@@ -1,0 +1,108 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "localeDateOrder": "mdy",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "DOIandURL": "doi",
+      "autoAbbrev": true,
+      "autoExport": "off",
+      "automaticTags": false,
+      "biblatexExtractEprint": false,
+      "caching": false,
+      "citekeyFold": false,
+      "citekeyFormat": "[auth:lower]-[shorttitle3_3]-[year]",
+      "citekeySearch": false,
+      "importBibTeXStrings": false,
+      "skipFields": "abstract,keywords,annotation,month"
+    }
+  },
+  "items": [
+    {
+      "DOI": "https://doi.org/10.1016/j.enggeo.2019.02.005",
+      "ISSN": "0013-7952",
+      "abstractNote": "A grain-based model (GBM) is generally employed by many researchers to simulate the microcracking process of crystalline brittle rock by the distinct element method. In this study, a novel grain-based model (nGBM) in two-dimensional Particle Flow Code 5.0 (PFC2D 5.0) is proposed to emulate the brittle failure of crystalline rock. First, the nGBM scheme is introduced, in which the flat-joint model is employed to model the contacts in mineral grains and the smooth-joint model is assigned to the grain interface contacts. Then, compressive tests are performed using Alxa porphyritic granite, and the strength values are fitted with the Hoek-Brown failure criterion. Third, a nGBM was generated based on the petrographic texture of realistic rock, such as mineral constituents, grain size, and distribution. The input microscale parameters are carefully calibrated according the experimental results. Finally, this model is applied to study the microcracking process of Alxa porphyritic granite and the influence of spatial distribution of minerals. It is found that a relatively high ratio of uniaxial compressive strength to tensile strength of each mineral or synthetic samples can be reproduced by the nGBM. Moreover, the simulated results show this model can capture the nonlinear characteristic of the Hoek-Brown failure criterion. After modeling, numerous mineral grains were cut across, which is consistent with the actual experimental observation; the tensile crack is over the shear crack in the models, while the number of intra-grain shear crack increases dramatically with increasing confining pressure. In addition, the numerical results indicate that the effect of spatial distribution of minerals has limited influence on the evolution of microcracks but has great impact on microcrack distribution. In summary, the proposed nGBM in PFC2D can well reproduce the realistic failure process of granitic rocks under different loading conditions.",
+      "attachments": [
+        {
+          "accessDate": "2022-01-07T15:45:21Z",
+          "contentType": "text/html",
+          "itemType": "attachment",
+          "key": "9FDUBG5I",
+          "linkMode": "linked_url",
+          "title": "S0013795218314546",
+          "uri": "http://zotero.org/users/8940226/items/9FDUBG5I",
+          "url": "http://www.sciencedirect.com/science/article/pii/S0013795218314546"
+        }
+      ],
+      "citationKey": "zhouNovelGrainbasedModel2019",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Jian",
+          "lastName": "Zhou"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Hengxing",
+          "lastName": "Lan"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Luqing",
+          "lastName": "Zhang"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Duoxing",
+          "lastName": "Yang"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Jie",
+          "lastName": "Song"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Song",
+          "lastName": "Wang"
+        }
+      ],
+      "date": "2019/03/09/",
+      "extra": [
+        "00000"
+      ],
+      "itemID": 1,
+      "itemType": "journalArticle",
+      "notes": [
+        "<p>\u91cd\u70b9\u53c2\u80033\uff1a\u9897\u7c92\u56fe\u4e0e\u5ca9\u77f3\u65ad\u88c2\u56fe</p>"
+      ],
+      "pages": "100-114",
+      "publicationTitle": "Engineering Geology",
+      "tags": [
+        {
+          "tag": "Alxa porphyritic granite"
+        },
+        {
+          "tag": "Microcracking evolution"
+        },
+        {
+          "tag": "Novel grain-based model"
+        },
+        {
+          "tag": "Numerical modeling"
+        },
+        {
+          "tag": "Particle flow code"
+        },
+        {
+          "tag": "Spatial distribution of minerals"
+        }
+      ],
+      "title": "Novel grain-based model for simulation of brittle failure of Alxa porphyritic granite",
+      "volume": "251"
+    }
+  ]
+}

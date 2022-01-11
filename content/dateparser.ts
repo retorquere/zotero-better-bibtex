@@ -1,6 +1,7 @@
 /* eslint-disable no-case-declarations */
-import EDTF = require('edtf')
-import edtfy = require('edtfy')
+import EDTF from 'edtf'
+import edtfy from 'edtfy'
+import * as CSL from 'citeproc'
 
 // import escapeStringRegexp = require('escape-string-regexp')
 
@@ -125,26 +126,26 @@ export function parse(value: string, localeDateOrder: string, as_range_part = fa
   if (as_range_part && value === '') return { type: 'open' }
 
   // https://forums.zotero.org/discussion/73729/name-and-year-import-issues-with-new-nasa-ads#latest
-  if (m = (/^(-?[0-9]+)-00-00$/.exec(value) || /^(-?[0-9]+)\/00\/00$/.exec(value) || /^(-?[0-9]+-[0-9]+)-00$/.exec(value))) return parse(m[1], localeDateOrder, as_range_part)
+  if (m = (/^(-?[0-9]+)-00-00$/.exec(value) || /^(-?[0-9]+)\/00\/00$/.exec(value) || /^(-?[0-9]+-[0-9]+)-00$/.exec(value))) return parse(m[1], localeDateOrder, true)
 
   // https://github.com/retorquere/zotero-better-bibtex/issues/1513
   // eslint-disable-next-line no-magic-numbers
-  if ((m = (/^([0-9]+) (de )?([a-z]+) (de )?([0-9]+)$/i).exec(value)) && (m[2] || m[4]) && (months[m[3].toLowerCase()])) return parse(`${m[1]} ${m[3]} ${m[5]}`, localeDateOrder, as_range_part)
+  if ((m = (/^([0-9]+) (de )?([a-z]+) (de )?([0-9]+)$/i).exec(value)) && (m[2] || m[4]) && (months[m[3].toLowerCase()])) return parse(`${m[1]} ${m[3]} ${m[5]}`, localeDateOrder, true)
 
   // '30-Mar-2020'
-  if (!as_range_part && (m = (/^([0-9]+)-([a-z]+)-([0-9]+)$/i).exec(value))) {
+  if (m = (/^([0-9]+)-([a-z]+)-([0-9]+)$/i).exec(value)) {
     let [ , day, month, year ] = m
     if (parseInt(day) > 31 && parseInt(year) < 31) [ day, year ] = [ year, day ] // eslint-disable-line no-magic-numbers
-    const date = parse(`${month} ${day} ${year}`, localeDateOrder, false)
+    const date = parse(`${month} ${day} ${year}`, localeDateOrder, true)
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     if (date.type === 'date') return date
   }
 
   // '[origdate] date'
-  if (!as_range_part && (m = /^\[(.+)\]\s*(.+)$/.exec(value))) {
+  if (m = /^\[(.+)\]\s*(.+)$/.exec(value)) {
     const [ , _orig, _date ] = m
-    const date = parse(_date, localeDateOrder, false)
-    const orig = parse(_orig, localeDateOrder, false)
+    const date = parse(_date, localeDateOrder, true)
+    const orig = parse(_orig, localeDateOrder, true)
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     if (date.type === 'date' && orig.type === 'date') return {...date, ...{ orig } }
   }
@@ -152,8 +153,8 @@ export function parse(value: string, localeDateOrder: string, as_range_part = fa
   // 'date [origdate]'
   if (!as_range_part && (m = /^(.+)\s*\[(.+)\]$/.exec(value))) {
     const [ , _date, _orig ] = m
-    const date = parse(_date, localeDateOrder, false)
-    const orig = parse(_orig, localeDateOrder, false)
+    const date = parse(_date, localeDateOrder, true)
+    const orig = parse(_orig, localeDateOrder, true)
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     if (date.type === 'date' && orig.type === 'date') return {...date, ...{ orig } }
   }
@@ -161,7 +162,7 @@ export function parse(value: string, localeDateOrder: string, as_range_part = fa
   // '[origdate]'
   if (!as_range_part && (m = /^\[(.+)\]$/.exec(value))) {
     const [ , _orig ] = m
-    const orig = parse(_orig, localeDateOrder, false)
+    const orig = parse(_orig, localeDateOrder, true)
     if (orig.type === 'date') return { ...{ orig } }
   }
 
@@ -169,8 +170,8 @@ export function parse(value: string, localeDateOrder: string, as_range_part = fa
   if (!as_range_part && (m = /^([a-zA-Z]+)\s+([0-9]+)(?:--|-|–)([0-9]+)[, ]\s*([0-9]+)$/.exec(value))) {
     const [ , month, day1, day2, year ] = m
 
-    const from = parse(`${month} ${day1} ${year}`, localeDateOrder, false)
-    const to = parse(`${month} ${day2} ${year}`, localeDateOrder, false)
+    const from = parse(`${month} ${day1} ${year}`, localeDateOrder, true)
+    const to = parse(`${month} ${day2} ${year}`, localeDateOrder, true)
 
     if (from.type === 'date' && to.type === 'date') return { type: 'interval', from, to }
   }
@@ -179,8 +180,8 @@ export function parse(value: string, localeDateOrder: string, as_range_part = fa
   if (!as_range_part && (m = /^([a-zA-Z]+\s+[0-9]+)(?:--|-|–)([a-zA-Z]+\s+[0-9]+)[, ]\s*([0-9]+)$/.exec(value))) {
     const [ , date1, date2, year ] = m
 
-    const from = parse(`${date1} ${year}`, localeDateOrder, false)
-    const to = parse(`${date2} ${year}`, localeDateOrder, false)
+    const from = parse(`${date1} ${year}`, localeDateOrder, true)
+    const to = parse(`${date2} ${year}`, localeDateOrder, true)
 
     if (from.type === 'date' && to.type === 'date') return { type: 'interval', from, to }
   }
@@ -189,8 +190,8 @@ export function parse(value: string, localeDateOrder: string, as_range_part = fa
   if (!as_range_part && (m = /^([0-9]+)\s*([a-zA-Z]+)?\s*(?:--|-|–)\s*([0-9]+)\s+([a-zA-Z]+)\s+([0-9]+)$/.exec(value))) {
     const [ , day1, month1, day2, month2, year ] = m
 
-    const from = parse(`${month1 || month2} ${day1} ${year}`, localeDateOrder, false)
-    const to = parse(`${month2} ${day2} ${year}`, localeDateOrder, false)
+    const from = parse(`${month1 || month2} ${day1} ${year}`, localeDateOrder, true)
+    const to = parse(`${month2} ${day2} ${year}`, localeDateOrder, true)
 
     if (from.type === 'date' && to.type === 'date') return { type: 'interval', from, to }
   }
@@ -199,8 +200,8 @@ export function parse(value: string, localeDateOrder: string, as_range_part = fa
   if (!as_range_part && (m = (/^([a-z]+)(?:--|-|–)([a-z]+)(?:--|-|–|\s+)([0-9]+)$/i).exec(value))) {
     const [ , month1, month2, year ] = m
 
-    const from = parse(`${month1} ${year}`, localeDateOrder, false)
-    const to = parse(`${month2} ${year}`, localeDateOrder, false)
+    const from = parse(`${month1} ${year}`, localeDateOrder, true)
+    const to = parse(`${month2} ${year}`, localeDateOrder, true)
 
     if (from.type === 'date' && to.type === 'date') return { type: 'interval', from, to }
   }
@@ -305,16 +306,26 @@ export function parse(value: string, localeDateOrder: string, as_range_part = fa
     }
   }
 
-  if (!as_range_part && !parsed) {
-    for (const sep of ['--', '-', '/', '_', '–']) {
+  if (!as_range_part && !parsed) { // try two range parts
+    for (const sep of ['--', '-', ' / ', '/', '_', '–']) {
       const split = value.split(sep)
       if (split.length === 2) {
-        const from = parse(split[0], localeDateOrder, false)
+        const from = parse(split[0], localeDateOrder, true)
         if (from.type !== 'date' && from.type !== 'season') continue
-        const to = parse(split[1], localeDateOrder, false)
+        const to = parse(split[1], localeDateOrder, true)
         if (to.type !== 'date' && to.type !== 'season') continue
         return { type: 'interval', from, to }
       }
+    }
+
+    const csl  = CSL.DateParser.parseDateToObject(value)
+    if (typeof csl.year === 'number') {
+      if (csl.day_end === csl.day) delete csl.day_end
+      if (csl.month_end === csl.month) delete csl.month_end
+      if (csl.year_end === csl.year) delete csl.year_end
+      const from = { type: 'date', year: csl.year, month: csl.month, day: csl.day }
+      const to = { type: 'date', year: csl.year_end, month: csl.month_end, day: csl.day_end }
+      return (to.year ? { type: 'interval', from, to } : from) as ParsedDate
     }
   }
 

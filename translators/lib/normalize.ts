@@ -99,7 +99,7 @@ export function normalize(library: Library, sort=true): void {
       for (const att of item.attachments) {
         att.contentType = att.contentType || att.mimeType
         delete att.mimeType
-        for (const prop of ['localPath', 'itemID', 'charset', 'dateAdded', 'parentItem', 'dateModified', 'version', 'relations', 'id']) {
+        for (const prop of ['select', 'localPath', 'itemID', 'charset', 'dateAdded', 'parentItem', 'dateModified', 'version', 'relations', 'id']) {
           delete att[prop]
         }
       }

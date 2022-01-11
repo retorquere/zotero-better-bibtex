@@ -114,6 +114,8 @@ if args.test_case:
     for line in feature:
       if line.lower().strip() == scenario:
         in_scenario = True
+      elif line.strip().startswith('scenario outline:'):
+        in_scenario = False
       elif in_scenario and f' #{issue.number} ' in line:
         print(f'replacing #{line.strip()}')
         removed = True
