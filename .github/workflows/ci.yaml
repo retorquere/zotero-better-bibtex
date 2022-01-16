@@ -106,7 +106,8 @@ jobs:
         #sudo apt install apt
 
         #curl -sL https://github.com/retorquere/zotero-deb/releases/download/apt-get/install.sh | sudo bash
-        curl -sL https://downloads.sourceforge.net/project/zotero-deb/install.sh | sudo bash
+        # curl -sL https://downloads.sourceforge.net/project/zotero-deb/install.sh | sudo bash
+        curl -sL https://apt.retorque.re/file/zotero-apt/install.sh | sudo bash
         sudo apt-get update
         sudo apt-get install ${{ matrix.client }}
     - name: install ${{ matrix.client }} beta
