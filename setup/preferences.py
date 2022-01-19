@@ -341,7 +341,7 @@ class Preferences:
     with open(meta, 'w') as f:
       print(template('preferences/meta.ts.mako').render(prefix=self.prefix, names=names, translators=translators, preferences=preferences).strip(), file=f)
 
-    defaults = os.path.join(root, 'defaults', 'preferences', 'defaults.js')
+    defaults = os.path.join(root, 'build', 'defaults', 'preferences', 'defaults.js')
     os.makedirs(os.path.dirname(defaults), exist_ok=True)
     with open(defaults, 'w') as f:
       print(template('preferences/defaults.js.mako').render(prefix=self.prefix, names=names, translators=translators, preferences=preferences).strip(), file=f)
