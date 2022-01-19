@@ -21,3 +21,15 @@ doesn't already know about. You can enable 'AUX Import' in the
 preferences, and when that is on, if the scan finds citekeys not
 already in your Zotero library, it will attempt to read those (but
 *only* those) items from the bibtex file named in the `aux` file.
+
+For BBT users who don't use LaTeX directly, you can create a
+custom `aux` file to use with the AUX scanner by hand. It is a
+text file formatted like this:
+
+```
+\citation{CITEKEY1}
+\citation{CITEKEY2}
+```
+
+Where `CITEKEY1`, `CITEKEY2` etc are the [citation keys]({{< ref "../" >}})
+that you want to include in the collection.
