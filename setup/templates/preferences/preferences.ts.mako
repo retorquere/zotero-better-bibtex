@@ -125,7 +125,8 @@ export const Preference = new class PreferenceManager {
     Zotero.Prefs.set('translators.better-bibtex.${pref.name}', v)
   }
   get ${pref.var}(): ${pref.valid} {
-    return (Zotero.Prefs.get('translators.better-bibtex.${pref.name}') as ${pref.valid})
+    const v: ${pref.valid} = Zotero.Prefs.get('translators.better-bibtex.${pref.name}') as ${pref.valid}
+    return typeof v === 'undefined' ? ${json.dumps(pref.default) | n} : v
   }
 
 % endfor
