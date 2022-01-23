@@ -74,12 +74,11 @@ export const Preference = new class PreferenceManager {
       Zotero.Prefs.set(key, defaults.autoExportDelay)
     }
 
-    function changed(pref) { Events.emit('preference-changed', pref) }
     // set defaults and install event emitter
     for (const pref of names) {
       if (pref !== 'platform') {
         if (typeof this[pref] === 'undefined') (this[pref] as any) = (typeof defaults[pref] === 'string' ? (defaults[pref] as string).replace(/^\u200B/, '') : defaults[pref])
-        Zotero.Prefs.registerObserver(<%text>`${prefix}${pref}`</%text>, changed.bind(null, pref))
+        Zotero.Prefs.registerObserver(<%text>`${prefix}${pref}`</%text>, this.changed.bind(this, pref))
       }
     }
     // put this in a preference so that translators can access this.
@@ -109,6 +108,9 @@ export const Preference = new class PreferenceManager {
     }
   }
 
+  changed(pref: string) {
+    Events.emit('preference-changed', pref)
+  }
 % for pref in preferences:
 %   if pref.name != 'platform':
   set ${pref.var}(v: ${pref.valid | n} | undefined) {

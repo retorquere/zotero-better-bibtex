@@ -207,8 +207,6 @@ export class ITranslator { // eslint-disable-line @typescript-eslint/naming-conv
     this[this.header.label.replace(/[^a-z]/ig, '')] = true
     this.BetterTeX = this.BetterBibTeX || this.BetterBibLaTeX
     this.BetterCSL = this.BetterCSLJSON || this.BetterCSLYAML
-    this.preferences = JSON.parse(JSON.stringify(defaults))
-    log.debug('prefs: @start', { preferences: this.preferences, defaults })
     this.options = this.header.displayOptions || {}
 
     const collator = new Intl.Collator('en')
@@ -266,29 +264,10 @@ export class ITranslator { // eslint-disable-line @typescript-eslint/naming-conv
       if (this.export.dir?.endsWith(this.paths.sep)) this.export.dir = this.export.dir.slice(0, -1)
     }
 
-    for (const pref of Object.keys(this.preferences)) {
-      let value
-
-      try {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-        value = Zotero.getOption(`preference_${pref}`)
-      }
-      catch (err) {
-        value = undefined
-      }
-
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      if (typeof value === 'undefined') {
-        value = Zotero.getHiddenPref(`better-bibtex.${pref}`)
-        if (typeof value === 'undefined') {
-          log.debug(`prefs: Zotero.getHiddenPref('better-bibtex.${pref}') returned undefined!`)
-          continue
-        }
-      }
-
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      this.preferences[pref] = value
-    }
+    this.preferences = Object.entries(defaults).reduce((acc, [pref, dflt]) => {
+      acc[pref] = this.getPreferenceOverride(pref) ?? Zotero.getHiddenPref(`better-bibtex.${pref}`) ?? dflt
+      return acc
+    }, {} as unknown as Preferences)
 
     // special handling
     log.debug('prefs: @load', this.preferences)
@@ -363,6 +342,15 @@ export class ITranslator { // eslint-disable-line @typescript-eslint/naming-conv
     }
 
     this.initialized = true
+  }
+
+  getPreferenceOverride(pref) { // eslint-disable-line @typescript-eslint/explicit-module-boundary-types
+    try {
+      return Zotero.getOption(`preference_${pref}`) // eslint-disable-line @typescript-eslint/no-unsafe-return
+    }
+    catch (err) {
+      return undefined
+    }
   }
 
   private registerCollection(collection, parent: string) {
