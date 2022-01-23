@@ -50,6 +50,7 @@ export namespace Translators {
     target: string
     configOptions?: {
       getCollections?: boolean
+      hash?: string
     }
   }
 }

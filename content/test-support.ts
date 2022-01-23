@@ -15,6 +15,7 @@ import { $and } from './db/loki'
 import  { defaults } from '../gen/preferences/meta'
 import { Preference } from '../gen/preferences'
 import * as memory from './memory'
+import { Deferred } from './deferred'
 
 const setatstart: string[] = ['workers', 'testing', 'caching'].filter(p => Preference[p] !== defaults[p])
 
@@ -298,5 +299,26 @@ export class TestSupport {
       await collection.removeItems(itemIDs)
     })
     if (collection.getChildItems(true).length) throw new Error(`${path} not empty`)
+  }
+
+  public async quickCopy(itemIDs: number[], translator: string): Promise<string> {
+    const format = {
+      mode: 'export',
+      contentType: '',
+      id: Translators.byName[translator]?.translatorID || translator,
+      locale: '',
+    }
+    const deferred = new Deferred<string>()
+
+    Zotero.QuickCopy.getContentFromItems(Zotero.Items.get(itemIDs), format, (obj, worked) => {
+      if (worked) {
+        deferred.resolve(obj.string.replace(/\r\n/g, '\n'))
+      }
+      else {
+        deferred.reject(new Error(Zotero.getString('fileInterface.exportError')))
+      }
+    })
+
+    return deferred.promise
   }
 }

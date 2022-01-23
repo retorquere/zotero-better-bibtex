@@ -95,19 +95,19 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       annotation: Zotero.ItemTypes.getID('annotation') || 'NULL',
     }
 
-    let reinit = false
-
     // cleanup old translators
     this.uninstall('Better BibTeX Quick Copy')
     this.uninstall('\u672B BetterBibTeX JSON (for debugging)')
     this.uninstall('BetterBibTeX JSON (for debugging)')
 
-    for (const header of Object.values(this.byId)) {
-      if (await this.install(header)) reinit = true
+    const reinit = []
+    for (const header of Object.keys(this.byName).map(name => JSON.parse(Zotero.File.getContentsFromURL(`resource://zotero-better-bibtex/${name}.json`)) as Translator.Header)) {
+      if (await this.install(header)) reinit.push(header)
     }
 
-    if (reinit) {
+    if (reinit.length) {
       let restart = false
+
       if (Preference.newTranslatorsAskRestart && !Preference.testing) {
         const dontAskAgain = { value: false }
         const ps = Services.prompt
@@ -137,15 +137,30 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       if (restart) Zotero.Utilities.Internal.quit(true)
 
       try {
+        log.debug('Translator.init: reinit start')
         await Zotero.Translators.reinit()
+        /*
+        for (const header of reinit) {
+          log.debug('Translator.init: pre-loading', header.label)
+          const translation = new Zotero.Translate.Export()
+          const translator = new Zotero.Translator({
+            ...header,
+            cacheCode: true,
+            path: OS.Path.join(Zotero.Translators.getTranslatorsDirectory(), Zotero.Translators.getFileNameFromLabel(header.label, header.translatorID)),
+          })
+          await translation._itemGetter.setAll(Zotero.Libraries.userLibraryID, true) // eslint-disable-line no-underscore-dangle
+          await translation._loadTranslator(translator) // eslint-disable-line no-underscore-dangle
+          await translation._prepareTranslation() // eslint-disable-line no-underscore-dangle
+        }
+        */
       }
       catch (err) {
-        log.error('Translator.inits: reinit failed @', (new Date()).valueOf() - start, err)
+        log.error('Translator.init: reinit failed @', (new Date()).valueOf() - start, err)
       }
     }
   }
 
-  public getTranslatorId(name) {
+  public getTranslatorId(name: string): string {
     const name_lc = name.toLowerCase()
 
     // shortcuts
@@ -576,7 +591,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     return false
   }
 
-  public async install(header) {
+  public async install(header: Translator.Header): Promise<boolean> {
     if (!header.label || !header.translatorID) throw new Error('not a translator')
 
     let installed = null
@@ -588,7 +603,6 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       installed = null
     }
 
-    header = JSON.parse(Zotero.File.getContentsFromURL(`resource://zotero-better-bibtex/${header.label}.json`))
     if (installed?.configOptions?.hash === header.configOptions.hash) return false
 
     const code = [
@@ -606,11 +620,11 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
     try {
       await Zotero.Translators.save(header, code)
-
     }
     catch (err) {
       log.error('Translator.install', header, 'failed:', err)
       this.uninstall(header.label)
+      return false
     }
 
     return true

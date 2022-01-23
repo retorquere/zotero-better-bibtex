@@ -373,6 +373,17 @@ class Zotero:
 
     return path
 
+  def quick_copy(self, itemIDs, translator, expected):
+    found = self.execute('return await Zotero.BetterBibTeX.TestSupport.quickCopy(itemIDs, translator)',
+      translator=translator,
+      itemIDs=itemIDs
+    )
+    expected_file = expected
+    expected, loaded_file = self.load(expected_file, True)
+    exported = self.exported(loaded_file, found)
+    assert_equal_diff(expected.strip(), found.strip())
+    self.exported(exported)
+
   def export_library(self, translator, displayOptions = {}, collection = None, output = None, expected = None, resetCache = False):
     assert not displayOptions.get('keepUpdated', False) or output # Auto-export needs a destination
     displayOptions['Normalize'] = True

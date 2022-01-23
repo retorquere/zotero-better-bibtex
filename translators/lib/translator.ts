@@ -207,7 +207,8 @@ export class ITranslator { // eslint-disable-line @typescript-eslint/naming-conv
     this[this.header.label.replace(/[^a-z]/ig, '')] = true
     this.BetterTeX = this.BetterBibTeX || this.BetterBibLaTeX
     this.BetterCSL = this.BetterCSLJSON || this.BetterCSLYAML
-    this.preferences = defaults
+    this.preferences = JSON.parse(JSON.stringify(defaults))
+    log.debug('prefs: @start', { preferences: this.preferences, defaults })
     this.options = this.header.displayOptions || {}
 
     const collator = new Intl.Collator('en')
@@ -277,13 +278,20 @@ export class ITranslator { // eslint-disable-line @typescript-eslint/naming-conv
       }
 
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      if (typeof value === 'undefined') value = Zotero.getHiddenPref(`better-bibtex.${pref}`)
+      if (typeof value === 'undefined') {
+        value = Zotero.getHiddenPref(`better-bibtex.${pref}`)
+        if (typeof value === 'undefined') {
+          log.debug(`prefs: Zotero.getHiddenPref('better-bibtex.${pref}') returned undefined!`)
+          continue
+        }
+      }
 
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       this.preferences[pref] = value
     }
 
     // special handling
+    log.debug('prefs: @load', this.preferences)
     this.skipFields = this.preferences.skipFields.toLowerCase().split(',').map(field => this.typefield(field)).filter((s: string) => s)
     this.skipField = this.skipFields.reduce((acc, field) => { acc[field] = true; return acc }, {})
 
