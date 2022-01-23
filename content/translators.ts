@@ -146,7 +146,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
           const translator = new Zotero.Translator({
             ...header,
             cacheCode: true,
-            path: OS.Path.join(Zotero.Translators.getTranslatorsDirectory(), Zotero.Translators.getFileNameFromLabel(header.label, header.translatorID)),
+            code: await Zotero.File.getContentsAsync(OS.Path.join(Zotero.Translators.getTranslatorsDirectory(), Zotero.Translators.getFileNameFromLabel(header.label, header.translatorID))),
           })
           await translation._itemGetter.setAll(Zotero.Libraries.userLibraryID, true) // eslint-disable-line no-underscore-dangle
           await translation._loadTranslator(translator) // eslint-disable-line no-underscore-dangle

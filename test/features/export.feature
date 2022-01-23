@@ -609,10 +609,10 @@ Scenario: Exporting %-encoded URLs (e.g. containing %20) #1966
   And I set preference .verbatimFields to "doi,file,ids,eprint,verba,verbb,verbc,groups"
   Then an export using "Better BibTeX" should match "export/*.bibtex"
 
-#Scenario: error exporting Better BibLaTex this.preference.skipFields is undefined #2029
-#  Given I restart Zotero
-#  And I remove all items
-#  When I import 2 references from "export/*.json"
-#  Then an export using "Better BibLaTeX" should match "export/*.biblatex"
-#  When I select the item with a field that contains "Collapse"
-#  Then a quick-copy using "Better BibLaTeX" should match "export/*.biblatex"
+Scenario: error exporting Better BibLaTex this.preference.skipFields is undefined #2029
+  Given I restart Zotero
+  And I remove all items
+  When I import 2 references from "export/*.json"
+  Then an export using "Better BibLaTeX" should match "export/*.biblatex"
+  When I select the item with a field that contains "Collapse"
+  Then a quick-copy using "Better BibLaTeX" should match "export/*.biblatex"
