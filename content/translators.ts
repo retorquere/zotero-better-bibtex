@@ -602,6 +602,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       installed = null
     }
 
+    log.debug('Translators.install', { installed, new: header })
     if (installed?.configOptions?.hash === header.configOptions.hash) return false
 
     const code = [
