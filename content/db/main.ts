@@ -116,19 +116,17 @@ class Main extends Loki {
 
     const autoexport = this.schemaCollection('autoexport', config)
 
-    for (const ae of autoexport.find()) {
-      if (typeof ae.recursive !== 'boolean') {
-        ae.recursive = false
-      }
-
-      scrubAutoExport(ae)
-      autoexport.update(ae)
-    }
-
     if (Preference.scrubDatabase) {
       // directly change the data objects and rebuild indexes https://github.com/techfort/LokiJS/issues/660
-      const length = autoexport.data.length
-      autoexport.data = autoexport.data.filter(doc => typeof doc.$loki === 'number' && typeof doc.meta === 'object')
+      let length = autoexport.data.length
+      for (const ae of autoexport.data) {
+        if (typeof ae.recursive !== 'boolean') {
+          ae.recursive = false
+          scrubAutoExport(ae)
+          length = -1
+        }
+      }
+      autoexport.data = autoexport.data.filter(doc => typeof doc.$loki === 'number' && typeof doc.meta === 'object' && autoexport.validate(doc)) // eslint-disable-line @typescript-eslint/no-unsafe-return
       if (length !== autoexport.data.length) {
         autoexport.ensureId()
         autoexport.ensureAllIndexes(true)
@@ -171,6 +169,8 @@ class Main extends Loki {
         item.setField('extra', clean)
         await item.saveTx()
       }
+
+      Preference.scrubDatabase = false
     }
   }
 }

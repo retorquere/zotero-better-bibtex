@@ -29,6 +29,7 @@ $patch$(Loki.Collection.prototype, 'insert', original => function(doc) {
   if (this.validate && !this.validate(doc)) {
     const err = new Error(`insert: validation failed for ${JSON.stringify(doc)} (${JSON.stringify(this.validate.errors)})`)
     log.error('insert: validation failed for', doc, this.validate.errors, err)
+    Preference.scrubDatabase = true
     throw err
   }
   return original.apply(this, arguments)
@@ -38,6 +39,7 @@ $patch$(Loki.Collection.prototype, 'update', original => function(doc) {
   if (this.validate && !this.validate(doc)) {
     const err = new Error(`update: validation failed for ${JSON.stringify(doc)} (${JSON.stringify(this.validate.errors)})`)
     log.error('update: validation failed for', doc, this.validate.errors, err)
+    Preference.scrubDatabase = true
     throw err
   }
   return original.apply(this, arguments)
