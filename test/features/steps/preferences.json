@@ -623,6 +623,7 @@
       "pandoc": "Pandoc citation",
       "orgmode": "Org-mode select link",
       "orgRef": "org-ref citation",
+      "orgRef3": "org-ref v3 citation",
       "rtfScan": "RTF Scan marker",
       "roamCiteKey": "Roam Cite Key",
       "atom": "Atom (https://atom.io/packages/zotero-citations)",
