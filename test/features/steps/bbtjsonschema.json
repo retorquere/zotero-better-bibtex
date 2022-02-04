@@ -316,6 +316,7 @@
                 "pandoc",
                 "orgmode",
                 "orgRef",
+                "orgRef3",
                 "rtfScan",
                 "roamCiteKey",
                 "atom",

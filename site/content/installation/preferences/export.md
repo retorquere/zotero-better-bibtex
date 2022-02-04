@@ -104,6 +104,7 @@ Options:
 * Pandoc citation
 * Org-mode select link
 * org-ref citation
+* org-ref v3 citation
 * RTF Scan marker
 * Roam Cite Key
 * Atom (https://atom.io/packages/zotero-citations)

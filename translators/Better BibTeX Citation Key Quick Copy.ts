@@ -76,6 +76,12 @@ const Mode = {
     Zotero.write(`cite:${items.map(item => item.citationKey).join(', ')}`)
   },
 
+  orgRef3(items) {
+    if (!items.length) return  ''
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    Zotero.write(`cite:&${items.map(item => item.citationKey).join(';&')}`)
+  },
+
   orgmode(items) {
     switch (Translator.preferences.quickCopyOrgMode) {
       case 'zotero':
