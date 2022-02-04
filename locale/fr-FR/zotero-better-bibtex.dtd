@@ -94,7 +94,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.export.quickCopy.orgMode.zotero "en utilisant la clé d'élément de Zotero">
 <!ENTITY better-bibtex.Preferences.export.quickCopy.orgMode.citekey "en utilisant la clé de citation de Better BibTeX">
 <!ENTITY better-bibtex.Preferences.export.quickCopy.orgRef "Citation org-ref">
-<!ENTITY better-bibtex.Preferences.export.quickCopy.orgRef3 "Citation org-ref v3">
+<!ENTITY better-bibtex.Preferences.export.quickCopy.orgRef3 "org-ref v3 citation">
 <!ENTITY better-bibtex.Preferences.export.quickCopy.pandoc.brackets "Encadrer les citations 'Pandoc' avec des crochets">
 <!ENTITY better-bibtex.Preferences.export.quickCopy.pandoc "Citation Pandoc">
 <!ENTITY better-bibtex.Preferences.export.quickCopy.selectLink "Lien de sélection de Zotero">
