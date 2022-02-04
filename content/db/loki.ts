@@ -7,6 +7,7 @@ declare const AsyncShutdown: any
 // declare const Sqlite: any
 
 import { patch as $patch$ } from '../monkey-patch'
+import { Preference } from '../../gen/preferences'
 
 import { log } from '../logger'
 // import { Preferences as Prefs } from '../prefs'
