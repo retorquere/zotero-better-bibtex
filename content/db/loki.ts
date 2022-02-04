@@ -30,6 +30,7 @@ $patch$(Loki.Collection.prototype, 'insert', original => function(doc) {
   if (this.validate && !this.validate(doc)) {
     const err = new Error(`insert: validation failed for ${JSON.stringify(doc)} (${JSON.stringify(this.validate.errors)})`)
     log.error('insert: validation failed for', doc, this.validate.errors, err)
+    alert(`Better BibTeX: error saving ${this.name}, restart to repair`)
     Preference.scrubDatabase = true
     throw err
   }
@@ -40,6 +41,7 @@ $patch$(Loki.Collection.prototype, 'update', original => function(doc) {
   if (this.validate && !this.validate(doc)) {
     const err = new Error(`update: validation failed for ${JSON.stringify(doc)} (${JSON.stringify(this.validate.errors)})`)
     log.error('update: validation failed for', doc, this.validate.errors, err)
+    alert(`Better BibTeX: error saving ${this.name}, restart to repair`)
     Preference.scrubDatabase = true
     throw err
   }
