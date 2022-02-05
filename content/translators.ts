@@ -2,7 +2,7 @@
 
 Components.utils.import('resource://gre/modules/Services.jsm')
 
-// declare class ChromeWorker extends Worker { }
+declare class ChromeWorker extends Worker { }
 
 Components.utils.import('resource://zotero/config.js')
 declare const ZOTERO_CONFIG: any
@@ -278,7 +278,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     let worker: Worker = null
     // WHAT IS GOING ON HERE FIREFOX?!?! A *NetworkError* for a xpi-internal resource:// URL?!
     try {
-      worker = new Worker(`resource://zotero-better-bibtex/worker/zotero.js?${workerContext}`)
+      worker = new ChromeWorker(`resource://zotero-better-bibtex/worker/zotero.js?${workerContext}`)
     }
     catch (err) {
       deferred.reject('could not get a Worker')

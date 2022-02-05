@@ -3,9 +3,9 @@ declare const ZOTERO_TRANSLATOR_INFO: any
 declare const workerContext: { translator: string, debugEnabled: boolean, worker: string }
 
 import { stringify, asciify } from './stringify'
-import { worker as inWorker } from './environment'
+import { environment } from './environment'
 
-const inTranslator = inWorker || typeof ZOTERO_TRANSLATOR_INFO !== 'undefined'
+const inTranslator = environment.worker || typeof ZOTERO_TRANSLATOR_INFO !== 'undefined'
 
 class Logger {
   public verbose = false
@@ -43,12 +43,12 @@ class Logger {
       msg = output
     }
 
-    if (inWorker) {
+    if (environment.worker) {
       worker = worker || workerContext.worker
       translator = translator || workerContext.translator
     }
     else {
-      if (worker) worker = `${worker} (but inWorker is false?)`
+      if (worker) worker = `${worker} (but environment is ${environment.name})`
       // Translator must be var-hoisted by esbuild for this to work
       if (!translator && inTranslator) translator = ZOTERO_TRANSLATOR_INFO.label
     }
@@ -70,7 +70,7 @@ class Logger {
 
   public get enabled(): boolean {
     if (!inTranslator) return Zotero.Debug.enabled as boolean
-    if (!inWorker) return true
+    if (!environment.worker) return true
     return !workerContext || workerContext.debugEnabled
   }
 
