@@ -6,7 +6,7 @@ import { affects, names as preferences, defaults, PreferenceName, Preferences, s
 import { client } from '../../content/client'
 import { Reference, Item, Collection } from '../../gen/typings/serialized-item'
 import { log } from '../../content/logger'
-import { worker } from '../../content/environment'
+import { environment } from '../../content/environment'
 import { Pinger } from '../../content/ping'
 
 type TranslatorMode = 'export' | 'import'
@@ -103,7 +103,7 @@ class Items {
 
     this.ping = new Pinger({
       total: this.list.length,
-      callback: pct => worker ? Zotero.BetterBibTeX.setProgress(pct) : null, // eslint-disable-line @typescript-eslint/no-unsafe-return
+      callback: pct => environment.worker ? Zotero.BetterBibTeX.setProgress(pct) : null, // eslint-disable-line @typescript-eslint/no-unsafe-return
     })
   }
 
