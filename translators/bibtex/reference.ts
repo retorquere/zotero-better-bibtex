@@ -350,13 +350,22 @@ export class Reference {
 
     if (!field.value && !field.bibtex && this.inPostscript) {
       delete this.has[field.name]
+      log.debug('add: removing', field.name)
       return null
     }
 
-    if (Translator.skipField[field.name]) return null
+    if (Translator.skipField[field.name]) {
+      log.debug('add: skipping', field.name)
+      return null
+    }
+
+    field.enc = field.enc || this.fieldEncoding[field.name] || 'latex'
 
     if (field.enc === 'date') {
-      if (!field.value) return null
+      if (!field.value) {
+        log.debug('add: null date', field.name)
+        return null
+      }
 
       if (field.value === 'today') {
         return this.add({
@@ -393,13 +402,17 @@ export class Reference {
     }
 
     if (field.fallback && field.replace) throw new Error('pick fallback or replace, buddy')
-    if (field.fallback && this.has[field.name]) return null
+    if (field.fallback && this.has[field.name]) {
+      log.debug('add: fallback already filled for', field.name)
+      return null
+    }
 
     // legacy field addition, leave in place for postscripts
     if (!field.name) {
       const keys = Object.keys(field)
       switch (keys.length) {
         case 0: // name -> undefined/null
+          log.debug('add: empty legacy object', field.name)
           return null
 
         case 1:
@@ -412,13 +425,25 @@ export class Reference {
     }
 
     if (!field.bibtex) {
-      if ((typeof field.value !== 'number') && !field.value) return null
-      if ((typeof field.value === 'string') && (field.value.trim() === '')) return null
-      if (Array.isArray(field.value) && (field.value.length === 0)) return null
+      if ((typeof field.value !== 'number') && !field.value) {
+        log.debug('add: no value supplied for', typeof field.value, field.name)
+        return null
+      }
+      if ((typeof field.value === 'string') && (field.value.trim() === '')) {
+        log.debug('add: no value supplied for', typeof field.value, field.name)
+        return null
+      }
+      if (Array.isArray(field.value) && (field.value.length === 0)) {
+        log.debug('add: empty array supplied for', field.name)
+        return null
+      }
     }
 
     if (this.has[field.name]) {
-      if (this.has[field.name].value === field.value && (this.has[field.name].enc || 'latex') === (field.enc || 'latex')) return null
+      if (!Array.isArray(field.value) && this.has[field.name].value === field.value && this.has[field.name].enc === field.enc) {
+        log.debug('add: same value supplied for', field.enc, field.name)
+        return null
+      }
 
       if (!this.inPostscript && !field.replace) {
         const value = field.bibtex ? 'bibtex' : 'value'
@@ -445,8 +470,6 @@ export class Reference {
 
       }
       else {
-        field.enc = field.enc || this.fieldEncoding[field.name] || 'latex'
-
         let value
         switch (field.enc) {
           case 'latex':
@@ -485,7 +508,10 @@ export class Reference {
             throw new Error(`Unexpected field encoding: ${JSON.stringify(field.enc)}`)
         }
 
-        if (!value) return null
+        if (!value) {
+          log.debug('add: no value after encoding', field.enc, field.name)
+          return null
+        }
 
         value = value.trim()
 
