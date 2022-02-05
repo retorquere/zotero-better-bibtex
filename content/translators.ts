@@ -2,7 +2,7 @@
 
 Components.utils.import('resource://gre/modules/Services.jsm')
 
-declare class ChromeWorker extends Worker { }
+// declare class ChromeWorker extends Worker { }
 
 Components.utils.import('resource://zotero/config.js')
 declare const ZOTERO_CONFIG: any
@@ -275,13 +275,13 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     log.debug('worker context:', workerContext)
 
     const deferred = new Deferred<string>()
-    let worker: ChromeWorker = null
+    let worker: Worker = null
     // WHAT IS GOING ON HERE FIREFOX?!?! A *NetworkError* for a xpi-internal resource:// URL?!
     try {
-      worker = new ChromeWorker(`resource://zotero-better-bibtex/worker/zotero.js?${workerContext}`)
+      worker = new Worker(`resource://zotero-better-bibtex/worker/zotero.js?${workerContext}`)
     }
     catch (err) {
-      deferred.reject('could not get a ChromeWorker')
+      deferred.reject('could not get a Worker')
       flash(
         'Failed to start background export',
         'Could not start a background export after 5 attempts. Background exports have been disabled -- PLEASE report this as a bug at the Better BibTeX github project',
