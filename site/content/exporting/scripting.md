@@ -356,3 +356,21 @@ if (Translator.BetterBibLaTeX) {
   reference.add({ name: 'rights', value: item.rights});
 }
 ```
+
+### Use `~` in file paths to avoid the .bib file being different on different computers
+
+For example on a Linux machine you might have `/home/myname` and on MacOS it is typically `/Users/mypossiblyothername`. If you sync a bib file on both to a git repo you will see a lot of diffs everytime due to them fighting each other.
+
+```javascript
+if (Translator.BetterTeX && !Translator.options.exportFileData && item.attachments && item.attachments.length) {
+  for (const att of item.attachments) {
+    if (att.localPath) {
+      att.localPath = att.localPath.replace(RegExp("^\/.*?\/.*?\/"), "~/")
+    }
+  }
+  reference.add({ name: 'file', value: item.attachments, enc: 'attachments' })
+  return { cache: false }
+}
+```
+
+From [discussion here](https://forums.zotero.org/discussion/comment/399187#Comment_399187).
