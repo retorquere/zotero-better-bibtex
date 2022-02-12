@@ -53,7 +53,7 @@ export function itemsChanged(items: ZoteroItem[]): void {
     }
   }
 
-  Zotero.debug(`itemsChanged: ${JSON.stringify({ collections: [...changed.collections], libraries: [...changed.libraries]})}`)
+  Zotero.debug(`itemsChanged: ${JSON.stringify({ collection: changed.collections.size, collections: [...changed.collections], library: changed.libraries.size, libraries: [...changed.libraries]})}`)
   if (changed.collections.size) Events.emit('collections-changed', [...changed.collections])
   if (changed.libraries.size) Events.emit('libraries-changed', [...changed.libraries])
 }
