@@ -36,7 +36,6 @@ import { validator } from '../ajv'
 const ajv = new AJV({ coerceTypes: true })
 
 for (const [method, meta] of Object.entries(methods)) {
-  log.debug('compiling', method, meta);
   (meta as unknown as any).validate = validator(ajv, meta.schema)
 }
 
@@ -952,8 +951,6 @@ class PatternFormatter {
 
   private transliterate(str: string, mode?: 'minimal' | 'de' | 'german' | 'ja' | 'japanese' | 'zh' | 'chinese'): string {
     mode = mode || this.item.transliterateMode || 'japanese'
-
-    log.debug('transliterate:', { input: str, mode, jieba: Preference.jieba, kuroshiro: Preference.kuroshiro && kuroshiro.enabled })
 
     let replace: Record<string, string> = {}
     switch (mode) {

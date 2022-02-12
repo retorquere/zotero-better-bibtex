@@ -188,7 +188,6 @@ export class XULoki extends Loki {
     const coll: any = this.getCollection(name) || this.addCollection(name, options)
     coll.cloneObjects = true
 
-    log.debug('compiling', JSON.stringify(options.schema, null, 2))
     coll.validate = validator.compile(options.schema)
 
     return coll
