@@ -988,11 +988,7 @@ class PatternFormatter {
       replace,
     })
 
-    log.debug('transliterate replace:', str)
-
     str = fold2ascii.foldMaintaining(str)
-
-    log.debug('transliterate fold:', str)
 
     return str
   }
