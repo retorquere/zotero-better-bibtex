@@ -223,9 +223,13 @@ export class ErrorReport {
     }
 
     info += 'Settings:\n'
+    const settings = { default: '', set: '' }
     for (const [key, value] of Object.entries(Preference.all)) {
-      info += `  ${key} = ${JSON.stringify(value)}${value === defaults[key] ? ' (default)' : ''}\n`
+      settings[value === defaults[key] ? 'default' : 'set'] += `  ${key} = ${JSON.stringify(value)}\n`
     }
+    if (settings.default) settings.default = `  default:\n${settings.default}`
+    info += settings.set + settings.default
+
     for (const key of ['export.quickCopy.setting']) {
       info += `  Zotero: ${key} = ${JSON.stringify(Zotero.Prefs.get(key))}\n`
     }
