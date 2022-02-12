@@ -35,7 +35,7 @@ import AJV from 'ajv'
 import { validator } from '../ajv'
 const ajv = new AJV({ coerceTypes: true })
 
-for (const [method, meta] of Object.entries(methods)) {
+for (const meta of Object.values(methods)) {
   (meta as unknown as any).validate = validator(ajv, meta.schema)
 }
 
