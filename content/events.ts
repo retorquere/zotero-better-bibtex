@@ -6,6 +6,7 @@ import { patch as $patch$ } from './monkey-patch'
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export const Events = new EventEmitter() // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
 
+Zotero.debug(`event-emitter startup: debug=${Zotero.Debug.enabled}`)
 if (Zotero.Debug.enabled) {
   const events = [
     'preference-changed',

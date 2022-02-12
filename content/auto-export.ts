@@ -400,6 +400,7 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
   }
 
   public schedule(type, ids) {
+    log.debug('auto-export: schedule', { type, ids })
     for (const ae of this.db.find({$and: [{ type: {$eq: type} }, {id: { $in: ids } }] })) {
       queue.add(ae)
     }
