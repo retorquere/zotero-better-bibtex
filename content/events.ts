@@ -7,7 +7,8 @@ import { patch as $patch$ } from './monkey-patch'
 export const Events = new EventEmitter() // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
 
 Zotero.debug(`event-emitter startup: debug=${Zotero.Debug.enabled}`)
-if (Zotero.Debug.enabled) {
+const force = true
+if (force || Zotero.Debug.enabled) {
   const events = [
     'preference-changed',
     'item-tag',
