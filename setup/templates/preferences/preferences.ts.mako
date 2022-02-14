@@ -1,4 +1,6 @@
 /* eslint-disable no-magic-numbers, @typescript-eslint/quotes, max-len */
+declare const Services: any
+
 import { Events } from '../content/events'
 <%
   import json
@@ -20,6 +22,11 @@ export const Preference = new class PreferenceManager {
     Zotero.Prefs.registerObserver('baseAttachmentPath', val => { this.baseAttachmentPath = val })
 
     // clear out old keys
+    const oops = 'extensions.translators.better-bibtex.'
+    for (key of Services.prefs.getBranch(oops).getChildList('', {}) as string[]) {
+      Zotero.Prefs.clear(oops + key, true) // eslint-disable-line @typescript-eslint/restrict-plus-operands
+    }
+
     if (typeof (old = Zotero.Prefs.get(key = '${prefix}citeprocNoteCitekey')) !== 'undefined') {
       Zotero.Prefs.clear(key)
     }
