@@ -10,6 +10,22 @@ jobs:
   nag:
     runs-on: ubuntu-latest
     steps:
+      - name: Read log-missing message
+        id: need-log
+        uses: juliangruber/read-file-action@v1
+        with:
+          path: ./.github/workflows/need-log.md
+      - name: Read no-close message
+        id: no-close
+        uses: juliangruber/read-file-action@v1
+        with:
+          path: ./.github/workflows/no-close.md
       - uses: retorquere/label-gun@main
         with:
           token: ${{ github.token }}
+          label.exempt: question
+          log-id.label: needs-support-log
+          log-id.regex: [A-Z0-9]{8}(-refs)?-(apse|euc)
+          log-id.message: ${{ steps.need-log.outputs.content }}
+          log-id.prompt: Support log ID (with `-apse` or `-euc`):
+          no-close.message: ${{ steps.no-close.outputs.content }}
