@@ -1,3 +1,5 @@
+import { log } from './logger'
+
 import { Preference } from '../gen/preferences'
 
 type Handler = () => void
@@ -44,6 +46,7 @@ export class Scheduler {
   }
 
   public schedule(id: number, handler: Handler): void {
+    log.debug('scheduler.schedule:', { id, held: !!this.held })
     if (this.held) {
       this.held.set(id, handler)
     }
@@ -54,6 +57,7 @@ export class Scheduler {
   }
 
   public cancel(id: number): void {
+    log.debug('scheduler.cancel:', { id, held: !!this.held })
     if (this.held) {
       this.held.delete(id)
     }

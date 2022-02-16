@@ -202,6 +202,7 @@ const queue = new class TaskQueue {
 
   public cancel(ae) {
     const $loki = (typeof ae === 'number' ? ae : ae.$loki)
+    log.debug('auto-export: cancel', ae)
     this.scheduler.cancel($loki)
   }
 
