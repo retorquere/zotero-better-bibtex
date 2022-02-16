@@ -25,7 +25,7 @@ jobs:
           token: ${{ github.token }}
           label.exempt: question
           log-id.label: needs-support-log
-          log-id.regex: [A-Z0-9]{8}(-refs)?-(apse|euc)
+          log-id.regex: "[A-Z0-9]{8}(-refs)?-(apse|euc)"
           log-id.message: ${{ steps.need-log.outputs.content }}
-          log-id.prompt: Support log ID (with `-apse` or `-euc`):
+          log-id.prompt: "Support log ID (with `-apse` or `-euc`):"
           no-close.message: ${{ steps.no-close.outputs.content }}
