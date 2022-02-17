@@ -10,11 +10,6 @@ jobs:
   nag:
     runs-on: ubuntu-latest
     steps:
-      - name: Read no-close message
-        id: no-close
-        uses: juliangruber/read-file-action@v1
-        with:
-          path: ./.github/workflows/no-close.md
       - uses: retorquere/label-gun@main
         with:
           token: ${{ github.token }}
