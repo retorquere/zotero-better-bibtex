@@ -51,8 +51,8 @@ export class Scheduler {
       this.held.set(id, handler)
     }
     else {
-      if (this.handlers.has(id)) clearTimeout(this.handlers.get(id))
-      this.handlers.set(id, setTimeout(handler, this.delay))
+      if (this.handlers.has(id)) Zotero.clearTimeout(this.handlers.get(id))
+      this.handlers.set(id, Zotero.setTimeout(handler, this.delay))
     }
   }
 
@@ -62,7 +62,7 @@ export class Scheduler {
       this.held.delete(id)
     }
     else if (this.handlers.has(id)) {
-      clearTimeout(this.handlers.get(id))
+      Zotero.clearTimeout(this.handlers.get(id))
       this.handlers.delete(id)
     }
   }
