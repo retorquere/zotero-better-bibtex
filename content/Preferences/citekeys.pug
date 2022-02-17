@@ -5,7 +5,7 @@ hbox
     onfocus="Zotero.BetterBibTeX.PrefPane.getCitekeyFormat(event.target);"
     onblur="Zotero.BetterBibTeX.PrefPane.saveCitekeyFormat(event.target);"
     oninput="Zotero.BetterBibTeX.PrefPane.checkCitekeyFormat(event.target);"
-    onkeypress="Zotero.setTimeout(function() { Zotero.BetterBibTeX.PrefPane.checkCitekeyFormat(event.target) }, 1);"
+    onkeypress="setTimeout(function() { Zotero.BetterBibTeX.PrefPane.checkCitekeyFormat(event.target) }, 1);"
   )
 checkbox(preference="pref-better-bibtex-citekeyFold" label="&better-bibtex.Preferences.citekey.fold;")
 checkbox(preference="pref-better-bibtex-citekeySearch" label="&better-bibtex.Preferences.citekey.search;")
