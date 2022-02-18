@@ -1,5 +1,3 @@
-import { log } from './logger'
-
 import { Preference } from '../gen/preferences'
 
 type Handler = () => void
@@ -46,23 +44,21 @@ export class Scheduler {
   }
 
   public schedule(id: number, handler: Handler): void {
-    log.debug('scheduler.schedule:', { id, held: !!this.held })
     if (this.held) {
       this.held.set(id, handler)
     }
     else {
-      if (this.handlers.has(id)) Zotero.clearTimeout(this.handlers.get(id))
-      this.handlers.set(id, Zotero.setTimeout(handler, this.delay))
+      if (this.handlers.has(id)) clearTimeout(this.handlers.get(id))
+      this.handlers.set(id, setTimeout(handler, this.delay))
     }
   }
 
   public cancel(id: number): void {
-    log.debug('scheduler.cancel:', { id, held: !!this.held })
     if (this.held) {
       this.held.delete(id)
     }
     else if (this.handlers.has(id)) {
-      Zotero.clearTimeout(this.handlers.get(id))
+      clearTimeout(this.handlers.get(id))
       this.handlers.delete(id)
     }
   }

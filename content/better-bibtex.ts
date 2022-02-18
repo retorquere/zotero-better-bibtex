@@ -697,7 +697,6 @@ notify('item', (action: string, type: any, ids: any[], extraData: { [x: string]:
       return
   }
 
-  log.debug('items changed:', items.concat(parents))
   notifyItemsChanged(items.concat(parents))
 })
 

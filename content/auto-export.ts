@@ -202,7 +202,6 @@ const queue = new class TaskQueue {
 
   public cancel(ae) {
     const $loki = (typeof ae === 'number' ? ae : ae.$loki)
-    log.debug('auto-export: cancel', ae)
     this.scheduler.cancel($loki)
   }
 
@@ -214,14 +213,12 @@ const queue = new class TaskQueue {
     await Zotero.BetterBibTeX.ready
 
     const ae = this.autoexports.get($loki)
-    log.debug('auto-export: run', ae)
     Events.emit('export-progress', 0, Translators.byId[ae.translatorID].label, $loki)
     if (!ae) throw new Error(`AutoExport ${$loki} not found`)
 
     ae.status = 'running'
     this.autoexports.update(scrubAutoExport(ae))
     const started = Date.now()
-    log.debug('auto-export', ae.type, ae.id, 'started')
 
     try {
       let scope
@@ -284,9 +281,7 @@ const queue = new class TaskQueue {
         }
       }
 
-      log.debug('auto-export:', ae, 'starting', jobs.length, 'job(s)')
       await Promise.all(jobs.map(job => Translators.exportItems(ae.translatorID, displayOptions, job.scope, job.path)))
-      log.debug('auto-export:', ae, jobs.length, 'finisged')
 
       await repo.push(l10n.localize('Preferences.auto-export.git.message', { type: Translators.byId[ae.translatorID].label.replace('Better ', '') }))
 
@@ -409,7 +404,6 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
   }
 
   public schedule(type, ids) {
-    log.debug('auto-export: schedule', { type, ids })
     for (const ae of this.db.find({$and: [{ type: {$eq: type} }, {id: { $in: ids } }] })) {
       queue.add(ae)
     }
