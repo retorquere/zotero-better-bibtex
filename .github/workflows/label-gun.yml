@@ -32,3 +32,4 @@ jobs:
             Thank you!
           log-id.prompt: "Support log ID (with `-apse` or `-euc`):"
           no-close.message: Thanks for the feedback; there's no way you could have known, but @retorquere prefers to keep bugreports/enhancements open as a reminder to merge the changes into a new release.
+          reopen.label: reopened

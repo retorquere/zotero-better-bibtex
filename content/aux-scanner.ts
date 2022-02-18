@@ -1,6 +1,5 @@
 Components.utils.import('resource://gre/modules/osfile.jsm')
 
-import { sleep } from './sleep'
 import { Translators } from './translators'
 import { Preference } from '../gen/preferences'
 import { pick } from './file-picker'
@@ -129,7 +128,7 @@ export const AUXScanner = new class { // eslint-disable-line @typescript-eslint/
       let timestamp = ''
 
       while (siblings.has(target.basename + timestamp)) {
-        await sleep(1500) // eslint-disable-line no-magic-numbers
+        await Zotero.Promise.delay(1500) // eslint-disable-line no-magic-numbers
         timestamp = (new Date).toLocaleDateString('nl', { year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: false })
       }
 

@@ -52,7 +52,7 @@ class Logger {
       // Translator must be var-hoisted by esbuild for this to work
       if (!translator && inTranslator) translator = ZOTERO_TRANSLATOR_INFO.label
     }
-    const prefix = ['better-bibtex', translator, error && 'error', worker && `(worker ${worker})`].filter(p => p).join(' ')
+    const prefix = ['better-bibtex', translator, error && ':error:', worker && `(worker ${worker})`].filter(p => p).join(' ')
     return `{${prefix}} +${diff} ${asciify(msg)}`
   }
 

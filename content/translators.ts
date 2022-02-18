@@ -15,7 +15,6 @@ import { Serializer } from './serializer'
 import { log } from './logger'
 import { DB as Cache, selector as cacheSelector } from './db/cache'
 import { DB } from './db/main'
-import { sleep } from './sleep'
 import { flash } from './flash'
 import { $and, Query } from './db/loki'
 import { Events } from './events'
@@ -430,7 +429,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
       // sleep occasionally so the UI gets a breather
       if ((Date.now() - worked) > 100) { // eslint-disable-line no-magic-numbers
-        await sleep(0) // eslint-disable-line no-magic-numbers
+        await Zotero.Promise.delay(0) // eslint-disable-line no-magic-numbers
         worked = Date.now()
       }
 

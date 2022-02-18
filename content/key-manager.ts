@@ -5,7 +5,6 @@ import { jieba } from './key-manager/chinese'
 
 import { Scheduler } from './scheduler'
 import { log } from './logger'
-import { sleep } from './sleep'
 import { flash } from './flash'
 import { Events, itemsChanged as notifyItemsChanged } from './events'
 import { fetchAsync as fetchInspireHEP } from './inspire-hep'
@@ -306,7 +305,7 @@ export class KeyManager {
       // async is just a heap of fun. Who doesn't enjoy a good race condition?
       // https://github.com/retorquere/zotero-better-bibtex/issues/774
       // https://groups.google.com/forum/#!topic/zotero-dev/yGP4uJQCrMc
-      await sleep(Preference.itemObserverDelay)
+      await Zotero.Promise.delay(Preference.itemObserverDelay)
 
       let item
       try {
