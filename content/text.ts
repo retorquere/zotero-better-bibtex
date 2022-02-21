@@ -5,7 +5,7 @@ import parse5 = require('parse5/lib/parser')
 const htmlParser = new parse5({ sourceCodeLocationInfo: true })
 
 import Language from '../gen/babel/langmap.json'
-import Tag from '../gen/babel/tag.json'
+// import Tag from '../gen/babel/tag.json'
 const LanguagePrefixes = Object.keys(Language).sort().reverse().filter(prefix => prefix.length > 3) // eslint-disable-line no-magic-numbers
 
 import charCategories = require('xregexp/tools/output/categories')
@@ -464,6 +464,8 @@ export function babelLanguage(language: string): string {
     || language
 }
 
+/*
 export function babelTag(langid: string): string {
   return (Tag[langid] as string) || ''
 }
+*/

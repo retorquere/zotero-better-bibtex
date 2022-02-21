@@ -1,5 +1,6 @@
 import * as ts from 'typescript'
 import * as fs from 'fs'
+import BabelTag from '../gen/babel/tag.json'
 
 // type Json = string | number | boolean | null | Json[] | { [key: string]: Json };
 
@@ -134,6 +135,9 @@ export class API {
       case ts.SyntaxKind.TypeLiteral:
         return this.TypeLiteral(type as ts.TypeLiteralNode)
 
+      case ts.SyntaxKind.ParenthesizedType:
+        return this.schema((type as any).type)
+
       case ts.SyntaxKind.ArrayType:
         return this.ArrayType(type as ts.ArrayTypeNode)
 
@@ -169,7 +173,20 @@ export class API {
   }
 
   private TypeReference(typeref: ts.TypeReferenceNode) {
-    assert(typeref.typeName.getText(this.ast) === 'Record', `unexpected TypeReference ${typeref.typeName.getText(this.ast)}`)
+    const typeName = typeref.typeName.getText(this.ast)
+    if (typeName === 'BabelLanguage') {
+      return {
+        type: 'string',
+        enum: Object.keys(BabelTag).sort(),
+      }
+    }
+    if (typeName === 'BabelLanguageTag') {
+      return {
+        type: 'string',
+        enum: Object.values(BabelTag).sort(),
+      }
+    }
+    assert(typeName === 'Record', `unexpected TypeReference ${typeName}`)
     assert(typeref.typeArguments.length === 2, `expected 2 types, found ${typeref.typeArguments.length}`)
 
     const key = this.schema(typeref.typeArguments[0])
@@ -206,19 +223,38 @@ export class API {
 
     if (types.length === 1) return types[0]
 
-    const consts = []
+    const consts: Set<string> = new Set
+    const enums: Set<string> = new Set
     const other = types.filter(t => {
-      if (typeof t.const === 'undefined') return true
-      consts.push(t.const)
-      return false
+      if (typeof t.const === 'string') {
+        consts.add(t.const)
+        return false
+      }
+      else if (t.type === 'string' && t.enum) {
+        for (const e of t.enum) {
+          enums.add(e)
+        }
+        return false
+      }
+      else {
+        return true
+      }
     })
 
-    switch (consts.length) {
-      case 0:
-      case 1:
-        return { oneOf: types }
-      default:
-        return { oneOf : other.concat({ enum: consts }) }
+
+    let combined
+    if ((consts.size + enums.size) > 1 || consts.size > 1 || enums.size > 0) {
+      combined = { type: 'string', enum: [...(new Set([...consts, ...enums]))].sort() }
     }
+    else if (consts.size === 1) {
+      combined = { const: [...consts][0] }
+    }
+    else {
+      return { oneOf: types }
+    }
+
+    if (other.length === 0) return combined
+
+    return { oneOf : other.concat(combined) }
   }
 }

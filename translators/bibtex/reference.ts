@@ -19,7 +19,8 @@ import { label as propertyLabel } from '../../gen/items/items'
 import * as Extra from '../../content/extra'
 import * as CSL from 'citeproc'
 import { log } from '../../content/logger'
-import { babelLanguage, babelTag } from '../../content/text'
+import { babelLanguage } from '../../content/text'
+import BabelTag from '../../gen/babel/tag.json'
 
 import { arXiv } from '../../content/arXiv'
 
@@ -203,7 +204,7 @@ export class Reference {
     }
     else {
       this.language = babelLanguage(this.item.language)
-      this.english = babelTag(this.language) === 'en'
+      this.english = BabelTag[this.language] === 'en'
     }
 
     // remove ordinal from edition
