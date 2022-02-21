@@ -19,7 +19,10 @@
     if (args.length > meta.parameters.length) error(`too many arguments for ${text}`)
 
     const params = args.reduce((acc, v, i) => {
-      acc[meta.parameters[i]] = v
+      const param = meta.parameters[i]
+      // horrid kludge for arrays
+      if (meta.schema.properties[param].type === 'array') v = v.split('/')
+      acc[param] = v
       return acc
     }, {})
 

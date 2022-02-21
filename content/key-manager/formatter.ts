@@ -13,7 +13,7 @@ import { Preference } from '../../gen/preferences'
 import { JournalAbbrev } from '../journal-abbrev'
 import * as Extra from '../extra'
 import { buildCiteKey as zotero_buildCiteKey } from './formatter-zotero'
-import { babelLanguage, babelTag } from '../text'
+import { babelLanguage } from '../text'
 import { fetchSync as fetchInspireHEP } from '../inspire-hep'
 
 const parser = require('./formatter.peggy')
@@ -34,6 +34,11 @@ import { kuroshiro } from './japanese'
 import AJV from 'ajv'
 import { validator } from '../ajv'
 const ajv = new AJV({ coerceTypes: true })
+
+import BabelTag from '../../gen/babel/tag.json'
+type ValueOf<T> = T[keyof T]
+type BabelLanguageTag = ValueOf<typeof BabelTag>
+type BabelLanguage = keyof typeof BabelTag
 
 for (const meta of Object.values(methods)) {
   (meta as unknown as any).validate = validator(ajv, meta.schema)
@@ -233,8 +238,8 @@ class Item {
     if (this.title.includes('<')) this.title = innerText(htmlParser.parseFragment(this.title))
   }
 
-  public babelTag(): string {
-    return babelTag(this.language)
+  public babelTag(): BabelLanguageTag {
+    return BabelTag[this.language as BabelLanguage] || ''
   }
 
   public getTags(): Tag[] | string[] {
@@ -368,18 +373,13 @@ class PatternFormatter {
   /**
    * Tests whether the entry has the given language set, and skips to the next pattern if not
    */
-  public $language(name: 'zh' | 'chinese' | 'ja' | 'japanese' | 'de' | 'german') {
-    const map = {
-      zh: 'zh',
-      chinese: 'zh',
-      ja: 'ja',
-      japanese: 'ja',
-      de: 'de',
-      german: 'de',
+  public $language(name: (BabelLanguage | BabelLanguageTag)[]) {
+    if (name.concat(name.map(n => BabelTag[n] as string).filter(n => n)).includes(this.item.babelTag())) {
+      return this.set('')
     }
-    if (!map[name]) throw new Error(`unexpected language ${JSON.stringify(name)}, choose one of ${Object.keys(map).join(', ')}`)
-    if (this.item.babelTag() !== map[name]) throw { next: true } // eslint-disable-line no-throw-literal
-    return this.set('')
+    else {
+      throw { next: true } // eslint-disable-line no-throw-literal
+    }
   }
 
   /**
