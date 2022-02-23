@@ -86,8 +86,6 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
   }
 
   public async init() {
-    const start = Date.now()
-
     this.itemType = {
       note: Zotero.ItemTypes.getID('note'),
       attachment: Zotero.ItemTypes.getID('attachment'),
@@ -541,16 +539,11 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
   public async install(header: Translator.Header): Promise<boolean> {
     if (!header.label || !header.translatorID) throw new Error('not a translator')
 
-    let installed = null
-    try {
-      installed = Zotero.Translators.get(header.translatorID)
-    }
-    catch (err) {
-      log.error('Translators.install', header, err)
-      installed = null
-    }
+    const destFile = Zotero.getTranslatorsDirectory()
+    destFile.append(`${header.label}.js`)
+    const installed = Zotero.Translators.get(header.translatorID) || null
 
-    log.debug('Translators.install', { installed, new: header })
+    log.debug('Translators.install', { installed, exists: destFile.exists(), new: header })
     if (installed?.configOptions?.hash === header.configOptions.hash) return false
 
     const code = [
