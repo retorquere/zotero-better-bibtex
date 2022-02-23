@@ -86,7 +86,7 @@
     "@retorquere/zotero-sync": "^1.0.23",
     "@types/bluebird": "^3.5.36",
     "@types/lokijs": "^1.5.7",
-    "@types/node": "^17.0.19",
+    "@types/node": "^17.0.21",
     "@xmldom/xmldom": "^0.8.1",
     "ajv": "^8.10.0",
     "ajv-keywords": "^5.1.0",
@@ -111,7 +111,7 @@
     "fast-json-patch": "^3.1.0",
     "file-path-filter": "^3.0.2",
     "find-up": "^6.3.0",
-    "fs-extra": "^10.0.0",
+    "fs-extra": "^10.0.1",
     "git-branch": "^2.0.1",
     "github-release-cli": "^2.1.0",
     "glob-promise": "^4.2.2",
@@ -137,7 +137,7 @@
     "process": "^0.11.10",
     "properties-reader": "^2.2.0",
     "pug": "^3.0.2",
-    "putout": "^25.0.1",
+    "putout": "^25.0.3",
     "rimraf": "^3.0.2",
     "shelljs": "^0.8.5",
     "string-template": "^1.0.0",
@@ -151,7 +151,7 @@
     "words-to-numbers": "^1.5.1",
     "xml-parser": "^1.2.1",
     "xpath": "^0.0.32",
-    "zotero-plugin": "^1.2.1"
+    "zotero-plugin": "^1.2.2"
   },
   "repository": {
     "type": "git",
