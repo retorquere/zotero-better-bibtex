@@ -104,67 +104,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       if (await this.install(header)) reinit.push(header)
     }
 
-    if (reinit.length) {
-      /*
-      let restart = false
-
-      if (Preference.newTranslatorsAskRestart && !Preference.testing) {
-        const dontAskAgain = { value: false }
-        const ps = Services.prompt
-        const index = ps.confirmEx(
-          null, // parent
-          l10n.localize('BetterBibTeX.startup.installingTranslators.new'), // dialogTitle
-          l10n.localize('BetterBibTeX.startup.installingTranslators.new.DnD'), // text
-
-          // button flags
-          // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-          ps.BUTTON_POS_0 * ps.BUTTON_TITLE_IS_STRING + ps.BUTTON_POS_0_DEFAULT
-            + ps.BUTTON_POS_1 * ps.BUTTON_TITLE_IS_STRING,
-
-          // button messages
-          Zotero.getString('general.restartNow'),
-          Zotero.getString('general.restartLater'),
-          null,
-          l10n.localize('BetterBibTeX.startup.installingTranslators.new.dontAskAgain'), // check message
-          dontAskAgain // check state
-        )
-
-        Preference.newTranslatorsAskRestart = !dontAskAgain.value
-
-        restart = (index === 0)
-      }
-
-      if (restart) Zotero.Utilities.Internal.quit(true)
-      */
-
-      try {
-        log.debug('Translator.init: reinit start')
-        await Zotero.Translators.reinit()
-        /*
-        for (const header of reinit) {
-          log.debug('Translator.init: pre-loading', header.label)
-          const translator = Zotero.Translators.get(header.translatorID)
-          if (translator) {
-            translator.cacheCode = true
-            try {
-              log.debug(Object.keys(Zotero.Translators))
-              await Zotero.Translators.getCodeForTranslator(translator)
-            }
-            catch (err) {
-              log.error('preload of', header.label, 'failed', err)
-              flash(`preload of ${header.label} failed`)
-            }
-          }
-          else {
-            log.error(`Translator ${header.translatorID} not found`)
-          }
-        }
-        */
-      }
-      catch (err) {
-        log.error('Translator.init: reinit failed @', (new Date()).valueOf() - start, err)
-      }
-    }
+    if (reinit.length) await Zotero.Translators.reinit()
   }
 
   public getTranslatorId(name: string): string {

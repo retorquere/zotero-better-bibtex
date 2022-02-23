@@ -26,10 +26,8 @@ export const Preference = new class PreferenceManager {
     for (key of Services.prefs.getBranch(oops).getChildList('', {}) as string[]) {
       Zotero.Prefs.clear(oops + key, true) // eslint-disable-line @typescript-eslint/restrict-plus-operands
     }
-
-    if (typeof (old = Zotero.Prefs.get(key = '${prefix}citeprocNoteCitekey')) !== 'undefined') {
-      Zotero.Prefs.clear(key)
-    }
+    if (typeof Zotero.Prefs.get(key = '${prefix}citeprocNoteCitekey') !== 'undefined') Zotero.Prefs.clear(key)
+    if (typeof Zotero.Prefs.get(key = '${prefix}newTranslatorsAskRestart') !== 'undefined') Zotero.Prefs.clear(key)
 
     // migrate ancient keys
     if ((old = Zotero.Prefs.get(key = '${prefix}quickCopyMode')) === 'orgmode_citekey') {

@@ -532,13 +532,6 @@
     }
   },
   {
-    "name": "newTranslatorsAskRestart",
-    "type": "boolean",
-    "default": true,
-    "affects": [],
-    "var": "newTranslatorsAskRestart"
-  },
-  {
     "name": "parseParticles",
     "type": "boolean",
     "default": true,
