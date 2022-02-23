@@ -145,7 +145,13 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
           const translator = Zotero.Translators.get(header.translatorID)
           if (translator) {
             translator.cacheCode = true
-            await Zotero.Translators.getCodeForTranslator(translator)
+            try {
+              await Zotero.Translators.getCodeForTranslator(translator)
+            }
+            catch (err) {
+              log.error('preload of', header.label, 'failed', err)
+              flash(`preload of ${header.label} failed`)
+            }
           }
           else {
             log.error(`Translator ${header.translatorID} not found`)
