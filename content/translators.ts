@@ -140,12 +140,14 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       try {
         log.debug('Translator.init: reinit start')
         await Zotero.Translators.reinit()
+        /*
         for (const header of reinit) {
           log.debug('Translator.init: pre-loading', header.label)
           const translator = Zotero.Translators.get(header.translatorID)
           if (translator) {
             translator.cacheCode = true
             try {
+              log.debug(Object.keys(Zotero.Translators))
               await Zotero.Translators.getCodeForTranslator(translator)
             }
             catch (err) {
@@ -157,6 +159,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
             log.error(`Translator ${header.translatorID} not found`)
           }
         }
+        */
       }
       catch (err) {
         log.error('Translator.init: reinit failed @', (new Date()).valueOf() - start, err)
@@ -625,6 +628,16 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
     try {
       await Zotero.Translators.save(header, code)
+      log.debug('caching', header)
+
+      if (Zotero.Translators.getCodeForTranslator) {
+        const translator = Zotero.Translators.get(header.translatorID)
+        translator.cacheCode = true
+        await Zotero.Translators.getCodeForTranslator(translator)
+      }
+      else {
+        new Zotero.Translator({...header, cacheCode: true, code })
+      }
     }
     catch (err) {
       log.error('Translator.install', header, 'failed:', err)
