@@ -105,6 +105,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     }
 
     if (reinit.length) {
+      /*
       let restart = false
 
       if (Preference.newTranslatorsAskRestart && !Preference.testing) {
@@ -134,24 +135,22 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       }
 
       if (restart) Zotero.Utilities.Internal.quit(true)
+      */
 
       try {
         log.debug('Translator.init: reinit start')
         await Zotero.Translators.reinit()
-        /*
         for (const header of reinit) {
           log.debug('Translator.init: pre-loading', header.label)
-          const translation = new Zotero.Translate.Export()
-          const translator = new Zotero.Translator({
-            ...header,
-            cacheCode: true,
-            code: await Zotero.File.getContentsAsync(OS.Path.join(Zotero.Translators.getTranslatorsDirectory(), Zotero.Translators.getFileNameFromLabel(header.label, header.translatorID))),
-          })
-          await translation._itemGetter.setAll(Zotero.Libraries.userLibraryID, true) // eslint-disable-line no-underscore-dangle
-          await translation._loadTranslator(translator) // eslint-disable-line no-underscore-dangle
-          await translation._prepareTranslation() // eslint-disable-line no-underscore-dangle
+          const translator = Zotero.Translators.get(header.translatorID)
+          if (translator) {
+            translator.cacheCode = true
+            await Zotero.Translators.getCodeForTranslator(translator)
+          }
+          else {
+            log.error(`Translator ${header.translatorID} not found`)
+          }
         }
-        */
       }
       catch (err) {
         log.error('Translator.init: reinit failed @', (new Date()).valueOf() - start, err)
