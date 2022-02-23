@@ -104,12 +104,6 @@ default: `<not set>`
 
 Any characters entered here will prefer a text-mode LaTeX-command counterpart over a math-mode, if a text-mode command is available. Only useful when `mapUnicode` is `conservative`. Characters specified in `mapMath` take presedence over characters specified in `mapText`.
 
-## newTranslatorsAskRestart
-
-default: `yes`
-
-New translators installed in Zotero are not immediately usuable for drag-and-drop. If you want to use BBT for drag-and-drop (e.g. to drag and drop citation keys or citations), you will be asked whether you want to restart after installation, or whether you want to reinstall when it is more convenient to you. You will be asked this whenever the BBT translators update, but you can disable this by checking "Do not ask again" in that dialog.
-
 ## parseParticles
 
 default: `yes`
