@@ -15,7 +15,6 @@ import { Serializer } from './serializer'
 import { log } from './logger'
 import { DB as Cache, selector as cacheSelector } from './db/cache'
 import { DB } from './db/main'
-import { sleep } from './sleep'
 import { flash } from './flash'
 import { $and, Query } from './db/loki'
 import { Events } from './events'
@@ -275,13 +274,13 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     log.debug('worker context:', workerContext)
 
     const deferred = new Deferred<string>()
-    let worker: ChromeWorker = null
+    let worker: Worker = null
     // WHAT IS GOING ON HERE FIREFOX?!?! A *NetworkError* for a xpi-internal resource:// URL?!
     try {
       worker = new ChromeWorker(`resource://zotero-better-bibtex/worker/zotero.js?${workerContext}`)
     }
     catch (err) {
-      deferred.reject('could not get a ChromeWorker')
+      deferred.reject('could not get a Worker')
       flash(
         'Failed to start background export',
         'Could not start a background export after 5 attempts. Background exports have been disabled -- PLEASE report this as a bug at the Better BibTeX github project',
@@ -430,7 +429,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
       // sleep occasionally so the UI gets a breather
       if ((Date.now() - worked) > 100) { // eslint-disable-line no-magic-numbers
-        await sleep(0) // eslint-disable-line no-magic-numbers
+        await Zotero.Promise.delay(0) // eslint-disable-line no-magic-numbers
         worked = Date.now()
       }
 

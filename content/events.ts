@@ -6,7 +6,7 @@ import { patch as $patch$ } from './monkey-patch'
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export const Events = new EventEmitter() // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
 
-if (Zotero.Debug.enabled) {
+if (Zotero.Prefs.get('translators.better-bibtex.log-events')) {
   const events = [
     'preference-changed',
     'item-tag',
@@ -33,7 +33,7 @@ if (Zotero.Debug.enabled) {
 }
 
 export function itemsChanged(items: ZoteroItem[]): void {
-  if (! items.length) return
+  if (!items.length) return
 
   const changed = {
     collections: new Set,

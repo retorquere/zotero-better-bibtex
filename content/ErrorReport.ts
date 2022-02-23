@@ -1,6 +1,7 @@
 Components.utils.import('resource://gre/modules/Services.jsm')
 
 import { Preference } from '../gen/preferences'
+import { defaults } from '../gen/preferences/meta'
 import { Translators } from './translators'
 import { log } from './logger'
 import Zip from 'jszip'
@@ -222,9 +223,13 @@ export class ErrorReport {
     }
 
     info += 'Settings:\n'
+    const settings = { default: '', set: '' }
     for (const [key, value] of Object.entries(Preference.all)) {
-      info += `  ${key} = ${JSON.stringify(value)}\n`
+      settings[value === defaults[key] ? 'default' : 'set'] += `  ${key} = ${JSON.stringify(value)}\n`
     }
+    if (settings.default) settings.default = `  default:\n${settings.default}`
+    info += settings.set + settings.default
+
     for (const key of ['export.quickCopy.setting']) {
       info += `  Zotero: ${key} = ${JSON.stringify(Zotero.Prefs.get(key))}\n`
     }

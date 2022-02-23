@@ -86,7 +86,11 @@ async function rebuild() {
       shims
     ],
     outdir: 'build/resource/worker',
-    banner: { js: 'importScripts("resource://zotero/config.js") // import ZOTERO_CONFIG' },
+    banner: { js: [
+        'importScripts("resource://gre/modules/osfile.jsm")',
+        'importScripts("resource://zotero/config.js") // import ZOTERO_CONFIG',
+      ].join('\n')
+    },
     footer: {
       js: [
         // make these var, not const, so they get hoisted and are available in the global scope. See logger.ts

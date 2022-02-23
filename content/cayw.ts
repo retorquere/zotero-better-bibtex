@@ -110,8 +110,8 @@ class Field {
   public getNoteIndex() { return 0 }
 }
 
-type DocumentData = {
-}
+type DocumentData = Record<string, any>
+
 type Citation = {
   id: number
   locator: string

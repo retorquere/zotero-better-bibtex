@@ -10,7 +10,7 @@ import * as Extra from '../../content/extra'
 import { Cache } from '../../typings/cache'
 import * as ExtraFields from '../../gen/items/extra-fields.json'
 import { log } from '../../content/logger'
-import { worker } from '../../content/environment'
+import { environment } from '../../content/environment'
 import { Reference } from '../../gen/typings/serialized-item'
 import * as postscript from '../lib/postscript'
 
@@ -80,7 +80,7 @@ export const CSLExporter = new class { // eslint-disable-line @typescript-eslint
       // until export translators can be async, itemToCSLJSON must run before the translator starts, so it actually doesn't do anything in a worker context
       // so re-assigne the extracted extra here
       let csl = Zotero.Utilities.itemToCSLJSON(item)
-      if (worker) csl.note = item.extra || undefined
+      if (environment.worker) csl.note = item.extra || undefined
 
       if (item.place) csl[item.itemType === 'presentation' ? 'event-place' : 'publisher-place'] = item.place
 

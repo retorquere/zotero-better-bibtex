@@ -1,2 +1,10 @@
-export const worker = (typeof WorkerGlobalScope !== 'undefined') && (typeof importScripts === 'function') && (navigator instanceof WorkerNavigator)
-export const zotero = (typeof Components !== 'undefined')
+// copied from emscripten
+export const environment: { node: boolean, worker: boolean, zotero: boolean, name: string } = {
+  // require is a function in firefox after importScripts("resource://gre/modules/workers/require.js")
+  node: typeof process === 'object' && typeof require === 'function' && typeof importScripts !== 'function',
+  // web: typeof window === 'object',
+  worker: typeof importScripts === 'function',
+  zotero: typeof Components !== 'undefined',
+  name: '',
+}
+environment.name = Object.entries(environment).map(([name, on]) => on ? name : '').filter(name => name).join('/')

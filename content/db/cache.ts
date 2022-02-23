@@ -14,8 +14,9 @@ const METADATA = 'Better BibTeX metadata'
 class Cache extends Loki {
   private initialized = false
 
-  public remove(ids, _reason) {
+  public remove(ids, reason) {
     if (!this.initialized) return
+    log.debug('remove from cache:', ids, reason)
 
     const query = Array.isArray(ids) ? { itemID : { $in : ids } } : { itemID: { $eq: ids } }
 

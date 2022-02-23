@@ -239,7 +239,6 @@ $patch$(Zotero.Item.prototype, 'getField', original => function Zotero_Item_prot
     switch (field) {
       case 'citekey':
       case 'citationKey':
-        log.debug('getField is', Zotero.BetterBibTeX.ready.isPending() ? 'pending' : 'live')
         if (Zotero.BetterBibTeX.ready.isPending()) return '' // eslint-disable-line @typescript-eslint/no-use-before-define
         return Zotero.BetterBibTeX.KeyManager.get(this.id).citekey as string
 

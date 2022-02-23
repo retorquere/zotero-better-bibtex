@@ -5,9 +5,9 @@ import { log } from '../logger'
 import { Preference } from '../../gen/preferences'
 import KuromojiAnalyzer from 'kuroshiro-analyzer-kuromoji'
 import { Events } from '../events'
-import { zotero as inZotero } from '../environment'
+import { environment } from '../environment'
 
-if (inZotero) {
+if (environment.zotero) {
   NodeDictionaryLoader.prototype.loadArrayBuffer = function(url, callback) { // eslint-disable-line prefer-arrow/prefer-arrow-functions
     url = `resource://zotero-better-bibtex/kuromoji/${url.replace(/.*[\\/]/, '').replace(/\.gz$/, '')}`
     const xhr = new XMLHttpRequest()
@@ -47,7 +47,7 @@ export const kuroshiro = new class {
       if (!Preference.kuroshiro || this.enabled) return
 
       this.kuroshiro = new Kuroshiro()
-      const analyzer = new KuromojiAnalyzer(inZotero ? 'resource://zotero-better-bibtex/kuromoji' : undefined)
+      const analyzer = new KuromojiAnalyzer(environment.zotero ? 'resource://zotero-better-bibtex/kuromoji' : undefined)
       await this.kuroshiro.init(analyzer)
       this.kuromoji = analyzer._analyzer // eslint-disable-line no-underscore-dangle
       this.enabled = true
