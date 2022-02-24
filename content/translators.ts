@@ -97,6 +97,8 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     this.uninstall('\u672B BetterBibTeX JSON (for debugging)')
     this.uninstall('BetterBibTeX JSON (for debugging)')
 
+    await Zotero.Translators.init()
+
     const reinit: { header: Translator.Header, code: string }[] = []
     let header: Translator.Header
     let code: string
