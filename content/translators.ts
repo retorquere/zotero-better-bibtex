@@ -97,12 +97,29 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     this.uninstall('\u672B BetterBibTeX JSON (for debugging)')
     this.uninstall('BetterBibTeX JSON (for debugging)')
 
-    const reinit = []
-    for (const header of Object.keys(this.byName).map(name => JSON.parse(Zotero.File.getContentsFromURL(`resource://zotero-better-bibtex/${name}.json`)) as Translator.Header)) {
-      if (await this.install(header)) reinit.push(header)
+    const reinit: { header: Translator.Header, code: string }[] = []
+    let header: Translator.Header
+    let code: string
+    for (header of Object.keys(this.byName).map(name => JSON.parse(Zotero.File.getContentsFromURL(`resource://zotero-better-bibtex/${name}.json`)) as Translator.Header)) {
+      if (code = await this.install(header)) reinit.push({ header, code })
     }
 
-    if (reinit.length) await Zotero.Translators.reinit()
+    if (reinit.length) {
+      await Zotero.Translators.reinit()
+
+      for ({ header, code } of reinit) {
+        log.debug('caching', header)
+
+        if (Zotero.Translators.getCodeForTranslator) {
+          const translator = Zotero.Translators.get(header.translatorID)
+          translator.cacheCode = true
+          await Zotero.Translators.getCodeForTranslator(translator)
+        }
+        else {
+          new Zotero.Translator({...header, cacheCode: true, code })
+        }
+      }
+    }
   }
 
   public getTranslatorId(name: string): string {
@@ -536,7 +553,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     return false
   }
 
-  public async install(header: Translator.Header): Promise<boolean> {
+  public async install(header: Translator.Header): Promise<string> {
     if (!header.label || !header.translatorID) throw new Error('not a translator')
 
     /*
@@ -546,7 +563,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     const installed = Zotero.Translators.get(header.translatorID) || null
 
     // log.debug('Translators.install', { installed, exists: destFile.exists(), new: header })
-    if (installed?.configOptions?.hash === header.configOptions.hash) return false
+    if (installed?.configOptions?.hash === header.configOptions.hash) return ''
 
     const code = [
       `ZOTERO_CONFIG = ${JSON.stringify(ZOTERO_CONFIG)}`,
@@ -563,24 +580,14 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
     try {
       await Zotero.Translators.save(header, code)
-      log.debug('caching', header)
-
-      if (Zotero.Translators.getCodeForTranslator) {
-        const translator = Zotero.Translators.get(header.translatorID)
-        translator.cacheCode = true
-        await Zotero.Translators.getCodeForTranslator(translator)
-      }
-      else {
-        new Zotero.Translator({...header, cacheCode: true, code })
-      }
     }
     catch (err) {
       log.error('Translator.install', header, 'failed:', err)
       this.uninstall(header.label)
-      return false
+      return ''
     }
 
-    return true
+    return code
   }
 
   public async uncached(translatorID: string, displayOptions: any, scope: any): Promise<any[]> {
