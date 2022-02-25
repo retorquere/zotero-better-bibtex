@@ -227,7 +227,7 @@ export class ErrorReport {
     for (const [key, value] of Object.entries(Preference.all)) {
       settings[value === defaults[key] ? 'default' : 'set'] += `  ${key} = ${JSON.stringify(value)}\n`
     }
-    if (settings.default) settings.default = `  default:\n${settings.default}`
+    if (settings.default) settings.default = `Settings at default:\n${settings.default}`
     info += settings.set + settings.default
 
     for (const key of ['export.quickCopy.setting']) {
