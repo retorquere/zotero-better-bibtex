@@ -116,12 +116,10 @@ jobs:
     - if: contains(github.event.commits[0].message, '[fast-test]')
       run: echo "##[set-output name=this;]--test-this"
       id: test
-    - name: Run headless test
-      uses: GabrielBB/xvfb-action@v1
+    - name: Run tests
+      run: xvfb-run --auto-servernum ./test/behave --client ${{ matrix.client }} --logs logs/logs --format travis --bin ${{ matrix.bin }} ${{ steps.test.outputs.this }}
       env:
         PYTHONUNBUFFERED: true
-      with:
-        run: ./test/behave --client ${{ matrix.client }} --logs logs/logs --format travis --bin ${{ matrix.bin }} ${{ steps.test.outputs.this }}
     - uses: actions/upload-artifact@v2
       if: ${{ failure() || cancelled() }}
       with:

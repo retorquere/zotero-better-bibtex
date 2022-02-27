@@ -123,13 +123,11 @@ jobs:
       id: test
 
     # needs logs/logs to have them show up as logs in the artifact... no idea why
-    - name: Run headless test
-      uses: GabrielBB/xvfb-action@v1
+    - name: Run tests
       # continue-on-error: ${{ matrix.client == 'jurism' }}
+      run: xvfb-run --auto-servernum ./test/behave --client ${{ matrix.client }} --logs logs/logs --format travis --bin ${{ matrix.bin }} ${{ steps.test.outputs.this }}
       env:
         PYTHONUNBUFFERED: true
-      with:
-        run: ./test/behave --client ${{ matrix.client }} --logs logs/logs --format travis --bin ${{ matrix.bin }} ${{ steps.test.outputs.this }}
 
     - uses: actions/upload-artifact@v2
       if: ${{ failure() || cancelled() }}
