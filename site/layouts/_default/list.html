@@ -7,7 +7,9 @@
 {{ if or (eq .Kind "taxonomy") (eq .Kind "taxonomyTerm") (eq .Kind "term") }}
 <ul>
   {{ range .Pages }}
-    <li>{{ template "page-path" dict "currentPage" . "id" .File.UniqueID }}</li>
+    {{ if .File }}
+      <li>{{ template "page-path" dict "currentPage" . "id" .File.UniqueID }}</li>
+    {{ end }}
   {{ end }}
 </ul>
 {{end}}
