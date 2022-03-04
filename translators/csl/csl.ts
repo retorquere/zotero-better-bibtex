@@ -14,7 +14,7 @@ import { environment } from '../../content/environment'
 import { RegularItem } from '../../gen/typings/serialized-item'
 import * as postscript from '../lib/postscript'
 
-type ExtendedReference = RegularItem & { extraFields: Extra.Fields }
+type ExtendedItem = RegularItem & { extraFields: Extra.Fields }
 
 const validCSLTypes: string[] = require('../../gen/items/csl-types.json')
 
@@ -37,7 +37,7 @@ export const CSLExporter = new class { // eslint-disable-line @typescript-eslint
     try {
       if (Translator.preferences.postscript.trim()) {
         this.postscript = new Function(
-          'reference',
+          'entry',
           'item',
           'Translator',
           'Zotero',
@@ -54,14 +54,14 @@ export const CSLExporter = new class { // eslint-disable-line @typescript-eslint
       log.debug('failed to install postscript', err, '\n', postscript.body(Translator.preferences.postscript))
     }
   }
-  public postscript(_reference, _item, _translator, _zotero, _extra): postscript.Allow {
+  public postscript(_entry, _item, _translator, _zotero, _extra): postscript.Allow {
     return { cache: true, write: true }
   }
 
   public doExport() {
     const items = []
     const order: { citationKey: string, i: number}[] = []
-    for (const item of (Translator.references as Generator<ExtendedReference, void, unknown>)) {
+    for (const item of (Translator.references as Generator<ExtendedItem, void, unknown>)) {
       order.push({ citationKey: item.citationKey, i: items.length })
 
       let cached: Cache.ExportedItem

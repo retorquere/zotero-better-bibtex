@@ -28,7 +28,7 @@ const required = [
 ]
 
 module.exports = function(explanation) {
-  var type = this.referencetype.toLowerCase()
+  var type = this.entrytype.toLowerCase()
 
   if (!allowed[type]) return
 

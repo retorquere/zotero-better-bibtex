@@ -9,7 +9,7 @@ tags:
 ---
 
 The Better BibTeX exporters are a lot slower than the standard Zotero Bib(La)TeX exporters. If you have a small library,
-you will not likely notice this, but if you have several thousand references, and you are in the habit of exporting
+you will not likely notice this, but if you have several thousand items, and you are in the habit of exporting
 substantial parts of your library, this gets annoying really fast.
 
 To deal with this problem, Better BibTeX implements an extensive caching system. With a filled cache, Better BibTeX is
@@ -46,18 +46,18 @@ Here are some numbers from a test with a library consisting of:
 
 ### Initial state
 
-Initially, your cache will be empty. The first export of any reference using Better BibTeX will therefore be a little
-over twice as slow as subsequent exports. After that, it gets pretty zippy, as the process of exporting a reference
-will also cache that reference *for the current export settings*. This means if you export once with, and once without
+Initially, your cache will be empty. The first export of any item using Better BibTeX will therefore be a little
+over twice as slow as subsequent exports. After that, it gets pretty zippy, as the process of exporting a item
+will also cache the output entry for that item *for the current export settings*. This means if you export once with, and once without
 notes (one of the options in the export popup), you will hit an empty cache twice. If you set up an automatic export,
-the export you do that registers it for auto-update will already be the first export, so if your references weren't
+the export you do that registers it for auto-update will already be the first export, so if your items weren't
 cached already, they will be before subsequent auto-exports.
 
 ### Cache refresh
 
-The cache entry for a reference is retained as long as you do not make any changes to that reference. Any change you
-make will drop all cache entries for that reference (so all variants you had for different export options). The cache
-for that reference will be refreshed as soon as you export it again, either manually or
+The cache entry for a item is retained as long as you do not make any changes to that item. Any change you
+make will drop all cache entries for that item (so all variants you had for different export options). The cache
+for that item will be refreshed as soon as you export it again, either manually or
 [automatically]({{< ref "exporting" >}}).
 
 ### Cache drop

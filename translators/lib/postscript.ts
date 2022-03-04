@@ -5,13 +5,18 @@ export type Allow = {
   write: boolean
 }
 
-export type Postscript = (reference: any, item: any) => Allow
+export type Postscript = (entry: any, item: any) => Allow
 
 export function body(script: string, guard?: string): string  {
   script = `
+    // phase out reference
+    const reference = entry
+    reference.referencetype = entry.entrytype
     const result = (() => {
       ${script};
     })()
+    if (reference.referencetype !== entry.entrytype) entry.entrytype = reference.referencetype
+    delete entry.referencetype
     switch (typeof result) {
       case 'undefined': return { cache: true, write: true }
       case 'boolean': return { cache: result, write: true }
@@ -34,6 +39,6 @@ export function body(script: string, guard?: string): string  {
   return script
 }
 
-export function noop(_reference: any, _item: any): Allow {
+export function noop(_entry: any, _item: any): Allow {
   return { cache: true, write: true }
 }

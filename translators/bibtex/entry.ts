@@ -147,11 +147,11 @@ const isBibString = /^[a-z][-a-z0-9_]*$/i
  *   * bibtex: the LaTeX-encoded value of the field
  *   * enc: the encoding to use for the field
  */
-export class Reference {
+export class Entry {
   public has: { [key: string]: any } = {}
   public item: Item
-  public referencetype: string
-  public referencetype_source: string
+  public entrytype: string
+  public entrytype_source: string
   public useprefix: boolean
   public language: string
   public english: boolean
@@ -172,8 +172,8 @@ export class Reference {
     try {
       if (Translator.preferences.postscript.trim()) {
         // workaround for https://github.com/Juris-M/zotero/issues/65
-        Reference.prototype.postscript = new Function(
-          'reference',
+        Entry.prototype.postscript = new Function(
+          'entry',
           'item',
           'Translator',
           'Zotero',
@@ -182,11 +182,11 @@ export class Reference {
         ) as postscript.Postscript
       }
       else {
-        Reference.prototype.postscript = postscript.noop as postscript.Postscript
+        Entry.prototype.postscript = postscript.noop as postscript.Postscript
       }
     }
     catch (err) {
-      Reference.prototype.postscript = postscript.noop as postscript.Postscript
+      Entry.prototype.postscript = postscript.noop as postscript.Postscript
       log.debug('failed to install postscript', err, '\n', postscript.body(Translator.preferences.postscript))
     }
   }
@@ -230,28 +230,28 @@ export class Reference {
 
     if (this.item.extraFields.tex.referencetype) {
       referencetype = this.item.extraFields.tex.referencetype.value
-      this.referencetype_source = `tex.${referencetype}`
+      this.entrytype_source = `tex.${referencetype}`
     }
     else if (csl_type) {
       referencetype = this.typeMap.csl[csl_type]
-      this.referencetype_source = `csl.${csl_type}`
+      this.entrytype_source = `csl.${csl_type}`
     }
     else if (isPrePrint) {
       referencetype = 'misc'
       delete this.item.extraFields.kv.type
-      this.referencetype_source = `zotero.${this.item.itemType}`
+      this.entrytype_source = `zotero.${this.item.itemType}`
     }
     else {
       referencetype = this.typeMap.zotero[this.item.itemType] || 'misc'
-      this.referencetype_source = `zotero.${this.item.itemType}`
+      this.entrytype_source = `zotero.${this.item.itemType}`
     }
 
     if (typeof referencetype === 'string') {
-      this.referencetype = referencetype
+      this.entrytype = referencetype
     }
     else {
       this.add({ name: 'entrysubtype', value: referencetype.subtype })
-      this.referencetype = referencetype.type
+      this.entrytype = referencetype.type
     }
 
     // TODO: maybe just use item.extraFields.var || item.var instead of deleting them here
@@ -574,7 +574,7 @@ export class Reference {
     const itemtype_name = field.name.split('.')
     let name
     if (itemtype_name.length === 2) {
-      if (this.referencetype !== itemtype_name[0]) return
+      if (this.entrytype !== itemtype_name[0]) return
       name = itemtype_name[1]
     }
     else {
@@ -622,11 +622,11 @@ export class Reference {
             break
 
           case 'title':
-            name = this.referencetype === 'book' ? 'maintitle' : null
+            name = this.entrytype === 'book' ? 'maintitle' : null
             break
 
           case 'publicationTitle':
-            switch (this.referencetype_source) {
+            switch (this.entrytype_source) {
               case 'zotero.film':
               case 'zotero.tvBroadcast':
               case 'zotero.videoRecording':
@@ -728,7 +728,7 @@ export class Reference {
     for (const [name, field] of Object.entries(this.item.extraFields.tex)) {
       // psuedo-var, sets the reference type. Repeat application here because this needs to override all else.
       if (name === 'referencetype') {
-        this.referencetype = field.value
+        this.entrytype = field.value
         continue
       }
 
@@ -817,11 +817,11 @@ export class Reference {
 
     if (!this.has.url) this.remove('urldate')
 
-    if (!Object.keys(this.has).length) this.add({name: 'type', value: this.referencetype})
+    if (!Object.keys(this.has).length) this.add({name: 'type', value: this.entrytype})
 
     const fields = Object.values(this.has).map(field => `  ${field.name} = ${field.bibtex}`)
 
-    let ref = `@${this.referencetype}{${this.item.citationKey},\n`
+    let ref = `@${this.entrytype}{${this.item.citationKey},\n`
     ref += fields.join(',\n')
     ref += '\n}\n'
     ref += this.qualityReport()
@@ -1270,7 +1270,7 @@ export class Reference {
         if (this.has.journal && this.has.journal.value.indexOf('.') >= 0) report.push(`? Possibly abbreviated journal title ${this.has.journal.value}`)
         if (this.has.journaltitle && this.has.journaltitle.value.indexOf('.') >= 0) report.push(`? Possibly abbreviated journal title ${this.has.journaltitle.value}`)
 
-        if (this.referencetype === 'inproceedings' && this.has.booktitle) {
+        if (this.entrytype === 'inproceedings' && this.has.booktitle) {
           if (!this.has.booktitle.value.match(/:|Proceedings|Companion| '/) || this.has.booktitle.value.match(/\.|workshop|conference|symposium/)) {
             report.push('? Unsure about the formatting of the booktitle')
           }
@@ -1287,7 +1287,7 @@ export class Reference {
         }
       }
       else {
-        report = [`I don't know how to quality-check ${this.referencetype} references`]
+        report = [`I don't know how to quality-check ${this.entrytype} references`]
       }
 
       report = report.concat(this.quality_report)

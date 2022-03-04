@@ -13,7 +13,7 @@ import wordsToNumbers from 'words-to-numbers'
 import { Translator } from './lib/translator'
 export { Translator }
 
-import { Reference } from './bibtex/entry'
+import { Entry } from './bibtex/entry'
 import { Exporter } from './bibtex/exporter'
 import * as escape from '../content/escape'
 
@@ -23,7 +23,7 @@ import { arXiv } from '../content/arXiv'
 
 import { babelLanguage } from '../content/text'
 
-Reference.prototype.caseConversion = {
+Entry.prototype.caseConversion = {
   title: true,
   series: true,
   shorttitle: true,
@@ -36,7 +36,7 @@ Reference.prototype.caseConversion = {
   eventtitle: true,
 }
 
-Reference.prototype.fieldEncoding = {
+Entry.prototype.fieldEncoding = {
   groups: 'verbatim', // blegh jabref field
   url: 'verbatim',
   doi: 'verbatim',
@@ -103,8 +103,8 @@ const lint: Record<string, {required: string[], optional: string[]}> = {
 }
 lint.conference = lint.inproceedings
 
-Reference.prototype.lint = function(_explanation) {
-  const type = lint[this.referencetype.toLowerCase()]
+Entry.prototype.lint = function(_explanation) {
+  const type = lint[this.entrytype.toLowerCase()]
   if (!type) return
 
   log.debug('lint:', type)
@@ -133,7 +133,7 @@ Reference.prototype.lint = function(_explanation) {
   return warnings
 }
 
-Reference.prototype.addCreators = function() {
+Entry.prototype.addCreators = function() {
   if (!this.item.creators || !this.item.creators.length) return
 
   // split creators into subcategories
@@ -172,7 +172,7 @@ Reference.prototype.addCreators = function() {
   this.add({ name: 'collaborator', value: collaborators, enc: 'creators' })
 }
 
-Reference.prototype.typeMap = {
+Entry.prototype.typeMap = {
   csl: {
     article               : 'article',
     'article-journal'     : 'article',
@@ -252,16 +252,16 @@ const months = [ 'jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 
 
 export function doExport(): void {
   Translator.init('export')
-  Reference.installPostscript()
+  Entry.installPostscript()
   Exporter.prepare_strings()
 
   // Zotero.write(`\n% ${Translator.header.label}\n`)
   Zotero.write('\n')
 
   for (const item of Exporter.items) {
-    const ref = new Reference(item)
-    if (item.itemType === 'report' && item.type?.toLowerCase().includes('manual')) ref.referencetype = 'manual'
-    if (['zotero.bookSection', 'csl.chapter', 'tex.chapter'].includes(ref.referencetype_source) && ref.hasCreator('bookAuthor')) ref.referencetype = 'inbook'
+    const ref = new Entry(item)
+    if (item.itemType === 'report' && item.type?.toLowerCase().includes('manual')) ref.entrytype = 'manual'
+    if (['zotero.bookSection', 'csl.chapter', 'tex.chapter'].includes(ref.entrytype_source) && ref.hasCreator('bookAuthor')) ref.entrytype = 'inbook'
 
     ref.add({name: 'address', value: item.place})
     ref.add({name: 'chapter', value: item.section})
@@ -281,10 +281,10 @@ export function doExport(): void {
 
     // this needs to be order volume - number for #1475
     ref.add({name: 'volume', value: ref.normalizeDashes(item.volume) })
-    if (!['book', 'inbook', 'incollection', 'proceedings', 'inproceedings'].includes(ref.referencetype) || !ref.has.volume) ref.add({ name: 'number', value: item.number || item.issue || item.seriesNumber })
+    if (!['book', 'inbook', 'incollection', 'proceedings', 'inproceedings'].includes(ref.entrytype) || !ref.has.volume) ref.add({ name: 'number', value: item.number || item.issue || item.seriesNumber })
     ref.add({ name: 'urldate', value: item.accessDate && item.accessDate.replace(/\s*T?\d+:\d+:\d+.*/, '') })
 
-    if (['zotero.bookSection', 'zotero.conferencePaper', 'tex.chapter', 'csl.chapter'].includes(ref.referencetype_source)) {
+    if (['zotero.bookSection', 'zotero.conferencePaper', 'tex.chapter', 'csl.chapter'].includes(ref.entrytype_source)) {
       ref.add({ name: 'booktitle', value: item.publicationTitle || item.conferenceName, bibtexStrings: true })
 
     }
@@ -297,7 +297,7 @@ export function doExport(): void {
 
     }
 
-    let reftype = ref.referencetype_source.split('.')[1]
+    let reftype = ref.entrytype_source.split('.')[1]
     if (reftype.endsWith('thesis')) reftype = 'thesis' // # 1965
     switch (reftype) {
       case 'thesis':
@@ -328,26 +328,26 @@ export function doExport(): void {
 
         case 'note':
         case 'note-url-ish':
-          urlfield = ref.add({ name: (['misc', 'booklet'].includes(ref.referencetype) && !ref.has.howpublished ? 'howpublished' : 'note'), value: item.url || item.extraFields.kv.url, enc: 'url' })
+          urlfield = ref.add({ name: (['misc', 'booklet'].includes(ref.entrytype) && !ref.has.howpublished ? 'howpublished' : 'note'), value: item.url || item.extraFields.kv.url, enc: 'url' })
           break
 
         default:
-          if (['csl.webpage', 'zotero.webpage', 'csl.post', 'csl.post-weblog'].includes(ref.referencetype_source)) urlfield = ref.add({ name: 'howpublished', value: item.url || item.extraFields.kv.url })
+          if (['csl.webpage', 'zotero.webpage', 'csl.post', 'csl.post-weblog'].includes(ref.entrytype_source)) urlfield = ref.add({ name: 'howpublished', value: item.url || item.extraFields.kv.url })
           break
       }
     }
     if (Translator.preferences.DOIandURL === 'both' || !urlfield) ref.add({ name: 'doi', value: (doi || '').replace(/^https?:\/\/doi.org\//i, '') })
 
-    if (ref.referencetype_source.split('.')[1] === 'thesis') {
+    if (ref.entrytype_source.split('.')[1] === 'thesis') {
       const thesistype = ref.thesistype(item.type, 'phdthesis', 'mastersthesis')
       if (thesistype) {
-        ref.referencetype = thesistype
+        ref.entrytype = thesistype
         ref.remove('type')
       }
     }
 
     // #1471 and http://ctan.cs.uu.nl/biblio/bibtex/base/btxdoc.pdf: organization The organization that sponsors a conference or that publishes a manual.
-    if (ref.referencetype === 'inproceedings') {
+    if (ref.entrytype === 'inproceedings') {
       const sponsors = []
       item.creators = item.creators.filter(creator => {
         if (creator.creatorType !== 'sponsor') return true
@@ -363,7 +363,7 @@ export function doExport(): void {
     }
     ref.addCreators()
     // #1541
-    if (ref.referencetype === 'inbook' && ref.has.author && ref.has.editor) delete ref.has.editor
+    if (ref.entrytype === 'inbook' && ref.has.author && ref.has.editor) delete ref.has.editor
 
     switch (ref.date.type) {
       case 'verbatim':
