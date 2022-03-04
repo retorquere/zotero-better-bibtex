@@ -2,7 +2,7 @@ import bs4
 import sqlite3
 import uuid
 import json, jsonpatch
-import os
+import os, sys
 import redo
 import platform
 import configparser
@@ -24,7 +24,10 @@ import subprocess
 import atexit
 import time
 import datetime
-from collections import OrderedDict, MutableMapping
+
+from collections import OrderedDict
+from collections.abc import MutableMapping
+
 import sys
 import threading
 import socket

@@ -214,7 +214,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       // when exporting file data you get relative paths, when not, you get absolute paths, only one version can go into the cache
       displayOptions.exportFileData
 
-      // jabref 4 stores collection info inside the reference, and collection info depends on which part of your library you're exporting
+      // jabref 4 stores collection info inside the entry, and collection info depends on which part of your library you're exporting
       || (translator.label.includes('TeX') && job.preferences.jabrefFormat >= 4) // eslint-disable-line no-magic-numbers
 
       // relative file paths are going to be different based on the file being exported to
@@ -298,7 +298,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
           break
 
         case 'cache':
-          let { itemID, reference, metadata } = e.data
+          let { itemID, entry, metadata } = e.data
           if (!metadata) metadata = {}
 
           if (!cache) {
@@ -316,13 +316,13 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
           if (cached) {
             // this should not happen?
             log.debug('unexpected cache store:', query)
-            cached.reference = reference
+            cached.reference = entry
             cached.metadata = metadata
             cached = cache.update(cached)
 
           }
           else {
-            cache.insert({...query, reference, metadata})
+            cache.insert({...query, reference: entry, metadata})
           }
           break
 

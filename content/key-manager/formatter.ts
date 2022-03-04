@@ -165,7 +165,7 @@ class Item {
   public extra: string
   public extraFields: Extra.Fields
 
-  constructor(item: ZoteroItem | SerializedItem) { // Reference must have simplifyForExport pre-applied, without scrubbing
+  constructor(item: ZoteroItem | SerializedItem) { // Item must have simplifyForExport pre-applied, without scrubbing
     this.item = item
 
     if ((item as ZoteroItem).getField) {
@@ -419,7 +419,7 @@ class PatternFormatter {
     }
   }
 
-  /** returns the name of the shared group library, or nothing if the reference is in your personal library */
+  /** returns the name of the shared group library, or nothing if the item is in your personal library */
   public $library() {
     if (this.item.libraryID === Zotero.Libraries.userLibraryID) return this.set('')
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
@@ -925,13 +925,13 @@ class PatternFormatter {
     return this.set(this.value.replace(script.han, ' $1 ').trim())
   }
 
-  /** word segmentation for Chinese references. Uses substantial memory; must be enabled under Preferences -> Better BibTeX -> Advanced -> Citekeys */
+  /** word segmentation for Chinese items. Uses substantial memory; must be enabled under Preferences -> Better BibTeX -> Advanced -> Citekeys */
   public _jieba() {
     if (!Preference.jieba) return this
     return this.set(jieba.cut(this.value).join(' ').trim())
   }
 
-  /** word segmentation for Japanese references. Uses substantial memory; must be enabled under Preferences -> Better BibTeX -> Advanced -> Citekeys */
+  /** word segmentation for Japanese items. Uses substantial memory; must be enabled under Preferences -> Better BibTeX -> Advanced -> Citekeys */
   public _kuromoji() {
     if (!Preference.kuroshiro || !kuroshiro.enabled) return this
     return this.set(kuroshiro.tokenize(this.value || '').join(' ').trim())

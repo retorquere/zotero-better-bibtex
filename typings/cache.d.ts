@@ -7,7 +7,7 @@ export declare namespace Cache {
 
   interface ExportedItem {
     itemID: number
-    reference: string // exported reference
+    entry: string // exported entry
 
     exportNotes: boolean
     useJournalAbbreviation: boolean

@@ -66,7 +66,7 @@ export const CSLExporter = new class { // eslint-disable-line @typescript-eslint
 
       let cached: Cache.ExportedItem
       if (cached = Zotero.BetterBibTeX.cacheFetch(item.itemID, Translator.options, Translator.preferences)) {
-        items.push(cached.reference)
+        items.push(cached.entry)
         continue
       }
 

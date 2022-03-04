@@ -87,7 +87,7 @@ class Cache extends Loki {
           type: 'object',
           properties: {
             itemID: { type: 'integer' },
-            reference: { type: 'string' },
+            entry: { type: 'string' },
 
             // options
             exportNotes: { type: 'boolean' },
@@ -103,16 +103,22 @@ class Cache extends Loki {
             meta: { type: 'object' },
             $loki: { type: 'integer' },
           },
-          required: [ 'itemID', 'exportNotes', 'useJournalAbbreviation', ...(translator.preferences), 'reference' ],
+          required: [ 'itemID', 'exportNotes', 'useJournalAbbreviation', ...(translator.preferences), 'entry' ],
           additionalProperties: false,
         },
         ttl,
         ttlInterval,
       })
-      if (!Preference.caching) coll.removeDataOnly()
-      log.debug(`cache.${coll.name}:`, coll.data.length)
-
-      this.clearOnUpgrade(coll, 'BetterBibTeX', version)
+      if (!Preference.caching) {
+        coll.removeDataOnly()
+      }
+      else if (! (coll.data[0]?.entry) ) { // phase out reference
+        coll.removeDataOnly()
+      }
+      else {
+        log.debug(`cache.${coll.name}:`, coll.data.length)
+        this.clearOnUpgrade(coll, 'BetterBibTeX', version)
+      }
     }
 
     this.initialized = true

@@ -408,13 +408,13 @@ export class KeyManager {
 
     this.keys.findAndRemove({ itemID: { $nin: ids } })
 
-    // find all references without citekey
+    // find all items without citekey
     this.scanning = this.keys.find($and({ citekey: marker }))
 
     if (this.scanning.length !== 0) {
       const progressWin = new Zotero.ProgressWindow({ closeOnClick: false })
       progressWin.changeHeadline('Better BibTeX: Assigning citation keys')
-      progressWin.addDescription(`Found ${this.scanning.length} references without a citation key`)
+      progressWin.addDescription(`Found ${this.scanning.length} items without a citation key`)
       const icon = `chrome://zotero/skin/treesource-unfiled${Zotero.hiDPI ? '@2x' : ''}.png`
       const progress = new progressWin.ItemProgress(icon, 'Assigning citation keys')
       progressWin.show()

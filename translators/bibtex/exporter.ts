@@ -65,7 +65,7 @@ export const Exporter = new class {
       Translator.cache[cached ? 'hits' : 'misses'] += 1
 
       if (cached) {
-        Zotero.write(cached.reference)
+        Zotero.write(cached.entry)
         this.postfix?.add(cached.metadata)
         continue
       }

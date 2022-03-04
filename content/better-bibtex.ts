@@ -394,7 +394,7 @@ Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
     return cloneDeep(cached)
   },
 
-  cacheStore(sandbox: { translator: { label: string }[] }, itemID: number, options: { exportNotes: boolean, useJournalAbbreviation: boolean }, prefs: any, reference: any, metadata: any) {
+  cacheStore(sandbox: { translator: { label: string }[] }, itemID: number, options: { exportNotes: boolean, useJournalAbbreviation: boolean }, prefs: any, entry: any, metadata: any) {
     if (!Preference.caching) return false
 
     if (!metadata) metadata = {}
@@ -409,13 +409,13 @@ Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
     let cached = collection.findOne($and(selector))
 
     if (cached) {
-      cached.reference = reference
+      cached.reference = entry
       cached.metadata = metadata
       cached = collection.update(cached)
 
     }
     else {
-      cached = collection.insert({...selector, reference, metadata})
+      cached = collection.insert({...selector, entry, metadata})
 
     }
 

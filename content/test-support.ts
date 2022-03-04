@@ -62,7 +62,7 @@ export class TestSupport {
       await collections[0].eraseTx()
     }
 
-    // Zotero DB access is *really* slow and times out even with chunked transactions. 3.5k references take ~ 50 seconds
+    // Zotero DB access is *really* slow and times out even with chunked transactions. 3.5k items take ~ 50 seconds
     // to delete.
     let items = await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, false, true, true)
     while (items.length) {

@@ -50,8 +50,8 @@ class WorkerZoteroBetterBibTeX {
     Zotero.send({ kind: 'progress', percent, translator: workerContext.translator, autoExport: Zotero.config.autoExport })
   }
 
-  public cacheStore(itemID: number, options: any, prefs: any, reference: string, metadata: any) {
-    if (Zotero.config.preferences.caching) Zotero.send({ kind: 'cache', itemID, reference, metadata })
+  public cacheStore(itemID: number, options: any, prefs: any, entry: string, metadata: any) {
+    if (Zotero.config.preferences.caching) Zotero.send({ kind: 'cache', itemID, entry, metadata })
     return true
   }
 
