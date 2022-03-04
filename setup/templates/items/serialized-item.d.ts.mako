@@ -38,7 +38,7 @@ export interface Attachment extends ItemBase {
   defaultPath?: string
 }
 
-export interface Reference extends ItemBase {
+export interface RegularItem extends ItemBase {
   itemType: ${' | '.join(["'" + itemType + "'" for itemType in itemTypes if itemType not in ['note', 'annotation', 'attachment']])}
   citationKey: string
 
@@ -74,4 +74,4 @@ export interface Reference extends ItemBase {
   }
 }
 
-export type Item = Reference | Note | Attachment
+export type Item = RegularItem | Note | Attachment

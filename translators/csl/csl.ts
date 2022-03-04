@@ -11,10 +11,10 @@ import { Cache } from '../../typings/cache'
 import * as ExtraFields from '../../gen/items/extra-fields.json'
 import { log } from '../../content/logger'
 import { environment } from '../../content/environment'
-import { Reference } from '../../gen/typings/serialized-item'
+import { RegularItem } from '../../gen/typings/serialized-item'
 import * as postscript from '../lib/postscript'
 
-type ExtendedReference = Reference & { extraFields: Extra.Fields }
+type ExtendedReference = RegularItem & { extraFields: Extra.Fields }
 
 const validCSLTypes: string[] = require('../../gen/items/csl-types.json')
 

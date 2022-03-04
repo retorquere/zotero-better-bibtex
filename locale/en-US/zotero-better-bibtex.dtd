@@ -36,7 +36,7 @@
 <!ENTITY better-bibtex.ErrorReport.debug "Support log">
 <!ENTITY better-bibtex.ErrorReport.notReviewed "Support logs can not reviewed unless referred to in the GitHub issue tracker by their ID.">
 <!ENTITY better-bibtex.ErrorReport.postToGitHub "Please post a message to the issue tracker (https://github.com/retorquere/zotero-better-bibtex/issues) with this support log ID, a description of the problem, and any steps necessary to reproduce it.">
-<!ENTITY better-bibtex.ErrorReport.references "References">
+<!ENTITY better-bibtex.ErrorReport.items "Items">
 <!ENTITY better-bibtex.ErrorReport.reportID "Support log ID:">
 <!ENTITY better-bibtex.ErrorReport.review "The data below is about to submitted to Better BibTeX for debugging. You can review the data to see whether there's sensitive information that you do not wish to send.
 

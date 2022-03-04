@@ -3,7 +3,7 @@ declare const Zotero: any
 import { Translator } from './lib/translator'
 export { Translator }
 
-import { Reference } from './bibtex/reference'
+import { Reference } from './bibtex/entry'
 import { Exporter } from './bibtex/exporter'
 
 Reference.prototype.fieldEncoding = {

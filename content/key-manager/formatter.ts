@@ -1,4 +1,4 @@
-import type { Tag, Reference as SerializedReference, Item as SerializedItem } from '../../gen/typings/serialized-item'
+import type { Tag, RegularItem as SerializedRegularItem, Item as SerializedItem } from '../../gen/typings/serialized-item'
 
 import { client } from '../client'
 
@@ -178,13 +178,13 @@ class Item {
       this.title = (item as ZoteroItem).getField('title', false, true) as string
     }
     else {
-      this.itemType = (item as SerializedReference).itemType
-      this.itemID = (item as SerializedReference).itemID
+      this.itemType = (item as SerializedRegularItem).itemType
+      this.itemID = (item as SerializedRegularItem).itemID
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       this.getField = (name: string) => this.item[name] || this.extraFields?.kv[name]
-      this.creators = (item as SerializedReference).creators
+      this.creators = (item as SerializedRegularItem).creators
       this.libraryID = null
-      this.title = (item as SerializedReference).title
+      this.title = (item as SerializedRegularItem).title
     }
 
     this.language = babelLanguage((this.getField('language') as string) || '')
@@ -243,7 +243,7 @@ class Item {
   }
 
   public getTags(): Tag[] | string[] {
-    return (this.item as ZoteroItem).getTags ? (this.item as ZoteroItem).getTags() : (this.item as SerializedReference).tags
+    return (this.item as ZoteroItem).getTags ? (this.item as ZoteroItem).getTags() : (this.item as SerializedRegularItem).tags
   }
 }
 

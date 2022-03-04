@@ -4,7 +4,7 @@ declare const __estrace: any // eslint-disable-line no-underscore-dangle
 
 import { affects, names as preferences, defaults, PreferenceName, Preferences, schema } from '../../gen/preferences/meta'
 import { client } from '../../content/client'
-import { Reference, Item, Collection } from '../../gen/typings/serialized-item'
+import { RegularItem, Item, Collection } from '../../gen/typings/serialized-item'
 import { log } from '../../content/logger'
 import { environment } from '../../content/environment'
 import { Pinger } from '../../content/ping'
@@ -91,7 +91,7 @@ class Items {
     let item: CacheableItem
     while (item = Zotero.nextItem()) {
       item.$cacheable = cacheable;
-      (item as Reference).journalAbbreviation = (item as Reference).journalAbbreviation || (item as Reference).autoJournalAbbreviation
+      (item as RegularItem).journalAbbreviation = (item as RegularItem).journalAbbreviation || (item as RegularItem).autoJournalAbbreviation
       this.list.push(this.map[item.itemID] = this.map[item.itemKey] = new Proxy(item, cacheDisabler))
     }
     // fallback to itemType.itemID for notes and attachments. And some items may have duplicate keys
@@ -115,7 +115,7 @@ class Items {
     this.ping.done()
   }
 
-  *references(): Generator<Reference, void, unknown> {
+  *references(): Generator<RegularItem, void, unknown> {
     for (const item of this.list) {
       switch (item.itemType) {
         case 'annotation':
@@ -124,7 +124,7 @@ class Items {
           break
 
         default:
-          yield (this.current = item) as unknown as Reference
+          yield (this.current = item) as unknown as RegularItem
       }
       this.ping.update()
     }
@@ -392,7 +392,7 @@ export class ITranslator { // eslint-disable-line @typescript-eslint/naming-conv
     this._items = this._items || new Items(this.cacheable)
     return this._items.items()
   }
-  get references(): Generator<Reference, void, unknown> {
+  get references(): Generator<RegularItem, void, unknown> {
     this._items = this._items || new Items(this.cacheable)
     return this._items.references()
   }

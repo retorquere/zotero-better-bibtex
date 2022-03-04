@@ -13,7 +13,7 @@ import wordsToNumbers from 'words-to-numbers'
 import { Translator } from './lib/translator'
 export { Translator }
 
-import { Reference } from './bibtex/reference'
+import { Reference } from './bibtex/entry'
 import { Exporter } from './bibtex/exporter'
 import * as escape from '../content/escape'
 

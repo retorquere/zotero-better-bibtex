@@ -1,7 +1,7 @@
 declare const Zotero: any
 
 import { Translator } from '../lib/translator'
-import { Reference } from '../../gen/typings/serialized-item'
+import { RegularItem } from '../../gen/typings/serialized-item'
 import { Cache } from '../../typings/cache'
 
 import { JabRef } from '../bibtex/jabref' // not so nice... BibTeX-specific code
@@ -41,11 +41,11 @@ export const Exporter = new class {
     return uniq
   }
 
-  public get items(): Generator<Reference, void, unknown> {
+  public get items(): Generator<RegularItem, void, unknown> {
     return this.itemsGenerator()
   }
 
-  private *itemsGenerator(): Generator<Reference, void, unknown> {
+  private *itemsGenerator(): Generator<RegularItem, void, unknown> {
     if (!this.postfix && Translator.BetterTeX) this.postfix = new Postfix(Translator.preferences.qualityReport)
 
     for (const item of Translator.references) {

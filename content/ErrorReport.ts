@@ -32,7 +32,7 @@ export class ErrorReport {
     info: string
     errors: string
     debug: string
-    references?: string
+    items?: string
   }
 
   public async send(): Promise<void> {
@@ -63,7 +63,7 @@ export class ErrorReport {
     catch (err) {
       log.error('failed to submit', this.key, err)
       const ps = Components.classes['@mozilla.org/embedcomp/prompt-service;1'].getService(Components.interfaces.nsIPromptService)
-      ps.alert(null, Zotero.getString('general.error'), `${err} (${this.key}, references: ${!!this.errorlog.references})`)
+      ps.alert(null, Zotero.getString('general.error'), `${err} (${this.key}, items: ${!!this.errorlog.items})`)
       if (wizard.rewind) wizard.rewind()
     }
   }
@@ -114,7 +114,7 @@ export class ErrorReport {
 
       zip.file(`${this.key}/debug.txt`, [ this.errorlog.info, this.cacheState, this.errorlog.errors, this.errorlog.debug ].filter(chunk => chunk).join('\n\n'))
 
-      if (this.errorlog.references) zip.file(`${this.key}/references.json`, this.errorlog.references)
+      if (this.errorlog.items) zip.file(`${this.key}/items.json`, this.errorlog.items)
 
       if (this.globals.document.getElementById('better-bibtex-error-report-include-db').checked) {
         zip.file(`${this.key}/database.json`, DB.serialize({ serializationMethod: 'pretty' }))
@@ -163,14 +163,14 @@ export class ErrorReport {
 
     if (Zotero.BetterBibTeX.ready && this.params.scope) {
       await Zotero.BetterBibTeX.ready
-      this.errorlog.references = await Translators.exportItems(Translators.byLabel.BetterBibTeXJSON.translatorID, {exportNotes: true, dropAttachments: true, Normalize: true}, this.params.scope)
+      this.errorlog.items = await Translators.exportItems(Translators.byLabel.BetterBibTeXJSON.translatorID, {exportNotes: true, dropAttachments: true, Normalize: true}, this.params.scope)
     }
 
     this.globals.document.getElementById('better-bibtex-error-context').value = this.errorlog.info
     this.globals.document.getElementById('better-bibtex-error-errors').value = this.errorlog.errors
     this.globals.document.getElementById('better-bibtex-error-debug').value = this.preview(this.errorlog.debug)
-    if (this.errorlog.references) this.globals.document.getElementById('better-bibtex-error-references').value = this.preview(this.errorlog.references)
-    this.globals.document.getElementById('better-bibtex-error-tab-references').hidden = !this.errorlog.references
+    if (this.errorlog.items) this.globals.document.getElementById('better-bibtex-error-items').value = this.preview(this.errorlog.items)
+    this.globals.document.getElementById('better-bibtex-error-tab-items').hidden = !this.errorlog.items
 
     const current = require('../gen/version.js')
     this.globals.document.getElementById('better-bibtex-report-current').value = l10n.localize('ErrorReport.better-bibtex.current', { version: current })
