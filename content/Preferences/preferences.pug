@@ -1,6 +1,6 @@
 preference#pref-better-bibtex-DOIandURL(name="extensions.zotero.translators.better-bibtex.DOIandURL" bbt:affects="tex" type="string" default="both")
 bbt:doc.
-  Does what it says on the tin, really. If a reference has both a DOI and an URL, you can choose to have them both exported, or either one of them. Note that for BibTeX,
+  Does what it says on the tin, really. If an item has both a DOI and an URL, you can choose to have them both exported, or either one of them. Note that for BibTeX,
   you must load the `url` package when you have `doi` or `url` fields. `doi` and `url` fields are so-called `verbatim` fields with different escaping rules, and
   BibTeX compilation will likely error out without the package loaded.
 
@@ -28,7 +28,7 @@ preference#pref-better-bibtex-autoExport(name="extensions.zotero.translators.bet
 bbt:doc.
   Determines when [automatic exports]({{ ref . "exporting" }}) are kicked off. Having it disabled still marks
   auto-exports as needing updates, so when you re-enable it, those exports will start. On-change means exports
-  happen whenever a reference in the export changes/is added/is removed. On idle does more or less what
+  happen whenever an item in the export changes/is added/is removed. On idle does more or less what
   `Disabled` (that is, no exports but mark as needing changes), but will kick off exports when your computer is
   idle. You mostly want this if your computer is performance-constrained (aka slow).
 
@@ -74,7 +74,7 @@ bbt:doc.
 
 preference#pref-better-bibtex-keyConflictPolicy(name="extensions.zotero.translators.better-bibtex.keyConflictPolicy" bbt:affects="" type="string" default="keep")
 bbt:doc.
-  This determines what happens if you pin a key to a value that is already in use in a different reference but not pinned there.
+  This determines what happens if you pin a key to a value that is already in use in a different item but not pinned there.
   Neither are ideal, you just get to pick your poison. If you let BBT change the non-pinned key by adding a postfix character,
   the citation key changes which could be problematic for existing papers. If you keep the non-pinned key as-is, your library now has duplicate keys.
 
@@ -114,7 +114,7 @@ bbt:doc.
   all your citation keys at once.
 
 preference#pref-better-bibtex-postscript(name="extensions.zotero.translators.better-bibtex.postscript" bbt:affects="*" type="string" default="")
-bbt:doc Snippet of javascript to run [after each reference generation]({{ ref . "exporting/scripting.md" }}).
+bbt:doc Snippet of javascript to run [after each entry generation]({{ ref . "exporting/scripting.md" }}).
 
 preference#pref-better-bibtex-strings(name="extensions.zotero.translators.better-bibtex.strings" bbt:affects="tex" type="string" default="")
 bbt:doc If you have externally maintained `@string` vars paste them here and they will be resolved for subsequent imports. These should be entered as `@string` declarations, such as `@string{IEEE_J_PWRE = "{IEEE} Transactions on Power Electronics"}`, not just the var name.
@@ -162,7 +162,7 @@ bbt:doc list of fields to treat as verbatim during import. If you're importing e
 
 preference#pref-better-bibtex-qualityReport(name="extensions.zotero.translators.better-bibtex.qualityReport" bbt:affects="tex" type="bool" default="false")
 bbt:doc.
-  Generate quality reports for exported references. These show up only in BibTeX and BibLaTeX report formats and indicate things like missing required fields and
+  Generate quality reports for exported entries. These show up only in BibTeX and BibLaTeX report formats and indicate things like missing required fields and
   duplicate citation keys.
 
 preference(name="extensions.zotero.translators.better-bibtex.biblatexExtendedDateFormat" bbt:affects="biblatex" type="bool" default="true")
@@ -203,9 +203,9 @@ bbt:doc.
 
 preference(name="extensions.zotero.translators.better-bibtex.itemObserverDelay" bbt:affects="" type="int" default="5")
 bbt:doc.
-  I've had reports where Zotero notifies extensions that references have changed, but if BBT then actually
-  retrieves those same references, Zotero complains they "haven't been saved yet". Super. This preference sets
-  the number of microseconds BBT should wait after being notified before acting on the changed references.
+  I've had reports where Zotero notifies extensions that items have changed, but if BBT then actually
+  retrieves those same items, Zotero complains they "haven't been saved yet". Super. This preference sets
+  the number of microseconds BBT should wait after being notified before acting on the changed items.
 
 preference(name="extensions.zotero.translators.better-bibtex.autoPinDelay" bbt:affects="" type="int" default="0")
 bbt:doc When > 0, BBT will automatically pin the first citation keys it generates for an item after this many seconds.

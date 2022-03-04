@@ -60,7 +60,7 @@ Use the extended biber 2.7 format for names with particles - only works in BibLa
 
 default: `both`
 
-Does what it says on the tin, really. If a reference has both a DOI and an URL, you can choose to have them both exported, or either one of them. Note that for BibTeX, you must load the `url` package when you have `doi` or `url` fields. `doi` and `url` fields are so-called `verbatim` fields with different escaping rules, and BibTeX compilation will likely error out without the package loaded.
+Does what it says on the tin, really. If an item has both a DOI and an URL, you can choose to have them both exported, or either one of them. Note that for BibTeX, you must load the `url` package when you have `doi` or `url` fields. `doi` and `url` fields are so-called `verbatim` fields with different escaping rules, and BibTeX compilation will likely error out without the package loaded.
 
 Options:
 
@@ -158,7 +158,7 @@ Used for drag-and-drop/quick copy citations in `Build your own` format. This is 
 
 default: `<not set>`
 
-Snippet of javascript to run [after each reference generation]({{ ref . "exporting/scripting.md" }}).
+Snippet of javascript to run [after each entry generation]({{ ref . "exporting/scripting.md" }}).
 
 ## Miscellaneous
 
@@ -172,7 +172,7 @@ If set, generates journal abbreviations on export using the Zotero journal abbre
 
 default: `no`
 
-Generate quality reports for exported references. These show up only in BibTeX and BibLaTeX report formats and indicate things like missing required fields and duplicate citation keys.
+Generate quality reports for exported entries. These show up only in BibTeX and BibLaTeX report formats and indicate things like missing required fields and duplicate citation keys.
 
 ### Include automatic tags in export
 

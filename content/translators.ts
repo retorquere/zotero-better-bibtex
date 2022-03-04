@@ -316,13 +316,13 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
           if (cached) {
             // this should not happen?
             log.debug('unexpected cache store:', query)
-            cached.reference = entry
+            cached.entry = entry
             cached.metadata = metadata
             cached = cache.update(cached)
 
           }
           else {
-            cache.insert({...query, reference: entry, metadata})
+            cache.insert({...query, entry, metadata})
           }
           break
 

@@ -150,7 +150,7 @@ export const AUXScanner = new class { // eslint-disable-line @typescript-eslint/
     if (missing_keys.length) {
       const collator = new Intl.Collator('en')
       missing_keys.sort(collator.compare.bind(collator))
-      let report = '<html><div><p><b>BibTeX AUX scan</b></p><p>Missing references:</p><ul>'
+      let report = '<html><div><p><b>BibTeX AUX scan</b></p><p>Missing entries:</p><ul>'
       for (const citekey of missing_keys) {
         report += `<li>${citekey.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/'/g, '&quot;').replace(/'/g, '&#039;')}</li>`
       }

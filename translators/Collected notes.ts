@@ -75,10 +75,10 @@ class Exporter {
     }
 
     const unfiled = { name: 'Unfiled', items: Object.values(items).filter(item => !filed.has(item.itemID)), collections: [], root: true }
-    if (!this.prune(unfiled)) this.collection(unfiled)
+    if (!this.prune(unfiled)) this.write_collection(unfiled)
 
     for (const collection of sorted(Object.values(collections))) {
-      if (collection.root && !this.prune(collection)) this.collection(collection)
+      if (collection.root && !this.prune(collection)) this.write_collection(collection)
     }
 
     let style = '\n  body {\n    counter-reset: h1;\n  }\n\n'
@@ -102,30 +102,30 @@ class Exporter {
     log.debug(`collectednotes.${context}: ${JSON.stringify(Array.from(args))}`)
   }
 
-  collection(collection, level = 1) {
+  write_collection(collection, level = 1) {
     log.debug(`collection ${collection.name} @ ${level} with ${collection.collections.length} subcollections`)
     this.levels = Math.max(this.levels, level)
 
     this.body += `<h${ level }>${ escape.html(collection.name) }</h${ level }>\n`
     for (const item of collection.items) {
-      this.item(item)
+      this.write_item(item)
     }
 
     for (const coll of sorted(collection.collections)) {
-      this.collection(coll, level + 1)
+      this.write_collection(coll, level + 1)
     }
   }
 
-  item(item) {
+  write_item(item) {
     switch (item.itemType) {
       case 'note':
         this.note(item.note, 'note')
         break
       case 'attachment':
-        this.reference(item)
+        this.item(item)
         break
       default:
-        this.reference(item)
+        this.item(item)
         break
     }
   }
@@ -172,7 +172,7 @@ class Exporter {
     }
   }
 
-  reference(item) {
+  item(item) {
     let notes = []
     let title = ''
 

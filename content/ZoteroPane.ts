@@ -184,7 +184,7 @@ export class ZoteroPane {
   public async addCitationLinks(): Promise<void> {
     const items = Zotero.getActiveZoteroPane().getSelectedItems()
     if (items.length !== 1) {
-      flash('Citation links only works for a single reference')
+      flash('Citation links only works for a single item')
       return
     }
 
@@ -202,11 +202,11 @@ export class ZoteroPane {
     await TeXstudio.push()
   }
 
-  public errorReport(includeReferences: string): void {
+  public errorReport(includeItems: string): void {
     const pane = Zotero.getActiveZoteroPane()
     let scope = null
 
-    switch (pane && includeReferences) {
+    switch (pane && includeItems) {
       case 'collection':
       case 'library':
         scope = { type: 'collection', collection: pane.getSelectedCollection() }

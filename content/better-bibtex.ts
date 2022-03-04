@@ -233,7 +233,7 @@ $patch$(Zotero.Item.prototype, 'setField', original => function Zotero_Item_prot
   return original.apply(this, arguments)
 })
 
-// To show the citekey in the reference list
+// To show the citekey in the item list
 $patch$(Zotero.Item.prototype, 'getField', original => function Zotero_Item_prototype_getField(field: any, unformatted: any, includeBaseMapped: any) {
   try {
     switch (field) {
@@ -409,7 +409,7 @@ Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
     let cached = collection.findOne($and(selector))
 
     if (cached) {
-      cached.reference = entry
+      cached.entry = entry
       cached.metadata = metadata
       cached = collection.update(cached)
 
@@ -752,7 +752,7 @@ class Progress {
     if (this.mode === 'popup') {
       this.progressWin = new Zotero.ProgressWindow({ closeOnClick: false })
       this.progressWin.changeHeadline('Better BibTeX: Initializing')
-      // this.progressWin.addDescription(`Found ${this.scanning.length} references without a citation key`)
+      // this.progressWin.addDescription(`Found ${this.scanning.length} items without a citation key`)
       const icon = `chrome://zotero/skin/treesource-unfiled${Zotero.hiDPI ? '@2x' : ''}.png`
       this.progress = new this.progressWin.ItemProgress(icon, `${this.msg}...`)
       this.progressWin.show()
