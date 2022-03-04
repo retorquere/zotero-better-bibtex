@@ -17,7 +17,7 @@ const cacheDisabler = new class {
   get(target, property) {
     // if (typeof target.$unused === 'undefined') target.$unused = new Set(Object.keys(target).filter(field => !ignore_unused_fields.includes(field)))
 
-    // collections: jabref 4 stores collection info inside the reference, and collection info depends on which part of your library you're exporting
+    // collections: jabref 4 stores collection info inside the entry, and collection info depends on which part of your library you're exporting
     if (property === 'collections') {
       // log.debug('cache-rate: not for item with collections', target, (new Error).stack)
       target.$cacheable = false
@@ -115,7 +115,7 @@ class Items {
     this.ping.done()
   }
 
-  *references(): Generator<RegularItem, void, unknown> {
+  *regularitems(): Generator<RegularItem, void, unknown> {
     for (const item of this.list) {
       switch (item.itemType) {
         case 'annotation':
@@ -392,9 +392,9 @@ export class ITranslator { // eslint-disable-line @typescript-eslint/naming-conv
     this._items = this._items || new Items(this.cacheable)
     return this._items.items()
   }
-  get references(): Generator<RegularItem, void, unknown> {
+  get regularitems(): Generator<RegularItem, void, unknown> {
     this._items = this._items || new Items(this.cacheable)
-    return this._items.references()
+    return this._items.regularitems()
   }
 }
 export const Translator = new ITranslator // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match

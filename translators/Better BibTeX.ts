@@ -483,7 +483,7 @@ class ZoteroItem {
     this.type = this.typeMap[this.bibtex.type]
     if (!this.type) {
       this.errors.push({ message: `Don't know what Zotero type to make of '${this.bibtex.type}' for ${this.bibtex.key ? `@${this.bibtex.key}` : 'unnamed item'}, importing as ${this.type = 'document'}` })
-      this.hackyFields.push(`tex.referencetype: ${this.bibtex.type}`)
+      this.hackyFields.push(`tex.entrytype: ${this.bibtex.type}`)
     }
     if (this.type === 'book' && (this.bibtex.fields.title || []).length && (this.bibtex.fields.booktitle || []).length) this.type = 'bookSection'
     if (this.type === 'journalArticle' && (this.bibtex.fields.booktitle || []).length && this.bibtex.fields.booktitle[0].match(/proceeding/i)) this.type = 'conferencePaper'
@@ -1207,7 +1207,7 @@ class ZoteroItem {
 // ZoteroItem::$__note__ = ZoteroItem::$__key__ = -> true
 
 //
-// ZoteroItem::$referenceType = (value) ->
+// ZoteroItem::$entryType = (value) ->
 //   @item.thesisType = value if value in [ 'phdthesis', 'mastersthesis' ]
 //   return true
 //

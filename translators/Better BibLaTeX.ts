@@ -290,7 +290,7 @@ export function doExport(): void {
     const entry = new Entry(item)
 
     if (entry.entrytype === 'incollection' && entry.hasCreator('bookAuthor')) entry.entrytype = 'inbook'
-    // if (ref.referencetype_source === 'csl.book' && !ref.hasCreator('author') && ref.hasCreator('editor')) ref.referencetype = 'collection'
+    // if (entry.entytype_source === 'csl.book' && !entry.hasCreator('author') && entry.hasCreator('editor')) entry.entytype = 'collection'
     if (entry.entrytype === 'book' && item.numberOfVolumes) entry.entrytype = 'mvbook'
     if (entry.entrytype === 'report' && item.type?.toLowerCase().includes('manual')) entry.entrytype = 'manual'
 
@@ -337,16 +337,16 @@ export function doExport(): void {
     }
 
     /*
-    if (ref.referencetype === 'inbook') {
-      ref.add({ name: 'chapter', value: item.title })
+    if (entry.entytype === 'inbook') {
+      entry.add({ name: 'chapter', value: item.title })
     } else {
-      ref.add({ name: 'title', value: item.title })
+      entry.add({ name: 'title', value: item.title })
     }
     */
     entry.add({ name: 'title', value: item.title })
 
     entry.add({ name: 'edition', value: item.edition })
-    // ref.add({ name: 'rights', value: item.rights })
+    // entry.add({ name: 'rights', value: item.rights })
     entry.add({ name: 'isbn', value: item.ISBN })
     entry.add({ name: 'issn', value: item.ISSN })
 
@@ -517,7 +517,7 @@ export function doExport(): void {
     entry.addCreators()
 
     // 'juniorcomma' needs more thought, it isn't for *all* suffixes you want this. Or even at all.
-    // ref.add({ name: 'options', value: (option for option in ['useprefix', 'juniorcomma'] when ref[option]).join(',') })
+    // entry.add({ name: 'options', value: (option for option in ['useprefix', 'juniorcomma'] when ref[option]).join(',') })
 
     if (entry.useprefix) entry.add({ name: 'options', value: 'useprefix=true' })
 

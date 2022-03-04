@@ -56,7 +56,7 @@ Use the extended biber 2.7 format for names with particles - only works in BibLa
 
 ## Fields
 
-### When a reference has both a DOI and a URL, export
+### When an item has both a DOI and a URL, export
 
 default: `both`
 
@@ -168,7 +168,7 @@ default: `no`
 
 If set, generates journal abbreviations on export using the Zotero journal abbreviator, according to the abbreviation style selected in the list below the checkbox.
 
-### Include comments about potential problems with the exported references
+### Include comments about potential problems with the exported entries
 
 default: `no`
 
@@ -199,7 +199,7 @@ Options:
 
 default: `yes`
 
-If you're dead-set on ignoring both BibTeX/BibLaTeX best practice (see the BBT FAQ) and the Zotero recommendations on title/sentence casing, you can turn this off to suppress [title casing for English references]({{ ref . "support/faq#bbt-is-changing-the-capitalization-of-my-titles-why" }})
+If you're dead-set on ignoring both BibTeX/BibLaTeX best practice (see the BBT FAQ) and the Zotero recommendations on title/sentence casing, you can turn this off to suppress [title casing for English items]({{ ref . "support/faq#bbt-is-changing-the-capitalization-of-my-titles-why" }})
 
 ### Apply case-protection to capitalized words by enclosing them in braces
 

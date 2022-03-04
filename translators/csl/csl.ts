@@ -61,7 +61,7 @@ export const CSLExporter = new class { // eslint-disable-line @typescript-eslint
   public doExport() {
     const items = []
     const order: { citationKey: string, i: number}[] = []
-    for (const item of (Translator.references as Generator<ExtendedItem, void, unknown>)) {
+    for (const item of (Translator.regularitems as Generator<ExtendedItem, void, unknown>)) {
       order.push({ citationKey: item.citationKey, i: items.length })
 
       let cached: Cache.ExportedItem

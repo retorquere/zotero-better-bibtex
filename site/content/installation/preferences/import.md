@@ -17,7 +17,7 @@ weight: 13
 
 default: `yes, but try to exclude already-sentence-cased titles`
 
-Bib(La)TeX references ought to be stored in Title Case; Zotero references are expected to be entered as sentence-case.
+Bib(La)TeX entries must be stored in Title Case; Zotero items are expected to be entered as sentence-case.
 
 With this option on, BBT will try to sentence-case during import. This sentence-casing uses heuristics, no natural language processing is performed, and the results are not perfect.
 
@@ -45,7 +45,7 @@ Options:
 * yes
 * no
 
-## When scanning an AUX file, attempt to import references from the attached bib file when their citation keys are not in Zotero
+## When scanning an AUX file, attempt to import entries from the attached bib file when their citation keys are not in Zotero
 
 default: `no`
 

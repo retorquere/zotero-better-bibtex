@@ -8,7 +8,7 @@
       "Better BibTeX"
     ],
     "var": "DOIandURL",
-    "label": "When a reference has both a DOI and a URL, export",
+    "label": "When an item has both a DOI and a URL, export",
     "options": {
       "both": "both",
       "doi": "DOI",
@@ -148,7 +148,7 @@
     "default": false,
     "affects": [],
     "var": "auxImport",
-    "label": "When scanning an AUX file, attempt to import references from the attached bib file when their citation keys are not in Zotero"
+    "label": "When scanning an AUX file, attempt to import entries from the attached bib file when their citation keys are not in Zotero"
   },
   {
     "name": "baseAttachmentPath",
@@ -593,7 +593,7 @@
       "Better BibTeX"
     ],
     "var": "qualityReport",
-    "label": "Include comments about potential problems with the exported references"
+    "label": "Include comments about potential problems with the exported entries"
   },
   {
     "name": "quickCopyEta",

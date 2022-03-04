@@ -69,7 +69,7 @@ class Preferences:
     tooltips = {}
     links = {
       'which is not all of them': 'support/faq#why-the-double-braces',
-      'title casing for English references': 'support/faq#bbt-is-changing-the-capitalization-of-my-titles-why',
+      'title casing for English items': 'support/faq#bbt-is-changing-the-capitalization-of-my-titles-why',
       'automatic brace-protection for words with uppercase letters': 'support/faq#why-the-double-braces'
     }
     for tooltip in self.pane.findall(f'.//{xul}popupset/{xul}tooltip/{xul}description'):
