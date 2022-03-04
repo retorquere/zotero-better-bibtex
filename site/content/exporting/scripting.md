@@ -154,7 +154,7 @@ arXiv is a bit of an odd duck. It really isn't a journal, so it shouldn't be the
 But for arguments' sake, let's say you get the desired output by including an empty `journaltitle` field (ugh) and stuff the `arXiv:...` ID in the `pages` field (*ugh*). You could do that with the following postscript:
 
 ```javascript
-if (Translator.BetterTeX && item.arXiv.id) {
+if (Translator.BetterTeX && item.arXiv) {
   reference.add({ name: 'pages', value: item.arXiv.id });
   if (!reference.has.journaltitle) { reference.add({ name: 'journaltitle', bibtex: '{}' }); }
 }
