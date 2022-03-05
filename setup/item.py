@@ -590,6 +590,7 @@ with open(os.path.join(ITEMS, 'items.ts'), 'w') as f:
             'type': 'object',
             'additionalProperties': False,
             'properties': {
+              'path': { 'type': 'string' },
               'accessDate': { 'type': 'string' },
               'contentType': { 'type': 'string' },
               'itemType': { 'type': 'string' },
