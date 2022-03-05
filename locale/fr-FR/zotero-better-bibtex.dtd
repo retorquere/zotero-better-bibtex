@@ -2,12 +2,12 @@
 <!ENTITY better-bibtex.FirstRun.welcome "Better BibTex pour Zotero (ou BBT) ajoute à Zotero une compatibilité étendue avec LaTeX ou Markdown. BBT est totalement configurable -- rendez-vous dans les préférences si vous êtes curieux -- mais nous allons commencer avec quelques choix simples.">
 
 <!ENTITY better-bibtex.FirstRun.citekeyFormat "Vos clés de citation">
-<!ENTITY better-bibtex.FirstRun.citekeyFormat.explanation "BBT will generate citation keys for your items. The citekey generation is highly configurable, and you can choose to override the generation, but you will need to select the default now. You can always go into the preferences and change this at any time.">
+<!ENTITY better-bibtex.FirstRun.citekeyFormat.explanation "BBT générera des clés de citation pour vos éléments. La génération de clés de citation est hautement configurable, et vous pouvez choisir de remplacer la génération, mais vous allez devoir maintenant sélectionner la valeur par défaut. Vous pourrez toujours aller dans les préférences et modifier cela à tout moment.">
 <!ENTITY better-bibtex.FirstRun.citekeyFormat.bbt "Utiliser le format par défaut de BBT pour la clé de citation">
 <!ENTITY better-bibtex.FirstRun.citekeyFormat.zotero "Utiliser le format par défaut de Zotero pour la clé de citation">
 <!ENTITY better-bibtex.FirstRun.citekeyFormat.explanation.bbt "Les nouvelles clés de citation seront par défaut générées en utilisant le format de BBT. Si vous voulez un format différent, modifiez-le dans les préférences, puis sélectionnez tous les éléments, cliquez avec le bouton droit et sélectionnez Actualiser">
 <!ENTITY better-bibtex.FirstRun.citekeyFormat.explanation.bbt.note "Note">
-<!ENTITY better-bibtex.FirstRun.citekeyFormat.explanation.bbt.citekeyUpdate "In Zotero 5, BBT no longer automatically updates the citation keys when you change the pattern in the preferences. If you want existing items to follow the changed pattern, you will have to select and refresh them.">
+<!ENTITY better-bibtex.FirstRun.citekeyFormat.explanation.bbt.citekeyUpdate "Dans Zotero 5, BBT ne met plus automatiquement à jour les clés de citation lorsque vous modifiez le modèle dans les préférences. Si vous voulez que les éléments existants suivent le modèle modifié, vous devrez les sélectionner et les rafraîchir.">
 <!ENTITY better-bibtex.FirstRun.citekeyFormat.explanation.zotero "Choisissez cette option si vous avez des documents qui font référence à des clés générées par Zotero sans l'aide de BBT. Cela va reproduire fidèlement les clés générées par Zotero, y compris les limitations connues du générateur de clé de Zotero. N'utilisez ceci que s'il vous est nécessaire que les clés soient exactement les mêmes que celles générées par Zotero.">
 <!ENTITY better-bibtex.FirstRun.citekeyFormat.explanation.example "vos clés de citation ressembleront à">
 
@@ -36,7 +36,7 @@
 <!ENTITY better-bibtex.ErrorReport.debug "Rapport d'erreur">
 <!ENTITY better-bibtex.ErrorReport.notReviewed "Les rapports d'erreurs ne peuvent pas être analysés, sauf s’ils sont référencés par leur identifiant dans le gestionnaire de tickets de GitHub.">
 <!ENTITY better-bibtex.ErrorReport.postToGitHub "Merci d'envoyer un message au gestionnaire de tickets de GitHub (https://github.com/retorquere/zotero-better-bibtex/issues), en précisant cet identifiant de débogage, une description du problème ainsi que toutes les étapes nécessaires pour le reproduire.">
-<!ENTITY better-bibtex.ErrorReport.items "Items">
+<!ENTITY better-bibtex.ErrorReport.items "Références">
 <!ENTITY better-bibtex.ErrorReport.reportID "Identifiant du rapport d'erreur :">
 <!ENTITY better-bibtex.ErrorReport.review "Les données ci-dessous sont sur le point d'être soumises à Better BibTeX à fins de débogage. Vous pouvez les examiner pour contrôler s'il y a des informations sensibles que vous ne souhaitez pas envoyer.
 
@@ -110,7 +110,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.citekey.uniqueness.scope.global "toutes les collections">
 
 <!ENTITY better-bibtex.Preferences.citekey.AUXScanner "Scanner du fichier AUX BibTeX">
-<!ENTITY better-bibtex.Preferences.citekey.AUXScanner.import "When scanning an AUX file, attempt to import entries from the attached bib file when their citation keys are not in Zotero">
+<!ENTITY better-bibtex.Preferences.citekey.AUXScanner.import "Lors de l'analyse d'un fichier `.aux`, tenter d'importer les références depuis le fichier `.bib` joint lorsque leurs clés de citation ne sont pas dans Zotero">
 
 <!ENTITY better-bibtex.Preferences.advanced "Avancé">
 <!ENTITY better-bibtex.Preferences.advanced.warning "Les paramètres ci-dessous ont un impact sur les performances et peuvent faire échouer les exportations. Procéder avec attention.">
@@ -119,12 +119,12 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.advanced.import.sentenceCase.off "non (importer les titres tels quels)">
 <!ENTITY better-bibtex.Preferences.advanced.import.sentenceCase.on "oui">
 <!ENTITY better-bibtex.Preferences.advanced.import.sentenceCase.on_guess "oui, mais en essayant d'exclure les titres déjà avec casse de phrase">
-<!ENTITY better-bibtex.Preferences.advanced.import.sentenceCase.warning "Bib(La)TeX entries must be stored in Title Case; Zotero items are expected to be entered as sentence-case.
+<!ENTITY better-bibtex.Preferences.advanced.import.sentenceCase.warning "Les entrées Bib(La)TeX devraient être stockées capitalisées (NdT : c.-à-d. avec l'initiale de chaque mot en capitale ; cette règle est conforme à la typographie anglaise mais pas française) ; les entrées Zotero devraient être saisies avec casse de phrase (NdT : c.-à-d. avec seule l'initiale de la phrase en capitale).
 
-With this option on, BBT will try to sentence-case during import. This sentence-casing uses heuristics, no natural language processing is performed, and the results are not perfect.
+Avec cette option activée, BBT essaiera d'appliquer la casse de phrase lors de l'importation. Le mécanisme sous-jacent utilise des heuristiques : aucun traitement de langage naturel n'est effectué, et les résultats ne sont pas parfaits.
 
-You can turn this off, but you may then also want to disable `Apply title-casing to titles` (which has its own problems, see the help entry for that option on this page).
-With 'yes, but try to exclude already-sentence-cased titles', BBT will attempt to detect titles that are already sentence cased and leave them as-is on import.">
+Vous pouvez désactiver cette option, mais vous pouvez aussi vouloir désactiver « Appliquer la capitalisation aux titres » (qui a ses propres problèmes, voir l'aide pour cette option sur cette page).
+Avec « oui, mais en essayant d'exclure les titres déjà avec casse de phrase », BBT tentera de détecter les titres déjà avec casse de phrase et ne les modifiera pas à l'importation.">
 
 <!ENTITY better-bibtex.Preferences.advanced.import.caseProtection "Protéger la casse pour les accolades :">
 <!ENTITY better-bibtex.Preferences.advanced.import.caseProtection.off "non">
@@ -141,7 +141,7 @@ En mode « minimal », le nombre d'éléments `span` est minimisé.">
 
 <!ENTITY better-bibtex.Preferences.advanced.tab.export "Exportation">
 <!ENTITY better-bibtex.Preferences.advanced.export.titleCase "Appliquer la capitalisation aux titres">
-<!ENTITY better-bibtex.Preferences.advanced.export.titleCase.warning "If you're dead-set on ignoring both BibTeX/BibLaTeX best practice (see the BBT FAQ) and the Zotero recommendations on title/sentence casing, you can turn this off to suppress title casing for English items">
+<!ENTITY better-bibtex.Preferences.advanced.export.titleCase.warning "Si vous n'êtes pas prêt à ignorer à la fois les meilleures pratiques BibTeX/BibLaTeX (voir la FAQ BBT) et les recommandations de Zotero sur la casse des titres/phrases, vous pouvez désactiver cette option pour supprimer la casse de titre pour les entrées en anglais">
 <!ENTITY better-bibtex.Preferences.advanced.export.braceProtection "Appliquer la protection de la casse aux mots en capitales en les insérant entre paires d'accolades">
 <!ENTITY better-bibtex.Preferences.advanced.export.braceProtection.warning "Si vous n'êtes pas prêt à ignorer à la fois les meilleures pratiques BibTeX/BibLaTeX (voir la FAQ BBT) et les recommandations de Zotero sur le tire/phrase, vous pouvez désactiver cette option pour supprimer la protection automatique des accolades pour les mots avec des lettres capitales.">
 
@@ -163,7 +163,7 @@ Si cette option est activée et que vous rencontrez un problème autre que l'ann
 <!ENTITY better-bibtex.Preferences.advanced.ideographs.kuroshiro "Appliquer la romanisation kuroshiro dans les noms/titres japonais. Monopolise beaucoup de mémoire.">
 <!ENTITY better-bibtex.Preferences.advanced.ideographs.jieba "Activer le filtre « jieba » dans les motifs de clés de citation. Monopolise beaucoup de mémoire.">
 
-<!ENTITY better-bibtex.Preferences.export.qualityReport "Include comments about potential problems with the exported entries">
+<!ENTITY better-bibtex.Preferences.export.qualityReport "Inclure des commentaires concernant de potentiels problèmes avec les entrées exportées">
 <!ENTITY better-bibtex.Preferences.export.automaticTags "Inclure les tags automatiques dans l'export">
 <!ENTITY better-bibtex.Preferences.export.jabrefFormat "Inclure les métadonnées spécifiques à JabRef :">
 <!ENTITY better-bibtex.Preferences.export.jabrefFormat.0 "Non">
@@ -189,7 +189,7 @@ Si cette option est activée et que vous rencontrez un problème autre que l'ann
 <!ENTITY better-bibtex.Preferences.export.fields.doi-and-url.both "les deux">
 <!ENTITY better-bibtex.Preferences.export.fields.doi-and-url.DOI "le DOI seulement">
 <!ENTITY better-bibtex.Preferences.export.fields.doi-and-url.URL "l'URL seulement">
-<!ENTITY better-bibtex.Preferences.export.fields.doi-and-url "When an item has both a DOI and a URL, export">
+<!ENTITY better-bibtex.Preferences.export.fields.doi-and-url "Lorsqu'une entrée comporte à la fois un DOI et une URL, exporter">
 <!ENTITY better-bibtex.Preferences.export.fields.doi-and-url.warning "La plupart des styles BibTeX ne supportent pas les champs « doi »/« url ». Parmi les styles qui les supportent, beaucoup oublient de charger le package « url » requis si bien que vous devez vous assurer de le charger vous-même. Les champs « doi » et « url » sont dits « verbatim » et, sans le package « url », la compilation échouera probablement.">
 <!ENTITY better-bibtex.Preferences.export.fields "Gestion des champs">
 
@@ -216,7 +216,7 @@ Si cette option est activée et que vous rencontrez un problème autre que l'ann
 <!ENTITY better-bibtex.Preferences.rescan-citekeys "Réanalyse des clés de citation verrouillées">
 <!ENTITY better-bibtex.Preferences.resetCache "Réinitialiser le cache">
 <!ENTITY better-bibtex.BetterBibTeX.reportErrors "Envoyer le rapport d'erreur de Better BibTeX...">
-<!ENTITY better-bibtex.BetterBibTeX.auxScanner "Scan BibTeX AUX file for entries...">
+<!ENTITY better-bibtex.BetterBibTeX.auxScanner "Scanner le fichier `.aux` BibTeX pour les entrées...">
 <!ENTITY better-bibtex.bulk-keys-confirm.message "Vous allez modifier plus de {treshold} éléments en une seule fois. Êtes-vous certain de vouloir poursuivre ?">
 <!ENTITY better-bibtex.bulk-keys-confirm.whatever "Oui, ne plus me le demander">
 <!ENTITY better-bibtex.BetterBibTeX.menu "Better BibTeX">
@@ -229,7 +229,7 @@ Si cette option est activée et que vous rencontrez un problème autre que l'ann
 <!ENTITY better-bibtex.BetterBibTeX.sentenceCase "BBT Casse de la phrase">
 <!ENTITY better-bibtex.BetterBibTeX.patchDates "Copier date-added/date-modified à partir du champ extra">
 <!ENTITY better-bibtex.ZoteroPane.tag-duplicates "Tagguer les clés de citation doublons">
-<!ENTITY better-bibtex.BetterBibTeX.TeXstudio "Push entries to TeXstudio">
+<!ENTITY better-bibtex.BetterBibTeX.TeXstudio "Envoyer les citations vers TeXstudio">
 <!ENTITY zotero.better-bibtex.csquotes "Remplacer les guillemets par la commande '\\enquote{...}' (nécessite le package « csquotes »)">
 <!ENTITY better-bibtex.BetterBibTeX.server.disabled "Exportation par HTTP désactivée">
 <!ENTITY better-bibtex.BetterBibTeX.show-collection-key "Télécharger l'export de Better BibTeX...">
