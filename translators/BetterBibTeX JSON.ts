@@ -69,28 +69,20 @@ export async function doImport(): Promise<void> {
       }
     }
 
-    if (!itemfields.valid.type[source.itemType]) throw new Error(`unexpected item type '${source.itemType}'`)
-    const validFields = itemfields.valid.field[source.itemType]
+    // clear out junk data
     for (const [field, value] of Object.entries(source)) {
-      const valid = !value || validFields[field]
-      if (valid) continue
-
-      const msg = `${valid}: unexpected ${source.itemType}.${field} for ${Translator.isZotero ? 'zotero' : 'juris-m'} in ${JSON.stringify(source)} / ${JSON.stringify(validFields)}`
-      if (valid === false) {
-        log.error(msg)
-      }
-      else {
-        throw new Error(msg)
-      }
+      if ((value ?? '') === '') delete source[field]
     }
-
+    // validate tests for strings
     if (Array.isArray(source.extra)) source.extra = source.extra.join('\n')
+    // marker so BBT-JSON can be imported without extra-field meddling
+    if (source.extra) source.extra = `\x1BBBT\x1B${source.extra}`
+
+    const error = itemfields.valid.test(source)
+    if (error) throw new Error(error)
 
     const item = new Zotero.Item()
     Object.assign(item, source)
-
-    // marker so BBT-JSON can be imported without extra-field meddling
-    if (item.extra) item.extra = `\x1BBBT\x1B${item.extra}`
 
     for (const att of item.attachments || []) {
       if (att.url) delete att.path

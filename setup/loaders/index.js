@@ -190,3 +190,21 @@ module.exports.trace = function(section) {
     }
   }
 }
+
+const Ajv = require('ajv')
+// const ajv = new Ajv({ discriminator: true, code: {source: true, esm: true} })
+const ajv = new Ajv({ discriminator: true, code: { source: true } })
+const ajvStandaloneCode = require('ajv/dist/standalone').default
+module.exports.ajv = {
+  name: 'ajv',
+  setup(build) {
+    build.onLoad({ filter: /.schema$/ }, async (args) => {
+      const schema = JSON.parse(await fs.promises.readFile(args.path, 'utf-8'))
+      const validate = ajv.compile(schema)
+      return {
+        contents: ajvStandaloneCode(ajv, validate),
+        loader: 'js'
+      }
+    })
+  },
+}

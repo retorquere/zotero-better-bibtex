@@ -61,6 +61,7 @@ async function rebuild() {
       // loader.bibertool,
       loader.peggy,
       loader.__dirname,
+      loader.ajv,
       shims
     ],
     outdir: 'build/content',
@@ -118,10 +119,11 @@ async function rebuild() {
       entryPoints: [path.join(translator.dir, translator.name + '.ts')],
       globalName,
       plugins: [
-        loader.trace('translators'),
+        // loader.trace('translators'),
         loader.bibertool,
         // loader.peggy,
         loader.__dirname,
+        loader.ajv,
         shims
       ],
       outfile,

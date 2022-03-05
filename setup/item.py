@@ -31,6 +31,7 @@ import tarfile
 import tempfile
 import zipfile
 import fnmatch
+import sqlite3
 
 root = os.path.join(os.path.dirname(__file__), '..')
 
@@ -567,6 +568,95 @@ with open(os.path.join(ITEMS, 'items.ts'), 'w') as f:
         valid.field[itemType][field] = client
       elif valid.field[itemType][field] != client:
         valid.field[itemType][field] = 'true'
+
+  jsonschema = sqlite3.connect(':memory:')
+  jsonschema.execute('CREATE TABLE valid (client, itemType, field)')
+  for itemType, fields in valid.field.items():
+    for field, validfor in fields.items():
+      validfor = ['zotero', 'jurism'] if validfor == 'true' else [validfor]
+      for client in validfor:
+        jsonschema.execute('INSERT INTO valid (client, itemType, field) VALUES (?, ?, ?)', (client, itemType, field))
+
+  for client in ['zotero', 'jurism']:
+    schema = {
+      'type': 'object',
+      'discriminator': { 'propertyName': 'itemType' },
+      'required': ['itemType'],
+      'oneOf': [],
+      '$defs': {
+        'attachments': {
+          'type': 'array',
+          'items': {
+            'type': 'object',
+            'additionalProperties': False,
+            'properties': {
+              'accessDate': { 'type': 'string' },
+              'contentType': { 'type': 'string' },
+              'itemType': { 'type': 'string' },
+              'key': { 'type': 'string' },
+              'linkMode': { 'type': 'string' },
+              'title': { 'type': 'string' },
+              'uri': { 'type': 'string' },
+              'url': { 'type': 'string' },
+            }
+          }
+        },
+
+        'creators': {
+          'type': 'array',
+          'items': {
+            'type': 'object',
+            'additionalProperties': False,
+            'properties': {
+              'creatorType': { 'type': 'string' },
+              'firstName': { 'type': 'string' },
+              'lastName': { 'type': 'string' },
+              'fieldMode': { 'type': 'number' },
+            }
+          }
+        },
+
+        'notes': {
+          'type': 'array',
+          'items': { 'type': 'string' },
+        },
+
+        'tags': {
+          'type': 'array',
+          'items': {
+            'type': 'object',
+            'additionalProperties': False,
+            'properties': {
+              'tag': { 'type': 'string' },
+              'type': { 'type': 'number' },
+            },
+            'required': ['tag'],
+          }
+        },
+
+      }
+    }
+    for itemType, in jsonschema.execute('SELECT DISTINCT itemType FROM valid WHERE client = ? ORDER BY itemType', (client,)):
+      schema['oneOf'].append({
+        'type': 'object',
+        'additionalProperties': False,
+        'properties': {
+           'itemType': { 'const': itemType },
+         },
+      })
+      for field, in jsonschema.execute('SELECT field FROM valid WHERE client = ? AND itemType = ? ORDER BY field', (client, itemType)):
+        if field == 'itemType': continue
+        assert field not in schema['oneOf'][-1]['properties'], (itemType, field)
+
+        if field in schema['$defs']:
+          schema['oneOf'][-1]['properties'][field] = { '$ref': '#/$defs/' + field }
+        elif field in ['itemID']:
+          schema['oneOf'][-1]['properties'][field] = { 'type': 'number' }
+        else:
+          schema['oneOf'][-1]['properties'][field] = { 'type': 'string' }
+
+    with open(os.path.join(ITEMS, client + '.schema'), 'w') as v:
+      json.dump(schema, v, indent='  ')
 
   # map aliases to base names
   DG = nx.DiGraph()
