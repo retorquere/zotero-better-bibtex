@@ -579,7 +579,7 @@ export function doExport(): void {
       if (archive && !entry.has.eprint) entry.add({ name: 'eprint', value: item.archiveLocation })
     }
 
-    if (item.arXiv && !entry.has.journaltitle && entry.entrytype === 'article') entry.entrytype = 'online'
+    if (item.arXiv && !entry.has.journaltitle && entry.entrytype === 'article') entry.entrytype = 'unpublished'
 
     entry.complete()
   }
