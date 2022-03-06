@@ -1,5 +1,5 @@
 @merge
-Feature: Export
+Feature: Merge
 
   Background:
     Given I set preference .extraMergeCSL to true
