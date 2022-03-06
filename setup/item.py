@@ -613,6 +613,7 @@ with open(os.path.join(ITEMS, 'items.ts'), 'w') as f:
               'firstName': { 'type': 'string' },
               'lastName': { 'type': 'string' },
               'fieldMode': { 'type': 'number' },
+              'multi': { 'type': 'object' },
             }
           }
         },
@@ -625,15 +626,30 @@ with open(os.path.join(ITEMS, 'items.ts'), 'w') as f:
         'tags': {
           'type': 'array',
           'items': {
-            'type': 'object',
-            'additionalProperties': False,
-            'properties': {
-              'tag': { 'type': 'string' },
-              'type': { 'type': 'number' },
-            },
-            'required': ['tag'],
-          }
+            'oneOf': [
+              {
+                'type': 'object',
+                'additionalProperties': False,
+                'properties': {
+                  'tag': { 'type': 'string' },
+                  'type': { 'type': 'number' },
+                },
+                'required': ['tag'],
+              },
+              { 'type': 'string' }
+            ],
+          },
         },
+
+        'edition': {
+          'oneOf': [
+            { 'type': 'string' },
+            { 'type': 'number' },
+          ]
+        },
+
+        'multi': { 'type': 'object' },
+        'seeAlso': { 'type': 'array' },
 
       }
     }

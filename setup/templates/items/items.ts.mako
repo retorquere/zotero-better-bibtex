@@ -20,8 +20,8 @@ type Valid = {
   test: (obj: any, strict?: boolean) => string
 }
 
-function err2string(err: ErrorObject): string {
-  if (err.keyword === 'additionalProperties') return 'Unexpected property ' + (err.params.additionalProperty as string)
+function err2string(err: ErrorObject, obj: { itemType: string }): string {
+  if (err.keyword === 'additionalProperties') return 'Unexpected property ' + (err.params.additionalProperty as string) + ' on ' + obj.itemType
   return (err.instancePath || '??') + ' ' + err.message
 }
 
@@ -42,7 +42,7 @@ export const valid: Valid = {
   },
   test: (obj: any, strict?: boolean) => {
     if (validator.me(obj)) return ''
-    const err = (validator.me.errors as ErrorObject[]).map(e => err2string(e).trim()).join(';\n')
+    const err = (validator.me.errors as ErrorObject[]).map(e => err2string(e, obj).trim()).join(';\n')
     if (!strict && validator.other(obj)) {
       Zotero.debug('Better BibTeX soft error: ' + err)
       return ''

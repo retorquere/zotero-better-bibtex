@@ -504,7 +504,7 @@ class ZoteroItem {
       this.import()
 
       if (Translator.preferences.testing) {
-        const err = valid.test(this.item, true)
+        const err = valid.test(JSON.parse(JSON.stringify(this.item)), true) // stringify/parse is a fast way to get rid of methods
         if (err) this.error(`import error: ${this.type} ${this.bibtex.key}: ${err}`)
       }
     }
