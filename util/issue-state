@@ -21,7 +21,6 @@ parser.add_argument('--all', action='store_true')
 parser.add_argument('--unsnyk', action='store_true')
 parser.add_argument('--orphaned-remote', action='store_true')
 parser.add_argument('--close-branch', action='store_true')
-parser.add_argument('--test-case', type=str)
 args = parser.parse_args()
 
 g = Github(os.environ['GITHUB_TOKEN'])
@@ -76,81 +75,6 @@ for issue in issues.values():
     local=next((branch for branch in branches.local if branch == f'gh-{issue.number}'), None),
     remote=next((branch for branch in branches.local if branch == f'gh-{issue.number}'), None)
   )
-
-if args.test_case:
-  if ',' in args.test_case:
-    log, fmt = args.test_case.split(',')
-  else:
-    log = args.test_case
-    fmt = 'biblatex'
-  if fmt == 'csl':
-    fmt = 'csl-json'
-  assert fmt in ['import', 'csl-json', 'csl-yaml', 'bibtex', 'biblatex'], fmt
-
-  issue = issues[int(branches.current.replace('gh-', ''))]
-  lib = os.path.join('logs', log, 'references.json')
-  print(subprocess.check_output(['./util/clean-lib.ts', lib, '--save']).decode())
-
-  print(issue.number, log, fmt)
-  valid_chars = f'-_.()# {string.ascii_letters}{string.digits}'
-  title = f'{issue.title} #{issue.number}'
-  title = ''.join(c for c in title if c in valid_chars)
-  with open(lib) as f:
-    n = ' ' + str(len(json.load(f)['items']))
-  print(title, n)
-
-  fixtures = 'import' if fmt == 'import' else 'export'
-  _feature = f'test/features/{fixtures}.feature'
-  with open(_feature) as f:
-    feature = f.readlines()
-  with open(_feature, 'w') as f:
-    if fmt == 'import':
-      scenario = 'Scenario Outline: Import <references> references from <file>'.lower().strip()
-    else:
-      scenario = f'Scenario Outline: Export <references> references for {fmt.replace("-", " ")} to <file>'.lower().strip()
-    in_scenario = False
-    inserted = False
-    removed = False
-    for line in feature:
-      if line.lower().strip() == scenario:
-        in_scenario = True
-      elif line.strip().startswith('scenario outline:'):
-        in_scenario = False
-      elif in_scenario and f' #{issue.number} ' in line:
-        print(f'replacing #{line.strip()}')
-        removed = True
-        continue
-      elif in_scenario and line.strip().replace(' ', '') == '|file|references|':
-        f.write(line)
-        print(f'     | {title} | {n} |', file=f)
-        inserted = True
-        continue
-      f.write(line)
-    print(title, 'inserted:', inserted, 'replaced:', removed)
-
-  shutil.copyfile(lib, os.path.join(f'test/fixtures/{fixtures}', title.strip() + '.json'))
-  if fmt == 'csl-json':
-    tgt = os.path.join(f'test/fixtures/{fixtures}', title.strip() + '.csl.json')
-    if not os.path.exists(tgt):
-      with open(tgt, 'w') as f:
-        print('[]', file=f)
-  else:
-    ext = 'bib' if fmt == 'import' else fmt.replace('-', '.')
-    Path(os.path.join(f'test/fixtures/{fixtures}', title.strip() + '.' + ext)).touch()
-
-  sys.exit(0)
-
-if args.orphaned_remote or args.close_branch:
-  for issue in sorted(issues.values(), key=lambda x: x.number):
-    if args.orphaned_remote and issue.branch.local is None and issue.branch.remote is not None: # orphaned remote
-      print(f'git push origin {shlex.quote(":" + issue.branch.remote)}')
-
-    if args.close_branch and issue.state != 'open':
-      if issue.branch.local is not None:
-        print(f'git branch -D {shlex.quote(issue.branch.local)}')
-      if issue.branch.remote is not None:
-        print(f'git push origin {shlex.quote(":" + issue.branch.remote)}')
-  sys.exit()
 
 for branch in set(branches.local + branches.remote):
   if m := re.match(r'^gh-([0-9]+)$', branch):
