@@ -594,6 +594,7 @@ with open(os.path.join(ITEMS, 'items.ts'), 'w') as f:
               'accessDate': { 'type': 'string' },
               'contentType': { 'type': 'string' },
               'itemType': { 'type': 'string' },
+              'mimeType': { 'type': 'string' },
               'key': { 'type': 'string' },
               'linkMode': { 'type': 'string' },
               'title': { 'type': 'string' },
