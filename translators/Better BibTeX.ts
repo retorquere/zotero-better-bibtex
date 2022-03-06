@@ -504,8 +504,8 @@ class ZoteroItem {
       this.import()
 
       if (Translator.preferences.testing) {
-        const err = Object.keys(this.item).filter(name => !this.validFields[name]).join(', ')
-        if (err) this.error(`import error: unexpected fields on ${this.type} ${this.bibtex.key}: ${err}`)
+        const err = valid.test(this.item, true)
+        if (err) this.error(`import error: ${this.type} ${this.bibtex.key}: ${err}`)
       }
     }
   }

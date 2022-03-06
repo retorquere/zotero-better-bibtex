@@ -7,7 +7,6 @@ import { ErrorObject } from 'ajv'
 const jurism = client === 'jurism'
 const zotero = !jurism
 
-type Validator = (obj: any, other?: boolean) => string
 const zoterovalidator = require('./zotero.schema')
 const jurismvalidator = require('./jurism.schema')
 const validator = {
@@ -18,7 +17,7 @@ const validator = {
 type Valid = {
   type: Record<string, boolean>
   field: Record<string, Record<string, boolean>>
-  test: Validator
+  test: (obj: any, strict?: boolean) => string
 }
 
 function err2string(err: ErrorObject): string {
@@ -41,10 +40,10 @@ export const valid: Valid = {
     },
     %endfor
   },
-  test: (obj: any) => {
+  test: (obj: any, strict?: boolean) => {
     if (validator.me(obj)) return ''
     const err = (validator.me.errors as ErrorObject[]).map(e => err2string(e).trim()).join(';\n')
-    if (validator.other(obj)) {
+    if (!strict && validator.other(obj)) {
       Zotero.debug('Better BibTeX soft error: ' + err)
       return ''
     }
