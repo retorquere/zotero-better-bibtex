@@ -33,3 +33,4 @@ requests
 ruamel.yaml
 selenium
 toml
+gherkin-official

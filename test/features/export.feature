@@ -13,7 +13,8 @@ Scenario Outline: Export <references> references for BibLaTeX to <file>
 
   Examples:
      | file                                                                                           | references  |
-     | How to export bib without month and date in year item (Using better bibtex) #2022 |  1 |
+     | BetterBibLaTeX exports articles as online #2058                                                | 3           |
+     | How to export bib without month and date in year item (Using better bibtex) #2022              | 1           |
      | Capitalized words after colons not brace protected #1978                                       | 1           |
      | Extensions to citation format syntax #1933                                                     | 1           |
      | Specific BBT citation key format is no longer working for my use case after update #1970       | 1           |
