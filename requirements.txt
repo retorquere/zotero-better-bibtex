@@ -29,8 +29,8 @@ python-frontmatter
 python-slugify
 readmd
 redo
+reformat_gherkin
 requests
 ruamel.yaml
 selenium
 toml
-reformat_gherkin
