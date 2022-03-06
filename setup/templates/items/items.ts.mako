@@ -21,7 +21,7 @@ type Valid = {
 }
 
 function err2string(err: ErrorObject, obj: { itemType: string }): string {
-  if (err.keyword === 'additionalProperties') return 'Unexpected property ' + (err.params.additionalProperty as string) + ' on ' + obj.itemType
+  if (!err.instancePath && err.keyword === 'additionalProperties') return 'Unexpected property ' + (err.params.additionalProperty as string) + ' on ' + obj.itemType
   return (err.instancePath || '??') + ' ' + err.message
 }
 
