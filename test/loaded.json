@@ -79,6 +79,8 @@
   "export/Better Biblatex export generates invalid latex when processing zero-width spaces #1892.json",
   "export/Better CSL JSON does not include authority field #2019.csl.json",
   "export/Better CSL JSON does not include authority field #2019.json",
+  "export/BetterBibLaTeX exports articles as online #2058.biblatex",
+  "export/BetterBibLaTeX exports articles as online #2058.json",
   "export/BetterBibLaTeX; Software field company is mapped to publisher instead of organization #1054.biblatex",
   "export/BetterBibLaTeX; Software field company is mapped to publisher instead of organization #1054.json",
   "export/BetterBibtex export fails for missing last name #978.bibtex",
