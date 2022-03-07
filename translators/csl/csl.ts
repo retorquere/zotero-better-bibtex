@@ -36,22 +36,15 @@ export const CSLExporter = new class { // eslint-disable-line @typescript-eslint
   public initialize() {
     try {
       if (Translator.preferences.postscript.trim()) {
-        this.postscript = new Function(
-          'entry',
-          'item',
-          'Translator',
-          'Zotero',
-          'extra',
-          postscript.body(Translator.preferences.postscript)
-        ) as postscript.Postscript
+        this.postscript = postscript.postscript('csl', Translator.preferences.postscript)
       }
       else {
-        this.postscript = postscript.noop as postscript.Postscript
+        this.postscript = postscript.noop
       }
     }
     catch (err) {
-      this.postscript = postscript.noop as postscript.Postscript
-      log.debug('failed to install postscript', err, '\n', postscript.body(Translator.preferences.postscript))
+      this.postscript = postscript.noop
+      log.debug('failed to install postscript', err, '\n', Translator.preferences.postscript)
     }
   }
   public postscript(_entry, _item, _translator, _zotero, _extra): postscript.Allow {

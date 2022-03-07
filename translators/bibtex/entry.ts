@@ -171,23 +171,19 @@ export class Entry {
   public static installPostscript(): void {
     try {
       if (Translator.preferences.postscript.trim()) {
-        // workaround for https://github.com/Juris-M/zotero/issues/65
-        Entry.prototype.postscript = new Function(
-          'entry',
-          'item',
-          'Translator',
-          'Zotero',
-          'extra',
-          postscript.body(Translator.preferences.postscript, 'this.inPostscript')
-        ) as postscript.Postscript
+        Entry.prototype.postscript = postscript.postscript(
+          'tex',
+          Translator.preferences.postscript,
+          'this.inPostscript' // workaround for https://github.com/Juris-M/zotero/issues/65
+        )
       }
       else {
-        Entry.prototype.postscript = postscript.noop as postscript.Postscript
+        Entry.prototype.postscript = postscript.noop
       }
     }
     catch (err) {
-      Entry.prototype.postscript = postscript.noop as postscript.Postscript
-      log.debug('failed to install postscript', err, '\n', postscript.body(Translator.preferences.postscript))
+      Entry.prototype.postscript = postscript.noop
+      log.debug('failed to install postscript', err, '\n', Translator.preferences.postscript)
     }
   }
 
