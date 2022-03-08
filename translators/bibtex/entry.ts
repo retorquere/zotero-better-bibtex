@@ -881,8 +881,29 @@ export class Entry {
    * @return {String} field.value encoded as verbatim LaTeX string (minimal escaping).
    */
   protected enc_verbatim(f): string {
+    let value: string = f.value || ''
     // if (!Translator.unicode) value = value.replace(/[^\x20-\x7E]/g, (chr => `\\%${`00${chr.charCodeAt(0).toString(16).slice(-2)}`}`))
-    return (f.value || '').replace(/([\\{}])/g, '\\$1')
+
+    // remove unbalanced braces
+    const braces: {c: string, pos: number}[] = []
+    for (let i = 0; i < value.length; i++) {
+      if (value[i] === '{') {
+        braces.unshift({c: value[i], pos: i})
+      }
+      else if (value[i] === '}') {
+        if (braces.length && braces[0].c === '{') {
+          braces.shift()
+        }
+        else {
+          braces.unshift({c: '', pos: i})
+        }
+      }
+    }
+    for (const b of braces) { // braces is already reversed
+      value = value.substring(0, b.pos) + value.substring(b.pos + 1)
+    }
+
+    return value
   }
 
   protected _enc_creators_scrub_name(name: string): string {
