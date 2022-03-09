@@ -72,7 +72,7 @@
     "kuromoji": "^0.1.2",
     "ooooevan-jieba": "^1.0.3",
     "parse5": "^6.0.1",
-    "pinyin": "^2.11.0",
+    "pinyin": "^2.11.1",
     "punycode2": "^1.0.0",
     "sprintf-js": "^1.1.2",
     "text-title-case": "^1.0.2",
@@ -82,7 +82,7 @@
     "xregexp": "^5.1.0"
   },
   "devDependencies": {
-    "@retorquere/bibtex-parser": "^6.1.0",
+    "@retorquere/bibtex-parser": "^6.1.2",
     "@retorquere/zotero-sync": "^1.0.23",
     "@types/bluebird": "^3.5.36",
     "@types/lokijs": "^1.5.7",
@@ -137,7 +137,7 @@
     "process": "^0.11.10",
     "properties-reader": "^2.2.0",
     "pug": "^3.0.2",
-    "putout": "^25.3.0",
+    "putout": "^25.4.1",
     "rimraf": "^3.0.2",
     "shelljs": "^0.8.5",
     "string-template": "^1.0.0",
