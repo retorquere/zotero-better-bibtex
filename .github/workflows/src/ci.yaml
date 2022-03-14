@@ -125,7 +125,7 @@ jobs:
     # needs logs/logs to have them show up as logs in the artifact... no idea why
     - name: Run tests
       # continue-on-error: ${{ matrix.client == 'jurism' }}
-      run: xvfb-run --auto-servernum ./test/behave --client ${{ matrix.client }} --logs logs/logs --format travis --bin ${{ matrix.bin }} ${{ steps.test.outputs.this }}
+      run: xvfb-run --auto-servernum ./test/behave --client ${{ matrix.client }} --logs logs/logs --format ci --bin ${{ matrix.bin }} ${{ steps.test.outputs.this }}
       env:
         PYTHONUNBUFFERED: true
 

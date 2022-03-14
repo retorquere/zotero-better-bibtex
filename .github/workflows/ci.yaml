@@ -117,7 +117,7 @@ jobs:
       run: echo "##[set-output name=this;]--test-this"
       id: test
     - name: Run tests
-      run: xvfb-run --auto-servernum ./test/behave --client ${{ matrix.client }} --logs logs/logs --format travis --bin ${{ matrix.bin }} ${{ steps.test.outputs.this }}
+      run: xvfb-run --auto-servernum ./test/behave --client ${{ matrix.client }} --logs logs/logs --format ci --bin ${{ matrix.bin }} ${{ steps.test.outputs.this }}
       env:
         PYTHONUNBUFFERED: true
     - uses: actions/upload-artifact@v2
