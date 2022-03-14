@@ -17,7 +17,7 @@ export function postscript(kind: 'csl' | 'tex', main: string, guard?: string): P
 
   if (kind === 'tex') {
     body += `
-      reference.referencetype = entry.entrytype
+      const entrytype = reference.referencetype = entry.entrytype
     `
   }
 
@@ -29,7 +29,13 @@ export function postscript(kind: 'csl' | 'tex', main: string, guard?: string): P
 
   if (kind === 'tex') {
     body += `
-      if (reference.referencetype !== entry.entrytype) entry.entrytype = reference.referencetype
+      if (entry.entrytype !== entrytype) {
+        // entrytype changed, keep as-is
+      }
+      else if (reference.referencetype !== entrytype) {
+        // phase out reference
+        entry.entrytype = reference.referencetype
+      }
       delete entry.referencetype
     `
   }
