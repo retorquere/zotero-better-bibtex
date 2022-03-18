@@ -83,6 +83,9 @@ document preferences and click `OK` *before* you refresh, or you'll get a confir
 popup for each citation. Also, the Word document is sometimes deemed
 corrupt when opening it, but running the pandoc command again without
 any changes fixes it ¯\\\_(ツ)\_/¯
+LibreOffice doesn't recognise Zotero citations in DOCX,
+see [issue #2070](https://github.com/retorquere/zotero-better-bibtex/issues/2070),
+and you must use ODT.
 
 You can also specify `transferable: true` to create a [transferable document](https://www.zotero.org/support/kb/moving_documents_between_word_processors). You don't really need this for ODT or DOCX (just use Pandoc to create those directly using this filter), but it will allow transferring your document to GDocs.
 
