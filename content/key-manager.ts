@@ -354,6 +354,7 @@ export class KeyManager {
         delete item.extra
         this.keys.update(item)
       }
+      this.keys.removeWhere(i => !i.citekey) // 2047
     }
 
     if (Array.isArray(this.scanning)) {
