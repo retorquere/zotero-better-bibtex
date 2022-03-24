@@ -123,7 +123,6 @@
     "is-isbn": "^1.1.0",
     "js-yaml": "^4.1.0",
     "jsesc": "^3.0.2",
-    "json5": "^2.2.1",
     "kuroshiro": "^1.2.0",
     "kuroshiro-analyzer-kuromoji": "^1.1.0",
     "lodash": "^4.17.21",
