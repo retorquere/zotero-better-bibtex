@@ -165,7 +165,6 @@ Feature: Export
 
     Examples:
       | file                                                                                                               | references |
-      | BibTeX export is incompatible with Zotero 6 Preprint item type. #2080                                              | 1          |
       | Non-breakable spaces in author fields should be exported as tilde #1430                                            | 1          |
       | University is exported as publisher as soon as tex.referencetype is specified in Extra field #1965                 | 1          |
       | fetch inspire-hep key #1879                                                                                        | 1          |
@@ -237,6 +236,10 @@ Feature: Export
       | date ranges #747+#746                                                                                              | 5          |
       | preserve @strings between import-export #1162                                                                      | 1          |
       | titles are title-cased in .bib file #558                                                                           | 2          |
+
+    @use.with_client=zotero
+    Examples:
+      | BibTeX export is incompatible with Zotero 6 Preprint item type. #2080                                              | 1          |
 
   @csl
   Scenario Outline: Export <references> references for CSL JSON to <file>

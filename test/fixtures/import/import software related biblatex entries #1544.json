@@ -2,12 +2,95 @@
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "localeDateOrder": "mdy",
+    "localeDateOrder": "dmy",
     "options": {
-      "exportNotes": true
+      "exportFileData": false,
+      "exportNotes": false,
+      "keepUpdated": false
     },
     "preferences": {
-      "citekeyFormat": "[auth:lower][shorttitle3_3][year]"
+      "DOIandURL": "both",
+      "ascii": "",
+      "asciiBibLaTeX": false,
+      "asciiBibTeX": true,
+      "autoAbbrev": false,
+      "autoAbbrevStyle": "",
+      "autoExport": "immediate",
+      "autoExportDelay": 5,
+      "autoExportIdleWait": 10,
+      "autoExportPathReplaceDiacritics": false,
+      "autoExportPathReplaceDirSep": "-",
+      "autoExportPathReplaceSpace": " ",
+      "autoPinDelay": 0,
+      "automaticTags": true,
+      "auxImport": false,
+      "baseAttachmentPath": "",
+      "biblatexExtendedDateFormat": true,
+      "biblatexExtendedNameFormat": false,
+      "biblatexExtractEprint": true,
+      "bibtexParticleNoOp": false,
+      "bibtexURL": "off",
+      "cacheFlushInterval": 5,
+      "caching": true,
+      "citeCommand": "cite",
+      "citekeyFold": true,
+      "citekeyFormat": "[auth][year]",
+      "citekeySearch": true,
+      "csquotes": "",
+      "exportBibTeXStrings": "off",
+      "exportBraceProtection": true,
+      "exportTitleCase": true,
+      "extraMergeCSL": false,
+      "extraMergeCitekeys": false,
+      "extraMergeTeX": false,
+      "git": "config",
+      "import": true,
+      "importBibTeXStrings": true,
+      "importCaseProtection": "as-needed",
+      "importCitationKey": true,
+      "importExtra": true,
+      "importJabRefAbbreviations": true,
+      "importJabRefStrings": true,
+      "importSentenceCase": "on+guess",
+      "importUnknownTexCommand": "ignore",
+      "itemObserverDelay": 5,
+      "jabrefFormat": 0,
+      "jieba": false,
+      "keyConflictPolicy": "keep",
+      "keyScope": "library",
+      "kuroshiro": false,
+      "mapMath": "",
+      "mapText": "",
+      "mapUnicode": "conservative",
+      "parseParticles": true,
+      "patchDates": "",
+      "platform": "",
+      "postscript": "",
+      "postscriptOverride": "",
+      "preferencesOverride": "",
+      "qualityReport": false,
+      "quickCopyEta": "",
+      "quickCopyMode": "latex",
+      "quickCopyOrgMode": "zotero",
+      "quickCopyPandocBrackets": false,
+      "quickCopySelectLink": "zotero",
+      "rawImports": false,
+      "rawLaTag": "#LaTeX",
+      "relativeFilePaths": false,
+      "retainCache": false,
+      "scrubDatabase": false,
+      "separatorList": "and",
+      "separatorNames": "and",
+      "skipFields": "",
+      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
+      "startupProgress": "popup",
+      "strings": "",
+      "stringsOverride": "",
+      "testing": true,
+      "verbatimFields": "url,doi,file,ids,eprint,verba,verbb,verbc,groups",
+      "warnBulkModify": 10,
+      "warnTitleCased": false,
+      "workers": 1
     }
   },
   "items": [
@@ -15,12 +98,12 @@
       "abstractNote": "Software for Numerical Computation freely distributed.",
       "attachments": [
         {
-          "accessDate": "2020-06-18T17:08:08Z",
+          "accessDate": "2022-03-25T20:56:08Z",
           "itemType": "attachment",
-          "key": "KUAFMPKL",
+          "key": "F88UYK5Z",
           "linkMode": "linked_url",
           "title": "scilab-1.1.tar",
-          "uri": "http://zotero.org/users/local/q1jn3DXi/items/KUAFMPKL",
+          "uri": "http://zotero.org/users/8230813/items/F88UYK5Z",
           "url": "https://hal.inria.fr/hal-02090402/file/scilab-1.1.tar.gz"
         }
       ],
@@ -28,7 +111,7 @@
       "creators": [
         {
           "creatorType": "programmer",
-          "firstName": "Fran\u00e7ois",
+          "firstName": "François",
           "lastName": "Delebecque"
         },
         {
@@ -58,11 +141,13 @@
         }
       ],
       "date": "1994-01",
+      "dateAdded": "2022-03-25T20:56:08Z",
+      "dateModified": "2022-03-25T20:56:08Z",
       "extra": [
         "Citation Key: delebecque:hal-02090402v1",
+        "Publisher: https://github.com/scilab/scilab",
         "tex.hal_id: hal-02090402",
         "tex.hal_version: v1",
-        "tex.repository: https://github.com/scilab/scilab",
         "tex.swhid: swh:1:dir:1ba0b67b5d0c8f10961d878d91ae9d6e499d746a; origin=https://hal.archives-ouvertes.fr/hal-02090402"
       ],
       "itemID": 1,
@@ -73,8 +158,13 @@
       "publisher": "Inria",
       "rights": "Scilab license",
       "title": "Scilab",
+      "uri": "http://zotero.org/users/8230813/items/EEBQ6MJD",
       "url": "https://www.scilab.org/",
       "versionNumber": "1.1"
     }
-  ]
+  ],
+  "version": {
+    "bbt": "6.2.14.emile.limonia",
+    "zotero": "6.0.3"
+  }
 }
