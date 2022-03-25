@@ -165,6 +165,7 @@ Feature: Export
 
     Examples:
       | file                                                                                                               | references |
+      | BibTeX export is incompatible with Zotero 6 Preprint item type. #2080                                              | 1          |
       | Non-breakable spaces in author fields should be exported as tilde #1430                                            | 1          |
       | University is exported as publisher as soon as tex.referencetype is specified in Extra field #1965                 | 1          |
       | fetch inspire-hep key #1879                                                                                        | 1          |

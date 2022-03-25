@@ -433,6 +433,9 @@
           "archiveCollection": {
             "type": "string"
           },
+          "archiveID": {
+            "type": "string"
+          },
           "archiveLocation": {
             "type": "string"
           },
@@ -649,6 +652,7 @@
           },
           "itemType": {
             "enum": [
+              "annotation",
               "artwork",
               "attachment",
               "audioRecording",
@@ -680,6 +684,7 @@
               "note",
               "patent",
               "podcast",
+              "preprint",
               "presentation",
               "radioBroadcast",
               "regulation",

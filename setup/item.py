@@ -66,7 +66,7 @@ class fetch(object):
         json.loads(urlopen("https://www.zotero.org/download/client/manifests/release/updates-linux-x86_64.json").read().decode("utf-8"))
         if not rel['version'] in releases
       ]
-      releases = [rel for rel in releases if rel.startswith('5.')]
+      releases = [rel for rel in releases if int(rel.split('.')[0]) >= 5]
       releases = sorted(releases, key=lambda r: [int(n) for n in r.replace('m', '.').split('.')])
       self.update(
         client=client,
