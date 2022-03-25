@@ -64,7 +64,6 @@
       "mapUnicode": "conservative",
       "parseParticles": true,
       "patchDates": "",
-      "platform": "",
       "postscript": "",
       "postscriptOverride": "",
       "preferencesOverride": "",
@@ -86,7 +85,6 @@
       "startupProgress": "popup",
       "strings": "",
       "stringsOverride": "",
-      "testing": true,
       "verbatimFields": "url,doi,file,ids,eprint,verba,verbb,verbc,groups",
       "warnBulkModify": 10,
       "warnTitleCased": false,
@@ -162,9 +160,5 @@
       "url": "https://www.scilab.org/",
       "versionNumber": "1.1"
     }
-  ],
-  "version": {
-    "bbt": "6.2.14.emile.limonia",
-    "zotero": "6.0.3"
-  }
+  ]
 }
