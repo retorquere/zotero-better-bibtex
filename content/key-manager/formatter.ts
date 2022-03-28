@@ -34,6 +34,7 @@ import { kuroshiro } from './japanese'
 import AJV from 'ajv'
 import { validator } from '../ajv'
 const ajv = new AJV({ coerceTypes: true })
+import csv from 'papaparse'
 
 import BabelTag from '../../gen/babel/tag.json'
 type ValueOf<T> = T[keyof T]
@@ -264,6 +265,8 @@ class PatternFormatter {
     caseNotUpper: Zotero.Utilities.XRegExp('[^\\p{Lu}]', 'g'),
     word: Zotero.Utilities.XRegExp('[\\p{L}\\p{Nd}\\{Pc}\\p{M}]+(-[\\p{L}\\p{Nd}\\{Pc}\\p{M}]+)*', 'g'),
   }
+
+  private acronyms: Record<string, Record<string, string>> = {}
 
   /*
    * three-letter month abbreviations. I assume these are the same ones that the
@@ -827,6 +830,50 @@ class PatternFormatter {
    */
   public _abbr() {
     return this.set(this.value.split(/\s+/).map(word => word.substring(0, 1)).join(' '))
+  }
+
+  /**
+   * Does an acronym lookup for the text. You can optionally pass the name of the list; the list must live in the Zotero/better-bibtex directory in your profile,
+   * and must use commas as the delimiter.
+   */
+  public _acronym(list='acronyms') {
+    list = list.replace(/\.csv$/i, '')
+
+    try {
+      if (!this.acronyms[list]) {
+        this.acronyms[list] = {}
+        for (const row of csv.parse(Zotero.File.getContents(OS.Path.join(Zotero.BetterBibTeX.dir, `${list}.csv`)))) {
+          switch (row.length) {
+            case 0:
+            case 1:
+              log.debug('acronyms: parsing', list, row, 'too short')
+              continue
+            case 2:
+              break
+            default:
+              log.debug('acronyms: parsing', list, row, 'too long')
+              break
+          }
+
+          const [ full, acro ] = row.map((cell: string) => cell.trim()) as [string, string]
+
+          if (!full || !acro) {
+            log.debug('acronyms: parsing', list, row, 'incomplete')
+            continue
+          }
+          else if (this.acronyms[list][full]) {
+            log.debug('acronyms: parsing', list, row, 'duplicate')
+          }
+          this.acronyms[list][full.toLowerCase()] = acro
+        }
+      }
+    }
+    catch (err) {
+      log.debug('error parsing acronym list', list)
+      this.acronyms[list] = {}
+    }
+
+    return this.set(this.acronyms[list][this.value.toLowerCase()] || this.value)
   }
 
   /** Forces the text inserted by the field marker to be in lowercase. For example, `[auth:lower]` expands the last name of the first author in lowercase. */
