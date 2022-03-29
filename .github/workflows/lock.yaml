@@ -8,12 +8,17 @@ jobs:
   lock:
     runs-on: ubuntu-latest
     steps:
+      # 30 days of inactivity => silent close
       - uses: dessant/lock-threads@v2
         with:
           github-token: ${{ github.token }}
           issue-lock-inactive-days: '30'
-#          issue-lock-reason: 'resolved'
-#          issue-lock-comment: >
-#            This issue has been automatically locked since there
-#            has not been any recent activity after it was closed.
-#            Please open a new issue for related bugs.
+      - uses: dessant/lock-threads@v2
+        with:
+          github-token: ${{ github.token }}
+          issue-lock-inactive-days: '3'
+          include-any-issue-labels: needs-support-log
+          issue-lock-reason: ''
+          issue-lock-comment: >
+            This issue has been automatically locked since there
+            has been no reaction to the request of a support log.
