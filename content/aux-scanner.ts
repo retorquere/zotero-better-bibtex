@@ -81,19 +81,24 @@ export const AUXScanner = new class { // eslint-disable-line @typescript-eslint/
   }
 
   private async parse(path: string, citekeys: string[], bibfiles: Record<string, string>): Promise<Source> {
-    switch (path.toLowerCase().split('.').pop()) {
-      case 'aux':
-        await this.parseAUX(path, citekeys, bibfiles)
-        return 'BibTeX AUX'
+    try {
+      switch (path.toLowerCase().split('.').pop()) {
+        case 'aux':
+          await this.parseAUX(path, citekeys, bibfiles)
+          return 'BibTeX AUX'
 
-      case 'md':
-        if (this.pandoc) {
-          await this.parseMD(path, citekeys)
-          return 'MarkDown'
-        }
-        break
+        case 'md':
+          if (this.pandoc) {
+            await this.parseMD(path, citekeys)
+            return 'MarkDown'
+          }
+          break
+      }
+      throw new Error(`Unsupported file type for ${path}`)
     }
-    alert(`Unsupported file type for ${path}`)
+    catch (err) {
+      alert(`AUX/Markdown scan failed: ${err.message}`)
+    }
     return null
   }
 
@@ -103,6 +108,7 @@ export const AUXScanner = new class { // eslint-disable-line @typescript-eslint/
     if (!(await OS.File.exists(filter))) {
       const file = Zotero.File.pathToFile(filter)
       const contents = Zotero.File.getContentsFromURL(`resource://zotero-better-bibtex/${lua}`)
+      log.debug('installing', lua, 'to', filter, ':\n', contents)
       Zotero.File.putContents(file, contents)
     }
 
