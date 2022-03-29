@@ -106,10 +106,12 @@ export const AUXScanner = new class { // eslint-disable-line @typescript-eslint/
     const lua = 'list-citekeys.lua'
     const filter = OS.Path.join(Zotero.BetterBibTeX.dir, lua)
     if (!(await OS.File.exists(filter))) {
+      const url = `resource://zotero-better-bibtex/${lua}`
+      log.debug('installing', url, 'to', filter, ':\n', contents)
       const file = Zotero.File.pathToFile(filter)
-      const contents = Zotero.File.getContentsFromURL(`resource://zotero-better-bibtex/${lua}`)
-      log.debug('installing', lua, 'to', filter, ':\n', contents)
+      const contents = Zotero.File.getContentsFromURL(url)
       Zotero.File.putContents(file, contents)
+      log.debug('installed', url, 'to', filter, ':\n', contents)
     }
 
     const output: any = OS.Path.join(Zotero.getTempDirectory().path, `citekeys_${Zotero.Utilities.randomString()}.txt`)
@@ -121,7 +123,7 @@ export const AUXScanner = new class { // eslint-disable-line @typescript-eslint/
     }
     catch (e) {
       alert(`pandoc parsing error ${e}`)
-      log.debug('pandoc parsing error:', e)
+      log.error('pandoc parsing error:', e)
       return
     }
     finally {
