@@ -103,19 +103,38 @@ export const AUXScanner = new class { // eslint-disable-line @typescript-eslint/
     return null
   }
 
-  private async parseMD(path: string, citekeys: string[]) {
+  private async luaFilter(): Promise<string> {
     const lua = `list-citekeys-${version}.lua`
+
+    const filters: string[] = []
+    const iterator = new OS.File.DirectoryIterator(Zotero.BetterBibTeX.dir)
+    try {
+      await iterator.forEach(entry => {
+        if (entry.isFile && entry.name !== lua && entry.name.match(/^list-citekeys.*\.lua$/)) filters.push(entry.name)
+      })
+    }
+    finally {
+      iterator.close()
+    }
+    for (const old of filters) {
+      await OS.File.remove(OS.Path.join(Zotero.BetterBibTeX.dir, old))
+    }
+
     const filter = OS.Path.join(Zotero.BetterBibTeX.dir, lua)
     if (!(await OS.File.exists(filter))) {
-      const url = `resource://zotero-better-bibtex/${lua}`
+      const url = 'resource://zotero-better-bibtex/list-citekeys.lua'
       log.debug('installing', url, 'to', filter)
       const file = Zotero.File.pathToFile(filter)
       const contents = Zotero.File.getContentsFromURL(url)
       Zotero.File.putContents(file, contents)
       log.debug('installed', url, 'to', filter, ':\n', contents)
     }
+    return filter
+  }
 
-    const output: any = OS.Path.join(Zotero.getTempDirectory().path, `citekeys_${Zotero.Utilities.randomString()}.txt`)
+  private async parseMD(path: string, citekeys: string[]) {
+    const filter = await this.luaFilter()
+    const output: string = OS.Path.join(Zotero.getTempDirectory().path, `citekeys_${Zotero.Utilities.randomString()}.txt`)
     try {
       await Zotero.Utilities.Internal.exec(this.pandoc, [ '--lua-filter', filter, '-t', 'markdown', '-o', output, path ])
       for (const citekey of (await Zotero.File.getContentsAsync(output)).split(/\s+/)) {
