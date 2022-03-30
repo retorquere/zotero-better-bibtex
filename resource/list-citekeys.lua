@@ -7,19 +7,15 @@ function Cite(cite)
   return nil
 end
 
-printed = false
-function Block(block)
-  body = ''
-  if not printed then
-    printed = true
-    for id, _ in pairs(citekeys) do
-      body = body .. id .. ' '
-    end
+function Pandoc(doc)
+  body = {}
+  for citekey, _ in pairs(citekeys) do
+    table.insert(body, pandoc.Plain(citekey))
   end
-  return pandoc.Plain(body)
+  return pandoc.Pandoc(body)
 end
 
 return {
   { Cite = Cite },
-  { Block = Block },
+  { Pandoc = Pandoc },
 }
