@@ -5,6 +5,7 @@ import { Preference } from '../gen/preferences'
 import { pick } from './file-picker'
 import { pathSearch } from './path-search'
 import { log } from './logger'
+const version = require('../gen/version.js')
 
 type Source = 'MarkDown' | 'BibTeX AUX'
 
@@ -103,7 +104,7 @@ export const AUXScanner = new class { // eslint-disable-line @typescript-eslint/
   }
 
   private async parseMD(path: string, citekeys: string[]) {
-    const lua = 'list-citekeys.lua'
+    const lua = `list-citekeys-${version}.lua`
     const filter = OS.Path.join(Zotero.BetterBibTeX.dir, lua)
     if (!(await OS.File.exists(filter))) {
       const url = `resource://zotero-better-bibtex/${lua}`
