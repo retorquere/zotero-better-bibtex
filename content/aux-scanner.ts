@@ -107,7 +107,7 @@ export const AUXScanner = new class { // eslint-disable-line @typescript-eslint/
     const filter = OS.Path.join(Zotero.BetterBibTeX.dir, lua)
     if (!(await OS.File.exists(filter))) {
       const url = `resource://zotero-better-bibtex/${lua}`
-      log.debug('installing', url, 'to', filter, ':\n', contents)
+      log.debug('installing', url, 'to', filter)
       const file = Zotero.File.pathToFile(filter)
       const contents = Zotero.File.getContentsFromURL(url)
       Zotero.File.putContents(file, contents)

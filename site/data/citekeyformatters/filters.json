@@ -1,5 +1,6 @@
 {
   "`abbr`": "Abbreviates the text. Only the first character and subsequent characters following white space will be included.",
+  "`acronym`=list? (string)": "Does an acronym lookup for the text. You can optionally pass the name of the list; the list must live in the Zotero/better-bibtex directory in your profile, and must use commas as the delimiter.",
   "`alphanum`": "clears out everything but unicode alphanumeric characters (unicode character classes `L` and `N`)",
   "`ascii`": "removes all non-ascii characters",
   "`capitalize`": "uppercases the first letter of each word",
