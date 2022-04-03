@@ -550,7 +550,7 @@ Feature: Export
     Then an export using "Better BibTeX" should match "export/*.bibtex"
     Then an export using "Better BibTeX" with cacheUse on should match "export/*-cached.bibtex"
     When I set preference .caching to false
-    Then an export using "Better BibTeX" should match "export/*.bibtex", but take no more than 400 seconds
+    Then an export using "Better BibTeX" with cacheUse on should match "export/*-uncached.bibtex"
 
   # tests without cache prefill
   @use.with_client=zotero @use.with_slow=true @timeout=3000 @whopper-uncached
