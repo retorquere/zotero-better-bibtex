@@ -230,15 +230,14 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
     const deferred = new Deferred<string>()
     let worker: Worker = null
-    // WHAT IS GOING ON HERE FIREFOX?!?! A *NetworkError* for a xpi-internal resource:// URL?!
     try {
-      worker = new ChromeWorker(`resource://zotero-better-bibtex/worker/zotero.js?${workerContext}`)
+      worker = new ChromeWorker(`chrome://zotero-better-bibtex/content/worker/zotero.js?${workerContext}`)
     }
     catch (err) {
       deferred.reject('could not get a Worker')
       flash(
         'Failed to start background export',
-        'Could not start a background export after 5 attempts. Background exports have been disabled -- PLEASE report this as a bug at the Better BibTeX github project',
+        'Could not start a background export. Background exports have been disabled -- PLEASE report this as a bug at the Better BibTeX github project',
         15 // eslint-disable-line no-magic-numbers
       )
       this.workers.disabled = true
