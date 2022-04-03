@@ -54,14 +54,12 @@ export const JournalAbbrev = new class { // eslint-disable-line @typescript-esli
     }
   }
 
-  public get(item, mode: 'abbrev' | 'auto' | 'abbrev+auto' = 'abbrev'): string {
-    if (!Preference.autoAbbrev) mode = 'abbrev'
-
+  public get(item, mode: 'abbrev' | 'auto' | 'abbrev+auto' = 'abbrev+auto'): string {
     let abbrev = ''
     let journal: string
     const zotero_item = !!(item.setType)
 
-    if (mode.startsWith('user')) {
+    if (mode.startsWith('abbrev')) {
       if (zotero_item) {
         try {
           abbrev = item.getField('journalAbbreviation', false, true)
