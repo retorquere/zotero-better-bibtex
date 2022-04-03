@@ -1,4 +1,4 @@
-import { Preference } from '../gen/preferences'
+import { Preference } from './prefs'
 import { Events } from './events'
 import { client } from './client'
 

@@ -2,7 +2,7 @@
 
 import { Translators } from '../translators'
 import { getItemsAsync } from '../get-items-async'
-import { Preference } from '../../gen/preferences'
+import { Preference } from '../prefs'
 import { log } from '../logger'
 import { fromEntries } from '../object'
 import { scannableCite } from '../../gen/ScannableCite'

@@ -9,7 +9,7 @@ declare const ZOTERO_CONFIG: any
 
 import { Deferred } from './deferred'
 import type { Translators as Translator } from '../typings/translators'
-import { Preference } from '../gen/preferences'
+import { Preference } from './prefs'
 import { schema } from '../gen/preferences/meta'
 import { Serializer } from './serializer'
 import { log } from './logger'

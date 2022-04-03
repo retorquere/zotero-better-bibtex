@@ -6,7 +6,7 @@ import { log } from './logger'
 import { patch as $patch$ } from './monkey-patch'
 import { DB as Cache } from './db/cache'
 
-import { Preference } from '../gen/preferences'
+import { Preference } from './prefs'
 import { options as preferenceOptions } from '../gen/preferences/meta'
 import { Formatter } from './key-manager/formatter'
 import { AutoExport } from './auto-export'

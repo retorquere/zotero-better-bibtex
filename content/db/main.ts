@@ -1,5 +1,5 @@
 import { XULoki as Loki } from './loki'
-import { Preference } from '../../gen/preferences'
+import { Preference } from '../prefs'
 import { schema } from '../../gen/preferences/meta'
 import { getItemsAsync } from '../get-items-async'
 import { log } from '../logger'

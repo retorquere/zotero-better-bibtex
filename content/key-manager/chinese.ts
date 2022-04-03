@@ -1,4 +1,4 @@
-import { Preference } from '../../gen/preferences'
+import { Preference } from '../prefs'
 import { log } from '../logger'
 import { Events } from '../events'
 

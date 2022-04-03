@@ -15,7 +15,7 @@ import * as ZoteroDB from './db/zotero'
 
 import { getItemsAsync } from './get-items-async'
 
-import { Preference } from '../gen/preferences'
+import { Preference } from './prefs'
 import { Formatter } from './key-manager/formatter'
 import { DB } from './db/main'
 import { DB as Cache } from './db/cache'

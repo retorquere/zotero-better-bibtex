@@ -9,7 +9,7 @@ import scripts = require('xregexp/tools/output/scripts')
 import { transliterate } from 'transliteration'
 
 import { flash } from '../flash'
-import { Preference } from '../../gen/preferences'
+import { Preference } from '../prefs'
 import { JournalAbbrev } from '../journal-abbrev'
 import * as Extra from '../extra'
 import { buildCiteKey as zotero_buildCiteKey } from './formatter-zotero'

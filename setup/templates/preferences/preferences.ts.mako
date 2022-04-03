@@ -1,121 +1,18 @@
 /* eslint-disable no-magic-numbers, @typescript-eslint/quotes, max-len */
-declare const Services: any
 
-import { Events } from '../content/events'
 <%
   import json
   prefix = 'translators.better-bibtex.'
 %>
 declare const Zotero: any
-const prefix = '${prefix}'
 
 import { Preferences, names, defaults } from './preferences/meta'
 import { fromEntries } from '../content/object'
 
-export const Preference = new class PreferenceManager {
+export class PreferenceManager {
   public default = defaults
+  public prefix = '${prefix}'
 
-  constructor() {
-    let old, key
-
-    this.baseAttachmentPath = Zotero.Prefs.get('baseAttachmentPath')
-    Zotero.Prefs.registerObserver('baseAttachmentPath', val => { this.baseAttachmentPath = val })
-
-    // clear out old keys
-    const oops = 'extensions.translators.better-bibtex.'
-    for (key of Services.prefs.getBranch(oops).getChildList('', {}) as string[]) {
-      Zotero.Prefs.clear(oops + key, true) // eslint-disable-line @typescript-eslint/restrict-plus-operands
-    }
-    if (typeof Zotero.Prefs.get(key = '${prefix}citeprocNoteCitekey') !== 'undefined') Zotero.Prefs.clear(key)
-    if (typeof Zotero.Prefs.get(key = '${prefix}newTranslatorsAskRestart') !== 'undefined') Zotero.Prefs.clear(key)
-
-    // migrate ancient keys
-    if ((old = Zotero.Prefs.get(key = '${prefix}quickCopyMode')) === 'orgmode_citekey') {
-      Zotero.Prefs.set(key, 'orgmode')
-      Zotero.Prefs.set('${prefix}quickCopyOrgMode', 'citationkey')
-    }
-    if ((old = Zotero.Prefs.get(key = '${prefix}quickCopyMode')) === 'selectLink_citekey') {
-      Zotero.Prefs.set(key, 'selectlink')
-      Zotero.Prefs.set('${prefix}quickCopySelectLink', 'citationkey')
-    }
-    if ((old = Zotero.Prefs.get(key = '${prefix}quickCopyMode')) === 'selectLink') {
-      Zotero.Prefs.set(key, 'selectlink')
-    }
-    if (typeof (old = Zotero.Prefs.get(key = '${prefix}workers')) !== 'undefined') {
-      Zotero.Prefs.rootBranch.setIntPref('extensions.zotero.${prefix}workers', typeof old === 'number' ? old : 1)
-    }
-    if (typeof (old = Zotero.Prefs.get(key = '${prefix}workersMax')) !== 'undefined') {
-      Zotero.Prefs.clear(key)
-      Zotero.Prefs.set('${prefix}workers', typeof old === 'number' ? old : 1)
-    }
-    if (typeof (old = Zotero.Prefs.get(key = '${prefix}workersCache')) !== 'undefined') {
-      Zotero.Prefs.clear(key)
-      Zotero.Prefs.rootBranch.setBoolPref('extensions.zotero.${prefix}caching', !!old)
-    }
-    if (typeof (old = Zotero.Prefs.get(key = '${prefix}caching')) !== 'boolean') {
-      Zotero.Prefs.rootBranch.setBoolPref('extensions.zotero.${prefix}caching', !!old)
-    }
-    if (typeof (old = Zotero.Prefs.get(key = '${prefix}suppressTitleCase')) !== 'undefined') {
-      Zotero.Prefs.clear(key)
-      Zotero.Prefs.set('${prefix}exportTitleCase', !old)
-    }
-    if (typeof (old = Zotero.Prefs.get(key = '${prefix}suppressBraceProtection')) !== 'undefined') {
-      Zotero.Prefs.clear(key)
-      Zotero.Prefs.set('${prefix}exportBraceProtection', !old)
-    }
-    if (typeof (old = Zotero.Prefs.get(key = '${prefix}suppressSentenceCase')) !== 'undefined') {
-      Zotero.Prefs.clear(key)
-      Zotero.Prefs.set('${prefix}importSentenceCase', old ? 'off' : 'on+guess')
-    }
-    if (typeof (old = Zotero.Prefs.get(key = '${prefix}suppressNoCase')) !== 'undefined') {
-      Zotero.Prefs.clear(key)
-      Zotero.Prefs.set('${prefix}importCaseProtection', old ? 'off' : 'as-needed')
-    }
-    if (typeof (old = Zotero.Prefs.get(key = '${prefix}autoPin')) !== 'undefined') {
-      Zotero.Prefs.clear(key)
-      Zotero.Prefs.set('${prefix}autoPinDelay', old ? 1 : 0)
-    }
-    if (Zotero.Prefs.get(key = '${prefix}autoExportDelay') === 1) {
-      Zotero.Prefs.set(key, defaults.autoExportDelay)
-    }
-
-    // set defaults and install event emitter
-    for (const pref of names) {
-      if (pref !== 'platform') {
-        if (typeof this[pref] === 'undefined') (this[pref] as any) = (typeof defaults[pref] === 'string' ? (defaults[pref] as string).replace(/^\u200B/, '') : defaults[pref])
-        Zotero.Prefs.registerObserver(<%text>`${prefix}${pref}`</%text>, this.changed.bind(this, pref))
-      }
-    }
-    // put this in a preference so that translators can access this.
-    if (Zotero.isWin) {
-      this.platform = 'win'
-    }
-    else if (Zotero.isMac) {
-      this.platform = 'mac'
-    }
-    else {
-      if (!Zotero.isLinux) Zotero.debug('error: better-bibtex could not establish the platform, assuming linux')
-      this.platform = 'lin'
-    }
-
-    if (this.testing) {
-      return new Proxy(this, {
-        set: (object, property, value) => {
-          if (!(property in object)) throw new TypeError(`Unsupported preference <%text>${new String(property)}</%text>`) // eslint-disable-line no-new-wrappers
-          object[property] = value
-          return true
-        },
-        get: (object, property) => {
-          if (!(property in object)) throw new TypeError(`Unsupported preference <%text>${new String(property)}</%text>`) // eslint-disable-line no-new-wrappers
-          return object[property] // eslint-disable-line @typescript-eslint/no-unsafe-return
-        },
-      })
-    }
-  }
-
-  changed(pref: string) {
-    Events.emit('preference-changed', pref)
-  }
 % for pref in preferences:
 %   if pref.name != 'platform':
   set ${pref.var}(v: ${pref.valid | n} | undefined) {

@@ -1,7 +1,7 @@
 import { XULoki as Loki } from './loki'
 import { Events } from '../events'
 import { File } from './store/file'
-import { Preference } from '../../gen/preferences'
+import { Preference } from '../prefs'
 import { affects, schema } from '../../gen/preferences/meta'
 import { log } from '../logger'
 

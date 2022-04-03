@@ -12,7 +12,7 @@ import { DB as Cache } from './db/cache'
 import * as Extra from './extra'
 import { $and } from './db/loki'
 import  { defaults } from '../gen/preferences/meta'
-import { Preference } from '../gen/preferences'
+import { Preference } from './prefs'
 import * as memory from './memory'
 import { Deferred } from './deferred'
 

@@ -1,7 +1,7 @@
 Components.utils.import('resource://gre/modules/osfile.jsm')
 
 import { Translators } from './translators'
-import { Preference } from '../gen/preferences'
+import { Preference } from './prefs'
 import { pick } from './file-picker'
 import { pathSearch } from './path-search'
 import { log } from './logger'

@@ -24,7 +24,7 @@ import { clean_pane_persist } from './clean_pane_persist'
 import { flash } from './flash'
 import { Deferred } from './deferred'
 
-import { Preference } from '../gen/preferences' // needs to be here early, initializes the prefs observer
+import { Preference } from './prefs' // needs to be here early, initializes the prefs observer
 import * as preferences from '../gen/preferences/meta'
 require('./pull-export') // just require, initializes the pull-export end points
 require('./json-rpc') // just require, initializes the json-rpc end point
