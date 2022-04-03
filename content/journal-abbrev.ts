@@ -54,24 +54,29 @@ export const JournalAbbrev = new class { // eslint-disable-line @typescript-esli
     }
   }
 
-  public get(item, force = false): string {
-    let abbrev:string
+  public get(item, mode: 'abbrev' | 'auto' | 'abbrev+auto' = 'abbrev'): string {
+    if (!Preference.autoAbbrev) mode = 'abbrev'
+
+    let abbrev = ''
     let journal: string
     const zotero_item = !!(item.setType)
 
-    if (zotero_item) {
-      try {
-        abbrev = item.getField('journalAbbreviation', false, true)
+    if (mode.startsWith('user')) {
+      if (zotero_item) {
+        try {
+          abbrev = item.getField('journalAbbreviation', false, true)
+        }
+        catch (error) {}
       }
-      catch (error) {}
-    }
-    else {
-      abbrev = item.journalAbbreviation
+      else {
+        abbrev = item.journalAbbreviation
+      }
     }
 
-    if (abbrev || (!Preference.autoAbbrev && !force)) return abbrev
+    if (abbrev || !mode.endsWith('auto')) return abbrev || null
 
-    if (!['conferencePaper', 'journalArticle', 'bill', 'case', 'statute'].includes(zotero_item ? Zotero.ItemTypes.getName(item.itemTypeID) : item.itemType)) return null
+    const itemType: string = zotero_item ? Zotero.ItemTypes.getName(item.itemTypeID) : item.itemType
+    if (!['conferencePaper', 'journalArticle', 'bill', 'case', 'statute'].includes(itemType)) return null
 
     for (const field of ['publicationTitle', 'reporter', 'code']) {
       try {
