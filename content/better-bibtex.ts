@@ -823,12 +823,20 @@ export class BetterBibTeX {
   private globals: Record<string, any>
   public debugEnabledAtStart: boolean
 
+  private deferred = {
+    loaded: new Deferred<boolean>(),
+    ready: new Deferred<boolean>(),
+  }
+  private loads = 0
+
   constructor() {
     this.debugEnabledAtStart = !!Zotero.Debug.enabled
+
+    this.ready = this.deferred.ready.promise
+    this.loaded = this.deferred.loaded.promise
   }
 
   public async scanAUX(target: string): Promise<void> {
-    if (!this.loaded) return // eslint-disable-line @typescript-eslint/no-misused-promises
     await this.loaded
 
     const aux = await AUXScanner.pick()
@@ -865,14 +873,11 @@ export class BetterBibTeX {
   }
 
   public async load(): Promise<void> { // eslint-disable-line @typescript-eslint/explicit-module-boundary-types
-    if (this.loaded) return // eslint-disable-line @typescript-eslint/no-misused-promises
-
-    const deferred = {
-      loaded: new Deferred<boolean>(),
-      ready: new Deferred<boolean>(),
+    this.loads++
+    if (this.loads > 1) {
+      log.error('BBT.load', this.loads)
+      return
     }
-    this.ready = deferred.ready.promise
-    this.loaded = deferred.loaded.promise
 
     if (typeof this.ready.isPending !== 'function') throw new Error('Zotero.Promise is not using Bluebird')
 
@@ -941,7 +946,7 @@ export class BetterBibTeX {
     await AutoExport.init()
 
     // not yet started
-    deferred.loaded.resolve(true)
+    this.deferred.loaded.resolve(true)
 
     // this is what really takes long
     progress.update(l10n.localize('BetterBibTeX.startup.waitingForTranslators'), 40) // eslint-disable-line no-magic-numbers
@@ -959,7 +964,7 @@ export class BetterBibTeX {
     progress.update(l10n.localize('BetterBibTeX.startup.autoExport'), 90) // eslint-disable-line no-magic-numbers
     AutoExport.start()
 
-    deferred.ready.resolve(true)
+    this.deferred.ready.resolve(true)
 
     progress.done()
 

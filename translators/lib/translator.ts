@@ -72,6 +72,7 @@ type TranslatorHeader = {
     Year: boolean
     Normalize: boolean
     markdown: boolean
+    cacheUse: boolean
   }
 
   configOptions: {
@@ -155,6 +156,7 @@ export class ITranslator { // eslint-disable-line @typescript-eslint/naming-conv
     exportFileData?: boolean
     useJournalAbbreviation?: boolean
     keepUpdated?: boolean
+    cacheUse?: boolean
     Title?: boolean
     Authors?: boolean
     Year?: boolean
@@ -179,7 +181,7 @@ export class ITranslator { // eslint-disable-line @typescript-eslint/naming-conv
 
   public cache: {
     hits: number
-    misses: number
+    requests: number
   }
 
   public header: TranslatorHeader
@@ -255,13 +257,14 @@ export class ITranslator { // eslint-disable-line @typescript-eslint/naming-conv
     if (mode === 'export') {
       this.cache = {
         hits: 0,
-        misses: 0,
+        requests: 0,
       }
       this.export = {
         dir: (Zotero.getOption('exportDir') as string),
         path: (Zotero.getOption('exportPath') as string),
       }
       if (this.export.dir?.endsWith(this.paths.sep)) this.export.dir = this.export.dir.slice(0, -1)
+      this.options.cacheUse = Zotero.getOption('cacheUse')
     }
 
     this.preferences = Object.entries(defaults).reduce((acc, [pref, dflt]) => {
@@ -271,6 +274,7 @@ export class ITranslator { // eslint-disable-line @typescript-eslint/naming-conv
 
     // special handling
     log.debug('prefs: @load', this.preferences)
+    log.debug('options: @load', this.options)
     this.skipFields = this.preferences.skipFields.toLowerCase().split(',').map(field => this.typefield(field)).filter((s: string) => s)
     this.skipField = this.skipFields.reduce((acc, field) => { acc[field] = true; return acc }, {})
 
@@ -282,7 +286,7 @@ export class ITranslator { // eslint-disable-line @typescript-eslint/naming-conv
     this.preferences.testing = (Zotero.getHiddenPref('better-bibtex.testing') as boolean)
 
     if (mode === 'export') {
-      this.unicode = !Translator.preferences[`ascii${this.header.label.replace(/Better /, '')}`]
+      this.unicode = !this.preferences[`ascii${this.header.label.replace(/Better /, '')}`]
 
       if (this.preferences.baseAttachmentPath && (this.export.dir === this.preferences.baseAttachmentPath || this.export.dir?.startsWith(this.preferences.baseAttachmentPath + this.paths.sep))) {
         this.preferences.relativeFilePaths = true
@@ -290,7 +294,7 @@ export class ITranslator { // eslint-disable-line @typescript-eslint/naming-conv
 
       // when exporting file data you get relative paths, when not, you get absolute paths, only one version can go into the cache
       // relative file paths are going to be different based on the file being exported to
-      this.cacheable = Zotero.getOption('caching') && !(
+      this.cacheable = this.preferences.caching && !(
         this.options.exportFileData
         ||
         this.preferences.relativeFilePaths
@@ -299,20 +303,20 @@ export class ITranslator { // eslint-disable-line @typescript-eslint/naming-conv
       )
 
       if (this.BetterTeX) {
-        Translator.preferences.separatorList = Translator.preferences.separatorList.trim()
-        Translator.preferences.separatorNames = Translator.preferences.separatorNames.trim()
+        this.preferences.separatorList = this.preferences.separatorList.trim()
+        this.preferences.separatorNames = this.preferences.separatorNames.trim()
         this.and = {
           list: {
-            re: new RegExp(escapeRegExp(Translator.preferences.separatorList), 'g'),
-            repl: ` {${Translator.preferences.separatorList}} `,
+            re: new RegExp(escapeRegExp(this.preferences.separatorList), 'g'),
+            repl: ` {${this.preferences.separatorList}} `,
           },
           names: {
-            re: new RegExp(` ${escapeRegExp(Translator.preferences.separatorNames)} `, 'g'),
-            repl: ` {${Translator.preferences.separatorNames}} `,
+            re: new RegExp(` ${escapeRegExp(this.preferences.separatorNames)} `, 'g'),
+            repl: ` {${this.preferences.separatorNames}} `,
           },
         }
-        Translator.preferences.separatorList = ` ${Translator.preferences.separatorList} `
-        Translator.preferences.separatorNames = ` ${Translator.preferences.separatorNames} `
+        this.preferences.separatorList = ` ${this.preferences.separatorList} `
+        this.preferences.separatorNames = ` ${this.preferences.separatorNames} `
       }
     }
 

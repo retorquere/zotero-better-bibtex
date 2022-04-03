@@ -548,7 +548,7 @@ Feature: Export
     When I restart Zotero with "1287" + "export/*.json"
     And I reset the cache
     Then an export using "Better BibTeX" should match "export/*.bibtex"
-    And an export using "Better BibTeX" should match "export/*.bibtex", but take no more than 150 seconds
+    Then an export using "Better BibTeX" with cacheUse on should match "export/*-cached.bibtex"
     When I set preference .caching to false
     Then an export using "Better BibTeX" should match "export/*.bibtex", but take no more than 400 seconds
 

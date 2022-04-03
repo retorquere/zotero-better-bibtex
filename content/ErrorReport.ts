@@ -161,7 +161,7 @@ export class ErrorReport {
       debug: Zotero.Debug.getConsoleViewerOutput().slice(-500000).join('\n'), // eslint-disable-line no-magic-numbers
     }
 
-    if (Zotero.BetterBibTeX.ready && this.params.scope) {
+    if (this.params.scope) {
       await Zotero.BetterBibTeX.ready
       this.errorlog.items = await Translators.exportItems(Translators.byLabel.BetterBibTeXJSON.translatorID, {exportNotes: true, dropAttachments: true, Normalize: true}, this.params.scope)
     }

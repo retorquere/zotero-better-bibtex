@@ -60,14 +60,15 @@ export const Exporter = new class {
 
       this.jabref.citekeys.set(item.itemID, item.citationKey)
 
-      // this is not automatically lazy-evaluated?!?!
-      const cached: Cache.ExportedItem = item.$cacheable && Translator.BetterTeX ? Zotero.BetterBibTeX.cacheFetch(item.itemID, Translator.options, Translator.preferences) : null
-      Translator.cache[cached ? 'hits' : 'misses'] += 1
-
-      if (cached) {
-        Zotero.write(cached.entry)
-        this.postfix?.add(cached.metadata)
-        continue
+      let cached: Cache.ExportedItem = null
+      if (item.$cacheable && Translator.BetterTeX) {
+        Translator.cache.requests++
+        if (cached = Zotero.BetterBibTeX.cacheFetch(item.itemID, Translator.options, Translator.preferences)) {
+          Translator.cache.hits += 100
+          Zotero.write(cached.entry)
+          this.postfix?.add(cached.metadata)
+          continue
+        }
       }
 
       itemfields.simplifyForExport(item)
@@ -108,6 +109,14 @@ export const Exporter = new class {
           Zotero.write(`${sep}% ${citekey} duplicates: ${n}\n`)
           sep = '% '
         }
+      }
+    }
+    if (Translator.BetterTeX && Translator.options.cacheUse) {
+      if (Translator.cache.requests) {
+        Zotero.write(`\n% cache use: ${Math.round(Translator.cache.hits/Translator.cache.requests)}%`)
+      }
+      else {
+        Zotero.write('\n% cache use: no')
       }
     }
   }

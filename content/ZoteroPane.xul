@@ -89,7 +89,7 @@
     Zotero.BetterBibTeX.globals = Zotero.BetterBibTeX.ZoteroPane.globals = Function('return this')();
     window.addEventListener('load', async function() {
       try {
-        Zotero.debug('BBT startup')
+        Zotero.debug(`BBT startup ${Zotero.BetterBibTeX.loads + 1}`)
         await Zotero.BetterBibTeX.load()
         Zotero.debug('BBT started, loading ZoteroPane')
         Zotero.BetterBibTeX.ZoteroPane.load()
