@@ -1,5 +1,4 @@
 import { Preference } from '../prefs'
-import { log } from '../logger'
 import { Events } from '../events'
 
 import Jieba = require('ooooevan-jieba')
@@ -9,7 +8,6 @@ export const jieba = new class {
   private jieba: any
 
   init() {
-    log.debug('jieba enabled:', Preference.jieba)
     this.load()
     Events.on('preference-changed', pref => {
       if (pref === 'jieba') this.load()

@@ -111,7 +111,7 @@ export async function doImport(): Promise<void> {
       data.collections[collection.parent].zoteroCollection.children.push(collection.zoteroCollection)
     }
     else {
-      if (collection.parent) log.debug(`Collection ${collection.key} has non-existent parent ${collection.parent}`)
+      if (collection.parent) log.error(`Collection ${collection.key} has non-existent parent ${collection.parent}`)
       collection.parent = false
     }
   }

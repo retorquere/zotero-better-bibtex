@@ -30,7 +30,6 @@ export class TestSupport {
 
   public memoryState(snapshot: string): memory.State {
     const state = memory.state(snapshot)
-    log.debug(snapshot, 'memory use:', state)
     return state
   }
 
@@ -101,8 +100,6 @@ export class TestSupport {
     let items = await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, true, false, true)
     const before = items.length
 
-    log.debug(`starting import at ${new Date()}`)
-
     if (path.endsWith('.aux')) {
       await AUXScanner.scan(path)
       // for some reason, the imported collection shows up as empty right after the import >:
@@ -111,26 +108,21 @@ export class TestSupport {
     else {
       await Zotero_File_Interface.importFile({ file: Zotero.File.pathToFile(path), createNewCollection: !!createNewCollection })
     }
-    log.debug(`import finished at ${new Date()}`)
 
     items = await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, true, false, true)
     const after = items.length
-
-    log.debug(`import found ${after - before} items`)
 
     return (after - before)
   }
 
   public async exportLibrary(translatorID: string, displayOptions: Record<string, number | string | boolean>, path: string, collectionName: string): Promise<string> {
     let scope
-    log.debug('TestSupport.exportLibrary', { translatorID, displayOptions, path, collectionName })
     if (collectionName) {
       let name = collectionName
       if (name[0] === '/') name = name.substring(1) // don't do full path parsing right now
       for (const collection of Zotero.Collections.getByLibrary(Zotero.Libraries.userLibraryID)) {
         if (collection.name === name) scope = { type: 'collection', collection: collection.id }
       }
-      log.debug('TestSupport.exportLibrary', { name, scope })
       if (!scope) throw new Error(`Collection '${name}' not found`)
     }
     else {
@@ -146,7 +138,6 @@ export class TestSupport {
     const sortedIDs = JSON.stringify(ids.slice().sort())
     // eslint-disable-next-line no-magic-numbers
     for (let attempt = 1; attempt <= 10; attempt++) {
-      log.debug(`select ${ids}, attempt ${attempt}`)
       await zoteroPane.selectItems(ids, true)
 
       let selected
@@ -158,10 +149,7 @@ export class TestSupport {
         selected = []
       }
 
-      log.debug('selected items = ', selected)
-
       if (sortedIDs === JSON.stringify(selected.sort())) return true
-      log.debug(`select: expected ${ids}, got ${selected}`)
     }
     throw new Error(`failed to select ${ids}`)
   }
@@ -220,10 +208,10 @@ export class TestSupport {
 
     if (citationKey) {
       if (action !== 'pin') throw new Error(`Don't know how to ${action} ${citationKey}`)
-      log.debug('conflict: pinning', ids, 'to', citationKey)
+      log.error('conflict: pinning', ids, 'to', citationKey)
       for (const item of await getItemsAsync(ids)) {
         item.setField('extra', Extra.set(item.getField('extra'), { citationKey }))
-        log.debug('conflict: extra set to', item.getField('extra'))
+        log.error('conflict: extra set to', item.getField('extra'))
         await item.saveTx()
       }
       return
@@ -259,7 +247,6 @@ export class TestSupport {
     // zoteroPane.mergeSelectedItems()
 
     if (typeof Zotero_Duplicates_Pane === 'undefined') {
-      log.debug('Loading duplicatesMerge.js')
       Components.classes['@mozilla.org/moz/jssubscript-loader;1'].getService(Components.interfaces.mozIJSSubScriptLoader).loadSubScript('chrome://zotero/content/duplicatesMerge.js')
     }
 

@@ -2,7 +2,6 @@ import { XULoki as Loki } from './loki'
 import { Preference } from '../prefs'
 import { schema } from '../../gen/preferences/meta'
 import { getItemsAsync } from '../get-items-async'
-import { log } from '../logger'
 
 import { SQLite } from './store/sqlite'
 
@@ -14,7 +13,6 @@ export function scrubAutoExport(ae: any): void { // eslint-disable-line @typescr
   for (const k of (schema.autoExport.preferences as string[]).concat(schema.autoExport.displayOptions)) {
     if (typeof ae[k] !== 'undefined' && !translator.types[k]) {
       delete ae[k]
-      log.debug('ae: stripping', k, 'from', ae)
     }
   }
 
@@ -112,7 +110,6 @@ class Main extends Loki {
         required: [ 'type', 'id', 'path', 'status', 'translatorID', ...(translator.displayOptions), ...(translator.preferences) ],
       })
     }
-    log.debug('ae schema:', JSON.stringify(config, null, 2))
 
     const autoexport = this.schemaCollection('autoexport', config)
 

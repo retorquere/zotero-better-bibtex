@@ -14,9 +14,8 @@ const METADATA = 'Better BibTeX metadata'
 class Cache extends Loki {
   private initialized = false
 
-  public remove(ids, reason) {
+  public remove(ids, _reason) {
     if (!this.initialized) return
-    log.debug('remove from cache:', ids, reason)
 
     const query = Array.isArray(ids) ? { itemID : { $in : ids } } : { itemID: { $eq: ids } }
 
@@ -62,7 +61,6 @@ class Cache extends Loki {
       },
     })
     if (!Preference.caching) coll.removeDataOnly()
-    log.debug('cache.itemToExportFormat:', coll.data.length)
 
     this.clearOnUpgrade(coll, 'Zotero', Zotero.version)
 
@@ -116,7 +114,6 @@ class Cache extends Loki {
         coll.removeDataOnly()
       }
       else {
-        log.debug(`cache.${coll.name}:`, coll.data.length)
         this.clearOnUpgrade(coll, 'BetterBibTeX', version)
       }
     }

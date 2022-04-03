@@ -103,7 +103,7 @@ export class ErrorReport {
       return JSON.parse((await Zotero.HTTP.request('GET', latest, { noCache: true })).response).tag_name.replace('v', '')
     }
     catch (err) {
-      log.debug('errorreport.latest:', err)
+      log.error('errorreport.latest:', err)
       return null
     }
   }

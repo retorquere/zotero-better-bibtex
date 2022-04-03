@@ -195,7 +195,6 @@ const queue = new class TaskQueue {
 
   public add(ae) {
     const $loki = (typeof ae === 'number' ? ae : ae.$loki)
-    log.debug('auto-export: add', ae)
     Events.emit('export-progress', 0, Translators.byId[ae.translatorID].label, $loki)
     this.scheduler.schedule($loki, this.run.bind(this, $loki))
   }
@@ -206,7 +205,6 @@ const queue = new class TaskQueue {
   }
 
   public run($loki: number) {
-    log.debug('autoexport: starting', $loki)
     this.runAsync($loki).catch(err => log.error('autoexport failed:', {$loki}, err))
   }
   public async runAsync($loki: number) {
@@ -218,7 +216,6 @@ const queue = new class TaskQueue {
 
     ae.status = 'running'
     this.autoexports.update(scrubAutoExport(ae))
-    const started = Date.now()
 
     try {
       let scope
@@ -286,7 +283,6 @@ const queue = new class TaskQueue {
       await repo.push(l10n.localize('Preferences.auto-export.git.message', { type: Translators.byId[ae.translatorID].label.replace('Better ', '') }))
 
       ae.error = ''
-      log.debug('auto-export', ae.type, ae.id, 'took', Date.now() - started, 'msecs')
     }
     catch (err) {
       log.error('auto-export', ae.type, ae.id, 'failed:', ae, err)
@@ -294,7 +290,6 @@ const queue = new class TaskQueue {
     }
 
     ae.status = 'done'
-    log.debug('auto-export done')
     this.autoexports.update(scrubAutoExport(ae))
   }
 
@@ -423,8 +418,6 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
   public async cached($loki) {
     if (!Preference.caching) return 0
 
-    log.debug('cache-rate: calculating cache rate for', $loki)
-    const start = Date.now()
     const ae = this.db.get($loki)
 
     const itemTypeIDs: number[] = ['attachment', 'note', 'annotation'].map(type => {
@@ -455,7 +448,6 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
       export: Cache.getCollection(label).find($and({...cacheSelector(label, options, prefs), $in: itemIDs})).length,
     }
 
-    log.debug('cache-rate: cache rate for', $loki, {...cached, items: itemIDs.size}, 'took', Date.now() - start)
     return Math.min(Math.round((100 * (cached.serialized + cached.export)) / (itemIDs.size * 2)), 100) // eslint-disable-line no-magic-numbers
   }
 

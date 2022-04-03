@@ -109,7 +109,7 @@ $patch$(Zotero.Utilities.Item?.itemToCSLJSON ? Zotero.Utilities.Item : Zotero.Ut
     }
   }
   catch (err) {
-    log.debug('failed patching CSL-JSON:', err)
+    log.error('failed patching CSL-JSON:', err)
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
@@ -471,7 +471,7 @@ function findOverride(exportPath: string, extension: string, filename: string, l
         if (typeof loaded === 'string' || loaded) return loaded
       }
       catch (err) {
-        log.debug('failed to load override', candidate)
+        log.error('failed to load override', candidate)
       }
     }
   }
@@ -516,20 +516,18 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
           (path: string) => Zotero.File.getContents(path) // eslint-disable-line @typescript-eslint/no-unsafe-return
         ),
       }
-      log.debug('export overrides:', override)
       displayOptions.caching = displayOptions.caching && !override.postscript && !override.preferences && !override.strings
 
       if (override.postscript) displayOptions.preference_postscript = override.postscript
       if (typeof override.strings === 'string') displayOptions.preference_strings = override.strings
       if (override.preferences) {
         displayOptions.caching = false
-        log.debug('prefs override:', override.preferences)
         for (const [pref, value] of Object.entries(override.preferences)) {
           if (typeof value !== typeof preferences.defaults[pref]) {
-            log.debug(`preference override for ${pref}: expected ${typeof preferences.defaults[pref]}, got ${typeof value}`)
+            log.error(`preference override for ${pref}: expected ${typeof preferences.defaults[pref]}, got ${typeof value}`)
           }
           else if (preferences.options[pref] && !preferences.options[pref][value]) {
-            log.debug(`preference override for ${pref}: expected ${Object.keys(preferences.options[pref]).join(' / ')}, got ${value}`)
+            log.error(`preference override for ${pref}: expected ${Object.keys(preferences.options[pref]).join(' / ')}, got ${value}`)
           }
           else {
             displayOptions[`preference_${pref}`] = value
@@ -589,7 +587,6 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
         disabled = Object.keys(this._handlers).filter(handler => !['done', 'itemDone', 'error'].includes(handler)).join(', ')
         if (disabled) disabled = `handlers: ${disabled}`
       }
-      log.debug('worker translation:', !disabled, disabled)
       if (!disabled) {
         const path = this.location?.path
 
@@ -600,7 +597,6 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
 
         return Translators.exportItemsByQueuedWorker(translatorID, displayOptions, { translate: this, scope: { ...this._export, getter: this._itemGetter }, path })
           .then(result => {
-            log.debug('worker translation done, result:', !!result)
             // eslint-disable-next-line id-blacklist
             this.string = result
             this.complete(result || true)
@@ -747,7 +743,6 @@ class Progress {
     this.mode = Preference.startupProgress
 
     log.debug(`${this.name}: waiting for Zotero locks...`)
-
     log.debug(`${this.name}: ${msg}...`)
     if (this.mode === 'popup') {
       this.progressWin = new Zotero.ProgressWindow({ closeOnClick: false })
@@ -976,7 +971,6 @@ export class BetterBibTeX {
     if (this.firstRun && this.firstRun.dragndrop) Zotero.Prefs.set('export.quickCopy.setting', `export=${Translators.byLabel.BetterBibTeXCitationKeyQuickCopy.translatorID}`)
 
     Events.emit('loaded')
-    log.debug('csl-yaml date mappings', Zotero.Schema.CSL_DATE_MAPPINGS)
 
     Events.on('export-progress', (percent: number, translator: string) => {
       const preparing = percent < 0 ? l10n.localize('Preferences.auto-export.status.preparing') : ''

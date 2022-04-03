@@ -2,7 +2,6 @@
 
 import AJV from 'ajv'
 
-import { log } from './logger'
 import { getItemsAsync } from './get-items-async'
 import { AUXScanner } from './aux-scanner'
 import { AutoExport } from './auto-export'
@@ -11,14 +10,14 @@ import { Preference } from './prefs'
 import { get as getCollection } from './collection'
 import { $and, Query } from './db/loki'
 import * as Library from './library'
+import { log } from './logger'
 
 import methods from '../gen/api/json-rpc.json'
 import { validator } from './ajv'
 
 const ajv = new AJV()
 
-for (const [method, meta] of Object.entries(methods)) {
-  log.debug('compiling', method, meta);
+for (const meta of Object.values(methods)) {
   (meta as unknown as any).validate = validator(ajv, meta.schema) // eslint-disable-line @typescript-eslint/no-unsafe-return
 }
 
@@ -392,8 +391,6 @@ Zotero.Server.Endpoints['/better-bibtex/json-rpc'] = class {
     await Zotero.BetterBibTeX.ready
 
     try {
-      log.debug('json-rpc: execute', data)
-
       const response = await (Array.isArray(data) ? Promise.all(data.map(req => api.handle(req))) : api.handle(data))
       return [OK, 'application/json', JSON.stringify(response)]
     }

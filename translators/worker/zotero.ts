@@ -291,13 +291,11 @@ export const Zotero = new WorkerZotero // eslint-disable-line @typescript-eslint
 
 const dec = new TextDecoder('utf-8')
 ctx.onmessage = function(e: { isTrusted?: boolean, data?: Translators.Worker.Message } ): void { // eslint-disable-line prefer-arrow/prefer-arrow-functions
-  log.debug('worker: received', { isTrusted: e.isTrusted, kind: e.data?.kind })
   if (!e.data) return // some kind of startup message
 
   try {
     switch (e.data.kind) {
       case 'start':
-        log.debug('worker: starting')
         Zotero.BetterBibTeX.localeDateOrder = workerContext.localeDateOrder
         Zotero.init(JSON.parse(dec.decode(new Uint8Array(e.data.config))))
         doExport()
@@ -309,7 +307,7 @@ ctx.onmessage = function(e: { isTrusted?: boolean, data?: Translators.Worker.Mes
         break
 
       default:
-        log.debug('unexpected message, stopping worker:', e)
+        log.error('unexpected message, stopping worker:', e)
         close()
         break
     }

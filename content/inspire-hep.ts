@@ -19,16 +19,15 @@ function urls(item): { type: string, id: string, url: string }[] {
 function parse(type, id, response): string {
   // eslint-disable-next-line no-magic-numbers
   if (response.status && (response.status < 200 || response.status > 299)) {
-    log.debug('Could not fetch inspireHEP key for', type, id, 'InspireHEP says:', response.message)
+    log.error('Could not fetch inspireHEP key for', type, id, 'InspireHEP says:', response.message)
     return null
   }
 
   if (response.metadata.texkeys.length === 0) {
-    log.debug('No inspireHEP key found for', type, id)
     return null
   }
 
-  if (response.metadata.texkeys.length > 1) log.debug('Multiple inspireHEP keys found for', type, id, response.metadata.texkeys)
+  if (response.metadata.texkeys.length > 1) log.error('Multiple inspireHEP keys found for', type, id, response.metadata.texkeys)
   return (response.metadata.texkeys[0] as string)
 }
 
@@ -40,7 +39,7 @@ export async function fetchAsync(item: any): Promise<string> {
       if (citekey) return citekey
     }
     catch (err) {
-      log.debug('inspireHEP', url, err)
+      log.error('inspireHEP', url, err)
     }
   }
   return ''
@@ -54,7 +53,7 @@ export function fetchSync(item: any): string {
       if (citekey) return citekey
     }
     catch (err) {
-      log.debug('inspireHEP', url, err)
+      log.error('inspireHEP', url, err)
     }
   }
   return ''

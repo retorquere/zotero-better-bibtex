@@ -195,7 +195,7 @@ export class KeyManager {
         await Zotero.DB.queryAsync(`ATTACH DATABASE '${path.replace(/'/g, "''")}' AS betterbibtexsearch`)
       }
       catch (err) {
-        log.debug('failed to attach the search database:', err)
+        log.error('failed to attach the search database:', err)
         flash('Error loading citekey search database, citekey search is disabled')
         search = false
       }
@@ -207,7 +207,7 @@ export class KeyManager {
         await Zotero.DB.valueQueryAsync('SELECT libraryID FROM betterbibtexsearch.citekeys LIMIT 1')
       }
       catch (err) {
-        log.debug(`dropping betterbibtexsearch.citekeys, assuming libraryID does not exist: ${err}`)
+        log.error(`dropping betterbibtexsearch.citekeys, assuming libraryID does not exist: ${err}`)
         await Zotero.DB.queryAsync('DROP TABLE IF EXISTS betterbibtexsearch.citekeys')
       }
       await Zotero.DB.queryAsync('CREATE TABLE IF NOT EXISTS betterbibtexsearch.citekeys (itemID PRIMARY KEY, libraryID, itemKey, citekey)')

@@ -183,7 +183,7 @@ export class Entry {
     }
     catch (err) {
       Entry.prototype.postscript = postscript.noop
-      log.debug('failed to install postscript', err, '\n', Translator.preferences.postscript)
+      log.error('failed to install postscript', err, '\n', Translator.preferences.postscript)
     }
   }
 
@@ -266,9 +266,11 @@ export class Entry {
         if (!item[name] || ef.type === 'date') {
           item[name] = value
         }
+        /*
         else {
           log.debug('extra fields: skipping', {name, value})
         }
+        */
         delete item.extraFields.kv[name]
       }
     }
@@ -356,22 +358,15 @@ export class Entry {
 
     if (!field.value && !field.bibtex && this.inPostscript) {
       delete this.has[field.name]
-      log.debug('add: removing', field.name)
       return null
     }
 
-    if (Translator.skipField[field.name]) {
-      log.debug('add: skipping', field.name)
-      return null
-    }
+    if (Translator.skipField[field.name]) return null
 
     field.enc = field.enc || this.fieldEncoding[field.name] || 'latex'
 
     if (field.enc === 'date') {
-      if (!field.value) {
-        log.debug('add: null date', field.name)
-        return null
-      }
+      if (!field.value) return null
 
       if (field.value === 'today') {
         return this.add({
@@ -409,47 +404,24 @@ export class Entry {
 
     if (field.fallback && field.replace) throw new Error('pick fallback or replace, buddy')
     if (field.fallback && this.has[field.name]) {
-      log.debug('add: fallback already filled for', field.name)
+      log.error('add: fallback already filled for', field.name)
       return null
     }
 
-    // legacy field addition, leave in place for postscripts
+    // legacy field addition
     if (!field.name) {
-      const keys = Object.keys(field)
-      switch (keys.length) {
-        case 0: // name -> undefined/null
-          log.debug('add: empty legacy object', field.name)
-          return null
-
-        case 1:
-          field = {name: keys[0], value: field[keys[0]]}
-          break
-
-        default:
-          throw new Error(`Quick-add mode expects exactly one name -> value mapping, found ${JSON.stringify(field)} (${(new Error()).stack})`)
-      }
+      log.error('add: empty legacy object', field.name)
+      return null
     }
 
     if (!field.bibtex) {
-      if ((typeof field.value !== 'number') && !field.value) {
-        log.debug('add: no value supplied for', typeof field.value, field.name)
-        return null
-      }
-      if ((typeof field.value === 'string') && (field.value.trim() === '')) {
-        log.debug('add: no value supplied for', typeof field.value, field.name)
-        return null
-      }
-      if (Array.isArray(field.value) && (field.value.length === 0)) {
-        log.debug('add: empty array supplied for', field.name)
-        return null
-      }
+      if ((typeof field.value !== 'number') && !field.value) return null
+      if ((typeof field.value === 'string') && (field.value.trim() === '')) return null
+      if (Array.isArray(field.value) && (field.value.length === 0)) return null
     }
 
     if (this.has[field.name]) {
-      if (!Array.isArray(field.value) && this.has[field.name].value === field.value && this.has[field.name].enc === field.enc) {
-        log.debug('add: same value supplied for', field.enc, field.name)
-        return null
-      }
+      if (!Array.isArray(field.value) && this.has[field.name].value === field.value && this.has[field.name].enc === field.enc) return null
 
       if (!this.inPostscript && !field.replace) {
         const value = field.bibtex ? 'bibtex' : 'value'
@@ -515,7 +487,7 @@ export class Entry {
         }
 
         if (!value) {
-          log.debug('add: no value after encoding', field.enc, field.name)
+          log.error('add: no value after encoding', field.enc, field.name)
           return null
         }
 
@@ -719,7 +691,7 @@ export class Entry {
         this.override({ name, verbatim: name, orig: { inherit: true }, value, enc, replace, fallback: !replace })
       }
       else {
-        log.debug('Unmapped extra field', key, '=', value)
+        log.error('Unmapped extra field', key, '=', value)
       }
     }
 
@@ -1053,7 +1025,6 @@ export class Entry {
   }
 
   protected enc_attachments(f, modify?: (path: string) => string): string {
-    log.debug('encoding attachments', f)
     if (!f.value || (f.value.length === 0)) return null
     const attachments: {title: string, mimetype: string, path: string}[] = []
 
@@ -1073,7 +1044,6 @@ export class Entry {
       else if (attachment.localPath) {
         att.path = attachment.localPath
       }
-      log.debug('encoding attachment', att)
 
       if (!att.path) continue // amazon/googlebooks etc links show up as atachments without a path
       // att.path = att.path.replace(/^storage:/, '')
@@ -1099,7 +1069,6 @@ export class Entry {
       if (modify) att.path = modify(att.path)
       attachments.push(att)
     }
-    log.debug('encoded attachments', attachments)
 
     if (attachments.length === 0) return null
 
@@ -1352,7 +1321,6 @@ export class Entry {
       for (const [prop, value, valueish] of unused_props) {
         if (prop === 'language' && this.has.langid) continue
         if (prop === 'libraryCatalog' && valueish.includes('arxiv') && this.item.arXiv) continue
-        log.debug('label:', { prop, label: propertyLabel[prop] })
         report.push(`? unused ${propertyLabel[prop.toLowerCase()] || prop} ("${value}")`)
       }
 

@@ -55,7 +55,6 @@ class Queue {
         if (scheduled.started < job.started && scheduled.args && scheduled.args.length === 3) { // eslint-disable-line no-magic-numbers
           const scheduledJob = (scheduled.args[2] as ExportJob)
           if (scheduledJob.path && scheduledJob.path === job.path) {
-            log.debug(job.started, 'cancels export to', job.path, 'started at', scheduledJob.started)
             scheduledJob.canceled = true
           }
         }
@@ -110,8 +109,6 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       await Zotero.Translators.reinit()
 
       for ({ header, code } of reinit) {
-        log.debug('caching', header)
-
         if (Zotero.Translators.getCodeForTranslator) {
           const translator = Zotero.Translators.get(header.translatorID)
           translator.cacheCode = true
@@ -177,16 +174,10 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
   }
 
   public async exportItemsByWorker(translatorID: string, displayOptions: Record<string, boolean>, job: ExportJob) {
-    if (job.path && job.canceled) {
-      log.debug('export to', job.path, 'started at', job.started, 'canceled')
-      return ''
-    }
+    if (job.path && job.canceled) return ''
 
     await Zotero.BetterBibTeX.ready
-    if (job.path && job.canceled) {
-      log.debug('export to', job.path, 'started at', job.started, 'canceled')
-      return ''
-    }
+    if (job.path && job.canceled) return ''
 
     const translator = this.byId[translatorID]
 
@@ -236,7 +227,6 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       debugEnabled: Zotero.Debug.enabled ? 'true' : 'false',
       worker: id,
     }).map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`).join('&')
-    log.debug('worker context:', workerContext)
 
     const deferred = new Deferred<string>()
     let worker: Worker = null
@@ -315,7 +305,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
           if (cached) {
             // this should not happen?
-            log.debug('unexpected cache store:', query)
+            log.error('unexpected cache store:', query)
             cached.entry = entry
             cached.metadata = metadata
             cached = cache.update(cached)
@@ -348,13 +338,11 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     }
 
     const scope = this.exportScope(job.scope)
-    log.debug('export scope:', scope)
     let collections: any[] = []
     switch (scope.type) {
       case 'library':
         items = await Zotero.Items.getAll(scope.id, true)
         collections = Zotero.Collections.getByLibrary(scope.id) // , true)
-        log.debug('library export, got', collections.length, 'collections')
         break
 
       case 'items':
@@ -375,10 +363,8 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       default:
         throw new Error(`Unexpected scope: ${Object.keys(scope)}`)
     }
-    if (job.path && job.canceled) {
-      log.debug('export to', job.path, 'started at', job.started, 'canceled')
-      return ''
-    }
+    if (job.path && job.canceled) return ''
+
     items = items.filter(item => !item.isAnnotation?.())
 
     let worked = Date.now()
@@ -387,7 +373,6 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       total: items.length * (translator.label.includes('CSL') ? 2 : 1),
       callback: pct => Events.emit('export-progress', -pct, translator.label, autoExport),
     })
-    log.debug('cache-rate: starting prep')
     // use a loop instead of map so we can await for beachball protection
     for (const item of items) {
       config.items.push(Serializer.fast(item))
@@ -400,11 +385,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
       prepare.update()
     }
-    if (job.path && job.canceled) {
-      log.debug('export to', job.path, 'started at', job.started, 'canceled')
-      return ''
-    }
-    log.debug('cache-rate: prep done')
+    if (job.path && job.canceled) return ''
 
     if (this.byId[translatorID].configOptions?.getCollections) {
       config.collections = collections.map(collection => {
@@ -416,9 +397,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     }
 
     // pre-fetch cache
-    log.debug('cache-rate: load cache?', !!cache)
     if (cache) {
-      log.debug('cache-rate: load item cache')
       const query = {...selector, itemID: { $in: config.items.map(item => item.itemID) }}
 
       // not safe in async!
@@ -438,18 +417,15 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     // pre-fetch CSL serializations
     // TODO: I should probably cache these
     if (translator.label.includes('CSL')) {
-      log.debug('cache-rate: load CSL cache')
       for (const item of config.items) {
         // if there's a cached item, we don't need a fresh CSL item since we're not regenerating it anyhow
         if (!config.cache[item.itemID]) {
-          if (item.creators?.find(cr => !cr.creatorType)) log.debug('cache-rate: csl', item.creators)
           config.cslItems[item.itemID] = Zotero.Utilities.itemToCSLJSON(item)
         }
         prepare.update()
       }
     }
     prepare.done()
-    log.debug('cache-rate: cache loaded')
 
     // if the average startup time is greater than the autoExportDelay, bump up the delay to prevent stall-cascades
     this.workers.startup += Math.ceil((Date.now() - start) / 1000) // eslint-disable-line no-magic-numbers
@@ -459,9 +435,8 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     const enc = new TextEncoder()
     // stringify gets around 'object could not be cloned', and arraybuffers can be passed zero-copy. win-win
     const abconfig = enc.encode(JSON.stringify(config)).buffer
-    log.debug('worker: kicking off, config is', abconfig.byteLength)
+
     worker.postMessage({ kind: 'start', config: abconfig }, [ abconfig ])
-    log.debug('worker: post-kickoff, config now', abconfig.byteLength)
 
     return deferred.promise
   }

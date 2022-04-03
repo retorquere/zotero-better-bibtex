@@ -5,7 +5,6 @@ declare const __estrace: any // eslint-disable-line no-underscore-dangle
 import { affects, names as preferences, defaults, PreferenceName, Preferences, schema } from '../../gen/preferences/meta'
 import { client } from '../../content/client'
 import { RegularItem, Item, Collection } from '../../gen/typings/serialized-item'
-import { log } from '../../content/logger'
 import { environment } from '../../content/environment'
 import { Pinger } from '../../content/ping'
 
@@ -19,7 +18,6 @@ const cacheDisabler = new class {
 
     // collections: jabref 4 stores collection info inside the entry, and collection info depends on which part of your library you're exporting
     if (property === 'collections') {
-      // log.debug('cache-rate: not for item with collections', target, (new Error).stack)
       target.$cacheable = false
     }
 
@@ -273,16 +271,12 @@ export class ITranslator { // eslint-disable-line @typescript-eslint/naming-conv
       this.options.cacheUse = Zotero.getOption('cacheUse')
     }
 
-    log.debug('cacheable before:', this.cacheable)
     this.preferences = Object.entries(defaults).reduce((acc, [pref, dflt]) => {
       acc[pref] = this.getPreferenceOverride(pref) ?? Zotero.getHiddenPref(`better-bibtex.${pref}`) ?? dflt
       return acc
     }, {} as unknown as Preferences)
-    log.debug('cacheable after:', this.cacheable, this.preferences)
 
     // special handling
-    log.debug('prefs: @load', this.preferences)
-    log.debug('options: @load', this.options)
     this.skipFields = this.preferences.skipFields.toLowerCase().split(',').map(field => this.typefield(field)).filter((s: string) => s)
     this.skipField = this.skipFields.reduce((acc, field) => { acc[field] = true; return acc }, {})
 
@@ -332,7 +326,6 @@ export class ITranslator { // eslint-disable-line @typescript-eslint/naming-conv
     if (mode === 'export' && this.header.configOptions?.getCollections && Zotero.nextCollection) {
       let collection: any
       while (collection = Zotero.nextCollection()) {
-        log.debug('getCollection:', collection)
         this.registerCollection(collection, '')
       }
     }
@@ -359,10 +352,7 @@ export class ITranslator { // eslint-disable-line @typescript-eslint/naming-conv
   getPreferenceOverride(pref) { // eslint-disable-line @typescript-eslint/explicit-module-boundary-types
     try {
       const override = Zotero.getOption(`preference_${pref}`)
-      if (typeof override !== 'undefined') {
-        this.cacheable = false
-        log.debug('pref override', pref, 'to', override)
-      }
+      if (typeof override !== 'undefined') this.cacheable = false
       return override // eslint-disable-line @typescript-eslint/no-unsafe-return
     }
     catch (err) {

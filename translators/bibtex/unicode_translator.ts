@@ -234,7 +234,7 @@ const htmlConverter = new class HTMLConverter {
         break
 
       default:
-        log.debug(`unexpected tag '${tag.nodeName}' (${Object.keys(tag)})`)
+        log.error(`unexpected tag '${tag.nodeName}' (${Object.keys(tag)})`)
         break
     }
 

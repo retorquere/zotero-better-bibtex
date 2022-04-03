@@ -44,7 +44,7 @@ export const CSLExporter = new class { // eslint-disable-line @typescript-eslint
     }
     catch (err) {
       this.postscript = postscript.noop
-      log.debug('failed to install postscript', err, '\n', Translator.preferences.postscript)
+      log.error('failed to install postscript', err, '\n', Translator.preferences.postscript)
     }
   }
   public postscript(_entry, _item, _translator, _zotero, _extra): postscript.Allow {

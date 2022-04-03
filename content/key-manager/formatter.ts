@@ -846,30 +846,30 @@ class PatternFormatter {
           switch (row.length) {
             case 0:
             case 1:
-              log.debug('acronyms: parsing', list, row, 'too short')
+              log.error('acronyms: parsing', list, row, 'too short')
               continue
             case 2:
               break
             default:
-              log.debug('acronyms: parsing', list, row, 'too long')
+              log.error('acronyms: parsing', list, row, 'too long')
               break
           }
 
           const [ full, acro ] = row.map((cell: string) => cell.trim()) as [string, string]
 
           if (!full || !acro) {
-            log.debug('acronyms: parsing', list, row, 'incomplete')
+            log.error('acronyms: parsing', list, row, 'incomplete')
             continue
           }
           else if (this.acronyms[list][full]) {
-            log.debug('acronyms: parsing', list, row, 'duplicate')
+            log.error('acronyms: parsing', list, row, 'duplicate')
           }
           this.acronyms[list][full.toLowerCase()] = acro
         }
       }
     }
     catch (err) {
-      log.debug('error parsing acronym list', list)
+      log.error('error parsing acronym list', list)
       this.acronyms[list] = {}
     }
 

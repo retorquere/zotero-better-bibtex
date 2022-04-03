@@ -176,7 +176,6 @@ class AutoExportPane {
     try {
       const $loki = parseInt(node.getAttributeNS(namespace, 'ae-id'))
       this.cacherate[$loki] = await AutoExport.cached($loki)
-      log.debug('cacherate:', this.cacherate)
       this.refresh()
     }
     catch (err) {
