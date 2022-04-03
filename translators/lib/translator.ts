@@ -176,7 +176,7 @@ export class ITranslator { // eslint-disable-line @typescript-eslint/naming-conv
   // public TeX: boolean
   // public CSL: boolean
 
-  private cacheable: boolean
+  private cacheable = true
   private _items: Items
 
   public cache: {
@@ -242,14 +242,20 @@ export class ITranslator { // eslint-disable-line @typescript-eslint/naming-conv
       sep: this.platform === 'win' ? '\\' : '/',
     }
 
+    try {
+      if (Zotero.getOption('caching') === false) this.cacheable = false
+    }
+    catch (err) {
+    }
+
     for (const key in this.options) {
       if (typeof this.options[key] === 'boolean') {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-        this.options[key] = !!Zotero.getOption(key)
+        this.options[key] = Zotero.getOption(key)
       }
       else {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-        this.options[key] = Zotero.getOption(key)
+        this.options[key] = !!Zotero.getOption(key)
       }
     }
 
@@ -267,10 +273,12 @@ export class ITranslator { // eslint-disable-line @typescript-eslint/naming-conv
       this.options.cacheUse = Zotero.getOption('cacheUse')
     }
 
+    log.debug('cacheable before:', this.cacheable)
     this.preferences = Object.entries(defaults).reduce((acc, [pref, dflt]) => {
       acc[pref] = this.getPreferenceOverride(pref) ?? Zotero.getHiddenPref(`better-bibtex.${pref}`) ?? dflt
       return acc
     }, {} as unknown as Preferences)
+    log.debug('cacheable after:', this.cacheable, this.preferences)
 
     // special handling
     log.debug('prefs: @load', this.preferences)
@@ -294,7 +302,7 @@ export class ITranslator { // eslint-disable-line @typescript-eslint/naming-conv
 
       // when exporting file data you get relative paths, when not, you get absolute paths, only one version can go into the cache
       // relative file paths are going to be different based on the file being exported to
-      this.cacheable = this.preferences.caching && !(
+      this.cacheable = this.cacheable && this.preferences.caching && !(
         this.options.exportFileData
         ||
         this.preferences.relativeFilePaths
@@ -350,7 +358,12 @@ export class ITranslator { // eslint-disable-line @typescript-eslint/naming-conv
 
   getPreferenceOverride(pref) { // eslint-disable-line @typescript-eslint/explicit-module-boundary-types
     try {
-      return Zotero.getOption(`preference_${pref}`) // eslint-disable-line @typescript-eslint/no-unsafe-return
+      const override = Zotero.getOption(`preference_${pref}`)
+      if (typeof override !== 'undefined') {
+        this.cacheable = false
+        log.debug('pref override', pref, 'to', override)
+      }
+      return override // eslint-disable-line @typescript-eslint/no-unsafe-return
     }
     catch (err) {
       return undefined
