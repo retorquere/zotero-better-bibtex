@@ -459,6 +459,12 @@ class PatternFormatter {
     return this.set(authors[authors.length - 1])
   }
 
+  /** returns the journal title */
+  public $journal__full() {
+    // this.item.item is the native item stored inside the this.item sorta-proxy
+    return this.set(this.item.getField('publicationTitle') || '')
+  }
+
   /** returns the journal abbreviation, or, if not found, the journal title, If 'automatic journal abbreviation' is enabled in the BBT settings,
    * it will use the same abbreviation filter Zotero uses in the wordprocessor integration. You might want to use the `abbr` filter on this.
    */
