@@ -34,7 +34,7 @@ import { kuroshiro } from './japanese'
 import AJV from 'ajv'
 import { validator } from '../ajv'
 const ajv = new AJV({ coerceTypes: true })
-import csv from 'papaparse'
+import { dictsync as csv2dict } from '../load-csv'
 
 import BabelTag from '../../gen/babel/tag.json'
 type ValueOf<T> = T[keyof T]
@@ -841,31 +841,19 @@ class PatternFormatter {
 
     try {
       if (!this.acronyms[list]) {
-        this.acronyms[list] = {}
-        for (const row of csv.parse(Zotero.File.getContents(OS.Path.join(Zotero.BetterBibTeX.dir, `${list}.csv`)))) {
-          switch (row.length) {
-            case 0:
-            case 1:
-              log.error('acronyms: parsing', list, row, 'too short')
-              continue
-            case 2:
-              break
-            default:
-              log.error('acronyms: parsing', list, row, 'too long')
-              break
-          }
-
-          const [ full, acro ] = row.map((cell: string) => cell.trim()) as [string, string]
-
-          if (!full || !acro) {
-            log.error('acronyms: parsing', list, row, 'incomplete')
-            continue
-          }
-          else if (this.acronyms[list][full]) {
-            log.error('acronyms: parsing', list, row, 'duplicate')
-          }
-          this.acronyms[list][full.toLowerCase()] = acro
-        }
+        this.acronyms[list] = csv2dict(OS.Path.join(Zotero.BetterBibTeX.dir, `${list}.csv`))
+          .reduce((acc: Record<string, string>, row: Record<string, string>) => {
+            row.full = (row.full || '').trim().toLowerCase()
+            row.acronym = (row.acronym || '').trim()
+            if (row.full && row.acronym) {
+              if (acc[row.full]) log.error('acronyms: parsing', list, row, 'duplicate')
+              acc[row.full] = row.acronym
+            }
+            else {
+              log.error('acronyms: parsing', list, row, 'incomplete')
+            }
+            return acc
+          }, {} as Record<string, string>)
       }
     }
     catch (err) {

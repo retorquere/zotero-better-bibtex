@@ -141,7 +141,7 @@ function makeDirs(path) {
     path = OS.Path.dirname(path)
   }
 
-  if (!isWinRoot(path) && !(OS.File.stat(path) as OS.File.Entry).isDir) throw new Error(`makeDirs: root ${path} is not a directory`)
+  if (!isWinRoot(path) && !(OS.File.stat(path) as OS.File.FileInfo).isDir) throw new Error(`makeDirs: root ${path} is not a directory`)
 
   for (path of paths) {
     OS.File.makeDir(path) as void

@@ -307,13 +307,13 @@ class Zotero:
       self.execute(f'return await Zotero.BetterBibTeX.TestSupport.importFile({json.dumps(self.import_at_start)})')
       self.import_at_start = None
 
-  def reset(self):
+  def reset(self, scenario):
     if self.needs_restart:
       self.shutdown()
       self.config.reset()
       self.start()
 
-    self.execute('await Zotero.BetterBibTeX.TestSupport.reset()')
+    self.execute('await Zotero.BetterBibTeX.TestSupport.reset(scenario)', scenario=scenario)
     self.preferences = Preferences(self)
 
   def reset_cache(self):

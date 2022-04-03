@@ -243,6 +243,16 @@
     "label": "Enable caching for background exports"
   },
   {
+    "name": "charmap",
+    "type": "string",
+    "default": "",
+    "affects": [
+      "Better BibLaTeX",
+      "Better BibTeX"
+    ],
+    "var": "charmap"
+  },
+  {
     "name": "citeCommand",
     "type": "string",
     "default": "cite",

@@ -22,6 +22,7 @@
   "bibtexURL": "off",
   "cacheFlushInterval": 5,
   "caching": true,
+  "charmap": "",
   "citeCommand": "cite",
   "citekeyFold": true,
   "citekeyFormat": "\u200b[auth:lower][shorttitle3_3][year]",

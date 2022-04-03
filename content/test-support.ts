@@ -41,7 +41,8 @@ export class TestSupport {
     return (AutoExport.db.find($and({ status: 'running' })).length > 0)
   }
 
-  public async reset(): Promise<void> {
+  public async reset(scenario: string): Promise<void> {
+    log.debug('reset for', scenario)
     Zotero.BetterBibTeX.localeDateOrder = Zotero.Date.getLocaleDateOrder()
 
     Cache.reset('test environment reset')

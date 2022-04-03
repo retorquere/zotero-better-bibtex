@@ -10,6 +10,7 @@ interface DirectoryIteratorConstructable {
 namespace OS {
   namespace File {
     type Entry = { isDir: boolean, size: number, path: string, unixMode?: number }
+    type FileInfo = { isDir: boolean, size: number, unixMode?: number, lastModificationDate: Date }
   }
 }
 declare const OS: {
@@ -21,7 +22,7 @@ declare const OS: {
     remove: (path: string, options?: { ignoreAbsent: boolean }) => Promise<void>
     writeAtomic: (path: string, data: Uint8Array | string, options?: { tmpPath?: string, encoding?: string }) => void | Promise<void>
     makeDir: (path: string, options?: { ignoreExisting?: boolean }) => void | Promise<void>
-    stat: (path: string) => OS.File.Entry | Promise<OS.File.Entry>
+    stat: (path: string) => OS.File.FileInfo | Promise<OS.File.FileInfo>
     copy: (src: string, tgt: string, options?: { noOverwrite?: boolean }) => void
     removeDir: (path: string, options?: { ignoreAbsent?: boolean, ignorePermissions?: boolean }) => void
 

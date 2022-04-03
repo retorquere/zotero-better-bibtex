@@ -7,6 +7,8 @@ declare const Zotero: any
 
 import { names, defaults } from '../gen/preferences/meta'
 import { PreferenceManager as PreferenceManagerBase } from '../gen/preferences'
+import { dict as csv2dict } from './load-csv'
+import { log } from './logger'
 
 export const Preference = new class PreferenceManager extends PreferenceManagerBase {
   public prefix = 'translators.better-bibtex.'
@@ -19,13 +21,6 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
 
     this.migrate()
 
-    // set defaults and install event emitter
-    for (const pref of names) {
-      if (pref !== 'platform') {
-        if (typeof this[pref] === 'undefined') (this[pref] as any) = (typeof defaults[pref] === 'string' ? (defaults[pref] as string).replace(/^\u200B/, '') : defaults[pref])
-        this.register(pref)
-      }
-    }
     // put this in a preference so that translators can access this.
     if (Zotero.isWin) {
       this.platform = 'win'
@@ -53,7 +48,7 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
     }
   }
 
-  register(pref: string) {
+  observe(pref: string) {
     Zotero.Prefs.registerObserver(`${this.prefix}${pref}`, this.changed.bind(this, pref))
   }
 
@@ -122,13 +117,6 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
       Zotero.Prefs.set(key, defaults.autoExportDelay)
     }
 
-    // set defaults and install event emitter
-    for (const pref of names) {
-      if (pref !== 'platform') {
-        if (typeof this[pref] === 'undefined') (this[pref] as any) = (typeof defaults[pref] === 'string' ? (defaults[pref] as string).replace(/^\u200B/, '') : defaults[pref])
-        Zotero.Prefs.registerObserver(`${this.prefix}${pref}`, this.changed.bind(this, pref))
-      }
-    }
     // put this in a preference so that translators can access this.
     if (Zotero.isWin) {
       this.platform = 'win'
@@ -153,6 +141,49 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
           return object[property] // eslint-disable-line @typescript-eslint/no-unsafe-return
         },
       })
+    }
+  }
+
+  private async loadFromCSV(pref: string, path: string, dflt: string, transform: (row: any) => any) {
+    const key = `${this.prefix}${pref}`
+    const modified = {
+      pref: Zotero.Prefs.get(`${key}.modified`) || 0,
+      file: (await OS.File.exists(path)) ? (await OS.File.stat(path)).lastModificationDate.getTime() : 0,
+    }
+    if (modified.pref >= modified.file) return
+
+    Zotero.Prefs.set(`${key}.modified`, modified.file)
+    const rows = await csv2dict(path)
+    try {
+      this[pref] = rows.length ? transform(rows) : dflt
+    }
+    catch (err) {
+      log.error('error loading pref', pref, 'from', path, ':', err)
+      this[pref] = dflt
+    }
+  }
+
+  public async initAsync(dir: string) {
+    // load from csv for easier editing
+    await this.loadFromCSV('charmap', OS.Path.join(dir, 'charmap.csv'), '', (rows: Record<string, string>[]) => JSON.stringify(
+      rows.reduce((acc: Record<string, Record<string, string>>, row: Record<string, string>) => {
+        if (row.unicode) {
+          const char = row.unicode
+          delete row.unicode
+          acc[char] = row
+        }
+        return acc
+      }, {})
+    ))
+
+    // set defaults and install event emitter
+    for (const pref of names) {
+      if (pref !== 'platform') {
+        if (typeof this[pref] === 'undefined') {
+          (this[pref] as any) = typeof defaults[pref] === 'string' ? (defaults[pref] as string).replace(/^\u200B/, '') : defaults[pref]
+        }
+        this.observe(pref)
+      }
     }
   }
 }

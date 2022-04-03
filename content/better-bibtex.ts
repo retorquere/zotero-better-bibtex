@@ -929,6 +929,8 @@ export class BetterBibTeX {
 
     log.debug("Zotero ready, let's roll!")
 
+    await Preference.initAsync(this.dir)
+
     progress.update(l10n.localize('BetterBibTeX.startup.loadingKeys'), 10) // eslint-disable-line no-magic-numbers
     await Promise.all([Cache.init(), DB.init()])
 

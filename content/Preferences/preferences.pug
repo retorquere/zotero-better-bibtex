@@ -324,6 +324,12 @@ preference(name="extensions.zotero.translators.better-bibtex.separatorNames" bbt
 bbt:doc.
   Separator between author names. You will need to add `--namesep='|'` to your biber calls.
 
+preference(name="extensions.zotero.translators.better-bibtex.charmap" bbt:affects="tex" type="string" default="")
+bbt:doc.
+  a JSON mapping from single character to raw LaTeX, to augment the default mapping; these will be applied when you export as ASCII. **DO NOT** edit this preferencedirectly,
+  but create a CSV (not semicolons) file named `charmap.csv` in the zotero data directory under the `better-bibtex` folder with columns `unicode` (the source character),
+  `text` (representation in LaTeX text mode, if any) and `math` (representation in LaTeX math mode, if any, without dollar signs).
+
 // documented in tooltip
 preference#pref-better-bibtex-retainCache(name="extensions.zotero.translators.better-bibtex.retainCache" bbt:affects="" type="bool" default="false")
 preference#pref-better-bibtex-exportTitleCase(name="extensions.zotero.translators.better-bibtex.exportTitleCase" bbt:affects="tex" type="bool" default="true")
