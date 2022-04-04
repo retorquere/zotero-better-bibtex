@@ -138,6 +138,7 @@
     "properties-reader": "^2.2.0",
     "pug": "^3.0.2",
     "putout": "^25.14.0",
+    "recast": "^0.20.5",
     "rimraf": "^3.0.2",
     "shelljs": "^0.8.5",
     "string-template": "^1.0.0",
