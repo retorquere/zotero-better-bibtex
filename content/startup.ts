@@ -6,8 +6,15 @@ import { patch as $patch$ } from './monkey-patch'
 import * as supported from '../schema/supported.json'
 import { clean_pane_persist } from './clean_pane_persist'
 
+function approxVersion(v: string): string {
+  return v
+    .replace(/m|-beta/, '.')
+    // https://github.com/retorquere/zotero-better-bibtex/issues/2093#issuecomment-1082885183
+    .replace(/\.SOURCE.*/, `.${Number.MAX_SAFE_INTEGER}`.slice(0, -1))
+}
+
 const versionCompare = Components.classes['@mozilla.org/xpcom/version-comparator;1'].getService(Components.interfaces.nsIVersionComparator)
-$patch$.enabled = versionCompare.compare(Zotero.version.replace('m', '.').replace(/-beta.*/, ''), supported[client].replace('m', '.')) >= 0
+$patch$.enabled = versionCompare.compare(approxVersion(Zotero.version), approxVersion(supported[client])) >= 0
 
 Zotero.debug(`monkey-patch: ${Zotero.version}: BBT ${$patch$.enabled ? 'en' : 'dis'}abled`)
 if (!$patch$.enabled) {
