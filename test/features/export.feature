@@ -13,6 +13,7 @@ Feature: Export
 
     Examples:
       | file                                                                                                                     | references |
+      | Configurable journal abbreviation for citekey #2097                                                                      | 1          |
       | BetterBibLaTeX exports articles as online #2058                                                                          | 3          |
       | How to export bib without month and date in year item (Using better bibtex) #2022                                        | 1          |
       | Capitalized words after colons not brace protected #1978                                                                 | 1          |
@@ -239,7 +240,7 @@ Feature: Export
 
     @use.with_client=zotero
     Examples:
-      | BibTeX export is incompatible with Zotero 6 Preprint item type. #2080                                              | 1          |
+      | BibTeX export is incompatible with Zotero 6 Preprint item type. #2080 | 1 |
 
   @csl
   Scenario Outline: Export <references> references for CSL JSON to <file>
