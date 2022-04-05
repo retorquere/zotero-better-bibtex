@@ -16,10 +16,10 @@ class FormatterAPI {
       schema: {
         type: 'object',
         properties: {
-          field: { type: 'string' }
+          field: { type: 'string' },
         },
         additionalProperties: false,
-      }
+      },
     }
 
     this.formatter = new API(source).classes.PatternFormatter
