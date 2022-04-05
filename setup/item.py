@@ -519,6 +519,7 @@ with fetch('zotero') as z, fetch('jurism') as j:
         else:
           min_version[client] = rel
 
+    min_version = { client: re.sub(r'(\.0)+$','', rel) for client, rel in min_version.items() }
     with open(os.path.join(root, 'schema', 'supported.json'), 'w') as f:
       json.dump(min_version, f)
 

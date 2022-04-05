@@ -11,6 +11,17 @@ class FormatterAPI {
   public doc: { function: Record<string, string>, filter: Record<string, string> } = { function: {}, filter: {} }
 
   constructor(source: string) {
+    this.signature.$getField = {
+      parameters: [ 'field' ],
+      schema: {
+        type: 'object',
+        properties: {
+          field: { type: 'string' }
+        },
+        additionalProperties: false,
+      }
+    }
+
     this.formatter = new API(source).classes.PatternFormatter
     for (const [name, method] of Object.entries(this.formatter)) {
       const kind = {$: 'function', _: 'filter'}[name[0]]
