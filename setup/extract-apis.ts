@@ -11,17 +11,6 @@ class FormatterAPI {
   public doc: { function: Record<string, string>, filter: Record<string, string> } = { function: {}, filter: {} }
 
   constructor(source: string) {
-    this.signature.$getField = {
-      parameters: [ 'field' ],
-      schema: {
-        type: 'object',
-        properties: {
-          field: { type: 'string' }
-        },
-        additionalProperties: false,
-      }
-    }
-
     this.formatter = new API(source).classes.PatternFormatter
     for (const [name, method] of Object.entries(this.formatter)) {
       const kind = {$: 'function', _: 'filter'}[name[0]]
@@ -29,13 +18,14 @@ class FormatterAPI {
 
       this.signature[name] = JSON.parse(JSON.stringify({
         parameters: method.parameters.map(p => p.name),
+        rest: method.parameters.find(p => p.rest)?.name,
         schema: method.schema,
       }))
 
       let names = [ name.substr(1) ]
       let name_edtr = ''
       if (kind === 'function' && method.parameters.find(p => p.name === 'onlyEditors')) { // auth function
-        for (const [author, editor] of [['authors', 'editors'], ['auth.auth', 'edtr.edtr'], [ 'auth', 'edtr' ]]) {
+        for (const [author, editor] of [['authors', 'editors'], ['author', 'editor'], ['auth.auth', 'edtr.edtr'], [ 'auth', 'edtr' ]]) {
           if (names[0].startsWith(author)) {
             names.push(name_edtr = names[0].replace(author, editor))
             break
@@ -43,6 +33,7 @@ class FormatterAPI {
         }
       }
       if (name_edtr) {
+        name_edtr = `$${name_edtr}`
         this.signature[name_edtr] = JSON.parse(JSON.stringify(this.signature[name]))
 
         for (const mname of [name, name_edtr]) {
@@ -69,14 +60,95 @@ class FormatterAPI {
 
       this.doc[kind][quoted] = method.doc
     }
+
+    for (const signature of Object.values(this.signature)) {
+      for (const [ property, type ] of Object.entries(signature.schema.properties)) {
+        signature.schema.properties[property] = this.upgrade(type)
+      }
+    }
   }
 
   private typedoc(type): string {
     if (['boolean', 'string', 'number'].includes(type.type)) return type.type
     if (type.oneOf) return type.oneOf.map(t => this.typedoc(t)).join(' | ')
+    if (type.anyOf) return type.anyOf.map(t => this.typedoc(t)).join(' | ')
     if (type.const) return JSON.stringify(type.const)
     if (type.enum) return type.enum.map(t => this.typedoc({ const: t })).join(' | ')
+    if (type.instanceof) return type.instanceof
     throw new Error(`no rule for ${JSON.stringify(type)}`)
+  }
+
+  upgrade(type) {
+    switch (type.type) {
+      case 'string':
+      case 'number':
+      case 'boolean':
+        return {
+          type: 'object',
+          properties: {
+            type: { const: 'Literal' },
+            value: { type: type.type },
+            raw: { type: 'string' },
+          },
+          required: [ 'type', 'value' ],
+          additionalProperties: false,
+        }
+      case 'array':
+        return {
+          type: 'object',
+          properties: {
+            type: { const: 'ArrayExpression' },
+            elements: { type: 'array', items: this.upgrade(type.items) },
+          },
+          required: [ 'type', 'elements' ],
+          additionalProperties: false,
+        }
+    }
+
+    if (typeof type.const !== 'undefined') {
+      return {
+        type: 'object',
+        properties: {
+          type: { const: 'Literal' },
+          value: { const: type.const },
+          raw: { type: 'string' },
+        },
+        required: [ 'type', 'value' ],
+        additionalProperties: false,
+      }
+    }
+
+    if (type.instanceof === 'RegExp') {
+      return {
+        type: 'object',
+        properties: {
+          type: { const: 'Literal' },
+          value: { type: 'object' },
+          raw: { type: 'string' },
+          regex: {
+            type: 'object',
+            properties: {
+              pattern: { type: 'string' },
+              flags: { type: 'string' },
+            },
+            required: [ 'pattern', 'flags' ],
+            additionalProperties: false,
+          },
+        },
+        required: [ 'type', 'regex' ],
+        additionalProperties: false,
+      }
+    }
+
+    if (type.oneOf) {
+      return { oneOf: type.oneOf.map(t => this.upgrade(t)) }
+    }
+
+    if (type.anyOf) {
+      return { anyOf: type.anyOf.map(t => this.upgrade(t)) }
+    }
+
+    throw type
   }
 }
 

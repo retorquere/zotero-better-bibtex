@@ -1,78 +1,45 @@
-const fs = require("fs");
-const recast = require("recast");
-const util = require('util')
-function show(obj) {
-  return JSON.stringify(obj, null, 2)
-}
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 
-const api = require('./gen/api/key-formatter.json')
-const methodnames = {}
-function findMethod(fname) {
-  if (typeof methodnames[fname] !== 'undefined') return methodnames[fname]
-
-  const uscore = fname.replace(/([A-Z])/g, chr => '_' + chr.toLowerCase())
-  const duscore = fname.replace(/([A-Z])/g, chr => '__' + chr.toLowerCase())
-  for (const name of Object.keys(api)) {
-    if ([uscore, duscore].includes(name.toLowerCase())) {
-      return (methodnames[fname] = name)
-    }
-  }
-  return (methodnames[fname] = '')
+import * as recast from 'recast'
+import api from '../../gen/api/key-formatter.json'
+const methodnames: Record<string, string> = Object.keys(api).reduce((acc, name) => { acc[name.toLowerCase()]=name; return acc }, {} as Record<string, string>)
+function findMethod(fname: string): string {
+  const uscore = fname.replace(/[a-z][A-Z]/g, chr => `${chr[0]}_${chr[1]}`).toLowerCase()
+  const duscore = fname.replace(/[a-z][A-Z]/g, chr => `${chr[0]}__${chr[1]}`).toLowerCase()
+  return methodnames[uscore] || methodnames[duscore]
 }
 
 type AST = any
 
-const Ajv = require("ajv")
+const Ajv = require('ajv')
 const ajv = new Ajv()
 const betterAjvErrors = require('better-ajv-errors').default
 
 for (const method of Object.values(api)) {
-  (method as unknown as any).validate = ajv.compile((method as unknown as any).schema)
+  (method  as any).validate = ajv.compile((method  as any).schema)
 }
 
 for (const fname in api) {
   if (fname[0] !== '_' && fname[0] !== '$') throw new Error(`Unexpected fname ${fname}`)
 }
 
-var source = [
-  'Auth.lower.capitalize() + "xxx"',
-  'auth.lower',
-`
- type(forumPost, WebPage)
-  + Auth.lower.capitalize
-  + journal(abbrev=abbrev)
-  + Date.formatDate('%Y-%m-%d.%H:%M:%S').prefix('.').replace(/x/g, 'a')
-  + PublicationTitle.select(1,1).lower.capitalize.prefix('.')
-  + shorttitle(3,3).lower.capitalize.prefix('.')
-  + Pages.prefix('.p.')
-  + Volume.prefix('.Vol.')
-  + NumberofVolumes.prefix(de)
-`,
-`Auth.lower.capitalize
-  + date('%oY').prefix('.')
-  + PublicationTitle.select(1,1).lower.capitalize.prefix('.')
-  + shorttitle(3,3).lower.capitalize.prefix('.')
-  + Pages.prefix('.p.')
-  + Volume.prefix('.Vol.')
-  + NumberofVolumes.prefix(de)
-  `
-].join(' | ')
 
-class PatternParser {
+export class PatternParser {
   public code: string
   private finder: AST
+  private ftype: string
 
-  constructor(source) {
+  constructor(source: string) {
     this.finder = recast.parse('[].find(pattern => { try { return pattern() } catch (err) { if (err.next) return ""; throw err } })')
     this.addpattern(recast.parse(source).program.body[0].expression)
     this.code = recast.prettyPrint(this.finder, {tabWidth: 2}).code
   }
 
-  error(expr) {
+  private error(expr): void {
     throw new Error(`Unexpected ${expr.type} at ${expr.loc.start.column}`)
   }
 
-  Literal(expr, context) {
+  protected Literal(expr: AST, _context: any): AST {
     return expr
   }
 
@@ -83,10 +50,10 @@ class PatternParser {
 
     const [ , prefix, author, editor, rest ] = m
     const function_name = `${prefix}${rest}`
-    
+
     const scrub = prefix[0] === prefix[0].toLowerCase()
 
-    
+
   }
   */
 
@@ -104,7 +71,7 @@ class PatternParser {
     if (method.rest) {
       if (method.parameters.length !== 1) throw new Error(`${me}: ...rest method may have only one parameter, got ${method.parameters.join(', ')}`)
       if (args.find(arg => arg.named_argument)) throw new Error(`${me}: named argument not supported in rest function`)
-      args = args.map(({ loc, ...arg }) => arg)
+      args = args.map(({ _loc, ...arg }) => arg) // eslint-disable-line @typescript-eslint/no-unsafe-return
       parameters[method.rest] = { type: 'ArrayExpression', elements: args }
     }
     else {
@@ -112,14 +79,15 @@ class PatternParser {
 
       const names = []
       args = args.map((arg, i) => {
-        let { named_argument, loc, ...argc } = arg
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { named_argument, _loc, ...argc } = arg
         const name = named_argument || method.parameters[i]
         if (names.includes(name)) throw new Error(`${me}: duplicate parameter ${name}`)
         names.push(name)
         parameters[name] = argc
         return argc
       })
-      args = method.parameters.map(param => parameters[param] || { type: 'Identifier', name: 'undefined' })
+      args = method.parameters.map((param: string) => parameters[param] as AST || { type: 'Identifier', name: 'undefined' } as AST)
     }
 
     if (!method.validate(parameters)) {
@@ -133,7 +101,7 @@ class PatternParser {
     return args
   }
 
-  private Identifier(expr: AST, context: any): AST {
+  protected Identifier(expr: AST, context: any): AST {
     let m
     if (context.arguments) {
       return { type: 'Literal', value: expr.name }
@@ -141,33 +109,33 @@ class PatternParser {
     else if (expr.type !== 'Identifier') {
       return expr
     }
-    else if (m = expr.name.match(/^(([Aa]uth|[Aa]uthors)|([Ee]dtr|[Ee]ditors))([\.a-zA-Z]*)$/)) {
-      const [ fname , prefix, author, editor, rest ] = m
+    else if (m = expr.name.match(/^(([Aa]uth|[Aa]uthors)|([Ee]dtr|[Ee]ditors))([a-zA-Z]*)$/)) {
+      const [ fname , prefix, , editor ] = m
       const onlyEditors = !!editor
       const scrub = !!prefix.match(/^[ae]/)
 
       const method = api[findMethod(`$${fname}`)]
       if (!method) throw new Error(`No such function ${fname}`)
 
-      const args = [ { 'type': 'Literal', value: scrub, named_argument: 'scrub' } ]
-      if (method.parameters.includes('onlyEditors')) args.push({ 'type': 'Literal', value: onlyEditors, named_argument: 'onlyEditors' })
+      const args = [ { type: 'Literal', value: scrub, named_argument: 'scrub' } ]
+      if (method.parameters.includes('onlyEditors')) args.push({ type: 'Literal', value: onlyEditors, named_argument: 'onlyEditors' })
       return {
         type: 'CallExpression',
-        callee: { 'type': 'Identifier', name: method },
+        callee: { type: 'Identifier', name: method },
         arguments: args,
       } as AST
     }
     else if (expr.name.match(/^[A-Z]/)) {
       // TODO: field lookup here
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      return {type: 'CallExpression', callee: { 'type': 'Identifier', name: 'get_field' }, arguments: [ { type: 'Literal', value: expr.name.replace(/^./, c => c.toLowerCase()) } ]} as AST
+      return {type: 'CallExpression', callee: { type: 'Identifier', name: 'get_field' }, arguments: [ { type: 'Literal', value: expr.name.replace(/^./, c => c.toLowerCase()) } ]} as AST
     }
     else {
       return { type: 'CallExpression', callee: expr, arguments: [] } as AST
     }
   }
 
-  private CallExpression(expr: AST, context: any): AST {
+  protected CallExpression(expr: AST, context: any): AST {
     const callee = (expr.callee.type === 'MemberExpression') ? { ...expr.callee, object: this.convert(expr.callee.object, context) } : expr.callee
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return {
@@ -177,7 +145,7 @@ class PatternParser {
     }
   }
 
-  private MemberExpression(expr: AST, context: any): AST {
+  protected MemberExpression(expr: AST, context: any): AST {
     return {
       ...expr,
       object: this.convert(expr.object, context),
@@ -185,12 +153,12 @@ class PatternParser {
     }
   }
 
-  private AssignmentExpression(expr: AST, context: any): AST {
+  protected AssignmentExpression(expr: AST, context: any): AST {
     if (!context.arguments) this.error(expr)
     return {...this.convert(expr.right, context), named_argument: expr.left.name}
   }
 
-  private BinaryExpression(expr: AST, context: any): AST {
+  protected BinaryExpression(expr: AST, context: any): AST {
     if (expr.operator !== '+') this.error(expr)
     return {
       ...expr,
@@ -233,7 +201,7 @@ class PatternParser {
     return this[expr.type](expr, context) as AST
   }
 
-  resolve(expr) {
+  private resolve(expr: AST) {
     let fname: string
 
     switch (expr.type) {
@@ -247,10 +215,13 @@ class PatternParser {
         }
 
         if (expr.callee.type === 'Identifier') {
+          console.log('ident', expr.callee.name)
           fname = expr.callee.name = `${fname}${expr.callee.name}`
         }
         else if (expr.callee.type === 'MemberExpression' && expr.callee.property.type === 'Identifier') {
+          console.log('member', expr.callee.property.name)
           fname = expr.callee.property.name = `${fname}${expr.callee.property.name}`
+
         }
         else {
           throw expr
@@ -281,7 +252,7 @@ class PatternParser {
     }
   }
 
-  insert(expr) {
+  private insert(expr: AST) {
     expr = this.convert(expr, {})
     this.ftype = '$'
     this.resolve(expr)
@@ -290,7 +261,7 @@ class PatternParser {
     this.finder.program.body[0].expression.callee.object.elements.push({ type: 'ArrowFunctionExpression', params: [], body: expr, expression: true })
   }
 
-  addpattern(expr) {
+  private addpattern(expr: AST) {
     if (expr.type === 'BinaryExpression' && expr.operator === '|') {
       this.addpattern(expr.left)
       this.insert(expr.right)
@@ -300,5 +271,3 @@ class PatternParser {
     }
   }
 }
-
-// console.log(new PatternParser(source).code)

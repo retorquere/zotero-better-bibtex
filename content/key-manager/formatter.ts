@@ -374,7 +374,26 @@ class PatternFormatter {
   }
 
   /**
-   * Tests whether the entry has the given language set, and skips to the next pattern if not
+   * Gets the value of the item field
+   */
+  public $get_field(name: string) { // make into enum
+    return this.set(this.item.getField(name) || '')
+  }
+
+  /**
+   * Tests whether the item is of any of the given types
+   */
+  public $type(...allowed: string[]) {
+    if (allowed.map(type => type.toLowerCase()).includes(this.item.itemType.toLowerCase())) {
+      return this.set('')
+    }
+    else {
+      throw { next: true } // eslint-disable-line no-throw-literal
+    }
+  }
+
+  /**
+   * Tests whether the item has the given language set, and skips to the next pattern if not
    */
   public $language(name: (BabelLanguage | BabelLanguageTag)[]) {
     if (name.concat(name.map(n => BabelTag[n] as string).filter(n => n)).includes(this.item.babelTag())) {
@@ -430,33 +449,39 @@ class PatternFormatter {
   }
 
   /** The first `N` (default: all) characters of the `M`th (default: first) author's last name. */
-  public $auth(onlyEditors: boolean, withInitials:boolean, joiner: string, n?: number, m?:number) {
+  public $auth(scrub=true, onlyEditors: boolean, withInitials:boolean, joiner: string, n?: number, m?:number) {
     const authors = this.creators(onlyEditors, {withInitials})
     if (!authors || !authors.length) return this.set('')
     let author = authors[m ? m - 1 : 0]
     if (author && n) author = author.substring(0, n)
+    if (author && scrub) author = this.clean(author)
     return this.set(author || '')
   }
 
   /** The forename initial of the first author. */
-  public $authForeIni(onlyEditors: boolean) {
+  public $authForeIni(scrub=true, onlyEditors: boolean) {
     const authors = this.creators(onlyEditors, {initialOnly: true})
     if (!authors || !authors.length) return this.set('')
+    if (scrub) authors[0] = this.clean(authors[0])
     return this.set(authors[0])
   }
 
   /** The forename initial of the last author. */
-  public $authorLastForeIni(onlyEditors: boolean) {
+  public $authorLastForeIni(scrub=true, onlyEditors: boolean) {
     const authors = this.creators(onlyEditors, {initialOnly: true})
     if (!authors || !authors.length) return this.set('')
-    return this.set(authors[authors.length - 1])
+    let author = authors[authors.length - 1]
+    if (scrub) author = this.clean(author)
+    return this.set(author)
   }
 
   /** The last name of the last author */
-  public $authorLast(onlyEditors: boolean, withInitials: boolean, joiner: string) { // eslint-disable-line @typescript-eslint/no-unused-vars
+  public $authorLast(scrub=true, onlyEditors: boolean, withInitials: boolean, joiner: string) { // eslint-disable-line @typescript-eslint/no-unused-vars
     const authors = this.creators(onlyEditors, {withInitials})
     if (!authors || !authors.length) return this.set('')
-    return this.set(authors[authors.length - 1])
+    let author = authors[authors.length - 1]
+    if (scrub) author = this.clean(author)
+    return this.set(author)
   }
 
   /** returns the journal abbreviation, or, if not found, the journal title, If 'automatic journal abbreviation' is enabled in the BBT settings,
@@ -794,7 +819,7 @@ class PatternFormatter {
   }
 
   /** replaces text, case insensitive; `:replace=.etal,&etal` will replace `.EtAl` with `&etal` */
-  public _replace(find: string, replace: string, mode?: 'string' | 'regex') {
+  public _replace(find: string | RegExp, replace: string, mode?: 'string' | 'regex') {
     if (!find) return this
     const re = mode === 'regex' ? find : find.replace(/[[\](){}*+?|^$.\\]/g, '\\$&')
     return this.set(this.value.replace(new RegExp(re, 'ig'), replace))
