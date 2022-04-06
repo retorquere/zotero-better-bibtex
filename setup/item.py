@@ -519,7 +519,8 @@ with fetch('zotero') as z, fetch('jurism') as j:
         else:
           min_version[client] = rel
 
-    min_version = { client: re.sub(r'(\.0)+$','', rel) for client, rel in min_version.items() }
+    print('******** UGLY HACK FOR #2099 *********')
+    min_version={ client: '5.2.7182818284590452' if ver == '6.0' else ver for client, ver in min_version.items() }
     with open(os.path.join(root, 'schema', 'supported.json'), 'w') as f:
       json.dump(min_version, f)
 
