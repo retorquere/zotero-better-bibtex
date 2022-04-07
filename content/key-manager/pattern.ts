@@ -23,7 +23,6 @@ for (const fname in api) {
   if (fname[0] !== '_' && fname[0] !== '$') throw new Error(`Unexpected fname ${fname}`)
 }
 
-
 export class PatternParser {
   public code: string
   private finder: AST
@@ -43,19 +42,38 @@ export class PatternParser {
     return expr
   }
 
-  /*
-  function creator(name) {
-    const m = name.match(/^(([Aa]uthors|[Aa]uth)|([Ee]dtr|[Ee]ditors))([.a-zA-Z]*)$/)
-    if (!m) return m
+  private creator(name) {
+    const m = name.match(/^[$]?(([Aa]uthors|[Aa]uth)|([Ee]dtr|[Ee]ditors))([.a-zA-Z]*)$/)
+    if (!m) return null
 
-    const [ , prefix, author, editor, rest ] = m
+    const [ , prefix, , editor, rest ] = m
     const function_name = `${prefix}${rest}`
+    const onlyEditors = !!editor
+    const scrub = !!prefix.match(/^[ae]/)
 
-    const scrub = prefix[0] === prefix[0].toLowerCase()
+    for (let [author, editor] of [['authors', 'editors'], ['author', 'editor'], ['authAuth', 'edtrEdtr'], [ 'auth', 'edtr' ]]) {
+      if (function_name.startsWith(editor)) {
+        name = function_name.replace(editor, author)
+        break
+      }
+      author = author[0].toUpperCase() + author.slice(1)
+      editor = editor[0].toUpperCase() + editor.slice(1)
+      if (function_name.startsWith(editor)) {
+        name = function_name.replace(editor, author)
+        break
+      }
+    }
 
+    const method = findMethod(`$${name}`)
+    if (!method) return null
 
+    if (api[method].parameters.includes('onlyEditors')) {
+      return { name, scrub, onlyEditors }
+    }
+    else {
+      return { name, scrub }
+    }
   }
-  */
 
   private resolveArguments(fname: string, args: AST[]): AST[] {
     const method = api[findMethod(fname)] // transitional before rename in formatter.ts
@@ -78,6 +96,7 @@ export class PatternParser {
       if (method.parameters.length < args.length) throw new Error(`${me}: expected ${method.parameters.length} arguments, got ${args.length}`)
 
       const names = []
+      console.log(me, args, parameters)
       args = args.map((arg, i) => {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { named_argument, _loc, ...argc } = arg
@@ -102,26 +121,22 @@ export class PatternParser {
   }
 
   protected Identifier(expr: AST, context: any): AST {
-    let m
+    let author
     if (context.arguments) {
       return { type: 'Literal', value: expr.name }
     }
     else if (expr.type !== 'Identifier') {
       return expr
     }
-    else if (m = expr.name.match(/^(([Aa]uth|[Aa]uthors)|([Ee]dtr|[Ee]ditors))([a-zA-Z]*)$/)) {
-      const [ fname , prefix, , editor ] = m
-      const onlyEditors = !!editor
-      const scrub = !!prefix.match(/^[ae]/)
+    else if (author = this.creator(expr.name)) {
+      const method = api[findMethod(`$${author.name}`)]
+      if (!method) throw new Error(`No such function ${author.name}`)
 
-      const method = api[findMethod(`$${fname}`)]
-      if (!method) throw new Error(`No such function ${fname}`)
-
-      const args = [ { type: 'Literal', value: scrub, named_argument: 'scrub' } ]
-      if (method.parameters.includes('onlyEditors')) args.push({ type: 'Literal', value: onlyEditors, named_argument: 'onlyEditors' })
+      const args = [ { type: 'Literal', value: author.scrub, named_argument: 'scrub' } ]
+      if (typeof author.onlyEditors !== 'undefined') args.push({ type: 'Literal', value: author.onlyEditors, named_argument: 'onlyEditors' })
       return {
         type: 'CallExpression',
-        callee: { type: 'Identifier', name: method },
+        callee: { type: 'Identifier', name: author.name },
         arguments: args,
       } as AST
     }
@@ -225,6 +240,13 @@ export class PatternParser {
         }
         else {
           throw expr
+        }
+
+        const author = this.creator(fname)
+        if (author) {
+          fname = `$${author.name}`
+          expr.arguments.push({ type: 'Literal', value: author.scrub, named_argument: 'scrub' })
+          if (typeof author.onlyEditors !== 'undefined') expr.arguments.push({ type: 'Literal', value: author.onlyEditors, named_argument: 'onlyEditors' })
         }
 
         expr.arguments = this.resolveArguments(fname, expr.arguments)
