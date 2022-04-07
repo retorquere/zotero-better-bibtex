@@ -1,7 +1,7 @@
 {
   "duration": {
     "(non-)dropping particle handling #313": 2820,
-    "AUX scanner": 8640,
+    "AUX scanner": 8650,
     "Better BibTeX Import 2": 1160,
     "BibTeX name escaping has a million inconsistencies #438": 480,
     "BibTeX; URL missing in bibtex for Book Section #412": 1060,
@@ -9,7 +9,7 @@
     "CAYW picker": 840,
     "CSL YAML export of date with original publication date in [brackets] #922": 360,
     "CSL-YAML import": {
-      "msecs": 1510,
+      "msecs": 1520,
       "runs": -353
     },
     "Capitalize all title-fields for language en #383": 680,
@@ -23,12 +23,12 @@
     },
     "Citekey generation failure #708 and sort references on export #957": 2040,
     "Collected notes": {
-      "msecs": 3770,
+      "msecs": 3780,
       "runs": -71
     },
     "Date export to Better CSL-JSON #360 #811": 1360,
     "Diacritics stripped from keys regardless of ascii or fold filters #266": 700,
-    "Do not caps-protect name fields #384 #565 #566": 3630,
+    "Do not caps-protect name fields #384 #565 #566": 3640,
     "Duplicate Citation Key Alias #1384": 10180,
     "Edition Numbers in BibTeX Exports #1446": 1100,
     "Export 1 references for BibLaTeX to @jurisdiction; map court,authority to institution #326": 320,
@@ -81,7 +81,7 @@
     "Export 1 references for BibLaTeX to Colon in bibtex key #405": 350,
     "Export 1 references for BibLaTeX to Colon not allowed in citation key format #268": 460,
     "Export 1 references for BibLaTeX to Configurable journal abbreviation for citekey #2097": {
-      "msecs": 1220,
+      "msecs": 1190,
       "runs": -479
     },
     "Export 1 references for BibLaTeX to DOI with underscores in extra field #108": 330,
@@ -92,7 +92,7 @@
     },
     "Export 1 references for BibLaTeX to Dates incorrect when Zotero date field includes times #934": 330,
     "Export 1 references for BibLaTeX to Define word delimiter characters #1943": {
-      "msecs": 880,
+      "msecs": 890,
       "runs": -421
     },
     "Export 1 references for BibLaTeX to Detect journal abbreviation in the publication field #1951": {
@@ -117,7 +117,7 @@
     },
     "Export 1 references for BibLaTeX to Export mapping for reporter field #219": 360,
     "Export 1 references for BibLaTeX to Export of hypen for range in the volume field #1929": {
-      "msecs": 750,
+      "msecs": 760,
       "runs": -411
     },
     "Export 1 references for BibLaTeX to Exporting of single-field author lacks braces #130": 410,
@@ -129,7 +129,7 @@
     "Export 1 references for BibLaTeX to German Umlaut separated by brackets #146": 390,
     "Export 1 references for BibLaTeX to HTML Fragment separator escaped in url #140 #147": 300,
     "Export 1 references for BibLaTeX to How to export bib without month and date in year item (Using better bibtex) #2022": {
-      "msecs": 1160,
+      "msecs": 1170,
       "runs": -440
     },
     "Export 1 references for BibLaTeX to How to use the last word of the title? #1746": {
@@ -242,7 +242,7 @@
       "runs": -411
     },
     "Export 1 references for BibTeX to DOI not escaped using postscript #1803": {
-      "msecs": 690,
+      "msecs": 700,
       "runs": -309
     },
     "Export 1 references for BibTeX to Debugging translator issue for PhD Dissertation type #1950": {
@@ -334,7 +334,7 @@
     },
     "Export 1 references for BibTeX to custom fields should be exported as-is #441": 480,
     "Export 1 references for BibTeX to fetch inspire-hep key #1879": {
-      "msecs": 2040,
+      "msecs": 2050,
       "runs": -422
     },
     "Export 1 references for BibTeX to lone ogonek should have brace": {
@@ -352,19 +352,19 @@
       "runs": -220
     },
     "Export 1 references for CSL JSON to BBT CSL JSON; Do not use shortTitle and journalAbbreviation #372": {
-      "msecs": 620,
+      "msecs": 630,
       "runs": -440
     },
     "Export 1 references for CSL JSON to Better CSL JSON does not include authority field #2019": {
-      "msecs": 810,
+      "msecs": 820,
       "runs": -440
     },
     "Export 1 references for CSL JSON to Multiple creators in Extra not exported in Better CSL JSON #2015": {
-      "msecs": 700,
+      "msecs": 710,
       "runs": -440
     },
     "Export 1 references for CSL JSON to Quotes around last names should be removed from citekeys #856": {
-      "msecs": 640,
+      "msecs": 650,
       "runs": -440
     },
     "Export 2 references for BibLaTeX to Better BibLaTeX.002": 380,
@@ -413,17 +413,17 @@
     "Export 2 references for BibTeX to error on exporting note with pre tags; duplicate field howpublished #1092": 670,
     "Export 2 references for BibTeX to titles are title-cased in .bib file #558": 510,
     "Export 26 references for CSL JSON to CSL exporters; ignore [Fields to omit from export] setting #1179": {
-      "msecs": 2840,
+      "msecs": 2890,
       "runs": -440
     },
     "Export 26 references for CSL JSON to Deterministic ordering for CSL #1178 #1400": {
-      "msecs": 3030,
+      "msecs": 3060,
       "runs": -440
     },
     "Export 27 references for BibLaTeX to EDTF dates in BibLaTeX #590": 1880,
     "Export 3 references for BibLaTeX to BBT export of square brackets in date #245 -- xref should not be escaped #246": 610,
     "Export 3 references for BibLaTeX to BetterBibLaTeX exports articles as online #2058": {
-      "msecs": 1710,
+      "msecs": 1730,
       "runs": -466
     },
     "Export 3 references for BibLaTeX to Do not caps-protect literal lists #391": 410,
@@ -444,11 +444,11 @@
     "Export 6 references for BibLaTeX to Better BibLaTeX.stable-keys": 620,
     "Export 8 references for BibLaTeX to Don't title-case sup-subscripts #1037": 660,
     "Export 86 references for BibLaTeX to Language field in the metadata exported incorrectly #1921": {
-      "msecs": 6800,
+      "msecs": 6830,
       "runs": -405
     },
     "Export as Collected Notes does not list subcollections #1768": {
-      "msecs": 5120,
+      "msecs": 5140,
       "runs": -256
     },
     "Export of creator-type fields from embedded CSL variables #365 uppercase DOI #825": 990,
@@ -483,7 +483,7 @@
     "Import 1 references from BibTeX import; preamble with def create problems #732": 1130,
     "Import 1 references from Biblatex Annotation Import Bug #613": 1040,
     "Import 1 references from Detect journal abbreviation in the publication field #1951": {
-      "msecs": 1760,
+      "msecs": 1770,
       "runs": -418
     },
     "Import 1 references from Endnote should parse": 770,
@@ -498,7 +498,7 @@
     "Import 1 references from Issues with round instead of curly braces do not import correctly #871": 1010,
     "Import 1 references from Literal names": 1230,
     "Import 1 references from Map the call-number field from Bib(La)TeX to call number #2021": {
-      "msecs": 1800,
+      "msecs": 1810,
       "runs": -440
     },
     "Import 1 references from Math formatting lost on import #627": 1020,
@@ -530,7 +530,7 @@
     },
     "Import 2 references from space after citekey creates confusion #716": 1170,
     "Import 20 references from BBT does not import groups from JabRef 5.1 #1641": {
-      "msecs": 3850,
+      "msecs": 3860,
       "runs": -161
     },
     "Import 3 references from Better BibTeX.009": 1130,
@@ -543,7 +543,7 @@
     "Import 9 references from Better BibLaTeX import improvements #549": 1520,
     "Import support for the online type in BBT #1358": 1170,
     "Include first name initial(s) in cite key generation pattern (86)": 450,
-    "Jabref groups import does not work #717": 3010,
+    "Jabref groups import does not work #717": 3020,
     "Jabref import - groups lost #1730": {
       "msecs": 3640,
       "runs": -228
@@ -564,21 +564,21 @@
       "runs": -276
     },
     "Postscript error aborts CSL JSON export #1155": 750,
-    "Really Big whopping library": 340530,
+    "Really Big whopping library": 340370,
     "Season ranges should be exported as pseudo-months (13-16, or 21-24) #860": 1220,
     "Set IDS field when merging references with different citation keys #1221": 9640,
     "Setting the item type via the cheater syntax #587": 1190,
     "Some bibtex entries quietly discarded on import from bib file #873": {
-      "msecs": 55550,
+      "msecs": 55690,
       "runs": -218
     },
     "Sorting and optional particle handling #411": 760,
     "Square brackets in Publication field (85), and non-pinned keys must change when the pattern does": 450,
     "Transforming exported file names (windows path conversion) #1939": {
-      "msecs": 860,
+      "msecs": 870,
       "runs": -413
     },
-    "Unabbreviate on import #1436-1": 39080,
+    "Unabbreviate on import #1436-1": 39100,
     "Unbalanced vphantom escapes #1043": 760,
     "arXiv identifiers in BibLaTeX export #460": 1180,
     "auto-export": 14370,
@@ -601,14 +601,13 @@
       "runs": -36
     },
     "web_page and other mendeley idiocy": {
-      "msecs": 40960,
+      "msecs": 41000,
       "runs": -239
     }
   },
   "fast": {
     "1": [
       "Export 1 references for BibLaTeX to Configurable journal abbreviation for citekey #2097",
-      "Export 3 references for BibLaTeX to BetterBibLaTeX exports articles as online #2058",
       "Export 1 references for BibLaTeX to How to export bib without month and date in year item (Using better bibtex) #2022",
       "Export 1 references for BibLaTeX to Capitalized words after colons not brace protected #1978",
       "Export 1 references for BibLaTeX to Extensions to citation format syntax #1933",
@@ -857,11 +856,12 @@
       "CSL-YAML import",
       "Import support for the online type in BBT #1358",
       "Math markup to unicode not always imported correctly #472",
+      "importing a title-cased bib #1246",
       "Import 4 references from Improve import of films #1837",
       "Import 1 references from tex.origdate ignored in citekey generation #1696",
-      "Import 1 references from collaborators to contributors",
       "Import 1 references from Importing changes Journal to The Journal #1601",
       "Import 1 references from Import of langle and rangle TeX commands #1468",
+      "Import 8 references from Overline during Import #1467",
       "Import 9 references from Better BibLaTeX import improvements #549",
       "Import 2 references from Better BibTeX.003",
       "Import 1 references from Better BibTeX.004",
@@ -901,6 +901,7 @@
       "unknown command handler #1733"
     ],
     "2": [
+      "Export 3 references for BibLaTeX to BetterBibLaTeX exports articles as online #2058",
       "Export 2 references for BibLaTeX to Kuroshiro hardcoded to apply to all CJK language items when option checked #1928",
       "Export 86 references for BibLaTeX to Language field in the metadata exported incorrectly #1921",
       "Export 27 references for BibLaTeX to EDTF dates in BibLaTeX #590",
@@ -919,12 +920,11 @@
       "Collected notes",
       "Export as Collected Notes does not list subcollections #1768",
       "Exporting %-encoded URLs (e.g. containing %20) #1966",
-      "importing a title-cased bib #1246",
       "AUX scanner",
       "Import 1 references from Map the call-number field from Bib(La)TeX to call number #2021",
       "Import 1 references from Detect journal abbreviation in the publication field #1951",
+      "Import 1 references from collaborators to contributors",
       "Import 20 references from BBT does not import groups from JabRef 5.1 #1641",
-      "Import 8 references from Overline during Import #1467",
       "Import 2 references from Import Jabref fileDirectory, unexpected reference type #1058",
       "Jabref groups import does not work #717",
       "Jabref import - groups lost #1730",
@@ -936,7 +936,7 @@
       "Identical Pinned keys lost when merging duplicated records #1721"
     ]
   },
-  "runs": 481,
+  "runs": 482,
   "slow": {
     "1": [
       "Export 1 references for BibLaTeX to Configurable journal abbreviation for citekey #2097",
