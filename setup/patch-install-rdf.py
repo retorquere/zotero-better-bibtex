@@ -8,7 +8,7 @@ import json
 install = minidom.parse('build/install.rdf')
 ta = install.getElementsByTagNameNS('*', 'targetApplication')[0]
 
-with open('gen/min-version.json') as f:
+with open('schema/supported.json') as f:
   min_version = json.load(f)
 
 for client, version in min_version.items():
