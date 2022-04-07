@@ -3,13 +3,16 @@
 import * as recast from 'recast'
 import api from '../../gen/api/key-formatter.json'
 const methodnames: Record<string, string> = Object.keys(api).reduce((acc, name) => { acc[name.toLowerCase()]=name; return acc }, {} as Record<string, string>)
+console.log(methodnames)
 function findMethod(fname: string): string {
   const uscore = fname.replace(/[a-z][A-Z]/g, chr => `${chr[0]}_${chr[1]}`).toLowerCase()
   const duscore = fname.replace(/[a-z][A-Z]/g, chr => `${chr[0]}__${chr[1]}`).toLowerCase()
+  console.log('find', uscore, duscore, methodnames[uscore] || methodnames[duscore])
   return methodnames[uscore] || methodnames[duscore]
 }
 
 type AST = any
+type Creator = { fname: string, onlyEditors?: boolean, scrub?: boolean }
 
 const Ajv = require('ajv')
 const ajv = new Ajv()
@@ -42,7 +45,7 @@ export class PatternParser {
     return expr
   }
 
-  private creator(name) {
+  private creator(name :string): Creator {
     const m = name.match(/^[$]?(([Aa]uthors|[Aa]uth)|([Ee]dtr|[Ee]ditors))([.a-zA-Z]*)$/)
     if (!m) return null
 
@@ -50,29 +53,30 @@ export class PatternParser {
     const function_name = `${prefix}${rest}`
     const onlyEditors = !!editor
     const scrub = !!prefix.match(/^[ae]/)
+    console.log('creator.name', name, function_name)
 
+    let fname = ''
     for (let [author, editor] of [['authors', 'editors'], ['author', 'editor'], ['authAuth', 'edtrEdtr'], [ 'auth', 'edtr' ]]) {
-      if (function_name.startsWith(editor)) {
-        name = function_name.replace(editor, author)
-        break
-      }
+      fname = function_name.startsWith(editor) ? fname = function_name.replace(editor, author) : function_name
+      console.log('creator.fname', function_name, findMethod(`$${fname}`))
+      if (fname = findMethod(`$${fname}`)) break
+
       author = author[0].toUpperCase() + author.slice(1)
       editor = editor[0].toUpperCase() + editor.slice(1)
-      if (function_name.startsWith(editor)) {
-        name = function_name.replace(editor, author)
-        break
-      }
+      fname = function_name.startsWith(editor) ? fname = function_name.replace(editor, author) : function_name
+      console.log('creator.fname', function_name, findMethod(`$${fname}`))
+      if (fname = findMethod(`$${fname}`)) break
     }
 
-    const method = findMethod(`$${name}`)
+    const method = api[fname]
     if (!method) return null
 
-    if (api[method].parameters.includes('onlyEditors')) {
-      return { name, scrub, onlyEditors }
+    const auth = { fname, scrub, onlyEditors, withInitials: false }
+    for (const field of Object.keys(auth)) {
+      if (!method.parameters.includes(field)) delete auth[field]
     }
-    else {
-      return { name, scrub }
-    }
+    console.log('creator.auth', name, fname, auth)
+    return auth
   }
 
   private resolveArguments(fname: string, args: AST[]): AST[] {
@@ -121,7 +125,7 @@ export class PatternParser {
   }
 
   protected Identifier(expr: AST, context: any): AST {
-    let author
+    let author: Creator
     if (context.arguments) {
       return { type: 'Literal', value: expr.name }
     }
@@ -129,14 +133,19 @@ export class PatternParser {
       return expr
     }
     else if (author = this.creator(expr.name)) {
-      const method = api[findMethod(`$${author.name}`)]
-      if (!method) throw new Error(`No such function ${author.name}`)
+      console.log('ident', author)
+      const method = api[`$${author.fname}`]
+      if (!method) throw new Error(`No such function ${author.fname}`)
 
       const args = [ { type: 'Literal', value: author.scrub, named_argument: 'scrub' } ]
-      if (typeof author.onlyEditors !== 'undefined') args.push({ type: 'Literal', value: author.onlyEditors, named_argument: 'onlyEditors' })
+      for (const field of Object.keys(author)) {
+        if (field !== 'name') {
+          args.push({ type: 'Literal', value: author[field], named_argument: field })
+        }
+      }
       return {
         type: 'CallExpression',
-        callee: { type: 'Identifier', name: author.name },
+        callee: { type: 'Identifier', name: author.fname },
         arguments: args,
       } as AST
     }
@@ -218,6 +227,7 @@ export class PatternParser {
 
   private resolve(expr: AST) {
     let fname: string
+    let author: Creator
 
     switch (expr.type) {
       case 'CallExpression':
@@ -230,21 +240,21 @@ export class PatternParser {
         }
 
         if (expr.callee.type === 'Identifier') {
-          console.log('ident', expr.callee.name)
+          console.log('callex ident', expr.callee.name)
           fname = expr.callee.name = `${fname}${expr.callee.name}`
         }
         else if (expr.callee.type === 'MemberExpression' && expr.callee.property.type === 'Identifier') {
-          console.log('member', expr.callee.property.name)
+          console.log('callex member', expr.callee.property.name)
           fname = expr.callee.property.name = `${fname}${expr.callee.property.name}`
-
         }
         else {
           throw expr
         }
 
-        const author = this.creator(fname)
-        if (author) {
-          fname = `$${author.name}`
+        console.log('callexpr', fname)
+        if (author = this.creator(fname)) {
+          console.log('callexpr auth', author)
+          fname = `$${author.fname}`
           expr.arguments.push({ type: 'Literal', value: author.scrub, named_argument: 'scrub' })
           if (typeof author.onlyEditors !== 'undefined') expr.arguments.push({ type: 'Literal', value: author.onlyEditors, named_argument: 'onlyEditors' })
         }
