@@ -61,11 +61,13 @@ class FormatterAPI {
       this.doc[kind][quoted] = method.doc
     }
 
+    /* re-enable this after the formatter migration
     for (const signature of Object.values(this.signature)) {
       for (const [ property, type ] of Object.entries(signature.schema.properties)) {
         signature.schema.properties[property] = this.upgrade(type)
       }
     }
+    */
   }
 
   private typedoc(type): string {
@@ -76,79 +78,6 @@ class FormatterAPI {
     if (type.enum) return type.enum.map(t => this.typedoc({ const: t })).join(' | ')
     if (type.instanceof) return type.instanceof
     throw new Error(`no rule for ${JSON.stringify(type)}`)
-  }
-
-  upgrade(type) {
-    switch (type.type) {
-      case 'string':
-      case 'number':
-      case 'boolean':
-        return {
-          type: 'object',
-          properties: {
-            type: { const: 'Literal' },
-            value: { type: type.type },
-            raw: { type: 'string' },
-          },
-          required: [ 'type', 'value' ],
-          additionalProperties: false,
-        }
-      case 'array':
-        return {
-          type: 'object',
-          properties: {
-            type: { const: 'ArrayExpression' },
-            elements: { type: 'array', items: this.upgrade(type.items) },
-          },
-          required: [ 'type', 'elements' ],
-          additionalProperties: false,
-        }
-    }
-
-    if (typeof type.const !== 'undefined') {
-      return {
-        type: 'object',
-        properties: {
-          type: { const: 'Literal' },
-          value: { const: type.const },
-          raw: { type: 'string' },
-        },
-        required: [ 'type', 'value' ],
-        additionalProperties: false,
-      }
-    }
-
-    if (type.instanceof === 'RegExp') {
-      return {
-        type: 'object',
-        properties: {
-          type: { const: 'Literal' },
-          value: { type: 'object' },
-          raw: { type: 'string' },
-          regex: {
-            type: 'object',
-            properties: {
-              pattern: { type: 'string' },
-              flags: { type: 'string' },
-            },
-            required: [ 'pattern', 'flags' ],
-            additionalProperties: false,
-          },
-        },
-        required: [ 'type', 'regex' ],
-        additionalProperties: false,
-      }
-    }
-
-    if (type.oneOf) {
-      return { oneOf: type.oneOf.map(t => this.upgrade(t)) }
-    }
-
-    if (type.anyOf) {
-      return { anyOf: type.anyOf.map(t => this.upgrade(t)) }
-    }
-
-    throw type
   }
 }
 

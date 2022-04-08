@@ -16,6 +16,11 @@
       }
     }
 
+    // kludge for regexes, otherwise length validation fails
+    if (method === '_replace' && args.length === 3 && args[2] === 'regex') {
+      args = [ new RegExp(args[0], args[1] ]
+    }
+
     if (args.length > meta.parameters.length) error(`too many arguments for ${text}`)
 
     const params = args.reduce((acc, v, i) => {
@@ -31,7 +36,7 @@
       error(`${text}: ${argerror}`)
     }
     else {
-      args = JSON.stringify(meta.parameters.slice(0, args.length).map(k => params[k])).slice(1, -1)
+      args = meta.parameters.slice(0, args.length).map(arg => arg instanceof RegExp ? arg.source : JSON.stringify(arg)).join(', ')
       return `${method}(${args})`
     }
   }

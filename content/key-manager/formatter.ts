@@ -21,6 +21,7 @@ import { parse as jsparse } from './jspattern'
 import * as DateParser from '../dateparser'
 
 import methods from '../../gen/api/key-formatter.json'
+
 import itemCreators from '../../gen/items/creators.json'
 import * as items from '../../gen/items/items'
 
@@ -32,9 +33,7 @@ import { sprintf } from 'sprintf-js'
 import { jieba, pinyin } from './chinese'
 import { kuroshiro } from './japanese'
 
-import AJV from 'ajv'
 import { validator } from '../ajv'
-const ajv = new AJV({ coerceTypes: true })
 import { dictsync as csv2dict } from '../load-csv'
 
 import BabelTag from '../../gen/babel/tag.json'
@@ -43,7 +42,7 @@ type BabelLanguageTag = ValueOf<typeof BabelTag>
 type BabelLanguage = keyof typeof BabelTag
 
 for (const meta of Object.values(methods)) {
-  (meta as unknown as any).validate = validator(ajv, meta.schema)
+  (meta as unknown as any).validate = validator(meta.schema)
 }
 
 function innerText(node): string {
@@ -885,10 +884,10 @@ class PatternFormatter {
   }
 
   /** replaces text, case insensitive; `:replace=.etal,&etal` will replace `.EtAl` with `&etal` */
-  public _replace(find: string | RegExp, replace: string, mode?: 'string' | 'regex') {
+  public _replace(find: string | RegExp, replace: string) {
     if (!find) return this
-    const re = mode === 'regex' ? find : find.replace(/[[\](){}*+?|^$.\\]/g, '\\$&')
-    return this.set(this.value.replace(new RegExp(re, 'ig'), replace))
+    if (typeof find === 'string') find = new RegExp(find.replace(/[[\](){}*+?|^$.\\]/g, '\\$&'), 'ig')
+    return this.set(this.value.replace(find, replace))
   }
 
   /**

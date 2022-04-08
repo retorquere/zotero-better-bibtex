@@ -2,7 +2,85 @@
 
 import * as recast from 'recast'
 import api from '../../gen/api/key-formatter.json'
-const methodnames: Record<string, string> = Object.keys(api).reduce((acc, name) => { acc[name.toLowerCase()]=name; return acc }, {} as Record<string, string>)
+// move this upgrade to setup/extract-api after migration
+function upgrade(type) {
+  switch (type.type) {
+    case 'string':
+    case 'number':
+    case 'boolean':
+      return {
+        type: 'object',
+        properties: {
+          type: { const: 'Literal' },
+          value: { type: type.type },
+          raw: { type: 'string' },
+        },
+        required: [ 'type', 'value' ],
+        additionalProperties: false,
+      }
+    case 'array':
+      return {
+        type: 'object',
+        properties: {
+          type: { const: 'ArrayExpression' },
+          elements: { type: 'array', items: upgrade(type.items) },
+        },
+        required: [ 'type', 'elements' ],
+        additionalProperties: false,
+      }
+  }
+
+  if (typeof type.const !== 'undefined') {
+    return {
+      type: 'object',
+      properties: {
+        type: { const: 'Literal' },
+        value: { const: type.const },
+        raw: { type: 'string' },
+      },
+      required: [ 'type', 'value' ],
+      additionalProperties: false,
+    }
+  }
+
+  if (type.instanceof === 'RegExp') {
+    return {
+      type: 'object',
+      properties: {
+        type: { const: 'Literal' },
+        value: { type: 'object' },
+        raw: { type: 'string' },
+        regex: {
+          type: 'object',
+          properties: {
+            pattern: { type: 'string' },
+            flags: { type: 'string' },
+          },
+          required: [ 'pattern', 'flags' ],
+          additionalProperties: false,
+        },
+      },
+      required: [ 'type', 'regex' ],
+      additionalProperties: false,
+    }
+  }
+
+  if (type.oneOf) {
+    return { oneOf: type.oneOf.map(t => upgrade(t)) }
+  }
+
+  if (type.anyOf) {
+    return { anyOf: type.anyOf.map(t => upgrade(t)) }
+  }
+
+  throw type
+}
+const astapi = {}
+for (const [ property, type ] of Object.entries(api)) {
+  astapi[property] = upgrade(type)
+}
+
+const methodnames: Record<string, string> = Object.keys(astapi).reduce((acc, name) => { acc[name.toLowerCase()]=name; return acc }, {} as Record<string, string>)
 function findMethod(fname: string): string {
   const uscore = fname.replace(/[a-z][A-Z]/g, chr => `${chr[0]}_${chr[1]}`).toLowerCase()
   const duscore = fname.replace(/[a-z][A-Z]/g, chr => `${chr[0]}__${chr[1]}`).toLowerCase()
@@ -17,15 +95,12 @@ function findMethod(fname: string): string {
 type AST = any
 type Creator = { fname?: string, onlyEditors?: boolean, scrub?: boolean, joiner?: string }
 
-const Ajv = require('ajv')
-const ajv = new Ajv()
-const betterAjvErrors = require('better-ajv-errors').default
-
-for (const method of Object.values(api)) {
-  (method  as any).validate = ajv.compile((method  as any).schema)
+import { validator } from '../ajv'
+for (const method of Object.values(astapi)) {
+  (method  as any).validate = validator((method  as any).schema)
 }
 
-for (const fname in api) {
+for (const fname in astapi) {
   if (fname[0] !== '_' && fname[0] !== '$') throw new Error(`Unexpected fname ${fname}`)
 }
 
@@ -72,7 +147,7 @@ export class PatternParser {
       if (fname = findMethod(fname)) break
     }
 
-    const method = api[fname]
+    const method = astapi[fname]
     if (!method) return null
 
     const auth = { fname: fname.substr(1), joiner, scrub, onlyEditors, withInitials: false }
@@ -83,7 +158,7 @@ export class PatternParser {
   }
 
   private resolveArguments(fname: string, args: AST[], extra: Record<string, number | string | boolean> = {}): AST[] {
-    const method = api[findMethod(fname)] // transitional before rename in formatter.ts
+    const method = astapi[findMethod(fname)] // transitional before rename in formatter.ts
     const kind = {$: 'function', _: 'filter'}[fname[0]]
     fname = fname.slice(1)
     const me = `${kind} ${JSON.stringify(fname)}`
@@ -133,12 +208,9 @@ export class PatternParser {
       while (args.length && (arg = args[args.length - 1]).type === 'Identifier' && arg.name === 'undefined') args.pop()
     }
 
-    if (!method.validate(parameters)) {
-      const err = betterAjvErrors(method.schema, parameters, method.validate.errors, { format: 'js' })[0]
-      let msg = err.error
-      if (err.path && err.path[0] === '/') msg = msg.replace(err.path, JSON.stringify(err.path.substr(1)))
-      if (err.suggestion) msg += `, ${err.suggestion}`
-      throw new Error(`${me}: ${msg}`)
+    let err: string
+    if (err = method.validate(parameters)) {
+      throw new Error(`${me}: ${err}`)
     }
 
     return args
@@ -155,7 +227,7 @@ export class PatternParser {
     }
     else if (author = this.creator(expr.name)) {
       ({ fname, ...author } = author)
-      const method = api[`$${fname}`]
+      const method = astapi[`$${fname}`]
       if (!method) throw new Error(`No such function ${fname}`)
 
       const args = Object.entries(author).map(([named_argument, value]) => ({ type: 'Literal', value, named_argument }))
