@@ -320,8 +320,13 @@ export class KeyManager {
       // update display panes by issuing a fake item-update notification
       Zotero.Notifier.trigger('modify', 'item', [citekey.itemID], { [citekey.itemID]: { bbtCitekeyUpdate: true } })
 
+      log.debug('autopin?', citekey.itemID, citekey.pinned, this.autopin.enabled)
       if (!citekey.pinned && this.autopin.enabled) {
-        this.autopin.schedule(citekey.itemID, () => { this.pin([citekey.itemID]).catch(err => log.error('failed to pin', citekey.itemID, ':', err)) })
+        this.autopin.schedule(citekey.itemID, () => {
+
+          log.debug('autopin: pinning', citekey.itemID)
+          this.pin([citekey.itemID]).catch(err => log.error('failed to pin', citekey.itemID, ':', err))
+        })
       }
       if (citekey.pinned && Preference.keyConflictPolicy === 'change') {
         const conflictQuery: Query = { $and: [

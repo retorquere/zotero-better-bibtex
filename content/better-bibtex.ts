@@ -641,6 +641,7 @@ notify('item-tag', (_action: any, _type: any, ids: any[], _extraData: any) => {
 
 notify('item', (action: string, type: any, ids: any[], extraData: { [x: string]: { bbtCitekeyUpdate: any } }) => {
   // prevents update loop -- see KeyManager.init()
+  log.debug('item', action, ids)
   if (action === 'modify') {
     ids = ids.filter((id: string | number) => !extraData[id] || !extraData[id].bbtCitekeyUpdate)
     if (!ids.length) return
