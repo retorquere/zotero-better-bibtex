@@ -21,7 +21,7 @@
     const params = args.reduce((acc, v, i) => {
       const param = meta.parameters[i]
       // horrid kludge for arrays
-      if (meta.schema.properties[param].type === 'array') v = v.split('/')
+      if (method === '$language') v = v.split('/')
       acc[param] = v
       return acc
     }, {})
