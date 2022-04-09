@@ -18,6 +18,7 @@ function upgrade(type) {
         required: [ 'type', 'value' ],
         additionalProperties: false,
       }
+
     case 'array':
       return {
         type: 'object',
@@ -73,11 +74,14 @@ function upgrade(type) {
     return { anyOf: type.anyOf.map(t => upgrade(t)) }
   }
 
+  console.log('hmmm...')
   throw type
 }
-const astapi = {}
-for (const [ property, type ] of Object.entries(api)) {
-  astapi[property] = upgrade(type)
+const astapi: typeof api = JSON.parse(JSON.stringify(api))
+for (const meta of Object.values(astapi)) {
+  for (const property of Object.keys(meta.schema.properties)) {
+    meta.schema.properties[property] = upgrade(meta.schema.properties[property])
+  }
 }
 
 const methodnames: Record<string, string> = Object.keys(astapi).reduce((acc, name) => { acc[name.toLowerCase()]=name; return acc }, {} as Record<string, string>)
@@ -104,8 +108,7 @@ for (const fname in astapi) {
   if (fname[0] !== '_' && fname[0] !== '$') throw new Error(`Unexpected fname ${fname}`)
 }
 
-console.log('started', new Date)
-
+type Context = { arguments?: boolean, coerce?: boolean }
 export class PatternParser {
   public code: string
   private finder: AST
@@ -122,7 +125,7 @@ export class PatternParser {
     throw new Error(`Unexpected ${expr.type} at ${expr.loc.start.column}`)
   }
 
-  protected Literal(expr: AST, _context: any): AST {
+  protected Literal(expr: AST, _context: Context): AST {
     return expr
   }
 
@@ -216,7 +219,7 @@ export class PatternParser {
     return args
   }
 
-  protected Identifier(expr: AST, context: any): AST {
+  protected Identifier(expr: AST, context: Context): AST {
     let author: Creator
     let fname: string
     if (context.arguments) {
@@ -247,7 +250,7 @@ export class PatternParser {
     }
   }
 
-  protected CallExpression(expr: AST, context: any): AST {
+  protected CallExpression(expr: AST, context: Context): AST {
     const callee = (expr.callee.type === 'MemberExpression') ? { ...expr.callee, object: this.convert(expr.callee.object, context) } : expr.callee
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return {
@@ -257,7 +260,7 @@ export class PatternParser {
     }
   }
 
-  protected MemberExpression(expr: AST, context: any): AST {
+  protected MemberExpression(expr: AST, context: Context): AST {
     return {
       ...expr,
       object: this.convert(expr.object, context),
@@ -265,12 +268,12 @@ export class PatternParser {
     }
   }
 
-  protected AssignmentExpression(expr: AST, context: any): AST {
+  protected AssignmentExpression(expr: AST, context: Context): AST {
     if (!context.arguments) this.error(expr)
     return {...this.convert(expr.right, context), named_argument: expr.left.name}
   }
 
-  protected BinaryExpression(expr: AST, context: any): AST {
+  protected BinaryExpression(expr: AST, context: Context): AST {
     if (expr.operator !== '+') this.error(expr)
     return {
       ...expr,
@@ -279,7 +282,7 @@ export class PatternParser {
     }
   }
 
-  private addThis(expr: AST, context: any): AST {
+  private addThis(expr: AST, context: Context): AST {
     let this_expr: AST
     switch (expr.type) {
       case 'BinaryExpression':
@@ -293,7 +296,7 @@ export class PatternParser {
         return expr
       default:
         this_expr = { type: 'MemberExpression', object: { type: 'ThisExpression' }, property: expr }
-        if (context.coerce) {
+        if (context.coerce) { // add leading empty string to force coercion to string
           context.coerce = false
           return {
             type: 'BinaryExpression',
@@ -308,7 +311,7 @@ export class PatternParser {
     }
   }
 
-  private convert(expr: AST, context: any): AST {
+  private convert(expr: AST, context: Context): AST {
     if (!this[expr.type]) this.error(expr)
     return this[expr.type](expr, context) as AST
   }
