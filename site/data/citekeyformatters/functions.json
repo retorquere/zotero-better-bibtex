@@ -4,7 +4,7 @@
   "`authEtAl` / `edtrEtAl`, `+initials`, `+<joinchar>`": "The last name of the first author, and the last name of the second author if there are two authors or \"EtAl\" if there are more than two. This is similar to `auth.etal`. The difference is that the authors are not separated by \".\" and in case of more than 2 authors \"EtAl\" instead of \".etal\" is appended.",
   "`authForeIni` / `edtrForeIni`": "The forename initial of the first author.",
   "`authIniN` / `edtrIniN`, `+initials`, `+<joinchar>`": "The beginning of each author's last name, using no more than `N` characters.",
-  "`authN_M` / `edtrN_M`, `+initials`, `+<joinchar>`": "The first `N` (default: all) characters of the `M`th (default: first) author's last name.",
+  "`authN_M` / `edtrN_M`, `+initials`": "The first `N` (default: all) characters of the `M`th (default: first) author's last name.",
   "`authorIni` / `editorIni`, `+initials`, `+<joinchar>`": "The first 5 characters of the first author's last name, and the last name initials of the remaining authors.",
   "`authorLastForeIni` / `editorLastForeIni`": "The forename initial of the last author.",
   "`authorLast` / `editorLast`, `+initials`": "The last name of the last author",

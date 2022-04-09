@@ -17,7 +17,7 @@ import { babelLanguage } from '../text'
 import { fetchSync as fetchInspireHEP } from '../inspire-hep'
 
 const parser = require('./formatter.peggy')
-import { parse as jsparse } from './jspattern'
+// import { parse as jsparse } from './jspattern'
 import * as DateParser from '../dateparser'
 
 import methods from '../../gen/api/key-formatter.json'
@@ -450,7 +450,7 @@ class PatternFormatter {
   }
 
   /** The first `N` (default: all) characters of the `M`th (default: first) author's last name. */
-  public $auth(scrub=true, onlyEditors=false, withInitials=false, joiner='', n=0, m=1) {
+  public $auth(scrub=true, onlyEditors=false, withInitials=false, n=0, m=1) {
     const authors = this.creators(onlyEditors, {withInitials})
     if (!authors || !authors.length) return this.set('')
     let author = authors[m ? m - 1 : 0]
@@ -570,7 +570,7 @@ class PatternFormatter {
   }
 
   /** The first 5 characters of the first author's last name, and the last name initials of the remaining authors. */
-  public $authorIni(scrub=true, onlyEditors=false, withInitials=false, joiner='') {
+  public $authorIni(scrub=true, onlyEditors=false, withInitials=false, joiner=''): PatternFormatter {
     const authors = this.creators(onlyEditors, {withInitials})
     if (!authors || !authors.length) return this.set('')
     const firstAuthor = authors.shift()
@@ -580,7 +580,7 @@ class PatternFormatter {
   }
   /** The first 5 characters of the first editor's last name, and the last name initials of the remaining editors. */
   public $editorIni(scrub=true, withInitials=false, joiner='') {
-    return this.authorIni(scrub, true, withInitials, joiner)
+    return this.$authorIni(scrub, true, withInitials, joiner)
   }
 
   /** The last name of the first two authors, and ".ea" if there are more than two. */
@@ -617,7 +617,7 @@ class PatternFormatter {
    * more than 2 editors "EtAl" instead of ".etal" is appended.
    */
   public $edtrEtAl(scrub=true, withInitials=false, joiner='') {
-    return this.authEtAl(scrub, true, withInitials, joiner)
+    return this.$authEtAl(scrub, true, withInitials, joiner)
   }
 
   /** The last name of the first author, and the last name of the second author if there are two authors or ".etal" if there are more than two. */
@@ -755,7 +755,7 @@ class PatternFormatter {
     const found = sprintf(pf.format, { a: expected, A: expected, n: expected })
     if (!found.includes(expected)) error(`postfix ${format} does not contain %(a)s, %(A)s or %(n)s`)
     if (found.split(expected).length > 2) error(`postfix ${format} contains multiple instances of %(a)s/%(A)s/%(n)s`)
-    this.postfix = { format: format, start }
+    this.postfix = { format, start }
     return this.set('')
   }
 
