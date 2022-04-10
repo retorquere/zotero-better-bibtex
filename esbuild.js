@@ -191,4 +191,7 @@ async function rebuild() {
   }
 }
 
-rebuild().catch(err => console.log(err))
+rebuild().catch(err => {
+  console.log(err)
+  process.exit(1)
+})

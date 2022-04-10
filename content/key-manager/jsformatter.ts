@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 
+import * as types from '../../gen/items/items'
 import * as recast from 'recast'
 import api from '../../gen/api/key-formatter.json'
 // move this upgrade to setup/extract-api after migration
@@ -74,8 +75,7 @@ function upgrade(type) {
     return { anyOf: type.anyOf.map(t => upgrade(t)) }
   }
 
-  console.log('hmmm...')
-  throw type
+  throw { notUpgradable: type } // eslint-disable-line no-throw-literal
 }
 const astapi: typeof api = JSON.parse(JSON.stringify(api))
 for (const meta of Object.values(astapi)) {
@@ -97,7 +97,6 @@ function findMethod(fname: string): string {
 }
 
 type AST = any
-type Creator = { fname?: string, onlyEditors?: boolean, scrub?: boolean, joiner?: string }
 
 import { validator } from '../ajv'
 for (const method of Object.values(astapi)) {
@@ -129,38 +128,7 @@ export class PatternParser {
     return expr
   }
 
-  private creator(name :string): Creator {
-    const m = name.match(/^[$]?(([Aa]uthors|[Aa]uth)|([Ee]dtr|[Ee]ditors))([.a-zA-Z]*)$/)
-    if (!m) return null
-
-    const [ , prefix, , editor, rest ] = m
-    const function_name = `${prefix}${rest}`
-    const onlyEditors = !!editor
-    const scrub = !!prefix.match(/^[ae]/)
-    const joiner = ''
-
-    let fname = ''
-    for (let [author, editor] of [['authors', 'editors'], ['author', 'editor'], ['authAuth', 'edtrEdtr'], [ 'auth', 'edtr' ]]) {
-      fname = function_name.startsWith(editor) ? fname = function_name.replace(editor, author) : function_name
-      if (fname = findMethod(fname)) break
-
-      author = author[0].toUpperCase() + author.slice(1)
-      editor = editor[0].toUpperCase() + editor.slice(1)
-      fname = function_name.startsWith(editor) ? fname = function_name.replace(editor, author) : function_name
-      if (fname = findMethod(fname)) break
-    }
-
-    const method = astapi[fname]
-    if (!method) return null
-
-    const auth = { fname: fname.substr(1), joiner, scrub, onlyEditors, withInitials: false }
-    for (const field of Object.keys(auth)) {
-      if (!method.parameters.includes(field) && field !== 'fname') delete auth[field]
-    }
-    return auth
-  }
-
-  private resolveArguments(fname: string, args: AST[], extra: Record<string, number | string | boolean> = {}): AST[] {
+  private resolveArguments(fname: string, args: AST[]): AST[] {
     const method = astapi[findMethod(fname)] // transitional before rename in formatter.ts
     const kind = {$: 'function', _: 'filter'}[fname[0]]
     fname = fname.slice(1)
@@ -179,17 +147,10 @@ export class PatternParser {
       }
     })
 
-    for (const [named_argument, value] of Object.entries(extra)) {
-      if (method.rest) throw new Error(`${me}: unexpected extra arguments for rest method`)
-      if (typeof value !== 'undefined' && !args.find(arg => arg.named_argument === named_argument)) {
-        args.push({ type: 'Literal', value, named_argument })
-      }
-    }
-
     let parameters = {}
-    args = args.map((arg, i) => {
+    args = args.map(arg => {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      let { named_argument, loc, ...argc } = arg
+      const { named_argument, loc, ...argc } = arg
       if (typeof parameters[named_argument] === 'undefined') {
         parameters[named_argument] = argc
       }
@@ -220,30 +181,17 @@ export class PatternParser {
   }
 
   protected Identifier(expr: AST, context: Context): AST {
-    let author: Creator
-    let fname: string
     if (context.arguments) {
       return { type: 'Literal', value: expr.name }
     }
     else if (expr.type !== 'Identifier') {
       return expr
     }
-    else if (author = this.creator(expr.name)) {
-      ({ fname, ...author } = author)
-      const method = astapi[`$${fname}`]
-      if (!method) throw new Error(`No such function ${fname}`)
-
-      const args = Object.entries(author).map(([named_argument, value]) => ({ type: 'Literal', value, named_argument }))
-      return {
-        type: 'CallExpression',
-        callee: { type: 'Identifier', name: fname },
-        arguments: args,
-      } as AST
-    }
     else if (expr.name.match(/^[A-Z]/)) {
-      // TODO: field lookup here
+      const name = types.name.field[expr.name.toLowerCase()]
+      if (!name) throw new Error(`No such field ${expr.name}`)
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      return {type: 'CallExpression', callee: { type: 'Identifier', name: 'get_field' }, arguments: [ { type: 'Literal', value: expr.name.replace(/^./, c => c.toLowerCase()) } ]} as AST
+      return {type: 'CallExpression', callee: { type: 'Identifier', name: 'get_field' }, arguments: [ { type: 'Literal', value: name } ]} as AST
     }
     else {
       return { type: 'CallExpression', callee: expr, arguments: [] } as AST
@@ -318,7 +266,6 @@ export class PatternParser {
 
   private resolve(expr: AST) {
     let fname: string
-    let author: Partial<Creator>
 
     switch (expr.type) {
       case 'CallExpression':
@@ -340,15 +287,7 @@ export class PatternParser {
           throw expr
         }
 
-        if (author = this.creator(fname)) {
-          ({ fname, ...author } = author)
-          fname = `$${fname}`
-        }
-        else {
-          author = {}
-        }
-
-        expr.arguments = this.resolveArguments(fname, expr.arguments, author)
+        expr.arguments = this.resolveArguments(fname, expr.arguments)
         this.resolve(expr.callee)
         break
 

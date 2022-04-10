@@ -1,7 +1,5 @@
 /* eslint-disable @typescript-eslint/require-await, no-throw-literal, max-len */
 
-import AJV from 'ajv'
-
 import { getItemsAsync } from './get-items-async'
 import { AUXScanner } from './aux-scanner'
 import { AutoExport } from './auto-export'
@@ -15,10 +13,8 @@ import { log } from './logger'
 import methods from '../gen/api/json-rpc.json'
 import { validator } from './ajv'
 
-const ajv = new AJV()
-
 for (const meta of Object.values(methods)) {
-  (meta as unknown as any).validate = validator(ajv, meta.schema) // eslint-disable-line @typescript-eslint/no-unsafe-return
+  (meta as unknown as any).validate = validator(meta.schema) // eslint-disable-line @typescript-eslint/no-unsafe-return
 }
 
 const OK = 200

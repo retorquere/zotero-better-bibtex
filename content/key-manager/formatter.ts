@@ -330,6 +330,7 @@ class PatternFormatter {
 
       try {
         const { formatter, postfix } = this.parsePattern(this.citekeyFormat)
+        log.debug('PatternFormatter.update: installing citekeyFormat ', {pattern: this.citekeyFormat})
         this.generate = (new Function(formatter) as () => string)
         this.postfix = postfix
         break
@@ -341,10 +342,11 @@ class PatternFormatter {
   }
 
   public parsePattern(pattern): { formatter: string, postfix: { start: number, format: string } } {
+    log.debug('parsePattern.pattern:', pattern)
     const formatter = (parser.parse(pattern, { sprintf, items, methods }) as { formatter: string, postfix: { start: number, format: string } })
     if (Preference.testing) {
-      log.debug('formatter function:', formatter.formatter)
-      log.debug('formatter postfix:', formatter.postfix)
+      log.debug('parsePattern.formatter:', formatter.formatter)
+      log.debug('parsePattern.formatter:', formatter.postfix)
     }
 
     return formatter
@@ -368,8 +370,7 @@ class PatternFormatter {
     return citekey
   }
 
-  private set(value, clean) {
-    if (clean) value = this.clean(value)
+  private set(value) {
     this.value = value
     return this
   }
@@ -450,55 +451,33 @@ class PatternFormatter {
   }
 
   /** The first `N` (default: all) characters of the `M`th (default: first) author's last name. */
-  public $auth(scrub=true, onlyEditors=false, withInitials=false, n=0, m=1) {
-    const authors = this.creators(onlyEditors, {withInitials})
+  public $auth(creator: 'author' | 'editor' = 'author', withInitials=false, n=0, m=1) {
+    const authors = this.creators(creator === 'editor', {withInitials})
     if (!authors || !authors.length) return this.set('')
     let author = authors[m ? m - 1 : 0]
     if (author && n) author = author.substring(0, n)
-    if (author && scrub) author = this.clean(author)
     return this.set(author || '')
-  }
-  /** The first `N` (default: all) characters of the `M`th (default: first) editor's last name. */
-  public $edtr(scrub=true, withInitials=false, joiner='', n=0, m=1) {
-    return this.$auth(scrub, true, withInitials, joiner, n, m)
   }
 
   /** The forename initial of the first author. */
-  public $authForeIni(scrub=true, onlyEditors=false) {
-    const authors = this.creators(onlyEditors, {initialOnly: true})
+  public $authForeIni(creator: 'author' | 'editor' = 'author') {
+    const authors = this.creators(creator === 'editor', {initialOnly: true})
     if (!authors || !authors.length) return this.set('')
-    if (scrub) authors[0] = this.clean(authors[0])
     return this.set(authors[0])
-  }
-  /** The forename initial of the first editor. */
-  public $edtrForeIni(scrub=true) {
-    return this.$authForeIni(scrub, true)
   }
 
   /** The forename initial of the last author. */
-  public $authorLastForeIni(scrub=true, onlyEditors=false) {
-    const authors = this.creators(onlyEditors, {initialOnly: true})
+  public $authorLastForeIni(creator: 'author' | 'editor' = 'author') {
+    const authors = this.creators(creator === 'editor', {initialOnly: true})
     if (!authors || !authors.length) return this.set('')
-    let author = authors[authors.length - 1]
-    if (scrub) author = this.clean(author)
-    return this.set(author)
-  }
-  /** The forename initial of the last editor. */
-  public $editorLastForeIni(scrub=true) {
-    return this.$authorLastForeIni(scrub, true)
+    return this.set(authors[authors.length - 1])
   }
 
   /** The last name of the last author */
-  public $authorLast(scrub=true, onlyEditors=false, withInitials=false) {
-    const authors = this.creators(onlyEditors, {withInitials})
+  public $authorLast(creator: 'author' | 'editor' = 'author', withInitials=false) {
+    const authors = this.creators(creator === 'editor', {withInitials})
     if (!authors || !authors.length) return this.set('')
-    let author = authors[authors.length - 1]
-    if (scrub) author = this.clean(author)
-    return this.set(author)
-  }
-  /** The last name of the last editor */
-  public $editorLast(scrub=true, withInitials=false) {
-    return this.$authorLast(scrub, true, withInitials)
+    return this.set(authors[authors.length - 1])
   }
 
   /** returns the journal abbreviation, or, if not found, the journal title, If 'automatic journal abbreviation' is enabled in the BBT settings,
@@ -513,8 +492,8 @@ class PatternFormatter {
   }
 
   /** The last name of up to N authors. If there are more authors, "EtAl" is appended. */
-  public $authors(scrub=true, onlyEditors=false, withInitials=false, joiner='', n?:number) {
-    let authors = this.creators(onlyEditors, {withInitials})
+  public $authors(creator: 'author' | 'editor' = 'author', withInitials=false, joiner='', n?:number) {
+    let authors = this.creators(creator === 'editor', {withInitials})
     if (!authors || !authors.length) return this.set('')
 
     if (n) {
@@ -523,77 +502,55 @@ class PatternFormatter {
       if (etal) authors.push('EtAl')
     }
 
-    return this.set(authors.join(joiner || ' '), scrub)
-  }
-  /** The last name of up to N editors. If there are more editors, "EtAl" is appended. */
-  public $editors(scrub=true, withInitials=false, joiner='', n?:number) {
-    return this.$authors(scrub, true, withInitials, joiner, n)
+    return this.set(authors.join(joiner || ' '))
   }
 
   /** Corresponds to the BibTeX style "alpha". One author: First three letters of the last name. Two to four authors: First letters of last names concatenated.
    * More than four authors: First letters of last names of first three authors concatenated. "+" at the end.
    */
-  public $authorsAlpha(scrub=true, onlyEditors=false, withInitials=false, joiner='') {
-    const authors = this.creators(onlyEditors, {withInitials})
+  public $authorsAlpha(creator: 'author' | 'editor' = 'author', withInitials=false, joiner='') {
+    const authors = this.creators(creator === 'editor', {withInitials})
     if (!authors || !authors.length) return this.set('')
 
     switch (authors.length) {
       case 1: // eslint-disable-line no-magic-numbers
-        return this.set(authors[0].substring(0, 3), scrub) // eslint-disable-line no-magic-numbers
+        return this.set(authors[0].substring(0, 3)) // eslint-disable-line no-magic-numbers
 
       case 2: // eslint-disable-line no-magic-numbers
       case 3: // eslint-disable-line no-magic-numbers
       case 4: // eslint-disable-line no-magic-numbers
-        return this.set(authors.map(author => author.substring(0, 1)).join(joiner || ' '), scrub)
+        return this.set(authors.map(author => author.substring(0, 1)).join(joiner || ' '))
 
       default:
         // eslint-disable-next-line no-magic-numbers
-        return this.set(`${authors.slice(0, 3).map(author => author.substring(0, 1)).join(joiner || ' ') }+`, scrub)
+        return this.set(`${authors.slice(0, 3).map(author => author.substring(0, 1)).join(joiner || ' ') }+`)
     }
-  }
-  /** Corresponds to the BibTeX style "alpha". One editor: First three letters of the last name. Two to four editors: First letters of last names concatenated.
-   * More than four editors: First letters of last names of first three editors concatenated. "+" at the end.
-   */
-  public $editorsAlpha(scrub=true, withInitials=false, joiner='') {
-    return this.$authorsAlpha(scrub, false, withInitials, joiner)
   }
 
   /** The beginning of each author's last name, using no more than `N` characters. */
-  public $authIni(scrub=true, onlyEditors=false, withInitials=false, joiner='', n?: number) {
-    const authors = this.creators(onlyEditors, {withInitials})
+  public $authIni(creator: 'author' | 'editor' = 'author', withInitials=false, joiner='', n?: number) {
+    const authors = this.creators(creator === 'editor', {withInitials})
     if (!authors || !authors.length) return this.set('')
-    return this.set(authors.map(author => author.substring(0, n)).join(joiner || '.'), scrub)
-  }
-  /** The beginning of each editor's last name, using no more than `N` characters. */
-  public $edtrIni(scrub=true, withInitials=false, joiner='', n?: number) {
-    return this.$authIni(scrub, true, withInitials, joiner, n)
+    return this.set(authors.map(author => author.substring(0, n)).join(joiner || '.'))
   }
 
   /** The first 5 characters of the first author's last name, and the last name initials of the remaining authors. */
-  public $authorIni(scrub=true, onlyEditors=false, withInitials=false, joiner=''): PatternFormatter {
-    const authors = this.creators(onlyEditors, {withInitials})
+  public $authorIni(creator: 'author' | 'editor' = 'author', withInitials=false, joiner=''): PatternFormatter {
+    const authors = this.creators(creator === 'editor', {withInitials})
     if (!authors || !authors.length) return this.set('')
     const firstAuthor = authors.shift()
 
     // eslint-disable-next-line no-magic-numbers
-    return this.set([firstAuthor.substring(0, 5)].concat(authors.map(name => name.substring(0, 1)).join('.')).join(joiner || '.'), scrub)
-  }
-  /** The first 5 characters of the first editor's last name, and the last name initials of the remaining editors. */
-  public $editorIni(scrub=true, withInitials=false, joiner='') {
-    return this.$authorIni(scrub, true, withInitials, joiner)
+    return this.set([firstAuthor.substring(0, 5)].concat(authors.map(name => name.substring(0, 1)).join('.')).join(joiner || '.'))
   }
 
   /** The last name of the first two authors, and ".ea" if there are more than two. */
-  public $auth__auth__ea(scrub=true, onlyEditors=false, withInitials=false, joiner='') {
-    const authors = this.creators(onlyEditors, {withInitials})
+  public $auth__auth__ea(creator: 'author' | 'editor' = 'author', withInitials=false, joiner='') {
+    const authors = this.creators(creator === 'editor', {withInitials})
     if (!authors || !authors.length) return this.set('')
 
     // eslint-disable-next-line no-magic-numbers
-    return this.set(authors.slice(0, 2).concat(authors.length > 2 ? ['ea'] : []).join(joiner || '.'), scrub)
-  }
-  /** The last name of the first two editors, and ".ea" if there are more than two. */
-  public $edtr__edtr__ea(scrub=true, withInitials=false, joiner='') {
-    return this.$auth__auth__ea(scrub, true, withInitials, joiner)
+    return this.set(authors.slice(0, 2).concat(authors.length > 2 ? ['ea'] : []).join(joiner || '.'))
   }
 
   /** The last name of the first author, and the last name of the
@@ -602,41 +559,28 @@ class PatternFormatter {
    * is that the authors are not separated by "." and in case of
    * more than 2 authors "EtAl" instead of ".etal" is appended.
    */
-  public $authEtAl(scrub=true, onlyEditors=false, withInitials=false, joiner='') {
-    const authors = this.creators(onlyEditors, {withInitials})
+  public $authEtAl(creator: 'author' | 'editor' = 'author', withInitials=false, joiner='') {
+    const authors = this.creators(creator === 'editor', {withInitials})
     if (!authors || !authors.length) return this.set('')
 
     // eslint-disable-next-line no-magic-numbers
     if (authors.length === 2) return this.set(authors.join(joiner || ' '))
-    return this.set(authors.slice(0, 1).concat(authors.length > 1 ? ['EtAl'] : []).join(joiner || ' '), scrub)
-  }
-  /** The last name of the first editor, and the last name of the
-   * second editor if there are two editors or "EtAl" if there are
-   * more than two. This is similar to `edtr.etal`. The difference
-   * is that the editors are not separated by "." and in case of
-   * more than 2 editors "EtAl" instead of ".etal" is appended.
-   */
-  public $edtrEtAl(scrub=true, withInitials=false, joiner='') {
-    return this.$authEtAl(scrub, true, withInitials, joiner)
+    return this.set(authors.slice(0, 1).concat(authors.length > 1 ? ['EtAl'] : []).join(joiner || ' '))
   }
 
   /** The last name of the first author, and the last name of the second author if there are two authors or ".etal" if there are more than two. */
-  public $auth__etal(scrub=true, onlyEditors=false, withInitials=false, joiner='') {
-    const authors = this.creators(onlyEditors, {withInitials})
+  public $auth__etal(creator: 'author' | 'editor' = 'author', withInitials=false, joiner='') {
+    const authors = this.creators(creator === 'editor', {withInitials})
     if (!authors || !authors.length) return this.set('')
 
     // eslint-disable-next-line no-magic-numbers
     if (authors.length === 2) return this.set(authors.join(joiner || '.'))
-    return this.set(authors.slice(0, 1).concat(authors.length > 1 ? ['etal'] : []).join(joiner || '.'), scrub)
-  }
-  /** The last name of the first editor, and the last name of the second editor if there are two editors or ".etal" if there are more than two. */
-  public $edtr__etal(scrub=true, withInitials=false, joiner='') {
-    return this.$auth__etal(scrub, true, withInitials, joiner)
+    return this.set(authors.slice(0, 1).concat(authors.length > 1 ? ['etal'] : []).join(joiner || '.'))
   }
 
   /** The last name if one author is given; the first character of up to three authors' last names if more than one author is given. A plus character is added, if there are more than three authors. */
-  public $authshort(scrub=true, onlyEditors=false, withInitials=false, joiner='') {
-    const authors = this.creators(onlyEditors, {withInitials})
+  public $authshort(creator: 'author' | 'editor' = 'author', withInitials=false, joiner='') {
+    const authors = this.creators(creator === 'editor', {withInitials})
     if (!authors || !authors.length) return this.set('')
 
     switch (authors.length) {
@@ -644,16 +588,12 @@ class PatternFormatter {
         return this.set('')
 
       case 1:
-        return this.set(authors[0], scrub)
+        return this.set(authors[0])
 
       default:
         // eslint-disable-next-line no-magic-numbers
-        return this.set(authors.slice(0, 3).map(author => author.substring(0, 1)).join(joiner || '.') + (authors.length > 3 ? '+' : ''), scrub)
+        return this.set(authors.slice(0, 3).map(author => author.substring(0, 1)).join(joiner || '.') + (authors.length > 3 ? '+' : ''))
     }
-  }
-  /** The last name if one editor is given; the first character of up to three editors' last names if more than one editor is given. A plus character is added, if there are more than three editors. */
-  public $edtrshort(scrub=true, withInitials=false, joiner='') {
-    return this.$authshort(scrub, true, withInitials, joiner)
   }
 
   /** The number of the first page of the publication (Caution: this will return the lowest number found in the pages field, since BibTeX allows `7,41,73--97` or `43+`.) */
@@ -752,9 +692,9 @@ class PatternFormatter {
 
   public $postfix(format='%(a)s', start=0) {
     const expected = `${Date.now()}`
-    const found = sprintf(pf.format, { a: expected, A: expected, n: expected })
-    if (!found.includes(expected)) error(`postfix ${format} does not contain %(a)s, %(A)s or %(n)s`)
-    if (found.split(expected).length > 2) error(`postfix ${format} contains multiple instances of %(a)s/%(A)s/%(n)s`)
+    const found = sprintf(format, { a: expected, A: expected, n: expected })
+    if (!found.includes(expected)) throw new Error(`postfix ${format} does not contain %(a)s, %(A)s or %(n)s`)
+    if (found.split(expected).length > 2) throw new Error(`postfix ${format} contains multiple instances of %(a)s/%(A)s/%(n)s`)
     this.postfix = { format, start }
     return this.set('')
   }
@@ -1121,9 +1061,6 @@ class PatternFormatter {
     return str
   }
 
-  private noop(str: string): string {
-    return str
-  }
   private clean(str: string, allow_spaces = false): string {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return Zotero.Utilities.XRegExp.replace(this.transliterate(str, 'ja'), allow_spaces ? this.re.unsafechars_allow_spaces : this.re.unsafechars, '', 'all').trim()
