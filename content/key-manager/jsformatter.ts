@@ -2,10 +2,16 @@
 
 import * as types from '../../gen/items/items'
 import * as recast from 'recast'
-const b = recast.types.builders
+import { ASTNode as AST, namedTypes as n, builders as b } from 'ast-types'
 
 import api from '../../gen/api/key-formatter.json'
 // move this upgrade to setup/extract-api after migration
+const object_or_null = { oneOf: [ { type: 'object' }, { type: 'null' } ] }
+const basics = {
+  loc: object_or_null,
+  comments: object_or_null,
+  regex: object_or_null,
+}
 function upgrade(type) {
   switch (type.type) {
     case 'string':
@@ -17,6 +23,7 @@ function upgrade(type) {
           type: { const: 'Literal' },
           value: { type: type.type },
           raw: { type: 'string' },
+          ...basics,
         },
         required: [ 'type', 'value' ],
         additionalProperties: false,
@@ -28,6 +35,7 @@ function upgrade(type) {
         properties: {
           type: { const: 'ArrayExpression' },
           elements: { type: 'array', items: upgrade(type.items) },
+          ...basics,
         },
         required: [ 'type', 'elements' ],
         additionalProperties: false,
@@ -41,6 +49,7 @@ function upgrade(type) {
         type: { const: 'Literal' },
         value: { const: type.const },
         raw: { type: 'string' },
+        ...basics,
       },
       required: [ 'type', 'value' ],
       additionalProperties: false,
@@ -54,11 +63,13 @@ function upgrade(type) {
         type: { const: 'Literal' },
         value: { type: 'object' },
         raw: { type: 'string' },
+        ...basics,
         regex: {
           type: 'object',
           properties: {
             pattern: { type: 'string' },
             flags: { type: 'string' },
+            ...basics,
           },
           required: [ 'pattern', 'flags' ],
           additionalProperties: false,
@@ -97,8 +108,6 @@ function findMethod(fname: string): string {
   }
   return ''
 }
-
-type AST = any
 
 import { validator } from '../ajv'
 for (const method of Object.values(astapi)) {
@@ -164,12 +173,12 @@ export class PatternParser {
 
     if (method.rest) {
       if (method.parameters.length !== 1) throw new Error(`${me}: ...rest method may have only one parameter, got ${method.parameters.join(', ')}`)
-      parameters = { [method.rest]: { type: 'ArrayExpression', elements: args } }
+      parameters = { [method.rest]: b.arrayExpression(args) }
     }
     else {
       if (method.parameters.length < args.length) throw new Error(`${me}: expected ${method.parameters.length} arguments, got ${args.length}`)
 
-      args = method.parameters.map((param: string) => parameters[param] as AST || { type: 'Identifier', name: 'undefined' } as AST)
+      args = method.parameters.map((param: string) => parameters[param] as AST || b.identifier('undefined') as AST)
       let arg
       while (args.length && (arg = args[args.length - 1]).type === 'Identifier' && arg.name === 'undefined') args.pop()
     }
@@ -184,22 +193,22 @@ export class PatternParser {
 
   protected Identifier(expr: AST, context: Context): AST {
     if (context.arguments) {
-      return { type: 'Literal', value: expr.name }
+      return b.literal(expr.name)
     }
     else if (expr.type !== 'Identifier') {
       return expr
     }
     else if (expr.name.match(/^(auth|edtr|editors)[a-zA-Z]*$/)) {
-      return {type: 'CallExpression', callee: { type: 'Identifier', name: expr.name }, arguments: [ ]} as AST
+      return b.callExpression(b.identifier(expr.name), [])
     }
     else if (expr.name.match(/^[A-Z]/)) {
       const name = types.name.field[expr.name.toLowerCase()]
       if (!name) throw new Error(`No such field ${expr.name}`)
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      return {type: 'CallExpression', callee: { type: 'Identifier', name: 'get_field' }, arguments: [ { type: 'Literal', value: name } ]} as AST
+      return b.callExpression(b.identifier('get_field'), [ b.literal(name) ])
     }
     else {
-      return { type: 'CallExpression', callee: expr, arguments: [] } as AST
+      return b.callExpression(expr, [])
     }
   }
 
@@ -248,15 +257,10 @@ export class PatternParser {
       case 'Literal':
         return expr
       default:
-        this_expr = { type: 'MemberExpression', object: { type: 'ThisExpression' }, property: expr }
+        this_expr = b.memberExpression(b.thisExpression(), expr, false)
         if (context.coerce) { // add leading empty string to force coercion to string
           context.coerce = false
-          return {
-            type: 'BinaryExpression',
-            operator: '+',
-            left: { type: 'Literal', value: '' },
-            right: this_expr,
-          }
+          return b.binaryExpression('+', b.literal(''), this_expr)
         }
         else {
           return this_expr
@@ -326,7 +330,7 @@ export class PatternParser {
     }
 
     // const wrapper = reset this.citekey
-    this.finder.program.body[0].expression.callee.object.elements.push({ type: 'ArrowFunctionExpression', params: [], body: expr, expression: true })
+    this.finder.program.body[0].expression.callee.object.elements.push(b.arrowFunctionExpression([], expr, true))
   }
 
   private addpattern(expr: AST) {
