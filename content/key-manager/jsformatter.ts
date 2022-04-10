@@ -2,7 +2,9 @@
 
 import * as types from '../../gen/items/items'
 import * as recast from 'recast'
-import { ASTNode as AST, namedTypes as n, builders as b } from 'ast-types'
+import { builders as b } from 'ast-types'
+
+type AST = any
 
 import api from '../../gen/api/key-formatter.json'
 // move this upgrade to setup/extract-api after migration
@@ -158,7 +160,7 @@ export class PatternParser {
       }
     })
 
-    let parameters = {}
+    let parameters: Record<string, AST> = {}
     args = args.map(arg => {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { named_argument, loc, ...argc } = arg
@@ -178,7 +180,7 @@ export class PatternParser {
     else {
       if (method.parameters.length < args.length) throw new Error(`${me}: expected ${method.parameters.length} arguments, got ${args.length}`)
 
-      args = method.parameters.map((param: string) => parameters[param] as AST || b.identifier('undefined') as AST)
+      args = method.parameters.map((param: string) => parameters[param] || b.identifier('undefined'))
       let arg
       while (args.length && (arg = args[args.length - 1]).type === 'Identifier' && arg.name === 'undefined') args.pop()
     }
