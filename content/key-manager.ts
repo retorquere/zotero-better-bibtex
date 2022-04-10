@@ -321,7 +321,9 @@ export class KeyManager {
       Zotero.Notifier.trigger('modify', 'item', [citekey.itemID], { [citekey.itemID]: { bbtCitekeyUpdate: true } })
 
       if (!citekey.pinned && this.autopin.enabled) {
-        this.autopin.schedule(citekey.itemID, () => { this.pin([citekey.itemID]).catch(err => log.error('failed to pin', citekey.itemID, ':', err)) })
+        this.autopin.schedule(citekey.itemID, () => {
+          this.pin([citekey.itemID]).catch(err => log.error('failed to pin', citekey.itemID, ':', err))
+        })
       }
       if (citekey.pinned && Preference.keyConflictPolicy === 'change') {
         const conflictQuery: Query = { $and: [
