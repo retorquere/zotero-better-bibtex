@@ -143,7 +143,7 @@ method
       }
 
       let method = match(fn, paramnames.slice(0, Object.keys(args).length).map(p => args[p]), input, error);
-      if (prefix.match(/^[ae]/)) method = method + '._clean()'
+      if (prefix.match(/^[ae]/)) method = method + '._clean(true)'
       return method
     }
   / operator:$([<>=] / [<>!] '=') n:$[0-9]+ {
