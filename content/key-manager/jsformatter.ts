@@ -260,7 +260,15 @@ export class PatternParser {
         this_expr = b.memberExpression(b.thisExpression(), expr, false)
         if (context.coerce) { // add leading empty string to force coercion to string
           context.coerce = false
-          return b.binaryExpression('+', b.literal(''), this_expr)
+          // return b.binaryExpression('+', b.literal(''), this_expr)
+          return b.binaryExpression('+',
+            b.assignmentExpression(
+              '=',
+              b.memberExpression(b.thisExpression(), b.identifier('citekey'), false),
+              b.literal('')
+            ),
+            this_expr
+          )
         }
         else {
           return this_expr
