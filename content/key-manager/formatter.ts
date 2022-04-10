@@ -250,7 +250,8 @@ class Item {
 
 const safechars = '-:\\p{L}0-9_!$*+./;\\[\\]'
 class PatternFormatter {
-  public value = ''
+  public chunk = ''
+  public citekey = ''
 
   public generate: () => string
   public postfix: { start: number, format: string }
@@ -329,8 +330,8 @@ class PatternFormatter {
       }
 
       try {
-        const { formatter, postfix } = this.parsePattern(this.citekeyFormat)
         log.debug('PatternFormatter.update: installing citekeyFormat ', {pattern: this.citekeyFormat})
+        const { formatter, postfix } = this.parsePattern(this.citekeyFormat)
         this.generate = (new Function(formatter) as () => string)
         this.postfix = postfix
         break
@@ -354,7 +355,7 @@ class PatternFormatter {
 
   public format(item: ZoteroItem | SerializedItem): string {
     this.item = new Item(item)
-    this.value = ''
+    this.chunk = ''
 
     switch (this.item.itemType) {
       case 'attachment':
@@ -366,12 +367,13 @@ class PatternFormatter {
     let citekey = this.generate() || `zotero-${this.item.itemID}`
     if (citekey && Preference.citekeyFold) citekey = this.transliterate(citekey)
     citekey = citekey.replace(/[\s{},@]/g, '')
+    log.debug('new citekey:', citekey)
 
     return citekey
   }
 
   private set(value) {
-    this.value = value
+    this.chunk = value
     return this
   }
 
@@ -707,62 +709,38 @@ class PatternFormatter {
    * Returns the given text if no output was generated
    */
   public _default(text: string) {
-    return this.value ? this : this.set(text)
+    return this.chunk ? this : this.set(text)
   }
 
   /**
-    * If the length of the output is not equal to the given number, skip to the next pattern. Alias: `=[number]`.
+    * If the length of the output does not match the given number, skip to the next pattern.
     */
-  public _eq(n: number) {
-    if (this.value.length === n) return this
+  public _len(relation: '<' | '<=' | '=' | '!=' | '>=' | '>', n: number) {
+    return this.len(this.chunk, relation, n)
+  }
+
+  private len(value: string, relation: '<' | '<=' | '=' | '!=' | '>=' | '>', n: number) {
+    switch (relation) {
+      case '<':
+        if (value.length < n) return this
+        break
+      case '<=':
+        if (value.length <= n) return this
+        break
+      case '=':
+        if (value.length === n) return this
+        break
+      case '!=':
+        if (value.length !== n) return this
+        break
+      case '>':
+        if (value.length > n) return this
+        break
+      case '>=':
+        if (value.length >= n) return this
+        break
+    }
     throw { next: true } // eslint-disable-line no-throw-literal
-  }
-
-  /**
-    * If the length of the output is not less than the given number, skip to the next pattern. Alias: `<[number]`.
-    */
-  public _lt(n: number) {
-    if (this.value.length < n) return this
-    throw { next: true } // eslint-disable-line no-throw-literal
-  }
-
-  /**
-    * If the length of the output is not greater than the given number, skip to the next pattern. Alias: `>[number]`.
-    */
-  public _gt(n: number) {
-    if (this.value.length > n) return this
-    throw { next: true } // eslint-disable-line no-throw-literal
-  }
-
-  /**
-    * If the length of the output is not lower than or equal to the given number, skip to the next pattern. Alias: `<=[number]`.
-    */
-  public _le(n: number) {
-    if (this.value.length <= n) return this
-    throw { next: true } // eslint-disable-line no-throw-literal
-  }
-
-  /**
-    * If the length of the output is not greater than or equal to the given number, skip to the next pattern. Alias: `>=[number]`.
-    */
-  public _ge(n: number) {
-    if (this.value.length >= n) return this
-    throw { next: true } // eslint-disable-line no-throw-literal
-  }
-
-  /**
-    * If the length of the output is equal to the given number, skip to the next pattern. Alias: `!=[number]`.
-    */
-  public _ne(n: number) {
-    if (this.value.length !== n) return this
-    throw { next: true } // eslint-disable-line no-throw-literal
-  }
-
-  /**
-    * If the length of the output is not longer than the given number, skip to the next pattern. Alias: `>[number]`.
-    */
-  public _longer(n: number) {
-    return this._gt(n)
   }
 
   /** discards the input */
@@ -772,16 +750,16 @@ class PatternFormatter {
 
   /** transforms date/time to local time. Mainly useful for dateAdded and dateModified as it requires an ISO-formatted input. */
   public _local_time() {
-    const m = this.value.match(/^([0-9]{4})-([0-9]{2})-([0-9]{2})[ T]([0-9]{2}):([0-9]{2}):([0-9]{2})Z?$/)
+    const m = this.chunk.match(/^([0-9]{4})-([0-9]{2})-([0-9]{2})[ T]([0-9]{2}):([0-9]{2}):([0-9]{2})Z?$/)
     if (!m) return this
-    const date = new Date(`${this.value}Z`)
+    const date = new Date(`${this.chunk}Z`)
     date.setMinutes(date.getMinutes() - date.getTimezoneOffset())
     return this.set(date.toISOString().replace('.000Z', '').replace('T', ' '))
   }
 
   /** formats date as by replacing y, m and d in the format */
   public _format_date(format='%Y-%m-%d') {
-    return this.set(this.format_date(this.value, format))
+    return this.set(this.format_date(this.chunk, format))
   }
 
   public format_date(value: string | PartialDate, format: string) {
@@ -820,14 +798,14 @@ class PatternFormatter {
 
   /** returns the value if it's an integer */
   public _numeric() {
-    return this.set(isNaN(parseInt(this.value)) ? '' : this.value)
+    return this.set(isNaN(parseInt(this.chunk)) ? '' : this.chunk)
   }
 
   /** replaces text, case insensitive; `:replace=.etal,&etal` will replace `.EtAl` with `&etal` */
   public _replace(find: string | RegExp, replace: string) {
     if (!find) return this
     if (typeof find === 'string') find = new RegExp(find.replace(/[[\](){}*+?|^$.\\]/g, '\\$&'), 'ig')
-    return this.set(this.value.replace(find, replace))
+    return this.set(this.chunk.replace(find, replace))
   }
 
   /**
@@ -836,7 +814,7 @@ class PatternFormatter {
    * you want the spaces in the value passed in to be replaced with those spaces in the parameter
    */
   public _condense(sep: string = '') { // eslint-disable-line @typescript-eslint/no-inferrable-types
-    return this.set(this.value.replace(/\s/g, sep))
+    return this.set(this.chunk.replace(/\s/g, sep))
   }
 
   /**
@@ -845,7 +823,7 @@ class PatternFormatter {
    * add a backslash (`\`) in front of it.
    */
   public _prefix(prefix: string) {
-    if (this.value && prefix) return this.set(`${prefix}${this.value}`)
+    if (this.chunk && prefix) return this.set(`${prefix}${this.chunk}`)
     return this
   }
 
@@ -854,7 +832,7 @@ class PatternFormatter {
    * it is supposed to postfix isn't empty
    */
   public _postfix(postfix: string) {
-    if (this.value && postfix) return this.set(`${this.value}${postfix}`)
+    if (this.chunk && postfix) return this.set(`${this.chunk}${postfix}`)
     return this
   }
 
@@ -862,7 +840,7 @@ class PatternFormatter {
    * Abbreviates the text. Only the first character and subsequent characters following white space will be included.
    */
   public _abbr() {
-    return this.set(this.value.split(/\s+/).map(word => word.substring(0, 1)).join(' '))
+    return this.set(this.chunk.split(/\s+/).map(word => word.substring(0, 1)).join(' '))
   }
 
   /**
@@ -894,17 +872,17 @@ class PatternFormatter {
       this.acronyms[list] = {}
     }
 
-    return this.set(this.acronyms[list][this.value.toLowerCase()] || this.value)
+    return this.set(this.acronyms[list][this.chunk.toLowerCase()] || this.chunk)
   }
 
   /** Forces the text inserted by the field marker to be in lowercase. For example, `[auth:lower]` expands the last name of the first author in lowercase. */
   public _lower() {
-    return this.set(this.value.toLowerCase())
+    return this.set(this.chunk.toLowerCase())
   }
 
   /** Forces the text inserted by the field marker to be in uppercase. For example, `[auth:upper]` expands the last name of the first author in uppercase. */
   public _upper() {
-    return this.set(this.value.toUpperCase())
+    return this.set(this.chunk.toUpperCase())
   }
 
   /**
@@ -917,7 +895,7 @@ class PatternFormatter {
    * Note that this filter is always applied if you use `title` (which is different from `Title`) or `shorttitle`.
    */
   public _skipwords() {
-    return this.set(this.value.split(/\s+/).filter(word => !this.skipWords.has(word.toLowerCase())).join(' ').trim())
+    return this.set(this.chunk.split(/\s+/).filter(word => !this.skipWords.has(word.toLowerCase())).join(' ').trim())
   }
 
   /**
@@ -926,7 +904,7 @@ class PatternFormatter {
    * selected.
    */
   public _select(start: number = 1, n?: number) { // eslint-disable-line @typescript-eslint/no-inferrable-types
-    const values = this.value.split(/\s+/)
+    const values = this.chunk.split(/\s+/)
     let end = values.length
 
     if (start === 0) start = 1
@@ -948,73 +926,73 @@ class PatternFormatter {
 
   /** (`substring=start,n`) selects `n` (default: all) characters starting at `start` (default: 1) */
   public _substring(start: number = 1, n?: number) { // eslint-disable-line @typescript-eslint/no-inferrable-types
-    if (typeof n === 'undefined') n = this.value.length
+    if (typeof n === 'undefined') n = this.chunk.length
 
-    return this.set(this.value.slice(start - 1, (start - 1) + n))
+    return this.set(this.chunk.slice(start - 1, (start - 1) + n))
   }
 
   /** removes all non-ascii characters */
   public _ascii() {
-    return this.set(this.value.replace(/[^ -~]/g, '').split(/\s+/).join(' ').trim())
+    return this.set(this.chunk.replace(/[^ -~]/g, '').split(/\s+/).join(' ').trim())
   }
 
   /** clears out everything but unicode alphanumeric characters (unicode character classes `L` and `N`) */
   public _alphanum() {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return this.set(Zotero.Utilities.XRegExp.replace(this.value, this.re.alphanum, '', 'all').split(/\s+/).join(' ').trim())
+    return this.set(Zotero.Utilities.XRegExp.replace(this.chunk, this.re.alphanum, '', 'all').split(/\s+/).join(' ').trim())
   }
 
   /** tries to replace diacritics with ascii look-alikes. Removes non-ascii characters it cannot match */
   public _fold(mode?: 'german' | 'japanese' | 'chinese') {
-    return this.set(this.transliterate(this.value, mode).split(/\s+/).join(' ').trim())
+    return this.set(this.transliterate(this.chunk, mode).split(/\s+/).join(' ').trim())
   }
 
   /** uppercases the first letter of each word */
   public _capitalize() {
-    return this.set(this.value.replace(/((^|\s)[a-z])/g, m => m.toUpperCase()))
+    return this.set(this.chunk.replace(/((^|\s)[a-z])/g, m => m.toUpperCase()))
   }
 
   /** Removes punctuation */
   public _nopunct() {
-    let value = Zotero.Utilities.XRegExp.replace(this.value, this.re.dash, '-', 'all')
+    let value = Zotero.Utilities.XRegExp.replace(this.chunk, this.re.dash, '-', 'all')
     value = Zotero.Utilities.XRegExp.replace(value, this.re.punct, '', 'all')
     return this.set(value)
   }
 
   /** Removes punctuation and word-connecting dashes */
   public _nopunctordash() {
-    let value = Zotero.Utilities.XRegExp.replace(this.value, this.re.dash, '', 'all')
+    let value = Zotero.Utilities.XRegExp.replace(this.chunk, this.re.dash, '', 'all')
     value = Zotero.Utilities.XRegExp.replace(value, this.re.punct, '', 'all')
     return this.set(value)
   }
 
   /** Treat ideaographs as individual words */
   public _split_ideographs() {
-    return this.set(this.value.replace(script.han, ' $1 ').trim())
+    return this.set(this.chunk.replace(script.han, ' $1 ').trim())
   }
 
   /** word segmentation for Chinese items. Uses substantial memory; must be enabled under Preferences -> Better BibTeX -> Advanced -> Citekeys */
   public _jieba() {
     if (!Preference.jieba) return this
-    return this.set(jieba.cut(this.value).join(' ').trim())
+    return this.set(jieba.cut(this.chunk).join(' ').trim())
   }
 
   /** word segmentation for Japanese items. Uses substantial memory; must be enabled under Preferences -> Better BibTeX -> Advanced -> Citekeys */
   public _kuromoji() {
     if (!Preference.kuroshiro || !kuroshiro.enabled) return this
-    return this.set(kuroshiro.tokenize(this.value || '').join(' ').trim())
+    return this.set(kuroshiro.tokenize(this.chunk || '').join(' ').trim())
   }
 
   /** transliterates the citation key and removes unsafe characters */
   public _clean(allow_spaces = false) {
-    if (!this.value) return this
-    return this.set(this.clean(this.value, allow_spaces))
+    if (!this.chunk) return this
+    return this.set(this.clean(this.chunk, allow_spaces))
   }
 
   /** transliterates the citation key. If you don't specify a mode, the mode is derived from the item language field */
   public _transliterate(mode?: 'minimal' | 'german' | 'de' | 'japanese' | 'ja' | 'zh' | 'chinese') {
-    if (!this.value) return this
-    return this.set(this.transliterate(this.value, mode))
+    if (!this.chunk) return this
+    return this.set(this.transliterate(this.chunk, mode))
   }
 
   private transliterate(str: string, mode?: 'minimal' | 'de' | 'german' | 'ja' | 'japanese' | 'zh' | 'chinese'): string {
@@ -1162,7 +1140,8 @@ class PatternFormatter {
   }
 
   public toString() {
-    return this.value
+    this.citekey += this.chunk
+    return this.chunk
   }
 }
 
