@@ -20,6 +20,7 @@
   "`keywordN`": "Tag number `N`",
   "`language`": "Tests whether the item has the given language set, and skips to the next pattern if not",
   "`lastpage`": "The number of the last page of the publication (See the remark on `firstpage`)",
+  "`len`": "If the length of the output does not match the given number, skip to the next pattern.",
   "`library`": "returns the name of the shared group library, or nothing if the item is in your personal library",
   "`month`": "the month of the publication",
   "`origdate`": "the original date of the publication",

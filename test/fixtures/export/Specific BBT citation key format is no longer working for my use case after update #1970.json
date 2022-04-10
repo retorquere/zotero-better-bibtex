@@ -8,7 +8,7 @@
     },
     "preferences": {
       "DOIandURL": "doi",
-      "citekeyFormat": "[auth1_1][auth1_2][auth1_3][auth1_4:>0:discard]+[shortyear][postfix+1=%(a)s]| [auth1_1][auth1_2][auth1_3:>0:discard][auth1_3][shortyear]| [auth2_1][auth1_2:>0:discard][auth2_2][shortyear]| [auth4_1][shortyear]",
+      "citekeyFormat": "[postfix+1=%(a)s] | [auth1_1][auth1_2][auth1_3][auth1_4:>0:discard]+[shortyear] | [auth1_1][auth1_2][auth1_3:>0:discard][auth1_3][shortyear]| [auth2_1][auth1_2:>0:discard][auth2_2][shortyear]| [auth4_1][shortyear]",
       "skipFields": "note,abstract,file,langid,keywords"
     }
   },

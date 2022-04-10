@@ -56,21 +56,6 @@
       return `${method}(${args})`
     }
   }
-
-  const postfix = {
-    postfix: null,
-    alpha: { start: 0, format: '%(a)s' },
-    numeric: { start: 0, format: '-%(n)s' },
-
-    set: function(pf) {
-      if (this.postfix && (this.postfix.start !== pf.start || this.postfix.format !== pf.format)) error(`postfix changed from ${this.postfix.format}+${this.postfix.start} to ${pf.format}+${pf.start}`)
-      const expected = `${Date.now()}`
-      const found = options.sprintf(pf.format, { a: expected, A: expected, n: expected })
-      if (!found.includes(expected)) error(`postfix ${pf.format} does not contain %(a)s, %(A)s or %(n)s`)
-      if (found.split(expected).length > 2) error(`postfix ${pf.format} contains multiple instances of %(a)s/%(A)s/%(n)s`)
-      this.postfix = { format: pf.format, start: pf.start ? 1 : 0 }
-    },
-  }
 }
 
 start
@@ -78,15 +63,15 @@ start
       var body = ''
 
       for (const pattern of patterns) {
-        body += `\ntry {\n  let citekey = '';\n`
+        body += `\ntry {\n  this.citekey = '';\n`
         for (const block of pattern) {
           body += `  ${block};\n`
         }
-        body += '  if (citekey) return citekey;\n}\ncatch (err) {\n  if (!err.next) throw err\n}\n'
+        body += '  if (this.citekey) return this.citekey;\n}\ncatch (err) {\n  if (!err.next) throw err\n}\n'
       }
       body += `\nreturn '';`
 
-      return { formatter: body, postfix: postfix.postfix || postfix.alpha }
+      return body
     }
 
 pattern
@@ -94,19 +79,19 @@ pattern
 
 block
   = [ \t\r\n]+                            { return '' }
-  / '[0]'                                 { postfix.set(postfix.numeric); return '' }
-  / '[postfix' start:'+1'? pf:stringparam ']' { postfix.set({ start: start, format: pf}); return '' }
+  / '[0]'                                 { return 'this.$postfix$("%(n)s")' }
+  / '[postfix' start:'+1'? pf:stringparam ']' { return `this.$postfix(${JSON.stringify(pf)}, ${start ? 1 : 0})` }
   / '[=' types:$[a-zA-Z/]+ ']'            {
       types = types.toLowerCase().split('/').map(type => type.trim()).map(type => options.items.name.type[type.toLowerCase()] || type);
       var unknown = types.find(type => !options.items.valid.type[type])
       if (typeof unknown !== 'undefined') error(`unknown item type "${unknown}; valid types are ${Object.keys(options.items.name.type)}"`);
-      return `if (!${JSON.stringify(types)}.includes(this.item.itemType)) throw { next: true }`;
+      return `this.$type(${types.map(t => JSON.stringify(t)).join(', ')})`
     }
-  / '[>' min:$[0-9]+ ']'                 { return `if (citekey.length <= ${min}) throw { next: true }` }
+  / '[>' min:$[0-9]+ ']'                 { return `if (this.citekey.length <= ${min}) throw { next: true }` }
   / '[' method:method filters:filter* ']' {
-      return `citekey += this.${[method].concat(filters).join('.')}.chunk`
+      return `this.citekey += this.${[method].concat(filters).join('.')}.chunk`
     }
-  / chars:$[^\|>\[\]]+                     { return `citekey += ${JSON.stringify(chars)}` }
+  / chars:$[^\|>\[\]]+                     { return `this.citekey += ${JSON.stringify(chars)}` }
 
 method
   = prefix:('auth' / 'Auth' / 'authors' / 'Authors' / 'edtr' / 'Edtr' / 'editors' / 'Editors') rest:$[\.a-zA-Z]* params:fparams? flags:flag* {
@@ -158,7 +143,6 @@ method
     return match('$len', [operator, n], operator, error)
   }
   / name:$([a-z][-.a-zA-Z]+) &{ return options.methods[method_name(name, '$')] } p:fparams? {
-      if (name === 'zotero') postfix.set(postfix.numeric)
       return match('$' + name, p || [], name, error)
     }
   / prop:$([a-zA-Z]+) {

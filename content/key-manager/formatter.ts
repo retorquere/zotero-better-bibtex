@@ -331,9 +331,9 @@ class PatternFormatter {
 
       try {
         log.debug('PatternFormatter.update: installing citekeyFormat ', {pattern: this.citekeyFormat})
-        const { formatter, postfix } = this.parsePattern(this.citekeyFormat)
+        this.$postfix()
+        const formatter = this.parsePattern(this.citekeyFormat)
         this.generate = (new Function(formatter) as () => string)
-        this.postfix = postfix
         break
       }
       catch (err) {
@@ -342,13 +342,10 @@ class PatternFormatter {
     }
   }
 
-  public parsePattern(pattern): { formatter: string, postfix: { start: number, format: string } } {
+  public parsePattern(pattern): string {
     log.debug('parsePattern.pattern:', pattern)
-    const formatter = (parser.parse(pattern, { sprintf, items, methods }) as { formatter: string, postfix: { start: number, format: string } })
-    if (Preference.testing) {
-      log.debug('parsePattern.formatter:', formatter.formatter)
-      log.debug('parsePattern.postfix:', formatter.postfix)
-    }
+    const formatter = parser.parse(pattern, { sprintf, items, methods }) as string
+    if (Preference.testing) log.debug('parsePattern.formatter:', formatter)
 
     return formatter
   }
@@ -364,6 +361,7 @@ class PatternFormatter {
         return ''
     }
 
+    this.$postfix()
     let citekey = this.generate() || `zotero-${this.item.itemID}`
     if (citekey && Preference.citekeyFold) citekey = this.transliterate(citekey)
     citekey = citekey.replace(/[\s{},@]/g, '')
@@ -399,7 +397,7 @@ class PatternFormatter {
   /**
    * Tests whether the item has the given language set, and skips to the next pattern if not
    */
-  public $language(name: (BabelLanguage | BabelLanguageTag)[]) {
+  public $language(...name: (BabelLanguage | BabelLanguageTag)[]) {
     if (name.concat(name.map(n => BabelTag[n] as string).filter(n => n)).includes(this.item.babelTag())) {
       return this.set('')
     }
@@ -416,6 +414,7 @@ class PatternFormatter {
    */
   public $zotero() {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    this.$postfix('%(n)', 1)
     return this.set(zotero_buildCiteKey({
       creators: this.item.creators,
       title: this.item.getField('title'),
@@ -698,10 +697,18 @@ class PatternFormatter {
     if (!found.includes(expected)) throw new Error(`postfix ${format} does not contain %(a)s, %(A)s or %(n)s`)
     if (found.split(expected).length > 2) throw new Error(`postfix ${format} contains multiple instances of %(a)s/%(A)s/%(n)s`)
     this.postfix = { format, start }
+    log.debug('$postfix ->', this.postfix)
     return this.set('')
   }
 
-  private padYear(year: string, length): string {
+  /**
+    * If the length of the output does not match the given number, skip to the next pattern.
+    */
+  public $len(relation: '<' | '<=' | '=' | '!=' | '>=' | '>', length: number) {
+    return this.len(this.citekey, relation, length).set('')
+  }
+
+  private padYear(year: string, length: number): string {
     return year ? year.replace(/[0-9]+/, y => y.length >= length ? y : (`0000${y}`).slice(-length)): ''
   }
 
