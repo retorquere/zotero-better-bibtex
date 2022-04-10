@@ -2,6 +2,8 @@
 
 import * as types from '../../gen/items/items'
 import * as recast from 'recast'
+const b = recast.types.builders
+
 import api from '../../gen/api/key-formatter.json'
 // move this upgrade to setup/extract-api after migration
 function upgrade(type) {
@@ -186,6 +188,9 @@ export class PatternParser {
     }
     else if (expr.type !== 'Identifier') {
       return expr
+    }
+    else if (expr.name.match(/^(auth|edtr|editors)[a-zA-Z]*$/)) {
+      return {type: 'CallExpression', callee: { type: 'Identifier', name: expr.name }, arguments: [ ]} as AST
     }
     else if (expr.name.match(/^[A-Z]/)) {
       const name = types.name.field[expr.name.toLowerCase()]
