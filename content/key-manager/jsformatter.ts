@@ -320,6 +320,7 @@ export class PatternParser {
       expr = this.addThis(expr, { coerce: true })
     }
 
+    // const wrapper = reset this.citekey
     this.finder.program.body[0].expression.callee.object.elements.push({ type: 'ArrowFunctionExpression', params: [], body: expr, expression: true })
   }
 

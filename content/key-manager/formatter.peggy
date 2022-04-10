@@ -104,7 +104,7 @@ block
     }
   / '[>' min:$[0-9]+ ']'                 { return `if (citekey.length <= ${min}) throw { next: true }` }
   / '[' method:method filters:filter* ']' {
-      return `citekey += this.${[method].concat(filters).join('.')}.value`
+      return `citekey += this.${[method].concat(filters).join('.')}.chunk`
     }
   / chars:$[^\|>\[\]]+                     { return `citekey += ${JSON.stringify(chars)}` }
 
@@ -155,7 +155,7 @@ method
       '>=': 'ge',
       '!=': 'ne',
     } || operator
-    return match('$' + method, [n], operator, error)
+    return match('$len', [operator, n], operator, error)
   }
   / name:$([a-z][-.a-zA-Z]+) &{ return options.methods[method_name(name, '$')] } p:fparams? {
       if (name === 'zotero') postfix.set(postfix.numeric)
@@ -177,7 +177,7 @@ flag
 
 filter
   = ':(' dflt:$[^)]+ ')'                  { return `_default(${JSON.stringify(dflt)})` }
-  / ':>' min:$[0-9]+                      { return `_longer(${min})` }
+  / ':>' min:$[0-9]+                      { return `_len('>', ${min})` }
   / ':' name:$[-a-z]+ params:stringparam* { return match('_' + name, params, name, error) }
 
 stringparam
