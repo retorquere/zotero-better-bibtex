@@ -5,6 +5,9 @@
 
   function literal(v) {
     if (v instanceof RegExp) return `/${v.source}/${v.flags}`
+
+    if (Array.isArray(v)) return '[' + v.map(literal).join(', ') + ']'
+
     switch (typeof v) {
       case 'undefined':
         return 'undefined'
