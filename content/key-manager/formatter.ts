@@ -414,7 +414,7 @@ class PatternFormatter {
    */
   public $zotero() {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    this.$postfix('%(n)', 1)
+    this.$postfix('-%(n)s')
     return this.set(zotero_buildCiteKey({
       creators: this.item.creators,
       title: this.item.getField('title'),
