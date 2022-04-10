@@ -3,6 +3,19 @@
     return (prefix || '') + method.replace(/[.]/g, '__').replace(/-/g, '_')
   }
 
+  function literal(v) {
+    if (v instanceof RegExp) return regexp.source
+    switch (typeof v) {
+      case 'undefined':
+        return 'undefined'
+      case 'string':
+      case 'number':
+      case 'boolean':
+        return JSON.stringify(v)
+    }
+    throw new Error(`unexpected argument value ${v}`)
+  }
+
   function match(fn, args, text, error) {
     if (!fn.match(/^[$_]/)) error(`unknown operator ${fn}`)
 
@@ -31,14 +44,12 @@
       return acc
     }, {})
 
-    Zotero.debug(`${method}(${JSON.stringify(meta.parameters)} => ${JSON.stringify(params)})`)
     const argerror = meta.validate(params) // validates and coerces
     if (argerror) {
       error(`${text}: ${argerror}`)
     }
     else {
-      args = meta.parameters.slice(0, args.length).map(arg => params[arg]).map(arg => arg instanceof RegExp ? arg.source : JSON.stringify(arg)).join(', ')
-      Zotero.debug(`${method}(${args})`)
+      args = meta.parameters.slice(0, args.length).map(arg => params[arg]).map(arg => literal(arg)).join(', ')
       return `${method}(${args})`
     }
   }
@@ -102,9 +113,15 @@ method
 
       const fn = method_name(prefix.toLowerCase() + rest, '$')
 
-      const args = { }
-      if (params[0]) args.n = params[0]
-      if (params[1]) args.m = params[1]
+      const args = {
+        creator: prefix.match(/^a/i) ? 'author' : 'editor'
+      }
+
+      params.forEach((p, i) => {
+        const n = parseInt(p)
+        if (!n || !isFinite(n)) error(`Unexpected integer value ${p}`)
+        args[i ? 'm' : 'n'] = n
+      })
 
       const paramnames = options.methods[fn].parameters
       if (paramnames.includes('withInitials')) args.withInitials = false
@@ -122,7 +139,7 @@ method
         }
       }
 
-      return match(fn, paramnames.slice(0, Object.keys(args).length).map(n => args[n]), input, error);
+      return match(fn, paramnames.slice(0, Object.keys(args).length).map(p => args[p]), input, error);
     }
   / operator:$([<>=] / [<>!] '=') n:$[0-9]+ {
     const method = {
