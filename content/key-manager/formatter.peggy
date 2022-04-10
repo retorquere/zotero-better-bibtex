@@ -4,7 +4,7 @@
   }
 
   function literal(v) {
-    if (v instanceof RegExp) return regexp.source
+    if (v instanceof RegExp) return v.source
     switch (typeof v) {
       case 'undefined':
         return 'undefined'
