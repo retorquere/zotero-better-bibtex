@@ -4,7 +4,7 @@
   }
 
   function literal(v) {
-    if (v instanceof RegExp) return v.source
+    if (v instanceof RegExp) return `/${v.source}/${v.flags}`
     switch (typeof v) {
       case 'undefined':
         return 'undefined'
