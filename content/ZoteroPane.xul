@@ -86,6 +86,7 @@
 
   <script src="chrome://zotero-better-bibtex/content/better-bibtex.js"/>
   <script>
+    Zotero.log('starting BBT', 'error')
     Zotero.BetterBibTeX.globals = Zotero.BetterBibTeX.ZoteroPane.globals = Function('return this')();
     window.addEventListener('load', async function() {
       try {

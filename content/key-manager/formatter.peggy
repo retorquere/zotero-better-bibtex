@@ -18,7 +18,7 @@
 
     // kludge for regexes, otherwise length validation fails
     if (method === '_replace' && args.length === 3 && args[2] === 'regex') {
-      args = [ new RegExp(args[0], args[1] ]
+      args = [ new RegExp(args[0]), args[1] ]
     }
 
     if (args.length > meta.parameters.length) error(`too many arguments for ${text}`)
@@ -26,17 +26,19 @@
     const params = args.reduce((acc, v, i) => {
       const param = meta.parameters[i]
       // horrid kludge for arrays
-      if (method === '$language') v = v.split('/')
+      if (method === '$language' && param === 'name') v = v.split('/')
       acc[param] = v
       return acc
     }, {})
 
+    Zotero.debug(`${method}(${JSON.stringify(meta.parameters)} => ${JSON.stringify(params)})`)
     const argerror = meta.validate(params) // validates and coerces
     if (argerror) {
       error(`${text}: ${argerror}`)
     }
     else {
-      args = meta.parameters.slice(0, args.length).map(arg => arg instanceof RegExp ? arg.source : JSON.stringify(arg)).join(', ')
+      args = meta.parameters.slice(0, args.length).map(arg => params[arg]).map(arg => arg instanceof RegExp ? arg.source : JSON.stringify(arg)).join(', ')
+      Zotero.debug(`${method}(${args})`)
       return `${method}(${args})`
     }
   }
@@ -98,19 +100,9 @@ method
 
       const input = prefix + rest
 
-      const scrub = (prefix[0] == prefix[0].toLowerCase());
-      prefix = prefix.toLowerCase();
-      let onlyEditors = false
-      if (prefix[0] === 'e') {
-        onlyEditors = true
-        if (prefix.startsWith('edtr')) rest = rest.replace(/^\.edtr\./i, '.auth.')
-        prefix = { edtr: 'auth', editors: 'authors' }[prefix]
-      }
-      const fn = method_name(prefix + rest, '$')
+      const fn = method_name(prefix.toLowerCase() + rest, '$')
 
-      const args = {
-        onlyEditors: onlyEditors,
-      }
+      const args = { }
       if (params[0]) args.n = params[0]
       if (params[1]) args.m = params[1]
 
@@ -130,10 +122,7 @@ method
         }
       }
 
-      let method = match(fn, paramnames.slice(0, Object.keys(args).length).map(n => args[n]), input, error);
-      if (scrub) method += '._clean(true)';
-
-      return method;
+      return match(fn, paramnames.slice(0, Object.keys(args).length).map(n => args[n]), input, error);
     }
   / operator:$([<>=] / [<>!] '=') n:$[0-9]+ {
     const method = {
