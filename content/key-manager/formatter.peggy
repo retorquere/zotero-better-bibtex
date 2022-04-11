@@ -38,11 +38,11 @@
     }
 
     if (args.length > meta.parameters.length) error(`too many arguments for ${text}`)
+    if (meta.rest) error('handle rest parameters inline')
 
     const params = args.reduce((acc, v, i) => {
       const param = meta.parameters[i]
-      // horrid kludge for arrays
-      if (method === '$language' && param === 'name') v = v.split('/')
+      // horrid kludge for arrays / rest parameters
       acc[param] = v
       return acc
     }, {})
@@ -85,7 +85,11 @@ block
       types = types.toLowerCase().split('/').map(type => type.trim()).map(type => options.items.name.type[type.toLowerCase()] || type);
       var unknown = types.find(type => !options.items.valid.type[type])
       if (typeof unknown !== 'undefined') error(`unknown item type "${unknown}; valid types are ${Object.keys(options.items.name.type)}"`);
-      return `this.$type(${types.map(t => JSON.stringify(t)).join(', ')})`
+      return `this.$type(${types.map(t => literal(t)).join(', ')})`
+    }
+  / '[language=' languages:$[a-zA-Z/]+ ']'            { // add language checking in parse phase
+      languages = languages.toLowerCase().split('/').map(language => language.trim())
+      return `this.$language(${languages.map(l => literal(l)).join(', ')})`
     }
   / '[>' min:$[0-9]+ ']'                 { return `if (this.citekey.length <= ${min}) throw { next: true }` }
   / '[' method:method filters:filter* ']' {
