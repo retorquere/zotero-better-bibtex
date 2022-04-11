@@ -5,5 +5,5 @@ declare const ZOTERO_CONFIG: any
 if (typeof Components !== 'undefined') Components.utils.import('resource://zotero/config.js')
 
 // check for process.version for node testing
-export const client = (process.version === '') ? ZOTERO_CONFIG.GUID.replace(/@.*/, '').replace('-', '') : 'zotero'
+export const client = (typeof Zotero !== 'undefined') ? ZOTERO_CONFIG.GUID.replace(/@.*/, '').replace('-', '') : 'zotero'
 
