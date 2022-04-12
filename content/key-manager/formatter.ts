@@ -609,13 +609,13 @@ class PatternFormatter {
   }
 
   /** The last name of the first author, and the last name of the second author if there are two authors or ".etal" if there are more than two. */
-  public $authEtal2(creator: 'author' | 'editor' = 'author', withInitials=false, joiner='') {
+  public $authEtal2(creator: 'author' | 'editor' = 'author', withInitials=false, joiner='.') {
     const authors = this.creators(creator === 'editor', {withInitials})
     if (!authors || !authors.length) return this.set('')
 
     // eslint-disable-next-line no-magic-numbers
-    if (authors.length === 2) return this.set(authors.join(joiner || '.'))
-    return this.set(authors.slice(0, 1).concat(authors.length > 1 ? ['etal'] : []).join(joiner || '.'))
+    if (authors.length === 2) return this.set(authors.join(joiner))
+    return this.set(authors.slice(0, 1).concat(authors.length > 1 ? ['etal'] : []).join(joiner))
   }
 
   /** The last name if one author is given; the first character of up to three authors' last names if more than one author is given. A plus character is added, if there are more than three authors. */
