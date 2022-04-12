@@ -379,7 +379,7 @@ class PatternFormatter {
    * Gets the value of the item field
    */
   public $getField(name: string) { // make into enum
-    return this.set(this.item.getField(name) || '')
+    return this.set((name === 'title' ? this.item.title : this.item.getField(name)) || '')
   }
 
   /**
