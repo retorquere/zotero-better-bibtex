@@ -173,7 +173,17 @@ class Item {
       this.itemID = (item as ZoteroItem).id
       this.itemType = Zotero.ItemTypes.getName((item as ZoteroItem).itemTypeID)
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      this.getField = (name: string) => ((name === 'dateAdded' || name === 'dateModified') ? (this.item as any)[name] : (this.item as ZoteroItem).getField(name, false, true)) || this.extraFields?.kv[name]
+      this.getField = function(name: string) => {
+        switch (name) {
+          case 'dateAdded':
+          case 'dateModified'
+            return (this.item as any)[name]
+          case 'title':
+            return this.title
+          default:
+            (this.item as ZoteroItem).getField(name, false, true)) || this.extraFields?.kv[name]
+        }
+      }
       this.creators = (item as ZoteroItem).getCreatorsJSON()
       this.libraryID = item.libraryID
       this.title = (item as ZoteroItem).getField('title', false, true) as string
@@ -182,7 +192,7 @@ class Item {
       this.itemType = (item as SerializedRegularItem).itemType
       this.itemID = (item as SerializedRegularItem).itemID
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      this.getField = (name: string) => this.item[name] || this.extraFields?.kv[name]
+      this.getField = (name: string) => name === 'title' ? this.title : this.item[name] || this.extraFields?.kv[name]
       this.creators = (item as SerializedRegularItem).creators
       this.libraryID = null
       this.title = (item as SerializedRegularItem).title
@@ -376,13 +386,6 @@ class PatternFormatter {
   }
 
   /**
-   * Gets the value of the item field
-   */
-  public $getField(name: string) { // make into enum
-    return this.set((name === 'title' ? this.item.title : this.item.getField(name)) || '')
-  }
-
-  /**
    * Tests whether the item is of any of the given types
    */
   public $type(...allowed: string[]) {
@@ -430,7 +433,10 @@ class PatternFormatter {
     return this.set(fetchInspireHEP(this.item) || '')
   }
 
-  public getField(name: string) {
+  /**
+   * Gets the value of the item field
+   */
+  public $getField(name: string) {
     const value = this.item.getField(name)
     switch (typeof value) {
       case 'number':
