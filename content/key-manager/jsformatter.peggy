@@ -1,22 +1,24 @@
 {
-  const methodnames = Object.keys(options.methods).reduce((acc, name) => { acc[name.toLowerCase()]=name; return acc }, {})
+  const identifier = require('../../gen/ecmascript-6')
+  const jsesc = require('jsesc')
 
   function method_name(method, prefix) {
-    return methodnames[(prefix || '') + method.replace(/[-.]/g, '').toLowerCase()] || ''
+    return (prefix || '') + method.replace(/[-.]([a-z])/g, (match, c) => c.toUpperCase())
   }
 
   function literal(v) {
     if (v instanceof RegExp) return `/${v.source}/${v.flags}`
 
-    if (Array.isArray(v)) return '[' + v.map(literal).join(', ') + ']'
+    if (Array.isArray(v)) return '[' + v.map(literal).join(',') + ']'
 
     switch (typeof v) {
       case 'undefined':
         return 'undefined'
       case 'string':
-      case 'number':
       case 'boolean':
-        return JSON.stringify(v)
+        return jsesc(v)
+      case 'number':
+        return identifier.test(v) ? v : jsesc(v)
     }
     throw new Error(`unexpected argument value ${v}`)
   }
@@ -54,50 +56,48 @@
       error(`${text}: ${argerror}`)
     }
     else {
-      args = meta.parameters.slice(0, args.length).map(arg => params[arg]).map(arg => literal(arg)).join(', ')
-      return `${method}(${args})`
+      let i
+      args = meta.parameters.slice(0, args.length).map(arg => params[arg])
+      while (args.length && (args[(i = args.length - 1)] === meta.defaults[i] || typeof args[i] === 'undefined')) args.pop()
+
+      if (args.length) {
+        args = args.map(arg => literal(arg)).join(',')
+        return `${method.substr(1)}(${args})`
+      }
+      else {
+        return method.substr(1)
+      }
     }
   }
 }
 
 start
   = patterns:pattern+ {
-      var body = ''
-
-      for (const pattern of patterns) {
-        body += `\ntry {\n  this.citekey = '';\n`
-        for (const block of pattern) {
-          body += `  ${block};\n`
-        }
-        body += '  if (this.citekey) return this.citekey;\n}\ncatch (err) {\n  if (!err.next) throw err\n}\n'
-      }
-      body += `\nreturn '';`
-
-      return body
+      return patterns.join(' | ')
     }
 
 pattern
-  = blocks:block+ [\|]? { return blocks.filter(block => block) }
+  = chunks:chunk+ [\|]? { return chunks.filter(chunk => chunk).join(' +') }
 
-block
+chunk
   = [ \t\r\n]+                            { return '' }
-  / '[0]'                                 { return 'this.$postfix("-%(n)s")' }
-  / '[postfix' start:'+1'? pf:stringparam ']' { return `this.$postfix(${JSON.stringify(pf)}, ${start ? 1 : 0})` }
+  / '[0]'                                 { return 'postfix("-%(n)s")' }
+  / '[postfix' start:'+1'? pf:stringparam ']' { return start ? `postfix(${literal(pf)}, 1)` : `postfix(${literal(pf)})` }
   / '[=' types:$[a-zA-Z/]+ ']'            {
       types = types.toLowerCase().split('/').map(type => type.trim()).map(type => options.items.name.type[type.toLowerCase()] || type);
       var unknown = types.find(type => !options.items.valid.type[type])
       if (typeof unknown !== 'undefined') error(`unknown item type "${unknown}; valid types are ${Object.keys(options.items.name.type)}"`);
-      return `this.$type(${types.map(t => literal(t)).join(', ')})`
+      return `type(${types.map(t => literal(t)).join(',')})`
     }
   / '[language=' languages:$[a-zA-Z/]+ ']'            { // add language checking in parse phase
-      languages = languages.toLowerCase().split('/').map(language => language.trim())
-      return `this.$language(${languages.map(l => literal(l)).join(', ')})`
+      languages = languages.toLowerCase().split('/').map(language => language.trim()).filter(l => l)
+      return `language(${languages.map(l => literal(l)).join(',')})`
     }
-  / '[>' min:$[0-9]+ ']'                 { return `if (this.citekey.length <= ${min}) throw { next: true }` }
+  / '[>' min:$[0-9]+ ']'                 { return `len('>',${min})` }
   / '[' method:method filters:filter* ']' {
-      return `this.citekey += this.${[method].concat(filters).join('.')}.chunk`
+      return [method].concat(filters).join('.')
     }
-  / chars:$[^\|>\[\]]+                     { return `this.citekey += ${JSON.stringify(chars)}` }
+  / chars:$[^\|>\[\]]+                     { return jsesc(chars) }
 
 method
   = prefix:('auth' / 'Auth' / 'authors' / 'Authors' / 'edtr' / 'Edtr' / 'editors' / 'Editors') rest:$[\.a-zA-Z]* params:fparams? flags:flag* {
@@ -133,8 +133,8 @@ method
         }
       }
 
-      let method = match(fn, paramnames.slice(0, Object.keys(args).length).map(p => args[p]), input, error);
-      if (prefix.match(/^[ae]/)) method = method + '._clean(true)'
+      let method = match(fn, paramnames.slice(0, Object.keys(args).length).map(p => args[p]), input, error)
+      if (prefix.match(/^[ae]/)) method += '.clean'
       return method
     }
   / operator:$([<>=] / [<>!] '=') n:$[0-9]+ {
@@ -154,7 +154,7 @@ method
   / prop:$([a-zA-Z]+) {
       const field = options.items.name.field[prop.toLowerCase()]
       if (!field) error(`Unknown field ${JSON.stringify(prop)}`)
-      return `getField(${JSON.stringify(field)})`
+      return field
     }
 
 fparams
@@ -166,8 +166,8 @@ flag
   = '+' flag:$[^_:\]]+                 { return flag }
 
 filter
-  = ':(' dflt:$[^)]+ ')'                  { return `_default(${JSON.stringify(dflt)})` }
-  / ':>' min:$[0-9]+                      { return `_len('>', ${min})` }
+  = ':(' dflt:$[^)]+ ')'                  { return `_default(${literal(dflt)})` }
+  / ':>' min:$[0-9]+                      { return `_len('>',${min})` }
   / ':' name:$[-a-z]+ params:stringparam* { return match('_' + name, params, name, error) }
 
 stringparam

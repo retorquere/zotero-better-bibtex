@@ -3,10 +3,11 @@
 import * as types from '../../gen/items/items'
 import * as recast from 'recast'
 import { builders as b } from 'ast-types'
+import _ from 'lodash'
 
 type AST = any
 
-import api from '../../gen/api/key-formatter.json'
+import { methods } from '../../gen/api/key-formatter'
 // move this upgrade to setup/extract-api after migration
 const object_or_null = { oneOf: [ { type: 'object' }, { type: 'null' } ] }
 const basics = {
@@ -92,31 +93,24 @@ function upgrade(type) {
 
   throw { notUpgradable: type } // eslint-disable-line no-throw-literal
 }
-const astapi: typeof api = JSON.parse(JSON.stringify(api))
-for (const meta of Object.values(astapi)) {
+const api: typeof methods = _.cloneDeep(methods)
+for (const meta of Object.values(api)) {
   for (const property of Object.keys(meta.schema.properties)) {
     meta.schema.properties[property] = upgrade(meta.schema.properties[property])
   }
 }
 
-const methodnames: Record<string, string> = Object.keys(astapi).reduce((acc, name) => { acc[name.toLowerCase()]=name; return acc }, {} as Record<string, string>)
+const methodnames: Record<string, string> = Object.keys(api).reduce((acc, name) => { acc[name.toLowerCase()]=name; return acc }, {} as Record<string, string>)
 function findMethod(fname: string): string {
-  const uscore = fname.replace(/[a-z][A-Z]/g, chr => `${chr[0]}_${chr[1]}`).toLowerCase()
-  const duscore = fname.replace(/[a-z][A-Z]/g, chr => `${chr[0]}__${chr[1]}`).toLowerCase()
-  for (const prefix of ['', '$', '_']) {
-    for (let name of [uscore, duscore]) {
-      if (name = methodnames[prefix + name]) return name
-    }
-  }
-  return ''
+  return methodnames[fname.toLowerCase()] || ''
 }
 
 import { validator } from '../ajv'
-for (const method of Object.values(astapi)) {
+for (const method of Object.values(api)) {
   (method  as any).validate = validator((method  as any).schema)
 }
 
-for (const fname in astapi) {
+for (const fname in api) {
   if (fname[0] !== '_' && fname[0] !== '$') throw new Error(`Unexpected fname ${fname}`)
 }
 
@@ -142,7 +136,7 @@ export class PatternParser {
   }
 
   private resolveArguments(fname: string, args: AST[]): AST[] {
-    const method = astapi[findMethod(fname)] // transitional before rename in formatter.ts
+    const method = api[findMethod(fname)] // transitional before rename in formatter.ts
     const kind = {$: 'function', _: 'filter'}[fname[0]]
     fname = fname.slice(1)
     const me = `${kind} ${JSON.stringify(fname)}`
@@ -207,7 +201,7 @@ export class PatternParser {
       const name = types.name.field[expr.name.toLowerCase()]
       if (!name) throw new Error(`No such field ${expr.name}`)
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      return b.callExpression(b.identifier('get_field'), [ b.literal(name) ])
+      return b.callExpression(b.identifier('getField'), [ b.literal(name) ])
     }
     else {
       return b.callExpression(expr, [])

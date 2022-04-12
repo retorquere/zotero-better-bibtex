@@ -4,6 +4,8 @@
 import { Method, API } from './api-extractor'
 import * as fs from 'fs'
 import stringify from 'fast-safe-stringify'
+import jsesc from 'jsesc'
+import _ from 'lodash'
 
 class FormatterAPI {
   private formatter: Record<string, Method>
@@ -16,11 +18,13 @@ class FormatterAPI {
       const kind = {$: 'function', _: 'filter'}[name[0]]
       if (!kind) continue
 
-      this.signature[name] = JSON.parse(JSON.stringify({
+      this.signature[name] = _.cloneDeep({
         parameters: method.parameters.map(p => p.name),
+        defaults: method.parameters.map(p => p.default),
         rest: method.parameters.find(p => p.rest)?.name,
         schema: method.schema,
-      }))
+      })
+      if (!this.signature[name].rest) delete this.signature[name].rest
 
       let names = [ name.substr(1) ]
       let name_edtr = ''
@@ -34,14 +38,13 @@ class FormatterAPI {
       }
       if (name_edtr) {
         name_edtr = `$${name_edtr}`
-        this.signature[name_edtr] = JSON.parse(JSON.stringify(this.signature[name]))
+        this.signature[name_edtr] = _.cloneDeep(this.signature[name])
 
         for (const mname of [name, name_edtr]) {
           this.signature[mname].schema.properties.onlyEditors = { const: mname === name_edtr }
         }
       }
 
-      names = names.map(n => n.replace(/__/g, '.').replace(/_/g, '-'))
       if (kind === 'function') {
         if (method.parameters.find(p => p.name === 'n')) names = names.map(n => `${n}N`)
         if (method.parameters.find(p => p.name === 'm')) names = names.map(n => `${n}_M`)
@@ -84,9 +87,12 @@ class FormatterAPI {
 if (!fs.existsSync('gen/api')) fs.mkdirSync('gen/api', { recursive: true })
 
 const formatters = new FormatterAPI('content/key-manager/formatter.ts')
-fs.writeFileSync('gen/api/key-formatter.json', JSON.stringify(formatters.signature, null, 2))
 fs.writeFileSync('site/data/citekeyformatters/functions.json', stringify.stable(formatters.doc.function, null, 2))
 fs.writeFileSync('site/data/citekeyformatters/filters.json', stringify.stable(formatters.doc.filter, null, 2))
+
+fs.writeFileSync('gen/api/key-formatter.ts', `/* eslint-disable quote-props, comma-dangle, no-magic-numbers */
+export const methods = ${jsesc(formatters.signature, { compact: false, indent: '  ' })} as const
+`)
 
 class JSONRPCAPI {
   private classes: Record<string, Record<string, Method>>

@@ -20,7 +20,7 @@ const parser = require('./formatter.peggy')
 // import { parse as jsparse } from './jspattern'
 import * as DateParser from '../dateparser'
 
-import methods from '../../gen/api/key-formatter.json'
+import { methods } from '../../gen/api/key-formatter'
 
 import itemCreators from '../../gen/items/creators.json'
 import * as items from '../../gen/items/items'
@@ -42,7 +42,7 @@ type BabelLanguageTag = ValueOf<typeof BabelTag>
 type BabelLanguage = keyof typeof BabelTag
 
 for (const meta of Object.values(methods)) {
-  (meta as unknown as any).validate = validator(meta.schema)
+  (meta as unknown as any).validate = validator((meta as any).schema)
 }
 
 function innerText(node): string {
@@ -378,7 +378,7 @@ class PatternFormatter {
   /**
    * Gets the value of the item field
    */
-  public $get_field(name: string) { // make into enum
+  public $getField(name: string) { // make into enum
     return this.set(this.item.getField(name) || '')
   }
 
@@ -426,7 +426,7 @@ class PatternFormatter {
   /**
    * Fetches the key from inspire-hep based on DOI or arXiv ID
    */
-  public $inspire_hep() {
+  public $inspireHep() {
     return this.set(fetchInspireHEP(this.item) || '')
   }
 
@@ -546,7 +546,7 @@ class PatternFormatter {
   }
 
   /** The last name of the first two authors, and ".ea" if there are more than two. */
-  public $auth__auth__ea(creator: 'author' | 'editor' = 'author', withInitials=false, joiner='') {
+  public $authAuthEa(creator: 'author' | 'editor' = 'author', withInitials=false, joiner='') {
     const authors = this.creators(creator === 'editor', {withInitials})
     if (!authors || !authors.length) return this.set('')
 
@@ -570,7 +570,7 @@ class PatternFormatter {
   }
 
   /** The last name of the first author, and the last name of the second author if there are two authors or ".etal" if there are more than two. */
-  public $auth__etal(creator: 'author' | 'editor' = 'author', withInitials=false, joiner='') {
+  public $authEtal(creator: 'author' | 'editor' = 'author', withInitials=false, joiner='') {
     const authors = this.creators(creator === 'editor', {withInitials})
     if (!authors || !authors.length) return this.set('')
 
@@ -756,7 +756,7 @@ class PatternFormatter {
   }
 
   /** transforms date/time to local time. Mainly useful for dateAdded and dateModified as it requires an ISO-formatted input. */
-  public _local_time() {
+  public _localTime() {
     const m = this.chunk.match(/^([0-9]{4})-([0-9]{2})-([0-9]{2})[ T]([0-9]{2}):([0-9]{2}):([0-9]{2})Z?$/)
     if (!m) return this
     const date = new Date(`${this.chunk}Z`)
@@ -765,7 +765,7 @@ class PatternFormatter {
   }
 
   /** formats date as by replacing y, m and d in the format */
-  public _format_date(format='%Y-%m-%d') {
+  public _formatDate(format='%Y-%m-%d') {
     return this.set(this.format_date(this.chunk, format))
   }
 
@@ -974,7 +974,7 @@ class PatternFormatter {
   }
 
   /** Treat ideaographs as individual words */
-  public _split_ideographs() {
+  public _splitIdeographs() {
     return this.set(this.chunk.replace(script.han, ' $1 ').trim())
   }
 
