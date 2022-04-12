@@ -451,6 +451,36 @@ class PatternFormatter {
     return this.set(Zotero.Libraries.get(this.item.libraryID).name)
   }
 
+  /**
+   * Author/editor information. Parameters are:
+   * - `creator`: author or editor,
+   * - `initials`: whether to add initials or to only use initials,
+   * - `letters`: pick this many letters from the name, defaults to 0 = all,
+   * - `select`: select these authors, number or range (inclusive); negative numbers mean "from the end", default = 0 = all,
+   * - `given`: use given name instead of family name,
+   * - `etal`: use this term to replace authors after `etalafter` authors have been named,
+   * - `etalafter`: add the `etal` if there are more authors selected that
+   * - `joiner`: use this character to join authors
+   */
+  public $author(
+    creator: 'author' | 'editor' = 'author',
+    initials : boolean | 'only' = false,
+    letters=0,
+    select: number | [number, number] = 0,
+    etal='etal',
+    etalafter=0,
+    joiner=''
+  ) {
+    let authors = this.creators(creator === 'editor', { withInitials: !!initials, initialOnly: initials === 'only'})
+    if (select !== 0) {
+      if (!Array.isArray(select)) select = [ select, select ]
+      authors = authors.slice(select[0], select[1] + 1)
+    }
+    if (!initials && letters) authors = authors.map(a => a.substr(0, letters))
+    if (etalafter && authors.length > etalafter) authors = authors.slice(0, etalafter).concat(etal)
+    return this.set(authors.join(joiner))
+  }
+
   /** The first `N` (default: all) characters of the `M`th (default: first) author's last name. */
   public $auth(creator: 'author' | 'editor' = 'author', withInitials=false, n=0, m=1) {
     const authors = this.creators(creator === 'editor', {withInitials})
@@ -570,7 +600,7 @@ class PatternFormatter {
   }
 
   /** The last name of the first author, and the last name of the second author if there are two authors or ".etal" if there are more than two. */
-  public $authEtal(creator: 'author' | 'editor' = 'author', withInitials=false, joiner='') {
+  public $authEtal2(creator: 'author' | 'editor' = 'author', withInitials=false, joiner='') {
     const authors = this.creators(creator === 'editor', {withInitials})
     if (!authors || !authors.length) return this.set('')
 

@@ -14,18 +14,22 @@ class FormatterAPI {
 
   constructor(source: string) {
     this.formatter = new API(source).classes.PatternFormatter
-    for (const [name, method] of Object.entries(this.formatter)) {
+    for (let [name, method] of Object.entries(this.formatter)) {
       const kind = {$: 'function', _: 'filter'}[name[0]]
       if (!kind) continue
 
-      this.signature[name] = _.cloneDeep({
+      const lcName = name.toLowerCase()
+      if (this.signature[lcName]) throw new Error(`duplicate ${kind} ${lcName}`)
+      this.signature[lcName] = _.cloneDeep({
+        name,
         parameters: method.parameters.map(p => p.name),
         defaults: method.parameters.map(p => p.default),
         rest: method.parameters.find(p => p.rest)?.name,
         schema: method.schema,
       })
-      if (!this.signature[name].rest) delete this.signature[name].rest
+      if (!this.signature[lcName].rest) delete this.signature[lcName].rest
 
+      /*
       let names = [ name.substr(1) ]
       let name_edtr = ''
       if (kind === 'function' && method.parameters.find(p => p.name === 'onlyEditors')) { // auth function
@@ -44,12 +48,13 @@ class FormatterAPI {
           this.signature[mname].schema.properties.onlyEditors = { const: mname === name_edtr }
         }
       }
+      */
 
       if (kind === 'function') {
-        if (method.parameters.find(p => p.name === 'n')) names = names.map(n => `${n}N`)
-        if (method.parameters.find(p => p.name === 'm')) names = names.map(n => `${n}_M`)
+        if (method.parameters.find(p => p.name === 'n')) name = `${name}N`
+        if (method.parameters.find(p => p.name === 'm')) name = `${name}_M`
       }
-      let quoted = names.map(n => '`' + n + '`').join(' / ')
+      let quoted = '`' + name + '`'
 
       switch (kind) {
         case 'function':

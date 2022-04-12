@@ -2,8 +2,11 @@
   const identifier = require('../../gen/ecmascript-6')
   const jsesc = require('jsesc')
 
+  function std_method_name(method, prefix) {
+    return (prefix || '') + method.replace(/[-.]/g, '').toLowerCase()
+  }
   function method_name(method, prefix) {
-    return (prefix || '') + method.replace(/[-.]([a-z])/g, (match, c) => c.toUpperCase())
+    return (options.methods[std_method_name(method, prefix)] || {}).name || ''
   }
 
   function literal(v) {
@@ -26,7 +29,7 @@
   function match(fn, args, text, error) {
     if (!fn.match(/^[$_]/)) error(`unknown operator ${fn}`)
 
-    const method = method_name(fn)
+    const method = std_method_name(fn)
 
     const meta = options.methods[method]
     if (!meta) {
@@ -62,10 +65,10 @@
 
       if (args.length) {
         args = args.map(arg => literal(arg)).join(',')
-        return `${method.substr(1)}(${args})`
+        return `${meta.name.substr(1)}(${args})`
       }
       else {
-        return method.substr(1)
+        return meta.name.substr(1)
       }
     }
   }
@@ -105,7 +108,8 @@ method
 
       const input = prefix + rest
 
-      const fn = method_name(prefix.toLowerCase() + rest, '$')
+      const fn = std_method_name(prefix.toLowerCase() + rest, '$')
+      if (!options.methods[fn]) error(`No such function ${input}`)
 
       const args = {
         creator: prefix.match(/^a/i) ? 'author' : 'editor'

@@ -1,8 +1,16 @@
 {
-  const methodnames = Object.keys(options.methods).reduce((acc, name) => { acc[name.toLowerCase()]=name; return acc }, {})
-
+  function std_method_name(method, prefix) {
+    return (prefix || '') + method.replace(/[-.]/g, '').toLowerCase()
+  }
   function method_name(method, prefix) {
-    return methodnames[(prefix || '') + method.replace(/[-.]/g, '').toLowerCase()] || ''
+    switch (method) {
+      case 'auth__etal':
+      case '$auth__etal':
+        method = std_method_name('$authetal2')
+      default:
+        method = std_method_name(method, prefix)
+    }
+    return (options.methods[method] || {}).name || ''
   }
 
   function literal(v) {
@@ -24,7 +32,7 @@
   function match(fn, args, text, error) {
     if (!fn.match(/^[$_]/)) error(`unknown operator ${fn}`)
 
-    const method = method_name(fn)
+    const method = std_method_name(fn)
 
     const meta = options.methods[method]
     if (!meta) {
@@ -55,7 +63,7 @@
     }
     else {
       args = meta.parameters.slice(0, args.length).map(arg => params[arg]).map(arg => literal(arg)).join(', ')
-      return `${method}(${args})`
+      return `${meta.name}(${args})`
     }
   }
 }
@@ -105,7 +113,8 @@ method
 
       const input = prefix + rest
 
-      const fn = method_name(prefix.toLowerCase() + rest, '$')
+      const fn = std_method_name(prefix + rest, '$')
+      if (!options.methods[fn]) error(`Unknown method ${input}`)
 
       const args = {
         creator: prefix.match(/^a/i) ? 'author' : 'editor'
@@ -148,13 +157,13 @@ method
     } || operator
     return match('$len', [operator, n], operator, error)
   }
-  / name:$([a-z][-.a-zA-Z]+) &{ return options.methods[method_name(name, '$')] } p:fparams? {
+  / name:$([a-z][-.a-zA-Z]+) &{ return method_name(name, '$') } p:fparams? {
       return match('$' + name, p || [], name, error)
     }
   / prop:$([a-zA-Z]+) {
       const field = options.items.name.field[prop.toLowerCase()]
       if (!field) error(`Unknown field ${JSON.stringify(prop)}`)
-      return `getField(${JSON.stringify(field)})`
+      return `$getField(${JSON.stringify(field)})`
     }
 
 fparams
