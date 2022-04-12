@@ -66,7 +66,10 @@
       error(`${text}: ${argerror}`)
     }
     else {
-      args = method.parameters.slice(0, args.length).map(arg => params[arg]).map(arg => literal(arg)).join(', ')
+      args = method.parameters.slice(0, args.length).map(arg => params[arg])
+      let i
+      while (args.length && (args[(i = args.length - 1)] === method.defaults[i] || typeof args[i] === 'undefined')) args.pop()
+      args = args.map(arg => literal(arg)).join(', ')
       return `${method.name}(${args})`
     }
   }
@@ -150,7 +153,7 @@ method
         }
       }
 
-      method = match('$' + input, method.parameters.slice(0, Object.keys(args).length).map(p => args[p]), input, error);
+      method = match('$' + input, method.parameters.slice(0, args.length).map(arg => args[arg]), input, error);
       if (prefix.match(/^[ae]/)) method = method + '._clean(true)'
       return method
     }
