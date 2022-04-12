@@ -173,15 +173,18 @@ class Item {
       this.itemID = (item as ZoteroItem).id
       this.itemType = Zotero.ItemTypes.getName((item as ZoteroItem).itemTypeID)
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      this.getField = function(name: string) => {
+      this.getField = function(name: string): string | number {
         switch (name) {
           case 'dateAdded':
-          case 'dateModified'
-            return (this.item as any)[name]
+          case 'dateModified':
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+            return (this.item)[name]
           case 'title':
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-return
             return this.title
           default:
-            (this.item as ZoteroItem).getField(name, false, true)) || this.extraFields?.kv[name]
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+            return (this.item as ZoteroItem).getField(name, false, true) as string || this.extraFields?.kv[name] || ''
         }
       }
       this.creators = (item as ZoteroItem).getCreatorsJSON()
@@ -192,7 +195,7 @@ class Item {
       this.itemType = (item as SerializedRegularItem).itemType
       this.itemID = (item as SerializedRegularItem).itemID
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      this.getField = (name: string) => name === 'title' ? this.title : this.item[name] || this.extraFields?.kv[name]
+      this.getField = (name: string) => name === 'title' ? this.title : this.item[name] || this.extraFields?.kv[name] || ''
       this.creators = (item as SerializedRegularItem).creators
       this.libraryID = null
       this.title = (item as SerializedRegularItem).title
