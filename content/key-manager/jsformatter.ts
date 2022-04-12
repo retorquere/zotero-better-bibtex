@@ -114,10 +114,6 @@ for (const meta of Object.values(api)) {
   }
 }
 
-function findMethod(fname: string): string {
-  return api[fname.toLowerCase()]?.name || ''
-}
-
 import { validator } from '../ajv'
 for (const method of Object.values(api)) {
   (method  as any).validate = validator((method  as any).schema)
