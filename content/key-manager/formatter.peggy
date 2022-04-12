@@ -1,6 +1,21 @@
 {
-  function method_name(method, prefix) {
-    return (prefix || '') + method.replace(/[.]/g, '__').replace(/-/g, '_')
+  function get_method(method, prefix) {
+    switch (method) {
+      // workaround for duplicate-after-lowercase
+      case 'auth.etal':
+      case '$auth.etal':
+      case 'Auth.etal':
+      case '$Auth.etal':
+        return options.methods.$authetal2
+      case 'edtr.etal':
+      case '$edtr.etal':
+      case 'Edtr.etal':
+      case '$Edtr.etal':
+        return options.methods.$edtretal2
+      default:
+        method = (prefix || '') + method.replace(/[-.]/g, '').toLowerCase()
+        return options.methods[method] || {}
+    }
   }
 
   function literal(v) {
@@ -22,38 +37,40 @@
   function match(fn, args, text, error) {
     if (!fn.match(/^[$_]/)) error(`unknown operator ${fn}`)
 
-    const method = method_name(fn)
+    const method = get_method(fn)
 
-    const meta = options.methods[method]
-    if (!meta) {
-      switch (method[0]) {
+    if (!method.name) {
+      switch (fn[0]) {
         case '$': error(`unknown function ${JSON.stringify(text)}`)
         case '_': error(`unknown filter ${JSON.stringify(text)}`)
       }
     }
+    if (method.rest) error('handle rest parameters inline')
 
     // kludge for regexes, otherwise length validation fails
-    if (method === '_replace' && args.length === 3 && args[2] === 'regex') {
+    if (method.name === '_replace' && args.length === 3 && args[2] === 'regex') {
       args = [ new RegExp(args[0]), args[1] ]
     }
 
-    if (args.length > meta.parameters.length) error(`too many arguments for ${text}`)
-    if (meta.rest) error('handle rest parameters inline')
+    if (args.length > method.parameters.length) error(`too many arguments for ${text}`)
 
     const params = args.reduce((acc, v, i) => {
-      const param = meta.parameters[i]
+      const param = method.parameters[i]
       // horrid kludge for arrays / rest parameters
       acc[param] = v
       return acc
     }, {})
 
-    const argerror = meta.validate(params) // validates and coerces
+    const argerror = method.validate(params) // validates and coerces
     if (argerror) {
       error(`${text}: ${argerror}`)
     }
     else {
-      args = meta.parameters.slice(0, args.length).map(arg => params[arg]).map(arg => literal(arg)).join(', ')
-      return `${method}(${args})`
+      args = method.parameters.slice(0, args.length).map(arg => params[arg])
+      let i
+      while (args.length && (args[(i = args.length - 1)] === method.defaults[i] || typeof args[i] === 'undefined')) args.pop()
+      args = args.map(arg => literal(arg)).join(', ')
+      return `${method.name}(${args})`
     }
   }
 }
@@ -103,7 +120,8 @@ method
 
       const input = prefix + rest
 
-      const fn = method_name(prefix.toLowerCase() + rest, '$')
+      let method = get_method(input, '$')
+      if (!method.name) error(`Unknown method ${input}`)
 
       const args = {
         creator: prefix.match(/^a/i) ? 'author' : 'editor'
@@ -115,23 +133,27 @@ method
         args[i ? 'm' : 'n'] = n
       })
 
-      const paramnames = options.methods[fn].parameters
-      if (paramnames.includes('withInitials')) args.withInitials = false
-      if (paramnames.includes('joiner')) args.joiner = ''
-
       for (const flag of flags) {
         if (flag == 'initials') {
-          if (typeof args.withInitials === 'undefined') error(`unexpected flag '${flag}' on function '${input}'`)
-          args.withInitials = true
+          if (method.parameters.includes('withInitials')) {
+            args.withInitials = true
+          }
+          else {
+            error(`unexpected flag '${flag}' on function '${input}'`)
+          }
         } else if (flag.length === 1) {
-          if (typeof args.joiner === 'undefined') error(`unexpected joiner on function '${input}'`)
-          args.joiner = flag
+          if (method.parameters.includes('joiner')) {
+            args.joiner = flag
+          }
+          else {
+            error(`unexpected joiner on function '${input}'`)
+          }
         } else if (flag.length) {
           error(`unexpected flag '${flag}' on function '${input}'`)
         }
       }
 
-      let method = match(fn, paramnames.slice(0, Object.keys(args).length).map(p => args[p]), input, error);
+      method = match('$' + input, method.parameters.slice(0, args.length).map(arg => args[arg]), input, error);
       if (prefix.match(/^[ae]/)) method = method + '._clean(true)'
       return method
     }
@@ -146,13 +168,13 @@ method
     } || operator
     return match('$len', [operator, n], operator, error)
   }
-  / name:$([a-z][-.a-zA-Z]+) &{ return options.methods[method_name(name, '$')] } p:fparams? {
+  / name:$([a-z][-.a-zA-Z]+) &{ return get_method(name, '$').name } p:fparams? {
       return match('$' + name, p || [], name, error)
     }
   / prop:$([a-zA-Z]+) {
       const field = options.items.name.field[prop.toLowerCase()]
       if (!field) error(`Unknown field ${JSON.stringify(prop)}`)
-      return `getField(${JSON.stringify(field)})`
+      return `$getField(${JSON.stringify(field)})`
     }
 
 fparams

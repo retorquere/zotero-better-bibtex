@@ -3,10 +3,11 @@
 import * as types from '../../gen/items/items'
 import * as recast from 'recast'
 import { builders as b } from 'ast-types'
+import _ from 'lodash'
 
 type AST = any
 
-import api from '../../gen/api/key-formatter.json'
+import { methods } from '../../gen/api/key-formatter'
 // move this upgrade to setup/extract-api after migration
 const object_or_null = { oneOf: [ { type: 'object' }, { type: 'null' } ] }
 const basics = {
@@ -32,15 +33,29 @@ function upgrade(type) {
       }
 
     case 'array':
-      return {
-        type: 'object',
-        properties: {
-          type: { const: 'ArrayExpression' },
-          elements: { type: 'array', items: upgrade(type.items) },
-          ...basics,
-        },
-        required: [ 'type', 'elements' ],
-        additionalProperties: false,
+      if (Array.isArray(type.items)) {
+        return {
+          type: 'object',
+          properties: {
+            type: { const: 'ArrayExpression' },
+            elements: { type: 'array', items: type.items.map(upgrade) },
+            ...basics,
+          },
+          required: [ 'type', 'elements' ],
+          additionalProperties: false,
+        }
+      }
+      else {
+        return {
+          type: 'object',
+          properties: {
+            type: { const: 'ArrayExpression' },
+            elements: { type: 'array', items: upgrade(type.items) },
+            ...basics,
+          },
+          required: [ 'type', 'elements' ],
+          additionalProperties: false,
+        }
       }
   }
 
@@ -92,31 +107,19 @@ function upgrade(type) {
 
   throw { notUpgradable: type } // eslint-disable-line no-throw-literal
 }
-const astapi: typeof api = JSON.parse(JSON.stringify(api))
-for (const meta of Object.values(astapi)) {
+const api: typeof methods = _.cloneDeep(methods)
+for (const meta of Object.values(api)) {
   for (const property of Object.keys(meta.schema.properties)) {
     meta.schema.properties[property] = upgrade(meta.schema.properties[property])
   }
 }
 
-const methodnames: Record<string, string> = Object.keys(astapi).reduce((acc, name) => { acc[name.toLowerCase()]=name; return acc }, {} as Record<string, string>)
-function findMethod(fname: string): string {
-  const uscore = fname.replace(/[a-z][A-Z]/g, chr => `${chr[0]}_${chr[1]}`).toLowerCase()
-  const duscore = fname.replace(/[a-z][A-Z]/g, chr => `${chr[0]}__${chr[1]}`).toLowerCase()
-  for (const prefix of ['', '$', '_']) {
-    for (let name of [uscore, duscore]) {
-      if (name = methodnames[prefix + name]) return name
-    }
-  }
-  return ''
-}
-
 import { validator } from '../ajv'
-for (const method of Object.values(astapi)) {
+for (const method of Object.values(api)) {
   (method  as any).validate = validator((method  as any).schema)
 }
 
-for (const fname in astapi) {
+for (const fname in api) {
   if (fname[0] !== '_' && fname[0] !== '$') throw new Error(`Unexpected fname ${fname}`)
 }
 
@@ -141,9 +144,17 @@ export class PatternParser {
     return expr
   }
 
+  kind(str: string): 'function' | 'filter' {
+    switch (str[0]) {
+      case '$': return 'function'
+      case '_': return 'function'
+      default: throw new Error(`indeterminate type for ${str}`)
+    }
+  }
+
   private resolveArguments(fname: string, args: AST[]): AST[] {
-    const method = astapi[findMethod(fname)] // transitional before rename in formatter.ts
-    const kind = {$: 'function', _: 'filter'}[fname[0]]
+    const method = api[fname.toLowerCase()] // transitional before rename in formatter.ts
+    const kind = this.kind(fname)
     fname = fname.slice(1)
     const me = `${kind} ${JSON.stringify(fname)}`
     if (!method) throw new Error(`No such ${me}`)
@@ -207,7 +218,7 @@ export class PatternParser {
       const name = types.name.field[expr.name.toLowerCase()]
       if (!name) throw new Error(`No such field ${expr.name}`)
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      return b.callExpression(b.identifier('get_field'), [ b.literal(name) ])
+      return b.callExpression(b.identifier('getField'), [ b.literal(name) ])
     }
     else {
       return b.callExpression(expr, [])
@@ -284,29 +295,34 @@ export class PatternParser {
   }
 
   private resolve(expr: AST) {
-    let fname: string
+    let passed: string
+    let callee: any
+    let prefix: string
 
     switch (expr.type) {
       case 'CallExpression':
         if (expr.callee.type === 'Identifier' && this.ftype === '$') {
-          fname = this.ftype
+          prefix = this.ftype
           this.ftype = '_'
         }
         else {
-          fname = '_'
+          prefix = '_'
         }
 
         if (expr.callee.type === 'Identifier') {
-          fname = expr.callee.name = `${fname}${expr.callee.name}`
+          callee = expr.callee
         }
         else if (expr.callee.type === 'MemberExpression' && expr.callee.property.type === 'Identifier') {
-          fname = expr.callee.property.name = `${fname}${expr.callee.property.name}`
+          callee = expr.callee.property
         }
         else {
           throw expr
         }
+        passed = callee.name
+        callee.name = api[`${prefix}${passed}`.toLowerCase()]?.name
+        if (!callee.name) throw new Error(`No such ${this.kind(prefix)} ${passed}`)
 
-        expr.arguments = this.resolveArguments(fname, expr.arguments)
+        expr.arguments = this.resolveArguments(callee.name, expr.arguments)
         this.resolve(expr.callee)
         break
 

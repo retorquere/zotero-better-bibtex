@@ -20,7 +20,7 @@ const parser = require('./formatter.peggy')
 // import { parse as jsparse } from './jspattern'
 import * as DateParser from '../dateparser'
 
-import methods from '../../gen/api/key-formatter.json'
+import { methods } from '../../gen/api/key-formatter'
 
 import itemCreators from '../../gen/items/creators.json'
 import * as items from '../../gen/items/items'
@@ -42,7 +42,7 @@ type BabelLanguageTag = ValueOf<typeof BabelTag>
 type BabelLanguage = keyof typeof BabelTag
 
 for (const meta of Object.values(methods)) {
-  (meta as unknown as any).validate = validator(meta.schema)
+  (meta as unknown as any).validate = validator((meta as any).schema)
 }
 
 function innerText(node): string {
@@ -173,7 +173,20 @@ class Item {
       this.itemID = (item as ZoteroItem).id
       this.itemType = Zotero.ItemTypes.getName((item as ZoteroItem).itemTypeID)
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      this.getField = (name: string) => ((name === 'dateAdded' || name === 'dateModified') ? (this.item as any)[name] : (this.item as ZoteroItem).getField(name, false, true)) || this.extraFields?.kv[name]
+      this.getField = function(name: string): string | number {
+        switch (name) {
+          case 'dateAdded':
+          case 'dateModified':
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+            return (this.item)[name]
+          case 'title':
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+            return this.title
+          default:
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+            return (this.item as ZoteroItem).getField(name, false, true) as string || this.extraFields?.kv[name] || ''
+        }
+      }
       this.creators = (item as ZoteroItem).getCreatorsJSON()
       this.libraryID = item.libraryID
       this.title = (item as ZoteroItem).getField('title', false, true) as string
@@ -182,7 +195,7 @@ class Item {
       this.itemType = (item as SerializedRegularItem).itemType
       this.itemID = (item as SerializedRegularItem).itemID
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      this.getField = (name: string) => this.item[name] || this.extraFields?.kv[name]
+      this.getField = (name: string) => name === 'title' ? this.title : this.item[name] || this.extraFields?.kv[name] || ''
       this.creators = (item as SerializedRegularItem).creators
       this.libraryID = null
       this.title = (item as SerializedRegularItem).title
@@ -376,13 +389,6 @@ class PatternFormatter {
   }
 
   /**
-   * Gets the value of the item field
-   */
-  public $get_field(name: string) { // make into enum
-    return this.set(this.item.getField(name) || '')
-  }
-
-  /**
    * Tests whether the item is of any of the given types
    */
   public $type(...allowed: string[]) {
@@ -426,11 +432,14 @@ class PatternFormatter {
   /**
    * Fetches the key from inspire-hep based on DOI or arXiv ID
    */
-  public $inspire_hep() {
+  public $inspireHep() {
     return this.set(fetchInspireHEP(this.item) || '')
   }
 
-  public getField(name: string) {
+  /**
+   * Gets the value of the item field
+   */
+  public $getField(name: string) {
     const value = this.item.getField(name)
     switch (typeof value) {
       case 'number':
@@ -449,6 +458,36 @@ class PatternFormatter {
     if (this.item.libraryID === Zotero.Libraries.userLibraryID) return this.set('')
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return this.set(Zotero.Libraries.get(this.item.libraryID).name)
+  }
+
+  /**
+   * Author/editor information. Parameters are:
+   * - `creator`: author or editor,
+   * - `initials`: whether to add initials or to only use initials,
+   * - `letters`: pick this many letters from the name, defaults to 0 = all,
+   * - `select`: select these authors, number or range (inclusive); negative numbers mean "from the end", default = 0 = all,
+   * - `given`: use given name instead of family name,
+   * - `etal`: use this term to replace authors after `etalafter` authors have been named,
+   * - `etalafter`: add the `etal` if there are more authors selected that
+   * - `joiner`: use this character to join authors
+   */
+  public $author(
+    creator: 'author' | 'editor' = 'author',
+    initials : boolean | 'only' = false,
+    letters=0,
+    select: number | [number, number] = 0,
+    etal='etal',
+    etalafter=0,
+    joiner=''
+  ) {
+    let authors = this.creators(creator === 'editor', { withInitials: !!initials, initialOnly: initials === 'only'})
+    if (select !== 0) {
+      if (!Array.isArray(select)) select = [ select, select ]
+      authors = authors.slice(select[0], select[1] + 1)
+    }
+    if (!initials && letters) authors = authors.map(a => a.substr(0, letters))
+    if (etalafter && authors.length > etalafter) authors = authors.slice(0, etalafter).concat(etal)
+    return this.set(authors.join(joiner))
   }
 
   /** The first `N` (default: all) characters of the `M`th (default: first) author's last name. */
@@ -546,7 +585,7 @@ class PatternFormatter {
   }
 
   /** The last name of the first two authors, and ".ea" if there are more than two. */
-  public $auth__auth__ea(creator: 'author' | 'editor' = 'author', withInitials=false, joiner='') {
+  public $authAuthEa(creator: 'author' | 'editor' = 'author', withInitials=false, joiner='') {
     const authors = this.creators(creator === 'editor', {withInitials})
     if (!authors || !authors.length) return this.set('')
 
@@ -570,13 +609,13 @@ class PatternFormatter {
   }
 
   /** The last name of the first author, and the last name of the second author if there are two authors or ".etal" if there are more than two. */
-  public $auth__etal(creator: 'author' | 'editor' = 'author', withInitials=false, joiner='') {
+  public $authEtal2(creator: 'author' | 'editor' = 'author', withInitials=false, joiner='.') {
     const authors = this.creators(creator === 'editor', {withInitials})
     if (!authors || !authors.length) return this.set('')
 
     // eslint-disable-next-line no-magic-numbers
-    if (authors.length === 2) return this.set(authors.join(joiner || '.'))
-    return this.set(authors.slice(0, 1).concat(authors.length > 1 ? ['etal'] : []).join(joiner || '.'))
+    if (authors.length === 2) return this.set(authors.join(joiner))
+    return this.set(authors.slice(0, 1).concat(authors.length > 1 ? ['etal'] : []).join(joiner))
   }
 
   /** The last name if one author is given; the first character of up to three authors' last names if more than one author is given. A plus character is added, if there are more than three authors. */
@@ -756,7 +795,7 @@ class PatternFormatter {
   }
 
   /** transforms date/time to local time. Mainly useful for dateAdded and dateModified as it requires an ISO-formatted input. */
-  public _local_time() {
+  public _localTime() {
     const m = this.chunk.match(/^([0-9]{4})-([0-9]{2})-([0-9]{2})[ T]([0-9]{2}):([0-9]{2}):([0-9]{2})Z?$/)
     if (!m) return this
     const date = new Date(`${this.chunk}Z`)
@@ -765,7 +804,7 @@ class PatternFormatter {
   }
 
   /** formats date as by replacing y, m and d in the format */
-  public _format_date(format='%Y-%m-%d') {
+  public _formatDate(format='%Y-%m-%d') {
     return this.set(this.format_date(this.chunk, format))
   }
 
@@ -974,7 +1013,7 @@ class PatternFormatter {
   }
 
   /** Treat ideaographs as individual words */
-  public _split_ideographs() {
+  public _splitIdeographs() {
     return this.set(this.chunk.replace(script.han, ' $1 ').trim())
   }
 

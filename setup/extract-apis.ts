@@ -4,6 +4,8 @@
 import { Method, API } from './api-extractor'
 import * as fs from 'fs'
 import stringify from 'fast-safe-stringify'
+import jsesc from 'jsesc'
+import _ from 'lodash'
 
 class FormatterAPI {
   private formatter: Record<string, Method>
@@ -12,16 +14,22 @@ class FormatterAPI {
 
   constructor(source: string) {
     this.formatter = new API(source).classes.PatternFormatter
-    for (const [name, method] of Object.entries(this.formatter)) {
+    for (let [name, method] of Object.entries(this.formatter)) {
       const kind = {$: 'function', _: 'filter'}[name[0]]
       if (!kind) continue
 
-      this.signature[name] = JSON.parse(JSON.stringify({
+      const lcName = name.toLowerCase()
+      if (this.signature[lcName]) throw new Error(`duplicate ${kind} ${lcName}`)
+      this.signature[lcName] = _.cloneDeep({
+        name,
         parameters: method.parameters.map(p => p.name),
+        defaults: method.parameters.map(p => p.default),
         rest: method.parameters.find(p => p.rest)?.name,
         schema: method.schema,
-      }))
+      })
+      if (!this.signature[lcName].rest) delete this.signature[lcName].rest
 
+      /*
       let names = [ name.substr(1) ]
       let name_edtr = ''
       if (kind === 'function' && method.parameters.find(p => p.name === 'onlyEditors')) { // auth function
@@ -34,19 +42,19 @@ class FormatterAPI {
       }
       if (name_edtr) {
         name_edtr = `$${name_edtr}`
-        this.signature[name_edtr] = JSON.parse(JSON.stringify(this.signature[name]))
+        this.signature[name_edtr] = _.cloneDeep(this.signature[name])
 
         for (const mname of [name, name_edtr]) {
           this.signature[mname].schema.properties.onlyEditors = { const: mname === name_edtr }
         }
       }
+      */
 
-      names = names.map(n => n.replace(/__/g, '.').replace(/_/g, '-'))
       if (kind === 'function') {
-        if (method.parameters.find(p => p.name === 'n')) names = names.map(n => `${n}N`)
-        if (method.parameters.find(p => p.name === 'm')) names = names.map(n => `${n}_M`)
+        if (method.parameters.find(p => p.name === 'n')) name = `${name}N`
+        if (method.parameters.find(p => p.name === 'm')) name = `${name}_M`
       }
-      let quoted = names.map(n => '`' + n + '`').join(' / ')
+      let quoted = '`' + name + '`'
 
       switch (kind) {
         case 'function':
@@ -84,9 +92,12 @@ class FormatterAPI {
 if (!fs.existsSync('gen/api')) fs.mkdirSync('gen/api', { recursive: true })
 
 const formatters = new FormatterAPI('content/key-manager/formatter.ts')
-fs.writeFileSync('gen/api/key-formatter.json', JSON.stringify(formatters.signature, null, 2))
 fs.writeFileSync('site/data/citekeyformatters/functions.json', stringify.stable(formatters.doc.function, null, 2))
 fs.writeFileSync('site/data/citekeyformatters/filters.json', stringify.stable(formatters.doc.filter, null, 2))
+
+fs.writeFileSync('gen/api/key-formatter.ts', `/* eslint-disable quote-props, comma-dangle, no-magic-numbers */
+export const methods = ${jsesc(formatters.signature, { compact: false, indent: '  ' })} as const
+`)
 
 class JSONRPCAPI {
   private classes: Record<string, Record<string, Method>>
