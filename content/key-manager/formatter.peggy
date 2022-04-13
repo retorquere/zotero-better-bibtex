@@ -87,14 +87,14 @@
 
 start
   = patterns:pattern+ {
-      if (options.migrate) return pattern.join(' | ')
+      if (options.migrate) return patterns.map(chunk => chunk.join('+')).join(' | ')
 
       var body = ''
 
       for (const pattern of patterns) {
         body += `\ntry {\n  this.citekey = '';\n`
-        for (const block of pattern) {
-          body += `  ${block};\n`
+        for (const chunk of pattern) {
+          body += `  ${chunk};\n`
         }
         body += '  if (this.citekey) return this.citekey;\n}\ncatch (err) {\n  if (!err.next) throw err\n}\n'
       }
@@ -104,9 +104,9 @@ start
     }
 
 pattern
-  = blocks:block+ [\|]? { return blocks.filter(block => block) }
+  = chunks:chunk+ [\|]? { return chunks.filter(chunk => chunk) }
 
-block
+chunk
   = [ \t\r\n]+                            { return '' }
   / '[0]'                                 { return `${options.migrate ? '' : 'this.$'}postfix("-%(n)s")` }
   / '[postfix' start:'+1'? pf:stringparam ']' {
@@ -208,7 +208,7 @@ method
   / prop:$([a-zA-Z]+) {
       const field = options.items.name.field[prop.toLowerCase()]
       if (!field) error(`Unknown field ${JSON.stringify(prop)}`)
-      if (options.migrate && field.match(/^[a-z]/)) error(`Unexpected cooked field ${field}`)
+      // if (options.migrate && field.match(/^[a-z]/)) error(`Unexpected cooked field ${field}`)
       return options.migrate ? field : `this.$getField(${literal(field)})`
     }
 
