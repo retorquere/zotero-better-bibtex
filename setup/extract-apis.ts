@@ -85,6 +85,8 @@ class FormatterAPI {
     if (type.const) return JSON.stringify(type.const)
     if (type.enum) return type.enum.map(t => this.typedoc({ const: t })).join(' | ')
     if (type.instanceof) return type.instanceof
+    if (type.type === 'array' && type.prefixItems) return `(${type.prefixItem.map(t => this.typedoc(t)).join(', ')})`
+    if (type.type === 'array' && typeof type.items !== 'boolean') return `${this.typedoc(type.items)}...`
     throw new Error(`no rule for ${JSON.stringify(type)}`)
   }
 }

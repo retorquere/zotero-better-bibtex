@@ -132,28 +132,40 @@ for (const fname in api) {
 type Context = { arguments?: boolean, coerce?: boolean }
 export class PatternParser {
   public code: string
-  private finder: AST
+  private patterns: AST
   private ftype: string
 
   constructor(source: string) {
-    this.finder = recast.parse('[].find(pattern => { try { return pattern() } catch (err) { if (err.next) return ""; throw err } })')
+    const finder = recast.parse('[].find(pattern => { try { return pattern() } catch (err) { if (err.next) return ""; throw err } })')
+    this.patterns = finder.program.body[0].expression.callee.object.elements
+
     this.addpattern(recast.parse(source).program.body[0].expression)
-    this.insert(recast.parse('"zotero-" + this.item.id').program.body[0].expression, false)
-    this.code = recast.prettyPrint(this.finder, {tabWidth: 2}).code
+
+    // eslint-disable-next-line prefer-template
+    this.code = [
+      recast.prettyPrint(finder.program.body[0].expression, {quote: 'single', tabWidth: 2}).code,
+      // this.citekey is set as a side-effect
+      'return this.citekey || ("zotero-" + this.item.id)',
+    ].join(';\n')
   }
 
   private error(expr): void {
     throw new Error(`Unexpected ${expr.type} at ${expr.loc.start.column}`)
   }
 
-  protected Literal(expr: AST, _context: Context): AST {
-    return expr
+  protected Literal(expr: AST, context: Context): AST {
+    if (context.arguments) {
+      return expr
+    }
+    else {
+      return b.callExpression(b.identifier('text'), [expr])
+    }
   }
 
   kind(str: string): 'function' | 'filter' {
     switch (str[0]) {
       case '$': return 'function'
-      case '_': return 'function'
+      case '_': return 'filter'
       default: throw new Error(`indeterminate type for ${str}`)
     }
   }
@@ -197,9 +209,14 @@ export class PatternParser {
     else {
       if (method.parameters.length < args.length) throw new Error(`${me}: expected ${method.parameters.length} arguments, got ${args.length}`)
 
-      args = method.parameters.map((param: string) => parameters[param] || b.identifier('undefined'))
-      let arg
-      while (args.length && (arg = args[args.length - 1]).type === 'Identifier' && arg.name === 'undefined') args.pop()
+      args = method.parameters.map((param: string, i: number) => parameters[param] || ( typeof method.defaults[i] !== 'undefined' ? b.literal(method.defaults[i]) : b.identifier('undefined') ))
+      args.reverse()
+      const defaults = [...method.defaults].reverse()
+      while(args.length && ((args[0].type === 'Identifier' && args[0].name === 'undefined') || (args[0].type === 'Literal' && args[0].value === defaults[0]))) {
+        args.shift()
+        defaults.shift()
+      }
+      args.reverse()
     }
 
     let err: string
@@ -361,8 +378,7 @@ export class PatternParser {
       expr = this.addThis(expr, { coerce: true })
     }
 
-    // const wrapper = reset this.citekey
-    this.finder.program.body[0].expression.callee.object.elements.push(b.arrowFunctionExpression([], expr, true))
+    this.patterns.push(b.arrowFunctionExpression([], expr, false))
   }
 
   private addpattern(expr: AST) {

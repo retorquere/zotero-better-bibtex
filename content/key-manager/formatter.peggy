@@ -59,9 +59,7 @@
     if (args.length > method.parameters.length) error(`too many arguments for ${text}`)
 
     const params = args.reduce((acc, v, i) => {
-      const param = method.parameters[i]
-      // horrid kludge for arrays / rest parameters
-      acc[param] = v
+      if (typeof v !== 'undefined') acc[method.parameters[i]] = v
       return acc
     }, {})
 
@@ -70,7 +68,13 @@
       error(`${text}: ${argerror}`)
     }
     else {
+      if (options.migrate) {
+        const named = Object.entries(params).map(([name, value]) => `${name}=${literal(value)}`)
+        return named.length ? `${method.name.substr(1)}(${named.join(',')})` : method.name.substr(1)
+      }
+
       args = method.parameters.slice(0, args.length).map(arg => params[arg])
+      args = args.map((arg, i) => typeof arg === 'undefined' ? method.defaults[i] : arg)
       let i
       while (args.length && (args[(i = args.length - 1)] === method.defaults[i] || typeof args[i] === 'undefined')) args.pop()
       args = args.map(arg => literal(arg)).join(', ')
