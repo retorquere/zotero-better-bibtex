@@ -1,6 +1,7 @@
-import AJV from 'ajv'
+// 2020 for prefixItems
+import AJV from 'ajv/dist/2020'
 
-const ajv = new AJV({ coerceTypes: true })
+const ajv = new AJV({ strict: true, coerceTypes: true })
 import keywords from 'ajv-keywords'
 keywords(ajv, 'instanceof')
 

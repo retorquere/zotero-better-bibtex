@@ -33,12 +33,18 @@ function upgrade(type) {
       }
 
     case 'array':
-      if (Array.isArray(type.items)) {
+      if (type.prefixItems) {
         return {
           type: 'object',
           properties: {
             type: { const: 'ArrayExpression' },
-            elements: { type: 'array', items: type.items.map(upgrade) },
+            elements: {
+              type: 'array',
+              prefixItems: type.prefixItems.map(upgrade),
+              items: type.items,
+              minItems: type.length,
+              maxItems: type.length,
+            },
             ...basics,
           },
           required: [ 'type', 'elements' ],

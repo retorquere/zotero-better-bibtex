@@ -1030,9 +1030,9 @@ class PatternFormatter {
   }
 
   /** transliterates the citation key and removes unsafe characters */
-  public _clean(allow_spaces = false) {
+  public _clean() {
     if (!this.chunk) return this
-    return this.set(this.clean(this.chunk, allow_spaces))
+    return this.set(this.clean(this.chunk, true))
   }
 
   /** transliterates the citation key. If you don't specify a mode, the mode is derived from the item language field */

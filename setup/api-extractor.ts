@@ -158,7 +158,10 @@ export class API {
     return {
       type: 'array',
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      items: tuple.elements.map((elt: ts.TypeNode) => this.schema(elt)),
+      prefixItems: tuple.elements.map((elt: ts.TypeNode) => this.schema(elt)),
+      items: false,
+      minItems: tuple.elements.length,
+      maxItems: tuple.elements.length,
     }
   }
 
