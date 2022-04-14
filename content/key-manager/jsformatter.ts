@@ -153,6 +153,15 @@ export class PatternParser {
     throw new Error(`Unexpected ${expr.type} at ${expr.loc.start.column}`)
   }
 
+  protected UnaryExpression(expr: AST, _context: Context): AST {
+    if (expr.operator === '-' && expr.argument.type === 'Literal' && typeof expr.argument.value === 'number') {
+      return b.literal(-1 * expr.argument.value)
+    }
+    else {
+      this.error(expr)
+    }
+  }
+
   protected Literal(expr: AST, context: Context): AST {
     if (context.arguments) {
       return expr

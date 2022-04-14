@@ -17,8 +17,7 @@ import { babelLanguage } from '../text'
 import { fetchSync as fetchInspireHEP } from '../inspire-hep'
 
 const legacyparser = require('./formatter.peggy')
-// import * as formatparser from './jsformatter'
-// import { parse as jsparse } from './jspattern'
+import * as formatparser from './jsformatter'
 import * as DateParser from '../dateparser'
 
 import { methods } from '../../gen/api/key-formatter'
@@ -360,12 +359,10 @@ class PatternFormatter {
 
   public parsePattern(pattern): string {
     log.debug('parsePattern.pattern:', pattern)
-    const formatter = legacyparser.parse(pattern, { sprintf, items, methods, migrate: false }) as string
+    let formatter = legacyparser.parse(pattern, { sprintf, items, methods, migrate: true }) as string
     if (Preference.testing) log.debug('parsePattern.formatter:', formatter)
-    /*
     formatter = formatparser.parse(formatter)
     if (Preference.testing) log.debug('parsePattern.reformatter:', formatter)
-    */
 
     return formatter
   }
@@ -741,6 +738,13 @@ class PatternFormatter {
     return this.$text((this.titleWords(this.item.title, { skipWords: true }) || []).join(' '))
   }
 
+  /**
+   * a pseudo-function that sets the citekey disambiguation postfix using an <a href="https://www.npmjs.com/package/sprintf-js">sprintf-js</a> format spec
+   * for when a key is generated that already exists. Does not add any text to the citekey otherwise.
+   * You *must* include *exactly* one of the placeholders `%(n)s`> (number), `%(a)s` (alpha, lowercase) or `e>%(A)s` (alpha, uppercase).
+   * For the rest of the disambiguator you can use things like padding and extra text as sprintf-js allows. With `+1` the disambiguator is always included,
+   * even if there is no need for it when no duplicates exist. The default  format is `%(a)s`.
+   */
   public $postfix(format='%(a)s', start=0) {
     const expected = `${Date.now()}`
     const found = sprintf(format, { a: expected, A: expected, n: expected })

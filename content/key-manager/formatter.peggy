@@ -3,20 +3,17 @@
   const jsesc = require('jsesc')
 
   function get_method(method, prefix) {
+    method = (prefix || '') + method.toLowerCase()
     switch (method) {
       // workaround for duplicate-after-lowercase
-      case 'auth.etal':
       case '$auth.etal':
-      case 'Auth.etal':
-      case '$Auth.etal':
         return options.methods.$authetal2
-      case 'edtr.etal':
+
       case '$edtr.etal':
-      case 'Edtr.etal':
-      case '$Edtr.etal':
         return options.methods.$edtretal2
+
       default:
-        method = (prefix || '') + method.replace(/[-.]/g, '').toLowerCase()
+        method = method.replace(/[-.]/g, '')
         return options.methods[method] || {}
     }
   }
@@ -59,7 +56,7 @@
     if (args.length > method.parameters.length) error(`too many arguments for ${text}`)
 
     const params = args.reduce((acc, v, i) => {
-      if (typeof v !== 'undefined') acc[method.parameters[i]] = v
+      if (typeof v !== 'undefined' && v !== method.defaults[i]) acc[method.parameters[i]] = v
       return acc
     }, {})
 
@@ -69,22 +66,18 @@
     }
     else {
       if (options.migrate) {
-        const named = Object.entries(params).map(([name, value]) => `${name}=${literal(value)}`)
-        return named.length ? `${method.name.substr(1)}(${named.join(',')})` : method.name.substr(1)
+        args = Object.entries(params).map(([p, v]) => `${p}=${literal(v)}`).join(',')
+        if (args) args = `(${args})`
+        return `${method.name.substr(1)}${args}`
       }
 
       args = method.parameters.slice(0, args.length).map(arg => params[arg])
       args = args.map((arg, i) => typeof arg === 'undefined' ? method.defaults[i] : arg)
       let i
       while (args.length && (args[(i = args.length - 1)] === method.defaults[i] || typeof args[i] === 'undefined')) args.pop()
-      args = args.map(arg => literal(arg)).join(', ')
 
-      if (options.migrate) {
-        return args.length ? `${method.name.substr(1)}(${args})` : method.name.substr(1)
-      }
-      else {
-        return `${method.name[0] === '$' ? 'this.' : ''}${method.name}(${args})`
-      }
+      args = args.map(arg => literal(arg)).join(', ')
+      return `${method.name[0] === '$' ? 'this.' : ''}${method.name}(${args})`
     }
   }
 }
@@ -210,10 +203,10 @@ method
       return match('$' + name, p || [], name, error)
     }
   / prop:$([a-zA-Z]+) {
+      if (prop.match(/^[a-z]/)) error(`Direct field access ${field} must start with a leading capital`)
       const field = options.items.name.field[prop.toLowerCase()]
       if (!field) error(`Unknown field ${JSON.stringify(prop)}`)
-      // if (options.migrate && field.match(/^[a-z]/)) error(`Unexpected cooked field ${field}`)
-      return options.migrate ? field : `this.$getField(${literal(field)})`
+      return options.migrate ? prop : `this.$getField(${literal(field)})`
     }
 
 fparams
