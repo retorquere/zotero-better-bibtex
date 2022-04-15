@@ -881,7 +881,7 @@ class PatternFormatter {
 
   /**
    * prefixes with its parameter, so `prefix=_` will add an underscore to the front if, and only if, the value
-   * it is supposed to prefix isn't empty. 
+   * it is supposed to prefix isn't empty.
    */
   public _prefix(prefix: string) {
     if (this.chunk && prefix) return this.$text(`${prefix}${this.chunk}`)
