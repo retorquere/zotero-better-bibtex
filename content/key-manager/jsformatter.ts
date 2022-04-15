@@ -4,6 +4,8 @@ import * as types from '../../gen/items/items'
 import * as recast from 'recast'
 import { builders as b } from 'ast-types'
 import _ from 'lodash'
+import { ajv } from '../ajv'
+import { sprintf } from 'sprintf-js'
 
 type AST = any
 
@@ -113,10 +115,54 @@ function upgrade(type) {
 
   throw { notUpgradable: type } // eslint-disable-line no-throw-literal
 }
+
+function postfix(_schema, format) {
+  // @ts-ignore
+  postfix.errors = []
+  let error = ''
+  try {
+    const expected = `${Date.now()}`
+    const found = sprintf(format, { a: expected, A: expected, n: expected })
+    if (!found.includes(expected)) {
+      error = `${format} does not contain %(a)s, %(A)s or %(n)s`
+    }
+    else if (found.split(expected).length > 2) {
+      error = `${format} contains multiple instances of %(a)s/%(A)s/%(n)s`
+    }
+    else {
+      return true
+    }
+  }
+  catch (err) {
+    error = err.message
+  }
+
+  // @ts-ignore
+  postfix.errors.push({
+    keyword: 'postfix',
+    message: error,
+    params: { keyword: 'postfix' },
+  })
+  return false
+}
+
+ajv.addKeyword({
+  keyword: 'postfix',
+  validate: postfix,
+})
+
 const api: typeof methods = _.cloneDeep(methods)
 for (const meta of Object.values(api)) {
   for (const property of Object.keys(meta.schema.properties)) {
     meta.schema.properties[property] = upgrade(meta.schema.properties[property])
+
+    if (meta.name === '_formatDate' || meta.name === '$date') {
+      meta.schema.properties[property].properties.value.pattern = '^([^%]|(%-?o?[ymdYDHM]))+$'
+    }
+    else if (meta.name === '$postfix' && property === 'format') {
+      // @ts-ignore
+      meta.schema.properties[property].properties.value = { postfix: true }
+    }
   }
 }
 

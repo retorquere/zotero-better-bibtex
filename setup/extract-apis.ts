@@ -4,8 +4,8 @@
 import { Method, API } from './api-extractor'
 import * as fs from 'fs'
 import stringify from 'fast-safe-stringify'
-import jsesc from 'jsesc'
 import _ from 'lodash'
+import jsesc from 'jsesc'
 
 class FormatterAPI {
   private formatter: Record<string, Method>
@@ -14,20 +14,20 @@ class FormatterAPI {
 
   constructor(source: string) {
     this.formatter = new API(source).classes.PatternFormatter
-    for (let [name, method] of Object.entries(this.formatter)) {
+    for (const [name, method] of Object.entries(this.formatter)) {
       const kind = {$: 'function', _: 'filter'}[name[0]]
       if (!kind) continue
 
-      const lcName = name.toLowerCase()
-      if (this.signature[lcName]) throw new Error(`duplicate ${kind} ${lcName}`)
-      this.signature[lcName] = _.cloneDeep({
+      const key = name.toLowerCase()
+      if (this.signature[key]) throw new Error(`duplicate ${kind} ${key}`)
+      this.signature[name.toLowerCase()] = _.cloneDeep({
         name,
         parameters: method.parameters.map(p => p.name),
         defaults: method.parameters.map(p => p.default),
         rest: method.parameters.find(p => p.rest)?.name,
         schema: method.schema,
       })
-      if (!this.signature[lcName].rest) delete this.signature[lcName].rest
+      if (!this.signature[key].rest) delete this.signature[key].rest
 
       /*
       let names = [ name.substr(1) ]
@@ -50,20 +50,22 @@ class FormatterAPI {
       }
       */
 
+      /*
       if (kind === 'function') {
         if (method.parameters.find(p => p.name === 'n')) name = `${name}N`
         if (method.parameters.find(p => p.name === 'm')) name = `${name}_M`
       }
-      let quoted = '`' + name + '`'
-
-      switch (kind) {
-        case 'function':
-          if (method.parameters.find(p => p.name === 'withInitials')) quoted += ', `+initials`'
-          if (method.parameters.find(p => p.name === 'joiner')) quoted += ', `+<joinchar>`'
-          break
-        case 'filter':
-          if (method.parameters.length) quoted += '=' + method.parameters.map(p => `${p.name}${method.schema.required.includes(p.name) ? '' : '?'} (${this.typedoc(method.schema.properties[p.name])})`).join(', ')
-          break
+      */
+      let quoted = '`' + name.substr(1) + '`'
+      if (method.parameters.length) {
+        quoted += '('
+          + method.parameters.map(p => {
+            let doc = '`' + p.name + '`' + (method.schema.required.includes(p.name) ? '' : '?')
+            doc += `: ${this.typedoc(method.schema.properties[p.name])}`
+            if (typeof p.default !== 'undefined') doc += `=${jsesc(p.default, { quotes: 'single', wrap: true })}`
+            return doc
+          }).join(', ')
+        + ')'
       }
 
       this.doc[kind][quoted] = method.doc
@@ -85,7 +87,7 @@ class FormatterAPI {
     if (type.const) return JSON.stringify(type.const)
     if (type.enum) return type.enum.map(t => this.typedoc({ const: t })).join(' | ')
     if (type.instanceof) return type.instanceof
-    if (type.type === 'array' && type.prefixItems) return `(${type.prefixItem.map(t => this.typedoc(t)).join(', ')})`
+    if (type.type === 'array' && type.prefixItems) return `(${type.prefixItems.map(t => this.typedoc(t)).join(', ')})`
     if (type.type === 'array' && typeof type.items !== 'boolean') return `${this.typedoc(type.items)}...`
     throw new Error(`no rule for ${JSON.stringify(type)}`)
   }

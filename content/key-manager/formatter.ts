@@ -470,7 +470,7 @@ class PatternFormatter {
 
   /**
    * Author/editor information. Parameters are:
-   * - `creator`: author or editor,
+   * - `creator`: select type of creator (`author` or `editor`),
    * - `initials`: whether to add initials or to only use initials,
    * - `letters`: pick this many letters from the name, defaults to 0 = all,
    * - `select`: select these authors, number or range (inclusive); negative numbers mean "from the end", default = 0 = all,
@@ -478,6 +478,8 @@ class PatternFormatter {
    * - `etal`: use this term to replace authors after `etalafter` authors have been named,
    * - `etalafter`: add the `etal` if there are more authors selected that
    * - `joiner`: use this character to join authors
+   * - `min`: skip to the next pattern if there are less than `min` creators
+   * - `min`: skip to the next pattern if there are more than `max` creators
    */
   public $author(
     creator: 'author' | 'editor' = 'author',
@@ -486,21 +488,25 @@ class PatternFormatter {
     select: number | [number, number] = 0,
     etal='etal',
     etalafter=0,
-    joiner=''
+    joiner='',
+    min=0,
+    max=0
   ) {
-    let authors = this.creators(creator === 'editor', { withInitials: !!initials, initialOnly: initials === 'only'})
+    let authors = this.creators(creator === 'editor', initials)
     if (select !== 0) {
       if (!Array.isArray(select)) select = [ select, select ]
       authors = authors.slice(select[0], select[1] + 1)
     }
+    if (min && authors.length < min) throw { next: true } // eslint-disable-line no-throw-literal
+    if (max && authors.length > max) throw { next: true } // eslint-disable-line no-throw-literal
     if (!initials && letters) authors = authors.map(a => a.substr(0, letters))
     if (etalafter && authors.length > etalafter) authors = authors.slice(0, etalafter).concat(etal)
     return this.$text(authors.join(joiner))
   }
 
   /** The first `N` (default: all) characters of the `M`th (default: first) author's last name. */
-  public $auth(creator: 'author' | 'editor' = 'author', withInitials=false, n=0, m=1) {
-    const authors = this.creators(creator === 'editor', {withInitials})
+  public $auth(creator: 'author' | 'editor' = 'author', initials=false, n=0, m=1) {
+    const authors = this.creators(creator === 'editor', initials)
     if (!authors || !authors.length) return this.$text('')
     let author = authors[m ? m - 1 : 0]
     if (author && n) author = author.substring(0, n)
@@ -509,21 +515,21 @@ class PatternFormatter {
 
   /** The forename initial of the first author. */
   public $authForeIni(creator: 'author' | 'editor' = 'author') {
-    const authors = this.creators(creator === 'editor', {initialOnly: true})
+    const authors = this.creators(creator === 'editor', 'only')
     if (!authors || !authors.length) return this.$text('')
     return this.$text(authors[0])
   }
 
   /** The forename initial of the last author. */
   public $authorLastForeIni(creator: 'author' | 'editor' = 'author') {
-    const authors = this.creators(creator === 'editor', {initialOnly: true})
+    const authors = this.creators(creator === 'editor', 'only')
     if (!authors || !authors.length) return this.$text('')
     return this.$text(authors[authors.length - 1])
   }
 
   /** The last name of the last author */
-  public $authorLast(creator: 'author' | 'editor' = 'author', withInitials=false) {
-    const authors = this.creators(creator === 'editor', {withInitials})
+  public $authorLast(creator: 'author' | 'editor' = 'author', initials=false) {
+    const authors = this.creators(creator === 'editor', initials)
     if (!authors || !authors.length) return this.$text('')
     return this.$text(authors[authors.length - 1])
   }
@@ -540,8 +546,8 @@ class PatternFormatter {
   }
 
   /** The last name of up to N authors. If there are more authors, "EtAl" is appended. */
-  public $authors(creator: 'author' | 'editor' = 'author', withInitials=false, joiner='', n?:number) {
-    let authors = this.creators(creator === 'editor', {withInitials})
+  public $authors(creator: 'author' | 'editor' = 'author', initials=false, joiner='', n?:number) {
+    let authors = this.creators(creator === 'editor', initials)
     if (!authors || !authors.length) return this.$text('')
 
     if (n) {
@@ -556,8 +562,8 @@ class PatternFormatter {
   /** Corresponds to the BibTeX style "alpha". One author: First three letters of the last name. Two to four authors: First letters of last names concatenated.
    * More than four authors: First letters of last names of first three authors concatenated. "+" at the end.
    */
-  public $authorsAlpha(creator: 'author' | 'editor' = 'author', withInitials=false, joiner='') {
-    const authors = this.creators(creator === 'editor', {withInitials})
+  public $authorsAlpha(creator: 'author' | 'editor' = 'author', initials=false, joiner='') {
+    const authors = this.creators(creator === 'editor', initials)
     if (!authors || !authors.length) return this.$text('')
 
     switch (authors.length) {
@@ -576,15 +582,15 @@ class PatternFormatter {
   }
 
   /** The beginning of each author's last name, using no more than `N` characters. */
-  public $authIni(creator: 'author' | 'editor' = 'author', withInitials=false, joiner='', n?: number) {
-    const authors = this.creators(creator === 'editor', {withInitials})
+  public $authIni(creator: 'author' | 'editor' = 'author', initials=false, joiner='', n?: number) {
+    const authors = this.creators(creator === 'editor', initials)
     if (!authors || !authors.length) return this.$text('')
     return this.$text(authors.map(author => author.substring(0, n)).join(joiner || '.'))
   }
 
   /** The first 5 characters of the first author's last name, and the last name initials of the remaining authors. */
-  public $authorIni(creator: 'author' | 'editor' = 'author', withInitials=false, joiner=''): PatternFormatter {
-    const authors = this.creators(creator === 'editor', {withInitials})
+  public $authorIni(creator: 'author' | 'editor' = 'author', initials=false, joiner=''): PatternFormatter {
+    const authors = this.creators(creator === 'editor', initials)
     if (!authors || !authors.length) return this.$text('')
     const firstAuthor = authors.shift()
 
@@ -593,8 +599,8 @@ class PatternFormatter {
   }
 
   /** The last name of the first two authors, and ".ea" if there are more than two. */
-  public $authAuthEa(creator: 'author' | 'editor' = 'author', withInitials=false, joiner='') {
-    const authors = this.creators(creator === 'editor', {withInitials})
+  public $authAuthEa(creator: 'author' | 'editor' = 'author', initials=false, joiner='') {
+    const authors = this.creators(creator === 'editor', initials)
     if (!authors || !authors.length) return this.$text('')
 
     // eslint-disable-next-line no-magic-numbers
@@ -607,8 +613,8 @@ class PatternFormatter {
    * is that the authors are not separated by "." and in case of
    * more than 2 authors "EtAl" instead of ".etal" is appended.
    */
-  public $authEtAl(creator: 'author' | 'editor' = 'author', withInitials=false, joiner='') {
-    const authors = this.creators(creator === 'editor', {withInitials})
+  public $authEtAl(creator: 'author' | 'editor' = 'author', initials=false, joiner='') {
+    const authors = this.creators(creator === 'editor', initials)
     if (!authors || !authors.length) return this.$text('')
 
     // eslint-disable-next-line no-magic-numbers
@@ -617,8 +623,8 @@ class PatternFormatter {
   }
 
   /** The last name of the first author, and the last name of the second author if there are two authors or ".etal" if there are more than two. */
-  public $authEtal2(creator: 'author' | 'editor' = 'author', withInitials=false, joiner='.') {
-    const authors = this.creators(creator === 'editor', {withInitials})
+  public $authEtal2(creator: 'author' | 'editor' = 'author', initials=false, joiner='.') {
+    const authors = this.creators(creator === 'editor', initials)
     if (!authors || !authors.length) return this.$text('')
 
     // eslint-disable-next-line no-magic-numbers
@@ -627,8 +633,8 @@ class PatternFormatter {
   }
 
   /** The last name if one author is given; the first character of up to three authors' last names if more than one author is given. A plus character is added, if there are more than three authors. */
-  public $authshort(creator: 'author' | 'editor' = 'author', withInitials=false, joiner='') {
-    const authors = this.creators(creator === 'editor', {withInitials})
+  public $authshort(creator: 'author' | 'editor' = 'author', initials=false, joiner='') {
+    const authors = this.creators(creator === 'editor', initials)
     if (!authors || !authors.length) return this.$text('')
 
     switch (authors.length) {
@@ -746,12 +752,7 @@ class PatternFormatter {
    * even if there is no need for it when no duplicates exist. The default  format is `%(a)s`.
    */
   public $postfix(format='%(a)s', start=0) {
-    const expected = `${Date.now()}`
-    const found = sprintf(format, { a: expected, A: expected, n: expected })
-    if (!found.includes(expected)) throw new Error(`postfix ${format} does not contain %(a)s, %(A)s or %(n)s`)
-    if (found.split(expected).length > 2) throw new Error(`postfix ${format} contains multiple instances of %(a)s/%(A)s/%(n)s`)
     this.postfix = { format, start }
-    log.debug('$postfix ->', this.postfix)
     return this.$text('')
   }
 
@@ -862,7 +863,7 @@ class PatternFormatter {
     return this.$text(isNaN(parseInt(this.chunk)) ? '' : this.chunk)
   }
 
-  /** replaces text, case insensitive; `:replace=.etal,&etal` will replace `.EtAl` with `&etal` */
+  /** replaces text, case insensitive when passing a string; `.replace('.etal','&etal')` will replace `.EtAl` with `&etal` */
   public _replace(find: string | RegExp, replace: string) {
     if (!find) return this
     if (typeof find === 'string') find = new RegExp(find.replace(/[[\](){}*+?|^$.\\]/g, '\\$&'), 'ig')
@@ -871,7 +872,7 @@ class PatternFormatter {
 
   /**
    * this replaces spaces in the value passed in. You can specify what to replace it with by adding it as a
-   * parameter, e.g `condense=_` will replace spaces with underscores. **Parameters should not contain spaces** unless
+   * parameter, e.g `.condense(_)` will replace spaces with underscores. **Parameter should not contain spaces** unless
    * you want the spaces in the value passed in to be replaced with those spaces in the parameter
    */
   public _condense(sep: string = '') { // eslint-disable-line @typescript-eslint/no-inferrable-types
@@ -880,8 +881,7 @@ class PatternFormatter {
 
   /**
    * prefixes with its parameter, so `prefix=_` will add an underscore to the front if, and only if, the value
-   * it is supposed to prefix isn't empty. If you want to use a reserved character (such as `:` or `\`), you'll need to
-   * add a backslash (`\`) in front of it.
+   * it is supposed to prefix isn't empty. 
    */
   public _prefix(prefix: string) {
     if (this.chunk && prefix) return this.$text(`${prefix}${this.chunk}`)
@@ -978,8 +978,8 @@ class PatternFormatter {
   }
 
   /**
-   * selects words from the value passed in. The format is `select=start,number` (1-based), so `select=1,4`
-   * would select the first four words. If `number` is not given, all words from `start` to the end of the list are
+   * selects words from the value passed in. The format is `select(start,number)` (1-based), so `select(1,4)` or `select(n=4)`
+   * would select the first four words. If `n` is not given, all words from `start` to the end are
    * selected.
    */
   public _select(start: number = 1, n?: number) { // eslint-disable-line @typescript-eslint/no-inferrable-types
@@ -1167,7 +1167,7 @@ class PatternFormatter {
     return this.transliterate(initial)
   }
 
-  private creators(onlyEditors, options: { initialOnly?: boolean, withInitials?: boolean} = {}): string[] {
+  private creators(onlyEditors, initials: boolean | 'only' = false): string[] {
     const types = itemCreators[client][this.item.itemType] || []
     const primary = types[0]
 
@@ -1176,13 +1176,13 @@ class PatternFormatter {
     for (const creator of this.item.creators) {
       if (onlyEditors && creator.creatorType !== 'editor' && creator.creatorType !== 'seriesEditor') continue
 
-      let name = options.initialOnly ? this.initial(creator) : this.stripQuotes(this.innerText(creator.lastName || creator.name))
+      let name = initials === 'only' ? this.initial(creator) : this.stripQuotes(this.innerText(creator.lastName || creator.name))
       if (name) {
-        if (options.withInitials && creator.firstName) {
-          let initials = Zotero.Utilities.XRegExp.replace(this.stripQuotes(creator.firstName), this.re.caseNotUpperTitle, '', 'all')
-          initials = this.transliterate(initials)
-          initials = Zotero.Utilities.XRegExp.replace(initials, this.re.caseNotUpper, '', 'all')
-          name += initials
+        if (initials === true && creator.firstName) {
+          let i = Zotero.Utilities.XRegExp.replace(this.stripQuotes(creator.firstName), this.re.caseNotUpperTitle, '', 'all')
+          i = this.transliterate(i)
+          i = Zotero.Utilities.XRegExp.replace(i, this.re.caseNotUpper, '', 'all')
+          name += i
         }
       }
       else {

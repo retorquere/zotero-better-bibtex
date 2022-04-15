@@ -166,8 +166,8 @@ method
 
       for (const flag of flags) {
         if (flag == 'initials') {
-          if (method.parameters.includes('withInitials')) {
-            args.withInitials = true
+          if (method.parameters.includes('initials')) {
+            args.initials = true
           }
           else {
             error(`unexpected flag '${flag}' on function '${input}'`)
