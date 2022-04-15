@@ -19,7 +19,7 @@
   "`nopunctordash`": "Removes punctuation and word-connecting dashes",
   "`numeric`": "returns the value if it's an integer",
   "`postfix`(`postfix`: string)": "postfixes with its parameter, so `postfix=_` will add an underscore to the end if, and only if, the value it is supposed to postfix isn't empty",
-  "`prefix`(`prefix`: string)": "prefixes with its parameter, so `prefix=_` will add an underscore to the front if, and only if, the value it is supposed to prefix isn't empty. If you want to use a reserved character (such as `:` or `\\`), you'll need to add a backslash (`\\`) in front of it.",
+  "`prefix`(`prefix`: string)": "prefixes with its parameter, so `prefix=_` will add an underscore to the front if, and only if, the value it is supposed to prefix isn't empty.",
   "`replace`(`find`: string | RegExp, `replace`: string)": "replaces text, case insensitive when passing a string; `.replace('.etal','&etal')` will replace `.EtAl` with `&etal`",
   "`select`(`start`?: number=1, `n`?: number)": "selects words from the value passed in. The format is `select(start,number)` (1-based), so `select(1,4)` or `select(n=4)` would select the first four words. If `n` is not given, all words from `start` to the end are selected.",
   "`skipwords`": "filters out common words like 'of', 'the', ... the list of words can be seen and changed by going into `about:config` under the key `extensions.zotero.translators.better-bibtex.skipWords` as a comma-separated, case-insensitive list of words.\n\nIf you want to strip words like 'Jr.' from names, you could use something like `[Auth:nopunct:skipwords:fold]` after adding `jr` to the skipWords list. Note that this filter is always applied if you use `title` (which is different from `Title`) or `shorttitle`.",
