@@ -157,6 +157,11 @@ method
       const args = {
         creator: prefix.match(/^a/i) ? 'author' : 'editor'
       }
+      // legacy method
+      if (method.name === '$authors') {
+        args.joiner = ' '
+        args.etal = 'EtAl'
+      }
 
       params.forEach((p, i) => {
         const n = parseInt(p)

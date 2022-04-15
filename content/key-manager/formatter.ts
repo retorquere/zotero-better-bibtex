@@ -475,33 +475,46 @@ class PatternFormatter {
    * - `letters`: pick this many letters from the name, defaults to 0 = all,
    * - `select`: select these authors, number or range (inclusive); negative numbers mean "from the end", default = 0 = all,
    * - `given`: use given name instead of family name,
-   * - `etal`: use this term to replace authors after `etalafter` authors have been named,
-   * - `etalafter`: add the `etal` if there are more authors selected that
+   * - `etal`: use this term to replace authors after `select` authors have been named,
    * - `joiner`: use this character to join authors
    * - `min`: skip to the next pattern if there are less than `min` creators
    * - `min`: skip to the next pattern if there are more than `max` creators
    */
   public $author(
+    select: number | [number, number] = 0,
     creator: 'author' | 'editor' = 'author',
     initials : boolean | 'only' = false,
     letters=0,
-    select: number | [number, number] = 0,
-    etal='etal',
-    etalafter=0,
-    joiner='',
+    etal='',
+    joiner=' ',
     min=0,
     max=0
   ) {
     let authors = this.creators(creator === 'editor', initials)
-    if (select !== 0) {
-      if (!Array.isArray(select)) select = [ select, select ]
-      authors = authors.slice(select[0], select[1] + 1)
-    }
     if (min && authors.length < min) throw { next: true } // eslint-disable-line no-throw-literal
     if (max && authors.length > max) throw { next: true } // eslint-disable-line no-throw-literal
+    if (!select) {
+      etal = ''
+    }
+    else {
+      if (Array.isArray(select)) {
+        etal = ''
+      }
+      else {
+        if (select >= authors.length) etal = ''
+        select = [ 1, select ]
+      }
+      authors = authors.slice(select[0] - 1, select[1])
+      if (etal && !etal.replace(/[a-z]/ig, '').length) etal = `${joiner}${etal}`
+    }
     if (!initials && letters) authors = authors.map(a => a.substr(0, letters))
-    if (etalafter && authors.length > etalafter) authors = authors.slice(0, etalafter).concat(etal)
-    return this.$text(authors.join(joiner))
+    log.debug('$author:', { select, creator, initials, letters, etal, joiner, min, max }, authors)
+    return this.$text(authors.join(joiner) + etal)
+  }
+
+  /** The last name of up to N authors. If there are more authors, "EtAl" is appended. */
+  public $authors(n=0, creator: 'author' | 'editor' = 'author', initials=false, joiner=' ') {
+    return this.$author(n, creator, initials, undefined, 'EtAl', joiner)
   }
 
   /** The first `N` (default: all) characters of the `M`th (default: first) author's last name. */
@@ -545,24 +558,10 @@ class PatternFormatter {
     return this.$text((abbrev === 'off' ? '' : JournalAbbrev.get(this.item.item, abbrev)) || this.item.getField('publicationTitle') as string || '')
   }
 
-  /** The last name of up to N authors. If there are more authors, "EtAl" is appended. */
-  public $authors(creator: 'author' | 'editor' = 'author', initials=false, joiner='', n?:number) {
-    let authors = this.creators(creator === 'editor', initials)
-    if (!authors || !authors.length) return this.$text('')
-
-    if (n) {
-      const etal = authors.length > n
-      authors = authors.slice(0, n)
-      if (etal) authors.push('EtAl')
-    }
-
-    return this.$text(authors.join(joiner || ' '))
-  }
-
   /** Corresponds to the BibTeX style "alpha". One author: First three letters of the last name. Two to four authors: First letters of last names concatenated.
    * More than four authors: First letters of last names of first three authors concatenated. "+" at the end.
    */
-  public $authorsAlpha(creator: 'author' | 'editor' = 'author', initials=false, joiner='') {
+  public $authorsAlpha(creator: 'author' | 'editor' = 'author', initials=false, joiner=' ') {
     const authors = this.creators(creator === 'editor', initials)
     if (!authors || !authors.length) return this.$text('')
 
@@ -573,38 +572,38 @@ class PatternFormatter {
       case 2: // eslint-disable-line no-magic-numbers
       case 3: // eslint-disable-line no-magic-numbers
       case 4: // eslint-disable-line no-magic-numbers
-        return this.$text(authors.map(author => author.substring(0, 1)).join(joiner || ' '))
+        return this.$text(authors.map(author => author.substring(0, 1)).join(joiner))
 
       default:
         // eslint-disable-next-line no-magic-numbers
-        return this.$text(`${authors.slice(0, 3).map(author => author.substring(0, 1)).join(joiner || ' ') }+`)
+        return this.$text(`${authors.slice(0, 3).map(author => author.substring(0, 1)).join(joiner) }+`)
     }
   }
 
   /** The beginning of each author's last name, using no more than `N` characters. */
-  public $authIni(creator: 'author' | 'editor' = 'author', initials=false, joiner='', n?: number) {
+  public $authIni(creator: 'author' | 'editor' = 'author', initials=false, joiner='.', n?: number) {
     const authors = this.creators(creator === 'editor', initials)
     if (!authors || !authors.length) return this.$text('')
-    return this.$text(authors.map(author => author.substring(0, n)).join(joiner || '.'))
+    return this.$text(authors.map(author => author.substring(0, n)).join(joiner))
   }
 
   /** The first 5 characters of the first author's last name, and the last name initials of the remaining authors. */
-  public $authorIni(creator: 'author' | 'editor' = 'author', initials=false, joiner=''): PatternFormatter {
+  public $authorIni(creator: 'author' | 'editor' = 'author', initials=false, joiner='.'): PatternFormatter {
     const authors = this.creators(creator === 'editor', initials)
     if (!authors || !authors.length) return this.$text('')
     const firstAuthor = authors.shift()
 
     // eslint-disable-next-line no-magic-numbers
-    return this.$text([firstAuthor.substring(0, 5)].concat(authors.map(name => name.substring(0, 1)).join('.')).join(joiner || '.'))
+    return this.$text([firstAuthor.substring(0, 5)].concat(authors.map(name => name.substring(0, 1)).join('.')).join(joiner))
   }
 
   /** The last name of the first two authors, and ".ea" if there are more than two. */
-  public $authAuthEa(creator: 'author' | 'editor' = 'author', initials=false, joiner='') {
+  public $authAuthEa(creator: 'author' | 'editor' = 'author', initials=false, joiner='.') {
     const authors = this.creators(creator === 'editor', initials)
     if (!authors || !authors.length) return this.$text('')
 
     // eslint-disable-next-line no-magic-numbers
-    return this.$text(authors.slice(0, 2).concat(authors.length > 2 ? ['ea'] : []).join(joiner || '.'))
+    return this.$text(authors.slice(0, 2).concat(authors.length > 2 ? ['ea'] : []).join(joiner))
   }
 
   /** The last name of the first author, and the last name of the
@@ -613,13 +612,13 @@ class PatternFormatter {
    * is that the authors are not separated by "." and in case of
    * more than 2 authors "EtAl" instead of ".etal" is appended.
    */
-  public $authEtAl(creator: 'author' | 'editor' = 'author', initials=false, joiner='') {
+  public $authEtAl(creator: 'author' | 'editor' = 'author', initials=false, joiner=' ') {
     const authors = this.creators(creator === 'editor', initials)
     if (!authors || !authors.length) return this.$text('')
 
     // eslint-disable-next-line no-magic-numbers
     if (authors.length === 2) return this.$text(authors.join(joiner || ' '))
-    return this.$text(authors.slice(0, 1).concat(authors.length > 1 ? ['EtAl'] : []).join(joiner || ' '))
+    return this.$text(authors.slice(0, 1).concat(authors.length > 1 ? ['EtAl'] : []).join(joiner))
   }
 
   /** The last name of the first author, and the last name of the second author if there are two authors or ".etal" if there are more than two. */
@@ -633,7 +632,7 @@ class PatternFormatter {
   }
 
   /** The last name if one author is given; the first character of up to three authors' last names if more than one author is given. A plus character is added, if there are more than three authors. */
-  public $authshort(creator: 'author' | 'editor' = 'author', initials=false, joiner='') {
+  public $authshort(creator: 'author' | 'editor' = 'author', initials=false, joiner='.') {
     const authors = this.creators(creator === 'editor', initials)
     if (!authors || !authors.length) return this.$text('')
 
@@ -646,7 +645,7 @@ class PatternFormatter {
 
       default:
         // eslint-disable-next-line no-magic-numbers
-        return this.$text(authors.slice(0, 3).map(author => author.substring(0, 1)).join(joiner || '.') + (authors.length > 3 ? '+' : ''))
+        return this.$text(authors.slice(0, 3).map(author => author.substring(0, 1)).join(joiner) + (authors.length > 3 ? '+' : ''))
     }
   }
 
