@@ -1,11 +1,53 @@
-hbox
+script.
+  function showNew() {
+    const citekey = document.getElementById('id-better-bibtex-preferences-citekeyFormat')
+    const converted = document.getElementById('id-better-bibtex-preferences-citekeyFormatNew')
+    const label = document.getElementById('id-better-bibtex-label-citekeyFormatNew')
+
+    converted.value = ''
+    if (citekey.value) {
+      try {
+        if (!citekey.value.startsWith("''")) converted.value = Zotero.BetterBibTeX.KeyManager.convertLegacy(citekey.value)
+      }
+      catch (err) {
+        Zotero.debug('could not convert citekey pattern: ' + err.message)
+        converted.value = ''
+      }
+    }
+    converted.hidden = label.hidden = !converted.value
+    Zotero.debug('converted citekey pattern: ' + converted.value)
+  }
+vbox
   label(bbt:preference="pref-better-bibtex-citekeyFormat") &better-bibtex.Preferences.citekey.format;
   textbox#id-better-bibtex-preferences-citekeyFormat(
     flex='1'
-    onfocus="Zotero.BetterBibTeX.PrefPane.getCitekeyFormat(event.target);"
-    onblur="Zotero.BetterBibTeX.PrefPane.saveCitekeyFormat(event.target);"
-    oninput="Zotero.BetterBibTeX.PrefPane.checkCitekeyFormat(event.target);"
-    onkeypress="setTimeout(function() { Zotero.BetterBibTeX.PrefPane.checkCitekeyFormat(event.target) }, 1);"
+    rows=1
+    onfocus="this.setAttribute('rows', '5'); Zotero.BetterBibTeX.PrefPane.getCitekeyFormat(event.target);"
+    onblur="this.setAttribute('rows', '1'); Zotero.BetterBibTeX.PrefPane.saveCitekeyFormat(event.target);"
+    oninput="Zotero.BetterBibTeX.PrefPane.checkCitekeyFormat(event.target); showNew();"
+    onkeypress="setTimeout(function() { Zotero.BetterBibTeX.PrefPane.checkCitekeyFormat(event.target); showNew() }, 1);"
+    multiline='true'
+  )
+
+  label#id-better-bibtex-label-citekeyFormatNew &better-bibtex.Preferences.citekey.format.new;
+  textbox#id-better-bibtex-preferences-citekeyFormatNew(
+    flex='1'
+    rows=1
+    readonly='true'
+    multiline='true'
+    onfocus="if (this.value) this.setAttribute('rows', '5')"
+    onblur="this.setAttribute('rows', '1')"
+  )
+
+  label#id-better-bibtex-label-citekeyFormatBackup(bbt:preference="pref-better-bibtex-citekeyFormatBackup") &better-bibtex.Preferences.citekey.format.backup;
+  textbox#id-better-bibtex-preferences-citekeyFormatBackup(
+    preference='pref-better-bibtex-citekeyFormatBackup'
+    flex='1'
+    rows=1
+    readonly='true'
+    multiline='true'
+    onfocus="if (this.value) this.setAttribute('rows', '5')"
+    onblur="this.setAttribute('rows', '1')"
   )
 checkbox(preference="pref-better-bibtex-citekeyFold" label="&better-bibtex.Preferences.citekey.fold;")
 checkbox(preference="pref-better-bibtex-citekeySearch" label="&better-bibtex.Preferences.citekey.search;")
@@ -35,3 +77,21 @@ hbox
   textbox(size="5" preference="pref-better-bibtex-warnBulkModify")
 hbox
   button#rescan-citekeys.hidden(label="&better-bibtex.Preferences.rescan-citekeys;" oncommand="Zotero.BetterBibTeX.PrefPane.rescanCitekeys()")
+script.
+  const observer = {}
+  function showBackup() {
+    const backup = document.getElementById('id-better-bibtex-preferences-citekeyFormatBackup')
+    const label = document.getElementById('id-better-bibtex-label-citekeyFormatBackup')
+    Zotero.debug('backup citekey pattern: ' + backup.value)
+    backup.hidden = label.hidden = !backup.value
+  }
+  window.addEventListener('load', function() {
+    observer.citekey = Zotero.Prefs.registerObserver('translators.better-bibtex.citekeyFormat', showNew)
+    showNew()
+    observer.backup = Zotero.Prefs.registerObserver('translators.better-bibtex.citekeyFormatBackup', showBackup)
+    showBackup()
+  })
+  window.addEventListener('unload', function() {
+    if (observer.citekey) Zotero.Prefs.unregisterObserver(observer.citekey)
+    if (observer.backup) Zotero.Prefs.unregisterObserver(observer.backup)
+  })

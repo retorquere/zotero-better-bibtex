@@ -580,4 +580,8 @@ export class KeyManager {
 
     return [ids]
   }
+
+  public convertLegacy(pattern: string): string {
+    return Formatter.convertLegacy(pattern)
+  }
 }

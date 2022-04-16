@@ -62,6 +62,7 @@ bbt:doc Hyperlink to select items in your library
 // the zero-width-space is a marker to re-save the current default so it doesn't get replaced when the default changes later, which would change new keys suddenly
 preference#pref-better-bibtex-citekeyFormat(name="extensions.zotero.translators.better-bibtex.citekeyFormat" bbt:affects="" type="string" default="\u200b[auth:lower][shorttitle3_3][year]")
 bbt:doc Set the pattern used to generate citation keys. The format of the keys is documented [here]({{ ref . "citing" }}).
+preference#pref-better-bibtex-citekeyFormatBackup(name="extensions.zotero.translators.better-bibtex.citekeyFormatBackup" bbt:affects="" type="string" default="")
 
 preference#pref-better-bibtex-citekeySearch(name="extensions.zotero.translators.better-bibtex.citekeySearch" bbt:affects="" type="bool" default="true")
 bbt:doc Enable searching on citation keys. Slows down startup on very large libraries. Requires Zotero restart to enable/disable.

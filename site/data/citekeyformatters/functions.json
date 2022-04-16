@@ -4,7 +4,7 @@
   "`authEtal2`(`creator`?: string='author', `initials`?: boolean=false, `joiner`?: string='.')": "The last name of the first author, and the last name of the second author if there are two authors or \".etal\" if there are more than two.",
   "`authForeIni`(`creator`?: string='author')": "The forename initial of the first author.",
   "`authIni`(`creator`?: string='author', `initials`?: boolean=false, `joiner`?: string='.', `n`?: number)": "The beginning of each author's last name, using no more than `N` characters.",
-  "`auth`(`creator`?: string='author', `initials`?: boolean=false, `n`?: number=0, `m`?: number=1)": "The last name of up to N authors. If there are more authors, \"EtAl\" is appended.   public $authors(n=0, creator: 'author' | 'editor' = 'author', initials=false, joiner=' ') {     return this.$author(n, creator, initials, undefined, 'EtAl', joiner)   }",
+  "`auth`(`creator`?: string='author', `initials`?: boolean=false, `n`?: number=0, `m`?: number=1)": "The first `N` (default: all) characters of the `M`th (default: first) author's last name.",
   "`authorIni`(`creator`?: string='author', `initials`?: boolean=false, `joiner`?: string='.')": "The first 5 characters of the first author's last name, and the last name initials of the remaining authors.",
   "`authorLastForeIni`(`creator`?: string='author')": "The forename initial of the last author.",
   "`authorLast`(`creator`?: string='author', `initials`?: boolean=false)": "The last name of the last author",

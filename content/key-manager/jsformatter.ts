@@ -157,7 +157,7 @@ for (const meta of Object.values(api)) {
     meta.schema.properties[property] = upgrade(meta.schema.properties[property])
 
     if (meta.name === '_formatDate' || meta.name === '$date') {
-      meta.schema.properties[property].properties.value.pattern = '^([^%]|(%-?o?[ymdYDHM]))+$'
+      meta.schema.properties[property].properties.value.pattern = '^([^%]|(%-?o?[ymdYDHMS]))+$'
     }
     else if (meta.name === '$postfix' && property === 'format') {
       // @ts-ignore

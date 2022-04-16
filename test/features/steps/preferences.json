@@ -277,6 +277,14 @@
     "label": "Citation key format"
   },
   {
+    "name": "citekeyFormatBackup",
+    "type": "string",
+    "default": "",
+    "affects": [],
+    "var": "citekeyFormatBackup",
+    "label": "Previous citation key format with error"
+  },
+  {
     "name": "citekeySearch",
     "type": "boolean",
     "default": true,

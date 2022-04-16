@@ -26,6 +26,7 @@
   "citeCommand": "cite",
   "citekeyFold": true,
   "citekeyFormat": "\u200b[auth:lower][shorttitle3_3][year]",
+  "citekeyFormatBackup": "",
   "citekeySearch": true,
   "csquotes": "",
   "exportBibTeXStrings": "off",

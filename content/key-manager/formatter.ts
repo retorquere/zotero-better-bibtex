@@ -306,38 +306,16 @@ class PatternFormatter {
     // the zero-width-space is a marker to re-save the current default so it doesn't get replaced when the default changes later, which would change new keys suddenly
     if (!Preference.citekeyFormat || Preference.citekeyFormat.includes('\u200B')) Preference.citekeyFormat = Preference.default.citekeyFormat.replace(/^\u200B/, '')
 
-    for (const attempt of ['get', 'strip', 'reset']) {
-      let citekeyFormat = ''
-      const errors = []
+    for (const attempt of ['get', 'reset']) {
       switch (attempt) {
         case 'get':
           this.citekeyFormat = Preference.citekeyFormat
           break
 
-        case 'strip':
-          for (const chunk of (Preference.citekeyFormat.replace(/^\u200B/, '').match(/[^\]]*\]*/g) as string[])) {
-            try {
-              this.parsePattern(citekeyFormat + chunk)
-              citekeyFormat += chunk
-            }
-            catch (err) {
-              errors.push(chunk)
-            }
-          }
-          citekeyFormat = citekeyFormat.trim()
-          if (citekeyFormat.includes('[')) {
-            // eslint-disable-next-line no-magic-numbers
-            if (errors.length) flash('Malformed citation pattern', `removed malformed patterns:\n${errors.join('\n')}`, 20)
-            this.citekeyFormat = Preference.citekeyFormat = citekeyFormat
-          }
-          else {
-            continue
-          }
-          break
-
         case 'reset':
           // eslint-disable-next-line no-magic-numbers
           flash('Malformed citation pattern', 'resetting to default', 20)
+          Preference.citekeyFormatBackup = Preference.citekeyFormat.replace(/^\u200B/, '')
           this.citekeyFormat = Preference.citekeyFormat = Preference.default.citekeyFormat.replace(/^\u200B/, '')
           break
       }
@@ -359,12 +337,23 @@ class PatternFormatter {
 
   public parsePattern(pattern): string {
     log.debug('parsePattern.pattern:', pattern)
-    let formatter = legacyparser.parse(pattern, { sprintf, items, methods, migrate: true }) as string
-    if (Preference.testing) log.debug('parsePattern.formatter:', formatter)
+    let formatter = ''
+    if (pattern.startsWith("''")) {
+      formatter = pattern
+    }
+    else {
+      if (!pattern.includes('[')) throw new Error('pattern does not contain functions')
+      formatter = legacyparser.parse(pattern, { sprintf, items, methods, migrate: true }) as string
+      if (Preference.testing) log.debug('parsePattern.old:', formatter)
+    }
     formatter = formatparser.parse(formatter)
-    if (Preference.testing) log.debug('parsePattern.reformatter:', formatter)
+    if (Preference.testing) log.debug('parsePattern.new:', formatter)
 
     return formatter
+  }
+
+  public convertLegacy(pattern: string): string {
+    return legacyparser.parse(pattern, { sprintf, items, methods, migrate: true }) as string
   }
 
   public format(item: ZoteroItem | SerializedItem): string {
@@ -511,12 +500,6 @@ class PatternFormatter {
     log.debug('$author:', { n, creator, initials, letters, etal, joiner, min, max }, authors)
     return this.$text(authors.join(joiner) + etal)
   }
-
-  /** The last name of up to N authors. If there are more authors, "EtAl" is appended.
-  public $authors(n=0, creator: 'author' | 'editor' = 'author', initials=false, joiner=' ') {
-    return this.$author(n, creator, initials, undefined, 'EtAl', joiner)
-  }
-  */
 
   /** The first `N` (default: all) characters of the `M`th (default: first) author's last name. */
   public $auth(creator: 'author' | 'editor' = 'author', initials=false, n=0, m=1) {

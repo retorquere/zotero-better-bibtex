@@ -186,6 +186,9 @@
             "citekeyFormat": {
               "type": "string"
             },
+            "citekeyFormatBackup": {
+              "type": "string"
+            },
             "citekeySearch": {
               "type": "boolean"
             },
