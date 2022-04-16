@@ -6,6 +6,7 @@ import { builders as b } from 'ast-types'
 import _ from 'lodash'
 import { ajv } from '../ajv'
 import { sprintf } from 'sprintf-js'
+import jsesc from 'jsesc'
 
 type AST = any
 
@@ -276,7 +277,7 @@ export class PatternParser {
 
     let err: string
     if (err = method.validate(parameters)) {
-      throw new Error(`${me}: ${err}`)
+      throw new Error(`${me}: ${err} ${jsesc(parameters)}`)
     }
 
     return args

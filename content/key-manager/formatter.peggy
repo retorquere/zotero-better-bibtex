@@ -66,8 +66,15 @@
     }
     else {
       if (options.migrate) {
-        args = Object.entries(params).map(([p, v]) => `${p}=${literal(v)}`).join(',')
-        if (args) args = `(${args})`
+        const n_m = Object.keys(params).sort().reverse()
+        const n_m_p = method.parameters.slice(0, n_m.length).join(',')
+        if (['n', 'n,m'].includes(n_m.join(',')) && n_m.join(',') === n_m_p) {
+          args = '(' + n_m.map(p => literal(params[p])) + ')'
+        }
+        else {
+          args = Object.entries(params).map(([p, v]) => `${p}=${literal(v)}`).join(',')
+          if (args) args = `(${args})`
+        }
         return `${method.name.substr(1)}${args}`
       }
 
@@ -151,13 +158,15 @@ method
       let input = prefix + rest
 
       const args = {
-        creator: prefix.match(/^a/i) ? 'author' : 'editor'
+        creator: prefix.match(/^a/i) ? 'author' : 'editor',
+        clean: !!prefix.match(/^[ae]/),
       }
       // legacy method
       if (input === 'authors') {
         args.joiner = ' '
         args.etal = 'EtAl'
       }
+
       let method = get_method(input, '$')
       if (!method.name) error(`Unknown method ${input}`)
 
@@ -188,13 +197,12 @@ method
       }
 
       method = match('$' + input, method.parameters.map((p, i) => {
-        const v = return args[p] || method.defaults[i]
+        const v = typeof args[p] !== 'undefined' ? args[p] : method.defaults[i]
         delete args[p]
         return v
       }), input, error);
       const ignored = Object.keys(args)
       if (ignored.length) error(`Unused arguments ${ignored}`)
-      // if (prefix.match(/^[ae]/)) method += (options.migrate ? '.clean' : '._clean()')
       return method
     }
   / operator:$([<>=] / [<>!] '=') n:$[0-9]+ {
