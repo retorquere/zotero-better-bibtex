@@ -71,8 +71,7 @@
         return `${method.name.substr(1)}${args}`
       }
 
-      args = method.parameters.slice(0, args.length).map(arg => params[arg])
-      args = args.map((arg, i) => typeof arg === 'undefined' ? method.defaults[i] : arg)
+      args = method.parameters.map((p, i) => typeof params[p] === 'undefined' ? method.defaults[i] : params[p])
       let i
       while (args.length && (args[(i = args.length - 1)] === method.defaults[i] || typeof args[i] === 'undefined')) args.pop()
 
@@ -149,19 +148,18 @@ method
   = prefix:('auth' / 'Auth' / 'authors' / 'Authors' / 'edtr' / 'Edtr' / 'editors' / 'Editors') rest:$[\.a-zA-Z]* params:fparams? flags:flag* {
       params = params || []
 
-      const input = prefix + rest
-
-      let method = get_method(input, '$')
-      if (!method.name) error(`Unknown method ${input}`)
+      let input = prefix + rest
 
       const args = {
         creator: prefix.match(/^a/i) ? 'author' : 'editor'
       }
       // legacy method
-      if (method.name === '$authors') {
+      if (input === 'authors') {
         args.joiner = ' '
         args.etal = 'EtAl'
       }
+      let method = get_method(input, '$')
+      if (!method.name) error(`Unknown method ${input}`)
 
       params.forEach((p, i) => {
         const n = parseInt(p)
@@ -189,7 +187,9 @@ method
         }
       }
 
-      method = match('$' + input, method.parameters.slice(0, args.length).map(arg => args[arg]), input, error);
+      console.log(args)
+      console.log(method.parameters.map((p, i) => args[p] || method.defaults[i]))
+      method = match('$' + input, method.parameters.map((p, i) => args[p] || method.defaults[i]), input, error);
       if (prefix.match(/^[ae]/)) method += (options.migrate ? '.clean' : '._clean()')
       return method
     }

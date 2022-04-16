@@ -470,18 +470,18 @@ class PatternFormatter {
 
   /**
    * Author/editor information. Parameters are:
+   * - `n`: select the first `n` authors (when passing a number) or the authors in this range (inclusive, when passing two values); negative numbers mean "from the end", default = 0 = all,
    * - `creator`: select type of creator (`author` or `editor`),
    * - `initials`: whether to add initials or to only use initials,
    * - `letters`: pick this many letters from the name, defaults to 0 = all,
-   * - `select`: select these authors, number or range (inclusive); negative numbers mean "from the end", default = 0 = all,
    * - `given`: use given name instead of family name,
    * - `etal`: use this term to replace authors after `select` authors have been named,
    * - `joiner`: use this character to join authors
    * - `min`: skip to the next pattern if there are less than `min` creators
    * - `min`: skip to the next pattern if there are more than `max` creators
    */
-  public $author(
-    select: number | [number, number] = 0,
+  public $authors(
+    n: number | [number, number] = 0,
     creator: 'author' | 'editor' = 'author',
     initials : boolean | 'only' = false,
     letters=0,
@@ -493,29 +493,30 @@ class PatternFormatter {
     let authors = this.creators(creator === 'editor', initials)
     if (min && authors.length < min) throw { next: true } // eslint-disable-line no-throw-literal
     if (max && authors.length > max) throw { next: true } // eslint-disable-line no-throw-literal
-    if (!select) {
+    if (!n) {
       etal = ''
     }
     else {
-      if (Array.isArray(select)) {
+      if (Array.isArray(n)) {
         etal = ''
       }
       else {
-        if (select >= authors.length) etal = ''
-        select = [ 1, select ]
+        if (n >= authors.length) etal = ''
+        n = [ 1, n ]
       }
-      authors = authors.slice(select[0] - 1, select[1])
+      authors = authors.slice(n[0] - 1, n[1])
       if (etal && !etal.replace(/[a-z]/ig, '').length) etal = `${joiner}${etal}`
     }
     if (!initials && letters) authors = authors.map(a => a.substr(0, letters))
-    log.debug('$author:', { select, creator, initials, letters, etal, joiner, min, max }, authors)
+    log.debug('$author:', { n, creator, initials, letters, etal, joiner, min, max }, authors)
     return this.$text(authors.join(joiner) + etal)
   }
 
-  /** The last name of up to N authors. If there are more authors, "EtAl" is appended. */
+  /** The last name of up to N authors. If there are more authors, "EtAl" is appended.
   public $authors(n=0, creator: 'author' | 'editor' = 'author', initials=false, joiner=' ') {
     return this.$author(n, creator, initials, undefined, 'EtAl', joiner)
   }
+  */
 
   /** The first `N` (default: all) characters of the `M`th (default: first) author's last name. */
   public $auth(creator: 'author' | 'editor' = 'author', initials=false, n=0, m=1) {
