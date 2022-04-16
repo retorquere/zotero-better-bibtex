@@ -3,22 +3,8 @@
   const jsesc = require('jsesc')
 
   function get_method(method, prefix) {
-    switch (method) {
-      // workaround for duplicate-after-lowercase
-      case 'auth.etal':
-      case '$auth.etal':
-      case 'Auth.etal':
-      case '$Auth.etal':
-        return options.methods.$authetal2
-      case 'edtr.etal':
-      case '$edtr.etal':
-      case 'Edtr.etal':
-      case '$Edtr.etal':
-        return options.methods.$edtretal2
-      default:
-        method = (prefix || '') + method.replace(/[-.]/g, '').toLowerCase()
-        return options.methods[method] || {}
-    }
+    method = (prefix || '') + method.toLowerCase().replace(/[-.]/g, '')
+    return options.methods[method] || {}
   }
 
   function literal(v, noident) {
@@ -59,9 +45,7 @@
     if (args.length > method.parameters.length) error(`too many arguments for ${text}`)
 
     const params = args.reduce((acc, v, i) => {
-      const param = method.parameters[i]
-      // horrid kludge for arrays / rest parameters
-      acc[param] = v
+      if (typeof v !== 'undefined' && v !== method.defaults[i]) acc[method.parameters[i]] = v
       return acc
     }, {})
 
@@ -70,17 +54,30 @@
       error(`${text}: ${argerror}`)
     }
     else {
-      args = method.parameters.slice(0, args.length).map(arg => params[arg])
+      if (options.migrate) {
+        const passed = method.parameters.filter(p => p in params)
+        const passed_j = passed.join(',') + ','
+        const all = method.parameters.join(',') + ','
+
+        if (!passed.length) {
+          args = ''
+        }
+        else if (method.parameters.length <= 2 && all.startsWith(passed_j) && passed_j.match(/(^|,)(start|n),/)) {
+          args = passed.map(p => literal(params[p]))
+        }
+        else {
+          args = passed.map(p => `${p}=${literal(params[p])}`).join(',')
+        }
+        if (args) args = `(${args})`
+        return `${method.name.substr(1)}${args}`
+      }
+
+      args = method.parameters.map((p, i) => typeof params[p] === 'undefined' ? method.defaults[i] : params[p])
       let i
       while (args.length && (args[(i = args.length - 1)] === method.defaults[i] || typeof args[i] === 'undefined')) args.pop()
-      args = args.map(arg => literal(arg)).join(', ')
 
-      if (options.migrate) {
-        return args.length ? `${method.name.substr(1)}(${args})` : method.name.substr(1)
-      }
-      else {
-        return `${method.name[0] === '$' ? 'this.' : ''}${method.name}(${args})`
-      }
+      args = args.map(arg => literal(arg)).join(', ')
+      return `${method.name[0] === '$' ? 'this.' : ''}${method.name}(${args})`
     }
   }
 }
@@ -152,25 +149,39 @@ method
   = prefix:('auth' / 'Auth' / 'authors' / 'Authors' / 'edtr' / 'Edtr' / 'editors' / 'Editors') rest:$[\.a-zA-Z]* params:fparams? flags:flag* {
       params = params || []
 
-      const input = prefix + rest
-
-      let method = get_method(input, '$')
-      if (!method.name) error(`Unknown method ${input}`)
+      let input = prefix + rest
 
       const args = {
-        creator: prefix.match(/^a/i) ? 'author' : 'editor'
+        creator: input.match(/^a/i) ? 'author' : 'editor',
+        clean: !input.match(/^[AE]/),
       }
-
       params.forEach((p, i) => {
         const n = parseInt(p)
         if (!n || !isFinite(n)) error(`Unexpected integer value ${p}`)
         args[i ? 'm' : 'n'] = n
       })
 
+      // legacy methods
+      switch (input) {
+        case 'authors':
+        case 'editors':
+          args.etal = 'EtAl'
+          break
+
+        // workaround for duplicate-after-lowercase
+        case 'auth.etal':
+        case 'edtr.etal':
+          input = 'authetal2'
+          break
+      }
+
+      let method = get_method(input, '$')
+      if (!method.name) error(`Unknown method ${input}`)
+
       for (const flag of flags) {
         if (flag == 'initials') {
-          if (method.parameters.includes('withInitials')) {
-            args.withInitials = true
+          if (method.parameters.includes('initials')) {
+            args.initials = true
           }
           else {
             error(`unexpected flag '${flag}' on function '${input}'`)
@@ -187,8 +198,13 @@ method
         }
       }
 
-      method = match('$' + input, method.parameters.slice(0, args.length).map(arg => args[arg]), input, error);
-      if (prefix.match(/^[ae]/)) method += (options.migrate ? '.clean' : '._clean()')
+      method = match('$' + input, method.parameters.map((p, i) => {
+        const v = typeof args[p] !== 'undefined' ? args[p] : method.defaults[i]
+        delete args[p]
+        return v
+      }), input, error);
+      const ignored = Object.keys(args)
+      if (ignored.length) error(`Unused arguments ${ignored}`)
       return method
     }
   / operator:$([<>=] / [<>!] '=') n:$[0-9]+ {
@@ -206,10 +222,10 @@ method
       return match('$' + name, p || [], name, error)
     }
   / prop:$([a-zA-Z]+) {
+      if (prop.match(/^[a-z]/)) error(`Direct field access ${field} must start with a leading capital`)
       const field = options.items.name.field[prop.toLowerCase()]
       if (!field) error(`Unknown field ${JSON.stringify(prop)}`)
-      // if (options.migrate && field.match(/^[a-z]/)) error(`Unexpected cooked field ${field}`)
-      return options.migrate ? field : `this.$getField(${literal(field)})`
+      return options.migrate ? prop : `this.$getField(${literal(field)})`
     }
 
 fparams

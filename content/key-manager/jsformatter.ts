@@ -4,6 +4,9 @@ import * as types from '../../gen/items/items'
 import * as recast from 'recast'
 import { builders as b } from 'ast-types'
 import _ from 'lodash'
+import { ajv } from '../ajv'
+import { sprintf } from 'sprintf-js'
+import jsesc from 'jsesc'
 
 type AST = any
 
@@ -113,10 +116,54 @@ function upgrade(type) {
 
   throw { notUpgradable: type } // eslint-disable-line no-throw-literal
 }
+
+function postfix(_schema, format) {
+  // @ts-ignore
+  postfix.errors = []
+  let error = ''
+  try {
+    const expected = `${Date.now()}`
+    const found = sprintf(format, { a: expected, A: expected, n: expected })
+    if (!found.includes(expected)) {
+      error = `${format} does not contain %(a)s, %(A)s or %(n)s`
+    }
+    else if (found.split(expected).length > 2) {
+      error = `${format} contains multiple instances of %(a)s/%(A)s/%(n)s`
+    }
+    else {
+      return true
+    }
+  }
+  catch (err) {
+    error = err.message
+  }
+
+  // @ts-ignore
+  postfix.errors.push({
+    keyword: 'postfix',
+    message: error,
+    params: { keyword: 'postfix' },
+  })
+  return false
+}
+
+ajv.addKeyword({
+  keyword: 'postfix',
+  validate: postfix,
+})
+
 const api: typeof methods = _.cloneDeep(methods)
 for (const meta of Object.values(api)) {
   for (const property of Object.keys(meta.schema.properties)) {
     meta.schema.properties[property] = upgrade(meta.schema.properties[property])
+
+    if (meta.name === '_formatDate' || meta.name === '$date') {
+      meta.schema.properties[property].properties.value.pattern = '^([^%]|(%-?o?[ymdYDHMS]))+$'
+    }
+    else if (meta.name === '$postfix' && property === 'format') {
+      // @ts-ignore
+      meta.schema.properties[property].properties.value = { postfix: true }
+    }
   }
 }
 
@@ -132,28 +179,49 @@ for (const fname in api) {
 type Context = { arguments?: boolean, coerce?: boolean }
 export class PatternParser {
   public code: string
-  private finder: AST
+  private patterns: AST
   private ftype: string
 
   constructor(source: string) {
-    this.finder = recast.parse('[].find(pattern => { try { return pattern() } catch (err) { if (err.next) return ""; throw err } })')
+    const finder = recast.parse('[].find(pattern => { try { return pattern() } catch (err) { if (err.next) return ""; throw err } })')
+    this.patterns = finder.program.body[0].expression.callee.object.elements
+
     this.addpattern(recast.parse(source).program.body[0].expression)
-    this.insert(recast.parse('"zotero-" + this.item.id').program.body[0].expression, false)
-    this.code = recast.prettyPrint(this.finder, {tabWidth: 2}).code
+
+    // eslint-disable-next-line prefer-template
+    this.code = [
+      recast.prettyPrint(finder.program.body[0].expression, {quote: 'single', tabWidth: 2}).code,
+      // this.citekey is set as a side-effect
+      'return this.citekey || ("zotero-" + this.item.id)',
+    ].join(';\n')
   }
 
   private error(expr): void {
     throw new Error(`Unexpected ${expr.type} at ${expr.loc.start.column}`)
   }
 
-  protected Literal(expr: AST, _context: Context): AST {
-    return expr
+  protected UnaryExpression(expr: AST, _context: Context): AST {
+    if (expr.operator === '-' && expr.argument.type === 'Literal' && typeof expr.argument.value === 'number') {
+      return b.literal(-1 * expr.argument.value)
+    }
+    else {
+      this.error(expr)
+    }
+  }
+
+  protected Literal(expr: AST, context: Context): AST {
+    if (context.arguments) {
+      return expr
+    }
+    else {
+      return b.callExpression(b.identifier('text'), [expr])
+    }
   }
 
   kind(str: string): 'function' | 'filter' {
     switch (str[0]) {
       case '$': return 'function'
-      case '_': return 'function'
+      case '_': return 'filter'
       default: throw new Error(`indeterminate type for ${str}`)
     }
   }
@@ -197,14 +265,19 @@ export class PatternParser {
     else {
       if (method.parameters.length < args.length) throw new Error(`${me}: expected ${method.parameters.length} arguments, got ${args.length}`)
 
-      args = method.parameters.map((param: string) => parameters[param] || b.identifier('undefined'))
-      let arg
-      while (args.length && (arg = args[args.length - 1]).type === 'Identifier' && arg.name === 'undefined') args.pop()
+      args = method.parameters.map((param: string, i: number) => parameters[param] || ( typeof method.defaults[i] !== 'undefined' ? b.literal(method.defaults[i]) : b.identifier('undefined') ))
+      args.reverse()
+      const defaults = [...method.defaults].reverse()
+      while(args.length && ((args[0].type === 'Identifier' && args[0].name === 'undefined') || (args[0].type === 'Literal' && args[0].value === defaults[0]))) {
+        args.shift()
+        defaults.shift()
+      }
+      args.reverse()
     }
 
     let err: string
     if (err = method.validate(parameters)) {
-      throw new Error(`${me}: ${err}`)
+      throw new Error(`${me}: ${err} ${jsesc(parameters)}`)
     }
 
     return args
@@ -361,8 +434,7 @@ export class PatternParser {
       expr = this.addThis(expr, { coerce: true })
     }
 
-    // const wrapper = reset this.citekey
-    this.finder.program.body[0].expression.callee.object.elements.push(b.arrowFunctionExpression([], expr, true))
+    this.patterns.push(b.arrowFunctionExpression([], expr, false))
   }
 
   private addpattern(expr: AST) {
