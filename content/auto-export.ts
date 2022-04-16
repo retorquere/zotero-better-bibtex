@@ -300,7 +300,8 @@ const queue = new class TaskQueue {
   }
 
   // idle observer
-  protected observe(_subject, topic, _data) {
+  protected observe(subject, topic, data) {
+    log.debug('auto-export idle observer:', { subject, topic, data })
     if (!this.started || Preference.autoExport === 'off') return
 
     switch (topic) {

@@ -1,4 +1,5 @@
 import { Preference } from './prefs'
+import { log } from './logger'
 
 type Handler = () => void
 type TimerHandle = ReturnType<typeof setTimeout>
@@ -44,6 +45,7 @@ export class Scheduler {
   }
 
   public schedule(id: number, handler: Handler): void {
+    log.debug('scheduler.schedule:', { id, held: !!this.held })
     if (this.held) {
       this.held.set(id, handler)
     }
