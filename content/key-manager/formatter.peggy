@@ -187,10 +187,14 @@ method
         }
       }
 
-      console.log(args)
-      console.log(method.parameters.map((p, i) => args[p] || method.defaults[i]))
-      method = match('$' + input, method.parameters.map((p, i) => args[p] || method.defaults[i]), input, error);
-      if (prefix.match(/^[ae]/)) method += (options.migrate ? '.clean' : '._clean()')
+      method = match('$' + input, method.parameters.map((p, i) => {
+        const v = return args[p] || method.defaults[i]
+        delete args[p]
+        return v
+      }), input, error);
+      const ignored = Object.keys(args)
+      if (ignored.length) error(`Unused arguments ${ignored}`)
+      // if (prefix.match(/^[ae]/)) method += (options.migrate ? '.clean' : '._clean()')
       return method
     }
   / operator:$([<>=] / [<>!] '=') n:$[0-9]+ {
