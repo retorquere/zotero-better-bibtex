@@ -3,8 +3,8 @@
 <!DOCTYPE overlay SYSTEM "chrome://zotero-better-bibtex/locale/zotero-better-bibtex.dtd">
 
 <overlay id="zotero-better-bibtex-zoteroPane-overlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
-  <hbox id="zotero-items-toolbar">
-    <hbox id="better-bibtex-progress" insertbefore="zotero-tb-search-spinner" hidden="true">
+  <hbox id="zotero-item-toolbar">
+    <hbox id="better-bibtex-progress" hidden="true">
       <progressmeter id="better-bibtex-progress-meter" mode="determined" value="0"/>
       <label id="better-bibtex-progress-label" value="startup"/>
     </hbox>
