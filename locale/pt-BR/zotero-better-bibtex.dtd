@@ -79,6 +79,8 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.citekey.fold "Força chave de citação em texto puro">
 <!ENTITY better-bibtex.Preferences.citekey.search "Enable citation key search">
 <!ENTITY better-bibtex.Preferences.citekey.format "Formato da chave de citação">
+<!ENTITY better-bibtex.Preferences.citekey.format.new "New citation key format">
+<!ENTITY better-bibtex.Preferences.citekey.format.backup "Previous citation key format with error">
 
 <!ENTITY better-bibtex.Preferences.export.quickCopy "Quick-Copy">
 <!ENTITY better-bibtex.Preferences.export.quickCopy.explanation "Quick-Copy/drag-and-drop citations">
