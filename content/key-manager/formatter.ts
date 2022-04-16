@@ -507,12 +507,7 @@ class PatternFormatter {
 
   /** The first `N` (default: all) characters of the `M`th (default: first) author's last name. */
   public $auth(n=0, m=1, creator: 'author' | 'editor' = 'author', initials=false, clean=true) {
-    const authors = this.creators(creator === 'editor', initials)
-    if (!authors.length) return this.$text('')
-    let author = authors[m ? m - 1 : 0] || ''
-    if (n) author = author.substring(0, n)
-    if (clean) author = this.clean(author, true)
-    return this.$text(author)
+    return this.$authors([m, m], creator, initials, n, undefined, undefined, clean)
   }
 
   /** The forename initial of the first author. */
@@ -536,17 +531,6 @@ class PatternFormatter {
     let author = authors[authors.length - 1] || ''
     if (clean) author = this.clean(author, true)
     return this.$text(author)
-  }
-
-  /** returns the journal abbreviation, or, if not found, the journal title, If 'automatic journal abbreviation' is enabled in the BBT settings,
-   * it will use the same abbreviation filter Zotero uses in the wordprocessor integration. You might want to use the `abbr` filter on this.
-   * Abbreviation behavior can be specified as `abbrev+auto` (the default) which uses the explicit journal abbreviation if present, and tries the automatic
-   * abbreviator if not (if auto-abbrev is enabled in the preferences), `auto` (skip explicit journal abbreviation even if present), `abbrev`
-   * (no auto-abbrev even if it is enabled in the preferences) or `off` (no abbrevation).
-   */
-  public $journal(abbrev: 'abbrev+auto' | 'abbrev' | 'auto' | 'off' = 'abbrev+auto') {
-    // this.item.item is the native item stored inside the this.item sorta-proxy
-    return this.$text((abbrev === 'off' ? '' : JournalAbbrev.get(this.item.item, abbrev)) || this.item.getField('publicationTitle') as string || '')
   }
 
   /** Corresponds to the BibTeX style "alpha". One author: First three letters of the last name. Two to four authors: First letters of last names concatenated.
@@ -667,6 +651,17 @@ class PatternFormatter {
     }
     if (clean) author = this.clean(author, true)
     return this.$text(author)
+  }
+
+  /** returns the journal abbreviation, or, if not found, the journal title, If 'automatic journal abbreviation' is enabled in the BBT settings,
+   * it will use the same abbreviation filter Zotero uses in the wordprocessor integration. You might want to use the `abbr` filter on this.
+   * Abbreviation behavior can be specified as `abbrev+auto` (the default) which uses the explicit journal abbreviation if present, and tries the automatic
+   * abbreviator if not (if auto-abbrev is enabled in the preferences), `auto` (skip explicit journal abbreviation even if present), `abbrev`
+   * (no auto-abbrev even if it is enabled in the preferences) or `off` (no abbrevation).
+   */
+  public $journal(abbrev: 'abbrev+auto' | 'abbrev' | 'auto' | 'off' = 'abbrev+auto') {
+    // this.item.item is the native item stored inside the this.item sorta-proxy
+    return this.$text((abbrev === 'off' ? '' : JournalAbbrev.get(this.item.item, abbrev)) || this.item.getField('publicationTitle') as string || '')
   }
 
   /** The number of the first page of the publication (Caution: this will return the lowest number found in the pages field, since BibTeX allows `7,41,73--97` or `43+`.) */

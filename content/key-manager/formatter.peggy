@@ -3,19 +3,8 @@
   const jsesc = require('jsesc')
 
   function get_method(method, prefix) {
-    method = (prefix || '') + method.toLowerCase()
-    switch (method) {
-      // workaround for duplicate-after-lowercase
-      case '$auth.etal':
-        return options.methods.$authetal2
-
-      case '$edtr.etal':
-        return options.methods.$edtretal2
-
-      default:
-        method = method.replace(/[-.]/g, '')
-        return options.methods[method] || {}
-    }
+    method = (prefix || '') + method.toLowerCase().replace(/[-.]/g, '')
+    return options.methods[method] || {}
   }
 
   function literal(v, noident) {
@@ -66,15 +55,20 @@
     }
     else {
       if (options.migrate) {
-        const n_m = Object.keys(params).sort().reverse()
-        const n_m_p = method.parameters.slice(0, n_m.length).join(',')
-        if (['n', 'n,m'].includes(n_m.join(',')) && n_m.join(',') === n_m_p) {
-          args = '(' + n_m.map(p => literal(params[p])) + ')'
+        const passed = method.parameters.filter(p => p in params)
+        const passed_j = passed.join(',') + ','
+        const all = method.parameters.join(',') + ','
+
+        if (!passed.length) {
+          args = ''
+        }
+        else if (method.parameters.length <= 2 && all.startsWith(passed_j) && passed_j.match(/(^|,)(start|n),/)) {
+          args = passed.map(p => literal(params[p]))
         }
         else {
-          args = Object.entries(params).map(([p, v]) => `${p}=${literal(v)}`).join(',')
-          if (args) args = `(${args})`
+          args = passed.map(p => `${p}=${literal(params[p])}`).join(',')
         }
+        if (args) args = `(${args})`
         return `${method.name.substr(1)}${args}`
       }
 
@@ -158,23 +152,31 @@ method
       let input = prefix + rest
 
       const args = {
-        creator: prefix.match(/^a/i) ? 'author' : 'editor',
-        clean: !!prefix.match(/^[ae]/),
+        creator: input.match(/^a/i) ? 'author' : 'editor',
+        clean: !input.match(/^[AE]/),
       }
-      // legacy method
-      if (input === 'authors') {
-        args.joiner = ' '
-        args.etal = 'EtAl'
-      }
-
-      let method = get_method(input, '$')
-      if (!method.name) error(`Unknown method ${input}`)
-
       params.forEach((p, i) => {
         const n = parseInt(p)
         if (!n || !isFinite(n)) error(`Unexpected integer value ${p}`)
         args[i ? 'm' : 'n'] = n
       })
+
+      // legacy methods
+      switch (input) {
+        case 'authors':
+        case 'editors':
+          args.etal = 'EtAl'
+          break
+
+        // workaround for duplicate-after-lowercase
+        case 'auth.etal':
+        case 'edtr.etal':
+          input = 'authetal2'
+          break
+      }
+
+      let method = get_method(input, '$')
+      if (!method.name) error(`Unknown method ${input}`)
 
       for (const flag of flags) {
         if (flag == 'initials') {
