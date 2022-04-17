@@ -107,8 +107,6 @@ Entry.prototype.lint = function(_explanation) {
   const type = lint[this.entrytype.toLowerCase()]
   if (!type) return
 
-  log.debug('lint:', type)
-
   // let fields = Object.keys(this.has)
   const warnings: string[] = []
 
@@ -128,7 +126,6 @@ Entry.prototype.lint = function(_explanation) {
     if (!type.optional.find(allowed => allowed.split('/').includes(field))) warnings.push(`Unexpected field '${field}'`)
   }
   */
-  log.debug('lint:', warnings)
 
   return warnings
 }
@@ -390,7 +387,7 @@ export function doExport(): void {
         break
 
       default:
-        log.debug('Unexpected date type', { date: item.date, parsed: ref.date })
+        log.error('Unexpected date type', { date: item.date, parsed: ref.date })
     }
 
     ref.add({ name: 'keywords', value: item.tags, enc: 'tags' })
@@ -788,7 +785,7 @@ class ZoteroItem {
       }
 
       if (!att.path) {
-        log.debug(`attachment import: file record '${record}' has no file path`)
+        log.error(`attachment import: file record '${record}' has no file path`)
         continue
       }
 
@@ -919,7 +916,6 @@ class ZoteroItem {
   protected $groups(value) {
     for (const group of value.split(/\s*,\s*/)) {
       if (this.jabref.groups[group] && !this.jabref.groups[group].entries.includes(this.bibtex.key)) this.jabref.groups[group].entries.push(this.bibtex.key)
-      log.debug('$groups: adding', this.bibtex.key, 'to', group, ':', this.jabref.groups)
     }
     return true
   }

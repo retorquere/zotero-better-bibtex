@@ -77,7 +77,7 @@ async function rebuild() {
   const vars = [ 'Zotero', 'workerContext' ]
   const globalName = vars.join('__')
   await bundle({
-    entryPoints: [ 'translators/worker/zotero.ts' ],
+    entryPoints: [ 'content/worker/zotero.ts' ],
     globalName,
     plugins: [
       loader.trace('worker'),
@@ -86,7 +86,7 @@ async function rebuild() {
       loader.__dirname,
       shims
     ],
-    outdir: 'build/resource/worker',
+    outdir: 'build/content/worker',
     banner: { js: [
         'importScripts("resource://gre/modules/osfile.jsm")',
         'importScripts("resource://zotero/config.js") // import ZOTERO_CONFIG',
@@ -191,4 +191,7 @@ async function rebuild() {
   }
 }
 
-rebuild().catch(err => console.log(err))
+rebuild().catch(err => {
+  console.log(err)
+  process.exit(1)
+})

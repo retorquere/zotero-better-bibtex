@@ -5,7 +5,6 @@ declare const __estrace: any // eslint-disable-line no-underscore-dangle
 import { affects, names as preferences, defaults, PreferenceName, Preferences, schema } from '../../gen/preferences/meta'
 import { client } from '../../content/client'
 import { RegularItem, Item, Collection } from '../../gen/typings/serialized-item'
-import { log } from '../../content/logger'
 import { environment } from '../../content/environment'
 import { Pinger } from '../../content/ping'
 
@@ -19,7 +18,6 @@ const cacheDisabler = new class {
 
     // collections: jabref 4 stores collection info inside the entry, and collection info depends on which part of your library you're exporting
     if (property === 'collections') {
-      // log.debug('cache-rate: not for item with collections', target, (new Error).stack)
       target.$cacheable = false
     }
 
@@ -72,6 +70,7 @@ type TranslatorHeader = {
     Year: boolean
     Normalize: boolean
     markdown: boolean
+    cacheUse: boolean
   }
 
   configOptions: {
@@ -155,6 +154,7 @@ export class ITranslator { // eslint-disable-line @typescript-eslint/naming-conv
     exportFileData?: boolean
     useJournalAbbreviation?: boolean
     keepUpdated?: boolean
+    cacheUse?: boolean
     Title?: boolean
     Authors?: boolean
     Year?: boolean
@@ -174,12 +174,12 @@ export class ITranslator { // eslint-disable-line @typescript-eslint/naming-conv
   // public TeX: boolean
   // public CSL: boolean
 
-  private cacheable: boolean
+  private cacheable = true
   private _items: Items
 
   public cache: {
     hits: number
-    misses: number
+    requests: number
   }
 
   public header: TranslatorHeader
@@ -240,14 +240,20 @@ export class ITranslator { // eslint-disable-line @typescript-eslint/naming-conv
       sep: this.platform === 'win' ? '\\' : '/',
     }
 
+    try {
+      if (Zotero.getOption('caching') === false) this.cacheable = false
+    }
+    catch (err) {
+    }
+
     for (const key in this.options) {
       if (typeof this.options[key] === 'boolean') {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-        this.options[key] = !!Zotero.getOption(key)
+        this.options[key] = Zotero.getOption(key)
       }
       else {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-        this.options[key] = Zotero.getOption(key)
+        this.options[key] = !!Zotero.getOption(key)
       }
     }
 
@@ -255,13 +261,14 @@ export class ITranslator { // eslint-disable-line @typescript-eslint/naming-conv
     if (mode === 'export') {
       this.cache = {
         hits: 0,
-        misses: 0,
+        requests: 0,
       }
       this.export = {
         dir: (Zotero.getOption('exportDir') as string),
         path: (Zotero.getOption('exportPath') as string),
       }
       if (this.export.dir?.endsWith(this.paths.sep)) this.export.dir = this.export.dir.slice(0, -1)
+      this.options.cacheUse = Zotero.getOption('cacheUse')
     }
 
     this.preferences = Object.entries(defaults).reduce((acc, [pref, dflt]) => {
@@ -270,7 +277,6 @@ export class ITranslator { // eslint-disable-line @typescript-eslint/naming-conv
     }, {} as unknown as Preferences)
 
     // special handling
-    log.debug('prefs: @load', this.preferences)
     this.skipFields = this.preferences.skipFields.toLowerCase().split(',').map(field => this.typefield(field)).filter((s: string) => s)
     this.skipField = this.skipFields.reduce((acc, field) => { acc[field] = true; return acc }, {})
 
@@ -282,7 +288,7 @@ export class ITranslator { // eslint-disable-line @typescript-eslint/naming-conv
     this.preferences.testing = (Zotero.getHiddenPref('better-bibtex.testing') as boolean)
 
     if (mode === 'export') {
-      this.unicode = !Translator.preferences[`ascii${this.header.label.replace(/Better /, '')}`]
+      this.unicode = !this.preferences[`ascii${this.header.label.replace(/Better /, '')}`]
 
       if (this.preferences.baseAttachmentPath && (this.export.dir === this.preferences.baseAttachmentPath || this.export.dir?.startsWith(this.preferences.baseAttachmentPath + this.paths.sep))) {
         this.preferences.relativeFilePaths = true
@@ -290,7 +296,7 @@ export class ITranslator { // eslint-disable-line @typescript-eslint/naming-conv
 
       // when exporting file data you get relative paths, when not, you get absolute paths, only one version can go into the cache
       // relative file paths are going to be different based on the file being exported to
-      this.cacheable = Zotero.getOption('caching') && !(
+      this.cacheable = this.cacheable && this.preferences.caching && !(
         this.options.exportFileData
         ||
         this.preferences.relativeFilePaths
@@ -299,20 +305,20 @@ export class ITranslator { // eslint-disable-line @typescript-eslint/naming-conv
       )
 
       if (this.BetterTeX) {
-        Translator.preferences.separatorList = Translator.preferences.separatorList.trim()
-        Translator.preferences.separatorNames = Translator.preferences.separatorNames.trim()
+        this.preferences.separatorList = this.preferences.separatorList.trim()
+        this.preferences.separatorNames = this.preferences.separatorNames.trim()
         this.and = {
           list: {
-            re: new RegExp(escapeRegExp(Translator.preferences.separatorList), 'g'),
-            repl: ` {${Translator.preferences.separatorList}} `,
+            re: new RegExp(escapeRegExp(this.preferences.separatorList), 'g'),
+            repl: ` {${this.preferences.separatorList}} `,
           },
           names: {
-            re: new RegExp(` ${escapeRegExp(Translator.preferences.separatorNames)} `, 'g'),
-            repl: ` {${Translator.preferences.separatorNames}} `,
+            re: new RegExp(` ${escapeRegExp(this.preferences.separatorNames)} `, 'g'),
+            repl: ` {${this.preferences.separatorNames}} `,
           },
         }
-        Translator.preferences.separatorList = ` ${Translator.preferences.separatorList} `
-        Translator.preferences.separatorNames = ` ${Translator.preferences.separatorNames} `
+        this.preferences.separatorList = ` ${this.preferences.separatorList} `
+        this.preferences.separatorNames = ` ${this.preferences.separatorNames} `
       }
     }
 
@@ -320,7 +326,6 @@ export class ITranslator { // eslint-disable-line @typescript-eslint/naming-conv
     if (mode === 'export' && this.header.configOptions?.getCollections && Zotero.nextCollection) {
       let collection: any
       while (collection = Zotero.nextCollection()) {
-        log.debug('getCollection:', collection)
         this.registerCollection(collection, '')
       }
     }
@@ -346,7 +351,9 @@ export class ITranslator { // eslint-disable-line @typescript-eslint/naming-conv
 
   getPreferenceOverride(pref) { // eslint-disable-line @typescript-eslint/explicit-module-boundary-types
     try {
-      return Zotero.getOption(`preference_${pref}`) // eslint-disable-line @typescript-eslint/no-unsafe-return
+      const override = Zotero.getOption(`preference_${pref}`)
+      if (typeof override !== 'undefined') this.cacheable = false
+      return override // eslint-disable-line @typescript-eslint/no-unsafe-return
     }
     catch (err) {
       return undefined

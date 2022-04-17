@@ -15,6 +15,7 @@ function assert(cond, msg) {
 export type Parameter = {
   name: string
   default: SimpleLiteral
+  rest?: boolean
 }
 export type Method = {
   doc: string
@@ -76,6 +77,7 @@ export class API {
     const p: Parameter = {
       name: param.name.getText(this.ast),
       default: this.Literal(param.initializer),
+      rest: !!param.dotDotDotToken,
     }
     method.parameters.push(p)
 
@@ -103,6 +105,9 @@ export class API {
 
       case ts.SyntaxKind.ObjectLiteralExpression:
         return this.ObjectLiteralExpression(init)
+
+      case ts.SyntaxKind.TrueKeyword:
+        return true
 
       case ts.SyntaxKind.FalseKeyword:
         return false
@@ -141,8 +146,22 @@ export class API {
       case ts.SyntaxKind.ArrayType:
         return this.ArrayType(type as ts.ArrayTypeNode)
 
+      case ts.SyntaxKind.TupleType:
+        return this.TupleType(type as ts.TupleTypeNode)
+
       default:
         throw {...type, kindName: ts.SyntaxKind[type.kind] } // eslint-disable-line no-throw-literal
+    }
+  }
+
+  private TupleType(tuple: ts.TupleTypeNode) {
+    return {
+      type: 'array',
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+      prefixItems: tuple.elements.map((elt: ts.TypeNode) => this.schema(elt)),
+      items: false,
+      minItems: tuple.elements.length,
+      maxItems: tuple.elements.length,
     }
   }
 
@@ -180,11 +199,14 @@ export class API {
         enum: Object.keys(BabelTag).sort(),
       }
     }
-    if (typeName === 'BabelLanguageTag') {
+    else if (typeName === 'BabelLanguageTag') {
       return {
         type: 'string',
         enum: Object.values(BabelTag).sort(),
       }
+    }
+    else if (typeName === 'RegExp') {
+      return { instanceof: typeName }
     }
     assert(typeName === 'Record', `unexpected TypeReference ${typeName}`)
     assert(typeref.typeArguments.length === 2, `expected 2 types, found ${typeref.typeArguments.length}`)
@@ -250,11 +272,11 @@ export class API {
       combined = { const: [...consts][0] }
     }
     else {
-      return { oneOf: types }
+      return { anyOf: types }
     }
 
     if (other.length === 0) return combined
 
-    return { oneOf : other.concat(combined) }
+    return { anyOf : other.concat(combined) }
   }
 }

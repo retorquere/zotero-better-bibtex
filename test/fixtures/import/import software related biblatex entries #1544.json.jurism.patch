@@ -1,0 +1,42 @@
+[
+  {
+    "op": "replace",
+    "path": "/items/0/attachments/0/key",
+    "value": "WZLTBD7Q"
+  },
+  {
+    "op": "replace",
+    "path": "/items/0/attachments/0/accessDate",
+    "value": "2022-03-25T22:02:40Z"
+  },
+  {
+    "op": "replace",
+    "path": "/items/0/attachments/0/uri",
+    "value": "http://zotero.org/users/local/NaNzQo9n/items/WZLTBD7Q"
+  },
+  {
+    "op": "remove",
+    "path": "/items/0/extra/1",
+    ":value": "Publisher: https://github.com/scilab/scilab"
+  },
+  {
+    "op": "add",
+    "path": "/items/0/extra/3",
+    "value": "tex.repository: https://github.com/scilab/scilab"
+  },
+  {
+    "op": "replace",
+    "path": "/items/0/dateModified",
+    "value": "2022-03-25T22:02:40Z"
+  },
+  {
+    "op": "replace",
+    "path": "/items/0/dateAdded",
+    "value": "2022-03-25T22:02:40Z"
+  },
+  {
+    "op": "replace",
+    "path": "/items/0/uri",
+    "value": "http://zotero.org/users/local/NaNzQo9n/items/T48LEI49"
+  }
+]

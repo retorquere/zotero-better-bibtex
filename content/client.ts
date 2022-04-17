@@ -1,5 +1,9 @@
-// we may be running in a translator, which will have it pre-loaded
-if (typeof Components !== 'undefined') Components.utils.import('resource://zotero/config.js')
+declare const Components: any
 declare const ZOTERO_CONFIG: any
 
-export const client = ZOTERO_CONFIG.GUID.replace(/@.*/, '').replace('-', '')
+// we may be running in a translator, which will have it pre-loaded
+if (typeof Components !== 'undefined') Components.utils.import('resource://zotero/config.js')
+
+// check for process.version for node testing
+export const client = (typeof Zotero !== 'undefined') ? ZOTERO_CONFIG.GUID.replace(/@.*/, '').replace('-', '') : 'zotero'
+

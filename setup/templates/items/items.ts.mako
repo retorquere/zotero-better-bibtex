@@ -1,5 +1,7 @@
 /* eslint-disable prefer-template, id-blacklist, @typescript-eslint/no-unsafe-return, @typescript-eslint/explicit-module-boundary-types */
 
+declare const Zotero: any
+
 import { client } from '../../content/client'
 import { Item } from '../typings/serialized-item'
 import { ErrorObject } from 'ajv'
@@ -44,7 +46,7 @@ export const valid: Valid = {
     if (validator.me(obj)) return ''
     const err = (validator.me.errors as ErrorObject[]).map(e => err2string(e, obj).trim()).join(';\n')
     if (!strict && validator.other(obj)) {
-      Zotero.debug('Better BibTeX soft error: ' + err)
+      if (typeof Zotero !== 'undefined') Zotero.debug('Better BibTeX soft error: ' + err)
       return ''
     }
     // https://ajv.js.org/api.html#validation-errors

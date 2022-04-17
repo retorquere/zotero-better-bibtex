@@ -243,6 +243,16 @@
     "label": "Enable caching for background exports"
   },
   {
+    "name": "charmap",
+    "type": "string",
+    "default": "",
+    "affects": [
+      "Better BibLaTeX",
+      "Better BibTeX"
+    ],
+    "var": "charmap"
+  },
+  {
     "name": "citeCommand",
     "type": "string",
     "default": "cite",
@@ -265,6 +275,14 @@
     "affects": [],
     "var": "citekeyFormat",
     "label": "Citation key format"
+  },
+  {
+    "name": "citekeyFormatBackup",
+    "type": "string",
+    "default": "",
+    "affects": [],
+    "var": "citekeyFormatBackup",
+    "label": "Previous citation key format with error"
   },
   {
     "name": "citekeySearch",

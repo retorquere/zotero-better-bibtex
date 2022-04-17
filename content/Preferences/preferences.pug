@@ -62,6 +62,7 @@ bbt:doc Hyperlink to select items in your library
 // the zero-width-space is a marker to re-save the current default so it doesn't get replaced when the default changes later, which would change new keys suddenly
 preference#pref-better-bibtex-citekeyFormat(name="extensions.zotero.translators.better-bibtex.citekeyFormat" bbt:affects="" type="string" default="\u200b[auth:lower][shorttitle3_3][year]")
 bbt:doc Set the pattern used to generate citation keys. The format of the keys is documented [here]({{ ref . "citing" }}).
+preference#pref-better-bibtex-citekeyFormatBackup(name="extensions.zotero.translators.better-bibtex.citekeyFormatBackup" bbt:affects="" type="string" default="")
 
 preference#pref-better-bibtex-citekeySearch(name="extensions.zotero.translators.better-bibtex.citekeySearch" bbt:affects="" type="bool" default="true")
 bbt:doc Enable searching on citation keys. Slows down startup on very large libraries. Requires Zotero restart to enable/disable.
@@ -323,6 +324,12 @@ bbt:doc.
 preference(name="extensions.zotero.translators.better-bibtex.separatorNames" bbt:affects="tex" type="string" default="and")
 bbt:doc.
   Separator between author names. You will need to add `--namesep='|'` to your biber calls.
+
+preference(name="extensions.zotero.translators.better-bibtex.charmap" bbt:affects="tex" type="string" default="")
+bbt:doc.
+  a JSON mapping from single character to raw LaTeX, to augment the default mapping; these will be applied when you export as ASCII. **DO NOT** edit this preferencedirectly,
+  but create a CSV (not semicolons) file named `charmap.csv` in the zotero data directory under the `better-bibtex` folder with columns `unicode` (the source character),
+  `text` (representation in LaTeX text mode, if any) and `math` (representation in LaTeX math mode, if any, without dollar signs).
 
 // documented in tooltip
 preference#pref-better-bibtex-retainCache(name="extensions.zotero.translators.better-bibtex.retainCache" bbt:affects="" type="bool" default="false")

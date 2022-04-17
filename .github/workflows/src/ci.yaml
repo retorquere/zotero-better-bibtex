@@ -102,12 +102,7 @@ jobs:
 
     - name: install ${{ matrix.client }}
       run: |
-        # ubuntu bug
-        #sudo add-apt-repository ppa:tj/bugfixes
-        #sudo apt-get update
-        #sudo apt install apt
-
-        curl -sL https://zotero.retorque.re/file/apt-package-archive/install.sh | sudo bash
+        curl -sL https://raw.githubusercontent.com/retorquere/zotero-deb/master/install.sh | sudo bash
         sudo apt-get update
         sudo apt-get install ${{ matrix.client }}
 

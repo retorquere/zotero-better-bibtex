@@ -1,10 +1,11 @@
 Components.utils.import('resource://gre/modules/Services.jsm')
 
-import { Preference } from '../gen/preferences'
+import { Preference } from './prefs'
 import { defaults } from '../gen/preferences/meta'
 import { Translators } from './translators'
 import { log } from './logger'
-import Zip from 'jszip'
+import Tar from 'tar-js'
+import { gzip } from 'pako'
 
 import { DB } from './db/main'
 import { DB as Cache } from './db/cache'
@@ -25,7 +26,6 @@ export class ErrorReport {
   private bucket: string
   private params: any
   private globals: Record<string, any>
-  private zipped: Uint8Array
   private cacheState: string
 
   private errorlog: {
@@ -42,7 +42,7 @@ export class ErrorReport {
     wizard.canRewind = false
 
     try {
-      await Zotero.HTTP.request('PUT', `${this.bucket}/${this.key}-${this.timestamp}.zip`, {
+      await Zotero.HTTP.request('PUT', `${this.bucket}/${this.key}-${this.timestamp}.tar.gz`, {
         noCache: true,
         // followRedirects: true,
         // noCache: true,
@@ -50,9 +50,9 @@ export class ErrorReport {
         headers: {
           'x-amz-storage-class': 'STANDARD',
           'x-amz-acl': 'bucket-owner-full-control',
-          'Content-Type': 'application/zip',
+          'Content-Type': 'application/x-tar',
         },
-        body: await this.zip(),
+        body: this.tar(),
       })
 
       wizard.advance()
@@ -103,36 +103,32 @@ export class ErrorReport {
       return JSON.parse((await Zotero.HTTP.request('GET', latest, { noCache: true })).response).tag_name.replace('v', '')
     }
     catch (err) {
-      log.debug('errorreport.latest:', err)
+      log.error('errorreport.latest:', err)
       return null
     }
   }
 
-  public async zip(): Promise<Uint8Array> {
-    if (!this.zipped) {
-      const zip = new Zip
+  public tar(): Uint8Array {
+    const tape = new Tar
 
-      zip.file(`${this.key}/debug.txt`, [ this.errorlog.info, this.cacheState, this.errorlog.errors, this.errorlog.debug ].filter(chunk => chunk).join('\n\n'))
+    tape.append(
+      `${this.key}/debug.txt`,
+      [ this.errorlog.info, this.cacheState, this.errorlog.errors, this.errorlog.debug ].filter(chunk => chunk).join('\n\n')
+    )
 
-      if (this.errorlog.items) zip.file(`${this.key}/items.json`, this.errorlog.items)
+    if (this.errorlog.items) tape.append(`${this.key}/items.json`, this.errorlog.items)
 
-      if (this.globals.document.getElementById('better-bibtex-error-report-include-db').checked) {
-        zip.file(`${this.key}/database.json`, DB.serialize({ serializationMethod: 'pretty' }))
-        zip.file(`${this.key}/cache.json`, Cache.serialize({ serializationMethod: 'pretty' }))
-      }
-
-      this.zipped = await zip.generateAsync({
-        type: 'uint8array',
-        compression: 'DEFLATE',
-        compressionOptions: { level: 9 },
-      })
+    if (this.globals.document.getElementById('better-bibtex-error-report-include-db').checked) {
+      tape.append(`${this.key}/database.json`, DB.serialize({ serializationMethod: 'pretty' }))
+      tape.append(`${this.key}/cache.json`, Cache.serialize({ serializationMethod: 'pretty' }))
     }
-    return this.zipped
+
+    return gzip(tape.out) as Uint8Array
   }
 
   public async save(): Promise<void> {
-    const filename = await pick('Logs', 'save', [['ZIP Archive (*.zip)', '*.zip']], `${this.key}.zip`)
-    if (filename) await OS.File.writeAtomic(filename, await this.zip())
+    const filename = await pick('Logs', 'save', [['Tape Archive (*.tar.gz)', '*.tar.gz']], `${this.key}.tar.gz`)
+    if (filename) await OS.File.writeAtomic(filename, this.tar())
   }
 
   private async ping(region: string) {
@@ -143,7 +139,6 @@ export class ErrorReport {
 
   public async load(): Promise<void> {
     this.key = this.timestamp = (new Date()).toISOString().replace(/\..*/, '').replace(/:/g, '.')
-    this.zipped = null
 
     const wizard = this.globals.document.getElementById('better-bibtex-error-report')
 
@@ -161,7 +156,7 @@ export class ErrorReport {
       debug: Zotero.Debug.getConsoleViewerOutput().slice(-500000).join('\n'), // eslint-disable-line no-magic-numbers
     }
 
-    if (Zotero.BetterBibTeX.ready && this.params.scope) {
+    if (this.params.scope) {
       await Zotero.BetterBibTeX.ready
       this.errorlog.items = await Translators.exportItems(Translators.byLabel.BetterBibTeXJSON.translatorID, {exportNotes: true, dropAttachments: true, Normalize: true}, this.params.scope)
     }

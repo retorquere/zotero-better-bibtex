@@ -36,6 +36,23 @@ const htmlConverter = new class HTMLConverter {
   private embraced: boolean
   private packages: { [key: string]: boolean } = {}
 
+  private charmap(): any {
+    if (!Translator.preferences.charmap) return {}
+
+    try {
+      const charmap = JSON.parse(Translator.preferences.charmap)
+      for (const [u, l] of Object.entries(charmap)) {
+        if (typeof l === 'string') charmap[u] = { text: l }
+        if (!charmap[u].text && !charmap[u].math) delete charmap[u]
+      }
+      return charmap
+    }
+    catch (err) {
+      log.debug('invalid charmap', Translator.preferences.charmap)
+      return {}
+    }
+  }
+
   public convert(html: string, options: ConverterOptions): ParseResult {
     this.embraced = false
     this.options = options
@@ -61,15 +78,18 @@ const htmlConverter = new class HTMLConverter {
       this.mapping = unicode2latex.ascii
     }
 
+    // safeguard against modifications for reusable workers
+    this.mapping = {
+      ...this.mapping,
+      ...this.charmap(),
+    }
+
     if (!this.mapping.initialized) {
-      // translator is re-ran every time it's used, not cached ready-to-run, so safe to modify the mapping
-      // TODO: THIS WILL BE A PROBLEM FOR REUSABLE WORKERS
       for (const c of Translator.preferences.ascii) {
         this.mapping[c] = unicode2latex.ascii[c]
       }
 
       if (Translator.preferences.mapUnicode === 'conservative') {
-        // TODO: THIS TOO WILL BE A PROBLEM FOR REUSABLE WORKERS
         for (const keep of Object.keys(switchMode).sort()) {
           const remove = switchMode[keep]
           const unicode = Translator.preferences[`map${keep[0].toUpperCase()}${keep.slice(1)}`]
@@ -234,7 +254,7 @@ const htmlConverter = new class HTMLConverter {
         break
 
       default:
-        log.debug(`unexpected tag '${tag.nodeName}' (${Object.keys(tag)})`)
+        log.error(`unexpected tag '${tag.nodeName}' (${Object.keys(tag)})`)
         break
     }
 

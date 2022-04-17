@@ -109,7 +109,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.citekey.uniqueness.scope.library "dentro de cada biblioteca">
 <!ENTITY better-bibtex.Preferences.citekey.uniqueness.scope.global "em todas as bibliotecas">
 
-<!ENTITY better-bibtex.Preferences.citekey.AUXScanner "Analisador BibTeX AUX">
+<!ENTITY better-bibtex.Preferences.citekey.AUXScanner "BibTeX AUX/Markdown scanner">
 <!ENTITY better-bibtex.Preferences.citekey.AUXScanner.import "When scanning an AUX file, attempt to import entries from the attached bib file when their citation keys are not in Zotero">
 
 <!ENTITY better-bibtex.Preferences.advanced "Avançado">
@@ -215,7 +215,7 @@ If you have this on, and you experience any problem that is not the cache gettin
 <!ENTITY better-bibtex.Preferences.rescan-citekeys "Reler chaves de citação fixas">
 <!ENTITY better-bibtex.Preferences.resetCache "Zerar cache">
 <!ENTITY better-bibtex.BetterBibTeX.reportErrors "Send Better BibTeX support log...">
-<!ENTITY better-bibtex.BetterBibTeX.auxScanner "Scan BibTeX AUX file for entries...">
+<!ENTITY better-bibtex.BetterBibTeX.auxScanner "Scan BibTeX AUX/Markdown file for references...">
 <!ENTITY better-bibtex.bulk-keys-confirm.message "Você está modificando mais que {treshold} items de uma vez. Tem certeza?">
 <!ENTITY better-bibtex.bulk-keys-confirm.whatever "OK e não perguntar novamente">
 <!ENTITY better-bibtex.BetterBibTeX.menu "Better BibTeX">

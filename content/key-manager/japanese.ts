@@ -2,7 +2,7 @@
 import Kuroshiro from 'kuroshiro'
 import NodeDictionaryLoader from 'kuromoji/src/loader/NodeDictionaryLoader'
 import { log } from '../logger'
-import { Preference } from '../../gen/preferences'
+import { Preference } from '../prefs'
 import KuromojiAnalyzer from 'kuroshiro-analyzer-kuromoji'
 import { Events } from '../events'
 import { environment } from '../environment'

@@ -24,7 +24,7 @@ import { clean_pane_persist } from './clean_pane_persist'
 import { flash } from './flash'
 import { Deferred } from './deferred'
 
-import { Preference } from '../gen/preferences' // needs to be here early, initializes the prefs observer
+import { Preference } from './prefs' // needs to be here early, initializes the prefs observer
 import * as preferences from '../gen/preferences/meta'
 require('./pull-export') // just require, initializes the pull-export end points
 require('./json-rpc') // just require, initializes the json-rpc end point
@@ -109,7 +109,7 @@ $patch$(Zotero.Utilities.Item?.itemToCSLJSON ? Zotero.Utilities.Item : Zotero.Ut
     }
   }
   catch (err) {
-    log.debug('failed patching CSL-JSON:', err)
+    log.error('failed patching CSL-JSON:', err)
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
@@ -471,7 +471,7 @@ function findOverride(exportPath: string, extension: string, filename: string, l
         if (typeof loaded === 'string' || loaded) return loaded
       }
       catch (err) {
-        log.debug('failed to load override', candidate)
+        log.error('failed to load override', candidate)
       }
     }
   }
@@ -516,20 +516,18 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
           (path: string) => Zotero.File.getContents(path) // eslint-disable-line @typescript-eslint/no-unsafe-return
         ),
       }
-      log.debug('export overrides:', override)
       displayOptions.caching = displayOptions.caching && !override.postscript && !override.preferences && !override.strings
 
       if (override.postscript) displayOptions.preference_postscript = override.postscript
       if (typeof override.strings === 'string') displayOptions.preference_strings = override.strings
       if (override.preferences) {
         displayOptions.caching = false
-        log.debug('prefs override:', override.preferences)
         for (const [pref, value] of Object.entries(override.preferences)) {
           if (typeof value !== typeof preferences.defaults[pref]) {
-            log.debug(`preference override for ${pref}: expected ${typeof preferences.defaults[pref]}, got ${typeof value}`)
+            log.error(`preference override for ${pref}: expected ${typeof preferences.defaults[pref]}, got ${typeof value}`)
           }
           else if (preferences.options[pref] && !preferences.options[pref][value]) {
-            log.debug(`preference override for ${pref}: expected ${Object.keys(preferences.options[pref]).join(' / ')}, got ${value}`)
+            log.error(`preference override for ${pref}: expected ${Object.keys(preferences.options[pref]).join(' / ')}, got ${value}`)
           }
           else {
             displayOptions[`preference_${pref}`] = value
@@ -589,7 +587,6 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
         disabled = Object.keys(this._handlers).filter(handler => !['done', 'itemDone', 'error'].includes(handler)).join(', ')
         if (disabled) disabled = `handlers: ${disabled}`
       }
-      log.debug('worker translation:', !disabled, disabled)
       if (!disabled) {
         const path = this.location?.path
 
@@ -600,7 +597,6 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
 
         return Translators.exportItemsByQueuedWorker(translatorID, displayOptions, { translate: this, scope: { ...this._export, getter: this._itemGetter }, path })
           .then(result => {
-            log.debug('worker translation done, result:', !!result)
             // eslint-disable-next-line id-blacklist
             this.string = result
             this.complete(result || true)
@@ -645,6 +641,7 @@ notify('item-tag', (_action: any, _type: any, ids: any[], _extraData: any) => {
 
 notify('item', (action: string, type: any, ids: any[], extraData: { [x: string]: { bbtCitekeyUpdate: any } }) => {
   // prevents update loop -- see KeyManager.init()
+  log.debug('item', action, ids)
   if (action === 'modify') {
     ids = ids.filter((id: string | number) => !extraData[id] || !extraData[id].bbtCitekeyUpdate)
     if (!ids.length) return
@@ -747,7 +744,6 @@ class Progress {
     this.mode = Preference.startupProgress
 
     log.debug(`${this.name}: waiting for Zotero locks...`)
-
     log.debug(`${this.name}: ${msg}...`)
     if (this.mode === 'popup') {
       this.progressWin = new Zotero.ProgressWindow({ closeOnClick: false })
@@ -823,12 +819,20 @@ export class BetterBibTeX {
   private globals: Record<string, any>
   public debugEnabledAtStart: boolean
 
+  private deferred = {
+    loaded: new Deferred<boolean>(),
+    ready: new Deferred<boolean>(),
+  }
+  private loads = 0
+
   constructor() {
     this.debugEnabledAtStart = !!Zotero.Debug.enabled
+
+    this.ready = this.deferred.ready.promise
+    this.loaded = this.deferred.loaded.promise
   }
 
   public async scanAUX(target: string): Promise<void> {
-    if (!this.loaded) return // eslint-disable-line @typescript-eslint/no-misused-promises
     await this.loaded
 
     const aux = await AUXScanner.pick()
@@ -848,7 +852,7 @@ export class BetterBibTeX {
         name = name.lastIndexOf('.') > 0 ? name.substr(0, name.lastIndexOf('.')) : name
         // eslint-disable-next-line no-case-declarations
         const tag = { value: name }
-        if (!ps.prompt(null, l10n.localize('BetterBibTeX.auxScan.title'), l10n.localize('BetterBibTeX.auxScan.prompt'), tag, null, {})) return
+        if (!ps.prompt(null, l10n.localize(`BetterBibTeX.auxScan.title.${aux.endsWith('.aux') ? 'aux' : 'md'}`), l10n.localize('BetterBibTeX.auxScan.prompt'), tag, null, {})) return
         if (!tag.value) return
 
         await AUXScanner.scan(aux, { tag: tag.value })
@@ -865,14 +869,11 @@ export class BetterBibTeX {
   }
 
   public async load(): Promise<void> { // eslint-disable-line @typescript-eslint/explicit-module-boundary-types
-    if (this.loaded) return // eslint-disable-line @typescript-eslint/no-misused-promises
-
-    const deferred = {
-      loaded: new Deferred<boolean>(),
-      ready: new Deferred<boolean>(),
+    this.loads++
+    if (this.loads > 1) {
+      log.error('BBT.load', this.loads)
+      return
     }
-    this.ready = deferred.ready.promise
-    this.loaded = deferred.loaded.promise
 
     if (typeof this.ready.isPending !== 'function') throw new Error('Zotero.Promise is not using Bluebird')
 
@@ -929,6 +930,8 @@ export class BetterBibTeX {
 
     log.debug("Zotero ready, let's roll!")
 
+    await Preference.initAsync(this.dir)
+
     progress.update(l10n.localize('BetterBibTeX.startup.loadingKeys'), 10) // eslint-disable-line no-magic-numbers
     await Promise.all([Cache.init(), DB.init()])
 
@@ -941,7 +944,7 @@ export class BetterBibTeX {
     await AutoExport.init()
 
     // not yet started
-    deferred.loaded.resolve(true)
+    this.deferred.loaded.resolve(true)
 
     // this is what really takes long
     progress.update(l10n.localize('BetterBibTeX.startup.waitingForTranslators'), 40) // eslint-disable-line no-magic-numbers
@@ -959,7 +962,7 @@ export class BetterBibTeX {
     progress.update(l10n.localize('BetterBibTeX.startup.autoExport'), 90) // eslint-disable-line no-magic-numbers
     AutoExport.start()
 
-    deferred.ready.resolve(true)
+    this.deferred.ready.resolve(true)
 
     progress.done()
 
@@ -971,7 +974,6 @@ export class BetterBibTeX {
     if (this.firstRun && this.firstRun.dragndrop) Zotero.Prefs.set('export.quickCopy.setting', `export=${Translators.byLabel.BetterBibTeXCitationKeyQuickCopy.translatorID}`)
 
     Events.emit('loaded')
-    log.debug('csl-yaml date mappings', Zotero.Schema.CSL_DATE_MAPPINGS)
 
     Events.on('export-progress', (percent: number, translator: string) => {
       const preparing = percent < 0 ? l10n.localize('Preferences.auto-export.status.preparing') : ''

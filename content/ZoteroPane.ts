@@ -2,7 +2,7 @@ import { log } from './logger'
 import { TeXstudio } from './tex-studio'
 import { repatch as $patch$ } from './monkey-patch'
 import { clean_pane_persist } from './clean_pane_persist'
-import { Preference } from '../gen/preferences'
+import { Preference } from './prefs'
 import { AutoExport } from './auto-export'
 import { flash } from './flash'
 import { sentenceCase } from './text'
@@ -23,7 +23,7 @@ export class ZoteroPane {
       await original.apply(this, arguments)
 
       if (!globals) {
-        log.debug('buildCollectionContextMenu: globals not set')
+        log.error('buildCollectionContextMenu: globals not set')
         return
       }
 
@@ -48,15 +48,12 @@ export class ZoteroPane {
         let auto_exports = []
         if (Preference.autoExport !== 'immediate') {
           if (isCollection) {
-            log.debug($and({ type: 'collection', id: treeRow.ref.id }))
             auto_exports = AutoExport.db.find($and({ type: 'collection', id: treeRow.ref.id }))
           }
           else if (isLibrary) {
-            log.debug($and({ type: 'library', id: treeRow.ref.libraryID }))
             auto_exports = AutoExport.db.find($and({ type: 'library', id: treeRow.ref.libraryID }))
           }
         }
-        log.debug('buildCollectionContextMenu: auto-exports', { isCollection, isLibrary, auto_exports, data: AutoExport.db.data })
 
         for (const node of [...globals.document.getElementsByClassName('zotero-collectionmenu-bbt-autoexport')]) {
           node.hidden = auto_exports.length === 0
@@ -150,18 +147,15 @@ export class ZoteroPane {
         return
       }
     }
-    log.debug('patchDates:', mapping)
 
     const tzdiff = (new Date).getTimezoneOffset()
     for (const item of items) {
       let save = false
       try {
         const extra = Extra.get(item.getField('extra'), 'zotero', { tex: true })
-        log.debug('patchDates:', extra)
         for (const [k, v] of Object.entries(extra.extraFields.tex)) {
           if (mapping[k]) {
             const date = DateParser.parse(v.value, Zotero.BetterBibTeX.localeDateOrder)
-            log.debug('patchDates:', date)
             if (date.type === 'date' && date.day) {
               delete extra.extraFields.tex[k]
               item.setField(mapping[k], new Date(date.year, date.month - 1, date.day, 0, -tzdiff).toISOString())
@@ -170,13 +164,12 @@ export class ZoteroPane {
           }
         }
         if (save) {
-          log.debug('patchDates:', extra, Extra.set(extra.extra, extra.extraFields))
           item.setField('extra', Extra.set(extra.extra, extra.extraFields))
           await item.saveTx()
         }
       }
       catch (err) {
-        log.debug('patchDates:', err)
+        log.error('patchDates:', err)
       }
     }
   }

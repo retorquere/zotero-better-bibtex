@@ -13,6 +13,7 @@ Feature: Export
 
     Examples:
       | file                                                                                                                     | references |
+      | Configurable journal abbreviation for citekey #2097                                                                      | 1          |
       | BetterBibLaTeX exports articles as online #2058                                                                          | 3          |
       | How to export bib without month and date in year item (Using better bibtex) #2022                                        | 1          |
       | Capitalized words after colons not brace protected #1978                                                                 | 1          |
@@ -236,6 +237,10 @@ Feature: Export
       | date ranges #747+#746                                                                                              | 5          |
       | preserve @strings between import-export #1162                                                                      | 1          |
       | titles are title-cased in .bib file #558                                                                           | 2          |
+
+    @use.with_client=zotero
+    Examples:
+      | BibTeX export is incompatible with Zotero 6 Preprint item type. #2080 | 1 |
 
   @csl
   Scenario Outline: Export <references> references for CSL JSON to <file>
@@ -544,9 +549,9 @@ Feature: Export
     When I restart Zotero with "1287" + "export/*.json"
     And I reset the cache
     Then an export using "Better BibTeX" should match "export/*.bibtex"
-    And an export using "Better BibTeX" should match "export/*.bibtex", but take no more than 150 seconds
+    Then an export using "Better BibTeX" with cacheUse on should match "export/*-cached.bibtex"
     When I set preference .caching to false
-    Then an export using "Better BibTeX" should match "export/*.bibtex", but take no more than 400 seconds
+    Then an export using "Better BibTeX" with cacheUse on should match "export/*-uncached.bibtex"
 
   # tests without cache prefill
   @use.with_client=zotero @use.with_slow=true @timeout=3000 @whopper-uncached

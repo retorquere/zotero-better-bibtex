@@ -174,6 +174,9 @@
             "caching": {
               "type": "boolean"
             },
+            "charmap": {
+              "type": "string"
+            },
             "citeCommand": {
               "type": "string"
             },
@@ -181,6 +184,9 @@
               "type": "boolean"
             },
             "citekeyFormat": {
+              "type": "string"
+            },
+            "citekeyFormatBackup": {
               "type": "string"
             },
             "citekeySearch": {
@@ -433,6 +439,9 @@
           "archiveCollection": {
             "type": "string"
           },
+          "archiveID": {
+            "type": "string"
+          },
           "archiveLocation": {
             "type": "string"
           },
@@ -649,6 +658,7 @@
           },
           "itemType": {
             "enum": [
+              "annotation",
               "artwork",
               "attachment",
               "audioRecording",
@@ -680,6 +690,7 @@
               "note",
               "patent",
               "podcast",
+              "preprint",
               "presentation",
               "radioBroadcast",
               "regulation",

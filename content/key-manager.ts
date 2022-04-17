@@ -15,7 +15,7 @@ import * as ZoteroDB from './db/zotero'
 
 import { getItemsAsync } from './get-items-async'
 
-import { Preference } from '../gen/preferences'
+import { Preference } from './prefs'
 import { Formatter } from './key-manager/formatter'
 import { DB } from './db/main'
 import { DB as Cache } from './db/cache'
@@ -195,7 +195,7 @@ export class KeyManager {
         await Zotero.DB.queryAsync(`ATTACH DATABASE '${path.replace(/'/g, "''")}' AS betterbibtexsearch`)
       }
       catch (err) {
-        log.debug('failed to attach the search database:', err)
+        log.error('failed to attach the search database:', err)
         flash('Error loading citekey search database, citekey search is disabled')
         search = false
       }
@@ -207,7 +207,7 @@ export class KeyManager {
         await Zotero.DB.valueQueryAsync('SELECT libraryID FROM betterbibtexsearch.citekeys LIMIT 1')
       }
       catch (err) {
-        log.debug(`dropping betterbibtexsearch.citekeys, assuming libraryID does not exist: ${err}`)
+        log.error(`dropping betterbibtexsearch.citekeys, assuming libraryID does not exist: ${err}`)
         await Zotero.DB.queryAsync('DROP TABLE IF EXISTS betterbibtexsearch.citekeys')
       }
       await Zotero.DB.queryAsync('CREATE TABLE IF NOT EXISTS betterbibtexsearch.citekeys (itemID PRIMARY KEY, libraryID, itemKey, citekey)')
@@ -321,7 +321,9 @@ export class KeyManager {
       Zotero.Notifier.trigger('modify', 'item', [citekey.itemID], { [citekey.itemID]: { bbtCitekeyUpdate: true } })
 
       if (!citekey.pinned && this.autopin.enabled) {
-        this.autopin.schedule(citekey.itemID, () => { this.pin([citekey.itemID]).catch(err => log.error('failed to pin', citekey.itemID, ':', err)) })
+        this.autopin.schedule(citekey.itemID, () => {
+          this.pin([citekey.itemID]).catch(err => log.error('failed to pin', citekey.itemID, ':', err))
+        })
       }
       if (citekey.pinned && Preference.keyConflictPolicy === 'change') {
         const conflictQuery: Query = { $and: [
@@ -588,5 +590,9 @@ export class KeyManager {
     }
 
     return [ids]
+  }
+
+  public convertLegacy(pattern: string): string {
+    return Formatter.convertLegacy(pattern)
   }
 }

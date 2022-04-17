@@ -9,17 +9,19 @@ import scripts = require('xregexp/tools/output/scripts')
 import { transliterate } from 'transliteration'
 
 import { flash } from '../flash'
-import { Preference } from '../../gen/preferences'
+import { Preference } from '../prefs'
 import { JournalAbbrev } from '../journal-abbrev'
 import * as Extra from '../extra'
 import { buildCiteKey as zotero_buildCiteKey } from './formatter-zotero'
 import { babelLanguage } from '../text'
 import { fetchSync as fetchInspireHEP } from '../inspire-hep'
 
-const parser = require('./formatter.peggy')
+const legacyparser = require('./formatter.peggy')
+import * as formatparser from './jsformatter'
 import * as DateParser from '../dateparser'
 
-import methods from '../../gen/api/key-formatter.json'
+import { methods } from '../../gen/api/key-formatter'
+
 import itemCreators from '../../gen/items/creators.json'
 import * as items from '../../gen/items/items'
 
@@ -31,9 +33,8 @@ import { sprintf } from 'sprintf-js'
 import { jieba, pinyin } from './chinese'
 import { kuroshiro } from './japanese'
 
-import AJV from 'ajv'
 import { validator } from '../ajv'
-const ajv = new AJV({ coerceTypes: true })
+import { dictsync as csv2dict } from '../load-csv'
 
 import BabelTag from '../../gen/babel/tag.json'
 type ValueOf<T> = T[keyof T]
@@ -41,7 +42,7 @@ type BabelLanguageTag = ValueOf<typeof BabelTag>
 type BabelLanguage = keyof typeof BabelTag
 
 for (const meta of Object.values(methods)) {
-  (meta as unknown as any).validate = validator(ajv, meta.schema)
+  (meta as unknown as any).validate = validator((meta as any).schema)
 }
 
 function innerText(node): string {
@@ -172,7 +173,20 @@ class Item {
       this.itemID = (item as ZoteroItem).id
       this.itemType = Zotero.ItemTypes.getName((item as ZoteroItem).itemTypeID)
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      this.getField = (name: string) => ((name === 'dateAdded' || name === 'dateModified') ? (this.item as any)[name] : (this.item as ZoteroItem).getField(name, false, true)) || this.extraFields?.kv[name]
+      this.getField = function(name: string): string | number {
+        switch (name) {
+          case 'dateAdded':
+          case 'dateModified':
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+            return (this.item)[name]
+          case 'title':
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+            return this.title
+          default:
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+            return (this.item as ZoteroItem).getField(name, false, true) as string || this.extraFields?.kv[name] || ''
+        }
+      }
       this.creators = (item as ZoteroItem).getCreatorsJSON()
       this.libraryID = item.libraryID
       this.title = (item as ZoteroItem).getField('title', false, true) as string
@@ -181,7 +195,7 @@ class Item {
       this.itemType = (item as SerializedRegularItem).itemType
       this.itemID = (item as SerializedRegularItem).itemID
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      this.getField = (name: string) => this.item[name] || this.extraFields?.kv[name]
+      this.getField = (name: string) => name === 'title' ? this.title : this.item[name] || this.extraFields?.kv[name] || ''
       this.creators = (item as SerializedRegularItem).creators
       this.libraryID = null
       this.title = (item as SerializedRegularItem).title
@@ -249,7 +263,8 @@ class Item {
 
 const safechars = '-:\\p{L}0-9_!$*+./;\\[\\]'
 class PatternFormatter {
-  public value = ''
+  public chunk = ''
+  public citekey = ''
 
   public generate: () => string
   public postfix: { start: number, format: string }
@@ -264,6 +279,8 @@ class PatternFormatter {
     caseNotUpper: Zotero.Utilities.XRegExp('[^\\p{Lu}]', 'g'),
     word: Zotero.Utilities.XRegExp('[\\p{L}\\p{Nd}\\{Pc}\\p{M}]+(-[\\p{L}\\p{Nd}\\{Pc}\\p{M}]+)*', 'g'),
   }
+
+  private acronyms: Record<string, Record<string, string>> = {}
 
   /*
    * three-letter month abbreviations. I assume these are the same ones that the
@@ -289,46 +306,27 @@ class PatternFormatter {
     // the zero-width-space is a marker to re-save the current default so it doesn't get replaced when the default changes later, which would change new keys suddenly
     if (!Preference.citekeyFormat || Preference.citekeyFormat.includes('\u200B')) Preference.citekeyFormat = Preference.default.citekeyFormat.replace(/^\u200B/, '')
 
-    for (const attempt of ['get', 'strip', 'reset']) {
-      let citekeyFormat = ''
-      const errors = []
+    for (const attempt of ['get', 'reset']) {
       switch (attempt) {
         case 'get':
           this.citekeyFormat = Preference.citekeyFormat
           break
 
-        case 'strip':
-          for (const chunk of (Preference.citekeyFormat.replace(/^\u200B/, '').match(/[^\]]*\]*/g) as string[])) {
-            try {
-              this.parsePattern(citekeyFormat + chunk)
-              citekeyFormat += chunk
-            }
-            catch (err) {
-              errors.push(chunk)
-            }
-          }
-          citekeyFormat = citekeyFormat.trim()
-          if (citekeyFormat.includes('[')) {
-            // eslint-disable-next-line no-magic-numbers
-            if (errors.length) flash('Malformed citation pattern', `removed malformed patterns:\n${errors.join('\n')}`, 20)
-            this.citekeyFormat = Preference.citekeyFormat = citekeyFormat
-          }
-          else {
-            continue
-          }
-          break
-
         case 'reset':
           // eslint-disable-next-line no-magic-numbers
           flash('Malformed citation pattern', 'resetting to default', 20)
+          Preference.citekeyFormatBackup = Preference.citekeyFormat.replace(/^\u200B/, '')
           this.citekeyFormat = Preference.citekeyFormat = Preference.default.citekeyFormat.replace(/^\u200B/, '')
           break
       }
 
       try {
-        const { formatter, postfix } = this.parsePattern(this.citekeyFormat)
+        log.debug('PatternFormatter.update: installing citekeyFormat ', {pattern: this.citekeyFormat})
+        this.$postfix()
+        const formatter = this.parsePattern(this.citekeyFormat)
+        log.debug('PatternFormatter.update: installing citekeyFormat ', formatter)
         this.generate = (new Function(formatter) as () => string)
-        this.postfix = postfix
+        log.debug('PatternFormatter.update: installing generate ', {generate: this.generate.toString()})
         break
       }
       catch (err) {
@@ -337,19 +335,30 @@ class PatternFormatter {
     }
   }
 
-  public parsePattern(pattern): { formatter: string, postfix: { start: number, format: string } } {
-    const formatter = (parser.parse(pattern, { sprintf, items, methods }) as { formatter: string, postfix: { start: number, format: string } })
-    if (Preference.testing) {
-      log.debug('formatter function:', formatter.formatter)
-      log.debug('formatter postfix:', formatter.postfix)
+  public parsePattern(pattern): string {
+    log.debug('parsePattern.pattern:', pattern)
+    let formatter = ''
+    if (pattern.startsWith("''")) {
+      formatter = pattern
     }
+    else {
+      if (!pattern.includes('[')) throw new Error('pattern does not contain functions')
+      formatter = legacyparser.parse(pattern, { sprintf, items, methods, migrate: true }) as string
+      if (Preference.testing) log.debug('parsePattern.old:', formatter)
+    }
+    formatter = formatparser.parse(formatter)
+    if (Preference.testing) log.debug('parsePattern.new:', formatter)
 
     return formatter
   }
 
+  public convertLegacy(pattern: string): string {
+    return legacyparser.parse(pattern, { sprintf, items, methods, migrate: true }) as string
+  }
+
   public format(item: ZoteroItem | SerializedItem): string {
     this.item = new Item(item)
-    this.value = ''
+    this.chunk = ''
 
     switch (this.item.itemType) {
       case 'attachment':
@@ -358,24 +367,42 @@ class PatternFormatter {
         return ''
     }
 
+    this.$postfix()
+    log.debug('formatting new key')
     let citekey = this.generate() || `zotero-${this.item.itemID}`
     if (citekey && Preference.citekeyFold) citekey = this.transliterate(citekey)
     citekey = citekey.replace(/[\s{},@]/g, '')
+    log.debug('new citekey:', citekey)
 
     return citekey
   }
 
-  private set(value) {
-    this.value = value
+  /**
+   * Set the currennt chunk
+   */
+  public $text(text: string) {
+    this.chunk = text
     return this
   }
 
   /**
-   * Tests whether the entry has the given language set, and skips to the next pattern if not
+   * Tests whether the item is of any of the given types
    */
-  public $language(name: (BabelLanguage | BabelLanguageTag)[]) {
+  public $type(...allowed: string[]) {
+    if (allowed.map(type => type.toLowerCase()).includes(this.item.itemType.toLowerCase())) {
+      return this.$text('')
+    }
+    else {
+      throw { next: true } // eslint-disable-line no-throw-literal
+    }
+  }
+
+  /**
+   * Tests whether the item has the given language set, and skips to the next pattern if not
+   */
+  public $language(...name: (BabelLanguage | BabelLanguageTag)[]) {
     if (name.concat(name.map(n => BabelTag[n] as string).filter(n => n)).includes(this.item.babelTag())) {
-      return this.set('')
+      return this.$text('')
     }
     else {
       throw { next: true } // eslint-disable-line no-throw-literal
@@ -390,7 +417,8 @@ class PatternFormatter {
    */
   public $zotero() {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return this.set(zotero_buildCiteKey({
+    this.$postfix('-%(n)s')
+    return this.$text(zotero_buildCiteKey({
       creators: this.item.creators,
       title: this.item.getField('title'),
       date: this.item.getField('date'),
@@ -401,19 +429,22 @@ class PatternFormatter {
   /**
    * Fetches the key from inspire-hep based on DOI or arXiv ID
    */
-  public $inspire_hep() {
-    return this.set(fetchInspireHEP(this.item) || '')
+  public $inspireHep() {
+    return this.$text(fetchInspireHEP(this.item) || '')
   }
 
-  public getField(name: string) {
+  /**
+   * Gets the value of the item field
+   */
+  public $getField(name: string) {
     const value = this.item.getField(name)
     switch (typeof value) {
       case 'number':
-        return this.set(`${value}`)
+        return this.$text(`${value}`)
       case 'string':
-        return this.set(this.innerText(value))
+        return this.$text(this.innerText(value))
       case 'undefined':
-        return this.set('')
+        return this.$text('')
       default:
         throw new Error(`Unexpected value ${JSON.stringify(value)} of type ${typeof value}`)
     }
@@ -421,109 +452,145 @@ class PatternFormatter {
 
   /** returns the name of the shared group library, or nothing if the item is in your personal library */
   public $library() {
-    if (this.item.libraryID === Zotero.Libraries.userLibraryID) return this.set('')
+    if (this.item.libraryID === Zotero.Libraries.userLibraryID) return this.$text('')
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return this.set(Zotero.Libraries.get(this.item.libraryID).name)
+    return this.$text(Zotero.Libraries.get(this.item.libraryID).name)
+  }
+
+  /**
+   * Author/editor information. Parameters are:
+   * - `n`: select the first `n` authors (when passing a number) or the authors in this range (inclusive, when passing two values); negative numbers mean "from the end", default = 0 = all,
+   * - `creator`: select type of creator (`author` or `editor`),
+   * - `initials`: whether to add initials or to only use initials,
+   * - `letters`: pick this many letters from the name, defaults to 0 = all,
+   * - `given`: use given name instead of family name,
+   * - `etal`: use this term to replace authors after `select` authors have been named,
+   * - `joiner`: use this character to join authors
+   * - `clean`: transliterates the citation key and removes unsafe characters
+   * - `min`: skip to the next pattern if there are less than `min` creators
+   * - `min`: skip to the next pattern if there are more than `max` creators
+   */
+  public $authors(
+    n: number | [number, number] = 0,
+    creator: 'author' | 'editor' = 'author',
+    initials : boolean | 'only' = false,
+    letters=0,
+    etal='',
+    joiner=' ',
+    clean=true,
+    min=0,
+    max=0
+  ) {
+    let authors = this.creators(creator === 'editor', initials)
+    if (min && authors.length < min) throw { next: true } // eslint-disable-line no-throw-literal
+    if (max && authors.length > max) throw { next: true } // eslint-disable-line no-throw-literal
+    if (!n) {
+      etal = ''
+    }
+    else {
+      if (Array.isArray(n)) {
+        etal = ''
+      }
+      else {
+        if (n >= authors.length) etal = ''
+        n = [ 1, n ]
+      }
+      authors = authors.slice(n[0] - 1, n[1])
+      if (etal && !etal.replace(/[a-z]/ig, '').length) etal = `${joiner}${etal}`
+    }
+    if (!initials && letters) authors = authors.map(a => a.substr(0, letters))
+    log.debug('$author:', { n, creator, initials, letters, etal, joiner, min, max }, authors)
+    let author = authors.join(joiner) + etal
+    if (clean) author = this.clean(author, true)
+    return this.$text(author)
   }
 
   /** The first `N` (default: all) characters of the `M`th (default: first) author's last name. */
-  public $auth(onlyEditors: boolean, withInitials:boolean, joiner: string, n?: number, m?:number) {
-    const authors = this.creators(onlyEditors, {withInitials})
-    if (!authors || !authors.length) return this.set('')
-    let author = authors[m ? m - 1 : 0]
-    if (author && n) author = author.substring(0, n)
-    return this.set(author || '')
+  public $auth(n=0, m=1, creator: 'author' | 'editor' = 'author', initials=false, clean=true) {
+    return this.$authors([m, m], creator, initials, n, undefined, undefined, clean)
   }
 
   /** The forename initial of the first author. */
-  public $authForeIni(onlyEditors: boolean) {
-    const authors = this.creators(onlyEditors, {initialOnly: true})
-    if (!authors || !authors.length) return this.set('')
-    return this.set(authors[0])
+  public $authForeIni(creator: 'author' | 'editor' = 'author', clean=true) {
+    let author: string = this.creators(creator === 'editor', 'only')[0] || ''
+    if (clean) author = this.clean(author, true)
+    return this.$text(author)
   }
 
   /** The forename initial of the last author. */
-  public $authorLastForeIni(onlyEditors: boolean) {
-    const authors = this.creators(onlyEditors, {initialOnly: true})
-    if (!authors || !authors.length) return this.set('')
-    return this.set(authors[authors.length - 1])
+  public $authorLastForeIni(creator: 'author' | 'editor' = 'author', clean=true) {
+    const authors = this.creators(creator === 'editor', 'only')
+    let author = authors[authors.length - 1] || ''
+    if (clean) author = this.clean(author, true)
+    return this.$text(author)
   }
 
   /** The last name of the last author */
-  public $authorLast(onlyEditors: boolean, withInitials: boolean, joiner: string) { // eslint-disable-line @typescript-eslint/no-unused-vars
-    const authors = this.creators(onlyEditors, {withInitials})
-    if (!authors || !authors.length) return this.set('')
-    return this.set(authors[authors.length - 1])
-  }
-
-  /** returns the journal abbreviation, or, if not found, the journal title, If 'automatic journal abbreviation' is enabled in the BBT settings,
-   * it will use the same abbreviation filter Zotero uses in the wordprocessor integration. You might want to use the `abbr` filter on this.
-   */
-  public $journal() {
-    // this.item.item is the native item stored inside the this.item sorta-proxy
-    return this.set(JournalAbbrev.get(this.item.item, true) || this.item.getField('publicationTitle') || '')
-  }
-
-  /** The last name of up to N authors. If there are more authors, "EtAl" is appended. */
-  public $authors(onlyEditors: boolean, withInitials: boolean, joiner: string, n?:number) {
-    let authors = this.creators(onlyEditors, {withInitials})
-    if (!authors || !authors.length) return this.set('')
-
-    if (n) {
-      const etal = authors.length > n
-      authors = authors.slice(0, n)
-      if (etal) authors.push('EtAl')
-    }
-
-    return this.set(authors.join(joiner || ' '))
+  public $authorLast(creator: 'author' | 'editor' = 'author', initials=false, clean=true) {
+    const authors = this.creators(creator === 'editor', initials)
+    let author = authors[authors.length - 1] || ''
+    if (clean) author = this.clean(author, true)
+    return this.$text(author)
   }
 
   /** Corresponds to the BibTeX style "alpha". One author: First three letters of the last name. Two to four authors: First letters of last names concatenated.
    * More than four authors: First letters of last names of first three authors concatenated. "+" at the end.
    */
-  public $authorsAlpha(onlyEditors: boolean, withInitials: boolean, joiner: string) {
-    const authors = this.creators(onlyEditors, {withInitials})
-    if (!authors || !authors.length) return this.set('')
+  public $authorsAlpha(creator: 'author' | 'editor' = 'author', initials=false, joiner=' ', clean=true) {
+    const authors = this.creators(creator === 'editor', initials)
+    if (!authors.length) return this.$text('')
 
+    let author: string
     switch (authors.length) {
       case 1: // eslint-disable-line no-magic-numbers
-        return this.set(authors[0].substring(0, 3)) // eslint-disable-line no-magic-numbers
+        author = authors[0].substring(0, 3) // eslint-disable-line no-magic-numbers
+        break
 
       case 2: // eslint-disable-line no-magic-numbers
       case 3: // eslint-disable-line no-magic-numbers
       case 4: // eslint-disable-line no-magic-numbers
-        return this.set(authors.map(author => author.substring(0, 1)).join(joiner || ' '))
+        author = authors.map(auth => auth.substring(0, 1)).join(joiner)
+        break
 
       default:
         // eslint-disable-next-line no-magic-numbers
-        return this.set(`${authors.slice(0, 3).map(author => author.substring(0, 1)).join(joiner || ' ') }+`)
+        author = `${authors.slice(0, 3).map(auth => auth.substring(0, 1)).join(joiner)}+`
+        break
     }
+    if (clean) author = this.clean(author, true)
+    return this.$text(author)
   }
 
   /** The beginning of each author's last name, using no more than `N` characters. */
-  public $authIni(onlyEditors: boolean, withInitials: boolean, joiner: string, n?: number) {
-    const authors = this.creators(onlyEditors, {withInitials})
-    if (!authors || !authors.length) return this.set('')
-    return this.set(authors.map(author => author.substring(0, n)).join(joiner || '.'))
+  public $authIni(n=0, creator: 'author' | 'editor' = 'author', initials=false, joiner='.', clean=true) {
+    const authors = this.creators(creator === 'editor', initials)
+    if (!authors.length) return this.$text('')
+    let author = authors.map(auth => auth.substring(0, n)).join(joiner)
+    if (clean) author = this.clean(author, true)
+    return this.$text(author)
   }
 
   /** The first 5 characters of the first author's last name, and the last name initials of the remaining authors. */
-  public $authorIni(onlyEditors: boolean, withInitials: boolean, joiner: string) {
-    const authors = this.creators(onlyEditors, {withInitials})
-    if (!authors || !authors.length) return this.set('')
+  public $authorIni(creator: 'author' | 'editor' = 'author', initials=false, joiner='.', clean=true): PatternFormatter {
+    const authors = this.creators(creator === 'editor', initials)
+    if (!authors.length) return this.$text('')
     const firstAuthor = authors.shift()
 
     // eslint-disable-next-line no-magic-numbers
-    return this.set([firstAuthor.substring(0, 5)].concat(authors.map(name => name.substring(0, 1)).join('.')).join(joiner || '.'))
+    let author = [firstAuthor.substring(0, 5)].concat(authors.map(name => name.substring(0, 1)).join('.')).join(joiner)
+    if (clean) author = this.clean(author, true)
+    return this.$text(author)
   }
 
   /** The last name of the first two authors, and ".ea" if there are more than two. */
-  public $auth__auth__ea(onlyEditors: boolean, withInitials: boolean, joiner: string) {
-    const authors = this.creators(onlyEditors, {withInitials})
-    if (!authors || !authors.length) return this.set('')
+  public $authAuthEa(creator: 'author' | 'editor' = 'author', initials=false, joiner='.', clean=true) {
+    const authors = this.creators(creator === 'editor', initials)
+    if (!authors.length) return this.$text('')
 
     // eslint-disable-next-line no-magic-numbers
-    return this.set(authors.slice(0, 2).concat(authors.length > 2 ? ['ea'] : []).join(joiner || '.'))
+    let author = authors.slice(0, 2).concat(authors.length > 2 ? ['ea'] : []).join(joiner)
+    if (clean) author = this.clean(author, true)
+    return this.$text(author)
   }
 
   /** The last name of the first author, and the last name of the
@@ -532,69 +599,97 @@ class PatternFormatter {
    * is that the authors are not separated by "." and in case of
    * more than 2 authors "EtAl" instead of ".etal" is appended.
    */
-  public $authEtAl(onlyEditors: boolean, withInitials: boolean, joiner: string) {
-    const authors = this.creators(onlyEditors, {withInitials})
-    if (!authors || !authors.length) return this.set('')
+  public $authEtAl(creator: 'author' | 'editor' = 'author', initials=false, joiner=' ', clean=true) {
+    const authors = this.creators(creator === 'editor', initials)
+    if (!authors.length) return this.$text('')
 
+    let author
     // eslint-disable-next-line no-magic-numbers
-    if (authors.length === 2) return this.set(authors.join(joiner || ' '))
-    return this.set(authors.slice(0, 1).concat(authors.length > 1 ? ['EtAl'] : []).join(joiner || ' '))
+    if (authors.length === 2) {
+      author = authors.join(joiner)
+    }
+    else {
+      author = authors.slice(0, 1).concat(authors.length > 1 ? ['EtAl'] : []).join(joiner)
+    }
+    if (clean) author = this.clean(author, true)
+    return this.$text(author)
   }
 
   /** The last name of the first author, and the last name of the second author if there are two authors or ".etal" if there are more than two. */
-  public $auth__etal(onlyEditors: boolean, withInitials: boolean, joiner: string) {
-    const authors = this.creators(onlyEditors, {withInitials})
-    if (!authors || !authors.length) return this.set('')
+  public $authEtal2(creator: 'author' | 'editor' = 'author', initials=false, joiner='.', clean=true) {
+    const authors = this.creators(creator === 'editor', initials)
+    if (!authors.length) return this.$text('')
 
+    let author
     // eslint-disable-next-line no-magic-numbers
-    if (authors.length === 2) return this.set(authors.join(joiner || '.'))
-    return this.set(authors.slice(0, 1).concat(authors.length > 1 ? ['etal'] : []).join(joiner || '.'))
+    if (authors.length === 2) {
+      author = authors.join(joiner)
+    }
+    else {
+      author = authors.slice(0, 1).concat(authors.length > 1 ? ['etal'] : []).join(joiner)
+    }
+    if (clean) author = this.clean(author, true)
+    return this.$text(author)
   }
 
   /** The last name if one author is given; the first character of up to three authors' last names if more than one author is given. A plus character is added, if there are more than three authors. */
-  public $authshort(onlyEditors: boolean, withInitials: boolean, joiner: string) {
-    const authors = this.creators(onlyEditors, {withInitials})
-    if (!authors || !authors.length) return this.set('')
+  public $authshort(creator: 'author' | 'editor' = 'author', initials=false, joiner='.', clean=true) {
+    const authors = this.creators(creator === 'editor', initials)
 
+    let author
     switch (authors.length) {
       case 0:
-        return this.set('')
+        return this.$text('')
 
       case 1:
-        return this.set(authors[0])
+        author = authors[0]
+        break
 
       default:
         // eslint-disable-next-line no-magic-numbers
-        return this.set(authors.slice(0, 3).map(author => author.substring(0, 1)).join(joiner || '.') + (authors.length > 3 ? '+' : ''))
+        author = authors.slice(0, 3).map(auth => auth.substring(0, 1)).join(joiner) + (authors.length > 3 ? '+' : '')
     }
+    if (clean) author = this.clean(author, true)
+    return this.$text(author)
+  }
+
+  /** returns the journal abbreviation, or, if not found, the journal title, If 'automatic journal abbreviation' is enabled in the BBT settings,
+   * it will use the same abbreviation filter Zotero uses in the wordprocessor integration. You might want to use the `abbr` filter on this.
+   * Abbreviation behavior can be specified as `abbrev+auto` (the default) which uses the explicit journal abbreviation if present, and tries the automatic
+   * abbreviator if not (if auto-abbrev is enabled in the preferences), `auto` (skip explicit journal abbreviation even if present), `abbrev`
+   * (no auto-abbrev even if it is enabled in the preferences) or `off` (no abbrevation).
+   */
+  public $journal(abbrev: 'abbrev+auto' | 'abbrev' | 'auto' | 'off' = 'abbrev+auto') {
+    // this.item.item is the native item stored inside the this.item sorta-proxy
+    return this.$text((abbrev === 'off' ? '' : JournalAbbrev.get(this.item.item, abbrev)) || this.item.getField('publicationTitle') as string || '')
   }
 
   /** The number of the first page of the publication (Caution: this will return the lowest number found in the pages field, since BibTeX allows `7,41,73--97` or `43+`.) */
   public $firstpage() {
     const pages: string = this.item.getField('pages') as string
-    if (!pages) return this.set('')
-    return this.set(pages.split(/[-\s,–]/)[0] || '')
+    if (!pages) return this.$text('')
+    return this.$text(pages.split(/[-\s,–]/)[0] || '')
   }
 
   /** The number of the last page of the publication (See the remark on `firstpage`) */
   public $lastpage() {
     const pages: string = this.item.getField('pages') as string
-    if (!pages) return this.set('')
-    return this.set(pages.split(/[-\s,–]/).pop() || '')
+    if (!pages) return this.$text('')
+    return this.$text(pages.split(/[-\s,–]/).pop() || '')
   }
 
   /** Tag number `N` */
   public $keyword(n: number) {
     const tag: string | { tag: string} = this.item.getTags()?.[n] || ''
-    return this.set(typeof tag === 'string' ? tag : tag.tag)
+    return this.$text(typeof tag === 'string' ? tag : tag.tag)
   }
 
   /** The first `N` (default: 3) words of the title, apply capitalization to first `M` (default: 0) of those */
   public $shorttitle(n: number = 3, m: number = 0) { // eslint-disable-line no-magic-numbers, @typescript-eslint/no-inferrable-types
     const words = this.titleWords(this.item.title, { skipWords: true, asciiOnly: true})
-    if (!words) return this.set('')
+    if (!words) return this.$text('')
 
-    return this.set(words.slice(0, n).map((word, i) => i < m ? word.charAt(0).toUpperCase() + word.slice(1) : word).join(' '))
+    return this.$text(words.slice(0, n).map((word, i) => i < m ? word.charAt(0).toUpperCase() + word.slice(1) : word).join(' '))
   }
 
   /** The first `N` (default: 1) words of the title, apply capitalization to first `M` (default: 0) of those */
@@ -604,17 +699,17 @@ class PatternFormatter {
 
   /** The last 2 digits of the publication year */
   public $shortyear() {
-    return this.set(this.format_date(this.item.date, '%y'))
+    return this.$text(this.format_date(this.item.date, '%y'))
   }
 
   /** The year of the publication */
   public $year() {
-    return this.set(this.padYear(this.format_date(this.item.date, '%-Y'), 2))
+    return this.$text(this.padYear(this.format_date(this.item.date, '%-Y'), 2))
   }
 
   /** The date of the publication */
   public $date(format: string = '%Y-%m-%d') { // eslint-disable-line @typescript-eslint/no-inferrable-types
-    return this.set(this.format_date(this.item.date, format))
+    return this.$text(this.format_date(this.item.date, format))
   }
 
   /** A pseudo-field from the extra field. eg if you have `Original
@@ -627,43 +722,62 @@ class PatternFormatter {
    */
   public $extra(variable: string) { // eslint-disable-line @typescript-eslint/no-inferrable-types
     const variables = variable.toLowerCase().trim().split(/\s*\/\s*/).filter(varname => varname)
-    if (!variables.length) return this.set('')
+    if (!variables.length) return this.$text('')
 
     const value = variables
       .map((varname: string) => this.item.extraFields.kv[varname] || this.item.extraFields.tex[varname]?.value || this.item.extraFields.tex[`tex.${varname}`]?.value)
       .find(val => val)
-    if (value) return this.set(value)
+    if (value) return this.$text(value)
 
     const extra: RegExpMatchArray = (this.item.extra || '')
       .split('\n')
       .map((line: string) => line.match(/^([^:]+):\s*(.+)/i))
       .find(match => match && (variables.includes(match[1].trim().toLowerCase()) || variable.toLowerCase() === match[1].trim().toLowerCase()))
-    return this.set(extra?.[2] || '')
+    return this.$text(extra?.[2] || '')
   }
 
 
   /** the original year of the publication */
   public $origyear() {
-    return this.set(this.padYear(this.format_date(this.item.date, '%-oY'), 2))
+    return this.$text(this.padYear(this.format_date(this.item.date, '%-oY'), 2))
   }
 
   /** the original date of the publication */
   public $origdate() {
-    return this.set(this.format_date(this.item.date, '%oY-%om-%od'))
+    return this.$text(this.format_date(this.item.date, '%oY-%om-%od'))
   }
 
   /** the month of the publication */
   public $month() {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return this.set(this.months[this.item.date.m] || '')
+    return this.$text(this.months[this.item.date.m] || '')
   }
 
   /** Capitalize all the significant words of the title, and concatenate them. For example, `An awesome paper on JabRef` will become `AnAwesomePaperJabref` */
   public $title() {
-    return this.set((this.titleWords(this.item.title, { skipWords: true }) || []).join(' '))
+    return this.$text((this.titleWords(this.item.title, { skipWords: true }) || []).join(' '))
   }
 
-  private padYear(year: string, length): string {
+  /**
+   * a pseudo-function that sets the citekey disambiguation postfix using an <a href="https://www.npmjs.com/package/sprintf-js">sprintf-js</a> format spec
+   * for when a key is generated that already exists. Does not add any text to the citekey otherwise.
+   * You *must* include *exactly* one of the placeholders `%(n)s`> (number), `%(a)s` (alpha, lowercase) or `e>%(A)s` (alpha, uppercase).
+   * For the rest of the disambiguator you can use things like padding and extra text as sprintf-js allows. With `+1` the disambiguator is always included,
+   * even if there is no need for it when no duplicates exist. The default  format is `%(a)s`.
+   */
+  public $postfix(format='%(a)s', start=0) {
+    this.postfix = { format, start }
+    return this.$text('')
+  }
+
+  /**
+    * If the length of the output does not match the given number, skip to the next pattern.
+    */
+  public $len(relation: '<' | '<=' | '=' | '!=' | '>=' | '>', length: number) {
+    return this.len(this.citekey, relation, length).$text('')
+  }
+
+  private padYear(year: string, length: number): string {
     return year ? year.replace(/[0-9]+/, y => y.length >= length ? y : (`0000${y}`).slice(-length)): ''
   }
 
@@ -671,81 +785,57 @@ class PatternFormatter {
    * Returns the given text if no output was generated
    */
   public _default(text: string) {
-    return this.value ? this : this.set(text)
+    return this.chunk ? this : this.$text(text)
   }
 
   /**
-    * If the length of the output is not equal to the given number, skip to the next pattern. Alias: `=[number]`.
+    * If the length of the output does not match the given number, skip to the next pattern.
     */
-  public _eq(n: number) {
-    if (this.value.length === n) return this
+  public _len(relation: '<' | '<=' | '=' | '!=' | '>=' | '>', n: number) {
+    return this.len(this.chunk, relation, n)
+  }
+
+  private len(value: string, relation: '<' | '<=' | '=' | '!=' | '>=' | '>', n: number) {
+    switch (relation) {
+      case '<':
+        if (value.length < n) return this
+        break
+      case '<=':
+        if (value.length <= n) return this
+        break
+      case '=':
+        if (value.length === n) return this
+        break
+      case '!=':
+        if (value.length !== n) return this
+        break
+      case '>':
+        if (value.length > n) return this
+        break
+      case '>=':
+        if (value.length >= n) return this
+        break
+    }
     throw { next: true } // eslint-disable-line no-throw-literal
-  }
-
-  /**
-    * If the length of the output is not less than the given number, skip to the next pattern. Alias: `<[number]`.
-    */
-  public _lt(n: number) {
-    if (this.value.length < n) return this
-    throw { next: true } // eslint-disable-line no-throw-literal
-  }
-
-  /**
-    * If the length of the output is not greater than the given number, skip to the next pattern. Alias: `>[number]`.
-    */
-  public _gt(n: number) {
-    if (this.value.length > n) return this
-    throw { next: true } // eslint-disable-line no-throw-literal
-  }
-
-  /**
-    * If the length of the output is not lower than or equal to the given number, skip to the next pattern. Alias: `<=[number]`.
-    */
-  public _le(n: number) {
-    if (this.value.length <= n) return this
-    throw { next: true } // eslint-disable-line no-throw-literal
-  }
-
-  /**
-    * If the length of the output is not greater than or equal to the given number, skip to the next pattern. Alias: `>=[number]`.
-    */
-  public _ge(n: number) {
-    if (this.value.length >= n) return this
-    throw { next: true } // eslint-disable-line no-throw-literal
-  }
-
-  /**
-    * If the length of the output is equal to the given number, skip to the next pattern. Alias: `!=[number]`.
-    */
-  public _ne(n: number) {
-    if (this.value.length !== n) return this
-    throw { next: true } // eslint-disable-line no-throw-literal
-  }
-
-  /**
-    * If the length of the output is not longer than the given number, skip to the next pattern. Alias: `>[number]`.
-    */
-  public _longer(n: number) {
-    return this._gt(n)
   }
 
   /** discards the input */
   public _discard() { // eslint-disable-line @typescript-eslint/no-unused-vars
-    return this.set('')
+    return this.$text('')
   }
 
   /** transforms date/time to local time. Mainly useful for dateAdded and dateModified as it requires an ISO-formatted input. */
-  public _local_time() {
-    const m = this.value.match(/^([0-9]{4})-([0-9]{2})-([0-9]{2})[ T]([0-9]{2}):([0-9]{2}):([0-9]{2})Z?$/)
+  public _localTime() {
+    const m = this.chunk.match(/^([0-9]{4})-([0-9]{2})-([0-9]{2})[ T]([0-9]{2}):([0-9]{2}):([0-9]{2})Z?$/)
     if (!m) return this
-    const date = new Date(`${this.value}Z`)
+    const date = new Date(`${this.chunk}Z`)
     date.setMinutes(date.getMinutes() - date.getTimezoneOffset())
-    return this.set(date.toISOString().replace('.000Z', '').replace('T', ' '))
+    return this.$text(date.toISOString().replace('.000Z', '').replace('T', ' '))
   }
 
   /** formats date as by replacing y, m and d in the format */
-  public _format_date(format='%Y-%m-%d') {
-    return this.set(this.format_date(this.value, format))
+  public _formatDate(format='%Y-%m-%d') {
+    return this.$text(this.format_date(this.chunk, format))
   }
 
   public format_date(value: string | PartialDate, format: string) {
@@ -784,32 +874,31 @@ class PatternFormatter {
 
   /** returns the value if it's an integer */
   public _numeric() {
-    return this.set(isNaN(parseInt(this.value)) ? '' : this.value)
+    return this.$text(isNaN(parseInt(this.chunk)) ? '' : this.chunk)
   }
 
-  /** replaces text, case insensitive; `:replace=.etal,&etal` will replace `.EtAl` with `&etal` */
-  public _replace(find: string, replace: string, mode?: 'string' | 'regex') {
+  /** replaces text, case insensitive when passing a string; `.replace('.etal','&etal')` will replace `.EtAl` with `&etal` */
+  public _replace(find: string | RegExp, replace: string) {
     if (!find) return this
-    const re = mode === 'regex' ? find : find.replace(/[[\](){}*+?|^$.\\]/g, '\\$&')
-    return this.set(this.value.replace(new RegExp(re, 'ig'), replace))
+    if (typeof find === 'string') find = new RegExp(find.replace(/[[\](){}*+?|^$.\\]/g, '\\$&'), 'ig')
+    return this.$text(this.chunk.replace(find, replace))
   }
 
   /**
    * this replaces spaces in the value passed in. You can specify what to replace it with by adding it as a
-   * parameter, e.g `condense=_` will replace spaces with underscores. **Parameters should not contain spaces** unless
+   * parameter, e.g `.condense(_)` will replace spaces with underscores. **Parameter should not contain spaces** unless
    * you want the spaces in the value passed in to be replaced with those spaces in the parameter
    */
   public _condense(sep: string = '') { // eslint-disable-line @typescript-eslint/no-inferrable-types
-    return this.set(this.value.replace(/\s/g, sep))
+    return this.$text(this.chunk.replace(/\s/g, sep))
   }
 
   /**
    * prefixes with its parameter, so `prefix=_` will add an underscore to the front if, and only if, the value
-   * it is supposed to prefix isn't empty. If you want to use a reserved character (such as `:` or `\`), you'll need to
-   * add a backslash (`\`) in front of it.
+   * it is supposed to prefix isn't empty.
    */
   public _prefix(prefix: string) {
-    if (this.value && prefix) return this.set(`${prefix}${this.value}`)
+    if (this.chunk && prefix) return this.$text(`${prefix}${this.chunk}`)
     return this
   }
 
@@ -818,7 +907,7 @@ class PatternFormatter {
    * it is supposed to postfix isn't empty
    */
   public _postfix(postfix: string) {
-    if (this.value && postfix) return this.set(`${this.value}${postfix}`)
+    if (this.chunk && postfix) return this.$text(`${this.chunk}${postfix}`)
     return this
   }
 
@@ -826,17 +915,49 @@ class PatternFormatter {
    * Abbreviates the text. Only the first character and subsequent characters following white space will be included.
    */
   public _abbr() {
-    return this.set(this.value.split(/\s+/).map(word => word.substring(0, 1)).join(' '))
+    return this.$text(this.chunk.split(/\s+/).map(word => word.substring(0, 1)).join(' '))
+  }
+
+  /**
+   * Does an acronym lookup for the text. You can optionally pass the name of the list; the list must live in the Zotero/better-bibtex directory in your profile,
+   * and must use commas as the delimiter.
+   */
+  public _acronym(list='acronyms') {
+    list = list.replace(/\.csv$/i, '')
+
+    try {
+      if (!this.acronyms[list]) {
+        this.acronyms[list] = csv2dict(OS.Path.join(Zotero.BetterBibTeX.dir, `${list}.csv`))
+          .reduce((acc: Record<string, string>, row: Record<string, string>) => {
+            row.full = (row.full || '').trim().toLowerCase()
+            row.acronym = (row.acronym || '').trim()
+            if (row.full && row.acronym) {
+              if (acc[row.full]) log.error('acronyms: parsing', list, row, 'duplicate')
+              acc[row.full] = row.acronym
+            }
+            else {
+              log.error('acronyms: parsing', list, row, 'incomplete')
+            }
+            return acc
+          }, {} as Record<string, string>)
+      }
+    }
+    catch (err) {
+      log.error('error parsing acronym list', list)
+      this.acronyms[list] = {}
+    }
+
+    return this.$text(this.acronyms[list][this.chunk.toLowerCase()] || this.chunk)
   }
 
   /** Forces the text inserted by the field marker to be in lowercase. For example, `[auth:lower]` expands the last name of the first author in lowercase. */
   public _lower() {
-    return this.set(this.value.toLowerCase())
+    return this.$text(this.chunk.toLowerCase())
   }
 
   /** Forces the text inserted by the field marker to be in uppercase. For example, `[auth:upper]` expands the last name of the first author in uppercase. */
   public _upper() {
-    return this.set(this.value.toUpperCase())
+    return this.$text(this.chunk.toUpperCase())
   }
 
   /**
@@ -848,17 +969,35 @@ class PatternFormatter {
    * after adding `jr` to the skipWords list.
    * Note that this filter is always applied if you use `title` (which is different from `Title`) or `shorttitle`.
    */
-  public _skipwords() {
-    return this.set(this.value.split(/\s+/).filter(word => !this.skipWords.has(word.toLowerCase())).join(' ').trim())
+  public _skipwords(/* ...words: string[] */) {
+    /*
+    let skipWords: Set<string> = new Set([...this.skipWords])
+
+    for (const word of words) {
+      if (!word) continue
+
+      if (word === '_') {
+        skipWords = new Set
+      }
+      else if (word[0] === '_') {
+        skipWords.delete(word.substr(1))
+      }
+      else {
+        skipWords.add(word)
+      }
+    }
+    */
+
+    return this.$text(this.chunk.split(/\s+/).filter(word => !this.skipWords.has(word.toLowerCase())).join(' ').trim())
   }
 
   /**
-   * selects words from the value passed in. The format is `select=start,number` (1-based), so `select=1,4`
-   * would select the first four words. If `number` is not given, all words from `start` to the end of the list are
+   * selects words from the value passed in. The format is `select(start,number)` (1-based), so `select(1,4)` or `select(n=4)`
+   * would select the first four words. If `n` is not given, all words from `start` to the end are
    * selected.
    */
   public _select(start: number = 1, n?: number) { // eslint-disable-line @typescript-eslint/no-inferrable-types
-    const values = this.value.split(/\s+/)
+    const values = this.chunk.split(/\s+/)
     let end = values.length
 
     if (start === 0) start = 1
@@ -875,78 +1014,78 @@ class PatternFormatter {
       end = start + n
     }
 
-    return this.set(values.slice(start, end).join(' '))
+    return this.$text(values.slice(start, end).join(' '))
   }
 
   /** (`substring=start,n`) selects `n` (default: all) characters starting at `start` (default: 1) */
   public _substring(start: number = 1, n?: number) { // eslint-disable-line @typescript-eslint/no-inferrable-types
-    if (typeof n === 'undefined') n = this.value.length
+    if (typeof n === 'undefined') n = this.chunk.length
 
-    return this.set(this.value.slice(start - 1, (start - 1) + n))
+    return this.$text(this.chunk.slice(start - 1, (start - 1) + n))
   }
 
   /** removes all non-ascii characters */
   public _ascii() {
-    return this.set(this.value.replace(/[^ -~]/g, '').split(/\s+/).join(' ').trim())
+    return this.$text(this.chunk.replace(/[^ -~]/g, '').split(/\s+/).join(' ').trim())
   }
 
   /** clears out everything but unicode alphanumeric characters (unicode character classes `L` and `N`) */
   public _alphanum() {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return this.set(Zotero.Utilities.XRegExp.replace(this.value, this.re.alphanum, '', 'all').split(/\s+/).join(' ').trim())
+    return this.$text(Zotero.Utilities.XRegExp.replace(this.chunk, this.re.alphanum, '', 'all').split(/\s+/).join(' ').trim())
   }
 
   /** tries to replace diacritics with ascii look-alikes. Removes non-ascii characters it cannot match */
   public _fold(mode?: 'german' | 'japanese' | 'chinese') {
-    return this.set(this.transliterate(this.value, mode).split(/\s+/).join(' ').trim())
+    return this.$text(this.transliterate(this.chunk, mode).split(/\s+/).join(' ').trim())
   }
 
   /** uppercases the first letter of each word */
   public _capitalize() {
-    return this.set(this.value.replace(/((^|\s)[a-z])/g, m => m.toUpperCase()))
+    return this.$text(this.chunk.replace(/((^|\s)[a-z])/g, m => m.toUpperCase()))
   }
 
   /** Removes punctuation */
   public _nopunct() {
-    let value = Zotero.Utilities.XRegExp.replace(this.value, this.re.dash, '-', 'all')
+    let value = Zotero.Utilities.XRegExp.replace(this.chunk, this.re.dash, '-', 'all')
     value = Zotero.Utilities.XRegExp.replace(value, this.re.punct, '', 'all')
-    return this.set(value)
+    return this.$text(value)
   }
 
   /** Removes punctuation and word-connecting dashes */
   public _nopunctordash() {
-    let value = Zotero.Utilities.XRegExp.replace(this.value, this.re.dash, '', 'all')
+    let value = Zotero.Utilities.XRegExp.replace(this.chunk, this.re.dash, '', 'all')
     value = Zotero.Utilities.XRegExp.replace(value, this.re.punct, '', 'all')
-    return this.set(value)
+    return this.$text(value)
   }
 
   /** Treat ideaographs as individual words */
-  public _split_ideographs() {
-    return this.set(this.value.replace(script.han, ' $1 ').trim())
+  public _splitIdeographs() {
+    return this.$text(this.chunk.replace(script.han, ' $1 ').trim())
   }
 
   /** word segmentation for Chinese items. Uses substantial memory; must be enabled under Preferences -> Better BibTeX -> Advanced -> Citekeys */
   public _jieba() {
     if (!Preference.jieba) return this
-    return this.set(jieba.cut(this.value).join(' ').trim())
+    return this.$text(jieba.cut(this.chunk).join(' ').trim())
   }
 
   /** word segmentation for Japanese items. Uses substantial memory; must be enabled under Preferences -> Better BibTeX -> Advanced -> Citekeys */
   public _kuromoji() {
     if (!Preference.kuroshiro || !kuroshiro.enabled) return this
-    return this.set(kuroshiro.tokenize(this.value || '').join(' ').trim())
+    return this.$text(kuroshiro.tokenize(this.chunk || '').join(' ').trim())
   }
 
   /** transliterates the citation key and removes unsafe characters */
-  public _clean(allow_spaces = false) {
-    if (!this.value) return this
-    return this.set(this.clean(this.value, allow_spaces))
+  public _clean() {
+    if (!this.chunk) return this
+    return this.$text(this.clean(this.chunk, true))
   }
 
   /** transliterates the citation key. If you don't specify a mode, the mode is derived from the item language field */
   public _transliterate(mode?: 'minimal' | 'german' | 'de' | 'japanese' | 'ja' | 'zh' | 'chinese') {
-    if (!this.value) return this
-    return this.set(this.transliterate(this.value, mode))
+    if (!this.chunk) return this
+    return this.$text(this.transliterate(this.chunk, mode))
   }
 
   private transliterate(str: string, mode?: 'minimal' | 'de' | 'german' | 'ja' | 'japanese' | 'zh' | 'chinese'): string {
@@ -1042,7 +1181,7 @@ class PatternFormatter {
     return this.transliterate(initial)
   }
 
-  private creators(onlyEditors, options: { initialOnly?: boolean, withInitials?: boolean} = {}): string[] {
+  private creators(onlyEditors, initials: boolean | 'only' = false): string[] {
     const types = itemCreators[client][this.item.itemType] || []
     const primary = types[0]
 
@@ -1051,13 +1190,13 @@ class PatternFormatter {
     for (const creator of this.item.creators) {
       if (onlyEditors && creator.creatorType !== 'editor' && creator.creatorType !== 'seriesEditor') continue
 
-      let name = options.initialOnly ? this.initial(creator) : this.stripQuotes(this.innerText(creator.lastName || creator.name))
+      let name = initials === 'only' ? this.initial(creator) : this.stripQuotes(this.innerText(creator.lastName || creator.name))
       if (name) {
-        if (options.withInitials && creator.firstName) {
-          let initials = Zotero.Utilities.XRegExp.replace(this.stripQuotes(creator.firstName), this.re.caseNotUpperTitle, '', 'all')
-          initials = this.transliterate(initials)
-          initials = Zotero.Utilities.XRegExp.replace(initials, this.re.caseNotUpper, '', 'all')
-          name += initials
+        if (initials === true && creator.firstName) {
+          let i = Zotero.Utilities.XRegExp.replace(this.stripQuotes(creator.firstName), this.re.caseNotUpperTitle, '', 'all')
+          i = this.transliterate(i)
+          i = Zotero.Utilities.XRegExp.replace(i, this.re.caseNotUpper, '', 'all')
+          name += i
         }
       }
       else {
@@ -1091,6 +1230,12 @@ class PatternFormatter {
 
     if (onlyEditors) return creators.editors || []
     return creators.authors || creators.editors || creators.translators || creators.collaborators || []
+  }
+
+  public toString() {
+    log.debug('formatter.toString:', this.chunk)
+    this.citekey += this.chunk
+    return this.chunk
   }
 }
 

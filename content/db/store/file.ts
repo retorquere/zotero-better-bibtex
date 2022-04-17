@@ -52,7 +52,7 @@ export class File {
           return coll
         }
         else {
-          log.debug('DB.Store.loadDatabaseVersionAsync:', `Could not load ${name}.${collname}`)
+          log.error('DB.Store.loadDatabaseVersionAsync:', `Could not load ${name}.${collname}`)
           return null
         }
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
@@ -62,7 +62,7 @@ export class File {
       callback(db)
     }
     catch (err) {
-      log.debug('DB.Store.loadDatabase', name, err)
+      log.error('DB.Store.loadDatabase', name, err)
       callback(err)
     }
   }

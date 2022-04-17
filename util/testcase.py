@@ -61,7 +61,7 @@ args.translator = {
 }[args.translator.lower()]
 
 assert args.issue, 'no issue'
-args.data = os.path.join(root, 'logs', f'{args.data}/references.json')
+args.data = os.path.join(root, 'logs', f'{args.data}/items.json')
 assert os.path.exists(args.data),  f'{args.data} does not exist'
 
 # get title

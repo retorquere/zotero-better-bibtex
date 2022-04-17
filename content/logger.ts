@@ -2,8 +2,9 @@
 declare const ZOTERO_TRANSLATOR_INFO: any
 declare const workerContext: { translator: string, debugEnabled: boolean, worker: string }
 
-import { stringify, asciify } from './stringify'
+import { asciify } from './stringify'
 import { environment } from './environment'
+import jsesc from 'jsesc'
 
 const inTranslator = environment.worker || typeof ZOTERO_TRANSLATOR_INFO !== 'undefined'
 
@@ -32,10 +33,10 @@ class Logger {
           output += this.formatError({ message: m.errorCode ? `${m.message} (${m.errorCode})` : m.message, filename: m.fileName, lineno: m.lineNumber, colno: m.column, stack: m.stack })
         }
         else if (this.verbose) {
-          output += stringify(m, null, 2)
+          output += jsesc(m, { compact: false, indent: '  '})
         }
         else {
-          output += stringify(m)
+          output += jsesc(m)
         }
 
         output += ' '

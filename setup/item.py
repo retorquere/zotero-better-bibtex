@@ -66,7 +66,7 @@ class fetch(object):
         json.loads(urlopen("https://www.zotero.org/download/client/manifests/release/updates-linux-x86_64.json").read().decode("utf-8"))
         if not rel['version'] in releases
       ]
-      releases = [rel for rel in releases if rel.startswith('5.')]
+      releases = [rel for rel in releases if int(rel.split('.')[0]) >= 5]
       releases = sorted(releases, key=lambda r: [int(n) for n in r.replace('m', '.').split('.')])
       self.update(
         client=client,
@@ -519,6 +519,8 @@ with fetch('zotero') as z, fetch('jurism') as j:
         else:
           min_version[client] = rel
 
+    print('******** UGLY HACK FOR #2099 *********')
+    min_version={ client: '5.2.7182818284590452' if ver == '6.0' else ver for client, ver in min_version.items() }
     with open(os.path.join(root, 'schema', 'supported.json'), 'w') as f:
       json.dump(min_version, f)
 

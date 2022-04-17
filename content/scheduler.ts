@@ -1,4 +1,4 @@
-import { Preference } from '../gen/preferences'
+import { Preference } from './prefs'
 
 type Handler = () => void
 type TimerHandle = ReturnType<typeof setTimeout>

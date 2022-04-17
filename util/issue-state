@@ -76,6 +76,18 @@ for issue in issues.values():
     remote=next((branch for branch in branches.local if branch == f'gh-{issue.number}'), None)
   )
 
+if args.orphaned_remote or args.close_branch:
+  for issue in sorted(issues.values(), key=lambda x: x.number):
+    if args.orphaned_remote and issue.branch.local is None and issue.branch.remote is not None: # orphaned remote
+      print(f'git push origin {shlex.quote(":" + issue.branch.remote)}')
+
+    if args.close_branch and issue.state != 'open':
+      if issue.branch.local is not None:
+        print(f'git branch -D {shlex.quote(issue.branch.local)}')
+      if issue.branch.remote is not None:
+        print(f'git push origin {shlex.quote(":" + issue.branch.remote)}')
+  sys.exit()
+
 for branch in set(branches.local + branches.remote):
   if m := re.match(r'^gh-([0-9]+)$', branch):
     assert int(m[1]) in issues, (m[1], issues.keys())
