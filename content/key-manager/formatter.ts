@@ -769,6 +769,13 @@ class PatternFormatter {
   }
 
   /**
+    * If the length of the output is not at least `n`, jump to the next pattern
+    */
+  public $min(length: number) {
+    return this.len(this.citekey, '>', length).$text('')
+  }
+
+  /**
     * If the length of the output does not match the given number, skip to the next pattern.
     */
   public $len(relation: '<' | '<=' | '=' | '!=' | '>=' | '>', length: number) {
@@ -791,6 +798,13 @@ class PatternFormatter {
     */
   public _len(relation: '<' | '<=' | '=' | '!=' | '>=' | '>', n: number) {
     return this.len(this.chunk, relation, n)
+  }
+
+  /**
+    * If the length of the output is not at least `n`, jump to the next pattern
+    */
+  public _min(n: number) {
+    return this.len(this.chunk, '>', n)
   }
 
   private len(value: string, relation: '<' | '<=' | '=' | '!=' | '>=' | '>', n: number) {

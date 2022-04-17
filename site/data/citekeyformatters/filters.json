@@ -15,6 +15,7 @@
   "`len`(`relation`: string, `n`: number)": "If the length of the output does not match the given number, skip to the next pattern.",
   "`localTime`": "transforms date/time to local time. Mainly useful for dateAdded and dateModified as it requires an ISO-formatted input.",
   "`lower`": "Forces the text inserted by the field marker to be in lowercase. For example, `[auth:lower]` expands the last name of the first author in lowercase.",
+  "`min`(`n`: number)": "If the length of the output is not at least `n`, jump to the next pattern",
   "`nopunct`": "Removes punctuation",
   "`nopunctordash`": "Removes punctuation and word-connecting dashes",
   "`numeric`": "returns the value if it's an integer",

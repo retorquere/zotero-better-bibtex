@@ -22,6 +22,7 @@
   "`lastpage`": "The number of the last page of the publication (See the remark on `firstpage`)",
   "`len`(`relation`: string, `length`: number)": "If the length of the output does not match the given number, skip to the next pattern.",
   "`library`": "returns the name of the shared group library, or nothing if the item is in your personal library",
+  "`min`(`length`: number)": "If the length of the output is not at least `n`, jump to the next pattern",
   "`month`": "the month of the publication",
   "`origdate`": "the original date of the publication",
   "`origyear`": "the original year of the publication",
