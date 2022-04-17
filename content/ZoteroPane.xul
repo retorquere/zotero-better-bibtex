@@ -5,9 +5,9 @@
 <overlay id="zotero-better-bibtex-zoteroPane-overlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
   <hbox id="zotero-item-toolbar">
     <hbox id="better-bibtex-progress" hidden="true" insertbefore="zotero-pq-buttons">
-      <label id="better-bibtex-progress-label" value=""/>
-       <!-- progressmeter id="better-bibtex-progress-meter" flex="1" mode="determined" value="0"/ -->
-      <label id="better-bibtex-progress-meter" value=""/>
+      <label id="better-bibtex-progress-label" flex="20" value=""/>
+      <progressmeter id="better-bibtex-progress-meter" flex="40" mode="determined" value="0"/>
+      <!-- label id="better-bibtex-progress-meter" value=""/ -->
     </hbox>
   </hbox>
 
