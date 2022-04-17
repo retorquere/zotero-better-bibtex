@@ -6,8 +6,9 @@
   <hbox id="zotero-item-toolbar">
     <hbox id="better-bibtex-progress" hidden="true" insertbefore="zotero-pq-buttons">
       <label id="better-bibtex-progress-label" flex="20" value=""/>
-      <progressmeter id="better-bibtex-progress-meter" flex="40" mode="determined" value="0"/>
+      <!-- progressmeter id="better-bibtex-progress-meter" flex="40" mode="determined" value="0"/ -->
       <!-- label id="better-bibtex-progress-meter" value=""/ -->
+      <hbox id="better-bibtex-progress-meter" class="bbt-progress-sprite" width="20" height="20"></hbox>
     </hbox>
   </hbox>
 

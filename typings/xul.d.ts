@@ -7,6 +7,10 @@ export namespace XUL {
     public classList: ClassList
   }
   
+  class Image extends Element {
+    public src: string
+  }
+  
   class Label extends Element {
     public value: string
   }

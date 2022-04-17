@@ -729,8 +729,10 @@ function setProgress(progress: number | false, msg: string) {
   progressbox.hidden = progress === false ? true : false
   if (progress === false) return
 
+  /*
   const progressmeter: XUL.ProgressMeter = (document.getElementById('better-bibtex-progress-meter') as unknown as XUL.ProgressMeter)
   if (typeof progress === 'number') progressmeter.value = progress
+  */
 
   /*
   const clocks = [
@@ -742,6 +744,9 @@ function setProgress(progress: number | false, msg: string) {
   const progressmeter: XUL.Label = (document.getElementById('better-bibtex-progress-meter') as unknown as XUL.Label)
   if (typeof progress === 'number') progressmeter.value = clocks[Math.ceil((progress / 100) * clocks.length)] // eslint-disable-line no-magic-numbers
   */
+
+  const progressmeter: XUL.Element = (document.getElementById('better-bibtex-progress-meter') as unknown as XUL.Element)
+  progressmeter.style.backgroundPosition = `-${Math.min(Math.abs(progress), 99) * 20}px 0` // eslint-disable-line no-magic-numbers
 
   const label: XUL.Label = (document.getElementById('better-bibtex-progress-label') as unknown as XUL.Label)
   label.value = msg
