@@ -195,29 +195,52 @@ $patch$(Zotero.Items, 'merge', original => async function Zotero_Items_merge(ite
 })
 
 // https://github.com/retorquere/zotero-better-bibtex/issues/769
-$patch$(Zotero.DataObjects.prototype, 'parseLibraryKeyHash', original => function Zotero_DataObjects_prototype_parseLibraryKeyHash(id: string) {
+function parseLibraryKeyFromCitekey(libraryKey) {
   try {
-    const decoded_id = decodeURIComponent(id)
-    if (decoded_id[0] === '@') {
-      const item = Zotero.BetterBibTeX.KeyManager.keys.findOne($and({ citekey: decoded_id.substring(1) }))
-      if (item) return { libraryID: item.libraryID, key: item.itemKey }
+    const decoded = decodeURIComponent(libraryKey)
+    if (decoded[0] === '@') {
+      const item = Zotero.BetterBibTeX.KeyManager.keys.findOne($and({ citekey: decoded.substring(1) }))
+
+      return item ? { libraryID: item.libraryID, key: item.itemKey } : false
     }
 
-    const m = decoded_id.match(/^bbt:(?:{([0-9]+)})?(.*)/)
+    const m = decoded.match(/^bbt:(?:{([0-9]+)})?(.*)/)
     if (m) {
       const [_libraryID, citekey] = m.slice(1)
       const libraryID: number = (!_libraryID || _libraryID === '1') ? Zotero.Libraries.userLibraryID : parseInt(_libraryID)
       const item = Zotero.BetterBibTeX.KeyManager.keys.findOne($and({ libraryID, citekey }))
-      if (item) return { libraryID: item.libraryID, key: item.itemKey }
+      return item ? { libraryID: item.libraryID, key: item.itemKey } : false
     }
   }
   catch (err) {
-    log.error('parseLibraryKeyHash:', id, err)
+    log.error('parseLibraryKeyFromCitekey:', libraryKey, err)
   }
+  return null
+}
 
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  return original.apply(this, arguments)
-})
+if (typeof Zotero.DataObjects.prototype.parseLibraryKeyHash === 'function') {
+  log.debug('monkey-patching parseLibraryKeyHash')
+  $patch$(Zotero.DataObjects.prototype, 'parseLibraryKeyHash', original => function Zotero_DataObjects_prototype_parseLibraryKeyHash(libraryKey: string) {
+    const item = parseLibraryKeyFromCitekey(libraryKey)
+    log.debug('parseLibraryKeyHash', { item })
+    if (item !== null) return item
+
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    return original.apply(this, arguments)
+  })
+}
+if (typeof Zotero.DataObjects.prototype.parseLibraryKey === 'function') {
+  log.debug('monkey-patching parseLibraryKey')
+  $patch$(Zotero.DataObjects.prototype, 'parseLibraryKey', original => function Zotero_DataObjects_prototype_parseLibraryKey(libraryKey: string) {
+    const item = parseLibraryKeyFromCitekey(libraryKey)
+    log.debug('parseLibraryKey', { item })
+    if (item) return item
+    if (item === false) return { libraryID: Zotero.Libraries.userLibraryID, key: undefined }
+
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    return original.apply(this, arguments)
+  })
+}
 
 // otherwise the display of the citekey in the item pane flames out
 $patch$(Zotero.ItemFields, 'isFieldOfBase', original => function Zotero_ItemFields_isFieldOfBase(field: string, _baseField: any) {
