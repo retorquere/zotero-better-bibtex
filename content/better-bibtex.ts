@@ -724,6 +724,28 @@ notify('collection-item', (_event: any, _type: any, collection_items: any) => {
   INIT
 */
 
+function setProgress(progress: number | false, msg: string) {
+  const progressbox = document.getElementById('better-bibtex-progress')
+  progressbox.hidden = progress === false ? true : false
+  if (progress === false) return
+
+  /*
+  const progressmeter: XUL.ProgressMeter = (document.getElementById('better-bibtex-progress-meter') as unknown as XUL.ProgressMeter)
+  if (typeof progress === 'number') progressmeter.value = progress
+  */
+  const clocks = [
+    '\u{1F550}', '\u{1F551}', '\u{1F552}',
+    '\u{1F553}', '\u{1F554}', '\u{1F555}',
+    '\u{1F556}', '\u{1F557}', '\u{1F558}',
+    '\u{1F559}', '\u{1F55A}', '\u{1F55B}',
+  ]
+  const progressmeter: XUL.Label = (document.getElementById('better-bibtex-progress-meter') as unknown as XUL.Label)
+  if (typeof progress === 'number') progressmeter.value = clocks[Math.ceil((progress / 100) * clocks.length)] // eslint-disable-line no-magic-numbers
+
+  const label: XUL.Label = (document.getElementById('better-bibtex-progress-label') as unknown as XUL.Label)
+  label.value = msg
+}
+
 // type TimerHandle = ReturnType<typeof setInterval>
 class Progress {
   private timestamp: number
@@ -732,8 +754,6 @@ class Progress {
   private progress: any
   private name = 'Startup progress'
   private mode: string
-  private label: XUL.Label
-  private progressmeter: XUL.ProgressMeter
 
   public start(msg: string) {
     this.timestamp = Date.now()
@@ -754,11 +774,7 @@ class Progress {
       this.progressWin.show()
     }
     else {
-      document.getElementById('better-bibtex-progress').hidden = false
-      this.progressmeter = (document.getElementById('better-bibtex-progress-meter') as unknown as XUL.ProgressMeter)
-      this.progressmeter.value = 0
-      this.label = (document.getElementById('better-bibtex-progress-label') as unknown as XUL.Label)
-      this.label.value = msg
+      setProgress(0, msg)
     }
   }
 
@@ -770,8 +786,7 @@ class Progress {
       this.progress.setText(msg)
     }
     else {
-      this.progressmeter.value = progress
-      this.label.value = msg
+      setProgress(progress, msg)
     }
   }
 
@@ -978,17 +993,7 @@ export class BetterBibTeX {
     Events.on('export-progress', (percent: number, translator: string) => {
       const preparing = percent < 0 ? l10n.localize('Preferences.auto-export.status.preparing') : ''
       percent = Math.abs(percent)
-      if (percent && percent < 100) { // eslint-disable-line no-magic-numbers
-        document.getElementById('better-bibtex-progress').hidden = false
-        const progressmeter = (document.getElementById('better-bibtex-progress-meter') as unknown as XUL.ProgressMeter)
-        progressmeter.value = Math.abs(percent)
-
-        const label = (document.getElementById('better-bibtex-progress-label') as unknown as XUL.Label)
-        label.value = `${preparing} ${translator}`.trim()
-      }
-      else {
-        document.getElementById('better-bibtex-progress').hidden = true
-      }
+      setProgress(percent && percent < 100 && Math.abs(percent), `${preparing} ${translator}`) // eslint-disable-line no-magic-numbers
     })
   }
 }
