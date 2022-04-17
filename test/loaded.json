@@ -434,6 +434,8 @@
   "export/When exporting notes, also handle the blockquote tag #1656.json",
   "export/Word segmentation for Chinese references #1682.bibtex",
   "export/Word segmentation for Chinese references #1682.json",
+  "export/Zotero's Manuscript 'Type' is mapped to both biblatex's 'type' and 'howpublished' #2114.biblatex",
+  "export/Zotero's Manuscript 'Type' is mapped to both biblatex's 'type' and 'howpublished' #2114.json",
   "export/[authN_M] citation key syntax has off-by-one error #899.bibtex",
   "export/[authN_M] citation key syntax has off-by-one error #899.json",
   "export/add date, origdate functions, and format-date filter #1488.bibtex",
