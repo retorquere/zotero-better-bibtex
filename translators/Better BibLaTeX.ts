@@ -479,7 +479,7 @@ export function doExport(): void {
         break
 
       default:
-        if (entry.entrytype === 'unpublished' && ![ 'presentation', 'manuscript' ].includes(item.itemType)) {
+        if (entry.entrytype === 'unpublished' && item.itemType !== 'presentation') {
           entry.add({ name: 'howpublished', value: item.type })
         }
         else {
