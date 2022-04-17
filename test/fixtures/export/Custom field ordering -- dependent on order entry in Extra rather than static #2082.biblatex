@@ -1,0 +1,19 @@
+
+@article{Jakobsen.etal_2020_WealthTaxationWealthAccumulationTheory,
+  title = {Wealth Taxation and Wealth Accumulation: Theory and Evidence from {{Denmark}}},
+  author = {Jakobsen, Katrine and Jakobsen, Kristian and Kleven, Henrik and Zucman, Gabriel},
+  date = {2020-02},
+  journaltitle = {The Quarterly Journal of Economics},
+  volume = {135},
+  number = {1},
+  pages = {329--388},
+  doi = {10.1093/qje/qjz032},
+  url = {https://doi.org/10.1093/qje/qjz032},
+  abstract = {Using administrative wealth records from Denmark, we study the effects of wealth taxes on wealth accumulation. Denmark used to impose one of the world's highest marginal tax rates on wealth, but this tax was greatly reduced starting in 1989 and later abolished. Due to the specific design of the wealth tax, the 1989 reform provides a compelling quasi-experiment for understanding behavioral responses among the wealthiest segments of the population. We find clear reduced-form effects of wealth taxes in the short and medium run, with larger effects on the very wealthy than on the moderately wealthy. We develop a simple life cycle model with utility of residual wealth (bequests) allowing us to interpret the evidence in terms of structural primitives. We calibrate the model to the quasi-experimental moments and simulate the model forward to estimate the long-run effect of wealth taxes on wealth accumulation. Our simulations show that the long-run elasticity of taxable wealth with respect to the net-of-tax return is sizable at the top of the distribution.},
+  keywords = {Data Sources: Wealth Inequality Trends,Wealth Taxation},
+  url_working_paper = {https://bibbase.org/network/publication/jakobsen-jakobsen-kleven-zucman-wealthtaxationandwealthaccumulationtheoryandevidencefromdenmark-2019},
+  url_online_appendix = {https://bibbase.org/network/publication/jakobsen-jakobsen-kleven-zucman-onlineappendixforwealthtaxationandwealthaccumulationtheoryandevidencefromdenmark-2020},
+  url_replication_data = {https://bibbase.org/network/publication/jakobsen-jakobsen-kleven-zucman-replicationdataforwealthtaxationandwealthaccumulationtheoryandevidencefromdenmark-2019}
+}
+
+
