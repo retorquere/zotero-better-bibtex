@@ -734,19 +734,8 @@ function setProgress(progress: number | false, msg: string) {
   if (typeof progress === 'number') progressmeter.value = progress
   */
 
-  /*
-  const clocks = [
-    '\u{1F550}', '\u{1F551}', '\u{1F552}',
-    '\u{1F553}', '\u{1F554}', '\u{1F555}',
-    '\u{1F556}', '\u{1F557}', '\u{1F558}',
-    '\u{1F559}', '\u{1F55A}', '\u{1F55B}',
-  ]
-  const progressmeter: XUL.Label = (document.getElementById('better-bibtex-progress-meter') as unknown as XUL.Label)
-  if (typeof progress === 'number') progressmeter.value = clocks[Math.ceil((progress / 100) * clocks.length)] // eslint-disable-line no-magic-numbers
-  */
-
   const progressmeter: XUL.Element = (document.getElementById('better-bibtex-progress-meter') as unknown as XUL.Element)
-  progressmeter.style.backgroundPosition = `-${Math.min(Math.abs(progress), 99) * 20}px 0` // eslint-disable-line no-magic-numbers
+  progressmeter.style.backgroundPosition = `-${Math.min(Math.abs(progress), 100) * 20}px 0` // eslint-disable-line no-magic-numbers
 
   const label: XUL.Label = (document.getElementById('better-bibtex-progress-label') as unknown as XUL.Label)
   label.value = msg
