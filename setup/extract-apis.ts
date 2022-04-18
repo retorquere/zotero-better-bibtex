@@ -29,33 +29,6 @@ class FormatterAPI {
       })
       if (!this.signature[key].rest) delete this.signature[key].rest
 
-      /*
-      let names = [ name.substr(1) ]
-      let name_edtr = ''
-      if (kind === 'function' && method.parameters.find(p => p.name === 'onlyEditors')) { // auth function
-        for (const [author, editor] of [['authors', 'editors'], ['author', 'editor'], ['auth.auth', 'edtr.edtr'], [ 'auth', 'edtr' ]]) {
-          if (names[0].startsWith(author)) {
-            names.push(name_edtr = names[0].replace(author, editor))
-            break
-          }
-        }
-      }
-      if (name_edtr) {
-        name_edtr = `$${name_edtr}`
-        this.signature[name_edtr] = _.cloneDeep(this.signature[name])
-
-        for (const mname of [name, name_edtr]) {
-          this.signature[mname].schema.properties.onlyEditors = { const: mname === name_edtr }
-        }
-      }
-      */
-
-      /*
-      if (kind === 'function') {
-        if (method.parameters.find(p => p.name === 'n')) name = `${name}N`
-        if (method.parameters.find(p => p.name === 'm')) name = `${name}_M`
-      }
-      */
       let quoted = '`' + name.substr(1) + '`'
       if (method.parameters.length) {
         quoted += '('
@@ -81,11 +54,11 @@ class FormatterAPI {
   }
 
   private typedoc(type): string {
+    if (type.enum) return type.enum.map(t => this.typedoc({ const: t })).join(' | ')
     if (['boolean', 'string', 'number'].includes(type.type)) return type.type
     if (type.oneOf) return type.oneOf.map(t => this.typedoc(t)).join(' | ')
     if (type.anyOf) return type.anyOf.map(t => this.typedoc(t)).join(' | ')
     if (type.const) return JSON.stringify(type.const)
-    if (type.enum) return type.enum.map(t => this.typedoc({ const: t })).join(' | ')
     if (type.instanceof) return type.instanceof
     if (type.type === 'array' && type.prefixItems) return `(${type.prefixItems.map(t => this.typedoc(t)).join(', ')})`
     if (type.type === 'array' && typeof type.items !== 'boolean') return `${this.typedoc(type.items)}...`
