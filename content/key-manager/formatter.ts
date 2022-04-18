@@ -462,12 +462,11 @@ class PatternFormatter {
    * - `n`: select the first `n` authors (when passing a number) or the authors in this range (inclusive, when passing two values); negative numbers mean "from the end", default = 0 = all,
    * - `creator`: select type of creator (`author` or `editor`),
    * - `name`: sprintf-js template. Available named parameters are: `f` (family name), `g` (given name), `i` (initials)
-   * - `given`: use given name instead of family name,
-   * - `etal`: use this term to replace authors after `select` authors have been named,
+   * - `etal`: use this term to replace authors after `n` authors have been named,
    * - `joiner`: use this character to join authors
    * - `clean`: transliterates the citation key and removes unsafe characters
    * - `min`: skip to the next pattern if there are less than `min` creators
-   * - `min`: skip to the next pattern if there are more than `max` creators
+   * - `max`: skip to the next pattern if there are more than `max` creators
    */
   public $authors(
     n: number | [number, number] = 0,
