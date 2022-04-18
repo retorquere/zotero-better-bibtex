@@ -29,16 +29,22 @@ export class Scheduler {
   }
 
   public set paused(paused: boolean) {
-    if (paused === this.paused) return
+    if (paused === this.paused) {
+      log.debug('scheduler: already', paused ? 'paused' : 'active')
+      return
+    }
 
     if (paused) {
+      log.debug('scheduler: pausing')
       this.held = new Map
     }
     else {
+      log.debug('scheduler: resuming')
       const held = this.held
       this.held = null
 
       for (const [id, handler] of held.entries()) {
+        log.debug('scheduler: resuming', id)
         this.schedule(id, handler)
       }
     }
