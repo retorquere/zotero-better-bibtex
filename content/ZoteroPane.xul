@@ -11,6 +11,13 @@
       <hbox id="better-bibtex-progress-meter" class="bbt-progress-sprite" width="20" height="20"></hbox>
     </hbox>
   </hbox>
+  <script>
+    // Zotero doesn't have an ID for the hbox-before-zotero-pq-buttons
+    window.addEventListener('load', function() {
+      const progress = document.getElementById('better-bibtex-progress')
+      progress.parentNode.insertBefore(progress, progress.previousSibling)
+    })
+  </script>
 
   <menupopup id="menu_ToolsPopup">
     <menuitem label="&better-bibtex.BetterBibTeX.auxScanner;" oncommand="Zotero.BetterBibTeX.scanAUX('tag')"/>
