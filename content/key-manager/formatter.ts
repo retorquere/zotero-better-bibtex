@@ -461,27 +461,24 @@ class PatternFormatter {
    * Author/editor information. Parameters are:
    * - `n`: select the first `n` authors (when passing a number) or the authors in this range (inclusive, when passing two values); negative numbers mean "from the end", default = 0 = all,
    * - `creator`: select type of creator (`author` or `editor`),
-   * - `initials`: whether to add initials or to only use initials,
-   * - `letters`: pick this many letters from the name, defaults to 0 = all,
-   * - `given`: use given name instead of family name,
-   * - `etal`: use this term to replace authors after `select` authors have been named,
+   * - `name`: sprintf-js template. Available named parameters are: `f` (family name), `g` (given name), `i` (initials)
+   * - `etal`: use this term to replace authors after `n` authors have been named,
    * - `joiner`: use this character to join authors
    * - `clean`: transliterates the citation key and removes unsafe characters
    * - `min`: skip to the next pattern if there are less than `min` creators
-   * - `min`: skip to the next pattern if there are more than `max` creators
+   * - `max`: skip to the next pattern if there are more than `max` creators
    */
   public $authors(
     n: number | [number, number] = 0,
     creator: 'author' | 'editor' = 'author',
-    initials : boolean | 'only' = false,
-    letters=0,
+    name='%(f)s',
     etal='',
     joiner=' ',
     clean=true,
     min=0,
     max=0
   ) {
-    let authors = this.creators(creator === 'editor', initials)
+    let authors = this.creators(creator === 'editor', name)
     if (min && authors.length < min) throw { next: true } // eslint-disable-line no-throw-literal
     if (max && authors.length > max) throw { next: true } // eslint-disable-line no-throw-literal
     if (!n) {
@@ -498,8 +495,6 @@ class PatternFormatter {
       authors = authors.slice(n[0] - 1, n[1])
       if (etal && !etal.replace(/[a-z]/ig, '').length) etal = `${joiner}${etal}`
     }
-    if (!initials && letters) authors = authors.map(a => a.substr(0, letters))
-    log.debug('$author:', { n, creator, initials, letters, etal, joiner, min, max }, authors)
     let author = authors.join(joiner) + etal
     if (clean) author = this.clean(author, true)
     return this.$text(author)
@@ -507,19 +502,21 @@ class PatternFormatter {
 
   /** The first `N` (default: all) characters of the `M`th (default: first) author's last name. */
   public $auth(n=0, m=1, creator: 'author' | 'editor' = 'author', initials=false, clean=true) {
-    return this.$authors([m, m], creator, initials, n, undefined, undefined, clean)
+    const family = n ? `%(f).${n}s` : '%(f)s'
+    const name = initials ? `${family}%(I)s` : family
+    return this.$authors([m, m], creator, name, undefined, undefined, clean)
   }
 
-  /** The forename initial of the first author. */
+  /** The given-name initial of the first author. */
   public $authForeIni(creator: 'author' | 'editor' = 'author', clean=true) {
-    let author: string = this.creators(creator === 'editor', 'only')[0] || ''
+    let author: string = this.creators(creator === 'editor', '%(I)s')[0] || ''
     if (clean) author = this.clean(author, true)
     return this.$text(author)
   }
 
-  /** The forename initial of the last author. */
+  /** The given-name initial of the last author. */
   public $authorLastForeIni(creator: 'author' | 'editor' = 'author', clean=true) {
-    const authors = this.creators(creator === 'editor', 'only')
+    const authors = this.creators(creator === 'editor', '%(I)s')
     let author = authors[authors.length - 1] || ''
     if (clean) author = this.clean(author, true)
     return this.$text(author)
@@ -527,7 +524,7 @@ class PatternFormatter {
 
   /** The last name of the last author */
   public $authorLast(creator: 'author' | 'editor' = 'author', initials=false, clean=true) {
-    const authors = this.creators(creator === 'editor', initials)
+    const authors = this.creators(creator === 'editor', initials ? '%(f)s%(I)s' : '%(f)s')
     let author = authors[authors.length - 1] || ''
     if (clean) author = this.clean(author, true)
     return this.$text(author)
@@ -537,7 +534,7 @@ class PatternFormatter {
    * More than four authors: First letters of last names of first three authors concatenated. "+" at the end.
    */
   public $authorsAlpha(creator: 'author' | 'editor' = 'author', initials=false, joiner=' ', clean=true) {
-    const authors = this.creators(creator === 'editor', initials)
+    const authors = this.creators(creator === 'editor', initials ? '%(f)s%(I)s' : '%(f)s')
     if (!authors.length) return this.$text('')
 
     let author: string
@@ -563,7 +560,7 @@ class PatternFormatter {
 
   /** The beginning of each author's last name, using no more than `N` characters. */
   public $authIni(n=0, creator: 'author' | 'editor' = 'author', initials=false, joiner='.', clean=true) {
-    const authors = this.creators(creator === 'editor', initials)
+    const authors = this.creators(creator === 'editor', initials ? '%(f)s%(I)s' : '%(f)s')
     if (!authors.length) return this.$text('')
     let author = authors.map(auth => auth.substring(0, n)).join(joiner)
     if (clean) author = this.clean(author, true)
@@ -572,7 +569,7 @@ class PatternFormatter {
 
   /** The first 5 characters of the first author's last name, and the last name initials of the remaining authors. */
   public $authorIni(creator: 'author' | 'editor' = 'author', initials=false, joiner='.', clean=true): PatternFormatter {
-    const authors = this.creators(creator === 'editor', initials)
+    const authors = this.creators(creator === 'editor', initials ? '%(f)s%(I)s' : '%(f)s')
     if (!authors.length) return this.$text('')
     const firstAuthor = authors.shift()
 
@@ -584,7 +581,7 @@ class PatternFormatter {
 
   /** The last name of the first two authors, and ".ea" if there are more than two. */
   public $authAuthEa(creator: 'author' | 'editor' = 'author', initials=false, joiner='.', clean=true) {
-    const authors = this.creators(creator === 'editor', initials)
+    const authors = this.creators(creator === 'editor', initials ? '%(f)s%(I)s' : '%(f)s')
     if (!authors.length) return this.$text('')
 
     // eslint-disable-next-line no-magic-numbers
@@ -600,7 +597,7 @@ class PatternFormatter {
    * more than 2 authors "EtAl" instead of ".etal" is appended.
    */
   public $authEtAl(creator: 'author' | 'editor' = 'author', initials=false, joiner=' ', clean=true) {
-    const authors = this.creators(creator === 'editor', initials)
+    const authors = this.creators(creator === 'editor', initials ? '%(f)s%(I)s' : '%(f)s')
     if (!authors.length) return this.$text('')
 
     let author
@@ -617,7 +614,10 @@ class PatternFormatter {
 
   /** The last name of the first author, and the last name of the second author if there are two authors or ".etal" if there are more than two. */
   public $authEtal2(creator: 'author' | 'editor' = 'author', initials=false, joiner='.', clean=true) {
-    const authors = this.creators(creator === 'editor', initials)
+    // eslint-disable-next-line prefer-template
+    return this.$authors(2, creator, '%(f)s' + (initials ? '%(I)s' : ''), '.etal', joiner, clean)
+    /*
+    const authors = this.creators(creator === 'editor', initials ? '%(f)s%(I)s' : '%(f)s')
     if (!authors.length) return this.$text('')
 
     let author
@@ -630,11 +630,12 @@ class PatternFormatter {
     }
     if (clean) author = this.clean(author, true)
     return this.$text(author)
+    */
   }
 
   /** The last name if one author is given; the first character of up to three authors' last names if more than one author is given. A plus character is added, if there are more than three authors. */
   public $authshort(creator: 'author' | 'editor' = 'author', initials=false, joiner='.', clean=true) {
-    const authors = this.creators(creator === 'editor', initials)
+    const authors = this.creators(creator === 'editor', initials ? '%(f)s%(I)s' : '%(f)s')
 
     let author
     switch (authors.length) {
@@ -773,7 +774,7 @@ class PatternFormatter {
   /**
     * If the length of the output does not match the given number, skip to the next pattern.
     */
-  public $len(relation: '<' | '<=' | '=' | '!=' | '>=' | '>', length: number) {
+  public $len(relation: '<' | '<=' | '=' | '!=' | '>=' | '>' = '>', length=0) {
     return this.len(this.citekey, relation, length).$text('')
   }
 
@@ -791,8 +792,8 @@ class PatternFormatter {
   /**
     * If the length of the output does not match the given number, skip to the next pattern.
     */
-  public _len(relation: '<' | '<=' | '=' | '!=' | '>=' | '>', n: number) {
-    return this.len(this.chunk, relation, n)
+  public _len(relation: '<' | '<=' | '=' | '!=' | '>=' | '>' = '>', length=0) {
+    return this.len(this.chunk, relation, length)
   }
 
   private len(value: string, relation: '<' | '<=' | '=' | '!=' | '>=' | '>', n: number) {
@@ -1165,23 +1166,30 @@ class PatternFormatter {
     return name
   }
 
-  private initial(creator) {
+  private initials(creator, all=true) {
     if (!creator.firstName) return ''
 
     const firstName = this.stripQuotes(creator.firstName)
 
-    let initial, m
+    let initials: string
+    let m
     if (m = firstName.match(/(.+)\u0097/)) {
-      initial = m[1]
+      initials = m[1]
+    }
+    else if (all) {
+      initials = firstName
     }
     else {
-      initial = firstName[0]
+      initials = firstName[0]
     }
 
-    return this.transliterate(initial)
+    initials = Zotero.Utilities.XRegExp.replace(initials, this.re.caseNotUpperTitle, '', 'all')
+    initials = this.transliterate(initials)
+    initials = Zotero.Utilities.XRegExp.replace(initials, this.re.caseNotUpper, '', 'all')
+    return initials
   }
 
-  private creators(onlyEditors, initials: boolean | 'only' = false): string[] {
+  private creators(onlyEditors, template: string): string[] {
     const types = itemCreators[client][this.item.itemType] || []
     const primary = types[0]
 
@@ -1190,19 +1198,13 @@ class PatternFormatter {
     for (const creator of this.item.creators) {
       if (onlyEditors && creator.creatorType !== 'editor' && creator.creatorType !== 'seriesEditor') continue
 
-      let name = initials === 'only' ? this.initial(creator) : this.stripQuotes(this.innerText(creator.lastName || creator.name))
-      if (name) {
-        if (initials === true && creator.firstName) {
-          let i = Zotero.Utilities.XRegExp.replace(this.stripQuotes(creator.firstName), this.re.caseNotUpperTitle, '', 'all')
-          i = this.transliterate(i)
-          i = Zotero.Utilities.XRegExp.replace(i, this.re.caseNotUpper, '', 'all')
-          name += i
-        }
-      }
-      else {
-        name = this.stripQuotes(this.innerText(creator.firstName))
-      }
-
+      log.debug('creator template:', template)
+      const name = sprintf(template, {
+        f: this.stripQuotes(this.innerText(creator.lastName || creator.name)),
+        g: this.stripQuotes(this.innerText(creator.firstName || '')),
+        I: this.initials(creator),
+        i: this.initials(creator, false),
+      })
       if (!name) continue
 
       switch (creator.creatorType) {

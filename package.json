@@ -132,7 +132,7 @@
     "kuroshiro-analyzer-kuromoji": "^1.1.0",
     "lodash.template": "^4.5.0",
     "lokijs": "^1.5.12",
-    "moment": "^2.29.2",
+    "moment": "^2.29.3",
     "node-eta": "^0.9.0",
     "number-to-words": "^1.2.4",
     "peggy": "^1.2.0",
@@ -158,7 +158,7 @@
     "words-to-numbers": "^1.5.1",
     "xml-parser": "^1.2.1",
     "xpath": "^0.0.32",
-    "zotero-plugin": "^1.4.0"
+    "zotero-plugin": "^1.4.1"
   },
   "repository": {
     "type": "git",

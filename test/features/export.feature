@@ -13,6 +13,7 @@ Feature: Export
 
     Examples:
       | file                                                                                                                     | references |
+      | Zotero's Manuscript 'Type' is mapped to both biblatex's 'type' and 'howpublished' #2114                                  | 1          |
       | Configurable journal abbreviation for citekey #2097                                                                      | 1          |
       | BetterBibLaTeX exports articles as online #2058                                                                          | 3          |
       | How to export bib without month and date in year item (Using better bibtex) #2022                                        | 1          |

@@ -351,11 +351,22 @@ export class KeyManager {
 
   public async rescan(clean?: boolean): Promise<void> {
     if (Preference.scrubDatabase) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return, no-prototype-builtins
-      for (const item of this.keys.where(i => i.hasOwnProperty('extra'))) { // 799
-        delete item.extra
-        this.keys.update(item)
+      this.keys.removeWhere(i => !i.citekey) // 2047
+
+      let errors = 0
+      for (const item of this.keys.data) {
+        if ('extra' in item) { // 799, tests for existence even if it is empty
+          delete item.extra
+          this.keys.update(item)
+        }
+
+        if (!this.keys.validate(item)) {
+          log.error('KeyManager.rescan, scrub error:', item, this.keys.validate.errors)
+          errors += 1
+        }
       }
+
+      if (errors) alert(`Better BibTeX: ${errors} errors found in the citekey database, please report on the Better BibTeX project site`)
     }
 
     if (Array.isArray(this.scanning)) {

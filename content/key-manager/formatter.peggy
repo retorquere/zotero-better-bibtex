@@ -166,6 +166,8 @@ method
         case 'authors':
         case 'editors':
           args.etal = 'EtAl'
+          args.name = typeof args.m === 'number' ? `%(f).${args.m}s` : '%(f)s'
+          delete args.m
           break
 
         // workaround for duplicate-after-lowercase
@@ -182,6 +184,9 @@ method
         if (flag == 'initials') {
           if (method.parameters.includes('initials')) {
             args.initials = true
+          }
+          else if (method.name === '$authors') {
+            args.name += '%(I)s'
           }
           else {
             error(`unexpected flag '${flag}' on function '${input}'`)

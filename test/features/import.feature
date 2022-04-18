@@ -157,7 +157,7 @@ Feature: Import
     Then the library should match "import/*.json"
 
   # https://forums.zotero.org/discussion/comment/371812/#Comment_371812
-  @use.with_slow=true @timeout=120
+  @use.with_slow=true @timeout=3000
   Scenario: web_page and other mendeley idiocy
     When I import 512 references from "import/*.bib" into a new collection
     Then the library should match "import/*.json"

@@ -479,10 +479,14 @@ export function doExport(): void {
         break
 
       default:
-        entry.add({ name: 'type', value: item.type })
+        if (entry.entrytype === 'unpublished' && item.itemType !== 'presentation') {
+          entry.add({ name: 'howpublished', value: item.type })
+        }
+        else {
+          entry.add({ name: 'type', value: item.type })
+        }
+        break
     }
-
-    if (entry.entrytype === 'unpublished' && item.itemType !== 'presentation') entry.add({ name: 'howpublished', value: item.type })
 
     if (item.accessDate && item.url) entry.add({ name: 'urldate', value: Zotero.BetterBibTeX.strToISO(item.accessDate), enc: 'date' })
 
