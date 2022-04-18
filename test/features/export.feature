@@ -442,6 +442,12 @@ Feature: Export
     Then an export using "Better BibTeX" should match "export/*.bibtex"
 
   @postscript @bbt
+  Scenario: Custom field ordering -- dependent on order entry in Extra rather than static #2082
+    Given I import 1 reference from "export/*.json"
+    And I set preference .postscript to "export/*.js"
+    Then an export using "Better BibLaTeX" should match "export/*.biblatex"
+
+  @postscript @bbt
   Scenario: Transforming exported file names (windows path conversion) #1939
     Given I import 1 reference from "export/*.json"
     And I set preference .postscript to "export/*.js"

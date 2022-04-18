@@ -1,11 +1,17 @@
 import * as mapping from '../gen/items/extra-fields.json'
 import * as CSL from 'citeproc'
 
-type TeXString = { value: string, raw?: boolean }
+type TeXString = { value: string, raw?: boolean, line: number }
+
+type Creator = {
+  name: string
+  type: string
+}
 
 export type Fields = {
   kv: Record<string, string>
   creator: Record<string, string[]>
+  creators: Creator[]
   tex: Record<string, TeXString>
   citationKey: string
   aliases: string[]
@@ -71,13 +77,14 @@ export function get(extra: string, mode: 'zotero' | 'csl', options?: GetOptions)
   const extraFields: Fields = {
     kv: {},
     creator: {},
+    creators: [],
     tex: {},
     citationKey: '',
     aliases: [],
   }
 
   let ef
-  extra = extra.split('\n').filter(line => {
+  extra = extra.split('\n').filter((line, i) => {
     const m = line.match(re.old) || line.match(re.new)
     if (!m) return true
 
@@ -109,11 +116,12 @@ export function get(extra: string, mode: 'zotero' | 'csl', options?: GetOptions)
     }
 
     if (options.kv && (ef = mapping[key]) && !tex) {
-      for (const field of (ef[mode] ||  ef[other])) {
+      for (const field of (ef[mode] || ef[other])) {
         switch (ef.type) {
           case 'name':
             extraFields.creator[field] = extraFields.creator[field] || []
             extraFields.creator[field].push(value)
+            extraFields.creators.push({ name: value, type: field })
             break
           case 'text':
           case 'date':
@@ -127,12 +135,12 @@ export function get(extra: string, mode: 'zotero' | 'csl', options?: GetOptions)
     }
 
     if (options.tex && tex && !key.includes(' ')) {
-      extraFields.tex[tex + key] = { value, raw }
+      extraFields.tex[tex + key] = { value, raw, line: i }
       return false
     }
 
     if (options.tex && !tex && otherFields.includes(key.replace(/[- ]/g, ''))) {
-      extraFields.tex[`tex.${key.replace(/[- ]/g, '')}`] = { value }
+      extraFields.tex[`tex.${key.replace(/[- ]/g, '')}`] = { value, line: i }
       return false
     }
 

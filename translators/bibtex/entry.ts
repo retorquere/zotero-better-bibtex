@@ -585,7 +585,7 @@ export class Entry {
       const replace = type === 'date'
       // these are handled just like 'arxiv' and 'lccn', respectively
       if (['PMID', 'PMCID'].includes(key) && typeof value === 'string') {
-        this.item.extraFields.tex[key.toLowerCase()] = { value }
+        this.item.extraFields.tex[key.toLowerCase()] = { value, line: -1 }
         delete this.item.extraFields.kv[key]
         continue
       }
