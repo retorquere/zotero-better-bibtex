@@ -614,6 +614,9 @@ class PatternFormatter {
 
   /** The last name of the first author, and the last name of the second author if there are two authors or ".etal" if there are more than two. */
   public $authEtal2(creator: 'author' | 'editor' = 'author', initials=false, joiner='.', clean=true) {
+    // eslint-disable-next-line prefer-template
+    return this.$authors(2, creator, '%(f)s' + (initials ? '%(I)s' : ''), '.etal', joiner, clean)
+    /*
     const authors = this.creators(creator === 'editor', initials ? '%(f)s%(I)s' : '%(f)s')
     if (!authors.length) return this.$text('')
 
@@ -627,6 +630,7 @@ class PatternFormatter {
     }
     if (clean) author = this.clean(author, true)
     return this.$text(author)
+    */
   }
 
   /** The last name if one author is given; the first character of up to three authors' last names if more than one author is given. A plus character is added, if there are more than three authors. */
@@ -1194,6 +1198,7 @@ class PatternFormatter {
     for (const creator of this.item.creators) {
       if (onlyEditors && creator.creatorType !== 'editor' && creator.creatorType !== 'seriesEditor') continue
 
+      log.debug('creator template:', template)
       const name = sprintf(template, {
         f: this.stripQuotes(this.innerText(creator.lastName || creator.name)),
         g: this.stripQuotes(this.innerText(creator.firstName || '')),
