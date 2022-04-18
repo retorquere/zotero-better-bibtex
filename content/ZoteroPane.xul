@@ -3,12 +3,21 @@
 <!DOCTYPE overlay SYSTEM "chrome://zotero-better-bibtex/locale/zotero-better-bibtex.dtd">
 
 <overlay id="zotero-better-bibtex-zoteroPane-overlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
-  <hbox id="zotero-items-toolbar">
-    <hbox id="better-bibtex-progress" insertbefore="zotero-tb-search-spinner" hidden="true">
-      <progressmeter id="better-bibtex-progress-meter" mode="determined" value="0"/>
-      <label id="better-bibtex-progress-label" value="startup"/>
+  <hbox id="zotero-item-toolbar">
+    <hbox id="better-bibtex-progress" hidden="true" insertbefore="zotero-pq-buttons">
+      <label id="better-bibtex-progress-label" flex="20" value=""/>
+      <!-- progressmeter id="better-bibtex-progress-meter" flex="40" mode="determined" value="0"/ -->
+      <!-- label id="better-bibtex-progress-meter" value=""/ -->
+      <hbox id="better-bibtex-progress-meter" class="bbt-progress-sprite" width="20" height="20"></hbox>
     </hbox>
   </hbox>
+  <script>
+    // Zotero doesn't have an ID for the hbox-before-zotero-pq-buttons
+    window.addEventListener('load', function() {
+      const progress = document.getElementById('better-bibtex-progress')
+      progress.parentNode.insertBefore(progress, progress.previousSibling)
+    })
+  </script>
 
   <menupopup id="menu_ToolsPopup">
     <menuitem label="&better-bibtex.BetterBibTeX.auxScanner;" oncommand="Zotero.BetterBibTeX.scanAUX('tag')"/>
