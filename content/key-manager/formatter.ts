@@ -1235,7 +1235,6 @@ class PatternFormatter {
   }
 
   public toString() {
-    log.debug('formatter.toString:', this.chunk)
     this.citekey += this.chunk
     return this.chunk
   }
