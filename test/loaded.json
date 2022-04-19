@@ -155,6 +155,8 @@
   "export/Colon not allowed in citation key format #268.json",
   "export/Configurable journal abbreviation for citekey #2097.biblatex",
   "export/Configurable journal abbreviation for citekey #2097.json",
+  "export/Custom field ordering -- dependent on order entry in Extra rather than static #2082.biblatex",
+  "export/Custom field ordering -- dependent on order entry in Extra rather than static #2082.json",
   "export/Customise name-separator and list-separator #1927.bibtex",
   "export/Customise name-separator and list-separator #1927.json",
   "export/DOI not escaped using postscript #1803.bibtex",
