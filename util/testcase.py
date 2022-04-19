@@ -80,7 +80,7 @@ with open(args.data) as f:
 parser = Parser()
 doc = Munch.fromDict(parser.parse(args.feature))
 
-outlines = [child for child in doc.feature.children if child.type == 'ScenarioOutline' and args.translator in child.name]
+outlines = [child for child in doc.feature.children if child.type == 'ScenarioOutline' and (args.translator in child.name or args.mode == 'import')]
 assert len(outlines) == 1, f'{len(outlines)} outlines found containing {args.translator}'
 
 with open(args.feature) as f:
@@ -111,7 +111,11 @@ if contents:
 # copy/create test fixtures
 fixture = os.path.join(root, f'test/fixtures/{args.mode}', args.title)
 shutil.copyfile(args.data, fixture + '.json')
-with open(fixture + '.' + args.translator.lower().replace('-', '.').replace('yaml', 'yml'), 'w') as f:
+if args.mode == 'import':
+  ext = 'bib'
+else:
+  ext = args.translator.lower().replace('-', '.').replace('yaml', 'yml')
+with open(fixture + '.' + ext, 'w') as f:
   if args.translator == 'CSL-JSON':
     f.write('{}')
 
