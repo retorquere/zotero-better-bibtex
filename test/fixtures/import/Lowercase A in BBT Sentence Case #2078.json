@@ -2,19 +2,17 @@
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "localeDateOrder": "mdy",
-    "options": {
-      "exportNotes": true
-    },
+    "localeDateOrder": "dmy",
+    "options": {},
     "preferences": {
-      "caching": false
+      "citekeyFormat": "[auth][year]"
     }
   },
   "items": [
     {
       "DOI": "10.21105/joss.01412",
       "ISSN": "2475-9066",
-      "accessDate": "2022-03-23T13:22:10Z",
+      "accessDate": "2022-03-23",
       "citationKey": "ludeckeInsightUnifiedInterface2019",
       "creators": [
         {
@@ -34,15 +32,17 @@
         }
       ],
       "date": "2019-06-25",
+      "extra": [
+        "Citation Key: ludeckeInsightUnifiedInterface2019"
+      ],
       "issue": "38",
       "itemID": 1,
       "itemType": "journalArticle",
       "journalAbbreviation": "JOSS",
-      "libraryCatalog": "DOI.org (Crossref)",
       "pages": "1412",
       "publicationTitle": "Journal of Open Source Software",
       "shortTitle": "Insight",
-      "title": "insight: A Unified Interface to Access Information from Model Objects in R",
+      "title": "Insight: A unified interface to access information from model objects in R",
       "url": "http://joss.theoj.org/papers/10.21105/joss.01412",
       "volume": "4"
     }
