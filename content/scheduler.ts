@@ -1,4 +1,5 @@
 import { Preference } from './prefs'
+import { log } from './logger'
 
 type Handler = () => void
 type TimerHandle = ReturnType<typeof setTimeout>
@@ -28,22 +29,29 @@ export class Scheduler {
   }
 
   public set paused(paused: boolean) {
-    if (paused === this.paused) return
+    if (paused === this.paused) {
+      log.debug('scheduler: already', paused ? 'paused' : 'active')
+      return
+    }
 
     if (paused) {
+      log.debug('scheduler: pausing')
       this.held = new Map
     }
     else {
+      log.debug('scheduler: resuming')
       const held = this.held
       this.held = null
 
       for (const [id, handler] of held.entries()) {
+        log.debug('scheduler: resuming', id)
         this.schedule(id, handler)
       }
     }
   }
 
   public schedule(id: number, handler: Handler): void {
+    log.debug('scheduler.schedule:', { id, held: !!this.held })
     if (this.held) {
       this.held.set(id, handler)
     }
