@@ -225,23 +225,21 @@ export const Formatter = new class { // eslint-disable-line @typescript-eslint/n
   }
 
   public async 'formatted-citation'(citations, options) {
-    let quickCopy = Zotero.Prefs.get('export.quickCopy.setting')
-    if (options.style) {
-      quickCopy = `bibliography/${options.contentType || 'text'}=`
-      if (!options.style.startsWith('http://')) quickCopy += 'http://www.zotero.org/styles/'
-      quickCopy += options.style
-    }
-    const format = Zotero.QuickCopy.unserializeSetting(quickCopy)
-
+    const format = Zotero.QuickCopy.unserializeSetting(Zotero.Prefs.get('export.quickCopy.setting'))
     if (format.mode !== 'bibliography') {
       throw new Error(`formatted-citations requires the Zotero default quick-copy format to be set to a citation style; it is currently ${format}`)
     }
 
+    if (options.style) {
+      if (!options.style.startsWith('http://')) options.style += `http://www.zotero.org/styles/${options.style}`
+      format.id = options.style
+    }
+    format.locale = format.locale || Zotero.Prefs.get('export.quickCopy.locale')
+
     // items must be pre-loaded for the citation processor
     await getItemsAsync(citations.map(item => item.id))
 
-    const locale = format.locale ? format.locale : Zotero.Prefs.get('export.quickCopy.locale')
-    const csl = Zotero.Styles.get(format.id).getCiteProc(locale)
+    const csl = Zotero.Styles.get(format.id).getCiteProc(format.locale)
     csl.updateItems(citations.map(item => item.id))
 
     const citation = {
@@ -252,12 +250,17 @@ export const Formatter = new class { // eslint-disable-line @typescript-eslint/n
     return csl.previewCitationCluster(citation, [], [], format.contentType)
   }
 
-  public async 'formatted-bibliography'(citations) {
-    const format = Zotero.Prefs.get('export.quickCopy.setting')
-
-    if (Zotero.QuickCopy.unserializeSetting(format).mode !== 'bibliography') {
-      throw new Error(`formatted-bibliography requires the Zotero default quick-copy format to be set to a citation style; it is currently ${format}`)
+  public async 'formatted-bibliography'(citations, options) {
+    const format = Zotero.QuickCopy.unserializeSetting(Zotero.Prefs.get('export.quickCopy.setting'))
+    if (format.mode !== 'bibliography') {
+      throw new Error(`formatted-citations requires the Zotero default quick-copy format to be set to a citation style; it is currently ${format}`)
     }
+
+    if (options.style) {
+      if (!options.style.startsWith('http://')) options.style += `http://www.zotero.org/styles/${options.style}`
+      format.id = options.style
+    }
+    format.locale = format.locale || Zotero.Prefs.get('export.quickCopy.locale')
 
     const items = await getItemsAsync(citations.map(item => item.id))
 
