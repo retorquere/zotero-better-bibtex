@@ -176,6 +176,11 @@ method
         case 'edtr.etal':
           input = 'authetal2'
           break
+
+        case 'nopunctordash':
+          input = 'nopunct'
+          args.dash = ''
+          break
       }
 
       let method = get_method(input, '$')
