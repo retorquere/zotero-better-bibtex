@@ -378,7 +378,7 @@ class PatternFormatter {
   }
 
   /**
-   * Set the currennt chunk
+   * Set the current chunk
    */
   public $text(text: string) {
     this.chunk = text

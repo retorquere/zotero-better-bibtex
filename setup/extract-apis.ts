@@ -19,6 +19,8 @@ class FormatterAPI {
       if (!kind) continue
 
       const key = name.toLowerCase()
+      if (key === '$text') continue
+
       if (this.signature[key]) throw new Error(`duplicate ${kind} ${key}`)
       this.signature[name.toLowerCase()] = _.cloneDeep({
         name,
