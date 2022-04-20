@@ -186,10 +186,12 @@ const queue = new class TaskQueue {
   }
 
   public pause() {
+    log.debug('idle?: queue paused')
     this.scheduler.paused = true
   }
 
   public resume() {
+    log.debug('idle?: queue resumed')
     this.scheduler.paused = false
   }
 
@@ -301,16 +303,20 @@ const queue = new class TaskQueue {
 
   // idle observer
   protected observe(subject, topic, data) {
-    log.debug('auto-export idle observer:', { subject, topic, data })
+    log.debug('idle?: observer:', { subject, topic, data })
     if (!this.started || Preference.autoExport === 'off') return
 
     switch (topic) {
       case 'back':
       case 'active':
-        if (Preference.autoExport === 'idle') this.pause()
+        if (Preference.autoExport === 'idle') {
+          log.debug('idle?: observer pausing queue')
+          this.pause()
+        }
         break
 
       case 'idle':
+        log.debug('idle?: observer resuming queue')
         this.resume()
         break
 
