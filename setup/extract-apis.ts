@@ -19,7 +19,6 @@ class FormatterAPI {
       if (!kind) continue
 
       const key = name.toLowerCase()
-      if (key === '$text') continue
 
       if (this.signature[key]) throw new Error(`duplicate ${kind} ${key}`)
       this.signature[name.toLowerCase()] = _.cloneDeep({
@@ -43,7 +42,7 @@ class FormatterAPI {
         + ')'
       }
 
-      this.doc[kind][quoted] = method.doc
+      if (key !== '$text') this.doc[kind][quoted] = method.doc
     }
 
     /* re-enable this after the formatter migration

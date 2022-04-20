@@ -105,6 +105,7 @@ pattern
 
 chunk
   = [ \t\r\n]+                            { return '' }
+  / '[]'                                  { return options.migrate ? "''" : '' }
   / '[0]'                                 { return `${options.migrate ? '' : 'this.$'}postfix("-%(n)s")` }
   / '[postfix' start:'+1'? pf:stringparam ']' {
         if (options.migrate && start) {

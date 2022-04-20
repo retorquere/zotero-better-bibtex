@@ -7,7 +7,11 @@ script.
     converted.value = ''
     if (citekey.value) {
       try {
-        if (!citekey.value.startsWith("''")) converted.value = "'' + " + Zotero.BetterBibTeX.KeyManager.convertLegacy(citekey.value)
+        if (!citekey.value.startsWith("''")) {
+          let nw = Zotero.BetterBibTeX.KeyManager.convertLegacy(citekey.value)
+          if (!nw.startsWith("''")) nw = "'' + " + nw
+          converted.value = nw
+        }
       }
       catch (err) {
         Zotero.debug('could not convert citekey pattern: ' + err.message)
