@@ -641,6 +641,8 @@
   "import/LaTeX commands in Zotero should be exported untouched #1380.roundtrip.bib",
   "import/Literal names.bib",
   "import/Literal names.json",
+  "import/Lowercase A in BBT Sentence Case #2078.bib",
+  "import/Lowercase A in BBT Sentence Case #2078.json",
   "import/Map the call-number field from Bib(La)TeX to call number #2021.bib",
   "import/Map the call-number field from Bib(La)TeX to call number #2021.json",
   "import/Math formatting lost on import #627.bib",
