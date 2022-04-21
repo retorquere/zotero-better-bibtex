@@ -25,8 +25,7 @@ import { methods } from '../../gen/api/key-formatter'
 import itemCreators from '../../gen/items/creators.json'
 import * as items from '../../gen/items/items'
 
-import parse5 = require('parse5/lib/parser')
-const htmlParser = new parse5()
+import { parseFragment } from 'parse5'
 
 import { sprintf } from 'sprintf-js'
 
@@ -249,7 +248,7 @@ class Item {
       this.date = null
     }
 
-    if (this.title.includes('<')) this.title = innerText(htmlParser.parseFragment(this.title))
+    if (this.title.includes('<')) this.title = innerText(parseFragment(this.title))
   }
 
   public babelTag(): BabelLanguageTag {
