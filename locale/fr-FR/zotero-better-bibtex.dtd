@@ -79,6 +79,8 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.citekey.fold "Forcer le formatage des clés de citation en texte brut">
 <!ENTITY better-bibtex.Preferences.citekey.search "Activer la recherche par clé de citation">
 <!ENTITY better-bibtex.Preferences.citekey.format "Format de clé">
+<!ENTITY better-bibtex.Preferences.citekey.format.new "Nouveau format de clé de citation">
+<!ENTITY better-bibtex.Preferences.citekey.format.backup "Format de clé de citation précédent avec erreur">
 
 <!ENTITY better-bibtex.Preferences.export.quickCopy "Copie rapide">
 <!ENTITY better-bibtex.Preferences.export.quickCopy.explanation "Copie rapide/glissé-déposé des citations">
