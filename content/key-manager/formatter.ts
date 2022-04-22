@@ -25,8 +25,7 @@ import { methods } from '../../gen/api/key-formatter'
 import itemCreators from '../../gen/items/creators.json'
 import * as items from '../../gen/items/items'
 
-import parse5 = require('parse5/lib/parser')
-const htmlParser = new parse5()
+import { parseFragment } from 'parse5'
 
 import { sprintf } from 'sprintf-js'
 
@@ -249,7 +248,7 @@ class Item {
       this.date = null
     }
 
-    if (this.title.includes('<')) this.title = innerText(htmlParser.parseFragment(this.title))
+    if (this.title.includes('<')) this.title = innerText(parseFragment(this.title))
   }
 
   public babelTag(): BabelLanguageTag {
@@ -378,7 +377,7 @@ class PatternFormatter {
   }
 
   /**
-   * Set the currennt chunk
+   * Set the current chunk
    */
   public $text(text: string) {
     this.chunk = text
@@ -386,7 +385,7 @@ class PatternFormatter {
   }
 
   /**
-   * Tests whether the item is of any of the given types
+   * Tests whether the item is of any of the given types, and skips to the next pattern if not
    */
   public $type(...allowed: string[]) {
     if (allowed.map(type => type.toLowerCase()).includes(this.item.itemType.toLowerCase())) {
@@ -629,7 +628,7 @@ class PatternFormatter {
     return this.$text(author)
   }
 
-  /** The last name if one author is given; the first character of up to three authors' last names if more than one author is given. A plus character is added, if there are more than three authors. */
+  /** The last name if one author/editor is given; the first character of up to three authors' last names if more than one author is given. A plus character is added, if there are more than three authors. */
   public $authshort(creator: 'author' | 'editor' = 'author', initials=false, joiner='.', clean=true) {
     const authors = this.creators(creator === 'editor', initials ? '%(f)s%(I)s' : '%(f)s')
 
@@ -711,8 +710,8 @@ class PatternFormatter {
 
   /** A pseudo-field from the extra field. eg if you have `Original
       date: 1970` in your `extra` field, you can get it as
-      `[extra=originalDate]`, or `tex.shortauthor: APA` which you could
-      get with `[extra=tex.shortauthor]`. Any `tex.` field will be
+      `extra(originalDate)`, or `tex.shortauthor: APA` which you could
+      get with `extra('tex.shortauthor')`. Any `tex.` field will be
       picked up, the other fields can be selected from [this
       list](https://retorque.re/zotero-better-bibtex/exporting/extra-fields/)
       of key names.
@@ -891,7 +890,7 @@ class PatternFormatter {
   }
 
   /**
-   * prefixes with its parameter, so `prefix=_` will add an underscore to the front if, and only if, the value
+   * prefixes with its parameter, so `.prefix(_)` will add an underscore to the front if, and only if, the value
    * it is supposed to prefix isn't empty.
    */
   public _prefix(prefix: string) {
@@ -900,7 +899,7 @@ class PatternFormatter {
   }
 
   /**
-   * postfixes with its parameter, so `postfix=_` will add an underscore to the end if, and only if, the value
+   * postfixes with its parameter, so `postfix(_)` will add an underscore to the end if, and only if, the value
    * it is supposed to postfix isn't empty
    */
   public _postfix(postfix: string) {
@@ -947,7 +946,7 @@ class PatternFormatter {
     return this.$text(this.acronyms[list][this.chunk.toLowerCase()] || this.chunk)
   }
 
-  /** Forces the text inserted by the field marker to be in lowercase. For example, `[auth:lower]` expands the last name of the first author in lowercase. */
+  /** Forces the text inserted by the field marker to be in lowercase. For example, `auth.lower` expands to the last name of the first author in lowercase. */
   public _lower() {
     return this.$text(this.chunk.toLowerCase())
   }
@@ -1014,7 +1013,7 @@ class PatternFormatter {
     return this.$text(values.slice(start, end).join(' '))
   }
 
-  /** (`substring=start,n`) selects `n` (default: all) characters starting at `start` (default: 1) */
+  /** `substring(start,n)` selects `n` (default: all) characters starting at `start` (default: 1) */
   public _substring(start: number = 1, n?: number) { // eslint-disable-line @typescript-eslint/no-inferrable-types
     if (typeof n === 'undefined') n = this.chunk.length
 
@@ -1043,17 +1042,15 @@ class PatternFormatter {
   }
 
   /** Removes punctuation */
-  public _nopunct() {
-    let value = Zotero.Utilities.XRegExp.replace(this.chunk, this.re.dash, '-', 'all')
+  public _nopunct(dash='-') {
+    let value = Zotero.Utilities.XRegExp.replace(this.chunk, this.re.dash, dash, 'all')
     value = Zotero.Utilities.XRegExp.replace(value, this.re.punct, '', 'all')
     return this.$text(value)
   }
 
-  /** Removes punctuation and word-connecting dashes */
+  /** Removes punctuation and word-connecting dashes. alias for `nopunct(dash='')` */
   public _nopunctordash() {
-    let value = Zotero.Utilities.XRegExp.replace(this.chunk, this.re.dash, '', 'all')
-    value = Zotero.Utilities.XRegExp.replace(value, this.re.punct, '', 'all')
-    return this.$text(value)
+    return this._nopunct('')
   }
 
   /** Treat ideaographs as individual words */

@@ -811,6 +811,7 @@ class Progress {
 export class BetterBibTeX {
   public TestSupport = new TestSupport
   public KeyManager = new KeyManager
+  public Text = { sentenceCase }
 
   // panes
   public ZoteroPane: ZoteroPaneHelper = new ZoteroPaneHelper

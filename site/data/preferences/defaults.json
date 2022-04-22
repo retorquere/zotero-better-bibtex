@@ -25,7 +25,7 @@
   "charmap": "",
   "citeCommand": "cite",
   "citekeyFold": true,
-  "citekeyFormat": "\u200b[auth:lower][shorttitle3_3][year]",
+  "citekeyFormat": "\u200b'' + auth.lower + shorttitle(3,3) + year",
   "citekeyFormatBackup": "",
   "citekeySearch": true,
   "csquotes": "",

@@ -271,7 +271,7 @@
   {
     "name": "citekeyFormat",
     "type": "string",
-    "default": "\u200b[auth:lower][shorttitle3_3][year]",
+    "default": "\u200b'' + auth.lower + shorttitle(3,3) + year",
     "affects": [],
     "var": "citekeyFormat",
     "label": "Citation key format"
