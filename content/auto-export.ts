@@ -169,13 +169,13 @@ const queue = new class TaskQueue {
   private idleService = Components.classes['@mozilla.org/widget/idleservice;1'].getService(Components.interfaces.nsIIdleService)
 
   constructor() {
-    this.pause('BBT init')
+    this.pause('startup')
   }
 
   public start() {
     if (this.started) return
     this.started = true
-    if (Preference.autoExport === 'immediate') this.resume('BBT start')
+    if (Preference.autoExport === 'immediate') this.resume('startup')
 
     this.idleService.addIdleObserver(this, Preference.autoExportIdleWait * 1000)
 
@@ -186,19 +186,20 @@ const queue = new class TaskQueue {
     this.autoexports = autoexports
   }
 
-  public pause(reason: string) {
+  public pause(reason: 'startup' | 'end-of-idle' | 'start-of-sync' | 'trigger-change') {
     log.debug('idle?: queue paused:', reason)
     this.scheduler.paused = true
   }
 
-  public resume(reason: string) {
+  public resume(reason: 'startup' | 'end-of-sync' | 'start-of-idle' | 'trigger-change') {
     log.debug('idle?: queue resume request:', reason)
     if (Zotero.Sync.Runner.syncInProgress) {
-      log.debug('idle?: queue not resumed: sync in progress, sync end will reschedule resume')
+      log.debug('idle?: queue not resumed: sync in progress, end-of-sync will trigger resume')
       this.scheduler.paused = true
       return
     }
 
+    const is_idle = this.idleService.idleTime >= Preference.autoExportIdleWait * 1000
     switch (Preference.autoExport) {
       case 'off':
         log.debug('idle?: queue not resumed: auto-export is off')
@@ -206,10 +207,10 @@ const queue = new class TaskQueue {
         return
 
       case 'idle':
-        if (this.idleService.idleTime < Preference.autoExportIdleWait * 1000) {
+        // don't re-schedule idle for end-of-sync / should never happen?
+        if (!is_idle) {
+          log.debug('idle?: queue not resumed:', reason, "but we're not actually idle")
           this.scheduler.paused = true
-          log.debug('idle?: queue not resumed: idle time too short?! rescheduling resume')
-          setTimeout(this.resume.bind(this, `rescheduled ${reason}`), Preference.autoExportIdleWait * 1000)
           return
         }
         break
@@ -336,13 +337,11 @@ const queue = new class TaskQueue {
     switch (topic) {
       case 'back':
       case 'active':
-        if (Preference.autoExport === 'idle') {
-          this.pause('idle observer => no longer idle, pausing queue')
-        }
+        this.pause('end-of-idle')
         break
 
       case 'idle':
-        this.resume('idle observer => gone idle, resuming queue')
+        this.resume('start-of-idle')
         break
 
       default:
@@ -360,12 +359,12 @@ const queue = new class TaskQueue {
     switch(`${type}.${action}`) {
       case 'sync.start':
         log.debug('idle?: sync started => pausing queue')
-        this.pause('sync started')
+        this.pause('start-of-sync')
         break
 
       case 'sync.finish':
         log.debug('idle?: sync finished => resuming queue')
-        this.resume('sync finished')
+        this.resume('end-of-sync')
         break
 
       default:
@@ -406,7 +405,7 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
       this.progress.delete(ae.$loki)
     })
 
-    if (Preference.autoExport === 'immediate') queue.resume(`autoExport=${Preference.autoExport}`)
+    if (Preference.autoExport === 'immediate') queue.resume('startup')
   }
 
   public start() {
@@ -509,9 +508,9 @@ Events.on('preference-changed', pref => {
 
   switch (Preference.autoExport) {
     case 'immediate':
-      queue.resume(`autoExport=${Preference.autoExport}`)
+      queue.resume('trigger-change')
       break
     default: // off / idle
-      queue.pause(`autoExport=${Preference.autoExport}`)
+      queue.pause('trigger-change')
   }
 })
