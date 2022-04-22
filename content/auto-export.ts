@@ -165,6 +165,8 @@ const queue = new class TaskQueue {
   private scheduler = new Scheduler('autoExportDelay', 1000) // eslint-disable-line no-magic-numbers
   private autoexports: any
   private started = false
+  public idle = false
+  public syncing = false
 
   constructor() {
     this.pause()
@@ -301,6 +303,31 @@ const queue = new class TaskQueue {
     return path
   }
 
+  private ping() {
+    if (this.syncing) {
+      this.pause()
+      return
+    }
+
+    switch (Preference.autoExport) {
+      case 'off':
+        this.pause()
+        return
+
+      case 'idle':
+        if (!this.idle) {
+          this.pause()
+          return
+        }
+        break
+
+      case 'immediate':
+        break
+    }
+
+    this.resume()
+  }
+
   // idle observer
   protected observe(subject, topic, data) {
     log.debug('idle?: observer:', { subject, topic, data })
@@ -309,15 +336,15 @@ const queue = new class TaskQueue {
     switch (topic) {
       case 'back':
       case 'active':
-        if (Preference.autoExport === 'idle') {
-          log.debug('idle?: observer pausing queue')
-          this.pause()
-        }
+        log.debug('idle?: observer pausing queue')
+        this.idle = false
+        this.ping()
         break
 
       case 'idle':
         log.debug('idle?: observer resuming queue')
-        this.resume()
+        this.idle = true
+        this.ping()
         break
 
       default:
@@ -334,11 +361,13 @@ const queue = new class TaskQueue {
 
     switch(`${type}.${action}`) {
       case 'sync.start':
-        this.pause()
+        this.syncing = true
+        this.ping()
         break
 
       case 'sync.finish':
-        this.resume()
+        this.syncing = false
+        this.ping()
         break
 
       default:
