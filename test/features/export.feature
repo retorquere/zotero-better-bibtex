@@ -557,7 +557,7 @@ Feature: Export
     And I reset the cache
     Then an export using "Better BibTeX" should match "export/*.bibtex"
     Then an export using "Better BibTeX" with cacheUse on should match "export/*-cached.bibtex"
-    When I set preference .caching to false
+    When I set preference .cache to false
     Then an export using "Better BibTeX" with cacheUse on should match "export/*-uncached.bibtex"
 
   # tests without cache prefill
@@ -565,7 +565,7 @@ Feature: Export
   Scenario: Really Big whopping library
     When I restart Zotero with "1287" + "export/*.json"
     And I reset the cache
-    And I set preference .caching to false
+    And I set preference .cache to false
     Then an export using "Better BibTeX" should match "export/*.bibtex"
 
   # tests the cache for CSL
