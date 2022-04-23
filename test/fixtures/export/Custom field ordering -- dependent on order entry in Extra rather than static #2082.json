@@ -8,7 +8,6 @@
     },
     "preferences": {
       "bibtexURL": "url",
-      "caching": false,
       "citekeyFormat": "[auth.etal]_[year]_[shorttitle5_5]",
       "skipFields": "issn,shorttitle"
     }

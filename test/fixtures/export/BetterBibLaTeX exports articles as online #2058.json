@@ -9,7 +9,6 @@
     "preferences": {
       "biblatexExtendedNameFormat": true,
       "bibtexURL": "url",
-      "caching": false,
       "extraMergeCSL": true,
       "extraMergeCitekeys": true,
       "extraMergeTeX": true,
