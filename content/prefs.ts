@@ -62,6 +62,17 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
     Events.emit('preference-changed', pref)
   }
 
+  set cache(v: boolean | undefined) {
+    if (!v) {
+      const e = new Error
+      log.debug('who turned off the cache?', e.stack)
+    }
+    super.cache = v
+  }
+  get cache(): boolean {
+    return super.cache
+  }
+
   private migrate() {
     let old, key
 
