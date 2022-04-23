@@ -95,6 +95,8 @@ To generate your citekeys, you use a pattern composed of functions and filters. 
 
 ### Direct access to unprocessed fields
 
+The above functions all retrieve information stored in the item's fields and process it in some way. If you don't want this, you can instead call field contents without any processing. To access Zotero fields, refer to them as given in the table below:
+
 {{< citekey-formatters/fields >}}
 
 (fields marked <sup>JM</sup> are only available in Juris-M).

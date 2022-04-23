@@ -36,12 +36,18 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
     if (this.testing) {
       return new Proxy(this, {
         set: (object, property, value) => {
-          if (!(property in object)) throw new TypeError(`Unsupported preference <%text>${new String(property)}</%text>`) // eslint-disable-line no-new-wrappers
+          if (!(property in object)) {
+            const stack = (new Error).stack
+            throw new TypeError(`Unsupported preference ${new String(property)} ${stack}`) // eslint-disable-line no-new-wrappers
+          }
           object[property] = value
           return true
         },
         get: (object, property) => {
-          if (!(property in object)) throw new TypeError(`Unsupported preference <%text>${new String(property)}</%text>`) // eslint-disable-line no-new-wrappers
+          if (!(property in object)) {
+            const stack = (new Error).stack
+            throw new TypeError(`Unsupported preference ${new String(property)} ${stack}`) // eslint-disable-line no-new-wrappers
+          }
           return object[property] // eslint-disable-line @typescript-eslint/no-unsafe-return
         },
       })
@@ -89,10 +95,6 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
     }
     if (typeof (old = Zotero.Prefs.get(key = 'translators.better-bibtex.workersCache')) !== 'undefined') {
       Zotero.Prefs.clear(key)
-      Zotero.Prefs.rootBranch.setBoolPref('extensions.zotero.translators.better-bibtex.caching', !!old)
-    }
-    if (typeof (old = Zotero.Prefs.get(key = 'translators.better-bibtex.caching')) !== 'boolean') {
-      Zotero.Prefs.rootBranch.setBoolPref('extensions.zotero.translators.better-bibtex.caching', !!old)
     }
     if (typeof (old = Zotero.Prefs.get(key = 'translators.better-bibtex.suppressTitleCase')) !== 'undefined') {
       Zotero.Prefs.clear(key)

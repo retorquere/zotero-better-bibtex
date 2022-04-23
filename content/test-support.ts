@@ -16,7 +16,7 @@ import { Preference } from './prefs'
 import * as memory from './memory'
 import { Deferred } from './deferred'
 
-const setatstart: string[] = ['workers', 'testing', 'caching'].filter(p => Preference[p] !== defaults[p])
+const setatstart: string[] = ['workers', 'testing', 'cache'].filter(p => Preference[p] !== defaults[p])
 
 export class TestSupport {
   public timedMemoryLog: any

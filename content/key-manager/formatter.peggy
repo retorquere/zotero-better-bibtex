@@ -226,21 +226,19 @@ method
       return method
     }
   / operator:$([<>=] / [<>!] '=') n:$[0-9]+ {
-    const method = {
-      '=': 'eq',
-      '<': 'lt',
-      '>': 'gt',
-      '<=': 'le',
-      '>=': 'ge',
-      '!=': 'ne',
-    } || operator
+    if (options.migrate && parseInt(n) === 0 && operator === '>') return 'len'
     return match('$len', [operator, n], operator, error)
   }
+  / prop:$([A-Z][a-zA-Z]+) { // before method matching, as method matching is case-insensitive now!
+      const field = options.items.name.field[prop.toLowerCase()]
+      if (!field) error(`Unknown field ${JSON.stringify(prop)}`)
+      return options.migrate ? prop : `this.$getField(${literal(field)})`
+    }
   / name:$([a-z][-.a-zA-Z]+) &{ return get_method(name, '$').name } p:fparams? {
       return match('$' + name, p || [], name, error)
     }
-  / prop:$([a-zA-Z]+) {
-      if (prop.match(/^[a-z]/)) error(`Direct field access ${field} must start with a leading capital`)
+  / prop:$([a-zA-Z]+) { // really just an error catcher now
+      if (prop.match(/^[a-z]/)) error(`Direct field access ${prop} must start with a leading capital`)
       const field = options.items.name.field[prop.toLowerCase()]
       if (!field) error(`Unknown field ${JSON.stringify(prop)}`)
       return options.migrate ? prop : `this.$getField(${literal(field)})`
@@ -256,7 +254,10 @@ flag
 
 filter
   = ':(' dflt:$[^)]+ ')'                  { return `${options.migrate ? '' : '_'}default(${literal(dflt)})` }
-  / ':>' min:$[0-9]+                      { return `${options.migrate ? '' : '_'}len('>', ${min})` }
+  / ':>' min:$[0-9]+                      {
+      if (options.migrate && parseInt(min) === 0) return 'len'
+      return `${options.migrate ? '' : '_'}len('>', ${min})`
+    }
   / ':' name:$[-a-z]+ params:stringparam* { return match('_' + name, params, name, error) }
 
 stringparam
