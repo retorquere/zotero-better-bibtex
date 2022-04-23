@@ -128,7 +128,14 @@ chunk
       languages = languages.toLowerCase().split('/').map(language => language.trim())
       return `${options.migrate ? '' : 'this.$'}language(${languages.map(l => literal(l)).join(', ')})`
     }
-  / '[>' min:$[0-9]+ ']'                 { return `${options.migrate ? '' : 'this.$'}len('>',${min})` }
+  / '[>' min:$[0-9]+ ']'                 {
+      if (options.migrate && parseInt(min) === 0) {
+        return 'len'
+      }
+      else {
+        return `${options.migrate ? '' : 'this.$'}len('>',${min})`
+      }
+    }
   / '[' method:method filters:filter* ']' {
       if (options.migrate) {
         return [method].concat(filters).join('.')

@@ -168,11 +168,11 @@
                 "url-ish"
               ]
             },
+            "cache": {
+              "type": "boolean"
+            },
             "cacheFlushInterval": {
               "type": "number"
-            },
-            "caching": {
-              "type": "boolean"
             },
             "charmap": {
               "type": "string"

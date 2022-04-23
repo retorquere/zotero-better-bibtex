@@ -340,15 +340,8 @@ class PatternFormatter {
       return legacyparser.parse(pattern, { sprintf, items, methods, migrate: false }) as string
     }
 
-    let formatter = ''
-    if (pattern.startsWith("''")) {
-      formatter = pattern
-    }
-    else {
-      if (!pattern.includes('[')) throw new Error('pattern does not contain functions')
-      formatter = legacyparser.parse(pattern, { sprintf, items, methods, migrate: true }) as string
-      if (Preference.testing) log.debug('parsePattern.old:', formatter)
-    }
+    let formatter = legacyparser.parse(pattern, { sprintf, items, methods, migrate: true }) as string
+    if (Preference.testing) log.debug('parsePattern.old:', formatter)
     formatter = formatparser.parse(formatter)
     if (Preference.testing) log.debug('parsePattern.new:', formatter)
 
