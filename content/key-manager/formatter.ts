@@ -336,6 +336,10 @@ class PatternFormatter {
 
   public parsePattern(pattern): string {
     log.debug('parsePattern.pattern:', pattern)
+    if (pattern.startsWith('[')) {
+      return legacyparser.parse(pattern, { sprintf, items, methods, migrate: false }) as string
+    }
+
     let formatter = ''
     if (pattern.startsWith("''")) {
       formatter = pattern
