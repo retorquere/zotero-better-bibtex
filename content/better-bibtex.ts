@@ -370,7 +370,7 @@ Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
   // extractFields(_sandbox, item) { return Extra.get(item.extra) },
 
   cacheFetch(sandbox: { translator: { label: string }[] }, itemID: number, options: { exportNotes: boolean, useJournalAbbreviation: boolean }, prefs: any) {
-    if (!Preference.caching) return false
+    if (!Preference.cache) return false
 
     const collection = Cache.getCollection(sandbox.translator[0].label)
     if (!collection) return false
@@ -395,7 +395,7 @@ Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
   },
 
   cacheStore(sandbox: { translator: { label: string }[] }, itemID: number, options: { exportNotes: boolean, useJournalAbbreviation: boolean }, prefs: any, entry: any, metadata: any) {
-    if (!Preference.caching) return false
+    if (!Preference.cache) return false
 
     if (!metadata) metadata = {}
 

@@ -449,7 +449,7 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
   }
 
   public async cached($loki) {
-    if (!Preference.caching) return 0
+    if (!Preference.cache) return 0
 
     const ae = this.db.get($loki)
 

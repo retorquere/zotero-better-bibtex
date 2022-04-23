@@ -22,7 +22,7 @@ export const Serializer = new class { // eslint-disable-line @typescript-eslint/
   }
 
   private fetch(item: ZoteroItem): Item {
-    if (!Preference.caching || !this.cache) return null
+    if (!Preference.cache || !this.cache) return null
 
     const cached: CacheEntry = this.cache.findOne($and({ itemID: item.id }))
     if (!cached) return null
@@ -32,7 +32,7 @@ export const Serializer = new class { // eslint-disable-line @typescript-eslint/
 
   private store(item: ZoteroItem, serialized: Item): Item {
     if (this.cache) {
-      if (Preference.caching) this.cache.insert({ itemID: item.id, item: serialized })
+      if (Preference.cache) this.cache.insert({ itemID: item.id, item: serialized })
     }
     else {
       Zotero.debug('Serializer.store ignored, DB not yet loaded')

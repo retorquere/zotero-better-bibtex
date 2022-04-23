@@ -60,7 +60,7 @@ class Cache extends Loki {
         additionalProperties: false,
       },
     })
-    if (!Preference.caching) coll.removeDataOnly()
+    if (!Preference.cache) coll.removeDataOnly()
 
     this.clearOnUpgrade(coll, 'Zotero', Zotero.version)
 
@@ -107,7 +107,7 @@ class Cache extends Loki {
         ttl,
         ttlInterval,
       })
-      if (!Preference.caching) {
+      if (!Preference.cache) {
         coll.removeDataOnly()
       }
       else if (! (coll.data[0]?.entry) ) { // phase out reference
