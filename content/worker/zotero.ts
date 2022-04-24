@@ -51,7 +51,7 @@ class WorkerZoteroBetterBibTeX {
   }
 
   public cacheStore(itemID: number, options: any, prefs: any, entry: string, metadata: any) {
-    if (Zotero.config.preferences.caching) Zotero.send({ kind: 'cache', itemID, entry, metadata })
+    if (Zotero.config.preferences.cache) Zotero.send({ kind: 'cache', itemID, entry, metadata })
     return true
   }
 

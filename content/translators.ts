@@ -201,7 +201,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       }
     }
 
-    const caching = Preference.cache && !(
+    const cache = Preference.cache && !(
       // when exporting file data you get relative paths, when not, you get absolute paths, only one version can go into the cache
       displayOptions.exportFileData
 
@@ -210,9 +210,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
       // relative file paths are going to be different based on the file being exported to
       || job.preferences.relativeFilePaths
-    )
-
-    const cache = caching && Cache.getCollection(translator.label)
+    ) && Cache.getCollection(translator.label)
 
     this.workers.total += 1
     const id = `${this.workers.total}`

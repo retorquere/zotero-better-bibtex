@@ -241,7 +241,7 @@ export class ITranslator { // eslint-disable-line @typescript-eslint/naming-conv
     }
 
     try {
-      if (Zotero.getOption('caching') === false) this.cacheable = false
+      if (Zotero.getOption('cache') === false) this.cacheable = false
     }
     catch (err) {
     }

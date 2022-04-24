@@ -532,6 +532,7 @@ Feature: Export
   Scenario: (non-)dropping particle handling #313
     When I import 53 references from "export/*.json"
     Then an export using "Better BibLaTeX" should match "export/*.biblatex"
+    And an export using "Better BibLaTeX" with cacheUse on should match "export/*-cached.biblatex"
 
   @1420
   Scenario: (non-)dropping particle handling #313
@@ -589,6 +590,7 @@ Feature: Export
   # And I wait 5 seconds
   # And I wait at most 100 seconds until all auto-exports are done
   # Then "/tmp/autoexport.bib" should match "export/*.bibtex"
+
   @1495
   Scenario: use author dash separation rather than camel casing in citekey #1495
     Given I import 1 reference from "export/*.json"
