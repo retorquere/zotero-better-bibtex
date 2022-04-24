@@ -13,6 +13,7 @@ import { AutoExport } from './auto-export'
 import { Translators } from './translators'
 import { client } from './client'
 import * as l10n from './l10n'
+import { Events } from './events'
 
 const namespace = 'http://retorque.re/zotero-better-bibtex/'
 
@@ -30,6 +31,10 @@ class AutoExportPane {
     }
 
     this.refresh()
+
+    Events.on('export-progress', (percent: number, _translator, ae: number) => {
+      if (percent >= 100) this.refreshCacheRate(ae).catch(err => log.error('failed to refresh cacherate for completed auto-export', ae, err))
+    })
   }
 
   public refresh() {
@@ -172,8 +177,8 @@ class AutoExportPane {
     this.refresh()
   }
 
-  public async refreshCacheRate(node) {
-    const $loki = node.getAttributeNS(namespace, 'ae-id')
+  public async refreshCacheRate(ae: Element | number) {
+    const $loki: number = typeof ae === 'number' ? ae : parseInt(ae.getAttributeNS(namespace, 'ae-id'))
     if (!$loki) {
       log.debug('refresh cacherate on unknown ae?')
     }
