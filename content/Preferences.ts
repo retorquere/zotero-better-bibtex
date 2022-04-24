@@ -175,11 +175,12 @@ class AutoExportPane {
   public async refreshCacheRate(node) {
     const $loki = node.getAttributeNS(namespace, 'ae-id')
     if (!$loki) {
-      log.debug('refresh cache rate on unknown ae?')
+      log.debug('refresh cacherate on unknown ae?')
     }
     else {
       try {
         this.cacherate[$loki] = await AutoExport.cached($loki)
+        log.debug('refresh cacherate:', $loki,'=', this.cacherate[$loki])
       }
       catch (err) {
         log.error('could not refresh cacherate:', err)
