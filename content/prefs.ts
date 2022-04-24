@@ -62,6 +62,7 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
     Events.emit('preference-changed', pref)
   }
 
+  /*
   set cache(v: boolean | undefined) {
     if (!v) {
       const e = new Error
@@ -72,6 +73,7 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
   get cache(): boolean {
     return super.cache
   }
+  */
 
   private migrate() {
     let old, key
