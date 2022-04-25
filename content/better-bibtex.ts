@@ -641,7 +641,7 @@ notify('item-tag', (_action: any, _type: any, ids: any[], _extraData: any) => {
 
 notify('item', (action: string, type: any, ids: any[], extraData: { [x: string]: { bbtCitekeyUpdate: any } }) => {
   // prevents update loop -- see KeyManager.init()
-  log.debug('item', action, ids)
+  // log.debug('item', action, ids, Zotero.Items.get(ids).map(item => Zotero.Utilities.Internal.itemToExportFormat(item))) // eslint-disable-line @typescript-eslint/no-unsafe-return
   if (action === 'modify') {
     ids = ids.filter((id: string | number) => !extraData[id] || !extraData[id].bbtCitekeyUpdate)
     if (!ids.length) return
@@ -653,8 +653,14 @@ notify('item', (action: string, type: any, ids: any[], extraData: { [x: string]:
   // https://groups.google.com/forum/#!topic/zotero-dev/99wkhAk-jm0
   const parentIDs = []
   const items = action === 'delete' ? [] : Zotero.Items.get(ids).filter((item: ZoteroItem) => {
-    if (typeof item.parentID !== 'boolean') {
-      parentIDs.push(item.parentID)
+    if (item.isAttachment() || item.isNote()) {
+      const parentID = item.parentID
+      if (typeof parentID === 'number') parentIDs.push(parentID)
+      return false
+    }
+    if (item.isAnnotation()) {
+      const parentID = item.parentItem?.parentID
+      if (typeof parentID === 'number') parentIDs.push(parentID)
       return false
     }
 
