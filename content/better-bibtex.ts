@@ -658,7 +658,7 @@ notify('item', (action: string, type: any, ids: any[], extraData: { [x: string]:
       if (typeof parentID === 'number') parentIDs.push(parentID)
       return false
     }
-    if (item.isAnnotation()) {
+    if (item.isAnnotation?.()) {
       const parentID = item.parentItem?.parentID
       if (typeof parentID === 'number') parentIDs.push(parentID)
       return false
