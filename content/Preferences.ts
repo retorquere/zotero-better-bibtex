@@ -178,18 +178,22 @@ class AutoExportPane {
   }
 
   public async refreshCacheRate(ae: Element | number) {
-    const $loki: number = typeof ae === 'number' ? ae : parseInt(ae.getAttributeNS(namespace, 'ae-id'))
-    if (!$loki) {
-      log.debug('refresh cacherate on unknown ae?')
+    log.debug('getting cacherate for', typeof ae)
+    if (typeof ae !== 'number') ae = parseInt(ae.getAttributeNS(namespace, 'ae-id'))
+    log.debug('getting cacherate for', typeof ae)
+
+    if (typeof ae !== 'number') {
+      log.debug('refresh cacherate on unknown ae?', typeof ae)
     }
     else {
       try {
-        this.cacherate[$loki] = await AutoExport.cached($loki)
-        log.debug('refresh cacherate:', $loki,'=', this.cacherate[$loki])
+        log.debug('getting cacherate for', { ae })
+        this.cacherate[ae] = await AutoExport.cached(ae)
+        log.debug('refresh cacherate:', ae, '=', this.cacherate[ae])
       }
       catch (err) {
-        log.error('could not refresh cacherate:', err)
-        delete this.cacherate[$loki]
+        log.error('could not refresh cacherate for', ae, err)
+        delete this.cacherate[ae]
       }
     }
     this.refresh()

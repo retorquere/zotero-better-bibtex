@@ -306,7 +306,6 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
             cached.entry = entry
             cached.metadata = metadata
             cached = cache.update(cached)
-
           }
           else {
             cache.insert({...query, entry, metadata})

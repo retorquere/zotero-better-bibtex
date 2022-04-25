@@ -462,9 +462,9 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
       }
     })
 
-    const itemIDs: Set<number> = new Set
-    await this.itemIDs(ae, ae.id, itemTypeIDs, itemIDs)
-    if (itemIDs.size === 0) return 100 // eslint-disable-line no-magic-numbers
+    const itemIDset: Set<number> = new Set
+    await this.itemIDs(ae, ae.id, itemTypeIDs, itemIDset)
+    if (itemIDset.size === 0) return 100 // eslint-disable-line no-magic-numbers
 
     const options = {
       exportNotes: !!ae.exportNotes,
@@ -476,12 +476,16 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
     }, {})
 
     const label = Translators.byId[ae.translatorID].label
+    const selector = cacheSelector(label, options, prefs)
+    const itemIDs = [...itemIDset]
+    const query = $and({...selector, itemID: { $in: itemIDs } })
+    log.debug('fetching cacherate:', { label, query })
     const cached = {
-      serialized: Cache.getCollection('itemToExportFormat').find({ itemID: { $in: [...itemIDs] } }).length,
-      export: Cache.getCollection(label).find($and({...cacheSelector(label, options, prefs), $in: itemIDs})).length,
+      serialized: Cache.getCollection('itemToExportFormat').find({ itemID: { $in: itemIDs } }).length,
+      export: Cache.getCollection(label).find(query).length,
     }
 
-    return Math.min(Math.round((100 * (cached.serialized + cached.export)) / (itemIDs.size * 2)), 100) // eslint-disable-line no-magic-numbers
+    return Math.min(Math.round((100 * (cached.serialized + cached.export)) / (itemIDs.length * 2)), 100) // eslint-disable-line no-magic-numbers
   }
 
   private async itemIDs(ae, id: number, itemTypeIDs: number[], itemIDs: Set<number>) {
