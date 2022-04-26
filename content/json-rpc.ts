@@ -86,6 +86,19 @@ class NSAutoExport {
 
 class NSUser {
   /**
+   * List all collections available in Zotero
+   */
+  public async collections() {
+    /* eslint-disable @typescript-eslint/no-unsafe-return */
+    return Zotero.Libraries.getAll()
+      .map(lib => lib.libraryID)
+      .map(libId => ({
+        ...Zotero.Collections.getByLibrary(libId, true),
+        libraryID: libId,
+      }))
+  }
+
+  /**
    * List the libraries (also known as groups) the user has in Zotero
    */
   public async groups() {
