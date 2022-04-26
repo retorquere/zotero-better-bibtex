@@ -31,7 +31,6 @@
       "bibtexParticleNoOp": false,
       "bibtexURL": "off",
       "cacheFlushInterval": 5,
-      "caching": true,
       "citeCommand": "cite",
       "citekeyFold": true,
       "citekeyFormat": "[auth][year]",

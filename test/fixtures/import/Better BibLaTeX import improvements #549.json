@@ -2,109 +2,13 @@
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "localeDateOrder": "ymd",
-    "options": {
-      "exportNotes": true
-    },
+    "localeDateOrder": "dmy",
+    "options": {},
     "preferences": {
-      "citekeyFormat": "[auth][year]",
-      "importCaseProtection": "off"
+      "citekeyFormat": "[auth][year]"
     }
   },
   "items": [
-    {
-      "citationKey": "2b",
-      "creators": [
-        {
-          "creatorType": "author",
-          "name": "02b"
-        }
-      ],
-      "extra": [
-        "Citation Key: 2b"
-      ],
-      "itemID": 3,
-      "itemType": "book",
-      "title": "Blah <span class=\"nocase\"><i>mkbibemph</i></span> and <span class=\"nocase\">\u201cmkbibquote\u201d</span>."
-    },
-    {
-      "citationKey": "2e",
-      "creators": [
-        {
-          "creatorType": "author",
-          "name": "02e"
-        }
-      ],
-      "extra": [
-        "Citation Key: 2e"
-      ],
-      "itemID": 4,
-      "itemType": "book",
-      "title": "Blah <span class=\"nocase\"><i>emph</i></span> and <span class=\"nocase\">\u201cenquote\u201d</span>."
-    },
-    {
-      "citationKey": "Arsdall2012",
-      "creators": [
-        {
-          "creatorType": "editor",
-          "firstName": "Anne",
-          "lastName": "van Arsdall"
-        },
-        {
-          "creatorType": "editor",
-          "firstName": "Timothy",
-          "lastName": "Graham"
-        }
-      ],
-      "date": "2012",
-      "extra": [
-        "Citation Key: Arsdall2012"
-      ],
-      "itemID": 6,
-      "itemType": "book",
-      "place": "Burlington, VT",
-      "publisher": "Ashgate",
-      "title": "Herbs and healers from the ancient mediterranean through the medieval west: Essays in honor of john m. Riddle"
-    },
-    {
-      "citationKey": "Cooper2013",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Glen",
-          "lastName": "Cooper"
-        }
-      ],
-      "date": "2013",
-      "extra": [
-        "Citation Key: Cooper2013",
-        "tex.crossref: Classen2013"
-      ],
-      "itemID": 8,
-      "itemType": "bookSection",
-      "pages": "263-87",
-      "title": "Byzantium between east and west: Competing hellenisms in the <i>Alexiad</i> of anna komnene and her contemporaries"
-    },
-    {
-      "citationKey": "Algar1985",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Hamid",
-          "lastName": "Algar"
-        }
-      ],
-      "date": "1985",
-      "extra": [
-        "Citation Key: Algar1985"
-      ],
-      "itemID": 5,
-      "itemType": "encyclopediaArticle",
-      "pages": "172-4",
-      "publicationTitle": "Encyclopedia iranica",
-      "title": "Besmallah: in exegesis, jurisprudence, and cultural life",
-      "volume": "4"
-    },
     {
       "citationKey": "1b",
       "creators": [
@@ -136,24 +40,78 @@
       "title": "Blah <span class=\"nocase\"><i>emph</i></span> and <span class=\"nocase\">\u201cenquote\u201d</span>."
     },
     {
-      "citationKey": "Correns1891",
+      "citationKey": "2b",
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "02b"
+        }
+      ],
+      "extra": [
+        "Citation Key: 2b"
+      ],
+      "itemID": 3,
+      "itemType": "book",
+      "title": "Blah <span class=\"nocase\"><i>mkbibemph</i></span> and <span class=\"nocase\">\u201cmkbibquote\u201d</span>."
+    },
+    {
+      "citationKey": "2e",
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "02e"
+        }
+      ],
+      "extra": [
+        "Citation Key: 2e"
+      ],
+      "itemID": 4,
+      "itemType": "book",
+      "title": "Blah <span class=\"nocase\"><i>emph</i></span> and <span class=\"nocase\">\u201cenquote\u201d</span>."
+    },
+    {
+      "citationKey": "Algar1985",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Hamid",
+          "lastName": "Algar"
+        }
+      ],
+      "date": "1985",
+      "extra": [
+        "Citation Key: Algar1985"
+      ],
+      "itemID": 5,
+      "itemType": "encyclopediaArticle",
+      "pages": "172-4",
+      "publicationTitle": "Encyclopedia iranica",
+      "title": "Besmallah: in exegesis, jurisprudence, and cultural life",
+      "volume": "4"
+    },
+    {
+      "citationKey": "Arsdall2012",
       "creators": [
         {
           "creatorType": "editor",
-          "firstName": "Paul",
-          "lastName": "Correns"
+          "firstName": "Anne",
+          "lastName": "van Arsdall"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "Timothy",
+          "lastName": "Graham"
         }
       ],
-      "date": "1891",
+      "date": "2012",
       "extra": [
-        "Citation Key: Correns1891"
+        "Citation Key: Arsdall2012"
       ],
-      "itemID": 9,
-      "itemType": "journalArticle",
-      "pages": "1-11",
-      "publicationTitle": "Beitr\u00e4ge zur Geschichte der Philosophie des Mittelalters",
-      "title": "Die dem boethius f\u00e4lschlich zugeschriebene abhandlung des dominicus gundisalvi 'De unitate'",
-      "volume": "1"
+      "itemID": 6,
+      "itemType": "book",
+      "place": "Burlington, VT",
+      "publisher": "Ashgate",
+      "title": "Herbs and healers from the ancient mediterranean through the medieval west: Essays in honor of john M. Riddle"
     },
     {
       "citationKey": "Bennett2003",
@@ -173,6 +131,45 @@
       "publisher": "University of London",
       "title": "Xenonika: medical texts associated with xenones in the late Byzantine period",
       "type": "Ph.D."
+    },
+    {
+      "citationKey": "Cooper2013",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Glen",
+          "lastName": "Cooper"
+        }
+      ],
+      "date": "2013",
+      "extra": [
+        "Citation Key: Cooper2013",
+        "tex.crossref: Classen2013"
+      ],
+      "itemID": 8,
+      "itemType": "bookSection",
+      "pages": "263-87",
+      "title": "Byzantium between east and west: Competing hellenisms in the <i>Alexiad</i> of anna komnene and her contemporaries"
+    },
+    {
+      "citationKey": "Correns1891",
+      "creators": [
+        {
+          "creatorType": "editor",
+          "firstName": "Paul",
+          "lastName": "Correns"
+        }
+      ],
+      "date": "1891",
+      "extra": [
+        "Citation Key: Correns1891"
+      ],
+      "itemID": 9,
+      "itemType": "journalArticle",
+      "pages": "1-11",
+      "publicationTitle": "Beitr\u00e4ge zur Geschichte der Philosophie des Mittelalters",
+      "title": "Die dem boethius f\u00e4lschlich zugeschriebene abhandlung des dominicus gundisalvi 'De unitate'",
+      "volume": "1"
     }
   ]
 }

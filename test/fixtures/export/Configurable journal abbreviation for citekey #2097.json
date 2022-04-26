@@ -8,7 +8,6 @@
     },
     "preferences": {
       "autoAbbrev": true,
-      "caching": false,
       "citekeyFormat": "[auth:lower][shorttitle3_3].[journal=auto][year]",
       "citekeySearch": false,
       "extraMergeCSL": true,

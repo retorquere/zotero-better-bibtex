@@ -3,8 +3,7 @@ import { toSentenceCase } from '@retorquere/bibtex-parser'
 import type { MarkupNode } from '../typings/markup'
 import { titleCased } from './csl-titlecase'
 
-import parse5 = require('parse5/lib/parser')
-const htmlParser = new parse5({ sourceCodeLocationInfo: true })
+import { parseFragment } from 'parse5'
 
 import Language from '../gen/babel/langmap.json'
 // import Tag from '../gen/babel/tag.json'
@@ -168,7 +167,7 @@ export const HTMLParser = new class { // eslint-disable-line @typescript-eslint/
       })
     }
 
-    doc = this.walk(htmlParser.parseFragment(this.html))
+    doc = this.walk(parseFragment(this.html, { sourceCodeLocationInfo: true }))
 
     if (this.options.caseConversion) {
       if (this.options.exportTitleCase) {

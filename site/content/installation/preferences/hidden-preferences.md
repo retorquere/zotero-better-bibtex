@@ -216,6 +216,6 @@ Select the style for auto-abbreviation. Only applicable to Juris-M; in Zotero, t
 
 ## Citation key format
 
-default: `​[auth:lower][shorttitle3_3][year]`
+default: `​auth.lower + shorttitle(3,3) + year`
 
 Set the pattern used to generate citation keys. The format of the keys is documented [here]({{ ref . "citing" }}).

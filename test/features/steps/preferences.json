@@ -223,14 +223,7 @@
     "override": true
   },
   {
-    "name": "cacheFlushInterval",
-    "type": "number",
-    "default": 5,
-    "affects": [],
-    "var": "cacheFlushInterval"
-  },
-  {
-    "name": "caching",
+    "name": "cache",
     "type": "boolean",
     "default": true,
     "affects": [
@@ -239,8 +232,15 @@
       "Better CSL JSON",
       "Better CSL YAML"
     ],
-    "var": "caching",
+    "var": "cache",
     "label": "Enable caching for background exports"
+  },
+  {
+    "name": "cacheFlushInterval",
+    "type": "number",
+    "default": 5,
+    "affects": [],
+    "var": "cacheFlushInterval"
   },
   {
     "name": "charmap",
@@ -271,7 +271,7 @@
   {
     "name": "citekeyFormat",
     "type": "string",
-    "default": "\u200b[auth:lower][shorttitle3_3][year]",
+    "default": "\u200bauth.lower + shorttitle(3,3) + year",
     "affects": [],
     "var": "citekeyFormat",
     "label": "Citation key format"

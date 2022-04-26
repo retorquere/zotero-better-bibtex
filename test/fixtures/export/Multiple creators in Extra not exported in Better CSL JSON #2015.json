@@ -5,9 +5,6 @@
     "localeDateOrder": "mdy",
     "options": {
       "exportNotes": true
-    },
-    "preferences": {
-      "caching": false
     }
   },
   "items": [

@@ -9,7 +9,6 @@
     "preferences": {
       "autoExport": "off",
       "bibtexURL": "url",
-      "caching": false,
       "citekeyFormat": "[authors1]:[year][veryshorttitle1_0:substring=1,2]",
       "exportTitleCase": false,
       "importSentenceCase": "off",

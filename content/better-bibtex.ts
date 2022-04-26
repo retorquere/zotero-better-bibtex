@@ -195,29 +195,52 @@ $patch$(Zotero.Items, 'merge', original => async function Zotero_Items_merge(ite
 })
 
 // https://github.com/retorquere/zotero-better-bibtex/issues/769
-$patch$(Zotero.DataObjects.prototype, 'parseLibraryKeyHash', original => function Zotero_DataObjects_prototype_parseLibraryKeyHash(id: string) {
+function parseLibraryKeyFromCitekey(libraryKey) {
   try {
-    const decoded_id = decodeURIComponent(id)
-    if (decoded_id[0] === '@') {
-      const item = Zotero.BetterBibTeX.KeyManager.keys.findOne($and({ citekey: decoded_id.substring(1) }))
-      if (item) return { libraryID: item.libraryID, key: item.itemKey }
+    const decoded = decodeURIComponent(libraryKey)
+    if (decoded[0] === '@') {
+      const item = Zotero.BetterBibTeX.KeyManager.keys.findOne($and({ citekey: decoded.substring(1) }))
+
+      return item ? { libraryID: item.libraryID, key: item.itemKey } : false
     }
 
-    const m = decoded_id.match(/^bbt:(?:{([0-9]+)})?(.*)/)
+    const m = decoded.match(/^bbt:(?:{([0-9]+)})?(.*)/)
     if (m) {
       const [_libraryID, citekey] = m.slice(1)
       const libraryID: number = (!_libraryID || _libraryID === '1') ? Zotero.Libraries.userLibraryID : parseInt(_libraryID)
       const item = Zotero.BetterBibTeX.KeyManager.keys.findOne($and({ libraryID, citekey }))
-      if (item) return { libraryID: item.libraryID, key: item.itemKey }
+      return item ? { libraryID: item.libraryID, key: item.itemKey } : false
     }
   }
   catch (err) {
-    log.error('parseLibraryKeyHash:', id, err)
+    log.error('parseLibraryKeyFromCitekey:', libraryKey, err)
   }
+  return null
+}
 
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  return original.apply(this, arguments)
-})
+if (typeof Zotero.DataObjects.prototype.parseLibraryKeyHash === 'function') {
+  log.debug('monkey-patching parseLibraryKeyHash')
+  $patch$(Zotero.DataObjects.prototype, 'parseLibraryKeyHash', original => function Zotero_DataObjects_prototype_parseLibraryKeyHash(libraryKey: string) {
+    const item = parseLibraryKeyFromCitekey(libraryKey)
+    log.debug('parseLibraryKeyHash', { item })
+    if (item !== null) return item
+
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    return original.apply(this, arguments)
+  })
+}
+if (typeof Zotero.DataObjects.prototype.parseLibraryKey === 'function') {
+  log.debug('monkey-patching parseLibraryKey')
+  $patch$(Zotero.DataObjects.prototype, 'parseLibraryKey', original => function Zotero_DataObjects_prototype_parseLibraryKey(libraryKey: string) {
+    const item = parseLibraryKeyFromCitekey(libraryKey)
+    log.debug('parseLibraryKey', { item })
+    if (item) return item
+    if (item === false) return { libraryID: Zotero.Libraries.userLibraryID, key: undefined }
+
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    return original.apply(this, arguments)
+  })
+}
 
 // otherwise the display of the citekey in the item pane flames out
 $patch$(Zotero.ItemFields, 'isFieldOfBase', original => function Zotero_ItemFields_isFieldOfBase(field: string, _baseField: any) {
@@ -370,7 +393,7 @@ Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
   // extractFields(_sandbox, item) { return Extra.get(item.extra) },
 
   cacheFetch(sandbox: { translator: { label: string }[] }, itemID: number, options: { exportNotes: boolean, useJournalAbbreviation: boolean }, prefs: any) {
-    if (!Preference.caching) return false
+    if (!Preference.cache) return false
 
     const collection = Cache.getCollection(sandbox.translator[0].label)
     if (!collection) return false
@@ -395,7 +418,7 @@ Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
   },
 
   cacheStore(sandbox: { translator: { label: string }[] }, itemID: number, options: { exportNotes: boolean, useJournalAbbreviation: boolean }, prefs: any, entry: any, metadata: any) {
-    if (!Preference.caching) return false
+    if (!Preference.cache) return false
 
     if (!metadata) metadata = {}
 
@@ -491,12 +514,12 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
         if (displayOptions.exportFileData) { // when exporting file data, the user was asked to pick a directory rather than a file
           displayOptions.exportDir = this.location.path
           displayOptions.exportPath = OS.Path.join(this.location.path, `${this.location.leafName}.${translator.target}`)
-          displayOptions.caching = false
+          displayOptions.cache = false
         }
         else {
           displayOptions.exportDir = this.location.parent.path
           displayOptions.exportPath = this.location.path
-          displayOptions.caching = true
+          displayOptions.cache = true
         }
       }
       const override = {
@@ -516,12 +539,12 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
           (path: string) => Zotero.File.getContents(path) // eslint-disable-line @typescript-eslint/no-unsafe-return
         ),
       }
-      displayOptions.caching = displayOptions.caching && !override.postscript && !override.preferences && !override.strings
+      displayOptions.cache = displayOptions.cache && !override.postscript && !override.preferences && !override.strings
 
       if (override.postscript) displayOptions.preference_postscript = override.postscript
       if (typeof override.strings === 'string') displayOptions.preference_strings = override.strings
       if (override.preferences) {
-        displayOptions.caching = false
+        displayOptions.cache = false
         for (const [pref, value] of Object.entries(override.preferences)) {
           if (typeof value !== typeof preferences.defaults[pref]) {
             log.error(`preference override for ${pref}: expected ${typeof preferences.defaults[pref]}, got ${typeof value}`)
@@ -811,6 +834,7 @@ class Progress {
 export class BetterBibTeX {
   public TestSupport = new TestSupport
   public KeyManager = new KeyManager
+  public Text = { sentenceCase }
 
   // panes
   public ZoteroPane: ZoteroPaneHelper = new ZoteroPaneHelper
