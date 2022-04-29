@@ -254,7 +254,7 @@ flag
 
 filter
   = ':(' dflt:$[^)]+ ')'                  { return `${options.migrate ? '' : '_'}default(${literal(dflt)})` }
-  / ':>' min:$[0-9]+                      {
+  / ':' ('>'/'longer=') min:$[0-9]+       {
       if (options.migrate && parseInt(min) === 0) return 'len'
       return `${options.migrate ? '' : '_'}len('>', ${min})`
     }
