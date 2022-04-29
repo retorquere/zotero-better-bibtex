@@ -23,9 +23,11 @@ function execShellCommand(cmd) {
 }
 
 async function bundle(config) {
+  console.log('aliasing BigInt to Number')
   config = {
     bundle: true,
     format: 'iife',
+    define: { BigInt: 'Number' },
     target: ['firefox60'],
     inject: [],
     ...config,
