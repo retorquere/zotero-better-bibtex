@@ -265,21 +265,25 @@ export class PrefPane {
     if (target) this.keyformat = target
     if (!this.keyformat || Zotero.BetterBibTeX.ready.isPending()) return // itemTypes not available yet
 
-    let msg
+    let msg = '', color = ''
     try {
       Formatter.parsePattern(this.keyformat.value)
-      msg = ''
+      if (Formatter.warning) {
+        msg = Formatter.warning
+        color = 'yellow'
+      }
       if (this.keyformat.value) this.saveCitekeyFormat(target)
     }
     catch (err) {
       msg = err.message
+      color = 'DarkOrange'
       if (err.location) msg += ` at ${(err.location.start.offset as number) + 1}`
       log.error('prefs: key format error:', msg)
     }
 
     if (!this.keyformat.value && !msg) msg = 'pattern is empty'
 
-    this.keyformat.setAttribute('style', (msg ? '-moz-appearance: none !important; background-color: DarkOrange' : ''))
+    this.keyformat.setAttribute('style', (msg ? `-moz-appearance: none !important; background-color: ${color}` : ''))
     this.keyformat.setAttribute('tooltiptext', msg)
   }
 
