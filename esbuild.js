@@ -23,7 +23,7 @@ function execShellCommand(cmd) {
 }
 
 async function bundle(config) {
-  console.log('aliasing BigInt to Number')
+  console.log('aliasing BigInt to Number') // https://github.com/benjamn/ast-types/issues/750
   config = {
     bundle: true,
     format: 'iife',
