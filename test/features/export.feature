@@ -13,6 +13,7 @@ Feature: Export
 
     Examples:
       | file                                                                                                                     | references |
+      | Authors export looks like this prefix=von useprefix=true... #2138                                                        | 1          |
       | Zotero's Manuscript 'Type' is mapped to both biblatex's 'type' and 'howpublished' #2114                                  | 1          |
       | Configurable journal abbreviation for citekey #2097                                                                      | 1          |
       | BetterBibLaTeX exports articles as online #2058                                                                          | 3          |
@@ -590,7 +591,6 @@ Feature: Export
   # And I wait 5 seconds
   # And I wait at most 100 seconds until all auto-exports are done
   # Then "/tmp/autoexport.bib" should match "export/*.bibtex"
-
   @1495
   Scenario: use author dash separation rather than camel casing in citekey #1495
     Given I import 1 reference from "export/*.json"

@@ -1128,6 +1128,7 @@ export class Entry {
     const initials_marker_pos: number = (name.given || '').indexOf(enc_creators_marker.initials) // end of guarded area
     let initials: string | String
 
+    log.debug('biblatexExtendedNameFormat:', Translator.preferences.biblatexExtendedNameFormat)
     if (Translator.preferences.biblatexExtendedNameFormat && (name['dropping-particle'] || name['non-dropping-particle'] || name['comma-suffix'])) {
       if (initials_marker_pos >= 0) {
         initials = name.given.substring(0, initials_marker_pos)

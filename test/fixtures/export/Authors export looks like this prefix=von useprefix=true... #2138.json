@@ -1,0 +1,49 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "localeDateOrder": "mdy",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "DOIandURL": "url",
+      "citekeyFormat": "[auth:lower][shorttitle3_3][year]",
+      "postscript": "if (Translator.BetterBibLaTeX && item.itemType === 'webpage') {\n    if (item.accessDate) {\n      reference.add({ name: 'note', value: \"(accessed \" + item.accessDate.replace(/\\s*T?\\d+:\\d+:\\d+.*/, '') + \")\" });\n    }\n    if (item.url.DASKANNWIEDERWEG_ICHMAGNURKEINEDOPPELTEURLIMGLOSSARY) {\n      reference.add({ name: 'howpublished', bibtex: \"{\\\\url{\" + reference.enc_verbatim({value: item.url}) + \"}}\" });\n    }\n  }"
+    }
+  },
+  "items": [
+    {
+      "citationKey": "chockalingamBayesianNetworkModels2017",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Sabarathinam",
+          "lastName": "Chockalingam"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Wolter",
+          "lastName": "Pieters"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Andr\ufffd",
+          "lastName": "Teixeira"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Pieter van",
+          "lastName": "Gelder"
+        }
+      ],
+      "date": "2017",
+      "itemID": 1,
+      "itemType": "conferencePaper",
+      "pages": "105-122",
+      "publicationTitle": "Nordic Conference on Secure IT Systems",
+      "publisher": "Springer",
+      "title": "Bayesian network models in cyber security: a systematic review"
+    }
+  ]
+}
