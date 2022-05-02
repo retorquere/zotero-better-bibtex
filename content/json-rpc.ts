@@ -87,10 +87,17 @@ class NSAutoExport {
 class NSUser {
   /**
    * List the libraries (also known as groups) the user has in Zotero
+   *
+   * @param includeCollections Wether or not the result should inlcude a list of collection for each library (default is false)
    */
-  public async groups() {
+  public async groups(includeCollections?: boolean) {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return await Zotero.Libraries.getAll().map(lib => ({ id: lib.libraryID, name: lib.name }))
+    return await Zotero.Libraries
+      .getAll().map(lib => ({
+        id: lib.libraryID,
+        name: lib.name,
+        collections: includeCollections ? Zotero.Collections.getByLibrary(lib.libraryID, true) : undefined,
+      }))
   }
 }
 
