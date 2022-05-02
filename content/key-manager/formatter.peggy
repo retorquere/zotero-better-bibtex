@@ -205,11 +205,11 @@ method
             error(`unexpected flag '${flag}' on function '${input}'`)
           }
         } else if (flag.length === 1) {
-          if (method.parameters.includes('joiner')) {
-            args.joiner = flag
+          if (method.parameters.includes('join')) {
+            args.join = flag
           }
           else {
-            error(`unexpected joiner on function '${input}'`)
+            error(`unexpected join on function '${input}'`)
           }
         } else if (flag.length) {
           error(`unexpected flag '${flag}' on function '${input}'`)
