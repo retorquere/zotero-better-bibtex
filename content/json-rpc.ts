@@ -172,6 +172,20 @@ class NSItem {
   }
 
   /**
+   * List collections for an item with the given citekey
+   *
+   * @param citekey  The citekey to search for
+   */
+  public async collections(citekey: string) {
+    const key = Zotero.BetterBibTeX.KeyManager.keys.findOne($and({ citekey: citekey.replace(/^@/, '') }))
+    if (!key) throw { code: INVALID_PARAMETERS, message: `${citekey} not found` }
+    const item = await getItemsAsync(key.itemID)
+
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    return item.getCollections().map(id => Zotero.Collections.get(id).name)
+  }
+
+  /**
    * Fetch the notes for a range of citekeys
    *
    * @param citekeys An array of citekeys
