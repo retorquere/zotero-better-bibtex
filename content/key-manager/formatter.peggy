@@ -205,11 +205,11 @@ method
             error(`unexpected flag '${flag}' on function '${input}'`)
           }
         } else if (flag.length === 1) {
-          if (method.parameters.includes('join')) {
-            args.join = flag
+          if (method.parameters.includes('sep')) {
+            args.sep = flag
           }
           else {
-            error(`unexpected join on function '${input}'`)
+            error(`unexpected sep on function '${input}'`)
           }
         } else if (flag.length) {
           error(`unexpected flag '${flag}' on function '${input}'`)

@@ -358,9 +358,9 @@ export class PatternParser {
 
   protected AssignmentExpression(expr: AST, context: Context): AST {
     if (!context.arguments) this.error(expr)
-    if (expr.left.name === 'joiner') {
-      this.warning = 'please use "join" instead of "joiner"'
-      expr.left.name = 'join'
+    if (expr.left.name === 'joiner' || expr.left.name === 'join') {
+      this.warning = `please use "sep" instead of "${expr.left.name}"`
+      expr.left.name = 'sep'
     }
     return {...this.convert(expr.right, context), named_argument: expr.left.name}
   }
