@@ -49,6 +49,7 @@ interface ZoteroItem {
   itemTypeID: number
   libraryID: number
   parentID: number
+  parentItem?: ZoteroItem
   key: string
   getField: (name: string, unformatted?: boolean, includeBaseMapped?: boolean) => string | number
   setField: (name: string, value: string | number) => void

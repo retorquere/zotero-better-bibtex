@@ -6,13 +6,10 @@ function module.tablelength(T)
   return count
 end
 
-math.randomseed(os.clock()^5)
-function module.random_id(length)
-  local id = ''
-  for i = 1, length do
-    id = id .. string.char(math.random(97, 122))
-  end
-  return id
+module.id_number = 0
+function module.next_id(length)
+  module.id_number = module.id_number + 1
+  return string.format(string.format('%%0%dd', length), module.id_number)
 end
 
 local function url_encode_char(chr)

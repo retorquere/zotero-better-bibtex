@@ -211,6 +211,8 @@ for (const fname in api) {
 type Context = { arguments?: boolean, coerce?: boolean }
 export class PatternParser {
   public code: string
+  public warning = ''
+
   private patterns: AST
   private ftype: string
 
@@ -356,6 +358,10 @@ export class PatternParser {
 
   protected AssignmentExpression(expr: AST, context: Context): AST {
     if (!context.arguments) this.error(expr)
+    if (expr.left.name === 'joiner' || expr.left.name === 'join') {
+      this.warning = `please use "sep" instead of "${expr.left.name}"`
+      expr.left.name = 'sep'
+    }
     return {...this.convert(expr.right, context), named_argument: expr.left.name}
   }
 

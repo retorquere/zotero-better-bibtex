@@ -56,13 +56,13 @@
     else {
       if (options.migrate) {
         const passed = method.parameters.filter(p => p in params)
-        const passed_j = passed.join(',') + ','
-        const all = method.parameters.join(',') + ','
+        const passed_j = ',' + passed.join(',') + ','
+        const all_j = ',' + method.parameters.join(',') + ','
 
         if (!passed.length) {
           args = ''
         }
-        else if (method.parameters.length <= 2 && all.startsWith(passed_j) && passed_j.match(/(^|,)(start|n),/)) {
+        else if (method.parameters.length === 1 || (method.parameters.length === 2 && all_j.startsWith(passed_j) && passed_j.match(/,(start|n),/))) {
           args = passed.map(p => literal(params[p]))
         }
         else {
@@ -205,11 +205,11 @@ method
             error(`unexpected flag '${flag}' on function '${input}'`)
           }
         } else if (flag.length === 1) {
-          if (method.parameters.includes('joiner')) {
-            args.joiner = flag
+          if (method.parameters.includes('sep')) {
+            args.sep = flag
           }
           else {
-            error(`unexpected joiner on function '${input}'`)
+            error(`unexpected sep on function '${input}'`)
           }
         } else if (flag.length) {
           error(`unexpected flag '${flag}' on function '${input}'`)
@@ -254,7 +254,7 @@ flag
 
 filter
   = ':(' dflt:$[^)]+ ')'                  { return `${options.migrate ? '' : '_'}default(${literal(dflt)})` }
-  / ':>' min:$[0-9]+                      {
+  / ':' ('>'/'longer=') min:$[0-9]+       {
       if (options.migrate && parseInt(min) === 0) return 'len'
       return `${options.migrate ? '' : '_'}len('>', ${min})`
     }
