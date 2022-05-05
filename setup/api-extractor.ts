@@ -52,17 +52,18 @@ export class API {
       .replace(/\*\/$/, '') // remove trailer
     const params: Record<string, string> = {}
     let m
-    params[''] = comment.trim().split('\n').map(line => {
-      if (m = line.match(/^\s*[*]\s+@param\s+([^\s]+)\s+(.*)/)) {
-        params[m[1]] = m[2]
-        return ''
-      }
-      else {
-        return `${line.replace(/^\s*[*]\s*/, '')}\n`
-      }
-    })
-    .join('')
-    .replace(/\n+/g, newlines => newlines.length > 1 ? '\n\n' : ' ')
+    params[''] = comment.trim().split('\n')
+      .map(line => {
+        if (m = line.match(/^\s*[*]\s+@param\s+([^\s]+)\s+(.*)/)) {
+          params[m[1]] = m[2]
+          return ''
+        }
+        else {
+          return `${line.replace(/^\s*[*]\s*/, '')}\n`
+        }
+      })
+      .join('')
+      .replace(/\n+/g, newlines => newlines.length > 1 ? '\n\n' : ' ')
 
     return params
   }
@@ -72,7 +73,7 @@ export class API {
 
     const comment_ranges = ts.getLeadingCommentRanges(this.ast.getFullText(), method.getFullStart())
     if (!comment_ranges) return
-    let comment = this.ast.getFullText().slice(comment_ranges[0].pos, comment_ranges[0].end)
+    const comment = this.ast.getFullText().slice(comment_ranges[0].pos, comment_ranges[0].end)
     if (!comment.startsWith('/**')) return
     const params = this.DocComment(comment)
 

@@ -43,17 +43,20 @@ class FormatterAPI {
         doc += '</td></tr>'
         return doc
       }).join('\n')
-      if (params) params = `
-        <details class="details"><summary class="summary">parameters:</summary>
-        <table>
-          <thead><tr><th>parameter</th><th>type</th>${description ? '<th>description</th>' : ''}<th>default</th></tr></thead>
-          <tbody>
-            ${params}
-          </tbody>
-        </table>
-        </details>`
+      if (params) {
+        params = `
+          <details class="details"><summary class="summary">parameters:</summary>
+          <table>
+            <thead><tr><th>parameter</th><th>type</th>${description ? '<th>description</th>' : ''}<th>default</th></tr></thead>
+            <tbody>
+              ${params}
+            </tbody>
+          </table>
+          </details>
+        `
+      }
 
-      if (key !== '$text' && key !== '$getfield') this.doc[kind][`<code>${name.substr(1)}</code>`] = showdown.makeHtml(method.doc) + params 
+      if (key !== '$text' && key !== '$getfield') this.doc[kind][`<code>${name.substr(1)}</code>`] = `${showdown.makeHtml(method.doc)}${params}`
     }
 
     /* re-enable this after the formatter migration
