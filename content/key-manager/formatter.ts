@@ -392,6 +392,7 @@ class PatternFormatter {
 
   /**
    * Tests whether the item is of any of the given types, and skips to the next pattern if not
+   * @param allowed one or more item type names
    */
   public $type(...allowed: string[]) {
     if (allowed.map(type => type.toLowerCase()).includes(this.item.itemType.toLowerCase())) {
@@ -404,6 +405,7 @@ class PatternFormatter {
 
   /**
    * Tests whether the item has the given language set, and skips to the next pattern if not
+   * @param name one or more language codes
    */
   public $language(...name: (BabelLanguage | BabelLanguageTag)[]) {
     if (name.concat(name.map(n => BabelTag[n] as string).filter(n => n)).includes(this.item.babelTag())) {
@@ -440,6 +442,7 @@ class PatternFormatter {
 
   /**
    * Gets the value of the item field
+   * @param name name of the field
    */
   public $getField(name: string) {
     const value = this.item.getField(name)
@@ -463,15 +466,15 @@ class PatternFormatter {
   }
 
   /**
-   * Author/editor information. Parameters are:
-   * - `n`: select the first `n` authors (when passing a number) or the authors in this range (inclusive, when passing two values); negative numbers mean "from the end", default = 0 = all,
-   * - `creator`: select type of creator (`author` or `editor`),
-   * - `name`: sprintf-js template. Available named parameters are: `f` (family name), `g` (given name), `i` (initials)
-   * - `etal`: use this term to replace authors after `n` authors have been named,
-   * - `sep`: use this character between authors
-   * - `clean`: transliterates the citation key and removes unsafe characters
-   * - `min`: skip to the next pattern if there are less than `min` creators
-   * - `max`: skip to the next pattern if there are more than `max` creators
+   * Author/editor information.
+   * @param n       select the first `n` authors (when passing a number) or the authors in this range (inclusive, when passing two values); negative numbers mean "from the end", default = 0 = all
+   * @param creator select type of creator (`author` or `editor`)
+   * @param name    sprintf-js template. Available named parameters are: `f` (family name), `g` (given name), `i` (initials)
+   * @param etal    use this term to replace authors after `n` authors have been named
+   * @param sep     use this character between authors
+   * @param clean   transliterates the citation key and removes unsafe characters
+   * @param min     skip to the next pattern if there are less than `min` creators, 0 = ignore
+   * @param max     skip to the next pattern if there are more than `max` creators, 0 = ignore
    */
   public $authors(
     n: number | [number, number] = 0,
@@ -505,7 +508,14 @@ class PatternFormatter {
     return this.$text(author)
   }
 
-  /** The first `N` (default: all) characters of the `M`th (default: first) author's last name. */
+  /**
+   * The first `n` (default: all) characters of the `m`th (default: first) author's last name.
+   * @param n         the number of characters to take from the name, 0 = all
+   * @param m         select the `m`th author
+   * @param creator   select from authors or only from editors
+   * @param initials  add author initials
+   * @param clean     transliterates the citation key and removes unsafe characters
+   */
   public $auth(n=0, m=1, creator: 'author' | 'editor' = 'author', initials=false, clean=true) {
     const family = n ? `%(f).${n}s` : '%(f)s'
     const name = initials ? `${family}%(I)s` : family
@@ -563,7 +573,7 @@ class PatternFormatter {
     return this.$text(author)
   }
 
-  /** The beginning of each author's last name, using no more than `N` characters. */
+  /** The beginning of each author's last name, using no more than `n` characters (0 = all). */
   public $authIni(n=0, creator: 'author' | 'editor' = 'author', initials=false, sep='.', clean=true) {
     const authors = this.creators(creator === 'editor', initials ? '%(f)s%(I)s' : '%(f)s')
     if (!authors.length) return this.$text('')
@@ -680,13 +690,13 @@ class PatternFormatter {
     return this.$text(pages.split(/[-\s,–]/).pop() || '')
   }
 
-  /** Tag number `N` */
+  /** Tag number `n` */
   public $keyword(n: number) {
     const tag: string | { tag: string} = this.item.getTags()?.[n] || ''
     return this.$text(typeof tag === 'string' ? tag : tag.tag)
   }
 
-  /** The first `N` (default: 3) words of the title, apply capitalization to first `M` (default: 0) of those */
+  /** The first `n` (default: 3) words of the title, apply capitalization to first `m` (default: 0) of those */
   public $shorttitle(n: number = 3, m: number = 0) { // eslint-disable-line no-magic-numbers, @typescript-eslint/no-inferrable-types
     const words = this.titleWords(this.item.title, { skipWords: true, asciiOnly: true})
     if (!words) return this.$text('')
@@ -694,7 +704,7 @@ class PatternFormatter {
     return this.$text(words.slice(0, n).map((word, i) => i < m ? word.charAt(0).toUpperCase() + word.slice(1) : word).join(' '))
   }
 
-  /** The first `N` (default: 1) words of the title, apply capitalization to first `M` (default: 0) of those */
+  /** The first `n` (default: 1) words of the title, apply capitalization to first `m` (default: 0) of those */
   public $veryshorttitle(n: number = 1, m: number = 0) { // eslint-disable-line no-magic-numbers, @typescript-eslint/no-inferrable-types
     return this.$shorttitle(n, m)
   }

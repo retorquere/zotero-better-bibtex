@@ -48,8 +48,6 @@ class NSAutoExport {
    * @param translator                             The name or GUID of a BBT translator
    * @param path                                   The absolute path to which the collection will be auto-exported
    * @param displayOptions                         Options which you would be able to select during an interactive export; `exportNotes`, default `false`, and `useJournalAbbreviation`, default `false`
-   * @param displayOptions.exportNotes             Export notes
-   * @param displayOptions.useJournalAbbreviation  Use Journal abbreviation in export
    * @param replace                                Replace the auto-export if it exists, default `false`
    * @returns                                      Collection ID of the target collection
    */

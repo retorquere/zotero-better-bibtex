@@ -7,6 +7,9 @@ import stringify from 'fast-safe-stringify'
 import _ from 'lodash'
 import jsesc from 'jsesc'
 
+import Showdown from 'showdown'
+const showdown = new Showdown.Converter()
+
 class FormatterAPI {
   private formatter: Record<string, Method>
   public signature: Record<string, any> = {}
@@ -30,19 +33,27 @@ class FormatterAPI {
       })
       if (!this.signature[key].rest) delete this.signature[key].rest
 
-      let quoted = '`' + name.substr(1) + '`'
-      if (method.parameters.length) {
-        quoted += '('
-          + method.parameters.map(p => {
-            let doc = '`' + p.name + '`' + (!method.schema.required.includes(p.name) && p.default === 'undefined' ? '?' : '')
-            doc += `: ${this.typedoc(method.schema.properties[p.name])}`
-            if (typeof p.default !== 'undefined') doc += `, default: \`${jsesc(p.default, { quotes: 'single', wrap: true })}\``
-            return doc
-          }).join(', ')
-        + ')'
-      }
+      const description = method.parameters.find(param => param.doc)
+      let params = method.parameters.map(p => {
+        let doc = '<tr>'
+        doc += '<td><code>' + p.name + '</code>' + (!method.schema.required.includes(p.name) && p.default === 'undefined' ? '?' : '') + '</td>'
+        doc += `<td>${this.typedoc(method.schema.properties[p.name])}</td><td>`
+        if (description) doc += `${showdown.makeHtml(p.doc || '')}</td><td>`
+        if (typeof p.default !== 'undefined') doc += `<code>${jsesc(p.default, { quotes: 'single', wrap: true })}</code> `
+        doc += '</td></tr>'
+        return doc
+      }).join('\n')
+      if (params) params = `
+        <details class="details"><summary class="summary">parameters:</summary>
+        <table>
+          <thead><tr><th>parameter</th><th>type</th>${description ? '<th>description</th>' : ''}<th>default</th></tr></thead>
+          <tbody>
+            ${params}
+          </tbody>
+        </table>
+        </details>`
 
-      if (key !== '$text' && key !== '$getfield') this.doc[kind][quoted] = method.doc
+      if (key !== '$text' && key !== '$getfield') this.doc[kind][`<code>${name.substr(1)}</code>`] = showdown.makeHtml(method.doc) + params 
     }
 
     /* re-enable this after the formatter migration
@@ -55,12 +66,12 @@ class FormatterAPI {
   }
 
   private typedoc(type): string {
-    if (type.enum) return type.enum.map(t => this.typedoc({ const: t })).join(' | ')
-    if (['boolean', 'string', 'number'].includes(type.type)) return `**${type.type}**`
-    if (type.oneOf) return type.oneOf.map(t => this.typedoc(t)).join(' | ')
-    if (type.anyOf) return type.anyOf.map(t => this.typedoc(t)).join(' | ')
-    if (type.const) return `\`${type.const}\``
-    if (type.instanceof) return `**${type.instanceof}**`
+    if (type.enum) return type.enum.map(t => this.typedoc({ const: t })).join(' / ')
+    if (['boolean', 'string', 'number'].includes(type.type)) return `<i>${type.type}</i>`
+    if (type.oneOf) return type.oneOf.map(t => this.typedoc(t)).join(' / ')
+    if (type.anyOf) return type.anyOf.map(t => this.typedoc(t)).join(' / ')
+    if (type.const) return `<code>${type.const}</code>`
+    if (type.instanceof) return `<i>${type.instanceof}</i>`
     if (type.type === 'array' && type.prefixItems) return `[${type.prefixItems.map(t => this.typedoc(t)).join(', ')}]`
     if (type.type === 'array' && typeof type.items !== 'boolean') return `${this.typedoc(type.items)}...`
     throw new Error(`no rule for ${JSON.stringify(type)}`)
