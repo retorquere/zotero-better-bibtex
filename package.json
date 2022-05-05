@@ -83,8 +83,6 @@
     "sprintf-js": "^1.1.2",
     "tar-js": "^0.3.0",
     "text-title-case": "^1.0.2",
-    "title": "^3.4.4",
-    "title-case": "^3.0.3",
     "transliteration": "^2.2.0",
     "xregexp": "^5.1.0"
   },

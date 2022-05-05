@@ -1,7 +1,7 @@
 import { toSentenceCase } from '@retorquere/bibtex-parser'
+import titleCased from './vercel/title'
 
 import type { MarkupNode } from '../typings/markup'
-import { titleCased } from './csl-titlecase'
 
 import { parseFragment } from 'parse5'
 
