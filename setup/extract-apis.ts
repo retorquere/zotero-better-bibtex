@@ -34,9 +34,9 @@ class FormatterAPI {
       if (method.parameters.length) {
         quoted += '('
           + method.parameters.map(p => {
-            let doc = '`' + p.name + '`' + (method.schema.required.includes(p.name) ? '' : '?')
+            let doc = '`' + p.name + '`' + (!method.schema.required.includes(p.name) && p.default === 'undefined' ? '?' : '')
             doc += `: ${this.typedoc(method.schema.properties[p.name])}`
-            if (typeof p.default !== 'undefined') doc += `=${jsesc(p.default, { quotes: 'single', wrap: true })}`
+            if (typeof p.default !== 'undefined') doc += `, default: \`${jsesc(p.default, { quotes: 'single', wrap: true })}\``
             return doc
           }).join(', ')
         + ')'
@@ -56,11 +56,11 @@ class FormatterAPI {
 
   private typedoc(type): string {
     if (type.enum) return type.enum.map(t => this.typedoc({ const: t })).join(' | ')
-    if (['boolean', 'string', 'number'].includes(type.type)) return type.type
+    if (['boolean', 'string', 'number'].includes(type.type)) return `**${type.type}**`
     if (type.oneOf) return type.oneOf.map(t => this.typedoc(t)).join(' | ')
     if (type.anyOf) return type.anyOf.map(t => this.typedoc(t)).join(' | ')
-    if (type.const) return JSON.stringify(type.const)
-    if (type.instanceof) return type.instanceof
+    if (type.const) return '`' + type.const + '`'
+    if (type.instanceof) return `**${type.instanceof}**`
     if (type.type === 'array' && type.prefixItems) return `(${type.prefixItems.map(t => this.typedoc(t)).join(', ')})`
     if (type.type === 'array' && typeof type.items !== 'boolean') return `${this.typedoc(type.items)}...`
     throw new Error(`no rule for ${JSON.stringify(type)}`)
