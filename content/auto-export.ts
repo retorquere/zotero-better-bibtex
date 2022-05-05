@@ -174,7 +174,8 @@ const queue = new class TaskQueue {
   public start() {
     if (Preference.autoExport === 'immediate') this.resume('startup')
 
-    this.idleService.addIdleObserver(this, Preference.autoExportIdleWait * 1000)
+    // really dumb but the idle service deals with msecs wverywhere -- except add, which is in seconds
+    this.idleService.addIdleObserver(this, Preference.autoExportIdleWait)
 
     Zotero.Notifier.registerObserver(this, ['sync'], 'BetterBibTeX', 1)
   }
