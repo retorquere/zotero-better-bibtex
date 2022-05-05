@@ -13,14 +13,14 @@ class Logger {
 
   protected timestamp: number
 
-  private format({ error=false, worker='', translator=''}, msg) {
+  private format({ error=false, worker='', translator='', issue=0}, msg) {
     let diff = null
     const now = Date.now()
     if (this.timestamp) diff = now - this.timestamp
     this.timestamp = now
 
     if (typeof msg !== 'string') {
-      let output = ''
+      let output = issue ? `issue ${issue}: `: ''
       for (const m of msg) {
         const type = typeof m
         if (type === 'string' || m instanceof String || type === 'number' || type === 'undefined' || type === 'boolean' || m === null) {
@@ -77,6 +77,10 @@ class Logger {
 
   public debug(...msg) {
     if (this.enabled) Zotero.debug(this.format({}, msg))
+  }
+
+  public for(issue: number, ...msg) {
+    if (this.enabled) Zotero.debug(this.format({ issue }, msg))
   }
 
   public error(...msg) {
