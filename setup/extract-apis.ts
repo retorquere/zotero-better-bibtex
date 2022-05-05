@@ -61,7 +61,7 @@ class FormatterAPI {
     if (type.anyOf) return type.anyOf.map(t => this.typedoc(t)).join(' | ')
     if (type.const) return `\`${type.const}\``
     if (type.instanceof) return `**${type.instanceof}**`
-    if (type.type === 'array' && type.prefixItems) return `(${type.prefixItems.map(t => this.typedoc(t)).join(', ')})`
+    if (type.type === 'array' && type.prefixItems) return `[${type.prefixItems.map(t => this.typedoc(t)).join(', ')}]`
     if (type.type === 'array' && typeof type.items !== 'boolean') return `${this.typedoc(type.items)}...`
     throw new Error(`no rule for ${JSON.stringify(type)}`)
   }
