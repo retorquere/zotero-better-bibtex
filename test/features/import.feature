@@ -53,6 +53,8 @@ Feature: Import
 
   Scenario: Copy date-addeddate-modified from extra field regenerates citation key #2142
     When I import 1 reference from "import/*.bib"
+    And I select the item with a field that contains "Bargaining"
+    And I copy date-added/date-modified for the selected items from the extra field
     Then the library should match "import/*.json"
 
   Scenario Outline: Import <references> references from <file>
