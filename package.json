@@ -89,7 +89,7 @@
     "xregexp": "^5.1.0"
   },
   "devDependencies": {
-    "@retorquere/bibtex-parser": "^6.3.3",
+    "@retorquere/bibtex-parser": "^6.3.4",
     "@retorquere/zotero-sync": "^1.0.23",
     "@types/bluebird": "^3.5.36",
     "@types/lokijs": "^1.5.7",
@@ -110,7 +110,7 @@
     "ejs": "^3.1.7",
     "esbuild": "^0.14.38",
     "escape-string-regexp": "^5.0.0",
-    "eslint": "^8.14.0",
+    "eslint": "^8.15.0",
     "estrace": "^4.0.0",
     "eta": "^1.12.3",
     "excel-column-name": "^1.0.1",
@@ -141,7 +141,7 @@
     "process": "^0.11.10",
     "properties-reader": "^2.2.0",
     "pug": "^3.0.2",
-    "putout": "^25.17.4",
+    "putout": "^26.0.0",
     "recast": "^0.21.1",
     "regenerate": "^1.4.2",
     "rimraf": "^3.0.2",

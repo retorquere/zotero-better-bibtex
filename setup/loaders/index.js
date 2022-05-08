@@ -23,13 +23,13 @@ function load_patches(dir) {
 
 module.exports.patcher = function(dir) {
   const patches = load_patches(dir)
-  const filter = '.*\\/(' + Object.keys(patches).map(source => source.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|') + ')$'
+  const filter = '.*\\/(' + Object.keys(patches).map(source => source.replace(/[.*+?^${}()\|\[\]\\\/]/g, '\\$&')).join('|') + ')$'
 
   return {
     name: 'patcher',
     setup(build) {
       build.onLoad({ filter: new RegExp(filter) }, async (args) => {
-        const target = args.path.replace(/.*[/]node_modules[/]/, 'node_modules/')
+        const target = args.path.replace(/.*?[/]node_modules[/]/, 'node_modules/')
         console.log('  patching', target)
         const source = await fs.promises.readFile(args.path, 'utf-8')
         const patch = patches[target]

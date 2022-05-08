@@ -14,6 +14,8 @@
   "export/Abbreviations in key generated for Conference Proceedings #548.json",
   "export/Allow explicit field override.biblatex",
   "export/Allow explicit field override.json",
+  "export/Authors export looks like this prefix=von useprefix=true... #2138.biblatex",
+  "export/Authors export looks like this prefix=von useprefix=true... #2138.json",
   "export/BBT CSL JSON; Do not use shortTitle and journalAbbreviation #372.csl.json",
   "export/BBT CSL JSON; Do not use shortTitle and journalAbbreviation #372.json",
   "export/BBT export of square brackets in date #245 -- xref should not be escaped #246.biblatex",

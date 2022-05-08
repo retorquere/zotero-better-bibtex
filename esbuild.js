@@ -26,7 +26,7 @@ async function bundle(config) {
   config = {
     bundle: true,
     format: 'iife',
-    define: { BigInt: 'Number' },
+    // define: { BigInt: 'Number' },
     target: ['firefox60'],
     inject: [],
     ...config,
@@ -48,7 +48,7 @@ async function bundle(config) {
     target = `${config.outdir} [${config.entryPoints.join(', ')}]`
   }
   console.log('* bundling', target)
-  console.log('  aliasing BigInt to Number for https://github.com/benjamn/ast-types/issues/750')
+  // console.log('  aliasing BigInt to Number for https://github.com/benjamn/ast-types/issues/750')
   const meta = (await esbuild.build(config)).metafile
   if (typeof metafile === 'string') await fs.promises.writeFile(metafile, JSON.stringify(meta, null, 2))
 }
