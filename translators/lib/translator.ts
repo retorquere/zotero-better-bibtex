@@ -139,7 +139,7 @@ export class ITranslator { // eslint-disable-line @typescript-eslint/naming-conv
   public preferences: Preferences
   public skipFields: string[]
   public skipField: Record<string, boolean>
-  public verbatimFields?: string[]
+  public verbatimFields?: (string | RegExp)[]
   public csquotes: { open: string, close: string }
   public export: { dir: string, path: string } = {
     dir: undefined,
@@ -280,7 +280,12 @@ export class ITranslator { // eslint-disable-line @typescript-eslint/naming-conv
     this.skipFields = this.preferences.skipFields.toLowerCase().split(',').map(field => this.typefield(field)).filter((s: string) => s)
     this.skipField = this.skipFields.reduce((acc, field) => { acc[field] = true; return acc }, {})
 
-    this.verbatimFields = this.preferences.verbatimFields.toLowerCase().split(',').map(field => this.typefield(field)).filter((s: string) => s)
+    let m
+    this.verbatimFields = this.preferences.verbatimFields
+      .toLowerCase()
+      .split(',')
+      .map(field => (m = field.trim().match(/^[/](.+)[/]$/)) ? new RegExp(m[1], 'i') : this.typefield(field))
+      .filter((s: string | RegExp) => s)
 
     if (!this.verbatimFields.length) this.verbatimFields = null
     this.csquotes = this.preferences.csquotes ? { open: this.preferences.csquotes[0], close: this.preferences.csquotes[1] } : null

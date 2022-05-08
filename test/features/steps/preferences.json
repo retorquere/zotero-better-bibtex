@@ -795,7 +795,7 @@
   {
     "name": "verbatimFields",
     "type": "string",
-    "default": "url,doi,file,ids,eprint,verba,verbb,verbc,groups",
+    "default": "url,doi,file,ids,eprint,/^verb[a-z]$/,groups,/^citeulike-linkout-[0-9]+$/, /^bdsk-url-[0-9]+$/",
     "affects": [],
     "var": "verbatimFields"
   },

@@ -198,7 +198,7 @@ A strings override will disable caching for that export.
 
 ## verbatimFields
 
-default: `url,doi,file,ids,eprint,verba,verbb,verbc,groups`
+default: `url,doi,file,ids,eprint,/^verb[a-z]$/,groups,/^citeulike-linkout-[0-9]+$/, /^bdsk-url-[0-9]+$/`
 
 list of fields to treat as verbatim during import. If you're importing e.g. Mendeley-generated BibTeX, which is out of spec in various ways, try removing `file` from this list before import.
 
