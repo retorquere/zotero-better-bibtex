@@ -119,7 +119,7 @@ export function get(extra: string, mode: 'zotero' | 'csl', options?: GetOptions)
       return false
     }
 
-    if (options.kv && (ef = mapping[key]) && !tex) {
+    if (options.kv && key !== 'citation key' && (ef = mapping[key]) && !tex) {
       for (const field of (ef[mode] || ef[other])) {
         switch (ef.type) {
           case 'name':
