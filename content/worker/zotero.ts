@@ -4,6 +4,7 @@ importScripts('resource://gre/modules/osfile.jsm')
 
 import type { ITranslator } from '../../translators/lib/translator'
 import type { Translators } from '../../typings/translators'
+export const { DOMParser, XMLSerializer } = require('@xmldom/xmldom')
 
 declare const doExport: () => void
 declare const Translator: ITranslator
