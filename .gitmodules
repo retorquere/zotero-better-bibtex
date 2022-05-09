@@ -21,3 +21,4 @@
 [submodule "submodules/zotero-utilities"]
 	path = submodules/zotero-utilities
 	url = https://github.com/zotero/utilities.git
+	branch = master
