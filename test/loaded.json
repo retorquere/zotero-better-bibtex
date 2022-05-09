@@ -609,6 +609,8 @@
   "import/Biblatex Annotation Import Bug #613.json",
   "import/CSL-YAML import.json",
   "import/CSL-YAML import.yml",
+  "import/Copy date-addeddate-modified from extra field regenerates citation key #2142.bib",
+  "import/Copy date-addeddate-modified from extra field regenerates citation key #2142.json",
   "import/Detect journal abbreviation in the publication field #1951.bib",
   "import/Detect journal abbreviation in the publication field #1951.json",
   "import/Endnote should parse.bib",
