@@ -5,6 +5,7 @@ importScripts('resource://gre/modules/osfile.jsm')
 import type { ITranslator } from '../../translators/lib/translator'
 import type { Translators } from '../../typings/translators'
 export const { DOMParser, XMLSerializer } = require('@xmldom/xmldom')
+import { Utilities as ZU } from '../../submodules/zotero-utilities/utilities.js'
 
 declare const doExport: () => void
 declare const Translator: ITranslator
@@ -95,6 +96,10 @@ class WorkerZoteroUtilities {
 
   public getVersion() {
     return workerContext.version
+  }
+
+  walkNoteDOM(note, visitors) {
+    ZU.walkNoteDOM(note, visitors)
   }
 
   public text2html(str: string, singleNewlineIsParagraph: boolean) {
