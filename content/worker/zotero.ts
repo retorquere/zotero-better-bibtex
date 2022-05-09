@@ -5,6 +5,29 @@ importScripts('resource://gre/modules/osfile.jsm')
 import type { ITranslator } from '../../translators/lib/translator'
 import type { Translators } from '../../typings/translators'
 
+import { DOMParser as XMLDOMParser } from '@xmldom/xmldom'
+
+function hasAttribute(attr: string): boolean {
+  return !!(this.getAttribute?.(attr))
+}
+function upgrade(node) {
+  if (!node.children) {
+    node.children = Array.from(node.childNodes || [])
+    for (const child of node.children) {
+      upgrade(child)
+    }
+  }
+  if (!node.hasAttribute) node.hasAttribute = hasAttribute
+}
+export class DOMParser extends XMLDOMParser {
+  parseFromString(text: string, contentType: string) { // eslint-disable-line @typescript-eslint/explicit-module-boundary-types
+    const doc = super.parseFromString(text, contentType)
+    upgrade(doc)
+    return doc
+  }
+}
+const ZU = require('../../submodules/zotero-utilities/utilities.js')
+
 declare const doExport: () => void
 declare const Translator: ITranslator
 declare const dump: (message: string) => void
@@ -94,6 +117,10 @@ class WorkerZoteroUtilities {
 
   public getVersion() {
     return workerContext.version
+  }
+
+  walkNoteDOM(note, visitors) {
+    ZU.walkNoteDOM(note, visitors)
   }
 
   public text2html(str: string, singleNewlineIsParagraph: boolean) {

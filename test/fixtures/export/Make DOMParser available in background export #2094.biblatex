@@ -1,0 +1,23 @@
+
+@article{huang_IndepthStudyLTE_2013,
+  title = {An In-Depth Study of {{LTE}}: Effect of Network Protocol and Application Behavior on Performance},
+  shorttitle = {An In-Depth Study of {{LTE}}},
+  author = {Huang, Junxian and Qian, Feng and Guo, Yihua and Zhou, Yuanyuan and Xu, Qiang and Mao, Z. Morley and Sen, Subhabrata and Spatscheck, Oliver},
+  date = {2013-09-19},
+  journaltitle = {ACM SIGCOMM Computer Communication Review},
+  shortjournal = {SIGCOMM Comput. Commun. Rev.},
+  volume = {43},
+  number = {4},
+  pages = {363--374},
+  note = {\section{Annotations\\
+(5/6/2022, 2:49:44 PM)}
+
+\par
+However, the interactions among applications, network transport protocol, and the radio layer still remain unexplored. (Huang et al., 2013, p. 363)
+\par
+We observed that LTE has significantly shorter state promotion delays and lower RTTs than those of 3G networks. (Huang et al., 2013, p. 363)
+\par
+\href{zotero://select/library/items/fixed-for-test}{Go to note}}
+}
+
+

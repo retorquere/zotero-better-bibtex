@@ -1,0 +1,94 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "localeDateOrder": "mdy",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "DOIandURL": "doi",
+      "asciiBibLaTeX": true,
+      "autoExport": "off",
+      "citekeyFormat": "[auth:lower]_[shorttitle3_3]_[year]",
+      "postscript": "if (Translator.BetterBibTeX && item.itemType === 'webpage') {\n    if (item.accessDate) {\n      reference.add({ name: 'year', value: item.accessDate.split(\"-\")[0]});\n    }\n    if (item.url) {\n      reference.add({ name: 'howpublished', bibtex: \"{\\\\url{\" + reference.enc_verbatim({value: item.url}) + \"}}\" });\n    }\n}\n\nif (Translator.BetterTeX) {\n    if (item.notes) {\n        var my_visitor = {\n            visitContainer: function (obj) {\n                Zotero.debug(\"visitContainer\");\n            },\n            visitAnnotation: function (obj) {\n                Zotero.debug(\"visitAnnotation\");\n            },\n            visitCitation: function (obj) {\n                Zotero.debug(\"visitCitation\");\n            },\n            visitOtherElement: function (obj) {\n                Zotero.debug(\"visitOtherElement\");\n            },\n            visitDataAttribute: function (obj) {\n                Zotero.debug(\"visitDataAttribute\");\n            },\n            visitURI: function (obj) {\n                Zotero.debug(\"visitURI\");\n                return obj;\n            }\n        };\n        const notes = item.notes.map(note => {\n            let [ , kind, lib, key ] = note.uri.match(/^https?:\\/\\/zotero\\.org\\/(users|groups)\\/((?:local\\/)?[^/]+)\\/items\\/(.+)/); key = 'fixed-for-test';\n            const select = (kind === 'users') ? `zotero://select/library/items/${key}` : `zotero://select/groups/${lib}/items/${key}`;\n            Zotero.debug(Zotero.Utilities.getCreatorsForType(item.itemType));\n            Zotero.debug('walkdom:' + JSON.stringify(note)); Zotero.Utilities.walkNoteDOM(note.note, my_visitor);\n            return note.note + ` <a href=\"${select}\">Go to note</a>`;\n        }).join('</p><p>');\n        reference.add({ name: 'note', value: notes, html: true });\n    }\n}",
+      "skipFields": "URL,abstract,file,DOI,keywords,langid,isbn,issn",
+      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc,groups"
+    }
+  },
+  "items": [
+    {
+      "DOI": "10.1145/2534169.2486006",
+      "ISSN": "0146-4833",
+      "accessDate": "2021-06-07T09:02:54Z",
+      "attachments": [],
+      "citationKey": "huang_IndepthStudyLTE_2013",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Junxian",
+          "lastName": "Huang"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Feng",
+          "lastName": "Qian"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Yihua",
+          "lastName": "Guo"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Yuanyuan",
+          "lastName": "Zhou"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Qiang",
+          "lastName": "Xu"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Z. Morley",
+          "lastName": "Mao"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Subhabrata",
+          "lastName": "Sen"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Oliver",
+          "lastName": "Spatscheck"
+        }
+      ],
+      "date": "2013-09-19",
+      "issue": "4",
+      "itemID": 1,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "SIGCOMM Comput. Commun. Rev.",
+      "language": "en",
+      "libraryCatalog": "DOI.org (Crossref)",
+      "notes": [
+        "<div data-citation-items=\"%5B%7B%22uris%22%3A%5B%22http%3A%2F%2Fzotero.org%2Fusers%2F4752161%2Fitems%2FL2KWDK96%22%5D%2C%22itemData%22%3A%7B%22id%22%3A%22http%3A%2F%2Fzotero.org%2Fusers%2F4752161%2Fitems%2FL2KWDK96%22%2C%22type%22%3A%22article-journal%22%2C%22container-title%22%3A%22ACM%20SIGCOMM%20Computer%20Communication%20Review%22%2C%22DOI%22%3A%2210.1145%2F2534169.2486006%22%2C%22ISSN%22%3A%220146-4833%22%2C%22issue%22%3A%224%22%2C%22journalAbbreviation%22%3A%22SIGCOMM%20Comput.%20Commun.%20Rev.%22%2C%22language%22%3A%22en%22%2C%22page%22%3A%22363-374%22%2C%22source%22%3A%22DOI.org%20(Crossref)%22%2C%22title%22%3A%22An%20in-depth%20study%20of%20LTE%3A%20effect%20of%20network%20protocol%20and%20application%20behavior%20on%20performance%22%2C%22title-short%22%3A%22An%20in-depth%20study%20of%20LTE%22%2C%22URL%22%3A%22https%3A%2F%2Fdl.acm.org%2Fdoi%2F10.1145%2F2534169.2486006%22%2C%22volume%22%3A%2243%22%2C%22author%22%3A%5B%7B%22family%22%3A%22Huang%22%2C%22given%22%3A%22Junxian%22%7D%2C%7B%22family%22%3A%22Qian%22%2C%22given%22%3A%22Feng%22%7D%2C%7B%22family%22%3A%22Guo%22%2C%22given%22%3A%22Yihua%22%7D%2C%7B%22family%22%3A%22Zhou%22%2C%22given%22%3A%22Yuanyuan%22%7D%2C%7B%22family%22%3A%22Xu%22%2C%22given%22%3A%22Qiang%22%7D%2C%7B%22family%22%3A%22Mao%22%2C%22given%22%3A%22Z.%20Morley%22%7D%2C%7B%22family%22%3A%22Sen%22%2C%22given%22%3A%22Subhabrata%22%7D%2C%7B%22family%22%3A%22Spatscheck%22%2C%22given%22%3A%22Oliver%22%7D%5D%2C%22accessed%22%3A%7B%22date-parts%22%3A%5B%5B%222021%22%2C6%2C7%5D%5D%7D%2C%22issued%22%3A%7B%22date-parts%22%3A%5B%5B%222013%22%2C9%2C19%5D%5D%7D%2C%22citation-key%22%3A%22huang_IndepthStudyLTE_2013%22%7D%7D%5D\" data-schema-version=\"8\"><h1>Annotations<br/>(5/6/2022, 2:49:44 PM)</h1>\n<p><span class=\"highlight\" data-annotation=\"%7B%22attachmentURI%22%3A%22http%3A%2F%2Fzotero.org%2Fusers%2F4752161%2Fitems%2F8SU8CCQA%22%2C%22annotationKey%22%3A%22EZFZEMQV%22%2C%22color%22%3A%22%23ffd400%22%2C%22pageLabel%22%3A%22363%22%2C%22position%22%3A%7B%22pageIndex%22%3A0%2C%22rects%22%3A%5B%5B122.047%2C534.989%2C292.894%2C543.005%5D%2C%5B53.798%2C524.528%2C292.894%2C532.544%5D%2C%5B53.798%2C514.067%2C78.948%2C522.083%5D%5D%7D%2C%22citationItem%22%3A%7B%22uris%22%3A%5B%22http%3A%2F%2Fzotero.org%2Fusers%2F4752161%2Fitems%2FL2KWDK96%22%5D%2C%22locator%22%3A%22363%22%7D%7D\">However, the interactions among applications, network transport protocol, and the radio layer still remain unexplored.</span> <span class=\"citation\" data-citation=\"%7B%22citationItems%22%3A%5B%7B%22uris%22%3A%5B%22http%3A%2F%2Fzotero.org%2Fusers%2F4752161%2Fitems%2FL2KWDK96%22%5D%2C%22locator%22%3A%22363%22%7D%5D%2C%22properties%22%3A%7B%7D%7D\">(<span class=\"citation-item\">Huang et al., 2013, p. 363</span>)</span></p><p><span class=\"highlight\" data-annotation=\"%7B%22attachmentURI%22%3A%22http%3A%2F%2Fzotero.org%2Fusers%2F4752161%2Fitems%2F8SU8CCQA%22%2C%22annotationKey%22%3A%22WD3P2JKD%22%2C%22color%22%3A%22%23ffd400%22%2C%22pageLabel%22%3A%22363%22%2C%22position%22%3A%7B%22pageIndex%22%3A0%2C%22rects%22%3A%5B%5B180.362%2C493.145%2C292.894%2C501.161%5D%2C%5B53.798%2C482.685%2C292.894%2C490.701%5D%2C%5B53.798%2C472.224%2C112.05%2C480.24%5D%5D%7D%2C%22citationItem%22%3A%7B%22uris%22%3A%5B%22http%3A%2F%2Fzotero.org%2Fusers%2F4752161%2Fitems%2FL2KWDK96%22%5D%2C%22locator%22%3A%22363%22%7D%7D\">We observed that LTE has significantly shorter state promotion delays and lower RTTs than those of 3G networks.</span> <span class=\"citation\" data-citation=\"%7B%22citationItems%22%3A%5B%7B%22uris%22%3A%5B%22http%3A%2F%2Fzotero.org%2Fusers%2F4752161%2Fitems%2FL2KWDK96%22%5D%2C%22locator%22%3A%22363%22%7D%5D%2C%22properties%22%3A%7B%7D%7D\">(<span class=\"citation-item\">Huang et al., 2013, p. 363</span>)</span></p></div>"
+      ],
+      "pages": "363-374",
+      "publicationTitle": "ACM SIGCOMM Computer Communication Review",
+      "shortTitle": "An in-depth study of LTE",
+      "tags": [
+        {
+          "tag": "BW-estimation-algorithm"
+        },
+        {
+          "tag": "Insightful"
+        }
+      ],
+      "title": "An in-depth study of LTE: effect of network protocol and application behavior on performance",
+      "url": "https://dl.acm.org/doi/10.1145/2534169.2486006",
+      "volume": "43"
+    }
+  ]
+}
