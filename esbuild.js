@@ -102,6 +102,9 @@ async function rebuild() {
       ].join('\n'),
     },
     metafile: 'gen/worker.json',
+    external: [
+      'jsdom',
+    ]
   })
 
   // translators
