@@ -32,7 +32,7 @@ declare const doExport: () => void
 declare const Translator: ITranslator
 declare const dump: (message: string) => void
 
-import XRegExp = require('xregexp')
+// import XRegExp = require('xregexp')
 import * as DateParser from '../../content/dateparser'
 // import * as Extra from '../../content/extra'
 import { qualityReport } from '../../content/qr-check'
@@ -112,37 +112,12 @@ class WorkerZoteroBetterBibTeX {
   }
 }
 
-class WorkerZoteroUtilities {
-  public XRegExp = XRegExp // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
+const WorkerZoteroUtilities = {
+  ...ZU,
 
-  public getVersion() {
-    return workerContext.version
-  }
+  getVersion: () => workerContext.version,
 
-  walkNoteDOM(note, visitors) {
-    ZU.walkNoteDOM(note, visitors)
-  }
-
-  public text2html(str: string, singleNewlineIsParagraph: boolean) {
-    str = str
-      .replace(/&/g, '&amp;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&apos;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-
-    if (singleNewlineIsParagraph) {
-      // \n => <p>
-      str = `<p>${str.replace(/\n/g, '</p><p>').replace(/ {2}/g, '&nbsp; ')}</p>`
-    }
-    else {
-      // \n\n => <p>, \n => <br/>
-      str = `<p>${str.replace(/\n\n/g, '</p><p>').replace(/\n/g, '<br/>').replace(/ {2}/g, '&nbsp; ')}</p>`
-    }
-
-    return str.replace(/<p>\s*<\/p>/g, '<p>&nbsp;</p>')
-  }
-
+  /*
   public getCreatorsForType(itemType) {
     return itemCreators[client][itemType]
   }
@@ -150,6 +125,7 @@ class WorkerZoteroUtilities {
   public itemToCSLJSON(item) {
     return Zotero.config.cslItems[item.itemID]
   }
+  */
 }
 
 function isWinRoot(path) {
@@ -208,6 +184,18 @@ function saveFile(path, overwrite) {
   return true
 }
 
+class WorkerZoteroCreatorTypes {
+  public getTypesForItemType(itemTypeID: string): { name: string } {
+    return itemCreators[client][itemTypeID]?.map(name => ({ name })) || []
+  }
+}
+
+class WorkerZoteroItemTypes {
+  public getID(type: string): string { // bit of a hack to return a string, but this is all in an emulated Zotero anyway
+    return type
+  }
+}
+
 class WorkerZotero {
   public config: Translators.Worker.Config
   public output: string
@@ -215,8 +203,10 @@ class WorkerZotero {
   public exportFile: string
   private items = 0
 
-  public Utilities = new WorkerZoteroUtilities // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
+  public Utilities = WorkerZoteroUtilities
   public BetterBibTeX = new WorkerZoteroBetterBibTeX // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
+  public CreatorTypes = new WorkerZoteroCreatorTypes
+  public ItemTypes  = new WorkerZoteroItemTypes
 
   public init(config: Translators.Worker.Config) {
     this.config = config
