@@ -89,7 +89,7 @@
     "xregexp": "^5.1.0"
   },
   "devDependencies": {
-    "@retorquere/bibtex-parser": "^6.3.4",
+    "@retorquere/bibtex-parser": "^6.3.5",
     "@retorquere/zotero-sync": "^1.0.23",
     "@types/bluebird": "^3.5.36",
     "@types/lokijs": "^1.5.7",
@@ -111,7 +111,7 @@
     "esbuild": "^0.14.38",
     "escape-string-regexp": "^5.0.0",
     "eslint": "^8.15.0",
-    "estrace": "^4.0.0",
+    "estrace": "^4.0.1",
     "eta": "^1.12.3",
     "excel-column-name": "^1.0.1",
     "fast-json-patch": "^3.1.1",
@@ -141,7 +141,7 @@
     "process": "^0.11.10",
     "properties-reader": "^2.2.0",
     "pug": "^3.0.2",
-    "putout": "^26.0.0",
+    "putout": "^26.0.1",
     "recast": "^0.21.1",
     "regenerate": "^1.4.2",
     "rimraf": "^3.0.2",
@@ -159,7 +159,7 @@
     "words-to-numbers": "^1.5.1",
     "xml-parser": "^1.2.1",
     "xpath": "^0.0.32",
-    "zotero-plugin": "^1.4.1"
+    "zotero-plugin": "^1.4.2"
   },
   "repository": {
     "type": "git",
