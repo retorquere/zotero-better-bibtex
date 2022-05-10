@@ -725,7 +725,7 @@ with open(os.path.join(ITEMS, 'items.ts'), 'w') as f:
         assert labels[field][client] == label, (client, field, labels[field][client], label)
 
   try:
-    print(template('items/items.ts.mako').render(names=names, labels=labels, valid=valid, aliases=aliases).strip(), file=f)
+    print(template('items/items.ts.mako').render(names=names, labels=labels, valid=valid, aliases=aliases, schemas=SCHEMA).strip(), file=f)
   except:
     print(exceptions.text_error_template().render())
   #stringizer = lambda x: DG.nodes[x]['name'] if x in DG.nodes else x

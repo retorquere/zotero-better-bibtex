@@ -85,6 +85,7 @@ async function rebuild() {
       loader.trace('worker'),
       // loader.bibertool,
       // loader.peggy,
+      loader.ajv,
       loader.__dirname,
       shims
     ],

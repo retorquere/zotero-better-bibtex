@@ -27,6 +27,7 @@ export class DOMParser extends XMLDOMParser {
   }
 }
 const ZU = require('../../submodules/zotero-utilities/utilities.js')
+const ZUI = require('../../submodules/zotero-utilities/utilities_item.js')
 
 declare const doExport: () => void
 declare const Translator: ITranslator
@@ -41,6 +42,7 @@ import itemCreators from '../../gen/items/creators.json'
 import { client } from '../../content/client'
 import { log } from '../../content/logger'
 import { Collection } from '../../gen/typings/serialized-item'
+import { CSL_MAPPINGS } from '../../gen/items/items'
 
 const ctx: DedicatedWorkerGlobalScope = self as any
 
@@ -113,6 +115,8 @@ class WorkerZoteroBetterBibTeX {
 }
 
 const WorkerZoteroUtilities = {
+  Item: ZUI,
+
   ...ZU,
 
   getVersion: () => workerContext.version,
@@ -207,6 +211,9 @@ class WorkerZotero {
   public BetterBibTeX = new WorkerZoteroBetterBibTeX // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   public CreatorTypes = new WorkerZoteroCreatorTypes
   public ItemTypes  = new WorkerZoteroItemTypes
+  public Schema = {
+    ...CSL_MAPPINGS,
+  }
 
   public init(config: Translators.Worker.Config) {
     this.config = config
