@@ -1,4 +1,4 @@
-print('zotero-live-citations f34bfc770')
+print('zotero-live-citations 993af1f79')
 do
 local _ENV = _ENV
 package.preload[ "locator" ] = function( ... ) local arg = _G.arg;
@@ -1680,36 +1680,23 @@ local state = {
 
 module.citekeys = {}
 
-function module.authors(csl_or_item)
-  local authors = {}
-  local author
-
-  if csl_or_item.author ~= nil then
-    for _, author in ipairs(csl_or_item.author) do
-      if author.literal ~= nil then
-        table.insert(authors, author.literal)
-      elseif author.family ~= nil then
-        table.insert(authors, author.family)
-      end
-    end
-
-  elseif csl_or_item.creators ~= nil then
-    for _, author in ipairs(csl_or_item.creators) do
-      if author.name ~= nil then
-        table.insert(authors, author.name)
-      elseif author.lastName ~= nil then
-        table.insert(authors, author.lastName)
-      end
-    end
-
-  elseif csl_or_item.reporter ~= nil then
-    table.insert(authors, csl_or_item.reporter)
-  end
-
-  if utils.tablelength(authors) == 0 then
+function module.authors(csl)
+  if csl.author == nil then
     return nil
   end
 
+  local authors = {}
+  local author
+  for _, author in ipairs(csl.author) do
+    if author.literal ~= nil then
+      table.insert(authors, author.literal)
+    elseif author.family ~= nil then
+      table.insert(authors, author.family)
+    end
+  end
+  if utils.tablelength(authors) == 0 then
+    return nil
+  end
   local last = table.remove(authors)
   if utils.tablelength(authors) == 0 then
     return last
