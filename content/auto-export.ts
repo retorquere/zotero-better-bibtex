@@ -115,8 +115,7 @@ class Git {
     try {
       await this.exec(this.git, ['-C', this.path, 'add', this.bib])
       await this.exec(this.git, ['-C', this.path, 'commit', '-m', msg])
-      // await this.exec(this.git, ['-C', this.path, 'push'])
-      await this.exec('CMD', ['/K', `"${this.git}" -C "${this.path}"  push`])
+      await this.exec(this.git, ['-C', this.path, 'push'])
     }
     catch (err) {
       flash('autoexport git push failed', err.message, 1)
@@ -129,13 +128,16 @@ class Git {
   }
 
   private async exec(exe: string, args?: string[]): Promise<boolean> { // eslint-disable-line @typescript-eslint/require-await
+    args = ['/K', exe].concat(args || [])
+    exe = await pathSearch('CMD')
+
     const cmd = new FileUtils.File(exe)
 
     if (!cmd.isExecutable()) throw new Error(`${cmd.path} is not an executable`)
 
     const proc = Components.classes['@mozilla.org/process/util;1'].createInstance(Components.interfaces.nsIProcess)
     proc.init(cmd)
-    proc.startHidden = true // requires post-55 Firefox
+    // proc.startHidden = true // requires post-55 Firefox
 
     const command = this.quote(cmd.path, args)
     log.debug('running:', command)
