@@ -115,7 +115,8 @@ class Git {
     try {
       await this.exec(this.git, ['-C', this.path, 'add', this.bib])
       await this.exec(this.git, ['-C', this.path, 'commit', '-m', msg])
-      await this.exec(this.git, ['-C', this.path, 'push'])
+      // await this.exec(this.git, ['-C', this.path, 'push'])
+      await this.exec('CMD', ['/K', `"${this.git}" -C "${this.path}"  push`])
     }
     catch (err) {
       flash('autoexport git push failed', err.message, 1)
