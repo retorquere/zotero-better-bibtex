@@ -101,6 +101,7 @@ class Git {
     if (!this.enabled) return
 
     try {
+      await this.exec(this.git, ['-C', this.path, 'checkout', this.bib])
       await this.exec(this.git, ['-C', this.path, 'pull'])
     }
     catch (err) {
