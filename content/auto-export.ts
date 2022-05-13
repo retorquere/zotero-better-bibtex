@@ -165,7 +165,6 @@ if (Preference.autoExportIdleWait < 1) Preference.autoExportIdleWait = 1
 const queue = new class TaskQueue {
   private scheduler = new Scheduler('autoExportDelay', 1000)
   private autoexports: any
-  private started = false
   private idleService = Components.classes['@mozilla.org/widget/idleservice;1'].getService(Components.interfaces.nsIIdleService)
 
   constructor() {
@@ -173,11 +172,10 @@ const queue = new class TaskQueue {
   }
 
   public start() {
-    if (this.started) return
-    this.started = true
     if (Preference.autoExport === 'immediate') this.resume('startup')
 
-    this.idleService.addIdleObserver(this, Preference.autoExportIdleWait * 1000)
+    // really dumb but the idle service deals with msecs wverywhere -- except add, which is in seconds
+    this.idleService.addIdleObserver(this, Preference.autoExportIdleWait)
 
     Zotero.Notifier.registerObserver(this, ['sync'], 'BetterBibTeX', 1)
   }
@@ -186,15 +184,15 @@ const queue = new class TaskQueue {
     this.autoexports = autoexports
   }
 
-  public pause(reason: 'startup' | 'end-of-idle' | 'start-of-sync' | 'trigger-change') {
-    log.debug('idle?: queue paused:', reason)
+  public pause(reason: 'startup' | 'end-of-idle' | 'start-of-sync' | 'preference-change') {
+    log.debug('on-idle: queue.pause:', reason)
     this.scheduler.paused = true
   }
 
-  public resume(reason: 'startup' | 'end-of-sync' | 'start-of-idle' | 'trigger-change') {
-    log.debug('idle?: queue resume request:', reason)
+  public resume(reason: 'startup' | 'end-of-sync' | 'start-of-idle' | 'preference-change') {
+    log.debug('on-idle: queue.resume:', reason)
     if (Zotero.Sync.Runner.syncInProgress) {
-      log.debug('idle?: queue not resumed: sync in progress, end-of-sync will trigger resume')
+      log.debug('on-idle: queue not resumed: sync in progress, end-of-sync will trigger resume')
       this.scheduler.paused = true
       return
     }
@@ -202,14 +200,14 @@ const queue = new class TaskQueue {
     const is_idle = this.idleService.idleTime >= Preference.autoExportIdleWait * 1000
     switch (Preference.autoExport) {
       case 'off':
-        log.debug('idle?: queue not resumed: auto-export is off')
+        log.debug('on-idle: queue not resumed: auto-export is off')
         this.scheduler.paused = true
         return
 
       case 'idle':
         // don't re-schedule idle for end-of-sync / should never happen?
         if (!is_idle) {
-          log.debug('idle?: queue not resumed:', reason, "but we're not actually idle")
+          log.debug('on-idle: queue not resumed:', reason, "but we're not actually idle")
           this.scheduler.paused = true
           return
         }
@@ -219,7 +217,7 @@ const queue = new class TaskQueue {
         break
     }
 
-    log.debug('idle?: queue resumed:', reason)
+    log.debug('on-idle: queue resumed:', reason)
     this.scheduler.paused = false
   }
 
@@ -308,6 +306,7 @@ const queue = new class TaskQueue {
         }
       }
 
+      log.debug('on-idle: starting auto-export')
       await Promise.all(jobs.map(job => Translators.exportItems(ae.translatorID, displayOptions, job.scope, job.path)))
 
       await repo.push(l10n.localize('Preferences.auto-export.git.message', { type: Translators.byId[ae.translatorID].label.replace('Better ', '') }))
@@ -330,17 +329,23 @@ const queue = new class TaskQueue {
   }
 
   // idle observer
-  protected observe(subject, topic, data) {
-    log.debug('idle?: observer:', { subject, topic, data })
-    if (!this.started || Preference.autoExport === 'off') return
+  protected observe(_subject, topic, data) {
+    log.debug('on-idle: idle.observe:', { topic, data })
+    if (Preference.autoExport === 'off') {
+      log.debug('on-idle: idle.observe: auto-export is off')
+      this.pause('preference-change')
+      return
+    }
 
     switch (topic) {
       case 'back':
       case 'active':
+        log.debug('on-idle: idle.observe: => pause', topic)
         this.pause('end-of-idle')
         break
 
       case 'idle':
+        log.debug('on-idle: idle.observe: => resume', topic)
         this.resume('start-of-idle')
         break
 
@@ -354,16 +359,20 @@ const queue = new class TaskQueue {
   // It is theoretically possible that auto-export is paused because Zotero is idle and then restarted when the sync finishes, but
   // I can't see how a system can be considered idle when Zotero is syncing.
   protected notify(action, type) {
-    if (!this.started || Preference.autoExport === 'off') return
+    if (Preference.autoExport === 'off') {
+      log.debug('on-idle: sync.notify: auto-export is off')
+      this.pause('preference-change')
+      return
+    }
 
     switch(`${type}.${action}`) {
       case 'sync.start':
-        log.debug('idle?: sync started => pausing queue')
+        log.debug('on-idle: sync.notify: started => pausing queue')
         this.pause('start-of-sync')
         break
 
       case 'sync.finish':
-        log.debug('idle?: sync finished => resuming queue')
+        log.debug('on-idle: sync.notify: finished => resuming queue')
         this.resume('end-of-sync')
         break
 
@@ -512,9 +521,9 @@ Events.on('preference-changed', pref => {
 
   switch (Preference.autoExport) {
     case 'immediate':
-      queue.resume('trigger-change')
+      queue.resume('preference-change')
       break
     default: // off / idle
-      queue.pause('trigger-change')
+      queue.pause('preference-change')
   }
 })

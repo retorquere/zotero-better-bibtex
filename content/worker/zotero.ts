@@ -115,9 +115,8 @@ class WorkerZoteroBetterBibTeX {
 }
 
 const WorkerZoteroUtilities = {
-  Item: ZUI,
-
   ...ZU,
+  Item: ZUI,
 
   getVersion: () => workerContext.version,
 
@@ -200,6 +199,9 @@ class WorkerZoteroItemTypes {
   }
 }
 
+class WorkerZoteroItemFields {
+}
+
 class WorkerZotero {
   public config: Translators.Worker.Config
   public output: string
@@ -211,6 +213,7 @@ class WorkerZotero {
   public BetterBibTeX = new WorkerZoteroBetterBibTeX // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   public CreatorTypes = new WorkerZoteroCreatorTypes
   public ItemTypes  = new WorkerZoteroItemTypes
+  public ItemFields  = new WorkerZoteroItemFields
   public Schema = {
     ...CSL_MAPPINGS,
   }
