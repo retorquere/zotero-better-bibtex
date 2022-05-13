@@ -4,6 +4,7 @@ importScripts('resource://gre/modules/osfile.jsm')
 
 import type { ITranslator } from '../../translators/lib/translator'
 import type { Translators } from '../../typings/translators'
+import { valid } from '../../gen/items/items'
 
 import { DOMParser as XMLDOMParser } from '@xmldom/xmldom'
 
@@ -28,6 +29,7 @@ export class DOMParser extends XMLDOMParser {
 }
 const ZU = require('../../submodules/zotero-utilities/utilities.js')
 const ZUI = require('../../submodules/zotero-utilities/utilities_item.js')
+const ZD = require('../../submodules/zotero-utilities/date.js')
 
 declare const doExport: () => void
 declare const Translator: ITranslator
@@ -44,6 +46,10 @@ import { log } from '../../content/logger'
 import { Collection } from '../../gen/typings/serialized-item'
 import { CSL_MAPPINGS } from '../../gen/items/items'
 
+import zotero_schema from '../../schema/zotero.json'
+import jurism_schema from '../../schema/jurism.json'
+const schema = client === 'zotero' ? zotero_schema : jurism_schema
+
 const ctx: DedicatedWorkerGlobalScope = self as any
 
 export const workerContext = {
@@ -51,6 +57,7 @@ export const workerContext = {
   platform: '',
   translator: '',
   output: '',
+  locale: '',
   localeDateOrder: '',
   debugEnabled: false,
   worker: '',
@@ -65,8 +72,6 @@ for(const [key, value] of (new URLSearchParams(ctx.location.search)).entries()) 
 }
 
 class WorkerZoteroBetterBibTeX {
-  public localeDateOrder: string
-
   public cacheFetch(itemID: number) {
     return Zotero.config.cache[itemID]
   }
@@ -87,7 +92,11 @@ class WorkerZoteroBetterBibTeX {
   public parseDate(date) {
     return DateParser.parse(date, workerContext.localeDateOrder)
   }
+
   public getLocaleDateOrder() {
+    return workerContext.localeDateOrder
+  }
+  public get localeDateOrder() {
     return workerContext.localeDateOrder
   }
 
@@ -191,6 +200,25 @@ class WorkerZoteroCreatorTypes {
   public getTypesForItemType(itemTypeID: string): { name: string } {
     return itemCreators[client][itemTypeID]?.map(name => ({ name })) || []
   }
+
+  public isValidForItemType(creatorTypeID, itemTypeID) {
+    return itemCreators[client][itemTypeID]?.includes(creatorTypeID)
+  }
+
+  public getLocalizedString(type: string): string {
+    return schema.locales[Zotero.locale]?.types[type] || type[0].toUpperCase() + type.substr(1).replace(/([A-Z])([a-z])/g, (m, u, l) => `${u.toLowerCase()} ${l}`)
+  }
+
+  public getPrimaryIDForType(typeID) {
+    return itemCreators[client][typeID]?.[0]
+  }
+
+  public getID(typeName) {
+    return typeName
+  }
+  public getName(typeID) {
+    return typeID
+  }
 }
 
 class WorkerZoteroItemTypes {
@@ -200,6 +228,27 @@ class WorkerZoteroItemTypes {
 }
 
 class WorkerZoteroItemFields {
+  public isValidForType(fieldID: string, itemTypeID: string) {
+    return valid.field[itemTypeID]?.[fieldID]
+  }
+
+  public getID(field: string): string {
+    return field
+  }
+
+  public getFieldIDFromTypeAndBase(_itemTypeID: string, fieldID: string): string {
+    // assumes normalized item
+    return fieldID
+  }
+
+  public getName(itemFieldID: string) {
+    return itemFieldID
+  }
+
+  public getBaseIDFromTypeAndField(_typeID: string, fieldID: string) {
+    // assumes normalized item
+    return fieldID
+  }
 }
 
 class WorkerZotero {
@@ -214,6 +263,7 @@ class WorkerZotero {
   public CreatorTypes = new WorkerZoteroCreatorTypes
   public ItemTypes  = new WorkerZoteroItemTypes
   public ItemFields  = new WorkerZoteroItemFields
+  public Date = ZD
   public Schema = {
     ...CSL_MAPPINGS,
   }
@@ -262,6 +312,10 @@ class WorkerZotero {
 
   public send(message: Translators.Worker.Message) {
     ctx.postMessage(message)
+  }
+
+  public get locale() {
+    return workerContext.locale
   }
 
   public getHiddenPref(pref) {
@@ -323,7 +377,6 @@ ctx.onmessage = function(e: { isTrusted?: boolean, data?: Translators.Worker.Mes
   try {
     switch (e.data.kind) {
       case 'start':
-        Zotero.BetterBibTeX.localeDateOrder = workerContext.localeDateOrder
         Zotero.init(JSON.parse(dec.decode(new Uint8Array(e.data.config))))
         doExport()
         Zotero.done()

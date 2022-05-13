@@ -221,6 +221,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       platform: Preference.platform,
       translator: translator.label,
       output: job.path || '',
+      locale: Zotero.locale,
       localeDateOrder: Zotero.BetterBibTeX.localeDateOrder,
       debugEnabled: Zotero.Debug.enabled ? 'true' : 'false',
       worker: id,
