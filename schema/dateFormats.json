@@ -1,0 +1,1322 @@
+{
+  "en-US": {
+    "short": [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec"
+    ],
+    "long": [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December"
+    ]
+  },
+  "af-ZA": {
+    "short": [
+      "Jan",
+      "Feb",
+      "Mrt",
+      "Apr",
+      "Mei",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Okt",
+      "Nov",
+      "Des"
+    ],
+    "long": [
+      "Januarie",
+      "Februarie",
+      "Maart",
+      "April",
+      "Mei",
+      "Junie",
+      "Julie",
+      "Augustus",
+      "September",
+      "Oktober",
+      "November",
+      "Desember"
+    ]
+  },
+  "ar": {
+    "short": [
+      "\u064a\u0646\u0627\u064a\u0631",
+      "\u0641\u0628\u0631\u0627\u064a\u0631",
+      "\u0645\u0627\u0631\u0633",
+      "\u0623\u0628\u0631\u064a\u0644",
+      "\u0645\u0627\u064a\u0648",
+      "\u064a\u0648\u0646\u064a\u0648",
+      "\u064a\u0648\u0644\u064a\u0648",
+      "\u0623\u063a\u0633\u0637\u0633",
+      "\u0633\u0628\u062a\u0645\u0628\u0631",
+      "\u0623\u0643\u062a\u0648\u0628\u0631",
+      "\u0646\u0648\u0641\u0645\u0628\u0631",
+      "\u062f\u064a\u0633\u0645\u0628\u0631"
+    ],
+    "long": [
+      "\u064a\u0646\u0627\u064a\u0631",
+      "\u0641\u0628\u0631\u0627\u064a\u0631",
+      "\u0645\u0627\u0631\u0633",
+      "\u0623\u0628\u0631\u064a\u0644",
+      "\u0645\u0627\u064a\u0648",
+      "\u064a\u0648\u0646\u064a\u0648",
+      "\u064a\u0648\u0644\u064a\u0648",
+      "\u0623\u063a\u0633\u0637\u0633",
+      "\u0633\u0628\u062a\u0645\u0628\u0631",
+      "\u0623\u0643\u062a\u0648\u0628\u0631",
+      "\u0646\u0648\u0641\u0645\u0628\u0631",
+      "\u062f\u064a\u0633\u0645\u0628\u0631"
+    ]
+  },
+  "bg-BG": {
+    "short": [
+      "\u042f\u043d\u0443",
+      "\u0424\u0435\u0432",
+      "\u041c\u0430\u0440",
+      "\u0410\u043f\u0440",
+      "\u041c\u0430\u0439",
+      "\u042e\u043d\u0438",
+      "\u042e\u043b\u0438",
+      "\u0410\u0432\u0433",
+      "\u0421\u0435\u043f",
+      "\u041e\u043a\u0442",
+      "\u041d\u043e\u0435",
+      "\u0414\u0435\u043a"
+    ],
+    "long": [
+      "\u042f\u043d\u0443\u0430\u0440\u0438",
+      "\u0424\u0435\u0432\u0440\u0443\u0430\u0440\u0438",
+      "\u041c\u0430\u0440\u0442",
+      "\u0410\u043f\u0440\u0438\u043b",
+      "\u041c\u0430\u0439",
+      "\u042e\u043d\u0438",
+      "\u042e\u043b\u0438",
+      "\u0410\u0432\u0433\u0443\u0441\u0442",
+      "\u0421\u0435\u043f\u0442\u0435\u043c\u0432\u0440\u0438",
+      "\u041e\u043a\u0442\u043e\u043c\u0432\u0440\u0438",
+      "\u041d\u043e\u0435\u043c\u0432\u0440\u0438",
+      "\u0414\u0435\u043a\u0435\u043c\u0432\u0440\u0438"
+    ]
+  },
+  "ca-AD": {
+    "short": [
+      "gen",
+      "febr",
+      "mar\u00e7",
+      "abr",
+      "maig",
+      "juny",
+      "jul",
+      "ag",
+      "set",
+      "oct",
+      "nov",
+      "des"
+    ],
+    "long": [
+      "gener",
+      "febrer",
+      "mar\u00e7",
+      "abril",
+      "maig",
+      "juny",
+      "juliol",
+      "agost",
+      "setembre",
+      "octubre",
+      "novembre",
+      "desembre"
+    ]
+  },
+  "cs-CZ": {
+    "short": [
+      "Led",
+      "\u00dano",
+      "B\u0159e",
+      "Dub",
+      "Kv\u011b",
+      "\u010cvn",
+      "\u010cnc",
+      "Srp",
+      "Z\u00e1\u0159",
+      "\u0158\u00edj",
+      "Lis",
+      "Pro"
+    ],
+    "long": [
+      "leden",
+      "\u00fanor",
+      "b\u0159ezen",
+      "duben",
+      "kv\u011bten",
+      "\u010derven",
+      "\u010dervenec",
+      "srpen",
+      "z\u00e1\u0159\u00ed",
+      "\u0159\u00edjen",
+      "listopad",
+      "prosinec"
+    ]
+  },
+  "da-DK": {
+    "short": [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "Maj",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Okt",
+      "Nov",
+      "Dec"
+    ],
+    "long": [
+      "Januar",
+      "Februar",
+      "Marts",
+      "April",
+      "Maj",
+      "Juni",
+      "Juli",
+      "August",
+      "September",
+      "Oktober",
+      "November",
+      "December"
+    ]
+  },
+  "de": {
+    "short": [
+      "Jan",
+      "Feb",
+      "M\u00e4r",
+      "Apr",
+      "Mai",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Okt",
+      "Nov",
+      "Dez"
+    ],
+    "long": [
+      "Januar",
+      "Februar",
+      "M\u00e4rz",
+      "April",
+      "Mai",
+      "Juni",
+      "Juli",
+      "August",
+      "September",
+      "Oktober",
+      "November",
+      "Dezember"
+    ]
+  },
+  "el-GR": {
+    "short": [
+      "\u0399\u03b1\u03bd",
+      "\u03a6\u03b5\u03b2",
+      "\u039c\u03b1\u03c1",
+      "\u0391\u03c0\u03c1",
+      "\u0399\u03bf\u03c5\u03bd",
+      "\u0399\u03bf\u03c5\u03bb",
+      "\u0391\u03c5\u03b3",
+      "\u03a3\u03b5\u03c0",
+      "\u039f\u03ba\u03c4",
+      "\u039d\u03bf\u03b5",
+      "\u0394\u03b5\u03ba",
+      "May"
+    ],
+    "long": [
+      "January",
+      "October",
+      "November",
+      "December",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September"
+    ]
+  },
+  "en-GB": {
+    "short": [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec"
+    ],
+    "long": [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December"
+    ]
+  },
+  "es-ES": {
+    "short": [
+      "Ene",
+      "Feb",
+      "Mar",
+      "Abr",
+      "May",
+      "Jun",
+      "Jul",
+      "Ago",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dic"
+    ],
+    "long": [
+      "Enero",
+      "Febrero",
+      "Marzo",
+      "Abril",
+      "Mayo",
+      "Junio",
+      "Julio",
+      "Agosto",
+      "Septiembre",
+      "Octubre",
+      "Noviembre",
+      "Diciembre"
+    ]
+  },
+  "fr-FR": {
+    "short": [
+      "jan",
+      "f\u00e9v",
+      "mar",
+      "avr",
+      "mai",
+      "juin",
+      "juil",
+      "ao\u00fb",
+      "sep",
+      "oct",
+      "nov",
+      "d\u00e9c"
+    ],
+    "long": [
+      "janvier",
+      "f\u00e9vrier",
+      "mars",
+      "avril",
+      "mai",
+      "juin",
+      "juillet",
+      "ao\u00fbt",
+      "septembre",
+      "octobre",
+      "novembre",
+      "d\u00e9cembre"
+    ]
+  },
+  "et-EE": {
+    "short": [
+      "jaan",
+      "veebr",
+      "m\u00e4rts",
+      "apr",
+      "mai",
+      "juun",
+      "juul",
+      "aug",
+      "sept",
+      "okt",
+      "nov",
+      "dets"
+    ],
+    "long": [
+      "jaanuar",
+      "veebruar",
+      "m\u00e4rts",
+      "aprill",
+      "mai",
+      "juuni",
+      "juuli",
+      "august",
+      "september",
+      "oktoober",
+      "november",
+      "detsember"
+    ]
+  },
+  "eu-ES": {
+    "short": [
+      "urt",
+      "ots",
+      "mar",
+      "api",
+      "mai",
+      "eka",
+      "uzt",
+      "abu",
+      "ira",
+      "urr",
+      "aza",
+      "abe"
+    ],
+    "long": [
+      "urtarrila",
+      "otsaila",
+      "martxoa",
+      "apirila",
+      "maiatza",
+      "ekaina",
+      "uztaila",
+      "abuztua",
+      "iraila",
+      "urria",
+      "azaroa",
+      "abendua"
+    ]
+  },
+  "fa": {
+    "short": [
+      "\u0698\u0627\u0646\u0648\u06cc\u0647",
+      "\u0641\u0648\u0631\u06cc\u0647",
+      "\u0645\u0627\u0631\u0633",
+      "\u0622\u0648\u0631\u06cc\u0644",
+      "\u0645\u0647",
+      "\u0698\u0648\u0626\u0646",
+      "\u0698\u0648\u0626\u06cc\u0647",
+      "\u0627\u0648\u062a",
+      "\u0633\u067e\u062a\u0627\u0645\u0628\u0631",
+      "\u0627\u06a9\u062a\u0628\u0631",
+      "\u0646\u0648\u0627\u0645\u0628\u0631",
+      "\u062f\u0633\u0627\u0645\u0628\u0631"
+    ],
+    "long": [
+      "\u0698\u0627\u0646\u0648\u06cc\u0647",
+      "\u0641\u0648\u0631\u06cc\u0647",
+      "\u0645\u0627\u0631\u0633",
+      "\u0622\u0648\u0631\u06cc\u0644",
+      "\u0645\u0647",
+      "\u0698\u0648\u0626\u0646",
+      "\u0698\u0648\u0626\u06cc\u0647",
+      "\u0627\u0648\u062a",
+      "\u0633\u067e\u062a\u0627\u0645\u0628\u0631",
+      "\u0627\u06a9\u062a\u0628\u0631",
+      "\u0646\u0648\u0627\u0645\u0628\u0631",
+      "\u062f\u0633\u0627\u0645\u0628\u0631"
+    ]
+  },
+  "fi-FI": {
+    "short": [
+      "tammi",
+      "helmi",
+      "maalis",
+      "huhti",
+      "touko",
+      "kes\u00e4",
+      "hein\u00e4",
+      "elo",
+      "syys",
+      "loka",
+      "marras",
+      "joulu"
+    ],
+    "long": [
+      "tammikuu",
+      "helmikuu",
+      "maaliskuu",
+      "huhtikuu",
+      "toukokuu",
+      "kes\u00e4kuu",
+      "hein\u00e4kuu",
+      "elokuu",
+      "syyskuu",
+      "lokakuu",
+      "marraskuu",
+      "joulukuu"
+    ]
+  },
+  "he-IL": {
+    "short": [
+      "\u05d9\u05e0'",
+      "\u05e4\u05d1'",
+      "\u05de\u05e8\u05e5",
+      "\u05d0\u05e4'",
+      "\u05de\u05d0\u05d9",
+      "\u05d9\u05d5\u05e0\u05d9",
+      "\u05d9\u05d5\u05dc\u05d9",
+      "\u05d0\u05d5\u05d2'",
+      "\u05e1\u05e4\u05d8'",
+      "\u05d0\u05d5\u05e7'",
+      "\u05e0\u05d5\u05d1'",
+      "\u05d3\u05e6'"
+    ],
+    "long": [
+      "\u05d9\u05e0\u05d5\u05d0\u05e8",
+      "\u05e4\u05d1\u05e8\u05d5\u05d0\u05e8",
+      "\u05de\u05e8\u05e5",
+      "\u05d0\u05e4\u05e8\u05d9\u05dc",
+      "\u05de\u05d0\u05d9",
+      "\u05d9\u05d5\u05e0\u05d9",
+      "\u05d9\u05d5\u05dc\u05d9",
+      "\u05d0\u05d5\u05d2\u05d5\u05e1\u05d8",
+      "\u05e1\u05e4\u05d8\u05de\u05d1\u05e8",
+      "\u05d0\u05d5\u05e7\u05d8\u05d5\u05d1\u05e8",
+      "\u05e0\u05d5\u05d1\u05de\u05d1\u05e8",
+      "\u05d3\u05e6\u05de\u05d1\u05e8"
+    ]
+  },
+  "hr-HR": {
+    "short": [
+      "Sij",
+      "Vel",
+      "O\u017eu",
+      "Tra",
+      "Svi",
+      "Lip",
+      "Srp",
+      "Kol",
+      "Ruj",
+      "Lis",
+      "Stu",
+      "Pro"
+    ],
+    "long": [
+      "Sije\u010danj",
+      "Velja\u010da",
+      "O\u017eujak",
+      "Travanj",
+      "Svibanj",
+      "Lipanj",
+      "Srpanj",
+      "Kolovoz",
+      "Rujan",
+      "Listopad",
+      "Studeni",
+      "Prosinac"
+    ]
+  },
+  "hu-HU": {
+    "short": [
+      "Jan.",
+      "Febr.",
+      "M\u00e1rc.",
+      "\u00c1pr.",
+      "M\u00e1j.",
+      "J\u00fan.",
+      "J\u00fal.",
+      "Aug.",
+      "Szept.",
+      "Okt.",
+      "Nov.",
+      "Dec."
+    ],
+    "long": [
+      "Janu\u00e1r",
+      "Febru\u00e1r",
+      "M\u00e1rcius",
+      "\u00c1prilis",
+      "M\u00e1jus",
+      "J\u00fanius",
+      "J\u00falius",
+      "Augusztus",
+      "Szeptember",
+      "Okt\u00f3ber",
+      "November",
+      "December"
+    ]
+  },
+  "id-ID": {
+    "short": [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "Mei",
+      "Jun",
+      "Jul",
+      "Agu",
+      "Sep",
+      "Okt",
+      "Nov",
+      "Des"
+    ],
+    "long": [
+      "Januari",
+      "Februari",
+      "Maret",
+      "April",
+      "Mei",
+      "Juni",
+      "Juli",
+      "Agustus",
+      "September",
+      "Oktober",
+      "November",
+      "Desember"
+    ]
+  },
+  "is-IS": {
+    "short": [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "Ma\u00ed",
+      "J\u00fan",
+      "J\u00fal",
+      "\u00c1g\u00fa",
+      "Sep",
+      "Okt",
+      "N\u00f3v",
+      "Des"
+    ],
+    "long": [
+      "Jan\u00faar",
+      "Febr\u00faar",
+      "Mars",
+      "Apr\u00edl",
+      "Ma\u00ed",
+      "J\u00fan\u00ed",
+      "J\u00fal\u00ed",
+      "\u00c1g\u00fast",
+      "September",
+      "Okt\u00f3ber",
+      "N\u00f3vember",
+      "Desember"
+    ]
+  },
+  "it-IT": {
+    "short": [
+      "Gen",
+      "Feb",
+      "Mar",
+      "Apr",
+      "Mag",
+      "Giu",
+      "Lug",
+      "Ago",
+      "Set",
+      "Ott",
+      "Nov",
+      "Dic"
+    ],
+    "long": [
+      "Gennaio",
+      "Febbraio",
+      "Marzo",
+      "Aprile",
+      "Maggio",
+      "Giugno",
+      "Luglio",
+      "Agosto",
+      "Settembre",
+      "Ottobre",
+      "Novembre",
+      "Dicembre"
+    ]
+  },
+  "ja-JP": {
+    "short": [
+      "(1\u6708)",
+      "(2\u6708)",
+      "(3\u6708)",
+      "(4\u6708)",
+      "(5\u6708)",
+      "(6\u6708)",
+      "(7\u6708)",
+      "(8\u6708)",
+      "(9\u6708)",
+      "(10\u6708)",
+      "(11\u6708)",
+      "(12\u6708)"
+    ],
+    "long": [
+      "1\u6708",
+      "2\u6708",
+      "3\u6708",
+      "4\u6708",
+      "5\u6708",
+      "6\u6708",
+      "7\u6708",
+      "8\u6708",
+      "9\u6708",
+      "10\u6708",
+      "11\u6708",
+      "12\u6708"
+    ]
+  },
+  "km": {
+    "short": [
+      "\u1798\u1780\u179a\u17b6",
+      "\u1780\u17bb\u1798\u17d2\u1797\u17c8",
+      "\u1798\u17b8\u1793\u17b6",
+      "\u1798\u17c1\u179f\u17b6",
+      "\u17a7\u179f\u1797\u17b6",
+      "\u1798\u17b7\u1790\u17bb\u1793\u17b6",
+      "\u1780\u1780\u17d2\u1780\u178a\u17b6",
+      "\u179f\u17b8\u17a0\u17b6",
+      "\u1780\u1789\u17d2\u1789\u17b6",
+      "\u178f\u17bb\u179b\u17b6",
+      "\u179c\u17b7\u1785\u17d2\u1786\u17b7\u1780\u17b6",
+      "\u1792\u17d2\u1793\u17bc"
+    ],
+    "long": [
+      "\u1798\u1780\u179a\u17b6",
+      "\u1780\u17bb\u1798\u17d2\u1797\u17c8",
+      "\u1798\u17b8\u1793\u17b6",
+      "\u1798\u17c1\u179f\u17b6",
+      "\u17a7\u179f\u1797\u17b6",
+      "\u1798\u17b7\u1790\u17bb\u1793\u17b6",
+      "\u1780\u1780\u17d2\u1780\u178a\u17b6",
+      "\u179f\u17b8\u17a0\u17b6",
+      "\u1780\u1789\u17d2\u1789\u17b6",
+      "\u178f\u17bb\u179b\u17b6",
+      "\u179c\u17b7\u1785\u17d2\u1786\u17b7\u1780\u17b6",
+      "\u1792\u17d2\u1793\u17bc"
+    ]
+  },
+  "ko-KR": {
+    "short": [
+      "1\uc6d4",
+      "2\uc6d4",
+      "3\uc6d4",
+      "4\uc6d4",
+      "5\uc6d4",
+      "6\uc6d4",
+      "7\uc6d4",
+      "8\uc6d4",
+      "9\uc6d4",
+      "10\uc6d4",
+      "11\uc6d4",
+      "12\uc6d4"
+    ],
+    "long": [
+      "1\uc6d4",
+      "2\uc6d4",
+      "3\uc6d4",
+      "4\uc6d4",
+      "5\uc6d4",
+      "6\uc6d4",
+      "7\uc6d4",
+      "8\uc6d4",
+      "9\uc6d4",
+      "10\uc6d4",
+      "11\uc6d4",
+      "12\uc6d4"
+    ]
+  },
+  "lt-LT": {
+    "short": [
+      "Sau",
+      "Vas",
+      "Kov",
+      "Bal",
+      "Geg",
+      "Bir",
+      "Lie",
+      "Rgp",
+      "Rgs",
+      "Spl",
+      "Lap",
+      "Grd"
+    ],
+    "long": [
+      "sausio",
+      "vasario",
+      "kovo",
+      "baland\u017eio",
+      "gegu\u017e\u0117s",
+      "bir\u017eelio",
+      "liepos",
+      "rugpj\u016b\u010dio",
+      "rugs\u0117jo",
+      "spalio",
+      "lapkri\u010dio",
+      "gruod\u017eio"
+    ]
+  },
+  "nb-NO": {
+    "short": [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "Mai",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Okt",
+      "Nov",
+      "Des"
+    ],
+    "long": [
+      "Januar",
+      "Februar",
+      "Mars",
+      "April",
+      "Mai",
+      "Juni",
+      "Juli",
+      "August",
+      "September",
+      "Oktober",
+      "November",
+      "Desember"
+    ]
+  },
+  "nn-NO": {
+    "short": [
+      "jan",
+      "feb",
+      "mar",
+      "apr",
+      "mai",
+      "jun",
+      "jul",
+      "aug",
+      "sep",
+      "okt",
+      "nov",
+      "des"
+    ],
+    "long": [
+      "Januar",
+      "Februar",
+      "Mars",
+      "April",
+      "Mai",
+      "Juni",
+      "Juli",
+      "August",
+      "September",
+      "Oktober",
+      "November",
+      "Desember"
+    ]
+  },
+  "nl-NL": {
+    "short": [
+      "jan",
+      "feb",
+      "mrt",
+      "apr",
+      "mei",
+      "jun",
+      "jul",
+      "aug",
+      "sep",
+      "okt",
+      "nov",
+      "dec"
+    ],
+    "long": [
+      "januari",
+      "februari",
+      "maart",
+      "april",
+      "mei",
+      "juni",
+      "juli",
+      "augustus",
+      "september",
+      "oktober",
+      "november",
+      "december"
+    ]
+  },
+  "pl-PL": {
+    "short": [
+      "Sty",
+      "Lut",
+      "Mar",
+      "Kwi",
+      "Maj",
+      "Cze",
+      "Lip",
+      "Sie",
+      "Wrz",
+      "Pa\u017a",
+      "Lis",
+      "Gru"
+    ],
+    "long": [
+      "Stycze\u0144",
+      "Luty",
+      "Marzec",
+      "Kwiecie\u0144",
+      "Maj",
+      "Czerwiec",
+      "Lipiec",
+      "Sierpie\u0144",
+      "Wrzesie\u0144",
+      "Pa\u017adziernik",
+      "Listopad",
+      "Grudzie\u0144"
+    ]
+  },
+  "pt-BR": {
+    "short": [
+      "Jan",
+      "Fev",
+      "Mar",
+      "Abr",
+      "Mai",
+      "Jun",
+      "Jul",
+      "Ago",
+      "Set",
+      "Out",
+      "Nov",
+      "Dez"
+    ],
+    "long": [
+      "Janeiro",
+      "Fevereiro",
+      "Mar\u00e7o",
+      "Abril",
+      "Maio",
+      "Junho",
+      "Julho",
+      "Agosto",
+      "Setembro",
+      "Outubro",
+      "Novembro",
+      "Dezembro"
+    ]
+  },
+  "pt-PT": {
+    "short": [
+      "Jan",
+      "Fev",
+      "Mar",
+      "Abr",
+      "Mai",
+      "Jun",
+      "Jul",
+      "Ago",
+      "Set",
+      "Out",
+      "Nov",
+      "Dez"
+    ],
+    "long": [
+      "janeiro",
+      "fevereiro",
+      "mar\u00e7o",
+      "abril",
+      "maio",
+      "junho",
+      "julho",
+      "agosto",
+      "setembro",
+      "outubro",
+      "novembro",
+      "dezembro"
+    ]
+  },
+  "ro-RO": {
+    "short": [
+      "Ian",
+      "Feb",
+      "Mar",
+      "Apr",
+      "Mai",
+      "Iun",
+      "Iul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Noi",
+      "Dec"
+    ],
+    "long": [
+      "Ianuarie",
+      "Februarie",
+      "Martie",
+      "Aprilie",
+      "Mai",
+      "Iunie",
+      "Iulie",
+      "August",
+      "Septembrie",
+      "Octombrie",
+      "Noiembrie",
+      "Decembrie"
+    ]
+  },
+  "ru-RU": {
+    "short": [
+      "\u042f\u043d\u0432\u0430\u0440\u044c",
+      "\u0424\u0435\u0432\u0440\u0430\u043b\u044c",
+      "\u041c\u0430\u0440\u0442",
+      "\u0410\u043f\u0440\u0435\u043b\u044c",
+      "\u041c\u0430\u0439",
+      "\u0418\u044e\u043d\u044c",
+      "\u0418\u044e\u043b\u044c",
+      "\u0410\u0432\u0433\u0443\u0441\u0442",
+      "\u0421\u0435\u043d\u0442\u044f\u0431\u0440\u044c",
+      "\u041e\u043a\u0442\u044f\u0431\u0440\u044c",
+      "\u041d\u043e\u044f\u0431\u0440\u044c",
+      "\u0414\u0435\u043a\u0430\u0431\u0440\u044c"
+    ],
+    "long": [
+      "\u042f\u043d\u0432\u0430\u0440\u044c",
+      "\u0424\u0435\u0432\u0440\u0430\u043b\u044c",
+      "\u041c\u0430\u0440\u0442",
+      "\u0410\u043f\u0440\u0435\u043b\u044c",
+      "\u041c\u0430\u0439",
+      "\u0418\u044e\u043d\u044c",
+      "\u0418\u044e\u043b\u044c",
+      "\u0410\u0432\u0433\u0443\u0441\u0442",
+      "\u0421\u0435\u043d\u0442\u044f\u0431\u0440\u044c",
+      "\u041e\u043a\u0442\u044f\u0431\u0440\u044c",
+      "\u041d\u043e\u044f\u0431\u0440\u044c",
+      "\u0414\u0435\u043a\u0430\u0431\u0440\u044c"
+    ]
+  },
+  "sk-SK": {
+    "short": [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "M\u00e1j",
+      "J\u00fan",
+      "J\u00fal",
+      "Aug",
+      "Sep",
+      "Okt",
+      "Nov",
+      "Dec"
+    ],
+    "long": [
+      "Janu\u00e1r",
+      "Febru\u00e1r",
+      "Marec",
+      "Apr\u00edl",
+      "M\u00e1j",
+      "J\u00fan",
+      "J\u00fal",
+      "August",
+      "September",
+      "Okt\u00f3ber",
+      "November",
+      "December"
+    ]
+  },
+  "sl-SI": {
+    "short": [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "Maj",
+      "Jun",
+      "Jul",
+      "Avg",
+      "Sep",
+      "Okt",
+      "Nov",
+      "Dec"
+    ],
+    "long": [
+      "Januar",
+      "Februar",
+      "Marec",
+      "April",
+      "Maj",
+      "Junij",
+      "Julij",
+      "Avgust",
+      "September",
+      "Oktober",
+      "November",
+      "December"
+    ]
+  },
+  "sr-RS": {
+    "short": [
+      "\u0408\u0430\u043d",
+      "\u0424\u0435\u0431",
+      "\u041c\u0430\u0440",
+      "\u0410\u043f\u0440",
+      "\u041c\u0430\u0458",
+      "\u0408\u0443\u043d",
+      "\u0408\u0443\u043b",
+      "\u0410\u0432\u0433",
+      "\u0421\u0435\u043f",
+      "\u041e\u043a\u0442",
+      "\u041d\u043e\u0432",
+      "\u0414\u0435\u0446"
+    ],
+    "long": [
+      "\u0408\u0430\u043d\u0443\u0430\u0440",
+      "\u0424\u0435\u0431\u0440\u0443\u0430\u0440",
+      "\u041c\u0430\u0440\u0442",
+      "\u0410\u043f\u0440\u0438\u043b",
+      "\u041c\u0430\u0458",
+      "\u0408\u0443\u043d",
+      "\u0408\u0443\u043b",
+      "\u0410\u0432\u0433\u0443\u0441\u0442",
+      "\u0421\u0435\u043f\u0442\u0435\u043c\u0431\u0430\u0440",
+      "\u041e\u043a\u0442\u043e\u0431\u0430\u0440",
+      "\u041d\u043e\u0432\u0435\u043c\u0431\u0430\u0440",
+      "\u0414\u0435\u0446\u0435\u043c\u0431\u0430\u0440"
+    ]
+  },
+  "sv-SE": {
+    "short": [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "Maj",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Okt",
+      "Nov",
+      "Dec"
+    ],
+    "long": [
+      "Januari",
+      "Februari",
+      "Mars",
+      "April",
+      "Maj",
+      "Juni",
+      "Juli",
+      "Augusti",
+      "September",
+      "Oktober",
+      "November",
+      "December"
+    ]
+  },
+  "th-TH": {
+    "short": [
+      "\u0e21.\u0e04.",
+      "\u0e01.\u0e1e.",
+      "\u0e21\u0e35.\u0e04.",
+      "\u0e40\u0e21.\u0e22.",
+      "\u0e1e.\u0e04.",
+      "\u0e21\u0e34.\u0e22.",
+      "\u0e01.\u0e04.",
+      "\u0e2a.\u0e04.",
+      "\u0e01.\u0e22.",
+      "\u0e15.\u0e04.",
+      "\u0e1e.\u0e22.",
+      "\u0e18.\u0e04."
+    ],
+    "long": [
+      "\u0e21\u0e01\u0e23\u0e32\u0e04\u0e21",
+      "\u0e01\u0e38\u0e21\u0e20\u0e32\u0e1e\u0e31\u0e19\u0e18\u0e4c",
+      "\u0e21\u0e35\u0e19\u0e32\u0e04\u0e21",
+      "\u0e40\u0e21\u0e29\u0e32\u0e22\u0e19",
+      "\u0e1e\u0e24\u0e29\u0e20\u0e32\u0e04\u0e21",
+      "\u0e21\u0e34\u0e16\u0e38\u0e19\u0e32\u0e22\u0e19",
+      "\u0e01\u0e23\u0e01\u0e0e\u0e32\u0e04\u0e21",
+      "\u0e2a\u0e34\u0e07\u0e2b\u0e32\u0e04\u0e21",
+      "\u0e01\u0e31\u0e19\u0e22\u0e32\u0e22\u0e19",
+      "\u0e15\u0e38\u0e25\u0e32\u0e04\u0e21",
+      "\u0e1e\u0e24\u0e28\u0e08\u0e34\u0e01\u0e32\u0e22\u0e19",
+      "\u0e18\u0e31\u0e19\u0e27\u0e32\u0e04\u0e21"
+    ]
+  },
+  "tr-TR": {
+    "short": [
+      "Oca",
+      "\u015eub",
+      "Mar",
+      "Nis",
+      "May",
+      "Haz",
+      "Tem",
+      "A\u011fu",
+      "Eyl",
+      "Eki",
+      "Kas",
+      "Ara"
+    ],
+    "long": [
+      "Ocak",
+      "\u015eubat",
+      "Mart",
+      "Nisan",
+      "May\u0131s",
+      "Haziran",
+      "Temmuz",
+      "A\u011fustos",
+      "Eyl\u00fcl",
+      "Ekim",
+      "Kas\u0131m",
+      "Aral\u0131k"
+    ]
+  },
+  "uk-UA": {
+    "short": [
+      "\u0421\u0456\u0447",
+      "\u041b\u044e\u0442",
+      "\u0411\u0435\u0440",
+      "\u041a\u0432\u0456",
+      "\u0422\u0440\u0430",
+      "\u0427\u0435\u0440",
+      "\u041b\u0438\u043f",
+      "\u0421\u0435\u0440",
+      "\u0412\u0435\u0440",
+      "\u0416\u043e\u0432",
+      "\u041b\u0438\u0441",
+      "\u0413\u0440\u0443"
+    ],
+    "long": [
+      "\u0421\u0456\u0447\u0435\u043d\u044c",
+      "\u041b\u044e\u0442\u0438\u0439",
+      "\u0411\u0435\u0440\u0435\u0437\u0435\u043d\u044c",
+      "\u041a\u0432\u0456\u0442\u0435\u043d\u044c",
+      "\u0422\u0440\u0430\u0432\u0435\u043d\u044c",
+      "\u0427\u0435\u0440\u0432\u0435\u043d\u044c",
+      "\u041b\u0438\u043f\u0435\u043d\u044c",
+      "\u0421\u0435\u0440\u043f\u0435\u043d\u044c",
+      "\u0412\u0435\u0440\u0435\u0441\u0435\u043d\u044c",
+      "\u0416\u043e\u0432\u0442\u0435\u043d\u044c",
+      "\u041b\u0438\u0441\u0442\u043e\u043f\u0430\u0434",
+      "\u0413\u0440\u0443\u0434\u0435\u043d\u044c"
+    ]
+  },
+  "vi-VN": {
+    "short": [
+      "Thg01",
+      "Thg02",
+      "Thg03",
+      "Thg04",
+      "Thg05",
+      "Thg06",
+      "Thg07",
+      "Thg08",
+      "Thg09",
+      "Thg10",
+      "Thg11",
+      "Thg12"
+    ],
+    "long": [
+      "Th\u00e1ng M\u1ed9t",
+      "Th\u00e1ng Hai",
+      "Th\u00e1ng Ba",
+      "Th\u00e1ng T\u01b0",
+      "Th\u00e1ng N\u0103m",
+      "Th\u00e1ng S\u00e1u",
+      "Th\u00e1ng B\u1ea3y",
+      "Th\u00e1ng T\u00e1m",
+      "Th\u00e1ng Ch\u00edn",
+      "Th\u00e1ng M\u01b0\u1eddi",
+      "Th\u00e1ng M\u01b0\u1eddi M\u1ed9t",
+      "Th\u00e1ng M\u01b0\u1eddi Hai"
+    ]
+  },
+  "zh-CN": {
+    "short": [
+      "\u4e00\u6708",
+      "\u4e8c\u6708",
+      "\u4e09\u6708",
+      "\u56db\u6708",
+      "\u4e94\u6708",
+      "\u516d\u6708",
+      "\u4e03\u6708",
+      "\u516b\u6708",
+      "\u4e5d\u6708",
+      "\u5341\u6708",
+      "\u5341\u4e00\u6708",
+      "\u5341\u4e8c\u6708"
+    ],
+    "long": [
+      "\u4e00\u6708",
+      "\u4e8c\u6708",
+      "\u4e09\u6708",
+      "\u56db\u6708",
+      "\u4e94\u6708",
+      "\u516d\u6708",
+      "\u4e03\u6708",
+      "\u516b\u6708",
+      "\u4e5d\u6708",
+      "\u5341\u6708",
+      "\u5341\u4e00\u6708",
+      "\u5341\u4e8c\u6708"
+    ]
+  },
+  "zh-TW": {
+    "short": [
+      "1 \u6708",
+      "2 \u6708",
+      "3 \u6708",
+      "4 \u6708",
+      "5 \u6708",
+      "6 \u6708",
+      "7 \u6708",
+      "8 \u6708",
+      "9 \u6708",
+      "10 \u6708",
+      "11 \u6708",
+      "12 \u6708"
+    ],
+    "long": [
+      "1 \u6708",
+      "2 \u6708",
+      "3 \u6708",
+      "4 \u6708",
+      "5 \u6708",
+      "6 \u6708",
+      "7 \u6708",
+      "8 \u6708",
+      "9 \u6708",
+      "10 \u6708",
+      "11 \u6708",
+      "12 \u6708"
+    ]
+  }
+}

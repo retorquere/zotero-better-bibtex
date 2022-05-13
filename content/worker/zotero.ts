@@ -49,6 +49,7 @@ import { CSL_MAPPINGS } from '../../gen/items/items'
 import zotero_schema from '../../schema/zotero.json'
 import jurism_schema from '../../schema/jurism.json'
 const schema = client === 'zotero' ? zotero_schema : jurism_schema
+import dateFormats from '../../schema/dateFormats.json'
 
 const ctx: DedicatedWorkerGlobalScope = self as any
 
@@ -269,6 +270,8 @@ class WorkerZotero {
   }
 
   public init(config: Translators.Worker.Config) {
+    this.Date.init(dateFormats)
+
     this.config = config
     this.config.preferences.platform = workerContext.platform
     this.config.preferences.client = client
