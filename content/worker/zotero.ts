@@ -6,27 +6,67 @@ import type { ITranslator } from '../../translators/lib/translator'
 import type { Translators } from '../../typings/translators'
 import { valid } from '../../gen/items/items'
 
-import { DOMParser as XMLDOMParser } from '@xmldom/xmldom'
-
-function hasAttribute(attr: string): boolean {
-  return !!(this.getAttribute?.(attr))
-}
-function upgrade(node) {
-  if (!node.children) {
-    node.children = Array.from(node.childNodes || [])
-    for (const child of node.children) {
-      upgrade(child)
+import { Element as XMLDOMElement } from '@xmldom/xmldom/lib/dom'
+function escapeXml(unsafe) {
+  return unsafe.replace(/[<>&'"]/g, (c: string) => {
+    switch (c) {
+      case '<': return '&lt;'
+      case '>': return '&gt;'
+      case '&': return '&amp;'
+      case '\'': return '&apos;'
+      case '"': return '&quot;'
     }
-  }
-  if (!node.hasAttribute) node.hasAttribute = hasAttribute
+  })
 }
+function upgrade(root) {
+  Object.defineProperty(root, 'children', {
+    get() {
+      if (!this.childNodes) return this.childNodes
+
+      return Array.from(this.childNodes).filter((child: any) => child.tagName && child.tagName[0] !== '#')
+    },
+  })
+  Object.defineProperty(root, 'innerHTML', {
+    get() {
+      if (!this.childNodes) return this.childNodes
+
+      return Array.from(this.childNodes).map((node: any) => {
+        switch (node.tagName || '') {
+          case '':
+          case '#comment':
+            return ''
+          case '#text':
+          case '#cdata-section':
+            return this.nodeValue
+          default:
+            if (!node.tagName || node.tagName[0] === '#') throw new Error(`unexpected tag ${node.tagName}`)
+            break
+        }
+
+        let innerHTML = `<${node.tagName}`
+        let i = node.attributes.length
+        while (i--) {
+          const attr = node.attributes[i]
+          innerHTML += ` ${attr.nodeName}="${escapeXml(attr.value)}"`
+        }
+        innerHTML += '>'
+        innerHTML += node.innerHTML
+        innerHTML += `</${node.tagName}>`
+        return innerHTML
+      }).join('')
+    },
+  })
+  return root
+}
+upgrade(XMLDOMElement.prototype)
+
+import { DOMParser as XMLDOMParser } from '@xmldom/xmldom'
 export class DOMParser extends XMLDOMParser {
   parseFromString(text: string, contentType: string) { // eslint-disable-line @typescript-eslint/explicit-module-boundary-types
-    const doc = super.parseFromString(text, contentType)
-    upgrade(doc)
-    return doc
+    return upgrade(super.parseFromString(text, contentType))
   }
 }
+
 const ZU = require('../../submodules/zotero-utilities/utilities.js')
 const ZUI = require('../../submodules/zotero-utilities/utilities_item.js')
 const ZD = require('../../submodules/zotero-utilities/date.js')
