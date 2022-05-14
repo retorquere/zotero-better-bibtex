@@ -249,7 +249,6 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       options: displayOptions || {},
       items: [],
       collections: [],
-      cslItems: {},
       cache: {},
       autoExport,
     }
@@ -367,7 +366,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     let worked = Date.now()
     config.items = []
     const prepare = new Pinger({
-      total: items.length * (translator.label.includes('CSL') ? 2 : 1),
+      total: items.length,
       callback: pct => Events.emit('export-progress', -pct, translator.label, autoExport),
     })
     // use a loop instead of map so we can await for beachball protection
@@ -411,17 +410,6 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       cache.dirty = true
     }
 
-    // pre-fetch CSL serializations
-    // TODO: I should probably cache these
-    if (translator.label.includes('CSL')) {
-      for (const item of config.items) {
-        // if there's a cached item, we don't need a fresh CSL item since we're not regenerating it anyhow
-        if (!config.cache[item.itemID]) {
-          config.cslItems[item.itemID] = Zotero.Utilities.itemToCSLJSON(item)
-        }
-        prepare.update()
-      }
-    }
     prepare.done()
 
     // if the average startup time is greater than the autoExportDelay, bump up the delay to prevent stall-cascades
