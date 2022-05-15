@@ -115,7 +115,7 @@ class Git {
 
     try {
       await this.exec(this.git, ['-C', this.path, 'add', this.bib])
-      await this.exec(this.git, ['-C', this.path, 'commit', '-m', msg])
+      await this.exec(this.git, ['-C', this.path, 'commit', '-m', msg, '--allow-empty'])
       await this.exec(this.git, ['-C', this.path, 'push'])
     }
     catch (err) {
