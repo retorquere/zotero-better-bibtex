@@ -4,6 +4,7 @@ importScripts('resource://gre/modules/osfile.jsm')
 
 import type { ITranslator } from '../../translators/lib/translator'
 import type { Translators } from '../../typings/translators'
+import { valid } from '../../gen/items/items'
 
 import { DOMParser as XMLDOMParser } from '@xmldom/xmldom'
 
@@ -27,12 +28,14 @@ export class DOMParser extends XMLDOMParser {
   }
 }
 const ZU = require('../../submodules/zotero-utilities/utilities.js')
+const ZUI = require('../../submodules/zotero-utilities/utilities_item.js')
+const ZD = require('../../submodules/zotero-utilities/date.js')
 
 declare const doExport: () => void
 declare const Translator: ITranslator
 declare const dump: (message: string) => void
 
-import XRegExp = require('xregexp')
+// import XRegExp = require('xregexp')
 import * as DateParser from '../../content/dateparser'
 // import * as Extra from '../../content/extra'
 import { qualityReport } from '../../content/qr-check'
@@ -41,6 +44,12 @@ import itemCreators from '../../gen/items/creators.json'
 import { client } from '../../content/client'
 import { log } from '../../content/logger'
 import { Collection } from '../../gen/typings/serialized-item'
+import { CSL_MAPPINGS } from '../../gen/items/items'
+
+import zotero_schema from '../../schema/zotero.json'
+import jurism_schema from '../../schema/jurism.json'
+const schema = client === 'zotero' ? zotero_schema : jurism_schema
+import dateFormats from '../../schema/dateFormats.json'
 
 const ctx: DedicatedWorkerGlobalScope = self as any
 
@@ -49,6 +58,7 @@ export const workerContext = {
   platform: '',
   translator: '',
   output: '',
+  locale: '',
   localeDateOrder: '',
   debugEnabled: false,
   worker: '',
@@ -63,8 +73,6 @@ for(const [key, value] of (new URLSearchParams(ctx.location.search)).entries()) 
 }
 
 class WorkerZoteroBetterBibTeX {
-  public localeDateOrder: string
-
   public cacheFetch(itemID: number) {
     return Zotero.config.cache[itemID]
   }
@@ -85,7 +93,11 @@ class WorkerZoteroBetterBibTeX {
   public parseDate(date) {
     return DateParser.parse(date, workerContext.localeDateOrder)
   }
+
   public getLocaleDateOrder() {
+    return workerContext.localeDateOrder
+  }
+  public get localeDateOrder() {
     return workerContext.localeDateOrder
   }
 
@@ -112,37 +124,13 @@ class WorkerZoteroBetterBibTeX {
   }
 }
 
-class WorkerZoteroUtilities {
-  public XRegExp = XRegExp // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
+const WorkerZoteroUtilities = {
+  ...ZU,
+  Item: ZUI,
 
-  public getVersion() {
-    return workerContext.version
-  }
+  getVersion: () => workerContext.version,
 
-  walkNoteDOM(note, visitors) {
-    ZU.walkNoteDOM(note, visitors)
-  }
-
-  public text2html(str: string, singleNewlineIsParagraph: boolean) {
-    str = str
-      .replace(/&/g, '&amp;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&apos;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-
-    if (singleNewlineIsParagraph) {
-      // \n => <p>
-      str = `<p>${str.replace(/\n/g, '</p><p>').replace(/ {2}/g, '&nbsp; ')}</p>`
-    }
-    else {
-      // \n\n => <p>, \n => <br/>
-      str = `<p>${str.replace(/\n\n/g, '</p><p>').replace(/\n/g, '<br/>').replace(/ {2}/g, '&nbsp; ')}</p>`
-    }
-
-    return str.replace(/<p>\s*<\/p>/g, '<p>&nbsp;</p>')
-  }
-
+  /*
   public getCreatorsForType(itemType) {
     return itemCreators[client][itemType]
   }
@@ -150,6 +138,7 @@ class WorkerZoteroUtilities {
   public itemToCSLJSON(item) {
     return Zotero.config.cslItems[item.itemID]
   }
+  */
 }
 
 function isWinRoot(path) {
@@ -208,6 +197,61 @@ function saveFile(path, overwrite) {
   return true
 }
 
+class WorkerZoteroCreatorTypes {
+  public getTypesForItemType(itemTypeID: string): { name: string } {
+    return itemCreators[client][itemTypeID]?.map(name => ({ name })) || []
+  }
+
+  public isValidForItemType(creatorTypeID, itemTypeID) {
+    return itemCreators[client][itemTypeID]?.includes(creatorTypeID)
+  }
+
+  public getLocalizedString(type: string): string {
+    return schema.locales[Zotero.locale]?.types[type] || type[0].toUpperCase() + type.substr(1).replace(/([A-Z])([a-z])/g, (m, u, l) => `${u.toLowerCase()} ${l}`)
+  }
+
+  public getPrimaryIDForType(typeID) {
+    return itemCreators[client][typeID]?.[0]
+  }
+
+  public getID(typeName) {
+    return typeName
+  }
+  public getName(typeID) {
+    return typeID
+  }
+}
+
+class WorkerZoteroItemTypes {
+  public getID(type: string): string { // bit of a hack to return a string, but this is all in an emulated Zotero anyway
+    return type
+  }
+}
+
+class WorkerZoteroItemFields {
+  public isValidForType(fieldID: string, itemTypeID: string) {
+    return valid.field[itemTypeID]?.[fieldID]
+  }
+
+  public getID(field: string): string {
+    return field
+  }
+
+  public getFieldIDFromTypeAndBase(_itemTypeID: string, fieldID: string): string {
+    // assumes normalized item
+    return fieldID
+  }
+
+  public getName(itemFieldID: string) {
+    return itemFieldID
+  }
+
+  public getBaseIDFromTypeAndField(_typeID: string, fieldID: string) {
+    // assumes normalized item
+    return fieldID
+  }
+}
+
 class WorkerZotero {
   public config: Translators.Worker.Config
   public output: string
@@ -215,10 +259,19 @@ class WorkerZotero {
   public exportFile: string
   private items = 0
 
-  public Utilities = new WorkerZoteroUtilities // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
+  public Utilities = WorkerZoteroUtilities
   public BetterBibTeX = new WorkerZoteroBetterBibTeX // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
+  public CreatorTypes = new WorkerZoteroCreatorTypes
+  public ItemTypes  = new WorkerZoteroItemTypes
+  public ItemFields  = new WorkerZoteroItemFields
+  public Date = ZD
+  public Schema = {
+    ...CSL_MAPPINGS,
+  }
 
   public init(config: Translators.Worker.Config) {
+    this.Date.init(dateFormats)
+
     this.config = config
     this.config.preferences.platform = workerContext.platform
     this.config.preferences.client = client
@@ -262,6 +315,10 @@ class WorkerZotero {
 
   public send(message: Translators.Worker.Message) {
     ctx.postMessage(message)
+  }
+
+  public get locale() {
+    return workerContext.locale
   }
 
   public getHiddenPref(pref) {
@@ -323,7 +380,6 @@ ctx.onmessage = function(e: { isTrusted?: boolean, data?: Translators.Worker.Mes
   try {
     switch (e.data.kind) {
       case 'start':
-        Zotero.BetterBibTeX.localeDateOrder = workerContext.localeDateOrder
         Zotero.init(JSON.parse(dec.decode(new Uint8Array(e.data.config))))
         doExport()
         Zotero.done()

@@ -7,7 +7,6 @@ export namespace Translators {
       options: any,
       items: Array<Item | Attachment | Note>
       collections: Collection[]
-      cslItems?: Record<number, any>
       cache: Record<number, {itemID: number, reference: string, metadata: any, meta: { updated: number }}>
       autoExport?: number
     }

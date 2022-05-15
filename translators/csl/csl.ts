@@ -70,9 +70,8 @@ export const CSLExporter = new class { // eslint-disable-line @typescript-eslint
 
       Object.assign(item, Extra.get(item.extra, 'csl'))
 
-      // until export translators can be async, itemToCSLJSON must run before the translator starts, so it actually doesn't do anything in a worker context
-      // so re-assigne the extracted extra here
       let csl = Zotero.Utilities.itemToCSLJSON(item)
+      csl['citation-key'] = item.citationKey
       if (environment.worker) csl.note = item.extra || undefined
 
       if (item.place) csl[item.itemType === 'presentation' ? 'event-place' : 'publisher-place'] = item.place

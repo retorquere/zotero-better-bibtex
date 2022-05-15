@@ -163,6 +163,12 @@ class fetch(object):
                 json.dump(client_schema, f, indent='  ')
               hashes[client][release] = self.hash(client_schema)
             print('      release', release, 'schema', client_schema['version'], 'hash', hashes[client][release])
+
+            if (client == 'zotero'):
+              with jar.open('resource/schema/dateFormats.json') as f:
+                dateFormats = json.load(f)
+              with open(os.path.join('schema', 'dateFormats.json'), 'w') as f:
+                json.dump(dateFormats, f, indent='  ')
           except KeyError:
             hashes[client][release] = None
             print('      release', release, 'does not have a bundled schema')
@@ -725,7 +731,7 @@ with open(os.path.join(ITEMS, 'items.ts'), 'w') as f:
         assert labels[field][client] == label, (client, field, labels[field][client], label)
 
   try:
-    print(template('items/items.ts.mako').render(names=names, labels=labels, valid=valid, aliases=aliases).strip(), file=f)
+    print(template('items/items.ts.mako').render(names=names, labels=labels, valid=valid, aliases=aliases, schemas=SCHEMA).strip(), file=f)
   except:
     print(exceptions.text_error_template().render())
   #stringizer = lambda x: DG.nodes[x]['name'] if x in DG.nodes else x
