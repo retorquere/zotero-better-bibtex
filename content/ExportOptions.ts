@@ -1,10 +1,11 @@
-import { patch as $patch$, unpatch as $unpatch$ } from './monkey-patch'
+import { patch as $patch$, unpatch as $unpatch$, Trampoline } from './monkey-patch'
 import * as l10n from './l10n'
 
 export class ExportOptions {
   private globals: Record<string, any>
   private DOM_OBSERVER: MutationObserver = null
   private reset = true
+  private patched: Trampoline[] = []
 
   public load(globals: Record<string, any>): void {
     this.globals = globals
@@ -21,13 +22,13 @@ export class ExportOptions {
       }
       // eslint-disable-next-line prefer-rest-params
       original.apply(this, arguments)
-    })
+    }, this.patched)
 
     $patch$(this.globals.Zotero_File_Interface_Export, 'updateOptions', original => function(_options) {
       // eslint-disable-next-line prefer-rest-params
       original.apply(this, arguments)
       self.warning()
-    })
+    }, this.patched)
   }
 
   public warning(): void {
@@ -59,8 +60,7 @@ export class ExportOptions {
 
   public unload(): void {
     this.DOM_OBSERVER.disconnect()
-    $unpatch$(this.globals.Zotero_File_Interface_Export, 'init', true)
-    $unpatch$(this.globals.Zotero_File_Interface_Export, 'updateOptions', true)
+    $unpatch$(this.patched)
   }
 
   mutex(e: Event): void {
