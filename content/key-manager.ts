@@ -6,7 +6,7 @@ import { jieba } from './key-manager/chinese'
 import { Scheduler } from './scheduler'
 import { log } from './logger'
 import { flash } from './flash'
-import { Events, itemsChanged as notifyItemsChanged } from './events'
+import { Events } from './events'
 import { fetchAsync as fetchInspireHEP } from './inspire-hep'
 import * as Extra from './extra'
 import { $and, Query } from './db/loki'
@@ -160,7 +160,7 @@ export class KeyManager {
       }
     }
 
-    if (updates.length) notifyItemsChanged(updates)
+    if (updates.length) Events.itemsChanged(updates)
   }
 
   public async init(): Promise<void> {

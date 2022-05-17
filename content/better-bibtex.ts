@@ -36,7 +36,7 @@ Components.utils.import('resource://gre/modules/AddonManager.jsm')
 declare const AddonManager: any
 
 import { log } from './logger'
-import { Events, itemsChanged as notifyItemsChanged } from './events'
+import { Events } from './events'
 
 import { Translators } from './translators'
 import { DB } from './db/main'
@@ -704,7 +704,7 @@ notify('item', (action: string, type: any, ids: any[], extraData: { [x: string]:
       return
   }
 
-  notifyItemsChanged(items.concat(parents))
+  Events.itemsChanged(items.concat(parents))
 })
 
 notify('collection', (event: string, _type: any, ids: string | any[], _extraData: any) => {
