@@ -6,6 +6,7 @@ config.rules['max-classes-per-file'] = 'off'
 config.rules['no-console'] = 'error'
 config.rules['no-new-func'] = 'off'
 config.rules['no-underscore-dangle'] = [ 'error', { "allowAfterThis": true } ]
+config.rules['prefer-template'] = 'off'
 
 config.rules['@typescript-eslint/no-unsafe-member-access'] = 'off'
 config.rules['@typescript-eslint/no-unsafe-call'] = 'off'
