@@ -233,7 +233,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       worker = new ChromeWorker(`chrome://zotero-better-bibtex/content/worker/zotero.js?${workerContext}`)
     }
     catch (err) {
-      deferred.reject('could not get a Worker')
+      deferred.reject(`could not get a Worker: ${err.message}`)
       flash(
         'Failed to start background export',
         'Could not start a background export. Background exports have been disabled -- PLEASE report this as a bug at the Better BibTeX github project',
