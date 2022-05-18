@@ -100,11 +100,12 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
       Zotero.Prefs.set(key, 'selectlink')
     }
     if (typeof (old = Zotero.Prefs.get(key = 'translators.better-bibtex.workers')) !== 'undefined') {
-      Zotero.Prefs.rootBranch.setIntPref('extensions.zotero.translators.better-bibtex.workers', typeof old === 'number' ? old : 1)
+      Zotero.Prefs.clear(key)
+      Zotero.Prefs.set('translators.better-bibtex.worker', !!old)
     }
     if (typeof (old = Zotero.Prefs.get(key = 'translators.better-bibtex.workersMax')) !== 'undefined') {
       Zotero.Prefs.clear(key)
-      Zotero.Prefs.set('translators.better-bibtex.workers', typeof old === 'number' ? old : 1)
+      Zotero.Prefs.set('translators.better-bibtex.worker', !!old)
     }
     if (typeof (old = Zotero.Prefs.get(key = 'translators.better-bibtex.workersCache')) !== 'undefined') {
       Zotero.Prefs.clear(key)

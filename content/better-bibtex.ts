@@ -575,7 +575,7 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
       if (this.noWait) { // noWait must be synchronous
         disabled = 'noWait is active'
       }
-      else if (!Preference.workers) {
+      else if (!Preference.worker) {
         disabled = 'user has disabled worker export'
       }
       else if (Translators.workers.disabled) {
@@ -598,7 +598,7 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
         this.saveQueue = []
         this._savingAttachments = []
 
-        return Translators.exportItemsByQueuedWorker(translatorID, displayOptions, { translate: this, scope: { ...this._export, getter: this._itemGetter }, path })
+        return Translators.exportItemsByWorker(translatorID, displayOptions, { translate: this, scope: { ...this._export, getter: this._itemGetter }, path })
           .then(result => {
             // eslint-disable-next-line id-blacklist
             this.string = result

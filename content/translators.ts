@@ -22,14 +22,7 @@ import { Pinger } from './ping'
 
 import * as translatorMetadata from '../gen/translators.json'
 
-import { TaskEasy } from 'task-easy'
-
 import * as l10n from './l10n'
-
-interface Priority {
-  priority: number
-  timestamp: number
-}
 
 type ExportScope = { type: 'items', items: any[] } | { type: 'library', id: number } | { type: 'collection', collection: any }
 type ExportJob = {
@@ -41,37 +34,12 @@ type ExportJob = {
   translate: any
 }
 
-class Queue {
-  private queue: TaskEasy<Priority>
-
-  constructor() {
-    this.queue = new TaskEasy((t1: Priority, t2: Priority) => t1.priority === t2.priority ? t1.timestamp < t2.timestamp : t1.priority > t2.priority)
-  }
-
-  public async schedule(task: TaskEasy.Task<string>, translatorID: string, displayOptions: Record<string, boolean>, job: ExportJob) {
-    job.started = Date.now()
-    if (job.path) {
-      for (const scheduled of (this.queue as any).tasks) {
-        if (scheduled.started < job.started && scheduled.args && scheduled.args.length === 3) { // eslint-disable-line no-magic-numbers
-          const scheduledJob = (scheduled.args[2] as ExportJob)
-          if (scheduledJob.path && scheduledJob.path === job.path) {
-            scheduledJob.canceled = true
-          }
-        }
-      }
-    }
-    return await this.queue.schedule(task, [translatorID, displayOptions, job], { priority: 1, timestamp: job.started })
-  }
-}
-
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export const Translators = new class { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   public byId: Record<string, Translator.Header>
   public byName: Record<string, Translator.Header>
   public byLabel: Record<string, Translator.Header>
   public itemType: { note: number, attachment: number, annotation: number }
-
-  private queue = new Queue
 
   public workers: { total: number, running: Set<string>, disabled: boolean, startup: number } = {
     total: 0,
@@ -162,15 +130,6 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     await translation.translate({ libraryID })
 
     return translation.newItems
-  }
-
-  public async exportItemsByQueuedWorker(translatorID: string, displayOptions: Record<string, boolean>, job: ExportJob) {
-    if (this.workers.running.size > Preference.workers) {
-      return this.queue.schedule(this.exportItemsByWorker.bind(this), translatorID, displayOptions, job)
-    }
-    else {
-      return this.exportItemsByWorker(translatorID, displayOptions, job)
-    }
   }
 
   public async exportItemsByWorker(translatorID: string, displayOptions: Record<string, boolean>, job: ExportJob) {

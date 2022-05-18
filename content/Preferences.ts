@@ -112,7 +112,7 @@ class AutoExportPane {
             break
 
           case 'status':
-            if (ae.status === 'running' && Preference.workers && typeof progress === 'number') {
+            if (ae.status === 'running' && Preference.worker && typeof progress === 'number') {
               (node as XUL.Textbox).value = progress < 0 ? `${this.label?.preparing || 'preparing'} ${-progress}%` : `${progress}%`
             }
             else {
@@ -541,12 +541,12 @@ export class PrefPane {
 
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
     for (const state of (Array.from(this.globals.document.getElementsByClassName('better-bibtex-preferences-worker-state')) as XUL.Textbox[])) {
-      state.value = l10n.localize(`BetterBibTeX.workers.${Preference.workers ? 'status' : 'disabled'}`, {
+      state.value = l10n.localize(`BetterBibTeX.workers.${Preference.worker ? 'status' : 'disabled'}`, {
         total: Translators.workers.total,
-        workers: Preference.workers,
+        workers: Preference.worker,
         running: Translators.workers.running.size,
       })
-      state.classList[Preference.workers ? 'remove' : 'add']('textbox-emph')
+      state.classList[Preference.worker ? 'remove' : 'add']('textbox-emph')
     }
 
     if (this.autoexport) this.autoexport.refresh()
