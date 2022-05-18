@@ -815,11 +815,10 @@
     "var": "warnTitleCased"
   },
   {
-    "name": "workers",
-    "type": "number",
-    "default": 1,
+    "name": "worker",
+    "type": "boolean",
+    "default": true,
     "affects": [],
-    "var": "workers",
-    "label": "Parallel background exports:"
+    "var": "worker"
   }
 ]
