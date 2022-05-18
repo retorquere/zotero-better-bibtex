@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions, @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-assignment */
 
 importScripts('resource://gre/modules/osfile.jsm')
+importScripts('resource://zotero/config.js') // import ZOTERO_CONFIG'
 
 import type { ITranslator } from '../../translators/lib/translator'
 import type { Translators } from '../../typings/translators'
@@ -380,6 +381,7 @@ ctx.onmessage = function(e: { isTrusted?: boolean, data?: Translators.Worker.Mes
   try {
     switch (e.data.kind) {
       case 'start':
+        importScripts(`resource://zotero-better-bibtex/${workerContext.translator}.js`)
         Zotero.init(JSON.parse(dec.decode(new Uint8Array(e.data.config))))
         doExport()
         Zotero.done()

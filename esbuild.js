@@ -90,17 +90,9 @@ async function rebuild() {
       shims
     ],
     outdir: 'build/content/worker',
-    banner: { js: [
-        'importScripts("resource://gre/modules/osfile.jsm")',
-        'importScripts("resource://zotero/config.js") // import ZOTERO_CONFIG',
-      ].join('\n')
-    },
     footer: {
-      js: [
-        // make these var, not const, so they get hoisted and are available in the global scope. See logger.ts
-        `var { ${vars.join(', ')} } = ${globalName};`,
-        'importScripts(`resource://zotero-better-bibtex/${workerContext.translator}.js`);',
-      ].join('\n'),
+      // make these var, not const, so they get hoisted and are available in the global scope. See logger.ts
+      js: `var { ${vars.join(', ')} } = ${globalName};`,
     },
     metafile: 'gen/worker.json',
     external: [ 'jsdom' ],
