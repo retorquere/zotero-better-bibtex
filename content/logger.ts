@@ -1,6 +1,6 @@
 // workerContext and Translator must be var-hoisted by esbuild to make this work
 declare const ZOTERO_TRANSLATOR_INFO: any
-declare const workerContext: { translator: string, debugEnabled: boolean, worker: string }
+declare const workerContext: { translator: string, debugEnabled: boolean, worker: number }
 
 import { asciify } from './stringify'
 import { environment } from './environment'
@@ -13,7 +13,8 @@ class Logger {
 
   protected timestamp: number
 
-  private format({ error=false, worker='', translator='', issue=0}, msg) {
+  private format({ error=false, worker=0, translator='', issue=0}, msg) {
+    let workername = `${worker}`
     let diff = null
     const now = Date.now()
     if (this.timestamp) diff = now - this.timestamp
@@ -45,15 +46,19 @@ class Logger {
     }
 
     if (environment.worker) {
-      worker = worker || workerContext.worker
+
+      if (!worker && workerContext.worker) {
+        worker = workerContext.worker
+        workername = `${workerContext.worker}`
+      }
       translator = translator || workerContext.translator
     }
     else {
-      if (worker) worker = `${worker} (but environment is ${environment.name})`
+      if (worker) workername = `${worker} (but environment is ${environment.name})`
       // Translator must be var-hoisted by esbuild for this to work
       if (!translator && inTranslator) translator = ZOTERO_TRANSLATOR_INFO.label
     }
-    const prefix = ['better-bibtex', translator, error && ':error:', worker && `(worker ${worker})`].filter(p => p).join(' ')
+    const prefix = ['better-bibtex', translator, error && ':error:', worker && `(worker ${workername})`].filter(p => p).join(' ')
     return `{${prefix}} +${diff} ${asciify(msg)}`
   }
 
@@ -86,7 +91,7 @@ class Logger {
   public error(...msg) {
     Zotero.debug(this.format({error: true}, msg))
   }
-  public status({ error=false, worker='', translator='' }, ...msg) {
+  public status({ error=false, worker=0, translator='' }, ...msg) {
     if (error || this.enabled) Zotero.debug(this.format({error, worker, translator}, msg))
   }
 }
