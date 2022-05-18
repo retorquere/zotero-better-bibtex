@@ -9,6 +9,16 @@ export namespace Translators {
       collections: Collection[]
       cache: Record<number, {itemID: number, reference: string, metadata: any, meta: { updated: number }}>
       autoExport?: number
+      globals: {
+        version: string
+        platform: string
+        translator: string
+        output: string
+        locale: string
+        localeDateOrder: string
+        debugEnabled: boolean
+        worker: number
+      },
     }
 
     type Message = 

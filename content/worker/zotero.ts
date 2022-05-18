@@ -64,14 +64,6 @@ export const workerContext = {
   debugEnabled: false,
   worker: '',
 }
-for(const [key, value] of (new URLSearchParams(ctx.location.search)).entries()) {
-  if (key === 'debugEnabled') {
-    workerContext[key] = value === 'true'
-  }
-  else {
-    workerContext[key] = value
-  }
-}
 
 class WorkerZoteroBetterBibTeX {
   public cacheFetch(itemID: number) {
@@ -378,11 +370,14 @@ const dec = new TextDecoder('utf-8')
 ctx.onmessage = function(e: { isTrusted?: boolean, data?: Translators.Worker.Message } ): void { // eslint-disable-line prefer-arrow/prefer-arrow-functions
   if (!e.data) return // some kind of startup message
 
+  let config: Translators.Worker.Config
   try {
     switch (e.data.kind) {
       case 'start':
+        config = JSON.parse(dec.decode(new Uint8Array(e.data.config)))
+        Object.assign(workerContext, config.globals)
         importScripts(`resource://zotero-better-bibtex/${workerContext.translator}.js`)
-        Zotero.init(JSON.parse(dec.decode(new Uint8Array(e.data.config))))
+        Zotero.init(config)
         doExport()
         Zotero.done()
         break

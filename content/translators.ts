@@ -41,7 +41,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
   public byLabel: Record<string, Translator.Header>
   public itemType: { note: number, attachment: number, annotation: number }
 
-  public workers: { total: number, running: Set<string>, disabled: boolean, startup: number } = {
+  public workers: { total: number, running: Set<number>, disabled: boolean, startup: number } = {
     total: 0,
     running: new Set,
     disabled: false,
@@ -172,24 +172,13 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     ) && Cache.getCollection(translator.label)
 
     this.workers.total += 1
-    const id = `${this.workers.total}`
+    const id = this.workers.total
     this.workers.running.add(id)
-
-    const workerContext = Object.entries({
-      version: Zotero.version,
-      platform: Preference.platform,
-      translator: translator.label,
-      output: job.path || '',
-      locale: Zotero.locale,
-      localeDateOrder: Zotero.BetterBibTeX.localeDateOrder,
-      debugEnabled: Zotero.Debug.enabled ? 'true' : 'false',
-      worker: id,
-    }).map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`).join('&')
 
     const deferred = new Deferred<string>()
     let worker: Worker = null
     try {
-      worker = new ChromeWorker(`chrome://zotero-better-bibtex/content/worker/zotero.js?${workerContext}`)
+      worker = new ChromeWorker('chrome://zotero-better-bibtex/content/worker/zotero.js')
     }
     catch (err) {
       deferred.reject(`could not get a Worker: ${err.message}`)
@@ -210,6 +199,17 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       collections: [],
       cache: {},
       autoExport,
+
+      globals: {
+        version: Zotero.version,
+        platform: Preference.platform,
+        translator: translator.label,
+        output: job.path || '',
+        locale: Zotero.locale,
+        localeDateOrder: Zotero.BetterBibTeX.localeDateOrder,
+        debugEnabled: !!Zotero.Debug.enabled,
+        worker: id,
+      },
     }
 
     const selector = schema.translator[translator.label]?.cached ? cacheSelector(translator.label, config.options, config.preferences) : null
