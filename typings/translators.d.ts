@@ -2,6 +2,7 @@ import { Item, Attachment, Collection, Tag } from '../gen/typings/serialized-ite
 
 export namespace Translators {
   namespace Worker {
+    /*
     type Environment = {
       version: string
       platform: string
@@ -23,8 +24,8 @@ export namespace Translators {
         cache: Record<number, {itemID: number, reference: string, metadata: any, meta: { updated: number }}>
       }
     }
+    */
 
-    /*
     type Config = {
       preferences: any,
       options: any,
@@ -43,7 +44,6 @@ export namespace Translators {
         worker: number
       },
     }
-    */
 
     type Message = 
         { kind: 'configure', config: Environment }

@@ -19,6 +19,7 @@ import { flash } from './flash'
 import { $and, Query } from './db/loki'
 import { Events } from './events'
 import { Pinger } from './ping'
+import PQueue from 'p-queue'
 
 import * as translatorMetadata from '../gen/translators.json'
 
@@ -40,6 +41,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
   public byName: Record<string, Translator.Header>
   public byLabel: Record<string, Translator.Header>
   public itemType: { note: number, attachment: number, annotation: number }
+  private queue: PQueue
 
   public workers: { total: number, running: Set<number>, disabled: boolean, startup: number } = {
     total: 0,
@@ -50,6 +52,11 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
   constructor() {
     Object.assign(this, translatorMetadata)
+    this.queue = new PQueue({
+      concurrency: 1,
+      timeout: 1000 * 60 * 60, // eslint-disable-line no-magic-numbers
+      throwOnTimeout: true,
+    })
   }
 
   public async init() {
@@ -133,6 +140,10 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
   }
 
   public async exportItemsByWorker(translatorID: string, displayOptions: Record<string, boolean>, job: ExportJob) {
+    return this.queue.add(() => this.exportItemsByQueuedWorker(translatorID, displayOptions, job))
+  }
+
+  private async exportItemsByQueuedWorker(translatorID: string, displayOptions: Record<string, boolean>, job: ExportJob) {
     if (job.path && job.canceled) return ''
 
     await Zotero.BetterBibTeX.ready
