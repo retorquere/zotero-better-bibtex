@@ -2,6 +2,29 @@ import { Item, Attachment, Collection, Tag } from '../gen/typings/serialized-ite
 
 export namespace Translators {
   namespace Worker {
+    type Environment = {
+      version: string
+      platform: string
+      locale: string
+      localeDateOrder: string
+    }
+
+    type Job = {
+      job: number,
+      translator: string
+      debugEnabled: boolean
+      preferences: any,
+      options: any,
+      autoExport?: number
+      output: string
+      data?: {
+        items: Array<Item | Attachment | Note>
+        collections: Collection[]
+        cache: Record<number, {itemID: number, reference: string, metadata: any, meta: { updated: number }}>
+      }
+    }
+
+    /*
     type Config = {
       preferences: any,
       options: any,
@@ -20,9 +43,11 @@ export namespace Translators {
         worker: number
       },
     }
+    */
 
     type Message = 
-        { kind: 'start', config: ArrayBuffer }
+        { kind: 'configure', config: Environment }
+      | { kind: 'start', config: ArrayBuffer }
       | { kind: 'done', output: boolean | string }
       | { kind: 'debug', message: string }
       | { kind: 'error', message: string }
