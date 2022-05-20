@@ -578,7 +578,7 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
       else if (!Preference.worker) {
         disabled = 'user has disabled worker export'
       }
-      else if (Translators.workers.disabled) {
+      else if (!Translators.worker) {
         // there wasn't an error starting a worker earlier
         disabled = 'failed to start a chromeworker, disabled until restart'
       }

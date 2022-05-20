@@ -42,12 +42,11 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
   public byLabel: Record<string, Translator.Header>
   public itemType: { note: number, attachment: number, annotation: number }
   private queue: PQueue
-  private worker: ChromeWorker
+  public worker: ChromeWorker
 
-  public workers: { total: number, running: Set<number>, disabled: boolean, startup: number } = {
+  public workers: { total: number, running: Set<number>, startup: number } = {
     total: 0,
     running: new Set,
-    disabled: false,
     startup: 0,
   }
 
@@ -72,7 +71,6 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
         15 // eslint-disable-line no-magic-numbers
       )
       this.worker = null
-      this.workers.disabled = true
     }
   }
 
