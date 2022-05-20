@@ -57,24 +57,10 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       timeout: 1000 * 60 * 60, // eslint-disable-line no-magic-numbers
       throwOnTimeout: true,
     })
-    try {
-      this.worker = new ChromeWorker('chrome://zotero-better-bibtex/content/worker/zotero.js')
-      log.debug('translate: worker acquired')
-    }
-    catch (err) {
-      log.error('translate: worker not acquired', err)
-      if (Preference.testing) throw err
-
-      flash(
-        'Failed to start background export',
-        `Could not start background export (${err.message}). Background exports have been disabled until restart -- report this as a bug at the Better BibTeX github project`,
-        15 // eslint-disable-line no-magic-numbers
-      )
-      this.worker = null
-    }
   }
 
   public async init() {
+
     this.itemType = {
       note: Zotero.ItemTypes.getID('note'),
       attachment: Zotero.ItemTypes.getID('attachment'),
@@ -154,16 +140,46 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     return translation.newItems
   }
 
+  private start() {
+    if (this.worker) return
+
+    try {
+      this.worker = new ChromeWorker('chrome://zotero-better-bibtex/content/worker/zotero.js')
+      this.worker.postMessage({ kind: 'configure', environment: {
+        version: Zotero.version,
+        platform: Preference.platform,
+        locale: Zotero.locale,
+        localeDateOrder: Zotero.BetterBibTeX.localeDateOrder,
+      }})
+      log.debug('translate: worker acquired')
+    }
+    catch (err) {
+      log.error('translate: worker not acquired', err)
+      if (Preference.testing) throw err
+
+      flash(
+        'Failed to start background export',
+        `Could not start background export (${err.message}). Background exports have been disabled until restart -- report this as a bug at the Better BibTeX github project`,
+        15 // eslint-disable-line no-magic-numbers
+      )
+      this.worker = null
+    }
+  }
+
   public async exportItemsByWorker(translatorID: string, displayOptions: Record<string, boolean>, job: ExportJob) {
-    return this.queue.add(() => this.exportItemsByQueuedWorker(translatorID, displayOptions, job))
+    this.start()
+
+    if (!this.worker) {
+      // this returns a promise for a new export, but for a foreground export
+      return this.exportItems(translatorID, displayOptions, job.scope, job.path)
+    }
+    else {
+      return this.queue.add(() => this.exportItemsByQueuedWorker(translatorID, displayOptions, job))
+    }
   }
 
   private async exportItemsByQueuedWorker(translatorID: string, displayOptions: Record<string, boolean>, job: ExportJob) {
-    // this returns a promise for a new export, but for a foreground export
-    if (!this.worker) return this.exportItems(translatorID, displayOptions, job.scope, job.path)
-
     if (job.path && job.canceled) return ''
-
     await Zotero.BetterBibTeX.ready
     if (job.path && job.canceled) return ''
 
