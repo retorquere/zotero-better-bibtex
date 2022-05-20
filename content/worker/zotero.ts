@@ -55,6 +55,13 @@ import dateFormats from '../../schema/dateFormats.json'
 
 const ctx: DedicatedWorkerGlobalScope = self as any
 
+export const environment = {
+  version: '',
+  platform: '',
+  locale: '',
+  localeDateOrder: '',
+}
+
 export const workerContext = {
   version: '',
   platform: '',

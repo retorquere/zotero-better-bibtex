@@ -2,7 +2,6 @@ import { Item, Attachment, Collection, Tag } from '../gen/typings/serialized-ite
 
 export namespace Translators {
   namespace Worker {
-    /*
     type Environment = {
       version: string
       platform: string
@@ -10,6 +9,7 @@ export namespace Translators {
       localeDateOrder: string
     }
 
+    /*
     type Job = {
       job: number,
       translator: string
@@ -46,7 +46,7 @@ export namespace Translators {
     }
 
     type Message = 
-        { kind: 'configure', config: Environment }
+        { kind: 'configure', environment: Environment }
       | { kind: 'start', config: ArrayBuffer }
       | { kind: 'done', output: boolean | string }
       | { kind: 'debug', message: string }
