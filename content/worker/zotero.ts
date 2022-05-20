@@ -59,7 +59,6 @@ export const environment = {
   version: '',
   platform: '',
   locale: '',
-  localeDateOrder: '',
 }
 
 export const workerJob: Partial<Translators.Worker.Job> = {}
@@ -83,14 +82,7 @@ class WorkerZoteroBetterBibTeX {
   }
 
   public parseDate(date) {
-    return DateParser.parse(date, environment.localeDateOrder)
-  }
-
-  public getLocaleDateOrder() {
-    return environment.localeDateOrder
-  }
-  public get localeDateOrder() {
-    return environment.localeDateOrder
+    return DateParser.parse(date)
   }
 
   public isEDTF(date, minuteLevelPrecision = false) {
@@ -112,7 +104,7 @@ class WorkerZoteroBetterBibTeX {
   }
 
   public strToISO(str) {
-    return DateParser.strToISO(str, environment.localeDateOrder)
+    return DateParser.strToISO(str)
   }
 }
 

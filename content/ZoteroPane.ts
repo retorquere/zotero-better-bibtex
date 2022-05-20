@@ -160,7 +160,7 @@ export class ZoteroPane {
         const extra = Extra.get(item.getField('extra'), 'zotero', { tex: true })
         for (const [k, v] of Object.entries(extra.extraFields.tex)) {
           if (mapping[k]) {
-            const date = DateParser.parse(v.value, Zotero.BetterBibTeX.localeDateOrder)
+            const date = DateParser.parse(v.value)
             if (date.type === 'date' && date.day) {
               delete extra.extraFields.tex[k]
               item.setField(mapping[k], new Date(date.year, date.month - 1, date.day, 0, -tzdiff).toISOString())

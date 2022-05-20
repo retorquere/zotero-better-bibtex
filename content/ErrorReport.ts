@@ -231,8 +231,6 @@ export class ErrorReport {
     info += `Zotero.Debug.enabled: ${Zotero.Debug.enabled}\n`
     info += `Zotero.Debug.enabled at start: ${Zotero.BetterBibTeX.debugEnabledAtStart}\n`
 
-    info += `LocaleDateOrder: ${Zotero.Date.getLocaleDateOrder()}\n`
-
     info += `Total export workers started: ${Translators.workers.total}, currently running: ${Translators.workers.running.size}\n`
 
     return info
