@@ -60,6 +60,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
   }
 
   public async init() {
+    this.start()
 
     this.itemType = {
       note: Zotero.ItemTypes.getID('note'),
