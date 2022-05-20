@@ -123,7 +123,10 @@ async function rebuild() {
         shims
       ],
       outfile,
-      banner: { js: `if (typeof ZOTERO_TRANSLATOR_INFO === 'undefined') var ZOTERO_TRANSLATOR_INFO = ${JSON.stringify(header)};` },
+      banner: { js: `
+        if (typeof ZOTERO_TRANSLATOR_INFO === 'undefined') var ZOTERO_TRANSLATOR_INFO = {}; // declare if not declared
+        Object.assign(ZOTERO_TRANSLATOR_INFO, ${JSON.stringify(header)}); // assign new data
+      `},
       // make these var, not const, so they get hoisted and are available in the global scope. See logger.ts
       footer: { js: `var { ${vars.join(', ')} } = ${globalName};` },
       metafile: `gen/${translator.name}.json`,
