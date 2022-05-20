@@ -1,10 +1,13 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions, @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-assignment */
 
 importScripts('resource://gre/modules/osfile.jsm')
+importScripts('resource://zotero/config.js') // import ZOTERO_CONFIG'
 
-import type { ITranslator } from '../../translators/lib/translator'
+import type { TranslatorHeader } from '../../translators/lib/translator'
 import type { Translators } from '../../typings/translators'
 import { valid } from '../../gen/items/items'
+
+declare var ZOTERO_TRANSLATOR_INFO: TranslatorHeader // eslint-disable-line no-var
 
 import { DOMParser as XMLDOMParser } from '@xmldom/xmldom'
 
@@ -32,7 +35,6 @@ const ZUI = require('../../submodules/zotero-utilities/utilities_item.js')
 const ZD = require('../../submodules/zotero-utilities/date.js')
 
 declare const doExport: () => void
-declare const Translator: ITranslator
 declare const dump: (message: string) => void
 
 // import XRegExp = require('xregexp')
@@ -62,14 +64,6 @@ export const workerContext = {
   localeDateOrder: '',
   debugEnabled: false,
   worker: '',
-}
-for(const [key, value] of (new URLSearchParams(ctx.location.search)).entries()) {
-  if (key === 'debugEnabled') {
-    workerContext[key] = value === 'true'
-  }
-  else {
-    workerContext[key] = value
-  }
 }
 
 class WorkerZoteroBetterBibTeX {
@@ -287,11 +281,11 @@ class WorkerZotero {
     if (workerContext.output) {
       if (this.config.options.exportFileData) { // output path is a directory
         this.exportDirectory = OS.Path.normalize(workerContext.output)
-        this.exportFile = OS.Path.join(this.exportDirectory, `${OS.Path.basename(this.exportDirectory)}.${Translator.header.target}`)
+        this.exportFile = OS.Path.join(this.exportDirectory, `${OS.Path.basename(this.exportDirectory)}.${ZOTERO_TRANSLATOR_INFO.target}`)
       }
       else {
         this.exportFile = OS.Path.normalize(workerContext.output)
-        const ext = `.${Translator.header.target}`
+        const ext = `.${ZOTERO_TRANSLATOR_INFO.target}`
         if (!this.exportFile.endsWith(ext)) this.exportFile += ext
         this.exportDirectory = OS.Path.dirname(this.exportFile)
       }
@@ -310,7 +304,6 @@ class WorkerZotero {
       OS.File.writeAtomic(this.exportFile, array) as void
     }
     this.send({ kind: 'done', output: this.exportFile ? true : this.output })
-    close()
   }
 
   public send(message: Translators.Worker.Message) {
@@ -338,7 +331,6 @@ class WorkerZotero {
   public logError(err) {
     dump(`worker: error=${err}\n`)
     this.send({ kind: 'error', message: `${err}\n${err.stack}` })
-    close()
   }
 
   public write(str) {
@@ -377,21 +369,23 @@ const dec = new TextDecoder('utf-8')
 ctx.onmessage = function(e: { isTrusted?: boolean, data?: Translators.Worker.Message } ): void { // eslint-disable-line prefer-arrow/prefer-arrow-functions
   if (!e.data) return // some kind of startup message
 
+  let config: Translators.Worker.Config
   try {
     switch (e.data.kind) {
       case 'start':
-        Zotero.init(JSON.parse(dec.decode(new Uint8Array(e.data.config))))
+        config = JSON.parse(dec.decode(new Uint8Array(e.data.config)))
+        Object.assign(workerContext, config.globals)
+        importScripts(`resource://zotero-better-bibtex/${workerContext.translator}.js`)
+        Zotero.init(config)
         doExport()
         Zotero.done()
         break
 
       case 'stop':
-        close()
         break
 
       default:
-        log.error('unexpected message, stopping worker:', e)
-        close()
+        log.error('unexpected message:', e)
         break
     }
   }
