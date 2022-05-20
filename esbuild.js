@@ -76,7 +76,7 @@ async function rebuild() {
   })
 
   // worker code
-  const vars = [ 'Zotero', 'workerContext', 'environment', 'DOMParser' ]
+  const vars = [ 'Zotero', 'workerJob', 'environment', 'DOMParser' ]
   const globalName = vars.join('__')
   await bundle({
     entryPoints: [ 'content/worker/zotero.ts' ],

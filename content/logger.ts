@@ -1,6 +1,7 @@
-// workerContext and Translator must be var-hoisted by esbuild to make this work
+import type { Translators as Translator } from '../typings/translators'
+// workerJob and Translator must be var-hoisted by esbuild to make this work
 declare var ZOTERO_TRANSLATOR_INFO: TranslatorHeader // eslint-disable-line no-var
-declare const workerContext: { translator: string, debugEnabled: boolean, worker: number }
+declare const workerJob: Translator.Worker.Job
 
 import { asciify } from './stringify'
 import { environment } from './environment'
@@ -48,12 +49,11 @@ class Logger {
     }
 
     if (environment.worker) {
-
-      if (!worker && workerContext.worker) {
-        worker = workerContext.worker
-        workername = `${workerContext.worker}`
+      if (!worker && workerJob.job) {
+        worker = workerJob.job
+        workername = `${workerJob.job}`
       }
-      translator = translator || workerContext.translator
+      translator = translator || workerJob.translator
     }
     else {
       if (worker) workername = `${worker} (but environment is ${environment.name})`
@@ -79,7 +79,7 @@ class Logger {
   public get enabled(): boolean {
     if (!inTranslator) return Zotero.Debug.enabled as boolean
     if (!environment.worker) return true
-    return !workerContext || workerContext.debugEnabled
+    return !workerJob || workerJob.debugEnabled
   }
 
   public debug(...msg) {

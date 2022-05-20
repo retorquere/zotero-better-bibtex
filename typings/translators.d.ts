@@ -9,40 +9,22 @@ export namespace Translators {
       localeDateOrder: string
     }
 
-    /*
     type Job = {
-      job: number,
+      job: number
       translator: string
-      debugEnabled: boolean
-      preferences: any,
-      options: any,
       autoExport?: number
+
+      preferences: any
+      options: any
+
       output: string
+      debugEnabled: boolean
+
       data?: {
         items: Array<Item | Attachment | Note>
         collections: Collection[]
         cache: Record<number, {itemID: number, reference: string, metadata: any, meta: { updated: number }}>
       }
-    }
-    */
-
-    type Config = {
-      preferences: any,
-      options: any,
-      items: Array<Item | Attachment | Note>
-      collections: Collection[]
-      cache: Record<number, {itemID: number, reference: string, metadata: any, meta: { updated: number }}>
-      autoExport?: number
-      globals: {
-        version: string
-        platform: string
-        translator: string
-        output: string
-        locale: string
-        localeDateOrder: string
-        debugEnabled: boolean
-        worker: number
-      },
     }
 
     type Message = 

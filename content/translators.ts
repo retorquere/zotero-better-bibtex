@@ -223,24 +223,20 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
     const deferred = new Deferred<string>()
 
-    const config: Translator.Worker.Config = {
+    const config: Translator.Worker.Job = {
       preferences: { ...Preference.all, ...job.preferences },
       options: displayOptions || {},
-      items: [],
-      collections: [],
-      cache: {},
+      data: {
+        items: [],
+        collections: [],
+        cache: {},
+      },
       autoExport,
 
-      globals: {
-        version: Zotero.version,
-        platform: Preference.platform,
-        translator: translator.label,
-        output: job.path || '',
-        locale: Zotero.locale,
-        localeDateOrder: Zotero.BetterBibTeX.localeDateOrder,
-        debugEnabled: !!Zotero.Debug.enabled,
-        worker: id,
-      },
+      translator: translator.label,
+      output: job.path || '',
+      debugEnabled: !!Zotero.Debug.enabled,
+      job: id,
     }
 
     const selector = schema.translator[translator.label]?.cached ? cacheSelector(translator.label, config.options, config.preferences) : null
@@ -346,14 +342,13 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     items = items.filter(item => !item.isAnnotation?.())
 
     let worked = Date.now()
-    config.items = []
     const prepare = new Pinger({
       total: items.length,
       callback: pct => Events.emit('export-progress', -pct, translator.label, autoExport),
     })
     // use a loop instead of map so we can await for beachball protection
     for (const item of items) {
-      config.items.push(Serializer.fast(item))
+      config.data.items.push(Serializer.fast(item))
 
       // sleep occasionally so the UI gets a breather
       if ((Date.now() - worked) > 100) { // eslint-disable-line no-magic-numbers
@@ -366,7 +361,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     if (job.path && job.canceled) return ''
 
     if (this.byId[translatorID].configOptions?.getCollections) {
-      config.collections = collections.map(collection => {
+      config.data.collections = collections.map(collection => {
         collection = collection.serialize(true)
         collection.id = collection.primary.collectionID
         collection.name = collection.fields.name
@@ -376,13 +371,13 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
     // pre-fetch cache
     if (cache) {
-      const query = {...selector, itemID: { $in: config.items.map(item => item.itemID) }}
+      const query = {...selector, itemID: { $in: config.data.items.map(item => item.itemID) }}
 
       // not safe in async!
       const cloneObjects = cache.cloneObjects
       // uncloned is safe because it gets serialized in the transfer
       cache.cloneObjects = false
-      config.cache = cache.find($and(query)).reduce((acc, cached) => {
+      config.data.cache = cache.find($and(query)).reduce((acc, cached) => {
         // direct-DB access for speed...
         cached.meta.updated = (new Date).getTime() // touches the cache object so it isn't reaped too early
         acc[cached.itemID] = cached
