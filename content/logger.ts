@@ -1,10 +1,12 @@
 // workerContext and Translator must be var-hoisted by esbuild to make this work
-declare const ZOTERO_TRANSLATOR_INFO: any
+declare var ZOTERO_TRANSLATOR_INFO: TranslatorHeader // eslint-disable-line no-var
 declare const workerContext: { translator: string, debugEnabled: boolean, worker: number }
 
 import { asciify } from './stringify'
 import { environment } from './environment'
 import jsesc from 'jsesc'
+
+import type { TranslatorHeader } from '../translators/lib/translator'
 
 const inTranslator = environment.worker || typeof ZOTERO_TRANSLATOR_INFO !== 'undefined'
 
