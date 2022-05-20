@@ -379,6 +379,10 @@ ctx.onmessage = function(e: { isTrusted?: boolean, data?: Translators.Worker.Mes
   let config: Translators.Worker.Config
   try {
     switch (e.data.kind) {
+      case 'configure':
+        Object.assign(environment, e.data.environment)
+        break
+
       case 'start':
         config = JSON.parse(dec.decode(new Uint8Array(e.data.config)))
         Object.assign(workerContext, config.globals)
