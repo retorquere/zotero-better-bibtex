@@ -150,7 +150,6 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
         version: Zotero.version,
         platform: Preference.platform,
         locale: Zotero.locale,
-        localeDateOrder: Zotero.BetterBibTeX.localeDateOrder,
       }})
       log.debug('translate: worker acquired')
     }

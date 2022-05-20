@@ -354,9 +354,8 @@ Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
   qrCheck(_sandbox: any, value: string, test: string, params = null) { return qualityReport(value, test, params) },
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  parseDate(_sandbox: any, date: string): ParsedDate { return DateParser.parse(date, Zotero.BetterBibTeX.localeDateOrder) },
+  parseDate(_sandbox: any, date: string): ParsedDate { return DateParser.parse(date) },
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  getLocaleDateOrder(_sandbox: any): string { return Zotero.BetterBibTeX.localeDateOrder },
 
   isEDTF(_sandbox: any, date: string, minuteLevelPrecision = false) { return DateParser.isEDTF(date, minuteLevelPrecision) },
 
@@ -425,7 +424,7 @@ Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
     return true
   },
 
-  strToISO(_sandbox: any, str: string) { return DateParser.strToISO(str, Zotero.BetterBibTeX.localeDateOrder) },
+  strToISO(_sandbox: any, str: string) { return DateParser.strToISO(str) },
 }
 
 Zotero.Translate.Import.prototype.Sandbox.BetterBibTeX = {
@@ -439,7 +438,7 @@ Zotero.Translate.Import.prototype.Sandbox.BetterBibTeX = {
     return HTMLParser.parse(text.toString(), options)
   },
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  parseDate(_sandbox: any, date: string): ParsedDate { return DateParser.parse(date, Zotero.BetterBibTeX.localeDateOrder) },
+  parseDate(_sandbox: any, date: string): ParsedDate { return DateParser.parse(date) },
 }
 
 $patch$(Zotero.Utilities.Internal, 'itemToExportFormat', original => function Zotero_Utilities_Internal_itemToExportFormat(zoteroItem: any, _legacy: any, _skipChildItems: any) {
@@ -831,7 +830,6 @@ export class BetterBibTeX {
   public ErrorReport = new ErrorReport
   public PrefPane = new PrefPane
 
-  public localeDateOrder: string = Zotero.Date.getLocaleDateOrder()
   public ready: BluebirdPromise<boolean>
   public loaded: BluebirdPromise<boolean>
   public dir: string
