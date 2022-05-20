@@ -119,14 +119,11 @@ function is_valid_date(date: ParsedDate) {
 }
 
 // swap day/month for our American friends
-function swap_day_month(day: number, month: number): number[] {
-  if (!day) day = undefined
-  if (day && getLocaleDateOrder() === 'mdy' && is_valid_month(day, false)) {
-    return [month, day]
-  }
-  else if (day && is_valid_month(day, false) && !is_valid_month(month, false)) {
-    return [month, day]
-  }
+function swap_day_month(day: number, month: number, fix_only = false): number[] {
+  if (!day) return [ undefined, month ]
+
+  if (!is_valid_month(month, false) && is_valid_month(day, false)) return [month, day]
+  if (!fix_only && getLocaleDateOrder() === 'mdy' && is_valid_month(day, false)) return [month, day]
   return [day, month]
 }
 
@@ -257,12 +254,12 @@ function parseToDate(value: string, as_single_date: boolean): ParsedDate {
     return ''
   }).replace(/\s+/g, ' '))
 
-  // these assume a sensible d/m/y format by default. There's no sane way to guess between m/d/y and d/m/y, and m/d/y is
+  // these assume a sensible y/m/d format by default. There's no sane way to guess between y/d/m and y/m/d, and y/d/m is
   // just wrong. https://en.wikipedia.org/wiki/Date_format_by_country
   if (m = /^(-?[0-9]{3,})([-\s/.])([0-9]{1,2})(\2([0-9]{1,2}))?$/.exec(exactish)) {
     const [ , _year, , _month, , _day ] = m
     const year = parseInt(_year)
-    const [day, month] = swap_day_month(parseInt(_day), parseInt(_month))
+    const [day, month] = swap_day_month(parseInt(_day), parseInt(_month), true)
 
     // if (!month && !day) return doubt({ type: 'date', year }, state)
     if (!day && has_valid_month(date = { type: 'date', year, month })) return Season.seasonize(doubt(date, state))
