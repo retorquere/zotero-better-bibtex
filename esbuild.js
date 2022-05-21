@@ -76,7 +76,7 @@ async function rebuild() {
   })
 
   // worker code
-  const vars = [ 'Zotero', 'workerContext', 'DOMParser' ]
+  const vars = [ 'Zotero', 'workerJob', 'environment', 'DOMParser' ]
   const globalName = vars.join('__')
   await bundle({
     entryPoints: [ 'content/worker/zotero.ts' ],
@@ -90,17 +90,9 @@ async function rebuild() {
       shims
     ],
     outdir: 'build/content/worker',
-    banner: { js: [
-        'importScripts("resource://gre/modules/osfile.jsm")',
-        'importScripts("resource://zotero/config.js") // import ZOTERO_CONFIG',
-      ].join('\n')
-    },
     footer: {
-      js: [
-        // make these var, not const, so they get hoisted and are available in the global scope. See logger.ts
-        `var { ${vars.join(', ')} } = ${globalName};`,
-        'importScripts(`resource://zotero-better-bibtex/${workerContext.translator}.js`);',
-      ].join('\n'),
+      // make these var, not const, so they get hoisted and are available in the global scope. See logger.ts
+      js: `var { ${vars.join(', ')} } = ${globalName};`,
     },
     metafile: 'gen/worker.json',
     external: [ 'jsdom' ],
@@ -131,7 +123,10 @@ async function rebuild() {
         shims
       ],
       outfile,
-      banner: { js: `if (typeof ZOTERO_TRANSLATOR_INFO === 'undefined') var ZOTERO_TRANSLATOR_INFO = ${JSON.stringify(header)};` },
+      banner: { js: `
+        if (typeof ZOTERO_TRANSLATOR_INFO === 'undefined') var ZOTERO_TRANSLATOR_INFO = {}; // declare if not declared
+        Object.assign(ZOTERO_TRANSLATOR_INFO, ${JSON.stringify(header)}); // assign new data
+      `},
       // make these var, not const, so they get hoisted and are available in the global scope. See logger.ts
       footer: { js: `var { ${vars.join(', ')} } = ${globalName};` },
       metafile: `gen/${translator.name}.json`,

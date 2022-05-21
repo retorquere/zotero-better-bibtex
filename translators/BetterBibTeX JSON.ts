@@ -1,7 +1,10 @@
 declare const Zotero: any
 
 import { Translator } from './lib/translator'
+import type { TranslatorHeader } from './lib/translator'
 export { Translator }
+
+declare var ZOTERO_TRANSLATOR_INFO: TranslatorHeader // eslint-disable-line no-var
 
 import * as itemfields from '../gen/items/items'
 const version = require('../gen/version.js')
@@ -27,7 +30,7 @@ export function detectImport(): boolean {
     return false
   }
 
-  if (!data.config || (data.config.id !== Translator.header.translatorID)) return false
+  if (!data.config || (data.config.id !== ZOTERO_TRANSLATOR_INFO.translatorID)) return false
   return true
 }
 
@@ -127,11 +130,10 @@ export function doExport(): void {
   let item
   const data = {
     config: {
-      id: Translator.header.translatorID,
-      label: Translator.header.label,
+      id: ZOTERO_TRANSLATOR_INFO.translatorID,
+      label: ZOTERO_TRANSLATOR_INFO.label,
       preferences: Translator.preferences,
       options: Translator.options,
-      localeDateOrder: Zotero.BetterBibTeX.getLocaleDateOrder(),
     },
     version: {
       zotero: Zotero.Utilities.getVersion(),

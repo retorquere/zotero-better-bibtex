@@ -8,8 +8,7 @@
     },
     "preferences": {
       "citekeyFormat": "[auth:lower][shorttitle3_3][year]",
-      "mapUnicode": "minimal-packages",
-      "workers": 4
+      "mapUnicode": "minimal-packages"
     }
   },
   "items": [

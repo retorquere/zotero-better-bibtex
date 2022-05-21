@@ -15,8 +15,7 @@
       "csquotes": "\u201c\u201d",
       "qualityReport": true,
       "quickCopyMode": "citekeys",
-      "skipFields": "abstract,series,number,isbn,issn",
-      "workers": 2
+      "skipFields": "abstract,series,number,isbn,issn"
     }
   },
   "items": [

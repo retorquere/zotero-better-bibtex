@@ -36,7 +36,7 @@ Components.utils.import('resource://gre/modules/AddonManager.jsm')
 declare const AddonManager: any
 
 import { log } from './logger'
-import { Events, itemsChanged as notifyItemsChanged } from './events'
+import { Events } from './events'
 
 import { Translators } from './translators'
 import { DB } from './db/main'
@@ -354,9 +354,8 @@ Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
   qrCheck(_sandbox: any, value: string, test: string, params = null) { return qualityReport(value, test, params) },
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  parseDate(_sandbox: any, date: string): ParsedDate { return DateParser.parse(date, Zotero.BetterBibTeX.localeDateOrder) },
+  parseDate(_sandbox: any, date: string): ParsedDate { return DateParser.parse(date) },
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  getLocaleDateOrder(_sandbox: any): string { return Zotero.BetterBibTeX.localeDateOrder },
 
   isEDTF(_sandbox: any, date: string, minuteLevelPrecision = false) { return DateParser.isEDTF(date, minuteLevelPrecision) },
 
@@ -425,7 +424,7 @@ Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
     return true
   },
 
-  strToISO(_sandbox: any, str: string) { return DateParser.strToISO(str, Zotero.BetterBibTeX.localeDateOrder) },
+  strToISO(_sandbox: any, str: string) { return DateParser.strToISO(str) },
 }
 
 Zotero.Translate.Import.prototype.Sandbox.BetterBibTeX = {
@@ -439,7 +438,7 @@ Zotero.Translate.Import.prototype.Sandbox.BetterBibTeX = {
     return HTMLParser.parse(text.toString(), options)
   },
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  parseDate(_sandbox: any, date: string): ParsedDate { return DateParser.parse(date, Zotero.BetterBibTeX.localeDateOrder) },
+  parseDate(_sandbox: any, date: string): ParsedDate { return DateParser.parse(date) },
 }
 
 $patch$(Zotero.Utilities.Internal, 'itemToExportFormat', original => function Zotero_Utilities_Internal_itemToExportFormat(zoteroItem: any, _legacy: any, _skipChildItems: any) {
@@ -575,10 +574,10 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
       if (this.noWait) { // noWait must be synchronous
         disabled = 'noWait is active'
       }
-      else if (!Preference.workers) {
+      else if (!Preference.worker) {
         disabled = 'user has disabled worker export'
       }
-      else if (Translators.workers.disabled) {
+      else if (!Translators.worker) {
         // there wasn't an error starting a worker earlier
         disabled = 'failed to start a chromeworker, disabled until restart'
       }
@@ -598,7 +597,7 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
         this.saveQueue = []
         this._savingAttachments = []
 
-        return Translators.exportItemsByQueuedWorker(translatorID, displayOptions, { translate: this, scope: { ...this._export, getter: this._itemGetter }, path })
+        return Translators.exportItemsByWorker(translatorID, displayOptions, { translate: this, scope: { ...this._export, getter: this._itemGetter }, path })
           .then(result => {
             // eslint-disable-next-line id-blacklist
             this.string = result
@@ -704,7 +703,7 @@ notify('item', (action: string, type: any, ids: any[], extraData: { [x: string]:
       return
   }
 
-  notifyItemsChanged(items.concat(parents))
+  Events.itemsChanged(items.concat(parents))
 })
 
 notify('collection', (event: string, _type: any, ids: string | any[], _extraData: any) => {
@@ -831,7 +830,6 @@ export class BetterBibTeX {
   public ErrorReport = new ErrorReport
   public PrefPane = new PrefPane
 
-  public localeDateOrder: string = Zotero.Date.getLocaleDateOrder()
   public ready: BluebirdPromise<boolean>
   public loaded: BluebirdPromise<boolean>
   public dir: string

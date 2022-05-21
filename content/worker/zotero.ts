@@ -1,10 +1,13 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions, @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-assignment */
 
 importScripts('resource://gre/modules/osfile.jsm')
+importScripts('resource://zotero/config.js') // import ZOTERO_CONFIG'
 
-import type { ITranslator } from '../../translators/lib/translator'
+import type { TranslatorHeader } from '../../translators/lib/translator'
 import type { Translators } from '../../typings/translators'
 import { valid } from '../../gen/items/items'
+
+declare var ZOTERO_TRANSLATOR_INFO: TranslatorHeader // eslint-disable-line no-var
 
 import { DOMParser as XMLDOMParser } from '@xmldom/xmldom'
 
@@ -32,7 +35,6 @@ const ZUI = require('../../submodules/zotero-utilities/utilities_item.js')
 const ZD = require('../../submodules/zotero-utilities/date.js')
 
 declare const doExport: () => void
-declare const Translator: ITranslator
 declare const dump: (message: string) => void
 
 // import XRegExp = require('xregexp')
@@ -53,36 +55,25 @@ import dateFormats from '../../schema/dateFormats.json'
 
 const ctx: DedicatedWorkerGlobalScope = self as any
 
-export const workerContext = {
+export const environment = {
   version: '',
   platform: '',
-  translator: '',
-  output: '',
   locale: '',
-  localeDateOrder: '',
-  debugEnabled: false,
-  worker: '',
 }
-for(const [key, value] of (new URLSearchParams(ctx.location.search)).entries()) {
-  if (key === 'debugEnabled') {
-    workerContext[key] = value === 'true'
-  }
-  else {
-    workerContext[key] = value
-  }
-}
+
+export const workerJob: Partial<Translators.Worker.Job> = {}
 
 class WorkerZoteroBetterBibTeX {
   public cacheFetch(itemID: number) {
-    return Zotero.config.cache[itemID]
+    return workerJob.data.cache[itemID]
   }
 
   public setProgress(percent: number) {
-    Zotero.send({ kind: 'progress', percent, translator: workerContext.translator, autoExport: Zotero.config.autoExport })
+    Zotero.send({ kind: 'progress', percent, translator: workerJob.translator, autoExport: workerJob.autoExport })
   }
 
   public cacheStore(itemID: number, options: any, prefs: any, entry: string, metadata: any) {
-    if (Zotero.config.preferences.cache) Zotero.send({ kind: 'cache', itemID, entry, metadata })
+    if (workerJob.preferences.cache) Zotero.send({ kind: 'cache', itemID, entry, metadata })
     return true
   }
 
@@ -91,14 +82,7 @@ class WorkerZoteroBetterBibTeX {
   }
 
   public parseDate(date) {
-    return DateParser.parse(date, workerContext.localeDateOrder)
-  }
-
-  public getLocaleDateOrder() {
-    return workerContext.localeDateOrder
-  }
-  public get localeDateOrder() {
-    return workerContext.localeDateOrder
+    return DateParser.parse(date)
   }
 
   public isEDTF(date, minuteLevelPrecision = false) {
@@ -120,7 +104,7 @@ class WorkerZoteroBetterBibTeX {
   }
 
   public strToISO(str) {
-    return DateParser.strToISO(str, workerContext.localeDateOrder)
+    return DateParser.strToISO(str)
   }
 }
 
@@ -128,7 +112,7 @@ const WorkerZoteroUtilities = {
   ...ZU,
   Item: ZUI,
 
-  getVersion: () => workerContext.version,
+  getVersion: () => environment.version,
 
   /*
   public getCreatorsForType(itemType) {
@@ -136,13 +120,13 @@ const WorkerZoteroUtilities = {
   }
 
   public itemToCSLJSON(item) {
-    return Zotero.config.cslItems[item.itemID]
+    return workerJob.cslItems[item.itemID]
   }
   */
 }
 
 function isWinRoot(path) {
-  return workerContext.platform === 'win' && path.match(/^[a-z]:\\?$/i)
+  return environment.platform === 'win' && path.match(/^[a-z]:\\?$/i)
 }
 function makeDirs(path) {
   if (isWinRoot(path)) return
@@ -253,7 +237,6 @@ class WorkerZoteroItemFields {
 }
 
 class WorkerZotero {
-  public config: Translators.Worker.Config
   public output: string
   public exportDirectory: string
   public exportFile: string
@@ -269,29 +252,28 @@ class WorkerZotero {
     ...CSL_MAPPINGS,
   }
 
-  public init(config: Translators.Worker.Config) {
+  public init() {
     this.Date.init(dateFormats)
 
-    this.config = config
-    this.config.preferences.platform = workerContext.platform
-    this.config.preferences.client = client
+    workerJob.preferences.platform = environment.platform
+    workerJob.preferences.client = client
     this.output = ''
-    this.items = this.config.items.length
+    this.items = workerJob.data.items.length
 
-    if (this.config.options.exportFileData) {
-      for (const item of this.config.items) {
+    if (workerJob.options.exportFileData) {
+      for (const item of workerJob.data.items) {
         this.patchAttachments(item)
       }
     }
 
-    if (workerContext.output) {
-      if (this.config.options.exportFileData) { // output path is a directory
-        this.exportDirectory = OS.Path.normalize(workerContext.output)
-        this.exportFile = OS.Path.join(this.exportDirectory, `${OS.Path.basename(this.exportDirectory)}.${Translator.header.target}`)
+    if (workerJob.output) {
+      if (workerJob.options.exportFileData) { // output path is a directory
+        this.exportDirectory = OS.Path.normalize(workerJob.output)
+        this.exportFile = OS.Path.join(this.exportDirectory, `${OS.Path.basename(this.exportDirectory)}.${ZOTERO_TRANSLATOR_INFO.target}`)
       }
       else {
-        this.exportFile = OS.Path.normalize(workerContext.output)
-        const ext = `.${Translator.header.target}`
+        this.exportFile = OS.Path.normalize(workerJob.output)
+        const ext = `.${ZOTERO_TRANSLATOR_INFO.target}`
         if (!this.exportFile.endsWith(ext)) this.exportFile += ext
         this.exportDirectory = OS.Path.dirname(this.exportFile)
       }
@@ -310,7 +292,6 @@ class WorkerZotero {
       OS.File.writeAtomic(this.exportFile, array) as void
     }
     this.send({ kind: 'done', output: this.exportFile ? true : this.output })
-    close()
   }
 
   public send(message: Translators.Worker.Message) {
@@ -318,19 +299,19 @@ class WorkerZotero {
   }
 
   public get locale() {
-    return workerContext.locale
+    return environment.locale
   }
 
   public getHiddenPref(pref) {
-    return this.config.preferences[pref.replace(/^better-bibtex\./, '')]
+    return workerJob.preferences[pref.replace(/^better-bibtex\./, '')]
   }
 
   public getOption(option) {
-    return this.config.options[option]
+    return workerJob.options[option]
   }
 
   public debug(message) {
-    if (workerContext.debugEnabled) {
+    if (workerJob.debugEnabled) {
       // dump(`worker: ${message}\n`)
       this.send({ kind: 'debug', message })
     }
@@ -338,7 +319,6 @@ class WorkerZotero {
   public logError(err) {
     dump(`worker: error=${err}\n`)
     this.send({ kind: 'error', message: `${err}\n${err.stack}` })
-    close()
   }
 
   public write(str) {
@@ -346,12 +326,12 @@ class WorkerZotero {
   }
 
   public nextItem() {
-    this.send({ kind: 'item', item: this.items - this.config.items.length })
-    return this.config.items.shift()
+    this.send({ kind: 'item', item: this.items - workerJob.data.items.length })
+    return workerJob.data.items.shift()
   }
 
   public nextCollection(): Collection {
-    return this.config.collections.shift()
+    return workerJob.data.collections.shift()
   }
 
   private patchAttachments(item): void {
@@ -379,19 +359,23 @@ ctx.onmessage = function(e: { isTrusted?: boolean, data?: Translators.Worker.Mes
 
   try {
     switch (e.data.kind) {
+      case 'configure':
+        Object.assign(environment, e.data.environment)
+        break
+
       case 'start':
-        Zotero.init(JSON.parse(dec.decode(new Uint8Array(e.data.config))))
+        Object.assign(workerJob, JSON.parse(dec.decode(new Uint8Array(e.data.config))))
+        importScripts(`resource://zotero-better-bibtex/${workerJob.translator}.js`)
+        Zotero.init()
         doExport()
         Zotero.done()
         break
 
       case 'stop':
-        close()
         break
 
       default:
-        log.error('unexpected message, stopping worker:', e)
-        close()
+        log.error('unexpected message:', e)
         break
     }
   }

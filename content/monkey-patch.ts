@@ -1,35 +1,25 @@
-const marker = 'BetterBibTeXMonkeyPatched'
+/* eslint-disable @typescript-eslint/ban-types, prefer-rest-params, @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-unsafe-return */
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/ban-types
-export function unpatch(object: any, method: string, softfail=false) {
+export type Trampoline = Function & { disabled?: boolean }
+const trampolines: Trampoline[] = []
+
+export function patch(object: any, method: string, patcher: (f: Function) => Function, mem?: Trampoline[]): void {
   if (!patch.enabled) return
   if (typeof object[method] !== 'function') throw new Error(`monkey-patch: ${method} is not a function`)
-  const patched = object[method][marker]
-  if (typeof patched !== 'function') {
-    if (softfail) {
-      return
-    }
-    else {
-      throw new Error(`monkey-patch: ${method}.${marker} is not a function`)
-    }
+
+  const orig = object[method]
+  const patched = patcher(orig)
+  object[method] = function trampoline() {
+    return (trampoline as Trampoline).disabled ? orig.apply(this, arguments) : patched.apply(this, arguments)
   }
-  object[method] = patched
+  trampolines.push(object[method])
+  if (mem) mem.push(object[method])
 }
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/ban-types
-export function repatch(object: any, method: string, patcher: ((Function) => Function)): void {
-  if (!patch.enabled) return
-  if (typeof object[method] !== 'function') throw new Error(`monkey-patch: ${method} is not a function`)
-  const patched = object[method][marker] || object[method]
-  object[method] = patcher(patched)
-  object[method][marker] = patched
-}
-
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/ban-types
-export function patch(object: any, method: string, patcher: ((Function) => Function)): void {
-  if (!patch.enabled) return
-  if (object[method][marker]) throw new Error(`${method} re-patched`)
-  repatch(object, method, patcher)
+export function unpatch(functions?: Trampoline[]) {
+  for (const trampoline of (functions || trampolines)) {
+    trampoline.disabled = true
+  }
 }
 
 patch.enabled = true

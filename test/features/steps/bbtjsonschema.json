@@ -391,8 +391,8 @@
             "warnTitleCased": {
               "type": "boolean"
             },
-            "workers": {
-              "type": "number"
+            "worker": {
+              "type": "boolean"
             }
           },
           "type": "object"
