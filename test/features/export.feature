@@ -453,7 +453,7 @@ Feature: Export
   Scenario: Transforming exported file names (windows path conversion) #1939
     Given I import 1 reference from "export/*.json"
     And I set preference .postscript to "export/*.js"
-    And I set preference .workers to 0
+    And I set preference .worker to false
     Then an export using "Better BibTeX" should match "export/*.bibtex"
 
   @postscript @1043
@@ -539,7 +539,7 @@ Feature: Export
   @1420
   Scenario: (non-)dropping particle handling #313
     When I import 53 references from "export/*.json"
-    And I set preference .workers to 0
+    And I set preference .worker to false
     Then an export using "Better BibLaTeX" should match "export/*.biblatex"
 
   @1270

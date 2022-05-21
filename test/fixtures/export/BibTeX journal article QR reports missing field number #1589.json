@@ -16,8 +16,7 @@
       "importSentenceCase": "off",
       "itemObserverDelay": 100,
       "keyConflictPolicy": "change",
-      "qualityReport": true,
-      "workers": 4
+      "qualityReport": true
     }
   },
   "items": [

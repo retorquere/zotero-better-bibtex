@@ -15,8 +15,7 @@
       "csquotes": "\u201c\u201d",
       "exportBraceProtection": false,
       "quickCopyMode": "citekeys",
-      "skipFields": "abstract",
-      "workers": 2
+      "skipFields": "abstract"
     }
   },
   "items": [

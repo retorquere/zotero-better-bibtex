@@ -1,6 +1,6 @@
 import { log } from './logger'
 import { TeXstudio } from './tex-studio'
-import { repatch as $patch$ } from './monkey-patch'
+import { patch as $patch$, unpatch as $unpatch$, Trampoline } from './monkey-patch'
 import { clean_pane_persist } from './clean_pane_persist'
 import { Preference } from './prefs'
 import { AutoExport } from './auto-export'
@@ -13,9 +13,14 @@ import * as DateParser from './dateparser'
 
 export class ZoteroPane {
   private globals: Record<string, any>
+  private patched: Trampoline[] = []
+
+  public unload(): void {
+    $unpatch$(this.patched)
+  }
 
   public load(): void {
-    const pane = Zotero.getActiveZoteroPane()
+    const pane = Zotero.getActiveZoteroPane() // TODO: this is problematic if there can be multiple
 
     const globals = this.globals
     $patch$(pane, 'buildCollectionContextMenu', original => async function() {
@@ -71,14 +76,14 @@ export class ZoteroPane {
       catch (err) {
         log.error('ZoteroPane.buildCollectionContextMenu:', err)
       }
-    })
+    }, this.patched)
 
     // Monkey patch because of https://groups.google.com/forum/#!topic/zotero-dev/zy2fSO1b0aQ
     $patch$(pane, 'serializePersist', original => function() {
       // eslint-disable-next-line prefer-rest-params
       original.apply(this, arguments)
       if (Zotero.BetterBibTeX.uninstalled) clean_pane_persist()
-    })
+    }, this.patched)
   }
 
   public pullExport(): void {
@@ -155,7 +160,7 @@ export class ZoteroPane {
         const extra = Extra.get(item.getField('extra'), 'zotero', { tex: true })
         for (const [k, v] of Object.entries(extra.extraFields.tex)) {
           if (mapping[k]) {
-            const date = DateParser.parse(v.value, Zotero.BetterBibTeX.localeDateOrder)
+            const date = DateParser.parse(v.value)
             if (date.type === 'date' && date.day) {
               delete extra.extraFields.tex[k]
               item.setField(mapping[k], new Date(date.year, date.month - 1, date.day, 0, -tzdiff).toISOString())

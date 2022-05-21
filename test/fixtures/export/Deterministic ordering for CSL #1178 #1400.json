@@ -16,8 +16,7 @@
       "parseParticles": false,
       "quickCopyMode": "pandoc",
       "quickCopyPandocBrackets": true,
-      "skipFields": "abstract",
-      "workers": 4
+      "skipFields": "abstract"
     }
   },
   "items": [
