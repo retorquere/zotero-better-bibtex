@@ -115,7 +115,7 @@ class Git {
 
     try {
       await this.exec(this.git, ['-C', this.path, 'add', this.bib])
-      await this.exec(this.git, ['-C', this.path, 'commit', '-m', msg, '--allow-empty'])
+      await this.exec(this.git, ['-C', this.path, 'commit', '-m', msg])
       await this.exec(this.git, ['-C', this.path, 'push'])
     }
     catch (err) {
@@ -138,7 +138,7 @@ class Git {
 
     const proc = Components.classes['@mozilla.org/process/util;1'].createInstance(Components.interfaces.nsIProcess)
     proc.init(cmd)
-    // proc.startHidden = true // requires post-55 Firefox
+    proc.startHidden = true // requires post-55 Firefox
 
     const command = this.quote(cmd.path, args)
     log.debug('running:', command)
