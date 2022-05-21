@@ -83,7 +83,6 @@ const htmlConverter = new class HTMLConverter {
       ...this.mapping,
       ...this.charmap(),
     }
-    log.debug('translate:', { unicode: Translator.unicode })
 
     if (!this.mapping.initialized) {
       for (const c of Translator.preferences.ascii) {

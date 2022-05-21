@@ -585,6 +585,10 @@ class Zotero:
     profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.log-events', True)
     profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.workers', self.workers)
     profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.caching', self.caching)
+
+    profile.firefox.set_preference('intl.accept_languages', 'en-GB')
+    profile.firefox.set_preference('intl.locale.requested', 'en-GB')
+
     profile.firefox.set_preference('extensions.zotero.debug-bridge.password', self.password)
     profile.firefox.set_preference('dom.max_chrome_script_run_time', self.config.timeout)
     utils.print(f'dom.max_chrome_script_run_time={self.config.timeout}')

@@ -271,7 +271,6 @@ export class ITranslator { // eslint-disable-line @typescript-eslint/naming-conv
       acc[pref] = this.getPreferenceOverride(pref) ?? Zotero.getHiddenPref(`better-bibtex.${pref}`) ?? dflt
       return acc
     }, {} as unknown as Preferences)
-    Zotero.debug(`translate: preferences = ${JSON.stringify(this.preferences, null, 2)}`)
 
     // special handling
     this.skipFields = this.preferences.skipFields.toLowerCase().split(',').map(field => this.typefield(field)).filter((s: string) => s)
@@ -291,7 +290,6 @@ export class ITranslator { // eslint-disable-line @typescript-eslint/naming-conv
 
     if (mode === 'export') {
       this.unicode = !this.preferences[`ascii${ZOTERO_TRANSLATOR_INFO.label.replace(/Better /, '')}`]
-      Zotero.debug(`translate: unicode = ${JSON.stringify({ unicode: this.unicode, label: ZOTERO_TRANSLATOR_INFO.label })}`)
 
       if (this.preferences.baseAttachmentPath && (this.export.dir === this.preferences.baseAttachmentPath || this.export.dir?.startsWith(this.preferences.baseAttachmentPath + this.paths.sep))) {
         this.preferences.relativeFilePaths = true
