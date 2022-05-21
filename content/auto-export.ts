@@ -138,7 +138,7 @@ class Git {
 
     const proc = Components.classes['@mozilla.org/process/util;1'].createInstance(Components.interfaces.nsIProcess)
     proc.init(cmd)
-    proc.startHidden = true // requires post-55 Firefox
+    proc.startHidden = true
 
     const command = this.quote(cmd.path, args)
     log.debug('running:', command)
