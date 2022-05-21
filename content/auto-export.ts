@@ -149,7 +149,7 @@ class Git {
         if (topic !== 'process-finished') {
           deferred.reject(new Error(`failed: ${command}`))
         }
-        else if (proc.exitValue !== 0) {
+        else if (proc.exitValue > 0) {
           deferred.reject(new Error(`failed with exit status ${proc.exitValue}: ${command}`))
         }
         else {
