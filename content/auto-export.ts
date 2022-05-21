@@ -129,8 +129,8 @@ class Git {
   }
 
   private async exec(exe: string, args?: string[]): Promise<boolean> { // eslint-disable-line @typescript-eslint/require-await
-    args = ['/K', exe].concat(args || [])
-    exe = await pathSearch('CMD')
+    // args = ['/K', exe].concat(args || [])
+    // exe = await pathSearch('CMD')
 
     const cmd = new FileUtils.File(exe)
 
