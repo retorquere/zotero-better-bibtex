@@ -20,6 +20,21 @@ function escapeXml(unsafe) {
     }
   })
 }
+
+const NodeType = {
+  ELEMENT_NODE                : 1,
+  ATTRIBUTE_NODE              : 2,
+  TEXT_NODE                   : 3,
+  CDATA_SECTION_NODE          : 4,
+  ENTITY_REFERENCE_NODE       : 5,
+  ENTITY_NODE                 : 6,
+  PROCESSING_INSTRUCTION_NODE : 7,
+  COMMENT_NODE                : 8,
+  DOCUMENT_NODE               : 9,
+  DOCUMENT_TYPE_NODE          : 10,
+  DOCUMENT_FRAGMENT_NODE      : 11,
+  NOTATION_NODE               : 12,
+}
 function upgrade(root) {
   if (!root.children) {
     Object.defineProperty(root, 'children', {
@@ -61,6 +76,51 @@ function upgrade(root) {
         }).join('')
       },
     })
+  }
+
+  if (!root.insertAdjacentHTML) {
+    root.insertAdjacentHTML = function(position: 'beforebegin' | 'afterbegin' | 'beforeend' | 'afterend', text: string) {
+      (position as string) = position.toLowerCase()
+
+      let context
+      switch (position) {
+        case 'beforebegin':
+        case 'afterend':
+          context = root.parentNode
+          if (context === null || context.nodeType === NodeType.DOCUMENT_NODE) {
+            throw new Error('Cannot insert HTML adjacent to parent-less nodes or children of document nodes.')
+          }
+          break
+
+        case 'afterbegin':
+        case 'beforeend':
+          context = root
+          break
+
+        default:
+          throw new Error('Must provide one of "beforebegin", "afterbegin", "beforeend", or "afterend".')
+      }
+
+      const fragment = new DOMParser().parseFromString(text, 'text/html').documentElement.firstChild
+
+      switch (position) {
+        case 'beforebegin':
+          this.parentNode.insert(fragment, this)
+          break
+
+        case 'afterbegin':
+          this.insert(fragment, this.firstChild)
+          break
+
+        case 'beforeend':
+          this.append(fragment)
+          break
+
+        case 'afterend':
+          this.parentNode.insert(fragment, this.nextSibling)
+          break
+      }
+    }
   }
 
   return root
