@@ -13,7 +13,7 @@ Feature: Export
 
     Examples:
       | file                                                                                                                     | references |
-      | Make DOMParser available in background export #2094                                                                      | 2          |
+      | Make DOMParser available in background export #2094                                                                      | 3          |
       | Authors export looks like this prefix=von useprefix=true... #2138                                                        | 1          |
       | Zotero's Manuscript 'Type' is mapped to both biblatex's 'type' and 'howpublished' #2114                                  | 1          |
       | Configurable journal abbreviation for citekey #2097                                                                      | 1          |

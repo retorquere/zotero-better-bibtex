@@ -10,7 +10,7 @@ parser.add_argument('-u', '--unique', action='store_true')
 parser.add_argument('libraries', type=str, nargs='+')
 args = parser.parse_args()
 
-main = args.libraries.pop()
+main = args.libraries.pop(0)
 
 with open(main) as f:
   data = json.load(f)
@@ -37,5 +37,11 @@ if args.unique:
 
 print(len(data['items']))
 
+print('saving', main)
 with open(main, 'w') as f:
   json.dump(data, f, indent='  ')
+
+with open(main) as f:
+  data = json.load(f)
+  print(len(data['items']))
+

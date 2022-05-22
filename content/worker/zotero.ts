@@ -113,7 +113,7 @@ function upgrade(root) {
           break
 
         case 'beforeend':
-          this.append(fragment)
+          this.appendChild(fragment)
           break
 
         case 'afterend':
