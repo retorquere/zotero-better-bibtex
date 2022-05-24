@@ -33,9 +33,12 @@ module.exports.patcher = function(dir) {
         console.log('  patching', target)
         const source = await fs.promises.readFile(args.path, 'utf-8')
         const patch = patches[target]
+        const contents = diff.applyPatch(source, patch)
+
+        if (contents === false) throw new Error(`failed to apply ${patch}`)
 
         return {
-          contents: diff.applyPatch(source, patch),
+          contents,
           loader: 'js',
         }
       })
