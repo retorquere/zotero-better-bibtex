@@ -7,6 +7,8 @@ import type { TranslatorHeader } from '../../translators/lib/translator'
 import type { Translators } from '../../typings/translators'
 import { valid } from '../../gen/items/items'
 
+import { DOMParser as XMLDOMParser } from '@xmldom/xmldom'
+
 declare var ZOTERO_TRANSLATOR_INFO: TranslatorHeader // eslint-disable-line no-var
 
 const NodeType = {
@@ -26,12 +28,18 @@ const NodeType = {
 
 const childrenProxy = {
   get(target, prop) { // eslint-disable-line prefer-arrow/prefer-arrow-functions
-    const children = Array.from(target.childNodes).filter((child: any) => child.tagName && child.tagName[0] !== '#')
-    if (prop === 'length') return children.length
-    if (typeof prop === 'number') return children[prop]
-    if (typeof prop === 'string' && prop.match(/^[0-9]+$/)) return children[prop]
-    if (prop === Symbol.iterator) return children[Symbol.iterator]
-    throw new Error(`cannot get unsupported ${typeof prop} children[${typeof prop === 'symbol' ? prop.toString() : prop}]`)
+    if (prop === Symbol.iterator) {
+      return function*() {
+        let child = target.firstChild
+        while (child) {
+          if (child.childNodes) yield child
+          child = child.nextSibling
+        }
+      }
+    }
+    const children = Array.from(target.childNodes).filter((child: any) => child.childNodes)
+    Zotero.debug(`proxy:children[${typeof prop === 'symbol' ? prop.toString() : prop}]`)
+    return children[prop]
   },
 
   set(target, prop, _value) { // eslint-disable-line prefer-arrow/prefer-arrow-functions
@@ -39,6 +47,7 @@ const childrenProxy = {
   },
 }
 
+const domParser = new XMLDOMParser
 function upgrade(root) {
   if (!root.children) {
     Object.defineProperty(root, 'children', {
@@ -79,7 +88,8 @@ function upgrade(root) {
           throw new Error('Must provide one of "beforebegin", "afterbegin", "beforeend", or "afterend".')
       }
 
-      const fragment = new DOMParser().parseFromString(text, 'text/html').documentElement.firstChild
+      const fragment = domParser.parseFromString(`<span>${text}</span>`, 'text/html').documentElement;
+      (fragment as any).nodeType = NodeType.DOCUMENT_FRAGMENT_NODE // seriously icky
 
       switch (position) {
         case 'beforebegin':
@@ -106,7 +116,6 @@ function upgrade(root) {
 import { Node as XMLDOMNode } from '@xmldom/xmldom/lib/dom'
 upgrade(XMLDOMNode.prototype)
 
-import { DOMParser as XMLDOMParser } from '@xmldom/xmldom'
 export class DOMParser extends XMLDOMParser {
   parseFromString(text: string, contentType: string) { // eslint-disable-line @typescript-eslint/explicit-module-boundary-types
     return upgrade(super.parseFromString(text, contentType))
