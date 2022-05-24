@@ -9,8 +9,6 @@ import jsesc from 'jsesc'
 
 import type { TranslatorHeader } from '../translators/lib/translator'
 
-const inTranslator = environment.worker || typeof ZOTERO_TRANSLATOR_INFO !== 'undefined'
-
 class Logger {
   public verbose = false
 
@@ -48,7 +46,7 @@ class Logger {
       msg = output
     }
 
-    if (environment.worker) {
+    if (Zotero.worker) {
       if (!worker && workerJob.job) {
         worker = workerJob.job
         workername = `${workerJob.job}`
@@ -58,7 +56,7 @@ class Logger {
     else {
       if (worker) workername = `${worker} (but environment is ${environment.name})`
       // Translator must be var-hoisted by esbuild for this to work
-      if (!translator && inTranslator) translator = ZOTERO_TRANSLATOR_INFO.label
+      if (!translator && typeof ZOTERO_TRANSLATOR_INFO !== 'undefined') translator = ZOTERO_TRANSLATOR_INFO.label
     }
     const prefix = ['better-bibtex', translator, error && ':error:', worker && `(worker ${workername})`].filter(p => p).join(' ')
     return `{${prefix}} +${diff} ${asciify(msg)}`
@@ -77,8 +75,8 @@ class Logger {
   }
 
   public get enabled(): boolean {
-    if (!inTranslator) return Zotero.Debug.enabled as boolean
-    if (!environment.worker) return true
+    if (typeof ZOTERO_TRANSLATOR_INFO === 'undefined') return Zotero.Debug.enabled as boolean
+    if (!Zotero.worker) return true
     return !workerJob || workerJob.debugEnabled
   }
 

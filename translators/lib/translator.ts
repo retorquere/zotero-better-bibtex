@@ -4,7 +4,6 @@ declare const __estrace: any // eslint-disable-line no-underscore-dangle
 import { affects, names as preferences, defaults, PreferenceName, Preferences, schema } from '../../gen/preferences/meta'
 import { client } from '../../content/client'
 import { RegularItem, Item, Collection } from '../../gen/typings/serialized-item'
-import { environment } from '../../content/environment'
 import { Pinger } from '../../content/ping'
 
 type TranslatorMode = 'export' | 'import'
@@ -102,7 +101,7 @@ class Items {
 
     this.ping = new Pinger({
       total: this.list.length,
-      callback: pct => environment.worker ? Zotero.BetterBibTeX.setProgress(pct) : null, // eslint-disable-line @typescript-eslint/no-unsafe-return
+      callback: pct => Zotero.worker ? Zotero.BetterBibTeX.setProgress(pct) : null, // eslint-disable-line @typescript-eslint/no-unsafe-return
     })
   }
 

@@ -10,7 +10,6 @@ import * as Extra from '../../content/extra'
 import { Cache } from '../../typings/cache'
 import * as ExtraFields from '../../gen/items/extra-fields.json'
 import { log } from '../../content/logger'
-import { environment } from '../../content/environment'
 import { RegularItem } from '../../gen/typings/serialized-item'
 import * as postscript from '../lib/postscript'
 
@@ -72,7 +71,7 @@ export const CSLExporter = new class { // eslint-disable-line @typescript-eslint
 
       let csl = Zotero.Utilities.itemToCSLJSON(item)
       csl['citation-key'] = item.citationKey
-      if (environment.worker) csl.note = item.extra || undefined
+      if (Zotero.worker) csl.note = item.extra || undefined
 
       if (item.place) csl[item.itemType === 'presentation' ? 'event-place' : 'publisher-place'] = item.place
 

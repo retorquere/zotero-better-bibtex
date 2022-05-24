@@ -9,18 +9,6 @@ import { valid } from '../../gen/items/items'
 
 declare var ZOTERO_TRANSLATOR_INFO: TranslatorHeader // eslint-disable-line no-var
 
-function escapeXml(unsafe) {
-  return unsafe.replace(/[<>&'"]/g, (c: string) => {
-    switch (c) {
-      case '<': return '&lt;'
-      case '>': return '&gt;'
-      case '&': return '&amp;'
-      case '\'': return '&apos;'
-      case '"': return '&quot;'
-    }
-  })
-}
-
 const NodeType = {
   ELEMENT_NODE                : 1,
   ATTRIBUTE_NODE              : 2,
@@ -35,12 +23,25 @@ const NodeType = {
   DOCUMENT_FRAGMENT_NODE      : 11,
   NOTATION_NODE               : 12,
 }
+
+const childrenProxy = {
+  get(target, prop) { // eslint-disable-line prefer-arrow/prefer-arrow-functions
+    const children = Array.from(target.childNodes).filter((child: any) => child.tagName && child.tagName[0] !== '#')
+    if (prop === 'length') return children.length
+    if (prop.match(/^[0-9]+$/)) return children[prop]
+    throw new Error(`cannot get unsupported children.${prop}`)
+  },
+
+  set(target, prop, _value) { // eslint-disable-line prefer-arrow/prefer-arrow-functions
+    throw new Error(`cannot set unsupported children.${prop}`)
+  },
+}
+
 function upgrade(root) {
   if (!root.children) {
     Object.defineProperty(root, 'children', {
       get() {
-        if (!this.childNodes) return this.childNodes
-        return Array.from(this.childNodes).filter((child: any) => child.tagName && child.tagName[0] !== '#')
+        return new Proxy(this, childrenProxy)
       },
     })
   }
@@ -48,32 +49,7 @@ function upgrade(root) {
   if (!root.innerHTML) {
     Object.defineProperty(root, 'innerHTML', {
       get() {
-        if (!this.childNodes) return this.childNodes
-
-        return Array.from(this.childNodes).map((node: any) => {
-          switch (node.tagName || '') {
-            case '':
-            case '#comment':
-              return ''
-            case '#text':
-            case '#cdata-section':
-              return this.nodeValue
-            default:
-              if (!node.tagName || node.tagName[0] === '#') throw new Error(`unexpected tag ${node.tagName}`)
-              break
-          }
-
-          let innerHTML = `<${node.tagName}`
-          let i = node.attributes.length
-          while (i--) {
-            const attr = node.attributes[i]
-            innerHTML += ` ${attr.nodeName}="${escapeXml(attr.value)}"`
-          }
-          innerHTML += '>'
-          innerHTML += node.innerHTML
-          innerHTML += `</${node.tagName}>`
-          return innerHTML
-        }).join('')
+        return this.childNodes?.toString()
       },
     })
   }
@@ -86,7 +62,7 @@ function upgrade(root) {
       switch (position) {
         case 'beforebegin':
         case 'afterend':
-          context = root.parentNode
+          context = this.parentNode
           if (context === null || context.nodeType === NodeType.DOCUMENT_NODE) {
             throw new Error('Cannot insert HTML adjacent to parent-less nodes or children of document nodes.')
           }
@@ -94,7 +70,7 @@ function upgrade(root) {
 
         case 'afterbegin':
         case 'beforeend':
-          context = root
+          context = this // eslint-disable-line @typescript-eslint/no-this-alias
           break
 
         default:
@@ -105,11 +81,11 @@ function upgrade(root) {
 
       switch (position) {
         case 'beforebegin':
-          this.parentNode.insert(fragment, this)
+          this.parentNode.insertBefore(fragment, this)
           break
 
         case 'afterbegin':
-          this.insert(fragment, this.firstChild)
+          this.insertBefore(fragment, this.firstChild)
           break
 
         case 'beforeend':
@@ -117,7 +93,7 @@ function upgrade(root) {
           break
 
         case 'afterend':
-          this.parentNode.insert(fragment, this.nextSibling)
+          this.parentNode.insertBefore(fragment, this.nextSibling)
           break
       }
     }
@@ -342,6 +318,8 @@ class WorkerZoteroItemFields {
 }
 
 class WorkerZotero {
+  public worker = true
+
   public output: string
   public exportDirectory: string
   public exportFile: string

@@ -83,6 +83,7 @@ async function rebuild() {
     globalName,
     plugins: [
       loader.trace('worker'),
+      loader.patcher('setup/patches'),
       // loader.bibertool,
       // loader.peggy,
       loader.ajv,
