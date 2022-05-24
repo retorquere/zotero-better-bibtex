@@ -35,7 +35,7 @@ module.exports.patcher = function(dir) {
         const patch = patches[target]
         const contents = diff.applyPatch(source, patch)
 
-        if (contents === false) throw new Error(`failed to patch ${target}`)
+        if (contents === false) throw new Error(`failed to apply ${patch}`)
 
         return {
           contents,
