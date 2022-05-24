@@ -456,7 +456,7 @@ Feature: Export
     Then an export using "Better BibTeX" should match "export/*.bibtex"
 
   Scenario: Make DOMParser available in background export #2094
-    Given I import 3 references from "export/*.json"
+    Given I import 4 references from "export/*.json"
     And I set preference .worker to false
     Then an export using "Better BibLaTeX" should match "export/*.biblatex"
     When I set preference .worker to true

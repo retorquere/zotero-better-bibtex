@@ -28,8 +28,10 @@ const childrenProxy = {
   get(target, prop) { // eslint-disable-line prefer-arrow/prefer-arrow-functions
     const children = Array.from(target.childNodes).filter((child: any) => child.tagName && child.tagName[0] !== '#')
     if (prop === 'length') return children.length
-    if (prop.match(/^[0-9]+$/)) return children[prop]
-    throw new Error(`cannot get unsupported children.${prop}`)
+    if (typeof prop === 'number') return children[prop]
+    if (typeof prop === 'string' && prop.match(/^[0-9]+$/)) return children[prop]
+    if (prop === Symbol.iterator) return children[Symbol.iterator]
+    throw new Error(`cannot get unsupported ${typeof prop} children[${typeof prop === 'symbol' ? prop.toString() : prop}]`)
   },
 
   set(target, prop, _value) { // eslint-disable-line prefer-arrow/prefer-arrow-functions
