@@ -807,6 +807,22 @@ class PatternFormatter {
     return this.len(this.chunk, relation, length)
   }
 
+  /**
+    * If the length of the output does not match the given number, skip to the next pattern.
+    */
+  public _match(match: RegExp | string) {
+    if (!match) return this
+
+    if (typeof match === 'string') {
+      if (this.chunk.toLowerCase().includes(match.toLowerCase())) return this
+    }
+    else if (this.chunk.match(match)) {
+      return this
+    }
+
+    throw { next: true } // eslint-disable-line no-throw-literal
+  }
+
   private len(value: string, relation: '<' | '<=' | '=' | '!=' | '>=' | '>', n: number) {
     switch (relation) {
       case '<':
