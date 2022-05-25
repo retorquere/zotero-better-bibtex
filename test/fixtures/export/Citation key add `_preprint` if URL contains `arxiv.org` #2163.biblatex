@@ -1,5 +1,5 @@
 
-@unpublished{arXiv.org_preprinthe_delving_deep_into_rectifiers_2015,
+@unpublished{_preprinthe_delving_deep_into_rectifiers_2015,
   title = {Delving {{Deep}} into {{Rectifiers}}: {{Surpassing Human-Level Performance}} on {{ImageNet Classification}}},
   shorttitle = {Delving {{Deep}} into {{Rectifiers}}},
   author = {He, Kaiming and Zhang, Xiangyu and Ren, Shaoqing and Sun, Jian},
@@ -14,7 +14,7 @@
   keywords = {Computer Science - Artificial Intelligence,Computer Science - Computer Vision and Pattern Recognition,Computer Science - Machine Learning}
 }
 
-@unpublished{arXiv.org_preprintwang_on_solving_minimax_optimization_locally_2019,
+@unpublished{_preprintwang_on_solving_minimax_optimization_locally_2019,
   title = {On {{Solving Minimax Optimization Locally}}: {{A Follow-the-Ridge Approach}}},
   shorttitle = {On {{Solving Minimax Optimization Locally}}},
   author = {Wang, Yuanhao and Zhang, Guodong and Ba, Jimmy},
