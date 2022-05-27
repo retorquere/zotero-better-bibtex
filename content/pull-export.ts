@@ -11,6 +11,7 @@ import { get as getLibrary } from './library'
 import { getItemsAsync } from './get-items-async'
 import { fromEntries } from './object'
 import { $and } from './db/loki'
+import { genZipBib } from './image-notes'
 
 function displayOptions(request) {
   const isTrue = new Set([ 'y', 'yes', 'true' ])
@@ -20,6 +21,31 @@ function displayOptions(request) {
     exportCharset: query.exportCharset || 'utf8',
     exportNotes: isTrue.has(query.exportNotes),
     useJournalAbbreviation: isTrue.has(query.useJournalAbbreviation),
+  }
+}
+
+Zotero.Server.Endpoints['/better-bibtex/export/collection-archive'] = Zotero.Server.Endpoints['/better-bibtex/collection-archive'] = class {
+  public supportedMethods = ['GET']
+
+  public async init(request) {
+    if (!request.query || !request.query['']) return [NOT_FOUND, 'text/plain', 'Could not export bibliography: no path']
+
+    try {
+      const [ , lib, path, translator ] = request.query[''].match(/^\/(?:([0-9]+)\/)?(.*)\.([-0-9a-z]+)$/i)
+      const libID = parseInt(lib || 0) || Zotero.Libraries.userLibraryID
+
+      const collection = Zotero.Collections.getByLibraryAndKey(libID, path) || (await getCollection(`/${libID}/${path}`))
+      if (!collection) return [NOT_FOUND, 'text/plain', `Could not export bibliography: path '${path}' not found`]
+
+      const bib = await Translators.exportItems(Translators.getTranslatorId(translator), displayOptions(request), { type: 'collection', collection })
+      const bibJson = await Translators.exportItems(Translators.getTranslatorId('jzon'), displayOptions(request), { type: 'collection', collection })
+      const zipFile = await genZipBib(path,collection,bib,bibJson)
+      const zipData = await Zotero.File.getBinaryContentsAsync(zipFile)
+      return [ OK, `text/plain; charset=utf-8\nContent-Disposition: attachment; filename="${path}.zip.base64"`, btoa(zipData)]
+    }
+    catch (err) {
+      return [{ notfound: NOT_FOUND, duplicate: CONFLICT, error: SERVER_ERROR}[err.kind || 'error'], 'text/plain', `${err}`]
+    }
   }
 }
 
