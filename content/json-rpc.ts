@@ -166,6 +166,16 @@ class NSItem {
     return (await getItemsAsync(item.getAttachments())).map(att => ({
       open: `zotero://open-pdf/${Zotero.API.getLibraryPrefix(item.libraryID || Zotero.Libraries.userLibraryID)}/items/${att.key}`,
       path: att.getFilePath(),
+      annotations: att.getAnnotations().map(raw => {
+        const annot = raw.toJSON()
+
+        if (annot.annotationPosition && typeof annot.annotationPosition === 'string') {
+          annot.annotationPosition = JSON.parse(annot.annotationPosition)
+        }
+
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+        return annot
+      }),
     }))
   }
 
