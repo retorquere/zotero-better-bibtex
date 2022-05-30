@@ -168,7 +168,7 @@ export const AUXScanner = new class { // eslint-disable-line @typescript-eslint/
       }
     }
 
-    re = /(?:\\citation|@cite)\{([^}]+)\}/g
+    re = /(?:\\citation|@cite|\\abx@aux@cite)\{([^}]+)\}/g
     while (m = re.exec(contents)) {
       for (const key of m[1].split(',')) {
         if (!citekeys.includes(key)) citekeys.push(key)

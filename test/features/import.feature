@@ -2,7 +2,7 @@
 Feature: Import
 
   Background:
-    Given I set preference .citekeyFormat to "[auth][year]"
+    Given I set preference .citekeyFormat to "auth + year"
     And I set preference .jabrefFormat to 0
 
   @schomd
@@ -45,10 +45,11 @@ Feature: Import
     Then the library should match "import/*.json"
     And an export using "Better BibTeX" should match "import/*.roundtrip.bib"
 
-  @758 @aux
+  @758 @aux @2164
   Scenario: AUX scanner
     When I import 149 references from "import/*-pre.json"
-    And I import 1 reference from "import/*.aux"
+    And I import 1 reference from "import/*.1.aux"
+    And I import 1 reference from "import/*.2.aux"
     Then the library should match "import/*-post.json"
 
   Scenario: Copy date-addeddate-modified from extra field regenerates citation key #2142

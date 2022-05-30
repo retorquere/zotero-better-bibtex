@@ -174,6 +174,8 @@ function parseInput(): any {
   while (chunk = Zotero.read(102400)) { // eslint-disable-line no-magic-numbers
     src += chunk
   }
+
+  src = src.replace(/\n---\n?$/, '\n...\n')
   return YAML.load(src) // eslint-disable-line @typescript-eslint/no-unsafe-return
 }
 
@@ -305,8 +307,10 @@ export async function doImport(): Promise<void> {
       else if (source[csl]['date-parts']) {
         value = join(source[csl]['date-parts'].map(dp => cslDate({...source[csl], 'date-part': dp})))
       }
-      // yaml-specific date array
-      else {
+      else if (typeof source[csl] === 'number' || typeof source[csl] === 'string') {
+        value = source[csl]
+      }
+      else { // yaml-specific date array
         value = join(source[csl].map(yamlDate))
       }
 
