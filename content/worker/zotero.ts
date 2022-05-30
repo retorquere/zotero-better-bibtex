@@ -7,25 +7,52 @@ import type { TranslatorHeader } from '../../translators/lib/translator'
 import type { Translators } from '../../typings/translators'
 import { valid } from '../../gen/items/items'
 
+import { DOMParser as XMLDOMParser } from '@xmldom/xmldom'
+
 declare var ZOTERO_TRANSLATOR_INFO: TranslatorHeader // eslint-disable-line no-var
 
-function escapeXml(unsafe) {
-  return unsafe.replace(/[<>&'"]/g, (c: string) => {
-    switch (c) {
-      case '<': return '&lt;'
-      case '>': return '&gt;'
-      case '&': return '&amp;'
-      case '\'': return '&apos;'
-      case '"': return '&quot;'
-    }
-  })
+const NodeType = {
+  ELEMENT_NODE                : 1,
+  ATTRIBUTE_NODE              : 2,
+  TEXT_NODE                   : 3,
+  CDATA_SECTION_NODE          : 4,
+  ENTITY_REFERENCE_NODE       : 5,
+  ENTITY_NODE                 : 6,
+  PROCESSING_INSTRUCTION_NODE : 7,
+  COMMENT_NODE                : 8,
+  DOCUMENT_NODE               : 9,
+  DOCUMENT_TYPE_NODE          : 10,
+  DOCUMENT_FRAGMENT_NODE      : 11,
+  NOTATION_NODE               : 12,
 }
+
+const childrenProxy = {
+  get(target, prop) { // eslint-disable-line prefer-arrow/prefer-arrow-functions
+    if (prop === Symbol.iterator) {
+      return function*() {
+        let child = target.firstChild
+        while (child) {
+          if (child.childNodes) yield child
+          child = child.nextSibling
+        }
+      }
+    }
+    const children = Array.from(target.childNodes).filter((child: any) => child.childNodes)
+    Zotero.debug(`proxy:children[${typeof prop === 'symbol' ? prop.toString() : prop}]`)
+    return children[prop]
+  },
+
+  set(target, prop, _value) { // eslint-disable-line prefer-arrow/prefer-arrow-functions
+    throw new Error(`cannot set unsupported children.${prop}`)
+  },
+}
+
+const domParser = new XMLDOMParser
 function upgrade(root) {
   if (!root.children) {
     Object.defineProperty(root, 'children', {
       get() {
-        if (!this.childNodes) return this.childNodes
-        return Array.from(this.childNodes).filter((child: any) => child.tagName && child.tagName[0] !== '#')
+        return new Proxy(this, childrenProxy)
       },
     })
   }
@@ -33,34 +60,54 @@ function upgrade(root) {
   if (!root.innerHTML) {
     Object.defineProperty(root, 'innerHTML', {
       get() {
-        if (!this.childNodes) return this.childNodes
-
-        return Array.from(this.childNodes).map((node: any) => {
-          switch (node.tagName || '') {
-            case '':
-            case '#comment':
-              return ''
-            case '#text':
-            case '#cdata-section':
-              return this.nodeValue
-            default:
-              if (!node.tagName || node.tagName[0] === '#') throw new Error(`unexpected tag ${node.tagName}`)
-              break
-          }
-
-          let innerHTML = `<${node.tagName}`
-          let i = node.attributes.length
-          while (i--) {
-            const attr = node.attributes[i]
-            innerHTML += ` ${attr.nodeName}="${escapeXml(attr.value)}"`
-          }
-          innerHTML += '>'
-          innerHTML += node.innerHTML
-          innerHTML += `</${node.tagName}>`
-          return innerHTML
-        }).join('')
+        return this.childNodes?.toString()
       },
     })
+  }
+
+  if (!root.insertAdjacentHTML) {
+    root.insertAdjacentHTML = function(position: 'beforebegin' | 'afterbegin' | 'beforeend' | 'afterend', text: string) {
+      (position as string) = position.toLowerCase()
+
+      let context
+      switch (position) {
+        case 'beforebegin':
+        case 'afterend':
+          context = this.parentNode
+          if (context === null || context.nodeType === NodeType.DOCUMENT_NODE) {
+            throw new Error('Cannot insert HTML adjacent to parent-less nodes or children of document nodes.')
+          }
+          break
+
+        case 'afterbegin':
+        case 'beforeend':
+          context = this // eslint-disable-line @typescript-eslint/no-this-alias
+          break
+
+        default:
+          throw new Error('Must provide one of "beforebegin", "afterbegin", "beforeend", or "afterend".')
+      }
+
+      const fragment = domParser.parseFromString(`<span>${text}</span>`, 'text/html').documentElement
+
+      switch (position) {
+        case 'beforebegin':
+          this.parentNode.insertBefore(fragment, this)
+          break
+
+        case 'afterbegin':
+          this.insertBefore(fragment, this.firstChild)
+          break
+
+        case 'beforeend':
+          this.appendChild(fragment)
+          break
+
+        case 'afterend':
+          this.parentNode.insertBefore(fragment, this.nextSibling)
+          break
+      }
+    }
   }
 
   return root
@@ -68,7 +115,6 @@ function upgrade(root) {
 import { Node as XMLDOMNode } from '@xmldom/xmldom/lib/dom'
 upgrade(XMLDOMNode.prototype)
 
-import { DOMParser as XMLDOMParser } from '@xmldom/xmldom'
 export class DOMParser extends XMLDOMParser {
   parseFromString(text: string, contentType: string) { // eslint-disable-line @typescript-eslint/explicit-module-boundary-types
     return upgrade(super.parseFromString(text, contentType))
@@ -284,6 +330,8 @@ class WorkerZoteroItemFields {
 }
 
 class WorkerZotero {
+  public worker = true
+
   public output: string
   public exportDirectory: string
   public exportFile: string
