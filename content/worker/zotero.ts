@@ -9,27 +9,72 @@ import { valid } from '../../gen/items/items'
 
 declare var ZOTERO_TRANSLATOR_INFO: TranslatorHeader // eslint-disable-line no-var
 
-import { DOMParser as XMLDOMParser } from '@xmldom/xmldom'
-
-function hasAttribute(attr: string): boolean {
-  return !!(this.getAttribute?.(attr))
-}
-function upgrade(node) {
-  if (!node.children) {
-    node.children = Array.from(node.childNodes || [])
-    for (const child of node.children) {
-      upgrade(child)
+function escapeXml(unsafe) {
+  return unsafe.replace(/[<>&'"]/g, (c: string) => {
+    switch (c) {
+      case '<': return '&lt;'
+      case '>': return '&gt;'
+      case '&': return '&amp;'
+      case '\'': return '&apos;'
+      case '"': return '&quot;'
     }
-  }
-  if (!node.hasAttribute) node.hasAttribute = hasAttribute
+  })
 }
+function upgrade(root) {
+  if (!root.children) {
+    Object.defineProperty(root, 'children', {
+      get() {
+        if (!this.childNodes) return this.childNodes
+        return Array.from(this.childNodes).filter((child: any) => child.tagName && child.tagName[0] !== '#')
+      },
+    })
+  }
+
+  if (!root.innerHTML) {
+    Object.defineProperty(root, 'innerHTML', {
+      get() {
+        if (!this.childNodes) return this.childNodes
+
+        return Array.from(this.childNodes).map((node: any) => {
+          switch (node.tagName || '') {
+            case '':
+            case '#comment':
+              return ''
+            case '#text':
+            case '#cdata-section':
+              return this.nodeValue
+            default:
+              if (!node.tagName || node.tagName[0] === '#') throw new Error(`unexpected tag ${node.tagName}`)
+              break
+          }
+
+          let innerHTML = `<${node.tagName}`
+          let i = node.attributes.length
+          while (i--) {
+            const attr = node.attributes[i]
+            innerHTML += ` ${attr.nodeName}="${escapeXml(attr.value)}"`
+          }
+          innerHTML += '>'
+          innerHTML += node.innerHTML
+          innerHTML += `</${node.tagName}>`
+          return innerHTML
+        }).join('')
+      },
+    })
+  }
+
+  return root
+}
+import { Node as XMLDOMNode } from '@xmldom/xmldom/lib/dom'
+upgrade(XMLDOMNode.prototype)
+
+import { DOMParser as XMLDOMParser } from '@xmldom/xmldom'
 export class DOMParser extends XMLDOMParser {
   parseFromString(text: string, contentType: string) { // eslint-disable-line @typescript-eslint/explicit-module-boundary-types
-    const doc = super.parseFromString(text, contentType)
-    upgrade(doc)
-    return doc
+    return upgrade(super.parseFromString(text, contentType))
   }
 }
+
 const ZU = require('../../submodules/zotero-utilities/utilities.js')
 const ZUI = require('../../submodules/zotero-utilities/utilities_item.js')
 const ZD = require('../../submodules/zotero-utilities/date.js')
@@ -158,6 +203,7 @@ function saveFile(path, overwrite) {
 
   if (this.linkMode === 'imported_file' || (this.linkMode === 'imported_url' && this.contentType !== 'text/html')) {
     makeDirs(OS.Path.dirname(this.path))
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     OS.File.copy(this.localPath, this.path, { noOverwrite: !overwrite })
   }
   else if (this.linkMode === 'imported_url') {
@@ -173,6 +219,7 @@ function saveFile(path, overwrite) {
     iterator.forEach(entry => { // eslint-disable-line @typescript-eslint/no-floating-promises
       if (entry.isDir) throw new Error(`Unexpected directory ${entry.path} in snapshot`)
       if (entry.name !== '.zotero-ft-cache') {
+        // eslint-disable-next-line @typescript-eslint/no-floating-promises
         OS.File.copy(OS.Path.join(snapshot, entry.name), OS.Path.join(target, entry.name), { noOverwrite: !overwrite })
       }
     })
