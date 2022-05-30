@@ -117,8 +117,17 @@ function upgrade(type) {
   throw { notUpgradable: type } // eslint-disable-line no-throw-literal
 }
 
-function creatorname(_schema, format) {
-  // @ts-ignore
+type AjvFormatValidator = {
+  (schema: any, format: string): boolean
+  errors: {
+    keyword: string
+    message: string
+    params: {
+      keyword: 'creatorname' | 'postfix'
+    }
+  }[]
+}
+const creatorname = <AjvFormatValidator>((_schema, format) => {
   creatorname.errors = []
   let error = ''
   try {
@@ -132,21 +141,19 @@ function creatorname(_schema, format) {
     error = err.message
   }
 
-  // @ts-ignore
   creatorname.errors.push({
     keyword: 'creatorname',
     message: error,
     params: { keyword: 'creatorname' },
   })
   return false
-}
+})
 ajv.addKeyword({
   keyword: 'creatorname',
   validate: creatorname,
 })
 
-function postfix(_schema, format) {
-  // @ts-ignore
+const postfix = <AjvFormatValidator>((_schema, format) => {
   postfix.errors = []
   let error = ''
   try {
@@ -167,14 +174,13 @@ function postfix(_schema, format) {
     error = err.message
   }
 
-  // @ts-ignore
   postfix.errors.push({
     keyword: 'postfix',
     message: error,
     params: { keyword: 'postfix' },
   })
   return false
-}
+})
 ajv.addKeyword({
   keyword: 'postfix',
   validate: postfix,
