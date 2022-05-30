@@ -1,19 +1,30 @@
 {
   "collections": {
     "coll:00000": {
-      "collections": [],
+      "collections": [
+        "coll:00001"
+      ],
       "items": [
         103,
         116
       ],
       "key": "coll:00000",
-      "name": "AUX scanner"
+      "name": "AUX scanner.1"
+    },
+    "coll:00001": {
+      "collections": [],
+      "items": [
+        10,
+        117
+      ],
+      "key": "coll:00001",
+      "name": "AUX scanner.2",
+      "parent": "coll:00000"
     }
   },
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "localeDateOrder": "ymd",
     "options": {},
     "preferences": {
       "autoAbbrev": true,
@@ -2299,7 +2310,7 @@
       "url": "http://www.webcitation.org/query?url=http%3A%2F%2Fwww.wtec.org%2FConvergingTechnologies%2F1%2FNBIC_report.pdf&date=2011-03-04"
     },
     {
-      "citationKey": "zotero-1115",
+      "citationKey": "zotero-1",
       "itemID": 111,
       "itemType": "book",
       "tags": [
@@ -2310,7 +2321,7 @@
       "title": "Grounding for the Metaphysics of Morals (Kant)"
     },
     {
-      "citationKey": "zotero-1116",
+      "citationKey": "zotero-1",
       "itemID": 112,
       "itemType": "book",
       "tags": [
@@ -2321,7 +2332,7 @@
       "title": "Groundwork for the Metaphysic of Morals (Bennett, Kant)"
     },
     {
-      "citationKey": "zotero-1117",
+      "citationKey": "zotero-1",
       "itemID": 113,
       "itemType": "book",
       "tags": [
@@ -2332,7 +2343,7 @@
       "title": "Groundwork of the Metaphysic of Morals"
     },
     {
-      "citationKey": "zotero-1118",
+      "citationKey": "zotero-1",
       "itemID": 114,
       "itemType": "book",
       "tags": [
@@ -2343,7 +2354,7 @@
       "title": "Kant's Grounding for the Metaphysics of Morals (UNC Philosophy)"
     },
     {
-      "citationKey": "zotero-1119",
+      "citationKey": "zotero-1",
       "itemID": 115,
       "itemType": "book",
       "tags": [
@@ -2359,6 +2370,11 @@
       "note": "<html><div><p><b>BibTeX AUX scan</b></p><p>Missing entries:</p><ul><li>carnap:meaning-and-synonymy</li><li>carnap:ontology</li><li>CarnapR:logss</li><li>dowden1979theory</li><li>duhem1991aim</li><li>field1980science</li><li>floridi:gettier</li><li>frege1980foundations</li><li>gettier:jtb</li><li>grice:defense-of-dogma</li><li>iep:carnap</li><li>kant:pure-reason</li><li>mcgrew:architectureofreason</li><li>prie:twod79</li><li>quine:carnap-logical-truth</li><li>quine:epistemology-naturalized</li><li>quine:indispensability</li><li>quine:twodogmas</li><li>quine:what-there-is</li><li>quine:wob</li><li>Quine1960-QUIWO</li><li>Quine1986-QUIPOL-2</li><li>Quine1987-QUIIOT</li><li>Schilpp1963-SCHTPO-38</li><li>searle:social-ontology</li><li>smyth:formsofintuition</li><li>soames2003philosophical</li><li>Vuillemin1979-VUIODA</li></ul></div></html>"
     },
     {
+      "itemID": 117,
+      "itemType": "note",
+      "note": "<html><div><p><b>BibTeX AUX scan</b></p><p>Missing entries:</p><ul><li>atici2013</li><li>berggren2003</li><li>berggren2015</li><li>berggren2018</li><li>bevan2015</li><li>bowker2010</li><li>buccellati2017</li><li>buchanan2016</li><li>bush1945</li><li>callon1992</li><li>caraher2015a</li><li>caraher2022</li><li>carver2010</li><li>chapman2016</li><li>coleman2012</li><li>collins1992</li><li>collins1992a</li><li>cooper2016</li><li>costa2013a</li><li>dallas2007</li><li>dallas2015</li><li>dallas2016</li><li>edgeworth1991</li><li>edgeworth2003</li><li>edwards2011</li><li>ettarh2018</li><li>faniel2013</li><li>foster2017</li><li>fotiadis1992</li><li>fredheim2020</li><li>gardin1989</li><li>gero1996</li><li>goodwin1994</li><li>goodwin2006</li><li>goodwin2010</li><li>gorwa2019</li><li>graham2019</li><li>harman2014</li><li>harnad1998</li><li>hodder1989</li><li>hodder2000</li><li>hodder2012</li><li>huggett2015a</li><li>huggett2017</li><li>huggett2020</li><li>huggett2020a</li><li>huggett2022</li><li>huvila2016</li><li>huvila2018</li><li>isaksen2010</li><li>joyce2002</li><li>joyce2002a</li><li>kansa2012</li><li>kansa2013</li><li>kansa2014a</li><li>kelty2008</li><li>kelty2008a</li><li>kintigh2014</li><li>kintigh2015</li><li>knorrcetina1999</li><li>knorrcetina2001</li><li>latour1986</li><li>latour2004</li><li>law2004</li><li>leonelli2019</li><li>lucas2012</li><li>lucas2019</li><li>marwick2018</li><li>mckeague2020</li><li>mcmanamon2017</li><li>mcmanus2012</li><li>mol2020</li><li>morgan2018a</li><li>nieborg2018</li><li>olson2013</li><li>opitz2018</li><li>opitz2021</li><li>pavel2010</li><li>perry2015b</li><li>politis2001</li><li>preucel2012</li><li>quinn2020</li><li>richards2021</li><li>richardson2015</li><li>roosevelt2015</li><li>sobotkova2018</li><li>sorensen2017</li><li>star1993</li><li>strauss1988</li><li>strupler2017</li><li>suber2003</li><li>tennant2020</li><li>thorpe2012</li><li>voss2012</li><li>wellen2004</li><li>whitcherkansa2014</li><li>woolgar1992</li><li>wright2018</li><li>wylie2003</li><li>wylie2010</li><li>wylie2017</li><li>yakel2007</li><li>yarrow2008</li><li>zorzin2015</li></ul></div></html>"
+    },
+    {
       "DOI": "10.1007/s11016-005-3431-7",
       "ISSN": "0815-0796",
       "citationKey": "Ladyman2005",
@@ -2371,7 +2387,7 @@
       ],
       "date": "2005",
       "issue": "3",
-      "itemID": 117,
+      "itemID": 118,
       "itemType": "journalArticle",
       "language": "English",
       "pages": "331-361",
@@ -2403,7 +2419,7 @@
       ],
       "date": "1999",
       "issue": "4",
-      "itemID": 118,
+      "itemID": 119,
       "itemType": "journalArticle",
       "journalAbbreviation": "Soc. Sci. J.",
       "pages": "615 - 621",
@@ -2439,7 +2455,7 @@
         "ArticleType: research-article / Full publication date: July 2006 / Copyright \u00a9 2006 The University of Chicago Press"
       ],
       "issue": "4",
-      "itemID": 119,
+      "itemID": 120,
       "itemType": "journalArticle",
       "journalAbbreviation": "Ethics",
       "libraryCatalog": "JSTOR",
@@ -2485,7 +2501,7 @@
       ],
       "date": "2002",
       "issue": "1",
-      "itemID": 120,
+      "itemID": 121,
       "itemType": "journalArticle",
       "journalAbbreviation": "Hum. Reprod.",
       "pages": "11-12",
@@ -2507,7 +2523,7 @@
       ],
       "date": "1967",
       "issue": "3775",
-      "itemID": 121,
+      "itemID": 122,
       "itemType": "journalArticle",
       "pages": "611-622",
       "publicationTitle": "Science",
@@ -2526,7 +2542,7 @@
         }
       ],
       "date": "December 2000",
-      "itemID": 122,
+      "itemID": 123,
       "itemType": "journalArticle",
       "journalAbbreviation": "Soc. Stud. Sci.",
       "pages": "p935\u2013949",
@@ -2545,7 +2561,7 @@
         }
       ],
       "date": "2007",
-      "itemID": 123,
+      "itemID": 124,
       "itemType": "journalArticle",
       "journalAbbreviation": "East Asian Sci. Technol. Soc. Int. J.",
       "pages": "213-231",
@@ -2575,7 +2591,7 @@
       ],
       "date": "2004",
       "issue": "9421",
-      "itemID": 124,
+      "itemID": 125,
       "itemType": "journalArticle",
       "pages": "1633\u2013 1641",
       "publicationTitle": "The Lancet",
@@ -2595,7 +2611,7 @@
       ],
       "date": "1984",
       "issue": "370",
-      "itemID": 125,
+      "itemID": 126,
       "itemType": "journalArticle",
       "pages": "194-214",
       "publicationTitle": "Mind",
@@ -2616,7 +2632,7 @@
       ],
       "date": "2006",
       "issue": "1",
-      "itemID": 126,
+      "itemID": 127,
       "itemType": "journalArticle",
       "journalAbbreviation": "Anthropol. Theory",
       "pages": "12-29",
@@ -2645,7 +2661,7 @@
       "extra": [
         "Citation Key: heidegger1977question"
       ],
-      "itemID": 127,
+      "itemID": 128,
       "itemType": "book",
       "publisher": "Harper Torchbooks",
       "tags": [
@@ -2673,7 +2689,7 @@
         }
       ],
       "date": "2001",
-      "itemID": 128,
+      "itemID": 129,
       "itemType": "book",
       "language": "English",
       "numPages": "323",
@@ -2692,7 +2708,7 @@
         }
       ],
       "date": "2002",
-      "itemID": 129,
+      "itemID": 130,
       "itemType": "book",
       "place": "Beijing; Cambridge; Farnham; K\u00f6ln",
       "publisher": "O.Reilly",
@@ -2723,7 +2739,7 @@
         }
       ],
       "date": "2003",
-      "itemID": 130,
+      "itemID": 131,
       "itemType": "book",
       "publisher": "Open Court Publishing",
       "tags": [
@@ -2749,7 +2765,7 @@
         }
       ],
       "date": "1969",
-      "itemID": 131,
+      "itemID": 132,
       "itemType": "book",
       "publisher": "Cambridge U.P., London",
       "title": "The unbound Prometheus; technological change and industrial development in Western Europe from 1750 to the present"
@@ -2766,7 +2782,7 @@
         }
       ],
       "date": "2006",
-      "itemID": 132,
+      "itemID": 133,
       "itemType": "book",
       "language": "en",
       "libraryCatalog": "Google Books",
@@ -2791,7 +2807,7 @@
         }
       ],
       "date": "2006",
-      "itemID": 133,
+      "itemID": 134,
       "itemType": "book",
       "publisher": "University of Chicago Press",
       "series": "science * culture",
@@ -2815,7 +2831,7 @@
         }
       ],
       "date": "1996",
-      "itemID": 134,
+      "itemID": 135,
       "itemType": "book",
       "publisher": "University of Chicago Press",
       "series": "International encyclopedia of unified science",
@@ -2836,7 +2852,7 @@
       "extra": [
         "Citation Key: ihde1990technology"
       ],
-      "itemID": 135,
+      "itemID": 136,
       "itemType": "book",
       "publisher": "Indiana University Press",
       "series": "The Indiana series in the philosophy of technology",
@@ -2864,7 +2880,7 @@
         }
       ],
       "date": "2002",
-      "itemID": 136,
+      "itemID": 137,
       "itemType": "book",
       "publisher": "Yale University Press",
       "series": "Rethinking the Western Tradition",
@@ -2890,7 +2906,7 @@
       "extra": [
         "Article: The Origin of the Work of Art"
       ],
-      "itemID": 137,
+      "itemID": 138,
       "itemType": "book",
       "notes": [
         "<p>Article: The Origin of the Work of Art</p>"
@@ -2911,7 +2927,7 @@
         }
       ],
       "date": "2005",
-      "itemID": 138,
+      "itemID": 139,
       "itemType": "book",
       "publisher": "Cambridge University Press",
       "series": "Cambridge Collections Online",
@@ -2943,7 +2959,7 @@
       "extra": [
         "Citation Key: wittgenstein1975certainty"
       ],
-      "itemID": 139,
+      "itemID": 140,
       "itemType": "book",
       "publisher": "Blackwell",
       "title": "On certainty"
@@ -2963,7 +2979,7 @@
       "extra": [
         "Citation Key: kripke1982wittgenstein"
       ],
-      "itemID": 140,
+      "itemID": 141,
       "itemType": "book",
       "publisher": "Harvard University Press",
       "title": "Wittgenstein on Rules and Private Language: An Elementary Exposition",
@@ -2984,7 +3000,7 @@
       "extra": [
         "Citation Key: kaplan2004readings"
       ],
-      "itemID": 141,
+      "itemID": 142,
       "itemType": "book",
       "notes": [
         "<p>A Phenomenology of Technics</p>"
@@ -3007,7 +3023,7 @@
       "extra": [
         "Citation Key: fodor1976language"
       ],
-      "itemID": 142,
+      "itemID": 143,
       "itemType": "book",
       "publisher": "Harvester Wheatsheaf",
       "series": "The Language and Thought Series",
@@ -3035,7 +3051,7 @@
         }
       ],
       "date": "2005",
-      "itemID": 143,
+      "itemID": 144,
       "itemType": "bookSection",
       "publicationTitle": "Death and Anti-Death, Volume 2: Two Hundred Years After Kant, Fifty Years After Turing",
       "publisher": "Ria University Press",
@@ -3067,7 +3083,7 @@
       "extra": [
         "Citation Key: heidegger1996beingandtime"
       ],
-      "itemID": 144,
+      "itemID": 145,
       "itemType": "book",
       "notes": [
         "<p>Translation by Stambaugh, Joan</p>"
@@ -3096,7 +3112,7 @@
       "extra": [
         "Citation Key: vandepoel2011ethicstechnologyengineering"
       ],
-      "itemID": 145,
+      "itemID": 146,
       "itemType": "book",
       "publisher": "Wiley",
       "title": "Ethics, Technology, and Engineering: An Introduction",
@@ -3124,7 +3140,7 @@
         }
       ],
       "date": "1997",
-      "itemID": 146,
+      "itemID": 147,
       "itemType": "book",
       "publisher": "New Press",
       "series": "ESSENTIAL WORKS OF MICHEL FOUCAULT",
@@ -3152,7 +3168,7 @@
         }
       ],
       "date": "2002",
-      "itemID": 147,
+      "itemID": 148,
       "itemType": "bookSection",
       "language": "English",
       "pages": "605-625",
@@ -3180,7 +3196,7 @@
       ],
       "date": "1943",
       "issue": "4",
-      "itemID": 148,
+      "itemID": 149,
       "itemType": "journalArticle",
       "journalAbbreviation": "J. Hist. Ideas",
       "language": "English",
@@ -3206,7 +3222,7 @@
         "Citation Key: 1999"
       ],
       "issue": "4",
-      "itemID": 149,
+      "itemID": 150,
       "itemType": "journalArticle",
       "journalAbbreviation": "Hum. Rights Q.",
       "language": "English",
@@ -3229,7 +3245,7 @@
       ],
       "date": "March 1985",
       "issue": "3",
-      "itemID": 150,
+      "itemID": 151,
       "itemType": "journalArticle",
       "journalAbbreviation": "Dr Dobbs J. Softw. Tools",
       "publicationTitle": "Dr. Dobb's Journal of Software Tools",

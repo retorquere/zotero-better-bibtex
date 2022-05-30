@@ -159,6 +159,7 @@ class Item {
   public creators: { lastName?: string, firstName?: string, name?: string, creatorType: string, fieldMode?: number, source?: string }[]
   public title: string
   public itemID: number
+  public id: number
   public libraryID: number
   public transliterateMode: 'german' | 'japanese' | 'chinese' | ''
   public getField: (name: string) => number | string
@@ -169,7 +170,7 @@ class Item {
     this.item = item
 
     if ((item as ZoteroItem).getField) {
-      this.itemID = (item as ZoteroItem).id
+      this.itemID = this.id = (item as ZoteroItem).id
       this.itemType = Zotero.ItemTypes.getName((item as ZoteroItem).itemTypeID)
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       this.getField = function(name: string): string | number {
@@ -192,7 +193,7 @@ class Item {
     }
     else {
       this.itemType = (item as SerializedRegularItem).itemType
-      this.itemID = (item as SerializedRegularItem).itemID
+      this.itemID = this.id = (item as SerializedRegularItem).itemID
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       this.getField = (name: string) => name === 'title' ? this.title : this.item[name] || this.extraFields?.kv[name] || ''
       this.creators = (item as SerializedRegularItem).creators
@@ -805,6 +806,22 @@ class PatternFormatter {
     */
   public _len(relation: '<' | '<=' | '=' | '!=' | '>=' | '>' = '>', length=0) {
     return this.len(this.chunk, relation, length)
+  }
+
+  /**
+    * If the length of the output does not match the given number, skip to the next pattern.
+    */
+  public _match(match: RegExp | string) {
+    if (!match) return this
+
+    if (typeof match === 'string') {
+      if (this.chunk.toLowerCase().includes(match.toLowerCase())) return this
+    }
+    else if (this.chunk.match(match)) {
+      return this
+    }
+
+    throw { next: true } // eslint-disable-line no-throw-literal
   }
 
   private len(value: string, relation: '<' | '<=' | '=' | '!=' | '>=' | '>', n: number) {

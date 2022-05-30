@@ -101,6 +101,7 @@ class Git {
     if (!this.enabled) return
 
     try {
+      await this.exec(this.git, ['-C', this.path, 'checkout', this.bib])
       await this.exec(this.git, ['-C', this.path, 'pull'])
     }
     catch (err) {
@@ -128,13 +129,16 @@ class Git {
   }
 
   private async exec(exe: string, args?: string[]): Promise<boolean> { // eslint-disable-line @typescript-eslint/require-await
+    // args = ['/K', exe].concat(args || [])
+    // exe = await pathSearch('CMD')
+
     const cmd = new FileUtils.File(exe)
 
     if (!cmd.isExecutable()) throw new Error(`${cmd.path} is not an executable`)
 
     const proc = Components.classes['@mozilla.org/process/util;1'].createInstance(Components.interfaces.nsIProcess)
     proc.init(cmd)
-    proc.startHidden = true // requires post-55 Firefox
+    proc.startHidden = true
 
     const command = this.quote(cmd.path, args)
     log.debug('running:', command)
@@ -145,7 +149,7 @@ class Git {
         if (topic !== 'process-finished') {
           deferred.reject(new Error(`failed: ${command}`))
         }
-        else if (proc.exitValue !== 0) {
+        else if (proc.exitValue > 0) {
           deferred.reject(new Error(`failed with exit status ${proc.exitValue}: ${command}`))
         }
         else {

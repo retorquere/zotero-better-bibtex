@@ -17,13 +17,13 @@ declare const OS: {
   // https://developer.mozilla.org/en-US/docs/Mozilla/JavaScript_code_modules/OSFile.jsm/OS.File_for_the_main_thread
   File: {
     exists: (path: string) => boolean | Promise<boolean>
-    read: (path: string | BufferSource, options?: { encoding: string } ) => string | Promise<string> | Uint8Array | Promise<Uint8Array> | Promise<BufferSource>
+    read: (path: string | BufferSource, options?: { encoding?: string }) => ArrayBufferLike | Promise<ArrayBufferLike>
     move: (from: string, to: string) => void | Promise<void>
     remove: (path: string, options?: { ignoreAbsent: boolean }) => Promise<void>
     writeAtomic: (path: string, data: Uint8Array | string, options?: { tmpPath?: string, encoding?: string }) => void | Promise<void>
     makeDir: (path: string, options?: { ignoreExisting?: boolean }) => void | Promise<void>
     stat: (path: string) => OS.File.FileInfo | Promise<OS.File.FileInfo>
-    copy: (src: string, tgt: string, options?: { noOverwrite?: boolean }) => void
+    copy: (src: string, tgt: string, options?: { noOverwrite?: boolean }) => void | Promise<void>
     removeDir: (path: string, options?: { ignoreAbsent?: boolean, ignorePermissions?: boolean }) => void
 
     DirectoryIterator: DirectoryIteratorConstructable

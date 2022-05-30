@@ -142,7 +142,12 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
   }
 
   private start() {
-    if (this.worker) return
+    if (this.worker && !Preference.worker) {
+      this.worker.terminate()
+      this.worker = null
+      return
+    }
+    if (this.worker || !Preference.worker) return
 
     try {
       this.worker = new ChromeWorker('chrome://zotero-better-bibtex/content/worker/zotero.js')
