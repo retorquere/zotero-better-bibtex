@@ -2,29 +2,46 @@
 
 import json
 import sys
+import argparse
 
-main = sys.argv[1]
+parser = argparse.ArgumentParser()
+parser.add_argument('-c', '--config', action='store_true')
+parser.add_argument('-u', '--unique', action='store_true')
+parser.add_argument('libraries', type=str, nargs='+')
+args = parser.parse_args()
+
+main = args.libraries.pop(0)
 
 with open(main) as f:
   data = json.load(f)
 
 jurisM = main.endswith('.juris-m.json')
 
-for add in sys.argv[2:]:
-  print(add)
-  if add.endswith('.schomd.json'): continue
-  if add.endswith('.csl.json') or add.endswith('.csl.juris-m.json'): continue
-  if not jurisM and add.endswith('.jurism.json'): continue
+for lib in args.libraries:
+  if lib.endswith('.schomd.json'): continue
+  if lib.endswith('.csl.json') or lib.endswith('.csl.juris-m.json'): continue
+  if not jurisM and lib.endswith('.jurism.json'): continue
+  print(lib)
 
-  with open(add) as f:
-    d = json.load(f)
+  with open(lib) as f:
+    lib = json.load(f)
 
-  if not 'items' in d: continue
+  if args.config and 'config' in lib:
+    data['config'] = lib['config']
 
+  if 'items' in lib:
+    data['items'] = data['items'] + lib['items']
 
-  data['items'] = data['items'] + d['items']
+if args.unique:
+  data['items'] = [json.loads(item) for item in set([json.dumps(item, sort_keys=True) for item in data['items']])]
 
 print(len(data['items']))
 
+print('saving', main)
 with open(main, 'w') as f:
   json.dump(data, f, indent='  ')
+
+with open(main) as f:
+  data = json.load(f)
+  print(len(data['items']))
+

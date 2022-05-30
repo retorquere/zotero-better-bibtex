@@ -457,6 +457,13 @@ Feature: Export
     And I set preference .worker to false
     Then an export using "Better BibTeX" should match "export/*.bibtex"
 
+  Scenario: Make DOMParser available in background export #2094
+    Given I import 4 references from "export/*.json"
+    And I set preference .worker to false
+    Then an export using "Better BibLaTeX" should match "export/*.biblatex"
+    When I set preference .worker to true
+    Then an export using "Better BibLaTeX" should match "export/*.biblatex"
+
   @postscript @1043
   Scenario: Unbalanced vphantom escapes #1043
     Given I import 1 references from "export/*.json"
