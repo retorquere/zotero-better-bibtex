@@ -203,6 +203,7 @@ function saveFile(path, overwrite) {
 
   if (this.linkMode === 'imported_file' || (this.linkMode === 'imported_url' && this.contentType !== 'text/html')) {
     makeDirs(OS.Path.dirname(this.path))
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     OS.File.copy(this.localPath, this.path, { noOverwrite: !overwrite })
   }
   else if (this.linkMode === 'imported_url') {
@@ -218,6 +219,7 @@ function saveFile(path, overwrite) {
     iterator.forEach(entry => { // eslint-disable-line @typescript-eslint/no-floating-promises
       if (entry.isDir) throw new Error(`Unexpected directory ${entry.path} in snapshot`)
       if (entry.name !== '.zotero-ft-cache') {
+        // eslint-disable-next-line @typescript-eslint/no-floating-promises
         OS.File.copy(OS.Path.join(snapshot, entry.name), OS.Path.join(target, entry.name), { noOverwrite: !overwrite })
       }
     })
