@@ -14,7 +14,6 @@ Feature: Export
     Examples:
       | file                                                                                                                     | references |
       | Citation key add `_preprint` if URL contains `arxiv.org` #2163                                                           | 12         |
-      | Make DOMParser available in background export #2094                                                                      | 2          |
       | Authors export looks like this prefix=von useprefix=true... #2138                                                        | 1          |
       | Zotero's Manuscript 'Type' is mapped to both biblatex's 'type' and 'howpublished' #2114                                  | 1          |
       | Configurable journal abbreviation for citekey #2097                                                                      | 1          |
