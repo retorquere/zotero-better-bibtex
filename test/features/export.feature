@@ -456,6 +456,8 @@ Feature: Export
     And I set preference .worker to false
     Then an export using "Better BibTeX" should match "export/*.bibtex"
 
+  # jurism doesn't have walknotedom
+  @use.with_client=zotero
   Scenario: Make DOMParser available in background export #2094
     Given I import 4 references from "export/*.json"
     And I set preference .worker to false
