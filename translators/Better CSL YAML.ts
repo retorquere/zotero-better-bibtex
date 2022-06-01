@@ -175,7 +175,7 @@ function parseInput(): any {
     src += chunk
   }
 
-  src = src.replace(/\n---\n?$/, '\n...\n')
+  src = src.replace(/\n---[\r\n]*$/, '\n...\n')
   return YAML.load(src) // eslint-disable-line @typescript-eslint/no-unsafe-return
 }
 
