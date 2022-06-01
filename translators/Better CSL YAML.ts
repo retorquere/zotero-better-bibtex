@@ -322,6 +322,9 @@ export async function doImport(): Promise<void> {
       }
     }
 
+    if (typeof source.id === 'string' && !source.id.match(/^[0-9]+$/) && !(item.extra || '').toLowerCase().match(/(^|\n)citation key:/)) {
+      item.extra = `${item.extra || ''}\nCitation Key: ${source.id}`.trim()
+    }
     await item.complete()
   }
 }
