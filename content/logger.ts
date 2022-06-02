@@ -5,7 +5,7 @@ declare const workerJob: Translator.Worker.Job
 
 import { asciify } from './stringify'
 import { environment } from './environment'
-import jsesc from 'jsesc'
+import { inspect } from 'loupe'
 
 import type { TranslatorHeader } from '../translators/lib/translator'
 
@@ -34,11 +34,8 @@ class Logger {
         else if (m && type === 'object' && m.message) { // mozilla exception, no idea on the actual instance type
           output += this.formatError({ message: m.errorCode ? `${m.message} (${m.errorCode})` : m.message, filename: m.fileName, lineno: m.lineNumber, colno: m.column, stack: m.stack })
         }
-        else if (this.verbose) {
-          output += jsesc(m, { compact: false, indent: '  '})
-        }
         else {
-          output += jsesc(m)
+          output += inspect(m)
         }
 
         output += ' '

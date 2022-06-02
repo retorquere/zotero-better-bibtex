@@ -1,6 +1,5 @@
 {
   const identifier = require('../../gen/ecmascript-6')
-  const jsesc = require('jsesc')
 
   function get_method(method, prefix) {
     method = (prefix || '') + method.toLowerCase().replace(/[-.]/g, '')
@@ -19,7 +18,7 @@
       case 'boolean':
         return `${v}`
       case 'string':
-        return options.migrate && !noident && identifier.test(v) ? v : jsesc(v, { quotes: 'single', wrap: true })
+        return options.migrate && !noident && identifier.test(v) ? v : JSON.stringify(v)
     }
     throw new Error(`unexpected argument value ${v}`)
   }
