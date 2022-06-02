@@ -39,6 +39,7 @@ import BabelTag from '../../gen/babel/tag.json'
 type ValueOf<T> = T[keyof T]
 type BabelLanguageTag = ValueOf<typeof BabelTag>
 type BabelLanguage = keyof typeof BabelTag
+type ZoteroItemType = keyof items.valid.type
 
 for (const meta of Object.values(methods)) {
   (meta as unknown as any).validate = validator((meta as any).schema)
@@ -395,7 +396,7 @@ class PatternFormatter {
    * Tests whether the item is of any of the given types, and skips to the next pattern if not
    * @param allowed one or more item type names
    */
-  public $type(...allowed: string[]) {
+  public $type(...allowed: ZoteroItemType[]) {
     if (allowed.map(type => type.toLowerCase()).includes(this.item.itemType.toLowerCase())) {
       return this.$text('')
     }
@@ -809,7 +810,7 @@ class PatternFormatter {
   }
 
   /**
-    * If the length of the output does not match the given number, skip to the next pattern.
+    * If the output does not match the given string/regex, skip to the next pattern.
     */
   public _match(match: RegExp | string) {
     if (!match) return this

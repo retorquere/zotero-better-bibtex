@@ -1,6 +1,8 @@
 import * as ts from 'typescript'
 import * as fs from 'fs'
 import BabelTag from '../gen/babel/tag.json'
+import zoteroSchema from '../schema/zotero.json'
+import jurismSchema from '../schema/jurism.json'
 
 // type Json = string | number | boolean | null | Json[] | { [key: string]: Json };
 
@@ -231,6 +233,18 @@ export class API {
       return {
         type: 'string',
         enum: Object.values(BabelTag).sort(),
+      }
+    }
+    else if (typeName === 'ZoteroItemType') {
+      const itemTypes: Set<string> = new Set
+      for (const schema of [zoteroSchema, jurismSchema]) {
+        for (const itemType of schema.itemTypes) {
+          if (itemType.creatorTypes?.length) itemTypes.add(itemType.itemType)
+        }
+      }
+      return {
+        type: 'string',
+        enum: Array.from(itemTypes).sort(),
       }
     }
     else if (typeName === 'RegExp') {
