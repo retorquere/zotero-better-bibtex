@@ -39,7 +39,7 @@ import BabelTag from '../../gen/babel/tag.json'
 type ValueOf<T> = T[keyof T]
 type BabelLanguageTag = ValueOf<typeof BabelTag>
 type BabelLanguage = keyof typeof BabelTag
-type ZoteroItemType = keyof items.valid.type
+type ZoteroItemType = keyof typeof items.valid.type
 
 for (const meta of Object.values(methods)) {
   (meta as unknown as any).validate = validator((meta as any).schema)
