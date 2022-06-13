@@ -42,6 +42,9 @@ if os.environ.get('CI') != 'true':
       if 'submodule ' in section:
         print(section)
         print(' ', run(os.path.join(root, module['path']), 'git checkout ' + module['branch']))
+        if section == 'submodule "submodules/zotero-utilities"':
+          print('   ', run(os.path.join(root, module['path']), 'rm -rf resource/schema/global'))
+          print('   ', run(os.path.join(root, module['path']), 'git checkout .'))
         print(' ', run(os.path.join(root, module['path']), 'git pull'))
         print(' ', run(root, 'git add ' + module['path']))
 
