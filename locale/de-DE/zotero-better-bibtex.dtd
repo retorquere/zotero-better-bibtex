@@ -220,7 +220,7 @@ If you have this on, and you experience any problem that is not the cache gettin
 <!ENTITY better-bibtex.BetterBibTeX.auxScanner "Scan BibTeX AUX/Markdown file for references...">
 <!ENTITY better-bibtex.bulk-keys-confirm.message "Sie ändern mehr als {treshold} Einträge auf einmal. Sind sie sicher?">
 <!ENTITY better-bibtex.bulk-keys-confirm.whatever "OK, nicht noch mal fragen">
-<!ENTITY better-bibtex.BetterBibTeX.menu "Better BibTex">
+<!ENTITY better-bibtex.BetterBibTeX.menu "Better BibTeX">
 <!ENTITY better-bibtex.BetterBibTeX.citekey.set "BibTeX-Key ändern...">
 <!ENTITY better-bibtex.BetterBibTeX.citekey.pin "BibTeX-Key anheften">
 <!ENTITY better-bibtex.BetterBibTeX.citekey.pinInspireHEP "Hefte BibTeX-Schlüssel aus InspireHEP an">
