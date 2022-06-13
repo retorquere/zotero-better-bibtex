@@ -32,181 +32,181 @@
   [
     "CallNumber",
     "CaseName",
-    "CitationKey<sup>Z</sup>",
-    "Code"
+    "Code",
+    "CodeNumber"
   ],
   [
-    "CodeNumber",
     "CodePages",
     "CodeVolume",
-    "Committee"
+    "Committee",
+    "Company"
   ],
   [
-    "Company",
     "ConferenceDate<sup>JM</sup>",
     "ConferenceName",
-    "Country"
+    "Country",
+    "Court"
   ],
   [
-    "Court",
     "DOI",
     "Date",
-    "DateAmended<sup>JM</sup>"
+    "DateAmended<sup>JM</sup>",
+    "DateDecided"
   ],
   [
-    "DateDecided",
     "DateEnacted",
     "DictionaryTitle",
-    "Distributor"
+    "Distributor",
+    "Division<sup>JM</sup>"
   ],
   [
-    "Division<sup>JM</sup>",
     "DocketNumber",
     "DocumentName<sup>JM</sup>",
-    "DocumentNumber"
+    "DocumentNumber",
+    "Edition"
   ],
   [
-    "Edition",
     "EncyclopediaTitle",
     "EpisodeNumber",
-    "FilingDate"
+    "FilingDate",
+    "FirstPage"
   ],
   [
-    "FirstPage",
     "ForumTitle",
     "GazetteFlag<sup>JM</sup>",
-    "Genre"
+    "Genre",
+    "History"
   ],
   [
-    "History",
     "ISBN",
     "ISSN",
-    "Institution"
+    "Institution",
+    "InterviewMedium"
   ],
   [
-    "InterviewMedium",
     "Issue",
     "IssueDate",
-    "IssuingAuthority"
+    "IssuingAuthority",
+    "JournalAbbreviation"
   ],
   [
-    "JournalAbbreviation",
     "Jurisdiction<sup>JM</sup>",
     "Label",
-    "Language"
+    "Language",
+    "LegalStatus"
   ],
   [
-    "LegalStatus",
     "LegislativeBody",
     "LetterType",
-    "LibraryCatalog"
+    "LibraryCatalog",
+    "ManuscriptType"
   ],
   [
-    "ManuscriptType",
     "MapType",
     "Medium",
-    "MeetingName"
+    "MeetingName",
+    "MeetingNumber<sup>JM</sup>"
   ],
   [
-    "MeetingNumber<sup>JM</sup>",
     "NameOfAct",
     "Network",
-    "NewsCaseDate<sup>JM</sup>"
+    "NewsCaseDate<sup>JM</sup>",
+    "NumPages"
   ],
   [
-    "NumPages",
     "Number",
     "NumberOfVolumes",
-    "OpeningDate<sup>JM</sup>"
+    "OpeningDate<sup>JM</sup>",
+    "Opus<sup>JM</sup>"
   ],
   [
-    "Opus<sup>JM</sup>",
     "OriginalDate<sup>JM</sup>",
     "Pages",
-    "ParentTreaty<sup>JM</sup>"
+    "ParentTreaty<sup>JM</sup>",
+    "PatentNumber"
   ],
   [
-    "PatentNumber",
     "Place",
     "PostType",
-    "PresentationType"
+    "PresentationType",
+    "PriorityDate<sup>JM</sup>"
   ],
   [
-    "PriorityDate<sup>JM</sup>",
     "PriorityNumbers",
     "ProceedingsTitle",
-    "ProgramTitle"
+    "ProgramTitle",
+    "ProgrammingLanguage"
   ],
   [
-    "ProgrammingLanguage",
     "PublicLawNumber",
     "PublicationDate<sup>JM</sup>",
-    "PublicationNumber<sup>JM</sup>"
+    "PublicationNumber<sup>JM</sup>",
+    "PublicationTitle"
   ],
   [
-    "PublicationTitle",
     "Publisher",
     "References",
-    "RegnalYear<sup>JM</sup>"
+    "RegnalYear<sup>JM</sup>",
+    "RegulationType<sup>JM</sup>"
   ],
   [
-    "RegulationType<sup>JM</sup>",
     "RegulatoryBody<sup>JM</sup>",
     "Reign<sup>JM</sup>",
-    "Release<sup>JM</sup>"
+    "Release<sup>JM</sup>",
+    "ReportNumber"
   ],
   [
-    "ReportNumber",
     "ReportType",
     "Reporter",
-    "ReporterVolume"
+    "ReporterVolume",
+    "Repository<sup>Z</sup>"
   ],
   [
-    "Repository<sup>Z</sup>",
     "ResolutionLabel<sup>JM</sup>",
     "Rights",
-    "RunningTime"
+    "RunningTime",
+    "Scale"
   ],
   [
-    "Scale",
     "Section",
     "Series",
-    "SeriesNumber"
+    "SeriesNumber",
+    "SeriesText"
   ],
   [
-    "SeriesText",
     "SeriesTitle",
     "Session",
-    "SessionType<sup>JM</sup>"
+    "SessionType<sup>JM</sup>",
+    "ShortTitle"
   ],
   [
-    "ShortTitle",
     "SigningDate<sup>JM</sup>",
     "Status<sup>JM</sup>",
-    "Studio"
+    "Studio",
+    "Subject"
   ],
   [
-    "Subject",
     "SupplementName<sup>JM</sup>",
     "System",
-    "ThesisType"
+    "ThesisType",
+    "Title"
   ],
   [
-    "Title",
     "TreatyNumber<sup>JM</sup>",
     "Type",
-    "University"
+    "University",
+    "Url"
   ],
   [
-    "Url",
     "VersionNumber",
     "VideoRecordingFormat",
-    "Volume"
+    "Volume",
+    "VolumeTitle<sup>JM</sup>"
   ],
   [
-    "VolumeTitle<sup>JM</sup>",
     "WebsiteTitle",
     "WebsiteType",
-    "YearAsVolume<sup>JM</sup>"
+    "YearAsVolume<sup>JM</sup>",
+    ""
   ]
 ]
