@@ -1,0 +1,30 @@
+--- node_modules/edtf/dist/index.cjs	2022-06-13 16:18:48.000000000 +0200
++++ node_modules/edtf/dist/index.cjs	2022-06-13 16:20:00.000000000 +0200
+@@ -1045,21 +1045,18 @@
+   }
+ }
+ 
+-const load = (locale) =>
+-  JSON.parse(fs.readFileSync(new URL(`../locale-data/${locale}.json`, (typeof document === 'undefined' ? new (require('u' + 'rl').URL)('file:' + __filename).href : (document.currentScript && document.currentScript.src || new URL('index.cjs', document.baseURI).href)))));
+-
+ const alias = (lang, ...regions) => {
+   for (let region of regions)
+     data[`${lang}-${region}`] = data[lang];
+ };
+ 
+ const data = {
+-  en: load('en-US'),
+-  es: load('es-ES'),
+-  de: load('de-DE'),
+-  fr: load('fr-FR'),
+-  it: load('it-IT'),
+-  ja: load('ja-JA')
++  en: require('../locale-data/en-US.json'),
++  es: require('../locale-data/es-ES.json'),
++  de: require('../locale-data/de-DE.json'),
++  fr: require('../locale-data/fr-FR.json'),
++  it: require('../locale-data/it-IT.json'),
++  ja: require('../locale-data/ja-JA.json')
+ };
+ 
+ alias('en', 'AU', 'CA', 'GB', 'NZ', 'SA', 'US');
