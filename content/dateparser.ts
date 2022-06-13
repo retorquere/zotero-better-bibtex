@@ -128,7 +128,7 @@ function swap_day_month(day: number, month: number, fix_only = false): number[] 
 }
 
 function stripTime(date: string): string {
-  return date.replace(/(\s+|T)[0-9]{2}:[0-9]{2}(:[0-9]{2}(Z|\+[0-9]{2}:?[0-9]{2})?)?$/, '')
+  return date.replace(/(\s+|T)[0-9]{2}:[0-9]{2}(:[0-9]{2}([.][0-9]+)?(Z|\+[0-9]{2}:?[0-9]{2})?)?$/, '')
 }
 
 export function parse(value: string): ParsedDate {
