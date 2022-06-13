@@ -301,12 +301,23 @@ class PatternFormatter {
   // private fold: boolean
   private citekeyFormat: string
 
-  public update(_reason: string) {
+  public update(reason: string) {
+    log.debug('update key formula:', reason)
     this.skipWords = new Set(Preference.skipWords.split(',').map((word: string) => word.trim()).filter((word: string) => word))
 
     // safeguard agains Zotero late-loading preference defaults
     // the zero-width-space is a marker to re-save the current default so it doesn't get replaced when the default changes later, which would change new keys suddenly
     if (!Preference.citekeyFormat || Preference.citekeyFormat.includes('\u200B')) Preference.citekeyFormat = Preference.default.citekeyFormat.replace(/^\u200B/, '')
+    if (Preference.citekeyFormat.startsWith('[')) {
+      log.debug('Upgrading citation pattern', Preference.citekeyFormat)
+      try {
+        Preference.citekeyFormat = legacyparser.parse(Preference.citekeyFormat, { sprintf, items, methods, migrate: true }) as string
+        flash('Citation pattern upgraded', `Citation pattern upgraded to ${Preference.citekeyFormat}`)
+      }
+      catch (err) {
+        log.debug('Upgrading citation pattern failed', err)
+      }
+    }
 
     for (const attempt of ['get', 'reset']) {
       switch (attempt) {
@@ -339,20 +350,7 @@ class PatternFormatter {
 
   public parsePattern(pattern): string {
     log.debug('parsePattern.pattern:', pattern)
-    let formatter = ''
-
-    if (pattern.startsWith('[]')) {
-      return legacyparser.parse(pattern, { sprintf, items, methods, migrate: false }) as string
-    }
-    else if (pattern.startsWith('[')) {
-      formatter = legacyparser.parse(pattern, { sprintf, items, methods, migrate: true }) as string
-      if (Preference.testing) log.debug('parsePattern.migrated:', formatter)
-    }
-    else {
-      formatter = pattern
-    }
-
-    const { code, warning } = new formatparser.PatternParser(formatter)
+    const { code, warning } = new formatparser.PatternParser(pattern)
     this.warning = warning
     if (Preference.testing) log.debug('parsePattern.compiled:', warning, code)
 

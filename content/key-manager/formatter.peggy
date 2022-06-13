@@ -83,6 +83,8 @@
 
 start
   = patterns:pattern+ {
+      if (!options.migrate) throw new Error('legacy parser only used for migration')
+
       if (options.migrate) return patterns.map(chunk => chunk.join('+')).join(' | ')
 
       var body = ''
