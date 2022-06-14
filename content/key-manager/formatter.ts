@@ -376,7 +376,7 @@ class PatternFormatter {
     this.$postfix()
     log.debug('formatting new key')
     let citekey = this.generate() || `zotero-${this.item.itemID}`
-    if (citekey && Preference.citekeyFold) citekey = this.transliterate(citekey)
+    if (citekey && Preference.citekeyFold && this.transliteration) citekey = this.transliterate(citekey)
     citekey = citekey.replace(/[\s{},@]/g, '')
     log.debug('new citekey:', citekey)
 
@@ -845,7 +845,7 @@ class PatternFormatter {
     return this.$text((this.titleWords(this.item.title, { skipWords: true }) || []).join(' '))
   }
 
-  /* turn auto-cleaning on/off */
+  /** turn auto-cleaning on/off */
   public $clean(enabled: boolean) {
     this.transliteration = enabled
   }
@@ -1271,7 +1271,7 @@ class PatternFormatter {
 
   private clean(str: string, allow_spaces = false): string {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return Zotero.Utilities.XRegExp.replace(this.transliterate(str, 'ja'), allow_spaces ? this.re.unsafechars_allow_spaces : this.re.unsafechars, '', 'all').trim()
+    return Zotero.Utilities.XRegExp.replace(this.transliterate(str), allow_spaces ? this.re.unsafechars_allow_spaces : this.re.unsafechars, '', 'all').trim()
   }
 
   private titleWords(title, options: { asciiOnly?: boolean, skipWords?: boolean} = {}): string[] {
@@ -1334,13 +1334,13 @@ class PatternFormatter {
     for (const creator of this.item.creators) {
       if (onlyEditors && creator.creatorType !== 'editor' && creator.creatorType !== 'seriesEditor') continue
 
-      log.debug('creator template:', template)
       const name = sprintf(template, {
         f: this.stripQuotes(this.innerText(creator.lastName || creator.name)),
         g: this.stripQuotes(this.innerText(creator.firstName || '')),
         I: this.initials(creator),
         i: this.initials(creator, false),
       })
+      log.debug('creator template:', template, name)
       if (!name) continue
 
       switch (creator.creatorType) {

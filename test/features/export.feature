@@ -13,6 +13,7 @@ Feature: Export
 
     Examples:
       | file                                                                                                                     | references |
+      | noclean                                                                                                                  | 1          |
       | date with fractional seconds                                                                                             | 1          |
       | Citation key add `_preprint` if URL contains `arxiv.org` #2163                                                           | 12         |
       | Authors export looks like this prefix=von useprefix=true... #2138                                                        | 1          |
