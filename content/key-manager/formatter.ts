@@ -16,8 +16,8 @@ import { buildCiteKey as zotero_buildCiteKey } from './formatter-zotero'
 import { babelLanguage } from '../text'
 import { fetchSync as fetchInspireHEP } from '../inspire-hep'
 
-const legacyparser = require('./formatter.peggy')
-import * as formatparser from './jsformatter'
+const legacyparser = require('./legacy.peggy')
+import * as formula from './convert'
 import * as DateParser from '../dateparser'
 
 import { methods } from '../../gen/api/key-formatter'
@@ -350,7 +350,7 @@ class PatternFormatter {
 
   public parsePattern(pattern): string {
     log.debug('parsePattern.pattern:', pattern)
-    const { code, warning } = new formatparser.PatternParser(pattern)
+    const { code, warning } = new formula.PatternParser(pattern)
     this.warning = warning
     if (Preference.testing) log.debug('parsePattern.compiled:', warning, code)
 
