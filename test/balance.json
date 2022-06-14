@@ -1,7 +1,7 @@
 {
   "duration": {
     "(non-)dropping particle handling #313": 2920,
-    "AUX scanner": 9110,
+    "AUX scanner": 9120,
     "Better BibTeX Import 2": 1160,
     "BibTeX name escaping has a million inconsistencies #438": 480,
     "BibTeX; URL missing in bibtex for Book Section #412": 1110,
@@ -27,16 +27,16 @@
       "runs": -71
     },
     "Copy date-addeddate-modified from extra field regenerates citation key #2142": {
-      "msecs": 5450,
+      "msecs": 5430,
       "runs": -510
     },
     "Custom field ordering -- dependent on order entry in Extra rather than static #2082": {
-      "msecs": 1390,
+      "msecs": 1380,
       "runs": -494
     },
     "Date export to Better CSL-JSON #360 #811": 1410,
     "Diacritics stripped from keys regardless of ascii or fold filters #266": 700,
-    "Do not caps-protect name fields #384 #565 #566": 4100,
+    "Do not caps-protect name fields #384 #565 #566": 4110,
     "Duplicate Citation Key Alias #1384": 10180,
     "Edition Numbers in BibTeX Exports #1446": 1100,
     "Export 1 references for BibLaTeX to @jurisdiction; map court,authority to institution #326": 320,
@@ -45,7 +45,7 @@
     "Export 1 references for BibLaTeX to Abbreviations in key generated for Conference Proceedings #548": 350,
     "Export 1 references for BibLaTeX to Allow explicit field override": 340,
     "Export 1 references for BibLaTeX to Authors export looks like this prefix=von useprefix=true... #2138": {
-      "msecs": 1150,
+      "msecs": 1140,
       "runs": -508
     },
     "Export 1 references for BibLaTeX to BBT yields error with quality report #1387": 360,
@@ -93,7 +93,7 @@
     "Export 1 references for BibLaTeX to Colon in bibtex key #405": 350,
     "Export 1 references for BibLaTeX to Colon not allowed in citation key format #268": 460,
     "Export 1 references for BibLaTeX to Configurable journal abbreviation for citekey #2097": {
-      "msecs": 1210,
+      "msecs": 1200,
       "runs": -479
     },
     "Export 1 references for BibLaTeX to DOI with underscores in extra field #108": 330,
@@ -141,7 +141,7 @@
     "Export 1 references for BibLaTeX to German Umlaut separated by brackets #146": 390,
     "Export 1 references for BibLaTeX to HTML Fragment separator escaped in url #140 #147": 300,
     "Export 1 references for BibLaTeX to How to export bib without month and date in year item (Using better bibtex) #2022": {
-      "msecs": 1310,
+      "msecs": 1320,
       "runs": -440
     },
     "Export 1 references for BibLaTeX to How to use the last word of the title? #1746": {
@@ -196,7 +196,7 @@
       "runs": -167
     },
     "Export 1 references for BibLaTeX to Zotero's Manuscript 'Type' is mapped to both biblatex's 'type' and 'howpublished' #2114": {
-      "msecs": 1170,
+      "msecs": 1160,
       "runs": -491
     },
     "Export 1 references for BibLaTeX to auth leaves punctuation in citation key #310": 320,
@@ -209,7 +209,7 @@
     "Export 1 references for BibLaTeX to condense in cite key format not working #308": 360,
     "Export 1 references for BibLaTeX to customized fields with curly brackets are not exported correctly anymore #775": 410,
     "Export 1 references for BibLaTeX to date with fractional seconds": {
-      "msecs": 1750,
+      "msecs": 1360,
       "runs": -526
     },
     "Export 1 references for BibLaTeX to don't escape entry key fields for #296": 340,
@@ -388,7 +388,7 @@
       "runs": -440
     },
     "Export 12 references for BibLaTeX to Citation key add `_preprint` if URL contains `arxiv.org` #2163": {
-      "msecs": 2740,
+      "msecs": 2690,
       "runs": -517
     },
     "Export 2 references for BibLaTeX to Better BibLaTeX.002": 380,
@@ -437,17 +437,17 @@
     "Export 2 references for BibTeX to error on exporting note with pre tags; duplicate field howpublished #1092": 670,
     "Export 2 references for BibTeX to titles are title-cased in .bib file #558": 510,
     "Export 26 references for CSL JSON to CSL exporters; ignore [Fields to omit from export] setting #1179": {
-      "msecs": 3800,
+      "msecs": 3790,
       "runs": -440
     },
     "Export 26 references for CSL JSON to Deterministic ordering for CSL #1178 #1400": {
-      "msecs": 3960,
+      "msecs": 3950,
       "runs": -440
     },
     "Export 27 references for BibLaTeX to EDTF dates in BibLaTeX #590": 2100,
     "Export 3 references for BibLaTeX to BBT export of square brackets in date #245 -- xref should not be escaped #246": 610,
     "Export 3 references for BibLaTeX to BetterBibLaTeX exports articles as online #2058": {
-      "msecs": 1650,
+      "msecs": 1640,
       "runs": -466
     },
     "Export 3 references for BibLaTeX to Do not caps-protect literal lists #391": 410,
@@ -455,7 +455,7 @@
     "Export 3 references for BibLaTeX to Normalize date ranges in citekeys #356": 510,
     "Export 3 references for BibTeX to No brace protection when suppressTitleCase set to true #1188": 550,
     "Export 3 references for BibTeX to Replicate Zotero key algorithm #439": 500,
-    "Export 36 references for BibTeX to Better BibTeX does not export collections #901": 4760,
+    "Export 36 references for BibTeX to Better BibTeX does not export collections #901": 4770,
     "Export 4 references for BibLaTeX to date and year are switched #406": 550,
     "Export 4 references for BibTeX to add date, origdate functions, and format-date filter #1488": {
       "msecs": 430,
@@ -468,7 +468,7 @@
     "Export 6 references for BibLaTeX to Better BibLaTeX.stable-keys": 620,
     "Export 8 references for BibLaTeX to Don't title-case sup-subscripts #1037": 660,
     "Export 86 references for BibLaTeX to Language field in the metadata exported incorrectly #1921": {
-      "msecs": 8210,
+      "msecs": 8220,
       "runs": -405
     },
     "Export as Collected Notes does not list subcollections #1768": {
@@ -522,7 +522,7 @@
     "Import 1 references from Issues with round instead of curly braces do not import correctly #871": 1010,
     "Import 1 references from Literal names": 1280,
     "Import 1 references from Lowercase A in BBT Sentence Case #2078": {
-      "msecs": 2300,
+      "msecs": 2290,
       "runs": -495
     },
     "Import 1 references from Map the call-number field from Bib(La)TeX to call number #2021": {
@@ -580,7 +580,7 @@
     "Journal abbreviations exported in bibtex (81)": 380,
     "LaTeX commands in Zotero should be exported untouched #1380": 1290,
     "Make DOMParser available in background export #2094": {
-      "msecs": 3250,
+      "msecs": 3190,
       "runs": -519
     },
     "Math markup to unicode not always imported correctly #472": 1030,
@@ -596,12 +596,12 @@
       "runs": -276
     },
     "Postscript error aborts CSL JSON export #1155": 750,
-    "Really Big whopping library": 336780,
+    "Really Big whopping library": 336580,
     "Season ranges should be exported as pseudo-months (13-16, or 21-24) #860": 1230,
     "Set IDS field when merging references with different citation keys #1221": 9640,
     "Setting the item type via the cheater syntax #587": 1230,
     "Some bibtex entries quietly discarded on import from bib file #873": {
-      "msecs": 63160,
+      "msecs": 63240,
       "runs": -218
     },
     "Sorting and optional particle handling #411": 760,
@@ -610,12 +610,12 @@
       "msecs": 1100,
       "runs": -413
     },
-    "Unabbreviate on import #1436-1": 40150,
+    "Unabbreviate on import #1436-1": 40160,
     "Unbalanced vphantom escapes #1043": 770,
     "arXiv identifiers in BibLaTeX export #460": 1180,
     "auto-export": 14370,
     "automatic tags in export #1270": 410,
-    "bibtex; url export does not survive underscores #402": 690,
+    "bibtex; url export does not survive underscores #402": 700,
     "ids field should be created in raw mode #1729": {
       "msecs": 9470,
       "runs": -227
@@ -633,12 +633,13 @@
       "runs": -36
     },
     "web_page and other mendeley idiocy": {
-      "msecs": 43840,
+      "msecs": 43850,
       "runs": -239
     }
   },
   "fast": {
     "1": [
+      "Export 1 references for BibLaTeX to date with fractional seconds",
       "Export 1 references for BibLaTeX to Authors export looks like this prefix=von useprefix=true... #2138",
       "Export 1 references for BibLaTeX to Zotero's Manuscript 'Type' is mapped to both biblatex's 'type' and 'howpublished' #2114",
       "Export 1 references for BibLaTeX to Configurable journal abbreviation for citekey #2097",
@@ -975,9 +976,10 @@
       "Identical Pinned keys lost when merging duplicated records #1721"
     ]
   },
-  "runs": 527,
+  "runs": 528,
   "slow": {
     "1": [
+      "Export 1 references for BibLaTeX to date with fractional seconds",
       "Export 12 references for BibLaTeX to Citation key add `_preprint` if URL contains `arxiv.org` #2163",
       "Export 1 references for BibLaTeX to Authors export looks like this prefix=von useprefix=true... #2138",
       "Export 1 references for BibLaTeX to Zotero's Manuscript 'Type' is mapped to both biblatex's 'type' and 'howpublished' #2114",
@@ -1309,8 +1311,7 @@
       "Merging error with arXiv ID #1373",
       "Duplicate Citation Key Alias #1384",
       "ids field should be created in raw mode #1729",
-      "Identical Pinned keys lost when merging duplicated records #1721",
-      "Export 1 references for BibLaTeX to date with fractional seconds"
+      "Identical Pinned keys lost when merging duplicated records #1721"
     ],
     "2": [
       "Really Big whopping library",
