@@ -398,11 +398,20 @@ export class PatternParser {
           context.coerce = false
           // return b.binaryExpression('+', b.literal(''), this_expr)
           return b.binaryExpression('+',
-            b.assignmentExpression(
-              '=',
-              b.memberExpression(b.thisExpression(), b.identifier('citekey'), false),
-              b.literal('')
-            ),
+
+            b.sequenceExpression([
+              b.assignmentExpression(
+                '=',
+                b.memberExpression(b.thisExpression(), b.identifier('transliteration'), false),
+                b.literal(true)
+              ),
+              b.assignmentExpression(
+                '=',
+                b.memberExpression(b.thisExpression(), b.identifier('citekey'), false),
+                b.literal('')
+              ),
+            ]),
+
             this_expr
           )
         }
