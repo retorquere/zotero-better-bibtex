@@ -848,6 +848,7 @@ class PatternFormatter {
   /** turn auto-cleaning on/off */
   public $clean(enabled: boolean) {
     this.transliteration = enabled
+    return this
   }
 
   /**
