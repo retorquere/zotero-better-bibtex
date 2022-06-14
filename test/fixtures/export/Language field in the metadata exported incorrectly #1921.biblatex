@@ -12,7 +12,7 @@
   langid = {austrian}
 }
 
-@incollection{apathySicherungsubereignung2012,
+@incollection{apathySicherungsuebereignung2012,
   title = {Die Sicherungsübereignung},
   shorttitle = {Sicherungsübereignung},
   booktitle = {Österreichisches Bankvertragsrecht Band IX: Kreditsicherheiten Teil II},
@@ -99,7 +99,7 @@
   langid = {german}
 }
 
-@book{beckNeueBurgschaftsrecht1942,
+@book{beckNeueBuergschaftsrecht1942,
   title = {Das neue Bürgschaftsrecht},
   shorttitle = {Bürgschaftsrecht},
   author = {Beck, Emil},
@@ -159,7 +159,7 @@
   langid = {german}
 }
 
-@inreference{buhlerArt3681998,
+@inreference{buehlerArt3681998,
   title = {Art. 368 OR},
   booktitle = {Der Werkvertrag, Art. 363-379 Zürcher Kommentar Band V/2d},
   author = {Bühler, Theodor},
@@ -170,7 +170,7 @@
   langid = {nswissgerman}
 }
 
-@inreference{buhlerArt3711998,
+@inreference{buehlerArt3711998,
   title = {Art. 371 OR},
   booktitle = {Der Werkvertrag, Art. 363-379 Zürcher Kommentar Band V/2d},
   author = {Bühler, Theodor},
@@ -181,7 +181,7 @@
   langid = {nswissgerman}
 }
 
-@book{bydlinskiBurgerlichesRechtBand2013,
+@book{bydlinskiBuergerlichesRechtBand2013,
   title = {Bürgerliches Recht Band I Allgemeiner Teil},
   shorttitle = {BR AT},
   author = {Bydlinski, Peter},
@@ -219,7 +219,7 @@
   langid = {austrian}
 }
 
-@incollection{coesterAllgemeineGeschaftsbedingungen2008,
+@incollection{coesterAllgemeineGeschaeftsbedingungen2008,
   title = {Allgemeine Geschäftsbedingungen},
   shorttitle = {AGB},
   booktitle = {Kommentar zum Bürgerlichen Gesetzbuch -- Eckpfeiler des Zivilrechts},
@@ -232,7 +232,7 @@
   langid = {german}
 }
 
-@article{dagdelenGeltungskontrolleErstreckungsklauselnKreditburgschaften2018,
+@article{dagdelenGeltungskontrolleErstreckungsklauselnKreditbuergschaften2018,
   title = {Geltungskontrolle der Erstreckungsklauseln in Kreditbürgschaften nach dem österreichischen bürgerlichen Recht},
   shorttitle = {Geltungskontrolle},
   author = {Dağdelen, Ahmet Hakan},
@@ -244,7 +244,7 @@
   langid = {austrian}
 }
 
-@book{dagdelenSchutzBurgenRechtsvergleich2020,
+@book{dagdelenSchutzBuergenRechtsvergleich2020,
   title = {Schutz des Bürgen - Ein Rechtsvergleich zwischen Österreich und der Türkei},
   shorttitle = {Rechtsvergleich},
   author = {Dağdelen, Ahmet Hakan},
@@ -281,7 +281,7 @@
   langid = {austrian}
 }
 
-@article{fountoulakisBurgschaftsrechtHoffnungenGesetzgebers2010,
+@article{fountoulakisBuergschaftsrechtHoffnungenGesetzgebers2010,
   title = {Bürgschaftsrecht - von Hoffnungen des Gesetzgebers und was davon übrig bleibt},
   shorttitle = {Bürgschaftsrecht},
   author = {Fountoulakis, Christiana},
@@ -326,7 +326,7 @@
   langid = {nswissgerman}
 }
 
-@inreference{goksuArt102IPRG2016,
+@inreference{goeksuArt102IPRG2016,
   title = {Art. 102 IPRG},
   booktitle = {Handkommentar zum Schweizer Privatrecht},
   author = {Göksu, Tarkan},
@@ -339,7 +339,7 @@
   langid = {nswissgerman}
 }
 
-@inreference{goksuArt103IPRG2016,
+@inreference{goeksuArt103IPRG2016,
   title = {Art. 103 IPRG},
   booktitle = {Handkommentar zum Schweizer Privatrecht},
   author = {Göksu, Tarkan},
@@ -352,7 +352,7 @@
   langid = {nswissgerman}
 }
 
-@article{gruberUmfangBurgenhaftungErstreckungsklausel2002,
+@article{gruberUmfangBuergenhaftungErstreckungsklausel2002,
   title = {Umfang der Bürgenhaftung: Erstreckungsklausel und Globalbürgschaft},
   shorttitle = {Erstreckungsklausel},
   author = {Gruber, Michael},
@@ -365,7 +365,7 @@
   langid = {austrian}
 }
 
-@book{guhlNeueBurgschaftsrechtSchweiz1942,
+@book{guhlNeueBuergschaftsrechtSchweiz1942,
   title = {Das neue Bürgschaftsrecht der Schweiz},
   shorttitle = {Bürgschaftsrecht},
   author = {Guhl, Theo},
@@ -386,7 +386,7 @@
   langid = {nswissgerman}
 }
 
-@article{haasStichwortAGBKontrolleFormularmassige04,
+@article{haasStichwortAGBKontrolleFormularmaessige04,
   title = {Stichwort AGB-Kontrolle: Formularmäßige Erstreckungsklauseln auf dem Prüfstand},
   shorttitle = {Erstreckungsklauseln},
   author = {Haas, Susanne},
@@ -496,7 +496,7 @@
   langid = {nswissgerman}
 }
 
-@book{iroBurgerlichesRechtBand2013,
+@book{iroBuergerlichesRechtBand2013,
   title = {Bürgerliches Recht Band IV Sachenrecht},
   shorttitle = {Sachenrecht},
   author = {Iro, Gert},
@@ -508,7 +508,7 @@
   langid = {austrian}
 }
 
-@book{iroBurgerlichesRechtBand2016,
+@book{iroBuergerlichesRechtBand2016,
   title = {Bürgerliches Recht Band IV Sachenrecht},
   shorttitle = {Sachenrecht},
   author = {Iro, Gert},
@@ -533,7 +533,7 @@
   langid = {austrian}
 }
 
-@inreference{jaggiArt171973,
+@inreference{jaeggiArt171973,
   title = {Art. 17 OR},
   booktitle = {Zürcher Kommentar Band Nr. V/1a Obligationenrecht Art. 1-17},
   author = {Jäggi, Peter and Schönenberger, Wilhelm},
@@ -544,7 +544,7 @@
   langid = {nswissgerman}
 }
 
-@inreference{kahrArt714ZGB2016,
+@inreference{kaehrArt714ZGB2016,
   title = {Art. 714 ZGB},
   booktitle = {ZGB Kommentar Schweizerisches Zivilgesetzbuch},
   author = {Kähr, Michel},
@@ -557,7 +557,7 @@
   langid = {nswissgerman}
 }
 
-@inreference{kahrArt715ZGB2016,
+@inreference{kaehrArt715ZGB2016,
   title = {Art. 715 ZGB},
   booktitle = {ZGB Kommentar Schweizerisches Zivilgesetzbuch},
   author = {Kähr, Michel},
@@ -570,7 +570,7 @@
   langid = {nswissgerman}
 }
 
-@incollection{kochKreditsicherheitenGesellschaftsanteilenImmaterialgutern2012,
+@incollection{kochKreditsicherheitenGesellschaftsanteilenImmaterialguetern2012,
   title = {Kreditsicherheiten an Gesellschaftsanteilen, Immaterialgütern und Internet-Domains},
   shorttitle = {Kreditsicherheiten},
   booktitle = {Österreichisches Bankvertragsrecht Band IX: Kreditsicherheiten Teil II},
@@ -584,7 +584,7 @@
   langid = {austrian}
 }
 
-@book{kohlerBGBAllgemeinerTeil2020,
+@book{koehlerBGBAllgemeinerTeil2020,
   title = {BGB Allgemeiner Teil},
   shorttitle = {AT},
   author = {Köhler, Helmut},
@@ -593,6 +593,19 @@
   publisher = {{C. H. Beck}},
   location = {{München}},
   langid = {german}
+}
+
+@incollection{koenigVomMangelfolgeschadenGrundzuege2019,
+  title = {Vom Mangelfolgeschaden: Grundzüge und Streitfragen},
+  shorttitle = {Mangelfolgeschaden},
+  booktitle = {Schweizerische Baurechtstagung 2019},
+  author = {König, Roger},
+  editor = {Stöckli, Hubert},
+  date = {2019},
+  pages = {79--106},
+  publisher = {{Institut für Schweizerisches und Internationales Baurecht}},
+  location = {{Freiburg}},
+  langid = {nswissgerman}
 }
 
 @book{kollerSchweizerischesObligationenrechtBesonderer2012,
@@ -638,19 +651,6 @@
   langid = {austrian}
 }
 
-@incollection{konigVomMangelfolgeschadenGrundzuge2019,
-  title = {Vom Mangelfolgeschaden: Grundzüge und Streitfragen},
-  shorttitle = {Mangelfolgeschaden},
-  booktitle = {Schweizerische Baurechtstagung 2019},
-  author = {König, Roger},
-  editor = {Stöckli, Hubert},
-  date = {2019},
-  pages = {79--106},
-  publisher = {{Institut für Schweizerisches und Internationales Baurecht}},
-  location = {{Freiburg}},
-  langid = {nswissgerman}
-}
-
 @inreference{kostkiewiczArt102IPRG2015,
   title = {Art. 102 IPRG},
   booktitle = {IPRG/LugÜ Kommentar Bundesgesetz über das Internationale Privatrecht, Lugano Übereinkommen und weitere Erlasse},
@@ -662,7 +662,7 @@
   langid = {nswissgerman}
 }
 
-@book{koziolBurgerlichesRechtBand2014,
+@book{koziolBuergerlichesRechtBand2014,
   ids = {koziolBuergerlichesRechtBand2006},
   title = {Bürgerliches Recht Band I},
   shorttitle = {BR I},
@@ -675,7 +675,7 @@
   langid = {austrian}
 }
 
-@book{lukeSachenrecht2018,
+@book{luekeSachenrecht2018,
   title = {Sachenrecht},
   shorttitle = {SachenR},
   author = {Lüke, Wolfgang},
@@ -697,7 +697,7 @@
   langid = {german}
 }
 
-@inreference{mullerArt172018,
+@inreference{muellerArt172018,
   title = {Art. 17 OR},
   booktitle = {Berner Kommentar Obligationenrecht Allgemeine Bestimmungen: Art. 1-18 OR mit allgemeiner Einleitung in das Schweizerische Obligationenrecht},
   author = {Müller, Christoph},
@@ -758,7 +758,7 @@
   langid = {nswissgerman}
 }
 
-@book{poschBurgerlichesRechtVII2010,
+@book{poschBuergerlichesRechtVII2010,
   title = {Bürgerliches Recht VII Internationales Privatrecht},
   shorttitle = {IPR},
   author = {Posch, Willibald},
@@ -783,7 +783,7 @@
   langid = {german}
 }
 
-@book{reinickeBurgschaftsrecht2008,
+@book{reinickeBuergschaftsrecht2008,
   title = {Bürgschaftsrecht},
   author = {Reinicke, Dietrich and Tiedtke, Klaus},
   date = {2008},
@@ -820,7 +820,7 @@
   langid = {austrian}
 }
 
-@inreference{ruediArt662011,
+@inreference{rueediArt662011,
   title = {Art. 66 OR},
   booktitle = {Berner Kommentar Die Entstehung der Obligation: Die Entstehung aus ungerechtfetigter Bereicherung: Ausschluss der Rückforderungen, Art. 66 OR},
   author = {Rüedi, Yves},
@@ -830,7 +830,7 @@
   langid = {nswissgerman}
 }
 
-@book{ruthersAllgemeinerTeilBGB2020,
+@book{ruethersAllgemeinerTeilBGB2020,
   title = {Allgemeiner Teil des BGB},
   shorttitle = {AT},
   author = {Rüthers, Bernd and Stadler, Astrid},
@@ -841,7 +841,7 @@
   langid = {german}
 }
 
-@incollection{schauble17Sachenrecht2017,
+@incollection{schaeuble17Sachenrecht2017,
   title = {§ 17 Sachenrecht},
   shorttitle = {§ 17},
   booktitle = {Internationales Privatrecht in der Notar- und Gestaltungspraxis},
@@ -854,7 +854,7 @@
   langid = {german}
 }
 
-@incollection{schiemannRechtsgeschaft2008,
+@incollection{schiemannRechtsgeschaeft2008,
   title = {Rechtsgeschäft},
   booktitle = {Kommentar zum Bürgerlichen Gesetzbuch -- Eckpfeiler des Zivilrechts},
   author = {Schiemann, Gottfried},
@@ -939,7 +939,7 @@
   langid = {nswissgerman}
 }
 
-@book{welserBurgerlichesRechtBand2015,
+@book{welserBuergerlichesRechtBand2015,
   title = {Bürgerliches Recht Band II},
   shorttitle = {BR II},
   author = {Welser, Rudolf and Zöchling-Jud, Brigitta},
@@ -975,7 +975,7 @@
   langid = {german}
 }
 
-@book{wendehorstPrivatrechtEinfuhrungRechtswissenschaften2016,
+@book{wendehorstPrivatrechtEinfuehrungRechtswissenschaften2016,
   title = {Privatrecht Einführung in die Rechtswissenschaften und ihre Methoden Teil II},
   shorttitle = {Einführung},
   author = {Wendehorst, Christiane and Zöchling-Jud, Brigitta},
@@ -1009,7 +1009,7 @@
   langid = {german}
 }
 
-@book{zanklBurgerlichesRecht2012,
+@book{zanklBuergerlichesRecht2012,
   title = {Bürgerliches Recht},
   shorttitle = {BR},
   author = {Zankl, Wolfgang},
