@@ -502,6 +502,8 @@
   "export/date ranges #747+#746.biblatex",
   "export/date ranges #747+#746.bibtex",
   "export/date ranges #747+#746.json",
+  "export/date with fractional seconds.biblatex",
+  "export/date with fractional seconds.json",
   "export/don't escape entry key fields for #296.biblatex",
   "export/don't escape entry key fields for #296.json",
   "export/error during export: duplicate field note #1636.biblatex",
