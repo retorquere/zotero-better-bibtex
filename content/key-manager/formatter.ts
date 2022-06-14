@@ -311,7 +311,7 @@ class PatternFormatter {
     if (Preference.citekeyFormat.startsWith('[')) {
       log.debug('Upgrading citation pattern', Preference.citekeyFormat)
       try {
-        Preference.citekeyFormat = legacyparser.parse(Preference.citekeyFormat, { sprintf, items, methods, migrate: true }) as string
+        Preference.citekeyFormat = legacyparser.parse(Preference.citekeyFormat, { sprintf, items, methods }) as string
         flash('Citation pattern upgraded', `Citation pattern upgraded to ${Preference.citekeyFormat}`)
       }
       catch (err) {
@@ -358,7 +358,7 @@ class PatternFormatter {
   }
 
   public convertLegacy(pattern: string): string {
-    return legacyparser.parse(pattern, { sprintf, items, methods, migrate: true }) as string
+    return legacyparser.parse(pattern, { sprintf, items, methods }) as string
   }
 
   public format(item: ZoteroItem | SerializedItem): string {

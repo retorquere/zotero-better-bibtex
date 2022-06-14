@@ -18,7 +18,7 @@
       case 'boolean':
         return `${v}`
       case 'string':
-        return options.migrate && !noident && identifier.test(v) ? v : JSON.stringify(v)
+        return !noident && identifier.test(v) ? v : JSON.stringify(v)
     }
     throw new Error(`unexpected argument value ${v}`)
   }
@@ -53,52 +53,28 @@
       error(`${text}: ${argerror}`)
     }
     else {
-      if (options.migrate) {
-        const passed = method.parameters.filter(p => p in params)
-        const passed_j = ',' + passed.join(',') + ','
-        const all_j = ',' + method.parameters.join(',') + ','
+      const passed = method.parameters.filter(p => p in params)
+      const passed_j = ',' + passed.join(',') + ','
+      const all_j = ',' + method.parameters.join(',') + ','
 
-        if (!passed.length) {
-          args = ''
-        }
-        else if (method.parameters.length === 1 || (method.parameters.length === 2 && all_j.startsWith(passed_j) && passed_j.match(/,(start|n),/))) {
-          args = passed.map(p => literal(params[p]))
-        }
-        else {
-          args = passed.map(p => `${p}=${literal(params[p])}`).join(',')
-        }
-        if (args) args = `(${args})`
-        return `${method.name.substr(1)}${args}`
+      if (!passed.length) {
+        args = ''
       }
-
-      args = method.parameters.map((p, i) => typeof params[p] === 'undefined' ? method.defaults[i] : params[p])
-      let i
-      while (args.length && (args[(i = args.length - 1)] === method.defaults[i] || typeof args[i] === 'undefined')) args.pop()
-
-      args = args.map(arg => literal(arg)).join(', ')
-      return `${method.name[0] === '$' ? 'this.' : ''}${method.name}(${args})`
+      else if (method.parameters.length === 1 || (method.parameters.length === 2 && all_j.startsWith(passed_j) && passed_j.match(/,(start|n),/))) {
+        args = passed.map(p => literal(params[p]))
+      }
+      else {
+        args = passed.map(p => `${p}=${literal(params[p])}`).join(',')
+      }
+      if (args) args = `(${args})`
+      return `${method.name.substr(1)}${args}`
     }
   }
 }
 
 start
   = patterns:pattern+ {
-      if (!options.migrate) throw new Error('legacy parser only used for migration')
-
-      if (options.migrate) return patterns.map(chunk => chunk.join('+')).join(' | ')
-
-      var body = ''
-
-      for (const pattern of patterns) {
-        body += `\ntry {\n  this.citekey = '';\n`
-        for (const chunk of pattern) {
-          body += `  ${chunk};\n`
-        }
-        body += '  if (this.citekey) return this.citekey;\n}\ncatch (err) {\n  if (!err.next) throw err\n}\n'
-      }
-      body += `\nreturn '';`
-
-      return body
+      return patterns.map(chunk => chunk.join('+')).join(' | ')
     }
 
 pattern
@@ -106,52 +82,39 @@ pattern
 
 chunk
   = [ \t\r\n]+                            { return '' }
-  / '[]'                                  { return options.migrate ? "''" : '' }
-  / '[0]'                                 { return `${options.migrate ? '' : 'this.$'}postfix("-%(n)s")` }
+  / '[]'                                  { return "''" }
+  / '[0]'                                 { return 'postfix("-%(n)s")' }
   / '[postfix' start:'+1'? pf:stringparam ']' {
-        if (options.migrate && start) {
+        if (start) {
           return `postfix(${literal(pf)}, 1)`
         }
-        else if (options.migrate) {
-          return `postfix(${literal(pf)})`
-        }
         else {
-          return `this.$postfix(${literal(pf)}, ${start ? 1 : 0})`
+          return `postfix(${literal(pf)})`
         }
       }
   / '[=' types:$[a-zA-Z/]+ ']'            {
       types = types.toLowerCase().split('/').map(type => type.trim()).map(type => options.items.name.type[type.toLowerCase()] || type);
       var unknown = types.find(type => !options.items.valid.type[type])
       if (typeof unknown !== 'undefined') error(`unknown item type "${unknown}; valid types are ${Object.keys(options.items.name.type)}"`);
-      return `${options.migrate ? '' : 'this.$'}type(${types.map(t => literal(t)).join(', ')})`
+      return `type(${types.map(t => literal(t)).join(', ')})`
     }
   / '[language=' languages:$[a-zA-Z/]+ ']'            { // add language checking in parse phase
       languages = languages.toLowerCase().split('/').map(language => language.trim())
-      return `${options.migrate ? '' : 'this.$'}language(${languages.map(l => literal(l)).join(', ')})`
+      return `language(${languages.map(l => literal(l)).join(', ')})`
     }
   / '[>' min:$[0-9]+ ']'                 {
-      if (options.migrate && parseInt(min) === 0) {
+      if (parseInt(min) === 0) {
         return 'len'
       }
       else {
-        return `${options.migrate ? '' : 'this.$'}len('>',${min})`
+        return `len('>',${min})`
       }
     }
   / '[' method:method filters:filter* ']' {
-      if (options.migrate) {
-        return [method].concat(filters).join('.')
-      }
-      else {
-        return `this.citekey += ${[method].concat(filters).join('.')}.chunk`
-      }
+      return [method].concat(filters).join('.')
     }
   / chars:$[^\|>\[\]]+                     {
-      if (options.migrate) {
-        return literal(chars, true)
-      }
-      else {
-        return `this.citekey += ${literal(chars)}`
-      }
+      return literal(chars, true)
     }
 
 method
@@ -227,13 +190,13 @@ method
       return method
     }
   / operator:$([<>=] / [<>!] '=') n:$[0-9]+ {
-    if (options.migrate && parseInt(n) === 0 && operator === '>') return 'len'
+    if (parseInt(n) === 0 && operator === '>') return 'len'
     return match('$len', [operator, n], operator, error)
   }
   / prop:$([A-Z][a-zA-Z]+) { // before method matching, as method matching is case-insensitive now!
       const field = options.items.name.field[prop.toLowerCase()]
       if (!field) error(`Unknown field ${JSON.stringify(prop)}`)
-      return options.migrate ? prop : `this.$getField(${literal(field)})`
+      return prop
     }
   / name:$([a-z][-.a-zA-Z]+) &{ return get_method(name, '$').name } p:fparams? {
       return match('$' + name, p || [], name, error)
@@ -242,7 +205,7 @@ method
       if (prop.match(/^[a-z]/)) error(`Direct field access ${prop} must start with a leading capital`)
       const field = options.items.name.field[prop.toLowerCase()]
       if (!field) error(`Unknown field ${JSON.stringify(prop)}`)
-      return options.migrate ? prop : `this.$getField(${literal(field)})`
+      return prop
     }
 
 fparams
@@ -254,10 +217,9 @@ flag
   = '+' flag:$[^_:\]]+                 { return flag }
 
 filter
-  = ':(' dflt:$[^)]+ ')'                  { return `${options.migrate ? '' : '_'}default(${literal(dflt)})` }
+  = ':(' dflt:$[^)]+ ')'                  { return `default(${literal(dflt)})` }
   / ':' ('>'/'longer=') min:$[0-9]+       {
-      if (options.migrate && parseInt(min) === 0) return 'len'
-      return `${options.migrate ? '' : '_'}len('>', ${min})`
+      return parseInt(min) === 0 ? 'len' : `len('>', ${min})`
     }
   / ':' name:$[-a-z]+ params:stringparam* { return match('_' + name, params, name, error) }
 
