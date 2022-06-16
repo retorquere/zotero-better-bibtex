@@ -266,12 +266,22 @@ export class PatternParser {
     }
   }
 
-  private resolveArguments(fname: string, args: AST[]): AST[] {
+  private resolveArguments(fname: string, args: AST[], deprecated: Record<string, string>={}): AST[] {
     const method = api[fname.toLowerCase()] // transitional before rename in formatter.ts
     const kind = this.kind(fname)
     fname = fname.slice(1)
     const me = `${kind} ${JSON.stringify(fname)}`
     if (!method) throw new Error(`No such ${me}`)
+
+    args = args.filter(arg => {
+      if (deprecated[arg.named_argument]) {
+        this.warning = deprecated[arg.named_argument]
+        return false
+      }
+      else {
+        return true
+      }
+    })
 
     let named = false
     args.forEach((arg, i) => {
@@ -398,20 +408,7 @@ export class PatternParser {
           context.coerce = false
           // return b.binaryExpression('+', b.literal(''), this_expr)
           return b.binaryExpression('+',
-
-            b.sequenceExpression([
-              b.assignmentExpression(
-                '=',
-                b.memberExpression(b.thisExpression(), b.identifier('transliteration'), false),
-                b.literal(true)
-              ),
-              b.assignmentExpression(
-                '=',
-                b.memberExpression(b.thisExpression(), b.identifier('citekey'), false),
-                b.literal('')
-              ),
-            ]),
-
+            b.callExpression(b.memberExpression(b.thisExpression(), b.identifier('reset')), []),
             this_expr
           )
         }
@@ -454,7 +451,11 @@ export class PatternParser {
         callee.name = api[`${prefix}${passed}`.toLowerCase()]?.name
         if (!callee.name) throw new Error(`No such ${this.kind(prefix)} ${passed}`)
 
-        expr.arguments = this.resolveArguments(callee.name, expr.arguments)
+        expr.arguments = this.resolveArguments(callee.name, expr.arguments, {
+          // move cleaning to Preference.citekeyFold
+          clean: callee.name.startsWith('$auth') && `clean parameter deprecated on ${this.kind(prefix)} ${passed}`,
+        })
+
         this.resolve(expr.callee)
         break
 

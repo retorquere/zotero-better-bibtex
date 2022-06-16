@@ -8,7 +8,7 @@
     },
     "preferences": {
       "baseAttachmentPath": "C:\\Users\\jtcar\\Dropbox\\Juris-M",
-      "citekeyFold": false,
+      "citekeyFold": true,
       "citekeyFormat": "[language=ja/ja][authEtAl][shorttitle2_2][year] | [Authors:jieba:select=1,2:transliterate=zh][Title:jieba:skipwords:select=1,2:nopunct:transliterate=zh][year]",
       "jieba": true,
       "kuroshiro": true,

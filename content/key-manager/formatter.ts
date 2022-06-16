@@ -266,7 +266,7 @@ const safechars = '-:\\p{L}0-9_!$*+./;\\[\\]'
 class PatternFormatter {
   public chunk = ''
   public citekey = ''
-  public transliteration = true
+  public folding: boolean
   public warning = ''
 
   public generate: () => string
@@ -362,6 +362,13 @@ class PatternFormatter {
     return legacyparser.parse(pattern, { sprintf, items, methods }) as string
   }
 
+  public reset() {
+    this.citekey = ''
+    this.folding = Preference.citekeyFold
+    log.debug('reset:', { folding: this.folding })
+    return ''
+  }
+
   public format(item: ZoteroItem | SerializedItem): string {
     this.item = new Item(item)
     this.chunk = ''
@@ -376,7 +383,7 @@ class PatternFormatter {
     this.$postfix()
     log.debug('formatting new key')
     let citekey = this.generate() || `zotero-${this.item.itemID}`
-    if (citekey && Preference.citekeyFold && this.transliteration) citekey = this.transliterate(citekey)
+    if (citekey && this.folding) citekey = this.transliterate(citekey)
     citekey = citekey.replace(/[\s{},@]/g, '')
     log.debug('new citekey:', citekey)
 
@@ -473,7 +480,6 @@ class PatternFormatter {
    * @param name    sprintf-js template. Available named parameters are: `f` (family name), `g` (given name), `i` (initials)
    * @param etal    use this term to replace authors after `n` authors have been named
    * @param sep     use this character between authors
-   * @param clean   transliterates the authors and removes unsafe characters
    * @param min     skip to the next pattern if there are less than `min` creators, 0 = ignore
    * @param max     skip to the next pattern if there are more than `max` creators, 0 = ignore
    */
@@ -483,7 +489,6 @@ class PatternFormatter {
     name='%(f)s',
     etal='',
     sep=' ',
-    clean=true,
     min=0,
     max=0
   ) {
@@ -505,7 +510,7 @@ class PatternFormatter {
       if (etal && !etal.replace(/[a-z]/ig, '').length) etal = `${sep}${etal}`
     }
     let author = authors.join(sep) + etal
-    if (clean && this.transliteration) author = this.clean(author, true)
+    if (this.folding) author = this.clean(author, true)
     return this.$text(author)
   }
 
@@ -515,34 +520,31 @@ class PatternFormatter {
    * @param m         select the `m`th author
    * @param creator   select from authors or only from editors
    * @param initials  add author initials
-   * @param clean     transliterates the authors and removes unsafe characters
    */
-  public $auth(n=0, m=1, creator: 'author' | 'editor' = 'author', initials=false, clean=true) {
+  public $auth(n=0, m=1, creator: 'author' | 'editor' = 'author', initials=false) {
     const family = n ? `%(f).${n}s` : '%(f)s'
     const name = initials ? `${family}%(I)s` : family
-    return this.$authors([m, m], creator, name, undefined, undefined, clean)
+    return this.$authors([m, m], creator, name, undefined, undefined)
   }
 
   /**
    * The given-name initial of the first author.
    * @param creator   select from authors or only from editors
-   * @param clean     transliterates the authors and removes unsafe characters
    */
-  public $authForeIni(creator: 'author' | 'editor' = 'author', clean=true) {
+  public $authForeIni(creator: 'author' | 'editor' = 'author') {
     let author: string = this.creators(creator === 'editor', '%(I)s')[0] || ''
-    if (clean && this.transliteration) author = this.clean(author, true)
+    if (this.folding) author = this.clean(author, true)
     return this.$text(author)
   }
 
   /**
    * The given-name initial of the last author.
    * @param creator   select from authors or only from editors
-   * @param clean     transliterates the authors and removes unsafe characters
    */
-  public $authorLastForeIni(creator: 'author' | 'editor' = 'author', clean=true) {
+  public $authorLastForeIni(creator: 'author' | 'editor' = 'author') {
     const authors = this.creators(creator === 'editor', '%(I)s')
     let author = authors[authors.length - 1] || ''
-    if (clean && this.transliteration) author = this.clean(author, true)
+    if (this.folding) author = this.clean(author, true)
     return this.$text(author)
   }
 
@@ -550,12 +552,11 @@ class PatternFormatter {
    * The last name of the last author
    * @param creator   select from authors or only from editors
    * @param initials  add author initials
-   * @param clean     transliterates the authors and removes unsafe characters
    */
-  public $authorLast(creator: 'author' | 'editor' = 'author', initials=false, clean=true) {
+  public $authorLast(creator: 'author' | 'editor' = 'author', initials=false) {
     const authors = this.creators(creator === 'editor', initials ? '%(f)s%(I)s' : '%(f)s')
     let author = authors[authors.length - 1] || ''
-    if (clean && this.transliteration) author = this.clean(author, true)
+    if (this.folding) author = this.clean(author, true)
     return this.$text(author)
   }
 
@@ -565,9 +566,8 @@ class PatternFormatter {
    * @param creator   select from authors or only from editors
    * @param initials  add author initials
    * @param sep     use this character between authors
-   * @param clean     transliterates the authors and removes unsafe characters
    */
-  public $authorsAlpha(creator: 'author' | 'editor' = 'author', initials=false, sep=' ', clean=true) {
+  public $authorsAlpha(creator: 'author' | 'editor' = 'author', initials=false, sep=' ') {
     const authors = this.creators(creator === 'editor', initials ? '%(f)s%(I)s' : '%(f)s')
     if (!authors.length) return this.$text('')
 
@@ -588,7 +588,7 @@ class PatternFormatter {
         author = `${authors.slice(0, 3).map(auth => auth.substring(0, 1)).join(sep)}+`
         break
     }
-    if (clean && this.transliteration) author = this.clean(author, true)
+    if (this.folding) author = this.clean(author, true)
     return this.$text(author)
   }
 
@@ -598,13 +598,12 @@ class PatternFormatter {
    * @param creator   select from authors or only from editors
    * @param initials  add author initials
    * @param sep     use this character between authors
-   * @param clean     transliterates the authors and removes unsafe characters
    */
-  public $authIni(n=0, creator: 'author' | 'editor' = 'author', initials=false, sep='.', clean=true) {
+  public $authIni(n=0, creator: 'author' | 'editor' = 'author', initials=false, sep='.') {
     const authors = this.creators(creator === 'editor', initials ? '%(f)s%(I)s' : '%(f)s')
     if (!authors.length) return this.$text('')
     let author = authors.map(auth => auth.substring(0, n)).join(sep)
-    if (clean && this.transliteration) author = this.clean(author, true)
+    if (this.folding) author = this.clean(author, true)
     return this.$text(author)
   }
 
@@ -613,16 +612,15 @@ class PatternFormatter {
    * @param creator   select from authors or only from editors
    * @param initials  add author initials
    * @param sep     use this character between authors
-   * @param clean     transliterates the authors and removes unsafe characters
    */
-  public $authorIni(creator: 'author' | 'editor' = 'author', initials=false, sep='.', clean=true): PatternFormatter {
+  public $authorIni(creator: 'author' | 'editor' = 'author', initials=false, sep='.'): PatternFormatter {
     const authors = this.creators(creator === 'editor', initials ? '%(f)s%(I)s' : '%(f)s')
     if (!authors.length) return this.$text('')
     const firstAuthor = authors.shift()
 
     // eslint-disable-next-line no-magic-numbers
     let author = [firstAuthor.substring(0, 5)].concat(authors.map(name => name.substring(0, 1)).join('.')).join(sep)
-    if (clean && this.transliteration) author = this.clean(author, true)
+    if (this.folding) author = this.clean(author, true)
     return this.$text(author)
   }
 
@@ -631,15 +629,14 @@ class PatternFormatter {
    * @param creator   select from authors or only from editors
    * @param initials  add author initials
    * @param sep     use this character between authors
-   * @param clean     transliterates the authors and removes unsafe characters
    */
-  public $authAuthEa(creator: 'author' | 'editor' = 'author', initials=false, sep='.', clean=true) {
+  public $authAuthEa(creator: 'author' | 'editor' = 'author', initials=false, sep='.') {
     const authors = this.creators(creator === 'editor', initials ? '%(f)s%(I)s' : '%(f)s')
     if (!authors.length) return this.$text('')
 
     // eslint-disable-next-line no-magic-numbers
     let author = authors.slice(0, 2).concat(authors.length > 2 ? ['ea'] : []).join(sep)
-    if (clean && this.transliteration) author = this.clean(author, true)
+    if (this.folding) author = this.clean(author, true)
     return this.$text(author)
   }
 
@@ -652,9 +649,8 @@ class PatternFormatter {
    * @param creator   select from authors or only from editors
    * @param initials  add author initials
    * @param sep     use this character between authors
-   * @param clean     transliterates the authors and removes unsafe characters
    */
-  public $authEtAl(creator: 'author' | 'editor' = 'author', initials=false, sep=' ', clean=true) {
+  public $authEtAl(creator: 'author' | 'editor' = 'author', initials=false, sep=' ') {
     const authors = this.creators(creator === 'editor', initials ? '%(f)s%(I)s' : '%(f)s')
     if (!authors.length) return this.$text('')
 
@@ -666,7 +662,7 @@ class PatternFormatter {
     else {
       author = authors.slice(0, 1).concat(authors.length > 1 ? ['EtAl'] : []).join(sep)
     }
-    if (clean && this.transliteration) author = this.clean(author, true)
+    if (this.folding) author = this.clean(author, true)
     return this.$text(author)
   }
 
@@ -675,9 +671,8 @@ class PatternFormatter {
    * @param creator   select from authors or only from editors
    * @param initials  add author initials
    * @param sep     use this character between authors
-   * @param clean     transliterates the authors and removes unsafe characters
    */
-  public $authEtal2(creator: 'author' | 'editor' = 'author', initials=false, sep='.', clean=true) {
+  public $authEtal2(creator: 'author' | 'editor' = 'author', initials=false, sep='.') {
     const authors = this.creators(creator === 'editor', initials ? '%(f)s%(I)s' : '%(f)s')
     if (!authors.length) return this.$text('')
 
@@ -689,7 +684,7 @@ class PatternFormatter {
     else {
       author = authors.slice(0, 1).concat(authors.length > 1 ? ['etal'] : []).join(sep)
     }
-    if (clean && this.transliteration) author = this.clean(author, true)
+    if (this.folding) author = this.clean(author, true)
     return this.$text(author)
   }
 
@@ -701,9 +696,8 @@ class PatternFormatter {
    * @param creator   select from authors or only from editors
    * @param initials  add author initials
    * @param sep     use this character between authors
-   * @param clean     transliterates the authors and removes unsafe characters
    */
-  public $authshort(creator: 'author' | 'editor' = 'author', initials=false, sep='.', clean=true) {
+  public $authshort(creator: 'author' | 'editor' = 'author', initials=false, sep='.') {
     const authors = this.creators(creator === 'editor', initials ? '%(f)s%(I)s' : '%(f)s')
 
     let author
@@ -719,7 +713,7 @@ class PatternFormatter {
         // eslint-disable-next-line no-magic-numbers
         author = authors.slice(0, 3).map(auth => auth.substring(0, 1)).join(sep) + (authors.length > 3 ? '+' : '')
     }
-    if (clean && this.transliteration) author = this.clean(author, true)
+    if (this.folding) author = this.clean(author, true)
     return this.$text(author)
   }
 
@@ -847,7 +841,7 @@ class PatternFormatter {
 
   /** turn auto-cleaning on/off */
   public $clean(enabled: boolean) {
-    this.transliteration = enabled
+    this.folding = enabled
     return this
   }
 
@@ -1280,11 +1274,12 @@ class PatternFormatter {
 
     title = this.innerText(title)
 
-    if (this.transliteration && options.asciiOnly && Preference.kuroshiro && kuroshiro.enabled) title = kuroshiro.convert(title, {to: 'romaji', mode: 'spaced'})
+    log.debug('titleWords', { options, folding: this.folding, kuroshiro: Preference.kuroshiro && kuroshiro.enabled})
+    if (this.folding && options.asciiOnly && Preference.kuroshiro && kuroshiro.enabled) title = kuroshiro.convert(title, {to: 'romaji', mode: 'spaced'})
 
     // 551
     let words: string[] = (Zotero.Utilities.XRegExp.matchChain(title, [this.re.word])
-      .map((word: string) => (this.transliteration && options.asciiOnly ? this.clean(word) : word).replace(/-/g, '')))
+      .map((word: string) => (this.folding && options.asciiOnly ? this.clean(word) : word).replace(/-/g, '')))
       .filter((word: string) => word)
 
     if (options.skipWords) words = words.filter((word: string) => !this.skipWords.has(word.toLowerCase()) && (ucs2decode(word).length > 1) || word.match(script.han))

@@ -125,7 +125,6 @@ method
 
       const args = {
         creator: input.match(/^a/i) ? 'author' : 'editor',
-        clean: !input.match(/^[AE]/),
       }
       params.forEach((p, i) => {
         const n = parseInt(p)
