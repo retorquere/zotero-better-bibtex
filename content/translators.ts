@@ -403,6 +403,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     // stringify gets around 'object could not be cloned', and arraybuffers can be passed zero-copy. win-win
     const abconfig = enc.encode(JSON.stringify(config)).buffer
 
+    log.debug('worker export started:', config.data.items.length, 'items, cache:', !!cache, Object.keys(config.data.cache).length, 'items cached')
     this.worker.postMessage({ kind: 'start', config: abconfig }, [ abconfig ])
 
     return deferred.promise
