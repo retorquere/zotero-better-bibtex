@@ -525,6 +525,8 @@
   "export/markup small-caps, superscript, italics #301.json",
   "export/micro sign (unicode B5) export seems wrong and span in title #1434.biblatex",
   "export/micro sign (unicode B5) export seems wrong and span in title #1434.json",
+  "export/noclean.biblatex",
+  "export/noclean.json",
   "export/origyear not taken from csl extra-field for citation key generation #1395.biblatex",
   "export/origyear not taken from csl extra-field for citation key generation #1395.json",
   "export/paragraphs in Zotero notes need par #1422.biblatex",
