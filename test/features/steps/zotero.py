@@ -603,7 +603,6 @@ class Zotero:
           profile.firefox.firefox.set_preference(p, v)
 
     if not self.config.first_run:
-      # force stripping of the pattern
       profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.citekeyFormat', "[auth:lower][year] | [=forumPost/WebPage][Auth:lower:capitalize][Date:format-date=%Y-%m-%d.%H\\:%M\\:%S:prefix=.][PublicationTitle:lower:capitalize:prefix=.][shorttitle3_3:lower:capitalize:prefix=.][Pages:prefix=.p.][Volume:prefix=.Vol.][NumberofVolumes:prefix=de] | [Auth:lower:capitalize][date=%oY:prefix=.][PublicationTitle:lower:capitalize:prefix=.][shorttitle3_3:lower:capitalize:prefix=.][Pages:prefix=.p.][Volume:prefix=.Vol.][NumberofVolumes:prefix=de]")
 
     if self.client == 'jurism':
