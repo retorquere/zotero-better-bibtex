@@ -108,7 +108,7 @@
     "dom-parser": "^0.1.6",
     "dotenv": "^16.0.1",
     "ejs": "^3.1.8",
-    "esbuild": "^0.14.44",
+    "esbuild": "^0.14.45",
     "escape-string-regexp": "^5.0.0",
     "eslint": "^8.17.0",
     "estrace": "^4.0.1",
@@ -141,7 +141,7 @@
     "process": "^0.11.10",
     "properties-reader": "^2.2.0",
     "pug": "^3.0.2",
-    "putout": "^26.14.0",
+    "putout": "^26.15.0",
     "recast": "^0.21.1",
     "regenerate": "^1.4.2",
     "rimraf": "^3.0.2",
@@ -158,7 +158,7 @@
     "words-to-numbers": "^1.5.1",
     "xml-parser": "^1.2.1",
     "xpath": "^0.0.32",
-    "zotero-plugin": "^1.4.3"
+    "zotero-plugin": "^1.4.4"
   },
   "repository": {
     "type": "git",
