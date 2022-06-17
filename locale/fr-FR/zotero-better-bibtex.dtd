@@ -6,8 +6,6 @@
 <!ENTITY better-bibtex.FirstRun.citekeyFormat.bbt "Utiliser le format par défaut de BBT pour la clé de citation">
 <!ENTITY better-bibtex.FirstRun.citekeyFormat.zotero "Utiliser le format par défaut de Zotero pour la clé de citation">
 <!ENTITY better-bibtex.FirstRun.citekeyFormat.explanation.bbt "Les nouvelles clés de citation seront par défaut générées en utilisant le format de BBT. Si vous voulez un format différent, modifiez-le dans les préférences, puis sélectionnez tous les éléments, cliquez avec le bouton droit et sélectionnez Actualiser">
-<!ENTITY better-bibtex.FirstRun.citekeyFormat.explanation.bbt.note "Note">
-<!ENTITY better-bibtex.FirstRun.citekeyFormat.explanation.bbt.citekeyUpdate "Dans Zotero 5, BBT ne met plus automatiquement à jour les clés de citation lorsque vous modifiez le modèle dans les préférences. Si vous voulez que les éléments existants suivent le modèle modifié, vous devrez les sélectionner et les rafraîchir.">
 <!ENTITY better-bibtex.FirstRun.citekeyFormat.explanation.zotero "Choisissez cette option si vous avez des documents qui font référence à des clés générées par Zotero sans l'aide de BBT. Cela va reproduire fidèlement les clés générées par Zotero, y compris les limitations connues du générateur de clé de Zotero. N'utilisez ceci que s'il vous est nécessaire que les clés soient exactement les mêmes que celles générées par Zotero.">
 <!ENTITY better-bibtex.FirstRun.citekeyFormat.explanation.example "vos clés de citation ressembleront à">
 
