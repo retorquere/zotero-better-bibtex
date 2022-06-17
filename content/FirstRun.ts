@@ -36,8 +36,8 @@ export class FirstRun {
 
     // special case for dynamic explanation
     const selected = this.globals.document.getElementById('better-bibtex-first-run-citekeyFormat').selectedItem.value
-    for (const pattern of ['bbt', 'zotero', 'whatever']) {
-      this.globals.document.getElementById(`better-bibtex-first-run-citekeyFormat-${pattern}`).setAttribute('hidden', pattern !== selected)
+    for (const format of this.globals.document.querySelectorAll('#better-bibtex-first-run-citekeyFormat radio')) {
+      this.globals.document.getElementById(`better-bibtex-first-run-citekeyFormat-${format.value}`).setAttribute('hidden', format.value !== selected)
     }
   }
 }
