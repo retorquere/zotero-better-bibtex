@@ -39,7 +39,7 @@ def before_all(context):
   context.zotero.export_library(translator = 'Better BibTeX')
 
 try:
-  with open(os.path.join(os.path.dirname(__file__), '../../../test/balance.json')) as f:
+  with open(os.path.join(os.path.dirname(__file__), '../../../test/stats/balance.json')) as f:
     balance = json.load(f)
 except FileNotFoundError:
   balance = None

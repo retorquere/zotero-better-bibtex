@@ -25,6 +25,7 @@ build
 resource/translators/*.json
 test/fixtures/plugins
 test/tmp
+test/stats
 tmp
 *.xpi
 *.log
