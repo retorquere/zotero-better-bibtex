@@ -581,10 +581,12 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
         // there wasn't an error starting a worker earlier
         disabled = 'failed to start a chromeworker, disabled until restart'
       }
+      /*
       else if (this.location?.path.startsWith('\\\\')) {
         // check for SMB path for #1396
         disabled = 'chrome workers fail on smb paths'
       }
+      */
       else {
         disabled = Object.keys(this._handlers).filter(handler => !['done', 'itemDone', 'error'].includes(handler)).join(', ')
         if (disabled) disabled = `handlers: ${disabled}`
