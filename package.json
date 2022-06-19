@@ -66,7 +66,7 @@
     "better-ajv-errors": "^1.2.0",
     "case": "^1.6.3",
     "citeproc": "^2.4.62",
-    "edtf": "^4.2.0",
+    "edtf": "^4.3.0",
     "edtfy": "^0.0.8",
     "eventemitter3": "^4.0.7",
     "fast-safe-stringify": "^2.1.1",
@@ -108,9 +108,9 @@
     "dom-parser": "^0.1.6",
     "dotenv": "^16.0.1",
     "ejs": "^3.1.8",
-    "esbuild": "^0.14.45",
+    "esbuild": "^0.14.46",
     "escape-string-regexp": "^5.0.0",
-    "eslint": "^8.17.0",
+    "eslint": "^8.18.0",
     "estrace": "^4.0.1",
     "eta": "^1.12.3",
     "excel-column-name": "^1.0.1",
@@ -150,7 +150,7 @@
     "string-template": "^1.0.0",
     "ts-node": "^10.8.1",
     "tslib": "^2.4.0",
-    "typescript": "^4.7.3",
+    "typescript": "^4.7.4",
     "unicode-11.0.0": "^0.7.8",
     "unicode2latex": "^3.0.0",
     "uri-templates": "^0.2.0",
@@ -158,7 +158,7 @@
     "words-to-numbers": "^1.5.1",
     "xml-parser": "^1.2.1",
     "xpath": "^0.0.32",
-    "zotero-plugin": "^1.4.4"
+    "zotero-plugin": "^1.4.5"
   },
   "repository": {
     "type": "git",
