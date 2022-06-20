@@ -96,6 +96,26 @@ AddonManager.addAddonListener({
   MONKEY PATCHES
 */
 
+// zotero moved itemToCSLJSON to Zotero.Utilities.Item, jurism for the moment keeps it on ZU
+$patch$(Zotero.Utilities.Item?.itemToCSLJSON ? Zotero.Utilities.Item : Zotero.Utilities, 'itemToCSLJSON', original => function itemToCSLJSON(zoteroItem: { itemID: any }) {
+  const cslItem = original.apply(this, arguments)
+
+  try {
+    if (typeof Zotero.Item !== 'undefined' && !(zoteroItem instanceof Zotero.Item)) {
+      const citekey = Zotero.BetterBibTeX.KeyManager.get(zoteroItem.itemID)
+      if (citekey) {
+        cslItem['citation-key'] = citekey.citekey
+      }
+    }
+  }
+  catch (err) {
+    log.error('failed patching CSL-JSON:', err)
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+  return cslItem
+})
+
 // https://github.com/retorquere/zotero-better-bibtex/issues/1221
 $patch$(Zotero.Items, 'merge', original => async function Zotero_Items_merge(item: ZoteroItem, otherItems: ZoteroItem[]) {
   try {
