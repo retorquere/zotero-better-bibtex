@@ -848,7 +848,7 @@ class PatternFormatter {
   /**
    * a pseudo-function that sets the citekey disambiguation postfix using an <a href="https://www.npmjs.com/package/sprintf-js">sprintf-js</a> format spec
    * for when a key is generated that already exists. Does not add any text to the citekey otherwise.
-   * You *must* include *exactly* one of the placeholders `%(n)s`> (number), `%(a)s` (alpha, lowercase) or `e>%(A)s` (alpha, uppercase).
+   * You *must* include *exactly one* of the placeholders `%(n)s` (number), `%(a)s` (alpha, lowercase) or `%(A)s` (alpha, uppercase).
    * For the rest of the disambiguator you can use things like padding and extra text as sprintf-js allows. With `+1` the disambiguator is always included,
    * even if there is no need for it when no duplicates exist. The default  format is `%(a)s`.
    * @param format sprintf-style format template
