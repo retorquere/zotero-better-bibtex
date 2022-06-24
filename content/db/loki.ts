@@ -15,7 +15,7 @@ import { log } from '../logger'
 // eslint-disable-next-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
 import Loki = require('lokijs')
 
-import { ajv } from '../ajv'
+import { validator } from '../ajv'
 
 // 894
 $patch$(Loki.Collection.prototype, 'findOne', original => function() {
@@ -25,8 +25,9 @@ $patch$(Loki.Collection.prototype, 'findOne', original => function() {
 })
 
 $patch$(Loki.Collection.prototype, 'insert', original => function(doc) {
-  if (this.validate && !this.validate(doc)) {
-    const err = new Error(`insert: validation failed for ${JSON.stringify(doc)} (${JSON.stringify(this.validate.errors)})`)
+  const error = this.validationError?.(doc)
+  if (error) {
+    const err = new Error(`insert: validation failed for ${JSON.stringify(doc)} (${error})`)
     log.error('insert: validation failed for', doc, this.validate.errors, err)
     alert(`Better BibTeX: error saving ${this.name}, restart to repair`)
     Preference.scrubDatabase = true
@@ -36,8 +37,9 @@ $patch$(Loki.Collection.prototype, 'insert', original => function(doc) {
 })
 
 $patch$(Loki.Collection.prototype, 'update', original => function(doc) {
-  if (this.validate && !this.validate(doc)) {
-    const err = new Error(`update: validation failed for ${JSON.stringify(doc)} (${JSON.stringify(this.validate.errors)})`)
+  const error = this.validationError?.(doc)
+  if (error) {
+    const err = new Error(`update: validation failed for ${JSON.stringify(doc)} (${error})`)
     log.error('update: validation failed for', doc, this.validate.errors, err)
     alert(`Better BibTeX: error saving ${this.name}, restart to repair`)
     Preference.scrubDatabase = true
@@ -186,7 +188,7 @@ export class XULoki extends Loki {
     const coll: any = this.getCollection(name) || this.addCollection(name, options)
     coll.cloneObjects = true
 
-    coll.validate = ajv.compile(options.schema)
+    coll.validationError = validator(options.schema)
 
     return coll
   }
