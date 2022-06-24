@@ -194,9 +194,15 @@ module.exports.trace = function(section) {
   }
 }
 
-const Ajv = require('ajv')
-// const ajv = new Ajv({ discriminator: true, code: {source: true, esm: true} })
-const ajv = new Ajv({ discriminator: true, code: { source: true } })
+// 2020 for prefixItems
+const AJV = require('ajv/dist/2020')
+const ajv = new AJV({
+  strict: false,
+  coerceTypes: true,
+  discriminator: true,
+  useDefaults: true,
+  code: { source: true },
+})
 const ajvStandaloneCode = require('ajv/dist/standalone').default
 module.exports.ajv = {
   name: 'ajv',

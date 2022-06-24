@@ -42,9 +42,17 @@ export const options: Partial<Record<PreferenceName, Record<string, string>>> = 
 % endfor
 }
 
-<% overrides = [pref for pref in preferences if pref.get('override', false)] %>\
-<% cache_or_autoexport = [tr for tr in translators if tr.cached or tr.keepUpdated] %>\
-<% ae_options = list(set([ option for tr in translators for option, dflt in tr.get('displayOptions', {}).items() if tr.keepUpdated and type(dflt) == bool and option not in ['exportFileData', 'keepUpdated'] ])) %>\
+<%
+ae_ignoreOptions = ['exportFileData', 'keepUpdated']
+overrides = [pref for pref in preferences if pref.get('override', false)]
+cache_or_autoexport = [tr for tr in translators if tr.cached or tr.keepUpdated]
+ae_options = list(set([
+  option
+  for tr in translators
+  for option, dflt in tr.get('displayOptions', {}).items()
+  if tr.keepUpdated and type(dflt) == bool and option not in ae_ignoreOptions
+]))
+%>\
 type LokiRecord = {
   type: 'object'
   additionalProperties: false
@@ -66,7 +74,7 @@ tr_options = [option for option in tr.get('displayOptions', {}).keys() if option
 
 tr_types = {}
 for pref in overrides:
-  if pref.var in tr.affectedBy:
+  if pref.var in tr.affectedBy and not pref.var in ae_ignoreOptions:
     if 'options' in pref:
       tr_types[pref.var] = { 'enum': list(pref.options.keys()) }
     else:
@@ -100,7 +108,7 @@ if tr.keepUpdated:
       'meta': { 'type': 'object' },
       '$loki': { 'type': 'integer' },
     },
-    'required': [ 'type', 'id', 'path', 'status', 'translatorID' ] + list(tr.displayOptions.keys()) + tr_preferences
+    'required': [ 'type', 'id', 'path', 'status', 'translatorID' ] + [ option for option in tr.displayOptions.keys() if option not in ae_ignoreOptions ] + tr_preferences
   }
 
 tr_cache = False

@@ -24,27 +24,24 @@ $patch$(Loki.Collection.prototype, 'findOne', original => function() {
   return original.apply(this, arguments)
 })
 
+function oops(collection, action, doc, errors) {
+  log.debug(collection, action, doc)
+  if (!errors) return
+
+  const error = new Error(`${collection} ${action} ${JSON.stringify(doc)}: ${errors}`)
+  Preference.scrubDatabase = true
+  log.error(error)
+  alert(`Better BibTeX: error ${action} ${collection}, restart to repair`)
+  throw error
+}
+
 $patch$(Loki.Collection.prototype, 'insert', original => function(doc) {
-  const error = this.validationError?.(doc)
-  if (error) {
-    const err = new Error(`insert: validation failed for ${JSON.stringify(doc)} (${error})`)
-    log.error('insert: validation failed for', doc, this.validate.errors, err)
-    alert(`Better BibTeX: error saving ${this.name}, restart to repair`)
-    Preference.scrubDatabase = true
-    throw err
-  }
+  oops(this.name, 'inserting', doc, this.validationError?.(doc))
   return original.apply(this, arguments)
 })
 
 $patch$(Loki.Collection.prototype, 'update', original => function(doc) {
-  const error = this.validationError?.(doc)
-  if (error) {
-    const err = new Error(`update: validation failed for ${JSON.stringify(doc)} (${error})`)
-    log.error('update: validation failed for', doc, this.validate.errors, err)
-    alert(`Better BibTeX: error saving ${this.name}, restart to repair`)
-    Preference.scrubDatabase = true
-    throw err
-  }
+  oops(this.name, 'updating', doc, this.validationError?.(doc))
   return original.apply(this, arguments)
 })
 
