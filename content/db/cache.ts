@@ -76,34 +76,12 @@ class Cache extends Loki {
     }
 
     for (const [name, translator] of Object.entries(schema.translator)) {
-      if (!translator.cached) continue
+      if (!translator.cache) continue
 
       coll = this.schemaCollection(name, {
         logging: false,
         indices: [ 'itemID', 'exportNotes', 'useJournalAbbreviation', ...(translator.preferences) ],
-        schema: {
-          type: 'object',
-          properties: {
-            itemID: { type: 'integer' },
-            entry: { type: 'string' },
-
-            // options
-            exportNotes: { type: 'boolean' },
-            useJournalAbbreviation: { type: 'boolean' },
-
-            // prefs
-            ...(translator.types),
-
-            // Optional
-            metadata: { type: 'object' },
-
-            // LokiJS
-            meta: { type: 'object' },
-            $loki: { type: 'integer' },
-          },
-          required: [ 'itemID', 'exportNotes', 'useJournalAbbreviation', ...(translator.preferences), 'entry' ],
-          additionalProperties: false,
-        },
+        schema: translator.cache,
         ttl,
         ttlInterval,
       })

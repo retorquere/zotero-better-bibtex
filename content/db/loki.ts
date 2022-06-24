@@ -15,9 +15,7 @@ import { log } from '../logger'
 // eslint-disable-next-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
 import Loki = require('lokijs')
 
-import AJV from 'ajv'
-const validator = new AJV({ useDefaults: true, coerceTypes: true })
-require('ajv-keywords')(validator)
+import { ajv } from '../ajv'
 
 // 894
 $patch$(Loki.Collection.prototype, 'findOne', original => function() {
@@ -188,7 +186,7 @@ export class XULoki extends Loki {
     const coll: any = this.getCollection(name) || this.addCollection(name, options)
     coll.cloneObjects = true
 
-    coll.validate = validator.compile(options.schema)
+    coll.validate = ajv.compile(options.schema)
 
     return coll
   }

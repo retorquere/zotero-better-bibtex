@@ -1,13 +1,21 @@
 // 2020 for prefixItems
 import AJV from 'ajv/dist/2020'
 
-export const ajv = new AJV({ strict: true, coerceTypes: true })
+const options  = {
+  strict: false,
+  coerceTypes: true,
+  discriminator: true,
+  useDefaults: true,
+}
+export const ajv = new AJV(options)
 import keywords from 'ajv-keywords'
-keywords(ajv, 'instanceof')
+keywords(ajv)
 
 import betterAjvErrors from 'better-ajv-errors'
 
 export function validator(schema): (data: any) => string { // eslint-disable-line @typescript-eslint/explicit-module-boundary-types
+  Zotero.debug(`compiling options ${JSON.stringify(schema)}`)
+  Zotero.debug(`compiling schema ${JSON.stringify(schema)}`)
   const ok = ajv.compile(schema)
   return function(data: any): string { // eslint-disable-line prefer-arrow/prefer-arrow-functions
     if (ok(data)) return ''
@@ -18,4 +26,3 @@ export function validator(schema): (data: any) => string { // eslint-disable-lin
     return msg
   }
 }
-
