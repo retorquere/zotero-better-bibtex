@@ -901,10 +901,9 @@ class ZoteroItem {
   }
 
   protected $annotation(value, field) {
-    log.debug('note field', field)
-    if (field === 'annote' || field === 'annotation') {
-      const plaintext = value.replace(/<p>/g, '').replace(/<\/p>/g, '\n\n').trim()
-      log.debug('note field', { plaintext })
+    if (Translator.importToExtra[field]) {
+      let plaintext = value.replace(/<p>/g, '').replace(/<\/p>/g, '\n\n').trim()
+      if (Translator.importToExtra[field] === 'force') plaintext = plaintext.replace(/<[^>]+>/g, '')
       if (!plaintext.includes('<')) {
         this.addToExtra(plaintext)
         return true
