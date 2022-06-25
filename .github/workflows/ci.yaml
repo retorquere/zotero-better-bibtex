@@ -116,7 +116,8 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: test-stats
-    - run: find . -name bins.json
+    - name: why?!?!
+      run: mkdir -p test/stats && mv bins.json $BINS
     - name: install python
       uses: actions/setup-python@v2
       with:
