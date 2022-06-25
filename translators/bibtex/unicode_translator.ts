@@ -253,6 +253,11 @@ const htmlConverter = new class HTMLConverter {
         latex = '\n\n\\begin{quotation}\n...\n\n\\end{quotation}\n'
         break
 
+      case 'img':
+        if (tag.attr.src) latex = `\\includegraphics{${tag.attr.src}}`
+        break
+
+
       default:
         log.error(`unexpected tag '${tag.nodeName}' (${Object.keys(tag)})`)
         break
