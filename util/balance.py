@@ -20,7 +20,6 @@ args = parser.parse_args()
 
 def publish(var, value):
   value = json.dumps(value)
-  value = json.dumps(value)
   print(f"set-output name={var}::{value}")
   print(f"::set-output name={var}::{value}")
 
