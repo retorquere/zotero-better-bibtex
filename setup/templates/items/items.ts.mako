@@ -3,15 +3,15 @@
 declare const Zotero: any
 
 import { client } from '../../content/client'
+import { validator, noncoercing } from '../../content/ajv'
 import { Item } from '../typings/serialized-item'
-import { ErrorObject } from 'ajv'
 
 const jurism = client === 'jurism'
 const zotero = !jurism
 
-const zoterovalidator = require('./zotero.schema')
-const jurismvalidator = require('./jurism.schema')
-const validator = {
+const zoterovalidator = validator(require('./zotero.json'), noncoercing)
+const jurismvalidator = validator(require('./jurism.json'), noncoercing)
+const broken = {
   me: zotero ? zoterovalidator : jurismvalidator,
   other: jurism ? zoterovalidator : jurismvalidator,
 }
@@ -20,11 +20,6 @@ type Valid = {
   type: Record<string, boolean>
   field: Record<string, Record<string, boolean>>
   test: (obj: any, strict?: boolean) => string
-}
-
-function err2string(err: ErrorObject, obj: { itemType: string }): string {
-  if (!err.instancePath && err.keyword === 'additionalProperties') return 'Unexpected property ' + (err.params.additionalProperty as string) + ' on ' + obj.itemType
-  return (err.instancePath || '??') + ' ' + err.message
 }
 
 export const valid: Valid = {
@@ -43,14 +38,14 @@ export const valid: Valid = {
     %endfor
   },
   test: (obj: any, strict?: boolean) => {
-    if (validator.me(obj)) return ''
-    const err = (validator.me.errors as ErrorObject[]).map(e => err2string(e, obj).trim()).join(';\n')
-    if (!strict && validator.other(obj)) {
-      if (typeof Zotero !== 'undefined') Zotero.debug('Better BibTeX soft error: ' + err)
+    const errors = broken.me(obj)
+    if (!errors) return ''
+    if (!strict && !broken.other(obj)) {
+      if (typeof Zotero !== 'undefined') Zotero.debug('Better BibTeX soft error: ' + errors)
       return ''
     }
     // https://ajv.js.org/api.html#validation-errors
-    return err
+    return errors
   },
 }
 

@@ -681,7 +681,7 @@ with open(os.path.join(ITEMS, 'items.ts'), 'w') as f:
         else:
           schema['oneOf'][-1]['properties'][field] = { 'type': 'string' }
 
-    with open(os.path.join(ITEMS, client + '.schema'), 'w') as v:
+    with open(os.path.join(ITEMS, client + '.json'), 'w') as v:
       json.dump(schema, v, indent='  ')
 
   # map aliases to base names

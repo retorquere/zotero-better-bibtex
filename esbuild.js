@@ -63,7 +63,6 @@ async function rebuild() {
       // loader.bibertool,
       loader.peggy,
       loader.__dirname,
-      loader.ajv,
       shims
     ],
     outdir: 'build/content',
@@ -86,7 +85,6 @@ async function rebuild() {
       loader.patcher('setup/patches'),
       // loader.bibertool,
       // loader.peggy,
-      loader.ajv,
       loader.__dirname,
       shims
     ],
@@ -120,7 +118,6 @@ async function rebuild() {
         loader.bibertool,
         // loader.peggy,
         loader.__dirname,
-        loader.ajv,
         shims
       ],
       outfile,

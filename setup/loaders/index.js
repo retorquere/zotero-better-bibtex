@@ -193,27 +193,3 @@ module.exports.trace = function(section) {
     }
   }
 }
-
-// 2020 for prefixItems
-const AJV = require('ajv/dist/2020')
-const ajv = new AJV({
-  strict: false,
-  coerceTypes: true,
-  discriminator: true,
-  useDefaults: true,
-  code: { source: true },
-})
-const ajvStandaloneCode = require('ajv/dist/standalone').default
-module.exports.ajv = {
-  name: 'ajv',
-  setup(build) {
-    build.onLoad({ filter: /.schema$/ }, async (args) => {
-      const schema = JSON.parse(await fs.promises.readFile(args.path, 'utf-8'))
-      const validate = ajv.compile(schema)
-      return {
-        contents: ajvStandaloneCode(ajv, validate),
-        loader: 'js'
-      }
-    })
-  },
-}

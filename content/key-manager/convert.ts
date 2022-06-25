@@ -4,7 +4,7 @@ import * as types from '../../gen/items/items'
 import * as recast from 'recast'
 import { builders as b } from 'ast-types'
 import _ from 'lodash'
-import { ajv } from '../ajv'
+import { coercing as ajv } from '../ajv'
 import { sprintf } from 'sprintf-js'
 import { inspect } from 'loupe'
 
@@ -205,9 +205,9 @@ for (const meta of Object.values(api)) {
   }
 }
 
-import { validator } from '../ajv'
+import { validator, noncoercing } from '../ajv'
 for (const method of Object.values(api)) {
-  (method  as any).validate = validator((method  as any).schema)
+  (method  as any).validate = validator((method  as any).schema, noncoercing)
 }
 
 for (const fname in api) {

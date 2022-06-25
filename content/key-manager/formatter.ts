@@ -32,7 +32,7 @@ import { sprintf } from 'sprintf-js'
 import { jieba, pinyin } from './chinese'
 import { kuroshiro } from './japanese'
 
-import { validator } from '../ajv'
+import { validator, coercing } from '../ajv'
 import { dictsync as csv2dict } from '../load-csv'
 
 import BabelTag from '../../gen/babel/tag.json'
@@ -42,7 +42,7 @@ type BabelLanguage = keyof typeof BabelTag
 type ZoteroItemType = keyof typeof items.valid.type
 
 for (const meta of Object.values(methods)) {
-  (meta as unknown as any).validate = validator((meta as any).schema)
+  (meta as unknown as any).validate = validator((meta as any).schema, coercing)
 }
 
 function innerText(node): string {

@@ -11,10 +11,10 @@ import * as Library from './library'
 import { log } from './logger'
 
 import methods from '../gen/api/json-rpc.json'
-import { validator } from './ajv'
+import { validator, noncoercing } from './ajv'
 
 for (const meta of Object.values(methods)) {
-  (meta as unknown as any).validate = validator(meta.schema) // eslint-disable-line @typescript-eslint/no-unsafe-return
+  (meta as unknown as any).validate = validator(meta.schema, noncoercing) // eslint-disable-line @typescript-eslint/no-unsafe-return
 }
 
 const OK = 200
