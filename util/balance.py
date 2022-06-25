@@ -103,6 +103,7 @@ class Tests:
             bin_weight += data.weights[i]
         if bin_weight > 0:
           bins[j] = bin_tests
+    # put shortest bin first, since bin 0 will also get all tests not already assigned to a bin
     self.bins = sorted(bins.values(), key=lambda cluster: sum([test.duration for test in cluster]))
     print('Time: ', math.ceil(solver.WallTime()/ 1000), 'seconds')
     print('Bins:', [sum([test.duration for test in cluster]) for cluster in self.bins])
