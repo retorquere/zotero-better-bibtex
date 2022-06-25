@@ -98,18 +98,18 @@ class Tests:
             bin_weight += data.weights[i]
         if bin_weight > 0:
           bins[j] = bin_tests
-    bins = sorted(bins.values(), key=lambda cluster: sum([test.duration for test in cluster]))
+    self.bins = sorted(bins.values(), key=lambda cluster: sum([test.duration for test in cluster]))
     print('Time: ', math.ceil(solver.WallTime()/ 1000), 'seconds')
-    print('Bins:', [sum([test.duration for test in cluster]) for cluster in bins])
+    print('Bins:', [sum([test.duration for test in cluster]) for cluster in self.bins])
 
     Path(os.path.dirname(args.bins)).mkdir(parents=True, exist_ok=True)
     with open(args.bins, 'w') as f:
-      json.dump([[test.name for test in cluster] for cluster in bins], f, indent='  ')
+      json.dump([[test.name for test in cluster] for cluster in self.bins], f, indent='  ')
 
 Tests = Tests()
 Tests.load(args.durations)
 Tests.balance()
-print(f"::set-output name=bins::{json.dumps(list(range(len(bins))))}")
+print(f"::set-output name=bins::{json.dumps(list(range(len(Tests.bins))))}")
 
 print('beta:', args.beta)
 clients = ['zotero', 'jurism']
