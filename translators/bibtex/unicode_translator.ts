@@ -254,7 +254,8 @@ const htmlConverter = new class HTMLConverter {
         break
 
       case 'img':
-        if (tag.attr.src) latex = `\\includegraphics{${tag.attr.src}}`
+        // latex does not support remote images
+        // if (tag.attr.src) latex = `\\includegraphics{${tag.attr.src}}`
         break
 
 
