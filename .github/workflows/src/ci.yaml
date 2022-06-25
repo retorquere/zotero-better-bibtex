@@ -50,7 +50,7 @@ env:
 jobs:
   jobs:
     outputs:
-      bins: ${{ steps.balance.outputs.matrix }}
+      bins: ${{ steps.balance.outputs.bins }}
       clients: ${{ steps.balance.outputs.clients }}
     runs-on: ubuntu-latest
     steps:
