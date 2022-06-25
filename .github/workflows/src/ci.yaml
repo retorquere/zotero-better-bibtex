@@ -55,6 +55,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+    - *cache
     - *install_python
     - *install_python_packages
     - *get_version
