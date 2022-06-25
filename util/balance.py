@@ -110,11 +110,12 @@ Tests = Tests()
 Tests.load(args.durations)
 Tests.balance()
 print(f"::set-output name=bins::{json.dumps(list(range(len(Tests.bins))))}")
+print(f"set-output name=bins::{json.dumps(list(range(len(Tests.bins))))}")
 
-print('beta:', args.beta)
 clients = ['zotero', 'jurism']
 if args.beta == 'true':
   clients += [client + '-beta' for client in clients]
   print('### REMOVING jurism-beta ###')
   clients = [client for client in clients if client != 'jurism-beta']
 print(f"::set-output name=clients::{json.dumps(clients)}")
+print(f"set-output name=clients::{json.dumps(clients)}")
