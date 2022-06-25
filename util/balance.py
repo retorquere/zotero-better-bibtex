@@ -117,4 +117,4 @@ if args.beta == 'true':
   clients += [client + '-beta' for client in clients]
   print('### REMOVING jurism-beta ###')
   clients = [client for client in clients if client != 'jurism-beta']
-print(f"::set-output name=bins::{json.dumps(clients)}")
+print(f"::set-output name=clients::{json.dumps(clients)}")
