@@ -204,6 +204,7 @@ jobs:
   durations:
     if: github.ref == 'refs/heads/master'
     needs: test
+    runs-on: ubuntu-latest
     steps:
     - name: fetch build artifacts
       uses: actions/download-artifact@v2
