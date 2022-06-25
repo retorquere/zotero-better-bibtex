@@ -18,6 +18,12 @@ parser.add_argument('-s', '--slow', default=False, action='store_true')
 parser.add_argument('--beta')
 args = parser.parse_args()
 
+def publish(var, value):
+  value = json.dumps(value)
+  value = json.dumps(value)
+  print(f"set-output name={var}::{value}")
+  print(f"::set-output name={var}::{value}")
+
 class NoTestError(Exception):
   pass
 class FailedError(Exception):
@@ -109,13 +115,11 @@ class Tests:
 Tests = Tests()
 Tests.load(args.durations)
 Tests.balance()
-print(f"::set-output name=bins::{json.dumps(list(range(len(Tests.bins))))}")
-print(f"set-output name=bins::{json.dumps(list(range(len(Tests.bins))))}")
+publish('bins', list(range(len(Tests.bins))))
 
 clients = ['zotero', 'jurism']
 if args.beta == 'true':
   clients += [client + '-beta' for client in clients]
   print('### REMOVING jurism-beta ###')
   clients = [client for client in clients if client != 'jurism-beta']
-print(f"::set-output name=clients::{json.dumps(clients)}")
-print(f"set-output name=clients::{json.dumps(clients)}")
+publish('clients', clients)
