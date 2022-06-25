@@ -15,26 +15,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Cache python/node dependencies
-      id: cache
-      uses: actions/cache@v3
-      env:
-        cache-name: v3
-      with:
-        path: |
-          ~/.npm
-          ~/.nocache/pip
-          ${{ env.pythonLocation }}
-        key: ${{ runner.os }}-build-${{ env.pythonLocation }}-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('requirements.txt') }}
     - name: install python
       uses: actions/setup-python@v2
       with:
         python-version: '3.10'
-    - name: install python packages
-      run: |
-        pip install packaging
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
+    - run: pip install munch ortools
     - name: get package version
       run: echo "::set-output name=version::"`jq -r .version package.json`
       id: version
