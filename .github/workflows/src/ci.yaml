@@ -60,7 +60,7 @@ jobs:
     - *install_python_packages
     - *get_version
     - name: get previous test durations
-      run: https://github.com/retorquere/zotero-better-bibtex/releases/download/builds/`basename $DURATIONS` --create-dirs -o $DURATIONS
+      run: curl -L https://github.com/retorquere/zotero-better-bibtex/releases/download/builds/`basename $DURATIONS` --create-dirs -o $DURATIONS
     - name: select test scope
       id: slow
       if: github.ref == 'refs/heads/master'
