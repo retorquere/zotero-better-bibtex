@@ -5,7 +5,7 @@ on:
   schedule:
   - cron: 0 0 * * *
 env:
-  DURATIONS: test/stats/behave-zotero.json
+  DURATIONS: test/stats/durations.json
   BINS: test/stats/bins.json
 jobs:
   jobs:
