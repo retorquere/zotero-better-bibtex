@@ -31,30 +31,46 @@ def before_feature(context, feature):
     if retries > 0:
       patch_scenario_with_autoretry(scenario, max_attempts=retries + 1)
 
+class TestBin:
+  def __init__(self):
+    self.bin = None
+    self.test = None
+
+  def load(self, context):
+    if not 'bin' in context.config.userdata:
+      return
+
+    self.bin = int(context.config.userdata['bin'])
+
+    assert 'bins' in context.config.userdata
+
+    self.tests = {}
+
+    with open(context.config.userdata['bins']) as f:
+      self.tests = {
+        test: i
+        for i, _bin in enumerate(json.load(f))
+        for test in _bin
+      }
+
+  def test_in(self, test):
+    return self.tests.get(re.sub(r' -- @[0-9]+\.[0-9]+ ', '', test), 0)
+TestBin = TestBin()
+
 def before_all(context):
+  TestBin.load(context)
   context.memory = Munch(total=None, increase=None)
   context.zotero = Zotero(context.config.userdata)
   setup_active_tag_values(active_tag_value_provider, context.config.userdata)
   # test whether the existing references, if any, have gotten a cite key
   context.zotero.export_library(translator = 'Better BibTeX')
 
-try:
-  with open(os.path.join(os.path.dirname(__file__), '../../../test/stats/balance.json')) as f:
-    balance = json.load(f)
-except FileNotFoundError:
-  balance = None
-
 def before_scenario(context, scenario):
   if active_tag_matcher.should_exclude_with(scenario.effective_tags):
     scenario.skip(f"DISABLED ACTIVE-TAG {str(active_tag_value_provider)}")
     return
-  if balance is not None and 'bin' in context.config.userdata:
-    if re.sub(r' -- @[0-9]+\.[0-9]+ ', '', scenario.name) in balance['slow' if active_tag_value_provider['slow'] == 'true' else 'fast']['1']:
-      test_bin = '1'
-    else:
-      test_bin = '2'
-    if context.config.userdata['bin'] != test_bin:
-      scenario.skip(f'TESTED IN BIN {test_bin}')
+  if TestBin.test_in(scenario.name) != TestBin.bin:
+    scenario.skip(f'TESTED IN BIN {TestBin.test_in(scenario.name)}')
       return
   if 'test' in context.config.userdata and not any(test in scenario.name.lower() for test in context.config.userdata['test'].lower().split(',')):
     scenario.skip(f"ONLY TESTING SCENARIOS WITH {context.config.userdata['test']}")
