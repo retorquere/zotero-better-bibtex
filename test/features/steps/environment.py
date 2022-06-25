@@ -71,9 +71,10 @@ def before_scenario(context, scenario):
     return
   if TestBin.test_in(scenario.name) != TestBin.bin:
     scenario.skip(f'TESTED IN BIN {TestBin.test_in(scenario.name)}')
-      return
+    return
   if 'test' in context.config.userdata and not any(test in scenario.name.lower() for test in context.config.userdata['test'].lower().split(',')):
     scenario.skip(f"ONLY TESTING SCENARIOS WITH {context.config.userdata['test']}")
+    return
 
   context.zotero.reset(scenario.name)
   context.displayOptions = {}
