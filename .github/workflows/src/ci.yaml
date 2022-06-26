@@ -71,8 +71,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: test-stats
-        path: |
-          test/stats/
+        path: ${{ env.BINS }}
 
   build:
     runs-on: ubuntu-latest

@@ -106,7 +106,7 @@ class Tests:
     # put shortest bin first, since bin 0 will also get all tests not already assigned to a bin
     self.bins = sorted(bins.values(), key=lambda cluster: sum([test.duration for test in cluster]))
     print('Time: ', math.ceil(solver.WallTime()/ 1000), 'seconds')
-    print('Bins:', [sum([test.duration for test in cluster]) for cluster in self.bins])
+    print('Bins:', [ str(datetime.timedelta(seconds=sum([test.duration for test in cluster]))) for cluster in self.bins ])
 
     Path(os.path.dirname(args.bins)).mkdir(parents=True, exist_ok=True)
     with open(args.bins, 'w') as f:
