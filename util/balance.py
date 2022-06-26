@@ -54,6 +54,7 @@ class Tests:
       bins = list(range(len(tests))),
       bin_capacity = math.ceil(max([test.seconds for test in tests] + [ args.minutes * 60 ]))
     )
+    print('Total test time:', str(datetime.timedelta(seconds=sum(data.weights))))
     # https://developers.google.com/optimization/bin/bin_packing
     # x[i, j] = 1 if item i is packed in bin j.
     x = {
