@@ -10,6 +10,7 @@ import re
 from ortools.linear_solver import pywraplp
 import math
 from pathlib import Path
+import datetime
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-b', '--bins', required=True)
