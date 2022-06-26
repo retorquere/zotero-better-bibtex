@@ -51,7 +51,7 @@ class Tests:
         name = re.sub(r' -- @[0-9]+\.[0-9]+ ', '', test.name)
         tests[name] = Munch(
           name = name,
-          duration = sum([step.result.duration for step in test.steps if 'result' in step and 'duration' in step.result]),
+          duration = math.ceil(sum([step.result.duration for step in test.steps if 'result' in step and 'duration' in step.result])),
           failed = (test.status == 'failed'),
           slow = 'use.with_slow=true' in test.tags or 'slow' in test.tags
         )
