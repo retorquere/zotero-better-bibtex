@@ -331,7 +331,6 @@ def step_impl(context, expected, found):
     expected = os.path.join(context.tmpDir, expected[2:])
   else:
     expected = os.path.join(ROOT, 'test/fixtures', expected)
-    context.zotero.loaded(expected)
   with open(expected) as f:
     expected = f.read()
 

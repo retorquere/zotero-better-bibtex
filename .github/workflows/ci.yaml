@@ -151,7 +151,7 @@ jobs:
       run: echo "##[set-output name=this;]--test-this"
       id: test
     - name: Run tests
-      run: xvfb-run --auto-servernum ./test/behave --client ${{ matrix.client }} --logs logs/logs --format ci --bin ${{ matrix.bin }} --bins $BINS ${{ steps.test.outputs.this }}
+      run: xvfb-run --auto-servernum ./test/behave --client ${{ matrix.client }} --format ci --bin ${{ matrix.bin }} --bins $BINS ${{ steps.test.outputs.this }} --durations gen/stats/durations-${{ matrix.client }}-${{ matrix.bin }}.json
       env:
         PYTHONUNBUFFERED: true
     - uses: actions/upload-artifact@v2
@@ -229,9 +229,7 @@ jobs:
       with:
         name: build-artifacts
     - name: rebalance tests
-      run: |
-        ./util/merge-logs.py -o $DURATIONS logs/behave-zotero-release-*-master.json
-        ./util/merge-logs.py -o gen/stats/loaded.json logs/loaded-zotero-release-*-master.json
+      run: ./util/merge-durations.py -o $DURATIONS `ls gen/stats/durations-zotero-*.json | grep -v beta`
     - name: Store build stats
       uses: svenstaro/upload-release-action@v2
       with:

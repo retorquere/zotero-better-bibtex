@@ -9,6 +9,9 @@ import os
 import steps.utils as utils
 import sys
 import json
+import time
+import math
+from pathlib import Path
 
 active_tag_value_provider = {
   'client': 'zotero',
@@ -34,7 +37,8 @@ def before_feature(context, feature):
 class TestBin:
   def __init__(self):
     self.bin = None
-    self.test = None
+    self.tests = None
+    self.durations = {}
 
   def load(self, context):
     if not 'bin' in context.config.userdata:
@@ -44,8 +48,6 @@ class TestBin:
 
     assert 'bins' in context.config.userdata
 
-    self.tests = {}
-
     with open(context.config.userdata['bins']) as f:
       self.tests = {
         test: i
@@ -53,8 +55,32 @@ class TestBin:
         for test in _bin
       }
 
+  def nameof(self, scenario):
+    return re.sub(r' -- @[0-9]+\.[0-9]+ ', '', scenario.name)
+
+  def save(self, context):
+    if durations := context.config.userdata.get('durations'):
+      Path(os.path.dirname(durations)).mkdir(parents=True, exist_ok=True)
+      with open(durations, 'w') as f:
+        durations = { test: { 'seconds': max(duration.stop - duration.start, 1), 'slow': duration.slow } for test, duration in self.durations.items() }
+        json.dump(durations, f, indent='  ')
+
+  def start(self, scenario):
+    self.durations[self.nameof(scenario)] = Munch(
+      start=math.floor(time.time()),
+      stop=None,
+      slow=any([True for tag in scenario.effective_tags if tag == 'use.with_slow=true'])
+    )
+  def stop(self, scenario):
+    test = self.nameof(scenario)
+    if test in self.durations:
+      self.durations[test].stop = math.ceil(time.time())
+
+  def test_here(self, test):
+    return self.bin is None or self.tests.get(self.nameof(test), 0) == self.bin
+
   def test_in(self, test):
-    return self.tests.get(re.sub(r' -- @[0-9]+\.[0-9]+ ', '', test), 0)
+    return self.tests.get(self.nameof(test), 0)
 TestBin = TestBin()
 
 def before_all(context):
@@ -65,17 +91,21 @@ def before_all(context):
   # test whether the existing references, if any, have gotten a cite key
   context.zotero.export_library(translator = 'Better BibTeX')
 
+def after_all(context):
+  TestBin.save(context)
+
 def before_scenario(context, scenario):
   if active_tag_matcher.should_exclude_with(scenario.effective_tags):
     scenario.skip(f"DISABLED ACTIVE-TAG {str(active_tag_value_provider)}")
     return
-  if TestBin.test_in(scenario.name) != TestBin.bin:
+  if not TestBin.test_here(scenario.name):
     scenario.skip(f'TESTED IN BIN {TestBin.test_in(scenario.name)}')
     return
   if 'test' in context.config.userdata and not any(test in scenario.name.lower() for test in context.config.userdata['test'].lower().split(',')):
     scenario.skip(f"ONLY TESTING SCENARIOS WITH {context.config.userdata['test']}")
     return
 
+  TestBin.start(scenario)
   context.zotero.reset(scenario.name)
   context.displayOptions = {}
   context.selected = []
@@ -99,3 +129,4 @@ def after_scenario(context, scenario):
       raise AssertionError(f'Memory increase cap of {context.memory.increase}MB exceeded by {memory.delta - context.memory.increase}MB')
     if context.memory.total and memory.resident > context.memory.total:
       raise AssertionError(f'Total memory cap of {context.memory.total}MB exceeded by {memory.resident - context.memory.total}MB')
+  TestBin.stop(scenario)

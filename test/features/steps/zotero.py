@@ -153,9 +153,6 @@ class Zotero:
   def __init__(self, userdata):
     assert not running('Zotero'), 'Zotero is running'
 
-    self.fixtures_loaded = set()
-    self.fixtures_loaded_log = userdata.get('loaded')
-
     self.client = userdata.get('client', 'zotero')
     self.beta = userdata.get('beta') == 'true'
     self.password = str(uuid.uuid4())
@@ -319,12 +316,6 @@ class Zotero:
   def reset_cache(self):
     self.execute('Zotero.BetterBibTeX.TestSupport.resetCache()')
 
-  def loaded(self, path):
-    self.fixtures_loaded.add(str(PurePath(path).relative_to(FIXTURES)))
-    if self.fixtures_loaded_log:
-      with open(self.fixtures_loaded_log, 'w') as f:
-        json.dump(sorted(list(self.fixtures_loaded)), f, indent='  ')
-
   def load(self, path, attempt_patch=False):
     path = os.path.join(FIXTURES, path)
 
@@ -357,7 +348,6 @@ class Zotero:
     if path.endswith('.json') and not (path.endswith('.csl.json') or path.endswith('.schomd.json')):
       validate_bbt_json(data)
 
-    self.loaded(loaded)
     return (data, loaded)
 
   def exported(self, path, data=None):

@@ -152,7 +152,7 @@ jobs:
     # needs logs/logs to have them show up as logs in the artifact... no idea why
     - name: Run tests
       # continue-on-error: ${{ matrix.client == 'jurism' }}
-      run: xvfb-run --auto-servernum ./test/behave --client ${{ matrix.client }} --logs logs/logs --format ci --bin ${{ matrix.bin }} --bins $BINS ${{ steps.test.outputs.this }}
+      run: xvfb-run --auto-servernum ./test/behave --client ${{ matrix.client }} --format ci --bin ${{ matrix.bin }} --bins $BINS ${{ steps.test.outputs.this }} --durations gen/stats/durations-${{ matrix.client }}-${{ matrix.bin }}.json
       env:
         PYTHONUNBUFFERED: true
 
@@ -197,9 +197,7 @@ jobs:
     - *install_python
     - *download_artifacts
     - name: rebalance tests
-      run: |
-        ./util/merge-logs.py -o $DURATIONS logs/behave-zotero-release-*-master.json
-        ./util/merge-logs.py -o gen/stats/loaded.json logs/loaded-zotero-release-*-master.json
+      run: ./util/merge-durations.py -o $DURATIONS `ls gen/stats/durations-zotero-*.json | grep -v beta`
     - name: Store build stats
       uses: svenstaro/upload-release-action@v2
       with:
