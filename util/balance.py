@@ -69,9 +69,8 @@ class Tests:
       weights = [test.duration for test in tests],
       tests = list(range(len(tests))),
       bins = list(range(len(tests))),
-      bin_capacity = math.ceil(max([test.duration for test in tests]))
+      bin_capacity = math.ceil(max([test.duration for test in tests] + [ 60 ]))
     )
-    print(data)
     # https://developers.google.com/optimization/bin/bin_packing
     # x[i, j] = 1 if item i is packed in bin j.
     x = {
