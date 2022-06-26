@@ -76,11 +76,11 @@ class TestBin:
     if test in self.durations:
       self.durations[test].stop = math.ceil(time.time())
 
-  def test_here(self, test):
-    return self.bin is None or self.tests.get(self.nameof(test), 0) == self.bin
+  def test_here(self, scenario):
+    return self.bin is None or self.tests.get(self.nameof(scenario), 0) == self.bin
 
-  def test_in(self, test):
-    return self.tests.get(self.nameof(test), 0)
+  def test_in(self, scenario):
+    return self.tests.get(self.nameof(scenario), 0)
 TestBin = TestBin()
 
 def before_all(context):
@@ -98,8 +98,8 @@ def before_scenario(context, scenario):
   if active_tag_matcher.should_exclude_with(scenario.effective_tags):
     scenario.skip(f"DISABLED ACTIVE-TAG {str(active_tag_value_provider)}")
     return
-  if not TestBin.test_here(scenario.name):
-    scenario.skip(f'TESTED IN BIN {TestBin.test_in(scenario.name)}')
+  if not TestBin.test_here(scenario):
+    scenario.skip(f'TESTED IN BIN {TestBin.test_in(scenario)}')
     return
   if 'test' in context.config.userdata and not any(test in scenario.name.lower() for test in context.config.userdata['test'].lower().split(',')):
     scenario.skip(f"ONLY TESTING SCENARIOS WITH {context.config.userdata['test']}")
