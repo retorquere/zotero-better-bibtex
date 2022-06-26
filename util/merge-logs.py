@@ -12,6 +12,7 @@ args = parser.parse_args()
 
 logs = []
 for job in args.logs:
+  print('adding', job)
   with open(job) as f:
     logs += json.load(f)
 
