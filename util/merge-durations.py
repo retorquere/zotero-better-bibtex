@@ -17,4 +17,4 @@ for job in args.durations:
     durations = durations | json.load(f)
 
 with open(args.output, 'w') as f:
-  json.dump(durations), f, indent='  ')
+  json.dump(durations, f, indent='  ')
