@@ -19,6 +19,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('-b', '--bins', required=True)
 parser.add_argument('-d', '--durations', required=True)
 parser.add_argument('-s', '--slow', default=False, action='store_true')
+parser.add_argument('-m', '--minutes', type=int, default=15)
 parser.add_argument('--beta')
 args = parser.parse_args()
 
@@ -37,39 +38,21 @@ class Tests:
 
   def load(self, timings):
     with open(timings) as f:
-      timings = json.load(f, object_hook=Munch.fromDict)
-
-    tests = {}
-
-    for feature in timings:
-      if not 'elements' in feature: continue
-
-      for test in feature.elements:
-        if test.type == 'background': continue
-
-        # for retries, the last successful iteration (if any) will overwrite the failed iterations
-        name = re.sub(r' -- @[0-9]+\.[0-9]+ ', '', test.name)
-        tests[name] = Munch(
-          name = name,
-          duration = math.ceil(sum([step.result.duration for step in test.steps if 'result' in step and 'duration' in step.result])),
-          failed = (test.status == 'failed'),
-          slow = 'use.with_slow=true' in test.tags or 'slow' in test.tags
-        )
-    if len(tests) == 0: raise NoTestError()
-    if any(1 for test in tests.values() if test.failed): raise FailedError()
-
-    self.tests += tests.values()
+      tests = json.load(f, object_hook=Munch.fromDict)
+      for name, test in tests.items():
+        test.name = name
+      self.tests = tests.values()
 
   def balance(self):
     tests = [test for test in self.tests if not test.slow or args.slow]
-    self.duration = sum([test.duration for test in tests])
+    self.seconds = sum([test.seconds for test in tests])
     solver = pywraplp.Solver.CreateSolver('SCIP')
 
     data = Munch(
-      weights = [test.duration for test in tests],
+      weights = [test.seconds for test in tests],
       tests = list(range(len(tests))),
       bins = list(range(len(tests))),
-      bin_capacity = math.ceil(max([test.duration for test in tests] + [ 20 * 60 ]))
+      bin_capacity = math.ceil(max([test.seconds for test in tests] + [ args.minutes * 60 ]))
     )
     # https://developers.google.com/optimization/bin/bin_packing
     # x[i, j] = 1 if item i is packed in bin j.
@@ -108,9 +91,9 @@ class Tests:
         if bin_weight > 0:
           bins[j] = bin_tests
     # put shortest bin first, since bin 0 will also get all tests not already assigned to a bin
-    self.bins = sorted(bins.values(), key=lambda cluster: sum([test.duration for test in cluster]))
+    self.bins = sorted(bins.values(), key=lambda cluster: sum([test.seconds for test in cluster]))
     print('Time: ', math.ceil(solver.WallTime()/ 1000), 'seconds')
-    print('Bins:', [ str(datetime.timedelta(seconds=sum([test.duration for test in cluster]))) for cluster in self.bins ])
+    print('Bins:', [ str(datetime.timedelta(seconds=sum([test.seconds for test in cluster]))) for cluster in self.bins ])
 
     Path(os.path.dirname(args.bins)).mkdir(parents=True, exist_ok=True)
     with open(args.bins, 'w') as f:

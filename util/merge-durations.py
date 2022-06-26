@@ -10,7 +10,7 @@ parser.add_argument('-o', '--output', required=True)
 parser.add_argument('durations', nargs='+')
 args = parser.parse_args()
 
-durations = []
+durations = {}
 for job in args.durations:
   print('adding', job)
   with open(job) as f:
