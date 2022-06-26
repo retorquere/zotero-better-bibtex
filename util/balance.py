@@ -12,6 +12,9 @@ import math
 from pathlib import Path
 import datetime
 
+# TODO: only upload slow stats
+# TODO: allow non-optimal solutions
+
 parser = argparse.ArgumentParser()
 parser.add_argument('-b', '--bins', required=True)
 parser.add_argument('-d', '--durations', required=True)
@@ -66,7 +69,7 @@ class Tests:
       weights = [test.duration for test in tests],
       tests = list(range(len(tests))),
       bins = list(range(len(tests))),
-      bin_capacity = math.ceil(max([test.duration for test in tests]))
+      bin_capacity = math.ceil(max([test.duration for test in tests] + [ 60 ]))
     )
     # https://developers.google.com/optimization/bin/bin_packing
     # x[i, j] = 1 if item i is packed in bin j.
