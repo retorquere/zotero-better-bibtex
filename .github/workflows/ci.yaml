@@ -38,6 +38,7 @@ jobs:
         name: test-artifacts
         path: |
           logs/
+          minitests/
 
   build:
     runs-on: ubuntu-latest
@@ -163,6 +164,7 @@ jobs:
         name: test-artifacts
         path: |
           logs/
+          minitests/
 
 #    - name: Setup tmate session
 #      if: ${{ failure() }}

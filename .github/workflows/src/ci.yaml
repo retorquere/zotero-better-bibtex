@@ -55,6 +55,7 @@ _anchors:
     uses: actions/download-artifact@v2
     with:
       name: build-artifacts
+  # dummy directory minitests because otherwise dir structure is not maintained?!
   upload_test_artifacts: &upload_test_artifacts
     name: store test artifacts
     uses: actions/upload-artifact@v2
@@ -62,6 +63,7 @@ _anchors:
       name: test-artifacts
       path: |
         logs/
+        minitests/
   download_test_artifacts: &download_test_artifacts
     name: fetch test artifacts
     uses: actions/download-artifact@v2
