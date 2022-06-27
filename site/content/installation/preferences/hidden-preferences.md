@@ -86,7 +86,7 @@ On import, place all bib(la)tex field Zotero doesn't have an existing field for 
 
 ## importNoteToExtra
 
-default: `annote,annotation`
+default: `<not set>`
 
 On import, import note-like fields in this comma-separated list to the `extra` field, unless the note has rich text.
 

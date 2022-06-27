@@ -43,7 +43,7 @@
   "importExtra": true,
   "importJabRefAbbreviations": true,
   "importJabRefStrings": true,
-  "importNoteToExtra": "annote,annotation",
+  "importNoteToExtra": "",
   "importSentenceCase": "on+guess",
   "importUnknownTexCommand": "ignore",
   "itemObserverDelay": 5,

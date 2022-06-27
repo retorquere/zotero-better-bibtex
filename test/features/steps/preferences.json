@@ -431,7 +431,7 @@
   {
     "name": "importNoteToExtra",
     "type": "string",
-    "default": "annote,annotation",
+    "default": "",
     "affects": [],
     "var": "importNoteToExtra"
   },
