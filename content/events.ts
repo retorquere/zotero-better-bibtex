@@ -74,6 +74,7 @@ export const Events = new class EventEmitter extends EventEmitter3 {
       }
     }
 
+    log.debug('itemsChanged:', { collections: Array.from(changed.collections), libraries: Array.from(changed.libraries) })
     if (changed.collections.size) this.emit('collections-changed', [...changed.collections])
     if (changed.libraries.size) this.emit('libraries-changed', [...changed.libraries])
   }
