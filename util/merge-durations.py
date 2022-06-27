@@ -7,14 +7,14 @@ import glob
 import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument('-o', '--output', required=True)
-parser.add_argument('logs', nargs='+')
+parser.add_argument('durations', nargs='+')
 args = parser.parse_args()
 
-logs = []
-for job in args.logs:
+durations = {}
+for job in args.durations:
   print('adding', job)
   with open(job) as f:
-    logs += json.load(f)
+    durations = durations | json.load(f)
 
 with open(args.output, 'w') as f:
-  json.dump(sorted(set(logs)), f, indent='  ')
+  json.dump(durations, f, indent='  ')

@@ -5,13 +5,15 @@ on:
   schedule:
   - cron: 0 0 * * *
 env:
-  DURATIONS: test/stats/durations.json
-  BINS: test/stats/bins.json
+  DURATIONS: logs/stats/durations.json
+  BINS: logs/stats/bins.json
 jobs:
   jobs:
     outputs:
       bins: ${{ steps.balance.outputs.bins }}
       clients: ${{ steps.balance.outputs.clients }}
+      slow: ${{ steps.slow.outputs.slow }}
+      beta: ${{ steps.beta.outputs.beta }}
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -27,16 +29,23 @@ jobs:
       run: curl -L https://github.com/retorquere/zotero-better-bibtex/releases/download/builds/`basename $DURATIONS` --create-dirs -o $DURATIONS
     - name: select test scope
       id: slow
-      if: github.ref == 'refs/heads/master'
+      if: github.ref == 'refs/heads/master' || github.event_name == 'schedule' || (github.event.head_commit.message == steps.version.outputs.version && startsWith(github.ref, 'refs/tags/'))
       run: echo "::set-output name=slow::--slow"
+    - name: enable beta for tagged builds and scheduled builds
+      id: beta
+      if: (github.event.head_commit.message == steps.version.outputs.version && startsWith(github.ref, 'refs/tags/')) || github.event_name == 'schedule'
+      run: echo "::set-output name=beta::--beta"
     - name: balance tests
       id: balance
-      run: ./util/balance.py --durations $DURATIONS --bins $BINS ${{ steps.slow.outputs.slow }} --beta ${{ (github.event.head_commit.message == steps.version.outputs.version && startsWith(github.ref, 'refs/tags/')) || github.event_name == 'schedule' }}
-    - name: store test job split
+      run: ./util/balance.py --durations $DURATIONS --bins $BINS ${{ steps.slow.outputs.slow }} ${{ steps.beta.outputs.beta }}
+    - name: store test artifacts
       uses: actions/upload-artifact@v2
       with:
-        name: test-stats
-        path: ${{ env.BINS }}
+        name: test-artifacts
+        path: |
+          logs/
+          minitests/
+
   build:
     runs-on: ubuntu-latest
     steps:
@@ -86,6 +95,7 @@ jobs:
         path: |
           xpi/
           gen/
+
     - uses: peaceiris/actions-hugo@v2
       with:
         hugo-version: latest
@@ -112,12 +122,10 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: build-artifacts
-    - name: fetch test stats
+    - name: fetch test artifacts
       uses: actions/download-artifact@v2
       with:
-        name: test-stats
-    - name: why?!?!
-      run: mkdir -p test/stats && mv bins.json $BINS
+        name: test-artifacts
     - name: install python
       uses: actions/setup-python@v2
       with:
@@ -144,14 +152,11 @@ jobs:
         curl -sL https://raw.githubusercontent.com/retorquere/zotero-deb/master/install.sh | sudo bash
         sudo apt-get update
         sudo apt-get install ${{ matrix.client }}
-    - name: install ${{ matrix.client }} beta
-      if: matrix.client != 'jurism'
-      run: sudo apt-get install ${{ matrix.client }}-beta
     - if: contains(github.event.commits[0].message, '[fast-test]')
       run: echo "##[set-output name=this;]--test-this"
       id: test
     - name: Run tests
-      run: xvfb-run --auto-servernum ./test/behave --client ${{ matrix.client }} --logs logs/logs --format ci --bin ${{ matrix.bin }} --bins $BINS ${{ steps.test.outputs.this }}
+      run: xvfb-run --auto-servernum ./test/behave --client ${{ matrix.client }} --format ci --bin ${{ matrix.bin }} --bins $BINS ${{ steps.test.outputs.this }} --durations logs/stats/durations-${{ matrix.client }}-${{ matrix.bin }}.json ${{ needs.jobs.outputs.slow }} ${{ needs.jobs.outputs.beta }}
       env:
         PYTHONUNBUFFERED: true
     - uses: actions/upload-artifact@v2
@@ -162,9 +167,17 @@ jobs:
     - name: store test artifacts
       uses: actions/upload-artifact@v2
       with:
-        name: build-artifacts
+        name: test-artifacts
         path: |
           logs/
+          minitests/
+
+#    - name: Setup tmate session
+#      if: ${{ failure() }}
+#      uses: mxschmitt/action-tmate@v3
+#      with:
+#        limit-access-to-actor: true
+
   release:
     if: github.event_name != 'schedule'
     needs: test
@@ -215,19 +228,17 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: '3.10'
-    - name: fetch build artifacts
+    - name: fetch test artifacts
       uses: actions/download-artifact@v2
       with:
-        name: build-artifacts
+        name: test-artifacts
     - name: rebalance tests
-      run: |
-        ./util/merge-logs.py -o $DURATIONS logs/behave-zotero-release-*-master.json
-        ./util/merge-logs.py -o test/stats/loaded.json logs/loaded-zotero-release-*-master.json
+      run: ./util/merge-durations.py -o $DURATIONS `ls logs/stats/durations-zotero-*.json | grep -v beta`
     - name: Store build stats
       uses: svenstaro/upload-release-action@v2
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: test/stats/*.json
+        file: logs/stats/*.json
         tag: builds
         overwrite: true
         file_glob: true
