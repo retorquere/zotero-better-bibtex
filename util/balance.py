@@ -18,9 +18,9 @@ import datetime
 parser = argparse.ArgumentParser()
 parser.add_argument('-b', '--bins', required=True)
 parser.add_argument('-d', '--durations', required=True)
-parser.add_argument('-s', '--slow', default=False, action='store_true')
 parser.add_argument('-m', '--minutes', type=int, default=15)
-parser.add_argument('--beta')
+parser.add_argument(      '--beta', default=False, action='store_true')
+parser.add_argument('-s', '--slow', default=False, action='store_true')
 args = parser.parse_args()
 
 def publish(var, value):
@@ -106,7 +106,7 @@ Tests.balance()
 publish('bins', list(range(len(Tests.bins))))
 
 clients = ['zotero', 'jurism']
-if args.beta == 'true':
+if args.beta:
   clients += [client + '-beta' for client in clients]
   print('### REMOVING jurism-beta ###')
   clients = [client for client in clients if client != 'jurism-beta']
