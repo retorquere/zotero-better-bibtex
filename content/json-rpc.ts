@@ -180,6 +180,62 @@ class NSItem {
   }
 
   /**
+   * Fetch the collections containing a range of citekeys
+   *
+   * @param citekeys An array of citekeys
+   * @param includeParents Include all parent collections back to the library root
+   */
+  public async collections(citekeys: string[], includeParents?: boolean) {
+    const keys = Zotero.BetterBibTeX.KeyManager.keys.find({ citekey: { $in: citekeys.map(citekey => citekey.replace('@', '')) } })
+    if (!keys.length) throw { code: INVALID_PARAMETERS, message: `zero matches for ${citekeys.join(',')}` }
+
+    const seen = {}
+    const recurseParents = (libraryID: string, key: string) => {
+      if (!seen[key]) {
+        let col = Zotero.Collections.getByLibraryAndKey(libraryID, key)
+
+        if (!col) return false
+
+        col = col.toJSON()
+
+        if (col.parentCollection) {
+          col.parentCollection = recurseParents(libraryID, col.parentCollection)
+        }
+
+        delete col.relations
+        delete col.version
+
+        seen[key] = col
+      }
+
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+      return seen[key]
+    }
+
+    const collections = {}
+    for (const key of keys) {
+      const item = await getItemsAsync(key.itemID)
+      collections[key.citekey] = item.getCollections().map(id => {
+        const col = Zotero.Collections.get(id).toJSON()
+
+        delete col.relations
+        delete col.version
+
+        seen[id] = col
+
+        if (includeParents && col.parentCollection) {
+          col.parentCollection = recurseParents(item.libraryID, col.parentCollection)
+        }
+
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+        return col
+      })
+    }
+
+    return collections
+  }
+
+  /**
    * Fetch the notes for a range of citekeys
    *
    * @param citekeys An array of citekeys
