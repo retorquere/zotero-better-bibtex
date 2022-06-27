@@ -246,6 +246,9 @@
             "importJabRefStrings": {
               "type": "boolean"
             },
+            "importNoteToExtra": {
+              "type": "string"
+            },
             "importSentenceCase": {
               "enum": [
                 "on+guess",

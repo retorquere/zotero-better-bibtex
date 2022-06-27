@@ -136,6 +136,7 @@ function escapeRegExp(text: string): string {
 
 export class ITranslator { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   public preferences: Preferences
+  public importToExtra: Record<string, 'plain' | 'force'>
   public skipFields: string[]
   public skipField: Record<string, boolean>
   public verbatimFields?: (string | RegExp)[]
@@ -272,6 +273,14 @@ export class ITranslator { // eslint-disable-line @typescript-eslint/naming-conv
     }, {} as unknown as Preferences)
 
     // special handling
+    this.importToExtra = {}
+    this.preferences.importNoteToExtra
+      .toLowerCase()
+      .split(/\s*,\s*/)
+      .filter(field => field)
+      .forEach(field => {
+        this.importToExtra[field.replace(/\s*=.*/, '')] = field.match(/\s*=\s*force$/) ? 'force' : 'plain'
+      })
     this.skipFields = this.preferences.skipFields.toLowerCase().split(',').map(field => this.typefield(field)).filter((s: string) => s)
     this.skipField = this.skipFields.reduce((acc, field) => { acc[field] = true; return acc }, {})
 

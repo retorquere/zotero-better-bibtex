@@ -900,15 +900,24 @@ class ZoteroItem {
     return true
   }
 
-  protected $annotation(value) {
+  protected $annotation(value, field) {
+    if (Translator.importToExtra[field]) {
+      let plaintext = value.replace(/<p>/g, '').replace(/<\/p>/g, '\n\n').trim()
+      if (Translator.importToExtra[field] === 'force') plaintext = plaintext.replace(/<[^>]+>/g, '')
+      if (!plaintext.includes('<')) {
+        this.addToExtra(plaintext)
+        return true
+      }
+    }
+
     this.item.notes.push(value)
     return true
   }
-  protected $comment(value) { return this.$annotation(value) }
-  protected $annote(value) { return this.$annotation(value) }
-  protected $review(value) { return this.$annotation(value) }
-  protected $notes(value) { return this.$annotation(value) }
-  protected $note(value) { return this.$annotation(value) }
+  protected $comment(value) { return this.$annotation(value, 'comment') }
+  protected $annote(value) { return this.$annotation(value, 'annote') }
+  protected $review(value) { return this.$annotation(value, 'review') }
+  protected $notes(value) { return this.$annotation(value, 'notes') }
+  protected $note(value) { return this.$annotation(value, 'note') }
 
   protected $series(value) { return this.set('series', value) }
 
@@ -1177,7 +1186,6 @@ class ZoteroItem {
     }
   }
 
-  /*
   private addToExtra(str) {
     if (this.item.extra && this.item.extra !== '') {
       this.item.extra += `\n${str}`
@@ -1186,7 +1194,6 @@ class ZoteroItem {
       this.item.extra = str
     }
   }
-  */
 
   private set(field, value, fallback = null) {
     if (!this.validFields[field]) return fallback && this.fallback(fallback, value)

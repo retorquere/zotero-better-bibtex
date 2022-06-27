@@ -429,6 +429,13 @@
     "var": "importJabRefStrings"
   },
   {
+    "name": "importNoteToExtra",
+    "type": "string",
+    "default": "annote,annotation",
+    "affects": [],
+    "var": "importNoteToExtra"
+  },
+  {
     "name": "importSentenceCase",
     "type": "string",
     "default": "on+guess",
