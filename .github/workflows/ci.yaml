@@ -5,8 +5,8 @@ on:
   schedule:
   - cron: 0 0 * * *
 env:
-  DURATIONS: gen/stats/durations.json
-  BINS: gen/stats/bins.json
+  DURATIONS: logs/stats/durations.json
+  BINS: logs/stats/bins.json
 jobs:
   jobs:
     outputs:
@@ -149,7 +149,7 @@ jobs:
       run: echo "##[set-output name=this;]--test-this"
       id: test
     - name: Run tests
-      run: xvfb-run --auto-servernum ./test/behave --client ${{ matrix.client }} --format ci --bin ${{ matrix.bin }} --bins $BINS ${{ steps.test.outputs.this }} --durations gen/stats/durations-${{ matrix.client }}-${{ matrix.bin }}.json
+      run: xvfb-run --auto-servernum ./test/behave --client ${{ matrix.client }} --format ci --bin ${{ matrix.bin }} --bins $BINS ${{ steps.test.outputs.this }} --durations logs/stats/durations-${{ matrix.client }}-${{ matrix.bin }}.json
       env:
         PYTHONUNBUFFERED: true
     - uses: actions/upload-artifact@v2
@@ -225,12 +225,12 @@ jobs:
       with:
         name: test-artifacts
     - name: rebalance tests
-      run: ./util/merge-durations.py -o $DURATIONS `ls gen/stats/durations-zotero-*.json | grep -v beta`
+      run: ./util/merge-durations.py -o $DURATIONS `ls logs/stats/durations-zotero-*.json | grep -v beta`
     - name: Store build stats
       uses: svenstaro/upload-release-action@v2
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: gen/stats/*.json
+        file: logs/stats/*.json
         tag: builds
         overwrite: true
         file_glob: true
