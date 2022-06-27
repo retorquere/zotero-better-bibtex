@@ -145,9 +145,6 @@ jobs:
         curl -sL https://raw.githubusercontent.com/retorquere/zotero-deb/master/install.sh | sudo bash
         sudo apt-get update
         sudo apt-get install ${{ matrix.client }}
-    - name: install ${{ matrix.client }} beta
-      if: matrix.client != 'jurism'
-      run: sudo apt-get install ${{ matrix.client }}-beta
     - if: contains(github.event.commits[0].message, '[fast-test]')
       run: echo "##[set-output name=this;]--test-this"
       id: test
