@@ -81,6 +81,7 @@ class Tests:
     if solution != pywraplp.Solver.OPTIMAL:
       raise ValueError('No optimal solution')
     bins = {}
+    slow = {}
     for j in data.bins:
       if y[j].solution_value() == 1:
         bin_tests = []
@@ -90,11 +91,19 @@ class Tests:
             bin_tests.append(tests[i])
             bin_weight += data.weights[i]
         if bin_weight > 0:
+          slow[j] = [test.name for test in bin_tests if test.slow]
+          if len(slow[j]) == 0:
+            del slow[j]
           bins[j] = bin_tests
     # put shortest bin first, since bin 0 will also get all tests not already assigned to a bin
     self.bins = sorted(bins.values(), key=lambda cluster: sum([test.seconds for test in cluster]))
     print('Time: ', math.ceil(solver.WallTime()/ 1000), 'seconds')
     print('Bins:', [ str(datetime.timedelta(seconds=sum([test.seconds for test in cluster]))) for cluster in self.bins ])
+    if len(slow):
+      print('Slow:')
+      for _bin, tests in slow.items():
+        for test in tests:
+          print(' ', _bin, ':', test)
 
     Path(os.path.dirname(args.bins)).mkdir(parents=True, exist_ok=True)
     with open(args.bins, 'w') as f:

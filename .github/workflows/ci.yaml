@@ -13,7 +13,6 @@ jobs:
       bins: ${{ steps.balance.outputs.bins }}
       clients: ${{ steps.balance.outputs.clients }}
       slow: ${{ steps.slow.outputs.slow }}
-      beta: ${{ steps.beta.outputs.beta }}
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -156,7 +155,7 @@ jobs:
       run: echo "##[set-output name=this;]--test-this"
       id: test
     - name: Run tests
-      run: xvfb-run --auto-servernum ./test/behave --client ${{ matrix.client }} --format ci --bin ${{ matrix.bin }} --bins $BINS ${{ steps.test.outputs.this }} --durations logs/stats/durations-${{ matrix.client }}-${{ matrix.bin }}.json ${{ needs.jobs.outputs.slow }} ${{ needs.jobs.outputs.beta }}
+      run: xvfb-run --auto-servernum ./test/behave --client ${{ matrix.client }} --format ci --bin ${{ matrix.bin }} --bins $BINS ${{ steps.test.outputs.this }} --durations logs/stats/durations-${{ matrix.client }}-${{ matrix.bin }}.json ${{ needs.jobs.outputs.slow }}
       env:
         PYTHONUNBUFFERED: true
     - uses: actions/upload-artifact@v2
