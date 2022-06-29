@@ -13,6 +13,7 @@ Feature: Export
 
     Examples:
       | file                                                                                                                     | references |
+      | inspireHep fetching broken #2201                                                                                         | 1          |
       | noclean                                                                                                                  | 1          |
       | date with fractional seconds                                                                                             | 1          |
       | Citation key add `_preprint` if URL contains `arxiv.org` #2163                                                           | 12         |
