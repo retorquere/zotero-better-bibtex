@@ -283,6 +283,13 @@
             "kuroshiro": {
               "type": "boolean"
             },
+            "language": {
+              "enum": [
+                "langid",
+                "language",
+                "both"
+              ]
+            },
             "mapMath": {
               "type": "string"
             },

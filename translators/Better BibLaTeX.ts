@@ -324,7 +324,8 @@ export function doExport(): void {
       }
     }
 
-    entry.add({ name: 'langid', value: entry.language })
+    if (['langid', 'both'].includes(Translator.preferences.language)) entry.add({ name: 'langid', value: entry.language })
+    if (['language', 'both'].includes(Translator.preferences.language)) entry.add({ name: 'language', value: item.language })
 
     if (entry.entrytype === 'patent') {
       if (item.country && !patent.region(item)) entry.add({ name: 'location', value: item.country || item.extraFields.kv['publisher-place'] })

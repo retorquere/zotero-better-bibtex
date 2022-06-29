@@ -52,6 +52,7 @@
   "keyConflictPolicy": "keep",
   "keyScope": "library",
   "kuroshiro": false,
+  "language": "langid",
   "mapMath": "",
   "mapText": "",
   "mapUnicode": "conservative",

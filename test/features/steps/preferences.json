@@ -520,6 +520,22 @@
     "label": "Apply kuroshiro romajization in Japanese names/titles. Uses a lot of memory."
   },
   {
+    "name": "language",
+    "type": "string",
+    "default": "langid",
+    "affects": [
+      "Better BibLaTeX",
+      "Better BibTeX"
+    ],
+    "var": "language",
+    "label": "Export language as",
+    "options": {
+      "langid": "langid",
+      "language": "language",
+      "both": "both"
+    }
+  },
+  {
     "name": "mapMath",
     "type": "string",
     "default": "",

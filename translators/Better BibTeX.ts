@@ -273,8 +273,10 @@ export function doExport(): void {
     ref.add({name: 'shorttitle', value: item.shortTitle})
     ref.add({name: 'abstract', value: item.abstractNote?.replace(/\n+/g, ' ')})
     ref.add({name: 'nationality', value: item.country})
-    ref.add({name: 'langid', value: babelLanguage(item.language) }) // help explain why bracing is weird on bibtex
     ref.add({name: 'assignee', value: item.assignee})
+
+    if (['langid', 'both'].includes(Translator.preferences.language)) ref.add({name: 'langid', value: babelLanguage(item.language) })
+    if (['language', 'both'].includes(Translator.preferences.language)) ref.add({name: 'language', value: item.language })
 
     // this needs to be order volume - number for #1475
     ref.add({name: 'volume', value: ref.normalizeDashes(item.volume) })
@@ -930,11 +932,7 @@ class ZoteroItem {
   }
 
   protected $language(_value, _field) {
-    const language = (this.bibtex.fields.language || []).concat(this.bibtex.fields.langid || [])
-      .map(babelLanguage) // eslint-disable-line @typescript-eslint/no-unsafe-return
-      .join(' and ')
-
-    return this.set('language', language)
+    return this.set('language', this.bibtex.fields.language || this.bibtex.fields.langid)
   }
   protected $langid(value, field) { return this.$language(value, field) }
 

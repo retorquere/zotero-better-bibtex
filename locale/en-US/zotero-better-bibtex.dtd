@@ -185,6 +185,10 @@ If you have this on, and you experience any problem that is not the cache gettin
 <!ENTITY better-bibtex.Preferences.export.bibtex.URLs.url-ish "in the 'url' field, but assuming the 'url' package is not loaded">
 <!ENTITY better-bibtex.Preferences.tab.export "Export">
 <!ENTITY better-bibtex.Preferences.export.fields.bibtexParticleNoOp "Disregard name prefixes when sorting">
+<!ENTITY better-bibtex.Preferences.export.fields.language.langid "langid">
+<!ENTITY better-bibtex.Preferences.export.fields.language.language "language">
+<!ENTITY better-bibtex.Preferences.export.fields.language.both "both">
+<!ENTITY better-bibtex.Preferences.export.fields.language "Export language as">
 <!ENTITY better-bibtex.Preferences.export.fields.doi-and-url.both "both">
 <!ENTITY better-bibtex.Preferences.export.fields.doi-and-url.DOI "DOI">
 <!ENTITY better-bibtex.Preferences.export.fields.doi-and-url.URL "URL">

@@ -56,6 +56,18 @@ Use the extended biber 2.7 format for names with particles - only works in BibLa
 
 ## Fields
 
+### Export language as
+
+default: `langid`
+
+Export either langid, language or both fields based on the item language (if any).
+
+Options:
+
+* langid
+* language
+* both
+
 ### When an item has both a DOI and a URL, export
 
 default: `both`
