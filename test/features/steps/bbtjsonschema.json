@@ -2,39 +2,42 @@
   "additionalProperties": false,
   "properties": {
     "collections": {
-      "additionalProperties": false,
-      "properties": {
-        "collections": {
+      "additionalProperties": {
+        "additionalProperties": false,
+        "properties": {
+          "collections": {
+            "items": {
+              "pattern": "^coll:[0-9]+$",
+              "type": "string"
+            },
+            "type": "array"
+          },
           "items": {
+            "items": {
+              "type": "integer"
+            },
+            "type": "array"
+          },
+          "key": {
             "pattern": "^coll:[0-9]+$",
             "type": "string"
           },
-          "type": "array"
-        },
-        "items": {
-          "items": {
-            "type": "integer"
+          "name": {
+            "type": "string"
           },
-          "type": "array"
+          "parent": {
+            "pattern": "^coll:[0-9]+$",
+            "type": "string"
+          }
         },
-        "key": {
-          "pattern": "^coll:[0-9]+$",
-          "type": "string"
-        },
-        "name": {
-          "type": "string"
-        },
-        "parent": {
-          "pattern": "^coll:[0-9]+$",
-          "type": "string"
-        }
+        "required": [
+          "collections",
+          "key",
+          "name",
+          "items"
+        ],
+        "type": "object"
       },
-      "required": [
-        "collections",
-        "key",
-        "name",
-        "items"
-      ],
       "type": "object"
     },
     "config": {
