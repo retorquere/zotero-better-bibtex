@@ -2,10 +2,9 @@
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "localeDateOrder": "dmy",
     "options": {},
     "preferences": {
-      "citekeyFormat": "[auth][year]"
+      "citekeyFormat": "auth + year"
     }
   },
   "items": [
@@ -154,7 +153,7 @@
       ],
       "itemID": 4,
       "itemType": "document",
-      "language": "english",
+      "language": "en",
       "notes": [
         "Alfredo Gabaldon (Department of Computer Science; University of Toronto);",
         "Appeared in the working notes of the AIPS workshop on On-Line Planning and Scheduling"
@@ -218,7 +217,7 @@
       ],
       "itemID": 6,
       "itemType": "journalArticle",
-      "language": "english",
+      "language": "en",
       "notes": [
         "The Pennsylvania State University CiteSeer Archives"
       ],
@@ -24386,7 +24385,7 @@
       ],
       "itemID": 987,
       "itemType": "bookSection",
-      "language": "english",
+      "language": "English",
       "pages": "545-548",
       "publicationTitle": "Logics in artificial intelligence",
       "publisher": "Springer Berlin Heidelberg",
