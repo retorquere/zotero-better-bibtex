@@ -504,7 +504,7 @@ class ZoteroItem {
 
       if (Translator.preferences.testing) {
         const err = valid.test(JSON.parse(JSON.stringify(this.item)), true) // stringify/parse is a fast way to get rid of methods
-        if (err) this.error(`import error: ${this.type} ${this.bibtex.key}: ${err}`)
+        if (err) this.error(`import error: ${this.type} ${this.bibtex.key}: ${err}\n${JSON.stringify(this.item, null, 2)}`)
       }
     }
   }
@@ -932,7 +932,7 @@ class ZoteroItem {
   }
 
   protected $language(_value, _field) {
-    return this.set('language', this.bibtex.fields.language || this.bibtex.fields.langid)
+    return this.set('language', this.bibtex.fields.language?.[0] || this.bibtex.fields.langid?.[0])
   }
   protected $langid(value, field) { return this.$language(value, field) }
 
