@@ -4,6 +4,7 @@ import { schema } from '../../gen/preferences/meta'
 import { getItemsAsync } from '../get-items-async'
 
 import { SQLite } from './store/sqlite'
+import { log } from '../logger'
 
 import * as Translators from '../../gen/translators.json'
 
@@ -87,7 +88,14 @@ class Main extends Loki {
     if (Preference.scrubDatabase) {
       // directly change the data objects and rebuild indexes https://github.com/techfort/LokiJS/issues/660
       const length = autoexport.data.length
-      autoexport.data = autoexport.data.filter(doc => typeof doc.$loki === 'number' && typeof doc.meta === 'object' && autoexport.validate(doc)) // eslint-disable-line @typescript-eslint/no-unsafe-return
+      autoexport.data = autoexport.data.filter(doc => {
+        const err = autoexport.validationError(doc)
+        if (err) {
+          log.debug('auto-export validation error', err, doc)
+          return false
+        }
+        return true
+      })
       if (length !== autoexport.data.length) {
         autoexport.ensureId()
         autoexport.ensureAllIndexes(true)
