@@ -169,6 +169,10 @@ class NSItem {
       annotations: att.getAnnotations().map(raw => {
         const annot = raw.toJSON()
 
+        if (annot.annotationType === 'image') {
+          annot.annotationImagePath = Zotero.Annotations.getCacheImagePath(item)
+        }
+
         if (annot.annotationPosition && typeof annot.annotationPosition === 'string') {
           annot.annotationPosition = JSON.parse(annot.annotationPosition)
         }
