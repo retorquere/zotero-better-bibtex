@@ -29,7 +29,7 @@ export class Postfix {
 
     let preamble = []
     if (this.declarePrefChars) preamble.push("\\ifdefined\\DeclarePrefChars\\DeclarePrefChars{'’-}\\else\\fi")
-    if (this.noopsort) preamble.push('\\newcommand{\\noopsort}[1]{}')
+    if (this.noopsort) preamble.push('\\providecommand{\\noopsort}[1]{}')
     if (preamble.length > 0) {
       preamble = preamble.map(cmd => `"${cmd} "`)
       postfix += `@preamble{ ${preamble.join(' \n # ')} }\n`
