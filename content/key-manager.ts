@@ -422,8 +422,8 @@ export class KeyManager {
       keys.delete(item.itemID)
     }
 
-    this.keys.findAndRemove({ itemID: { $nin: deleted } })
-    this.keys.findAndRemove({ itemID: { $nin: this.regenerate } })
+    this.keys.findAndRemove({ itemID: { $in: deleted } })
+    this.keys.findAndRemove({ itemID: { $in: this.regenerate } })
 
     this.regenerate.push(...keys.keys())
 
