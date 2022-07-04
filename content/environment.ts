@@ -1,8 +1,5 @@
-// copied from emscripten
 export const environment: { node: boolean, zotero: boolean, name: string } = {
-  // require is a function in firefox after importScripts("resource://gre/modules/workers/require.js")
-  node: typeof process === 'object' && typeof require === 'function' && typeof importScripts !== 'function',
-  // web: typeof window === 'object',
+  node: typeof process === 'object' && !process.version, // process.version is empty in the browser shim
   zotero: typeof Components !== 'undefined',
   name: '',
 }
