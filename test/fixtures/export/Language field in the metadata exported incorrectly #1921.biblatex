@@ -49,7 +49,7 @@
   edition = {8},
   publisher = {{C. H. Beck}},
   location = {{München}},
-  langid = {german}
+  langid = {ngerman}
 }
 
 @inreference{basedow305cBGB2019,
@@ -61,7 +61,7 @@
   edition = {8},
   publisher = {{C. H. Beck}},
   location = {{München}},
-  langid = {german}
+  langid = {ngerman}
 }
 
 @inreference{basedowVor305BGB2019,
@@ -73,7 +73,7 @@
   edition = {8},
   publisher = {{C. H. Beck}},
   location = {{München}},
-  langid = {german}
+  langid = {ngerman}
 }
 
 @book{baurSachenrecht2009,
@@ -84,7 +84,7 @@
   edition = {18},
   publisher = {{C. H. Beck}},
   location = {{München}},
-  langid = {german}
+  langid = {ngerman}
 }
 
 @inreference{beckmann449BGB2004,
@@ -96,7 +96,7 @@
   pages = {417--477},
   publisher = {{Sellier - de Gruyter}},
   location = {{Berlin}},
-  langid = {german}
+  langid = {ngerman}
 }
 
 @book{beckNeueBuergschaftsrecht1942,
@@ -119,7 +119,7 @@
   pages = {482--488},
   publisher = {{Luchterhand}},
   location = {{Neuwied}},
-  langid = {german}
+  langid = {ngerman}
 }
 
 @inreference{berger305cBGB2007,
@@ -132,7 +132,7 @@
   pages = {489--492},
   publisher = {{Luchterhand}},
   location = {{Neuwied}},
-  langid = {german}
+  langid = {ngerman}
 }
 
 @book{bergerAllgemeinesSchuldrecht2012,
@@ -156,7 +156,7 @@
   pages = {3080--3083},
   publisher = {{Luchterhand}},
   location = {{Neuwied}},
-  langid = {german}
+  langid = {ngerman}
 }
 
 @inreference{buehlerArt3681998,
@@ -229,7 +229,7 @@
   pages = {159--184},
   publisher = {{Sellier - de Gruyter}},
   location = {{Berlin}},
-  langid = {german}
+  langid = {ngerman}
 }
 
 @article{dagdelenGeltungskontrolleErstreckungsklauselnKreditbuergschaften2018,
@@ -409,7 +409,7 @@
   pages = {407--415},
   publisher = {{C. H. Beck}},
   location = {{München}},
-  langid = {german}
+  langid = {ngerman}
 }
 
 @inreference{heinrichs305cBGB2005,
@@ -422,7 +422,7 @@
   pages = {416--419},
   publisher = {{C. H. Beck}},
   location = {{München}},
-  langid = {german}
+  langid = {ngerman}
 }
 
 @inreference{heldrichArt43EGBGB2005,
@@ -435,7 +435,7 @@
   pages = {2646--2649},
   publisher = {{C. H. Beck}},
   location = {{München}},
-  langid = {german}
+  langid = {ngerman}
 }
 
 @inreference{hitzArt714ZGB2016,
@@ -592,7 +592,7 @@
   edition = {44},
   publisher = {{C. H. Beck}},
   location = {{München}},
-  langid = {german}
+  langid = {ngerman}
 }
 
 @incollection{koenigVomMangelfolgeschadenGrundzuege2019,
@@ -683,7 +683,7 @@
   edition = {4},
   publisher = {{C. H. Beck}},
   location = {{München}},
-  langid = {german}
+  langid = {ngerman}
 }
 
 @book{medicusSchuldrechtIIBesonderer2018,
@@ -694,7 +694,7 @@
   edition = {18},
   publisher = {{Beck}},
   location = {{München}},
-  langid = {german}
+  langid = {ngerman}
 }
 
 @inreference{muellerArt172018,
@@ -780,7 +780,7 @@
   pages = {658--661},
   publisher = {{C. H. Beck}},
   location = {{München}},
-  langid = {german}
+  langid = {ngerman}
 }
 
 @book{reinickeBuergschaftsrecht2008,
@@ -790,7 +790,7 @@
   edition = {3},
   publisher = {{Carl Heymanns Verlag}},
   location = {{Köln - München}},
-  langid = {german}
+  langid = {ngerman}
 }
 
 @incollection{riedlerEigentumsvorbehalt2012,
@@ -838,7 +838,7 @@
   edition = {20},
   publisher = {{C. H. Beck}},
   location = {{München}},
-  langid = {german}
+  langid = {ngerman}
 }
 
 @incollection{schaeuble17Sachenrecht2017,
@@ -851,7 +851,7 @@
   edition = {3},
   publisher = {{C. H. Beck}},
   location = {{München}},
-  langid = {german}
+  langid = {ngerman}
 }
 
 @incollection{schiemannRechtsgeschaeft2008,
@@ -863,7 +863,7 @@
   pages = {43--122},
   publisher = {{Sellier - de Gruyter}},
   location = {{Berlin}},
-  langid = {german}
+  langid = {ngerman}
 }
 
 @inreference{schmidt449BGB2007,
@@ -876,7 +876,7 @@
   pages = {755--760},
   publisher = {{Luchterhand}},
   location = {{Neuwied}},
-  langid = {german}
+  langid = {ngerman}
 }
 
 @inreference{schurr1063ABGB2013,
@@ -925,7 +925,7 @@
   pages = {955--977},
   publisher = {{Sellier - de Gruyter}},
   location = {{Berlin}},
-  langid = {german}
+  langid = {ngerman}
 }
 
 @inreference{weberArt1102002,
@@ -960,7 +960,7 @@
   edition = {5},
   publisher = {{C. H. Beck}},
   location = {{München}},
-  langid = {german}
+  langid = {ngerman}
 }
 
 @inreference{wendehorstArt43EGBGB2018,
@@ -972,7 +972,7 @@
   edition = {7},
   publisher = {{C. H. Beck}},
   location = {{München}},
-  langid = {german}
+  langid = {ngerman}
 }
 
 @book{wendehorstPrivatrechtEinfuehrungRechtswissenschaften2016,
@@ -995,7 +995,7 @@
   edition = {7},
   publisher = {{C. H. Beck}},
   location = {{München}},
-  langid = {german}
+  langid = {ngerman}
 }
 
 @book{wolfSachenrecht2020,
@@ -1006,7 +1006,7 @@
   edition = {35},
   publisher = {{C. H. Beck}},
   location = {{München}},
-  langid = {german}
+  langid = {ngerman}
 }
 
 @book{zanklBuergerlichesRecht2012,
