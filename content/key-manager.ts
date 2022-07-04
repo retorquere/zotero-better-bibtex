@@ -384,7 +384,7 @@ export class KeyManager {
       const m = keyLine.exec(extra)
       return m ? m[2].trim() : ''
     }
-    const keys: Map<number, { itemKey: string, citationKey: string }> = (await ZoteroDB.queryAsync(`
+    const db: Map<number, { itemKey: string, citationKey: string }> = (await ZoteroDB.queryAsync(`
       SELECT item.itemID, item.key, extra.value as extra
       FROM items item
       LEFT JOIN itemData field ON field.itemID = item.itemID AND field.fieldID = ${this.query.field.extra}
@@ -398,11 +398,11 @@ export class KeyManager {
       })
       return acc
     }, new Map)
-    log.error('KeyManager.rescan, found:', keys)
+    log.error('KeyManager.rescan, found:', db)
 
     const deleted: number[] = []
     for (const item of this.keys.data) {
-      const key = keys.get(item.itemID)
+      const key = db.get(item.itemID)
 
       if (!key) {
         deleted.push(item.itemID)
@@ -419,13 +419,11 @@ export class KeyManager {
         this.regenerate.push(item.itemID)
       }
 
-      keys.delete(item.itemID)
+      db.delete(item.itemID)
     }
 
-    this.keys.findAndRemove({ itemID: { $in: deleted } })
-    this.keys.findAndRemove({ itemID: { $in: this.regenerate } })
-
-    this.regenerate.push(...keys.keys())
+    this.keys.findAndRemove({ itemID: { $in: [...deleted, ...this.regenerate] } })
+    this.regenerate.push(...db.keys())
 
     log.debug('keymanager.rescan:', {
       deleted,
