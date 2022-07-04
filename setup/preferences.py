@@ -14,7 +14,7 @@ from glob import glob
 import frontmatter
 from types import SimpleNamespace
 
-if os.system('setup/preferences.js') != 0:
+if os.system('setup/preferences.js content/Preferences.pug build/content/Preferences.xul') != 0:
   print('unpug failed')
   sys.exit(1)
 
@@ -53,10 +53,11 @@ class Preferences:
     self.printed = []
     self.vars = []
 
-    self.pane, self.ns = load(os.path.join(root, 'content/Preferences.xul'))
+    self.pane, self.ns = load(os.path.join(root, 'build/content/Preferences.xul'))
     self.parse()
     self.doc()
     self.save()
+    self.clean(os.path.join(root, 'build/content/Preferences.xul'))
 
   def parse(self):
     xul = f'{{{self.ns.xul}}}'
@@ -300,6 +301,18 @@ class Preferences:
 
     return doc
 
+  def clean(self, path):
+    xul = f'{{{self.ns.xul}}}'
+    bbt = f'{{{self.ns.bbt}}}'
+    for node in self.pane.findall(f'.//{bbt}*'):
+      node.getparent().remove(node)
+    for node in self.pane.xpath(f'.//xul:*[@bbt:*]', namespaces=self.ns):
+      for attr in list(node.attrib):
+        if attr.startswith(bbt):
+          node.attrib.pop(attr)
+    et = etree.ElementTree(self.pane)
+    et.write(path, pretty_print=True)
+
   def save(self):
     for pref in self.preferences.values():
       assert (pref.name in self.printed) or (pref.name in self.undocumented), f'{pref.name} not printed'
@@ -346,6 +359,7 @@ class Preferences:
     with open(defaults, 'w') as f:
       print(template('preferences/defaults.js.mako').render(prefix=self.prefix, names=names, translators=translators, preferences=preferences).strip(), file=f)
 
+# check translations
 content = os.path.join(root, 'content')
 for xul in os.listdir(content):
   if xul.endswith('xul'):
