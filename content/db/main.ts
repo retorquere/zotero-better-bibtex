@@ -10,9 +10,12 @@ import * as Translators from '../../gen/translators.json'
 
 export function scrubAutoExport(ae: any): void { // eslint-disable-line @typescript-eslint/explicit-module-boundary-types
   const translator = schema.translator[Translators.byId[ae.translatorID].label]
+  const properties = translator.autoexport ? translator.autoexport.properties : {}
+  log.debug('scrub:', { ae, properties })
   for (const k of Object.keys(ae)) {
-    if (!translator.autoexport || !translator.autoexport.properties[k]) delete ae[k]
+    if (!properties[k]) delete ae[k]
   }
+  log.debug('scrubed:', { ae })
 
   return ae // eslint-disable-line @typescript-eslint/no-unsafe-return
 }
