@@ -2,7 +2,8 @@
 
 import * as types from '../../gen/items/items'
 import * as recast from 'recast'
-import { builders as b } from 'ast-types'
+// import { builders as b } from 'ast-types'
+import { builders as b } from 'recast/node_modules/ast-types'
 import _ from 'lodash'
 import { coercing as ajv } from '../ajv'
 import { sprintf } from 'sprintf-js'
