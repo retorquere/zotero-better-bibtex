@@ -62,7 +62,6 @@
     "@inkdropapp/html2markdown": "^2.6.5",
     "@lifeparticle/ap-style-title-case": "^1.5.0",
     "ajv": "^8.11.0",
-    "ast-types": "^0.14.2",
     "better-ajv-errors": "^1.2.0",
     "case": "^1.6.3",
     "citeproc": "^2.4.62",
