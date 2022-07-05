@@ -6,7 +6,7 @@ import { log } from '../logger'
 import fold2ascii from 'fold-to-ascii'
 import ucs2decode = require('punycode2/ucs2/decode')
 import scripts = require('xregexp/tools/output/scripts')
-import { transliterate } from 'transliteration'
+import { transliterate } from 'transliteration/dist/node/src/node/index'
 
 import { flash } from '../flash'
 import { Preference } from '../prefs'
