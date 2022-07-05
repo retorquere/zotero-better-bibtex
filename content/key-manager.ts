@@ -398,7 +398,6 @@ export class KeyManager {
       })
       return acc
     }, new Map)
-    log.error('KeyManager.rescan, found:', db)
 
     const deleted: number[] = []
     for (const item of this.keys.data) {
@@ -408,11 +407,9 @@ export class KeyManager {
         deleted.push(item.itemID)
       }
       else if (key.citationKey && (!item.pinned || item.citekey !== key.citationKey)) {
-        log.debug('keymanager.rescan:', { pinned: true, citekey: key.citationKey })
         this.keys.update({...item, pinned: true, citekey: key.citationKey, itemKey: key.itemKey })
       }
       else if (!key.citationKey && item.citekey && item.pinned) {
-        log.debug('keymanager.rescan:', { pinned: false, citekey: item.citekey })
         this.keys.update({...item, pinned: false, itemKey: key.itemKey})
       }
       else if (!item.citekey) {
@@ -425,13 +422,7 @@ export class KeyManager {
     this.keys.findAndRemove({ itemID: { $in: [...deleted, ...this.regenerate] } })
     this.regenerate.push(...db.keys())
 
-    log.debug('keymanager.rescan:', {
-      deleted,
-      regenerate: this.regenerate,
-    })
-
     if (this.regenerate.length !== 0) {
-      log.debug('keymanager.rescan: regenerate', this.regenerate)
       const progressWin = new Zotero.ProgressWindow({ closeOnClick: false })
       progressWin.changeHeadline('Better BibTeX: Assigning citation keys')
       progressWin.addDescription(`Found ${this.regenerate.length} items without a citation key`)
