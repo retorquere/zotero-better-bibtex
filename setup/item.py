@@ -32,6 +32,7 @@ import tempfile
 import zipfile
 import fnmatch
 import sqlite3
+from pygit2 import Repository
 
 root = os.path.join(os.path.dirname(__file__), '..')
 
@@ -125,7 +126,7 @@ class fetch(object):
       ood = f'{itemtypes} does not exist'
     else:
       return
-    if 'CI' in os.environ:
+    if 'CI' in os.environ or Repository('.').head.shorthand != 'master':
       raise ValueError(f'{self.schema} out of date: {ood}')
 
     print('  updating', os.path.basename(self.schema))

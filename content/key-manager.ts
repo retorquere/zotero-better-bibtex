@@ -41,7 +41,7 @@ export class KeyManager {
   }
   public autopin: Scheduler = new Scheduler('autoPinDelay', 1000) // eslint-disable-line no-magic-numbers
 
-  private scanning: any[]
+  private regenerate: number[]
   private started = false
 
   private getField(item: { getField: ((str: string) => string)}, field: string): string {
@@ -369,92 +369,92 @@ export class KeyManager {
       if (errors) alert(`Better BibTeX: ${errors} errors found in the citekey database, please report on the Better BibTeX project site`)
     }
 
-    if (Array.isArray(this.scanning)) {
-      let left: string
-      if (this.scanning.length) {
-        left = `, ${this.scanning.length} items left`
-      }
-      else {
-        left = ''
-      }
-      flash('Scanning still in progress', `Scan is still running${left}`)
+    if (Array.isArray(this.regenerate)) {
+      flash('Regeneration still in progress', 'Citation key regeneration is still running')
       return
     }
 
-    this.scanning = []
+    this.regenerate = []
 
     if (clean) this.keys.removeDataOnly()
 
-    const marker = '\uFFFD'
-
-    const ids = []
-    const items = await ZoteroDB.queryAsync(`
-      SELECT item.itemID, item.libraryID, item.key, extra.value as extra, item.itemTypeID
+    const keyLine = /(^|\n)Citation Key\s*:\s*(.+?)(\n|$)/i
+    const getKey = (extra: string) => {
+      if (!extra) return ''
+      const m = keyLine.exec(extra)
+      return m ? m[2].trim() : ''
+    }
+    const db: Map<number, { itemKey: string, citationKey: string }> = (await ZoteroDB.queryAsync(`
+      SELECT item.itemID, item.key, extra.value as extra
       FROM items item
       LEFT JOIN itemData field ON field.itemID = item.itemID AND field.fieldID = ${this.query.field.extra}
       LEFT JOIN itemDataValues extra ON extra.valueID = field.valueID
       WHERE item.itemID NOT IN (select itemID from deletedItems)
       AND item.itemTypeID NOT IN (${this.query.type.attachment}, ${this.query.type.note}, ${this.query.type.annotation || this.query.type.note})
-    `)
-    for (const item of items) {
-      ids.push(item.itemID)
-      // if no citekey is found, it will be '', which will allow it to be found right after this loop
-      const extra = Extra.get(item.extra, 'zotero', { citationKey: true })
+    `)).reduce((acc: Map<number, { itemKey: string, citationKey: string }>, item) => {
+      acc.set(item.itemID, {
+        itemKey: item.key,
+        citationKey: getKey(item.extra),
+      })
+      return acc
+    }, new Map)
+    log.error('KeyManager.rescan, found:', db)
 
-      // don't fetch when clean is active because the removeDataOnly will have done it already
-      const existing = clean ? null : this.keys.findOne($and({ itemID: item.itemID }))
-      if (!existing) {
-        // if the extra doesn't have a citekey, insert marker, next phase will find & fix it
-        this.keys.insert({ citekey: extra.extraFields.citationKey || marker, pinned: !!extra.extraFields.citationKey, itemID: item.itemID, libraryID: item.libraryID, itemKey: item.key })
+    const deleted: number[] = []
+    for (const item of this.keys.data) {
+      const key = db.get(item.itemID)
+
+      if (!key) {
+        deleted.push(item.itemID)
       }
-      else if (extra.extraFields.citationKey && ((extra.extraFields.citationKey !== existing.citekey) || !existing.pinned)) {
-        // we have an existing key in the DB, extra says it should be pinned to the extra value, but it's not.
-        // update the DB to have the itemkey if necessaru
-        this.keys.update({ ...existing, citekey: extra.extraFields.citationKey, pinned: true, itemKey: item.key })
+      else if (key.citationKey && (!item.pinned || item.citekey !== key.citationKey)) {
+        log.debug('keymanager.rescan:', { pinned: true, citekey: key.citationKey })
+        this.keys.update({...item, pinned: true, citekey: key.citationKey, itemKey: key.itemKey })
       }
-      else if (!existing.itemKey) {
-        this.keys.update({ ...existing, itemKey: item.key })
+      else if (!key.citationKey && item.citekey && item.pinned) {
+        log.debug('keymanager.rescan:', { pinned: false, citekey: item.citekey })
+        this.keys.update({...item, pinned: false, itemKey: key.itemKey})
       }
+      else if (!item.citekey) {
+        this.regenerate.push(item.itemID)
+      }
+
+      db.delete(item.itemID)
     }
 
-    this.keys.findAndRemove({ itemID: { $nin: ids } })
+    this.keys.findAndRemove({ itemID: { $in: [...deleted, ...this.regenerate] } })
+    this.regenerate.push(...db.keys())
 
-    // find all items without citekey
-    this.scanning = this.keys.find($and({ citekey: marker }))
+    log.debug('keymanager.rescan:', {
+      deleted,
+      regenerate: this.regenerate,
+    })
 
-    if (this.scanning.length !== 0) {
+    if (this.regenerate.length !== 0) {
+      log.debug('keymanager.rescan: regenerate', this.regenerate)
       const progressWin = new Zotero.ProgressWindow({ closeOnClick: false })
       progressWin.changeHeadline('Better BibTeX: Assigning citation keys')
-      progressWin.addDescription(`Found ${this.scanning.length} items without a citation key`)
+      progressWin.addDescription(`Found ${this.regenerate.length} items without a citation key`)
       const icon = `chrome://zotero/skin/treesource-unfiled${Zotero.hiDPI ? '@2x' : ''}.png`
       const progress = new progressWin.ItemProgress(icon, 'Assigning citation keys')
       progressWin.show()
 
-      const eta = new ETA(this.scanning.length, { autoStart: true })
-      for (let done = 0; done < this.scanning.length; done++) {
-        let key = this.scanning[done]
-        const item = await getItemsAsync(key.itemID)
-
-        if (key.citekey === marker) {
-          if (key.pinned) {
-            const parsed = Extra.get(item.getField('extra'), 'zotero', { citationKey: true })
-            item.setField('extra', parsed.extra)
-            await item.saveTx({ [key.itemID]: { bbtCitekeyUpdate: true } })
-          }
-          key = null
-        }
+      const eta = new ETA(this.regenerate.length, { autoStart: true })
+      while (this.regenerate.length) {
+        const item = await getItemsAsync(this.regenerate.pop())
 
         try {
-          this.update(item, key)
+          this.update(item)
         }
         catch (err) {
-          log.error('KeyManager.rescan: update', done, 'failed:', err)
+          log.error('KeyManager.rescan: update', (eta.done as number) + 1, 'failed:', err)
         }
 
         eta.iterate()
 
         // eslint-disable-next-line no-magic-numbers
-        if ((done % 10) === 1) {
+        if ((eta.done % 10) === 1) {
+          log.debug('keymanager.rescan: regenerated', eta.done)
           // eslint-disable-next-line no-magic-numbers
           progress.setProgress((eta.done * 100) / eta.count)
           progress.setText(eta.format(`${eta.done} / ${eta.count}, {{etah}} remaining`))
@@ -468,7 +468,7 @@ export class KeyManager {
       progressWin.startCloseTimer(500)
     }
 
-    this.scanning = null
+    this.regenerate = null
   }
 
   public update(item: ZoteroItem, current?: { pinned: boolean, citekey: string }): string {
