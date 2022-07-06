@@ -13,6 +13,7 @@ Feature: Export
 
     Examples:
       | file                                                                                                                     | references |
+      | Citation key format backward compatibility issue. #2204                                                                  | 1          |
       | inspireHep fetching broken #2201                                                                                         | 1          |
       | noclean                                                                                                                  | 1          |
       | date with fractional seconds                                                                                             | 1          |

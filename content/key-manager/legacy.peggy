@@ -201,10 +201,10 @@ method
       return match('$' + name, p || [], name, error)
     }
   / prop:$([a-zA-Z]+) { // really just an error catcher now
-      if (prop.match(/^[a-z]/)) error(`Direct field access ${prop} must start with a leading capital`)
+      // if (prop.match(/^[a-z]/)) error(`Direct field access ${prop} must start with a leading capital`)
       const field = options.items.name.field[prop.toLowerCase()]
       if (!field) error(`Unknown field ${JSON.stringify(prop)}`)
-      return prop
+      return field.replace(/^./, c => c.toUpperCase())
     }
 
 fparams
