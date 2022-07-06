@@ -102,7 +102,7 @@ jobs:
 
     - name: balance tests
       id: balance
-      run: ./util/balance.py --durations $DURATIONS --bins $BINS ${{ steps.slow.outputs.slow }} ${{ steps.beta.outputs.beta }}
+      run: ./util/balance.py --durations $DURATIONS --bins $BINS --minutes 10 ${{ steps.slow.outputs.slow }} ${{ steps.beta.outputs.beta }}
     - *upload_test_artifacts
 
   build:

@@ -18,7 +18,7 @@ import datetime
 parser = argparse.ArgumentParser()
 parser.add_argument('-b', '--bins', required=True)
 parser.add_argument('-d', '--durations', required=True)
-parser.add_argument('-m', '--minutes', type=int, default=12) # one hour of test time becomes 5 builds
+parser.add_argument('-m', '--minutes', type=int, required=True) # one hour of test time becomes 6 builds
 parser.add_argument(      '--beta', default=False, action='store_true')
 parser.add_argument('-s', '--slow', default=False, action='store_true')
 args = parser.parse_args()

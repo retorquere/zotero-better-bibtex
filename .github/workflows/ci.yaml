@@ -36,7 +36,7 @@ jobs:
       run: echo "::set-output name=beta::--beta"
     - name: balance tests
       id: balance
-      run: ./util/balance.py --durations $DURATIONS --bins $BINS ${{ steps.slow.outputs.slow }} ${{ steps.beta.outputs.beta }}
+      run: ./util/balance.py --durations $DURATIONS --bins $BINS --minutes 10 ${{ steps.slow.outputs.slow }} ${{ steps.beta.outputs.beta }}
     - name: store test artifacts
       uses: actions/upload-artifact@v2
       with:
