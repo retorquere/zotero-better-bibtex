@@ -1,0 +1,40 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "citekeyFormat": "[=book]book:[auth:lower]:[PublicationTitle:skipwords:abbr:lower:alphanum][volume:prefix=-][issue:prefix=_] | [=conferencePaper][auth:lower]:[extra=tex.shortconf:lower:>0][shortyear] | [=conferencePaper][auth:lower]:[conferenceName:skipwords:abbr:lower:alphanum][shortyear] | [auth:lower][shortyear]",
+      "extraMergeCSL": true,
+      "extraMergeCitekeys": true,
+      "extraMergeTeX": true,
+      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc"
+    }
+  },
+  "items": [
+    {
+      "ISBN": "978-0-313-20911-6",
+      "citationKey": "priorTimeModalityBeing1979",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Arthur N.",
+          "lastName": "Prior"
+        }
+      ],
+      "date": "1979",
+      "edition": "Reprinted, 1. [print.]",
+      "itemID": 1,
+      "itemType": "book",
+      "language": "eng",
+      "libraryCatalog": "K10plus ISBN",
+      "numPages": "148",
+      "place": "Westport, Conn",
+      "publisher": "Greenwood Press",
+      "shortTitle": "Time and modality",
+      "title": "Time and modality: being the John Locke lectures for 1955 - 6 delivered in the University of Oxford"
+    }
+  ]
+}
