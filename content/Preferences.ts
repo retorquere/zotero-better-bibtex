@@ -275,9 +275,21 @@ export class PrefPane {
     if (target) this.keyformat = target
     if (!this.keyformat || Zotero.BetterBibTeX.ready.isPending()) return // itemTypes not available yet
 
-    let msg = '', color = ''
+    let msg = '', color = '', pattern = (this.keyformat.value as string)
+
+    if (pattern.startsWith('[')) {
+      try {
+        pattern = Zotero.BetterBibTeX.KeyManager.convertLegacy(pattern)
+        msg = 'legacy citekey formula format'
+        color = 'yellow'
+      }
+      catch (err) {
+        msg = err.message
+        color = 'orange'
+      }
+    }
     try {
-      Formatter.parsePattern(this.keyformat.value)
+      Formatter.parsePattern(pattern)
       if (Formatter.warning) {
         msg = Formatter.warning
         color = 'yellow'
@@ -291,7 +303,7 @@ export class PrefPane {
       log.error('prefs: key format error:', msg)
     }
 
-    if (!this.keyformat.value && !msg) msg = 'pattern is empty'
+    if (!pattern && !msg) msg = 'pattern is empty'
 
     this.keyformat.setAttribute('style', (msg ? `-moz-appearance: none !important; background-color: ${color}` : ''))
     this.keyformat.setAttribute('tooltiptext', msg)
@@ -300,8 +312,11 @@ export class PrefPane {
   public saveCitekeyFormat(target = null): void {
     if (target) this.keyformat = target
     try {
-      Formatter.parsePattern(this.keyformat.value)
-      Preference.citekeyFormat = this.keyformat.value
+      let pattern = this.keyformat.value as string
+      if (pattern.startsWith('[')) pattern = Zotero.BetterBibTeX.KeyManager.convertLegacy(pattern)
+
+      Formatter.parsePattern(pattern)
+      Preference.citekeyFormat = pattern
     }
     catch (error) {
       // restore previous value

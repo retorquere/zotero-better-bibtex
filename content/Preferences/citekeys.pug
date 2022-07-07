@@ -24,8 +24,8 @@ vbox
   textbox#id-better-bibtex-preferences-citekeyFormat(
     flex='1'
     rows=1
-    onfocus="this.setAttribute('rows', '5'); Zotero.BetterBibTeX.PrefPane.getCitekeyFormat(event.target);"
-    onblur="this.setAttribute('rows', '1'); Zotero.BetterBibTeX.PrefPane.saveCitekeyFormat(event.target);"
+    onfocus="this.setAttribute('rows', '5'); Zotero.BetterBibTeX.PrefPane.getCitekeyFormat(event.target); showNew();"
+    onblur="this.setAttribute('rows', '1'); Zotero.BetterBibTeX.PrefPane.saveCitekeyFormat(event.target); showNew();"
     oninput="Zotero.BetterBibTeX.PrefPane.checkCitekeyFormat(event.target); showNew();"
     onkeypress="setTimeout(function() { Zotero.BetterBibTeX.PrefPane.checkCitekeyFormat(event.target); showNew() }, 1);"
     multiline='true'
