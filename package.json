@@ -84,7 +84,7 @@
     "text-title-case": "^1.0.2",
     "title": "^3.4.4",
     "title-case": "^3.0.3",
-    "transliteration": "^2.3.3",
+    "transliteration": "^2.3.5",
     "xregexp": "^5.1.1"
   },
   "devDependencies": {
