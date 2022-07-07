@@ -84,7 +84,7 @@
     "text-title-case": "^1.0.2",
     "title": "^3.4.4",
     "title-case": "^3.0.3",
-    "transliteration": "^2.3.3",
+    "transliteration": "^2.3.5",
     "xregexp": "^5.1.1"
   },
   "devDependencies": {
@@ -92,7 +92,7 @@
     "@retorquere/zotero-sync": "^1.0.23",
     "@types/bluebird": "^3.5.36",
     "@types/lokijs": "^1.5.7",
-    "@types/node": "^18.0.1",
+    "@types/node": "^18.0.3",
     "@xmldom/xmldom": "^0.8.2",
     "ajv-keywords": "^5.1.0",
     "archiver": "^5.3.1",
@@ -131,7 +131,7 @@
     "kuroshiro-analyzer-kuromoji": "^1.1.0",
     "lodash.template": "^4.5.0",
     "lokijs": "^1.5.12",
-    "moment": "^2.29.3",
+    "moment": "^2.29.4",
     "node-eta": "^0.9.0",
     "number-to-words": "^1.2.4",
     "peggy": "^2.0.1",
