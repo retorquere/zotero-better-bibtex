@@ -423,7 +423,6 @@ export class KeyManager {
     this.regenerate.push(...db.keys())
 
     if (this.regenerate.length !== 0) {
-      log.debug('keymanager.rescan: regenerate', this.regenerate)
       const progressWin = new Zotero.ProgressWindow({ closeOnClick: false })
       progressWin.changeHeadline('Better BibTeX: Assigning citation keys')
       progressWin.addDescription(`Found ${this.regenerate.length} items without a citation key`)
