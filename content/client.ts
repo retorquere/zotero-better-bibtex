@@ -1,3 +1,4 @@
+declare const Zotero: any
 declare const Components: any
 declare const ZOTERO_CONFIG: any
 
