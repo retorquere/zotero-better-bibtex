@@ -267,7 +267,6 @@ class PatternFormatter {
   public chunk = ''
   public citekey = ''
   public folding: boolean
-  public warning = ''
 
   public generate: () => string
   public postfix: { start: number, format: string }
@@ -351,10 +350,8 @@ class PatternFormatter {
 
   public parsePattern(pattern): string {
     log.debug('parsePattern.pattern:', pattern)
-    const { code, warning } = new formula.PatternParser(pattern)
-    this.warning = warning
-    if (Preference.testing) log.debug('parsePattern.compiled:', warning, code)
-
+    const code = formula.convert(pattern)
+    if (Preference.testing) log.debug('parsePattern.compiled:', code)
     return code
   }
 

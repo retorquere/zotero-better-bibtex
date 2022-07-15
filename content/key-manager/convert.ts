@@ -1,18 +1,13 @@
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-
-import * as types from '../../gen/items/items'
-import * as recast from 'recast'
-// import { builders as b } from 'ast-types'
-import { builders as b } from 'recast/node_modules/ast-types'
+/* eslint-disable prefer-arrow/prefer-arrow-functions, @typescript-eslint/no-unsafe-return */
+import { parse, types, prettyPrint } from 'recast'
+const b = types.builders
+// const { getFieldNames } = types
+import * as items from '../../gen/items/items'
+import { methods } from '../../gen/api/key-formatter'
+import { validator, noncoercing } from '../ajv'
 import _ from 'lodash'
-import { coercing as ajv } from '../ajv'
-import { sprintf } from 'sprintf-js'
 import { inspect } from 'loupe'
 
-type AST = any
-
-import { methods } from '../../gen/api/key-formatter'
-// move this upgrade to setup/extract-api after migration
 const object_or_null = { oneOf: [ { type: 'object' }, { type: 'null' } ] }
 const basics = {
   loc: object_or_null,
@@ -117,76 +112,6 @@ function upgrade(type) {
 
   throw { notUpgradable: type } // eslint-disable-line no-throw-literal
 }
-
-type AjvFormatValidator = {
-  (schema: any, format: string): boolean
-  errors: {
-    keyword: string
-    message: string
-    params: {
-      keyword: 'creatorname' | 'postfix'
-    }
-  }[]
-}
-const creatorname = <AjvFormatValidator>((_schema, format) => {
-  creatorname.errors = []
-  let error = ''
-  try {
-    const expected = `${Date.now()}`
-    const vars = { f: expected, g: expected, i: expected, I: expected }
-    const found = sprintf(format, vars)
-    if (found.includes(expected)) return true
-    error = `${format} does not contain ${Object.keys(vars).map(v => `%(${v})s`).join('/')}`
-  }
-  catch (err) {
-    error = err.message
-  }
-
-  creatorname.errors.push({
-    keyword: 'creatorname',
-    message: error,
-    params: { keyword: 'creatorname' },
-  })
-  return false
-})
-ajv.addKeyword({
-  keyword: 'creatorname',
-  validate: creatorname,
-})
-
-const postfix = <AjvFormatValidator>((_schema, format) => {
-  postfix.errors = []
-  let error = ''
-  try {
-    const expected = `${Date.now()}`
-    const vars = { a: expected, A: expected, n: expected }
-    const found = sprintf(format, vars)
-    if (!found.includes(expected)) {
-      error = `${format} does not contain ${Object.keys(vars).map(v => `%(${v})s`).join('/')}`
-    }
-    else if (found.split(expected).length > 2) {
-      error = `${format} contains multiple instances of ${Object.keys(vars).map(v => `%(${v})s`).join('/')}`
-    }
-    else {
-      return true
-    }
-  }
-  catch (err) {
-    error = err.message
-  }
-
-  postfix.errors.push({
-    keyword: 'postfix',
-    message: error,
-    params: { keyword: 'postfix' },
-  })
-  return false
-})
-ajv.addKeyword({
-  keyword: 'postfix',
-  validate: postfix,
-})
-
 const api: typeof methods = _.cloneDeep(methods)
 for (const meta of Object.values(api)) {
   for (const property of Object.keys(meta.schema.properties)) {
@@ -196,313 +121,286 @@ for (const meta of Object.values(api)) {
       meta.schema.properties[property].properties.value.pattern = '^([^%]|(%-?o?[ymdYDHMS]))+$'
     }
     else if (meta.name === '$postfix' && property === 'format') {
-      // @ts-ignore
-      meta.schema.properties[property].properties.value = { postfix: true }
+      (meta.schema.properties[property] as any).properties.value = { postfix: true }
     }
     else if (meta.name === '$authors' && property === 'name') {
-      // @ts-ignore
-      meta.schema.properties[property].properties.value = { creatorname: true }
+      (meta.schema.properties[property] as any).properties.value = { creatorname: true }
     }
   }
 }
-
-import { validator, noncoercing } from '../ajv'
 for (const method of Object.values(api)) {
   (method  as any).validate = validator((method  as any).schema, noncoercing)
 }
 
-for (const fname in api) {
-  if (fname[0] !== '_' && fname[0] !== '$') throw new Error(`Unexpected fname ${fname}`)
+function assign(node: any, meta: any) {
+  node.meta = node.meta || {}
+  Object.assign(node.meta, meta)
 }
 
-type Context = { arguments?: boolean, coerce?: boolean }
-export class PatternParser {
-  public code: string
-  public warning = ''
+/*
+function graphviz(ast) {
+  let gv = 'digraph G {'
+  let id = 0
+  types.visit(ast, {
 
-  private patterns: AST
-  private ftype: string
+    visitNode(path) {
+      this.traverse(path)
 
-  constructor(source: string) {
-    const finder = recast.parse('[].find(pattern => { try { return pattern() } catch (err) { if (err.next) return ""; throw err } })')
-    this.patterns = finder.program.body[0].expression.callee.object.elements
+      assign(path.node, { id: id++ })
 
-    this.addpattern(recast.parse(source).program.body[0].expression)
-
-    // eslint-disable-next-line prefer-template
-    this.code = [
-      recast.prettyPrint(finder.program.body[0].expression, {quote: 'single', tabWidth: 2}).code,
-      // this.citekey is set as a side-effect
-      'return this.citekey || ("zotero-" + this.item.id)',
-    ].join(';\n')
-  }
-
-  private error(expr): void {
-    throw new Error(`Unexpected ${expr.type} at ${expr.loc.start.column}`)
-  }
-
-  protected UnaryExpression(expr: AST, _context: Context): AST {
-    if (expr.operator === '-' && expr.argument.type === 'Literal' && typeof expr.argument.value === 'number') {
-      return b.literal(-1 * expr.argument.value)
-    }
-    else {
-      this.error(expr)
-    }
-  }
-
-  protected Literal(expr: AST, context: Context): AST {
-    if (context.arguments) {
-      return expr
-    }
-    else {
-      return b.callExpression(b.identifier('text'), [expr])
-    }
-  }
-
-  kind(str: string): 'function' | 'filter' {
-    switch (str[0]) {
-      case '$': return 'function'
-      case '_': return 'filter'
-      default: throw new Error(`indeterminate type for ${str}`)
-    }
-  }
-
-  private resolveArguments(fname: string, args: AST[], deprecated: Record<string, string>={}): AST[] {
-    const method = api[fname.toLowerCase()] // transitional before rename in formatter.ts
-    const kind = this.kind(fname)
-    fname = fname.slice(1)
-    const me = `${kind} ${JSON.stringify(fname)}`
-    if (!method) throw new Error(`No such ${me}`)
-
-    args = args.filter(arg => {
-      if (deprecated[arg.named_argument]) {
-        this.warning = deprecated[arg.named_argument]
-        return false
+      let children = {}
+      for (const child of getFieldNames(path.node)) {
+        if (path.node[child] && path.node[child].meta) {
+          children[child] = path.node[child].meta.id
+        }
       }
-      else {
-        return true
+
+      let type = path.node.type
+      switch (path.node.type) {
+        case 'ArrayExpression':
+          type = '[...]'
+          path.node.elements.forEach((child, i) => {
+            children[i] = child.meta.id
+          })
+          break
+        case 'SequenceExpression':
+          type = '.., ..'
+          path.node.expressions.forEach((child, i) => {
+            children[i] = child.meta.id
+          })
+          break
+        case 'LogicalExpression':
+        case 'BinaryExpression':
+          type = path.node.operator
+          break
+        case 'Literal':
+          if (typeof path.node.value === 'string') {
+            type = "'" + path.node.value + "'"
+          }
+          else {
+            type = path.node.value
+          }
+          break
+        case 'Identifier':
+          type = path.node.name
+          break
+        case 'ConditionalExpression':
+          type = '?:'
+          break
+        case 'MemberExpression':
+          type = '.'
+          break
+        case 'CallExpression':
+          type = '(...)'
+          break
+        case 'ThisExpression':
+          type = 'this'
+          break
+        case 'ExpressionStatement':
+          type = 'expr'
+          break
       }
-    })
 
-    let named = false
-    args.forEach((arg, i) => {
-      if (!arg.named_argument) {
-        if (named) throw new Error(`${me}: positional argument ${i+1} after named argument`)
-        arg.named_argument = method.parameters[i]
+      gv += `node${path.node.meta.id} [label="${type}"]\n`
+      for (const [rel, id] of Object.entries(children)) {
+        gv += `node${path.node.meta.id} -> node${id} [label="${rel}"]\n`
       }
-      else {
-        if (method.rest) throw new Error(`${me}: named argument not supported in rest function`)
-        named = true
-      }
-    })
-
-    let parameters: Record<string, AST> = {}
-    args = args.map(arg => {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { named_argument, loc, ...argc } = arg
-      if (typeof parameters[named_argument] === 'undefined') {
-        parameters[named_argument] = argc
-      }
-      else {
-        throw new Error(`${me}: duplicate argument ${JSON.stringify(named_argument)}`)
-      }
-      return argc
-    })
-
-    if (method.rest) {
-      if (method.parameters.length !== 1) throw new Error(`${me}: ...rest method may have only one parameter, got ${method.parameters.join(', ')}`)
-      parameters = { [method.rest]: b.arrayExpression(args) }
     }
-    else {
-      if (method.parameters.length < args.length) throw new Error(`${me}: expected ${method.parameters.length} arguments, got ${args.length}`)
+  })
+  gv += '}'
+  return gv
+}
+*/
 
-      args = method.parameters.map((param: string, i: number) => parameters[param] || ( typeof method.defaults[i] !== 'undefined' ? b.literal(method.defaults[i]) : b.identifier('undefined') ))
-      args.reverse()
-      const defaults = [...method.defaults].reverse()
-      while(args.length && ((args[0].type === 'Identifier' && args[0].name === 'undefined') || (args[0].type === 'Literal' && args[0].value === defaults[0]))) {
-        args.shift()
-        defaults.shift()
-      }
-      args.reverse()
-    }
-
-    let err: string
-    if (err = method.validate(parameters)) {
-      throw new Error(`${me}: ${err} ${inspect(parameters)}`)
-    }
-
-    return args
+function error(msg, node) {
+  if (node?.loc) {
+    msg += ' @ '
+    if (node.loc.start.line !== 1) msg += `line ${node.loc.start.line}, `
+    msg += `position ${(node.loc.start.column as number) + 1}`
   }
+  throw new Error(msg)
+}
 
-  protected Identifier(expr: AST, context: Context): AST {
-    if (context.arguments) {
-      return b.literal(expr.name)
-    }
-    else if (expr.type !== 'Identifier') {
-      return expr
-    }
-    else if (expr.name.match(/^(auth|edtr|editors)[a-zA-Z]*$/)) {
-      return b.callExpression(b.identifier(expr.name), [])
-    }
-    else if (expr.name.match(/^[A-Z]/)) {
-      const name = types.name.field[expr.name.toLowerCase()]
-      if (!name) throw new Error(`No such field ${expr.name}`)
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      return b.callExpression(b.identifier('getField'), [ b.literal(name) ])
-    }
-    else {
-      return b.callExpression(expr, [])
-    }
-  }
+function argname(node) {
+  if (node.type !== 'Identifier') error(`argument name must be identifier, not ${node.type}`, node)
+  return node.name
+}
 
-  protected CallExpression(expr: AST, context: Context): AST {
-    const callee = (expr.callee.type === 'MemberExpression') ? { ...expr.callee, object: this.convert(expr.callee.object, context) } : expr.callee
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return {
-      ...expr,
-      callee,
-      arguments: expr.arguments.map((arg: AST) => this.convert(arg, {...context, arguments: true })),
-    }
-  }
-
-  protected MemberExpression(expr: AST, context: Context): AST {
-    return {
-      ...expr,
-      object: this.convert(expr.object, context),
-      property: this.convert(expr.property, context),
-    }
-  }
-
-  protected AssignmentExpression(expr: AST, context: Context): AST {
-    if (!context.arguments) this.error(expr)
-    if (expr.left.name === 'joiner' || expr.left.name === 'join') {
-      this.warning = `please use "sep" instead of "${expr.left.name}"`
-      expr.left.name = 'sep'
-    }
-    return {...this.convert(expr.right, context), named_argument: expr.left.name}
-  }
-
-  protected BinaryExpression(expr: AST, context: Context): AST {
-    if (expr.operator !== '+') this.error(expr)
-    return {
-      ...expr,
-      left: this.convert(expr.left, context),
-      right: this.convert(expr.right, context),
-    }
-  }
-
-  private addThis(expr: AST, context: Context): AST {
-    let this_expr: AST
-    switch (expr.type) {
-      case 'BinaryExpression':
-        if (expr.operator !== '+') throw expr
-        return {
-          ...expr,
-          left: this.addThis(expr.left, context),
-          right: this.addThis(expr.right, context),
-        }
-      case 'Literal':
-        return expr
-      default:
-        this_expr = b.memberExpression(b.thisExpression(), expr, false)
-        if (context.coerce) { // add leading empty string to force coercion to string
-          context.coerce = false
-          // return b.binaryExpression('+', b.literal(''), this_expr)
-          return b.binaryExpression('+',
-            b.callExpression(b.memberExpression(b.thisExpression(), b.identifier('reset')), []),
-            this_expr
-          )
-        }
-        else {
-          return this_expr
-        }
-    }
-  }
-
-  private convert(expr: AST, context: Context): AST {
-    if (!this[expr.type]) this.error(expr)
-    return this[expr.type](expr, context) as AST
-  }
-
-  private resolve(expr: AST) {
-    let passed: string
-    let callee: any
-    let prefix: string
-
-    switch (expr.type) {
-      case 'CallExpression':
-        if (expr.callee.type === 'Identifier' && this.ftype === '$') {
-          prefix = this.ftype
-          this.ftype = '_'
-        }
-        else {
-          prefix = '_'
-        }
-
-        if (expr.callee.type === 'Identifier') {
-          callee = expr.callee
-        }
-        else if (expr.callee.type === 'MemberExpression' && expr.callee.property.type === 'Identifier') {
-          callee = expr.callee.property
-        }
-        else {
-          throw expr
-        }
-        passed = callee.name
-        callee.name = api[`${prefix}${passed}`.toLowerCase()]?.name
-        if (!callee.name) throw new Error(`No such ${this.kind(prefix)} ${passed}`)
-
-        expr.arguments = this.resolveArguments(callee.name, expr.arguments, {
-          // move cleaning to Preference.citekeyFold
-          clean: callee.name.startsWith('$auth') && `clean parameter deprecated on ${this.kind(prefix)} ${passed}`,
-        })
-
-        this.resolve(expr.callee)
-        break
-
-      case 'MemberExpression':
-        this.resolve(expr.object)
-        this.resolve(expr.property)
-        break
-
-      case 'BinaryExpression':
-        this.ftype = '$'
-        this.resolve(expr.left)
-        this.ftype = '$'
-        this.resolve(expr.right)
-        break
-
-      case 'Literal':
-      case 'Identifier':
-        break
-
-      default:
-        throw new Error(`Cannot resolve ${expr.type}`)
-    }
-  }
-
-  private insert(expr: AST, convert=true) {
-    if (convert) {
-      expr = this.convert(expr, {})
-      this.ftype = '$'
-      this.resolve(expr)
-      expr = this.addThis(expr, { coerce: true })
-    }
-
-    this.patterns.push(b.arrowFunctionExpression([], expr, false))
-  }
-
-  private addpattern(expr: AST) {
-    if (expr.type === 'BinaryExpression' && expr.operator === '|') {
-      this.addpattern(expr.left)
-      this.insert(expr.right)
-    }
-    else {
-      this.insert(expr)
-    }
+function argvalue(node) {
+  switch (node.type) {
+    case 'Literal':
+    case 'ArrayExpression':
+      return node
+    case 'Identifier':
+      return b.literal(node.name)
+    default:
+      error(`argument value must be literal, array, or identifier, not ${node.type}`, node)
+      break
   }
 }
 
-export function parse(pattern: string): string {
-  return (new PatternParser(pattern)).code
+function resolveArguments(method, args, node) {
+  const parameters = {}
+
+  if (method.rest) {
+    parameters[method.rest] = b.arrayExpression(args.map(argvalue))
+  }
+  else {
+    if (method.parameters.length < args.length) error(`${method.name.slice(1)}: expected ${method.parameters.length} arguments, got ${args.length}`, node)
+
+    let hasNamed = false
+    // "shadowed" by the later let arg: any
+    args.forEach((arg, i) => { // eslint-disable-line @typescript-eslint/no-shadow
+      let name: string
+      let value: any
+      if (arg.type === 'AssignmentExpression') {
+        name = argname(arg.left)
+        // ignore deprecated parameter
+        if (method.name.startsWith('$auth') && name === 'clean') return
+        value = argvalue(arg.right)
+        hasNamed = true
+      }
+      else if (hasNamed) {
+        error('positional arguments cannot follow named arguments', arg)
+      }
+      else {
+        name = method.parameters[i]
+        value = argvalue(arg)
+      }
+      if (typeof parameters[name] !== 'undefined') error(`duplicate parameter ${name}`, arg)
+      parameters[name] = value
+    })
+  }
+
+  let err: string
+  if (err = method.validate(parameters)) error(`${method.name.slice(1)}: ${err} ${inspect(parameters)}`, node)
+
+  args = method.parameters.map((param: string, i: number) => parameters[param] || (typeof method.defaults[i] === 'undefined' ? b.identifier('undefined') : b.literal(method.defaults[i])))
+  let end: number
+  let arg: any
+  while((end = args.length - 1) >= 0 && (((arg = args[end]).type === 'Identifier' && arg.name === 'undefined') || (arg.type === 'Literal' && arg.value === method.defaults[end]))) {
+    args.pop()
+  }
+
+  return method.rest ? args[0].elements : args
+}
+
+function split(ast, operator) {
+  if (ast.type === 'BinaryExpression' && ast.operator === operator) {
+    return types.visit(ast, {
+      visitBinaryExpression(path) {
+        this.traverse(path)
+
+        /*
+        if (path.parent.node.type === 'BinaryExpression' && path.name === 'right') {
+          throw new Error("Don't use parenthesis")
+        }
+        */
+
+        if (path.node.operator === operator) {
+          const left = path.node.left.type === 'SequenceExpression' ? path.node.left.expressions : [ path.node.left ]
+          const right = path.node.right.type === 'SequenceExpression' ? path.node.right.expressions : [ path.node.right ]
+          return b.sequenceExpression(left.concat(right))
+        }
+      },
+    })
+  }
+  else {
+    return b.sequenceExpression([types.visit(ast, {
+      visitBinaryExpression(path) {
+        if (path.node.operator === operator) error(`Unexpected operator ${path.node.operator}`, path.node)
+        this.traverse(path)
+      },
+    })])
+  }
+}
+function stitch(ast, operator) {
+  if (ast.type !== 'SequenceExpression' || !ast.expressions.length) error('expected SequenceExpression', ast)
+  if (ast.expressions.length === 1) return ast.expressions[0]
+  return ast.expressions.reduce((acc, term) => b.binaryExpression(operator, acc, term), b.binaryExpression(operator, ast.expressions.shift(), ast.expressions.shift()))
+}
+
+export function convert(formulas: string): string {
+  let ast = parse(formulas).program
+  if (ast.body[0].type !== 'ExpressionStatement' || ast.body.length !== 1) throw new Error('expected 1 expression statement')
+  ast = ast.body[0].expression
+
+  ast = split(ast, '|')
+  ast.expressions = ast.expressions.map(formula => {
+    formula = split(formula, '+')
+
+    formula.expressions = formula.expressions.map(term => {
+      let namespace = '$'
+      return types.visit(term, {
+        visitCallExpression(path) {
+          if ((path.node as any).meta?.called) error('double call', path.node)
+          assign(path.node.callee, { called: path.node })
+          this.visitor.visitWithoutReset(path.get('callee'))
+
+          return false
+        },
+        visitMemberExpression(path) {
+          if (path.node.computed || path.node.property.type !== 'Identifier') error('computed property not supported', path.node)
+          if ((path.node as any).meta?.called) assign(path.node.property, { called: (path.node as any).meta.called })
+          this.traverse(path)
+        },
+        visitIdentifier(path) {
+          this.traverse(path)
+
+          try {
+            if (path.node.name.match(/^[A-Z]/)) {
+              const name = items.name.field[path.node.name.toLowerCase()]
+              if (!name) error(`No such field ${path.node.name}`, path.node)
+              if ((path.node as any).meta?.called) error('fields cannot be called', path.node)
+              if (namespace !== '$' || (path.node as any).meta?.called) error('field access not allowed here', path.node)
+              return b.callExpression(b.memberExpression(b.thisExpression(), b.identifier('$getField')), [b.literal(name)])
+            }
+            else {
+              const method = api[`${namespace}${path.node.name.toLowerCase()}`]
+              if (!method) {
+                const me = `${namespace === '$' ? 'function' : 'filter'} ${JSON.stringify(path.node.name)}`
+                error(`No such ${me}`, path.node)
+              }
+
+              if ((path.node as any).meta?.called) {
+                (path.node as any).meta.called.arguments = resolveArguments(method, (path.node as any).meta?.called.arguments || [], path.node)
+              }
+
+              if (namespace === '$') {
+                const node = b.memberExpression(b.thisExpression(), b.identifier(method.name))
+                if (!(path.node as any).meta?.called) return b.callExpression(node, [])
+                return node
+              }
+              else {
+                path.node.name = method.name
+                if (!(path.node as any).meta?.called) return b.callExpression(path.node, [])
+              }
+            }
+          }
+          finally {
+            namespace = '_'
+          }
+        },
+        visitLiteral(path) {
+          this.traverse(path)
+          return b.callExpression(b.memberExpression(b.thisExpression(), b.identifier('$text')), [b.literal(path.node.value)])
+        },
+      })
+    })
+
+    // coerce to string
+    formula.expressions.unshift(b.callExpression(b.memberExpression(b.thisExpression(), b.identifier('reset')), []))
+
+    return stitch(formula, '+')
+  })
+
+  ast = types.visit(parse('formulas.find(pattern => { try { return pattern() } catch (err) { if (err.next) return ""; throw err } })'), {
+    visitIdentifier(path) {
+      if (path.node.name === 'formulas') return b.arrayExpression(ast.expressions.map(formula => b.arrowFunctionExpression([], formula, false)))
+      return false
+    },
+  })
+  return prettyPrint(ast, {tabWidth: 2, quote: 'single'}).code + `;
+    // this.citekey is set as a side-effect
+    return this.citekey || ('zotero-' + this.item.id)`
 }

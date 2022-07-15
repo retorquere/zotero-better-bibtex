@@ -292,10 +292,6 @@ export class PrefPane {
     }
     try {
       Formatter.parsePattern(pattern)
-      if (Formatter.warning) {
-        msg = Formatter.warning
-        color = 'yellow'
-      }
       if (this.keyformat.value) this.saveCitekeyFormat(target)
     }
     catch (err) {
