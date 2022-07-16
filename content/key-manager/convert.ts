@@ -300,6 +300,7 @@ function split(ast, operator) {
   }
   parts.unshift(ast)
 
+  /* the visitNode -> Error does an en-passant check on stray binary expressions
   const CheckNesting = {
     visitBinaryExpression(path) {
       if (path.node.operator === operator) error(`improperly nested ${operator} expression ${print(path.node)}`, path.node)
@@ -307,6 +308,8 @@ function split(ast, operator) {
     },
   }
   return parts.map(part => types.visit(part, CheckNesting))
+  */
+  return parts
 }
 
 function stitch(terms, operator) {
@@ -382,6 +385,7 @@ export function convert(formulas: string): string {
             namespace = '_'
           }
         },
+
         visitLiteral(path) {
           this.traverse(path)
           return b.callExpression(b.memberExpression(b.thisExpression(), b.identifier('$text')), [b.literal(path.node.value)])
