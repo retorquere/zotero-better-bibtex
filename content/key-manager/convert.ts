@@ -229,10 +229,17 @@ function argname(node) {
 function argvalue(node) {
   switch (node.type) {
     case 'Literal':
+      return node
     case 'ArrayExpression':
+      node.elements = node.elements.map(argvalue)
       return node
     case 'Identifier':
       return b.literal(node.name)
+    case 'UnaryExpression':
+      if (node.operator !== '-' || node.argument.type !== 'Literal' || typeof node.argument.value !== 'number') {
+        error(`${node.operator}${node.argument.type} is not a number`, node)
+      }
+      return b.literal(-1 * node.argument.value)
     default:
       error(`argument value must be literal, array, or identifier, not ${node.type}`, node)
       break
@@ -384,6 +391,11 @@ export function convert(formulas: string): string {
         visitLiteral(path) {
           this.traverse(path)
           return b.callExpression(b.memberExpression(b.thisExpression(), b.identifier('$text')), [b.literal(path.node.value)])
+        },
+
+        visitNode(path) {
+          this.traverse(path)
+          error(`Unexpected ${path.node.type}`, path.node)
         },
       })
     })
