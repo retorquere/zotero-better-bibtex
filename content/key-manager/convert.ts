@@ -293,38 +293,29 @@ function resolveArguments(method, args, node) {
 }
 
 function split(ast, operator) {
-  if (ast.type === 'BinaryExpression' && ast.operator === operator) {
-    return types.visit(ast, {
-      visitBinaryExpression(path) {
-        this.traverse(path)
-
-        /*
-        if (path.parent.node.type === 'BinaryExpression' && path.name === 'right') {
-          throw new Error("Don't use parenthesis")
-        }
-        */
-
-        if (path.node.operator === operator) {
-          const left = path.node.left.type === 'SequenceExpression' ? path.node.left.expressions : [ path.node.left ]
-          const right = path.node.right.type === 'SequenceExpression' ? path.node.right.expressions : [ path.node.right ]
-          return b.sequenceExpression(left.concat(right))
-        }
-      },
-    })
+  const parts = []
+  while (ast.type === 'BinaryExpression' && ast.operator === operator) {
+    parts.unshift(ast.right)
+    ast = ast.left
   }
-  else {
-    return b.sequenceExpression([types.visit(ast, {
-      visitBinaryExpression(path) {
-        if (path.node.operator === operator) error(`Unexpected operator ${path.node.operator}`, path.node)
-        this.traverse(path)
-      },
-    })])
+  parts.unshift(ast)
+
+  const CheckNesting = {
+    visitBinaryExpression(path) {
+      if (path.node.operator === operator) error(`improperly nested ${operator} expression ${print(path.node)}`, path.node)
+      this.traverse(path)
+    },
   }
+  return parts.map(part => types.visit(part, CheckNesting))
 }
-function stitch(ast, operator) {
-  if (ast.type !== 'SequenceExpression' || !ast.expressions.length) error('expected SequenceExpression', ast)
-  if (ast.expressions.length === 1) return ast.expressions[0]
-  return ast.expressions.reduce((acc, term) => b.binaryExpression(operator, acc, term), b.binaryExpression(operator, ast.expressions.shift(), ast.expressions.shift()))
+
+function stitch(terms, operator) {
+  if (terms.length === 1) return terms[0]
+  return terms.reduce((acc, term) => b.binaryExpression(operator, acc, term), b.binaryExpression(operator, terms.shift(), terms.shift()))
+}
+
+function print(ast): string {
+  return prettyPrint(ast, {tabWidth: 2, quote: 'single'}).code
 }
 
 export function convert(formulas: string): string {
@@ -332,11 +323,8 @@ export function convert(formulas: string): string {
   if (ast.body[0].type !== 'ExpressionStatement' || ast.body.length !== 1) throw new Error('expected 1 expression statement')
   ast = ast.body[0].expression
 
-  ast = split(ast, '|')
-  ast.expressions = ast.expressions.map(formula => {
-    formula = split(formula, '+')
-
-    formula.expressions = formula.expressions.map(term => {
+  const asts = split(ast, '|').map(formula => {
+    formula = split(formula, '+').map(term => {
       let namespace = '$'
       return types.visit(term, {
         visitCallExpression(path) {
@@ -401,18 +389,18 @@ export function convert(formulas: string): string {
     })
 
     // coerce to string
-    formula.expressions.unshift(b.callExpression(b.memberExpression(b.thisExpression(), b.identifier('reset')), []))
+    formula.unshift(b.callExpression(b.memberExpression(b.thisExpression(), b.identifier('reset')), []))
 
     return stitch(formula, '+')
   })
 
   ast = types.visit(parse('formulas.find(pattern => { try { return pattern() } catch (err) { if (err.next) return ""; throw err } })'), {
     visitIdentifier(path) {
-      if (path.node.name === 'formulas') return b.arrayExpression(ast.expressions.map(formula => b.arrowFunctionExpression([], formula, false)))
+      if (path.node.name === 'formulas') return b.arrayExpression(asts.map(formula => b.arrowFunctionExpression([], formula, false)))
       return false
     },
   })
-  return prettyPrint(ast, {tabWidth: 2, quote: 'single'}).code + `;
-    // this.citekey is set as a side-effect
-    return this.citekey || ('zotero-' + this.item.id)`
+  return print(ast) + `;
+// this.citekey is set as a side-effect
+return this.citekey || ('zotero-' + this.item.id)`
 }
