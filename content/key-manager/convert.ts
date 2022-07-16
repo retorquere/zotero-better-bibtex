@@ -311,7 +311,13 @@ function split(ast, operator) {
 
 function stitch(terms, operator) {
   if (terms.length === 1) return terms[0]
-  return terms.reduce((acc, term) => b.binaryExpression(operator, acc, term), b.binaryExpression(operator, terms.shift(), terms.shift()))
+  const left = terms.shift()
+  const right = terms.shift()
+  let ast = b.binaryExpression(operator, left, right)
+  for (const term of terms) {
+    ast = b.binaryExpression(operator, ast, term)
+  }
+  return ast
 }
 
 function print(ast): string {
