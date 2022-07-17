@@ -235,7 +235,7 @@ export class ErrorReport {
     let info = ''
 
     const appInfo = Components.classes['@mozilla.org/xre/app-info;1'].getService(Components.interfaces.nsIXULAppInfo)
-    info += `Application: ${appInfo.name} ${appInfo.version} ${Zotero.locale}\n`
+    info += `Application: ${appInfo.name} (${Zotero.clientName}) ${appInfo.version} ${Zotero.locale}\n`
     info += `Platform: ${Zotero.platform} ${Zotero.oscpu}\n`
 
     const addons = await Zotero.getInstalledExtensions()

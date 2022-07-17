@@ -4,7 +4,7 @@ declare var ZOTERO_TRANSLATOR_INFO: TranslatorHeader // eslint-disable-line no-v
 declare const workerJob: Translator.Worker.Job
 
 import { asciify } from './stringify'
-import { environment } from './environment'
+import { worker as inWorker } from './client'
 import { inspect } from 'loupe'
 
 import type { TranslatorHeader } from '../translators/lib/translator'
@@ -43,7 +43,7 @@ class Logger {
       msg = output
     }
 
-    if (Zotero.worker) {
+    if (inWorker) {
       if (!worker && workerJob.job) {
         worker = workerJob.job
         workername = `${workerJob.job}`
@@ -51,7 +51,7 @@ class Logger {
       translator = translator || workerJob.translator
     }
     else {
-      if (worker) workername = `${worker} (but environment is ${environment.name})`
+      if (worker) workername = `${worker} (ceci n'est pas une ouvrier)`
       // Translator must be var-hoisted by esbuild for this to work
       if (!translator && typeof ZOTERO_TRANSLATOR_INFO !== 'undefined') translator = ZOTERO_TRANSLATOR_INFO.label
     }

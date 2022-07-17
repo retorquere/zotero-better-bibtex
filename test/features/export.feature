@@ -250,18 +250,19 @@ Feature: Export
       | BibTeX export is incompatible with Zotero 6 Preprint item type. #2080 | 1 |
 
   @csl
-  Scenario Outline: Export <references> references for CSL JSON to <file>
+  Scenario Outline: Export <references> references for CSL-JSON to <file>
     When I import <references> references from "export/<file>.json"
     Then an export using "Better CSL JSON" should match "export/*.csl.json"
 
     Examples:
-      | file                                                             | references |
-      | Better CSL JSON does not include authority field #2019           | 1          |
-      | Multiple creators in Extra not exported in Better CSL JSON #2015 | 1          |
-      | Deterministic ordering for CSL #1178 #1400                       | 26         |
-      | CSL exporters; ignore [Fields to omit from export] setting #1179 | 26         |
-      | Quotes around last names should be removed from citekeys #856    | 1          |
-      | BBT CSL JSON; Do not use shortTitle and journalAbbreviation #372 | 1          |
+      | file                                                                             | references |
+      | Export library to Better CSL JSONYAML failed when standard items included. #2212 | 1          |
+      | Better CSL JSON does not include authority field #2019                           | 1          |
+      | Multiple creators in Extra not exported in Better CSL JSON #2015                 | 1          |
+      | Deterministic ordering for CSL #1178 #1400                                       | 26         |
+      | CSL exporters; ignore [Fields to omit from export] setting #1179                 | 26         |
+      | Quotes around last names should be removed from citekeys #856                    | 1          |
+      | BBT CSL JSON; Do not use shortTitle and journalAbbreviation #372                 | 1          |
 
   Scenario: Omit URL export when DOI present. #131
     When I import 3 references with 2 attachments from "export/*.json" into a new collection

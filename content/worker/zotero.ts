@@ -152,6 +152,10 @@ export const environment = {
   locale: '',
 }
 
+for(const [key, value] of (new URLSearchParams(ctx.location.search)).entries()) {
+  environment[key] = value
+}
+
 export const workerJob: Partial<Translators.Worker.Job> = {}
 
 class WorkerZoteroBetterBibTeX {
@@ -454,10 +458,6 @@ ctx.onmessage = function(e: { isTrusted?: boolean, data?: Translators.Worker.Mes
 
   try {
     switch (e.data.kind) {
-      case 'configure':
-        Object.assign(environment, e.data.environment)
-        break
-
       case 'start':
         Object.assign(workerJob, JSON.parse(dec.decode(new Uint8Array(e.data.config))))
         importScripts(`resource://zotero-better-bibtex/${workerJob.translator}.js`)

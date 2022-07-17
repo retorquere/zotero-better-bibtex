@@ -150,12 +150,14 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     if (this.worker || !Preference.worker) return
 
     try {
-      this.worker = new ChromeWorker('chrome://zotero-better-bibtex/content/worker/zotero.js')
-      this.worker.postMessage({ kind: 'configure', environment: {
+      const environment = Object.entries({
         version: Zotero.version,
         platform: Preference.platform,
         locale: Zotero.locale,
-      }})
+        clientName: Zotero.clientName,
+      }).map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`).join('&')
+
+      this.worker = new ChromeWorker(`chrome://zotero-better-bibtex/content/worker/zotero.js?${environment}`)
       log.debug('translate: worker acquired')
     }
     catch (err) {
