@@ -371,6 +371,8 @@ import { qualityReport } from './qr-check'
 import type { ParsedDate } from './dateparser'
 
 Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
+  clientName: Zotero.clientName,
+
   qrCheck(_sandbox: any, value: string, test: string, params = null) { return qualityReport(value, test, params) },
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
@@ -448,6 +450,8 @@ Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
 }
 
 Zotero.Translate.Import.prototype.Sandbox.BetterBibTeX = {
+  clientName: Zotero.clientName,
+
   parseHTML(_sandbox: any, text: { toString: () => any }, options: { html?: boolean, caseConversion?: boolean, exportBraceProtection: boolean, csquotes: string, exportTitleCase: boolean }) {
     options = {
       ...options,
