@@ -13,6 +13,7 @@ Feature: Export
 
     Examples:
       | file                                                                                                                     | references |
+      | Apply Title Casing to tex.subtitle entry on export #2213                                                                 | 1          |
       | Citation key format backward compatibility issue. #2204                                                                  | 1          |
       | inspireHep fetching broken #2201                                                                                         | 1          |
       | noclean                                                                                                                  | 1          |
@@ -255,16 +256,17 @@ Feature: Export
     Then an export using "Better CSL JSON" should match "export/*.csl.json"
 
     Examples:
-      | file                                                                             | references |
-      | Better CSL JSON does not include authority field #2019                           | 1          |
-      | Multiple creators in Extra not exported in Better CSL JSON #2015                 | 1          |
-      | Deterministic ordering for CSL #1178 #1400                                       | 26         |
-      | CSL exporters; ignore [Fields to omit from export] setting #1179                 | 26         |
-      | Quotes around last names should be removed from citekeys #856                    | 1          |
-      | BBT CSL JSON; Do not use shortTitle and journalAbbreviation #372                 | 1          |
+      | file                                                             | references |
+      | Better CSL JSON does not include authority field #2019           | 1          |
+      | Multiple creators in Extra not exported in Better CSL JSON #2015 | 1          |
+      | Deterministic ordering for CSL #1178 #1400                       | 26         |
+      | CSL exporters; ignore [Fields to omit from export] setting #1179 | 26         |
+      | Quotes around last names should be removed from citekeys #856    | 1          |
+      | BBT CSL JSON; Do not use shortTitle and journalAbbreviation #372 | 1          |
+
     @use.with_client=jurism
     Examples:
-      | Export library to Better CSL JSONYAML failed when standard items included. #2212 | 1          |
+      | Export library to Better CSL JSONYAML failed when standard items included. #2212 | 1 |
 
   Scenario: Omit URL export when DOI present. #131
     When I import 3 references with 2 attachments from "export/*.json" into a new collection

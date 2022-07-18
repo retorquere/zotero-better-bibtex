@@ -1,6 +1,6 @@
 declare const Zotero: any
 
-import { print } from './dump'
+import { print } from './logger'
 
 const ctx: DedicatedWorkerGlobalScope = typeof self === 'undefined' ? undefined : (self as any)
 export const worker = !!(ctx?.location?.search)

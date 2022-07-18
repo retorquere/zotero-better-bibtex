@@ -34,6 +34,7 @@ Entry.prototype.caseConversion = {
   origtitle: true,
   booktitle: true,
   maintitle: true,
+  subtitle: true,
   eventtitle: true,
 }
 
