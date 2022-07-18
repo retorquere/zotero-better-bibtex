@@ -1,66 +1,50 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 
+
 export type Allow = {
   cache: boolean
   write: boolean
 }
 import type { ITranslator as Translator } from '../lib/translator'
 import type { Fields as ExtraFields } from '../../content/extra'
+import { log } from '../../content/logger'
 
 export type Postscript = (entry: any, item: any, translator: Translator, extra: ExtraFields) => Allow
 
 export function postscript(kind: 'csl' | 'tex', main: string, guard?: string): Postscript  {
-  let body = ` // eslint-disable-line no-comma-dangle
-    // phase out reference
-    const reference = entry
-  `
+  let body = `
+    // aliases for backwards compat
+    const item = source;
+    const zotero = source;
 
-  if (kind === 'tex') {
-    body += `
-      const entrytype = reference.referencetype = entry.entrytype
-    `
-  }
+    const reference = target;
+    const entry = target;
+    const ${kind} = target;
 
-  body += `
-    const result = (() => {
-      ${main};
-    })()
-  `
+    // referencetype is the legacy name of entrytype
+    const entrytype = reference.referencetype = entry.entrytype
 
-  if (kind === 'tex') {
-    body += `
-      if (entry.entrytype !== entrytype) {
-        // entrytype changed, keep as-is
-      }
-      else if (reference.referencetype !== entrytype) {
-        // phase out reference
-        entry.entrytype = reference.referencetype
-      }
-      delete entry.referencetype
-    `
-  }
+    const result = (() => { ${main}; })();
 
-  body += `
+    // entry type change through legacy field
+    if (entry.entrytype === entrytype && reference.referencetype !== entrytype) entry.entrytype = reference.referencetype
+    delete entry.referencetype
+
     switch (typeof result) {
       case 'undefined': return { cache: true, write: true }
       case 'boolean': return { cache: result, write: true }
-      default: return { cache: true, write: true, ...result }
+      case 'object': return { cache: true, write: true, ...result }
+      default:
+        Zotero.debug('Unexpected postscript result ' + JSON.stringify(result));
+        return { cache: false, write: true }
     }
   `
 
-  if (guard) {
-    body = `
-      ${guard} = true;
-      try {
-        ${body}
-      }
-      finally {
-        ${guard} = false;
-      }
-    `
-  }
+  if (guard) body = `${guard} = true; try { ${body} } finally { ${guard} = false; }`
 
-  return new Function('entry', 'item', 'Translator', 'Zotero', 'extra', body) as Postscript
+  log.debug('postscript=', body)
+
+  return new Function('target', 'source', 'Translator', 'Zotero', 'extra', body) as Postscript
 }
 
 export const noop: Postscript = function(_entry: any, _item: any, _translator: Translator, _extra: ExtraFields): Allow { // eslint-disable-line prefer-arrow/prefer-arrow-functions
