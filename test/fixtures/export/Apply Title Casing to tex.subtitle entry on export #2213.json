@@ -1,0 +1,55 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "DOIandURL": "doi",
+      "automaticTags": false,
+      "citekeyFormat": "auth.lower + shorttitle(3,3) + year ",
+      "keyScope": "global",
+      "skipFields": "file"
+    }
+  },
+  "items": [
+    {
+      "ISBN": "978-3-540-46859-2",
+      "abstractNote": "Dirac's formalism of quantum mechanics was always praised for its elegance. This book introduces the student to its mathematical foundations and demonstrates its ease of applicability to problems in quantum physics. The book starts by describing in detail the concept of Gel'fand triplets and how one can make use of them to make the Dirac heuristic approach rigorous. The results are then deepened by giving the analytic tools, such as the Hardy class function and Hilbert and Mellin transforms, needed in applications to physical problems. Next, the RHS model for decaying states based on the concept of Gamow vectors is presented. Applications are given to physical theories of such phenomena as decaying states and resonances.",
+      "attachments": [],
+      "citationKey": "bohmDiracKetsGamow1989",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Arno",
+          "lastName": "Bohm"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Manuel",
+          "lastName": "Gadella"
+        }
+      ],
+      "date": "1989",
+      "edition": "1",
+      "extra": [
+        "DOI: 10.1007/3-540-51916-5",
+        "ISSN: 1616-6361",
+        "tex.maintitle: The rigged Hilbert space of quantum mechanics",
+        "TeX.subtitle: The rigged Hilbert space formulation of quantum mechanics"
+      ],
+      "itemID": 1,
+      "itemType": "book",
+      "language": "en",
+      "libraryCatalog": "link.springer.com",
+      "numPages": "VIII, 120",
+      "place": "Berlin, Heidelberg",
+      "publisher": "Springer-Verlag",
+      "series": "Lecture notes in physics",
+      "seriesNumber": "348",
+      "title": "Dirac kets, Gamow vectors and Gel\u2019fand triplets",
+      "url": "https://link.springer.com/10.1007/3-540-51916-5"
+    }
+  ]
+}
