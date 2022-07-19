@@ -709,15 +709,17 @@ export class Entry {
         continue
       }
 
+      const mode = ({ raw: { raw: true }, cased: { caseConversion: true } }[field.mode]) || {}
+
       switch (name) {
         case 'mr':
-          this.override({ name: 'mrnumber', value: field.value, raw: field.raw })
+          this.override({ name: 'mrnumber', value: field.value, ...mode })
           break
         case 'zbl':
-          this.override({ name: 'zmnumber', value: field.value, raw: field.raw })
+          this.override({ name: 'zmnumber', value: field.value, ...mode })
           break
         case 'lccn': case 'pmcid':
-          this.override({ name, value: field.value, raw: field.raw })
+          this.override({ name, value: field.value, ...mode })
           break
         case 'pmid':
         case 'arxiv':
@@ -725,27 +727,27 @@ export class Entry {
         case 'hdl':
           if (Translator.BetterBibLaTeX) {
             this.override({ name: 'eprinttype', value: name })
-            this.override({ name: 'eprint', value: field.value, raw: field.raw })
+            this.override({ name: 'eprint', value: field.value, ...mode })
           }
           else {
-            this.override({ name, value: field.value, raw: field.raw })
+            this.override({ name, value: field.value, ...mode })
           }
           break
         case 'googlebooksid':
           if (Translator.BetterBibLaTeX) {
             this.override({ name: 'eprinttype', value: 'googlebooks' })
-            this.override({ name: 'eprint', value: field.value, raw: field.raw })
+            this.override({ name: 'eprint', value: field.value, ...mode })
           }
           else {
-            this.override({ name: 'googlebooks', value: field.value, raw: field.raw })
+            this.override({ name: 'googlebooks', value: field.value, ...mode })
           }
           break
         case 'xref':
-          this.override({ name, value: field.value, raw: field.raw })
+          this.override({ name, value: field.value, ...mode })
           break
 
         default:
-          this.override({ ...field, name, bibtexStrings })
+          this.override({ name, value: field.value, bibtexStrings, ...mode })
           break
       }
     }
