@@ -48,6 +48,7 @@
 |**episode number**          |text|number                                                      |number                  |
 |**event date**              |date|conferenceDate¹ / dateAmended¹ / signingDate¹               |event-date              |
 |**event place**             |text|                                                            |event-place             |
+|**event title**             |text|                                                            |event-title²            |
 |**filing date**             |date|filingDate                                                  |submitted               |
 |**first page**              |text|pages                                                       |page                    |
 |**forum title**             |text|publicationTitle                                            |                        |
@@ -99,6 +100,7 @@
 |**reviewed author**         |name|reviewedAuthor                                              |reviewed-author         |
 |**reviewed title**          |text|                                                            |reviewed-title          |
 |**running time**            |text|runningTime                                                 |                        |
+|**script writer**           |name|scriptwriter                                                |script-writer²          |
 |**series editor**           |name|seriesEditor                                                |collection-editor       |
 |**series number**           |text|seriesNumber                                                |                        |
 |**series text**             |text|seriesText                                                  |                        |
