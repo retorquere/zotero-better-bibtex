@@ -56,11 +56,12 @@ class fetch(object):
     self.schema = os.path.join(SCHEMA.root, f'{client}.json')
 
     if client == 'zotero':
-      releases = [
-        ref['ref'].split('/')[-1]
-        for ref in
-        json.loads(readurl('https://api.github.com/repos/zotero/zotero/git/refs/tags'))
-      ]
+      # releases = [
+      #   ref['ref'].split('/')[-1]
+      #   for ref in
+      #   json.loads(readurl('https://api.github.com/repos/zotero/zotero/git/refs/tags'))
+      # ]
+      releases = []
       releases += [
         rel['version']
         for rel in
@@ -119,7 +120,7 @@ class fetch(object):
 
     current = releases[-1]
     if current not in hashes[client]:
-      ood = f'{current} not in f{client}.json'
+      ood = f'{current} not in {client}.json'
     elif not os.path.exists(self.schema):
       ood = f'{self.schema} does not exist'
     elif not os.path.exists(itemtypes):
