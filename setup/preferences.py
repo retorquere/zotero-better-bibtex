@@ -13,10 +13,9 @@ import re
 from glob import glob
 import frontmatter
 from types import SimpleNamespace
+import subprocess
 
-if os.system('setup/preferences.js content/Preferences.pug build/content/Preferences.xul') != 0:
-  print('unpug failed')
-  sys.exit(1)
+subprocess.check_output(['node', 'setup/preferences.js', 'content/Preferences.pug', 'build/content/Preferences.xul'])
 
 root = os.path.join(os.path.dirname(__file__), '..')
 

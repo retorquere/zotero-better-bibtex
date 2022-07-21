@@ -7,13 +7,15 @@ import { patch as $patch$ } from './monkey-patch'
 import { DB as Cache } from './db/cache'
 
 import { Preference } from './prefs'
-import { options as preferenceOptions } from '../gen/preferences/meta'
+import { options as preferenceOptions, defaults as preferenceDefaults } from '../gen/preferences/meta'
 import { Formatter } from './key-manager/formatter'
 import { AutoExport } from './auto-export'
 import { Translators } from './translators'
 import { client } from './client'
 import * as l10n from './l10n'
 import { Events } from './events'
+import { pick } from './file-picker'
+import { flash } from './flash'
 
 const namespace = 'http://retorque.re/zotero-better-bibtex/'
 
@@ -267,6 +269,50 @@ export class PrefPane {
   private observed: XUL.Element
   private globals: Record<string, any>
   // private prefwindow: HTMLElement
+
+  public async importPrefs(): Promise<void> {
+    const preferences: { path: string, contents?: string, parsed?: any } = {
+      path: await pick(Zotero.getString('fileInterface.import'), 'open', [['BBT JSON file', '*.json']]),
+    }
+    if (!preferences.path) return
+
+    try {
+      preferences.contents = Zotero.File.getContents(preferences.path)
+    }
+    catch (err) {
+      flash(`could not read contents of ${preferences.path}`)
+      return
+    }
+
+    try {
+      preferences.parsed = JSON.parse(preferences.contents)
+    }
+    catch (err) {
+      flash(`could not parse contents of ${preferences.path}`)
+      return
+    }
+
+    if (typeof preferences.parsed?.config?.preferences !== 'object') {
+      flash(`no preferences in ${preferences.path}`)
+      return
+    }
+
+    try {
+      log.debug('importing', preferences.path)
+      for (const [pref, value] of Object.entries(preferences.parsed.config.preferences)) {
+        if (typeof value === 'undefined' || typeof value !== typeof preferenceDefaults[pref]) {
+          flash(`Invalid ${typeof value} value for ${pref}, expected ${preferenceDefaults[pref]}`)
+        }
+        else {
+          Preference[pref] = value
+          flash(`${pref} set to ${JSON.stringify(pref)}`)
+        }
+      }
+    }
+    catch (err) {
+      flash(err.message)
+    }
+  }
 
   public getCitekeyFormat(target = null): void {
     if (target) this.keyformat = target

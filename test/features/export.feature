@@ -590,7 +590,7 @@ Feature: Export
     Then an export using "Better BibTeX" should match "export/*.bibtex"
 
   # tests the cache for CSL
-  @use.with_client=zotero @use.with_slow=true @timeout=3000 @whopper
+  @use.with_client=zotero @use.with_slow=true @timeout=3000 @whopper @whopper-csl
   Scenario: Really Big whopping library
     When I restart Zotero with "1287" + "export/*.json"
     And I reset the cache
