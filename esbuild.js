@@ -34,6 +34,18 @@ async function bundle(config) {
 
   config.inject.push('./setup/loaders/globals.js')
 
+  if (config.exportGlobals) {
+    delete config.exportGlobals
+    const esm = await esbuild.build({ ...config, logLevel: 'silent', format: 'esm', metafile: true, write: false })
+    for (const output of Object.values(esm.metafile.outputs)) {
+      if (output.entryPoint) {
+        config.globalName = output.exports.sort().join('___')
+        // make these var, not const, so they get hoisted and are available in the global scope.
+        config.footer = { js: `var { ${output.exports.sort().join(', ')} } = ${config.globalName};` }
+      }
+    }
+  }
+
   const metafile = config.metafile
   config.metafile = true
 
@@ -75,11 +87,8 @@ async function rebuild() {
   })
 
   // worker code
-  const vars = [ 'Zotero', 'workerJob', 'environment', 'DOMParser' ]
-  const globalName = vars.join('__')
   await bundle({
     entryPoints: [ 'content/worker/zotero.ts' ],
-    globalName,
     plugins: [
       loader.trace('worker'),
       loader.patcher('setup/patches'),
@@ -89,10 +98,7 @@ async function rebuild() {
       shims
     ],
     outdir: 'build/content/worker',
-    footer: {
-      // make these var, not const, so they get hoisted and are available in the global scope. See logger.ts
-      js: `var { ${vars.join(', ')} } = ${globalName};`,
-    },
+    exportGlobals: true,
     metafile: 'gen/worker.json',
     external: [ 'jsdom' ],
   })
@@ -100,11 +106,6 @@ async function rebuild() {
   // translators
   for (const translator of (await glob('translators/*.json')).map(tr => path.parse(tr))) {
     const header = require('./' + path.join(translator.dir, translator.name + '.json'))
-    const vars = ['Translator']
-      .concat((header.translatorType & 1) ? ['detectImport', 'doImport'] : [])
-      .concat((header.translatorType & 2) ? ['doExport'] : [])
-
-    const globalName = translator.name.replace(/ /g, '') + '__' + vars.join('__')
     const outfile = path.join('build/resource', translator.name + '.js')
 
     // https://esbuild.github.io/api/#write
@@ -112,7 +113,6 @@ async function rebuild() {
     // https://esbuild.github.io/api/#working-directory
     await bundle({
       entryPoints: [path.join(translator.dir, translator.name + '.ts')],
-      globalName,
       plugins: [
         // loader.trace('translators'),
         loader.bibertool,
@@ -125,8 +125,7 @@ async function rebuild() {
         if (typeof ZOTERO_TRANSLATOR_INFO === 'undefined') var ZOTERO_TRANSLATOR_INFO = {}; // declare if not declared
         Object.assign(ZOTERO_TRANSLATOR_INFO, ${JSON.stringify(header)}); // assign new data
       `},
-      // make these var, not const, so they get hoisted and are available in the global scope. See logger.ts
-      footer: { js: `var { ${vars.join(', ')} } = ${globalName};` },
+      exportGlobals: true,
       metafile: `gen/${translator.name}.json`,
     })
 
@@ -153,9 +152,7 @@ async function rebuild() {
       banner: {
         js: 'var ZOTERO_CONFIG = { GUID: "zotero@" };\n',
       },
-      footer: {
-        js: 'const { Zotero, DOMParser } = Headless;\n'
-      },
+      exportGlobals: true,
       metafile: 'gen/headless/zotero.json',
     })
     let external = node_modules.external

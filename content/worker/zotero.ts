@@ -146,14 +146,14 @@ import dateFormats from '../../schema/dateFormats.json'
 
 const ctx: DedicatedWorkerGlobalScope = self as any
 
-export const environment = {
+export const workerEnvironment = {
   version: '',
   platform: '',
   locale: '',
 }
 
 for(const [key, value] of (new URLSearchParams(ctx.location.search)).entries()) {
-  environment[key] = value
+  workerEnvironment[key] = value
 }
 
 export const workerJob: Partial<Translators.Worker.Job> = {}
@@ -207,7 +207,7 @@ const WorkerZoteroUtilities = {
   ...ZU,
   Item: ZUI,
 
-  getVersion: () => environment.version,
+  getVersion: () => workerEnvironment.version,
 
   /*
   public getCreatorsForType(itemType) {
@@ -221,7 +221,7 @@ const WorkerZoteroUtilities = {
 }
 
 function isWinRoot(path) {
-  return environment.platform === 'win' && path.match(/^[a-z]:\\?$/i)
+  return workerEnvironment.platform === 'win' && path.match(/^[a-z]:\\?$/i)
 }
 function makeDirs(path) {
   if (isWinRoot(path)) return
@@ -354,7 +354,7 @@ class WorkerZotero {
   public init() {
     this.Date.init(dateFormats)
 
-    workerJob.preferences.platform = environment.platform
+    workerJob.preferences.platform = workerEnvironment.platform
     workerJob.preferences.client = client
     this.output = ''
     this.items = workerJob.data.items.length
@@ -398,7 +398,7 @@ class WorkerZotero {
   }
 
   public get locale() {
-    return environment.locale
+    return workerEnvironment.locale
   }
 
   public getHiddenPref(pref) {

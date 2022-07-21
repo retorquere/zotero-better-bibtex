@@ -49,7 +49,7 @@ class Logger {
     }
 
     if (inWorker) {
-      if (!worker && workerJob.job) {
+      if (!worker && typeof workerJob !== 'undefined') {
         worker = workerJob.job
         workername = `${workerJob.job}`
       }
