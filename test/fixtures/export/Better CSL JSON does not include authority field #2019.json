@@ -1,0 +1,39 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "localeDateOrder": "mdy",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "extraMergeCSL": true,
+      "extraMergeCitekeys": true,
+      "extraMergeTeX": true,
+      "quickCopyMode": "pandoc",
+      "quickCopyPandocBrackets": true,
+      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc,groups"
+    }
+  },
+  "items": [
+    {
+      "citationKey": "WhiteState1966",
+      "court": "Md.",
+      "date": "Oct 19, 1966",
+      "extra": [
+        "Citation Key: WhiteState1966"
+      ],
+      "itemID": 1,
+      "itemType": "case",
+      "pages": "259",
+      "reporter": "A.2d",
+      "tags": [
+        {
+          "tag": "oath"
+        }
+      ],
+      "title": "White v. State",
+      "volume": "223"
+    }
+  ]
+}

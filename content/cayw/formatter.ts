@@ -2,8 +2,7 @@
 
 import { Translators } from '../translators'
 import { getItemsAsync } from '../get-items-async'
-import { Preference } from '../../gen/preferences'
-import { log } from '../logger'
+import { Preference } from '../prefs'
 import { fromEntries } from '../object'
 import { scannableCite } from '../../gen/ScannableCite'
 
@@ -112,7 +111,7 @@ export const Formatter = new class { // eslint-disable-line @typescript-eslint/n
 
     if (citations.length === 0) return ''
 
-    /* test for simple case where multiple references can be put in a single cite */
+    /* test for simple case where multiple entries can be put in a single cite */
     if (citations.length > 1) {
       const state = citations.reduce((acc, cit) => {
         for (const field of ['prefix', 'suffix', 'suppressAuthor', 'locator', 'label']) {
@@ -227,14 +226,12 @@ export const Formatter = new class { // eslint-disable-line @typescript-eslint/n
 
   public async 'formatted-citation'(citations, options) {
     let quickCopy = Zotero.Prefs.get('export.quickCopy.setting')
-    log.debug('CAYW.formatted-citation: format=', quickCopy, 'options=', options)
     if (options.style) {
       quickCopy = `bibliography/${options.contentType || 'text'}=`
       if (!options.style.startsWith('http://')) quickCopy += 'http://www.zotero.org/styles/'
       quickCopy += options.style
     }
     const format = Zotero.QuickCopy.unserializeSetting(quickCopy)
-    log.debug('CAYW.formatted-citation: format=', quickCopy, format)
 
     if (format.mode !== 'bibliography') {
       throw new Error(`formatted-citations requires the Zotero default quick-copy format to be set to a citation style; it is currently ${format}`)

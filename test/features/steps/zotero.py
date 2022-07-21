@@ -2,7 +2,7 @@ import bs4
 import sqlite3
 import uuid
 import json, jsonpatch
-import os
+import os, sys
 import redo
 import platform
 import configparser
@@ -24,7 +24,10 @@ import subprocess
 import atexit
 import time
 import datetime
-from collections import OrderedDict, MutableMapping
+
+from collections import OrderedDict
+from collections.abc import MutableMapping
+
 import sys
 import threading
 import socket
@@ -149,9 +152,6 @@ class Config:
 class Zotero:
   def __init__(self, userdata):
     assert not running('Zotero'), 'Zotero is running'
-
-    self.fixtures_loaded = set()
-    self.fixtures_loaded_log = userdata.get('loaded')
 
     self.client = userdata.get('client', 'zotero')
     self.beta = userdata.get('beta') == 'true'
@@ -304,23 +304,17 @@ class Zotero:
       self.execute(f'return await Zotero.BetterBibTeX.TestSupport.importFile({json.dumps(self.import_at_start)})')
       self.import_at_start = None
 
-  def reset(self):
+  def reset(self, scenario):
     if self.needs_restart:
       self.shutdown()
       self.config.reset()
       self.start()
 
-    self.execute('await Zotero.BetterBibTeX.TestSupport.reset()')
+    self.execute('await Zotero.BetterBibTeX.TestSupport.reset(scenario)', scenario=scenario)
     self.preferences = Preferences(self)
 
   def reset_cache(self):
     self.execute('Zotero.BetterBibTeX.TestSupport.resetCache()')
-
-  def loaded(self, path):
-    self.fixtures_loaded.add(str(PurePath(path).relative_to(FIXTURES)))
-    if self.fixtures_loaded_log:
-      with open(self.fixtures_loaded_log, 'w') as f:
-        json.dump(sorted(list(self.fixtures_loaded)), f, indent='  ')
 
   def load(self, path, attempt_patch=False):
     path = os.path.join(FIXTURES, path)
@@ -354,7 +348,6 @@ class Zotero:
     if path.endswith('.json') and not (path.endswith('.csl.json') or path.endswith('.schomd.json')):
       validate_bbt_json(data)
 
-    self.loaded(loaded)
     return (data, loaded)
 
   def exported(self, path, data=None):
@@ -372,6 +365,17 @@ class Zotero:
         f.write(data)
 
     return path
+
+  def quick_copy(self, itemIDs, translator, expected):
+    found = self.execute('return await Zotero.BetterBibTeX.TestSupport.quickCopy(itemIDs, translator)',
+      translator=translator,
+      itemIDs=itemIDs
+    )
+    expected_file = expected
+    expected, loaded_file = self.load(expected_file, True)
+    exported = self.exported(loaded_file, found)
+    assert_equal_diff(expected.strip(), found.strip())
+    self.exported(exported)
 
   def export_library(self, translator, displayOptions = {}, collection = None, output = None, expected = None, resetCache = False):
     assert not displayOptions.get('keepUpdated', False) or output # Auto-export needs a destination
@@ -568,8 +572,13 @@ class Zotero:
 
     profile.firefox.set_preference('extensions.zotero.debug.memoryInfo', True)
     profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.testing', self.testing)
+    profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.log-events', True)
     profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.workers', self.workers)
     profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.caching', self.caching)
+
+    profile.firefox.set_preference('intl.accept_languages', 'en-GB')
+    profile.firefox.set_preference('intl.locale.requested', 'en-GB')
+
     profile.firefox.set_preference('extensions.zotero.debug-bridge.password', self.password)
     profile.firefox.set_preference('dom.max_chrome_script_run_time', self.config.timeout)
     utils.print(f'dom.max_chrome_script_run_time={self.config.timeout}')
@@ -584,8 +593,7 @@ class Zotero:
           profile.firefox.firefox.set_preference(p, v)
 
     if not self.config.first_run:
-      # force stripping of the pattern
-      profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.citekeyFormat', "[auth:lower][year] | [=forumPost/WebPage][Auth:lower:capitalize][Date:format-date=%Y-%m-%d.%H\\:%M\\:%S:prefix=.][PublicationTitle1_1:lower:capitalize:prefix=.][shorttitle3_3:lower:capitalize:prefix=.][Pages:prefix=.p.][Volume:prefix=.Vol.][NumberofVolumes:prefix=de] | [Auth:lower:capitalize][date:%oY:prefix=.][PublicationTitle1_1:lower:capitalize:prefix=.][shorttitle3_3:lower:capitalize:prefix=.][Pages:prefix=.p.][Volume:prefix=.Vol.][NumberofVolumes:prefix=de]")
+      profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.citekeyFormat', "[auth:lower][year] | [=forumPost/WebPage][Auth:lower:capitalize][Date:format-date=%Y-%m-%d.%H\\:%M\\:%S:prefix=.][PublicationTitle:lower:capitalize:prefix=.][shorttitle3_3:lower:capitalize:prefix=.][Pages:prefix=.p.][Volume:prefix=.Vol.][NumberofVolumes:prefix=de] | [Auth:lower:capitalize][date=%oY:prefix=.][PublicationTitle:lower:capitalize:prefix=.][shorttitle3_3:lower:capitalize:prefix=.][Pages:prefix=.p.][Volume:prefix=.Vol.][NumberofVolumes:prefix=de]")
 
     if self.client == 'jurism':
       utils.print('\n\n** WORKAROUNDS FOR JURIS-M IN PLACE -- SEE https://github.com/Juris-M/zotero/issues/34 **\n\n')

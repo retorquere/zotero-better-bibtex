@@ -57,11 +57,11 @@ Note that the default biblatex styles do not seem to support origdate; you can f
 Exchange [here](http://tex.stackexchange.com/questions/142999/the-proper-way-to-cite-the-earliest-publication-date-in-brackets-followed-by)
 and [here](http://tex.stackexchange.com/questions/55859/getting-origyear-to-work-in-biblatex).
 
-### Changing the exported reference type
+### Changing the exported entry type
 
-If you add a field called `tex.referencetype`, the value of that field value will be used as the reference type
-instead of the one usually inferred from the Zotero reference type. You can use this to create, for example,
-`@customa{citekeyhere, ....}` type references.
+If you add a field called `tex.entrytype`, the value of that field value will be used as the entry type
+instead of the one usually inferred from the Zotero item type. You can use this to create, for example,
+`@customa{citekeyhere, ....}` type entries.
 
 ### Background exports
 

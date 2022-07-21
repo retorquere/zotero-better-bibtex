@@ -30,13 +30,10 @@ export class SQLite {
   }
 
   private async closeDatabase(conn, name, _reason) {
-    if (!conn) {
-      log.debug('DB.Store.closeDatabase: ', name, typeof conn)
-      return
-    }
+    if (!conn) return
 
     if (conn.closed) {
-      log.debug('DB.Store.closeDatabase: not re-closing connection', name)
+      log.error('DB.Store.closeDatabase: not re-closing connection', name)
       return
     }
 
@@ -44,7 +41,7 @@ export class SQLite {
       await conn.closeDatabase(true)
     }
     catch (err) {
-      log.debug('DB.Store.closeDatabase FAILED', name, err)
+      log.error('DB.Store.closeDatabase FAILED', name, err)
     }
   }
 
@@ -54,10 +51,10 @@ export class SQLite {
       const conn = this.conn[name]
 
       if (conn === false) {
-        log.debug('DB.Store.exportDatabaseSQLiteAsync: save of', name, 'attempted after close')
+        log.error('DB.Store.exportDatabaseSQLiteAsync: save of', name, 'attempted after close')
       }
       else if (!conn) {
-        log.debug('DB.Store.exportDatabaseSQLiteAsync: save of', name, 'to unopened database')
+        log.error('DB.Store.exportDatabaseSQLiteAsync: save of', name, 'to unopened database')
       }
       else {
         await conn.executeTransaction(async () => {
@@ -113,7 +110,7 @@ export class SQLite {
           }
         }
         catch (err) {
-          log.debug(`DB.Store.loadDatabaseSQLiteAsync: failed to load ${name}:`, row.name)
+          log.error(`DB.Store.loadDatabaseSQLiteAsync: failed to load ${name}:`, row.name)
           failed = true
         }
       }
@@ -123,12 +120,12 @@ export class SQLite {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-return
         db.collections = db.collections.map((coll: string) => collections[coll]).filter(coll => coll)
         if (missing.length) {
-          log.debug(`DB.Store.loadDatabaseSQLiteAsync: could not find ${name}.${missing.join('.')}`)
+          log.error(`DB.Store.loadDatabaseSQLiteAsync: could not find ${name}.${missing.join('.')}`)
         }
 
       }
       else if (rows) {
-        log.debug('DB.Store.loadDatabaseSQLiteAsync: could not find metadata for', name, rows)
+        log.error('DB.Store.loadDatabaseSQLiteAsync: could not find metadata for', name, rows)
         failed = true
 
       }
@@ -136,7 +133,7 @@ export class SQLite {
       this.conn[name] = conn
 
       if (failed) {
-        log.debug('DB.Store.loadDatabaseSQLiteAsync failed, returning empty database')
+        log.error('DB.Store.loadDatabaseSQLiteAsync failed, returning empty database')
         callback(null)
       }
       else {
@@ -160,7 +157,7 @@ export class SQLite {
 
     }
     catch (err) {
-      log.debug('DB.Store.openDatabaseSQLiteAsync:', { name, fatal }, err)
+      log.error('DB.Store.openDatabaseSQLiteAsync:', { name, fatal }, err)
       if (fatal) throw err
 
       // restore disabled until I Zotero supports after-open restore

@@ -2,7 +2,6 @@ declare const Zotero_File_Interface: any
 declare const Zotero_Duplicates_Pane: any
 
 import { AutoExport } from './auto-export'
-import { sleep } from './sleep'
 import * as ZoteroDB from './db/zotero'
 import { log } from './logger'
 import { Translators } from './translators'
@@ -13,10 +12,11 @@ import { DB as Cache } from './db/cache'
 import * as Extra from './extra'
 import { $and } from './db/loki'
 import  { defaults } from '../gen/preferences/meta'
-import { Preference } from '../gen/preferences'
+import { Preference } from './prefs'
 import * as memory from './memory'
+import { Deferred } from './deferred'
 
-const setatstart: string[] = ['workers', 'testing', 'caching'].filter(p => Preference[p] !== defaults[p])
+const setatstart: string[] = ['worker', 'testing', 'cache'].filter(p => Preference[p] !== defaults[p])
 
 export class TestSupport {
   public timedMemoryLog: any
@@ -30,7 +30,6 @@ export class TestSupport {
 
   public memoryState(snapshot: string): memory.State {
     const state = memory.state(snapshot)
-    log.debug(snapshot, 'memory use:', state)
     return state
   }
 
@@ -42,8 +41,8 @@ export class TestSupport {
     return (AutoExport.db.find($and({ status: 'running' })).length > 0)
   }
 
-  public async reset(): Promise<void> {
-    Zotero.BetterBibTeX.localeDateOrder = Zotero.Date.getLocaleDateOrder()
+  public async reset(scenario: string): Promise<void> {
+    log.debug('reset for', scenario)
 
     Cache.reset('test environment reset')
 
@@ -62,7 +61,7 @@ export class TestSupport {
       await collections[0].eraseTx()
     }
 
-    // Zotero DB access is *really* slow and times out even with chunked transactions. 3.5k references take ~ 50 seconds
+    // Zotero DB access is *really* slow and times out even with chunked transactions. 3.5k items take ~ 50 seconds
     // to delete.
     let items = await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, false, true, true)
     while (items.length) {
@@ -85,20 +84,13 @@ export class TestSupport {
     return itemIDs.length
   }
 
-  public async importFile(path: string, createNewCollection: boolean, preferences: Record<string, number | boolean | string>, localeDateOrder?: string): Promise<number> {
-    if (localeDateOrder) Zotero.BetterBibTeX.localeDateOrder = localeDateOrder
-
+  public async importFile(path: string, createNewCollection: boolean, preferences: Record<string, number | boolean | string>): Promise<number> {
     preferences = preferences || {}
 
-    if (Object.keys(preferences).length) {
-      for (let [pref, value] of Object.entries(preferences)) {
-        if (typeof defaults[pref] === 'undefined') throw new Error(`Unsupported preference ${pref} in test case`)
-        if (Array.isArray(value)) value = value.join(',')
-        Zotero.Prefs.set(`translators.better-bibtex.${pref}`, value)
-      }
-    }
-    else {
-      log.debug(`importing references from ${path}`)
+    for (let [pref, value] of Object.entries(preferences)) {
+      if (typeof defaults[pref] === 'undefined') throw new Error(`Unsupported preference ${pref} in test case`)
+      if (Array.isArray(value)) value = value.join(',')
+      Zotero.Prefs.set(`translators.better-bibtex.${pref}`, value)
     }
 
     if (!path) return 0
@@ -106,36 +98,29 @@ export class TestSupport {
     let items = await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, true, false, true)
     const before = items.length
 
-    log.debug(`starting import at ${new Date()}`)
-
     if (path.endsWith('.aux')) {
       await AUXScanner.scan(path)
       // for some reason, the imported collection shows up as empty right after the import >:
-      await sleep(1500) // eslint-disable-line no-magic-numbers
+      await Zotero.Promise.delay(1500) // eslint-disable-line no-magic-numbers
     }
     else {
       await Zotero_File_Interface.importFile({ file: Zotero.File.pathToFile(path), createNewCollection: !!createNewCollection })
     }
-    log.debug(`import finished at ${new Date()}`)
 
     items = await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, true, false, true)
     const after = items.length
-
-    log.debug(`import found ${after - before} items`)
 
     return (after - before)
   }
 
   public async exportLibrary(translatorID: string, displayOptions: Record<string, number | string | boolean>, path: string, collectionName: string): Promise<string> {
     let scope
-    log.debug('TestSupport.exportLibrary', { translatorID, displayOptions, path, collectionName })
     if (collectionName) {
       let name = collectionName
       if (name[0] === '/') name = name.substring(1) // don't do full path parsing right now
       for (const collection of Zotero.Collections.getByLibrary(Zotero.Libraries.userLibraryID)) {
         if (collection.name === name) scope = { type: 'collection', collection: collection.id }
       }
-      log.debug('TestSupport.exportLibrary', { name, scope })
       if (!scope) throw new Error(`Collection '${name}' not found`)
     }
     else {
@@ -151,7 +136,6 @@ export class TestSupport {
     const sortedIDs = JSON.stringify(ids.slice().sort())
     // eslint-disable-next-line no-magic-numbers
     for (let attempt = 1; attempt <= 10; attempt++) {
-      log.debug(`select ${ids}, attempt ${attempt}`)
       await zoteroPane.selectItems(ids, true)
 
       let selected
@@ -163,10 +147,7 @@ export class TestSupport {
         selected = []
       }
 
-      log.debug('selected items = ', selected)
-
       if (sortedIDs === JSON.stringify(selected.sort())) return true
-      log.debug(`select: expected ${ids}, got ${selected}`)
     }
     throw new Error(`failed to select ${ids}`)
   }
@@ -225,10 +206,10 @@ export class TestSupport {
 
     if (citationKey) {
       if (action !== 'pin') throw new Error(`Don't know how to ${action} ${citationKey}`)
-      log.debug('conflict: pinning', ids, 'to', citationKey)
+      log.error('conflict: pinning', ids, 'to', citationKey)
       for (const item of await getItemsAsync(ids)) {
         item.setField('extra', Extra.set(item.getField('extra'), { citationKey }))
-        log.debug('conflict: extra set to', item.getField('extra'))
+        log.error('conflict: extra set to', item.getField('extra'))
         await item.saveTx()
       }
       return
@@ -264,19 +245,18 @@ export class TestSupport {
     // zoteroPane.mergeSelectedItems()
 
     if (typeof Zotero_Duplicates_Pane === 'undefined') {
-      log.debug('Loading duplicatesMerge.js')
       Components.classes['@mozilla.org/moz/jssubscript-loader;1'].getService(Components.interfaces.mozIJSSubScriptLoader).loadSubScript('chrome://zotero/content/duplicatesMerge.js')
     }
 
     selected.sort((a, b) => ids.indexOf(a.id) - ids.indexOf(b.id))
 
     Zotero_Duplicates_Pane.setItems(selected)
-    await sleep(1500) // eslint-disable-line no-magic-numbers
+    await Zotero.Promise.delay(1500) // eslint-disable-line no-magic-numbers
 
     const before = await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, true, false, true)
     await Zotero_Duplicates_Pane.merge()
 
-    await sleep(1500) // eslint-disable-line no-magic-numbers
+    await Zotero.Promise.delay(1500) // eslint-disable-line no-magic-numbers
     const after = await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, true, false, true)
     if (before.length - after.length !== (ids.length - 1)) throw new Error(`merging ${ids.length}: before = ${before.length}, after = ${after.length}`)
   }
@@ -303,5 +283,26 @@ export class TestSupport {
       await collection.removeItems(itemIDs)
     })
     if (collection.getChildItems(true).length) throw new Error(`${path} not empty`)
+  }
+
+  public async quickCopy(itemIDs: number[], translator: string): Promise<string> {
+    const format = {
+      mode: 'export',
+      contentType: '',
+      id: Translators.byName[translator]?.translatorID || translator,
+      locale: '',
+    }
+    const deferred = new Deferred<string>()
+
+    Zotero.QuickCopy.getContentFromItems(Zotero.Items.get(itemIDs), format, (obj, worked) => {
+      if (worked) {
+        deferred.resolve(obj.string.replace(/\r\n/g, '\n'))
+      }
+      else {
+        deferred.reject(new Error(Zotero.getString('fileInterface.exportError')))
+      }
+    })
+
+    return deferred.promise
   }
 }

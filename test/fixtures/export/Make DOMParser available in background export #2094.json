@@ -1,0 +1,313 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "DOIandURL": "doi",
+      "asciiBibLaTeX": true,
+      "autoExport": "off",
+      "citekeyFormat": "[auth:lower]_[shorttitle3_3]_[year]",
+      "postscript": "if (Translator.BetterBibTeX && item.itemType === 'webpage') {\n    if (item.accessDate) {\n      reference.add({ name: 'year', value: item.accessDate.split(\"-\")[0]});\n    }\n    if (item.url) {\n      reference.add({ name: 'howpublished', bibtex: \"{\\\\url{\" + reference.enc_verbatim({value: item.url}) + \"}}\" });\n    }\n}\n\nif (Translator.BetterTeX) {\n    if (item.notes) {\n        var my_visitor = {\n            citation_uris: [],\n            visitContainer: function (obj) {\n                Zotero.debug(\"2094: visitContainer:\" + obj + \" \" + typeof obj);\n            },\n            visitAnnotation: function (obj) {\n                Zotero.debug(\"2094: visitAnnotation:\" + obj + \" \" + typeof obj);\n                json = JSON.parse(decodeURIComponent(obj.getAttribute('data-annotation')));\n                Zotero.debug(\"2094: \" + JSON.stringify(json));\n                const page_index = json[\"position\"][\"pageIndex\"];\n                const annot_key = Translator.preferences.testing ? 'fixed-for-test' : json.annotationKey;\n                let [ , kind, lib, key ] = json[\"attachmentURI\"].match(/^https?:\\/\\/zotero\\.org\\/(users|groups)\\/((?:local\\/)?[^/]+)\\/items\\/(.+)/);\n                if (Translator.preferences.testing) key = 'fixed-for-test';\n                pdf_uri = (kind === 'users') ? `zotero://open-pdf/library/items/${key}?page=${page_index}&annotation=${annot_key}` : `zotero://open-pdf/groups/${lib}/items/${key}?page=${page_index}&annotation=${annot_key}`;\n\n                Zotero.debug(\"2094: Add a PDF link:\" + pdf_uri);\n                obj.insertAdjacentHTML(\"beforeend\", ` |Open PDF, <a href=\"${pdf_uri}\">Open PDF</a>|`);\n                Zotero.debug(\"2094: Link added:\" + obj);\n            },\n            visitCitation: function (obj) {\n                Zotero.debug(\"2094: visitCitation:\" + obj + \" \" + typeof obj);\n            },\n            visitOtherElement: function (obj) {\n                Zotero.debug(\"2094: visitOtherElement:\" + obj + \" \" + typeof obj + \" : \" + obj.toString().charCodeAt(0) + \" . \" + obj.nodeType + \" , \" + obj.length);\n                Zotero.debug(\"2094: \" + obj.innerHTML);\n                if (this.citation_uris.length != 0) {\n                    Zotero.debug(\"2094: Add citation links:\" + this.citation_uris);\n                    if (obj.hasAttribute(\"class\") && obj.getAttribute(\"class\") === \"citation-item\") {\n                        const uri_to_added = this.citation_uris.shift();\n                        obj.insertAdjacentHTML(\"afterend\", ` |Open item, <a href=\"${uri_to_added}\">Open item</a>|`);\n                        Zotero.debug(\"2094: Link added:\" + obj);\n                    }\n                }\n            },\n            visitDataAttribute: function (attr, json) {\n                Zotero.debug(\"2094: visitDataAttribute:\" + attr + \" \" + JSON.stringify(json));\n                if (attr === \"data-citation\") {\n                    // clear the array\n                    this.citation_uris.length = 0;\n                    for (let temp of json[\"citationItems\"]) {\n                        const temp_uris = temp[\"uris\"].map(val => {\n                            let [ , kind, lib, key ] = val.match(/^https?:\\/\\/zotero\\.org\\/(users|groups)\\/((?:local\\/)?[^/]+)\\/items\\/(.+)/);\n                            if (Translator.preferences.testing) key = 'fixed-for-test';\n                            const select = (kind === 'users') ? `zotero://select/library/items/${key}` : `zotero://select/groups/${lib}/items/${key}`;\n                            return select;\n                        });\n                        this.citation_uris.push.apply(this.citation_uris, temp_uris);\n                    }\n                }\n            },\n            visitURI: function (obj) {\n                Zotero.debug(\"2094: visitURI:\" + obj + \" \" + typeof obj);\n                return obj;\n            }\n        };\n        const notes = item.notes.map(note => {\n            let [ , kind, lib, key ] = note.uri.match(/^https?:\\/\\/zotero\\.org\\/(users|groups)\\/((?:local\\/)?[^/]+)\\/items\\/(.+)/);\n            if (Translator.preferences.testing) key = 'fixed-for-test';\n            const select = (kind === 'users') ? `zotero://select/library/items/${key}` : `zotero://select/groups/${lib}/items/${key}`;\n            const modified_content = Zotero.Utilities.walkNoteDOM(note.note, my_visitor);\n            Zotero.debug(\"2094: \" + typeof modified_content + \" , \" + modified_content);\n            return modified_content + `(Go to the note, <a href=\"${select}\">Go to note</a>)<br/>..................................`;\n        }).join('</p><p>');\n        reference.add({ name: 'note', value: notes, html: true });\n    }\n}\n\n",
+      "skipFields": "URL,abstract,file,DOI,keywords,langid,isbn,issn",
+      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc,groups"
+    }
+  },
+  "items": [
+    {
+      "DOI": "10.1145/2534169.2486006",
+      "ISSN": "0146-4833",
+      "accessDate": "2021-06-07T09:02:54Z",
+      "attachments": [],
+      "citationKey": "huang_IndepthStudyLTE_2013",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Junxian",
+          "lastName": "Huang"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Feng",
+          "lastName": "Qian"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Yihua",
+          "lastName": "Guo"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Yuanyuan",
+          "lastName": "Zhou"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Qiang",
+          "lastName": "Xu"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Z. Morley",
+          "lastName": "Mao"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Subhabrata",
+          "lastName": "Sen"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Oliver",
+          "lastName": "Spatscheck"
+        }
+      ],
+      "date": "2013-09-19",
+      "issue": "4",
+      "itemID": 1,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "SIGCOMM Comput. Commun. Rev.",
+      "language": "en",
+      "libraryCatalog": "DOI.org (Crossref)",
+      "notes": [
+        "<div data-citation-items=\"%5B%7B%22uris%22%3A%5B%22http%3A%2F%2Fzotero.org%2Fusers%2F4752161%2Fitems%2F8FC6JVQ6%22%5D%2C%22itemData%22%3A%7B%22id%22%3A%22http%3A%2F%2Fzotero.org%2Fusers%2F4752161%2Fitems%2F8FC6JVQ6%22%2C%22type%22%3A%22article-journal%22%2C%22abstract%22%3A%22TCP%20BBR%20is%20a%20new%20TCP%20variant%20developed%20at%20Google%2C%20which%2C%20as%20of%20this%20year%2C%20is%20fully%20deployed%20in%20Google's%20internal%20WANs%20and%20used%20by%20services%20such%20as%20Google.com%20and%20YouTube.%20In%20contrast%20to%20other%20commonly%20used%20TCP%20variants%2C%20TCP%20BBR%20is%20not%20loss-based%20but%20model-based%3A%20It%20builds%20a%20model%20of%20the%20network%20path%20between%20communicating%20nodes%20in%20terms%20of%20bottleneck%20bandwidth%20and%20minimum%20round-trip%20delay%20and%20tries%20to%20operate%20at%20the%20point%20where%20all%20available%20bandwidth%20is%20used%20and%20the%20round-trip%20delay%20is%20at%20a%20minimum.%20Although%20TCP%20BBR%20has%20indeed%20resulted%20in%20lower%20latency%20and%20more%20efficient%20usage%20of%20bandwidth%20in%20fixed%20networks%2C%20its%20performance%20over%20cellular%20networks%20is%20less%20clear.%20This%20article%20studies%20TCP%20BBR%20in%20live%20mobile%20networks%20and%20through%20emulations%2C%20and%20compares%20its%20performance%20with%20TCP%20NewReno%20and%20TCP%20CUBIC%2C%20two%20of%20the%20most%20commonly%20used%20TCP%20variants.%20The%20results%20from%20these%20studies%20suggest%20that%20in%20most%20cases%20TCP%20BBR%20outperforms%20both%20TCP%20NewReno%20and%20TCP%20CUBIC.%20However%2C%20under%20precise%20network%20conditions%2C%20competing%20TCP%20BBR%20flows%20do%20not%20share%20the%20available%20bandwidth%20in%20a%20fair%20way%2C%20something%20that%20shows%20up%2C%20for%20example%2C%20when%20shorter%20TCP%20BBR%20flows%20struggle%20to%20get%20their%20fair%20share%20from%20longer%20ones.%22%2C%22container-title%22%3A%22IEEE%20Communications%20Magazine%22%2C%22DOI%22%3A%2210.1109%2FMCOM.2018.1700725%22%2C%22ISSN%22%3A%221558-1896%22%2C%22issue%22%3A%223%22%2C%22note%22%3A%22event%3A%20IEEE%20Communications%20Magazine%22%2C%22page%22%3A%22172-179%22%2C%22source%22%3A%22IEEE%20Xplore%22%2C%22title%22%3A%22On%20the%20Use%20of%20TCP%20BBR%20in%20Cellular%20Networks%22%2C%22volume%22%3A%2256%22%2C%22author%22%3A%5B%7B%22family%22%3A%22Atxutegi%22%2C%22given%22%3A%22E.%22%7D%2C%7B%22family%22%3A%22Liberal%22%2C%22given%22%3A%22F.%22%7D%2C%7B%22family%22%3A%22Haile%22%2C%22given%22%3A%22H.%20K.%22%7D%2C%7B%22family%22%3A%22Grinnemo%22%2C%22given%22%3A%22K.%22%7D%2C%7B%22family%22%3A%22Brunstrom%22%2C%22given%22%3A%22A.%22%7D%2C%7B%22family%22%3A%22Arvidsson%22%2C%22given%22%3A%22A.%22%7D%5D%2C%22issued%22%3A%7B%22date-parts%22%3A%5B%5B%222018%22%2C3%5D%5D%7D%2C%22citation-key%22%3A%22atxutegi_UseTCPBBR_2018%22%7D%7D%2C%7B%22uris%22%3A%5B%22http%3A%2F%2Fzotero.org%2Fusers%2F4752161%2Fitems%2FIR9GYRYW%22%5D%2C%22itemData%22%3A%7B%22id%22%3A%22http%3A%2F%2Fzotero.org%2Fusers%2F4752161%2Fitems%2FIR9GYRYW%22%2C%22type%22%3A%22paper-conference%22%2C%22container-title%22%3A%2212th%20USENIX%20Symposium%20on%20Networked%20Systems%20Design%20and%20Implementation%20(NSDI%2015)%22%2C%22event-place%22%3A%22Oakland%2C%20CA%22%2C%22ISBN%22%3A%22978-1-931971-21-8%22%2C%22page%22%3A%22219%E2%80%93234%22%2C%22publisher%22%3A%22USENIX%20Association%22%2C%22publisher-place%22%3A%22Oakland%2C%20CA%22%2C%22title%22%3A%22Towards%20Wifi%20Mobility%20without%20Fast%20Handover%22%2C%22URL%22%3A%22https%3A%2F%2Fwww.usenix.org%2Fconference%2Fnsdi15%2Ftechnical-sessions%2Fpresentation%2Fcroitoru%22%2C%22author%22%3A%5B%7B%22family%22%3A%22Croitoru%22%2C%22given%22%3A%22Andrei%22%7D%2C%7B%22family%22%3A%22Niculescu%22%2C%22given%22%3A%22Dragos%22%7D%2C%7B%22family%22%3A%22Raiciu%22%2C%22given%22%3A%22Costin%22%7D%5D%2C%22issued%22%3A%7B%22date-parts%22%3A%5B%5B%222015%22%5D%5D%7D%2C%22citation-key%22%3A%22croitoru_WifiMobilityFast_2015%22%7D%7D%2C%7B%22uris%22%3A%5B%22http%3A%2F%2Fzotero.org%2Fusers%2F4752161%2Fitems%2FBGMMKVIF%22%5D%2C%22itemData%22%3A%7B%22id%22%3A%22http%3A%2F%2Fzotero.org%2Fusers%2F4752161%2Fitems%2FBGMMKVIF%22%2C%22type%22%3A%22paper-conference%22%2C%22abstract%22%3A%22Load%20balancing%20in%20datacenter%20networks%20(DCNs)%20is%20an%20important%20and%20challenging%20task%20for%20datacenter%20managers.%20A%20number%20of%20sophisticated%20technologies%20have%20been%20proposed%20to%20improve%20load%20balancing%20performance%20in%20a%20complicated%20circumstance%2C%20i.e.%2C%20with%20various%20traf%EF%AC%81c%20characteristics.%20Many%20approaches%20need%20a%20high%20cost%20to%20implement%2C%20such%20as%20changing%20switch%20hardware.%20The%20ef%EF%AC%81ciency%20problem%20has%20not%20been%20well%20addressed.%20MPTCP%20was%20proposed%20as%20a%20low-cost%20approach%20to%20improve%20data%20transmission%20in%20DCNs%2C%20which%20uses%20sub%EF%AC%82ows%20to%20balance%20workloads%20across%20multiple%20paths.%20However%2C%20current%20MPTCP%20is%20not%20satisfying%2C%20especially%20when%20there%20are%20rack-local%20%EF%AC%82ows%20or%20many-to-one%20short%20%EF%AC%82ows.%20In%20this%20paper%2C%20we%20propose%20DCMPTCP%20to%20improve%20the%20ef%EF%AC%81cacy%20of%20MPTCP.%20We%20gradually%20develop%20three%20mechanisms.%20First%2C%20DCMPTCP%20identi%EF%AC%81es%20rack-local%20traf%EF%AC%81c%20and%20eliminates%20unnecessary%20sub%EF%AC%82ows%20to%20reduce%20the%20overhead.%20Second%2C%20DCMPTCP%20estimates%20%EF%AC%82ow%20length%20and%20establishes%20sub%EF%AC%82ows%20in%20a%20smarter%20way.%20Third%2C%20DCMPTCP%20strengthens%20explicit%20congestion%20noti%EF%AC%81cation%20to%20improve%20the%20congestion%20control%20performance%20on%20inter-rack%20manyto-one%20short%20%EF%AC%82ows.%20DCMPTCP%20has%20a%20good%20compatibility%20and%20is%20easy%20to%20deploy.%20We%20implement%20DCMPTCP%20in%20ns-3%20simulator%20and%20evaluate%20the%20performance%20by%20comprehensive%20simulations.%20The%20results%20show%20that%20DCMPTCP%20achieves%20~65-771X%20and%20~10-15X%20better%20FCT%20than%20MPTCP%20for%20rack-local%20and%20inter-rack%20traf%EF%AC%81c%20respectively.%22%2C%22container-title%22%3A%222018%20IEEE%2038th%20International%20Conference%20on%20Distributed%20Computing%20Systems%20(ICDCS)%22%2C%22DOI%22%3A%2210.1109%2FICDCS.2018.00067%22%2C%22event%22%3A%222018%20IEEE%2038th%20International%20Conference%20on%20Distributed%20Computing%20Systems%20(ICDCS)%22%2C%22event-place%22%3A%22Vienna%22%2C%22ISBN%22%3A%22978-1-5386-6871-9%22%2C%22language%22%3A%22en%22%2C%22page%22%3A%22622-633%22%2C%22publisher%22%3A%22IEEE%22%2C%22publisher-place%22%3A%22Vienna%22%2C%22source%22%3A%22Crossref%22%2C%22title%22%3A%22DCMPTCP%3A%20Host-Based%20Load%20Balancing%20for%20Datacenters%22%2C%22title-short%22%3A%22DCMPTCP%22%2C%22URL%22%3A%22https%3A%2F%2Fieeexplore.ieee.org%2Fdocument%2F8416330%2F%22%2C%22author%22%3A%5B%7B%22family%22%3A%22Dong%22%2C%22given%22%3A%22Enhuan%22%7D%2C%7B%22family%22%3A%22Fu%22%2C%22given%22%3A%22Xiaoming%22%7D%2C%7B%22family%22%3A%22Xu%22%2C%22given%22%3A%22Mingwei%22%7D%2C%7B%22family%22%3A%22Yang%22%2C%22given%22%3A%22Yuan%22%7D%5D%2C%22accessed%22%3A%7B%22date-parts%22%3A%5B%5B%222018%22%2C12%2C7%5D%5D%7D%2C%22issued%22%3A%7B%22date-parts%22%3A%5B%5B%222018%22%2C7%5D%5D%7D%2C%22citation-key%22%3A%22dong_DCMPTCPHostBasedLoad_2018%22%7D%7D%2C%7B%22uris%22%3A%5B%22http%3A%2F%2Fzotero.org%2Fusers%2F4752161%2Fitems%2F6F2D9PIK%22%5D%2C%22itemData%22%3A%7B%22id%22%3A%22http%3A%2F%2Fzotero.org%2Fusers%2F4752161%2Fitems%2F6F2D9PIK%22%2C%22type%22%3A%22article-journal%22%2C%22abstract%22%3A%22Congestion%20control%20(CC)%20has%20a%20significant%20influence%20on%20the%20performance%20of%20transmission%20control%20protocol%20(TCP)%20connections.%20Over%20the%20last%20three%20decades%2C%20many%20researchers%20have%20extensively%20studied%20and%20proposed%20a%20multitude%20of%20enhancements%20to%20standard%20TCP%20CC.%20However%2C%20this%20topic%20still%20inspires%20both%20academic%20and%20industrial%20research%20communities%20due%20to%20the%20change%20in%20Internet%20application%20requirements%20and%20the%20evolution%20of%20Internet%20technologies.%20The%20standard%20TCP%20CC%20infers%20network%20congestion%20based%20on%20packet%20loss%20events%20which%20leads%20to%20long%20queuing%20delay%20when%20bottleneck%20buffer%20size%20is%20large.%20A%20promising%20solution%20to%20this%20problem%20is%20to%20use%20the%20delay%20signal%20(RTT%20or%20one-way%20delay%20measurements)%20to%20infer%20congestion%20earlier%20and%20react%20to%20the%20congestion%20before%20the%20queuing%20delay%20reaches%20a%20high%20value.%20In%20this%20survey%20paper%2C%20we%20describe%20the%20delay%20signal%20and%20the%20algorithms%20that%20completely%20or%20partially%20utilize%20this%20type%20of%20signal.%20Additionally%2C%20we%20illustrate%20standard%20CC%20and%20modern%20active%20queue%20management%20(AQM)%20principles%20and%20discus%20the%20interaction%20between%20AQM%20and%20the%20delay%20signal.%22%2C%22container-title%22%3A%22IEEE%20Communications%20Surveys%20Tutorials%22%2C%22DOI%22%3A%2210.1109%2FCOMST.2019.2904994%22%2C%22ISSN%22%3A%221553-877X%22%2C%22issue%22%3A%224%22%2C%22note%22%3A%22event%3A%20IEEE%20Communications%20Surveys%20Tutorials%22%2C%22page%22%3A%223609-3638%22%2C%22source%22%3A%22IEEE%20Xplore%22%2C%22title%22%3A%22A%20Survey%20of%20Delay-Based%20and%20Hybrid%20TCP%20Congestion%20Control%20Algorithms%22%2C%22volume%22%3A%2221%22%2C%22author%22%3A%5B%7B%22family%22%3A%22Al-Saadi%22%2C%22given%22%3A%22Rasool%22%7D%2C%7B%22family%22%3A%22Armitage%22%2C%22given%22%3A%22Grenville%22%7D%2C%7B%22family%22%3A%22But%22%2C%22given%22%3A%22Jason%22%7D%2C%7B%22family%22%3A%22Branch%22%2C%22given%22%3A%22Philip%22%7D%5D%2C%22issued%22%3A%7B%22date-parts%22%3A%5B%5B%222019%22%5D%5D%2C%22season%22%3A%22Fourthquarter%22%7D%2C%22citation-key%22%3A%22al-saadi_SurveyDelayBasedHybrid_2019%22%7D%7D%5D\" data-schema-version=\"8\"><h1>Manually Generated Notes</h1>\n<p>This is a reference to <span class=\"citation\" data-citation=\"%7B%22citationItems%22%3A%5B%7B%22uris%22%3A%5B%22http%3A%2F%2Fzotero.org%2Fusers%2F4752161%2Fitems%2F8FC6JVQ6%22%5D%7D%5D%2C%22properties%22%3A%7B%7D%7D\">(<span class=\"citation-item\">Atxutegi et al., 2018</span>)</span></p>\n<p><span class=\"citation\" data-citation=\"%7B%22citationItems%22%3A%5B%7B%22uris%22%3A%5B%22http%3A%2F%2Fzotero.org%2Fusers%2F4752161%2Fitems%2F8FC6JVQ6%22%5D%7D%2C%7B%22uris%22%3A%5B%22http%3A%2F%2Fzotero.org%2Fusers%2F4752161%2Fitems%2FIR9GYRYW%22%5D%7D%2C%7B%22uris%22%3A%5B%22http%3A%2F%2Fzotero.org%2Fusers%2F4752161%2Fitems%2FBGMMKVIF%22%5D%7D%5D%2C%22properties%22%3A%7B%7D%7D\">(<span class=\"citation-item\">Atxutegi et al., 2018</span>; <span class=\"citation-item\">Croitoru et al., 2015</span>; <span class=\"citation-item\">Dong et al., 2018</span>)</span></p>\n<p><a href=\"https://bing.com\" rel=\"noopener noreferrer nofollow\">aaa</a></p>\n</div>",
+        "<div data-citation-items=\"%5B%7B%22uris%22%3A%5B%22http%3A%2F%2Fzotero.org%2Fusers%2F4752161%2Fitems%2FL2KWDK96%22%5D%2C%22itemData%22%3A%7B%22id%22%3A%22http%3A%2F%2Fzotero.org%2Fusers%2F4752161%2Fitems%2FL2KWDK96%22%2C%22type%22%3A%22article-journal%22%2C%22container-title%22%3A%22ACM%20SIGCOMM%20Computer%20Communication%20Review%22%2C%22DOI%22%3A%2210.1145%2F2534169.2486006%22%2C%22ISSN%22%3A%220146-4833%22%2C%22issue%22%3A%224%22%2C%22journalAbbreviation%22%3A%22SIGCOMM%20Comput.%20Commun.%20Rev.%22%2C%22language%22%3A%22en%22%2C%22page%22%3A%22363-374%22%2C%22source%22%3A%22DOI.org%20(Crossref)%22%2C%22title%22%3A%22An%20in-depth%20study%20of%20LTE%3A%20effect%20of%20network%20protocol%20and%20application%20behavior%20on%20performance%22%2C%22title-short%22%3A%22An%20in-depth%20study%20of%20LTE%22%2C%22URL%22%3A%22https%3A%2F%2Fdl.acm.org%2Fdoi%2F10.1145%2F2534169.2486006%22%2C%22volume%22%3A%2243%22%2C%22author%22%3A%5B%7B%22family%22%3A%22Huang%22%2C%22given%22%3A%22Junxian%22%7D%2C%7B%22family%22%3A%22Qian%22%2C%22given%22%3A%22Feng%22%7D%2C%7B%22family%22%3A%22Guo%22%2C%22given%22%3A%22Yihua%22%7D%2C%7B%22family%22%3A%22Zhou%22%2C%22given%22%3A%22Yuanyuan%22%7D%2C%7B%22family%22%3A%22Xu%22%2C%22given%22%3A%22Qiang%22%7D%2C%7B%22family%22%3A%22Mao%22%2C%22given%22%3A%22Z.%20Morley%22%7D%2C%7B%22family%22%3A%22Sen%22%2C%22given%22%3A%22Subhabrata%22%7D%2C%7B%22family%22%3A%22Spatscheck%22%2C%22given%22%3A%22Oliver%22%7D%5D%2C%22accessed%22%3A%7B%22date-parts%22%3A%5B%5B%222021%22%2C6%2C7%5D%5D%7D%2C%22issued%22%3A%7B%22date-parts%22%3A%5B%5B%222013%22%2C9%2C19%5D%5D%7D%2C%22citation-key%22%3A%22huang_IndepthStudyLTE_2013%22%7D%7D%5D\" data-schema-version=\"8\"><h1>Annotations<br/>(5/10/2022, 6:59:51 PM)</h1>\n<p><span class=\"highlight\" data-annotation=\"%7B%22attachmentURI%22%3A%22http%3A%2F%2Fzotero.org%2Fusers%2F4752161%2Fitems%2F8SU8CCQA%22%2C%22annotationKey%22%3A%22EZFZEMQV%22%2C%22color%22%3A%22%23ffd400%22%2C%22pageLabel%22%3A%22363%22%2C%22position%22%3A%7B%22pageIndex%22%3A0%2C%22rects%22%3A%5B%5B122.047%2C534.989%2C292.894%2C543.005%5D%2C%5B53.798%2C524.528%2C292.894%2C532.544%5D%2C%5B53.798%2C514.067%2C78.948%2C522.083%5D%5D%7D%2C%22citationItem%22%3A%7B%22uris%22%3A%5B%22http%3A%2F%2Fzotero.org%2Fusers%2F4752161%2Fitems%2FL2KWDK96%22%5D%2C%22locator%22%3A%22363%22%7D%7D\">However, the interactions among applications, network transport protocol, and the radio layer still remain unexplored.</span> <span class=\"citation\" data-citation=\"%7B%22citationItems%22%3A%5B%7B%22uris%22%3A%5B%22http%3A%2F%2Fzotero.org%2Fusers%2F4752161%2Fitems%2FL2KWDK96%22%5D%2C%22locator%22%3A%22363%22%7D%5D%2C%22properties%22%3A%7B%7D%7D\">(<span class=\"citation-item\">Huang et al., 2013, p. 363</span>)</span></p><p><span class=\"highlight\" data-annotation=\"%7B%22attachmentURI%22%3A%22http%3A%2F%2Fzotero.org%2Fusers%2F4752161%2Fitems%2F8SU8CCQA%22%2C%22annotationKey%22%3A%22WD3P2JKD%22%2C%22color%22%3A%22%23ffd400%22%2C%22pageLabel%22%3A%22363%22%2C%22position%22%3A%7B%22pageIndex%22%3A0%2C%22rects%22%3A%5B%5B180.362%2C493.145%2C292.894%2C501.161%5D%2C%5B53.798%2C482.685%2C292.894%2C490.701%5D%2C%5B53.798%2C472.224%2C112.05%2C480.24%5D%5D%7D%2C%22citationItem%22%3A%7B%22uris%22%3A%5B%22http%3A%2F%2Fzotero.org%2Fusers%2F4752161%2Fitems%2FL2KWDK96%22%5D%2C%22locator%22%3A%22363%22%7D%7D\">We observed that LTE has significantly shorter state promotion delays and lower RTTs than those of 3G networks.</span> <span class=\"citation\" data-citation=\"%7B%22citationItems%22%3A%5B%7B%22uris%22%3A%5B%22http%3A%2F%2Fzotero.org%2Fusers%2F4752161%2Fitems%2FL2KWDK96%22%5D%2C%22locator%22%3A%22363%22%7D%5D%2C%22properties%22%3A%7B%7D%7D\">(<span class=\"citation-item\">Huang et al., 2013, p. 363</span>)</span></p><p><span class=\"citation\" data-citation=\"%7B%22citationItems%22%3A%5B%7B%22uris%22%3A%5B%22http%3A%2F%2Fzotero.org%2Fusers%2F4752161%2Fitems%2FL2KWDK96%22%5D%2C%22locator%22%3A%22363%22%7D%5D%2C%22properties%22%3A%7B%7D%7D\">(<span class=\"citation-item\">Huang et al., 2013, p. 363</span>)</span> test</p></div>"
+      ],
+      "pages": "363-374",
+      "publicationTitle": "ACM SIGCOMM Computer Communication Review",
+      "shortTitle": "An in-depth study of LTE",
+      "tags": [
+        {
+          "tag": "BW-estimation-algorithm"
+        },
+        {
+          "tag": "Insightful"
+        }
+      ],
+      "title": "An in-depth study of LTE: effect of network protocol and application behavior on performance",
+      "url": "https://dl.acm.org/doi/10.1145/2534169.2486006",
+      "volume": "43"
+    },
+    {
+      "DOI": "10.1145/2534169.2486006",
+      "ISSN": "0146-4833",
+      "accessDate": "2021-06-07T09:02:54Z",
+      "citationKey": "huang_IndepthStudyLTE_2013",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Junxian",
+          "lastName": "Huang"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Feng",
+          "lastName": "Qian"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Yihua",
+          "lastName": "Guo"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Yuanyuan",
+          "lastName": "Zhou"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Qiang",
+          "lastName": "Xu"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Z. Morley",
+          "lastName": "Mao"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Subhabrata",
+          "lastName": "Sen"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Oliver",
+          "lastName": "Spatscheck"
+        }
+      ],
+      "date": "2013-09-19",
+      "issue": "4",
+      "itemID": 1,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "SIGCOMM Comput. Commun. Rev.",
+      "language": "en",
+      "libraryCatalog": "DOI.org (Crossref)",
+      "notes": [
+        "<div data-citation-items=\"%5B%7B%22uris%22%3A%5B%22http%3A%2F%2Fzotero.org%2Fusers%2F4752161%2Fitems%2F8FC6JVQ6%22%5D%2C%22itemData%22%3A%7B%22id%22%3A%22http%3A%2F%2Fzotero.org%2Fusers%2F4752161%2Fitems%2F8FC6JVQ6%22%2C%22type%22%3A%22article-journal%22%2C%22abstract%22%3A%22TCP%20BBR%20is%20a%20new%20TCP%20variant%20developed%20at%20Google%2C%20which%2C%20as%20of%20this%20year%2C%20is%20fully%20deployed%20in%20Google's%20internal%20WANs%20and%20used%20by%20services%20such%20as%20Google.com%20and%20YouTube.%20In%20contrast%20to%20other%20commonly%20used%20TCP%20variants%2C%20TCP%20BBR%20is%20not%20loss-based%20but%20model-based%3A%20It%20builds%20a%20model%20of%20the%20network%20path%20between%20communicating%20nodes%20in%20terms%20of%20bottleneck%20bandwidth%20and%20minimum%20round-trip%20delay%20and%20tries%20to%20operate%20at%20the%20point%20where%20all%20available%20bandwidth%20is%20used%20and%20the%20round-trip%20delay%20is%20at%20a%20minimum.%20Although%20TCP%20BBR%20has%20indeed%20resulted%20in%20lower%20latency%20and%20more%20efficient%20usage%20of%20bandwidth%20in%20fixed%20networks%2C%20its%20performance%20over%20cellular%20networks%20is%20less%20clear.%20This%20article%20studies%20TCP%20BBR%20in%20live%20mobile%20networks%20and%20through%20emulations%2C%20and%20compares%20its%20performance%20with%20TCP%20NewReno%20and%20TCP%20CUBIC%2C%20two%20of%20the%20most%20commonly%20used%20TCP%20variants.%20The%20results%20from%20these%20studies%20suggest%20that%20in%20most%20cases%20TCP%20BBR%20outperforms%20both%20TCP%20NewReno%20and%20TCP%20CUBIC.%20However%2C%20under%20precise%20network%20conditions%2C%20competing%20TCP%20BBR%20flows%20do%20not%20share%20the%20available%20bandwidth%20in%20a%20fair%20way%2C%20something%20that%20shows%20up%2C%20for%20example%2C%20when%20shorter%20TCP%20BBR%20flows%20struggle%20to%20get%20their%20fair%20share%20from%20longer%20ones.%22%2C%22container-title%22%3A%22IEEE%20Communications%20Magazine%22%2C%22DOI%22%3A%2210.1109%2FMCOM.2018.1700725%22%2C%22ISSN%22%3A%221558-1896%22%2C%22issue%22%3A%223%22%2C%22note%22%3A%22event%3A%20IEEE%20Communications%20Magazine%22%2C%22page%22%3A%22172-179%22%2C%22source%22%3A%22IEEE%20Xplore%22%2C%22title%22%3A%22On%20the%20Use%20of%20TCP%20BBR%20in%20Cellular%20Networks%22%2C%22volume%22%3A%2256%22%2C%22author%22%3A%5B%7B%22family%22%3A%22Atxutegi%22%2C%22given%22%3A%22E.%22%7D%2C%7B%22family%22%3A%22Liberal%22%2C%22given%22%3A%22F.%22%7D%2C%7B%22family%22%3A%22Haile%22%2C%22given%22%3A%22H.%20K.%22%7D%2C%7B%22family%22%3A%22Grinnemo%22%2C%22given%22%3A%22K.%22%7D%2C%7B%22family%22%3A%22Brunstrom%22%2C%22given%22%3A%22A.%22%7D%2C%7B%22family%22%3A%22Arvidsson%22%2C%22given%22%3A%22A.%22%7D%5D%2C%22issued%22%3A%7B%22date-parts%22%3A%5B%5B%222018%22%2C3%5D%5D%7D%2C%22citation-key%22%3A%22atxutegi_UseTCPBBR_2018%22%7D%7D%2C%7B%22uris%22%3A%5B%22http%3A%2F%2Fzotero.org%2Fusers%2F4752161%2Fitems%2FIR9GYRYW%22%5D%2C%22itemData%22%3A%7B%22id%22%3A%22http%3A%2F%2Fzotero.org%2Fusers%2F4752161%2Fitems%2FIR9GYRYW%22%2C%22type%22%3A%22paper-conference%22%2C%22container-title%22%3A%2212th%20USENIX%20Symposium%20on%20Networked%20Systems%20Design%20and%20Implementation%20(NSDI%2015)%22%2C%22event-place%22%3A%22Oakland%2C%20CA%22%2C%22ISBN%22%3A%22978-1-931971-21-8%22%2C%22page%22%3A%22219%E2%80%93234%22%2C%22publisher%22%3A%22USENIX%20Association%22%2C%22publisher-place%22%3A%22Oakland%2C%20CA%22%2C%22title%22%3A%22Towards%20Wifi%20Mobility%20without%20Fast%20Handover%22%2C%22URL%22%3A%22https%3A%2F%2Fwww.usenix.org%2Fconference%2Fnsdi15%2Ftechnical-sessions%2Fpresentation%2Fcroitoru%22%2C%22author%22%3A%5B%7B%22family%22%3A%22Croitoru%22%2C%22given%22%3A%22Andrei%22%7D%2C%7B%22family%22%3A%22Niculescu%22%2C%22given%22%3A%22Dragos%22%7D%2C%7B%22family%22%3A%22Raiciu%22%2C%22given%22%3A%22Costin%22%7D%5D%2C%22issued%22%3A%7B%22date-parts%22%3A%5B%5B%222015%22%5D%5D%7D%2C%22citation-key%22%3A%22croitoru_WifiMobilityFast_2015%22%7D%7D%2C%7B%22uris%22%3A%5B%22http%3A%2F%2Fzotero.org%2Fusers%2F4752161%2Fitems%2FBGMMKVIF%22%5D%2C%22itemData%22%3A%7B%22id%22%3A%22http%3A%2F%2Fzotero.org%2Fusers%2F4752161%2Fitems%2FBGMMKVIF%22%2C%22type%22%3A%22paper-conference%22%2C%22abstract%22%3A%22Load%20balancing%20in%20datacenter%20networks%20(DCNs)%20is%20an%20important%20and%20challenging%20task%20for%20datacenter%20managers.%20A%20number%20of%20sophisticated%20technologies%20have%20been%20proposed%20to%20improve%20load%20balancing%20performance%20in%20a%20complicated%20circumstance%2C%20i.e.%2C%20with%20various%20traf%EF%AC%81c%20characteristics.%20Many%20approaches%20need%20a%20high%20cost%20to%20implement%2C%20such%20as%20changing%20switch%20hardware.%20The%20ef%EF%AC%81ciency%20problem%20has%20not%20been%20well%20addressed.%20MPTCP%20was%20proposed%20as%20a%20low-cost%20approach%20to%20improve%20data%20transmission%20in%20DCNs%2C%20which%20uses%20sub%EF%AC%82ows%20to%20balance%20workloads%20across%20multiple%20paths.%20However%2C%20current%20MPTCP%20is%20not%20satisfying%2C%20especially%20when%20there%20are%20rack-local%20%EF%AC%82ows%20or%20many-to-one%20short%20%EF%AC%82ows.%20In%20this%20paper%2C%20we%20propose%20DCMPTCP%20to%20improve%20the%20ef%EF%AC%81cacy%20of%20MPTCP.%20We%20gradually%20develop%20three%20mechanisms.%20First%2C%20DCMPTCP%20identi%EF%AC%81es%20rack-local%20traf%EF%AC%81c%20and%20eliminates%20unnecessary%20sub%EF%AC%82ows%20to%20reduce%20the%20overhead.%20Second%2C%20DCMPTCP%20estimates%20%EF%AC%82ow%20length%20and%20establishes%20sub%EF%AC%82ows%20in%20a%20smarter%20way.%20Third%2C%20DCMPTCP%20strengthens%20explicit%20congestion%20noti%EF%AC%81cation%20to%20improve%20the%20congestion%20control%20performance%20on%20inter-rack%20manyto-one%20short%20%EF%AC%82ows.%20DCMPTCP%20has%20a%20good%20compatibility%20and%20is%20easy%20to%20deploy.%20We%20implement%20DCMPTCP%20in%20ns-3%20simulator%20and%20evaluate%20the%20performance%20by%20comprehensive%20simulations.%20The%20results%20show%20that%20DCMPTCP%20achieves%20~65-771X%20and%20~10-15X%20better%20FCT%20than%20MPTCP%20for%20rack-local%20and%20inter-rack%20traf%EF%AC%81c%20respectively.%22%2C%22container-title%22%3A%222018%20IEEE%2038th%20International%20Conference%20on%20Distributed%20Computing%20Systems%20(ICDCS)%22%2C%22DOI%22%3A%2210.1109%2FICDCS.2018.00067%22%2C%22event%22%3A%222018%20IEEE%2038th%20International%20Conference%20on%20Distributed%20Computing%20Systems%20(ICDCS)%22%2C%22event-place%22%3A%22Vienna%22%2C%22ISBN%22%3A%22978-1-5386-6871-9%22%2C%22language%22%3A%22en%22%2C%22page%22%3A%22622-633%22%2C%22publisher%22%3A%22IEEE%22%2C%22publisher-place%22%3A%22Vienna%22%2C%22source%22%3A%22Crossref%22%2C%22title%22%3A%22DCMPTCP%3A%20Host-Based%20Load%20Balancing%20for%20Datacenters%22%2C%22title-short%22%3A%22DCMPTCP%22%2C%22URL%22%3A%22https%3A%2F%2Fieeexplore.ieee.org%2Fdocument%2F8416330%2F%22%2C%22author%22%3A%5B%7B%22family%22%3A%22Dong%22%2C%22given%22%3A%22Enhuan%22%7D%2C%7B%22family%22%3A%22Fu%22%2C%22given%22%3A%22Xiaoming%22%7D%2C%7B%22family%22%3A%22Xu%22%2C%22given%22%3A%22Mingwei%22%7D%2C%7B%22family%22%3A%22Yang%22%2C%22given%22%3A%22Yuan%22%7D%5D%2C%22accessed%22%3A%7B%22date-parts%22%3A%5B%5B%222018%22%2C12%2C7%5D%5D%7D%2C%22issued%22%3A%7B%22date-parts%22%3A%5B%5B%222018%22%2C7%5D%5D%7D%2C%22citation-key%22%3A%22dong_DCMPTCPHostBasedLoad_2018%22%7D%7D%2C%7B%22uris%22%3A%5B%22http%3A%2F%2Fzotero.org%2Fusers%2F4752161%2Fitems%2F6F2D9PIK%22%5D%2C%22itemData%22%3A%7B%22id%22%3A%22http%3A%2F%2Fzotero.org%2Fusers%2F4752161%2Fitems%2F6F2D9PIK%22%2C%22type%22%3A%22article-journal%22%2C%22abstract%22%3A%22Congestion%20control%20(CC)%20has%20a%20significant%20influence%20on%20the%20performance%20of%20transmission%20control%20protocol%20(TCP)%20connections.%20Over%20the%20last%20three%20decades%2C%20many%20researchers%20have%20extensively%20studied%20and%20proposed%20a%20multitude%20of%20enhancements%20to%20standard%20TCP%20CC.%20However%2C%20this%20topic%20still%20inspires%20both%20academic%20and%20industrial%20research%20communities%20due%20to%20the%20change%20in%20Internet%20application%20requirements%20and%20the%20evolution%20of%20Internet%20technologies.%20The%20standard%20TCP%20CC%20infers%20network%20congestion%20based%20on%20packet%20loss%20events%20which%20leads%20to%20long%20queuing%20delay%20when%20bottleneck%20buffer%20size%20is%20large.%20A%20promising%20solution%20to%20this%20problem%20is%20to%20use%20the%20delay%20signal%20(RTT%20or%20one-way%20delay%20measurements)%20to%20infer%20congestion%20earlier%20and%20react%20to%20the%20congestion%20before%20the%20queuing%20delay%20reaches%20a%20high%20value.%20In%20this%20survey%20paper%2C%20we%20describe%20the%20delay%20signal%20and%20the%20algorithms%20that%20completely%20or%20partially%20utilize%20this%20type%20of%20signal.%20Additionally%2C%20we%20illustrate%20standard%20CC%20and%20modern%20active%20queue%20management%20(AQM)%20principles%20and%20discus%20the%20interaction%20between%20AQM%20and%20the%20delay%20signal.%22%2C%22container-title%22%3A%22IEEE%20Communications%20Surveys%20Tutorials%22%2C%22DOI%22%3A%2210.1109%2FCOMST.2019.2904994%22%2C%22ISSN%22%3A%221553-877X%22%2C%22issue%22%3A%224%22%2C%22note%22%3A%22event%3A%20IEEE%20Communications%20Surveys%20Tutorials%22%2C%22page%22%3A%223609-3638%22%2C%22source%22%3A%22IEEE%20Xplore%22%2C%22title%22%3A%22A%20Survey%20of%20Delay-Based%20and%20Hybrid%20TCP%20Congestion%20Control%20Algorithms%22%2C%22volume%22%3A%2221%22%2C%22author%22%3A%5B%7B%22family%22%3A%22Al-Saadi%22%2C%22given%22%3A%22Rasool%22%7D%2C%7B%22family%22%3A%22Armitage%22%2C%22given%22%3A%22Grenville%22%7D%2C%7B%22family%22%3A%22But%22%2C%22given%22%3A%22Jason%22%7D%2C%7B%22family%22%3A%22Branch%22%2C%22given%22%3A%22Philip%22%7D%5D%2C%22issued%22%3A%7B%22date-parts%22%3A%5B%5B%222019%22%5D%5D%2C%22season%22%3A%22Fourthquarter%22%7D%2C%22citation-key%22%3A%22al-saadi_SurveyDelayBasedHybrid_2019%22%7D%7D%5D\" data-schema-version=\"8\"><h1>Manually Generated Notes</h1>\n<p>This is a reference to <span class=\"citation\" data-citation=\"%7B%22citationItems%22%3A%5B%7B%22uris%22%3A%5B%22http%3A%2F%2Fzotero.org%2Fusers%2F4752161%2Fitems%2F8FC6JVQ6%22%5D%7D%5D%2C%22properties%22%3A%7B%7D%7D\">(<span class=\"citation-item\">Atxutegi et al., 2018</span>)</span></p>\n<p><span class=\"citation\" data-citation=\"%7B%22citationItems%22%3A%5B%7B%22uris%22%3A%5B%22http%3A%2F%2Fzotero.org%2Fusers%2F4752161%2Fitems%2F8FC6JVQ6%22%5D%7D%2C%7B%22uris%22%3A%5B%22http%3A%2F%2Fzotero.org%2Fusers%2F4752161%2Fitems%2FIR9GYRYW%22%5D%7D%2C%7B%22uris%22%3A%5B%22http%3A%2F%2Fzotero.org%2Fusers%2F4752161%2Fitems%2FBGMMKVIF%22%5D%7D%5D%2C%22properties%22%3A%7B%7D%7D\">(<span class=\"citation-item\">Atxutegi et al., 2018</span>; <span class=\"citation-item\">Croitoru et al., 2015</span>; <span class=\"citation-item\">Dong et al., 2018</span>)</span></p>\n<p><a href=\"https://bing.com\" rel=\"noopener noreferrer nofollow\">aaa</a></p>\n</div>",
+        "<div data-citation-items=\"%5B%7B%22uris%22%3A%5B%22http%3A%2F%2Fzotero.org%2Fusers%2F4752161%2Fitems%2FL2KWDK96%22%5D%2C%22itemData%22%3A%7B%22id%22%3A%22http%3A%2F%2Fzotero.org%2Fusers%2F4752161%2Fitems%2FL2KWDK96%22%2C%22type%22%3A%22article-journal%22%2C%22container-title%22%3A%22ACM%20SIGCOMM%20Computer%20Communication%20Review%22%2C%22DOI%22%3A%2210.1145%2F2534169.2486006%22%2C%22ISSN%22%3A%220146-4833%22%2C%22issue%22%3A%224%22%2C%22journalAbbreviation%22%3A%22SIGCOMM%20Comput.%20Commun.%20Rev.%22%2C%22language%22%3A%22en%22%2C%22page%22%3A%22363-374%22%2C%22source%22%3A%22DOI.org%20(Crossref)%22%2C%22title%22%3A%22An%20in-depth%20study%20of%20LTE%3A%20effect%20of%20network%20protocol%20and%20application%20behavior%20on%20performance%22%2C%22title-short%22%3A%22An%20in-depth%20study%20of%20LTE%22%2C%22URL%22%3A%22https%3A%2F%2Fdl.acm.org%2Fdoi%2F10.1145%2F2534169.2486006%22%2C%22volume%22%3A%2243%22%2C%22author%22%3A%5B%7B%22family%22%3A%22Huang%22%2C%22given%22%3A%22Junxian%22%7D%2C%7B%22family%22%3A%22Qian%22%2C%22given%22%3A%22Feng%22%7D%2C%7B%22family%22%3A%22Guo%22%2C%22given%22%3A%22Yihua%22%7D%2C%7B%22family%22%3A%22Zhou%22%2C%22given%22%3A%22Yuanyuan%22%7D%2C%7B%22family%22%3A%22Xu%22%2C%22given%22%3A%22Qiang%22%7D%2C%7B%22family%22%3A%22Mao%22%2C%22given%22%3A%22Z.%20Morley%22%7D%2C%7B%22family%22%3A%22Sen%22%2C%22given%22%3A%22Subhabrata%22%7D%2C%7B%22family%22%3A%22Spatscheck%22%2C%22given%22%3A%22Oliver%22%7D%5D%2C%22accessed%22%3A%7B%22date-parts%22%3A%5B%5B%222021%22%2C6%2C7%5D%5D%7D%2C%22issued%22%3A%7B%22date-parts%22%3A%5B%5B%222013%22%2C9%2C19%5D%5D%7D%2C%22citation-key%22%3A%22huang_IndepthStudyLTE_2013%22%7D%7D%5D\" data-schema-version=\"8\"><h1>Annotations<br/>(5/10/2022, 6:59:51 PM)</h1>\n<p><span class=\"highlight\" data-annotation=\"%7B%22attachmentURI%22%3A%22http%3A%2F%2Fzotero.org%2Fusers%2F4752161%2Fitems%2F8SU8CCQA%22%2C%22annotationKey%22%3A%22EZFZEMQV%22%2C%22color%22%3A%22%23ffd400%22%2C%22pageLabel%22%3A%22363%22%2C%22position%22%3A%7B%22pageIndex%22%3A0%2C%22rects%22%3A%5B%5B122.047%2C534.989%2C292.894%2C543.005%5D%2C%5B53.798%2C524.528%2C292.894%2C532.544%5D%2C%5B53.798%2C514.067%2C78.948%2C522.083%5D%5D%7D%2C%22citationItem%22%3A%7B%22uris%22%3A%5B%22http%3A%2F%2Fzotero.org%2Fusers%2F4752161%2Fitems%2FL2KWDK96%22%5D%2C%22locator%22%3A%22363%22%7D%7D\">However, the interactions among applications, network transport protocol, and the radio layer still remain unexplored.</span> <span class=\"citation\" data-citation=\"%7B%22citationItems%22%3A%5B%7B%22uris%22%3A%5B%22http%3A%2F%2Fzotero.org%2Fusers%2F4752161%2Fitems%2FL2KWDK96%22%5D%2C%22locator%22%3A%22363%22%7D%5D%2C%22properties%22%3A%7B%7D%7D\">(<span class=\"citation-item\">Huang et al., 2013, p. 363</span>)</span></p><p><span class=\"highlight\" data-annotation=\"%7B%22attachmentURI%22%3A%22http%3A%2F%2Fzotero.org%2Fusers%2F4752161%2Fitems%2F8SU8CCQA%22%2C%22annotationKey%22%3A%22WD3P2JKD%22%2C%22color%22%3A%22%23ffd400%22%2C%22pageLabel%22%3A%22363%22%2C%22position%22%3A%7B%22pageIndex%22%3A0%2C%22rects%22%3A%5B%5B180.362%2C493.145%2C292.894%2C501.161%5D%2C%5B53.798%2C482.685%2C292.894%2C490.701%5D%2C%5B53.798%2C472.224%2C112.05%2C480.24%5D%5D%7D%2C%22citationItem%22%3A%7B%22uris%22%3A%5B%22http%3A%2F%2Fzotero.org%2Fusers%2F4752161%2Fitems%2FL2KWDK96%22%5D%2C%22locator%22%3A%22363%22%7D%7D\">We observed that LTE has significantly shorter state promotion delays and lower RTTs than those of 3G networks.</span> <span class=\"citation\" data-citation=\"%7B%22citationItems%22%3A%5B%7B%22uris%22%3A%5B%22http%3A%2F%2Fzotero.org%2Fusers%2F4752161%2Fitems%2FL2KWDK96%22%5D%2C%22locator%22%3A%22363%22%7D%5D%2C%22properties%22%3A%7B%7D%7D\">(<span class=\"citation-item\">Huang et al., 2013, p. 363</span>)</span></p><p><span class=\"citation\" data-citation=\"%7B%22citationItems%22%3A%5B%7B%22uris%22%3A%5B%22http%3A%2F%2Fzotero.org%2Fusers%2F4752161%2Fitems%2FL2KWDK96%22%5D%2C%22locator%22%3A%22363%22%7D%5D%2C%22properties%22%3A%7B%7D%7D\">(<span class=\"citation-item\">Huang et al., 2013, p. 363</span>)</span> test</p></div>"
+      ],
+      "pages": "363-374",
+      "publicationTitle": "ACM SIGCOMM Computer Communication Review",
+      "shortTitle": "An in-depth study of LTE",
+      "tags": [
+        {
+          "tag": "BW-estimation-algorithm"
+        },
+        {
+          "tag": "Insightful"
+        }
+      ],
+      "title": "An in-depth study of LTE: effect of network protocol and application behavior on performance",
+      "url": "https://dl.acm.org/doi/10.1145/2534169.2486006",
+      "volume": "43"
+    },
+    {
+      "DOI": "10.1145/2534169.2486006",
+      "ISSN": "0146-4833",
+      "accessDate": "2021-06-07T09:02:54Z",
+      "citationKey": "huang_IndepthStudyLTE_2013",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Junxian",
+          "lastName": "Huang"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Feng",
+          "lastName": "Qian"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Yihua",
+          "lastName": "Guo"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Yuanyuan",
+          "lastName": "Zhou"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Qiang",
+          "lastName": "Xu"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Z. Morley",
+          "lastName": "Mao"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Subhabrata",
+          "lastName": "Sen"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Oliver",
+          "lastName": "Spatscheck"
+        }
+      ],
+      "date": "2013-09-19",
+      "issue": "4",
+      "itemID": 2,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "SIGCOMM Comput. Commun. Rev.",
+      "language": "en",
+      "libraryCatalog": "DOI.org (Crossref)",
+      "notes": [
+        "<div data-citation-items=\"%5B%7B%22uris%22%3A%5B%22http%3A%2F%2Fzotero.org%2Fusers%2F4752161%2Fitems%2FL2KWDK96%22%5D%2C%22itemData%22%3A%7B%22id%22%3A%22http%3A%2F%2Fzotero.org%2Fusers%2F4752161%2Fitems%2FL2KWDK96%22%2C%22type%22%3A%22article-journal%22%2C%22container-title%22%3A%22ACM%20SIGCOMM%20Computer%20Communication%20Review%22%2C%22DOI%22%3A%2210.1145%2F2534169.2486006%22%2C%22ISSN%22%3A%220146-4833%22%2C%22issue%22%3A%224%22%2C%22journalAbbreviation%22%3A%22SIGCOMM%20Comput.%20Commun.%20Rev.%22%2C%22language%22%3A%22en%22%2C%22page%22%3A%22363-374%22%2C%22source%22%3A%22DOI.org%20(Crossref)%22%2C%22title%22%3A%22An%20in-depth%20study%20of%20LTE%3A%20effect%20of%20network%20protocol%20and%20application%20behavior%20on%20performance%22%2C%22title-short%22%3A%22An%20in-depth%20study%20of%20LTE%22%2C%22URL%22%3A%22https%3A%2F%2Fdl.acm.org%2Fdoi%2F10.1145%2F2534169.2486006%22%2C%22volume%22%3A%2243%22%2C%22author%22%3A%5B%7B%22family%22%3A%22Huang%22%2C%22given%22%3A%22Junxian%22%7D%2C%7B%22family%22%3A%22Qian%22%2C%22given%22%3A%22Feng%22%7D%2C%7B%22family%22%3A%22Guo%22%2C%22given%22%3A%22Yihua%22%7D%2C%7B%22family%22%3A%22Zhou%22%2C%22given%22%3A%22Yuanyuan%22%7D%2C%7B%22family%22%3A%22Xu%22%2C%22given%22%3A%22Qiang%22%7D%2C%7B%22family%22%3A%22Mao%22%2C%22given%22%3A%22Z.%20Morley%22%7D%2C%7B%22family%22%3A%22Sen%22%2C%22given%22%3A%22Subhabrata%22%7D%2C%7B%22family%22%3A%22Spatscheck%22%2C%22given%22%3A%22Oliver%22%7D%5D%2C%22accessed%22%3A%7B%22date-parts%22%3A%5B%5B%222021%22%2C6%2C7%5D%5D%7D%2C%22issued%22%3A%7B%22date-parts%22%3A%5B%5B%222013%22%2C9%2C19%5D%5D%7D%2C%22citation-key%22%3A%22huang_IndepthStudyLTE_2013%22%7D%7D%5D\" data-schema-version=\"8\"><h1>Annotations<br/>(5/6/2022, 2:49:44 PM)</h1>\n<p><span class=\"highlight\" data-annotation=\"%7B%22attachmentURI%22%3A%22http%3A%2F%2Fzotero.org%2Fusers%2F4752161%2Fitems%2F8SU8CCQA%22%2C%22annotationKey%22%3A%22EZFZEMQV%22%2C%22color%22%3A%22%23ffd400%22%2C%22pageLabel%22%3A%22363%22%2C%22position%22%3A%7B%22pageIndex%22%3A0%2C%22rects%22%3A%5B%5B122.047%2C534.989%2C292.894%2C543.005%5D%2C%5B53.798%2C524.528%2C292.894%2C532.544%5D%2C%5B53.798%2C514.067%2C78.948%2C522.083%5D%5D%7D%2C%22citationItem%22%3A%7B%22uris%22%3A%5B%22http%3A%2F%2Fzotero.org%2Fusers%2F4752161%2Fitems%2FL2KWDK96%22%5D%2C%22locator%22%3A%22363%22%7D%7D\">However, the interactions among applications, network transport protocol, and the radio layer still remain unexplored.</span> <span class=\"citation\" data-citation=\"%7B%22citationItems%22%3A%5B%7B%22uris%22%3A%5B%22http%3A%2F%2Fzotero.org%2Fusers%2F4752161%2Fitems%2FL2KWDK96%22%5D%2C%22locator%22%3A%22363%22%7D%5D%2C%22properties%22%3A%7B%7D%7D\">(<span class=\"citation-item\">Huang et al., 2013, p. 363</span>)</span></p><p><span class=\"highlight\" data-annotation=\"%7B%22attachmentURI%22%3A%22http%3A%2F%2Fzotero.org%2Fusers%2F4752161%2Fitems%2F8SU8CCQA%22%2C%22annotationKey%22%3A%22WD3P2JKD%22%2C%22color%22%3A%22%23ffd400%22%2C%22pageLabel%22%3A%22363%22%2C%22position%22%3A%7B%22pageIndex%22%3A0%2C%22rects%22%3A%5B%5B180.362%2C493.145%2C292.894%2C501.161%5D%2C%5B53.798%2C482.685%2C292.894%2C490.701%5D%2C%5B53.798%2C472.224%2C112.05%2C480.24%5D%5D%7D%2C%22citationItem%22%3A%7B%22uris%22%3A%5B%22http%3A%2F%2Fzotero.org%2Fusers%2F4752161%2Fitems%2FL2KWDK96%22%5D%2C%22locator%22%3A%22363%22%7D%7D\">We observed that LTE has significantly shorter state promotion delays and lower RTTs than those of 3G networks.</span> <span class=\"citation\" data-citation=\"%7B%22citationItems%22%3A%5B%7B%22uris%22%3A%5B%22http%3A%2F%2Fzotero.org%2Fusers%2F4752161%2Fitems%2FL2KWDK96%22%5D%2C%22locator%22%3A%22363%22%7D%5D%2C%22properties%22%3A%7B%7D%7D\">(<span class=\"citation-item\">Huang et al., 2013, p. 363</span>)</span></p></div>"
+      ],
+      "pages": "363-374",
+      "publicationTitle": "ACM SIGCOMM Computer Communication Review",
+      "shortTitle": "An in-depth study of LTE",
+      "tags": [
+        {
+          "tag": "BW-estimation-algorithm"
+        },
+        {
+          "tag": "Insightful"
+        }
+      ],
+      "title": "An in-depth study of LTE: effect of network protocol and application behavior on performance",
+      "url": "https://dl.acm.org/doi/10.1145/2534169.2486006",
+      "volume": "43"
+    },
+    {
+      "DOI": "10.1145/2534169.2486006",
+      "ISSN": "0146-4833",
+      "accessDate": "2021-06-07T09:02:54Z",
+      "attachments": [],
+      "citationKey": "huang_IndepthStudyLTE_2013",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Junxian",
+          "lastName": "Huang"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Feng",
+          "lastName": "Qian"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Yihua",
+          "lastName": "Guo"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Yuanyuan",
+          "lastName": "Zhou"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Qiang",
+          "lastName": "Xu"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Z. Morley",
+          "lastName": "Mao"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Subhabrata",
+          "lastName": "Sen"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Oliver",
+          "lastName": "Spatscheck"
+        }
+      ],
+      "date": "2013-09-19",
+      "issue": "4",
+      "itemID": 1,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "SIGCOMM Comput. Commun. Rev.",
+      "language": "en",
+      "libraryCatalog": "DOI.org (Crossref)",
+      "notes": [
+        "<div data-citation-items=\"%5B%7B%22uris%22%3A%5B%22http%3A%2F%2Fzotero.org%2Fusers%2F4752161%2Fitems%2F8FC6JVQ6%22%5D%2C%22itemData%22%3A%7B%22id%22%3A%22http%3A%2F%2Fzotero.org%2Fusers%2F4752161%2Fitems%2F8FC6JVQ6%22%2C%22type%22%3A%22article-journal%22%2C%22abstract%22%3A%22TCP%20BBR%20is%20a%20new%20TCP%20variant%20developed%20at%20Google%2C%20which%2C%20as%20of%20this%20year%2C%20is%20fully%20deployed%20in%20Google's%20internal%20WANs%20and%20used%20by%20services%20such%20as%20Google.com%20and%20YouTube.%20In%20contrast%20to%20other%20commonly%20used%20TCP%20variants%2C%20TCP%20BBR%20is%20not%20loss-based%20but%20model-based%3A%20It%20builds%20a%20model%20of%20the%20network%20path%20between%20communicating%20nodes%20in%20terms%20of%20bottleneck%20bandwidth%20and%20minimum%20round-trip%20delay%20and%20tries%20to%20operate%20at%20the%20point%20where%20all%20available%20bandwidth%20is%20used%20and%20the%20round-trip%20delay%20is%20at%20a%20minimum.%20Although%20TCP%20BBR%20has%20indeed%20resulted%20in%20lower%20latency%20and%20more%20efficient%20usage%20of%20bandwidth%20in%20fixed%20networks%2C%20its%20performance%20over%20cellular%20networks%20is%20less%20clear.%20This%20article%20studies%20TCP%20BBR%20in%20live%20mobile%20networks%20and%20through%20emulations%2C%20and%20compares%20its%20performance%20with%20TCP%20NewReno%20and%20TCP%20CUBIC%2C%20two%20of%20the%20most%20commonly%20used%20TCP%20variants.%20The%20results%20from%20these%20studies%20suggest%20that%20in%20most%20cases%20TCP%20BBR%20outperforms%20both%20TCP%20NewReno%20and%20TCP%20CUBIC.%20However%2C%20under%20precise%20network%20conditions%2C%20competing%20TCP%20BBR%20flows%20do%20not%20share%20the%20available%20bandwidth%20in%20a%20fair%20way%2C%20something%20that%20shows%20up%2C%20for%20example%2C%20when%20shorter%20TCP%20BBR%20flows%20struggle%20to%20get%20their%20fair%20share%20from%20longer%20ones.%22%2C%22container-title%22%3A%22IEEE%20Communications%20Magazine%22%2C%22DOI%22%3A%2210.1109%2FMCOM.2018.1700725%22%2C%22ISSN%22%3A%221558-1896%22%2C%22issue%22%3A%223%22%2C%22note%22%3A%22event%3A%20IEEE%20Communications%20Magazine%22%2C%22page%22%3A%22172-179%22%2C%22source%22%3A%22IEEE%20Xplore%22%2C%22title%22%3A%22On%20the%20Use%20of%20TCP%20BBR%20in%20Cellular%20Networks%22%2C%22volume%22%3A%2256%22%2C%22author%22%3A%5B%7B%22family%22%3A%22Atxutegi%22%2C%22given%22%3A%22E.%22%7D%2C%7B%22family%22%3A%22Liberal%22%2C%22given%22%3A%22F.%22%7D%2C%7B%22family%22%3A%22Haile%22%2C%22given%22%3A%22H.%20K.%22%7D%2C%7B%22family%22%3A%22Grinnemo%22%2C%22given%22%3A%22K.%22%7D%2C%7B%22family%22%3A%22Brunstrom%22%2C%22given%22%3A%22A.%22%7D%2C%7B%22family%22%3A%22Arvidsson%22%2C%22given%22%3A%22A.%22%7D%5D%2C%22issued%22%3A%7B%22date-parts%22%3A%5B%5B%222018%22%2C3%5D%5D%7D%2C%22citation-key%22%3A%22atxutegi_UseTCPBBR_2018%22%7D%7D%2C%7B%22uris%22%3A%5B%22http%3A%2F%2Fzotero.org%2Fusers%2F4752161%2Fitems%2FIR9GYRYW%22%5D%2C%22itemData%22%3A%7B%22id%22%3A%22http%3A%2F%2Fzotero.org%2Fusers%2F4752161%2Fitems%2FIR9GYRYW%22%2C%22type%22%3A%22paper-conference%22%2C%22container-title%22%3A%2212th%20USENIX%20Symposium%20on%20Networked%20Systems%20Design%20and%20Implementation%20(NSDI%2015)%22%2C%22event-place%22%3A%22Oakland%2C%20CA%22%2C%22ISBN%22%3A%22978-1-931971-21-8%22%2C%22page%22%3A%22219%E2%80%93234%22%2C%22publisher%22%3A%22USENIX%20Association%22%2C%22publisher-place%22%3A%22Oakland%2C%20CA%22%2C%22title%22%3A%22Towards%20Wifi%20Mobility%20without%20Fast%20Handover%22%2C%22URL%22%3A%22https%3A%2F%2Fwww.usenix.org%2Fconference%2Fnsdi15%2Ftechnical-sessions%2Fpresentation%2Fcroitoru%22%2C%22author%22%3A%5B%7B%22family%22%3A%22Croitoru%22%2C%22given%22%3A%22Andrei%22%7D%2C%7B%22family%22%3A%22Niculescu%22%2C%22given%22%3A%22Dragos%22%7D%2C%7B%22family%22%3A%22Raiciu%22%2C%22given%22%3A%22Costin%22%7D%5D%2C%22issued%22%3A%7B%22date-parts%22%3A%5B%5B%222015%22%5D%5D%7D%2C%22citation-key%22%3A%22croitoru_WifiMobilityFast_2015%22%7D%7D%2C%7B%22uris%22%3A%5B%22http%3A%2F%2Fzotero.org%2Fusers%2F4752161%2Fitems%2FBGMMKVIF%22%5D%2C%22itemData%22%3A%7B%22id%22%3A%22http%3A%2F%2Fzotero.org%2Fusers%2F4752161%2Fitems%2FBGMMKVIF%22%2C%22type%22%3A%22paper-conference%22%2C%22abstract%22%3A%22Load%20balancing%20in%20datacenter%20networks%20(DCNs)%20is%20an%20important%20and%20challenging%20task%20for%20datacenter%20managers.%20A%20number%20of%20sophisticated%20technologies%20have%20been%20proposed%20to%20improve%20load%20balancing%20performance%20in%20a%20complicated%20circumstance%2C%20i.e.%2C%20with%20various%20traf%EF%AC%81c%20characteristics.%20Many%20approaches%20need%20a%20high%20cost%20to%20implement%2C%20such%20as%20changing%20switch%20hardware.%20The%20ef%EF%AC%81ciency%20problem%20has%20not%20been%20well%20addressed.%20MPTCP%20was%20proposed%20as%20a%20low-cost%20approach%20to%20improve%20data%20transmission%20in%20DCNs%2C%20which%20uses%20sub%EF%AC%82ows%20to%20balance%20workloads%20across%20multiple%20paths.%20However%2C%20current%20MPTCP%20is%20not%20satisfying%2C%20especially%20when%20there%20are%20rack-local%20%EF%AC%82ows%20or%20many-to-one%20short%20%EF%AC%82ows.%20In%20this%20paper%2C%20we%20propose%20DCMPTCP%20to%20improve%20the%20ef%EF%AC%81cacy%20of%20MPTCP.%20We%20gradually%20develop%20three%20mechanisms.%20First%2C%20DCMPTCP%20identi%EF%AC%81es%20rack-local%20traf%EF%AC%81c%20and%20eliminates%20unnecessary%20sub%EF%AC%82ows%20to%20reduce%20the%20overhead.%20Second%2C%20DCMPTCP%20estimates%20%EF%AC%82ow%20length%20and%20establishes%20sub%EF%AC%82ows%20in%20a%20smarter%20way.%20Third%2C%20DCMPTCP%20strengthens%20explicit%20congestion%20noti%EF%AC%81cation%20to%20improve%20the%20congestion%20control%20performance%20on%20inter-rack%20manyto-one%20short%20%EF%AC%82ows.%20DCMPTCP%20has%20a%20good%20compatibility%20and%20is%20easy%20to%20deploy.%20We%20implement%20DCMPTCP%20in%20ns-3%20simulator%20and%20evaluate%20the%20performance%20by%20comprehensive%20simulations.%20The%20results%20show%20that%20DCMPTCP%20achieves%20~65-771X%20and%20~10-15X%20better%20FCT%20than%20MPTCP%20for%20rack-local%20and%20inter-rack%20traf%EF%AC%81c%20respectively.%22%2C%22container-title%22%3A%222018%20IEEE%2038th%20International%20Conference%20on%20Distributed%20Computing%20Systems%20(ICDCS)%22%2C%22DOI%22%3A%2210.1109%2FICDCS.2018.00067%22%2C%22event%22%3A%222018%20IEEE%2038th%20International%20Conference%20on%20Distributed%20Computing%20Systems%20(ICDCS)%22%2C%22event-place%22%3A%22Vienna%22%2C%22ISBN%22%3A%22978-1-5386-6871-9%22%2C%22language%22%3A%22en%22%2C%22page%22%3A%22622-633%22%2C%22publisher%22%3A%22IEEE%22%2C%22publisher-place%22%3A%22Vienna%22%2C%22source%22%3A%22Crossref%22%2C%22title%22%3A%22DCMPTCP%3A%20Host-Based%20Load%20Balancing%20for%20Datacenters%22%2C%22title-short%22%3A%22DCMPTCP%22%2C%22URL%22%3A%22https%3A%2F%2Fieeexplore.ieee.org%2Fdocument%2F8416330%2F%22%2C%22author%22%3A%5B%7B%22family%22%3A%22Dong%22%2C%22given%22%3A%22Enhuan%22%7D%2C%7B%22family%22%3A%22Fu%22%2C%22given%22%3A%22Xiaoming%22%7D%2C%7B%22family%22%3A%22Xu%22%2C%22given%22%3A%22Mingwei%22%7D%2C%7B%22family%22%3A%22Yang%22%2C%22given%22%3A%22Yuan%22%7D%5D%2C%22accessed%22%3A%7B%22date-parts%22%3A%5B%5B%222018%22%2C12%2C7%5D%5D%7D%2C%22issued%22%3A%7B%22date-parts%22%3A%5B%5B%222018%22%2C7%5D%5D%7D%2C%22citation-key%22%3A%22dong_DCMPTCPHostBasedLoad_2018%22%7D%7D%2C%7B%22uris%22%3A%5B%22http%3A%2F%2Fzotero.org%2Fusers%2F4752161%2Fitems%2F6F2D9PIK%22%5D%2C%22itemData%22%3A%7B%22id%22%3A%22http%3A%2F%2Fzotero.org%2Fusers%2F4752161%2Fitems%2F6F2D9PIK%22%2C%22type%22%3A%22article-journal%22%2C%22abstract%22%3A%22Congestion%20control%20(CC)%20has%20a%20significant%20influence%20on%20the%20performance%20of%20transmission%20control%20protocol%20(TCP)%20connections.%20Over%20the%20last%20three%20decades%2C%20many%20researchers%20have%20extensively%20studied%20and%20proposed%20a%20multitude%20of%20enhancements%20to%20standard%20TCP%20CC.%20However%2C%20this%20topic%20still%20inspires%20both%20academic%20and%20industrial%20research%20communities%20due%20to%20the%20change%20in%20Internet%20application%20requirements%20and%20the%20evolution%20of%20Internet%20technologies.%20The%20standard%20TCP%20CC%20infers%20network%20congestion%20based%20on%20packet%20loss%20events%20which%20leads%20to%20long%20queuing%20delay%20when%20bottleneck%20buffer%20size%20is%20large.%20A%20promising%20solution%20to%20this%20problem%20is%20to%20use%20the%20delay%20signal%20(RTT%20or%20one-way%20delay%20measurements)%20to%20infer%20congestion%20earlier%20and%20react%20to%20the%20congestion%20before%20the%20queuing%20delay%20reaches%20a%20high%20value.%20In%20this%20survey%20paper%2C%20we%20describe%20the%20delay%20signal%20and%20the%20algorithms%20that%20completely%20or%20partially%20utilize%20this%20type%20of%20signal.%20Additionally%2C%20we%20illustrate%20standard%20CC%20and%20modern%20active%20queue%20management%20(AQM)%20principles%20and%20discus%20the%20interaction%20between%20AQM%20and%20the%20delay%20signal.%22%2C%22container-title%22%3A%22IEEE%20Communications%20Surveys%20Tutorials%22%2C%22DOI%22%3A%2210.1109%2FCOMST.2019.2904994%22%2C%22ISSN%22%3A%221553-877X%22%2C%22issue%22%3A%224%22%2C%22note%22%3A%22event%3A%20IEEE%20Communications%20Surveys%20Tutorials%22%2C%22page%22%3A%223609-3638%22%2C%22source%22%3A%22IEEE%20Xplore%22%2C%22title%22%3A%22A%20Survey%20of%20Delay-Based%20and%20Hybrid%20TCP%20Congestion%20Control%20Algorithms%22%2C%22volume%22%3A%2221%22%2C%22author%22%3A%5B%7B%22family%22%3A%22Al-Saadi%22%2C%22given%22%3A%22Rasool%22%7D%2C%7B%22family%22%3A%22Armitage%22%2C%22given%22%3A%22Grenville%22%7D%2C%7B%22family%22%3A%22But%22%2C%22given%22%3A%22Jason%22%7D%2C%7B%22family%22%3A%22Branch%22%2C%22given%22%3A%22Philip%22%7D%5D%2C%22issued%22%3A%7B%22date-parts%22%3A%5B%5B%222019%22%5D%5D%2C%22season%22%3A%22Fourthquarter%22%7D%2C%22citation-key%22%3A%22al-saadi_SurveyDelayBasedHybrid_2019%22%7D%7D%5D\" data-schema-version=\"8\"><h1>Manually Generated Notes</h1>\n<p>This is a reference to <span class=\"citation\" data-citation=\"%7B%22citationItems%22%3A%5B%7B%22uris%22%3A%5B%22http%3A%2F%2Fzotero.org%2Fusers%2F4752161%2Fitems%2F8FC6JVQ6%22%5D%7D%5D%2C%22properties%22%3A%7B%7D%7D\">(<span class=\"citation-item\">Atxutegi et al., 2018</span>)</span></p>\n<p><span class=\"citation\" data-citation=\"%7B%22citationItems%22%3A%5B%7B%22uris%22%3A%5B%22http%3A%2F%2Fzotero.org%2Fusers%2F4752161%2Fitems%2F8FC6JVQ6%22%5D%7D%2C%7B%22uris%22%3A%5B%22http%3A%2F%2Fzotero.org%2Fusers%2F4752161%2Fitems%2FIR9GYRYW%22%5D%7D%2C%7B%22uris%22%3A%5B%22http%3A%2F%2Fzotero.org%2Fusers%2F4752161%2Fitems%2FBGMMKVIF%22%5D%7D%5D%2C%22properties%22%3A%7B%7D%7D\">(<span class=\"citation-item\">Atxutegi et al., 2018</span>; <span class=\"citation-item\">Croitoru et al., 2015</span>; <span class=\"citation-item\">Dong et al., 2018</span>)</span></p>\n<p><a href=\"https://bing.com\" rel=\"noopener noreferrer nofollow\">aaa</a></p>\n</div>",
+        "<div data-citation-items=\"%5B%7B%22uris%22%3A%5B%22http%3A%2F%2Fzotero.org%2Fusers%2F4752161%2Fitems%2FL2KWDK96%22%5D%2C%22itemData%22%3A%7B%22id%22%3A%22http%3A%2F%2Fzotero.org%2Fusers%2F4752161%2Fitems%2FL2KWDK96%22%2C%22type%22%3A%22article-journal%22%2C%22container-title%22%3A%22ACM%20SIGCOMM%20Computer%20Communication%20Review%22%2C%22DOI%22%3A%2210.1145%2F2534169.2486006%22%2C%22ISSN%22%3A%220146-4833%22%2C%22issue%22%3A%224%22%2C%22journalAbbreviation%22%3A%22SIGCOMM%20Comput.%20Commun.%20Rev.%22%2C%22language%22%3A%22en%22%2C%22page%22%3A%22363-374%22%2C%22source%22%3A%22DOI.org%20(Crossref)%22%2C%22title%22%3A%22An%20in-depth%20study%20of%20LTE%3A%20effect%20of%20network%20protocol%20and%20application%20behavior%20on%20performance%22%2C%22title-short%22%3A%22An%20in-depth%20study%20of%20LTE%22%2C%22URL%22%3A%22https%3A%2F%2Fdl.acm.org%2Fdoi%2F10.1145%2F2534169.2486006%22%2C%22volume%22%3A%2243%22%2C%22author%22%3A%5B%7B%22family%22%3A%22Huang%22%2C%22given%22%3A%22Junxian%22%7D%2C%7B%22family%22%3A%22Qian%22%2C%22given%22%3A%22Feng%22%7D%2C%7B%22family%22%3A%22Guo%22%2C%22given%22%3A%22Yihua%22%7D%2C%7B%22family%22%3A%22Zhou%22%2C%22given%22%3A%22Yuanyuan%22%7D%2C%7B%22family%22%3A%22Xu%22%2C%22given%22%3A%22Qiang%22%7D%2C%7B%22family%22%3A%22Mao%22%2C%22given%22%3A%22Z.%20Morley%22%7D%2C%7B%22family%22%3A%22Sen%22%2C%22given%22%3A%22Subhabrata%22%7D%2C%7B%22family%22%3A%22Spatscheck%22%2C%22given%22%3A%22Oliver%22%7D%5D%2C%22accessed%22%3A%7B%22date-parts%22%3A%5B%5B%222021%22%2C6%2C7%5D%5D%7D%2C%22issued%22%3A%7B%22date-parts%22%3A%5B%5B%222013%22%2C9%2C19%5D%5D%7D%2C%22citation-key%22%3A%22huang_IndepthStudyLTE_2013%22%7D%7D%5D\" data-schema-version=\"8\"><h1>Annotations<br/>(5/10/2022, 6:59:51 PM)</h1>\n<p><span class=\"highlight\" data-annotation=\"%7B%22attachmentURI%22%3A%22http%3A%2F%2Fzotero.org%2Fusers%2F4752161%2Fitems%2F8SU8CCQA%22%2C%22annotationKey%22%3A%22EZFZEMQV%22%2C%22color%22%3A%22%23ffd400%22%2C%22pageLabel%22%3A%22363%22%2C%22position%22%3A%7B%22pageIndex%22%3A0%2C%22rects%22%3A%5B%5B122.047%2C534.989%2C292.894%2C543.005%5D%2C%5B53.798%2C524.528%2C292.894%2C532.544%5D%2C%5B53.798%2C514.067%2C78.948%2C522.083%5D%5D%7D%2C%22citationItem%22%3A%7B%22uris%22%3A%5B%22http%3A%2F%2Fzotero.org%2Fusers%2F4752161%2Fitems%2FL2KWDK96%22%5D%2C%22locator%22%3A%22363%22%7D%7D\">However, the interactions among applications, network transport protocol, and the radio layer still remain unexplored.</span> <span class=\"citation\" data-citation=\"%7B%22citationItems%22%3A%5B%7B%22uris%22%3A%5B%22http%3A%2F%2Fzotero.org%2Fusers%2F4752161%2Fitems%2FL2KWDK96%22%5D%2C%22locator%22%3A%22363%22%7D%5D%2C%22properties%22%3A%7B%7D%7D\">(<span class=\"citation-item\">Huang et al., 2013, p. 363</span>)</span></p><p><span class=\"highlight\" data-annotation=\"%7B%22attachmentURI%22%3A%22http%3A%2F%2Fzotero.org%2Fusers%2F4752161%2Fitems%2F8SU8CCQA%22%2C%22annotationKey%22%3A%22WD3P2JKD%22%2C%22color%22%3A%22%23ffd400%22%2C%22pageLabel%22%3A%22363%22%2C%22position%22%3A%7B%22pageIndex%22%3A0%2C%22rects%22%3A%5B%5B180.362%2C493.145%2C292.894%2C501.161%5D%2C%5B53.798%2C482.685%2C292.894%2C490.701%5D%2C%5B53.798%2C472.224%2C112.05%2C480.24%5D%5D%7D%2C%22citationItem%22%3A%7B%22uris%22%3A%5B%22http%3A%2F%2Fzotero.org%2Fusers%2F4752161%2Fitems%2FL2KWDK96%22%5D%2C%22locator%22%3A%22363%22%7D%7D\">We observed that LTE has significantly shorter state promotion delays and lower RTTs than those of 3G networks.</span> <span class=\"citation\" data-citation=\"%7B%22citationItems%22%3A%5B%7B%22uris%22%3A%5B%22http%3A%2F%2Fzotero.org%2Fusers%2F4752161%2Fitems%2FL2KWDK96%22%5D%2C%22locator%22%3A%22363%22%7D%5D%2C%22properties%22%3A%7B%7D%7D\">(<span class=\"citation-item\">Huang et al., 2013, p. 363</span>)</span></p><p><span class=\"citation\" data-citation=\"%7B%22citationItems%22%3A%5B%7B%22uris%22%3A%5B%22http%3A%2F%2Fzotero.org%2Fusers%2F4752161%2Fitems%2FL2KWDK96%22%5D%2C%22locator%22%3A%22363%22%7D%5D%2C%22properties%22%3A%7B%7D%7D\">(<span class=\"citation-item\">Huang et al., 2013, p. 363</span>)</span> test</p></div>"
+      ],
+      "pages": "363-374",
+      "publicationTitle": "ACM SIGCOMM Computer Communication Review",
+      "shortTitle": "An in-depth study of LTE",
+      "tags": [
+        {
+          "tag": "BW-estimation-algorithm"
+        },
+        {
+          "tag": "Insightful"
+        }
+      ],
+      "title": "An in-depth study of LTE: effect of network protocol and application behavior on performance",
+      "url": "https://dl.acm.org/doi/10.1145/2534169.2486006",
+      "volume": "43"
+    }
+  ]
+}

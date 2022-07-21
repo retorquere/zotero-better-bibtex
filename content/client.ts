@@ -1,5 +1,18 @@
-// we may be running in a translator, which will have it pre-loaded
-if (typeof Components !== 'undefined') Components.utils.import('resource://zotero/config.js')
-declare const ZOTERO_CONFIG: any
+declare const Zotero: any
 
-export const client = ZOTERO_CONFIG.GUID.replace(/@.*/, '').replace('-', '')
+import { print } from './logger'
+
+const ctx: DedicatedWorkerGlobalScope = typeof self === 'undefined' ? undefined : (self as any)
+export const worker = !!(ctx?.location?.search)
+
+function clientname(): string {
+  if (worker) return (new URLSearchParams(ctx.location.search)).get('clientName')
+  if (Zotero.clientName) return Zotero.clientName as string
+  if (Zotero.BetterBibTeX?.clientName) return Zotero.BetterBibTeX.clientName as string
+  // do something to detect node maybe
+  // if (Zotero.Jurism) return 'Juris-M'
+  print(`better-bibtex client detection: worker: ${worker}, assuming Zotero`)
+  return 'Zotero'
+}
+export const clientName = clientname()
+export const client = clientName.toLowerCase().replace('-', '')

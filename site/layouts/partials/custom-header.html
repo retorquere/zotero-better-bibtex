@@ -10,6 +10,27 @@
   #body-inner h3 { text-decoration: underline green }
 </style>
 {{ end }}
+<style>
+  details.details > summary.summary::before {
+    content: '▶️';
+  }
+
+  details.details[open] > summary.summary:before {
+    content: '🔽';
+  }
+
+  /*
+  details.details {
+    border: 1px solid gray;
+    border-radius: 0.2rem;
+    padding: 0.5rem;
+  }
+
+  details.details[open] > summary.summary {
+    margin-bottom: 0.5rem;
+  }
+  */
+</style>
 {{ if in .Permalink "/exporting/extra-fields/" }}
 <link rel="stylesheet" href="http://cdn.graphalchemist.com/alchemy.min.css"/>
 {{ end }}

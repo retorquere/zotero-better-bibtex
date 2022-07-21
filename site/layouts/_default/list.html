@@ -7,7 +7,9 @@
 {{ if or (eq .Kind "taxonomy") (eq .Kind "taxonomyTerm") (eq .Kind "term") }}
 <ul>
   {{ range .Pages }}
-    <li>{{ template "page-path" dict "currentPage" . "id" .UniqueID }}</li>
+    {{ if .File }}
+      <li>{{ template "page-path" dict "currentPage" . "id" .File.UniqueID }}</li>
+    {{ end }}
   {{ end }}
 </ul>
 {{end}}
@@ -22,15 +24,15 @@
 {{ partial "footer.html" . }}
 
 {{ define "page-path" }}
-  {{ if .currentPage.Parent }}
-    {{ if not .currentPage.Parent.IsHome }}
-      {{ template "page-path" dict "currentPage" .currentPage.Parent }}
+    {{ if .currentPage.Parent }}
+      {{ if not .currentPage.Parent.IsHome }}
+        {{ template "page-path" dict "currentPage" .currentPage.Parent }}
+      {{ end }}
     {{ end }}
-  {{ end }}
 
-  {{ if eq .id .currentPage.UniqueID }}
-    <a href="{{ .currentPage.URL }}">{{ .currentPage.Title }}</a>
-  {{ else }}
-    {{ .currentPage.Title }} &gt;
-  {{ end }}
+    {{ if eq .id .currentPage.File.UniqueID }}
+      <a href="{{ .currentPage.Permalink }}">{{ .currentPage.Title }}</a>
+    {{ else }}
+      {{ .currentPage.Title }} &gt;
+    {{ end }}
 {{ end }}

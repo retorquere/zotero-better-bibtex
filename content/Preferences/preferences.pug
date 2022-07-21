@@ -1,6 +1,10 @@
+preference#pref-better-bibtex-language(name="extensions.zotero.translators.better-bibtex.language" bbt:affects="tex" type="string" default="langid")
+bbt:doc.
+  Export either langid, language or both fields based on the item language (if any).
+
 preference#pref-better-bibtex-DOIandURL(name="extensions.zotero.translators.better-bibtex.DOIandURL" bbt:affects="tex" type="string" default="both")
 bbt:doc.
-  Does what it says on the tin, really. If a reference has both a DOI and an URL, you can choose to have them both exported, or either one of them. Note that for BibTeX,
+  Does what it says on the tin, really. If an item has both a DOI and an URL, you can choose to have them both exported, or either one of them. Note that for BibTeX,
   you must load the `url` package when you have `doi` or `url` fields. `doi` and `url` fields are so-called `verbatim` fields with different escaping rules, and
   BibTeX compilation will likely error out without the package loaded.
 
@@ -28,7 +32,7 @@ preference#pref-better-bibtex-autoExport(name="extensions.zotero.translators.bet
 bbt:doc.
   Determines when [automatic exports]({{ ref . "exporting" }}) are kicked off. Having it disabled still marks
   auto-exports as needing updates, so when you re-enable it, those exports will start. On-change means exports
-  happen whenever a reference in the export changes/is added/is removed. On idle does more or less what
+  happen whenever an item in the export changes/is added/is removed. On idle does more or less what
   `Disabled` (that is, no exports but mark as needing changes), but will kick off exports when your computer is
   idle. You mostly want this if your computer is performance-constrained (aka slow).
 
@@ -60,8 +64,9 @@ preference#pref-better-bibtex-quickCopySelectLink(name="extensions.zotero.transl
 bbt:doc Hyperlink to select items in your library
 
 // the zero-width-space is a marker to re-save the current default so it doesn't get replaced when the default changes later, which would change new keys suddenly
-preference#pref-better-bibtex-citekeyFormat(name="extensions.zotero.translators.better-bibtex.citekeyFormat" bbt:affects="" type="string" default="\u200b[auth:lower][shorttitle3_3][year]")
+preference#pref-better-bibtex-citekeyFormat(name="extensions.zotero.translators.better-bibtex.citekeyFormat" bbt:affects="" type="string" default="\u200bauth.lower + shorttitle(3,3) + year")
 bbt:doc Set the pattern used to generate citation keys. The format of the keys is documented [here]({{ ref . "citing" }}).
+preference#pref-better-bibtex-citekeyFormatBackup(name="extensions.zotero.translators.better-bibtex.citekeyFormatBackup" bbt:affects="" type="string" default="")
 
 preference#pref-better-bibtex-citekeySearch(name="extensions.zotero.translators.better-bibtex.citekeySearch" bbt:affects="" type="bool" default="true")
 bbt:doc Enable searching on citation keys. Slows down startup on very large libraries. Requires Zotero restart to enable/disable.
@@ -74,7 +79,7 @@ bbt:doc.
 
 preference#pref-better-bibtex-keyConflictPolicy(name="extensions.zotero.translators.better-bibtex.keyConflictPolicy" bbt:affects="" type="string" default="keep")
 bbt:doc.
-  This determines what happens if you pin a key to a value that is already in use in a different reference but not pinned there.
+  This determines what happens if you pin a key to a value that is already in use in a different item but not pinned there.
   Neither are ideal, you just get to pick your poison. If you let BBT change the non-pinned key by adding a postfix character,
   the citation key changes which could be problematic for existing papers. If you keep the non-pinned key as-is, your library now has duplicate keys.
 
@@ -114,7 +119,7 @@ bbt:doc.
   all your citation keys at once.
 
 preference#pref-better-bibtex-postscript(name="extensions.zotero.translators.better-bibtex.postscript" bbt:affects="*" type="string" default="")
-bbt:doc Snippet of javascript to run [after each reference generation]({{ ref . "exporting/scripting.md" }}).
+bbt:doc Snippet of javascript to run [after each entry generation]({{ ref . "exporting/scripting.md" }}).
 
 preference#pref-better-bibtex-strings(name="extensions.zotero.translators.better-bibtex.strings" bbt:affects="tex" type="string" default="")
 bbt:doc If you have externally maintained `@string` vars paste them here and they will be resolved for subsequent imports. These should be entered as `@string` declarations, such as `@string{IEEE_J_PWRE = "{IEEE} Transactions on Power Electronics"}`, not just the var name.
@@ -157,12 +162,12 @@ bbt:doc When you set this on, BBT will import bib files leaving any LaTeX comman
 preference(name="extensions.zotero.translators.better-bibtex.skipWords" bbt:affects="tex" type="string" default="a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum")
 bbt:doc list of words to skip in title when generating citation keys
 
-preference(name="extensions.zotero.translators.better-bibtex.verbatimFields" bbt:affects="" type="string" default="url,doi,file,ids,eprint,verba,verbb,verbc,groups")
+preference(name="extensions.zotero.translators.better-bibtex.verbatimFields" bbt:affects="" type="string" default="url,doi,file,ids,eprint,/^verb[a-z]$/,groups,/^citeulike-linkout-[0-9]+$/, /^bdsk-url-[0-9]+$/")
 bbt:doc list of fields to treat as verbatim during import. If you're importing e.g. Mendeley-generated BibTeX, which is out of spec in various ways, try removing `file` from this list before import.
 
 preference#pref-better-bibtex-qualityReport(name="extensions.zotero.translators.better-bibtex.qualityReport" bbt:affects="tex" type="bool" default="false")
 bbt:doc.
-  Generate quality reports for exported references. These show up only in BibTeX and BibLaTeX report formats and indicate things like missing required fields and
+  Generate quality reports for exported entries. These show up only in BibTeX and BibLaTeX report formats and indicate things like missing required fields and
   duplicate citation keys.
 
 preference(name="extensions.zotero.translators.better-bibtex.biblatexExtendedDateFormat" bbt:affects="biblatex" type="bool" default="true")
@@ -203,9 +208,9 @@ bbt:doc.
 
 preference(name="extensions.zotero.translators.better-bibtex.itemObserverDelay" bbt:affects="" type="int" default="5")
 bbt:doc.
-  I've had reports where Zotero notifies extensions that references have changed, but if BBT then actually
-  retrieves those same references, Zotero complains they "haven't been saved yet". Super. This preference sets
-  the number of microseconds BBT should wait after being notified before acting on the changed references.
+  I've had reports where Zotero notifies extensions that items have changed, but if BBT then actually
+  retrieves those same items, Zotero complains they "haven't been saved yet". Super. This preference sets
+  the number of microseconds BBT should wait after being notified before acting on the changed items.
 
 preference(name="extensions.zotero.translators.better-bibtex.autoPinDelay" bbt:affects="" type="int" default="0")
 bbt:doc When > 0, BBT will automatically pin the first citation keys it generates for an item after this many seconds.
@@ -218,6 +223,9 @@ bbt:doc Use BBTs importer instead of Zotero's importer
 
 preference(name="extensions.zotero.translators.better-bibtex.importExtra" bbt:affects="" type="bool" default="true")
 bbt:doc On import, place all bib(la)tex field Zotero doesn't have an existing field for in the Zotero `extra` field of the item
+
+preference(name="extensions.zotero.translators.better-bibtex.importNoteToExtra" bbt:affects="" type="string" default="")
+bbt:doc On import, import note-like fields in this comma-separated list to the `extra` field, unless the note has rich text.
 
 preference(name="extensions.zotero.translators.better-bibtex.importCitationKey" bbt:affects="" type="bool" default="true")
 bbt:doc On import, assign the existing citation key to the item being imported
@@ -294,29 +302,18 @@ bbt:doc.
   Any characters entered here will prefer a math-mode LaTeX-command counterpart over a math-mode,
   if a math-mode command is available. Only useful when `mapUnicode` is `conservative`.
 
-preference(name="extensions.zotero.translators.better-bibtex.newTranslatorsAskRestart" bbt:affects="" type="bool" default="true")
+preference(name="extensions.zotero.translators.better-bibtex.worker" bbt:affects="" type="bool" default="true")
 bbt:doc.
-  New translators installed in Zotero are not immediately usuable for drag-and-drop. If you want to use BBT for drag-and-drop
-  (e.g. to drag and drop citation keys or citations), you will be asked whether you want to restart after installation,
-  or whether you want to reinstall when it is more convenient to you. You will be asked this whenever the BBT translators update,
-  but you can disable this by checking "Do not ask again" in that dialog.
+  BBT can perform its exports in a separate thread, and should no
+  longer block Zotero's UI pretty much regardless of how large your
+  library is. It is possible to turn background exports off by
+  setting this value to `false` in the hidden preferences; you will get
+  the old (blocking) behavior back, but you can't complain about
+  Zotero being laggy during auto-exports; all Zotero exports are
+  blocking, and it's a minor miracle I got background exports to
+  work at all.
 
-preference#pref-better-bibtex-workers(name="extensions.zotero.translators.better-bibtex.workers" bbt:affects="" type="int" default="1")
-bbt:doc.
-  BBT can now perform its exports in a separate thread, and
-  should no longer block Zotero's UI pretty much regardless
-  of how large your library is. The default of 1 parallel
-  export should suit most needs, but if you have many
-  auto-exports set up, you may want to raise the maximum
-  parallel exports to prevent queueing of exports. It is
-  possible to turn background exports off by setting this
-  value to `0` in the hidden preferences; you will get the
-  old (blocking) behavior back, but you can't complain about
-  Zotero being laggy during auto-exports. All Zotero exports
-  are blocking, and it's a minor miracle I got background
-  exports to work at all.
-
-preference#pref-better-bibtex-caching(name="extensions.zotero.translators.better-bibtex.caching" bbt:affects="*" type="bool" default="true")
+preference#pref-better-bibtex-cache(name="extensions.zotero.translators.better-bibtex.cache" bbt:affects="*" type="bool" default="true")
 bbt:doc.
   Even though BBT exports happen in a separate thread, some
   work needs to be done before the background export can
@@ -330,6 +327,12 @@ bbt:doc.
 preference(name="extensions.zotero.translators.better-bibtex.separatorNames" bbt:affects="tex" type="string" default="and")
 bbt:doc.
   Separator between author names. You will need to add `--namesep='|'` to your biber calls.
+
+preference(name="extensions.zotero.translators.better-bibtex.charmap" bbt:affects="tex" type="string" default="")
+bbt:doc.
+  a JSON mapping from single character to raw LaTeX, to augment the default mapping; these will be applied when you export as ASCII. **DO NOT** edit this preferencedirectly,
+  but create a CSV (not semicolons) file named `charmap.csv` in the zotero data directory under the `better-bibtex` folder with columns `unicode` (the source character),
+  `text` (representation in LaTeX text mode, if any) and `math` (representation in LaTeX math mode, if any, without dollar signs).
 
 // documented in tooltip
 preference#pref-better-bibtex-retainCache(name="extensions.zotero.translators.better-bibtex.retainCache" bbt:affects="" type="bool" default="false")

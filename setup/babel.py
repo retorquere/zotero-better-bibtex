@@ -68,7 +68,7 @@ class MultiOrderedDict(OrderedDict):
 
 DB.execute('CREATE TABLE babel (tag NOT NULL, prio NOT NULL, rel NOT NULL, langid NOT NULL)')
 for path in sorted(Path('submodules/babel/locale').rglob('*.ini'), key=lambda p: p.name):
-  locale = RawConfigParser(dict_type=MultiOrderedDict, strict=False)
+  locale = RawConfigParser(dict_type=MultiOrderedDict, strict=False, allow_no_value=True)
   locale.read(str(path))
   locale = locale['identification']
 

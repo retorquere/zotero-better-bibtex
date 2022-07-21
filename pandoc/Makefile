@@ -11,7 +11,7 @@ count:
 bundle:
 ifeq ($(shell grep '^local pl =' *.lua), )
 	echo "print('zotero-live-citations $(shell git rev-parse --short HEAD)')" > $(DEPLOYED)
-	~/.luarocks/bin/amalg.lua -o $(BUNDLED) -s $(MAIN) lunajson lunajson.decoder lunajson.encoder lunajson.sax locator utils zotero
+	/usr/local/bin/amalg.lua -o $(BUNDLED) -s $(MAIN) lunajson lunajson.decoder lunajson.encoder lunajson.sax locator utils zotero
 	cat $(BUNDLED) >> $(DEPLOYED)
 	rm $(BUNDLED)
 else
@@ -19,10 +19,13 @@ else
 	@exit 1
 endif
 
+test-deployed:
+	@rm -f *.docx *.odt *.json
+	pandoc -s --lua-filter=$(DEPLOYED) -o paper$(TIMESTAMP).odt main.md
 test:
 	@rm -f *.docx *.odt *.json
 	#@pandoc -s --lua-filter=$(MAIN) -o paper$(TIMESTAMP).docx main.md
-	@pandoc -s --lua-filter=$(MAIN) -o paper$(TIMESTAMP).odt main.md
+	pandoc -s --lua-filter=$(MAIN) -o paper$(TIMESTAMP).odt main.md
 	pandoc -s --metadata=zotero_scannable_cite:true --lua-filter=$(MAIN) -o paper$(TIMESTAMP)-scannable-cite.odt main.md
 
 jurism:

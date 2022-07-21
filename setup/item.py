@@ -31,6 +31,8 @@ import tarfile
 import tempfile
 import zipfile
 import fnmatch
+import sqlite3
+from pygit2 import Repository
 
 root = os.path.join(os.path.dirname(__file__), '..')
 
@@ -54,18 +56,19 @@ class fetch(object):
     self.schema = os.path.join(SCHEMA.root, f'{client}.json')
 
     if client == 'zotero':
-      releases = [
-        ref['ref'].split('/')[-1]
-        for ref in
-        json.loads(readurl('https://api.github.com/repos/zotero/zotero/git/refs/tags'))
-      ]
+      # releases = [
+      #   ref['ref'].split('/')[-1]
+      #   for ref in
+      #   json.loads(readurl('https://api.github.com/repos/zotero/zotero/git/refs/tags'))
+      # ]
+      releases = []
       releases += [
         rel['version']
         for rel in
         json.loads(urlopen("https://www.zotero.org/download/client/manifests/release/updates-linux-x86_64.json").read().decode("utf-8"))
         if not rel['version'] in releases
       ]
-      releases = [rel for rel in releases if rel.startswith('5.')]
+      releases = [rel for rel in releases if int(rel.split('.')[0]) >= 5]
       releases = sorted(releases, key=lambda r: [int(n) for n in r.replace('m', '.').split('.')])
       self.update(
         client=client,
@@ -117,14 +120,14 @@ class fetch(object):
 
     current = releases[-1]
     if current not in hashes[client]:
-      ood = f'{current} not in f{client}.json'
+      ood = f'{current} not in {client}.json'
     elif not os.path.exists(self.schema):
       ood = f'{self.schema} does not exist'
     elif not os.path.exists(itemtypes):
       ood = f'{itemtypes} does not exist'
     else:
       return
-    if 'CI' in os.environ:
+    if 'CI' in os.environ or Repository('.').head.shorthand != 'master':
       raise ValueError(f'{self.schema} out of date: {ood}')
 
     print('  updating', os.path.basename(self.schema))
@@ -162,6 +165,12 @@ class fetch(object):
                 json.dump(client_schema, f, indent='  ')
               hashes[client][release] = self.hash(client_schema)
             print('      release', release, 'schema', client_schema['version'], 'hash', hashes[client][release])
+
+            if (client == 'zotero'):
+              with jar.open('resource/schema/dateFormats.json') as f:
+                dateFormats = json.load(f)
+              with open(os.path.join('schema', 'dateFormats.json'), 'w') as f:
+                json.dump(dateFormats, f, indent='  ')
           except KeyError:
             hashes[client][release] = None
             print('      release', release, 'does not have a bundled schema')
@@ -518,6 +527,8 @@ with fetch('zotero') as z, fetch('jurism') as j:
         else:
           min_version[client] = rel
 
+    print('******** UGLY HACK FOR #2099 *********')
+    min_version={ client: '5.2.7182818284590452' if ver == '6.0' else ver for client, ver in min_version.items() }
     with open(os.path.join(root, 'schema', 'supported.json'), 'w') as f:
       json.dump(min_version, f)
 
@@ -568,6 +579,113 @@ with open(os.path.join(ITEMS, 'items.ts'), 'w') as f:
       elif valid.field[itemType][field] != client:
         valid.field[itemType][field] = 'true'
 
+  jsonschema = sqlite3.connect(':memory:')
+  jsonschema.execute('CREATE TABLE valid (client, itemType, field)')
+  for itemType, fields in valid.field.items():
+    for field, validfor in fields.items():
+      validfor = ['zotero', 'jurism'] if validfor == 'true' else [validfor]
+      for client in validfor:
+        jsonschema.execute('INSERT INTO valid (client, itemType, field) VALUES (?, ?, ?)', (client, itemType, field))
+
+  for client in ['zotero', 'jurism']:
+    schema = {
+      'type': 'object',
+      'discriminator': { 'propertyName': 'itemType' },
+      'required': ['itemType'],
+      'oneOf': [],
+      '$defs': {
+        'attachments': {
+          'type': 'array',
+          'items': {
+            'type': 'object',
+            'additionalProperties': False,
+            'properties': {
+              'path': { 'type': 'string' },
+              'accessDate': { 'type': 'string' },
+              'contentType': { 'type': 'string' },
+              'itemType': { 'type': 'string' },
+              'mimeType': { 'type': 'string' },
+              'key': { 'type': 'string' },
+              'linkMode': { 'type': 'string' },
+              'title': { 'type': 'string' },
+              'uri': { 'type': 'string' },
+              'url': { 'type': 'string' },
+            }
+          }
+        },
+
+        'creators': {
+          'type': 'array',
+          'items': {
+            'type': 'object',
+            'additionalProperties': False,
+            'properties': {
+              'creatorType': { 'type': 'string' },
+              'firstName': { 'type': 'string' },
+              'lastName': { 'type': 'string' },
+              'fieldMode': { 'type': 'number' },
+              'multi': { 'type': 'object' },
+            }
+          }
+        },
+
+        'notes': {
+          'type': 'array',
+          'items': { 'type': 'string' },
+        },
+
+        'tags': {
+          'type': 'array',
+          'items': {
+            'oneOf': [
+              {
+                'type': 'object',
+                'additionalProperties': False,
+                'properties': {
+                  'tag': { 'type': 'string' },
+                  'type': { 'type': 'number' },
+                },
+                'required': ['tag'],
+              },
+              { 'type': 'string' }
+            ],
+          },
+        },
+
+        'edition': {
+          'oneOf': [
+            { 'type': 'string' },
+            { 'type': 'number' },
+          ]
+        },
+
+        'multi': { 'type': 'object' },
+        'seeAlso': { 'type': 'array' },
+
+      }
+    }
+    for itemType, in jsonschema.execute('SELECT DISTINCT itemType FROM valid WHERE client = ? ORDER BY itemType', (client,)):
+      schema['oneOf'].append({
+        'type': 'object',
+        'additionalProperties': False,
+        'properties': {
+           'itemType': { 'const': itemType },
+         },
+      })
+      for field, in jsonschema.execute('SELECT field FROM valid WHERE client = ? AND itemType = ? ORDER BY field', (client, itemType)):
+        if field == 'itemType': continue
+        assert field not in schema['oneOf'][-1]['properties'], (itemType, field)
+
+        if field in schema['$defs']:
+          schema['oneOf'][-1]['properties'][field] = { '$ref': '#/$defs/' + field }
+        elif field in ['itemID']:
+          schema['oneOf'][-1]['properties'][field] = { 'type': 'number' }
+        else:
+          schema['oneOf'][-1]['properties'][field] = { 'type': 'string' }
+
+    with open(os.path.join(ITEMS, client + '.json'), 'w') as v:
+      json.dump(schema, v, indent='  ')
+
   # map aliases to base names
   DG = nx.DiGraph()
   for field in jsonpath.parse('*.itemTypes.*.fields.*').find(SCHEMA):
@@ -615,7 +733,7 @@ with open(os.path.join(ITEMS, 'items.ts'), 'w') as f:
         assert labels[field][client] == label, (client, field, labels[field][client], label)
 
   try:
-    print(template('items/items.ts.mako').render(names=names, labels=labels, valid=valid, aliases=aliases).strip(), file=f)
+    print(template('items/items.ts.mako').render(names=names, labels=labels, valid=valid, aliases=aliases, schemas=SCHEMA).strip(), file=f)
   except:
     print(exceptions.text_error_template().render())
   #stringizer = lambda x: DG.nodes[x]['name'] if x in DG.nodes else x

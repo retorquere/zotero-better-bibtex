@@ -34,7 +34,7 @@ it into Zotero using [installation instructions]({{< ref "/installation" >}}) to
 
 There isn't a straightforward one-to-one mapping for all Zotero to Bib(La)TeX
 fields. For most I can make reasonable choices, but there are some things where
-Better BibTeX takes a little more liberties with your references in order to get
+Better BibTeX takes a little more liberties with your items in order to get
 sensible output.
 
 Title fields in particular are a total mess. Zotero [recommends having your
@@ -43,16 +43,16 @@ case](https://zotero-manual.github.io/adding-items/#sentence-and-title-case)
 because that's what the embedded citation processor expects, but of course,
 BibLaTeX expects your titles to be in Title Case... *but only if they're in
 English*. Nice. In order to translate the Zotero recommendation into Bib(La)TeX
-best practice, BBT will title-case the titles of English references. English
-references, as far as BBT is concerned, are those references that have their
+best practice, BBT will title-case the titles of English items. English
+items, as far as BBT is concerned, are those items that have their
 language explicitly set to an English language (`american` counts as English for
-example), and those references that have no explicit language set. To do this,
+example), and those items that have no explicit language set. To do this,
 BBT uses the same title-caser that Zotero uses to produce title-cased styles
 such as Chicago.
 
 The titles so modified will then pass through your Bib(La)TeX processor, which
 will in turn try to lowercase or initial-caps some words and not others -- for
-English references. But then sometimes, you want words that have capitals to
+English items. But then sometimes, you want words that have capitals to
 keep. BBT assumes that if a word has at least one capital letter (subject to
 some rather complex exceptions) you meant it to be there, and you want BibTeX to
 leave it alone no matter what. To do that, it wraps those (strings of) words in
@@ -106,7 +106,7 @@ Did you know that
     recapitalized by Bib(La)TeX), but `{\emph{Homo sapiens}}` *is not*
     case-protected so it *will* be recapitalized. So to get predictable
     behavior, this is written out as `{{\emph{Homo sapiens}}}`.
-*   casing behavior over the *whole* reference field depends on [whether there's
+*   casing behavior over the *whole* entry field depends on [whether there's
     a slash-command at the first
     position](https://github.com/retorquere/zotero-better-bibtex/issues/541#issuecomment-240156274)
     of the title?
@@ -122,14 +122,14 @@ now ignores exactly that pattern (see
 [here](https://tex.stackexchange.com/a/233976/27603)).
 
 The double-bracing is the only unambiguous rule I could construct that
-consistently gets the rendered reference right (so far).
+consistently gets the rendered entries right (so far).
 
 Bib(La)TeX provides a never-ending stream of edge cases, which BBT tries to
 decide algorithmically. I try to keep the resulting file as pretty as I can (I'm
 sensitive to the aesthetics myself), but the target is best described as "given
 reasonable input, generate well-rendering output", and
 reasonable-to-well-rendering in the BBT case will have to include "follows
-Zotero recommendations for storing references" and "prefer intent-preserving
+Zotero recommendations for storing items" and "prefer intent-preserving
 LaTeX over pretty-looking LaTeX".
 
 Bib(La)TeX be crazy.

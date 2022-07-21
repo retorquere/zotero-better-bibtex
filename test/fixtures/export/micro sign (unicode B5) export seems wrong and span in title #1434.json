@@ -9,8 +9,7 @@
     "preferences": {
       "asciiBibLaTeX": true,
       "citekeyFormat": "[auth]_[title]_[year]",
-      "itemObserverDelay": 100,
-      "workers": 4
+      "itemObserverDelay": 100
     }
   },
   "items": [

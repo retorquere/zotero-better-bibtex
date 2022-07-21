@@ -1,0 +1,328 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "localeDateOrder": "mdy",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "biblatexExtendedNameFormat": true,
+      "bibtexURL": "url",
+      "extraMergeCSL": true,
+      "extraMergeCitekeys": true,
+      "extraMergeTeX": true,
+      "keyConflictPolicy": "change",
+      "skipFields": "file, urldate"
+    }
+  },
+  "items": [
+    {
+      "abstractNote": "This document describes version 0.10 of TorchAudio: building blocks for machine learning applications in the audio and speech processing domain. The objective of TorchAudio is to accelerate the development and deployment of machine learning applications for researchers and engineers by providing off-the-shelf building blocks. The building blocks are designed to be GPU-compatible, automatically differentiable, and production-ready. TorchAudio can be easily installed from Python Package Index repository and the source code is publicly available under a BSD-2-Clause License (as of September 2021) at https://github.com/pytorch/audio. In this document, we provide an overview of the design principles, functionalities, and benchmarks of TorchAudio. We also benchmark our implementation of several audio and speech operations and models. We verify through the benchmarks that our implementations of various operations and models are valid and perform similarly to other publicly available implementations.",
+      "accessDate": "2022-03-03T21:41:24Z",
+      "attachments": [],
+      "citationKey": "yangTorchAudioBuildingBlocks2022",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Yao-Yuan",
+          "lastName": "Yang"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Moto",
+          "lastName": "Hira"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Zhaoheng",
+          "lastName": "Ni"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Anjali",
+          "lastName": "Chourdia"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Artyom",
+          "lastName": "Astafurov"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Caroline",
+          "lastName": "Chen"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Ching-Feng",
+          "lastName": "Yeh"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Christian",
+          "lastName": "Puhrsch"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "David",
+          "lastName": "Pollack"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Dmitriy",
+          "lastName": "Genzel"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Donny",
+          "lastName": "Greenberg"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Edward Z.",
+          "lastName": "Yang"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Jason",
+          "lastName": "Lian"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Jay",
+          "lastName": "Mahadeokar"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Jeff",
+          "lastName": "Hwang"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Ji",
+          "lastName": "Chen"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Peter",
+          "lastName": "Goldsborough"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Prabhat",
+          "lastName": "Roy"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Sean",
+          "lastName": "Narenthiran"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Shinji",
+          "lastName": "Watanabe"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Soumith",
+          "lastName": "Chintala"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Vincent",
+          "lastName": "Quenneville-B\u00e9lair"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Yangyang",
+          "lastName": "Shi"
+        }
+      ],
+      "date": "2022-02-16",
+      "extra": [
+        "arXiv: 2110.15018",
+        "tex.ids= yang2021torchaudio"
+      ],
+      "itemID": 1,
+      "itemType": "journalArticle",
+      "libraryCatalog": "arXiv.org",
+      "notes": [
+        "Comment: Accepted by ICASSP 2022"
+      ],
+      "publicationTitle": "arXiv:2110.15018 [cs, eess]",
+      "shortTitle": "TorchAudio",
+      "tags": [
+        {
+          "tag": "Article"
+        },
+        {
+          "tag": "Computer Science - Sound",
+          "type": 1
+        },
+        {
+          "tag": "Electrical Engineering and Systems Science - Audio and Speech Processing",
+          "type": 1
+        }
+      ],
+      "title": "TorchAudio: Building Blocks for Audio and Speech Processing",
+      "url": "http://arxiv.org/abs/2110.15018"
+    },
+    {
+      "abstractNote": "This paper introduces WaveNet, a deep neural network for generating raw audio waveforms. The model is fully probabilistic and autoregressive, with the predictive distribution for each audio sample conditioned on all previous ones; nonetheless we show that it can be efficiently trained on data with tens of thousands of samples per second of audio. When applied to text-to-speech, it yields state-of-the-art performance, with human listeners rating it as significantly more natural sounding than the best parametric and concatenative systems for both English and Mandarin. A single WaveNet can capture the characteristics of many different speakers with equal fidelity, and can switch between them by conditioning on the speaker identity. When trained to model music, we find that it generates novel and often highly realistic musical fragments. We also show that it can be employed as a discriminative model, returning promising results for phoneme recognition.",
+      "accessDate": "2022-02-27T17:58:02Z",
+      "attachments": [],
+      "citationKey": "vandenoordWaveNetGenerativeModel2016",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Aaron",
+          "lastName": "van den Oord"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Sander",
+          "lastName": "Dieleman"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Heiga",
+          "lastName": "Zen"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Karen",
+          "lastName": "Simonyan"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Oriol",
+          "lastName": "Vinyals"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Alex",
+          "lastName": "Graves"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Nal",
+          "lastName": "Kalchbrenner"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Andrew",
+          "lastName": "Senior"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Koray",
+          "lastName": "Kavukcuoglu"
+        }
+      ],
+      "date": "2016-09-19",
+      "extra": [
+        "arXiv: 1609.03499",
+        "Citation Key: vandenoordWaveNetGenerativeModel2016"
+      ],
+      "itemID": 2,
+      "itemType": "journalArticle",
+      "language": "en",
+      "libraryCatalog": "arXiv.org",
+      "publicationTitle": "arXiv:1609.03499 [cs]",
+      "shortTitle": "WaveNet",
+      "tags": [
+        {
+          "tag": "Article"
+        },
+        {
+          "tag": "Computer Science - Machine Learning",
+          "type": 1
+        },
+        {
+          "tag": "Computer Science - Sound",
+          "type": 1
+        }
+      ],
+      "title": "WaveNet: A Generative Model for Raw Audio",
+      "url": "http://arxiv.org/abs/1609.03499"
+    },
+    {
+      "abstractNote": "This paper introduces WaveNet, a deep neural network for generating raw audio waveforms. The model is fully probabilistic and autoregressive, with the predictive distribution for each audio sample conditioned on all previous ones; nonetheless we show that it can be efficiently trained on data with tens of thousands of samples per second of audio. When applied to text-to-speech, it yields state-of-the-art performance, with human listeners rating it as significantly more natural sounding than the best parametric and concatenative systems for both English and Mandarin. A single WaveNet can capture the characteristics of many different speakers with equal fidelity, and can switch between them by conditioning on the speaker identity. When trained to model music, we find that it generates novel and often highly realistic musical fragments. We also show that it can be employed as a discriminative model, returning promising results for phoneme recognition.",
+      "accessDate": "2022-02-27T17:58:02Z",
+      "citationKey": "vandenoordDummyWaveNetGenerative2016",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Aaron",
+          "lastName": "van den Oord"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Sander",
+          "lastName": "Dieleman"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Heiga",
+          "lastName": "Zen"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Karen",
+          "lastName": "Simonyan"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Oriol",
+          "lastName": "Vinyals"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Alex",
+          "lastName": "Graves"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Nal",
+          "lastName": "Kalchbrenner"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Andrew",
+          "lastName": "Senior"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Koray",
+          "lastName": "Kavukcuoglu"
+        }
+      ],
+      "date": "2016-09-19",
+      "extra": [
+        "arXiv: 1609.03499"
+      ],
+      "itemID": 3,
+      "itemType": "journalArticle",
+      "language": "en",
+      "libraryCatalog": "arXiv.org",
+      "publicationTitle": "dummy",
+      "shortTitle": "WaveNet",
+      "tags": [
+        {
+          "tag": "Article"
+        },
+        {
+          "tag": "Computer Science - Machine Learning",
+          "type": 1
+        },
+        {
+          "tag": "Computer Science - Sound",
+          "type": 1
+        }
+      ],
+      "title": "Dummy - WaveNet: A Generative Model for Raw Audio",
+      "url": "http://arxiv.org/abs/1609.03499"
+    }
+  ]
+}

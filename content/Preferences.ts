@@ -6,13 +6,16 @@ import { log } from './logger'
 import { patch as $patch$ } from './monkey-patch'
 import { DB as Cache } from './db/cache'
 
-import { Preference } from '../gen/preferences'
-import { options as preferenceOptions } from '../gen/preferences/meta'
+import { Preference } from './prefs'
+import { options as preferenceOptions, defaults as preferenceDefaults } from '../gen/preferences/meta'
 import { Formatter } from './key-manager/formatter'
 import { AutoExport } from './auto-export'
 import { Translators } from './translators'
 import { client } from './client'
 import * as l10n from './l10n'
+import { Events } from './events'
+import { pick } from './file-picker'
+import { flash } from './flash'
 
 const namespace = 'http://retorque.re/zotero-better-bibtex/'
 
@@ -30,6 +33,12 @@ class AutoExportPane {
     }
 
     this.refresh()
+
+    Events.on('export-progress', (percent: number, _translator, ae: number) => {
+      if (percent >= 100 && typeof ae === 'number') {
+        this.refreshCacheRate(ae).catch(err => log.error('failed to refresh cacherate for completed auto-export', ae, err))
+      }
+    })
   }
 
   public refresh() {
@@ -107,7 +116,7 @@ class AutoExportPane {
             break
 
           case 'status':
-            if (ae.status === 'running' && Preference.workers && typeof progress === 'number') {
+            if (ae.status === 'running' && Preference.worker && typeof progress === 'number') {
               (node as XUL.Textbox).value = progress < 0 ? `${this.label?.preparing || 'preparing'} ${-progress}%` : `${progress}%`
             }
             else {
@@ -172,17 +181,26 @@ class AutoExportPane {
     this.refresh()
   }
 
-  public async refreshCacheRate(node) {
-    try {
-      const $loki = parseInt(node.getAttributeNS(namespace, 'ae-id'))
-      this.cacherate[$loki] = await AutoExport.cached($loki)
-      log.debug('cacherate:', this.cacherate)
-      this.refresh()
+  public async refreshCacheRate(ae: Element | number) {
+    log.debug('getting cacherate for', typeof ae)
+    if (typeof ae !== 'number') ae = parseInt(ae.getAttributeNS(namespace, 'ae-id'))
+    log.debug('getting cacherate for', typeof ae)
+
+    if (typeof ae !== 'number') {
+      log.debug('refresh cacherate on unknown ae?', typeof ae)
     }
-    catch (err) {
-      log.error('could not refresh cacherate:', err)
-      this.cacherate = {}
+    else {
+      try {
+        log.debug('getting cacherate for', { ae })
+        this.cacherate[ae] = await AutoExport.cached(ae)
+        log.debug('refresh cacherate:', ae, '=', this.cacherate[ae])
+      }
+      catch (err) {
+        log.error('could not refresh cacherate for', ae, err)
+        delete this.cacherate[ae]
+      }
     }
+    this.refresh()
   }
 
   public edit(node) {
@@ -252,6 +270,50 @@ export class PrefPane {
   private globals: Record<string, any>
   // private prefwindow: HTMLElement
 
+  public async importPrefs(): Promise<void> {
+    const preferences: { path: string, contents?: string, parsed?: any } = {
+      path: await pick(Zotero.getString('fileInterface.import'), 'open', [['BBT JSON file', '*.json']]),
+    }
+    if (!preferences.path) return
+
+    try {
+      preferences.contents = Zotero.File.getContents(preferences.path)
+    }
+    catch (err) {
+      flash(`could not read contents of ${preferences.path}`)
+      return
+    }
+
+    try {
+      preferences.parsed = JSON.parse(preferences.contents)
+    }
+    catch (err) {
+      flash(`could not parse contents of ${preferences.path}`)
+      return
+    }
+
+    if (typeof preferences.parsed?.config?.preferences !== 'object') {
+      flash(`no preferences in ${preferences.path}`)
+      return
+    }
+
+    try {
+      log.debug('importing', preferences.path)
+      for (const [pref, value] of Object.entries(preferences.parsed.config.preferences)) {
+        if (typeof value === 'undefined' || typeof value !== typeof preferenceDefaults[pref]) {
+          flash(`Invalid ${typeof value} value for ${pref}, expected ${preferenceDefaults[pref]}`)
+        }
+        else {
+          Preference[pref] = value
+          flash(`${pref} set to ${JSON.stringify(pref)}`)
+        }
+      }
+    }
+    catch (err) {
+      flash(err.message)
+    }
+  }
+
   public getCitekeyFormat(target = null): void {
     if (target) this.keyformat = target
     this.keyformat.value = Preference.citekeyFormat
@@ -261,29 +323,44 @@ export class PrefPane {
     if (target) this.keyformat = target
     if (!this.keyformat || Zotero.BetterBibTeX.ready.isPending()) return // itemTypes not available yet
 
-    let msg
+    let msg = '', color = '', pattern = (this.keyformat.value as string)
+
+    if (pattern.startsWith('[')) {
+      try {
+        pattern = Zotero.BetterBibTeX.KeyManager.convertLegacy(pattern)
+        msg = 'legacy citekey formula format'
+        color = 'yellow'
+      }
+      catch (err) {
+        msg = err.message
+        color = 'orange'
+      }
+    }
     try {
-      Formatter.parsePattern(this.keyformat.value)
-      msg = ''
+      Formatter.parsePattern(pattern)
       if (this.keyformat.value) this.saveCitekeyFormat(target)
     }
     catch (err) {
       msg = err.message
+      color = 'DarkOrange'
       if (err.location) msg += ` at ${(err.location.start.offset as number) + 1}`
       log.error('prefs: key format error:', msg)
     }
 
-    if (!this.keyformat.value && !msg) msg = 'pattern is empty'
+    if (!pattern && !msg) msg = 'pattern is empty'
 
-    this.keyformat.setAttribute('style', (msg ? '-moz-appearance: none !important; background-color: DarkOrange' : ''))
+    this.keyformat.setAttribute('style', (msg ? `-moz-appearance: none !important; background-color: ${color}` : ''))
     this.keyformat.setAttribute('tooltiptext', msg)
   }
 
   public saveCitekeyFormat(target = null): void {
     if (target) this.keyformat = target
     try {
-      Formatter.parsePattern(this.keyformat.value)
-      Preference.citekeyFormat = this.keyformat.value
+      let pattern = this.keyformat.value as string
+      if (pattern.startsWith('[')) pattern = Zotero.BetterBibTeX.KeyManager.convertLegacy(pattern)
+
+      Formatter.parsePattern(pattern)
+      Preference.citekeyFormat = pattern
     }
     catch (error) {
       // restore previous value
@@ -406,7 +483,7 @@ export class PrefPane {
     if (this.globals.document.location.hash === '#better-bibtex') {
       // runs into the 'TypeError: aId is undefined' problem for some reason unless I delay the activation of the pane
       // eslint-disable-next-line no-magic-numbers, @typescript-eslint/no-unsafe-return
-      Zotero.setTimeout(() => this.globals.document.getElementById('zotero-prefs').showPane(this.globals.document.getElementById('zotero-prefpane-better-bibtex')), 500)
+      setTimeout(() => this.globals.document.getElementById('zotero-prefs').showPane(this.globals.document.getElementById('zotero-prefpane-better-bibtex')), 500)
     }
 
     // no other way that I know of to know that I've just been selected
@@ -510,7 +587,7 @@ export class PrefPane {
         if (selectedIndex === -1) selectedIndex = 0
         this.styleChanged(selectedIndex)
 
-        Zotero.setTimeout(() => { stylebox.ensureIndexIsVisible(selectedIndex); stylebox.selectedIndex = selectedIndex }, 0)
+        setTimeout(() => { stylebox.ensureIndexIsVisible(selectedIndex); stylebox.selectedIndex = selectedIndex }, 0)
       })
     }
 
@@ -523,12 +600,12 @@ export class PrefPane {
 
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
     for (const state of (Array.from(this.globals.document.getElementsByClassName('better-bibtex-preferences-worker-state')) as XUL.Textbox[])) {
-      state.value = l10n.localize(`BetterBibTeX.workers.${Preference.workers ? 'status' : 'disabled'}`, {
+      state.value = l10n.localize(`BetterBibTeX.workers.${Preference.worker ? 'status' : 'disabled'}`, {
         total: Translators.workers.total,
-        workers: Preference.workers,
+        workers: Preference.worker,
         running: Translators.workers.running.size,
       })
-      state.classList[Preference.workers ? 'remove' : 'add']('textbox-emph')
+      state.classList[Preference.worker ? 'remove' : 'add']('textbox-emph')
     }
 
     if (this.autoexport) this.autoexport.refresh()

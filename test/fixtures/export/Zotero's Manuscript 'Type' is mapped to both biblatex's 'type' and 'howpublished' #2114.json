@@ -1,0 +1,51 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "localeDateOrder": "dmy",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "DOIandURL": "doi",
+      "autoAbbrev": true,
+      "automaticTags": false,
+      "baseAttachmentPath": "/home/chayanin/Drive/Books",
+      "biblatexExtendedNameFormat": true,
+      "biblatexExtractEprint": false,
+      "citekeyFormat": "[auth:lower][year][veryshorttitle:lower]",
+      "extraMergeCSL": true,
+      "extraMergeCitekeys": true,
+      "extraMergeTeX": true,
+      "postscript": "if (Translator.BetterTeX) {\n   if (reference.has.keywords) delete reference.has.keywords\n  if (reference.has.jurisdiction) {\n    reference.has.jurisdiction.name = 'keywords'\n  }\n}",
+      "skipFields": "abstract,file,issn,annotation",
+      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc"
+    }
+  },
+  "items": [
+    {
+      "abstractNote": "We study a platform that sells productive inputs (such as e-commerce and distribution services) to a fringe of producers in an upstream market, while also selling its own output in the corresponding downstream market. The platform faces a tradeo\ufb00: any output that it sells downstream increases competition with the fringe of producers and lowers the downstream price, which in turn reduces demand for the platform\u2019s productive inputs and decreases upstream revenue. Adopting a mechanism design approach, we characterize the optimal menu of contracts the platform o\ufb00ers in the upstream market. These contracts involve price discrimination in the form of nonlinear pricing and quantity discounts. If the platform is a monopoly in the upstream market, then we show that the tradeo\ufb00 always resolves in favor of consumers and at the expense of producers. However, if the platform faces competition in the upstream market, then it has an incentive to undermine this competition by engaging in activities, such as \u201ckiller\u201d acquisitions and exclusive dealing, that harm both consumers and producers.",
+      "attachments": [],
+      "citationKey": "kang2022contracting",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Zi Yang",
+          "lastName": "Kang"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Ellen V",
+          "lastName": "Muir"
+        }
+      ],
+      "date": "2022",
+      "itemID": 1,
+      "itemType": "manuscript",
+      "language": "en",
+      "title": "Contracting and vertical control by a dominant platform",
+      "type": "Working Paper",
+      "url": "https://web.stanford.edu/~evmuir/Muir-JMP.pdf"
+    }
+  ]
+}

@@ -35,7 +35,7 @@
         <tab label="&better-bibtex.ErrorReport.context;"/>
         <tab label="&better-bibtex.ErrorReport.errors;"/>
         <tab label="&better-bibtex.ErrorReport.debug;"/>
-        <tab label="&better-bibtex.ErrorReport.references;" id="better-bibtex-error-tab-references"/>
+        <tab label="&better-bibtex.ErrorReport.items;" id="better-bibtex-error-tab-items"/>
       </tabs>
 
       <tabpanels>
@@ -49,7 +49,7 @@
           <textbox id="better-bibtex-error-debug" class="plain" readonly="true" multiline="true" flex="1" style="min-height: 8em;"/>
         </tabpanel>
         <tabpanel orient="vertical">
-          <textbox id="better-bibtex-error-references" class="plain" readonly="true" multiline="true" flex="1" style="min-height: 8em;"/>
+          <textbox id="better-bibtex-error-items" class="plain" readonly="true" multiline="true" flex="1" style="min-height: 8em;"/>
         </tabpanel>
       </tabpanels>
     </tabbox>
@@ -89,6 +89,16 @@
       }
       catch (err) {
         Zotero.debug('failed to load ErrorReport' + err.message)
+      }
+    })
+    window.addEventListener('unload', async function() {
+      try {
+        Zotero.debug('unloading ErrorReport')
+        await Zotero.BetterBibTeX.ErrorReport.unload()
+        Zotero.debug('unloaded ErrorReport')
+      }
+      catch (err) {
+        Zotero.debug('failed to unload ErrorReport' + err.message)
       }
     })
   </script>

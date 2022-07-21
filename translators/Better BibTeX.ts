@@ -13,7 +13,7 @@ import wordsToNumbers from 'words-to-numbers'
 import { Translator } from './lib/translator'
 export { Translator }
 
-import { Reference } from './bibtex/reference'
+import { Entry } from './bibtex/entry'
 import { Exporter } from './bibtex/exporter'
 import * as escape from '../content/escape'
 
@@ -23,7 +23,7 @@ import { arXiv } from '../content/arXiv'
 
 import { babelLanguage } from '../content/text'
 
-Reference.prototype.caseConversion = {
+Entry.prototype.caseConversion = {
   title: true,
   series: true,
   shorttitle: true,
@@ -36,7 +36,7 @@ Reference.prototype.caseConversion = {
   eventtitle: true,
 }
 
-Reference.prototype.fieldEncoding = {
+Entry.prototype.fieldEncoding = {
   groups: 'verbatim', // blegh jabref field
   url: 'verbatim',
   doi: 'verbatim',
@@ -103,11 +103,9 @@ const lint: Record<string, {required: string[], optional: string[]}> = {
 }
 lint.conference = lint.inproceedings
 
-Reference.prototype.lint = function(_explanation) {
-  const type = lint[this.referencetype.toLowerCase()]
+Entry.prototype.lint = function(_explanation) {
+  const type = lint[this.entrytype.toLowerCase()]
   if (!type) return
-
-  log.debug('lint:', type)
 
   // let fields = Object.keys(this.has)
   const warnings: string[] = []
@@ -128,12 +126,11 @@ Reference.prototype.lint = function(_explanation) {
     if (!type.optional.find(allowed => allowed.split('/').includes(field))) warnings.push(`Unexpected field '${field}'`)
   }
   */
-  log.debug('lint:', warnings)
 
   return warnings
 }
 
-Reference.prototype.addCreators = function() {
+Entry.prototype.addCreators = function() {
   if (!this.item.creators || !this.item.creators.length) return
 
   // split creators into subcategories
@@ -172,7 +169,7 @@ Reference.prototype.addCreators = function() {
   this.add({ name: 'collaborator', value: collaborators, enc: 'creators' })
 }
 
-Reference.prototype.typeMap = {
+Entry.prototype.typeMap = {
   csl: {
     article               : 'article',
     'article-journal'     : 'article',
@@ -252,16 +249,16 @@ const months = [ 'jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 
 
 export function doExport(): void {
   Translator.init('export')
-  Reference.installPostscript()
+  Entry.installPostscript()
   Exporter.prepare_strings()
 
   // Zotero.write(`\n% ${Translator.header.label}\n`)
   Zotero.write('\n')
 
   for (const item of Exporter.items) {
-    const ref = new Reference(item)
-    if (item.itemType === 'report' && item.type?.toLowerCase().includes('manual')) ref.referencetype = 'manual'
-    if (['zotero.bookSection', 'csl.chapter', 'tex.chapter'].includes(ref.referencetype_source) && ref.hasCreator('bookAuthor')) ref.referencetype = 'inbook'
+    const ref = new Entry(item)
+    if (item.itemType === 'report' && item.type?.toLowerCase().includes('manual')) ref.entrytype = 'manual'
+    if (['zotero.bookSection', 'csl.chapter', 'tex.chapter'].includes(ref.entrytype_source) && ref.hasCreator('bookAuthor')) ref.entrytype = 'inbook'
 
     ref.add({name: 'address', value: item.place})
     ref.add({name: 'chapter', value: item.section})
@@ -276,15 +273,17 @@ export function doExport(): void {
     ref.add({name: 'shorttitle', value: item.shortTitle})
     ref.add({name: 'abstract', value: item.abstractNote?.replace(/\n+/g, ' ')})
     ref.add({name: 'nationality', value: item.country})
-    ref.add({name: 'langid', value: babelLanguage(item.language) }) // help explain why bracing is weird on bibtex
     ref.add({name: 'assignee', value: item.assignee})
+
+    if (['langid', 'both'].includes(Translator.preferences.language)) ref.add({name: 'langid', value: babelLanguage(item.language) })
+    if (['language', 'both'].includes(Translator.preferences.language)) ref.add({name: 'language', value: item.language })
 
     // this needs to be order volume - number for #1475
     ref.add({name: 'volume', value: ref.normalizeDashes(item.volume) })
-    if (!['book', 'inbook', 'incollection', 'proceedings', 'inproceedings'].includes(ref.referencetype) || !ref.has.volume) ref.add({ name: 'number', value: item.number || item.issue || item.seriesNumber })
+    if (!['book', 'inbook', 'incollection', 'proceedings', 'inproceedings'].includes(ref.entrytype) || !ref.has.volume) ref.add({ name: 'number', value: item.number || item.issue || item.seriesNumber })
     ref.add({ name: 'urldate', value: item.accessDate && item.accessDate.replace(/\s*T?\d+:\d+:\d+.*/, '') })
 
-    if (['zotero.bookSection', 'zotero.conferencePaper', 'tex.chapter', 'csl.chapter'].includes(ref.referencetype_source)) {
+    if (['zotero.bookSection', 'zotero.conferencePaper', 'tex.chapter', 'csl.chapter'].includes(ref.entrytype_source)) {
       ref.add({ name: 'booktitle', value: item.publicationTitle || item.conferenceName, bibtexStrings: true })
 
     }
@@ -297,7 +296,7 @@ export function doExport(): void {
 
     }
 
-    let reftype = ref.referencetype_source.split('.')[1]
+    let reftype = ref.entrytype_source.split('.')[1]
     if (reftype.endsWith('thesis')) reftype = 'thesis' // # 1965
     switch (reftype) {
       case 'thesis':
@@ -328,26 +327,26 @@ export function doExport(): void {
 
         case 'note':
         case 'note-url-ish':
-          urlfield = ref.add({ name: (['misc', 'booklet'].includes(ref.referencetype) && !ref.has.howpublished ? 'howpublished' : 'note'), value: item.url || item.extraFields.kv.url, enc: 'url' })
+          urlfield = ref.add({ name: (['misc', 'booklet'].includes(ref.entrytype) && !ref.has.howpublished ? 'howpublished' : 'note'), value: item.url || item.extraFields.kv.url, enc: 'url' })
           break
 
         default:
-          if (['csl.webpage', 'zotero.webpage', 'csl.post', 'csl.post-weblog'].includes(ref.referencetype_source)) urlfield = ref.add({ name: 'howpublished', value: item.url || item.extraFields.kv.url })
+          if (['csl.webpage', 'zotero.webpage', 'csl.post', 'csl.post-weblog'].includes(ref.entrytype_source)) urlfield = ref.add({ name: 'howpublished', value: item.url || item.extraFields.kv.url })
           break
       }
     }
     if (Translator.preferences.DOIandURL === 'both' || !urlfield) ref.add({ name: 'doi', value: (doi || '').replace(/^https?:\/\/doi.org\//i, '') })
 
-    if (ref.referencetype_source.split('.')[1] === 'thesis') {
+    if (ref.entrytype_source.split('.')[1] === 'thesis') {
       const thesistype = ref.thesistype(item.type, 'phdthesis', 'mastersthesis')
       if (thesistype) {
-        ref.referencetype = thesistype
+        ref.entrytype = thesistype
         ref.remove('type')
       }
     }
 
     // #1471 and http://ctan.cs.uu.nl/biblio/bibtex/base/btxdoc.pdf: organization The organization that sponsors a conference or that publishes a manual.
-    if (ref.referencetype === 'inproceedings') {
+    if (ref.entrytype === 'inproceedings') {
       const sponsors = []
       item.creators = item.creators.filter(creator => {
         if (creator.creatorType !== 'sponsor') return true
@@ -363,7 +362,7 @@ export function doExport(): void {
     }
     ref.addCreators()
     // #1541
-    if (ref.referencetype === 'inbook' && ref.has.author && ref.has.editor) delete ref.has.editor
+    if (ref.entrytype === 'inbook' && ref.has.author && ref.has.editor) delete ref.has.editor
 
     switch (ref.date.type) {
       case 'verbatim':
@@ -390,7 +389,7 @@ export function doExport(): void {
         break
 
       default:
-        log.debug('Unexpected date type', { date: item.date, parsed: ref.date })
+        log.error('Unexpected date type', { date: item.date, parsed: ref.date })
     }
 
     ref.add({ name: 'keywords', value: item.tags, enc: 'tags' })
@@ -483,7 +482,7 @@ class ZoteroItem {
     this.type = this.typeMap[this.bibtex.type]
     if (!this.type) {
       this.errors.push({ message: `Don't know what Zotero type to make of '${this.bibtex.type}' for ${this.bibtex.key ? `@${this.bibtex.key}` : 'unnamed item'}, importing as ${this.type = 'document'}` })
-      this.hackyFields.push(`tex.referencetype: ${this.bibtex.type}`)
+      this.hackyFields.push(`tex.entrytype: ${this.bibtex.type}`)
     }
     if (this.type === 'book' && (this.bibtex.fields.title || []).length && (this.bibtex.fields.booktitle || []).length) this.type = 'bookSection'
     if (this.type === 'journalArticle' && (this.bibtex.fields.booktitle || []).length && this.bibtex.fields.booktitle[0].match(/proceeding/i)) this.type = 'conferencePaper'
@@ -504,8 +503,8 @@ class ZoteroItem {
       this.import()
 
       if (Translator.preferences.testing) {
-        const err = Object.keys(this.item).filter(name => !this.validFields[name]).join(', ')
-        if (err) this.error(`import error: unexpected fields on ${this.type} ${this.bibtex.key}: ${err}`)
+        const err = valid.test(JSON.parse(JSON.stringify(this.item)), true) // stringify/parse is a fast way to get rid of methods
+        if (err) this.error(`import error: ${this.type} ${this.bibtex.key}: ${err}\n${JSON.stringify(this.item, null, 2)}`)
       }
     }
   }
@@ -574,6 +573,10 @@ class ZoteroItem {
     }
 
     return this.$address(value)
+  }
+
+  protected '$call-number'(value) {
+    return this.set('callNumber', value)
   }
 
   protected $edition(value) {
@@ -784,7 +787,7 @@ class ZoteroItem {
       }
 
       if (!att.path) {
-        log.debug(`attachment import: file record '${record}' has no file path`)
+        log.error(`attachment import: file record '${record}' has no file path`)
         continue
       }
 
@@ -899,15 +902,24 @@ class ZoteroItem {
     return true
   }
 
-  protected $annotation(value) {
+  protected $annotation(value, field) {
+    if (Translator.importToExtra[field]) {
+      let plaintext = value.replace(/<p>/g, '').replace(/<\/p>/g, '\n\n').trim()
+      if (Translator.importToExtra[field] === 'force') plaintext = plaintext.replace(/<[^>]+>/g, '')
+      if (!plaintext.includes('<')) {
+        this.addToExtra(plaintext)
+        return true
+      }
+    }
+
     this.item.notes.push(value)
     return true
   }
-  protected $comment(value) { return this.$annotation(value) }
-  protected $annote(value) { return this.$annotation(value) }
-  protected $review(value) { return this.$annotation(value) }
-  protected $notes(value) { return this.$annotation(value) }
-  protected $note(value) { return this.$annotation(value) }
+  protected $comment(value) { return this.$annotation(value, 'comment') }
+  protected $annote(value) { return this.$annotation(value, 'annote') }
+  protected $review(value) { return this.$annotation(value, 'review') }
+  protected $notes(value) { return this.$annotation(value, 'notes') }
+  protected $note(value) { return this.$annotation(value, 'note') }
 
   protected $series(value) { return this.set('series', value) }
 
@@ -915,17 +927,12 @@ class ZoteroItem {
   protected $groups(value) {
     for (const group of value.split(/\s*,\s*/)) {
       if (this.jabref.groups[group] && !this.jabref.groups[group].entries.includes(this.bibtex.key)) this.jabref.groups[group].entries.push(this.bibtex.key)
-      log.debug('$groups: adding', this.bibtex.key, 'to', group, ':', this.jabref.groups)
     }
     return true
   }
 
   protected $language(_value, _field) {
-    const language = (this.bibtex.fields.language || []).concat(this.bibtex.fields.langid || [])
-      .map(babelLanguage) // eslint-disable-line @typescript-eslint/no-unsafe-return
-      .join(' and ')
-
-    return this.set('language', language)
+    return this.set('language', this.bibtex.fields.language?.[0] || this.bibtex.fields.langid?.[0])
   }
   protected $langid(value, field) { return this.$language(value, field) }
 
@@ -1177,7 +1184,6 @@ class ZoteroItem {
     }
   }
 
-  /*
   private addToExtra(str) {
     if (this.item.extra && this.item.extra !== '') {
       this.item.extra += `\n${str}`
@@ -1186,7 +1192,6 @@ class ZoteroItem {
       this.item.extra = str
     }
   }
-  */
 
   private set(field, value, fallback = null) {
     if (!this.validFields[field]) return fallback && this.fallback(fallback, value)
@@ -1203,7 +1208,7 @@ class ZoteroItem {
 // ZoteroItem::$__note__ = ZoteroItem::$__key__ = -> true
 
 //
-// ZoteroItem::$referenceType = (value) ->
+// ZoteroItem::$entryType = (value) ->
 //   @item.thesisType = value if value in [ 'phdthesis', 'mastersthesis' ]
 //   return true
 //

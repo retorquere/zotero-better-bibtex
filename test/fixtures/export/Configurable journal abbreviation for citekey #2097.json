@@ -1,0 +1,57 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "localeDateOrder": "mdy",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "autoAbbrev": true,
+      "citekeyFormat": "[auth:lower][shorttitle3_3].[journal=auto][year]",
+      "citekeySearch": false,
+      "extraMergeCSL": true,
+      "extraMergeCitekeys": true,
+      "extraMergeTeX": true,
+      "quickCopyMode": "pandoc",
+      "quickCopyPandocBrackets": true,
+      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc"
+    }
+  },
+  "items": [
+    {
+      "DOI": "10.1016/j.supflu.2010.12.004",
+      "ISSN": "08968446",
+      "accessDate": "2022-03-31T22:00:14Z",
+      "citationKey": "2012_Duarte_TheJournalofSupercriticalFluids_326",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Ana Rita C.",
+          "lastName": "Duarte"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Jo\u00e3o F.",
+          "lastName": "Mano"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Rui L.",
+          "lastName": "Reis"
+        }
+      ],
+      "date": "12/2012",
+      "itemID": 1,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "The Journal of Supercritical Fluids",
+      "language": "en",
+      "libraryCatalog": "DOI.org (Crossref)",
+      "pages": "326-332",
+      "publicationTitle": "The Journal of Supercritical Fluids",
+      "title": "The role of organic solvent on the preparation of chitosan scaffolds by supercritical assisted phase inversion",
+      "url": "https://linkinghub.elsevier.com/retrieve/pii/S0896844610005103",
+      "volume": "72"
+    }
+  ]
+}

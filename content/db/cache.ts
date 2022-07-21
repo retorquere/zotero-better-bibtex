@@ -1,7 +1,7 @@
 import { XULoki as Loki } from './loki'
 import { Events } from '../events'
 import { File } from './store/file'
-import { Preference } from '../../gen/preferences'
+import { Preference } from '../prefs'
 import { affects, schema } from '../../gen/preferences/meta'
 import { log } from '../logger'
 
@@ -60,8 +60,7 @@ class Cache extends Loki {
         additionalProperties: false,
       },
     })
-    if (!Preference.caching) coll.removeDataOnly()
-    log.debug('cache.itemToExportFormat:', coll.data.length)
+    if (!Preference.cache) coll.removeDataOnly()
 
     this.clearOnUpgrade(coll, 'Zotero', Zotero.version)
 
@@ -77,41 +76,24 @@ class Cache extends Loki {
     }
 
     for (const [name, translator] of Object.entries(schema.translator)) {
-      if (!translator.cached) continue
+      if (!translator.cache) continue
 
       coll = this.schemaCollection(name, {
         logging: false,
         indices: [ 'itemID', 'exportNotes', 'useJournalAbbreviation', ...(translator.preferences) ],
-        schema: {
-          type: 'object',
-          properties: {
-            itemID: { type: 'integer' },
-            reference: { type: 'string' },
-
-            // options
-            exportNotes: { type: 'boolean' },
-            useJournalAbbreviation: { type: 'boolean' },
-
-            // prefs
-            ...(translator.types),
-
-            // Optional
-            metadata: { type: 'object' },
-
-            // LokiJS
-            meta: { type: 'object' },
-            $loki: { type: 'integer' },
-          },
-          required: [ 'itemID', 'exportNotes', 'useJournalAbbreviation', ...(translator.preferences), 'reference' ],
-          additionalProperties: false,
-        },
+        schema: translator.cache,
         ttl,
         ttlInterval,
       })
-      if (!Preference.caching) coll.removeDataOnly()
-      log.debug(`cache.${coll.name}:`, coll.data.length)
-
-      this.clearOnUpgrade(coll, 'BetterBibTeX', version)
+      if (!Preference.cache) {
+        coll.removeDataOnly()
+      }
+      else if (! (coll.data[0]?.entry) ) { // phase out reference
+        coll.removeDataOnly()
+      }
+      else {
+        this.clearOnUpgrade(coll, 'BetterBibTeX', version)
+      }
     }
 
     this.initialized = true

@@ -1,4 +1,4 @@
-print('zotero-live-citations a266bf0e6')
+print('zotero-live-citations f34bfc770')
 do
 local _ENV = _ENV
 package.preload[ "locator" ] = function( ... ) local arg = _G.arg;
@@ -1623,13 +1623,10 @@ function module.tablelength(T)
   return count
 end
 
-math.randomseed(os.clock()^5)
-function module.random_id(length)
-  local id = ''
-  for i = 1, length do
-    id = id .. string.char(math.random(97, 122))
-  end
-  return id
+module.id_number = 0
+function module.next_id(length)
+  module.id_number = module.id_number + 1
+  return string.format(string.format('%%0%dd', length), module.id_number)
 end
 
 local function url_encode_char(chr)
@@ -1683,23 +1680,36 @@ local state = {
 
 module.citekeys = {}
 
-function module.authors(csl)
-  if csl.author == nil then
-    return nil
-  end
-
+function module.authors(csl_or_item)
   local authors = {}
   local author
-  for _, author in ipairs(csl.author) do
-    if author.literal ~= nil then
-      table.insert(authors, author.literal)
-    elseif author.family ~= nil then
-      table.insert(authors, author.family)
+
+  if csl_or_item.author ~= nil then
+    for _, author in ipairs(csl_or_item.author) do
+      if author.literal ~= nil then
+        table.insert(authors, author.literal)
+      elseif author.family ~= nil then
+        table.insert(authors, author.family)
+      end
     end
+
+  elseif csl_or_item.creators ~= nil then
+    for _, author in ipairs(csl_or_item.creators) do
+      if author.name ~= nil then
+        table.insert(authors, author.name)
+      elseif author.lastName ~= nil then
+        table.insert(authors, author.lastName)
+      end
+    end
+
+  elseif csl_or_item.reporter ~= nil then
+    table.insert(authors, csl_or_item.reporter)
   end
+
   if utils.tablelength(authors) == 0 then
     return nil
   end
+
   local last = table.remove(authors)
   if utils.tablelength(authors) == 0 then
     return last
@@ -1871,14 +1881,14 @@ local function zotero_bibl_odt()
       .. utils.xmlescape(message)
       .. '</text:p>'
       ..'</text:section>',
-    'ZOTERO_BIBL ' .. utils.xmlescape(bib_settings) .. ' CSL_BIBLIOGRAPHY' .. ' RND' .. utils.random_id(10))
+    'ZOTERO_BIBL ' .. utils.xmlescape(bib_settings) .. ' CSL_BIBLIOGRAPHY' .. ' RND' .. utils.next_id(10))
 end
 
 -- -- -- citation market generators -- -- --
 local function zotero_ref(cite)
   local content = pandoc.utils.stringify(cite.content)
   local csl = {
-    citationID = utils.random_id(8),
+    citationID = utils.next_id(8),
     properties = {
       formattedCitation = content,
       plainCitation = nil, -- effectively the same as not including this like -- keep an eye on whether Zotero is OK with this missing. Maybe switch to a library that allows json.null
@@ -1955,7 +1965,7 @@ local function zotero_ref(cite)
       return pandoc.RawInline('opendocument', field)
     end
 
-    csl = 'ZOTERO_ITEM CSL_CITATION ' .. utils.xmlescape(json.encode(csl)) .. ' RND' .. utils.random_id(10)
+    csl = 'ZOTERO_ITEM CSL_CITATION ' .. utils.xmlescape(json.encode(csl)) .. ' RND' .. utils.next_id(10)
     local field = author_in_text .. '<text:reference-mark-start text:name="' .. csl .. '"/>'
     field = field .. utils.xmlescape(message)
     field = field .. '<text:reference-mark-end text:name="' .. csl .. '"/>'

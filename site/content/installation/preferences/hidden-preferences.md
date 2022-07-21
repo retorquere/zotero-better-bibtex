@@ -48,6 +48,12 @@ default: `5`
 
 How often the Better BibTeX database should be saved to disk. Defaults to once every 5 seconds. Note that your database is always saved when your computer goes idle, or when you exit Zotero.
 
+## charmap
+
+default: `<not set>`
+
+a JSON mapping from single character to raw LaTeX, to augment the default mapping; these will be applied when you export as ASCII. **DO NOT** edit this preferencedirectly, but create a CSV (not semicolons) file named `charmap.csv` in the zotero data directory under the `better-bibtex` folder with columns `unicode` (the source character), `text` (representation in LaTeX text mode, if any) and `math` (representation in LaTeX math mode, if any, without dollar signs).
+
 ## csquotes
 
 default: `<not set>`
@@ -78,6 +84,12 @@ default: `yes`
 
 On import, place all bib(la)tex field Zotero doesn't have an existing field for in the Zotero `extra` field of the item
 
+## importNoteToExtra
+
+default: `<not set>`
+
+On import, import note-like fields in this comma-separated list to the `extra` field, unless the note has rich text.
+
 ## importUnknownTexCommand
 
 default: `ignore`
@@ -90,7 +102,7 @@ What to do when encountering a TeX command the parser does not know about. Pleas
 
 default: `5`
 
-I've had reports where Zotero notifies extensions that references have changed, but if BBT then actually retrieves those same references, Zotero complains they "haven't been saved yet". Super. This preference sets the number of microseconds BBT should wait after being notified before acting on the changed references.
+I've had reports where Zotero notifies extensions that items have changed, but if BBT then actually retrieves those same items, Zotero complains they "haven't been saved yet". Super. This preference sets the number of microseconds BBT should wait after being notified before acting on the changed items.
 
 ## mapMath
 
@@ -103,12 +115,6 @@ Any characters entered here will prefer a math-mode LaTeX-command counterpart ov
 default: `<not set>`
 
 Any characters entered here will prefer a text-mode LaTeX-command counterpart over a math-mode, if a text-mode command is available. Only useful when `mapUnicode` is `conservative`. Characters specified in `mapMath` take presedence over characters specified in `mapText`.
-
-## newTranslatorsAskRestart
-
-default: `yes`
-
-New translators installed in Zotero are not immediately usuable for drag-and-drop. If you want to use BBT for drag-and-drop (e.g. to drag and drop citation keys or citations), you will be asked whether you want to restart after installation, or whether you want to reinstall when it is more convenient to you. You will be asked this whenever the BBT translators update, but you can disable this by checking "Do not ask again" in that dialog.
 
 ## parseParticles
 
@@ -198,7 +204,7 @@ A strings override will disable caching for that export.
 
 ## verbatimFields
 
-default: `url,doi,file,ids,eprint,verba,verbb,verbc,groups`
+default: `url,doi,file,ids,eprint,/^verb[a-z]$/,groups,/^citeulike-linkout-[0-9]+$/, /^bdsk-url-[0-9]+$/`
 
 list of fields to treat as verbatim during import. If you're importing e.g. Mendeley-generated BibTeX, which is out of spec in various ways, try removing `file` from this list before import.
 
@@ -208,6 +214,12 @@ default: `no`
 
 Both Zotero and BBT expect titles to be in sentence-case, but a lot of sites offer import data that is Title Cased. When exporting these titles to bib(la)tex you're going to get a lot of extra unwanted braces, because all these Title Cased words will look like proper nouns to BBTs own title-casing mechanism. When this setting is on, you will be warned when you import/save items in Zotero with titles that look like they're Title Cased, so that you can inspect/correct them.
 
+## worker
+
+default: `yes`
+
+BBT can perform its exports in a separate thread, and should no longer block Zotero's UI pretty much regardless of how large your library is. It is possible to turn background exports off by setting this value to `false` in the hidden preferences; you will get the old (blocking) behavior back, but you can't complain about Zotero being laggy during auto-exports; all Zotero exports are blocking, and it's a minor miracle I got background exports to work at all.
+
 ## Abbreviation style:
 
 default: `<not set>`
@@ -216,6 +228,6 @@ Select the style for auto-abbreviation. Only applicable to Juris-M; in Zotero, t
 
 ## Citation key format
 
-default: `​[auth:lower][shorttitle3_3][year]`
+default: `​auth.lower + shorttitle(3,3) + year`
 
 Set the pattern used to generate citation keys. The format of the keys is documented [here]({{ ref . "citing" }}).

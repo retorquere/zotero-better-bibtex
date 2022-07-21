@@ -11,8 +11,7 @@
       "bibtexURL": "url",
       "citekeyFormat": "[auth:lower]_[shorttitle1_1:lower]_[year]",
       "itemObserverDelay": 100,
-      "skipFields": "file",
-      "workers": 4
+      "skipFields": "file"
     }
   },
   "items": [

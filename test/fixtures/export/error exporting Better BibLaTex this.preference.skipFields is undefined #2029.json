@@ -1,0 +1,60 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "citekeyFormat": "[auth:lower][year][journal:lower:abbr]",
+      "quickCopyMode": "pandoc",
+      "quickCopyPandocBrackets": true
+    }
+  },
+  "items": [
+    {
+      "itemID": 1,
+      "itemType": "note",
+      "note": "<h1><strong>_Color Coding System </strong></h1>\n<p><strong>- \ud83d\udfe8 \u2192 Important note by author<br />- \ud83d\udfe9 \u2192 Disagree with author, add to `#toread`<br />- \ud83d\udfe5 \u2192 Interesting / Important into me / work<br />- \ud83d\udfe6 \u2192 Reread &amp; read highlights<br />- \ud83d\udfea \u2192 Create Zettelkasten note</strong></p>\n<p>\u00a0</p>\n<p>\u00a0</p>",
+      "tags": [
+        {
+          "tag": "meta"
+        }
+      ]
+    },
+    {
+      "DOI": "10.13169/arabstudquar.43.2.0098",
+      "ISSN": "0271-3519",
+      "abstractNote": "<p class=\"first\" id=\"d388814e66\">To defend the thesis of \u201cpermanent violence\u201d in Yemen that leads to state failure and in the context of the structural crisis of capital (where Keynesianism has reached its structural limits), this article will look at the Yemeni war through a Marxist lens. It aims to analyze the deep sociological roots of the Yemeni war through the laws of capital as presented by Marx and to show why the Yemeni war is a goal in itself for Imperialism. Three main laws of capital are considered: (1) the general law of capital accumulation developed in Volume I of <i>Das Kapital</i>, (2) the law of the \u201ctransformation\u201d of value into price as presented in Volume III of <i>Das Kapital</i>, and (3) the law relating to the contradiction between production and consumption (leading to a crisis of overproduction and a crisis of underconsumption) that was developed by Marx in the <i>Grundrisse</i>, in <i>Economic and Philosophic Manuscripts of 1844</i>, and by contemporary Marxist author, Istvan M\u00e9sz\u00e1ros <i>.</i> All of these laws are all tied to the Marxist \u201claw of value\u201d which refers to the idea that socially necessary labor time acts as the ultimate regulating force in exchange and production under Imperialism. </p>",
+      "accessDate": "2022-01-21T23:33:35Z",
+      "attachments": [],
+      "citationKey": "kadri2021asq",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Jude",
+          "lastName": "Kadri"
+        }
+      ],
+      "date": "2021-04-01",
+      "extra": [
+        "Publisher: Pluto Journals",
+        "Citation Key: kadri2021asq"
+      ],
+      "itemID": 2,
+      "itemType": "journalArticle",
+      "libraryCatalog": "www.scienceopen.com",
+      "notes": [
+        "<p><strong>Blue Annotations</strong></p>\n<p><u>general law of capital accumulation and the transformation of value into price (for profit gains) in the market</u></p>\n<p><u>price of productio</u></p>\n<p><u>variable capital, i.e., living labo</u></p>\n<p><u>total surplus valu</u></p>\n<p><u>average organic composition of capita</u></p>\n<p><u>constant capita</u></p>\n<p><u>average rate of profit of capit</u></p>\n<p><u>average rate of prof</u></p>\n<p><u>\"absolute\" or \"relative\" surplus val</u></p>\n<blockquote>For Marx, market prices of a certain commodity all tend towards the average \"price of production\" of this commodity. The price of production is equal to the cost-price (capital spent on constant capital and variable capital, i.e., living labor16) + the average rate of profit of capital (that equalizes across different sectors and industries). This average rate of profit is a part of the total surplus value which reflects the rate of profit of firms with an average organic composition of capital.17 The capitals that manage to lower their price of production by increasing the organic composition of their capital vis-\u00e0-vis the average one will be able to incorporate \"absolute\" or \"relative\" surplus value (beyond the average one) in their goods to appropriate a higher share of profit in the free market at the expense of the rest of the capitals (<a href=\"zotero://open-pdf/library/items/43P472HQ?page=5\">Kadri 2021:5</a>)</blockquote>",
+        "<p><strong>Magenta Annotations</strong></p>\n<blockquote>huge imperial rents from a weakened Yemeni state, the expansion of the dollar supply, and the increased military presence of the American, Saudi, Emirati, and Israeli armies in the Arab world (including the expansion of Israelis on Palestinian land (<a href=\"zotero://open-pdf/library/items/43P472HQ?page=4\">Kadri 2021:4</a>)</blockquote>\n<blockquote>social conditions for capital accumulation on a global scale (<a href=\"zotero://open-pdf/library/items/43P472HQ?page=8\">Kadri 2021:8</a>)</blockquote>",
+        "<p><strong>Red Annotations</strong></p>\n<blockquote>The real cost of an iPhone is maybe $1,000 or so, but its value is much, much more. Through paying for the iPhone, we are possibly paying for the wars and waste that were necessary to obtain all the raw product and cheap labor for iPhone production (<a href=\"zotero://open-pdf/library/items/43P472HQ?page=8\">Kadri 2021:8</a>)</blockquote>\n<blockquote>The most powerful states exist to regulate or ensure the social conditions for capital accumulation on a global scale (<a href=\"zotero://open-pdf/library/items/43P472HQ?page=8\">Kadri 2021:8</a>)</blockquote>",
+        "<p><strong>Yellow Annotations</strong></p>\n<blockquote>permanent violence (<a href=\"zotero://open-pdf/library/items/43P472HQ?page=1\">Kadri 2021:1</a>)</blockquote>\n<p><em>#concept</em>(<a href=\"zotero://open-pdf/library/items/43P472HQ?page=1\">note on p.1</a>)</p>\n<p>\u00a0</p>\n<blockquote>aim of the imperialist camp (which includes the USA, Israel, the UAE, and Saudi Arabia) is not to \"win\" the war but to gradually destroy the sovereignty of Yemenis and make Yemen a permanently 'Failed State\". (<a href=\"zotero://open-pdf/library/items/43P472HQ?page=2\">Kadri 2021:2</a>)</blockquote>\n<p><em>Main argument by author. </em>(<a href=\"zotero://open-pdf/library/items/43P472HQ?page=2\">note on p.2</a>)</p>\n<p>\u00a0</p>\n<blockquote>Imperialist violence exists because monopoly-finance capitalist groups in a handful of imperialist countries meddle in the global South in pursuit of their interests (<a href=\"zotero://open-pdf/library/items/43P472HQ?page=2\">Kadri 2021:2</a>)</blockquote>\n<p><em>#concept<br />Permanent violence driven by capitalist pursuit of profit in developing world. </em>(<a href=\"zotero://open-pdf/library/items/43P472HQ?page=2\">note on p.2</a>)</p>\n<p>\u00a0</p>\n<p><em>#concept <br />[[Law of capital accumulation]]</em>(<a href=\"zotero://open-pdf/library/items/43P472HQ?page=4\">note on p.4</a>)</p>\n<p>\u00a0</p>\n<p><em>\u00ff\u00fe*What does it mean to transform value \u2122! price?*<br />- Assumes monetary value results from some pre-existing value ascribed. </em>(<a href=\"zotero://open-pdf/library/items/43P472HQ?page=4\">note on p.4</a>)</p>\n<p>\u00a0</p>\n<p><em>I think this is the main thrust of the Marxist argument here.<br />**War costs a lot but the benefits exceed those costs.**</em>(<a href=\"zotero://open-pdf/library/items/43P472HQ?page=4\">note on p.4</a>)</p>\n<p>\u00a0</p>\n<blockquote>even though the different Yemeni wars seem to have cost the American imperialist camp hundreds of billions of dollars since 2002, these billions are incomparable to the immense surplus value realized by monopoly-financial capital thanks to the war itself and the mass pauperization in the strategic Yemeni nation. Monopoly-financial capital derives huge imperial rents from a weakened Yemeni state, the expansion of the dollar supply, and the increased military presence of the American, Saudi, Emirati, and Israeli armies in the Arab world (including the expansion of Israelis on Palestinian land (<a href=\"zotero://open-pdf/library/items/43P472HQ?page=4\">Kadri 2021:4</a>)</blockquote>\n<p><em>Very confusing. What does this mean in practical terms? Look up other explanations<br /><br />#concepts<br />#toexplore</em>(<a href=\"zotero://open-pdf/library/items/43P472HQ?page=5\">note on p.5</a>)</p>\n<p>\u00a0</p>\n<p><em>When I pay for a phone, do I finance the wars necessary for exploration of its raw materials and labor to produce it? How is an iPhone quantified? </em>(<a href=\"zotero://open-pdf/library/items/43P472HQ?page=8\">note on p.8</a>)</p>\n<p>\u00a0</p>\n<p><em>I think this explains the close ties between politics and commerce. </em>(<a href=\"zotero://open-pdf/library/items/43P472HQ?page=8\">note on p.8</a>)</p>\n<p>\u00a0</p>\n<blockquote>capital is transnational in nature and considers all human beings as potential sources of surplus value (<a href=\"zotero://open-pdf/library/items/43P472HQ?page=8\">Kadri 2021:8</a>)</blockquote>"
+      ],
+      "publicationTitle": "Arab Studies Quarterly",
+      "shortTitle": "The Collapse of Yemen&apos;s Sovereignty by Permanent Violence",
+      "title": "The Collapse of Yemen's Sovereignty by Permanent Violence: A Means of Both Production and Consumption of Value",
+      "url": "https://www.scienceopen.com/hosted-document?doi=10.13169/arabstudquar.43.2.0098"
+    }
+  ]
+}

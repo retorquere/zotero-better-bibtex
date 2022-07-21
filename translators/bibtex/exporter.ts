@@ -1,7 +1,7 @@
 declare const Zotero: any
 
 import { Translator } from '../lib/translator'
-import { Reference } from '../../gen/typings/serialized-item'
+import { RegularItem } from '../../gen/typings/serialized-item'
 import { Cache } from '../../typings/cache'
 
 import { JabRef } from '../bibtex/jabref' // not so nice... BibTeX-specific code
@@ -41,33 +41,37 @@ export const Exporter = new class {
     return uniq
   }
 
-  public get items(): Generator<Reference, void, unknown> {
+  public get items(): Generator<RegularItem, void, unknown> {
     return this.itemsGenerator()
   }
 
-  private *itemsGenerator(): Generator<Reference, void, unknown> {
+  private *itemsGenerator(): Generator<RegularItem, void, unknown> {
     if (!this.postfix && Translator.BetterTeX) this.postfix = new Postfix(Translator.preferences.qualityReport)
 
-    for (const item of Translator.references) {
-      if (!item.citationKey) {
-        throw new Error(`No citation key in ${JSON.stringify(item)}`)
+    for (const item of Translator.regularitems) {
+      Object.assign(item, Extra.get(item.extra, 'zotero'))
+      if (typeof item.itemID !== 'number') { // https://github.com/diegodlh/zotero-cita/issues/145
+        item.citationKey = item.extraFields.citationKey
+        item.$cacheable = false
       }
+      if (!item.citationKey) throw new Error(`No citation key in ${JSON.stringify(item)}`)
+
       this.citekeys[item.citationKey] = (this.citekeys[item.citationKey] || 0) + 1
 
       this.jabref.citekeys.set(item.itemID, item.citationKey)
 
-      // this is not automatically lazy-evaluated?!?!
-      const cached: Cache.ExportedItem = item.$cacheable && Translator.BetterTeX ? Zotero.BetterBibTeX.cacheFetch(item.itemID, Translator.options, Translator.preferences) : null
-      Translator.cache[cached ? 'hits' : 'misses'] += 1
-
-      if (cached) {
-        Zotero.write(cached.reference)
-        this.postfix?.add(cached.metadata)
-        continue
+      let cached: Cache.ExportedItem = null
+      if (item.$cacheable && Translator.BetterTeX) {
+        Translator.cache.requests++
+        if (cached = Zotero.BetterBibTeX.cacheFetch(item.itemID, Translator.options, Translator.preferences)) {
+          Translator.cache.hits += 100
+          Zotero.write(cached.entry)
+          this.postfix?.add(cached.metadata)
+          continue
+        }
       }
 
       itemfields.simplifyForExport(item)
-      Object.assign(item, Extra.get(item.extra, 'zotero'))
 
       // strip extra.tex fields that are not for me
       const prefix = Translator.BetterBibLaTeX ? 'biblatex.' : 'bibtex.'
@@ -105,6 +109,14 @@ export const Exporter = new class {
           Zotero.write(`${sep}% ${citekey} duplicates: ${n}\n`)
           sep = '% '
         }
+      }
+    }
+    if (Translator.BetterTeX && Translator.options.cacheUse) {
+      if (Translator.cache.requests) {
+        Zotero.write(`\n% cache use: ${Math.round(Translator.cache.hits/Translator.cache.requests)}%`)
+      }
+      else {
+        Zotero.write('\n% cache use: no')
       }
     }
   }

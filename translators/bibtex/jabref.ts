@@ -42,9 +42,9 @@ export class JabRef {
     let group = [`${level} ${Translator.preferences.jabrefFormat === 5 ? 'Static' : 'Explicit'}Group:${this.quote(collection.name)}`, '0'] // eslint-disable-line no-magic-numbers
 
     if (Translator.preferences.jabrefFormat === 3) { // eslint-disable-line no-magic-numbers
-      const references = ((collection.items || []).filter(id => this.citekeys.has(id)).map(id => this.quote(this.citekeys.get(id))))
-      if (Translator.preferences.testing) references.sort()
-      group = group.concat(references)
+      const items = ((collection.items || []).filter(id => this.citekeys.has(id)).map(id => this.quote(this.citekeys.get(id))))
+      if (Translator.preferences.testing) items.sort()
+      group = group.concat(items)
     }
 
     if (Translator.preferences.jabrefFormat === 5) { // eslint-disable-line no-magic-numbers

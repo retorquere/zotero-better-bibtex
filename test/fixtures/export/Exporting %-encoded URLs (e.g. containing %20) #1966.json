@@ -9,7 +9,6 @@
     "preferences": {
       "DOIandURL": "doi",
       "bibtexURL": "url",
-      "caching": false,
       "citekeyFold": false,
       "citekeyFormat": "[auth][year]",
       "skipFields": "file,language,urldate,shorttitle,copyright,month,note,abstract,langid"

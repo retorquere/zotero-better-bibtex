@@ -2,10 +2,9 @@
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "localeDateOrder": "dmy",
     "options": {},
     "preferences": {
-      "citekeyFormat": "[auth][year]"
+      "citekeyFormat": "auth + year"
     }
   },
   "items": [
@@ -45,7 +44,7 @@
       "pages": "197\u2013227",
       "publicationTitle": "Journal of Experimental and Theoretical AI",
       "title": "Planning and reacting in uncertain and dynamic environments",
-      "url": "http://www.ai.sri.com/w\u0303ilkins/papers/jetai.ps",
+      "url": "http://www.ai.sri.com/~wilkins/papers/jetai.ps",
       "volume": "7"
     },
     {
@@ -154,7 +153,7 @@
       ],
       "itemID": 4,
       "itemType": "document",
-      "language": "english",
+      "language": "en",
       "notes": [
         "Alfredo Gabaldon (Department of Computer Science; University of Toronto);",
         "Appeared in the working notes of the AIPS workshop on On-Line Planning and Scheduling"
@@ -218,7 +217,7 @@
       ],
       "itemID": 6,
       "itemType": "journalArticle",
-      "language": "english",
+      "language": "en",
       "notes": [
         "The Pennsylvania State University CiteSeer Archives"
       ],
@@ -20124,7 +20123,7 @@
       ],
       "itemID": 815,
       "itemType": "conferencePaper",
-      "publicationTitle": "Proceedings of the first international conference on knowledge capture (k-cap'01)",
+      "publicationTitle": "Proceedings of the first international conference on knowledge capture (K-cap'01)",
       "title": "Knowledge entry as the graphical assembly of components"
     },
     {
@@ -24161,7 +24160,7 @@
       "publisher": "Springer",
       "series": "Lecture notes in computer science",
       "title": "Generating artificial corpora for plan recognition",
-      "url": "http://dx.doi.org/10.1007/11527886\u20824",
+      "url": "http://dx.doi.org/10.1007/11527886_24",
       "volume": "3538"
     },
     {
@@ -24386,12 +24385,12 @@
       ],
       "itemID": 987,
       "itemType": "bookSection",
-      "language": "english",
+      "language": "English",
       "pages": "545-548",
       "publicationTitle": "Logics in artificial intelligence",
       "publisher": "Springer Berlin Heidelberg",
       "series": "Lecture notes in computer science",
-      "title": "Z-log: Applying system-z",
+      "title": "Z-log: Applying system-Z",
       "url": "http://dx.doi.org/10.1007/3-540-45757-7_52",
       "volume": "2424"
     },

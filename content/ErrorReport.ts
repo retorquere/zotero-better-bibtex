@@ -1,9 +1,9 @@
 Components.utils.import('resource://gre/modules/Services.jsm')
 
-import { Preference } from '../gen/preferences'
+import { Preference } from './prefs'
+import { defaults } from '../gen/preferences/meta'
 import { Translators } from './translators'
 import { log } from './logger'
-import Zip from 'jszip'
 
 import { DB } from './db/main'
 import { DB as Cache } from './db/cache'
@@ -15,23 +15,34 @@ import * as s3 from './s3.json'
 import * as PACKAGE from '../package.json'
 
 const kB = 1024
+const COMPRESSION_BEST = 9
+
+// PR_RDONLY       0x01
+const PR_WRONLY = 0x02
+// const PR_RDWR = 0x04
+const PR_CREATE_FILE =0x08
+// define PR_APPEND       0x10
+// define PR_TRUNCATE     0x20
+// define PR_SYNC         0x40
+// define PR_EXCL         0x80
 
 export class ErrorReport {
   private previewSize = 3 * kB // eslint-disable-line no-magic-numbers, yoda
 
   private key: string
   private timestamp: string
+  private zipfile: string
+
   private bucket: string
   private params: any
   private globals: Record<string, any>
-  private zipped: Uint8Array
   private cacheState: string
 
   private errorlog: {
     info: string
     errors: string
     debug: string
-    references?: string
+    items?: string
   }
 
   public async send(): Promise<void> {
@@ -41,7 +52,7 @@ export class ErrorReport {
     wizard.canRewind = false
 
     try {
-      await Zotero.HTTP.request('PUT', `${this.bucket}/${this.key}-${this.timestamp}.zip`, {
+      await Zotero.HTTP.request('PUT', `${this.bucket}/${OS.Path.basename(this.zipfile)}`, {
         noCache: true,
         // followRedirects: true,
         // noCache: true,
@@ -51,7 +62,7 @@ export class ErrorReport {
           'x-amz-acl': 'bucket-owner-full-control',
           'Content-Type': 'application/zip',
         },
-        body: await this.zip(),
+        body: new Uint8Array(await OS.File.read(await this.zip(), {})),
       })
 
       wizard.advance()
@@ -62,7 +73,7 @@ export class ErrorReport {
     catch (err) {
       log.error('failed to submit', this.key, err)
       const ps = Components.classes['@mozilla.org/embedcomp/prompt-service;1'].getService(Components.interfaces.nsIPromptService)
-      ps.alert(null, Zotero.getString('general.error'), `${err} (${this.key}, references: ${!!this.errorlog.references})`)
+      ps.alert(null, Zotero.getString('general.error'), `${err} (${this.key}, items: ${!!this.errorlog.items})`)
       if (wizard.rewind) wizard.rewind()
     }
   }
@@ -102,36 +113,46 @@ export class ErrorReport {
       return JSON.parse((await Zotero.HTTP.request('GET', latest, { noCache: true })).response).tag_name.replace('v', '')
     }
     catch (err) {
-      log.debug('errorreport.latest:', err)
+      log.error('errorreport.latest:', err)
       return null
     }
   }
 
-  public async zip(): Promise<Uint8Array> {
-    if (!this.zipped) {
-      const zip = new Zip
+  public async zip(): Promise<string> {
+    if (!await OS.File.exists(this.zipfile)) {
+      const zipWriter = Components.classes['@mozilla.org/zipwriter;1'].createInstance(Components.interfaces.nsIZipWriter)
+      // 0x02 = Read and Write
 
-      zip.file(`${this.key}/debug.txt`, [ this.errorlog.info, this.cacheState, this.errorlog.errors, this.errorlog.debug ].filter(chunk => chunk).join('\n\n'))
+      zipWriter.open(Zotero.File.pathToFile(this.zipfile), PR_WRONLY + PR_CREATE_FILE)
+      const converter = Components.classes['@mozilla.org/intl/scriptableunicodeconverter'].createInstance(Components.interfaces.nsIScriptableUnicodeConverter)
+      converter.charset = 'UTF-8'
 
-      if (this.errorlog.references) zip.file(`${this.key}/references.json`, this.errorlog.references)
-
-      if (this.globals.document.getElementById('better-bibtex-error-report-include-db').checked) {
-        zip.file(`${this.key}/database.json`, DB.serialize({ serializationMethod: 'pretty' }))
-        zip.file(`${this.key}/cache.json`, Cache.serialize({ serializationMethod: 'pretty' }))
+      function add(filename, body) { // eslint-disable-line no-inner-declarations, prefer-arrow/prefer-arrow-functions
+        const istream = converter.convertToInputStream(body)
+        zipWriter.addEntryStream(filename, Date.now(), COMPRESSION_BEST, istream, false)
+        istream.close()
       }
 
-      this.zipped = await zip.generateAsync({
-        type: 'uint8array',
-        compression: 'DEFLATE',
-        compressionOptions: { level: 9 },
-      })
+      add(
+        `${this.key}/debug.txt`,
+        [ this.errorlog.info, this.cacheState, this.errorlog.errors, this.errorlog.debug ].filter(chunk => chunk).join('\n\n')
+      )
+
+      if (this.errorlog.items) add(`${this.key}/items.json`, this.errorlog.items)
+
+      if (this.globals.document.getElementById('better-bibtex-error-report-include-db').checked) {
+        add(`${this.key}/database.json`, DB.serialize({ serializationMethod: 'pretty' }))
+        add(`${this.key}/cache.json`, Cache.serialize({ serializationMethod: 'pretty' }))
+      }
+
+      zipWriter.close()
     }
-    return this.zipped
+    return this.zipfile
   }
 
   public async save(): Promise<void> {
-    const filename = await pick('Logs', 'save', [['ZIP Archive (*.zip)', '*.zip']], `${this.key}.zip`)
-    if (filename) await OS.File.writeAtomic(filename, await this.zip())
+    const filename = await pick('Logs', 'save', [['Zip Archive (*.zip)', '*.zip']], `${this.key}.zip`)
+    if (filename) await OS.File.copy(await this.zip(), filename)
   }
 
   private async ping(region: string) {
@@ -141,8 +162,7 @@ export class ErrorReport {
   }
 
   public async load(): Promise<void> {
-    this.key = this.timestamp = (new Date()).toISOString().replace(/\..*/, '').replace(/:/g, '.')
-    this.zipped = null
+    this.timestamp = (new Date()).toISOString().replace(/\..*/, '').replace(/:/g, '.')
 
     const wizard = this.globals.document.getElementById('better-bibtex-error-report')
 
@@ -160,16 +180,16 @@ export class ErrorReport {
       debug: Zotero.Debug.getConsoleViewerOutput().slice(-500000).join('\n'), // eslint-disable-line no-magic-numbers
     }
 
-    if (Zotero.BetterBibTeX.ready && this.params.scope) {
+    if (this.params.scope) {
       await Zotero.BetterBibTeX.ready
-      this.errorlog.references = await Translators.exportItems(Translators.byLabel.BetterBibTeXJSON.translatorID, {exportNotes: true, dropAttachments: true, Normalize: true}, this.params.scope)
+      this.errorlog.items = await Translators.exportItems(Translators.byLabel.BetterBibTeXJSON.translatorID, {exportNotes: true, dropAttachments: true, Normalize: true}, this.params.scope)
     }
 
     this.globals.document.getElementById('better-bibtex-error-context').value = this.errorlog.info
     this.globals.document.getElementById('better-bibtex-error-errors').value = this.errorlog.errors
     this.globals.document.getElementById('better-bibtex-error-debug').value = this.preview(this.errorlog.debug)
-    if (this.errorlog.references) this.globals.document.getElementById('better-bibtex-error-references').value = this.preview(this.errorlog.references)
-    this.globals.document.getElementById('better-bibtex-error-tab-references').hidden = !this.errorlog.references
+    if (this.errorlog.items) this.globals.document.getElementById('better-bibtex-error-items').value = this.preview(this.errorlog.items)
+    this.globals.document.getElementById('better-bibtex-error-tab-items').hidden = !this.errorlog.items
 
     const current = require('../gen/version.js')
     this.globals.document.getElementById('better-bibtex-report-current').value = l10n.localize('ErrorReport.better-bibtex.current', { version: current })
@@ -192,6 +212,8 @@ export class ErrorReport {
       this.bucket = `http://${s3.bucket}-${region.short}.s3-${region.region}.amazonaws.com${region.tld || ''}`
       this.key = `${Zotero.Utilities.generateObjectKey()}${this.params.scope ? '-refs' : ''}-${region.short}`
 
+      this.zipfile = OS.Path.join(Zotero.getTempDirectory().path, `${this.key}-${this.timestamp}.zip`)
+
       continueButton.disabled = false
       continueButton.focus()
     }
@@ -199,6 +221,9 @@ export class ErrorReport {
       alert(`No AWS region can be reached: ${err.message}`)
       wizard.getButton('cancel').disabled = false
     }
+  }
+  public async unload(): Promise<void> {
+    if (await OS.File.exists(this.zipfile)) await OS.File.remove(this.zipfile, { ignoreAbsent: true })
   }
 
   private preview(text: string): string {
@@ -210,7 +235,7 @@ export class ErrorReport {
     let info = ''
 
     const appInfo = Components.classes['@mozilla.org/xre/app-info;1'].getService(Components.interfaces.nsIXULAppInfo)
-    info += `Application: ${appInfo.name} ${appInfo.version} ${Zotero.locale}\n`
+    info += `Application: ${appInfo.name} (${Zotero.clientName}) ${appInfo.version} ${Zotero.locale}\n`
     info += `Platform: ${Zotero.platform} ${Zotero.oscpu}\n`
 
     const addons = await Zotero.getInstalledExtensions()
@@ -222,16 +247,18 @@ export class ErrorReport {
     }
 
     info += 'Settings:\n'
+    const settings = { default: '', set: '' }
     for (const [key, value] of Object.entries(Preference.all)) {
-      info += `  ${key} = ${JSON.stringify(value)}\n`
+      settings[value === defaults[key] ? 'default' : 'set'] += `  ${key} = ${JSON.stringify(value)}\n`
     }
+    if (settings.default) settings.default = `Settings at default:\n${settings.default}`
+    info += settings.set + settings.default
+
     for (const key of ['export.quickCopy.setting']) {
       info += `  Zotero: ${key} = ${JSON.stringify(Zotero.Prefs.get(key))}\n`
     }
     info += `Zotero.Debug.enabled: ${Zotero.Debug.enabled}\n`
     info += `Zotero.Debug.enabled at start: ${Zotero.BetterBibTeX.debugEnabledAtStart}\n`
-
-    info += `LocaleDateOrder: ${Zotero.Date.getLocaleDateOrder()}\n`
 
     info += `Total export workers started: ${Translators.workers.total}, currently running: ${Translators.workers.running.size}\n`
 

@@ -13,10 +13,9 @@ import re
 from glob import glob
 import frontmatter
 from types import SimpleNamespace
+import subprocess
 
-if os.system('setup/preferences.js') != 0:
-  print('unpug failed')
-  sys.exit(1)
+subprocess.check_output(['node', 'setup/preferences.js', 'content/Preferences.pug', 'build/content/Preferences.xul'])
 
 root = os.path.join(os.path.dirname(__file__), '..')
 
@@ -53,10 +52,11 @@ class Preferences:
     self.printed = []
     self.vars = []
 
-    self.pane, self.ns = load(os.path.join(root, 'content/Preferences.xul'))
+    self.pane, self.ns = load(os.path.join(root, 'build/content/Preferences.xul'))
     self.parse()
     self.doc()
     self.save()
+    self.clean(os.path.join(root, 'build/content/Preferences.xul'))
 
   def parse(self):
     xul = f'{{{self.ns.xul}}}'
@@ -69,7 +69,7 @@ class Preferences:
     tooltips = {}
     links = {
       'which is not all of them': 'support/faq#why-the-double-braces',
-      'title casing for English references': 'support/faq#bbt-is-changing-the-capitalization-of-my-titles-why',
+      'title casing for English items': 'support/faq#bbt-is-changing-the-capitalization-of-my-titles-why',
       'automatic brace-protection for words with uppercase letters': 'support/faq#why-the-double-braces'
     }
     for tooltip in self.pane.findall(f'.//{xul}popupset/{xul}tooltip/{xul}description'):
@@ -300,6 +300,18 @@ class Preferences:
 
     return doc
 
+  def clean(self, path):
+    xul = f'{{{self.ns.xul}}}'
+    bbt = f'{{{self.ns.bbt}}}'
+    for node in self.pane.findall(f'.//{bbt}*'):
+      node.getparent().remove(node)
+    for node in self.pane.xpath(f'.//xul:*[@bbt:*]', namespaces=self.ns):
+      for attr in list(node.attrib):
+        if attr.startswith(bbt) and not attr.startswith(f'{bbt}ae-'):
+          node.attrib.pop(attr)
+    et = etree.ElementTree(self.pane)
+    et.write(path, pretty_print=True)
+
   def save(self):
     for pref in self.preferences.values():
       assert (pref.name in self.printed) or (pref.name in self.undocumented), f'{pref.name} not printed'
@@ -341,6 +353,12 @@ class Preferences:
     with open(meta, 'w') as f:
       print(template('preferences/meta.ts.mako').render(prefix=self.prefix, names=names, translators=translators, preferences=preferences).strip(), file=f)
 
+    defaults = os.path.join(root, 'build', 'defaults', 'preferences', 'defaults.js')
+    os.makedirs(os.path.dirname(defaults), exist_ok=True)
+    with open(defaults, 'w') as f:
+      print(template('preferences/defaults.js.mako').render(prefix=self.prefix, names=names, translators=translators, preferences=preferences).strip(), file=f)
+
+# check translations
 content = os.path.join(root, 'content')
 for xul in os.listdir(content):
   if xul.endswith('xul'):

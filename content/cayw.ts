@@ -110,8 +110,8 @@ class Field {
   public getNoteIndex() { return 0 }
 }
 
-type DocumentData = {
-}
+type DocumentData = Record<string, any>
+
 type Citation = {
   id: number
   locator: string
@@ -389,7 +389,7 @@ Zotero.Server.Endpoints['/better-bibtex/cayw'] = class {
   public async init(request) {
     const options = request.query || {}
 
-    if (options.probe) return [this.OK, 'text/plain', (!Zotero.BetterBibTeX.ready || Zotero.BetterBibTeX.ready.isPending()) ? 'starting' : 'ready' ]
+    if (options.probe) return [this.OK, 'text/plain', Zotero.BetterBibTeX.ready.isPending() ? 'starting' : 'ready' ]
 
     try {
       const citation = options.selected ? (await selected(options)) : (await pick(options))

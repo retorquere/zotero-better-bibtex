@@ -8,7 +8,7 @@ import { DB, scrubAutoExport } from './db/main'
 import { DB as Cache, selector as cacheSelector } from './db/cache'
 import { $and } from './db/loki'
 import { Translators } from './translators'
-import { Preference } from '../gen/preferences'
+import { Preference } from './prefs'
 import { Preferences, schema } from '../gen/preferences/meta'
 import * as ini from 'ini'
 import fold2ascii from 'fold-to-ascii'
@@ -101,6 +101,7 @@ class Git {
     if (!this.enabled) return
 
     try {
+      await this.exec(this.git, ['-C', this.path, 'checkout', this.bib])
       await this.exec(this.git, ['-C', this.path, 'pull'])
     }
     catch (err) {
@@ -128,13 +129,16 @@ class Git {
   }
 
   private async exec(exe: string, args?: string[]): Promise<boolean> { // eslint-disable-line @typescript-eslint/require-await
+    // args = ['/K', exe].concat(args || [])
+    // exe = await pathSearch('CMD')
+
     const cmd = new FileUtils.File(exe)
 
     if (!cmd.isExecutable()) throw new Error(`${cmd.path} is not an executable`)
 
     const proc = Components.classes['@mozilla.org/process/util;1'].createInstance(Components.interfaces.nsIProcess)
     proc.init(cmd)
-    proc.startHidden = true // requires post-55 Firefox
+    proc.startHidden = true
 
     const command = this.quote(cmd.path, args)
     log.debug('running:', command)
@@ -145,7 +149,7 @@ class Git {
         if (topic !== 'process-finished') {
           deferred.reject(new Error(`failed: ${command}`))
         }
-        else if (proc.exitValue !== 0) {
+        else if (proc.exitValue > 0) {
           deferred.reject(new Error(`failed with exit status ${proc.exitValue}: ${command}`))
         }
         else {
@@ -161,22 +165,21 @@ const git = new Git()
 
 
 if (Preference.autoExportDelay < 1) Preference.autoExportDelay = 1
+if (Preference.autoExportIdleWait < 1) Preference.autoExportIdleWait = 1
 const queue = new class TaskQueue {
-  private scheduler = new Scheduler('autoExportDelay', 1000) // eslint-disable-line no-magic-numbers
+  private scheduler = new Scheduler('autoExportDelay', 1000)
   private autoexports: any
-  private started = false
+  private idleService = Components.classes['@mozilla.org/widget/idleservice;1'].getService(Components.interfaces.nsIIdleService)
 
   constructor() {
-    this.pause()
+    this.pause('startup')
   }
 
   public start() {
-    if (this.started) return
-    this.started = true
-    if (Preference.autoExport === 'immediate') this.resume()
+    if (Preference.autoExport === 'immediate') this.resume('startup')
 
-    const idleService = Components.classes['@mozilla.org/widget/idleservice;1'].getService(Components.interfaces.nsIIdleService)
-    idleService.addIdleObserver(this, Preference.autoExportIdleWait)
+    // really dumb but the idle service deals with msecs wverywhere -- except add, which is in seconds
+    this.idleService.addIdleObserver(this, Preference.autoExportIdleWait)
 
     Zotero.Notifier.registerObserver(this, ['sync'], 'BetterBibTeX', 1)
   }
@@ -185,18 +188,47 @@ const queue = new class TaskQueue {
     this.autoexports = autoexports
   }
 
-  public pause() {
+  public pause(reason: 'startup' | 'end-of-idle' | 'start-of-sync' | 'preference-change') {
+    log.debug('on-idle: queue.pause:', reason)
     this.scheduler.paused = true
   }
 
-  public resume() {
+  public resume(reason: 'startup' | 'end-of-sync' | 'start-of-idle' | 'preference-change') {
+    log.debug('on-idle: queue.resume:', reason)
+    if (Zotero.Sync.Runner.syncInProgress) {
+      log.debug('on-idle: queue not resumed: sync in progress, end-of-sync will trigger resume')
+      this.scheduler.paused = true
+      return
+    }
+
+    const is_idle = this.idleService.idleTime >= Preference.autoExportIdleWait * 1000
+    switch (Preference.autoExport) {
+      case 'off':
+        log.debug('on-idle: queue not resumed: auto-export is off')
+        this.scheduler.paused = true
+        return
+
+      case 'idle':
+        // don't re-schedule idle for end-of-sync / should never happen?
+        if (!is_idle) {
+          log.debug('on-idle: queue not resumed:', reason, "but we're not actually idle")
+          this.scheduler.paused = true
+          return
+        }
+        break
+
+      case 'immediate':
+        break
+    }
+
+    log.debug('on-idle: queue resumed:', reason)
     this.scheduler.paused = false
   }
 
   public add(ae) {
     const $loki = (typeof ae === 'number' ? ae : ae.$loki)
     Events.emit('export-progress', 0, Translators.byId[ae.translatorID].label, $loki)
-    this.scheduler.schedule($loki, () => { this.run($loki).catch(err => log.error('autoexport failed:', {$loki}, err)) })
+    this.scheduler.schedule($loki, this.run.bind(this, $loki))
   }
 
   public cancel(ae) {
@@ -204,7 +236,10 @@ const queue = new class TaskQueue {
     this.scheduler.cancel($loki)
   }
 
-  public async run($loki: number) {
+  public run($loki: number) {
+    this.runAsync($loki).catch(err => log.error('autoexport failed:', {$loki}, err))
+  }
+  public async runAsync($loki: number) {
     await Zotero.BetterBibTeX.ready
 
     const ae = this.autoexports.get($loki)
@@ -213,8 +248,6 @@ const queue = new class TaskQueue {
 
     ae.status = 'running'
     this.autoexports.update(scrubAutoExport(ae))
-    const started = Date.now()
-    log.debug('auto-export', ae.type, ae.id, 'started')
 
     try {
       let scope
@@ -277,12 +310,12 @@ const queue = new class TaskQueue {
         }
       }
 
+      log.debug('on-idle: starting auto-export')
       await Promise.all(jobs.map(job => Translators.exportItems(ae.translatorID, displayOptions, job.scope, job.path)))
 
       await repo.push(l10n.localize('Preferences.auto-export.git.message', { type: Translators.byId[ae.translatorID].label.replace('Better ', '') }))
 
       ae.error = ''
-      log.debug('auto-export', ae.type, ae.id, 'took', Date.now() - started, 'msecs')
     }
     catch (err) {
       log.error('auto-export', ae.type, ae.id, 'failed:', ae, err)
@@ -290,7 +323,6 @@ const queue = new class TaskQueue {
     }
 
     ae.status = 'done'
-    log.debug('auto-export done')
     this.autoexports.update(scrubAutoExport(ae))
   }
 
@@ -301,17 +333,24 @@ const queue = new class TaskQueue {
   }
 
   // idle observer
-  protected observe(_subject, topic, _data) {
-    if (!this.started || Preference.autoExport === 'off') return
+  protected observe(_subject, topic, data) {
+    log.debug('on-idle: idle.observe:', { topic, data })
+    if (Preference.autoExport === 'off') {
+      log.debug('on-idle: idle.observe: auto-export is off')
+      this.pause('preference-change')
+      return
+    }
 
     switch (topic) {
       case 'back':
       case 'active':
-        if (Preference.autoExport === 'idle') this.pause()
+        log.debug('on-idle: idle.observe: => pause', topic)
+        this.pause('end-of-idle')
         break
 
       case 'idle':
-        this.resume()
+        log.debug('on-idle: idle.observe: => resume', topic)
+        this.resume('start-of-idle')
         break
 
       default:
@@ -324,15 +363,21 @@ const queue = new class TaskQueue {
   // It is theoretically possible that auto-export is paused because Zotero is idle and then restarted when the sync finishes, but
   // I can't see how a system can be considered idle when Zotero is syncing.
   protected notify(action, type) {
-    if (!this.started || Preference.autoExport === 'off') return
+    if (Preference.autoExport === 'off') {
+      log.debug('on-idle: sync.notify: auto-export is off')
+      this.pause('preference-change')
+      return
+    }
 
     switch(`${type}.${action}`) {
       case 'sync.start':
-        this.pause()
+        log.debug('on-idle: sync.notify: started => pausing queue')
+        this.pause('start-of-sync')
         break
 
       case 'sync.finish':
-        this.resume()
+        log.debug('on-idle: sync.notify: finished => resuming queue')
+        this.resume('end-of-sync')
         break
 
       default:
@@ -373,7 +418,7 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
       this.progress.delete(ae.$loki)
     })
 
-    if (Preference.autoExport === 'immediate') { queue.resume() }
+    if (Preference.autoExport === 'immediate') queue.resume('startup')
   }
 
   public start() {
@@ -413,14 +458,12 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
   }
 
   public run(id) {
-    queue.run(id).catch(err => log.error('AutoExport.run:', err))
+    queue.run(id)
   }
 
   public async cached($loki) {
-    if (!Preference.caching) return 0
+    if (!Preference.cache) return 0
 
-    log.debug('cache-rate: calculating cache rate for', $loki)
-    const start = Date.now()
     const ae = this.db.get($loki)
 
     const itemTypeIDs: number[] = ['attachment', 'note', 'annotation'].map(type => {
@@ -432,9 +475,9 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
       }
     })
 
-    const itemIDs: Set<number> = new Set
-    await this.itemIDs(ae, ae.id, itemTypeIDs, itemIDs)
-    if (itemIDs.size === 0) return 100 // eslint-disable-line no-magic-numbers
+    const itemIDset: Set<number> = new Set
+    await this.itemIDs(ae, ae.id, itemTypeIDs, itemIDset)
+    if (itemIDset.size === 0) return 100 // eslint-disable-line no-magic-numbers
 
     const options = {
       exportNotes: !!ae.exportNotes,
@@ -446,13 +489,16 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
     }, {})
 
     const label = Translators.byId[ae.translatorID].label
+    const selector = cacheSelector(label, options, prefs)
+    const itemIDs = [...itemIDset]
+    const query = $and({...selector, itemID: { $in: itemIDs } })
+    log.debug('fetching cacherate:', { label, query })
     const cached = {
-      serialized: Cache.getCollection('itemToExportFormat').find({ itemID: { $in: [...itemIDs] } }).length,
-      export: Cache.getCollection(label).find($and({...cacheSelector(label, options, prefs), $in: itemIDs})).length,
+      serialized: Cache.getCollection('itemToExportFormat').find({ itemID: { $in: itemIDs } }).length,
+      export: Cache.getCollection(label).find(query).length,
     }
 
-    log.debug('cache-rate: cache rate for', $loki, {...cached, items: itemIDs.size}, 'took', Date.now() - start)
-    return Math.min(Math.round((100 * (cached.serialized + cached.export)) / (itemIDs.size * 2)), 100) // eslint-disable-line no-magic-numbers
+    return Math.min(Math.round((100 * (cached.serialized + cached.export)) / (itemIDs.length * 2)), 100) // eslint-disable-line no-magic-numbers
   }
 
   private async itemIDs(ae, id: number, itemTypeIDs: number[], itemIDs: Set<number>) {
@@ -479,9 +525,9 @@ Events.on('preference-changed', pref => {
 
   switch (Preference.autoExport) {
     case 'immediate':
-      queue.resume()
+      queue.resume('preference-change')
       break
     default: // off / idle
-      queue.pause()
+      queue.pause('preference-change')
   }
 })

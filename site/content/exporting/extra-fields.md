@@ -3,7 +3,7 @@ title: Extra fields
 weight: 8
 ---
 In some cases the Zotero fields do not offer a place to enter the
-data you need to get your references just right. For this Zotero
+data you need to get your exported entries just right. For this Zotero
 has a so-called "cheater syntax" which allows you to add extra
 "fields" as separate lines in the `extra` field all items in Zotero
 have. These fields are supported by the citation processor inside

@@ -76,32 +76,19 @@ parser.add_argument('--slow', action='store_true',
             CI.tag != ''
 )
 parser.add_argument('--test')
+parser.add_argument('--durations')
 parser.add_argument('--bin')
-parser.add_argument('--logs')
-parser.add_argument('--prebuilt')
+parser.add_argument('--bins')
 parser.add_argument('--tagged', action='store_true', default=CI.tag != '')
 parser.add_argument('--nightly', action='store_true', default=(CI.event == 'schedule') or ('#nightly' in CI.message))
 args, unknownargs = parser.parse_known_args()
-sys.argv = sys.argv[:1]
-if CI.branch != '' and args.logs:
-  # prepend but replace later, because the final format is for the console
-  sys.argv += [
-    '--format', 'json.pretty',
-    '--outfile', 'behave.json',
-    '--define', 'loaded.json', # f"loaded={logfile('loaded')}",
-  ]
-sys.argv += unknownargs
+sys.argv = sys.argv[:1] + unknownargs
 
 if args.start:
   args.keep = True
   sys.argv += ['--tags', '@none']
 
-if args.prebuilt:
-  for xpi in glob.glob('xpi/zotero-better-bibtex*.xpi'):
-    os.remove(xpi)
-  xpi = glob.glob(f'prebuilt/zotero-better-bibtex*{args.prebuilt}*.xpi')[0]
-  shutil.copy(xpi, 'xpi')
-elif not CI.service : # local run
+if not CI.service : # local run
   process = subprocess.Popen(['npm', 'run', 'build'], stdout=subprocess.PIPE)
   while True:
     line = process.stdout.readline()
@@ -112,13 +99,9 @@ elif not CI.service : # local run
     print(f'Build exited with exit code {returncode}')
     sys.exit(returncode)
 
-if args.nightly and CI.service and not args.tagged: # test for beta on nightly
-  args.beta = (args.bin == '2')
-elif CI.service and os.environ.get('BETA') == 'true':
+if args.client.endswith('-beta'):
+  args.client = args.client.split('-')[0]
   args.beta = True
-
-if args.beta:
-  args.bin = None
 
 if args.this or args.test_this:
   repo = Repository('.')
@@ -129,7 +112,7 @@ if args.this or args.test_this:
 
 if args.test or args.this or args.nightly or args.tagged or args.beta: args.slow = True
 
-if args.client == 'jurism' and args.beta and CI.service:
+if args.client == 'jurism' and args.beta:
   print(f"********* SKIPPING{' BETA' if args.beta else ''} BUILD FOR {args.client.upper()} UNTIL FURTHER NOTICE ****************")
   sys.exit()
 
@@ -137,28 +120,15 @@ sys.argv.extend(['--define', f"client={args.client}"])
 sys.argv.extend(['--define', f'workers={str(args.workers).lower()}'])
 sys.argv.extend(['--define', f'caching={str(args.workers).lower()}'])
 if args.bin: sys.argv.extend(['--define', f"bin={args.bin}"])
+if args.bins: sys.argv.extend(['--define', f"bins={args.bins}"])
 sys.argv.extend(['--define', f'kill={str(not args.keep).lower()}'])
 if args.stop: sys.argv.append('--stop')
 if args.slow: sys.argv.extend(['--define', 'slow=true'])
 if args.beta: sys.argv.extend(['--define', 'beta=true'])
 if args.test: sys.argv.extend(['--define', f'test={args.test}'])
+if args.durations: sys.argv.extend(['--define', f'durations={args.durations}'])
 if args.this: sys.argv.extend(['--tags', args.this ])
 if args.log_memory_every: sys.argv.extend(['--define', f'log_memory_every={args.log_memory_every}'])
-
-if CI.branch != '' and args.logs:
-  if not os.path.exists(args.logs): os.makedirs(args.logs)
-  def replace_logfile(arg):
-    if arg not in ['behave.json', 'loaded.json']: return arg
-    name = os.path.splitext(arg)[0]
-    if args.nightly:
-      name = os.path.join(args.logs, f'{name}-{args.client}-{"beta" if args.beta else "release"}-{CI.branch}.json')
-    else:
-      name = os.path.join(args.logs, f'{name}-{args.client}-{args.bin}-{CI.branch}.json')
-    if arg == 'behave.json':
-      return name
-    else:
-      return f'loaded={name}'
-  sys.argv = [replace_logfile(arg) for arg in sys.argv]
 
 print('prepped with', args)
 print('starting with', ' '.join(sys.argv))

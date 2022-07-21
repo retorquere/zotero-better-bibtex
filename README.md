@@ -9,14 +9,14 @@ Better BibTeX (BBT) is an extension for [Zotero](https://www.zotero.org) and [Ju
 ### Facilities for generating citation keys
 
 * Automatically generate [citation keys](https://retorque.re/zotero-better-bibtex/citing/) without key clashes! Generate citation keys that take into account existing keys in your library even when they are not part of the items you export. Prevent random breakage!
-* Generate citation keys based on [JabRef patterns](https://docs.jabref.org/setup/citationkeypatterns).
+* Generate citation keys based on contents of your items using [citekey formulas](https://retorque.re/zotero-better-bibtex/citing/#configurable-citekey-generator).
 * Set your own, stable citation keys, drag and drop LaTeX citations, add other custom BibLaTeX fields.
 
 
 ### Conversion between formats and encodings
 * Zotero does all its work in UTF-8 Unicode, which is absolutely the right thing to do. Unfortunately, for those shackled
 to BibTeX and who cannot (yet) move to BibLaTeX, unicode is a major PITA. Also, Zotero supports some simple HTML markup
-in your references that Bib(La)TeX won't understand.
+in your items that Bib(La)TeX won't understand.
 
 * BBT will convert from/to HTML/LaTeX:
 

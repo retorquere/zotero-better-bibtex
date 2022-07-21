@@ -10,11 +10,10 @@ import * as Extra from '../../content/extra'
 import { Cache } from '../../typings/cache'
 import * as ExtraFields from '../../gen/items/extra-fields.json'
 import { log } from '../../content/logger'
-import { worker } from '../../content/environment'
-import { Reference } from '../../gen/typings/serialized-item'
+import { RegularItem } from '../../gen/typings/serialized-item'
 import * as postscript from '../lib/postscript'
 
-type ExtendedReference = Reference & { extraFields: Extra.Fields }
+type ExtendedItem = RegularItem & { extraFields: Extra.Fields }
 
 const validCSLTypes: string[] = require('../../gen/items/csl-types.json')
 
@@ -36,37 +35,30 @@ export const CSLExporter = new class { // eslint-disable-line @typescript-eslint
   public initialize() {
     try {
       if (Translator.preferences.postscript.trim()) {
-        this.postscript = new Function(
-          'reference',
-          'item',
-          'Translator',
-          'Zotero',
-          'extra',
-          postscript.body(Translator.preferences.postscript)
-        ) as postscript.Postscript
+        this.postscript = postscript.postscript('csl', Translator.preferences.postscript)
       }
       else {
-        this.postscript = postscript.noop as postscript.Postscript
+        this.postscript = postscript.noop
       }
     }
     catch (err) {
-      this.postscript = postscript.noop as postscript.Postscript
-      log.debug('failed to install postscript', err, '\n', postscript.body(Translator.preferences.postscript))
+      this.postscript = postscript.noop
+      log.error('failed to install postscript', err, '\n', Translator.preferences.postscript)
     }
   }
-  public postscript(_reference, _item, _translator, _zotero, _extra): postscript.Allow {
+  public postscript(_entry, _item, _translator, _zotero, _extra): postscript.Allow {
     return { cache: true, write: true }
   }
 
   public doExport() {
     const items = []
     const order: { citationKey: string, i: number}[] = []
-    for (const item of (Translator.references as Generator<ExtendedReference, void, unknown>)) {
+    for (const item of (Translator.regularitems as Generator<ExtendedItem, void, unknown>)) {
       order.push({ citationKey: item.citationKey, i: items.length })
 
       let cached: Cache.ExportedItem
       if (cached = Zotero.BetterBibTeX.cacheFetch(item.itemID, Translator.options, Translator.preferences)) {
-        items.push(cached.reference)
+        items.push(cached.entry)
         continue
       }
 
@@ -77,25 +69,14 @@ export const CSLExporter = new class { // eslint-disable-line @typescript-eslint
 
       Object.assign(item, Extra.get(item.extra, 'csl'))
 
-      // until export translators can be async, itemToCSLJSON must run before the translator starts, so it actually doesn't do anything in a worker context
-      // so re-assigne the extracted extra here
       let csl = Zotero.Utilities.itemToCSLJSON(item)
-      if (worker) csl.note = item.extra || undefined
+      csl['citation-key'] = item.citationKey
+      if (Zotero.worker) csl.note = item.extra || undefined
 
-      // 637
-      /* TODO: is this still needed with the new extra-parser?
-      delete csl['publisher-place']
-      delete csl['archive-place']
-      delete csl['event-place']
-      delete csl['original-publisher-place']
-      delete csl['publisher-place']
-      */
       if (item.place) csl[item.itemType === 'presentation' ? 'event-place' : 'publisher-place'] = item.place
 
       // https://github.com/retorquere/zotero-better-bibtex/issues/811#issuecomment-347165389
       if (item.ISBN) csl.ISBN = item.ISBN
-
-      delete csl.authority
 
       if (item.itemType === 'videoRecording' && csl.type === 'video') csl.type = 'motion_picture'
 

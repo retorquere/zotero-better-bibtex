@@ -1,25 +1,33 @@
-// workerContext and Translator must be var-hoisted by esbuild to make this work
-declare const ZOTERO_TRANSLATOR_INFO: any
-declare const workerContext: { translator: string, debugEnabled: boolean, worker: string }
+import type { Translators as Translator } from '../typings/translators'
+// workerJob and Translator must be var-hoisted by esbuild to make this work
+declare var ZOTERO_TRANSLATOR_INFO: TranslatorHeader // eslint-disable-line no-var
+declare const workerJob: Translator.Worker.Job
+declare const dump: (msg: string) => void
 
-import { stringify, asciify } from './stringify'
-import { worker as inWorker } from './environment'
+import { asciify } from './stringify'
+import { worker as inWorker } from './client'
+import { inspect } from 'loupe'
 
-const inTranslator = inWorker || typeof ZOTERO_TRANSLATOR_INFO !== 'undefined'
+export function print(msg: string): void {
+  dump(msg + '\n')
+}
+
+import type { TranslatorHeader } from '../translators/lib/translator'
 
 class Logger {
   public verbose = false
 
   protected timestamp: number
 
-  private format({ error=false, worker='', translator=''}, msg) {
+  private format({ error=false, worker=0, translator='', issue=0}, msg) {
+    let workername = `${worker}`
     let diff = null
     const now = Date.now()
     if (this.timestamp) diff = now - this.timestamp
     this.timestamp = now
 
     if (typeof msg !== 'string') {
-      let output = ''
+      let output = issue ? `issue ${issue}: `: ''
       for (const m of msg) {
         const type = typeof m
         if (type === 'string' || m instanceof String || type === 'number' || type === 'undefined' || type === 'boolean' || m === null) {
@@ -31,11 +39,8 @@ class Logger {
         else if (m && type === 'object' && m.message) { // mozilla exception, no idea on the actual instance type
           output += this.formatError({ message: m.errorCode ? `${m.message} (${m.errorCode})` : m.message, filename: m.fileName, lineno: m.lineNumber, colno: m.column, stack: m.stack })
         }
-        else if (this.verbose) {
-          output += stringify(m, null, 2)
-        }
         else {
-          output += stringify(m)
+          output += inspect(m)
         }
 
         output += ' '
@@ -44,15 +49,18 @@ class Logger {
     }
 
     if (inWorker) {
-      worker = worker || workerContext.worker
-      translator = translator || workerContext.translator
+      if (!worker && workerJob.job) {
+        worker = workerJob.job
+        workername = `${workerJob.job}`
+      }
+      translator = translator || workerJob.translator
     }
     else {
-      if (worker) worker = `${worker} (but inWorker is false?)`
+      if (worker) workername = `${worker} (ceci n'est pas une ouvrier)`
       // Translator must be var-hoisted by esbuild for this to work
-      if (!translator && inTranslator) translator = ZOTERO_TRANSLATOR_INFO.label
+      if (!translator && typeof ZOTERO_TRANSLATOR_INFO !== 'undefined') translator = ZOTERO_TRANSLATOR_INFO.label
     }
-    const prefix = ['better-bibtex', translator, error && 'error', worker && `(worker ${worker})`].filter(p => p).join(' ')
+    const prefix = ['better-bibtex', translator, error && ':error:', worker && `(worker ${workername})`].filter(p => p).join(' ')
     return `{${prefix}} +${diff} ${asciify(msg)}`
   }
 
@@ -69,19 +77,27 @@ class Logger {
   }
 
   public get enabled(): boolean {
-    if (!inTranslator) return Zotero.Debug.enabled as boolean
-    if (!inWorker) return true
-    return !workerContext || workerContext.debugEnabled
+    if (typeof ZOTERO_TRANSLATOR_INFO === 'undefined') return Zotero.Debug.enabled as boolean
+    if (!Zotero.worker) return true
+    return !workerJob || workerJob.debugEnabled
   }
 
   public debug(...msg) {
     if (this.enabled) Zotero.debug(this.format({}, msg))
   }
 
+  public dump(...msg) {
+    if (this.enabled) print(this.format({}, msg))
+  }
+
+  public for(issue: number, ...msg) {
+    if (this.enabled) Zotero.debug(this.format({ issue }, msg))
+  }
+
   public error(...msg) {
     Zotero.debug(this.format({error: true}, msg))
   }
-  public status({ error=false, worker='', translator='' }, ...msg) {
+  public status({ error=false, worker=0, translator='' }, ...msg) {
     if (error || this.enabled) Zotero.debug(this.format({error, worker, translator}, msg))
   }
 }

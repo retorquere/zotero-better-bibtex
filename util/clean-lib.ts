@@ -49,12 +49,20 @@ function sortkey(item) {
   return [ item.dateModified || item.dateAdded, item.itemType, `${item.itemID}` ].join('\t')
 }
 */
+
+function stripCC(input) {
+  var output = ''
+  for (var i=0; i<input.length; i++) {
+    if (input.charCodeAt(i) >= 32) output += input.charAt(i)
+  }
+  return output
+}
 for (const lib of argv._) {
   const ext = extensions.find(ext => lib.endsWith(ext))
 
   if (ext === '.schomd.json' || ext === '.csl.json') continue
 
-  const pre = JSON.parse(fs.readFileSync(lib, 'utf-8'))
+  const pre = JSON.parse(stripCC(fs.readFileSync(lib, 'utf-8')))
   const post = JSON.parse(JSON.stringify(pre))
 
   switch (ext) {

@@ -7,7 +7,6 @@ import html2markdown from '@inkdropapp/html2markdown'
 import { Translator } from './lib/translator'
 export { Translator }
 import { log } from '../content/logger'
-import { fromEntries } from '../content/object'
 
 import { Item } from '../gen/typings/serialized-item'
 
@@ -53,12 +52,6 @@ class Exporter {
       if (this.keep(cleaned)) items[item.itemID] = cleaned
     }
 
-    log.debug(Object.values(Translator.collections).map(coll => ({
-      ...coll,
-      collections: fromEntries((coll.collections || []).map(key => [ key, !!Translator.collections[key] ])),
-      items: fromEntries((coll.items || []).map(itemID => [ itemID, !!items[itemID] ])),
-    })))
-
     for (const [key, collection] of Object.entries(Translator.collections)) {
       for (const itemID of collection.items) filed.add(itemID)
       collections[key] = {
@@ -75,10 +68,10 @@ class Exporter {
     }
 
     const unfiled = { name: 'Unfiled', items: Object.values(items).filter(item => !filed.has(item.itemID)), collections: [], root: true }
-    if (!this.prune(unfiled)) this.collection(unfiled)
+    if (!this.prune(unfiled)) this.write_collection(unfiled)
 
     for (const collection of sorted(Object.values(collections))) {
-      if (collection.root && !this.prune(collection)) this.collection(collection)
+      if (collection.root && !this.prune(collection)) this.write_collection(collection)
     }
 
     let style = '\n  body {\n    counter-reset: h1;\n  }\n\n'
@@ -94,7 +87,6 @@ class Exporter {
     style += '  blockquote { border-left: 1px solid gray; }\n'
 
     this.html = `<html><head><style>${ style }</style></head><body>${ this.body }</body></html>`
-    log.debug('Translator options:', Translator.options)
     if (Translator.options.markdown) this.markdown = html2markdown(this.html)
   }
 
@@ -102,30 +94,29 @@ class Exporter {
     log.debug(`collectednotes.${context}: ${JSON.stringify(Array.from(args))}`)
   }
 
-  collection(collection, level = 1) {
-    log.debug(`collection ${collection.name} @ ${level} with ${collection.collections.length} subcollections`)
+  write_collection(collection, level = 1) {
     this.levels = Math.max(this.levels, level)
 
     this.body += `<h${ level }>${ escape.html(collection.name) }</h${ level }>\n`
     for (const item of collection.items) {
-      this.item(item)
+      this.write_item(item)
     }
 
     for (const coll of sorted(collection.collections)) {
-      this.collection(coll, level + 1)
+      this.write_collection(coll, level + 1)
     }
   }
 
-  item(item) {
+  write_item(item) {
     switch (item.itemType) {
       case 'note':
         this.note(item.note, 'note')
         break
       case 'attachment':
-        this.reference(item)
+        this.item(item)
         break
       default:
-        this.reference(item)
+        this.item(item)
         break
     }
   }
@@ -135,7 +126,6 @@ class Exporter {
 
     collection.collections = collection.collections.filter(sub => !this.prune(sub))
 
-    log.debug(`prune: ${collection.name}: ${collection.items.length} items, ${collection.collections.length} collections: ${!collection.items.length && !collection.collections.length}`)
     return !collection.items.length && !collection.collections.length
   }
 
@@ -172,7 +162,7 @@ class Exporter {
     }
   }
 
-  reference(item) {
+  item(item) {
     let notes = []
     let title = ''
 

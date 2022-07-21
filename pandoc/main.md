@@ -3,7 +3,7 @@
 The course \textit{Advanced Software Design} is built around the achievement-driven learning methodology [@wrigstad2017mastery]
 (more details in [@sec:theory]).
 This methodology gives students more  control of their
-learning with enough flexibility to engage them in deeper learning [@biggsTang2011].
+learning with enough flexibility to engage them in deeper learning [@biggsTang2011, @sec:theory, @stuff].
 Yet, year after year, although the course \textit{Advanced Software Design} has increased in the number
 of students, we observed that students do not pursue higher grades.
 In this course, a higher grade implies the possibility of deeper learning, as students need

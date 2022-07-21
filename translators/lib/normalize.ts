@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-return */
 
 import { stringify } from '../../content/stringify'
-import { Reference, Collection } from '../../gen/typings/serialized-item'
+import { RegularItem, Collection } from '../../gen/typings/serialized-item'
 
 function rjust(str: string | number, width: number, padding: string): string {
   if (typeof str === 'number') str = `${str}`
@@ -99,7 +99,7 @@ export function normalize(library: Library, sort=true): void {
       for (const att of item.attachments) {
         att.contentType = att.contentType || att.mimeType
         delete att.mimeType
-        for (const prop of ['localPath', 'itemID', 'charset', 'dateAdded', 'parentItem', 'dateModified', 'version', 'relations', 'id']) {
+        for (const prop of ['select', 'localPath', 'itemID', 'charset', 'dateAdded', 'parentItem', 'dateModified', 'version', 'relations', 'id']) {
           delete att[prop]
         }
       }
@@ -123,7 +123,7 @@ export function normalize(library: Library, sort=true): void {
     strip(item)
 
     if (item.extra?.length) {
-      item.extra = (item as Reference).extra.split('\n')
+      item.extra = (item as RegularItem).extra.split('\n')
     }
     else {
       delete item.extra

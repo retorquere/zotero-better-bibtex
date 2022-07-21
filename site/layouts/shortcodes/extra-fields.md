@@ -5,6 +5,7 @@
 |**adoption date**           |date|adoptionDate¹                                               |                        |
 |**application number**      |text|applicationNumber                                           |                        |
 |**archive collection**      |text|archiveCollection¹                                          |archive\_collection¹    |
+|**archive id**              |text|number                                                      |number                  |
 |**archive location**        |text|archiveLocation                                             |archive\_location       |
 |**archive place**           |text|                                                            |archive-place           |
 |**artwork medium**          |text|medium                                                      |                        |
@@ -22,6 +23,7 @@
 |**case name**               |text|title                                                       |title                   |
 |**cast member**             |name|castMember                                                  |castMember              |
 |**chapter number**          |text|session                                                     |chapter-number          |
+|**citation key**            |text|citationKey²                                                |                        |
 |**code number**             |text|codeNumber                                                  |                        |
 |**code pages**              |text|pages                                                       |page                    |
 |**code volume**             |text|volume                                                      |                        |
@@ -46,6 +48,7 @@
 |**episode number**          |text|number                                                      |number                  |
 |**event date**              |date|conferenceDate¹ / dateAmended¹ / signingDate¹               |event-date              |
 |**event place**             |text|                                                            |event-place             |
+|**event title**             |text|                                                            |event-title²            |
 |**filing date**             |date|filingDate                                                  |submitted               |
 |**first page**              |text|pages                                                       |page                    |
 |**forum title**             |text|publicationTitle                                            |                        |
@@ -97,6 +100,7 @@
 |**reviewed author**         |name|reviewedAuthor                                              |reviewed-author         |
 |**reviewed title**          |text|                                                            |reviewed-title          |
 |**running time**            |text|runningTime                                                 |                        |
+|**script writer**           |name|scriptwriter                                                |script-writer²          |
 |**series editor**           |name|seriesEditor                                                |collection-editor       |
 |**series number**           |text|seriesNumber                                                |                        |
 |**series text**             |text|seriesText                                                  |                        |

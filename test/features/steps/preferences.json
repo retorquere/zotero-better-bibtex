@@ -8,7 +8,7 @@
       "Better BibTeX"
     ],
     "var": "DOIandURL",
-    "label": "When a reference has both a DOI and a URL, export",
+    "label": "When an item has both a DOI and a URL, export",
     "options": {
       "both": "both",
       "doi": "DOI",
@@ -148,7 +148,7 @@
     "default": false,
     "affects": [],
     "var": "auxImport",
-    "label": "When scanning an AUX file, attempt to import references from the attached bib file when their citation keys are not in Zotero"
+    "label": "When scanning an AUX file, attempt to import entries from the attached bib file when their citation keys are not in Zotero"
   },
   {
     "name": "baseAttachmentPath",
@@ -223,14 +223,7 @@
     "override": true
   },
   {
-    "name": "cacheFlushInterval",
-    "type": "number",
-    "default": 5,
-    "affects": [],
-    "var": "cacheFlushInterval"
-  },
-  {
-    "name": "caching",
+    "name": "cache",
     "type": "boolean",
     "default": true,
     "affects": [
@@ -239,8 +232,25 @@
       "Better CSL JSON",
       "Better CSL YAML"
     ],
-    "var": "caching",
+    "var": "cache",
     "label": "Enable caching for background exports"
+  },
+  {
+    "name": "cacheFlushInterval",
+    "type": "number",
+    "default": 5,
+    "affects": [],
+    "var": "cacheFlushInterval"
+  },
+  {
+    "name": "charmap",
+    "type": "string",
+    "default": "",
+    "affects": [
+      "Better BibLaTeX",
+      "Better BibTeX"
+    ],
+    "var": "charmap"
   },
   {
     "name": "citeCommand",
@@ -261,10 +271,18 @@
   {
     "name": "citekeyFormat",
     "type": "string",
-    "default": "\u200b[auth:lower][shorttitle3_3][year]",
+    "default": "\u200bauth.lower + shorttitle(3,3) + year",
     "affects": [],
     "var": "citekeyFormat",
     "label": "Citation key format"
+  },
+  {
+    "name": "citekeyFormatBackup",
+    "type": "string",
+    "default": "",
+    "affects": [],
+    "var": "citekeyFormatBackup",
+    "label": "Previous citation key format with error"
   },
   {
     "name": "citekeySearch",
@@ -411,6 +429,13 @@
     "var": "importJabRefStrings"
   },
   {
+    "name": "importNoteToExtra",
+    "type": "string",
+    "default": "",
+    "affects": [],
+    "var": "importNoteToExtra"
+  },
+  {
     "name": "importSentenceCase",
     "type": "string",
     "default": "on+guess",
@@ -495,6 +520,22 @@
     "label": "Apply kuroshiro romajization in Japanese names/titles. Uses a lot of memory."
   },
   {
+    "name": "language",
+    "type": "string",
+    "default": "langid",
+    "affects": [
+      "Better BibLaTeX",
+      "Better BibTeX"
+    ],
+    "var": "language",
+    "label": "Export language as",
+    "options": {
+      "langid": "langid",
+      "language": "language",
+      "both": "both"
+    }
+  },
+  {
     "name": "mapMath",
     "type": "string",
     "default": "",
@@ -530,13 +571,6 @@
       "text": "Prefer text-mode replacements",
       "math": "Prefer math-mode replacements"
     }
-  },
-  {
-    "name": "newTranslatorsAskRestart",
-    "type": "boolean",
-    "default": true,
-    "affects": [],
-    "var": "newTranslatorsAskRestart"
   },
   {
     "name": "parseParticles",
@@ -600,7 +634,7 @@
       "Better BibTeX"
     ],
     "var": "qualityReport",
-    "label": "Include comments about potential problems with the exported references"
+    "label": "Include comments about potential problems with the exported entries"
   },
   {
     "name": "quickCopyEta",
@@ -623,6 +657,7 @@
       "pandoc": "Pandoc citation",
       "orgmode": "Org-mode select link",
       "orgRef": "org-ref citation",
+      "orgRef3": "org-ref v3 citation",
       "rtfScan": "RTF Scan marker",
       "roamCiteKey": "Roam Cite Key",
       "atom": "Atom (https://atom.io/packages/zotero-citations)",
@@ -783,7 +818,7 @@
   {
     "name": "verbatimFields",
     "type": "string",
-    "default": "url,doi,file,ids,eprint,verba,verbb,verbc,groups",
+    "default": "url,doi,file,ids,eprint,/^verb[a-z]$/,groups,/^citeulike-linkout-[0-9]+$/, /^bdsk-url-[0-9]+$/",
     "affects": [],
     "var": "verbatimFields"
   },
@@ -803,11 +838,10 @@
     "var": "warnTitleCased"
   },
   {
-    "name": "workers",
-    "type": "number",
-    "default": 1,
+    "name": "worker",
+    "type": "boolean",
+    "default": true,
     "affects": [],
-    "var": "workers",
-    "label": "Parallel background exports:"
+    "var": "worker"
   }
 ]

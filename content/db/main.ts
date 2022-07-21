@@ -1,22 +1,21 @@
 import { XULoki as Loki } from './loki'
-import { Preference } from '../../gen/preferences'
+import { Preference } from '../prefs'
 import { schema } from '../../gen/preferences/meta'
 import { getItemsAsync } from '../get-items-async'
-import { log } from '../logger'
 
 import { SQLite } from './store/sqlite'
+import { log } from '../logger'
 
 import * as Translators from '../../gen/translators.json'
 
 export function scrubAutoExport(ae: any): void { // eslint-disable-line @typescript-eslint/explicit-module-boundary-types
   const translator = schema.translator[Translators.byId[ae.translatorID].label]
-
-  for (const k of (schema.autoExport.preferences as string[]).concat(schema.autoExport.displayOptions)) {
-    if (typeof ae[k] !== 'undefined' && !translator.types[k]) {
-      delete ae[k]
-      log.debug('ae: stripping', k, 'from', ae)
-    }
+  const properties = translator.autoexport ? translator.autoexport.properties : {}
+  log.debug('scrub:', { ae, properties })
+  for (const k of Object.keys(ae)) {
+    if (!properties[k]) delete ae[k]
   }
+  log.debug('scrubed:', { ae })
 
   return ae // eslint-disable-line @typescript-eslint/no-unsafe-return
 }
@@ -76,59 +75,30 @@ class Main extends Loki {
         ...schema.autoExport.preferences,
       ],
       unique: [ 'path' ],
-      logging: true,
+      // logging: true,
       schema: {
+        type: 'object',
+        discriminator: { propertyName: 'translatorID' },
         oneOf: [],
       },
     }
-    for (const [name, translator] of Object.entries(schema.translator)) {
-      if (!translator.autoexport) continue
-
-      config.schema.oneOf.push({
-        type: 'object',
-        additionalProperties: false,
-        properties: {
-          type: { enum: [ 'collection', 'library' ] },
-          id: { type: 'integer' },
-          path: { type: 'string', minLength: 1 },
-          status: { enum: [ 'scheduled', 'running', 'done', 'error' ] },
-          translatorID: { const: Translators.byName[name].translatorID },
-
-          // options
-          exportNotes: { type: 'boolean' },
-          useJournalAbbreviation: { type: 'boolean' },
-
-          // prefs
-          ...(translator.types),
-
-          // status
-          error: { type: 'string' },
-          recursive: { type: 'boolean' },
-
-          // LokiJS
-          meta: { type: 'object' },
-          $loki: { type: 'integer' },
-        },
-        required: [ 'type', 'id', 'path', 'status', 'translatorID', ...(translator.displayOptions), ...(translator.preferences) ],
-      })
+    for (const translator of Object.values(schema.translator)) {
+      if (translator.autoexport) config.schema.oneOf.push(translator.autoexport)
     }
-    log.debug('ae schema:', JSON.stringify(config, null, 2))
 
     const autoexport = this.schemaCollection('autoexport', config)
-
-    for (const ae of autoexport.find()) {
-      if (typeof ae.recursive !== 'boolean') {
-        ae.recursive = false
-      }
-
-      scrubAutoExport(ae)
-      autoexport.update(ae)
-    }
 
     if (Preference.scrubDatabase) {
       // directly change the data objects and rebuild indexes https://github.com/techfort/LokiJS/issues/660
       const length = autoexport.data.length
-      autoexport.data = autoexport.data.filter(doc => typeof doc.$loki === 'number' && typeof doc.meta === 'object')
+      autoexport.data = autoexport.data.filter(doc => {
+        const err = autoexport.validationError(doc)
+        if (err) {
+          log.debug('auto-export validation error', err, doc)
+          return false
+        }
+        return true
+      })
       if (length !== autoexport.data.length) {
         autoexport.ensureId()
         autoexport.ensureAllIndexes(true)
@@ -171,6 +141,8 @@ class Main extends Loki {
         item.setField('extra', clean)
         await item.saveTx()
       }
+
+      Preference.scrubDatabase = false
     }
   }
 }

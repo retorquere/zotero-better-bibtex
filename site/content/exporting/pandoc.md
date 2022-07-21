@@ -9,7 +9,7 @@ In addition to LaTeX, BBT plays very well with pandoc:
 
 * you can [drag and drop]({{< ref "/installation/preferences/#quick-copydrag-and-drop-citations" >}}) citations from Zotero into your markdown documents.
 * you can [cite as you write]({{< ref "/citing/cayw" >}}) in your favorite editor with varying levels of comfort, mostly depending on how easy (VSCode, Sublime) or hard (looking at you Scrivener) it is to extend your editor.
-* you can even convert your markdown document into a LibreOffice/Word document with actual live Zotero references as if you had entered them into Zotero all along (see below)
+* you can even convert your markdown document into a LibreOffice/Word document with actual live Zotero items as if you had entered them into Zotero all along (see below)
 
 ## Use CSL, not bibtex with pandoc
 
@@ -83,6 +83,9 @@ document preferences and click `OK` *before* you refresh, or you'll get a confir
 popup for each citation. Also, the Word document is sometimes deemed
 corrupt when opening it, but running the pandoc command again without
 any changes fixes it ¯\\\_(ツ)\_/¯
+LibreOffice doesn't recognise Zotero citations in DOCX,
+see [issue #2070](https://github.com/retorquere/zotero-better-bibtex/issues/2070),
+and you must use ODT.
 
 You can also specify `transferable: true` to create a [transferable document](https://www.zotero.org/support/kb/moving_documents_between_word_processors). You don't really need this for ODT or DOCX (just use Pandoc to create those directly using this filter), but it will allow transferring your document to GDocs.
 

@@ -56,11 +56,23 @@ Use the extended biber 2.7 format for names with particles - only works in BibLa
 
 ## Fields
 
-### When a reference has both a DOI and a URL, export
+### Export language as
+
+default: `langid`
+
+Export either langid, language or both fields based on the item language (if any).
+
+Options:
+
+* langid
+* language
+* both
+
+### When an item has both a DOI and a URL, export
 
 default: `both`
 
-Does what it says on the tin, really. If a reference has both a DOI and an URL, you can choose to have them both exported, or either one of them. Note that for BibTeX, you must load the `url` package when you have `doi` or `url` fields. `doi` and `url` fields are so-called `verbatim` fields with different escaping rules, and BibTeX compilation will likely error out without the package loaded.
+Does what it says on the tin, really. If an item has both a DOI and an URL, you can choose to have them both exported, or either one of them. Note that for BibTeX, you must load the `url` package when you have `doi` or `url` fields. `doi` and `url` fields are so-called `verbatim` fields with different escaping rules, and BibTeX compilation will likely error out without the package loaded.
 
 Options:
 
@@ -104,6 +116,7 @@ Options:
 * Pandoc citation
 * Org-mode select link
 * org-ref citation
+* org-ref v3 citation
 * RTF Scan marker
 * Roam Cite Key
 * Atom (https://atom.io/packages/zotero-citations)
@@ -157,7 +170,7 @@ Used for drag-and-drop/quick copy citations in `Build your own` format. This is 
 
 default: `<not set>`
 
-Snippet of javascript to run [after each reference generation]({{ ref . "exporting/scripting.md" }}).
+Snippet of javascript to run [after each entry generation]({{ ref . "exporting/scripting.md" }}).
 
 ## Miscellaneous
 
@@ -167,11 +180,11 @@ default: `no`
 
 If set, generates journal abbreviations on export using the Zotero journal abbreviator, according to the abbreviation style selected in the list below the checkbox.
 
-### Include comments about potential problems with the exported references
+### Include comments about potential problems with the exported entries
 
 default: `no`
 
-Generate quality reports for exported references. These show up only in BibTeX and BibLaTeX report formats and indicate things like missing required fields and duplicate citation keys.
+Generate quality reports for exported entries. These show up only in BibTeX and BibLaTeX report formats and indicate things like missing required fields and duplicate citation keys.
 
 ### Include automatic tags in export
 
@@ -198,7 +211,7 @@ Options:
 
 default: `yes`
 
-If you're dead-set on ignoring both BibTeX/BibLaTeX best practice (see the BBT FAQ) and the Zotero recommendations on title/sentence casing, you can turn this off to suppress [title casing for English references]({{ ref . "support/faq#bbt-is-changing-the-capitalization-of-my-titles-why" }})
+If you're dead-set on ignoring both BibTeX/BibLaTeX best practice (see the BBT FAQ) and the Zotero recommendations on title/sentence casing, you can turn this off to suppress [title casing for English items]({{ ref . "support/faq#bbt-is-changing-the-capitalization-of-my-titles-why" }})
 
 ### Apply case-protection to capitalized words by enclosing them in braces
 
@@ -215,12 +228,6 @@ default: `no`
 By default, BBT clears all caches whenever BBT or Zotero is upgraded. I can't realistically predict whether a change in Zotero or BBT is going to affect the output generated for any given item, so to be sure you always have the latest export-affecting fixes, the caches are discarded when a new version of either is detected. If you have a very large library however, of which you regularly export significant portions, you might want to retain the cached items even if that does come with the risk that you get wrong output on export that has been fixed in the interim.
 
 If you have this on, and you experience any problem that is not the cache getting dropped on upgrade, you *must* clear the cache and reproduce the problem. When you change this setting, as with any setting change, the cache will be dropped.
-
-#### Parallel background exports:
-
-default: `1`
-
-BBT can now perform its exports in a separate thread, and should no longer block Zotero's UI pretty much regardless of how large your library is. The default of 1 parallel export should suit most needs, but if you have many auto-exports set up, you may want to raise the maximum parallel exports to prevent queueing of exports. It is possible to turn background exports off by setting this value to `0` in the hidden preferences; you will get the old (blocking) behavior back, but you can't complain about Zotero being laggy during auto-exports. All Zotero exports are blocking, and it's a minor miracle I got background exports to work at all.
 
 #### Enable caching for background exports
 

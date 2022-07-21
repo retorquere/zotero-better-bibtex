@@ -1,8 +1,8 @@
 import { log } from './logger'
 import { TeXstudio } from './tex-studio'
-import { repatch as $patch$ } from './monkey-patch'
+import { patch as $patch$, unpatch as $unpatch$, Trampoline } from './monkey-patch'
 import { clean_pane_persist } from './clean_pane_persist'
-import { Preference } from '../gen/preferences'
+import { Preference } from './prefs'
 import { AutoExport } from './auto-export'
 import { flash } from './flash'
 import { sentenceCase } from './text'
@@ -13,9 +13,14 @@ import * as DateParser from './dateparser'
 
 export class ZoteroPane {
   private globals: Record<string, any>
+  private patched: Trampoline[] = []
+
+  public unload(): void {
+    $unpatch$(this.patched)
+  }
 
   public load(): void {
-    const pane = Zotero.getActiveZoteroPane()
+    const pane = Zotero.getActiveZoteroPane() // TODO: this is problematic if there can be multiple
 
     const globals = this.globals
     $patch$(pane, 'buildCollectionContextMenu', original => async function() {
@@ -23,7 +28,7 @@ export class ZoteroPane {
       await original.apply(this, arguments)
 
       if (!globals) {
-        log.debug('buildCollectionContextMenu: globals not set')
+        log.error('buildCollectionContextMenu: globals not set')
         return
       }
 
@@ -48,15 +53,12 @@ export class ZoteroPane {
         let auto_exports = []
         if (Preference.autoExport !== 'immediate') {
           if (isCollection) {
-            log.debug($and({ type: 'collection', id: treeRow.ref.id }))
             auto_exports = AutoExport.db.find($and({ type: 'collection', id: treeRow.ref.id }))
           }
           else if (isLibrary) {
-            log.debug($and({ type: 'library', id: treeRow.ref.libraryID }))
             auto_exports = AutoExport.db.find($and({ type: 'library', id: treeRow.ref.libraryID }))
           }
         }
-        log.debug('buildCollectionContextMenu: auto-exports', { isCollection, isLibrary, auto_exports, data: AutoExport.db.data })
 
         for (const node of [...globals.document.getElementsByClassName('zotero-collectionmenu-bbt-autoexport')]) {
           node.hidden = auto_exports.length === 0
@@ -74,14 +76,14 @@ export class ZoteroPane {
       catch (err) {
         log.error('ZoteroPane.buildCollectionContextMenu:', err)
       }
-    })
+    }, this.patched)
 
     // Monkey patch because of https://groups.google.com/forum/#!topic/zotero-dev/zy2fSO1b0aQ
     $patch$(pane, 'serializePersist', original => function() {
       // eslint-disable-next-line prefer-rest-params
       original.apply(this, arguments)
       if (Zotero.BetterBibTeX.uninstalled) clean_pane_persist()
-    })
+    }, this.patched)
   }
 
   public pullExport(): void {
@@ -150,18 +152,15 @@ export class ZoteroPane {
         return
       }
     }
-    log.debug('patchDates:', mapping)
 
     const tzdiff = (new Date).getTimezoneOffset()
     for (const item of items) {
       let save = false
       try {
         const extra = Extra.get(item.getField('extra'), 'zotero', { tex: true })
-        log.debug('patchDates:', extra)
         for (const [k, v] of Object.entries(extra.extraFields.tex)) {
           if (mapping[k]) {
-            const date = DateParser.parse(v.value, Zotero.BetterBibTeX.localeDateOrder)
-            log.debug('patchDates:', date)
+            const date = DateParser.parse(v.value)
             if (date.type === 'date' && date.day) {
               delete extra.extraFields.tex[k]
               item.setField(mapping[k], new Date(date.year, date.month - 1, date.day, 0, -tzdiff).toISOString())
@@ -170,13 +169,12 @@ export class ZoteroPane {
           }
         }
         if (save) {
-          log.debug('patchDates:', extra, Extra.set(extra.extra, extra.extraFields))
           item.setField('extra', Extra.set(extra.extra, extra.extraFields))
           await item.saveTx()
         }
       }
       catch (err) {
-        log.debug('patchDates:', err)
+        log.error('patchDates:', err)
       }
     }
   }
@@ -184,7 +182,7 @@ export class ZoteroPane {
   public async addCitationLinks(): Promise<void> {
     const items = Zotero.getActiveZoteroPane().getSelectedItems()
     if (items.length !== 1) {
-      flash('Citation links only works for a single reference')
+      flash('Citation links only works for a single item')
       return
     }
 
@@ -202,11 +200,11 @@ export class ZoteroPane {
     await TeXstudio.push()
   }
 
-  public errorReport(includeReferences: string): void {
+  public errorReport(includeItems: string): void {
     const pane = Zotero.getActiveZoteroPane()
     let scope = null
 
-    switch (pane && includeReferences) {
+    switch (pane && includeItems) {
       case 'collection':
       case 'library':
         scope = { type: 'collection', collection: pane.getSelectedCollection() }

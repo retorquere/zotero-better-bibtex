@@ -1,11 +1,17 @@
 import * as mapping from '../gen/items/extra-fields.json'
 import * as CSL from 'citeproc'
 
-type TeXString = { value: string, raw?: boolean }
+type TeXString = { value: string, mode?: 'raw' | 'cased', line: number }
+
+type Creator = {
+  name: string
+  type: string
+}
 
 export type Fields = {
   kv: Record<string, string>
   creator: Record<string, string[]>
+  creators: Creator[]
   tex: Record<string, TeXString>
   citationKey: string
   aliases: string[]
@@ -39,8 +45,8 @@ export function zoteroCreator(value: string, creatorType: string): ZoteroCreator
 
 const re = {
   // fetch fields as per https://forums.zotero.org/discussion/3673/2/original-date-of-publication/. Spurious 'tex.' so I can do a single match
-  old: /^{:((?:bib(?:la)?)?tex\.)?([^:]+)(:)\s*([^}]+)}$/,
-  new: /^((?:bib(?:la)?)?tex\.)?([^:=]+)\s*([:=])\s*([\S\s]*)/,
+  old: /^{:((?:bib(?:la)?)?tex\.)?([^:]+)(:)\s*([^}]+)}$/i,
+  new: /^((?:bib(?:la)?)?tex\.)?([^:=]+)\s*([:=])\s*([\S\s]*)/i,
 }
 
 type SetOptions = {
@@ -62,29 +68,35 @@ const casing = {
 }
 
 export function get(extra: string, mode: 'zotero' | 'csl', options?: GetOptions): { extra: string, extraFields: Fields } {
-  if (!options) options = { citationKey: true , aliases: true, kv: true, tex: true }
+  let defaults = false
+  if (!options) {
+    options = { citationKey: true , aliases: true, kv: true, tex: true }
+    defaults = true
+  }
 
   const other = {zotero: 'csl', csl: 'zotero'}[mode]
 
   extra = extra || ''
 
   const extraFields: Fields = {
-    kv: {},
+    kv: options.kv || defaults ? {} : undefined,
     creator: {},
-    tex: {},
+    creators: [],
+    tex: options.tex || defaults ? {} : undefined,
     citationKey: '',
-    aliases: [],
+    aliases: options.aliases || defaults ? [] : undefined,
   }
 
   let ef
-  extra = extra.split('\n').filter(line => {
+  extra = extra.split('\n').filter((line, i) => {
     const m = line.match(re.old) || line.match(re.new)
     if (!m) return true
 
     let [ , tex, key, assign, value ] = m
-    const raw = (assign === '=')
+    const texmode = (assign === '=') ? 'raw' : (tex && (tex.includes('T') || tex.match(/^[A-Z]/)) ? 'cased' : undefined)
+    tex = tex && tex.toLowerCase()
 
-    if (!tex && raw) return true
+    if (!tex && texmode) return true
 
     if (tex) {
       key = key.trim().toLowerCase()
@@ -108,12 +120,13 @@ export function get(extra: string, mode: 'zotero' | 'csl', options?: GetOptions)
       return false
     }
 
-    if (options.kv && (ef = mapping[key]) && !tex) {
-      for (const field of (ef[mode] ||  ef[other])) {
+    if (options.kv && key !== 'citation key' && (ef = mapping[key]) && !tex) {
+      for (const field of (ef[mode] || ef[other])) {
         switch (ef.type) {
           case 'name':
             extraFields.creator[field] = extraFields.creator[field] || []
             extraFields.creator[field].push(value)
+            extraFields.creators.push({ name: value, type: field })
             break
           case 'text':
           case 'date':
@@ -127,12 +140,12 @@ export function get(extra: string, mode: 'zotero' | 'csl', options?: GetOptions)
     }
 
     if (options.tex && tex && !key.includes(' ')) {
-      extraFields.tex[tex + key] = { value, raw }
+      extraFields.tex[tex + key] = { value, mode: texmode, line: i }
       return false
     }
 
     if (options.tex && !tex && otherFields.includes(key.replace(/[- ]/g, ''))) {
-      extraFields.tex[`tex.${key.replace(/[- ]/g, '')}`] = { value }
+      extraFields.tex[`tex.${key.replace(/[- ]/g, '')}`] = { value, line: i }
       return false
     }
 
@@ -157,7 +170,7 @@ export function set(extra: string, options: SetOptions = {}): string {
   if (options.tex) {
     for (const name of Object.keys(options.tex).sort()) {
       let prefix, field
-      const m = name.match(/^((?:bib(?:la)?)?tex\.)(.*)/)
+      const m = name.match(/^((?:bib(?:la)?)?tex\.)(.*)/i)
       if (m) {
         [ , prefix, field ] = m
       }
@@ -167,7 +180,7 @@ export function set(extra: string, options: SetOptions = {}): string {
       }
       if (otherFields.includes(field)) prefix = ''
       const value = options.tex[name]
-      parsed.extra += `\n${prefix}${casing[field] || field}${value.raw ? '=' : ':'} ${value.value}`
+      parsed.extra += `\n${prefix}${casing[field] || field}${value.mode === 'raw' ? '=' : ':'} ${value.value}`
     }
   }
 

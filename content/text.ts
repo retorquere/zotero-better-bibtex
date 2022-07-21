@@ -1,11 +1,12 @@
+import { toSentenceCase } from '@retorquere/bibtex-parser'
+
 import type { MarkupNode } from '../typings/markup'
 import { titleCased } from './csl-titlecase'
 
-import parse5 = require('parse5/lib/parser')
-const htmlParser = new parse5({ sourceCodeLocationInfo: true })
+import { parseFragment } from 'parse5'
 
 import Language from '../gen/babel/langmap.json'
-import Tag from '../gen/babel/tag.json'
+// import Tag from '../gen/babel/tag.json'
 const LanguagePrefixes = Object.keys(Language).sort().reverse().filter(prefix => prefix.length > 3) // eslint-disable-line no-magic-numbers
 
 import charCategories = require('xregexp/tools/output/categories')
@@ -106,25 +107,7 @@ export function titleCase(text: string): string {
 }
 
 export function sentenceCase(text: string): string {
-  let haslowercase = false
-  const restore: [number, number, string][] = []
-  let sentencecased = text.replace(/((?:^|[?!]|[-.:;[\]<>'*\\(),{}—_“”‘’])?\s*)([^-\s;?:.![\]<>'*\\(),{}—_“”‘’]+)/g, (match: string, leader:string, word:string, offset: number) => {
-    if (word.match(/^[A-Z]$/)) {
-      const leaderlen = leader?.length
-      restore.push([offset + leaderlen, offset + leaderlen + word.length, word])
-    }
-    else if (word.match(/^[a-z]/)) {
-      haslowercase = true
-    }
-    if (leader && !leader.match(/^[?!]/) && word.match(/^[A-Z][^A-Z]*$/)) word = word.toLowerCase()
-    return (leader || '') + word
-  })
-
-  if (haslowercase) {
-    for (const [start, end, word] of restore) {
-      sentencecased = sentencecased.substr(0, start) + word + sentencecased.substr(end)
-    }
-  }
+  let sentencecased: string = toSentenceCase(text)
 
   // restore protected parts from original
   text.replace(/<span class="nocase">.*?<\/span>|<nc>.*?<\/nc>/gi, (match: string, offset: number) => {
@@ -184,7 +167,7 @@ export const HTMLParser = new class { // eslint-disable-line @typescript-eslint/
       })
     }
 
-    doc = this.walk(htmlParser.parseFragment(this.html))
+    doc = this.walk(parseFragment(this.html, { sourceCodeLocationInfo: true }))
 
     if (this.options.caseConversion) {
       if (this.options.exportTitleCase) {
@@ -464,6 +447,8 @@ export function babelLanguage(language: string): string {
     || language
 }
 
+/*
 export function babelTag(langid: string): string {
   return (Tag[langid] as string) || ''
 }
+*/

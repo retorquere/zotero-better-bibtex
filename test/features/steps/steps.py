@@ -117,6 +117,16 @@ def step_impl(context, db):
 def step_impl(context, profile):
   context.zotero.restart(timeout=context.timeout, profile=profile)
 
+@step(r'I restart Zotero')
+def step_impl(context):
+  context.zotero.restart(timeout=context.timeout)
+
+@step(r'I apply the preferences from "{source}"')
+def step_impl(context, references, source):
+  source = expand_scenario_variables(context, source)
+  context.imported = source
+  assert_that(context.zotero.import_file(context, source, items=False), equal_to(references))
+
 @step(r'I import {references:d} references from "{source}"')
 def step_impl(context, references, source):
   source = expand_scenario_variables(context, source)
@@ -181,6 +191,10 @@ def export_library(context, translator='BetterBibTeX JSON', collection=None, exp
   if timeout is not None:
     assert(runtime < timeout), f'Export runtime of {runtime} exceeded set maximum of {timeout}'
 
+@then(u'a quick-copy using "{translator}" should match {path}')
+def step_impl(context, translator, path):
+  context.zotero.quick_copy(translator=translator, expected=expand_scenario_variables(context, json.loads(path)), itemIDs=context.selected)
+
 @then(u'an export to "{output}" using "{translator}" should match {path}')
 def step_impl(context, output, translator, path):
   export_library(context,
@@ -237,13 +251,13 @@ def step_impl(context, translator, expected, seconds):
 def step_impl(context, expected):
   export_library(context, expected = expected)
 
-@when(u'I select the item with a field that {mode} "{value}"')
+@step(u'I select the item with a field that {mode} "{value}"')
 def step_impl(context, mode, value):
   context.selected += context.zotero.execute('return await Zotero.BetterBibTeX.TestSupport.find({[mode]: value})', mode=mode, value=value)
   context.zotero.execute('await Zotero.BetterBibTeX.TestSupport.select(ids)', ids=context.selected)
   time.sleep(3)
 
-@when(u'I select {n} items with a field that {mode} "{value}"')
+@step(u'I select {n} items with a field that {mode} "{value}"')
 def step_impl(context, n, mode, value):
   context.selected += context.zotero.execute('return await Zotero.BetterBibTeX.TestSupport.find({[mode]: value}, n)', mode=mode, value=value, n=int(n))
   context.zotero.execute('await Zotero.BetterBibTeX.TestSupport.select(ids)', ids=context.selected)
@@ -257,6 +271,13 @@ def step_impl(context, collection):
 def step_impl(context):
   assert len(context.selected) == 1
   context.zotero.execute('await Zotero.Items.trashTx([id])', id=context.selected[0])
+
+@step(u'I remove all items')
+def step_impl(context):
+  context.zotero.execute('''
+    await Zotero.Items.trashTx(await Zotero.Items.getAll(await Zotero.Libraries.userLibraryID, false, false, true))
+    await Zotero.Items.emptyTrash(Zotero.Libraries.userLibraryID)
+  ''')
 
 @when(u'I remove the selected items')
 def step_impl(context):
@@ -310,7 +331,6 @@ def step_impl(context, expected, found):
     expected = os.path.join(context.tmpDir, expected[2:])
   else:
     expected = os.path.join(ROOT, 'test/fixtures', expected)
-    context.zotero.loaded(expected)
   with open(expected) as f:
     expected = f.read()
 
@@ -348,3 +368,7 @@ def step_impl(context, path):
 @step(u'I reset the cache')
 def step_impl(context):
   context.zotero.execute('Zotero.BetterBibTeX.TestSupport.resetCache()')
+
+@step(u'I copy date-added/date-modified for the selected items from the extra field')
+def step_impl(context):
+  context.zotero.execute('Zotero.BetterBibTeX.ZoteroPane.patchDates()')

@@ -58,7 +58,7 @@ user_pref("extensions.zotero.debug.log", true);
 user_pref("extensions.zotero.debug.time", true);
 user_pref("extensions.zotero.debug.store", true);
 user_pref("extensions.zoteroMacWordIntegration.installed", true);
-user_pref("extensions.zotero.translators.better-bibtex.citekeyFormat", "[auth:lower][year] | [=forumPost/WebPage][Auth:lower:capitalize][Date:format-date=%Y-%m-%d.%H\\:%M\\:%S:prefix=.][PublicationTitle1_1:lower:capitalize:prefix=.][shorttitle3_3:lower:capitalize:prefix=.][Pages:prefix=.p.][Volume:prefix=.Vol.][NumberofVolumes:prefix=de] | [Auth:lower:capitalize][date:%oY:prefix=.][PublicationTitle1_1:lower:capitalize:prefix=.][shorttitle3_3:lower:capitalize:prefix=.][Pages:prefix=.p.][Volume:prefix=.Vol.][NumberofVolumes:prefix=de]");
+user_pref("extensions.zotero.translators.better-bibtex.citekeyFormat", "[auth:lower][year] | [=forumPost/WebPage][Auth:lower:capitalize][Date:format-date=%Y-%m-%d.%H\\:%M\\:%S:prefix=.][PublicationTitle:lower:capitalize:prefix=.][shorttitle3_3:lower:capitalize:prefix=.][Pages:prefix=.p.][Volume:prefix=.Vol.][NumberofVolumes:prefix=de] | [Auth:lower:capitalize][date:%oY:prefix=.][PublicationTitle:lower:capitalize:prefix=.][shorttitle3_3:lower:capitalize:prefix=.][Pages:prefix=.p.][Volume:prefix=.Vol.][NumberofVolumes:prefix=de]");
 user_pref("extensions.zotero.dataDir", "/Users/emile/.BBTZ5TEST/jurism");
 user_pref("extensions.zotero.useDataDir", true);
 user_pref("app.update.auto", false);

@@ -1,15 +1,27 @@
-/* eslint-disable id-blacklist, @typescript-eslint/no-unsafe-return, @typescript-eslint/explicit-module-boundary-types */
+/* eslint-disable prefer-template, id-blacklist, @typescript-eslint/no-unsafe-return, @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/quotes */
+
+declare const Zotero: any
 
 import { client } from '../../content/client'
+import { validator, noncoercing } from '../../content/ajv'
 import { Item } from '../typings/serialized-item'
 
 const jurism = client === 'jurism'
 const zotero = !jurism
 
+const zoterovalidator = validator(require('./zotero.json'), noncoercing)
+const jurismvalidator = validator(require('./jurism.json'), noncoercing)
+const broken = {
+  me: zotero ? zoterovalidator : jurismvalidator,
+  other: jurism ? zoterovalidator : jurismvalidator,
+}
+
 type Valid = {
   type: Record<string, boolean>
   field: Record<string, Record<string, boolean>>
+  test: (obj: any, strict?: boolean) => string
 }
+
 export const valid: Valid = {
   type: {
     %for itemType, client in sorted(valid.type.items()):
@@ -24,6 +36,16 @@ export const valid: Valid = {
       %endfor
     },
     %endfor
+  },
+  test: (obj: any, strict?: boolean) => {
+    const errors = broken.me(obj)
+    if (!errors) return ''
+    if (!strict && !broken.other(obj)) {
+      if (typeof Zotero !== 'undefined') Zotero.debug('Better BibTeX soft error: ' + errors)
+      return ''
+    }
+    // https://ajv.js.org/api.html#validation-errors
+    return errors
   },
 }
 
@@ -66,7 +88,7 @@ function unalias(item: any, { scrub = true }: { scrub?: boolean } = {}): void {
     %if client != 'both':
   if (${client}) {
     %endif
-    %for field, field_aliases in aliases[client].items():
+    %for field, field_aliases in sorted(aliases[client].items()):
       %if len(field_aliases) == 1:
   ${indent}if (item.${field_aliases[0]}) item.${field} = item.${field_aliases[0]}
       %else:
@@ -133,3 +155,50 @@ export function simplifyForImport(item: any): Item {
 
   return (item as Item)
 }
+<%!
+  def jsesc(v, identifier=False):
+    if type(v) == list:
+      assert not identifier
+      return '[ ' + ', '.join([jsesc(m) for m in v]) + ' ]'
+    else:
+      q = "'" if '-' in v or not identifier else ''
+      return q + v +q
+  def uniq(kv):
+    u = []
+    ks = []
+    for k, v in reversed(kv):
+      if not k in ks:
+        u.append((k, v))
+        ks.append(k)
+    return sorted(u)
+
+%>
+const schema_csl_mappings = {
+%for client, schema in [(cl, schemas[cl]) for cl in ['zotero', 'jurism']]:
+  ${client}: {
+    CSL_TYPE_MAPPINGS: {
+      %for zoteroType, cslType in uniq([(zotero, csl) for csl, types in schema.csl.types.items() for zotero in types]):
+      ${zoteroType}: '${cslType}',
+      %endfor
+    },
+    CSL_TYPE_MAPPINGS_REVERSE: {
+      %for cslType, zoteroTypes in uniq(schema.csl.types.items()):
+      ${jsesc(cslType, True)}: ${jsesc(zoteroTypes)},
+      %endfor
+    },
+    %for kind in ['text', 'date', 'name']:
+    CSL_${kind.upper()}_MAPPINGS: {
+      %for cslType, zoteroTypes in uniq((schema.csl.names if kind == 'name' else schema.csl.fields[kind]).items()):
+      ${jsesc(cslType, True)}: ${jsesc(zoteroTypes)},
+      %endfor
+    },
+    %endfor
+    CSL_FIELD_MAPPINGS_REVERSE: {
+      %for zoteroField, cslField in uniq( [(zotero, csl) for csl, types in schema.csl.fields.text.items() for zotero in types] + [(zotero, csl) for csl, types in schema.csl.fields.date.items() for zotero in (types if type(types) == list else [types])]):
+      ${zoteroField}: '${cslField}',
+      %endfor
+    },
+  },
+%endfor
+}
+export const CSL_MAPPINGS = schema_csl_mappings[client]

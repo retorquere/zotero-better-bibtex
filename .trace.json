@@ -1,5 +1,5 @@
 {
-  "gh-1896": {
+  ".schemas": {
     "plugin": [
       "content/better-bibtex.ts",
       "content/key-manager.ts",

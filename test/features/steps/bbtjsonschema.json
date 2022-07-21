@@ -168,11 +168,14 @@
                 "url-ish"
               ]
             },
+            "cache": {
+              "type": "boolean"
+            },
             "cacheFlushInterval": {
               "type": "number"
             },
-            "caching": {
-              "type": "boolean"
+            "charmap": {
+              "type": "string"
             },
             "citeCommand": {
               "type": "string"
@@ -181,6 +184,9 @@
               "type": "boolean"
             },
             "citekeyFormat": {
+              "type": "string"
+            },
+            "citekeyFormatBackup": {
               "type": "string"
             },
             "citekeySearch": {
@@ -240,6 +246,9 @@
             "importJabRefStrings": {
               "type": "boolean"
             },
+            "importNoteToExtra": {
+              "type": "string"
+            },
             "importSentenceCase": {
               "enum": [
                 "on+guess",
@@ -273,6 +282,13 @@
             },
             "kuroshiro": {
               "type": "boolean"
+            },
+            "language": {
+              "enum": [
+                "langid",
+                "language",
+                "both"
+              ]
             },
             "mapMath": {
               "type": "string"
@@ -316,6 +332,7 @@
                 "pandoc",
                 "orgmode",
                 "orgRef",
+                "orgRef3",
                 "rtfScan",
                 "roamCiteKey",
                 "atom",
@@ -384,8 +401,8 @@
             "warnTitleCased": {
               "type": "boolean"
             },
-            "workers": {
-              "type": "number"
+            "worker": {
+              "type": "boolean"
             }
           },
           "type": "object"
@@ -430,6 +447,9 @@
             "type": "string"
           },
           "archiveCollection": {
+            "type": "string"
+          },
+          "archiveID": {
             "type": "string"
           },
           "archiveLocation": {
@@ -648,6 +668,7 @@
           },
           "itemType": {
             "enum": [
+              "annotation",
               "artwork",
               "attachment",
               "audioRecording",
@@ -679,6 +700,7 @@
               "note",
               "patent",
               "podcast",
+              "preprint",
               "presentation",
               "radioBroadcast",
               "regulation",

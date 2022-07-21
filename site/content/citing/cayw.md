@@ -97,7 +97,7 @@ The following formats are available:
   * `useJournalAbbreviation`: set to `true` to use journal abbreviations
 * `json`: the full pick information Zotero provides.
 
-The picker passes the following data along with your picked references if you filled them out:
+The picker passes the following data along with your picked items if you filled them out:
 
 | field             |                                               |
 | ----------------- | --------------------------------------------- |
@@ -109,14 +109,14 @@ The picker passes the following data along with your picked references if you fi
 However not all output formats support these. Pandoc and scannable cite are the richest ones, supporting all 4. MultiMarkdown supports
 none. The `formatted-` formats will ignore these. LaTeX supports all 4, in a way:
 
-* in the `latex` ([`natbib`](https://ctan.org/pkg/natbib)) format: if you choose `suppress author` for none or all of your references in a pick, you
+* in the `latex` ([`natbib`](https://ctan.org/pkg/natbib)) format: if you choose `suppress author` for none or all of your items in a pick, you
   will get the citation as you would normally enter it, such as `\cite{author1,author2}`, or
   `\citeyear{author1,author2}`. If you use `locator`, `prefix`, `suffix` in any one of them, or you use `suppress author`
   for some but not for others, the picker will write them out all separate, like `\cite[p. 1]{author1}\citeyear{author2}`,
   as natbib doesn't seem to have a good mechanism for combined citations that mix different prefixes/suffixes/locators.
 * in the [`biblatex`](https://ctan.org/pkg/biblatex) format: `suppress author` is ignored unless the command is one of `\cite`, `\autocite`
-  or `\parencite` AND there is one reference only, in which case the starred variant of the command is returned, which
-  hides the author; for multiple references with `locator`s, `prefix`es or `suffix`es, the `s`-affixed variant of the
+  or `\parencite` **and** there is one items only, in which case the starred variant of the command is returned, which
+  hides the author; for multiple items with `locator`s, `prefix`es or `suffix`es, the `s`-affixed variant of the
   command is generated
 
 Some of the formatters use abbreviated labels for the results if you include a locator. The defaults are:
@@ -153,7 +153,7 @@ you use this option you will probably want to bind to a hotkey, either system-wi
 [AutoHotKey](http://www.autohotkey.com) works for windows, for OSX [Karabiner](https://pqrs.org/osx/karabiner/) ought to
 do the job, and for Linux [xbindkeys](https://unix.stackexchange.com/questions/44672/assign-shortcut-key-to-run-a-script) could do the job.
 
-For example, if you call up http://127.0.0.1:23119/better-bibtex/cayw?format=mmd&clipboard=yes, the Zotero citation picker will pop up. If you then select two references that happen to have cite keys `adams2001` and `brigge2002`, then
+For example, if you call up http://127.0.0.1:23119/better-bibtex/cayw?format=mmd&clipboard=yes, the Zotero citation picker will pop up. If you then select two items that happen to have cite keys `adams2001` and `brigge2002`, then
 
 * the response body will be `[#adams2001][][#brigge2002][]`, and
 * `[#adams2001][][#brigge2002][]` will be left on the clipboard

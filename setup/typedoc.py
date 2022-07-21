@@ -24,7 +24,7 @@ for client in ['zotero', 'jurism']:
     for fields in itemType['fields']
     #for field in fields.values()
     for field in [fields['field'], fields.get('baseField', fields['field'])]
-    if field != 'extra'
+    if field not in ['extra', 'citationKey']
   )))
 
   typeNames[client] = list(set(itemType['itemType'] for itemType in schema['itemTypes']))
