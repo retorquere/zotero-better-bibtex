@@ -69,7 +69,7 @@
     "edtfy": "^0.0.8",
     "eventemitter3": "^4.0.7",
     "fast-safe-stringify": "^2.1.1",
-    "fold-to-ascii": "^5.0.0",
+    "fold-to-ascii": "^5.0.1",
     "jsesc": "^3.0.2",
     "kuromoji": "^0.1.2",
     "lodash": "^4.17.21",
