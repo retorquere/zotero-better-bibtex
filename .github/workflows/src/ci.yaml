@@ -144,6 +144,8 @@ jobs:
     - build
     - jobs
     runs-on: ubuntu-latest
+    container:
+      image: elementary/docker:unstable
     strategy:
       fail-fast: false
       matrix:
