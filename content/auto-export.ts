@@ -434,7 +434,6 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
       ae[option] = ae[option] || false
     }
 
-    this.db.removeWhere({ path: ae.path })
     this.db.insert(scrubAutoExport(ae))
 
     git.repo(ae.path).then(repo => {
