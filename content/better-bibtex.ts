@@ -615,7 +615,7 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
         disabled = Object.keys(this._handlers).filter(handler => !['done', 'itemDone', 'error'].includes(handler)).join(', ')
         if (disabled) disabled = `handlers: ${disabled}`
       }
-      if (!disabled) {
+      if (!disabled && typeof translator.displayOptions?.keepUpdated === 'boolean') {
         const path = this.location?.path
 
         // fake out the stuff that complete expects to be set by .translate
