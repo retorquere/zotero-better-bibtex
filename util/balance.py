@@ -118,7 +118,7 @@ clients = ['zotero', 'jurism']
 if args.beta:
   clients += [client + '-beta' for client in clients]
 
-ban = {'jurism', 'jurism-beta'}
+ban = {'jurism-beta'}
 banned = set(clients).intersection(ban)
 if banned.size > 0:
   print('### REMOVING', banned, '###')
