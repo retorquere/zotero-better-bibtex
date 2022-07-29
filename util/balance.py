@@ -117,6 +117,11 @@ publish('bins', list(range(len(Tests.bins))))
 clients = ['zotero', 'jurism']
 if args.beta:
   clients += [client + '-beta' for client in clients]
-  print('### REMOVING jurism-beta ###')
-  clients = [client for client in clients if client != 'jurism-beta']
+
+ban = {'jurism', 'jurism-beta'}
+banned = set(clients).intersection(ban)
+if banned.size > 0:
+  print('### REMOVING', banned, '###')
+  clients = list(set(clients) - banned)
+
 publish('clients', clients)
