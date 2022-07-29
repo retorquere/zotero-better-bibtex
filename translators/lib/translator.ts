@@ -5,6 +5,7 @@ import { affects, names as preferences, defaults, PreferenceName, Preferences, s
 import { client } from '../../content/client'
 import { RegularItem, Item, Collection } from '../../gen/typings/serialized-item'
 import { Pinger } from '../../content/ping'
+// import { log } from '../../content/logger'
 
 type TranslatorMode = 'export' | 'import'
 
@@ -226,6 +227,7 @@ export class ITranslator { // eslint-disable-line @typescript-eslint/naming-conv
     this.BetterTeX = this.BetterBibTeX || this.BetterBibLaTeX
     this.BetterCSL = this.BetterCSLJSON || this.BetterCSLYAML
     this.options = ZOTERO_TRANSLATOR_INFO.displayOptions || {}
+    // log.debug(ZOTERO_TRANSLATOR_INFO.label, mode, 'translator starting', Zotero.worker ? 'in worker' : '')
 
     this.platform = (Zotero.getHiddenPref('better-bibtex.platform') as string)
     this.isJurisM = client === 'jurism'

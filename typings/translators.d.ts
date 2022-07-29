@@ -70,6 +70,7 @@ export namespace Translators {
     }
     displayOptions?: {
       keepUpdated?: boolean
+      worker?: boolean
     }
   }
 }

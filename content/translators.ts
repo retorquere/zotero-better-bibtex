@@ -185,6 +185,8 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     await Zotero.BetterBibTeX.ready
     if (job.path && job.canceled) return ''
 
+    this.displayOptions(translatorID, displayOptions)
+
     log.debug('translate: setting up worker')
     const translator = this.byId[translatorID]
 
@@ -406,8 +408,17 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     return deferred.promise
   }
 
+  public displayOptions(translatorID: string, displayOptions: any): any {
+    const defaults = this.byId[translatorID].displayOptions || {}
+    for (const [k, v] of Object.entries(defaults)) {
+      if (typeof displayOptions[k] === 'undefined') displayOptions[k] = v
+    }
+    return displayOptions
+  }
+
   public async exportItems(translatorID: string, displayOptions: any, scope: ExportScope, path: string = null): Promise<string> {
     await Zotero.BetterBibTeX.ready
+    this.displayOptions(translatorID, displayOptions)
 
     const start = Date.now()
 
