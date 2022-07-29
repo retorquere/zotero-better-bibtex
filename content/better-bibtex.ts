@@ -594,28 +594,35 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
         })
       }
 
-      let disabled = ''
+      let noworker = ''
       if (this.noWait) { // noWait must be synchronous
-        disabled = 'noWait is active'
+        noworker = 'noWait is active'
       }
       else if (!Preference.worker) {
-        disabled = 'user has disabled worker export'
+        noworker = 'user has disabled worker export'
       }
       else if (!Translators.worker) {
         // there wasn't an error starting a worker earlier
-        disabled = 'failed to start a chromeworker, disabled until restart'
+        noworker = 'failed to start a chromeworker, disabled until restart'
+      }
+      else if (typeof translator.displayOptions?.keepUpdated !== 'boolean') {
+        noworker = `${translator.label} does not support auto-export`
       }
       /*
       else if (this.location?.path.startsWith('\\\\')) {
         // check for SMB path for #1396
-        disabled = 'chrome workers fail on smb paths'
+        noworker = 'chrome workers fail on smb paths'
       }
       */
       else {
-        disabled = Object.keys(this._handlers).filter(handler => !['done', 'itemDone', 'error'].includes(handler)).join(', ')
-        if (disabled) disabled = `handlers: ${disabled}`
+        noworker = Object.keys(this._handlers).filter(handler => !['done', 'itemDone', 'error'].includes(handler)).join(', ')
+        if (noworker) noworker = `found async handlers: ${noworker}`
       }
-      if (!disabled && displayOptions.worker) {
+
+      if (noworker) {
+        log.debug('worker export skipped,', noworker)
+      }
+      else {
         const path = this.location?.path
 
         // fake out the stuff that complete expects to be set by .translate
