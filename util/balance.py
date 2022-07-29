@@ -120,7 +120,7 @@ if args.beta:
 
 ban = {'jurism-beta'}
 banned = set(clients).intersection(ban)
-if banned.size > 0:
+if len(banned) > 0:
   print('### REMOVING', banned, '###')
   clients = list(set(clients) - banned)
 
