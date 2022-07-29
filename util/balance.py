@@ -117,6 +117,6 @@ publish('bins', list(range(len(Tests.bins))))
 clients = ['zotero', 'jurism']
 if args.beta:
   clients += [client + '-beta' for client in clients]
-  print('### REMOVING jurism-beta ###')
-  clients = [client for client in clients if client != 'jurism-beta']
+  print('### REMOVING jurism ###')
+  clients = [client for client in clients if not client.startswith('jurism')]
 publish('clients', clients)
