@@ -323,7 +323,7 @@ export class PrefPane {
     if (target) this.keyformat = target
     if (!this.keyformat || Zotero.BetterBibTeX.ready.isPending()) return // itemTypes not available yet
 
-    let msg = '', color = '', pattern = (this.keyformat.value as string)
+    let msg = '', color = '', pattern = (this.keyformat.value as string) || ''
 
     if (pattern.startsWith('[')) {
       try {
