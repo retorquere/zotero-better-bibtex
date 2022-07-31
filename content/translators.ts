@@ -21,6 +21,12 @@ import { Events } from './events'
 import { Pinger } from './ping'
 import Puqeue from 'puqeue'
 
+class Queue extends Puqeue {
+  get queued() {
+    return this._queue.length
+  }
+}
+
 import * as translatorMetadata from '../gen/translators.json'
 
 import * as l10n from './l10n'
@@ -41,7 +47,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
   public byName: Record<string, Translator.Header>
   public byLabel: Record<string, Translator.Header>
   public itemType: { note: number, attachment: number, annotation: number }
-  private queue = new Puqeue
+  private queue = new Queue
   public worker: ChromeWorker
 
   public workers: { total: number, running: Set<number>, startup: number } = {
