@@ -462,16 +462,16 @@ Feature: Export
   Scenario: Transforming exported file names (windows path conversion) #1939
     Given I import 1 reference from "export/*.json"
     And I set preference .postscript to "export/*.js"
-    And I set preference .worker to false
+    And I set export option worker to false
     Then an export using "Better BibTeX" should match "export/*.bibtex"
 
   # jurism doesn't have walknotedom
   @use.with_client=zotero
   Scenario: Make DOMParser available in background export #2094
     Given I import 4 references from "export/*.json"
-    And I set preference .worker to false
+    And I set export option worker to false
     Then an export using "Better BibLaTeX" should match "export/*.biblatex"
-    When I set preference .worker to true
+    When I set export option worker to false
     Then an export using "Better BibLaTeX" should match "export/*.biblatex"
 
   @postscript @1043
@@ -557,7 +557,7 @@ Feature: Export
   @1420
   Scenario: (non-)dropping particle handling #313
     When I import 53 references from "export/*.json"
-    And I set preference .worker to false
+    And I set export option worker to false
     Then an export using "Better BibLaTeX" should match "export/*.biblatex"
 
   @1270

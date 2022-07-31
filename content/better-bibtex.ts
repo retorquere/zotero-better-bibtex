@@ -598,15 +598,15 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
       if (this.noWait) { // noWait must be synchronous
         noworker = 'noWait is active'
       }
-      else if (!Preference.worker) {
-        noworker = 'user has disabled worker export'
-      }
       else if (!Translators.worker) {
         // there wasn't an error starting a worker earlier
         noworker = 'failed to start a chromeworker, disabled until restart'
       }
-      else if (typeof translator.displayOptions?.keepUpdated !== 'boolean') {
-        noworker = `${translator.label} does not support auto-export`
+      else if (!translator.displayOptions.worker) {
+        noworker = `${translator.label} does not support background export`
+      }
+      else if (!displayOptions.worker) {
+        noworker = `user has chosen foreground export for ${translator.label}`
       }
       /*
       else if (this.location?.path.startsWith('\\\\')) {

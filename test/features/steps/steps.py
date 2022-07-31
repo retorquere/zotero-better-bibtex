@@ -81,6 +81,12 @@ def step_impl(context, pref, value):
   with open(context.preferenceOverride, 'w') as f:
     json.dump(override, f)
 
+@step('I set export option {option} to {value}')
+def step_impl(context, option, value):
+  value = json.loads(value)
+  assert type(value) == bool
+  context.displayOptions[option] = value
+
 @step('I set preference {pref} to {value}')
 def step_impl(context, pref, value):
   value = json.loads(value)

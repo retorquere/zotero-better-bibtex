@@ -432,7 +432,7 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
       ae[pref] = Preference[pref]
     }
     for (const option of translator.displayOptions) {
-      if (typeof ae[option] !== 'boolean') ae[option] = translator.displayOptions[option]
+      if (typeof ae[option] === 'undefined') ae[option] = translator.displayOptions[option]
     }
 
     this.db.insert(scrubAutoExport(ae))

@@ -836,12 +836,5 @@
     "default": false,
     "affects": [],
     "var": "warnTitleCased"
-  },
-  {
-    "name": "worker",
-    "type": "boolean",
-    "default": true,
-    "affects": [],
-    "var": "worker"
   }
 ]

@@ -403,9 +403,6 @@
             },
             "warnTitleCased": {
               "type": "boolean"
-            },
-            "worker": {
-              "type": "boolean"
             }
           },
           "type": "object"

@@ -43,7 +43,7 @@ export const options: Partial<Record<PreferenceName, Record<string, string>>> = 
 }
 
 <%
-ae_ignoreOptions = ['exportFileData', 'keepUpdated']
+ae_ignoreOptions = ['worker', 'exportFileData', 'keepUpdated']
 overrides = [pref for pref in preferences if pref.get('override', false)]
 cache_or_autoexport = [tr for tr in translators if tr.cached or tr.keepUpdated]
 ae_options = list(set([
