@@ -154,6 +154,11 @@ export function doExport(): void {
   while (item = Zotero.nextItem()) {
     if (item.citationKey) items.push(item)
   }
+  items.sort((a: any, b: any) => {
+    const ka = [ a.citationKey || a.itemType, a.dateModified || a.dateAdded, a.itemID ].join('\t')
+    const kb = [ b.citationKey || b.itemType, b.dateModified || b.dateAdded, b.itemID ].join('\t')
+    return ka.localeCompare(kb, undefined, { sensitivity: 'base' })
+  })
 
   const mode = Mode[Zotero.getOption('quickCopyMode')] || Mode[Zotero.getHiddenPref('better-bibtex.quickCopyMode')]
   if (mode) {
