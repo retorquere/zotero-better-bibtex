@@ -132,6 +132,10 @@ function dependencyGraph(metafile) {
   `
 }
 
+function js(src) {
+  return src.replace(/[.]ts$/, '.js')
+}
+
 async function bundle(config) {
   config = {
     bundle: true,
@@ -145,12 +149,23 @@ async function bundle(config) {
 
   config.inject.push('./setup/loaders/globals.js')
 
+  let target
+  if (config.outfile) {
+    target = config.outfile
+  }
+  else if (config.entryPoints.length === 1 && config.outdir) {
+    target = path.join(config.outdir, js(path.basename(config.entryPoints[0])))
+  }
+  else {
+    target = `${config.outdir} [${config.entryPoints.map(js).join(', ')}]`
+  }
+
   if (config.exportGlobals) {
     delete config.exportGlobals
     const esm = await esbuild.build({ ...config, logLevel: 'silent', format: 'esm', metafile: true, write: false })
     if (process.env.GML) {
-      fs.writeFileSync(config.outfile + '.gml', dependencyGraph(esm.metafile))
-      fs.writeFileSync(config.outfile + '.dep', JSON.stringify(esm.metafile, null, 2))
+      console.log('  generating dependency graph', target + '.gml')
+      fs.writeFileSync(target + '.gml', dependencyGraph(esm.metafile))
     }
     for (const output of Object.values(esm.metafile.outputs)) {
       if (output.entryPoint) {
@@ -164,16 +179,6 @@ async function bundle(config) {
   const metafile = config.metafile
   config.metafile = true
 
-  let target
-  if (config.outfile) {
-    target = config.outfile
-  }
-  else if (config.entryPoints.length === 1 && config.outdir) {
-    target = path.join(config.outdir, path.basename(config.entryPoints[0]))
-  }
-  else {
-    target = `${config.outdir} [${config.entryPoints.join(', ')}]`
-  }
   console.log('* bundling', target)
   // console.log('  aliasing BigInt to Number for https://github.com/benjamn/ast-types/issues/750')
   const meta = (await esbuild.build(config)).metafile
