@@ -1,5 +1,4 @@
 /* eslint-disable */
-import * as CSL from 'citeproc'
 
 function makeRegExp(lst) {
   lst = lst.slice()
@@ -15,12 +14,12 @@ class State {
   constructor() {
     this.locale = {}
     this.locale[this.opt.lang] = { opts: {} }
-    this.locale[this.opt.lang].opts['skip-words'] = CSL.SKIP_WORDS
+    this.locale[this.opt.lang].opts['skip-words'] = Zotero.BetterBibTeX.CSL().SKIP_WORDS
     this.locale[this.opt.lang].opts["skip-words-regexp"] = makeRegExp(this.locale[this.opt.lang].opts["skip-words"]) // eslint-disable-line @typescript-eslint/quotes, @typescript-eslint/semi,@typescript-eslint/member-delimiter-style
     this.tmp = {}
   }
 }
 
 export function titleCased(text: string): string {
-  return CSL.Output.Formatters.title(new State, text)
+  return Zotero.BetterBibTeX.CSL().Output.Formatters.title(new State, text)
 }

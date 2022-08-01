@@ -8,6 +8,7 @@ import type { Translators } from '../../typings/translators'
 import { valid } from '../../gen/items/items'
 
 import { DOMParser as XMLDOMParser } from '@xmldom/xmldom'
+import * as CSL from 'citeproc'
 
 declare var ZOTERO_TRANSLATOR_INFO: TranslatorHeader // eslint-disable-line no-var
 
@@ -159,6 +160,8 @@ for(const [key, value] of (new URLSearchParams(ctx.location.search)).entries()) 
 export const workerJob: Partial<Translators.Worker.Job> = {}
 
 class WorkerZoteroBetterBibTeX {
+  public CSL() { return CSL }
+
   public cacheFetch(itemID: number) {
     return workerJob.data.cache[itemID]
   }

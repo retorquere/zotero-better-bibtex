@@ -14,7 +14,8 @@
     "exportNotes": false,
     "exportFileData": false,
     "useJournalAbbreviation": false,
-    "keepUpdated": false
+    "keepUpdated": false,
+    "worker": true
   },
   "priority": 50,
   "inRepository": false

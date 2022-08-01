@@ -1,7 +1,6 @@
 /* eslint-disable no-case-declarations */
 import EDTF = require('edtf')
 import edtfy = require('edtfy')
-// import * as CSL from 'citeproc'
 
 // import escapeStringRegexp = require('escape-string-regexp')
 

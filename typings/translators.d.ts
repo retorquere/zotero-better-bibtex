@@ -68,5 +68,9 @@ export namespace Translators {
       getCollections?: boolean
       hash?: string
     }
+    displayOptions?: {
+      keepUpdated?: boolean
+      worker?: boolean
+    }
   }
 }

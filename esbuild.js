@@ -22,6 +22,120 @@ function execShellCommand(cmd) {
   })
 }
 
+class Gradient {
+  constructor(start, end, min, max) {
+    this.min = min
+    this.max = max
+    this.start = this.hexToRgb(start)
+    this.end = this.hexToRgb(end)
+    this.diff = {
+      r: this.end.r - this.start.r,
+      g: this.end.g - this.start.g,
+      b: this.end.b - this.start.b,
+    }
+  }
+
+  hexToRgb(hex) {
+    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
+    return result ? {
+      r: parseInt(result[1], 16),
+      g: parseInt(result[2], 16),
+      b: parseInt(result[3], 16)
+    } : null
+  }
+
+  fade(value) {
+    return (value - this.min) / (this.max - this.min)
+  }
+
+  getColor(value) {
+    if (value < this.min) throw new Error(`${value} < ${this.min}`)
+    if (value > this.max) throw new Error(`${value} > ${this.max}`)
+    const fade = this.fade(value)
+
+    const r = (this.diff.r * fade) + this.start.r
+    const g = (this.diff.g * fade) + this.start.g
+    const b = (this.diff.b * fade) + this.start.b
+
+    return '#' + [r, g, b].map(v => Math.round(v).toString(16).padStart(2, '0')).join('')
+  }
+}
+
+function humansize(v) {
+  const units = ['b', 'k', 'M', 'G']
+  while (units.length > 1 && v > 1024) {
+    units.shift()
+    v = v / 1024
+  }
+  return `${Math.round(v)}${units[0]}`
+}
+function dependencyGraph(metafile) {
+  const graph = { nodes: '', edges: '' }
+  const node = {}
+  function nodeid(module) {
+    if (typeof node[module] !== 'number') node[module] = Object.keys(node).length
+    return node[module]
+  }
+  const Wrap = 5000
+  let X = 0
+  let Y = 0
+  let H = 0
+  const size = { }
+  for (const [module, data] of Object.entries(metafile.inputs)) {
+    if (typeof size.min === 'undefined' || data.bytes < size.min) size.min = data.bytes
+    if (typeof size.max === 'undefined' || data.bytes > size.max) size.max = data.bytes
+  }
+  const gradient = new Gradient('#00FF00', '#FF0000', 0, size.max)
+  for (const [module, data] of Object.entries(metafile.inputs)) {
+    let label = `${module.replace(/^node_modules\//, ':')} (${humansize(data.bytes)})`
+    label = JSON.stringify(label)
+    const w = 60
+    const h = 30
+    graph.nodes += `
+      node [
+        id ${nodeid(module)}
+        label ${label}
+        graphics [
+          x ${X}
+          y ${Y}
+          w ${w}
+          h ${h}
+          fill "${gradient.getColor(data.bytes)}"
+          outline "#000000"
+        ]
+      ]
+    `
+    X += w
+    H = h > H ? h : H
+    if (X > Wrap) {
+      Y += H
+      X = 0
+      H = 0
+    }
+
+    for (const dep of data.imports) {
+      graph.edges += `
+        edge [
+          source ${nodeid(module)}
+          target ${nodeid(dep.path)}
+        ]
+      `
+    }
+  }
+  return `
+    graph [
+	    hierarchic	1
+	    directed	1
+      ${graph.nodes}
+      ${graph.edges}
+    ]
+  `
+}
+
+function js(src) {
+  return src.replace(/[.]ts$/, '.js')
+}
+
 async function bundle(config) {
   config = {
     bundle: true,
@@ -29,14 +143,30 @@ async function bundle(config) {
     // define: { BigInt: 'Number' },
     target: ['firefox60'],
     inject: [],
+    treeShaking: true,
     ...config,
   }
 
   config.inject.push('./setup/loaders/globals.js')
 
+  let target
+  if (config.outfile) {
+    target = config.outfile
+  }
+  else if (config.entryPoints.length === 1 && config.outdir) {
+    target = path.join(config.outdir, js(path.basename(config.entryPoints[0])))
+  }
+  else {
+    target = `${config.outdir} [${config.entryPoints.map(js).join(', ')}]`
+  }
+
   if (config.exportGlobals) {
     delete config.exportGlobals
     const esm = await esbuild.build({ ...config, logLevel: 'silent', format: 'esm', metafile: true, write: false })
+    if (process.env.GML) {
+      console.log('  generating dependency graph', target + '.gml')
+      fs.writeFileSync(target + '.gml', dependencyGraph(esm.metafile))
+    }
     for (const output of Object.values(esm.metafile.outputs)) {
       if (output.entryPoint) {
         config.globalName = output.exports.sort().join('___')
@@ -49,16 +179,6 @@ async function bundle(config) {
   const metafile = config.metafile
   config.metafile = true
 
-  let target
-  if (config.outfile) {
-    target = config.outfile
-  }
-  else if (config.entryPoints.length === 1 && config.outdir) {
-    target = path.join(config.outdir, path.basename(config.entryPoints[0]))
-  }
-  else {
-    target = `${config.outdir} [${config.entryPoints.join(', ')}]`
-  }
   console.log('* bundling', target)
   // console.log('  aliasing BigInt to Number for https://github.com/benjamn/ast-types/issues/750')
   const meta = (await esbuild.build(config)).metafile

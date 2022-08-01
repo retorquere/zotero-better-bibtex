@@ -116,7 +116,7 @@ class AutoExportPane {
             break
 
           case 'status':
-            if (ae.status === 'running' && Preference.worker && typeof progress === 'number') {
+            if (ae.status === 'running' && typeof progress === 'number') {
               (node as XUL.Textbox).value = progress < 0 ? `${this.label?.preparing || 'preparing'} ${-progress}%` : `${progress}%`
             }
             else {
@@ -323,7 +323,7 @@ export class PrefPane {
     if (target) this.keyformat = target
     if (!this.keyformat || Zotero.BetterBibTeX.ready.isPending()) return // itemTypes not available yet
 
-    let msg = '', color = '', pattern = (this.keyformat.value as string)
+    let msg = '', color = '', pattern = (this.keyformat.value as string) || ''
 
     if (pattern.startsWith('[')) {
       try {
@@ -600,12 +600,11 @@ export class PrefPane {
 
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
     for (const state of (Array.from(this.globals.document.getElementsByClassName('better-bibtex-preferences-worker-state')) as XUL.Textbox[])) {
-      state.value = l10n.localize(`BetterBibTeX.workers.${Preference.worker ? 'status' : 'disabled'}`, {
+      state.value = l10n.localize('BetterBibTeX.workers.status', {
         total: Translators.workers.total,
-        workers: Preference.worker,
         running: Translators.workers.running.size,
       })
-      state.classList[Preference.worker ? 'remove' : 'add']('textbox-emph')
+      state.classList.remove('textbox-emph')
     }
 
     if (this.autoexport) this.autoexport.refresh()

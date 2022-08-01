@@ -267,6 +267,7 @@ const queue = new class TaskQueue {
       const displayOptions: any = {
         exportNotes: ae.exportNotes,
         useJournalAbbreviation: ae.useJournalAbbreviation,
+        worker: true,
       }
 
       /*
@@ -431,7 +432,7 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
       ae[pref] = Preference[pref]
     }
     for (const option of translator.displayOptions) {
-      ae[option] = ae[option] || false
+      if (typeof ae[option] === 'undefined') ae[option] = translator.displayOptions[option]
     }
 
     this.db.insert(scrubAutoExport(ae))

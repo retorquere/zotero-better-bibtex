@@ -554,7 +554,7 @@ with open(os.path.join(TYPINGS, 'serialized-item.d.ts'), 'w') as f:
   print(template('items/serialized-item.d.ts.mako').render(fields=fields, itemTypes=itemTypes).strip(), file=f)
 
 print('  writing field simplifier')
-with open(os.path.join(ITEMS, 'items.ts'), 'w') as f:
+with open(os.path.join(ITEMS, 'items.ts'), 'w') as items, open(os.path.join(ITEMS, 'simplify.ts'), 'w') as simplify:
   valid = Munch(type={}, field={})
   for itemType in jsonpath.parse('*.itemTypes.*.itemType').find(SCHEMA):
     client = str(itemType.full_path).split('.')[0]
@@ -733,7 +733,11 @@ with open(os.path.join(ITEMS, 'items.ts'), 'w') as f:
         assert labels[field][client] == label, (client, field, labels[field][client], label)
 
   try:
-    print(template('items/items.ts.mako').render(names=names, labels=labels, valid=valid, aliases=aliases, schemas=SCHEMA).strip(), file=f)
+    print(template('items/items.ts.mako').render(names=names, labels=labels, valid=valid, aliases=aliases, schemas=SCHEMA).strip(), file=items)
+  except:
+    print(exceptions.text_error_template().render())
+  try:
+    print(template('items/simplify.ts.mako').render(names=names, labels=labels, valid=valid, aliases=aliases, schemas=SCHEMA).strip(), file=simplify)
   except:
     print(exceptions.text_error_template().render())
   #stringizer = lambda x: DG.nodes[x]['name'] if x in DG.nodes else x

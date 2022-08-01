@@ -21,6 +21,12 @@ import { Events } from './events'
 import { Pinger } from './ping'
 import Puqeue from 'puqeue'
 
+class Queue extends Puqeue {
+  get queued() {
+    return this._queue.length
+  }
+}
+
 import * as translatorMetadata from '../gen/translators.json'
 
 import * as l10n from './l10n'
@@ -41,7 +47,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
   public byName: Record<string, Translator.Header>
   public byLabel: Record<string, Translator.Header>
   public itemType: { note: number, attachment: number, annotation: number }
-  private queue = new Puqeue
+  private queue = new Queue
   public worker: ChromeWorker
 
   public workers: { total: number, running: Set<number>, startup: number } = {
@@ -137,12 +143,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
   }
 
   private start() {
-    if (this.worker && !Preference.worker) {
-      this.worker.terminate()
-      this.worker = null
-      return
-    }
-    if (this.worker || !Preference.worker) return
+    if (this.worker) return
 
     try {
       const environment = Object.entries({
@@ -184,6 +185,8 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     if (job.path && job.canceled) return ''
     await Zotero.BetterBibTeX.ready
     if (job.path && job.canceled) return ''
+
+    this.displayOptions(translatorID, displayOptions)
 
     log.debug('translate: setting up worker')
     const translator = this.byId[translatorID]
@@ -406,8 +409,17 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     return deferred.promise
   }
 
+  public displayOptions(translatorID: string, displayOptions: any): any {
+    const defaults = this.byId[translatorID].displayOptions || {}
+    for (const [k, v] of Object.entries(defaults)) {
+      if (typeof displayOptions[k] === 'undefined') displayOptions[k] = v
+    }
+    return displayOptions
+  }
+
   public async exportItems(translatorID: string, displayOptions: any, scope: ExportScope, path: string = null): Promise<string> {
     await Zotero.BetterBibTeX.ready
+    this.displayOptions(translatorID, displayOptions)
 
     const start = Date.now()
 

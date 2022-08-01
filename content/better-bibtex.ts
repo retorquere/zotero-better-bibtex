@@ -50,6 +50,7 @@ import { TeXstudio } from './tex-studio'
 import { $and } from './db/loki'
 import { cloneDeep } from 'lodash'
 import * as l10n from './l10n'
+import * as CSL from 'citeproc'
 
 // UNINSTALL
 AddonManager.addAddonListener({
@@ -366,13 +367,13 @@ $patch$(Zotero.Integration, 'getApplication', original => function Zotero_Integr
 
 /* bugger this, I don't want megabytes of shared code in the translators */
 import * as DateParser from './dateparser'
-// import CiteProc = require('./citeproc.ts')
 import { qualityReport } from './qr-check'
 import type { ParsedDate } from './dateparser'
 
 Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
   clientName: Zotero.clientName,
 
+  CSL() { return CSL }, // eslint-disable-line @typescript-eslint/no-unsafe-return
   qrCheck(_sandbox: any, value: string, test: string, params = null) { return qualityReport(value, test, params) },
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
@@ -594,28 +595,35 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
         })
       }
 
-      let disabled = ''
+      let noworker = ''
       if (this.noWait) { // noWait must be synchronous
-        disabled = 'noWait is active'
-      }
-      else if (!Preference.worker) {
-        disabled = 'user has disabled worker export'
+        noworker = 'noWait is active'
       }
       else if (!Translators.worker) {
         // there wasn't an error starting a worker earlier
-        disabled = 'failed to start a chromeworker, disabled until restart'
+        noworker = 'failed to start a chromeworker, disabled until restart'
+      }
+      else if (!translator.displayOptions.worker) {
+        noworker = `${translator.label} does not support background export`
+      }
+      else if (!displayOptions.worker) {
+        noworker = `user has chosen foreground export for ${translator.label}`
       }
       /*
       else if (this.location?.path.startsWith('\\\\')) {
         // check for SMB path for #1396
-        disabled = 'chrome workers fail on smb paths'
+        noworker = 'chrome workers fail on smb paths'
       }
       */
       else {
-        disabled = Object.keys(this._handlers).filter(handler => !['done', 'itemDone', 'error'].includes(handler)).join(', ')
-        if (disabled) disabled = `handlers: ${disabled}`
+        noworker = Object.keys(this._handlers).filter(handler => !['done', 'itemDone', 'error'].includes(handler)).join(', ')
+        if (noworker) noworker = `found async handlers: ${noworker}`
       }
-      if (!disabled) {
+
+      if (noworker) {
+        log.debug('worker export skipped,', noworker)
+      }
+      else {
         const path = this.location?.path
 
         // fake out the stuff that complete expects to be set by .translate
@@ -844,6 +852,8 @@ class Progress {
 }
 
 export class BetterBibTeX {
+  // eslint-disable-next-line prefer-arrow/prefer-arrow-functions, @typescript-eslint/no-unsafe-return, @typescript-eslint/explicit-module-boundary-types
+  public CSL() { return CSL }
   public TestSupport = new TestSupport
   public KeyManager = new KeyManager
   public Text = { sentenceCase }

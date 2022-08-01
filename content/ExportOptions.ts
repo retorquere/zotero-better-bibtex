@@ -13,6 +13,7 @@ export class ExportOptions {
     this.DOM_OBSERVER.observe(this.globals.document.getElementById('translator-options'), { attributes: true, subtree: true, childList: true })
     this.addEventHandlers()
 
+    this.mutex()
     this.warning()
 
     const self = this // eslint-disable-line @typescript-eslint/no-this-alias
@@ -63,25 +64,28 @@ export class ExportOptions {
     $unpatch$(this.patched)
   }
 
-  mutex(e: Event): void {
+  mutex(e?: Event): void {
     const exportFileData = this.globals.document.getElementById('export-option-exportFileData')
     const keepUpdated = this.globals.document.getElementById('export-option-keepUpdated')
-    const target = e.target as Element
+    const worker = this.globals.document.getElementById('export-option-worker')
+    const target = e ? e.target as Element : exportFileData
 
     if (!exportFileData || !keepUpdated) return null
 
-    keepUpdated.disabled = exportFileData.checked
-
-    if ((target.id === exportFileData.id) && exportFileData.checked) {
+    if (target.id === exportFileData.id && exportFileData.checked) {
       keepUpdated.checked = false
     }
-    else if ((target.id === keepUpdated.id) && keepUpdated.checked) {
+    else if (target.id === keepUpdated.id && keepUpdated.checked) {
       exportFileData.checked = false
+      worker.checked = true
     }
+
+    keepUpdated.disabled = exportFileData.checked
+    worker.disabled = keepUpdated.checked
   }
 
   addEventHandlers(): void {
-    for (const id of [ 'export-option-exportFileData', 'export-option-keepUpdated' ]) {
+    for (const id of [ 'export-option-exportFileData', 'export-option-keepUpdated', 'export-option-worker' ]) {
       const node = this.globals.document.getElementById(id)
       if (!node) {
         Zotero.debug(`exportoptions: ${id} not found`)
@@ -94,6 +98,10 @@ export class ExportOptions {
           node.checked = false
           this.reset = false
         }
+      }
+
+      if (id === 'export-option-worker') {
+        node.setAttribute('label', l10n.localize('exportOptions.worker'))
       }
 
       if (node.getAttribute('better-bibtex')) return null

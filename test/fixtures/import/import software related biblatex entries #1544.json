@@ -86,8 +86,7 @@
       "stringsOverride": "",
       "verbatimFields": "url,doi,file,ids,eprint,verba,verbb,verbc,groups",
       "warnBulkModify": 10,
-      "warnTitleCased": false,
-      "worker": true
+      "warnTitleCased": false
     }
   },
   "items": [
