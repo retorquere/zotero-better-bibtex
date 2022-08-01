@@ -160,7 +160,7 @@ for(const [key, value] of (new URLSearchParams(ctx.location.search)).entries()) 
 export const workerJob: Partial<Translators.Worker.Job> = {}
 
 class WorkerZoteroBetterBibTeX {
-  public CSL = CSL
+  public CSL() { return CSL }
 
   public cacheFetch(itemID: number) {
     return workerJob.data.cache[itemID]

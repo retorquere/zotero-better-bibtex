@@ -50,6 +50,7 @@ import { TeXstudio } from './tex-studio'
 import { $and } from './db/loki'
 import { cloneDeep } from 'lodash'
 import * as l10n from './l10n'
+import * as CSL from 'citeproc'
 
 // UNINSTALL
 AddonManager.addAddonListener({
@@ -370,9 +371,9 @@ import { qualityReport } from './qr-check'
 import type { ParsedDate } from './dateparser'
 
 Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
-  CSL: Zotero.CiteProc.CSL,
   clientName: Zotero.clientName,
 
+  CSL() { return CSL }, // eslint-disable-line @typescript-eslint/no-unsafe-return
   qrCheck(_sandbox: any, value: string, test: string, params = null) { return qualityReport(value, test, params) },
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
@@ -851,7 +852,8 @@ class Progress {
 }
 
 export class BetterBibTeX {
-  public CSL = Zotero.CiteProc.CSL
+  // eslint-disable-next-line prefer-arrow/prefer-arrow-functions, @typescript-eslint/no-unsafe-return, @typescript-eslint/explicit-module-boundary-types
+  public CSL() { return CSL }
   public TestSupport = new TestSupport
   public KeyManager = new KeyManager
   public Text = { sentenceCase }
