@@ -911,7 +911,7 @@ export class Entry {
           given: this._enc_creators_scrub_name(creator.firstName || ''),
         }
 
-        if (Translator.preferences.parseParticles) CSL.parseParticles(name)
+        if (Translator.preferences.parseParticles) parseParticles(name)
 
         if (!Translator.BetterBibLaTeX || !Translator.preferences.biblatexExtendedNameFormat) {
           // side effects to set use-prefix/uniorcomma -- make sure addCreators is called *before* adding 'options'
