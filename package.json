@@ -88,7 +88,7 @@
     "xregexp": "^5.1.1"
   },
   "devDependencies": {
-    "@retorquere/bibtex-parser": "^6.3.8",
+    "@retorquere/bibtex-parser": "^6.3.9",
     "@retorquere/zotero-sync": "^1.0.23",
     "@types/bluebird": "^3.5.36",
     "@types/lokijs": "^1.5.7",
