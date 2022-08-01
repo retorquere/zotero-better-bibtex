@@ -6,14 +6,14 @@ declare const Zotero: any
 import { Translator } from '../lib/translator'
 
 import { simplifyForExport } from '../../gen/items/simplify'
-import * as Extra from '../../content/extra'
+import { Fields as ParsedExtraFields, get as getExtra, cslCreator } from '../../content/extra'
 import { Cache } from '../../typings/cache'
 import * as ExtraFields from '../../gen/items/extra-fields.json'
 import { log } from '../../content/logger'
 import { RegularItem } from '../../gen/typings/serialized-item'
 import * as postscript from '../lib/postscript'
 
-type ExtendedItem = RegularItem & { extraFields: Extra.Fields }
+type ExtendedItem = RegularItem & { extraFields: ParsedExtraFields }
 
 const validCSLTypes: string[] = require('../../gen/items/csl-types.json')
 
@@ -67,7 +67,7 @@ export const CSLExporter = new class { // eslint-disable-line @typescript-eslint
         item.accessDate = item.accessDate.replace(/T?[0-9]{2}:[0-9]{2}:[0-9]{2}.*/, '').trim()
       }
 
-      Object.assign(item, Extra.get(item.extra, 'csl'))
+      Object.assign(item, getExtra(item.extra, 'csl'))
 
       let csl = Zotero.Utilities.itemToCSLJSON(item)
       csl['citation-key'] = item.citationKey
@@ -97,7 +97,7 @@ export const CSLExporter = new class { // eslint-disable-line @typescript-eslint
 
       if (csl.type === 'broadcast' && csl.genre === 'television broadcast') delete csl.genre
 
-      const extraFields: Extra.Fields = JSON.parse(JSON.stringify(item.extraFields))
+      const extraFields: ParsedExtraFields = JSON.parse(JSON.stringify(item.extraFields))
 
       // special case for #587... not pretty
       // checked separately because .type isn't actually a CSL var so wouldn't pass the ef.type test below
@@ -126,7 +126,7 @@ export const CSLExporter = new class { // eslint-disable-line @typescript-eslint
 
       for (const [field, value] of Object.entries(item.extraFields.creator)) {
         if (!ExtraFields[field].csl) continue
-        csl[field] = value.map(Extra.cslCreator)
+        csl[field] = value.map(cslCreator)
 
         delete item.extraFields.creator[field]
       }

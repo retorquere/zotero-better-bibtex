@@ -6,7 +6,7 @@ export { Translator }
 
 declare var ZOTERO_TRANSLATOR_INFO: TranslatorHeader // eslint-disable-line no-var
 
-import * as itemfields from '../gen/items/items'
+import { valid } from '../gen/items/items'
 import { simplifyForImport, simplifyForExport } from '../gen/items/simplify'
 const version = require('../gen/version.js')
 import { stringify } from '../content/stringify'
@@ -82,7 +82,7 @@ export async function doImport(): Promise<void> {
     // marker so BBT-JSON can be imported without extra-field meddling
     if (source.extra) source.extra = `\x1BBBT\x1B${source.extra}`
 
-    const error = itemfields.valid.test(source)
+    const error = valid.test(source)
     if (error) throw new Error(error)
 
     const item = new Zotero.Item()
