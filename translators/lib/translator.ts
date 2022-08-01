@@ -377,19 +377,26 @@ export class ITranslator { // eslint-disable-line @typescript-eslint/naming-conv
 
   private registerCollection(collection, parent: string) {
     const key = (collection.primary ? collection.primary : collection).key
-    const children = collection.children || collection.descendents || []
-    const collections = children.filter(coll => coll.type === 'collection')
+    if (this.collections[key]) return // why does JM send collections twice?!
 
     this.collections[key] = {
       key,
       parent,
       name: collection.name,
-      collections: collections.map(coll => coll.key as string),
-      items: children.filter(coll => coll.type === 'item').map(item => item.id as number),
+      collections: [],
+      items: [],
     }
 
-    for (collection of collections) {
-      this.registerCollection(collection, key)
+    for (const child of (collection.descendents || collection.children)) {
+      switch (child.type) {
+        case 'collection':
+          this.collections[key].collections.push(child.key as string)
+          this.registerCollection(child, key)
+          break
+        case 'item':
+          this.collections[key].items.push(child.id as number)
+          break
+      }
     }
   }
 
