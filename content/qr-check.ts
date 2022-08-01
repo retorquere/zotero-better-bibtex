@@ -1,17 +1,17 @@
-import { validate as IsISBN } from 'is-isbn'
-import * as issn from './issn'
+import { validate as isISBN } from 'is-isbn'
+import { validate as isISSN } from './issn'
 import EAN = require('barcoder')
-import * as DateParser from './dateparser'
+import { isEDTF } from './dateparser'
 
 const ismn_prefix = '9790'
 
 export function qualityReport(value: string, test: string, params = null): string {
   switch (test) {
     case 'isbn':
-      return IsISBN(value.replace(/-/g, '')) ? '' : 'not a valid ISBN'
+      return isISBN(value.replace(/-/g, '')) ? '' : 'not a valid ISBN'
 
     case 'issn':
-      return issn.validate(value) ? '' : 'not a valid ISSN'
+      return isISSN(value) ? '' : 'not a valid ISSN'
 
     case 'ismn':
       value = value.replace(/[ -]/g, '')
@@ -27,7 +27,7 @@ export function qualityReport(value: string, test: string, params = null): strin
       return EAN.validate(value) ? '' : 'not a valid ISMN'
 
     case 'date':
-      return DateParser.isEDTF(value) ? '' : 'not a valid ETDF date'
+      return isEDTF(value) ? '' : 'not a valid ETDF date'
 
     case 'pattern':
       return (new RegExp(`^${params}$`, 'i').test(value)) ? '' : `must match /^${params}$/`
