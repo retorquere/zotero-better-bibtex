@@ -1,12 +1,7 @@
 /* eslint-disable prefer-arrow/prefer-arrow-functions */
 declare const Zotero: any
 
-import { Translator } from './lib/translator'
-export { Translator }
-
-import { Exporter } from './bibtex/exporter'
-
-import { simplifyForExport } from '../gen/items/items'
+import { simplifyForExport } from '../gen/items/simplify'
 
 import * as Eta from 'eta'
 
@@ -42,7 +37,7 @@ const Mode = {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     const keys = items.map(item => item.citationKey)
 
-    const cmd = `${Translator.preferences.citeCommand}`.trim()
+    const cmd = `${Zotero.getHiddenPref('better-bibtex.citeCommand')}`.trim()
     if (cmd === '') {
       Zotero.write(keys.join(','))
     }
@@ -60,7 +55,7 @@ const Mode = {
   pandoc(items) {
     let keys = items.map(item => `@${item.citationKey}`)
     keys = keys.join('; ')
-    if (Translator.preferences.quickCopyPandocBrackets) keys = `[${keys}]`
+    if (Zotero.getHiddenPref('better-bibtex.quickCopyPandocBrackets')) keys = `[${keys}]`
     Zotero.write(keys)
   },
 
@@ -83,7 +78,7 @@ const Mode = {
   },
 
   orgmode(items) {
-    switch (Translator.preferences.quickCopyOrgMode) {
+    switch (Zotero.getHiddenPref('better-bibtex.quickCopyOrgMode')) {
       case 'zotero':
         for (const item of items) {
           Zotero.write(`[[${select_by_key(item)}][@${item.citationKey}]]`)
@@ -98,7 +93,7 @@ const Mode = {
   },
 
   selectlink(items) {
-    switch (Translator.preferences.quickCopySelectLink) {
+    switch (Zotero.getHiddenPref('better-bibtex.quickCopySelectLink')) {
       case 'zotero':
         Zotero.write(items.map(select_by_key).join('\n'))
         break
@@ -145,7 +140,7 @@ const Mode = {
 
   eta(items) {
     try {
-      Zotero.write(Eta.render(Translator.preferences.quickCopyEta, { items: items.map(simplifyForExport) }))
+      Zotero.write(Eta.render(Zotero.getHiddenPref('better-bibtex.quickCopyEta'), { items: items.map(simplifyForExport) }))
     }
     catch (err) {
       Zotero.write(`${err}`)
@@ -154,18 +149,17 @@ const Mode = {
 }
 
 export function doExport(): void {
-  Translator.init('export')
-
   const items = []
-  for (const item of Exporter.items) {
+  let item: any
+  while (item = Zotero.nextItem()) {
     if (item.citationKey) items.push(item)
   }
 
-  const mode = Mode[`${Translator.options.quickCopyMode}`] || Mode[`${Translator.preferences.quickCopyMode}`]
+  const mode = Mode[Zotero.getOption('quickCopyMode')] || Mode[Zotero.getHiddenPref('better-bibtex.quickCopyMode')]
   if (mode) {
     mode.call(null, items)
   }
   else {
-    throw new Error(`Unsupported Quick Copy format '${Translator.options.quickCopyMode || Translator.preferences.quickCopyMode}', I only know about: ${Object.keys(Mode).join(', ')}`)
+    throw new Error(`Unsupported Quick Copy format '${Zotero.getOption('quickCopyMode') || Zotero.getHiddenPref('better-bibtex.quickCopyMode')}', I only know about: ${Object.keys(Mode).join(', ')}`)
   }
 }

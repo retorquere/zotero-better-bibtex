@@ -5,7 +5,7 @@ import { RegularItem } from '../../gen/typings/serialized-item'
 import { Cache } from '../../typings/cache'
 
 import { JabRef } from '../bibtex/jabref' // not so nice... BibTeX-specific code
-import * as itemfields from '../../gen/items/items'
+import { simplifyForExport } from '../../gen/items/simplify'
 import * as bibtexParser from '@retorquere/bibtex-parser'
 import { Postfix } from './postfix'
 import * as Extra from '../../content/extra'
@@ -71,7 +71,7 @@ export const Exporter = new class {
         }
       }
 
-      itemfields.simplifyForExport(item)
+      simplifyForExport(item)
 
       // strip extra.tex fields that are not for me
       const prefix = Translator.BetterBibLaTeX ? 'biblatex.' : 'bibtex.'

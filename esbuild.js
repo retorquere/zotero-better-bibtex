@@ -22,6 +22,39 @@ function execShellCommand(cmd) {
   })
 }
 
+function dependencyGraph(metafile) {
+  const graph = { nodes: '', edges: '' }
+  const node = {}
+  function nodeid(module) {
+    if (typeof node[module] !== 'number') node[module] = Object.keys(node).length
+    return node[module]
+  }
+  for (const [module, data] of Object.entries(metafile.inputs)) {
+    graph.nodes += `
+      node [
+        id ${nodeid(module)}
+        label ${JSON.stringify(module.replace(/^node_modules\//, ':'))}
+      ]
+    `
+    for (const dep of data.imports) {
+      graph.edges += `
+        edge [
+          source ${nodeid(module)}
+          target ${nodeid(dep.path)}
+        ]
+      `
+    }
+  }
+  return `
+    graph [
+	    hierarchic	1
+	    directed	1
+      ${graph.nodes}
+      ${graph.edges}
+    ]
+  `
+}
+
 async function bundle(config) {
   config = {
     bundle: true,
@@ -29,6 +62,7 @@ async function bundle(config) {
     // define: { BigInt: 'Number' },
     target: ['firefox60'],
     inject: [],
+    treeShaking: true,
     ...config,
   }
 
@@ -37,6 +71,7 @@ async function bundle(config) {
   if (config.exportGlobals) {
     delete config.exportGlobals
     const esm = await esbuild.build({ ...config, logLevel: 'silent', format: 'esm', metafile: true, write: false })
+    // fs.writeFileSync(config.outfile + '.gml', dependencyGraph(esm.metafile))
     for (const output of Object.values(esm.metafile.outputs)) {
       if (output.entryPoint) {
         config.globalName = output.exports.sort().join('___')

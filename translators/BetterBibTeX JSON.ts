@@ -7,6 +7,7 @@ export { Translator }
 declare var ZOTERO_TRANSLATOR_INFO: TranslatorHeader // eslint-disable-line no-var
 
 import * as itemfields from '../gen/items/items'
+import { simplifyForImport, simplifyForExport } from '../gen/items/simplify'
 const version = require('../gen/version.js')
 import { stringify } from '../content/stringify'
 import { log } from '../content/logger'
@@ -48,7 +49,7 @@ export async function doImport(): Promise<void> {
 
   const items = new Set
   for (const source of (data.items as any[])) {
-    itemfields.simplifyForImport(source)
+    simplifyForImport(source)
 
     // I do export these but the cannot be imported back
     delete source.relations
@@ -155,7 +156,7 @@ export function doExport(): void {
 
     delete item.collections
 
-    itemfields.simplifyForExport(item, { dropAttachments: Translator.options.dropAttachments})
+    simplifyForExport(item, { dropAttachments: Translator.options.dropAttachments})
     item.relations = item.relations ? (item.relations['dc:relation'] || []) : []
 
     for (const att of item.attachments || []) {

@@ -5,7 +5,7 @@ import { affects, names as preferences, defaults, PreferenceName, Preferences, s
 import { client } from '../../content/client'
 import { RegularItem, Item, Collection } from '../../gen/typings/serialized-item'
 import { Pinger } from '../../content/ping'
-import { log } from '../../content/logger'
+declare const dump: (msg: string) => void
 
 type TranslatorMode = 'export' | 'import'
 
@@ -231,7 +231,7 @@ export class ITranslator { // eslint-disable-line @typescript-eslint/naming-conv
 
     let start = `${ZOTERO_TRANSLATOR_INFO.label} ${mode} translator starting in ${Zotero.worker ? 'background' : 'foreground'}`
     if (!!Zotero.worker !== (mode === 'export' && !!this.options.worker)) start += ', which was unexpected'
-    log.debug(start)
+    dump(start)
 
     this.platform = (Zotero.getHiddenPref('better-bibtex.platform') as string)
     this.isJurisM = client === 'jurism'

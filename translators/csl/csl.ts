@@ -5,7 +5,7 @@ declare const Zotero: any
 
 import { Translator } from '../lib/translator'
 
-import * as itemfields from '../../gen/items/items'
+import { simplifyForExport } from '../../gen/items/simplify'
 import * as Extra from '../../content/extra'
 import { Cache } from '../../typings/cache'
 import * as ExtraFields from '../../gen/items/extra-fields.json'
@@ -62,7 +62,7 @@ export const CSLExporter = new class { // eslint-disable-line @typescript-eslint
         continue
       }
 
-      itemfields.simplifyForExport(item)
+      simplifyForExport(item)
       if (item.accessDate) { // WTH is Juris-M doing with those dates?
         item.accessDate = item.accessDate.replace(/T?[0-9]{2}:[0-9]{2}:[0-9]{2}.*/, '').trim()
       }

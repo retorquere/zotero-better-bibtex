@@ -16,8 +16,9 @@ import { text2latex, replace_command_spacers } from './unicode_translator'
 import { datefield } from './datefield'
 import * as ExtraFields from '../../gen/items/extra-fields.json'
 import { label as propertyLabel } from '../../gen/items/items'
-import * as Extra from '../../content/extra'
-import * as CSL from 'citeproc'
+import type { Fields as ParsedExtraFields } from '../../content/extra'
+import { zoteroCreator as ExtraZoteroCreator } from '../../content/extra'
+import { parseParticles } from 'citeproc'
 import { log } from '../../content/logger'
 import { babelLanguage } from '../../content/text'
 import BabelTag from '../../gen/babel/tag.json'
@@ -166,7 +167,7 @@ export class Entry {
 
   private inPostscript = false
   private quality_report: string[] = []
-  private extraFields: Extra.Fields
+  private extraFields: ParsedExtraFields
 
   public static installPostscript(): void {
     try {
@@ -278,7 +279,7 @@ export class Entry {
     for (const [name, value] of Object.entries(item.extraFields.creator)) {
       if (ExtraFields[name].zotero) {
         for (const creator of (value as string[])) {
-          item.creators.push({...Extra.zoteroCreator(creator, name), source: creator})
+          item.creators.push({...ExtraZoteroCreator(creator, name), source: creator})
         }
         delete item.extraFields.creator[name]
       }
