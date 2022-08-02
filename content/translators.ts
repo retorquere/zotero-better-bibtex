@@ -410,6 +410,9 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
   }
 
   public displayOptions(translatorID: string, displayOptions: any): any {
+    if (!displayOptions) {
+      return this.byId[translatorID].displayOptions || {}
+    }
     const defaults = this.byId[translatorID].displayOptions || {}
     for (const [k, v] of Object.entries(defaults)) {
       if (typeof displayOptions[k] === 'undefined') displayOptions[k] = v
@@ -419,7 +422,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
   public async exportItems(translatorID: string, displayOptions: any, scope: ExportScope, path: string = null): Promise<string> {
     await Zotero.BetterBibTeX.ready
-    this.displayOptions(translatorID, displayOptions)
+    displayOptions = this.displayOptions(translatorID, displayOptions)
 
     const start = Date.now()
 
