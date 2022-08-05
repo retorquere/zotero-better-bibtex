@@ -313,7 +313,7 @@ const queue = new class TaskQueue {
       }
 
       log.debug('on-idle: starting auto-export')
-      await Promise.all(jobs.map(job => Translators.exportItems(job)))
+      await Promise.all(jobs.map(job => Translators.exportItemsByWorker(job)))
 
       await repo.push(l10n.localize('Preferences.auto-export.git.message', { type: Translators.byId[ae.translatorID].label.replace('Better ', '') }))
 
