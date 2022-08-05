@@ -180,26 +180,19 @@ const queue = new class TaskQueue {
 
     // really dumb but the idle service deals with msecs wverywhere -- except add, which is in seconds
     this.idleService.addIdleObserver(this, Preference.autoExportIdleWait)
-
-    Zotero.Notifier.registerObserver(this, ['sync'], 'BetterBibTeX', 1)
   }
 
   public init(autoexports) {
     this.autoexports = autoexports
   }
 
-  public pause(reason: 'startup' | 'end-of-idle' | 'start-of-sync' | 'preference-change') {
+  public pause(reason: 'startup' | 'end-of-idle' | 'preference-change') {
     log.debug('on-idle: queue.pause:', reason)
     this.scheduler.paused = true
   }
 
-  public resume(reason: 'startup' | 'end-of-sync' | 'start-of-idle' | 'preference-change') {
+  public resume(reason: 'startup' | 'start-of-idle' | 'preference-change') {
     log.debug('on-idle: queue.resume:', reason)
-    if (Zotero.Sync.Runner.syncInProgress) {
-      log.debug('on-idle: queue not resumed: sync in progress, end-of-sync will trigger resume')
-      this.scheduler.paused = true
-      return
-    }
 
     const is_idle = this.idleService.idleTime >= Preference.autoExportIdleWait * 1000
     switch (Preference.autoExport) {
@@ -209,7 +202,6 @@ const queue = new class TaskQueue {
         return
 
       case 'idle':
-        // don't re-schedule idle for end-of-sync / should never happen?
         if (!is_idle) {
           log.debug('on-idle: queue not resumed:', reason, "but we're not actually idle")
           this.scheduler.paused = true
@@ -356,33 +348,6 @@ const queue = new class TaskQueue {
 
       default:
         log.error('Unexpected idle state', topic)
-        break
-    }
-  }
-
-  // pause during sync.
-  // It is theoretically possible that auto-export is paused because Zotero is idle and then restarted when the sync finishes, but
-  // I can't see how a system can be considered idle when Zotero is syncing.
-  protected notify(action, type) {
-    if (Preference.autoExport === 'off') {
-      log.debug('on-idle: sync.notify: auto-export is off')
-      this.pause('preference-change')
-      return
-    }
-
-    switch(`${type}.${action}`) {
-      case 'sync.start':
-        log.debug('on-idle: sync.notify: started => pausing queue')
-        this.pause('start-of-sync')
-        break
-
-      case 'sync.finish':
-        log.debug('on-idle: sync.notify: finished => resuming queue')
-        this.resume('end-of-sync')
-        break
-
-      default:
-        log.error('Unexpected Zotero notification state', { action, type })
         break
     }
   }
