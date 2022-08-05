@@ -631,7 +631,7 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
         this.saveQueue = []
         this._savingAttachments = []
 
-        return Translators.exportItemsByWorker(translatorID, displayOptions, { translate: this, scope: { ...this._export, getter: this._itemGetter }, path })
+        return Translators.exportItemsByWorker({ translatorID, displayOptions, translate: this, scope: { ...this._export, getter: this._itemGetter }, path })
           .then(result => {
             // eslint-disable-next-line id-blacklist
             this.string = result

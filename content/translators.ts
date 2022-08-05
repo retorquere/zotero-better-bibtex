@@ -32,13 +32,16 @@ import * as translatorMetadata from '../gen/translators.json'
 import * as l10n from './l10n'
 
 type ExportScope = { type: 'items', items: any[] } | { type: 'library', id: number } | { type: 'collection', collection: any }
-type ExportJob = {
-  scope?: ExportScope
-  path?: string
+export type ExportJob = {
+  translatorID: string
+  displayOptions: Record<string, boolean>
+  scope: ExportScope
+  autoExport?: number
   preferences?: Record<string, boolean | number | string>
+  path?: string
   started?: number
   canceled?: boolean
-  translate: any
+  translate?: any
 }
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
@@ -169,44 +172,37 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     }
   }
 
-  public async exportItemsByWorker(translatorID: string, displayOptions: Record<string, boolean>, job: ExportJob) {
+  public async exportItemsByWorker(job: ExportJob) {
     this.start()
 
     if (!this.worker) {
       // this returns a promise for a new export, but for a foreground export
-      return this.exportItems(translatorID, displayOptions, job.scope, job.path)
+      return this.exportItems(job.translatorID, job.displayOptions, job.scope, job.path)
     }
     else {
-      return this.queue.add(() => this.exportItemsByQueuedWorker(translatorID, displayOptions, job))
+      return this.queue.add(() => this.exportItemsByQueuedWorker(job))
     }
   }
 
-  private async exportItemsByQueuedWorker(translatorID: string, displayOptions: Record<string, boolean>, job: ExportJob) {
+  private async exportItemsByQueuedWorker(job: ExportJob) {
     if (job.path && job.canceled) return ''
     await Zotero.BetterBibTeX.ready
     if (job.path && job.canceled) return ''
 
-    this.displayOptions(translatorID, displayOptions)
+    const displayOptions = this.displayOptions(job.translatorID, job.displayOptions)
 
     log.debug('translate: setting up worker')
-    const translator = this.byId[translatorID]
+    const translator = this.byId[job.translatorID]
 
     const start = Date.now()
 
     job.preferences = job.preferences || {}
-    displayOptions = displayOptions || {}
 
     // undo override smuggling so I can pre-fetch the cache
     const cloaked_override = 'preference_'
-    const cloaked_auto_export = 'auto_export_id'
-    let autoExport: number
     for (const [pref, value] of Object.entries(displayOptions)) {
       if (pref.startsWith(cloaked_override)) {
-        job.preferences[pref.replace(cloaked_override, '')] = (value as unknown as any)
-        delete displayOptions[pref]
-      }
-      else if (pref === cloaked_auto_export) {
-        autoExport = parseInt(value as unknown as string)
+        job.preferences[pref.replace(cloaked_override, '')] = (value as string)
         delete displayOptions[pref]
       }
     }
@@ -236,7 +232,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
         collections: [],
         cache: {},
       },
-      autoExport,
+      autoExport: job.autoExport,
 
       translator: translator.label,
       output: job.path || '',
@@ -266,7 +262,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
           break
 
         case 'done':
-          Events.emit('export-progress', 100, translator.label, autoExport) // eslint-disable-line no-magic-numbers
+          Events.emit('export-progress', 100, translator.label, job.autoExport) // eslint-disable-line no-magic-numbers
           deferred.resolve(typeof e.data.output === 'boolean' ? '' : e.data.output)
           this.workers.running.delete(id)
           break
@@ -349,7 +345,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     let worked = Date.now()
     const prepare = new Pinger({
       total: items.length,
-      callback: pct => Events.emit('export-progress', -pct, translator.label, autoExport),
+      callback: pct => Events.emit('export-progress', -pct, translator.label, job.autoExport),
     })
     // use a loop instead of map so we can await for beachball protection
     for (const item of items) {
@@ -365,7 +361,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     }
     if (job.path && job.canceled) return ''
 
-    if (this.byId[translatorID].configOptions?.getCollections) {
+    if (this.byId[job.translatorID].configOptions?.getCollections) {
       config.data.collections = collections.map(collection => {
         collection = collection.serialize(true)
         collection.id = collection.primary.collectionID

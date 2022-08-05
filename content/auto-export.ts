@@ -7,7 +7,7 @@ import { Events } from './events'
 import { DB, scrubAutoExport } from './db/main'
 import { DB as Cache, selector as cacheSelector } from './db/cache'
 import { $and } from './db/loki'
-import { Translators } from './translators'
+import { Translators, ExportJob } from './translators'
 import { Preference } from './prefs'
 import { Preferences, schema } from '../gen/preferences/meta'
 import * as ini from 'ini'
@@ -274,9 +274,14 @@ const queue = new class TaskQueue {
       for (const pref of schema.translator[Translators.byId[ae.translatorID].label].preferences) {
         displayOptions[`preference_${pref}`] = ae[pref]
       }
-      displayOptions.auto_export_id = ae.$loki
 
-      const jobs = [ { scope, path: ae.path } ]
+      const jobs: ExportJob[] = [{
+        translatorID: ae.translatorID,
+        autoExport: ae.$loki,
+        displayOptions,
+        scope,
+        path: ae.path,
+      }]
 
       if (ae.recursive) {
         const collections = scope.type === 'library' ? Zotero.Collections.getByLibrary(scope.id, true) : Zotero.Collections.getByParent(scope.collection, true)
@@ -299,7 +304,11 @@ const queue = new class TaskQueue {
             .map((p: string) => autoExportPathReplaceDiacritics ? (fold2ascii.foldMaintaining(p) as string) : p)
             .join(autoExportPathReplaceDirSep || '-') + ext
           )
-          jobs.push({ scope: { type: 'collection', collection: collection.id }, path } )
+          jobs.push({
+            ...jobs[0],
+            scope: { type: 'collection', collection: collection.id },
+            path,
+          })
         }
       }
 
