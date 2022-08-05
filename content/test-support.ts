@@ -126,7 +126,7 @@ export class TestSupport {
     else {
       scope = null
     }
-    return await Translators.exportItems(translatorID, displayOptions, scope, path)
+    return await Translators.exportItems({translatorID, displayOptions: displayOptions as Record<string, boolean>, scope, path})
   }
 
   public async select(ids: number[]): Promise<boolean> {

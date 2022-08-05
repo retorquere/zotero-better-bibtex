@@ -177,7 +177,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
     if (!this.worker) {
       // this returns a promise for a new export, but for a foreground export
-      return this.exportItems(job.translatorID, job.displayOptions, job.scope, job.path)
+      return this.exportItems(job)
     }
     else {
       return this.queue.add(() => this.exportItemsByQueuedWorker(job))
@@ -416,16 +416,17 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     return displayOptions
   }
 
-  public async exportItems(translatorID: string, displayOptions: any, scope: ExportScope, path: string = null): Promise<string> {
+  // public async exportItems(translatorID: string, displayOptions: any, scope: ExportScope, path: string = null): Promise<string> {
+  public async exportItems(job: ExportJob): Promise<string> {
     await Zotero.BetterBibTeX.ready
-    displayOptions = this.displayOptions(translatorID, displayOptions)
+    const displayOptions = this.displayOptions(job.translatorID, job.displayOptions)
 
     const start = Date.now()
 
     const deferred = Zotero.Promise.defer()
     const translation = new Zotero.Translate.Export()
 
-    scope = this.exportScope(scope)
+    const scope = this.exportScope(job.scope)
 
     switch (scope.type) {
       case 'library':
@@ -444,14 +445,14 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
         throw new Error(`Unexpected scope: ${Object.keys(scope)}`)
     }
 
-    translation.setTranslator(translatorID)
-    if (displayOptions && (Object.keys(displayOptions).length !== 0)) translation.setDisplayOptions(displayOptions)
+    translation.setTranslator(job.translatorID)
+    if (Object.keys(displayOptions).length !== 0) translation.setDisplayOptions(displayOptions)
 
-    if (path) {
+    if (job.path) {
       let file = null
 
       try {
-        file = Zotero.File.pathToFile(path)
+        file = Zotero.File.pathToFile(job.path)
         // path could exist but not be a regular file
         if (file.exists() && !file.isFile()) file = null
       }
@@ -461,13 +462,13 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
         file = null
       }
       if (!file) {
-        deferred.reject(l10n.localize('Translate.error.target.notaFile', { path }))
+        deferred.reject(l10n.localize('Translate.error.target.notaFile', { path: job.path }))
         return deferred.promise
       }
 
       // the parent directory could have been removed
       if (!file.parent || !file.parent.exists()) {
-        deferred.reject(l10n.localize('Translate.error.target.noParent', { path }))
+        deferred.reject(l10n.localize('Translate.error.target.noParent', { path: job.path }))
         return deferred.promise
       }
 
@@ -479,7 +480,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
         deferred.resolve(obj ? obj.string : undefined)
       }
       else {
-        log.error('Translators.exportItems failed in', { time: Date.now() - start, translatorID, displayOptions, path })
+        log.error('Translators.exportItems failed in', { time: Date.now() - start, ...job, translate: undefined })
         deferred.reject('translation failed')
       }
     })

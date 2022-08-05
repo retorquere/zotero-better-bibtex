@@ -182,7 +182,11 @@ export class ErrorReport {
 
     if (this.params.scope) {
       await Zotero.BetterBibTeX.ready
-      this.errorlog.items = await Translators.exportItems(Translators.byLabel.BetterBibTeXJSON.translatorID, {exportNotes: true, dropAttachments: true, Normalize: true}, this.params.scope)
+      this.errorlog.items = await Translators.exportItems({
+        translatorID: Translators.byLabel.BetterBibTeXJSON.translatorID,
+        displayOptions: {exportNotes: true, dropAttachments: true, Normalize: true},
+        scope: this.params.scope,
+      })
     }
 
     this.globals.document.getElementById('better-bibtex-error-context').value = this.errorlog.info

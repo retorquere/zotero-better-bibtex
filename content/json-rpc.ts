@@ -374,7 +374,11 @@ class NSItem {
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return [OK, 'text/plain', await Translators.exportItems(Translators.getTranslatorId(translator), null, { type: 'items', items: await getItemsAsync(found.map(key => key.itemID)) }) ]
+    return [OK, 'text/plain', await Translators.exportItems({
+      translatorID: Translators.getTranslatorId(translator),
+      displayOptions: {},
+      scope: { type: 'items', items: await getItemsAsync(found.map(key => key.itemID)) }, // eslint-disable-line @typescript-eslint/no-unsafe-return
+    })]
   }
 }
 

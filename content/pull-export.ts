@@ -37,7 +37,11 @@ Zotero.Server.Endpoints['/better-bibtex/export/collection'] = Zotero.Server.Endp
       const collection = Zotero.Collections.getByLibraryAndKey(libID, path) || (await getCollection(`/${libID}/${path}`))
       if (!collection) return [NOT_FOUND, 'text/plain', `Could not export bibliography: path '${path}' not found`]
 
-      return [ OK, 'text/plain', await Translators.exportItems(Translators.getTranslatorId(translator), displayOptions(request), { type: 'collection', collection }) ]
+      return [ OK, 'text/plain', await Translators.exportItems({
+        translatorID: Translators.getTranslatorId(translator),
+        displayOptions: displayOptions(request),
+        scope: { type: 'collection', collection },
+      })]
 
     }
     catch (err) {
@@ -60,7 +64,11 @@ Zotero.Server.Endpoints['/better-bibtex/export/library'] = Zotero.Server.Endpoin
         return [NOT_FOUND, 'text/plain', `Could not export bibliography: library '${request.query['']}' does not exist`]
       }
 
-      return [OK, 'text/plain', await Translators.exportItems(Translators.getTranslatorId(translator), displayOptions(request), { type: 'library', id: libID }) ]
+      return [OK, 'text/plain', await Translators.exportItems({
+        translatorID: Translators.getTranslatorId(translator),
+        displayOptions: displayOptions(request),
+        scope: { type: 'library', id: libID },
+      })]
 
     }
     catch (err) {
@@ -87,7 +95,11 @@ Zotero.Server.Endpoints['/better-bibtex/export/selected'] = Zotero.Server.Endpoi
         return [OK, 'text/plain', Zotero.QuickCopy.getContentFromItems(items, format, null, true).text ]
       }
 
-      return [OK, 'text/plain', await Translators.exportItems(Translators.getTranslatorId(translator), displayOptions(request), { type: 'items', items }) ]
+      return [OK, 'text/plain', await Translators.exportItems({
+        translatorID: Translators.getTranslatorId(translator),
+        displayOptions: displayOptions(request),
+        scope: { type: 'items', items },
+      })]
     }
     catch (err) {
       return [SERVER_ERROR, 'text/plain', `${err}`]
@@ -162,7 +174,7 @@ Zotero.Server.Endpoints['/better-bibtex/export/item'] = class {
       if (!Object.keys(itemIDs).length) return [ SERVER_ERROR, 'text/plain', 'no items found' ]
       // itemID => zotero item
       const items = fromEntries((await getItemsAsync(Object.values(itemIDs))).map(item => [ item.itemID , item ]))
-      let contents = await Translators.exportItems(translatorID, displayOptions(request), { type: 'items', items: Object.values(items) })
+      let contents = await Translators.exportItems({translatorID, displayOptions: displayOptions(request), scope: { type: 'items', items: Object.values(items) }})
 
       if (pandocFilterData) {
         let filtered_items

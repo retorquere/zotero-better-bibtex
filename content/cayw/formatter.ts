@@ -268,14 +268,14 @@ export const Formatter = new class { // eslint-disable-line @typescript-eslint/n
     const items = await getItemsAsync(citations.map(citation => citation.id))
 
     const label = (options.translator || 'biblatex').replace(/\s/g, '').toLowerCase().replace('better', '')
-    const translator = Object.keys(Translators.byId).find(id => Translators.byId[id].label.replace(/\s/g, '').toLowerCase().replace('better', '') === label) || options.translator
+    const translatorID = Object.keys(Translators.byId).find(id => Translators.byId[id].label.replace(/\s/g, '').toLowerCase().replace('better', '') === label) || options.translator
 
-    const exportOptions = {
+    const displayOptions = {
       exportNotes: ['yes', 'y', 'true'].includes((options.exportNotes || '').toLowerCase()),
       useJournalAbbreviation: ['yes', 'y', 'true'].includes((options.useJournalAbbreviation || '').toLowerCase()),
     }
 
-    return await Translators.exportItems(translator, exportOptions, { type: 'items', items })
+    return await Translators.exportItems({translatorID, displayOptions, scope: { type: 'items', items }})
   }
 
   public async json(citations, _options) {
