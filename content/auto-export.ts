@@ -218,6 +218,7 @@ const queue = new class TaskQueue {
   }
 
   public add(ae) {
+    log.debug('ae.scheduling', ae)
     const $loki = (typeof ae === 'number' ? ae : ae.$loki)
     Events.emit('export-progress', 0, Translators.byId[ae.translatorID].label, $loki)
     this.scheduler.schedule($loki, this.run.bind(this, $loki))
@@ -235,6 +236,7 @@ const queue = new class TaskQueue {
     await Zotero.BetterBibTeX.ready
 
     const ae = this.autoexports.get($loki)
+    log.debug('ae.starting', ae)
     Events.emit('export-progress', 0, Translators.byId[ae.translatorID].label, $loki)
     if (!ae) throw new Error(`AutoExport ${$loki} not found`)
 
@@ -312,8 +314,9 @@ const queue = new class TaskQueue {
         }
       }
 
-      log.debug('on-idle: starting auto-export')
+      log.debug('ae.starting', jobs.length, 'jobs for', ae.$loki)
       await Promise.all(jobs.map(job => Translators.exportItemsByWorker(job)))
+      log.debug('ae.done', jobs.length, 'jobs for', ae.$loki)
 
       await repo.push(l10n.localize('Preferences.auto-export.git.message', { type: Translators.byId[ae.translatorID].label.replace('Better ', '') }))
 

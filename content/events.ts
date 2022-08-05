@@ -47,8 +47,10 @@ export const Events = new class EventEmitter extends EventEmitter3 {
     const prefix: string = typeof event === 'string' ? event + '.' : '\0'
     const results: boolean[] = []
     for (const listening of this.eventNames()) {
-      log.debug('event.emit(', listening, args, ')')
-      if (listening === event || (typeof listening === 'string' && listening.startsWith(prefix))) results.push(super.emit.apply(this, [listening, ...args]))
+      if (listening === event || (typeof listening === 'string' && listening.startsWith(prefix))) {
+        log.debug('event.emit(', listening, args, ')')
+        results.push(super.emit.apply(this, [listening, ...args]))
+      }
     }
     return results.length === 0 ? false : !results.find(r => !r)
   }
