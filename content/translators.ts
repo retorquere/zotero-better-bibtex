@@ -50,7 +50,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
   public byName: Record<string, Translator.Header>
   public byLabel: Record<string, Translator.Header>
   public itemType: { note: number, attachment: number, annotation: number }
-  private queue = new Queue
+  public queue = new Queue
   public worker: ChromeWorker
 
   public workers: { total: number, running: Set<number>, startup: number } = {

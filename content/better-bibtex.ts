@@ -1031,9 +1031,9 @@ export class BetterBibTeX {
     Events.emit('loaded')
 
     Events.on('export-progress', (percent: number, translator: string) => {
-      const preparing = percent < 0 ? l10n.localize('Preferences.auto-export.status.preparing') : ''
-      percent = Math.abs(percent)
-      setProgress(percent && percent < 100 && Math.abs(percent), `${preparing} ${translator}`) // eslint-disable-line no-magic-numbers
+      let status = `${percent < 0 ? l10n.localize('Preferences.auto-export.status.preparing') : ''} ${translator}`.trim()
+      if (Translators.queue.queued) status += ` +${Translators.queue.queued}`
+      setProgress(percent && percent < 100 && Math.abs(percent), status) // eslint-disable-line no-magic-numbers
     })
   }
 }
