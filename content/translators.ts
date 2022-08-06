@@ -191,7 +191,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
     const displayOptions = this.displayOptions(job.translatorID, job.displayOptions)
 
-    log.debug('eibqw: starting')
+    log.dump('eibqw: starting')
     const translator = this.byId[job.translatorID]
 
     const start = Date.now()
@@ -312,7 +312,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       this.workers.running.delete(id)
     }
 
-    log.debug('eibqw: fetching scope')
+    log.dump('eibqw: fetching scope')
     const scope = this.exportScope(job.scope)
     let collections: any[] = []
     switch (scope.type) {
@@ -343,7 +343,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
     items = items.filter(item => !item.isAnnotation?.())
 
-    log.debug('eibqw: loading serialization cache')
+    log.dump('eibqw: loading serialization cache')
     let worked = Date.now()
     const prepare = new Pinger({
       total: items.length,
@@ -372,7 +372,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       })
     }
 
-    log.debug('eibqw: loading export cache')
+    log.dump('eibqw: loading export cache')
     // pre-fetch cache
     if (cache) {
       const query = {...selector, itemID: { $in: config.data.items.map(item => item.itemID) }}
@@ -392,22 +392,22 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     }
 
     prepare.done()
-    log.debug('eibqw: prepare done')
+    log.dump('eibqw: prepare done')
 
     // if the average startup time is greater than the autoExportDelay, bump up the delay to prevent stall-cascades
     this.workers.startup += Math.ceil((Date.now() - start) / 1000) // eslint-disable-line no-magic-numbers
     // eslint-disable-next-line no-magic-numbers
     if (this.workers.total > 5 && (this.workers.startup / this.workers.total) > Preference.autoExportDelay) {
       Preference.autoExportDelay = Math.ceil(this.workers.startup / this.workers.total)
-      log.debug('eibqw: bumping autoExportDelay to', Preference.autoExportDelay)
+      log.dump('eibqw: bumping autoExportDelay to', Preference.autoExportDelay)
     }
 
-    log.debug('eibqw: encoding payload')
+    log.dump('eibqw: encoding payload')
     const enc = new TextEncoder()
     // stringify gets around 'object could not be cloned', and arraybuffers can be passed zero-copy. win-win
     const abconfig = enc.encode(JSON.stringify(config)).buffer
 
-    log.debug('eibqw: starting worker export:', config.data.items.length, 'items, cache:', !!cache, Object.keys(config.data.cache).length, 'items cached')
+    log.dump('eibqw: starting worker export:', config.data.items.length, 'items, cache:', !!cache, Object.keys(config.data.cache).length, 'items cached')
     this.worker.postMessage({ kind: 'start', config: abconfig }, [ abconfig ])
 
     return deferred.promise

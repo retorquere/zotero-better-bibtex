@@ -19,7 +19,7 @@ class Logger {
 
   protected timestamp: number
 
-  private format({ error=false, worker=0, translator='', issue=0}, msg) {
+  private format({ error=false, worker=0, translator='', issue=0 }, msg) {
     let workername = `${worker}`
     let diff = null
     const now = Date.now()
