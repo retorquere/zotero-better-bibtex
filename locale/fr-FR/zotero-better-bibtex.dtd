@@ -230,7 +230,7 @@ Si cette option est activée et que vous rencontrez un problème autre que l'ann
 <!ENTITY better-bibtex.BetterBibTeX.citekey.pinInspireHEP "Verrouiller les clés BibTeX de InspireHEP">
 <!ENTITY better-bibtex.BetterBibTeX.citekey.unpin "Déverrouiller la clé de citation">
 <!ENTITY better-bibtex.BetterBibTeX.citekey.refresh "Rafraichir la clé de citation">
-<!ENTITY better-bibtex.BetterBibTeX.addCitationLinks "Citation Graph: add citation links...">
+<!ENTITY better-bibtex.BetterBibTeX.addCitationLinks "Graphique de citation : ajouter des liens de citation...">
 <!ENTITY better-bibtex.BetterBibTeX.sentenceCase "BBT Casse de la phrase">
 <!ENTITY better-bibtex.BetterBibTeX.patchDates "Copier date-added/date-modified à partir du champ extra">
 <!ENTITY better-bibtex.ZoteroPane.tag-duplicates "Tagguer les clés de citation doublons">
