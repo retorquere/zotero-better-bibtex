@@ -347,7 +347,11 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     let worked = Date.now()
     const prepare = new Pinger({
       total: items.length,
-      callback: pct => Events.emit('export-progress', -pct, translator.label, job.autoExport),
+      callback: pct => {
+        let preparing = `${l10n.localize('Preferences.auto-export.status.preparing')} ${translator.label}`.trim()
+        if (this.queue.queued) preparing += ` +${Translators.queue.queued}`
+        Events.emit('export-progress', pct, preparing, job.autoExport)
+      },
     })
     // use a loop instead of map so we can await for beachball protection
     for (const item of items) {

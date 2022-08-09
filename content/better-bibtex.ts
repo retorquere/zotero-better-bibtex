@@ -767,18 +767,12 @@ notify('collection-item', (_event: any, _type: any, collection_items: any) => {
   INIT
 */
 
-function setProgress(progress: number | false, msg: string) {
+function setProgress(progress: number, msg: string) {
   const progressbox = document.getElementById('better-bibtex-progress')
-  progressbox.hidden = progress === false ? true : false
-  if (progress === false) return
-
-  /*
-  const progressmeter: XUL.ProgressMeter = (document.getElementById('better-bibtex-progress-meter') as unknown as XUL.ProgressMeter)
-  if (typeof progress === 'number') progressmeter.value = progress
-  */
+  if (progressbox.hidden = (progress >= 100)) return
 
   const progressmeter: XUL.Element = (document.getElementById('better-bibtex-progress-meter') as unknown as XUL.Element)
-  progressmeter.style.backgroundPosition = `-${Math.min(Math.abs(progress), 100) * 20}px 0` // eslint-disable-line no-magic-numbers
+  progressmeter.style.backgroundPosition = `-${Math.min(progress, 100) * 20}px 0` // eslint-disable-line no-magic-numbers
 
   const label: XUL.Label = (document.getElementById('better-bibtex-progress-label') as unknown as XUL.Label)
   label.value = msg
@@ -1030,10 +1024,13 @@ export class BetterBibTeX {
 
     Events.emit('loaded')
 
-    Events.on('export-progress', (percent: number, translator: string) => {
+    Events.on('export-progress', (percent: number, message: string) => {
+      /*
       let status = `${percent < 0 ? l10n.localize('Preferences.auto-export.status.preparing') : ''} ${translator}`.trim()
       if (Translators.queue.queued) status += ` +${Translators.queue.queued}`
       setProgress(percent && percent < 100 && Math.abs(percent), status) // eslint-disable-line no-magic-numbers
+      */
+      setProgress(percent, message) // eslint-disable-line no-magic-numbers
     })
   }
 }
