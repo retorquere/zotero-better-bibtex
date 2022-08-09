@@ -616,7 +616,7 @@ class PatternFormatter {
     const firstAuthor = authors.shift()
 
     // eslint-disable-next-line no-magic-numbers
-    let author = [firstAuthor.substring(0, 5)].concat(authors.map(name => name.substring(0, 1)).join('.')).join(sep)
+    let author = [firstAuthor.substring(0, 5)].concat(authors.map(name => name.substring(0, 1)).join(sep)).join(sep)
     if (this.folding) author = this.clean(author, true)
     return this.$text(author)
   }
