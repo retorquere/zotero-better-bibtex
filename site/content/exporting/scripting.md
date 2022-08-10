@@ -373,3 +373,12 @@ if (Translator.BetterTeX && !Translator.options.exportFileData && item.attachmen
 ```
 
 From [discussion here](https://forums.zotero.org/discussion/comment/399187#Comment_399187).
+
+### Adding file field for CSL JSON export
+It can be useful to have paths to attachment files included in json files, which is currently not the case, see [issue 518](https://github.com/retorquere/zotero-better-bibtex/issues/518).
+
+```javascript
+if (Translator.BetterCSLJSON) {
+	entry.file = item.attachments.map(a => a.localPath).join(";");
+}
+```
