@@ -49,7 +49,7 @@ switch (Translator.header.label) {
 
 If you want to run a postscript in the CSL translators but don't care whether it will output YAML or JSON, you can test for `Translator.BetterCSL`, which will be true when either one of `BetterCSLJSON` or `BetterCSLYAML` is active. Analogously, `Translator.BetterTeX` will be true if either of `Better BibTeX` or `Better BibLaTeX` is active.
 
-In the postscript, the entry being built is available as `entry`, as both `entry` and `this` in BetterTeX postscripts, and as `reference` for legacy postscripts; and the Zotero item it is being built from is available as `item`.
+In the postscript, the entry being built is available as `tex` (primary), `entry`, `reference` and `this` (legacy) in BetterTeX postscripts, or `csl` (primary), `entry`, `reference` and `this` in BetterCSL postscripts; the Zotero item it is being built from is available as `zotero` (primary) or `item` (legacy).
 
 You should really test for the translator context in your postscripts using the `Translator.<name>` tests mentioned above. If you don't because you have a postscript that pre-date postscript CSL support, you will probably be using the legacy use of `this` to set things on the entry being built, and calling `reference.add` in those postscripts; since, for CSL postscripts, `this` is not set, it will make the script will non-fatally error out, so you're very probably good to go as-is. But please fix your postscripts to test for the translator context.
 
@@ -57,17 +57,17 @@ You should really test for the translator context in your postscripts using the 
 
 The postscript should be a `javascript` snippet. You can access the data with following objects and methods:
 
-- `item` is the Zotero item that's the source for the entry being built. 
-- `entry` is the BibTeX entry you are building, and the entry has a number of fields.
+- `zotero` is the Zotero item that's the source for the entry being built. 
+- `tex` is the BibTeX entry you are building, and the entry has a number of fields.
 
-  e.g. you can access the date in zotero item `item.date`.
+  e.g. you can access the date in zotero item `zotero.date`.
 
-- `entry.has` is a dictionary of fields for output.
-- `entry.date` is the parsed and normalized version of `item.date`.
+- `tex.has` is a dictionary of fields for output.
+- `tex.date` is the parsed and normalized version of `zotero.date`.
 
-  e.g. you can see whether the `year` field has been set by testing for `entry.has.year`, and when e.g. for a season-date only the year is exported in bibtex, you can find it in `entry.date.season`
+  e.g. you can see whether the `year` field has been set by testing for `tex.has.year`, and when e.g. for a season-date only the year is exported in bibtex, you can find it in `tex.date.season`
 
-- `entry.add` is the function to add or modify keys in `entry.has`. It accepts the following named parameters in the form of an object:
+- `tex.add` is the function to add or modify keys in `tex.has`. It accepts the following named parameters in the form of an object:
 
   - `name`: name of the bib(la)tex field to output
   - `value`: the value for the field *without* LaTeX encoding
@@ -81,21 +81,21 @@ The postscript should be a `javascript` snippet. You can access the data with fo
   - `sep`: if `value` is an array, and `enc` is `latex`, encode each array element using `latex` and join the results with the string in `sep`. Defaults to an empty string.
   - `html`: boolean indicating whether the `value` is full HTML (really only useful for notes)
 
-  e.g. change the value of year in output `entry.add({name: 'year', value: "your_year_value"})`
+  e.g. change the value of year in output `tex.add({name: 'year', value: "your_year_value"})`
 
-- `entry.addCreators` adds the contents of `item.creators` to `entry`.
+- `tex.addCreators` adds the contents of `zotero.creators` to `tex`.
 
-  author encoding has a fair number of moving bits and generates multiple fields (`author`, `editor`, etc), this function is here so you can manipulate `item.creators` and call `entry.addCreators` to *replace*
-  the existing creator fields on `entry`.
+  author encoding has a fair number of moving bits and generates multiple fields (`author`, `editor`, etc), this function is here so you can manipulate `zotero.creators` and call `tex.addCreators` to *replace*
+  the existing creator fields on `tex`.
 
-- `entry.remove` removes a field previously added by `entry.add` or `entry.addCreators`
+- `tex.remove` removes a field previously added by `tex.add` or `tex.addCreators`
 
 ## The API for `BetterCSLJSON` and `BetterCSLYAML`
 
-- `entry` is the CSL object being built. Any changes made to this object will directly change the CSL object being output.
-- `item` is the Zotero item it's being built from.
+- `csl` is the CSL object being built. Any changes made to this object will directly change the CSL object being output.
+- `zotero` is the Zotero item it's being built from.
 
-There isn't really an API. You can use regular javascript to manipulate the `entry` object, which is a [CSL-JSON](http://docs.citationstyles.org/en/stable/specification.html#appendix-iv-variables) object.
+There isn't really an API. You can use regular javascript to manipulate the `csl` object, which is a [CSL-JSON](http://docs.citationstyles.org/en/stable/specification.html#appendix-iv-variables) object.
 
 ## Debugging
 
@@ -114,12 +114,12 @@ the Zotero item looks like to the translator.
 Since BibTeX doesn't really have well-defined behavior across styles the way BibLaTeX does, BBT can't generate URL data which is compatible with all BibTeX styles. If you know the style you use yourself, you can add the data in the format you want using a postscript. The script below will add a note for the last accessed date, and a `\url` tag within the `howpublished` field, but only for BibTeX, not for BibLaTeX, and only for `webpage` entries:
 
 ```javascript
-if (Translator.BetterBibTeX && item.itemType === 'webpage') {
-    if (item.accessDate) {
-      entry.add({ name: 'note', value: "(accessed " + item.accessDate.replace(/\s*T?\d+:\d+:\d+.*/, '') + ")" });
+if (Translator.BetterBibTeX && zotero.itemType === 'webpage') {
+    if (zotero.accessDate) {
+      tex.add({ name: 'note', value: "(accessed " + zotero.accessDate.replace(/\s*T?\d+:\d+:\d+.*/, '') + ")" });
     }
-    if (item.url) {
-      entry.add({ name: 'howpublished', bibtex: "{\\url{" + entry.enc_verbatim({value: item.url}) + "}}" });
+    if (zotero.url) {
+      tex.add({ name: 'howpublished', bibtex: "{\\url{" + tex.enc_verbatim({value: zotero.url}) + "}}" });
     }
   }
 ```
@@ -130,7 +130,7 @@ If you want to retain commas in your keywords (e.g. for chemical elements) and s
 
 ```javascript
 if (Translator.BetterTeX) {
-  entry.add({ name: 'keywords', value: item.tags, sep: ', ', enc: 'tags' });
+  tex.add({ name: 'keywords', value: zotero.tags, sep: ', ', enc: 'tags' });
 }
 ```
 
@@ -139,10 +139,10 @@ as the default encoder knows what to do with arrays, if you give it a separator.
 ### Add DOI in note field
 
 ```javascript
-if (Translator.BetterTeX && item.DOI) {
-  var doi = item.DOI;
+if (Translator.BetterTeX && zotero.DOI) {
+  var doi = zotero.DOI;
   if (doi.indexOf('doi:') != 0) { doi = 'doi:' + doi; }
-  entry.add({ name: 'note', value: '[' + doi + ']' });
+  tex.add({ name: 'note', value: '[' + doi + ']' });
 }
 ```
 
@@ -153,9 +153,9 @@ arXiv is a bit of an odd duck. It really isn't a journal, so it shouldn't be the
 But for arguments' sake, let's say you get the desired output by including an empty `journaltitle` field (ugh) and stuff the `arXiv:...` ID in the `pages` field (*ugh*). You could do that with the following postscript:
 
 ```javascript
-if (Translator.BetterTeX && item.arXiv) {
-  entry.add({ name: 'pages', value: item.arXiv.id });
-  if (!entry.has.journaltitle) { entry.add({ name: 'journaltitle', bibtex: '{}' }); }
+if (Translator.BetterTeX && zotero.arXiv) {
+  tex.add({ name: 'pages', value: zotero.arXiv.id });
+  if (!tex.has.journaltitle) { tex.add({ name: 'journaltitle', bibtex: '{}' }); }
 }
 ```
 
@@ -170,9 +170,9 @@ if (Translator.BetterTeX) {
   // https://github.com/retorquere/zotero-better-bibtex/issues/512
 
   const order = ['author', 'date', 'title', 'publisher']
-  for (const [field, value] of order.filter(front => entry.has[first]).concat(Object.keys(entry.has).filter(other => !order.includes(other))).map(f => [f, entry.has[f]])) {
-    delete entry.has[field]
-    entry.has[field] = value
+  for (const [field, value] of order.filter(front => tex.has[first]).concat(Object.keys(tex.has).filter(other => !order.includes(other))).map(f => [f, tex.has[f]])) {
+    delete tex.has[field]
+    tex.has[field] = value
   }
 }
 ```
@@ -200,16 +200,16 @@ Further details [Export to Biblatex/Bibtex. Custom field order. #512](https://gi
 ### Detect and protect LaTeX math formulas
 
 ```javascript
-if (Translator.BetterTeX && entry.has.title) {
-  entry.add({ name: 'title', value: item.title.replace(/(\$.*?\$)/g, '<script>{$1}</script>') });
+if (Translator.BetterTeX && tex.has.title) {
+  tex.add({ name: 'title', value: zotero.title.replace(/(\$.*?\$)/g, '<script>{$1}</script>') });
 }
 ```
 
 ### Or, detect and protect (simple) LaTeX commands
 
 ```javascript
-if (Translator.BetterTeX && entry.has.journal) {
-  entry.add({ name: 'journal', value: entry.has.journal.value.replace(/(\\\w+)/g, '<script>{$1}</script>') });
+if (Translator.BetterTeX && tex.has.journal) {
+  tex.add({ name: 'journal', value: tex.has.journal.value.replace(/(\\\w+)/g, '<script>{$1}</script>') });
 }
 ```
 
@@ -218,32 +218,32 @@ if (Translator.BetterTeX && entry.has.journal) {
 ```javascript
 if (Translator.BetterTeX) {
   // different for bibtex and biblatex exporters
-  const note = ['annotation', 'note'].find(field => entry.has[field])
+  const note = ['annotation', 'note'].find(field => tex.has[field])
 
   if (note) {
-    let notes = item.notes.map(note => `<div>${note}</div>`).join('')
+    let notes = zotero.notes.map(note => `<div>${note}</div>`).join('')
     notes = notes
       .replace(/(\$\$[\s\S]*?\$\$)/g, '<script>$1</script>')
       .replace(/\\\(/g, '<script>$')
       .replace(/\\\)/g, '$</script>')
-    entry.add({ name: note, value: notes, html: true });
+    tex.add({ name: note, value: notes, html: true });
   }
 }
 ```
 
 ### Replace `director` with `author` for `videoRecording` and `film` entries
 
-Creator handling is fairly complicated, so to change the authors/editors/creators of any kind, you must change them on `item` and then call `addCreators` to do the needful. `addCreators` will *replace* the existing creators that were added to `entry` with the current state in `item.creators`, however you left it.
+Creator handling is fairly complicated, so to change the authors/editors/creators of any kind, you must change them on `zotero` and then call `addCreators` to do the needful. `addCreators` will *replace* the existing creators that were added to `tex` with the current state in `zotero.creators`, however you left it.
 
 ```javascript
 if (Translator.BetterBibLaTeX) {
-  switch (item.itemType) {
+  switch (zotero.itemType) {
     case 'videoRecording':
     case 'film':
-      for (const creator of item.creators) {
+      for (const creator of zotero.creators) {
         if (creator.creatorType === 'director') creator.creatorType = 'author'
       }
-      entry.addCreators();
+      tex.addCreators();
       break;
   }
 }
@@ -253,18 +253,18 @@ if (Translator.BetterBibLaTeX) {
 
 ```javascript
 if (Translator.BetterBibLaTeX) {
-  if (entry.entrytype === 'collection') entry.entrytype = 'book'
+  if (tex.entrytype === 'collection') tex.entrytype = 'book'
 }
 ```
 
 ### Set the entry type to `misc` for arXiv preprints in BibTeX
 
 ```
-if (Translator.BetterBibTeX && entry.entrytype === 'article' && item.arXiv) {
-  if (entry.has.journal && item.arXiv.source === 'publicationTitle') {
-    entry.remove('journal');
+if (Translator.BetterBibTeX && tex.entrytype === 'article' && zotero.arXiv) {
+  if (tex.has.journal && zotero.arXiv.source === 'publicationTitle') {
+    tex.remove('journal');
   }
-  if (!entry.has.journal) entry.entrytype = 'misc'
+  if (!tex.has.journal) tex.entrytype = 'misc'
 }
 ```
 
@@ -314,11 +314,11 @@ if you then apply a postscript such as
 ```
 if (Translator.BetterBibLaTeX) {
   // biblatex-mla
-  if (item.archive && item.archiveLocation) {
-    entry.add({ name: 'type', value: entry.entrytype })
-    entry.entrytype = 'unpublished'
-    entry.add({ name: 'library', value: item.archive})
-    entry.add({ name: 'number', value: item.archiveLocation })
+  if (zotero.archive && zotero.archiveLocation) {
+    tex.add({ name: 'type', value: tex.entrytype })
+    tex.entrytype = 'unpublished'
+    tex.add({ name: 'library', value: zotero.archive})
+    tex.add({ name: 'number', value: zotero.archiveLocation })
   }
 }
 ```
@@ -343,8 +343,8 @@ you get
 ### Export season for BibTeX
 
 ```
-if (Translator.BetterBibTeX && entry.date.type === 'season') {
-  entry.add({ name: 'month', value: ['', 'spring', 'summer', 'fall', 'winter'][entry.date.season] })
+if (Translator.BetterBibTeX && tex.date.type === 'season') {
+  tex.add({ name: 'month', value: ['', 'spring', 'summer', 'fall', 'winter'][tex.date.season] })
 }
 ```
 
@@ -352,7 +352,7 @@ if (Translator.BetterBibTeX && entry.date.type === 'season') {
 
 ```
 if (Translator.BetterBibLaTeX) {
-  entry.add({ name: 'rights', value: item.rights});
+  tex.add({ name: 'rights', value: zotero.rights});
 }
 ```
 
@@ -361,13 +361,13 @@ if (Translator.BetterBibLaTeX) {
 For example on a Linux machine you might have `/home/myname` and on MacOS it is typically `/Users/mypossiblyothername`. If you sync a bib file on both to a git repo you will see a lot of diffs everytime due to them fighting each other.
 
 ```javascript
-if (Translator.BetterTeX && !Translator.options.exportFileData && item.attachments && item.attachments.length) {
-  for (const att of item.attachments) {
+if (Translator.BetterTeX && !Translator.options.exportFileData && zotero.attachments && zotero.attachments.length) {
+  for (const att of zotero.attachments) {
     if (att.localPath) {
       att.localPath = att.localPath.replace(RegExp("^\/.*?\/.*?\/"), "~/")
     }
   }
-  entry.add({ name: 'file', value: item.attachments, enc: 'attachments' })
+  tex.add({ name: 'file', value: zotero.attachments, enc: 'attachments' })
   return { cache: false }
 }
 ```
