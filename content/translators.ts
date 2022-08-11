@@ -247,7 +247,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       switch (e.data?.kind) {
         case 'error':
           log.status({error: true, translator: translator.label, worker: id}, 'QBW failed:', Date.now() - start, e.data)
-          job.translate._runHandler('error', e.data) // eslint-disable-line no-underscore-dangle
+          job.translate?._runHandler('error', e.data) // eslint-disable-line no-underscore-dangle
           deferred.reject(e.data.message)
           this.workers.running.delete(id)
           break
@@ -258,7 +258,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
           break
 
         case 'item':
-          job.translate._runHandler('itemDone', items[e.data.item]) // eslint-disable-line no-underscore-dangle
+          job.translate?._runHandler('itemDone', items[e.data.item]) // eslint-disable-line no-underscore-dangle
           break
 
         case 'done':
@@ -307,7 +307,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
     this.worker.onerror = e => {
       log.status({error: true, translator: translator.label, worker: id}, 'QBW: failed:', Date.now() - start, 'message:', e)
-      job.translate._runHandler('error', e) // eslint-disable-line no-underscore-dangle
+      job.translate?._runHandler('error', e) // eslint-disable-line no-underscore-dangle
       deferred.reject(e.message)
       this.workers.running.delete(id)
     }
