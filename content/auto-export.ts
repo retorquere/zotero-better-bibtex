@@ -340,27 +340,23 @@ const queue = new class TaskQueue {
   // idle observer
   protected observe(_subject, topic, data) {
     log.debug('on-idle: idle.observe:', { topic, data })
-    if (Preference.autoExport === 'off') {
-      log.debug('on-idle: idle.observe: auto-export is off')
-      this.pause('preference-change')
-      return
-    }
+    if (Preference.autoExport === 'idle') {
+      switch (topic) {
+        case 'back':
+        case 'active':
+          log.debug('on-idle: idle.observe: => pause', topic)
+          this.pause('end-of-idle')
+          break
 
-    switch (topic) {
-      case 'back':
-      case 'active':
-        log.debug('on-idle: idle.observe: => pause', topic)
-        this.pause('end-of-idle')
-        break
+        case 'idle':
+          log.debug('on-idle: idle.observe: => resume', topic)
+          this.resume('start-of-idle')
+          break
 
-      case 'idle':
-        log.debug('on-idle: idle.observe: => resume', topic)
-        this.resume('start-of-idle')
-        break
-
-      default:
-        log.error('Unexpected idle state', topic)
-        break
+        default:
+          log.error('Unexpected idle state', topic)
+          break
+      }
     }
   }
 }
