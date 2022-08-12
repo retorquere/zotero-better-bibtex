@@ -229,7 +229,7 @@ If you have this on, and you experience any problem that is not the cache gettin
 <!ENTITY better-bibtex.BetterBibTeX.citekey.pinInspireHEP "Hefte BibTeX-Schlüssel aus InspireHEP an">
 <!ENTITY better-bibtex.BetterBibTeX.citekey.unpin "BibTeX-Key lösen">
 <!ENTITY better-bibtex.BetterBibTeX.citekey.refresh "Aktualisiere BibTeX key">
-<!ENTITY better-bibtex.BetterBibTeX.addCitationLinks "Füge Zitat-Links hinzu...">
+<!ENTITY better-bibtex.BetterBibTeX.addCitationLinks "Citation Graph: add citation links...">
 <!ENTITY better-bibtex.BetterBibTeX.sentenceCase "BBT Sentence-case">
 <!ENTITY better-bibtex.BetterBibTeX.patchDates "Copy date-added/date-modified from extra field">
 <!ENTITY better-bibtex.ZoteroPane.tag-duplicates "Markiere doppelte Zitierschlüssel">
