@@ -2,9 +2,8 @@ import { Preference } from './prefs'
 import { Events } from './events'
 import { client } from './client'
 
-import { log } from './logger'
+import { simplifyForExport as simplify } from '../gen/items/simplify'
 
-// export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export const JournalAbbrev = new class { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   private initialized: boolean
   private style: any
@@ -57,7 +56,8 @@ export const JournalAbbrev = new class { // eslint-disable-line @typescript-esli
   public get(item, mode: 'abbrev' | 'auto' | 'abbrev+auto' = 'abbrev+auto'): string {
     let abbrev = ''
     let journal: string
-    const zotero_item = !!(item.setType)
+    const zotero_item = !!(item._objectType) // eslint-disable-line no-underscore-dangle
+    if (!zotero_item) item = simplify(Object.create(item))
 
     if (mode.startsWith('abbrev')) {
       if (zotero_item) {
@@ -86,7 +86,6 @@ export const JournalAbbrev = new class { // eslint-disable-line @typescript-esli
         break
       }
       catch (err) {
-        log.error('JournalAbbrev.get: err', err)
       }
     }
 

@@ -439,6 +439,10 @@ Feature: Export
     And I import 1 reference with 1 attachment from "export/*.json"
     Then an export using "Better BibTeX" with useJournalAbbreviation on should match "export/*.bibtex"
 
+  Scenario: Auto Abbreviation of Proceedings Title #2245
+    When I import 1 reference from "export/*.json"
+    Then an export using "Better BibTeX" with useJournalAbbreviation on should match "export/*.bibtex"
+
   @81 @bbt
   Scenario: Journal abbreviations exported in bibtex (81)
     Given I set preference .citekeyFormat to "[authors2][year][journal:nopunct]"

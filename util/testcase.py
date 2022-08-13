@@ -111,9 +111,9 @@ if contents:
 # copy/create test fixtures
 fixture = os.path.join(root, f'test/fixtures/{args.mode}', args.title)
 source = fixture + '.json'
+shutil.copyfile(args.data, source)
 subprocess.check_output(['git', 'add', source])
 
-shutil.copyfile(args.data, source)
 if args.mode == 'import':
   ext = 'bib'
 else:

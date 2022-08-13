@@ -285,15 +285,12 @@ export function doExport(): void {
 
     if (['zotero.bookSection', 'zotero.conferencePaper', 'tex.chapter', 'csl.chapter'].includes(ref.entrytype_source)) {
       ref.add({ name: 'booktitle', value: item.publicationTitle || item.conferenceName, bibtexStrings: true })
-
     }
     else if (ref.getBibString(item.publicationTitle)) {
       ref.add({ name: 'journal', value: item.publicationTitle, bibtexStrings: true })
-
     }
     else {
       ref.add({ name: 'journal', value: (Translator.options.useJournalAbbreviation && item.journalAbbreviation) || item.publicationTitle, bibtexStrings: true })
-
     }
 
     let reftype = ref.entrytype_source.split('.')[1]
