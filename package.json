@@ -92,7 +92,7 @@
     "@retorquere/zotero-sync": "^1.0.23",
     "@types/bluebird": "^3.5.36",
     "@types/lokijs": "^1.5.7",
-    "@types/node": "^18.7.3",
+    "@types/node": "^18.7.5",
     "@xmldom/xmldom": "^0.8.2",
     "ajv-keywords": "^5.1.0",
     "archiver": "^5.3.1",
@@ -107,10 +107,10 @@
     "dom-parser": "^0.1.6",
     "dotenv": "^16.0.1",
     "ejs": "^3.1.8",
-    "esbuild": "^0.15.2",
+    "esbuild": "^0.15.3",
     "escape-string-regexp": "^5.0.0",
     "eslint": "^8.22.0",
-    "estrace": "^4.0.2",
+    "estrace": "^4.1.0",
     "eta": "^1.12.3",
     "excel-column-name": "^1.0.1",
     "fast-json-patch": "^3.1.1",
@@ -157,7 +157,7 @@
     "words-to-numbers": "^1.5.1",
     "xml-parser": "^1.2.1",
     "xpath": "^0.0.32",
-    "zotero-plugin": "^1.4.6"
+    "zotero-plugin": "^1.4.7"
   },
   "repository": {
     "type": "git",
