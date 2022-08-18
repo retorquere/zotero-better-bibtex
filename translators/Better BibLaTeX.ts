@@ -384,7 +384,17 @@ export function doExport(): void {
       case 'movie':
       case 'video':
       case 'inbook':
-        if (!entry.has.booktitle) entry.add({ name: 'booktitle', value: item.publicationTitle, bibtexStrings: true })
+        if (!entry.has.booktitle) {
+          if (entry.entrytype === 'inproceedings' && entry.getBibString(item.publicationTitle)) {
+            entry.add({ name: 'booktitle', value: item.publicationTitle, bibtexStrings: true })
+          }
+          else if (entry.entrytype === 'inproceedings' && Translator.options.useJournalAbbreviation && item.publicationTitle && item.journalAbbreviation) {
+            entry.add({ name: 'booktitle', value: item.journalAbbreviation, bibtexStrings: true })
+          }
+          else {
+            entry.add({ name: 'booktitle', value: item.publicationTitle, bibtexStrings: true })
+          }
+        }
         break
 
       case 'online':

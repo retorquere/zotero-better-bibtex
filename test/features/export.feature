@@ -440,7 +440,7 @@ Feature: Export
     Then an export using "Better BibTeX" with useJournalAbbreviation on should match "export/*.bibtex"
 
   Scenario: Auto Abbreviation of Proceedings Title #2245
-    When I import 1 reference from "export/*.json"
+    When I import 2 references from "export/*.json"
     Then an export using "Better BibTeX" with useJournalAbbreviation on should match "export/*.bibtex"
 
   @81 @bbt

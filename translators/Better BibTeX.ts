@@ -283,7 +283,10 @@ export function doExport(): void {
     if (!['book', 'inbook', 'incollection', 'proceedings', 'inproceedings'].includes(ref.entrytype) || !ref.has.volume) ref.add({ name: 'number', value: item.number || item.issue || item.seriesNumber })
     ref.add({ name: 'urldate', value: item.accessDate && item.accessDate.replace(/\s*T?\d+:\d+:\d+.*/, '') })
 
-    if (['zotero.bookSection', 'zotero.conferencePaper', 'tex.chapter', 'csl.chapter'].includes(ref.entrytype_source)) {
+    if (ref.entrytype_source === 'zotero.conferencePaper') {
+      ref.add({ name: 'booktitle', value: (Translator.options.useJournalAbbreviation && item.journalAbbreviation) || item.publicationTitle || item.conferenceName, bibtexStrings: true })
+    }
+    else if (['zotero.bookSection', 'tex.chapter', 'csl.chapter'].includes(ref.entrytype_source)) {
       ref.add({ name: 'booktitle', value: item.publicationTitle || item.conferenceName, bibtexStrings: true })
     }
     else if (ref.getBibString(item.publicationTitle)) {
