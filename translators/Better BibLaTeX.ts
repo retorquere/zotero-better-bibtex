@@ -38,7 +38,7 @@ Entry.prototype.caseConversion = {
   eventtitle: true,
 }
 
-Entry.prototype.lint = require('./bibtex/biber-tool.conf')
+Entry.prototype.lint = require('../submodules/biber/data/biber-tool.conf')
 
 type CreatorArray = any[] & { type?: string }
 
