@@ -1240,6 +1240,8 @@ export class Entry {
       ba: bathesis,
       bachelor: bathesis,
       bachelors: bathesis,
+      undergrad: bathesis,
+      undergraduate: bathesis,
 
       cand: candthesis,
       candidate: candthesis,
