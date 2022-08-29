@@ -264,7 +264,8 @@ class Item {
   }
 }
 
-const safechars = '-:\\p{L}0-9_!$*+./;\\[\\]'
+// https://tex.stackexchange.com/questions/408530/what-characters-are-allowed-to-use-as-delimiters-for-bibtex-keys
+const unsafechars = /["#%'(),=\\{}~\s]/g
 class PatternFormatter {
   public chunk = ''
   public citekey = ''
@@ -273,9 +274,10 @@ class PatternFormatter {
   public generate: () => string
   public postfix: { start: number, format: string }
 
+
   private re = {
-    unsafechars_allow_spaces: Zotero.Utilities.XRegExp(`[^${safechars}\\s]`),
-    unsafechars: Zotero.Utilities.XRegExp(`[^${safechars}]`),
+    unsafechars_allow_spaces: new RegExp(unsafechars.source.replace(/\\s/, ''), 'g'),
+    unsafechars,
     alphanum: Zotero.Utilities.XRegExp('[^\\p{L}\\p{N}]'),
     punct: Zotero.Utilities.XRegExp('\\p{Pe}|\\p{Pf}|\\p{Pi}|\\p{Po}|\\p{Ps}', 'g'),
     dash: Zotero.Utilities.XRegExp('\\p{Pd}|\u2500|\uFF0D|\u2015', 'g'), // additional pseudo-dashes from #1880
@@ -383,7 +385,7 @@ class PatternFormatter {
     log.debug('formatting new key')
     let citekey = this.generate() || `zotero-${this.item.itemID}`
     if (citekey && this.folding) citekey = this.transliterate(citekey)
-    citekey = citekey.replace(/[\s{},@]/g, '')
+    citekey = citekey.replace(this.re.unsafechars, '')
     log.debug('new citekey:', citekey)
 
     return citekey
@@ -1265,7 +1267,7 @@ class PatternFormatter {
 
   private clean(str: string, allow_spaces = false): string {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return Zotero.Utilities.XRegExp.replace(this.transliterate(str), allow_spaces ? this.re.unsafechars_allow_spaces : this.re.unsafechars, '', 'all').trim()
+    return this.transliterate(str).replace(allow_spaces ? this.re.unsafechars_allow_spaces : this.re.unsafechars, '').trim()
   }
 
   private titleWords(title, options: { asciiOnly?: boolean, skipWords?: boolean} = {}): string[] {

@@ -1,0 +1,43 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "options": {
+      "exportNotes": true,
+      "worker": true
+    },
+    "preferences": {
+      "citekeyFormat": "authEtal2(sep='&') + year"
+    }
+  },
+  "items": [
+    {
+      "attachments": [],
+      "citationKey": "VaishnaviKuechler2004",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Vijay",
+          "lastName": "Vaishnavi"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "William",
+          "lastName": "Kuechler"
+        }
+      ],
+      "date": "2004",
+      "itemID": 1,
+      "itemType": "report",
+      "libraryCatalog": "Google Scholar",
+      "pages": "62",
+      "tags": [
+        {
+          "tag": "process_model"
+        }
+      ],
+      "title": "Design science research in information systems",
+      "url": "http://www.desrist.org/design-research-in-information-systems/"
+    }
+  ]
+}

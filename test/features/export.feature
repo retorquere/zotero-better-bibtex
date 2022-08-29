@@ -13,6 +13,7 @@ Feature: Export
 
     Examples:
       | file                                                                                                                     | references |
+      | authEtal2(sep='&') + year =  & disappears #2252                                                                          | 1          |
       | Apply Title Casing to tex.subtitle entry on export #2213                                                                 | 1          |
       | Citation key format backward compatibility issue. #2204                                                                  | 1          |
       | inspireHep fetching broken #2201                                                                                         | 1          |
