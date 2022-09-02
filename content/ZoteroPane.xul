@@ -77,7 +77,7 @@
 
   <treecols id="zotero-items-columns-header">
     <treecol
-      id="zotero-items-column-citekey"
+      id="zotero-items-column-citationKey"
       label="&ZoteroPane.column.citekey;"
       flex="1"
       insertafter="zotero-items-column-title"
