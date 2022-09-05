@@ -12,6 +12,8 @@ import * as ExtraFields from '../../gen/items/extra-fields.json'
 import { log } from '../../content/logger'
 import { RegularItem } from '../../gen/typings/serialized-item'
 import * as postscript from '../lib/postscript'
+import { ParsedDate } from '../../content/dateparser'
+import { Date as CSLDate, Data as CSLItem } from 'csl-json'
 
 type ExtendedItem = RegularItem & { extraFields: ParsedExtraFields }
 
@@ -26,13 +28,12 @@ const keyOrder = [
   'circa',
 ].reduce((acc, field, idx) => { acc[field] = idx + 1; return acc }, {})
 
-// export singleton: https://k94n.com/es6-modules-single-instance-pattern
-export const CSLExporter = new class { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
-  public flush: Function // will be added by JSON/YAML exporter
-  public serialize: Function // will be added by JSON/YAML exporter
-  public date2CSL: Function // will be added by JSON/YAML exporter
+export abstract class CSLExporter {
+  protected abstract flush(items: string[]):string
+  protected abstract serialize(items: CSLItem): string
+  protected abstract date2CSL(date: ParsedDate): CSLDate
 
-  public initialize() {
+  public initialize(): void {
     try {
       if (Translator.preferences.postscript.trim()) {
         this.postscript = postscript.postscript('csl', Translator.preferences.postscript)
@@ -46,11 +47,13 @@ export const CSLExporter = new class { // eslint-disable-line @typescript-eslint
       log.error('failed to install postscript', err, '\n', Translator.preferences.postscript)
     }
   }
+
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   public postscript(_entry, _item, _translator, _zotero, _extra): postscript.Allow {
     return { cache: true, write: true }
   }
 
-  public doExport() {
+  public doExport(): void {
     const items = []
     const order: { citationKey: string, i: number}[] = []
     for (const item of (Translator.regularitems as Generator<ExtendedItem, void, unknown>)) {
@@ -164,7 +167,7 @@ export const CSLExporter = new class { // eslint-disable-line @typescript-eslint
     Zotero.write(this.flush(order.map(o => items[o.i])))
   }
 
-  public keySort(a, b) {
+  public keySort(a: string, b: string): number {
     const oa = keyOrder[a]
     const ob = keyOrder[b]
 

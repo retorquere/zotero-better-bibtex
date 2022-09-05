@@ -65,6 +65,7 @@
     "better-ajv-errors": "^1.2.0",
     "case": "^1.6.3",
     "citeproc": "^2.4.62",
+    "csl-json": "^0.1.0",
     "edtf": "^4.4.0",
     "edtfy": "^0.0.8",
     "eventemitter3": "^4.0.7",

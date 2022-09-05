@@ -1,9 +1,11 @@
 import { Translator } from './lib/translator'
 export { Translator }
 
-import { CSLExporter as Exporter } from './csl/csl'
+import { ParsedDate } from '../content/dateparser'
+import { CSLExporter } from './csl/csl'
+import { Date as CSLDate, Data as CSLItem, LooseNumber } from 'csl-json'
 
-function date2csl(date) {
+function date2csl(date: ParsedDate): [LooseNumber, LooseNumber?, LooseNumber?] {
   let csl
   switch (date.type) {
     case 'open':
@@ -28,41 +30,48 @@ function date2csl(date) {
   }
 }
 
-Exporter.date2CSL = date => {
-  switch (date.type) {
-    case 'date':
-      return {
-        'date-parts': [ date2csl(date) ],
-        circa: (date.approximate || date.uncertain) ? true : undefined,
-      }
+class Exporter extends CSLExporter {
+  public date2CSL(date: ParsedDate): CSLDate {
+    switch (date.type) {
+      case 'date':
+        return {
+          'date-parts': [ date2csl(date) ],
+          circa: (date.approximate || date.uncertain) ? true : undefined,
+        }
 
-    case 'interval':
-      return {
-        'date-parts': [ date2csl(date.from), date2csl(date.to) ],
-        circa: (date.from.approximate || date.from.uncertain || date.to.approximate || date.to.uncertain) ? true : undefined,
-      }
+      case 'interval':
+        return {
+          'date-parts': [ date2csl(date.from), date2csl(date.to) ],
+          circa: (date.from.approximate || date.from.uncertain || date.to.approximate || date.to.uncertain) ? true : undefined,
+        }
 
-    case 'verbatim':
-      return { literal: date.verbatim }
+      case 'verbatim':
+        return { literal: date.verbatim }
 
-    case 'season':
-      return {
-        'date-parts': [ [ date.year ] ],
-        season: date.season,
-        circa: (date.approximate || date.uncertain) ? true : undefined,
-      }
+      case 'season':
+        return {
+          'date-parts': [ [ date.year ] ],
+          season: date.season,
+          circa: (date.approximate || date.uncertain) ? true : undefined,
+        }
 
-    default:
-      throw new Error(`Unexpected date type ${JSON.stringify(date)}`)
+      default:
+        throw new Error(`Unexpected date type ${JSON.stringify(date)}`)
+    }
+  }
+
+  public serialize(csl: CSLItem): string {
+    return JSON.stringify(csl)
+  }
+
+  public flush(items: string[]): string {
+    return `[\n${(items.map(item => `  ${item}`)).join(',\n')}\n]\n`
   }
 }
 
-Exporter.serialize = csl => JSON.stringify(csl)
-
-Exporter.flush = items => `[\n${(items.map(item => `  ${item}`)).join(',\n')}\n]\n`
-
 export function doExport(): void {
   Translator.init('export')
-  Exporter.initialize()
-  Exporter.doExport()
+  const exporter = new Exporter
+  exporter.initialize()
+  exporter.doExport()
 }
