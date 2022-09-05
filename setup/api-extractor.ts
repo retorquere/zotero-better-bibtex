@@ -250,6 +250,12 @@ export class API {
     else if (typeName === 'RegExp') {
       return { instanceof: typeName }
     }
+    else if (typeName === 'Creator') {
+      return {
+        type: 'string',
+        enum: [ 'author', 'editor', 'translator', 'collaborator', '*' ],
+      }
+    }
     assert(typeName === 'Record', `unexpected TypeReference ${typeName}`)
     assert(typeref.typeArguments.length === 2, `expected 2 types, found ${typeref.typeArguments.length}`)
 

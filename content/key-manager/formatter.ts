@@ -151,6 +151,8 @@ type PartialDate = {
   S?: string
 }
 
+type Creator = 'author' | 'editor' | 'translator' | 'collaborator' | '*'
+
 class Item {
   public item: ZoteroItem | SerializedItem
   private language = ''
@@ -482,14 +484,14 @@ class PatternFormatter {
    */
   public $authors(
     n: number | [number, number] = 0,
-    creator: 'author' | 'editor' = 'author',
+    creator: Creator = '*',
     name='%(f)s',
     etal='',
     sep=' ',
     min=0,
     max=0
   ) {
-    let authors = this.creators(creator === 'editor', name)
+    let authors = this.creators(creator, name)
     if (min && authors.length < min) throw { next: true } // eslint-disable-line no-throw-literal
     if (max && authors.length > max) throw { next: true } // eslint-disable-line no-throw-literal
     if (!n) {
@@ -518,7 +520,7 @@ class PatternFormatter {
    * @param creator   select from authors or only from editors
    * @param initials  add author initials
    */
-  public $auth(n=0, m=1, creator: 'author' | 'editor' = 'author', initials=false) {
+  public $auth(n=0, m=1, creator: Creator = '*', initials=false) {
     const family = n ? `%(f).${n}s` : '%(f)s'
     const name = initials ? `${family}%(I)s` : family
     return this.$authors([m, m], creator, name, undefined, undefined)
@@ -528,8 +530,8 @@ class PatternFormatter {
    * The given-name initial of the first author.
    * @param creator   select from authors or only from editors
    */
-  public $authForeIni(creator: 'author' | 'editor' = 'author') {
-    let author: string = this.creators(creator === 'editor', '%(I)s')[0] || ''
+  public $authForeIni(creator: Creator = '*') {
+    let author: string = this.creators(creator, '%(I)s')[0] || ''
     if (this.folding) author = this.clean(author, true)
     return this.$text(author)
   }
@@ -538,8 +540,8 @@ class PatternFormatter {
    * The given-name initial of the last author.
    * @param creator   select from authors or only from editors
    */
-  public $authorLastForeIni(creator: 'author' | 'editor' = 'author') {
-    const authors = this.creators(creator === 'editor', '%(I)s')
+  public $authorLastForeIni(creator: Creator = '*') {
+    const authors = this.creators(creator, '%(I)s')
     let author = authors[authors.length - 1] || ''
     if (this.folding) author = this.clean(author, true)
     return this.$text(author)
@@ -550,8 +552,8 @@ class PatternFormatter {
    * @param creator   select from authors or only from editors
    * @param initials  add author initials
    */
-  public $authorLast(creator: 'author' | 'editor' = 'author', initials=false) {
-    const authors = this.creators(creator === 'editor', initials ? '%(f)s%(I)s' : '%(f)s')
+  public $authorLast(creator: Creator = '*', initials=false) {
+    const authors = this.creators(creator, initials ? '%(f)s%(I)s' : '%(f)s')
     let author = authors[authors.length - 1] || ''
     if (this.folding) author = this.clean(author, true)
     return this.$text(author)
@@ -564,8 +566,8 @@ class PatternFormatter {
    * @param initials  add author initials
    * @param sep     use this character between authors
    */
-  public $authorsAlpha(creator: 'author' | 'editor' = 'author', initials=false, sep=' ') {
-    const authors = this.creators(creator === 'editor', initials ? '%(f)s%(I)s' : '%(f)s')
+  public $authorsAlpha(creator: Creator = '*', initials=false, sep=' ') {
+    const authors = this.creators(creator, initials ? '%(f)s%(I)s' : '%(f)s')
     if (!authors.length) return this.$text('')
 
     let author: string
@@ -596,8 +598,8 @@ class PatternFormatter {
    * @param initials  add author initials
    * @param sep     use this character between authors
    */
-  public $authIni(n=0, creator: 'author' | 'editor' = 'author', initials=false, sep='.') {
-    const authors = this.creators(creator === 'editor', initials ? '%(f)s%(I)s' : '%(f)s')
+  public $authIni(n=0, creator: Creator = '*', initials=false, sep='.') {
+    const authors = this.creators(creator, initials ? '%(f)s%(I)s' : '%(f)s')
     if (!authors.length) return this.$text('')
     let author = authors.map(auth => auth.substring(0, n)).join(sep)
     if (this.folding) author = this.clean(author, true)
@@ -610,8 +612,8 @@ class PatternFormatter {
    * @param initials  add author initials
    * @param sep     use this character between authors
    */
-  public $authorIni(creator: 'author' | 'editor' = 'author', initials=false, sep='.'): PatternFormatter {
-    const authors = this.creators(creator === 'editor', initials ? '%(f)s%(I)s' : '%(f)s')
+  public $authorIni(creator: Creator = '*', initials=false, sep='.'): PatternFormatter {
+    const authors = this.creators(creator, initials ? '%(f)s%(I)s' : '%(f)s')
     if (!authors.length) return this.$text('')
     const firstAuthor = authors.shift()
 
@@ -627,8 +629,8 @@ class PatternFormatter {
    * @param initials  add author initials
    * @param sep     use this character between authors
    */
-  public $authAuthEa(creator: 'author' | 'editor' = 'author', initials=false, sep='.') {
-    const authors = this.creators(creator === 'editor', initials ? '%(f)s%(I)s' : '%(f)s')
+  public $authAuthEa(creator: Creator = '*', initials=false, sep='.') {
+    const authors = this.creators(creator, initials ? '%(f)s%(I)s' : '%(f)s')
     if (!authors.length) return this.$text('')
 
     // eslint-disable-next-line no-magic-numbers
@@ -647,8 +649,8 @@ class PatternFormatter {
    * @param initials  add author initials
    * @param sep     use this character between authors
    */
-  public $authEtAl(creator: 'author' | 'editor' = 'author', initials=false, sep=' ') {
-    const authors = this.creators(creator === 'editor', initials ? '%(f)s%(I)s' : '%(f)s')
+  public $authEtAl(creator: Creator = '*', initials=false, sep=' ') {
+    const authors = this.creators(creator, initials ? '%(f)s%(I)s' : '%(f)s')
     if (!authors.length) return this.$text('')
 
     let author
@@ -669,8 +671,8 @@ class PatternFormatter {
    * @param initials  add author initials
    * @param sep     use this character between authors
    */
-  public $authEtal2(creator: 'author' | 'editor' = 'author', initials=false, sep='.') {
-    const authors = this.creators(creator === 'editor', initials ? '%(f)s%(I)s' : '%(f)s')
+  public $authEtal2(creator: Creator = '*', initials=false, sep='.') {
+    const authors = this.creators(creator, initials ? '%(f)s%(I)s' : '%(f)s')
     if (!authors.length) return this.$text('')
 
     let author
@@ -694,8 +696,8 @@ class PatternFormatter {
    * @param initials  add author initials
    * @param sep     use this character between authors
    */
-  public $authshort(creator: 'author' | 'editor' = 'author', initials=false, sep='.') {
-    const authors = this.creators(creator === 'editor', initials ? '%(f)s%(I)s' : '%(f)s')
+  public $authshort(creator: Creator = '*', initials=false, sep='.') {
+    const authors = this.creators(creator, initials ? '%(f)s%(I)s' : '%(f)s')
 
     let author
     switch (authors.length) {
@@ -1318,15 +1320,13 @@ class PatternFormatter {
     return initials
   }
 
-  private creators(onlyEditors, template: string): string[] {
+  private creators(kind: Creator, template: string): string[] {
     const types = itemCreators[client][this.item.itemType] || []
     const primary = types[0]
 
-    const creators: Record<string, string[]> = {}
+    const creators: Partial<Record<Creator, string[]>> = {}
 
     for (const creator of this.item.creators) {
-      if (onlyEditors && creator.creatorType !== 'editor' && creator.creatorType !== 'seriesEditor') continue
-
       const name = sprintf(template, {
         f: this.stripQuotes(this.innerText(creator.lastName || creator.name)),
         g: this.stripQuotes(this.innerText(creator.firstName || '')),
@@ -1339,28 +1339,31 @@ class PatternFormatter {
       switch (creator.creatorType) {
         case 'editor':
         case 'seriesEditor':
-          creators.editors = creators.editors || []
-          creators.editors.push(name)
+          creators.editor = creators.editor || []
+          creators.editor.push(name)
           break
 
         case 'translator':
-          creators.translators = creators.translators || []
-          creators.translators.push(name)
+          creators.translator = creators.translator || []
+          creators.translator.push(name)
           break
 
         case primary:
-          creators.authors = creators.authors || []
-          creators.authors.push(name)
+          creators.author = creators.author || []
+          creators.author.push(name)
           break
 
         default:
-          creators.collaborators = creators.collaborators || []
-          creators.collaborators.push(name)
+          creators.collaborator = creators.collaborator || []
+          creators.collaborator.push(name)
       }
     }
 
-    if (onlyEditors) return creators.editors || []
-    return creators.authors || creators.editors || creators.translators || creators.collaborators || []
+    const kinds: string[] = kind === '*' ? ['author', 'editor', 'translator', 'collaborator'] : [ kind ]
+    for (const creator of kinds) {
+      if (creators[creator]) return creators[creator]
+    }
+    return []
   }
 
   public toString() {
