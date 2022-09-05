@@ -1299,7 +1299,7 @@ class PatternFormatter {
     return name
   }
 
-  private initials(creator, all=true) {
+  private initials(creator, all=true): string {
     if (!creator.firstName) return ''
 
     const firstName = this.stripQuotes(creator.firstName)
@@ -1363,7 +1363,7 @@ class PatternFormatter {
 
     const kinds: string[] = kind === '*' ? ['author', 'editor', 'translator', 'collaborator'] : [ kind ]
     for (const creator of kinds) {
-      if (creators[creator]) return creators[creator]
+      if (creators[creator]) return creators[creator] as string[]
     }
     return []
   }
