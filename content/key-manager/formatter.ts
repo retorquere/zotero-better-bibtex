@@ -519,7 +519,7 @@ class PatternFormatter {
    * The first `n` (default: all) characters of the `m`th (default: first) author's last name.
    * @param n         the number of characters to take from the name, 0 = all
    * @param m         select the `m`th author
-   * @param creator   select from authors or only from editors
+   * @param creator   kind of creator to select, `*` selects `author` first, and if not present, `editor`, `translator` or `collaborator`, in that order.
    * @param initials  add author initials
    */
   public $auth(n=0, m=1, creator: Creator = '*', initials=false) {
@@ -530,7 +530,7 @@ class PatternFormatter {
 
   /**
    * The given-name initial of the first author.
-   * @param creator   select from authors or only from editors
+   * @param creator   kind of creator to select, `*` selects `author` first, and if not present, `editor`, `translator` or `collaborator`, in that order.
    */
   public $authForeIni(creator: Creator = '*') {
     let author: string = this.creators(creator, '%(I)s')[0] || ''
@@ -540,7 +540,7 @@ class PatternFormatter {
 
   /**
    * The given-name initial of the last author.
-   * @param creator   select from authors or only from editors
+   * @param creator   kind of creator to select, `*` selects `author` first, and if not present, `editor`, `translator` or `collaborator`, in that order.
    */
   public $authorLastForeIni(creator: Creator = '*') {
     const authors = this.creators(creator, '%(I)s')
@@ -551,7 +551,7 @@ class PatternFormatter {
 
   /**
    * The last name of the last author
-   * @param creator   select from authors or only from editors
+   * @param creator   kind of creator to select, `*` selects `author` first, and if not present, `editor`, `translator` or `collaborator`, in that order.
    * @param initials  add author initials
    */
   public $authorLast(creator: Creator = '*', initials=false) {
@@ -564,7 +564,7 @@ class PatternFormatter {
   /**
    * Corresponds to the BibTeX style "alpha". One author: First three letters of the last name. Two to four authors: First letters of last names concatenated.
    * More than four authors: First letters of last names of first three authors concatenated. "+" at the end.
-   * @param creator   select from authors or only from editors
+   * @param creator   kind of creator to select, `*` selects `author` first, and if not present, `editor`, `translator` or `collaborator`, in that order.
    * @param initials  add author initials
    * @param sep     use this character between authors
    */
@@ -596,7 +596,7 @@ class PatternFormatter {
   /**
    * The beginning of each author's last name, using no more than `n` characters (0 = all).
    * @param n         the number of characters to take from the name, 0 = all
-   * @param creator   select from authors or only from editors
+   * @param creator   kind of creator to select, `*` selects `author` first, and if not present, `editor`, `translator` or `collaborator`, in that order.
    * @param initials  add author initials
    * @param sep     use this character between authors
    */
@@ -610,7 +610,7 @@ class PatternFormatter {
 
   /**
    * The first 5 characters of the first author's last name, and the last name initials of the remaining authors.
-   * @param creator   select from authors or only from editors
+   * @param creator   kind of creator to select, `*` selects `author` first, and if not present, `editor`, `translator` or `collaborator`, in that order.
    * @param initials  add author initials
    * @param sep     use this character between authors
    */
@@ -627,7 +627,7 @@ class PatternFormatter {
 
   /**
    * The last name of the first two authors, and ".ea" if there are more than two.
-   * @param creator   select from authors or only from editors
+   * @param creator   kind of creator to select, `*` selects `author` first, and if not present, `editor`, `translator` or `collaborator`, in that order.
    * @param initials  add author initials
    * @param sep     use this character between authors
    */
@@ -647,7 +647,7 @@ class PatternFormatter {
    * more than two. This is similar to `auth.etal`. The difference
    * is that the authors are not separated by "." and in case of
    * more than 2 authors "EtAl" instead of ".etal" is appended.
-   * @param creator   select from authors or only from editors
+   * @param creator   kind of creator to select, `*` selects `author` first, and if not present, `editor`, `translator` or `collaborator`, in that order.
    * @param initials  add author initials
    * @param sep     use this character between authors
    */
@@ -669,7 +669,7 @@ class PatternFormatter {
 
   /**
    * The last name of the first author, and the last name of the second author if there are two authors or ".etal" if there are more than two.
-   * @param creator   select from authors or only from editors
+   * @param creator   kind of creator to select, `*` selects `author` first, and if not present, `editor`, `translator` or `collaborator`, in that order.
    * @param initials  add author initials
    * @param sep     use this character between authors
    */
@@ -694,7 +694,7 @@ class PatternFormatter {
    * of up to three authors' last names if more than one author is
    * given. A plus character is added, if there are more than three
    * authors.
-   * @param creator   select from authors or only from editors
+   * @param creator   kind of creator to select, `*` selects `author` first, and if not present, `editor`, `translator` or `collaborator`, in that order.
    * @param initials  add author initials
    * @param sep     use this character between authors
    */
