@@ -124,7 +124,7 @@ method
       let input = prefix + rest
 
       const args = {
-        creator: input.match(/^a/i) ? 'author' : 'editor',
+        creator: input.match(/^a/i) ? '*' : 'editor',
       }
       params.forEach((p, i) => {
         const n = parseInt(p)

@@ -313,7 +313,6 @@ class PatternFormatter {
     // the zero-width-space is a marker to re-save the current default so it doesn't get replaced when the default changes later, which would change new keys suddenly
     if (!Preference.citekeyFormat || Preference.citekeyFormat.includes('\u200B')) Preference.citekeyFormat = Preference.default.citekeyFormat.replace(/^\u200B/, '')
     if (Preference.citekeyFormat.startsWith('[')) {
-      log.debug('Upgrading citation pattern', Preference.citekeyFormat)
       try {
         Preference.citekeyFormat = legacyparser.parse(Preference.citekeyFormat, { sprintf, items, methods }) as string
         flash('Citation pattern upgraded', `Citation pattern upgraded to ${Preference.citekeyFormat}`)
@@ -338,10 +337,8 @@ class PatternFormatter {
       }
 
       try {
-        log.debug('PatternFormatter.update: installing citekeyFormat ', {pattern: this.citekeyFormat})
         this.$postfix()
         const formatter = this.parsePattern(this.citekeyFormat)
-        log.debug('PatternFormatter.update: installing citekeyFormat ', formatter)
         this.generate = (new Function(formatter) as () => string)
         log.debug('PatternFormatter.update: installing generate ', {generate: this.generate.toString()})
         break
@@ -353,7 +350,6 @@ class PatternFormatter {
   }
 
   public parsePattern(pattern): string {
-    log.debug('parsePattern.pattern:', pattern)
     const code = formula.convert(pattern)
     if (Preference.testing) log.debug('parsePattern.compiled:', code)
     return code
@@ -366,7 +362,6 @@ class PatternFormatter {
   public reset() {
     this.citekey = ''
     this.folding = Preference.citekeyFold
-    log.debug('reset:', { folding: this.folding })
     return ''
   }
 
@@ -382,11 +377,9 @@ class PatternFormatter {
     }
 
     this.$postfix()
-    log.debug('formatting new key')
     let citekey = this.generate() || `zotero-${this.item.itemID}`
     if (citekey && this.folding) citekey = this.transliterate(citekey)
     citekey = citekey.replace(this.re.unsafechars, '')
-    log.debug('new citekey:', citekey)
 
     return citekey
   }
@@ -1275,7 +1268,6 @@ class PatternFormatter {
 
     title = this.innerText(title)
 
-    log.debug('titleWords', { options, folding: this.folding, kuroshiro: Preference.kuroshiro && kuroshiro.enabled})
     if (this.folding && options.asciiOnly && Preference.kuroshiro && kuroshiro.enabled) title = kuroshiro.convert(title, {to: 'romaji', mode: 'spaced'})
 
     // 551
@@ -1322,11 +1314,16 @@ class PatternFormatter {
     return initials
   }
 
-  private creators(kind: Creator, template: string): string[] {
+  private creators(select: Creator, template: string): string[] {
     const types = itemCreators[client][this.item.itemType] || []
     const primary = types[0]
 
-    const creators: Partial<Record<Creator, string[]>> = {}
+    const creators = {
+      editor: [],
+      author: [],
+      translator: [],
+      collaborator: [],
+    }
 
     for (const creator of this.item.creators) {
       const name = sprintf(template, {
@@ -1335,35 +1332,31 @@ class PatternFormatter {
         I: this.initials(creator),
         i: this.initials(creator, false),
       })
-      log.debug('creator template:', template, name)
       if (!name) continue
 
       switch (creator.creatorType) {
         case 'editor':
         case 'seriesEditor':
-          creators.editor = creators.editor || []
           creators.editor.push(name)
           break
 
         case 'translator':
-          creators.translator = creators.translator || []
           creators.translator.push(name)
           break
 
         case primary:
-          creators.author = creators.author || []
           creators.author.push(name)
           break
 
         default:
-          creators.collaborator = creators.collaborator || []
           creators.collaborator.push(name)
       }
     }
 
-    const kinds: string[] = kind === '*' ? ['author', 'editor', 'translator', 'collaborator'] : [ kind ]
-    for (const creator of kinds) {
-      if (creators[creator]) return creators[creator] as string[]
+    const candidates: Creator[] = select === '*' ? ['author', 'editor', 'translator', 'collaborator'] : [ select ]
+
+    for (const kind of candidates) {
+      if (creators[kind].length) return creators[kind] as string[]
     }
     return []
   }
