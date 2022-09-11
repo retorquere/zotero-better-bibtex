@@ -11,6 +11,10 @@ from steps.utils import assert_equal_diff, expand_scenario_variables
 import steps.utils as utils
 import steps.zotero as zotero
 import glob
+import subprocess, shlex, shutil
+import io
+import zipfile
+import html, re
 
 from contextlib import contextmanager
 
@@ -132,6 +136,40 @@ def step_impl(context, references, source):
   source = expand_scenario_variables(context, source)
   context.imported = source
   assert_that(context.zotero.import_file(context, source, items=False), equal_to(references))
+
+@step(r'I compile "{source}" to "{target}" it should match "{baseline}"')
+def step_impl(context, source, target, baseline):
+  source = os.path.join('test/fixtures', expand_scenario_variables(context, source))
+  baseline = os.path.join('test/fixtures', expand_scenario_variables(context, baseline))
+
+  target = expand_scenario_variables(context, target)
+  assert target.startswith('~/'), target
+  target = os.path.join(context.tmpDir, target[2:])
+
+  lua = 'site/content/exporting/zotero.lua'
+
+  subprocess.run(f'pandoc -s --lua-filter={shlex.quote(lua)} -o {shlex.quote(target)} {shlex.quote(source)}', shell=True, check=True)
+
+  def neuter(cit):
+    for key in ['id', 'citationID', 'uri', 'uris']:
+      if key in cit:
+        del cit[key]
+    if 'citationItems' in cit:
+      for c in cit['citationItems']:
+        neuter(c)
+    return cit
+
+  def citations(fname):
+    with zipfile.ZipFile(fname) as zf:
+      with io.TextIOWrapper(zf.open('content.xml'), encoding='utf-8') as f:
+        cit = re.findall(r'"ZOTERO_ITEM CSL_CITATION ([^"]+)"', f.read())
+        cit = [html.unescape(c) for c in cit]
+        cit = [c.rsplit(' ', 1)[0] for c in cit]
+        cit = [json.loads(c) for c in cit]
+        cit = [neuter(c) for c in cit]
+        return json.dumps(cit, indent='  ', sort_keys=True)
+
+  assert_equal_diff(citations(baseline), citations(target))
 
 @step(r'I import {references:d} references from "{source}"')
 def step_impl(context, references, source):

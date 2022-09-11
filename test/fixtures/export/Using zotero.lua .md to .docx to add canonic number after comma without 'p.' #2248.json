@@ -1,0 +1,1480 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "options": {
+      "exportNotes": true,
+      "worker": true
+    },
+    "preferences": {
+      "DOIandURL": "doi",
+      "autoAbbrevStyle": "http://www.zotero.org/styles/elsevier-harvard",
+      "autoExport": "idle",
+      "autoExportIdleWait": 60,
+      "autoPinDelay": 1,
+      "citekeyFormat": "auth.lower+year | type(forumPost, webpage)+auth.lower.capitalize+Date.formatDate(\"%Y-%m-%d.%H:%M:%S\").prefix(\".\")+PublicationTitle.lower.capitalize.prefix(\".\")+shorttitle(3,3).lower.capitalize.prefix(\".\")+Pages.prefix(\".p.\")+Volume.prefix(\".Vol.\")+NumberofVolumes.prefix(de) | auth.lower.capitalize+date(\"%oY\").prefix(\".\")+PublicationTitle.lower.capitalize.prefix(\".\")+shorttitle(3,3).lower.capitalize.prefix(\".\")+Pages.prefix(\".p.\")+Volume.prefix(\".Vol.\")+NumberofVolumes.prefix(de)",
+      "csquotes": "\u00ab\u00bb",
+      "importSentenceCase": "off",
+      "itemObserverDelay": 100,
+      "keyConflictPolicy": "change",
+      "kuroshiro": true,
+      "qualityReport": true
+    }
+  },
+  "items": [
+    {
+      "citationKey": "betts",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Ben",
+          "lastName": "W. Betts"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Jay",
+          "lastName": "Bal"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Alan",
+          "lastName": "W. Betts"
+        }
+      ],
+      "date": "2013-1",
+      "extra": [
+        "Publication Title: Int. J. of Continuing Engineering Education and Life-Long Learning",
+        "Citation Key: betts"
+      ],
+      "itemID": 1,
+      "itemType": "journalArticle",
+      "pages": "213 - 228",
+      "title": "Gamification as a tool for increasing the depth of student understanding using a collaborative e-learning environment",
+      "volume": "23"
+    },
+    {
+      "citationKey": "biggs1996",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "John",
+          "lastName": "Biggs"
+        }
+      ],
+      "date": "1996",
+      "extra": [
+        "Citation Key: biggs1996"
+      ],
+      "issue": "3",
+      "itemID": 2,
+      "itemType": "journalArticle",
+      "pages": "374\u2013364",
+      "publicationTitle": "Higher Education",
+      "title": "Enhancing teaching through constructive alignment",
+      "volume": "32"
+    },
+    {
+      "citationKey": "biggsTang2011",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "John",
+          "lastName": "Biggs"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Catherine",
+          "lastName": "Tang"
+        }
+      ],
+      "date": "2011",
+      "extra": [
+        "Citation Key: biggsTang2011"
+      ],
+      "itemID": 3,
+      "itemType": "book",
+      "publisher": "McGraw-Hill International",
+      "title": "Teaching For Quality Learning At University"
+    },
+    {
+      "citationKey": "bloom1974",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "B. S",
+          "lastName": "Bloom"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "J. H.",
+          "lastName": "Block"
+        }
+      ],
+      "date": "1974",
+      "extra": [
+        "Citation Key: bloom1974"
+      ],
+      "itemID": 4,
+      "itemType": "bookSection",
+      "place": "New York",
+      "publicationTitle": "Schools, society, and mastery learning",
+      "publisher": "Holt, Rinehart & Winston",
+      "title": "An introduction to mastery learning theory"
+    },
+    {
+      "citationKey": "bolognaDeclaration",
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "Bologna Declaration"
+        }
+      ],
+      "date": "June 1999",
+      "extra": [
+        "Citation Key: bolognaDeclaration"
+      ],
+      "itemID": 5,
+      "itemType": "conferencePaper",
+      "place": "Bologna, Italy",
+      "publicationTitle": "Conference of Ministers responsible for Higher Education in 29 European countries",
+      "title": "Towards the European Higher European Area"
+    },
+    {
+      "citationKey": "clark2013",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Tony",
+          "lastName": "Clark"
+        }
+      ],
+      "date": "December 2013",
+      "extra": [
+        "Citation Key: clark2013"
+      ],
+      "itemID": 6,
+      "itemType": "document",
+      "notes": [
+        "Blog post"
+      ],
+      "title": "Computer Science: An Approach to Teaching and Learning",
+      "url": "http://clarktony.blogspot.co.uk/2013/12/computer-science-approach-to-teaching.html"
+    },
+    {
+      "citationKey": "Corpus05intrinsicand",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Mark R.",
+          "lastName": "Lepper"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Jennifer Henderlong",
+          "lastName": "Corpus"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Sheena S.",
+          "lastName": "Iyengar"
+        }
+      ],
+      "date": "2005",
+      "extra": [
+        "Citation Key: Corpus05intrinsicand"
+      ],
+      "issue": "2",
+      "itemID": 7,
+      "itemType": "journalArticle",
+      "pages": "184\u2013196",
+      "publicationTitle": "Journal of Educational Psychology",
+      "title": "Intrinsic and extrinsic motivational orientations in the classroom: Age differences and academic correlates",
+      "volume": "97"
+    },
+    {
+      "citationKey": "deterding2011game",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Sebastian",
+          "lastName": "Deterding"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Dan",
+          "lastName": "Dixon"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Rilla",
+          "lastName": "Khaled"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Lennart",
+          "lastName": "Nacke"
+        }
+      ],
+      "date": "2011",
+      "extra": [
+        "Citation Key: deterding2011game",
+        "tex.organization: ACM"
+      ],
+      "itemID": 8,
+      "itemType": "conferencePaper",
+      "pages": "9\u201315",
+      "place": "New York, NY, USA",
+      "publicationTitle": "Proceedings of the 15th international academic MindTrek conference: Envisioning future media environments",
+      "publisher": "ACM",
+      "title": "From game design elements to gamefulness: defining gamification"
+    },
+    {
+      "citationKey": "dicheva2015gamification",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Darina",
+          "lastName": "Dicheva"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Christo",
+          "lastName": "Dichev"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Gennady",
+          "lastName": "Agre"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Galia",
+          "lastName": "Angelova"
+        }
+      ],
+      "date": "2015",
+      "extra": [
+        "Citation Key: dicheva2015gamification",
+        "Publisher: JSTOR"
+      ],
+      "issue": "3",
+      "itemID": 9,
+      "itemType": "journalArticle",
+      "pages": "75",
+      "publicationTitle": "Journal of Educational Technology & Society",
+      "title": "Gamification in education: a systematic mapping study",
+      "volume": "18"
+    },
+    {
+      "citationKey": "gamification-brain-trust",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Williams",
+          "lastName": "J."
+        }
+      ],
+      "date": "2012",
+      "extra": [
+        "Citation Key: gamification-brain-trust",
+        "tex.date-added: 2018-07-05 19:17:59 +0000",
+        "tex.date-modified: 2018-07-05 19:20:01 +0000"
+      ],
+      "itemID": 10,
+      "itemType": "document",
+      "title": "The Gamification Brain Trust: Intrinsically Motivating People to Change Behavior (part 2).",
+      "url": "https://venturebeat.com/2012/09/22/the-gamification-brain-trust-intrinsically-motivating-people-to-change-behavior-part-2/"
+    },
+    {
+      "citationKey": "gamification-leaderboard-benefits",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Pascal",
+          "lastName": "Van Hentenryck"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Carleton",
+          "lastName": "Coffrin"
+        }
+      ],
+      "date": "2014-3",
+      "extra": [
+        "Citation Key: gamification-leaderboard-benefits"
+      ],
+      "itemID": 11,
+      "itemType": "conferencePaper",
+      "pages": "677-682",
+      "place": "New York, NY, USA",
+      "publicationTitle": "SIGCSE 2014 - Proceedings of the 45th ACM Technical Symposium on Computer Science Education",
+      "publisher": "ACM",
+      "title": "Teaching creative problem solving in a MOOC"
+    },
+    {
+      "citationKey": "gamification-thesis",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "B. Merino",
+          "lastName": "de Paz"
+        }
+      ],
+      "date": "2013",
+      "extra": [
+        "Citation Key: gamification-thesis",
+        "tex.date-added: 2018-07-22 21:01:48 +0000",
+        "tex.date-modified: 2018-07-22 21:03:37 +0000"
+      ],
+      "itemID": 12,
+      "itemType": "thesis",
+      "publisher": "The University of Manchester",
+      "title": "Gamification: A tool to improve sustainability efforts,"
+    },
+    {
+      "citationKey": "glover2013play",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Ian",
+          "lastName": "Glover"
+        }
+      ],
+      "date": "2013",
+      "extra": [
+        "Citation Key: glover2013play"
+      ],
+      "itemID": 13,
+      "itemType": "conferencePaper",
+      "pages": "1999\u20132008",
+      "place": "Waynesville, NC",
+      "publicationTitle": "EdMedia: World Conference on Educational Media and Technology",
+      "publisher": "Association for the Advancement of Computing in Education (AACE)",
+      "title": "Play as you learn: gamification as a technique for motivating learners"
+    },
+    {
+      "citationKey": "hattie2012",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "John",
+          "lastName": "Hattie"
+        }
+      ],
+      "date": "2012",
+      "extra": [
+        "Citation Key: hattie2012"
+      ],
+      "itemID": 14,
+      "itemType": "book",
+      "publisher": "Routledge",
+      "title": "Visible Learning for Teachers: Maximizing the Impact on Learners"
+    },
+    {
+      "citationKey": "huang2013gamification",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Wendy Hsin-Yuan",
+          "lastName": "Huang"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Dilip",
+          "lastName": "Soman"
+        }
+      ],
+      "date": "2013",
+      "extra": [
+        "Citation Key: huang2013gamification"
+      ],
+      "itemID": 15,
+      "itemType": "journalArticle",
+      "publicationTitle": "Research Report Series: Behavioural Economics in Action, Rotman School of Management, University of Toronto",
+      "title": "Gamification of education"
+    },
+    {
+      "citationKey": "intrinsic-book",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Edward",
+          "lastName": "Deci"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Richard",
+          "lastName": "Ryan"
+        }
+      ],
+      "date": "1985-1",
+      "extra": [
+        "Citation Key: intrinsic-book"
+      ],
+      "itemID": 16,
+      "itemType": "journalArticle",
+      "publicationTitle": "Contemporary Sociology",
+      "title": "Intrinsic Motivation and Self-Determination in Human Behavior",
+      "volume": "3"
+    },
+    {
+      "citationKey": "leeHammer2011",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "J. J.",
+          "lastName": "Lee"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "J.",
+          "lastName": "Hammer"
+        }
+      ],
+      "date": "2011",
+      "extra": [
+        "Citation Key: leeHammer2011"
+      ],
+      "issue": "2",
+      "itemID": 17,
+      "itemType": "journalArticle",
+      "pages": "1\u201315",
+      "publicationTitle": "Acad. Exchange Quart.",
+      "title": "Gamification in education: What, how, why bother?",
+      "volume": "15"
+    },
+    {
+      "citationKey": "oldwine",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Katrin",
+          "lastName": "Becker"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Scott",
+          "lastName": "Nicholson"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "Karen",
+          "lastName": "Schrier"
+        }
+      ],
+      "date": "2016",
+      "extra": [
+        "Citation Key: oldwine",
+        "Section: 3"
+      ],
+      "itemID": 18,
+      "itemType": "bookSection",
+      "pages": "61\u201385",
+      "publicationTitle": "Learning, Education and Games Volume Two: Bringing Games into Educational Contexts",
+      "publisher": "ETC Press",
+      "title": "Gamification in the Classroom: Old Wine in New Badges"
+    },
+    {
+      "citationKey": "psychologyMotivation",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Richard",
+          "lastName": "Ryan"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Edward",
+          "lastName": "Deci"
+        }
+      ],
+      "date": "2000-2",
+      "extra": [
+        "Citation Key: psychologyMotivation"
+      ],
+      "itemID": 19,
+      "itemType": "journalArticle",
+      "pages": "68-78",
+      "publicationTitle": "American Psychologist",
+      "title": "Self-Determination Theory and the Facilitation of Intrinsic Motivation, Social Development, and Well-Being",
+      "volume": "55"
+    },
+    {
+      "citationKey": "rustPrice2003",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Chris",
+          "lastName": "Rust"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Margaret",
+          "lastName": "Price"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Berry",
+          "lastName": "O'Donovan"
+        }
+      ],
+      "date": "2003",
+      "extra": [
+        "Citation Key: rustPrice2003"
+      ],
+      "issue": "2",
+      "itemID": 20,
+      "itemType": "journalArticle",
+      "pages": "147\u2013164",
+      "publicationTitle": "Assessment & Evaluation in Higher Education",
+      "title": "Improving students' learning by developing their understanding of assessment criteria and processes",
+      "volume": "28"
+    },
+    {
+      "citationKey": "wrigstad2017mastery",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Tobias",
+          "lastName": "Wrigstad"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Elias",
+          "lastName": "Castegren"
+        }
+      ],
+      "date": "2017",
+      "extra": [
+        "Citation Key: wrigstad2017mastery"
+      ],
+      "itemID": 21,
+      "itemType": "conferencePaper",
+      "publicationTitle": "SPLASH-E",
+      "title": "Mastery Learning-Like Teaching with Achievements"
+    },
+    {
+      "citationKey": "zimmerman1986",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Barry J.",
+          "lastName": "Zimmerman"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Manuel Martinez",
+          "lastName": "Pons"
+        }
+      ],
+      "date": "1986",
+      "extra": [
+        "Citation Key: zimmerman1986"
+      ],
+      "issue": "4",
+      "itemID": 22,
+      "itemType": "journalArticle",
+      "pages": "614\u2013628",
+      "publicationTitle": "American Educational Research Journal",
+      "title": "Development of a structured interview for assessing student use of self-regulated learning strategies",
+      "volume": "23"
+    },
+    {
+      "DOI": "10.1080/08993408.2013.780449",
+      "citationKey": "freitas-twice",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Adrian A.",
+          "lastName": "de Freitas"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Michelle M.",
+          "lastName": "de Freitas"
+        }
+      ],
+      "date": "2013",
+      "extra": [
+        "Citation Key: freitas-twice",
+        "Publisher: Routledge",
+        "tex.eprint: https://doi.org/10.1080/08993408.2013.780449"
+      ],
+      "issue": "2",
+      "itemID": 23,
+      "itemType": "journalArticle",
+      "pages": "186-206",
+      "publicationTitle": "Computer Science Education",
+      "title": "Classroom Live: a software-assisted gamification tool",
+      "url": "https://doi.org/10.1080/08993408.2013.780449",
+      "volume": "23"
+    },
+    {
+      "DOI": "10.1109/ICL.2013.6644642",
+      "citationKey": "Berkling",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "K.",
+          "lastName": "Berkling"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "C.",
+          "lastName": "Thomas"
+        }
+      ],
+      "date": "Sept 2013",
+      "extra": [
+        "Citation Key: Berkling"
+      ],
+      "itemID": 24,
+      "itemType": "conferencePaper",
+      "pages": "525-530",
+      "place": "Kazan, Russia",
+      "publicationTitle": "2013 International Conference on Interactive Collaborative Learning (ICL)",
+      "publisher": "IEEE",
+      "tags": [
+        {
+          "tag": "blended learning"
+        },
+        {
+          "tag": "Collaboration"
+        },
+        {
+          "tag": "Collaborative work"
+        },
+        {
+          "tag": "computer aided instruction"
+        },
+        {
+          "tag": "computer games"
+        },
+        {
+          "tag": "computer science education"
+        },
+        {
+          "tag": "Conferences"
+        },
+        {
+          "tag": "CSEDU 2013"
+        },
+        {
+          "tag": "Daniel Pink motivational theory"
+        },
+        {
+          "tag": "e-learning"
+        },
+        {
+          "tag": "education"
+        },
+        {
+          "tag": "educational courses"
+        },
+        {
+          "tag": "Educational institutions"
+        },
+        {
+          "tag": "Games"
+        },
+        {
+          "tag": "gamification"
+        },
+        {
+          "tag": "gamified classroom"
+        },
+        {
+          "tag": "ICL 2013"
+        },
+        {
+          "tag": "IGIP SPEED Young Scientist award paper"
+        },
+        {
+          "tag": "Materials"
+        },
+        {
+          "tag": "motivation"
+        },
+        {
+          "tag": "motivation gap"
+        },
+        {
+          "tag": "software engineering"
+        },
+        {
+          "tag": "Software engineering"
+        },
+        {
+          "tag": "software engineering course gamification"
+        },
+        {
+          "tag": "student engagement"
+        },
+        {
+          "tag": "student motivation understanding"
+        }
+      ],
+      "title": "Gamification of a Software Engineering course and a detailed analysis of the factors that lead to it's failure"
+    },
+    {
+      "DOI": "10.1109/ISSE.2013.6648287",
+      "citationKey": "todor",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "V.",
+          "lastName": "Todor"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "D.",
+          "lastName": "Pitic\u0103"
+        }
+      ],
+      "date": "2013-05",
+      "extra": [
+        "Citation Key: todor",
+        "ISSN: 2161-2528"
+      ],
+      "itemID": 25,
+      "itemType": "conferencePaper",
+      "pages": "428-431",
+      "publicationTitle": "Proceedings of the 36th International Spring Seminar on Electronics Technology",
+      "publisher": "IEEE",
+      "tags": [
+        {
+          "tag": "computer aided instruction"
+        },
+        {
+          "tag": "Computer aided instruction"
+        },
+        {
+          "tag": "computer games"
+        },
+        {
+          "tag": "Consumer electronics"
+        },
+        {
+          "tag": "continuing education"
+        },
+        {
+          "tag": "continuous learning"
+        },
+        {
+          "tag": "e-learning platform"
+        },
+        {
+          "tag": "electronic engineering computing"
+        },
+        {
+          "tag": "electronic engineering education"
+        },
+        {
+          "tag": "electronics"
+        },
+        {
+          "tag": "game mechanics"
+        },
+        {
+          "tag": "Games"
+        },
+        {
+          "tag": "gamification"
+        },
+        {
+          "tag": "information quality"
+        },
+        {
+          "tag": "Lead"
+        },
+        {
+          "tag": "nongame applications"
+        },
+        {
+          "tag": "problem solving"
+        },
+        {
+          "tag": "Seminars"
+        },
+        {
+          "tag": "Springs"
+        },
+        {
+          "tag": "student motivation"
+        }
+      ],
+      "title": "The gamification of the study of electronics in dedicated e-learning platforms"
+    },
+    {
+      "DOI": "10.1109/VS-GAMES.2013.6624228",
+      "citationKey": "eng-engineering-gamification",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "G.",
+          "lastName": "Barata"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "S.",
+          "lastName": "Gama"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "J.",
+          "lastName": "Jorge"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "D.",
+          "lastName": "Goncalves"
+        }
+      ],
+      "date": "Sept 2013",
+      "extra": [
+        "Publication Title: 2013 5th International Conference on Games and Virtual Worlds for Serious Applications (VS-GAMES)",
+        "Citation Key: eng-engineering-gamification"
+      ],
+      "itemID": 26,
+      "itemType": "journalArticle",
+      "pages": "1-8",
+      "title": "Engaging Engineering Students with Gamification"
+    },
+    {
+      "DOI": "10.1109/VS-GAMES.2015.7295760",
+      "citationKey": "review-gamification-framework",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "A.",
+          "lastName": "Mora"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "D.",
+          "lastName": "Riera"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "C.",
+          "lastName": "Gonzalez"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "J.",
+          "lastName": "Arnedo-Moreno"
+        }
+      ],
+      "date": "Sept 2015",
+      "extra": [
+        "Citation Key: review-gamification-framework"
+      ],
+      "itemID": 27,
+      "itemType": "conferencePaper",
+      "pages": "1-8",
+      "publicationTitle": "2015 7th International Conference on Games and Virtual Worlds for Serious Applications (VS-Games)",
+      "publisher": "IEEE",
+      "tags": [
+        {
+          "tag": "Bibliographies"
+        },
+        {
+          "tag": "Context"
+        },
+        {
+          "tag": "design framework"
+        },
+        {
+          "tag": "Design methodology"
+        },
+        {
+          "tag": "Ethics"
+        },
+        {
+          "tag": "formal design process"
+        },
+        {
+          "tag": "formal specification"
+        },
+        {
+          "tag": "game components"
+        },
+        {
+          "tag": "game design elements"
+        },
+        {
+          "tag": "Games"
+        },
+        {
+          "tag": "gamification design frameworks"
+        },
+        {
+          "tag": "gamification-based solutions"
+        },
+        {
+          "tag": "Proposals"
+        },
+        {
+          "tag": "serious games (computing)"
+        }
+      ],
+      "title": "A Literature Review of Gamification Design Frameworks",
+      "url": "http://dx.doi.org/10.1109/VS-GAMES.2015.7295760"
+    },
+    {
+      "DOI": "10.1145/2513456.2513469",
+      "ISBN": "978-1-4503-2112-9",
+      "citationKey": "ODonovan",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Siobhan",
+          "lastName": "O'Donovan"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "James",
+          "lastName": "Gain"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Patrick",
+          "lastName": "Marais"
+        }
+      ],
+      "date": "2013",
+      "extra": [
+        "Citation Key: ODonovan",
+        "Number of pages: 10",
+        "Place: East London, South Africa",
+        "tex.acmid: 2513469"
+      ],
+      "itemID": 28,
+      "itemType": "conferencePaper",
+      "pages": "242\u2013251",
+      "place": "New York, NY, USA",
+      "publicationTitle": "Proceedings of the South African Institute for Computer Scientists and Information Technologists Conference",
+      "publisher": "ACM",
+      "series": "SAICSIT '13",
+      "tags": [
+        {
+          "tag": "active learning"
+        },
+        {
+          "tag": "games design"
+        },
+        {
+          "tag": "gamification"
+        }
+      ],
+      "title": "A Case Study in the Gamification of a University-level Games Development Course",
+      "url": "http://doi.acm.org/10.1145/2513456.2513469"
+    },
+    {
+      "DOI": "10.1145/2536536.2536602",
+      "ISBN": "978-1-4503-2345-1",
+      "citationKey": "Villagrasa",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Sergi",
+          "lastName": "Villagrasa"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Jaume",
+          "lastName": "Duran"
+        }
+      ],
+      "date": "2013",
+      "extra": [
+        "Citation Key: Villagrasa",
+        "Number of pages: 5",
+        "Place: Salamanca, Spain",
+        "tex.acmid: 2536602"
+      ],
+      "itemID": 29,
+      "itemType": "conferencePaper",
+      "pages": "429\u2013433",
+      "place": "New York, NY, USA",
+      "publicationTitle": "Proceedings of the First International Conference on Technological Ecosystem for Enhancing Multiculturality",
+      "publisher": "ACM",
+      "series": "TEEM '13",
+      "tags": [
+        {
+          "tag": "3D education"
+        },
+        {
+          "tag": "engage"
+        },
+        {
+          "tag": "gamification"
+        },
+        {
+          "tag": "problem based learning"
+        },
+        {
+          "tag": "quest based learning"
+        },
+        {
+          "tag": "web GL"
+        }
+      ],
+      "title": "Gamification for Learning 3D Computer Graphics Arts",
+      "url": "http://doi.acm.org/10.1145/2536536.2536602"
+    },
+    {
+      "DOI": "10.1145/2554850.2554956",
+      "ISBN": "978-1-4503-2469-4",
+      "citationKey": "deSousaBorges:2014:SMG:2554850.2554956",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Simone",
+          "lastName": "de Sousa Borges"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Vinicius H. S.",
+          "lastName": "Durelli"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Helena Macedo",
+          "lastName": "Reis"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Seiji",
+          "lastName": "Isotani"
+        }
+      ],
+      "date": "2014",
+      "extra": [
+        "Citation Key: deSousaBorges:2014:SMG:2554850.2554956",
+        "Number of pages: 7",
+        "Place: Gyeongju, Republic of Korea",
+        "tex.acmid: 2554956",
+        "tex.bdsk-url-2: http://dx.doi.org/10.1145/2554850.2554956"
+      ],
+      "itemID": 30,
+      "itemType": "conferencePaper",
+      "pages": "216\u2013222",
+      "place": "New York, NY, USA",
+      "publicationTitle": "Proceedings of the 29th Annual ACM Symposium on Applied Computing",
+      "publisher": "ACM",
+      "series": "SAC '14",
+      "tags": [
+        {
+          "tag": "education"
+        },
+        {
+          "tag": "engagement"
+        },
+        {
+          "tag": "gamification"
+        },
+        {
+          "tag": "literature review"
+        },
+        {
+          "tag": "motivation"
+        },
+        {
+          "tag": "persuasive computing"
+        },
+        {
+          "tag": "survey"
+        },
+        {
+          "tag": "systematic mapping"
+        }
+      ],
+      "title": "A Systematic Mapping on Gamification Applied to Education",
+      "url": "http://doi.acm.org/10.1145/2554850.2554956"
+    },
+    {
+      "DOI": "10.1145/2591062.2591171",
+      "ISBN": "978-1-4503-2768-8",
+      "citationKey": "Snipes:2014:EGD:2591062.2591171",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Will",
+          "lastName": "Snipes"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Anil R.",
+          "lastName": "Nair"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Emerson",
+          "lastName": "Murphy-Hill"
+        }
+      ],
+      "date": "2014",
+      "extra": [
+        "Citation Key: Snipes:2014:EGD:2591062.2591171",
+        "Number of pages: 10",
+        "Place: Hyderabad, India",
+        "tex.acmid: 2591171",
+        "tex.bdsk-url-2: http://dx.doi.org/10.1145/2591062.2591171"
+      ],
+      "itemID": 31,
+      "itemType": "conferencePaper",
+      "pages": "105\u2013114",
+      "place": "New York, NY, USA",
+      "publicationTitle": "Companion Proceedings of the 36th International Conference on Software Engineering",
+      "publisher": "ACM",
+      "series": "ICSE Companion 2014",
+      "tags": [
+        {
+          "tag": "Code Navigation"
+        },
+        {
+          "tag": "Development"
+        },
+        {
+          "tag": "Productivity"
+        }
+      ],
+      "title": "Experiences Gamifying Developer Adoption of Practices and Tools",
+      "url": "http://doi.acm.org/10.1145/2591062.2591171"
+    },
+    {
+      "DOI": "10.1145/3134302.3134305",
+      "ISBN": "978-1-4503-5234-5",
+      "citationKey": "Dicheva:2017:GEP:3134302.3134305",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Darina",
+          "lastName": "Dicheva"
+        }
+      ],
+      "date": "2017",
+      "extra": [
+        "Citation Key: Dicheva:2017:GEP:3134302.3134305",
+        "Number of pages: 1",
+        "Place: Ruse, Bulgaria",
+        "tex.acmid: 3134305",
+        "tex.bdsk-url-2: http://dx.doi.org/10.1145/3134302.3134305"
+      ],
+      "itemID": 32,
+      "itemType": "conferencePaper",
+      "pages": "11\u201311",
+      "place": "New York, NY, USA",
+      "publicationTitle": "Proceedings of the 18th International Conference on Computer Systems and Technologies",
+      "publisher": "ACM",
+      "series": "CompSysTech'17",
+      "tags": [
+        {
+          "tag": "Active Learning"
+        },
+        {
+          "tag": "Computer Science Education"
+        },
+        {
+          "tag": "Gamification"
+        },
+        {
+          "tag": "Motivation"
+        }
+      ],
+      "title": "Gamification in Education: A Passing Trend or a Genuine Potential?",
+      "url": "http://doi.acm.org/10.1145/3134302.3134305"
+    },
+    {
+      "DOI": "10.1145/3136273.3136299",
+      "ISBN": "978-1-4503-5285-7",
+      "citationKey": "Goshevski:2017:RGP:3136273.3136299",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Dimitar",
+          "lastName": "Goshevski"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Joana",
+          "lastName": "Veljanoska"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Thanos",
+          "lastName": "Hatziapostolou"
+        }
+      ],
+      "date": "2017",
+      "extra": [
+        "Citation Key: Goshevski:2017:RGP:3136273.3136299",
+        "Number of pages: 6",
+        "Place: Skopje, Macedonia",
+        "tex.acmid: 3136299",
+        "tex.articleno: 28",
+        "tex.bdsk-url-2: http://dx.doi.org/10.1145/3136273.3136299"
+      ],
+      "itemID": 33,
+      "itemType": "conferencePaper",
+      "pages": "28:1\u201328:6",
+      "place": "New York, NY, USA",
+      "publicationTitle": "Proceedings of the 8th Balkan Conference in Informatics",
+      "publisher": "ACM",
+      "series": "BCI '17",
+      "tags": [
+        {
+          "tag": "Gamification"
+        },
+        {
+          "tag": "Gamification Platforms"
+        },
+        {
+          "tag": "Higher Education"
+        }
+      ],
+      "title": "A Review of Gamification Platforms for Higher Education",
+      "url": "http://doi.acm.org/10.1145/3136273.3136299"
+    },
+    {
+      "DOI": "10.1145/3170427.3170662",
+      "ISBN": "978-1-4503-5621-3",
+      "citationKey": "Tondello:2018:GTT:3170427.3170662",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Gustavo F.",
+          "lastName": "Tondello"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Lennart E.",
+          "lastName": "Nacke"
+        }
+      ],
+      "date": "2018",
+      "extra": [
+        "Citation Key: Tondello:2018:GTT:3170427.3170662",
+        "Number of pages: 4",
+        "Place: Montreal QC, Canada",
+        "tex.acmid: 3170662",
+        "tex.articleno: C25",
+        "tex.bdsk-url-2: http://dx.doi.org/10.1145/3170427.3170662"
+      ],
+      "itemID": 34,
+      "itemType": "conferencePaper",
+      "pages": "C25:1\u2013C25:4",
+      "place": "New York, NY, USA",
+      "publicationTitle": "Extended Abstracts of the 2018 CHI Conference on Human Factors in Computing Systems",
+      "publisher": "ACM",
+      "series": "CHI EA '18",
+      "tags": [
+        {
+          "tag": "gameful design"
+        },
+        {
+          "tag": "gamification"
+        },
+        {
+          "tag": "motivation"
+        }
+      ],
+      "title": "Gamification: Tools and Techniques for Motivating Users",
+      "url": "http://doi.acm.org/10.1145/3170427.3170662"
+    },
+    {
+      "DOI": "https://doi.org/10.1006/ceps.1999.1020",
+      "ISSN": "0361-476X",
+      "citationKey": "RYAN200054",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Richard M.",
+          "lastName": "Ryan"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Edward L.",
+          "lastName": "Deci"
+        }
+      ],
+      "date": "2000",
+      "extra": [
+        "Citation Key: RYAN200054",
+        "tex.bdsk-url-2: https://doi.org/10.1006/ceps.1999.1020"
+      ],
+      "issue": "1",
+      "itemID": 35,
+      "itemType": "journalArticle",
+      "pages": "54 - 67",
+      "publicationTitle": "Contemporary Educational Psychology",
+      "title": "Intrinsic and Extrinsic Motivations: Classic Definitions and New Directions",
+      "url": "http://www.sciencedirect.com/science/article/pii/S0361476X99910202",
+      "volume": "25"
+    },
+    {
+      "DOI": "https://doi.org/10.1016/j.ijhcs.2014.09.006",
+      "ISSN": "1071-5819",
+      "citationKey": "SEABORN201514",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Katie",
+          "lastName": "Seaborn"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Deborah I.",
+          "lastName": "Fels"
+        }
+      ],
+      "date": "2015",
+      "extra": [
+        "Citation Key: SEABORN201514",
+        "tex.bdsk-url-2: https://doi.org/10.1016/j.ijhcs.2014.09.006"
+      ],
+      "itemID": 36,
+      "itemType": "journalArticle",
+      "pages": "14 - 31",
+      "publicationTitle": "International Journal of Human-Computer Studies",
+      "tags": [
+        {
+          "tag": "Gameful design"
+        },
+        {
+          "tag": "Gamification"
+        },
+        {
+          "tag": "Motivation"
+        },
+        {
+          "tag": "User experience"
+        }
+      ],
+      "title": "Gamification in theory and action: A survey",
+      "url": "http://www.sciencedirect.com/science/article/pii/S1071581914001256",
+      "volume": "74"
+    },
+    {
+      "ISBN": "138132631",
+      "citationKey": "hair2010multivariate",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Joseph F.",
+          "lastName": "Hair"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "William C.",
+          "lastName": "Black"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Barry J.",
+          "lastName": "Babin"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Rolph E.",
+          "lastName": "Anderson"
+        }
+      ],
+      "date": "2009-02",
+      "edition": "7",
+      "extra": [
+        "Citation Key: hair2010multivariate",
+        "tex.howpublished: Paperback",
+        "tex.posted-at: 2013-05-03 03:29:50",
+        "tex.priority: 2"
+      ],
+      "itemID": 37,
+      "itemType": "book",
+      "publisher": "Prentice Hall",
+      "tags": [
+        {
+          "tag": "0_quantiative"
+        },
+        {
+          "tag": "0_research"
+        },
+        {
+          "tag": "0_research_methods"
+        },
+        {
+          "tag": "0_statistics"
+        }
+      ],
+      "title": "Multivariate Data Analysis (7th Edition)"
+    },
+    {
+      "ISBN": "978-1-4493-9767-8",
+      "citationKey": "zichermann2011gamification",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "G.",
+          "lastName": "Zichermann"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "C.",
+          "lastName": "Cunningham"
+        }
+      ],
+      "date": "2011",
+      "extra": [
+        "Citation Key: zichermann2011gamification",
+        "tex.lccn: 2012382507"
+      ],
+      "itemID": 38,
+      "itemType": "book",
+      "publisher": "O'Reilly Media",
+      "series": "O'Reilly Series",
+      "title": "Gamification by Design: Implementing Game Mechanics in Web and Mobile Apps"
+    },
+    {
+      "ISBN": "978-1-4673-3076-3",
+      "citationKey": "Snipes:2013:TRR:2486788.2486983",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Will",
+          "lastName": "Snipes"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Vinay",
+          "lastName": "Augustine"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Anil R.",
+          "lastName": "Nair"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Emerson",
+          "lastName": "Murphy-Hill"
+        }
+      ],
+      "date": "2013",
+      "extra": [
+        "Citation Key: Snipes:2013:TRR:2486788.2486983",
+        "Number of pages: 4",
+        "Place: San Francisco, CA, USA",
+        "tex.acmid: 2486983"
+      ],
+      "itemID": 39,
+      "itemType": "conferencePaper",
+      "pages": "1277\u20131280",
+      "place": "Piscataway, NJ, USA",
+      "publicationTitle": "Proceedings of the 2013 International Conference on Software Engineering",
+      "publisher": "IEEE Press",
+      "series": "ICSE '13",
+      "title": "Towards Recognizing and Rewarding Efficient Developer Work Patterns",
+      "url": "http://dl.acm.org/citation.cfm?id=2486788.2486983"
+    }
+  ]
+}

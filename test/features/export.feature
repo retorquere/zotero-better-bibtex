@@ -647,6 +647,10 @@ Feature: Export
     And I set preference .verbatimFields to "doi,file,ids,eprint,verba,verbb,verbc,groups"
     Then an export using "Better BibTeX" should match "export/*.bibtex"
 
+  Scenario: Using zotero.lua .md to .docx to add canonic number after comma without 'p.' #2248
+    Given I import 39 references from "export/*.json"
+    When I compile "export/*.md" to "~/*.odt" it should match "export/*.odt"
+
 # Scenario: error exporting Better BibLaTex this.preference.skipFields is undefined #2029
 # Given I restart Zotero
 # And I remove all items
