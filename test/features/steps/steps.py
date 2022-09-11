@@ -147,8 +147,9 @@ def step_impl(context, source, target, baseline):
   target = os.path.join(context.tmpDir, target[2:])
 
   lua = 'site/content/exporting/zotero.lua'
+  client = context.config.userdata.get('client', 'zotero')
 
-  subprocess.run(f'pandoc -s --lua-filter={shlex.quote(lua)} -o {shlex.quote(target)} {shlex.quote(source)}', shell=True, check=True)
+  subprocess.run(f'pandoc -s --metadata=zotero_client:{client} --lua-filter={shlex.quote(lua)} -o {shlex.quote(target)} {shlex.quote(source)}', shell=True, check=True)
 
   def neuter(cit):
     for key in ['id', 'citationID', 'uri', 'uris']:
