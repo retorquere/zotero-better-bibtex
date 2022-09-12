@@ -231,7 +231,7 @@ local function scannable_cite(cite)
 
     local label, locator, suffix = csl_locator.parse(pandoc.utils.stringify(item.suffix))
     if locator then
-      locator = (label or 'p.') .. ' ' .. locator
+      locator = utils.trim((label or 'p.') .. ' ' .. locator)
     else
       locator = ''
     end

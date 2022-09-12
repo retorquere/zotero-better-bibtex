@@ -44,4 +44,11 @@ function module.deepcopy(orig)
   return copy
 end
 
+function module.trim(s)
+  if s == nil then
+    return s
+  end
+  return (s:gsub("^%s*(.-)%s*$", "%1"))
+end
+
 return module

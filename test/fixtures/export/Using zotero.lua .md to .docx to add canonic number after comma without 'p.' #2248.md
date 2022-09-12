@@ -25,6 +25,17 @@ The paper makes the following contributions:
 \item Implementation experience.
 \end{itemize}
 
+1. [@wrigstad2017mastery, one suffix after comma]
+2. [@wrigstad2017mastery 2 suffix without comma]
+3. [@wrigstad2017mastery, 3 suffix after comma with number]
+4. [@wrigstad2017mastery, iv Oneword]
+5. [@wrigstad2017mastery, five]
+6. [@wrigstad2017mastery, vi]
+7. [@wrigstad2017mastery a seventh case without comma]
+8. [@wrigstad2017mastery{ii, A, D-Z}, with a suffix]
+9. [@wrigstad2017mastery, {pp. iv, vi-xi, (xv)-(xvii)} with suffix here]
+10. [@wrigstad2017mastery{}, 99 years later]
+
 # Theory {#sec:theory}
 
 ## Achievement-driven learning methodology {#sec:achievement-driven}

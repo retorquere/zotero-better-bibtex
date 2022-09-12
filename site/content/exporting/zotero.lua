@@ -1,7 +1,9 @@
-print('zotero-live-citations f34bfc770')
+print('zotero-live-citations 1b01fd62a')
 do
 local _ENV = _ENV
 package.preload[ "locator" ] = function( ... ) local arg = _G.arg;
+local utils = require('utils')
+
 local module = {}
 
 local labels = {
@@ -79,38 +81,38 @@ end
 
 local function parse(suffix)
   if not suffix then
-    return nil, nil, suffix
+    return nil, nil, utils.trim(suffix)
   end
 
   local s, e, locator, label, remaining
   local _suffix = suffix
 
-  s, e, locator = string.find(_suffix, '^{([^{}]+)}$')
+  s, e, locator = string.find(_suffix, '^{([^{}]*)}$')
   if locator then
     label, locator = get_label(locator)
-    return label, locator, nil
+    return utils.trim(label), utils.trim(locator), nil
   end
 
-  local s, e, locator, remaining = string.find(_suffix, '^{([^{}]+)}, *(.*)')
+  local s, e, locator, remaining = string.find(_suffix, '^{([^{}]*)}, *(.*)')
   if locator then
     label, locator = get_label(locator)
-    return label, locator, remaining
+    return utils.trim(label), utils.trim(locator), utils.trim(remaining)
   end
 
-  s, e, locator = string.find(_suffix, '^, *{([^{}]+)}$')
+  s, e, locator = string.find(_suffix, '^, *{([^{}]*)}$')
   if locator then
     label, locator = get_label(locator)
-    return label, locator, nil
+    return utils.trim(label), utils.trim(locator), nil
   end
 
-  s, e, locator, remaining = string.find(_suffix, '^, *{([^{}]+)} *(.*)')
+  s, e, locator, remaining = string.find(_suffix, '^, *{([^{}]*)} *(.*)')
   if locator then
     label, locator = get_label(locator)
-    return label, locator, remaining
+    return utils.trim(label), utils.trim(locator), utils.trim(remaining)
   end
 
   if not string.find(_suffix, '^, .') then
-    return nil, nil, suffix
+    return nil, nil, utils.trim(suffix)
   end
 
   s, e, label, remaining = string.find(_suffix, '^, *(%l+%.?) *(.*)')
@@ -138,12 +140,12 @@ local function parse(suffix)
       _suffix = nil
     end
 
-    _locator = _locator:gsub('^, *', '')
+    _locator = _locator:gsub('^,', '')
 
-    return label, _locator, _suffix
+    return utils.trim(label), utils.trim(_locator), utils.trim(_suffix)
   end
     
-  return nil, nil, suffix
+  return nil, nil, utils.trim(suffix)
 end
 
 function module.parse(suffix)
@@ -1661,6 +1663,13 @@ function module.deepcopy(orig)
   return copy
 end
 
+function module.trim(s)
+  if s == nil then
+    return s
+  end
+  return (s:gsub("^%s*(.-)%s*$", "%1"))
+end
+
 return module
 end
 end
@@ -2007,7 +2016,7 @@ local function scannable_cite(cite)
 
     local label, locator, suffix = csl_locator.parse(pandoc.utils.stringify(item.suffix))
     if locator then
-      locator = (label or 'p.') .. ' ' .. locator
+      locator = utils.trim((label or 'p.') .. ' ' .. locator)
     else
       locator = ''
     end
