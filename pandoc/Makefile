@@ -19,6 +19,9 @@ else
 	@exit 1
 endif
 
+2248:
+	pandoc -s --lua-filter=$(DEPLOYED) -o "../test/tmp/Using zotero.lua .md to .docx to add canonic number after comma without 'p.' #2248.odt" "../test/fixtures/export/Using zotero.lua .md to .docx to add canonic number after comma without 'p.' #2248.md"
+
 test-deployed:
 	@rm -f *.docx *.odt *.json
 	pandoc -s --lua-filter=$(DEPLOYED) -o paper$(TIMESTAMP).odt main.md
@@ -94,6 +97,7 @@ rocks:
 	luarocks install lunajson
 	luarocks install penlight
 	luarocks install amalg
+	luarocks install lpeg
 
 start:
 	ZOTERO_IMPORT=$(PWD)/biblio.bib npm start

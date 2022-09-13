@@ -1,159 +1,59 @@
-print('zotero-live-citations 1b01fd62a')
+print('zotero-live-citations e6117a4e8')
 do
 local _ENV = _ENV
 package.preload[ "locator" ] = function( ... ) local arg = _G.arg;
-local utils = require('utils')
+-- local lpeg = require('lpeg')
+
+local book = (lpeg.P('book') + lpeg.P('bk.') + lpeg.P('bks.')) / 'book'
+local chapter = (lpeg.P('chapter') + lpeg.P('chap.') + lpeg.P('chaps.')) / 'chapter'
+local column = (lpeg.P('column') + lpeg.P('col.') + lpeg.P('cols.')) / 'column'
+local figure = (lpeg.P('figure') + lpeg.P('fig.') + lpeg.P('figs.')) / 'figure'
+local folio = (lpeg.P('folio') + lpeg.P('fol.') + lpeg.P('fols.')) / 'folio'
+local number = (lpeg.P('number') + lpeg.P('no.') + lpeg.P('nos.')) / 'number'
+local line = (lpeg.P('line') + lpeg.P('l.') + lpeg.P('ll.')) / 'line'
+local note = (lpeg.P('note') + lpeg.P('n.') + lpeg.P('nn.')) / 'note'
+local opus = (lpeg.P('opus') + lpeg.P('op.') + lpeg.P('opp.')) / 'opus'
+local page = (lpeg.P('page') + lpeg.P('p.') + lpeg.P('pp.')) / 'page'
+local paragraph = (lpeg.P('paragraph') + lpeg.P('para.') + lpeg.P('paras.') + lpeg.P('¶¶') + lpeg.P('¶')) / 'paragraph'
+local part = (lpeg.P('part') + lpeg.P('pt.') + lpeg.P('pts.')) / 'part'
+local section = (lpeg.P('section') + lpeg.P('sec.') + lpeg.P('secs.') + lpeg.P('§§') + lpeg.P('§')) / 'section'
+local subverbo = (lpeg.P('sub verbo') + lpeg.P('s.v.') + lpeg.P('s.vv.')) / 'sub verbo'
+local verse = (lpeg.P('verse') + lpeg.P('v.') + lpeg.P('vv.')) / 'verse'
+local volume = (lpeg.P('volume') + lpeg.P('vol.') + lpeg.P('vols.')) / 'volume'
+local label = book + chapter + column + figure + folio + number + line + note + opus + page + paragraph + part + section + subverbo + verse + volume
+
+local whitespace = lpeg.P(' ')^0
+local nonspace = lpeg.P(1) - lpeg.S(' ')
+local nonbrace = lpeg.P(1) - lpeg.S('{}')
+
+local word = nonspace^1 / 1
+-- local roman = lpeg.S('IiVvXxLlCcDdMm]')^1
+local number = lpeg.R('09')^1 -- + roman
+local dash = lpeg.S('-')
+local comma = lpeg.P(',')
+
+local numbers = number * (whitespace * dash^1 * whitespace * number)^-1
+local ranges = (numbers * (whitespace * comma * whitespace * numbers)^0) / 1
+
+local braced_locator = lpeg.P('{') * lpeg.Cs(label + lpeg.Cc('page')) * whitespace * lpeg.C(nonbrace^1) * lpeg.P('}')
+local locator = braced_locator + (label * whitespace * ranges) + (label * whitespace * word) + (lpeg.Cc('page') * ranges)
+local remainder = lpeg.C(lpeg.P(1)^0)
+
+local suffix = lpeg.P(',')^-1 * whitespace * locator * remainder
 
 local module = {}
 
-local labels = {
-  book = 'book',
-  ['bk.'] = 'book',
-  ['bks.'] = 'book',
-  chapter = 'chapter',
-  ['chap.'] = 'chapter',
-  ['chaps.'] = 'chapter',
-  column = 'column',
-  ['col.'] = 'column',
-  ['cols.'] = 'column',
-  figure = 'figure',
-  ['fig.'] = 'figure',
-  ['figs.'] = 'figure',
-  folio = 'folio',
-  ['fol.'] = 'folio',
-  ['fols.'] = 'folio',
-  number = 'number',
-  ['no.'] = 'number',
-  ['nos.'] = 'number',
-  line = 'line',
-  ['l.'] = 'line',
-  ['ll.'] = 'line',
-  note = 'note',
-  ['n.'] = 'note',
-  ['nn.'] = 'note',
-  opus = 'opus',
-  ['op.'] = 'opus',
-  ['opp.'] = 'opus',
-  page = 'page',
-  ['p.'] = 'page',
-  ['pp.'] = 'page',
-  paragraph = 'paragraph',
-  ['para.'] = 'paragraph',
-  ['paras.'] = 'paragraph',
-  part = 'part',
-  ['pt.'] = 'part',
-  ['pts.'] = 'part',
-  section = 'section',
-  ['sec.'] = 'section',
-  ['secs.'] = 'section',
-  ['sub verbo'] = 'sub verbo',
-  ['s.v.'] = 'sub verbo',
-  ['s.vv.'] = 'sub verbo',
-  verse = 'verse',
-  ['v.'] = 'verse',
-  ['vv.'] = 'verse',
-  volume = 'volume',
-  ['vol.'] = 'volume',
-  ['vols.'] = 'volume'
-}
-
-function module.short_labels()
-  local sl = {}
-  for k, v in pairs(labels) do
-    if not sl[v] or string.len(k) < string.len(sl[v]) then
-      sl[v] = k
-    end
+function module.parse(input, shortlabel)
+  if string.sub(input,1,2) == '{}' then
+    return nil, nil, string.sub(input, 3)
   end
 
-  for k, v in pairs(labels) do
-    labels[k] = sl[v]
-  end
-end
-
-local function get_label(locator)
-  local s, e, label, remaining = string.find(locator, '^(%l+.?) *(.*)')
-  if label and labels[label:lower()] then
-    return labels[label:lower()], remaining
+  local parsed = lpeg.Ct(suffix):match(input)
+  if parsed then
+    return table.unpack(parsed)
   else
-    return labels['page'], locator
+    return nil, nil, input
   end
-end
-
-local function parse(suffix)
-  if not suffix then
-    return nil, nil, utils.trim(suffix)
-  end
-
-  local s, e, locator, label, remaining
-  local _suffix = suffix
-
-  s, e, locator = string.find(_suffix, '^{([^{}]*)}$')
-  if locator then
-    label, locator = get_label(locator)
-    return utils.trim(label), utils.trim(locator), nil
-  end
-
-  local s, e, locator, remaining = string.find(_suffix, '^{([^{}]*)}, *(.*)')
-  if locator then
-    label, locator = get_label(locator)
-    return utils.trim(label), utils.trim(locator), utils.trim(remaining)
-  end
-
-  s, e, locator = string.find(_suffix, '^, *{([^{}]*)}$')
-  if locator then
-    label, locator = get_label(locator)
-    return utils.trim(label), utils.trim(locator), nil
-  end
-
-  s, e, locator, remaining = string.find(_suffix, '^, *{([^{}]*)} *(.*)')
-  if locator then
-    label, locator = get_label(locator)
-    return utils.trim(label), utils.trim(locator), utils.trim(remaining)
-  end
-
-  if not string.find(_suffix, '^, .') then
-    return nil, nil, utils.trim(suffix)
-  end
-
-  s, e, label, remaining = string.find(_suffix, '^, *(%l+%.?) *(.*)')
-  if label and labels[label:lower()] then
-    label = labels[label:lower()]
-    _suffix = ', ' .. remaining
-  else
-    label = labels['page']
-  end
-
-  local _locator = ''
-  local loc
-  while true do
-    s, e, loc, remaining = string.find(_suffix, '^(, *[^, ]+)(.*)')
-    if loc then
-      _locator = _locator .. loc
-      _suffix = remaining
-    else
-      break
-    end
-  end
-
-  if _locator ~= '' then
-    if _suffix == '' then
-      _suffix = nil
-    end
-
-    _locator = _locator:gsub('^,', '')
-
-    return utils.trim(label), utils.trim(_locator), utils.trim(_suffix)
-  end
-    
-  return nil, nil, utils.trim(suffix)
-end
-
-function module.parse(suffix)
-  label, locator, suffix = parse(suffix)
-  if label == labels['page'] then
-    label = nil
-  end
-  return label, locator, suffix
 end
 
 return module
@@ -1817,7 +1717,7 @@ local zotero = require('zotero')
 local config = {
   client = 'zotero',
   scannable_cite = false,
-  csl_style = nil, -- more to document than anything else -- Lua does not store nils in tables
+  csl_style = 'apa7',
   format = nil, -- more to document than anything else -- Lua does not store nils in tables
   transferable = false
 }
@@ -2014,9 +1914,27 @@ local function scannable_cite(cite)
       s, e, ug, id, key = string.find(citation.uri, 'http://zotero.org/(%w+)/(%w+)/items/(%w+)')
     end
 
+    local shortlabel = {
+      book = 'bk.',
+      chapter = 'chap.',
+      column = 'col.',
+      figure = 'fig.',
+      folio = 'fol.',
+      number = 'no.',
+      line = 'l.',
+      note = 'n.',
+      opus = 'op.',
+      page = 'p.',
+      paragraph = 'para.',
+      part = 'pt.',
+      section = 'sec.',
+      ['sub verbo'] = 's.v.',
+      verse = 'v.',
+      volume = 'vol.',
+    }
     local label, locator, suffix = csl_locator.parse(pandoc.utils.stringify(item.suffix))
-    if locator then
-      locator = utils.trim((label or 'p.') .. ' ' .. locator)
+    if label then
+      locator = shortlabel[label] .. ' ' .. locator
     else
       locator = ''
     end
@@ -2106,7 +2024,6 @@ function Meta(meta)
     -- scannable-cite takes precedence over csl-style
     config.format = 'scannable-cite'
     zotero.url = zotero.url .. '&translator=jzon'
-    csl_locator.short_labels()
   elseif string.match(FORMAT, 'odt') or string.match(FORMAT, 'docx') then
     config.format = FORMAT
     zotero.url = zotero.url .. '&translator=json'

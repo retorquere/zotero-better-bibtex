@@ -649,7 +649,7 @@ Feature: Export
 
   @use.with_client=zotero
   Scenario: Using zotero.lua .md to .docx to add canonic number after comma without 'p.' #2248
-    Given I import 39 references from "export/*.json"
+    Given I import 2 references from "export/*.json"
     When I compile "export/*.md" to "~/*.odt" it should match "export/*.odt"
 
 # Scenario: error exporting Better BibLaTex this.preference.skipFields is undefined #2029

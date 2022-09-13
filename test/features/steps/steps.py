@@ -8,6 +8,7 @@ import time
 import os
 from hamcrest import assert_that, equal_to
 from steps.utils import assert_equal_diff, expand_scenario_variables
+from steps.citations import citations
 import steps.utils as utils
 import steps.zotero as zotero
 import glob
@@ -150,25 +151,6 @@ def step_impl(context, source, target, baseline):
   client = context.config.userdata.get('client', 'zotero')
 
   subprocess.run(f'pandoc -s --metadata=zotero_client:{client} --lua-filter={shlex.quote(lua)} -o {shlex.quote(target)} {shlex.quote(source)}', shell=True, check=True)
-
-  def neuter(cit):
-    for key in ['id', 'citationID', 'uri', 'uris']:
-      if key in cit:
-        del cit[key]
-    if 'citationItems' in cit:
-      for c in cit['citationItems']:
-        neuter(c)
-    return cit
-
-  def citations(fname):
-    with zipfile.ZipFile(fname) as zf:
-      with io.TextIOWrapper(zf.open('content.xml'), encoding='utf-8') as f:
-        cit = re.findall(r'"ZOTERO_ITEM CSL_CITATION ([^"]+)"', f.read())
-        cit = [html.unescape(c) for c in cit]
-        cit = [c.rsplit(' ', 1)[0] for c in cit]
-        cit = [json.loads(c) for c in cit]
-        cit = [neuter(c) for c in cit]
-        return json.dumps(cit, indent='  ', sort_keys=True)
 
   assert_equal_diff(citations(baseline), citations(target))
 

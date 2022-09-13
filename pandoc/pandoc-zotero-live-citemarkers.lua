@@ -32,7 +32,7 @@ local zotero = require('zotero')
 local config = {
   client = 'zotero',
   scannable_cite = false,
-  csl_style = nil, -- more to document than anything else -- Lua does not store nils in tables
+  csl_style = 'apa7',
   format = nil, -- more to document than anything else -- Lua does not store nils in tables
   transferable = false
 }
@@ -229,9 +229,27 @@ local function scannable_cite(cite)
       s, e, ug, id, key = string.find(citation.uri, 'http://zotero.org/(%w+)/(%w+)/items/(%w+)')
     end
 
+    local shortlabel = {
+      book = 'bk.',
+      chapter = 'chap.',
+      column = 'col.',
+      figure = 'fig.',
+      folio = 'fol.',
+      number = 'no.',
+      line = 'l.',
+      note = 'n.',
+      opus = 'op.',
+      page = 'p.',
+      paragraph = 'para.',
+      part = 'pt.',
+      section = 'sec.',
+      ['sub verbo'] = 's.v.',
+      verse = 'v.',
+      volume = 'vol.',
+    }
     local label, locator, suffix = csl_locator.parse(pandoc.utils.stringify(item.suffix))
-    if locator then
-      locator = utils.trim((label or 'p.') .. ' ' .. locator)
+    if label then
+      locator = shortlabel[label] .. ' ' .. locator
     else
       locator = ''
     end
@@ -321,7 +339,6 @@ function Meta(meta)
     -- scannable-cite takes precedence over csl-style
     config.format = 'scannable-cite'
     zotero.url = zotero.url .. '&translator=jzon'
-    csl_locator.short_labels()
   elseif string.match(FORMAT, 'odt') or string.match(FORMAT, 'docx') then
     config.format = FORMAT
     zotero.url = zotero.url .. '&translator=json'
