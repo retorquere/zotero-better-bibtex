@@ -4,7 +4,7 @@ import json, sys, zipfile, io, re, html
 import xml.etree.ElementTree as ET
 
 def neuter(cit):
-  for key in ['id', 'citationID', 'uri', 'uris']:
+  for key in ['id', 'citationID', 'uri', 'uris', 'properties']:
     if key in cit:
       del cit[key]
   for k, v in list(cit.items()):

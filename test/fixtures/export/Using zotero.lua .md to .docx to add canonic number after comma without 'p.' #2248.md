@@ -50,12 +50,28 @@ In this chapter I lean towards the other movement of rhetorical psychology: how 
 
 # Equivalent to Pandoc Manual's examples
 
-9. (Billig, 1991, ii, A, D-Z}, with a suffix] )
+9. (Billig, 1991, ii, A, D-Z, with a suffix] )
 10. (Billig, 1991, pp. iv, vi-xi, (xv)-(xvii) with suffix here)
 11. (Billig, 1991, 99 years later)  
 ```
 
 ### Actual output
+1. [@Billig1991IdeologyOpinions, one suffix after comma]  
+2. [@Billig1991IdeologyOpinions 2 suffix without comma]  
+3. [@Billig1991IdeologyOpinions, 3 suffix after comma with number]  
+4. [@Billig1991IdeologyOpinions, iv wordAfterRoman]  
+5. [@Billig1991IdeologyOpinions, one]  
+6. [@Billig1991IdeologyOpinions, p. vi]  
+7. [@Billig1991IdeologyOpinions a seventh case without comma]  
+
+#### Equivalent to Pandoc Manual's examples
+
+9. [@Billig1991IdeologyOpinions{ii, A, D-Z}, with a suffix]  
+10. [@Billig1991IdeologyOpinions, {pp. iv, vi-xi, (xv)-(xvii)} with suffix here]   
+11. [@Billig1991IdeologyOpinions{}, 99 years later]  
+
+
+### Manually adjusted output with citation picker
 1. [@Billig1991IdeologyOpinions, one suffix after comma]  
 2. [@Billig1991IdeologyOpinions 2 suffix without comma]  
 3. [@Billig1991IdeologyOpinions, 3 suffix after comma with number]  
