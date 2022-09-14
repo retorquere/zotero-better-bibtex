@@ -1,8 +1,8 @@
-print('zotero-live-citations dac9a9a39')
+print('zotero-live-citations bcf83c171')
 do
 local _ENV = _ENV
 package.preload[ "locator" ] = function( ... ) local arg = _G.arg;
-local lpeg = require('lpeg')
+-- local lpeg = require('lpeg')
 
 local book = (lpeg.P('book') + lpeg.P('bk.') + lpeg.P('bks.')) / 'book'
 local chapter = (lpeg.P('chapter') + lpeg.P('chap.') + lpeg.P('chaps.')) / 'chapter'

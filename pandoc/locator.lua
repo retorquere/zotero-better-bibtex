@@ -1,4 +1,4 @@
-local lpeg = require('lpeg')
+-- local lpeg = require('lpeg')
 
 local book = (lpeg.P('book') + lpeg.P('bk.') + lpeg.P('bks.')) / 'book'
 local chapter = (lpeg.P('chapter') + lpeg.P('chap.') + lpeg.P('chaps.')) / 'chapter'
