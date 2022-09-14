@@ -162,6 +162,7 @@ jobs:
         curl -sL https://raw.githubusercontent.com/retorquere/zotero-deb/master/install.sh | sudo bash
         sudo apt-get update
         sudo apt-get install ${{ matrix.client }} pandoc
+        pandoc -v
 
     # fast test
     - if: contains(github.event.commits[0].message, '[fast-test]')
