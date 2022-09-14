@@ -1,4 +1,4 @@
-print('zotero-live-citations e6117a4e8')
+print('zotero-live-citations 777eb41af')
 do
 local _ENV = _ENV
 package.preload[ "locator" ] = function( ... ) local arg = _G.arg;
@@ -22,38 +22,43 @@ local verse = (lpeg.P('verse') + lpeg.P('v.') + lpeg.P('vv.')) / 'verse'
 local volume = (lpeg.P('volume') + lpeg.P('vol.') + lpeg.P('vols.')) / 'volume'
 local label = book + chapter + column + figure + folio + number + line + note + opus + page + paragraph + part + section + subverbo + verse + volume
 
-local whitespace = lpeg.P(' ')^0
+local optionalwhitespace = lpeg.P(' ')^0
+local whitespace = lpeg.P(' ')^1
 local nonspace = lpeg.P(1) - lpeg.S(' ')
 local nonbrace = lpeg.P(1) - lpeg.S('{}')
 
 local word = nonspace^1 / 1
 -- local roman = lpeg.S('IiVvXxLlCcDdMm]')^1
 local number = lpeg.R('09')^1 -- + roman
-local dash = lpeg.S('-')
-local comma = lpeg.P(',')
 
-local numbers = number * (whitespace * dash^1 * whitespace * number)^-1
-local ranges = (numbers * (whitespace * comma * whitespace * numbers)^0) / 1
+local numbers = number * (optionalwhitespace * lpeg.S('-')^1 * optionalwhitespace * number)^-1
+local ranges = (numbers * (optionalwhitespace * lpeg.P(',') * optionalwhitespace * numbers)^0) / 1
 
-local braced_locator = lpeg.P('{') * lpeg.Cs(label + lpeg.Cc('page')) * whitespace * lpeg.C(nonbrace^1) * lpeg.P('}')
-local locator = braced_locator + (label * whitespace * ranges) + (label * whitespace * word) + (lpeg.Cc('page') * ranges)
+-- local braced_locator = lpeg.P('{') * lpeg.Cs(label + lpeg.Cc('page')) * whitespace * lpeg.C(nonbrace^1) * lpeg.P('}')
+local braced_locator = lpeg.P('{') * label * whitespace * lpeg.C(nonbrace^1) * lpeg.P('}')
+local braced_implicit_locator = lpeg.P('{') * lpeg.Cc('page') * lpeg.Cs(numbers) * lpeg.P('}')
+local locator = braced_locator + braced_implicit_locator + (label * whitespace * ranges) + (label * whitespace * word) + (lpeg.Cc('page') * ranges)
 local remainder = lpeg.C(lpeg.P(1)^0)
 
-local suffix = lpeg.P(',')^-1 * whitespace * locator * remainder
+local suffix = lpeg.P(',')^-1 * optionalwhitespace * locator * remainder
+
+local pseudo_locator = lpeg.P('{') * lpeg.C(nonbrace^0) * lpeg.P('}') * remainder
 
 local module = {}
 
 function module.parse(input, shortlabel)
-  if string.sub(input,1,2) == '{}' then
-    return nil, nil, string.sub(input, 3)
-  end
-
   local parsed = lpeg.Ct(suffix):match(input)
   if parsed then
     return table.unpack(parsed)
-  else
-    return nil, nil, input
   end
+
+  parsed = lpeg.Ct(pseudo_locator):match(input)
+  if parsed then
+    local pt1, pt2 = table.unpack(parsed)
+    return nil, nil, pt1 .. pt2
+  end
+
+  return nil, nil, input
 end
 
 return module
