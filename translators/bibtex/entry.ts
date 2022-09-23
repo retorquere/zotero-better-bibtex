@@ -798,11 +798,10 @@ export class Entry {
 
     if (!Object.keys(this.has).length) this.add({name: 'type', value: this.entrytype})
 
-    const fields = Object.values(this.has).map(field => `  ${field.name} = ${field.bibtex}`)
 
     let ref = `@${this.entrytype}{${this.item.citationKey},\n`
-    ref += fields.join(',\n')
-    ref += '\n}\n'
+    ref += Object.values(this.has).map(field => `  ${field.name} = ${field.bibtex}`).join(',\n') + '\n'
+    ref += '}\n'
     ref += this.qualityReport()
     ref += '\n'
 
