@@ -219,6 +219,19 @@ function parseLibraryKeyFromCitekey(libraryKey) {
   return null
 }
 
+$patch$(Zotero.API, 'getResultsFromParams', original => function Zotero_API_getResultsFromParams(params: Record<string, any>) {
+  if (params.itemKey) {
+    const libraryID = params.libraryID || Zotero.Libraries.userLibraryID
+    params.itemKey = params.itemKey.split(',').map((itemKey: string) => {
+      const m = itemKey.match(/^(bbt:|@)(.+)/)
+      const citekey: { itemKey: string } = m ? Zotero.BetterBibTeX.KeyManager.keys.findOne($and({ libraryID, citekey: m[2] })) : {}
+      return citekey.itemKey || itemKey
+    }).join(',')
+  }
+
+  return original.apply(this, arguments) as Record<string, any>
+})
+
 if (typeof Zotero.DataObjects.prototype.parseLibraryKeyHash === 'function') {
   log.debug('monkey-patching parseLibraryKeyHash')
   $patch$(Zotero.DataObjects.prototype, 'parseLibraryKeyHash', original => function Zotero_DataObjects_prototype_parseLibraryKeyHash(libraryKey: string) {
