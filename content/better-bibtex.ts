@@ -220,6 +220,7 @@ function parseLibraryKeyFromCitekey(libraryKey) {
 }
 
 $patch$(Zotero.API, 'getResultsFromParams', original => function Zotero_API_getResultsFromParams(params: Record<string, any>) {
+  log.debug('getResultsFromParams orig', params)
   if (params.itemKey) {
     const libraryID = params.libraryID || Zotero.Libraries.userLibraryID
     params.itemKey = params.itemKey.split(',').map((itemKey: string) => {
@@ -228,6 +229,7 @@ $patch$(Zotero.API, 'getResultsFromParams', original => function Zotero_API_getR
       return citekey.itemKey || itemKey
     }).join(',')
   }
+  log.debug('getResultsFromParams modified', params)
 
   return original.apply(this, arguments) as Record<string, any>
 })
