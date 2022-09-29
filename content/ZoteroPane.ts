@@ -142,7 +142,7 @@ export class ZoteroPane {
     const mapping: Record<string, string> = { 'tex.dateadded': 'dateAdded', 'tex.datemodified': 'dateModified' }
     if (Preference.patchDates.trim()) {
       try {
-        for (const assignment of Preference.patchDates.trim().split(/\s,\s/)) {
+        for (const assignment of Preference.patchDates.trim().split(/\s*,\s*/)) {
           const [, k, v ] = assignment.trim().match(/^([-_a-z09]+)\s*=\s*(dateadded|datemodified)$/i)
           mapping [`tex.${k.toLowerCase()}`] = { dateadded: 'dateAdded', datemodified: 'dateModified' }[v.toLowerCase()]
         }
