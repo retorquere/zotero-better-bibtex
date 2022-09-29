@@ -220,14 +220,18 @@ function parseLibraryKeyFromCitekey(libraryKey) {
 }
 
 $patch$(Zotero.API, 'getResultsFromParams', original => function Zotero_API_getResultsFromParams(params: Record<string, any>) {
-  log.debug('getResultsFromParams orig', params)
-  if (params.itemKey) {
-    const libraryID = params.libraryID || Zotero.Libraries.userLibraryID
-    params.itemKey = params.itemKey.split(',').map((itemKey: string) => {
-      const m = itemKey.match(/^(bbt:|@)(.+)/)
-      const citekey: { itemKey: string } = m ? Zotero.BetterBibTeX.KeyManager.keys.findOne($and({ libraryID, citekey: m[2] })) : {}
-      return citekey.itemKey || itemKey
-    }).join(',')
+  try {
+    if (params.itemKey) {
+      const libraryID = params.libraryID || Zotero.Libraries.userLibraryID
+      params.itemKey = params.map((itemKey: string) => {
+        const m = itemKey.match(/^(bbt:|@)(.+)/)
+        const citekey: { itemKey: string } = m ? Zotero.BetterBibTeX.KeyManager.keys.findOne($and({ libraryID, citekey: m[2] })) : {}
+        return citekey.itemKey || itemKey
+      })
+    }
+  }
+  catch (err) {
+    log.debug('getResultsFromParams', params, err)
   }
   log.debug('getResultsFromParams modified', params)
 
