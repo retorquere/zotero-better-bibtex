@@ -223,7 +223,7 @@ $patch$(Zotero.API, 'getResultsFromParams', original => function Zotero_API_getR
   try {
     if (params.itemKey) {
       const libraryID = params.libraryID || Zotero.Libraries.userLibraryID
-      params.itemKey = params.map((itemKey: string) => {
+      params.itemKey = params.itemKey.map((itemKey: string) => {
         const m = itemKey.match(/^(bbt:|@)(.+)/)
         const citekey: { itemKey: string } = m ? Zotero.BetterBibTeX.KeyManager.keys.findOne($and({ libraryID, citekey: m[2] })) : {}
         return citekey.itemKey || itemKey
