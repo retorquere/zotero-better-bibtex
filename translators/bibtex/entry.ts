@@ -296,15 +296,12 @@ export class Entry {
     if ((this.item.arXiv = arXiv.parse(this.item.publicationTitle)) && this.item.arXiv.id) {
       this.item.arXiv.source = 'publicationTitle'
       if (Translator.BetterBibLaTeX) delete this.item.publicationTitle
-
     }
     else if ((this.item.arXiv = arXiv.parse(this.item.extraFields.tex.arxiv?.value)) && this.item.arXiv.id) {
       this.item.arXiv.source = 'extra'
-
     }
     else {
       this.item.arXiv = null
-
     }
 
     if (this.item.arXiv) {
