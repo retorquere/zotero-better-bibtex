@@ -6,9 +6,9 @@ import sys
 from types import SimpleNamespace
 
 clients = [
-  SimpleNamespace(exe='zotero', installdir='Zotero'),
-  SimpleNamespace(exe='zotero', installdir='Zotero-beta'),
   SimpleNamespace(exe='jurism', installdir='Jurism'),
+  SimpleNamespace(exe='zotero', installdir='Zotero-beta'),
+  SimpleNamespace(exe='zotero', installdir='Zotero'),
 ]
 
 for client in clients:
