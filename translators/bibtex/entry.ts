@@ -24,40 +24,6 @@ import BabelTag from '../../gen/babel/tag.json'
 
 import { arXiv } from '../../content/arXiv'
 
-const Path = { // eslint-disable-line  @typescript-eslint/naming-convention
-  normalize(path) { // eslint-disable-line prefer-arrow/prefer-arrow-functions
-    return Translator.paths.caseSensitive ? path : path.toLowerCase()
-  },
-
-  drive(path) { // eslint-disable-line prefer-arrow/prefer-arrow-functions
-    if (Translator.preferences.platform !== 'win') return ''
-    return path.match(/^[a-z]:\//) ? path.substring(0, 2) : ''
-  },
-
-  relative(path) { // eslint-disable-line prefer-arrow/prefer-arrow-functions
-    if (this.drive(Translator.export.dir) !== this.drive(path)) return path
-
-    const from = Translator.export.dir.split(Translator.paths.sep)
-    const to = path.split(Translator.paths.sep)
-
-    while (from.length && to.length && this.normalize(from[0]) === this.normalize(to[0])) {
-      from.shift()
-      to.shift()
-    }
-    // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-    return `..${Translator.paths.sep}`.repeat(from.length) + to.join(Translator.paths.sep)
-  },
-}
-
-/*
- * h1 Global object: Translator
- *
- * The global Translator object allows access to the current configuration of the translator
- *
- * @param {enum} caseConversion whether titles should be title-cased and case-preserved
- * @param {boolean} bibtexURL set to true when BBT will generate \url{..} around the urls for BibTeX
- */
-
 /*
  * h1 class: Entry
  *
@@ -140,6 +106,15 @@ const enc_creators_marker = {
 }
 const isBibString = /^[a-z][-a-z0-9_]*$/i
 
+export type Config = {
+  fieldEncoding: Record<string, 'raw' | 'url' | 'verbatim' | 'creators' | 'literal' | 'latex' | 'tags' | 'attachments' | 'date'>
+  caseConversion: Record<string, boolean>
+  typeMap: {
+    csl: Record<string, string | { type: string, subtype?: string }>
+    zotero: Record<string, string | { type: string, subtype?: string }>
+  }
+}
+
 /*
  * The fields are objects with the following keys:
  *   * name: name of the Bib(La)TeX field
@@ -157,16 +132,13 @@ export class Entry {
   public english: boolean
   public date: ParsedDate | { type: 'none' }
 
-  // patched in by the Bib(La)TeX translators
-  public fieldEncoding: Record<string, 'raw' | 'url' | 'verbatim' | 'creators' | 'literal' | 'latex' | 'tags' | 'attachments' | 'date'>
-  public caseConversion: Record<string, boolean>
-  public typeMap: { csl: { [key: string]: string | { type: string, subtype?: string } }, zotero: { [key: string]: string | { type: string, subtype?: string } } }
-  public lint: Function
-  public addCreators: Function
+  public config: Config
 
   private inPostscript = false
   private quality_report: string[] = []
   private extraFields: ParsedExtraFields
+
+  protected addCreators() {} // eslint-disable-line @typescript-eslint/no-empty-function
 
   public static installPostscript(): void {
     try {
@@ -191,8 +163,13 @@ export class Entry {
   private packages: Record<string, boolean> = {}
   private juniorcomma: boolean
 
-  constructor(item) {
+  public lint(_explanation: Record<string, string>): string[] {
+    return []
+  }
+
+  constructor(item, config: Config) {
     this.item = item
+    this.config = config
     this.date = item.date ? Zotero.BetterBibTeX.parseDate(item.date) : { type: 'none' }
 
     if (!this.item.language) {
@@ -217,7 +194,7 @@ export class Entry {
 
     // preserve for thesis type etc
     let csl_type = this.item.extraFields.kv.type
-    if (!isPrePrint && this.typeMap.csl[csl_type]) {
+    if (!isPrePrint && config.typeMap.csl[csl_type]) {
       delete this.item.extraFields.kv.type
     }
     else {
@@ -238,7 +215,7 @@ export class Entry {
       delete this.item.extraFields.tex.referencetype
     }
     else if (csl_type) {
-      entrytype = this.typeMap.csl[csl_type]
+      entrytype = config.typeMap.csl[csl_type]
       this.entrytype_source = `csl.${csl_type}`
     }
     else if (isPrePrint) {
@@ -247,7 +224,7 @@ export class Entry {
       this.entrytype_source = `zotero.${this.item.itemType}`
     }
     else {
-      entrytype = this.typeMap.zotero[this.item.itemType] || 'misc'
+      entrytype = config.typeMap.zotero[this.item.itemType] || 'misc'
       this.entrytype_source = `zotero.${this.item.itemType}`
     }
 
@@ -360,7 +337,7 @@ export class Entry {
 
     if (Translator.skipField[field.name]) return null
 
-    field.enc = field.enc || this.fieldEncoding[field.name] || 'latex'
+    field.enc = field.enc || this.config.fieldEncoding[field.name] || 'latex'
 
     if (field.enc === 'date') {
       if (!field.value) return null
@@ -967,7 +944,7 @@ export class Entry {
 
     if (f.raw || options.raw) return f.value
 
-    const caseConversion = this.caseConversion[f.name] || f.caseConversion
+    const caseConversion = this.config.caseConversion[f.name] || f.caseConversion
     const latex = text2latex(f.value, {html: f.html, caseConversion: caseConversion && this.english, creator: options.creator})
     for (const pkg of latex.packages) {
       this.packages[pkg] = true
@@ -1022,6 +999,23 @@ export class Entry {
     return tags.map(tag => tag.tag).join(',')
   }
 
+  relPath(path) {
+    const normalize = p => Translator.paths.caseSensitive ? p : p.toLowerCase()
+    const drive = p => Translator.preferences.platform === 'win' && p.match(/^[a-z]:\//) ? p.substring(0, 2) : ''
+
+    if (drive(Translator.export.dir) !== drive(path)) return path
+
+    const from = Translator.export.dir.split(Translator.paths.sep)
+    const to = path.split(Translator.paths.sep)
+
+    while (from.length && to.length && normalize(from[0]) === normalize(to[0])) {
+      from.shift()
+      to.shift()
+    }
+    // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
+    return `..${Translator.paths.sep}`.repeat(from.length) + to.join(Translator.paths.sep)
+  }
+
   protected enc_attachments(f, modify?: (path: string) => string): string {
     if (!f.value || (f.value.length === 0)) return null
     const attachments: {title: string, mimetype: string, path: string}[] = []
@@ -1056,7 +1050,7 @@ export class Entry {
       if (!att.mimetype && (att.path.slice(-4).toLowerCase() === '.pdf')) att.mimetype = 'application/pdf' // eslint-disable-line no-magic-numbers
 
       if (Translator.preferences.relativeFilePaths && Translator.export.dir) {
-        const relative = Path.relative(att.path)
+        const relative = this.relPath(att.path)
         if (relative !== att.path) {
           this.item.$cacheable = false
           att.path = relative
