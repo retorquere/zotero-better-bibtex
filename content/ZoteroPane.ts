@@ -143,7 +143,7 @@ export class ZoteroPane {
       'tex.dateadded': 'dateAdded',
       'tex.date-added': 'dateAdded',
       'tex.datemodified': 'dateModified',
-      'tex.date-modified': 'dateModified'
+      'tex.date-modified': 'dateModified',
     }
     if (Preference.patchDates.trim()) {
       try {
