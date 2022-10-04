@@ -167,6 +167,9 @@ function parseToDate(value: string, as_single_date: boolean): ParsedDate {
 
   if (value === '') return { type: 'open' }
 
+  // https://github.com/retorquere/zotero-better-bibtex/issues/2275
+  if (m = /^(\d{4}-\d{2}-\d{2})T\d{2}:\d{2}:\d{2}/.exec(value)) value = m[1]
+
   // https://forums.zotero.org/discussion/73729/name-and-year-import-issues-with-new-nasa-ads#latest
   if (m = (/^(-?[0-9]+)-00-00$/.exec(value) || /^(-?[0-9]+)\/00\/00$/.exec(value) || /^(-?[0-9]+-[0-9]+)-00$/.exec(value))) return parseToDate(m[1], true)
 

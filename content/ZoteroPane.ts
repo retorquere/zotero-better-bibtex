@@ -139,7 +139,12 @@ export class ZoteroPane {
 
   public async patchDates(): Promise<void> {
     const items = Zotero.getActiveZoteroPane().getSelectedItems()
-    const mapping: Record<string, string> = { 'tex.dateadded': 'dateAdded', 'tex.datemodified': 'dateModified' }
+    const mapping: Record<string, string> = {
+      'tex.dateadded': 'dateAdded',
+      'tex.date-added': 'dateAdded',
+      'tex.datemodified': 'dateModified',
+      'tex.date-modified': 'dateModified'
+    }
     if (Preference.patchDates.trim()) {
       try {
         for (const assignment of Preference.patchDates.trim().split(/\s*,\s*/)) {
