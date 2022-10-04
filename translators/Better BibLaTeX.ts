@@ -3,211 +3,215 @@ declare const Zotero: any
 import { Translator } from './lib/translator'
 export { Translator }
 
-import { Entry } from './bibtex/entry'
+import { Entry as BaseEntry, Config } from './bibtex/entry'
 import { Exporter } from './bibtex/exporter'
-
-Entry.prototype.fieldEncoding = {
-  groups: 'verbatim', // blegh jabref field
-  url: 'url',
-  doi: 'verbatim',
-  eprint: 'verbatim',
-  eprintclass: 'verbatim',
-  crossref: 'raw',
-  xdata: 'raw',
-  xref: 'raw',
-  entrykey: 'raw',
-  childentrykey: 'raw',
-  verba: 'verbatim',
-  verbb: 'verbatim',
-  verbc: 'verbatim',
-  institution: 'literal',
-  publisher: 'literal',
-  origpublisher: 'literal',
-  organization: 'literal',
-  location: 'literal',
-  origlocation: 'literal',
-}
-Entry.prototype.caseConversion = {
-  title: true,
-  series: true,
-  shorttitle: true,
-  origtitle: true,
-  booktitle: true,
-  maintitle: true,
-  subtitle: true,
-  eventtitle: true,
-}
-
-Entry.prototype.lint = require('../submodules/biber/data/biber-tool.conf')
 
 type CreatorArray = any[] & { type?: string }
 
-Entry.prototype.addCreators = function() {
-  if (!this.item.creators || !this.item.creators.length) return
+const config: Config = {
+  fieldEncoding: {
+    groups: 'verbatim', // blegh jabref field
+    url: 'url',
+    doi: 'verbatim',
+    eprint: 'verbatim',
+    eprintclass: 'verbatim',
+    crossref: 'raw',
+    xdata: 'raw',
+    xref: 'raw',
+    entrykey: 'raw',
+    childentrykey: 'raw',
+    verba: 'verbatim',
+    verbb: 'verbatim',
+    verbc: 'verbatim',
+    institution: 'literal',
+    publisher: 'literal',
+    origpublisher: 'literal',
+    organization: 'literal',
+    location: 'literal',
+    origlocation: 'literal',
+  },
 
-  const creators: Record<string, CreatorArray> = {
-    author: [],
-    bookauthor: [],
-    commentator: [],
-    editor: [],
-    editora: [],
-    editorb: [],
-    holder: [],
-    translator: [],
-    // scriptwriter: [],
-    // director: [],
-  }
-  creators.editora.type = 'collaborator'
-  creators.editorb.type = 'redactor'
+  caseConversion: {
+    title: true,
+    series: true,
+    shorttitle: true,
+    origtitle: true,
+    booktitle: true,
+    maintitle: true,
+    subtitle: true,
+    eventtitle: true,
+  },
 
-  for (const creator of this.item.creators) {
-    switch (creator.creatorType) {
-      case 'director':
-        // 365.something
-        if (['video', 'movie'].includes(this.entrytype)) {
-          creators.editor.push(creator)
-          creators.editor.type = 'director'
-        }
-        else {
+  typeMap: {
+    csl: {
+      article               : 'article',
+      'article-journal'     : 'article',
+      'article-magazine'    : {type: 'article', subtype: 'magazine'},
+      'article-newspaper'   : {type: 'article', subtype: 'newspaper'},
+      bill                  : 'legislation',
+      book                  : 'book',
+      broadcast             : {type: 'misc', subtype: 'broadcast'},
+      chapter               : 'incollection',
+      data                  : 'dataset',
+      dataset               : 'dataset',
+      entry                 : 'inreference',
+      'entry-dictionary'    : 'inreference',
+      'entry-encyclopedia'  : 'inreference',
+      figure                : 'image',
+      graphic               : 'image',
+      interview             : {type: 'misc', subtype: 'interview'},
+      legal_case            : 'jurisdiction',
+      legislation           : 'legislation',
+      manuscript            : 'unpublished',
+      map                   : {type: 'misc', subtype: 'map'},
+      motion_picture        : 'movie',
+      musical_score         : 'audio',
+      pamphlet              : 'booklet',
+      'paper-conference'    : 'inproceedings',
+      patent                : 'patent',
+      personal_communication: 'letter',
+      post                  : 'online',
+      'post-weblog'         : 'online',
+      report                : 'report',
+      review                : 'review',
+      'review-book'         : 'review',
+      song                  : 'music',
+      speech                : {type: 'misc', subtype: 'speech'},
+      thesis                : 'thesis',
+      treaty                : 'legal',
+      webpage               : 'online',
+    },
+    zotero: {
+      artwork            : 'artwork',
+      audioRecording     : 'audio',
+      bill               : 'legislation',
+      blogPost           : 'online',
+      book               : 'book',
+      bookSection        : 'incollection',
+      case               : 'jurisdiction',
+      computerProgram    : 'software',
+      conferencePaper    : 'inproceedings',
+      dictionaryEntry    : 'inreference',
+      document           : 'misc',
+      email              : 'letter',
+      encyclopediaArticle: 'inreference',
+      film               : 'movie',
+      forumPost          : 'online',
+      gazette            : 'jurisdiction',
+      hearing            : 'jurisdiction',
+      instantMessage     : 'misc',
+      interview          : 'misc',
+      journalArticle     : 'article',
+      letter             : 'letter',
+      magazineArticle    : {type: 'article', subtype: 'magazine'},
+      manuscript         : 'unpublished',
+      map                : 'misc',
+      newspaperArticle   : {type: 'article', subtype: 'newspaper'},
+      patent             : 'patent',
+      podcast            : 'audio',
+      presentation       : 'unpublished',
+      radioBroadcast     : 'audio',
+      report             : 'report',
+      statute            : 'legislation',
+      thesis             : 'thesis',
+      tvBroadcast        : 'video',
+      videoRecording     : 'video',
+      webpage            : 'online',
+    },
+  },
+}
+
+class Entry extends BaseEntry {
+  public addCreators() {
+    if (!this.item.creators || !this.item.creators.length) return
+
+    const creators: Record<string, CreatorArray> = {
+      author: [],
+      bookauthor: [],
+      commentator: [],
+      editor: [],
+      editora: [],
+      editorb: [],
+      holder: [],
+      translator: [],
+      // scriptwriter: [],
+      // director: [],
+    }
+    creators.editora.type = 'collaborator'
+    creators.editorb.type = 'redactor'
+
+    for (const creator of this.item.creators) {
+      switch (creator.creatorType) {
+        case 'director':
+          // 365.something
+          if (['video', 'movie'].includes(this.entrytype)) {
+            creators.editor.push(creator)
+            creators.editor.type = 'director'
+          }
+          else {
+            creators.author.push(creator)
+          }
+          break
+
+        case 'author':
+        case 'inventor':
+        case 'interviewer':
+        case 'programmer':
+        case 'artist':
+        case 'podcaster':
+        case 'presenter':
           creators.author.push(creator)
-        }
-        break
+          break
 
-      case 'author':
-      case 'inventor':
-      case 'interviewer':
-      case 'programmer':
-      case 'artist':
-      case 'podcaster':
-      case 'presenter':
-        creators.author.push(creator)
-        break
+        case 'bookAuthor':
+          creators.bookauthor.push(creator)
+          break
 
-      case 'bookAuthor':
-        creators.bookauthor.push(creator)
-        break
+        case 'commenter':
+          creators.commentator.push(creator)
+          break
 
-      case 'commenter':
-        creators.commentator.push(creator)
-        break
+        case 'editor':
+          creators.editor.push(creator)
+          break
 
-      case 'editor':
-        creators.editor.push(creator)
-        break
+        case 'assignee':
+          creators.holder.push(creator)
+          break
 
-      case 'assignee':
-        creators.holder.push(creator)
-        break
+        case 'translator':
+          creators.translator.push(creator)
+          break
 
-      case 'translator':
-        creators.translator.push(creator)
-        break
+        case 'seriesEditor':
+          creators.editorb.push(creator)
+          break
 
-      case 'seriesEditor':
-        creators.editorb.push(creator)
-        break
+        case 'scriptwriter':
+          // 365.something
+          creators.editora.push(creator)
+          if (['video', 'movie'].includes(this.entrytype)) {
+            creators.editora.type = 'scriptwriter'
+          }
+          break
 
-      case 'scriptwriter':
-        // 365.something
-        creators.editora.push(creator)
-        if (['video', 'movie'].includes(this.entrytype)) {
-          creators.editora.type = 'scriptwriter'
-        }
-        break
+        default:
+          creators.editora.push(creator)
+      }
+    }
 
-      default:
-        creators.editora.push(creator)
+    for (const [field, value] of Object.entries(creators)) {
+      this.remove(field)
+      this.remove(`${field}type`)
+
+      if (!value.length) continue
+
+      this.add({ name: field, value, enc: 'creators' })
+      if (value.type) this.add({ name: `${field}type`, value: value.type })
     }
   }
-
-  for (const [field, value] of Object.entries(creators)) {
-    this.remove(field)
-    this.remove(`${field}type`)
-
-    if (!value.length) continue
-
-    this.add({ name: field, value, enc: 'creators' })
-    if (value.type) this.add({ name: `${field}type`, value: value.type })
-  }
 }
-
-Entry.prototype.typeMap = {
-  csl: {
-    article               : 'article',
-    'article-journal'     : 'article',
-    'article-magazine'    : {type: 'article', subtype: 'magazine'},
-    'article-newspaper'   : {type: 'article', subtype: 'newspaper'},
-    bill                  : 'legislation',
-    book                  : 'book',
-    broadcast             : {type: 'misc', subtype: 'broadcast'},
-    chapter               : 'incollection',
-    data                  : 'dataset',
-    dataset               : 'dataset',
-    entry                 : 'inreference',
-    'entry-dictionary'    : 'inreference',
-    'entry-encyclopedia'  : 'inreference',
-    figure                : 'image',
-    graphic               : 'image',
-    interview             : {type: 'misc', subtype: 'interview'},
-    legal_case            : 'jurisdiction',
-    legislation           : 'legislation',
-    manuscript            : 'unpublished',
-    map                   : {type: 'misc', subtype: 'map'},
-    motion_picture        : 'movie',
-    musical_score         : 'audio',
-    pamphlet              : 'booklet',
-    'paper-conference'    : 'inproceedings',
-    patent                : 'patent',
-    personal_communication: 'letter',
-    post                  : 'online',
-    'post-weblog'         : 'online',
-    report                : 'report',
-    review                : 'review',
-    'review-book'         : 'review',
-    song                  : 'music',
-    speech                : {type: 'misc', subtype: 'speech'},
-    thesis                : 'thesis',
-    treaty                : 'legal',
-    webpage               : 'online',
-  },
-  zotero: {
-    artwork            : 'artwork',
-    audioRecording     : 'audio',
-    bill               : 'legislation',
-    blogPost           : 'online',
-    book               : 'book',
-    bookSection        : 'incollection',
-    case               : 'jurisdiction',
-    computerProgram    : 'software',
-    conferencePaper    : 'inproceedings',
-    dictionaryEntry    : 'inreference',
-    document           : 'misc',
-    email              : 'letter',
-    encyclopediaArticle: 'inreference',
-    film               : 'movie',
-    forumPost          : 'online',
-    gazette            : 'jurisdiction',
-    hearing            : 'jurisdiction',
-    instantMessage     : 'misc',
-    interview          : 'misc',
-    journalArticle     : 'article',
-    letter             : 'letter',
-    magazineArticle    : {type: 'article', subtype: 'magazine'},
-    manuscript         : 'unpublished',
-    map                : 'misc',
-    newspaperArticle   : {type: 'article', subtype: 'newspaper'},
-    patent             : 'patent',
-    podcast            : 'audio',
-    presentation       : 'unpublished',
-    radioBroadcast     : 'audio',
-    report             : 'report',
-    statute            : 'legislation',
-    thesis             : 'thesis',
-    tvBroadcast        : 'video',
-    videoRecording     : 'video',
-    webpage            : 'online',
-  },
-}
+Entry.prototype.lint = require('../submodules/biber/data/biber-tool.conf')
 
 function looks_like_number(n): string | boolean {
   if (n.match(/^(?=[MDCLXVI])M*(C[MD]|D?C*)(X[CL]|L?X*)(I[XV]|V?I*)$/)) return 'roman'
@@ -288,7 +292,7 @@ export function doExport(): void {
   Zotero.write('\n')
 
   for (const item of Exporter.items) {
-    const entry = new Entry(item)
+    const entry = new Entry(item, config)
 
     if (entry.entrytype === 'incollection' && entry.hasCreator('bookAuthor')) entry.entrytype = 'inbook'
     // if (entry.entytype_source === 'csl.book' && !entry.hasCreator('author') && entry.hasCreator('editor')) entry.entytype = 'collection'
@@ -502,19 +506,9 @@ export function doExport(): void {
 
     if (item.accessDate && item.url) entry.add({ name: 'urldate', value: Zotero.BetterBibTeX.strToISO(item.accessDate), enc: 'date' })
 
-    entry.add({
-      name: 'date',
-      verbatim: 'year',
-      orig: { name: 'origdate', verbatim: 'origdate' },
-      value: item.date,
-      enc: 'date',
-    })
-    entry.add({
-      name: 'origdate',
-      value: item.originalDate,
-      enc: 'date',
-      replace: true, // #293 has both date="year [origyear]" and extra="original-date: origyear"
-    })
+    entry.add({ name: 'date', verbatim: 'year', orig: { name: 'origdate', verbatim: 'origdate' }, value: item.date, enc: 'date' })
+    // #293 has both date="year [origyear]" and extra="original-date: origyear"
+    entry.add({ name: 'origdate', value: item.originalDate, enc: 'date', replace: true })
     entry.add({ name: 'eventdate', value: item.conferenceDate, enc: 'date' })
 
     entry.add({ name: 'pages', value: entry.normalizeDashes(item.pages) })

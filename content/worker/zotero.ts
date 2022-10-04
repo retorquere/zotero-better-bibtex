@@ -419,7 +419,7 @@ class WorkerZotero {
     }
   }
   public logError(err) {
-    dump(`worker: error=${err}\n`)
+    dump(`worker: error: ${err}\n`)
     this.send({ kind: 'error', message: `${err}\n${err.stack}` })
   }
 

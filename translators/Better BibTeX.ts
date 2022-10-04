@@ -13,7 +13,7 @@ import wordsToNumbers from 'words-to-numbers'
 import { Translator } from './lib/translator'
 export { Translator }
 
-import { Entry } from './bibtex/entry'
+import { Entry as BaseEntry, Config } from './bibtex/entry'
 import { Exporter } from './bibtex/exporter'
 import * as escape from '../content/escape'
 
@@ -23,226 +23,233 @@ import { arXiv } from '../content/arXiv'
 
 import { babelLanguage } from '../content/text'
 
-Entry.prototype.caseConversion = {
-  title: true,
-  series: true,
-  shorttitle: true,
-  booktitle: true,
-  type: true,
+const config: Config = {
+  caseConversion: {
+    title: true,
+    series: true,
+    shorttitle: true,
+    booktitle: true,
+    type: true,
 
-  // only for imports
-  origtitle: true,
-  maintitle: true,
-  eventtitle: true,
+    // only for imports
+    origtitle: true,
+    maintitle: true,
+    eventtitle: true,
+  },
+
+  fieldEncoding: {
+    groups: 'verbatim', // blegh jabref field
+    url: 'verbatim',
+    doi: 'verbatim',
+    // school: 'literal'
+    institution: 'literal',
+    publisher: 'literal',
+    organization: 'literal',
+    address: 'literal',
+  },
+
+  typeMap: {
+    csl: {
+      article               : 'article',
+      'article-journal'     : 'article',
+      'article-magazine'    : 'article',
+      'article-newspaper'   : 'article',
+      bill                  : 'misc',
+      book                  : 'book',
+      broadcast             : 'misc',
+      chapter               : 'incollection',
+      dataset               : 'misc',
+      entry                 : 'incollection',
+      'entry-dictionary'    : 'incollection',
+      'entry-encyclopedia'  : 'incollection',
+      figure                : 'misc',
+      graphic               : 'misc',
+      interview             : 'misc',
+      legal_case            : 'misc',
+      legislation           : 'misc',
+      manuscript            : 'unpublished',
+      map                   : 'misc',
+      motion_picture        : 'misc',
+      musical_score         : 'misc',
+      pamphlet              : 'booklet',
+      'paper-conference'    : 'inproceedings',
+      patent                : 'misc',
+      personal_communication: 'misc',
+      post                  : 'misc',
+      'post-weblog'         : 'misc',
+      report                : 'techreport',
+      review                : 'article',
+      'review-book'         : 'article',
+      song                  : 'misc',
+      speech                : 'misc',
+      thesis                : 'phdthesis',
+      treaty                : 'misc',
+      webpage               : 'misc',
+    },
+    zotero: {
+      artwork         : 'misc',
+      audioRecording  : 'misc',
+      bill            : 'misc',
+      blogPost        : 'misc',
+      book            : 'book',
+      bookSection     : 'incollection',
+      case            : 'misc',
+      computerProgram : 'misc',
+      conferencePaper : 'inproceedings',
+      dictionaryEntry : 'misc',
+      document        : 'misc',
+      email           : 'misc',
+      encyclopediaArticle:  'article',
+      film            : 'misc',
+      forumPost       : 'misc',
+      hearing         : 'misc',
+      instantMessage  : 'misc',
+      interview       : 'misc',
+      journalArticle  : 'article',
+      letter          : 'misc',
+      magazineArticle : 'article',
+      manuscript      : 'unpublished',
+      map             : 'misc',
+      newspaperArticle: 'article',
+      patent          : 'patent',
+      podcast         : 'misc',
+      presentation    : 'misc',
+      radioBroadcast  : 'misc',
+      report          : 'techreport',
+      statute         : 'misc',
+      thesis          : 'phdthesis',
+      tvBroadcast     : 'misc',
+      videoRecording  : 'misc',
+      webpage         : 'misc',
+    },
+  },
 }
 
-Entry.prototype.fieldEncoding = {
-  groups: 'verbatim', // blegh jabref field
-  url: 'verbatim',
-  doi: 'verbatim',
-  // school: 'literal'
-  institution: 'literal',
-  publisher: 'literal',
-  organization: 'literal',
-  address: 'literal',
-}
-
-const lint: Record<string, {required: string[], optional: string[]}> = {
-  article: {
-    required: [ 'author', 'title', 'journal', 'year' ],
-    optional: [ 'volume', 'number', 'pages', 'month', 'note', 'key' ],
-  },
-  book: {
-    required: ['author/editor', 'title', 'publisher', 'year' ],
-    optional: [ 'volume/number', 'series', 'address', 'edition', 'month', 'note', 'key' ],
-  },
-  booklet: {
-    required: [ 'title' ],
-    optional: [ 'author', 'howpublished', 'address', 'month', 'year', 'note', 'key' ],
-  },
-  inbook: {
-    required: [ 'author/editor', 'title', 'chapter/pages', 'publisher', 'year' ],
-    optional: [ 'volume/number', 'series', 'type', 'address', 'edition', 'month', 'note', 'key' ],
-  },
-  incollection: {
-    required: [ 'author', 'title', 'booktitle', 'publisher', 'year' ],
-    optional:  [ 'editor', 'volume/number', 'series', 'type', 'chapter', 'pages', 'address', 'edition', 'month', 'note', 'key' ],
-  },
-  inproceedings: {
-    required: [ 'author', 'title', 'booktitle', 'year' ],
-    optional: [ 'editor', 'volume/number', 'series', 'pages', 'address', 'month', 'organization', 'publisher', 'note', 'key' ],
-  },
-  manual: {
-    required: [ 'title' ],
-    optional: [ 'author', 'organization', 'address', 'edition', 'month', 'year', 'note', 'key' ],
-  },
-  mastersthesis: {
-    required: [ 'author', 'title', 'school', 'year' ],
-    optional: [ 'type', 'address', 'month', 'note', 'key' ],
-  },
-  misc: {
-    required: [],
-    optional: [ 'author', 'title', 'howpublished', 'month', 'year', 'note', 'key' ],
-  },
-  phdthesis: {
-    required: [ 'author', 'title', 'school', 'year' ],
-    optional: [ 'type', 'address', 'month', 'note', 'key' ],
-  },
-  proceedings: {
-    required: ['title', 'year' ],
-    optional: [ 'editor', 'volume/number', 'series', 'address', 'month', 'organization', 'publisher', 'note', 'key' ],
-  },
-  techreport: {
-    required: [ 'author', 'title', 'institution', 'year' ],
-    optional: [ 'type', 'number', 'address', 'month', 'note', 'key' ],
-  },
-  unpublished: {
-    required: [ 'author', 'title', 'note' ],
-    optional: [ 'month', 'year', 'key' ],
-  },
-}
-lint.conference = lint.inproceedings
-
-Entry.prototype.lint = function(_explanation) {
-  const type = lint[this.entrytype.toLowerCase()]
-  if (!type) return
-
-  // let fields = Object.keys(this.has)
-  const warnings: string[] = []
-
-  for (const required of type.required) {
-    const match = required.split('/').find(field => this.has[field])
-    if (match) {
-      // fields = fields.filter(field => field !== match)
-    }
-    else {
-      warnings.push(`Missing required field '${required}'`)
-    }
+class Entry extends BaseEntry {
+  private lintrules: Record<string, {required: string[], optional: string[]}> = {
+    article: {
+      required: [ 'author', 'title', 'journal', 'year' ],
+      optional: [ 'volume', 'number', 'pages', 'month', 'note', 'key' ],
+    },
+    book: {
+      required: ['author/editor', 'title', 'publisher', 'year' ],
+      optional: [ 'volume/number', 'series', 'address', 'edition', 'month', 'note', 'key' ],
+    },
+    booklet: {
+      required: [ 'title' ],
+      optional: [ 'author', 'howpublished', 'address', 'month', 'year', 'note', 'key' ],
+    },
+    conference: {
+      required: [ 'author', 'title', 'booktitle', 'year' ],
+      optional: [ 'editor', 'volume/number', 'series', 'pages', 'address', 'month', 'organization', 'publisher', 'note', 'key' ],
+    },
+    inbook: {
+      required: [ 'author/editor', 'title', 'chapter/pages', 'publisher', 'year' ],
+      optional: [ 'volume/number', 'series', 'type', 'address', 'edition', 'month', 'note', 'key' ],
+    },
+    incollection: {
+      required: [ 'author', 'title', 'booktitle', 'publisher', 'year' ],
+      optional:  [ 'editor', 'volume/number', 'series', 'type', 'chapter', 'pages', 'address', 'edition', 'month', 'note', 'key' ],
+    },
+    inproceedings: {
+      required: [ 'author', 'title', 'booktitle', 'year' ],
+      optional: [ 'editor', 'volume/number', 'series', 'pages', 'address', 'month', 'organization', 'publisher', 'note', 'key' ],
+    },
+    manual: {
+      required: [ 'title' ],
+      optional: [ 'author', 'organization', 'address', 'edition', 'month', 'year', 'note', 'key' ],
+    },
+    mastersthesis: {
+      required: [ 'author', 'title', 'school', 'year' ],
+      optional: [ 'type', 'address', 'month', 'note', 'key' ],
+    },
+    misc: {
+      required: [],
+      optional: [ 'author', 'title', 'howpublished', 'month', 'year', 'note', 'key' ],
+    },
+    phdthesis: {
+      required: [ 'author', 'title', 'school', 'year' ],
+      optional: [ 'type', 'address', 'month', 'note', 'key' ],
+    },
+    proceedings: {
+      required: ['title', 'year' ],
+      optional: [ 'editor', 'volume/number', 'series', 'address', 'month', 'organization', 'publisher', 'note', 'key' ],
+    },
+    techreport: {
+      required: [ 'author', 'title', 'institution', 'year' ],
+      optional: [ 'type', 'number', 'address', 'month', 'note', 'key' ],
+    },
+    unpublished: {
+      required: [ 'author', 'title', 'note' ],
+      optional: [ 'month', 'year', 'key' ],
+    },
   }
 
-  // bibtex is so incredibly lax, forget about optionals-checking
-  /*
-  for (const field of fields) {
-    if (!type.optional.find(allowed => allowed.split('/').includes(field))) warnings.push(`Unexpected field '${field}'`)
-  }
-  */
+  public lint(_explanation) {
+    const type = this.lintrules[this.entrytype.toLowerCase()]
+    if (!type) return
 
-  return warnings
-}
+    // let fields = Object.keys(this.has)
+    const warnings: string[] = []
 
-Entry.prototype.addCreators = function() {
-  if (!this.item.creators || !this.item.creators.length) return
-
-  // split creators into subcategories
-  const authors = []
-  const editors = []
-  const translators = []
-  const collaborators = []
-  const primaryCreatorType = Zotero.Utilities.getCreatorsForType(this.item.itemType)[0]
-
-  for (const creator of this.item.creators) {
-    switch (creator.creatorType) {
-      case 'editor':
-      case 'seriesEditor':
-        editors.push(creator)
-        break
-      case 'translator':
-        translators.push(creator)
-        break
-      case primaryCreatorType:
-        authors.push(creator)
-        break
-      default:
-        collaborators.push(creator)
-        break
+    for (const required of type.required) {
+      const match = required.split('/').find(field => this.has[field])
+      if (match) {
+        // fields = fields.filter(field => field !== match)
+      }
+      else {
+        warnings.push(`Missing required field '${required}'`)
+      }
     }
+
+    // bibtex is so incredibly lax, forget about optionals-checking
+    /*
+    for (const field of fields) {
+      if (!type.optional.find(allowed => allowed.split('/').includes(field))) warnings.push(`Unexpected field '${field}'`)
+    }
+    */
+
+    return warnings
   }
 
-  this.remove('author')
-  this.remove('editor')
-  this.remove('translator')
-  this.remove('collaborator')
+  public addCreators() {
+    if (!this.item.creators || !this.item.creators.length) return
 
-  this.add({ name: 'author', value: authors, enc: 'creators' })
-  this.add({ name: 'editor', value: editors, enc: 'creators' })
-  this.add({ name: 'translator', value: translators, enc: 'creators' })
-  this.add({ name: 'collaborator', value: collaborators, enc: 'creators' })
-}
+    // split creators into subcategories
+    const authors = []
+    const editors = []
+    const translators = []
+    const collaborators = []
+    const primaryCreatorType = Zotero.Utilities.getCreatorsForType(this.item.itemType)[0]
 
-Entry.prototype.typeMap = {
-  csl: {
-    article               : 'article',
-    'article-journal'     : 'article',
-    'article-magazine'    : 'article',
-    'article-newspaper'   : 'article',
-    bill                  : 'misc',
-    book                  : 'book',
-    broadcast             : 'misc',
-    chapter               : 'incollection',
-    dataset               : 'misc',
-    entry                 : 'incollection',
-    'entry-dictionary'    : 'incollection',
-    'entry-encyclopedia'  : 'incollection',
-    figure                : 'misc',
-    graphic               : 'misc',
-    interview             : 'misc',
-    legal_case            : 'misc',
-    legislation           : 'misc',
-    manuscript            : 'unpublished',
-    map                   : 'misc',
-    motion_picture        : 'misc',
-    musical_score         : 'misc',
-    pamphlet              : 'booklet',
-    'paper-conference'    : 'inproceedings',
-    patent                : 'misc',
-    personal_communication: 'misc',
-    post                  : 'misc',
-    'post-weblog'         : 'misc',
-    report                : 'techreport',
-    review                : 'article',
-    'review-book'         : 'article',
-    song                  : 'misc',
-    speech                : 'misc',
-    thesis                : 'phdthesis',
-    treaty                : 'misc',
-    webpage               : 'misc',
-  },
-  zotero: {
-    artwork         : 'misc',
-    audioRecording  : 'misc',
-    bill            : 'misc',
-    blogPost        : 'misc',
-    book            : 'book',
-    bookSection     : 'incollection',
-    case            : 'misc',
-    computerProgram : 'misc',
-    conferencePaper : 'inproceedings',
-    dictionaryEntry : 'misc',
-    document        : 'misc',
-    email           : 'misc',
-    encyclopediaArticle:  'article',
-    film            : 'misc',
-    forumPost       : 'misc',
-    hearing         : 'misc',
-    instantMessage  : 'misc',
-    interview       : 'misc',
-    journalArticle  : 'article',
-    letter          : 'misc',
-    magazineArticle : 'article',
-    manuscript      : 'unpublished',
-    map             : 'misc',
-    newspaperArticle: 'article',
-    patent          : 'patent',
-    podcast         : 'misc',
-    presentation    : 'misc',
-    radioBroadcast  : 'misc',
-    report          : 'techreport',
-    statute         : 'misc',
-    thesis          : 'phdthesis',
-    tvBroadcast     : 'misc',
-    videoRecording  : 'misc',
-    webpage         : 'misc',
-  },
+    for (const creator of this.item.creators) {
+      switch (creator.creatorType) {
+        case 'editor':
+        case 'seriesEditor':
+          editors.push(creator)
+          break
+        case 'translator':
+          translators.push(creator)
+          break
+        case primaryCreatorType:
+          authors.push(creator)
+          break
+        default:
+          collaborators.push(creator)
+          break
+      }
+    }
+
+    this.remove('author')
+    this.remove('editor')
+    this.remove('translator')
+    this.remove('collaborator')
+
+    this.add({ name: 'author', value: authors, enc: 'creators' })
+    this.add({ name: 'editor', value: editors, enc: 'creators' })
+    this.add({ name: 'translator', value: translators, enc: 'creators' })
+    this.add({ name: 'collaborator', value: collaborators, enc: 'creators' })
+  }
 }
 
 const months = [ 'jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec' ]
@@ -256,7 +263,7 @@ export function doExport(): void {
   Zotero.write('\n')
 
   for (const item of Exporter.items) {
-    const ref = new Entry(item)
+    const ref = new Entry(item, config)
     if (item.itemType === 'report' && item.type?.toLowerCase().includes('manual')) ref.entrytype = 'manual'
     if (['zotero.bookSection', 'csl.chapter', 'tex.chapter'].includes(ref.entrytype_source) && ref.hasCreator('bookAuthor')) ref.entrytype = 'inbook'
 
@@ -434,7 +441,7 @@ function importGroup(group, itemIDs, root = null) {
 class ZoteroItem {
   protected item: any
 
-  private typeMap = {
+  public typeMap = {
     article:            'journalArticle',
     book:               'book',
     book_section:       'bookSection', // mendeley made-up entry type
