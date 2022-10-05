@@ -151,7 +151,6 @@ export class ZoteroPane {
       return
     }
 
-    const tzdiff = (new Date).getTimezoneOffset()
     for (const item of items) {
       let save = false
       try {
@@ -161,16 +160,10 @@ export class ZoteroPane {
             const date = DateParser.parse(v.value)
             if (date.type === 'date' && date.day) {
               delete extra.extraFields.tex[k]
-              const timestamp = new Date()
-              timestamp.setUTCFullYear(date.year)
-              timestamp.setUTCMonth(date.month - 1)
-              timestamp.setUTCDate(date.day - 1)
-              timestamp.setUTCMilliseconds(0)
-              timestamp.setUTCMinutes(0)
-              timestamp.setUTCMonth(0)
-              timestamp.setUTCSeconds(0)
-              timestamp.setUTCHours(tzdiff)
-              item.setField(mapping[k], timestamp.toISOString().replace('Z', ''))
+              const year = `${date.year}`.padStart(4, '0') // eslint-disable-line no-magic-numbers
+              const month = `${date.month}`.padStart(2, '0')
+              const day = `${date.day}`.padStart(2, '0')
+              item.setField(mapping[k], `${year}-${month}-${day}`)
               save = true
             }
           }
