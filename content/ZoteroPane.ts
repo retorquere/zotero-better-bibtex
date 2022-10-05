@@ -161,7 +161,16 @@ export class ZoteroPane {
             const date = DateParser.parse(v.value)
             if (date.type === 'date' && date.day) {
               delete extra.extraFields.tex[k]
-              item.setField(mapping[k], new Date(date.year, date.month - 1, date.day, 0, -tzdiff).toISOString())
+              const timestamp = new Date()
+              timestamp.setUTCFullYear(date.year)
+              timestamp.setUTCMonth(date.month - 1)
+              timestamp.setUTCDate(date.day - 1)
+              timestamp.setUTCMilliseconds(0)
+              timestamp.setUTCMinutes(0)
+              timestamp.setUTCMonth(0)
+              timestamp.setUTCSeconds(0)
+              timestamp.setUTCHours(tzdiff)
+              item.setField(mapping[k], timestamp.toISOString().replace('Z', ''))
               save = true
             }
           }
