@@ -199,8 +199,6 @@ export class ITranslation { // eslint-disable-line @typescript-eslint/naming-con
 
   public and: { list: { re: any, repl: string }, names: { re: any, repl: string } }
 
-  public initialized = false
-
   constructor() {
     const collator = new Intl.Collator('en')
     this.stringCompare = (collator.compare.bind(collator) as (left: string, right: string) => number)
@@ -259,20 +257,6 @@ export class ITranslation { // eslint-disable-line @typescript-eslint/naming-con
       }
     }
 
-    // special handling
-    if (mode === 'export') {
-      this.cache = {
-        hits: 0,
-        requests: 0,
-      }
-      this.export = {
-        dir: (Zotero.getOption('exportDir') as string),
-        path: (Zotero.getOption('exportPath') as string),
-      }
-      if (this.export.dir?.endsWith(this.paths.sep)) this.export.dir = this.export.dir.slice(0, -1)
-      this.options.cacheUse = Zotero.getOption('cacheUse')
-    }
-
     this.preferences = Object.entries(defaults).reduce((acc, [pref, dflt]) => {
       acc[pref] = this.getPreferenceOverride(pref) ?? Zotero.getHiddenPref(`better-bibtex.${pref}`) ?? dflt
       return acc
@@ -302,7 +286,20 @@ export class ITranslation { // eslint-disable-line @typescript-eslint/naming-con
 
     this.preferences.testing = (Zotero.getHiddenPref('better-bibtex.testing') as boolean)
 
+    this.collections = {}
+
     if (mode === 'export') {
+      this.cache = {
+        hits: 0,
+        requests: 0,
+      }
+      this.export = {
+        dir: (Zotero.getOption('exportDir') as string),
+        path: (Zotero.getOption('exportPath') as string),
+      }
+      if (this.export.dir?.endsWith(this.paths.sep)) this.export.dir = this.export.dir.slice(0, -1)
+      this.options.cacheUse = Zotero.getOption('cacheUse')
+
       this.unicode = !this.preferences[`ascii${ZOTERO_TRANSLATOR_INFO.label.replace(/Better /, '')}`]
 
       if (this.preferences.baseAttachmentPath && (this.export.dir === this.preferences.baseAttachmentPath || this.export.dir?.startsWith(this.preferences.baseAttachmentPath + this.paths.sep))) {
@@ -335,33 +332,30 @@ export class ITranslation { // eslint-disable-line @typescript-eslint/naming-con
         this.preferences.separatorList = ` ${this.preferences.separatorList} `
         this.preferences.separatorNames = ` ${this.preferences.separatorNames} `
       }
-    }
 
-    this.collections = {}
-    if (mode === 'export' && ZOTERO_TRANSLATOR_INFO.configOptions?.getCollections && Zotero.nextCollection) {
-      let collection: any
-      while (collection = Zotero.nextCollection()) {
-        this.registerCollection(collection, '')
+      if (ZOTERO_TRANSLATOR_INFO.configOptions?.getCollections && Zotero.nextCollection) {
+        let collection: any
+        while (collection = Zotero.nextCollection()) {
+          this.registerCollection(collection, '')
+        }
+      }
+
+      if (this.preferences.testing && typeof __estrace === 'undefined' && schema.translator[ZOTERO_TRANSLATOR_INFO.label]?.cache) {
+        const ignored = ['testing']
+        this.preferences = new Proxy(this.preferences, {
+          set: (object, property, _value) => {
+            throw new TypeError(`Unexpected set of preference ${String(property)}`)
+          },
+          get: (object, property: PreferenceName) => {
+            // JSON.stringify will attempt to get this
+            if (property as unknown as string === 'toJSON') return object[property]
+            if (!preferences.includes(property)) throw new TypeError(`Unsupported preference ${property}`)
+            if (!ignored.includes(property) && !affects[property]?.includes(ZOTERO_TRANSLATOR_INFO.label)) throw new TypeError(`Preference ${property} claims not to affect ${ZOTERO_TRANSLATOR_INFO.label}`)
+            return object[property] // eslint-disable-line @typescript-eslint/no-unsafe-return
+          },
+        })
       }
     }
-
-    if (!this.initialized && mode === 'export' && this.preferences.testing && typeof __estrace === 'undefined' && schema.translator[ZOTERO_TRANSLATOR_INFO.label]?.cache) {
-      const ignored = ['testing']
-      this.preferences = new Proxy(this.preferences, {
-        set: (object, property, _value) => {
-          throw new TypeError(`Unexpected set of preference ${String(property)}`)
-        },
-        get: (object, property: PreferenceName) => {
-          // JSON.stringify will attempt to get this
-          if (property as unknown as string === 'toJSON') return object[property]
-          if (!preferences.includes(property)) throw new TypeError(`Unsupported preference ${property}`)
-          if (!ignored.includes(property) && !affects[property]?.includes(ZOTERO_TRANSLATOR_INFO.label)) throw new TypeError(`Preference ${property} claims not to affect ${ZOTERO_TRANSLATOR_INFO.label}`)
-          return object[property] // eslint-disable-line @typescript-eslint/no-unsafe-return
-        },
-      })
-    }
-
-    this.initialized = true
   }
 
   getPreferenceOverride(pref) { // eslint-disable-line @typescript-eslint/explicit-module-boundary-types
