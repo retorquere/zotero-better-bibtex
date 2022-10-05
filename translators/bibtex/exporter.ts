@@ -1,6 +1,6 @@
 declare const Zotero: any
 
-import { Translator } from '../lib/translator'
+import { Translation } from '../lib/translator'
 import { RegularItem } from '../../gen/typings/serialized-item'
 import { Cache } from '../../typings/cache'
 
@@ -23,10 +23,10 @@ export const Exporter = new class {
   }
 
   public prepare_strings() {
-    if (!Translator.BetterTeX || !Translator.preferences.strings) return
+    if (!Translation.BetterTeX || !Translation.preferences.strings) return
 
-    if (Translator.BetterTeX && Translator.preferences.exportBibTeXStrings.startsWith('match')) {
-      this.strings = bibtexParser.parse(Translator.preferences.strings, { markup: (Translator.csquotes ? { enquote: Translator.csquotes } : {}) }).strings
+    if (Translation.BetterTeX && Translation.preferences.exportBibTeXStrings.startsWith('match')) {
+      this.strings = bibtexParser.parse(Translation.preferences.strings, { markup: (Translation.csquotes ? { enquote: Translation.csquotes } : {}) }).strings
       for (const [k, v] of Object.entries(this.strings)) {
         this.strings_reverse[v.toUpperCase()] = k.toUpperCase()
       }
@@ -46,9 +46,9 @@ export const Exporter = new class {
   }
 
   private *itemsGenerator(): Generator<RegularItem, void, unknown> {
-    if (!this.postfix && Translator.BetterTeX) this.postfix = new Postfix(Translator.preferences.qualityReport)
+    if (!this.postfix && Translation.BetterTeX) this.postfix = new Postfix(Translation.preferences.qualityReport)
 
-    for (const item of Translator.regularitems) {
+    for (const item of Translation.regularitems) {
       Object.assign(item, Extra.get(item.extra, 'zotero'))
       if (typeof item.itemID !== 'number') { // https://github.com/diegodlh/zotero-cita/issues/145
         item.citationKey = item.extraFields.citationKey
@@ -61,10 +61,10 @@ export const Exporter = new class {
       this.jabref.citekeys.set(item.itemID, item.citationKey)
 
       let cached: Cache.ExportedItem = null
-      if (item.$cacheable && Translator.BetterTeX) {
-        Translator.cache.requests++
-        if (cached = Zotero.BetterBibTeX.cacheFetch(item.itemID, Translator.options, Translator.preferences)) {
-          Translator.cache.hits += 100
+      if (item.$cacheable && Translation.BetterTeX) {
+        Translation.cache.requests++
+        if (cached = Zotero.BetterBibTeX.cacheFetch(item.itemID, Translation.options, Translation.preferences)) {
+          Translation.cache.hits += 100
           Zotero.write(cached.entry)
           this.postfix?.add(cached.metadata)
           continue
@@ -74,7 +74,7 @@ export const Exporter = new class {
       simplifyForExport(item)
 
       // strip extra.tex fields that are not for me
-      const prefix = Translator.BetterBibLaTeX ? 'biblatex.' : 'bibtex.'
+      const prefix = Translation.BetterBibLaTeX ? 'biblatex.' : 'bibtex.'
       for (const [name, field] of Object.entries(item.extraFields.tex).sort((a, b) => b[0].localeCompare(a[0]))) { // sorts the fields from tex. to biblatex. to bibtex.
         for (const type of [ prefix, 'tex.' ]) {
           if (name.startsWith(type)) {
@@ -86,9 +86,9 @@ export const Exporter = new class {
         delete item.extraFields.tex[name]
       }
 
-      item.raw = Translator.BetterTeX && Translator.preferences.rawLaTag === '*'
+      item.raw = Translation.BetterTeX && Translation.preferences.rawLaTag === '*'
       item.tags = item.tags.filter(tag => {
-        if (Translator.BetterTeX && tag.tag === Translator.preferences.rawLaTag) {
+        if (Translation.BetterTeX && tag.tag === Translation.preferences.rawLaTag) {
           item.raw = true
           return false
         }
@@ -102,7 +102,7 @@ export const Exporter = new class {
   public complete() {
     this.jabref.exportGroups()
     if (this.postfix) Zotero.write(this.postfix.toString())
-    if (Translator.BetterTeX && Translator.preferences.qualityReport) {
+    if (Translation.BetterTeX && Translation.preferences.qualityReport) {
       let sep = '\n% == Citekey duplicates in this file:\n'
       for (const [citekey, n] of Object.entries(this.citekeys).sort((a, b) => a[0].localeCompare(b[0]))) {
         if (n > 1) {
@@ -111,9 +111,9 @@ export const Exporter = new class {
         }
       }
     }
-    if (Translator.BetterTeX && Translator.options.cacheUse) {
-      if (Translator.cache.requests) {
-        Zotero.write(`\n% cache use: ${Math.round(Translator.cache.hits/Translator.cache.requests)}%`)
+    if (Translation.BetterTeX && Translation.options.cacheUse) {
+      if (Translation.cache.requests) {
+        Zotero.write(`\n% cache use: ${Math.round(Translation.cache.hits/Translation.cache.requests)}%`)
       }
       else {
         Zotero.write('\n% cache use: no')

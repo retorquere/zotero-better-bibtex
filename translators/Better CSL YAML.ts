@@ -3,9 +3,9 @@ declare const Zotero: any
 import YAML = require('js-yaml')
 import { Date as CSLDate, Data as CSLItem, LooseNumber } from 'csl-json'
 
-import { Translator } from './lib/translator'
+import { Translation } from './lib/translator'
 import type { MarkupNode } from '../typings/markup'
-export { Translator }
+export { Translation as Translator }
 
 import { CSLExporter } from './csl/csl'
 import { log } from '../content/logger'
@@ -166,7 +166,7 @@ class Exporter extends CSLExporter {
 }
 
 export function doExport(): void {
-  Translator.init('export')
+  Translation.init('export')
   const exporter = new Exporter
   exporter.initialize()
   exporter.doExport()

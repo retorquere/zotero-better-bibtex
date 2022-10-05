@@ -1,8 +1,8 @@
 declare const Zotero: any
 
-import { Translator } from './lib/translator'
+import { Translation } from './lib/translator'
 import type { TranslatorHeader } from './lib/translator'
-export { Translator }
+export { Translation as Translator }
 
 declare var ZOTERO_TRANSLATOR_INFO: TranslatorHeader // eslint-disable-line no-var
 
@@ -36,7 +36,7 @@ export function detectImport(): boolean {
 }
 
 export async function doImport(): Promise<void> {
-  Translator.init('import')
+  Translation.init('import')
 
   let str
   let json = ''
@@ -126,41 +126,41 @@ export async function doImport(): Promise<void> {
 }
 
 export function doExport(): void {
-  Translator.init('export')
+  Translation.init('export')
 
   let item
   const data = {
     config: {
       id: ZOTERO_TRANSLATOR_INFO.translatorID,
       label: ZOTERO_TRANSLATOR_INFO.label,
-      preferences: Translator.preferences,
-      options: Translator.options,
+      preferences: Translation.preferences,
+      options: Translation.options,
     },
     version: {
       zotero: Zotero.Utilities.getVersion(),
       bbt: version,
     },
-    collections: Translator.collections,
+    collections: Translation.collections,
     items: [],
   }
 
   const validAttachmentFields = new Set([ 'relations', 'uri', 'itemType', 'title', 'path', 'tags', 'dateAdded', 'dateModified', 'seeAlso', 'mimeType' ])
 
   while ((item = Zotero.nextItem())) {
-    if (Translator.options.dropAttachments && item.itemType === 'attachment') continue
+    if (Translation.options.dropAttachments && item.itemType === 'attachment') continue
 
-    if (!Translator.preferences.testing) {
+    if (!Translation.preferences.testing) {
       const [ , kind, lib, key ] = item.uri.match(/^https?:\/\/zotero\.org\/(users|groups)\/((?:local\/)?[^/]+)\/items\/(.+)/)
       item.select = (kind === 'users') ? `zotero://select/library/items/${key}` : `zotero://select/groups/${lib}/items/${key}`
     }
 
     delete item.collections
 
-    simplifyForExport(item, { dropAttachments: Translator.options.dropAttachments})
+    simplifyForExport(item, { dropAttachments: Translation.options.dropAttachments})
     item.relations = item.relations ? (item.relations['dc:relation'] || []) : []
 
     for (const att of item.attachments || []) {
-      if (Translator.options.exportFileData && att.saveFile && att.defaultPath) {
+      if (Translation.options.exportFileData && att.saveFile && att.defaultPath) {
         att.saveFile(att.defaultPath, true)
         att.path = att.defaultPath
       }
@@ -168,7 +168,7 @@ export function doExport(): void {
         att.path = att.localPath
       }
 
-      if (!Translator.preferences.testing) {
+      if (!Translation.preferences.testing) {
         const [ , kind, lib, key ] = att.uri.match(/^https?:\/\/zotero\.org\/(users|groups)\/((?:local\/)?[^/]+)\/items\/(.+)/)
         att.select = (kind === 'users') ? `zotero://select/library/items/${key}` : `zotero://select/groups/${lib}/items/${key}`
       }
@@ -186,7 +186,7 @@ export function doExport(): void {
     data.items.push(item)
   }
 
-  if (Translator.preferences.testing) normalize(data)
+  if (Translation.preferences.testing) normalize(data)
 
   Zotero.write(stringify(data, null, '  '))
 }

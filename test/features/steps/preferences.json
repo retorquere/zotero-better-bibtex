@@ -587,7 +587,7 @@
   {
     "name": "patchDates",
     "type": "string",
-    "default": "",
+    "default": "dateadded=dateAdded, date-added=dateAdded, datemodified=dateModified, date-modified=dateModified",
     "affects": [],
     "var": "patchDates"
   },

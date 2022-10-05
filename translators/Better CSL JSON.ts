@@ -1,5 +1,5 @@
-import { Translator } from './lib/translator'
-export { Translator }
+import { Translation } from './lib/translator'
+export { Translation as Translator }
 
 import { ParsedDate } from '../content/dateparser'
 import { CSLExporter } from './csl/csl'
@@ -70,7 +70,7 @@ class Exporter extends CSLExporter {
 }
 
 export function doExport(): void {
-  Translator.init('export')
+  Translation.init('export')
   const exporter = new Exporter
   exporter.initialize()
   exporter.doExport()

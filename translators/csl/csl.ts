@@ -3,7 +3,7 @@
 
 declare const Zotero: any
 
-import { Translator } from '../lib/translator'
+import { Translation } from '../lib/translator'
 
 import { simplifyForExport } from '../../gen/items/simplify'
 import { Fields as ParsedExtraFields, get as getExtra, cslCreator } from '../../content/extra'
@@ -35,8 +35,8 @@ export abstract class CSLExporter {
 
   public initialize(): void {
     try {
-      if (Translator.preferences.postscript.trim()) {
-        this.postscript = postscript.postscript('csl', Translator.preferences.postscript)
+      if (Translation.preferences.postscript.trim()) {
+        this.postscript = postscript.postscript('csl', Translation.preferences.postscript)
       }
       else {
         this.postscript = postscript.noop
@@ -44,7 +44,7 @@ export abstract class CSLExporter {
     }
     catch (err) {
       this.postscript = postscript.noop
-      log.error('failed to install postscript', err, '\n', Translator.preferences.postscript)
+      log.error('failed to install postscript', err, '\n', Translation.preferences.postscript)
     }
   }
 
@@ -56,11 +56,11 @@ export abstract class CSLExporter {
   public doExport(): void {
     const items = []
     const order: { citationKey: string, i: number}[] = []
-    for (const item of (Translator.regularitems as Generator<ExtendedItem, void, unknown>)) {
+    for (const item of (Translation.regularitems as Generator<ExtendedItem, void, unknown>)) {
       order.push({ citationKey: item.citationKey, i: items.length })
 
       let cached: Cache.ExportedItem
-      if (cached = Zotero.BetterBibTeX.cacheFetch(item.itemID, Translator.options, Translator.preferences)) {
+      if (cached = Zotero.BetterBibTeX.cacheFetch(item.itemID, Translation.options, Translation.preferences)) {
         items.push(cached.entry)
         continue
       }
@@ -145,20 +145,20 @@ export abstract class CSLExporter {
 
       let allow: postscript.Allow = { cache: true, write: true }
       try {
-        allow = this.postscript(csl, item, Translator, Zotero, extraFields)
+        allow = this.postscript(csl, item, Translation, Zotero, extraFields)
       }
       catch (err) {
         log.error('CSL.postscript failed:', err)
         allow.cache = false
       }
 
-      for (const field of Translator.skipFields) {
+      for (const field of Translation.skipFields) {
         delete csl[field]
       }
       csl = this.sortObject(csl)
       csl = this.serialize(csl)
 
-      if (allow.cache) Zotero.BetterBibTeX.cacheStore(item.itemID, Translator.options, Translator.preferences, csl)
+      if (allow.cache) Zotero.BetterBibTeX.cacheStore(item.itemID, Translation.options, Translation.preferences, csl)
 
       if (allow.write) items.push(csl)
     }

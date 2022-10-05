@@ -4,8 +4,8 @@ declare const Zotero: any
 
 import html2markdown from '@inkdropapp/html2markdown'
 
-import { Translator } from './lib/translator'
-export { Translator }
+import { Translation } from './lib/translator'
+export { Translation as Translator }
 import { log } from '../content/logger'
 
 import { Item } from '../gen/typings/serialized-item'
@@ -47,12 +47,12 @@ class Exporter {
     const filed: Set<number> = new Set
     const collections: Record<string, ExpandedCollection> = {}
 
-    for (const item of Translator.items) {
+    for (const item of Translation.items) {
       const cleaned = clean(item)
       if (this.keep(cleaned)) items[item.itemID] = cleaned
     }
 
-    for (const [key, collection] of Object.entries(Translator.collections)) {
+    for (const [key, collection] of Object.entries(Translation.collections)) {
       for (const itemID of collection.items) filed.add(itemID)
       collections[key] = {
         name: collection.name,
@@ -60,10 +60,10 @@ class Exporter {
         items: (collection.items || []).map(itemID => items[itemID]).filter(item => item),
         // resolve collection IDs to collections
         collections: [],
-        root: !Translator.collections[collection.parent],
+        root: !Translation.collections[collection.parent],
       }
     }
-    for (const [key, collection] of Object.entries(Translator.collections)) {
+    for (const [key, collection] of Object.entries(Translation.collections)) {
       collections[key].collections = (collection.collections || []).map(coll => collections[coll]).filter(coll => coll)
     }
 
@@ -87,7 +87,7 @@ class Exporter {
     style += '  blockquote { border-left: 1px solid gray; }\n'
 
     this.html = `<html><head><style>${ style }</style></head><body>${ this.body }</body></html>`
-    if (Translator.options.markdown) this.markdown = html2markdown(this.html)
+    if (Translation.options.markdown) this.markdown = html2markdown(this.html)
   }
 
   show(context, args) {
@@ -220,8 +220,8 @@ class Exporter {
 }
 
 export function doExport(): void {
-  Translator.init('export')
-  if (Translator.options.markdown) {
+  Translation.init('export')
+  if (Translation.options.markdown) {
     Zotero.write((new Exporter).markdown)
   }
   else {

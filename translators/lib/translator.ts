@@ -135,7 +135,7 @@ function escapeRegExp(text: string): string {
   return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&')
 }
 
-export class ITranslator { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
+export class ITranslation { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   public preferences: Preferences
   public importToExtra: Record<string, 'plain' | 'force'>
   public skipFields: string[]
@@ -426,4 +426,4 @@ export class ITranslator { // eslint-disable-line @typescript-eslint/naming-conv
     return this._items.regularitems()
   }
 }
-export const Translator = new ITranslator // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
+export const Translation = new ITranslation // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match

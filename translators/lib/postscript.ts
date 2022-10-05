@@ -4,7 +4,7 @@ export type Allow = {
   cache: boolean
   write: boolean
 }
-import type { ITranslator as Translator } from '../lib/translator'
+import type { ITranslation as Translator } from '../lib/translator'
 import type { Fields as ExtraFields } from '../../content/extra'
 import { log } from '../../content/logger'
 
