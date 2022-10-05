@@ -145,11 +145,11 @@ bbt:doc.
   if you set `csquotes` to a string of character pairs, each pair will be assumed to be the open and close parts of a pair and
   will be replaced with a `\\enquote{...}` construct.
 
-preference(name="extensions.zotero.translators.better-bibtex.patchDates" bbt:affects="" type="string" default="")
+preference(name="extensions.zotero.translators.better-bibtex.patchDates" bbt:affects="" type="string" default="dateadded=dateAdded, date-added=dateAdded, datemodified=dateModified, date-modified=dateModified")
 bbt:doc.
   Import translators cannot set the date-added and date-modified of the items that are imported, they always get the current time as their date-added. BBT will leave fields it can't map as
   `tex.[field]` in the `extra` field of the item. If you enter a list of comma-separated field mappings here, like `date-added = dateAdded, timestamp=dateModified`, BBT will offer a menu option
-  to remove them from the `extra` field and set the corresponding date of the item to their values, assuming they can be parsed as simple dates (no circa and stuff). The default mappings `tex.dateadded=dateadded, tex.datemodified=datemodified` are always active.
+  to remove them from the `extra` field and set the corresponding date of the item to their values, assuming they can be parsed as simple dates (no circa and stuff).
 
 preference(name="extensions.zotero.translators.better-bibtex.rawLaTag" bbt:affects="tex" type="string" default="#LaTeX")
 bbt:doc.

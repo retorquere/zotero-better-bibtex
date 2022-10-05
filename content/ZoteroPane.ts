@@ -139,23 +139,16 @@ export class ZoteroPane {
 
   public async patchDates(): Promise<void> {
     const items = Zotero.getActiveZoteroPane().getSelectedItems()
-    const mapping: Record<string, string> = {
-      'tex.dateadded': 'dateAdded',
-      'tex.date-added': 'dateAdded',
-      'tex.datemodified': 'dateModified',
-      'tex.date-modified': 'dateModified',
+    const mapping: Record<string, string> = {}
+    try {
+      for (const assignment of Preference.patchDates.trim().split(/\s*,\s*/)) {
+        const [, k, v ] = assignment.trim().match(/^([-_a-z09]+)\s*=\s*(dateadded|datemodified)$/i)
+        mapping[k.toLowerCase()] = mapping[`tex.${k.toLowerCase()}`] = { dateadded: 'dateAdded', datemodified: 'dateModified' }[v.toLowerCase()]
+      }
     }
-    if (Preference.patchDates.trim()) {
-      try {
-        for (const assignment of Preference.patchDates.trim().split(/\s*,\s*/)) {
-          const [, k, v ] = assignment.trim().match(/^([-_a-z09]+)\s*=\s*(dateadded|datemodified)$/i)
-          mapping [`tex.${k.toLowerCase()}`] = { dateadded: 'dateAdded', datemodified: 'dateModified' }[v.toLowerCase()]
-        }
-      }
-      catch (err) {
-        flash('could not parse field mapping', `could not parse field mapping ${Preference.patchDates}`)
-        return
-      }
+    catch (err) {
+      flash('could not parse field mapping', `could not parse field mapping ${Preference.patchDates}`)
+      return
     }
 
     const tzdiff = (new Date).getTimezoneOffset()
