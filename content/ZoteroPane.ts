@@ -139,21 +139,18 @@ export class ZoteroPane {
 
   public async patchDates(): Promise<void> {
     const items = Zotero.getActiveZoteroPane().getSelectedItems()
-    const mapping: Record<string, string> = { 'tex.dateadded': 'dateAdded', 'tex.datemodified': 'dateModified' }
-    if (Preference.patchDates.trim()) {
-      try {
-        for (const assignment of Preference.patchDates.trim().split(/\s*,\s*/)) {
-          const [, k, v ] = assignment.trim().match(/^([-_a-z09]+)\s*=\s*(dateadded|datemodified)$/i)
-          mapping [`tex.${k.toLowerCase()}`] = { dateadded: 'dateAdded', datemodified: 'dateModified' }[v.toLowerCase()]
-        }
-      }
-      catch (err) {
-        flash('could not parse field mapping', `could not parse field mapping ${Preference.patchDates}`)
-        return
+    const mapping: Record<string, string> = {}
+    try {
+      for (const assignment of Preference.patchDates.trim().split(/\s*,\s*/)) {
+        const [, k, v ] = assignment.trim().match(/^([-_a-z09]+)\s*=\s*(dateadded|datemodified)$/i)
+        mapping[k.toLowerCase()] = mapping[`tex.${k.toLowerCase()}`] = { dateadded: 'dateAdded', datemodified: 'dateModified' }[v.toLowerCase()]
       }
     }
+    catch (err) {
+      flash('could not parse field mapping', `could not parse field mapping ${Preference.patchDates}`)
+      return
+    }
 
-    const tzdiff = (new Date).getTimezoneOffset()
     for (const item of items) {
       let save = false
       try {
@@ -163,7 +160,10 @@ export class ZoteroPane {
             const date = DateParser.parse(v.value)
             if (date.type === 'date' && date.day) {
               delete extra.extraFields.tex[k]
-              item.setField(mapping[k], new Date(date.year, date.month - 1, date.day, 0, -tzdiff).toISOString())
+              const year = `${date.year}`.padStart(4, '0') // eslint-disable-line no-magic-numbers
+              const month = `${date.month}`.padStart(2, '0')
+              const day = `${date.day}`.padStart(2, '0')
+              item.setField(mapping[k], `${year}-${month}-${day}`)
               save = true
             }
           }
