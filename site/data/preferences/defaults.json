@@ -57,7 +57,7 @@
   "mapText": "",
   "mapUnicode": "conservative",
   "parseParticles": true,
-  "patchDates": "",
+  "patchDates": "dateadded=dateAdded, date-added=dateAdded, datemodified=dateModified, date-modified=dateModified",
   "platform": "",
   "postscript": "",
   "postscriptOverride": "",
