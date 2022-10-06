@@ -5,6 +5,8 @@ import { affects, names as preferences, defaults, PreferenceName, Preferences, s
 import { client } from '../../content/client'
 import { RegularItem, Item, Collection } from '../../gen/typings/serialized-item'
 import { Pinger } from '../../content/ping'
+import { Exporter as BibTeXExporter } from '../bibtex/exporter'
+
 declare const dump: (msg: string) => void
 
 type TranslatorMode = 'export' | 'import'
@@ -176,6 +178,7 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
   // public TeX: boolean
   // public CSL: boolean
 
+  public bibtex: BibTeXExporter
   private cacheable = true
   private _items: Items
 
@@ -226,6 +229,8 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
     this.BetterTeX = this.BetterBibTeX || this.BetterBibLaTeX
     this.BetterCSL = this.BetterCSLJSON || this.BetterCSLYAML
     this.options = ZOTERO_TRANSLATOR_INFO.displayOptions || {}
+
+    if (this.BetterTeX && mode === 'export') this.bibtex = new BibTeXExporter(this)
 
     let start = `${ZOTERO_TRANSLATOR_INFO.label} ${mode} translator starting in ${Zotero.worker ? 'background' : 'foreground'}`
     if (!!Zotero.worker !== (mode === 'export' && !!this.options.worker)) start += ', which was unexpected'

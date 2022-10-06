@@ -13,7 +13,6 @@ declare var Translator: Translation // eslint-disable-line no-var
 
 import * as postscript from '../lib/postscript'
 
-import { Exporter } from './exporter'
 import { text2latex, replace_command_spacers } from './unicode_translator'
 import { datefield } from './datefield'
 import * as ExtraFields from '../../gen/items/extra-fields.json'
@@ -509,12 +508,12 @@ export class Entry {
 
       case 'match':
         // the importer uppercases string declarations
-        return Exporter.strings[value.toUpperCase()] && value
+        return Translator.bibtex.strings[value.toUpperCase()] && value
 
       case 'match+reverse':
         // the importer uppercases string declarations
         value = value.toUpperCase()
-        return Exporter.strings[value] ? value : Exporter.strings_reverse[value]
+        return Translator.bibtex.strings[value] ? value : Translator.bibtex.strings_reverse[value]
 
       default:
         return null
@@ -788,7 +787,7 @@ export class Entry {
     this.metadata.packages = Object.keys(this.packages)
     if (this.item.$cacheable) Zotero.BetterBibTeX.cacheStore(this.item.itemID, Translator.options, Translator.preferences, ref, this.metadata)
 
-    Exporter.postfix.add(this.metadata)
+    Translator.bibtex.postfix.add(this.metadata)
   }
 
   /*

@@ -4,7 +4,6 @@ import { Translation } from './lib/translator'
 export const Translator = new Translation
 
 import { Entry as BaseEntry, Config } from './bibtex/entry'
-import { Exporter } from './bibtex/exporter'
 
 type CreatorArray = any[] & { type?: string }
 
@@ -286,12 +285,12 @@ const patent = new class {
 export function doExport(): void {
   Translator.init('export')
   Entry.installPostscript()
-  Exporter.prepare_strings()
+  Translator.bibtex.prepare_strings()
 
   // Zotero.write(`\n% ${Translator.header.label}\n`)
   Zotero.write('\n')
 
-  for (const item of Exporter.items) {
+  for (const item of Translator.bibtex.items) {
     const entry = new Entry(item, config)
 
     if (entry.entrytype === 'incollection' && entry.hasCreator('bookAuthor')) entry.entrytype = 'inbook'
@@ -594,6 +593,6 @@ export function doExport(): void {
     entry.complete()
   }
 
-  Exporter.complete()
+  Translator.bibtex.complete()
   Zotero.write('\n')
 }

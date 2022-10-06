@@ -14,7 +14,6 @@ import { Translation } from './lib/translator'
 export const Translator = new Translation
 
 import { Entry as BaseEntry, Config } from './bibtex/entry'
-import { Exporter } from './bibtex/exporter'
 import * as escape from '../content/escape'
 
 import * as bibtexParser from '@retorquere/bibtex-parser'
@@ -257,12 +256,12 @@ const months = [ 'jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 
 export function doExport(): void {
   Translator.init('export')
   Entry.installPostscript()
-  Exporter.prepare_strings()
+  Translator.bibtex.prepare_strings()
 
   // Zotero.write(`\n% ${Translator.header.label}\n`)
   Zotero.write('\n')
 
-  for (const item of Exporter.items) {
+  for (const item of Translator.bibtex.items) {
     const ref = new Entry(item, config)
     if (item.itemType === 'report' && item.type?.toLowerCase().includes('manual')) ref.entrytype = 'manual'
     if (['zotero.bookSection', 'csl.chapter', 'tex.chapter'].includes(ref.entrytype_source) && ref.hasCreator('bookAuthor')) ref.entrytype = 'inbook'
@@ -408,7 +407,7 @@ export function doExport(): void {
     ref.complete()
   }
 
-  Exporter.complete()
+  Translator.bibtex.complete()
   Zotero.write('\n')
 }
 
