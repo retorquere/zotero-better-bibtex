@@ -783,7 +783,7 @@ export class Entry {
 
     if (allow.write) Zotero.write(ref)
 
-    this.metadata.DeclarePrefChars = Exporter.unique_chars(this.metadata.DeclarePrefChars)
+    this.metadata.DeclarePrefChars = this.unique_chars(this.metadata.DeclarePrefChars)
 
     this.metadata.packages = Object.keys(this.packages)
     if (this.item.$cacheable) Zotero.BetterBibTeX.cacheStore(this.item.itemID, Translator.options, Translator.preferences, ref, this.metadata)
@@ -1329,6 +1329,14 @@ export class Entry {
       // restore cacheable state
       this.item.$cacheable = $cacheable
     }
+  }
+
+  private unique_chars(str) {
+    let uniq = ''
+    for (const c of str) {
+      if (uniq.indexOf(c) < 0) uniq += c
+    }
+    return uniq
   }
 }
 

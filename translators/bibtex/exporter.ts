@@ -31,14 +31,6 @@ export const Exporter = new class {
     }
   }
 
-  public unique_chars(str) {
-    let uniq = ''
-    for (const c of str) {
-      if (uniq.indexOf(c) < 0) uniq += c
-    }
-    return uniq
-  }
-
   public get items(): Generator<RegularItem, void, unknown> {
     return this.itemsGenerator()
   }
