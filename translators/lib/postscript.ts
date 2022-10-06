@@ -4,11 +4,12 @@ export type Allow = {
   cache: boolean
   write: boolean
 }
-import type { ITranslation as Translator } from '../lib/translator'
+import type { Translation } from '../lib/translator'
+
 import type { Fields as ExtraFields } from '../../content/extra'
 import { log } from '../../content/logger'
 
-export type Postscript = (entry: any, item: any, translator: Translator, extra: ExtraFields) => Allow
+export type Postscript = (entry: any, item: any, translator: Translation, extra: ExtraFields) => Allow
 
 export function postscript(kind: 'csl' | 'tex', main: string, guard?: string): Postscript  {
   let body = `
@@ -46,6 +47,6 @@ export function postscript(kind: 'csl' | 'tex', main: string, guard?: string): P
   return new Function('target', 'source', 'Translator', 'Zotero', 'extra', body) as Postscript
 }
 
-export const noop: Postscript = function(_entry: any, _item: any, _translator: Translator, _extra: ExtraFields): Allow { // eslint-disable-line prefer-arrow/prefer-arrow-functions
+export const noop: Postscript = function(_entry: any, _item: any, _translator: Translation, _extra: ExtraFields): Allow { // eslint-disable-line prefer-arrow/prefer-arrow-functions
   return { cache: true, write: true }
 }

@@ -4,8 +4,9 @@ import YAML = require('js-yaml')
 import { Date as CSLDate, Data as CSLItem, LooseNumber } from 'csl-json'
 
 import { Translation } from './lib/translator'
+export const Translator = new Translation
+
 import type { MarkupNode } from '../typings/markup'
-export { Translation as Translator }
 
 import { CSLExporter } from './csl/csl'
 import { log } from '../content/logger'
@@ -166,7 +167,7 @@ class Exporter extends CSLExporter {
 }
 
 export function doExport(): void {
-  Translation.init('export')
+  Translator.init('export')
   const exporter = new Exporter
   exporter.initialize()
   exporter.doExport()

@@ -2,6 +2,7 @@
 
 import type { ParsedDate } from '../../content/dateparser'
 import { Translation } from '../lib/translator'
+declare var Translator: Translation // eslint-disable-line no-var
 import type { Translators } from '../../typings/translators'
 
 function pad(v:string, padding: string): string {
@@ -41,7 +42,7 @@ function format(date) {
 
   }
 
-  if (formatted && Translation.BetterBibLaTeX && Translation.preferences.biblatexExtendedDateFormat) {
+  if (formatted && Translator.BetterBibLaTeX && Translator.preferences.biblatexExtendedDateFormat) {
     if (date.uncertain) formatted += '?'
     if (date.approximate) formatted += '~'
   }

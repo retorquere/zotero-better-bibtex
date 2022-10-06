@@ -1,7 +1,7 @@
 declare const Zotero: any
 
 import { Translation } from './lib/translator'
-export { Translation as Translator }
+export const Translator = new Translation
 
 function node(id, attributes = {}) {
   let n = JSON.stringify(id)
@@ -27,7 +27,7 @@ type Item = {
 }
 
 export function doExport(): void {
-  Translation.init('export')
+  Translator.init('export')
 
   Zotero.write('digraph CitationGraph {\n')
   Zotero.write('  concentrate=true;\n')
@@ -39,7 +39,7 @@ export function doExport(): void {
   }
 
   const items: Item[] = []
-  for (const ref of Translation.regularitems) {
+  for (const ref of Translator.regularitems) {
     const label = [ ref.citationKey ]
 
     if (add.title && ref.title) {
