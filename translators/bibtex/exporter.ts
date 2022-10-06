@@ -13,14 +13,10 @@ import * as Extra from '../../content/extra'
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export const Exporter = new class {
   public postfix: Postfix
-  public jabref: JabRef
+  public jabref = new JabRef
   public strings: {[key: string]: string} = {}
   public strings_reverse: {[key: string]: string} = {}
   public citekeys: Record<string, number> = {}
-
-  constructor() {
-    this.jabref = new JabRef()
-  }
 
   public prepare_strings() {
     if (!Translation.BetterTeX || !Translation.preferences.strings) return
