@@ -13,7 +13,7 @@ declare var Translator: Translation // eslint-disable-line no-var
 
 import * as postscript from '../lib/postscript'
 
-import { text2latex, replace_command_spacers } from './unicode_translator'
+import { replace_command_spacers } from './unicode_translator'
 import { datefield } from './datefield'
 import * as ExtraFields from '../../gen/items/extra-fields.json'
 import { label as propertyLabel } from '../../gen/items/items'
@@ -946,11 +946,11 @@ export class Entry {
     if (f.raw || options.raw) return f.value
 
     const caseConversion = this.config.caseConversion[f.name] || f.caseConversion
-    const latex = text2latex(f.value, {html: f.html, caseConversion: caseConversion && this.english, creator: options.creator})
-    for (const pkg of latex.packages) {
+    const { latex, packages, raw } = Translator.bibtex.text2latex(f.value, {html: f.html, caseConversion: caseConversion && this.english, creator: options.creator })
+    for (const pkg of packages) {
       this.packages[pkg] = true
     }
-    let value: String | string = latex.latex
+    let value: String | string = latex
 
     /*
       biblatex has a langid field it can use to exclude non-English
@@ -962,7 +962,7 @@ export class Entry {
     */
     if (caseConversion && Translator.BetterBibTeX && !this.english && Translator.preferences.exportBraceProtection) value = `{${value}}`
 
-    if (f.value instanceof String && !latex.raw) value = new String(`{${value}}`) // eslint-disable-line no-new-wrappers
+    if (f.value instanceof String && !raw) value = new String(`{${value}}`) // eslint-disable-line no-new-wrappers
     return value
   }
 
@@ -1103,7 +1103,7 @@ export class Entry {
 
   // eslint-disable-next-line @typescript-eslint/ban-types
   private _enc_creator_part(part: string | String): string | String {
-    const { latex, packages } = text2latex((part as string), { creator: true, commandspacers: true })
+    const { latex, packages } = Translator.bibtex.text2latex((part as string), { creator: true, commandspacers: true })
     for (const pkg of packages) {
       this.packages[pkg] = true
     }

@@ -1,7 +1,8 @@
 declare const Zotero: any
 declare const __estrace: any // eslint-disable-line no-underscore-dangle
 
-import { affects, names as preferences, defaults, PreferenceName, Preferences, schema } from '../../gen/preferences/meta'
+import { affects, names as preferences, defaults, PreferenceName, Preferences as StoredPreferences, schema } from '../../gen/preferences/meta'
+import { TeXMap } from '../../content/prefs'
 import { client } from '../../content/client'
 import { RegularItem, Item, Collection } from '../../gen/typings/serialized-item'
 import { Pinger } from '../../content/ping'
@@ -10,6 +11,7 @@ import { Exporter as BibTeXExporter } from '../bibtex/exporter'
 declare const dump: (msg: string) => void
 
 type TranslatorMode = 'export' | 'import'
+type Preferences = StoredPreferences & { texmap?: TeXMap }
 
 type CacheableItem = Item & { $cacheable: boolean }
 
@@ -230,8 +232,6 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
     this.BetterCSL = this.BetterCSLJSON || this.BetterCSLYAML
     this.options = ZOTERO_TRANSLATOR_INFO.displayOptions || {}
 
-    if (this.BetterTeX && mode === 'export') this.bibtex = new BibTeXExporter(this)
-
     let start = `${ZOTERO_TRANSLATOR_INFO.label} ${mode} translator starting in ${Zotero.worker ? 'background' : 'foreground'}`
     if (!!Zotero.worker !== (mode === 'export' && !!this.options.worker)) start += ', which was unexpected'
     dump(start)
@@ -268,6 +268,13 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
     }, {} as unknown as Preferences)
 
     // special handling
+    try {
+      this.preferences.texmap = JSON.parse(this.preferences.charmap)
+    }
+    catch (err) {
+      this.preferences.texmap = {}
+    }
+
     this.importToExtra = {}
     this.preferences.importNoteToExtra
       .toLowerCase()
@@ -346,7 +353,10 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
       }
 
       if (this.preferences.testing && typeof __estrace === 'undefined' && schema.translator[ZOTERO_TRANSLATOR_INFO.label]?.cache) {
-        const ignored = ['testing']
+        const ignored = {
+          testing: true,
+          texmap: true,
+        }
         this.preferences = new Proxy(this.preferences, {
           set: (object, property, _value) => {
             throw new TypeError(`Unexpected set of preference ${String(property)}`)
@@ -354,12 +364,16 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
           get: (object, property: PreferenceName) => {
             // JSON.stringify will attempt to get this
             if (property as unknown as string === 'toJSON') return object[property]
-            if (!preferences.includes(property)) throw new TypeError(`Unsupported preference ${property}`)
-            if (!ignored.includes(property) && !affects[property]?.includes(ZOTERO_TRANSLATOR_INFO.label)) throw new TypeError(`Preference ${property} claims not to affect ${ZOTERO_TRANSLATOR_INFO.label}`)
+            if (!ignored[property]) {
+              if (!preferences.includes(property)) throw new TypeError(`Unsupported preference ${property}`)
+              if (!affects[property]?.includes(ZOTERO_TRANSLATOR_INFO.label)) throw new TypeError(`Preference ${property} claims not to affect ${ZOTERO_TRANSLATOR_INFO.label}`)
+            }
             return object[property] // eslint-disable-line @typescript-eslint/no-unsafe-return
           },
         })
       }
+
+      if (this.BetterTeX) this.bibtex = new BibTeXExporter(this)
     }
   }
 

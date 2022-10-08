@@ -10,8 +10,12 @@ import { PreferenceManager as PreferenceManagerBase } from '../gen/preferences'
 import { dict as csv2dict } from './load-csv'
 import { log } from './logger'
 
+type TexChar = { unicode?: string, math?: string, text?: string }
+export type TeXMap = Record<string, TexChar>
+
 export const Preference = new class PreferenceManager extends PreferenceManagerBase {
   public prefix = 'translators.better-bibtex.'
+  public texmap: TeXMap = {}
 
   constructor() {
     super()
@@ -183,14 +187,11 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
 
   public async initAsync(dir: string) {
     // load from csv for easier editing
+    this.texmap = {}
     await this.loadFromCSV('charmap', OS.Path.join(dir, 'charmap.csv'), '', (rows: Record<string, string>[]) => JSON.stringify(
-      rows.reduce((acc: Record<string, Record<string, string>>, row: Record<string, string>) => {
-        if (row.unicode) {
-          const char = row.unicode
-          delete row.unicode
-          acc[char] = row
-        }
-        return acc
+      rows.reduce((acc: TeXMap, row: TexChar) => {
+        if (row.unicode && (row.math || row.text)) acc[row.unicode] = { text: row.text, math: row.math }
+        return (this.texmap = acc)
       }, {})
     ))
 

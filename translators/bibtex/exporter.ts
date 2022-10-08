@@ -10,6 +10,7 @@ import { simplifyForExport } from '../../gen/items/simplify'
 import * as bibtexParser from '@retorquere/bibtex-parser'
 import { Postfix } from './postfix'
 import * as Extra from '../../content/extra'
+import { HTMLConverter, ConverterOptions, ParseResult } from './unicode_translator'
 
 export class Exporter {
   public postfix: Postfix
@@ -19,9 +20,11 @@ export class Exporter {
   public citekeys: Record<string, number> = {}
 
   private translation: Translation
+  private htmlconverter: HTMLConverter
 
   constructor(translation: Translation) {
     this.translation = translation
+    this.htmlconverter = new HTMLConverter(translation.preferences.texmap)
   }
 
   public prepare_strings(): void {
@@ -91,6 +94,11 @@ export class Exporter {
 
       yield item
     }
+  }
+
+  text2latex(text:string, options: ConverterOptions = {}): ParseResult {
+    if (typeof options.html === 'undefined') options.html = false
+    return this.htmlconverter.tolatex(text, options)
   }
 
   public complete(): void {
