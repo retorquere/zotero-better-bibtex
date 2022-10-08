@@ -10,8 +10,9 @@ function edition(n: string | number): string {
 }
 import wordsToNumbers from 'words-to-numbers'
 
-import { Translation } from './lib/translator'
-export const Translator = new Translation
+import { Translation, TranslatorMetadata } from './lib/translator'
+declare var ZOTERO_TRANSLATOR_INFO: TranslatorMetadata // eslint-disable-line no-var
+export const Translator = new Translation(ZOTERO_TRANSLATOR_INFO)
 
 import { Entry as BaseEntry, Config } from './bibtex/entry'
 import * as escape from '../content/escape'

@@ -48,7 +48,7 @@ type NestedCollection = {
   parent?: NestedCollection
 }
 
-export type TranslatorHeader = {
+export type TranslatorMetadata = {
   translatorID: string
   translatorType: number
   label: string
@@ -81,7 +81,6 @@ export type TranslatorHeader = {
     async: boolean
   }
 }
-declare var ZOTERO_TRANSLATOR_INFO: TranslatorHeader // eslint-disable-line no-var
 
 class Items {
   public list: CacheableItem[] = []
@@ -167,6 +166,7 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
     worker?: boolean
   }
 
+  public translator: TranslatorMetadata
   public BetterBibLaTeX?: boolean                   // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   public BetterBibTeX?: boolean                     // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   public BetterTeX: boolean                         // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
@@ -204,7 +204,8 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
 
   public and: { list: { re: any, repl: string }, names: { re: any, repl: string } }
 
-  constructor() {
+  constructor(translator: TranslatorMetadata) {
+    this.translator = translator
     const collator = new Intl.Collator('en')
     this.stringCompare = (collator.compare.bind(collator) as (left: string, right: string) => number)
   }
@@ -227,12 +228,12 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
   }
 
   public init(mode: TranslatorMode): void {
-    this[ZOTERO_TRANSLATOR_INFO.label.replace(/[^a-z]/ig, '')] = true
+    this[this.translator.label.replace(/[^a-z]/ig, '')] = true
     this.BetterTeX = this.BetterBibTeX || this.BetterBibLaTeX
     this.BetterCSL = this.BetterCSLJSON || this.BetterCSLYAML
-    this.options = ZOTERO_TRANSLATOR_INFO.displayOptions || {}
+    this.options = this.translator.displayOptions || {}
 
-    let start = `${ZOTERO_TRANSLATOR_INFO.label} ${mode} translator starting in ${Zotero.worker ? 'background' : 'foreground'}`
+    let start = `${this.translator.label} ${mode} translator starting in ${Zotero.worker ? 'background' : 'foreground'}`
     if (!!Zotero.worker !== (mode === 'export' && !!this.options.worker)) start += ', which was unexpected'
     dump(start)
 
@@ -312,7 +313,7 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
       if (this.export.dir?.endsWith(this.paths.sep)) this.export.dir = this.export.dir.slice(0, -1)
       this.options.cacheUse = Zotero.getOption('cacheUse')
 
-      this.unicode = !this.preferences[`ascii${ZOTERO_TRANSLATOR_INFO.label.replace(/Better /, '')}`]
+      this.unicode = !this.preferences[`ascii${this.translator.label.replace(/Better /, '')}`]
 
       if (this.preferences.baseAttachmentPath && (this.export.dir === this.preferences.baseAttachmentPath || this.export.dir?.startsWith(this.preferences.baseAttachmentPath + this.paths.sep))) {
         this.preferences.relativeFilePaths = true
@@ -345,14 +346,14 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
         this.preferences.separatorNames = ` ${this.preferences.separatorNames} `
       }
 
-      if (ZOTERO_TRANSLATOR_INFO.configOptions?.getCollections && Zotero.nextCollection) {
+      if (this.translator.configOptions?.getCollections && Zotero.nextCollection) {
         let collection: any
         while (collection = Zotero.nextCollection()) {
           this.registerCollection(collection, '')
         }
       }
 
-      if (this.preferences.testing && typeof __estrace === 'undefined' && schema.translator[ZOTERO_TRANSLATOR_INFO.label]?.cache) {
+      if (this.preferences.testing && typeof __estrace === 'undefined' && schema.translator[this.translator.label]?.cache) {
         const ignored = {
           testing: true,
           texmap: true,
@@ -366,7 +367,7 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
             if (property as unknown as string === 'toJSON') return object[property]
             if (!ignored[property]) {
               if (!preferences.includes(property)) throw new TypeError(`Unsupported preference ${property}`)
-              if (!affects[property]?.includes(ZOTERO_TRANSLATOR_INFO.label)) throw new TypeError(`Preference ${property} claims not to affect ${ZOTERO_TRANSLATOR_INFO.label}`)
+              if (!affects[property]?.includes(this.translator.label)) throw new TypeError(`Preference ${property} claims not to affect ${this.translator.label}`)
             }
             return object[property] // eslint-disable-line @typescript-eslint/no-unsafe-return
           },

@@ -1,11 +1,8 @@
 declare const Zotero: any
 
-import { Translation } from './lib/translator'
-export const Translator = new Translation
-
-import type { TranslatorHeader } from './lib/translator'
-
-declare var ZOTERO_TRANSLATOR_INFO: TranslatorHeader // eslint-disable-line no-var
+import { Translation, TranslatorMetadata } from './lib/translator'
+declare var ZOTERO_TRANSLATOR_INFO: TranslatorMetadata // eslint-disable-line no-var
+export const Translator = new Translation(ZOTERO_TRANSLATOR_INFO)
 
 import { valid } from '../gen/items/items'
 import { simplifyForImport, simplifyForExport } from '../gen/items/simplify'

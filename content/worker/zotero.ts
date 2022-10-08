@@ -3,14 +3,14 @@
 importScripts('resource://gre/modules/osfile.jsm')
 importScripts('resource://zotero/config.js') // import ZOTERO_CONFIG'
 
-import type { TranslatorHeader } from '../../translators/lib/translator'
+import type { TranslatorMetadata } from '../../translators/lib/translator'
 import type { Translators } from '../../typings/translators'
 import { valid } from '../../gen/items/items'
 
 import { DOMParser as XMLDOMParser } from '@xmldom/xmldom'
 import * as CSL from 'citeproc'
 
-declare var ZOTERO_TRANSLATOR_INFO: TranslatorHeader // eslint-disable-line no-var
+declare var ZOTERO_TRANSLATOR_INFO: TranslatorMetadata // eslint-disable-line no-var
 
 const NodeType = {
   ELEMENT_NODE                : 1,

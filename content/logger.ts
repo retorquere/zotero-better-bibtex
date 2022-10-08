@@ -1,6 +1,7 @@
 import type { Translators as Translator } from '../typings/translators'
+import type { TranslatorMetadata } from '../translators/lib/translator'
 // workerJob and Translator must be var-hoisted by esbuild to make this work
-declare var ZOTERO_TRANSLATOR_INFO: TranslatorHeader // eslint-disable-line no-var
+declare var ZOTERO_TRANSLATOR_INFO: TranslatorMetadata // eslint-disable-line no-var
 declare const workerJob: Translator.Worker.Job
 declare const dump: (msg: string) => void
 
@@ -12,7 +13,6 @@ export function print(msg: string): void {
   dump(msg + '\n')
 }
 
-import type { TranslatorHeader } from '../translators/lib/translator'
 
 class Logger {
   public verbose = false

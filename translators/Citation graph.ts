@@ -1,7 +1,8 @@
 declare const Zotero: any
 
-import { Translation } from './lib/translator'
-export const Translator = new Translation
+import { Translation, TranslatorMetadata } from './lib/translator'
+declare var ZOTERO_TRANSLATOR_INFO: TranslatorMetadata // eslint-disable-line no-var
+export const Translator = new Translation(ZOTERO_TRANSLATOR_INFO)
 
 function node(id, attributes = {}) {
   let n = JSON.stringify(id)

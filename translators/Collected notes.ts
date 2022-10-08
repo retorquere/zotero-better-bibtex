@@ -1,11 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 
+import { Translation, TranslatorMetadata } from './lib/translator'
+
 declare const Zotero: any
+declare var ZOTERO_TRANSLATOR_INFO: TranslatorMetadata // eslint-disable-line no-var
 
 import html2markdown from '@inkdropapp/html2markdown'
 
-import { Translation } from './lib/translator'
-export const Translator = new Translation
+export const Translator = new Translation(ZOTERO_TRANSLATOR_INFO)
 
 import { log } from '../content/logger'
 import { Item } from '../gen/typings/serialized-item'
