@@ -200,14 +200,10 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
     sep: string
   }
 
-  public stringCompare: (a: string, b: string) => number
-
   public and: { list: { re: any, repl: string }, names: { re: any, repl: string } }
 
   constructor(translator: TranslatorMetadata) {
     this.translator = translator
-    const collator = new Intl.Collator('en')
-    this.stringCompare = (collator.compare.bind(collator) as (left: string, right: string) => number)
   }
 
   public get exportDir(): string {

@@ -2,7 +2,6 @@ declare const Zotero: any
 
 import { Translation, TranslatorMetadata } from './lib/translator'
 declare var ZOTERO_TRANSLATOR_INFO: TranslatorMetadata // eslint-disable-line no-var
-export const Translator = new Translation(ZOTERO_TRANSLATOR_INFO)
 
 function node(id, attributes = {}) {
   let n = JSON.stringify(id)
@@ -28,7 +27,8 @@ type Item = {
 }
 
 export function doExport(): void {
-  Translator.init('export')
+  const translation = new Translation(ZOTERO_TRANSLATOR_INFO)
+  translation.init('export')
 
   Zotero.write('digraph CitationGraph {\n')
   Zotero.write('  concentrate=true;\n')
@@ -40,7 +40,7 @@ export function doExport(): void {
   }
 
   const items: Item[] = []
-  for (const ref of Translator.regularitems) {
+  for (const ref of translation.regularitems) {
     const label = [ ref.citationKey ]
 
     if (add.title && ref.title) {

@@ -1,24 +1,27 @@
 import { Translation } from '../lib/translator'
-declare var Translator: Translation // eslint-disable-line no-var
+
+import { stringCompare } from '../lib/string-compare'
 
 declare const Zotero: any
 
 export class JabRef {
   public citekeys: Map<number, string>
   private groups: string[]
+  private translation: Translation
 
-  constructor() {
+  constructor(translation: Translation) {
+    this.translation = translation // eslint-disable-line no-var
     this.citekeys = new Map
   }
 
   public exportGroups(): void {
-    if ((Object.keys(Translator.collections).length === 0) || !Translator.preferences.jabrefFormat) return
+    if ((Object.keys(this.translation.collections).length === 0) || !this.translation.preferences.jabrefFormat) return
 
     let meta
-    if (Translator.preferences.jabrefFormat === 3) { // eslint-disable-line no-magic-numbers
+    if (this.translation.preferences.jabrefFormat === 3) { // eslint-disable-line no-magic-numbers
       meta = 'groupsversion:3'
     }
-    else if (Translator.BetterBibLaTeX) {
+    else if (this.translation.BetterBibLaTeX) {
       meta = 'databaseType:biblatex'
     }
     else {
@@ -26,11 +29,11 @@ export class JabRef {
     }
 
     Zotero.write(`@comment{jabref-meta: ${meta};}\n`)
-    Zotero.write(`@comment{jabref-meta: ${Translator.preferences.jabrefFormat === 5 ? 'grouping' : 'groupstree'}:\n`) // eslint-disable-line no-magic-numbers
+    Zotero.write(`@comment{jabref-meta: ${this.translation.preferences.jabrefFormat === 5 ? 'grouping' : 'groupstree'}:\n`) // eslint-disable-line no-magic-numbers
 
     this.groups = ['0 AllEntriesGroup:']
-    const collections = Object.values(Translator.collections).filter(coll => !coll.parent)
-    if (Translator.preferences.testing) collections.sort((a, b) => Translator.stringCompare(a.name, b.name))
+    const collections = Object.values(this.translation.collections).filter(coll => !coll.parent)
+    if (this.translation.preferences.testing) collections.sort((a, b) => stringCompare(a.name, b.name))
     for (const collection of collections) {
       this.exportGroup(collection, 1)
     }
@@ -40,15 +43,15 @@ export class JabRef {
   }
 
   private exportGroup(collection, level: number): void {
-    let group = [`${level} ${Translator.preferences.jabrefFormat === 5 ? 'Static' : 'Explicit'}Group:${this.quote(collection.name)}`, '0'] // eslint-disable-line no-magic-numbers
+    let group = [`${level} ${this.translation.preferences.jabrefFormat === 5 ? 'Static' : 'Explicit'}Group:${this.quote(collection.name)}`, '0'] // eslint-disable-line no-magic-numbers
 
-    if (Translator.preferences.jabrefFormat === 3) { // eslint-disable-line no-magic-numbers
+    if (this.translation.preferences.jabrefFormat === 3) { // eslint-disable-line no-magic-numbers
       const items = ((collection.items || []).filter(id => this.citekeys.has(id)).map(id => this.quote(this.citekeys.get(id))))
-      if (Translator.preferences.testing) items.sort()
+      if (this.translation.preferences.testing) items.sort()
       group = group.concat(items)
     }
 
-    if (Translator.preferences.jabrefFormat === 5) { // eslint-disable-line no-magic-numbers
+    if (this.translation.preferences.jabrefFormat === 5) { // eslint-disable-line no-magic-numbers
       group = group.concat(['1', '0x8a8a8aff', '', '']) // isexpanded?, color, icon, description
     }
     else {
@@ -58,8 +61,8 @@ export class JabRef {
     this.groups.push(group.join(';'))
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    const children = (collection.collections || []).map(key => Translator.collections[key]).filter(coll => coll)
-    if (Translator.preferences.testing) children.sort((a, b) => Translator.stringCompare(a.name, b.name))
+    const children = (collection.collections || []).map(key => this.translation.collections[key]).filter(coll => coll)
+    if (this.translation.preferences.testing) children.sort((a, b) => stringCompare(a.name, b.name))
     for (const child of children) {
       this.exportGroup(child, level + 1)
     }

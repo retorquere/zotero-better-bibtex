@@ -1,7 +1,6 @@
 declare const Zotero: any
 
 import { Translation } from '../lib/translator'
-declare var Translator: Translation // eslint-disable-line no-var
 
 import type { MarkupNode } from '../../typings/markup'
 import type { TeXMap } from '../../content/prefs'
@@ -42,8 +41,10 @@ export class HTMLConverter {
   private options: ConverterOptions = {}
   private embraced: boolean
   private packages: { [key: string]: boolean } = {}
+  private translation: Translation
 
-  constructor(charmap: TeXMap) {
+  constructor(charmap: TeXMap, translation: Translation) {
+    this.translation = translation
     this.mapping = {
       text: this.init(charmap, false),
       creator: this.init(charmap, true),
@@ -54,11 +55,11 @@ export class HTMLConverter {
   private init(charmap: TeXMap, creator: boolean): TeXMap {
     let mapping: TeXMap
 
-    if (Translator.unicode) {
+    if (this.translation.unicode) {
       log.debug('init charmap: unicode')
       mapping = unicode2latex.unicode
     }
-    else if (creator && Translator.BetterBibTeX) {
+    else if (creator && this.translation.BetterBibTeX) {
       log.debug('init charmap: bibtex-creator')
       /* https://github.com/retorquere/zotero-better-bibtex/issues/1189
         Needed so that composite characters are counted as single characters
@@ -82,14 +83,14 @@ export class HTMLConverter {
       ...(charmap || {}),
     }
 
-    for (const c of Translator.preferences.ascii) {
+    for (const c of this.translation.preferences.ascii) {
       mapping[c] = unicode2latex.ascii[c]
     }
 
-    if (Translator.preferences.mapUnicode === 'conservative') {
+    if (this.translation.preferences.mapUnicode === 'conservative') {
       for (const keep of Object.keys(switchMode).sort()) {
         const remove = switchMode[keep]
-        const unicode = Translator.preferences[`map${keep[0].toUpperCase()}${keep.slice(1)}`]
+        const unicode = this.translation.preferences[`map${keep[0].toUpperCase()}${keep.slice(1)}`]
         for (const c of unicode) {
           if (mapping[c] && mapping[c].text && mapping[c].math) {
             delete mapping[c][remove]
@@ -98,7 +99,7 @@ export class HTMLConverter {
       }
 
     }
-    else if (Translator.preferences.mapUnicode === 'minimal-packages') {
+    else if (this.translation.preferences.mapUnicode === 'minimal-packages') {
       // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
       for (const tex of (Object.values(mapping) as LatexRepresentation[])) {
         if (tex.text && tex.math) {
@@ -115,7 +116,7 @@ export class HTMLConverter {
 
     }
     else {
-      const remove = switchMode[Translator.preferences.mapUnicode]
+      const remove = switchMode[this.translation.preferences.mapUnicode]
       if (remove) {
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
         for (const tex of (Object.values(mapping) as LatexRepresentation[])) {
@@ -272,7 +273,7 @@ export class HTMLConverter {
     if (tag.nocase) latex = `{{${latex}}}`
     if (tag.relax) latex = `{\\relax ${latex}}`
     if (tag.enquote) {
-      if (Translator.BetterBibTeX) {
+      if (this.translation.BetterBibTeX) {
         latex = `\\enquote{${latex}}`
       }
       else {
@@ -296,7 +297,7 @@ export class HTMLConverter {
     /* holy mother of %^$#^%$@ the bib(la)tex case conversion rules are insane */
     /* https://github.com/retorquere/zotero-better-bibtex/issues/541 */
     /* https://github.com/plk/biblatex/issues/459 ... oy! */
-    if (!this.embraced) this.embraced = this.options.caseConversion && (((this.latex || latex)[0] !== '\\') || Translator.BetterBibTeX)
+    if (!this.embraced) this.embraced = this.options.caseConversion && (((this.latex || latex)[0] !== '\\') || this.translation.BetterBibTeX)
     if (!this.embraced || !condition) return latex
     return `{${latex}}`
   }
@@ -329,7 +330,7 @@ export class HTMLConverter {
         i += 3 // eslint-disable-line  no-magic-numbers
       }
 
-      if (!mapped && !Translator.unicode) {
+      if (!mapped && !this.translation.unicode) {
         // combining diacritics. Relies on NFD always being mapped, otherwise NFC won't be tested
 
         if (m = combining_diacritics.exec(text.substring(i))) {
@@ -342,7 +343,7 @@ export class HTMLConverter {
             if (char) {
               const cmd = diacritic.command.match(/[a-z]/)
 
-              if (Translator.BetterBibTeX && diacritic.mode === 'text') {
+              if (this.translation.BetterBibTeX && diacritic.mode === 'text') {
                 // needs to be braced to count as a single char for name abbreviation
                 mapped = ({ [diacritic.mode]: `{\\${diacritic.command}${cmd ? ' ': ''}${char}}` } as LatexRepresentation)
 

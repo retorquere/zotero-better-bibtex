@@ -2,7 +2,6 @@ declare const Zotero: any
 
 import { Translation, TranslatorMetadata } from './lib/translator'
 declare var ZOTERO_TRANSLATOR_INFO: TranslatorMetadata // eslint-disable-line no-var
-export const Translator = new Translation(ZOTERO_TRANSLATOR_INFO)
 
 import { Entry as BaseEntry, Config } from './bibtex/entry'
 
@@ -284,22 +283,23 @@ const patent = new class {
 }
 
 export function doExport(): void {
-  Translator.init('export')
-  Entry.installPostscript()
-  Translator.bibtex.prepare_strings()
+  const translation = new Translation(ZOTERO_TRANSLATOR_INFO)
+  translation.init('export')
+  Entry.installPostscript(translation)
+  translation.bibtex.prepare_strings()
 
-  // Zotero.write(`\n% ${Translator.header.label}\n`)
+  // Zotero.write(`\n% ${translation.header.label}\n`)
   Zotero.write('\n')
 
-  for (const item of Translator.bibtex.items) {
-    const entry = new Entry(item, config)
+  for (const item of translation.bibtex.items) {
+    const entry = new Entry(item, config, translation)
 
     if (entry.entrytype === 'incollection' && entry.hasCreator('bookAuthor')) entry.entrytype = 'inbook'
     // if (entry.entytype_source === 'csl.book' && !entry.hasCreator('author') && entry.hasCreator('editor')) entry.entytype = 'collection'
     if (entry.entrytype === 'book' && item.numberOfVolumes) entry.entrytype = 'mvbook'
     if (entry.entrytype === 'report' && item.type?.toLowerCase().includes('manual')) entry.entrytype = 'manual'
 
-    if (Translator.preferences.biblatexExtractEprint) {
+    if (translation.preferences.biblatexExtractEprint) {
       let m
       if (item.url && (m = item.url.match(/^https?:\/\/www.jstor.org\/stable\/([\S]+)$/i))) {
         entry.override({ name: 'eprinttype', value: 'jstor'})
@@ -329,8 +329,8 @@ export function doExport(): void {
       }
     }
 
-    if (['langid', 'both'].includes(Translator.preferences.language)) entry.add({ name: 'langid', value: entry.language })
-    if (['language', 'both'].includes(Translator.preferences.language)) entry.add({ name: 'language', value: item.language })
+    if (['langid', 'both'].includes(translation.preferences.language)) entry.add({ name: 'langid', value: entry.language })
+    if (['language', 'both'].includes(translation.preferences.language)) entry.add({ name: 'language', value: item.language })
 
     if (entry.entrytype === 'patent') {
       if (item.country && !patent.region(item)) entry.add({ name: 'location', value: item.country || item.extraFields.kv['publisher-place'] })
@@ -392,7 +392,7 @@ export function doExport(): void {
           if (entry.entrytype === 'inproceedings' && entry.getBibString(item.publicationTitle)) {
             entry.add({ name: 'booktitle', value: item.publicationTitle, bibtexStrings: true })
           }
-          else if (entry.entrytype === 'inproceedings' && Translator.options.useJournalAbbreviation && item.publicationTitle && item.journalAbbreviation) {
+          else if (entry.entrytype === 'inproceedings' && translation.options.useJournalAbbreviation && item.publicationTitle && item.journalAbbreviation) {
             entry.add({ name: 'booktitle', value: item.journalAbbreviation, bibtexStrings: true })
           }
           else {
@@ -410,7 +410,7 @@ export function doExport(): void {
           entry.add({ name: 'journaltitle', value: item.publicationTitle, bibtexStrings: true })
 
         }
-        else if (Translator.options.useJournalAbbreviation && item.publicationTitle && item.journalAbbreviation) {
+        else if (translation.options.useJournalAbbreviation && item.publicationTitle && item.journalAbbreviation) {
           entry.add({ name: 'journaltitle', value: item.journalAbbreviation, bibtexStrings: true })
 
         }
@@ -594,6 +594,6 @@ export function doExport(): void {
     entry.complete()
   }
 
-  Translator.bibtex.complete()
+  translation.bibtex.complete()
   Zotero.write('\n')
 }

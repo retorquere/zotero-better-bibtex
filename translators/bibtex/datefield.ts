@@ -2,7 +2,6 @@
 
 import type { ParsedDate } from '../../content/dateparser'
 import { Translation } from '../lib/translator'
-declare var Translator: Translation // eslint-disable-line no-var
 import type { Translators } from '../../typings/translators'
 
 function pad(v:string, padding: string): string {
@@ -21,7 +20,7 @@ function year(y) {
   }
 }
 
-function format(date) {
+function format(date, translation: Translation): string {
   let formatted
 
   if (typeof date.year === 'number' && date.month && date.day) {
@@ -42,7 +41,7 @@ function format(date) {
 
   }
 
-  if (formatted && Translator.BetterBibLaTeX && Translator.preferences.biblatexExtendedDateFormat) {
+  if (formatted && translation.BetterBibLaTeX && translation.preferences.biblatexExtendedDateFormat) {
     if (date.uncertain) formatted += '?'
     if (date.approximate) formatted += '~'
   }
@@ -50,7 +49,7 @@ function format(date) {
   return formatted
 }
 
-export function datefield(date: ParsedDate, field: Translators.BibTeX.Field): Translators.BibTeX.Field {
+export function datefield(date: ParsedDate, field: Translators.BibTeX.Field, translation: Translation): Translators.BibTeX.Field {
   field = JSON.parse(JSON.stringify({ ...field, value: '', enc: 'latex' }))
 
   if (!date) return field
@@ -69,15 +68,15 @@ export function datefield(date: ParsedDate, field: Translators.BibTeX.Field): Tr
 
   }
   else if (date.type === 'date' || date.type === 'season') {
-    field.value = format(date)
+    field.value = format(date, translation)
 
   }
   else if (date.type === 'interval') {
-    field.value = `${format(date.from)}/${format(date.to)}`
+    field.value = `${format(date.from, translation)}/${format(date.to, translation)}`
 
   }
   else if (date.year) {
-    field.value = format(date)
+    field.value = format(date, translation)
 
   }
 

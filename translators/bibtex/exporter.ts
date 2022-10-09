@@ -14,7 +14,7 @@ import { HTMLConverter, ConverterOptions, ParseResult } from './unicode_translat
 
 export class Exporter {
   public postfix: Postfix
-  public jabref = new JabRef
+  public jabref: JabRef
   public strings: {[key: string]: string} = {}
   public strings_reverse: {[key: string]: string} = {}
   public citekeys: Record<string, number> = {}
@@ -24,7 +24,8 @@ export class Exporter {
 
   constructor(translation: Translation) {
     this.translation = translation
-    this.htmlconverter = new HTMLConverter(translation.preferences.texmap)
+    this.jabref = new JabRef(translation)
+    this.htmlconverter = new HTMLConverter(translation.preferences.texmap, translation)
   }
 
   public prepare_strings(): void {

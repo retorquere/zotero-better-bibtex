@@ -12,7 +12,6 @@ import wordsToNumbers from 'words-to-numbers'
 
 import { Translation, TranslatorMetadata } from './lib/translator'
 declare var ZOTERO_TRANSLATOR_INFO: TranslatorMetadata // eslint-disable-line no-var
-export const Translator = new Translation(ZOTERO_TRANSLATOR_INFO)
 
 import { Entry as BaseEntry, Config } from './bibtex/entry'
 import * as escape from '../content/escape'
@@ -255,15 +254,16 @@ class Entry extends BaseEntry {
 const months = [ 'jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec' ]
 
 export function doExport(): void {
-  Translator.init('export')
-  Entry.installPostscript()
-  Translator.bibtex.prepare_strings()
+  const translation = new Translation(ZOTERO_TRANSLATOR_INFO)
+  translation.init('export')
+  Entry.installPostscript(translation)
+  translation.bibtex.prepare_strings()
 
-  // Zotero.write(`\n% ${Translator.header.label}\n`)
+  // Zotero.write(`\n% ${translation.header.label}\n`)
   Zotero.write('\n')
 
-  for (const item of Translator.bibtex.items) {
-    const ref = new Entry(item, config)
+  for (const item of translation.bibtex.items) {
+    const ref = new Entry(item, config, translation)
     if (item.itemType === 'report' && item.type?.toLowerCase().includes('manual')) ref.entrytype = 'manual'
     if (['zotero.bookSection', 'csl.chapter', 'tex.chapter'].includes(ref.entrytype_source) && ref.hasCreator('bookAuthor')) ref.entrytype = 'inbook'
 
@@ -282,8 +282,8 @@ export function doExport(): void {
     ref.add({name: 'nationality', value: item.country})
     ref.add({name: 'assignee', value: item.assignee})
 
-    if (['langid', 'both'].includes(Translator.preferences.language)) ref.add({name: 'langid', value: babelLanguage(item.language) })
-    if (['language', 'both'].includes(Translator.preferences.language)) ref.add({name: 'language', value: item.language })
+    if (['langid', 'both'].includes(translation.preferences.language)) ref.add({name: 'langid', value: babelLanguage(item.language) })
+    if (['language', 'both'].includes(translation.preferences.language)) ref.add({name: 'language', value: item.language })
 
     // this needs to be order volume - number for #1475
     ref.add({name: 'volume', value: ref.normalizeDashes(item.volume) })
@@ -291,7 +291,7 @@ export function doExport(): void {
     ref.add({ name: 'urldate', value: item.accessDate && item.accessDate.replace(/\s*T?\d+:\d+:\d+.*/, '') })
 
     if (ref.entrytype_source === 'zotero.conferencePaper') {
-      ref.add({ name: 'booktitle', value: (Translator.options.useJournalAbbreviation && item.journalAbbreviation) || item.publicationTitle || item.conferenceName, bibtexStrings: true })
+      ref.add({ name: 'booktitle', value: (translation.options.useJournalAbbreviation && item.journalAbbreviation) || item.publicationTitle || item.conferenceName, bibtexStrings: true })
     }
     else if (['zotero.bookSection', 'tex.chapter', 'csl.chapter'].includes(ref.entrytype_source)) {
       ref.add({ name: 'booktitle', value: item.publicationTitle || item.conferenceName, bibtexStrings: true })
@@ -300,7 +300,7 @@ export function doExport(): void {
       ref.add({ name: 'journal', value: item.publicationTitle, bibtexStrings: true })
     }
     else {
-      ref.add({ name: 'journal', value: (Translator.options.useJournalAbbreviation && item.journalAbbreviation) || item.publicationTitle, bibtexStrings: true })
+      ref.add({ name: 'journal', value: (translation.options.useJournalAbbreviation && item.journalAbbreviation) || item.publicationTitle, bibtexStrings: true })
     }
 
     let reftype = ref.entrytype_source.split('.')[1]
@@ -325,11 +325,11 @@ export function doExport(): void {
 
     const doi = item.DOI || item.extraFields.kv.DOI
     let urlfield = null
-    if (Translator.preferences.DOIandURL === 'both' || !doi) {
-      switch (Translator.preferences.bibtexURL) {
+    if (translation.preferences.DOIandURL === 'both' || !doi) {
+      switch (translation.preferences.bibtexURL) {
         case 'url':
         case 'url-ish':
-          urlfield = ref.add({ name: 'url', value: item.url || item.extraFields.kv.url, enc: Translator.verbatimFields.includes('url') ? 'url' : 'latex' })
+          urlfield = ref.add({ name: 'url', value: item.url || item.extraFields.kv.url, enc: translation.verbatimFields.includes('url') ? 'url' : 'latex' })
           break
 
         case 'note':
@@ -342,7 +342,7 @@ export function doExport(): void {
           break
       }
     }
-    if (Translator.preferences.DOIandURL === 'both' || !urlfield) ref.add({ name: 'doi', value: (doi || '').replace(/^https?:\/\/doi.org\//i, '') })
+    if (translation.preferences.DOIandURL === 'both' || !urlfield) ref.add({ name: 'doi', value: (doi || '').replace(/^https?:\/\/doi.org\//i, '') })
 
     if (ref.entrytype_source.split('.')[1] === 'thesis') {
       const thesistype = ref.thesistype(item.type, 'phdthesis', 'mastersthesis')
@@ -360,12 +360,12 @@ export function doExport(): void {
 
         let sponsor = creator.source
         sponsor = sponsor.replace(/ and /g, ' {and} ')
-        if (Translator.and.names.repl !== ' {and} ') sponsor = sponsor.replace(Translator.and.names.re, Translator.and.names.repl)
+        if (translation.and.names.repl !== ' {and} ') sponsor = sponsor.replace(translation.and.names.re, translation.and.names.repl)
 
         sponsors.push(sponsor)
         return false
       })
-      ref.add({ name: 'organization', value: sponsors.join(Translator.preferences.separatorList) })
+      ref.add({ name: 'organization', value: sponsors.join(translation.preferences.separatorList) })
     }
     ref.addCreators()
     // #1541
@@ -408,7 +408,7 @@ export function doExport(): void {
     ref.complete()
   }
 
-  Translator.bibtex.complete()
+  translation.bibtex.complete()
   Zotero.write('\n')
 }
 
@@ -484,7 +484,7 @@ class ZoteroItem {
   private validFields: Record<string, boolean>
   private numberPrefix: string
 
-  constructor(private id: number, private bibtex: any, private jabref, private errors: bibtexParser.ParseError[]) {
+  constructor(private translation: Translation, private id: number, private bibtex: any, private jabref, private errors: bibtexParser.ParseError[]) {
     this.bibtex.type = this.bibtex.type.toLowerCase()
     this.type = this.typeMap[this.bibtex.type]
     if (!this.type) {
@@ -509,7 +509,7 @@ class ZoteroItem {
 
       this.import()
 
-      if (Translator.preferences.testing) {
+      if (this.translation.preferences.testing) {
         const err = valid.test(JSON.parse(JSON.stringify(this.item)), true) // stringify/parse is a fast way to get rid of methods
         if (err) this.error(`import error: ${this.type} ${this.bibtex.key}: ${err}\n${JSON.stringify(this.item, null, 2)}`)
       }
@@ -798,7 +798,7 @@ class ZoteroItem {
         continue
       }
 
-      if (this.jabref.fileDirectory) att.path = `${this.jabref.fileDirectory}${Translator.paths.sep}${att.path}`
+      if (this.jabref.fileDirectory) att.path = `${this.jabref.fileDirectory}${this.translation.paths.sep}${att.path}`
 
       if (att.mimeType.toLowerCase() === 'pdf' || (!att.mimeType && att.path.toLowerCase().endsWith('.pdf'))) {
         att.mimeType = 'application/pdf'
@@ -910,9 +910,9 @@ class ZoteroItem {
   }
 
   protected $annotation(value, field) {
-    if (Translator.importToExtra[field]) {
+    if (this.translation.importToExtra[field]) {
       let plaintext = value.replace(/<p>/g, '').replace(/<\/p>/g, '\n\n').trim()
-      if (Translator.importToExtra[field] === 'force') plaintext = plaintext.replace(/<[^>]+>/g, '')
+      if (this.translation.importToExtra[field] === 'force') plaintext = plaintext.replace(/<[^>]+>/g, '')
       if (!plaintext.includes('<')) {
         this.addToExtra(plaintext)
         return true
@@ -1126,9 +1126,9 @@ class ZoteroItem {
       }
     }
 
-    if (Translator.preferences.rawImports && Translator.preferences.rawLaTag !== '*') {
+    if (this.translation.preferences.rawImports && this.translation.preferences.rawLaTag !== '*') {
       if (!this.item.tags) this.item.tags = []
-      this.item.tags.push({ tag: Translator.preferences.rawLaTag, type: 1 })
+      this.item.tags.push({ tag: this.translation.preferences.rawLaTag, type: 1 })
     }
 
     // eslint-disable-next-line id-blacklist
@@ -1163,8 +1163,8 @@ class ZoteroItem {
     }
 
     this.hackyFields = this.hackyFields.filter(line => {
-      if (line.startsWith('Citation Key:')) return Translator.preferences.importCitationKey
-      if (line.startsWith('tex.')) return Translator.preferences.importExtra
+      if (line.startsWith('Citation Key:')) return this.translation.preferences.importCitationKey
+      if (line.startsWith('tex.')) return this.translation.preferences.importExtra
       return true
     })
     if (this.hackyFields.length > 0) {
@@ -1203,7 +1203,7 @@ class ZoteroItem {
   private set(field, value, fallback = null) {
     if (!this.validFields[field]) return fallback && this.fallback(fallback, value)
 
-    if (Translator.preferences.testing && (this.item[field] || typeof this.item[field] === 'number') && (value || typeof value === 'number') && this.item[field] !== value) {
+    if (this.translation.preferences.testing && (this.item[field] || typeof this.item[field] === 'number') && (value || typeof value === 'number') && this.item[field] !== value) {
       this.error(`import error: duplicate ${field} on ${this.type} ${this.bibtex.key} (old: ${this.item[field]}, new: ${value})`)
     }
 
@@ -1279,10 +1279,11 @@ async function fetch_polyfill(url): Promise<{ json: () => Promise<any>, text: ()
 }
 
 export async function doImport(): Promise<void> {
-  Translator.init('import')
+  const translation = new Translation(ZOTERO_TRANSLATOR_INFO)
+  translation.init('import')
 
-  const unabbreviate = Translator.preferences.importJabRefAbbreviations ? await (await fetch_polyfill('resource://zotero-better-bibtex/unabbrev/unabbrev.json')).json() : undefined
-  const strings = Translator.preferences.importJabRefStrings ? await (await fetch_polyfill('resource://zotero-better-bibtex/unabbrev/strings.bib')).text() : undefined
+  const unabbreviate = translation.preferences.importJabRefAbbreviations ? await (await fetch_polyfill('resource://zotero-better-bibtex/unabbrev/unabbrev.json')).json() : undefined
+  const strings = translation.preferences.importJabRefStrings ? await (await fetch_polyfill('resource://zotero-better-bibtex/unabbrev/strings.bib')).text() : undefined
 
   let read
   let input = ''
@@ -1290,13 +1291,13 @@ export async function doImport(): Promise<void> {
     input += read
   }
 
-  if (Translator.preferences.strings && Translator.preferences.importBibTeXStrings) input = `${Translator.preferences.strings}\n${input}`
+  if (translation.preferences.strings && translation.preferences.importBibTeXStrings) input = `${translation.preferences.strings}\n${input}`
 
   const bib = await bibtexParser.promises.parse(input, {
-    caseProtection: (Translator.preferences.importCaseProtection as 'as-needed'), // we are actually sure it's a valid enum value; stupid workaround for TS2322: Type 'string' is not assignable to type 'boolean | "as-needed" | "strict"'.
-    errorHandler: (Translator.preferences.testing ? undefined : function(err) { log.error(err) }), // eslint-disable-line prefer-arrow/prefer-arrow-functions
+    caseProtection: (translation.preferences.importCaseProtection as 'as-needed'), // we are actually sure it's a valid enum value; stupid workaround for TS2322: Type 'string' is not assignable to type 'boolean | "as-needed" | "strict"'.
+    errorHandler: (translation.preferences.testing ? undefined : function(err) { log.error(err) }), // eslint-disable-line prefer-arrow/prefer-arrow-functions
     unknownCommandHandler: function(node) { // eslint-disable-line object-shorthand
-      switch (Translator.preferences.importUnknownTexCommand) {
+      switch (translation.preferences.importUnknownTexCommand) {
         case 'tex':
           // eslint-disable-next-line @typescript-eslint/no-unsafe-return
           return this.text(`<script>${node.source}</script>`)
@@ -1307,14 +1308,14 @@ export async function doImport(): Promise<void> {
           // eslint-disable-next-line @typescript-eslint/no-unsafe-return
           return this.text('')
         default:
-          throw new Error(`Unexpected unknownCommandHandler ${JSON.stringify(Translator.preferences.importUnknownTexCommand)}`)
+          throw new Error(`Unexpected unknownCommandHandler ${JSON.stringify(translation.preferences.importUnknownTexCommand)}`)
       }
     },
-    markup: (Translator.csquotes ? { enquote: Translator.csquotes } : {}),
-    sentenceCase: Translator.preferences.importSentenceCase !== 'off',
-    guessAlreadySentenceCased: Translator.preferences.importSentenceCase === 'on+guess',
-    verbatimFields: Translator.verbatimFields,
-    raw: Translator.preferences.rawImports,
+    markup: (translation.csquotes ? { enquote: translation.csquotes } : {}),
+    sentenceCase: translation.preferences.importSentenceCase !== 'off',
+    guessAlreadySentenceCased: translation.preferences.importSentenceCase === 'on+guess',
+    verbatimFields: translation.verbatimFields,
+    raw: translation.preferences.rawImports,
     unabbreviate,
     strings,
   })
@@ -1334,7 +1335,7 @@ export async function doImport(): Promise<void> {
     if (bibtex.key) itemIDS[bibtex.key] = id // Endnote has no citation keys
 
     try {
-      await (new ZoteroItem(id, bibtex, bib.jabref, errors)).complete()
+      await (new ZoteroItem(translation, id, bibtex, bib.jabref, errors)).complete()
     }
     catch (err) {
       log.error('bbt import error:', err)
