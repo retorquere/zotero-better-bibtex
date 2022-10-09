@@ -5,7 +5,6 @@ import { Date as CSLDate, Data as CSLItem, LooseNumber } from 'csl-json'
 
 import { Translation, TranslatorMetadata } from './lib/translator'
 declare var ZOTERO_TRANSLATOR_INFO: TranslatorMetadata // eslint-disable-line no-var
-export const Translator = new Translation(ZOTERO_TRANSLATOR_INFO)
 
 import type { MarkupNode } from '../typings/markup'
 
@@ -168,8 +167,9 @@ class Exporter extends CSLExporter {
 }
 
 export function doExport(): void {
-  Translator.init('export')
-  const exporter = new Exporter(Translator)
+  const translation = new Translation(ZOTERO_TRANSLATOR_INFO)
+  translation.init('export')
+  const exporter = new Exporter(translation)
   exporter.doExport()
 }
 

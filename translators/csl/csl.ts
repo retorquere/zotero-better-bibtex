@@ -4,7 +4,6 @@
 declare const Zotero: any
 
 import { Translation } from '../lib/translator'
-declare var Translator: Translation // eslint-disable-line no-var
 
 import { simplifyForExport } from '../../gen/items/simplify'
 import { Fields as ParsedExtraFields, get as getExtra, cslCreator } from '../../content/extra'
@@ -149,7 +148,7 @@ export abstract class CSLExporter {
 
       let allow: postscript.Allow = { cache: true, write: true }
       try {
-        allow = this.postscript(csl, item, Translator, Zotero, extraFields)
+        allow = this.postscript(csl, item, this.translation, Zotero, extraFields)
       }
       catch (err) {
         log.error('CSL.postscript failed:', err)
