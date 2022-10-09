@@ -169,8 +169,7 @@ class Exporter extends CSLExporter {
 
 export function doExport(): void {
   Translator.init('export')
-  const exporter = new Exporter
-  exporter.initialize()
+  const exporter = new Exporter(Translator)
   exporter.doExport()
 }
 
