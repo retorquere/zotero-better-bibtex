@@ -27,8 +27,7 @@ type Item = {
 }
 
 export function doExport(): void {
-  const translation = new Translation(ZOTERO_TRANSLATOR_INFO)
-  translation.init('export')
+  const translation = new Translation(ZOTERO_TRANSLATOR_INFO, 'export')
 
   Zotero.write('digraph CitationGraph {\n')
   Zotero.write('  concentrate=true;\n')

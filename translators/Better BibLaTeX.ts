@@ -283,8 +283,7 @@ const patent = new class {
 }
 
 export function doExport(): void {
-  const translation = new Translation(ZOTERO_TRANSLATOR_INFO)
-  translation.init('export')
+  const translation = new Translation(ZOTERO_TRANSLATOR_INFO, 'export')
   Entry.installPostscript(translation)
   translation.bibtex.prepare_strings()
 

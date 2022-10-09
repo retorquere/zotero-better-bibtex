@@ -254,8 +254,7 @@ class Entry extends BaseEntry {
 const months = [ 'jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec' ]
 
 export function doExport(): void {
-  const translation = new Translation(ZOTERO_TRANSLATOR_INFO)
-  translation.init('export')
+  const translation = new Translation(ZOTERO_TRANSLATOR_INFO, 'export')
   Entry.installPostscript(translation)
   translation.bibtex.prepare_strings()
 
@@ -1279,8 +1278,7 @@ async function fetch_polyfill(url): Promise<{ json: () => Promise<any>, text: ()
 }
 
 export async function doImport(): Promise<void> {
-  const translation = new Translation(ZOTERO_TRANSLATOR_INFO)
-  translation.init('import')
+  const translation = new Translation(ZOTERO_TRANSLATOR_INFO, 'import')
 
   const unabbreviate = translation.preferences.importJabRefAbbreviations ? await (await fetch_polyfill('resource://zotero-better-bibtex/unabbrev/unabbrev.json')).json() : undefined
   const strings = translation.preferences.importJabRefStrings ? await (await fetch_polyfill('resource://zotero-better-bibtex/unabbrev/strings.bib')).text() : undefined

@@ -222,8 +222,7 @@ class Exporter {
 }
 
 export function doExport(): void {
-  const translation = new Translation(ZOTERO_TRANSLATOR_INFO)
-  translation.init('export')
+  const translation = new Translation(ZOTERO_TRANSLATOR_INFO, 'export')
   const exporter = new Exporter(translation)
   if (translation.options.markdown) {
     Zotero.write(exporter.markdown)
