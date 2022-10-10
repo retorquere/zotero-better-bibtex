@@ -73,4 +73,5 @@ export function doExport(): void {
   const translation = new Translation(ZOTERO_TRANSLATOR_INFO, 'export')
   const exporter = new Exporter(translation)
   exporter.doExport()
+  Zotero.write(translation.output)
 }

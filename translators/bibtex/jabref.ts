@@ -2,8 +2,6 @@ import { Translation } from '../lib/translator'
 
 import { stringCompare } from '../lib/string-compare'
 
-declare const Zotero: any
-
 export class JabRef {
   public citekeys: Map<number, string>
   private groups: string[]
@@ -28,8 +26,8 @@ export class JabRef {
       meta = 'databaseType:bibtex'
     }
 
-    Zotero.write(`@comment{jabref-meta: ${meta};}\n`)
-    Zotero.write(`@comment{jabref-meta: ${this.translation.preferences.jabrefFormat === 5 ? 'grouping' : 'groupstree'}:\n`) // eslint-disable-line no-magic-numbers
+    this.translation.output += `@comment{jabref-meta: ${meta};}\n`
+    this.translation.output += `@comment{jabref-meta: ${this.translation.preferences.jabrefFormat === 5 ? 'grouping' : 'groupstree'}:\n` // eslint-disable-line no-magic-numbers
 
     this.groups = ['0 AllEntriesGroup:']
     const collections = Object.values(this.translation.collections).filter(coll => !coll.parent)
@@ -38,8 +36,8 @@ export class JabRef {
       this.exportGroup(collection, 1)
     }
 
-    Zotero.write(this.groups.map(group => this.quote(group, true)).concat('').join(';\n'))
-    Zotero.write('}\n')
+    this.translation.output += this.groups.map(group => this.quote(group, true)).concat('').join(';\n')
+    this.translation.output += '}\n'
   }
 
   private exportGroup(collection, level: number): void {

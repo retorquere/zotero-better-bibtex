@@ -150,6 +150,8 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
     path: undefined,
   }
 
+  public output = ''
+
   public options: {
     quickCopyMode?: string
     dropAttachments?: boolean

@@ -7,14 +7,14 @@ function node(id, attributes = {}) {
   let n = JSON.stringify(id)
   const attrs = Object.entries(attributes).map(([key, value]) => `${key}=${JSON.stringify(value)}`).join(', ')
   if (attrs) n += ` [${attrs}]`
-  Zotero.write(`  ${n};\n`)
+  return `  ${n};\n`
 }
 
 function edge(source, target, attributes = {}) {
   let e = `${JSON.stringify(source)} -> ${JSON.stringify(target)}`
   const attrs = Object.entries(attributes).map(([key, value]) => `${key}=${JSON.stringify(value)}`).join(', ')
   if (attrs) e += ` [${attrs}]`
-  Zotero.write(`  ${e};\n`)
+  return `  ${e};\n`
 }
 
 type Item = {
@@ -29,8 +29,8 @@ type Item = {
 export function doExport(): void {
   const translation = new Translation(ZOTERO_TRANSLATOR_INFO, 'export')
 
-  Zotero.write('digraph CitationGraph {\n')
-  Zotero.write('  concentrate=true;\n')
+  this.translation.output += 'digraph CitationGraph {\n'
+  this.translation.output += '  concentrate=true;\n'
 
   const add = {
     title: Zotero.getOption('Title'),
@@ -78,15 +78,15 @@ export function doExport(): void {
   }
 
   for (const item of items) {
-    node(item.id, { label: item.label })
+    this.translation.output += node(item.id, { label: item.label })
 
     for (const uri of item.relations) {
       const other = items.find(o => o.uri === uri)
       if (other) {
-        edge(item.id, other.id)
+        this.translation.output += edge(item.id, other.id)
       }
       else {
-        edge(item.id, uri.replace(/.*\//, ''), { style: 'dashed', dir: 'both' })
+        this.translation.output += edge(item.id, uri.replace(/.*\//, ''), { style: 'dashed', dir: 'both' })
       }
     }
 
@@ -94,13 +94,15 @@ export function doExport(): void {
       const other = items.find(o => o.citationKey === citationKey)
 
       if (other) {
-        edge(item.id, other.id)
+        this.translation.output += edge(item.id, other.id)
       }
       else {
-        edge(item.id, citationKey, { style: 'dashed' })
+        this.translation.output += edge(item.id, citationKey, { style: 'dashed' })
       }
     }
   }
 
-  Zotero.write('}')
+  this.translation.output += '}'
+
+  Zotero.write(this.translation.output)
 }

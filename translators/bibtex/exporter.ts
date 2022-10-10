@@ -63,7 +63,7 @@ export class Exporter {
         this.translation.cache.requests++
         if (cached = Zotero.BetterBibTeX.cacheFetch(item.itemID, this.translation.options, this.translation.preferences)) {
           this.translation.cache.hits += 100
-          Zotero.write(cached.entry)
+          this.translation.output += cached.entry
           this.postfix?.add(cached.metadata)
           continue
         }
@@ -104,22 +104,22 @@ export class Exporter {
 
   public complete(): void {
     this.jabref.exportGroups()
-    if (this.postfix) Zotero.write(this.postfix.toString())
+    if (this.postfix) this.translation.output += this.postfix.toString()
     if (this.translation.BetterTeX && this.translation.preferences.qualityReport) {
       let sep = '\n% == Citekey duplicates in this file:\n'
       for (const [citekey, n] of Object.entries(this.citekeys).sort((a, b) => a[0].localeCompare(b[0]))) {
         if (n > 1) {
-          Zotero.write(`${sep}% ${citekey} duplicates: ${n}\n`)
+          this.translation.output += `${sep}% ${citekey} duplicates: ${n}\n`
           sep = '% '
         }
       }
     }
     if (this.translation.BetterTeX && this.translation.options.cacheUse) {
       if (this.translation.cache.requests) {
-        Zotero.write(`\n% cache use: ${Math.round(this.translation.cache.hits/this.translation.cache.requests)}%`)
+        this.translation.output += `\n% cache use: ${Math.round(this.translation.cache.hits/this.translation.cache.requests)}%`
       }
       else {
-        Zotero.write('\n% cache use: no')
+        this.translation.output += '\n% cache use: no'
       }
     }
   }

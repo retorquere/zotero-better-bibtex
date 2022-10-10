@@ -782,7 +782,7 @@ export class Entry {
     ref += this.qualityReport()
     ref += '\n'
 
-    if (allow.write) Zotero.write(ref)
+    if (allow.write) this.translation.output += ref
 
     this.metadata.DeclarePrefChars = this.unique_chars(this.metadata.DeclarePrefChars)
 

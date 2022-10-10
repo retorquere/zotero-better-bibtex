@@ -258,8 +258,7 @@ export function doExport(): void {
   Entry.installPostscript(translation)
   translation.bibtex.prepare_strings()
 
-  // Zotero.write(`\n% ${translation.header.label}\n`)
-  Zotero.write('\n')
+  // translation.output += `\n% ${translation.header.label}\n`
 
   for (const item of translation.bibtex.items) {
     const ref = new Entry(item, config, translation)
@@ -408,7 +407,7 @@ export function doExport(): void {
   }
 
   translation.bibtex.complete()
-  Zotero.write('\n')
+  Zotero.write(translation.output)
 }
 
 export function detectImport(): boolean {
