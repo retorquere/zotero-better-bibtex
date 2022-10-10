@@ -39,7 +39,7 @@ export function doExport(): void {
   }
 
   const items: Item[] = []
-  for (const ref of translation.items.regular) {
+  for (const ref of translation.data.items.regular) {
     const label = [ ref.citationKey ]
 
     if (add.title && ref.title) {

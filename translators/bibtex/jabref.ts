@@ -13,7 +13,7 @@ export class JabRef {
   }
 
   public exportGroups(): void {
-    if ((Object.keys(this.translation.collections.byKey).length === 0) || !this.translation.preferences.jabrefFormat) return
+    if ((Object.keys(this.translation.collections).length === 0) || !this.translation.preferences.jabrefFormat) return
 
     let meta
     if (this.translation.preferences.jabrefFormat === 3) { // eslint-disable-line no-magic-numbers
@@ -30,7 +30,7 @@ export class JabRef {
     this.translation.output += `@comment{jabref-meta: ${this.translation.preferences.jabrefFormat === 5 ? 'grouping' : 'groupstree'}:\n` // eslint-disable-line no-magic-numbers
 
     this.groups = ['0 AllEntriesGroup:']
-    const collections = Object.values(this.translation.collections.byKey).filter(coll => !coll.parent)
+    const collections = Object.values(this.translation.collections).filter(coll => !coll.parent)
     if (this.translation.preferences.testing) collections.sort((a, b) => stringCompare(a.name, b.name))
     for (const collection of collections) {
       this.exportGroup(collection, 1)
@@ -59,7 +59,7 @@ export class JabRef {
     this.groups.push(group.join(';'))
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    const children = (collection.collections || []).map(key => this.translation.collections.byKey[key]).filter(coll => coll)
+    const children = (collection.collections || []).map(key => this.translation.collections[key]).filter(coll => coll)
     if (this.translation.preferences.testing) children.sort((a, b) => stringCompare(a.name, b.name))
     for (const child of children) {
       this.exportGroup(child, level + 1)

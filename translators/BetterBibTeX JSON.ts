@@ -138,13 +138,13 @@ export function doExport(): void {
       zotero: Zotero.Utilities.getVersion(),
       bbt: version,
     },
-    collections: translation.collections.byKey,
+    collections: translation.collections,
     items: [],
   }
 
   const validAttachmentFields = new Set([ 'relations', 'uri', 'itemType', 'title', 'path', 'tags', 'dateAdded', 'dateModified', 'seeAlso', 'mimeType' ])
 
-  for (const item of translation.items) {
+  for (const item of translation.data.items) {
     if (!translation.preferences.testing) addSelect(item)
     delete (item as any).$cacheable
 

@@ -49,12 +49,12 @@ class Exporter {
     const filed: Set<number> = new Set
     const collections: Record<string, ExpandedCollection> = {}
 
-    for (const item of this.translation.items) {
+    for (const item of this.translation.data.items) {
       const cleaned = clean(item)
       if (this.keep(cleaned)) items[item.itemID] = cleaned
     }
 
-    for (const [key, collection] of Object.entries(this.translation.collections.byKey)) {
+    for (const [key, collection] of Object.entries(this.translation.collections)) {
       for (const itemID of collection.items) filed.add(itemID)
 
       collections[key] = {
@@ -63,11 +63,11 @@ class Exporter {
         items: (collection.items || []).map(itemID => items[itemID]).filter(item => item),
         // resolve collection IDs to collections
         collections: [],
-        root: !this.translation.collections.byKey[collection.parent],
+        root: !this.translation.collections[collection.parent],
       }
     }
 
-    for (const [key, collection] of Object.entries(this.translation.collections.byKey)) {
+    for (const [key, collection] of Object.entries(this.translation.collections)) {
       collections[key].collections = (collection.collections || []).map(coll => collections[coll]).filter(coll => coll)
     }
 

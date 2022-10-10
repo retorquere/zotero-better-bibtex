@@ -240,8 +240,12 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
   // public CSL: boolean
 
   public bibtex: BibTeXExporter
-  public items: Items
-  public collections: Collections
+
+  public data: {
+    items: Items
+    collections: Collections
+  }
+  public collections: Record<string, Collection> = {} // keep because it is being used in postscripts
 
   private cacheable = true
 
@@ -262,12 +266,12 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
   public and: { list: { re: any, repl: string }, names: { re: any, repl: string } }
 
   public get exportDir(): string {
-    this.items.current.$cacheable = false
+    this.data.items.current.$cacheable = false
     return this.export.dir
   }
 
   public get exportPath(): string {
-    this.items.current.$cacheable = false
+    this.data.items.current.$cacheable = false
     return this.export.path
   }
 
@@ -417,8 +421,9 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
       }
 
       if (this.BetterTeX) this.bibtex = new BibTeXExporter(this)
-      this.items = new Items(this.cacheable)
-      this.collections = new Collections(translator, this.items)
+      const items = new Items(this.cacheable)
+      this.data = { items, collections: new Collections(translator, items) }
+      this.collections = this.data.collections.byKey
     }
   }
 
