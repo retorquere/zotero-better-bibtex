@@ -134,11 +134,11 @@ export class Items {
 }
 
 export class Collections {
-  public collections: Record<string, Collection> = {}
+  public byKey: Record<string, Collection> = {}
 
   constructor(translator: TranslatorMetadata, private items: Items, collections?: Record<string, Collection>) {
     if (collections) {
-      this.collections = collections
+      this.byKey = collections
     }
     else if (translator.configOptions?.getCollections && Zotero.nextCollection) {
       let collection: any
@@ -150,9 +150,9 @@ export class Collections {
 
   private registerCollection(collection, parent: string) {
     const key = (collection.primary ? collection.primary : collection).key
-    if (this.collections[key]) return // why does JM send collections twice?!
+    if (this.byKey[key]) return // why does JM send collections twice?!
 
-    this.collections[key] = {
+    this.byKey[key] = {
       key,
       parent,
       name: collection.name,
@@ -163,18 +163,18 @@ export class Collections {
     for (const child of (collection.descendents || collection.children)) {
       switch (child.type) {
         case 'collection':
-          this.collections[key].collections.push(child.key as string)
+          this.byKey[key].collections.push(child.key as string)
           this.registerCollection(child, key)
           break
         case 'item':
-          this.collections[key].items.push(child.id as number)
+          this.byKey[key].items.push(child.id as number)
           break
       }
     }
   }
 
   public get collectionTree(): NestedCollection[] {
-    return Object.values(this.collections).filter(coll => !coll.parent).map(coll => this.nestedCollection(coll))
+    return Object.values(this.byKey).filter(coll => !coll.parent).map(coll => this.nestedCollection(coll))
   }
 
   private nestedCollection(collection: Collection): NestedCollection {
@@ -182,8 +182,9 @@ export class Collections {
       key: collection.key,
       name: collection.name,
       items: collection.items.map((itemID: number) => this.items.map[itemID]).filter((item: Item) => item),
-      collections: collection.collections.map((key: string) => this.nestedCollection(this.collections[key])).filter((coll: NestedCollection) => coll),
+      collections: collection.collections.map((key: string) => this.nestedCollection(this.byKey[key])).filter((coll: NestedCollection) => coll),
     }
+
     for (const coll of nested.collections) {
       coll.parent = nested
     }

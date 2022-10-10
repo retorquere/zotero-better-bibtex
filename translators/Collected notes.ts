@@ -54,8 +54,9 @@ class Exporter {
       if (this.keep(cleaned)) items[item.itemID] = cleaned
     }
 
-    for (const [key, collection] of Object.entries(this.translation.collections)) {
+    for (const [key, collection] of Object.entries(this.translation.collections.byKey)) {
       for (const itemID of collection.items) filed.add(itemID)
+
       collections[key] = {
         name: collection.name,
         // resolve item IDs to items

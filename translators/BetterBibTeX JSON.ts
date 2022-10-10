@@ -138,7 +138,7 @@ export function doExport(): void {
       zotero: Zotero.Utilities.getVersion(),
       bbt: version,
     },
-    collections: translation.collections.collections,
+    collections: translation.collections.byKey,
     items: [],
   }
 
