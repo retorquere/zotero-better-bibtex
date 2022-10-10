@@ -36,6 +36,9 @@ export interface Attachment extends ItemBase {
   mimeType?: string
   localPath?: string
   defaultPath?: string
+  relations: { 'dc:relation': string[] }
+
+  saveFile(path: string, overwrite: boolean): void
 }
 
 export interface RegularItem extends ItemBase {
