@@ -5,7 +5,6 @@ import { affects, names as preferences, defaults, PreferenceName, Preferences as
 import { TeXMap } from '../../content/prefs'
 import { client } from '../../content/client'
 import { RegularItem, Item, Collection } from '../../gen/typings/serialized-item'
-import { Pinger } from '../../content/ping'
 import { Exporter as BibTeXExporter } from '../bibtex/exporter'
 
 declare const dump: (msg: string) => void
@@ -88,25 +87,26 @@ export class Items {
   public map: Record<number | string, CacheableItem> = {}
   public current: CacheableItem
 
-  private ping: Pinger
-
-  constructor(cacheable: boolean) {
+  constructor(cacheable: boolean, items?: CacheableItem[]) {
     let item: CacheableItem
-    while (item = Zotero.nextItem()) {
-      item.$cacheable = cacheable;
-      (item as RegularItem).journalAbbreviation = (item as RegularItem).journalAbbreviation || (item as RegularItem).autoJournalAbbreviation
-      this.items.push(this.map[item.itemID] = this.map[item.itemKey] = new Proxy(item, cacheDisabler))
+    if (items) {
+      this.items = items
+    }
+    else {
+      while (item = Zotero.nextItem()) {
+        (item as RegularItem).journalAbbreviation = (item as RegularItem).journalAbbreviation || (item as RegularItem).autoJournalAbbreviation
+        this.items.push(this.map[item.itemID] = this.map[item.itemKey] = new Proxy(item, cacheDisabler))
+      }
+    }
+
+    for (item of this.items) {
+      item.$cacheable = cacheable
     }
     // fallback to itemType.itemID for notes and attachments. And some items may have duplicate keys
     this.items.sort((a: any, b: any) => {
       const ka = [ a.citationKey || a.itemType, a.dateModified || a.dateAdded, a.itemID ].join('\t')
       const kb = [ b.citationKey || b.itemType, b.dateModified || b.dateAdded, b.itemID ].join('\t')
       return ka.localeCompare(kb, undefined, { sensitivity: 'base' })
-    })
-
-    this.ping = new Pinger({
-      total: this.items.length,
-      callback: pct => Zotero.worker ? Zotero.BetterBibTeX.setProgress(pct) : null, // eslint-disable-line @typescript-eslint/no-unsafe-return
     })
   }
 
@@ -130,17 +130,18 @@ export class Items {
         default:
           yield (this.current = item) as unknown as CacheableRegularItem
       }
-      this.ping.update()
     }
-    this.ping.done()
   }
 }
 
 export class Collections {
   public collections: Record<string, Collection> = {}
 
-  constructor(translator: TranslatorMetadata, private items: Items) {
-    if (translator.configOptions?.getCollections && Zotero.nextCollection) {
+  constructor(translator: TranslatorMetadata, private items: Items, collections?: Record<string, Collection>) {
+    if (collections) {
+      this.collections = collections
+    }
+    else if (translator.configOptions?.getCollections && Zotero.nextCollection) {
       let collection: any
       while (collection = Zotero.nextCollection()) {
         this.registerCollection(collection, '')
