@@ -289,7 +289,7 @@ export function doExport(): void {
     ref.add({ name: 'urldate', value: item.accessDate && item.accessDate.replace(/\s*T?\d+:\d+:\d+.*/, '') })
 
     if (ref.entrytype_source === 'zotero.conferencePaper') {
-      ref.add({ name: 'booktitle', value: (translation.options.useJournalAbbreviation && item.journalAbbreviation) || item.publicationTitle || item.conferenceName, bibtexStrings: true })
+      ref.add({ name: 'booktitle', value: (translation.options.useJournalAbbreviation && (item.journalAbbreviation || item.autoJournalAbbreviation)) || item.publicationTitle || item.conferenceName, bibtexStrings: true })
     }
     else if (['zotero.bookSection', 'tex.chapter', 'csl.chapter'].includes(ref.entrytype_source)) {
       ref.add({ name: 'booktitle', value: item.publicationTitle || item.conferenceName, bibtexStrings: true })
@@ -298,7 +298,7 @@ export function doExport(): void {
       ref.add({ name: 'journal', value: item.publicationTitle, bibtexStrings: true })
     }
     else {
-      ref.add({ name: 'journal', value: (translation.options.useJournalAbbreviation && item.journalAbbreviation) || item.publicationTitle, bibtexStrings: true })
+      ref.add({ name: 'journal', value: (translation.options.useJournalAbbreviation && (item.journalAbbreviation || item.autoJournalAbbreviation)) || item.publicationTitle, bibtexStrings: true })
     }
 
     let reftype = ref.entrytype_source.split('.')[1]

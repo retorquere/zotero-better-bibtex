@@ -94,7 +94,6 @@ export class Items {
     }
     else {
       while (item = Zotero.nextItem()) {
-        (item as RegularItem).journalAbbreviation = (item as RegularItem).journalAbbreviation || (item as RegularItem).autoJournalAbbreviation
         this.items.push(this.map[item.itemID] = this.map[item.itemKey] = new Proxy(item, cacheDisabler))
       }
     }

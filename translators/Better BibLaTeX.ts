@@ -368,6 +368,7 @@ export function doExport(): void {
     const number_added = entry.add({ name: 'number', value: patent.number(item) || item.number || item.seriesNumber })
     entry.add({ name: !number_added && looks_like_number_field(item.issue) ? 'number' : 'issue', value: item.issue })
 
+    const journalAbbreviation = item.journalAbbreviation || item.autoJournalAbbreviation
     switch (entry.entrytype) {
       case 'jurisdiction':
         entry.add({ name: 'journaltitle', value: item.reporter || (item.publicationTitle !== item.title && item.publicationTitle), bibtexStrings: true })
@@ -388,8 +389,8 @@ export function doExport(): void {
           if (entry.entrytype === 'inproceedings' && entry.getBibString(item.publicationTitle)) {
             entry.add({ name: 'booktitle', value: item.publicationTitle, bibtexStrings: true })
           }
-          else if (entry.entrytype === 'inproceedings' && translation.options.useJournalAbbreviation && item.publicationTitle && item.journalAbbreviation) {
-            entry.add({ name: 'booktitle', value: item.journalAbbreviation, bibtexStrings: true })
+          else if (entry.entrytype === 'inproceedings' && translation.options.useJournalAbbreviation && item.publicationTitle && journalAbbreviation) {
+            entry.add({ name: 'booktitle', value: journalAbbreviation, bibtexStrings: true })
           }
           else {
             entry.add({ name: 'booktitle', value: item.publicationTitle, bibtexStrings: true })
@@ -406,8 +407,8 @@ export function doExport(): void {
           entry.add({ name: 'journaltitle', value: item.publicationTitle, bibtexStrings: true })
 
         }
-        else if (translation.options.useJournalAbbreviation && item.publicationTitle && item.journalAbbreviation) {
-          entry.add({ name: 'journaltitle', value: item.journalAbbreviation, bibtexStrings: true })
+        else if (translation.options.useJournalAbbreviation && item.publicationTitle && journalAbbreviation) {
+          entry.add({ name: 'journaltitle', value: journalAbbreviation, bibtexStrings: true })
 
         }
         else {
@@ -417,7 +418,7 @@ export function doExport(): void {
             entry.add({ name: 'journalsubtitle', value: item.section })
           }
           else {
-            entry.add({ name: 'shortjournal', value: item.journalAbbreviation, bibtexStrings: true })
+            entry.add({ name: 'shortjournal', value: journalAbbreviation, bibtexStrings: true })
           }
         }
         break

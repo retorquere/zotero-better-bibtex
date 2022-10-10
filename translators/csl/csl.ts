@@ -75,6 +75,8 @@ export abstract class CSLExporter {
 
       Object.assign(item, getExtra(item.extra, 'csl'))
 
+      item.journalAbbreviation = item.journalAbbreviation || item.autoJournalAbbreviation
+
       let csl = Zotero.Utilities.itemToCSLJSON(item)
       csl['citation-key'] = item.citationKey
       if (Zotero.worker) csl.note = item.extra || undefined
