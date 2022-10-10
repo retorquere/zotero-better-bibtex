@@ -545,7 +545,7 @@ export class Entry {
 
   public complete(): void {
     if (this.translation.preferences.jabrefFormat >= 4 && this.item.collections?.length) { // eslint-disable-line no-magic-numbers
-      const groups = Array.from(new Set(this.item.collections.map(key => this.translation.collections[key]?.name).filter(name => name))).sort()
+      const groups = Array.from(new Set(this.item.collections.map(key => this.translation.collections.byKey[key]?.name).filter(name => name))).sort()
       this.add({ name: 'groups', value: groups.join(',') })
     }
 

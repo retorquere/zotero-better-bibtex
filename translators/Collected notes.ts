@@ -63,10 +63,11 @@ class Exporter {
         items: (collection.items || []).map(itemID => items[itemID]).filter(item => item),
         // resolve collection IDs to collections
         collections: [],
-        root: !this.translation.collections[collection.parent],
+        root: !this.translation.collections.byKey[collection.parent],
       }
     }
-    for (const [key, collection] of Object.entries(this.translation.collections)) {
+
+    for (const [key, collection] of Object.entries(this.translation.collections.byKey)) {
       collections[key].collections = (collection.collections || []).map(coll => collections[coll]).filter(coll => coll)
     }
 
