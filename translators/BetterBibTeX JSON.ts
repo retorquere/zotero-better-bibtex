@@ -116,7 +116,7 @@ export async function doImport(): Promise<void> {
   }
   for (const collection of collections) {
     if (collection.parent) continue
-    await collection.zoteroCollection.complete()
+    collection.zoteroCollection.complete()
   }
 }
 

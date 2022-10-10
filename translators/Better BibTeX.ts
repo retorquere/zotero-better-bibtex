@@ -498,7 +498,6 @@ class ZoteroItem {
     if (!Object.keys(this.bibtex.fields).length) {
       this.errors.push({ message: `No fields in ${this.bibtex.key ? `@${this.bibtex.key}` : 'unnamed item'}` })
       this.item = null
-
     }
     else {
       this.item = new Zotero.Item(this.type)
