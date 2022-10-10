@@ -8,7 +8,7 @@ import { simplifyForImport, simplifyForExport } from '../gen/items/simplify'
 const version = require('../gen/version.js')
 import { stringify } from '../content/stringify'
 import { log } from '../content/logger'
-import { normalize } from './lib/normalize'
+import { normalize, Library } from './lib/normalize'
 
 const chunkSize = 0x100000
 
@@ -39,10 +39,10 @@ export async function doImport(): Promise<void> {
     json += str
   }
 
-  const data = JSON.parse(json)
+  const data: Library = JSON.parse(json)
   if (!data.items || !data.items.length) return
 
-  const items = new Set
+  const items = new Set<number>
   for (const source of (data.items as any[])) {
     simplifyForImport(source)
 
@@ -107,7 +107,7 @@ export async function doImport(): Promise<void> {
   }
   for (const collection of collections) {
     if (collection.parent && data.collections[collection.parent]) {
-      data.collections[collection.parent].zoteroCollection.children.push(collection.zoteroCollection)
+      (data.collections[collection.parent] as unknown as any).zoteroCollection.children.push(collection.zoteroCollection)
     }
     else {
       if (collection.parent) log.error(`Collection ${collection.key} has non-existent parent ${collection.parent}`)
@@ -116,7 +116,7 @@ export async function doImport(): Promise<void> {
   }
   for (const collection of collections) {
     if (collection.parent) continue
-    collection.zoteroCollection.complete()
+    await collection.zoteroCollection.complete()
   }
 }
 
@@ -134,7 +134,7 @@ export function doExport(): void {
       zotero: Zotero.Utilities.getVersion(),
       bbt: version,
     },
-    collections: translation.collections,
+    collections: translation.collections.collections,
     items: [],
   }
 

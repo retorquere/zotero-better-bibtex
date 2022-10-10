@@ -9,7 +9,7 @@ function rjust(str: string | number, width: number, padding: string): string {
   return str.length < width ? padding.repeat(width - str.length) + str : str
 }
 
-type Library = {
+export type Library = {
   config: any
   preferences?: any
 

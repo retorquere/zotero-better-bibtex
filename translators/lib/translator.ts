@@ -14,6 +14,7 @@ type TranslatorMode = 'export' | 'import'
 type Preferences = StoredPreferences & { texmap?: TeXMap }
 
 type CacheableItem = Item & { $cacheable: boolean }
+type CacheableRegularItem = RegularItem & { $cacheable: boolean }
 
 const cacheDisabler = new class {
   get(target, property) {
@@ -82,8 +83,8 @@ export type TranslatorMetadata = {
   }
 }
 
-class Items {
-  public list: CacheableItem[] = []
+export class Items {
+  private items: CacheableItem[] = []
   public map: Record<number | string, CacheableItem> = {}
   public current: CacheableItem
 
@@ -94,31 +95,32 @@ class Items {
     while (item = Zotero.nextItem()) {
       item.$cacheable = cacheable;
       (item as RegularItem).journalAbbreviation = (item as RegularItem).journalAbbreviation || (item as RegularItem).autoJournalAbbreviation
-      this.list.push(this.map[item.itemID] = this.map[item.itemKey] = new Proxy(item, cacheDisabler))
+      this.items.push(this.map[item.itemID] = this.map[item.itemKey] = new Proxy(item, cacheDisabler))
     }
     // fallback to itemType.itemID for notes and attachments. And some items may have duplicate keys
-    this.list.sort((a: any, b: any) => {
+    this.items.sort((a: any, b: any) => {
       const ka = [ a.citationKey || a.itemType, a.dateModified || a.dateAdded, a.itemID ].join('\t')
       const kb = [ b.citationKey || b.itemType, b.dateModified || b.dateAdded, b.itemID ].join('\t')
       return ka.localeCompare(kb, undefined, { sensitivity: 'base' })
     })
 
     this.ping = new Pinger({
-      total: this.list.length,
+      total: this.items.length,
       callback: pct => Zotero.worker ? Zotero.BetterBibTeX.setProgress(pct) : null, // eslint-disable-line @typescript-eslint/no-unsafe-return
     })
   }
 
-  *items(): Generator<Item, void, unknown> {
-    for (const item of this.list) {
-      yield (this.current = item) as Item
-      this.ping.update()
+  *[Symbol.iterator](): Generator<CacheableItem, void, unknown> {
+    for (const item of this.items) {
+      yield item
     }
-    this.ping.done()
   }
 
-  *regularitems(): Generator<RegularItem, void, unknown> {
-    for (const item of this.list) {
+  public get regular(): Generator<CacheableRegularItem, void, unknown> {
+    return this._regular()
+  }
+  private *_regular(): Generator<CacheableRegularItem, void, unknown> {
+    for (const item of this.items) {
       switch (item.itemType) {
         case 'annotation':
         case 'note':
@@ -126,11 +128,66 @@ class Items {
           break
 
         default:
-          yield (this.current = item) as unknown as RegularItem
+          yield (this.current = item) as unknown as CacheableRegularItem
       }
       this.ping.update()
     }
     this.ping.done()
+  }
+}
+
+export class Collections {
+  public collections: Record<string, Collection> = {}
+
+  constructor(translator: TranslatorMetadata, private items: Items) {
+    if (translator.configOptions?.getCollections && Zotero.nextCollection) {
+      let collection: any
+      while (collection = Zotero.nextCollection()) {
+        this.registerCollection(collection, '')
+      }
+    }
+  }
+
+  private registerCollection(collection, parent: string) {
+    const key = (collection.primary ? collection.primary : collection).key
+    if (this.collections[key]) return // why does JM send collections twice?!
+
+    this.collections[key] = {
+      key,
+      parent,
+      name: collection.name,
+      collections: [],
+      items: [],
+    }
+
+    for (const child of (collection.descendents || collection.children)) {
+      switch (child.type) {
+        case 'collection':
+          this.collections[key].collections.push(child.key as string)
+          this.registerCollection(child, key)
+          break
+        case 'item':
+          this.collections[key].items.push(child.id as number)
+          break
+      }
+    }
+  }
+
+  public get collectionTree(): NestedCollection[] {
+    return Object.values(this.collections).filter(coll => !coll.parent).map(coll => this.nestedCollection(coll))
+  }
+
+  private nestedCollection(collection: Collection): NestedCollection {
+    const nested: NestedCollection = {
+      key: collection.key,
+      name: collection.name,
+      items: collection.items.map((itemID: number) => this.items.map[itemID]).filter((item: Item) => item),
+      collections: collection.collections.map((key: string) => this.nestedCollection(this.collections[key])).filter((coll: NestedCollection) => coll),
+    }
+    for (const coll of nested.collections) {
+      coll.parent = nested
+    }
+    return nested
   }
 }
 
@@ -182,15 +239,15 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
   // public CSL: boolean
 
   public bibtex: BibTeXExporter
+  public items: Items
+  public collections: Collections
+
   private cacheable = true
-  private _items: Items
 
   public cache: {
     hits: number
     requests: number
   }
-
-  public collections: Record<string, Collection>
 
   public isJurisM: boolean
   public isZotero: boolean
@@ -204,12 +261,12 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
   public and: { list: { re: any, repl: string }, names: { re: any, repl: string } }
 
   public get exportDir(): string {
-    this._items.current.$cacheable = false
+    this.items.current.$cacheable = false
     return this.export.dir
   }
 
   public get exportPath(): string {
-    this._items.current.$cacheable = false
+    this.items.current.$cacheable = false
     return this.export.path
   }
 
@@ -292,8 +349,6 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
 
     this.preferences.testing = (Zotero.getHiddenPref('better-bibtex.testing') as boolean)
 
-    this.collections = {}
-
     if (mode === 'export') {
       this.cache = {
         hits: 0,
@@ -339,13 +394,6 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
         this.preferences.separatorNames = ` ${this.preferences.separatorNames} `
       }
 
-      if (translator.configOptions?.getCollections && Zotero.nextCollection) {
-        let collection: any
-        while (collection = Zotero.nextCollection()) {
-          this.registerCollection(collection, '')
-        }
-      }
-
       if (this.preferences.testing && typeof __estrace === 'undefined' && schema.translator[translator.label]?.cache) {
         const ignored = {
           testing: true,
@@ -368,6 +416,8 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
       }
 
       if (this.BetterTeX) this.bibtex = new BibTeXExporter(this)
+      this.items = new Items(this.cacheable)
+      this.collections = new Collections(translator, this.items)
     }
   }
 
@@ -380,56 +430,5 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
     catch (err) {
       return undefined
     }
-  }
-
-  private registerCollection(collection, parent: string) {
-    const key = (collection.primary ? collection.primary : collection).key
-    if (this.collections[key]) return // why does JM send collections twice?!
-
-    this.collections[key] = {
-      key,
-      parent,
-      name: collection.name,
-      collections: [],
-      items: [],
-    }
-
-    for (const child of (collection.descendents || collection.children)) {
-      switch (child.type) {
-        case 'collection':
-          this.collections[key].collections.push(child.key as string)
-          this.registerCollection(child, key)
-          break
-        case 'item':
-          this.collections[key].items.push(child.id as number)
-          break
-      }
-    }
-  }
-
-  get collectionTree(): NestedCollection[] {
-    return Object.values(this.collections).filter(coll => !coll.parent).map(coll => this.nestedCollection(coll))
-  }
-  private nestedCollection(collection: Collection): NestedCollection {
-    this._items = this._items || new Items(this.cacheable)
-    const nested: NestedCollection = {
-      key: collection.key,
-      name: collection.name,
-      items: collection.items.map((itemID: number) => this._items.map[itemID]).filter((item: Item) => item),
-      collections: collection.collections.map((key: string) => this.nestedCollection(this.collections[key])).filter((coll: NestedCollection) => coll),
-    }
-    for (const coll of nested.collections) {
-      coll.parent = nested
-    }
-    return nested
-  }
-
-  get items(): Generator<Item, void, unknown> {
-    this._items = this._items || new Items(this.cacheable)
-    return this._items.items()
-  }
-  get regularitems(): Generator<RegularItem, void, unknown> {
-    this._items = this._items || new Items(this.cacheable)
-    return this._items.regularitems()
   }
 }
