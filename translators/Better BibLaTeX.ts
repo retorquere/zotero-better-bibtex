@@ -284,6 +284,12 @@ const patent = new class {
 
 export function doExport(): void {
   const translation = Translation.Export(ZOTERO_TRANSLATOR_INFO, collect())
+  generateExport(translation)
+  translation.saveAttachments()
+  Zotero.write(translation.output.body)
+}
+
+export function generateExport(translation: Translation): void {
   Entry.installPostscript(translation)
   translation.bibtex.prepare_strings()
 
@@ -592,6 +598,4 @@ export function doExport(): void {
   }
 
   translation.bibtex.complete()
-  translation.saveAttachments()
-  Zotero.write(translation.output.body)
 }
