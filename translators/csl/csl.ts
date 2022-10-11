@@ -59,7 +59,7 @@ export abstract class CSLExporter {
   public doExport(): void {
     const items = []
     const order: { citationKey: string, i: number}[] = []
-    for (const item of (this.translation.data.items.regular as Generator<ExtendedItem, void, unknown>)) {
+    for (const item of (this.translation.input.items.regular as Generator<ExtendedItem, void, unknown>)) {
       order.push({ citationKey: item.citationKey, i: items.length })
 
       let cached: Cache.ExportedItem

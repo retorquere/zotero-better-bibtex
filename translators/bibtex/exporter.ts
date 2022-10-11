@@ -46,7 +46,7 @@ export class Exporter {
   private *itemsGenerator(): Generator<RegularItem, void, unknown> {
     if (!this.postfix && this.translation.BetterTeX) this.postfix = new Postfix(this.translation.preferences.qualityReport)
 
-    for (const item of this.translation.data.items.regular) {
+    for (const item of this.translation.input.items.regular) {
       Object.assign(item, Extra.get(item.extra, 'zotero'))
       if (typeof item.itemID !== 'number') { // https://github.com/diegodlh/zotero-cita/issues/145
         item.citationKey = item.extraFields.citationKey

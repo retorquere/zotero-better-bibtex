@@ -87,26 +87,29 @@ export class Items {
   public map: Record<number | string, CacheableItem> = {}
   public current: CacheableItem
 
-  constructor(cacheable: boolean, items?: CacheableItem[]) {
-    let item: CacheableItem
+  constructor(items?: CacheableItem[]) {
     if (items) {
-      this.items = items
+      this.items = items.map(item => this.map[item.itemID] = this.map[item.itemKey] = new Proxy(item, cacheDisabler) as CacheableItem)
     }
     else {
+      let item: CacheableItem
       while (item = Zotero.nextItem()) {
         this.items.push(this.map[item.itemID] = this.map[item.itemKey] = new Proxy(item, cacheDisabler))
       }
     }
 
-    for (item of this.items) {
-      item.$cacheable = cacheable
-    }
     // fallback to itemType.itemID for notes and attachments. And some items may have duplicate keys
     this.items.sort((a: any, b: any) => {
       const ka = [ a.citationKey || a.itemType, a.dateModified || a.dateAdded, a.itemID ].join('\t')
       const kb = [ b.citationKey || b.itemType, b.dateModified || b.dateAdded, b.itemID ].join('\t')
       return ka.localeCompare(kb, undefined, { sensitivity: 'base' })
     })
+  }
+
+  public cacheable(cacheable: boolean): void {
+    for (const item of this.items) {
+      item.$cacheable = cacheable
+    }
   }
 
   *[Symbol.iterator](): Generator<CacheableItem, void, unknown> {
@@ -208,8 +211,6 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
     path: undefined,
   }
 
-  public output = ''
-
   public options: {
     quickCopyMode?: string
     dropAttachments?: boolean
@@ -241,11 +242,12 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
 
   public bibtex: BibTeXExporter
 
-  public data: {
+  public input: {
     items: Items
     collections: Collections
   }
   public collections: Record<string, Collection> = {} // keep because it is being used in postscripts
+  public output = ''
 
   private cacheable = true
 
@@ -266,12 +268,12 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
   public and: { list: { re: any, repl: string }, names: { re: any, repl: string } }
 
   public get exportDir(): string {
-    this.data.items.current.$cacheable = false
+    this.input.items.current.$cacheable = false
     return this.export.dir
   }
 
   public get exportPath(): string {
-    this.data.items.current.$cacheable = false
+    this.input.items.current.$cacheable = false
     return this.export.path
   }
 
@@ -421,9 +423,12 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
       }
 
       if (this.BetterTeX) this.bibtex = new BibTeXExporter(this)
-      const items = new Items(this.cacheable)
-      this.data = { items, collections: new Collections(translator, items) }
-      this.collections = this.data.collections.byKey
+
+      const items = new Items
+      this.input = { items, collections: new Collections(translator, items) }
+
+      items.cacheable(this.cacheable)
+      this.collections = this.input.collections.byKey
     }
   }
 

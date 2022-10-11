@@ -144,7 +144,7 @@ export function doExport(): void {
 
   const validAttachmentFields = new Set([ 'relations', 'uri', 'itemType', 'title', 'path', 'tags', 'dateAdded', 'dateModified', 'seeAlso', 'mimeType' ])
 
-  for (const item of translation.data.items) {
+  for (const item of translation.input.items) {
     if (!translation.preferences.testing) addSelect(item)
     delete (item as any).$cacheable
 
