@@ -7,9 +7,6 @@ import { client } from '../../content/client'
 import { RegularItem, Item, Collection } from '../../gen/typings/serialized-item'
 import { Exporter as BibTeXExporter } from '../bibtex/exporter'
 
-declare const dump: (msg: string) => void
-
-type TranslatorMode = 'export' | 'import'
 type Preferences = StoredPreferences & { texmap?: TeXMap }
 
 type CacheableItem = Item & { $cacheable: boolean }
@@ -139,11 +136,11 @@ export class Items {
 export class Collections {
   public byKey: Record<string, Collection> = {}
 
-  constructor(translator: TranslatorMetadata, private items: Items, collections?: Record<string, Collection>) {
+  constructor(private items: Items, collections?: Record<string, Collection>) {
     if (collections) {
       this.byKey = collections
     }
-    else if (translator.configOptions?.getCollections && Zotero.nextCollection) {
+    else if (Zotero.nextCollection) {
       let collection: any
       while (collection = Zotero.nextCollection()) {
         this.registerCollection(collection, '')
@@ -197,6 +194,16 @@ export class Collections {
 
 function escapeRegExp(text: string): string {
   return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&')
+}
+
+export type Input = {
+  items: Items
+  collections: Collections
+}
+
+export function collect(): Input {
+  const items = new Items
+  return { items, collections: new Collections(items) }
 }
 
 export class Translation { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
@@ -284,15 +291,92 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
     return field
   }
 
-  constructor(public translator: TranslatorMetadata, mode: TranslatorMode) {
+  static Import(translator: TranslatorMetadata): Translation {
+    return new this(translator)
+  }
+  static Export(translator: TranslatorMetadata, input: Input): Translation {
+    const translation = new this(translator)
+
+    translation.input = input
+
+    translation.cache = {
+      hits: 0,
+      requests: 0,
+    }
+    translation.export = {
+      dir: (Zotero.getOption('exportDir') as string),
+      path: (Zotero.getOption('exportPath') as string),
+    }
+    if (translation.export.dir?.endsWith(translation.paths.sep)) translation.export.dir = translation.export.dir.slice(0, -1)
+    translation.options.cacheUse = Zotero.getOption('cacheUse')
+
+    translation.unicode = !translation.preferences[`ascii${translator.label.replace(/Better /, '')}`]
+
+    if (translation.preferences.baseAttachmentPath && (translation.export.dir === translation.preferences.baseAttachmentPath || translation.export.dir?.startsWith(translation.preferences.baseAttachmentPath + translation.paths.sep))) {
+      translation.preferences.relativeFilePaths = true
+    }
+
+    // when exporting file data you get relative paths, when not, you get absolute paths, only one version can go into the cache
+    // relative file paths are going to be different based on the file being exported to
+    translation.cacheable = translation.cacheable && translation.preferences.cache && !(
+      translation.options.exportFileData
+      ||
+      translation.preferences.relativeFilePaths
+      ||
+      (translation.preferences.baseAttachmentPath && translation.export.dir?.startsWith(translation.preferences.baseAttachmentPath))
+    )
+
+    if (translation.BetterTeX) {
+      translation.preferences.separatorList = translation.preferences.separatorList.trim()
+      translation.preferences.separatorNames = translation.preferences.separatorNames.trim()
+      translation.and = {
+        list: {
+          re: new RegExp(escapeRegExp(translation.preferences.separatorList), 'g'),
+          repl: ` {${translation.preferences.separatorList}} `,
+        },
+        names: {
+          re: new RegExp(` ${escapeRegExp(translation.preferences.separatorNames)} `, 'g'),
+          repl: ` {${translation.preferences.separatorNames}} `,
+        },
+      }
+      translation.preferences.separatorList = ` ${translation.preferences.separatorList} `
+      translation.preferences.separatorNames = ` ${translation.preferences.separatorNames} `
+    }
+
+    if (translation.preferences.testing && typeof __estrace === 'undefined' && schema.translator[translator.label]?.cache) {
+      const ignored = {
+        testing: true,
+        texmap: true,
+      }
+      translation.preferences = new Proxy(translation.preferences, {
+        set: (object, property, _value) => {
+          throw new TypeError(`Unexpected set of preference ${String(property)}`)
+        },
+        get: (object, property: PreferenceName) => {
+          // JSON.stringify will attempt to get this
+          if (property as unknown as string === 'toJSON') return object[property]
+          if (!ignored[property]) {
+            if (!preferences.includes(property)) throw new TypeError(`Unsupported preference ${property}`)
+            if (!affects[property]?.includes(translator.label)) throw new TypeError(`Preference ${property} claims not to affect ${translator.label}`)
+          }
+          return object[property] // eslint-disable-line @typescript-eslint/no-unsafe-return
+        },
+      })
+    }
+
+    if (translation.BetterTeX) translation.bibtex = new BibTeXExporter(translation)
+
+    translation.input.items.cacheable(translation.cacheable)
+    translation.collections = translation.input.collections.byKey
+
+    return translation
+  }
+
+  private constructor(public translator: TranslatorMetadata) {
     this[translator.label.replace(/[^a-z]/ig, '')] = true
     this.BetterTeX = this.BetterBibTeX || this.BetterBibLaTeX
     this.BetterCSL = this.BetterCSLJSON || this.BetterCSLYAML
     this.options = translator.displayOptions || {}
-
-    let start = `${translator.label} ${mode} translator starting in ${Zotero.worker ? 'background' : 'foreground'}`
-    if (!!Zotero.worker !== (mode === 'export' && !!this.options.worker)) start += ', which was unexpected'
-    dump(start)
 
     this.platform = (Zotero.getHiddenPref('better-bibtex.platform') as string)
     this.isJurisM = client === 'jurism'
@@ -355,81 +439,6 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
     this.csquotes = this.preferences.csquotes ? { open: this.preferences.csquotes[0], close: this.preferences.csquotes[1] } : null
 
     this.preferences.testing = (Zotero.getHiddenPref('better-bibtex.testing') as boolean)
-
-    if (mode === 'export') {
-      this.cache = {
-        hits: 0,
-        requests: 0,
-      }
-      this.export = {
-        dir: (Zotero.getOption('exportDir') as string),
-        path: (Zotero.getOption('exportPath') as string),
-      }
-      if (this.export.dir?.endsWith(this.paths.sep)) this.export.dir = this.export.dir.slice(0, -1)
-      this.options.cacheUse = Zotero.getOption('cacheUse')
-
-      this.unicode = !this.preferences[`ascii${translator.label.replace(/Better /, '')}`]
-
-      if (this.preferences.baseAttachmentPath && (this.export.dir === this.preferences.baseAttachmentPath || this.export.dir?.startsWith(this.preferences.baseAttachmentPath + this.paths.sep))) {
-        this.preferences.relativeFilePaths = true
-      }
-
-      // when exporting file data you get relative paths, when not, you get absolute paths, only one version can go into the cache
-      // relative file paths are going to be different based on the file being exported to
-      this.cacheable = this.cacheable && this.preferences.cache && !(
-        this.options.exportFileData
-        ||
-        this.preferences.relativeFilePaths
-        ||
-        (this.preferences.baseAttachmentPath && this.export.dir?.startsWith(this.preferences.baseAttachmentPath))
-      )
-
-      if (this.BetterTeX) {
-        this.preferences.separatorList = this.preferences.separatorList.trim()
-        this.preferences.separatorNames = this.preferences.separatorNames.trim()
-        this.and = {
-          list: {
-            re: new RegExp(escapeRegExp(this.preferences.separatorList), 'g'),
-            repl: ` {${this.preferences.separatorList}} `,
-          },
-          names: {
-            re: new RegExp(` ${escapeRegExp(this.preferences.separatorNames)} `, 'g'),
-            repl: ` {${this.preferences.separatorNames}} `,
-          },
-        }
-        this.preferences.separatorList = ` ${this.preferences.separatorList} `
-        this.preferences.separatorNames = ` ${this.preferences.separatorNames} `
-      }
-
-      if (this.preferences.testing && typeof __estrace === 'undefined' && schema.translator[translator.label]?.cache) {
-        const ignored = {
-          testing: true,
-          texmap: true,
-        }
-        this.preferences = new Proxy(this.preferences, {
-          set: (object, property, _value) => {
-            throw new TypeError(`Unexpected set of preference ${String(property)}`)
-          },
-          get: (object, property: PreferenceName) => {
-            // JSON.stringify will attempt to get this
-            if (property as unknown as string === 'toJSON') return object[property]
-            if (!ignored[property]) {
-              if (!preferences.includes(property)) throw new TypeError(`Unsupported preference ${property}`)
-              if (!affects[property]?.includes(translator.label)) throw new TypeError(`Preference ${property} claims not to affect ${translator.label}`)
-            }
-            return object[property] // eslint-disable-line @typescript-eslint/no-unsafe-return
-          },
-        })
-      }
-
-      if (this.BetterTeX) this.bibtex = new BibTeXExporter(this)
-
-      const items = new Items
-      this.input = { items, collections: new Collections(translator, items) }
-
-      items.cacheable(this.cacheable)
-      this.collections = this.input.collections.byKey
-    }
   }
 
   getPreferenceOverride(pref) { // eslint-disable-line @typescript-eslint/explicit-module-boundary-types

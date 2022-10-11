@@ -3,7 +3,7 @@ declare const Zotero: any
 import YAML = require('js-yaml')
 import { Date as CSLDate, Data as CSLItem, LooseNumber } from 'csl-json'
 
-import { Translation, TranslatorMetadata } from './lib/translator'
+import { Translation, TranslatorMetadata, collect } from './lib/translator'
 declare var ZOTERO_TRANSLATOR_INFO: TranslatorMetadata // eslint-disable-line no-var
 
 import type { MarkupNode } from '../typings/markup'
@@ -167,7 +167,7 @@ class Exporter extends CSLExporter {
 }
 
 export function doExport(): void {
-  const translation = new Translation(ZOTERO_TRANSLATOR_INFO, 'export')
+  const translation = Translation.Export(ZOTERO_TRANSLATOR_INFO, collect())
   const exporter = new Exporter(translation)
   exporter.doExport()
   Zotero.write(translation.output)

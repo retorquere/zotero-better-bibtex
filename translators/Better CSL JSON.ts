@@ -1,4 +1,4 @@
-import { Translation, TranslatorMetadata } from './lib/translator'
+import { Translation, TranslatorMetadata, collect } from './lib/translator'
 declare var ZOTERO_TRANSLATOR_INFO: TranslatorMetadata // eslint-disable-line no-var
 
 import { ParsedDate } from '../content/dateparser'
@@ -70,7 +70,7 @@ class Exporter extends CSLExporter {
 }
 
 export function doExport(): void {
-  const translation = new Translation(ZOTERO_TRANSLATOR_INFO, 'export')
+  const translation = Translation.Export(ZOTERO_TRANSLATOR_INFO, collect())
   const exporter = new Exporter(translation)
   exporter.doExport()
   Zotero.write(translation.output)

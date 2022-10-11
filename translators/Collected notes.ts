@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 
-import { Translation, TranslatorMetadata } from './lib/translator'
+import { Translation, TranslatorMetadata, collect } from './lib/translator'
 
 declare const Zotero: any
 declare var ZOTERO_TRANSLATOR_INFO: TranslatorMetadata // eslint-disable-line no-var
@@ -224,7 +224,7 @@ class Exporter {
 }
 
 export function doExport(): void {
-  const translation = new Translation(ZOTERO_TRANSLATOR_INFO, 'export')
+  const translation = Translation.Export(ZOTERO_TRANSLATOR_INFO, collect())
   const exporter = new Exporter(translation)
   translation.output += exporter[translation.options.markdown ? 'markdown' : 'html']
   Zotero.write(translation.output)

@@ -10,7 +10,7 @@ function edition(n: string | number): string {
 }
 import wordsToNumbers from 'words-to-numbers'
 
-import { Translation, TranslatorMetadata } from './lib/translator'
+import { Translation, TranslatorMetadata, collect } from './lib/translator'
 declare var ZOTERO_TRANSLATOR_INFO: TranslatorMetadata // eslint-disable-line no-var
 
 import { Entry as BaseEntry, Config } from './bibtex/entry'
@@ -254,7 +254,7 @@ class Entry extends BaseEntry {
 const months = [ 'jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec' ]
 
 export function doExport(): void {
-  const translation = new Translation(ZOTERO_TRANSLATOR_INFO, 'export')
+  const translation = Translation.Export(ZOTERO_TRANSLATOR_INFO, collect())
   Entry.installPostscript(translation)
   translation.bibtex.prepare_strings()
 
@@ -1277,7 +1277,7 @@ async function fetch_polyfill(url): Promise<{ json: () => Promise<any>, text: ()
 }
 
 export async function doImport(): Promise<void> {
-  const translation = new Translation(ZOTERO_TRANSLATOR_INFO, 'import')
+  const translation = Translation.Import(ZOTERO_TRANSLATOR_INFO)
 
   const unabbreviate = translation.preferences.importJabRefAbbreviations ? await (await fetch_polyfill('resource://zotero-better-bibtex/unabbrev/unabbrev.json')).json() : undefined
   const strings = translation.preferences.importJabRefStrings ? await (await fetch_polyfill('resource://zotero-better-bibtex/unabbrev/strings.bib')).text() : undefined

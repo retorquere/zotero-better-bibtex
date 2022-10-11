@@ -1,6 +1,6 @@
 declare const Zotero: any
 
-import { Translation, TranslatorMetadata } from './lib/translator'
+import { Translation, TranslatorMetadata, collect } from './lib/translator'
 declare var ZOTERO_TRANSLATOR_INFO: TranslatorMetadata // eslint-disable-line no-var
 
 import { Entry as BaseEntry, Config } from './bibtex/entry'
@@ -283,7 +283,7 @@ const patent = new class {
 }
 
 export function doExport(): void {
-  const translation = new Translation(ZOTERO_TRANSLATOR_INFO, 'export')
+  const translation = Translation.Export(ZOTERO_TRANSLATOR_INFO, collect())
   Entry.installPostscript(translation)
   translation.bibtex.prepare_strings()
 
