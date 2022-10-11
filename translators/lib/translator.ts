@@ -4,7 +4,7 @@ declare const __estrace: any // eslint-disable-line no-underscore-dangle
 import { affects, names as preferences, defaults, PreferenceName, Preferences as StoredPreferences, schema } from '../../gen/preferences/meta'
 import { TeXMap } from '../../content/prefs'
 import { client } from '../../content/client'
-import { RegularItem, Item, Collection } from '../../gen/typings/serialized-item'
+import { RegularItem, Item, Collection, Attachment } from '../../gen/typings/serialized-item'
 import { Exporter as BibTeXExporter } from '../bibtex/exporter'
 
 type Preferences = StoredPreferences & { texmap?: TeXMap }
@@ -201,6 +201,11 @@ export type Input = {
   collections: Collections
 }
 
+export type Output = {
+  body: string
+  attachments: Attachment[]
+}
+
 export function collect(): Input {
   const items = new Items
   return { items, collections: new Collections(items) }
@@ -254,7 +259,10 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
     collections: Collections
   }
   public collections: Record<string, Collection> = {} // keep because it is being used in postscripts
-  public output = ''
+  public output: Output = {
+    body: '',
+    attachments: [],
+  }
 
   private cacheable = true
 
@@ -310,7 +318,7 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
     if (translation.export.dir?.endsWith(translation.paths.sep)) translation.export.dir = translation.export.dir.slice(0, -1)
     translation.options.cacheUse = Zotero.getOption('cacheUse')
 
-    translation.unicode = !translation.preferences[`ascii${translator.label.replace(/Better /, '')}`]
+    translation.unicode = !translation.preferences[`ascii${translator.label.replace(/Better /, '')}`] || false
 
     if (translation.preferences.baseAttachmentPath && (translation.export.dir === translation.preferences.baseAttachmentPath || translation.export.dir?.startsWith(translation.preferences.baseAttachmentPath + translation.paths.sep))) {
       translation.preferences.relativeFilePaths = true

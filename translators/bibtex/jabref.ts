@@ -26,8 +26,8 @@ export class JabRef {
       meta = 'databaseType:bibtex'
     }
 
-    this.translation.output += `@comment{jabref-meta: ${meta};}\n`
-    this.translation.output += `@comment{jabref-meta: ${this.translation.preferences.jabrefFormat === 5 ? 'grouping' : 'groupstree'}:\n` // eslint-disable-line no-magic-numbers
+    this.translation.output.body += `@comment{jabref-meta: ${meta};}\n`
+    this.translation.output.body += `@comment{jabref-meta: ${this.translation.preferences.jabrefFormat === 5 ? 'grouping' : 'groupstree'}:\n` // eslint-disable-line no-magic-numbers
 
     this.groups = ['0 AllEntriesGroup:']
     const collections = Object.values(this.translation.collections).filter(coll => !coll.parent)
@@ -36,8 +36,8 @@ export class JabRef {
       this.exportGroup(collection, 1)
     }
 
-    this.translation.output += this.groups.map(group => this.quote(group, true)).concat('').join(';\n')
-    this.translation.output += '}\n'
+    this.translation.output.body += this.groups.map(group => this.quote(group, true)).concat('').join(';\n')
+    this.translation.output.body += '}\n'
   }
 
   private exportGroup(collection, level: number): void {

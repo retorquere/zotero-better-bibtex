@@ -593,5 +593,5 @@ export function doExport(): void {
 
   translation.bibtex.complete()
 
-  Zotero.write(translation.output)
+  Zotero.write(translation.output.body)
 }

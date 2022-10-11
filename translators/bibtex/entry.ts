@@ -782,7 +782,7 @@ export class Entry {
     ref += this.qualityReport()
     ref += '\n'
 
-    if (allow.write) this.translation.output += ref
+    if (allow.write) this.translation.output.body += ref
 
     this.metadata.DeclarePrefChars = this.unique_chars(this.metadata.DeclarePrefChars)
 

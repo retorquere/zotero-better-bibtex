@@ -170,7 +170,7 @@ export function doExport(): void {
   const translation = Translation.Export(ZOTERO_TRANSLATOR_INFO, collect())
   const exporter = new Exporter(translation)
   exporter.doExport()
-  Zotero.write(translation.output)
+  Zotero.write(translation.output.body)
 }
 
 function parseInput(): any {

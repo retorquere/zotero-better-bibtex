@@ -29,8 +29,8 @@ type Item = {
 export function doExport(): void {
   const translation = Translation.Export(ZOTERO_TRANSLATOR_INFO, collect())
 
-  this.translation.output += 'digraph CitationGraph {\n'
-  this.translation.output += '  concentrate=true;\n'
+  this.translation.output.body += 'digraph CitationGraph {\n'
+  this.translation.output.body += '  concentrate=true;\n'
 
   const add = {
     title: Zotero.getOption('Title'),
@@ -78,15 +78,15 @@ export function doExport(): void {
   }
 
   for (const item of items) {
-    this.translation.output += node(item.id, { label: item.label })
+    this.translation.output.body += node(item.id, { label: item.label })
 
     for (const uri of item.relations) {
       const other = items.find(o => o.uri === uri)
       if (other) {
-        this.translation.output += edge(item.id, other.id)
+        this.translation.output.body += edge(item.id, other.id)
       }
       else {
-        this.translation.output += edge(item.id, uri.replace(/.*\//, ''), { style: 'dashed', dir: 'both' })
+        this.translation.output.body += edge(item.id, uri.replace(/.*\//, ''), { style: 'dashed', dir: 'both' })
       }
     }
 
@@ -94,15 +94,15 @@ export function doExport(): void {
       const other = items.find(o => o.citationKey === citationKey)
 
       if (other) {
-        this.translation.output += edge(item.id, other.id)
+        this.translation.output.body += edge(item.id, other.id)
       }
       else {
-        this.translation.output += edge(item.id, citationKey, { style: 'dashed' })
+        this.translation.output.body += edge(item.id, citationKey, { style: 'dashed' })
       }
     }
   }
 
-  this.translation.output += '}'
+  this.translation.output.body += '}'
 
-  Zotero.write(this.translation.output)
+  Zotero.write(this.translation.output.body)
 }

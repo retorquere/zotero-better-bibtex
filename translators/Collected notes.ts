@@ -226,6 +226,6 @@ class Exporter {
 export function doExport(): void {
   const translation = Translation.Export(ZOTERO_TRANSLATOR_INFO, collect())
   const exporter = new Exporter(translation)
-  translation.output += exporter[translation.options.markdown ? 'markdown' : 'html']
-  Zotero.write(translation.output)
+  translation.output.body += exporter[translation.options.markdown ? 'markdown' : 'html']
+  Zotero.write(translation.output.body)
 }

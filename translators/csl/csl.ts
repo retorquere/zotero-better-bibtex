@@ -169,7 +169,7 @@ export abstract class CSLExporter {
     }
 
     order.sort((a, b) => a.citationKey.localeCompare(b.citationKey, undefined, { sensitivity: 'base' }))
-    this.translation.output += this.flush(order.map(o => items[o.i]))
+    this.translation.output.body += this.flush(order.map(o => items[o.i]))
   }
 
   public keySort(a: string, b: string): number {
