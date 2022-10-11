@@ -38,7 +38,7 @@ jobs:
       id: balance
       run: ./util/balance.py --durations $DURATIONS --bins $BINS --minutes 10 ${{ steps.slow.outputs.slow }} ${{ steps.beta.outputs.beta }}
     - name: store test artifacts
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: test-artifacts
         path: |
@@ -162,13 +162,13 @@ jobs:
       run: xvfb-run --auto-servernum ./test/behave --client ${{ matrix.client }} --format ci --bin ${{ matrix.bin }} --bins $BINS ${{ steps.test.outputs.this }} --durations logs/stats/durations-${{ matrix.client }}-${{ matrix.bin }}.json ${{ needs.jobs.outputs.slow }}
       env:
         PYTHONUNBUFFERED: true
-    - uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v3
       if: ${{ failure() || cancelled() }}
       with:
         name: debug log ${{ matrix.client }} ${{ matrix.bin }}
         path: ~/.BBTZ5TEST.log
     - name: store test artifacts
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: test-artifacts
         path: |

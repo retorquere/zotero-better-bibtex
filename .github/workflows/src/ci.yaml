@@ -58,7 +58,7 @@ _anchors:
   # dummy directory minitests because otherwise dir structure is not maintained?!
   upload_test_artifacts: &upload_test_artifacts
     name: store test artifacts
-    uses: actions/upload-artifact@v2
+    uses: actions/upload-artifact@v3
     with:
       name: test-artifacts
       path: |
@@ -179,7 +179,7 @@ jobs:
       env:
         PYTHONUNBUFFERED: true
 
-    - uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v3
       if: ${{ failure() || cancelled() }}
       with:
         name: debug log ${{ matrix.client }} ${{ matrix.bin }}
