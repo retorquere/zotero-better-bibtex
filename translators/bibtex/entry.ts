@@ -1312,7 +1312,7 @@ export class Entry {
       const unused_props = Object.entries(this.item.extraFields.kv).map(([p, v]) => [ `extra: ${propertyLabel[p.toLowerCase()] || p}`, v ])
         .concat(Object.entries(this.item))
         .map(([p, v]) => [p, v, this.valueish(v) ])
-        .filter(([p, v, vi]) => vi !== '' && !ignore_unused_props.includes(p) && !used_values.includes(this.valueish(v)))
+        .filter(([p, _v, vi]) => vi !== '' && !ignore_unused_props.includes(p) && !used_values.includes(vi))
         .sort(property_sort)
 
       for (const [prop, value, valueish] of unused_props) {
