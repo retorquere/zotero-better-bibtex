@@ -449,6 +449,13 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
     this.preferences.testing = (Zotero.getHiddenPref('better-bibtex.testing') as boolean)
   }
 
+  saveAttachments(): void {
+    if (!this.output?.attachments.length) return
+    for (const attachment of this.output.attachments) {
+      attachment.saveFile(attachment.defaultPath, true)
+    }
+  }
+
   getPreferenceOverride(pref) { // eslint-disable-line @typescript-eslint/explicit-module-boundary-types
     try {
       const override = Zotero.getOption(`preference_${pref}`)

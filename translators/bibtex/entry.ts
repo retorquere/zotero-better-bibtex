@@ -1044,8 +1044,8 @@ export class Entry {
       // att.path = att.path.replace(/^storage:/, '')
       att.path = att.path.replace(/(?:\s*[{}]+)+\s*/g, ' ')
 
-      if (this.translation.options.exportFileData) {
-        attachment.saveFile(att.path, true)
+      if (this.translation.options.exportFileData && attachment.saveFile) {
+        attachment.saveFile(attachment.defaultPath, true)
       }
 
       if (!att.title) att.title = att.path.replace(/.*[\\/]/, '') || 'attachment'

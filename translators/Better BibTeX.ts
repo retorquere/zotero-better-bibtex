@@ -408,6 +408,7 @@ export function doExport(): void {
   }
 
   translation.bibtex.complete()
+  translation.saveAttachments()
   Zotero.write(translation.output.body)
 }
 
