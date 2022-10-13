@@ -252,7 +252,6 @@ class Entry extends BaseEntry {
 
 export function generateBibTeX(translation: Translation): void {
   translation.bibtex = new BibTeXExporter(translation)
-  translation.ZoteroItem = ZoteroItem
 
   Entry.installPostscript(translation)
   translation.bibtex.prepare_strings()
@@ -445,6 +444,8 @@ export function generateBibTeX(translation: Translation): void {
 //   return true
 
 export async function parseBibTeX(input: string, translation: Translation): Promise<bibtexParser.Bibliography> {
+  translation.ZoteroItem = ZoteroItem
+
   const unabbreviate = translation.preferences.importJabRefAbbreviations ? require('@retorquere/bibtex-parser/unabbrev.json') : undefined
   const strings = translation.preferences.importJabRefStrings ? require('@retorquere/bibtex-parser/strings.bib') : undefined
 
