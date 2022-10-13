@@ -5,7 +5,8 @@ import { affects, names as preferences, defaults, PreferenceName, Preferences as
 import { TeXMap } from '../../content/prefs'
 import { client } from '../../content/client'
 import { RegularItem, Item, Collection, Attachment } from '../../gen/typings/serialized-item'
-import { Exporter as BibTeXExporter } from '../bibtex/exporter'
+import type { Exporter as BibTeXExporter } from '../bibtex/exporter'
+import type { ZoteroItem } from '../bibtex/bibtex'
 
 type Preferences = StoredPreferences & { texmap?: TeXMap }
 
@@ -253,6 +254,7 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
   // public CSL: boolean
 
   public bibtex: BibTeXExporter
+  public ZoteroItem: typeof ZoteroItem
 
   public input: {
     items: Items
@@ -371,8 +373,6 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
         },
       })
     }
-
-    if (translation.BetterTeX) translation.bibtex = new BibTeXExporter(translation)
 
     translation.input.items.cacheable(translation.cacheable)
     translation.collections = translation.input.collections.byKey

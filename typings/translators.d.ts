@@ -35,6 +35,7 @@ export namespace Translators {
       | { kind: 'error', message: string }
       | { kind: 'cache', itemID: number, entry: string, metadata: any }
       | { kind: 'item', item: number }
+      | { kind: 'ping' }
       | { kind: 'stop' }
       | { kind: 'progress', percent: number, translator: string, autoExport: number }
   }

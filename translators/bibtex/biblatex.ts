@@ -1,9 +1,8 @@
-declare const Zotero: any
+import { Exporter as BibTeXExporter } from './exporter'
+import { Translation } from '../lib/translator'
+import { strToISO } from '../../content/dateparser'
 
-import { Translation, TranslatorMetadata, collect } from './lib/translator'
-declare var ZOTERO_TRANSLATOR_INFO: TranslatorMetadata // eslint-disable-line no-var
-
-import { Entry as BaseEntry, Config } from './bibtex/entry'
+import { Entry as BaseEntry, Config } from './entry'
 
 type CreatorArray = any[] & { type?: string }
 
@@ -210,7 +209,7 @@ class Entry extends BaseEntry {
     }
   }
 }
-Entry.prototype.lint = require('../submodules/biber/data/biber-tool.conf')
+Entry.prototype.lint = require('../../submodules/biber/data/biber-tool.conf')
 
 function looks_like_number(n): string | boolean {
   if (n.match(/^(?=[MDCLXVI])M*(C[MD]|D?C*)(X[CL]|L?X*)(I[XV]|V?I*)$/)) return 'roman'
@@ -282,14 +281,9 @@ const patent = new class {
   }
 }
 
-export function doExport(): void {
-  const translation = Translation.Export(ZOTERO_TRANSLATOR_INFO, collect())
-  generateExport(translation)
-  translation.saveAttachments()
-  Zotero.write(translation.output.body)
-}
+export function generateBibLaTeX(translation: Translation): void {
+  translation.bibtex = new BibTeXExporter(translation)
 
-export function generateExport(translation: Translation): void {
   Entry.installPostscript(translation)
   translation.bibtex.prepare_strings()
 
@@ -507,7 +501,7 @@ export function generateExport(translation: Translation): void {
         break
     }
 
-    if (item.accessDate && item.url) entry.add({ name: 'urldate', value: Zotero.BetterBibTeX.strToISO(item.accessDate), enc: 'date' })
+    if (item.accessDate && item.url) entry.add({ name: 'urldate', value: strToISO(item.accessDate), enc: 'date' })
 
     entry.add({ name: 'date', verbatim: 'year', orig: { name: 'origdate', verbatim: 'origdate' }, value: item.date, enc: 'date' })
     // #293 has both date="year [origyear]" and extra="original-date: origyear"

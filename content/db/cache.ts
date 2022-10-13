@@ -1,9 +1,10 @@
-import { XULoki as Loki } from './loki'
+import { XULoki as Loki, $and } from './loki'
 import { Events } from '../events'
 import { File } from './store/file'
 import { Preference } from '../prefs'
 import { affects, schema } from '../../gen/preferences/meta'
 import { log } from '../logger'
+import { cloneDeep } from 'lodash'
 
 const version = require('../../gen/version.js')
 
@@ -125,7 +126,72 @@ class Cache extends Loki {
       entries: this.collections.reduce((acc, coll) => acc + coll.data.length, 0),
     }
   }
+
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  selector(translator: string, options: any, prefs: Partial<Preferences>) {
+    const query = {
+      exportNotes: !!options.exportNotes,
+      useJournalAbbreviation: !!options.useJournalAbbreviation,
+      // itemID: Array.isArray(itemID) ? {$in: itemID} : itemID,
+    }
+    for (const pref of schema.translator[translator].preferences) {
+      query[pref] = prefs[pref]
+    }
+    return query
+  }
+
+  fetch(translator: string, itemID: number, options: { exportNotes: boolean, useJournalAbbreviation: boolean }, prefs: any) {
+    if (!Preference.cache) return false
+
+    const collection = this.getCollection(translator)
+    if (!collection) return false
+
+    // not safe in async!
+    const cloneObjects = collection.cloneObjects
+    collection.cloneObjects = false
+    const cached = collection.findOne($and({...this.selector(translator, options, prefs), itemID}))
+    collection.cloneObjects = cloneObjects
+
+    if (!cached) return false
+
+    // collection.update(cached) // touches the cache object so it isn't reaped too early
+
+    // direct-DB access for speed...
+    cached.meta.updated = (new Date).getTime() // touches the cache object so it isn't reaped too early
+    collection.dirty = true
+
+    // isolate object, because it was not fetched using clone
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    return cloneDeep(cached)
+  }
+
+  store(translator: string, itemID: number, options: { exportNotes: boolean, useJournalAbbreviation: boolean }, prefs: any, entry: any, metadata: any) {
+    if (!Preference.cache) return false
+
+    if (!metadata) metadata = {}
+
+    const collection = this.getCollection(translator)
+    if (!collection) {
+      log.error('cacheStore: cache', translator, 'not found')
+      return false
+    }
+
+    const selector = {...this.selector(translator, options, prefs), itemID}
+    let cached = collection.findOne($and(selector))
+
+    if (cached) {
+      cached.entry = entry
+      cached.metadata = metadata
+      cached = collection.update(cached)
+    }
+    else {
+      collection.insert({...selector, entry, metadata})
+    }
+
+    return true
+  }
 }
+
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export const DB = new Cache('cache', { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   autosave: true,
@@ -144,16 +210,3 @@ Events.on('items-changed', ids => {
 // cleanup
 if (DB.getCollection('cache')) { DB.removeCollection('cache') }
 if (DB.getCollection('serialized')) { DB.removeCollection('serialized') }
-
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export function selector(translator: string, options: any, prefs: Partial<Preferences>) {
-  const query = {
-    exportNotes: !!options.exportNotes,
-    useJournalAbbreviation: !!options.useJournalAbbreviation,
-    // itemID: Array.isArray(itemID) ? {$in: itemID} : itemID,
-  }
-  for (const pref of schema.translator[translator].preferences) {
-    query[pref] = prefs[pref]
-  }
-  return query
-}

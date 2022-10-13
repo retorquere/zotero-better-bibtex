@@ -1,6 +1,10 @@
 declare const Zotero: any
 
-import { log } from '../content/logger'
+import { log } from '../../content/logger'
+import { Exporter as BibTeXExporter } from './exporter'
+import { arXiv } from '../../content/arXiv'
+import { valid, label } from '../../gen/items/items'
+import wordsToNumbers from 'words-to-numbers'
 
 const toWordsOrdinal = require('number-to-words/src/toWordsOrdinal')
 function edition(n: string | number): string {
@@ -8,19 +12,14 @@ function edition(n: string | number): string {
   if (typeof n === 'number' || (typeof n === 'string' && n.match(/^[0-9]+$/))) return toWordsOrdinal(n).replace(/^\w/, (c: string) => c.toUpperCase())
   return n
 }
-import wordsToNumbers from 'words-to-numbers'
 
-import { Translation, TranslatorMetadata, collect } from './lib/translator'
-declare var ZOTERO_TRANSLATOR_INFO: TranslatorMetadata // eslint-disable-line no-var
+import { Translation } from '../lib/translator'
 
-import { Entry as BaseEntry, Config } from './bibtex/entry'
-import * as escape from '../content/escape'
+import { Entry as BaseEntry, Config } from './entry'
 
 import * as bibtexParser from '@retorquere/bibtex-parser'
-import { valid, label } from '../gen/items/items'
-import { arXiv } from '../content/arXiv'
 
-import { babelLanguage } from '../content/text'
+import { babelLanguage } from '../../content/text'
 
 const config: Config = {
   caseConversion: {
@@ -251,10 +250,10 @@ class Entry extends BaseEntry {
   }
 }
 
-const months = [ 'jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec' ]
+export function generateBibTeX(translation: Translation): void {
+  translation.bibtex = new BibTeXExporter(translation)
+  translation.ZoteroItem = ZoteroItem
 
-export function doExport(): void {
-  const translation = Translation.Export(ZOTERO_TRANSLATOR_INFO, collect())
   Entry.installPostscript(translation)
   translation.bibtex.prepare_strings()
 
@@ -408,39 +407,78 @@ export function doExport(): void {
   }
 
   translation.bibtex.complete()
-  translation.saveAttachments()
-  Zotero.write(translation.output.body)
 }
 
-export function detectImport(): boolean {
-  let detected = (Zotero.getHiddenPref('better-bibtex.import') as boolean)
-  if (detected) {
-    const input = Zotero.read(102400) // eslint-disable-line no-magic-numbers
-    const bib = bibtexParser.chunker.parse(input, { max_entries: 1 })
-    detected = !!bib.find(chunk => chunk.entry)
-  }
-  return detected
+// ZoteroItem::$__note__ = ZoteroItem::$__key__ = -> true
+
+//
+// ZoteroItem::$entryType = (value) ->
+//   @item.thesisType = value if value in [ 'phdthesis', 'mastersthesis' ]
+//   return true
+//
+// ### these return the value which will be interpreted as 'true' ###
+//
+// ZoteroItem::$copyright    = (value) -> @item.rights = value
+// ZoteroItem::$assignee     = (value) -> @item.assignee = value
+// ZoteroItem::$issue        = (value) -> @item.issue = value
+//
+// ### ZoteroItem::$lccn = (value) -> @item.callNumber = value ###
+// ZoteroItem::$lccn = (value) -> @hackyFields.push("LCCB: #{value}")
+// ZoteroItem::$pmid = ZoteroItem::$pmcid = (value, field) -> @hackyFields.push("#{field.toUpperCase()}: #{value}")
+// ZoteroItem::$mrnumber = (value) -> @hackyFields.push("MR: #{value}")
+// ZoteroItem::$zmnumber = (value) -> @hackyFields.push("Zbl: #{value}")
+//
+// ZoteroItem::$subtitle = (value) ->
+//   @item.title = '' unless @item.title
+//   @item.title = @item.title.trim()
+//   value = value.trim()
+//   if not /[-–—:!?.;]$/.test(@item.title) and not /^[-–—:.;¡¿]/.test(value)
+//     @item.title += ': '
+//   else
+//   @item.title += ' ' if @item.title.length
+//   @item.title += value
+//   return true
+//
+// ZoteroItem::$fjournal = (value) ->
+//   @item.journalAbbreviation = @item.publicationTitle if @item.publicationTitle
+//   @item.publicationTitle = value
+//   return true
+
+export async function parseBibTeX(input: string, translation: Translation): Promise<bibtexParser.Bibliography> {
+  const unabbreviate = translation.preferences.importJabRefAbbreviations ? require('@retorquere/bibtex-parser/unabbrev.json') : undefined
+  const strings = translation.preferences.importJabRefStrings ? require('@retorquere/bibtex-parser/strings.bib') : undefined
+
+  return bibtexParser.promises.parse(input, {
+    // we are actually sure it's a valid enum value; stupid workaround for TS2322: Type 'string' is not assignable to type 'boolean | "as-needed" | "strict"'.
+    caseProtection: (translation.preferences.importCaseProtection as 'as-needed'),
+    errorHandler: (translation.preferences.testing ? undefined : function(err) { log.error(err) }), // eslint-disable-line prefer-arrow/prefer-arrow-functions
+    unknownCommandHandler: function(node) { // eslint-disable-line object-shorthand
+      switch (translation.preferences.importUnknownTexCommand) {
+        case 'tex':
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+          return this.text(`<script>${node.source}</script>`)
+        case 'text':
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+          return this.text(node.source)
+        case 'ignore':
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+          return this.text('')
+        default:
+          throw new Error(`Unexpected unknownCommandHandler ${JSON.stringify(translation.preferences.importUnknownTexCommand)}`)
+      }
+    },
+    markup: (translation.csquotes ? { enquote: translation.csquotes } : {}),
+    sentenceCase: translation.preferences.importSentenceCase !== 'off',
+    guessAlreadySentenceCased: translation.preferences.importSentenceCase === 'on+guess',
+    verbatimFields: translation.verbatimFields,
+    raw: translation.preferences.rawImports,
+    unabbreviate,
+    strings,
+  })
 }
 
-function importGroup(group, itemIDs, root = null) {
-  const collection = new Zotero.Collection()
-  collection.type = 'collection'
-  collection.name = group.name
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  collection.children = group.entries.filter(citekey => itemIDs[citekey]).map(citekey => ({type: 'item', id: itemIDs[citekey]}))
-
-  for (const subgroup of group.groups || []) {
-    collection.children.push(importGroup(subgroup, itemIDs))
-  }
-
-  if (root) collection.complete()
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  return collection
-}
-
-class ZoteroItem {
-  protected item: any
-
+const months = [ 'jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec' ]
+export class ZoteroItem {
   public typeMap = {
     article:            'journalArticle',
     book:               'book',
@@ -478,13 +516,15 @@ class ZoteroItem {
     webpage:            'webpage', // papers3 made-up entry type
   }
 
-  private type: string
+  public type: string
+
   private hackyFields: string[] = []
   private eprint: { [key: string]: string } = {}
   private validFields: Record<string, boolean>
   private numberPrefix: string
+  private item: any
 
-  constructor(private translation: Translation, private id: number, private bibtex: any, private jabref, private errors: bibtexParser.ParseError[]) {
+  constructor(private translation: Translation, private id: number, private bibtex: bibtexParser.Entry, private jabref: bibtexParser.jabref.JabRefMetadata, private errors: bibtexParser.ParseError[]) {
     this.bibtex.type = this.bibtex.type.toLowerCase()
     this.type = this.typeMap[this.bibtex.type]
     if (!this.type) {
@@ -496,39 +536,19 @@ class ZoteroItem {
 
     if (!valid.type[this.type]) this.error(`import error: unexpected item ${this.bibtex.key} of type ${this.type}`)
     this.validFields = valid.field[this.type]
-
-    if (!Object.keys(this.bibtex.fields).length) {
-      this.errors.push({ message: `No fields in ${this.bibtex.key ? `@${this.bibtex.key}` : 'unnamed item'}` })
-      this.item = null
-    }
-    else {
-      this.item = new Zotero.Item(this.type)
-      this.item.itemID = this.id
-      if (this.type === 'report' && this.bibtex.type === 'manual') this.$type('manual')
-
-      this.import()
-
-      if (this.translation.preferences.testing) {
-        const err = valid.test(JSON.parse(JSON.stringify(this.item)), true) // stringify/parse is a fast way to get rid of methods
-        if (err) this.error(`import error: ${this.type} ${this.bibtex.key}: ${err}\n${JSON.stringify(this.item, null, 2)}`)
-      }
-    }
   }
 
-  public async complete() {
-    if (this.item) await this.item.complete()
-  }
-
-  private fallback(fields, value) {
-    const field = fields.find(f => label[f])
+  private fallback(fields: string[], value: string | number): boolean {
+    const field = fields.find((f: string) => label[f])
     if (field) {
-      this.hackyFields.push(`${label[field]}: ${value.replace(/\n+/g, '')}`)
+      if (typeof value === 'string') value = value.replace(/\n+/g, '')
+      this.hackyFields.push(`${label[field]}: ${value}`)
       return true
     }
     return false
   }
 
-  protected $title(_value) {
+  protected $title(): boolean {
     let title = []
     if (this.bibtex.fields.title) title = title.concat(this.bibtex.fields.title)
     if (this.bibtex.fields.titleaddon) title = title.concat(this.bibtex.fields.titleaddon)
@@ -542,17 +562,17 @@ class ZoteroItem {
     }
     return true
   }
-  protected $titleaddon(value) { return this.$title(value) }
-  protected $subtitle(value) { return this.$title(value) }
+  protected $titleaddon(): boolean { return this.$title() }
+  protected $subtitle(): boolean { return this.$title() }
 
-  protected $holder(_value, _field) {
+  protected $holder(): boolean {
     if (this.item.itemType === 'patent') {
       this.item.assignee = this.bibtex.fields.holder.map((name: string) => name.replace(/"/g, '')).join('; ')
     }
     return true
   }
 
-  protected $publisher(value, field) {
+  protected $publisher(value: string | number, field: string): boolean {
     // difference between jurism and zotero. Prepending 'field' makes the import prefer exact matches to the input
     const candidates = [field].concat(['institution', 'publisher'])
     field = candidates.find(f => this.validFields[f])
@@ -566,35 +586,38 @@ class ZoteroItem {
 
     return true
   }
-  protected $institution(value, field) { return this.$publisher(value, field) }
-  protected $school(value, field) { return this.$publisher(value, field) }
+  protected $institution(value: string | number, field: string): boolean { return this.$publisher(value, field) }
+  protected $school(value: string | number, field: string): boolean { return this.$publisher(value, field) }
 
-  protected $address(value) {
+  protected $address(value: string | number): boolean {
     return this.set('place', value, ['place'])
   }
-  protected $location(value) {
+  protected $location(value: string | number): boolean {
     if (this.type === 'conferencePaper') {
-      this.hackyFields.push(`Place: ${value.replace(/\n+/g, '')}`)
+      if (typeof value === 'string') value = value.replace(/\n+/g, '')
+      this.hackyFields.push(`Place: ${value}`)
       return true
     }
 
     return this.$address(value)
   }
 
-  protected '$call-number'(value) {
+  protected '$call-number'(value: string | number): boolean {
     return this.set('callNumber', value)
   }
 
-  protected $edition(value) {
-    value = value.replace(/^([0-9]+)(nd|th)$/, '$1')
-    const numbers = wordsToNumbers(value)
-    if (typeof numbers === 'number' || (typeof numbers === 'string' && numbers && !numbers.match(/\w/))) value = numbers
+  protected $edition(value: string | number): boolean {
+    if (typeof value === 'string') {
+      value = value.replace(/^([0-9]+)(nd|th)$/, '$1')
+      const numbers = wordsToNumbers(value)
+      if (typeof numbers === 'number' || (typeof numbers === 'string' && numbers && !numbers.match(/\w/))) value = numbers
+    }
     return this.set('edition', value)
   }
 
-  protected $isbn(value) { return this.set('ISBN', value) }
+  protected $isbn(value: string | number): boolean { return this.set('ISBN', value) }
 
-  protected $booktitle(value) {
+  protected $booktitle(value: string): boolean {
     switch (this.type) {
       case 'conferencePaper':
       case 'bookSection':
@@ -609,7 +632,7 @@ class ZoteroItem {
     return this.fallback(['booktitle'], value)
   }
 
-  protected $journaltitle() {
+  protected $journaltitle(): boolean {
     let journal: { field: string, value: string}, abbr: { field: string, value: string} = null
 
     // journal-full is bibdesk
@@ -678,29 +701,29 @@ class ZoteroItem {
 
     return true
   }
-  protected $journal() { return this.$journaltitle() }
-  protected $shortjournal() { return this.$journaltitle() }
-  protected '$journal-full'() { return this.$journaltitle() }
+  protected $journal(): boolean { return this.$journaltitle() }
+  protected $shortjournal(): boolean { return this.$journaltitle() }
+  protected '$journal-full'(): boolean { return this.$journaltitle() }
 
-  protected $pages(value) {
+  protected $pages(value: string | number): boolean {
     if (!this.validFields.pages) return this.fallback(['pages'], value)
     this.set('pages', value)
     return true
   }
-  protected $pagetotal(value) {
+  protected $pagetotal(value: string | number): boolean {
     if (!this.validFields.numPages) return this.fallback(['numPages'], value)
     this.set('numPages', value)
     return true
   }
-  protected $numpages(value, _field) { return this.$pagetotal(value) }
+  protected $numpages(value: string): boolean { return this.$pagetotal(value) }
 
-  protected $volume(value) { return this.set('volume', value) }
+  protected $volume(value: string | number): boolean { return this.set('volume', value) }
 
-  protected $doi(value) { return this.set('DOI', value) }
+  protected $doi(value: string | number): boolean { return this.set('DOI', value) }
 
-  protected $abstract(value) { return this.set('abstractNote', value) }
+  protected $abstract(value: string | number): boolean { return this.set('abstractNote', value) }
 
-  protected $keywords(_value) {
+  protected $keywords(): boolean {
     let tags = this.bibtex.fields.keywords || []
     tags = tags.concat(this.bibtex.fields.keyword || [])
     for (const mesh of this.bibtex.fields.mesh || []) {
@@ -712,10 +735,10 @@ class ZoteroItem {
     this.item.tags = tags
     return true
   }
-  protected $keyword(value) { return this.$keywords(value) }
-  protected $mesh(value) { return this.$keywords(value) } // bibdesk
+  protected $keyword(): boolean { return this.$keywords() }
+  protected $mesh(): boolean { return this.$keywords() } // bibdesk
 
-  protected $date(_value) {
+  protected $date(): boolean {
     if (this.item.date) return true
 
     const dates = (this.bibtex.fields.date || []).slice()
@@ -723,7 +746,7 @@ class ZoteroItem {
     const year = (this.bibtex.fields.year && this.bibtex.fields.year[0]) || ''
 
     let month = (this.bibtex.fields.month && this.bibtex.fields.month[0]) || ''
-    const monthno = months.indexOf(month.toLowerCase())
+    const monthno: number = months.indexOf(month.toLowerCase())
     if (monthno >= 0) month = `0${monthno + 1}`.slice(-2) // eslint-disable-line no-magic-numbers
 
     const day = (this.bibtex.fields.day && this.bibtex.fields.day[0]) || ''
@@ -747,14 +770,14 @@ class ZoteroItem {
     this.item.date = Array.from(new Set(dates)).join(', ')
     return true
   }
-  protected $year(value) { return this.$date(value) }
-  protected $month(value) { return this.$date(value) }
-  protected $day(value) { return this.$date(value) }
+  protected $year(): boolean { return this.$date() }
+  protected $month(): boolean { return this.$date() }
+  protected $day(): boolean { return this.$date() }
 
   // "files" will import the same as "file" but won't be treated as verbatim by the bibtex parser. Needed because the people at Mendeley can't be bothered
   // to read the manual apparently.
-  protected $files(value) { return this.$file(value) }
-  protected $file(value) {
+  protected $files(value: string): boolean { return this.$file(value) }
+  protected $file(value: string): boolean {
     const replace = {
       '\\;':    '\u0011',
       '\u0011': ';',
@@ -786,14 +809,14 @@ class ZoteroItem {
           break
 
         default:
-          log.error(`attachment import: Unexpected number of parts in file record '${record}': ${parts.length}`)
+          Zotero.debug(`attachment import: Unexpected number of parts in file record '${record}': ${parts.length}`)
           // might be absolute windows path, just make Zotero try
           att.path = parts.join(':')
           break
       }
 
       if (!att.path) {
-        log.error(`attachment import: file record '${record}' has no file path`)
+        Zotero.debug(`attachment import: file record '${record}' has no file path`)
         continue
       }
 
@@ -813,7 +836,7 @@ class ZoteroItem {
     return true
   }
 
-  protected $license(value) {
+  protected $license(value: string | number): boolean {
     if (this.validFields.rights) {
       this.set('rights', value)
       return true
@@ -823,7 +846,7 @@ class ZoteroItem {
     }
   }
 
-  protected $version(value) {
+  protected $version(value: string | number): boolean {
     if (this.validFields.versionNumber) {
       this.set('versionNumber', value)
       return true
@@ -834,16 +857,16 @@ class ZoteroItem {
   }
 
   /* TODO: Zotero ignores these on import
-  protected '$date-modified'(value) { return this.item.dateAdded = this.unparse(value) }
-  protected '$date-added'(value) { return this.item.dateAdded = this.unparse(value) }
-  protected '$added-at'(value) { return this.item.dateAdded = this.unparse(value) }
-  protected $timestamp(value) { return this.item.dateAdded = this.unparse(value) }
+  protected '$date-modified'(value: string | number): boolean { return this.item.dateAdded = this.unparse(value) }
+  protected '$date-added'(value: string | number): boolean { return this.item.dateAdded = this.unparse(value) }
+  protected '$added-at'(value: string | number): boolean { return this.item.dateAdded = this.unparse(value) }
+  protected $timestamp(value: string | number): boolean { return this.item.dateAdded = this.unparse(value) }
   */
 
-  protected $urldate(value) { return this.set('accessDate', value) }
-  protected $lastchecked(value) { return this.$urldate(value) }
+  protected $urldate(value: string | number): boolean { return this.set('accessDate', value) }
+  protected $lastchecked(value: string | number): boolean { return this.$urldate(value) }
 
-  protected $number(value, field) {
+  protected $number(value: string | number, field: string): boolean {
     if (this.bibtex.fields.number && this.validFields.number && this.bibtex.fields.issue && this.validFields.issue) {
       this.set('issue', this.bibtex.fields.issue)
       this.set('number', this.bibtex.fields.number)
@@ -856,15 +879,15 @@ class ZoteroItem {
     this.set(field, value)
     return true
   }
-  protected $issue(value, field) { return this.$number(value, field) }
+  protected $issue(value: string | number, field: string): boolean { return this.$number(value, field) }
 
-  protected $issn(value) {
+  protected $issn(value: string | number): boolean {
     if (!this.validFields.ISSN) return this.fallback(['ISSN'], value)
 
     return this.set('ISSN', value)
   }
 
-  protected $url(value, field) {
+  protected $url(value: string, field: string): boolean {
     let m, url
 
     // no escapes needed in an verbatim field but people do it anyway
@@ -887,10 +910,10 @@ class ZoteroItem {
     this.item.url = url
     return true
   }
-  protected $howpublished(value, field) { return this.$url(value, field) }
-  protected '$remote-url'(value, field) { return this.$url(value, field) }
+  protected $howpublished(value: string, field: string): boolean { return this.$url(value, field) }
+  protected '$remote-url'(value: string, field: string): boolean { return this.$url(value, field) }
 
-  protected $type(value) {
+  protected $type(value: string): boolean {
     if (this.type === 'patent') {
       this.numberPrefix = {patent: '', patentus: 'US', patenteu: 'EP', patentuk: 'GB', patentdede: 'DE', patentfr: 'FR' }[value.toLowerCase()]
       return typeof this.numberPrefix !== 'undefined'
@@ -901,14 +924,14 @@ class ZoteroItem {
     return true
   }
 
-  protected $lista(value) {
+  protected $lista(value: string | number): boolean {
     if (this.type !== 'encyclopediaArticle' || !!this.item.title) return false
 
     this.set('title', value)
     return true
   }
 
-  protected $annotation(value, field) {
+  protected $annotation(value: string, field: string): boolean {
     if (this.translation.importToExtra[field]) {
       let plaintext = value.replace(/<p>/g, '').replace(/<\/p>/g, '\n\n').trim()
       if (this.translation.importToExtra[field] === 'force') plaintext = plaintext.replace(/<[^>]+>/g, '')
@@ -921,30 +944,30 @@ class ZoteroItem {
     this.item.notes.push(value)
     return true
   }
-  protected $comment(value) { return this.$annotation(value, 'comment') }
-  protected $annote(value) { return this.$annotation(value, 'annote') }
-  protected $review(value) { return this.$annotation(value, 'review') }
-  protected $notes(value) { return this.$annotation(value, 'notes') }
-  protected $note(value) { return this.$annotation(value, 'note') }
+  protected $comment(value: string, field: string): boolean { return this.$annotation(value, field) }
+  protected $annote(value: string, field: string): boolean { return this.$annotation(value, field) }
+  protected $review(value: string, field: string): boolean { return this.$annotation(value, field) }
+  protected $notes(value: string, field: string): boolean { return this.$annotation(value, field) }
+  protected $note(value: string, field: string): boolean { return this.$annotation(value, field) }
 
-  protected $series(value) { return this.set('series', value) }
+  protected $series(value: string | number): boolean { return this.set('series', value) }
 
   // horrid jabref 3.8+ groups format
-  protected $groups(value) {
+  protected $groups(value: string): boolean {
     for (const group of value.split(/\s*,\s*/)) {
       if (this.jabref.groups[group] && !this.jabref.groups[group].entries.includes(this.bibtex.key)) this.jabref.groups[group].entries.push(this.bibtex.key)
     }
     return true
   }
 
-  protected $language(_value, _field) {
+  protected $language(): boolean {
     return this.set('language', this.bibtex.fields.language?.[0] || this.bibtex.fields.langid?.[0])
   }
-  protected $langid(value, field) { return this.$language(value, field) }
+  protected $langid(): boolean { return this.$language() }
 
-  protected $shorttitle(value) { return this.set('shortTitle', value) }
+  protected $shorttitle(value: string | number): boolean { return this.set('shortTitle', value) }
 
-  protected $eprinttype(value, field) {
+  protected $eprinttype(value: string, field: string): boolean {
     this.eprint[field] = value.trim()
 
     this.eprint.eprintType = {
@@ -957,19 +980,19 @@ class ZoteroItem {
 
     return true
   }
-  protected $archiveprefix(value, field) { return this.$eprinttype(value, field) }
+  protected $archiveprefix(value: string, field: string): boolean { return this.$eprinttype(value, field) }
 
-  protected $eprint(value, field) {
+  protected $eprint(value: string, field: string): boolean {
     this.eprint[field] = value
     return true
   }
-  protected $eprintclass(value, field) { return this.$eprint(value, field) }
-  protected $primaryclass(value, _field) { return this.$eprint(value, 'eprintclass') }
-  protected $slaccitation(value, field) { return this.$eprint(value, field) }
+  protected $eprintclass(value: string, field: string): boolean { return this.$eprint(value, field) }
+  protected $primaryclass(value: string): boolean { return this.$eprint(value, 'eprintclass') }
+  protected $slaccitation(value: string, field: string): boolean { return this.$eprint(value, field) }
 
-  protected $nationality(value) { return this.set('country', value) }
+  protected $nationality(value: string | number): boolean { return this.set('country', value) }
 
-  protected $chapter(value) {
+  protected $chapter(value: string | number): boolean {
     const candidates = ['section', 'bookSection']
     const field = candidates.find(f => this.validFields[f])
     if (!field) return this.fallback(candidates, value)
@@ -977,17 +1000,26 @@ class ZoteroItem {
     return this.set(field, value)
   }
 
-  protected $origdate(value) {
+  protected $origdate(value: string | number): boolean {
     if (!this.fallback(['originaldate'], value)) this.hackyFields.push(`Original Date: ${value}`)
     return true
   }
 
   private error(err) {
-    log.error(err)
+    Zotero.debug(err)
     throw new Error(err)
   }
 
-  private import() {
+  public import(item: any): any { // eslint-disable-line @typescript-eslint/explicit-module-boundary-types
+    if (!Object.keys(this.bibtex.fields).length) {
+      this.errors.push({ message: `No fields in ${this.bibtex.key ? `@${this.bibtex.key}` : 'unnamed item'}` })
+      return null
+    }
+
+    this.item = item
+    this.item.itemID = this.id
+    if (this.type === 'report' && this.bibtex.type === 'manual') this.$type('manual')
+
     for (const subtitle of ['titleaddon', 'subtitle']) {
       if (!this.bibtex.fields.title && this.bibtex.fields[subtitle]) {
         this.bibtex.fields.title = this.bibtex.fields[subtitle]
@@ -1054,14 +1086,14 @@ class ZoteroItem {
 
     // do this before because some handlers directly access this.bibtex.fields
     for (const [field, values] of Object.entries(this.bibtex.fields)) {
-      this.bibtex.fields[field] = (values as string[]).map(value => typeof value === 'string' ? value.replace(/\u00A0/g, ' ').trim() : `${value}`)
+      this.bibtex.fields[field] = values.map(value => typeof value === 'string' ? value.replace(/\u00A0/g, ' ').trim() : `${value}`)
     }
 
     const zoteroField = {
       conference: 'conferenceName',
     }
     for (const [field, values] of Object.entries(this.bibtex.fields)) {
-      for (const value of (values as string[])) {
+      for (const value of values) {
         if (field.match(/^(local-zo-url-[0-9]+)|(file-[0-9]+)$/)) {
           if (this.$file(value)) continue
         }
@@ -1069,7 +1101,7 @@ class ZoteroItem {
           if (this.$url(value, field)) continue
         }
         else if (field.match(/^note_[0-9]+$/)) { // jabref, #1878
-          if (this.$note(value)) continue
+          if (this.$note(value, 'note')) continue
         }
 
         if (this[`$${field}`] && this[`$${field}`](value, field)) continue
@@ -1188,6 +1220,13 @@ class ZoteroItem {
       this.item.publisher = this.item.backupPublisher
       delete this.item.backupPublisher
     }
+
+    if (this.translation.preferences.testing) {
+      const err = valid.test(JSON.parse(JSON.stringify(this.item)), true) // stringify/parse is a fast way to get rid of methods
+      if (err) this.error(`import error: ${this.type} ${this.bibtex.key}: ${err}\n${JSON.stringify(this.item, null, 2)}`)
+    }
+
+    return this.item // eslint-disable-line @typescript-eslint/no-unsafe-return
   }
 
   private addToExtra(str) {
@@ -1245,127 +1284,3 @@ class ZoteroItem {
 //   @item.journalAbbreviation = @item.publicationTitle if @item.publicationTitle
 //   @item.publicationTitle = value
 //   return true
-
-async function fetch_polyfill(url): Promise<{ json: () => Promise<any>, text: () => Promise<string> }> {
-  return new Promise((resolve, reject) => {
-    const xhr = new XMLHttpRequest()
-    xhr.open('GET', url)
-
-    xhr.onload = function() {
-      if (this.status >= 200 && this.status < 300) { // eslint-disable-line no-magic-numbers
-        resolve({
-          json: () => JSON.parse(xhr.response), // eslint-disable-line @typescript-eslint/no-unsafe-return
-          text: () => xhr.response, // eslint-disable-line @typescript-eslint/no-unsafe-return
-        })
-      }
-      else {
-        reject({
-          status: this.status,
-          statusText: xhr.statusText,
-        })
-      }
-    }
-
-    xhr.onerror = function() {
-      reject({
-        status: this.status,
-        statusText: xhr.statusText,
-      })
-    }
-
-    xhr.send()
-  })
-}
-
-export async function doImport(): Promise<void> {
-  const translation = Translation.Import(ZOTERO_TRANSLATOR_INFO)
-
-  const unabbreviate = translation.preferences.importJabRefAbbreviations ? await (await fetch_polyfill('resource://zotero-better-bibtex/unabbrev/unabbrev.json')).json() : undefined
-  const strings = translation.preferences.importJabRefStrings ? await (await fetch_polyfill('resource://zotero-better-bibtex/unabbrev/strings.bib')).text() : undefined
-
-  let read
-  let input = ''
-  while ((read = Zotero.read(0x100000)) !== false) { // eslint-disable-line no-magic-numbers
-    input += read
-  }
-
-  if (translation.preferences.strings && translation.preferences.importBibTeXStrings) input = `${translation.preferences.strings}\n${input}`
-
-  const bib = await bibtexParser.promises.parse(input, {
-    caseProtection: (translation.preferences.importCaseProtection as 'as-needed'), // we are actually sure it's a valid enum value; stupid workaround for TS2322: Type 'string' is not assignable to type 'boolean | "as-needed" | "strict"'.
-    errorHandler: (translation.preferences.testing ? undefined : function(err) { log.error(err) }), // eslint-disable-line prefer-arrow/prefer-arrow-functions
-    unknownCommandHandler: function(node) { // eslint-disable-line object-shorthand
-      switch (translation.preferences.importUnknownTexCommand) {
-        case 'tex':
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-          return this.text(`<script>${node.source}</script>`)
-        case 'text':
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-          return this.text(node.source)
-        case 'ignore':
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-          return this.text('')
-        default:
-          throw new Error(`Unexpected unknownCommandHandler ${JSON.stringify(translation.preferences.importUnknownTexCommand)}`)
-      }
-    },
-    markup: (translation.csquotes ? { enquote: translation.csquotes } : {}),
-    sentenceCase: translation.preferences.importSentenceCase !== 'off',
-    guessAlreadySentenceCased: translation.preferences.importSentenceCase === 'on+guess',
-    verbatimFields: translation.verbatimFields,
-    raw: translation.preferences.rawImports,
-    unabbreviate,
-    strings,
-  })
-  const errors = bib.errors
-
-  const whitelist = bib.comments
-    .filter(comment => comment.startsWith('zotero-better-bibtex:whitelist:'))
-    .map(comment => comment.toLowerCase().replace(/\s/g, '').split(':').pop().split(',').filter(key => key))[0]
-
-  const itemIDS = {}
-  let imported = 0
-  let id = 0
-  for (const bibtex of bib.entries) {
-    if (bibtex.key && whitelist && !whitelist.includes(bibtex.key.toLowerCase())) continue
-    id++
-
-    if (bibtex.key) itemIDS[bibtex.key] = id // Endnote has no citation keys
-
-    try {
-      await (new ZoteroItem(translation, id, bibtex, bib.jabref, errors)).complete()
-    }
-    catch (err) {
-      log.error('bbt import error:', err)
-      errors.push({ message: err.message })
-    }
-
-    imported += 1
-    Zotero.setProgress(imported / bib.entries.length * 100) // eslint-disable-line no-magic-numbers
-  }
-
-  for (const group of bib.jabref.root || []) {
-    importGroup(group, itemIDS, true)
-  }
-
-  if (errors.length) {
-    const item = new Zotero.Item('note')
-    item.note = 'Import errors found: <ul>'
-    for (const err of errors) {
-      item.note += '<li>'
-      if (err.line) {
-        item.note += `line ${err.line}`
-        if (err.column) item.note += `, column ${err.column}`
-        item.note += ': '
-      }
-      item.note += escape.html(err.message)
-      if (err.source) item.note += `<pre>${escape.html(err.source)}</pre>`
-      item.note += '</li>'
-    }
-    item.note += '</ul>'
-    item.tags = [{ tag: '#Better BibTeX import error', type: 1 }]
-    await item.complete()
-  }
-
-  Zotero.setProgress(100) // eslint-disable-line no-magic-numbers
-}

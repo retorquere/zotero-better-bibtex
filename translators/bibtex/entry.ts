@@ -6,7 +6,7 @@ declare const Zotero: any
 import { RegularItem as Item } from '../../gen/typings/serialized-item'
 import { Cache } from '../../typings/cache'
 import type { Translators } from '../../typings/translators'
-import type { ParsedDate } from '../../content/dateparser'
+import * as DateParser from '../../content/dateparser'
 
 import { Translation } from '../lib/translator'
 
@@ -92,15 +92,6 @@ function property_sort(a: [string, string], b: [string, string]): number {
   return stringCompare(a[0], b[0])
 }
 
-const re = {
-  // private nonLetters: new Zotero.Utilities.XRegExp('[^\\p{Letter}]', 'g')
-  punctuationAtEnd: new Zotero.Utilities.XRegExp('[\\p{Punctuation}]$'),
-  startsWithLowercase: new Zotero.Utilities.XRegExp('^[\\p{Ll}]'),
-  hasLowercaseWord: new Zotero.Utilities.XRegExp('\\s[\\p{Ll}]'),
-  whitespace: new Zotero.Utilities.XRegExp('[\\p{Zs}]+'),
-  nonwordish: new Zotero.Utilities.XRegExp('[^\\p{L}\\p{N}]', 'g'),
-}
-
 const enc_creators_marker = {
   initials: '\u0097', // end of guarded area
   relax: '\u200C', // zero-width non-joiner
@@ -131,13 +122,21 @@ export class Entry {
   public useprefix: boolean
   public language: string
   public english: boolean
-  public date: ParsedDate | { type: 'none' }
+  public date: DateParser.ParsedDate | { type: 'none' }
 
   public config: Config
 
   private inPostscript = false
   private quality_report: string[] = []
   private extraFields: ParsedExtraFields
+
+  private re: {
+    punctuationAtEnd: any
+    startsWithLowercase: any
+    hasLowercaseWord: any
+    whitespace: any
+    nonwordish: any
+  }
 
   protected addCreators() {} // eslint-disable-line @typescript-eslint/no-empty-function
 
@@ -170,10 +169,21 @@ export class Entry {
   }
 
   constructor(item, config: Config, translation: Translation) {
+    if (!this.re) {
+      Entry.prototype.re = {
+        // private nonLetters: new Zotero.Utilities.XRegExp('[^\\p{Letter}]', 'g')
+        punctuationAtEnd: new Zotero.Utilities.XRegExp('[\\p{Punctuation}]$'),
+        startsWithLowercase: new Zotero.Utilities.XRegExp('^[\\p{Ll}]'),
+        hasLowercaseWord: new Zotero.Utilities.XRegExp('\\s[\\p{Ll}]'),
+        whitespace: new Zotero.Utilities.XRegExp('[\\p{Zs}]+'),
+        nonwordish: new Zotero.Utilities.XRegExp('[^\\p{L}\\p{N}]', 'g'),
+      }
+    }
+
     this.translation = translation
     this.item = item
     this.config = config
-    this.date = item.date ? Zotero.BetterBibTeX.parseDate(item.date) : { type: 'none' }
+    this.date = item.date ? DateParser.parse(item.date) : { type: 'none' }
 
     if (!this.item.language) {
       this.english = true
@@ -296,7 +306,7 @@ export class Entry {
   private valueish(value) {
     switch (typeof value) {
       case 'number': return `${value}`
-      case 'string': return Zotero.Utilities.XRegExp.replace(value, re.nonwordish, '', 'all').toLowerCase()
+      case 'string': return Zotero.Utilities.XRegExp.replace(value, this.re.nonwordish, '', 'all').toLowerCase()
       default: return ''
     }
   }
@@ -356,7 +366,7 @@ export class Entry {
       // bare year
       // if (this.translation.BetterBibLaTeX && (typeof field.value === 'number' || (typeof field.value === 'string' && field.value.match(/^[0-9]+$/)))) return this.add({...field, bibtex: `${field.value}`, enc: 'latex'})
 
-      if (this.translation.BetterBibLaTeX && this.translation.preferences.biblatexExtendedDateFormat && Zotero.BetterBibTeX.isEDTF(field.value, true)) {
+      if (this.translation.BetterBibLaTeX && this.translation.preferences.biblatexExtendedDateFormat && DateParser.isEDTF(field.value as string, true)) {
         return this.add({
           ...field,
           value: (field.value as string).replace(/\.[0-9]{3}[a-z]+$/i, ''),
@@ -364,7 +374,7 @@ export class Entry {
         })
       }
 
-      const date = Zotero.BetterBibTeX.parseDate(field.value)
+      const date = DateParser.parse(field.value as string)
 
       this.add(datefield(date, field, this.translation))
 
@@ -787,7 +797,16 @@ export class Entry {
     this.metadata.DeclarePrefChars = this.unique_chars(this.metadata.DeclarePrefChars)
 
     this.metadata.packages = Object.keys(this.packages)
-    if (this.item.$cacheable) Zotero.BetterBibTeX.cacheStore(this.item.itemID, this.translation.options, this.translation.preferences, ref, this.metadata)
+    if (this.item.$cacheable) {
+      Zotero.BetterBibTeX.Cache.store(
+        this.translation.translator.label,
+        this.item.itemID,
+        this.translation.options,
+        this.translation.preferences,
+        ref,
+        this.metadata
+      )
+    }
 
     this.translation.bibtex.postfix.add(this.metadata)
   }
@@ -855,7 +874,7 @@ export class Entry {
   protected _enc_creators_scrub_name(name: string): string {
     name = name.replace(/uFFFC/g, '') // these should never appear
     name = name.replace(/\u00A0/g, '\uFFFC') // safeguard non-breaking spaces -- the only non-space space-ish allowed in names (see #859)
-    name =  Zotero.Utilities.XRegExp.replace(name, re.whitespace, ' ', 'all') // all the rest must go
+    name =  Zotero.Utilities.XRegExp.replace(name, this.re.whitespace, ' ', 'all') // all the rest must go
     name = name.replace(/\uFFFC/g, '\u00A0') // restore non-breaking spaces
     return name
   }
@@ -1084,7 +1103,7 @@ export class Entry {
     if (particle[particle.length - 1] === ' ') return particle
 
     if (this.translation.BetterBibLaTeX) {
-      if (Zotero.Utilities.XRegExp.test(particle, re.punctuationAtEnd)) this.metadata.DeclarePrefChars += particle[particle.length - 1]
+      if (Zotero.Utilities.XRegExp.test(particle, this.re.punctuationAtEnd)) this.metadata.DeclarePrefChars += particle[particle.length - 1]
       // if BBLT, always add a space if it isn't there
       return `${particle} `
     }
@@ -1095,7 +1114,7 @@ export class Entry {
     if (particle[particle.length - 1] === '.') return `${particle} `
 
     // if it ends in any other punctuation, it's probably something like d'Medici -- no space
-    if (Zotero.Utilities.XRegExp.test(particle, re.punctuationAtEnd)) {
+    if (Zotero.Utilities.XRegExp.test(particle, this.re.punctuationAtEnd)) {
       if (relax) return `${particle}${enc_creators_marker.relax} `
       return particle
     }
@@ -1147,7 +1166,7 @@ export class Entry {
       return namebuilder.join(', ')
     }
 
-    if (family && Zotero.Utilities.XRegExp.test(family, re.startsWithLowercase)) family = new String(family) // eslint-disable-line no-new-wrappers
+    if (family && Zotero.Utilities.XRegExp.test(family, this.re.startsWithLowercase)) family = new String(family) // eslint-disable-line no-new-wrappers
 
     if (family) family = this._enc_creator_part(family)
 
@@ -1191,7 +1210,7 @@ export class Entry {
 
     // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
     if (name['non-dropping-particle']) family = new String(this._enc_creators_pad_particle(name['non-dropping-particle']) + family) // eslint-disable-line no-new-wrappers
-    if (Zotero.Utilities.XRegExp.test(family, re.startsWithLowercase) || Zotero.Utilities.XRegExp.test(family, re.hasLowercaseWord)) family = new String(family) // eslint-disable-line no-new-wrappers
+    if (Zotero.Utilities.XRegExp.test(family, this.re.startsWithLowercase) || Zotero.Utilities.XRegExp.test(family, this.re.hasLowercaseWord)) family = new String(family) // eslint-disable-line no-new-wrappers
 
     // https://github.com/retorquere/zotero-better-bibtex/issues/978 -- enc_latex can return null
     family = family ? this._enc_creator_part(family) : ''

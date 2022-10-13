@@ -5,7 +5,7 @@ import { log } from './logger'
 
 import { Events } from './events'
 import { DB, scrubAutoExport } from './db/main'
-import { DB as Cache, selector as cacheSelector } from './db/cache'
+import { DB as Cache } from './db/cache'
 import { $and } from './db/loki'
 import { Translators, ExportJob } from './translators'
 import { Preference } from './prefs'
@@ -462,7 +462,7 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
     }, {})
 
     const label = Translators.byId[ae.translatorID].label
-    const selector = cacheSelector(label, options, prefs)
+    const selector = Cache.selector(label, options, prefs)
     const itemIDs = [...itemIDset]
     const query = $and({...selector, itemID: { $in: itemIDs } })
     log.debug('fetching cacherate:', { label, query })

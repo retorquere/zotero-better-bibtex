@@ -30,7 +30,7 @@ require('./pull-export') // just require, initializes the pull-export end points
 require('./json-rpc') // just require, initializes the json-rpc end point
 import { AUXScanner } from './aux-scanner'
 import * as Extra from './extra'
-import { sentenceCase, titleCase, HTMLParser } from './text'
+import { sentenceCase, titleCase, HTMLParser, HTMLParserOptions } from './text'
 
 Components.utils.import('resource://gre/modules/AddonManager.jsm')
 declare const AddonManager: any
@@ -40,7 +40,7 @@ import { Events } from './events'
 
 import { Translators } from './translators'
 import { DB } from './db/main'
-import { DB as Cache, selector as cacheSelector } from './db/cache'
+import { DB as Cache } from './db/cache'
 import { Serializer } from './serializer'
 import { JournalAbbrev } from './journal-abbrev'
 import { AutoExport } from './auto-export'
@@ -48,9 +48,12 @@ import { KeyManager } from './key-manager'
 import { TestSupport } from './test-support'
 import { TeXstudio } from './tex-studio'
 import { $and } from './db/loki'
-import { cloneDeep } from 'lodash'
 import * as l10n from './l10n'
 import * as CSL from 'citeproc'
+
+import { generateBibLaTeX } from '../translators/bibtex/biblatex'
+import { generateBibTeX, parseBibTeX } from '../translators/bibtex/bibtex'
+import { Translation } from '../translators/lib/translator'
 
 // UNINSTALL
 AddonManager.addAddonListener({
@@ -395,14 +398,8 @@ Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
   CSL() { return CSL }, // eslint-disable-line @typescript-eslint/no-unsafe-return
   qrCheck(_sandbox: any, value: string, test: string, params = null) { return qualityReport(value, test, params) },
 
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  parseDate(_sandbox: any, date: string): ParsedDate { return DateParser.parse(date) },
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-
-  isEDTF(_sandbox: any, date: string, minuteLevelPrecision = false) { return DateParser.isEDTF(date, minuteLevelPrecision) },
-
   titleCase(_sandbox: any, text: string): string { return titleCase(text) },
-  parseHTML(_sandbox: any, text: { toString: () => any }, options: { html?: boolean, caseConversion?: boolean, exportBraceProtection: boolean, csquotes: string, exportTitleCase: boolean }) {
+  parseHTML(_sandbox: any, text: { toString: () => any }, options: HTMLParserOptions) {
     options = {
       ...options,
       exportBraceProtection: Preference.exportBraceProtection,
@@ -413,66 +410,25 @@ Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
   },
   // extractFields(_sandbox, item) { return Extra.get(item.extra) },
 
+  strToISO(_sandbox: any, str: string) { return DateParser.strToISO(str) },
+
+  generateBibLaTeX(_sandbox: any, translation: Translation) { generateBibLaTeX(translation) },
+  generateBibTeX(_sandbox: any, translation: Translation) { generateBibTeX(translation) },
+
   cacheFetch(sandbox: { translator: { label: string }[] }, itemID: number, options: { exportNotes: boolean, useJournalAbbreviation: boolean }, prefs: any) {
-    if (!Preference.cache) return false
-
-    const collection = Cache.getCollection(sandbox.translator[0].label)
-    if (!collection) return false
-
-    // not safe in async!
-    const cloneObjects = collection.cloneObjects
-    collection.cloneObjects = false
-    const cached = collection.findOne($and({...cacheSelector(sandbox.translator[0].label, options, prefs), itemID}))
-    collection.cloneObjects = cloneObjects
-
-    if (!cached) return false
-
-    // collection.update(cached) // touches the cache object so it isn't reaped too early
-
-    // direct-DB access for speed...
-    cached.meta.updated = (new Date).getTime() // touches the cache object so it isn't reaped too early
-    collection.dirty = true
-
-    // isolate object, because it was not fetched using clone
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return cloneDeep(cached)
+    return Cache.fetch(sandbox.translator[0].label, itemID, options, prefs)
   },
 
   cacheStore(sandbox: { translator: { label: string }[] }, itemID: number, options: { exportNotes: boolean, useJournalAbbreviation: boolean }, prefs: any, entry: any, metadata: any) {
-    if (!Preference.cache) return false
-
-    if (!metadata) metadata = {}
-
-    const collection = Cache.getCollection(sandbox.translator[0].label)
-    if (!collection) {
-      log.error('cacheStore: cache', sandbox.translator[0].label, 'not found')
-      return false
-    }
-
-    const selector = {...cacheSelector(sandbox.translator[0].label, options, prefs), itemID}
-    let cached = collection.findOne($and(selector))
-
-    if (cached) {
-      cached.entry = entry
-      cached.metadata = metadata
-      cached = collection.update(cached)
-
-    }
-    else {
-      cached = collection.insert({...selector, entry, metadata})
-
-    }
-
-    return true
+    return Cache.store(sandbox.translator[0].label, itemID, options, prefs, entry, metadata)
   },
-
-  strToISO(_sandbox: any, str: string) { return DateParser.strToISO(str) },
 }
 
 Zotero.Translate.Import.prototype.Sandbox.BetterBibTeX = {
   clientName: Zotero.clientName,
 
-  parseHTML(_sandbox: any, text: { toString: () => any }, options: { html?: boolean, caseConversion?: boolean, exportBraceProtection: boolean, csquotes: string, exportTitleCase: boolean }) {
+  parseHTML(_sandbox: any, text: { toString: () => any }, options: HTMLParserOptions) {
     options = {
       ...options,
       exportBraceProtection: Preference.exportBraceProtection,
@@ -481,8 +437,11 @@ Zotero.Translate.Import.prototype.Sandbox.BetterBibTeX = {
     }
     return HTMLParser.parse(text.toString(), options)
   },
+
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   parseDate(_sandbox: any, date: string): ParsedDate { return DateParser.parse(date) },
+
+  async parseBibTeX(_sandbox: any, input: string, translation: Translation) { return parseBibTeX(input, translation) },
 }
 
 $patch$(Zotero.Utilities.Internal, 'itemToExportFormat', original => function Zotero_Utilities_Internal_itemToExportFormat(zoteroItem: any, _legacy: any, _skipChildItems: any) {
@@ -865,6 +824,8 @@ class Progress {
 }
 
 export class BetterBibTeX {
+  public Cache = Cache
+
   // eslint-disable-next-line prefer-arrow/prefer-arrow-functions, @typescript-eslint/no-unsafe-return, @typescript-eslint/explicit-module-boundary-types
   public CSL() { return CSL }
   public TestSupport = new TestSupport

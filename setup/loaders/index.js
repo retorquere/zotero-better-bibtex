@@ -46,6 +46,18 @@ module.exports.patcher = function(dir) {
   }
 }
 
+module.exports.bib = {
+  name: 'bib',
+  setup(build) {
+    build.onLoad({ filter: /\.bib$/ }, async (args) => {
+      return {
+        contents: await fs.promises.readFile(args.path, 'utf-8'),
+        loader: 'text'
+      }
+    })
+  }
+}
+
 module.exports.bibertool = {
   name: 'bibertool',
   setup(build) {

@@ -102,7 +102,7 @@ class Config:
         'db': '',
         'locale': userdata.get('locale', ''),
         'first_run': userdata.get('first-run', 'false') == 'true',
-        'timeout': 60,
+        'timeout': 120,
         'profile': '',
         'trace_factor': 1,
       }

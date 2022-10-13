@@ -1,6 +1,5 @@
-declare const Zotero: any
-
 import { Translation } from '../lib/translator'
+import { HTMLParser } from '../../content/text'
 
 import type { MarkupNode } from '../../typings/markup'
 import type { TeXMap } from '../../content/prefs'
@@ -136,7 +135,13 @@ export class HTMLConverter {
     this.packages = {}
     this.stack = []
 
-    const ast: MarkupNode = Zotero.BetterBibTeX.parseHTML(source, this.options)
+    const ast: MarkupNode = HTMLParser.parse(source, {
+      html: options.html,
+      caseConversion: options.caseConversion,
+      exportBraceProtection: this.translation.preferences.exportBraceProtection,
+      csquotes: this.translation.preferences.csquotes,
+      exportTitleCase: this.translation.preferences.exportTitleCase,
+    })
     this.walk(ast)
 
     if (!options.commandspacers) this.latex = replace_command_spacers(this.latex)

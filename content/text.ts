@@ -118,7 +118,7 @@ export function sentenceCase(text: string): string {
   return sentencecased
 }
 
-type HTMLParserOptions = {
+export type HTMLParserOptions = {
   html?: boolean
   caseConversion?: boolean
   exportBraceProtection: boolean
