@@ -25,9 +25,8 @@ args = parser.parse_args()
 
 def publish(var, value):
   value = json.dumps(value)
-  with open(os.environ['GITHUB_ENV'], 'a') as f:
-    print(f"{var}={value}")
-    print(f"{var}={value}", file=f)
+  print(f"set-output name={var}::{value}")
+  print(f"::set-output name={var}::{value}")
 
 class NoTestError(Exception):
   pass
