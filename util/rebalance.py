@@ -141,4 +141,6 @@ except FailedError:
 print('writing', output)
 with open(output, 'w') as f:
   json.dump(balance, f, indent='  ', sort_keys=True)
-print(f"::set-output name=balance::{output}")
+with open(os.environ['GITHUB_ENV'], 'a') as f:
+  print(f"balance={json.dumps(output)}")
+  print(f"balance={json.dumps(output)}", file=f)
