@@ -6,8 +6,9 @@ import type { TeXMap } from '../../content/prefs'
 
 import { log } from '../../content/logger'
 import HE = require('he')
-import * as unicode2latex from 'unicode2latex'
 const combining_diacritics = /^[^\u0300-\u036F][\u0300-\u036F]+/
+
+import * as unicode2latex from 'unicode2latex'
 
 const switchMode = {
   math: 'text',
@@ -29,6 +30,7 @@ export type ParseResult = { latex: string, raw: boolean, packages: string[] }
 
 type LatexRepresentation = { text?: string, math?: string, textpackages?: string[], mathpackages?: string[], commandspacer?: boolean }
 
+const clone = <T>(obj: T): T => JSON.parse(JSON.stringify(obj)) as T
 export class HTMLConverter {
   private latex = ''
   private mapping: {
@@ -55,11 +57,9 @@ export class HTMLConverter {
     let mapping: TeXMap
 
     if (this.translation.unicode) {
-      log.debug('init charmap: unicode')
       mapping = unicode2latex.unicode
     }
     else if (creator && this.translation.BetterBibTeX) {
-      log.debug('init charmap: bibtex-creator')
       /* https://github.com/retorquere/zotero-better-bibtex/issues/1189
         Needed so that composite characters are counted as single characters
         for in-text citation generation. This messes with the {} cleanup
@@ -72,15 +72,14 @@ export class HTMLConverter {
       mapping = unicode2latex.ascii_bibtex_creator
     }
     else {
-      log.debug('init charmap: ascii')
       mapping = unicode2latex.ascii
     }
 
     // safeguard against modifications for reusable workers
-    mapping = {
+    mapping = clone({
       ...mapping,
       ...(charmap || {}),
-    }
+    })
 
     for (const c of this.translation.preferences.ascii) {
       mapping[c] = unicode2latex.ascii[c]
