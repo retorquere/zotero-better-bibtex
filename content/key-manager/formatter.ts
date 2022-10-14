@@ -839,6 +839,12 @@ class PatternFormatter {
     return this
   }
 
+  /** turn auto-cleaning on/off */
+  public $fold(enabled: boolean) {
+    this.folding = enabled
+    return this
+  }
+
   /**
    * a pseudo-function that sets the citekey disambiguation postfix using an <a href="https://www.npmjs.com/package/sprintf-js">sprintf-js</a> format spec
    * for when a key is generated that already exists. Does not add any text to the citekey otherwise.
