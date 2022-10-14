@@ -8,7 +8,7 @@ env:
   DURATIONS: logs/stats/durations.json
   BINS: logs/stats/bins.json
 jobs:
-  jobs:
+  balance:
     outputs:
       bins: ${{ env.test_bins }}
       clients: ${{ env.test_clients }}
@@ -111,8 +111,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        bin: ${{ fromJSON(needs.jobs.outputs.bins) }}
-        client: ${{ fromJSON(needs.jobs.outputs.clients) }}
+        bin: ${{ fromJSON(needs.balance.outputs.bins) }}
+        client: ${{ fromJSON(needs.balance.outputs.clients) }}
     steps:
     - uses: actions/checkout@v2
     - name: fetch build artifacts
@@ -154,7 +154,7 @@ jobs:
         sudo mv pandoc-2.19.2/bin/pandoc /usr/bin
         pandoc -v
     - name: Run tests
-      run: xvfb-run --auto-servernum ./test/behave --client ${{ matrix.client }} --format ci --bin ${{ matrix.bin }} --bins $BINS --durations logs/stats/durations-${{ matrix.client }}-${{ matrix.bin }}.json ${{ needs.jobs.outputs.slow }}
+      run: xvfb-run --auto-servernum ./test/behave --client ${{ matrix.client }} --format ci --bin ${{ matrix.bin }} --bins $BINS --durations logs/stats/durations-${{ matrix.client }}-${{ matrix.bin }}.json ${{ needs.balance.outputs.slow }}
       env:
         PYTHONUNBUFFERED: true
     - uses: actions/upload-artifact@v3
