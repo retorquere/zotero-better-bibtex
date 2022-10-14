@@ -147,8 +147,6 @@ async function bundle(config) {
     ...config,
   }
 
-  config.inject.push('./setup/loaders/globals.js')
-
   let target
   if (config.outfile) {
     target = config.outfile
@@ -205,6 +203,7 @@ async function rebuild() {
       loader.__dirname,
       shims
     ],
+    inject: ['./setup/loaders/globals.js'],
     outdir: 'build/content',
     banner: { js: 'if (!Zotero.BetterBibTeX) {\n' },
     footer: { js: '\n}' },
@@ -226,6 +225,7 @@ async function rebuild() {
       loader.__dirname,
       shims
     ],
+    inject: ['./setup/loaders/globals.js'],
     outdir: 'build/content/worker',
     exportGlobals: true,
     metafile: 'gen/worker.json',
@@ -276,6 +276,7 @@ async function rebuild() {
       // target: ['node12'],
       // inject: [ './headless/inject.js' ],
       plugins: [node_modules.plugin, loader.patcher('setup/patches'), loader.bibertool, loader.peggy ],
+      inject: ['./setup/loaders/globals.js'],
       bundle: true,
       globalName: 'Headless',
       entryPoints: [ 'headless/zotero.ts' ],
