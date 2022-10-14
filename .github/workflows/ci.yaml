@@ -106,7 +106,7 @@ jobs:
   test:
     needs:
     - build
-    - jobs
+    - balance
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
