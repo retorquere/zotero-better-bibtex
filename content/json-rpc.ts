@@ -163,24 +163,31 @@ class NSItem {
     const item = await getItemsAsync(key.itemID)
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return (await getItemsAsync(item.getAttachments())).map(att => ({
-      open: `zotero://open-pdf/${Zotero.API.getLibraryPrefix(item.libraryID || Zotero.Libraries.userLibraryID)}/items/${att.key}`,
-      path: att.getFilePath(),
-      annotations: att.getAnnotations().map(raw => {
-        const annot = raw.toJSON()
+    return (await getItemsAsync(item.getAttachments())).map(att => {
+      const data: Record<string, any> = {
+        open: `zotero://open-pdf/${Zotero.API.getLibraryPrefix(item.libraryID || Zotero.Libraries.userLibraryID)}/items/${att.key}`,
+        path: att.getFilePath(),
+      }
 
-        if (annot.annotationType === 'image') {
-          annot.annotationImagePath = Zotero.Annotations.getCacheImagePath(item)
-        }
+      if (att.isPDFAttachment()) {
+        data.annotations = att.getAnnotations().map(raw => {
+          const annot = raw.toJSON()
 
-        if (annot.annotationPosition && typeof annot.annotationPosition === 'string') {
-          annot.annotationPosition = JSON.parse(annot.annotationPosition)
-        }
+          if (annot.annotationType === 'image') {
+            annot.annotationImagePath = Zotero.Annotations.getCacheImagePath(item)
+          }
 
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-        return annot
-      }),
-    }))
+          if (annot.annotationPosition && typeof annot.annotationPosition === 'string') {
+            annot.annotationPosition = JSON.parse(annot.annotationPosition)
+          }
+
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+          return annot
+        })
+      }
+
+      return data
+    })
   }
 
   /**
