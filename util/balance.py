@@ -11,7 +11,6 @@ from ortools.linear_solver import pywraplp
 import math
 from pathlib import Path
 import datetime
-import shlex
 
 # TODO: only upload slow stats
 # TODO: allow non-optimal solutions
@@ -25,7 +24,6 @@ parser.add_argument('-s', '--slow', default=False, action='store_true')
 args = parser.parse_args()
 
 def publish(var, value):
-  value = shlex.quote(value)
   with open(os.environ['GITHUB_ENV'], 'a') as f:
     print(f"{var}={value}")
     print(f"{var}={value}", file=f)
