@@ -53,6 +53,8 @@ import * as CSL from 'citeproc'
 
 import { generateBibLaTeX } from '../translators/bibtex/biblatex'
 import { generateBibTeX, parseBibTeX } from '../translators/bibtex/bibtex'
+import { generateCSLYAML, parseCSLYAML } from '../translators/csl/yaml'
+import { generateCSLJSON } from '../translators/csl/json'
 import { Translation } from '../translators/lib/translator'
 
 // UNINSTALL
@@ -414,6 +416,8 @@ Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
 
   generateBibLaTeX(_sandbox: any, translation: Translation) { generateBibLaTeX(translation) },
   generateBibTeX(_sandbox: any, translation: Translation) { generateBibTeX(translation) },
+  generateCSLYAML(_sandbox: any, translation: Translation) { generateCSLYAML(translation) },
+  generateCSLJSON(_sandbox: any, translation: Translation) { generateCSLJSON(translation) },
 
   cacheFetch(sandbox: { translator: { label: string }[] }, itemID: number, options: { exportNotes: boolean, useJournalAbbreviation: boolean }, prefs: any) {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
@@ -443,6 +447,7 @@ Zotero.Translate.Import.prototype.Sandbox.BetterBibTeX = {
   parseDate(_sandbox: any, date: string): ParsedDate { return DateParser.parse(date) },
 
   async parseBibTeX(_sandbox: any, input: string, translation: Translation) { return parseBibTeX(input, translation) },
+  parseCSLYAML(_sandbox: any, input: string): any { return parseCSLYAML(input) },
 }
 
 $patch$(Zotero.Utilities.Internal, 'itemToExportFormat', original => function Zotero_Utilities_Internal_itemToExportFormat(zoteroItem: any, _legacy: any, _skipChildItems: any) {

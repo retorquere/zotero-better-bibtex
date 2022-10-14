@@ -8,6 +8,8 @@ import type { Translators } from '../../typings/translators'
 import { valid } from '../../gen/items/items'
 import { generateBibLaTeX } from '../../translators/bibtex/biblatex'
 import { generateBibTeX } from '../../translators/bibtex/bibtex'
+import { generateCSLJSON } from '../../translators/csl/json'
+import { generateCSLYAML, parseCSLYAML } from '../../translators/csl/yaml'
 import { Translation } from '../../translators/lib/translator'
 
 import { DOMParser as XMLDOMParser } from '@xmldom/xmldom'
@@ -223,6 +225,9 @@ class WorkerZoteroBetterBibTeX {
 
   public generateBibLaTeX(translation: Translation) { generateBibLaTeX(translation) }
   public generateBibTeX(translation: Translation) { generateBibTeX(translation) }
+  generateCSLYAML(translation: Translation) { generateCSLYAML(translation) }
+  generateCSLJSON(translation: Translation) { generateCSLJSON(translation) }
+  parseCSLYAML(input: string): any { return parseCSLYAML(input) }
 }
 
 const WorkerZoteroUtilities = {
