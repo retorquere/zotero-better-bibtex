@@ -9,8 +9,7 @@ on:
 _anchors:
   get_version: &get_version
     name: get package version
-    run: echo "::set-output name=version::"`jq -r .version package.json`
-    id: version
+    run: echo "version="`jq -r .version package.json` >> $GITHUB_ENV
   install_python: &install_python
     name: install python
     uses: actions/setup-python@v3
@@ -77,9 +76,9 @@ env:
 jobs:
   jobs:
     outputs:
-      bins: ${{ steps.balance.outputs.bins }}
-      clients: ${{ steps.balance.outputs.clients }}
-      slow: ${{ steps.slow.outputs.slow }}
+      bins: ${{ env.test_bins }}
+      clients: ${{ env.test_clients }}
+      slow: ${{ env.test_slow }}
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -92,17 +91,17 @@ jobs:
     - name: enable slow tests for master, scheduled builds, or tagged builds
       id: slow
       if:
-        (github.event.head_commit.message == steps.version.outputs.version && startsWith(github.ref, 'refs/tags/')) || github.event_name == 'schedule' || github.ref == 'refs/heads/master'
-      run: echo "::set-output name=slow::--slow"
+        (github.event.head_commit.message == env.version && startsWith(github.ref, 'refs/tags/')) || github.event_name == 'schedule' || github.ref == 'refs/heads/master'
+      run: echo "slow=--slow" >> $GITHUB_ENV
 
     - name: enable beta for tagged builds and scheduled builds
       id: beta
-      if: (github.event.head_commit.message == steps.version.outputs.version && startsWith(github.ref, 'refs/tags/')) || github.event_name == 'schedule'
-      run: echo "::set-output name=beta::--beta"
+      if: (github.event.head_commit.message == env.version && startsWith(github.ref, 'refs/tags/')) || github.event_name == 'schedule'
+      run: echo "beta=--beta" >> $GITHUB_ENV
 
     - name: balance tests
       id: balance
-      run: ./util/balance.py --durations $DURATIONS --bins $BINS --minutes 10 ${{ steps.slow.outputs.slow }} ${{ steps.beta.outputs.beta }}
+      run: ./util/balance.py --durations $DURATIONS --bins $BINS --minutes 10 ${{ env.slow }} ${{ env.beta }}
     - *upload_test_artifacts
 
   build:
@@ -116,7 +115,7 @@ jobs:
     - *get_version
     - name: cancel spurious build on tagged version
       uses: andymckay/cancel-action@master
-      if: github.event.head_commit.message == steps.version.outputs.version && !startsWith(github.ref, 'refs/tags/')
+      if: github.event.head_commit.message == env.version && !startsWith(github.ref, 'refs/tags/')
 
     - *install_python
     - *install_node
@@ -167,15 +166,10 @@ jobs:
         sudo mv pandoc-2.19.2/bin/pandoc /usr/bin
         pandoc -v
 
-    # fast test
-    - if: contains(github.event.commits[0].message, '[fast-test]')
-      run: echo "##[set-output name=this;]--test-this"
-      id: test
-
     # needs logs/logs to have them show up as logs in the artifact... no idea why
     - name: Run tests
       # continue-on-error: ${{ matrix.client == 'jurism' }}
-      run: xvfb-run --auto-servernum ./test/behave --client ${{ matrix.client }} --format ci --bin ${{ matrix.bin }} --bins $BINS ${{ steps.test.outputs.this }} --durations logs/stats/durations-${{ matrix.client }}-${{ matrix.bin }}.json ${{ needs.jobs.outputs.slow }}
+      run: xvfb-run --auto-servernum ./test/behave --client ${{ matrix.client }} --format ci --bin ${{ matrix.bin }} --bins $BINS --durations logs/stats/durations-${{ matrix.client }}-${{ matrix.bin }}.json ${{ needs.jobs.outputs.slow }}
       env:
         PYTHONUNBUFFERED: true
 

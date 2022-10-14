@@ -11,6 +11,7 @@ from ortools.linear_solver import pywraplp
 import math
 from pathlib import Path
 import datetime
+import shlex
 
 # TODO: only upload slow stats
 # TODO: allow non-optimal solutions
@@ -24,9 +25,10 @@ parser.add_argument('-s', '--slow', default=False, action='store_true')
 args = parser.parse_args()
 
 def publish(var, value):
-  value = json.dumps(value)
-  print(f"set-output name={var}::{value}")
-  print(f"::set-output name={var}::{value}")
+  value = shlex.quote(value)
+  with open(os.environ['GITHUB_ENV'], 'a') as f:
+    print(f"{var}={value}")
+    print(f"{var}={value}", file=f)
 
 class NoTestError(Exception):
   pass
@@ -112,7 +114,7 @@ class Tests:
 Tests = Tests()
 Tests.load(args.durations)
 Tests.balance()
-publish('bins', list(range(len(Tests.bins))))
+publish('test_bins', json.dumps(list(range(len(Tests.bins)))))
 
 clients = ['zotero', 'jurism']
 if args.beta:
@@ -124,4 +126,4 @@ if len(banned) > 0:
   print('### REMOVING', banned, '###')
   clients = list(set(clients) - banned)
 
-publish('clients', clients)
+publish('test_clients', json.dumps(clients))
