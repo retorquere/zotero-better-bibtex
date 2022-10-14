@@ -12,12 +12,12 @@ _anchors:
     run: echo "version="`jq -r .version package.json` >> $GITHUB_ENV
   install_python: &install_python
     name: install python
-    uses: actions/setup-python@v3
+    uses: actions/setup-python@v4
     with:
       python-version: '3.10'
   install_node: &install_node
     name: install node
-    uses: actions/setup-node@v2
+    uses: actions/setup-node@v3
     with:
       node-version: 16.x
   cache: &cache
@@ -51,7 +51,7 @@ _anchors:
         gen/
   download_build_artifacts: &download_build_artifacts
     name: fetch build artifacts
-    uses: actions/download-artifact@v2
+    uses: actions/download-artifact@v3
     with:
       name: build-artifacts
   # dummy directory minitests because otherwise dir structure is not maintained?!
@@ -65,7 +65,7 @@ _anchors:
         minitests/
   download_test_artifacts: &download_test_artifacts
     name: fetch test artifacts
-    uses: actions/download-artifact@v2
+    uses: actions/download-artifact@v3
     with:
       name: test-artifacts
 
@@ -107,7 +107,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
       with:
         persist-credentials: false
         submodules: true  # Fetch Hugo themes (true OR recursive)
@@ -149,7 +149,7 @@ jobs:
         bin: ${{ fromJSON(needs.balance.outputs.bins) }}
         client: ${{ fromJSON(needs.balance.outputs.clients) }}
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - *download_build_artifacts
     - *download_test_artifacts
     - *install_python
@@ -192,7 +192,7 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
 
     - *download_build_artifacts
     - *install_python
@@ -210,7 +210,7 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - *install_python
     - *download_test_artifacts
     - name: rebalance tests
