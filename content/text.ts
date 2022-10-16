@@ -121,9 +121,9 @@ export function sentenceCase(text: string): string {
 export type HTMLParserOptions = {
   html?: boolean
   caseConversion?: boolean
-  exportBraceProtection: boolean
-  csquotes: string
-  exportTitleCase: boolean
+  exportBraceProtection?: boolean
+  csquotes?: string
+  exportTitleCase?: boolean
 }
 
 export const HTMLParser = new class { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match

@@ -19,12 +19,13 @@ import { label as propertyLabel } from '../../gen/items/items'
 import type { Fields as ParsedExtraFields } from '../../content/extra'
 import { zoteroCreator as ExtraZoteroCreator } from '../../content/extra'
 import { log } from '../../content/logger'
-import { babelLanguage } from '../../content/text'
+import { babelLanguage, titleCase } from '../../content/text'
 import BabelTag from '../../gen/babel/tag.json'
 
 import { arXiv } from '../../content/arXiv'
 
 import { stringCompare } from '../lib/string-compare'
+import * as CSL from 'citeproc'
 
 /*
  * h1 class: Entry
@@ -905,7 +906,7 @@ export class Entry {
           given: this._enc_creators_scrub_name(creator.firstName || ''),
         }
 
-        if (this.translation.preferences.parseParticles) Zotero.BetterBibTeX.CSL().parseParticles(name)
+        if (this.translation.preferences.parseParticles) CSL.parseParticles(name)
 
         if (!this.translation.BetterBibLaTeX || !this.translation.preferences.biblatexExtendedNameFormat) {
           // side effects to set use-prefix/uniorcomma -- make sure addCreators is called *before* adding 'options'
@@ -1289,7 +1290,7 @@ export class Entry {
         }
 
         if (this.has.title && this.translation.preferences.exportTitleCase) {
-          const titleCased = Zotero.BetterBibTeX.titleCase(this.has.title.value) === this.has.title.value
+          const titleCased = titleCase(this.has.title.value) === this.has.title.value
           if (this.has.title.value.match(/\s/)) {
             if (titleCased) report.push('? Title looks like it was stored in title-case in Zotero')
           }

@@ -15,7 +15,6 @@ import { generateCSLYAML, parseCSLYAML } from '../../translators/csl/yaml'
 import { Translation } from '../../translators/lib/translator'
 
 import { DOMParser as XMLDOMParser } from '@xmldom/xmldom'
-import * as CSL from 'citeproc'
 
 declare var ZOTERO_TRANSLATOR_INFO: TranslatorMetadata // eslint-disable-line no-var
 
@@ -138,7 +137,6 @@ declare const doExport: () => void
 import * as DateParser from '../../content/dateparser'
 // import * as Extra from '../../content/extra'
 import { qualityReport } from '../../content/qr-check'
-import { titleCase, HTMLParser } from '../../content/text'
 import itemCreators from '../../gen/items/creators.json'
 import { client } from '../../content/client'
 import { log } from '../../content/logger'
@@ -179,8 +177,6 @@ class WorkerZoteroBetterBibTeX {
     fetch: cacheFetch,
   }
 
-  public CSL() { return CSL }
-
   public setProgress(percent: number) {
     Zotero.send({ kind: 'progress', percent, translator: workerJob.translator, autoExport: workerJob.autoExport })
   }
@@ -205,6 +201,7 @@ class WorkerZoteroBetterBibTeX {
     return DateParser.isEDTF(date, minuteLevelPrecision)
   }
 
+  /*
   public titleCase(text) {
     return titleCase(text)
   }
@@ -218,6 +215,7 @@ class WorkerZoteroBetterBibTeX {
     }
     return HTMLParser.parse(text.toString(), options)
   }
+  */
 
   public strToISO(str) {
     return DateParser.strToISO(str)

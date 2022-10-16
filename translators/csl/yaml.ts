@@ -10,13 +10,14 @@ import type { MarkupNode } from '../../typings/markup'
 import { CSLExporter } from './csl'
 import { log } from '../../content/logger'
 import { ParsedDate } from '../../content/dateparser'
+import { HTMLParser } from '../../content/text'
 
 const htmlConverter = new class HTML {
   private markdown: string
 
   public convert(html) {
     this.markdown = ''
-    this.walk(Zotero.BetterBibTeX.parseHTML(html))
+    this.walk(HTMLParser.parse(html, {}))
     return this.markdown
   }
 
