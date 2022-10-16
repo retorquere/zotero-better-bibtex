@@ -25,19 +25,18 @@ There's a more technical explanation below, but the TL;DR version is that you wa
 to get it over with, export your entire library (once, no need to tick 'Keep Updated') using the 'Better BibTeX' format
 and go grab coffee (or lunch, depending on the size of your library). After that, things should be *much* better.
 
-Here are some numbers from a test with a library consisting of:
-
-* 24352 items
-* 424 notes
-* 10407 attachments
+Here are some numbers from a test with a library consisting of 86 items, exported 50 times in a row to middle out variances:
 
 (attachments are not exported for this test, but they still required serialization and handling):
 
 | Exporter                    |                      |
 | --------------------        | -------------------- |
-| Zotero                      | 112s                |
-| Better BibTeX, empty cache  | 235s                |
-| Better BibTeX, filled cache | 51s                |
+| Zotero BibTeX               | 3s                |
+| Better BibTeX, empty cache  | 9s                |
+| Better BibTeX, filled cache | 4s                |
+| Zotero BibLaTeX               | 4s                |
+| Better BibLaTeX, empty cache  | 9s                |
+| Better BibLaTeX, filled cache | 3s                |
 
 **note**: if you have 'Export files' enabled during export, or set the JabRef export format to `4`, the cache will not be active. If you do large (auto)exports, avoid these.
 
