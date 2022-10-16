@@ -1,4 +1,6 @@
-const { qualityReport } = require('../../../gen/bibertool-qr-check')
+/* eslint-disable quote-props, @typescript-eslint/quotes, @typescript-eslint/indent, comma-dangle, prefer-arrow/prefer-arrow-functions, object-shorthand */
+
+import { qualityReport as qr } from '../content/bibertool-qr-check'
 
 const fieldSet = <%- fieldSet %>
 const allowed = {
@@ -29,13 +31,13 @@ const required = [
   <%_ } -%>
 ]
 
-module.exports = function(explanation) {
-  var type = this.entrytype.toLowerCase()
+export function qualityReport(explanation: Record<string, string>): string[] {
+  const type = this.entrytype.toLowerCase()
 
   if (!allowed[type]) return
 
-  var unexpected = Object.keys(this.has).filter(field => !allowed[type].find(set => set.has(field)))
-  var report = unexpected.map(field => "Unexpected field '" + field + "'" + (explanation[field] ? (' (' + explanation[field] + ')'): ''))
+  const unexpected: string[] = Object.keys(this.has).filter((field: string) => !allowed[type].find((set: Set<string>) => set.has(field)))
+  const report: string[] = unexpected.map(field => "Unexpected field '" + field + "'" + (explanation[field] ? (' (' + explanation[field] + ')'): ''))
 
   for (const test of required) {
     if (test.types.has(type)) test.check(this, report)
@@ -44,7 +46,7 @@ module.exports = function(explanation) {
   <%_ for (const [, {test, fields, params}] of Object.entries(data)) { -%>
     for (const field of <%- JSON.stringify(fields) -%>) {
       if (this.has[field]) {
-        const warning = qualityReport(this.has[field].value, <%- JSON.stringify(test) -%><%- typeof params === 'undefined' ? '' : ', ' + JSON.stringify(params) -%>)
+        const warning = qr(this.has[field].value, <%- JSON.stringify(test) -%><%- typeof params === 'undefined' ? '' : ', ' + JSON.stringify(params) -%>)
         if (warning) report.push("'" + field + "': " + warning)
       }
     }

@@ -1,6 +1,7 @@
 import { Exporter as BibTeXExporter } from './exporter'
 import { Translation } from '../lib/translator'
 import { strToISO } from '../../content/dateparser'
+import { qualityReport } from '../../gen/biber-tool'
 
 import { Entry as BaseEntry, Config } from './entry'
 
@@ -209,7 +210,7 @@ class Entry extends BaseEntry {
     }
   }
 }
-Entry.prototype.lint = require('../../submodules/biber/data/biber-tool.conf')
+Entry.prototype.lint = qualityReport
 
 function looks_like_number(n): string | boolean {
   if (n.match(/^(?=[MDCLXVI])M*(C[MD]|D?C*)(X[CL]|L?X*)(I[XV]|V?I*)$/)) return 'roman'

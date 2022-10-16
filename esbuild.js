@@ -191,21 +191,12 @@ async function bundle(config) {
 }
 
 async function rebuild() {
-  // bibertool support
-  await bundle({
-    entryPoints: [ 'content/bibertool-qr-check.ts' ],
-    plugins: [ loader.__dirname ],
-    outdir: 'gen',
-    format: 'cjs',
-  })
-
   // plugin code
   await bundle({
     entryPoints: [ 'content/better-bibtex.ts' ],
     plugins: [
       loader.trace('plugin'),
       loader.patcher('setup/patches'),
-      loader.bibertool,
       loader.bib,
       loader.peggy,
       loader.__dirname,
@@ -227,7 +218,6 @@ async function rebuild() {
     plugins: [
       loader.trace('worker'),
       loader.patcher('setup/patches'),
-      loader.bibertool,
       loader.bib,
       // loader.peggy,
       loader.__dirname,
@@ -254,7 +244,6 @@ async function rebuild() {
       entryPoints: [path.join(translator.dir, translator.name + '.ts')],
       plugins: [
         // loader.trace('translators'),
-        loader.bibertool,
         // loader.peggy,
         loader.__dirname,
         shims
@@ -284,7 +273,7 @@ async function rebuild() {
       platform: 'node',
       // target: ['node12'],
       // inject: [ './headless/inject.js' ],
-      plugins: [node_modules.plugin, loader.patcher('setup/patches'), loader.bibertool, loader.peggy ],
+      plugins: [node_modules.plugin, loader.patcher('setup/patches'), loader.peggy ],
       inject: ['./setup/loaders/globals.js'],
       bundle: true,
       globalName: 'Headless',
@@ -303,7 +292,7 @@ async function rebuild() {
       platform: 'node',
       // target: ['node12'],
       // inject: [ './headless/inject.js' ],
-      plugins: [node_modules.plugin, loader.patcher('setup/patches'), loader.bibertool, loader.peggy ],
+      plugins: [node_modules.plugin, loader.patcher('setup/patches'), loader.peggy ],
       bundle: true,
       globalName: 'Headless',
       entryPoints: [ 'headless/index.ts' ],

@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const xpath = require('xpath')
 const fs = require('fs')
 const path = require('path')
@@ -163,4 +165,4 @@ function bibertool(source) {
   return ejs.render(fs.readFileSync(path.join(__dirname, 'bibertool.ejs'), 'utf8'), BiberTool)
 }
 
-module.exports = { bibertool }
+fs.writeFileSync(path.join(__dirname, '../gen/biber-tool.ts'), bibertool(fs.readFileSync(path.join(__dirname, '../submodules/biber/data/biber-tool.conf'), 'utf-8')))
