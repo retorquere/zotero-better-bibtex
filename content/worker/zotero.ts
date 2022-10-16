@@ -132,7 +132,6 @@ const ZUI = require('../../submodules/zotero-utilities/utilities_item.js')
 const ZD = require('../../submodules/zotero-utilities/date.js')
 
 declare const doExport: () => void
-declare const dump: (message: string) => void
 
 import * as DateParser from '../../content/dateparser'
 // import * as Extra from '../../content/extra'
@@ -168,7 +167,6 @@ function cacheFetch(_translator: string, itemID: number, _options: any, _prefs: 
   return workerJob.data.cache[itemID]
 }
 function cacheStore(_translator: string, itemID: number, _options: any, _prefs: any, entry: string, metadata: any) {
-  dump(JSON.stringify({ kind: 'cache', itemID, entry, metadata }))
   if (workerJob.preferences.cache) Zotero.send({ kind: 'cache', itemID, entry, metadata })
   return true
 }
@@ -438,7 +436,6 @@ class WorkerZotero {
 
   public debug(message) {
     if (workerJob.debugEnabled) {
-      // dump(`worker: ${message}\n`)
       this.send({ kind: 'debug', message })
     }
   }
@@ -485,7 +482,6 @@ ctx.onmessage = function(e: { isTrusted?: boolean, data?: Translators.Worker.Mes
   if (!e.data) return // some kind of startup message
 
   try {
-    dump(`\nworker: got ${e.data.kind}\n`)
     switch (e.data.kind) {
       case 'start':
         Object.assign(workerJob, JSON.parse(dec.decode(new Uint8Array(e.data.config))))
@@ -508,7 +504,6 @@ ctx.onmessage = function(e: { isTrusted?: boolean, data?: Translators.Worker.Mes
     }
   }
   catch (err) {
-    dump(`\nworker error: ${err.message}\n`)
     Zotero.logError(err)
   }
 }
