@@ -136,7 +136,6 @@ declare const doExport: () => void
 
 import * as DateParser from '../../content/dateparser'
 // import * as Extra from '../../content/extra'
-import { qualityReport } from '../../content/qr-check'
 import itemCreators from '../../gen/items/creators.json'
 import { client } from '../../content/client'
 import { log } from '../../content/logger'
@@ -187,10 +186,6 @@ class WorkerZoteroBetterBibTeX {
 
   public cacheStore(itemID: number, _options: any, _prefs: any, entry: string, metadata: any) {
     return cacheStore('', itemID, null, null, entry, metadata)
-  }
-
-  public qrCheck(value, test, options = null) {
-    return qualityReport(value, test, options)
   }
 
   public parseDate(date) {

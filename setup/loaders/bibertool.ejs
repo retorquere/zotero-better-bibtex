@@ -1,3 +1,5 @@
+const { qualityReport } = require('../../../gen/bibertool-qr-check')
+
 const fieldSet = <%- fieldSet %>
 const allowed = {
 <%_ for (const [type, sets] of Object.entries(allowed)) { -%>
@@ -42,7 +44,7 @@ module.exports = function(explanation) {
   <%_ for (const [, {test, fields, params}] of Object.entries(data)) { -%>
     for (const field of <%- JSON.stringify(fields) -%>) {
       if (this.has[field]) {
-        const warning = Zotero.BetterBibTeX.qrCheck(this.has[field].value, <%- JSON.stringify(test) -%><%- typeof params === 'undefined' ? '' : ', ' + JSON.stringify(params) -%>)
+        const warning = qualityReport(this.has[field].value, <%- JSON.stringify(test) -%><%- typeof params === 'undefined' ? '' : ', ' + JSON.stringify(params) -%>)
         if (warning) report.push("'" + field + "': " + warning)
       }
     }

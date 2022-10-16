@@ -191,6 +191,14 @@ async function bundle(config) {
 }
 
 async function rebuild() {
+  // bibertool support
+  await bundle({
+    entryPoints: [ 'content/bibertool-qr-check.ts' ],
+    plugins: [ loader.__dirname ],
+    outdir: 'gen',
+    format: 'cjs',
+  })
+
   // plugin code
   await bundle({
     entryPoints: [ 'content/better-bibtex.ts' ],

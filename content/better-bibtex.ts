@@ -391,13 +391,10 @@ $patch$(Zotero.Integration, 'getApplication', original => function Zotero_Integr
 
 /* bugger this, I don't want megabytes of shared code in the translators */
 import * as DateParser from './dateparser'
-import { qualityReport } from './qr-check'
 import type { ParsedDate } from './dateparser'
 
 Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
   clientName: Zotero.clientName,
-
-  qrCheck(_sandbox: any, value: string, test: string, params = null) { return qualityReport(value, test, params) },
 
   /*
   titleCase(_sandbox: any, text: string): string { return titleCase(text) },
