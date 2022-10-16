@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions, @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-assignment */
 
+declare const dump: (message: string) => void
+
 importScripts('resource://gre/modules/osfile.jsm')
 importScripts('resource://zotero/config.js') // import ZOTERO_CONFIG'
 
@@ -481,13 +483,16 @@ const dec = new TextDecoder('utf-8')
 ctx.onmessage = function(e: { isTrusted?: boolean, data?: Translators.Worker.Message } ): void { // eslint-disable-line prefer-arrow/prefer-arrow-functions
   if (!e.data) return // some kind of startup message
 
+  let started: number
   try {
     switch (e.data.kind) {
       case 'start':
+        started = Date.now()
         Object.assign(workerJob, JSON.parse(dec.decode(new Uint8Array(e.data.config))))
         importScripts(`resource://zotero-better-bibtex/${workerJob.translator}.js`)
         Zotero.init()
         doExport()
+        log.debug('export duration:', Date.now() - started)
         Zotero.done()
         break
 
