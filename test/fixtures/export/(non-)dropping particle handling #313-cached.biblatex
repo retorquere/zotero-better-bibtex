@@ -359,5 +359,3 @@
 }
 
 @preamble{ "\ifdefined\DeclarePrefChars\DeclarePrefChars{'’-}\else\fi " }
-
-% cache use: 100%
