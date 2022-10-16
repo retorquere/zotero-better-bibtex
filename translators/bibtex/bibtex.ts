@@ -3,6 +3,7 @@ declare const Zotero: any
 import { log } from '../../content/logger'
 import { Exporter as BibTeXExporter } from './exporter'
 import { arXiv } from '../../content/arXiv'
+import { validItem } from '../../content/ajv'
 import { valid, label } from '../../gen/items/items'
 import wordsToNumbers from 'words-to-numbers'
 
@@ -1223,7 +1224,7 @@ export class ZoteroItem {
     }
 
     if (this.translation.preferences.testing) {
-      const err = valid.test(JSON.parse(JSON.stringify(this.item)), true) // stringify/parse is a fast way to get rid of methods
+      const err = validItem(JSON.parse(JSON.stringify(this.item)), true) // stringify/parse is a fast way to get rid of methods
       if (err) this.error(`import error: ${this.type} ${this.bibtex.key}: ${err}\n${JSON.stringify(this.item, null, 2)}`)
     }
 

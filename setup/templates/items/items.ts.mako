@@ -18,7 +18,6 @@ const broken = {
 type Valid = {
   type: Record<string, boolean>
   field: Record<string, Record<string, boolean>>
-  test: (obj: any, strict?: boolean) => string
 }
 
 export const valid: Valid = {
@@ -35,16 +34,6 @@ export const valid: Valid = {
       %endfor
     },
     %endfor
-  },
-  test: (obj: any, strict?: boolean) => {
-    const errors = broken.me(obj)
-    if (!errors) return ''
-    if (!strict && !broken.other(obj)) {
-      if (typeof Zotero !== 'undefined') Zotero.debug('Better BibTeX soft error: ' + errors)
-      return ''
-    }
-    // https://ajv.js.org/api.html#validation-errors
-    return errors
   },
 }
 

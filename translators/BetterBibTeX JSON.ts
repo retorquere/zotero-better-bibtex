@@ -3,7 +3,7 @@ declare const Zotero: any
 import { Translation, TranslatorMetadata, collect } from './lib/translator'
 declare var ZOTERO_TRANSLATOR_INFO: TranslatorMetadata // eslint-disable-line no-var
 
-import { valid } from '../gen/items/items'
+import { validItem } from '../content/ajv'
 import { simplifyForImport, simplifyForExport } from '../gen/items/simplify'
 const version = require('../gen/version.js')
 import { stringify } from '../content/stringify'
@@ -77,7 +77,7 @@ export async function doImport(): Promise<void> {
     // marker so BBT-JSON can be imported without extra-field meddling
     if (source.extra) source.extra = `\x1BBBT\x1B${source.extra}`
 
-    const error = valid.test(source)
+    const error = validItem(source)
     if (error) throw new Error(error)
 
     const item = new Zotero.Item()
