@@ -1,4 +1,5 @@
 import * as mapping from '../gen/items/extra-fields.json'
+import * as CSL from 'citeproc'
 
 type TeXString = { value: string, mode?: 'raw' | 'cased', line: number }
 
@@ -23,7 +24,7 @@ export function cslCreator(value: string): CSLCreator {
   const creator = value.split(/\s*\|\|\s*/)
   if (creator.length === 2) { // eslint-disable-line no-magic-numbers
     const csl_creator = { family: creator[0] || '', given: creator[1] || ''}
-    Zotero.BetterBibTeX.CSL().parseParticles(csl_creator)
+    CSL.parseParticles(csl_creator)
     return csl_creator
   }
   else {
