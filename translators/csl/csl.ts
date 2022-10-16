@@ -4,11 +4,10 @@
 declare const Zotero: any
 
 import { Translation } from '../lib/translator'
-import { DB as Cache } from '../../content/db/cache'
 
 import { simplifyForExport } from '../../gen/items/simplify'
 import { Fields as ParsedExtraFields, get as getExtra, cslCreator } from '../../content/extra'
-import { Cache as CacheTypes } from '../../typings/cache'
+import { Cache } from '../../typings/cache'
 import * as ExtraFields from '../../gen/items/extra-fields.json'
 import { log } from '../../content/logger'
 import { RegularItem } from '../../gen/typings/serialized-item'
@@ -63,8 +62,8 @@ export abstract class CSLExporter {
     for (const item of (this.translation.input.items.regular as Generator<ExtendedItem, void, unknown>)) {
       order.push({ citationKey: item.citationKey, i: items.length })
 
-      let cached: CacheTypes.ExportedItem
-      if (cached = Cache.fetch(this.translation.translator.label, item.itemID, this.translation.options, this.translation.preferences)) {
+      let cached: Cache.ExportedItem
+      if (cached = Zotero.BetterBibTeX.Cache.fetch(this.translation.translator.label, item.itemID, this.translation.options, this.translation.preferences)) {
         items.push(cached.entry)
         continue
       }
@@ -164,7 +163,7 @@ export abstract class CSLExporter {
       csl = this.sortObject(csl)
       csl = this.serialize(csl)
 
-      if (allow.cache) Cache.store(this.translation.translator.label, item.itemID, this.translation.options, this.translation.preferences, csl, {})
+      if (allow.cache) Zotero.BetterBibTeX.Cache.store(this.translation.translator.label, item.itemID, this.translation.options, this.translation.preferences, csl, {})
 
       if (allow.write) items.push(csl)
     }

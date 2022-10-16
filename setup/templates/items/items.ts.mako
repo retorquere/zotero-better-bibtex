@@ -1,19 +1,8 @@
 /* eslint-disable prefer-template, id-blacklist, @typescript-eslint/no-unsafe-return, @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/quotes */
 
-declare const Zotero: any
-
 import { client } from '../../content/client'
-import { validator, noncoercing } from '../../content/ajv'
-
 const jurism = client === 'jurism'
 const zotero = !jurism
-
-const zoterovalidator = validator(require('./zotero.json'), noncoercing)
-const jurismvalidator = validator(require('./jurism.json'), noncoercing)
-const broken = {
-  me: zotero ? zoterovalidator : jurismvalidator,
-  other: jurism ? zoterovalidator : jurismvalidator,
-}
 
 type Valid = {
   type: Record<string, boolean>
