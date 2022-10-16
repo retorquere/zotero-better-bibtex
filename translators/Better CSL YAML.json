@@ -8,7 +8,7 @@
   "maxVersion": "",
   "displayOptions": {
     "keepUpdated": false,
-    "worker": true
+    "worker": false
   },
   "configOptions": {
     "getCollections": true

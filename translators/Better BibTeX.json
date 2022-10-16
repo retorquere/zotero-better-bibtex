@@ -15,7 +15,7 @@
     "exportFileData": false,
     "useJournalAbbreviation": false,
     "keepUpdated": false,
-    "worker": true
+    "worker": false
   },
   "translatorType": 3,
   "browserSupport": "gcsv",

@@ -15,7 +15,7 @@
     "exportFileData": false,
     "useJournalAbbreviation": false,
     "keepUpdated": false,
-    "worker": true
+    "worker": false
   },
   "priority": 50,
   "inRepository": false
