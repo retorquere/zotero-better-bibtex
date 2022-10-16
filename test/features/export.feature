@@ -577,7 +577,7 @@ Feature: Export
     Then an export using "Better BibLaTeX" should match "export/*.biblatex"
 
   # tests the cache
-  @use.with_client=zotero @use.with_slow=true @timeout=3000 @whopper @whopper-cached
+  @use.with_client=zotero @use.with_slow=true @timeout=3000 @whopper
   Scenario: Really Big whopping library
     When I restart Zotero with "1287" + "export/*.json"
     And I reset the cache
@@ -586,19 +586,11 @@ Feature: Export
     When I set preference .cache to false
     Then an export using "Better BibTeX" with cacheUse on should match "export/*-uncached.bibtex"
 
-  # tests without cache prefill
-  @use.with_client=zotero @use.with_slow=true @timeout=3000 @whopper-uncached
-  Scenario: Really Big whopping library
-    When I restart Zotero with "1287" + "export/*.json"
-    And I reset the cache
+    When I reset the cache
     And I set preference .cache to false
     Then an export using "Better BibTeX" should match "export/*.bibtex"
 
-  # tests the cache for CSL
-  @use.with_client=zotero @use.with_slow=true @timeout=3000 @whopper @whopper-csl
-  Scenario: Really Big whopping library
-    When I restart Zotero with "1287" + "export/*.json"
-    And I reset the cache
+    When I reset the cache
     Then an export using "Better CSL JSON" should match "export/*.csl.json"
     And an export using "Better CSL JSON" should match "export/*.csl.json", but take no more than 150 seconds
 
@@ -651,6 +643,25 @@ Feature: Export
   Scenario: Using zotero.lua .md to .docx to add canonic number after comma without 'p.' #2248
     Given I import 2 references from "export/*.json"
     When I compile "export/*.md" to "~/*.odt" it should match "export/*.odt"
+
+  @use.with_client=zotero @use.with_slow=true @timeout=3000
+  Scenario: Compare export times
+    Given I import 86 references from "export/*.json"
+
+    And I set preference .cache to false
+
+    Then I export the library 50 times using "Better BibTeX"
+    # stock bibtex
+    And I export the library 50 times using "id:9cb70025-a888-4a29-a210-93ec52da40d4"
+
+    Then I export the library 50 times using "Better BibLaTeX"
+    # stock biblatex
+    And I export the library 50 times using "id:b6e39b57-8942-4d11-8259-342c46ce395f"
+
+    Then I set preference .cache to true
+
+    And I export the library 50 times using "Better BibTeX"
+    And I export the library 50 times using "Better BibLaTeX"
 
 # Scenario: error exporting Better BibLaTex this.preference.skipFields is undefined #2029
 # Given I restart Zotero

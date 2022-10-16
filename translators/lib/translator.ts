@@ -61,17 +61,16 @@ export type TranslatorMetadata = {
   browserSupport: string
 
   displayOptions: {
-    exportNotes: boolean
-    exportFileData: boolean
-    useJournalAbbreviation: boolean
-    keepUpdated: boolean
-    quickCopyMode: string
-    Title: boolean
-    Authors: boolean
-    Year: boolean
-    Normalize: boolean
-    markdown: boolean
-    cacheUse: boolean
+    exportNotes?: boolean
+    exportFileData?: boolean
+    useJournalAbbreviation?: boolean
+    keepUpdated?: boolean
+    quickCopyMode?: string
+    Title?: boolean
+    Authors?: boolean
+    Year?: boolean
+    Normalize?: boolean
+    markdown?: boolean
   }
 
   configOptions: {
@@ -232,7 +231,6 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
     exportFileData?: boolean
     useJournalAbbreviation?: boolean
     keepUpdated?: boolean
-    cacheUse?: boolean
     Title?: boolean
     Authors?: boolean
     Year?: boolean
@@ -267,11 +265,6 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
   }
 
   private cacheable = true
-
-  public cache: {
-    hits: number
-    requests: number
-  }
 
   public isJurisM: boolean
   public isZotero: boolean
@@ -309,16 +302,11 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
 
     translation.input = input
 
-    translation.cache = {
-      hits: 0,
-      requests: 0,
-    }
     translation.export = {
       dir: (Zotero.getOption('exportDir') as string),
       path: (Zotero.getOption('exportPath') as string),
     }
     if (translation.export.dir?.endsWith(translation.paths.sep)) translation.export.dir = translation.export.dir.slice(0, -1)
-    translation.options.cacheUse = Zotero.getOption('cacheUse')
 
     translation.unicode = !translation.preferences[`ascii${translator.label.replace(/Better /, '')}`] || false
 

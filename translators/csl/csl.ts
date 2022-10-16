@@ -4,15 +4,16 @@
 declare const Zotero: any
 
 import { Translation } from '../lib/translator'
+import { DB as Cache } from '../../content/db/cache'
 
 import { simplifyForExport } from '../../gen/items/simplify'
 import { Fields as ParsedExtraFields, get as getExtra, cslCreator } from '../../content/extra'
-import { Cache } from '../../typings/cache'
+import { Cache as CacheTypes } from '../../typings/cache'
 import * as ExtraFields from '../../gen/items/extra-fields.json'
 import { log } from '../../content/logger'
 import { RegularItem } from '../../gen/typings/serialized-item'
 import * as postscript from '../lib/postscript'
-import { ParsedDate } from '../../content/dateparser'
+import * as dateparser from '../../content/dateparser'
 import { Date as CSLDate, Data as CSLItem } from 'csl-json'
 
 type ExtendedItem = RegularItem & { extraFields: ParsedExtraFields }
@@ -32,7 +33,7 @@ export abstract class CSLExporter {
   private translation: Translation
   protected abstract flush(items: string[]):string
   protected abstract serialize(items: CSLItem): string
-  protected abstract date2CSL(date: ParsedDate): CSLDate
+  protected abstract date2CSL(date: dateparser.ParsedDate): CSLDate
 
   constructor(translation: Translation) {
     this.translation = translation
@@ -62,8 +63,8 @@ export abstract class CSLExporter {
     for (const item of (this.translation.input.items.regular as Generator<ExtendedItem, void, unknown>)) {
       order.push({ citationKey: item.citationKey, i: items.length })
 
-      let cached: Cache.ExportedItem
-      if (cached = Zotero.BetterBibTeX.cacheFetch(item.itemID, this.translation.options, this.translation.preferences)) {
+      let cached: CacheTypes.ExportedItem
+      if (cached = Cache.fetch(this.translation.translator.label, item.itemID, this.translation.options, this.translation.preferences)) {
         items.push(cached.entry)
         continue
       }
@@ -91,12 +92,12 @@ export abstract class CSLExporter {
       if (csl.journalAbbreviation) [csl.journalAbbreviation, csl['container-title-short']] = [csl['container-title-short'], csl.journalAbbreviation]
 
       if (item.date) {
-        const parsed = Zotero.BetterBibTeX.parseDate(item.date)
+        const parsed = dateparser.parse(item.date)
         if (parsed.type) csl.issued = this.date2CSL(parsed) // possible for there to be an orig-date only
         if (parsed.orig) csl['original-date'] = this.date2CSL(parsed.orig)
       }
 
-      if (item.accessDate) csl.accessed = this.date2CSL(Zotero.BetterBibTeX.parseDate(item.accessDate))
+      if (item.accessDate) csl.accessed = this.date2CSL(dateparser.parse(item.accessDate))
 
       /* ham-fisted workaround for #365 */
       if ((csl.type === 'motion_picture' || csl.type === 'broadcast') && csl.author && !csl.director) [csl.author, csl.director] = [csl.director, csl.author]
@@ -119,7 +120,7 @@ export abstract class CSLExporter {
         if (!ef.csl) continue
 
         if (ef.type === 'date') {
-          csl[name] = this.date2CSL(Zotero.BetterBibTeX.parseDate(value))
+          csl[name] = this.date2CSL(dateparser.parse(value))
         }
         else if (name === 'csl-type') {
           if (!validCSLTypes.includes(value)) continue // and keep the kv variable, maybe for postscripting
@@ -163,7 +164,7 @@ export abstract class CSLExporter {
       csl = this.sortObject(csl)
       csl = this.serialize(csl)
 
-      if (allow.cache) Zotero.BetterBibTeX.cacheStore(item.itemID, this.translation.options, this.translation.preferences, csl)
+      if (allow.cache) Cache.store(this.translation.translator.label, item.itemID, this.translation.options, this.translation.preferences, csl, {})
 
       if (allow.write) items.push(csl)
     }

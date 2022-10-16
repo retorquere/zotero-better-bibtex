@@ -183,10 +183,7 @@ class Zotero:
       atexit.register(self.shutdown)
 
     self.testing = userdata.get('testing', 'true') == 'true'
-    if userdata.get('workers', 'true') == 'true':
-      self.workers = 1
-    else:
-      self.workers = 0
+    self.worker = userdata.get('worker', 'true') == 'true'
     self.caching = userdata.get('caching', 'true') == 'true'
 
     self.preferences = Preferences(self)
@@ -573,7 +570,6 @@ class Zotero:
     profile.firefox.set_preference('extensions.zotero.debug.memoryInfo', True)
     profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.testing', self.testing)
     profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.log-events', True)
-    profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.workers', self.workers)
     profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.caching', self.caching)
 
     profile.firefox.set_preference('intl.accept_languages', 'en-GB')

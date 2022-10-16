@@ -16,6 +16,7 @@ import subprocess, shlex, shutil
 import io
 import zipfile
 import html, re
+import timeit
 
 from contextlib import contextmanager
 
@@ -196,8 +197,13 @@ def step_impl(context, references, attachments, source):
   context.imported = source
   assert_that(context.zotero.import_file(context, source), equal_to(references))
 
+@step(r'I export the library {n:d} times using "{translator}"')
+def step_impl(context, n, translator):
+  timeit.timeit(lambda: export_library(context, translator = translator), number=n)
+
 def export_library(context, translator='BetterBibTeX JSON', collection=None, expected=None, output=None, displayOption=None, timeout=None, resetCache=False):
-  expected = expand_scenario_variables(context, expected)
+  if expected is not None:
+    expected = expand_scenario_variables(context, expected)
   displayOptions = { **context.displayOptions }
   if displayOption: displayOptions[displayOption] = True
   if output:

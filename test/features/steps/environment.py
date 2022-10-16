@@ -107,7 +107,10 @@ def before_scenario(context, scenario):
 
   TestBin.start(scenario)
   context.zotero.reset(scenario.name)
-  context.displayOptions = {}
+  context.displayOptions = {
+    # set export option to the --worker option passed to behave
+    'worker': context.zotero.worker,
+  }
   context.selected = []
   context.imported = None
   context.picked = []

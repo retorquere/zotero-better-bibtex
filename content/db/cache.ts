@@ -4,7 +4,8 @@ import { File } from './store/file'
 import { Preference } from '../prefs'
 import { affects, schema } from '../../gen/preferences/meta'
 import { log } from '../logger'
-import { cloneDeep } from 'lodash'
+import { Cache as CacheTypes } from '../../typings/cache'
+import { clone } from '../clone'
 
 const version = require('../../gen/version.js')
 
@@ -140,11 +141,17 @@ class Cache extends Loki {
     return query
   }
 
-  fetch(translator: string, itemID: number, options: { exportNotes: boolean, useJournalAbbreviation: boolean }, prefs: any) {
-    if (!Preference.cache) return false
+  fetch(translator: string, itemID: number, options: { exportNotes?: boolean, useJournalAbbreviation?: boolean }, prefs: Preferences): CacheTypes.ExportedItem {
+    if (!Preference.cache) return null
 
     const collection = this.getCollection(translator)
-    if (!collection) return false
+    if (!collection) return null
+
+    options = {
+      exportNotes: false,
+      useJournalAbbreviation: false,
+      ...options,
+    }
 
     // not safe in async!
     const cloneObjects = collection.cloneObjects
@@ -152,7 +159,7 @@ class Cache extends Loki {
     const cached = collection.findOne($and({...this.selector(translator, options, prefs), itemID}))
     collection.cloneObjects = cloneObjects
 
-    if (!cached) return false
+    if (!cached) return null
 
     // collection.update(cached) // touches the cache object so it isn't reaped too early
 
@@ -162,13 +169,19 @@ class Cache extends Loki {
 
     // isolate object, because it was not fetched using clone
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return cloneDeep(cached)
+    return clone(cached)
   }
 
-  store(translator: string, itemID: number, options: { exportNotes: boolean, useJournalAbbreviation: boolean }, prefs: any, entry: any, metadata: any) {
+  store(translator: string, itemID: number, options: { exportNotes?: boolean, useJournalAbbreviation?: boolean }, prefs: any, entry: any, metadata: any) {
     if (!Preference.cache) return false
 
     if (!metadata) metadata = {}
+
+    options = {
+      exportNotes: false,
+      useJournalAbbreviation: false,
+      ...options,
+    }
 
     const collection = this.getCollection(translator)
     if (!collection) {

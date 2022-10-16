@@ -1,3 +1,4 @@
+import { clone } from '../../content/clone'
 import { Translation } from '../lib/translator'
 import { HTMLParser } from '../../content/text'
 
@@ -30,7 +31,6 @@ export type ParseResult = { latex: string, raw: boolean, packages: string[] }
 
 type LatexRepresentation = { text?: string, math?: string, textpackages?: string[], mathpackages?: string[], commandspacer?: boolean }
 
-const clone = <T>(obj: T): T => JSON.parse(JSON.stringify(obj)) as T
 export class HTMLConverter {
   private latex = ''
   private mapping: {

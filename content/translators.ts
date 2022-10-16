@@ -7,6 +7,7 @@ declare class ChromeWorker extends Worker { }
 Components.utils.import('resource://zotero/config.js')
 declare const ZOTERO_CONFIG: any
 
+import { clone } from './clone'
 import { Deferred } from './deferred'
 import type { Translators as Translator } from '../typings/translators'
 import { Preference } from './prefs'
@@ -414,10 +415,8 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
   }
 
   public displayOptions(translatorID: string, displayOptions: any): any {
-    if (!displayOptions) {
-      return this.byId[translatorID].displayOptions || {}
-    }
-    const defaults = this.byId[translatorID].displayOptions || {}
+    displayOptions = clone(displayOptions || this.byId[translatorID]?.displayOptions || {})
+    const defaults = this.byId[translatorID]?.displayOptions || {}
     for (const [k, v] of Object.entries(defaults)) {
       if (typeof displayOptions[k] === 'undefined') displayOptions[k] = v
     }

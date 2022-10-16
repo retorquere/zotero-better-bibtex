@@ -148,6 +148,7 @@ jobs:
       matrix:
         bin: ${{ fromJSON(needs.balance.outputs.bins) }}
         client: ${{ fromJSON(needs.balance.outputs.clients) }}
+        worker: ['--worker', '--no-worker']
     steps:
     - uses: actions/checkout@v3
     - *download_build_artifacts
@@ -169,7 +170,7 @@ jobs:
     # needs logs/logs to have them show up as logs in the artifact... no idea why
     - name: Run tests
       # continue-on-error: ${{ matrix.client == 'jurism' }}
-      run: xvfb-run --auto-servernum ./test/behave --client ${{ matrix.client }} --format ci --bin ${{ matrix.bin }} --bins $BINS --durations logs/stats/durations-${{ matrix.client }}-${{ matrix.bin }}.json ${{ needs.balance.outputs.slow }}
+      run: xvfb-run --auto-servernum ./test/behave --client ${{ matrix.client }} ${{ matrix.worker }} --format ci --bin ${{ matrix.bin }} --bins $BINS --durations logs/stats/durations-${{ matrix.client }}-${{ matrix.bin }}.json ${{ needs.balance.outputs.slow }}
       env:
         PYTHONUNBUFFERED: true
 

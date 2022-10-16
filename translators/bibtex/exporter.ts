@@ -60,9 +60,7 @@ export class Exporter {
 
       let cached: Cache.ExportedItem = null
       if (item.$cacheable && this.translation.BetterTeX) {
-        this.translation.cache.requests++
         if (cached = Zotero.BetterBibTeX.Cache.fetch(this.translation.translator.label, item.itemID, this.translation.options, this.translation.preferences)) {
-          this.translation.cache.hits += 100
           this.translation.output.body += cached.entry
           this.postfix?.add(cached.metadata)
           continue
@@ -112,14 +110,6 @@ export class Exporter {
           this.translation.output.body += `${sep}% ${citekey} duplicates: ${n}\n`
           sep = '% '
         }
-      }
-    }
-    if (this.translation.BetterTeX && this.translation.options.cacheUse) {
-      if (this.translation.cache.requests) {
-        this.translation.output.body += `\n% cache use: ${Math.round(this.translation.cache.hits/this.translation.cache.requests)}%`
-      }
-      else {
-        this.translation.output.body += '\n% cache use: no'
       }
     }
   }
