@@ -1017,5 +1017,8 @@ export class BetterBibTeX {
       setProgress(percent, message) // eslint-disable-line no-magic-numbers
     })
   }
+
+  public parseDate(date: string): ParsedDate { return DateParser.parse(date) }
 }
+
 Zotero.BetterBibTeX = Zotero.BetterBibTeX || new BetterBibTeX
