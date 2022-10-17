@@ -29,6 +29,7 @@ local zotero = require('zotero')
 
 if lpeg == nil then
   print('upgrade pandoc to version 2.16.2 or later')
+  os.exit()
 end
 
 -- -- global state -- --
