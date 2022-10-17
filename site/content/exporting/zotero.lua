@@ -1,4 +1,11 @@
-print('zotero-live-citations ab2bfa1f1')
+
+  print('zotero-live-citations 374f349')
+  local mt, latest = pandoc.mediabag.fetch('https://retorque.re/zotero-better-bibtex/exporting/zotero.lua.revision')
+  latest = string.sub(latest, 1, 10)
+  if '374f349' ~= latest then
+    print('new version "' .. latest .. '" available at https://retorque.re/zotero-better-bibtex/exporting')
+  end
+
 do
 local _ENV = _ENV
 package.preload[ "locator" ] = function( ... ) local arg = _G.arg;
@@ -2103,3 +2110,4 @@ return {
   { Div = Div },
   { Doc = Doc },
 }
+
