@@ -118,10 +118,4 @@ clients = ['zotero', 'jurism']
 if args.beta:
   clients += [client + '-beta' for client in clients]
 
-ban = {'jurism-beta'}
-banned = set(clients).intersection(ban)
-if len(banned) > 0:
-  print('### REMOVING', banned, '###')
-  clients = list(set(clients) - banned)
-
 publish('test_clients', json.dumps(clients))

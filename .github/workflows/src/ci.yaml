@@ -149,6 +149,10 @@ jobs:
         bin: ${{ fromJSON(needs.balance.outputs.bins) }}
         client: ${{ fromJSON(needs.balance.outputs.clients) }}
         worker: ['--worker', '--no-worker']
+        exclude:
+          - client: jurism-beta
+          - client: jurism
+            worker: '--worker'
     steps:
     - uses: actions/checkout@v3
     - *download_build_artifacts
