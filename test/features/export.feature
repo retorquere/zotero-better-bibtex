@@ -585,7 +585,7 @@ Feature: Export
     And an export using "Better BibTeX" should match "export/*.bibtex"
     And an export using "Better BibTeX" should match "export/*.bibtex"
     When I set preference .cache to false
-    Then an export using "Better BibTeX" with should match "export/*.bibtex"
+    Then an export using "Better BibTeX" should match "export/*.bibtex"
 
     When I reset the cache
     And I set preference .cache to false
