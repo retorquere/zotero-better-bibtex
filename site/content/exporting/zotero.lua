@@ -1,8 +1,8 @@
 
-  print('zotero-live-citations 374f349')
+  print('zotero-live-citations af33f61')
   local mt, latest = pandoc.mediabag.fetch('https://retorque.re/zotero-better-bibtex/exporting/zotero.lua.revision')
   latest = string.sub(latest, 1, 10)
-  if '374f349' ~= latest then
+  if 'af33f61' ~= latest then
     print('new version "' .. latest .. '" available at https://retorque.re/zotero-better-bibtex/exporting')
   end
 
@@ -1726,6 +1726,7 @@ local zotero = require('zotero')
 
 if lpeg == nil then
   print('upgrade pandoc to version 2.16.2 or later')
+  os.exit()
 end
 
 -- -- global state -- --
