@@ -581,10 +581,11 @@ Feature: Export
   Scenario: Really Big whopping library
     When I restart Zotero with "1287" + "export/*.json"
     And I reset the cache
-    Then an export using "Better BibTeX" should match "export/*.bibtex"
-    Then an export using "Better BibTeX" with cacheUse on should match "export/*-cached.bibtex"
+    And I export the library 1 times using "id:9cb70025-a888-4a29-a210-93ec52da40d4"
+    And an export using "Better BibTeX" should match "export/*.bibtex"
+    And an export using "Better BibTeX" should match "export/*.bibtex"
     When I set preference .cache to false
-    Then an export using "Better BibTeX" with cacheUse on should match "export/*-uncached.bibtex"
+    Then an export using "Better BibTeX" with should match "export/*.bibtex"
 
     When I reset the cache
     And I set preference .cache to false
