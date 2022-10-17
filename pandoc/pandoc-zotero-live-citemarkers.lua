@@ -22,11 +22,14 @@
 -- SOFTWARE.
 --
 
--- local pl = require('pl.pretty') -- for pl.pretty.dump
 local json = require('lunajson')
 local csl_locator = require('locator')
 local utils = require('utils')
 local zotero = require('zotero')
+
+if lpeg == nil then
+  print('upgrade pandoc to version 2.16.2 or later')
+end
 
 -- -- global state -- --
 local config = {
