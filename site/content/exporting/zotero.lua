@@ -1,8 +1,8 @@
 
-  print('zotero-live-citations af33f61')
+  print('zotero-live-citations 3e2046c')
   local mt, latest = pandoc.mediabag.fetch('https://retorque.re/zotero-better-bibtex/exporting/zotero.lua.revision')
   latest = string.sub(latest, 1, 10)
-  if 'af33f61' ~= latest then
+  if '3e2046c' ~= latest then
     print('new version "' .. latest .. '" available at https://retorque.re/zotero-better-bibtex/exporting')
   end
 
@@ -10,6 +10,7 @@ do
 local _ENV = _ENV
 package.preload[ "locator" ] = function( ... ) local arg = _G.arg;
 -- local lpeg = require('lpeg')
+local utils = require('utils')
 
 local book = (lpeg.P('book') + lpeg.P('bk.') + lpeg.P('bks.')) / 'book'
 local chapter = (lpeg.P('chapter') + lpeg.P('chap.') + lpeg.P('chaps.')) / 'chapter'
@@ -56,12 +57,14 @@ function module.parse(input, shortlabel)
   local parsed = lpeg.Ct(suffix):match(input)
   if parsed then
     local _prefix, _label, _locator, _suffix = table.unpack(parsed)
+    if utils.trim(_suffix) == ',' then _suffix = '' end
     return _label, _locator, _prefix .. _suffix
   end
 
   parsed = lpeg.Ct(pseudo_locator):match(input)
   if parsed then
     local _prefix, _locator, _suffix = table.unpack(parsed)
+    if utils.trim(_suffix) == ',' then _suffix = '' end
     return nil, nil, _prefix .. _locator .. _suffix
   end
 
