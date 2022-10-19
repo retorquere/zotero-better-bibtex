@@ -85,7 +85,8 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     const reinit: { header: Translator.Header, code: string }[] = []
     let header: Translator.Header
     let code: string
-    for (header of Object.values(this.byName)) {
+    // fetch from resource because that has the hash
+    for (header of Object.keys(this.byName).map(name => JSON.parse(Zotero.File.getContentsFromURL(`resource://zotero-better-bibtex/${name}.json`)) as Translator.Header)) {
       if (code = await this.install(header)) reinit.push({ header, code })
     }
 
