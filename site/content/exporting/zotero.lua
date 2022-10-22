@@ -1,16 +1,16 @@
 
-  print('zotero-live-citations e865e17')
+  print('zotero-live-citations 9016790')
   local mt, latest = pandoc.mediabag.fetch('https://retorque.re/zotero-better-bibtex/exporting/zotero.lua.revision')
   latest = string.sub(latest, 1, 10)
-  if 'e865e17' ~= latest then
+  if '9016790' ~= latest then
     print('new version "' .. latest .. '" available at https://retorque.re/zotero-better-bibtex/exporting')
   end
 
 do
 local _ENV = _ENV
 package.preload[ "locator" ] = function( ... ) local arg = _G.arg;
--- local lpeg = require('lpeg')
 local utils = require('utils')
+-- local lpeg = require('lpeg')
 
 local book = (lpeg.P('book') + lpeg.P('bk.') + lpeg.P('bks.')) / 'book'
 local chapter = (lpeg.P('chapter') + lpeg.P('chap.') + lpeg.P('chaps.')) / 'chapter'
@@ -1860,8 +1860,7 @@ local function zotero_ref(cite)
         citation['suppress-author'] = true
       end
       citation.prefix = pandoc.utils.stringify(item.prefix)
-      local prefix, label, locator, suffix = csl_locator.parse(pandoc.utils.stringify(item.suffix))
-      citation.prefix = prefix
+      local label, locator, suffix = csl_locator.parse(pandoc.utils.stringify(item.suffix))
       citation.suffix = suffix
       citation.label = label
       citation.locator = locator
@@ -1952,7 +1951,7 @@ local function scannable_cite(cite)
       verse = 'v.',
       volume = 'vol.',
     }
-    local prefix, label, locator, suffix = csl_locator.parse(pandoc.utils.stringify(item.suffix))
+    local label, locator, suffix = csl_locator.parse(pandoc.utils.stringify(item.suffix))
     if label then
       locator = shortlabel[label] .. ' ' .. locator
     else
@@ -1960,7 +1959,7 @@ local function scannable_cite(cite)
     end
 
     citations = citations ..
-      '{ ' .. (pandoc.utils.stringify(item.prefix) or '') .. prefix ..
+      '{ ' .. (pandoc.utils.stringify(item.prefix) or '') ..
       ' | ' .. suppress .. utils.trim(string.gsub(pandoc.utils.stringify(cite.content) or '', '[|{}]', '')) ..
       ' | ' .. locator ..
       ' | ' .. (suffix or '') ..

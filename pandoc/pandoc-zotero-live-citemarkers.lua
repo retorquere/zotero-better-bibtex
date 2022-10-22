@@ -160,8 +160,7 @@ local function zotero_ref(cite)
         citation['suppress-author'] = true
       end
       citation.prefix = pandoc.utils.stringify(item.prefix)
-      local prefix, label, locator, suffix = csl_locator.parse(pandoc.utils.stringify(item.suffix))
-      citation.prefix = prefix
+      local label, locator, suffix = csl_locator.parse(pandoc.utils.stringify(item.suffix))
       citation.suffix = suffix
       citation.label = label
       citation.locator = locator
@@ -252,7 +251,7 @@ local function scannable_cite(cite)
       verse = 'v.',
       volume = 'vol.',
     }
-    local prefix, label, locator, suffix = csl_locator.parse(pandoc.utils.stringify(item.suffix))
+    local label, locator, suffix = csl_locator.parse(pandoc.utils.stringify(item.suffix))
     if label then
       locator = shortlabel[label] .. ' ' .. locator
     else
@@ -260,7 +259,7 @@ local function scannable_cite(cite)
     end
 
     citations = citations ..
-      '{ ' .. (pandoc.utils.stringify(item.prefix) or '') .. prefix ..
+      '{ ' .. (pandoc.utils.stringify(item.prefix) or '') ..
       ' | ' .. suppress .. utils.trim(string.gsub(pandoc.utils.stringify(cite.content) or '', '[|{}]', '')) ..
       ' | ' .. locator ..
       ' | ' .. (suffix or '') ..

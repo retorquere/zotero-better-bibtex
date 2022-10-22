@@ -151,7 +151,13 @@ def step_impl(context, source, target, baseline):
   lua = 'site/content/exporting/zotero.lua'
   client = context.config.userdata.get('client', 'zotero')
 
-  subprocess.run(f'pandoc -s --metadata=zotero_client:{client} --lua-filter={shlex.quote(lua)} -o {shlex.quote(target)} {shlex.quote(source)}', shell=True, check=True)
+  result = subprocess.run(
+    f'pandoc -s --metadata=zotero_client:{client} --lua-filter={shlex.quote(lua)} -o {shlex.quote(target)} {shlex.quote(source)}',
+    shell=True,
+    check=True,
+    stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True
+  )
+  utils.print(result.stdout)
 
   assert_equal_diff(citations(baseline), citations(target))
 
