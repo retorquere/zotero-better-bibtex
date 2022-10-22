@@ -1,8 +1,8 @@
 
-  print('zotero-live-citations 3e2046c')
+  print('zotero-live-citations e865e17')
   local mt, latest = pandoc.mediabag.fetch('https://retorque.re/zotero-better-bibtex/exporting/zotero.lua.revision')
   latest = string.sub(latest, 1, 10)
-  if '3e2046c' ~= latest then
+  if 'e865e17' ~= latest then
     print('new version "' .. latest .. '" available at https://retorque.re/zotero-better-bibtex/exporting')
   end
 
@@ -57,14 +57,14 @@ function module.parse(input, shortlabel)
   local parsed = lpeg.Ct(suffix):match(input)
   if parsed then
     local _prefix, _label, _locator, _suffix = table.unpack(parsed)
-    if utils.trim(_suffix) == ',' then _suffix = '' end
+    if utils.trim(_prefix) == ',' then _prefix = '' end
     return _label, _locator, _prefix .. _suffix
   end
 
   parsed = lpeg.Ct(pseudo_locator):match(input)
   if parsed then
     local _prefix, _locator, _suffix = table.unpack(parsed)
-    if utils.trim(_suffix) == ',' then _suffix = '' end
+    if utils.trim(_prefix) == ',' then _prefix = '' end
     return nil, nil, _prefix .. _locator .. _suffix
   end
 
@@ -1860,7 +1860,8 @@ local function zotero_ref(cite)
         citation['suppress-author'] = true
       end
       citation.prefix = pandoc.utils.stringify(item.prefix)
-      local label, locator, suffix = csl_locator.parse(pandoc.utils.stringify(item.suffix))
+      local prefix, label, locator, suffix = csl_locator.parse(pandoc.utils.stringify(item.suffix))
+      citation.prefix = prefix
       citation.suffix = suffix
       citation.label = label
       citation.locator = locator
@@ -1951,7 +1952,7 @@ local function scannable_cite(cite)
       verse = 'v.',
       volume = 'vol.',
     }
-    local label, locator, suffix = csl_locator.parse(pandoc.utils.stringify(item.suffix))
+    local prefix, label, locator, suffix = csl_locator.parse(pandoc.utils.stringify(item.suffix))
     if label then
       locator = shortlabel[label] .. ' ' .. locator
     else
@@ -1959,7 +1960,7 @@ local function scannable_cite(cite)
     end
 
     citations = citations ..
-      '{ ' .. (pandoc.utils.stringify(item.prefix) or '') ..
+      '{ ' .. (pandoc.utils.stringify(item.prefix) or '') .. prefix ..
       ' | ' .. suppress .. utils.trim(string.gsub(pandoc.utils.stringify(cite.content) or '', '[|{}]', '')) ..
       ' | ' .. locator ..
       ' | ' .. (suffix or '') ..
