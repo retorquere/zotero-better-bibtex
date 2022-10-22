@@ -398,8 +398,10 @@ export function convert(formulas: string): string {
       })
     })
 
-    // coerce to string
+    // reset accumulator and force string coercion
     formula.unshift(b.callExpression(b.memberExpression(b.thisExpression(), b.identifier('reset')), []))
+    // perform cleanup
+    formula.push(b.callExpression(b.memberExpression(b.thisExpression(), b.identifier('finalize')), []))
 
     return stitch(formula, '+')
   })

@@ -365,6 +365,12 @@ class PatternFormatter {
     return ''
   }
 
+  public finalize() {
+    if (this.citekey && this.folding) this.citekey = this.transliterate(this.citekey)
+    this.citekey = this.citekey.replace(this.re.unsafechars, '')
+    return ''
+  }
+
   public format(item: ZoteroItem | SerializedItem): string {
     this.item = new Item(item)
     this.chunk = ''
@@ -377,11 +383,7 @@ class PatternFormatter {
     }
 
     this.$postfix()
-    let citekey = this.generate() || `zotero-${this.item.itemID}`
-    if (citekey && this.folding) citekey = this.transliterate(citekey)
-    citekey = citekey.replace(this.re.unsafechars, '')
-
-    return citekey
+    return this.generate()
   }
 
   /**
