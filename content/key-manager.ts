@@ -164,8 +164,11 @@ export class KeyManager {
   }
 
   public async init(): Promise<void> {
+    log.debug('KeyManager.init start')
     await kuroshiro.init()
+    log.debug('KeyManager.init kuro ready')
     jieba.init()
+    log.debug('KeyManager.init jieba ready')
 
     this.keys = DB.getCollection('citekey')
 
@@ -181,8 +184,10 @@ export class KeyManager {
     for (const field of await ZoteroDB.queryAsync('select fieldID, fieldName from fields')) {
       this.query.field[field.fieldName] = field.fieldID
     }
+    log.debug('KeyManager.init query ready')
 
     Formatter.update('init')
+    log.debug('KeyManager.init done')
   }
 
   public async start(): Promise<void> {
