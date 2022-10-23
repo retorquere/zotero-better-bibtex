@@ -365,10 +365,10 @@ class PatternFormatter {
     return ''
   }
 
-  public finalize() {
+  public finalize(_citekey: string) {
     if (this.citekey && this.folding) this.citekey = this.transliterate(this.citekey)
     this.citekey = this.citekey.replace(this.re.unsafechars, '')
-    return ''
+    return this.citekey
   }
 
   public format(item: ZoteroItem | SerializedItem): string {
