@@ -585,7 +585,7 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
         // there wasn't an error starting a worker earlier
         noworker = 'failed to start a chromeworker, disabled until restart'
       }
-      else if (!translator.displayOptions.worker) {
+      else if (typeof translator.displayOptions.worker === 'undefined') {
         noworker = `${translator.label} does not support background export`
       }
       else if (!displayOptions.worker) {

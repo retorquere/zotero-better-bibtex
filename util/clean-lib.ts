@@ -57,6 +57,20 @@ function stripCC(input) {
   }
   return output
 }
+
+function clean(item) {
+  delete item.uri
+  delete item.dateAdded
+  delete item.dateModified
+  delete item.relations
+  delete item.select
+  delete item.itemKey
+  delete item.contentType
+  delete item.linkMode
+  delete item.filename
+  delete item.localPath
+}
+
 for (const lib of argv._) {
   const ext = extensions.find(ext => lib.endsWith(ext))
 
@@ -87,11 +101,7 @@ for (const lib of argv._) {
 
       // post.items.sort((a, b) => sortkey(a).localeCompare(sortkey(b)))
       for (const item of (post.items || [])) {
-        delete item.uri
-        delete item.dateAdded
-        delete item.dateModified
-        delete item.relations
-        delete item.select
+        clean(item)
 
         delete item.multi
 
@@ -105,7 +115,7 @@ for (const lib of argv._) {
               return false
             }
             else {
-              delete att.libraryID
+              clean(att)
               return true
             }
           })
