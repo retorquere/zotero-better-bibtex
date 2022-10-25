@@ -103,6 +103,12 @@ export class Items {
     })
   }
 
+  public erase(): void {
+    this.items = []
+    this.map = {}
+    this.current = null
+  }
+
   public cacheable(cacheable: boolean): void {
     for (const item of this.items) {
       item.$cacheable = cacheable
@@ -146,6 +152,10 @@ export class Collections {
         this.registerCollection(collection, '')
       }
     }
+  }
+
+  public erase(): void {
+    this.byKey = {}
   }
 
   private registerCollection(collection, parent: string) {
@@ -435,6 +445,13 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
     this.csquotes = this.preferences.csquotes ? { open: this.preferences.csquotes[0], close: this.preferences.csquotes[1] } : null
 
     this.preferences.testing = (Zotero.getHiddenPref('better-bibtex.testing') as boolean)
+  }
+
+  public erase(): void {
+    this.input.items.erase()
+    this.input.collections.erase()
+    this.output.body = ''
+    this.output.attachments = []
   }
 
   saveAttachments(): void {

@@ -8,6 +8,7 @@ export function doExport(): void {
   Zotero.BetterBibTeX.generateBibTeX(translation)
   translation.saveAttachments()
   Zotero.write(translation.output.body)
+  translation.erase()
 }
 
 import * as escape from '../content/escape'

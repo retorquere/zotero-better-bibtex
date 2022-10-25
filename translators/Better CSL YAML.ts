@@ -7,6 +7,7 @@ export function doExport(): void {
   const translation = Translation.Export(ZOTERO_TRANSLATOR_INFO, collect())
   Zotero.BetterBibTeX.generateCSLYAML(translation)
   Zotero.write(translation.output.body)
+  translation.erase()
 }
 
 function parseInput(): any {

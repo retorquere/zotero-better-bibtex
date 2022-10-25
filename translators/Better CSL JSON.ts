@@ -5,4 +5,5 @@ export function doExport(): void {
   const translation = Translation.Export(ZOTERO_TRANSLATOR_INFO, collect())
   Zotero.BetterBibTeX.generateCSLJSON(translation)
   Zotero.write(translation.output.body)
+  translation.erase()
 }

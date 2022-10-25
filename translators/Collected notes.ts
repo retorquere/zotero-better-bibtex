@@ -228,4 +228,5 @@ export function doExport(): void {
   const exporter = new Exporter(translation)
   translation.output.body += exporter[translation.options.markdown ? 'markdown' : 'html']
   Zotero.write(translation.output.body)
+  translation.erase()
 }

@@ -105,4 +105,5 @@ export function doExport(): void {
   this.translation.output.body += '}'
 
   Zotero.write(this.translation.output.body)
+  translation.erase()
 }
