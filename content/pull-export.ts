@@ -37,8 +37,16 @@ Zotero.Server.Endpoints['/better-bibtex/export/collection-archive'] = Zotero.Ser
       const collection = Zotero.Collections.getByLibraryAndKey(libID, path) || (await getCollection(`/${libID}/${path}`))
       if (!collection) return [NOT_FOUND, 'text/plain', `Could not export bibliography: path '${path}' not found`]
 
-      const bib = await Translators.exportItems(Translators.getTranslatorId(translator), displayOptions(request), { type: 'collection', collection })
-      const bibJson = await Translators.exportItems(Translators.getTranslatorId('jzon'), displayOptions(request), { type: 'collection', collection })
+      const bib = await Translators.exportItems({
+        translatorID: Translators.getTranslatorId(translator),
+        displayOptions: displayOptions(request),
+        scope: { type: 'collection', collection },
+      })
+      const bibJson = await Translators.exportItems({
+        translatorID: Translators.getTranslatorId('jzon'),
+        displayOptions: displayOptions(request),
+        scope: { type: 'collection', collection },
+      })
       const zipFile = await genZipBib(path,collection,bib,bibJson)
       const zipData = await Zotero.File.getBinaryContentsAsync(zipFile)
       return [ OK, `text/plain; charset=utf-8\nContent-Disposition: attachment; filename="${path}.zip.base64"`, btoa(zipData)]
@@ -235,3 +243,4 @@ Zotero.Server.Endpoints['/better-bibtex/export/item'] = class {
     }
   }
 }
+
