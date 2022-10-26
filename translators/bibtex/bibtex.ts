@@ -780,6 +780,8 @@ export class ZoteroItem {
   // to read the manual apparently.
   protected $files(value: string): boolean { return this.$file(value) }
   protected $file(value: string): boolean {
+    this.item.attachments.push({ path: value }) // fixes #2295
+
     const replace = {
       '\\;':    '\u0011',
       '\u0011': ';',
