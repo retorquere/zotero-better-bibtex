@@ -73,7 +73,7 @@ export class KeyManager {
     ids = this.expandSelection(ids)
 
     for (const item of await getItemsAsync(ids)) {
-      if (!item.isRegularItem()) continue
+      if (item.isFeedItem || !item.isRegularItem()) continue
 
       const extra = this.getField(item, 'extra')
       const parsed = Extra.get(extra, 'zotero')
@@ -98,7 +98,7 @@ export class KeyManager {
     ids = this.expandSelection(ids)
 
     for (const item of await getItemsAsync(ids)) {
-      if (!item.isRegularItem()) continue
+      if (item.isFeedItem || !item.isRegularItem()) continue
 
       const parsed = Extra.get(item.getField('extra'), 'zotero', { citationKey: true })
       if (!parsed.extraFields.citationKey) continue
@@ -134,7 +134,7 @@ export class KeyManager {
 
     const updates = []
     for (const item of await getItemsAsync(ids)) {
-      if (!item.isRegularItem()) continue
+      if (item.isFeedItem || !item.isRegularItem()) continue
 
       const extra = item.getField('extra')
 
@@ -474,7 +474,7 @@ export class KeyManager {
   }
 
   public update(item: ZoteroItem, current?: { pinned: boolean, citekey: string }): string {
-    if (!item.isRegularItem()) return null
+    if (item.isFeedItem || !item.isRegularItem()) return null
 
     current = current || this.keys.findOne($and({ itemID: item.id }))
 
