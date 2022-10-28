@@ -426,12 +426,14 @@ export class KeyManager {
 
     const regenerate = (
       this.regenerate.length !== 0
+      /*
       &&
       (
         Preference.testing
         ||
         Services.prompt.confirm(null, l10n.localize('KeyManager.regenerate'), l10n.localize('KeyManager.regenerate.confirm', { n: this.regenerate.length }))
       )
+      */
     )
     if (regenerate) {
       const progressWin = new Zotero.ProgressWindow({ closeOnClick: false })
