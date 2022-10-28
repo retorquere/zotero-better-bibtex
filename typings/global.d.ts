@@ -43,6 +43,7 @@ declare const OS: {
 interface ZoteroItem {
   id: number
   isRegularItem: () => boolean
+  isFeedItem: boolean
   isNote: () => boolean
   isAttachment: () => boolean
   isAnnotation?: () => boolean
