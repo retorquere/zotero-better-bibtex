@@ -525,6 +525,7 @@ export class ZoteroItem {
   private validFields: Record<string, boolean>
   private numberPrefix: string
   private item: any
+  private attachments?: Record<string, any>
 
   constructor(private translation: Translation, private id: number, private bibtex: bibtexParser.Entry, private jabref: bibtexParser.jabref.JabRefMetadata, private errors: bibtexParser.ParseError[]) {
     this.bibtex.type = this.bibtex.type.toLowerCase()
@@ -776,11 +777,30 @@ export class ZoteroItem {
   protected $month(): boolean { return this.$date() }
   protected $day(): boolean { return this.$date() }
 
+  private addAttachment(att: any) {
+    if (!att.path) return
+    if (!this.attachments) this.attachments = {}
+
+    if (this.jabref.fileDirectory) att.path = `${this.jabref.fileDirectory}${this.translation.paths.sep}${att.path}`
+
+    att.title = att.title || att.path.split(/[\\/]/).pop().replace(/\.[^.]+$/, '')
+    if (!att.title) delete att.title
+
+    if (att.mimeType?.toLowerCase() === 'pdf' || (!att.mimeType && att.path.toLowerCase().endsWith('.pdf'))) {
+      att.mimeType = 'application/pdf'
+    }
+    if (!att.mimeType) delete att.mimeType
+
+    const overwrite = att.overwrite
+    delete att.overwrite
+    if (overwrite || !this.attachments[att.path]) this.attachments[att.path] = att
+  }
+
   // "files" will import the same as "file" but won't be treated as verbatim by the bibtex parser. Needed because the people at Mendeley can't be bothered
   // to read the manual apparently.
   protected $files(value: string): boolean { return this.$file(value) }
   protected $file(value: string): boolean {
-    this.item.attachments.push({ path: value }) // fixes #2295
+    this.addAttachment({ path: value }) // fixes #2295
 
     const replace = {
       '\\;':    '\u0011',
@@ -794,6 +814,7 @@ export class ZoteroItem {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     for (const record of value.replace(/\\[\\;:]/g, escaped => replace[escaped]).split(';')) {
       const att = {
+        overwrite: true,
         mimeType: '',
         path: '',
         title: '',
@@ -824,17 +845,7 @@ export class ZoteroItem {
         continue
       }
 
-      if (this.jabref.fileDirectory) att.path = `${this.jabref.fileDirectory}${this.translation.paths.sep}${att.path}`
-
-      if (att.mimeType.toLowerCase() === 'pdf' || (!att.mimeType && att.path.toLowerCase().endsWith('.pdf'))) {
-        att.mimeType = 'application/pdf'
-      }
-      if (!att.mimeType) delete att.mimeType
-
-      att.title = att.title || att.path.split(/[\\/]/).pop().replace(/\.[^.]+$/, '')
-      if (!att.title) delete att.title
-
-      this.item.attachments.push(att)
+      this.addAttachment(att)
     }
 
     return true
@@ -1230,6 +1241,7 @@ export class ZoteroItem {
       if (err) this.error(`import error: ${this.type} ${this.bibtex.key}: ${err}\n${JSON.stringify(this.item, null, 2)}`)
     }
 
+    if (this.attachments) this.item.attachments = Object.values(this.attachments)
     return this.item // eslint-disable-line @typescript-eslint/no-unsafe-return
   }
 
