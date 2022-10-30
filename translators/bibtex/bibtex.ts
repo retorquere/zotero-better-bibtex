@@ -556,9 +556,10 @@ export class ZoteroItem {
   }
 
   protected $title(): boolean {
-    let title = []
+    let title: string[] = []
+    let len: number
     for (const field of ['title', 'titleaddon', 'subtitle']) {
-      if (this.bibtex.fields[field]?.length) title.push(this.bibtex.fields[field][0])
+      if (len = this.bibtex.fields[field]?.length) title.push(this.bibtex.fields[field][len - 1])
     }
     title = title.filter(unique)
 
