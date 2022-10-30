@@ -1,0 +1,44 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "citekeyFormat": "auth + year"
+    }
+  },
+  "items": [
+    {
+      "ISBN": "0415170540 (hardcover)",
+      "attachments": [],
+      "citationKey": "ZGaukroger1998a",
+      "creators": [
+        {
+          "creatorType": "editor",
+          "firstName": "Stephen",
+          "lastName": "Gaukroger"
+        }
+      ],
+      "date": "1998",
+      "extra": [
+        "Citation Key: ZGaukroger1998a",
+        "tex.category: Secondary",
+        "tex.date-added: 2015-09-09 17:10:49 +0000",
+        "tex.date-modified: 2019-04-20 15:19:21 -0400",
+        "tex.library-id: 97024517"
+      ],
+      "itemID": 1,
+      "itemType": "book",
+      "place": "London",
+      "publisher": "Routledge",
+      "tags": [
+        {
+          "tag": "Emotions"
+        }
+      ],
+      "title": "The soft underbelly of reason : The passions in the seventeenth century"
+    }
+  ]
+}
