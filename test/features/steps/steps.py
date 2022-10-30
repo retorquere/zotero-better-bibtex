@@ -380,7 +380,7 @@ def step_impl(context, expected, found):
   with open(found) as f:
     found = f.read()
 
-  assert_equal_diff(expected.strip(), found.strip())
+  assert_equal_diff(expected.strip(), found)
 
 @step(u'I wait {seconds:d} seconds')
 def step_impl(context, seconds):

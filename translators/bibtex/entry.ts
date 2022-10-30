@@ -791,7 +791,6 @@ export class Entry {
     ref += Object.values(this.has).map(field => `  ${field.name} = ${field.bibtex}`).join(',\n') + '\n'
     ref += '}\n'
     ref += this.qualityReport()
-    ref += '\n'
 
     if (allow.write) this.translation.output.body += ref
 
