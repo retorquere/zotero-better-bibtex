@@ -22,6 +22,10 @@ import * as bibtexParser from '@retorquere/bibtex-parser'
 
 import { babelLanguage } from '../../content/text'
 
+function unique(value, index, self) {
+  return self.indexOf(value) === index
+}
+
 const config: Config = {
   caseConversion: {
     title: true,
@@ -553,9 +557,10 @@ export class ZoteroItem {
 
   protected $title(): boolean {
     let title = []
-    if (this.bibtex.fields.title) title = title.concat(this.bibtex.fields.title)
-    if (this.bibtex.fields.titleaddon) title = title.concat(this.bibtex.fields.titleaddon)
-    if (this.bibtex.fields.subtitle) title = title.concat(this.bibtex.fields.subtitle)
+    for (const field of ['title', 'titleaddon', 'subtitle']) {
+      if (this.bibtex.fields[field]?.length) title.push(this.bibtex.fields[field][0])
+    }
+    title = title.filter(unique)
 
     if (this.type === 'encyclopediaArticle') {
       this.item.publicationTitle = title.join('. ')

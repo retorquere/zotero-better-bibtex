@@ -14,6 +14,8 @@ export function doExport(): void {
 import * as escape from '../content/escape'
 
 export function detectImport(): boolean {
+  if (!Zotero.getHiddenPref('better-bibtex.import')) return false
+
   const maxChars = 1048576 // 1MB
   const chunk = 4096
 
