@@ -11,6 +11,36 @@
   },
   "items": [
     {
+      "ISBN": "0-521-53180-2",
+      "attachments": [],
+      "citationKey": "garberayers1998b",
+      "creators": [
+        {
+          "creatorType": "editor",
+          "firstName": "Daniel",
+          "lastName": "Garber"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "Michael",
+          "lastName": "Ayers"
+        }
+      ],
+      "date": "1998",
+      "edition": "2Rev Ed",
+      "extra": [
+        "Citation Key: garberayers1998b",
+        "tex.category: Secondary",
+        "tex.date-added: 2022-10-26 18:58:57 -0400",
+        "tex.date-modified: 2022-10-26 18:58:57 -0400",
+        "tex.price: $80.00"
+      ],
+      "itemID": 1,
+      "itemType": "book",
+      "publisher": "Cambridge University Press",
+      "title": "The Cambridge history of seventeenth-century philosophy. The cambridge history of seventeenth-century philosophy"
+    },
+    {
       "ISBN": "0415170540 (hardcover)",
       "attachments": [],
       "citationKey": "ZGaukroger1998a",
@@ -29,7 +59,7 @@
         "tex.date-modified: 2019-04-20 15:19:21 -0400",
         "tex.library-id: 97024517"
       ],
-      "itemID": 1,
+      "itemID": 2,
       "itemType": "book",
       "place": "London",
       "publisher": "Routledge",
