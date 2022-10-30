@@ -26,6 +26,7 @@ export class JabRef {
       meta = 'databaseType:bibtex'
     }
 
+    if (this.translation.output.body) this.translation.output.body += '\n'
     this.translation.output.body += `@comment{jabref-meta: ${meta};}\n`
     this.translation.output.body += `@comment{jabref-meta: ${this.translation.preferences.jabrefFormat === 5 ? 'grouping' : 'groupstree'}:\n` // eslint-disable-line no-magic-numbers
 

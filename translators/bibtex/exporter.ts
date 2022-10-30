@@ -104,15 +104,16 @@ export class Exporter {
 
   public complete(): void {
     this.jabref.exportGroups()
-    if (this.postfix) this.translation.output.body += this.postfix.toString()
+    let postfix = this.postfix?.toString() || ''
     if (this.translation.BetterTeX && this.translation.preferences.qualityReport) {
       let sep = '\n% == Citekey duplicates in this file:\n'
       for (const [citekey, n] of Object.entries(this.citekeys).sort((a, b) => a[0].localeCompare(b[0]))) {
         if (n > 1) {
-          this.translation.output.body += `${sep}% ${citekey} duplicates: ${n}\n`
+          postfix += `${sep}% ${citekey} duplicates: ${n}\n`
           sep = '% '
         }
       }
     }
+    if (postfix) this.translation.output.body += (this.translation.output.body ? '\n' : '') + postfix
   }
 }
