@@ -371,7 +371,7 @@ class Zotero:
     expected_file = expected
     expected, loaded_file = self.load(expected_file, True)
     exported = self.exported(loaded_file, found)
-    assert_equal_diff(expected.strip(), found.strip())
+    assert_equal_diff(expected, found.strip())
     self.exported(exported)
 
   def export_library(self, translator, displayOptions = {}, collection = None, output = None, expected = None, resetCache = False):
@@ -418,7 +418,7 @@ class Zotero:
       assert_equal_diff(clean_html(expected).strip(), clean_html(found).strip())
 
     else:
-      assert_equal_diff(expected.strip(), found.strip())
+      assert_equal_diff(expected, found)
 
     self.exported(exported)
 

@@ -529,7 +529,7 @@ Feature: Export
     When I set preference .parseParticles to false
     Then an export using "Better BibLaTeX" should match "export/*.off.biblatex"
 
-  @retries=5
+  #@retries=5
   Scenario: auto-export
     Given I import 3 references with 2 attachments from "export/*.json" into a new collection
     And I set preference .autoExport to "immediate"

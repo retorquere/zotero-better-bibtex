@@ -345,7 +345,7 @@ def step_impl(context, title):
 @then(u'the picks for "{fmt}" should be "{expected}"')
 def step_impl(context, fmt, expected):
   found = context.zotero.execute('return await Zotero.BetterBibTeX.TestSupport.pick(fmt, picks)', fmt=fmt, picks=context.picked)
-  assert_equal_diff(expected.strip(), found.strip())
+  assert_equal_diff(expected, found)
 
 @when(u'I {change} the citation key')
 def step_impl(context, change):
@@ -380,7 +380,7 @@ def step_impl(context, expected, found):
   with open(found) as f:
     found = f.read()
 
-  assert_equal_diff(expected.strip(), found)
+  assert_equal_diff(expected, found)
 
 @step(u'I wait {seconds:d} seconds')
 def step_impl(context, seconds):

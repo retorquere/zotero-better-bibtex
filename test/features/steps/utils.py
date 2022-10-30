@@ -1,3 +1,4 @@
+import re
 from bs4 import BeautifulSoup
 from markdownify import markdownify as md
 import difflib
@@ -49,7 +50,10 @@ class benchmark(object):
     return time.time() - self.started
 
 def assert_equal_diff(expected, found):
-  assert expected == found, '\n' + '\n'.join(difflib.unified_diff(expected.split('\n'), found.split('\n'), fromfile='expected', tofile='found', lineterm=''))
+  assert found in [
+    re.sub(r'\s+$', '\n', expected.lstrip()),
+    expected.strip(),
+  ], '\n' + '\n'.join(difflib.unified_diff(expected.split('\n'), found.split('\n'), fromfile='expected', tofile='found', lineterm=''))
 
 def expand_scenario_variables(context, filename, star=True):
   scenario = None

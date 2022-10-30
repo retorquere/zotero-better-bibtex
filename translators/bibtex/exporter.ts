@@ -103,17 +103,24 @@ export class Exporter {
   }
 
   public complete(): void {
-    this.jabref.exportGroups()
-    let postfix = this.postfix?.toString() || ''
-    if (this.translation.BetterTeX && this.translation.preferences.qualityReport) {
-      let sep = '\n% == Citekey duplicates in this file:\n'
+    const postfix: string[] = [
+      this.jabref.toString(),
+      this.postfix?.toString() || '',
+    ].filter(m => m)
+
+    if (this.translation.preferences.qualityReport) {
+      const duplicates = [
+        '% == Citekey duplicates in this file:\n',
+      ]
       for (const [citekey, n] of Object.entries(this.citekeys).sort((a, b) => a[0].localeCompare(b[0]))) {
-        if (n > 1) {
-          postfix += `${sep}% ${citekey} duplicates: ${n}\n`
-          sep = '% '
-        }
+        if (n > 1) duplicates.push(`% ${citekey} duplicates: ${n}\n`)
       }
+      if (duplicates.length > 1) postfix.push(duplicates.join(''))
     }
-    if (postfix) this.translation.output.body += (this.translation.output.body ? '\n' : '') + postfix
+
+    if (postfix.length) {
+      if (this.translation.output.body) this.translation.output.body += '\n'
+      this.translation.output.body += postfix.join('')
+    }
   }
 }

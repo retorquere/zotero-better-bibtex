@@ -12,8 +12,8 @@ export class JabRef {
     this.citekeys = new Map
   }
 
-  public exportGroups(): void {
-    if ((Object.keys(this.translation.collections).length === 0) || !this.translation.preferences.jabrefFormat) return
+  public toString(): string {
+    if ((Object.keys(this.translation.collections).length === 0) || !this.translation.preferences.jabrefFormat) return ''
 
     let meta
     if (this.translation.preferences.jabrefFormat === 3) { // eslint-disable-line no-magic-numbers
@@ -26,10 +26,6 @@ export class JabRef {
       meta = 'databaseType:bibtex'
     }
 
-    if (this.translation.output.body) this.translation.output.body += '\n'
-    this.translation.output.body += `@comment{jabref-meta: ${meta};}\n`
-    this.translation.output.body += `@comment{jabref-meta: ${this.translation.preferences.jabrefFormat === 5 ? 'grouping' : 'groupstree'}:\n` // eslint-disable-line no-magic-numbers
-
     this.groups = ['0 AllEntriesGroup:']
     const collections = Object.values(this.translation.collections).filter(coll => !coll.parent)
     if (this.translation.preferences.testing) collections.sort((a, b) => stringCompare(a.name, b.name))
@@ -37,8 +33,13 @@ export class JabRef {
       this.exportGroup(collection, 1)
     }
 
-    this.translation.output.body += this.groups.map(group => this.quote(group, true)).concat('').join(';\n')
-    this.translation.output.body += '}\n'
+    if (this.groups.length === 1) return ''
+
+    let groups = `@comment{jabref-meta: ${meta};}\n`
+    groups += `@comment{jabref-meta: ${this.translation.preferences.jabrefFormat === 5 ? 'grouping' : 'groupstree'}:\n` // eslint-disable-line no-magic-numbers
+    groups += this.groups.map(group => this.quote(group, true)).concat('').join(';\n')
+    groups += '}\n'
+    return groups
   }
 
   private exportGroup(collection, level: number): void {
