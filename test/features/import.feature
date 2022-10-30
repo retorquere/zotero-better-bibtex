@@ -109,7 +109,7 @@ Feature: Import
       | space after citekey creates confusion #716                                  | 2          |
       | zbb (quietly) chokes on this .bib #664                                      | 1          |
       | import software related biblatex entries #1544                              | 1          |
-      | BBT + Zotfile creating duplicate files in the wrong location #2300          | 2          |
+      | BBT + Zotfile creating duplicate files in the wrong location #2300          | 7          |
 
   @use.with_slow=true @timeout=3000
   Scenario: Some bibtex entries quietly discarded on import from bib file #873
