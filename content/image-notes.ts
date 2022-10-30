@@ -24,7 +24,6 @@ export async function genZipBib(path:string,collection:any,bib:string,bibJson:st
     }
 
   }
-  const zoteroStorageDir = String(Zotero.Prefs.get('dataDir'))+'/storage/'
 
   const zipFile = Components.classes['@mozilla.org/file/directory_service;1'].getService(Components.interfaces.nsIProperties).get('AChrom',Components.interfaces.nsIFile)
   const tmpLocation = '/tmp/'+path+String(Zotero.Utilities.randomString())
@@ -39,7 +38,7 @@ export async function genZipBib(path:string,collection:any,bib:string,bibJson:st
     zipW.open(zipFile, PR_RDWR | PR_CREATE_FILE | PR_TRUNCATE)
 
     for (const i of attachmentKeyNotes) {
-      const fileToAddToZip=FileUtils.File(zoteroStorageDir+String(i)+'/image.png')
+      const fileToAddToZip=FileUtils.File(Zotero.getStorageDirectory()+String(i)+'/image.png')
       zipW.addEntryFile(path+'/'+String(i)+'/image.png', 0 , fileToAddToZip, false)
     }
 
