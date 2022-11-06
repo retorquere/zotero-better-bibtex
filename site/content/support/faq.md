@@ -170,7 +170,7 @@ When BBT encounters an error during a background export, it will automatically d
 
 ### Why Zotero + BBT instead of Mendeley?
 
-There's too many reasons to list why Zotero tops Mendeley, but just a few:
+Among the reasons to just prefer Zotero over Mendeley outright you will find:
 
 * Mendeley is owned by Elsevier.
 * Mendeley thinks you [cannot be trusted with your own data](https://www.zotero.org/support/kb/mendeley_import#mendeley_database_encryption)
