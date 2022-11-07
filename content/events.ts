@@ -4,17 +4,18 @@ import { EventEmitter as EventEmitter3 } from 'eventemitter3'
 import { log } from './logger'
 
 const events: string[] = [
+  'collections-changed',
+  'collections-removed',
   'error',
-  'preference-changed',
+  'export-progress',
   'item-tag',
   'items-changed',
   'items-removed',
   'libraries-changed',
-  'collections-changed',
-  'collections-removed',
   'libraries-removed',
-  'export-progress',
   'loaded',
+  'preference-changed',
+  'window-loaded',
 ]
 const event_prefix = events.map(name => name + '.')
 
@@ -81,3 +82,21 @@ export const Events = new class EventEmitter extends EventEmitter3 {
     if (changed.libraries.size) this.emit('libraries-changed', [...changed.libraries])
   }
 }
+
+const windowListener = {
+  onOpenWindow: xulWindow => {
+    Zotero.debug('windowListener:onOpenWindow')
+    const win = xulWindow.QueryInterface(Components.interfaces.nsIInterfaceRequestor).getInterface(Components.interfaces.nsIDOMWindow)
+    win.addEventListener('load', function listener() { // eslint-disable-line prefer-arrow/prefer-arrow-functions
+      win.removeEventListener('load', listener, false)
+      Events.emit('window-loaded', win)
+    }, false)
+  },
+  onCloseWindow: () => {
+    Zotero.debug('windowListener:onCloseWindow')
+  },
+  onWindowTitleChange: _xulWindow => {
+    Zotero.debug('windowListener:onWindowTitleChange')
+  },
+}
+Services.wm.addListener(windowListener)

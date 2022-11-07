@@ -144,7 +144,7 @@ class Main extends Loki {
       Preference.scrubDatabase = false
     }
 
-    autoexport.on(['insert', 'update'], (ae: { path: string, $loki: number }) => {
+    autoexport.on(['pre-insert', 'pre-update'], (ae: { path: string, $loki: number }) => {
       autoexport.removeWhere({ $and: [ { path: ae.path }, { $loki: { $ne: ae.$loki } } ] })
     })
   }

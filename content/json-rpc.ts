@@ -145,7 +145,7 @@ class NSItem {
 
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       return {
-        ...Zotero.Utilities.itemToCSLJSON(item),
+        ...Zotero.Utilities.Item.itemToCSLJSON(item),
         library: libraries[item.libraryID],
         citekey: Zotero.BetterBibTeX.KeyManager.keys.findOne($and({ libraryID: item.libraryID, itemID: item.id })).citekey,
       }

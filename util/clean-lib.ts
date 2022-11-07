@@ -59,6 +59,7 @@ function stripCC(input) {
 }
 
 function clean(item) {
+  delete item.libraryID
   delete item.uri
   delete item.dateAdded
   delete item.dateModified

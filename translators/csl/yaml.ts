@@ -140,6 +140,7 @@ class Exporter extends CSLExporter {
   public date2CSL(date: ParsedDate): CSLDate { // fudge for CSL-YAML dates
     switch (date.type) {
       case 'date':
+      case 'open':
       case 'season':
         return [ date2csl(date) ] as unknown as CSLDate
 

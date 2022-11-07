@@ -77,7 +77,7 @@ export abstract class CSLExporter {
 
       item.journalAbbreviation = item.journalAbbreviation || item.autoJournalAbbreviation
 
-      let csl = Zotero.Utilities.itemToCSLJSON(item)
+      let csl = Zotero.Utilities.Item.itemToCSLJSON(item)
       csl['citation-key'] = item.citationKey
       if (Zotero.worker) csl.note = item.extra || undefined
 
@@ -116,7 +116,7 @@ export abstract class CSLExporter {
 
       for (const [name, value] of Object.entries(item.extraFields.kv)) {
         const ef = ExtraFields[name]
-        if (!ef.csl) continue
+        if (!ef.csl || !value) continue
 
         if (ef.type === 'date') {
           csl[name] = this.date2CSL(dateparser.parse(value))

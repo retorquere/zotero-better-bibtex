@@ -80,7 +80,11 @@ with open(args.data) as f:
 parser = Parser()
 doc = Munch.fromDict(parser.parse(args.feature))
 
-outlines = [child for child in doc.feature.children if child.type == 'ScenarioOutline' and (args.translator in child.name or args.mode == 'import')]
+outlines = [
+  child.scenario
+  for child in doc.feature.children
+  if child.get('scenario') and child.scenario.keyword == 'Scenario Outline' and (args.translator in child.scenario.name or args.mode == 'import')
+]
 assert len(outlines) == 1, f'{len(outlines)} outlines found containing {args.translator}'
 
 with open(args.feature) as f:
