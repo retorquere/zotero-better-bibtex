@@ -152,7 +152,7 @@ jobs:
         exclude:
           - client: jurism-beta
           - client: jurism
-            worker: '--worker'
+          #  worker: '--worker'
     steps:
     - uses: actions/checkout@v3
     - *download_build_artifacts
