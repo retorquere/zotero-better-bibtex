@@ -15,6 +15,7 @@
     "sourceMap": false,
     "downlevelIteration": true,
     "resolveJsonModule": true,
+    "moduleResolution": "node16",
     "skipLibCheck": true,
     "typeRoots": [
       "./node_modules/@types",

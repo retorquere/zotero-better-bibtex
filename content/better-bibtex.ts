@@ -25,6 +25,7 @@ import { flash } from './flash'
 import { Deferred } from './deferred'
 
 import { Preference } from './prefs' // needs to be here early, initializes the prefs observer
+import { start as prefpane_start } from './Preferences'
 import * as preferences from '../gen/preferences/meta'
 require('./pull-export') // just require, initializes the pull-export end points
 require('./json-rpc') // just require, initializes the json-rpc end point
@@ -1017,6 +1018,15 @@ export class BetterBibTeX {
       setProgress(percent && percent < 100 && Math.abs(percent), status) // eslint-disable-line no-magic-numbers
       */
       setProgress(percent, message) // eslint-disable-line no-magic-numbers
+    })
+    Events.on('window-loaded', (win: Window, href: string) => {
+      switch (href) {
+        case 'chrome://zotero/content/preferences/preferences.xul':
+          prefpane_start(win)
+          break
+        default:
+          log.debug('window-loaded', href)
+      }
     })
   }
 
