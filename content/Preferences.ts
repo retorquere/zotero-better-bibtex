@@ -25,11 +25,13 @@ export function start(win: Window): any {
 
   const parser = Components.classes['@mozilla.org/xmlextras/domparser;1'].createInstance(Components.interfaces.nsIDOMParser)
   const xul = parser.parseFromString(Zotero.File.getContentsFromURL('chrome://zotero-better-bibtex/content/Preferences.xul'), 'text/xml')
+  log.debug('prefwindow', xul.documentElement.textContent)
+
   const prefpane = xul.querySelector('prefpane')
   const id: string = prefpane.getAttribute('id') + '2' // eslint-disable-line @typescript-eslint/restrict-plus-operands
   if (win.document.querySelector(`prefpane#${id}`)) return // already loaded
 
-  xul.querySelector('script#loader').remove()
+  prefpane.removeAttribute('load')
   prefwindow.appendChild(prefpane)
 }
 

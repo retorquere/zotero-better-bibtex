@@ -56,7 +56,6 @@ class Preferences:
     self.parse()
     self.doc()
     self.save()
-    self.clean(os.path.join(root, 'build/content/Preferences.xul'))
 
   def parse(self):
     xul = f'{{{self.ns.xul}}}'
@@ -299,18 +298,6 @@ class Preferences:
       doc += '\n'
 
     return doc
-
-  def clean(self, path):
-    xul = f'{{{self.ns.xul}}}'
-    bbt = f'{{{self.ns.bbt}}}'
-    for node in self.pane.findall(f'.//{bbt}*'):
-      node.getparent().remove(node)
-    for node in self.pane.xpath(f'.//xul:*[@bbt:*]', namespaces=self.ns):
-      for attr in list(node.attrib):
-        if attr.startswith(bbt) and not attr.startswith(f'{bbt}ae-'):
-          node.attrib.pop(attr)
-    et = etree.ElementTree(self.pane)
-    et.write(path, pretty_print=True)
 
   def save(self):
     for pref in self.preferences.values():
