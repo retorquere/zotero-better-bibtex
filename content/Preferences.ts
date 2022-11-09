@@ -16,7 +16,7 @@ import * as l10n from './l10n'
 import { Events } from './events'
 import { pick } from './file-picker'
 import { flash } from './flash'
-import { parse as parsedtd } from 'dtd-file'
+const dtdparser = require('./dtd-file.peggy')
 
 const namespace = 'http://retorque.re/zotero-better-bibtex/'
 
@@ -35,13 +35,16 @@ export function start(win: Window): any {
   if (!prefwindow) return log.error('prefs.start: prefwindow not found')
 
   let xml = Zotero.File.getContentsFromURL('chrome://zotero-better-bibtex/content/Preferences.xul')
+  xml = xml.replace(/<[?]xml-stylesheet.*?[?]>/g, '')
   const url = xml.match(/<!DOCTYPE window SYSTEM "([^"]+)">/)[1]
-  const dtd: Record<string, string> = parsedtd(Zotero.File.getContentsFromURL(url))
+  const dtd: Record<string, string> = dtdparser.parse(Zotero.File.getContentsFromURL(url))
+  log.debug(dtd)
   for (const [key, value] of Object.entries(dtd)) {
     xml = xml.replace(new RegExp(`&${key};`, 'g'), escapeHtml(value))
   }
+  log.debug(xml)
   const parser = Components.classes['@mozilla.org/xmlextras/domparser;1'].createInstance(Components.interfaces.nsIDOMParser)
-  const xul = parser.parseFromString(xml)
+  const xul = parser.parseFromString(xml, 'text/xml')
   log.debug('prefwindow', xul.documentElement.textContent)
 
   const prefpane = xul.querySelector('prefpane')

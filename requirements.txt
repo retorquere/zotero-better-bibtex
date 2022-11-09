@@ -22,7 +22,7 @@ ortools
 pathvalidate
 psutil
 pushbullet.py
-pygit2>1.10,<1.11
+pygit2
 pygtrie
 pylint
 pytablewriter
