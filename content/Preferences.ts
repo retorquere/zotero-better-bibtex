@@ -35,24 +35,38 @@ export function start(win: Window): any {
   if (!prefwindow) return log.error('prefs.start: prefwindow not found')
 
   let xml = Zotero.File.getContentsFromURL('chrome://zotero-better-bibtex/content/Preferences.xul')
-  xml = xml.replace(/<[?]xml-stylesheet.*?[?]>/g, '')
   const url = xml.match(/<!DOCTYPE window SYSTEM "([^"]+)">/)[1]
   const dtd: Record<string, string> = dtdparser.parse(Zotero.File.getContentsFromURL(url))
-  log.debug(dtd)
   for (const [key, value] of Object.entries(dtd)) {
     xml = xml.replace(new RegExp(`&${key};`, 'g'), escapeHtml(value))
   }
-  log.debug(xml)
-  const parser = Components.classes['@mozilla.org/xmlextras/domparser;1'].createInstance(Components.interfaces.nsIDOMParser)
+  const parser = new DOMParser
   const xul = parser.parseFromString(xml, 'text/xml')
-  log.debug('prefwindow', xul.documentElement.textContent)
+
+  xul.querySelectorAll('*[onpaneload]').forEach(elt => {
+    elt.removeAttribute('onpaneload')
+  })
 
   const prefpane = xul.querySelector('prefpane')
-  const id: string = prefpane.getAttribute('id') + '2' // eslint-disable-line @typescript-eslint/restrict-plus-operands
-  if (win.document.querySelector(`prefpane#${id}`)) return // already loaded
+  let id: string = prefpane.getAttribute('id')
+  log.debug('prefs id=', id)
+  if (win.document.querySelector(`prefpane#${id}`)) {
+    log.debug('prefpane: already loaded')
+    return
+  }
 
-  prefpane.removeAttribute('load')
-  prefwindow.appendChild(prefpane)
+  let neighbour: Element
+  if ((id = prefpane.getAttribute('insertafter')) && (neighbour = win.document.querySelector(`prefpane#${id}`)) && neighbour.nextSibling) {
+    prefwindow.insertBefore(prefpane, neighbour.nextSibling)
+  }
+  else if ((id = prefpane.getAttribute('insertbefore')) && (neighbour = win.document.querySelector(`prefpane#${id}`))) {
+    prefwindow.insertBefore(prefpane, neighbour)
+  }
+  else {
+    prefwindow.appendChild(prefpane)
+  }
+  log.debug('>>>\n', win.document.documentElement.outerHTML, '\n<<<')
+  log.debug('prefpane: appended')
 }
 
 class AutoExportPane {

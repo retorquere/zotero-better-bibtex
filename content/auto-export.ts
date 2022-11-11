@@ -315,7 +315,7 @@ const queue = new class TaskQueue {
       }
 
       log.debug('ae.starting', jobs.length, 'jobs for', ae.$loki)
-      await Promise.all(jobs.map(job => Translators.exportItemsByWorker(job)))
+      await Promise.all(jobs.map(job => Translators.queueJob(job)))
       log.debug('ae.done', jobs.length, 'jobs for', ae.$loki)
 
       await repo.push(l10n.localize('Preferences.auto-export.git.message', { type: Translators.byId[ae.translatorID].label.replace('Better ', '') }))

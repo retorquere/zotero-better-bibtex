@@ -14,6 +14,7 @@ from glob import glob
 import frontmatter
 from types import SimpleNamespace
 import subprocess
+from pathlib import Path
 
 subprocess.check_output(['node', 'setup/preferences.js', 'content/Preferences.pug', 'build/content/Preferences.xul'])
 
@@ -28,21 +29,29 @@ def jstype(v):
   if type(v) == int: return 'number'
   raise ValueError(f'Unexpected type {type(v)}')
 
-def load(path):
-  #for lang in [l for l in os.listdir(os.path.join(root, 'locale')) if l != 'en-US'] + ['en-US']: # make sure en-US is loaded last for the website
-  for lang in ['en-US']:
-    #print(f'  {os.path.basename(path)} {lang}')
-    with open(path) as f:
-        xul = f.read()
-    with open(os.path.join(root, f'locale/{lang}/zotero-better-bibtex.dtd')) as dtd:
-      for entity in etree.DTD(dtd).entities():
-        xul = xul.replace(f'&{entity.name};', entity.content)
-    xul = etree.fromstring(xul)
-    ns = Munch()
-    for name, url in xul.nsmap.items():
-      if not name: name = 'xul'
-      ns[name] = url
+def loadxul(xul, replace, as_string=False, lang='en-US'):
+  #print(f'  {os.path.basename(path)} {lang}')
+  if isinstance(xul, Path):
+    with open(str(xul)) as f:
+      xul = f.read()
+  else:
+    assert type(xul) == str, type(xul)
+
+  with open(os.path.join(root, f'locale/{lang}/zotero-better-bibtex.dtd')) as dtd:
+    for entity in etree.DTD(dtd).entities():
+      xul = replace(xul, entity)
+  if as_string:
+    return xul
+  xul = etree.fromstring(xul)
+  ns = Munch()
+  for name, url in xul.nsmap.items():
+    if not name: name = 'xul'
+    ns[name] = url
   return xul, ns
+
+loadxul.translate = lambda xul, entity: xul.replace(f'&{entity.name};', entity.content)
+loadxul.stash = lambda xul, entity: xul.replace(f'&{entity.name};', f'###{entity.name};')
+loadxul.restore = lambda xul, entity: xul.replace(f'###{entity.name};', f'&{entity.name};')
 
 class Preferences:
   def __init__(self):
@@ -52,10 +61,12 @@ class Preferences:
     self.printed = []
     self.vars = []
 
-    self.pane, self.ns = load(os.path.join(root, 'build/content/Preferences.xul'))
+    self.path = Path(root) / 'build/content/Preferences.xul'
+    self.pane, self.ns = loadxul(self.path, loadxul.translate)
     self.parse()
     self.doc()
     self.save()
+    self.clean()
 
   def parse(self):
     xul = f'{{{self.ns.xul}}}'
@@ -299,6 +310,27 @@ class Preferences:
 
     return doc
 
+  def clean(self):
+    with open(str(self.path)) as f:
+      declarations = [line for line in f.readlines() if line.startswith('<?') or line.startswith('<!DOCTYPE')]
+
+    pane, ns = loadxul(self.path, loadxul.stash)
+    xul = f'{{{ns.xul}}}'
+    bbt = f'{{{ns.bbt}}}'
+    for node in pane.findall(f'.//{bbt}*'):
+      node.getparent().remove(node)
+    for node in pane.xpath(f'.//xul:*[@bbt:*]', namespaces=self.ns):
+      for attr in list(node.attrib):
+        if attr.startswith(bbt) and not attr.startswith(f'{bbt}ae-'):
+          node.attrib.pop(attr)
+
+    pane = etree.tostring(pane, pretty_print=True, encoding='utf-8').decode('utf-8')
+    pane = loadxul(pane, loadxul.restore, as_string=True)
+    with open(str(self.path), 'w') as f:
+      for declaration in declarations:
+        f.write(declaration)
+      f.write(pane)
+
   def save(self):
     for pref in self.preferences.values():
       assert (pref.name in self.printed) or (pref.name in self.undocumented), f'{pref.name} not printed'
@@ -350,6 +382,6 @@ content = os.path.join(root, 'content')
 for xul in os.listdir(content):
   if xul.endswith('xul'):
     print(' ', xul)
-    load(os.path.join(content, xul))
+    loadxul(Path(content) / xul, loadxul.translate)
 
 Preferences()
