@@ -29,10 +29,10 @@ function escapeHtml(unsafe: string): string {
     .replace(/'/g, '&#039;')
 }
 
-
 export function start(win: Window): any {
   const prefwindow = win.document.querySelector('prefwindow#zotero-prefs')
   if (!prefwindow) return log.error('prefs.start: prefwindow not found')
+  if (prefwindow) return 0
 
   let xml = Zotero.File.getContentsFromURL('chrome://zotero-better-bibtex/content/Preferences.xul')
   const url = xml.match(/<!DOCTYPE window SYSTEM "([^"]+)">/)[1]
@@ -45,6 +45,9 @@ export function start(win: Window): any {
 
   xul.querySelectorAll('*[onpaneload]').forEach(elt => {
     elt.removeAttribute('onpaneload')
+  })
+  xul.querySelectorAll('script').forEach(elt => {
+    elt.remove()
   })
 
   const prefpane = xul.querySelector('prefpane')
@@ -66,7 +69,7 @@ export function start(win: Window): any {
     prefwindow.appendChild(prefpane)
   }
   log.debug('>>>\n', win.document.documentElement.outerHTML, '\n<<<')
-  log.debug('prefpane: appended')
+  log.debug('prefpane: appended:', !!win.document.querySelector(`prefpane#${id}`))
 }
 
 class AutoExportPane {
