@@ -424,7 +424,7 @@ export class KeyManager {
 
       db.delete(item.itemID)
     }
-    if (db.size) log.debug('keymanager.rescan:', db,size, 'new items', ...db.keys())
+    if (db.size) log.debug('keymanager.rescan:', db.size, 'new items', ...db.keys())
 
     this.keys.findAndRemove({ itemID: { $in: [...deleted, ...this.regenerate] } })
     this.regenerate.push(...db.keys()) // generate new keys for items that are in the Z db but not in the BBT db
