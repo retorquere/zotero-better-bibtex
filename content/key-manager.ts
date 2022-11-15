@@ -403,39 +403,33 @@ export class KeyManager {
 
     const deleted: number[] = []
     for (const item of this.keys.data) {
-      const key = db.get(item.itemID)
+      const indb = db.get(item.itemID)
 
-      if (!key) {
+      if (!indb) {
         deleted.push(item.itemID)
+        log.debug('keymanager.rescan: deleted', item, 'from key database, no counterpart in Zotero DB')
       }
-      else if (key.citationKey && (!item.pinned || item.citekey !== key.citationKey)) {
-        this.keys.update({...item, pinned: true, citekey: key.citationKey, itemKey: key.itemKey })
+      else if (indb.citationKey && (!item.pinned || item.citekey !== indb.citationKey)) {
+        this.keys.update({...item, pinned: true, citekey: indb.citationKey, itemKey: indb.itemKey })
+        log.debug('keymanager.rescan: updated', item, 'using', indb)
       }
-      else if (!key.citationKey && item.citekey && item.pinned) {
-        this.keys.update({...item, pinned: false, itemKey: key.itemKey})
+      else if (!indb.citationKey && item.citekey && item.pinned) {
+        this.keys.update({...item, pinned: false, itemKey: indb.itemKey})
+        log.debug('keymanager.rescan: updated', item, 'using', indb)
       }
-      else if (!item.citekey) {
+      else if (!item.citekey) { // this should not be possible
         this.regenerate.push(item.itemID)
+        log.debug('keymanager.rescan: regenerating', item, 'missing citekey')
       }
 
       db.delete(item.itemID)
     }
+    if (db.size) log.debug('keymanager.rescan:', db,size, 'new items', ...db.keys())
 
     this.keys.findAndRemove({ itemID: { $in: [...deleted, ...this.regenerate] } })
-    this.regenerate.push(...db.keys())
+    this.regenerate.push(...db.keys()) // generate new keys for items that are in the Z db but not in the BBT db
 
-    const regenerate = (
-      this.regenerate.length !== 0
-      /*
-      &&
-      (
-        Preference.testing
-        ||
-        Services.prompt.confirm(null, l10n.localize('KeyManager.regenerate'), l10n.localize('KeyManager.regenerate.confirm', { n: this.regenerate.length }))
-      )
-      */
-    )
-    if (regenerate) {
+    if (this.regenerate.length) {
       const progressWin = new Zotero.ProgressWindow({ closeOnClick: false })
       progressWin.changeHeadline('Better BibTeX: Assigning citation keys')
       progressWin.addDescription(`Found ${this.regenerate.length} items without a citation key`)
