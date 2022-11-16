@@ -1031,6 +1031,9 @@ export class BetterBibTeX {
   }
 
   public parseDate(date: string): ParsedDate { return DateParser.parse(date) }
+  public unload(): void {
+    Zotero.debug('Unloading BBT?')
+  }
 }
 
 Zotero.BetterBibTeX = Zotero.BetterBibTeX || new BetterBibTeX
