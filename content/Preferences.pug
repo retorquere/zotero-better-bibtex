@@ -10,23 +10,23 @@
 | <?xml-stylesheet href="chrome://zotero-better-bibtex/skin/error-report.css" type="text/css"?>
 | <!DOCTYPE window SYSTEM "chrome://zotero-better-bibtex/locale/zotero-better-bibtex.dtd">
 overlay#zotero-better-bibtex-preferences(xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:bbt="http://retorque.re/zotero-better-bibtex/")
-  popupset
-    tooltip#tooltip-bibtexURL
-      description &better-bibtex.Preferences.export.fields.doi-and-url.warning;
-    tooltip#tooltip-jabrefFormat
-      description &better-bibtex.Preferences.export.jabrefFormat.warn;
-    tooltip#tooltip-importSentenceCase
-      description &better-bibtex.Preferences.advanced.import.sentenceCase.warning;
-    tooltip#tooltip-importCaseProtection
-      description &better-bibtex.Preferences.advanced.import.caseProtection.warning;
-    tooltip#tooltip-exportTitleCase
-      description &better-bibtex.Preferences.advanced.export.titleCase.warning;
-    tooltip#tooltip-exportBraceProtection
-      description &better-bibtex.Preferences.advanced.export.braceProtection.warning;
-    tooltip#tooltip-retainCache
-      description &better-bibtex.Preferences.advanced.export.retainCache.warning;
   prefwindow#zotero-prefs
     prefpane#zotero-prefpane-better-bibtex(insertafter="zotero-prefpane-advanced" label="&better-bibtex.Preferences.prefpane.better-bibtex;" image="chrome://zotero-better-bibtex/skin/bibtex.svg" onpaneload="load()" helpTopic="BetterBibTeX")
+      popupset
+        tooltip#tooltip-bibtexURL
+          description &better-bibtex.Preferences.export.fields.doi-and-url.warning;
+        tooltip#tooltip-jabrefFormat
+          description &better-bibtex.Preferences.export.jabrefFormat.warn;
+        tooltip#tooltip-importSentenceCase
+          description &better-bibtex.Preferences.advanced.import.sentenceCase.warning;
+        tooltip#tooltip-importCaseProtection
+          description &better-bibtex.Preferences.advanced.import.caseProtection.warning;
+        tooltip#tooltip-exportTitleCase
+          description &better-bibtex.Preferences.advanced.export.titleCase.warning;
+        tooltip#tooltip-exportBraceProtection
+          description &better-bibtex.Preferences.advanced.export.braceProtection.warning;
+        tooltip#tooltip-retainCache
+          description &better-bibtex.Preferences.advanced.export.retainCache.warning;
 
       preferences#zotero-preferences-cite
         include Preferences/preferences.pug

@@ -1,0 +1,46 @@
+{
+  "collections": { },
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "autoExportDelay": 229,
+      "baseAttachmentPath": "\\\\ad.uni-hamburg.de\\basis\\mit\\bm01\\bal6922\\Documents\\3_resources\\PDF",
+      "citekeyFormat": "auth.lower+year",
+      "extraMergeCSL": true,
+      "extraMergeCitekeys": true,
+      "extraMergeTeX": true,
+      "keyScope": "global",
+      "quickCopyMode": "citekeys",
+      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc,groups"
+    }
+  },
+  "items": [
+    {
+      "ISBN": "978-0-253-21190-3",
+      "citationKey": "peirce1998e",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Charles S.",
+          "lastName": "Peirce"
+        }
+      ],
+      "date": "1998-04-01",
+      "extra": [
+        "original-date:"
+      ],
+      "itemID": 687,
+      "itemType": "bookSection",
+      "language": "English",
+      "libraryCatalog": "Amazon",
+      "place": "Bloomington",
+      "publicationTitle": "The Essential Peirce: Selected Philosophical Writings, Volume 2",
+      "publisher": "Indiana University Press",
+      "title": "Pragmatism (1907)"
+    }
+  ]
+}

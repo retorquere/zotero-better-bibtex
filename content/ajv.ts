@@ -81,11 +81,13 @@ for (const ajv of [coercing, noncoercing]) {
 
 import betterAjvErrors from 'better-ajv-errors'
 
+type AjvError = { error: string, suggestion: string }
 export function validator(schema, ajv): (data: any) => string { // eslint-disable-line @typescript-eslint/explicit-module-boundary-types
   const ok = ajv.compile(schema)
   return function(data: any): string { // eslint-disable-line prefer-arrow/prefer-arrow-functions
     if (ok(data)) return ''
-    return betterAjvErrors(schema, data, ok.errors, { format: 'js' }).map(err => err.error + (err.suggestion ? ', ' : '') + (err.suggestion || '')).join('\n')
+    return (betterAjvErrors(schema, data, ok.errors, { format: 'js' }) as AjvError[])
+      .map((err: AjvError) => err.error + (err.suggestion ? `, ${err.suggestion}` : '')).join('\n')
   }
 }
 

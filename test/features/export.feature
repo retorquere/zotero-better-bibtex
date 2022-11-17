@@ -251,13 +251,14 @@ Feature: Export
     Examples:
       | BibTeX export is incompatible with Zotero 6 Preprint item type. #2080 | 1 |
 
-  @csl
+  @csl @timeout=3000
   Scenario Outline: Export <references> references for CSL-JSON to <file>
     When I import <references> references from "export/<file>.json"
     Then an export using "Better CSL JSON" should match "export/*.csl.json"
 
     Examples:
       | file                                                             | references |
+      | Export Error Unexpected date type #2303                          | 1          |
       | Better CSL JSON does not include authority field #2019           | 1          |
       | Multiple creators in Extra not exported in Better CSL JSON #2015 | 1          |
       | Deterministic ordering for CSL #1178 #1400                       | 26         |
@@ -529,7 +530,7 @@ Feature: Export
     When I set preference .parseParticles to false
     Then an export using "Better BibLaTeX" should match "export/*.off.biblatex"
 
-  #@retries=5
+  # @retries=5
   Scenario: auto-export
     Given I import 3 references with 2 attachments from "export/*.json" into a new collection
     And I set preference .autoExport to "immediate"
@@ -586,11 +587,9 @@ Feature: Export
     And an export using "Better BibTeX" should match "export/*.bibtex"
     When I set preference .cache to false
     Then an export using "Better BibTeX" should match "export/*.bibtex"
-
     When I reset the cache
     And I set preference .cache to false
     Then an export using "Better BibTeX" should match "export/*.bibtex"
-
     When I reset the cache
     Then an export using "Better CSL JSON" should match "export/*.csl.json"
     And an export using "Better CSL JSON" should match "export/*.csl.json", but take no more than 150 seconds
@@ -648,19 +647,14 @@ Feature: Export
   @use.with_client=zotero @use.with_slow=true @timeout=3000
   Scenario: Compare export times
     Given I import 86 references from "export/*.json"
-
     And I set preference .cache to false
-
     Then I export the library 50 times using "Better BibTeX"
     # stock bibtex
     And I export the library 50 times using "id:9cb70025-a888-4a29-a210-93ec52da40d4"
-
     Then I export the library 50 times using "Better BibLaTeX"
     # stock biblatex
     And I export the library 50 times using "id:b6e39b57-8942-4d11-8259-342c46ce395f"
-
     Then I set preference .cache to true
-
     And I export the library 50 times using "Better BibTeX"
     And I export the library 50 times using "Better BibLaTeX"
 

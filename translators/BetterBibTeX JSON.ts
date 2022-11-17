@@ -6,7 +6,7 @@ declare var ZOTERO_TRANSLATOR_INFO: TranslatorMetadata // eslint-disable-line no
 import { validItem } from '../content/ajv'
 import { simplifyForImport, simplifyForExport } from '../gen/items/simplify'
 const version = require('../gen/version.js')
-import { stringify } from '../content/stringify'
+import { fast_stringify as stringify } from '../content/stringify'
 import { log } from '../content/logger'
 import { normalize, Library } from './lib/normalize'
 
@@ -191,6 +191,6 @@ export function doExport(): void {
 
   if (translation.preferences.testing) normalize(data)
 
-  Zotero.write(stringify(data, null, '  '))
+  Zotero.write(stringify(data, null, '  ', true))
   translation.erase()
 }

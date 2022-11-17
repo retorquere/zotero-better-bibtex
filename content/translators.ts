@@ -201,8 +201,12 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       return this.exportItems(job)
     }
     else {
-      return this.queue.add(() => this.exportItemsByQueuedWorker(job))
+      return this.queueJob(job)
     }
+  }
+
+  public async queueJob(job: ExportJob) {
+    return this.queue.add(() => this.exportItemsByQueuedWorker(job))
   }
 
   private async exportItemsByQueuedWorker(job: ExportJob) {

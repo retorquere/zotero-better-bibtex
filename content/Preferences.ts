@@ -16,8 +16,61 @@ import * as l10n from './l10n'
 import { Events } from './events'
 import { pick } from './file-picker'
 import { flash } from './flash'
+const dtdparser = require('./dtd-file.peggy')
 
 const namespace = 'http://retorque.re/zotero-better-bibtex/'
+
+function escapeHtml(unsafe: string): string {
+  return unsafe
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;')
+}
+
+export function start(win: Window): any {
+  const prefwindow = win.document.querySelector('prefwindow#zotero-prefs')
+  if (!prefwindow) return log.error('prefs.start: prefwindow not found')
+  if (prefwindow) return 0
+
+  let xml = Zotero.File.getContentsFromURL('chrome://zotero-better-bibtex/content/Preferences.xul')
+  const url = xml.match(/<!DOCTYPE window SYSTEM "([^"]+)">/)[1]
+  const dtd: Record<string, string> = dtdparser.parse(Zotero.File.getContentsFromURL(url))
+  for (const [key, value] of Object.entries(dtd)) {
+    xml = xml.replace(new RegExp(`&${key};`, 'g'), escapeHtml(value))
+  }
+  const parser = new DOMParser
+  const xul = parser.parseFromString(xml, 'text/xml')
+
+  xul.querySelectorAll('*[onpaneload]').forEach(elt => {
+    elt.removeAttribute('onpaneload')
+  })
+  xul.querySelectorAll('script').forEach(elt => {
+    elt.remove()
+  })
+
+  const prefpane = xul.querySelector('prefpane')
+  let id: string = prefpane.getAttribute('id')
+  log.debug('prefs id=', id)
+  if (win.document.querySelector(`prefpane#${id}`)) {
+    log.debug('prefpane: already loaded')
+    return
+  }
+
+  let neighbour: Element
+  if ((id = prefpane.getAttribute('insertafter')) && (neighbour = win.document.querySelector(`prefpane#${id}`)) && neighbour.nextSibling) {
+    prefwindow.insertBefore(prefpane, neighbour.nextSibling)
+  }
+  else if ((id = prefpane.getAttribute('insertbefore')) && (neighbour = win.document.querySelector(`prefpane#${id}`))) {
+    prefwindow.insertBefore(prefpane, neighbour)
+  }
+  else {
+    prefwindow.appendChild(prefpane)
+  }
+  log.debug('>>>\n', win.document.documentElement.outerHTML, '\n<<<')
+  log.debug('prefpane: appended:', !!win.document.querySelector(`prefpane#${id}`))
+}
 
 class AutoExportPane {
   private label: { [key: string]: string }

@@ -33,6 +33,7 @@ class Exporter extends CSLExporter {
   public date2CSL(date: ParsedDate): CSLDate {
     switch (date.type) {
       case 'date':
+      case 'open':
         return {
           'date-parts': [ date2csl(date) ],
           circa: (date.approximate || date.uncertain) ? true : undefined,

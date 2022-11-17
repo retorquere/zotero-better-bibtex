@@ -34,7 +34,7 @@ type CitekeySearchRecord = { itemID: number, libraryID: number, itemKey: string,
 export class KeyManager {
   public keys: any
   public query: {
-    field: { extra?: number }
+    field: { extra?: number, title?: number }
     type: {
       note?: number
       attachment?: number
@@ -386,14 +386,19 @@ export class KeyManager {
       const m = keyLine.exec(extra)
       return m ? m[2].trim() : ''
     }
-    const db: Map<number, { itemKey: string, citationKey: string }> = (await ZoteroDB.queryAsync(`
+
+    type DBState = Map<number, { itemKey: string, citationKey: string }>
+    const inzdb: DBState = (await ZoteroDB.queryAsync(`
       SELECT item.itemID, item.key, extra.value as extra
       FROM items item
-      LEFT JOIN itemData field ON field.itemID = item.itemID AND field.fieldID = ${this.query.field.extra}
-      LEFT JOIN itemDataValues extra ON extra.valueID = field.valueID
-      WHERE item.itemID NOT IN (select itemID from deletedItems)
-      AND item.itemTypeID NOT IN (${this.query.type.attachment}, ${this.query.type.note}, ${this.query.type.annotation || this.query.type.note})
-    `)).reduce((acc: Map<number, { itemKey: string, citationKey: string }>, item) => {
+
+      LEFT JOIN itemData extraField ON extraField.itemID = item.itemID AND extraField.fieldID = ${this.query.field.extra}
+      LEFT JOIN itemDataValues extra ON extra.valueID = extraField.valueID
+
+      WHERE item.itemID NOT IN (SELECT itemID FROM deletedItems)
+        AND item.itemTypeID NOT IN (${this.query.type.attachment}, ${this.query.type.note}, ${this.query.type.annotation || this.query.type.note})
+        AND item.itemID NOT IN (SELECT itemID from feedItems)
+    `)).reduce((acc: DBState, item) => {
       acc.set(item.itemID, {
         itemKey: item.key,
         citationKey: getKey(item.extra),
@@ -402,40 +407,34 @@ export class KeyManager {
     }, new Map)
 
     const deleted: number[] = []
-    for (const item of this.keys.data) {
-      const key = db.get(item.itemID)
+    for (const bbt of this.keys.data) {
+      const zotero = inzdb.get(bbt.itemID)
 
-      if (!key) {
-        deleted.push(item.itemID)
+      if (!zotero) {
+        deleted.push(bbt.itemID)
+        // log.debug('keymanager.rescan: deleted', bbt, 'from key database, no counterpart in Zotero DB')
       }
-      else if (key.citationKey && (!item.pinned || item.citekey !== key.citationKey)) {
-        this.keys.update({...item, pinned: true, citekey: key.citationKey, itemKey: key.itemKey })
+      else if (zotero.citationKey && (!bbt.pinned || bbt.citekey !== zotero.citationKey)) {
+        this.keys.update({...bbt, pinned: true, citekey: zotero.citationKey, itemKey: zotero.itemKey })
+        // log.debug('keymanager.rescan: updated', bbt, 'using', zotero)
       }
-      else if (!key.citationKey && item.citekey && item.pinned) {
-        this.keys.update({...item, pinned: false, itemKey: key.itemKey})
+      else if (!zotero.citationKey && bbt.citekey && bbt.pinned) {
+        this.keys.update({...bbt, pinned: false, itemKey: zotero.itemKey})
+        // log.debug('keymanager.rescan: updated', bbt, 'using', zotero)
       }
-      else if (!item.citekey) {
-        this.regenerate.push(item.itemID)
+      else if (!bbt.citekey) { // this should not be possible
+        this.regenerate.push(bbt.itemID)
+        // log.debug('keymanager.rescan: regenerating', bbt, 'missing citekey')
       }
 
-      db.delete(item.itemID)
+      inzdb.delete(bbt.itemID)
     }
+    // if (inzdb.size) log.debug('keymanager.rescan:', inzdb.size, 'new items', { itemIDs: [...inzdb.entries()] })
 
     this.keys.findAndRemove({ itemID: { $in: [...deleted, ...this.regenerate] } })
-    this.regenerate.push(...db.keys())
+    this.regenerate.push(...inzdb.keys()) // generate new keys for items that are in the Z db but not in the BBT db
 
-    const regenerate = (
-      this.regenerate.length !== 0
-      /*
-      &&
-      (
-        Preference.testing
-        ||
-        Services.prompt.confirm(null, l10n.localize('KeyManager.regenerate'), l10n.localize('KeyManager.regenerate.confirm', { n: this.regenerate.length }))
-      )
-      */
-    )
-    if (regenerate) {
+    if (this.regenerate.length) {
       const progressWin = new Zotero.ProgressWindow({ closeOnClick: false })
       progressWin.changeHeadline('Better BibTeX: Assigning citation keys')
       progressWin.addDescription(`Found ${this.regenerate.length} items without a citation key`)

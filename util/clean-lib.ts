@@ -8,7 +8,7 @@ const validate = ajv.compile(require('../test/features/steps/bbtjsonschema.json'
 import * as jsonpatch from 'fast-json-patch'
 
 import { normalize } from '../translators/lib/normalize'
-import { stringify } from '../content/stringify'
+import { stable_stringify as stringify } from '../content/stringify'
 import * as fs from 'fs'
 import { sync as glob } from 'glob'
 import * as path from 'path'
@@ -59,6 +59,7 @@ function stripCC(input) {
 }
 
 function clean(item) {
+  delete item.libraryID
   delete item.uri
   delete item.dateAdded
   delete item.dateModified

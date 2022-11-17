@@ -4,32 +4,34 @@ import { EventEmitter as EventEmitter3 } from 'eventemitter3'
 import { log } from './logger'
 
 const events: string[] = [
+  'collections-changed',
+  'collections-removed',
   'error',
-  'preference-changed',
+  'export-progress',
   'item-tag',
   'items-changed',
   'items-removed',
   'libraries-changed',
-  'collections-changed',
-  'collections-removed',
   'libraries-removed',
-  'export-progress',
   'loaded',
+  'preference-changed',
+  'window-loaded',
 ]
 const event_prefix = events.map(name => name + '.')
 
-const log_events = Zotero.Prefs.get('translators.better-bibtex.log-events')
-
 export const Events = new class EventEmitter extends EventEmitter3 {
+  testing: boolean
+
   constructor() {
     super()
+    this.testing = Zotero.Prefs.get('translators.better-bibtex.log-events')
     this.on('error', err => {
       throw Zotero.debug(err)
     })
   }
 
   private verify(event: string | symbol) {
-    if (!log_events) return true
+    if (!this.testing) return true
     if (typeof event === 'symbol') return false
     if (events.includes(event) || event_prefix.find(prefix => event.startsWith(prefix))) return true
     throw new Error(`Unsupported event ${event}`)
@@ -48,7 +50,14 @@ export const Events = new class EventEmitter extends EventEmitter3 {
     const results: boolean[] = []
     for (const listening of this.eventNames()) {
       if (listening === event || (typeof listening === 'string' && listening.startsWith(prefix))) {
-        log.debug('event.emit(', listening, args, ')')
+        if (this.testing) {
+          try {
+            log.debug('event.emit(', listening, args, ')')
+          }
+          catch (err) {
+            log.debug('event.emit(', listening, ')')
+          }
+        }
         results.push(super.emit.apply(this, [listening, ...args]))
       }
     }
@@ -81,3 +90,16 @@ export const Events = new class EventEmitter extends EventEmitter3 {
     if (changed.libraries.size) this.emit('libraries-changed', [...changed.libraries])
   }
 }
+
+const windowListener = {
+  onOpenWindow: xulWindow => {
+    const win = xulWindow.QueryInterface(Components.interfaces.nsIInterfaceRequestor).getInterface(Components.interfaces.nsIDOMWindow)
+    win.addEventListener('load', function listener() { // eslint-disable-line prefer-arrow/prefer-arrow-functions
+      win.removeEventListener('load', listener, false)
+      Events.emit('window-loaded', win, win.location.href)
+    }, false)
+  },
+  // onCloseWindow: () => { },
+  // onWindowTitleChange: _xulWindow => { },
+}
+Services.wm.addListener(windowListener)
