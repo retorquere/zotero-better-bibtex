@@ -300,7 +300,7 @@ class PatternFormatter {
   private months = { 1: 'jan', 2: 'feb', 3: 'mar', 4: 'apr', 5: 'may', 6: 'jun', 7: 'jul', 8: 'aug', 9: 'sep', 10: 'oct', 11: 'nov', 12: 'dec' }
 
   // eslint-disable-next-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
-  private DOMParser = new DOMParser
+  private DOMParser: DOMParser
 
   private item: Item
 
@@ -1301,6 +1301,7 @@ class PatternFormatter {
 
   private innerText(str: string): string {
     if (!str) return ''
+    if (!this.DOMParser) this.DOMParser = new DOMParser
     return this.DOMParser.parseFromString(`<span>${str}</span>`, 'text/html').documentElement.textContent
   }
 
