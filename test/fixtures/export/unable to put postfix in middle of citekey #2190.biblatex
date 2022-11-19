@@ -1,0 +1,28 @@
+@book{smythe1977_Comm,
+  shorttitle = {Communications},
+  author = {Smythe, Dallas W.},
+  date = {1977},
+  eprint = {cXUxGwAACAAJ},
+  eprinttype = {googlebooks},
+  langid = {english},
+  title = {Communications},
+  subtitle = {Blindspot of {{Western Marxism}}}
+}
+
+@article{smythe1977-a_Comm,
+  shorttitle = {Communications},
+  author = {Smythe, Dallas W.},
+  date = {1977-12-30},
+  journaltitle = {CTheory},
+  volume = {1},
+  number = {3},
+  pages = {1--27},
+  issn = {1190-9153},
+  url = {https://journals.uvic.ca/index.php/ctheory/article/view/13715},
+  urldate = {2022-11-17},
+  issue = {3},
+  langid = {english},
+  keywords = {critical theory,cultural studies,philosophy,political science,sociology},
+  title = {Communications},
+  subtitle = {Blindspot of {{Western Marxism}}}
+}

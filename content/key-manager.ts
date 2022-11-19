@@ -520,23 +520,21 @@ export class KeyManager {
     const conflictQuery: Query = { $and: [ { itemID: { $ne: item.id } } ] }
     if (Preference.keyScope !== 'global') conflictQuery.$and.push({ libraryID: { $eq: item.libraryID } })
 
-    let postfix: string
     const seen = {}
     // eslint-disable-next-line no-constant-condition
-    for (let n = Formatter.postfix.start; true; n += 1) {
-      if (n) {
-        const alpha = intToExcelCol(n)
-        postfix = sprintf(Formatter.postfix.format, { a: alpha.toLowerCase(), A: alpha, n })
-      }
-      else {
-        postfix = ''
-      }
+    for (let n = Formatter.postfix.offset; true; n += 1) {
+      const postfixed = citekey.replace(Formatter.postfix.marker, () => {
+        let postfix = ''
+        if (n) {
+          const alpha = intToExcelCol(n)
+          postfix = sprintf(Formatter.postfix.template, { a: alpha.toLowerCase(), A: alpha, n })
+          // this should never happen, it'd mean the postfix pattern doesn't have placeholders, which should have been caught by parsePattern
+          if (seen[postfix]) throw new Error(`${JSON.stringify(Formatter.postfix)} does not generate unique postfixes`)
+          seen[postfix] = true
+        }
+        return postfix
+      })
 
-      // this should never happen, it'd mean the postfix pattern doesn't have placeholders, which should have been caught by parsePattern
-      if (seen[postfix]) throw new Error(`${JSON.stringify(Formatter.postfix)} does not generate unique postfixes`)
-      seen[postfix] = true
-
-      const postfixed = citekey + postfix
       const conflict = transient.includes(postfixed) || this.keys.findOne({ $and: [...conflictQuery.$and, { citekey: { $eq: postfixed } }] })
       if (conflict) continue
 
