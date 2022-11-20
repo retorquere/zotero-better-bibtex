@@ -16,10 +16,9 @@ from types import SimpleNamespace
 import subprocess
 from pathlib import Path
 
-ROOT = os.path.join(os.path.dirname(__file__), '..')
-PREFS = 'build/content/Preferences_bbt.xul'
+subprocess.check_output(['node', 'setup/preferences.js', 'content/Preferences.pug', 'build/content/Preferences.xul'])
 
-subprocess.check_output(['node', 'setup/preferences.js', 'content/Preferences.pug', PREFS])
+root = os.path.join(os.path.dirname(__file__), '..')
 
 def template(tmpl):
   return Template(filename=os.path.join(os.path.dirname(os.path.realpath(__file__)), 'templates', tmpl))
@@ -38,7 +37,7 @@ def loadxul(xul, replace, as_string=False, lang='en-US'):
   else:
     assert type(xul) == str, type(xul)
 
-  with open(os.path.join(ROOT, f'locale/{lang}/zotero-better-bibtex.dtd')) as dtd:
+  with open(os.path.join(root, f'locale/{lang}/zotero-better-bibtex.dtd')) as dtd:
     for entity in etree.DTD(dtd).entities():
       xul = replace(xul, entity)
   if as_string:
@@ -62,7 +61,7 @@ class Preferences:
     self.printed = []
     self.vars = []
 
-    self.path = Path(ROOT) / PREFS
+    self.path = Path(root) / 'build/content/Preferences.xul'
     self.pane, self.ns = loadxul(self.path, loadxul.translate)
     self.parse()
     self.doc()
@@ -226,7 +225,7 @@ class Preferences:
 
     # prepare labels
     index = False
-    for tab, panel in gettabs(self.pane, f'.//{xul}prefpane/{xul}deck/{xul}tabbox'):
+    for tab, panel in gettabs(self.pane, f'.//{xul}prefwindow/{xul}prefpane/{xul}deck/{xul}tabbox'):
       panel.attrib[f'{bbt}label'] = tab.attrib['label']
 
       if not index:
@@ -336,20 +335,20 @@ class Preferences:
     for pref in self.preferences.values():
       assert (pref.name in self.printed) or (pref.name in self.undocumented), f'{pref.name} not printed'
 
-    os.makedirs(os.path.join(ROOT, 'gen'), exist_ok=True)
+    os.makedirs(os.path.join(root, 'gen'), exist_ok=True)
     preferences = sorted(self.preferences.values(), key=lambda pref: pref.name)
     for pref in preferences:
       if 'id' in pref:
         del pref['id']
 
-    with open(os.path.join(ROOT, 'test/features/steps/preferences.json'), 'w') as f:
+    with open(os.path.join(root, 'test/features/steps/preferences.json'), 'w') as f:
       json.dump([{ k: v for k, v in pref.items() if k != 'description'} for pref in preferences], f, indent=2)
 
-    with open(os.path.join(ROOT, 'site/data/preferences/defaults.json'), 'w') as f:
+    with open(os.path.join(root, 'site/data/preferences/defaults.json'), 'w') as f:
       json.dump({ pref.name: pref.default for pref in preferences }, f, indent=2)
 
-    os.makedirs(os.path.join(ROOT, 'build/defaults/preferences'), exist_ok=True)
-    with open(os.path.join(ROOT, 'build/defaults/preferences/defaults.js'), 'w') as f:
+    os.makedirs(os.path.join(root, 'build/defaults/preferences'), exist_ok=True)
+    with open(os.path.join(root, 'build/defaults/preferences/defaults.js'), 'w') as f:
       for pref in preferences:
         print(f'pref({json.dumps(self.prefix + pref.name)}, {json.dumps(pref.default)})', file=f)
 
@@ -365,21 +364,21 @@ class Preferences:
     names = [pref.var for pref in preferences]
 
     translators = self.translators.values()
-    with open(os.path.join(ROOT, 'gen', 'preferences.ts'), 'w') as f:
+    with open(os.path.join(root, 'gen', 'preferences.ts'), 'w') as f:
       print(template('preferences/preferences.ts.mako').render(prefix=self.prefix, names=names, translators=translators, preferences=preferences).strip(), file=f)
 
-    meta = os.path.join(ROOT, 'gen', 'preferences', 'meta.ts')
+    meta = os.path.join(root, 'gen', 'preferences', 'meta.ts')
     os.makedirs(os.path.dirname(meta), exist_ok=True)
     with open(meta, 'w') as f:
       print(template('preferences/meta.ts.mako').render(prefix=self.prefix, names=names, translators=translators, preferences=preferences).strip(), file=f)
 
-    defaults = os.path.join(ROOT, 'build', 'defaults', 'preferences', 'defaults.js')
+    defaults = os.path.join(root, 'build', 'defaults', 'preferences', 'defaults.js')
     os.makedirs(os.path.dirname(defaults), exist_ok=True)
     with open(defaults, 'w') as f:
       print(template('preferences/defaults.js.mako').render(prefix=self.prefix, names=names, translators=translators, preferences=preferences).strip(), file=f)
 
 # check translations
-content = os.path.join(ROOT, 'content')
+content = os.path.join(root, 'content')
 for xul in os.listdir(content):
   if xul.endswith('xul'):
     print(' ', xul)
