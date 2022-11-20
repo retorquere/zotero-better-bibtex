@@ -12,6 +12,7 @@ import { Events } from './events'
 import { fetchAsync as fetchInspireHEP } from './inspire-hep'
 import * as Extra from './extra'
 import { $and, Query } from './db/loki'
+import { excelColumn } from './text'
 
 import * as ZoteroDB from './db/zotero'
 
@@ -25,7 +26,6 @@ import { DB as Cache } from './db/cache'
 import { patch as $patch$ } from './monkey-patch'
 
 import { sprintf } from 'sprintf-js'
-import { intToExcelCol } from 'excel-column-name'
 
 import * as l10n from './l10n'
 
@@ -526,12 +526,12 @@ export class KeyManager {
       const postfixed = citekey.replace(Formatter.postfix.marker, () => {
         let postfix = ''
         if (n) {
-          const alpha = intToExcelCol(n)
+          const alpha = excelColumn(n)
           postfix = sprintf(Formatter.postfix.template, { a: alpha.toLowerCase(), A: alpha, n })
-          // this should never happen, it'd mean the postfix pattern doesn't have placeholders, which should have been caught by parsePattern
-          if (seen[postfix]) throw new Error(`${JSON.stringify(Formatter.postfix)} does not generate unique postfixes`)
-          seen[postfix] = true
         }
+        // this should never happen, it'd mean the postfix pattern doesn't have placeholders, which should have been caught by parsePattern
+        if (seen[postfix]) throw new Error(`${JSON.stringify(Formatter.postfix)} does not generate unique postfixes`)
+        seen[postfix] = true
         return postfix
       })
 
