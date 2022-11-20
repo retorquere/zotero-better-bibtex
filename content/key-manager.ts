@@ -353,6 +353,7 @@ export class KeyManager {
 
   public async rescan(clean?: boolean): Promise<void> {
     if (Preference.scrubDatabase) {
+      log.debug('scrubbing database')
       this.keys.removeWhere(i => !i.citekey) // 2047
 
       let errors = 0
@@ -450,7 +451,7 @@ export class KeyManager {
           this.update(item)
         }
         catch (err) {
-          log.error('KeyManager.rescan: update', (eta.done as number) + 1, 'failed:', err)
+          log.error('KeyManager.rescan: update', (eta.done as number) + 1, item, 'failed:', err.message || err)
         }
 
         eta.iterate()
