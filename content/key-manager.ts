@@ -444,20 +444,17 @@ export class KeyManager {
       progressWin.show()
 
       const eta = new ETA(this.regenerate.length, { autoStart: true })
-      while (this.regenerate.length) {
-        const item = await getItemsAsync(this.regenerate.pop())
-
+      for (const itemID of this.regenerate) {
         try {
-          this.update(item)
+          this.update(await getItemsAsync(itemID))
         }
         catch (err) {
-          log.error('KeyManager.rescan: update', (eta.done as number) + 1, item, 'failed:', err.message || err)
+          log.error('KeyManager.rescan: update', (eta.done as number) + 1, 'failed:', err.message || err, err.stack)
         }
 
         eta.iterate()
 
-        // eslint-disable-next-line no-magic-numbers
-        if ((eta.done % 10) === 1) {
+        if ((eta.done % 10) === 1) { // eslint-disable-line no-magic-numbers
           log.debug('keymanager.rescan: regenerated', eta.done)
           // eslint-disable-next-line no-magic-numbers
           progress.setProgress((eta.done * 100) / eta.count)
