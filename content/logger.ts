@@ -5,7 +5,9 @@ declare var ZOTERO_TRANSLATOR_INFO: TranslatorMetadata // eslint-disable-line no
 declare const workerJob: Translator.Worker.Job
 declare const dump: (msg: string) => void
 
-import { fast_stringify as stringify, asciify } from './stringify'
+// import { fast_stringify as stringify, asciify } from './stringify'
+import { asciify } from './stringify'
+import { inspect } from 'loupe'
 import { worker as inWorker } from './client'
 
 export function print(msg: string): void {
@@ -39,7 +41,7 @@ class Logger {
           output += this.formatError({ message: m.errorCode ? `${m.message} (${m.errorCode})` : m.message, filename: m.fileName, lineno: m.lineNumber, colno: m.column, stack: m.stack })
         }
         else {
-          output += stringify(m)
+          output += inspect(m)
         }
 
         output += ' '
