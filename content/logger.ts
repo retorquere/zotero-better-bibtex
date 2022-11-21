@@ -6,14 +6,13 @@ declare const workerJob: Translator.Worker.Job
 declare const dump: (msg: string) => void
 
 import { asciify } from './stringify'
-import { fast_stringify as stringify } from './stringify'
+import { stringify } from './stringify'
 // import { inspect as stringify } from 'loupe'
 import { worker as inWorker } from './client'
 
 export function print(msg: string): void {
   dump(msg + '\n')
 }
-
 
 class Logger {
   public verbose = false

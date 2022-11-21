@@ -11,9 +11,26 @@ export function stable_stringify(obj: any, replacer?: any, indent?: string | num
   return ucode ? asciify(stringified) : stringified
 }
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export function fast_stringify(obj: any, replacer?: any, indent?: string | number, ucode?: boolean): string {
-  const stringified: string = fast_safe_stringify(obj, replacer, indent)
-
+// safely handles circular references
+export function stringify(obj, indent: number | string = 2, ucode?: boolean) { // eslint-disable-line @typescript-eslint/explicit-module-boundary-types
+  let cache = []
+  const stringified = JSON.stringify(
+    obj,
+    (key, value): any => {
+      switch (typeof value) {
+        case 'number':
+        case 'string':
+        case 'boolean':
+          return value
+        default:
+          if (value === null) return value
+          if (cache.includes(value)) return undefined
+          cache.push(value)
+          return value
+      }
+    },
+    indent
+  )
+  cache = null
   return ucode ? asciify(stringified) : stringified
 }
