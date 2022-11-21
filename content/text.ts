@@ -485,3 +485,16 @@ export function excelColumn(n: number): string {
 
   return col
 }
+
+let parser: DOMParser
+export function getDOMParser(): DOMParser {
+  if (!parser) {
+    try {
+      parser = new DOMParser
+    }
+    catch (err) {
+      parser = Components.classes['@mozilla.org/xmlextras/domparser;1'].createInstance(Components.interfaces.nsIDOMParser)
+    }
+  }
+  return parser
+}

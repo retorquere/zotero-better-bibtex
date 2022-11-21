@@ -16,6 +16,7 @@ import * as l10n from './l10n'
 import { Events } from './events'
 import { pick } from './file-picker'
 import { flash } from './flash'
+import { getDOMParser } from './text'
 const dtdparser = require('./dtd-file.peggy')
 
 const namespace = 'http://retorque.re/zotero-better-bibtex/'
@@ -40,7 +41,7 @@ export function start(win: Window): any {
   for (const [key, value] of Object.entries(dtd)) {
     xml = xml.replace(new RegExp(`&${key};`, 'g'), escapeHtml(value))
   }
-  const parser = new DOMParser
+  const parser = getDOMParser()
   const xul = parser.parseFromString(xml, 'text/xml')
 
   xul.querySelectorAll('*[onpaneload]').forEach(elt => {

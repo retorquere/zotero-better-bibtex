@@ -13,7 +13,7 @@ import { Preference } from '../prefs'
 import { JournalAbbrev } from '../journal-abbrev'
 import * as Extra from '../extra'
 import { buildCiteKey as zotero_buildCiteKey } from './formatter-zotero'
-import { babelLanguage } from '../text'
+import { babelLanguage, getDOMParser } from '../text'
 import { fetchSync as fetchInspireHEP } from '../inspire-hep'
 
 const legacyparser = require('./legacy.peggy')
@@ -1323,7 +1323,7 @@ class PatternFormatter {
 
   private innerText(str: string): string {
     if (!str) return ''
-    if (!this.DOMParser) this.DOMParser = new DOMParser
+    if (!this.DOMParser) this.DOMParser = getDOMParser()
     return this.DOMParser.parseFromString(`<span>${str}</span>`, 'text/html').documentElement.textContent
   }
 
