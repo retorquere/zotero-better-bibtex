@@ -60,7 +60,7 @@ export function doExport(): void {
     if (author.length) label.push(author.join(' '))
 
     items.push({
-      id: `node-${ref.uri.replace(/.*\//, '')}`,
+      id: `node-${items.length}`,
       label: label.join('\n'),
       relations: (ref.relations?.['dc:relation'] || []),
       // eslint-disable-next-line prefer-spread
