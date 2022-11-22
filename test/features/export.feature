@@ -666,3 +666,7 @@ Feature: Export
 # Then an export using "Better BibLaTeX" should match "export/*.biblatex"
 # When I select the item with a field that contains "Collapse"
 # Then a quick-copy using "Better BibLaTeX" should match "export/*.biblatex"
+
+  Scenario: `Error getCollections configure option not set` when exporting to citation graph #2319
+    Given I import 2 references from "export/*.json"
+    Then an export using "Citation graph" should match "export/*.dot"
