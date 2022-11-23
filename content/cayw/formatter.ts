@@ -94,7 +94,7 @@ function citation2latex(citation, options) {
 export const Formatter = new class { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   public async playground(citations, options) {
     const formatted = await citations.map(cit => `${options.keyprefix || ''}${cit.citekey}${options.keypostfix || ''}`)
-    return formatted.length ? `${options.citeprefix || ''}${formatted.join(options.separator || ',')}${options.citekeypostfix || ''}` : ''
+    return formatted.length ? `${options.citeprefix || ''}${formatted.join(options.separator || ',')}${options.citepostfix || ''}` : ''
   }
 
   public async citationLinks(citations, _options): Promise<string> {
