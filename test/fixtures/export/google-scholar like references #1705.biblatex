@@ -1,4 +1,3 @@
-
 @inproceedings{el2020lossy,
   title = {Lossy {{CSI-FiSh}}: {{Efficient Signature Scheme}} with {{Tight Reduction}} to {{Decisional CSIDH-512}}},
   shorttitle = {Lossy {{CSI-FiSh}}},
@@ -16,7 +15,7 @@
   langid = {english}
 }
 
-@report{yoo2017post,
+@report{yoo2017postquantum,
   title = {A {{Post-Quantum Digital Signature Scheme Based}} on {{Supersingular Isogenies}}},
   author = {Yoo, Youngho and Azarderakhsh, Reza and Jalali, Amir and Jao, David and Soukharev, Vladimir},
   date = {2017},
@@ -26,5 +25,3 @@
   abstract = {We present the first general-purpose digital signature scheme based on supersingular elliptic curve isogenies secure against quantum adversaries in the quantum random oracle model with small key sizes. This scheme is an application of Unruh’s construction of non-interactive zero-knowledge proofs to an interactive zero-knowledge proof proposed by De Feo, Jao, and Plût. We implement our proposed scheme on an x86-64 PC platform as well as an ARM-powered device. We exploit the state-of-the-art techniques to speed up the computations for general C and assembly. Finally, we provide timing results for real world applications.},
   keywords = {digital signatures,isogenies,post-quantum cryptography,public-key cryptography}
 }
-
-
