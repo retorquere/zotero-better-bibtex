@@ -766,7 +766,7 @@ class PatternFormatter {
    * @param m number of words to capitalize. `0` means no capitalization
    */
   public $shorttitle(n: number = 3, m: number = 0) { // eslint-disable-line no-magic-numbers, @typescript-eslint/no-inferrable-types
-    const words = this.titleWords(this.item.title, { skipWords: true, asciiOnly: true})
+    const words = this.titleWords(this.item.title, { skipWords: true, transliterate: true})
     if (!words) return this.$text('')
 
     return this.$text(words.slice(0, n).map((word, i) => i < m ? word.charAt(0).toUpperCase() + word.slice(1) : word).join(' '))
@@ -1126,8 +1126,8 @@ class PatternFormatter {
       }
     }
     */
-
-    return this.$text(this.chunk.split(/\s+/).filter(word => !this.skipWords.has(word.toLowerCase())).join(' ').trim())
+    const words = this.titleWords(this.item.title, { skipWords: true })
+    return this.$text(words ? words.join(' ') : '')
   }
 
   /**
@@ -1286,7 +1286,7 @@ class PatternFormatter {
     return this.transliterate(str).replace(allow_spaces ? this.re.unsafechars_allow_spaces : this.re.unsafechars, '').trim()
   }
 
-  private titleWords(title, options: { asciiOnly?: boolean, skipWords?: boolean} = {}): string[] {
+  private titleWords(title, options: { transliterate?: boolean, skipWords?: boolean} = {}): string[] {
     if (!title) return null
 
     // 551
@@ -1309,7 +1309,7 @@ class PatternFormatter {
       log.debug('titleWords: words after kuroshiro =', words)
     }
 
-    if (options.asciiOnly) {
+    if (options.transliterate) {
       words = words.map((word: string) => {
         if (this.item.transliterateMode) {
           return this.transliterate(word)
@@ -1324,11 +1324,12 @@ class PatternFormatter {
           return this.transliterate(word)
         }
       })
-      log.debug('titleWords: words after asciiOnly =', words)
+      log.debug('titleWords: words after transliterate =', words)
 
-      // remove transliterated skipwords
-      if (options.skipWords) words = words.filter((word: string) => !this.skipWords.has(word.toLowerCase()))
     }
+
+    // remove transliterated and non-CJK skipwords
+    if (options.skipWords) words = words.filter((word: string) => !this.skipWords.has(word.toLowerCase()))
 
     if (words.length === 0) return null
 
