@@ -1,0 +1,71 @@
+@misc{Acemoglu_2022_AutomationWorkforceFirmLevel,
+  type = {Working Paper},
+  title = {Automation and the Workforce: A Firm-Level View from the 2019 Annual Business Survey},
+  shorttitle = {Automation and the Workforce},
+  author = {Acemoglu, Daron and Anderson, Gary W. and Beede, David N. and Buffington, Cathy and Childress, Eric E. and Dinlersoz, Emin and Foster, Lucia S. and Goldschlag, Nathan and Haltiwanger, John C. and Kroff, Zachary and Restrepo, Pascual and Zolas, Nikolas},
+  date = {2022-11},
+  series = {Working Paper Series},
+  number = {30659},
+  publisher = {National Bureau of Economic Research},
+  doi = {10.3386/w30659},
+  url = {https://www.nber.org/papers/w30659},
+  urldate = {2022-11-21}
+}
+
+@article{fang_2022_shuzihuazhuanxingshifou,
+  title = {数字化转型是否促进了企业内共同富裕?——来自中国A股上市公司的证据},
+  shorttitle = {数字化转型是否促进了企业内共同富裕?},
+  author = {方, 明月 and 林, 佳妮 and 聂, 辉华},
+  date = {2022},
+  journaltitle = {数量经济技术经济研究},
+  number = {11},
+  pages = {50--70},
+  issn = {1000-3894},
+  doi = {10.13653/j.cnki.jqte.2022.11.003},
+  url = {https://kns.cnki.net/kcms/detail/detail.aspx?dbcode=CAPJ&dbname=CAPJLAST&filename=SLJY20221021002&uniplatform=NZKPT&v=IKfCs3qqx5LoqvozRJvCsO5v8yR5fswy1se1qnGXD_Z_OmIq9MChOrsEzUwqHIs_},
+  urldate = {2022-11-15},
+  langid = {chinese}
+}
+
+@article{jin_2022_shuzihuazhuanxingdui,
+  title = {数字化转型对企业绿色创新的影响——基于中国制造业上市公司的经验证据},
+  author = {靳, 毓 and 文, 雯 and 何, 茵},
+  date = {2022},
+  journaltitle = {财贸研究},
+  volume = {33},
+  number = {07},
+  pages = {69--83},
+  issn = {1001-6260},
+  doi = {10.19337/j.cnki.34-1093/f.2022.07.006},
+  url = {https://kns.cnki.net/kcms/detail/detail.aspx?dbcode=CJFD&dbname=CJFDLAST2022&filename=CMYJ202207006&uniplatform=NZKPT&v=KgUu3Im3EGysI96xCX5mmBrDDsWkL9OR4uNeYSLJMZVAyIdWqzhU0lc7MZ79RVgt},
+  urldate = {2022-11-14},
+  langid = {chinese}
+}
+
+@article{pan_2022_shuzihuazhuanxingyu,
+  title = {数字化转型与企业创新——基于中国上市公司年报的经验证据},
+  author = {潘, 红波 and 高, 金辉},
+  date = {2022},
+  journaltitle = {中南大学学报(社会科学版)},
+  volume = {28},
+  number = {05},
+  pages = {107--121},
+  issn = {1672-3104},
+  url = {https://kns.cnki.net/kcms/detail/detail.aspx?dbcode=CJFD&dbname=CJFDAUTO&filename=ZLXS202205010&uniplatform=NZKPT&v=q-Kkz2rs1vX3SGlCJ0jjLpfuIlgSx3L4fGKQO8wLu-REyU950bQv9Haob2YwTGXW},
+  urldate = {2022-11-14},
+  langid = {chinese}
+}
+
+@article{yang_2022_shuzihuazhuanxingyu,
+  title = {数字化转型与企业创新效率——来自中国制造业上市公司的经验证据},
+  author = {杨, 水利 and 陈, 娜 and 李, 雷},
+  date = {2022},
+  journaltitle = {运筹与管理},
+  volume = {31},
+  number = {05},
+  pages = {169--176},
+  issn = {1007-3221},
+  url = {https://kns.cnki.net/kcms/detail/detail.aspx?dbcode=CJFD&dbname=CJFDLAST2022&filename=YCGL202205026&uniplatform=NZKPT&v=ccQE4PJdQRdUIN6sE8epFL8Is9qqTE6AFoGhCXkksq0GAUbBxeEVR85msvelVmjw},
+  urldate = {2022-11-14},
+  langid = {chinese}
+}
