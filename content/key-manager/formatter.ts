@@ -1293,20 +1293,18 @@ class PatternFormatter {
     let words: string[] = Zotero.Utilities.XRegExp.matchChain(title, [this.re.word])
       .map((word: string) => word.replace(/-/g, ''))
       .filter((word: string) => word && !(options.skipWords && ucs2decode(word).length === 1 && !word.match(script.cjk)))
-    log.debug('titleWords: words=', words)
 
     // apply jieba.cut and flatten.
     if (Preference.jieba && options.skipWords && this.item.transliterateMode === 'chinese') {
       words = [].concat(...words.map((word: string) => jieba.cut(word)))
-      log.debug('titleWords: words after jieba =', words)
-      // remove native skipwords
+      // remove CJK skipwords
       words = words.filter((word: string) => !this.skipWords.has(word.toLowerCase()))
-      log.debug('titleWords: words after jieba skipWords=', words)
     }
 
     if (Preference.kuroshiro && kuroshiro.enabled && options.skipWords && this.item.transliterateMode === 'japanese') {
       words = [].concat(...words.map((word: string) => kuroshiro.tokenize(word)))
-      log.debug('titleWords: words after kuroshiro =', words)
+      // remove CJK skipwords
+      words = words.filter((word: string) => !this.skipWords.has(word.toLowerCase()))
     }
 
     if (options.transliterate) {
@@ -1324,7 +1322,6 @@ class PatternFormatter {
           return this.transliterate(word)
         }
       })
-      log.debug('titleWords: words after transliterate =', words)
 
     }
 
