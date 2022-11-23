@@ -1,4 +1,3 @@
-
 @incollection{higuchinippon2014,
   title = {日本型排外主義をめぐる問い},
   booktitle = {日本型排外主義: 在特会・外国人参政権・東アジア地政学},
@@ -8,7 +7,6 @@
   publisher = {{Nagoya Daigaku Shuppankai}},
   location = {{名古屋}},
   isbn = {978-4-8158-0763-4},
+  langid = {japanese},
   keywords = {Japan,Jinshu sabetsu,Right-wing extremists,Shakaiteki haijo}
 }
-
-

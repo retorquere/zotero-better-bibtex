@@ -132,8 +132,16 @@ function parseDate(v): PartialDate {
 }
 
 const script = {
-  // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-  han: new RegExp('([' + scripts.find((s: { name: string }) => s.name === 'Han').bmp + '])', 'g'), // eslint-disable-line  prefer-template
+  cjk: new RegExp('([' + scripts.map((s: { name: string, bmp: string }): string => { // eslint-disable-line @typescript-eslint/restrict-plus-operands, prefer-template
+    switch (s.name) {
+      case 'Katakana':
+      case 'Hiragana':
+      case 'Han':
+        return s.bmp
+      default:
+        return ''
+    }
+  }).join('') + '])', 'g'), // eslint-disable-line @typescript-eslint/restrict-plus-operands,prefer-template
 }
 
 type PartialDate = {
@@ -273,7 +281,6 @@ const unsafechars = /["#%'(),=\\{}~\s]/g
 class PatternFormatter {
   public chunk = ''
   public citekey = ''
-  public folding: boolean
 
   public generate: () => string
   public postfix = {
@@ -367,12 +374,11 @@ class PatternFormatter {
 
   public reset() {
     this.citekey = ''
-    this.folding = Preference.citekeyFold
     return ''
   }
 
   public finalize(_citekey: string) {
-    if (this.citekey && this.folding) this.citekey = this.transliterate(this.citekey)
+    if (this.citekey && Preference.citekeyFold) this.citekey = this.transliterate(this.citekey)
     this.citekey = this.citekey.replace(this.re.unsafechars, '')
     return this.citekey
   }
@@ -520,8 +526,7 @@ class PatternFormatter {
       authors = authors.slice(n[0] - 1, n[1])
       if (etal && !etal.replace(/[a-z]/ig, '').length) etal = `${sep}${etal}`
     }
-    let author = authors.join(sep) + etal
-    if (this.folding) author = this.clean(author, true)
+    const author = authors.join(sep) + etal
     return this.$text(author)
   }
 
@@ -543,8 +548,7 @@ class PatternFormatter {
    * @param creator   kind of creator to select, `*` selects `author` first, and if not present, `editor`, `translator` or `collaborator`, in that order.
    */
   public $authForeIni(creator: Creator = '*') {
-    let author: string = this.creators(creator, '%(I)s')[0] || ''
-    if (this.folding) author = this.clean(author, true)
+    const author: string = this.creators(creator, '%(I)s')[0] || ''
     return this.$text(author)
   }
 
@@ -554,8 +558,7 @@ class PatternFormatter {
    */
   public $authorLastForeIni(creator: Creator = '*') {
     const authors = this.creators(creator, '%(I)s')
-    let author = authors[authors.length - 1] || ''
-    if (this.folding) author = this.clean(author, true)
+    const author = authors[authors.length - 1] || ''
     return this.$text(author)
   }
 
@@ -566,8 +569,7 @@ class PatternFormatter {
    */
   public $authorLast(creator: Creator = '*', initials=false) {
     const authors = this.creators(creator, initials ? '%(f)s%(I)s' : '%(f)s')
-    let author = authors[authors.length - 1] || ''
-    if (this.folding) author = this.clean(author, true)
+    const author = authors[authors.length - 1] || ''
     return this.$text(author)
   }
 
@@ -599,7 +601,6 @@ class PatternFormatter {
         author = `${authors.slice(0, 3).map(auth => auth.substring(0, 1)).join(sep)}+`
         break
     }
-    if (this.folding) author = this.clean(author, true)
     return this.$text(author)
   }
 
@@ -613,8 +614,7 @@ class PatternFormatter {
   public $authIni(n=0, creator: Creator = '*', initials=false, sep='.') {
     const authors = this.creators(creator, initials ? '%(f)s%(I)s' : '%(f)s')
     if (!authors.length) return this.$text('')
-    let author = authors.map(auth => auth.substring(0, n)).join(sep)
-    if (this.folding) author = this.clean(author, true)
+    const author = authors.map(auth => auth.substring(0, n)).join(sep)
     return this.$text(author)
   }
 
@@ -630,8 +630,7 @@ class PatternFormatter {
     const firstAuthor = authors.shift()
 
     // eslint-disable-next-line no-magic-numbers
-    let author = [firstAuthor.substring(0, 5)].concat(authors.map(name => name.substring(0, 1)).join(sep)).join(sep)
-    if (this.folding) author = this.clean(author, true)
+    const author = [firstAuthor.substring(0, 5)].concat(authors.map(name => name.substring(0, 1)).join(sep)).join(sep)
     return this.$text(author)
   }
 
@@ -646,8 +645,7 @@ class PatternFormatter {
     if (!authors.length) return this.$text('')
 
     // eslint-disable-next-line no-magic-numbers
-    let author = authors.slice(0, 2).concat(authors.length > 2 ? ['ea'] : []).join(sep)
-    if (this.folding) author = this.clean(author, true)
+    const author = authors.slice(0, 2).concat(authors.length > 2 ? ['ea'] : []).join(sep)
     return this.$text(author)
   }
 
@@ -673,7 +671,6 @@ class PatternFormatter {
     else {
       author = authors.slice(0, 1).concat(authors.length > 1 ? ['EtAl'] : []).join(sep)
     }
-    if (this.folding) author = this.clean(author, true)
     return this.$text(author)
   }
 
@@ -695,7 +692,6 @@ class PatternFormatter {
     else {
       author = authors.slice(0, 1).concat(authors.length > 1 ? ['etal'] : []).join(sep)
     }
-    if (this.folding) author = this.clean(author, true)
     return this.$text(author)
   }
 
@@ -724,7 +720,6 @@ class PatternFormatter {
         // eslint-disable-next-line no-magic-numbers
         author = authors.slice(0, 3).map(auth => auth.substring(0, 1)).join(sep) + (authors.length > 3 ? '+' : '')
     }
-    if (this.folding) author = this.clean(author, true)
     return this.$text(author)
   }
 
@@ -848,18 +843,6 @@ class PatternFormatter {
   /** Capitalize all the significant words of the title, and concatenate them. For example, `An awesome paper on JabRef` will become `AnAwesomePaperJabref` */
   public $title() {
     return this.$text((this.titleWords(this.item.title, { skipWords: true }) || []).join(' '))
-  }
-
-  /** turn auto-cleaning on/off */
-  public $clean(enabled: boolean) {
-    this.folding = enabled
-    return this
-  }
-
-  /** turn auto-cleaning on/off */
-  public $fold(enabled: boolean) {
-    this.folding = enabled
-    return this
   }
 
   /**
@@ -1224,7 +1207,7 @@ class PatternFormatter {
 
   /** Treat ideaographs as individual words */
   public _splitIdeographs() {
-    return this.$text(this.chunk.replace(script.han, ' $1 ').trim())
+    return this.$text(this.chunk.replace(script.cjk, ' $1 ').trim())
   }
 
   /** word segmentation for Chinese items. Uses substantial memory; must be enabled under Preferences -> Better BibTeX -> Advanced -> Citekeys */
@@ -1276,7 +1259,7 @@ class PatternFormatter {
 
       case 'zh':
       case 'chinese':
-        if (Preference.kuroshiro && kuroshiro.enabled) str = pinyin(str)
+        str = pinyin(str)
         break
 
       case 'ja':
@@ -1306,17 +1289,49 @@ class PatternFormatter {
   private titleWords(title, options: { asciiOnly?: boolean, skipWords?: boolean} = {}): string[] {
     if (!title) return null
 
-    title = this.innerText(title)
-
-    if (this.folding && options.asciiOnly && Preference.kuroshiro && kuroshiro.enabled) title = kuroshiro.convert(title, {to: 'romaji', mode: 'spaced'})
-
     // 551
-    let words: string[] = (Zotero.Utilities.XRegExp.matchChain(title, [this.re.word])
-      .map((word: string) => (this.folding && options.asciiOnly ? this.clean(word) : word).replace(/-/g, '')))
-      .filter((word: string) => word)
+    let words: string[] = Zotero.Utilities.XRegExp.matchChain(title, [this.re.word])
+      .map((word: string) => word.replace(/-/g, ''))
+      .filter((word: string) => word && !(options.skipWords && ucs2decode(word).length === 1 && !word.match(script.cjk)))
+    log.debug('titleWords: words=', words)
 
-    if (options.skipWords) words = words.filter((word: string) => !this.skipWords.has(word.toLowerCase()) && (ucs2decode(word).length > 1) || word.match(script.han))
+    // apply jieba.cut and flatten.
+    if (Preference.jieba && options.skipWords && this.item.transliterateMode === 'chinese') {
+      words = [].concat(...words.map((word: string) => jieba.cut(word)))
+      log.debug('titleWords: words after jieba =', words)
+      // remove native skipwords
+      words = words.filter((word: string) => !this.skipWords.has(word.toLowerCase()))
+      log.debug('titleWords: words after jieba skipWords=', words)
+    }
+
+    if (Preference.kuroshiro && kuroshiro.enabled && options.skipWords && this.item.transliterateMode === 'japanese') {
+      words = [].concat(...words.map((word: string) => kuroshiro.tokenize(word)))
+      log.debug('titleWords: words after kuroshiro =', words)
+    }
+
+    if (options.asciiOnly) {
+      words = words.map((word: string) => {
+        if (this.item.transliterateMode) {
+          return this.transliterate(word)
+        }
+        else if (Preference.kuroshiro && kuroshiro.enabled) {
+          return this.transliterate(kuroshiro.convert(word, {to: 'romaji'}), 'minimal')
+        }
+        else if (Preference.jieba) {
+          return this.transliterate(pinyin(word), 'minimal')
+        }
+        else {
+          return this.transliterate(word)
+        }
+      })
+      log.debug('titleWords: words after asciiOnly =', words)
+
+      // remove transliterated skipwords
+      if (options.skipWords) words = words.filter((word: string) => !this.skipWords.has(word.toLowerCase()))
+    }
+
     if (words.length === 0) return null
+
     return words
   }
 

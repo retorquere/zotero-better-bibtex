@@ -6,7 +6,8 @@
       "exportNotes": true
     },
     "preferences": {
-      "citekeyFormat": "clean(false)+auth.lower+year",
+      "citekeyFormat": "auth.lower+year",
+      "citekeyFold": false,
       "kuroshiro": true
     }
   },

@@ -99,7 +99,7 @@ chunk
       return `type(${types.map(t => literal(t)).join(', ')})`
     }
   / '[language=' languages:$[a-zA-Z/]+ ']'            { // add language checking in parse phase
-      languages = languages.toLowerCase().split('/').map(language => language.trim())
+      languages = [...(new Set(languages.toLowerCase().split('/').map(language => language.trim())))]
       return `language(${languages.map(l => literal(l)).join(', ')})`
     }
   / '[>' min:$[0-9]+ ']'                 {
@@ -186,6 +186,9 @@ method
       }), input, error);
       const ignored = Object.keys(args)
       if (ignored.length) error(`Unused arguments ${ignored}`)
+
+      if (prefix.match(/^[a-z]/)) method += '.fold'
+
       return method
     }
   / operator:$([<>=] / [<>!] '=') n:$[0-9]+ {

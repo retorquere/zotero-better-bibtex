@@ -13,6 +13,7 @@ Feature: Export
 
     Examples:
       | file                                                                                                                     | references |
+      | Citation key is too long for Chines literature #2320                                                                     | 5          |
       | unable to put postfix in middle of citekey #2190                                                                         | 2          |
       | authEtal2(sep='&') + year =  & disappears #2252                                                                          | 1          |
       | Apply Title Casing to tex.subtitle entry on export #2213                                                                 | 1          |
@@ -659,14 +660,13 @@ Feature: Export
     And I export the library 50 times using "Better BibTeX"
     And I export the library 50 times using "Better BibLaTeX"
 
-# Scenario: error exporting Better BibLaTex this.preference.skipFields is undefined #2029
-# Given I restart Zotero
-# And I remove all items
-# When I import 2 references from "export/*.json"
-# Then an export using "Better BibLaTeX" should match "export/*.biblatex"
-# When I select the item with a field that contains "Collapse"
-# Then a quick-copy using "Better BibLaTeX" should match "export/*.biblatex"
-
+  # Scenario: error exporting Better BibLaTex this.preference.skipFields is undefined #2029
+  # Given I restart Zotero
+  # And I remove all items
+  # When I import 2 references from "export/*.json"
+  # Then an export using "Better BibLaTeX" should match "export/*.biblatex"
+  # When I select the item with a field that contains "Collapse"
+  # Then a quick-copy using "Better BibLaTeX" should match "export/*.biblatex"
   Scenario: `Error getCollections configure option not set` when exporting to citation graph #2319
     Given I import 2 references from "export/*.json"
     Then an export using "Citation graph" should match "export/*.dot"

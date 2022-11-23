@@ -60,12 +60,17 @@ export const kuroshiro = new class {
 
   public convert(str: string, options: any): string {
     if (!this.enabled) throw new Error('kuroshiro not initialized')
-    if (str && Kuroshiro.Util.hasJapanese(str)) return this.kuroshiro.convert(str, options)
+    if (this.hasJapanese(str)) return this.kuroshiro.convert(str, options)
     return str
   }
 
   public tokenize(str: string): string[] {
     if (!this.enabled) throw new Error('kuroshiro not initialized')
     return this.kuromoji.tokenize(str).map(c => c.surface_form)
+  }
+
+  public hasJapanese(str: string): boolean {
+    if (!this.enabled) throw new Error('kuroshiro not initialized')
+    return str && Kuroshiro.Util.hasJapanese(str)
   }
 }
