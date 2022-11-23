@@ -404,7 +404,7 @@ class PatternFormatter {
    * Set the current chunk
    */
   public $text(text: string) {
-    this.chunk = text
+    this.chunk = text || ''
     return this
   }
 
@@ -1126,7 +1126,7 @@ class PatternFormatter {
       }
     }
     */
-    const words = this.titleWords(this.item.title, { skipWords: true })
+    const words = this.titleWords(this.chunk, { skipWords: true })
     return this.$text(words ? words.join(' ') : '')
   }
 
