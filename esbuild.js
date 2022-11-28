@@ -144,6 +144,7 @@ async function bundle(config) {
     target: ['firefox60'],
     inject: [],
     treeShaking: true,
+    keepNames: true,
     ...config,
   }
 

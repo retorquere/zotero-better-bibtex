@@ -488,6 +488,8 @@ export function excelColumn(n: number): string {
 
 let parser: DOMParser
 export function getDOMParser(): DOMParser {
+  return (parser = parser || Components.classes['@mozilla.org/xmlextras/domparser;1'].createInstance(Components.interfaces.nsIDOMParser) as DOMParser)
+  /*
   if (!parser) {
     try {
       parser = new DOMParser
@@ -497,4 +499,5 @@ export function getDOMParser(): DOMParser {
     }
   }
   return parser
+  */
 }
