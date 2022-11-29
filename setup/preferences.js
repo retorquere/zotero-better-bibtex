@@ -65,7 +65,8 @@ class XUL {
 
       let val
       if (attr.val.match(/^"&.+;"$/) || attr.val.match(/^'&.+;'$/)) {
-        val = `tr[${JSON.stringify(attr.val.slice(2, -2))}]`
+        const key = JSON.stringify(attr.val.slice(2, -2))
+        val = `tr[${key}] || ${key}`
       }
       else {
         val = attr.val
@@ -101,7 +102,8 @@ class XUL {
     let js
     if (node.val.match(/^&.+;$/)) {
       if (root.startsWith('script')) throw new Error(root)
-      js = `doc.createTextNode(tr[${JSON.stringify(node.val.slice(1, -1))}])`
+      const key = JSON.stringify(node.val.slice(1, -1))
+      js = `doc.createTextNode(tr[${key}] || ${key})`
     } else if (root.startsWith('script')) {
       this.js += node.val
       return
