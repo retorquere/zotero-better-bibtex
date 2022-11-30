@@ -331,7 +331,7 @@ export function generateBibTeX(translation: Translation): void {
       switch (translation.preferences.bibtexURL) {
         case 'url':
         case 'url-ish':
-          urlfield = ref.add({ name: 'url', value: item.url || item.extraFields.kv.url, enc: translation.verbatimFields.includes('url') ? 'url' : 'latex' })
+          urlfield = ref.add({ name: 'url', value: item.url || item.extraFields.kv.url, enc: translation.isVerbatimField('url') ? 'url' : 'latex' })
           break
 
         case 'note':

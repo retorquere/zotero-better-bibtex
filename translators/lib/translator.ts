@@ -471,4 +471,8 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
       return undefined
     }
   }
+
+  isVerbatimField(field: string): boolean {
+    return !!this.verbatimFields.find(v => typeof v === 'string' ? v === field : field.match(v))
+  }
 }

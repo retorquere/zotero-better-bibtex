@@ -55,9 +55,10 @@ class XUL {
 
     node.var = `${name}${this.node[node.name]}`
 
-    this.js += this.indent(indent) + `const ${node.var} = doc.createElementNS('${namespace}', ${JSON.stringify(name)});\n`
+    this.js += this.indent(indent) + `const ${node.var} = ${root}.appendChild(doc.createElementNS('${namespace}', ${JSON.stringify(name)}));\n`
+
     for (const attr of node.attrs) {
-      if (attr.name.match(/^(xmlns|on(pane)?load)/)) continue
+      if (attr.name.match(/^(xmlns|on(pane)?load|insertafter|insertbefore)/)) continue
 
       var { namespace, name } = this.unpack(attr.name)
       if (namespace === this.ns.xul && name === 'onpaneload') continue
@@ -78,7 +79,6 @@ class XUL {
         this.js += this.indent(indent + 1) + `${node.var}.setAttributeNS('${namespace}', ${JSON.stringify(name)}, ${val});\n`
       }
     }
-    this.js += this.indent(indent) + `${root}.appendChild(${node.var});\n`
     this.Block(node.block, node.var, indent + 1)
   }
 

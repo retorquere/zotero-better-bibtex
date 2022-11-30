@@ -87,6 +87,8 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     let code: string
     // fetch from resource because that has the hash
     for (header of Object.keys(this.byName).map(name => JSON.parse(Zotero.File.getContentsFromURL(`resource://zotero-better-bibtex/${name}.json`)) as Translator.Header)) {
+      // workaround for mem limitations on Windows
+      if (typeof header.displayOptions?.worker === 'boolean') header.displayOptions.worker = !!Zotero.isWin
       if (code = await this.install(header)) reinit.push({ header, code })
     }
 
