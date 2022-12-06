@@ -9,6 +9,8 @@ const tgt = process.argv[3] || 'build/content/Preferences.xul'
 
 class XUL {
   start(ast) {
+    this.preference = null
+    this.preferences = {}
     this.ns = {
       xul: 'http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul',
       html: 'http://www.w3.org/1999/xhtml',
@@ -22,6 +24,18 @@ class XUL {
   
   generate(node, root, indent) {
     this[node.type](node, root, indent)
+  }
+
+  text(node) {
+    switch (node.type) {
+      case 'Block':
+        return node.nodes.map(n => this.text(n)).join('')
+      case 'Text':
+        return node.val
+      default:
+        console.log(node)
+        throw new Error(node.type)
+    }
   }
 
   unpack(nodename) {
@@ -51,14 +65,28 @@ class XUL {
     }
 
     var { namespace, name } = this.unpack(node.name)
-    if (namespace === this.ns.bbt && name === 'doc') return
+    if (namespace === this.ns.bbt && name === 'doc') {
+      this.preferences[this.preference] = this.text(node.block).trim()
+      return
+    }
+    if (namespace === this.ns.xul && name === 'preference') {
+      this.preference = JSON.parse(node.attrs.find(attr => attr.name === 'name').val).replace('extensions.zotero.translators.better-bibtex.', '')
+      this.preferences[this.preference] = {}
+    }
 
     node.var = `${name}${this.node[node.name]}`
 
+    this.js += this.indent(indent) + `${root}.appendChild(doc.createTextNode("\\n${this.indent(indent)}"));\n`
     this.js += this.indent(indent) + `const ${node.var} = ${root}.appendChild(doc.createElementNS('${namespace}', ${JSON.stringify(name)}));\n`
 
     for (const attr of node.attrs) {
       if (attr.name.match(/^(xmlns|on(pane)?load|insertafter|insertbefore)/)) continue
+
+      if (attr.name === 'class') {
+        if (!attr.val.match(/^'[^']+'$/)) throw new Error(attr.val)
+        this.js += this.indent(indent + 1) + `${node.var}.classList.add(${JSON.stringify(attr.val.slice(1, -1))});\n`
+        continue
+      }
 
       var { namespace, name } = this.unpack(attr.name)
       if (namespace === this.ns.xul && name === 'onpaneload') continue
@@ -128,6 +156,7 @@ options.plugins = [{
 
 pug.renderFile('content/Preferences/prefpane.pug', options)
 fs.writeFileSync('gen/preferences/xul.js', generator.js)
+fs.writeFileSync('gen/preferences/doc.js', JSON.stringify(generator.preferences, null, 2))
 
 const xul = pug.renderFile(src, options)
 const build = path.dirname(tgt)

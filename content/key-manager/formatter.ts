@@ -17,7 +17,7 @@ import { babelLanguage } from '../text'
 import { fetchSync as fetchInspireHEP } from '../inspire-hep'
 
 const legacyparser = require('./legacy.peggy')
-import * as formula from './convert'
+import * as Formula from './convert'
 import * as DateParser from '../dateparser'
 
 import { methods } from '../../gen/api/key-formatter'
@@ -316,54 +316,74 @@ class PatternFormatter {
   private skipWords: Set<string>
 
   // private fold: boolean
-  private citekeyFormat: string
-
   public update(reason: string) {
     log.debug('update key formula:', reason)
     this.skipWords = new Set(Preference.skipWords.split(',').map((word: string) => word.trim()).filter((word: string) => word))
 
-    // safeguard agains Zotero late-loading preference defaults
-    // the zero-width-space is a marker to re-save the current default so it doesn't get replaced when the default changes later, which would change new keys suddenly
-    if (!Preference.citekeyFormat || Preference.citekeyFormat.includes('\u200B')) Preference.citekeyFormat = Preference.default.citekeyFormat.replace(/^\u200B/, '')
-    if (Preference.citekeyFormat.startsWith('[')) {
-      try {
-        Preference.citekeyFormat = legacyparser.parse(Preference.citekeyFormat, { sprintf, items, methods }) as string
-        flash('Citation pattern upgraded', `Citation pattern upgraded to ${Preference.citekeyFormat}`)
+    for (const ck of ['citekeyFormat', 'citekeyFormatBackup']) {
+      if (Preference[ck].startsWith('[')) {
+        try {
+          Preference[ck] = legacyparser.parse(Preference[ck], { sprintf, items, methods }) as string
+          flash('Citation pattern upgraded', `Citation pattern upgraded to ${Preference.citekeyFormat}`)
+        }
+        catch (err) {
+          Preference[ck] = ''
+          log.debug('Upgrading citation pattern failed', err)
+        }
       }
-      catch (err) {
-        log.debug('Upgrading citation pattern failed', err)
-      }
+
+      // safeguard agains Zotero late-loading preference defaults
+      // the zero-width-space is a marker to re-save the current default so it doesn't get replaced when the default changes later, which would change new keys suddenly
+      if (!Preference[ck] || Preference[ck].includes('\u200B')) Preference[ck] = Preference.default.citekeyFormat.replace(/^\u200B/, '')
     }
 
-    for (const attempt of ['get', 'reset']) {
+    let formula: string
+
+    for (const attempt of ['verify', 'restore', 'reset']) {
       switch (attempt) {
-        case 'get':
-          this.citekeyFormat = Preference.citekeyFormat
+        case 'verify':
+          formula = Preference.citekeyFormat
+          break
+
+        case 'restore':
+          // eslint-disable-next-line no-magic-numbers
+          flash('Malformed citation pattern', 'retrying backup', 20)
+          formula = Preference.citekeyFormatBackup
+          Preference.citekeyFormatBackup = Preference.citekeyFormat
           break
 
         case 'reset':
           // eslint-disable-next-line no-magic-numbers
           flash('Malformed citation pattern', 'resetting to default', 20)
-          Preference.citekeyFormatBackup = Preference.citekeyFormat.replace(/^\u200B/, '')
-          this.citekeyFormat = Preference.citekeyFormat = Preference.default.citekeyFormat.replace(/^\u200B/, '')
+          formula = Preference.default.citekeyFormat.replace(/^\u200B/, '')
           break
       }
 
       try {
         this.$postfix()
-        const formatter = this.parsePattern(this.citekeyFormat)
+        const formatter = this.parsePattern(formula)
         this.generate = (new Function(formatter) as () => string)
         log.debug('PatternFormatter.update: installing generate ', {generate: this.generate.toString()})
+        switch (attempt) {
+          case 'verify':
+            Preference.citekeyFormatBackup = Preference.citekeyFormat
+            break
+          case 'restore':
+          case 'reset':
+            Preference.citekeyFormat = formula
+            break
+        }
+
         break
       }
       catch (err) {
-        log.error('PatternFormatter.update: Error parsing citekeyFormat ', {pattern: this.citekeyFormat}, err, err.location)
+        log.error('PatternFormatter.update: Error parsing citekeyFormat ', {formula}, err, err.location)
       }
     }
   }
 
   public parsePattern(pattern): string {
-    const code = formula.convert(pattern)
+    const code = Formula.convert(pattern)
     if (Preference.testing) log.debug('parsePattern.compiled:', code)
     return code
   }
