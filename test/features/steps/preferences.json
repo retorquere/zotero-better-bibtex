@@ -92,7 +92,8 @@
     "type": "number",
     "default": 5,
     "affects": [],
-    "var": "autoExportDelay"
+    "var": "autoExportDelay",
+    "label": "Delay auto-export for"
   },
   {
     "name": "autoExportIdleWait",
@@ -127,7 +128,8 @@
     "type": "number",
     "default": 0,
     "affects": [],
-    "var": "autoPinDelay"
+    "var": "autoPinDelay",
+    "label": "Automatically pin citation key after"
   },
   {
     "name": "automaticTags",
@@ -274,7 +276,7 @@
     "default": "\u200bauth.lower + shorttitle(3,3) + year",
     "affects": [],
     "var": "citekeyFormat",
-    "label": "Citation key format"
+    "label": "Citation key formula"
   },
   {
     "name": "citekeyFormatBackup",

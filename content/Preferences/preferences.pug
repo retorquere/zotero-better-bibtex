@@ -195,7 +195,7 @@ bbt:doc.
   * `tex`: import and mark as TeX code, so on re-export it will be output as-is
   * `text`: import without marking it as TeX code, so on re-export it will be treated as regular text
 
-preference(name="extensions.zotero.translators.better-bibtex.autoExportDelay" bbt:affects="" type="int" default="5")
+preference#pref-better-bibtex-autoExportDelay(name="extensions.zotero.translators.better-bibtex.autoExportDelay" bbt:affects="" type="int" default="5")
 bbt:doc.
   If you have auto-exports set up, BBT will wait this many seconds before actually kicking off the exports to buffer multiple changes in quick succession
   setting off an unreasonable number of auto-exports. Minimum is 1 second. Changes to this preference take effect after restarting Zotero.
@@ -212,7 +212,7 @@ bbt:doc.
   retrieves those same items, Zotero complains they "haven't been saved yet". Super. This preference sets
   the number of microseconds BBT should wait after being notified before acting on the changed items.
 
-preference(name="extensions.zotero.translators.better-bibtex.autoPinDelay" bbt:affects="" type="int" default="0")
+preference#pref-better-bibtex-autoPinDelay(name="extensions.zotero.translators.better-bibtex.autoPinDelay" bbt:affects="" type="int" default="0")
 bbt:doc When > 0, BBT will automatically pin the first citation keys it generates for an item after this many seconds.
 
 preference(name="extensions.zotero.translators.better-bibtex.parseParticles" bbt:affects="*" type="bool" default="true")

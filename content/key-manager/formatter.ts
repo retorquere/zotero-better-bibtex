@@ -337,6 +337,8 @@ class PatternFormatter {
       if (!Preference[ck] || Preference[ck].includes('\u200B')) Preference[ck] = Preference.default.citekeyFormat.replace(/^\u200B/, '')
     }
 
+    if (Preference.citekeyFormatBackup === Preference.citekeyFormat) Preference.citekeyFormatBackup = ''
+
     let formula: string
 
     for (const attempt of ['verify', 'restore', 'reset']) {
@@ -346,6 +348,7 @@ class PatternFormatter {
           break
 
         case 'restore':
+          if (!Preference.citekeyFormatBackup || Preference.citekeyFormatBackup === Preference.citekeyFormat) continue
           // eslint-disable-next-line no-magic-numbers
           flash('Malformed citation pattern', 'retrying backup', 20)
           formula = Preference.citekeyFormatBackup

@@ -262,6 +262,9 @@ class Preferences:
       elif pref := node.get('preference'):
         doc.pages[doc.current].content += self.pref(self.preferences[pref], level + 2)
 
+      elif node.tag == f'{xul}textbox' and node.get('id') == 'id-better-bibtex-preferences-citekeyFormat':
+        doc.pages[doc.current].content += self.pref(self.preferences['pref-better-bibtex-citekeyFormat'], level + 2)
+
       for child in node:
         walk(child, (level or 0) + levelup)
 

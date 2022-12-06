@@ -18,23 +18,11 @@ default: `<not set>`
 
 If you have unicode turned on you can still selectively replace some characters to plain-text commands; any characters entered here will always be replaced by their LaTeX-command counterparts.
 
-## autoExportDelay
-
-default: `5`
-
-If you have auto-exports set up, BBT will wait this many seconds before actually kicking off the exports to buffer multiple changes in quick succession setting off an unreasonable number of auto-exports. Minimum is 1 second. Changes to this preference take effect after restarting Zotero.
-
 ## autoExportIdleWait
 
 default: `10`
 
 Number of seconds to wait after your system goes idle before kicking off auto-exports.
-
-## autoPinDelay
-
-default: `0`
-
-When > 0, BBT will automatically pin the first citation keys it generates for an item after this many seconds.
 
 ## biblatexExtendedDateFormat
 
@@ -219,9 +207,3 @@ Both Zotero and BBT expect titles to be in sentence-case, but a lot of sites off
 default: `<not set>`
 
 Select the style for auto-abbreviation. Only applicable to Juris-M; in Zotero, the style for automatic abbreviation is not configurable.
-
-## Citation key format
-
-default: `​auth.lower + shorttitle(3,3) + year`
-
-Set the pattern used to generate citation keys. The format of the keys is documented [here]({{ ref . "citing" }}).
