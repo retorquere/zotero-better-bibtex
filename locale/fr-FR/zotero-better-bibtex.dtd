@@ -1,3 +1,5 @@
+<!ENTITY better-bibtex.seconds "seconds">
+
 <!ENTITY better-bibtex.FirstRun.title "Bienvenue dans Better BibTex pour Zotero">
 <!ENTITY better-bibtex.FirstRun.welcome "Better BibTex pour Zotero (ou BBT) ajoute à Zotero une compatibilité étendue avec LaTeX ou Markdown. BBT est totalement configurable -- rendez-vous dans les préférences si vous êtes curieux -- mais nous allons commencer avec quelques choix simples.">
 
@@ -56,6 +58,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.auto-export.idle "à la mise en veille">
 <!ENTITY better-bibtex.Preferences.auto-export.immediate "au changement">
 <!ENTITY better-bibtex.Preferences.auto-export.off "désactivée">
+<!ENTITY better-bibtex.Preferences.auto-export.delay "Delay auto-export for">
 <!ENTITY better-bibtex.Preferences.auto-export.run "Exporter maintenant">
 <!ENTITY better-bibtex.Preferences.auto-export.remove "Supprimer">
 <!ENTITY better-bibtex.Preferences.auto-export.collection "Collection">
@@ -76,9 +79,10 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.citekey.citekeys "Clés de citation">
 <!ENTITY better-bibtex.Preferences.citekey.fold "Forcer le formatage des clés de citation en texte brut">
 <!ENTITY better-bibtex.Preferences.citekey.search "Activer la recherche par clé de citation">
-<!ENTITY better-bibtex.Preferences.citekey.format "Format de clé">
+<!ENTITY better-bibtex.Preferences.citekey.format "Citation key formula">
 <!ENTITY better-bibtex.Preferences.citekey.format.new "Nouveau format de clé de citation">
 <!ENTITY better-bibtex.Preferences.citekey.format.backup "Format de clé de citation précédent avec erreur">
+<!ENTITY better-bibtex.Preferences.citekey.autoPinDelay "Automatically pin citation key after">
 
 <!ENTITY better-bibtex.Preferences.export.quickCopy "Copie rapide">
 <!ENTITY better-bibtex.Preferences.export.quickCopy.explanation "Copie rapide/glissé-déposé des citations">
