@@ -63,6 +63,7 @@ parser.add_argument('--jurism', dest='client', action='store_const', const='juri
 parser.add_argument('--client', dest='client', default=os.environ.get('CLIENT', 'zotero'))
 parser.add_argument('--log-memory-every', dest='log_memory_every', type=int)
 parser.add_argument('--beta', action='store_true', default=('#beta' in CI.message))
+parser.add_argument('--dev', action='store_true', default=('#dev' in CI.message))
 parser.add_argument('--keep', '--no-keep', dest='keep', action=BooleanAction, default=False)
 parser.add_argument('--worker', '--no-worker', dest='worker', action=BooleanAction, default=False)
 parser.add_argument('--caching', '--no-caching', dest='caching', action=BooleanAction, default=True)
@@ -102,6 +103,13 @@ if not CI.service : # local run
 if args.client.endswith('-beta'):
   args.client = args.client.split('-')[0]
   args.beta = True
+elif args.client.endswith('-dev'):
+  args.client = args.client.split('-')[0]
+  args.dev = True
+
+if args.dev and args.beta:
+  print('cannot test beta + dev')
+  sys.exit(1)
 
 if args.this or args.test_this:
   repo = Repository('.')
@@ -110,11 +118,11 @@ if args.this or args.test_this:
   if args.this: args.this = branch.replace('gh-', '@')
   if args.test_this: args.test = branch.replace('gh-', '')
 
-if args.test or args.this or args.nightly or args.tagged or args.beta: args.slow = True
+if args.test or args.this or args.nightly or args.tagged or args.beta or args.dev: args.slow = True
 
-if args.client == 'jurism' and args.beta:
-  print(f"********* SKIPPING{' BETA' if args.beta else ''} BUILD FOR {args.client.upper()} UNTIL FURTHER NOTICE ****************")
-  sys.exit()
+if args.client == 'jurism':
+  print(f"********* JURISM NO LONGER SUPPORTED ***********")
+  sys.exit(1)
 
 sys.argv.extend(['--define', f"client={args.client}"])
 sys.argv.extend(['--define', f'worker={str(args.worker).lower()}'])
@@ -124,7 +132,10 @@ if args.bins: sys.argv.extend(['--define', f"bins={args.bins}"])
 sys.argv.extend(['--define', f'kill={str(not args.keep).lower()}'])
 if args.stop: sys.argv.append('--stop')
 if args.slow: sys.argv.extend(['--define', 'slow=true'])
+
 if args.beta: sys.argv.extend(['--define', 'beta=true'])
+elif args.dev: sys.argv.extend(['--define', 'dev=true'])
+
 if args.test: sys.argv.extend(['--define', f'test={args.test}'])
 if args.durations: sys.argv.extend(['--define', f'durations={args.durations}'])
 if args.this: sys.argv.extend(['--tags', args.this ])
