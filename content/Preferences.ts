@@ -461,8 +461,8 @@ export class PrefPane {
 
     this.observer = new MutationObserver(this.mutated.bind(this))
     this.observed = this.globals.document.getElementById('zotero-prefpane-export')
-    this.observer.observe(this.observed, { childList: true, subtree: true })
-    // this.prefwindow = this.globals.document.getElementsByTagName('prefwindow')[0]
+    if (this.observed) this.observer.observe(this.observed, { childList: true, subtree: true })
+    const prefwindow = this.globals.document.getElementsByTagName('prefwindow')[0]
 
     const deck = this.globals.document.getElementById('better-bibtex-prefs-deck')
     deck.selectedIndex = 0
@@ -476,25 +476,21 @@ export class PrefPane {
 
     deck.selectedIndex = 1
 
-    if (typeof this.globals.Zotero_Preferences === 'undefined') {
-      log.error('Preferences.load: Zotero_Preferences not ready')
-      return
+    if (typeof this.globals.Zotero_Preferences !== 'undefined') {
+      const tabbox = this.globals.document.getElementById('better-bibtex-prefs-tabbox')
+      $patch$(this.globals.Zotero_Preferences, 'openHelpLink', original => function() {
+        if (prefwindow.currentPane.helpTopic === 'BetterBibTeX') {
+          const id = tabbox.selectedPanel.id
+          if (id) this.openURL(`https://retorque.re/zotero-better-bibtex/configuration/#${id.replace('better-bibtex-prefs-', '')}`)
+        }
+        else {
+          // eslint-disable-next-line prefer-rest-params
+          original.apply(this, arguments)
+        }
+      })
     }
 
     this.autoexport.load()
-
-    const tabbox = this.globals.document.getElementById('better-bibtex-prefs-tabbox')
-    $patch$(this.globals.Zotero_Preferences, 'openHelpLink', original => function() {
-      if (this.prefwindow.currentPane.helpTopic === 'BetterBibTeX') {
-        const id = tabbox.selectedPanel.id
-        if (id) this.openURL(`https://retorque.re/zotero-better-bibtex/configuration/#${id.replace('better-bibtex-prefs-', '')}`)
-      }
-      else {
-        // eslint-disable-next-line prefer-rest-params
-        original.apply(this, arguments)
-      }
-    })
-
     this.getCitekeyFormat()
 
     if (this.globals.document.location.hash === '#better-bibtex') {
@@ -510,17 +506,6 @@ export class PrefPane {
     this.timer = typeof this.timer === 'number' ? this.timer : this.globals.window.setInterval(this.refresh.bind(this), 500)  // eslint-disable-line no-magic-numbers
   }
 
-  /*
-  private unpx(size: string | number): number {
-    if (typeof size === 'number') return size
-    const px = parseInt(size.replace(/px$/, ''))
-    return isNaN(px) ? 0 : px
-  }
-  private isVisible(el) {
-    const rect = el.getBoundingClientRect()
-    return (rect.top >= 0) && (rect.bottom <= this.globals.window.innerHeight)
-  }
-  */
   private resize() {
     // https://stackoverflow.com/questions/4707712/prefwindow-sizing-itself-to-the-wrong-tab-when-browser-preferences-animatefade
     Zotero.Prefs.set('browser.preferences.animateFadeIn', false, true)
@@ -531,31 +516,6 @@ export class PrefPane {
     tabbox.height = tabbox.boxObject.height
     tabbox.width = tabbox.boxObject.width
     this.globals.window.sizeToContent()
-
-    /*
-    const prefpane: HTMLElement = (this.prefwindow as any).currentPane
-
-    log.debug('prefpane', prefpane.id, 'height:', prefpane.getBoundingClientRect().height, 'parent:', prefpane.parentElement.tagName)
-    let height = 0
-    for (const child of [...prefpane.children]) {
-      const bbox = child.getBoundingClientRect()
-      const style = this.globals.window.getComputedStyle(child)
-
-      log.debug('  child:', child.tagName, 'height:', this.unpx(bbox.height) + this.unpx(style.marginTop) + this.unpx(style.marginBottom))
-      height += this.unpx(bbox.height) + this.unpx(style.marginTop) + this.unpx(style.marginBottom)
-    }
-
-    this.prefwindow.style.height = `${height}px`
-    log.debug('prefpane', prefpane.id, 'reset to', height, 'actual:', prefpane.getBoundingClientRect().height)
-
-    // this.globals.window.sizeToContent()
-
-    const step = 20
-    do {
-      height += step // eslint-disable-line no-magic-numbers
-      this.prefwindow.style.height = `${height}px`
-    } while (!this.isVisible(prefpane))
-    */
   }
 
   private unload() {

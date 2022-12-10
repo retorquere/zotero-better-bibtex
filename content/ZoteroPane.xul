@@ -19,6 +19,7 @@
 
   <menupopup id="menu_ToolsPopup">
     <menuitem label="&better-bibtex.BetterBibTeX.auxScanner;" oncommand="Zotero.BetterBibTeX.scanAUX('tag')"/>
+    <menuitem label="Better BibTeX" oncommand="Components.classes['@mozilla.org/embedcomp/window-watcher;1'].getService(Components.interfaces.nsIWindowWatcher).openWindow(null, 'chrome://zotero-better-bibtex/content/PreferencesWindow.xul', 'better-bibtex-preferences', 'chrome,centerscreen,modal', { wrappedJSObject: {} })"/>
   </menupopup>
   <menupopup id="menu_HelpPopup">
     <menuitem insertafter="reportErrors" label="&better-bibtex.BetterBibTeX.reportErrors;" oncommand="Zotero.BetterBibTeX.ZoteroPane.errorReport()"/>

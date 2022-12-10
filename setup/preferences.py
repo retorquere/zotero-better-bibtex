@@ -16,6 +16,7 @@ from types import SimpleNamespace
 import subprocess
 from pathlib import Path
 
+subprocess.check_output(['node', 'setup/preferences.js', 'content/Preferences/prefwindow.pug', 'build/content/PreferencesWindow.xul'])
 subprocess.check_output(['node', 'setup/preferences.js', 'content/Preferences.pug', 'build/content/Preferences.xul'])
 
 root = os.path.join(os.path.dirname(__file__), '..')
