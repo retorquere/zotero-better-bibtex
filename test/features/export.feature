@@ -177,6 +177,7 @@ Feature: Export
 
     Examples:
       | file                                                                                                               | references |
+      | accented character in 'journal' field is not brace protected by bibtex export #2337                                | 1          |
       | Non-breakable spaces in author fields should be exported as tilde #1430                                            | 1          |
       | University is exported as publisher as soon as tex.referencetype is specified in Extra field #1965                 | 1          |
       | fetch inspire-hep key #1879                                                                                        | 1          |
