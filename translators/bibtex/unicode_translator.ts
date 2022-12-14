@@ -59,7 +59,7 @@ export class HTMLConverter {
     if (this.translation.unicode) {
       mapping = unicode2latex.unicode
     }
-    else if (creator && this.translation.BetterBibTeX) {
+    else if (this.translation.preferences.mapUnicode === 'creator' || (creator && this.translation.BetterBibTeX)) {
       /* https://github.com/retorquere/zotero-better-bibtex/issues/1189
         Needed so that composite characters are counted as single characters
         for in-text citation generation. This messes with the {} cleanup
@@ -95,7 +95,6 @@ export class HTMLConverter {
           }
         }
       }
-
     }
     else if (this.translation.preferences.mapUnicode === 'minimal-packages') {
       // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
@@ -111,7 +110,6 @@ export class HTMLConverter {
           }
         }
       }
-
     }
     else {
       const remove = switchMode[this.translation.preferences.mapUnicode]

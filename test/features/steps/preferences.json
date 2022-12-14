@@ -571,7 +571,8 @@
       "minimal-packages": "Minimize additional latex packages required",
       "conservative": "Minimize the number of switches between math-mode and text-mode",
       "text": "Prefer text-mode replacements",
-      "math": "Prefer math-mode replacements"
+      "math": "Prefer math-mode replacements",
+      "creator": "Add braces to accented characters to assist simple latex parsers"
     }
   },
   {

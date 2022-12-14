@@ -206,6 +206,7 @@ Options:
 * Minimize the number of switches between math-mode and text-mode
 * Prefer text-mode replacements
 * Prefer math-mode replacements
+* Add braces to accented characters to assist simple latex parsers
 
 ### Apply title-casing to titles
 
