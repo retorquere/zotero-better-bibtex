@@ -103,6 +103,7 @@ export const Serializer = new class { // eslint-disable-line @typescript-eslint/
         serialized.citationKey = Zotero.BetterBibTeX.KeyManager.get(item.id).citekey;
         (serialized as any).citekey = serialized.citationKey // legacy
         if (!serialized.journalAbbreviation && Preference.autoAbbrev) serialized.autoJournalAbbreviation = JournalAbbrev.get(serialized)
+        if (!serialized.autoJournalAbbreviation) delete serialized.autoJournalAbbreviation
         break
     }
 
