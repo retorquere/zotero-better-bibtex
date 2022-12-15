@@ -1,0 +1,41 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "baseAttachmentPath": "C:\\Users\\emarc\\OneDrive\\Documents\\Mendeley",
+      "citekeyFormat": "auth.capitalize+year",
+      "keyScope": "global",
+      "skipFields": "file, abstract",
+      "mapUnicode": "creator",
+      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc,groups"
+    }
+  },
+  "items": [
+    {
+      "citationKey": "Tsallis1994",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Constantino",
+          "lastName": "Tsallis"
+        }
+      ],
+      "date": "1994",
+      "extra": [
+        "Citation Key: Tsallis1994"
+      ],
+      "issue": "6",
+      "itemID": 1,
+      "itemType": "journalArticle",
+      "pages": "468\u2013471",
+      "publicationTitle": "Qu\u00edmica Nova",
+      "title": "What are the numbers that experiments provide?",
+      "url": "http://quimicanova.sbq.org.br/detalhe_artigo.asp?id=5517",
+      "volume": "17"
+    }
+  ]
+}
