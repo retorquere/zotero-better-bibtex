@@ -2,7 +2,7 @@ name: 'Manage issues and nag about debug logs'
 
 on:
   issues:
-    types: [opened, edited, closed]
+    types: [opened, edited, closed, reopened]
   issue_comment:
     types: [created, edited, closed]
 
