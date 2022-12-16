@@ -54,7 +54,7 @@ class Tests:
     data = Munch(
       weights = [test.seconds for test in tests],
       tests = list(range(len(tests))),
-      bins = list(range(max(len(tests), 1))),
+      bins = list(range(len(tests))),
       bin_capacity = math.ceil(max([test.seconds for test in tests] + [ args.minutes * 60 ]))
     )
     print('Total test time:', str(datetime.timedelta(seconds=sum(data.weights))))
@@ -115,7 +115,7 @@ class Tests:
 Tests = Tests()
 Tests.load(args.durations)
 Tests.balance()
-publish('test_bins', json.dumps(list(range(len(Tests.bins)))))
+publish('test_bins', json.dumps(list(range(max(len(Tests.bins), 1)))))
 
 clients = ['zotero', 'jurism']
 if args.beta:
