@@ -116,6 +116,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.citekey.AUXScanner "BibTeX AUX/Markdown scanner">
 <!ENTITY better-bibtex.Preferences.citekey.AUXScanner.import "When scanning an AUX file, attempt to import entries from the attached bib file when their citation keys are not in Zotero">
 <!ENTITY better-bibtex.Preferences.importPrefs "Import BetterBibTeX preferences...">
+<!ENTITY better-bibtex.Preferences.exportPrefs "Export BetterBibTeX preferences...">
 
 <!ENTITY better-bibtex.Preferences.advanced "Avançado">
 <!ENTITY better-bibtex.Preferences.advanced.warning "Estas opções afetam o desempenho e podem causar falhas na exportação. Seja cuidadoso.">
