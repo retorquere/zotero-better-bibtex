@@ -320,7 +320,7 @@ export class PrefPane {
         if (typeof value === 'undefined' || typeof value !== typeof preferenceDefaults[pref]) {
           flash(`Invalid ${typeof value} value for ${pref}, expected ${preferenceDefaults[pref]}`)
         }
-        else {
+        else if (Preference[pref] !== value) {
           Preference[pref] = value
           flash(`${pref} set to ${JSON.stringify(pref)}`)
         }
