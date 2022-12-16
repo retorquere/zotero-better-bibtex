@@ -226,7 +226,7 @@ jobs:
           if (process.env.XPI_RELEASED) {
             github.rest.issues.addLabels({
               issue_number: parseInt(process.env.XPI_RELEASED),
-              owner: 'retorquere'
+              owner: 'retorquere',
               repo: 'zotero-better-bibtex',
               labels: ['awaiting-user-feedback'],
             })
