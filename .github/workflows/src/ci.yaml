@@ -232,4 +232,8 @@ jobs:
     - name: rebalance tests
       run: ./util/merge-durations.py -o $DURATIONS `ls logs/stats/durations-zotero-*--no-worker.json | grep -v beta`
     - name: Store build stats
-      run: gh release upload builds logs/stats/*.json --clobber --repo ${{ github.repository }}
+      run: |
+        for asset in `gh release view builds --json assets --jq '.assets[].name' | grep ^durations`; do
+          gh release delete-asset builds $asset -y
+        done
+        gh release upload builds logs/stats/*.json --clobber --repo ${{ github.repository }}
