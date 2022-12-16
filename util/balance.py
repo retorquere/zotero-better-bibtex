@@ -38,7 +38,10 @@ class Tests:
 
   def load(self, timings):
     with open(timings) as f:
-      tests = json.load(f, object_hook=Munch.fromDict)
+      try:
+        tests = json.load(f, object_hook=Munch.fromDict)
+      except json.decoder.JSONDecodeError:
+        tests = {}
       for name, test in tests.items():
         test.name = name
       self.tests = tests.values()
