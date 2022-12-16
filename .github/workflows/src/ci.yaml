@@ -232,10 +232,4 @@ jobs:
     - name: rebalance tests
       run: ./util/merge-durations.py -o $DURATIONS `ls logs/stats/durations-zotero-*--no-worker.json | grep -v beta`
     - name: Store build stats
-      uses: svenstaro/upload-release-action@v2
-      with:
-        repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: logs/stats/*.json
-        tag: builds
-        overwrite: true
-        file_glob: true
+      run: gh release upload builds logs/stats/*.json --clobber --repo ${{ github.repository }}
