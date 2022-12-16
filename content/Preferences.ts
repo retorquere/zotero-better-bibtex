@@ -287,6 +287,12 @@ export class PrefPane {
   private globals: Record<string, any>
   // private prefwindow: HTMLElement
 
+  public async exportPrefs(): Promise<void> {
+    const file = await pick(Zotero.getString('fileInterface.export'), 'save', [['BBT JSON file', '*.json']])
+    if (!file) return
+    Zotero.File.putContents(Zotero.File.pathToFile(file), JSON.stringify({ config: { preferences: Preference.all } }, null, 2))
+  }
+
   public async importPrefs(): Promise<void> {
     const preferences: { path: string, contents?: string, parsed?: any } = {
       path: await pick(Zotero.getString('fileInterface.import'), 'open', [['BBT JSON file', '*.json']]),
@@ -322,7 +328,7 @@ export class PrefPane {
         }
         else if (Preference[pref] !== value) {
           Preference[pref] = value
-          flash(`${pref} set to ${JSON.stringify(pref)}`)
+          flash(`${pref} set`, `${pref} set to ${JSON.stringify(value)}`)
         }
       }
     }
