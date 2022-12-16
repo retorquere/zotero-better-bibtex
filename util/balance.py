@@ -54,7 +54,7 @@ class Tests:
     data = Munch(
       weights = [test.seconds for test in tests],
       tests = list(range(len(tests))),
-      bins = list(range(len(tests))),
+      bins = list(range(max(len(tests), 1))),
       bin_capacity = math.ceil(max([test.seconds for test in tests] + [ args.minutes * 60 ]))
     )
     print('Total test time:', str(datetime.timedelta(seconds=sum(data.weights))))
