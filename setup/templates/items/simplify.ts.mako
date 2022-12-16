@@ -33,12 +33,12 @@ function unalias(item: any, { scrub = true }: { scrub?: boolean } = {}): void {
 }
 
 // import & export translators expect different creator formats... nice
-export function simplifyForExport(item: any, { dropAttachments=false, scrub=true }: { dropAttachments?: boolean, scrub?: boolean } = {}): Item {
+export function simplifyForExport(item: any, { creators=true, dropAttachments=false, scrub=true }: { creators?: boolean, dropAttachments?: boolean, scrub?: boolean } = {}): Item {
   unalias(item, { scrub })
 
   if (item.filingDate) item.filingDate = item.filingDate.replace(/^0000-00-00 /, '')
 
-  if (item.creators) {
+  if (creators && item.creators) {
     for (const creator of item.creators) {
       if (creator.fieldMode) {
         creator.name = creator.name || creator.lastName
