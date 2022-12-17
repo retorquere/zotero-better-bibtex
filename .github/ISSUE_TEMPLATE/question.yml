@@ -1,0 +1,18 @@
+name: Question about use
+description: You have a question about how to use BBT that does not require a change to BBT
+title: "[Question]: "
+labels: ["question"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this form if you want help using BBT when you are pretty suer you don't need a change to BBT.
+  - type: textarea
+    id: request
+    attributes:
+      label: What happened?
+      description: What did you expect to happen?
+      placeholder: Tell us what you see!
+      value: ""
+    validations:
+      required: true
