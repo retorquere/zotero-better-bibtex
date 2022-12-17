@@ -1,5 +1,5 @@
 blank_issues_enabled: false
-#contact_links:
-#  - name: Questions on use
-#    url: https://github.com/retorquere/zotero-better-bibtex/discussions
-#    about: Please ask and answer questions here about things that are not bug reports or feature requests.
+contact_links:
+  - name: Questions on use
+    url: https://github.com/retorquere/zotero-better-bibtex/discussions
+    about: Please ask and answer questions here about things that are not bug reports or feature requests.
