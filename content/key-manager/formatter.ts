@@ -1232,6 +1232,10 @@ class PatternFormatter {
   public _splitIdeographs() {
     return this.$text(this.chunk.replace(script.cjk, ' $1 ').trim())
   }
+  /** Treat ideaographs as individual words */
+  public _ideographs() {
+    return this.$text(this.chunk.replace(script.cjk, ' $1 ').trim())
+  }
 
   /** word segmentation for Chinese items. Uses substantial memory; must be enabled under Preferences -> Better BibTeX -> Advanced -> Citekeys */
   public _jieba() {
