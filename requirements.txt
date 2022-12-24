@@ -38,3 +38,4 @@ ruamel.yaml
 selenium
 snakemake>=7.16
 toml
+setuptools>=65.5.1 # not directly required, pinned by Snyk to avoid a vulnerability
