@@ -84,7 +84,7 @@ class fetch(object):
           for ref in
           json.loads(readurl('https://api.github.com/repos/juris-m/zotero/git/refs/tags'))
         ]
-      except urllib.error.HTTPError: # fallback for rate limit exceeded
+      except HTTPError: # fallback for rate limit exceeded
         with open(os.path.join(SCHEMA.root, 'hashes.json')) as f:
           releases = list(json.load(f)['jurism'].keys())
       releases += [
