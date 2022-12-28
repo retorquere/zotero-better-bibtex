@@ -103,6 +103,9 @@ class Git {
     try {
       await this.exec(this.git, ['-C', this.path, 'checkout', this.bib])
       await this.exec(this.git, ['-C', this.path, 'pull'])
+      // fixes #2356
+      await Zotero.Promise.delay(2000) // eslint-disable-line no-magic-numbers
+      await this.exec(this.git, ['-C', this.path, 'pull'])
     }
     catch (err) {
       flash('autoexport git pull failed', err.message, 1)
