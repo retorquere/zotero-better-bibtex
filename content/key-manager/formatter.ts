@@ -786,7 +786,7 @@ class PatternFormatter {
   /**
    * The first `n` (default: 3) words of the title, apply capitalization to first `m` (default: 0) of those.
    * @param n number of words to select
-   * @param m number of words to capitalize. `0` means no capitalization
+   * @param m number of words to capitalize. `0` means no words will be capitalized. Mind that existing capitals are not removed.
    */
   public $shorttitle(n: number = 3, m: number = 0) { // eslint-disable-line no-magic-numbers, @typescript-eslint/no-inferrable-types
     const words = this.titleWords(this.item.title, { skipWords: true, transliterate: true})
@@ -798,7 +798,7 @@ class PatternFormatter {
   /**
    * The first `n` words of the title, apply capitalization to first `m` of those
    * @param n number of words to select
-   * @param m number of words to capitalize. `0` means no capitalization
+   * @param m number of words to capitalize. `0` means no words will be capitalized. Mind that existing capitals are not removed.
    */
   public $veryshorttitle(n: number = 1, m: number = 0) { // eslint-disable-line no-magic-numbers, @typescript-eslint/no-inferrable-types
     return this.$shorttitle(n, m)
