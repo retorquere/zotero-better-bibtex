@@ -13,6 +13,7 @@ Feature: Export
 
     Examples:
       | file                                                                                                                     | references |
+      | Convert Chinese name to Pinyin in citation key. #2361                                                                    | 1          |
       | Citation key is too long for Chines literature #2320                                                                     | 5          |
       | unable to put postfix in middle of citekey #2190                                                                         | 2          |
       | authEtal2(sep='&') + year =  & disappears #2252                                                                          | 1          |

@@ -1255,6 +1255,11 @@ class PatternFormatter {
     return this.$text(this.clean(this.chunk, true))
   }
 
+  /** transliterates the citation key to pinyin */
+  public _pinyin() {
+    return this.$text(pinyin(this.chunk))
+  }
+
   /**
    * transliterates the citation key. If you don't specify a mode, the mode is derived from the item language field
    * @param mode specialized translateration modes for german, japanese or chinese. default is minimal
