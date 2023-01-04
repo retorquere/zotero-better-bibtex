@@ -1117,7 +1117,7 @@ class PatternFormatter {
     return this.$text(this.chunk.toLowerCase())
   }
 
-  /** Forces the text inserted by the field marker to be in uppercase. For example, `[auth:upper]` expands the last name of the first author in uppercase. */
+  /** Forces the text inserted by the field marker to be in uppercase. For example, `auth.upper` expands the last name of the first author in uppercase. */
   public _upper() {
     return this.$text(this.chunk.toUpperCase())
   }
@@ -1127,7 +1127,7 @@ class PatternFormatter {
    * `about:config` under the key `extensions.zotero.translators.better-bibtex.skipWords` as a comma-separated,
    * case-insensitive list of words.
    *
-   * If you want to strip words like 'Jr.' from names, you could use something like `[Auth:nopunct:skipwords:fold]`
+   * If you want to strip words like 'Jr.' from names, you could use something like `Auth.nopunct.skipwords.fold`
    * after adding `jr` to the skipWords list.
    * Note that this filter is always applied if you use `title` (which is different from `Title`) or `shorttitle`.
    */
