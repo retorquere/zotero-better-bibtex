@@ -181,12 +181,15 @@ class Namespace {
   Tag(node, root, indent) {
     if (node.name === 'script') return
 
+    /*
+    // make html the default namespace
     if (node.name.startsWith('html:')) {
       node.name = node.name.replace('html:', '')
     }
     else {
       node.name = `xul:${node.name}`
     }
+    */
 
     this.Block(node.block)
   }
