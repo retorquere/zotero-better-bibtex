@@ -16,14 +16,13 @@ import * as l10n from './l10n'
 import { Events } from './events'
 import { pick } from './file-picker'
 import { flash } from './flash'
-const dtdparser = require('./dtd-file.peggy')
-
-const makeUI = require('../gen/preferences/xul')
+// const dtdparser = require('./dtd-file.peggy')
 
 const namespace = 'http://retorque.re/zotero-better-bibtex/'
 
 export function start(win: Window): any {
   log.debug('prefs.start')
+  /*
   const prefwindow = win.document.querySelector('prefwindow#zotero-prefs')
   if (!prefwindow) return log.error('prefs.start: prefwindow not found')
   if (prefwindow) return
@@ -33,6 +32,7 @@ export function start(win: Window): any {
   const dtd: Record<string, string> = dtdparser.parse(Zotero.File.getContentsFromURL(url))
 
   makeUI(win.document, prefwindow, dtd)
+  */
   log.debug('>>>\n', win.document.documentElement.outerHTML, '\n<<<')
 }
 

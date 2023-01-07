@@ -786,7 +786,7 @@ class PatternFormatter {
   /**
    * The first `n` (default: 3) words of the title, apply capitalization to first `m` (default: 0) of those.
    * @param n number of words to select
-   * @param m number of words to capitalize. `0` means no capitalization
+   * @param m number of words to capitalize. `0` means no words will be capitalized. Mind that existing capitals are not removed.
    */
   public $shorttitle(n: number = 3, m: number = 0) { // eslint-disable-line no-magic-numbers, @typescript-eslint/no-inferrable-types
     const words = this.titleWords(this.item.title, { skipWords: true, transliterate: true})
@@ -798,7 +798,7 @@ class PatternFormatter {
   /**
    * The first `n` words of the title, apply capitalization to first `m` of those
    * @param n number of words to select
-   * @param m number of words to capitalize. `0` means no capitalization
+   * @param m number of words to capitalize. `0` means no words will be capitalized. Mind that existing capitals are not removed.
    */
   public $veryshorttitle(n: number = 1, m: number = 0) { // eslint-disable-line no-magic-numbers, @typescript-eslint/no-inferrable-types
     return this.$shorttitle(n, m)
@@ -1117,7 +1117,7 @@ class PatternFormatter {
     return this.$text(this.chunk.toLowerCase())
   }
 
-  /** Forces the text inserted by the field marker to be in uppercase. For example, `[auth:upper]` expands the last name of the first author in uppercase. */
+  /** Forces the text inserted by the field marker to be in uppercase. For example, `auth.upper` expands the last name of the first author in uppercase. */
   public _upper() {
     return this.$text(this.chunk.toUpperCase())
   }
@@ -1127,7 +1127,7 @@ class PatternFormatter {
    * `about:config` under the key `extensions.zotero.translators.better-bibtex.skipWords` as a comma-separated,
    * case-insensitive list of words.
    *
-   * If you want to strip words like 'Jr.' from names, you could use something like `[Auth:nopunct:skipwords:fold]`
+   * If you want to strip words like 'Jr.' from names, you could use something like `Auth.nopunct.skipwords.fold`
    * after adding `jr` to the skipWords list.
    * Note that this filter is always applied if you use `title` (which is different from `Title`) or `shorttitle`.
    */
@@ -1253,6 +1253,11 @@ class PatternFormatter {
   public _clean() {
     if (!this.chunk) return this
     return this.$text(this.clean(this.chunk, true))
+  }
+
+  /** transliterates the citation key to pinyin */
+  public _pinyin() {
+    return this.$text(pinyin(this.chunk))
   }
 
   /**
