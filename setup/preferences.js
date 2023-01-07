@@ -160,16 +160,28 @@ options.pretty = true
 
 class Namespace {
   constructor(ast) {
+    this.preferences = {}
     this.convert(ast, 'root', 1)
   }
 
+  register(pref) {
+    pref = eval(pref)
+    this.preferences[pref] = {}
+    // console.log('registered', pref)
+  }
+  attr(node, name) {
+    const attr = node.attrs.find(attr => attr.name === name)
+    return attr ? eval(attr.val) : null
+  }
+
   convert(node, root, indent) {
+    if (!this[node.type]) throw new Error(node.type)
     this[node.type](node)
   }
 
-   Block(node) {
-     for (const sub of node.nodes) {
-       this.convert(sub)
+  Block(node) {
+    for (const sub of node.nodes) {
+      this.convert(sub)
     }
   }
 
@@ -177,9 +189,36 @@ class Namespace {
   }
   Comment(node) {
   }
+  BlockComment(node) {
+  }
 
   Tag(node, root, indent) {
-    if (node.name === 'script') return
+    let pref, id
+    switch (node.name) {
+      case 'script':
+        return
+
+      case 'preference':
+        pref = node.attrs.find(attr => attr.name === 'name')
+        if (!pref) throw new Error('orphan preference')
+        this.register(pref.val)
+        id = node.attrs.find(attr => attr.name === 'id')
+        if (id) throw new Error('obsolete preference id ' + id.val)
+        node.attrs.push({...pref, name: 'id'})
+        break
+
+      case 'tooltip':
+        id = this.attr(node, 'id')
+        if (id) {
+          pref = id.replace('tooltip-', 'extensions.zotero.translators.better-bibtex.')
+          if (!this.preferences[pref]) throw new Error(pref)
+        }
+
+      default:
+        pref = this.attr(node, 'preference') || this.attr(node, 'bbt:preference')
+        if (pref && !this.preferences[pref]) throw new Error(pref)
+        break
+    }
 
     /*
     // make html the default namespace
@@ -196,7 +235,7 @@ class Namespace {
 }
 options.plugins = [{
   preCodeGen(ast, options) {
-    // new Namespace(ast)
+    new Namespace(ast)
     return ast
   }
 }]

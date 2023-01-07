@@ -1,4 +1,7 @@
 prefpane#zotero-prefpane-better-bibtex(insertafter="zotero-prefpane-advanced" label="&better-bibtex.Preferences.prefpane.better-bibtex;" image="chrome://zotero-better-bibtex/skin/bibtex.svg" onpaneload="load()" helpTopic="BetterBibTeX")
+  preferences#zotero-preferences-cite
+    include preferences.pug
+
   popupset
     tooltip#tooltip-bibtexURL
       description &better-bibtex.Preferences.export.fields.doi-and-url.warning;
@@ -14,9 +17,6 @@ prefpane#zotero-prefpane-better-bibtex(insertafter="zotero-prefpane-advanced" la
       description &better-bibtex.Preferences.advanced.export.braceProtection.warning;
     tooltip#tooltip-retainCache
       description &better-bibtex.Preferences.advanced.export.retainCache.warning;
-
-  preferences#zotero-preferences-cite
-    include preferences.pug
 
   deck#better-bibtex-prefs-deck(selectedIndex='0')
     label#better-bibtex-loading &better-bibtex.Preferences.prefpane.loading;
