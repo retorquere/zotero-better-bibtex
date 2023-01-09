@@ -1,0 +1,166 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "preferences": {
+      "ascii": "",
+      "asciiBibLaTeX": false,
+      "asciiBibTeX": true,
+      "autoAbbrev": false,
+      "autoAbbrevStyle": "",
+      "autoExport": "immediate",
+      "autoExportDelay": 5,
+      "autoExportIdleWait": 10,
+      "autoExportPathReplaceDiacritics": false,
+      "autoExportPathReplaceDirSep": "-",
+      "autoExportPathReplaceSpace": " ",
+      "automaticTags": true,
+      "autoPinDelay": 0,
+      "auxImport": false,
+      "baseAttachmentPath": "",
+      "biblatexExtendedDateFormat": true,
+      "biblatexExtendedNameFormat": false,
+      "biblatexExtractEprint": true,
+      "bibtexParticleNoOp": false,
+      "bibtexURL": "off",
+      "cache": true,
+      "cacheFlushInterval": 5,
+      "charmap": "",
+      "citeCommand": "cite",
+      "citekeyFold": true,
+      "citekeyFormat": "auth + year",
+      "citekeyFormatBackup": "auth + year",
+      "citekeySearch": true,
+      "csquotes": "",
+      "DOIandURL": "both",
+      "exportBibTeXStrings": "off",
+      "exportBraceProtection": true,
+      "exportTitleCase": true,
+      "extraMergeCitekeys": false,
+      "extraMergeCSL": false,
+      "extraMergeTeX": false,
+      "git": "config",
+      "import": true,
+      "importBibTeXStrings": true,
+      "importCaseProtection": "as-needed",
+      "importCitationKey": true,
+      "importExtra": true,
+      "importJabRefAbbreviations": true,
+      "importJabRefStrings": true,
+      "importNoteToExtra": "",
+      "importSentenceCase": "on+guess",
+      "importUnknownTexCommand": "ignore",
+      "itemObserverDelay": 5,
+      "jabrefFormat": 0,
+      "jieba": false,
+      "keyConflictPolicy": "keep",
+      "keyScope": "library",
+      "kuroshiro": false,
+      "language": "langid",
+      "mapMath": "",
+      "mapText": "",
+      "mapUnicode": "conservative",
+      "parseParticles": true,
+      "patchDates": "dateadded=dateAdded, date-added=dateAdded, datemodified=dateModified, date-modified=dateModified",
+      "platform": "",
+      "postscript": "",
+      "postscriptOverride": "",
+      "preferencesOverride": "",
+      "qualityReport": false,
+      "quickCopyEta": "",
+      "quickCopyMode": "latex",
+      "quickCopyOrgMode": "zotero",
+      "quickCopyPandocBrackets": false,
+      "quickCopySelectLink": "zotero",
+      "rawImports": false,
+      "rawLaTag": "#LaTeX",
+      "relativeFilePaths": false,
+      "retainCache": false,
+      "scrubDatabase": false,
+      "separatorList": "and",
+      "separatorNames": "and",
+      "skipFields": "",
+      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
+      "startupProgress": "popup",
+      "strings": "",
+      "stringsOverride": "",
+      "testing": true,
+      "verbatimFields": "url,doi,file,ids,eprint,/^verb[a-z]$/,groups,/^citeulike-linkout-[0-9]+$/, /^bdsk-url-[0-9]+$/",
+      "warnBulkModify": 10,
+      "warnTitleCased": false,
+      "texmap": {}
+    },
+    "options": {
+      "exportNotes": true,
+      "exportFileData": false,
+      "keepUpdated": false,
+      "worker": false
+    }
+  },
+  "version": {
+    "zotero": "6.0.19",
+    "bbt": "6.7.46.emile.limonia"
+  },
+  "items": [
+    {
+      "itemType": "bookSection",
+      "pages": "227\u201332",
+      "extra": [
+        "Citation Key: El-HusseiniToeplerSalamon:2004",
+        "Section: 12"
+      ],
+      "title": "Lebanon",
+      "creators": [
+        {
+          "firstName": "Hashem",
+          "lastName": "El-Husseini",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Stefan",
+          "lastName": "Toepler",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Lester M.",
+          "lastName": "Salamon",
+          "creatorType": "author"
+        }
+      ],
+      "dateAdded": "2023-01-09T14:26:32Z",
+      "dateModified": "2023-01-09T14:26:32Z",
+      "uri": "http://zotero.org/users/8230813/items/KZ4UL2IU",
+      "citationKey": "El-HusseiniToeplerSalamon:2004",
+      "itemID": 1,
+      "publicationTitle": "Global civil society: Dimensions of the nonprofit sector"
+    },
+    {
+      "itemType": "book",
+      "volume": "2",
+      "place": "Bloomfield, CT",
+      "publisher": "Kumarian Press",
+      "date": "2004",
+      "extra": [
+        "Citation Key: SalamonSokolowski:2004"
+      ],
+      "title": "Global civil society: Dimensions of the nonprofit sector",
+      "creators": [
+        {
+          "firstName": "Lester M.",
+          "lastName": "Salamon",
+          "creatorType": "editor"
+        },
+        {
+          "firstName": "S. Wojciech",
+          "lastName": "Sokolowski",
+          "creatorType": "editor"
+        }
+      ],
+      "dateAdded": "2023-01-09T14:26:32Z",
+      "dateModified": "2023-01-09T14:26:32Z",
+      "uri": "http://zotero.org/users/8230813/items/S7KFMYVF",
+      "citationKey": "SalamonSokolowski:2004",
+      "itemID": 2
+    }
+  ]
+}

@@ -64,6 +64,7 @@ Feature: Import
 
     Examples:
       | file                                                                        | references |
+      | crossref                                                                    | 2          |
       | Lowercase A in BBT Sentence Case #2078                                      | 1          |
       | Map the call-number field from Bib(La)TeX to call number #2021              | 1          |
       | Detect journal abbreviation in the publication field #1951                  | 1          |
