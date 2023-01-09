@@ -7,6 +7,9 @@ import { validItem } from '../../content/ajv'
 import { valid, label } from '../../gen/items/items'
 import wordsToNumbers from 'words-to-numbers'
 
+import { toByteArray as unbase64 } from 'base64-js'
+import { parseBuffer as parsePList } from 'bplist-parser'
+
 const toWordsOrdinal = require('number-to-words/src/toWordsOrdinal')
 function edition(n: string | number): string {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
@@ -1120,6 +1123,18 @@ export class ZoteroItem {
         }
         else if (field.match(/^bdsk-url-[0-9]+$/)) {
           if (this.$url(value, field)) continue
+        }
+        else if (field.match(/^bdsk-file-[0-9]+$/)) {
+          let imported = false
+          try {
+            for (const att of parsePList(Buffer.from(unbase64(value)))) {
+              if (att.relativePath && this.$file(att.relativePath)) imported = true
+            }
+          }
+          catch (err) {
+            if (err) this.error(`import error: ${this.type} ${this.bibtex.key}: ${err}\n${JSON.stringify(this.item, null, 2)}`)
+          }
+          if (imported) continue
         }
         else if (field.match(/^note_[0-9]+$/)) { // jabref, #1878
           if (this.$note(value, 'note')) continue
