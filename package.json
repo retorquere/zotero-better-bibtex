@@ -112,7 +112,7 @@
     "dom-parser": "^0.1.6",
     "dotenv": "^16.0.3",
     "ejs": "^3.1.8",
-    "esbuild": "^0.16.14",
+    "esbuild": "^0.16.16",
     "escape-string-regexp": "^5.0.0",
     "eslint": "^8.31.0",
     "estrace": "^4.1.1",
