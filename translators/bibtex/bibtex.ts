@@ -7,7 +7,6 @@ import { validItem } from '../../content/ajv'
 import { valid, label } from '../../gen/items/items'
 import wordsToNumbers from 'words-to-numbers'
 
-import { toByteArray as unbase64 } from 'base64-js'
 import { parseBuffer as parsePList } from 'bplist-parser'
 
 const toWordsOrdinal = require('number-to-words/src/toWordsOrdinal')
@@ -1118,7 +1117,7 @@ export class ZoteroItem {
     }
     for (const [field, values] of Object.entries(this.bibtex.fields)) {
       for (const value of values) {
-        if (field.match(/^(local-zo-url-[0-9]+)|(file-[0-9]+)$/)) {
+        if (field.match(/^(local-zo-url-[0-9]+|file-[0-9]+)$/)) {
           if (this.$file(value)) continue
         }
         else if (field.match(/^bdsk-url-[0-9]+$/)) {
@@ -1127,7 +1126,7 @@ export class ZoteroItem {
         else if (field.match(/^bdsk-file-[0-9]+$/)) {
           let imported = false
           try {
-            for (const att of parsePList(Buffer.from(unbase64(value)))) {
+            for (const att of parsePList(new Buffer(value, 'base64'))) {
               if (att.relativePath && this.$file(att.relativePath)) imported = true
             }
           }

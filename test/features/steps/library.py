@@ -1,3 +1,4 @@
+import re
 import json
 from copy import deepcopy
 from steps.utils import html2md, HashableDict, print
@@ -49,7 +50,10 @@ def clean_item(item):
   item.pop('citationKey', None)
   item.pop('uri', None)
 
-  item.pop('attachments', None) # I'll need to get around to this eventually
+  if 'attachments' in item:
+    for att in item['attachments']:
+      att['path'] = re.sub(r'.*/zotero/storage/[^/]+', 'ATTACHMENT_KEY', att['path'])
+      att.pop('uri', None)
 
   # make diffs more readable
   if 'extra' in item and type(item['extra']) != list:

@@ -11,7 +11,6 @@ import { normalize } from '../translators/lib/normalize'
 import { stable_stringify as stringify } from '../content/stringify'
 import * as fs from 'fs'
 import { sync as glob } from 'glob'
-import * as path from 'path'
 
 import { defaults, names } from '../gen/preferences/meta'
 const supported: string[] = names.filter(name => !['client', 'testing', 'platform', 'newTranslatorsAskRestart'].includes(name))
@@ -111,15 +110,10 @@ for (const lib of argv._) {
         }
 
         if (item.attachments) {
-          item.attachments = item.attachments.filter(att => {
-            if (att.path && !fs.existsSync(path.join(path.dirname(lib), att.path))) {
-              return false
-            }
-            else {
-              clean(att)
-              return true
-            }
-          })
+          for (const att of item.attachments) {
+            clean(att)
+            att.path = att.path.replace(/.*\/zotero\/storage\/[^/]+/, 'ATTACHMENT_KEY')
+          }
         }
       }
       break
