@@ -3,6 +3,13 @@
 const pug = require('pug')
 const fs = require('fs')
 const path = require('path')
+const glob = require('glob-promise')
+const peggy = require("peggy");
+const dtd = peggy.generate(fs.readFileSync('setup/dtd-file.peggy', 'utf-8')).parse(fs.readFileSync('locale/en-US/zotero-better-bibtex.dtd', 'utf-8'))
+
+const translators = glob.sync('translators/*.json')
+  .map(tr => require(`../${tr}`).label)
+  .filter(tr => tr.match(/Better /) && !tr.match(/Quick/))
 
 const src = process.argv[2] || 'content/Preferences.pug'
 const tgt = process.argv[3] || 'build/content/Preferences.xul'
@@ -10,172 +17,92 @@ const tgt = process.argv[3] || 'build/content/Preferences.xul'
 const options = {}
 options.pretty = true
 
-// class XUL {
-//   start(ast) {
-//     this.preference = null
-//     this.preferences = {}
-//     this.ns = {
-//       xul: 'http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul',
-//       html: 'http://www.w3.org/1999/xhtml',
-//       bbt: 'http://retorque.re/zotero-better-bibtex/',
-//     }
-//     this.js = 'module.exports = function(doc, root, tr) {\n'
-//     this.node = {}
-//     this.generate(ast, 'root', 1)
-//     this.js += '}'
-//   }
-//
-//   generate(node, root, indent) {
-//     this[node.type](node, root, indent)
-//   }
-//
-//   text(node) {
-//     switch (node.type) {
-//       case 'Block':
-//         return node.nodes.map(n => this.text(n)).join('')
-//       case 'Text':
-//         return node.val
-//       default:
-//         console.log(node)
-//         throw new Error(node.type)
-//     }
-//   }
-//
-//   unpack(nodename) {
-//     let [namespace, name] = nodename.split(':')
-//     if (name) {
-//       namespace = this.ns[namespace]
-//     }
-//     else {
-//       name = nodename
-//       namespace = this.ns.xul
-//     }
-//     return { namespace, name }
-//   }
-//
-//   Tag(node, root, indent) {
-//     if (node.name === 'script') return
-//
-//     this.node[node.name] = (this.node[node.name] || 0) + 1
-//
-//     for (const attr of node.attrs) {
-//       if (attr.name === 'xmlns') {
-//         this.ns.xul = attr.val
-//       }
-//       else if (attr.name.startsWith('xmlns:')) {
-//         this.ns[attr.name.replace(/.*:/, '')] = attr.val
-//       }
-//     }
-//
-//     var { namespace, name } = this.unpack(node.name)
-//     if (namespace === this.ns.bbt && name === 'doc') {
-//       this.preferences[this.preference] = this.text(node.block).trim()
-//       return
-//     }
-//     if (namespace === this.ns.xul && name === 'preference') {
-//       this.preference = JSON.parse(node.attrs.find(attr => attr.name === 'name').val).replace('extensions.zotero.translators.better-bibtex.', '')
-//       this.preferences[this.preference] = {}
-//     }
-//
-//     node.var = `${name}${this.node[node.name]}`
-//
-//     this.js += this.indent(indent) + `${root}.appendChild(doc.createTextNode("\\n${this.indent(indent)}"));\n`
-//     this.js += this.indent(indent) + `const ${node.var} = ${root}.appendChild(doc.createElementNS('${namespace}', ${JSON.stringify(name)}));\n`
-//
-//     for (const attr of node.attrs) {
-//       if (attr.name.match(/^(xmlns|on(pane)?load|insertafter|insertbefore)/)) continue
-//
-//       if (attr.name === 'class') {
-//         if (!attr.val.match(/^'[^']+'$/)) throw new Error(attr.val)
-//         this.js += this.indent(indent + 1) + `${node.var}.classList.add(${JSON.stringify(attr.val.slice(1, -1))});\n`
-//         continue
-//       }
-//
-//       var { namespace, name } = this.unpack(attr.name)
-//       if (namespace === this.ns.xul && name === 'onpaneload') continue
-//       if (namespace === this.ns.bbt && name === 'affects') continue
-//
-//       let val
-//       if (attr.val.match(/^"&.+;"$/) || attr.val.match(/^'&.+;'$/)) {
-//         const key = JSON.stringify(attr.val.slice(2, -2))
-//         val = `tr[${key}] || ${key}`
-//       }
-//       else {
-//         val = attr.val
-//       }
-//       if (namespace === this.ns.xul) {
-//         this.js += this.indent(indent + 1) + `${node.var}.setAttribute(${JSON.stringify(name)}, ${val});\n`
-//       }
-//       else {
-//         this.js += this.indent(indent + 1) + `${node.var}.setAttributeNS('${namespace}', ${JSON.stringify(name)}, ${val});\n`
-//       }
-//     }
-//     this.Block(node.block, node.var, indent + 1)
-//   }
-//
-//   Block(node, root, indent) {
-//     for (const sub of node.nodes) {
-//       this.generate(sub, root, indent)
-//     }
-//   }
-//
-//   Comment(node, root, indent) {
-//     return
-//     this.js += `/* ${node.val.replace(/[/][*]/g, '/ *').replace(/[*][/]/g, '* /')} */\n`
-//   }
-//
-//   indent(n) { return '  '.repeat(n) }
-//
-//   Text(node, root, indent) {
-//     if (node.val.startsWith('<?xml')) return
-//     if (node.val.startsWith('<!DOCTYPE')) return
-//
-//     let js
-//     if (node.val.match(/^&.+;$/)) {
-//       if (root.startsWith('script')) throw new Error(root)
-//       const key = JSON.stringify(node.val.slice(1, -1))
-//       js = `doc.createTextNode(tr[${key}] || ${key})`
-//     } else if (root.startsWith('script')) {
-//       this.js += node.val
-//       return
-//     }
-//     else {
-//       js = `doc.createTextNode(${JSON.stringify(node.val)})`
-//     }
-//     if (!node.val.trim()) return
-//     this.js += this.indent(indent) + `${root}.appendChild(${js});\n`
-//   }
-// }
-// const generator = new XUL
-// options.plugins = [{
-//   preCodeGen(ast, options) {
-//     generator.start(ast)
-//     return ast
-//   }
-// }]
-//
-// pug.renderFile('content/Preferences/prefpane.pug', options)
-// fs.writeFileSync('gen/preferences/xul.js', generator.js)
-// fs.writeFileSync('gen/preferences/doc.json', JSON.stringify(generator.preferences, null, 2))
-
 class Namespace {
   constructor(ast) {
     this.preferences = {}
+    this.preference = null
     this.convert(ast, 'root', 1)
+    console.log(this.preferences)
   }
 
-  register(pref) {
-    pref = eval(pref)
-    this.preferences[pref] = {}
-    // console.log('registered', pref)
+  error(...args) {
+    console.log(...args)
+    process.exit(1)
   }
-  attr(node, name) {
+
+  register(node) {
+    const name = this.attr(node, 'name', true)
+    const id = this.attr(node, 'id')
+    if (id) this.error('obsolete preference id', id)
+
+    const pref = {
+      name,
+      type: this.attr(node, 'type', true),
+      default: this.attr(node, 'default', true),
+      affects: this.attr(node, 'bbt:affects', true),
+    }
+
+    switch (pref.type) {
+      case 'bool':
+      case 'int':
+        pref.default = eval(pref.default)
+        if (typeof pref.default !== (pref.type === 'bool' ? 'boolean' : 'number')) this.error(this.attr(node, 'default'), 'is not', pref.type)
+        break
+      case 'string':
+        break
+      default:
+        this.error('Unexpected type', pref.type)
+    }
+
+    pref.affects = pref.affects
+      .split(/\s+/)
+      .reduce((acc, affects) => {
+        switch(affects) {
+          case '':
+            break
+
+          case '*':
+            acc.push(...translators)
+            break
+
+          case 'tex':
+          case 'bibtex':
+          case 'biblatex':
+          case 'csl':
+            acc.push(...translators.filter(tr => tr.toLowerCase().includes(affects)))
+            break
+
+          default:
+            this.error('Unexpected affects', affects, 'in', pref.affects, name)
+        }
+        return acc
+      }, [])
+      .sort()
+
+    this.preferences[this.preference = name] = pref
+    // console.log('registered', this.preference)
+  }
+
+  attr(node, name, required) {
     const attr = node.attrs.find(attr => attr.name === name)
+    if (!attr && required) this.error(`could not find ${node.name}.${name} in`, this.attr(node, 'name'))
     return attr ? eval(attr.val) : null
   }
 
+  doc(doc, pref) {
+    doc = doc.replace(/&([^;]+);/g, (entity, id) => {
+      if (!dtd[id]) this.error(id, 'not in dtd')
+      return dtd[id]
+    })
+    pref = pref || this.preference
+    if (!pref) this.error('doc for no pref')
+    if (!this.preferences[pref]) this.error('doc for unregistered', pref)
+    if (this.preferences[pref].doc) this.error('re-doc for', pref, '\nold:', this.preferences[pref].doc, '\nnew:', doc)
+    this.preferences[pref].doc = doc
+  }
+
   convert(node, root, indent) {
-    if (!this[node.type]) throw new Error(node.type)
+    if (!this[node.type]) this.error(node.type)
     this[node.type](node)
   }
 
@@ -192,6 +119,19 @@ class Namespace {
   BlockComment(node) {
   }
 
+  text(node) {
+    if (!node) this.error('text: no node')
+
+    switch (node.type) {
+      case 'Block':
+        return node.nodes.map(n => this.text(n)).join('')
+      case 'Text':
+        return node.val
+      default:
+        this.error('text: unexpected', node.type)
+    }
+  }
+
   Tag(node, root, indent) {
     let pref, id
     switch (node.name) {
@@ -199,24 +139,27 @@ class Namespace {
         return
 
       case 'preference':
+        this.register(node)
+        // clone name to id
         pref = node.attrs.find(attr => attr.name === 'name')
-        if (!pref) throw new Error('orphan preference')
-        this.register(pref.val)
-        id = node.attrs.find(attr => attr.name === 'id')
-        if (id) throw new Error('obsolete preference id ' + id.val)
         node.attrs.push({...pref, name: 'id'})
         break
 
       case 'tooltip':
-        id = this.attr(node, 'id')
-        if (id) {
+        if (id = this.attr(node, 'id', true)) {
           pref = id.replace('tooltip-', 'extensions.zotero.translators.better-bibtex.')
-          if (!this.preferences[pref]) throw new Error(pref)
+          if (!this.preferences[pref]) this.error(pref)
+          this.doc(this.text(node.block.nodes.find(n => n.type === 'Tag' && n.name === 'description').block), pref)
         }
+        break
+
+      case 'bbt:doc':
+        this.doc(this.text(node.block))
+        break
 
       default:
         pref = this.attr(node, 'preference') || this.attr(node, 'bbt:preference')
-        if (pref && !this.preferences[pref]) throw new Error(pref)
+        if (pref && !this.preferences[pref]) this.error(pref)
         break
     }
 
