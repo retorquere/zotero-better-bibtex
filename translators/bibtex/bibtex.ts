@@ -1159,7 +1159,7 @@ export class ZoteroItem {
             this.hackyFields.push(`PMID: ${value}`)
             break
 
-          case 'subject': // otherwise it's picked up by the sibject -> title mapper, and I don't think that's right
+          case 'subject': // otherwise it's picked up by the subject -> title mapper, and I don't think that's right
             this.hackyFields.push(`tex.${field}: ${value}`)
             break
 
