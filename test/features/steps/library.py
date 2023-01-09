@@ -52,8 +52,13 @@ def clean_item(item):
 
   if 'attachments' in item:
     for att in item['attachments']:
-      att['path'] = re.sub(r'.*/zotero/storage/[^/]+', 'ATTACHMENT_KEY', att['path'])
+      if 'path' in att:
+        att['path'] = re.sub(r'.*/zotero/storage/[^/]+', 'ATTACHMENT_KEY', att['path'])
       att.pop('uri', None)
+      att.pop('accessDate', None)
+      att.pop('itemKey', None)
+      att.pop('key', None)
+      att.pop('libraryID', None)
 
   # make diffs more readable
   if 'extra' in item and type(item['extra']) != list:
