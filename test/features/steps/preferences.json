@@ -297,7 +297,7 @@
   {
     "name": "citekeyUnsafeChars",
     "type": "string",
-    "default": "\"#%'(),={}~",
+    "default": "\\\"#%'(),={}~",
     "affects": [],
     "var": "citekeyUnsafeChars"
   },

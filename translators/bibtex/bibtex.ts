@@ -890,7 +890,7 @@ export class ZoteroItem {
   protected $urldate(value: string | number): boolean {
     if (typeof value !== 'string') return false
     const date = value.replace(/^accessed\s*:?\s*/i, '')
-    const parsed = parseDate(value)
+    const parsed = parseDate(date)
     if (parsed.type !== 'date' || !parsed.day) return false
 
     return this.set('accessDate', strToISODate(date))
