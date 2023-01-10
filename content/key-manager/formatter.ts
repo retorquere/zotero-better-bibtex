@@ -4,6 +4,7 @@ import { client } from '../client'
 
 import { log } from '../logger'
 import fold2ascii from 'fold-to-ascii'
+import rescape from '@stdlib/utils-escape-regexp-string'
 import ucs2decode = require('punycode2/ucs2/decode')
 import scripts = require('xregexp/tools/output/scripts')
 import { transliterate } from 'transliteration/dist/node/src/node/index'
@@ -316,8 +317,9 @@ class PatternFormatter {
   // private fold: boolean
   public update(reason: string) {
     log.debug('update key formula:', reason, Preference.citekeyUnsafeChars)
-    this.re.unsafechars_allow_spaces = new RegExp(`[\\\\${Preference.citekeyUnsafeChars}]`, 'g')
-    this.re.unsafechars = new RegExp(`[\\\\${Preference.citekeyUnsafeChars}\\s]`, 'g')
+    const unsafechars = rescape(Preference.citekeyUnsafeChars)
+    this.re.unsafechars_allow_spaces = new RegExp(`[${unsafechars}]`, 'g')
+    this.re.unsafechars = new RegExp(`[${unsafechars}\\s]`, 'g')
     this.skipWords = new Set(Preference.skipWords.split(',').map((word: string) => word.trim()).filter((word: string) => word))
 
     for (const ck of ['citekeyFormat', 'citekeyFormatBackup']) {
