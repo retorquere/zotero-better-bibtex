@@ -288,8 +288,8 @@ class PatternFormatter {
   }
 
   private re = {
-    unsafechars_allow_spaces: new RegExp(`[\\\\${Preference.citekeyUnsafeChars}]`, 'g'),
-    unsafechars: new RegExp(`[\\\\${Preference.citekeyUnsafeChars}\\s]`, 'g'),
+    unsafechars_allow_spaces: /\s/g,
+    unsafechars: /\s/g,
     alphanum: Zotero.Utilities.XRegExp('[^\\p{L}\\p{N}]'),
     punct: Zotero.Utilities.XRegExp('\\p{Pe}|\\p{Pf}|\\p{Pi}|\\p{Po}|\\p{Ps}', 'g'),
     dash: Zotero.Utilities.XRegExp('\\p{Pd}|\u2500|\uFF0D|\u2015', 'g'), // additional pseudo-dashes from #1880
@@ -315,7 +315,9 @@ class PatternFormatter {
 
   // private fold: boolean
   public update(reason: string) {
-    log.debug('update key formula:', reason)
+    log.debug('update key formula:', reason, Preference.citekeyUnsafeChars)
+    this.re.unsafechars_allow_spaces = new RegExp(`[\\\\${Preference.citekeyUnsafeChars}]`, 'g')
+    this.re.unsafechars = new RegExp(`[\\\\${Preference.citekeyUnsafeChars}\\s]`, 'g')
     this.skipWords = new Set(Preference.skipWords.split(',').map((word: string) => word.trim()).filter((word: string) => word))
 
     for (const ck of ['citekeyFormat', 'citekeyFormatBackup']) {

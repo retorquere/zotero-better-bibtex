@@ -294,7 +294,7 @@ export class KeyManager {
     }
 
     Events.on('preference-changed', pref => {
-      if (['autoAbbrevStyle', 'citekeyFormat', 'citekeyFold', 'skipWords'].includes(pref)) {
+      if (['autoAbbrevStyle', 'citekeyFormat', 'citekeyFold', 'citekeyUnsafeChars', 'skipWords'].includes(pref)) {
         Formatter.update('pref-change')
       }
     })
