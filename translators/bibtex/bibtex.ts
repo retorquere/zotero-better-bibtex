@@ -6,6 +6,7 @@ import { arXiv } from '../../content/arXiv'
 import { validItem } from '../../content/ajv'
 import { valid, label } from '../../gen/items/items'
 import wordsToNumbers from 'words-to-numbers'
+import { parse as parseDate, strToISO as strToISODate } from '../../content/dateparser'
 
 import { parseBuffer as parsePList } from 'bplist-parser'
 
@@ -886,7 +887,13 @@ export class ZoteroItem {
   protected $timestamp(value: string | number): boolean { return this.item.dateAdded = this.unparse(value) }
   */
 
-  protected $urldate(value: string | number): boolean { return this.set('accessDate', value) }
+  protected $urldate(value: string | number): boolean {
+    if (typeof value !== 'string') return false
+    const date = parseDate(value)
+    if (date.type !== 'date' || !date.day) return false
+
+    return this.set('accessDate', strToISODate(value))
+  }
   protected $lastchecked(value: string | number): boolean { return this.$urldate(value) }
 
   protected $number(value: string | number, field: string): boolean {
