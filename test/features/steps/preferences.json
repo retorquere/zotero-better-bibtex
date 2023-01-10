@@ -295,6 +295,13 @@
     "label": "Enable citation key search"
   },
   {
+    "name": "citekeyUnsafeChars",
+    "type": "string",
+    "default": "\"#%'(),={}~",
+    "affects": [],
+    "var": "citekeyUnsafeChars"
+  },
+  {
     "name": "csquotes",
     "type": "string",
     "default": "",

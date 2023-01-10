@@ -4,6 +4,7 @@ import { client } from '../client'
 
 import { log } from '../logger'
 import fold2ascii from 'fold-to-ascii'
+import rescape from '@stdlib/utils-escape-regexp-string'
 import ucs2decode = require('punycode2/ucs2/decode')
 import scripts = require('xregexp/tools/output/scripts')
 import { transliterate } from 'transliteration/dist/node/src/node/index'
@@ -276,8 +277,6 @@ class Item {
   }
 }
 
-// https://tex.stackexchange.com/questions/408530/what-characters-are-allowed-to-use-as-delimiters-for-bibtex-keys
-const unsafechars = /["#%'(),=\\{}~\s]/g
 class PatternFormatter {
   public chunk = ''
   public citekey = ''
@@ -290,8 +289,8 @@ class PatternFormatter {
   }
 
   private re = {
-    unsafechars_allow_spaces: new RegExp(unsafechars.source.replace(/\\s/, ''), 'g'),
-    unsafechars,
+    unsafechars_allow_spaces: /\s/g,
+    unsafechars: /\s/g,
     alphanum: Zotero.Utilities.XRegExp('[^\\p{L}\\p{N}]'),
     punct: Zotero.Utilities.XRegExp('\\p{Pe}|\\p{Pf}|\\p{Pi}|\\p{Po}|\\p{Ps}', 'g'),
     dash: Zotero.Utilities.XRegExp('\\p{Pd}|\u2500|\uFF0D|\u2015', 'g'), // additional pseudo-dashes from #1880
@@ -317,7 +316,10 @@ class PatternFormatter {
 
   // private fold: boolean
   public update(reason: string) {
-    log.debug('update key formula:', reason)
+    log.debug('update key formula:', reason, Preference.citekeyUnsafeChars)
+    const unsafechars = rescape(Preference.citekeyUnsafeChars)
+    this.re.unsafechars_allow_spaces = new RegExp(`[${unsafechars}]`, 'g')
+    this.re.unsafechars = new RegExp(`[${unsafechars}\\s]`, 'g')
     this.skipWords = new Set(Preference.skipWords.split(',').map((word: string) => word.trim()).filter((word: string) => word))
 
     for (const ck of ['citekeyFormat', 'citekeyFormatBackup']) {

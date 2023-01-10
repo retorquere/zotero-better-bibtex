@@ -889,10 +889,11 @@ export class ZoteroItem {
 
   protected $urldate(value: string | number): boolean {
     if (typeof value !== 'string') return false
-    const date = parseDate(value)
-    if (date.type !== 'date' || !date.day) return false
+    const date = value.replace(/^accessed\s*:?\s*/i, '')
+    const parsed = parseDate(value)
+    if (parsed.type !== 'date' || !parsed.day) return false
 
-    return this.set('accessDate', strToISODate(value))
+    return this.set('accessDate', strToISODate(date))
   }
   protected $lastchecked(value: string | number): boolean { return this.$urldate(value) }
 
