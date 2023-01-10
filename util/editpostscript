@@ -1,0 +1,5 @@
+#!/bin/bash
+
+./util/postscript "$1" postscript.txt -e
+vi postscript.txt
+./util/postscript "$1" postscript.txt -s

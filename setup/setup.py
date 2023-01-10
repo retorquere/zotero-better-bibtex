@@ -7,8 +7,6 @@ import submodules
 import months
 import kuroshiro
 import item
-import bibertool
-import abbrev
 import jieba
 import babel
 import scannablecite

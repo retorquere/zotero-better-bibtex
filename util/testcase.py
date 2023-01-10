@@ -11,15 +11,15 @@ from types import SimpleNamespace
 
 from subprocess import call
 
-#import subprocess
 import argparse
 #import shlex
 #import sys
 from github import Github
 #import os
-#import re
+import re
 #from pathlib import Path
 import shutil
+import subprocess
 #import string
 
 from pygit2 import Repository
@@ -69,6 +69,7 @@ assert os.path.exists(args.data),  f'{args.data} does not exist'
 g = Github(os.environ['GITHUB_TOKEN'])
 repo = g.get_repo('retorquere/zotero-better-bibtex')
 issue = repo.get_issue(int(args.issue))
+issue.title = re.sub(r'^\[[^\]]+\]\s*', '', issue.title)
 args.title = sanitize_filename(f'{issue.title} #{issue.number}'.strip())
 
 # clean lib before putting it in place
@@ -80,7 +81,11 @@ with open(args.data) as f:
 parser = Parser()
 doc = Munch.fromDict(parser.parse(args.feature))
 
-outlines = [child for child in doc.feature.children if child.type == 'ScenarioOutline' and (args.translator in child.name or args.mode == 'import')]
+outlines = [
+  child.scenario
+  for child in doc.feature.children
+  if child.get('scenario') and child.scenario.keyword == 'Scenario Outline' and (args.translator in child.scenario.name or args.mode == 'import')
+]
 assert len(outlines) == 1, f'{len(outlines)} outlines found containing {args.translator}'
 
 with open(args.feature) as f:
@@ -110,14 +115,20 @@ if contents:
 
 # copy/create test fixtures
 fixture = os.path.join(root, f'test/fixtures/{args.mode}', args.title)
-shutil.copyfile(args.data, fixture + '.json')
+source = fixture + '.json'
+shutil.copyfile(args.data, source)
+subprocess.check_output(['git', 'add', source])
+
 if args.mode == 'import':
   ext = 'bib'
 else:
   ext = args.translator.lower().replace('-', '.').replace('yaml', 'yml')
-with open(fixture + '.' + ext, 'w') as f:
+
+target = fixture + '.' + ext
+with open(target, 'w') as f:
   if args.translator == 'CSL-JSON':
     f.write('{}')
+subprocess.check_output(['git', 'add', target])
 
 # reformat
 sys.argv.append(args.feature)

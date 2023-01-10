@@ -13,6 +13,18 @@ Feature: Export
 
     Examples:
       | file                                                                                                                     | references |
+      | Issue of generating citekeys with parentheses  #2366                                                                     | 1          |
+      | Convert Chinese name to Pinyin in citation key. #2361                                                                    | 1          |
+      | Citation key is too long for Chines literature #2320                                                                     | 5          |
+      | unable to put postfix in middle of citekey #2190                                                                         | 2          |
+      | authEtal2(sep='&') + year =  & disappears #2252                                                                          | 1          |
+      | Apply Title Casing to tex.subtitle entry on export #2213                                                                 | 1          |
+      | Citation key format backward compatibility issue. #2204                                                                  | 1          |
+      | inspireHep fetching broken #2201                                                                                         | 1          |
+      | noclean                                                                                                                  | 1          |
+      | date with fractional seconds                                                                                             | 1          |
+      | Citation key add `_preprint` if URL contains `arxiv.org` #2163                                                           | 12         |
+      | Authors export looks like this prefix=von useprefix=true... #2138                                                        | 1          |
       | Zotero's Manuscript 'Type' is mapped to both biblatex's 'type' and 'howpublished' #2114                                  | 1          |
       | Configurable journal abbreviation for citekey #2097                                                                      | 1          |
       | BetterBibLaTeX exports articles as online #2058                                                                          | 3          |
@@ -167,6 +179,7 @@ Feature: Export
 
     Examples:
       | file                                                                                                               | references |
+      | accented character in 'journal' field is not brace protected by bibtex export #2337                                | 1          |
       | Non-breakable spaces in author fields should be exported as tilde #1430                                            | 1          |
       | University is exported as publisher as soon as tex.referencetype is specified in Extra field #1965                 | 1          |
       | fetch inspire-hep key #1879                                                                                        | 1          |
@@ -243,19 +256,25 @@ Feature: Export
     Examples:
       | BibTeX export is incompatible with Zotero 6 Preprint item type. #2080 | 1 |
 
-  @csl
-  Scenario Outline: Export <references> references for CSL JSON to <file>
+  @csl @timeout=3000
+  Scenario Outline: Export <references> references for CSL-JSON to <file>
     When I import <references> references from "export/<file>.json"
     Then an export using "Better CSL JSON" should match "export/*.csl.json"
 
     Examples:
-      | file                                                             | references |
-      | Better CSL JSON does not include authority field #2019           | 1          |
-      | Multiple creators in Extra not exported in Better CSL JSON #2015 | 1          |
-      | Deterministic ordering for CSL #1178 #1400                       | 26         |
-      | CSL exporters; ignore [Fields to omit from export] setting #1179 | 26         |
-      | Quotes around last names should be removed from citekeys #856    | 1          |
-      | BBT CSL JSON; Do not use shortTitle and journalAbbreviation #372 | 1          |
+      | file                                                                            | references |
+      | unwanted inclusion of Zotero's internal journal abbreviations in CSL JSON #2375 | 1          |
+      | Export Error Unexpected date type #2303                                         | 1          |
+      | Better CSL JSON does not include authority field #2019                          | 1          |
+      | Multiple creators in Extra not exported in Better CSL JSON #2015                | 1          |
+      | Deterministic ordering for CSL #1178 #1400                                      | 26         |
+      | CSL exporters; ignore [Fields to omit from export] setting #1179                | 26         |
+      | Quotes around last names should be removed from citekeys #856                   | 1          |
+      | BBT CSL JSON; Do not use shortTitle and journalAbbreviation #372                | 1          |
+
+    @use.with_client=jurism
+    Examples:
+      | Export library to Better CSL JSONYAML failed when standard items included. #2212 | 1 |
 
   Scenario: Omit URL export when DOI present. #131
     When I import 3 references with 2 attachments from "export/*.json" into a new collection
@@ -428,6 +447,10 @@ Feature: Export
     And I import 1 reference with 1 attachment from "export/*.json"
     Then an export using "Better BibTeX" with useJournalAbbreviation on should match "export/*.bibtex"
 
+  Scenario: Auto Abbreviation of Proceedings Title #2245
+    When I import 2 references from "export/*.json"
+    Then an export using "Better BibTeX" with useJournalAbbreviation on should match "export/*.bibtex"
+
   @81 @bbt
   Scenario: Journal abbreviations exported in bibtex (81)
     Given I set preference .citekeyFormat to "[authors2][year][journal:nopunct]"
@@ -451,8 +474,17 @@ Feature: Export
   Scenario: Transforming exported file names (windows path conversion) #1939
     Given I import 1 reference from "export/*.json"
     And I set preference .postscript to "export/*.js"
-    And I set preference .workers to 0
+    And I set export option worker to false
     Then an export using "Better BibTeX" should match "export/*.bibtex"
+
+  # jurism doesn't have walknotedom
+  @use.with_client=zotero
+  Scenario: Make DOMParser available in background export #2094
+    Given I import 4 references from "export/*.json"
+    And I set export option worker to false
+    Then an export using "Better BibLaTeX" should match "export/*.biblatex"
+    When I set export option worker to false
+    Then an export using "Better BibLaTeX" should match "export/*.biblatex"
 
   @postscript @1043
   Scenario: Unbalanced vphantom escapes #1043
@@ -504,7 +536,7 @@ Feature: Export
     When I set preference .parseParticles to false
     Then an export using "Better BibLaTeX" should match "export/*.off.biblatex"
 
-  @ae
+  # @retries=5
   Scenario: auto-export
     Given I import 3 references with 2 attachments from "export/*.json" into a new collection
     And I set preference .autoExport to "immediate"
@@ -513,7 +545,7 @@ Feature: Export
     And an auto-export of "/auto-export" to "~/autoexport.coll.bib" using "Better BibLaTeX" should match "export/*.before.coll.biblatex"
     When I select the item with a field that is "IEEE"
     And I remove the selected item
-    And I wait 10 seconds
+    And I wait 15 seconds
     Then "~/autoexport.bib" should match "export/*.after.biblatex"
     And "~/autoexport.coll.bib" should match "export/*.after.coll.biblatex"
 
@@ -532,11 +564,12 @@ Feature: Export
   Scenario: (non-)dropping particle handling #313
     When I import 53 references from "export/*.json"
     Then an export using "Better BibLaTeX" should match "export/*.biblatex"
+    And an export using "Better BibLaTeX" with cacheUse on should match "export/*-cached.biblatex"
 
   @1420
   Scenario: (non-)dropping particle handling #313
     When I import 53 references from "export/*.json"
-    And I set preference .workers to 0
+    And I set export option worker to false
     Then an export using "Better BibLaTeX" should match "export/*.biblatex"
 
   @1270
@@ -551,28 +584,19 @@ Feature: Export
     Then an export using "Better BibLaTeX" should match "export/*.biblatex"
 
   # tests the cache
-  @use.with_client=zotero @use.with_slow=true @timeout=3000 @whopper @whopper-cached
-  Scenario: Really Big whopping library
-    When I restart Zotero with "1287" + "export/*.json"
-    And I reset the cache
-    Then an export using "Better BibTeX" should match "export/*.bibtex"
-    Then an export using "Better BibTeX" with cacheUse on should match "export/*-cached.bibtex"
-    When I set preference .caching to false
-    Then an export using "Better BibTeX" with cacheUse on should match "export/*-uncached.bibtex"
-
-  # tests without cache prefill
-  @use.with_client=zotero @use.with_slow=true @timeout=3000 @whopper-uncached
-  Scenario: Really Big whopping library
-    When I restart Zotero with "1287" + "export/*.json"
-    And I reset the cache
-    And I set preference .caching to false
-    Then an export using "Better BibTeX" should match "export/*.bibtex"
-
-  # tests the cache for CSL
   @use.with_client=zotero @use.with_slow=true @timeout=3000 @whopper
   Scenario: Really Big whopping library
     When I restart Zotero with "1287" + "export/*.json"
     And I reset the cache
+    And I export the library 1 times using "id:9cb70025-a888-4a29-a210-93ec52da40d4"
+    And an export using "Better BibTeX" should match "export/*.bibtex"
+    And an export using "Better BibTeX" should match "export/*.bibtex"
+    When I set preference .cache to false
+    Then an export using "Better BibTeX" should match "export/*.bibtex"
+    When I reset the cache
+    And I set preference .cache to false
+    Then an export using "Better BibTeX" should match "export/*.bibtex"
+    When I reset the cache
     Then an export using "Better CSL JSON" should match "export/*.csl.json"
     And an export using "Better CSL JSON" should match "export/*.csl.json", but take no more than 150 seconds
 
@@ -621,10 +645,32 @@ Feature: Export
     And I set preference .verbatimFields to "doi,file,ids,eprint,verba,verbb,verbc,groups"
     Then an export using "Better BibTeX" should match "export/*.bibtex"
 
-# Scenario: error exporting Better BibLaTex this.preference.skipFields is undefined #2029
-# Given I restart Zotero
-# And I remove all items
-# When I import 2 references from "export/*.json"
-# Then an export using "Better BibLaTeX" should match "export/*.biblatex"
-# When I select the item with a field that contains "Collapse"
-# Then a quick-copy using "Better BibLaTeX" should match "export/*.biblatex"
+  @use.with_client=zotero
+  Scenario: Using zotero.lua .md to .docx to add canonic number after comma without 'p.' #2248
+    Given I import 2 references from "export/*.json"
+    When I compile "export/*.md" to "~/*.odt" it should match "export/*.odt"
+
+  @use.with_client=zotero @use.with_slow=true @timeout=3000
+  Scenario: Compare export times
+    Given I import 86 references from "export/*.json"
+    And I set preference .cache to false
+    Then I export the library 50 times using "Better BibTeX"
+    # stock bibtex
+    And I export the library 50 times using "id:9cb70025-a888-4a29-a210-93ec52da40d4"
+    Then I export the library 50 times using "Better BibLaTeX"
+    # stock biblatex
+    And I export the library 50 times using "id:b6e39b57-8942-4d11-8259-342c46ce395f"
+    Then I set preference .cache to true
+    And I export the library 50 times using "Better BibTeX"
+    And I export the library 50 times using "Better BibLaTeX"
+
+  # Scenario: error exporting Better BibLaTex this.preference.skipFields is undefined #2029
+  # Given I restart Zotero
+  # And I remove all items
+  # When I import 2 references from "export/*.json"
+  # Then an export using "Better BibLaTeX" should match "export/*.biblatex"
+  # When I select the item with a field that contains "Collapse"
+  # Then a quick-copy using "Better BibLaTeX" should match "export/*.biblatex"
+  Scenario: `Error getCollections configure option not set` when exporting to citation graph #2319
+    Given I import 2 references from "export/*.json"
+    Then an export using "Citation graph" should match "export/*.dot"

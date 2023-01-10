@@ -6,9 +6,9 @@ import sys
 from types import SimpleNamespace
 
 clients = [
-  SimpleNamespace(exe='zotero', installdir='Zotero'),
-  SimpleNamespace(exe='zotero', installdir='Zotero-beta'),
   SimpleNamespace(exe='jurism', installdir='Jurism'),
+  SimpleNamespace(exe='zotero', installdir='Zotero-beta'),
+  SimpleNamespace(exe='zotero', installdir='Zotero'),
 ]
 
 for client in clients:
@@ -21,10 +21,14 @@ for client in clients:
     print('skipping', client)
     continue
 
-  with open(launcher, 'w') as f:
-    f.write('#!/bin/bash\n')
-    f.write('set -x\n')
-    f.write(f'{exe} -P -datadir profile\n')
+  try:
+    with open(launcher, 'w') as f:
+      f.write('#!/bin/bash\n')
+      f.write('set -x\n')
+      f.write(f'{exe} -P -datadir profile\n')
+  except:
+    print('could not update', client.exe)
+    continue
 
   os.chmod(launcher, os.stat(exe).st_mode)
 

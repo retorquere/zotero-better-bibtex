@@ -1,0 +1,10 @@
+[
+  {
+    "op": "remove",
+    "path": "/5/script-writer"
+  },
+  {
+    "op": "remove",
+    "path": "/4/script-writer"
+  }
+]

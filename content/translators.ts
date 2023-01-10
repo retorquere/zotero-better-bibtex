@@ -7,61 +7,42 @@ declare class ChromeWorker extends Worker { }
 Components.utils.import('resource://zotero/config.js')
 declare const ZOTERO_CONFIG: any
 
+import { clone } from './clone'
 import { Deferred } from './deferred'
 import type { Translators as Translator } from '../typings/translators'
 import { Preference } from './prefs'
 import { schema } from '../gen/preferences/meta'
 import { Serializer } from './serializer'
 import { log } from './logger'
-import { DB as Cache, selector as cacheSelector } from './db/cache'
+import { DB as Cache } from './db/cache'
 import { DB } from './db/main'
 import { flash } from './flash'
 import { $and, Query } from './db/loki'
 import { Events } from './events'
 import { Pinger } from './ping'
+import Puqeue from 'puqeue'
+
+class Queue extends Puqeue {
+  get queued() {
+    return this._queue.length
+  }
+}
 
 import * as translatorMetadata from '../gen/translators.json'
 
-import { TaskEasy } from 'task-easy'
-
 import * as l10n from './l10n'
 
-interface Priority {
-  priority: number
-  timestamp: number
-}
-
 type ExportScope = { type: 'items', items: any[] } | { type: 'library', id: number } | { type: 'collection', collection: any }
-type ExportJob = {
-  scope?: ExportScope
-  path?: string
+export type ExportJob = {
+  translatorID: string
+  displayOptions: Record<string, boolean>
+  scope: ExportScope
+  autoExport?: number
   preferences?: Record<string, boolean | number | string>
+  path?: string
   started?: number
   canceled?: boolean
-  translate: any
-}
-
-class Queue {
-  private queue: TaskEasy<Priority>
-
-  constructor() {
-    this.queue = new TaskEasy((t1: Priority, t2: Priority) => t1.priority === t2.priority ? t1.timestamp < t2.timestamp : t1.priority > t2.priority)
-  }
-
-  public async schedule(task: TaskEasy.Task<string>, translatorID: string, displayOptions: Record<string, boolean>, job: ExportJob) {
-    job.started = Date.now()
-    if (job.path) {
-      for (const scheduled of (this.queue as any).tasks) {
-        if (scheduled.started < job.started && scheduled.args && scheduled.args.length === 3) { // eslint-disable-line no-magic-numbers
-          const scheduledJob = (scheduled.args[2] as ExportJob)
-          if (scheduledJob.path && scheduledJob.path === job.path) {
-            scheduledJob.canceled = true
-          }
-        }
-      }
-    }
-    return await this.queue.schedule(task, [translatorID, displayOptions, job], { priority: 1, timestamp: job.started })
-  }
+  translate?: any
 }
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
@@ -70,13 +51,12 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
   public byName: Record<string, Translator.Header>
   public byLabel: Record<string, Translator.Header>
   public itemType: { note: number, attachment: number, annotation: number }
+  public queue = new Queue
+  public worker: ChromeWorker
 
-  private queue = new Queue
-
-  public workers: { total: number, running: Set<string>, disabled: boolean, startup: number } = {
+  public workers: { total: number, running: Set<number>, startup: number } = {
     total: 0,
     running: new Set,
-    disabled: false,
     startup: 0,
   }
 
@@ -85,6 +65,8 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
   }
 
   public async init() {
+    await this.start()
+
     this.itemType = {
       note: Zotero.ItemTypes.getID('note'),
       attachment: Zotero.ItemTypes.getID('attachment'),
@@ -96,12 +78,17 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     this.uninstall('\u672B BetterBibTeX JSON (for debugging)')
     this.uninstall('BetterBibTeX JSON (for debugging)')
 
+    log.debug('zotero translators: waiting for init')
     await Zotero.Translators.init()
+    log.debug('zotero translators: init done')
 
     const reinit: { header: Translator.Header, code: string }[] = []
     let header: Translator.Header
     let code: string
+    // fetch from resource because that has the hash
     for (header of Object.keys(this.byName).map(name => JSON.parse(Zotero.File.getContentsFromURL(`resource://zotero-better-bibtex/${name}.json`)) as Translator.Header)) {
+      // workaround for mem limitations on Windows
+      if (typeof header.displayOptions?.worker === 'boolean') header.displayOptions.worker = !!Zotero.isWin
       if (code = await this.install(header)) reinit.push({ header, code })
     }
 
@@ -164,44 +151,90 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     return translation.newItems
   }
 
-  public async exportItemsByQueuedWorker(translatorID: string, displayOptions: Record<string, boolean>, job: ExportJob) {
-    if (this.workers.running.size > Preference.workers) {
-      return this.queue.schedule(this.exportItemsByWorker.bind(this), translatorID, displayOptions, job)
+  private async start() { // eslint-disable-line @typescript-eslint/require-await
+    if (this.worker) return
+
+    try {
+      const environment = Object.entries({
+        version: Zotero.version,
+        platform: Preference.platform,
+        locale: Zotero.locale,
+        clientName: Zotero.clientName,
+      }).map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`).join('&')
+
+      log.debug('translate: getting worker')
+      this.worker = new ChromeWorker(`chrome://zotero-better-bibtex/content/worker/zotero.js?${environment}`)
+      /*
+      const ping = new Promise((resolve, reject) => {
+        this.worker.onmessage = (e: { data: Translator.Worker.Message }) => {
+          if (e.data.kind === 'ping') {
+            resolve('')
+          }
+          else {
+            log.debug('translate: getting worker, ping response', e.data)
+            reject(e.data.kind)
+          }
+        }
+      })
+      this.worker.postMessage({ kind: 'ping' })
+      const timeout = await new Promise((resolve, reject) => setTimeout(reject, 2000)) // eslint-disable-line no-magic-numbers
+      await Promise.race([ping, timeout])
+      */
+      log.debug('translate: worker acquired')
     }
-    else {
-      return this.exportItemsByWorker(translatorID, displayOptions, job)
+    catch (err) {
+      log.error('translate: worker not acquired', err)
+      if (Preference.testing) throw err
+
+      flash(
+        'Failed to start background export',
+        `Could not start background export (${err.message}). Background exports have been disabled until restart -- report this as a bug at the Better BibTeX github project`,
+        15 // eslint-disable-line no-magic-numbers
+      )
+      this.worker = null
     }
   }
 
-  public async exportItemsByWorker(translatorID: string, displayOptions: Record<string, boolean>, job: ExportJob) {
-    if (job.path && job.canceled) return ''
+  public async exportItemsByWorker(job: ExportJob) {
+    await this.start()
 
+    if (!this.worker) {
+      // this returns a promise for a new export, but for a foreground export
+      return this.exportItems(job)
+    }
+    else {
+      return this.queueJob(job)
+    }
+  }
+
+  public async queueJob(job: ExportJob) {
+    return this.queue.add(() => this.exportItemsByQueuedWorker(job))
+  }
+
+  private async exportItemsByQueuedWorker(job: ExportJob) {
+    if (job.path && job.canceled) return ''
     await Zotero.BetterBibTeX.ready
     if (job.path && job.canceled) return ''
 
-    const translator = this.byId[translatorID]
+    const displayOptions = this.displayOptions(job.translatorID, job.displayOptions)
+
+    log.dump('eibqw: starting')
+    const translator = this.byId[job.translatorID]
 
     const start = Date.now()
 
     job.preferences = job.preferences || {}
-    displayOptions = displayOptions || {}
 
     // undo override smuggling so I can pre-fetch the cache
     const cloaked_override = 'preference_'
-    const cloaked_auto_export = 'auto_export_id'
-    let autoExport: number
     for (const [pref, value] of Object.entries(displayOptions)) {
       if (pref.startsWith(cloaked_override)) {
-        job.preferences[pref.replace(cloaked_override, '')] = (value as unknown as any)
-        delete displayOptions[pref]
-      }
-      else if (pref === cloaked_auto_export) {
-        autoExport = parseInt(value as unknown as string)
+        job.preferences[pref.replace(cloaked_override, '')] = (value as string)
         delete displayOptions[pref]
       }
     }
 
-    const caching = Preference.caching && !(
+    const cache = Preference.cache && !(
       // when exporting file data you get relative paths, when not, you get absolute paths, only one version can go into the cache
       displayOptions.exportFileData
 
@@ -210,62 +243,37 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
       // relative file paths are going to be different based on the file being exported to
       || job.preferences.relativeFilePaths
-    )
-
-    const cache = caching && Cache.getCollection(translator.label)
+    ) && Cache.getCollection(translator.label)
 
     this.workers.total += 1
-    const id = `${this.workers.total}`
+    const id = this.workers.total
     this.workers.running.add(id)
 
-    const workerContext = Object.entries({
-      version: Zotero.version,
-      platform: Preference.platform,
-      translator: translator.label,
-      output: job.path || '',
-      localeDateOrder: Zotero.BetterBibTeX.localeDateOrder,
-      debugEnabled: Zotero.Debug.enabled ? 'true' : 'false',
-      worker: id,
-    }).map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`).join('&')
-
     const deferred = new Deferred<string>()
-    let worker: Worker = null
-    try {
-      worker = new ChromeWorker(`chrome://zotero-better-bibtex/content/worker/zotero.js?${workerContext}`)
-    }
-    catch (err) {
-      deferred.reject('could not get a Worker')
-      flash(
-        'Failed to start background export',
-        'Could not start a background export. Background exports have been disabled -- PLEASE report this as a bug at the Better BibTeX github project',
-        15 // eslint-disable-line no-magic-numbers
-      )
-      this.workers.disabled = true
-      // this returns a promise for a new export, but now a foreground export
-      return this.exportItems(translatorID, displayOptions, job.scope, job.path)
-    }
 
-    const config: Translator.Worker.Config = {
+    const config: Translator.Worker.Job = {
       preferences: { ...Preference.all, ...job.preferences },
       options: displayOptions || {},
-      items: [],
-      collections: [],
-      cslItems: {},
-      cache: {},
-      autoExport,
+      data: {
+        items: [],
+        collections: [],
+        cache: {},
+      },
+      autoExport: job.autoExport,
+
+      translator: translator.label,
+      output: job.path || '',
+      debugEnabled: !!Zotero.Debug.enabled,
+      job: id,
     }
 
-    const selector = schema.translator[translator.label]?.cached ? cacheSelector(translator.label, config.options, config.preferences) : null
-
     let items: any[] = []
-    worker.onmessage = (e: { data: Translator.Worker.Message }) => {
+    this.worker.onmessage = (e: { data: Translator.Worker.Message }) => {
       switch (e.data?.kind) {
         case 'error':
           log.status({error: true, translator: translator.label, worker: id}, 'QBW failed:', Date.now() - start, e.data)
-          job.translate._runHandler('error', e.data) // eslint-disable-line no-underscore-dangle
+          job.translate?._runHandler('error', e.data) // eslint-disable-line no-underscore-dangle
           deferred.reject(e.data.message)
-          worker.postMessage({ kind: 'stop' })
-          worker.terminate()
           this.workers.running.delete(id)
           break
 
@@ -275,44 +283,19 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
           break
 
         case 'item':
-          job.translate._runHandler('itemDone', items[e.data.item]) // eslint-disable-line no-underscore-dangle
+          job.translate?._runHandler('itemDone', items[e.data.item]) // eslint-disable-line no-underscore-dangle
           break
 
         case 'done':
-          Events.emit('export-progress', 100, translator.label, autoExport) // eslint-disable-line no-magic-numbers
+          Events.emit('export-progress', 100, translator.label, job.autoExport) // eslint-disable-line no-magic-numbers
           deferred.resolve(typeof e.data.output === 'boolean' ? '' : e.data.output)
-          worker.postMessage({ kind: 'stop' })
-          worker.terminate()
           this.workers.running.delete(id)
           break
 
         case 'cache':
           let { itemID, entry, metadata } = e.data
           if (!metadata) metadata = {}
-
-          if (!cache) {
-            const msg = `worker.cacheStore: cache ${translator.label} not found`
-            log.error(msg)
-            deferred.reject(msg)
-            worker.postMessage({ kind: 'stop' })
-            worker.terminate()
-            this.workers.running.delete(id)
-          }
-
-          const query = {...selector, itemID}
-          let cached = cache.findOne($and(query))
-
-          if (cached) {
-            // this should not happen?
-            log.error('unexpected cache store:', query)
-            cached.entry = entry
-            cached.metadata = metadata
-            cached = cache.update(cached)
-
-          }
-          else {
-            cache.insert({...query, entry, metadata})
-          }
+          Cache.store(translator.label, itemID, config.options, config.preferences, entry, metadata)
           break
 
         case 'progress':
@@ -327,16 +310,15 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       }
     }
 
-    worker.onerror = e => {
+    this.worker.onerror = e => {
       log.status({error: true, translator: translator.label, worker: id}, 'QBW: failed:', Date.now() - start, 'message:', e)
-      job.translate._runHandler('error', e) // eslint-disable-line no-underscore-dangle
+      job.translate?._runHandler('error', e) // eslint-disable-line no-underscore-dangle
       deferred.reject(e.message)
-      worker.postMessage({ kind: 'stop' })
-      worker.terminate()
       this.workers.running.delete(id)
     }
 
     const scope = this.exportScope(job.scope)
+    log.dump('eibqw: fetching scope', scope)
     let collections: any[] = []
     switch (scope.type) {
       case 'library':
@@ -366,15 +348,19 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
     items = items.filter(item => !item.isAnnotation?.())
 
+    log.dump('eibqw: loading serialization cache')
     let worked = Date.now()
-    config.items = []
     const prepare = new Pinger({
-      total: items.length * (translator.label.includes('CSL') ? 2 : 1),
-      callback: pct => Events.emit('export-progress', -pct, translator.label, autoExport),
+      total: items.length,
+      callback: pct => {
+        let preparing = `${l10n.localize('Preferences.auto-export.status.preparing')} ${translator.label}`.trim()
+        if (this.queue.queued) preparing += ` +${Translators.queue.queued}`
+        Events.emit('export-progress', pct, preparing, job.autoExport)
+      },
     })
     // use a loop instead of map so we can await for beachball protection
     for (const item of items) {
-      config.items.push(Serializer.fast(item))
+      config.data.items.push(Serializer.fast(item))
 
       // sleep occasionally so the UI gets a breather
       if ((Date.now() - worked) > 100) { // eslint-disable-line no-magic-numbers
@@ -386,8 +372,8 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     }
     if (job.path && job.canceled) return ''
 
-    if (this.byId[translatorID].configOptions?.getCollections) {
-      config.collections = collections.map(collection => {
+    if (this.byId[job.translatorID].configOptions?.getCollections) {
+      config.data.collections = collections.map(collection => {
         collection = collection.serialize(true)
         collection.id = collection.primary.collectionID
         collection.name = collection.fields.name
@@ -395,15 +381,17 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       })
     }
 
+    log.dump('eibqw: loading export cache')
     // pre-fetch cache
     if (cache) {
-      const query = {...selector, itemID: { $in: config.items.map(item => item.itemID) }}
+      const selector = schema.translator[translator.label]?.cache ? Cache.selector(translator.label, config.options, config.preferences) : null
+      const query = {...selector, itemID: { $in: config.data.items.map(item => item.itemID) }}
 
       // not safe in async!
       const cloneObjects = cache.cloneObjects
       // uncloned is safe because it gets serialized in the transfer
       cache.cloneObjects = false
-      config.cache = cache.find($and(query)).reduce((acc, cached) => {
+      config.data.cache = cache.find($and(query)).reduce((acc, cached) => {
         // direct-DB access for speed...
         cached.meta.updated = (new Date).getTime() // touches the cache object so it isn't reaped too early
         acc[cached.itemID] = cached
@@ -413,42 +401,48 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       cache.dirty = true
     }
 
-    // pre-fetch CSL serializations
-    // TODO: I should probably cache these
-    if (translator.label.includes('CSL')) {
-      for (const item of config.items) {
-        // if there's a cached item, we don't need a fresh CSL item since we're not regenerating it anyhow
-        if (!config.cache[item.itemID]) {
-          config.cslItems[item.itemID] = Zotero.Utilities.itemToCSLJSON(item)
-        }
-        prepare.update()
-      }
-    }
     prepare.done()
+    log.dump('eibqw: prepare done')
 
     // if the average startup time is greater than the autoExportDelay, bump up the delay to prevent stall-cascades
     this.workers.startup += Math.ceil((Date.now() - start) / 1000) // eslint-disable-line no-magic-numbers
     // eslint-disable-next-line no-magic-numbers
-    if (this.workers.total > 5 && (this.workers.startup / this.workers.total) > Preference.autoExportDelay) Preference.autoExportDelay = Math.ceil(this.workers.startup / this.workers.total)
+    if (this.workers.total > 5 && (this.workers.startup / this.workers.total) > Preference.autoExportDelay) {
+      Preference.autoExportDelay = Math.ceil(this.workers.startup / this.workers.total)
+      log.dump('eibqw: bumping autoExportDelay to', Preference.autoExportDelay)
+    }
 
+    log.dump('eibqw: encoding payload')
     const enc = new TextEncoder()
     // stringify gets around 'object could not be cloned', and arraybuffers can be passed zero-copy. win-win
     const abconfig = enc.encode(JSON.stringify(config)).buffer
 
-    worker.postMessage({ kind: 'start', config: abconfig }, [ abconfig ])
+    log.dump('eibqw: starting worker export:', config.data.items.length, 'items, cache:', !!cache, Object.keys(config.data.cache).length, 'items cached')
+    this.worker.postMessage({ kind: 'start', config: abconfig }, [ abconfig ])
 
     return deferred.promise
   }
 
-  public async exportItems(translatorID: string, displayOptions: any, scope: ExportScope, path: string = null): Promise<string> {
+  public displayOptions(translatorID: string, displayOptions: any): any {
+    displayOptions = clone(displayOptions || this.byId[translatorID]?.displayOptions || {})
+    const defaults = this.byId[translatorID]?.displayOptions || {}
+    for (const [k, v] of Object.entries(defaults)) {
+      if (typeof displayOptions[k] === 'undefined') displayOptions[k] = v
+    }
+    return displayOptions
+  }
+
+  // public async exportItems(translatorID: string, displayOptions: any, scope: ExportScope, path: string = null): Promise<string> {
+  public async exportItems(job: ExportJob): Promise<string> {
     await Zotero.BetterBibTeX.ready
+    const displayOptions = this.displayOptions(job.translatorID, job.displayOptions)
 
     const start = Date.now()
 
     const deferred = Zotero.Promise.defer()
     const translation = new Zotero.Translate.Export()
 
-    scope = this.exportScope(scope)
+    const scope = this.exportScope(job.scope)
 
     switch (scope.type) {
       case 'library':
@@ -467,14 +461,14 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
         throw new Error(`Unexpected scope: ${Object.keys(scope)}`)
     }
 
-    translation.setTranslator(translatorID)
-    if (displayOptions && (Object.keys(displayOptions).length !== 0)) translation.setDisplayOptions(displayOptions)
+    translation.setTranslator(job.translatorID)
+    if (Object.keys(displayOptions).length !== 0) translation.setDisplayOptions(displayOptions)
 
-    if (path) {
+    if (job.path) {
       let file = null
 
       try {
-        file = Zotero.File.pathToFile(path)
+        file = Zotero.File.pathToFile(job.path)
         // path could exist but not be a regular file
         if (file.exists() && !file.isFile()) file = null
       }
@@ -484,13 +478,13 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
         file = null
       }
       if (!file) {
-        deferred.reject(l10n.localize('Translate.error.target.notaFile', { path }))
+        deferred.reject(l10n.localize('Translate.error.target.notaFile', { path: job.path }))
         return deferred.promise
       }
 
       // the parent directory could have been removed
       if (!file.parent || !file.parent.exists()) {
-        deferred.reject(l10n.localize('Translate.error.target.noParent', { path }))
+        deferred.reject(l10n.localize('Translate.error.target.noParent', { path: job.path }))
         return deferred.promise
       }
 
@@ -502,8 +496,8 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
         deferred.resolve(obj ? obj.string : undefined)
       }
       else {
-        log.error('Translators.exportItems failed in', { time: Date.now() - start, translatorID, displayOptions, path })
-        deferred.reject('translation failed')
+        log.error('error: Translators.exportItems failed in', { time: Date.now() - start, ...job, translate: undefined })
+        deferred.reject('error: translation failed')
       }
     })
 
@@ -538,7 +532,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       Zotero.File.getContentsFromURL(`resource://zotero-better-bibtex/${header.label}.js`),
     ].join('\n')
 
-    if (schema.translator[header.label]?.cached) Cache.getCollection(header.label).removeDataOnly()
+    if (schema.translator[header.label]?.cache) Cache.getCollection(header.label).removeDataOnly()
 
     // importing AutoExports would be circular, so access DB directly
     const autoexports = DB.getCollection('autoexport')
@@ -560,7 +554,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
   public async uncached(translatorID: string, displayOptions: any, scope: any): Promise<any[]> {
     // get all itemIDs in cache
-    const cache = Preference.caching && Cache.getCollection(this.byId[translatorID].label)
+    const cache = Preference.cache && Cache.getCollection(this.byId[translatorID].label)
     if (!cache) return []
 
     const query: Query = {$and: [

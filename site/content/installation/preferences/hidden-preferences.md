@@ -18,23 +18,17 @@ default: `<not set>`
 
 If you have unicode turned on you can still selectively replace some characters to plain-text commands; any characters entered here will always be replaced by their LaTeX-command counterparts.
 
-## autoExportDelay
+## Abbreviation style:
 
-default: `5`
+default: `<not set>`
 
-If you have auto-exports set up, BBT will wait this many seconds before actually kicking off the exports to buffer multiple changes in quick succession setting off an unreasonable number of auto-exports. Minimum is 1 second. Changes to this preference take effect after restarting Zotero.
+Select the style for auto-abbreviation. Only applicable to Juris-M; in Zotero, the style for automatic abbreviation is not configurable.
 
 ## autoExportIdleWait
 
 default: `10`
 
 Number of seconds to wait after your system goes idle before kicking off auto-exports.
-
-## autoPinDelay
-
-default: `0`
-
-When > 0, BBT will automatically pin the first citation keys it generates for an item after this many seconds.
 
 ## biblatexExtendedDateFormat
 
@@ -84,6 +78,12 @@ default: `yes`
 
 On import, place all bib(la)tex field Zotero doesn't have an existing field for in the Zotero `extra` field of the item
 
+## importNoteToExtra
+
+default: `<not set>`
+
+On import, import note-like fields in this comma-separated list to the `extra` field, unless the note has rich text.
+
 ## importUnknownTexCommand
 
 default: `ignore`
@@ -118,9 +118,9 @@ Name particle handling. Only turn on when requested and we're talking about it o
 
 ## patchDates
 
-default: `<not set>`
+default: `dateadded=dateAdded, date-added=dateAdded, datemodified=dateModified, date-modified=dateModified`
 
-Import translators cannot set the date-added and date-modified of the items that are imported, they always get the current time as their date-added. BBT will leave fields it can't map as `tex.[field]` in the `extra` field of the item. If you enter a list of comma-separated field mappings here, like `date-added = dateAdded, timestamp=dateModified`, BBT will offer a menu option to remove them from the `extra` field and set the corresponding date of the item to their values, assuming they can be parsed as simple dates (no circa and stuff). The default mappings `tex.dateadded=dateadded, tex.datemodified=datemodified` are always active.
+Import translators cannot set the date-added and date-modified of the items that are imported, they always get the current time as their date-added. BBT will leave fields it can't map as `tex.[field]` in the `extra` field of the item. If you enter a list of comma-separated field mappings here, like `date-added = dateAdded, timestamp=dateModified`, BBT will offer a menu option to remove them from the `extra` field and set the corresponding date of the item to their values, assuming they can be parsed as simple dates (no circa and stuff).
 
 ## postscriptOverride
 
@@ -198,7 +198,7 @@ A strings override will disable caching for that export.
 
 ## verbatimFields
 
-default: `url,doi,file,ids,eprint,verba,verbb,verbc,groups`
+default: `url,doi,file,ids,eprint,/^verb[a-z]$/,groups,/^citeulike-linkout-[0-9]+$/, /^bdsk-url-[0-9]+$/`
 
 list of fields to treat as verbatim during import. If you're importing e.g. Mendeley-generated BibTeX, which is out of spec in various ways, try removing `file` from this list before import.
 
@@ -207,15 +207,3 @@ list of fields to treat as verbatim during import. If you're importing e.g. Mend
 default: `no`
 
 Both Zotero and BBT expect titles to be in sentence-case, but a lot of sites offer import data that is Title Cased. When exporting these titles to bib(la)tex you're going to get a lot of extra unwanted braces, because all these Title Cased words will look like proper nouns to BBTs own title-casing mechanism. When this setting is on, you will be warned when you import/save items in Zotero with titles that look like they're Title Cased, so that you can inspect/correct them.
-
-## Abbreviation style:
-
-default: `<not set>`
-
-Select the style for auto-abbreviation. Only applicable to Juris-M; in Zotero, the style for automatic abbreviation is not configurable.
-
-## Citation key format
-
-default: `​[auth:lower][shorttitle3_3][year]`
-
-Set the pattern used to generate citation keys. The format of the keys is documented [here]({{ ref . "citing" }}).

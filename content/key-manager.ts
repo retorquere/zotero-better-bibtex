@@ -1,3 +1,5 @@
+Components.utils.import('resource://gre/modules/Services.jsm')
+
 import ETA from 'node-eta'
 
 import { kuroshiro } from './key-manager/japanese'
@@ -6,10 +8,11 @@ import { jieba } from './key-manager/chinese'
 import { Scheduler } from './scheduler'
 import { log } from './logger'
 import { flash } from './flash'
-import { Events, itemsChanged as notifyItemsChanged } from './events'
+import { Events } from './events'
 import { fetchAsync as fetchInspireHEP } from './inspire-hep'
 import * as Extra from './extra'
 import { $and, Query } from './db/loki'
+import { excelColumn } from './text'
 
 import * as ZoteroDB from './db/zotero'
 
@@ -23,7 +26,6 @@ import { DB as Cache } from './db/cache'
 import { patch as $patch$ } from './monkey-patch'
 
 import { sprintf } from 'sprintf-js'
-import { intToExcelCol } from 'excel-column-name'
 
 import * as l10n from './l10n'
 
@@ -32,7 +34,7 @@ type CitekeySearchRecord = { itemID: number, libraryID: number, itemKey: string,
 export class KeyManager {
   public keys: any
   public query: {
-    field: { extra?: number }
+    field: { extra?: number, title?: number }
     type: {
       note?: number
       attachment?: number
@@ -41,7 +43,7 @@ export class KeyManager {
   }
   public autopin: Scheduler = new Scheduler('autoPinDelay', 1000) // eslint-disable-line no-magic-numbers
 
-  private scanning: any[]
+  private regenerate: number[]
   private started = false
 
   private getField(item: { getField: ((str: string) => string)}, field: string): string {
@@ -71,7 +73,7 @@ export class KeyManager {
     ids = this.expandSelection(ids)
 
     for (const item of await getItemsAsync(ids)) {
-      if (!item.isRegularItem()) continue
+      if (item.isFeedItem || !item.isRegularItem()) continue
 
       const extra = this.getField(item, 'extra')
       const parsed = Extra.get(extra, 'zotero')
@@ -96,7 +98,7 @@ export class KeyManager {
     ids = this.expandSelection(ids)
 
     for (const item of await getItemsAsync(ids)) {
-      if (!item.isRegularItem()) continue
+      if (item.isFeedItem || !item.isRegularItem()) continue
 
       const parsed = Extra.get(item.getField('extra'), 'zotero', { citationKey: true })
       if (!parsed.extraFields.citationKey) continue
@@ -132,7 +134,7 @@ export class KeyManager {
 
     const updates = []
     for (const item of await getItemsAsync(ids)) {
-      if (!item.isRegularItem()) continue
+      if (item.isFeedItem || !item.isRegularItem()) continue
 
       const extra = item.getField('extra')
 
@@ -160,7 +162,7 @@ export class KeyManager {
       }
     }
 
-    if (updates.length) notifyItemsChanged(updates)
+    if (updates.length) Events.itemsChanged(updates)
   }
 
   public async init(): Promise<void> {
@@ -292,7 +294,7 @@ export class KeyManager {
     }
 
     Events.on('preference-changed', pref => {
-      if (['autoAbbrevStyle', 'citekeyFormat', 'citekeyFold', 'skipWords'].includes(pref)) {
+      if (['autoAbbrevStyle', 'citekeyFormat', 'citekeyFold', 'citekeyUnsafeChars', 'skipWords'].includes(pref)) {
         Formatter.update('pref-change')
       }
     })
@@ -351,6 +353,7 @@ export class KeyManager {
 
   public async rescan(clean?: boolean): Promise<void> {
     if (Preference.scrubDatabase) {
+      log.debug('scrubbing database')
       this.keys.removeWhere(i => !i.citekey) // 2047
 
       let errors = 0
@@ -369,94 +372,90 @@ export class KeyManager {
       if (errors) alert(`Better BibTeX: ${errors} errors found in the citekey database, please report on the Better BibTeX project site`)
     }
 
-    if (Array.isArray(this.scanning)) {
-      let left: string
-      if (this.scanning.length) {
-        left = `, ${this.scanning.length} items left`
-      }
-      else {
-        left = ''
-      }
-      flash('Scanning still in progress', `Scan is still running${left}`)
+    if (Array.isArray(this.regenerate)) {
+      flash('Regeneration still in progress', 'Citation key regeneration is still running')
       return
     }
 
-    this.scanning = []
+    this.regenerate = []
 
     if (clean) this.keys.removeDataOnly()
 
-    const marker = '\uFFFD'
-
-    const ids = []
-    const items = await ZoteroDB.queryAsync(`
-      SELECT item.itemID, item.libraryID, item.key, extra.value as extra, item.itemTypeID
-      FROM items item
-      LEFT JOIN itemData field ON field.itemID = item.itemID AND field.fieldID = ${this.query.field.extra}
-      LEFT JOIN itemDataValues extra ON extra.valueID = field.valueID
-      WHERE item.itemID NOT IN (select itemID from deletedItems)
-      AND item.itemTypeID NOT IN (${this.query.type.attachment}, ${this.query.type.note}, ${this.query.type.annotation || this.query.type.note})
-    `)
-    for (const item of items) {
-      ids.push(item.itemID)
-      // if no citekey is found, it will be '', which will allow it to be found right after this loop
-      const extra = Extra.get(item.extra, 'zotero', { citationKey: true })
-
-      // don't fetch when clean is active because the removeDataOnly will have done it already
-      const existing = clean ? null : this.keys.findOne($and({ itemID: item.itemID }))
-      if (!existing) {
-        // if the extra doesn't have a citekey, insert marker, next phase will find & fix it
-        this.keys.insert({ citekey: extra.extraFields.citationKey || marker, pinned: !!extra.extraFields.citationKey, itemID: item.itemID, libraryID: item.libraryID, itemKey: item.key })
-
-      }
-      else if (extra.extraFields.citationKey && ((extra.extraFields.citationKey !== existing.citekey) || !existing.pinned)) {
-        // we have an existing key in the DB, extra says it should be pinned to the extra value, but it's not.
-        // update the DB to have the itemkey if necessaru
-        this.keys.update({ ...existing, citekey: extra.extraFields.citationKey, pinned: true, itemKey: item.key })
-
-      }
-      else if (!existing.itemKey) {
-        this.keys.update({ ...existing, itemKey: item.key })
-      }
+    const keyLine = /(^|\n)Citation Key\s*:\s*(.+?)(\n|$)/i
+    const getKey = (extra: string) => {
+      if (!extra) return ''
+      const m = keyLine.exec(extra)
+      return m ? m[2].trim() : ''
     }
 
-    this.keys.findAndRemove({ itemID: { $nin: ids } })
+    type DBState = Map<number, { itemKey: string, citationKey: string }>
+    const inzdb: DBState = (await ZoteroDB.queryAsync(`
+      SELECT item.itemID, item.key, extra.value as extra
+      FROM items item
 
-    // find all items without citekey
-    this.scanning = this.keys.find($and({ citekey: marker }))
+      LEFT JOIN itemData extraField ON extraField.itemID = item.itemID AND extraField.fieldID = ${this.query.field.extra}
+      LEFT JOIN itemDataValues extra ON extra.valueID = extraField.valueID
 
-    if (this.scanning.length !== 0) {
+      WHERE item.itemID NOT IN (SELECT itemID FROM deletedItems)
+        AND item.itemTypeID NOT IN (${this.query.type.attachment}, ${this.query.type.note}, ${this.query.type.annotation || this.query.type.note})
+        AND item.itemID NOT IN (SELECT itemID from feedItems)
+    `)).reduce((acc: DBState, item) => {
+      acc.set(item.itemID, {
+        itemKey: item.key,
+        citationKey: getKey(item.extra),
+      })
+      return acc
+    }, new Map)
+
+    const deleted: number[] = []
+    for (const bbt of this.keys.data) {
+      const zotero = inzdb.get(bbt.itemID)
+
+      if (!zotero) {
+        deleted.push(bbt.itemID)
+        // log.debug('keymanager.rescan: deleted', bbt, 'from key database, no counterpart in Zotero DB')
+      }
+      else if (zotero.citationKey && (!bbt.pinned || bbt.citekey !== zotero.citationKey)) {
+        this.keys.update({...bbt, pinned: true, citekey: zotero.citationKey, itemKey: zotero.itemKey })
+        // log.debug('keymanager.rescan: updated', bbt, 'using', zotero)
+      }
+      else if (!zotero.citationKey && bbt.citekey && bbt.pinned) {
+        this.keys.update({...bbt, pinned: false, itemKey: zotero.itemKey})
+        // log.debug('keymanager.rescan: updated', bbt, 'using', zotero)
+      }
+      else if (!bbt.citekey) { // this should not be possible
+        this.regenerate.push(bbt.itemID)
+        // log.debug('keymanager.rescan: regenerating', bbt, 'missing citekey')
+      }
+
+      inzdb.delete(bbt.itemID)
+    }
+    // if (inzdb.size) log.debug('keymanager.rescan:', inzdb.size, 'new items', { itemIDs: [...inzdb.entries()] })
+
+    this.keys.findAndRemove({ itemID: { $in: [...deleted, ...this.regenerate] } })
+    this.regenerate.push(...inzdb.keys()) // generate new keys for items that are in the Z db but not in the BBT db
+
+    if (this.regenerate.length) {
       const progressWin = new Zotero.ProgressWindow({ closeOnClick: false })
       progressWin.changeHeadline('Better BibTeX: Assigning citation keys')
-      progressWin.addDescription(`Found ${this.scanning.length} items without a citation key`)
+      progressWin.addDescription(`Found ${this.regenerate.length} items without a citation key`)
       const icon = `chrome://zotero/skin/treesource-unfiled${Zotero.hiDPI ? '@2x' : ''}.png`
       const progress = new progressWin.ItemProgress(icon, 'Assigning citation keys')
       progressWin.show()
 
-      const eta = new ETA(this.scanning.length, { autoStart: true })
-      for (let done = 0; done < this.scanning.length; done++) {
-        let key = this.scanning[done]
-        const item = await getItemsAsync(key.itemID)
-
-        if (key.citekey === marker) {
-          if (key.pinned) {
-            const parsed = Extra.get(item.getField('extra'), 'zotero', { citationKey: true })
-            item.setField('extra', parsed.extra)
-            await item.saveTx({ [key.itemID]: { bbtCitekeyUpdate: true } })
-          }
-          key = null
-        }
-
+      const eta = new ETA(this.regenerate.length, { autoStart: true })
+      for (const itemID of this.regenerate) {
         try {
-          this.update(item, key)
+          this.update(await getItemsAsync(itemID))
         }
         catch (err) {
-          log.error('KeyManager.rescan: update', done, 'failed:', err)
+          log.error('KeyManager.rescan: update', (eta.done as number) + 1, 'failed:', err.message || err, err.stack)
         }
 
         eta.iterate()
 
-        // eslint-disable-next-line no-magic-numbers
-        if ((done % 10) === 1) {
+        if ((eta.done % 10) === 1) { // eslint-disable-line no-magic-numbers
+          log.debug('keymanager.rescan: regenerated', eta.done)
           // eslint-disable-next-line no-magic-numbers
           progress.setProgress((eta.done * 100) / eta.count)
           progress.setText(eta.format(`${eta.done} / ${eta.count}, {{etah}} remaining`))
@@ -470,11 +469,11 @@ export class KeyManager {
       progressWin.startCloseTimer(500)
     }
 
-    this.scanning = null
+    this.regenerate = null
   }
 
   public update(item: ZoteroItem, current?: { pinned: boolean, citekey: string }): string {
-    if (!item.isRegularItem()) return null
+    if (item.isFeedItem || !item.isRegularItem()) return null
 
     current = current || this.keys.findOne($and({ itemID: item.id }))
 
@@ -519,23 +518,21 @@ export class KeyManager {
     const conflictQuery: Query = { $and: [ { itemID: { $ne: item.id } } ] }
     if (Preference.keyScope !== 'global') conflictQuery.$and.push({ libraryID: { $eq: item.libraryID } })
 
-    let postfix: string
     const seen = {}
     // eslint-disable-next-line no-constant-condition
-    for (let n = Formatter.postfix.start; true; n += 1) {
-      if (n) {
-        const alpha = intToExcelCol(n)
-        postfix = sprintf(Formatter.postfix.format, { a: alpha.toLowerCase(), A: alpha, n })
-      }
-      else {
-        postfix = ''
-      }
+    for (let n = Formatter.postfix.offset; true; n += 1) {
+      const postfixed = citekey.replace(Formatter.postfix.marker, () => {
+        let postfix = ''
+        if (n) {
+          const alpha = excelColumn(n)
+          postfix = sprintf(Formatter.postfix.template, { a: alpha.toLowerCase(), A: alpha, n })
+        }
+        // this should never happen, it'd mean the postfix pattern doesn't have placeholders, which should have been caught by parsePattern
+        if (seen[postfix]) throw new Error(`${JSON.stringify(Formatter.postfix)} does not generate unique postfixes`)
+        seen[postfix] = true
+        return postfix
+      })
 
-      // this should never happen, it'd mean the postfix pattern doesn't have placeholders, which should have been caught by parsePattern
-      if (seen[postfix]) throw new Error(`${JSON.stringify(Formatter.postfix)} does not generate unique postfixes`)
-      seen[postfix] = true
-
-      const postfixed = citekey + postfix
       const conflict = transient.includes(postfixed) || this.keys.findOne({ $and: [...conflictQuery.$and, { citekey: { $eq: postfixed } }] })
       if (conflict) continue
 

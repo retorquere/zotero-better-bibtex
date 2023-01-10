@@ -13,7 +13,6 @@
       "baseAttachmentPath": "/home/chayanin/Drive/Books",
       "biblatexExtendedNameFormat": true,
       "biblatexExtractEprint": false,
-      "caching": false,
       "citekeyFormat": "[auth:lower][year][veryshorttitle:lower]",
       "extraMergeCSL": true,
       "extraMergeCitekeys": true,

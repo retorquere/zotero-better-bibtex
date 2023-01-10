@@ -325,20 +325,28 @@ export const Application = new class { // eslint-disable-line @typescript-eslint
 export async function pick(options: any): Promise<string> {
   await Zotero.BetterBibTeX.ready
 
-  const doc = Application.createDocument(options)
-  await Zotero.Integration.execCommand('BetterBibTeX', 'addEditCitation', doc.id)
+  try {
+    const formatter = options.format || 'default'
+    if (!Formatter[formatter]) throw new Error(`No such formatter ${JSON.stringify(formatter)}`)
+    const doc = Application.createDocument(options)
+    await Zotero.Integration.execCommand('BetterBibTeX', 'addEditCitation', doc.id)
 
-  const picked = doc.citation()
-  const citation: string = picked.length ? await Formatter[options.format || 'playground'](picked, options) : ''
-  Application.closeDocument(doc)
+    const picked = doc.citation()
+    Zotero.debug(`picking ${JSON.stringify(options)}`)
+    const citation: string = picked.length ? await Formatter[formatter](picked, options) : ''
+    Application.closeDocument(doc)
 
-  if (options.select && picked.length) {
-    const zoteroPane = Zotero.getActiveZoteroPane()
-    zoteroPane.show()
-    await zoteroPane.selectItems(picked.map(item => item.id), true)
+    if (options.select && picked.length) {
+      const zoteroPane = Zotero.getActiveZoteroPane()
+      zoteroPane.show()
+      await zoteroPane.selectItems(picked.map(item => item.id), true)
+    }
+
+    return citation
   }
-
-  return citation
+  catch (err) {
+    flash('CAYW Failed', err.message)
+  }
 }
 
 async function selected(options): Promise<string> {

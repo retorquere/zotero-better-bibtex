@@ -7,7 +7,6 @@
       "exportNotes": true
     },
     "preferences": {
-      "caching": false,
       "citekeyFormat": "[auth:lower][year][journal:lower:abbr]",
       "quickCopyMode": "pandoc",
       "quickCopyPandocBrackets": true

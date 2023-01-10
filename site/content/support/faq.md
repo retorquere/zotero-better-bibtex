@@ -13,13 +13,6 @@ tags:
   - export
 ---
 
-## Are there any plans to support Firefox 57+?
-
-BBT lives where Zotero lives, and Zotero [only has standalone these
-days](https://www.zotero.org/blog/zotero-5-and-firefox-faq/). BBT is installed
-inside Zotero instead of in the browser. Please see the [installation
-instructions]({{< ref "/installation" >}}) to get started with BBT.
-
 ## Add-on could not be installed because it appears to be corrupt.
 
 You have downloaded the Better BibTeX plugin by clicking on the
@@ -174,3 +167,16 @@ JabRef import works generally well but has a few gotchas:
 ## [Background exports]({{< relref "../exporting/#background-exports" >}}) have been disabled
 
 When BBT encounters an error during a background export, it will automatically disable them; the UI will show `Background exports disabled`. For reasons that I haven't yet discovered, Firefox (the platform Zotero still builds on) sometimes declines BBT's request for a background thread, and will decline them until Zotero is restarted. In order to let you keep on working, BBT will disable background exports, and subsequent exports will be the normal Zotero foreground exports. You can re-enable the background exports using the `parallel exports` slider in BBT's `Advanced` preferences, under the `export` tab, or by restarting Zotero, which will re-enable them if you haven't manually set the slider to `0`.
+
+### Why Zotero + BBT instead of Mendeley?
+
+Among the reasons to just prefer Zotero over Mendeley outright you will find:
+
+* Mendeley is owned by Elsevier.
+* Mendeley thinks you [cannot be trusted with your own data](https://www.zotero.org/support/kb/mendeley_import#mendeley_database_encryption)
+
+But wrt bibtex export, I don't think the Mendeley engineers actively use bib(la)tex:
+
+* Mendeley is still double-bracing titles -- a behavior so wrong (yet unfortunately ubiquitous), biblatex started [ignoring double-braced titles]() (see [here](https://tex.stackexchange.com/a/327387/27603) and [here](https://tex.stackexchange.com/a/233976/27603)).
+* Mendeley uses CSL, so items should be entered in sentence case (as is the case in Zotero). But bib(la)tex expects title-case, so titles should be ocnverted to title case during export. This is difficult, so Mendeley just doesn't bother doing it.
+* Verbatim fields that should per spec be exported as regular fields by Mendeley.

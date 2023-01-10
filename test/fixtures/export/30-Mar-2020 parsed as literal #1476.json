@@ -8,8 +8,7 @@
     },
     "preferences": {
       "citekeyFormat": "[auth:lower][shorttitle3_3][year]",
-      "itemObserverDelay": 100,
-      "workers": 4
+      "itemObserverDelay": 100
     }
   },
   "items": [

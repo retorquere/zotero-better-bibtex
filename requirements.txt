@@ -32,8 +32,9 @@ python-slugify
 readmd
 redo
 reformat_gherkin
+reformat_gherkin
 requests
 ruamel.yaml
 selenium
+snakemake>=7.16
 toml
-reformat_gherkin

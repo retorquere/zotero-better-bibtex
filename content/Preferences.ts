@@ -7,14 +7,34 @@ import { patch as $patch$ } from './monkey-patch'
 import { DB as Cache } from './db/cache'
 
 import { Preference } from './prefs'
-import { options as preferenceOptions } from '../gen/preferences/meta'
+import { options as preferenceOptions, defaults as preferenceDefaults } from '../gen/preferences/meta'
 import { Formatter } from './key-manager/formatter'
 import { AutoExport } from './auto-export'
 import { Translators } from './translators'
 import { client } from './client'
 import * as l10n from './l10n'
+import { Events } from './events'
+import { pick } from './file-picker'
+import { flash } from './flash'
+// const dtdparser = require('./dtd-file.peggy')
 
 const namespace = 'http://retorque.re/zotero-better-bibtex/'
+
+export function start(win: Window): any {
+  log.debug('prefs.start')
+  /*
+  const prefwindow = win.document.querySelector('prefwindow#zotero-prefs')
+  if (!prefwindow) return log.error('prefs.start: prefwindow not found')
+  if (prefwindow) return
+
+  const xml = Zotero.File.getContentsFromURL('chrome://zotero-better-bibtex/content/Preferences.xul')
+  const url = xml.match(/<!DOCTYPE window SYSTEM "([^"]+)">/)[1]
+  const dtd: Record<string, string> = dtdparser.parse(Zotero.File.getContentsFromURL(url))
+
+  makeUI(win.document, prefwindow, dtd)
+  */
+  log.debug('>>>\n', win.document.documentElement.outerHTML, '\n<<<')
+}
 
 class AutoExportPane {
   private label: { [key: string]: string }
@@ -30,6 +50,12 @@ class AutoExportPane {
     }
 
     this.refresh()
+
+    Events.on('export-progress', (percent: number, _message: string, ae: number) => {
+      if (percent >= 100 && typeof ae === 'number') {
+        this.refreshCacheRate(ae).catch(err => log.error('failed to refresh cacherate for completed auto-export', ae, err))
+      }
+    })
   }
 
   public refresh() {
@@ -107,7 +133,7 @@ class AutoExportPane {
             break
 
           case 'status':
-            if (ae.status === 'running' && Preference.workers && typeof progress === 'number') {
+            if (ae.status === 'running' && typeof progress === 'number') {
               (node as XUL.Textbox).value = progress < 0 ? `${this.label?.preparing || 'preparing'} ${-progress}%` : `${progress}%`
             }
             else {
@@ -172,16 +198,26 @@ class AutoExportPane {
     this.refresh()
   }
 
-  public async refreshCacheRate(node) {
-    try {
-      const $loki = parseInt(node.getAttributeNS(namespace, 'ae-id'))
-      this.cacherate[$loki] = await AutoExport.cached($loki)
-      this.refresh()
+  public async refreshCacheRate(ae: Element | number) {
+    log.debug('getting cacherate for', typeof ae)
+    if (typeof ae !== 'number') ae = parseInt(ae.getAttributeNS(namespace, 'ae-id'))
+    log.debug('getting cacherate for', typeof ae)
+
+    if (typeof ae !== 'number') {
+      log.debug('refresh cacherate on unknown ae?', typeof ae)
     }
-    catch (err) {
-      log.error('could not refresh cacherate:', err)
-      this.cacherate = {}
+    else {
+      try {
+        log.debug('getting cacherate for', { ae })
+        this.cacherate[ae] = await AutoExport.cached(ae)
+        log.debug('refresh cacherate:', ae, '=', this.cacherate[ae])
+      }
+      catch (err) {
+        log.error('could not refresh cacherate for', ae, err)
+        delete this.cacherate[ae]
+      }
     }
+    this.refresh()
   }
 
   public edit(node) {
@@ -251,6 +287,56 @@ export class PrefPane {
   private globals: Record<string, any>
   // private prefwindow: HTMLElement
 
+  public async exportPrefs(): Promise<void> {
+    const file = await pick(Zotero.getString('fileInterface.export'), 'save', [['BBT JSON file', '*.json']])
+    if (!file) return
+    Zotero.File.putContents(Zotero.File.pathToFile(file), JSON.stringify({ config: { preferences: Preference.all } }, null, 2))
+  }
+
+  public async importPrefs(): Promise<void> {
+    const preferences: { path: string, contents?: string, parsed?: any } = {
+      path: await pick(Zotero.getString('fileInterface.import'), 'open', [['BBT JSON file', '*.json']]),
+    }
+    if (!preferences.path) return
+
+    try {
+      preferences.contents = Zotero.File.getContents(preferences.path)
+    }
+    catch (err) {
+      flash(`could not read contents of ${preferences.path}`)
+      return
+    }
+
+    try {
+      preferences.parsed = JSON.parse(preferences.contents)
+    }
+    catch (err) {
+      flash(`could not parse contents of ${preferences.path}`)
+      return
+    }
+
+    if (typeof preferences.parsed?.config?.preferences !== 'object') {
+      flash(`no preferences in ${preferences.path}`)
+      return
+    }
+
+    try {
+      log.debug('importing', preferences.path)
+      for (const [pref, value] of Object.entries(preferences.parsed.config.preferences)) {
+        if (typeof value === 'undefined' || typeof value !== typeof preferenceDefaults[pref]) {
+          flash(`Invalid ${typeof value} value for ${pref}, expected ${preferenceDefaults[pref]}`)
+        }
+        else if (Preference[pref] !== value) {
+          Preference[pref] = value
+          flash(`${pref} set`, `${pref} set to ${JSON.stringify(value)}`)
+        }
+      }
+    }
+    catch (err) {
+      flash(err.message)
+    }
+  }
+
   public getCitekeyFormat(target = null): void {
     if (target) this.keyformat = target
     this.keyformat.value = Preference.citekeyFormat
@@ -260,29 +346,44 @@ export class PrefPane {
     if (target) this.keyformat = target
     if (!this.keyformat || Zotero.BetterBibTeX.ready.isPending()) return // itemTypes not available yet
 
-    let msg
+    let msg = '', color = '', pattern = (this.keyformat.value as string) || ''
+
+    if (pattern.startsWith('[')) {
+      try {
+        pattern = Zotero.BetterBibTeX.KeyManager.convertLegacy(pattern)
+        msg = 'legacy citekey formula format'
+        color = 'yellow'
+      }
+      catch (err) {
+        msg = err.message
+        color = 'orange'
+      }
+    }
     try {
-      Formatter.parsePattern(this.keyformat.value)
-      msg = ''
+      Formatter.parsePattern(pattern)
       if (this.keyformat.value) this.saveCitekeyFormat(target)
     }
     catch (err) {
       msg = err.message
+      color = 'DarkOrange'
       if (err.location) msg += ` at ${(err.location.start.offset as number) + 1}`
       log.error('prefs: key format error:', msg)
     }
 
-    if (!this.keyformat.value && !msg) msg = 'pattern is empty'
+    if (!pattern && !msg) msg = 'pattern is empty'
 
-    this.keyformat.setAttribute('style', (msg ? '-moz-appearance: none !important; background-color: DarkOrange' : ''))
+    this.keyformat.setAttribute('style', (msg ? `-moz-appearance: none !important; background-color: ${color}` : ''))
     this.keyformat.setAttribute('tooltiptext', msg)
   }
 
   public saveCitekeyFormat(target = null): void {
     if (target) this.keyformat = target
     try {
-      Formatter.parsePattern(this.keyformat.value)
-      Preference.citekeyFormat = this.keyformat.value
+      let pattern = this.keyformat.value as string
+      if (pattern.startsWith('[')) pattern = Zotero.BetterBibTeX.KeyManager.convertLegacy(pattern)
+
+      Formatter.parsePattern(pattern)
+      Preference.citekeyFormat = pattern
     }
     catch (error) {
       // restore previous value
@@ -366,8 +467,8 @@ export class PrefPane {
 
     this.observer = new MutationObserver(this.mutated.bind(this))
     this.observed = this.globals.document.getElementById('zotero-prefpane-export')
-    this.observer.observe(this.observed, { childList: true, subtree: true })
-    // this.prefwindow = this.globals.document.getElementsByTagName('prefwindow')[0]
+    if (this.observed) this.observer.observe(this.observed, { childList: true, subtree: true })
+    const prefwindow = this.globals.document.getElementsByTagName('prefwindow')[0]
 
     const deck = this.globals.document.getElementById('better-bibtex-prefs-deck')
     deck.selectedIndex = 0
@@ -381,25 +482,21 @@ export class PrefPane {
 
     deck.selectedIndex = 1
 
-    if (typeof this.globals.Zotero_Preferences === 'undefined') {
-      log.error('Preferences.load: Zotero_Preferences not ready')
-      return
+    if (typeof this.globals.Zotero_Preferences !== 'undefined') {
+      const tabbox = this.globals.document.getElementById('better-bibtex-prefs-tabbox')
+      $patch$(this.globals.Zotero_Preferences, 'openHelpLink', original => function() {
+        if (prefwindow.currentPane.helpTopic === 'BetterBibTeX') {
+          const id = tabbox.selectedPanel.id
+          if (id) this.openURL(`https://retorque.re/zotero-better-bibtex/configuration/#${id.replace('better-bibtex-prefs-', '')}`)
+        }
+        else {
+          // eslint-disable-next-line prefer-rest-params
+          original.apply(this, arguments)
+        }
+      })
     }
 
     this.autoexport.load()
-
-    const tabbox = this.globals.document.getElementById('better-bibtex-prefs-tabbox')
-    $patch$(this.globals.Zotero_Preferences, 'openHelpLink', original => function() {
-      if (this.prefwindow.currentPane.helpTopic === 'BetterBibTeX') {
-        const id = tabbox.selectedPanel.id
-        if (id) this.openURL(`https://retorque.re/zotero-better-bibtex/configuration/#${id.replace('better-bibtex-prefs-', '')}`)
-      }
-      else {
-        // eslint-disable-next-line prefer-rest-params
-        original.apply(this, arguments)
-      }
-    })
-
     this.getCitekeyFormat()
 
     if (this.globals.document.location.hash === '#better-bibtex') {
@@ -415,17 +512,6 @@ export class PrefPane {
     this.timer = typeof this.timer === 'number' ? this.timer : this.globals.window.setInterval(this.refresh.bind(this), 500)  // eslint-disable-line no-magic-numbers
   }
 
-  /*
-  private unpx(size: string | number): number {
-    if (typeof size === 'number') return size
-    const px = parseInt(size.replace(/px$/, ''))
-    return isNaN(px) ? 0 : px
-  }
-  private isVisible(el) {
-    const rect = el.getBoundingClientRect()
-    return (rect.top >= 0) && (rect.bottom <= this.globals.window.innerHeight)
-  }
-  */
   private resize() {
     // https://stackoverflow.com/questions/4707712/prefwindow-sizing-itself-to-the-wrong-tab-when-browser-preferences-animatefade
     Zotero.Prefs.set('browser.preferences.animateFadeIn', false, true)
@@ -436,31 +522,6 @@ export class PrefPane {
     tabbox.height = tabbox.boxObject.height
     tabbox.width = tabbox.boxObject.width
     this.globals.window.sizeToContent()
-
-    /*
-    const prefpane: HTMLElement = (this.prefwindow as any).currentPane
-
-    log.debug('prefpane', prefpane.id, 'height:', prefpane.getBoundingClientRect().height, 'parent:', prefpane.parentElement.tagName)
-    let height = 0
-    for (const child of [...prefpane.children]) {
-      const bbox = child.getBoundingClientRect()
-      const style = this.globals.window.getComputedStyle(child)
-
-      log.debug('  child:', child.tagName, 'height:', this.unpx(bbox.height) + this.unpx(style.marginTop) + this.unpx(style.marginBottom))
-      height += this.unpx(bbox.height) + this.unpx(style.marginTop) + this.unpx(style.marginBottom)
-    }
-
-    this.prefwindow.style.height = `${height}px`
-    log.debug('prefpane', prefpane.id, 'reset to', height, 'actual:', prefpane.getBoundingClientRect().height)
-
-    // this.globals.window.sizeToContent()
-
-    const step = 20
-    do {
-      height += step // eslint-disable-line no-magic-numbers
-      this.prefwindow.style.height = `${height}px`
-    } while (!this.isVisible(prefpane))
-    */
   }
 
   private unload() {
@@ -522,12 +583,11 @@ export class PrefPane {
 
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
     for (const state of (Array.from(this.globals.document.getElementsByClassName('better-bibtex-preferences-worker-state')) as XUL.Textbox[])) {
-      state.value = l10n.localize(`BetterBibTeX.workers.${Preference.workers ? 'status' : 'disabled'}`, {
+      state.value = l10n.localize('BetterBibTeX.workers.status', {
         total: Translators.workers.total,
-        workers: Preference.workers,
         running: Translators.workers.running.size,
       })
-      state.classList[Preference.workers ? 'remove' : 'add']('textbox-emph')
+      state.classList.remove('textbox-emph')
     }
 
     if (this.autoexport) this.autoexport.refresh()

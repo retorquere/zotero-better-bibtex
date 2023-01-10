@@ -9,6 +9,9 @@ import os
 import steps.utils as utils
 import sys
 import json
+import time
+import math
+from pathlib import Path
 
 active_tag_value_provider = {
   'client': 'zotero',
@@ -31,36 +34,83 @@ def before_feature(context, feature):
     if retries > 0:
       patch_scenario_with_autoretry(scenario, max_attempts=retries + 1)
 
+class TestBin:
+  def __init__(self):
+    self.bin = None
+    self.tests = None
+    self.durations = {}
+
+  def load(self, context):
+    if not 'bin' in context.config.userdata:
+      return
+
+    self.bin = int(context.config.userdata['bin'])
+
+    assert 'bins' in context.config.userdata
+
+    with open(context.config.userdata['bins']) as f:
+      self.tests = {
+        test: i
+        for i, _bin in enumerate(json.load(f))
+        for test in _bin
+      }
+
+  def nameof(self, scenario):
+    return re.sub(r' -- @[0-9]+\.[0-9]+ ', '', scenario.name)
+
+  def save(self, context):
+    if durations := context.config.userdata.get('durations'):
+      Path(os.path.dirname(durations)).mkdir(parents=True, exist_ok=True)
+      with open(durations, 'w') as f:
+        durations = { test: { 'seconds': max(duration.stop - duration.start, 1), 'slow': duration.slow } for test, duration in self.durations.items() }
+        json.dump(durations, f, indent='  ')
+
+  def start(self, scenario):
+    self.durations[self.nameof(scenario)] = Munch(
+      start=math.floor(time.time()),
+      stop=None,
+      slow=any([True for tag in scenario.effective_tags if tag == 'use.with_slow=true'])
+    )
+  def stop(self, scenario):
+    test = self.nameof(scenario)
+    if test in self.durations:
+      self.durations[test].stop = math.ceil(time.time())
+
+  def test_here(self, scenario):
+    return self.bin is None or self.tests.get(self.nameof(scenario), 0) == self.bin
+
+  def test_in(self, scenario):
+    return self.tests.get(self.nameof(scenario), 0)
+TestBin = TestBin()
+
 def before_all(context):
+  TestBin.load(context)
   context.memory = Munch(total=None, increase=None)
   context.zotero = Zotero(context.config.userdata)
   setup_active_tag_values(active_tag_value_provider, context.config.userdata)
   # test whether the existing references, if any, have gotten a cite key
   context.zotero.export_library(translator = 'Better BibTeX')
 
-try:
-  with open(os.path.join(os.path.dirname(__file__), '../../../test/balance.json')) as f:
-    balance = json.load(f)
-except FileNotFoundError:
-  balance = None
+def after_all(context):
+  TestBin.save(context)
 
 def before_scenario(context, scenario):
   if active_tag_matcher.should_exclude_with(scenario.effective_tags):
     scenario.skip(f"DISABLED ACTIVE-TAG {str(active_tag_value_provider)}")
     return
-  if balance is not None and 'bin' in context.config.userdata:
-    if re.sub(r' -- @[0-9]+\.[0-9]+ ', '', scenario.name) in balance['slow' if active_tag_value_provider['slow'] == 'true' else 'fast']['1']:
-      test_bin = '1'
-    else:
-      test_bin = '2'
-    if context.config.userdata['bin'] != test_bin:
-      scenario.skip(f'TESTED IN BIN {test_bin}')
-      return
+  if not TestBin.test_here(scenario):
+    scenario.skip(f'TESTED IN BIN {TestBin.test_in(scenario)}')
+    return
   if 'test' in context.config.userdata and not any(test in scenario.name.lower() for test in context.config.userdata['test'].lower().split(',')):
     scenario.skip(f"ONLY TESTING SCENARIOS WITH {context.config.userdata['test']}")
+    return
 
+  TestBin.start(scenario)
   context.zotero.reset(scenario.name)
-  context.displayOptions = {}
+  context.displayOptions = {
+    # set export option to the --worker option passed to behave
+    'worker': context.zotero.worker,
+  }
   context.selected = []
   context.imported = None
   context.picked = []
@@ -82,3 +132,4 @@ def after_scenario(context, scenario):
       raise AssertionError(f'Memory increase cap of {context.memory.increase}MB exceeded by {memory.delta - context.memory.increase}MB')
     if context.memory.total and memory.resident > context.memory.total:
       raise AssertionError(f'Total memory cap of {context.memory.total}MB exceeded by {memory.resident - context.memory.total}MB')
+  TestBin.stop(scenario)

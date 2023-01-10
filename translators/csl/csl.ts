@@ -3,18 +3,19 @@
 
 declare const Zotero: any
 
-import { Translator } from '../lib/translator'
+import { Translation } from '../lib/translator'
 
-import * as itemfields from '../../gen/items/items'
-import * as Extra from '../../content/extra'
+import { simplifyForExport } from '../../gen/items/simplify'
+import { Fields as ParsedExtraFields, get as getExtra, cslCreator } from '../../content/extra'
 import { Cache } from '../../typings/cache'
 import * as ExtraFields from '../../gen/items/extra-fields.json'
 import { log } from '../../content/logger'
-import { environment } from '../../content/environment'
 import { RegularItem } from '../../gen/typings/serialized-item'
 import * as postscript from '../lib/postscript'
+import * as dateparser from '../../content/dateparser'
+import { Date as CSLDate, Data as CSLItem } from 'csl-json'
 
-type ExtendedItem = RegularItem & { extraFields: Extra.Fields }
+type ExtendedItem = RegularItem & { extraFields: ParsedExtraFields }
 
 const validCSLTypes: string[] = require('../../gen/items/csl-types.json')
 
@@ -27,16 +28,18 @@ const keyOrder = [
   'circa',
 ].reduce((acc, field, idx) => { acc[field] = idx + 1; return acc }, {})
 
-// export singleton: https://k94n.com/es6-modules-single-instance-pattern
-export const CSLExporter = new class { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
-  public flush: Function // will be added by JSON/YAML exporter
-  public serialize: Function // will be added by JSON/YAML exporter
-  public date2CSL: Function // will be added by JSON/YAML exporter
+export abstract class CSLExporter {
+  private translation: Translation
+  protected abstract flush(items: string[]):string
+  protected abstract serialize(items: CSLItem): string
+  protected abstract date2CSL(date: dateparser.ParsedDate): CSLDate
 
-  public initialize() {
+  constructor(translation: Translation) {
+    this.translation = translation
+
     try {
-      if (Translator.preferences.postscript.trim()) {
-        this.postscript = postscript.postscript('csl', Translator.preferences.postscript)
+      if (this.translation.preferences.postscript.trim()) {
+        this.postscript = postscript.postscript('csl', this.translation.preferences.postscript)
       }
       else {
         this.postscript = postscript.noop
@@ -44,36 +47,39 @@ export const CSLExporter = new class { // eslint-disable-line @typescript-eslint
     }
     catch (err) {
       this.postscript = postscript.noop
-      log.error('failed to install postscript', err, '\n', Translator.preferences.postscript)
+      log.error('failed to install postscript', err, '\n', this.translation.preferences.postscript)
     }
   }
+
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   public postscript(_entry, _item, _translator, _zotero, _extra): postscript.Allow {
     return { cache: true, write: true }
   }
 
-  public doExport() {
+  public doExport(): void {
     const items = []
     const order: { citationKey: string, i: number}[] = []
-    for (const item of (Translator.regularitems as Generator<ExtendedItem, void, unknown>)) {
+    for (const item of (this.translation.input.items.regular as Generator<ExtendedItem, void, unknown>)) {
       order.push({ citationKey: item.citationKey, i: items.length })
 
       let cached: Cache.ExportedItem
-      if (cached = Zotero.BetterBibTeX.cacheFetch(item.itemID, Translator.options, Translator.preferences)) {
+      if (cached = Zotero.BetterBibTeX.Cache.fetch(this.translation.translator.label, item.itemID, this.translation.options, this.translation.preferences)) {
         items.push(cached.entry)
         continue
       }
 
-      itemfields.simplifyForExport(item)
+      simplifyForExport(item)
       if (item.accessDate) { // WTH is Juris-M doing with those dates?
         item.accessDate = item.accessDate.replace(/T?[0-9]{2}:[0-9]{2}:[0-9]{2}.*/, '').trim()
       }
 
-      Object.assign(item, Extra.get(item.extra, 'csl'))
+      Object.assign(item, getExtra(item.extra, 'csl'))
 
-      // until export translators can be async, itemToCSLJSON must run before the translator starts, so it actually doesn't do anything in a worker context
-      // so re-assigne the extracted extra here
-      let csl = Zotero.Utilities.itemToCSLJSON(item)
-      if (environment.worker) csl.note = item.extra || undefined
+      item.journalAbbreviation = item.journalAbbreviation || item.autoJournalAbbreviation
+
+      let csl = Zotero.Utilities.Item.itemToCSLJSON(item)
+      csl['citation-key'] = item.citationKey
+      if (Zotero.worker) csl.note = item.extra || undefined
 
       if (item.place) csl[item.itemType === 'presentation' ? 'event-place' : 'publisher-place'] = item.place
 
@@ -85,12 +91,12 @@ export const CSLExporter = new class { // eslint-disable-line @typescript-eslint
       if (csl.journalAbbreviation) [csl.journalAbbreviation, csl['container-title-short']] = [csl['container-title-short'], csl.journalAbbreviation]
 
       if (item.date) {
-        const parsed = Zotero.BetterBibTeX.parseDate(item.date)
+        const parsed = dateparser.parse(item.date)
         if (parsed.type) csl.issued = this.date2CSL(parsed) // possible for there to be an orig-date only
         if (parsed.orig) csl['original-date'] = this.date2CSL(parsed.orig)
       }
 
-      if (item.accessDate) csl.accessed = this.date2CSL(Zotero.BetterBibTeX.parseDate(item.accessDate))
+      if (item.accessDate) csl.accessed = this.date2CSL(dateparser.parse(item.accessDate))
 
       /* ham-fisted workaround for #365 */
       if ((csl.type === 'motion_picture' || csl.type === 'broadcast') && csl.author && !csl.director) [csl.author, csl.director] = [csl.director, csl.author]
@@ -99,7 +105,7 @@ export const CSLExporter = new class { // eslint-disable-line @typescript-eslint
 
       if (csl.type === 'broadcast' && csl.genre === 'television broadcast') delete csl.genre
 
-      const extraFields: Extra.Fields = JSON.parse(JSON.stringify(item.extraFields))
+      const extraFields: ParsedExtraFields = JSON.parse(JSON.stringify(item.extraFields))
 
       // special case for #587... not pretty
       // checked separately because .type isn't actually a CSL var so wouldn't pass the ef.type test below
@@ -110,10 +116,10 @@ export const CSLExporter = new class { // eslint-disable-line @typescript-eslint
 
       for (const [name, value] of Object.entries(item.extraFields.kv)) {
         const ef = ExtraFields[name]
-        if (!ef.csl) continue
+        if (!ef.csl || !value) continue
 
         if (ef.type === 'date') {
-          csl[name] = this.date2CSL(Zotero.BetterBibTeX.parseDate(value))
+          csl[name] = this.date2CSL(dateparser.parse(value))
         }
         else if (name === 'csl-type') {
           if (!validCSLTypes.includes(value)) continue // and keep the kv variable, maybe for postscripting
@@ -128,7 +134,7 @@ export const CSLExporter = new class { // eslint-disable-line @typescript-eslint
 
       for (const [field, value] of Object.entries(item.extraFields.creator)) {
         if (!ExtraFields[field].csl) continue
-        csl[field] = value.map(Extra.cslCreator)
+        csl[field] = value.map(cslCreator)
 
         delete item.extraFields.creator[field]
       }
@@ -144,29 +150,29 @@ export const CSLExporter = new class { // eslint-disable-line @typescript-eslint
 
       let allow: postscript.Allow = { cache: true, write: true }
       try {
-        allow = this.postscript(csl, item, Translator, Zotero, extraFields)
+        allow = this.postscript(csl, item, this.translation, Zotero, extraFields)
       }
       catch (err) {
         log.error('CSL.postscript failed:', err)
         allow.cache = false
       }
 
-      for (const field of Translator.skipFields) {
+      for (const field of this.translation.skipFields) {
         delete csl[field]
       }
       csl = this.sortObject(csl)
       csl = this.serialize(csl)
 
-      if (allow.cache) Zotero.BetterBibTeX.cacheStore(item.itemID, Translator.options, Translator.preferences, csl)
+      if (allow.cache) Zotero.BetterBibTeX.Cache.store(this.translation.translator.label, item.itemID, this.translation.options, this.translation.preferences, csl, {})
 
       if (allow.write) items.push(csl)
     }
 
     order.sort((a, b) => a.citationKey.localeCompare(b.citationKey, undefined, { sensitivity: 'base' }))
-    Zotero.write(this.flush(order.map(o => items[o.i])))
+    this.translation.output.body += this.flush(order.map(o => items[o.i]))
   }
 
-  public keySort(a, b) {
+  public keySort(a: string, b: string): number {
     const oa = keyOrder[a]
     const ob = keyOrder[b]
 
@@ -188,4 +194,3 @@ export const CSLExporter = new class { // eslint-disable-line @typescript-eslint
     return obj
   }
 }
-

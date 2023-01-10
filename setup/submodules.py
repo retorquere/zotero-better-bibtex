@@ -7,6 +7,7 @@ import os
 import configparser
 from contextlib import contextmanager
 from pathlib import Path
+from pygit2 import Repository
 
 @contextmanager
 def chdir(path):
@@ -17,9 +18,10 @@ def chdir(path):
   finally:
     os.chdir(origin)
 
-if os.environ.get('CI') != 'true':
+
+if Repository('.').head.shorthand == 'master' and os.environ.get('CI') != 'true':
   print('updating submodules')
-  online = True
+
   try:
     online = urllib.request.urlopen('https://github.com').getcode() == 200
   except:
@@ -42,6 +44,9 @@ if os.environ.get('CI') != 'true':
       if 'submodule ' in section:
         print(section)
         print(' ', run(os.path.join(root, module['path']), 'git checkout ' + module['branch']))
+        if section == 'submodule "submodules/zotero-utilities"':
+          print('   ', run(os.path.join(root, module['path']), 'rm -rf resource/schema/global'))
+          print('   ', run(os.path.join(root, module['path']), 'git checkout .'))
         print(' ', run(os.path.join(root, module['path']), 'git pull'))
         print(' ', run(root, 'git add ' + module['path']))
 

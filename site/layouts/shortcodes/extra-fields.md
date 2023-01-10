@@ -5,7 +5,7 @@
 |**adoption date**           |date|adoptionDate¹                                               |                        |
 |**application number**      |text|applicationNumber                                           |                        |
 |**archive collection**      |text|archiveCollection¹                                          |archive\_collection¹    |
-|**archive id**              |text|archiveID² / archive\_id²                                   |                        |
+|**archive id**              |text|number                                                      |number                  |
 |**archive location**        |text|archiveLocation                                             |archive\_location       |
 |**archive place**           |text|                                                            |archive-place           |
 |**artwork medium**          |text|medium                                                      |                        |
@@ -14,7 +14,7 @@
 |**attorney agent**          |name|attorneyAgent                                               |attorneyAgent           |
 |**audio file type**         |text|medium                                                      |                        |
 |**audio recording format**  |text|medium                                                      |                        |
-|**bill number**             |text|number                                                      |                        |
+|**bill number**             |text|number                                                      |number                  |
 |**blog title**              |text|publicationTitle                                            |                        |
 |**book abbreviation**       |text|journalAbbreviation                                         |container-title-short   |
 |**book author**             |name|bookAuthor                                                  |container-author        |
@@ -40,14 +40,15 @@
 |**date decided**            |date|date                                                        |issued                  |
 |**date enacted**            |date|date                                                        |issued                  |
 |**dictionary title**        |text|publicationTitle                                            |                        |
-|**docket number**           |text|number                                                      |                        |
+|**docket number**           |text|number                                                      |number                  |
 |**document name**           |text|documentName¹                                               |document-name¹          |
 |**document number**         |text|documentNumber¹ / number                                    |document-number¹        |
 |**editorial director**      |name|                                                            |editorial-director      |
 |**encyclopedia title**      |text|publicationTitle                                            |                        |
-|**episode number**          |text|number                                                      |                        |
+|**episode number**          |text|number                                                      |number                  |
 |**event date**              |date|conferenceDate¹ / dateAmended¹ / signingDate¹               |event-date              |
 |**event place**             |text|                                                            |event-place             |
+|**event title**             |text|                                                            |event-title²            |
 |**filing date**             |date|filingDate                                                  |submitted               |
 |**first page**              |text|pages                                                       |page                    |
 |**forum title**             |text|publicationTitle                                            |                        |
@@ -76,7 +77,7 @@
 |**original publisher place**|text|                                                            |original-publisher-place|
 |**original title**          |text|                                                            |original-title          |
 |**parent treaty**           |text|parentTreaty¹                                               |                        |
-|**patent number**           |text|number                                                      |                        |
+|**patent number**           |text|number                                                      |number                  |
 |**post type**               |text|type                                                        |                        |
 |**presentation type**       |text|type                                                        |                        |
 |**priority date**           |date|priorityDate¹                                               |                        |
@@ -84,7 +85,7 @@
 |**proceedings title**       |text|publicationTitle                                            |                        |
 |**program title**           |text|publicationTitle                                            |                        |
 |**programming language**    |text|programmingLanguage                                         |                        |
-|**public law number**       |text|number                                                      |                        |
+|**public law number**       |text|number                                                      |number                  |
 |**publication date**        |date|publicationDate¹                                            |publication-date¹       |
 |**publication number**      |text|publicationNumber¹                                          |publication-number¹     |
 |**publication title**       |text|publicationTitle                                            |                        |
@@ -92,13 +93,14 @@
 |**regnal year**             |text|regnalYear¹                                                 |                        |
 |**regulation type**         |text|regulationType¹ / type                                      |                        |
 |**regulatory body**         |text|legislativeBody / regulatoryBody¹                           |                        |
-|**report number**           |text|number                                                      |                        |
+|**report number**           |text|number                                                      |number                  |
 |**report type**             |text|type                                                        |                        |
 |**reporter volume**         |text|volume                                                      |                        |
 |**resolution label**        |text|resolutionLabel¹                                            |                        |
 |**reviewed author**         |name|reviewedAuthor                                              |reviewed-author         |
 |**reviewed title**          |text|                                                            |reviewed-title          |
 |**running time**            |text|runningTime                                                 |                        |
+|**script writer**           |name|scriptwriter                                                |script-writer²          |
 |**series editor**           |name|seriesEditor                                                |collection-editor       |
 |**series number**           |text|seriesNumber                                                |                        |
 |**series text**             |text|seriesText                                                  |                        |
@@ -110,7 +112,7 @@
 |**testimony by**            |name|testimonyBy¹                                                |testimonyBy¹            |
 |**thesis type**             |text|type                                                        |                        |
 |**title short**             |text|shortTitle                                                  |title-short             |
-|**treaty number**           |text|number                                                      |                        |
+|**treaty number**           |text|number                                                      |number                  |
 |**version number**          |text|versionNumber                                               |version                 |
 |**video recording format**  |text|medium                                                      |                        |
 |**volume title**            |text|volumeTitle¹                                                |volume-title¹           |

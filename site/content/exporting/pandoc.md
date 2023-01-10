@@ -56,8 +56,9 @@ All of these problems go away if you just skip the detour via bibtex and export 
 
 You can convert a Pandoc-compatible markdown source to a LibreOffice or Word document with live citation fields connecting to Zotero.
 
+* make sure you have pandoc version 2.16.2 or later.
 * download the [Pandoc filter](../zotero.lua)
-* add some metadata to your markdown file in a YAML header:
+* optional: add some metadata to your markdown file in a YAML header:
 
 ```yaml
 ---

@@ -1,0 +1,154 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "options": {
+      "exportNotes": true,
+      "worker": true
+    },
+    "preferences": {
+      "autoAbbrev": true,
+      "exportTitleCase": false,
+      "skipFields": "abstract,file,month,day,keywords,copyright"
+    }
+  },
+  "items": [
+    {
+      "abstractNote": "In medical imaging, radiological scans of different modalities serve to enhance different sets of features for clinical diagnosis and treatment planning. This variety enriches the source information that could be used for outcome prediction. Deep learning methods are particularly well-suited for feature extraction from high-dimensional inputs such as images. In this work, we apply a CNN classification network augmented with a FCN preprocessor sub-network to a public TCIA head and neck cancer dataset. The training goal is survival prediction of radiotherapy cases based on pre-treatment FDG PET-CT scans, acquired across 4 different hospitals. We show that the preprocessor sub-network in conjunction with aggregated residual connection leads to improvements over state-of-the-art results when combining both CT and PET input images.",
+      "accessDate": "2022-08-12T05:50:55Z",
+      "citationKey": "leNormalizedFullyConvolutional2020",
+      "conferenceName": "Medical Imaging with Deep Learning",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "William",
+          "lastName": "Le"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Francisco Perdig\u00f3n",
+          "lastName": "Romero"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Samuel",
+          "lastName": "Kadoury"
+        }
+      ],
+      "date": "2020-05-28",
+      "extra": [
+        "arXiv:2005.14017 [cs, eess]",
+        "version: 1",
+        "type: article"
+      ],
+      "itemID": 1,
+      "itemType": "conferencePaper",
+      "libraryCatalog": "arXiv.org",
+      "pages": "1-6",
+      "publicationTitle": "Proceedings of the Medical Imaging with Deep Learning",
+      "tags": [
+        {
+          "tag": "Computer Science - Computer Vision and Pattern Recognition",
+          "type": 1
+        },
+        {
+          "tag": "Electrical Engineering and Systems Science - Image and Video Processing",
+          "type": 1
+        },
+        {
+          "tag": "Unread"
+        }
+      ],
+      "title": "A normalized fully convolutional approach to head and neck cancer outcome prediction",
+      "url": "http://arxiv.org/abs/2005.14017"
+    },
+    {
+      "abstractNote": "There is an emerging interest in radiotherapy treatment planning that uses only magnetic resonance (MR) imaging. Cur-rent clinical workflows rely on computed tomography (CT) images for dose calculation and patient positioning, therefore synthetic CT images need to be derived from MR images. Re-cent efforts for MR-to-CT image synthesis have focused on unsupervised training for ease of data preparation. However, accuracy is more important than convenience. In this paper, we propose a deep learning framework for MR-to-CT image synthesis that is trained in a supervised manner. The pro-posed framework utilizes a new hybrid objective function to enforce visual realism, accurate electron density information, and structural consistency between the MR and CT image domains. Our experiments show that the proposed method (MAE of 68.22, PSNR of 22.28, and FID of 0.73) outperforms the existing unsupervised and supervised techniques in both quantitative and qualitative comparisons.",
+      "attachments": [],
+      "citationKey": "angImprovedDeepLearning2022",
+      "conferenceName": "International Symposium on Biomedical Imaging",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Sui Paul",
+          "lastName": "Ang"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Son Lam",
+          "lastName": "Phung"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Matthew",
+          "lastName": "Field"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Mark Matthias",
+          "lastName": "Schira"
+        }
+      ],
+      "date": "2022-03",
+      "extra": [
+        "ISSN: 1945-8452"
+      ],
+      "itemID": 1,
+      "itemType": "conferencePaper",
+      "libraryCatalog": "IEEE Xplore",
+      "pages": "1-5",
+      "publicationTitle": "Proceedings of the International Symposium on Biomedical Imaging",
+      "tags": [
+        {
+          "tag": "Computed tomography",
+          "type": 1
+        },
+        {
+          "tag": "deep learning",
+          "type": 1
+        },
+        {
+          "tag": "Deep learning",
+          "type": 1
+        },
+        {
+          "tag": "GAN",
+          "type": 1
+        },
+        {
+          "tag": "hybrid objective function",
+          "type": 1
+        },
+        {
+          "tag": "Image synthesis",
+          "type": 1
+        },
+        {
+          "tag": "Linear programming",
+          "type": 1
+        },
+        {
+          "tag": "Magnetic resonance",
+          "type": 1
+        },
+        {
+          "tag": "MR-to-CT image synthesis",
+          "type": 1
+        },
+        {
+          "tag": "structural consistency",
+          "type": 1
+        },
+        {
+          "tag": "Training",
+          "type": 1
+        },
+        {
+          "tag": "Visualization",
+          "type": 1
+        }
+      ],
+      "title": "An improved deep learning framework for MR-to-CT image synthesis with a new hybrid objective function"
+    }
+  ]
+}

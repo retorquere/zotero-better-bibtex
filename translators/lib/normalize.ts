@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-return */
 
-import { stringify } from '../../content/stringify'
+import { stable_stringify as stringify } from '../../content/stringify'
 import { RegularItem, Collection } from '../../gen/typings/serialized-item'
 
 function rjust(str: string | number, width: number, padding: string): string {
@@ -9,7 +9,7 @@ function rjust(str: string | number, width: number, padding: string): string {
   return str.length < width ? padding.repeat(width - str.length) + str : str
 }
 
-type Library = {
+export type Library = {
   config: any
   preferences?: any
 

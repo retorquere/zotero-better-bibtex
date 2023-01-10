@@ -1,6 +1,8 @@
 import * as ts from 'typescript'
 import * as fs from 'fs'
 import BabelTag from '../gen/babel/tag.json'
+import zoteroSchema from '../schema/zotero.json'
+import jurismSchema from '../schema/jurism.json'
 
 // type Json = string | number | boolean | null | Json[] | { [key: string]: Json };
 
@@ -16,6 +18,7 @@ export type Parameter = {
   name: string
   default: SimpleLiteral
   rest?: boolean
+  doc?: string
 }
 export type Method = {
   doc: string
@@ -45,20 +48,41 @@ export class API {
     })
   }
 
+  private DocComment(comment: string): Record<string, string> {
+    comment = comment
+      .replace(/^\/\*\*/, '') // remove leader
+      .replace(/\*\/$/, '') // remove trailer
+    const params: Record<string, string> = {}
+    let m
+    params[''] = comment.trim().split('\n')
+      .map(line => {
+        if (m = line.match(/^\s*[*]\s+@param\s+([^\s]+)\s+(.*)/)) {
+          params[m[1]] = m[2]
+          return ''
+        }
+        else {
+          return `${line.replace(/^\s*[*]\s*/, '')}\n`
+        }
+      })
+      .join('')
+      .replace(/\n+/g, newlines => newlines.length > 1 ? '\n\n' : ' ')
+
+    return params
+  }
   private MethodDeclaration(className: string, method: ts.MethodDeclaration): void {
     const methodName: string = method.name.getText(this.ast)
     if (!methodName) return
 
     const comment_ranges = ts.getLeadingCommentRanges(this.ast.getFullText(), method.getFullStart())
     if (!comment_ranges) return
-    let comment = this.ast.getFullText().slice(comment_ranges[0].pos, comment_ranges[0].end)
+    const comment = this.ast.getFullText().slice(comment_ranges[0].pos, comment_ranges[0].end)
     if (!comment.startsWith('/**')) return
-    comment = comment.replace(/^\/\*\*/, '').replace(/\*\/$/, '').trim().split('\n').map(line => line.replace(/^\s*[*]\s*/, '')).join('\n').replace(/\n+/g, newlines => newlines.length > 1 ? '\n\n' : ' ')
+    const params = this.DocComment(comment)
 
     if (!this.classes[className]) this.classes[className] = {}
 
     this.classes[className][methodName] = {
-      doc: comment,
+      doc: params[''],
       parameters: [],
       schema: {
         type: 'object',
@@ -67,18 +91,24 @@ export class API {
         required: [],
       },
     }
+    delete params['']
 
     method.forEachChild(param => {
-      if (ts.isParameter(param)) this.ParameterDeclaration(this.classes[className][methodName], param)
+      if (ts.isParameter(param)) this.ParameterDeclaration(this.classes[className][methodName], param, params)
     })
+    const orphans = Object.keys(params).join('/')
+    if (orphans) throw new Error(`orphaned param docs for ${orphans}`)
   }
 
-  private ParameterDeclaration(method: Method, param: ts.ParameterDeclaration) {
+  private ParameterDeclaration(method: Method, param: ts.ParameterDeclaration, doc: Record<string, string>) {
+    const name = param.name.getText(this.ast)
     const p: Parameter = {
-      name: param.name.getText(this.ast),
+      name,
+      doc: doc[name],
       default: this.Literal(param.initializer),
       rest: !!param.dotDotDotToken,
     }
+    delete doc[name]
     method.parameters.push(p)
 
     if (param.type) {
@@ -205,8 +235,26 @@ export class API {
         enum: Object.values(BabelTag).sort(),
       }
     }
+    else if (typeName === 'ZoteroItemType') {
+      const itemTypes: Set<string> = new Set
+      for (const schema of [zoteroSchema, jurismSchema]) {
+        for (const itemType of schema.itemTypes) {
+          if (itemType.creatorTypes?.length) itemTypes.add(itemType.itemType)
+        }
+      }
+      return {
+        type: 'string',
+        enum: Array.from(itemTypes).sort(),
+      }
+    }
     else if (typeName === 'RegExp') {
       return { instanceof: typeName }
+    }
+    else if (typeName === 'Creator') {
+      return {
+        type: 'string',
+        enum: [ 'author', 'editor', 'translator', 'collaborator', '*' ],
+      }
     }
     assert(typeName === 'Record', `unexpected TypeReference ${typeName}`)
     assert(typeref.typeArguments.length === 2, `expected 2 types, found ${typeref.typeArguments.length}`)

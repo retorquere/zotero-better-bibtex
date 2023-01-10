@@ -1,7 +1,6 @@
 const fs = require('fs')
 const path = require('path')
 const diff = require('diff')
-const { bibertool } = require('./bibertool')
 const peggy = require('peggy')
 const shell = require('shelljs')
 const { filePathFilter } = require('file-path-filter')
@@ -23,19 +22,22 @@ function load_patches(dir) {
 
 module.exports.patcher = function(dir) {
   const patches = load_patches(dir)
-  const filter = '.*\\/(' + Object.keys(patches).map(source => source.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|') + ')$'
+  const filter = '.*\\/(' + Object.keys(patches).map(source => source.replace(/[.*+?^${}()\|\[\]\\\/]/g, '\\$&')).join('|') + ')$'
 
   return {
     name: 'patcher',
     setup(build) {
       build.onLoad({ filter: new RegExp(filter) }, async (args) => {
-        const target = args.path.replace(/.*[/]node_modules[/]/, 'node_modules/')
+        const target = args.path.replace(/.*?[/]node_modules[/]/, 'node_modules/')
         console.log('  patching', target)
         const source = await fs.promises.readFile(args.path, 'utf-8')
         const patch = patches[target]
+        const contents = diff.applyPatch(source, patch)
+
+        if (contents === false) throw new Error(`failed to apply ${patch}`)
 
         return {
-          contents: diff.applyPatch(source, patch),
+          contents,
           loader: 'js',
         }
       })
@@ -43,13 +45,13 @@ module.exports.patcher = function(dir) {
   }
 }
 
-module.exports.bibertool = {
-  name: 'bibertool',
+module.exports.bib = {
+  name: 'bib',
   setup(build) {
-    build.onLoad({ filter: /\/biber-tool\.conf$/ }, async (args) => {
+    build.onLoad({ filter: /\.bib$/ }, async (args) => {
       return {
-        contents: bibertool(await fs.promises.readFile(args.path, 'utf-8')),
-        loader: 'js'
+        contents: await fs.promises.readFile(args.path, 'utf-8'),
+        loader: 'text'
       }
     })
   }
@@ -189,22 +191,4 @@ module.exports.trace = function(section) {
       })
     }
   }
-}
-
-const Ajv = require('ajv')
-// const ajv = new Ajv({ discriminator: true, code: {source: true, esm: true} })
-const ajv = new Ajv({ discriminator: true, code: { source: true } })
-const ajvStandaloneCode = require('ajv/dist/standalone').default
-module.exports.ajv = {
-  name: 'ajv',
-  setup(build) {
-    build.onLoad({ filter: /.schema$/ }, async (args) => {
-      const schema = JSON.parse(await fs.promises.readFile(args.path, 'utf-8'))
-      const validate = ajv.compile(schema)
-      return {
-        contents: ajvStandaloneCode(ajv, validate),
-        loader: 'js'
-      }
-    })
-  },
 }

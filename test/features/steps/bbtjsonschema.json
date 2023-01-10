@@ -83,6 +83,9 @@
             },
             "useJournalAbbreviation": {
               "type": "boolean"
+            },
+            "worker": {
+              "type": "boolean"
             }
           },
           "type": "object"
@@ -168,11 +171,11 @@
                 "url-ish"
               ]
             },
+            "cache": {
+              "type": "boolean"
+            },
             "cacheFlushInterval": {
               "type": "number"
-            },
-            "caching": {
-              "type": "boolean"
             },
             "charmap": {
               "type": "string"
@@ -191,6 +194,9 @@
             },
             "citekeySearch": {
               "type": "boolean"
+            },
+            "citekeyUnsafeChars": {
+              "type": "string"
             },
             "csquotes": {
               "type": "string"
@@ -246,6 +252,9 @@
             "importJabRefStrings": {
               "type": "boolean"
             },
+            "importNoteToExtra": {
+              "type": "string"
+            },
             "importSentenceCase": {
               "enum": [
                 "on+guess",
@@ -280,6 +289,13 @@
             "kuroshiro": {
               "type": "boolean"
             },
+            "language": {
+              "enum": [
+                "langid",
+                "language",
+                "both"
+              ]
+            },
             "mapMath": {
               "type": "string"
             },
@@ -291,7 +307,8 @@
                 "minimal-packages",
                 "conservative",
                 "text",
-                "math"
+                "math",
+                "creator"
               ]
             },
             "parseParticles": {
@@ -390,9 +407,6 @@
             },
             "warnTitleCased": {
               "type": "boolean"
-            },
-            "workers": {
-              "type": "number"
             }
           },
           "type": "object"

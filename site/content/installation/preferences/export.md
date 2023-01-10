@@ -56,6 +56,18 @@ Use the extended biber 2.7 format for names with particles - only works in BibLa
 
 ## Fields
 
+### Export language as
+
+default: `langid`
+
+Export either langid, language or both fields based on the item language (if any).
+
+Options:
+
+* langid
+* language
+* both
+
 ### When an item has both a DOI and a URL, export
 
 default: `both`
@@ -194,6 +206,7 @@ Options:
 * Minimize the number of switches between math-mode and text-mode
 * Prefer text-mode replacements
 * Prefer math-mode replacements
+* Add braces to accented characters to assist simple latex parsers
 
 ### Apply title-casing to titles
 
@@ -216,12 +229,6 @@ default: `no`
 By default, BBT clears all caches whenever BBT or Zotero is upgraded. I can't realistically predict whether a change in Zotero or BBT is going to affect the output generated for any given item, so to be sure you always have the latest export-affecting fixes, the caches are discarded when a new version of either is detected. If you have a very large library however, of which you regularly export significant portions, you might want to retain the cached items even if that does come with the risk that you get wrong output on export that has been fixed in the interim.
 
 If you have this on, and you experience any problem that is not the cache getting dropped on upgrade, you *must* clear the cache and reproduce the problem. When you change this setting, as with any setting change, the cache will be dropped.
-
-#### Parallel background exports:
-
-default: `1`
-
-BBT can now perform its exports in a separate thread, and should no longer block Zotero's UI pretty much regardless of how large your library is. The default of 1 parallel export should suit most needs, but if you have many auto-exports set up, you may want to raise the maximum parallel exports to prevent queueing of exports. It is possible to turn background exports off by setting this value to `0` in the hidden preferences; you will get the old (blocking) behavior back, but you can't complain about Zotero being laggy during auto-exports. All Zotero exports are blocking, and it's a minor miracle I got background exports to work at all.
 
 #### Enable caching for background exports
 

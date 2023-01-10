@@ -19,6 +19,7 @@
 
   <menupopup id="menu_ToolsPopup">
     <menuitem label="&better-bibtex.BetterBibTeX.auxScanner;" oncommand="Zotero.BetterBibTeX.scanAUX('tag')"/>
+    <menuitem label="Better BibTeX" oncommand="Components.classes['@mozilla.org/embedcomp/window-watcher;1'].getService(Components.interfaces.nsIWindowWatcher).openWindow(null, 'chrome://zotero-better-bibtex/content/PreferencesWindow.xul', 'better-bibtex-preferences', 'chrome,centerscreen,modal', { wrappedJSObject: {} })"/>
   </menupopup>
   <menupopup id="menu_HelpPopup">
     <menuitem insertafter="reportErrors" label="&better-bibtex.BetterBibTeX.reportErrors;" oncommand="Zotero.BetterBibTeX.ZoteroPane.errorReport()"/>
@@ -77,7 +78,7 @@
 
   <treecols id="zotero-items-columns-header">
     <treecol
-      id="zotero-items-column-citekey"
+      id="zotero-items-column-citationKey"
       label="&ZoteroPane.column.citekey;"
       flex="1"
       insertafter="zotero-items-column-title"
@@ -102,8 +103,17 @@
         Zotero.debug('BBT started, loading ZoteroPane')
         Zotero.BetterBibTeX.ZoteroPane.load()
         Zotero.debug('ZoteroPane started')
-      } catch (err) {
+      }
+      catch (err) {
         Zotero.debug(`loading ZoteroPane error: ${err.message}\n${err.stack ||''}`)
+      }
+    })
+    window.addEventListener('unload', async function() {
+      try {
+        await Zotero.BetterBibTeX.unload()
+      }
+      catch (err) {
+        Zotero.debug(`unloading ZoteroPane error: ${err.message}\n${err.stack ||''}`)
       }
     })
   </script>

@@ -10,8 +10,12 @@ import { PreferenceManager as PreferenceManagerBase } from '../gen/preferences'
 import { dict as csv2dict } from './load-csv'
 import { log } from './logger'
 
+type TexChar = { unicode?: string, math?: string, text?: string }
+export type TeXMap = Record<string, TexChar>
+
 export const Preference = new class PreferenceManager extends PreferenceManagerBase {
   public prefix = 'translators.better-bibtex.'
+  public texmap: TeXMap = {}
 
   constructor() {
     super()
@@ -36,12 +40,18 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
     if (this.testing) {
       return new Proxy(this, {
         set: (object, property, value) => {
-          if (!(property in object)) throw new TypeError(`Unsupported preference <%text>${new String(property)}</%text>`) // eslint-disable-line no-new-wrappers
+          if (!(property in object)) {
+            const stack = (new Error).stack
+            throw new TypeError(`Unsupported preference ${new String(property)} ${stack}`) // eslint-disable-line no-new-wrappers
+          }
           object[property] = value
           return true
         },
         get: (object, property) => {
-          if (!(property in object)) throw new TypeError(`Unsupported preference <%text>${new String(property)}</%text>`) // eslint-disable-line no-new-wrappers
+          if (!(property in object)) {
+            const stack = (new Error).stack
+            throw new TypeError(`Unsupported preference ${new String(property)} ${stack}`) // eslint-disable-line no-new-wrappers
+          }
           return object[property] // eslint-disable-line @typescript-eslint/no-unsafe-return
         },
       })
@@ -56,6 +66,19 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
     Events.emit('preference-changed', pref)
   }
 
+  /*
+  set cache(v: boolean | undefined) {
+    if (!v) {
+      const e = new Error
+      log.debug('who turned off the cache?', e.stack)
+    }
+    super.cache = v
+  }
+  get cache(): boolean {
+    return super.cache
+  }
+  */
+
   private migrate() {
     let old, key
 
@@ -66,6 +89,7 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
     }
     if (typeof Zotero.Prefs.get(key = 'translators.better-bibtex.citeprocNoteCitekey') !== 'undefined') Zotero.Prefs.clear(key)
     if (typeof Zotero.Prefs.get(key = 'translators.better-bibtex.newTranslatorsAskRestart') !== 'undefined') Zotero.Prefs.clear(key)
+    if (typeof Zotero.Prefs.get(key = 'translators.better-bibtex.caching') !== 'undefined') Zotero.Prefs.clear(key)
 
     // migrate ancient keys
     if ((old = Zotero.Prefs.get(key = 'translators.better-bibtex.quickCopyMode')) === 'orgmode_citekey') {
@@ -79,19 +103,17 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
     if ((old = Zotero.Prefs.get(key = 'translators.better-bibtex.quickCopyMode')) === 'selectLink') {
       Zotero.Prefs.set(key, 'selectlink')
     }
-    if (typeof (old = Zotero.Prefs.get(key = 'translators.better-bibtex.workers')) !== 'undefined') {
-      Zotero.Prefs.rootBranch.setIntPref('extensions.zotero.translators.better-bibtex.workers', typeof old === 'number' ? old : 1)
-    }
-    if (typeof (old = Zotero.Prefs.get(key = 'translators.better-bibtex.workersMax')) !== 'undefined') {
+    if (typeof Zotero.Prefs.get(key = 'translators.better-bibtex.worker') !== 'undefined') {
       Zotero.Prefs.clear(key)
-      Zotero.Prefs.set('translators.better-bibtex.workers', typeof old === 'number' ? old : 1)
+    }
+    if (typeof Zotero.Prefs.get(key = 'translators.better-bibtex.workers') !== 'undefined') {
+      Zotero.Prefs.clear(key)
+    }
+    if (typeof Zotero.Prefs.get(key = 'translators.better-bibtex.workersMax') !== 'undefined') {
+      Zotero.Prefs.clear(key)
     }
     if (typeof (old = Zotero.Prefs.get(key = 'translators.better-bibtex.workersCache')) !== 'undefined') {
       Zotero.Prefs.clear(key)
-      Zotero.Prefs.rootBranch.setBoolPref('extensions.zotero.translators.better-bibtex.caching', !!old)
-    }
-    if (typeof (old = Zotero.Prefs.get(key = 'translators.better-bibtex.caching')) !== 'boolean') {
-      Zotero.Prefs.rootBranch.setBoolPref('extensions.zotero.translators.better-bibtex.caching', !!old)
     }
     if (typeof (old = Zotero.Prefs.get(key = 'translators.better-bibtex.suppressTitleCase')) !== 'undefined') {
       Zotero.Prefs.clear(key)
@@ -165,14 +187,11 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
 
   public async initAsync(dir: string) {
     // load from csv for easier editing
+    this.texmap = {}
     await this.loadFromCSV('charmap', OS.Path.join(dir, 'charmap.csv'), '', (rows: Record<string, string>[]) => JSON.stringify(
-      rows.reduce((acc: Record<string, Record<string, string>>, row: Record<string, string>) => {
-        if (row.unicode) {
-          const char = row.unicode
-          delete row.unicode
-          acc[char] = row
-        }
-        return acc
+      rows.reduce((acc: TeXMap, row: TexChar) => {
+        if (row.unicode && (row.math || row.text)) acc[row.unicode] = { text: row.text, math: row.math }
+        return (this.texmap = acc)
       }, {})
     ))
 

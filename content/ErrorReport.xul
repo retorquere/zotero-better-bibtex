@@ -91,5 +91,15 @@
         Zotero.debug('failed to load ErrorReport' + err.message)
       }
     })
+    window.addEventListener('unload', async function() {
+      try {
+        Zotero.debug('unloading ErrorReport')
+        await Zotero.BetterBibTeX.ErrorReport.unload()
+        Zotero.debug('unloaded ErrorReport')
+      }
+      catch (err) {
+        Zotero.debug('failed to unload ErrorReport' + err.message)
+      }
+    })
   </script>
 </wizard>

@@ -8,34 +8,20 @@ const validate = ajv.compile(require('../test/features/steps/bbtjsonschema.json'
 import * as jsonpatch from 'fast-json-patch'
 
 import { normalize } from '../translators/lib/normalize'
-import { stringify } from '../content/stringify'
+import { stable_stringify as stringify } from '../content/stringify'
 import * as fs from 'fs'
-import { sync as glob } from 'glob'
-import * as path from 'path'
 
 import { defaults, names } from '../gen/preferences/meta'
 const supported: string[] = names.filter(name => !['client', 'testing', 'platform', 'newTranslatorsAskRestart'].includes(name))
 
 const argv = require("clp")()
-if (argv.save && typeof argv.save !== 'boolean') {
-  console.log('put --save at end of command line')
-  process.exit(1)
-}
-if (argv.saveAll && typeof argv.saveAll !== 'boolean') {
-  console.log('put --save-all at end of command line')
+if (argv.attachments && typeof argv.attachments !== 'boolean') {
+  console.log('put --attachments at end of command line')
   process.exit(1)
 }
 
 const localeDateOrder = argv.localeDateOrder ? argv.localeDateOrder.split('=') : null
 
-if (argv._.length === 0) {
-  if (argv.save) {
-    console.log('use --save-all for global replace')
-    process.exit(1)
-  }
-  argv._ = glob('test/fixtures/*/*.json')
-  argv.save = argv['save-all']
-}
 argv._.sort()
 console.log(`## inspecting ${argv._.length} files`)
 
@@ -49,12 +35,35 @@ function sortkey(item) {
   return [ item.dateModified || item.dateAdded, item.itemType, `${item.itemID}` ].join('\t')
 }
 */
+
+function stripCC(input) {
+  var output = ''
+  for (var i=0; i<input.length; i++) {
+    if (input.charCodeAt(i) >= 32) output += input.charAt(i)
+  }
+  return output
+}
+
+function clean(item) {
+  delete item.libraryID
+  delete item.uri
+  delete item.dateAdded
+  delete item.dateModified
+  delete item.relations
+  delete item.select
+  delete item.itemKey
+  delete item.contentType
+  delete item.linkMode
+  delete item.filename
+  delete item.localPath
+}
+
 for (const lib of argv._) {
   const ext = extensions.find(ext => lib.endsWith(ext))
 
   if (ext === '.schomd.json' || ext === '.csl.json') continue
 
-  const pre = JSON.parse(fs.readFileSync(lib, 'utf-8'))
+  const pre = JSON.parse(stripCC(fs.readFileSync(lib, 'utf-8')))
   const post = JSON.parse(JSON.stringify(pre))
 
   switch (ext) {
@@ -79,11 +88,7 @@ for (const lib of argv._) {
 
       // post.items.sort((a, b) => sortkey(a).localeCompare(sortkey(b)))
       for (const item of (post.items || [])) {
-        delete item.uri
-        delete item.dateAdded
-        delete item.dateModified
-        delete item.relations
-        delete item.select
+        clean(item)
 
         delete item.multi
 
@@ -91,16 +96,12 @@ for (const lib of argv._) {
           delete creator.multi
         }
 
+        if (argv.attachments) delete item.attachments
         if (item.attachments) {
-          item.attachments = item.attachments.filter(att => {
-            if (att.path && !fs.existsSync(path.join(path.dirname(lib), att.path))) {
-              return false
-            }
-            else {
-              delete att.libraryID
-              return true
-            }
-          })
+          for (const att of item.attachments) {
+            clean(att)
+            att.path = att.path.replace(/.*\/zotero\/storage\/[^/]+/, 'ATTACHMENT_KEY')
+          }
         }
       }
       break
@@ -117,11 +118,7 @@ for (const lib of argv._) {
   const diff = jsonpatch.compare(pre, post)
   if (diff.length > 0) {
     console.log(lib)
-    if (argv.save) {
-      console.log('  saving')
-      fs.writeFileSync(lib, stringify(post, null, 2, true))
-    } else {
-      console.log(diff)
-    }
+    console.log('  saving')
+    fs.writeFileSync(lib, stringify(post, null, 2, true))
   }
 }

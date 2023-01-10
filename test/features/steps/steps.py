@@ -8,9 +8,15 @@ import time
 import os
 from hamcrest import assert_that, equal_to
 from steps.utils import assert_equal_diff, expand_scenario_variables
+from steps.citations import citations
 import steps.utils as utils
 import steps.zotero as zotero
 import glob
+import subprocess, shlex, shutil
+import io
+import zipfile
+import html, re
+import timeit
 
 from contextlib import contextmanager
 
@@ -81,6 +87,12 @@ def step_impl(context, pref, value):
   with open(context.preferenceOverride, 'w') as f:
     json.dump(override, f)
 
+@step('I set export option {option} to {value}')
+def step_impl(context, option, value):
+  value = json.loads(value)
+  assert type(value) == bool
+  context.displayOptions[option] = value
+
 @step('I set preference {pref} to {value}')
 def step_impl(context, pref, value):
   value = json.loads(value)
@@ -127,6 +139,28 @@ def step_impl(context, references, source):
   context.imported = source
   assert_that(context.zotero.import_file(context, source, items=False), equal_to(references))
 
+@step(r'I compile "{source}" to "{target}" it should match "{baseline}"')
+def step_impl(context, source, target, baseline):
+  source = os.path.join('test/fixtures', expand_scenario_variables(context, source))
+  baseline = os.path.join('test/fixtures', expand_scenario_variables(context, baseline))
+
+  target = expand_scenario_variables(context, target)
+  assert target.startswith('~/'), target
+  target = os.path.join(context.tmpDir, target[2:])
+
+  lua = 'site/content/exporting/zotero.lua'
+  client = context.config.userdata.get('client', 'zotero')
+
+  result = subprocess.run(
+    f'pandoc -s --metadata=zotero_client:{client} --lua-filter={shlex.quote(lua)} -o {shlex.quote(target)} {shlex.quote(source)}',
+    shell=True,
+    check=True,
+    stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True
+  )
+  utils.print(result.stdout)
+
+  assert_equal_diff(citations(baseline), citations(target))
+
 @step(r'I import {references:d} references from "{source}"')
 def step_impl(context, references, source):
   source = expand_scenario_variables(context, source)
@@ -169,8 +203,13 @@ def step_impl(context, references, attachments, source):
   context.imported = source
   assert_that(context.zotero.import_file(context, source), equal_to(references))
 
+@step(r'I export the library {n:d} times using "{translator}"')
+def step_impl(context, n, translator):
+  timeit.timeit(lambda: export_library(context, translator = translator), number=n)
+
 def export_library(context, translator='BetterBibTeX JSON', collection=None, expected=None, output=None, displayOption=None, timeout=None, resetCache=False):
-  expected = expand_scenario_variables(context, expected)
+  if expected is not None:
+    expected = expand_scenario_variables(context, expected)
   displayOptions = { **context.displayOptions }
   if displayOption: displayOptions[displayOption] = True
   if output:
@@ -306,7 +345,7 @@ def step_impl(context, title):
 @then(u'the picks for "{fmt}" should be "{expected}"')
 def step_impl(context, fmt, expected):
   found = context.zotero.execute('return await Zotero.BetterBibTeX.TestSupport.pick(fmt, picks)', fmt=fmt, picks=context.picked)
-  assert_equal_diff(expected.strip(), found.strip())
+  assert_equal_diff(expected, found)
 
 @when(u'I {change} the citation key')
 def step_impl(context, change):
@@ -331,7 +370,6 @@ def step_impl(context, expected, found):
     expected = os.path.join(context.tmpDir, expected[2:])
   else:
     expected = os.path.join(ROOT, 'test/fixtures', expected)
-    context.zotero.loaded(expected)
   with open(expected) as f:
     expected = f.read()
 
@@ -342,7 +380,7 @@ def step_impl(context, expected, found):
   with open(found) as f:
     found = f.read()
 
-  assert_equal_diff(expected.strip(), found.strip())
+  assert_equal_diff(expected, found)
 
 @step(u'I wait {seconds:d} seconds')
 def step_impl(context, seconds):
@@ -369,3 +407,7 @@ def step_impl(context, path):
 @step(u'I reset the cache')
 def step_impl(context):
   context.zotero.execute('Zotero.BetterBibTeX.TestSupport.resetCache()')
+
+@step(u'I copy date-added/date-modified for the selected items from the extra field')
+def step_impl(context):
+  context.zotero.execute('Zotero.BetterBibTeX.ZoteroPane.patchDates()')

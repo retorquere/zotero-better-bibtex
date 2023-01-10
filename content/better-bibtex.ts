@@ -25,22 +25,23 @@ import { flash } from './flash'
 import { Deferred } from './deferred'
 
 import { Preference } from './prefs' // needs to be here early, initializes the prefs observer
+import { start as prefpane_start } from './Preferences'
 import * as preferences from '../gen/preferences/meta'
 require('./pull-export') // just require, initializes the pull-export end points
 require('./json-rpc') // just require, initializes the json-rpc end point
 import { AUXScanner } from './aux-scanner'
 import * as Extra from './extra'
-import { sentenceCase, titleCase, HTMLParser } from './text'
+import { sentenceCase, HTMLParser, HTMLParserOptions } from './text'
 
 Components.utils.import('resource://gre/modules/AddonManager.jsm')
 declare const AddonManager: any
 
 import { log } from './logger'
-import { Events, itemsChanged as notifyItemsChanged } from './events'
+import { Events } from './events'
 
 import { Translators } from './translators'
 import { DB } from './db/main'
-import { DB as Cache, selector as cacheSelector } from './db/cache'
+import { DB as Cache } from './db/cache'
 import { Serializer } from './serializer'
 import { JournalAbbrev } from './journal-abbrev'
 import { AutoExport } from './auto-export'
@@ -48,8 +49,14 @@ import { KeyManager } from './key-manager'
 import { TestSupport } from './test-support'
 import { TeXstudio } from './tex-studio'
 import { $and } from './db/loki'
-import { cloneDeep } from 'lodash'
 import * as l10n from './l10n'
+import * as CSL from 'citeproc'
+
+import { generateBibLaTeX } from '../translators/bibtex/biblatex'
+import { generateBibTeX, parseBibTeX } from '../translators/bibtex/bibtex'
+import { generateCSLYAML, parseCSLYAML } from '../translators/csl/yaml'
+import { generateCSLJSON } from '../translators/csl/json'
+import { Translation } from '../translators/lib/translator'
 
 // UNINSTALL
 AddonManager.addAddonListener({
@@ -96,7 +103,7 @@ AddonManager.addAddonListener({
   MONKEY PATCHES
 */
 
-// zotero beta moves itemToCSLJSON to Zotero.Utilities.Item
+// zotero moved itemToCSLJSON to Zotero.Utilities.Item, jurism for the moment keeps it on ZU
 $patch$(Zotero.Utilities.Item?.itemToCSLJSON ? Zotero.Utilities.Item : Zotero.Utilities, 'itemToCSLJSON', original => function itemToCSLJSON(zoteroItem: { itemID: any }) {
   const cslItem = original.apply(this, arguments)
 
@@ -195,29 +202,71 @@ $patch$(Zotero.Items, 'merge', original => async function Zotero_Items_merge(ite
 })
 
 // https://github.com/retorquere/zotero-better-bibtex/issues/769
-$patch$(Zotero.DataObjects.prototype, 'parseLibraryKeyHash', original => function Zotero_DataObjects_prototype_parseLibraryKeyHash(id: string) {
+function parseLibraryKeyFromCitekey(libraryKey) {
   try {
-    const decoded_id = decodeURIComponent(id)
-    if (decoded_id[0] === '@') {
-      const item = Zotero.BetterBibTeX.KeyManager.keys.findOne($and({ citekey: decoded_id.substring(1) }))
-      if (item) return { libraryID: item.libraryID, key: item.itemKey }
+    const decoded = decodeURIComponent(libraryKey)
+    if (decoded[0] === '@') {
+      const item = Zotero.BetterBibTeX.KeyManager.keys.findOne($and({ citekey: decoded.substring(1) }))
+
+      return item ? { libraryID: item.libraryID, key: item.itemKey } : false
     }
 
-    const m = decoded_id.match(/^bbt:(?:{([0-9]+)})?(.*)/)
+    const m = decoded.match(/^bbt:(?:{([0-9]+)})?(.*)/)
     if (m) {
       const [_libraryID, citekey] = m.slice(1)
       const libraryID: number = (!_libraryID || _libraryID === '1') ? Zotero.Libraries.userLibraryID : parseInt(_libraryID)
       const item = Zotero.BetterBibTeX.KeyManager.keys.findOne($and({ libraryID, citekey }))
-      if (item) return { libraryID: item.libraryID, key: item.itemKey }
+      return item ? { libraryID: item.libraryID, key: item.itemKey } : false
     }
   }
   catch (err) {
-    log.error('parseLibraryKeyHash:', id, err)
+    log.error('parseLibraryKeyFromCitekey:', libraryKey, err)
   }
+  return null
+}
 
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  return original.apply(this, arguments)
+$patch$(Zotero.API, 'getResultsFromParams', original => function Zotero_API_getResultsFromParams(params: Record<string, any>) {
+  try {
+    if (params.itemKey) {
+      const libraryID = params.libraryID || Zotero.Libraries.userLibraryID
+      params.itemKey = params.itemKey.map((itemKey: string) => {
+        const m = itemKey.match(/^(bbt:|@)(.+)/)
+        const citekey: { itemKey: string } = m ? Zotero.BetterBibTeX.KeyManager.keys.findOne($and({ libraryID, citekey: m[2] })) : {}
+        return citekey.itemKey || itemKey
+      })
+    }
+  }
+  catch (err) {
+    log.debug('getResultsFromParams', params, err)
+  }
+  log.debug('getResultsFromParams modified', params)
+
+  return original.apply(this, arguments) as Record<string, any>
 })
+
+if (typeof Zotero.DataObjects.prototype.parseLibraryKeyHash === 'function') {
+  log.debug('monkey-patching parseLibraryKeyHash')
+  $patch$(Zotero.DataObjects.prototype, 'parseLibraryKeyHash', original => function Zotero_DataObjects_prototype_parseLibraryKeyHash(libraryKey: string) {
+    const item = parseLibraryKeyFromCitekey(libraryKey)
+    log.debug('parseLibraryKeyHash', { item })
+    if (item !== null) return item
+
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    return original.apply(this, arguments)
+  })
+}
+if (typeof Zotero.DataObjects.prototype.parseLibraryKey === 'function') {
+  log.debug('monkey-patching parseLibraryKey')
+  $patch$(Zotero.DataObjects.prototype, 'parseLibraryKey', original => function Zotero_DataObjects_prototype_parseLibraryKey(libraryKey: string) {
+    const item = parseLibraryKeyFromCitekey(libraryKey)
+    log.debug('parseLibraryKey', { item })
+    if (item) return item
+    if (item === false) return { libraryID: Zotero.Libraries.userLibraryID, key: undefined }
+
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    return original.apply(this, arguments)
+  })
+}
 
 // otherwise the display of the citekey in the item pane flames out
 $patch$(Zotero.ItemFields, 'isFieldOfBase', original => function Zotero_ItemFields_isFieldOfBase(field: string, _baseField: any) {
@@ -316,7 +365,7 @@ else {
     if (col.id !== 'zotero-items-column-citekey') return original.apply(this, arguments)
 
     const item = this.getRow(row).ref
-    if (!item.isRegularItem()) return ''
+    if (!item.isRegularItem() || item.isFeedItem) return ''
 
     if (Zotero.BetterBibTeX.ready.isPending()) { // eslint-disable-line @typescript-eslint/no-use-before-define
       if (!itemTreeViewWaiting[item.id]) {
@@ -343,22 +392,14 @@ $patch$(Zotero.Integration, 'getApplication', original => function Zotero_Integr
 
 /* bugger this, I don't want megabytes of shared code in the translators */
 import * as DateParser from './dateparser'
-// import CiteProc = require('./citeproc.ts')
-import { qualityReport } from './qr-check'
 import type { ParsedDate } from './dateparser'
 
 Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
-  qrCheck(_sandbox: any, value: string, test: string, params = null) { return qualityReport(value, test, params) },
+  clientName: Zotero.clientName,
 
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  parseDate(_sandbox: any, date: string): ParsedDate { return DateParser.parse(date, Zotero.BetterBibTeX.localeDateOrder) },
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  getLocaleDateOrder(_sandbox: any): string { return Zotero.BetterBibTeX.localeDateOrder },
-
-  isEDTF(_sandbox: any, date: string, minuteLevelPrecision = false) { return DateParser.isEDTF(date, minuteLevelPrecision) },
-
+  /*
   titleCase(_sandbox: any, text: string): string { return titleCase(text) },
-  parseHTML(_sandbox: any, text: { toString: () => any }, options: { html?: boolean, caseConversion?: boolean, exportBraceProtection: boolean, csquotes: string, exportTitleCase: boolean }) {
+  parseHTML(_sandbox: any, text: { toString: () => any }, options: HTMLParserOptions) {
     options = {
       ...options,
       exportBraceProtection: Preference.exportBraceProtection,
@@ -367,66 +408,31 @@ Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
     }
     return HTMLParser.parse(text.toString(), options)
   },
+  */
   // extractFields(_sandbox, item) { return Extra.get(item.extra) },
 
+  strToISO(_sandbox: any, str: string) { return DateParser.strToISO(str) },
+
+  generateBibLaTeX(_sandbox: any, translation: Translation) { generateBibLaTeX(translation) },
+  generateBibTeX(_sandbox: any, translation: Translation) { generateBibTeX(translation) },
+  generateCSLYAML(_sandbox: any, translation: Translation) { generateCSLYAML(translation) },
+  generateCSLJSON(_sandbox: any, translation: Translation) { generateCSLJSON(translation) },
+
   cacheFetch(sandbox: { translator: { label: string }[] }, itemID: number, options: { exportNotes: boolean, useJournalAbbreviation: boolean }, prefs: any) {
-    if (!Preference.caching) return false
-
-    const collection = Cache.getCollection(sandbox.translator[0].label)
-    if (!collection) return false
-
-    // not safe in async!
-    const cloneObjects = collection.cloneObjects
-    collection.cloneObjects = false
-    const cached = collection.findOne($and({...cacheSelector(sandbox.translator[0].label, options, prefs), itemID}))
-    collection.cloneObjects = cloneObjects
-
-    if (!cached) return false
-
-    // collection.update(cached) // touches the cache object so it isn't reaped too early
-
-    // direct-DB access for speed...
-    cached.meta.updated = (new Date).getTime() // touches the cache object so it isn't reaped too early
-    collection.dirty = true
-
-    // isolate object, because it was not fetched using clone
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return cloneDeep(cached)
+    return Cache.fetch(sandbox.translator[0].label, itemID, options, prefs)
   },
 
   cacheStore(sandbox: { translator: { label: string }[] }, itemID: number, options: { exportNotes: boolean, useJournalAbbreviation: boolean }, prefs: any, entry: any, metadata: any) {
-    if (!Preference.caching) return false
-
-    if (!metadata) metadata = {}
-
-    const collection = Cache.getCollection(sandbox.translator[0].label)
-    if (!collection) {
-      log.error('cacheStore: cache', sandbox.translator[0].label, 'not found')
-      return false
-    }
-
-    const selector = {...cacheSelector(sandbox.translator[0].label, options, prefs), itemID}
-    let cached = collection.findOne($and(selector))
-
-    if (cached) {
-      cached.entry = entry
-      cached.metadata = metadata
-      cached = collection.update(cached)
-
-    }
-    else {
-      cached = collection.insert({...selector, entry, metadata})
-
-    }
-
-    return true
+    return Cache.store(sandbox.translator[0].label, itemID, options, prefs, entry, metadata)
   },
-
-  strToISO(_sandbox: any, str: string) { return DateParser.strToISO(str, Zotero.BetterBibTeX.localeDateOrder) },
+  parseDate(_sandbox: any, date: string): ParsedDate { return DateParser.parse(date) },
 }
 
 Zotero.Translate.Import.prototype.Sandbox.BetterBibTeX = {
-  parseHTML(_sandbox: any, text: { toString: () => any }, options: { html?: boolean, caseConversion?: boolean, exportBraceProtection: boolean, csquotes: string, exportTitleCase: boolean }) {
+  clientName: Zotero.clientName,
+
+  parseHTML(_sandbox: any, text: { toString: () => any }, options: HTMLParserOptions) {
     options = {
       ...options,
       exportBraceProtection: Preference.exportBraceProtection,
@@ -435,8 +441,12 @@ Zotero.Translate.Import.prototype.Sandbox.BetterBibTeX = {
     }
     return HTMLParser.parse(text.toString(), options)
   },
+
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  parseDate(_sandbox: any, date: string): ParsedDate { return DateParser.parse(date, Zotero.BetterBibTeX.localeDateOrder) },
+  parseDate(_sandbox: any, date: string): ParsedDate { return DateParser.parse(date) },
+
+  async parseBibTeX(_sandbox: any, input: string, translation: Translation) { return parseBibTeX(input, translation) },
+  parseCSLYAML(_sandbox: any, input: string): any { return parseCSLYAML(input) },
 }
 
 $patch$(Zotero.Utilities.Internal, 'itemToExportFormat', original => function Zotero_Utilities_Internal_itemToExportFormat(zoteroItem: any, _legacy: any, _skipChildItems: any) {
@@ -491,12 +501,12 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
         if (displayOptions.exportFileData) { // when exporting file data, the user was asked to pick a directory rather than a file
           displayOptions.exportDir = this.location.path
           displayOptions.exportPath = OS.Path.join(this.location.path, `${this.location.leafName}.${translator.target}`)
-          displayOptions.caching = false
+          displayOptions.cache = false
         }
         else {
           displayOptions.exportDir = this.location.parent.path
           displayOptions.exportPath = this.location.path
-          displayOptions.caching = true
+          displayOptions.cache = true
         }
       }
       const override = {
@@ -516,12 +526,12 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
           (path: string) => Zotero.File.getContents(path) // eslint-disable-line @typescript-eslint/no-unsafe-return
         ),
       }
-      displayOptions.caching = displayOptions.caching && !override.postscript && !override.preferences && !override.strings
+      displayOptions.cache = displayOptions.cache && !override.postscript && !override.preferences && !override.strings
 
       if (override.postscript) displayOptions.preference_postscript = override.postscript
       if (typeof override.strings === 'string') displayOptions.preference_strings = override.strings
       if (override.preferences) {
-        displayOptions.caching = false
+        displayOptions.cache = false
         for (const [pref, value] of Object.entries(override.preferences)) {
           if (typeof value !== typeof preferences.defaults[pref]) {
             log.error(`preference override for ${pref}: expected ${typeof preferences.defaults[pref]}, got ${typeof value}`)
@@ -568,26 +578,35 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
         })
       }
 
-      let disabled = ''
+      let noworker = ''
       if (this.noWait) { // noWait must be synchronous
-        disabled = 'noWait is active'
+        noworker = 'noWait is active'
       }
-      else if (!Preference.workers) {
-        disabled = 'user has disabled worker export'
-      }
-      else if (Translators.workers.disabled) {
+      else if (!Translators.worker) {
         // there wasn't an error starting a worker earlier
-        disabled = 'failed to start a chromeworker, disabled until restart'
+        noworker = 'failed to start a chromeworker, disabled until restart'
       }
+      else if (typeof translator.displayOptions.worker === 'undefined') {
+        noworker = `${translator.label} does not support background export`
+      }
+      else if (!displayOptions.worker) {
+        noworker = `user has chosen foreground export for ${translator.label}`
+      }
+      /*
       else if (this.location?.path.startsWith('\\\\')) {
         // check for SMB path for #1396
-        disabled = 'chrome workers fail on smb paths'
+        noworker = 'chrome workers fail on smb paths'
+      }
+      */
+      else {
+        noworker = Object.keys(this._handlers).filter(handler => !['done', 'itemDone', 'error'].includes(handler)).join(', ')
+        if (noworker) noworker = `found async handlers: ${noworker}`
+      }
+
+      if (noworker) {
+        log.debug('worker export skipped,', noworker)
       }
       else {
-        disabled = Object.keys(this._handlers).filter(handler => !['done', 'itemDone', 'error'].includes(handler)).join(', ')
-        if (disabled) disabled = `handlers: ${disabled}`
-      }
-      if (!disabled) {
         const path = this.location?.path
 
         // fake out the stuff that complete expects to be set by .translate
@@ -595,7 +614,7 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
         this.saveQueue = []
         this._savingAttachments = []
 
-        return Translators.exportItemsByQueuedWorker(translatorID, displayOptions, { translate: this, scope: { ...this._export, getter: this._itemGetter }, path })
+        return Translators.exportItemsByWorker({ translatorID, displayOptions, translate: this, scope: { ...this._export, getter: this._itemGetter }, path })
           .then(result => {
             // eslint-disable-next-line id-blacklist
             this.string = result
@@ -640,8 +659,8 @@ notify('item-tag', (_action: any, _type: any, ids: any[], _extraData: any) => {
 })
 
 notify('item', (action: string, type: any, ids: any[], extraData: { [x: string]: { bbtCitekeyUpdate: any } }) => {
+  // log.debug('item.notify', action, ids, Zotero.Items.get(ids).map(item => Zotero.Utilities.Internal.itemToExportFormat(item))) // eslint-disable-line @typescript-eslint/no-unsafe-return
   // prevents update loop -- see KeyManager.init()
-  log.debug('item', action, ids)
   if (action === 'modify') {
     ids = ids.filter((id: string | number) => !extraData[id] || !extraData[id].bbtCitekeyUpdate)
     if (!ids.length) return
@@ -653,8 +672,16 @@ notify('item', (action: string, type: any, ids: any[], extraData: { [x: string]:
   // https://groups.google.com/forum/#!topic/zotero-dev/99wkhAk-jm0
   const parentIDs = []
   const items = action === 'delete' ? [] : Zotero.Items.get(ids).filter((item: ZoteroItem) => {
-    if (typeof item.parentID !== 'boolean') {
-      parentIDs.push(item.parentID)
+    if (item.isFeedItem) return false
+
+    if (item.isAttachment() || item.isNote()) {
+      const parentID = item.parentID
+      if (typeof parentID === 'number') parentIDs.push(parentID)
+      return false
+    }
+    if (item.isAnnotation?.()) {
+      const parentID = item.parentItem?.parentID
+      if (typeof parentID === 'number') parentIDs.push(parentID)
       return false
     }
 
@@ -662,6 +689,7 @@ notify('item', (action: string, type: any, ids: any[], extraData: { [x: string]:
   })
   if (parentIDs.length) Cache.remove(parentIDs, `parent items ${parentIDs} changed`)
   const parents = parentIDs.length ? Zotero.Items.get(parentIDs) : []
+  // log.debug('item.notify.parents', parentIDs, parents.map(item => Zotero.Utilities.Internal.itemToExportFormat(item))) // eslint-disable-line @typescript-eslint/no-unsafe-return
 
   switch (action) {
     case 'delete':
@@ -694,7 +722,7 @@ notify('item', (action: string, type: any, ids: any[], extraData: { [x: string]:
       return
   }
 
-  notifyItemsChanged(items.concat(parents))
+  Events.itemsChanged(items.concat(parents))
 })
 
 notify('collection', (event: string, _type: any, ids: string | any[], _extraData: any) => {
@@ -724,18 +752,12 @@ notify('collection-item', (_event: any, _type: any, collection_items: any) => {
   INIT
 */
 
-function setProgress(progress: number | false, msg: string) {
+function setProgress(progress: number, msg: string) {
   const progressbox = document.getElementById('better-bibtex-progress')
-  progressbox.hidden = progress === false ? true : false
-  if (progress === false) return
-
-  /*
-  const progressmeter: XUL.ProgressMeter = (document.getElementById('better-bibtex-progress-meter') as unknown as XUL.ProgressMeter)
-  if (typeof progress === 'number') progressmeter.value = progress
-  */
+  if (progressbox.hidden = (progress >= 100)) return
 
   const progressmeter: XUL.Element = (document.getElementById('better-bibtex-progress-meter') as unknown as XUL.Element)
-  progressmeter.style.backgroundPosition = `-${Math.min(Math.abs(progress), 100) * 20}px 0` // eslint-disable-line no-magic-numbers
+  progressmeter.style.backgroundPosition = `-${Math.min(progress, 100) * 20}px 0` // eslint-disable-line no-magic-numbers
 
   const label: XUL.Label = (document.getElementById('better-bibtex-progress-label') as unknown as XUL.Label)
   label.value = msg
@@ -809,8 +831,13 @@ class Progress {
 }
 
 export class BetterBibTeX {
+  public Cache = Cache
+
+  // eslint-disable-next-line prefer-arrow/prefer-arrow-functions, @typescript-eslint/no-unsafe-return, @typescript-eslint/explicit-module-boundary-types
+  public CSL() { return CSL }
   public TestSupport = new TestSupport
   public KeyManager = new KeyManager
+  public Text = { sentenceCase }
 
   // panes
   public ZoteroPane: ZoteroPaneHelper = new ZoteroPaneHelper
@@ -820,7 +847,6 @@ export class BetterBibTeX {
   public ErrorReport = new ErrorReport
   public PrefPane = new PrefPane
 
-  public localeDateOrder: string = Zotero.Date.getLocaleDateOrder()
   public ready: BluebirdPromise<boolean>
   public loaded: BluebirdPromise<boolean>
   public dir: string
@@ -985,11 +1011,29 @@ export class BetterBibTeX {
 
     Events.emit('loaded')
 
-    Events.on('export-progress', (percent: number, translator: string) => {
-      const preparing = percent < 0 ? l10n.localize('Preferences.auto-export.status.preparing') : ''
-      percent = Math.abs(percent)
-      setProgress(percent && percent < 100 && Math.abs(percent), `${preparing} ${translator}`) // eslint-disable-line no-magic-numbers
+    Events.on('export-progress', (percent: number, message: string) => {
+      /*
+      let status = `${percent < 0 ? l10n.localize('Preferences.auto-export.status.preparing') : ''} ${translator}`.trim()
+      if (Translators.queue.queued) status += ` +${Translators.queue.queued}`
+      setProgress(percent && percent < 100 && Math.abs(percent), status) // eslint-disable-line no-magic-numbers
+      */
+      setProgress(percent, message) // eslint-disable-line no-magic-numbers
+    })
+    Events.on('window-loaded', (win: Window, href: string) => {
+      log.debug('window-loaded', href)
+      switch (href) {
+        case 'chrome://zotero/content/preferences/preferences.xul':
+          log.debug('window-loaded', href, 'calling prefpane_start')
+          prefpane_start(win)
+          break
+      }
     })
   }
+
+  public parseDate(date: string): ParsedDate { return DateParser.parse(date) }
+  public unload(): void {
+    Zotero.debug('Unloading BBT?')
+  }
 }
+
 Zotero.BetterBibTeX = Zotero.BetterBibTeX || new BetterBibTeX

@@ -1,7 +1,7 @@
 ---
 references:
-- id: 000021000024=00
-  citation-key: 000021000024=00
+- id: '00002100002400'
+  citation-key: '00002100002400'
   issued:
     - year: -1
       season: 1
@@ -10,8 +10,8 @@ references:
   title: 0000-21/0000-24
   type: webpage
 
-- id: 001121001222=-11
-  citation-key: 001121001222=-11
+- id: 001121001222-11
+  citation-key: 001121001222-11
   issued:
     - year: -12
       season: 1
@@ -20,8 +20,8 @@ references:
   title: '-0011-21/-0012-22'
   type: webpage
 
-- id: 001121001222=11
-  citation-key: 001121001222=11
+- id: '00112100122211'
+  citation-key: '00112100122211'
   issued:
     - year: 11
       season: 1
@@ -30,8 +30,8 @@ references:
   title: 0011-21/0012-22
   type: webpage
 
-- id: 201121201222=-2011
-  citation-key: 201121201222=-2011
+- id: 201121201222-2011
+  citation-key: 201121201222-2011
   issued:
     - year: -2012
       season: 1
@@ -40,8 +40,8 @@ references:
   title: '-2011-21/-2012-22'
   type: webpage
 
-- id: monthsoutrange=2017
-  citation-key: monthsoutrange=2017
+- id: monthsoutrange2017
+  citation-key: monthsoutrange2017
   issued:
     - year: 2017
       season: 2
@@ -52,8 +52,8 @@ references:
   title: months out of range
   type: webpage
 
-- id: SeasonrangesEDTF=2017
-  citation-key: SeasonrangesEDTF=2017
+- id: SeasonrangesEDTF2017
+  citation-key: SeasonrangesEDTF2017
   issued:
     - year: 2017
       season: 3

@@ -10,7 +10,7 @@ function urls(item): { type: string, id: string, url: string }[] {
   const doi = (item.getField('DOI') || parsed.extraFields.kv.DOI || '').replace(/^https?:\/\/doi.org\//i, '')
   if (doi) candidates.push({ type: 'DOI', id: doi, url: `https://inspirehep.net/api/doi/${doi}` })
 
-  const arxiv = ((['arxiv.org', 'arxiv'].includes((item.getField('libraryCatalog') || '').toLowerCase())) && arXiv.parse(item.getField('publicationTitle')).id) || arXiv.parse(parsed.extraFields.tex.arxiv).id
+  const arxiv = ((['arxiv.org', 'arxiv'].includes((item.getField('libraryCatalog') || '').toLowerCase())) && arXiv.parse(item.getField('publicationTitle')).id) || arXiv.parse(parsed.extraFields.tex['tex.arxiv']?.value).id
   if (arxiv) candidates.push({ type: 'arXiv ID', id: arxiv, url: `https://inspirehep.net/api/arxiv/${arxiv}` })
 
   return candidates

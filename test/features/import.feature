@@ -2,7 +2,7 @@
 Feature: Import
 
   Background:
-    Given I set preference .citekeyFormat to "[auth][year]"
+    Given I set preference .citekeyFormat to "auth + year"
     And I set preference .jabrefFormat to 0
 
   @schomd
@@ -45,19 +45,27 @@ Feature: Import
     Then the library should match "import/*.json"
     And an export using "Better BibTeX" should match "import/*.roundtrip.bib"
 
-  @758 @aux
+  @758 @aux @2164
   Scenario: AUX scanner
     When I import 149 references from "import/*-pre.json"
-    And I import 1 reference from "import/*.aux"
+    And I import 1 reference from "import/*.1.aux"
+    And I import 1 reference from "import/*.2.aux"
     Then the library should match "import/*-post.json"
 
-  @959 @1058 @871 @1081 @1115 @1350 @667
+  Scenario: Copy date-addeddate-modified from extra field regenerates citation key #2142
+    When I import 1 reference from "import/*.bib"
+    And I select the item with a field that contains "Bargaining"
+    And I copy date-added/date-modified for the selected items from the extra field
+    Then the library should match "import/*.json"
+
   Scenario Outline: Import <references> references from <file>
     When I import <references> references from "import/<file>.bib"
     Then the library should match "import/*.json"
 
     Examples:
       | file                                                                        | references |
+      | accessDate must be ISO date #2376                                           | 2          |
+      | Dealing with base64-encoded paths from BibDesk #2374                        | 3          |
       | Lowercase A in BBT Sentence Case #2078                                      | 1          |
       | Map the call-number field from Bib(La)TeX to call number #2021              | 1          |
       | Detect journal abbreviation in the publication field #1951                  | 1          |
@@ -103,6 +111,7 @@ Feature: Import
       | space after citekey creates confusion #716                                  | 2          |
       | zbb (quietly) chokes on this .bib #664                                      | 1          |
       | import software related biblatex entries #1544                              | 1          |
+      | BBT + Zotfile creating duplicate files in the wrong location #2300          | 7          |
 
   @use.with_slow=true @timeout=3000
   Scenario: Some bibtex entries quietly discarded on import from bib file #873
@@ -119,6 +128,11 @@ Feature: Import
   Scenario: Edition Numbers in BibTeX Exports #1446
     When I import 1 reference from "export/*.bibtex"
     Then the library should match "export/*.roundtrip.json"
+
+  Scenario: Import to Extra instead of Note #2191
+    Given I set preference .importNoteToExtra to "note"
+    When I import 1 reference from "import/*.bib"
+    Then the library should match "import/*.json"
 
   Scenario: Options to use default import process? #1562
     Given I set preference .importExtra to false

@@ -1,19 +1,22 @@
-declare const Zotero: any
+import { clone } from '../../content/clone'
+import { Translation } from '../lib/translator'
+import { HTMLParser } from '../../content/text'
 
-import { Translator } from '../lib/translator'
 import type { MarkupNode } from '../../typings/markup'
+import type { TeXMap } from '../../content/prefs'
 
 import { log } from '../../content/logger'
 import HE = require('he')
-import * as unicode2latex from 'unicode2latex'
 const combining_diacritics = /^[^\u0300-\u036F][\u0300-\u036F]+/
+
+import * as unicode2latex from 'unicode2latex'
 
 const switchMode = {
   math: 'text',
   text: 'math',
 }
 
-type ConverterOptions = {
+export type ConverterOptions = {
   caseConversion?: boolean
   html?: boolean
   creator?: boolean
@@ -24,45 +27,39 @@ export function replace_command_spacers(latex: string): string {
   return latex.replace(/\0(\s)/g, '{}$1').replace(/\0([^;.,!?${}_^\\/])/g, ' $1').replace(/\0/g, '')
 }
 
-type ParseResult = { latex: string, raw: boolean, packages: string[] }
+export type ParseResult = { latex: string, raw: boolean, packages: string[] }
 
 type LatexRepresentation = { text?: string, math?: string, textpackages?: string[], mathpackages?: string[], commandspacer?: boolean }
 
-const htmlConverter = new class HTMLConverter {
+export class HTMLConverter {
   private latex = ''
-  private mapping: any = {}
+  private mapping: {
+    text: TeXMap
+    creator: TeXMap
+    active: TeXMap
+  }
   private stack: any[] = []
   private options: ConverterOptions = {}
   private embraced: boolean
   private packages: { [key: string]: boolean } = {}
+  private translation: Translation
 
-  private charmap(): any {
-    if (!Translator.preferences.charmap) return {}
-
-    try {
-      const charmap = JSON.parse(Translator.preferences.charmap)
-      for (const [u, l] of Object.entries(charmap)) {
-        if (typeof l === 'string') charmap[u] = { text: l }
-        if (!charmap[u].text && !charmap[u].math) delete charmap[u]
-      }
-      return charmap
-    }
-    catch (err) {
-      log.debug('invalid charmap', Translator.preferences.charmap)
-      return {}
+  constructor(charmap: TeXMap, translation: Translation) {
+    this.translation = translation
+    this.mapping = {
+      text: this.init(charmap, false),
+      creator: this.init(charmap, true),
+      active: {},
     }
   }
 
-  public convert(html: string, options: ConverterOptions): ParseResult {
-    this.embraced = false
-    this.options = options
-    this.latex = ''
-    this.packages = {}
+  private init(charmap: TeXMap, creator: boolean): TeXMap {
+    let mapping: TeXMap
 
-    if (Translator.unicode) {
-      this.mapping = unicode2latex.unicode
+    if (this.translation.unicode) {
+      mapping = unicode2latex.unicode
     }
-    else if (options.creator && Translator.BetterBibTeX) {
+    else if (this.translation.preferences.mapUnicode === 'creator' || (creator && this.translation.BetterBibTeX)) {
       /* https://github.com/retorquere/zotero-better-bibtex/issues/1189
         Needed so that composite characters are counted as single characters
         for in-text citation generation. This messes with the {} cleanup
@@ -72,67 +69,76 @@ const htmlConverter = new class HTMLConverter {
         Only testing ascii.text because that's the only place (so far)
         that these have turned up.
       */
-      this.mapping = unicode2latex.ascii_bibtex_creator
+      mapping = unicode2latex.ascii_bibtex_creator
     }
     else {
-      this.mapping = unicode2latex.ascii
+      mapping = unicode2latex.ascii
     }
 
     // safeguard against modifications for reusable workers
-    this.mapping = {
-      ...this.mapping,
-      ...this.charmap(),
+    mapping = clone({
+      ...mapping,
+      ...(charmap || {}),
+    })
+
+    for (const c of this.translation.preferences.ascii) {
+      mapping[c] = unicode2latex.ascii[c]
     }
 
-    if (!this.mapping.initialized) {
-      for (const c of Translator.preferences.ascii) {
-        this.mapping[c] = unicode2latex.ascii[c]
-      }
-
-      if (Translator.preferences.mapUnicode === 'conservative') {
-        for (const keep of Object.keys(switchMode).sort()) {
-          const remove = switchMode[keep]
-          const unicode = Translator.preferences[`map${keep[0].toUpperCase()}${keep.slice(1)}`]
-          for (const c of unicode) {
-            if (this.mapping[c] && this.mapping[c].text && this.mapping[c].math) {
-              delete this.mapping[c][remove]
-            }
+    if (this.translation.preferences.mapUnicode === 'conservative') {
+      for (const keep of Object.keys(switchMode).sort()) {
+        const remove = switchMode[keep]
+        const unicode = this.translation.preferences[`map${keep[0].toUpperCase()}${keep.slice(1)}`]
+        for (const c of unicode) {
+          if (mapping[c] && mapping[c].text && mapping[c].math) {
+            delete mapping[c][remove]
           }
         }
-
       }
-      else if (Translator.preferences.mapUnicode === 'minimal-packages') {
+    }
+    else if (this.translation.preferences.mapUnicode === 'minimal-packages') {
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+      for (const tex of (Object.values(mapping) as LatexRepresentation[])) {
+        if (tex.text && tex.math) {
+          if (tex.textpackages && !tex.mathpackages) {
+            delete tex.text
+            delete tex.textpackages
+          }
+          else if (!tex.textpackages && tex.mathpackages) {
+            delete tex.math
+            delete tex.mathpackages
+          }
+        }
+      }
+    }
+    else {
+      const remove = switchMode[this.translation.preferences.mapUnicode]
+      if (remove) {
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
-        for (const tex of (Object.values(this.mapping) as LatexRepresentation[])) {
-          if (tex.text && tex.math) {
-            if (tex.textpackages && !tex.mathpackages) {
-              delete tex.text
-              delete tex.textpackages
-            }
-            else if (!tex.textpackages && tex.mathpackages) {
-              delete tex.math
-              delete tex.mathpackages
-            }
-          }
-        }
-
-      }
-      else {
-        const remove = switchMode[Translator.preferences.mapUnicode]
-        if (remove) {
-          // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
-          for (const tex of (Object.values(this.mapping) as LatexRepresentation[])) {
-            if (tex.text && tex.math) delete tex[remove]
-          }
+        for (const tex of (Object.values(mapping) as LatexRepresentation[])) {
+          if (tex.text && tex.math) delete tex[remove]
         }
       }
-
-      this.mapping.initialized = true
     }
 
+    return mapping
+  }
+
+  public tolatex(source: string, options: ConverterOptions): ParseResult {
+    this.mapping.active = options.creator ? this.mapping.creator : this.mapping.text
+    this.embraced = false
+    this.options = options
+    this.latex = ''
+    this.packages = {}
     this.stack = []
 
-    const ast: MarkupNode = Zotero.BetterBibTeX.parseHTML(html, this.options)
+    const ast: MarkupNode = HTMLParser.parse(source, {
+      html: options.html,
+      caseConversion: options.caseConversion,
+      exportBraceProtection: this.translation.preferences.exportBraceProtection,
+      csquotes: this.translation.preferences.csquotes,
+      exportTitleCase: this.translation.preferences.exportTitleCase,
+    })
     this.walk(ast)
 
     if (!options.commandspacers) this.latex = replace_command_spacers(this.latex)
@@ -253,6 +259,12 @@ const htmlConverter = new class HTMLConverter {
         latex = '\n\n\\begin{quotation}\n...\n\n\\end{quotation}\n'
         break
 
+      case 'img':
+        // latex does not support remote images
+        // if (tag.attr.src) latex = `\\includegraphics{${tag.attr.src}}`
+        break
+
+
       default:
         log.error(`unexpected tag '${tag.nodeName}' (${Object.keys(tag)})`)
         break
@@ -263,7 +275,7 @@ const htmlConverter = new class HTMLConverter {
     if (tag.nocase) latex = `{{${latex}}}`
     if (tag.relax) latex = `{\\relax ${latex}}`
     if (tag.enquote) {
-      if (Translator.BetterBibTeX) {
+      if (this.translation.BetterBibTeX) {
         latex = `\\enquote{${latex}}`
       }
       else {
@@ -287,7 +299,7 @@ const htmlConverter = new class HTMLConverter {
     /* holy mother of %^$#^%$@ the bib(la)tex case conversion rules are insane */
     /* https://github.com/retorquere/zotero-better-bibtex/issues/541 */
     /* https://github.com/plk/biblatex/issues/459 ... oy! */
-    if (!this.embraced) this.embraced = this.options.caseConversion && (((this.latex || latex)[0] !== '\\') || Translator.BetterBibTeX)
+    if (!this.embraced) this.embraced = this.options.caseConversion && (((this.latex || latex)[0] !== '\\') || this.translation.BetterBibTeX)
     if (!this.embraced || !condition) return latex
     return `{${latex}}`
   }
@@ -316,24 +328,24 @@ const htmlConverter = new class HTMLConverter {
 
       // tie "i","︠","a","︡"
       if (text[i + 1] === '\ufe20' && text[i + 3] === '\ufe21') { // eslint-disable-line  no-magic-numbers
-        mapped = this.mapping[text.substr(i, 4)] || { text: `${text[i]}${text[i + 2]}` } // eslint-disable-line  no-magic-numbers
+        mapped = this.mapping.active[text.substr(i, 4)] || { text: `${text[i]}${text[i + 2]}` } // eslint-disable-line  no-magic-numbers
         i += 3 // eslint-disable-line  no-magic-numbers
       }
 
-      if (!mapped && !Translator.unicode) {
+      if (!mapped && !this.translation.unicode) {
         // combining diacritics. Relies on NFD always being mapped, otherwise NFC won't be tested
 
         if (m = combining_diacritics.exec(text.substring(i))) {
           // try compact representation first
-          mapped = this.mapping[m[0].normalize('NFC')]
+          mapped = this.mapping.active[m[0].normalize('NFC')]
 
           // normal char + 1 or two following combining diacritics
           if (!mapped && (diacritic = unicode2latex.diacritics.tolatex[m[0].substr(1,2)])) {
-            const char = (this.mapping[text[i]] || { text: text[i], math: text[i] })[diacritic.mode]
+            const char = (this.mapping.active[text[i]] || { text: text[i], math: text[i] })[diacritic.mode]
             if (char) {
               const cmd = diacritic.command.match(/[a-z]/)
 
-              if (Translator.BetterBibTeX && diacritic.mode === 'text') {
+              if (this.translation.BetterBibTeX && diacritic.mode === 'text') {
                 // needs to be braced to count as a single char for name abbreviation
                 mapped = ({ [diacritic.mode]: `{\\${diacritic.command}${cmd ? ' ': ''}${char}}` } as LatexRepresentation)
 
@@ -360,12 +372,12 @@ const htmlConverter = new class HTMLConverter {
       }
 
       // ??
-      if (!mapped && text[i + 1] && (mapped = this.mapping[text.substr(i, 2)])) {
+      if (!mapped && text[i + 1] && (mapped = this.mapping.active[text.substr(i, 2)])) {
         i += 1
       }
 
       // fallback -- single char mapping
-      if (!mapped) mapped = this.mapping[text[i]] || { text: text[i] }
+      if (!mapped) mapped = this.mapping.active[text[i]] || { text: text[i] }
 
       // in and out of math mode
       if (!mapped[mode]) {
@@ -425,14 +437,4 @@ const htmlConverter = new class HTMLConverter {
 
     this.latex += latex.normalize('NFC')
   }
-}
-
-export function html2latex(html:string, options: ConverterOptions): ParseResult {
-  if (typeof options.html === 'undefined') options.html = true
-  return htmlConverter.convert(html, options)
-}
-
-export function text2latex(text:string, options: ConverterOptions = {}): ParseResult {
-  if (typeof options.html === 'undefined') options.html = false
-  return html2latex(text, options)
 }

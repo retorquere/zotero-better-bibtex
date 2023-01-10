@@ -92,7 +92,8 @@
     "type": "number",
     "default": 5,
     "affects": [],
-    "var": "autoExportDelay"
+    "var": "autoExportDelay",
+    "label": "Delay auto-export for"
   },
   {
     "name": "autoExportIdleWait",
@@ -127,7 +128,8 @@
     "type": "number",
     "default": 0,
     "affects": [],
-    "var": "autoPinDelay"
+    "var": "autoPinDelay",
+    "label": "Automatically pin citation key after"
   },
   {
     "name": "automaticTags",
@@ -223,14 +225,7 @@
     "override": true
   },
   {
-    "name": "cacheFlushInterval",
-    "type": "number",
-    "default": 5,
-    "affects": [],
-    "var": "cacheFlushInterval"
-  },
-  {
-    "name": "caching",
+    "name": "cache",
     "type": "boolean",
     "default": true,
     "affects": [
@@ -239,8 +234,15 @@
       "Better CSL JSON",
       "Better CSL YAML"
     ],
-    "var": "caching",
+    "var": "cache",
     "label": "Enable caching for background exports"
+  },
+  {
+    "name": "cacheFlushInterval",
+    "type": "number",
+    "default": 5,
+    "affects": [],
+    "var": "cacheFlushInterval"
   },
   {
     "name": "charmap",
@@ -271,10 +273,10 @@
   {
     "name": "citekeyFormat",
     "type": "string",
-    "default": "\u200b[auth:lower][shorttitle3_3][year]",
+    "default": "\u200bauth.lower + shorttitle(3,3) + year",
     "affects": [],
     "var": "citekeyFormat",
-    "label": "Citation key format"
+    "label": "Citation key formula"
   },
   {
     "name": "citekeyFormatBackup",
@@ -291,6 +293,13 @@
     "affects": [],
     "var": "citekeySearch",
     "label": "Enable citation key search"
+  },
+  {
+    "name": "citekeyUnsafeChars",
+    "type": "string",
+    "default": "\\\"#%'(),={}~",
+    "affects": [],
+    "var": "citekeyUnsafeChars"
   },
   {
     "name": "csquotes",
@@ -429,6 +438,13 @@
     "var": "importJabRefStrings"
   },
   {
+    "name": "importNoteToExtra",
+    "type": "string",
+    "default": "",
+    "affects": [],
+    "var": "importNoteToExtra"
+  },
+  {
     "name": "importSentenceCase",
     "type": "string",
     "default": "on+guess",
@@ -513,6 +529,22 @@
     "label": "Apply kuroshiro romajization in Japanese names/titles. Uses a lot of memory."
   },
   {
+    "name": "language",
+    "type": "string",
+    "default": "langid",
+    "affects": [
+      "Better BibLaTeX",
+      "Better BibTeX"
+    ],
+    "var": "language",
+    "label": "Export language as",
+    "options": {
+      "langid": "langid",
+      "language": "language",
+      "both": "both"
+    }
+  },
+  {
     "name": "mapMath",
     "type": "string",
     "default": "",
@@ -546,7 +578,8 @@
       "minimal-packages": "Minimize additional latex packages required",
       "conservative": "Minimize the number of switches between math-mode and text-mode",
       "text": "Prefer text-mode replacements",
-      "math": "Prefer math-mode replacements"
+      "math": "Prefer math-mode replacements",
+      "creator": "Add braces to accented characters to assist simple latex parsers"
     }
   },
   {
@@ -564,7 +597,7 @@
   {
     "name": "patchDates",
     "type": "string",
-    "default": "",
+    "default": "dateadded=dateAdded, date-added=dateAdded, datemodified=dateModified, date-modified=dateModified",
     "affects": [],
     "var": "patchDates"
   },
@@ -795,7 +828,7 @@
   {
     "name": "verbatimFields",
     "type": "string",
-    "default": "url,doi,file,ids,eprint,verba,verbb,verbc,groups",
+    "default": "url,doi,file,ids,eprint,/^verb[a-z]$/,groups,/^citeulike-linkout-[0-9]+$/, /^bdsk-url-[0-9]+$/",
     "affects": [],
     "var": "verbatimFields"
   },
@@ -813,13 +846,5 @@
     "default": false,
     "affects": [],
     "var": "warnTitleCased"
-  },
-  {
-    "name": "workers",
-    "type": "number",
-    "default": 1,
-    "affects": [],
-    "var": "workers",
-    "label": "Parallel background exports:"
   }
 ]

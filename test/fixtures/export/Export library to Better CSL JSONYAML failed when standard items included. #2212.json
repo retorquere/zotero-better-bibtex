@@ -1,0 +1,41 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "asciiBibLaTeX": true,
+      "auxImport": true,
+      "biblatexExtendedNameFormat": true,
+      "citekeyFormat": "auth.lower+shorttitle(3,3)+year",
+      "extraMergeCSL": true,
+      "extraMergeCitekeys": true,
+      "extraMergeTeX": true,
+      "keyConflictPolicy": "change",
+      "keyScope": "global",
+      "quickCopyMode": "citekeys",
+      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc,groups"
+    }
+  },
+  "items": [
+    {
+      "accessDate": "2020-06-26T14:55:02Z",
+      "archiveLocation": "W531.51C",
+      "citationKey": "ShuiZhongZongYouJiTanJianCeFangFaGuoYangJiaoLiuSuanYanZiWaiGuangYangHuaHongWaiXianCeDingFa2000",
+      "date": "2000/12/22",
+      "extra": [
+        "ndard\"}"
+      ],
+      "itemID": 1,
+      "itemType": "standard",
+      "jurisdiction": "002twRepublic of China|TW",
+      "language": "zh-tw",
+      "libraryCatalog": "www.epa.gov.tw",
+      "publisher": "\u884c\u653f\u9662\u74b0\u4fdd\u7f72\u74b0\u5883\u6aa2\u9a57\u6240",
+      "title": "\u6c34\u4e2d\u7e3d\u6709\u6a5f\u78b3\u6aa2\u6e2c\u65b9\u6cd5\uff0d\u904e\u6c27\u7126\u786b\u9178\u9e7d\u7d2b\u5916\u5149\u6c27\u5316\uff0f\u7d05\u5916\u7dda\u6e2c\u5b9a\u6cd5",
+      "url": "https://www.epa.gov.tw/niea/971403AB2BCCCB38"
+    }
+  ]
+}

@@ -11,10 +11,10 @@ import * as Library from './library'
 import { log } from './logger'
 
 import methods from '../gen/api/json-rpc.json'
-import { validator } from './ajv'
+import { validator, noncoercing } from './ajv'
 
 for (const meta of Object.values(methods)) {
-  (meta as unknown as any).validate = validator(meta.schema) // eslint-disable-line @typescript-eslint/no-unsafe-return
+  (meta as unknown as any).validate = validator(meta.schema, noncoercing) // eslint-disable-line @typescript-eslint/no-unsafe-return
 }
 
 const OK = 200
@@ -48,8 +48,6 @@ class NSAutoExport {
    * @param translator                             The name or GUID of a BBT translator
    * @param path                                   The absolute path to which the collection will be auto-exported
    * @param displayOptions                         Options which you would be able to select during an interactive export; `exportNotes`, default `false`, and `useJournalAbbreviation`, default `false`
-   * @param displayOptions.exportNotes             Export notes
-   * @param displayOptions.useJournalAbbreviation  Use Journal abbreviation in export
    * @param replace                                Replace the auto-export if it exists, default `false`
    * @returns                                      Collection ID of the target collection
    */
@@ -87,10 +85,17 @@ class NSAutoExport {
 class NSUser {
   /**
    * List the libraries (also known as groups) the user has in Zotero
+   *
+   * @param includeCollections Wether or not the result should inlcude a list of collection for each library (default is false)
    */
-  public async groups() {
+  public async groups(includeCollections?: boolean) {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return await Zotero.Libraries.getAll().map(lib => ({ id: lib.libraryID, name: lib.name }))
+    return await Zotero.Libraries
+      .getAll().map(lib => ({
+        id: lib.libraryID,
+        name: lib.name,
+        collections: includeCollections ? Zotero.Collections.getByLibrary(lib.libraryID, true) : undefined,
+      }))
   }
 }
 
@@ -140,7 +145,7 @@ class NSItem {
 
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       return {
-        ...Zotero.Utilities.itemToCSLJSON(item),
+        ...Zotero.Utilities.Item.itemToCSLJSON(item),
         library: libraries[item.libraryID],
         citekey: Zotero.BetterBibTeX.KeyManager.keys.findOne($and({ libraryID: item.libraryID, itemID: item.id })).citekey,
       }
@@ -158,10 +163,87 @@ class NSItem {
     const item = await getItemsAsync(key.itemID)
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return (await getItemsAsync(item.getAttachments())).map(att => ({
-      open: `zotero://open-pdf/${Zotero.API.getLibraryPrefix(item.libraryID || Zotero.Libraries.userLibraryID)}/items/${att.key}`,
-      path: att.getFilePath(),
-    }))
+    return (await getItemsAsync(item.getAttachments())).map(att => {
+      const data: Record<string, any> = {
+        open: `zotero://open-pdf/${Zotero.API.getLibraryPrefix(item.libraryID || Zotero.Libraries.userLibraryID)}/items/${att.key}`,
+        path: att.getFilePath(),
+      }
+
+      if (att.isPDFAttachment()) {
+        data.annotations = att.getAnnotations().map(raw => {
+          const annot = raw.toJSON()
+
+          if (annot.annotationType === 'image') {
+            annot.annotationImagePath = Zotero.Annotations.getCacheImagePath(item)
+          }
+
+          if (annot.annotationPosition && typeof annot.annotationPosition === 'string') {
+            annot.annotationPosition = JSON.parse(annot.annotationPosition)
+          }
+
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+          return annot
+        })
+      }
+
+      return data
+    })
+  }
+
+  /**
+   * Fetch the collections containing a range of citekeys
+   *
+   * @param citekeys An array of citekeys
+   * @param includeParents Include all parent collections back to the library root
+   */
+  public async collections(citekeys: string[], includeParents?: boolean) {
+    const keys = Zotero.BetterBibTeX.KeyManager.keys.find({ citekey: { $in: citekeys.map(citekey => citekey.replace('@', '')) } })
+    if (!keys.length) throw { code: INVALID_PARAMETERS, message: `zero matches for ${citekeys.join(',')}` }
+
+    const seen = {}
+    const recurseParents = (libraryID: string, key: string) => {
+      if (!seen[key]) {
+        let col = Zotero.Collections.getByLibraryAndKey(libraryID, key)
+
+        if (!col) return false
+
+        col = col.toJSON()
+
+        if (col.parentCollection) {
+          col.parentCollection = recurseParents(libraryID, col.parentCollection)
+        }
+
+        delete col.relations
+        delete col.version
+
+        seen[key] = col
+      }
+
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+      return seen[key]
+    }
+
+    const collections = {}
+    for (const key of keys) {
+      const item = await getItemsAsync(key.itemID)
+      collections[key.citekey] = item.getCollections().map(id => {
+        const col = Zotero.Collections.get(id).toJSON()
+
+        delete col.relations
+        delete col.version
+
+        seen[id] = col
+
+        if (includeParents && col.parentCollection) {
+          col.parentCollection = recurseParents(item.libraryID, col.parentCollection)
+        }
+
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+        return col
+      })
+    }
+
+    return collections
   }
 
   /**
@@ -299,7 +381,11 @@ class NSItem {
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return [OK, 'text/plain', await Translators.exportItems(Translators.getTranslatorId(translator), null, { type: 'items', items: await getItemsAsync(found.map(key => key.itemID)) }) ]
+    return [OK, 'text/plain', await Translators.exportItems({
+      translatorID: Translators.getTranslatorId(translator),
+      displayOptions: {},
+      scope: { type: 'items', items: await getItemsAsync(found.map(key => key.itemID)) }, // eslint-disable-line @typescript-eslint/no-unsafe-return
+    })]
   }
 }
 

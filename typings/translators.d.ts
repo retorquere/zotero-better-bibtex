@@ -2,23 +2,40 @@ import { Item, Attachment, Collection, Tag } from '../gen/typings/serialized-ite
 
 export namespace Translators {
   namespace Worker {
-    type Config = {
-      preferences: any,
-      options: any,
-      items: Array<Item | Attachment | Note>
-      collections: Collection[]
-      cslItems?: Record<number, any>
-      cache: Record<number, {itemID: number, reference: string, metadata: any, meta: { updated: number }}>
+    type Environment = {
+      version: string
+      platform: string
+      locale: string
+      localeDateOrder: string
+    }
+
+    type Job = {
+      job: number
+      translator: string
       autoExport?: number
+
+      preferences: any
+      options: any
+
+      output: string
+      debugEnabled: boolean
+
+      data?: {
+        items: Array<Item | Attachment | Note>
+        collections: Collection[]
+        cache: Record<number, {itemID: number, reference: string, metadata: any, meta: { updated: number }}>
+      }
     }
 
     type Message = 
-        { kind: 'start', config: ArrayBuffer }
+        { kind: 'configure', environment: Environment }
+      | { kind: 'start', config: ArrayBuffer }
       | { kind: 'done', output: boolean | string }
       | { kind: 'debug', message: string }
       | { kind: 'error', message: string }
       | { kind: 'cache', itemID: number, entry: string, metadata: any }
       | { kind: 'item', item: number }
+      | { kind: 'ping' }
       | { kind: 'stop' }
       | { kind: 'progress', percent: number, translator: string, autoExport: number }
   }
@@ -51,6 +68,10 @@ export namespace Translators {
     configOptions?: {
       getCollections?: boolean
       hash?: string
+    }
+    displayOptions?: {
+      keepUpdated?: boolean
+      worker?: boolean
     }
   }
 }

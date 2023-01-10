@@ -22,17 +22,21 @@
 -- SOFTWARE.
 --
 
--- local pl = require('pl.pretty') -- for pl.pretty.dump
 local json = require('lunajson')
 local csl_locator = require('locator')
 local utils = require('utils')
 local zotero = require('zotero')
 
+if lpeg == nil then
+  print('upgrade pandoc to version 2.16.2 or later')
+  os.exit()
+end
+
 -- -- global state -- --
 local config = {
   client = 'zotero',
   scannable_cite = false,
-  csl_style = nil, -- more to document than anything else -- Lua does not store nils in tables
+  csl_style = 'apa7',
   format = nil, -- more to document than anything else -- Lua does not store nils in tables
   transferable = false
 }
@@ -105,14 +109,14 @@ local function zotero_bibl_odt()
       .. utils.xmlescape(message)
       .. '</text:p>'
       ..'</text:section>',
-    'ZOTERO_BIBL ' .. utils.xmlescape(bib_settings) .. ' CSL_BIBLIOGRAPHY' .. ' RND' .. utils.random_id(10))
+    'ZOTERO_BIBL ' .. utils.xmlescape(bib_settings) .. ' CSL_BIBLIOGRAPHY' .. ' RND' .. utils.next_id(10))
 end
 
 -- -- -- citation market generators -- -- --
 local function zotero_ref(cite)
   local content = pandoc.utils.stringify(cite.content)
   local csl = {
-    citationID = utils.random_id(8),
+    citationID = utils.next_id(8),
     properties = {
       formattedCitation = content,
       plainCitation = nil, -- effectively the same as not including this like -- keep an eye on whether Zotero is OK with this missing. Maybe switch to a library that allows json.null
@@ -189,7 +193,7 @@ local function zotero_ref(cite)
       return pandoc.RawInline('opendocument', field)
     end
 
-    csl = 'ZOTERO_ITEM CSL_CITATION ' .. utils.xmlescape(json.encode(csl)) .. ' RND' .. utils.random_id(10)
+    csl = 'ZOTERO_ITEM CSL_CITATION ' .. utils.xmlescape(json.encode(csl)) .. ' RND' .. utils.next_id(10)
     local field = author_in_text .. '<text:reference-mark-start text:name="' .. csl .. '"/>'
     field = field .. utils.xmlescape(message)
     field = field .. '<text:reference-mark-end text:name="' .. csl .. '"/>'
@@ -229,9 +233,27 @@ local function scannable_cite(cite)
       s, e, ug, id, key = string.find(citation.uri, 'http://zotero.org/(%w+)/(%w+)/items/(%w+)')
     end
 
+    local shortlabel = {
+      book = 'bk.',
+      chapter = 'chap.',
+      column = 'col.',
+      figure = 'fig.',
+      folio = 'fol.',
+      number = 'no.',
+      line = 'l.',
+      note = 'n.',
+      opus = 'op.',
+      page = 'p.',
+      paragraph = 'para.',
+      part = 'pt.',
+      section = 'sec.',
+      ['sub verbo'] = 's.v.',
+      verse = 'v.',
+      volume = 'vol.',
+    }
     local label, locator, suffix = csl_locator.parse(pandoc.utils.stringify(item.suffix))
-    if locator then
-      locator = (label or 'p.') .. ' ' .. locator
+    if label then
+      locator = shortlabel[label] .. ' ' .. locator
     else
       locator = ''
     end
@@ -321,7 +343,6 @@ function Meta(meta)
     -- scannable-cite takes precedence over csl-style
     config.format = 'scannable-cite'
     zotero.url = zotero.url .. '&translator=jzon'
-    csl_locator.short_labels()
   elseif string.match(FORMAT, 'odt') or string.match(FORMAT, 'docx') then
     config.format = FORMAT
     zotero.url = zotero.url .. '&translator=json'

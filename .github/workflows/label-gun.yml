@@ -1,8 +1,8 @@
-name: 'Manage issues and nag about support logs'
+name: 'Manage issues and nag about debug logs'
 
 on:
   issues:
-    types: [opened, edited, closed]
+    types: [opened, edited, closed, reopened]
   issue_comment:
     types: [created, edited, closed]
 
@@ -14,21 +14,22 @@ jobs:
         with:
           token: ${{ github.token }}
           label.exempt: question
-          log-id.label: needs-support-log
-          log-id.regex: "[A-Z0-9]{8}(-refs)?-(apse|euc)"
-          log-id.message: |
-            It looks like you did not upload an support log. The support log is important; it gives `@retorquere` your current BBT settings and a copy of the items under consideration as a test case so he can best replicate your issue, or build towards the desired behavior. Without it, `@retorquere` is effectively blind. **Support logs are useful for both analysis and for enhancement requests**; in the case of export enhancements, I need the copy of the references you have in mind.
+          label.awaiting: awaiting-user-feedback
+          label.log-required: needs-debug-log
+          label.reopened: reopened
+          log-id: "[A-Z0-9]{8}(-refs)?-(apse|euc)"
+          message.log-required: |
+            It looks like you did not upload an debug log. The debug log is important; it gives `@retorquere` your current BBT settings and a copy of the items under consideration as a test case so he can best replicate your issue, or build towards the desired behavior. Without it, `@retorquere` is effectively blind. **debug logs are useful for both analysis and for enhancement requests**; in the case of export enhancements, I need the copy of the references you have in mind.
 
-            If you did try to submit a support log, but the ID looked like `D<number>`, that is a Zotero debug report, which I cannot access. Please re-submit a BBT debug log by one of the methods below.
+            If you did try to submit a debug log, but the ID looked like `D<number>`, that is a Zotero debug report, which I cannot access. Please re-submit a BBT debug log by one of the methods below.
 
             **This request is much more likely than not to apply to you too @{{username}}, _even if you think it unlikely_**. Please trust `@retorquere` when he says he will usually need one; he will more often than not just end up saying "please send a debug log". Let's just skip over the unnecesary delay this entails. Sending a debug log is very easy:
 
-            1. If your issue relates to how BBT behaves around a **specific reference(s)**, such as citekey generation or export, select at least one of the items(s) under consideration, right-click it, and submit an BBT support log from that popup menu. If the problem is with export, please do include a sample of what you see exported, and what you expected to see exported for these references.
+            1. If your issue relates to how BBT behaves around a **specific reference(s)**, such as citekey generation or export, select at least one of the items(s) under consideration, right-click it, and submit an BBT debug log from that popup menu. If the problem is with export, please do include a sample of what you see exported, and what you expected to see exported for these references.
 
-            2. If the issue **does not relate to references** and is of a more general nature, generate an support log by restarting Zotero with debugging enabled (Help -> Debug Output Logging -> Restart with logging enabled), reproducing your problem, and selecting "Send Better BibTeX debug report..." from the help menu.
+            2. If the issue **does not relate to references** and is of a more general nature, generate an debug log by restarting Zotero with debugging enabled (Help -> Debug Output Logging -> Restart with logging enabled), reproducing your problem, and selecting "Send Better BibTeX debug report..." from the help menu.
 
             Once done, you will see a debug ID in red. Please post that debug id in the issue here.
 
             Thank you!
-          no-close.message: Thanks for the feedback; there's no way you could have known, but @retorquere prefers to keep bugreports/enhancements open as a reminder to merge the changes into a new release.
-          reopen.label: reopened
+          message.no-close: Thanks for the feedback; there's no way you could have known, but @retorquere prefers to keep bugreports/enhancements open as a reminder to merge the changes into a new release.

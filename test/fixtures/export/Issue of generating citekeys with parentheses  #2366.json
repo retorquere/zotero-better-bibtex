@@ -1,0 +1,45 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "autoExportDelay": 46,
+      "baseAttachmentPath": "C:\\Users\\XinYin\\OneDrive - UGent\\3.Resources",
+      "citekeyFold": false,
+      "citekeyFormat": "auth + \"(\" + year + \")\" + shorttitle(3,3)",
+      "citekeyFormatBackup": "auth + \"(\" + year + \")\" + shorttitle(3,3)",
+      "citekeyUnsafeChars": "\"#%',={}~",
+      "extraMergeCSL": true,
+      "extraMergeCitekeys": true,
+      "extraMergeTeX": true,
+      "quickCopyMode": "pandoc",
+      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc"
+    }
+  },
+  "items": [
+    {
+      "accessDate": "2023-01-06T07:54:57Z",
+      "citationKey": "Agilent2022ModificationsImproveType",
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "Agilent"
+        }
+      ],
+      "date": "2022",
+      "itemID": 1,
+      "itemType": "webpage",
+      "tags": [
+        {
+          "tag": "/unread",
+          "type": 1
+        }
+      ],
+      "title": "Some modifications to improve type selection in BibTeX export.",
+      "url": "https://groups.google.com/g/zotero-dev/c/qSq8QdX0F9I"
+    }
+  ]
+}

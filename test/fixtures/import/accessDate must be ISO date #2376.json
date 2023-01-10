@@ -1,0 +1,57 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "citekeyFormat": "auth + year",
+      "citekeyFormatBackup": "auth + year"
+    }
+  },
+  "items": [
+    {
+      "accessDate": "2011-11-29",
+      "citationKey": "r2",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "C",
+          "lastName": "Brush"
+        }
+      ],
+      "date": "2011",
+      "extra": [
+        "Citation Key: r2"
+      ],
+      "itemID": 1,
+      "itemType": "journalArticle",
+      "language": "en",
+      "pages": "45-73",
+      "publicationTitle": "Family Business Review",
+      "title": "Herzinfarkt symptome",
+      "url": "http://www.netdoktor.de/",
+      "volume": "29"
+    },
+    {
+      "accessDate": "2016-02-03",
+      "citationKey": "r42",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "D",
+          "lastName": "Kelley"
+        }
+      ],
+      "date": "2015",
+      "extra": [
+        "Citation Key: r42"
+      ],
+      "itemID": 2,
+      "itemType": "webpage",
+      "title": "Global entrepreneurship",
+      "url": "http://www.gemconsortium.org"
+    }
+  ]
+}

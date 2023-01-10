@@ -2,10 +2,11 @@
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "localeDateOrder": "dmy",
-    "options": {},
+    "options": {
+      "exportNotes": true
+    },
     "preferences": {
-      "citekeyFormat": "[auth][year]"
+      "citekeyFormat": "auth + year"
     }
   },
   "items": [
@@ -154,14 +155,14 @@
       ],
       "itemID": 4,
       "itemType": "document",
-      "language": "english",
+      "language": "en",
       "notes": [
         "Alfredo Gabaldon (Department of Computer Science; University of Toronto);",
         "Appeared in the working notes of the AIPS workshop on On-Line Planning and Scheduling"
       ],
       "rights": "unrestricted",
       "title": "Programming hierarchical task networks in the situation calculus",
-      "url": "http://citeseer.ist.psu.edu/525546.html; http://www.cs.toronto.edu/cogrobo/Papers/htn-opw.ps"
+      "url": "http://citeseer.ist.psu.edu/525546.html;                   http://www.cs.toronto.edu/cogrobo/Papers/htn-opw.ps"
     },
     {
       "abstractNote": "Hierarchical task network and action-based planning approaches have traditionally been studied separately. In many domains, human expertise in the form of hierarchical reduction schemas exists, but is incomplete. In such domains, hybrid approaches that use both HTN and action-based planning techniques are needed. In this paper, we extend our previous work on refinement planning to include hierarchical planning. Specifically, we provide a generalized plan-space refinement that is capable of handling non-primitive actions. The generalization provides a principled way of handling partially hierarchical domains, while preserving systematicity, and respecting the user-intent inherent in the reduction schemas. Our general account also puts into perspective the many surface differences between the HTN and action-based planners, and could support the transfer of progress between HTN and action-based planning approaches.",
@@ -218,13 +219,13 @@
       ],
       "itemID": 6,
       "itemType": "journalArticle",
-      "language": "english",
+      "language": "en",
       "notes": [
         "The Pennsylvania State University CiteSeer Archives"
       ],
       "rights": "unrestricted",
       "title": "Propice-plan: Toward a unified framework for planning and execution",
-      "url": "http://citeseer.ist.psu.edu/507370.html; http://www.informatik.uni-ulm.de/ki/biundo/ECP-Papers/61-despouys.ps.gz"
+      "url": "http://citeseer.ist.psu.edu/507370.html;                  http://www.informatik.uni-ulm.de/ki/biundo/ECP-Papers/61-despouys.ps.gz"
     },
     {
       "abstractNote": "Planning is a central activity in many areas including robotics, manufacturing, space mission sequencing, and logistics. As the size and complexity of planning problems grow, there is great economic pressure to automate this process in order to reduce the cost of planning effort, and to improve the quality of produced plans. AI planning research has focused on general-purpose planning systems which can process the specifications of an application domain and generate solutions to planning problems in that domain. Unfortunately, there is a big gap between theoretical and application oriented work in AI planning. The theoretical work has been mostly based on state-based planning, which has limited practical applications. The application-oriented work has been based on hierarchical task network (HTN) planning, which lacks a theoretical foundation. As a result, in spite of many years of research, building planning applications remains a formidable task. The goal of this dissertation is to facilitate building reliable and effective planning applications. The methodology includes design of a mathematical framework for HTN planning, analysis of this framework, development of provably correct algorithms based on this analysis, and the implementation of these algorithms for further evaluation and exploration. The representation, analyses, and algorithms described in this thesis will make it easier to apply HTN planning techniques effectively and correctly to planning applications. The precise and mathematical nature of the descriptions will also help teaching about HTN planning, will clarify misconceptions in the literature, and will stimulate further research.",
@@ -20124,7 +20125,7 @@
       ],
       "itemID": 815,
       "itemType": "conferencePaper",
-      "publicationTitle": "Proceedings of the first international conference on knowledge capture (k-cap'01)",
+      "publicationTitle": "Proceedings of the first international conference on knowledge capture (K-cap'01)",
       "title": "Knowledge entry as the graphical assembly of components"
     },
     {
@@ -24386,12 +24387,12 @@
       ],
       "itemID": 987,
       "itemType": "bookSection",
-      "language": "english",
+      "language": "English",
       "pages": "545-548",
       "publicationTitle": "Logics in artificial intelligence",
       "publisher": "Springer Berlin Heidelberg",
       "series": "Lecture notes in computer science",
-      "title": "Z-log: Applying system-z",
+      "title": "Z-log: Applying system-Z",
       "url": "http://dx.doi.org/10.1007/3-540-45757-7_52",
       "volume": "2424"
     },

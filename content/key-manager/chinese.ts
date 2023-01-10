@@ -23,7 +23,7 @@ export const jieba = new class {
 
   public cut(input: string): string[] {
     if (Preference.jieba) {
-      this.init()
+      this.load()
     }
     else {
       throw new Error('jieba not loaded')

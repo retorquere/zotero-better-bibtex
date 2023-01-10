@@ -15,9 +15,7 @@ import { log } from '../logger'
 // eslint-disable-next-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
 import Loki = require('lokijs')
 
-import AJV from 'ajv'
-const validator = new AJV({ useDefaults: true, coerceTypes: true })
-require('ajv-keywords')(validator)
+import { validator, coercing } from '../ajv'
 
 // 894
 $patch$(Loki.Collection.prototype, 'findOne', original => function() {
@@ -26,25 +24,24 @@ $patch$(Loki.Collection.prototype, 'findOne', original => function() {
   return original.apply(this, arguments)
 })
 
+function oops(collection, action, doc, errors) {
+  log.debug(collection, action, doc)
+  if (!errors) return
+
+  const error = new Error(`${collection} ${action} ${JSON.stringify(doc)}: ${errors}`)
+  Preference.scrubDatabase = true
+  log.error(error)
+  alert(`Better BibTeX: error ${action} ${collection}, restart to repair`)
+  throw error
+}
+
 $patch$(Loki.Collection.prototype, 'insert', original => function(doc) {
-  if (this.validate && !this.validate(doc)) {
-    const err = new Error(`insert: validation failed for ${JSON.stringify(doc)} (${JSON.stringify(this.validate.errors)})`)
-    log.error('insert: validation failed for', doc, this.validate.errors, err)
-    alert(`Better BibTeX: error saving ${this.name}, restart to repair`)
-    Preference.scrubDatabase = true
-    throw err
-  }
+  oops(this.name, 'inserting', doc, this.validationError?.(doc))
   return original.apply(this, arguments)
 })
 
 $patch$(Loki.Collection.prototype, 'update', original => function(doc) {
-  if (this.validate && !this.validate(doc)) {
-    const err = new Error(`update: validation failed for ${JSON.stringify(doc)} (${JSON.stringify(this.validate.errors)})`)
-    log.error('update: validation failed for', doc, this.validate.errors, err)
-    alert(`Better BibTeX: error saving ${this.name}, restart to repair`)
-    Preference.scrubDatabase = true
-    throw err
-  }
+  oops(this.name, 'updating', doc, this.validationError?.(doc))
   return original.apply(this, arguments)
 })
 
@@ -188,7 +185,7 @@ export class XULoki extends Loki {
     const coll: any = this.getCollection(name) || this.addCollection(name, options)
     coll.cloneObjects = true
 
-    coll.validate = validator.compile(options.schema)
+    coll.validationError = validator(options.schema, coercing)
 
     return coll
   }

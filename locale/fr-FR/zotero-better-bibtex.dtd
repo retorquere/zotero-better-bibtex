@@ -1,3 +1,5 @@
+<!ENTITY better-bibtex.seconds "secondes">
+
 <!ENTITY better-bibtex.FirstRun.title "Bienvenue dans Better BibTex pour Zotero">
 <!ENTITY better-bibtex.FirstRun.welcome "Better BibTex pour Zotero (ou BBT) ajoute à Zotero une compatibilité étendue avec LaTeX ou Markdown. BBT est totalement configurable -- rendez-vous dans les préférences si vous êtes curieux -- mais nous allons commencer avec quelques choix simples.">
 
@@ -6,8 +8,6 @@
 <!ENTITY better-bibtex.FirstRun.citekeyFormat.bbt "Utiliser le format par défaut de BBT pour la clé de citation">
 <!ENTITY better-bibtex.FirstRun.citekeyFormat.zotero "Utiliser le format par défaut de Zotero pour la clé de citation">
 <!ENTITY better-bibtex.FirstRun.citekeyFormat.explanation.bbt "Les nouvelles clés de citation seront par défaut générées en utilisant le format de BBT. Si vous voulez un format différent, modifiez-le dans les préférences, puis sélectionnez tous les éléments, cliquez avec le bouton droit et sélectionnez Actualiser">
-<!ENTITY better-bibtex.FirstRun.citekeyFormat.explanation.bbt.note "Note">
-<!ENTITY better-bibtex.FirstRun.citekeyFormat.explanation.bbt.citekeyUpdate "Dans Zotero 5, BBT ne met plus automatiquement à jour les clés de citation lorsque vous modifiez le modèle dans les préférences. Si vous voulez que les éléments existants suivent le modèle modifié, vous devrez les sélectionner et les rafraîchir.">
 <!ENTITY better-bibtex.FirstRun.citekeyFormat.explanation.zotero "Choisissez cette option si vous avez des documents qui font référence à des clés générées par Zotero sans l'aide de BBT. Cela va reproduire fidèlement les clés générées par Zotero, y compris les limitations connues du générateur de clé de Zotero. N'utilisez ceci que s'il vous est nécessaire que les clés soient exactement les mêmes que celles générées par Zotero.">
 <!ENTITY better-bibtex.FirstRun.citekeyFormat.explanation.example "vos clés de citation ressembleront à">
 
@@ -27,24 +27,24 @@
 <!ENTITY better-bibtex.FirstRun.done "Félicitations !">
 <!ENTITY better-bibtex.FirstRun.done.explanation "BBT est maintenant configuré. Vous pouvez toujours modifier l'un de ces paramètres dans les préférences de Zotero, onglet 'Better BibTex'.">
 
-<!ENTITY better-bibtex.ErrorReport.title "Rapport d'erreur de Better BibTeX">
+<!ENTITY better-bibtex.ErrorReport.title "Journal de débogage Better BibTeX">
 <!ENTITY better-bibtex.ErrorReport.restartWithLoggingEnabled  "Redémarrer avec le journal activé…">
-<!ENTITY better-bibtex.ErrorReport.enableDebug "La création de rapport d'erreurs de Zotero est actuellement désactivé. Il sera plus facile de diagnostiquer le problème si vous l'activez avant de soumettre un rapport d'erreur de Better BibTeX.">
+<!ENTITY better-bibtex.ErrorReport.enableDebug "Le journal de débogage de Zotero est actuellement désactivé. Il sera plus facile de diagnostiquer le problème si vous l'activez avant de soumettre un rapport d'erreur.">
 <!ENTITY better-bibtex.ErrorReport.context "Contexte d'application">
 <!ENTITY better-bibtex.ErrorReport.errors "Erreurs">
 <!ENTITY better-bibtex.ErrorReport.includeCache "Inclure le cache">
-<!ENTITY better-bibtex.ErrorReport.debug "Rapport d'erreur">
-<!ENTITY better-bibtex.ErrorReport.notReviewed "Les rapports d'erreurs ne peuvent pas être analysés, sauf s’ils sont référencés par leur identifiant dans le gestionnaire de tickets de GitHub.">
+<!ENTITY better-bibtex.ErrorReport.debug "Journal de débogage">
+<!ENTITY better-bibtex.ErrorReport.notReviewed "Les journaux de débogage ne peuvent pas être vérifiés à moins d'être référencés dans le gestionnaire de tickets GitHub par leur ID.">
 <!ENTITY better-bibtex.ErrorReport.postToGitHub "Merci d'envoyer un message au gestionnaire de tickets de GitHub (https://github.com/retorquere/zotero-better-bibtex/issues), en précisant cet identifiant de débogage, une description du problème ainsi que toutes les étapes nécessaires pour le reproduire.">
 <!ENTITY better-bibtex.ErrorReport.items "Références">
-<!ENTITY better-bibtex.ErrorReport.reportID "Identifiant du rapport d'erreur :">
+<!ENTITY better-bibtex.ErrorReport.reportID "ID du journal de débogage :">
 <!ENTITY better-bibtex.ErrorReport.review "Les données ci-dessous sont sur le point d'être soumises à Better BibTeX à fins de débogage. Vous pouvez les examiner pour contrôler s'il y a des informations sensibles que vous ne souhaitez pas envoyer.
 
 Si vous êtes d'accord pour envoyer ces données, veuillez passer à l'écran suivant et publier l'ID de débogage qui y figure dans le gestionnaire de problèmes à l'adresse suivante :
 
 https://github.com/retorquere/zotero-better-bibtex/issue">
-<!ENTITY better-bibtex.ErrorReport.submissionInProgress			"Veuillez patienter pendant la transmission du rapport d'erreur.">
-<!ENTITY better-bibtex.ErrorReport.submitted						"Votre rapport d'erreur a été soumis.">
+<!ENTITY better-bibtex.ErrorReport.submissionInProgress			"Veuillez patienter pendant que le journal de débogage est soumis.">
+<!ENTITY better-bibtex.ErrorReport.submitted						"Votre journal de débogage a été envoyé.">
 <!ENTITY better-bibtex.ErrorReport.save						"Enregistrer la copie du journal">
 
 <!ENTITY better-bibtex.ItemPane.citekey_column	"Clé de citation">
@@ -58,6 +58,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.auto-export.idle "à la mise en veille">
 <!ENTITY better-bibtex.Preferences.auto-export.immediate "au changement">
 <!ENTITY better-bibtex.Preferences.auto-export.off "désactivée">
+<!ENTITY better-bibtex.Preferences.auto-export.delay "Retarder l'export automatique de">
 <!ENTITY better-bibtex.Preferences.auto-export.run "Exporter maintenant">
 <!ENTITY better-bibtex.Preferences.auto-export.remove "Supprimer">
 <!ENTITY better-bibtex.Preferences.auto-export.collection "Collection">
@@ -78,7 +79,10 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.citekey.citekeys "Clés de citation">
 <!ENTITY better-bibtex.Preferences.citekey.fold "Forcer le formatage des clés de citation en texte brut">
 <!ENTITY better-bibtex.Preferences.citekey.search "Activer la recherche par clé de citation">
-<!ENTITY better-bibtex.Preferences.citekey.format "Format de clé">
+<!ENTITY better-bibtex.Preferences.citekey.format "Formule de clé de citation">
+<!ENTITY better-bibtex.Preferences.citekey.format.new "Nouveau format de clé de citation">
+<!ENTITY better-bibtex.Preferences.citekey.format.backup "Format de clé de citation précédent avec erreur">
+<!ENTITY better-bibtex.Preferences.citekey.autoPinDelay "Épingler automatiquement la clé de citation après coup">
 
 <!ENTITY better-bibtex.Preferences.export.quickCopy "Copie rapide">
 <!ENTITY better-bibtex.Preferences.export.quickCopy.explanation "Copie rapide/glissé-déposé des citations">
@@ -111,6 +115,8 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 
 <!ENTITY better-bibtex.Preferences.citekey.AUXScanner "Scanner BibTeX AUX/Markdown">
 <!ENTITY better-bibtex.Preferences.citekey.AUXScanner.import "Lors de l'analyse d'un fichier `.aux`, tenter d'importer les références depuis le fichier `.bib` joint lorsque leurs clés de citation ne sont pas dans Zotero">
+<!ENTITY better-bibtex.Preferences.importPrefs "Importer les préférences de BetterBibTeX...">
+<!ENTITY better-bibtex.Preferences.exportPrefs "Export des préférences de BetterBibTeX...">
 
 <!ENTITY better-bibtex.Preferences.advanced "Avancé">
 <!ENTITY better-bibtex.Preferences.advanced.warning "Les paramètres ci-dessous ont un impact sur les performances et peuvent faire échouer les exportations. Procéder avec attention.">
@@ -186,6 +192,10 @@ Si cette option est activée et que vous rencontrez un problème autre que l'ann
 <!ENTITY better-bibtex.Preferences.export.bibtex.URLs.url-ish "dans le champ « url » mais en supposant que le package « url » n'est pas chargé">
 <!ENTITY better-bibtex.Preferences.tab.export "Exportation">
 <!ENTITY better-bibtex.Preferences.export.fields.bibtexParticleNoOp "Ne pas tenir compte des préfixes de noms lors du tri">
+<!ENTITY better-bibtex.Preferences.export.fields.language.langid "identifiant de langue">
+<!ENTITY better-bibtex.Preferences.export.fields.language.language "langue">
+<!ENTITY better-bibtex.Preferences.export.fields.language.both "les deux">
+<!ENTITY better-bibtex.Preferences.export.fields.language "Exporter la langue en tant que">
 <!ENTITY better-bibtex.Preferences.export.fields.doi-and-url.both "les deux">
 <!ENTITY better-bibtex.Preferences.export.fields.doi-and-url.DOI "le DOI seulement">
 <!ENTITY better-bibtex.Preferences.export.fields.doi-and-url.URL "l'URL seulement">
@@ -200,11 +210,12 @@ Si cette option est activée et que vous rencontrez un problème autre que l'ann
 <!ENTITY better-bibtex.Preferences.export.fields.export-strings.match "Comparer aux variables @string ci-dessous">
 <!ENTITY better-bibtex.Preferences.export.fields.export-strings.match_reverse "Comparer aux variables @string et leurs valeurs ci-dessous">
 
-<!ENTITY better-bibtex.Preferences.export.fields.skip "Champs à exclure de l'exportation (séparés par des virgules) :">
+<!ENTITY better-bibtex.Preferences.export.fields.skip "Champs à exclure de l'exportation (séparés par des virgules)">
 <!ENTITY better-bibtex.Preferences.export.misc "Divers">
 <!ENTITY better-bibtex.Preferences.export.map-unicode "Lors de la conversion en commandes LaTeX en texte brut :">
 <!ENTITY better-bibtex.Preferences.export.map-unicode.minimal-packages "Minimiser le nombre de packages LaTeX supplémentaires requis">
 <!ENTITY better-bibtex.Preferences.export.map-unicode.conservative "Minimiser le nombre de commutateurs entre les modes mathématique et texte">
+<!ENTITY better-bibtex.Preferences.export.map-unicode.creator "Ajouter des accolades aux caractères accentués pour aider les analyseurs latex simples">
 <!ENTITY better-bibtex.Preferences.export.map-unicode.text "Préférer les remplacements en mode texte">
 <!ENTITY better-bibtex.Preferences.export.map-unicode.math "Préférer les remplacements en mode mathématique">
 
@@ -215,7 +226,7 @@ Si cette option est activée et que vous rencontrez un problème autre que l'ann
 <!ENTITY better-bibtex.Preferences.prefpane.loading "Chargement de Better BibTeX en cours">
 <!ENTITY better-bibtex.Preferences.rescan-citekeys "Réanalyse des clés de citation verrouillées">
 <!ENTITY better-bibtex.Preferences.resetCache "Réinitialiser le cache">
-<!ENTITY better-bibtex.BetterBibTeX.reportErrors "Envoyer le rapport d'erreur de Better BibTeX...">
+<!ENTITY better-bibtex.BetterBibTeX.reportErrors "Envoyer le journal de débogage Better BibTeX...">
 <!ENTITY better-bibtex.BetterBibTeX.auxScanner "Scanner le fichier BibTeX AUX/Markdown pour les références...">
 <!ENTITY better-bibtex.bulk-keys-confirm.message "Vous allez modifier plus de {treshold} éléments en une seule fois. Êtes-vous certain de vouloir poursuivre ?">
 <!ENTITY better-bibtex.bulk-keys-confirm.whatever "Oui, ne plus me le demander">
@@ -225,7 +236,7 @@ Si cette option est activée et que vous rencontrez un problème autre que l'ann
 <!ENTITY better-bibtex.BetterBibTeX.citekey.pinInspireHEP "Verrouiller les clés BibTeX de InspireHEP">
 <!ENTITY better-bibtex.BetterBibTeX.citekey.unpin "Déverrouiller la clé de citation">
 <!ENTITY better-bibtex.BetterBibTeX.citekey.refresh "Rafraichir la clé de citation">
-<!ENTITY better-bibtex.BetterBibTeX.addCitationLinks "Ajouter des liens de citation...">
+<!ENTITY better-bibtex.BetterBibTeX.addCitationLinks "Graphique de citation : ajouter des liens de citation...">
 <!ENTITY better-bibtex.BetterBibTeX.sentenceCase "BBT Casse de la phrase">
 <!ENTITY better-bibtex.BetterBibTeX.patchDates "Copier date-added/date-modified à partir du champ extra">
 <!ENTITY better-bibtex.ZoteroPane.tag-duplicates "Tagguer les clés de citation doublons">

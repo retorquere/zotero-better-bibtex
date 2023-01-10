@@ -18,3 +18,11 @@
 	path = submodules/zotero-odf-scan-plugin
 	url = https://github.com/Juris-M/zotero-odf-scan-plugin.git
 	branch = master
+[submodule "submodules/zotero-utilities"]
+	path = submodules/zotero-utilities
+	url = https://github.com/zotero/utilities.git
+	branch = master
+[submodule "submodules/biber"]
+	path = submodules/biber
+	url = https://github.com/plk/biber.git
+	branch = dev

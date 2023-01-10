@@ -1,9 +1,14 @@
-declare const Components: any
-declare const ZOTERO_CONFIG: any
+declare const Zotero: any
 
-// we may be running in a translator, which will have it pre-loaded
-if (typeof Components !== 'undefined') Components.utils.import('resource://zotero/config.js')
+const ctx: DedicatedWorkerGlobalScope = typeof self === 'undefined' ? undefined : (self as any)
+export const worker = !!(ctx?.location?.search)
 
-// check for process.version for node testing
-export const client = (typeof Zotero !== 'undefined') ? ZOTERO_CONFIG.GUID.replace(/@.*/, '').replace('-', '') : 'zotero'
+function clientname(): string {
+  if (worker) return (new URLSearchParams(ctx.location.search)).get('clientName')
+  if (Zotero.clientName) return Zotero.clientName as string
+  if (Zotero.BetterBibTeX?.clientName) return Zotero.BetterBibTeX.clientName as string
+  throw new Error('Unable to detect clientName')
+}
 
+export const clientName = clientname()
+export const client = clientName.toLowerCase().replace('-', '')

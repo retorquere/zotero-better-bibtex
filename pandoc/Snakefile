@@ -1,0 +1,51 @@
+from datetime import datetime
+import pygit2
+import tempfile
+from glob import glob
+import os
+
+VERSION   = pygit2.Repository('.').revparse_single('HEAD').short_id
+TIMESTAMP = datetime.now().isoformat()
+MAIN      = 'pandoc-zotero-live-citemarkers.lua'
+DEPLOYED  = '../site/content/exporting/zotero.lua'
+BIB       = os.path.join(os.getcwd(), 'biblio.bib')
+
+HEADER = f'''
+  print('zotero-live-citations {VERSION}')
+  local mt, latest = pandoc.mediabag.fetch('https://retorque.re/zotero-better-bibtex/exporting/zotero.lua.revision')
+  latest = string.sub(latest, 1, 10)
+  if '{VERSION}' ~= latest then
+    print('new version "' .. latest .. '" available at https://retorque.re/zotero-better-bibtex/exporting')
+  end
+'''
+
+rule bundle:
+  input: glob('*.lua') + ['Snakefile']
+  output: DEPLOYED
+  run:
+    with open(DEPLOYED, 'w') as deployed:
+      print(HEADER, file=deployed)
+      with tempfile.NamedTemporaryFile(mode='w+') as bundle:
+        shell('/usr/local/bin/amalg.lua -o {bundle.name} -s {MAIN} lunajson lunajson.decoder lunajson.encoder lunajson.sax locator utils zotero')
+        bundle.seek(0)
+        print(bundle.read(), file=deployed)
+
+    with open(DEPLOYED + '.revision', 'w') as deployed:
+      deployed.write(VERSION)
+
+rule test:
+  input: rules.bundle.output
+  run:
+    shell('rm -f *.docx *.odt *.json')
+    shell('pandoc -s --lua-filter={DEPLOYED} -o paper{TIMESTAMP}.odt main.md')
+    shell('pandoc -s --metadata=zotero_scannable_cite:true --lua-filter={DEPLOYED} -o paper{TIMESTAMP}-scannable-cite.odt main.md')
+
+rule rocks:
+  run:
+    shell("luarocks install lunajson ")
+    shell("luarocks install penlight")
+    shell("luarocks install amalg")
+    shell("luarocks install lpeg")
+
+rule start:
+	shell: "ZOTERO_IMPORT={BIB} npm start"

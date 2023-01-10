@@ -3,11 +3,17 @@ import { log } from './logger'
 
 type Handler = () => void
 type TimerHandle = ReturnType<typeof setTimeout>
+type Job = {
+  id: number
+  start: number
+  handler: Handler
+  timer: TimerHandle
+}
 
 export class Scheduler {
   private _delay: string | number
   private factor: number
-  private handlers: Map<number, TimerHandle> = new Map
+  private job: Map<number, Job> = new Map
   private held: Map<number, Handler> = null
 
   constructor(delay: string | number, factor = 1) {
@@ -16,7 +22,6 @@ export class Scheduler {
   }
 
   public get delay(): number {
-    // what preference is this actually grabbing?
     return (typeof this._delay === 'string' ? Preference[this._delay] : this._delay) * this.factor
   }
 
@@ -54,20 +59,39 @@ export class Scheduler {
     log.debug('scheduler.schedule:', { id, held: !!this.held })
     if (this.held) {
       this.held.set(id, handler)
+      return
+    }
+
+    let job: Job
+    if (job = this.job.get(id)) {
+      log.debug('scheduler: rescheduling', id, 'after', Date.now() - job.start)
+      clearTimeout(job.timer)
     }
     else {
-      if (this.handlers.has(id)) clearTimeout(this.handlers.get(id))
-      this.handlers.set(id, setTimeout(handler, this.delay))
+      log.debug('scheduler: scheduling', id)
+      job = {
+        id,
+        start: Date.now(),
+        handler,
+        timer: 0 as unknown as TimerHandle,
+      }
     }
+    job.timer = setTimeout(j => {
+      log.debug('scheduler: running', j.id, 'after', Date.now() - j.start)
+      this.job.delete(id)
+      j.handler()
+    }, this.delay, job)
+    this.job.set(id, job)
   }
 
   public cancel(id: number): void {
+    let job: Job
     if (this.held) {
       this.held.delete(id)
     }
-    else if (this.handlers.has(id)) {
-      clearTimeout(this.handlers.get(id))
-      this.handlers.delete(id)
+    else if (job = this.job.get(id)) {
+      clearTimeout(job.timer)
+      this.job.delete(id)
     }
   }
 }

@@ -1,0 +1,56 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "options": {},
+    "preferences": {
+      "citekeyFormat": "auth + year",
+      "importNoteToExtra": "note"
+    }
+  },
+  "items": [
+    {
+      "ISBN": "0-226-03933-1",
+      "citationKey": "danker_greek-english_2000",
+      "creators": [
+        {
+          "creatorType": "editor",
+          "firstName": "Frederick W.",
+          "lastName": "Danker"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "Walter",
+          "lastName": "Bauer"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "William",
+          "lastName": "Arndt"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "F. Wilbur",
+          "lastName": "Gingrich"
+        },
+        {
+          "creatorType": "translator",
+          "firstName": "Frederick W.",
+          "lastName": "Danker"
+        }
+      ],
+      "date": "2000",
+      "edition": "3rd ed.",
+      "extra": [
+        "Citation Key: danker_greek-english_2000",
+        "annote: BDAG bibtex.note=annote: BDAG"
+      ],
+      "itemID": 1,
+      "itemType": "book",
+      "place": "Chicago",
+      "publisher": "University of Chicago Press",
+      "shortTitle": "Greek-English Lexicon",
+      "title": "A Greek-English Lexicon of the New Testament and Other Early Christian Literature"
+    }
+  ]
+}

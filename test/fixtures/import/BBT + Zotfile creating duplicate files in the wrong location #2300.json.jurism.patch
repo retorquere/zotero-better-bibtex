@@ -1,0 +1,17 @@
+[
+  {
+    "op": "replace",
+    "path": "/items/1/extra/1",
+    "value": "Original date: 1613"
+  },
+  {
+    "op": "add",
+    "path": "/items/5/publisher",
+    "value": "American Association for the Advancement of Science"
+  },
+  {
+    "op": "remove",
+    "path": "/items/5/extra/1",
+    ":value": "Publisher: American Association for the Advancement of Science"
+  }
+]

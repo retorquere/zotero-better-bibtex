@@ -1,0 +1,254 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "citekeyFormat": "auth + year",
+      "citekeyFormatBackup": "auth + year"
+    }
+  },
+  "items": [
+    {
+      "citationKey": "ducheyne_2015",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Steffen",
+          "lastName": "Ducheyne"
+        }
+      ],
+      "date": "2015, Jun. 2015",
+      "extra": [
+        "Citation Key: ducheyne_2015",
+        "tex.category: Secondary",
+        "tex.date-added: 2022-10-26 18:58:57 -0400",
+        "tex.date-modified: 2022-10-26 18:58:57 -0400"
+      ],
+      "issue": "51",
+      "itemID": 1,
+      "itemType": "journalArticle",
+      "notes": [
+        "In the paper at hand, I provide an editorial history of Isaac Newton\u2019s famous regulae philosophandi on the basis of extant manuscript material.&amp;amp;lt;/p&amp;amp;gt;"
+      ],
+      "pages": "143\u2013164",
+      "publicationTitle": "Estudios de Filosof\u00eda",
+      "title": "An editorial history of Newton\u2019s regulae philosophandi"
+    },
+    {
+      "citationKey": "gocl1613",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Rudolph",
+          "lastName": "Goclenius"
+        }
+      ],
+      "date": "1964",
+      "extra": [
+        "Citation Key: gocl1613",
+        "Original Date: 1613",
+        "tex.category: Primary"
+      ],
+      "itemID": 2,
+      "itemType": "book",
+      "notes": [
+        "B51 .G576 1964",
+        "Rodolphus Goclenius. Reprint (1st work). Originally published: Francofurti : M. Becker, 1613. Added title page, engr. of original edition."
+      ],
+      "place": "Hildesheim",
+      "publisher": "G. Olms",
+      "tags": [
+        {
+          "tag": "Dictionaries"
+        },
+        {
+          "tag": "Scholasticism"
+        }
+      ],
+      "title": "Lexicon philosophicum, quo tanquam clave philosophicae fores aperiuntur"
+    },
+    {
+      "ISBN": "0-521-53180-2",
+      "attachments": [
+        {
+          "itemType": "attachment",
+          "path": "ATTACHMENT_KEY/GarberAyers - The Cambridge History of Seventeenth-Century Philosophy (2003).pdf",
+          "title": "GarberAyers - The Cambridge History of Seventeenth-Century Philosophy (2003)"
+        },
+        {
+          "itemType": "attachment",
+          "path": "ATTACHMENT_KEY/GarberAyers - The Cambridge History of Seventeenth-Century Philosophy (2003)a.pdf",
+          "title": "GarberAyers - The Cambridge History of Seventeenth-Century Philosophy (2003)a"
+        }
+      ],
+      "citationKey": "garberayers1998b",
+      "creators": [
+        {
+          "creatorType": "editor",
+          "firstName": "Daniel",
+          "lastName": "Garber"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "Michael",
+          "lastName": "Ayers"
+        }
+      ],
+      "date": "1998",
+      "edition": "2Rev Ed",
+      "extra": [
+        "Citation Key: garberayers1998b",
+        "tex.category: Secondary",
+        "tex.date-added: 2022-10-26 18:58:57 -0400",
+        "tex.date-modified: 2022-10-26 18:58:57 -0400",
+        "tex.price: $80.00"
+      ],
+      "itemID": 3,
+      "itemType": "book",
+      "publisher": "Cambridge University Press",
+      "title": "The cambridge history of seventeenth-century philosophy"
+    },
+    {
+      "ISBN": "0-521-65177-8",
+      "citationKey": "zcosm02",
+      "creators": [
+        {
+          "creatorType": "editor",
+          "firstName": "I. Bernard",
+          "lastName": "Cohen"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "George E.",
+          "lastName": "Smith"
+        }
+      ],
+      "date": "2002",
+      "edition": "2",
+      "extra": [
+        "Citation Key: zcosm02",
+        "tex.category: Secondary",
+        "tex.date-added: 2022-10-26 18:58:57 -0400",
+        "tex.date-modified: 2022-10-26 18:58:57 -0400",
+        "tex.price: $85.00"
+      ],
+      "itemID": 4,
+      "itemType": "bookSection",
+      "place": "Cambridge",
+      "publicationTitle": "The Cambridge companion to Newton",
+      "publisher": "Cambridge University Press",
+      "title": "The cambridge companion to Newton"
+    },
+    {
+      "ISBN": "0415170540 (hardcover)",
+      "attachments": [
+        {
+          "itemType": "attachment",
+          "path": "ATTACHMENT_KEY/Gaukroger - The Soft Underbelly of Reason  The Passions in the Seventeenth (1998).pdf",
+          "title": "Gaukroger - The Soft Underbelly of Reason  The Passions in the Seventeenth (1998)"
+        }
+      ],
+      "citationKey": "ZGaukroger1998a",
+      "creators": [
+        {
+          "creatorType": "editor",
+          "firstName": "Stephen",
+          "lastName": "Gaukroger"
+        }
+      ],
+      "date": "1998",
+      "extra": [
+        "Citation Key: ZGaukroger1998a",
+        "tex.category: Secondary",
+        "tex.date-added: 2015-09-09 17:10:49 +0000",
+        "tex.date-modified: 2019-04-20 15:19:21 -0400",
+        "tex.library-id: 97024517"
+      ],
+      "itemID": 5,
+      "itemType": "book",
+      "place": "London",
+      "publisher": "Routledge",
+      "tags": [
+        {
+          "tag": "Emotions"
+        }
+      ],
+      "title": "The soft underbelly of reason : The passions in the seventeenth century"
+    },
+    {
+      "ISSN": "00368075, 10959203",
+      "accessDate": "2022-09-27",
+      "citationKey": "westfall1973a",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Richard S.",
+          "lastName": "Westfall"
+        }
+      ],
+      "date": "1973",
+      "extra": [
+        "Citation Key: westfall1973a",
+        "Publisher: American Association for the Advancement of Science",
+        "tex.category: Secondary",
+        "tex.date-added: 2022-10-26 18:58:57 -0400",
+        "tex.date-modified: 2022-10-26 18:58:57 -0400"
+      ],
+      "issue": "4075",
+      "itemID": 6,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "Science",
+      "pages": "751\u2013758",
+      "publicationTitle": "Science (New York, N.Y.)",
+      "title": "Newton and the fudge factor",
+      "volume": "179"
+    },
+    {
+      "ISSN": "0039-3681",
+      "citationKey": "sakellariou202228",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Vassilis",
+          "lastName": "Sakellariou"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "User",
+          "lastName": "Test"
+        }
+      ],
+      "date": "2022",
+      "extra": [
+        "Citation Key: sakellariou202228",
+        "tex.category: Secondary",
+        "tex.date-added: 2022-10-26 18:58:57 -0400",
+        "tex.date-modified: 2022-10-26 18:58:57 -0400"
+      ],
+      "itemID": 7,
+      "itemType": "journalArticle",
+      "pages": "28-36",
+      "publicationTitle": "Studies in History and Philosophy of Science",
+      "tags": [
+        {
+          "tag": "Constitutive"
+        },
+        {
+          "tag": "Dynamical laws"
+        },
+        {
+          "tag": "Historicised"
+        },
+        {
+          "tag": "Synthesis"
+        }
+      ],
+      "title": "Constituting the \u2018object\u2019 of science in Newton's Principia: the many faces of Janus",
+      "url": "https://doi.org/10.1016/j.shpsa.2022.07.002",
+      "volume": "95"
+    }
+  ]
+}

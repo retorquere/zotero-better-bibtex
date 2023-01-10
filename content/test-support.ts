@@ -16,7 +16,7 @@ import { Preference } from './prefs'
 import * as memory from './memory'
 import { Deferred } from './deferred'
 
-const setatstart: string[] = ['workers', 'testing', 'caching'].filter(p => Preference[p] !== defaults[p])
+const setatstart: string[] = ['testing', 'cache'].filter(p => Preference[p] !== defaults[p])
 
 export class TestSupport {
   public timedMemoryLog: any
@@ -43,7 +43,6 @@ export class TestSupport {
 
   public async reset(scenario: string): Promise<void> {
     log.debug('reset for', scenario)
-    Zotero.BetterBibTeX.localeDateOrder = Zotero.Date.getLocaleDateOrder()
 
     Cache.reset('test environment reset')
 
@@ -85,9 +84,7 @@ export class TestSupport {
     return itemIDs.length
   }
 
-  public async importFile(path: string, createNewCollection: boolean, preferences: Record<string, number | boolean | string>, localeDateOrder?: string): Promise<number> {
-    if (localeDateOrder) Zotero.BetterBibTeX.localeDateOrder = localeDateOrder
-
+  public async importFile(path: string, createNewCollection: boolean, preferences: Record<string, number | boolean | string>): Promise<number> {
     preferences = preferences || {}
 
     for (let [pref, value] of Object.entries(preferences)) {
@@ -129,7 +126,7 @@ export class TestSupport {
     else {
       scope = null
     }
-    return await Translators.exportItems(translatorID, displayOptions, scope, path)
+    return await Translators.exportItems({translatorID, displayOptions: displayOptions as Record<string, boolean>, scope, path})
   }
 
   public async select(ids: number[]): Promise<boolean> {

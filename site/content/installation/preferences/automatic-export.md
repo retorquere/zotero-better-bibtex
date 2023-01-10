@@ -22,3 +22,9 @@ Options:
 * Disabled
 * On Change
 * When Idle
+
+## Delay auto-export for
+
+default: `5`
+
+If you have auto-exports set up, BBT will wait this many seconds before actually kicking off the exports to buffer multiple changes in quick succession setting off an unreasonable number of auto-exports. Minimum is 1 second. Changes to this preference take effect after restarting Zotero.

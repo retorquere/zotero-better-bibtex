@@ -13,8 +13,7 @@
       "citekeyFormat": "[auth:lower][shorttitle3_3][year]",
       "exportBraceProtection": false,
       "exportTitleCase": false,
-      "keyScope": "global",
-      "workers": 2
+      "keyScope": "global"
     }
   },
   "items": [

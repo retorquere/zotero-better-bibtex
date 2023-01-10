@@ -1,16 +1,17 @@
 declare const Zotero: any
-declare const ZOTERO_TRANSLATOR_INFO: any
 declare const __estrace: any // eslint-disable-line no-underscore-dangle
 
-import { affects, names as preferences, defaults, PreferenceName, Preferences, schema } from '../../gen/preferences/meta'
+import { affects, names as preferences, defaults, PreferenceName, Preferences as StoredPreferences, schema } from '../../gen/preferences/meta'
+import { TeXMap } from '../../content/prefs'
 import { client } from '../../content/client'
-import { RegularItem, Item, Collection } from '../../gen/typings/serialized-item'
-import { environment } from '../../content/environment'
-import { Pinger } from '../../content/ping'
+import { RegularItem, Item, Collection, Attachment } from '../../gen/typings/serialized-item'
+import type { Exporter as BibTeXExporter } from '../bibtex/exporter'
+import type { ZoteroItem } from '../bibtex/bibtex'
 
-type TranslatorMode = 'export' | 'import'
+type Preferences = StoredPreferences & { texmap?: TeXMap }
 
 type CacheableItem = Item & { $cacheable: boolean }
+type CacheableRegularItem = RegularItem & { $cacheable: boolean }
 
 const cacheDisabler = new class {
   get(target, property) {
@@ -45,7 +46,7 @@ type NestedCollection = {
   parent?: NestedCollection
 }
 
-type TranslatorHeader = {
+export type TranslatorMetadata = {
   translatorID: string
   translatorType: number
   label: string
@@ -60,17 +61,16 @@ type TranslatorHeader = {
   browserSupport: string
 
   displayOptions: {
-    exportNotes: boolean
-    exportFileData: boolean
-    useJournalAbbreviation: boolean
-    keepUpdated: boolean
-    quickCopyMode: string
-    Title: boolean
-    Authors: boolean
-    Year: boolean
-    Normalize: boolean
-    markdown: boolean
-    cacheUse: boolean
+    exportNotes?: boolean
+    exportFileData?: boolean
+    useJournalAbbreviation?: boolean
+    keepUpdated?: boolean
+    quickCopyMode?: string
+    Title?: boolean
+    Authors?: boolean
+    Year?: boolean
+    Normalize?: boolean
+    markdown?: boolean
   }
 
   configOptions: {
@@ -79,43 +79,53 @@ type TranslatorHeader = {
   }
 }
 
-class Items {
-  public list: CacheableItem[] = []
+export class Items {
+  private items: CacheableItem[] = []
   public map: Record<number | string, CacheableItem> = {}
   public current: CacheableItem
 
-  private ping: Pinger
-
-  constructor(cacheable: boolean) {
-    let item: CacheableItem
-    while (item = Zotero.nextItem()) {
-      item.$cacheable = cacheable;
-      (item as RegularItem).journalAbbreviation = (item as RegularItem).journalAbbreviation || (item as RegularItem).autoJournalAbbreviation
-      this.list.push(this.map[item.itemID] = this.map[item.itemKey] = new Proxy(item, cacheDisabler))
+  constructor(items?: CacheableItem[]) {
+    if (items) {
+      this.items = items.map(item => this.map[item.itemID] = this.map[item.itemKey] = new Proxy(item, cacheDisabler) as CacheableItem)
     }
+    else {
+      let item: CacheableItem
+      while (item = Zotero.nextItem()) {
+        this.items.push(this.map[item.itemID] = this.map[item.itemKey] = new Proxy(item, cacheDisabler))
+      }
+    }
+
     // fallback to itemType.itemID for notes and attachments. And some items may have duplicate keys
-    this.list.sort((a: any, b: any) => {
+    this.items.sort((a: any, b: any) => {
       const ka = [ a.citationKey || a.itemType, a.dateModified || a.dateAdded, a.itemID ].join('\t')
       const kb = [ b.citationKey || b.itemType, b.dateModified || b.dateAdded, b.itemID ].join('\t')
       return ka.localeCompare(kb, undefined, { sensitivity: 'base' })
     })
-
-    this.ping = new Pinger({
-      total: this.list.length,
-      callback: pct => environment.worker ? Zotero.BetterBibTeX.setProgress(pct) : null, // eslint-disable-line @typescript-eslint/no-unsafe-return
-    })
   }
 
-  *items(): Generator<Item, void, unknown> {
-    for (const item of this.list) {
-      yield (this.current = item) as Item
-      this.ping.update()
+  public erase(): void {
+    this.items = []
+    this.map = {}
+    this.current = null
+  }
+
+  public cacheable(cacheable: boolean): void {
+    for (const item of this.items) {
+      item.$cacheable = cacheable
     }
-    this.ping.done()
   }
 
-  *regularitems(): Generator<RegularItem, void, unknown> {
-    for (const item of this.list) {
+  *[Symbol.iterator](): Generator<CacheableItem, void, unknown> {
+    for (const item of this.items) {
+      yield item
+    }
+  }
+
+  public get regular(): Generator<CacheableRegularItem, void, unknown> {
+    return this._regular()
+  }
+  private *_regular(): Generator<CacheableRegularItem, void, unknown> {
+    for (const item of this.items) {
       switch (item.itemType) {
         case 'annotation':
         case 'note':
@@ -123,11 +133,72 @@ class Items {
           break
 
         default:
-          yield (this.current = item) as unknown as RegularItem
+          yield (this.current = item) as unknown as CacheableRegularItem
       }
-      this.ping.update()
     }
-    this.ping.done()
+  }
+}
+
+export class Collections {
+  public byKey: Record<string, Collection> = {}
+
+  constructor(private items: Items, collections?: Record<string, Collection>) {
+    if (collections) {
+      this.byKey = collections
+    }
+    else if (Zotero.nextCollection) {
+      let collection: any
+      while (collection = Zotero.nextCollection()) {
+        this.registerCollection(collection, '')
+      }
+    }
+  }
+
+  public erase(): void {
+    this.byKey = {}
+  }
+
+  private registerCollection(collection, parent: string) {
+    const key = (collection.primary ? collection.primary : collection).key
+    if (this.byKey[key]) return // why does JM send collections twice?!
+
+    this.byKey[key] = {
+      key,
+      parent,
+      name: collection.name,
+      collections: [],
+      items: [],
+    }
+
+    for (const child of (collection.descendents || collection.children)) {
+      switch (child.type) {
+        case 'collection':
+          this.byKey[key].collections.push(child.key as string)
+          this.registerCollection(child, key)
+          break
+        case 'item':
+          this.byKey[key].items.push(child.id as number)
+          break
+      }
+    }
+  }
+
+  public get collectionTree(): NestedCollection[] {
+    return Object.values(this.byKey).filter(coll => !coll.parent).map(coll => this.nestedCollection(coll))
+  }
+
+  private nestedCollection(collection: Collection): NestedCollection {
+    const nested: NestedCollection = {
+      key: collection.key,
+      name: collection.name,
+      items: collection.items.map((itemID: number) => this.items.map[itemID]).filter((item: Item) => item),
+      collections: collection.collections.map((key: string) => this.nestedCollection(this.byKey[key])).filter((coll: NestedCollection) => coll),
+    }
+
+    for (const coll of nested.collections) {
+      coll.parent = nested
+    }
+    return nested
   }
 }
 
@@ -135,11 +206,27 @@ function escapeRegExp(text: string): string {
   return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&')
 }
 
-export class ITranslator { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
+export type Input = {
+  items: Items
+  collections: Collections
+}
+
+export type Output = {
+  body: string
+  attachments: Attachment[]
+}
+
+export function collect(): Input {
+  const items = new Items
+  return { items, collections: new Collections(items) }
+}
+
+export class Translation { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   public preferences: Preferences
+  public importToExtra: Record<string, 'plain' | 'force'>
   public skipFields: string[]
   public skipField: Record<string, boolean>
-  public verbatimFields?: string[]
+  public verbatimFields?: (string | RegExp)[]
   public csquotes: { open: string, close: string }
   public export: { dir: string, path: string } = {
     dir: undefined,
@@ -154,11 +241,11 @@ export class ITranslator { // eslint-disable-line @typescript-eslint/naming-conv
     exportFileData?: boolean
     useJournalAbbreviation?: boolean
     keepUpdated?: boolean
-    cacheUse?: boolean
     Title?: boolean
     Authors?: boolean
     Year?: boolean
     Normalize?: boolean
+    worker?: boolean
   }
 
   public BetterBibLaTeX?: boolean                   // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
@@ -174,17 +261,20 @@ export class ITranslator { // eslint-disable-line @typescript-eslint/naming-conv
   // public TeX: boolean
   // public CSL: boolean
 
-  private cacheable = true
-  private _items: Items
+  public bibtex: BibTeXExporter
+  public ZoteroItem: typeof ZoteroItem
 
-  public cache: {
-    hits: number
-    requests: number
+  public input: {
+    items: Items
+    collections: Collections
+  }
+  public collections: Record<string, Collection> = {} // keep because it is being used in postscripts
+  public output: Output = {
+    body: '',
+    attachments: [],
   }
 
-  public header: TranslatorHeader
-
-  public collections: Record<string, Collection>
+  private cacheable = true
 
   public isJurisM: boolean
   public isZotero: boolean
@@ -195,31 +285,15 @@ export class ITranslator { // eslint-disable-line @typescript-eslint/naming-conv
     sep: string
   }
 
-  public stringCompare: (a: string, b: string) => number
-
   public and: { list: { re: any, repl: string }, names: { re: any, repl: string } }
 
-  public initialized = false
-
-  constructor() {
-    this.header = (ZOTERO_TRANSLATOR_INFO as TranslatorHeader)
-
-    this[this.header.label.replace(/[^a-z]/ig, '')] = true
-    this.BetterTeX = this.BetterBibTeX || this.BetterBibLaTeX
-    this.BetterCSL = this.BetterCSLJSON || this.BetterCSLYAML
-    this.options = this.header.displayOptions || {}
-
-    const collator = new Intl.Collator('en')
-    this.stringCompare = (collator.compare.bind(collator) as (left: string, right: string) => number)
-  }
-
   public get exportDir(): string {
-    this._items.current.$cacheable = false
+    this.input.items.current.$cacheable = false
     return this.export.dir
   }
 
   public get exportPath(): string {
-    this._items.current.$cacheable = false
+    this.input.items.current.$cacheable = false
     return this.export.path
   }
 
@@ -230,7 +304,86 @@ export class ITranslator { // eslint-disable-line @typescript-eslint/naming-conv
     return field
   }
 
-  public init(mode: TranslatorMode): void {
+  static Import(translator: TranslatorMetadata): Translation {
+    return new this(translator)
+  }
+  static Export(translator: TranslatorMetadata, input: Input): Translation {
+    const translation = new this(translator)
+
+    translation.input = input
+
+    translation.export = {
+      dir: (Zotero.getOption('exportDir') as string),
+      path: (Zotero.getOption('exportPath') as string),
+    }
+    if (translation.export.dir?.endsWith(translation.paths.sep)) translation.export.dir = translation.export.dir.slice(0, -1)
+
+    translation.unicode = !translation.preferences[`ascii${translator.label.replace(/Better /, '')}`] || false
+
+    if (translation.preferences.baseAttachmentPath && (translation.export.dir === translation.preferences.baseAttachmentPath || translation.export.dir?.startsWith(translation.preferences.baseAttachmentPath + translation.paths.sep))) {
+      translation.preferences.relativeFilePaths = true
+    }
+
+    // when exporting file data you get relative paths, when not, you get absolute paths, only one version can go into the cache
+    // relative file paths are going to be different based on the file being exported to
+    translation.cacheable = translation.cacheable && translation.preferences.cache && !(
+      translation.options.exportFileData
+      ||
+      translation.preferences.relativeFilePaths
+      ||
+      (translation.preferences.baseAttachmentPath && translation.export.dir?.startsWith(translation.preferences.baseAttachmentPath))
+    )
+
+    if (translation.BetterTeX) {
+      translation.preferences.separatorList = translation.preferences.separatorList.trim()
+      translation.preferences.separatorNames = translation.preferences.separatorNames.trim()
+      translation.and = {
+        list: {
+          re: new RegExp(escapeRegExp(translation.preferences.separatorList), 'g'),
+          repl: ` {${translation.preferences.separatorList}} `,
+        },
+        names: {
+          re: new RegExp(` ${escapeRegExp(translation.preferences.separatorNames)} `, 'g'),
+          repl: ` {${translation.preferences.separatorNames}} `,
+        },
+      }
+      translation.preferences.separatorList = ` ${translation.preferences.separatorList} `
+      translation.preferences.separatorNames = ` ${translation.preferences.separatorNames} `
+    }
+
+    if (translation.preferences.testing && typeof __estrace === 'undefined' && schema.translator[translator.label]?.cache) {
+      const ignored = {
+        testing: true,
+        texmap: true,
+      }
+      translation.preferences = new Proxy(translation.preferences, {
+        set: (object, property, _value) => {
+          throw new TypeError(`Unexpected set of preference ${String(property)}`)
+        },
+        get: (object, property: PreferenceName) => {
+          // JSON.stringify will attempt to get this
+          if (property as unknown as string === 'toJSON') return object[property]
+          if (!ignored[property]) {
+            if (!preferences.includes(property)) throw new TypeError(`Unsupported preference ${property}`)
+            if (!affects[property]?.includes(translator.label)) throw new TypeError(`Preference ${property} claims not to affect ${translator.label}`)
+          }
+          return object[property] // eslint-disable-line @typescript-eslint/no-unsafe-return
+        },
+      })
+    }
+
+    translation.input.items.cacheable(translation.cacheable)
+    translation.collections = translation.input.collections.byKey
+
+    return translation
+  }
+
+  private constructor(public translator: TranslatorMetadata) {
+    this[translator.label.replace(/[^a-z]/ig, '')] = true
+    this.BetterTeX = this.BetterBibTeX || this.BetterBibLaTeX
+    this.BetterCSL = this.BetterCSLJSON || this.BetterCSLYAML
+    this.options = translator.displayOptions || {}
+
     this.platform = (Zotero.getHiddenPref('better-bibtex.platform') as string)
     this.isJurisM = client === 'jurism'
     this.isZotero = !this.isJurisM
@@ -241,7 +394,7 @@ export class ITranslator { // eslint-disable-line @typescript-eslint/naming-conv
     }
 
     try {
-      if (Zotero.getOption('caching') === false) this.cacheable = false
+      if (Zotero.getOption('cache') === false) this.cacheable = false
     }
     catch (err) {
     }
@@ -257,96 +410,55 @@ export class ITranslator { // eslint-disable-line @typescript-eslint/naming-conv
       }
     }
 
-    // special handling
-    if (mode === 'export') {
-      this.cache = {
-        hits: 0,
-        requests: 0,
-      }
-      this.export = {
-        dir: (Zotero.getOption('exportDir') as string),
-        path: (Zotero.getOption('exportPath') as string),
-      }
-      if (this.export.dir?.endsWith(this.paths.sep)) this.export.dir = this.export.dir.slice(0, -1)
-      this.options.cacheUse = Zotero.getOption('cacheUse')
-    }
-
     this.preferences = Object.entries(defaults).reduce((acc, [pref, dflt]) => {
       acc[pref] = this.getPreferenceOverride(pref) ?? Zotero.getHiddenPref(`better-bibtex.${pref}`) ?? dflt
       return acc
     }, {} as unknown as Preferences)
 
     // special handling
+    try {
+      this.preferences.texmap = JSON.parse(this.preferences.charmap)
+    }
+    catch (err) {
+      this.preferences.texmap = {}
+    }
+
+    this.importToExtra = {}
+    this.preferences.importNoteToExtra
+      .toLowerCase()
+      .split(/\s*,\s*/)
+      .filter(field => field)
+      .forEach(field => {
+        this.importToExtra[field.replace(/\s*=.*/, '')] = field.match(/\s*=\s*force$/) ? 'force' : 'plain'
+      })
     this.skipFields = this.preferences.skipFields.toLowerCase().split(',').map(field => this.typefield(field)).filter((s: string) => s)
     this.skipField = this.skipFields.reduce((acc, field) => { acc[field] = true; return acc }, {})
 
-    this.verbatimFields = this.preferences.verbatimFields.toLowerCase().split(',').map(field => this.typefield(field)).filter((s: string) => s)
+    let m
+    this.verbatimFields = this.preferences.verbatimFields
+      .toLowerCase()
+      .split(',')
+      .map(field => (m = field.trim().match(/^[/](.+)[/]$/)) ? new RegExp(m[1], 'i') : this.typefield(field))
+      .filter((s: string | RegExp) => s)
 
     if (!this.verbatimFields.length) this.verbatimFields = null
     this.csquotes = this.preferences.csquotes ? { open: this.preferences.csquotes[0], close: this.preferences.csquotes[1] } : null
 
     this.preferences.testing = (Zotero.getHiddenPref('better-bibtex.testing') as boolean)
+  }
 
-    if (mode === 'export') {
-      this.unicode = !this.preferences[`ascii${this.header.label.replace(/Better /, '')}`]
+  public erase(): void {
+    this.input.items.erase()
+    this.input.collections.erase()
+    this.output.body = ''
+    this.output.attachments = []
+  }
 
-      if (this.preferences.baseAttachmentPath && (this.export.dir === this.preferences.baseAttachmentPath || this.export.dir?.startsWith(this.preferences.baseAttachmentPath + this.paths.sep))) {
-        this.preferences.relativeFilePaths = true
-      }
-
-      // when exporting file data you get relative paths, when not, you get absolute paths, only one version can go into the cache
-      // relative file paths are going to be different based on the file being exported to
-      this.cacheable = this.cacheable && this.preferences.caching && !(
-        this.options.exportFileData
-        ||
-        this.preferences.relativeFilePaths
-        ||
-        (this.preferences.baseAttachmentPath && this.export.dir?.startsWith(this.preferences.baseAttachmentPath))
-      )
-
-      if (this.BetterTeX) {
-        this.preferences.separatorList = this.preferences.separatorList.trim()
-        this.preferences.separatorNames = this.preferences.separatorNames.trim()
-        this.and = {
-          list: {
-            re: new RegExp(escapeRegExp(this.preferences.separatorList), 'g'),
-            repl: ` {${this.preferences.separatorList}} `,
-          },
-          names: {
-            re: new RegExp(` ${escapeRegExp(this.preferences.separatorNames)} `, 'g'),
-            repl: ` {${this.preferences.separatorNames}} `,
-          },
-        }
-        this.preferences.separatorList = ` ${this.preferences.separatorList} `
-        this.preferences.separatorNames = ` ${this.preferences.separatorNames} `
-      }
+  saveAttachments(): void {
+    if (!this.output?.attachments.length) return
+    for (const attachment of this.output.attachments) {
+      attachment.saveFile(attachment.defaultPath, true)
     }
-
-    this.collections = {}
-    if (mode === 'export' && this.header.configOptions?.getCollections && Zotero.nextCollection) {
-      let collection: any
-      while (collection = Zotero.nextCollection()) {
-        this.registerCollection(collection, '')
-      }
-    }
-
-    if (!this.initialized && mode === 'export' && this.preferences.testing && typeof __estrace === 'undefined' && schema.translator[this.header.label]?.cached) {
-      const ignored = ['testing']
-      this.preferences = new Proxy(this.preferences, {
-        set: (object, property, _value) => {
-          throw new TypeError(`Unexpected set of preference ${String(property)}`)
-        },
-        get: (object, property: PreferenceName) => {
-          // JSON.stringify will attempt to get this
-          if (property as unknown as string === 'toJSON') return object[property]
-          if (!preferences.includes(property)) throw new TypeError(`Unsupported preference ${property}`)
-          if (!ignored.includes(property) && !affects[property]?.includes(this.header.label)) throw new TypeError(`Preference ${property} claims not to affect ${this.header.label}`)
-          return object[property] // eslint-disable-line @typescript-eslint/no-unsafe-return
-        },
-      })
-    }
-
-    this.initialized = true
   }
 
   getPreferenceOverride(pref) { // eslint-disable-line @typescript-eslint/explicit-module-boundary-types
@@ -360,48 +472,7 @@ export class ITranslator { // eslint-disable-line @typescript-eslint/naming-conv
     }
   }
 
-  private registerCollection(collection, parent: string) {
-    const key = (collection.primary ? collection.primary : collection).key
-    const children = collection.children || collection.descendents || []
-    const collections = children.filter(coll => coll.type === 'collection')
-
-    this.collections[key] = {
-      key,
-      parent,
-      name: collection.name,
-      collections: collections.map(coll => coll.key as string),
-      items: children.filter(coll => coll.type === 'item').map(item => item.id as number),
-    }
-
-    for (collection of collections) {
-      this.registerCollection(collection, key)
-    }
-  }
-
-  get collectionTree(): NestedCollection[] {
-    return Object.values(this.collections).filter(coll => !coll.parent).map(coll => this.nestedCollection(coll))
-  }
-  private nestedCollection(collection: Collection): NestedCollection {
-    this._items = this._items || new Items(this.cacheable)
-    const nested: NestedCollection = {
-      key: collection.key,
-      name: collection.name,
-      items: collection.items.map((itemID: number) => this._items.map[itemID]).filter((item: Item) => item),
-      collections: collection.collections.map((key: string) => this.nestedCollection(this.collections[key])).filter((coll: NestedCollection) => coll),
-    }
-    for (const coll of nested.collections) {
-      coll.parent = nested
-    }
-    return nested
-  }
-
-  get items(): Generator<Item, void, unknown> {
-    this._items = this._items || new Items(this.cacheable)
-    return this._items.items()
-  }
-  get regularitems(): Generator<RegularItem, void, unknown> {
-    this._items = this._items || new Items(this.cacheable)
-    return this._items.regularitems()
+  isVerbatimField(field: string): boolean {
+    return !!this.verbatimFields.find(v => typeof v === 'string' ? v === field : field.match(v))
   }
 }
-export const Translator = new ITranslator // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match

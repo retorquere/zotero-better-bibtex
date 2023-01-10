@@ -12,7 +12,6 @@
       "autoExport": "off",
       "automaticTags": false,
       "biblatexExtractEprint": false,
-      "caching": false,
       "citekeyFold": false,
       "citekeyFormat": "[auth:lower]-[shorttitle3_3]-[year]",
       "citekeySearch": false,

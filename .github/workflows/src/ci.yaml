@@ -7,20 +7,23 @@ on:
   - cron: 0 0 * * *
 
 _anchors:
+  get_version: &get_version
+    name: get package version
+    run: echo "version="`jq -r .version package.json` >> $GITHUB_ENV
   install_python: &install_python
     name: install python
-    uses: actions/setup-python@v2
+    uses: actions/setup-python@v4
     with:
       python-version: '3.10'
   install_node: &install_node
     name: install node
-    uses: actions/setup-node@v2
+    uses: actions/setup-node@v3
     with:
       node-version: 16.x
   cache: &cache
     name: Cache python/node dependencies
     id: cache
-    uses: actions/cache@v2
+    uses: actions/cache@v3
     env:
       cache-name: v3
     with:
@@ -38,21 +41,81 @@ _anchors:
   install_node_packages: &install_node_packages
     name: install node packages
     run: npm install
+  upload_build_artifacts: &upload_build_artifacts
+    name: store build artifacts
+    uses: actions/upload-artifact@v3
+    with:
+      name: build-artifacts
+      path: |
+        xpi/
+        gen/
+  download_build_artifacts: &download_build_artifacts
+    name: fetch build artifacts
+    uses: actions/download-artifact@v3
+    with:
+      name: build-artifacts
+  # dummy directory minitests because otherwise dir structure is not maintained?!
+  upload_test_artifacts: &upload_test_artifacts
+    name: store test artifacts
+    uses: actions/upload-artifact@v3
+    with:
+      name: test-artifacts
+      path: |
+        logs/
+        minitests/
+  download_test_artifacts: &download_test_artifacts
+    name: fetch test artifacts
+    uses: actions/download-artifact@v3
+    with:
+      name: test-artifacts
+
+env:
+  DURATIONS: logs/stats/durations.json
+  BINS: logs/stats/bins.json
 
 jobs:
+  balance:
+    outputs:
+      bins: ${{ env.test_bins }}
+      clients: ${{ env.test_clients }}
+      slow: ${{ env.test_slow }}
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - *install_python
+    - run: pip install munch ortools
+    - *get_version
+    - name: get previous test durations
+      run: curl -L https://github.com/retorquere/zotero-better-bibtex/releases/download/builds/`basename $DURATIONS` --create-dirs -o $DURATIONS
+
+    - name: enable slow tests for master, scheduled builds, or tagged builds
+      id: slow
+      if:
+        (github.event.head_commit.message == env.version && startsWith(github.ref, 'refs/tags/')) || github.event_name == 'schedule' || github.ref == 'refs/heads/master'
+      run: echo "slow=--slow" >> $GITHUB_ENV
+
+    - name: enable beta for tagged builds and scheduled builds
+      id: beta
+      if: (github.event.head_commit.message == env.version && startsWith(github.ref, 'refs/tags/')) || github.event_name == 'schedule'
+      run: echo "beta=--beta" >> $GITHUB_ENV
+
+    - name: balance tests
+      id: balance
+      run: ./util/balance.py --durations $DURATIONS --bins $BINS --minutes 10 ${{ env.slow }} ${{ env.beta }}
+    - *upload_test_artifacts
+
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
       with:
         persist-credentials: false
         submodules: true  # Fetch Hugo themes (true OR recursive)
         fetch-depth: 0    # Fetch all history for .GitInfo and .Lastmod
-    - run: echo "::set-output name=version::"`jq -r .version package.json`
-      id: version
+    - *get_version
     - name: cancel spurious build on tagged version
       uses: andymckay/cancel-action@master
-      if: github.event.head_commit.message == steps.version.outputs.version && !startsWith(github.ref, 'refs/tags/')
+      if: github.event.head_commit.message == env.version && !startsWith(github.ref, 'refs/tags/')
 
     - *install_python
     - *install_node
@@ -62,13 +125,7 @@ jobs:
 
     - run: npm run build
 
-    - name: store build artifacts
-      uses: actions/upload-artifact@v2
-      with:
-        name: build-artifacts
-        path: |
-          xpi/
-          gen/
+    - *upload_build_artifacts
 
     - uses: peaceiris/actions-hugo@v2
       with:
@@ -76,26 +133,30 @@ jobs:
         extended: true
     - run: npm run docs:deploy
     - uses: peaceiris/actions-gh-pages@v3
-      if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
+      if: ${{ github.event_name == 'push' && (github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/tags/')) }}
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./site/public
 
   test:
-    needs: build
+    needs:
+    - build
+    - balance
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        client: [zotero, jurism]
-        bin: ['1', '2']
+        bin: ${{ fromJSON(needs.balance.outputs.bins) }}
+        client: ${{ fromJSON(needs.balance.outputs.clients) }}
+        worker: ['--worker', '--no-worker']
+        exclude:
+          - client: jurism-beta
+          - client: jurism
+          #  worker: '--worker'
     steps:
-    - uses: actions/checkout@v2
-    - name: fetch build artifacts
-      uses: actions/download-artifact@v2
-      with:
-        name: build-artifacts
-      
+    - uses: actions/checkout@v3
+    - *download_build_artifacts
+    - *download_test_artifacts
     - *install_python
     - *cache
     - *install_python_packages
@@ -105,35 +166,25 @@ jobs:
         curl -sL https://raw.githubusercontent.com/retorquere/zotero-deb/master/install.sh | sudo bash
         sudo apt-get update
         sudo apt-get install ${{ matrix.client }}
-
-    - name: install ${{ matrix.client }} beta
-      if: matrix.client != 'jurism'
-      run: sudo apt-get install ${{ matrix.client }}-beta
-
-    # fast test
-    - if: contains(github.event.commits[0].message, '[fast-test]')
-      run: echo "##[set-output name=this;]--test-this"
-      id: test
+        curl -LO https://github.com/jgm/pandoc/releases/download/2.19.2/pandoc-2.19.2-linux-amd64.tar.gz
+        tar xvzf pandoc-2.19.2-linux-amd64.tar.gz
+        sudo mv pandoc-2.19.2/bin/pandoc /usr/bin
+        pandoc -v
 
     # needs logs/logs to have them show up as logs in the artifact... no idea why
     - name: Run tests
       # continue-on-error: ${{ matrix.client == 'jurism' }}
-      run: xvfb-run --auto-servernum ./test/behave --client ${{ matrix.client }} --logs logs/logs --format ci --bin ${{ matrix.bin }} ${{ steps.test.outputs.this }}
+      run: xvfb-run --auto-servernum ./test/behave --client ${{ matrix.client }} ${{ matrix.worker }} --format ci --bin ${{ matrix.bin }} --bins $BINS --durations logs/stats/durations-${{ matrix.client }}-${{ matrix.bin }}${{ matrix.worker }}.json ${{ needs.balance.outputs.slow }}
       env:
         PYTHONUNBUFFERED: true
 
-    - uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v3
       if: ${{ failure() || cancelled() }}
       with:
         name: debug log ${{ matrix.client }} ${{ matrix.bin }}
         path: ~/.BBTZ5TEST.log
 
-    - name: store test artifacts
-      uses: actions/upload-artifact@v2
-      with:
-        name: build-artifacts
-        path: |
-          logs/
+    - *upload_test_artifacts
 
 #    - name: Setup tmate session
 #      if: ${{ failure() }}
@@ -146,13 +197,9 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
 
-    - name: fetch build artifacts
-      uses: actions/download-artifact@v2
-      with:
-        name: build-artifacts
-
+    - *download_build_artifacts
     - *install_python
     - *install_node
     - *cache
@@ -162,18 +209,30 @@ jobs:
     - run: npm run release
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-    - name: rebalance tests
-      id: logs
-      if: github.ref == 'refs/heads/master'
-      run: |
-        ./util/rebalance.py ${{ github.ref }} test/balance.json
-        ./util/loaded.py ${{ github.ref }} test/loaded.json
-    - uses: stefanzweifel/git-auto-commit-action@v4
-      if: steps.logs.outputs.balance || steps.logs.outputs.loaded
-      continue-on-error: true
+    - uses: actions/github-script@v6
       with:
-        commit_message: Rebalance test suite
-        file_pattern: ${{ steps.logs.outputs.balance }} ${{ steps.logs.outputs.loaded }}
-        skip_dirty_check: false
+        script: |
+          if (process.env.XPI_RELEASED) {
+            github.rest.issues.addLabels({
+              issue_number: parseInt(process.env.XPI_RELEASED),
+              owner: 'retorquere',
+              repo: 'zotero-better-bibtex',
+              labels: ['awaiting-user-feedback'],
+            })
+          }
 
+  durations:
+    if: github.ref == 'refs/heads/master'
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - *install_python
+    - *download_test_artifacts
+    - name: rebalance tests
+      run: ./util/merge-durations.py -o $DURATIONS `ls logs/stats/durations-zotero-*--no-worker.json | grep -v beta`
+    - name: Store build stats
+      run: |
+        gh release upload builds $DURATIONS --clobber --repo ${{ github.repository }}
+      env:
+        GH_TOKEN: ${{ github.token }}
