@@ -452,3 +452,52 @@ export function babelTag(langid: string): string {
   return (Tag[langid] as string) || ''
 }
 */
+
+const excelColumnCache: Map<number, string> = new Map
+// https://www.geeksforgeeks.org/find-excel-column-name-given-number/
+export function excelColumn(n: number): string {
+  const cached = excelColumnCache.get(n)
+  if (cached) return cached
+
+  const arr: number[] = []
+  let i = 0
+
+  // Step 1: Converting to number assuming 0 in number system
+  while (n) {
+    arr[i] = n % 26 // eslint-disable-line no-magic-numbers
+    n = Math.floor(n / 26) // eslint-disable-line no-magic-numbers
+    i++
+  }
+
+  // Step 2: Getting rid of 0, as 0 is not part of number system
+  for (let j = 0; j < i - 1; j++) {
+    if (arr[j] <= 0) {
+      arr[j] += 26 // eslint-disable-line no-magic-numbers
+      arr[j + 1] = arr[j + 1] - 1
+    }
+  }
+
+  let col = ''
+  for (let j = i; j >= 0; j--) {
+    if (arr[j] > 0) col += String.fromCharCode(65 + arr[j] - 1) // eslint-disable-line no-magic-numbers
+  }
+  excelColumnCache.set(n, col)
+
+  return col
+}
+
+let parser: DOMParser
+export function getDOMParser(): DOMParser {
+  return (parser = parser || Components.classes['@mozilla.org/xmlextras/domparser;1'].createInstance(Components.interfaces.nsIDOMParser) as DOMParser)
+  /*
+  if (!parser) {
+    try {
+      parser = new DOMParser
+    }
+    catch (err) {
+      parser = Components.classes['@mozilla.org/xmlextras/domparser;1'].createInstance(Components.interfaces.nsIDOMParser)
+    }
+  }
+  return parser
+  */
+}

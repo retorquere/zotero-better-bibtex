@@ -64,6 +64,8 @@ Feature: Import
 
     Examples:
       | file                                                                        | references |
+      | accessDate must be ISO date #2376                                           | 2          |
+      | Dealing with base64-encoded paths from BibDesk #2374                        | 3          |
       | Lowercase A in BBT Sentence Case #2078                                      | 1          |
       | Map the call-number field from Bib(La)TeX to call number #2021              | 1          |
       | Detect journal abbreviation in the publication field #1951                  | 1          |

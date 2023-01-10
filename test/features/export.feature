@@ -13,6 +13,10 @@ Feature: Export
 
     Examples:
       | file                                                                                                                     | references |
+      | Issue of generating citekeys with parentheses  #2366                                                                     | 1          |
+      | Convert Chinese name to Pinyin in citation key. #2361                                                                    | 1          |
+      | Citation key is too long for Chines literature #2320                                                                     | 5          |
+      | unable to put postfix in middle of citekey #2190                                                                         | 2          |
       | authEtal2(sep='&') + year =  & disappears #2252                                                                          | 1          |
       | Apply Title Casing to tex.subtitle entry on export #2213                                                                 | 1          |
       | Citation key format backward compatibility issue. #2204                                                                  | 1          |
@@ -175,6 +179,7 @@ Feature: Export
 
     Examples:
       | file                                                                                                               | references |
+      | accented character in 'journal' field is not brace protected by bibtex export #2337                                | 1          |
       | Non-breakable spaces in author fields should be exported as tilde #1430                                            | 1          |
       | University is exported as publisher as soon as tex.referencetype is specified in Extra field #1965                 | 1          |
       | fetch inspire-hep key #1879                                                                                        | 1          |
@@ -257,14 +262,15 @@ Feature: Export
     Then an export using "Better CSL JSON" should match "export/*.csl.json"
 
     Examples:
-      | file                                                             | references |
-      | Export Error Unexpected date type #2303                          | 1          |
-      | Better CSL JSON does not include authority field #2019           | 1          |
-      | Multiple creators in Extra not exported in Better CSL JSON #2015 | 1          |
-      | Deterministic ordering for CSL #1178 #1400                       | 26         |
-      | CSL exporters; ignore [Fields to omit from export] setting #1179 | 26         |
-      | Quotes around last names should be removed from citekeys #856    | 1          |
-      | BBT CSL JSON; Do not use shortTitle and journalAbbreviation #372 | 1          |
+      | file                                                                            | references |
+      | unwanted inclusion of Zotero's internal journal abbreviations in CSL JSON #2375 | 1          |
+      | Export Error Unexpected date type #2303                                         | 1          |
+      | Better CSL JSON does not include authority field #2019                          | 1          |
+      | Multiple creators in Extra not exported in Better CSL JSON #2015                | 1          |
+      | Deterministic ordering for CSL #1178 #1400                                      | 26         |
+      | CSL exporters; ignore [Fields to omit from export] setting #1179                | 26         |
+      | Quotes around last names should be removed from citekeys #856                   | 1          |
+      | BBT CSL JSON; Do not use shortTitle and journalAbbreviation #372                | 1          |
 
     @use.with_client=jurism
     Examples:
@@ -658,10 +664,13 @@ Feature: Export
     And I export the library 50 times using "Better BibTeX"
     And I export the library 50 times using "Better BibLaTeX"
 
-# Scenario: error exporting Better BibLaTex this.preference.skipFields is undefined #2029
-# Given I restart Zotero
-# And I remove all items
-# When I import 2 references from "export/*.json"
-# Then an export using "Better BibLaTeX" should match "export/*.biblatex"
-# When I select the item with a field that contains "Collapse"
-# Then a quick-copy using "Better BibLaTeX" should match "export/*.biblatex"
+  # Scenario: error exporting Better BibLaTex this.preference.skipFields is undefined #2029
+  # Given I restart Zotero
+  # And I remove all items
+  # When I import 2 references from "export/*.json"
+  # Then an export using "Better BibLaTeX" should match "export/*.biblatex"
+  # When I select the item with a field that contains "Collapse"
+  # Then a quick-copy using "Better BibLaTeX" should match "export/*.biblatex"
+  Scenario: `Error getCollections configure option not set` when exporting to citation graph #2319
+    Given I import 2 references from "export/*.json"
+    Then an export using "Citation graph" should match "export/*.dot"

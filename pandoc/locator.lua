@@ -54,7 +54,8 @@ function module.parse(input, shortlabel)
   if parsed then
     local _prefix, _locator, _suffix = table.unpack(parsed)
     if utils.trim(_prefix) == ',' then _prefix = '' end
-    return nil, nil, _prefix .. _locator .. _suffix
+    -- return nil, nil, _prefix .. _locator .. _suffix
+    return 'page', _locator, _prefix .. _suffix
   end
 
   return nil, nil, input

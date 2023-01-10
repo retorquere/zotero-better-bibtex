@@ -1,26 +1,5 @@
-script.
-  function showNew() {
-    const citekey = document.getElementById('id-better-bibtex-preferences-citekeyFormat')
-    const converted = document.getElementById('id-better-bibtex-preferences-citekeyFormatNew')
-    const label = document.getElementById('id-better-bibtex-label-citekeyFormatNew')
-
-    converted.value = ''
-    if (citekey.value) {
-      try {
-        if (citekey.value.startsWith('[')) {
-          converted.value = Zotero.BetterBibTeX.KeyManager.convertLegacy(citekey.value)
-        }
-      }
-      catch (err) {
-        Zotero.debug('could not convert citekey pattern: ' + err.message)
-        converted.value = ''
-      }
-    }
-    converted.hidden = label.hidden = !converted.value
-    Zotero.debug('converted citekey pattern: ' + converted.value)
-  }
 vbox
-  label(bbt:preference="pref-better-bibtex-citekeyFormat") &better-bibtex.Preferences.citekey.format;
+  label(bbt:preference='extensions.zotero.translators.better-bibtex.citekeyFormat') &better-bibtex.Preferences.citekey.format;
   textbox#id-better-bibtex-preferences-citekeyFormat(
     flex='1'
     rows=1
@@ -41,9 +20,9 @@ vbox
     onblur="this.setAttribute('rows', '1')"
   )
 
-  label#id-better-bibtex-label-citekeyFormatBackup(bbt:preference="pref-better-bibtex-citekeyFormatBackup") &better-bibtex.Preferences.citekey.format.backup;
+  label#id-better-bibtex-label-citekeyFormatBackup(bbt:preference="extensions.zotero.translators.better-bibtex.citekeyFormatBackup") &better-bibtex.Preferences.citekey.format.backup;
   textbox#id-better-bibtex-preferences-citekeyFormatBackup(
-    preference='pref-better-bibtex-citekeyFormatBackup'
+    preference='extensions.zotero.translators.better-bibtex.citekeyFormatBackup'
     flex='1'
     rows=1
     readonly='true'
@@ -51,49 +30,37 @@ vbox
     onfocus="if (this.value) this.setAttribute('rows', '5')"
     onblur="this.setAttribute('rows', '1')"
   )
-checkbox(preference="pref-better-bibtex-citekeyFold" label="&better-bibtex.Preferences.citekey.fold;")
-checkbox(preference="pref-better-bibtex-citekeySearch" label="&better-bibtex.Preferences.citekey.search;")
+checkbox(preference="extensions.zotero.translators.better-bibtex.citekeyFold" label="&better-bibtex.Preferences.citekey.fold;")
+checkbox(preference="extensions.zotero.translators.better-bibtex.citekeySearch" label="&better-bibtex.Preferences.citekey.search;")
+hbox
+  label(bbt:preference="extensions.zotero.translators.better-bibtex.autoPinDelay") &better-bibtex.Preferences.citekey.autoPinDelay;
+  scale(min=0 max=30 flex=2 preference="extensions.zotero.translators.better-bibtex.autoPinDelay")
+  textbox(preference='extensions.zotero.translators.better-bibtex.autoPinDelay' size=2 rows=1 readonly='true')
+  label &better-bibtex.seconds;
+  hbox(flex='5')
 
 groupbox(style='margin-bottom: 10px')
   caption(label="&better-bibtex.Preferences.citekey.uniqueness;")
   // <description>&better-bibtex.Preferences.citekey.uniqueness.pin.description;</description>
   hbox
-    label(bbt:preference="pref-better-bibtex-keyScope") &better-bibtex.Preferences.citekey.uniqueness.scope;
-    menulist(preference="pref-better-bibtex-keyScope")
+    label(bbt:preference="extensions.zotero.translators.better-bibtex.keyScope") &better-bibtex.Preferences.citekey.uniqueness.scope;
+    menulist(preference="extensions.zotero.translators.better-bibtex.keyScope")
       menupopup
         menuitem(label="&better-bibtex.Preferences.citekey.uniqueness.scope.global;" value="global")
         menuitem(label="&better-bibtex.Preferences.citekey.uniqueness.scope.library;" value="library")
   hbox
-    label(bbt:preference="pref-better-bibtex-keyConflictPolicy") &better-bibtex.Preferences.citekey.uniqueness.conflict;
-    menulist(preference="pref-better-bibtex-keyConflictPolicy")
+    label(bbt:preference="extensions.zotero.translators.better-bibtex.keyConflictPolicy") &better-bibtex.Preferences.citekey.uniqueness.conflict;
+    menulist(preference="extensions.zotero.translators.better-bibtex.keyConflictPolicy")
       menupopup
         menuitem(label="&better-bibtex.Preferences.citekey.uniqueness.conflict.change;" value="change")
         menuitem(label="&better-bibtex.Preferences.citekey.uniqueness.conflict.keep;" value="keep")
 
 groupbox
   caption(label="&better-bibtex.Preferences.advanced.ideographs;")
-  checkbox(preference="pref-better-bibtex-kuroshiro" label="&better-bibtex.Preferences.advanced.ideographs.kuroshiro;")
-  checkbox(preference="pref-better-bibtex-jieba" label="&better-bibtex.Preferences.advanced.ideographs.jieba;")
+  checkbox(preference="extensions.zotero.translators.better-bibtex.kuroshiro" label="&better-bibtex.Preferences.advanced.ideographs.kuroshiro;")
+  checkbox(preference="extensions.zotero.translators.better-bibtex.jieba" label="&better-bibtex.Preferences.advanced.ideographs.jieba;")
 hbox
-  label(bbt:preference="pref-better-bibtex-warnBulkModify") &better-bibtex.Preferences.bulkWarning;
-  textbox(size="5" preference="pref-better-bibtex-warnBulkModify")
+  label(bbt:preference="extensions.zotero.translators.better-bibtex.warnBulkModify") &better-bibtex.Preferences.bulkWarning;
+  textbox(size="5" preference="extensions.zotero.translators.better-bibtex.warnBulkModify")
 hbox
   button#rescan-citekeys.hidden(label="&better-bibtex.Preferences.rescan-citekeys;" oncommand="Zotero.BetterBibTeX.PrefPane.rescanCitekeys()")
-script.
-  const observer = {}
-  function showBackup() {
-    const backup = document.getElementById('id-better-bibtex-preferences-citekeyFormatBackup')
-    const label = document.getElementById('id-better-bibtex-label-citekeyFormatBackup')
-    Zotero.debug('backup citekey pattern: ' + backup.value)
-    backup.hidden = label.hidden = !backup.value
-  }
-  window.addEventListener('load', function() {
-    observer.citekey = Zotero.Prefs.registerObserver('translators.better-bibtex.citekeyFormat', showNew)
-    showNew()
-    observer.backup = Zotero.Prefs.registerObserver('translators.better-bibtex.citekeyFormatBackup', showBackup)
-    showBackup()
-  })
-  window.addEventListener('unload', function() {
-    if (observer.citekey) Zotero.Prefs.unregisterObserver(observer.citekey)
-    if (observer.backup) Zotero.Prefs.unregisterObserver(observer.backup)
-  })

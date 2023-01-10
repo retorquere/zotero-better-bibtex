@@ -1,8 +1,8 @@
 
-  print('zotero-live-citations 9016790')
+  print('zotero-live-citations dc9ea45')
   local mt, latest = pandoc.mediabag.fetch('https://retorque.re/zotero-better-bibtex/exporting/zotero.lua.revision')
   latest = string.sub(latest, 1, 10)
-  if '9016790' ~= latest then
+  if 'dc9ea45' ~= latest then
     print('new version "' .. latest .. '" available at https://retorque.re/zotero-better-bibtex/exporting')
   end
 
@@ -65,7 +65,8 @@ function module.parse(input, shortlabel)
   if parsed then
     local _prefix, _locator, _suffix = table.unpack(parsed)
     if utils.trim(_prefix) == ',' then _prefix = '' end
-    return nil, nil, _prefix .. _locator .. _suffix
+    -- return nil, nil, _prefix .. _locator .. _suffix
+    return 'page', _locator, _prefix .. _suffix
   end
 
   return nil, nil, input

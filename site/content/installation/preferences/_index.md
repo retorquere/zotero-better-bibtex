@@ -11,6 +11,12 @@ weight: 10
 
 {{% preferences/header %}}
 
+## Citation key formula
+
+default: `​auth.lower + shorttitle(3,3) + year`
+
+Set the pattern used to generate citation keys. The format of the keys is documented [here]({{ ref . "citing" }}).
+
 ## Force citation key to plain text
 
 default: `yes`
@@ -22,6 +28,12 @@ If you have deviated from the default citation key format pattern by [specifying
 default: `yes`
 
 Enable searching on citation keys. Slows down startup on very large libraries. Requires Zotero restart to enable/disable.
+
+## Automatically pin citation key after
+
+default: `0`
+
+When > 0, BBT will automatically pin the first citation keys it generates for an item after this many seconds.
 
 ## Keeping citation keys unique
 

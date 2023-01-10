@@ -10,32 +10,18 @@ import * as jsonpatch from 'fast-json-patch'
 import { normalize } from '../translators/lib/normalize'
 import { stable_stringify as stringify } from '../content/stringify'
 import * as fs from 'fs'
-import { sync as glob } from 'glob'
-import * as path from 'path'
 
 import { defaults, names } from '../gen/preferences/meta'
 const supported: string[] = names.filter(name => !['client', 'testing', 'platform', 'newTranslatorsAskRestart'].includes(name))
 
 const argv = require("clp")()
-if (argv.save && typeof argv.save !== 'boolean') {
-  console.log('put --save at end of command line')
-  process.exit(1)
-}
-if (argv.saveAll && typeof argv.saveAll !== 'boolean') {
-  console.log('put --save-all at end of command line')
+if (argv.attachments && typeof argv.attachments !== 'boolean') {
+  console.log('put --attachments at end of command line')
   process.exit(1)
 }
 
 const localeDateOrder = argv.localeDateOrder ? argv.localeDateOrder.split('=') : null
 
-if (argv._.length === 0) {
-  if (argv.save) {
-    console.log('use --save-all for global replace')
-    process.exit(1)
-  }
-  argv._ = glob('test/fixtures/*/*.json')
-  argv.save = argv['save-all']
-}
 argv._.sort()
 console.log(`## inspecting ${argv._.length} files`)
 
@@ -110,16 +96,12 @@ for (const lib of argv._) {
           delete creator.multi
         }
 
+        if (argv.attachments) delete item.attachments
         if (item.attachments) {
-          item.attachments = item.attachments.filter(att => {
-            if (att.path && !fs.existsSync(path.join(path.dirname(lib), att.path))) {
-              return false
-            }
-            else {
-              clean(att)
-              return true
-            }
-          })
+          for (const att of item.attachments) {
+            clean(att)
+            att.path = att.path.replace(/.*\/zotero\/storage\/[^/]+/, 'ATTACHMENT_KEY')
+          }
         }
       }
       break
@@ -136,11 +118,7 @@ for (const lib of argv._) {
   const diff = jsonpatch.compare(pre, post)
   if (diff.length > 0) {
     console.log(lib)
-    if (argv.save) {
-      console.log('  saving')
-      fs.writeFileSync(lib, stringify(post, null, 2, true))
-    } else {
-      console.log(diff)
-    }
+    console.log('  saving')
+    fs.writeFileSync(lib, stringify(post, null, 2, true))
   }
 }

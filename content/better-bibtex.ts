@@ -1020,12 +1020,12 @@ export class BetterBibTeX {
       setProgress(percent, message) // eslint-disable-line no-magic-numbers
     })
     Events.on('window-loaded', (win: Window, href: string) => {
+      log.debug('window-loaded', href)
       switch (href) {
         case 'chrome://zotero/content/preferences/preferences.xul':
+          log.debug('window-loaded', href, 'calling prefpane_start')
           prefpane_start(win)
           break
-        default:
-          log.debug('window-loaded', href)
       }
     })
   }

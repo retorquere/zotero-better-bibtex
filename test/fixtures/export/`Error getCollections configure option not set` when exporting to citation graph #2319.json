@@ -1,0 +1,140 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "DOIandURL": "doi",
+      "automaticTags": false,
+      "baseAttachmentPath": "/home/stanley/Cloudstore/zotero/mylib-storage",
+      "biblatexExtendedNameFormat": true,
+      "biblatexExtractEprint": false,
+      "cache": false,
+      "citekeyFormat": "auth+year",
+      "extraMergeCSL": true,
+      "extraMergeCitekeys": true,
+      "extraMergeTeX": true,
+      "keyConflictPolicy": "change",
+      "qualityReport": true,
+      "skipFields": "abstract, file"
+    }
+  },
+  "items": [
+    {
+      "abstractNote": "One in four commercial airline flights is delayed, inconveniencing travelers and causing large financial losses for carriers. The ability to accurately predict delays would make travelers\u2019 lives easier and save airlines money. In this work, we approach the problem of predicting flight delays using a Variational Long Short-Term Memory (LSTM) model. The model is trained to predict aggregate daily delays for U.S. airports using a combination of continuous and discrete variables, including weather, airport characteristics, and congestion. Monte Carlo Dropout, a Bayesian Deep Learning technique based on variational inference, is incorporated to provide planners with a well-calibrated prediction interval. We show that our Variational LSTM results in an average median absolute error of 5.8 minutes per day across 123 airports in the United States. Moreover, results show that predictive uncertainty is well explained through a calibration analysis.",
+      "citationKey": "Vandal2017",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Thomas",
+          "lastName": "Vandal"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Max",
+          "lastName": "Livingston"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Camen",
+          "lastName": "Piho"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Sam",
+          "lastName": "Zimmerman"
+        }
+      ],
+      "date": "2017-10",
+      "extra": [
+        "Citation Key: Vandal2017",
+        "tex.crossref: PAPIs2017",
+        "cites: Kendall2017",
+        "cites: Kim2016b"
+      ],
+      "itemID": 1,
+      "itemType": "conferencePaper",
+      "pages": "45-51",
+      "tags": [
+        {
+          "tag": "concept: bayesian deep learning"
+        },
+        {
+          "tag": "method: dropout"
+        },
+        {
+          "tag": "method: lstm"
+        },
+        {
+          "tag": "method: variational lstm"
+        },
+        {
+          "tag": "metric: accuracy plot"
+        },
+        {
+          "tag": "objective: delay prediction"
+        },
+        {
+          "tag": "objective: uncertainty quantification"
+        },
+        {
+          "tag": "reviewed"
+        }
+      ],
+      "title": "Prediction and Uncertainty Quantification of Daily Airport Flight Delays"
+    },
+    {
+      "DOI": "10.1109/DASC.2016.7778092",
+      "citationKey": "Kim2016b",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Young Jin",
+          "lastName": "Kim"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Sun",
+          "lastName": "Choi"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Simon",
+          "lastName": "Briceno"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Dimitri",
+          "lastName": "Mavris"
+        }
+      ],
+      "date": "2016-09",
+      "extra": [
+        "Citation Key: Kim2016b",
+        "tex.crossref: DASC2016"
+      ],
+      "itemID": 2,
+      "itemType": "conferencePaper",
+      "tags": [
+        {
+          "tag": "method: dropout"
+        },
+        {
+          "tag": "method: lstm"
+        },
+        {
+          "tag": "method: rnn"
+        },
+        {
+          "tag": "objective: delay prediction"
+        },
+        {
+          "tag": "reviewed"
+        }
+      ],
+      "title": "A deep learning approach to flight delay prediction"
+    }
+  ]
+}

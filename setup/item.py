@@ -78,11 +78,15 @@ class fetch(object):
         schema='resource/schema/global/schema.json'
       )
     elif client == 'jurism':
-      releases = [
-        ref['ref'].split('/')[-1].replace('v', '')
-        for ref in
-        json.loads(readurl('https://api.github.com/repos/juris-m/zotero/git/refs/tags'))
-      ]
+      try:
+        releases = [
+          ref['ref'].split('/')[-1].replace('v', '')
+          for ref in
+          json.loads(readurl('https://api.github.com/repos/juris-m/zotero/git/refs/tags'))
+        ]
+      except HTTPError: # fallback for rate limit exceeded
+        with open(os.path.join(SCHEMA.root, 'hashes.json')) as f:
+          releases = list(json.load(f)['jurism'].keys())
       releases += [
         rel
         for rel in

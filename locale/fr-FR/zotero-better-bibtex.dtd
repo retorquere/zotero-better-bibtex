@@ -1,3 +1,5 @@
+<!ENTITY better-bibtex.seconds "secondes">
+
 <!ENTITY better-bibtex.FirstRun.title "Bienvenue dans Better BibTex pour Zotero">
 <!ENTITY better-bibtex.FirstRun.welcome "Better BibTex pour Zotero (ou BBT) ajoute à Zotero une compatibilité étendue avec LaTeX ou Markdown. BBT est totalement configurable -- rendez-vous dans les préférences si vous êtes curieux -- mais nous allons commencer avec quelques choix simples.">
 
@@ -56,6 +58,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.auto-export.idle "à la mise en veille">
 <!ENTITY better-bibtex.Preferences.auto-export.immediate "au changement">
 <!ENTITY better-bibtex.Preferences.auto-export.off "désactivée">
+<!ENTITY better-bibtex.Preferences.auto-export.delay "Retarder l'export automatique de">
 <!ENTITY better-bibtex.Preferences.auto-export.run "Exporter maintenant">
 <!ENTITY better-bibtex.Preferences.auto-export.remove "Supprimer">
 <!ENTITY better-bibtex.Preferences.auto-export.collection "Collection">
@@ -76,9 +79,10 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.citekey.citekeys "Clés de citation">
 <!ENTITY better-bibtex.Preferences.citekey.fold "Forcer le formatage des clés de citation en texte brut">
 <!ENTITY better-bibtex.Preferences.citekey.search "Activer la recherche par clé de citation">
-<!ENTITY better-bibtex.Preferences.citekey.format "Format de clé">
+<!ENTITY better-bibtex.Preferences.citekey.format "Formule de clé de citation">
 <!ENTITY better-bibtex.Preferences.citekey.format.new "Nouveau format de clé de citation">
 <!ENTITY better-bibtex.Preferences.citekey.format.backup "Format de clé de citation précédent avec erreur">
+<!ENTITY better-bibtex.Preferences.citekey.autoPinDelay "Épingler automatiquement la clé de citation après coup">
 
 <!ENTITY better-bibtex.Preferences.export.quickCopy "Copie rapide">
 <!ENTITY better-bibtex.Preferences.export.quickCopy.explanation "Copie rapide/glissé-déposé des citations">
@@ -112,6 +116,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.citekey.AUXScanner "Scanner BibTeX AUX/Markdown">
 <!ENTITY better-bibtex.Preferences.citekey.AUXScanner.import "Lors de l'analyse d'un fichier `.aux`, tenter d'importer les références depuis le fichier `.bib` joint lorsque leurs clés de citation ne sont pas dans Zotero">
 <!ENTITY better-bibtex.Preferences.importPrefs "Importer les préférences de BetterBibTeX...">
+<!ENTITY better-bibtex.Preferences.exportPrefs "Export des préférences de BetterBibTeX...">
 
 <!ENTITY better-bibtex.Preferences.advanced "Avancé">
 <!ENTITY better-bibtex.Preferences.advanced.warning "Les paramètres ci-dessous ont un impact sur les performances et peuvent faire échouer les exportations. Procéder avec attention.">
@@ -210,6 +215,7 @@ Si cette option est activée et que vous rencontrez un problème autre que l'ann
 <!ENTITY better-bibtex.Preferences.export.map-unicode "Lors de la conversion en commandes LaTeX en texte brut :">
 <!ENTITY better-bibtex.Preferences.export.map-unicode.minimal-packages "Minimiser le nombre de packages LaTeX supplémentaires requis">
 <!ENTITY better-bibtex.Preferences.export.map-unicode.conservative "Minimiser le nombre de commutateurs entre les modes mathématique et texte">
+<!ENTITY better-bibtex.Preferences.export.map-unicode.creator "Ajouter des accolades aux caractères accentués pour aider les analyseurs latex simples">
 <!ENTITY better-bibtex.Preferences.export.map-unicode.text "Préférer les remplacements en mode texte">
 <!ENTITY better-bibtex.Preferences.export.map-unicode.math "Préférer les remplacements en mode mathématique">
 

@@ -38,7 +38,10 @@ class Tests:
 
   def load(self, timings):
     with open(timings) as f:
-      tests = json.load(f, object_hook=Munch.fromDict)
+      try:
+        tests = json.load(f, object_hook=Munch.fromDict)
+      except json.decoder.JSONDecodeError:
+        tests = {}
       for name, test in tests.items():
         test.name = name
       self.tests = tests.values()
@@ -55,6 +58,7 @@ class Tests:
       bin_capacity = math.ceil(max([test.seconds for test in tests] + [ args.minutes * 60 ]))
     )
     print('Total test time:', str(datetime.timedelta(seconds=sum(data.weights))))
+    print('Bin capacity:', data.bin_capacity, 'seconds')
     # https://developers.google.com/optimization/bin/bin_packing
     # x[i, j] = 1 if item i is packed in bin j.
     x = {
@@ -112,10 +116,10 @@ class Tests:
 Tests = Tests()
 Tests.load(args.durations)
 Tests.balance()
-publish('test_bins', json.dumps(list(range(len(Tests.bins)))))
+publish('test_bins', json.dumps(list(range(max(len(Tests.bins), 1)))))
 
-clients = ['zotero', 'jurism']
+# clients = ['zotero', 'jurism']
+clients = ['zotero']
 if args.beta:
   clients += [client + '-beta' for client in clients]
-
 publish('test_clients', json.dumps(clients))

@@ -16,60 +16,24 @@ import * as l10n from './l10n'
 import { Events } from './events'
 import { pick } from './file-picker'
 import { flash } from './flash'
-const dtdparser = require('./dtd-file.peggy')
+// const dtdparser = require('./dtd-file.peggy')
 
 const namespace = 'http://retorque.re/zotero-better-bibtex/'
 
-function escapeHtml(unsafe: string): string {
-  return unsafe
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#039;')
-}
-
 export function start(win: Window): any {
+  log.debug('prefs.start')
+  /*
   const prefwindow = win.document.querySelector('prefwindow#zotero-prefs')
   if (!prefwindow) return log.error('prefs.start: prefwindow not found')
-  if (prefwindow) return 0
+  if (prefwindow) return
 
-  let xml = Zotero.File.getContentsFromURL('chrome://zotero-better-bibtex/content/Preferences.xul')
+  const xml = Zotero.File.getContentsFromURL('chrome://zotero-better-bibtex/content/Preferences.xul')
   const url = xml.match(/<!DOCTYPE window SYSTEM "([^"]+)">/)[1]
   const dtd: Record<string, string> = dtdparser.parse(Zotero.File.getContentsFromURL(url))
-  for (const [key, value] of Object.entries(dtd)) {
-    xml = xml.replace(new RegExp(`&${key};`, 'g'), escapeHtml(value))
-  }
-  const parser = new DOMParser
-  const xul = parser.parseFromString(xml, 'text/xml')
 
-  xul.querySelectorAll('*[onpaneload]').forEach(elt => {
-    elt.removeAttribute('onpaneload')
-  })
-  xul.querySelectorAll('script').forEach(elt => {
-    elt.remove()
-  })
-
-  const prefpane = xul.querySelector('prefpane')
-  let id: string = prefpane.getAttribute('id')
-  log.debug('prefs id=', id)
-  if (win.document.querySelector(`prefpane#${id}`)) {
-    log.debug('prefpane: already loaded')
-    return
-  }
-
-  let neighbour: Element
-  if ((id = prefpane.getAttribute('insertafter')) && (neighbour = win.document.querySelector(`prefpane#${id}`)) && neighbour.nextSibling) {
-    prefwindow.insertBefore(prefpane, neighbour.nextSibling)
-  }
-  else if ((id = prefpane.getAttribute('insertbefore')) && (neighbour = win.document.querySelector(`prefpane#${id}`))) {
-    prefwindow.insertBefore(prefpane, neighbour)
-  }
-  else {
-    prefwindow.appendChild(prefpane)
-  }
+  makeUI(win.document, prefwindow, dtd)
+  */
   log.debug('>>>\n', win.document.documentElement.outerHTML, '\n<<<')
-  log.debug('prefpane: appended:', !!win.document.querySelector(`prefpane#${id}`))
 }
 
 class AutoExportPane {
@@ -323,6 +287,12 @@ export class PrefPane {
   private globals: Record<string, any>
   // private prefwindow: HTMLElement
 
+  public async exportPrefs(): Promise<void> {
+    const file = await pick(Zotero.getString('fileInterface.export'), 'save', [['BBT JSON file', '*.json']])
+    if (!file) return
+    Zotero.File.putContents(Zotero.File.pathToFile(file), JSON.stringify({ config: { preferences: Preference.all } }, null, 2))
+  }
+
   public async importPrefs(): Promise<void> {
     const preferences: { path: string, contents?: string, parsed?: any } = {
       path: await pick(Zotero.getString('fileInterface.import'), 'open', [['BBT JSON file', '*.json']]),
@@ -356,9 +326,9 @@ export class PrefPane {
         if (typeof value === 'undefined' || typeof value !== typeof preferenceDefaults[pref]) {
           flash(`Invalid ${typeof value} value for ${pref}, expected ${preferenceDefaults[pref]}`)
         }
-        else {
+        else if (Preference[pref] !== value) {
           Preference[pref] = value
-          flash(`${pref} set to ${JSON.stringify(pref)}`)
+          flash(`${pref} set`, `${pref} set to ${JSON.stringify(value)}`)
         }
       }
     }
@@ -497,8 +467,8 @@ export class PrefPane {
 
     this.observer = new MutationObserver(this.mutated.bind(this))
     this.observed = this.globals.document.getElementById('zotero-prefpane-export')
-    this.observer.observe(this.observed, { childList: true, subtree: true })
-    // this.prefwindow = this.globals.document.getElementsByTagName('prefwindow')[0]
+    if (this.observed) this.observer.observe(this.observed, { childList: true, subtree: true })
+    const prefwindow = this.globals.document.getElementsByTagName('prefwindow')[0]
 
     const deck = this.globals.document.getElementById('better-bibtex-prefs-deck')
     deck.selectedIndex = 0
@@ -512,25 +482,21 @@ export class PrefPane {
 
     deck.selectedIndex = 1
 
-    if (typeof this.globals.Zotero_Preferences === 'undefined') {
-      log.error('Preferences.load: Zotero_Preferences not ready')
-      return
+    if (typeof this.globals.Zotero_Preferences !== 'undefined') {
+      const tabbox = this.globals.document.getElementById('better-bibtex-prefs-tabbox')
+      $patch$(this.globals.Zotero_Preferences, 'openHelpLink', original => function() {
+        if (prefwindow.currentPane.helpTopic === 'BetterBibTeX') {
+          const id = tabbox.selectedPanel.id
+          if (id) this.openURL(`https://retorque.re/zotero-better-bibtex/configuration/#${id.replace('better-bibtex-prefs-', '')}`)
+        }
+        else {
+          // eslint-disable-next-line prefer-rest-params
+          original.apply(this, arguments)
+        }
+      })
     }
 
     this.autoexport.load()
-
-    const tabbox = this.globals.document.getElementById('better-bibtex-prefs-tabbox')
-    $patch$(this.globals.Zotero_Preferences, 'openHelpLink', original => function() {
-      if (this.prefwindow.currentPane.helpTopic === 'BetterBibTeX') {
-        const id = tabbox.selectedPanel.id
-        if (id) this.openURL(`https://retorque.re/zotero-better-bibtex/configuration/#${id.replace('better-bibtex-prefs-', '')}`)
-      }
-      else {
-        // eslint-disable-next-line prefer-rest-params
-        original.apply(this, arguments)
-      }
-    })
-
     this.getCitekeyFormat()
 
     if (this.globals.document.location.hash === '#better-bibtex') {
@@ -546,17 +512,6 @@ export class PrefPane {
     this.timer = typeof this.timer === 'number' ? this.timer : this.globals.window.setInterval(this.refresh.bind(this), 500)  // eslint-disable-line no-magic-numbers
   }
 
-  /*
-  private unpx(size: string | number): number {
-    if (typeof size === 'number') return size
-    const px = parseInt(size.replace(/px$/, ''))
-    return isNaN(px) ? 0 : px
-  }
-  private isVisible(el) {
-    const rect = el.getBoundingClientRect()
-    return (rect.top >= 0) && (rect.bottom <= this.globals.window.innerHeight)
-  }
-  */
   private resize() {
     // https://stackoverflow.com/questions/4707712/prefwindow-sizing-itself-to-the-wrong-tab-when-browser-preferences-animatefade
     Zotero.Prefs.set('browser.preferences.animateFadeIn', false, true)
@@ -567,31 +522,6 @@ export class PrefPane {
     tabbox.height = tabbox.boxObject.height
     tabbox.width = tabbox.boxObject.width
     this.globals.window.sizeToContent()
-
-    /*
-    const prefpane: HTMLElement = (this.prefwindow as any).currentPane
-
-    log.debug('prefpane', prefpane.id, 'height:', prefpane.getBoundingClientRect().height, 'parent:', prefpane.parentElement.tagName)
-    let height = 0
-    for (const child of [...prefpane.children]) {
-      const bbox = child.getBoundingClientRect()
-      const style = this.globals.window.getComputedStyle(child)
-
-      log.debug('  child:', child.tagName, 'height:', this.unpx(bbox.height) + this.unpx(style.marginTop) + this.unpx(style.marginBottom))
-      height += this.unpx(bbox.height) + this.unpx(style.marginTop) + this.unpx(style.marginBottom)
-    }
-
-    this.prefwindow.style.height = `${height}px`
-    log.debug('prefpane', prefpane.id, 'reset to', height, 'actual:', prefpane.getBoundingClientRect().height)
-
-    // this.globals.window.sizeToContent()
-
-    const step = 20
-    do {
-      height += step // eslint-disable-line no-magic-numbers
-      this.prefwindow.style.height = `${height}px`
-    } while (!this.isVisible(prefpane))
-    */
   }
 
   private unload() {

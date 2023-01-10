@@ -9,7 +9,7 @@ import type { Translation } from '../lib/translator'
 import type { Fields as ExtraFields } from '../../content/extra'
 import { log } from '../../content/logger'
 
-export type Postscript = (entry: any, item: any, translator: Translation, extra: ExtraFields) => Allow
+export type Postscript = (target: any, source: any, translator: Translation, extra: ExtraFields) => Allow
 
 export function postscript(kind: 'csl' | 'tex', main: string, guard?: string): Postscript  {
   let body = `

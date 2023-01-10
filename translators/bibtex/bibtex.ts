@@ -6,6 +6,9 @@ import { arXiv } from '../../content/arXiv'
 import { validItem } from '../../content/ajv'
 import { valid, label } from '../../gen/items/items'
 import wordsToNumbers from 'words-to-numbers'
+import { parse as parseDate, strToISO as strToISODate } from '../../content/dateparser'
+
+import { parseBuffer as parsePList } from 'bplist-parser'
 
 const toWordsOrdinal = require('number-to-words/src/toWordsOrdinal')
 function edition(n: string | number): string {
@@ -331,7 +334,7 @@ export function generateBibTeX(translation: Translation): void {
       switch (translation.preferences.bibtexURL) {
         case 'url':
         case 'url-ish':
-          urlfield = ref.add({ name: 'url', value: item.url || item.extraFields.kv.url, enc: translation.verbatimFields.includes('url') ? 'url' : 'latex' })
+          urlfield = ref.add({ name: 'url', value: item.url || item.extraFields.kv.url, enc: translation.isVerbatimField('url') ? 'url' : 'latex' })
           break
 
         case 'note':
@@ -884,7 +887,14 @@ export class ZoteroItem {
   protected $timestamp(value: string | number): boolean { return this.item.dateAdded = this.unparse(value) }
   */
 
-  protected $urldate(value: string | number): boolean { return this.set('accessDate', value) }
+  protected $urldate(value: string | number): boolean {
+    if (typeof value !== 'string') return false
+    const date = value.replace(/^accessed\s*:?\s*/i, '')
+    const parsed = parseDate(date)
+    if (parsed.type !== 'date' || !parsed.day) return false
+
+    return this.set('accessDate', strToISODate(date))
+  }
   protected $lastchecked(value: string | number): boolean { return this.$urldate(value) }
 
   protected $number(value: string | number, field: string): boolean {
@@ -1115,11 +1125,23 @@ export class ZoteroItem {
     }
     for (const [field, values] of Object.entries(this.bibtex.fields)) {
       for (const value of values) {
-        if (field.match(/^(local-zo-url-[0-9]+)|(file-[0-9]+)$/)) {
+        if (field.match(/^(local-zo-url-[0-9]+|file-[0-9]+)$/)) {
           if (this.$file(value)) continue
         }
         else if (field.match(/^bdsk-url-[0-9]+$/)) {
           if (this.$url(value, field)) continue
+        }
+        else if (field.match(/^bdsk-file-[0-9]+$/)) {
+          let imported = false
+          try {
+            for (const att of parsePList(new Buffer(value, 'base64'))) {
+              if (att.relativePath && this.$file(att.relativePath)) imported = true
+            }
+          }
+          catch (err) {
+            if (err) this.error(`import error: ${this.type} ${this.bibtex.key}: ${err}\n${JSON.stringify(this.item, null, 2)}`)
+          }
+          if (imported) continue
         }
         else if (field.match(/^note_[0-9]+$/)) { // jabref, #1878
           if (this.$note(value, 'note')) continue
@@ -1144,7 +1166,7 @@ export class ZoteroItem {
             this.hackyFields.push(`PMID: ${value}`)
             break
 
-          case 'subject': // otherwise it's picked up by the sibject -> title mapper, and I don't think that's right
+          case 'subject': // otherwise it's picked up by the subject -> title mapper, and I don't think that's right
             this.hackyFields.push(`tex.${field}: ${value}`)
             break
 

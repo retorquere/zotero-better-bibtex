@@ -5,20 +5,21 @@ declare var ZOTERO_TRANSLATOR_INFO: TranslatorMetadata // eslint-disable-line no
 declare const workerJob: Translator.Worker.Job
 declare const dump: (msg: string) => void
 
-import { fast_stringify as stringify, asciify } from './stringify'
+import { asciify } from './stringify'
+import { stringify } from './stringify'
+// import { inspect as stringify } from 'loupe'
 import { worker as inWorker } from './client'
 
 export function print(msg: string): void {
   dump(msg + '\n')
 }
 
-
 class Logger {
   public verbose = false
 
   protected timestamp: number
 
-  private format({ error=false, worker=0, translator='', issue=0 }, msg) {
+  private format({ error=false, worker=0, translator='' }, msg) {
     let workername = `${worker}`
     let diff = null
     const now = Date.now()
@@ -26,25 +27,24 @@ class Logger {
     this.timestamp = now
 
     if (typeof msg !== 'string') {
-      let output = issue ? `issue ${issue}: `: ''
-      for (const m of msg) {
+      msg = msg.map(m => {
         const type = typeof m
-        if (type === 'string' || m instanceof String || type === 'number' || type === 'undefined' || type === 'boolean' || m === null) {
-          output += m
+        if (type === 'string' || m instanceof String) {
+          return m as string
+        }
+        else if (type === 'number' || type === 'undefined' || type === 'boolean' || m === null) {
+          return `${m}`
         }
         else if (m instanceof Error || m instanceof ErrorEvent || m.toString() === '[object ErrorEvent]') {
-          output += this.formatError(m)
+          return this.formatError(m)
         }
         else if (m && type === 'object' && m.message) { // mozilla exception, no idea on the actual instance type
-          output += this.formatError({ message: m.errorCode ? `${m.message} (${m.errorCode})` : m.message, filename: m.fileName, lineno: m.lineNumber, colno: m.column, stack: m.stack })
+          return this.formatError({ message: m.errorCode ? `${m.message} (${m.errorCode})` : m.message, filename: m.fileName, lineno: m.lineNumber, colno: m.column, stack: m.stack })
         }
         else {
-          output += stringify(m)
+          return stringify(m)
         }
-
-        output += ' '
-      }
-      msg = output
+      }).join(' ')
     }
 
     if (inWorker) {
@@ -87,10 +87,6 @@ class Logger {
 
   public dump(...msg) {
     if (this.enabled) print(this.format({}, msg))
-  }
-
-  public for(issue: number, ...msg) {
-    if (this.enabled) Zotero.debug(this.format({ issue }, msg))
   }
 
   public error(...msg) {

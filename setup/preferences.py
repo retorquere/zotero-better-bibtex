@@ -16,6 +16,7 @@ from types import SimpleNamespace
 import subprocess
 from pathlib import Path
 
+subprocess.check_output(['node', 'setup/preferences.js', 'content/Preferences/prefwindow.pug', 'build/content/PreferencesWindow.xul'])
 subprocess.check_output(['node', 'setup/preferences.js', 'content/Preferences.pug', 'build/content/Preferences.xul'])
 
 root = os.path.join(os.path.dirname(__file__), '..')
@@ -201,8 +202,6 @@ class Preferences:
       assert pref, f'could not find pref with name {override}'
       pref.override = True
 
-    self.preferences['#skipWords'].default = self.preferences['#skipWords'].default.replace(' ', '')
-
   def doc(self):
     xul = f'{{{self.ns.xul}}}'
     bbt = f'{{{self.ns.bbt}}}'
@@ -261,6 +260,9 @@ class Preferences:
 
       elif pref := node.get('preference'):
         doc.pages[doc.current].content += self.pref(self.preferences[pref], level + 2)
+
+      elif node.tag == f'{xul}textbox' and node.get('id') == 'id-better-bibtex-preferences-citekeyFormat':
+        doc.pages[doc.current].content += self.pref(self.preferences['extensions.zotero.translators.better-bibtex.citekeyFormat'], level + 2)
 
       for child in node:
         walk(child, (level or 0) + levelup)

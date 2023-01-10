@@ -12,6 +12,7 @@ import { Events } from './events'
 import { fetchAsync as fetchInspireHEP } from './inspire-hep'
 import * as Extra from './extra'
 import { $and, Query } from './db/loki'
+import { excelColumn } from './text'
 
 import * as ZoteroDB from './db/zotero'
 
@@ -25,7 +26,6 @@ import { DB as Cache } from './db/cache'
 import { patch as $patch$ } from './monkey-patch'
 
 import { sprintf } from 'sprintf-js'
-import { intToExcelCol } from 'excel-column-name'
 
 import * as l10n from './l10n'
 
@@ -294,7 +294,7 @@ export class KeyManager {
     }
 
     Events.on('preference-changed', pref => {
-      if (['autoAbbrevStyle', 'citekeyFormat', 'citekeyFold', 'skipWords'].includes(pref)) {
+      if (['autoAbbrevStyle', 'citekeyFormat', 'citekeyFold', 'citekeyUnsafeChars', 'skipWords'].includes(pref)) {
         Formatter.update('pref-change')
       }
     })
@@ -353,6 +353,7 @@ export class KeyManager {
 
   public async rescan(clean?: boolean): Promise<void> {
     if (Preference.scrubDatabase) {
+      log.debug('scrubbing database')
       this.keys.removeWhere(i => !i.citekey) // 2047
 
       let errors = 0
@@ -443,20 +444,17 @@ export class KeyManager {
       progressWin.show()
 
       const eta = new ETA(this.regenerate.length, { autoStart: true })
-      while (this.regenerate.length) {
-        const item = await getItemsAsync(this.regenerate.pop())
-
+      for (const itemID of this.regenerate) {
         try {
-          this.update(item)
+          this.update(await getItemsAsync(itemID))
         }
         catch (err) {
-          log.error('KeyManager.rescan: update', (eta.done as number) + 1, 'failed:', err)
+          log.error('KeyManager.rescan: update', (eta.done as number) + 1, 'failed:', err.message || err, err.stack)
         }
 
         eta.iterate()
 
-        // eslint-disable-next-line no-magic-numbers
-        if ((eta.done % 10) === 1) {
+        if ((eta.done % 10) === 1) { // eslint-disable-line no-magic-numbers
           log.debug('keymanager.rescan: regenerated', eta.done)
           // eslint-disable-next-line no-magic-numbers
           progress.setProgress((eta.done * 100) / eta.count)
@@ -520,23 +518,21 @@ export class KeyManager {
     const conflictQuery: Query = { $and: [ { itemID: { $ne: item.id } } ] }
     if (Preference.keyScope !== 'global') conflictQuery.$and.push({ libraryID: { $eq: item.libraryID } })
 
-    let postfix: string
     const seen = {}
     // eslint-disable-next-line no-constant-condition
-    for (let n = Formatter.postfix.start; true; n += 1) {
-      if (n) {
-        const alpha = intToExcelCol(n)
-        postfix = sprintf(Formatter.postfix.format, { a: alpha.toLowerCase(), A: alpha, n })
-      }
-      else {
-        postfix = ''
-      }
+    for (let n = Formatter.postfix.offset; true; n += 1) {
+      const postfixed = citekey.replace(Formatter.postfix.marker, () => {
+        let postfix = ''
+        if (n) {
+          const alpha = excelColumn(n)
+          postfix = sprintf(Formatter.postfix.template, { a: alpha.toLowerCase(), A: alpha, n })
+        }
+        // this should never happen, it'd mean the postfix pattern doesn't have placeholders, which should have been caught by parsePattern
+        if (seen[postfix]) throw new Error(`${JSON.stringify(Formatter.postfix)} does not generate unique postfixes`)
+        seen[postfix] = true
+        return postfix
+      })
 
-      // this should never happen, it'd mean the postfix pattern doesn't have placeholders, which should have been caught by parsePattern
-      if (seen[postfix]) throw new Error(`${JSON.stringify(Formatter.postfix)} does not generate unique postfixes`)
-      seen[postfix] = true
-
-      const postfixed = citekey + postfix
       const conflict = transient.includes(postfixed) || this.keys.findOne({ $and: [...conflictQuery.$and, { citekey: { $eq: postfixed } }] })
       if (conflict) continue
 

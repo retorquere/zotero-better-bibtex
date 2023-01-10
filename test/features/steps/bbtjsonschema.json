@@ -195,6 +195,9 @@
             "citekeySearch": {
               "type": "boolean"
             },
+            "citekeyUnsafeChars": {
+              "type": "string"
+            },
             "csquotes": {
               "type": "string"
             },
@@ -304,7 +307,8 @@
                 "minimal-packages",
                 "conservative",
                 "text",
-                "math"
+                "math",
+                "creator"
               ]
             },
             "parseParticles": {

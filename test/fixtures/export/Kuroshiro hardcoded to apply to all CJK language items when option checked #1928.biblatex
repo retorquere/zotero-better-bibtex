@@ -1,4 +1,3 @@
-
 @book{akiyaMinHigashi2010,
   title = {閩東區福寧片四縣市方言研究},
   author = {秋谷, 裕幸},
@@ -8,7 +7,7 @@
   langid = {japanese}
 }
 
-@book{qiugumindongoufuningpian2010,
+@book{qiugumindongou2010,
   title = {閩東區福寧片四縣市方言研究},
   author = {秋谷, 裕幸},
   date = {2010},
@@ -16,5 +15,3 @@
   location = {{福州}},
   langid = {chinese}
 }
-
-

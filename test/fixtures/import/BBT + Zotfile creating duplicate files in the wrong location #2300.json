@@ -6,7 +6,8 @@
       "exportNotes": true
     },
     "preferences": {
-      "citekeyFormat": "auth + year"
+      "citekeyFormat": "auth + year",
+      "citekeyFormatBackup": "auth + year"
     }
   },
   "items": [
@@ -71,7 +72,18 @@
     },
     {
       "ISBN": "0-521-53180-2",
-      "attachments": [],
+      "attachments": [
+        {
+          "itemType": "attachment",
+          "path": "ATTACHMENT_KEY/GarberAyers - The Cambridge History of Seventeenth-Century Philosophy (2003).pdf",
+          "title": "GarberAyers - The Cambridge History of Seventeenth-Century Philosophy (2003)"
+        },
+        {
+          "itemType": "attachment",
+          "path": "ATTACHMENT_KEY/GarberAyers - The Cambridge History of Seventeenth-Century Philosophy (2003)a.pdf",
+          "title": "GarberAyers - The Cambridge History of Seventeenth-Century Philosophy (2003)a"
+        }
+      ],
       "citationKey": "garberayers1998b",
       "creators": [
         {
@@ -132,7 +144,13 @@
     },
     {
       "ISBN": "0415170540 (hardcover)",
-      "attachments": [],
+      "attachments": [
+        {
+          "itemType": "attachment",
+          "path": "ATTACHMENT_KEY/Gaukroger - The Soft Underbelly of Reason  The Passions in the Seventeenth (1998).pdf",
+          "title": "Gaukroger - The Soft Underbelly of Reason  The Passions in the Seventeenth (1998)"
+        }
+      ],
       "citationKey": "ZGaukroger1998a",
       "creators": [
         {

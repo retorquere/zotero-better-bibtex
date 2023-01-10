@@ -39,6 +39,7 @@
       "itemID": 1,
       "itemType": "bookSection",
       "libraryCatalog": "Library of Congress ISBN",
+      "language": "ja",
       "multi": {
         "_keys": {
           "bookTitle": {

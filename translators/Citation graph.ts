@@ -29,8 +29,8 @@ type Item = {
 export function doExport(): void {
   const translation = Translation.Export(ZOTERO_TRANSLATOR_INFO, collect())
 
-  this.translation.output.body += 'digraph CitationGraph {\n'
-  this.translation.output.body += '  concentrate=true;\n'
+  translation.output.body += 'digraph CitationGraph {\n'
+  translation.output.body += '  concentrate=true;\n'
 
   const add = {
     title: Zotero.getOption('Title'),
@@ -60,7 +60,7 @@ export function doExport(): void {
     if (author.length) label.push(author.join(' '))
 
     items.push({
-      id: `node-${ref.uri.replace(/.*\//, '')}`,
+      id: `node-${items.length}`,
       label: label.join('\n'),
       relations: (ref.relations?.['dc:relation'] || []),
       // eslint-disable-next-line prefer-spread
@@ -78,15 +78,15 @@ export function doExport(): void {
   }
 
   for (const item of items) {
-    this.translation.output.body += node(item.id, { label: item.label })
+    translation.output.body += node(item.id, { label: item.label })
 
     for (const uri of item.relations) {
       const other = items.find(o => o.uri === uri)
       if (other) {
-        this.translation.output.body += edge(item.id, other.id)
+        translation.output.body += edge(item.id, other.id)
       }
       else {
-        this.translation.output.body += edge(item.id, uri.replace(/.*\//, ''), { style: 'dashed', dir: 'both' })
+        translation.output.body += edge(item.id, uri.replace(/.*\//, ''), { style: 'dashed', dir: 'both' })
       }
     }
 
@@ -94,16 +94,16 @@ export function doExport(): void {
       const other = items.find(o => o.citationKey === citationKey)
 
       if (other) {
-        this.translation.output.body += edge(item.id, other.id)
+        translation.output.body += edge(item.id, other.id)
       }
       else {
-        this.translation.output.body += edge(item.id, citationKey, { style: 'dashed' })
+        translation.output.body += edge(item.id, citationKey, { style: 'dashed' })
       }
     }
   }
 
-  this.translation.output.body += '}'
+  translation.output.body += '}'
 
-  Zotero.write(this.translation.output.body)
+  Zotero.write(translation.output.body)
   translation.erase()
 }

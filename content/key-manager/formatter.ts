@@ -4,6 +4,7 @@ import { client } from '../client'
 
 import { log } from '../logger'
 import fold2ascii from 'fold-to-ascii'
+import rescape from '@stdlib/utils-escape-regexp-string'
 import ucs2decode = require('punycode2/ucs2/decode')
 import scripts = require('xregexp/tools/output/scripts')
 import { transliterate } from 'transliteration/dist/node/src/node/index'
@@ -17,7 +18,7 @@ import { babelLanguage } from '../text'
 import { fetchSync as fetchInspireHEP } from '../inspire-hep'
 
 const legacyparser = require('./legacy.peggy')
-import * as formula from './convert'
+import * as Formula from './convert'
 import * as DateParser from '../dateparser'
 
 import { methods } from '../../gen/api/key-formatter'
@@ -132,8 +133,16 @@ function parseDate(v): PartialDate {
 }
 
 const script = {
-  // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-  han: new RegExp('([' + scripts.find((s: { name: string }) => s.name === 'Han').bmp + '])', 'g'), // eslint-disable-line  prefer-template
+  cjk: new RegExp('([' + scripts.map((s: { name: string, bmp: string }): string => { // eslint-disable-line @typescript-eslint/restrict-plus-operands, prefer-template
+    switch (s.name) {
+      case 'Katakana':
+      case 'Hiragana':
+      case 'Han':
+        return s.bmp
+      default:
+        return ''
+    }
+  }).join('') + '])', 'g'), // eslint-disable-line @typescript-eslint/restrict-plus-operands,prefer-template
 }
 
 type PartialDate = {
@@ -268,20 +277,20 @@ class Item {
   }
 }
 
-// https://tex.stackexchange.com/questions/408530/what-characters-are-allowed-to-use-as-delimiters-for-bibtex-keys
-const unsafechars = /["#%'(),=\\{}~\s]/g
 class PatternFormatter {
   public chunk = ''
   public citekey = ''
-  public folding: boolean
 
   public generate: () => string
-  public postfix: { start: number, format: string }
-
+  public postfix = {
+    offset: 0,
+    template: '%(a)s',
+    marker: '\x1A',
+  }
 
   private re = {
-    unsafechars_allow_spaces: new RegExp(unsafechars.source.replace(/\\s/, ''), 'g'),
-    unsafechars,
+    unsafechars_allow_spaces: /\s/g,
+    unsafechars: /\s/g,
     alphanum: Zotero.Utilities.XRegExp('[^\\p{L}\\p{N}]'),
     punct: Zotero.Utilities.XRegExp('\\p{Pe}|\\p{Pf}|\\p{Pi}|\\p{Po}|\\p{Ps}', 'g'),
     dash: Zotero.Utilities.XRegExp('\\p{Pd}|\u2500|\uFF0D|\u2015', 'g'), // additional pseudo-dashes from #1880
@@ -300,61 +309,86 @@ class PatternFormatter {
   private months = { 1: 'jan', 2: 'feb', 3: 'mar', 4: 'apr', 5: 'may', 6: 'jun', 7: 'jul', 8: 'aug', 9: 'sep', 10: 'oct', 11: 'nov', 12: 'dec' }
 
   // eslint-disable-next-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
-  private DOMParser: DOMParser
 
   private item: Item
 
   private skipWords: Set<string>
 
   // private fold: boolean
-  private citekeyFormat: string
-
   public update(reason: string) {
-    log.debug('update key formula:', reason)
+    log.debug('update key formula:', reason, Preference.citekeyUnsafeChars)
+    const unsafechars = rescape(Preference.citekeyUnsafeChars)
+    this.re.unsafechars_allow_spaces = new RegExp(`[${unsafechars}]`, 'g')
+    this.re.unsafechars = new RegExp(`[${unsafechars}\\s]`, 'g')
     this.skipWords = new Set(Preference.skipWords.split(',').map((word: string) => word.trim()).filter((word: string) => word))
 
-    // safeguard agains Zotero late-loading preference defaults
-    // the zero-width-space is a marker to re-save the current default so it doesn't get replaced when the default changes later, which would change new keys suddenly
-    if (!Preference.citekeyFormat || Preference.citekeyFormat.includes('\u200B')) Preference.citekeyFormat = Preference.default.citekeyFormat.replace(/^\u200B/, '')
-    if (Preference.citekeyFormat.startsWith('[')) {
-      try {
-        Preference.citekeyFormat = legacyparser.parse(Preference.citekeyFormat, { sprintf, items, methods }) as string
-        flash('Citation pattern upgraded', `Citation pattern upgraded to ${Preference.citekeyFormat}`)
+    for (const ck of ['citekeyFormat', 'citekeyFormatBackup']) {
+      if (Preference[ck].startsWith('[')) {
+        try {
+          Preference[ck] = legacyparser.parse(Preference[ck], { sprintf, items, methods }) as string
+          flash('Citation pattern upgraded', `Citation pattern upgraded to ${Preference.citekeyFormat}`)
+        }
+        catch (err) {
+          Preference[ck] = ''
+          log.debug('Upgrading citation pattern failed', err)
+        }
       }
-      catch (err) {
-        log.debug('Upgrading citation pattern failed', err)
-      }
+
+      // safeguard agains Zotero late-loading preference defaults
+      // the zero-width-space is a marker to re-save the current default so it doesn't get replaced when the default changes later, which would change new keys suddenly
+      if (!Preference[ck] || Preference[ck].includes('\u200B')) Preference[ck] = Preference.default.citekeyFormat.replace(/^\u200B/, '')
     }
 
-    for (const attempt of ['get', 'reset']) {
+    if (Preference.citekeyFormatBackup === Preference.citekeyFormat) Preference.citekeyFormatBackup = ''
+
+    let formula: string
+
+    for (const attempt of ['verify', 'restore', 'reset']) {
       switch (attempt) {
-        case 'get':
-          this.citekeyFormat = Preference.citekeyFormat
+        case 'verify':
+          formula = Preference.citekeyFormat
+          break
+
+        case 'restore':
+          if (!Preference.citekeyFormatBackup || Preference.citekeyFormatBackup === Preference.citekeyFormat) continue
+          // eslint-disable-next-line no-magic-numbers
+          flash('Malformed citation pattern', 'retrying backup', 20)
+          formula = Preference.citekeyFormatBackup
+          Preference.citekeyFormatBackup = Preference.citekeyFormat
           break
 
         case 'reset':
           // eslint-disable-next-line no-magic-numbers
           flash('Malformed citation pattern', 'resetting to default', 20)
-          Preference.citekeyFormatBackup = Preference.citekeyFormat.replace(/^\u200B/, '')
-          this.citekeyFormat = Preference.citekeyFormat = Preference.default.citekeyFormat.replace(/^\u200B/, '')
+          formula = Preference.default.citekeyFormat.replace(/^\u200B/, '')
           break
       }
 
       try {
         this.$postfix()
-        const formatter = this.parsePattern(this.citekeyFormat)
+        const formatter = this.parsePattern(formula)
         this.generate = (new Function(formatter) as () => string)
         log.debug('PatternFormatter.update: installing generate ', {generate: this.generate.toString()})
+        switch (attempt) {
+          case 'verify':
+            Preference.citekeyFormatBackup = Preference.citekeyFormat
+            break
+          case 'restore':
+          case 'reset':
+            Preference.citekeyFormat = formula
+            break
+        }
+
         break
       }
       catch (err) {
-        log.error('PatternFormatter.update: Error parsing citekeyFormat ', {pattern: this.citekeyFormat}, err, err.location)
+        log.error('PatternFormatter.update: Error parsing citekeyFormat ', {formula}, err, err.location)
       }
     }
   }
 
   public parsePattern(pattern): string {
-    const code = formula.convert(pattern)
+    const code = Formula.convert(pattern)
     if (Preference.testing) log.debug('parsePattern.compiled:', code)
     return code
   }
@@ -365,12 +399,11 @@ class PatternFormatter {
 
   public reset() {
     this.citekey = ''
-    this.folding = Preference.citekeyFold
     return ''
   }
 
   public finalize(_citekey: string) {
-    if (this.citekey && this.folding) this.citekey = this.transliterate(this.citekey)
+    if (this.citekey && Preference.citekeyFold) this.citekey = this.transliterate(this.citekey)
     this.citekey = this.citekey.replace(this.re.unsafechars, '')
     return this.citekey
   }
@@ -387,14 +420,16 @@ class PatternFormatter {
     }
 
     this.$postfix()
-    return this.generate()
+    let citekey = this.generate()
+    if (!citekey.includes(this.postfix.marker)) citekey += this.postfix.marker
+    return citekey
   }
 
   /**
    * Set the current chunk
    */
   public $text(text: string) {
-    this.chunk = text
+    this.chunk = text || ''
     return this
   }
 
@@ -516,8 +551,7 @@ class PatternFormatter {
       authors = authors.slice(n[0] - 1, n[1])
       if (etal && !etal.replace(/[a-z]/ig, '').length) etal = `${sep}${etal}`
     }
-    let author = authors.join(sep) + etal
-    if (this.folding) author = this.clean(author, true)
+    const author = authors.join(sep) + etal
     return this.$text(author)
   }
 
@@ -539,8 +573,7 @@ class PatternFormatter {
    * @param creator   kind of creator to select, `*` selects `author` first, and if not present, `editor`, `translator` or `collaborator`, in that order.
    */
   public $authForeIni(creator: Creator = '*') {
-    let author: string = this.creators(creator, '%(I)s')[0] || ''
-    if (this.folding) author = this.clean(author, true)
+    const author: string = this.creators(creator, '%(I)s')[0] || ''
     return this.$text(author)
   }
 
@@ -550,8 +583,7 @@ class PatternFormatter {
    */
   public $authorLastForeIni(creator: Creator = '*') {
     const authors = this.creators(creator, '%(I)s')
-    let author = authors[authors.length - 1] || ''
-    if (this.folding) author = this.clean(author, true)
+    const author = authors[authors.length - 1] || ''
     return this.$text(author)
   }
 
@@ -562,8 +594,7 @@ class PatternFormatter {
    */
   public $authorLast(creator: Creator = '*', initials=false) {
     const authors = this.creators(creator, initials ? '%(f)s%(I)s' : '%(f)s')
-    let author = authors[authors.length - 1] || ''
-    if (this.folding) author = this.clean(author, true)
+    const author = authors[authors.length - 1] || ''
     return this.$text(author)
   }
 
@@ -595,7 +626,6 @@ class PatternFormatter {
         author = `${authors.slice(0, 3).map(auth => auth.substring(0, 1)).join(sep)}+`
         break
     }
-    if (this.folding) author = this.clean(author, true)
     return this.$text(author)
   }
 
@@ -609,8 +639,7 @@ class PatternFormatter {
   public $authIni(n=0, creator: Creator = '*', initials=false, sep='.') {
     const authors = this.creators(creator, initials ? '%(f)s%(I)s' : '%(f)s')
     if (!authors.length) return this.$text('')
-    let author = authors.map(auth => auth.substring(0, n)).join(sep)
-    if (this.folding) author = this.clean(author, true)
+    const author = authors.map(auth => auth.substring(0, n)).join(sep)
     return this.$text(author)
   }
 
@@ -626,8 +655,7 @@ class PatternFormatter {
     const firstAuthor = authors.shift()
 
     // eslint-disable-next-line no-magic-numbers
-    let author = [firstAuthor.substring(0, 5)].concat(authors.map(name => name.substring(0, 1)).join(sep)).join(sep)
-    if (this.folding) author = this.clean(author, true)
+    const author = [firstAuthor.substring(0, 5)].concat(authors.map(name => name.substring(0, 1)).join(sep)).join(sep)
     return this.$text(author)
   }
 
@@ -642,8 +670,7 @@ class PatternFormatter {
     if (!authors.length) return this.$text('')
 
     // eslint-disable-next-line no-magic-numbers
-    let author = authors.slice(0, 2).concat(authors.length > 2 ? ['ea'] : []).join(sep)
-    if (this.folding) author = this.clean(author, true)
+    const author = authors.slice(0, 2).concat(authors.length > 2 ? ['ea'] : []).join(sep)
     return this.$text(author)
   }
 
@@ -669,7 +696,6 @@ class PatternFormatter {
     else {
       author = authors.slice(0, 1).concat(authors.length > 1 ? ['EtAl'] : []).join(sep)
     }
-    if (this.folding) author = this.clean(author, true)
     return this.$text(author)
   }
 
@@ -691,7 +717,6 @@ class PatternFormatter {
     else {
       author = authors.slice(0, 1).concat(authors.length > 1 ? ['etal'] : []).join(sep)
     }
-    if (this.folding) author = this.clean(author, true)
     return this.$text(author)
   }
 
@@ -720,7 +745,6 @@ class PatternFormatter {
         // eslint-disable-next-line no-magic-numbers
         author = authors.slice(0, 3).map(auth => auth.substring(0, 1)).join(sep) + (authors.length > 3 ? '+' : '')
     }
-    if (this.folding) author = this.clean(author, true)
     return this.$text(author)
   }
 
@@ -764,10 +788,10 @@ class PatternFormatter {
   /**
    * The first `n` (default: 3) words of the title, apply capitalization to first `m` (default: 0) of those.
    * @param n number of words to select
-   * @param m number of words to capitalize. `0` means no capitalization
+   * @param m number of words to capitalize. `0` means no words will be capitalized. Mind that existing capitals are not removed.
    */
   public $shorttitle(n: number = 3, m: number = 0) { // eslint-disable-line no-magic-numbers, @typescript-eslint/no-inferrable-types
-    const words = this.titleWords(this.item.title, { skipWords: true, asciiOnly: true})
+    const words = this.titleWords(this.item.title, { skipWords: true, transliterate: true})
     if (!words) return this.$text('')
 
     return this.$text(words.slice(0, n).map((word, i) => i < m ? word.charAt(0).toUpperCase() + word.slice(1) : word).join(' '))
@@ -776,7 +800,7 @@ class PatternFormatter {
   /**
    * The first `n` words of the title, apply capitalization to first `m` of those
    * @param n number of words to select
-   * @param m number of words to capitalize. `0` means no capitalization
+   * @param m number of words to capitalize. `0` means no words will be capitalized. Mind that existing capitals are not removed.
    */
   public $veryshorttitle(n: number = 1, m: number = 0) { // eslint-disable-line no-magic-numbers, @typescript-eslint/no-inferrable-types
     return this.$shorttitle(n, m)
@@ -846,28 +870,33 @@ class PatternFormatter {
     return this.$text((this.titleWords(this.item.title, { skipWords: true }) || []).join(' '))
   }
 
-  /** turn auto-cleaning on/off */
-  public $clean(enabled: boolean) {
-    this.folding = enabled
-    return this
-  }
-
-  /** turn auto-cleaning on/off */
-  public $fold(enabled: boolean) {
-    this.folding = enabled
-    return this
+  /**
+   * a pseudo-function that sets the citekey disambiguation infix using an <a href="https://www.npmjs.com/package/sprintf-js">sprintf-js</a> format spec
+   * for when a key is generated that already exists. The infix charachter appears at the place of this function of the formula instead of at the and (as postfix does).
+   * You *must* include *exactly one* of the placeholders `%(n)s` (number), `%(a)s` (alpha, lowercase) or `%(A)s` (alpha, uppercase).
+   * For the rest of the disambiguator you can use things like padding and extra text as sprintf-js allows. With start set to `1` the disambiguator is always included,
+   * even if there is no need for it when no duplicates exist. The default  format is `%(a)s`.
+   * @param format sprintf-style format template
+   * @param start start value for postfix
+   */
+  public $infix(format='%(a)s', start=0) {
+    this.postfix.template = format
+    this.postfix.offset = start
+    return this.$text(this.postfix.marker)
   }
 
   /**
    * a pseudo-function that sets the citekey disambiguation postfix using an <a href="https://www.npmjs.com/package/sprintf-js">sprintf-js</a> format spec
    * for when a key is generated that already exists. Does not add any text to the citekey otherwise.
    * You *must* include *exactly one* of the placeholders `%(n)s` (number), `%(a)s` (alpha, lowercase) or `%(A)s` (alpha, uppercase).
-   * For the rest of the disambiguator you can use things like padding and extra text as sprintf-js allows. With `+1` the disambiguator is always included,
+   * For the rest of the disambiguator you can use things like padding and extra text as sprintf-js allows. With start set to `1` the disambiguator is always included,
    * even if there is no need for it when no duplicates exist. The default  format is `%(a)s`.
    * @param format sprintf-style format template
+   * @param start start value for postfix
    */
   public $postfix(format='%(a)s', start=0) {
-    this.postfix = { format, start }
+    this.postfix.template = format
+    this.postfix.offset = start
     return this.$text('')
   }
 
@@ -1090,7 +1119,7 @@ class PatternFormatter {
     return this.$text(this.chunk.toLowerCase())
   }
 
-  /** Forces the text inserted by the field marker to be in uppercase. For example, `[auth:upper]` expands the last name of the first author in uppercase. */
+  /** Forces the text inserted by the field marker to be in uppercase. For example, `auth.upper` expands the last name of the first author in uppercase. */
   public _upper() {
     return this.$text(this.chunk.toUpperCase())
   }
@@ -1100,7 +1129,7 @@ class PatternFormatter {
    * `about:config` under the key `extensions.zotero.translators.better-bibtex.skipWords` as a comma-separated,
    * case-insensitive list of words.
    *
-   * If you want to strip words like 'Jr.' from names, you could use something like `[Auth:nopunct:skipwords:fold]`
+   * If you want to strip words like 'Jr.' from names, you could use something like `Auth.nopunct.skipwords.fold`
    * after adding `jr` to the skipWords list.
    * Note that this filter is always applied if you use `title` (which is different from `Title`) or `shorttitle`.
    */
@@ -1122,8 +1151,8 @@ class PatternFormatter {
       }
     }
     */
-
-    return this.$text(this.chunk.split(/\s+/).filter(word => !this.skipWords.has(word.toLowerCase())).join(' ').trim())
+    const words = this.titleWords(this.chunk, { skipWords: true })
+    return this.$text(words ? words.join(' ') : '')
   }
 
   /**
@@ -1203,7 +1232,11 @@ class PatternFormatter {
 
   /** Treat ideaographs as individual words */
   public _splitIdeographs() {
-    return this.$text(this.chunk.replace(script.han, ' $1 ').trim())
+    return this.$text(this.chunk.replace(script.cjk, ' $1 ').trim())
+  }
+  /** Treat ideaographs as individual words */
+  public _ideographs() {
+    return this.$text(this.chunk.replace(script.cjk, ' $1 ').trim())
   }
 
   /** word segmentation for Chinese items. Uses substantial memory; must be enabled under Preferences -> Better BibTeX -> Advanced -> Citekeys */
@@ -1222,6 +1255,11 @@ class PatternFormatter {
   public _clean() {
     if (!this.chunk) return this
     return this.$text(this.clean(this.chunk, true))
+  }
+
+  /** transliterates the citation key to pinyin */
+  public _pinyin() {
+    return this.$text(pinyin(this.chunk))
   }
 
   /**
@@ -1255,7 +1293,7 @@ class PatternFormatter {
 
       case 'zh':
       case 'chinese':
-        if (Preference.kuroshiro && kuroshiro.enabled) str = pinyin(str)
+        str = pinyin(str)
         break
 
       case 'ja':
@@ -1282,27 +1320,56 @@ class PatternFormatter {
     return this.transliterate(str).replace(allow_spaces ? this.re.unsafechars_allow_spaces : this.re.unsafechars, '').trim()
   }
 
-  private titleWords(title, options: { asciiOnly?: boolean, skipWords?: boolean} = {}): string[] {
+  private titleWords(title, options: { transliterate?: boolean, skipWords?: boolean} = {}): string[] {
     if (!title) return null
 
-    title = this.innerText(title)
-
-    if (this.folding && options.asciiOnly && Preference.kuroshiro && kuroshiro.enabled) title = kuroshiro.convert(title, {to: 'romaji', mode: 'spaced'})
-
     // 551
-    let words: string[] = (Zotero.Utilities.XRegExp.matchChain(title, [this.re.word])
-      .map((word: string) => (this.folding && options.asciiOnly ? this.clean(word) : word).replace(/-/g, '')))
-      .filter((word: string) => word)
+    let words: string[] = Zotero.Utilities.XRegExp.matchChain(title, [this.re.word])
+      .map((word: string) => word.replace(/-/g, ''))
+      .filter((word: string) => word && !(options.skipWords && ucs2decode(word).length === 1 && !word.match(script.cjk)))
 
-    if (options.skipWords) words = words.filter((word: string) => !this.skipWords.has(word.toLowerCase()) && (ucs2decode(word).length > 1) || word.match(script.han))
+    // apply jieba.cut and flatten.
+    if (Preference.jieba && options.skipWords && this.item.transliterateMode === 'chinese') {
+      words = [].concat(...words.map((word: string) => jieba.cut(word)))
+      // remove CJK skipwords
+      words = words.filter((word: string) => !this.skipWords.has(word.toLowerCase()))
+    }
+
+    if (Preference.kuroshiro && kuroshiro.enabled && options.skipWords && this.item.transliterateMode === 'japanese') {
+      words = [].concat(...words.map((word: string) => kuroshiro.tokenize(word)))
+      // remove CJK skipwords
+      words = words.filter((word: string) => !this.skipWords.has(word.toLowerCase()))
+    }
+
+    if (options.transliterate) {
+      words = words.map((word: string) => {
+        if (this.item.transliterateMode) {
+          return this.transliterate(word)
+        }
+        else if (Preference.kuroshiro && kuroshiro.enabled) {
+          return this.transliterate(kuroshiro.convert(word, {to: 'romaji'}), 'minimal')
+        }
+        else if (Preference.jieba) {
+          return this.transliterate(pinyin(word), 'minimal')
+        }
+        else {
+          return this.transliterate(word)
+        }
+      })
+
+    }
+
+    // remove transliterated and non-CJK skipwords
+    if (options.skipWords) words = words.filter((word: string) => !this.skipWords.has(word.toLowerCase()))
+
     if (words.length === 0) return null
+
     return words
   }
 
   private innerText(str: string): string {
     if (!str) return ''
-    if (!this.DOMParser) this.DOMParser = new DOMParser
-    return this.DOMParser.parseFromString(`<span>${str}</span>`, 'text/html').documentElement.textContent
+    return innerText(parseFragment(`<span>${str}</span>`))
   }
 
   private stripQuotes(name: string): string {

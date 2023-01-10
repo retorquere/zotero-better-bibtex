@@ -92,7 +92,8 @@
     "type": "number",
     "default": 5,
     "affects": [],
-    "var": "autoExportDelay"
+    "var": "autoExportDelay",
+    "label": "Delay auto-export for"
   },
   {
     "name": "autoExportIdleWait",
@@ -127,7 +128,8 @@
     "type": "number",
     "default": 0,
     "affects": [],
-    "var": "autoPinDelay"
+    "var": "autoPinDelay",
+    "label": "Automatically pin citation key after"
   },
   {
     "name": "automaticTags",
@@ -274,7 +276,7 @@
     "default": "\u200bauth.lower + shorttitle(3,3) + year",
     "affects": [],
     "var": "citekeyFormat",
-    "label": "Citation key format"
+    "label": "Citation key formula"
   },
   {
     "name": "citekeyFormatBackup",
@@ -291,6 +293,13 @@
     "affects": [],
     "var": "citekeySearch",
     "label": "Enable citation key search"
+  },
+  {
+    "name": "citekeyUnsafeChars",
+    "type": "string",
+    "default": "\\\"#%'(),={}~",
+    "affects": [],
+    "var": "citekeyUnsafeChars"
   },
   {
     "name": "csquotes",
@@ -569,7 +578,8 @@
       "minimal-packages": "Minimize additional latex packages required",
       "conservative": "Minimize the number of switches between math-mode and text-mode",
       "text": "Prefer text-mode replacements",
-      "math": "Prefer math-mode replacements"
+      "math": "Prefer math-mode replacements",
+      "creator": "Add braces to accented characters to assist simple latex parsers"
     }
   },
   {

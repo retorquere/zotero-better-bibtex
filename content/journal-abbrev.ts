@@ -57,7 +57,7 @@ export const JournalAbbrev = new class { // eslint-disable-line @typescript-esli
     let abbrev = ''
     let journal: string
     const zotero_item = !!(item._objectType) // eslint-disable-line no-underscore-dangle
-    if (!zotero_item) item = simplify(Object.create(item))
+    if (!zotero_item) item = simplify(Object.create(item), { creators: false, scrub: false }) // don't mess with the serialized object, Zotero needs it intact
 
     if (mode.startsWith('abbrev')) {
       if (zotero_item) {

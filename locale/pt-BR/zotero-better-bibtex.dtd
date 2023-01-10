@@ -1,3 +1,5 @@
+<!ENTITY better-bibtex.seconds "seconds">
+
 <!ENTITY better-bibtex.FirstRun.title "Bem-vindo ao Better BibTeX para Zotero">
 <!ENTITY better-bibtex.FirstRun.welcome "Better BibTeX para Zotero (ou simplesmente BBT) procura tornar Zotero mais útil para tradicionalistas do LaTeX e do Markdown. Há muitas opções para configurar no BBT -- dê uma olhada nas preferências se estiver curioso -- mas vamos acertrar o básico com algumas escolhas simples.">
 
@@ -56,6 +58,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.auto-export.idle "Quando ocioso">
 <!ENTITY better-bibtex.Preferences.auto-export.immediate "Imediatamente">
 <!ENTITY better-bibtex.Preferences.auto-export.off "Desativado">
+<!ENTITY better-bibtex.Preferences.auto-export.delay "Delay auto-export for">
 <!ENTITY better-bibtex.Preferences.auto-export.run "Exportar agora">
 <!ENTITY better-bibtex.Preferences.auto-export.remove "Remover">
 <!ENTITY better-bibtex.Preferences.auto-export.collection "Coleção">
@@ -76,9 +79,10 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.citekey.citekeys "Chaves de citação">
 <!ENTITY better-bibtex.Preferences.citekey.fold "Força chave de citação em texto puro">
 <!ENTITY better-bibtex.Preferences.citekey.search "Enable citation key search">
-<!ENTITY better-bibtex.Preferences.citekey.format "Formato da chave de citação">
+<!ENTITY better-bibtex.Preferences.citekey.format "Citation key formula">
 <!ENTITY better-bibtex.Preferences.citekey.format.new "New citation key format">
 <!ENTITY better-bibtex.Preferences.citekey.format.backup "Previous citation key format with error">
+<!ENTITY better-bibtex.Preferences.citekey.autoPinDelay "Automatically pin citation key after">
 
 <!ENTITY better-bibtex.Preferences.export.quickCopy "Quick-Copy">
 <!ENTITY better-bibtex.Preferences.export.quickCopy.explanation "Quick-Copy/drag-and-drop citations">
@@ -112,6 +116,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.citekey.AUXScanner "BibTeX AUX/Markdown scanner">
 <!ENTITY better-bibtex.Preferences.citekey.AUXScanner.import "When scanning an AUX file, attempt to import entries from the attached bib file when their citation keys are not in Zotero">
 <!ENTITY better-bibtex.Preferences.importPrefs "Import BetterBibTeX preferences...">
+<!ENTITY better-bibtex.Preferences.exportPrefs "Export BetterBibTeX preferences...">
 
 <!ENTITY better-bibtex.Preferences.advanced "Avançado">
 <!ENTITY better-bibtex.Preferences.advanced.warning "Estas opções afetam o desempenho e podem causar falhas na exportação. Seja cuidadoso.">
@@ -209,6 +214,7 @@ If you have this on, and you experience any problem that is not the cache gettin
 <!ENTITY better-bibtex.Preferences.export.map-unicode "When converting to plain-text latex commands:">
 <!ENTITY better-bibtex.Preferences.export.map-unicode.minimal-packages "Minimize additional latex packages required">
 <!ENTITY better-bibtex.Preferences.export.map-unicode.conservative "Minimize the number of switches between math-mode and text-mode">
+<!ENTITY better-bibtex.Preferences.export.map-unicode.creator "Add braces to accented characters to assist simple latex parsers">
 <!ENTITY better-bibtex.Preferences.export.map-unicode.text "Prefer text-mode replacements">
 <!ENTITY better-bibtex.Preferences.export.map-unicode.math "Prefer math-mode replacements">
 
