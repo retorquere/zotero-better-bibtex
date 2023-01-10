@@ -276,8 +276,6 @@ class Item {
   }
 }
 
-// https://tex.stackexchange.com/questions/408530/what-characters-are-allowed-to-use-as-delimiters-for-bibtex-keys
-const unsafechars = /["#%'(),=\\{}~\s]/g
 class PatternFormatter {
   public chunk = ''
   public citekey = ''
@@ -290,8 +288,8 @@ class PatternFormatter {
   }
 
   private re = {
-    unsafechars_allow_spaces: new RegExp(unsafechars.source.replace(/\\s/, ''), 'g'),
-    unsafechars,
+    unsafechars_allow_spaces: new RegExp(`[\\\\${Preference.citekeyUnsafeChars}]`, 'g'),
+    unsafechars: new RegExp(`[\\\\${Preference.citekeyUnsafeChars}\\s]`, 'g'),
     alphanum: Zotero.Utilities.XRegExp('[^\\p{L}\\p{N}]'),
     punct: Zotero.Utilities.XRegExp('\\p{Pe}|\\p{Pf}|\\p{Pi}|\\p{Po}|\\p{Ps}', 'g'),
     dash: Zotero.Utilities.XRegExp('\\p{Pd}|\u2500|\uFF0D|\u2015', 'g'), // additional pseudo-dashes from #1880

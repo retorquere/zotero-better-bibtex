@@ -28,6 +28,7 @@
   "citekeyFormat": "\u200bauth.lower + shorttitle(3,3) + year",
   "citekeyFormatBackup": "",
   "citekeySearch": true,
+  "citekeyUnsafeChars": "\"#%'(),={}~",
   "csquotes": "",
   "exportBibTeXStrings": "off",
   "exportBraceProtection": true,

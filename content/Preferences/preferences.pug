@@ -67,6 +67,8 @@ bbt:doc Hyperlink to select items in your library
 preference(name="extensions.zotero.translators.better-bibtex.citekeyFormat" bbt:affects="" type="string" default="\u200bauth.lower + shorttitle(3,3) + year")
 bbt:doc Set the pattern used to generate citation keys. The format of the keys is documented [here]({{ ref . "citing" }}).
 preference(name="extensions.zotero.translators.better-bibtex.citekeyFormatBackup" bbt:affects="" type="string" default="")
+// https://tex.stackexchange.com/questions/408530/what-characters-are-allowed-to-use-as-delimiters-for-bibtex-keys
+preference(name="extensions.zotero.translators.better-bibtex.citekeyUnsafeChars" bbt:affects="" type="string" default="\"#%'(),={}~")
 
 preference(name="extensions.zotero.translators.better-bibtex.citekeySearch" bbt:affects="" type="bool" default="true")
 bbt:doc Enable searching on citation keys. Slows down startup on very large libraries. Requires Zotero restart to enable/disable.

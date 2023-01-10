@@ -195,6 +195,9 @@
             "citekeySearch": {
               "type": "boolean"
             },
+            "citekeyUnsafeChars": {
+              "type": "string"
+            },
             "csquotes": {
               "type": "string"
             },
