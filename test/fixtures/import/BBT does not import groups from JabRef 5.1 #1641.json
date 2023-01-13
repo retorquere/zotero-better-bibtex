@@ -28,9 +28,12 @@
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "options": {},
+    "options": {
+      "exportNotes": true
+    },
     "preferences": {
-      "citekeyFormat": "auth + year"
+      "citekeyFormat": "auth + year",
+      "citekeyFormatBackup": "auth + year"
     }
   },
   "items": [
@@ -192,7 +195,6 @@
       "date": "2012",
       "extra": [
         "Citation Key: Bogadottir2012",
-        "tex.crossref: Hornborg2012",
         "tex.owner: napoletano",
         "tex.timestamp: 2020-09-12"
       ],
@@ -315,7 +317,6 @@
       "date": "2012",
       "extra": [
         "Citation Key: Clark2012",
-        "tex.crossref: Hornborg2012",
         "tex.owner: napoletano",
         "tex.timestamp: 2020-09-12"
       ],
@@ -438,7 +439,6 @@
       "date": "2012",
       "extra": [
         "Citation Key: Clark2012a",
-        "tex.crossref: Hornborg2012",
         "tex.owner: napoletano",
         "tex.timestamp: 2020-09-12"
       ],
@@ -556,7 +556,6 @@
       "date": "2012",
       "extra": [
         "Citation Key: Hakansson2012",
-        "tex.crossref: Hornborg2012",
         "tex.owner: napoletano",
         "tex.timestamp: 2020-09-12"
       ],
@@ -674,7 +673,6 @@
       "date": "2012",
       "extra": [
         "Citation Key: Hermele2012",
-        "tex.crossref: Hornborg2012",
         "tex.owner: napoletano",
         "tex.timestamp: 2020-09-12"
       ],
@@ -913,7 +911,6 @@
       "date": "2012",
       "extra": [
         "Citation Key: Hornborg2012a",
-        "tex.crossref: Hornborg2012",
         "tex.owner: napoletano",
         "tex.timestamp: 2020-09-12"
       ],
@@ -1031,7 +1028,6 @@
       "date": "2012",
       "extra": [
         "Citation Key: Hornborg2012b",
-        "tex.crossref: Hornborg2012",
         "tex.owner: napoletano",
         "tex.timestamp: 2020-09-12"
       ],
@@ -1159,7 +1155,6 @@
       "date": "2012",
       "extra": [
         "Citation Key: Isson2012",
-        "tex.crossref: Hornborg2012",
         "tex.owner: napoletano",
         "tex.timestamp: 2020-09-12"
       ],
@@ -1282,7 +1277,6 @@
       "date": "2012",
       "extra": [
         "Citation Key: Jerneck2012",
-        "tex.crossref: Hornborg2012",
         "tex.owner: napoletano",
         "tex.timestamp: 2020-09-12"
       ],
@@ -1400,7 +1394,6 @@
       "date": "2012",
       "extra": [
         "Citation Key: Jonsson2012",
-        "tex.crossref: Hornborg2012",
         "tex.owner: napoletano",
         "tex.timestamp: 2020-09-12"
       ],
@@ -1523,7 +1516,6 @@
       "date": "2012",
       "extra": [
         "Citation Key: Jorgenson2012",
-        "tex.crossref: Hornborg2012",
         "tex.owner: napoletano",
         "tex.timestamp: 2020-09-12"
       ],
@@ -1641,7 +1633,6 @@
       "date": "2012",
       "extra": [
         "Citation Key: Karlsson2012",
-        "tex.crossref: Hornborg2012",
         "tex.owner: napoletano",
         "tex.timestamp: 2020-09-12"
       ],
@@ -1759,7 +1750,6 @@
       "date": "2012",
       "extra": [
         "Citation Key: Malm2012",
-        "tex.crossref: Hornborg2012",
         "tex.owner: napoletano",
         "tex.timestamp: 2020-09-12"
       ],
@@ -1877,7 +1867,6 @@
       "date": "2012",
       "extra": [
         "Citation Key: Oestberg2012",
-        "tex.crossref: Hornborg2012",
         "tex.owner: napoletano",
         "tex.timestamp: 2020-09-12"
       ],
@@ -1995,7 +1984,6 @@
       "date": "2012",
       "extra": [
         "Citation Key: Widengard2012",
-        "tex.crossref: Hornborg2012",
         "tex.owner: napoletano",
         "tex.timestamp: 2020-09-12"
       ],
@@ -2113,7 +2101,6 @@
       "date": "2012",
       "extra": [
         "Citation Key: Widgren2012",
-        "tex.crossref: Hornborg2012",
         "tex.owner: napoletano",
         "tex.timestamp: 2020-09-12"
       ],

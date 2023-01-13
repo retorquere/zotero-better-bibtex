@@ -28,8 +28,19 @@
           "creatorType": "author",
           "firstName": "Lester M.",
           "lastName": "Salamon"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "Lester M.",
+          "lastName": "Salamon"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "S. Wojciech",
+          "lastName": "Sokolowski"
         }
       ],
+      "date": "2004",
       "extra": [
         "Citation Key: El-HusseiniToeplerSalamon:2004",
         "Section: 12"
@@ -38,7 +49,9 @@
       "itemType": "bookSection",
       "pages": "227\u201332",
       "publicationTitle": "Global civil society: Dimensions of the nonprofit sector",
-      "title": "Lebanon"
+      "publisher": "Kumarian Press",
+      "title": "Lebanon",
+      "volume": "2"
     },
     {
       "citationKey": "SalamonSokolowski:2004",

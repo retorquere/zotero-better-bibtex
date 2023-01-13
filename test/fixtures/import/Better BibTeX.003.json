@@ -6,7 +6,8 @@
       "exportNotes": true
     },
     "preferences": {
-      "citekeyFormat": "[auth:lower][shorttitle3_3][year]"
+      "citekeyFormat": "auth + year",
+      "citekeyFormatBackup": "auth + year"
     }
   },
   "items": [
@@ -22,8 +23,19 @@
           "creatorType": "author",
           "firstName": "Second",
           "lastName": "Author"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "First",
+          "lastName": "Editor"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "Second",
+          "lastName": "Editor"
         }
       ],
+      "date": "2006-10",
       "extra": [
         "Citation Key: author:06"
       ],
