@@ -541,8 +541,18 @@ export class ZoteroItem {
       this.errors.push({ message: `Don't know what Zotero type to make of '${this.bibtex.type}' for ${this.bibtex.key ? `@${this.bibtex.key}` : 'unnamed item'}, importing as ${this.type = 'document'}` })
       this.hackyFields.push(`tex.entrytype: ${this.bibtex.type}`)
     }
-    if (this.type === 'book' && (this.bibtex.fields.title || []).length && (this.bibtex.fields.booktitle || []).length) this.type = 'bookSection'
-    if (this.type === 'journalArticle' && (this.bibtex.fields.booktitle || []).length && this.bibtex.fields.booktitle[0].match(/proceeding/i)) this.type = 'conferencePaper'
+
+    log.debug('crossref:', this.bibtex)
+    if (
+      this.type === 'book'
+      && this.bibtex.fields.title?.length
+      && this.bibtex.fields.booktitle?.length
+      && !this.bibtex.crossref.donated.includes('booktitle')) this.type = 'bookSection'
+
+    if (
+      this.type === 'journalArticle'
+      && this.bibtex.fields.booktitle?.length
+      && this.bibtex.fields.booktitle.join('\n').match(/proceeding/i)) this.type = 'conferencePaper'
 
     if (!valid.type[this.type]) this.error(`import error: unexpected item ${this.bibtex.key} of type ${this.type}`)
     this.validFields = valid.field[this.type]
@@ -637,6 +647,7 @@ export class ZoteroItem {
 
       case 'book':
         if ((this.bibtex.fields.title || []).includes(value)) return true
+        if (this.bibtex.fields.title && this.bibtex.crossref.donated.includes('booktitle')) return true
         if (!this.item.title) return this.set('title', value)
         break
     }

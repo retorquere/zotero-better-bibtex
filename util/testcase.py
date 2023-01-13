@@ -69,8 +69,8 @@ assert os.path.exists(args.data),  f'{args.data} does not exist'
 g = Github(os.environ['GITHUB_TOKEN'])
 repo = g.get_repo('retorquere/zotero-better-bibtex')
 issue = repo.get_issue(int(args.issue))
-issue.title = re.sub(r'^\[[^\]]+\]\s*', '', issue.title)
-args.title = sanitize_filename(f'{issue.title} #{issue.number}'.strip())
+args.title = re.sub(r'^\[[^\]]+\]', '', issue.title).strip()
+args.title = sanitize_filename(f'{args.title} #{issue.number}'.strip())
 
 # clean lib before putting it in place
 assert call(["./util/clean-lib.ts", args.data, '--save'], cwd=root) == 0, 'clean failed'
