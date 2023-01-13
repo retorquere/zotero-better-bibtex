@@ -6,7 +6,8 @@
       "exportNotes": true
     },
     "preferences": {
-      "citekeyFormat": "auth + year"
+      "citekeyFormat": "auth + year",
+      "citekeyFormatBackup": "auth + year"
     }
   },
   "items": [
@@ -16281,12 +16282,48 @@
     },
     {
       "citationKey": "NguyenETAL:DiversityAIJ",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Tuan Anh",
+          "lastName": "Nguyen"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Minh Binh",
+          "lastName": "Do"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Alfonso",
+          "lastName": "Gerevini"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Ivan",
+          "lastName": "Serina"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Biplav",
+          "lastName": "Srivastava"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Subbarao",
+          "lastName": "Kambhampati"
+        }
+      ],
+      "date": "2012",
       "extra": [
-        "Citation Key: NguyenETAL:DiversityAIJ",
-        "tex.crossref: journals/ai/NguyenDGSSK12"
+        "Citation Key: NguyenETAL:DiversityAIJ"
       ],
       "itemID": 658,
-      "itemType": "journalArticle"
+      "itemType": "journalArticle",
+      "pages": "1\u201331",
+      "title": "Generating diverse plans to handle unknown and partially known user preferences",
+      "url": "http://dx.doi.org/10.1016/j.artint.2012.05.005",
+      "volume": "190"
     },
     {
       "citationKey": "NguyenRao01",
