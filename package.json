@@ -95,7 +95,7 @@
     "xregexp": "^5.1.1"
   },
   "devDependencies": {
-    "@retorquere/bibtex-parser": "^6.4.6",
+    "@retorquere/bibtex-parser": "^6.4.7",
     "@retorquere/zotero-sync": "^1.0.23",
     "@types/bluebird": "^3.5.38",
     "@types/lokijs": "^1.5.7",
@@ -116,7 +116,7 @@
     "dom-parser": "^0.1.6",
     "dotenv": "^16.0.3",
     "ejs": "^3.1.8",
-    "esbuild": "^0.16.17",
+    "esbuild": "^0.17.0",
     "eslint": "^8.31.0",
     "estrace": "^4.1.1",
     "eta": "^1.13.0",
