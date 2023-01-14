@@ -821,6 +821,7 @@ export class ZoteroItem {
   }
 
   // "files (Mendeley)/filename(Qiqqa)" will import the same as "file" but won't be treated as verbatim by the bibtex parser. Needed because the people at Mendeley/Qiqqa can't be bothered to read the manual apparently.
+  protected $pdf(value: string): boolean { return this.$file(value) }
   protected $files(value: string): boolean { return this.$file(value) }
   protected $filename(value: string): boolean { return this.$file(value) }
   protected $file(value: string): boolean {
