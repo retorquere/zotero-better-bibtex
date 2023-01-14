@@ -64,6 +64,7 @@ Feature: Import
 
     Examples:
       | file                                                                                   | references |
+      | Qiqqa                                                                                  | 2          |
       | Import from Clipboard stopped working #2377                                            | 1          |
       | Child items that use the crossref field do not have their parent fields imported #2373 | 3          |
       | accessDate must be ISO date #2376                                                      | 2          |

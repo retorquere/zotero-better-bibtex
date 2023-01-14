@@ -82,7 +82,7 @@
   "strings": "",
   "stringsOverride": "",
   "testing": false,
-  "verbatimFields": "url,doi,file,ids,eprint,/^verb[a-z]$/,groups,/^citeulike-linkout-[0-9]+$/, /^bdsk-url-[0-9]+$/",
+  "verbatimFields": "url,doi,file,pdf,ids,eprint,/^verb[a-z]$/,groups,/^citeulike-linkout-[0-9]+$/, /^bdsk-url-[0-9]+$/",
   "warnBulkModify": 10,
   "warnTitleCased": false
 }
