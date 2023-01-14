@@ -752,6 +752,9 @@ export class ZoteroItem {
     for (const mesh of this.bibtex.fields.mesh || []) {
       tags = tags.concat((mesh || '').trim().split(/\s*;\s*/).filter(tag => tag)) // eslint-disable-line @typescript-eslint/no-unsafe-return
     }
+    for (const tag of this.bibtex.fields.tags || []) {
+      tags = tags.concat((tag || '').trim().split(/\s*;\s*/).filter(tag => tag)) // eslint-disable-line @typescript-eslint/no-unsafe-return
+    }
     tags = tags.sort()
     tags = tags.filter((item, pos, ary) => !pos || (item !== ary[pos - 1]))
 
@@ -759,6 +762,7 @@ export class ZoteroItem {
     return true
   }
   protected $keyword(): boolean { return this.$keywords() }
+  protected $tags(): boolean { return this.$keywords() }
   protected $mesh(): boolean { return this.$keywords() } // bibdesk
 
   protected $date(): boolean {
