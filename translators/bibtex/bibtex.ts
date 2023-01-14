@@ -753,7 +753,7 @@ export class ZoteroItem {
       tags = tags.concat((mesh || '').trim().split(/\s*;\s*/).filter(tag => tag)) // eslint-disable-line @typescript-eslint/no-unsafe-return
     }
     for (const tag of this.bibtex.fields.tags || []) {
-      tags = tags.concat((tag || '').trim().split(/\s*;\s*/).filter(tag => tag)) // eslint-disable-line @typescript-eslint/no-unsafe-return
+      tags = tags.concat((tag || '').trim().split(/\s*;\s*/).filter(t => t)) // eslint-disable-line @typescript-eslint/no-unsafe-return
     }
     tags = tags.sort()
     tags = tags.filter((item, pos, ary) => !pos || (item !== ary[pos - 1]))
