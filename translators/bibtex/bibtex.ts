@@ -816,9 +816,9 @@ export class ZoteroItem {
     if (overwrite || !this.attachments[att.path]) this.attachments[att.path] = att
   }
 
-  // "files" will import the same as "file" but won't be treated as verbatim by the bibtex parser. Needed because the people at Mendeley can't be bothered
-  // to read the manual apparently.
+  // "files (Mendeley)/filename(Qiqqa)" will import the same as "file" but won't be treated as verbatim by the bibtex parser. Needed because the people at Mendeley/Qiqqa can't be bothered to read the manual apparently.
   protected $files(value: string): boolean { return this.$file(value) }
+  protected $filename(value: string): boolean { return this.$file(value) }
   protected $file(value: string): boolean {
     this.addAttachment({ path: value }) // fixes #2295
 
