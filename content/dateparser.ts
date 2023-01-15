@@ -15,11 +15,20 @@ export type ParsedDate = {
   year?: number
   month?: number
   day?: number
+
+  hour?: number
+  minute?: number
+  seconds?: number
+  offset?: number
+
   orig?: ParsedDate
   verbatim?: string
+
   from?: ParsedDate
   to?: ParsedDate
+
   dates?: ParsedDate[]
+
   season?: SeasonID
   uncertain?: boolean
   approximate?: boolean
@@ -58,13 +67,13 @@ function doubt(date: ParsedDate, state: { uncertain: boolean, approximate: boole
 }
 
 function normalize_edtf(date: any): ParsedDate {
-  let year, month, day
+  let year, month, day, hour, minute, seconds
 
   switch (date.type) {
     case 'Date':
-      [ year, month, day ] = date.values
+      [ year, month, day, hour, minute, seconds ] = date.values
       if (typeof month === 'number') month += 1
-      return doubt({ type: 'date', year, month, day}, {approximate: date.approximate || date.unspecified, uncertain: date.uncertain })
+      return doubt({ type: 'date', year, month, day, hour, minute, seconds, offset: date.offset }, {approximate: date.approximate || date.unspecified, uncertain: date.uncertain })
 
     case 'Interval':
       // eslint-disable-next-line no-magic-numbers
@@ -154,6 +163,39 @@ export function parse(value: string): ParsedDate {
   return date
 }
 
+function parseEDTF(value: string): ParsedDate {
+  // 2378 + 2275
+  let date = value
+
+  let m: RegExpMatchArray
+  if (m = /^(\d+)[^\d]+(\d+)[^\d]+(\d+)[^\d]+(\d{2}:\d{2}:\d{2}(?:[.]\d+)?)(.*)/.exec(date)) {
+    const [, year, month, day, time, tz] = m
+    date = `${year.padStart(4, '0')}-${month.padStart(2, '0')}-${day.padStart(2, '0')}T${time}${(tz || '').replace(/\s/g, '')}` // eslint-disable-line no-magic-numbers
+  }
+
+  try {
+    // https://github.com/inukshuk/edtf.js/issues/5
+    const edtf = normalize_edtf(EDTF.parse(upgrade_edtf(date.replace(/_|--/, '/'))))
+    if (edtf) return edtf
+  }
+  catch (err) {
+  }
+
+  try {
+    const edtf = normalize_edtf(EDTF.parse(edtfy(date
+      .normalize('NFC')
+      .replace(/\. /, ' ') // 8. july 2011
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+      .replace(months_re, _ => months[_.toLowerCase()] || _)
+    )))
+    if (edtf) return edtf
+  }
+  catch (err) {
+  }
+
+  return { verbatim: value }
+}
+
 function parseToDate(value: string, as_single_date: boolean): ParsedDate {
   value = (value || '').trim()
   let date: ParsedDate
@@ -167,8 +209,21 @@ function parseToDate(value: string, as_single_date: boolean): ParsedDate {
 
   if (value === '') return { type: 'open' }
 
-  // https://github.com/retorquere/zotero-better-bibtex/issues/2275
-  if (m = /^(\d{4}-\d{2}-\d{2})[ T]\d{2}:\d{2}:\d{2}/.exec(value)) value = m[1]
+  /*
+  const time: ParsedDate = {}
+  if (m = /[ T](\d{2}):(\d{2})(:(\d{2})?([A-Z]*\s?([+]\d+([.]\d+)?))?$/.exec(value)) {
+    const [match, h, m, , s, tz] = m
+    time.hour = parseInt(h)
+    time.minute = parseInt(m)
+    if (s) time.seconds = parseInt(s)
+    if (tz) time.timezone = tz.replace(/\s/g, '')
+
+    value = value.replace(match, '')
+  }
+  */
+
+  date = parseEDTF(value)
+  if (!date.verbatim) return date
 
   // https://forums.zotero.org/discussion/73729/name-and-year-import-issues-with-new-nasa-ads#latest
   if (m = (/^(-?[0-9]+)-00-00$/.exec(value) || /^(-?[0-9]+)\/00\/00$/.exec(value) || /^(-?[0-9]+-[0-9]+)-00$/.exec(value))) return parseToDate(m[1], true)
@@ -311,26 +366,6 @@ function parseToDate(value: string, as_single_date: boolean): ParsedDate {
 
   if (exactish.match(/^-?[0-9]{3,}$/)) {
     return doubt({ type: 'date', year: parseInt(exactish) }, state)
-  }
-
-  try {
-    // https://github.com/inukshuk/edtf.js/issues/5
-    const edtf = normalize_edtf(EDTF.parse(upgrade_edtf(stripTime(value.replace(/_|--/, '/')))))
-    if (edtf) return edtf
-  }
-  catch (err) {
-  }
-
-  try {
-    const edtf = normalize_edtf(EDTF.parse(edtfy(value
-      .normalize('NFC')
-      .replace(/\. /, ' ') // 8. july 2011
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      .replace(months_re, _ => months[_.toLowerCase()] || _)
-    )))
-    if (edtf) return edtf
-  }
-  catch (err) {
   }
 
   // https://github.com/retorquere/zotero-better-bibtex/issues/868

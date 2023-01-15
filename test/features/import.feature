@@ -53,9 +53,10 @@ Feature: Import
     Then the library should match "import/*-post.json"
 
   Scenario: Copy date-addeddate-modified menu option not working #2378
-    When I import 1 reference from "import/*.bib"
-    And I select the item with a field that contains "formal"
+    When I import 2 references from "import/*.bib"
+    And I select 2 items with a field that contains "formal"
     And I copy date-added/date-modified for the selected items from the extra field
+    And I wait 2 seconds
     Then the library should match "import/*.json"
 
   Scenario: Copy date-addeddate-modified from extra field regenerates citation key #2142
