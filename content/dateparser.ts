@@ -222,8 +222,7 @@ function parseToDate(value: string, as_single_date: boolean): ParsedDate {
   }
   */
 
-  date = parseEDTF(value)
-  if (!date.verbatim) return date
+  if (value.match(/[T ]/) && !(date = parseEDTF(value)).verbatim) return date
 
   // https://forums.zotero.org/discussion/73729/name-and-year-import-issues-with-new-nasa-ads#latest
   if (m = (/^(-?[0-9]+)-00-00$/.exec(value) || /^(-?[0-9]+)\/00\/00$/.exec(value) || /^(-?[0-9]+-[0-9]+)-00$/.exec(value))) return parseToDate(m[1], true)
@@ -367,6 +366,8 @@ function parseToDate(value: string, as_single_date: boolean): ParsedDate {
   if (exactish.match(/^-?[0-9]{3,}$/)) {
     return doubt({ type: 'date', year: parseInt(exactish) }, state)
   }
+
+  if (!(date = parseEDTF(value)).verbatim) return date
 
   // https://github.com/retorquere/zotero-better-bibtex/issues/868
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
