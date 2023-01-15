@@ -100,7 +100,7 @@ for (const lib of argv._) {
         if (item.attachments) {
           for (const att of item.attachments) {
             clean(att)
-            att.path = att.path.replace(/.*\/zotero\/storage\/[^/]+/, 'ATTACHMENT_KEY')
+            if (att.path) att.path = att.path.replace(/.*\/zotero\/storage\/[^/]+/, 'ATTACHMENT_KEY')
           }
         }
       }
