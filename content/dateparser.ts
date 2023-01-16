@@ -282,76 +282,73 @@ function parseToDate(value: string, as_single_date: boolean): ParsedDate {
     if (from.type === 'date' && to.type === 'date') return { type: 'interval', from, to }
   }
 
-  const state: ParsedDate = {}
-  const exactish = value
-    .replace(/(?:\s+|T)(\d{2}):(\d{2})(?::(\d{2}(?:[.]\d+)?)\s*(?:Z|([+-]\d{2}):?(\d{2})?)?)?$/, (match, H, M, S, offsetH, offsetM) => {
-      state.hour = parseInt(H)
-      state.minute = parseInt(M)
-      if (S) state.seconds = parseFloat(S)
-      if (offsetH) state.offset = 60 * parseInt(offsetH) // eslint-disable-line no-magic-numbers
-      if (offsetM) state.offset += parseInt(offsetM)
-      return ''
-    })
-    .replace(/[~?]+$/, match => {
-      if (match.indexOf('~') >= 0) state.approximate = true
-      if (match.indexOf('?') >= 0) state.uncertain = true
+  const time_doubt: ParsedDate = {}
+  const date_only = value
+    .replace(/(?:(?:\s+|T)(\d{2}):(\d{2})(?::(\d{2}(?:[.]\d+)?)\s*(?:Z|([+-]\d{2}):?(\d{2})?)?)?)?([~?]*)$/, (match, H, M, S, offsetH, offsetM, doubt) => {
+      time_doubt.hour = parseInt(H)
+      time_doubt.minute = parseInt(M)
+      if (S) time_doubt.seconds = parseFloat(S)
+      if (offsetH) time_doubt.offset = 60 * parseInt(offsetH) // eslint-disable-line no-magic-numbers
+      if (offsetM) time_doubt.offset += (offsetH[0] === '-' ? -1 : 1) * parseInt(offsetM)
+      if (doubt && doubt.indexOf('~') >= 0) time_doubt.approximate = true
+      if (doubt && doubt.indexOf('?') >= 0) time_doubt.uncertain = true
       return ''
     })
     .replace(/\s+/g, ' ')
 
   // these assume a sensible y/m/d format by default. There's no sane way to guess between y/d/m and y/m/d, and y/d/m is
   // just wrong. https://en.wikipedia.org/wiki/Date_format_by_country
-  if (m = /^(-?[0-9]{3,})([-\s/.])([0-9]{1,2})(\2([0-9]{1,2}))?$/.exec(exactish)) {
+  if (m = /^(-?[0-9]{3,})([-\s/.])([0-9]{1,2})(\2([0-9]{1,2}))?$/.exec(date_only)) {
     const [ , _year, , _month, , _day ] = m
     const year = parseInt(_year)
     const [day, month] = swap_day_month(parseInt(_day), parseInt(_month), true)
 
-    // if (!month && !day) return { type: 'date', year, ...state }
-    if (!day && has_valid_month(date = { type: 'date', year, month })) return Season.seasonize({...date, ...state})
-    if (is_valid_date(date = { type: 'date', year, month, day })) return {...date, ...state}
+    // if (!month && !day) return { type: 'date', year, ...time_doubt }
+    if (!day && has_valid_month(date = { type: 'date', year, month })) return Season.seasonize({...date, ...time_doubt})
+    if (is_valid_date(date = { type: 'date', year, month, day })) return {...date, ...time_doubt}
   }
 
   // https://github.com/retorquere/zotero-better-bibtex/issues/1112
-  if (m = /^([0-9]{1,2})\s+([0-9]{1,2})\s*,\s*([0-9]{4,})$/.exec(exactish)) {
+  if (m = /^([0-9]{1,2})\s+([0-9]{1,2})\s*,\s*([0-9]{4,})$/.exec(date_only)) {
     const [ , _day, _month, _year ] = m
     const year = parseInt(_year)
     const [day, month] = swap_day_month(parseInt(_day), parseInt(_month))
 
-    if (!month && !day) return { type: 'date', year, ...state }
-    if (!day && has_valid_month(date = { type: 'date', year, month })) return Season.seasonize({ ...date, ...state })
-    if (is_valid_date(date = { type: 'date', year, month, day })) return { ...date, ...state }
+    if (!month && !day) return { type: 'date', year, ...time_doubt }
+    if (!day && has_valid_month(date = { type: 'date', year, month })) return Season.seasonize({ ...date, ...time_doubt })
+    if (is_valid_date(date = { type: 'date', year, month, day })) return { ...date, ...time_doubt }
   }
 
-  if (m = /^([0-9]{1,2})([-\s/.])([0-9]{1,2})(\2([0-9]{3,}))$/.exec(exactish)) {
+  if (m = /^([0-9]{1,2})([-\s/.])([0-9]{1,2})(\2([0-9]{3,}))$/.exec(date_only)) {
     const [ , _day, , _month, , _year ] = m
     const year = parseInt(_year)
     const [day, month] = swap_day_month(parseInt(_day), parseInt(_month))
 
-    if (!month && !day) return { type: 'date', year, ...state }
-    if (!day && has_valid_month(date = { type: 'date', year, month })) return Season.seasonize({ ...date, ...state })
-    if (is_valid_date(date = { type: 'date', year, month, day })) return { ...date, ...state }
+    if (!month && !day) return { type: 'date', year, ...time_doubt }
+    if (!day && has_valid_month(date = { type: 'date', year, month })) return Season.seasonize({ ...date, ...time_doubt })
+    if (is_valid_date(date = { type: 'date', year, month, day })) return { ...date, ...time_doubt }
   }
 
-  if (m = /^([0-9]{1,2})[-\s/.]([0-9]{3,})$/.exec(exactish)) {
+  if (m = /^([0-9]{1,2})[-\s/.]([0-9]{3,})$/.exec(date_only)) {
     const [ , _month, _year ] = m
     const month = parseInt(_month)
     const year = parseInt(_year)
 
-    if (!month) return { type: 'date', year, ...state }
-    if (has_valid_month(date = { type: 'date', year, month })) return Season.seasonize({ ...date, ...state })
+    if (!month) return { type: 'date', year, ...time_doubt }
+    if (has_valid_month(date = { type: 'date', year, month })) return Season.seasonize({ ...date, ...time_doubt })
   }
 
-  if (m = /^([0-9]{3,})[-\s/.]([0-9]{1,2})$/.exec(exactish)) {
+  if (m = /^([0-9]{3,})[-\s/.]([0-9]{1,2})$/.exec(date_only)) {
     const [ , _year, _month ] = m
     const year = parseInt(_year)
     const month = parseInt(_month)
 
-    if (!month) return { type: 'date', year, ...state }
-    if (has_valid_month(date = { type: 'date', year, month })) return Season.seasonize({ ...date, ...state })
+    if (!month) return { type: 'date', year, ...time_doubt }
+    if (has_valid_month(date = { type: 'date', year, month })) return Season.seasonize({ ...date, ...time_doubt })
   }
 
-  if (exactish.match(/^-?[0-9]{3,}$/)) {
-    return { type: 'date', year: parseInt(exactish), ...state }
+  if (date_only.match(/^-?[0-9]{3,}$/)) {
+    return { type: 'date', year: parseInt(date_only), ...time_doubt }
   }
 
   if (!(date = parseEDTF(value)).verbatim) return date
