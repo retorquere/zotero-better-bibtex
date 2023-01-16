@@ -137,6 +137,10 @@ export class ZoteroPane {
     }
   }
 
+  public padNum(n: number, width: number): string {
+    return `${n || 0}`.padStart(width, '0')
+  }
+
   public async patchDates(): Promise<void> {
     const items = Zotero.getActiveZoteroPane().getSelectedItems()
     const mapping: Record<string, string> = {}
@@ -160,10 +164,9 @@ export class ZoteroPane {
             const date = DateParser.parse(v.value)
             if (date.type === 'date' && date.day) {
               delete extra.extraFields.tex[k]
-              const year = `${date.year}`.padStart(4, '0') // eslint-disable-line no-magic-numbers
-              const month = `${date.month}`.padStart(2, '0')
-              const day = `${date.day}`.padStart(2, '0')
-              item.setField(mapping[k], `${year}-${month}-${day}`)
+              const time = typeof date.seconds === 'number'
+              const timestamp = new Date(date.year, date.month - 1, date.day, time ? date.hour : 0, time ? date.minute - (date.offset || 0): 0, time ? date.seconds : 0, 0)
+              item.setField(mapping[k], timestamp.toISOString())
               save = true
             }
           }

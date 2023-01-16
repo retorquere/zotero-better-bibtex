@@ -15,11 +15,20 @@ export type ParsedDate = {
   year?: number
   month?: number
   day?: number
+
+  hour?: number
+  minute?: number
+  seconds?: number
+  offset?: number
+
   orig?: ParsedDate
   verbatim?: string
+
   from?: ParsedDate
   to?: ParsedDate
+
   dates?: ParsedDate[]
+
   season?: SeasonID
   uncertain?: boolean
   approximate?: boolean
@@ -51,20 +60,14 @@ const Season = new class {
   }
 }
 
-function doubt(date: ParsedDate, state: { uncertain: boolean, approximate: boolean }): ParsedDate {
-  if (state.uncertain) date.uncertain = true
-  if (state.approximate) date.approximate = true
-  return date
-}
-
 function normalize_edtf(date: any): ParsedDate {
-  let year, month, day
+  let year, month, day, hour, minute, seconds
 
   switch (date.type) {
     case 'Date':
-      [ year, month, day ] = date.values
+      [ year, month, day, hour, minute, seconds ] = date.values
       if (typeof month === 'number') month += 1
-      return doubt({ type: 'date', year, month, day}, {approximate: date.approximate || date.unspecified, uncertain: date.uncertain })
+      return { type: 'date', year, month, day, hour, minute, seconds, offset: date.offset, approximate: date.approximate || date.unspecified, uncertain: date.uncertain }
 
     case 'Interval':
       // eslint-disable-next-line no-magic-numbers
@@ -128,10 +131,6 @@ function swap_day_month(day: number, month: number, fix_only = false): number[] 
   return [day, month]
 }
 
-function stripTime(date: string): string {
-  return date.replace(/(\s+|T)[0-9]{2}:[0-9]{2}(:[0-9]{2}([.][0-9]+)?(Z|\+[0-9]{2}:?[0-9]{2})?)?$/, '')
-}
-
 export function parse(value: string): ParsedDate {
   const date = parseToDate(value, false)
 
@@ -154,6 +153,39 @@ export function parse(value: string): ParsedDate {
   return date
 }
 
+function parseEDTF(value: string): ParsedDate {
+  // 2378 + 2275
+  let date = value
+
+  let m: RegExpMatchArray
+  if (m = /^(\d+)[^\d]+(\d+)[^\d]+(\d+)[^\d]+(\d{2}:\d{2}:\d{2}(?:[.]\d+)?)(.*)/.exec(date)) {
+    const [, year, month, day, time, tz] = m
+    date = `${year.padStart(4, '0')}-${month.padStart(2, '0')}-${day.padStart(2, '0')}T${time}${(tz || '').replace(/\s/g, '')}` // eslint-disable-line no-magic-numbers
+  }
+
+  try {
+    // https://github.com/inukshuk/edtf.js/issues/5
+    const edtf = normalize_edtf(EDTF.parse(upgrade_edtf(date.replace(/_|--/, '/'))))
+    if (edtf) return edtf
+  }
+  catch (err) {
+  }
+
+  try {
+    const edtf = normalize_edtf(EDTF.parse(edtfy(date
+      .normalize('NFC')
+      .replace(/\. /, ' ') // 8. july 2011
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+      .replace(months_re, _ => months[_.toLowerCase()] || _)
+    )))
+    if (edtf) return edtf
+  }
+  catch (err) {
+  }
+
+  return { verbatim: value }
+}
+
 function parseToDate(value: string, as_single_date: boolean): ParsedDate {
   value = (value || '').trim()
   let date: ParsedDate
@@ -167,8 +199,7 @@ function parseToDate(value: string, as_single_date: boolean): ParsedDate {
 
   if (value === '') return { type: 'open' }
 
-  // https://github.com/retorquere/zotero-better-bibtex/issues/2275
-  if (m = /^(\d{4}-\d{2}-\d{2})T\d{2}:\d{2}:\d{2}/.exec(value)) value = m[1]
+  // if (value.match(/[T ]/) && !(date = parseEDTF(value)).verbatim) return date
 
   // https://forums.zotero.org/discussion/73729/name-and-year-import-issues-with-new-nasa-ads#latest
   if (m = (/^(-?[0-9]+)-00-00$/.exec(value) || /^(-?[0-9]+)\/00\/00$/.exec(value) || /^(-?[0-9]+-[0-9]+)-00$/.exec(value))) return parseToDate(m[1], true)
@@ -251,12 +282,22 @@ function parseToDate(value: string, as_single_date: boolean): ParsedDate {
     if (from.type === 'date' && to.type === 'date') return { type: 'interval', from, to }
   }
 
-  const state = {approximate: false, uncertain: false}
-  const exactish = stripTime(value.replace(/[~?]+$/, match => {
-    state.approximate = match.indexOf('~') >= 0
-    state.uncertain = match.indexOf('?') >= 0
-    return ''
-  }).replace(/\s+/g, ' '))
+  const state: ParsedDate = {}
+  const exactish = value
+    .replace(/(?:\s+|T)(\d{2}):(\d{2})(?::(\d{2}(?:[.]\d+)?)\s*(?:Z|([+-]\d{2}):?(\d{2})?)?)?$/, (match, H, M, S, offsetH, offsetM) => {
+      state.hour = parseInt(H)
+      state.minute = parseInt(M)
+      if (S) state.seconds = parseFloat(S)
+      if (offsetH) state.offset = 60 * parseInt(offsetH) // eslint-disable-line no-magic-numbers
+      if (offsetM) state.offset += parseInt(offsetM)
+      return ''
+    })
+    .replace(/[~?]+$/, match => {
+      if (match.indexOf('~') >= 0) state.approximate = true
+      if (match.indexOf('?') >= 0) state.uncertain = true
+      return ''
+    })
+    .replace(/\s+/g, ' ')
 
   // these assume a sensible y/m/d format by default. There's no sane way to guess between y/d/m and y/m/d, and y/d/m is
   // just wrong. https://en.wikipedia.org/wiki/Date_format_by_country
@@ -265,9 +306,9 @@ function parseToDate(value: string, as_single_date: boolean): ParsedDate {
     const year = parseInt(_year)
     const [day, month] = swap_day_month(parseInt(_day), parseInt(_month), true)
 
-    // if (!month && !day) return doubt({ type: 'date', year }, state)
-    if (!day && has_valid_month(date = { type: 'date', year, month })) return Season.seasonize(doubt(date, state))
-    if (is_valid_date(date = { type: 'date', year, month, day })) return doubt(date, state)
+    // if (!month && !day) return { type: 'date', year, ...state }
+    if (!day && has_valid_month(date = { type: 'date', year, month })) return Season.seasonize({...date, ...state})
+    if (is_valid_date(date = { type: 'date', year, month, day })) return {...date, ...state}
   }
 
   // https://github.com/retorquere/zotero-better-bibtex/issues/1112
@@ -276,9 +317,9 @@ function parseToDate(value: string, as_single_date: boolean): ParsedDate {
     const year = parseInt(_year)
     const [day, month] = swap_day_month(parseInt(_day), parseInt(_month))
 
-    if (!month && !day) return doubt({ type: 'date', year }, state)
-    if (!day && has_valid_month(date = { type: 'date', year, month })) return Season.seasonize(doubt(date, state))
-    if (is_valid_date(date = { type: 'date', year, month, day })) return doubt(date, state)
+    if (!month && !day) return { type: 'date', year, ...state }
+    if (!day && has_valid_month(date = { type: 'date', year, month })) return Season.seasonize({ ...date, ...state })
+    if (is_valid_date(date = { type: 'date', year, month, day })) return { ...date, ...state }
   }
 
   if (m = /^([0-9]{1,2})([-\s/.])([0-9]{1,2})(\2([0-9]{3,}))$/.exec(exactish)) {
@@ -286,9 +327,9 @@ function parseToDate(value: string, as_single_date: boolean): ParsedDate {
     const year = parseInt(_year)
     const [day, month] = swap_day_month(parseInt(_day), parseInt(_month))
 
-    if (!month && !day) return doubt({ type: 'date', year }, state)
-    if (!day && has_valid_month(date = { type: 'date', year, month })) return Season.seasonize(doubt(date, state))
-    if (is_valid_date(date = { type: 'date', year, month, day })) return doubt(date, state)
+    if (!month && !day) return { type: 'date', year, ...state }
+    if (!day && has_valid_month(date = { type: 'date', year, month })) return Season.seasonize({ ...date, ...state })
+    if (is_valid_date(date = { type: 'date', year, month, day })) return { ...date, ...state }
   }
 
   if (m = /^([0-9]{1,2})[-\s/.]([0-9]{3,})$/.exec(exactish)) {
@@ -296,8 +337,8 @@ function parseToDate(value: string, as_single_date: boolean): ParsedDate {
     const month = parseInt(_month)
     const year = parseInt(_year)
 
-    if (!month) return doubt({ type: 'date', year }, state)
-    if (has_valid_month(date = { type: 'date', year, month })) return Season.seasonize(doubt(date, state))
+    if (!month) return { type: 'date', year, ...state }
+    if (has_valid_month(date = { type: 'date', year, month })) return Season.seasonize({ ...date, ...state })
   }
 
   if (m = /^([0-9]{3,})[-\s/.]([0-9]{1,2})$/.exec(exactish)) {
@@ -305,33 +346,15 @@ function parseToDate(value: string, as_single_date: boolean): ParsedDate {
     const year = parseInt(_year)
     const month = parseInt(_month)
 
-    if (!month) return doubt({ type: 'date', year }, state)
-    if (has_valid_month(date = { type: 'date', year, month })) return Season.seasonize(doubt(date, state))
+    if (!month) return { type: 'date', year, ...state }
+    if (has_valid_month(date = { type: 'date', year, month })) return Season.seasonize({ ...date, ...state })
   }
 
   if (exactish.match(/^-?[0-9]{3,}$/)) {
-    return doubt({ type: 'date', year: parseInt(exactish) }, state)
+    return { type: 'date', year: parseInt(exactish), ...state }
   }
 
-  try {
-    // https://github.com/inukshuk/edtf.js/issues/5
-    const edtf = normalize_edtf(EDTF.parse(upgrade_edtf(stripTime(value.replace(/_|--/, '/')))))
-    if (edtf) return edtf
-  }
-  catch (err) {
-  }
-
-  try {
-    const edtf = normalize_edtf(EDTF.parse(edtfy(value
-      .normalize('NFC')
-      .replace(/\. /, ' ') // 8. july 2011
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      .replace(months_re, _ => months[_.toLowerCase()] || _)
-    )))
-    if (edtf) return edtf
-  }
-  catch (err) {
-  }
+  if (!(date = parseEDTF(value)).verbatim) return date
 
   // https://github.com/retorquere/zotero-better-bibtex/issues/868
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
