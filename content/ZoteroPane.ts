@@ -165,7 +165,10 @@ export class ZoteroPane {
             if (date.type === 'date' && date.day) {
               delete extra.extraFields.tex[k]
               const time = typeof date.seconds === 'number'
-              const timestamp = new Date(date.year, date.month - 1, date.day, time ? date.hour : 0, time ? date.minute - (date.offset || 0): 0, time ? date.seconds : 0, 0)
+              const timestamp = new Date(
+                date.year, date.month - 1, date.day,
+                time ? date.hour : 0, time ? date.minute - (date.offset || 0): 0, time ? date.seconds : 0, 0
+              )
               item.setField(mapping[k], timestamp.toISOString())
               save = true
             }

@@ -1,0 +1,133 @@
+/* eslint-disable no-magic-numbers, @typescript-eslint/quotes, max-len, quote-props, comma-dangle, eol-last */
+<%
+function stringify(o, indent=true) {
+  return JSON.stringify(o, null, indent ? 2 : undefined)
+}
+%>
+
+export const names = <%~ stringify(it.preferences.map(p => p.shortName)) %> as const
+
+export type PreferenceName = typeof names[number]
+
+export const affects: Partial<Record<PreferenceName, string[]>> = <%~ stringify(
+  it
+  .preferences
+  .reduce((acc, p) => { if (p.affects && p.affects.length) acc[p.shortName] = p.affects; return acc}, {})
+) %>
+
+
+export type Preferences = {
+<% for (const pref of it.preferences) { %>
+  <%=pref.shortName %>: <%~ pref.valid %>
+
+<% } %>
+}
+
+export const defaults: Preferences = {
+<% for (const pref of it.preferences) { %>
+  <%= pref.shortName %>: <%~ stringify(pref.shortName === 'citekeyFormat' ? pref.default.replace('\u200b', '') : pref.default, false) %>,
+<% } %>
+}
+
+export const options: Partial<Record<PreferenceName, Record<string, string>>> = <%~ stringify(
+  it
+  .preferences
+  .reduce((acc, pref) => { if (pref.options) acc[pref.shortName] = pref.options; return acc }, {})
+) %>
+
+<%
+const ignoreOptions = ['worker', 'exportFileData', 'keepUpdated']
+const overrides = it.preferences.filter(pref => pref.override)
+
+const schema = {}
+
+schema.autoExport = {
+  preferences: overrides.map(pref => pref.shortName),
+  displayOptions: it.translators.reduce((acc, tr) => {
+    if (typeof tr.displayOptions?.keepUpdated === 'boolean') {
+      for (const option in (tr.displayOptions || {})) {
+        if (!ignoreOptions.includes(option) && !acc.includes(option)) acc.push(option)
+      }
+    }
+    return acc
+  }, []),
+}
+
+schema.translator = {}
+for (const tr of it.translators) {
+  if (!tr.keepUpdated && !tr.cached) continue
+
+  const options = Object.keys(tr.displayOptions)
+    .filter(option => !ignoreOptions.includes(option))
+    .reduce((acc, option) => { acc[option] = { type: 'boolean' }; return acc }, {})
+  const prefs = overrides
+    .filter(pref => tr.affectedBy.includes(pref.shortName))
+    .reduce((acc, pref) => { acc[pref.shortName] = pref.options ? { enum: Object.keys(pref.options) } : { type: pref.type }; return acc }, {})
+
+  schema.translator[tr.label] = {
+    autoexport: {
+      type: 'object',
+      additionalProperties: false,
+      properties: {
+        type: { enum: ['collection', 'library'] },
+        id: { type: 'integer' },
+        path: { type: 'string', minLength: 1 },
+        status: { enum: [ 'scheduled', 'running', 'done', 'error' ] },
+        translatorID: { const: tr.translatorID },
+
+        // options
+        exportNotes: { type: 'boolean' },
+        useJournalAbbreviation: { type: 'boolean' },
+
+        ...prefs,
+
+        // status
+        error: { type: 'string' },
+        recursive: { type: 'boolean' },
+
+        // LokiJS
+        meta: { type: 'object' },
+        $loki: { type: 'integer' },
+      },
+      required: [ 'type', 'id', 'path', 'status', 'translatorID', ...Object.keys(options), ...Object.keys(prefs) ],
+    },
+    cache: !tr.cached ? false : {
+      type: 'object',
+      additionalProperties: false,
+      properties: {
+        itemID: { type: 'integer' },
+        entry: { type: 'string' },
+
+        // options
+        exportNotes: { type: 'boolean' },
+        useJournalAbbreviation: { type: 'boolean' },
+
+        ...prefs,
+
+        // Optional
+        metadata: { type: 'object' },
+
+        // LokiJS
+        meta: { type: 'object' },
+        $loki: { type: 'integer' },
+      },
+      required: [],
+      required: [ 'itemID', 'exportNotes', 'useJournalAbbreviation', ...Object.keys(prefs), 'entry'],
+    },
+    preferences: Object.keys(prefs),
+    displayOptions: Object.keys(options),
+  }
+}
+%>
+
+type LokiRecord = {
+  type: 'object'
+  additionalProperties: false
+  properties: any
+  required: string[]
+}
+export const schema: {
+  autoExport: { preferences: PreferenceName[], displayOptions: string[] }
+  translator: Record<string, { cache: false | LokiRecord, autoexport: false | LokiRecord, displayOptions: string[], preferences: PreferenceName[] }>
+} = <%~ stringify(schema) %>
+

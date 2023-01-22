@@ -29,12 +29,12 @@ def refresh():
     prefs = Munch.fromDict(json.load(f))
   schema.properties.config.properties.preferences.properties = {}
   for pref in prefs:
-    if pref.var in ['client', 'platform', 'newTranslatorsAskRestart', 'testing']:
+    if pref.name in ['client', 'platform', 'newTranslatorsAskRestart', 'testing']:
       pass
     elif pref.type == 'string' and 'options' in pref:
-      schema.properties.config.properties.preferences.properties[pref.var] = { 'enum': list(pref.options.keys()) }
+      schema.properties.config.properties.preferences.properties[pref.name] = { 'enum': list(pref.options.keys()) }
     elif pref.type in [ 'string', 'boolean', 'number' ]:
-      schema.properties.config.properties.preferences.properties[pref.var] = { 'type': pref.type }
+      schema.properties.config.properties.preferences.properties[pref.name] = { 'type': pref.type }
     else:
       raise ValueError(pref.type)
 

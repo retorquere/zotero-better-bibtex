@@ -128,6 +128,7 @@
     "github-release-cli": "^2.1.0",
     "glob-promise": "^6.0.1",
     "global": "^4.4.0",
+    "gray-matter": "^4.0.3",
     "he": "^1.2.0",
     "indent-string": "^5.0.0",
     "ini": "^3.0.1",

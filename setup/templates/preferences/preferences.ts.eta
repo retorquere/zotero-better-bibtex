@@ -1,0 +1,53 @@
+/* eslint-disable no-magic-numbers, @typescript-eslint/quotes, max-len */
+
+declare const Zotero: any
+
+import { Preferences, names, defaults } from './preferences/meta'
+import { fromEntries } from '../content/object'
+
+export class PreferenceManager {
+  public default = defaults
+  public prefix = 'translators.better-bibtex.'
+
+<%
+it.preferences.forEach(pref => {
+  if (pref.name === 'platform') {
+-%>
+  set <%= pref.shortName %>(v: <%~ pref.valid %>) {
+<%
+  }
+  else {
+-%>
+  set <%= pref.shortName %>(v: <%~ pref.valid %> | undefined) {
+    if (typeof v === 'undefined') v = <%~ JSON.stringify(pref.default) %>
+
+    if (v === this.<%= pref.shortName %>) return
+<%
+  }
+  if (pref.quoted_options) {
+-%>
+    if (!<%~ pref.quoted_options %>.includes(v)) throw new Error(`<%= pref.shortName %> must be one of <%~ pref.quoted_options %>, got '${v}'`)
+<%
+  }
+  else {
+-%>
+    if (typeof v !== '<%= pref.type %>') throw new Error(`<%= pref.shortName %> must be of type <%= pref.type %>, got '${typeof v}'`)
+<%
+  }
+-%>
+    Zotero.Prefs.set('translators.better-bibtex.<%= pref.shortName %>', v)
+  }
+  get <%= pref.shortName %>(): <%~ pref.valid %> {
+    const v: <%~ pref.valid %> = Zotero.Prefs.get('translators.better-bibtex.<%= pref.shortName %>') as <%~ pref.valid %>
+
+    return typeof v === 'undefined' ? <%~ JSON.stringify(pref.default) %> : v
+  }
+
+<%
+})
+-%>
+  get all(): Preferences {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    return fromEntries(names.map(pref => [ pref, this[pref] ])) as Preferences
+  }
+}

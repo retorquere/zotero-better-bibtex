@@ -7,4 +7,7 @@
     "member-ordering": false,
     "max-classes-per-file": false
   }
+  "linterOptions": {
+    "exclude": [ "setup" ]
+  }
 }
