@@ -7,10 +7,14 @@ import * as fs from 'fs'
 import * as path from 'path'
 import * as glob from 'glob-promise'
 import * as peggy from 'peggy'
-const dtd = peggy.generate(fs.readFileSync('setup/dtd-file.peggy', 'utf-8')).parse(fs.readFileSync('locale/en-US/zotero-better-bibtex.dtd', 'utf-8'))
 import * as matter from 'gray-matter'
 import * as eta from 'eta'
 import * as _ from 'lodash'
+
+function error(...args) {
+  console.log(...args)
+  process.exit(1)
+}
 
 const translators = glob.sync('translators/*.json')
   .map(file => {
@@ -24,17 +28,13 @@ const translators = glob.sync('translators/*.json')
 const src = process.argv[2] || 'content/Preferences.pug'
 const tgt = process.argv[3] || 'build/content/Preferences.xul'
 
-function trx(txt) {
-  if (!txt) return txt
-  return txt.replace(/&([^;]+);/g, (entity, id) => {
-    if (!dtd[id]) error(id, 'not in dtd')
-    return dtd[id]
-  })
-}
+const l10n = new class {
+  private strings = peggy.generate(fs.readFileSync('setup/dtd-file.peggy', 'utf-8')).parse(fs.readFileSync('locale/en-US/zotero-better-bibtex.dtd', 'utf-8')) as Record<string, string>
 
-function error(...args) {
-  console.log(...args)
-  process.exit(1)
+  tr(txt: string): string {
+    if (!txt) return txt
+    return txt.replace(/&([^;]+);/g, (entity, id) => this.strings![id] || (error(id, 'not in dtd')) as unknown as string)
+  }
 }
 
 class ASTWalker {
@@ -49,12 +49,12 @@ class ASTWalker {
   attr(node, name: string, required=false): string {
     const attr = node.attrs.find(attr => attr.name === name)
     if (!attr && required) error(`could not find ${node.name}.${name} in`, node.attrs.map(a => a.name))
-    return attr ? trx(eval(attr.val)) : null
+    return attr ? l10n.tr(eval(attr.val)) : null
   }
 
   text(node) {
     switch (node.type) {
-      case 'Text': return trx(node.val)
+      case 'Text': return l10n.tr(node.val)
       case 'Tag': return this.attr(node, 'label') || this.text(node.block)
       case 'Block': return node.nodes.map(n => this.text(n)).join('')
       default: return ''
@@ -166,7 +166,7 @@ class Docs extends ASTWalker {
       label: '',
       description: '',
       // @ts-ignore
-      type: {int: 'number', string: 'string', bool: 'boolean'}[this.attr(node, 'type', true)] || error('unsupported type', this.attr(node, 'type')),
+      type: { int: 'number', string: 'string', bool: 'boolean' }[this.attr(node, 'type', true)] || error('unsupported type', this.attr(node, 'type')),
       default: this.attr(node, 'default', true),
       affects,
       options: new Map,
