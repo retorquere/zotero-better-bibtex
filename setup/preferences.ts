@@ -10,6 +10,7 @@ import * as peggy from 'peggy'
 const dtd = peggy.generate(fs.readFileSync('setup/dtd-file.peggy', 'utf-8')).parse(fs.readFileSync('locale/en-US/zotero-better-bibtex.dtd', 'utf-8'))
 import * as matter from 'gray-matter'
 import * as eta from 'eta'
+import * as _ from 'lodash'
 
 const translators = glob.sync('translators/*.json')
   .map(file => {
@@ -411,19 +412,11 @@ class Docs extends ASTWalker {
   }
 
   saveTypescript() {
-    const replacer = (key, value) => {
-      if (value instanceof Map) {
-        if (!value.size) return undefined
-        return Array.from(value.entries()).reduce((acc, [k, v]) => { acc[k] = v; return acc }, {})
-      }
-      else {
-        return value
-      }
-    }
-    const preferences = JSON.parse(JSON.stringify(Object.values(this.preferences).sort((a, b) => a.name.localeCompare(b.name)), replacer))
+    const preferences = _.cloneDeep(Object.values(this.preferences).sort((a, b) => a.name.localeCompare(b.name)))
     for (const pref of preferences) {
+      if (!pref.options.size) delete pref.options
       if (pref.options) {
-        const options = Object.keys(pref.options).map(option => pref.type === 'number' ? parseInt(option) : option)
+        const options = [...pref.options.keys()]
         pref.valid = options.map(option => JSON.stringify(option)).join(' | ')
         pref.quoted_options = JSON.stringify(options)
       }

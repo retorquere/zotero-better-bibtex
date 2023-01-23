@@ -32,7 +32,10 @@ export const defaults: Preferences = {
 export const options: Partial<Record<PreferenceName, Record<string, string>>> = <%~ stringify(
   it
   .preferences
-  .reduce((acc, pref) => { if (pref.options) acc[pref.shortName] = pref.options; return acc }, {})
+  .reduce((acc, pref) => {
+    if (pref.options) acc[pref.shortName] = [...pref.options.entries()].reduce((acc, [k, v]) => Object.assign(acc, {[k]: v}), {})
+    return acc
+  }, {})
 ) %>
 
 <%
@@ -62,7 +65,7 @@ for (const tr of it.translators) {
     .reduce((acc, option) => { acc[option] = { type: 'boolean' }; return acc }, {})
   const prefs = overrides
     .filter(pref => tr.affectedBy.includes(pref.shortName))
-    .reduce((acc, pref) => { acc[pref.shortName] = pref.options ? { enum: Object.keys(pref.options) } : { type: pref.type }; return acc }, {})
+    .reduce((acc, pref) => { acc[pref.shortName] = pref.options ? { enum: [...pref.options.keys()] } : { type: pref.type }; return acc }, {})
 
   schema.translator[tr.label] = {
     autoexport: {
