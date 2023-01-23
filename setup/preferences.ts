@@ -95,7 +95,7 @@ class Swap extends ASTWalker {
 
 class StripConfig extends ASTWalker {
   Tag(node) {
-    node.attrs = node.attrs.filter(attr => !attr.name.startsWith('bbt:') || attr.name.startsWith('bbt:ae-'))
+    node.attrs = node.attrs.filter(attr => !attr.name.startsWith('bbt:'))
     this.walk(node.block)
   }
 
@@ -326,7 +326,7 @@ class Docs extends ASTWalker {
         break
     }
 
-    const field = this.attr(node, 'bbt:ae-field')
+    const field = this.attr(node, 'data-ae-field')
     if (field) {
       pref = Object.values(this.preferences).find(p => p.shortName === field)
       if (pref) pref.override = true

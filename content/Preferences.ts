@@ -18,8 +18,6 @@ import { pick } from './file-picker'
 import { flash } from './flash'
 // const dtdparser = require('./dtd-file.peggy')
 
-const namespace = 'http://retorque.re/zotero-better-bibtex/'
-
 export function start(win: Window): any {
   log.debug('prefs.start')
   /*
@@ -71,7 +69,7 @@ class AutoExportPane {
     const tabpanels = this.globals.document.getElementById('better-bibtex-prefs-auto-export-tabpanels')
 
     const rebuild = {
-      tabs: Array.from(tabs.children).map((node: Element) => ({ updated: parseInt(node.getAttributeNS(namespace, 'ae-updated')), id: parseInt(node.getAttributeNS(namespace, 'ae-id')) })),
+      tabs: Array.from(tabs.children).map((node: Element) => ({ updated: parseInt(node.getAttribute('data-ae-updated')), id: parseInt(node.getAttribute('data-ae-id')) })),
       exports: auto_exports.map(ae => ({ updated: ae.meta.updated || ae.meta.created, id: ae.$loki })),
       rebuild: false,
       update: false,
@@ -90,15 +88,15 @@ class AutoExportPane {
       if (rebuild.rebuild) {
         // tab
         tab = tabs.appendChild(this.globals.document.createElementNS('http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul', 'tab'))
-        tab.setAttributeNS(namespace, 'ae-id', `${ae.$loki}`)
-        tab.setAttributeNS(namespace, 'ae-updated', `${ae.meta.updated || ae.meta.created}`)
+        tab.setAttribute('data-ae-id', `${ae.$loki}`)
+        tab.setAttribute('data-ae-updated', `${ae.meta.updated || ae.meta.created}`)
 
         // tabpanel
         tabpanel = (index === 0 ? tabpanels.firstChild : tabpanels.appendChild(tabpanels.firstChild.cloneNode(true)))
 
         // set IDs on clone
-        for (const node of Array.from(tabpanel.querySelectorAll('[*|ae-id]'))) {
-          (node as Element).setAttributeNS(namespace, 'ae-id', `${ae.$loki}`)
+        for (const node of Array.from(tabpanel.querySelectorAll('*[data-ae-id]'))) {
+          (node as Element).setAttribute('data-ae-id', `${ae.$loki}`)
         }
 
         // hide/show per-translator options
@@ -118,8 +116,8 @@ class AutoExportPane {
       tab.setAttribute('label', `${{ library: '\ud83d\udcbb', collection: '\ud83d\udcc2' }[ae.type]} ${this.name(ae, 'short')}`)
 
       const progress = AutoExport.progress.get(ae.$loki)
-      for (const node of Array.from(tabpanel.querySelectorAll('[*|ae-field]'))) {
-        const field = (node as Element).getAttributeNS(namespace, 'ae-field')
+      for (const node of Array.from(tabpanel.querySelectorAll('*[data-ae-field]'))) {
+        const field = (node as Element).getAttribute('data-ae-field')
 
         if (!rebuild.update && (node as XUL.Textbox).readonly) continue
 
@@ -187,20 +185,20 @@ class AutoExportPane {
   public remove(node) {
     if (!Services.prompt.confirm(null, l10n.localize('AutoExport.delete'), l10n.localize('AutoExport.delete.confirm'))) return
 
-    const ae = AutoExport.db.get(parseInt(node.getAttributeNS(namespace, 'ae-id')))
+    const ae = AutoExport.db.get(parseInt(node.getAttribute('data-ae-id')))
     Cache.getCollection(Translators.byId[ae.translatorID].label)?.removeDataOnly()
     AutoExport.db.remove(ae)
     this.refresh()
   }
 
   public run(node) {
-    AutoExport.run(parseInt(node.getAttributeNS(namespace, 'ae-id')))
+    AutoExport.run(parseInt(node.getAttribute('data-ae-id')))
     this.refresh()
   }
 
   public async refreshCacheRate(ae: Element | number) {
     log.debug('getting cacherate for', typeof ae)
-    if (typeof ae !== 'number') ae = parseInt(ae.getAttributeNS(namespace, 'ae-id'))
+    if (typeof ae !== 'number') ae = parseInt(ae.getAttribute('data-ae-id'))
     log.debug('getting cacherate for', typeof ae)
 
     if (typeof ae !== 'number') {
@@ -221,8 +219,8 @@ class AutoExportPane {
   }
 
   public edit(node) {
-    const field = node.getAttributeNS(namespace, 'ae-field')
-    const ae = AutoExport.db.get(parseInt(node.getAttributeNS(namespace, 'ae-id')))
+    const field = node.getAttribute('data-ae-field')
+    const ae = AutoExport.db.get(parseInt(node.getAttribute('data-ae-id')))
     Cache.getCollection(Translators.byId[ae.translatorID].label).removeDataOnly()
 
     switch (field) {
