@@ -404,13 +404,13 @@ class Docs extends ASTWalker {
   saveTypescript() {
     const preferences = _.cloneDeep(Object.values(this.preferences).sort((a, b) => a.name.localeCompare(b.name)))
     for (const pref of preferences) {
-      if (!pref.options.size) delete pref.options
-      if (pref.options) {
+      if (pref.options.size) {
         const options = [...pref.options.keys()]
         pref.valid = options.map(option => JSON.stringify(option)).join(' | ')
         pref.quoted_options = JSON.stringify(options)
       }
       else {
+        delete pref.options
         pref.valid = pref.type
       }
     }
