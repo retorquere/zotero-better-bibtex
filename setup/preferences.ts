@@ -32,20 +32,10 @@ function trx(txt) {
   })
 }
 
-/*
-async function find(data, expr) {
-  find.cache = find.cache || {}
-  expr = (find.cache[expr] = find.cache[expr] || jsonata(expr))
-  return await expr.evaluate(data)
-}
-find = sp(find)
-*/
-
 function error(...args) {
   console.log(...args)
   process.exit(1)
 }
-
 
 class ASTWalker {
   walk(node, history?) {
