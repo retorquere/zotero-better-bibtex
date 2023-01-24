@@ -236,7 +236,7 @@ class Docs extends ASTWalker {
   }
 
   Tag(node, history) {
-    let pref, id, label, page
+    let pref, id, label, page, hidden
 
     switch (node.name) {
       case 'caption':
@@ -260,6 +260,7 @@ class Docs extends ASTWalker {
         break
 
       case 'tabpanel':
+        hidden = history.find(parent => parent.name && this.attr(parent, 'hidden'))
         label = history.find(n => n.name === 'tabbox').$labels.shift()
         page = this.attr(node, 'bbt:page')
         if (page) {
@@ -269,7 +270,7 @@ class Docs extends ASTWalker {
             content: '',
           }
         }
-        else {
+        else if (!hidden) {
           node.$section = label
           this.section(label, history)
         }
@@ -318,7 +319,7 @@ class Docs extends ASTWalker {
           if (!pref.pref) error(pref.name, 'does not exist')
 
           label = this.attr(node, 'label') || (node.name === 'label' && this.text(node))
-          if (label && (pref.bbt || !pref.pref.label)) {
+          if (!hidden && label && (pref.bbt || !pref.pref.label)) {
             if (!pref.pref.label && pref.pref.description) this.section(`<%~ it.${this.preferences[pref.name].shortName} %>\n`, history, 1)
             this.label(label, pref.name)
           }

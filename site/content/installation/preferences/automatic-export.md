@@ -39,5 +39,3 @@ setting off an unreasonable number of auto-exports. Minimum is 1 second. Changes
 
 
 
-## auto-export
-
