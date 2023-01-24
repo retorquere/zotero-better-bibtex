@@ -175,9 +175,8 @@ class Docs extends ASTWalker {
       case 'boolean':
       case 'number':
         pref.default = eval(pref.default as string)
-        if (typeof pref.default !== pref.type) error(this.attr(node, 'default'), 'is not', pref.type)
-        break
       case 'string':
+        if (typeof pref.default !== pref.type) error(this.attr(node, 'default'), 'is not', pref.type)
         break
       default:
         error('Unexpected type', pref.type)
