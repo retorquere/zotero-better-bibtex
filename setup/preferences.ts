@@ -33,7 +33,7 @@ const l10n = new class {
 
   tr(txt: string): string {
     if (!txt) return txt
-    return txt.replace(/&([^;]+);/g, (entity, id) => this.strings![id] || (error(id, 'not in dtd')) as unknown as string)
+    return txt.replace(/&([^;]+);/g, (entity, id) => this.strings[id] || (error(id, 'not in dtd')) as unknown as string)
   }
 }
 
