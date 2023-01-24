@@ -235,7 +235,7 @@ class Docs extends ASTWalker {
   }
 
   Tag(node, history) {
-    let pref, id, label, page, hidden
+    let bbt, pref, id, label, page, hidden
 
     switch (node.name) {
       case 'caption':
@@ -308,18 +308,14 @@ class Docs extends ASTWalker {
         break
 
       default:
-        pref = {
-          xul: this.attr(node, 'preference'),
-          bbt: this.attr(node, 'bbt:preference'),
-        }
-        pref.name = pref.xul || pref.bbt
-        pref.pref = this.preferences[pref.name]
-        if (pref.name) {
-          if (!pref.pref) error(pref.name, 'does not exist')
+        pref = (bbt = this.attr(node, 'bbt:preference')) || this.attr(node, 'preference')
+        if (pref) {
+          if (!this.preferences[pref]) error(pref, 'does not exist')
+          pref = this.preferences[pref]
 
           label = this.attr(node, 'label') || (node.name === 'label' && this.text(node))
-          if (!hidden && label && (pref.bbt || !pref.pref.label)) {
-            if (!pref.pref.label && pref.pref.description) this.section(`<%~ it.${this.preferences[pref.name].shortName} %>\n`, history, 1)
+          if (!hidden && label && (bbt || !pref.label)) {
+            if (!pref.label && pref.description) this.section(`<%~ it.${pref.shortName} %>\n`, history, 1)
             this.label(label, pref.name)
           }
         }
