@@ -203,6 +203,7 @@ export class KeyManager {
       }
     }
     if (search) {
+      /*
       // 1829
       try {
         // no other way to detect column existence on attached databases
@@ -212,6 +213,7 @@ export class KeyManager {
         log.error(`dropping betterbibtexsearch.citekeys, assuming libraryID does not exist: ${err}`)
         await Zotero.DB.queryAsync('DROP TABLE IF EXISTS betterbibtexsearch.citekeys')
       }
+      */
       await Zotero.DB.queryAsync('CREATE TABLE IF NOT EXISTS betterbibtexsearch.citekeys (itemID PRIMARY KEY, libraryID, itemKey, citekey)')
 
       const match: Record<string, CitekeySearchRecord> = this.keys.data

@@ -18,7 +18,7 @@ import { pick } from './file-picker'
 import { flash } from './flash'
 // const dtdparser = require('./dtd-file.peggy')
 
-export function start(win: Window): any {
+export function start(_win: Window): any {
   log.debug('prefs.start')
   /*
   const prefwindow = win.document.querySelector('prefwindow#zotero-prefs')
@@ -31,7 +31,6 @@ export function start(win: Window): any {
 
   makeUI(win.document, prefwindow, dtd)
   */
-  log.debug('>>>\n', win.document.documentElement.outerHTML, '\n<<<')
 }
 
 class AutoExportPane {

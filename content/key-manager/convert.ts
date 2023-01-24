@@ -329,7 +329,7 @@ function print(ast): string {
 
 export function convert(formulas: string): string {
   let ast = parse(formulas).program
-  if (ast.body[0].type !== 'ExpressionStatement' || ast.body.length !== 1) throw new Error('expected 1 expression statement')
+  if (ast.body.length !== 1 || ast.body[0].type !== 'ExpressionStatement') throw new Error(`${JSON.stringify(formulas)}: expected 1 expression statement`)
   ast = ast.body[0].expression
 
   const asts = split(ast, '|').map(formula => {

@@ -26,9 +26,9 @@ for client in clients:
       f.write('#!/bin/bash\n')
       f.write('set -x\n')
       f.write(f'{exe} -P -datadir profile\n')
-  except:
-    print('could not update', client.exe)
-    continue
+  except PermissionError as e:
+    print('could not update', client.exe, e)
+    sys.exit(1)
 
   os.chmod(launcher, os.stat(exe).st_mode)
 
