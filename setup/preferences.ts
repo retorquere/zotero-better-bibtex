@@ -114,7 +114,7 @@ type Preference = {
   description: string
   type: 'number' | 'boolean' | 'string'
   default: number | boolean | string
-  options: Map<string | number, string>
+  options?: Map<string | number, string>
   affects: string[]
 }
 type Page = {
@@ -169,7 +169,6 @@ class Docs extends ASTWalker {
       type: { int: 'number', string: 'string', bool: 'boolean' }[this.attr(node, 'type', true)] || error('unsupported type', this.attr(node, 'type')),
       default: this.attr(node, 'default', true),
       affects,
-      options: new Map,
     }
 
     switch (pref.type) {
@@ -212,6 +211,7 @@ class Docs extends ASTWalker {
       default:
         error('option for', this.preferences[pref].type, pref)
     }
+    this.preferences[pref].options = this.preferences[pref].options || new Map
     this.preferences[pref].options.set(value, label)
   }
 
@@ -344,7 +344,7 @@ class Docs extends ASTWalker {
           dflt = pref.default
           break
         case 'string':
-          dflt = pref.options.size ? pref.options.get(pref.default as string) : (pref.default || '<not set>')
+          dflt = pref.options ? pref.options.get(pref.default as string) : (pref.default || '<not set>')
           break
         case 'boolean':
           dflt = pref.default ? 'yes' : 'no'
@@ -352,7 +352,7 @@ class Docs extends ASTWalker {
       }
       if (typeof dflt === 'undefined') error('unsupported pref default', pref.type)
       prefs[pref.shortName] = `${pref.label || pref.shortName}\n\ndefault: \`${dflt}\`\n\n${pref.description}\n`
-      if (pref.options.size) prefs[pref.shortName] += `\nOptions:\n\n${[...pref.options.values()].map(o => `* ${o}`).join('\n')}\n`
+      if (pref.options) prefs[pref.shortName] += `\nOptions:\n\n${[...pref.options.values()].map(o => `* ${o}`).join('\n')}\n`
     }
 
     this.pages['hidden-preferences'] = {
@@ -404,13 +404,12 @@ class Docs extends ASTWalker {
   saveTypescript() {
     const preferences = _.cloneDeep(Object.values(this.preferences).sort((a, b) => a.name.localeCompare(b.name)))
     for (const pref of preferences) {
-      if (pref.options.size) {
+      if (pref.options) {
         const options = [...pref.options.keys()]
         pref.valid = options.map(option => JSON.stringify(option)).join(' | ')
         pref.quoted_options = JSON.stringify(options)
       }
       else {
-        delete pref.options
         pref.valid = pref.type
       }
     }
