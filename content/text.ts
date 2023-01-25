@@ -444,6 +444,7 @@ export function babelLanguage(language: string): string {
     || Language[lc.replace(/[^a-z0-9]/, '-')]
     || Language[lc.replace(notAlphaNum, '')]
     || (!lc.match(notAlphaNum) && Language[LanguagePrefixes.find((prefix: string) => lc.startsWith(prefix))])
+    || Language[lc.replace(/-.*/, '').replace(/[^a-z0-9]/, '-')]
     || language
 }
 
