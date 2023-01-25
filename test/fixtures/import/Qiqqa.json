@@ -12,26 +12,13 @@
   },
   "items": [
     {
-      "citationKey": "godel1933present",
-      "creators": [
+      "attachments": [
         {
-          "creatorType": "author",
-          "firstName": "Kurt",
-          "lastName": "G\u00f6del"
+          "itemType": "attachment",
+          "path": "ATTACHMENT_KEY/K\u00fchne2006 - Matters of (meta-) modeling.pdf",
+          "title": "K\u00fchne2006 - Matters of (meta-) modeling.pdf"
         }
       ],
-      "date": "1933",
-      "extra": [
-        "Citation Key: godel1933present"
-      ],
-      "itemID": 1,
-      "itemType": "bookSection",
-      "pages": "45\u201353",
-      "publicationTitle": "Collected works",
-      "title": "The present situation in the foundations of mathematics",
-      "volume": "3"
-    },
-    {
       "citationKey": "kuhne2006matters",
       "creators": [
         {
@@ -46,7 +33,7 @@
         "Publisher: Springer"
       ],
       "issue": "4",
-      "itemID": 2,
+      "itemID": 1,
       "itemType": "journalArticle",
       "pages": "369\u2013385",
       "publicationTitle": "Software and Systems Modeling",
@@ -60,6 +47,26 @@
       ],
       "title": "Matters of (meta-) modeling",
       "volume": "5"
+    },
+    {
+      "citationKey": "godel1933present",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Kurt",
+          "lastName": "G\u00f6del"
+        }
+      ],
+      "date": "1933",
+      "extra": [
+        "Citation Key: godel1933present"
+      ],
+      "itemID": 2,
+      "itemType": "bookSection",
+      "pages": "45\u201353",
+      "publicationTitle": "Collected works",
+      "title": "The present situation in the foundations of mathematics",
+      "volume": "3"
     }
   ]
 }
