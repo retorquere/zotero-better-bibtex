@@ -347,7 +347,7 @@ export async function pick(options: any): Promise<string> {
   }
   catch (err) {
     log.debug('CAYW error:', err)
-    flash('CAYW Failed', err.message)
+    flash('CAYW Failed', log.formatError(err))
   }
 }
 
