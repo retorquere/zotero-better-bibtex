@@ -70,13 +70,35 @@
       "extra": [
         "Google-Books-ID: gzA4AAAACAAJ"
       ],
-      "itemID": 1,
+      "itemID": 2,
       "itemType": "book",
       "language": "zh",
       "libraryCatalog": "Google Books",
       "numPages": "153",
       "publisher": "\u90d1\u5dde\u5927\u5b66\u51fa\u7248\u793e",
       "title": "\u6cd5\u533b\u5b66\u94c1\u9053\u635f\u4f24\u56fe\u8c31"
+    },
+    {
+      "ISBN": "978-988-17202-7-6",
+      "citationKey": "zhao_GaigeLi_2009",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "\u7d2b\u967d",
+          "lastName": "\u8d99"
+        }
+      ],
+      "date": "2009",
+      "extra": [
+        "Google-Books-ID: FVaOQQAACAAJ"
+      ],
+      "itemID": 3,
+      "itemType": "book",
+      "language": "zh",
+      "libraryCatalog": "Google Books",
+      "numPages": "370",
+      "publisher": "\u65b0\u4e16\u7d00\u51fa\u7248\u793e",
+      "title": "\u6539\u9769\u6b77\u7a0b"
     }
   ]
 }
