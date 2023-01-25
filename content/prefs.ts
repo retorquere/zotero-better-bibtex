@@ -195,12 +195,14 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
       }, {})
     ))
 
-    // set defaults and install event emitter
     for (const pref of names) {
-      if (pref !== 'platform') {
-        if (typeof this[pref] === 'undefined') {
-          (this[pref] as any) = typeof defaults[pref] === 'string' ? (defaults[pref] as string).replace(/^\u200B/, '') : defaults[pref]
+      if (pref !== 'platform' && pref !== 'testing') {
+        // zotero does not set defaults?!
+        if (typeof Zotero.Prefs.get(`${this.prefix}${pref}`) === 'undefined') {
+          Zotero.Prefs.set(`${this.prefix}${pref}`, typeof defaults[pref] === 'string' ? (defaults[pref] as string).replace(/^\u200B/, '') : defaults[pref])
+          log.debug(`${pref} is undefined, setting to ${JSON.stringify(defaults[pref])}`)
         }
+        // install event emitter
         this.observe(pref)
       }
     }
