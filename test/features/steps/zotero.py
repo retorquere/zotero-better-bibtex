@@ -157,7 +157,9 @@ class Zotero:
     self.beta = userdata.get('beta') == 'true'
     self.dev = userdata.get('dev') == 'true'
     self.password = str(uuid.uuid4())
-    self.import_at_start = os.environ.get('ZOTERO_IMPORT', None)
+    self.import_at_start = userdata.get('import', None)
+    if self.import_at_start:
+      self.import_at_start = os.path.abspath(self.import_at_start)
 
     self.config = Config(userdata)
 
@@ -299,7 +301,13 @@ class Zotero:
     self.config.pop()
 
     if self.import_at_start:
-      self.execute(f'return await Zotero.BetterBibTeX.TestSupport.importFile({json.dumps(self.import_at_start)})')
+      prefs = {}
+      if self.import_at_start.endswith('.json'):
+        with open(self.import_at_start) as f:
+          data = json.load(f)
+          prefs = data.get('config', {}).get('preferences', {})
+      utils.print(f'import at start: {json.dumps(self.import_at_start)}, {json.dumps(prefs)}')
+      self.execute('return await Zotero.BetterBibTeX.TestSupport.importFile(file, true, prefs)', file=self.import_at_start, prefs=prefs)
       self.import_at_start = None
 
   def reset(self, scenario):

@@ -89,7 +89,8 @@ def before_all(context):
   context.zotero = Zotero(context.config.userdata)
   setup_active_tag_values(active_tag_value_provider, context.config.userdata)
   # test whether the existing references, if any, have gotten a cite key
-  context.zotero.export_library(translator = 'Better BibTeX')
+  if not 'import' in context.config.userdata:
+    context.zotero.export_library(translator = 'Better BibTeX')
 
 def after_all(context):
   TestBin.save(context)

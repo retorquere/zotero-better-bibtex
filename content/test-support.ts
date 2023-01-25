@@ -87,6 +87,7 @@ export class TestSupport {
   public async importFile(path: string, createNewCollection: boolean, preferences: Record<string, number | boolean | string>): Promise<number> {
     preferences = preferences || {}
 
+    log.debug('importing', path, 'with preferences', preferences)
     for (let [pref, value] of Object.entries(preferences)) {
       if (typeof defaults[pref] === 'undefined') throw new Error(`Unsupported preference ${pref} in test case`)
       if (Array.isArray(value)) value = value.join(',')

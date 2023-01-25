@@ -77,6 +77,7 @@ parser.add_argument('--slow', action='store_true',
             CI.tag != ''
 )
 parser.add_argument('--test')
+parser.add_argument('--import', dest='import_at_start')
 parser.add_argument('--durations')
 parser.add_argument('--bin')
 parser.add_argument('--bins')
@@ -138,6 +139,7 @@ elif args.dev: sys.argv.extend(['--define', 'dev=true'])
 
 if args.test: sys.argv.extend(['--define', f'test={args.test}'])
 if args.durations: sys.argv.extend(['--define', f'durations={args.durations}'])
+if args.import_at_start: sys.argv.extend(['--define', f'import={args.import_at_start}'])
 if args.this: sys.argv.extend(['--tags', args.this ])
 if args.log_memory_every: sys.argv.extend(['--define', f'log_memory_every={args.log_memory_every}'])
 
