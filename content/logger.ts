@@ -63,7 +63,7 @@ class Logger {
     return `{${prefix}} +${diff} ${asciify(msg)}`
   }
 
-  private formatError(e, indent='') {
+  public formatError(e, indent='') {
     let msg = [e.name, e.message].filter(s => s).join(': ')
     if (e.filename || e.fileName) msg += ` in ${e.filename || e.fileName}`
     if (e.lineno || e.lineNumber) {

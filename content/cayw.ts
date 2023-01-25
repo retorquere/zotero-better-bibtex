@@ -5,6 +5,7 @@ import { Formatter } from './cayw/formatter'
 import { TeXstudio } from './tex-studio'
 import * as escape from './escape'
 import { flash } from './flash'
+import { log } from './logger'
 
 Components.utils.import('resource://gre/modules/XPCOMUtils.jsm')
 
@@ -345,7 +346,8 @@ export async function pick(options: any): Promise<string> {
     return citation
   }
   catch (err) {
-    flash('CAYW Failed', err.message)
+    log.debug('CAYW error:', err)
+    flash('CAYW Failed', log.formatError(err))
   }
 }
 
