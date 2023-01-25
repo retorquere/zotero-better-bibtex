@@ -1,0 +1,25 @@
+@book{xiao_FayixueTiedao_2003,
+  title = {法医学铁道损伤图谱},
+  author = {肖, 发民},
+  date = {2003},
+  eprint = {gzA4AAAACAAJ},
+  eprinttype = {googlebooks},
+  publisher = {{郑州大学出版社}},
+  abstract = {本书共收集图片400余幅并附以文字说明,以铁路上常见的各种伤亡为主,内容分为:辗轧伤、撞击、拖擦伤等共9章。},
+  isbn = {978-7-81048-761-0},
+  langid = {chinese},
+  pagetotal = {153}
+}
+
+@book{xiao_FayixueTiedao_2013,
+  title = {法医学铁道损伤图谱},
+  author = {肖, 发民},
+  date = {2013},
+  eprint = {gzA4AAAACAAJ},
+  eprinttype = {googlebooks},
+  publisher = {{郑州大学出版社}},
+  abstract = {本书共收集图片400余幅并附以文字说明,以铁路上常见的各种伤亡为主,内容分为:辗轧伤、撞击、拖擦伤等共9章。},
+  isbn = {978-7-81048-761-0},
+  langid = {chinese},
+  pagetotal = {153}
+}
