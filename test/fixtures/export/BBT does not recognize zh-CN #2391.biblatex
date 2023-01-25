@@ -23,3 +23,15 @@
   langid = {chinese},
   pagetotal = {153}
 }
+
+@book{zhao_GaigeLi_2009,
+  title = {改革歷程},
+  author = {趙, 紫陽},
+  date = {2009},
+  eprint = {FVaOQQAACAAJ},
+  eprinttype = {googlebooks},
+  publisher = {{新世紀出版社}},
+  isbn = {978-988-17202-7-6},
+  langid = {chinese},
+  pagetotal = {370}
+}
