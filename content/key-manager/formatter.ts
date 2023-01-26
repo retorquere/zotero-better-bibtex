@@ -1239,7 +1239,7 @@ class PatternFormatter {
     return this.$text(this.chunk.replace(script.cjk, ' $1 ').trim())
   }
 
-  /** word segmentation for Chinese items. Uses substantial memory; must be enabled under Preferences -> Better BibTeX -> Advanced -> Citekeys */
+  /** word segmentation for Chinese items. Uses substantial memory, and adds about 7 seconds to BBTs startup time; must be enabled under Preferences -> Better BibTeX -> Advanced -> Citekeys */
   public _jieba(mode: 'cn' | 'tw' = 'cn') {
     if (!Preference.jieba) return this
     return this.$text(jieba.cut(this.chunk, mode).join(' ').trim())
