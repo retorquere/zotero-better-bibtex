@@ -88,7 +88,7 @@ When on, BBT will load kuroshiro for romajization in citation keys. This uses a 
 
 default: `no`
 
-When on, BBT will make Chinese word segmentation available for citation keys construction. This uses a lot of memory, easily 70MB. If you don't have Chinese titles/names, keep this off.
+When on, BBT will make Chinese word segmentation available for citation keys construction. This uses a lot of memory, easily 70MB, and adds several seconds to the startup time of BBT. If you don't have Chinese titles/names, keep this off.
 
 
 ## Warn me when changing citation keys in bulk
