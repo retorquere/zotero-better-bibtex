@@ -24,6 +24,7 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
     Zotero.Prefs.registerObserver('baseAttachmentPath', val => { this.baseAttachmentPath = val })
 
     this.migrate()
+    this.setDefaultPrefs()
 
     // put this in a preference so that translators can access this.
     if (Zotero.isWin) {
@@ -55,6 +56,26 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
           return object[property] // eslint-disable-line @typescript-eslint/no-unsafe-return
         },
       })
+    }
+  }
+
+  setDefaultPrefs() {
+    const branch = Services.prefs.getDefaultBranch('')
+    for (let [pref, value] of Object.entries(defaults)) {
+      pref = `extensions.zotero.translators.better-bibtex.${pref}`
+      switch (typeof value) {
+        case 'boolean':
+          branch.setBoolPref(pref, value)
+          break
+        case 'string':
+          branch.setStringPref(pref, value)
+          break
+        case 'number':
+          branch.setIntPref(pref, value)
+          break
+        default:
+          Zotero.logError(`Invalid type '${typeof(value)}' for pref '${pref}'`)
+      }
     }
   }
 
@@ -198,10 +219,12 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
     for (const pref of names) {
       if (pref !== 'platform' && pref !== 'testing') {
         // zotero does not set defaults?!
+        /*
         if (typeof Zotero.Prefs.get(`${this.prefix}${pref}`) === 'undefined') {
           Zotero.Prefs.set(`${this.prefix}${pref}`, typeof defaults[pref] === 'string' ? (defaults[pref] as string).replace(/^\u200B/, '') : defaults[pref])
           log.debug(`${pref} is undefined, setting to ${JSON.stringify(defaults[pref])}`)
         }
+        */
         // install event emitter
         this.observe(pref)
       }
