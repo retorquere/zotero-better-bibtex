@@ -1240,8 +1240,9 @@ class PatternFormatter {
   }
 
   /** word segmentation for Chinese items. Uses substantial memory, and adds about 7 seconds to BBTs startup time; must be enabled under Preferences -> Better BibTeX -> Advanced -> Citekeys */
-  public _jieba(mode: 'cn' | 'tw' = 'cn') {
+  public _jieba(mode?: 'cn' | 'tw') {
     if (!Preference.jieba) return this
+    mode = mode || (this.item.getField('language')?.toString().toLowerCase() === 'tw' ? 'tw' : 'cn')
     return this.$text(jieba.cut(this.chunk, mode).join(' ').trim())
   }
 
