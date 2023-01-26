@@ -1331,7 +1331,7 @@ class PatternFormatter {
 
     // apply jieba.cut and flatten.
     if (Preference.jieba && options.skipWords && this.item.transliterateMode === 'chinese') {
-      const mode = this.item.getField('language')?.toString().toLowerCase() === 'zh-tw' ? 'tw' : 'cn'
+      const mode = this.item.getField('language')?.toString().toLowerCase() === 'tw' ? 'tw' : 'cn'
       words = [].concat(...words.map((word: string) => jieba.cut(word, mode)))
       // remove CJK skipwords
       words = words.filter((word: string) => !this.skipWords.has(word.toLowerCase()))
