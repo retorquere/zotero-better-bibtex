@@ -4,7 +4,7 @@ import { Events } from '../events'
 import Pinyin from 'pinyin'
 import createJieba from 'js-jieba'
 import * as cn from 'jieba-zh-cn'
-// import * as tw from 'jieba-zh-tw'
+import * as tw from 'jieba-zh-tw'
 
 /*
 const cnjieba = createJieba(
@@ -14,17 +14,11 @@ const cnjieba = createJieba(
   cn.IDF,
   cn.StopWords
 )
-const twjieba = createJieba(
-  tw.JiebaDict,
-  tw.HMMModel,
-  tw.UserDict,
-  tw.IDF,
-  tw.StopWords
-)
 */
 
 export const jieba = new class {
-  private jieba: any
+  private cn: any
+  private tw: any
 
   init() {
     this.load()
@@ -34,25 +28,32 @@ export const jieba = new class {
   }
 
   private load() {
-    if (Preference.jieba && !this.jieba) {
-      this.jieba = createJieba(
+    if (Preference.jieba && !this.cn) {
+      this.cn = createJieba(
         cn.JiebaDict,
         cn.HMMModel,
         cn.UserDict,
         cn.IDF,
         cn.StopWords
       )
+      this.tw = createJieba(
+        tw.JiebaDict,
+        tw.HMMModel,
+        tw.UserDict,
+        tw.IDF,
+        tw.StopWords
+      )
     }
   }
 
-  public cut(input: string): string[] {
+  public cut(input: string, mode: 'cn' | 'tw' ='cn'): string[] {
     if (Preference.jieba) {
       this.load()
     }
     else {
       throw new Error('jieba not loaded')
     }
-    return (this.jieba.cut(input, true).filter((w: string) => w.trim()) as string[])
+    return (this[mode].cut(input, true).filter((w: string) => w.trim()) as string[])
   }
 }
 

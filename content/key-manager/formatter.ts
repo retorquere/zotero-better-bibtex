@@ -1240,9 +1240,9 @@ class PatternFormatter {
   }
 
   /** word segmentation for Chinese items. Uses substantial memory; must be enabled under Preferences -> Better BibTeX -> Advanced -> Citekeys */
-  public _jieba() {
+  public _jieba(mode: 'cn' | 'tw' = 'cn') {
     if (!Preference.jieba) return this
-    return this.$text(jieba.cut(this.chunk).join(' ').trim())
+    return this.$text(jieba.cut(this.chunk, mode).join(' ').trim())
   }
 
   /** word segmentation for Japanese items. Uses substantial memory; must be enabled under Preferences -> Better BibTeX -> Advanced -> Citekeys */
@@ -1331,7 +1331,8 @@ class PatternFormatter {
 
     // apply jieba.cut and flatten.
     if (Preference.jieba && options.skipWords && this.item.transliterateMode === 'chinese') {
-      words = [].concat(...words.map((word: string) => jieba.cut(word)))
+      const mode = this.item.getField('language')?.toString().toLowerCase() === 'zh-tw' ? 'tw' : 'cn'
+      words = [].concat(...words.map((word: string) => jieba.cut(word, mode)))
       // remove CJK skipwords
       words = words.filter((word: string) => !this.skipWords.has(word.toLowerCase()))
       log.debug('titleWords after jieba:', words)
