@@ -351,8 +351,18 @@ class Docs extends ASTWalker {
       if (pref.options) prefs[pref.shortName] += `\nOptions:\n\n${[...pref.options.values()].map(o => `* ${o}`).join('\n')}\n`
     }
 
+    const hidden = `
+You can edit most Better BibTeX preferences through the Preferences window in Zotero. However, Better BibTeX supports additional hidden preferences. These settings are intended for more advanced use.
+
+## Zotero
+
+To view the the full list of Better BibTeX's preferences, including many hidden preferences, go to the Advanced pane of the Zotero preferences and click “Config Editor”. Enter “better-bibtex” into the Filter field at the top of the list that comes up. Preferences that can be safely changed by users are described below.
+
+The Better BibTeX hidden preferences are preceded by “extensions.zotero.translators.better-bibtex.”
+
+`
     this.pages['hidden-preferences'] = {
-      content: Object.values(this.preferences).filter(p => !p.label && p.description).map(p => `## <%~ it.${p.shortName} %>`).sort().join('\n'),
+      content: hidden + Object.values(this.preferences).filter(p => !p.label && p.description).map(p => `## <%~ it.${p.shortName} %>`).sort().join('\n'),
     }
 
     for (const page of glob.sync(path.join(dir, '*.md'))) {
