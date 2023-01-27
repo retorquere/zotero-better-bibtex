@@ -11,6 +11,11 @@ import os
 print('parsing babel language mapping')
 import sqlite3
 DB = sqlite3.connect(':memory:')
+
+#if os.path.exists('babel.sqlite'):
+#  os.remove('babel.sqlite')
+#DB = sqlite3.connect('babel.sqlite', isolation_level=None)
+
 class Row(sqlite3.Row):
   def __getattr__(self, name):
     return self[name]
@@ -20,41 +25,41 @@ class Row(sqlite3.Row):
     return { k: self[k] for k in self.keys() }
 DB.row_factory = Row
 
-class Trie:
-  def __init__(self):
-    self.letters={}
-
-  def addString(self,s):
-    letters=self.letters
-    for c in s:
-      if(c not in letters):
-        letters[c]={"freq":1}
-      else:
-        letters[c]["freq"]+=1
-      letters=letters[c]
-    letters["*"]=True #marks the end of word
-    
-  def generateUniquePrefix(self,s):
-    prefix=[]
-    letters=self.letters
-    for c in s:
-      prefix.append(c)
-      if(letters[c]["freq"]==1):
-        break
-      letters=letters[c]
-      
-    return "".join(prefix)
-
-  @classmethod
-  def prefix(cls, A):
-    t=Trie()
-    for s in A:
-      t.addString(s)
-    ans=[]
-    for s in A:
-      prefix=t.generateUniquePrefix(s)
-      ans.append(prefix)
-    return {k: next(v for v in A if v.startswith(k)) for k in ans}
+#class Trie:
+#  def __init__(self):
+#    self.letters={}
+#
+#  def addString(self,s):
+#    letters=self.letters
+#    for c in s:
+#      if(c not in letters):
+#        letters[c]={"freq":1}
+#      else:
+#        letters[c]["freq"]+=1
+#      letters=letters[c]
+#    letters["*"]=True #marks the end of word
+#    
+#  def generateUniquePrefix(self,s):
+#    prefix=[]
+#    letters=self.letters
+#    for c in s:
+#      prefix.append(c)
+#      if(letters[c]["freq"]==1):
+#        break
+#      letters=letters[c]
+#      
+#    return "".join(prefix)
+#
+#  @classmethod
+#  def prefix(cls, A):
+#    t=Trie()
+#    for s in A:
+#      t.addString(s)
+#    ans=[]
+#    for s in A:
+#      prefix=t.generateUniquePrefix(s)
+#      ans.append(prefix)
+#    return {k: next(v for v in A if v.startswith(k)) for k in ans}
 
 DB.execute('CREATE TABLE biblatex (langid NOT NULL PRIMARY KEY)')
 DB.executemany('INSERT INTO biblatex (langid) VALUES (?)', [(path.stem.lower(),) for path in Path('submodules/biblatex/tex/latex/biblatex/lbx').glob('*.lbx')])
@@ -200,22 +205,24 @@ for langid, mapping in langids.items():
 patchups = {
   'gaelic': 'scottishgaelic',
   'norwegian': 'norsk',
+  'tw': 'chinese-traditional',
+  'zh-tw': 'chinese-traditional',
 }
 for language, langid in patchups.items():
   DB.execute('INSERT INTO langmap (language, langid) SELECT ?, ? WHERE EXISTS (SELECT 1 FROM langmap WHERE langid = ?)', (language, langid, langid))
 
 # all unique prefixes
-for prefix, language in Trie.prefix([row.language for row in DB.execute('SELECT language FROM langmap')]).items():
-  continue # disable for now
-
-  if prefix[-1] == '-': prefix = prefix[:-1]
-  if len(prefix) < 3: continue # don't match very short IDs
-  DB.execute('''
-    INSERT INTO langmap (language, langid)
-    SELECT ?, langid
-    FROM langmap
-    WHERE language = ? AND NOT EXISTS (SELECT 1 FROM langmap WHERE language = ?)
-  ''', (prefix, language, prefix))
+#for prefix, language in Trie.prefix([row.language for row in DB.execute('SELECT language FROM langmap')]).items():
+#  continue # disable for now
+#
+#  if prefix[-1] == '-': prefix = prefix[:-1]
+#  if len(prefix) < 3: continue # don't match very short IDs
+#  DB.execute('''
+#    INSERT INTO langmap (language, langid)
+#    SELECT ?, langid
+#    FROM langmap
+#    WHERE language = ? AND NOT EXISTS (SELECT 1 FROM langmap WHERE language = ?)
+#  ''', (prefix, language, prefix))
 
 for row in DB.execute('SELECT * FROM babel WHERE prio <> 0 AND langid NOT IN (SELECT language FROM langmap) ORDER BY langid'):
   print(' ', row.langid, '=>', row.tag, 'not mapped')
@@ -224,20 +231,45 @@ os.makedirs('gen/babel', exist_ok=True)
 with open('gen/babel/langmap.json', 'w') as f:
   json.dump({ row.language: row.langid for row in DB.execute('SELECT * from langmap ORDER BY language')}, f, indent='  ')
 
-with open('gen/babel/ids.json', 'w') as f:
-  json.dump([ row.langid for row in DB.execute('SELECT DISTINCT langid from langmap ORDER BY langid')], f, indent='  ')
+#with open('gen/babel/ids.json', 'w') as f:
+#  json.dump([ row.langid for row in DB.execute('SELECT DISTINCT langid from langmap ORDER BY langid')], f, indent='  ')
 
 with open('gen/babel/tag.json', 'w') as f:
   tag = {}
-  for langid in ['en', 'ja', 'zh', 'de']:
-    language = f"SELECT DISTINCT langid FROM langmap WHERE language = '{langid}' OR language LIKE '{langid}-%'"
-    language = DB.execute(f'''
-      {language}
-      UNION
-      SELECT DISTINCT language FROM langmap WHERE langid IN ({language})
-    ''')
-    for row in language:
-      tag[row.langid] = langid
+  q = '''
+    WITH
+      babeltag(tag) AS (
+        SELECT 'en'
+        UNION
+        SELECT 'ja'
+        UNION
+        SELECT 'zh'
+        UNION
+        SELECT 'de'
+      ),
+      language(tag, language) AS (
+        SELECT 'zh-hant', 'chinese-traditional'
+
+        UNION
+
+        SELECT 'zh-hant', 'zh-tw'
+
+        UNION
+
+        SELECT babeltag.tag, langmap.langid
+        FROM langmap
+        JOIN babeltag ON langmap.language = babeltag.tag OR (langmap.language NOT IN ('zh-hant', 'zh-tw') AND langmap.language LIKE babeltag.tag || '-%')
+
+        UNION
+
+        SELECT language.tag, langmap.language
+        FROM language
+        JOIN langmap ON langmap.langid = language.language
+      )
+    SELECT tag, language from language
+  '''
+  for row in DB.execute(q):
+    tag[row.language] = row.tag
   json.dump(tag, f, indent='  ')
 
 #for line in DB.iterdump():

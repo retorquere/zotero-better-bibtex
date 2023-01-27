@@ -1,0 +1,104 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "DOIandURL": "doi",
+      "asciiBibLaTeX": true,
+      "baseAttachmentPath": "D:\\OneDrive - ZnqbuZ\\Documents",
+      "citekeyFormat": "auth.fold.lower +\"_\"+ veryshorttitle(2,2) +\"_\"+ year",
+      "citekeyFormatBackup": "auth.fold.lower +\"_\"+ veryshorttitle(2,2) +\"_\"+ year",
+      "jieba": true,
+      "warnBulkModify": 0
+    }
+  },
+  "items": [
+    {
+      "ISBN": "978-7-81048-761-0",
+      "abstractNote": "\u672c\u4e66\u5171\u6536\u96c6\u56fe\u7247400\u4f59\u5e45\u5e76\u9644\u4ee5\u6587\u5b57\u8bf4\u660e,\u4ee5\u94c1\u8def\u4e0a\u5e38\u89c1\u7684\u5404\u79cd\u4f24\u4ea1\u4e3a\u4e3b,\u5185\u5bb9\u5206\u4e3a:\u8f97\u8f67\u4f24\u3001\u649e\u51fb\u3001\u62d6\u64e6\u4f24\u7b49\u51719\u7ae0\u3002",
+      "attachments": [
+        {
+          "accessDate": "2022-09-24T09:49:36Z",
+          "itemType": "attachment",
+          "title": "Google Books Link",
+          "url": "https://books.google.com.tw/books?id=gzA4AAAACAAJ"
+        }
+      ],
+      "citationKey": "xiao_Fayixuetiedaosunshangtupu_2003",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "\u53d1\u6c11",
+          "lastName": "\u8096"
+        }
+      ],
+      "date": "2003",
+      "extra": [
+        "Google-Books-ID: gzA4AAAACAAJ"
+      ],
+      "itemID": 1,
+      "itemType": "book",
+      "language": "zh-CN",
+      "libraryCatalog": "Google Books",
+      "numPages": "153",
+      "publisher": "\u90d1\u5dde\u5927\u5b66\u51fa\u7248\u793e",
+      "title": "\u6cd5\u533b\u5b66\u94c1\u9053\u635f\u4f24\u56fe\u8c31"
+    },
+    {
+      "ISBN": "978-7-81048-761-0",
+      "abstractNote": "\u672c\u4e66\u5171\u6536\u96c6\u56fe\u7247400\u4f59\u5e45\u5e76\u9644\u4ee5\u6587\u5b57\u8bf4\u660e,\u4ee5\u94c1\u8def\u4e0a\u5e38\u89c1\u7684\u5404\u79cd\u4f24\u4ea1\u4e3a\u4e3b,\u5185\u5bb9\u5206\u4e3a:\u8f97\u8f67\u4f24\u3001\u649e\u51fb\u3001\u62d6\u64e6\u4f24\u7b49\u51719\u7ae0\u3002",
+      "attachments": [
+        {
+          "accessDate": "2022-09-24T09:49:36Z",
+          "itemType": "attachment",
+          "title": "Google Books Link",
+          "url": "https://books.google.com.tw/books?id=gzA4AAAACAAJ"
+        }
+      ],
+      "citationKey": "xiao_Fayixuetiedaosunshangtupu_2003",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "\u53d1\u6c11",
+          "lastName": "\u8096"
+        }
+      ],
+      "date": "2013",
+      "extra": [
+        "Google-Books-ID: gzA4AAAACAAJ"
+      ],
+      "itemID": 2,
+      "itemType": "book",
+      "language": "zh",
+      "libraryCatalog": "Google Books",
+      "numPages": "153",
+      "publisher": "\u90d1\u5dde\u5927\u5b66\u51fa\u7248\u793e",
+      "title": "\u6cd5\u533b\u5b66\u94c1\u9053\u635f\u4f24\u56fe\u8c31"
+    },
+    {
+      "ISBN": "978-988-17202-7-6",
+      "citationKey": "zhao_GaigeLi_2009",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "\u7d2b\u967d",
+          "lastName": "\u8d99"
+        }
+      ],
+      "date": "2009",
+      "extra": [
+        "Google-Books-ID: FVaOQQAACAAJ"
+      ],
+      "itemID": 3,
+      "itemType": "book",
+      "language": "zh",
+      "libraryCatalog": "Google Books",
+      "numPages": "370",
+      "publisher": "\u65b0\u4e16\u7d00\u51fa\u7248\u793e",
+      "title": "\u6539\u9769\u6b77\u7a0b"
+    }
+  ]
+}

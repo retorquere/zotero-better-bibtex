@@ -96,7 +96,10 @@ for (const lib of argv._) {
           delete creator.multi
         }
 
-        if (argv.attachments) delete item.attachments
+        if (argv.attachments && item.attachments) {
+          item.attachments = item.attachments.filter(att => !att.path)
+          if (!item.attachments.length) delete item.attachments
+        }
         if (item.attachments) {
           for (const att of item.attachments) {
             clean(att)
