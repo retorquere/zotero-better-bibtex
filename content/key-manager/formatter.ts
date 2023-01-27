@@ -175,7 +175,7 @@ class Item {
   public key: string
   public id: number
   public libraryID: number
-  public transliterateMode: 'german' | 'japanese' | 'chinese' | ''
+  public transliterateMode: 'german' | 'japanese' | 'chinese' | 'chinese-traditional' | ''
   public getField: (name: string) => number | string
   public extra: string
   public extraFields: Extra.Fields
@@ -229,6 +229,10 @@ class Item {
 
       case 'zh':
         this.transliterateMode = 'chinese'
+        break
+
+      case 'zh-hant':
+        this.transliterateMode = 'chinese-traditional'
         break
 
       default:
@@ -1240,9 +1244,10 @@ class PatternFormatter {
   }
 
   /** word segmentation for Chinese items. Uses substantial memory, and adds about 7 seconds to BBTs startup time; must be enabled under Preferences -> Better BibTeX -> Advanced -> Citekeys */
-  public _jieba(mode?: 'cn' | 'tw') {
+  public _jieba(mode?: 'cn' | 'tw' | 'hant') {
     if (!Preference.jieba) return this
-    mode = mode || (this.item.getField('language')?.toString().toLowerCase() === 'tw' ? 'tw' : 'cn')
+    if (mode === 'hant') mode = 'tw'
+    mode = mode || (this.item.transliterateMode === 'chinese-traditional' ? 'tw' : 'cn')
     return this.$text(jieba.cut(this.chunk, mode).join(' ').trim())
   }
 
@@ -1272,7 +1277,7 @@ class PatternFormatter {
     return this.$text(this.transliterate(this.chunk, mode))
   }
 
-  private transliterate(str: string, mode?: 'minimal' | 'de' | 'german' | 'ja' | 'japanese' | 'zh' | 'chinese'): string {
+  private transliterate(str: string, mode?: 'minimal' | 'de' | 'german' | 'ja' | 'japanese' | 'zh' | 'chinese' | 'tw' | 'zh-hant' | 'chinese-traditional'): string {
     mode = mode || this.item.transliterateMode || 'japanese'
 
     let replace: Record<string, string> = {}
@@ -1292,7 +1297,10 @@ class PatternFormatter {
         }
         break
 
+      case 'tw':
+      case 'zh-hant':
       case 'zh':
+      case 'chinese-traditional':
       case 'chinese':
         str = pinyin(str)
         break
@@ -1331,8 +1339,8 @@ class PatternFormatter {
     log.debug('titleWords:', words)
 
     // apply jieba.cut and flatten.
-    if (Preference.jieba && options.skipWords && this.item.transliterateMode === 'chinese') {
-      const mode = this.item.getField('language')?.toString().toLowerCase() === 'tw' ? 'tw' : 'cn'
+    if (Preference.jieba && options.skipWords && this.item.transliterateMode.startsWith('chinese')) {
+      const mode = this.item.transliterateMode === 'chinese-traditional' ? 'tw' : 'cn'
       words = [].concat(...words.map((word: string) => jieba.cut(word, mode)))
       // remove CJK skipwords
       words = words.filter((word: string) => !this.skipWords.has(word.toLowerCase()))
