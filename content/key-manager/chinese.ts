@@ -6,16 +6,6 @@ import createJieba from 'js-jieba'
 import * as cn from 'jieba-zh-cn'
 import * as tw from 'jieba-zh-tw'
 
-/*
-const cnjieba = createJieba(
-  cn.JiebaDict,
-  cn.HMMModel,
-  cn.UserDict,
-  cn.IDF,
-  cn.StopWords
-)
-*/
-
 export const jieba = new class {
   private cn: any
   private tw: any
