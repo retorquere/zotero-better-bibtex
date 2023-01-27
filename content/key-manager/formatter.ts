@@ -1278,7 +1278,7 @@ class PatternFormatter {
   }
 
   private transliterate(str: string, mode?: 'minimal' | 'de' | 'german' | 'ja' | 'japanese' | 'zh' | 'chinese' | 'tw' | 'zh-hant' | 'chinese-traditional'): string {
-    mode = mode || this.item.transliterateMode || 'japanese'
+    mode = mode || this.item.transliterateMode || 'minimal'
 
     let replace: Record<string, string> = {}
     switch (mode) {

@@ -5,7 +5,7 @@ import { Translation, TranslatorMetadata, collect } from './lib/translator'
 declare const Zotero: any
 declare var ZOTERO_TRANSLATOR_INFO: TranslatorMetadata // eslint-disable-line no-var
 
-import html2markdown from '@inkdropapp/html2markdown'
+import html2md from 'html-to-md'
 
 import { log } from '../content/logger'
 import { Item } from '../gen/typings/serialized-item'
@@ -91,7 +91,7 @@ class Exporter {
     style += '  blockquote { border-left: 1px solid gray; }\n'
 
     this.html = `<html><head><style>${ style }</style></head><body>${ this.body }</body></html>`
-    if (this.translation.options.markdown) this.markdown = html2markdown(this.html)
+    if (this.translation.options.markdown) this.markdown = html2md(this.html)
   }
 
   show(context, args) {

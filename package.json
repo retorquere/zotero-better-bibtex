@@ -59,7 +59,6 @@
   "dependencies": {
     "@artsy/to-title-case": "^1.1.0",
     "@caeser1996/titlecase": "^3.0.2",
-    "@inkdropapp/html2markdown": "^3.0.0",
     "@lifeparticle/ap-style-title-case": "^1.5.0",
     "@stdlib/utils-escape-regexp-string": "^0.0.9",
     "@ungap/structured-clone": "^1.0.1",
@@ -75,6 +74,7 @@
     "eventemitter3": "^5.0.0",
     "fast-safe-stringify": "^2.1.1",
     "fold-to-ascii": "^5.0.1",
+    "html-to-md": "^0.8.3",
     "i": "^0.3.7",
     "jieba-zh-cn": "^1.0.12",
     "jieba-zh-tw": "^1.0.12",

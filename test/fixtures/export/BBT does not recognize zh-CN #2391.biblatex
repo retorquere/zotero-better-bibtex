@@ -41,12 +41,27 @@
   langid = {chinese-traditional}
 }
 
-@book{XiaomingBiyeWuGuoliJiaotongDaxueZixunKexueYuGongchengYanjiusuo,
+@book{XiaomingBiyeYuGuoliJiaotongDaxueZixunKexueYuGongchengYanjiusuo,
   title = {小明畢業於國立交通大學資訊科學與工程研究所},
   langid = {chinese-traditional}
 }
 
 @book{XinzhuDeJiaotongDaxueYaoZai2021Nian2Yue1RiYuTaibeiDeYangmingDaxueHebing,
   title = {新竹的交通大學要在2021年2月1日與台北的陽明大學合併},
+  langid = {chinese-traditional}
+}
+
+@book{YuZh,
+  title = {於 zh},
+  langid = {chinese}
+}
+
+@book{YuZhCN,
+  title = {於 zh-CN},
+  langid = {chinese}
+}
+
+@book{YuZhTW,
+  title = {於 zh-TW},
   langid = {chinese-traditional}
 }
