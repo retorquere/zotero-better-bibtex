@@ -1336,7 +1336,6 @@ class PatternFormatter {
     let words: string[] = Zotero.Utilities.XRegExp.matchChain(title, [this.re.word])
       .map((word: string) => word.replace(/-/g, ''))
       .filter((word: string) => word && !(options.skipWords && ucs2decode(word).length === 1 && !word.match(script.cjk)))
-    log.debug('titleWords:', words)
 
     // apply jieba.cut and flatten.
     if (Preference.jieba && options.skipWords && this.item.transliterateMode.startsWith('chinese')) {
@@ -1344,36 +1343,29 @@ class PatternFormatter {
       words = [].concat(...words.map((word: string) => jieba.cut(word, mode)))
       // remove CJK skipwords
       words = words.filter((word: string) => !this.skipWords.has(word.toLowerCase()))
-      log.debug('titleWords after jieba:', words)
     }
 
     if (Preference.kuroshiro && kuroshiro.enabled && options.skipWords && this.item.transliterateMode === 'japanese') {
       words = [].concat(...words.map((word: string) => kuroshiro.tokenize(word)))
       // remove CJK skipwords
       words = words.filter((word: string) => !this.skipWords.has(word.toLowerCase()))
-      log.debug('titleWords after kuroshiro:', words)
     }
 
     if (options.transliterate) {
       words = words.map((word: string) => {
         if (this.item.transliterateMode) {
-          log.debug('titleWords transliterating in mode', this.item.transliterateMode)
           return this.transliterate(word)
         }
         else if (Preference.kuroshiro && kuroshiro.enabled) {
-          log.debug('titleWords transliterating in fallback kuroshiro mode')
           return this.transliterate(kuroshiro.convert(word, {to: 'romaji'}), 'minimal')
         }
         else if (Preference.jieba) {
-          log.debug('titleWords transliterating in fallback jieba->pinyin mode')
           return this.transliterate(pinyin(word), 'minimal')
         }
         else {
-          log.debug('titleWords transliterating in fallback default mode')
           return this.transliterate(word)
         }
       })
-      log.debug('titleWords transliterated to', words)
     }
 
     // remove transliterated and non-CJK skipwords
