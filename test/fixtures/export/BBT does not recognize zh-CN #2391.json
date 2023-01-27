@@ -9,13 +9,33 @@
       "DOIandURL": "doi",
       "asciiBibLaTeX": true,
       "baseAttachmentPath": "D:\\OneDrive - ZnqbuZ\\Documents",
-      "citekeyFormat": "auth.fold.lower +\"_\"+ veryshorttitle(2,2) +\"_\"+ year",
-      "citekeyFormatBackup": "auth.fold.lower +\"_\"+ veryshorttitle(2,2) +\"_\"+ year",
+      "citekeyFormat": "title.transliterate.capitalize",
       "jieba": true,
       "warnBulkModify": 0
     }
   },
   "items": [
+    {
+      "citationKey": "MeizhuJinbiaoDuikangsai",
+      "itemID": 1,
+      "itemType": "book",
+      "language": "zh-Hant",
+      "title": "\u6885\u7af9\u9326\u6a19\u5c0d\u6297\u8cfd"
+    },
+    {
+      "citationKey": "XiaomingBiyeWuGuoliJiaotongDaxueZixunKexueYuGongchengYanjiusuo",
+      "itemID": 2,
+      "itemType": "book",
+      "language": "zh-Hant",
+      "title": "\u5c0f\u660e\u7562\u696d\u65bc\u570b\u7acb\u4ea4\u901a\u5927\u5b78\u8cc7\u8a0a\u79d1\u5b78\u8207\u5de5\u7a0b\u7814\u7a76\u6240"
+    },
+    {
+      "citationKey": "XinzhuJiaotongDaxueYaoZai2021Nian2Yue1RiYuTaibeiYangmingDaxueHebing",
+      "itemID": 3,
+      "itemType": "book",
+      "language": "zh-Hant",
+      "title": "\u65b0\u7af9\u7684\u4ea4\u901a\u5927\u5b78\u8981\u57282021\u5e742\u67081\u65e5\u8207\u53f0\u5317\u7684\u967d\u660e\u5927\u5b78\u5408\u4f75"
+    },
     {
       "ISBN": "978-7-81048-761-0",
       "abstractNote": "\u672c\u4e66\u5171\u6536\u96c6\u56fe\u7247400\u4f59\u5e45\u5e76\u9644\u4ee5\u6587\u5b57\u8bf4\u660e,\u4ee5\u94c1\u8def\u4e0a\u5e38\u89c1\u7684\u5404\u79cd\u4f24\u4ea1\u4e3a\u4e3b,\u5185\u5bb9\u5206\u4e3a:\u8f97\u8f67\u4f24\u3001\u649e\u51fb\u3001\u62d6\u64e6\u4f24\u7b49\u51719\u7ae0\u3002",
@@ -39,7 +59,7 @@
       "extra": [
         "Google-Books-ID: gzA4AAAACAAJ"
       ],
-      "itemID": 1,
+      "itemID": 4,
       "itemType": "book",
       "language": "zh-CN",
       "libraryCatalog": "Google Books",
@@ -70,7 +90,7 @@
       "extra": [
         "Google-Books-ID: gzA4AAAACAAJ"
       ],
-      "itemID": 2,
+      "itemID": 5,
       "itemType": "book",
       "language": "zh",
       "libraryCatalog": "Google Books",
@@ -92,7 +112,7 @@
       "extra": [
         "Google-Books-ID: FVaOQQAACAAJ"
       ],
-      "itemID": 3,
+      "itemID": 6,
       "itemType": "book",
       "language": "zh",
       "libraryCatalog": "Google Books",

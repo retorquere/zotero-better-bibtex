@@ -13,7 +13,7 @@ Feature: Export
 
     Examples:
       | file                                                                                                                     | references |
-      | BBT does not recognize zh-CN #2391                                                                                       | 3          |
+      | BBT does not recognize zh-CN #2391                                                                                       | 6          |
       | Issue of generating citekeys with parentheses  #2366                                                                     | 1          |
       | Convert Chinese name to Pinyin in citation key. #2361                                                                    | 1          |
       | Citation key is too long for Chines literature #2320                                                                     | 5          |

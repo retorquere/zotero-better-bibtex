@@ -1,4 +1,4 @@
-@book{xiao_FayixueTiedao_2003,
+@book{FayixueTiedaoSunshangTupu,
   title = {法医学铁道损伤图谱},
   author = {肖, 发民},
   date = {2003},
@@ -11,7 +11,7 @@
   pagetotal = {153}
 }
 
-@book{xiao_FayixueTiedao_2013,
+@book{FayixueTiedaoSunshangTupua,
   title = {法医学铁道损伤图谱},
   author = {肖, 发民},
   date = {2013},
@@ -24,7 +24,7 @@
   pagetotal = {153}
 }
 
-@book{zhao_GaigeLicheng_2009,
+@book{GaigeLicheng,
   title = {改革歷程},
   author = {趙, 紫陽},
   date = {2009},
@@ -34,4 +34,19 @@
   isbn = {978-988-17202-7-6},
   langid = {chinese},
   pagetotal = {370}
+}
+
+@book{MeizhuJinbiaoDuikangsai,
+  title = {梅竹錦標對抗賽},
+  langid = {chinese-traditional}
+}
+
+@book{XiaomingBiyeWuGuoliJiaotongDaxueZixunKexueYuGongchengYanjiusuo,
+  title = {小明畢業於國立交通大學資訊科學與工程研究所},
+  langid = {chinese-traditional}
+}
+
+@book{XinzhuDeJiaotongDaxueYaoZai2021Nian2Yue1RiYuTaibeiDeYangmingDaxueHebing,
+  title = {新竹的交通大學要在2021年2月1日與台北的陽明大學合併},
+  langid = {chinese-traditional}
 }
