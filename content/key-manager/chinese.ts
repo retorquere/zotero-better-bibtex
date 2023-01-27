@@ -48,5 +48,5 @@ export const jieba = new class {
 }
 
 export function pinyin(str: string): string {
-  return Pinyin(str).map((c: string[]) => c.join('')).join('')
+  return Pinyin(str).map((c: string[]) => c[0]).join('')
 }
