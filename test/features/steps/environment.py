@@ -102,7 +102,7 @@ def before_scenario(context, scenario):
     return
   if not TestBin.test_here(scenario):
     #scenario.skip(f'TESTED IN BIN {TestBin.test_in(scenario)}')
-    #scenario.skip()
+    scenario.skip()
     return
   if 'test' in context.config.userdata and not any(test in scenario.name.lower() for test in context.config.userdata['test'].lower().split(',')):
     #scenario.skip(f"ONLY TESTING SCENARIOS WITH {context.config.userdata['test']}")
