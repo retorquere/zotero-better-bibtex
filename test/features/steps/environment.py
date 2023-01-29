@@ -97,13 +97,16 @@ def after_all(context):
 
 def before_scenario(context, scenario):
   if active_tag_matcher.should_exclude_with(scenario.effective_tags):
-    scenario.skip(f"DISABLED ACTIVE-TAG {str(active_tag_value_provider)}")
+    #scenario.skip(f"DISABLED ACTIVE-TAG {str(active_tag_value_provider)}")
+    scenario.skip()
     return
   if not TestBin.test_here(scenario):
-    scenario.skip(f'TESTED IN BIN {TestBin.test_in(scenario)}')
+    #scenario.skip(f'TESTED IN BIN {TestBin.test_in(scenario)}')
+    #scenario.skip()
     return
   if 'test' in context.config.userdata and not any(test in scenario.name.lower() for test in context.config.userdata['test'].lower().split(',')):
-    scenario.skip(f"ONLY TESTING SCENARIOS WITH {context.config.userdata['test']}")
+    #scenario.skip(f"ONLY TESTING SCENARIOS WITH {context.config.userdata['test']}")
+    scenario.skip()
     return
 
   TestBin.start(scenario)
