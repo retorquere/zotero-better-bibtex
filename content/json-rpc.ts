@@ -352,9 +352,6 @@ class NSItem {
       if (typeof libraryID !== 'number') throw { code: INVALID_PARAMETERS, message: 'keyscope is library, please provide a library ID' }
       query.$and.push({ libraryID: {$eq: libraryID} })
     }
-    else if (Preference.keyScope === 'global') {
-      if (typeof libraryID === 'number') throw { code: INVALID_PARAMETERS, message: 'keyscope is global, do not provide a library ID' }
-    }
 
     const found = Zotero.BetterBibTeX.KeyManager.keys.find(query)
 
