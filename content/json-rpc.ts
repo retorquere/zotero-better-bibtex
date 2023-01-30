@@ -4,7 +4,6 @@ import { getItemsAsync } from './get-items-async'
 import { AUXScanner } from './aux-scanner'
 import { AutoExport } from './auto-export'
 import { Translators } from './translators'
-import { Preference } from './prefs'
 import { get as getCollection } from './collection'
 import { $and, Query } from './db/loki'
 import * as Library from './library'
@@ -350,7 +349,7 @@ class NSItem {
       $and: [
         { citekey: { $in: citekeys } },
         { libraryID: { $eq: Library.get(libraryID).id } },
-      ]
+      ],
     }
 
     const found = Zotero.BetterBibTeX.KeyManager.keys.find(query)
