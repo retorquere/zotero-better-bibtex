@@ -344,13 +344,13 @@ class NSItem {
    * @param translator BBT translator name or GUID
    * @param libraryID  ID of library to select the items from. When omitted, assume 'My Library'
    */
-  public async export(citekeys: string[], translator: string, libraryID?: number) {
-    const query: Query = {$and: [{citekey: { $in: citekeys } } ]}
+  public async export(citekeys: string[], translator: string, libraryID?: string | number) {
 
-    if (Preference.keyScope === 'library') {
-      if (typeof libraryID === 'undefined') libraryID = Zotero.Libraries.userLibraryID
-      if (typeof libraryID !== 'number') throw { code: INVALID_PARAMETERS, message: 'keyscope is library, please provide a library ID' }
-      query.$and.push({ libraryID: {$eq: libraryID} })
+    const query: Query = {
+      $and: [
+        { citekey: { $in: citekeys } },
+        { libraryID: { $eq: Library.get(libraryID).id } },
+      ]
     }
 
     const found = Zotero.BetterBibTeX.KeyManager.keys.find(query)
