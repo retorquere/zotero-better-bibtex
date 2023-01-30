@@ -167,7 +167,7 @@ Si cette option est activée et que vous rencontrez un problème autre que l'ann
 
 <!ENTITY better-bibtex.Preferences.advanced.ideographs "Idéographes dans les clés de citation">
 <!ENTITY better-bibtex.Preferences.advanced.ideographs.kuroshiro "Appliquer la romanisation kuroshiro dans les noms/titres japonais. Monopolise beaucoup de mémoire.">
-<!ENTITY better-bibtex.Preferences.advanced.ideographs.jieba "Enable 'jieba'/'pinyin' filters in citekey patterns. Uses a lot of memory.">
+<!ENTITY better-bibtex.Preferences.advanced.ideographs.jieba "Activer les filtres 'jieba'/'pinyin' dans les motifs de clés de citation. Utilise beaucoup de mémoire.">
 
 <!ENTITY better-bibtex.Preferences.export.qualityReport "Inclure des commentaires concernant de potentiels problèmes avec les entrées exportées">
 <!ENTITY better-bibtex.Preferences.export.automaticTags "Inclure les tags automatiques dans l'export">
