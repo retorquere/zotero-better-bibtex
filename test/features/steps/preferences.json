@@ -537,7 +537,7 @@
   },
   {
     "name": "jieba",
-    "label": "Enable 'jieba' filter in citekey patterns. Uses a lot of memory.",
+    "label": "Enable 'jieba'/'pinyin' filters in citekey patterns. Uses a lot of memory.",
     "type": "boolean",
     "default": false,
     "affects": []
