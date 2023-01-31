@@ -327,7 +327,7 @@ export async function pick(options: any): Promise<string> {
   await Zotero.BetterBibTeX.ready
 
   try {
-    const formatter = options.format || 'default'
+    const formatter = options.format || 'playground'
     if (!Formatter[formatter]) throw new Error(`No such formatter ${JSON.stringify(formatter)}`)
     const doc = Application.createDocument(options)
     await Zotero.Integration.execCommand('BetterBibTeX', 'addEditCitation', doc.id)
