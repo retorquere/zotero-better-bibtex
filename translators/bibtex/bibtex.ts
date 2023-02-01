@@ -119,6 +119,7 @@ const config: Config = {
       newspaperArticle: 'article',
       patent          : 'patent',
       podcast         : 'misc',
+      preprint        : 'misc',
       presentation    : 'misc',
       radioBroadcast  : 'misc',
       report          : 'techreport',

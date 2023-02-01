@@ -108,6 +108,7 @@ const config: Config = {
       newspaperArticle   : {type: 'article', subtype: 'newspaper'},
       patent             : 'patent',
       podcast            : 'audio',
+      preprint           : 'online',
       presentation       : 'unpublished',
       radioBroadcast     : 'audio',
       report             : 'report',

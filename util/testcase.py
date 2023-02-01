@@ -41,6 +41,7 @@ parser.add_argument('--feature',    '-f', dest='feature')
 parser.add_argument('--issue',      '-i', dest='issue', default=issue and str(issue))
 parser.add_argument('--export',     '-e', dest='mode', action='store_const', const='export')
 parser.add_argument('--import'          , dest='mode', action='store_const', const='import')
+parser.add_argument('--prefs'           , dest='mode', action='store_const', const='prefs')
 args, unknownargs = parser.parse_known_args()
 sys.argv = sys.argv[:1] + unknownargs
 

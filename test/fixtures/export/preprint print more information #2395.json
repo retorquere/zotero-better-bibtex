@@ -1,0 +1,51 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "asciiBibLaTeX": true,
+      "autoAbbrev": true,
+      "autoExportDelay": 2,
+      "baseAttachmentPath": "/Users/furue/Dropbox/doc/papers",
+      "citekeyFormat": "authEtal2(initials=true).capitalize+\":\"+year",
+      "citekeyFormatBackup": "authEtal2(initials=true).capitalize+\":\"+year",
+      "exportTitleCase": false,
+      "extraMergeCSL": true,
+      "qualityReport": true,
+      "skipFields": "abstract,file,issn",
+      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc,groups"
+    }
+  },
+  "items": [
+    {
+      "DOI": "10.1002/essoar.10511180.2",
+      "abstractNote": "Intermediate, eastward zonal jets connect the oxygen-rich western boundary of the Atlantic Ocean with the oxygen minimum zones on the eastern boundary. These jets are not well represented in climate",
+      "accessDate": "2022-10-26T02:57:11Z",
+      "archiveLocation": "world",
+      "citationKey": "CalilPHR:2022a",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Paulo H. R.",
+          "lastName": "Calil"
+        }
+      ],
+      "date": "18-10-2022",
+      "extra": [
+        "ISSN: 1051-1180",
+        "Section: Oceanography"
+      ],
+      "itemID": 1,
+      "itemType": "preprint",
+      "language": "EN",
+      "libraryCatalog": "www.essoar.org",
+      "publisher": "Earth and Space Science Open Archive",
+      "rights": "Creative Commons Attribution 4.0 International License",
+      "title": "High-resolution, basin-scale simulations reveal the impact of intermediate zonal jets on the Atlantic oxygen minimum zones",
+      "url": "https://essopenarchive.org/doi/full/10.1002/essoar.10511180.2"
+    }
+  ]
+}
