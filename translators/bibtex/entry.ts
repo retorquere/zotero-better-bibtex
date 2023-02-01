@@ -61,6 +61,7 @@ const fieldOrder = [
   'number',
   'eprint',
   'eprinttype',
+  'eprintclass',
   'primaryclass',
   'pages',
   'publisher',

@@ -297,7 +297,12 @@ export function generateBibLaTeX(translation: Translation): void {
     if (entry.entrytype === 'book' && item.numberOfVolumes) entry.entrytype = 'mvbook'
     if (entry.entrytype === 'report' && item.type?.toLowerCase().includes('manual')) entry.entrytype = 'manual'
 
-    if (translation.preferences.biblatexExtractEprint) {
+    if (item.itemType === 'preprint' && item.publisher) {
+      entry.add({ name: 'eprint', value: item.number })
+      entry.add({ name: 'eprinttype', value: item.publisher })
+      entry.add({ name: 'eprintclass', value: item.section })
+    }
+    else if (translation.preferences.biblatexExtractEprint) {
       let m
       if (item.url && (m = item.url.match(/^https?:\/\/www.jstor.org\/stable\/([\S]+)$/i))) {
         entry.override({ name: 'eprinttype', value: 'jstor'})
@@ -468,7 +473,8 @@ export function generateBibLaTeX(translation: Translation): void {
         break
 
       default:
-        entry.add({ name: 'publisher', value: item.publisher, bibtexStrings: true })
+        // preprint is handled above
+        if (item.itemType !== 'preprint') entry.add({ name: 'publisher', value: item.publisher, bibtexStrings: true })
     }
 
     switch (entry.entrytype) {
