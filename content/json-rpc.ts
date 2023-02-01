@@ -4,7 +4,6 @@ import { getItemsAsync } from './get-items-async'
 import { AUXScanner } from './aux-scanner'
 import { AutoExport } from './auto-export'
 import { Translators } from './translators'
-import { Preference } from './prefs'
 import { get as getCollection } from './collection'
 import { $and, Query } from './db/loki'
 import * as Library from './library'
@@ -276,7 +275,7 @@ class NSItem {
    *
    * @returns  A formatted bibliography
    */
-  public async bibliography(citekeys: string[], format: { quickCopy?: boolean, contentType?: 'html' | 'text', locale?: string, id?: string} = {}) {
+  public async bibliography(citekeys: string[], format: { quickCopy?: boolean, contentType?: 'html' | 'text', locale?: string, id?: string} = {}, library?: string | number) {
     const qc = format.quickCopy ? Zotero.QuickCopy.unserializeSetting(Zotero.Prefs.get('export.quickCopy.setting')) : {}
     delete format.quickCopy
 
@@ -291,10 +290,17 @@ class NSItem {
     if (!format.id) throw new Error('no style specified')
     if (!format.id.includes('/')) format.id = `http://www.zotero.org/styles/${format.id}`
 
+    const libraryID = Library.get(library).id
+
     if (((format as any).mode || 'bibliography') !== 'bibliography') throw new Error(`mode must be bibliograpy, not ${(format as any).mode}`)
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    const items = await getItemsAsync(Zotero.BetterBibTeX.KeyManager.keys.find({ citekey: { $in: citekeys.map((citekey: string) => citekey.replace('@', '')) } }).map(key => key.itemID))
+    const items = await getItemsAsync(
+      Zotero.BetterBibTeX.KeyManager.keys.find($and({
+        citekey: { $in: citekeys.map((citekey: string) => citekey.replace('@', '')) },
+        libraryID,
+      })).map((key: { itemID: number }) => key.itemID)
+    )
 
     const bibliography = Zotero.QuickCopy.getContentFromItems(items, { ...format, mode: 'bibliography' }, null, false)
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
@@ -337,13 +343,13 @@ class NSItem {
    * @param translator BBT translator name or GUID
    * @param libraryID  ID of library to select the items from. When omitted, assume 'My Library'
    */
-  public async export(citekeys: string[], translator: string, libraryID?: number) {
-    const query: Query = {$and: [{citekey: { $in: citekeys } } ]}
+  public async export(citekeys: string[], translator: string, libraryID?: string | number) {
 
-    if (Preference.keyScope === 'library') {
-      if (typeof libraryID === 'undefined') libraryID = Zotero.Libraries.userLibraryID
-      if (typeof libraryID !== 'number') throw { code: INVALID_PARAMETERS, message: 'keyscope is library, please provide a library ID' }
-      query.$and.push({ libraryID: {$eq: libraryID} })
+    const query: Query = {
+      $and: [
+        { citekey: { $in: citekeys } },
+        { libraryID: { $eq: Library.get(libraryID).id } },
+      ],
     }
 
     const found = Zotero.BetterBibTeX.KeyManager.keys.find(query)
@@ -413,7 +419,14 @@ const api = new class API {
     if (request.params) {
       if (Array.isArray(request.params)) {
         if (request.params.length > schema.parameters.length) {
-          return {jsonrpc: '2.0', error: {code: INVALID_PARAMETERS, message: `${request.method}: expected (max) ${schema.parameters.length} arguments, got ${request.params.length}`}, id: null}
+          return {
+            jsonrpc: '2.0',
+            error: {
+              code: INVALID_PARAMETERS,
+              message: `${request.method}: expected (max) ${schema.parameters.length} arguments, got ${request.params.length}`,
+            },
+            id: null,
+          }
         }
 
         args.array = request.params
