@@ -806,22 +806,27 @@ export class ZoteroItem {
     if (!att.path) return
     if (!this.attachments) this.attachments = {}
 
-    if (this.jabref.fileDirectory) att.path = `${this.jabref.fileDirectory}${this.translation.paths.sep}${att.path}`
+    const overwrite = att.overwrite
+    delete att.overwrite
+    const path = att.path
 
     att.title = att.title || att.path.split(/[\\/]/).pop().replace(/\.[^.]+$/, '')
     if (!att.title) delete att.title
 
-    if (att.mimeType?.toLowerCase() === 'pdf' || (!att.mimeType && att.path.toLowerCase().endsWith('.pdf'))) {
-      att.mimeType = 'application/pdf'
-    }
+    if (att.mimeType?.toLowerCase() === 'pdf' || (!att.mimeType && att.path.toLowerCase().endsWith('.pdf'))) att.mimeType = 'application/pdf'
     if (!att.mimeType) delete att.mimeType
 
-    const overwrite = att.overwrite
-    delete att.overwrite
-    if (overwrite || !this.attachments[att.path]) this.attachments[att.path] = att
+    // unicode file paths can be encoded in any one of these forms
+    for (const form of ['NFC', 'NFD', 'NFKC', 'NFKD']) {
+      att = {...att, path }
+      if (this.jabref.fileDirectory) att.path = `${this.jabref.fileDirectory}${this.translation.paths.sep}${att.path}`
+      att.path = att.path.normalize(form)
+
+      if (overwrite || !this.attachments[att.path]) this.attachments[att.path] = att
+    }
   }
 
-  // "files (Mendeley)/filename(Qiqqa)" will import the same as "file" but won't be treated as verbatim by the bibtex parser. Needed because the people at Mendeley/Qiqqa can't be bothered to read the manual apparently.
+  // "files(Mendeley)/filename(Qiqqa)" will import the same as "file" but won't be treated as verbatim by the bibtex parser. Needed because the people at Mendeley/Qiqqa can't be bothered to read the manual apparently.
   protected $pdf(value: string): boolean { return this.$file(value) }
   protected $files(value: string): boolean { return this.$file(value) }
   protected $filename(value: string): boolean { return this.$file(value) }
