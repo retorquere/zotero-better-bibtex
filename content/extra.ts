@@ -102,7 +102,8 @@ export function get(extra: string, mode: 'zotero' | 'csl', options?: GetOptions)
       key = key.trim().toLowerCase()
     }
     else {
-      key = key.trim().replace(/[-_]/g, ' ').replace(/([a-z])([A-Z])/g, '$1 $2').toLowerCase()
+      // retain leading dash or underscore
+      key = key.trim().replace(/(?!^)[-_]/g, ' ').replace(/([a-z])([A-Z])/g, '$1 $2').toLowerCase()
     }
     value = value.trim()
 
@@ -117,6 +118,13 @@ export function get(extra: string, mode: 'zotero' | 'csl', options?: GetOptions)
     }
     if (options.aliases && tex && key === 'ids') {
       extraFields.aliases = [...extraFields.aliases, ...(value.split(/s*,\s*/).filter(alias => alias))]
+      return false
+    }
+
+    // https://github.com/retorquere/zotero-better-bibtex/issues/2399
+    Zotero.debug(`extra _eprint: ${JSON.stringify({ options, key, value })}`)
+    if (options.kv && key === '_eprint') {
+      extraFields.kv[key] = value
       return false
     }
 
