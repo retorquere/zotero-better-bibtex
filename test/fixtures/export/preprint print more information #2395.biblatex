@@ -9,7 +9,8 @@
   url = {https://essopenarchive.org/doi/full/10.1002/essoar.10511180.2},
   urldate = {2022-10-26},
   abstract = {Intermediate, eastward zonal jets connect the oxygen-rich western boundary of the Atlantic Ocean with the oxygen minimum zones on the eastern boundary. These jets are not well represented in climate},
-  langid = {english}
+  langid = {english},
+  pubstate = {preprint}
 }
 % == BibLateX quality report for CalilPHR:2022:
 % Unexpected field 'issn'
