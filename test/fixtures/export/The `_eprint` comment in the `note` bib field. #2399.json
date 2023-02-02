@@ -1,0 +1,69 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {}
+  },
+  "items": [
+    {
+      "DOI": "10.1029/2008GL035209",
+      "ISSN": "1944-8007",
+      "abstractNote": "In this study we address a systematic bias in climate records that manifests due to the establishment of the Gregorian calendar system and exerts a statistically significant effect on monthly and seasonal temperature records. The addition of one extra day in February normally every fourth year produces a significant seasonal drift in the monthly values of that year in four major temperature datasets used in climate change analysis. The addition of a \u2018leap year day\u2019 for the Northern Hemisphere creates statistically significantly colder months of July to December and, to a lesser degree warmer months of February to June than correspondingly common (non-leap year) months. The discovery of such a fundamental bias in four major temperature datasets used in climate analysis (and likely present in any dataset displaying strong annual cycles, e.g., U.S. streamflow data) indicates the continued need for detailed scrutiny of climate records for such biases.",
+      "accessDate": "2021-06-16T05:19:37Z",
+      "citationKey": "CervenyRS.etal:2008",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Randall S.",
+          "lastName": "Cerveny"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Bohumil M.",
+          "lastName": "Svoma"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Robert C.",
+          "lastName": "Balling"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Russell S.",
+          "lastName": "Vose"
+        }
+      ],
+      "date": "2008",
+      "extra": [
+        "_eprint: https://agupubs.onlinelibrary.wiley.com/doi/pdf/10.1029/2008GL035209"
+      ],
+      "issue": "19",
+      "itemID": 1,
+      "itemType": "journalArticle",
+      "language": "en",
+      "libraryCatalog": "Wiley Online Library",
+      "publicationTitle": "Geophysical Research Letters",
+      "rights": "Copyright 2008 by the American Geophysical Union.",
+      "tags": [
+        {
+          "tag": "calendar",
+          "type": 1
+        },
+        {
+          "tag": "climate",
+          "type": 1
+        },
+        {
+          "tag": "database",
+          "type": 1
+        }
+      ],
+      "title": "Gregorian calendar bias in monthly temperature databases",
+      "url": "https://agupubs.onlinelibrary.wiley.com/doi/abs/10.1029/2008GL035209",
+      "volume": "35"
+    }
+  ]
+}

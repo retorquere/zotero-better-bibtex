@@ -1,0 +1,15 @@
+@article{cervenyGregorianCalendarBias2008,
+  title = {Gregorian Calendar Bias in Monthly Temperature Databases},
+  author = {Cerveny, Randall S. and Svoma, Bohumil M. and Balling, Robert C. and Vose, Russell S.},
+  date = {2008},
+  journaltitle = {Geophysical Research Letters},
+  volume = {35},
+  number = {19},
+  issn = {1944-8007},
+  doi = {10.1029/2008GL035209},
+  url = {https://agupubs.onlinelibrary.wiley.com/doi/abs/10.1029/2008GL035209},
+  urldate = {2021-06-16},
+  abstract = {In this study we address a systematic bias in climate records that manifests due to the establishment of the Gregorian calendar system and exerts a statistically significant effect on monthly and seasonal temperature records. The addition of one extra day in February normally every fourth year produces a significant seasonal drift in the monthly values of that year in four major temperature datasets used in climate change analysis. The addition of a ‘leap year day’ for the Northern Hemisphere creates statistically significantly colder months of July to December and, to a lesser degree warmer months of February to June than correspondingly common (non-leap year) months. The discovery of such a fundamental bias in four major temperature datasets used in climate analysis (and likely present in any dataset displaying strong annual cycles, e.g., U.S. streamflow data) indicates the continued need for detailed scrutiny of climate records for such biases.},
+  langid = {english},
+  keywords = {calendar,climate,database}
+}
