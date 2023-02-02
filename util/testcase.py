@@ -41,6 +41,8 @@ parser.add_argument('--feature',    '-f', dest='feature')
 parser.add_argument('--issue',      '-i', dest='issue', default=issue and str(issue))
 parser.add_argument('--export',     '-e', dest='mode', action='store_const', const='export')
 parser.add_argument('--import'          , dest='mode', action='store_const', const='import')
+parser.add_argument('--prefs'           , action='store_true')
+parser.add_argument('--attachments'     , action='store_true')
 args, unknownargs = parser.parse_known_args()
 sys.argv = sys.argv[:1] + unknownargs
 
@@ -73,7 +75,10 @@ args.title = re.sub(r'^\[[^\]]+\]\s*:', '', issue.title).strip()
 args.title = sanitize_filename(f'{args.title} #{issue.number}'.strip())
 
 # clean lib before putting it in place
-assert call(["./util/clean-lib.ts", args.data, '--save'], cwd=root) == 0, 'clean failed'
+cleanlib = ["./util/clean-lib.ts", args.data]
+if args.prefs: cleanlib.append('--prefs')
+if args.attachments: cleanlib.append('--attachments')
+assert call(cleanlib, cwd=root) == 0, 'clean failed'
 with open(args.data) as f:
   args.n = len(json.load(f)['items'])
 

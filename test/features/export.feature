@@ -14,6 +14,7 @@ Feature: Export
     Examples:
       | file                                                                                                                     | references |
       | The `_eprint` comment in the `note` bib field. #2399                                                                     | 1          |
+      | preprint print more information #2395                                                                                    | 1          |
       | BBT does not recognize zh-CN #2391                                                                                       | 9          |
       | Issue of generating citekeys with parentheses  #2366                                                                     | 1          |
       | Convert Chinese name to Pinyin in citation key. #2361                                                                    | 1          |

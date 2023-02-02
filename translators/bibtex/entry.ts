@@ -61,6 +61,7 @@ const fieldOrder = [
   'number',
   'eprint',
   'eprinttype',
+  'eprintclass',
   'primaryclass',
   'pages',
   'publisher',
@@ -204,11 +205,11 @@ export class Entry {
     let entrytype: any
 
     // workaround for preprints, https://forums.zotero.org/discussion/comment/385524#Comment_385524
-    const isPrePrint = this.translation.BetterBibTeX && this.item.itemType === 'report' && this.item.extraFields.kv.type?.toLowerCase() === 'article'
+    const pseudoPrePrint = this.translation.BetterBibTeX && this.item.itemType === 'report' && this.item.extraFields.kv.type?.toLowerCase() === 'article'
 
     // preserve for thesis type etc
     let csl_type = this.item.extraFields.kv.type
-    if (!isPrePrint && config.typeMap.csl[csl_type]) {
+    if (!pseudoPrePrint && config.typeMap.csl[csl_type]) {
       delete this.item.extraFields.kv.type
     }
     else {
@@ -232,7 +233,7 @@ export class Entry {
       entrytype = config.typeMap.csl[csl_type]
       this.entrytype_source = `csl.${csl_type}`
     }
-    else if (isPrePrint) {
+    else if (pseudoPrePrint) {
       entrytype = 'misc'
       delete this.item.extraFields.kv.type
       this.entrytype_source = `zotero.${this.item.itemType}`

@@ -1,4 +1,4 @@
-@misc{Acemoglu_2022_AutomationWorkforceFirmLevel,
+@online{Acemoglu_2022_AutomationWorkforceFirmLevel,
   type = {Working Paper},
   title = {Automation and the Workforce: A Firm-Level View from the 2019 Annual Business Survey},
   shorttitle = {Automation and the Workforce},
@@ -6,7 +6,8 @@
   date = {2022-11},
   series = {Working Paper Series},
   number = {30659},
-  publisher = {National Bureau of Economic Research},
+  eprint = {30659},
+  eprinttype = {National Bureau of Economic Research},
   doi = {10.3386/w30659},
   url = {https://www.nber.org/papers/w30659},
   urldate = {2022-11-21}

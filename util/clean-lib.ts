@@ -19,6 +19,10 @@ if (argv.attachments && typeof argv.attachments !== 'boolean') {
   console.log('put --attachments at end of command line')
   process.exit(1)
 }
+if (argv.prefs && typeof argv.prefs !== 'boolean') {
+  console.log('put --prefs at end of command line')
+  process.exit(1)
+}
 
 const localeDateOrder = argv.localeDateOrder ? argv.localeDateOrder.split('=') : null
 
@@ -81,6 +85,7 @@ for (const lib of argv._) {
       }
 
       if (post.config?.preferences) {
+        if (argv.prefs) post.config.preferences = {}
         for (const [pref, value] of Object.entries(post.config.preferences)) {
           if (!supported.includes(pref) || value === defaults[pref]) delete post.config.preferences[pref]
         }
