@@ -15,7 +15,6 @@
       "exportTitleCase": false,
       "extraMergeCSL": true,
       "qualityReport": true,
-      "skipFields": "abstract,file,issn",
       "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc,groups"
     }
   },

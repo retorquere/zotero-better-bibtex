@@ -296,6 +296,7 @@ export function generateBibLaTeX(translation: Translation): void {
     // if (entry.entytype_source === 'csl.book' && !entry.hasCreator('author') && entry.hasCreator('editor')) entry.entytype = 'collection'
     if (entry.entrytype === 'book' && item.numberOfVolumes) entry.entrytype = 'mvbook'
     if (entry.entrytype === 'report' && item.type?.toLowerCase().includes('manual')) entry.entrytype = 'manual'
+    // if (item.itemType === 'preprint' && entry.entrytype === 'online' && item.ISSN && item.publicationTitle) entry.entrytype = 'article'
 
     if (item.itemType === 'preprint' && item.publisher) {
       entry.add({ name: 'eprint', value: item.number })
