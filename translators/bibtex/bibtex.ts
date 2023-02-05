@@ -543,7 +543,6 @@ export class ZoteroItem {
       this.hackyFields.push(`tex.entrytype: ${this.bibtex.type}`)
     }
 
-    log.debug('crossref:', this.bibtex)
     if (
       this.type === 'book'
       && this.bibtex.fields.title?.length
@@ -806,9 +805,11 @@ export class ZoteroItem {
     if (!att.path) return
     if (!this.attachments) this.attachments = {}
 
+    let path = att.path
+    if (this.jabref.fileDirectory) path = `${this.jabref.fileDirectory}${this.translation.paths.sep}${path}`
+
     const overwrite = att.overwrite
     delete att.overwrite
-    const path = att.path
 
     att.title = att.title || att.path.split(/[\\/]/).pop().replace(/\.[^.]+$/, '')
     if (!att.title) delete att.title
@@ -817,13 +818,13 @@ export class ZoteroItem {
     if (!att.mimeType) delete att.mimeType
 
     // unicode file paths can be encoded in any one of these forms
-    for (const form of ['NFC', 'NFD', 'NFKC', 'NFKD']) {
-      att = {...att, path }
-      if (this.jabref.fileDirectory) att.path = `${this.jabref.fileDirectory}${this.translation.paths.sep}${att.path}`
-      att.path = att.path.normalize(form)
+    for (const form of ['', 'NFC', 'NFD', 'NFKC', 'NFKD']) {
+      att = { ...att, path }
+      if (form) att.path = att.path.normalize(form)
 
       if (overwrite || !this.attachments[att.path]) this.attachments[att.path] = att
     }
+    log.debug('addAttachment:', { path, attachments: this.attachments })
   }
 
   // "files(Mendeley)/filename(Qiqqa)" will import the same as "file" but won't be treated as verbatim by the bibtex parser. Needed because the people at Mendeley/Qiqqa can't be bothered to read the manual apparently.
