@@ -818,7 +818,7 @@ export class ZoteroItem {
     if (!att.mimeType) delete att.mimeType
 
     // unicode file paths can be encoded in any one of these forms
-    for (const form of ['', 'NFC', 'NFD', 'NFKC', 'NFKD']) {
+    for (const form of (this.translation.preferences.platform === 'win' ? ['', 'NFC', 'NFD', 'NFKC', 'NFKD'] : [''])) {
       att = { ...att, path }
       if (form) att.path = att.path.normalize(form)
 
