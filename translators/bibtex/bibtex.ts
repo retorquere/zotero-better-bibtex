@@ -1147,6 +1147,7 @@ export class ZoteroItem {
       conference: 'conferenceName',
     }
     for (const [field, values] of Object.entries(this.bibtex.fields)) {
+      log.debug('BBT import:', field, values)
       for (const value of values) {
         if (field.match(/^(local-zo-url-[0-9]+|file-[0-9]+)$/)) {
           if (this.$file(value)) continue
