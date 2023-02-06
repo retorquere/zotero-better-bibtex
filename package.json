@@ -80,6 +80,7 @@
     "jieba-zh-tw": "^1.0.12",
     "js-jieba": "^1.0.12",
     "jsesc": "^3.0.2",
+    "jslingua": "^0.13.0",
     "kuromoji": "^0.1.2",
     "lodash": "^4.17.21",
     "loupe": "^2.3.6",
