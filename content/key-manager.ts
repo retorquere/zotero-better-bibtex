@@ -537,6 +537,7 @@ export class KeyManager {
         return postfix
       })
 
+      log.debug('refresh: testing', postfixed, 'against', transient, this.keys.findOne({ $and: [...conflictQuery.$and, { citekey: { $eq: postfixed } }] }))
       const conflict = transient.includes(postfixed) || this.keys.findOne({ $and: [...conflictQuery.$and, { citekey: { $eq: postfixed } }] })
       if (conflict) continue
 
