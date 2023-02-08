@@ -1074,7 +1074,7 @@ export class Entry {
       if (!att.mimetype && (att.path.slice(-4).toLowerCase() === '.pdf')) att.mimetype = 'application/pdf' // eslint-disable-line no-magic-numbers
 
       log.debug('relpath:', {
-        prefs: this.translation.preferences,
+        relativeFilePaths: this.translation.preferences.relativeFilePaths,
         dir: this.translation.export.dir,
       })
       if (this.translation.preferences.relativeFilePaths && this.translation.export.dir) {
