@@ -1171,6 +1171,7 @@ export class ZoteroItem {
           if (this.$note(value, 'note')) continue
         }
 
+        log.debug('import: handling', { field, value })
         if (this[`$${field}`] && this[`$${field}`](value, field)) continue
 
         switch (field) {
