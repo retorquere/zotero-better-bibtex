@@ -59,6 +59,11 @@ default: `<not set>`
 if you set `csquotes` to a string of character pairs, each pair will be assumed to be the open and close parts of a pair and
 will be replaced with a `\\enquote{...}` construct.
 
+## extraMergeCitekeys
+
+default: `no`
+
+When merging items, also merge their citation keys into an bib(la)tex `ids` field.
 ## git
 
 default: `config`
