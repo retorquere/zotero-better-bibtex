@@ -223,7 +223,7 @@ const queue = new class TaskQueue {
   public add(ae) {
     log.debug('ae.scheduling', ae)
     const $loki = (typeof ae === 'number' ? ae : ae.$loki)
-    Events.emit('export-progress', 0, `Scheduled ${Translators.byId[ae.translatorID].label}`, $loki)
+    Events.emit('export-progress', { pct: 0, message: `Scheduled ${Translators.byId[ae.translatorID].label}`, ae: $loki }) // eslint-disable-line @typescript-eslint/no-floating-promises
     this.scheduler.schedule($loki, this.run.bind(this, $loki))
   }
 
@@ -240,7 +240,7 @@ const queue = new class TaskQueue {
 
     const ae = this.autoexports.get($loki)
     log.debug('ae.starting', ae)
-    Events.emit('export-progress', 0, `Starting ${Translators.byId[ae.translatorID].label}`, $loki)
+    Events.emit('export-progress', { pct: 0, message: `Starting ${Translators.byId[ae.translatorID].label}`, ae: $loki }) // eslint-disable-line @typescript-eslint/no-floating-promises
     if (!ae) throw new Error(`AutoExport ${$loki} not found`)
 
     ae.status = 'running'
@@ -376,8 +376,8 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
     Events.on('libraries-removed', ids => this.remove('library', ids))
     Events.on('collections-changed', ids => this.schedule('collection', ids))
     Events.on('collections-removed', ids => this.remove('collection', ids))
-    Events.on('export-progress', (percent, _message, ae) => {
-      if (typeof ae === 'number') this.progress.set(ae, percent)
+    Events.on('export-progress', ({ pct, ae }) => {
+      if (typeof ae === 'number') this.progress.set(ae, pct)
     })
   }
 
