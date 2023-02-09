@@ -659,7 +659,7 @@ notify('item-tag', (_action: any, _type: any, ids: any[], _extraData: any) => {
 })
 
 notify('item', (action: string, type: any, ids: any[], extraData: { [x: string]: { bbtCitekeyUpdate: any } }) => {
-  // log.debug('item.notify', action, ids, Zotero.Items.get(ids).map(item => Zotero.Utilities.Internal.itemToExportFormat(item))) // eslint-disable-line @typescript-eslint/no-unsafe-return
+  log.debug('item.notify', action, ids) // Zotero.Items.get(ids).map(item => Zotero.Utilities.Internal.itemToExportFormat(item))) // eslint-disable-line @typescript-eslint/no-unsafe-return
   // prevents update loop -- see KeyManager.init()
   if (action === 'modify') {
     ids = ids.filter((id: string | number) => !extraData[id] || !extraData[id].bbtCitekeyUpdate)
