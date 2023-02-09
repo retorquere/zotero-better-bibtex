@@ -235,16 +235,18 @@ class Docs extends ASTWalker {
   }
 
   Tag(node, history) {
-    let bbt, pref, id, label, page, hidden
+    let bbt, pref, id, label, page
+
+    const hidden = history.find(parent => parent.name && this.attr(parent, 'hidden'))
 
     switch (node.name) {
       case 'caption':
         pref = this.attr(node, 'bbt:preference')
+        label = this.attr(node, 'label') || this.text(node)
         if (pref) {
-          this.label(this.text(node), pref)
+          this.label(label, pref)
         }
         else {
-          label = this.text(node)
           history.find(n => n.name === 'groupbox').$section = label
           this.section(label, history)
         }
@@ -259,7 +261,6 @@ class Docs extends ASTWalker {
         break
 
       case 'tabpanel':
-        hidden = history.find(parent => parent.name && this.attr(parent, 'hidden'))
         label = history.find(n => n.name === 'tabbox').$labels.shift()
         page = this.attr(node, 'bbt:page')
         if (page) {
@@ -298,8 +299,10 @@ class Docs extends ASTWalker {
         break
 
       case 'menuitem':
-        pref = this.attr(history.find(n => n.name === 'menulist'), 'preference')
-        if (pref) this.option(pref, this.attr(node, 'label', true), this.attr(node, 'value', true))
+        if (!hidden) {
+          pref = this.attr(history.find(n => n.name === 'menulist'), 'preference')
+          if (pref) this.option(pref, this.attr(node, 'label', true), this.attr(node, 'value', true))
+        }
         break
 
       case 'radio':
