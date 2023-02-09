@@ -4,5 +4,5 @@ import ara from 'jslingua/src/ara/ara.trans.mjs'
 ara.s('buckwalter')
 
 export function transliterate(str: string): string {
-  return ara.t(str)
+  return ara.t(str).replace(/['>|{`]/g, 'a').replace(/[<}]/g, 'i').replace(/&/g, 'u')
 }
