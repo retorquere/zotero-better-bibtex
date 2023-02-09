@@ -218,8 +218,8 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
     const displayOptions = {
       ...this.displayOptions(job.translatorID, job.displayOptions),
-      exportPath: job.path,
-      exportDir: OS.Path.dirname(job.path),
+      exportPath: job.path || undefined,
+      exportDir: job.path ? OS.Path.dirname(job.path) : undefined,
     }
 
     log.dump('eibqw: starting')
