@@ -243,7 +243,6 @@ class Docs extends ASTWalker {
       case 'caption':
         pref = this.attr(node, 'bbt:preference')
         label = this.attr(node, 'label') || this.text(node)
-        console.log(pref, label)
         if (pref) {
           this.label(label, pref)
           this.section(`<%~ it.${this.preferences[pref].shortName} %>\n`, history, 1)

@@ -1,13 +1,12 @@
 vbox(flex="1")
   label &better-bibtex.Preferences.auto-export.explanation;
   separator.thin
-  hbox
-    label(bbt:preference="extensions.zotero.translators.better-bibtex.autoExport") &better-bibtex.Preferences.auto-export;
-    menulist(preference="extensions.zotero.translators.better-bibtex.autoExport")
-      menupopup
-        menuitem(label="&better-bibtex.Preferences.auto-export.off;" value="off")
-        menuitem(label="&better-bibtex.Preferences.auto-export.immediate;" value="immediate")
-        menuitem(label="&better-bibtex.Preferences.auto-export.idle;" value="idle")
+  groupbox
+    caption(bbt:preference="extensions.zotero.translators.better-bibtex.autoExport") &better-bibtex.Preferences.auto-export;
+    radiogroup(preference="extensions.zotero.translators.better-bibtex.autoExport")
+      radio(label="&better-bibtex.Preferences.auto-export.off;" value="off")
+      radio(label="&better-bibtex.Preferences.auto-export.immediate;" value="immediate")
+      radio(label="&better-bibtex.Preferences.auto-export.idle;" value="idle")
   hbox
     label(bbt:preference="extensions.zotero.translators.better-bibtex.autoExportDelay") &better-bibtex.Preferences.auto-export.delay;
     scale(min="2" max="300" flex=2 preference="extensions.zotero.translators.better-bibtex.autoExportDelay")
