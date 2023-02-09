@@ -11,6 +11,24 @@ weight: 13
 
 {{% preferences/header %}}
 
+## Sentence-case titles on import:
+
+default: `yes, but try to exclude already-sentence-cased titles`
+
+Bib(La)TeX entries must be stored in Title Case; Zotero items are expected to be entered as sentence-case.
+
+With this option on, BBT will try to sentence-case during import. This sentence-casing uses heuristics, no natural language processing is performed, and the results are not perfect.
+
+You can turn this off, but you may then also want to disable `Apply title-casing to titles` (which has its own problems, see the help entry for that option on this page).
+With 'yes, but try to exclude already-sentence-cased titles', BBT will attempt to detect titles that are already sentence cased and leave them as-is on import.
+
+Options:
+
+* yes, but try to exclude already-sentence-cased titles
+* yes
+* no (import titles as-is)
+
+
 ## Insert case-protection for braces:
 
 default: `minimal`

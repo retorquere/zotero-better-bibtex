@@ -502,7 +502,7 @@
   },
   {
     "name": "extraMergeCitekeys",
-    "label": "their citation keys into an bib(la)tex `ids` field",
+    "label": "",
     "type": "boolean",
     "default": false,
     "affects": []
