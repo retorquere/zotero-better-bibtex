@@ -242,11 +242,11 @@ class Docs extends ASTWalker {
     switch (node.name) {
       case 'caption':
         pref = this.attr(node, 'bbt:preference')
+        label = this.attr(node, 'label') || this.text(node)
         if (pref) {
-          this.label(this.text(node), pref)
+          this.label(label, pref)
         }
         else {
-          label = this.text(node)
           history.find(n => n.name === 'groupbox').$section = label
           this.section(label, history)
         }
