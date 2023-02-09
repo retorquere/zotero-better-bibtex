@@ -378,6 +378,9 @@ export function generateBibTeX(translation: Translation): void {
     if (ref.entrytype === 'inbook' && ref.has.author && ref.has.editor) delete ref.has.editor
 
     switch (ref.date.type) {
+      case 'none':
+        break
+
       case 'verbatim':
         ref.add({ name: 'year', value: ref.date.verbatim })
         break
