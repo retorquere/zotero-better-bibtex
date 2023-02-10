@@ -299,41 +299,6 @@ export function generateBibLaTeX(translation: Translation): void {
     // if (item.itemType === 'preprint' && entry.entrytype === 'online' && item.ISSN && item.publicationTitle) entry.entrytype = 'article'
     if (item.itemType === 'preprint') entry.add({ name: 'pubstate', value: 'preprint' })
 
-    if (item.itemType === 'preprint' && item.publisher) {
-      entry.add({ name: 'eprint', value: item.number })
-      entry.add({ name: 'eprinttype', value: item.publisher })
-      entry.add({ name: 'eprintclass', value: item.section })
-    }
-    else if (translation.preferences.biblatexExtractEprint) {
-      let m
-      if (item.url && (m = item.url.match(/^https?:\/\/www.jstor.org\/stable\/([\S]+)$/i))) {
-        entry.override({ name: 'eprinttype', value: 'jstor'})
-        entry.override({ name: 'eprint', value: m[1].replace(/\?.*/, '') })
-        entry.remove('archiveprefix')
-        entry.remove('primaryclass')
-        delete item.url
-        entry.remove('url')
-
-      }
-      else if (item.url && (m = item.url.match(/^https?:\/\/books.google.com\/books?id=([\S]+)$/i))) {
-        entry.override({ name: 'eprinttype', value: 'googlebooks'})
-        entry.override({ name: 'eprint', value: m[1] })
-        entry.remove('archiveprefix')
-        entry.remove('primaryclass')
-        delete item.url
-        entry.remove('url')
-
-      }
-      else if (item.url && (m = item.url.match(/^https?:\/\/www.ncbi.nlm.nih.gov\/pubmed\/([\S]+)$/i))) {
-        entry.override({ name: 'eprinttype', value: 'pubmed'})
-        entry.override({ name: 'eprint', value: m[1] })
-        entry.remove('archiveprefix')
-        entry.remove('primaryclass')
-        delete item.url
-        entry.remove('url')
-      }
-    }
-
     if (['langid', 'both'].includes(translation.preferences.language)) entry.add({ name: 'langid', value: entry.language })
     if (['language', 'both'].includes(translation.preferences.language)) entry.add({ name: 'language', value: item.language })
 
