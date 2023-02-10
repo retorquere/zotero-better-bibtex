@@ -63,18 +63,23 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
     const branch = Services.prefs.getDefaultBranch('')
     for (let [pref, value] of Object.entries(defaults)) {
       pref = `extensions.zotero.translators.better-bibtex.${pref}`
-      switch (typeof value) {
-        case 'boolean':
-          branch.setBoolPref(pref, value)
-          break
-        case 'string':
-          branch.setStringPref(pref, value)
-          break
-        case 'number':
-          branch.setIntPref(pref, value)
-          break
-        default:
-          Zotero.logError(`Invalid type '${typeof(value)}' for pref '${pref}'`)
+      try {
+        switch (typeof value) {
+          case 'boolean':
+            branch.setBoolPref(pref, value)
+            break
+          case 'string':
+            branch.setStringPref(pref, value)
+            break
+          case 'number':
+            branch.setIntPref(pref, value)
+            break
+          default:
+            Zotero.logError(`Better BibTeX: Invalid type '${typeof(value)}' for pref '${pref}'`)
+        }
+      }
+      catch (err) {
+        Zotero.logError(`Better BibTeX: Error setting default for ${pref} to ${typeof value} ${JSON.stringify(value)}`)
       }
     }
   }
