@@ -543,7 +543,6 @@ export class ZoteroItem {
       this.hackyFields.push(`tex.entrytype: ${this.bibtex.type}`)
     }
 
-    log.debug('crossref:', this.bibtex)
     if (
       this.type === 'book'
       && this.bibtex.fields.title?.length
