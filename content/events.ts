@@ -1,14 +1,15 @@
 /* eslint-disable prefer-rest-params */
 
-import { EventEmitter as EventEmitter3 } from 'eventemitter3'
+import Emittery from 'emittery'
+
 import { log } from './logger'
 
 const events: string[] = [
   'collections-changed',
   'collections-removed',
-  'error',
+  // 'error',
   'export-progress',
-  'item-tag',
+  // 'item-tag',
   'items-changed',
   'items-removed',
   'libraries-changed',
@@ -17,78 +18,54 @@ const events: string[] = [
   'preference-changed',
   'window-loaded',
 ]
-const event_prefix = events.map(name => name + '.')
 
-export const Events = new class EventEmitter extends EventEmitter3 {
-  testing: boolean
+export const Events = new Emittery<{
+  'collections-changed': number[]
+  'collections-removed': number[]
+  'export-progress': { pct: number, message: string, ae?: number }
+  'items-changed': number[]
+  'items-removed': number[]
+  'libraries-changed': number[]
+  'libraries-removed': number[]
+  'loaded': undefined
+  'preference-changed': string
+  'window-loaded': { win: Window, href: string }
+}>({
+  debug: {
+    name: 'better-bibtex event',
+    enabled: Zotero.Prefs.get('translators.better-bibtex.log-events'),
+    logger: (type, debugName, eventName, eventData) => {
+      if (typeof eventName === 'symbol') return
+      log.debug(debugName, type, eventName, eventData)
+      if (typeof eventName !== 'string' || !events.includes(eventName)) throw new Error(`unsupported event ${type}.${eventName}`)
+    },
+  },
+})
 
-  constructor() {
-    super()
-    this.testing = Zotero.Prefs.get('translators.better-bibtex.log-events')
-    this.on('error', err => {
-      throw Zotero.debug(err)
-    })
+export function itemsChanged(items: ZoteroItem[]): void {
+  if (!items.length) return
+
+  const changed = {
+    collections: new Set,
+    libraries: new Set,
   }
 
-  private verify(event: string | symbol) {
-    if (!this.testing) return true
-    if (typeof event === 'symbol') return false
-    if (events.includes(event) || event_prefix.find(prefix => event.startsWith(prefix))) return true
-    throw new Error(`Unsupported event ${event}`)
-  }
+  for (const item of items) {
+    changed.libraries.add(item.libraryID)
 
-  public on(event: string | symbol, handler: (...args: any[]) => void, self?: any): this {
-    this.verify(event)
-    super.on(event, handler, self)
-    return this
-  }
+    for (let collectionID of item.getCollections()) {
+      if (changed.collections.has(collectionID)) continue
 
-  public emit(event: string | symbol, ...args: any[]): boolean {
-    this.verify(event)
-
-    const prefix: string = typeof event === 'string' ? event + '.' : '\0'
-    const results: boolean[] = []
-    for (const listening of this.eventNames()) {
-      if (listening === event || (typeof listening === 'string' && listening.startsWith(prefix))) {
-        if (this.testing) {
-          try {
-            log.debug('event.emit(', listening, args, ')')
-          }
-          catch (err) {
-            log.debug('event.emit(', listening, ')')
-          }
-        }
-        results.push(super.emit.apply(this, [listening, ...args]))
+      while (collectionID) {
+        changed.collections.add(collectionID)
+        collectionID = Zotero.Collections.get(collectionID).parentID
       }
     }
-    return results.length === 0 ? false : !results.find(r => !r)
   }
 
-  public itemsChanged(items: ZoteroItem[]): void {
-    if (!items.length) return
-
-    const changed = {
-      collections: new Set,
-      libraries: new Set,
-    }
-
-    for (const item of items) {
-      changed.libraries.add(item.libraryID)
-
-      for (let collectionID of item.getCollections()) {
-        if (changed.collections.has(collectionID)) continue
-
-        while (collectionID) {
-          changed.collections.add(collectionID)
-          collectionID = Zotero.Collections.get(collectionID).parentID
-        }
-      }
-    }
-
-    log.debug('itemsChanged:', { collections: Array.from(changed.collections), libraries: Array.from(changed.libraries) })
-    if (changed.collections.size) this.emit('collections-changed', [...changed.collections])
-    if (changed.libraries.size) this.emit('libraries-changed', [...changed.libraries])
-  }
+  log.debug('itemsChanged:', { collections: Array.from(changed.collections), libraries: Array.from(changed.libraries) })
+  if (changed.collections.size) this.emit('collections-changed', [...changed.collections])
+  if (changed.libraries.size) this.emit('libraries-changed', [...changed.libraries])
 }
 
 const windowListener = {
@@ -96,7 +73,7 @@ const windowListener = {
     const win = xulWindow.QueryInterface(Components.interfaces.nsIInterfaceRequestor).getInterface(Components.interfaces.nsIDOMWindow)
     win.addEventListener('load', function listener() { // eslint-disable-line prefer-arrow/prefer-arrow-functions
       win.removeEventListener('load', listener, false)
-      Events.emit('window-loaded', win, win.location.href)
+      void Events.emit('window-loaded', { win, href: win.location.href })
     }, false)
   },
   // onCloseWindow: () => { },

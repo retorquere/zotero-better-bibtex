@@ -37,7 +37,7 @@ Components.utils.import('resource://gre/modules/AddonManager.jsm')
 declare const AddonManager: any
 
 import { log } from './logger'
-import { Events } from './events'
+import { Events, itemsChanged } from './events'
 
 import { Translators } from './translators'
 import { DB } from './db/main'
@@ -655,7 +655,7 @@ notify('item-tag', (_action: any, _type: any, ids: any[], _extraData: any) => {
   ids = ids.map((item_tag: string) => parseInt(item_tag.split('-')[0]))
 
   Cache.remove(ids, `item ${ids} changed`)
-  Events.emit('items-changed', ids)
+  void Events.emit('items-changed', ids)
 })
 
 notify('item', (action: string, type: any, ids: any[], extraData: { [x: string]: { bbtCitekeyUpdate: any } }) => {
@@ -699,7 +699,7 @@ notify('item', (action: string, type: any, ids: any[], extraData: { [x: string]:
     case 'trash':
       log.debug('item.notify: removing', ids)
       Zotero.BetterBibTeX.KeyManager.remove(ids)
-      Events.emit('items-removed', ids)
+      void Events.emit('items-removed', ids)
       log.debug('item.notify: should have emitted items-removed', ids)
       break
 
@@ -727,19 +727,19 @@ notify('item', (action: string, type: any, ids: any[], extraData: { [x: string]:
       return
   }
 
-  Events.itemsChanged(items.concat(parents))
+  itemsChanged(items.concat(parents))
 })
 
-notify('collection', (event: string, _type: any, ids: string | any[], _extraData: any) => {
-  if ((event === 'delete') && ids.length) Events.emit('collections-removed', ids)
+notify('collection', (event: string, _type: any, ids: number[], _extraData: any) => {
+  if ((event === 'delete') && ids.length) void Events.emit('collections-removed', ids)
 })
 
-notify('group', (event: string, _type: any, ids: string | any[], _extraData: any) => {
-  if ((event === 'delete') && ids.length) Events.emit('libraries-removed', ids)
+notify('group', (event: string, _type: any, ids: number[], _extraData: any) => {
+  if ((event === 'delete') && ids.length) void Events.emit('libraries-removed', ids)
 })
 
 notify('collection-item', (_event: any, _type: any, collection_items: any) => {
-  const changed = new Set()
+  const changed: Set<number> = new Set()
 
   for (const collection_item of collection_items) {
     let collectionID = parseInt(collection_item.split('-')[0])
@@ -750,7 +750,7 @@ notify('collection-item', (_event: any, _type: any, collection_items: any) => {
     }
   }
 
-  if (changed.size) Events.emit('collections-changed', Array.from(changed))
+  if (changed.size) void Events.emit('collections-changed', Array.from(changed))
 })
 
 /*
@@ -1014,17 +1014,17 @@ export class BetterBibTeX {
 
     if (this.firstRun && this.firstRun.dragndrop) Zotero.Prefs.set('export.quickCopy.setting', `export=${Translators.byLabel.BetterBibTeXCitationKeyQuickCopy.translatorID}`)
 
-    Events.emit('loaded')
+    void Events.emit('loaded')
 
-    Events.on('export-progress', (percent: number, message: string) => {
+    Events.on('export-progress', ({ pct, message }) => {
       /*
       let status = `${percent < 0 ? l10n.localize('Preferences.auto-export.status.preparing') : ''} ${translator}`.trim()
       if (Translators.queue.queued) status += ` +${Translators.queue.queued}`
       setProgress(percent && percent < 100 && Math.abs(percent), status) // eslint-disable-line no-magic-numbers
       */
-      setProgress(percent, message) // eslint-disable-line no-magic-numbers
+      setProgress(pct, message) // eslint-disable-line no-magic-numbers
     })
-    Events.on('window-loaded', (win: Window, href: string) => {
+    Events.on('window-loaded', ({ win, href }: {win: Window, href: string}) => {
       log.debug('window-loaded', href)
       switch (href) {
         case 'chrome://zotero/content/preferences/preferences.xul':
