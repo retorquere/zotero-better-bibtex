@@ -4,21 +4,6 @@ import Emittery from 'emittery'
 
 import { log } from './logger'
 
-const events: string[] = [
-  'collections-changed',
-  'collections-removed',
-  // 'error',
-  'export-progress',
-  // 'item-tag',
-  'items-changed',
-  'items-removed',
-  'libraries-changed',
-  'libraries-removed',
-  'loaded',
-  'preference-changed',
-  'window-loaded',
-]
-
 export const Events = new Emittery<{
   'collections-changed': number[]
   'collections-removed': number[]
@@ -37,7 +22,6 @@ export const Events = new Emittery<{
     logger: (type, debugName, eventName, eventData) => {
       if (typeof eventName === 'symbol') return
       log.debug(debugName, type, eventName, eventData)
-      if (typeof eventName !== 'string' || !events.includes(eventName)) throw new Error(`unsupported event ${type}.${eventName}`)
     },
   },
 })
