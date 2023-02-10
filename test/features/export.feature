@@ -13,6 +13,7 @@ Feature: Export
 
     Examples:
       | file                                                                                                                     | references |
+      | Arabic script letters in citation keys #2403                                                                             | 1          |
       | The `_eprint` comment in the `note` bib field. #2399                                                                     | 1          |
       | preprint print more information #2395                                                                                    | 1          |
       | BBT does not recognize zh-CN #2391                                                                                       | 9          |

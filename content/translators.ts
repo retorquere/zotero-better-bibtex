@@ -291,7 +291,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
           break
 
         case 'done':
-          Events.emit('export-progress', 100, translator.label, job.autoExport) // eslint-disable-line no-magic-numbers
+          void Events.emit('export-progress', { pct: 100, message: translator.label, ae: job.autoExport })
           deferred.resolve(typeof e.data.output === 'boolean' ? '' : e.data.output)
           this.workers.running.delete(id)
           break
@@ -303,7 +303,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
           break
 
         case 'progress':
-          Events.emit('export-progress', e.data.percent, e.data.translator, e.data.autoExport)
+          void Events.emit('export-progress', { pct: e.data.percent, message: e.data.translator, ae: e.data.autoExport })
           break
 
         default:
@@ -359,7 +359,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       callback: pct => {
         let preparing = `${l10n.localize('Preferences.auto-export.status.preparing')} ${translator.label}`.trim()
         if (this.queue.queued) preparing += ` +${Translators.queue.queued}`
-        Events.emit('export-progress', pct, preparing, job.autoExport)
+        void Events.emit('export-progress', { pct, message: preparing, ae: job.autoExport })
       },
     })
     // use a loop instead of map so we can await for beachball protection

@@ -32,6 +32,7 @@ import { sprintf } from 'sprintf-js'
 
 import { jieba, pinyin } from './chinese'
 import { kuroshiro } from './japanese'
+import { transliterate as arabic } from './arabic'
 
 import { validator, coercing } from '../ajv'
 import { dictsync as csv2dict } from '../load-csv'
@@ -175,7 +176,7 @@ class Item {
   public key: string
   public id: number
   public libraryID: number
-  public transliterateMode: 'german' | 'japanese' | 'chinese' | 'chinese-traditional' | ''
+  public transliterateMode: 'german' | 'japanese' | 'chinese' | 'chinese-traditional' | 'arabic' | ''
   public getField: (name: string) => number | string
   public extra: string
   public extraFields: Extra.Fields
@@ -233,6 +234,10 @@ class Item {
 
       case 'zh-hant':
         this.transliterateMode = 'chinese-traditional'
+        break
+
+      case 'ar':
+        this.transliterateMode = 'arabic'
         break
 
       default:
@@ -1278,12 +1283,12 @@ class PatternFormatter {
    * transliterates the citation key. If you don't specify a mode, the mode is derived from the item language field
    * @param mode specialized translateration modes for german, japanese or chinese. default is minimal
    */
-  public _transliterate(mode?: 'minimal' | 'german' | 'de' | 'japanese' | 'ja' | 'zh' | 'chinese') {
+  public _transliterate(mode?: 'minimal' | 'german' | 'de' | 'japanese' | 'ja' | 'zh' | 'chinese' | 'tw' | 'zh-hant' | 'ar' | 'arabic') {
     if (!this.chunk) return this
     return this.$text(this.transliterate(this.chunk, mode))
   }
 
-  private transliterate(str: string, mode?: 'minimal' | 'de' | 'german' | 'ja' | 'japanese' | 'zh' | 'chinese' | 'tw' | 'zh-hant' | 'chinese-traditional'): string {
+  private transliterate(str: string, mode?: 'minimal' | 'de' | 'german' | 'ja' | 'japanese' | 'zh' | 'chinese' | 'tw' | 'zh-hant' | 'chinese-traditional' | 'ar' | 'arabic'): string {
     mode = mode || this.item.transliterateMode || 'minimal'
 
     let replace: Record<string, string> = {}
@@ -1314,6 +1319,11 @@ class PatternFormatter {
       case 'ja':
       case 'japanese':
         if (Preference.kuroshiro && kuroshiro.enabled) str = kuroshiro.convert(str, {to: 'romaji'})
+        break
+
+      case 'ar':
+      case 'arabic':
+        str = arabic(str)
         break
 
       default:
