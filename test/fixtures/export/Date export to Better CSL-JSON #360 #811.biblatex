@@ -1,4 +1,3 @@
-
 @online{doe10_edtf_2011,
   title = {{{EDTF}} Date Range, circa Begin \& End: 2011-05-25\textasciitilde/2012-06-26\textasciitilde},
   author = {Doe10, John},
@@ -45,7 +44,9 @@
   number = {3},
   eprint = {1225428},
   eprinttype = {jstor},
-  pages = {4--23}
+  pages = {4--23},
+  url = {http://www.jstor.org/stable/1225428},
+  urldate = {2015-04-30}
 }
 
 @online{doe8_title_2017,
@@ -99,5 +100,3 @@
   author = {Doe6, John},
   date = {-0099-07-12/-0043-03-15}
 }
-
-
