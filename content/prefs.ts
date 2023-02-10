@@ -84,7 +84,7 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
   }
 
   changed(pref: string) {
-    Events.emit('preference-changed', pref)
+    void Events.emit('preference-changed', pref)
   }
 
   /*

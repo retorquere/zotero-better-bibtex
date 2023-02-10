@@ -655,7 +655,7 @@ notify('item-tag', (_action: any, _type: any, ids: any[], _extraData: any) => {
   ids = ids.map((item_tag: string) => parseInt(item_tag.split('-')[0]))
 
   Cache.remove(ids, `item ${ids} changed`)
-  Events.emit('items-changed', ids) // eslint-disable-line @typescript-eslint/no-floating-promises
+  void Events.emit('items-changed', ids)
 })
 
 notify('item', (action: string, type: any, ids: any[], extraData: { [x: string]: { bbtCitekeyUpdate: any } }) => {
@@ -695,7 +695,7 @@ notify('item', (action: string, type: any, ids: any[], extraData: { [x: string]:
     case 'delete':
     case 'trash':
       Zotero.BetterBibTeX.KeyManager.remove(ids)
-      Events.emit('items-removed', ids) // eslint-disable-line @typescript-eslint/no-floating-promises
+      void Events.emit('items-removed', ids)
       break
 
     case 'add':
@@ -726,11 +726,11 @@ notify('item', (action: string, type: any, ids: any[], extraData: { [x: string]:
 })
 
 notify('collection', (event: string, _type: any, ids: number[], _extraData: any) => {
-  if ((event === 'delete') && ids.length) Events.emit('collections-removed', ids) // eslint-disable-line @typescript-eslint/no-floating-promises
+  if ((event === 'delete') && ids.length) void Events.emit('collections-removed', ids)
 })
 
 notify('group', (event: string, _type: any, ids: number[], _extraData: any) => {
-  if ((event === 'delete') && ids.length) Events.emit('libraries-removed', ids) // eslint-disable-line @typescript-eslint/no-floating-promises
+  if ((event === 'delete') && ids.length) void Events.emit('libraries-removed', ids)
 })
 
 notify('collection-item', (_event: any, _type: any, collection_items: any) => {
@@ -745,7 +745,7 @@ notify('collection-item', (_event: any, _type: any, collection_items: any) => {
     }
   }
 
-  if (changed.size) Events.emit('collections-changed', Array.from(changed)) // eslint-disable-line @typescript-eslint/no-floating-promises
+  if (changed.size) void Events.emit('collections-changed', Array.from(changed))
 })
 
 /*
@@ -1009,7 +1009,7 @@ export class BetterBibTeX {
 
     if (this.firstRun && this.firstRun.dragndrop) Zotero.Prefs.set('export.quickCopy.setting', `export=${Translators.byLabel.BetterBibTeXCitationKeyQuickCopy.translatorID}`)
 
-    Events.emit('loaded') // eslint-disable-line @typescript-eslint/no-floating-promises
+    void Events.emit('loaded')
 
     Events.on('export-progress', ({ pct, message }) => {
       /*

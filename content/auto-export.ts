@@ -223,7 +223,7 @@ const queue = new class TaskQueue {
   public add(ae) {
     log.debug('ae.scheduling', ae)
     const $loki = (typeof ae === 'number' ? ae : ae.$loki)
-    Events.emit('export-progress', { pct: 0, message: `Scheduled ${Translators.byId[ae.translatorID].label}`, ae: $loki }) // eslint-disable-line @typescript-eslint/no-floating-promises
+    void Events.emit('export-progress', { pct: 0, message: `Scheduled ${Translators.byId[ae.translatorID].label}`, ae: $loki })
     this.scheduler.schedule($loki, this.run.bind(this, $loki))
   }
 
@@ -240,7 +240,7 @@ const queue = new class TaskQueue {
 
     const ae = this.autoexports.get($loki)
     log.debug('ae.starting', ae)
-    Events.emit('export-progress', { pct: 0, message: `Starting ${Translators.byId[ae.translatorID].label}`, ae: $loki }) // eslint-disable-line @typescript-eslint/no-floating-promises
+    void Events.emit('export-progress', { pct: 0, message: `Starting ${Translators.byId[ae.translatorID].label}`, ae: $loki })
     if (!ae) throw new Error(`AutoExport ${$loki} not found`)
 
     ae.status = 'running'
