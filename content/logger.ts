@@ -30,7 +30,7 @@ class Logger {
       msg = msg.map(m => {
         const type = typeof m
         if (type === 'symbol') {
-          return m.toString()
+          return m.toString() as string
         }
         else if (type === 'string' || m instanceof String) {
           return m as string
