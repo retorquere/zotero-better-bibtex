@@ -340,8 +340,8 @@ export class Entry {
       return false
     }
 
-    delete this.item.url
-    this.remove('url')
+    // delete this.item.url
+    // this.remove('url')
     return true
   }
 
