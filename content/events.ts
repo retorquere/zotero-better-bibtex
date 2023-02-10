@@ -45,27 +45,25 @@ export const Events = new Emittery<{
 export function itemsChanged(items: ZoteroItem[]): void {
   if (!items.length) return
 
-  const changed = {
-    collections: new Set,
-    libraries: new Set,
-  }
+  const collections: Set<number> = new Set
+  const libraries: Set<number> = new Set
 
   for (const item of items) {
-    changed.libraries.add(item.libraryID)
+    libraries.add(item.libraryID)
 
     for (let collectionID of item.getCollections()) {
-      if (changed.collections.has(collectionID)) continue
+      if (collections.has(collectionID)) continue
 
       while (collectionID) {
-        changed.collections.add(collectionID)
+        collections.add(collectionID)
         collectionID = Zotero.Collections.get(collectionID).parentID
       }
     }
   }
 
-  log.debug('itemsChanged:', { collections: Array.from(changed.collections), libraries: Array.from(changed.libraries) })
-  if (changed.collections.size) this.emit('collections-changed', [...changed.collections])
-  if (changed.libraries.size) this.emit('libraries-changed', [...changed.libraries])
+  log.debug('itemsChanged:', { collections: Array.from(collections), libraries: Array.from(libraries) })
+  if (collections.size) void Events.emit('collections-changed', [...collections])
+  if (libraries.size) void Events.emit('libraries-changed', [...libraries])
 }
 
 const windowListener = {
