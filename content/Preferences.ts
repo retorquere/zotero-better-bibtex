@@ -48,8 +48,8 @@ class AutoExportPane {
 
     this.refresh()
 
-    Events.on('export-progress', (percent: number, _message: string, ae: number) => {
-      if (percent >= 100 && typeof ae === 'number') {
+    Events.on('export-progress', ( { pct, ae }) => {
+      if (pct >= 100 && typeof ae === 'number') {
         this.refreshCacheRate(ae).catch(err => log.error('failed to refresh cacherate for completed auto-export', ae, err))
       }
     })
