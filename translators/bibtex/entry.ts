@@ -285,7 +285,19 @@ export class Entry {
       }
     }
 
-    if ((item.arXiv = arXiv.parse(item.publicationTitle)) && item.arXiv.id) {
+    const eprinttype = this.translation.BetterBibTeX ? 'archiveprefix' : 'eprinttype'
+    const eprintclass = this.translation.BetterBibTeX ? 'primaryclass' : 'eprintclass'
+
+    if (item.itemType === 'preprint' && item.publisher) {
+      if (item.publisher?.match(/arxiv/i)) item.arXiv = { source: 'preprint', id: item.number, category: item.section }
+      this.add({ name: 'eprint', value: item.number })
+      this.add({ name: eprinttype, value: item.publisher })
+      this.add({ name: eprintclass, value: item.section })
+    }
+    else if (this.extractEprint()) {
+      // pass
+    }
+    else if ((item.arXiv = arXiv.parse(item.publicationTitle)) && item.arXiv.id) {
       item.arXiv.source = 'publicationTitle'
       if (this.translation.BetterBibLaTeX) delete item.publicationTitle
     }
@@ -298,12 +310,39 @@ export class Entry {
 
     if (item.arXiv) {
       delete item.extraFields.tex.arxiv
-      this.add({ name: 'eprinttype', value: 'arxiv'})
-      this.add({ name: 'archiveprefix', value: 'arXiv'} ) // alias for eprinttype
       this.add({ name: 'eprint', value: item.arXiv.id })
-      this.add({ name: 'eprintclass', value: item.arXiv.category })
-      this.add({ name: 'primaryclass', value: item.arXiv.category }) // alias for eprintclass
+      this.add({ name: eprinttype, value: 'arxiv'})
+      this.add({ name: eprintclass, value: item.arXiv.category })
     }
+
+    // aliases
+    // if (this.has.eprintclass) this.add({ name: 'primaryclass', value: this.has.eprintclass.value })
+    // if (this.has.eprinttype) this.add({ name: 'archiveprefix', value: this.has.eprinttype.value })
+  }
+
+  private extractEprint(): boolean {
+    if (!this.translation.preferences.biblatexExtractEprint || !this.item.url) return false
+
+    let m
+    if (m = this.item.url.match(/^https?:\/\/www.jstor.org\/stable\/([\S]+)$/i)) {
+      this.add({ name: 'eprinttype', value: 'jstor'})
+      this.add({ name: 'eprint', value: m[1].replace(/\?.*/, '') })
+    }
+    else if (m = this.item.url.match(/^https?:\/\/books.google.com\/books?id=([\S]+)$/i)) {
+      this.add({ name: 'eprinttype', value: 'googlebooks'})
+      this.add({ name: 'eprint', value: m[1] })
+    }
+    else if (m = this.item.url.match(/^https?:\/\/www.ncbi.nlm.nih.gov\/pubmed\/([\S]+)$/i)) {
+      this.add({ name: 'eprinttype', value: 'pubmed'})
+      this.add({ name: 'eprint', value: m[1] })
+    }
+    else {
+      return false
+    }
+
+    delete this.item.url
+    this.remove('url')
+    return true
   }
 
   private valueish(value) {
