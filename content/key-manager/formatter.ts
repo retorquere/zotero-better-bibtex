@@ -1224,7 +1224,7 @@ class PatternFormatter {
    * tries to replace diacritics with ascii look-alikes. Removes non-ascii characters it cannot match
    * @param mode specialized folding modes for german, japanese or chinese
    */
-  public _fold(mode?: 'german' | 'japanese' | 'chinese') {
+  public _fold(mode?: 'german' | 'japanese' | 'chinese' | 'arabic') {
     return this.$text(this.transliterate(this.chunk, mode).split(/\s+/).join(' ').trim())
   }
 
