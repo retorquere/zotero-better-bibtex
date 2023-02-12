@@ -77,7 +77,7 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
             branch.setIntPref(name, value)
             break
           default:
-            error = `invalid defualt type '${typeof(value)}' for '${pref}'`
+            error = `invalid default type '${typeof(value)}' for '${pref}'`
             break
         }
       }
