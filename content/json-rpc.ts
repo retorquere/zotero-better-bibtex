@@ -297,7 +297,7 @@ class NSItem {
       libraryID: Library.get(library).id,
     })
 
-    Zotero.debug(`json-rpc item.bibliography searching ${JSON.stringify(query)}`)
+    Zotero.debug(`json-rpc item.bibliography searching ${JSON.stringify(query)} in ${Library.get(library)}`)
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     const items = await getItemsAsync(Zotero.BetterBibTeX.KeyManager.keys.find(query).map((key: { itemID: number }) => key.itemID))
