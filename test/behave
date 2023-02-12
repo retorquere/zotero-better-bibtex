@@ -12,6 +12,7 @@ import tarfile
 from pygit2 import Repository
 import glob
 from munch import Munch
+import configparser
 
 import pathlib
 for d in pathlib.Path(__file__).resolve().parents:
@@ -29,6 +30,7 @@ CI = Munch(
   tag = (os.environ.get('GITHUB_REF', '').startswith('refs/tags/') and os.environ['GITHUB_REF'].split('/')[-1]) or '',
   message = (os.environ.get('GITHUB_SHA') and subprocess.check_output(['git', 'log', '--format=%B', '-n', '1', os.environ['GITHUB_SHA']], encoding='UTF-8').strip()) or ''
 )
+BRANCH = CI.branch if CI.branch != '' else Repository('.').head.name.split('/')[-1]
 
 def load_json(path, default):
   try:
@@ -86,6 +88,10 @@ parser.add_argument('--nightly', action='store_true', default=(CI.event == 'sche
 args, unknownargs = parser.parse_known_args()
 sys.argv = sys.argv[:1] + unknownargs
 
+behave_ini = configparser.ConfigParser()
+behave_ini.read(os.path.join(ROOT, 'behave.ini'))
+sys.argv += shlex.split(behave_ini.get('branch', BRANCH, fallback=''))
+
 if args.start:
   args.keep = True
   sys.argv += ['--tags', '@none']
@@ -113,11 +119,9 @@ if args.dev and args.beta:
   sys.exit(1)
 
 if args.this or args.test_this:
-  repo = Repository('.')
-  branch = repo.head.name.split('/')[-1]
-  assert re.match(r'^gh-[0-9]+$', branch)
-  if args.this: args.this = branch.replace('gh-', '@')
-  if args.test_this: args.test = branch.replace('gh-', '')
+  assert re.match(r'^gh-[0-9]+$', BRANCH)
+  if args.this: args.this = BRANCH.replace('gh-', '@')
+  if args.test_this: args.test = BRANCH.replace('gh-', '')
 
 if args.test or args.this or args.nightly or args.tagged or args.beta or args.dev: args.slow = True
 
