@@ -443,16 +443,18 @@ class PatternFormatter {
   }
 
   /**
-   * Tests whether the item is of any of the given types, and skips to the next pattern if not
+   * Without arguments, returns the item type.
+   * When arguments as passed, tests whether the item is of any of the given types, and skips to the next pattern if not, eg `type(book) + veryshorttitle | auth + year`.
    * @param allowed one or more item type names
    */
   public $type(...allowed: ZoteroItemType[]) {
+    if (!allowed.length) return this.$text(this.item.itemType)
+
     if (allowed.map(type => type.toLowerCase()).includes(this.item.itemType.toLowerCase())) {
       return this.$text('')
     }
-    else {
-      throw { next: true } // eslint-disable-line no-throw-literal
-    }
+
+    throw { next: true } // eslint-disable-line no-throw-literal
   }
 
   /**
@@ -1224,7 +1226,7 @@ class PatternFormatter {
    * tries to replace diacritics with ascii look-alikes. Removes non-ascii characters it cannot match
    * @param mode specialized folding modes for german, japanese or chinese
    */
-  public _fold(mode?: 'german' | 'japanese' | 'chinese') {
+  public _fold(mode?: 'german' | 'japanese' | 'chinese' | 'arabic') {
     return this.$text(this.transliterate(this.chunk, mode).split(/\s+/).join(' ').trim())
   }
 
