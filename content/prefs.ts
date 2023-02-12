@@ -9,6 +9,7 @@ import { names, defaults } from '../gen/preferences/meta'
 import { PreferenceManager as PreferenceManagerBase } from '../gen/preferences'
 import { dict as csv2dict } from './load-csv'
 import { log } from './logger'
+import { flash } from './flash'
 
 type TexChar = { unicode?: string, math?: string, text?: string }
 export type TeXMap = Record<string, TexChar>
@@ -61,20 +62,31 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
 
   setDefaultPrefs() {
     const branch = Services.prefs.getDefaultBranch('')
-    for (let [pref, value] of Object.entries(defaults)) {
-      pref = `extensions.zotero.translators.better-bibtex.${pref}`
-      switch (typeof value) {
-        case 'boolean':
-          branch.setBoolPref(pref, value)
-          break
-        case 'string':
-          branch.setStringPref(pref, value)
-          break
-        case 'number':
-          branch.setIntPref(pref, value)
-          break
-        default:
-          Zotero.logError(`Invalid type '${typeof(value)}' for pref '${pref}'`)
+    for (const [pref, value] of Object.entries(defaults)) {
+      const name = `extensions.zotero.translators.better-bibtex.${pref}`
+      let error = ''
+      try {
+        switch (typeof value) {
+          case 'boolean':
+            branch.setBoolPref(name, value)
+            break
+          case 'string':
+            branch.setStringPref(name, value)
+            break
+          case 'number':
+            branch.setIntPref(name, value)
+            break
+          default:
+            error = `invalid defualt type '${typeof(value)}' for '${pref}'`
+            break
+        }
+      }
+      catch (err) {
+        error = `could not set default for ${pref} to ${typeof value} ${JSON.stringify(value)}`
+      }
+      if (error) {
+        Zotero.logError(`Better BibTeX: ${error}`)
+        flash(`could not set default ${pref}`, error)
       }
     }
   }

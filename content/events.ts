@@ -18,7 +18,7 @@ export const Events = new Emittery<{
 }>({
   debug: {
     name: 'better-bibtex event',
-    enabled: Zotero.Prefs.get('translators.better-bibtex.log-events'),
+    enabled: Zotero.Prefs.get('translators.better-bibtex.logEvents'),
     logger: (type, debugName, eventName, eventData) => {
       if (typeof eventName === 'symbol') return
       log.debug(debugName, type, eventName, eventData)

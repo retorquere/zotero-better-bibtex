@@ -609,6 +609,8 @@ export class Entry {
     if (this.translation.BetterBibLaTeX) this.add({ name: 'pubstate', value: this.item.status })
 
     for (const [key, value] of Object.entries(this.item.extraFields.kv)) {
+      if (key === '_eprint') continue
+
       const type = ExtraFields[key]?.type || 'string'
       let enc = {name: 'creator', text: 'latex'}[type] || type
       const replace = type === 'date'

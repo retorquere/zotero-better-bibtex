@@ -112,6 +112,7 @@ export class KeyManager {
   public async refresh(ids: 'selected' | number | number[], manual = false): Promise<void> {
     ids = this.expandSelection(ids)
 
+    log.debug(`refresh: ${ids}`)
     Cache.remove(ids, `refreshing keys for ${ids}`)
 
     const warnAt = manual ? Preference.warnBulkModify : 0
@@ -480,6 +481,7 @@ export class KeyManager {
     current = current || this.keys.findOne($and({ itemID: item.id }))
 
     const proposed = this.propose(item)
+    log.debug('refresh:', proposed)
 
     if (current && (current.pinned || !this.autopin.enabled) && (current.pinned === proposed.pinned) && (current.citekey === proposed.citekey)) return current.citekey
 
@@ -535,6 +537,7 @@ export class KeyManager {
         return postfix
       })
 
+      log.debug('refresh: testing', postfixed, 'against', transient, this.keys.findOne({ $and: [...conflictQuery.$and, { citekey: { $eq: postfixed } }] }))
       const conflict = transient.includes(postfixed) || this.keys.findOne({ $and: [...conflictQuery.$and, { citekey: { $eq: postfixed } }] })
       if (conflict) continue
 
