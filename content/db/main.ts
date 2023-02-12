@@ -62,7 +62,7 @@ class Main extends Loki {
       }
     }
 
-    if (Zotero.Prefs.get('translators.better-bibtex.log-events')) {
+    if (Zotero.Prefs.get('translators.better-bibtex.logEvents')) {
       for (const event of ['insert', 'delete', 'update']) {
         (e => {
           citekeys.on(e, record => { log.debug('LokiJS', e, record) })

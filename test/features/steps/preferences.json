@@ -794,6 +794,13 @@
     "affects": []
   },
   {
+    "name": "logEvents",
+    "label": "",
+    "type": "boolean",
+    "default": false,
+    "affects": []
+  },
+  {
     "name": "platform",
     "label": "",
     "type": "string",
