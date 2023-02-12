@@ -87,6 +87,7 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
       if (error) {
         Zotero.logError(`Better BibTeX: ${error}`)
         flash(`could not set default ${pref}`, error)
+        alert(error)
       }
     }
   }
