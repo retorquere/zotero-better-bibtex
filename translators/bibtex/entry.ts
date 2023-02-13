@@ -1074,9 +1074,11 @@ export class Entry {
     const to = path.split(this.translation.paths.sep)
 
     while (from.length && to.length && normalize(from[0]) === normalize(to[0])) {
+      log.debug('relpath:', { base: this.translation.export.dir, path, from, to })
       from.shift()
       to.shift()
     }
+    log.debug('relpath:', { base: this.translation.export.dir, path, from, to })
     // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
     return `..${this.translation.paths.sep}`.repeat(from.length) + to.join(this.translation.paths.sep)
   }
