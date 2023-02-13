@@ -497,9 +497,10 @@ export class KeyManager {
     return proposed.citekey
   }
 
-  public remove(ids: any[]): void {
+  public remove(ids: number[] | number): void {
     if (!Array.isArray(ids)) ids = [ids]
     this.keys.findAndRemove({ itemID : { $in : ids } })
+    log.debug('keymanager after remove:', ids, this.keys.find({ itemID : { $in : ids } }))
   }
 
   public get(itemID: number): { citekey: string, pinned: boolean, retry?: boolean } {
