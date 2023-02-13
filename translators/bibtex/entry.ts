@@ -1074,13 +1074,13 @@ export class Entry {
     const to = path.split(this.translation.paths.sep)
 
     while (from.length && to.length && normalize(from[0]) === normalize(to[0])) {
-      log.debug('relpath:', { base: this.translation.export.dir, path, from, to })
       from.shift()
       to.shift()
     }
-    log.debug('relpath:', { base: this.translation.export.dir, path, from, to })
     // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-    return `..${this.translation.paths.sep}`.repeat(from.length) + to.join(this.translation.paths.sep)
+    const rel = `..${this.translation.paths.sep}`.repeat(from.length) + to.join(this.translation.paths.sep)
+    log.debug('relpath:', { base: this.translation.export.dir, path, rel })
+    return rel
   }
 
   protected enc_attachments(f, modify?: (path: string) => string): string {
@@ -1123,6 +1123,7 @@ export class Entry {
       })
       if (this.translation.preferences.relativeFilePaths && this.translation.export.dir) {
         const relative = this.relPath(att.path)
+        log.debug('relpath:', { abs: att.path, rel: relative })
         if (relative !== att.path) {
           this.item.$cacheable = false
           att.path = relative
