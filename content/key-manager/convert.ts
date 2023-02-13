@@ -360,7 +360,14 @@ export function convert(formulas: string): string {
               return b.callExpression(b.memberExpression(b.thisExpression(), b.identifier('$getField')), [b.literal(name)])
             }
             else {
-              const method = api[`${namespace}${path.node.name.toLowerCase()}`]
+              let name = `${namespace}${path.node.name.toLowerCase()}`
+              // deprecated aliases
+              switch (name) {
+                case '_fold':
+                  name = '_transliterate'
+                  break
+              }
+              const method = api[name]
               if (!method) {
                 const me = `${namespace === '$' ? 'function' : 'filter'} ${JSON.stringify(path.node.name)}`
                 error(`No such ${me}`, path.node)
