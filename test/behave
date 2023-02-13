@@ -31,13 +31,10 @@ CI = Munch(
   message = (os.environ.get('GITHUB_SHA') and subprocess.check_output(['git', 'log', '--format=%B', '-n', '1', os.environ['GITHUB_SHA']], encoding='UTF-8').strip()) or ''
 )
 BRANCH = CI.branch if CI.branch != '' else Repository('.').head.name.split('/')[-1]
+behave_ini = configparser.ConfigParser()
+behave_ini.read(os.path.join(ROOT, 'behave.ini'))
+sys.argv += shlex.split(behave_ini.get('branch', BRANCH, fallback=''))
 
-def load_json(path, default):
-  try:
-    with open(path) as f:
-      return json.load(f)
-  except:
-    return default
 class BooleanAction(argparse.Action):
   def __init__(self, option_strings, dest, nargs=None, **kwargs):
     super().__init__(option_strings, dest, nargs=0, **kwargs)
@@ -72,8 +69,7 @@ parser.add_argument('--caching', '--no-caching', dest='caching', action=BooleanA
 parser.add_argument('--this', action='store_true')
 parser.add_argument('--test-this', action='store_true')
 parser.add_argument('--slow', action='store_true',
-  default = CI.branch in load_json(os.path.join(ROOT, '.slow.json'), []) or
-            CI.branch == 'master' or
+  default = CI.branch == 'master' or
             '#slow' in CI.message or
             CI.event == 'schedule' or
             CI.tag != ''
@@ -87,10 +83,6 @@ parser.add_argument('--tagged', action='store_true', default=CI.tag != '')
 parser.add_argument('--nightly', action='store_true', default=(CI.event == 'schedule') or ('#nightly' in CI.message))
 args, unknownargs = parser.parse_known_args()
 sys.argv = sys.argv[:1] + unknownargs
-
-behave_ini = configparser.ConfigParser()
-behave_ini.read(os.path.join(ROOT, 'behave.ini'))
-sys.argv += shlex.split(behave_ini.get('branch', BRANCH, fallback=''))
 
 if args.start:
   args.keep = True
