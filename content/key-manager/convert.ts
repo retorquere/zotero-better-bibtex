@@ -8,6 +8,8 @@ import { validator, noncoercing } from '../ajv'
 import _ from 'lodash'
 import { inspect } from 'loupe'
 
+import alias = require('./alias.json')
+
 const object_or_null = { oneOf: [ { type: 'object' }, { type: 'null' } ] }
 const basics = {
   loc: object_or_null,
@@ -361,12 +363,7 @@ export function convert(formulas: string): string {
             }
             else {
               let name = `${namespace}${path.node.name.toLowerCase()}`
-              // deprecated aliases
-              switch (name) {
-                case '_fold':
-                  name = '_transliterate'
-                  break
-              }
+              name = alias[name] || name
               const method = api[name]
               if (!method) {
                 const me = `${namespace === '$' ? 'function' : 'filter'} ${JSON.stringify(path.node.name)}`

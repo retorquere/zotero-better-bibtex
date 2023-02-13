@@ -1,8 +1,10 @@
 {
   const identifier = require('../../gen/ecmascript-6')
+  const alias = require('./alias.json')
 
   function get_method(method, prefix) {
     method = (prefix || '') + method.toLowerCase().replace(/[-.]/g, '')
+    method = alias[method] || method
     return options.methods[method] || {}
   }
 
