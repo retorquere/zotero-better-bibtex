@@ -43,7 +43,7 @@ class Logger {
         }
         else {
           try {
-            return stringify(m)
+            return stringify(m, '')
           }
           catch (err) {
             // may be an mozilla exception, no idea on the actual instance type
