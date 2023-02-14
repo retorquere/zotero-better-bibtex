@@ -289,10 +289,14 @@ export class Entry {
     const eprintclass = this.translation.BetterBibTeX ? 'primaryclass' : 'eprintclass'
 
     if (item.itemType === 'preprint' && item.publisher) {
-      if (item.publisher?.match(/arxiv/i)) item.arXiv = { source: 'preprint', id: item.number, category: item.section }
-      this.add({ name: 'eprint', value: item.number })
-      this.add({ name: eprinttype, value: item.publisher })
-      this.add({ name: eprintclass, value: item.section })
+      if (item.publisher?.match(/arxiv/i)) {
+        item.arXiv = { source: 'preprint', id: item.number, category: item.section }
+      }
+      else {
+        this.add({ name: 'eprint', value: item.number })
+        this.add({ name: eprinttype, value: item.publisher })
+        this.add({ name: eprintclass, value: item.section })
+      }
     }
     else if (this.extractEprint()) {
       // pass
@@ -1078,7 +1082,7 @@ export class Entry {
       to.shift()
     }
     // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-    return `..${this.translation.paths.sep}`.repeat(from.length) + to.join(this.translation.paths.sep)
+    return  `..${this.translation.paths.sep}`.repeat(from.length) + to.join(this.translation.paths.sep)
   }
 
   protected enc_attachments(f, modify?: (path: string) => string): string {
@@ -1115,10 +1119,6 @@ export class Entry {
 
       if (!att.mimetype && (att.path.slice(-4).toLowerCase() === '.pdf')) att.mimetype = 'application/pdf' // eslint-disable-line no-magic-numbers
 
-      log.debug('relpath:', {
-        relativeFilePaths: this.translation.preferences.relativeFilePaths,
-        dir: this.translation.export.dir,
-      })
       if (this.translation.preferences.relativeFilePaths && this.translation.export.dir) {
         const relative = this.relPath(att.path)
         if (relative !== att.path) {

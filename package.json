@@ -69,6 +69,7 @@
     "case": "^1.6.3",
     "citeproc": "^2.4.62",
     "csl-json": "^0.1.0",
+    "cyrillic-to-translit-js": "^3.2.1",
     "edtf": "^4.4.1",
     "edtfy": "^0.0.8",
     "emittery": "^1.0.1",

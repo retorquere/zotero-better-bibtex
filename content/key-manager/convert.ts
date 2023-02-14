@@ -8,6 +8,8 @@ import { validator, noncoercing } from '../ajv'
 import _ from 'lodash'
 import { inspect } from 'loupe'
 
+import alias = require('./alias.json')
+
 const object_or_null = { oneOf: [ { type: 'object' }, { type: 'null' } ] }
 const basics = {
   loc: object_or_null,
@@ -360,7 +362,9 @@ export function convert(formulas: string): string {
               return b.callExpression(b.memberExpression(b.thisExpression(), b.identifier('$getField')), [b.literal(name)])
             }
             else {
-              const method = api[`${namespace}${path.node.name.toLowerCase()}`]
+              let name = `${namespace}${path.node.name.toLowerCase()}`
+              name = alias[name] || name
+              const method = api[name]
               if (!method) {
                 const me = `${namespace === '$' ? 'function' : 'filter'} ${JSON.stringify(path.node.name)}`
                 error(`No such ${me}`, path.node)

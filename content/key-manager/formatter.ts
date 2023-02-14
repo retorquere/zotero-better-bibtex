@@ -7,7 +7,6 @@ import fold2ascii from 'fold-to-ascii'
 import rescape from '@stdlib/utils-escape-regexp-string'
 import ucs2decode = require('punycode2/ucs2/decode')
 import scripts = require('xregexp/tools/output/scripts')
-import { transliterate } from 'transliteration/dist/node/src/node/index'
 
 import { flash } from '../flash'
 import { Preference } from '../prefs'
@@ -33,6 +32,8 @@ import { sprintf } from 'sprintf-js'
 import { jieba, pinyin } from './chinese'
 import { kuroshiro } from './japanese'
 import { transliterate as arabic } from './arabic'
+import { transliterate } from 'transliteration/dist/node/src/node/index'
+import { ukranian, mongolian, russian } from './cyrillic'
 
 import { validator, coercing } from '../ajv'
 import { dictsync as csv2dict } from '../load-csv'
@@ -176,7 +177,7 @@ class Item {
   public key: string
   public id: number
   public libraryID: number
-  public transliterateMode: 'german' | 'japanese' | 'chinese' | 'chinese-traditional' | 'arabic' | ''
+  public transliterateMode: 'german' | 'japanese' | 'chinese' | 'chinese-traditional' | 'arabic' | 'ukranian' | 'mongolian' | 'russian' | ''
   public getField: (name: string) => number | string
   public extra: string
   public extraFields: Extra.Fields
@@ -238,6 +239,18 @@ class Item {
 
       case 'ar':
         this.transliterateMode = 'arabic'
+        break
+
+      case 'uk':
+        this.transliterateMode = 'ukranian'
+        break
+
+      case 'mn':
+        this.transliterateMode = 'mongolian'
+        break
+
+      case 'ru':
+        this.transliterateMode = 'russian'
         break
 
       default:
@@ -326,7 +339,7 @@ class PatternFormatter {
   // private fold: boolean
   public update(reason: string) {
     log.debug('update key formula:', reason, Preference.citekeyUnsafeChars)
-    const unsafechars = rescape(Preference.citekeyUnsafeChars)
+    const unsafechars = rescape(Preference.citekeyUnsafeChars + '\uFFFD')
     this.re.unsafechars_allow_spaces = new RegExp(`[${unsafechars}]`, 'g')
     this.re.unsafechars = new RegExp(`[${unsafechars}\\s]`, 'g')
     this.skipWords = new Set(Preference.skipWords.split(',').map((word: string) => word.trim()).filter((word: string) => word))
@@ -1222,14 +1235,6 @@ class PatternFormatter {
     return this.$text(Zotero.Utilities.XRegExp.replace(this.chunk, this.re.alphanum, '', 'all').split(/\s+/).join(' ').trim())
   }
 
-  /**
-   * tries to replace diacritics with ascii look-alikes. Removes non-ascii characters it cannot match
-   * @param mode specialized folding modes for german, japanese or chinese
-   */
-  public _fold(mode?: 'german' | 'japanese' | 'chinese' | 'arabic') {
-    return this.$text(this.transliterate(this.chunk, mode).split(/\s+/).join(' ').trim())
-  }
-
   /** uppercases the first letter of each word */
   public _capitalize() {
     return this.$text(this.chunk.replace(/((^|\s)[a-z])/g, m => m.toUpperCase()))
@@ -1285,12 +1290,12 @@ class PatternFormatter {
    * transliterates the citation key. If you don't specify a mode, the mode is derived from the item language field
    * @param mode specialized translateration modes for german, japanese or chinese. default is minimal
    */
-  public _transliterate(mode?: 'minimal' | 'german' | 'de' | 'japanese' | 'ja' | 'zh' | 'chinese' | 'tw' | 'zh-hant' | 'ar' | 'arabic') {
+  public _transliterate(mode?: 'minimal' | 'de' | 'german' | 'ja' | 'japanese' | 'zh' | 'chinese' | 'tw' | 'zh-hant' | 'ar' | 'arabic' | 'uk' | 'ukranian' | 'mn' | 'mongolian' | 'ru' | 'russian') {
     if (!this.chunk) return this
     return this.$text(this.transliterate(this.chunk, mode))
   }
 
-  private transliterate(str: string, mode?: 'minimal' | 'de' | 'german' | 'ja' | 'japanese' | 'zh' | 'chinese' | 'tw' | 'zh-hant' | 'chinese-traditional' | 'ar' | 'arabic'): string {
+  private transliterate(str: string, mode?: 'minimal' | 'de' | 'german' | 'ja' | 'japanese' | 'zh' | 'chinese' | 'tw' | 'zh-hant' | 'chinese-traditional' | 'ar' | 'arabic' | 'uk' | 'ukranian' | 'mn' | 'mongolian' | 'ru' | 'russian'): string {
     mode = mode || this.item.transliterateMode || 'minimal'
 
     let replace: Record<string, string> = {}
@@ -1326,6 +1331,21 @@ class PatternFormatter {
       case 'ar':
       case 'arabic':
         str = arabic(str)
+        break
+
+      case 'uk':
+      case 'ukranian':
+        str = ukranian(str)
+        break
+
+      case 'mn':
+      case 'mongolian':
+        str = mongolian(str)
+        break
+
+      case 'ru':
+      case 'russian':
+        str = russian(str)
         break
 
       default:
