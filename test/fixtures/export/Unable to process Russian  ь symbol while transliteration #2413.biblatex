@@ -1,0 +1,17 @@
+@article{romankoPolimeraznayaCepnayaReakciya2022,
+  title = {Полимеразная цепная реакция (ПЦР), как эффективный скрининговый метод выявления транслокаций с участием генов NTRK при немелкоклеточном раке легкого},
+  author = {Романько, Александр and Преображенская, Елена and Митюшкина, Наталья and Тюрин, Владислав and Мулкиджан, Римма and Кривошеева, Елена and Имянитов, Евгений},
+  date = {2022-05-06},
+  journaltitle = {Вопросы онкологии},
+  volume = {68},
+  number = {2},
+  pages = {182--187},
+  issn = {0507-3758},
+  doi = {10.37469/0507-3758-2022-68-2-182-187},
+  url = {https://voprosyonkologii.ru/index.php/journal/article/view/1392},
+  urldate = {2022-11-21},
+  abstract = {Background. The detection of translocations involving genes of the NTRK family in patients with non-small cell lung cancer (NSCLC) is a serious technical challenge. This is due to the presence of a large number of partner genes, breakpoints in them, and the presence of alternative splicing in the NTRK genes themselves. The aim of this work was to develop an effective method for diagnosing NTRK translocations, as well as to analyze the frequency and spectrum of these rearrangements in NSCLC. Materials and methods. We have developed a combined NTRK translocation search method based on a reverse transcription PCR reaction. The method consists of 2 stages: primary PCR with analysis of unbalanced expression of NTRK genes and a series of variant-specific PCRs to identify frequent variants of rearrangements. Results. In a sample of 5102 patients with NSCLC, 9 cases of unbalanced expression of one of the NTRK genes were found. Using variant-specific PCR, the presence of rearrangements was confirmed in 2 of these 9 NSCLC. The rest of the samples demonstrating the phenomenon of unbalanced expression were analyzed by high-throughput next generation RNA sequencing (NGS), as a result of which 4 more NTRK translocations were found. Thus, a total of 6 rearrangements were identified with the participation of genes of the NTRK family (6/5102, 0.12\%): SQSTM1ex5/NTRK1ex9, TPM3ex8/NTRK1ex10, CD74ex6/NTRK1ex10, FAM118Bex8/NTRK1ex9, SQSTM1ex4/NTRK2ex14, ETV6ex5/NTRK3ex15. The FAM118B/NTRK1 translocation has not been previously described in the literature. Conclusion. The combination of 2 different PCR tests seems to be an adequate approach for diagnosing rearrangements involving the NTRK1, NTRK2, NTRK3 genes. Systematic screening for unbalanced expression of NTRK genes makes it possible to identify new variants of clinically significant translocations in NSCLC.},
+  issue = {2},
+  langid = {russian},
+  keywords = {NTRK,немелкоклеточный рак легкого,ПЦР диагностика,транслокация}
+}

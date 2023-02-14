@@ -867,7 +867,7 @@ export class BetterBibTeX {
   private loads = 0
 
   constructor() {
-    this.debugEnabledAtStart = !!Zotero.Debug.enabled
+    this.debugEnabledAtStart = Zotero.Prefs.get('debug.store')
 
     this.ready = this.deferred.ready.promise
     this.loaded = this.deferred.loaded.promise
