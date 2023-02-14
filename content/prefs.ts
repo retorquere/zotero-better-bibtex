@@ -85,8 +85,10 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
         error = `could not set default for ${pref} to ${typeof value} ${JSON.stringify(value)}`
       }
       if (error) {
+        const v = Zotero.Prefs.get(`translators.better-bibtex.${pref}`)
+        if (typeof v !== 'undefined') error += `, value currently set to ${typeof v} ${JSON.stringify(v)}`
         Zotero.logError(`Better BibTeX: ${error}`)
-        flash(`could not set default ${pref}`, error)
+        flash(`could not set default ${pref}`, error, 20)
         Zotero.Prefs.clear(name)
       }
     }
