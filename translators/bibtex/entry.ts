@@ -289,10 +289,14 @@ export class Entry {
     const eprintclass = this.translation.BetterBibTeX ? 'primaryclass' : 'eprintclass'
 
     if (item.itemType === 'preprint' && item.publisher) {
-      if (item.publisher?.match(/arxiv/i)) item.arXiv = { source: 'preprint', id: item.number, category: item.section }
-      this.add({ name: 'eprint', value: item.number })
-      this.add({ name: eprinttype, value: item.publisher })
-      this.add({ name: eprintclass, value: item.section })
+      if (item.publisher?.match(/arxiv/i)) {
+        item.arXiv = { source: 'preprint', id: item.number, category: item.section }
+      }
+      else {
+        this.add({ name: 'eprint', value: item.number })
+        this.add({ name: eprinttype, value: item.publisher })
+        this.add({ name: eprintclass, value: item.section })
+      }
     }
     else if (this.extractEprint()) {
       // pass
