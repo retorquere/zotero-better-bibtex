@@ -187,47 +187,47 @@ export class Entry {
     this.config = config
     this.date = item.date ? DateParser.parse(item.date) : { type: 'none' }
 
-    if (!this.item.language) {
+    if (!item.language) {
       this.english = true
     }
     else {
-      this.language = babelLanguage(this.item.language)
+      this.language = babelLanguage(item.language)
       this.english = BabelTag[this.language] === 'en'
     }
 
     // remove ordinal from edition
-    this.item.edition = (this.item.edition || '').replace(/^([0-9]+)(nd|th)$/, '$1')
+    item.edition = (item.edition || '').replace(/^([0-9]+)(nd|th)$/, '$1')
 
-    this.extraFields = JSON.parse(JSON.stringify(this.item.extraFields))
+    this.extraFields = JSON.parse(JSON.stringify(item.extraFields))
 
     // should be const entrytype: string | { type: string, subtype?: string }
     // https://github.com/Microsoft/TypeScript/issues/10422
     let entrytype: any
 
     // workaround for preprints, https://forums.zotero.org/discussion/comment/385524#Comment_385524
-    const pseudoPrePrint = this.translation.BetterBibTeX && this.item.itemType === 'report' && this.item.extraFields.kv.type?.toLowerCase() === 'article'
+    const pseudoPrePrint = this.translation.BetterBibTeX && item.itemType === 'report' && item.extraFields.kv.type?.toLowerCase() === 'article'
 
     // preserve for thesis type etc
-    let csl_type = this.item.extraFields.kv.type
+    let csl_type = item.extraFields.kv.type
     if (!pseudoPrePrint && config.typeMap.csl[csl_type]) {
-      delete this.item.extraFields.kv.type
+      delete item.extraFields.kv.type
     }
     else {
       csl_type = null
     }
 
-    if (this.item.extraFields.tex.entrytype) {
-      entrytype = this.item.extraFields.tex.entrytype.value
+    if (item.extraFields.tex.entrytype) {
+      entrytype = item.extraFields.tex.entrytype.value
       this.entrytype_source = `tex.${entrytype}`
 
-      delete this.item.extraFields.tex.referencetype
+      delete item.extraFields.tex.referencetype
     }
-    else if (this.item.extraFields.tex.referencetype) { // phase out reference
-      entrytype = this.item.extraFields.tex.referencetype.value
+    else if (item.extraFields.tex.referencetype) { // phase out reference
+      entrytype = item.extraFields.tex.referencetype.value
       this.entrytype_source = `tex.${entrytype}`
 
-      this.item.extraFields.tex.entrytype = this.item.extraFields.tex.referencetype
-      delete this.item.extraFields.tex.referencetype
+      item.extraFields.tex.entrytype = item.extraFields.tex.referencetype
+      delete item.extraFields.tex.referencetype
     }
     else if (csl_type) {
       entrytype = config.typeMap.csl[csl_type]
@@ -235,12 +235,12 @@ export class Entry {
     }
     else if (pseudoPrePrint) {
       entrytype = 'misc'
-      delete this.item.extraFields.kv.type
-      this.entrytype_source = `zotero.${this.item.itemType}`
+      delete item.extraFields.kv.type
+      this.entrytype_source = `zotero.${item.itemType}`
     }
     else {
-      entrytype = config.typeMap.zotero[this.item.itemType] || 'misc'
-      this.entrytype_source = `zotero.${this.item.itemType}`
+      entrytype = config.typeMap.zotero[item.itemType] || 'misc'
+      this.entrytype_source = `zotero.${item.itemType}`
     }
 
     if (typeof entrytype === 'string') {
@@ -281,28 +281,72 @@ export class Entry {
         this.add({name: 'timestamp', value: '2015-02-24 12:14:36 +0100'})
       }
       else {
-        this.add({name: 'timestamp', value: this.item.dateModified || this.item.dateAdded})
+        this.add({name: 'timestamp', value: item.dateModified || item.dateAdded})
       }
     }
 
-    if ((this.item.arXiv = arXiv.parse(this.item.publicationTitle)) && this.item.arXiv.id) {
-      this.item.arXiv.source = 'publicationTitle'
-      if (this.translation.BetterBibLaTeX) delete this.item.publicationTitle
+    const eprinttype = this.translation.BetterBibTeX ? 'archiveprefix' : 'eprinttype'
+    const eprintclass = this.translation.BetterBibTeX ? 'primaryclass' : 'eprintclass'
+
+    if (item.itemType === 'preprint' && item.publisher) {
+      if (item.publisher?.match(/arxiv/i)) {
+        item.arXiv = { source: 'preprint', id: item.number, category: item.section }
+      }
+      else {
+        this.add({ name: 'eprint', value: item.number })
+        this.add({ name: eprinttype, value: item.publisher })
+        this.add({ name: eprintclass, value: item.section })
+      }
     }
-    else if ((this.item.arXiv = arXiv.parse(this.item.extraFields.tex.arxiv?.value)) && this.item.arXiv.id) {
-      this.item.arXiv.source = 'extra'
+    else if (this.extractEprint()) {
+      // pass
+    }
+    else if ((item.arXiv = arXiv.parse(item.publicationTitle)) && item.arXiv.id) {
+      item.arXiv.source = 'publicationTitle'
+      if (this.translation.BetterBibLaTeX) delete item.publicationTitle
+    }
+    else if ((item.arXiv = arXiv.parse(item.extraFields.tex.arxiv?.value)) && item.arXiv.id) {
+      item.arXiv.source = 'extra'
     }
     else {
-      this.item.arXiv = null
+      item.arXiv = null
     }
 
-    if (this.item.arXiv) {
-      delete this.item.extraFields.tex.arxiv
-      this.add({ name: 'archiveprefix', value: 'arXiv'} )
-      this.add({ name: 'eprinttype', value: 'arxiv'})
-      this.add({ name: 'eprint', value: this.item.arXiv.id })
-      this.add({ name: 'primaryclass', value: this.item.arXiv.category })
+    if (item.arXiv) {
+      delete item.extraFields.tex.arxiv
+      this.add({ name: 'eprint', value: item.arXiv.id })
+      this.add({ name: eprinttype, value: 'arxiv'})
+      this.add({ name: eprintclass, value: item.arXiv.category })
     }
+
+    // aliases
+    // if (this.has.eprintclass) this.add({ name: 'primaryclass', value: this.has.eprintclass.value })
+    // if (this.has.eprinttype) this.add({ name: 'archiveprefix', value: this.has.eprinttype.value })
+  }
+
+  private extractEprint(): boolean {
+    if (!this.translation.preferences.biblatexExtractEprint || !this.item.url) return false
+
+    let m
+    if (m = this.item.url.match(/^https?:\/\/www.jstor.org\/stable\/([\S]+)$/i)) {
+      this.add({ name: 'eprinttype', value: 'jstor'})
+      this.add({ name: 'eprint', value: m[1].replace(/\?.*/, '') })
+    }
+    else if (m = this.item.url.match(/^https?:\/\/books.google.com\/books?id=([\S]+)$/i)) {
+      this.add({ name: 'eprinttype', value: 'googlebooks'})
+      this.add({ name: 'eprint', value: m[1] })
+    }
+    else if (m = this.item.url.match(/^https?:\/\/www.ncbi.nlm.nih.gov\/pubmed\/([\S]+)$/i)) {
+      this.add({ name: 'eprinttype', value: 'pubmed'})
+      this.add({ name: 'eprint', value: m[1] })
+    }
+    else {
+      return false
+    }
+
+    // delete this.item.url
+    // this.remove('url')
+    return true
   }
 
   private valueish(value) {
@@ -569,6 +613,8 @@ export class Entry {
     if (this.translation.BetterBibLaTeX) this.add({ name: 'pubstate', value: this.item.status })
 
     for (const [key, value] of Object.entries(this.item.extraFields.kv)) {
+      if (key === '_eprint') continue
+
       const type = ExtraFields[key]?.type || 'string'
       let enc = {name: 'creator', text: 'latex'}[type] || type
       const replace = type === 'date'
@@ -1036,7 +1082,7 @@ export class Entry {
       to.shift()
     }
     // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-    return `..${this.translation.paths.sep}`.repeat(from.length) + to.join(this.translation.paths.sep)
+    return  `..${this.translation.paths.sep}`.repeat(from.length) + to.join(this.translation.paths.sep)
   }
 
   protected enc_attachments(f, modify?: (path: string) => string): string {

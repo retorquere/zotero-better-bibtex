@@ -300,7 +300,7 @@
   },
   {
     "name": "autoAbbrevStyle",
-    "label": "Abbreviation style:",
+    "label": "",
     "type": "string",
     "default": "",
     "affects": [
@@ -788,6 +788,13 @@
   },
   {
     "name": "testing",
+    "label": "",
+    "type": "boolean",
+    "default": false,
+    "affects": []
+  },
+  {
+    "name": "logEvents",
     "label": "",
     "type": "boolean",
     "default": false,

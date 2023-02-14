@@ -296,6 +296,9 @@
                 "both"
               ]
             },
+            "logEvents": {
+              "type": "boolean"
+            },
             "mapMath": {
               "type": "string"
             },

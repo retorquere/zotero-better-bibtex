@@ -29,7 +29,10 @@ class Logger {
     if (typeof msg !== 'string') {
       msg = msg.map(m => {
         const type = typeof m
-        if (type === 'string' || m instanceof String) {
+        if (type === 'symbol') {
+          return m.toString() as string
+        }
+        else if (type === 'string' || m instanceof String) {
           return m as string
         }
         else if (type === 'number' || type === 'undefined' || type === 'boolean' || m === null) {
@@ -38,11 +41,14 @@ class Logger {
         else if (m instanceof Error || m instanceof ErrorEvent || m.toString() === '[object ErrorEvent]') {
           return this.formatError(m)
         }
-        else if (m && type === 'object' && m.message) { // mozilla exception, no idea on the actual instance type
-          return this.formatError({ message: m.errorCode ? `${m.message} (${m.errorCode})` : m.message, filename: m.fileName, lineno: m.lineNumber, colno: m.column, stack: m.stack })
-        }
         else {
-          return stringify(m)
+          try {
+            return stringify(m, '')
+          }
+          catch (err) {
+            // may be an mozilla exception, no idea on the actual instance type
+            return (m.message ? `${m.message}: ` : '') + this.formatError(err)
+          }
         }
       }).join(' ')
     }

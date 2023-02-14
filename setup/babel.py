@@ -207,6 +207,7 @@ patchups = {
   'norwegian': 'norsk',
   'tw': 'chinese-traditional',
   'zh-tw': 'chinese-traditional',
+  'ara': 'arabic',
 }
 for language, langid in patchups.items():
   DB.execute('INSERT INTO langmap (language, langid) SELECT ?, ? WHERE EXISTS (SELECT 1 FROM langmap WHERE langid = ?)', (language, langid, langid))
@@ -246,6 +247,8 @@ with open('gen/babel/tag.json', 'w') as f:
         SELECT 'zh'
         UNION
         SELECT 'de'
+        UNION
+        SELECT 'ar'
       ),
       language(tag, language) AS (
         SELECT 'zh-hant', 'chinese-traditional'
