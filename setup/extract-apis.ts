@@ -1,5 +1,5 @@
 #!/usr/bin/env npx ts-node
-/* eslint-disable prefer-template, @typescript-eslint/no-unsafe-return */
+/* eslint-disable no-underscore-dangle, prefer-template, @typescript-eslint/no-unsafe-return */
 
 import { Method, API } from './api-extractor'
 import * as fs from 'fs'
