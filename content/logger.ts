@@ -67,12 +67,13 @@ class Logger {
   */
 
   public get enabled(): boolean {
-    if (typeof ZOTERO_TRANSLATOR_INFO === 'undefined') {
-      return (Zotero.Debug.enabled || Zotero.Prefs.get('debug.store')) as boolean
-    }
-    else {
-      return typeof workerJob === 'undefined' || workerJob.debugEnabled
-    }
+    return (
+      (typeof workerJob !== 'undefined' && workerJob.debugEnabled)
+      ||
+      Zotero.Debug.enabled
+      ||
+      Zotero.Prefs?.get('debug.store')
+    ) as boolean
   }
 
   public debug(...msg) {
