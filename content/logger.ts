@@ -5,8 +5,7 @@ declare var ZOTERO_TRANSLATOR_INFO: TranslatorMetadata // eslint-disable-line no
 declare const workerJob: Translator.Worker.Job
 declare const dump: (msg: string) => void
 
-import { asciify } from './stringify'
-import { inspect } from 'loupe'
+import { asciify, stringify } from './stringify'
 import { worker as inWorker } from './client'
 
 export function print(msg: string): void {
@@ -14,17 +13,11 @@ export function print(msg: string): void {
 }
 
 function toString(obj) {
-  let s = inspect(obj) as string
-  if (s.startsWith('Error:') && obj.stack) s += `${s}\n{obj.stack}`
-  return s
-}
-
-function safeToString(obj) {
   try {
-    return toString(obj)
+    return stringify(obj)
   }
   catch (err) {
-    return toString(err)
+    return stringify(err)
   }
 }
 
@@ -40,7 +33,7 @@ class Logger {
     if (this.timestamp) diff = now - this.timestamp
     this.timestamp = now
 
-    if (typeof msg !== 'string') msg = msg.map(safeToString).join(' ')
+    if (Array.isArray(msg)) msg = msg.map(toString).join(' ')
 
     if (inWorker) {
       if (!worker && typeof workerJob !== 'undefined') {

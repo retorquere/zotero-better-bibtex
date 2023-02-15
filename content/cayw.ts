@@ -1,7 +1,7 @@
 /* eslint-disable no-magic-numbers */
 declare const XPCOMUtils: any
 
-import { inspect } from 'loupe'
+import { stringify } from './stringify'
 
 import { Formatter } from './cayw/formatter'
 import { TeXstudio } from './tex-studio'
@@ -349,7 +349,7 @@ export async function pick(options: any): Promise<string> {
   }
   catch (err) {
     log.debug('CAYW error:', err)
-    flash('CAYW Failed', inspect(err))
+    flash('CAYW Failed', stringify(err))
   }
 }
 
