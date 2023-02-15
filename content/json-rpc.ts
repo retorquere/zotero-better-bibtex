@@ -295,8 +295,6 @@ class NSItem {
     const query: Query = { $and: [ { citekey: { $in: citekeys.map((citekey: string) => citekey.replace('@', '')) } } ] }
     if (library !== '*') query.$and.push({ libraryID: Library.get(library).libraryID })
 
-    Zotero.debug(`json-rpc item.bibliography searching ${JSON.stringify(query)} in ${JSON.stringify(Library.get(library))}`)
-
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     const items = await getItemsAsync(Zotero.BetterBibTeX.KeyManager.keys.find(query).map((key: { itemID: number }) => key.itemID))
 
