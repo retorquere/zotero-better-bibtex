@@ -119,7 +119,7 @@ class NSItem {
     search.addCondition('itemType', 'isNot', 'attachment')
     if (typeof library !== 'undefined') {
       try {
-        search.addCondition('libraryID', 'is', Library.get(library).id)
+        search.addCondition('libraryID', 'is', Library.get(library).libraryID)
       }
       catch (err) {
         throw new Error(`library ${JSON.stringify(library)} not found`)
@@ -294,7 +294,7 @@ class NSItem {
 
     const query = $and({
       citekey: { $in: citekeys.map((citekey: string) => citekey.replace('@', '')) },
-      libraryID: Library.get(library).id,
+      libraryID: Library.get(library).libraryID,
     })
 
     Zotero.debug(`json-rpc item.bibliography searching ${JSON.stringify(query)} in ${JSON.stringify(Library.get(library))}`)
@@ -348,7 +348,7 @@ class NSItem {
     const query: Query = {
       $and: [
         { citekey: { $in: citekeys } },
-        { libraryID: { $eq: Library.get(libraryID).id } },
+        { libraryID: { $eq: Library.get(libraryID).libraryID } },
       ],
     }
 
