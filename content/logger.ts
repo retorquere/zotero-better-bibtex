@@ -6,8 +6,7 @@ declare const workerJob: Translator.Worker.Job
 declare const dump: (msg: string) => void
 
 import { asciify } from './stringify'
-import { stringify } from './stringify'
-// import { inspect as stringify } from 'loupe'
+import { inspect } from 'loupe'
 import { worker as inWorker } from './client'
 
 export function print(msg: string): void {
@@ -28,27 +27,11 @@ class Logger {
 
     if (typeof msg !== 'string') {
       msg = msg.map(m => {
-        const type = typeof m
-        if (type === 'symbol') {
-          return m.toString() as string
+        try {
+          return inspect(m) as string
         }
-        else if (type === 'string' || m instanceof String) {
-          return m as string
-        }
-        else if (type === 'number' || type === 'undefined' || type === 'boolean' || m === null) {
-          return `${m}`
-        }
-        else if (m instanceof Error || m instanceof ErrorEvent || m.toString() === '[object ErrorEvent]') {
-          return this.formatError(m)
-        }
-        else {
-          try {
-            return stringify(m, '')
-          }
-          catch (err) {
-            // may be an mozilla exception, no idea on the actual instance type
-            return (m.message ? `${m.message}: ` : '') + this.formatError(err)
-          }
+        catch (err) {
+          return inspect(err) as string
         }
       }).join(' ')
     }
@@ -69,6 +52,7 @@ class Logger {
     return `{${prefix}} +${diff} ${asciify(msg)}`
   }
 
+  /*
   public formatError(e, indent='') {
     let msg = [e.name, e.message].filter(s => s).join(': ')
     if (e.filename || e.fileName) msg += ` in ${e.filename || e.fileName}`
@@ -80,11 +64,15 @@ class Logger {
     if (e.error) msg += `\n${indent}${this.formatError(e.error, '  ')}\n`
     return `${indent}<Error: ${msg}>`
   }
+  */
 
   public get enabled(): boolean {
-    if (typeof ZOTERO_TRANSLATOR_INFO === 'undefined') return Zotero.Debug.enabled as boolean
-    if (!Zotero.worker) return true
-    return !workerJob || workerJob.debugEnabled
+    if (typeof ZOTERO_TRANSLATOR_INFO === 'undefined') {
+      return (Zotero.Debug.enabled || Zotero.Prefs.get('debug.store')) as boolean
+    }
+    else {
+      return typeof workerJob === 'undefined' || workerJob.debugEnabled
+    }
   }
 
   public debug(...msg) {
