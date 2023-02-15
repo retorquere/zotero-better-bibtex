@@ -13,6 +13,21 @@ export function print(msg: string): void {
   dump(msg + '\n')
 }
 
+function toString(obj) {
+  let s = inspect(obj) as string
+  if (s.startsWith('Error:') && obj.stack) s += `${s}\n{obj.stack}`
+  return s
+}
+
+function safeToString(obj) {
+  try {
+    return toString(obj)
+  }
+  catch (err) {
+    return toString(err)
+  }
+}
+
 class Logger {
   public verbose = false
 
@@ -25,16 +40,7 @@ class Logger {
     if (this.timestamp) diff = now - this.timestamp
     this.timestamp = now
 
-    if (typeof msg !== 'string') {
-      msg = msg.map(m => {
-        try {
-          return inspect(m) as string
-        }
-        catch (err) {
-          return inspect(err) as string
-        }
-      }).join(' ')
-    }
+    if (typeof msg !== 'string') msg = msg.map(safeToString).join(' ')
 
     if (inWorker) {
       if (!worker && typeof workerJob !== 'undefined') {
