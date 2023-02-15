@@ -117,7 +117,7 @@ class NSItem {
     }
     search.addCondition('quicksearch-titleCreatorYear', 'contains', terms)
     search.addCondition('itemType', 'isNot', 'attachment')
-    if (typeof library !== 'undefined') {
+    if (typeof library !== 'undefined' && library !== '*') {
       try {
         search.addCondition('libraryID', 'is', Library.get(library).libraryID)
       }
@@ -292,10 +292,8 @@ class NSItem {
 
     if (((format as any).mode || 'bibliography') !== 'bibliography') throw new Error(`mode must be bibliograpy, not ${(format as any).mode}`)
 
-    const query = $and({
-      citekey: { $in: citekeys.map((citekey: string) => citekey.replace('@', '')) },
-      libraryID: Library.get(library).libraryID,
-    })
+    const query: Query = { $and: [ { citekey: { $in: citekeys.map((citekey: string) => citekey.replace('@', '')) } } ] }
+    if (library !== '*') query.$and.push({ libraryID: Library.get(library).libraryID })
 
     Zotero.debug(`json-rpc item.bibliography searching ${JSON.stringify(query)} in ${JSON.stringify(Library.get(library))}`)
 
