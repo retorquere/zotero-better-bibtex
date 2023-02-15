@@ -17,17 +17,23 @@ export function stringify(obj, indent: number | string = 2, ucode?: boolean) { /
   const stringified = JSON.stringify(
     obj,
     (key, value): any => {
+      if (value instanceof Error || value instanceof ErrorEvent || (value.QueryInterface && (value.name || value.message)) || value.toString() === '[object ErrorEvent]') {
+        return `[error: ${[value.name, value.message].filter(m => m).join(': ')}${value.stack ? `\n${value.stack}` : ''}]`
+      }
+      if (value.QueryInterface) return '[XPCOM Object]'
+
       switch (typeof value) {
         case 'number':
         case 'string':
         case 'boolean':
           return value
-        default:
-          if (value === null) return value
-          if (cache.includes(value)) return undefined
-          cache.push(value)
-          return value
       }
+
+      if (value === null) return value
+
+      if (cache.includes(value)) return '[circular]'
+      cache.push(value)
+      return value
     },
     indent
   )

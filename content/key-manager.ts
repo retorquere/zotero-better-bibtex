@@ -497,9 +497,10 @@ export class KeyManager {
     return proposed.citekey
   }
 
-  public remove(ids: any[]): void {
+  public remove(ids: number[] | number): void {
     if (!Array.isArray(ids)) ids = [ids]
     this.keys.findAndRemove({ itemID : { $in : ids } })
+    log.debug('refresh: keymanager after remove:', ids, this.keys.find({ itemID : { $in : ids } }))
   }
 
   public get(itemID: number): { citekey: string, pinned: boolean, retry?: boolean } {
@@ -519,7 +520,7 @@ export class KeyManager {
 
     citekey = Formatter.format(item)
 
-    const conflictQuery: Query = { $and: [ { itemID: { $ne: item.id } } ] }
+    const conflictQuery: Query = { $and: [ { citekey: { $eq: '' } }, { itemID: { $ne: item.id } } ] }
     if (Preference.keyScope !== 'global') conflictQuery.$and.push({ libraryID: { $eq: item.libraryID } })
 
     const seen = {}
@@ -537,8 +538,9 @@ export class KeyManager {
         return postfix
       })
 
-      log.debug('refresh: testing', postfixed, 'against', transient, this.keys.findOne({ $and: [...conflictQuery.$and, { citekey: { $eq: postfixed } }] }))
-      const conflict = transient.includes(postfixed) || this.keys.findOne({ $and: [...conflictQuery.$and, { citekey: { $eq: postfixed } }] })
+      conflictQuery.$and[0] = { citekey: { $eq: postfixed } }
+      log.debug('refresh: testing', postfixed, 'against', transient, this.keys.findOne(conflictQuery))
+      const conflict = transient.includes(postfixed) || this.keys.findOne(conflictQuery)
       if (conflict) continue
 
       return { citekey: postfixed, pinned: false }

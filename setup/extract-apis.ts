@@ -6,7 +6,6 @@ import * as fs from 'fs'
 import stringify from 'fast-safe-stringify'
 import _ from 'lodash'
 import jsesc from 'jsesc'
-import { inspect } from 'loupe'
 
 import Showdown from 'showdown'
 const showdown = new Showdown.Converter()
@@ -40,7 +39,7 @@ class FormatterAPI {
         doc += '<td><code>' + p.name + '</code>' + (!method.schema.required.includes(p.name) && p.default === 'undefined' ? '?' : '') + '</td>'
         doc += `<td>${this.typedoc(method.schema.properties[p.name])}</td><td>`
         if (description) doc += `${showdown.makeHtml(p.doc || '')}</td><td>`
-        if (typeof p.default !== 'undefined') doc += `<code>${inspect(p.default)}</code> `
+        if (typeof p.default !== 'undefined') doc += `<code>${JSON.stringify(p.default)}</code> `
         doc += '</td></tr>'
         return doc
       }).join('\n')

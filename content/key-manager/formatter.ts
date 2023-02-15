@@ -1253,10 +1253,6 @@ class PatternFormatter {
   }
 
   /** Treat ideaographs as individual words */
-  public _splitIdeographs() {
-    return this.$text(this.chunk.replace(script.cjk, ' $1 ').trim())
-  }
-  /** Treat ideaographs as individual words */
   public _ideographs() {
     return this.$text(this.chunk.replace(script.cjk, ' $1 ').trim())
   }
