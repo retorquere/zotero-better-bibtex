@@ -117,9 +117,9 @@ class NSItem {
     }
     search.addCondition('quicksearch-titleCreatorYear', 'contains', terms)
     search.addCondition('itemType', 'isNot', 'attachment')
-    if (typeof library !== 'undefined') {
+    if (typeof library !== 'undefined' && library !== '*') {
       try {
-        search.addCondition('libraryID', 'is', Library.get(library).id)
+        search.addCondition('libraryID', 'is', Library.get(library).libraryID)
       }
       catch (err) {
         throw new Error(`library ${JSON.stringify(library)} not found`)
@@ -290,17 +290,13 @@ class NSItem {
     if (!format.id) throw new Error('no style specified')
     if (!format.id.includes('/')) format.id = `http://www.zotero.org/styles/${format.id}`
 
-    const libraryID = Library.get(library).id
-
     if (((format as any).mode || 'bibliography') !== 'bibliography') throw new Error(`mode must be bibliograpy, not ${(format as any).mode}`)
 
+    const query: Query = { $and: [ { citekey: { $in: citekeys.map((citekey: string) => citekey.replace('@', '')) } } ] }
+    if (library !== '*') query.$and.push({ libraryID: Library.get(library).libraryID })
+
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    const items = await getItemsAsync(
-      Zotero.BetterBibTeX.KeyManager.keys.find($and({
-        citekey: { $in: citekeys.map((citekey: string) => citekey.replace('@', '')) },
-        libraryID,
-      })).map((key: { itemID: number }) => key.itemID)
-    )
+    const items = await getItemsAsync(Zotero.BetterBibTeX.KeyManager.keys.find(query).map((key: { itemID: number }) => key.itemID))
 
     const bibliography = Zotero.QuickCopy.getContentFromItems(items, { ...format, mode: 'bibliography' }, null, false)
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
@@ -348,7 +344,7 @@ class NSItem {
     const query: Query = {
       $and: [
         { citekey: { $in: citekeys } },
-        { libraryID: { $eq: Library.get(libraryID).id } },
+        { libraryID: { $eq: Library.get(libraryID).libraryID } },
       ],
     }
 
