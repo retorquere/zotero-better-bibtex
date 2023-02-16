@@ -12,8 +12,9 @@ export function print(msg: string): void {
   dump(msg + '\n')
 }
 
-function toString(obj) {
+function toString(obj): string {
   try {
+    if (typeof obj === 'string') return obj
     return stringify(obj)
   }
   catch (err) {
