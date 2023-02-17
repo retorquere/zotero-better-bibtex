@@ -1,0 +1,20 @@
+@article{IlligS.etal:2018,
+  title = {Subseasonal {{Coastal-Trapped Wave Propagations}} in the {{Southeastern Pacific}} and {{Atlantic Oceans}}: 2. {{Wave Characteristics}} and {{Connection With}} the {{Equatorial Variability}}},
+  shorttitle = {Subseasonal {{Coastal-Trapped Wave Propagations}} in the {{Southeastern Pacific}} and {{Atlantic Oceans}}},
+  author = {Illig, Serena and Bach\`elery, Marie-Lou and Cadier, Emeline},
+  date = {2018},
+  journaltitle = {Journal of Geophysical Research: Oceans},
+  shortjournal = {J. Geophys. Res. Oceans},
+  volume = {123},
+  number = {6},
+  pages = {3942--3961},
+  doi = {10.1029/2017JC013540},
+  url = {https://onlinelibrary.wiley.com/doi/abs/10.1029/2017JC013540},
+  urldate = {2023-02-17},
+  langid = {english},
+  keywords = {altimetry,Coastal Trapped Waves,Eastern Boundary Upwelling Systems,linear coastal model,model experimentation,subseasonal variability}
+}
+% == BibLateX quality report for IlligS.etal:2018:
+% ? unused extra: _eprint ("https://onlinelibrary.wiley.com/doi/pdf/10.1029/2017JC013540")
+% ? unused ISSN ("2169-9291")
+% ? unused Library catalog ("Wiley Online Library")
