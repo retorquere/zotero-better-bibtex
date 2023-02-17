@@ -675,7 +675,8 @@ notify('item', (action: string, type: any, ids: any[], extraData: { [x: string]:
   // https://groups.google.com/forum/#!topic/zotero-dev/99wkhAk-jm0
   const parentIDs = []
   const items = action === 'delete' ? [] : Zotero.Items.get(ids).filter((item: ZoteroItem) => {
-    if (item.isFeedItem) return false
+    // check .deleted for #2401 -- we're getting *updated* (?!) notifications for trashed items which reinstates them into the BBT DB
+    if (item.isFeedItem || item.deleted) return false
 
     if (item.isAttachment() || item.isNote()) {
       const parentID = item.parentID
