@@ -15,10 +15,10 @@ export function print(msg: string): void {
 function toString(obj): string {
   try {
     if (typeof obj === 'string') return obj
-    return stringify(obj)
+    return stringify(obj, 0)
   }
   catch (err) {
-    return stringify(err)
+    return stringify(err, 0)
   }
 }
 
