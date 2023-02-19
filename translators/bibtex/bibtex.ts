@@ -810,18 +810,15 @@ export class ZoteroItem {
 
     if (this.jabref.fileDirectory) att.path = `${this.jabref.fileDirectory}${this.translation.paths.sep}${att.path}`
 
-    const overwrite = att.overwrite
-    delete att.overwrite
-
     att.title = att.title || att.path.split(/[\\/]/).pop().replace(/\.[^.]+$/, '')
     if (!att.title) delete att.title
 
     if (att.mimeType?.toLowerCase() === 'pdf' || (!att.mimeType && att.path.toLowerCase().endsWith('.pdf'))) att.mimeType = 'application/pdf'
     if (!att.mimeType) delete att.mimeType
 
+    const overwrite = att.overwrite
+    delete att.overwrite
     if (overwrite || !this.attachments[att.path]) this.attachments[att.path] = att
-
-    log.debug('addAttachment:', { att, attachments: this.attachments })
   }
 
   // "files(Mendeley)/filename(Qiqqa)" will import the same as "file" but won't be treated as verbatim by the bibtex parser. Needed because the people at Mendeley/Qiqqa can't be bothered to read the manual apparently.
@@ -1144,7 +1141,6 @@ export class ZoteroItem {
       conference: 'conferenceName',
     }
     for (const [field, values] of Object.entries(this.bibtex.fields)) {
-      log.debug('BBT import:', field, values)
       for (const value of values) {
         if (field.match(/^(local-zo-url-[0-9]+|file-[0-9]+)$/)) {
           if (this.$file(value)) continue
@@ -1168,7 +1164,6 @@ export class ZoteroItem {
           if (this.$note(value, 'note')) continue
         }
 
-        log.debug('import: handling', { field, value })
         if (this[`$${field}`] && this[`$${field}`](value, field)) continue
 
         switch (field) {
