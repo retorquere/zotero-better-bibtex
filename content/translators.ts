@@ -78,9 +78,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     this.uninstall('\u672B BetterBibTeX JSON (for debugging)')
     this.uninstall('BetterBibTeX JSON (for debugging)')
 
-    log.debug('zotero translators: waiting for init')
     await Zotero.Translators.init()
-    log.debug('zotero translators: init done')
 
     const reinit: { header: Translator.Header, code: string }[] = []
     let header: Translator.Header
@@ -162,25 +160,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
         clientName: Zotero.clientName,
       }).map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`).join('&')
 
-      log.debug('translate: getting worker')
       this.worker = new ChromeWorker(`chrome://zotero-better-bibtex/content/worker/zotero.js?${environment}`)
-      /*
-      const ping = new Promise((resolve, reject) => {
-        this.worker.onmessage = (e: { data: Translator.Worker.Message }) => {
-          if (e.data.kind === 'ping') {
-            resolve('')
-          }
-          else {
-            log.debug('translate: getting worker, ping response', e.data)
-            reject(e.data.kind)
-          }
-        }
-      })
-      this.worker.postMessage({ kind: 'ping' })
-      const timeout = await new Promise((resolve, reject) => setTimeout(reject, 2000)) // eslint-disable-line no-magic-numbers
-      await Promise.race([ping, timeout])
-      */
-      log.debug('translate: worker acquired')
     }
     catch (err) {
       log.error('translate: worker not acquired', err)

@@ -348,7 +348,7 @@ export async function pick(options: any): Promise<string> {
     return citation
   }
   catch (err) {
-    log.debug('CAYW error:', err)
+    log.error('CAYW error:', err)
     flash('CAYW Failed', stringify(err))
   }
 }

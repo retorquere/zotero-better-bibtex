@@ -189,24 +189,19 @@ const queue = new class TaskQueue {
     this.autoexports = autoexports
   }
 
-  public pause(reason: 'startup' | 'end-of-idle' | 'preference-change') {
-    log.debug('on-idle: queue.pause:', reason)
+  public pause(_reason: 'startup' | 'end-of-idle' | 'preference-change') {
     this.scheduler.paused = true
   }
 
-  public resume(reason: 'startup' | 'start-of-idle' | 'preference-change') {
-    log.debug('on-idle: queue.resume:', reason)
-
+  public resume(_reason: 'startup' | 'start-of-idle' | 'preference-change') {
     const is_idle = this.idleService.idleTime >= Preference.autoExportIdleWait * 1000
     switch (Preference.autoExport) {
       case 'off':
-        log.debug('on-idle: queue not resumed: auto-export is off')
         this.scheduler.paused = true
         return
 
       case 'idle':
         if (!is_idle) {
-          log.debug('on-idle: queue not resumed:', reason, "but we're not actually idle")
           this.scheduler.paused = true
           return
         }
@@ -216,12 +211,10 @@ const queue = new class TaskQueue {
         break
     }
 
-    log.debug('on-idle: queue resumed:', reason)
     this.scheduler.paused = false
   }
 
   public add(ae) {
-    log.debug('ae.scheduling', ae)
     const $loki = (typeof ae === 'number' ? ae : ae.$loki)
     void Events.emit('export-progress', { pct: 0, message: `Scheduled ${Translators.byId[ae.translatorID].label}`, ae: $loki })
     this.scheduler.schedule($loki, this.run.bind(this, $loki))
@@ -239,7 +232,6 @@ const queue = new class TaskQueue {
     await Zotero.BetterBibTeX.ready
 
     const ae = this.autoexports.get($loki)
-    log.debug('ae.starting', ae)
     void Events.emit('export-progress', { pct: 0, message: `Starting ${Translators.byId[ae.translatorID].label}`, ae: $loki })
     if (!ae) throw new Error(`AutoExport ${$loki} not found`)
 
@@ -317,9 +309,7 @@ const queue = new class TaskQueue {
         }
       }
 
-      log.debug('ae.starting', jobs.length, 'jobs for', ae.$loki)
       await Promise.all(jobs.map(job => Translators.queueJob(job)))
-      log.debug('ae.done', jobs.length, 'jobs for', ae.$loki)
 
       await repo.push(l10n.localize('Preferences.auto-export.git.message', { type: Translators.byId[ae.translatorID].label.replace('Better ', '') }))
 
@@ -341,18 +331,15 @@ const queue = new class TaskQueue {
   }
 
   // idle observer
-  protected observe(_subject, topic, data) {
-    log.debug('on-idle: idle.observe:', { topic, data })
+  protected observe(_subject, topic, _data) {
     if (Preference.autoExport === 'idle') {
       switch (topic) {
         case 'back':
         case 'active':
-          log.debug('on-idle: idle.observe: => pause', topic)
           this.pause('end-of-idle')
           break
 
         case 'idle':
-          log.debug('on-idle: idle.observe: => resume', topic)
           this.resume('start-of-idle')
           break
 
@@ -468,7 +455,6 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
     const selector = Cache.selector(label, options, prefs)
     const itemIDs = [...itemIDset]
     const query = $and({...selector, itemID: { $in: itemIDs } })
-    log.debug('fetching cacherate:', { label, query })
     const cached = {
       serialized: Cache.getCollection('itemToExportFormat').find({ itemID: { $in: itemIDs } }).length,
       export: Cache.getCollection(label).find(query).length,

@@ -29,15 +29,12 @@ class Cache extends Loki {
   public reset(reason: string, affected?: string[]) {
     if (!this.initialized) return
 
-    log.debug('cache drop:', reason, affected || '*')
-
     for (const coll of this.collections) {
       if (!affected || affected.includes(coll.name)) this.drop(coll, reason)
     }
   }
 
-  private drop(coll: any, reason: string) {
-    log.debug(`dropping cache.${coll.name}:`, reason)
+  private drop(coll: any, _reason: string) {
     coll.removeDataOnly()
   }
 

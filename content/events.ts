@@ -45,7 +45,6 @@ export function itemsChanged(items: ZoteroItem[]): void {
     }
   }
 
-  log.debug('itemsChanged:', { collections: Array.from(collections), libraries: Array.from(libraries) })
   if (collections.size) void Events.emit('collections-changed', [...collections])
   if (libraries.size) void Events.emit('libraries-changed', [...libraries])
 }

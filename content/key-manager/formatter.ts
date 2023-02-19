@@ -337,8 +337,7 @@ class PatternFormatter {
   private skipWords: Set<string>
 
   // private fold: boolean
-  public update(reason: string) {
-    log.debug('update key formula:', reason, Preference.citekeyUnsafeChars)
+  public update(_reason: string) {
     const unsafechars = rescape(Preference.citekeyUnsafeChars + '\uFFFD')
     this.re.unsafechars_allow_spaces = new RegExp(`[${unsafechars}]`, 'g')
     this.re.unsafechars = new RegExp(`[${unsafechars}\\s]`, 'g')
@@ -352,7 +351,7 @@ class PatternFormatter {
         }
         catch (err) {
           Preference[ck] = ''
-          log.debug('Upgrading citation pattern failed', err)
+          log.error('Upgrading citation pattern failed', err)
         }
       }
 
@@ -515,7 +514,7 @@ class PatternFormatter {
       return this.$text(fetchInspireHEP(this.item) || '')
     }
     catch (err) {
-      log.debug('inspire-hep returned an error:', err)
+      log.error('inspire-hep returned an error:', err)
       throw { next: true } // eslint-disable-line no-throw-literal
     }
   }

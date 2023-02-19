@@ -41,9 +41,7 @@ export class TestSupport {
     return (AutoExport.db.find($and({ status: 'running' })).length > 0)
   }
 
-  public async reset(scenario: string): Promise<void> {
-    log.debug('reset for', scenario)
-
+  public async reset(_scenario: string): Promise<void> {
     Cache.reset('test environment reset')
 
     let collections
@@ -87,7 +85,6 @@ export class TestSupport {
   public async importFile(path: string, createNewCollection: boolean, preferences: Record<string, number | boolean | string>): Promise<number> {
     preferences = preferences || {}
 
-    log.debug('importing', path, 'with preferences', preferences)
     for (let [pref, value] of Object.entries(preferences)) {
       if (typeof defaults[pref] === 'undefined') throw new Error(`Unsupported preference ${pref} in test case`)
       if (Array.isArray(value)) value = value.join(',')

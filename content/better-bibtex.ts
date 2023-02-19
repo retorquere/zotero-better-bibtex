@@ -239,16 +239,13 @@ $patch$(Zotero.API, 'getResultsFromParams', original => function Zotero_API_getR
   catch (err) {
     log.debug('getResultsFromParams', params, err)
   }
-  log.debug('getResultsFromParams modified', params)
 
   return original.apply(this, arguments) as Record<string, any>
 })
 
 if (typeof Zotero.DataObjects.prototype.parseLibraryKeyHash === 'function') {
-  log.debug('monkey-patching parseLibraryKeyHash')
   $patch$(Zotero.DataObjects.prototype, 'parseLibraryKeyHash', original => function Zotero_DataObjects_prototype_parseLibraryKeyHash(libraryKey: string) {
     const item = parseLibraryKeyFromCitekey(libraryKey)
-    log.debug('parseLibraryKeyHash', { item })
     if (item !== null) return item
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
@@ -256,10 +253,8 @@ if (typeof Zotero.DataObjects.prototype.parseLibraryKeyHash === 'function') {
   })
 }
 if (typeof Zotero.DataObjects.prototype.parseLibraryKey === 'function') {
-  log.debug('monkey-patching parseLibraryKey')
   $patch$(Zotero.DataObjects.prototype, 'parseLibraryKey', original => function Zotero_DataObjects_prototype_parseLibraryKey(libraryKey: string) {
     const item = parseLibraryKeyFromCitekey(libraryKey)
-    log.debug('parseLibraryKey', { item })
     if (item) return item
     if (item === false) return { libraryID: Zotero.Libraries.userLibraryID, key: undefined }
 
@@ -659,7 +654,6 @@ notify('item-tag', (_action: any, _type: any, ids: any[], _extraData: any) => {
 })
 
 notify('item', (action: string, type: any, ids: any[], extraData: { [x: string]: { bbtCitekeyUpdate: any } }) => {
-  log.debug('item.notify:', action, ids) // Zotero.Items.get(ids).map(item => Zotero.Utilities.Internal.itemToExportFormat(item))) // eslint-disable-line @typescript-eslint/no-unsafe-return
   // prevents update loop -- see KeyManager.init()
   if (action === 'modify') {
     ids = ids.filter((id: string | number) => !extraData[id] || !extraData[id].bbtCitekeyUpdate)
@@ -694,15 +688,12 @@ notify('item', (action: string, type: any, ids: any[], extraData: { [x: string]:
   })
   if (parentIDs.length) Cache.remove(parentIDs, `parent items ${parentIDs} changed`)
   const parents = parentIDs.length ? Zotero.Items.get(parentIDs) : []
-  // log.debug('item.notify.parents', parentIDs, parents.map(item => Zotero.Utilities.Internal.itemToExportFormat(item))) // eslint-disable-line @typescript-eslint/no-unsafe-return
 
   switch (action) {
     case 'delete':
     case 'trash':
-      log.debug('item.notify: removing', ids)
       Zotero.BetterBibTeX.KeyManager.remove(ids)
       void Events.emit('items-removed', ids)
-      log.debug('item.notify: should have emitted items-removed', ids)
       break
 
     case 'add':
@@ -944,8 +935,6 @@ export class BetterBibTeX {
       const ww = Components.classes['@mozilla.org/embedcomp/window-watcher;1'].getService(Components.interfaces.nsIWindowWatcher)
       ww.openWindow(null, 'chrome://zotero-better-bibtex/content/FirstRun.xul', 'better-bibtex-first-run', 'chrome,centerscreen,modal', params)
       this.firstRun = params.wrappedJSObject
-
-      log.debug('firstRun:', this.firstRun)
 
       Preference.citekeyFormat = (this.firstRun.citekeyFormat === 'zotero') ? '[zotero:clean]' : citekeyFormat.replace(/\u200B/g, '')
       Preference.importJabRefAbbreviations = this.firstRun.unabbreviate

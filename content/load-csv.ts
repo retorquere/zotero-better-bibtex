@@ -2,7 +2,6 @@ import csv from 'papaparse'
 import { log } from './logger'
 
 async function read(path: string): Promise<string> {
-  log.debug('csv.read', path)
   try {
     return (await OS.File.exists(path)) ? (await OS.File.read(path, { encoding: 'utf-8' }) as unknown as string) : ''
   }

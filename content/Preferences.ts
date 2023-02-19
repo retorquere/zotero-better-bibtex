@@ -196,18 +196,14 @@ class AutoExportPane {
   }
 
   public async refreshCacheRate(ae: Element | number) {
-    log.debug('getting cacherate for', typeof ae)
     if (typeof ae !== 'number') ae = parseInt(ae.getAttribute('data-ae-id'))
-    log.debug('getting cacherate for', typeof ae)
 
     if (typeof ae !== 'number') {
-      log.debug('refresh cacherate on unknown ae?', typeof ae)
+      log.error('refresh cacherate on unknown ae?', typeof ae)
     }
     else {
       try {
-        log.debug('getting cacherate for', { ae })
         this.cacherate[ae] = await AutoExport.cached(ae)
-        log.debug('refresh cacherate:', ae, '=', this.cacherate[ae])
       }
       catch (err) {
         log.error('could not refresh cacherate for', ae, err)
@@ -318,7 +314,6 @@ export class PrefPane {
     }
 
     try {
-      log.debug('importing', preferences.path)
       for (const [pref, value] of Object.entries(preferences.parsed.config.preferences)) {
         if (typeof value === 'undefined' || typeof value !== typeof preferenceDefaults[pref]) {
           flash(`Invalid ${typeof value} value for ${pref}, expected ${preferenceDefaults[pref]}`)

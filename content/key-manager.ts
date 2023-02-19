@@ -112,7 +112,6 @@ export class KeyManager {
   public async refresh(ids: 'selected' | number | number[], manual = false): Promise<void> {
     ids = this.expandSelection(ids)
 
-    log.debug(`refresh: ${ids}`)
     Cache.remove(ids, `refreshing keys for ${ids}`)
 
     const warnAt = manual ? Preference.warnBulkModify : 0
@@ -416,24 +415,19 @@ export class KeyManager {
 
       if (!zotero) {
         deleted.push(bbt.itemID)
-        // log.debug('keymanager.rescan: deleted', bbt, 'from key database, no counterpart in Zotero DB')
       }
       else if (zotero.citationKey && (!bbt.pinned || bbt.citekey !== zotero.citationKey)) {
         this.keys.update({...bbt, pinned: true, citekey: zotero.citationKey, itemKey: zotero.itemKey })
-        // log.debug('keymanager.rescan: updated', bbt, 'using', zotero)
       }
       else if (!zotero.citationKey && bbt.citekey && bbt.pinned) {
         this.keys.update({...bbt, pinned: false, itemKey: zotero.itemKey})
-        // log.debug('keymanager.rescan: updated', bbt, 'using', zotero)
       }
       else if (!bbt.citekey) { // this should not be possible
         this.regenerate.push(bbt.itemID)
-        // log.debug('keymanager.rescan: regenerating', bbt, 'missing citekey')
       }
 
       inzdb.delete(bbt.itemID)
     }
-    // if (inzdb.size) log.debug('keymanager.rescan:', inzdb.size, 'new items', { itemIDs: [...inzdb.entries()] })
 
     this.keys.findAndRemove({ itemID: { $in: [...deleted, ...this.regenerate] } })
     this.regenerate.push(...inzdb.keys()) // generate new keys for items that are in the Z db but not in the BBT db
@@ -481,7 +475,6 @@ export class KeyManager {
     current = current || this.keys.findOne($and({ itemID: item.id }))
 
     const proposed = this.propose(item)
-    log.debug('refresh:', proposed)
 
     if (current && (current.pinned || !this.autopin.enabled) && (current.pinned === proposed.pinned) && (current.citekey === proposed.citekey)) return current.citekey
 
@@ -500,7 +493,6 @@ export class KeyManager {
   public remove(ids: number[] | number): void {
     if (!Array.isArray(ids)) ids = [ids]
     this.keys.findAndRemove({ itemID : { $in : ids } })
-    log.debug('refresh: keymanager after remove:', ids, this.keys.find({ itemID : { $in : ids } }))
   }
 
   public get(itemID: number): { citekey: string, pinned: boolean, retry?: boolean } {
@@ -539,7 +531,6 @@ export class KeyManager {
       })
 
       conflictQuery.$and[0] = { citekey: { $eq: postfixed } }
-      log.debug('refresh: testing', postfixed, 'against', transient, this.keys.findOne(conflictQuery))
       const conflict = transient.includes(postfixed) || this.keys.findOne(conflictQuery)
       if (conflict) continue
 
