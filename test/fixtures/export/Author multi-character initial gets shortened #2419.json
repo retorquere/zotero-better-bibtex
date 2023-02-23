@@ -12,7 +12,8 @@
       "citekeyFormatBackup": "auth + year",
       "exportTitleCase": false,
       "importSentenceCase": "off",
-      "quickCopyMode": "citekeys"
+      "quickCopyMode": "citekeys",
+      "biblatexExtendedNameFormat": true
     }
   },
   "items": [
