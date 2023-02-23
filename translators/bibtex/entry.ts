@@ -814,9 +814,11 @@ export class Entry {
     }
     this.item.$cacheable = this.item.$cacheable && allow.cache
 
-    for (const name of Object.keys(this.has)) {
-      const fullname = `${this.translation.BetterBibTeX ? 'bibtex' : 'biblatex'}.${this.entrytype}.${name}`
-      if (fullname.match(this.translation.skipField)) this.remove(name)
+    if (this.translation.skipField) {
+      for (const name of Object.keys(this.has)) {
+        const fullname = `${this.translation.BetterBibTeX ? 'bibtex' : 'biblatex'}.${this.entrytype}.${name}`
+        if (fullname.match(this.translation.skipField)) this.remove(name)
+      }
     }
 
     if (this.has.url && this.has.doi) {
