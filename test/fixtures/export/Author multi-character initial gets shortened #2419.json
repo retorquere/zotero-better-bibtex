@@ -1,0 +1,66 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "autoAbbrev": true,
+      "autoExportDelay": 2,
+      "citekeyFormat": "auth + year",
+      "citekeyFormatBackup": "auth + year",
+      "exportTitleCase": false,
+      "importSentenceCase": "off",
+      "quickCopyMode": "citekeys"
+    }
+  },
+  "items": [
+    {
+      "DOI": "10.1103/PhysRevA.75.063630",
+      "ISSN": "1050-2947, 1094-1622",
+      "accessDate": "2023-02-22T19:56:23Z",
+      "citationKey": "Astrakharchik2007",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "G. E.",
+          "lastName": "Astrakharchik"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "J.",
+          "lastName": "Boronat"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "J.",
+          "lastName": "Casulleras"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "I. L.",
+          "lastName": "Kurbakov"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Yu.\u00ADE.",
+          "lastName": "Lozovik"
+        }
+      ],
+      "date": "2007-6-29",
+      "issue": "6",
+      "itemID": 1,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "Phys. Rev. A",
+      "language": "en",
+      "libraryCatalog": "DOI.org (Crossref)",
+      "pages": "063630",
+      "publicationTitle": "Physical Review A",
+      "shortTitle": "Weakly interacting two-dimensional system of dipoles",
+      "title": "Weakly interacting two-dimensional system of dipoles: Limitations of the mean-field theory",
+      "url": "https://link.aps.org/doi/10.1103/PhysRevA.75.063630",
+      "volume": "75"
+    }
+  ]
+}
