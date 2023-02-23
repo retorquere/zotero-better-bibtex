@@ -1193,7 +1193,20 @@ export class Entry {
     const initials_marker_pos: number = name.given?.match(enc_creators_marker.initials)?.index
     let initials: string | String
 
-    if (this.translation.preferences.biblatexExtendedNameFormat && (typeof initials_marker_pos === 'number' || name['dropping-particle'] || name['non-dropping-particle'] || name['comma-suffix'])) {
+    let extendedNameformat = (
+      this.translation.preferences.biblatexExtendedNameFormat
+      && (
+        (typeof initials_marker_pos === 'number' && initials_marker_pos > 1)
+        ||
+        name['dropping-particle']
+        ||
+        name['non-dropping-particle']
+        ||
+        name['comma-suffix']
+      )
+    )
+      
+    if (extendedNameformat) {
       if (typeof initials_marker_pos === 'number') {
         initials = name.given.substring(0, initials_marker_pos)
         if (initials.length > 1) initials = new String(initials) // eslint-disable-line no-new-wrappers
