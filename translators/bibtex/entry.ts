@@ -394,7 +394,7 @@ export class Entry {
       return null
     }
 
-    if (this.translation.skipField[field.name]) return null
+    if (this.translation.skipField?.exec(`${this.translation.BetterBibTeX ? 'bibtex' : 'biblatex'}.${this.entrytype}.${field.name}`)) return null
 
     field.enc = field.enc || this.config.fieldEncoding[field.name] || 'latex'
 
