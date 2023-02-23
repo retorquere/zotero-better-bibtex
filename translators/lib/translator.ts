@@ -442,10 +442,10 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
         return `(${ m[1] === 'tex' ? 'bib(la)?' : '' }[.][a-z]+[.]${ m[2] })`
       }
       if (m = field.match(/^([a-z]+)[.]([a-z]+)$/)) {
-        return `(${ this.BetterTeX ? 'bib(la)tex' : 'csl' }[.]${ m[1] }[.]${ m[2] })`
+        return `(${ this.BetterTeX ? 'bib(la)?tex' : 'csl' }[.]${ m[1] }[.]${ m[2] })`
       }
       if (m = field.match(/^[a-z]+$/)) {
-        return `(${ this.BetterTeX ? 'bib(la)tex' : 'csl' }[.][a-z]+[.]${ field })`
+        return `(${ this.BetterTeX ? 'bib(la)?tex' : 'csl' }[.][a-z]+[.]${ field })`
       }
       return ''
     }).filter(field => field).join('|') + ')$')
