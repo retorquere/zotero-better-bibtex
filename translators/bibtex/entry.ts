@@ -95,7 +95,7 @@ function property_sort(a: [string, string], b: [string, string]): number {
 }
 
 const enc_creators_marker = {
-  initials: /[\u00AD\u0097]/, // soft hyphen, end of guarded area
+  initials: /[\u2063\u0097]/, // invisible separator, end of guarded area
   relax: '\u200C', // zero-width non-joiner
 }
 const isBibString = /^[a-z][-a-z0-9_]*$/i
