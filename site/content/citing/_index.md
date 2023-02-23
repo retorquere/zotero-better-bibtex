@@ -83,7 +83,7 @@ extra('tex.shortauthor').transliterate.clean.lower.len + year | 'default' + auth
 
 ### Generating citekeys
 
-To generate your citekeys, you use a formula composed of functions and filters. Broadly, functions grab text from your item, and filters transform that text. **Note that the formula syntax has changed from a bracketed format to a javascript-ish format**. The old syntax was getting harder to maintain and its inflexibility prevented new extensions to the functions being implemented cleanly. **The old syntax still works** and will be translated to the new format automatically and displayed below the old format if you use it. At some point not too far away, BBT will automatically upgrade old patterns and use those directly. But for now you can choose which format you use.
+To generate your citekeys, you use a formula composed of functions and filters. Broadly, functions grab text from your item, and filters transform that text. **Note that the formula syntax has changed from a bracketed format to a javascript-ish format**. The old syntax was getting harder to maintain and its inflexibility prevented new extensions to the functions being implemented cleanly. **The old syntax still works** but will be translated to the new format automatically.
 
 Below you will find a full list of functions and filters you can use, in the new format only, sorry. You can still use these in the old syntax, but they support only positional parameters, where I would recommend generally to use the new syntax with named parameters.
 
