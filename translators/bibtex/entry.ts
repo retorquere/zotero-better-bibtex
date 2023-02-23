@@ -1193,7 +1193,7 @@ export class Entry {
     const initials_marker_pos: number = name.given?.match(enc_creators_marker.initials)?.index
     let initials: string | String
 
-    let extendedNameformat = (
+    const extendedNameformat = (
       this.translation.preferences.biblatexExtendedNameFormat
       && (
         (typeof initials_marker_pos === 'number' && initials_marker_pos > 1)
@@ -1205,7 +1205,7 @@ export class Entry {
         name['comma-suffix']
       )
     )
-      
+
     if (extendedNameformat) {
       if (typeof initials_marker_pos === 'number') {
         initials = name.given.substring(0, initials_marker_pos)
