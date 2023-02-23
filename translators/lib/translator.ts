@@ -225,7 +225,7 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
   public preferences: Preferences
   public importToExtra: Record<string, 'plain' | 'force'>
   public skipFields: string[]
-  public skipField: Record<string, boolean>
+  public skipField: RegExp
   public verbatimFields?: (string | RegExp)[]
   public csquotes: { open: string, close: string }
   public export: { dir: string, path: string } = {
@@ -432,9 +432,24 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
         this.importToExtra[field.replace(/\s*=.*/, '')] = field.match(/\s*=\s*force$/) ? 'force' : 'plain'
       })
     this.skipFields = this.preferences.skipFields.toLowerCase().split(',').map(field => this.typefield(field)).filter((s: string) => s)
-    this.skipField = this.skipFields.reduce((acc, field) => { acc[field] = true; return acc }, {})
 
-    let m
+    let m: RegExpMatchArray
+    this.skipField = new RegExp('^(' + this.skipFields.map(field => {
+      if (m = field.match(/^(csl|tex|bibtex|biblatex)[.]([a-z]+)[.]([a-z]+)$/)) {
+        return `(${ m[1] === 'tex' ? 'bib(la)?' : '' }[.]${ m[2] }[.]${ m[3] })` // eslint-disable-line no-magic-numbers
+      }
+      if (m = field.match(/^(tex|bibtex|biblatex)[.]([a-z]+)$/)) {
+        return `(${ m[1] === 'tex' ? 'bib(la)?' : '' }[.][a-z]+[.]${ m[2] })`
+      }
+      if (m = field.match(/^([a-z]+)[.]([a-z]+)$/)) {
+        return `(${ this.BetterTeX ? 'bib(la)tex' : 'csl' }[.]${ m[1] }[.]${ m[2] })`
+      }
+      if (m = field.match(/^[a-z]+$/)) {
+        return `(${ this.BetterTeX ? 'bib(la)tex' : 'csl' }[.][a-z]+[.]${ field })`
+      }
+      return ''
+    }).filter(field => field).join('|') + ')$')
+
     this.verbatimFields = this.preferences.verbatimFields
       .toLowerCase()
       .split(',')
