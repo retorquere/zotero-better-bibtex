@@ -10,7 +10,6 @@
       "baseAttachmentPath": "C:\\Users\\XinYin\\OneDrive - UGent\\3.Resources",
       "citekeyFold": false,
       "citekeyFormat": "auth + \"(\" + year + \")\" + shorttitle(3,3)",
-      "citekeyFormatBackup": "auth + \"(\" + year + \")\" + shorttitle(3,3)",
       "citekeyUnsafeChars": "\"#%',={}~",
       "extraMergeCSL": true,
       "extraMergeCitekeys": true,

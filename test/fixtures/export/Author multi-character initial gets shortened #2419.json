@@ -9,7 +9,6 @@
       "autoAbbrev": true,
       "autoExportDelay": 2,
       "citekeyFormat": "auth + year",
-      "citekeyFormatBackup": "auth + year",
       "exportTitleCase": false,
       "importSentenceCase": "off",
       "quickCopyMode": "citekeys"

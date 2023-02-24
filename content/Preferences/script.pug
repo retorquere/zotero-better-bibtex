@@ -1,7 +1,6 @@
 script.
-  function showBackup() {
-    const citekey = document.getElementById('id-better-bibtex-preferences-citekeyFormat')
-    const backup = document.getElementById('id-better-bibtex-preferences-citekeyFormatBackup')
+  function show() {
+    const editing = document.getElementById('id-better-bibtex-preferences-citekeyFormatEditing')
     const label = document.getElementById('id-better-bibtex-label-citekeyFormatBackup')
     Zotero.debug('backup citekey pattern: ' + backup.value)
     backup.hidden = label.hidden = !backup.value || (citekey.value === backup.value)

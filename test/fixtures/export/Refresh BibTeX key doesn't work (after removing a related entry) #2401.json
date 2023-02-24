@@ -12,7 +12,6 @@
       "baseAttachmentPath": "/Users/furue/Dropbox/doc/papers",
       "bibtexURL": "url",
       "citekeyFormat": "authEtal2(initials=true).capitalize+\":\"+year",
-      "citekeyFormatBackup": "authEtal2(initials=true).capitalize+\":\"+year",
       "exportTitleCase": false,
       "extraMergeCSL": true,
       "logEvents": true,

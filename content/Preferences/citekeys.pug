@@ -1,33 +1,21 @@
 vbox
-  label(bbt:preference='extensions.zotero.translators.better-bibtex.citekeyFormat') &better-bibtex.Preferences.citekey.format;
-  textbox#id-better-bibtex-preferences-citekeyFormat(
+  label(bbt:preference='extensions.zotero.translators.better-bibtex.citekeyFormatEditing') &better-bibtex.Preferences.citekey.format;
+  textbox#id-better-bibtex-preferences-citekeyFormatEditing(
     flex='1'
     rows=1
-    onfocus="this.setAttribute('rows', '5'); Zotero.BetterBibTeX.PrefPane.getCitekeyFormat(event.target); showNew();"
-    onblur="this.setAttribute('rows', '1'); Zotero.BetterBibTeX.PrefPane.saveCitekeyFormat(event.target); showNew();"
-    oninput="Zotero.BetterBibTeX.PrefPane.checkCitekeyFormat(event.target); showNew();"
-    onkeypress="setTimeout(function() { Zotero.BetterBibTeX.PrefPane.checkCitekeyFormat(event.target); showNew() }, 1);"
-    multiline='true'
-  )
-
-  label#id-better-bibtex-label-citekeyFormatNew &better-bibtex.Preferences.citekey.format.new;
-  textbox#id-better-bibtex-preferences-citekeyFormatNew(
-    flex='1'
-    rows=1
-    readonly='true'
-    multiline='true'
-    onfocus="if (this.value) this.setAttribute('rows', '5')"
+    onfocus="this.setAttribute('rows', '5')"
     onblur="this.setAttribute('rows', '1')"
+    multiline='true'
   )
 
-  label#id-better-bibtex-label-citekeyFormatBackup(bbt:preference="extensions.zotero.translators.better-bibtex.citekeyFormatBackup") &better-bibtex.Preferences.citekey.format.backup;
-  textbox#id-better-bibtex-preferences-citekeyFormatBackup(
-    preference='extensions.zotero.translators.better-bibtex.citekeyFormatBackup'
+  label#id-better-bibtex-label-citekeyFormat(bbt:preference="extensions.zotero.translators.better-bibtex.citekeyFormat") &better-bibtex.Preferences.citekey.format.installed;
+  textbox#id-better-bibtex-preferences-citekeyFormat(
+    preference='extensions.zotero.translators.better-bibtex.citekeyFormat'
     flex='1'
     rows=1
     readonly='true'
     multiline='true'
-    onfocus="if (this.value) this.setAttribute('rows', '5')"
+    onfocus="this.setAttribute('rows', '5')"
     onblur="this.setAttribute('rows', '1')"
   )
 checkbox(preference="extensions.zotero.translators.better-bibtex.citekeyFold" label="&better-bibtex.Preferences.citekey.fold;")

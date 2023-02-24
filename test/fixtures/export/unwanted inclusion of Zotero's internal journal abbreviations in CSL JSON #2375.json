@@ -9,7 +9,6 @@
       "autoAbbrev": true,
       "autoExportDelay": 2,
       "citekeyFormat": "authEtal2.capitalize+len+year+title.select(1,3).capitalize | title.select(1,5).capitalize+year",
-      "citekeyFormatBackup": "authEtal2.capitalize+len+year+title.select(1,3).capitalize | title.select(1,5).capitalize+year",
       "quickCopyMode": "pandoc",
       "quickCopyPandocBrackets": true
     }

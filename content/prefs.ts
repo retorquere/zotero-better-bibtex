@@ -125,6 +125,7 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
     if (typeof Zotero.Prefs.get(key = 'translators.better-bibtex.citeprocNoteCitekey') !== 'undefined') Zotero.Prefs.clear(key)
     if (typeof Zotero.Prefs.get(key = 'translators.better-bibtex.newTranslatorsAskRestart') !== 'undefined') Zotero.Prefs.clear(key)
     if (typeof Zotero.Prefs.get(key = 'translators.better-bibtex.caching') !== 'undefined') Zotero.Prefs.clear(key)
+    if (typeof Zotero.Prefs.get(key = 'translators.better-bibtex.citekeyFormatBackup') !== 'undefined') Zotero.Prefs.clear(key)
 
     // migrate ancient keys
     if ((old = Zotero.Prefs.get(key = 'translators.better-bibtex.quickCopyMode')) === 'orgmode_citekey') {
