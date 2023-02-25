@@ -10,7 +10,6 @@
       "citekeyFold": true,
       "jieba": true,
       "citekeyFormat": "auth.fold(chinese).lower + year",
-      "citekeyFormatBackup": "auth.lower + year",
       "warnBulkModify": 0
     }
   },

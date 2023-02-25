@@ -6,8 +6,7 @@
       "exportNotes": true
     },
     "preferences": {
-      "citekeyFormat": "auth + year",
-      "citekeyFormatBackup": "auth + year"
+      "citekeyFormat": "auth + year"
     }
   },
   "items": [

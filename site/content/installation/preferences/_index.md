@@ -12,7 +12,7 @@ weight: 10
 
 {{% preferences/header %}}
 
-## Citation key formula
+## Active citation key formula
 
 default: `​auth.lower + shorttitle(3,3) + year`
 

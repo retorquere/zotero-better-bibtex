@@ -6,8 +6,7 @@
       "exportNotes": true
     },
     "preferences": {
-      "autoExportDelay": 2,
-      "citekeyFormatBackup": "auth.lower + shorttitle(3,3) + year"
+      "autoExportDelay": 2
     }
   },
   "items": [

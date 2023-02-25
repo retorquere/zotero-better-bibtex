@@ -11,7 +11,6 @@
       "autoExportDelay": 2,
       "baseAttachmentPath": "/Users/furue/Dropbox/doc/papers",
       "citekeyFormat": "authEtal2(initials=true).capitalize+\":\"+year",
-      "citekeyFormatBackup": "authEtal2(initials=true).capitalize+\":\"+year",
       "exportTitleCase": false,
       "extraMergeCSL": true,
       "qualityReport": true,

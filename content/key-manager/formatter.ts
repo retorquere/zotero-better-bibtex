@@ -337,85 +337,70 @@ class PatternFormatter {
   private skipWords: Set<string>
 
   // private fold: boolean
-  public update(_reason: string) {
+  public update(formulas: string[]): string {
     const unsafechars = rescape(Preference.citekeyUnsafeChars + '\uFFFD')
     this.re.unsafechars_allow_spaces = new RegExp(`[${unsafechars}]`, 'g')
     this.re.unsafechars = new RegExp(`[${unsafechars}\\s]`, 'g')
     this.skipWords = new Set(Preference.skipWords.split(',').map((word: string) => word.trim()).filter((word: string) => word))
 
-    for (const ck of ['citekeyFormat', 'citekeyFormatBackup']) {
-      if (Preference[ck].startsWith('[')) {
+    let error = ''
+    // the zero-width-space is a marker to re-save the current default so it doesn't get replaced when the default changes later, which would change new keys suddenly
+    for (let formula of [...formulas, Preference.default.citekeyFormat.replace(/^\u200B/, '')]) {
+      log.debug('formula.update: trying', formula)
+      if (!formula) continue
+
+      if (formula[0] === '[') {
         try {
-          Preference[ck] = legacyparser.parse(Preference[ck], { sprintf, items, methods }) as string
-          flash('Citation pattern upgraded', `Citation pattern upgraded to ${Preference.citekeyFormat}`)
+          formula = this.convertLegacy(formula)
         }
         catch (err) {
-          Preference[ck] = ''
-          log.error('Upgrading citation pattern failed', err)
+          error = `failed to upgrade legacy formula ${formula}`
+          continue
         }
-      }
-
-      // safeguard agains Zotero late-loading preference defaults
-      // the zero-width-space is a marker to re-save the current default so it doesn't get replaced when the default changes later, which would change new keys suddenly
-      if (!Preference[ck] || Preference[ck].includes('\u200B')) Preference[ck] = Preference.default.citekeyFormat.replace(/^\u200B/, '')
-    }
-
-    if (Preference.citekeyFormatBackup === Preference.citekeyFormat) Preference.citekeyFormatBackup = ''
-
-    let formula: string
-
-    for (const attempt of ['verify', 'restore', 'reset']) {
-      switch (attempt) {
-        case 'verify':
-          formula = Preference.citekeyFormat
-          break
-
-        case 'restore':
-          if (!Preference.citekeyFormatBackup || Preference.citekeyFormatBackup === Preference.citekeyFormat) continue
-          // eslint-disable-next-line no-magic-numbers
-          flash('Malformed citation pattern', 'retrying backup', 20)
-          formula = Preference.citekeyFormatBackup
-          Preference.citekeyFormatBackup = Preference.citekeyFormat
-          break
-
-        case 'reset':
-          // eslint-disable-next-line no-magic-numbers
-          flash('Malformed citation pattern', 'resetting to default', 20)
-          formula = Preference.default.citekeyFormat.replace(/^\u200B/, '')
-          break
       }
 
       try {
         this.$postfix()
-        const formatter = this.parsePattern(formula)
+        const formatter = this.parseFormula(formula)
         this.generate = (new Function(formatter) as () => string)
-        log.debug('PatternFormatter.update: installing generate ', {generate: this.generate.toString()})
-        switch (attempt) {
-          case 'verify':
-            Preference.citekeyFormatBackup = Preference.citekeyFormat
-            break
-          case 'restore':
-          case 'reset':
-            Preference.citekeyFormat = formula
-            break
+        log.debug('CitekeyFormatter.update: installing generator', this.generate.toString())
+        if (Preference.citekeyFormat !== formula) log.debug('CitekeyFormatter.update: change citekeyFormat from', Preference.citekeyFormat, 'to', formula)
+        Preference.citekeyFormat = formula
+        if (!Preference.citekeyFormatEditing) {
+          log.debug('CitekeyFormatter.update: set citekeyFormatEditing to', formula)
+          Preference.citekeyFormatEditing = formula
         }
-
-        break
+        return error
       }
       catch (err) {
-        log.error('PatternFormatter.update: Error parsing citekeyFormat ', {formula}, err, err.location)
+        if (!error) error = err.message
+        // eslint-disable-next-line no-magic-numbers
+        log.error('CitekeyFormatter.update: Error parsing citekeyFormat ', formula)
+        log.error(err, err.location)
       }
     }
+
+    // we should never get here
+    log.error('CitekeyFormatter.update: no formula?!')
+    return 'failed to install citekey formula'
   }
 
-  public parsePattern(pattern): string {
-    const code = Formula.convert(pattern)
-    if (Preference.testing) log.debug('parsePattern.compiled:', code)
+  public parseFormula(formula): string {
+    const code = Formula.convert(formula)
+    if (Preference.testing) log.debug('parseFormula.compiled:', code)
     return code
   }
 
   public convertLegacy(pattern: string): string {
-    return legacyparser.parse(pattern, { sprintf, items, methods }) as string
+    try {
+      const formula: string = legacyparser.parse(pattern, { sprintf, items, methods })
+      flash('legacy citation key pattern upgraded', `legacy citation key pattern ${pattern} upgraded to ${formula}`)
+      return formula
+    }
+    catch (err) {
+      flash('could not upgrade legacy citation key pattern', `could not upgrade lecacy citation key pattern ${pattern}`)
+      throw err
+    }
   }
 
   public reset() {

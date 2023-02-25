@@ -150,14 +150,14 @@
   },
   {
     "name": "citekeyFormat",
-    "label": "Citation key formula",
+    "label": "Active citation key formula",
     "type": "string",
     "default": "​auth.lower + shorttitle(3,3) + year",
     "affects": []
   },
   {
-    "name": "citekeyFormatBackup",
-    "label": "Previous citation key format with error",
+    "name": "citekeyFormatEditing",
+    "label": "Citation key formula",
     "type": "string",
     "default": "",
     "affects": []

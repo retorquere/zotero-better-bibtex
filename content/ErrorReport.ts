@@ -156,7 +156,7 @@ export class ErrorReport {
   }
 
   private async ping(region: string) {
-    await Zotero.HTTP.request('GET', `http://s3.${region}.amazonaws.com${s3.region[region].tld || ''}/ping`, { noCache: true })
+    await Zotero.HTTP.request('GET', `https://s3.${region}.amazonaws.com${s3.region[region].tld || ''}/ping`, { noCache: true })
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return { region, ...s3.region[region] }
   }
@@ -213,7 +213,7 @@ export class ErrorReport {
       this.globals.document.getElementById('better-bibtex-report-cache').value = this.cacheState = l10n.localize('ErrorReport.better-bibtex.cache', Cache.state())
 
       const region = await Zotero.Promise.any(Object.keys(s3.region).map(this.ping.bind(this)))
-      this.bucket = `http://${s3.bucket}-${region.short}.s3-${region.region}.amazonaws.com${region.tld || ''}`
+      this.bucket = `https://${s3.bucket}-${region.short}.s3-${region.region}.amazonaws.com${region.tld || ''}`
       this.key = `${Zotero.Utilities.generateObjectKey()}${this.params.scope ? '-refs' : ''}-${region.short}`
 
       this.zipfile = OS.Path.join(Zotero.getTempDirectory().path, `${this.key}-${this.timestamp}.zip`)
