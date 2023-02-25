@@ -80,8 +80,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.citekey.fold "Force citation key to plain text">
 <!ENTITY better-bibtex.Preferences.citekey.search "Enable citation key search">
 <!ENTITY better-bibtex.Preferences.citekey.format "Citation key formula">
-<!ENTITY better-bibtex.Preferences.citekey.format.new "New citation key format">
-<!ENTITY better-bibtex.Preferences.citekey.format.backup "Previous citation key format with error">
+<!ENTITY better-bibtex.Preferences.citekey.format.installed "Active citation key formula">
 <!ENTITY better-bibtex.Preferences.citekey.autoPinDelay "Automatically pin citation key after">
 
 <!ENTITY better-bibtex.Preferences.export.quickCopy "Quick-Copy">

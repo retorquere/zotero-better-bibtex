@@ -184,7 +184,7 @@ export class KeyManager {
       this.query.field[field.fieldName] = field.fieldID
     }
 
-    Formatter.update('init')
+    Formatter.update([Preference.citekeyFormat])
   }
 
   public async start(): Promise<void> {
@@ -297,7 +297,7 @@ export class KeyManager {
 
     Events.on('preference-changed', pref => {
       if (['autoAbbrevStyle', 'citekeyFormat', 'citekeyFold', 'citekeyUnsafeChars', 'skipWords'].includes(pref)) {
-        Formatter.update('pref-change')
+        Formatter.update([Preference.citekeyFormat])
       }
     })
 
@@ -585,9 +585,5 @@ export class KeyManager {
     }
 
     return [ids]
-  }
-
-  public convertLegacy(pattern: string): string {
-    return Formatter.convertLegacy(pattern)
   }
 }

@@ -5,8 +5,17 @@ export namespace XUL {
     public getAttribute(name: string): string
     public setAttribute(name: string, value: string): void
     public classList: ClassList
+    public height: number
+    public width: number
   }
   
+  class Tabbox extends Element {
+    boxObject: {
+      public height: number
+      public width: number
+    }
+  }
+
   class Image extends Element {
     public src: string
   }
@@ -40,7 +49,14 @@ export namespace XUL {
   class Menulist extends XUL.Element {
     public firstChild: Menupopup
     public selectedItem: Menuitem
+    public selectedIndex: number
     public value: string
+    public getItemAtIndex(index: number): XUL.MenuItem
+    public ensureIndexIsVisible(index: number): void
+  }
+
+  class Deck extends XUL.Element {
+    public selectedIndex: number
   }
 }
 

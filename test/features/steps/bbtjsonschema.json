@@ -189,7 +189,7 @@
             "citekeyFormat": {
               "type": "string"
             },
-            "citekeyFormatBackup": {
+            "citekeyFormatEditing": {
               "type": "string"
             },
             "citekeySearch": {
