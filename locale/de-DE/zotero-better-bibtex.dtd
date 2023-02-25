@@ -1,10 +1,10 @@
-<!ENTITY better-bibtex.seconds "seconds">
+<!ENTITY better-bibtex.seconds "Sekunden">
 
 <!ENTITY better-bibtex.FirstRun.title "Willkommen bei Better BibTeX for Zotero">
 <!ENTITY better-bibtex.FirstRun.welcome "Better BibTeX for Zotero (oder BBT, wie es allgemein genannt wird) macht Zotero nützlicher für LaTeX- und Markdown-Holdouts. Es gibt viele Konfigurationsmöglichkeiten für BBT -- werfen Sie einen Blick in die Konigurationseinstellungen, wenn Sie neugierig sind -- aber lassen Sie uns mit einer einfachen Auswahl beginnen.">
 
 <!ENTITY better-bibtex.FirstRun.citekeyFormat "Ihre Zitierschlüssel">
-<!ENTITY better-bibtex.FirstRun.citekeyFormat.explanation "BBT will generate citation keys for your items. The citekey generation is highly configurable, and you can choose to override the generation, but you will need to select the default now. You can always go into the preferences and change this at any time.">
+<!ENTITY better-bibtex.FirstRun.citekeyFormat.explanation "BBT generiert Zitierschlüssel für ihre Einträge. Dieser Prozess ist in hohem Maße konfigurierbar und kann übersprungen werden, allerdings müssen Sie jetzt einen Defaultwert setzen. Sie können die Auswahl jederzeit im Konfigurationsmenü ändern.">
 <!ENTITY better-bibtex.FirstRun.citekeyFormat.bbt "Verwende das Standard-Zitierschlüssel-Format von BBT">
 <!ENTITY better-bibtex.FirstRun.citekeyFormat.zotero "Verwende das Standard-Zitierschlüssel-Format von Zotero">
 <!ENTITY better-bibtex.FirstRun.citekeyFormat.explanation.bbt "Neue Schlüssel werden im BBT-Standardformat generiert. Wenn Sie ein anderes Format verwenden wollen, ändern Sie es in den Einstellungen, anschließend alle Elemente markieren, Rechtsklick und &quot;Aktualisieren&quot; auswählen">
@@ -19,33 +19,33 @@
 <!ENTITY better-bibtex.FirstRun.dragndrop.enable "Aktiviere Drag-and-Drop-Zitate">
 
 <!ENTITY better-bibtex.FirstRun.importUnabbreviate "BibTeX-Strings und Zeitschriftenabkürzungen beim Import erweitern">
-<!ENTITY better-bibtex.FirstRun.importUnabbreviate.explanation "Some bibtex files have journal abbreviations in the 'journal' field. If you enable this, BBT will attempt to replace those abbreviations with the full journal name during import of bibtex files">
+<!ENTITY better-bibtex.FirstRun.importUnabbreviate.explanation "Einige bibtex-Dateien haben Zeitschriftenabkürzungen im Feld 'Journal'. Wenn Sie dies aktivieren, wird BBT versuchen, diese Abkürzungen beim Import von bibtex-Dateien durch den vollständigen Journalnamen zu ersetzen">
 <!ENTITY better-bibtex.FirstRun.importUnabbreviate.enable "Zeitschriftennamen beim Import nicht abkürzen">
-<!ENTITY better-bibtex.FirstRun.importStrings.explanation "Some bibtex files use @string variables for journal names. If you enable this, BBT will use a list of common journal IDs to replace these variables with the full journal name">
+<!ENTITY better-bibtex.FirstRun.importStrings.explanation "Einige bibtex-Dateien verwenden @string-Variablen für Zeitschriftennamen. Wenn Sie dies aktivieren, wird BBT eine Liste gemeinsamer Zeitschriften-IDs verwenden, um diese Variablen durch den vollständigen Journalnamen zu ersetzen">
 <!ENTITY better-bibtex.FirstRun.importStrings.enable "@string-Zeitschriftennamen beim Import erweitern">
 
 <!ENTITY better-bibtex.FirstRun.done "Fertig!">
 <!ENTITY better-bibtex.FirstRun.done.explanation "BBT kann nun verwendet werden. Sie können alle Einstellungen über den BBT-Reiter in den Zotero-Einstellungen ändern.">
 
-<!ENTITY better-bibtex.ErrorReport.title "Better BibTeX debug log">
+<!ENTITY better-bibtex.ErrorReport.title "Better BibTeX Debug-Log">
 <!ENTITY better-bibtex.ErrorReport.restartWithLoggingEnabled  "Mit aktiviertem Logging neustarten…">
-<!ENTITY better-bibtex.ErrorReport.enableDebug "Zotero debug logging is currently disabled. It will be easier to diagnose the problem if you enable it before submitting a debug log.">
+<!ENTITY better-bibtex.ErrorReport.enableDebug "Das Zotero Debug-Logging ist derzeit deaktiviert. Es ist einfacher, das Problem zu diagnostizieren, wenn Sie es aktivieren, bevor Sie ein Debug-Log senden.">
 <!ENTITY better-bibtex.ErrorReport.context "Anwendungskontext">
 <!ENTITY better-bibtex.ErrorReport.errors "Fehler">
-<!ENTITY better-bibtex.ErrorReport.includeCache "Include cache">
-<!ENTITY better-bibtex.ErrorReport.debug "Debug log">
-<!ENTITY better-bibtex.ErrorReport.notReviewed "Debug logs can not reviewed unless referred to in the GitHub issue tracker by their ID.">
-<!ENTITY better-bibtex.ErrorReport.postToGitHub "Please post a message to the issue tracker (https://github.com/retorquere/zotero-better-bibtex/issues) with this debug log ID, a description of the problem, and any steps necessary to reproduce it.">
-<!ENTITY better-bibtex.ErrorReport.items "Items">
-<!ENTITY better-bibtex.ErrorReport.reportID "Debug log ID:">
-<!ENTITY better-bibtex.ErrorReport.review "The data below is about to submitted to Better BibTeX for debugging. You can review the data to see whether there's sensitive information that you do not wish to send.
+<!ENTITY better-bibtex.ErrorReport.includeCache "Cache einbeziehen">
+<!ENTITY better-bibtex.ErrorReport.debug "Debug-Log">
+<!ENTITY better-bibtex.ErrorReport.notReviewed "Debug-Logs können nicht überprüft werden, bis im GitHub Issue-Tracker auf ihre ID verwiesen wird.">
+<!ENTITY better-bibtex.ErrorReport.postToGitHub "Bitte senden Sie eine Nachricht an den Issue-Tracker (https://github.com/retorquere/zotero-better-bibtex/issues) mit dieser Debug-Log-ID, einer Beschreibung des Problems und allen notwendigen Schritten zu seiner Reproduktion.">
+<!ENTITY better-bibtex.ErrorReport.items "Einträge">
+<!ENTITY better-bibtex.ErrorReport.reportID "Debug-Log-ID:">
+<!ENTITY better-bibtex.ErrorReport.review "Die unten aufgeführten Daten werden für die Fehlerbehebung an Better BibTeX gesendet. Bitte prüfen Sie sie auf sensible Daten, die sie nicht senden wollen.
 
-If you are OK with sending this data, please proceed to the next screen and post the debug ID presented in the next screen in the issue tracker at
+Wenn Sie mit dem Senden einverstanden sind, bitte fahren Sie mit der nächsten Anzeige fort und posten Sie die dort erscheinende Debug-ID im Issue-Tracker bei
 
 https://github.com/retorquere/zotero-better-bibtex/issue">
-<!ENTITY better-bibtex.ErrorReport.submissionInProgress			"Please wait while the debug log is submitted.">
-<!ENTITY better-bibtex.ErrorReport.submitted						"Your debug log has been submitted.">
-<!ENTITY better-bibtex.ErrorReport.save						"Save copy of log">
+<!ENTITY better-bibtex.ErrorReport.submissionInProgress			"Bitte warten Sie, während der Debug-Log übermittelt wird.">
+<!ENTITY better-bibtex.ErrorReport.submitted						"Ihr Debug-Log wurde übermittelt.">
+<!ENTITY better-bibtex.ErrorReport.save						"Kopie des Logs speichern">
 
 <!ENTITY better-bibtex.ItemPane.citekey_column	"Zitierschlüssel">
 
@@ -58,7 +58,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.auto-export.idle "Wenn unbeschäftigt">
 <!ENTITY better-bibtex.Preferences.auto-export.immediate "Bei Veränderung">
 <!ENTITY better-bibtex.Preferences.auto-export.off "Ausgestellt">
-<!ENTITY better-bibtex.Preferences.auto-export.delay "Delay auto-export for">
+<!ENTITY better-bibtex.Preferences.auto-export.delay "Auto-Export verzögern für">
 <!ENTITY better-bibtex.Preferences.auto-export.run "Jetzt Exportieren">
 <!ENTITY better-bibtex.Preferences.auto-export.remove "Löschen">
 <!ENTITY better-bibtex.Preferences.auto-export.collection "Sammlung">
@@ -71,22 +71,22 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.auto-export.fields.journalAbbrev "Zeitschriften-Abkürzungen verwenden">
 <!ENTITY better-bibtex.Preferences.auto-export.fields.recursive "Exportiere alle Untersammlungen">
 <!ENTITY better-bibtex.Preferences.auto-export.fields.error "Fehler">
-<!ENTITY better-bibtex.Preferences.auto-export.fields.cached "Cached">
+<!ENTITY better-bibtex.Preferences.auto-export.fields.cached "Zwischengespeichert">
 <!ENTITY better-bibtex.Preferences.auto-export.warn.long-running "Warne mich, wenn Auto-Exporte länger dauern als (seconds)">
 
 <!ENTITY better-bibtex.Preferences.bulkWarning "Warne mich, wenn mehrere Schlüssel auf einmal geändert werden">
 <!ENTITY better-bibtex.Preferences.tab.citekey "Zitierschlüssel">
 <!ENTITY better-bibtex.Preferences.citekey.citekeys "Zitierschlüssel">
 <!ENTITY better-bibtex.Preferences.citekey.fold "Erzwinge Plaintext-Format bei Zitierschlüsseln">
-<!ENTITY better-bibtex.Preferences.citekey.search "Enable citation key search">
-<!ENTITY better-bibtex.Preferences.citekey.format "Citation key formula">
-<!ENTITY better-bibtex.Preferences.citekey.format.installed "Active citation key formula">
-<!ENTITY better-bibtex.Preferences.citekey.autoPinDelay "Automatically pin citation key after">
+<!ENTITY better-bibtex.Preferences.citekey.search "Zitierschlüsselsuche aktivieren">
+<!ENTITY better-bibtex.Preferences.citekey.format "Zitierschlüssel-Formel">
+<!ENTITY better-bibtex.Preferences.citekey.format.installed "Aktiviere Zitierschlüssel-Formel">
+<!ENTITY better-bibtex.Preferences.citekey.autoPinDelay "Zitierschlüssel automatisch anpinnen nach">
 
 <!ENTITY better-bibtex.Preferences.export.quickCopy "Quick-Copy">
 <!ENTITY better-bibtex.Preferences.export.quickCopy.explanation "Quick-Copy/drag-and-drop citations">
 <!ENTITY better-bibtex.Preferences.export.quickCopy.atom "Atom (https://atom.io/packages/zotero-citations)">
-<!ENTITY better-bibtex.Preferences.export.quickCopy.citekeys "Cite Keys">
+<!ENTITY better-bibtex.Preferences.export.quickCopy.citekeys "Zitierschlüssel">
 <!ENTITY better-bibtex.Preferences.export.quickCopy.format "Quick-Copy format">
 <!ENTITY better-bibtex.Preferences.export.quickCopy.gitbook "GitBook">
 <!ENTITY better-bibtex.Preferences.export.quickCopy.latex.command "LaTeX command">
@@ -103,7 +103,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.export.quickCopy.selectLink "Zotero select link">
 <!ENTITY better-bibtex.Preferences.export.quickCopy.selectLink.zotero "using Zotero item key">
 <!ENTITY better-bibtex.Preferences.export.quickCopy.selectLink.citekey "using Better BibTeX citation key">
-<!ENTITY better-bibtex.Preferences.export.quickCopy.etaTemplate "Eta template">
+<!ENTITY better-bibtex.Preferences.export.quickCopy.etaTemplate "Eta-Template">
 <!ENTITY better-bibtex.Preferences.citekey.uniqueness "Halte Zitierschlüssel eindeutig">
 <!ENTITY better-bibtex.Preferences.citekey.uniqueness.conflict "Bei Konflikten mit einem angehefteten Schlüssel werden nicht angeheftete Schlüssel">
 <!ENTITY better-bibtex.Preferences.citekey.uniqueness.conflict.change "nachbearbeitet (führt zu Änderungen der Zitierschlüssel)">
@@ -114,8 +114,8 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 
 <!ENTITY better-bibtex.Preferences.citekey.AUXScanner "BibTeX AUX/Markdown scanner">
 <!ENTITY better-bibtex.Preferences.citekey.AUXScanner.import "When scanning an AUX file, attempt to import entries from the attached bib file when their citation keys are not in Zotero">
-<!ENTITY better-bibtex.Preferences.importPrefs "Import BetterBibTeX preferences...">
-<!ENTITY better-bibtex.Preferences.exportPrefs "Export BetterBibTeX preferences...">
+<!ENTITY better-bibtex.Preferences.importPrefs "BetterBibTeX-Einstellungen importieren...">
+<!ENTITY better-bibtex.Preferences.exportPrefs "BetterBibTeX-Einstellungen exportieren...">
 
 <!ENTITY better-bibtex.Preferences.advanced "Erweitert">
 <!ENTITY better-bibtex.Preferences.advanced.warning "Diese Einstellungen werden die Leistung beeinträchtigen und können zu einem Abbruch der Exporte führen. Behandeln Sie sie mit Vorsicht.">
@@ -154,14 +154,14 @@ If you turn this off, the markup is omitted during import. When you select 'yes'
 
 If you have this on, and you experience any problem that is not the cache getting dropped on upgrade, you *must* clear the cache and reproduce the problem. When you change this setting, as with any setting change, the cache will be dropped.">
 <!ENTITY better-bibtex.Preferences.advanced.export.workers "Parallele Hintergrundexporte:">
-<!ENTITY better-bibtex.Preferences.advanced.export.workers.cache "Enable caching for background exports">
+<!ENTITY better-bibtex.Preferences.advanced.export.workers.cache "Caching für Hintergrund-Exporte aktivieren">
 
 <!ENTITY better-bibtex.Preferences.advanced.tab.citekeys "Zitierschlüssel">
 
-<!ENTITY better-bibtex.Preferences.advanced.extraMerge "When merging items, also merge:">
+<!ENTITY better-bibtex.Preferences.advanced.extraMerge "Beim Zusammenführen von Items auch zusammenführen:">
 <!ENTITY better-bibtex.Preferences.advanced.extraMergeCitekeys "their citation keys into an bib(la)tex `ids` field">
 <!ENTITY better-bibtex.Preferences.advanced.extraMergeCSL "fields that are understood to be CSL fields by Zotero">
-<!ENTITY better-bibtex.Preferences.advanced.extraMergeTeX "their `tex.*` fields">
+<!ENTITY better-bibtex.Preferences.advanced.extraMergeTeX "ihre &quot;tex.*&quot;-Felder">
 
 <!ENTITY better-bibtex.Preferences.advanced.ideographs "Ideographs in citekeys">
 <!ENTITY better-bibtex.Preferences.advanced.ideographs.kuroshiro "Apply kuroshiro romajization in Japanese names/titles. Uses a lot of memory.">
@@ -183,16 +183,16 @@ If you have this on, and you experience any problem that is not the cache gettin
 <!ENTITY better-bibtex.Preferences.export.bibtex "BibTeX">
 <!ENTITY better-bibtex.Preferences.export.bibtex.URLs "Füge URLs zu BibTeX-Export hinzu">
 <!ENTITY better-bibtex.Preferences.export.bibtex.URLs.off "Nein">
-<!ENTITY better-bibtex.Preferences.export.bibtex.URLs.note "in the 'note' field">
-<!ENTITY better-bibtex.Preferences.export.bibtex.URLs.note-url-ish "in the 'note' field, but assuming the 'url' package is not loaded">
+<!ENTITY better-bibtex.Preferences.export.bibtex.URLs.note "im 'note'-Feld">
+<!ENTITY better-bibtex.Preferences.export.bibtex.URLs.note-url-ish "im &quot;note&quot;-Feld, aber davon ausgehend, dass das &quot;url&quot;-Paket nicht geladen wurde">
 <!-- https://texfaq.org/FAQ-citeURL -->
-<!ENTITY better-bibtex.Preferences.export.bibtex.URLs.url "in the 'url' field">
-<!ENTITY better-bibtex.Preferences.export.bibtex.URLs.url-ish "in the 'url' field, but assuming the 'url' package is not loaded">
+<!ENTITY better-bibtex.Preferences.export.bibtex.URLs.url "im 'url'-Feld">
+<!ENTITY better-bibtex.Preferences.export.bibtex.URLs.url-ish "im &quot;url&quot;-Feld, aber davon ausgehend, dass das &quot;url&quot;-Paket nicht geladen wurde">
 <!ENTITY better-bibtex.Preferences.tab.export "Exportiere">
 <!ENTITY better-bibtex.Preferences.export.fields.bibtexParticleNoOp "Ignoriere Namens-Präfixe beim Sortieren">
 <!ENTITY better-bibtex.Preferences.export.fields.language.langid "langid">
-<!ENTITY better-bibtex.Preferences.export.fields.language.language "language">
-<!ENTITY better-bibtex.Preferences.export.fields.language.both "both">
+<!ENTITY better-bibtex.Preferences.export.fields.language.language "Sprache">
+<!ENTITY better-bibtex.Preferences.export.fields.language.both "beide">
 <!ENTITY better-bibtex.Preferences.export.fields.language "Export language as">
 <!ENTITY better-bibtex.Preferences.export.fields.doi-and-url.both "beide">
 <!ENTITY better-bibtex.Preferences.export.fields.doi-and-url.DOI "DOI">
@@ -221,10 +221,10 @@ If you have this on, and you experience any problem that is not the cache gettin
 <!ENTITY better-bibtex.Preferences.postscript.warn "Die Verwendung von 'Translator.options.exportPath' in Postscripts deaktiviert den Cache. Die Exporte werden sich deutlich verlangsamen.">
 <!ENTITY better-bibtex.Preferences.advanced.tab.strings "@string-Definitionen">
 <!ENTITY better-bibtex.Preferences.prefpane.better-bibtex "Better BibTeX">
-<!ENTITY better-bibtex.Preferences.prefpane.loading "Better BibTeX is loading">
+<!ENTITY better-bibtex.Preferences.prefpane.loading "Better BibTeX wird geladen">
 <!ENTITY better-bibtex.Preferences.rescan-citekeys "Scanne angeheftete Zitierschlüssel erneut">
 <!ENTITY better-bibtex.Preferences.resetCache "Cache zurücksetzen">
-<!ENTITY better-bibtex.BetterBibTeX.reportErrors "Send Better BibTeX debug log...">
+<!ENTITY better-bibtex.BetterBibTeX.reportErrors "Better BibTeX Debug-Log senden...">
 <!ENTITY better-bibtex.BetterBibTeX.auxScanner "Scan BibTeX AUX/Markdown file for references...">
 <!ENTITY better-bibtex.bulk-keys-confirm.message "Sie ändern mehr als {treshold} Einträge auf einmal. Sind sie sicher?">
 <!ENTITY better-bibtex.bulk-keys-confirm.whatever "OK, nicht noch mal fragen">
@@ -238,7 +238,7 @@ If you have this on, and you experience any problem that is not the cache gettin
 <!ENTITY better-bibtex.BetterBibTeX.sentenceCase "BBT Sentence-case">
 <!ENTITY better-bibtex.BetterBibTeX.patchDates "Copy date-added/date-modified from extra field">
 <!ENTITY better-bibtex.ZoteroPane.tag-duplicates "Markiere doppelte Zitierschlüssel">
-<!ENTITY better-bibtex.BetterBibTeX.TeXstudio "Push entries to TeXstudio">
+<!ENTITY better-bibtex.BetterBibTeX.TeXstudio "Einträge an TeXstudio senden">
 <!ENTITY zotero.better-bibtex.csquotes "Ersetze links/rechts (doppelte) Anführungszeichen mit \\enquote{...} (benötigt csquotes)">
 <!ENTITY better-bibtex.BetterBibTeX.server.disabled "Exportier über HTTP ausgestellt">
 <!ENTITY better-bibtex.BetterBibTeX.show-collection-key "Download Better-BibTeX-Export...">
@@ -250,4 +250,4 @@ If you have this on, and you experience any problem that is not the cache gettin
 <!ENTITY better-bibtex.ServerURL.OK "OK">
 
 <!-- remove after reactified zoteropane is in release -->
-<!ENTITY ZoteroPane.column.citekey "Citation Key">
+<!ENTITY ZoteroPane.column.citekey "Zitierschlüssel">
