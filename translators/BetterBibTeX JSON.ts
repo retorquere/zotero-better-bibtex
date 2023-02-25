@@ -127,11 +127,19 @@ function addSelect(item: any) {
 
 export function doExport(): void {
   const translation = Translation.Export(ZOTERO_TRANSLATOR_INFO, collect())
+
+  const preferences = {...translation.preferences}
+  delete preferences.citekeyFormatEditing
+  delete preferences.testing
+  delete preferences.platform
+  delete preferences.logEvents
+  delete preferences.scrubDatabase
+
   const data = {
     config: {
       id: ZOTERO_TRANSLATOR_INFO.translatorID,
       label: ZOTERO_TRANSLATOR_INFO.label,
-      preferences: translation.preferences,
+      preferences,
       options: translation.options,
     },
     version: {
