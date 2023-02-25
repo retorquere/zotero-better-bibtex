@@ -22,8 +22,8 @@ Events.on('window-loaded', ({ win, href }: {win: Window, href: string}) => {
   if (href === 'chrome://zotero/content/preferences/preferences.xul') {
     currentWin = win as any
     currentWin.addEventListener('unload', () => {
-      currentWin = null
       Zotero.BetterBibTeX.PrefPane.unload()
+      currentWin = null
     })
     Zotero.BetterBibTeX.PrefPane.load()
   }
