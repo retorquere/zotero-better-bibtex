@@ -92,12 +92,12 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.export.quickCopy.latex.command "LaTeX-Befehl">
 <!ENTITY better-bibtex.Preferences.export.quickCopy.latex "LaTeX-Zitat">
 <!ENTITY better-bibtex.Preferences.export.quickCopy.rtfScan "RTF-Scan-Marker">
-<!ENTITY better-bibtex.Preferences.export.quickCopy.roamCiteKey "Roam Cite Key">
+<!ENTITY better-bibtex.Preferences.export.quickCopy.roamCiteKey "Roam-Zitierschlüssel">
 <!ENTITY better-bibtex.Preferences.export.quickCopy.orgMode "Org-mode select link">
 <!ENTITY better-bibtex.Preferences.export.quickCopy.orgMode.zotero "Zotero-Eintragsschlüssel verwenden">
 <!ENTITY better-bibtex.Preferences.export.quickCopy.orgMode.citekey "Better-BibTeX-Zitierschlüssel verwenden">
-<!ENTITY better-bibtex.Preferences.export.quickCopy.orgRef "org-ref citation">
-<!ENTITY better-bibtex.Preferences.export.quickCopy.orgRef3 "org-ref v3 citation">
+<!ENTITY better-bibtex.Preferences.export.quickCopy.orgRef "Org-Ref-Zitat">
+<!ENTITY better-bibtex.Preferences.export.quickCopy.orgRef3 "Org-Ref-V3-Zitat">
 <!ENTITY better-bibtex.Preferences.export.quickCopy.pandoc.brackets "Umschließe Pandoc-Zitate mit Klammern">
 <!ENTITY better-bibtex.Preferences.export.quickCopy.pandoc "Pandoc-Zitat">
 <!ENTITY better-bibtex.Preferences.export.quickCopy.selectLink "Zotero select link">
@@ -112,8 +112,8 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.citekey.uniqueness.scope.library "innerhalb jeder Bibliothek">
 <!ENTITY better-bibtex.Preferences.citekey.uniqueness.scope.global "über alle Bibliotheken hinweg">
 
-<!ENTITY better-bibtex.Preferences.citekey.AUXScanner "BibTeX AUX/Markdown scanner">
-<!ENTITY better-bibtex.Preferences.citekey.AUXScanner.import "When scanning an AUX file, attempt to import entries from the attached bib file when their citation keys are not in Zotero">
+<!ENTITY better-bibtex.Preferences.citekey.AUXScanner "BibTeX AUX-/Markdown-Scanner">
+<!ENTITY better-bibtex.Preferences.citekey.AUXScanner.import "Versuche beim Scannen einer AUX-Datei, Einträge aus der angehängten Bib-Datei zu importieren, wenn sich deren Zitierschlüssel nicht in Zotero befinden">
 <!ENTITY better-bibtex.Preferences.importPrefs "BetterBibTeX-Einstellungen importieren...">
 <!ENTITY better-bibtex.Preferences.exportPrefs "BetterBibTeX-Einstellungen exportieren...">
 
@@ -140,7 +140,7 @@ With 'yes, but try to exclude already-sentence-cased titles', BBT will attempt t
 There's plenty of bib(la)tex files out there that do this a little overzealously, and you may not like the resulting HTML code in your items, even though this is what the braces mean in bib(la)tex, and Zotero supports it.
 
 If you turn this off, the markup is omitted during import. When you select 'yes', all braces that bib(la)tex would interpret as case protection (which is not all of them) are converted to `span` elements. In `minimal` mode, the number of `span` elements is minimized.">
-<!ENTITY better-bibtex.Preferences.advanced.import.unabbreviate "Expand abbreviated journal titles on import using list:">
+<!ENTITY better-bibtex.Preferences.advanced.import.unabbreviate "Abgekürzte Zeitschriftentitel beim Import erweitern anhand der Liste:">
 <!ENTITY better-bibtex.Preferences.advanced.import.unabbreviate.off "Kein">
 
 <!ENTITY better-bibtex.Preferences.advanced.tab.export "Export">
@@ -159,26 +159,26 @@ Wenn Sie dies eingeschaltet haben und Sie Probleme haben außer der Löschung de
 <!ENTITY better-bibtex.Preferences.advanced.tab.citekeys "Zitierschlüssel">
 
 <!ENTITY better-bibtex.Preferences.advanced.extraMerge "Beim Zusammenführen von Items auch zusammenführen:">
-<!ENTITY better-bibtex.Preferences.advanced.extraMergeCitekeys "their citation keys into an bib(la)tex `ids` field">
-<!ENTITY better-bibtex.Preferences.advanced.extraMergeCSL "fields that are understood to be CSL fields by Zotero">
+<!ENTITY better-bibtex.Preferences.advanced.extraMergeCitekeys "ihre Zitierschlüssel in Bib(La)TeX &quot;ids&quot;-Feld">
+<!ENTITY better-bibtex.Preferences.advanced.extraMergeCSL "Felder, die von Zotero als CSL-Felder verstanden werden">
 <!ENTITY better-bibtex.Preferences.advanced.extraMergeTeX "ihre &quot;tex.*&quot;-Felder">
 
-<!ENTITY better-bibtex.Preferences.advanced.ideographs "Ideographs in citekeys">
-<!ENTITY better-bibtex.Preferences.advanced.ideographs.kuroshiro "Apply kuroshiro romajization in Japanese names/titles. Uses a lot of memory.">
-<!ENTITY better-bibtex.Preferences.advanced.ideographs.jieba "Enable 'jieba'/'pinyin' filters in citekey patterns. Uses a lot of memory.">
+<!ENTITY better-bibtex.Preferences.advanced.ideographs "Ideographen in Zitierschlüsseln">
+<!ENTITY better-bibtex.Preferences.advanced.ideographs.kuroshiro "Kuroshiro romajization in japanischen Namen/Titeln anwenden. Benötigt viel Speicher.">
+<!ENTITY better-bibtex.Preferences.advanced.ideographs.jieba "Aktiviere &quot;jieba&quot;/&quot;pinyin&quot;-Filter in Zitierschlüssel-Mustern. Benötigt viel Speicher.">
 
-<!ENTITY better-bibtex.Preferences.export.qualityReport "Include comments about potential problems with the exported entries">
+<!ENTITY better-bibtex.Preferences.export.qualityReport "Kommentare über mögliche Probleme mit den exportieren Einträgen hinzufügen">
 <!ENTITY better-bibtex.Preferences.export.automaticTags "Inkludiere automatische Tags in den Export">
 <!ENTITY better-bibtex.Preferences.export.jabrefFormat "Füge JabRef-spezifische Meta-Informationen hinzu:">
 <!ENTITY better-bibtex.Preferences.export.jabrefFormat.0 "Keine">
 <!ENTITY better-bibtex.Preferences.export.jabrefFormat.3 "für JabRef 3">
 <!ENTITY better-bibtex.Preferences.export.jabrefFormat.4 "für JabRef 4">
 <!ENTITY better-bibtex.Preferences.export.jabrefFormat.5 "für JabRef 5">
-<!ENTITY better-bibtex.Preferences.export.jabrefFormat.warn "Export JabRef-specific fields: timestamps, titles for attachments, and groups for each collection an item is part of. Note that having this on will disable caching in exports, which is really undesirable specifically for auto-exports.">
+<!ENTITY better-bibtex.Preferences.export.jabrefFormat.warn "JabRef-spezifische Felder exportieren: Zeitstempel, Titel für Anhänge und Gruppen für jede Sammlung, zu der ein Artikel gehört. Beachten Sie, dass das Einschalten das Caching in Exporten deaktiviert, was speziell für Auto-Exporte nicht wünschenswert ist.">
 <!ENTITY better-bibtex.Preferences.export.biblatex.ascii "Exportiere Latex-Befehle im Unicode-Format als Plaintext">
 <!ENTITY better-bibtex.Preferences.export.biblatex "BibLaTeX">
 <!ENTITY better-bibtex.Preferences.export.biblatex.extendedNameFormat "Verwende das erweiterte Namensformat von BibLaTeX (benötigt biblatex 3.5)">
-<!ENTITY better-bibtex.Preferences.export.biblatex.biblatexExtractEprint "Extract JSTOR/Google Books/PubMed info from the URL field into eprint fields">
+<!ENTITY better-bibtex.Preferences.export.biblatex.biblatexExtractEprint "Extrahiere JSTOR-/Google-Books-/PubMed-Informationen aus dem URL-Feld in die eprint-Felder">
 <!ENTITY better-bibtex.Preferences.export.bibtex.ascii "Exportiere Latex-Befehle im Unicode-Format als Plaintext (empfohlen)">
 <!ENTITY better-bibtex.Preferences.export.bibtex "BibTeX">
 <!ENTITY better-bibtex.Preferences.export.bibtex.URLs "Füge URLs zu BibTeX-Export hinzu">
@@ -202,18 +202,18 @@ Wenn Sie dies eingeschaltet haben und Sie Probleme haben außer der Löschung de
 <!ENTITY better-bibtex.Preferences.export.fields "Felder">
 
 <!ENTITY better-bibtex.Preferences.export.fields.import-strings "Erweitere die folgenden @string-Variablen während des Imports">
-<!ENTITY better-bibtex.Preferences.export.fields.export-strings "If a field could be a @string reference, export it as an unbraced @string reference">
+<!ENTITY better-bibtex.Preferences.export.fields.export-strings "Wenn ein Feld eine @string-Referenz sein könnte, exportiere es als @string-Referenz ohne Klammern">
 <!ENTITY better-bibtex.Preferences.export.fields.export-strings.off "Nein">
 <!ENTITY better-bibtex.Preferences.export.fields.export-strings.detect "Behandle Felder mit nur einem Wort als @String-Variablen">
-<!ENTITY better-bibtex.Preferences.export.fields.export-strings.match "Match against the @string declarations below">
-<!ENTITY better-bibtex.Preferences.export.fields.export-strings.match_reverse "Match against the @string declarations and their values below">
+<!ENTITY better-bibtex.Preferences.export.fields.export-strings.match "Mit den @string-Deklarationen unten vergleichen">
+<!ENTITY better-bibtex.Preferences.export.fields.export-strings.match_reverse "Mit den @string-Deklarationen und ihren Werten unten vergleichen">
 
 <!ENTITY better-bibtex.Preferences.export.fields.skip "Felder, die nicht exportiert werden sollen (mit Komma trennen)">
 <!ENTITY better-bibtex.Preferences.export.misc "Verschiedenes">
 <!ENTITY better-bibtex.Preferences.export.map-unicode "Beim Konvertieren von LaTeX-Befehlen im Plaintext:">
 <!ENTITY better-bibtex.Preferences.export.map-unicode.minimal-packages "Zusätzlich benötigte Latex-Pakete minimieren">
 <!ENTITY better-bibtex.Preferences.export.map-unicode.conservative "Minimiere die Anzahl der Wechsel zwischen dem Mathematik- und Textmodus">
-<!ENTITY better-bibtex.Preferences.export.map-unicode.creator "Add braces to accented characters to assist simple latex parsers">
+<!ENTITY better-bibtex.Preferences.export.map-unicode.creator "Klammern zu Buchstaben mit Akzenten hinzufügen, um einfache LaTeX-Parser zu unterstützen">
 <!ENTITY better-bibtex.Preferences.export.map-unicode.text "Textmodus-Ersetzungen bevorzugen">
 <!ENTITY better-bibtex.Preferences.export.map-unicode.math "Mathematikmodus-Ersetzungen bevorzugen">
 
