@@ -1211,7 +1211,7 @@ export class Entry {
 
     let initials: string
     if (name.given === name.initials) {
-      name.given = `<span class="nocase">${name.given}</span>`
+      name.given = `<span relax="true">${name.given}</span>`
     }
     else if (name.given.startsWith(initials = name.initials.replace(/\.$/, ''))) {
       name.given = `<span relax="true">${initials}</span>${name.given.substr(initials.length)}`
@@ -1272,9 +1272,6 @@ export class Entry {
       }
       if (name['comma-suffix']) namebuilder.push('juniorcomma=true')
       return namebuilder.join(', ')
-    }
-    else {
-      this.protectInitials(name)
     }
 
     if (family && Zotero.Utilities.XRegExp.test(family, this.re.startsWithLowercase)) family = new String(family) // eslint-disable-line no-new-wrappers
