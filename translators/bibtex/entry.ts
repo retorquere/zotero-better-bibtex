@@ -1206,12 +1206,12 @@ export class Entry {
     }
   }
 
-  private relaxInitials(name: { given?: string, initials?: string }) {
+  private protectInitials(name: { given?: string, initials?: string }) {
     if (!name.given || !name.initials) return
 
     let initials: string
     if (name.given === name.initials) {
-      name.given = `<span relax="true">${name.given}</span>`
+      name.given = `<span class="nocase">${name.given}</span>`
     }
     else if (name.given.startsWith(initials = name.initials.replace(/\.$/, ''))) {
       name.given = `<span relax="true">${initials}</span>${name.given.substr(initials.length)}`
@@ -1266,7 +1266,7 @@ export class Entry {
       return namebuilder.join(', ')
     }
     else {
-      this.relaxInitials(name)
+      this.protectInitials(name)
     }
 
     if (family && Zotero.Utilities.XRegExp.test(family, this.re.startsWithLowercase)) family = new String(family) // eslint-disable-line no-new-wrappers
@@ -1295,7 +1295,7 @@ export class Entry {
     // cleanup from old initials detection
     name.given = name.given?.replace(enc_creators_marker.initials, '')
     this.detectInitials(name)
-    this.relaxInitials(name)
+    this.protectInitials(name)
 
     /*
       TODO: http://chat.stackexchange.com/rooms/34705/discussion-between-retorquere-and-egreg
