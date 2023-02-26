@@ -398,7 +398,7 @@
     "name": "biblatexExtendedNameFormat",
     "label": "Use BibLaTeX extended name format (requires biblatex 3.5)",
     "type": "boolean",
-    "default": false,
+    "default": true,
     "affects": [
       "Better BibLaTeX"
     ],

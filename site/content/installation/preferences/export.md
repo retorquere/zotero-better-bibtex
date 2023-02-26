@@ -60,7 +60,7 @@ simply more pleasing to have things like accented characters translated to their
 
 ### Use BibLaTeX extended name format (requires biblatex 3.5)
 
-default: `no`
+default: `yes`
 
 Use the extended biber 2.7 format for names with particles - only works in BibLaTeX 3.5 or later.
 This biblatex has a new (less ambiguous) way to store creator names. It's technically
