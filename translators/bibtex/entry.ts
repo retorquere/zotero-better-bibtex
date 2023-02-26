@@ -182,9 +182,9 @@ export class Entry {
         hasLowercaseWord: new Zotero.Utilities.XRegExp('\\s[\\p{Ll}]'),
         whitespace: new Zotero.Utilities.XRegExp('[\\p{Zs}]+'),
         nonwordish: new Zotero.Utilities.XRegExp('[^\\p{L}\\p{N}]', 'g'),
-        leadingUppercase: new Zotero.Utilities.XRegExp('^(\\p{Lu})(\\p{Lu}*)(.*)'),
-        initials: new Zotero.Utilities.XRegExp('^(\\p{L}+[.]\\s*)+$'),
-        longInitials: new Zotero.Utilities.XRegExp('\\p{L}{2}[.]'),
+        leadingUppercase: new Zotero.Utilities.XRegExp('^(\\p{Lu})(\\p{Lu}*)(\\p{Ll}.*)'),
+        initials: new Zotero.Utilities.XRegExp('^(\\p{L}+\\.\\s*)+$'),
+        longInitials: new Zotero.Utilities.XRegExp('\\p{L}{2}\\.'),
       }
     }
 
@@ -1213,7 +1213,7 @@ export class Entry {
     if (name.given === name.initials) {
       name.given = `<span relax="true">${name.given}</span>`
     }
-    else if (name.given.startsWith(initials = name.initials.replace(/[.]$/, ''))) {
+    else if (name.given.startsWith(initials = name.initials.replace(/\.$/, ''))) {
       name.given = `<span relax="true">${initials}</span>${name.given.substr(initials.length)}`
     }
   }
