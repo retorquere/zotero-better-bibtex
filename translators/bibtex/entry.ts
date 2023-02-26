@@ -1197,8 +1197,12 @@ export class Entry {
       const m = Zotero.Utilities.XRegExp.exec(part, this.re.leadingUppercase)
       if (!m) return { given }
       multiChar = multiChar || m[2]
-      initials += `${m[1]}${m[2].toLowerCase()}. `
-      given += `${m[1]}${m[2].toLowerCase()}${m[3]} ` // eslint-disable-line no-magic-numbers
+
+      // special case for #2419, IJsbrand
+      if (m[1] !== 'I' || m[2] !== 'J') m[2] = m[2].toLowerCase()
+
+      initials += `${m[1]}${m[2]}. `
+      given += `${m[1]}${m[2]}${m[3]} ` // eslint-disable-line no-magic-numbers
     }
     if (multiChar) {
       name.initials = initials.trim()
@@ -1211,7 +1215,7 @@ export class Entry {
 
     let initials: string
     if (name.given === name.initials) {
-      name.given = `<span relax="true">${name.given}</span>`
+      name.given = `<span relax="true">${name.given.replace(/[.]$/, '')}</span>`
     }
     else if (name.given.startsWith(initials = name.initials.replace(/\.$/, ''))) {
       name.given = `<span relax="true">${initials}</span>${name.given.substr(initials.length)}`
