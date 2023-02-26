@@ -1256,7 +1256,15 @@ export class Entry {
       const namebuilder: string[] = []
       if (family) namebuilder.push(`family=${this._enc_creator_part(family)}`)
       if (name.given) namebuilder.push(`given=${this._enc_creator_part(name.given)}`)
-      if (name.initials) namebuilder.push(`given-i=${this._enc_creator_part(name.initials)}`)
+      if (name.initials) {
+        const initials = Zotero.Utilities.XRegExp.exec(name.initials, this.re.allCaps)
+          ? name.initials
+          : name.initials
+            .split(/[\s.]+/)
+            .map(initial => initial.length > 1 ? `<span class="nocase">${initial}</span>` : initial)
+            .join('')
+        namebuilder.push(`given-i=${this._enc_creator_part(initials)}`)
+      }
       if (name.suffix) namebuilder.push(`suffix=${this._enc_creator_part(name.suffix)}`)
       if (name['dropping-particle'] || name['non-dropping-particle']) {
         namebuilder.push(`prefix=${this._enc_creator_part(name['dropping-particle'] || name['non-dropping-particle'])}`)
