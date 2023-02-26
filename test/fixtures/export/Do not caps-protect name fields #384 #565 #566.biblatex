@@ -1,18 +1,15 @@
-
 @book{al-hakim,
-  author = {al- Hakim, Tawfiq},
-  options = {useprefix=true},
+  author = {family=Hakim, given=Tawfiq, prefix=al-, useprefix=true},
   annotation = {[al-Hakim][Tawfiq]}
 }
 
 @book{beauvoir,
-  author = {de Beauvoir, Simone},
+  author = {family=Beauvoir, given=Simone, prefix=de, useprefix=false},
   annotation = {[Beauvoir][Simone de]}
 }
 
 @book{bovendeert,
-  author = {boven d' Eert, Christianus},
-  options = {useprefix=true},
+  author = {family=Eert, given=Christianus, prefix=boven d', useprefix=true},
   annotation = {[boven d'Eert][Christianus]}
 }
 
@@ -22,8 +19,7 @@
 }
 
 @book{dalembert,
-  author = {d’ Alembert, Jean le Rond},
-  options = {useprefix=true},
+  author = {family=Alembert, given=Jean le Rond, prefix=d’, useprefix=true},
   annotation = {[d’Alembert][Jean le Rond]}
 }
 
@@ -73,18 +69,17 @@
 }
 
 @book{dupuydeclinchamps,
-  author = {du Puy de Clinchamps, {\relax Ph}ilippe},
-  options = {useprefix=true},
+  author = {family=Puy de Clinchamps, given=Philippe, given-i={{Ph}}, prefix=du, useprefix=true},
   annotation = {[du Puy de Clinchamps][PhU+0097ilippe]}
 }
 
 @book{este,
-  author = {d’ Este, Beatrice},
+  author = {family=Este, given=Beatrice, prefix=d’, useprefix=false},
   annotation = {[Este][Beatrice d’]}
 }
 
 @book{humboldt,
-  author = {von Humboldt, Alexander},
+  author = {family=Humboldt, given=Alexander, prefix=von, useprefix=false},
   annotation = {[Humboldt][Alexander von]}
 }
 
@@ -99,12 +94,12 @@
 }
 
 @book{lafontaine,
-  author = {de La Fontaine, Jean},
+  author = {family=La Fontaine, given=Jean, prefix=de, useprefix=false},
   annotation = {[La Fontaine][Jean de]}
 }
 
 @book{lasalle,
-  author = {de La Salle, René-Robert Cavelier},
+  author = {family=La Salle, given=René-Robert Cavelier, prefix=de, useprefix=false},
   annotation = {[La Salle][René-Robert Cavelier de]}
 }
 
@@ -124,7 +119,7 @@
 }
 
 @book{medici,
-  author = {de’\hspace{0pt} Medici, Lorenzo},
+  author = {family=Medici, given=Lorenzo, prefix=de’\hspace{0pt}, useprefix=false},
   annotation = {[Medici][Lorenzo de’U+200B]}
 }
 
@@ -144,8 +139,7 @@
 }
 
 @book{s-gravesande,
-  author = {'s- Gravesande, Goverdus},
-  options = {useprefix=true},
+  author = {family=Gravesande, given=Goverdus, prefix='s-, useprefix=true},
   annotation = {['s-Gravesande][Goverdus]}
 }
 
@@ -155,7 +149,7 @@
 }
 
 @book{sadat,
-  author = {el- Sadat, Anwar},
+  author = {family=Sadat, given=Anwar, prefix=el-, useprefix=false},
   annotation = {[Sadat][Anwar el-]}
 }
 
@@ -165,28 +159,27 @@
 }
 
 @book{silva,
-  author = {da Silva, Agostinho},
+  author = {family=Silva, given=Agostinho, prefix=da, useprefix=false},
   annotation = {[Silva][Agostinho da]}
 }
 
 @book{stein,
-  author = {vom und zum Stein, Heinrich Friedrich Karl},
+  author = {family=Stein, given=Heinrich Friedrich Karl, prefix=vom und zum, useprefix=false},
   annotation = {[Stein][Heinrich Friedrich Karl vom und zum]}
 }
 
 @book{stevenson,
-  author = {Stevenson, III, Adlai E.},
+  author = {family=Stevenson, given=Adlai E., suffix=III, juniorcomma=true},
   annotation = {[Stevenson][Adlai E.,! III]}
 }
 
 @book{tocqueville,
-  author = {de Tocqueville, Alexis},
+  author = {family=Tocqueville, given=Alexis, prefix=de, useprefix=false},
   annotation = {[Tocqueville][Alexis de]}
 }
 
 @book{vangogh,
-  author = {van Gogh, Vincent},
-  options = {useprefix=true},
+  author = {family=Gogh, given=Vincent, prefix=van, useprefix=true},
   annotation = {[van Gogh][Vincent]}
 }
 
@@ -204,6 +197,3 @@
   author = {Vaughan Williams, Ralph},
   annotation = {[Vaughan Williams][Ralph]}
 }
-
-@preamble{ "\ifdefined\DeclarePrefChars\DeclarePrefChars{'’-}\else\fi " }
-
