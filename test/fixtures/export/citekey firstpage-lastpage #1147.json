@@ -10,7 +10,8 @@
       "asciiBibTeX": false,
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
       "citekeyFormat": "[zotero:clean][firstpage:prefix=_]",
-      "itemObserverDelay": 100
+      "itemObserverDelay": 100,
+      "biblatexExtendedNameFormat": false
     }
   },
   "items": [

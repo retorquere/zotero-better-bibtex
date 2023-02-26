@@ -5,7 +5,8 @@
     "localeDateOrder": "ymd",
     "preferences": {
       "bibtexURL": "note",
-      "citekeyFormat": "[auth][year]"
+      "citekeyFormat": "[auth][year]",
+      "biblatexExtendedNameFormat": false
     }
   },
   "items": [

@@ -9,7 +9,8 @@
     "preferences": {
       "autoAbbrevStyle": "http://www.zotero.org/styles/nature",
       "bibtexURL": "note",
-      "citekeyFormat": "[Auth:condense,_:fold:lower][year][Title:fold:skipwords:select,1,1:lower]"
+      "citekeyFormat": "[Auth:condense,_:fold:lower][year][Title:fold:skipwords:select,1,1:lower]",
+      "biblatexExtendedNameFormat": false
     }
   },
   "items": [

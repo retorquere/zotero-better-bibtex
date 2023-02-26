@@ -11,7 +11,8 @@
       "autoExport": "idle",
       "biblatexExtendedDateFormat": false,
       "citekeyFormat": "[zotero]",
-      "itemObserverDelay": 100
+      "itemObserverDelay": 100,
+      "biblatexExtendedNameFormat": false
     }
   },
   "items": [

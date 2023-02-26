@@ -11,7 +11,8 @@
       "bibtexURL": "note",
       "citekeyFormat": "[auth:lower][Title:fold:nopunct:skipwords:select,1,1:lower:alphanum:prefix,_][year:prefix,_][0]",
       "csquotes": "\u00ab\u00bb\u201c\u201d",
-      "skipFields": "abstract,file,editora,editoratype,editorb,editorbtype"
+      "skipFields": "abstract,file,editora,editoratype,editorb,editorbtype",
+      "biblatexExtendedNameFormat": false
     }
   },
   "items": [
