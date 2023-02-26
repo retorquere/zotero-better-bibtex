@@ -274,7 +274,11 @@ export function generateBibTeX(translation: Translation): void {
 
     ref.add({name: 'address', value: item.place})
     ref.add({name: 'chapter', value: item.section})
-    ref.add({name: 'edition', value: edition(item.edition)})
+    ref.add({name: 'edition', value:
+      (typeof item.edition === 'number' || item.edition?.match(/^[0-9]+$/)) && (!item.language || babelLanguage(item.language) === 'english')
+        ? edition(item.edition)
+        : item.edition // eslint-disable-line comma-dangle
+    })
     ref.add({name: 'type', value: item.type})
     ref.add({name: 'series', value: item.series, bibtexStrings: true})
     ref.add({name: 'title', value: item.title})
@@ -999,6 +1003,9 @@ export class ZoteroItem {
   protected $note(value: string, field: string): boolean { return this.$annotation(value, field) }
 
   protected $series(value: string | number): boolean { return this.set('series', value) }
+  protected $collection(value: string): boolean {
+    return this.bibtex.fields.series ? (this.bibtex.fields.series[0].toLowerCase() === value.toLowerCase()) : this.$series(value)
+  }
 
   // horrid jabref 3.8+ groups format
   protected $groups(value: string): boolean {
