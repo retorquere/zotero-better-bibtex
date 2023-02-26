@@ -274,7 +274,11 @@ export function generateBibTeX(translation: Translation): void {
 
     ref.add({name: 'address', value: item.place})
     ref.add({name: 'chapter', value: item.section})
-    ref.add({name: 'edition', value: edition(item.edition)})
+    ref.add({name: 'edition', value:
+      (typeof item.edition === 'number' || item.edition?.match(/^[0-9]+$/)) && (!item.language || babelLanguage(item.language) === 'english')
+        ? edition(item.edition)
+        : item.edition // eslint-disable-line comma-dangle
+    })
     ref.add({name: 'type', value: item.type})
     ref.add({name: 'series', value: item.series, bibtexStrings: true})
     ref.add({name: 'title', value: item.title})
