@@ -16,4 +16,4 @@ If you'd really just rather hand-code your LaTeX constructs, BBT makes that poss
 
 ## Recognizing initials in names
 
-In names, you can force first names like `Philippe` to be exported to `{\relax Ph}ilippe` (which causes it to get initial `Ph.` rather than `P.` in styles that do initials) by adding an [invisible separator](https://invisible-characters.com/) (`⁣`) character between `Ph` and `ilippe`.
+In names, you can force first names like `Philippe` to be exported to `{\relax Ph}ilippe` (which causes it to get initial `Ph.` rather than `P.` in styles that do initials) capitalizing the letters you want to have used as the initials, so `PHilippe`.

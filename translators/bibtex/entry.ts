@@ -95,7 +95,7 @@ function property_sort(a: [string, string], b: [string, string]): number {
 }
 
 const enc_creators_marker = {
-  initials: /[\u2063\u0097]/, // invisible separator, end of guarded area
+  initials: /[\u2063\u0097]/g, // invisible separator, end of guarded area
   relax: '\u200C', // zero-width non-joiner
 }
 const isBibString = /^[a-z][-a-z0-9_]*$/i
@@ -138,6 +138,7 @@ export class Entry {
     hasLowercaseWord: any
     whitespace: any
     nonwordish: any
+    leadingUppercase: any
   }
 
   protected addCreators() {} // eslint-disable-line @typescript-eslint/no-empty-function
@@ -179,6 +180,7 @@ export class Entry {
         hasLowercaseWord: new Zotero.Utilities.XRegExp('\\s[\\p{Ll}]'),
         whitespace: new Zotero.Utilities.XRegExp('[\\p{Zs}]+'),
         nonwordish: new Zotero.Utilities.XRegExp('[^\\p{L}\\p{N}]', 'g'),
+        leadingUppercase: new Zotero.Utilities.XRegExp('^(\\p{Lu})(\\p{Lu}*)(.*)'),
       }
     }
 
@@ -1173,6 +1175,45 @@ export class Entry {
     return `${particle} `
   }
 
+  private detectInitials(name: { given?: string, initials?: string}) {
+    if (!name.given) return
+
+    if (name.given.match(/^[^\s]+[.](\s*[^\s]+[.])*$/) && name.given.match(/[^\s]{2}[.]/)) {
+      name.initials = name.given
+      return
+    }
+
+    if (name.given.includes('.')) return
+
+    let initials = ''
+    let given = ''
+    let multiChar = ''
+    for (const part of name.given.split(/\s+/)) {
+      const m = Zotero.Utilities.XRegExp.exec(part, this.re.leadingUppercase)
+      if (!m) return { given }
+      multiChar = multiChar || m[2]
+      initials += `${m[1]}${m[2].toLowerCase()}. `
+      given += `${m[1]}${m[2].toLowerCase()}${m[3]} ` // eslint-disable-line no-magic-numbers
+    }
+    if (multiChar) {
+      name.initials = initials.trim()
+      name.given = given.trim()
+    }
+    Zotero.debug(`initials: ${JSON.stringify({ multiChar, name })}`)
+  }
+
+  private relaxInitials(name: { given?: string, initials?: string }) {
+    if (!name.given || !name.initials) return
+
+    let initials: string
+    if (name.given === name.initials) {
+      name.given = `<span relax="true">${name.given}</span>`
+    }
+    else if (name.given.startsWith(initials = name.initials.replace(/[.]$/, ''))) {
+      name.given = `<span relax="true">${initials}</span>${name.given.substr(initials.length)}`
+    }
+  }
+
   // eslint-disable-next-line @typescript-eslint/ban-types
   private _enc_creator_part(part: string | String): string | String {
     const { latex, packages } = this.translation.bibtex.text2latex((part as string), { creator: true, commandspacers: true })
@@ -1181,7 +1222,7 @@ export class Entry {
     }
     return (part instanceof String) ? new String(`{${latex}}`) : latex // eslint-disable-line no-new-wrappers
   }
-  private _enc_creators_biblatex(name: {family?: string, given?: string, suffix?: string}): string {
+  private _enc_creators_biblatex(name: {family?: string, given?: string, suffix?: string, initials?: string}): string {
     let family: string | String
     if ((name.family.length > 1) && (name.family[0] === '"') && (name.family[name.family.length - 1] === '"')) {
       family = new String(name.family.slice(1, -1)) // eslint-disable-line no-new-wrappers
@@ -1190,13 +1231,14 @@ export class Entry {
       ({ family } = name)
     }
 
-    const initials_marker_pos: number = name.given?.match(enc_creators_marker.initials)?.index
-    let initials: string | String
+    // cleanup from old initials detection
+    name.given = name.given?.replace(enc_creators_marker.initials, '')
+    this.detectInitials(name)
 
     const extendedNameformat = (
       this.translation.preferences.biblatexExtendedNameFormat
       && (
-        (typeof initials_marker_pos === 'number' && initials_marker_pos > 1)
+        name.initials
         ||
         name['dropping-particle']
         ||
@@ -1207,19 +1249,10 @@ export class Entry {
     )
 
     if (extendedNameformat) {
-      if (typeof initials_marker_pos === 'number') {
-        initials = name.given.substring(0, initials_marker_pos)
-        if (initials.length > 1) initials = new String(initials) // eslint-disable-line no-new-wrappers
-        name.given = name.given.replace(enc_creators_marker.initials, '')
-      }
-      else {
-        initials = ''
-      }
-
       const namebuilder: string[] = []
       if (family) namebuilder.push(`family=${this._enc_creator_part(family)}`)
       if (name.given) namebuilder.push(`given=${this._enc_creator_part(name.given)}`)
-      if (initials) namebuilder.push(`given-i=${this._enc_creator_part(initials)}`)
+      if (name.initials) namebuilder.push(`given-i=${this._enc_creator_part(name.initials)}`)
       if (name.suffix) namebuilder.push(`suffix=${this._enc_creator_part(name.suffix)}`)
       if (name['dropping-particle'] || name['non-dropping-particle']) {
         namebuilder.push(`prefix=${this._enc_creator_part(name['dropping-particle'] || name['non-dropping-particle'])}`)
@@ -1228,12 +1261,13 @@ export class Entry {
       if (name['comma-suffix']) namebuilder.push('juniorcomma=true')
       return namebuilder.join(', ')
     }
+    else {
+      this.relaxInitials(name)
+    }
 
     if (family && Zotero.Utilities.XRegExp.test(family, this.re.startsWithLowercase)) family = new String(family) // eslint-disable-line no-new-wrappers
 
     if (family) family = this._enc_creator_part(family)
-
-    if (typeof initials_marker_pos === 'number') name.given = `<span relax="true">${name.given.replace(enc_creators_marker.initials, '</span>')}`
 
     let latex = ''
     if (name['dropping-particle']) latex += this._enc_creator_part(this._enc_creators_pad_particle(name['dropping-particle']))
@@ -1254,9 +1288,10 @@ export class Entry {
       family = name.family
     }
 
-    if (name.given?.match(enc_creators_marker.initials)) {
-      name.given = `<span relax="true">${name.given.replace(enc_creators_marker.initials, '</span>')}`
-    }
+    // cleanup from old initials detection
+    name.given = name.given?.replace(enc_creators_marker.initials, '')
+    this.detectInitials(name)
+    this.relaxInitials(name)
 
     /*
       TODO: http://chat.stackexchange.com/rooms/34705/discussion-between-retorquere-and-egreg
