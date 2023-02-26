@@ -139,6 +139,8 @@ export class Entry {
     whitespace: any
     nonwordish: any
     leadingUppercase: any
+    initials: any
+    longInitials: any
   }
 
   protected addCreators() {} // eslint-disable-line @typescript-eslint/no-empty-function
@@ -181,6 +183,8 @@ export class Entry {
         whitespace: new Zotero.Utilities.XRegExp('[\\p{Zs}]+'),
         nonwordish: new Zotero.Utilities.XRegExp('[^\\p{L}\\p{N}]', 'g'),
         leadingUppercase: new Zotero.Utilities.XRegExp('^(\\p{Lu})(\\p{Lu}*)(.*)'),
+        initials: new Zotero.Utilities.XRegExp('^(\\p{L}+[.]\\s*)+$'),
+        longInitials: new Zotero.Utilities.XRegExp('\\p{L}{2}[.]'),
       }
     }
 
@@ -1178,7 +1182,7 @@ export class Entry {
   private detectInitials(name: { given?: string, initials?: string}) {
     if (!name.given) return
 
-    if (name.given.match(/^[^\s]+[.](\s*[^\s]+[.])*$/) && name.given.match(/[^\s]{2}[.]/)) {
+    if (Zotero.Utilities.XRegExp.exec(name.given, this.re.initials) && Zotero.Utilities.XRegExp.exec(name.given, this.re.longInitials)) {
       name.initials = name.given
       return
     }
