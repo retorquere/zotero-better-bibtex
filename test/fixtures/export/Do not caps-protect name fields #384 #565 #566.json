@@ -10,7 +10,7 @@
       "bibtexURL": "note",
       "citekeyFormat": "[auth:lower]",
       "skipFields": "timestamp",
-      "biblatexExtendedNameFormat": false
+      "biblatexExtendedNameFormat": true
     }
   },
   "items": [
