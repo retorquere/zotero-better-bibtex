@@ -141,6 +141,7 @@ export class Entry {
     leadingUppercase: any
     initials: any
     longInitials: any
+    allCaps: any
   }
 
   protected addCreators() {} // eslint-disable-line @typescript-eslint/no-empty-function
@@ -185,6 +186,7 @@ export class Entry {
         leadingUppercase: new Zotero.Utilities.XRegExp('^(\\p{Lu})(\\p{Lu}*)(\\p{Ll}.*)'),
         initials: new Zotero.Utilities.XRegExp('^(\\p{L}+\\.\\s*)+$'),
         longInitials: new Zotero.Utilities.XRegExp('\\p{L}{2}\\.'),
+        allCaps: new Zotero.Utilities.XRegExp('^\\p{Lu}{2,}$'),
       }
     }
 
@@ -978,7 +980,6 @@ export class Entry {
 
         name = name.replace(/ and /g, ' {and} ')
         if (this.translation.and.names.repl !== ' {and} ') name = name.replace(this.translation.and.names.re, this.translation.and.names.repl)
-
       }
       else {
         continue
@@ -1182,7 +1183,7 @@ export class Entry {
   private detectInitials(name: { given?: string, initials?: string}) {
     if (!name.given) return
 
-    if (Zotero.Utilities.XRegExp.exec(name.given, this.re.initials) && Zotero.Utilities.XRegExp.exec(name.given, this.re.longInitials)) {
+    if (Zotero.Utilities.XRegExp.exec(name.given, this.re.allCaps) || (Zotero.Utilities.XRegExp.exec(name.given, this.re.initials) && Zotero.Utilities.XRegExp.exec(name.given, this.re.longInitials))) {
       name.initials = name.given
       return
     }
@@ -1203,7 +1204,6 @@ export class Entry {
       name.initials = initials.trim()
       name.given = given.trim()
     }
-    Zotero.debug(`initials: ${JSON.stringify({ multiChar, name })}`)
   }
 
   private relaxInitials(name: { given?: string, initials?: string }) {
