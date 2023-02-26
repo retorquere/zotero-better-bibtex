@@ -1003,6 +1003,9 @@ export class ZoteroItem {
   protected $note(value: string, field: string): boolean { return this.$annotation(value, field) }
 
   protected $series(value: string | number): boolean { return this.set('series', value) }
+  protected $collection(value: string): boolean {
+    return this.bibtex.fields.series ? (this.bibtex.fields.series[0].toLowerCase() === value.toLowerCase()) : this.$series(value)
+  }
 
   // horrid jabref 3.8+ groups format
   protected $groups(value: string): boolean {
