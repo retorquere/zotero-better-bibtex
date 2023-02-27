@@ -331,7 +331,6 @@ export class PrefPane {
   public checkCitekeyFormat(): void {
     if (!currentWin || Zotero.BetterBibTeX.ready.isPending()) return // itemTypes not available yet
 
-    log.debug('checkCitekeyFormat', [Preference.citekeyFormatEditing, Preference.citekeyFormat])
     const error = Formatter.update([Preference.citekeyFormatEditing, Preference.citekeyFormat])
 
     const editing = currentWin.document.getElementById('id-better-bibtex-preferences-citekeyFormatEditing')
