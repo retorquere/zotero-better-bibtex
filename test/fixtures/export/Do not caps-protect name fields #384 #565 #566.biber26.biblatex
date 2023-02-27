@@ -1,4 +1,3 @@
-
 @book{al-hakim,
   author = {family=Hakim, given=Tawfiq, prefix=al-, useprefix=true},
   annotation = {[al-Hakim][Tawfiq]}
@@ -70,7 +69,7 @@
 }
 
 @book{dupuydeclinchamps,
-  author = {family=Puy de Clinchamps, given=Philippe, given-i=Ph., prefix=du, useprefix=true},
+  author = {family=Puy de Clinchamps, given=Philippe, given-i={{Ph}}, prefix=du, useprefix=true},
   annotation = {[du Puy de Clinchamps][PhU+0097ilippe]}
 }
 
@@ -198,5 +197,3 @@
   author = {Vaughan Williams, Ralph},
   annotation = {[Vaughan Williams][Ralph]}
 }
-
-
