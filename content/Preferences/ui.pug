@@ -1,0 +1,43 @@
+preferences#zotero-preferences-cite
+  include preferences.pug
+
+popupset
+  tooltip#tooltip-bibtexURL
+    description &better-bibtex.Preferences.export.fields.doi-and-url.warning;
+  tooltip#tooltip-jabrefFormat
+    description &better-bibtex.Preferences.export.jabrefFormat.warn;
+  tooltip#tooltip-importSentenceCase
+    description &better-bibtex.Preferences.advanced.import.sentenceCase.warning;
+  tooltip#tooltip-importCaseProtection
+    description &better-bibtex.Preferences.advanced.import.caseProtection.warning;
+  tooltip#tooltip-exportTitleCase
+    description &better-bibtex.Preferences.advanced.export.titleCase.warning;
+  tooltip#tooltip-exportBraceProtection
+    description &better-bibtex.Preferences.advanced.export.braceProtection.warning;
+  tooltip#tooltip-retainCache
+    description &better-bibtex.Preferences.advanced.export.retainCache.warning;
+
+deck#better-bibtex-prefs-deck(selectedIndex='0')
+  label#better-bibtex-loading &better-bibtex.Preferences.prefpane.loading;
+
+  vbox
+    html:details(bbt:page='_index' ontoggle='Zotero.BetterBibTeX.PrefPane.refresh()')
+      html:summary &better-bibtex.Preferences.tab.citekey;
+      vbox
+        include citekeys.pug
+    html:details(bbt:page='export' ontoggle='Zotero.BetterBibTeX.PrefPane.refresh()')
+      summary &better-bibtex.Preferences.tab.export;
+      vbox
+        include export.pug
+    html:details(bbt:page='automatic-export' ontoggle='Zotero.BetterBibTeX.PrefPane.refresh()')
+      summary &better-bibtex.Preferences.tab.auto-export;
+      vbox
+        include autoexport.pug
+    html:details(bbt:page='import' ontoggle='Zotero.BetterBibTeX.PrefPane.refresh()')
+      summary &better-bibtex.Preferences.advanced.tab.import;
+      vbox
+        include import.pug
+    html:details(bbt:page='miscellaneous' ontoggle='Zotero.BetterBibTeX.PrefPane.refresh()')
+      summary &better-bibtex.Preferences.export.misc;
+      vbox
+        include misc.pug
