@@ -94,7 +94,8 @@
     "title": "^3.5.3",
     "title-case": "^3.0.3",
     "transliteration": "^2.3.5",
-    "xregexp": "^5.1.1"
+    "xregexp": "^5.1.1",
+    "zotero-plugin-toolkit": "^2.0.6"
   },
   "devDependencies": {
     "@retorquere/bibtex-parser": "^6.4.10",

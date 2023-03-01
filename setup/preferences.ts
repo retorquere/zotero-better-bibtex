@@ -25,8 +25,8 @@ const translators = glob.sync('translators/*.json')
     return tr
   })
 
-const src = process.argv[2] || 'content/Preferences.pug'
-const tgt = process.argv[3] || 'build/content/Preferences.xul'
+const src = process.argv[2] || 'content/Preferences/main.pug'
+const tgt = process.argv[3] || 'build/content/preferences.xhtml'
 
 const l10n = new class {
   private strings = peggy.generate(fs.readFileSync('setup/dtd-file.peggy', 'utf-8')).parse(fs.readFileSync('locale/en-US/zotero-better-bibtex.dtd', 'utf-8')) as Record<string, string>
