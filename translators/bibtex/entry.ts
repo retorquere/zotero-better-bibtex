@@ -840,8 +840,6 @@ export class Entry {
       }
     }
 
-    if (!this.has.url) this.remove('urldate')
-
     if (!Object.keys(this.has).length) this.add({name: 'type', value: this.entrytype})
 
 
