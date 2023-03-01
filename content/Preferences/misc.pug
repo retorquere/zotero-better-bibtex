@@ -1,15 +1,9 @@
-tabbox
-  tabs
-    tab(label="&better-bibtex.Preferences.export.fields;")
-    tab(bbt:preference="extensions.zotero.translators.better-bibtex.strings" label="&better-bibtex.Preferences.advanced.tab.strings;")
-    // tab(label="Hidden preferences" hidden="false")
+html:details
+  html:summary &better-bibtex.Preferences.export.fields;
+  vbox
+    include misc/fields.pug
 
-  tabpanels
-    tabpanel(orient="vertical")
-      include misc/fields.pug
-
-    tabpanel(orient="vertical")
-      include misc/strings.pug
-
-    // tabpanel(orient="vertical")
-      // include misc/hidden.pug
+html:details(bbt:preference='extensions.zotero.translators.better-bibtex.strings')
+  html:summary &better-bibtex.Preferences.advanced.tab.strings;
+  vbox
+    include misc/strings.pug

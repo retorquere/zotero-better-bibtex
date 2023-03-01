@@ -49,65 +49,62 @@ class AutoExportPane {
 
     const auto_exports = AutoExport.db.find()
 
-    const tabbox = Zotero.BetterBibTeX.PrefPane.window.document.getElementById('better-bibtex-prefs-auto-export-tabbox')
-    tabbox.setAttribute('hidden', `${!auto_exports.length}`)
+    const container = Zotero.BetterBibTeX.PrefPane.window.document.getElementById('better-bibtex-prefs-auto-exports')
+    container.setAttribute('hidden', `${!auto_exports.length}`)
     if (!auto_exports.length) return null
 
-    const tabs = Zotero.BetterBibTeX.PrefPane.window.document.getElementById('better-bibtex-prefs-auto-export-tabs')
-    const tabpanels = Zotero.BetterBibTeX.PrefPane.window.document.getElementById('better-bibtex-prefs-auto-export-tabpanels')
+    const rebuild = auto_exports.length !== container.children.length
+      ? { rebuild: true, update: true }
+      : Array.from(container.children)
+        .map((details: Element, i: number) => ({ // eslint-disable-line @typescript-eslint/no-shadow
+          details: {
+            id: parseInt(details.getAttribute('data-ae-id')),
+            updated: parseInt(details.getAttribute('data-ae-updated')),
+          },
+          ae: {
+            id: auto_exports[i].$loki,
+            updated: auto_exports[i].meta.updated || auto_exports[i].meta.created,
+          },
+        }))
+        .reduce((acc: { rebuild: boolean, update: boolean }, ae) => {
+          acc.rebuild = acc.rebuild || ae.details.id !== ae.ae.id
+          acc.update = acc.update || ae.details.updated !== ae.ae.updated
+          return acc
+        }, { rebuild: false, update: false })
 
-    const rebuild = {
-      tabs: Array.from(tabs.children).map((node: Element) => ({ updated: parseInt(node.getAttribute('data-ae-updated')), id: parseInt(node.getAttribute('data-ae-id')) })),
-      exports: auto_exports.map(ae => ({ updated: ae.meta.updated || ae.meta.created, id: ae.$loki })),
-      rebuild: false,
-      update: false,
-    }
-    rebuild.rebuild = (rebuild.tabs.length !== rebuild.exports.length) || (typeof rebuild.tabs.find((tab, index) => rebuild.exports[index].id !== tab.id) !== 'undefined')
-    rebuild.update = rebuild.rebuild || (rebuild.tabs.length !== rebuild.exports.length) || (typeof rebuild.tabs.find((tab, index) => rebuild.exports[index].updated !== tab.updated) !== 'undefined')
+    while (rebuild.rebuild && container.children.length > 1) container.removeChild(container.firstChild)
 
-    if (rebuild.rebuild) {
-      while (tabs.children.length) tabs.removeChild(tabs.firstChild)
-      while (tabpanels.children.length > 1) tabpanels.removeChild(tabpanels.firstChild)
-    }
-
+    let details: Element
     for (const [index, ae] of auto_exports.entries()) {
-      let tab, tabpanel
-
       if (rebuild.rebuild) {
-        // tab
-        tab = tabs.appendChild(Zotero.BetterBibTeX.PrefPane.window.document.createElementNS('http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul', 'tab'))
-        tab.setAttribute('data-ae-id', `${ae.$loki}`)
-        tab.setAttribute('data-ae-updated', `${ae.meta.updated || ae.meta.created}`)
-
-        // tabpanel
-        tabpanel = (index === 0 ? tabpanels.firstChild : tabpanels.appendChild(tabpanels.firstChild.cloneNode(true)))
+        details = (index === 0 ? container.firstChild : container.appendChild(container.firstChild.cloneNode(true)))
+        details.setAttribute('data-ae-id', `${ae.$loki}`)
+        details.setAttribute('data-ae-updated', `${ae.meta.updated || ae.meta.created}`)
 
         // set IDs on clone
-        for (const node of Array.from(tabpanel.querySelectorAll('*[data-ae-id]'))) {
-          (node as Element).setAttribute('data-ae-id', `${ae.$loki}`)
+        for (const node of Array.from(details.querySelectorAll('*[data-ae-id]'))) {
+          node.setAttribute('data-ae-id', `${ae.$loki}`)
         }
 
         // hide/show per-translator options
         const enabled = `autoexport-${Translators.byId[ae.translatorID].label.replace(/ /g, '')}`
         // eslint is wrong here. tsc complains that hidden is not present on element, and I think tsc is correct here
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
-        for (const node of (Array.from(tabpanel.getElementsByClassName('autoexport-options')) as XUL.Element[])) {
+        for (const node of (Array.from(details.getElementsByClassName('autoexport-options')) as unknown [] as XUL.Element[])) {
           node.hidden = !node.classList.contains(enabled)
         }
-
       }
       else {
-        tab = tabs.children[index]
-        tabpanel = tabpanels.children[index]
+        details = container.children[index]
       }
 
-      tab.setAttribute('label', `${{ library: '\ud83d\udcbb', collection: '\ud83d\udcc2' }[ae.type]} ${this.name(ae, 'short')}`)
+      details.querySelector('summary').textContent = `${{ library: '\ud83d\udcbb', collection: '\ud83d\udcc2' }[ae.type]} ${this.name(ae, 'short')}`
 
       const progress = AutoExport.progress.get(ae.$loki)
-      for (const node of Array.from(tabpanel.querySelectorAll('*[data-ae-field]'))) {
-        const field = (node as Element).getAttribute('data-ae-field')
+      for (const node of Array.from(details.querySelectorAll('*[data-ae-field]')) as unknown[] as XUL.Element[]) {
+        const field = node.getAttribute('data-ae-field')
 
-        if (!rebuild.update && (node as XUL.Textbox).readonly) continue
+        if (!rebuild.update && (node as unknown as XUL.Textbox).readonly) continue
 
         switch (field) {
           case 'type':
@@ -140,7 +137,7 @@ class AutoExportPane {
             break
 
           case 'error':
-            ((node as Element).parentElement as unknown as XUL.Element).hidden = !ae[field];
+            (node.parentElement as unknown as XUL.Element).hidden = !ae[field];
             (node as XUL.Textbox).value = ae[field]
             break
 

@@ -235,7 +235,7 @@ class Docs extends ASTWalker {
   }
 
   Tag(node, history) {
-    let bbt, pref, id, label, page
+    let bbt, pref, id, label, page, details
 
     const hidden = history.find(parent => parent.name && this.attr(parent, 'hidden'))
 
@@ -255,26 +255,25 @@ class Docs extends ASTWalker {
         }
         break
 
-      case 'tabbox':
-        node.$labels = []
-        break
-
-      case 'tab':
-        history.find(n => n.name === 'tabbox').$labels.push(this.text(node))
-        break
-
-      case 'tabpanel':
-        label = history.find(n => n.name === 'tabbox').$labels.shift()
+      case 'html:details':
         page = this.attr(node, 'bbt:page')
         if (page) {
-          this.page = page
+          node.$page = this.page = page
           this.pages[page] = {
-            title: label,
+            title: '',
             content: '',
           }
         }
+        break
+
+      case 'html:summary':
+        details = history.find(n => n.name === 'html:details')
+        label = this.text(node)
+        if (details.$page) {
+          this.pages[details.$page].title = label
+        }
         else if (!hidden) {
-          node.$section = label
+          details.$section = label
           this.section(label, history)
         }
         break
