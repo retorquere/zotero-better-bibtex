@@ -1069,7 +1069,24 @@ export class ZoteroItem {
 
     this.item = item
     this.item.itemID = this.id
-    if (this.type === 'report' && this.bibtex.type === 'manual') this.$type('manual')
+
+    switch (this.bibtex.type) {
+      case 'manual':
+        if (this.type === 'report') this.$type('manual')
+        break
+      case 'phdthesis':
+        this.$type('phd')
+        break
+      case 'mastersthesis':
+        this.$type('master')
+        break
+      case 'bathesis':
+        this.$type('bachelor')
+        break
+      case 'candthesis':
+        this.$type('candidate')
+        break
+    }
 
     for (const subtitle of ['titleaddon', 'subtitle']) {
       if (!this.bibtex.fields.title && this.bibtex.fields[subtitle]) {
