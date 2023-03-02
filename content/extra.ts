@@ -122,7 +122,6 @@ export function get(extra: string, mode: 'zotero' | 'csl', options?: GetOptions)
     }
 
     // https://github.com/retorquere/zotero-better-bibtex/issues/2399
-    Zotero.debug(`extra _eprint: ${JSON.stringify({ options, key, value })}`)
     if (options.kv && key === '_eprint') {
       extraFields.kv[key] = value
       return false
