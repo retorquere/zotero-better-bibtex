@@ -27,13 +27,6 @@ default: `<not set>`
 If you have unicode turned on you can still selectively replace some characters to plain-text commands; any characters entered here will always
 be replaced by their LaTeX-command counterparts.
 
-## autoAbbrevStyle
-
-default: `<not set>`
-
-Select the style for auto-abbreviation. Only applicable to Juris-M; in Zotero, the style for automatic
-abbreviation is not configurable.
-
 ## autoExportIdleWait
 
 default: `10`
@@ -66,11 +59,6 @@ default: `<not set>`
 if you set `csquotes` to a string of character pairs, each pair will be assumed to be the open and close parts of a pair and
 will be replaced with a `\\enquote{...}` construct.
 
-## extraMergeCitekeys
-
-default: `no`
-
-When merging items, also merge their citation keys into an bib(la)tex `ids` field.
 ## git
 
 default: `config`

@@ -3,11 +3,12 @@ checkbox(preference="extensions.zotero.translators.better-bibtex.bibtexParticleN
 hbox
   label(bbt:preference="extensions.zotero.translators.better-bibtex.bibtexURL") &better-bibtex.Preferences.export.bibtex.URLs;:
   image(tooltip="tooltip-bibtexURL" src="chrome://zotero-better-bibtex/skin/attention.svg" width="16" height="16")
-groupbox
-  radiogroup(preference="extensions.zotero.translators.better-bibtex.bibtexURL")
-    radio(label="&better-bibtex.Preferences.export.bibtex.URLs.off;" value="off")
-    radio(label="&better-bibtex.Preferences.export.bibtex.URLs.note;" value="note")
-    radio(label="&better-bibtex.Preferences.export.bibtex.URLs.note-url-ish;" value="note-url-ish")
-    radio(label="&better-bibtex.Preferences.export.bibtex.URLs.url;" value="url")
-    radio(label="&better-bibtex.Preferences.export.bibtex.URLs.url-ish;" value="url-ish")
+hbox
+  menulist(preference="extensions.zotero.translators.better-bibtex.bibtexURL")
+    menupopup
+      menuitem(label="&better-bibtex.Preferences.export.bibtex.URLs.off;" value="off")
+      menuitem(label="&better-bibtex.Preferences.export.bibtex.URLs.note;" value="note")
+      menuitem(label="&better-bibtex.Preferences.export.bibtex.URLs.note-url-ish;" value="note-url-ish")
+      menuitem(label="&better-bibtex.Preferences.export.bibtex.URLs.url;" value="url")
+      menuitem(label="&better-bibtex.Preferences.export.bibtex.URLs.url-ish;" value="url-ish")
   hbox(flex='1')

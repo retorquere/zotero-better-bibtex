@@ -302,7 +302,7 @@ class Docs extends ASTWalker {
         break
 
       case 'menuitem':
-        error('menulists are deprecated')
+        // error('menulists are deprecated')
         if (!hidden) {
           pref = this.attr(history.find(n => n.name === 'menulist'), 'preference')
           if (pref) this.option(pref, this.attr(node, 'label', true), this.attr(node, 'value', true))

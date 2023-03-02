@@ -300,7 +300,7 @@
   },
   {
     "name": "autoAbbrevStyle",
-    "label": "",
+    "label": "Abbreviation style:",
     "type": "string",
     "default": "",
     "affects": [
@@ -502,7 +502,7 @@
   },
   {
     "name": "extraMergeCitekeys",
-    "label": "",
+    "label": "their citation keys into an bib(la)tex `ids` field",
     "type": "boolean",
     "default": false,
     "affects": []

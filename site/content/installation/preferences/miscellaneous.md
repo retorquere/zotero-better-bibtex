@@ -15,6 +15,13 @@ weight: 14
 
 ### When merging items, also merge:
 
+#### their citation keys into an bib(la)tex `ids` field
+
+default: `no`
+
+When merging items, also merge their citation keys into an bib(la)tex `ids` field.
+
+
 #### fields that are understood to be CSL fields by Zotero
 
 default: `no`
