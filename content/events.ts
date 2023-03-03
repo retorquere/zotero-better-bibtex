@@ -53,7 +53,6 @@ const windowListener = {
   onOpenWindow: xulWindow => {
     const win = xulWindow.QueryInterface(Components.interfaces.nsIInterfaceRequestor).getInterface(Components.interfaces.nsIDOMWindow)
     win.addEventListener('load', function listener() { // eslint-disable-line prefer-arrow/prefer-arrow-functions
-      win.removeEventListener('load', listener, false)
       void Events.emit('window-loaded', { win, href: win.location.href })
     }, false)
   },
