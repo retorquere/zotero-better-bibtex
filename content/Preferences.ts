@@ -54,7 +54,7 @@ class AutoExportPane {
   }
 
   public refresh() {
-    if (Zotero.BetterBibTeX.ready.isPending()) return null
+    if (!currentWin || Zotero.BetterBibTeX.ready.isPending()) return null
 
     const auto_exports = AutoExport.db.find()
 
