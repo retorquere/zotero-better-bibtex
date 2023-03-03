@@ -10,7 +10,7 @@ vbox(flex="1")
         menuitem(label="&better-bibtex.Preferences.auto-export.idle;" value="idle")
   hbox
     label(bbt:preference="extensions.zotero.translators.better-bibtex.autoExportDelay") &better-bibtex.Preferences.auto-export.delay;
-    scale(min="2" max="300" flex=2 preference="extensions.zotero.translators.better-bibtex.autoExportDelay")
+    html:input(type='range' min='2' max='300' preference='extensions.zotero.translators.better-bibtex.autoExportDelay')
     textbox(preference='extensions.zotero.translators.better-bibtex.autoExportDelay' size='3' rows=1 readonly='true')
     label &better-bibtex.seconds;
     hbox(flex=5)

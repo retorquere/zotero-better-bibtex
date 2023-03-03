@@ -579,7 +579,7 @@ class Zotero:
 
     profile.firefox.set_preference('extensions.zotero.debug.memoryInfo', True)
     profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.testing', self.testing)
-    profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.log-events', True)
+    profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.logEvents', self.testing)
     profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.caching', self.caching)
 
     profile.firefox.set_preference('intl.accept_languages', 'en-GB')
