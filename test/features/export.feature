@@ -271,6 +271,7 @@ Feature: Export
 
     Examples:
       | file                                                                            | references |
+      | _eprint in extra causes CSL-JSON export error #2430                             | 1          |
       | unwanted inclusion of Zotero's internal journal abbreviations in CSL JSON #2375 | 1          |
       | Export Error Unexpected date type #2303                                         | 1          |
       | Better CSL JSON does not include authority field #2019                          | 1          |

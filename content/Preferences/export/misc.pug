@@ -2,21 +2,21 @@ checkbox#id-better-bibtex-preferences-autoAbbrev(label="&better-bibtex.Preferenc
 
 separator#better-bibtex-abbrev-style-separator.thin.jurism
 
-// label#better-bibtex-abbrev-style-label.jurism(bbt:preference="extensions.zotero.translators.better-bibtex.autoAbbrevStyle") &better-bibtex.Preferences.auto-abbrev.style;
-// menulist#better-bibtex-abbrev-style.jurism(onchange="Zotero.BetterBibTeX.PrefPane.styleChanged()")
-//   menupopup#better-bibtex-abbrev-style-popup
+label#better-bibtex-abbrev-style-label.jurism(bbt:preference="extensions.zotero.translators.better-bibtex.autoAbbrevStyle") &better-bibtex.Preferences.auto-abbrev.style;
+menulist#better-bibtex-abbrev-style.jurism(onchange="Zotero.BetterBibTeX.PrefPane.styleChanged()")
+  menupopup#better-bibtex-abbrev-style-popup
 
 checkbox(label="&better-bibtex.Preferences.export.qualityReport;" preference="extensions.zotero.translators.better-bibtex.qualityReport")
 checkbox(label="&better-bibtex.Preferences.export.automaticTags;" preference="extensions.zotero.translators.better-bibtex.automaticTags")
 
-groupbox
-  caption(bbt:preference="extensions.zotero.translators.better-bibtex.mapUnicode") &better-bibtex.Preferences.export.map-unicode;
-  radiogroup(preference="extensions.zotero.translators.better-bibtex.mapUnicode")
-    radio(label="&better-bibtex.Preferences.export.map-unicode.minimal-packages;" value="minimal-packages")
-    radio(label="&better-bibtex.Preferences.export.map-unicode.conservative;" value="conservative")
-    radio(label="&better-bibtex.Preferences.export.map-unicode.text;" value="text")
-    radio(label="&better-bibtex.Preferences.export.map-unicode.math;" value="math")
-    radio(label="&better-bibtex.Preferences.export.map-unicode.creator;" value="creator")
+label(bbt:preference="extensions.zotero.translators.better-bibtex.mapUnicode") &better-bibtex.Preferences.export.map-unicode;
+menulist(preference="extensions.zotero.translators.better-bibtex.mapUnicode")
+  menupopup
+    menuitem(label="&better-bibtex.Preferences.export.map-unicode.minimal-packages;" value="minimal-packages")
+    menuitem(label="&better-bibtex.Preferences.export.map-unicode.conservative;" value="conservative")
+    menuitem(label="&better-bibtex.Preferences.export.map-unicode.text;" value="text")
+    menuitem(label="&better-bibtex.Preferences.export.map-unicode.math;" value="math")
+    menuitem(label="&better-bibtex.Preferences.export.map-unicode.creator;" value="creator")
 
 hbox
   checkbox(preference="extensions.zotero.translators.better-bibtex.exportTitleCase" label="&better-bibtex.Preferences.advanced.export.titleCase;")

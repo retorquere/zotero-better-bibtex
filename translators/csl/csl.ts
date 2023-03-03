@@ -116,7 +116,7 @@ export abstract class CSLExporter {
 
       for (const [name, value] of Object.entries(item.extraFields.kv)) {
         const ef = ExtraFields[name]
-        if (!ef.csl || !value) continue
+        if (!ef?.csl || !value) continue
 
         if (ef.type === 'date') {
           csl[name] = this.date2CSL(dateparser.parse(value))

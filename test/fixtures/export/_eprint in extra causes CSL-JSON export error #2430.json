@@ -1,0 +1,38 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "citekeyFormat": "auth.fold.lower + year | type(forumPost, webpage) + auth.lower.capitalize + Date.formatDate(\"%Y-%m-%d.%H:%M:%S\").prefix(\".\") + PublicationTitle.lower.capitalize.prefix(\".\") + shorttitle(3,3).lower.capitalize.prefix(\".\") + Pages.prefix(\".p.\") + Volume.prefix(\".Vol.\") + NumberofVolumes.prefix(de) | auth.lower.capitalize + date(\"%oY\").prefix(\".\") + PublicationTitle.lower.capitalize.prefix(\".\") + shorttitle(3,3).lower.capitalize.prefix(\".\") + Pages.prefix(\".p.\") + Volume.prefix(\".Vol.\") + NumberofVolumes.prefix(de)",
+      "kuroshiro": true
+    }
+  },
+  "items": [
+    {
+      "citationKey": "Bonissone:PI",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Piero",
+          "lastName": "Bonissone"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Jonathan",
+          "lastName": "Stillman"
+        }
+      ],
+      "extra": [
+        "Citation Key: Bonissone:PI",
+        "_eprint: https://doi.org/10.1080/00182370.2020.1725992"
+      ],
+      "itemID": 1,
+      "itemType": "conferencePaper",
+      "pages": "169\u2013177",
+      "title": "A case study in integration of case-based and temporal reasoning using CAFE and Tachyon"
+    }
+  ]
+}

@@ -213,6 +213,15 @@ default: `no`
 If set, generates journal abbreviations on export using the Zotero journal abbreviator, according to the abbreviation style selected in the list below the checkbox.
 
 
+### Abbreviation style:
+
+default: `<not set>`
+
+Select the style for auto-abbreviation. Only applicable to Juris-M; in Zotero, the style for automatic
+abbreviation is not configurable.
+
+
+
 ### Include comments about potential problems with the exported entries
 
 default: `no`

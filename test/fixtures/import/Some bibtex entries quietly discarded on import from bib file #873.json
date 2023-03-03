@@ -252,7 +252,8 @@
         "University of Maryland at College Park.\u2013Dept. of Computer Science."
       ],
       "publisher": "University of Maryland at College Park",
-      "title": "Hierarchical task network planning :\u2013formalization, analysis, and implementation"
+      "title": "Hierarchical task network planning :\u2013formalization, analysis, and implementation",
+      "type": "phd"
     },
     {
       "abstractNote": "SHOP (Simple Hierarchical Ordered Planner) is a domain-independent HTN Planning system with the following characteristics. * SHOP plans for tasks in the same order that they will later be executed. This avoids some of the goal-interaction issues that arise in other HTN planners, thus making the planning algorithm relatively simple. * The planning algorithm is sound and complete over a large class of problems. * Since SHOP knows the complete world-state at each step of the planning process, it can use highly expressive domain representations. For example, it can do planning problems that require complex numeric computations. * In our tests, SHOP solved problems several orders of magnitude faster than Blackbox and TLplan. This occured even though SHOP is written in Lisp and the other planners are written in C. (Also cross-referenced as UMIACS-TR 99-04)",
@@ -3253,7 +3254,8 @@
       "itemType": "thesis",
       "place": "Providence, RI",
       "publisher": "Computer Science Department, Brown University",
-      "title": "Classifying and detecting plan-based misconceptions for robust plan recognition"
+      "title": "Classifying and detecting plan-based misconceptions for robust plan recognition",
+      "type": "phd"
     },
     {
       "citationKey": "Campbell:82",
@@ -4603,7 +4605,8 @@
       "itemID": 181,
       "itemType": "thesis",
       "publisher": "Yale University Department of Computer Science",
-      "title": "Script application: Computer understanding of newspaper stories"
+      "title": "Script application: Computer understanding of newspaper stories",
+      "type": "phd"
     },
     {
       "citationKey": "Cullingford:81",
@@ -4665,7 +4668,8 @@
       "itemID": 184,
       "itemType": "thesis",
       "publisher": "Department of Computer Science, University of Maryland at College Park",
-      "title": "Word sense disambiguation in descriptive text interpretation"
+      "title": "Word sense disambiguation in descriptive text interpretation",
+      "type": "phd"
     },
     {
       "citationKey": "David:95",
@@ -8245,7 +8249,8 @@
       "itemID": 327,
       "itemType": "thesis",
       "publisher": "University of Washington",
-      "title": "Planning and knowledge representation for softbots"
+      "title": "Planning and knowledge representation for softbots",
+      "type": "phd"
     },
     {
       "citationKey": "Golden98",
@@ -11614,7 +11619,8 @@
       "itemType": "thesis",
       "place": "Edmonton, Alberta",
       "publisher": "Department of Computing Science, University of Alberta",
-      "title": "A theoretical evaluation of selected backtracking algorithms"
+      "title": "A theoretical evaluation of selected backtracking algorithms",
+      "type": "master"
     },
     {
       "citationKey": "Konik:2006",
@@ -14806,7 +14812,8 @@
       "itemID": 601,
       "itemType": "thesis",
       "publisher": "Yale University Department of Computer Science",
-      "title": "Planning by search through simulations"
+      "title": "Planning by search through simulations",
+      "type": "phd"
     },
     {
       "citationKey": "Miller:Agoric",
@@ -15516,7 +15523,8 @@
       "itemID": 629,
       "itemType": "thesis",
       "publisher": "New York University",
-      "title": "Foundations of a logic of knowledge, action, and communication"
+      "title": "Foundations of a logic of knowledge, action, and communication",
+      "type": "phd"
     },
     {
       "citationKey": "Morris:1976",
@@ -15691,7 +15699,8 @@
         "Available as University of Maryland Computer Science Technical Report CS-TR-3157"
       ],
       "publisher": "University of Michigan, Ann Arbor",
-      "title": "CIRCA: The cooperative intelligent real-time control architecture"
+      "title": "CIRCA: The cooperative intelligent real-time control architecture",
+      "type": "phd"
     },
     {
       "citationKey": "musliner:94a",
@@ -16142,7 +16151,8 @@
       "itemID": 653,
       "itemType": "thesis",
       "publisher": "Artificial Intelligence Laboratory, University of Texas at Austin",
-      "title": "A general abductive system with application to plan recognition and diagnosis"
+      "title": "A general abductive system with application to plan recognition and diagnosis",
+      "type": "phd"
     },
     {
       "citationKey": "Ngo95:Probabilistic",
@@ -16580,7 +16590,8 @@
       "itemID": 671,
       "itemType": "thesis",
       "publisher": "Computer Science Division (EECS), % University of California at Berkeley",
-      "title": "Unified theory of inference for text understanding"
+      "title": "Unified theory of inference for text understanding",
+      "type": "phd"
     },
     {
       "citationKey": "Oates:PI",
@@ -17059,7 +17070,8 @@
       "itemType": "thesis",
       "place": "Stanford, CA",
       "publisher": "Stanford University",
-      "title": "Toward a mathematical theory of plan synthesis"
+      "title": "Toward a mathematical theory of plan synthesis",
+      "type": "phd"
     },
     {
       "citationKey": "Pednault:88",
@@ -18415,7 +18427,8 @@
       "itemID": 743,
       "itemType": "thesis",
       "publisher": "Department of Computer Science, Yale University",
-      "title": "Question-driven Understanding: An integrated theory of story understanding, memory and learning"
+      "title": "Question-driven Understanding: An integrated theory of story understanding, memory and learning",
+      "type": "phd"
     },
     {
       "citationKey": "RaoETALDiversity:07",
@@ -18730,7 +18743,8 @@
       "itemID": 756,
       "itemType": "thesis",
       "publisher": "Computer and Information Science, Penn University",
-      "title": "Selection and information: A class-based approach to lexical relationships"
+      "title": "Selection and information: A class-based approach to lexical relationships",
+      "type": "phd"
     },
     {
       "citationKey": "Rich:83",
@@ -19537,7 +19551,8 @@
       "itemID": 790,
       "itemType": "thesis",
       "publisher": "Department of Computer Science, Brown University",
-      "title": "CHIRON: Planning in an open-textured domain"
+      "title": "CHIRON: Planning in an open-textured domain",
+      "type": "phd"
     },
     {
       "citationKey": "Sandewall:92",
@@ -20306,7 +20321,8 @@
       "itemID": 822,
       "itemType": "thesis",
       "publisher": "Ohio State University",
-      "title": "Communication of intent in distributed supervisory control systems"
+      "title": "Communication of intent in distributed supervisory control systems",
+      "type": "phd"
     },
     {
       "citationKey": "Shepard:71",
@@ -20956,7 +20972,8 @@
       "itemID": 848,
       "itemType": "thesis",
       "publisher": "Loughborough University",
-      "title": "An integrated architecture for operating procedure synthesis"
+      "title": "An integrated architecture for operating procedure synthesis",
+      "type": "phd"
     },
     {
       "citationKey": "Sproull:1977",

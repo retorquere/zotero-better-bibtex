@@ -302,7 +302,7 @@ class Docs extends ASTWalker {
         break
 
       case 'menuitem':
-        error('menulists are deprecated')
+        // error('menulists are deprecated')
         if (!hidden) {
           pref = this.attr(history.find(n => n.name === 'menulist'), 'preference')
           if (pref) this.option(pref, this.attr(node, 'label', true), this.attr(node, 'value', true))
@@ -434,6 +434,40 @@ The Better BibTeX hidden preferences are preceded by “extensions.zotero.transl
   }
 }
 
+class Convert extends ASTWalker {
+  children(node) {
+    if (node.block.nodes.find(node => node.type !== 'Tag')) error('unexpected', node.block.nodes.find(node => node.type !== 'Tag').type)
+    return node.block.nodes.map(node => node.name).join(',')
+  }
+
+  Tag(node, history) {
+    switch (node.name) {
+      case 'menulist':
+        node.name = 'html:select'
+        if (this.children(node) !== 'menupopup') error('unexpected menulist content', this.children(node))
+        node.block = node.block.nodes[0].block
+        break
+      case 'menupopup':
+        error('should not find menupopups')
+        break
+      case 'menuitem':
+        node.name = 'html:option'
+        node.block.nodes = [{
+          type: 'Text',
+          val: eval(node.attrs.find(attr => attr.name === 'label').val),
+        }]
+        node.attrs = node.attrs.filter(attr => attr.name !== 'label')
+        break
+    }
+
+    this.walk(node.block, history)
+  }
+}
+
+function walk(cls, ast) {
+  (new cls).walk(ast)
+}
+
 const options = {
   pretty: true,
   plugins: [{
@@ -444,9 +478,10 @@ const options = {
       walker.savePrefs('test/features/steps/preferences.json')
       walker.saveDefaults('build/defaults/preferences/defaults.js')
       walker.saveDefaults('build/prefs.js')
-      walker.saveTypescript();
+      walker.saveTypescript()
 
-      (new StripConfig).walk(ast)
+      walk(StripConfig, ast)
+      walk(Convert, ast)
 
       return ast
     },
