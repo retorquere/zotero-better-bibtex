@@ -14,14 +14,12 @@
     <vbox flex="1">
       <hbox flex="1">
         <label>&better-bibtex.ServerURL.format;</label>
-        <menulist id="formats" oncommand="update();">
-          <menupopup>
-            <menuitem label="BibLaTeX" value=".biblatex"/>
-            <menuitem label="BibTeX" value=".bibtex"/>
-            <menuitem label="CSL YAML" value=".yaml"/>
-            <menuitem label="CSL JSON" value=".json"/>
-          </menupopup>
-        </menulist>
+        <html:select id="formats" oncommand="update();">
+          <html:option value=".biblatex"/>BibLaTeX</html:option>
+          <html:option value=".bibtex"/>BibTeX</html:option>
+          <html:option value=".yaml"/>CSL YAML</html:option>
+          <html:option value=".json"/>CSL JSON</html:option>
+        </html:select>
       </hbox>
       <hbox flex="1">
         <description>&better-bibtex.ServerURL.description;</description><textbox flex="1" id="pull-export-short" class="plain" readonly="true"/>
