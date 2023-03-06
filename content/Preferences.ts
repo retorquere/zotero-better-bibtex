@@ -107,7 +107,8 @@ class AutoExportPane {
         pane = ui.deck.children[index]
       }
 
-      option.textContent = `${{ library: '\ud83d\udcbb', collection: '\ud83d\udcc2' }[ae.type]} ${this.name(ae, 'short')} (${Translators.byId[ae.translatorID].label}) ${ae.path}`
+      const path = ae.path.startsWith(OS.Constants.Path.homeDir) ? ae.path.replace(OS.Constants.Path.homeDir, '~') : ae.path
+      option.textContent = `${{ library: '\ud83d\udcbb', collection: '\ud83d\udcc2' }[ae.type]} ${this.name(ae, 'short')} (${Translators.byId[ae.translatorID].label}) ${path}`
 
       const progress = AutoExport.progress.get(ae.$loki)
       for (const node of Array.from(pane.querySelectorAll('*[data-ae-field]'))) {
