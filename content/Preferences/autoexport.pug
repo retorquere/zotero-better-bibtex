@@ -13,12 +13,13 @@ vbox(flex="1")
     textbox(preference='extensions.zotero.translators.better-bibtex.autoExportDelay' size='3' rows=1 readonly='true')
     label &better-bibtex.seconds;
     hbox(flex=5)
-tabbox#better-bibtex-prefs-auto-export-tabbox(hidden="true")
-  arrowscrollbox.tabbrowser-arrowscrollbox(allowevents="true" orient="horizontal")
-    tabs#better-bibtex-prefs-auto-export-tabs
-      tab(label="auto-export")
-  tabpanels#better-bibtex-prefs-auto-export-tabpanels(flex="1")
-    tabpanel(flex="1" orient="vertical")
+vbox#better-bibtex-prefs-auto-exports(hidden="true")
+  hbox
+    html:select#better-bibtex-prefs-auto-export-select(onchange="document.getElementById('better-bibtex-prefs-auto-export-deck').selectedIndex = this.selectedIndex")
+      html:option
+    vbox
+  deck#better-bibtex-prefs-auto-export-deck(flex="1")
+    vbox(flex="1")
       grid(flex="1")
         columns
           column
