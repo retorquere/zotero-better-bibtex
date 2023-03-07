@@ -14,7 +14,7 @@
     <vbox flex="1">
       <hbox flex="1">
         <label>&better-bibtex.ServerURL.format;</label>
-        <html:select id="formats" oncommand="update();">
+        <html:select id="formats" onchange="update();">
           <html:option value=".biblatex"/>BibLaTeX</html:option>
           <html:option value=".bibtex"/>BibTeX</html:option>
           <html:option value=".yaml"/>CSL YAML</html:option>

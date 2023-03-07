@@ -3,7 +3,7 @@ groupbox
   vbox(style='height: 14em;' flex='1')
     hbox
       label(bbt:preference='extensions.zotero.translators.better-bibtex.quickCopyMode') &better-bibtex.Preferences.export.quickCopy.format;
-      html:select#id-better-bibtex-preferences-quickCopyMode(preference='extensions.zotero.translators.better-bibtex.quickCopyMode' preference-editable='true' oncommand='Zotero.BetterBibTeX.PrefPane.refresh();')
+      html:select#id-better-bibtex-preferences-quickCopyMode(preference='extensions.zotero.translators.better-bibtex.quickCopyMode' preference-editable='true' onchange='Zotero.BetterBibTeX.PrefPane.refresh();')
         html:option(value='latex') &better-bibtex.Preferences.export.quickCopy.latex;
         html:option(value='citekeys') &better-bibtex.Preferences.export.quickCopy.citekeys;
         html:option(value='pandoc') &better-bibtex.Preferences.export.quickCopy.pandoc;
