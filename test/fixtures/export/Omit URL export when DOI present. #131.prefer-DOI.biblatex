@@ -1,4 +1,3 @@
-
 @inproceedings{CapEA11,
   title = {Comparing Archival Policies for {{Blue Waters}}},
   booktitle = {High {{Performance Computing}} ({{HiPC}}), 2011 18th International Conference On},
@@ -7,6 +6,7 @@
   pages = {1--10},
   publisher = {{IEEE}},
   doi = {10.1109/HiPC.2011.6152428},
+  urldate = {2014-10-23},
   keywords = {bdec15,zotero_testcase},
   groups = {Omit URL export when DOI present. #131},
   timestamp = {2015-02-24 12:14:36 +0100}
@@ -22,6 +22,7 @@
   publisher = {{IEEE Press}},
   location = {{Piscataway, NJ, USA}},
   doi = {10.1109/SC.2014.72},
+  urldate = {2015-01-12},
   abstract = {We study the energy used by a production-level regional climate and weather simulation code on a distributed memory system with hybrid CPU-GPU nodes. The code is optimised for both processor architectures, for which we investigate both time and energy to solution. Operational constraints for time to solution can be met with both processor types, although on different numbers of nodes. Energy to solution is a factor 3 lower with GPUs, but strong scaling can be pushed to larger node counts with CPUs to minimize time to solution. Our data shows that an affine relationship exists between energy and nodehours consumed by the simulation. We use this property to devise a simple and practical methodology for optimising for energy efficiency that can be applied to other applications, which we demonstrate with the HPCG benchmark. We conclude with a discussion about the relationship to the commonly-used GF/Watt metric.},
   isbn = {978-1-4799-5500-8},
   keywords = {bdec15,zotero_testcase},
@@ -38,6 +39,7 @@
   pages = {485--498},
   issn = {0003-0007, 1520-0477},
   doi = {10.1175/BAMS-D-11-00094.1},
+  urldate = {2012-04-17},
   keywords = {bdec15,jasmin13a,p-12-iam,p-gmdm41,zotero_testcase},
   groups = {Omit URL export when DOI present. #131},
   timestamp = {2015-02-24 12:14:36 +0100}
@@ -48,4 +50,3 @@
 0 AllEntriesGroup:;
 1 ExplicitGroup:Omit URL export when DOI present. #131\;0\;;
 }
-
