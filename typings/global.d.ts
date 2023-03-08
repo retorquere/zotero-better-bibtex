@@ -38,6 +38,12 @@ declare const OS: {
     split: (path: string) => { absolute: boolean, components: string[], winDrive?: string }
     toFileURI: (path: string) => string
   }
+
+  Constants: {
+    Path: {
+      homeDir: string
+    }
+  }
 }
 
 interface ZoteroItem {

@@ -33,16 +33,14 @@ groupbox(style='margin-bottom: 10px')
   // <description>&better-bibtex.Preferences.citekey.uniqueness.pin.description;</description>
   hbox
     label(bbt:preference="extensions.zotero.translators.better-bibtex.keyScope") &better-bibtex.Preferences.citekey.uniqueness.scope;
-    menulist(preference="extensions.zotero.translators.better-bibtex.keyScope")
-      menupopup
-        menuitem(label="&better-bibtex.Preferences.citekey.uniqueness.scope.global;" value="global")
-        menuitem(label="&better-bibtex.Preferences.citekey.uniqueness.scope.library;" value="library")
+    html:select(preference="extensions.zotero.translators.better-bibtex.keyScope")
+      html:option(value='global') &better-bibtex.Preferences.citekey.uniqueness.scope.global;
+      html:option(value='library') &better-bibtex.Preferences.citekey.uniqueness.scope.library;
   hbox
     label(bbt:preference="extensions.zotero.translators.better-bibtex.keyConflictPolicy") &better-bibtex.Preferences.citekey.uniqueness.conflict;
-    menulist(preference="extensions.zotero.translators.better-bibtex.keyConflictPolicy")
-      menupopup
-        menuitem(label="&better-bibtex.Preferences.citekey.uniqueness.conflict.change;" value="change")
-        menuitem(label="&better-bibtex.Preferences.citekey.uniqueness.conflict.keep;" value="keep")
+    html:select(preference="extensions.zotero.translators.better-bibtex.keyConflictPolicy")
+      html:option(value='change') &better-bibtex.Preferences.citekey.uniqueness.conflict.change;
+      html:option(value='keep') &better-bibtex.Preferences.citekey.uniqueness.conflict.keep;
 
 groupbox
   caption(label="&better-bibtex.Preferences.advanced.ideographs;")

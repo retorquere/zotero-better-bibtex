@@ -301,8 +301,15 @@ class Docs extends ASTWalker {
         this.description(this.text(node))
         break
 
+      case 'html:option':
+        if (!hidden) {
+          pref = this.attr(history.find(n => n.name === 'html:select'), 'preference')
+          if (pref) this.option(pref, this.text(node), this.attr(node, 'value', true))
+        }
+        break
+
       case 'menuitem':
-        // error('menulists are deprecated')
+        error('menulists are deprecated')
         if (!hidden) {
           pref = this.attr(history.find(n => n.name === 'menulist'), 'preference')
           if (pref) this.option(pref, this.attr(node, 'label', true), this.attr(node, 'value', true))
@@ -434,6 +441,7 @@ The Better BibTeX hidden preferences are preceded by “extensions.zotero.transl
   }
 }
 
+/*
 class Convert extends ASTWalker {
   children(node) {
     if (node.block.nodes.find(node => node.type !== 'Tag')) error('unexpected', node.block.nodes.find(node => node.type !== 'Tag').type)
@@ -463,6 +471,7 @@ class Convert extends ASTWalker {
     this.walk(node.block, history)
   }
 }
+*/
 
 function walk(cls, ast) {
   (new cls).walk(ast)
@@ -481,7 +490,7 @@ const options = {
       walker.saveTypescript()
 
       walk(StripConfig, ast)
-      walk(Convert, ast)
+      // walk(Convert, ast)
 
       return ast
     },

@@ -8,11 +8,10 @@ hbox
       radio(label="&better-bibtex.Preferences.advanced.import.sentenceCase.off;" value="off")
 hbox
   label(bbt:preference="extensions.zotero.translators.better-bibtex.importCaseProtection") &better-bibtex.Preferences.advanced.import.caseProtection;
-  menulist(preference="extensions.zotero.translators.better-bibtex.importCaseProtection")
-    menupopup
-      menuitem(label="&better-bibtex.Preferences.advanced.import.caseProtection.as_needed;" value="as-needed")
-      menuitem(label="&better-bibtex.Preferences.advanced.import.caseProtection.on;" value="on")
-      menuitem(label="&better-bibtex.Preferences.advanced.import.caseProtection.off;" value="off")
+  html:select(preference="extensions.zotero.translators.better-bibtex.importCaseProtection")
+    html:option(value='as-needed') &better-bibtex.Preferences.advanced.import.caseProtection.as_needed;
+    html:option(value='on') &better-bibtex.Preferences.advanced.import.caseProtection.on;
+    html:option(value='off') &better-bibtex.Preferences.advanced.import.caseProtection.off;
   image(tooltip="tooltip-importCaseProtection" src="chrome://zotero-better-bibtex/skin/attention.svg" width="16" height="16")
 
 checkbox(preference="extensions.zotero.translators.better-bibtex.auxImport" label="&better-bibtex.Preferences.citekey.AUXScanner.import;")
