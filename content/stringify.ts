@@ -27,9 +27,10 @@ export function stringify(obj, indent: number | string = 2, ucode?: boolean) { /
 
       if (value === null) return value
 
-      if (value instanceof Error || value instanceof ErrorEvent || (value.QueryInterface && (value.name || value.message)) || value.toString() === '[object ErrorEvent]') {
+      if (value instanceof Error || value instanceof ErrorEvent || (value.QueryInterface && value.message) || value.toString() === '[object ErrorEvent]') {
         return `[error: ${[value.name, value.message].filter(m => m).join(': ')}${value.stack ? `\n${value.stack}` : ''}]`
       }
+      if (value.QueryInterface && value.name) return `[XPCOM Object ${value.name}]`
       if (value.QueryInterface) return '[XPCOM Object]'
 
       if (cache.includes(value)) return '[circular]'
