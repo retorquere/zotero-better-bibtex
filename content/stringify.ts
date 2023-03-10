@@ -11,10 +11,37 @@ export function stable_stringify(obj: any, replacer?: any, indent?: string | num
   return ucode ? asciify(stringified) : stringified
 }
 
+function stringifyXPCOM(obj): string {
+  if (!obj.QueryInterface) return ''
+  let str: string
+
+  try {
+    str = obj.toString?.() || ''
+  }
+  catch (err) {
+    str = err.message || '<toString error>'
+  }
+
+  try {
+    if (obj.message) return `[XPCOM error ${obj.message} ${str}`
+    if (obj.name) return `[XPCOM object ${obj.name} ${str}]`
+    return `[XPCOM object ${str}]`
+  }
+  catch (err) {
+    return `[unserialisable XPCOM object ${str}]`
+  }
+}
+
+function stringifyError(obj) {
+  if (obj instanceof Error) return `[error: ${obj.message || '<unspecified error>'}\n${obj.stack}]`
+  if (obj instanceof ErrorEvent) return `[errorevent: ${obj.message || '<unspecified errorevent>'}]`
+  return ''
+}
+
 // safely handles circular references
 export function stringify(obj, indent: number | string = 2, ucode?: boolean) { // eslint-disable-line @typescript-eslint/explicit-module-boundary-types
   let cache = []
-  let err
+  let replacement: string
   const stringified = JSON.stringify(
     obj,
     (key, value): any => {
@@ -27,27 +54,19 @@ export function stringify(obj, indent: number | string = 2, ucode?: boolean) { /
       }
 
       if (value === null) return value
+      if (cache.includes(value)) return '[circular]'
 
-      if (value.QueryInterface && value.message) {
-        err = `${value.message} ${value.toString?.()}`
+      if (replacement = stringifyXPCOM(value)) {
+        value = replacement
       }
-      else if ((value instanceof Error || value instanceof ErrorEvent) && value.message) {
-        err = err.message
-      }
-      else if (value.toString && value.toString() === '[object ErrorEvent]') {
-        err = `XPCOM error ${value.name || '<unknown>'}`
+      else if (replacement = stringifyError(value)) {
+        value = replacement
       }
       else {
-        err = null
+        replacement = ''
       }
-      if (err) {
-        return `[error: ${err}${value.stack ? `\n${value.stack}` : ''}]`
-      }
-
-      if (value.QueryInterface) return `[XPCOM object ${value.name} ${value.toString?.()}]`
-      if (cache.includes(value)) return '[circular]'
-      cache.push(value)
-      return value
+      if (!replacement) cache.push(value)
+      return replacement || value
     },
     indent
   )
