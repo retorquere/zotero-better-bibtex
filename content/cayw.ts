@@ -425,8 +425,9 @@ Zotero.Server.Endpoints['/better-bibtex/cayw'] = class {
       return [this.OK, 'text/html; charset=utf-8', citation]
     }
     catch (err) {
-      flash('CAYW Failed', `${err}\n${err.stack}`)
-      return [this.SERVER_ERROR, 'application/text', `CAYW failed: ${err}\n${err.stack}`]
+      log.error('CAYW request failed:', options, err)
+      flash('CAYW Failed', err.message)
+      return [this.SERVER_ERROR, 'application/text', `CAYW failed: ${err.message}\n${err.stack}`]
     }
   }
 }
