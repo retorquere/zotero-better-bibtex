@@ -14,6 +14,7 @@ export function stable_stringify(obj: any, replacer?: any, indent?: string | num
 // safely handles circular references
 export function stringify(obj, indent: number | string = 2, ucode?: boolean) { // eslint-disable-line @typescript-eslint/explicit-module-boundary-types
   let cache = []
+  let err
   const stringified = JSON.stringify(
     obj,
     (key, value): any => {
@@ -27,12 +28,23 @@ export function stringify(obj, indent: number | string = 2, ucode?: boolean) { /
 
       if (value === null) return value
 
-      if (value instanceof Error || value instanceof ErrorEvent || (value.QueryInterface && value.message) || value.toString() === '[object ErrorEvent]') {
-        return `[error: ${[value.name, value.message].filter(m => m).join(': ')}${value.stack ? `\n${value.stack}` : ''}]`
+      if (value.QueryInterface && value.message) {
+        err = `${value.message} ${value.toString?.()}`
       }
-      if (value.QueryInterface && value.name) return `[XPCOM Object ${value.name}]`
-      if (value.QueryInterface) return '[XPCOM Object]'
+      else if ((value instanceof Error || value instanceof ErrorEvent) && value.message) {
+        err = err.message
+      }
+      else if (value.toString && value.toString() === '[object ErrorEvent]') {
+        err = `XPCOM error ${value.name || '<unknown>'}`
+      }
+      else {
+        err = null
+      }
+      if (err) {
+        return `[error: ${err}${value.stack ? `\n${value.stack}` : ''}]`
+      }
 
+      if (value.QueryInterface) return `[XPCOM object ${value.name} ${value.toString?.()}]`
       if (cache.includes(value)) return '[circular]'
       cache.push(value)
       return value
