@@ -34,7 +34,7 @@
 <!ENTITY better-bibtex.ErrorReport.errors "Erreurs">
 <!ENTITY better-bibtex.ErrorReport.includeCache "Inclure le cache">
 <!ENTITY better-bibtex.ErrorReport.debug "Journal de débogage">
-<!ENTITY better-bibtex.ErrorReport.notReviewed "Debug logs cannot be reviewed unless referred to in the GitHub issue tracker by their ID.">
+<!ENTITY better-bibtex.ErrorReport.notReviewed "Les journaux de débogage ne peuvent pas être vérifiés à moins d'être référencés dans le gestionnaire de tickets GitHub par leur ID.">
 <!ENTITY better-bibtex.ErrorReport.postToGitHub "Merci d'envoyer un message au gestionnaire de tickets de GitHub (https://github.com/retorquere/zotero-better-bibtex/issues), en précisant cet identifiant de débogage, une description du problème ainsi que toutes les étapes nécessaires pour le reproduire.">
 <!ENTITY better-bibtex.ErrorReport.items "Références">
 <!ENTITY better-bibtex.ErrorReport.reportID "ID du journal de débogage :">
