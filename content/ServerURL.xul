@@ -15,10 +15,10 @@
       <hbox flex="1">
         <label>&better-bibtex.ServerURL.format;</label>
         <html:select id="formats" onchange="update();">
-          <html:option value=".biblatex"/>BibLaTeX</html:option>
-          <html:option value=".bibtex"/>BibTeX</html:option>
-          <html:option value=".yaml"/>CSL YAML</html:option>
-          <html:option value=".json"/>CSL JSON</html:option>
+          <html:option value=".biblatex">BibLaTeX</html:option>
+          <html:option value=".bibtex">BibTeX</html:option>
+          <html:option value=".yaml">CSL YAML</html:option>
+          <html:option value=".json">CSL JSON</html:option>
         </html:select>
       </hbox>
       <hbox flex="1">
