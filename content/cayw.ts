@@ -307,7 +307,7 @@ export const Application = new class { // eslint-disable-line @typescript-eslint
    *
    * @param {String|Number} id
    */
-  public getDocument(id) {
+  public async getDocument(id) { // eslint-disable-line @typescript-eslint/require-await
     return this.docs[id]
   }
 
