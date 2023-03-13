@@ -34,7 +34,7 @@
 <!ENTITY better-bibtex.ErrorReport.errors "Erros">
 <!ENTITY better-bibtex.ErrorReport.includeCache "Include cache">
 <!ENTITY better-bibtex.ErrorReport.debug "Debug log">
-<!ENTITY better-bibtex.ErrorReport.notReviewed "Debug logs can not reviewed unless referred to in the GitHub issue tracker by their ID.">
+<!ENTITY better-bibtex.ErrorReport.notReviewed "Debug logs cannot be reviewed unless referred to in the GitHub issue tracker by their ID.">
 <!ENTITY better-bibtex.ErrorReport.postToGitHub "Please post a message to the issue tracker (https://github.com/retorquere/zotero-better-bibtex/issues) with this debug log ID, a description of the problem, and any steps necessary to reproduce it.">
 <!ENTITY better-bibtex.ErrorReport.items "Items">
 <!ENTITY better-bibtex.ErrorReport.reportID "Debug log ID:">
