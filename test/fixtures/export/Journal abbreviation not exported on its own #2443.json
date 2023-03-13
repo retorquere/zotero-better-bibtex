@@ -1,0 +1,40 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "autoExportDelay": 2,
+      "citekeyFormat": "auth + year",
+      "exportBraceProtection": false,
+      "exportTitleCase": false,
+      "importSentenceCase": "off",
+      "quickCopyMode": "citekeys"
+    }
+  },
+  "items": [
+    {
+      "citationKey": "Einstein1925",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "A.",
+          "lastName": "Einstein"
+        }
+      ],
+      "date": "1925",
+      "extra": [
+        "tex.related: Simon2005",
+        "tex.relatedstring: reprinted in"
+      ],
+      "issue": "1",
+      "itemID": 1,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "Sitzungsber. Preuss. Akad. Wiss.",
+      "pages": "3",
+      "title": "Quantentheorie des einatomigen idealen Gases"
+    }
+  ]
+}
