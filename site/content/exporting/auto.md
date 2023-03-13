@@ -31,9 +31,9 @@ from here, that can only be done by initiating an export.
 
 You may want to use your BBT generated bib(la)tex on other systems; maybe you use Overleaf (as I do), maybe you have your documents compiled using github actions (as I do). In any case, you want your auto-exported items to show up somewhere else. If you're thinking of this in the context of Overleaf, here's a TL;DR of the pros and cons:
 
-* Auto-export + cloud-sync
-  * pro: gets the full bibtex file to Overleaf, should be seamless
-  * con: have not tested, paid option on overleaf
+* Auto-export + cloud-sync + import by URL
+  * pro: gets the full Better BibTex / Better BibLaTeX file into Overleaf
+  * con: requires cloud service which has direct-download links 
 * Auto-export + `git`:
   * pro: gets the full bibtex file to Overleaf, tested and works
   * con: requires technical expertise to set up, paid option on overleaf
@@ -43,7 +43,14 @@ You may want to use your BBT generated bib(la)tex on other systems; maybe you us
 
 ### DropBox / Google Drive / Box.com / ...
 
-Or any other of the plethora of choices that are available today that will "cloud-sync" your files. Just auto-export your bib file to a cloud-synced folder, and Bob's your uncle. Incidentally, this should work with Overleaf, but I have not tested it personally, as I use...
+Or any other of the plethora of choices that are available today that will "cloud-sync" your files. Will work with any cloud service, as long as it delivers direct-download links, as this method will import into Overleaf by URL.
+1.Export the Better Bibtex / Better LaTeX file into an cloud shared folder, with the "keep updated"-option checked
+2.Create/generate/find a direct-download link. Google is your friend.
+3.Import your cloud-saved bib-file into Overleaf by "Add file -> From external URL"
+4.When adding new sources, refresh both the Zotero client, and click the "refresh"-button in the file on Overleaf
+
+If working in a group, this can be accomplished by repeating step 1 for each person into the same cloud-shared folder. When doing step 1, make sure to use the same filename as the original bib-file. This will overwrite the bib-file every time the library is refreshed. 
+
 
 ### git support
 
