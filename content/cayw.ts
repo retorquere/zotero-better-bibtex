@@ -332,28 +332,22 @@ export async function pick(options: any): Promise<string> {
     const formatter = options.format || 'playground'
     if (!Formatter[formatter]) throw new Error(`No such formatter ${JSON.stringify(formatter)}`)
     const doc = Application.createDocument(options)
-    log.debug('CAYW: created document')
     await Zotero.Integration.execCommand('BetterBibTeX', 'addEditCitation', doc.id)
-    log.debug('CAYW: added citation')
 
     const picked = doc.citation()
-    log.debug('CAYW: picked citation for', options)
     const citation: string = picked.length ? await Formatter[formatter](picked, options) : ''
     Application.closeDocument(doc)
-    log.debug('CAYW: closed')
 
     if (options.select && picked.length) {
-      log.debug('CAYW: selecting pick')
       const zoteroPane = Zotero.getActiveZoteroPane()
       zoteroPane.show()
       await zoteroPane.selectItems(picked.map(item => item.id), true)
-      log.debug('CAYW: selected pick')
     }
 
     return citation
   }
   catch (err) {
-    log.error('CAYW error:', err, options)
+    log.error('CAYW error:', err, `${err}`, err.stack, options)
     flash('CAYW Failed', stringify(err))
   }
 }
