@@ -44,5 +44,8 @@ for locale in sorted(glob.glob(os.path.join(locales, 'locales-*.xml'))):
     else:
       months[translation] = english
 
+for month in range(1, 13):
+  month = str(month)
+  months[f'{month}月'] = mapping[f'month-{month.rjust(2, "0")}']
 with open(os.path.join(root, 'gen/dateparser-months.json'), 'w') as out:
   json.dump(months, out, indent=2, sort_keys=True, ensure_ascii=False)
