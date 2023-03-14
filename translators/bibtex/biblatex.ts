@@ -379,11 +379,9 @@ export function generateBibLaTeX(translation: Translation): void {
       case 'article':
         if (entry.getBibString(item.publicationTitle)) {
           entry.add({ name: 'journaltitle', value: item.publicationTitle, bibtexStrings: true })
-
         }
-        else if (translation.options.useJournalAbbreviation && item.publicationTitle && journalAbbreviation) {
+        else if ((translation.options.useJournalAbbreviation || !item.publicationTitle) && journalAbbreviation) {
           entry.add({ name: 'journaltitle', value: journalAbbreviation, bibtexStrings: true })
-
         }
         else {
           entry.add({ name: 'journaltitle', value: item.publicationTitle, bibtexStrings: true })

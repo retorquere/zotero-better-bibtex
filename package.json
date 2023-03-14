@@ -101,7 +101,7 @@
     "@retorquere/zotero-sync": "^1.0.23",
     "@types/bluebird": "^3.5.38",
     "@types/lokijs": "^1.5.7",
-    "@types/node": "^18.15.0",
+    "@types/node": "^18.15.2",
     "@xmldom/xmldom": "^0.8.6",
     "ajv-keywords": "^5.1.0",
     "archiver": "^5.3.1",
@@ -167,7 +167,7 @@
     "words-to-numbers": "^1.5.1",
     "xml-parser": "^1.2.1",
     "xpath": "^0.0.32",
-    "zotero-plugin": "^1.4.12"
+    "zotero-plugin": "^1.4.15"
   },
   "repository": {
     "type": "git",

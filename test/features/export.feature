@@ -13,6 +13,7 @@ Feature: Export
 
     Examples:
       | file                                                                                                                     | references |
+      | Journal abbreviation not exported on its own #2443                                                                       | 1          |
       | Author multi-character initial gets shortened #2419                                                                      | 1          |
       | relativePaths overwritten by absolute after automatic export #2405                                                       | 1          |
       | Unable to process Russian  ь symbol while transliteration #2413                                                          | 1          |
