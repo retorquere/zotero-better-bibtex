@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-assignment */
 
 declare const Zotero: any
+declare const dump: (msg: string) => void
 
 import { Translation } from '../lib/translator'
 
@@ -150,10 +151,13 @@ export abstract class CSLExporter {
 
       let allow: postscript.Allow = { cache: true, write: true }
       try {
+        dump('CSL.postscript start\n')
         allow = this.postscript(csl, item, this.translation, Zotero, extraFields)
+        dump(`CSL.postscript done: ${JSON.stringify(allow)}\n`)
       }
       catch (err) {
-        log.error('CSL.postscript failed:', err)
+        dump(`CSL.postscript error: ${err}\n`)
+        log.error('CSL.postscript error:', err)
         allow.cache = false
       }
 
