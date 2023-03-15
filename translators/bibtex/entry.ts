@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return, @typescript-eslint/explicit-module-boundary-types */
 
 declare const Zotero: any
+declare const dump: (msg: string) => void
 
 import { RegularItem as Item } from '../../gen/typings/serialized-item'
 import { Cache } from '../../typings/cache'
@@ -813,11 +814,12 @@ export class Entry {
 
     let allow: postscript.Allow = { cache: true, write: true }
     try {
-      log.debug('2445: has url before?', !!this.has.url)
+      dump('2445: before postscript\n')
       allow = this.postscript(this, this.item, this.translation, Zotero, this.extraFields)
-      log.debug('2445: has url after?', !!this.has.url, allow)
+      dump('2445: after postscript\n')
     }
     catch (err) {
+      dump(`2445: postscript error ${err}\n`)
       if (this.translation.preferences.testing) throw err
       log.error('postscript error:', err)
       allow.cache = false
