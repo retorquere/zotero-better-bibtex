@@ -813,11 +813,13 @@ export class Entry {
 
     let allow: postscript.Allow = { cache: true, write: true }
     try {
+      log.debug('2445: has url before?', !!this.has.url)
       allow = this.postscript(this, this.item, this.translation, Zotero, this.extraFields)
+      log.debug('2445: has url after?', !!this.has.url, allow)
     }
     catch (err) {
       if (this.translation.preferences.testing) throw err
-      log.error('Entry.postscript failed:', err)
+      log.error('postscript error:', err)
       allow.cache = false
     }
     this.item.$cacheable = this.item.$cacheable && allow.cache

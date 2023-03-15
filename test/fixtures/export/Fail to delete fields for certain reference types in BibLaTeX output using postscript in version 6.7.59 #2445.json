@@ -1,0 +1,88 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "DOIandURL": "doi",
+      "asciiBibTeX": false,
+      "autoExportDelay": 2,
+      "automaticTags": false,
+      "biblatexExtractEprint": false,
+      "citekeyFormat": "auth.lower+year",
+      "extraMergeCSL": true,
+      "extraMergeCitekeys": true,
+      "extraMergeTeX": true,
+      "keyConflictPolicy": "change",
+      "keyScope": "global",
+      "postscript": "if (\n  Translator.BetterBibLaTeX &&\n  (item.itemType == \"book\" ||\n    item.itemType == \"bookSection\" ||\n    item.itemType == \"journalArticle\" ||\n    item.itemType == \"thesis\")\n) {\n  delete this.has.url;\n}",
+      "quickCopyMode": "pandoc",
+      "skipFields": "language, langid, annotation, shorttitle, shortjournal, eprint, eprinttype, editortype, issn, isbn",
+      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc,groups"
+    }
+  },
+  "items": [
+    {
+      "ISSN": "1673-1441",
+      "abstractNote": "\u59cb\u5efa\u4e8e 1905 \u5e74\u7684\u5ef6\u957f\u6cb9\u77ff\u662f\u4e2d\u56fd\u5927\u9646\u4e0a\u53d1\u73b0\u548c\u5f00\u53d1\u6700\u65e9\u7684\u6cb9\u7530\u3002\u5728\u5ef6\u957f\u6cb9\u77ff\u65e9\u671f (1905\u20141949 \u5e74) \u52d8\u63a2\u4e0e\u5f00\u91c7\u4e2d\uff0c\u6709 5 \u4ef6\u91cd\u5927\u4e8b\u4ef6\uff0c\u5373\uff1a\u4ece\u5ef6\u957f\u77f3\u6cb9\u5b98\u5382\u7684\u6210\u7acb\u4e0e\u4e2d\u56fd\u8fd1\u4ee3\u9646\u4e0a\u7b2c\u4e00\u53e3\u6cb9\u4e95\u3001\u6c11\u529e\u6cb9\u77ff\u7684\u547c\u58f0\u3001\u7f8e\u5b5a\u5bf9\u9655\u5317\u7684\u94bb\u63a2\u4e0e\u77f3\u6cb9\u5730\u8d28\u8c03\u67e5\u3001\u4e2d\u56fd\u4eba\u8fdb\u884c\u7684\u65e9\u671f\u9655\u5317\u77f3\u6cb9\u5730\u8d28\u8c03\u67e5\u548c\u6709\u529b\u5730\u652f\u63f4\u6297\u65e5\u6218\u4e89\u7684\u529f\u81e3\u6cb9\u77ff\u3002",
+      "accessDate": "2023-01-05T09:04:33Z",
+      "citationKey": "shibaoheng2006",
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "\u77f3\u5b9d\u73e9"
+        }
+      ],
+      "date": "2006",
+      "extra": [
+        "<\u5317\u5927\u6838\u5fc3>",
+        "Citation Key: shibaoheng2006"
+      ],
+      "issue": "1",
+      "itemID": 1,
+      "itemType": "journalArticle",
+      "language": "zh-CN",
+      "libraryCatalog": "\u4e2d\u56fd\u77e5\u7f51CNKI",
+      "pages": "75-80",
+      "publicationTitle": "\u4e2d\u56fd\u79d1\u6280\u53f2\u6742\u5fd7",
+      "tags": [
+        {
+          "tag": "early stage",
+          "type": 1
+        },
+        {
+          "tag": "exploitation",
+          "type": 1
+        },
+        {
+          "tag": "exploration",
+          "type": 1
+        },
+        {
+          "tag": "Yanchang Oilfield",
+          "type": 1
+        },
+        {
+          "tag": "\u52d8\u63a2",
+          "type": 1
+        },
+        {
+          "tag": "\u5ef6\u957f\u6cb9\u77ff",
+          "type": 1
+        },
+        {
+          "tag": "\u5f00\u91c7",
+          "type": 1
+        },
+        {
+          "tag": "\u65e9\u671f",
+          "type": 1
+        }
+      ],
+      "title": "\u5ef6\u957f\u6cb9\u77ff\u7684\u65e9\u671f\u52d8\u63a2\u4e0e\u5f00\u91c7\u7b80\u8ff0",
+      "url": "https://kns.cnki.net/kcms/detail/detail.aspx?dbcode=CJFD&dbname=CJFD2006&filename=ZGKS200601007"
+    }
+  ]
+}
