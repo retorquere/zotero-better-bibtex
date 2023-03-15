@@ -271,16 +271,16 @@ Feature: Export
     Then an export using "Better CSL JSON" should match "export/*.csl.json"
 
     Examples:
-      | file                                                                            | references |
-      | _eprint in extra causes CSL-JSON export error #2430                             | 1          |
-      | unwanted inclusion of Zotero's internal journal abbreviations in CSL JSON #2375 | 1          |
-      | Export Error Unexpected date type #2303                                         | 1          |
-      | Better CSL JSON does not include authority field #2019                          | 1          |
-      | Multiple creators in Extra not exported in Better CSL JSON #2015                | 1          |
-      | Deterministic ordering for CSL #1178 #1400                                      | 26         |
-      | CSL exporters; ignore [Fields to omit from export] setting #1179                | 26         |
-      | Quotes around last names should be removed from citekeys #856                   | 1          |
-      | BBT CSL JSON; Do not use shortTitle and journalAbbreviation #372                | 1          |
+      | file                                                                                       | references |
+      | _eprint in extra causes CSL-JSON export error #2430                                        | 1          |
+      | unwanted inclusion of Zotero's internal journal abbreviations in CSL JSON #2375            | 1          |
+      | Export Error Unexpected date type #2303                                                    | 1          |
+      | Better CSL JSON does not include authority field #2019                                     | 1          |
+      | Multiple creators in Extra not exported in Better CSL JSON #2015                           | 1          |
+      | Deterministic ordering for CSL #1178 #1400                                                 | 26         |
+      | CSL exporters; ignore [Fields to omit from export] setting #1179                           | 26         |
+      | Quotes around last names should be removed from citekeys #856                              | 1          |
+      | BBT CSL JSON; Do not use shortTitle and journalAbbreviation #372                           | 1          |
 
     @use.with_client=jurism
     Examples:
@@ -408,7 +408,12 @@ Feature: Export
     And I import 1 reference from "export/*.json"
     Then an export using "Better BibTeX" should match "export/*.bibtex"
 
-  @1155
+  Scenario: In background exports, postscript doesn't run unless debug output logging is enabled #2448
+    When I set preference .ignorePostscriptErrors to false
+    When I set preference .testing to false
+    When I import 1 references from "export/*.json"
+    Then an export using "Better CSL JSON" should match "export/*.csl.json"
+
   Scenario: Postscript error aborts CSL JSON export #1155
     When I set preference .ignorePostscriptErrors to true
     When I import 4 references from "export/*.json"
