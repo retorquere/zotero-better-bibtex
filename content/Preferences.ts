@@ -417,6 +417,12 @@ export class PrefPane {
 
     await Zotero.BetterBibTeX.ready
 
+    // bloody *@*&^@# html controls only sorta work for prefs
+    for (const node of Array.from(currentWin.document.querySelectorAll('select'))) {
+      const pref = node.getAttribute('preference')
+      if (pref) node.value = Preference[pref.replace('extensions.zotero.translators.better-bibtex.', '')]
+    }
+
     currentWin.document.getElementById('rescan-citekeys').hidden = !Zotero.Debug.enabled
 
     deck.selectedIndex = 1
