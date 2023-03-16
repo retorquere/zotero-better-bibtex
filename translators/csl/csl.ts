@@ -150,9 +150,10 @@ export abstract class CSLExporter {
 
       let allow: postscript.Allow = { cache: true, write: true }
       try {
-        this.translation.output.body += '[before postscript]'
+        // eslint-disable-next-line @typescript-eslint/unbound-method
+        this.translation.output.body += `\n[before postscript]\n${this.postscript}\n${JSON.stringify(csl)}\n`
         allow = this.postscript(csl, item, this.translation, Zotero, extraFields)
-        this.translation.output.body += '[after postscript]'
+        this.translation.output.body += `[after postscript]\n${JSON.stringify(csl)}\n`
       }
       catch (err) {
         this.translation.output.body += `[postscript error: ${err}]`
