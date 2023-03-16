@@ -62,9 +62,6 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
   constructor() {
     Object.assign(this, translatorMetadata)
-    // temporary for #2445
-    Preference.cache = false
-    log.error('CACHE DISABLED FOR #2445')
   }
 
   public async init() {

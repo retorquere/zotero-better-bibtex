@@ -70,7 +70,7 @@ class Logger {
     return (
       (typeof workerJob !== 'undefined' && workerJob.debugEnabled)
       ||
-      Zotero.Debug.enabled
+      Zotero.Debug?.enabled
       ||
       Zotero.Prefs?.get('debug.store')
     ) as boolean

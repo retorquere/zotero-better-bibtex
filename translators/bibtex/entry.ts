@@ -813,12 +813,9 @@ export class Entry {
 
     let allow: postscript.Allow = { cache: true, write: true }
     try {
-      this.translation.output.body += '[before postscript]'
       allow = this.postscript(this, this.item, this.translation, Zotero, this.extraFields)
-      this.translation.output.body += '[after postscript]'
     }
     catch (err) {
-      this.translation.output.body += `[postscript error: ${err}]`
       if (this.translation.preferences.testing) throw err
       log.error('postscript error:', err)
       allow.cache = false
