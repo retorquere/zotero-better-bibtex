@@ -62,6 +62,9 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
   constructor() {
     Object.assign(this, translatorMetadata)
+    // temporary for #2445
+    Preference.cache = false
+    log.error('CACHE DISABLED FOR #2445')
   }
 
   public async init() {
@@ -202,7 +205,6 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       exportDir: job.path ? OS.Path.dirname(job.path) : undefined,
     }
 
-    log.dump('eibqw: starting')
     const translator = this.byId[job.translatorID]
 
     const start = Date.now()
@@ -302,7 +304,6 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     }
 
     const scope = this.exportScope(job.scope)
-    log.dump('eibqw: fetching scope', scope)
     let collections: any[] = []
     switch (scope.type) {
       case 'library':
@@ -332,7 +333,6 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
     items = items.filter(item => !item.isAnnotation?.())
 
-    log.dump('eibqw: loading serialization cache')
     let worked = Date.now()
     const prepare = new Pinger({
       total: items.length,
@@ -365,7 +365,6 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       })
     }
 
-    log.dump('eibqw: loading export cache')
     // pre-fetch cache
     if (cache) {
       const selector = schema.translator[translator.label]?.cache ? Cache.selector(translator.label, config.options, config.preferences) : null
@@ -386,22 +385,18 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     }
 
     prepare.done()
-    log.dump('eibqw: prepare done')
 
     // if the average startup time is greater than the autoExportDelay, bump up the delay to prevent stall-cascades
     this.workers.startup += Math.ceil((Date.now() - start) / 1000) // eslint-disable-line no-magic-numbers
     // eslint-disable-next-line no-magic-numbers
     if (this.workers.total > 5 && (this.workers.startup / this.workers.total) > Preference.autoExportDelay) {
       Preference.autoExportDelay = Math.ceil(this.workers.startup / this.workers.total)
-      log.dump('eibqw: bumping autoExportDelay to', Preference.autoExportDelay)
     }
 
-    log.dump('eibqw: encoding payload')
     const enc = new TextEncoder()
     // stringify gets around 'object could not be cloned', and arraybuffers can be passed zero-copy. win-win
     const abconfig = enc.encode(JSON.stringify(config)).buffer
 
-    log.dump('eibqw: starting worker export:', config.data.items.length, 'items, cache:', !!cache, Object.keys(config.data.cache).length, 'items cached')
     this.worker.postMessage({ kind: 'start', config: abconfig }, [ abconfig ])
 
     return deferred.promise
