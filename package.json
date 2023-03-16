@@ -101,7 +101,7 @@
     "@retorquere/zotero-sync": "^1.0.23",
     "@types/bluebird": "^3.5.38",
     "@types/lokijs": "^1.5.7",
-    "@types/node": "^18.15.2",
+    "@types/node": "^18.15.3",
     "@xmldom/xmldom": "^0.8.6",
     "ajv-keywords": "^5.1.0",
     "archiver": "^5.3.1",
@@ -159,7 +159,7 @@
     "string-template": "^1.0.0",
     "ts-node": "^10.9.1",
     "tslib": "^2.5.0",
-    "typescript": "^4.9.5",
+    "typescript": "^5.0.2",
     "unicode-11.0.0": "^0.7.8",
     "unicode2latex": "^3.0.3",
     "uri-templates": "^0.2.0",
@@ -167,7 +167,7 @@
     "words-to-numbers": "^1.5.1",
     "xml-parser": "^1.2.1",
     "xpath": "^0.0.32",
-    "zotero-plugin": "^1.4.15"
+    "zotero-plugin": "^1.4.17"
   },
   "repository": {
     "type": "git",
