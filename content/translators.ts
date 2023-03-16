@@ -11,7 +11,7 @@ import { clone } from './clone'
 import { Deferred } from './deferred'
 import type { Translators as Translator } from '../typings/translators'
 import { Preference } from './prefs'
-import { schema } from '../gen/preferences/meta'
+import { schema, Preferences } from '../gen/preferences/meta'
 import { Serializer } from './serializer'
 import { log } from './logger'
 import { DB as Cache } from './db/cache'
@@ -38,7 +38,7 @@ export type ExportJob = {
   displayOptions: Record<string, boolean>
   scope: ExportScope
   autoExport?: number
-  preferences?: Record<string, boolean | number | string>
+  preferences?: Partial<Preferences>
   path?: string
   started?: number
   canceled?: boolean
