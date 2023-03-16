@@ -1,4 +1,5 @@
-;if (typeof Zotero !== 'undefined' && Zotero.Debug) Zotero.Debug.enabled = true
+;
+// if (typeof Zotero !== 'undefined' && Zotero.Debug) Zotero.Debug.enabled = true
 
 const __estrace = {
   hold: '',
@@ -20,7 +21,7 @@ const __estrace = {
     if (name.startsWith('<anonymous')) return
     this.log(`bbt.trace.enter ${url} : ${name}`)
     // const replacer = this.circularReplacer()
-    //this.report(`bbt trace.enter ${url}.${name}(${Array.from(args).map(arg => JSON.stringify(arg, replacer)).join(', ')})`)
+    // this.report(`bbt trace.enter ${url}.${name}(${Array.from(args).map(arg => JSON.stringify(arg, replacer)).join(', ')})`)
   },
 
   exit(name, url, result) {
@@ -30,10 +31,9 @@ const __estrace = {
   },
 
   log(msg) {
-    const now = Date.now()
-    if (this.ready() && (!this.last || (now - this.last) > 1000)) {
-      Zotero.debug((this.hold ? this.hold.replace(this.prefix, '') + this.prefix : '') + msg)
-      this.last = now
+    if (this.ready()) {
+      if (this.hold) dump(this.hold)
+      dump(msg + '\n')
       this.hold = ''
     }
     else {

@@ -1,19 +1,8 @@
 {
-  ".schemas": {
+  "gh-2445": {
     "plugin": [
-      "content/better-bibtex.ts",
-      "content/key-manager.ts",
-      "content/serializer.ts",
-      "content/db/*.ts",
-      "content/auto-export.ts",
-      "content/dateparser.ts",
-      "content/escape.ts",
-      "content/get-items-async.ts",
-      "content/journal-abbrev.ts",
-      "content/markupparser.ts",
-      "content/scheduler.ts",
-      "content/startup.ts",
-      "content/translators.ts"
+      "translators/csl/csl.ts",
+      "translators/bibtex/entry.ts"
     ]
   }
 }

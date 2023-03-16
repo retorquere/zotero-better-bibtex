@@ -174,7 +174,8 @@ module.exports.trace = function(section) {
           const { code } = putout(source.code, {
             fixCount: 1,
             rules: {
-              'estrace/trace': ['on', { url: localpath, exclude: [ 'FunctionExpression', 'ArrowFunctionExpression' ] }],
+              // 'estrace/trace': ['on', { url: localpath, exclude: [ 'FunctionExpression', 'ArrowFunctionExpression' ] }],
+              'estrace/trace': ['on', { url: localpath }],
             },
             plugins: [ estrace ],
           })

@@ -245,7 +245,7 @@ async function rebuild() {
     await bundle({
       entryPoints: [path.join(translator.dir, translator.name + '.ts')],
       plugins: [
-        // loader.trace('translators'),
+        loader.trace('translators'),
         // loader.peggy,
         loader.__dirname,
         shims
