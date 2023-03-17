@@ -817,7 +817,7 @@ export class Entry {
     }
     catch (err) {
       if (this.translation.preferences.testing) throw err
-      log.error('Entry.postscript failed:', err)
+      log.error('postscript error:', err)
       allow.cache = false
     }
     this.item.$cacheable = this.item.$cacheable && allow.cache

@@ -13,6 +13,7 @@ Feature: Export
 
     Examples:
       | file                                                                                                                     | references |
+      | Fail to delete fields for certain reference types in BibLaTeX output using postscript in version 6.7.59 #2445            | 1          |
       | Journal abbreviation not exported on its own #2443                                                                       | 1          |
       | Author multi-character initial gets shortened #2419                                                                      | 1          |
       | relativePaths overwritten by absolute after automatic export #2405                                                       | 1          |
@@ -408,7 +409,12 @@ Feature: Export
     And I import 1 reference from "export/*.json"
     Then an export using "Better BibTeX" should match "export/*.bibtex"
 
-  @1155
+  Scenario: In background exports, postscript doesn't run unless debug output logging is enabled #2448
+    When I set preference .ignorePostscriptErrors to false
+    When I set preference .testing to false
+    When I import 1 references from "export/*.json"
+    Then an export using "Better CSL JSON" should match "export/*.csl.json"
+
   Scenario: Postscript error aborts CSL JSON export #1155
     When I set preference .ignorePostscriptErrors to true
     When I import 4 references from "export/*.json"
