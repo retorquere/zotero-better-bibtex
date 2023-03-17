@@ -292,15 +292,15 @@ export const Application = new class { // eslint-disable-line @typescript-eslint
   public secondaryFieldType = 'Bookmark'
   public fields: any[] = []
 
-  private docs: { [key: number]: Document } = {}
-  private docId = 0
+  private docs: Record<string, Document> = {}
+  private active: string
 
   /**
    * Gets the active document.
    *
    * @returns {Document}
    */
-  public getActiveDocument() { return this.docs[this.docId] }
+  public getActiveDocument() { return this.docs[this.active] }
 
   /**
    * Gets the document by some app-specific identifier.
@@ -314,9 +314,9 @@ export const Application = new class { // eslint-disable-line @typescript-eslint
   public QueryInterface() { return this }
 
   public createDocument(options) {
-    this.docId += 1
-    this.docs[this.docId] = new Document(this.docId, options)
-    return this.docs[this.docId]
+    this.active = Zotero.Utilities.generateObjectKey()
+    this.docs[this.active] = new Document(this.active, options)
+    return this.docs[this.active]
   }
 
   public closeDocument(doc) {
