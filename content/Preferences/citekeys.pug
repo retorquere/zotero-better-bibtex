@@ -23,7 +23,7 @@ checkbox(preference="extensions.zotero.translators.better-bibtex.citekeyFold" la
 checkbox(preference="extensions.zotero.translators.better-bibtex.citekeySearch" label="&better-bibtex.Preferences.citekey.search;")
 hbox
   label(bbt:preference="extensions.zotero.translators.better-bibtex.autoPinDelay") &better-bibtex.Preferences.citekey.autoPinDelay;
-  scale(min=0 max=30 flex=2 preference="extensions.zotero.translators.better-bibtex.autoPinDelay")
+  html:input(type='range' min=0 max=30 preference="extensions.zotero.translators.better-bibtex.autoPinDelay")
   textbox(preference='extensions.zotero.translators.better-bibtex.autoPinDelay' size=2 rows=1 readonly='true')
   label &better-bibtex.seconds;
   hbox(flex='5')
