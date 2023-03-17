@@ -314,7 +314,7 @@ export const Application = new class { // eslint-disable-line @typescript-eslint
   public QueryInterface() { return this }
 
   public createDocument(options) {
-    this.active = Zotero.Utilities.generateObjectKey()
+    this.active = `better-bibtex-cayw-${Zotero.Utilities.generateObjectKey()}`
     this.docs[this.active] = new Document(this.active, options)
     return this.docs[this.active]
   }
