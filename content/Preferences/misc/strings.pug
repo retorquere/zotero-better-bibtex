@@ -1,9 +1,8 @@
 checkbox(preference="extensions.zotero.translators.better-bibtex.importBibTeXStrings" label="&better-bibtex.Preferences.export.fields.import-strings;")
-groupbox
-  caption(label="&better-bibtex.Preferences.export.fields.export-strings;" bbt:preference="extensions.zotero.translators.better-bibtex.exportBibTeXStrings")
-  radiogroup(preference="extensions.zotero.translators.better-bibtex.exportBibTeXStrings")
-    radio(label="&better-bibtex.Preferences.export.fields.export-strings.off;" value="off")
-    radio(label="&better-bibtex.Preferences.export.fields.export-strings.detect;" value="detect")
-    radio(label="&better-bibtex.Preferences.export.fields.export-strings.match;" value="match")
-    radio(label="&better-bibtex.Preferences.export.fields.export-strings.match_reverse;" value="match+reverse")
+label(bbt:preference="extensions.zotero.translators.better-bibtex.exportBibTeXStrings") &better-bibtex.Preferences.export.fields.export-strings;
+html:select(preference="extensions.zotero.translators.better-bibtex.exportBibTeXStrings")
+  html:option(value='off') &better-bibtex.Preferences.export.fields.export-strings.off;
+  html:option(value='detect') &better-bibtex.Preferences.export.fields.export-strings.detect;
+  html:option(value='match') &better-bibtex.Preferences.export.fields.export-strings.match;
+  html:option(value='match+reverse') &better-bibtex.Preferences.export.fields.export-strings.match_reverse;
 textbox(rows='10' multiline='true' preference='extensions.zotero.translators.better-bibtex.strings')

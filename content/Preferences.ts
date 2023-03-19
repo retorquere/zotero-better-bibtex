@@ -418,9 +418,8 @@ export class PrefPane {
     await Zotero.BetterBibTeX.ready
 
     // bloody *@*&^@# html controls only sorta work for prefs
-    for (const node of Array.from(currentWin.document.querySelectorAll('select'))) {
-      const pref = node.getAttribute('preference')
-      if (pref) node.value = Preference[pref.replace('extensions.zotero.translators.better-bibtex.', '')]
+    for (const node of Array.from(currentWin.document.querySelectorAll("select[preference], input[preference][type='range']"))) {
+      (node as HTMLInputElement).value = Preference[node.getAttribute('preference').replace('extensions.zotero.translators.better-bibtex.', '')]
     }
 
     currentWin.document.getElementById('rescan-citekeys').hidden = !Zotero.Debug.enabled
