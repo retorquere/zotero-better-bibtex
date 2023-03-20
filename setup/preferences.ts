@@ -396,29 +396,6 @@ The Better BibTeX hidden preferences are preceded by “extensions.zotero.transl
     }
   }
 
-  savePrefs(prefs) {
-    function replacer(key, value) {
-      if (value instanceof Map) {
-        if (!value.size) return undefined
-        return Array.from(value.entries()).reduce((acc, [k, v]) => { acc[k] = v; return acc }, {})
-      }
-      else if (key === 'description') {
-        return undefined
-      }
-      else if (key === 'name') {
-        return this.shortName
-      }
-      else if (key === 'shortName') {
-        return undefined
-      }
-      else {
-        return value
-      }
-    }
-
-    fs.writeFileSync(prefs, JSON.stringify(Object.values(this.preferences), replacer, 2))
-  }
-
   saveDefaults(defaults) {
     fs.writeFileSync(defaults, Object.values(this.preferences).map(p => `pref(${JSON.stringify(p.name)}, ${JSON.stringify(p.default)})\n`).join(''))
   }
@@ -484,7 +461,6 @@ const options = {
       const walker = new Docs
       walker.walk(ast, [])
       walker.savePages('site/content/installation/preferences')
-      walker.savePrefs('test/features/steps/preferences.json')
       walker.saveDefaults('build/defaults/preferences/defaults.js')
       walker.saveDefaults('build/prefs.js')
       walker.saveTypescript()

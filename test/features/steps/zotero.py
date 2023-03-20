@@ -14,7 +14,6 @@ import tempfile
 from munch import *
 from steps.utils import running, nested_dict_iter, benchmark, ROOT, assert_equal_diff, serialize, html2md, clean_html, extra_lower
 from steps.library import load as Library
-from steps.bbtjsonschema import validate as validate_bbt_json
 import steps.utils as utils
 import shutil
 import shlex
@@ -42,6 +41,12 @@ yaml.default_flow_style = False
 
 EXPORTED = os.path.join(ROOT, 'exported')
 FIXTURES = os.path.join(ROOT, 'test/fixtures')
+
+
+with open(os.path.join(ROOT, 'schema', 'BetterBibTeX JSON.json')) as f:
+  bbt_json_schema = json.load(f)
+def validate(lib):
+  jsonschema.validate(instance=lib, schema=bbt_json_schema)
 
 def install_proxies(xpis, profile):
   for xpi in xpis:
