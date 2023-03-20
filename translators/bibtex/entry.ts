@@ -1358,6 +1358,7 @@ export class Entry {
       ma: mastersthesis,
       master: mastersthesis,
       masters: mastersthesis,
+      mphil: mastersthesis,
 
       ba: bathesis,
       bachelor: bathesis,
