@@ -7,5 +7,4 @@ import 'zotero-plugin/rdf'
 import 'zotero-plugin/version'
 import './extract-apis'
 import './bibertool'
-import './bbtjsonschema'
 require('./javascript-identifier-regex')
