@@ -29,7 +29,7 @@ for (const translator of glob.sync('translators/*.json')) {
 schema.properties.config.properties.preferences.properties = {}
 for (const [pref, dflt] of Object.entries(defaults)) {
   const type = typeof dflt
-  if (['client', 'platform', 'newTranslatorsAskRestart', 'testing'].includes(pref)) continue
+  if (['client', 'platform', 'newTranslatorsAskRestart', 'testing', 'citekeyFormatEditing'].includes(pref)) continue
 
   if (type === 'string' && options[pref]) {
     schema.properties.config.properties.preferences.properties[pref] = { type: 'string', enum: Object.keys(options[pref]) }

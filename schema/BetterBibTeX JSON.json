@@ -192,9 +192,6 @@
             "citekeyFormat": {
               "type": "string"
             },
-            "citekeyFormatEditing": {
-              "type": "string"
-            },
             "citekeySearch": {
               "type": "boolean"
             },
