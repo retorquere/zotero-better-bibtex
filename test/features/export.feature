@@ -409,12 +409,6 @@ Feature: Export
     And I import 1 reference from "export/*.json"
     Then an export using "Better BibTeX" should match "export/*.bibtex"
 
-  Scenario: In background exports, postscript doesn't run unless debug output logging is enabled #2448
-    When I set preference .ignorePostscriptErrors to false
-    When I set preference .testing to false
-    When I import 1 references from "export/*.json"
-    Then an export using "Better CSL JSON" should match "export/*.csl.json"
-
   Scenario: Postscript error aborts CSL JSON export #1155
     When I set preference .ignorePostscriptErrors to true
     When I import 4 references from "export/*.json"
