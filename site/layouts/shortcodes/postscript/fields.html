@@ -1,0 +1,9 @@
+<table>
+  {{ range $row := .Site.Data.postscript.fields }}
+    <tr>
+      {{ range $field := $row }}
+        <td>{{ $field | safeHTML }}</td>
+      {{ end }}
+    </tr>
+  {{ end }}
+</table>
