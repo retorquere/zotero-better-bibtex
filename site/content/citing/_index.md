@@ -103,7 +103,7 @@ The above functions all retrieve information stored in the item's fields and pro
 
 {{< citekey-formatters/fields >}}
 
-(fields marked <sup>JM</sup> are only available in Juris-M).
+(fields marked <sup>Z</sup> are only available in Zotero, fields marked with <sup>JM</sup> are only available in Juris-M).
 
 #### Filters
 

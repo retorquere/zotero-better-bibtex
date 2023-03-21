@@ -97,6 +97,18 @@ The postscript should be a `javascript` snippet. You can access the data with fo
 
 There isn't really an API. You can use regular javascript to manipulate the `csl` object, which is a [CSL-JSON](http://docs.citationstyles.org/en/stable/specification.html#appendix-iv-variables) object.
 
+## Item types and fields
+
+In a postscript `zotero.itemType` will have one of these values:
+
+{{< postscript/itemtypes >}}
+
+Other fields on the `zotero` object are:
+
+{{< postscript/fields >}}
+
+(types/fields marked <sup>Z</sup> are only available in Zotero, fields marked with <sup>JM</sup> are only available in Juris-M).
+
 ## Debugging
 
 There isn't much in place in terms of debugging, as tranlators (and
