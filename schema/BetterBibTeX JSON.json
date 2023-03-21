@@ -99,7 +99,8 @@
                 "both",
                 "doi",
                 "url"
-              ]
+              ],
+              "type": "string"
             },
             "ascii": {
               "type": "string"
@@ -121,7 +122,8 @@
                 "off",
                 "immediate",
                 "idle"
-              ]
+              ],
+              "type": "string"
             },
             "autoExportDelay": {
               "type": "number"
@@ -169,7 +171,8 @@
                 "note-url-ish",
                 "url",
                 "url-ish"
-              ]
+              ],
+              "type": "string"
             },
             "cache": {
               "type": "boolean"
@@ -207,7 +210,8 @@
                 "detect",
                 "match",
                 "match+reverse"
-              ]
+              ],
+              "type": "string"
             },
             "exportBraceProtection": {
               "type": "boolean"
@@ -238,7 +242,8 @@
                 "as-needed",
                 "on",
                 "off"
-              ]
+              ],
+              "type": "string"
             },
             "importCitationKey": {
               "type": "boolean"
@@ -260,7 +265,8 @@
                 "on+guess",
                 "on",
                 "off"
-              ]
+              ],
+              "type": "string"
             },
             "importUnknownTexCommand": {
               "type": "string"
@@ -278,13 +284,15 @@
               "enum": [
                 "change",
                 "keep"
-              ]
+              ],
+              "type": "string"
             },
             "keyScope": {
               "enum": [
                 "global",
                 "library"
-              ]
+              ],
+              "type": "string"
             },
             "kuroshiro": {
               "type": "boolean"
@@ -294,7 +302,8 @@
                 "langid",
                 "language",
                 "both"
-              ]
+              ],
+              "type": "string"
             },
             "logEvents": {
               "type": "boolean"
@@ -312,7 +321,8 @@
                 "text",
                 "math",
                 "creator"
-              ]
+              ],
+              "type": "string"
             },
             "parseParticles": {
               "type": "boolean"
@@ -349,13 +359,15 @@
                 "gitbook",
                 "selectlink",
                 "eta"
-              ]
+              ],
+              "type": "string"
             },
             "quickCopyOrgMode": {
               "enum": [
                 "zotero",
                 "citationkey"
-              ]
+              ],
+              "type": "string"
             },
             "quickCopyPandocBrackets": {
               "type": "boolean"
@@ -364,7 +376,8 @@
               "enum": [
                 "zotero",
                 "citationkey"
-              ]
+              ],
+              "type": "string"
             },
             "rawImports": {
               "type": "boolean"

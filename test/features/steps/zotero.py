@@ -23,6 +23,7 @@ import subprocess
 import atexit
 import time
 import datetime
+import jsonschema
 
 from collections import OrderedDict
 from collections.abc import MutableMapping
@@ -42,10 +43,9 @@ yaml.default_flow_style = False
 EXPORTED = os.path.join(ROOT, 'exported')
 FIXTURES = os.path.join(ROOT, 'test/fixtures')
 
-
 with open(os.path.join(ROOT, 'schema', 'BetterBibTeX JSON.json')) as f:
   bbt_json_schema = json.load(f)
-def validate(lib):
+def validate_bbt_json(lib):
   jsonschema.validate(instance=lib, schema=bbt_json_schema)
 
 def install_proxies(xpis, profile):
@@ -667,8 +667,13 @@ class Preferences:
     self.zotero = zotero
     self.pref = {}
     self.prefix = 'translators.better-bibtex.'
-    with open(os.path.join(os.path.dirname(__file__), 'preferences.json')) as f:
-      self.supported = {self.prefix + pref['name']: type(pref['default']) for pref in json.load(f)}
+
+    with open(os.path.join(ROOT, 'schema/BetterBibTeX JSON.json')) as f:
+      schema = json.load(f, object_hook=Munch)
+      self.supported = {
+        self.prefix + pref: {'string': str, 'boolean': bool, 'number': int}[tpe.type]
+        for pref, tpe in schema.properties.config.properties.preferences.properties.items()
+      }
     self.supported[self.prefix + 'removeStock'] = bool
     self.supported[self.prefix + 'ignorePostscriptErrors'] = bool
 

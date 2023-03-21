@@ -4,7 +4,7 @@
 
 import AJV from 'ajv'
 const ajv = new AJV
-const validate = ajv.compile(require('../test/features/steps/bbtjsonschema.json'))
+const validate = ajv.compile(require('../schema/BetterBibTeX JSON.json'))
 import * as jsonpatch from 'fast-json-patch'
 
 import { normalize } from '../translators/lib/normalize'

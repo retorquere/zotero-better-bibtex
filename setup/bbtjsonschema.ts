@@ -32,7 +32,7 @@ for (const [pref, dflt] of Object.entries(defaults)) {
   if (['client', 'platform', 'newTranslatorsAskRestart', 'testing'].includes(pref)) continue
 
   if (type === 'string' && options[pref]) {
-    schema.properties.config.properties.preferences.properties[pref] = { enum: Object.keys(options[pref]) }
+    schema.properties.config.properties.preferences.properties[pref] = { type: 'string', enum: Object.keys(options[pref]) }
   }
   else if (['string', 'boolean', 'number'].includes(type)) {
     schema.properties.config.properties.preferences.properties[pref] = { type }
