@@ -81,7 +81,10 @@ if args.prefs: cleanlib.append('--prefs')
 if args.attachments: cleanlib.append('--attachments')
 assert call(cleanlib, cwd=root) == 0, 'clean failed'
 with open(args.data) as f:
-  args.n = len(json.load(f)['items'])
+  data = json.load(f)
+  args.n = len(data['items'])
+  if not args.attachments and any(['attachment' in item for item in data['items']]):
+    print('*** WARNING ***:', args.data, 'has attachments')
 
 # insert example
 parser = Parser()
