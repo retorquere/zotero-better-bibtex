@@ -42,8 +42,8 @@ for (const [pref, dflt] of Object.entries(defaults)) {
   }
 }
 
-schema.properties.items.properties = {...schema.properties.items.items.properties}
-for (const k of Object.keys(schema.properties.items.properties)) {
+schema.properties.items.items.properties = {...schema.properties.items.items.properties}
+for (const k of Object.keys(schema.properties.items.items.properties)) {
   switch (k) { // keep these because they are not in the Zotero schema declaration
     case 'note':
     case 'multi':
@@ -61,7 +61,7 @@ for (const k of Object.keys(schema.properties.items.properties)) {
     case 'attachments':
       break
     default:
-      delete schema.properties.items.properties[k]
+      delete schema.properties.items.items.properties[k]
       break
   }
 }
