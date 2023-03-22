@@ -188,6 +188,7 @@ Feature: Export
 
     Examples:
       | file                                                                                                               | references |
+      | {relax} in author also removes trailing dot '.' #2454                                                              | 1          |
       | Author multi-character initial gets shortened #2419                                                                | 1          |
       | accented character in 'journal' field is not brace protected by bibtex export #2337                                | 1          |
       | Non-breakable spaces in author fields should be exported as tilde #1430                                            | 1          |

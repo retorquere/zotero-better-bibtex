@@ -1213,7 +1213,16 @@ export class Entry {
 
     let initials: string
     if (name.given === name.initials) {
-      name.given = `<span relax="true">${name.given.replace(/[.]$/, '')}</span>`
+      name.given = name.given.split(' ')
+        .map((initial: string) => {
+          if (Zotero.Utilities.XRegExp.exec(initial, this.re.longInitials)) {
+            return `<span relax="true">${initial.replace(/[.]$/, '')}</span>${initial.endsWith('.') ? '.' : ''}`
+          }
+          else {
+            return initial
+          }
+        })
+        .join(' ')
     }
     else if (name.given.startsWith(initials = name.initials.replace(/\.$/, ''))) {
       name.given = `<span relax="true">${initials}</span>${name.given.substr(initials.length)}`
