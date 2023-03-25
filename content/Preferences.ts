@@ -508,12 +508,14 @@ export class PrefPane {
       })
     }
 
+    /*
     const quickCopy = currentWin.document.getElementById('id-better-bibtex-preferences-quickCopyMode') as HTMLSelectElement
     const quickCopyMode = quickCopy.options[quickCopy.selectedIndex]?.value
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
     for (const node of (Array.from(currentWin.document.getElementsByClassName('better-bibtex-preferences-quickcopy-details')) as unknown[] as XUL.Element[])) {
       node.hidden = (node.id !== `better-bibtex-preferences-quickcopy-${quickCopyMode}`)
     }
+    */
 
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
     for (const state of (Array.from(currentWin.document.getElementsByClassName('better-bibtex-preferences-worker-state')) as unknown[] as XUL.Textbox[])) {
