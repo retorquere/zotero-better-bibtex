@@ -57,7 +57,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.auto-export.explanation "You can only review and remove exports here. To add an auto-export, perform an export as usual and check the 'Keep updated' option presented there.">
 <!ENTITY better-bibtex.Preferences.auto-export.idle "When Idle">
 <!ENTITY better-bibtex.Preferences.auto-export.immediate "On Change">
-<!ENTITY better-bibtex.Preferences.auto-export.off "Disabled">
+<!ENTITY better-bibtex.Preferences.auto-export.off "Paused">
 <!ENTITY better-bibtex.Preferences.auto-export.delay "Delay auto-export for">
 <!ENTITY better-bibtex.Preferences.auto-export.run "Export now">
 <!ENTITY better-bibtex.Preferences.auto-export.remove "Remove">
