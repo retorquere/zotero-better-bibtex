@@ -14,17 +14,28 @@ aliases:
 To export a library, group or collection, right-click on it in the left Zotero pane and choose "Export Library…" or "Export Collection…".
 With BBT's export translators (e.g., "Better BibTeX"), checking the `Keep updated` option will register the export for automation.
 After you’ve completed the current export, any changes to the collection or library will trigger an automatic re-export to update the file.
-You can review/remove exports from the BBT preferences.  While
-I've gone to some lengths to make sure performance is OK, don't go overboard with the number of auto-exports you have
-going. Also, exporting only targeted selections over your whole library will get you better performance. You can set up
+You can review/remove exports from the BBT preferences.  While I've gone to some lengths to make sure performance is OK, don't go overboard with the number of auto-exports you have going. Also, exporting only targeted selections over your whole library will get you better performance. You can set up
 separate exports for separate papers for example if you have set up a collection for each.
 
 ## Managing auto-exports
 
+There are two important concepts in play for auto-export
+
+* register a collection/library for scheduled epxorts, and
+* executing these scheduled exports
+
+When you check "keep updated" in the export screen, that means "in the future, schedule this export for re-export when any of its items change, to the file I pick next". If you do not check this checkbox, that merely means you are not registering the export you are doing, rather than undoing an auto-export you scheduled before.
+
+When these scheduled exports are ran depends on a further configuration in the preferences. You can choose to have scheduled exports to be ran:
+
+* **on change**: run the scheduled export as soon as possible
+* **on idle**: run the scheduled export as soon as Zotero goes idle (meaning you haven't used it for some seconds)
+* **paused**: run the scheduled exports manually, or run then whenever you change the setting back to "on change" or "on idle". In sthis mode, exports _are still scheduled_, they are just not ran until you give permission.
+
 After you've set up an auto-export using an `Keep updated` export,
 you can manage your auto-exports in the BBT preferences under the
-`Automatic exports` tab. There, you can remove auto-export, change
-settings on them, or remove them. You cannot add new auto-exports
+`Automatic exports` tab. There, you can remove auto-exports or change
+settings on them. You cannot add new auto-exports
 from here, that can only be done by initiating an export.
 
 ## Getting your BBT-generated bib(la)tex/citekeys to other places
