@@ -1,0 +1,40 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "bibtexURL": "url-ish",
+      "keyScope": "global",
+      "skipFields": "abstract,file"
+    }
+  },
+  "items": [
+    {
+      "ISBN": "978-92-64-56162-5 978-92-64-93390-3 978-92-64-74645-9",
+      "accessDate": "2023-03-26T21:34:30Z",
+      "citationKey": "oecdRealisingPotentialPrimary2020",
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "OECD"
+        }
+      ],
+      "date": "2020-05-30",
+      "extra": [
+        "DOI: 10.1787/a92adee4-en"
+      ],
+      "itemID": 1,
+      "itemType": "book",
+      "language": "en",
+      "libraryCatalog": "DOI.org (Crossref)",
+      "place": "Paris",
+      "publisher": "OECD",
+      "series": "OECD Health Policy Studies",
+      "title": "Realising the Potential of Primary Health Care",
+      "url": "https://www.oecd-ilibrary.org/social-issues-migration-health/realising-the-potential-of-primary-health-care_a92adee4-en"
+    }
+  ]
+}
