@@ -25,7 +25,7 @@ idle. You mostly want this if your computer is performance-constrained (aka slow
 
 Options:
 
-* Disabled
+* Paused
 * On Change
 * When Idle
 

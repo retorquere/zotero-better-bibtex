@@ -335,16 +335,26 @@ export function generateBibTeX(translation: Translation): void {
       switch (translation.preferences.bibtexURL) {
         case 'url':
         case 'url-ish':
-          urlfield = ref.add({ name: 'url', value: item.url || item.extraFields.kv.url, enc: translation.isVerbatimField('url') ? 'url' : 'latex' })
+          urlfield = ref.add({
+            name: 'url',
+            value: item.url || item.extraFields.kv.url,
+            enc: translation.preferences.bibtexURL === 'url' && translation.isVerbatimField('url') ? 'url' : 'latex',
+          })
           break
 
         case 'note':
         case 'note-url-ish':
-          urlfield = ref.add({ name: (['misc', 'booklet'].includes(ref.entrytype) && !ref.has.howpublished ? 'howpublished' : 'note'), value: item.url || item.extraFields.kv.url, enc: 'url' })
+          urlfield = ref.add({
+            name: (['misc', 'booklet'].includes(ref.entrytype) && !ref.has.howpublished ? 'howpublished' : 'note'),
+            value: item.url || item.extraFields.kv.url,
+            enc: translation.preferences.bibtexURL === 'note' ? 'url': 'latex',
+          })
           break
 
         default:
-          if (['csl.webpage', 'zotero.webpage', 'csl.post', 'csl.post-weblog'].includes(ref.entrytype_source)) urlfield = ref.add({ name: 'howpublished', value: item.url || item.extraFields.kv.url })
+          if (['csl.webpage', 'zotero.webpage', 'csl.post', 'csl.post-weblog'].includes(ref.entrytype_source)) {
+            urlfield = ref.add({ name: 'howpublished', value: item.url || item.extraFields.kv.url })
+          }
           break
       }
     }
