@@ -150,7 +150,7 @@
     "process": "^0.11.10",
     "properties-reader": "^2.2.0",
     "pug": "^3.0.2",
-    "putout": "^29.1.6",
+    "putout": "^29.1.7",
     "recast": "^0.22.0",
     "regenerate": "^1.4.2",
     "rimraf": "^4.4.1",
