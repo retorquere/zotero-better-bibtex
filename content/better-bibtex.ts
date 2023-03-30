@@ -912,6 +912,13 @@ export class BetterBibTeX {
 
     log.debug('Loading Better BibTeX: starting...')
 
+    const progress = new Progress
+    progress.start(l10n.localize('BetterBibTeX.startup.waitingForZotero'))
+
+    // https://groups.google.com/d/msg/zotero-dev/QYNGxqTSpaQ/uvGObVNlCgAJ
+    // this is what really takes long
+    await Zotero.Schema.schemaUpdatePromise
+
     await TeXstudio.init()
 
     for (const node of [...this.globals.document.getElementsByClassName('bbt-texstudio')]) {
@@ -950,11 +957,6 @@ export class BetterBibTeX {
         20 // eslint-disable-line no-magic-numbers
       )
     }
-    const progress = new Progress
-    progress.start(l10n.localize('BetterBibTeX.startup.waitingForZotero'))
-
-    // https://groups.google.com/d/msg/zotero-dev/QYNGxqTSpaQ/uvGObVNlCgAJ
-    await Zotero.Schema.schemaUpdatePromise
 
     this.dir = OS.Path.join(Zotero.DataDirectory.dir, 'better-bibtex')
     await OS.File.makeDir(this.dir, { ignoreExisting: true })
@@ -976,10 +978,6 @@ export class BetterBibTeX {
 
     // not yet started
     this.deferred.loaded.resolve(true)
-
-    // this is what really takes long
-    progress.update(l10n.localize('BetterBibTeX.startup.waitingForTranslators'), 40) // eslint-disable-line no-magic-numbers
-    await Zotero.Schema.schemaUpdatePromise
 
     progress.update(l10n.localize('BetterBibTeX.startup.journalAbbrev'), 60) // eslint-disable-line no-magic-numbers
     await JournalAbbrev.init()
