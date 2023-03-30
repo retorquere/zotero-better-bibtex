@@ -1,0 +1,15 @@
+@article{rehman2019multivariate,
+  title = {Multivariate Variational Mode Decomposition},
+  author = {family=Rehman, given=Naveed, prefix=ur, useprefix=false and Aftab, Hania},
+  date = {2019-12-01},
+  journaltitle = {IEEE Transactions on Signal Processing},
+  shortjournal = {Ieee T Signal Proces},
+  volume = {67},
+  number = {23},
+  pages = {6039--6052},
+  issn = {1053-587X, 1941-0476},
+  doi = {10.1109/TSP.2019.2951223},
+  url = {https://ieeexplore.ieee.org/document/8890883/},
+  urldate = {2023-03-01},
+  langid = {american}
+}

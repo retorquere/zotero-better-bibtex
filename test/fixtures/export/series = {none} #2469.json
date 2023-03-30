@@ -1,0 +1,56 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "citekeyFormat": "auth.lower+year+veryshorttitle.lower",
+      "exportBraceProtection": false,
+      "keyConflictPolicy": "change",
+      "skipFields": "abstract,note,file,keywords,annotation"
+    }
+  },
+  "items": [
+    {
+      "DOI": "10.1109/TSP.2019.2951223",
+      "ISSN": "1053-587X, 1941-0476",
+      "accessDate": "2023-03-01T09:14:19Z",
+      "archive": "Q1",
+      "archiveLocation": "\u5de5\u7a0b\u6280\u672f2\u533a",
+      "callNumber": "4.8750",
+      "citationKey": "rehman2019multivariate",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Naveed ur",
+          "lastName": "Rehman"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Hania",
+          "lastName": "Aftab"
+        }
+      ],
+      "date": "2019-12-1",
+      "extra": [
+        "129 citations (Crossref) [2023-03-14]"
+      ],
+      "issue": "23",
+      "itemID": 1,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "Ieee T Signal Proces",
+      "language": "en-US",
+      "libraryCatalog": "\u5de5\u7a0b\uff1a\u7535\u5b50\u4e0e\u7535\u6c142\u533a",
+      "pages": "6039-6052",
+      "publicationTitle": "IEEE Transactions on Signal Processing",
+      "rights": "5.5678",
+      "seriesText": "\u65e0",
+      "seriesTitle": "\u65e0",
+      "title": "Multivariate Variational Mode Decomposition",
+      "url": "https://ieeexplore.ieee.org/document/8890883/",
+      "volume": "67"
+    }
+  ]
+}

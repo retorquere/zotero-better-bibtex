@@ -421,7 +421,7 @@ export function generateBibLaTeX(translation: Translation): void {
       }
     }
 
-    entry.add({ name: 'series', value: item.seriesTitle || item.series, bibtexStrings: true })
+    entry.add({ name: 'series', value: item.series, bibtexStrings: true })
 
     switch (entry.entrytype) {
       case 'report':
