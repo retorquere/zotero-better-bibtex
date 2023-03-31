@@ -745,11 +745,10 @@ with open(os.path.join(ITEMS, 'items.ts'), 'w') as items, open(os.path.join(ITEM
   #stringizer = lambda x: DG.nodes[x]['name'] if x in DG.nodes else x
   #nx.write_gml(DG, 'fields.gml') # , stringizer)
 
-print('  writing csl-types')
-with open(os.path.join(ITEMS, 'csl-types.json'), 'w') as f:
-  types = set()
-  for type_ in jsonpath.parse('*.csl.types.*').find(SCHEMA):
-    types.add(str(type_.full_path).split('.')[-1])
-  for type_ in jsonpath.parse('*.csl.unmapped.*').find(SCHEMA):
-    if type_.value == 'type': types.add(str(type_.full_path).split('.')[-1])
-  json.dump(list(types), f)
+print('  writing csl-metadata')
+with open(os.path.join(ITEMS, 'csl.json'), 'w') as f, open('submodules/citation-style-language-schema/schemas/input/csl-data.json') as s:
+  schema = json.load(s, object_hook=Munch.fromDict)['items'].properties
+  for p, m in schema.items():
+    if 'type' in m and type(m.type) == list:
+      m.type = sorted(m.type)
+  json.dump(schema, f, indent='  ')

@@ -26,3 +26,7 @@
 	path = submodules/biber
 	url = https://github.com/plk/biber.git
 	branch = dev
+[submodule "submodules/citation-style-language-schema"]
+	path = submodules/citation-style-language-schema
+	url = https://github.com/citation-style-language/schema
+	branch = master
