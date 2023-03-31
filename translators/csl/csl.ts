@@ -115,24 +115,29 @@ export abstract class CSLExporter {
       }
 
       for (const [name, value] of Object.entries(item.extraFields.kv)) {
+        if (!value) continue
+
         const cslField = CSLField[name]
         if (cslField) {
           if (cslField.type === 'string' && cslField.enum?.includes(value)) {
             csl[name] = value
+            delete item.extraFields.kv[name]
             continue
           }
           if (cslField.$ref === '#/definitions/date-variable') {
             csl[name] = this.date2CSL(dateparser.parse(value))
+            delete item.extraFields.kv[name]
             continue
           }
           if (cslField.type === 'string' || (Array.isArray(cslField.type) || cslField.type.join(',') === 'number,string')) {
             csl[name] = value
+            delete item.extraFields.kv[name]
             continue
           }
         }
 
         const ef = ExtraFields[name]
-        if (!ef?.csl || !value) continue
+        if (!ef?.csl) continue
 
         if (ef.type === 'date') {
           csl[name] = this.date2CSL(dateparser.parse(value))
