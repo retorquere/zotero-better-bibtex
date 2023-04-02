@@ -845,28 +845,23 @@ export class BetterBibTeX {
   public PrefPane = new PrefPane
 
   public ready: BluebirdPromise<boolean>
-  public loaded: BluebirdPromise<boolean>
+  private deferred = new Deferred<boolean>()
   public dir: string
 
   private firstRun: { citekeyFormat: string, dragndrop: boolean, unabbreviate: boolean, strings: boolean }
   private globals: Record<string, any>
   public debugEnabledAtStart: boolean
 
-  private deferred = {
-    loaded: new Deferred<boolean>(),
-    ready: new Deferred<boolean>(),
-  }
   private loads = 0
 
   constructor() {
     this.debugEnabledAtStart = Zotero.Prefs.get('debug.store')
 
-    this.ready = this.deferred.ready.promise
-    this.loaded = this.deferred.loaded.promise
+    this.ready = this.deferred.promise
   }
 
   public async scanAUX(target: string): Promise<void> {
-    await this.loaded
+    await this.ready
 
     const aux = await AUXScanner.pick()
     if (!aux) return
@@ -976,9 +971,6 @@ export class BetterBibTeX {
     progress.update(l10n.localize('BetterBibTeX.startup.autoExport.load'), 30) // eslint-disable-line no-magic-numbers
     await AutoExport.init()
 
-    // not yet started
-    this.deferred.loaded.resolve(true)
-
     progress.update(l10n.localize('BetterBibTeX.startup.journalAbbrev'), 60) // eslint-disable-line no-magic-numbers
     await JournalAbbrev.init()
 
@@ -991,7 +983,7 @@ export class BetterBibTeX {
     progress.update(l10n.localize('BetterBibTeX.startup.autoExport'), 90) // eslint-disable-line no-magic-numbers
     AutoExport.start()
 
-    this.deferred.ready.resolve(true)
+    this.deferred.resolve(true)
 
     progress.done()
 
