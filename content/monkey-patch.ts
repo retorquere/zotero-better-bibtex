@@ -23,3 +23,4 @@ export function unpatch(functions?: Trampoline[]) {
 }
 
 patch.enabled = true
+patch.started = 0

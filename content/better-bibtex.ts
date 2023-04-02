@@ -908,11 +908,13 @@ export class BetterBibTeX {
     log.debug('Loading Better BibTeX: starting...')
 
     const progress = new Progress
+    Zotero.debug(`{better-bibtex-startup} waiting for Zotero @ ${Date.now() - $patch$.started}`)
     progress.start(l10n.localize('BetterBibTeX.startup.waitingForZotero'))
 
     // https://groups.google.com/d/msg/zotero-dev/QYNGxqTSpaQ/uvGObVNlCgAJ
     // this is what really takes long
     await Zotero.Schema.schemaUpdatePromise
+    Zotero.debug(`{better-bibtex-startup} Zotero ready @ ${Date.now() - $patch$.started}`)
 
     await TeXstudio.init()
 
@@ -984,6 +986,7 @@ export class BetterBibTeX {
     AutoExport.start()
 
     this.deferred.resolve(true)
+    Zotero.debug(`{better-bibtex-startup} startup ready @ ${Date.now() - $patch$.started}`)
 
     progress.done()
 
