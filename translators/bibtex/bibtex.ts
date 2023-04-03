@@ -668,6 +668,21 @@ export class ZoteroItem {
     return this.fallback(['booktitle'], value)
   }
 
+  protected $entrysubtype(value: string): boolean {
+    if (!this.item.itemType.endsWith('Article')) return false
+
+    const type = value.toLowerCase()
+    switch (type) {
+      case 'encyclopedia':
+      case 'magazine':
+      case 'newspaper':
+        this.item.itemType = `${type}Article`
+        return true
+    }
+
+    return false
+  }
+
   protected $journaltitle(): boolean {
     let journal: { field: string, value: string}, abbr: { field: string, value: string} = null
 
