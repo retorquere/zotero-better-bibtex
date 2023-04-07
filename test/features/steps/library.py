@@ -147,7 +147,7 @@ def load(lib):
 
   # renumber collections
   collectionKeys = {}
-  for coll in sorted(lib['collections'].values(), key=lambda c: json.dumps(unkey(c), sort_keys=True)):
+  for coll in sorted(lib['collections'].values(), key=lambda c: (c.get('parent'), c.get('name'))):
     collKey = collectionKeys[coll['key']] = str(len(collectionKeys)).rjust(10, '0')
     coll['key'] = collKey
   for coll in list(lib['collections'].values()):
