@@ -14,7 +14,8 @@
     "exportNotes": true,
     "exportFileData": false,
     "keepUpdated": false,
-    "worker": false
+    "worker": false,
+    "Normalize": false
   },
   "translatorType": 3,
   "browserSupport": "gcsv",

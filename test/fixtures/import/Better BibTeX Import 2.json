@@ -2,55 +2,168 @@
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "localeDateOrder": "ymd"
+    "preferences": {
+      "ascii": "",
+      "asciiBibLaTeX": false,
+      "asciiBibTeX": true,
+      "autoAbbrev": false,
+      "autoAbbrevStyle": "",
+      "autoExport": "immediate",
+      "autoExportDelay": 5,
+      "autoExportIdleWait": 10,
+      "autoExportPathReplaceDiacritics": false,
+      "autoExportPathReplaceDirSep": "-",
+      "autoExportPathReplaceSpace": " ",
+      "automaticTags": true,
+      "autoPinDelay": 0,
+      "auxImport": false,
+      "baseAttachmentPath": "",
+      "biblatexExtendedDateFormat": true,
+      "biblatexExtendedNameFormat": true,
+      "biblatexExtractEprint": true,
+      "bibtexParticleNoOp": false,
+      "bibtexURL": "off",
+      "cache": true,
+      "cacheFlushInterval": 5,
+      "charmap": "",
+      "citeCommand": "cite",
+      "citekeyFold": true,
+      "citekeyFormat": "auth + year",
+      "citekeySearch": true,
+      "citekeyUnsafeChars": "\\\"#%'(),={}~",
+      "csquotes": "",
+      "DOIandURL": "both",
+      "exportBibTeXStrings": "off",
+      "exportBraceProtection": true,
+      "exportTitleCase": true,
+      "extraMergeCitekeys": false,
+      "extraMergeCSL": false,
+      "extraMergeTeX": false,
+      "git": "config",
+      "import": true,
+      "importBibTeXStrings": true,
+      "importCaseProtection": "as-needed",
+      "importCitationKey": true,
+      "importExtra": true,
+      "importJabRefAbbreviations": true,
+      "importJabRefStrings": true,
+      "importNoteToExtra": "",
+      "importSentenceCase": "on+guess",
+      "importUnknownTexCommand": "ignore",
+      "itemObserverDelay": 5,
+      "jabrefFormat": 0,
+      "jieba": false,
+      "keyConflictPolicy": "keep",
+      "keyScope": "library",
+      "kuroshiro": false,
+      "language": "langid",
+      "mapMath": "",
+      "mapText": "",
+      "mapUnicode": "conservative",
+      "parseParticles": true,
+      "patchDates": "dateadded=dateAdded, date-added=dateAdded, datemodified=dateModified, date-modified=dateModified",
+      "postscript": "",
+      "postscriptOverride": "",
+      "preferencesOverride": "",
+      "qualityReport": false,
+      "quickCopyEta": "",
+      "quickCopyMode": "latex",
+      "quickCopyOrgMode": "zotero",
+      "quickCopyPandocBrackets": false,
+      "quickCopySelectLink": "zotero",
+      "rawImports": false,
+      "rawLaTag": "#LaTeX",
+      "relativeFilePaths": false,
+      "retainCache": false,
+      "separatorList": "and",
+      "separatorNames": "and",
+      "skipFields": "",
+      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
+      "startupProgress": "popup",
+      "strings": "",
+      "stringsOverride": "",
+      "verbatimFields": "url,doi,file,pdf,ids,eprint,/^verb[a-z]$/,groups,/^citeulike-linkout-[0-9]+$/, /^bdsk-url-[0-9]+$/",
+      "warnBulkModify": 10,
+      "warnTitleCased": false,
+      "texmap": {}
+    },
+    "options": {
+      "exportNotes": true,
+      "exportFileData": false,
+      "keepUpdated": false,
+      "worker": false
+    }
   },
+  "version": {
+    "zotero": "6.0.23",
+    "bbt": "6.7.67.emile.limonia"
+  },
+  "collections": {},
   "items": [
     {
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Milton",
-          "lastName": "Abramowitz"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "Irene A.",
-          "lastName": "Stegun"
-        }
-      ],
-      "date": "1964",
-      "edition": "ninth Dover printing, tenth GPO printing",
-      "extra": [
-        "Citation Key: abramowitz+stegun"
-      ],
-      "itemID": 1,
+      "version": 0,
       "itemType": "book",
+      "edition": "ninth Dover printing, tenth GPO printing",
       "place": "New York",
       "publisher": "Dover",
-      "title": "Handbook of mathematical functions with formulas, graphs, and mathematical tables"
-    },
-    {
-      "ISBN": "0-385-52740-3",
+      "date": "1964",
+      "extra": "Citation Key: abramowitz+stegun",
+      "title": "Handbook of mathematical functions with formulas, graphs, and mathematical tables",
       "creators": [
         {
-          "creatorType": "author",
-          "firstName": "Joe",
-          "lastName": "Torre"
+          "firstName": "Milton",
+          "lastName": "Abramowitz",
+          "creatorType": "author"
         },
         {
-          "creatorType": "author",
-          "firstName": "Tom",
-          "lastName": "Verducci"
+          "firstName": "Irene A.",
+          "lastName": "Stegun",
+          "creatorType": "author"
         }
       ],
-      "date": "2008",
-      "extra": [
-        "Citation Key: Torre2008"
-      ],
-      "itemID": 2,
+      "tags": [],
+      "relations": [],
+      "dateAdded": "2023-04-07T11:16:01Z",
+      "dateModified": "2023-04-07T11:16:01Z",
+      "uri": "http://zotero.org/users/8230813/items/PTFTWTMF",
+      "attachments": [],
+      "notes": [],
+      "citationKey": "abramowitz+stegun",
+      "itemID": 103,
+      "itemKey": "PTFTWTMF",
+      "libraryID": 1
+    },
+    {
+      "version": 0,
       "itemType": "book",
       "publisher": "Doubleday",
-      "title": "The yankee years"
+      "ISBN": "0-385-52740-3",
+      "date": "2008",
+      "extra": "Citation Key: Torre2008",
+      "title": "The yankee years",
+      "creators": [
+        {
+          "firstName": "Joe",
+          "lastName": "Torre",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Tom",
+          "lastName": "Verducci",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [],
+      "relations": [],
+      "dateAdded": "2023-04-07T11:16:01Z",
+      "dateModified": "2023-04-07T11:16:01Z",
+      "uri": "http://zotero.org/users/8230813/items/DIEJS5Q7",
+      "attachments": [],
+      "notes": [],
+      "citationKey": "Torre2008",
+      "itemID": 104,
+      "itemKey": "DIEJS5Q7",
+      "libraryID": 1
     }
   ]
 }

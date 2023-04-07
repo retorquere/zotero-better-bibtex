@@ -60,6 +60,9 @@
             "Authors": {
               "type": "boolean"
             },
+            "Normalize": {
+              "type": "boolean"
+            },
             "Title": {
               "type": "boolean"
             },

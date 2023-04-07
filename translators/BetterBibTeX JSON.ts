@@ -8,7 +8,7 @@ import { simplifyForImport, simplifyForExport } from '../gen/items/simplify'
 const version = require('../gen/version.js')
 import { stringify } from '../content/stringify'
 import { log } from '../content/logger'
-import { normalize, Library } from './lib/normalize'
+import type { Library } from './lib/normalize'
 
 const chunkSize = 0x100000
 
@@ -169,7 +169,7 @@ export function doExport(): void {
         (item as any).relations = item.relations?.['dc:relation'] || []
         delete item.collections
 
-        simplifyForExport(item, { dropAttachments: translation.options.dropAttachments})
+        if (translation.options.Normalize) simplifyForExport(item, { dropAttachments: translation.options.dropAttachments})
 
         for (const att of item.attachments || []) {
           if (translation.options.exportFileData && att.saveFile && att.defaultPath) {
@@ -196,8 +196,6 @@ export function doExport(): void {
 
     data.items.push(item)
   }
-
-  if (translation.preferences.testing) normalize(data)
 
   Zotero.write(stringify(data, '  ', true))
   translation.erase()
