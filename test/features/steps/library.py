@@ -3,6 +3,7 @@ import json
 from copy import deepcopy
 from steps.utils import html2md, HashableDict, print
 import steps.utils as utils
+import sqlite3
 
 def unnest(obj, key):
   if type(obj) == str: return obj
@@ -135,19 +136,35 @@ def load(lib):
 
   if 'collections' not in lib: lib['collections'] = {}
 
-  # remove strays
-  # lib['collections'] = {
-  #  k: coll
-  #  for k, coll in lib['collections'].items()
-  #  if not 'parent' in coll or coll['parent'] == False or coll['parent'] in lib['collections']
-  #}
+  db = sqlite3.connect(':memory:')
+  db.execute('CREATE TABLE collections (id, name, parent)')
   for coll in lib['collections'].values():
+    db.execute('INSERT INTO collections (id, name) VALUES (?, ?)', (coll['key'], coll['name']))
     coll.pop('parent', None)
     coll.pop('id', None)
+  for coll in lib['collections'].values():
+    for sub in coll.get('collections', []):
+      db.execute('UPDATE collections SET parent = ? WHERE id = ?', (coll['key'], sub))
+  def collectionName(key):
+    q = '''
+      WITH RECURSIVE path(level, name, parent) AS (
+        SELECT 0, name, parent FROM collections WHERE id = ?
+
+        UNION ALL
+
+        SELECT path.level + 1, collections.name, collections.parent FROM collections JOIN path ON collections.id = path.parent
+      )
+      ,path_from_root AS (
+        SELECT name FROM path ORDER BY level DESC
+      )
+      SELECT group_concat(name, ' :: ') FROM path_from_root;
+    '''
+    for row in db.execute(q, (key,)):
+      return row[0]
 
   # renumber collections
   collectionKeys = {}
-  for coll in sorted(lib['collections'].values(), key=lambda c: (c.get('parent'), c.get('name'))):
+  for coll in sorted(lib['collections'].values(), key=lambda c: collectionName(c['key'])):
     collKey = collectionKeys[coll['key']] = str(len(collectionKeys)).rjust(10, '0')
     coll['key'] = collKey
   for coll in list(lib['collections'].values()):
