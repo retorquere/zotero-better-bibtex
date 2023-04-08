@@ -39,7 +39,7 @@ export const options: Partial<Record<PreferenceName, Record<string, string>>> = 
 ) %>
 
 <%
-const ignoreOptions = ['worker', 'exportFileData', 'keepUpdated']
+const ignoreOptions = ['worker', 'exportFileData', 'keepUpdated', 'Normalize']
 const overrides = it.preferences.filter(pref => pref.override)
 
 const schema = {}
