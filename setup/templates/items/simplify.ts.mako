@@ -61,7 +61,7 @@ export function simplifyForExport(item: any, { creators=true, dropAttachments=fa
 }
 
 export function simplifyForImport(item: any): Item {
-  unalias(item, { scrub: true })
+  // unalias(item, { scrub: true })
 
   if (item.creators) {
     for (const creator of item.creators) {

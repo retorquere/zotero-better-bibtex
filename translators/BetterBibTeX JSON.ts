@@ -4,7 +4,7 @@ import { Translation, TranslatorMetadata, collect } from './lib/translator'
 declare var ZOTERO_TRANSLATOR_INFO: TranslatorMetadata // eslint-disable-line no-var
 
 // import { validItem } from '../content/ajv'
-import { simplifyForExport } from '../gen/items/simplify'
+import { simplifyForImport, simplifyForExport } from '../gen/items/simplify'
 const version = require('../gen/version.js')
 // import { stringify } from '../content/stringify'
 // import { log } from '../content/logger'
@@ -44,7 +44,7 @@ export async function doImport(): Promise<void> {
 
   const items = new Set<number>
   for (const source of (data.items as any[])) {
-    // simplifyForImport(source)
+    simplifyForImport(source)
 
     // I do export these but the cannot be imported back
     delete source.relations
