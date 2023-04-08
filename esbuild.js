@@ -250,7 +250,7 @@ async function rebuild() {
         loader.__dirname,
         shims
       ],
-      inject: ['./setup/loaders/globals.js'],
+      // inject: ['./setup/loaders/globals.js'],
       outfile,
       banner: { js: `
         if (typeof ZOTERO_TRANSLATOR_INFO === 'undefined') var ZOTERO_TRANSLATOR_INFO = {}; // declare if not declared

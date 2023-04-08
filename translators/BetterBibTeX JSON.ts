@@ -3,11 +3,11 @@ declare const Zotero: any
 import { Translation, TranslatorMetadata, collect } from './lib/translator'
 declare var ZOTERO_TRANSLATOR_INFO: TranslatorMetadata // eslint-disable-line no-var
 
-import { validItem } from '../content/ajv'
-import { simplifyForImport, simplifyForExport } from '../gen/items/simplify'
+// import { validItem } from '../content/ajv'
+import { simplifyForExport } from '../gen/items/simplify'
 const version = require('../gen/version.js')
-import { stringify } from '../content/stringify'
-import { log } from '../content/logger'
+// import { stringify } from '../content/stringify'
+// import { log } from '../content/logger'
 import type { Library } from './lib/normalize'
 
 const chunkSize = 0x100000
@@ -44,7 +44,7 @@ export async function doImport(): Promise<void> {
 
   const items = new Set<number>
   for (const source of (data.items as any[])) {
-    simplifyForImport(source)
+    // simplifyForImport(source)
 
     // I do export these but the cannot be imported back
     delete source.relations
@@ -77,8 +77,8 @@ export async function doImport(): Promise<void> {
     // marker so BBT-JSON can be imported without extra-field meddling
     if (source.extra) source.extra = `\x1BBBT\x1B${source.extra}`
 
-    const error = validItem(source)
-    if (error) throw new Error(error)
+    // const error = validItem(source)
+    // if (error) throw new Error(error)
 
     const item = new Zotero.Item()
     Object.assign(item, source)
@@ -101,7 +101,7 @@ export async function doImport(): Promise<void> {
     collection.zoteroCollection.name = collection.name
     collection.zoteroCollection.children = collection.items.filter(id => {
       if (items.has(id)) return true
-      log.error(`Collection ${collection.key} has non-existent item ${id}`)
+      Zotero.debug(`Collection ${collection.key} has non-existent item ${id}`)
       return false
     }).map(id => ({type: 'item', id}))
   }
@@ -110,7 +110,7 @@ export async function doImport(): Promise<void> {
       (data.collections[collection.parent] as unknown as any).zoteroCollection.children.push(collection.zoteroCollection)
     }
     else {
-      if (collection.parent) log.error(`Collection ${collection.key} has non-existent parent ${collection.parent}`)
+      if (collection.parent) Zotero.debug(`Collection ${collection.key} has non-existent parent ${collection.parent}`)
       collection.parent = false
     }
   }
@@ -197,6 +197,6 @@ export function doExport(): void {
     data.items.push(item)
   }
 
-  Zotero.write(stringify(data, '  ', true))
+  Zotero.write(JSON.stringify(data, null, 2))
   translation.erase()
 }
