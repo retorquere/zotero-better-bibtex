@@ -415,24 +415,34 @@ export class KeyManager {
     }, new Map)
 
     const deleted: number[] = []
+    const activity = {
+      deleted: 0,
+      updated: 0,
+      regen: 0,
+    }
     for (const bbt of this.keys.data) {
       const zotero = inzdb.get(bbt.itemID)
 
       if (!zotero) {
         deleted.push(bbt.itemID)
+        activity.deleted++
       }
       else if (zotero.citationKey && (!bbt.pinned || bbt.citekey !== zotero.citationKey)) {
         this.keys.update({...bbt, pinned: true, citekey: zotero.citationKey, itemKey: zotero.itemKey })
+        activity.updated++
       }
       else if (!zotero.citationKey && bbt.citekey && bbt.pinned) {
         this.keys.update({...bbt, pinned: false, itemKey: zotero.itemKey})
+        activity.updated++
       }
       else if (!bbt.citekey) { // this should not be possible
         this.regenerate.push(bbt.itemID)
+        activity.regen++
       }
 
       inzdb.delete(bbt.itemID)
     }
+    log.debug('keymanager.rescan:', activity)
 
     this.keys.findAndRemove({ itemID: { $in: [...deleted, ...this.regenerate] } })
     this.regenerate.push(...inzdb.keys()) // generate new keys for items that are in the Z db but not in the BBT db
