@@ -962,9 +962,10 @@ export class BetterBibTeX {
 
     await Preference.initAsync(this.dir)
 
-    progress.update(l10n.localize('BetterBibTeX.startup.loadingKeys'), 10) // eslint-disable-line no-magic-numbers
+    progress.update(l10n.localize('BetterBibTeX.startup.loadingDatabases'), 5) // eslint-disable-line no-magic-numbers
     await Promise.all([Cache.init(), DB.init()])
 
+    progress.update(l10n.localize('BetterBibTeX.startup.loadingKeys'), 10) // eslint-disable-line no-magic-numbers
     await this.KeyManager.init() // loads the existing keys
 
     progress.update(l10n.localize('BetterBibTeX.startup.serializationCache'), 20) // eslint-disable-line no-magic-numbers

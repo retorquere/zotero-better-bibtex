@@ -166,9 +166,11 @@ export class KeyManager {
   }
 
   public async init(): Promise<void> {
+    log.debug('keymanager.init: kuroshiro/jieba')
     await kuroshiro.init()
     jieba.init()
 
+    log.debug('keymanager.init: get keys')
     this.keys = DB.getCollection('citekey')
 
     this.query = {
@@ -176,6 +178,7 @@ export class KeyManager {
       type: {},
     }
 
+    log.debug('keymanager.init: pre-fetching types/fields')
     for (const type of await ZoteroDB.queryAsync('select itemTypeID, typeName from itemTypes')) { // 1 = attachment, 14 = note
       this.query.type[type.typeName] = type.itemTypeID
     }
@@ -184,7 +187,9 @@ export class KeyManager {
       this.query.field[field.fieldName] = field.fieldID
     }
 
+    log.debug('keymanager.init: compiling', Preference.citekeyFormat)
     Formatter.update([Preference.citekeyFormat])
+    log.debug('keymanager.init: done')
   }
 
   public async start(): Promise<void> {
