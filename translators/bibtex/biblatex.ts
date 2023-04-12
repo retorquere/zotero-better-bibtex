@@ -339,7 +339,10 @@ export function generateBibLaTeX(translation: Translation): void {
 
     entry.add({ name: 'pagetotal', value: item.numPages })
 
-    const number_added = entry.add({ name: 'number', value: patent.number(item) || item.number || item.seriesNumber })
+    let number_added = ''
+    if (!item.number?.match(/arxiv/i) || !entry.has.eprint) {
+      number_added = entry.add({ name: 'number', value: patent.number(item) || item.number || item.seriesNumber })
+    }
     entry.add({ name: !number_added && looks_like_number_field(item.issue) ? 'number' : 'issue', value: item.issue })
 
     const journalAbbreviation = item.journalAbbreviation || item.autoJournalAbbreviation

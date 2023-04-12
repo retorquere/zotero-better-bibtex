@@ -298,23 +298,21 @@ export class Entry {
 
     if (item.itemType === 'preprint' && item.publisher) {
       if (item.publisher?.match(/arxiv/i)) {
-        item.arXiv = { source: 'preprint', id: item.number, category: item.section }
+        item.arXiv = arXiv.parse(item.number, 'preprint')
       }
       else {
         this.add({ name: 'eprint', value: item.number })
         this.add({ name: eprinttype, value: item.publisher })
-        this.add({ name: eprintclass, value: item.section })
       }
     }
     else if (this.extractEprint()) {
       // pass
     }
-    else if ((item.arXiv = arXiv.parse(item.publicationTitle)) && item.arXiv.id) {
-      item.arXiv.source = 'publicationTitle'
+    else if ((item.arXiv = arXiv.parse(item.publicationTitle, 'publicationTitle')) && item.arXiv.id) {
       if (this.translation.BetterBibLaTeX) delete item.publicationTitle
     }
-    else if ((item.arXiv = arXiv.parse(item.extraFields.tex.arxiv?.value)) && item.arXiv.id) {
-      item.arXiv.source = 'extra'
+    else if ((item.arXiv = arXiv.parse(item.extraFields.tex.arxiv?.value, 'extra')) && item.arXiv.id) {
+      // pass
     }
     else {
       item.arXiv = null
@@ -322,6 +320,10 @@ export class Entry {
 
     if (item.arXiv) {
       delete item.extraFields.tex.arxiv
+
+      // section can be set from extra
+      item.arXiv.category = item.arXiv.category || item.section
+
       this.add({ name: 'eprint', value: item.arXiv.id })
       this.add({ name: eprinttype, value: 'arxiv'})
       this.add({ name: eprintclass, value: item.arXiv.category })
