@@ -303,6 +303,7 @@ export class Entry {
       else {
         this.add({ name: 'eprint', value: item.number })
         this.add({ name: eprinttype, value: item.publisher })
+        this.add({ name: eprintclass, value: item.section })
       }
     }
     else if (this.extractEprint()) {
