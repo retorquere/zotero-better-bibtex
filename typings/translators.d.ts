@@ -28,7 +28,8 @@ export namespace Translators {
     }
 
     type Message = 
-        { kind: 'configure', environment: Environment }
+        { kind: 'initialize', CSL_MAPPINGS: any }
+      | { kind: 'configure', environment: Environment }
       | { kind: 'start', config: ArrayBuffer }
       | { kind: 'done', output: boolean | string }
       | { kind: 'debug', message: string }
