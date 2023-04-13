@@ -76,32 +76,32 @@ export const label: Record<string, string> = {
     return sorted(u)
 
 %>
-const schema_csl_mappings = {
-%for client, schema in [(cl, schemas[cl]) for cl in ['zotero', 'jurism']]:
-  ${client}: {
-    CSL_TYPE_MAPPINGS: {
-      %for zoteroType, cslType in uniq([(zotero, csl) for csl, types in schema.csl.types.items() for zotero in types]):
-      ${zoteroType}: '${cslType}',
-      %endfor
-    },
-    CSL_TYPE_MAPPINGS_REVERSE: {
-      %for cslType, zoteroTypes in uniq(schema.csl.types.items()):
-      ${jsesc(cslType, True)}: ${jsesc(zoteroTypes)},
-      %endfor
-    },
-    %for kind in ['text', 'date', 'name']:
-    CSL_${kind.upper()}_MAPPINGS: {
-      %for cslType, zoteroTypes in uniq((schema.csl.names if kind == 'name' else schema.csl.fields[kind]).items()):
-      ${jsesc(cslType, True)}: ${jsesc(zoteroTypes)},
-      %endfor
-    },
-    %endfor
-    CSL_FIELD_MAPPINGS_REVERSE: {
-      %for zoteroField, cslField in uniq( [(zotero, csl) for csl, types in schema.csl.fields.text.items() for zotero in types] + [(zotero, csl) for csl, types in schema.csl.fields.date.items() for zotero in (types if type(types) == list else [types])]):
-      ${zoteroField}: '${cslField}',
-      %endfor
-    },
-  },
-%endfor
-}
-export const CSL_MAPPINGS = schema_csl_mappings[client]
+## const schema_csl_mappings = {
+## %for client, schema in [(cl, schemas[cl]) for cl in ['zotero', 'jurism']]:
+##   ${client}: {
+##     CSL_TYPE_MAPPINGS: {
+##       %for zoteroType, cslType in uniq([(zotero, csl) for csl, types in schema.csl.types.items() for zotero in types]):
+##       ${zoteroType}: '${cslType}',
+##       %endfor
+##     },
+##     CSL_TYPE_MAPPINGS_REVERSE: {
+##       %for cslType, zoteroTypes in uniq(schema.csl.types.items()):
+##       ${jsesc(cslType, True)}: ${jsesc(zoteroTypes)},
+##       %endfor
+##     },
+##     %for kind in ['text', 'date', 'name']:
+##     CSL_${kind.upper()}_MAPPINGS: {
+##       %for cslType, zoteroTypes in uniq((schema.csl.names if kind == 'name' else schema.csl.fields[kind]).items()):
+##       ${jsesc(cslType, True)}: ${jsesc(zoteroTypes)},
+##       %endfor
+##     },
+##     %endfor
+##     CSL_FIELD_MAPPINGS_REVERSE: {
+##       %for zoteroField, cslField in uniq( [(zotero, csl) for csl, types in schema.csl.fields.text.items() for zotero in types] + [(zotero, csl) for csl, types in schema.csl.fields.date.items() for zotero in (types if type(types) == list else [types])]):
+##       ${zoteroField}: '${cslField}',
+##       %endfor
+##     },
+##   },
+## %endfor
+## }
+## export const CSL_MAPPINGS = schema_csl_mappings[client]
