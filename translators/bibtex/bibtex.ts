@@ -2,7 +2,7 @@ declare const Zotero: any
 
 import { log } from '../../content/logger'
 import { Exporter as BibTeXExporter } from './exporter'
-import { arXiv } from '../../content/arXiv'
+import { parse as arXiv } from '../../content/arXiv'
 import { validItem } from '../../content/ajv'
 import { valid, label } from '../../gen/items/items'
 import wordsToNumbers from 'words-to-numbers'
@@ -1274,7 +1274,7 @@ export class ZoteroItem {
 
     if (this.eprint.slaccitation && !this.eprint.eprint) {
       const m = this.eprint.slaccitation.match(/^%%CITATION = (.+);%%$/)
-      const arxiv = arXiv.parse(m && m[1].trim())
+      const arxiv = arXiv(m && m[1].trim())
 
       if (arxiv.id) {
         this.eprint.eprintType = this.eprint.eprinttype = 'arXiv'

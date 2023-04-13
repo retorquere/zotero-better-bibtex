@@ -296,27 +296,31 @@ export class Entry {
     const eprinttype = this.translation.BetterBibTeX ? 'archiveprefix' : 'eprinttype'
     const eprintclass = this.translation.BetterBibTeX ? 'primaryclass' : 'eprintclass'
 
+    item.arXiv = new arXiv
+
     if (item.itemType === 'preprint' && item.publisher) {
       if (item.publisher?.match(/arxiv/i)) {
-        item.arXiv = arXiv.parse(item.number, 'preprint')
+        item.arXiv.parse(item.number, 'preprint')
       }
       else {
         this.add({ name: 'eprint', value: item.number })
         this.add({ name: eprinttype, value: item.publisher })
         this.add({ name: eprintclass, value: item.section })
+        item.arXiv = null
       }
     }
     else if (this.extractEprint()) {
-      // pass
-    }
-    else if ((item.arXiv = arXiv.parse(item.publicationTitle, 'publicationTitle')) && item.arXiv.id) {
-      if (this.translation.BetterBibLaTeX) delete item.publicationTitle
-    }
-    else if ((item.arXiv = arXiv.parse(item.extraFields.tex.arxiv?.value, 'extra')) && item.arXiv.id) {
-      // pass
-    }
-    else {
       item.arXiv = null
+    }
+
+    if (item.arXiv) {
+      if (item.arXiv.parse(item.publicationTitle, 'publicationTitle')) {
+        if (this.translation.BetterBibLaTeX) delete item.publicationTitle
+      }
+
+      item.arXiv.parse(item.extraFields.tex.arxiv?.value, 'extra')
+
+      if (!item.arXiv.id) item.arXiv = null
     }
 
     if (item.arXiv) {

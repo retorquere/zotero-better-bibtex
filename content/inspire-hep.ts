@@ -1,5 +1,5 @@
 import { log } from './logger'
-import { arXiv } from './arXiv'
+import { parse as arXiv } from './arXiv'
 import * as Extra from './extra'
 
 function urls(item): { type: string, id: string, url: string }[] {
@@ -16,7 +16,7 @@ function urls(item): { type: string, id: string, url: string }[] {
     candidates.push({ type: 'DOI', id: doi, url: `https://inspirehep.net/api/doi/${doi}` })
   }
 
-  const arxiv = ((['arxiv.org', 'arxiv'].includes((item.getField('libraryCatalog') || '').toLowerCase())) && arXiv.parse(item.getField('publicationTitle')).id) || arXiv.parse(parsed.extraFields.tex['tex.arxiv']?.value).id
+  const arxiv = ((['arxiv.org', 'arxiv'].includes((item.getField('libraryCatalog') || '').toLowerCase())) && arXiv(item.getField('publicationTitle')).id) || arXiv(parsed.extraFields.tex['tex.arxiv']?.value).id
   if (arxiv) candidates.push({ type: 'arXiv ID', id: arxiv, url: `https://inspirehep.net/api/arxiv/${arxiv}` })
 
   return candidates
