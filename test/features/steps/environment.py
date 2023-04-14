@@ -119,7 +119,7 @@ def before_scenario(context, scenario):
   context.imported = None
   context.picked = []
 
-  context.timeout = 60
+  context.timeout = 90
   # jurism is just generally slower
   if context.config.userdata.get('client') == 'jurism': context.timeout *= 3
   for tag in scenario.effective_tags:
