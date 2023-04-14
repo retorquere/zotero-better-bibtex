@@ -84,7 +84,7 @@ pattern
 
 chunk
   = [ \t\r\n]+                            { return '' }
-  / '[]'                                  { return "''" }
+  / '[]'                                  { return '' }
   / '[0]'                                 { return 'postfix("-%(n)s")' }
   / '[postfix' start:'+1'? pf:stringparam ']' {
         if (start) {

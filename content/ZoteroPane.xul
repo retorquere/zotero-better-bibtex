@@ -93,18 +93,18 @@
 
   <script src="chrome://zotero-better-bibtex/content/better-bibtex.js"/>
   <script>
-    Zotero.log('starting BBT')
+  Zotero.debug(`{better-bibtex-startup} script load @ ${Date.now()}`)
     Zotero.BetterBibTeX.globals = Zotero.BetterBibTeX.ZoteroPane.globals = Function('return this')();
     window.addEventListener('load', async function() {
       try {
-        Zotero.debug(`BBT startup ${Zotero.BetterBibTeX.loads + 1}`)
+        Zotero.debug(`{better-bibtex-startup} window load @ ${Date.now()}`)
         await Zotero.BetterBibTeX.load()
-        Zotero.debug('BBT started, loading ZoteroPane')
+        Zotero.debug(`{better-bibtex-startup} started, load ZoteroPane @ ${Date.now()}`)
         Zotero.BetterBibTeX.ZoteroPane.load()
-        Zotero.debug('ZoteroPane started')
+        Zotero.debug(`{better-bibtex-startup} ZoteroPane started @ ${Date.now()}`)
       }
       catch (err) {
-        Zotero.debug(`loading ZoteroPane error: ${err.message}\n${err.stack ||''}`)
+  Zotero.debug(`{better-bibtex-startup} loading ZoteroPane error: ${err.message}\n${err.stack ||''}`)
       }
     })
     window.addEventListener('unload', async function() {

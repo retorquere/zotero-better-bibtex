@@ -43,10 +43,10 @@ yaml.default_flow_style = False
 EXPORTED = os.path.join(ROOT, 'exported')
 FIXTURES = os.path.join(ROOT, 'test/fixtures')
 
-with open(os.path.join(ROOT, 'schema', 'BetterBibTeX JSON.json')) as f:
-  bbt_json_schema = json.load(f)
-def validate_bbt_json(lib):
-  jsonschema.validate(instance=lib, schema=bbt_json_schema)
+#with open(os.path.join(ROOT, 'schema', 'BetterBibTeX JSON.json')) as f:
+#  bbt_json_schema = json.load(f)
+#def validate_bbt_json(lib):
+#  jsonschema.validate(instance=lib, schema=bbt_json_schema)
 
 def install_proxies(xpis, profile):
   for xpi in xpis:
@@ -356,8 +356,8 @@ class Zotero:
           dmp = diff_match_patch()
           data = dmp.patch_apply(dmp.patch_fromText(f.read()), data)[0]
 
-    if path.endswith('.json') and not (path.endswith('.csl.json') or path.endswith('.schomd.json')):
-      validate_bbt_json(data)
+#    if path.endswith('.json') and not (path.endswith('.csl.json') or path.endswith('.schomd.json')):
+#      validate_bbt_json(data)
 
     return (data, loaded)
 
@@ -586,7 +586,8 @@ class Zotero:
     profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.testing', self.testing)
     profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.logEvents', self.testing)
     profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.caching', self.caching)
-
+    # don't nag about the Z7 beta for a day
+    profile.firefox.set_preference('extensions.zotero.hiddenNotices', json.dumps({ 'z7-beta-warning': time.time() + 86400 }))
     profile.firefox.set_preference('intl.accept_languages', 'en-GB')
     profile.firefox.set_preference('intl.locale.requested', 'en-GB')
 

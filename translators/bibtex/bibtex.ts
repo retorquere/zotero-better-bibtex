@@ -2,7 +2,7 @@ declare const Zotero: any
 
 import { log } from '../../content/logger'
 import { Exporter as BibTeXExporter } from './exporter'
-import { arXiv } from '../../content/arXiv'
+import { parse as arXiv } from '../../content/arXiv'
 import { validItem } from '../../content/ajv'
 import { valid, label } from '../../gen/items/items'
 import wordsToNumbers from 'words-to-numbers'
@@ -335,16 +335,26 @@ export function generateBibTeX(translation: Translation): void {
       switch (translation.preferences.bibtexURL) {
         case 'url':
         case 'url-ish':
-          urlfield = ref.add({ name: 'url', value: item.url || item.extraFields.kv.url, enc: translation.isVerbatimField('url') ? 'url' : 'latex' })
+          urlfield = ref.add({
+            name: 'url',
+            value: item.url || item.extraFields.kv.url,
+            enc: translation.preferences.bibtexURL === 'url' && translation.isVerbatimField('url') ? 'url' : 'latex',
+          })
           break
 
         case 'note':
         case 'note-url-ish':
-          urlfield = ref.add({ name: (['misc', 'booklet'].includes(ref.entrytype) && !ref.has.howpublished ? 'howpublished' : 'note'), value: item.url || item.extraFields.kv.url, enc: 'url' })
+          urlfield = ref.add({
+            name: (['misc', 'booklet'].includes(ref.entrytype) && !ref.has.howpublished ? 'howpublished' : 'note'),
+            value: item.url || item.extraFields.kv.url,
+            enc: translation.preferences.bibtexURL === 'note' ? 'url': 'latex',
+          })
           break
 
         default:
-          if (['csl.webpage', 'zotero.webpage', 'csl.post', 'csl.post-weblog'].includes(ref.entrytype_source)) urlfield = ref.add({ name: 'howpublished', value: item.url || item.extraFields.kv.url })
+          if (['csl.webpage', 'zotero.webpage', 'csl.post', 'csl.post-weblog'].includes(ref.entrytype_source)) {
+            urlfield = ref.add({ name: 'howpublished', value: item.url || item.extraFields.kv.url })
+          }
           break
       }
     }
@@ -656,6 +666,21 @@ export class ZoteroItem {
     }
 
     return this.fallback(['booktitle'], value)
+  }
+
+  protected $entrysubtype(value: string): boolean {
+    if (!this.item.itemType.endsWith('Article')) return false
+
+    const type = value.toLowerCase()
+    switch (type) {
+      case 'encyclopedia':
+      case 'magazine':
+      case 'newspaper':
+        this.item.itemType = `${type}Article`
+        return true
+    }
+
+    return false
   }
 
   protected $journaltitle(): boolean {
@@ -1249,7 +1274,7 @@ export class ZoteroItem {
 
     if (this.eprint.slaccitation && !this.eprint.eprint) {
       const m = this.eprint.slaccitation.match(/^%%CITATION = (.+);%%$/)
-      const arxiv = arXiv.parse(m && m[1].trim())
+      const arxiv = arXiv(m && m[1].trim())
 
       if (arxiv.id) {
         this.eprint.eprintType = this.eprint.eprinttype = 'arXiv'

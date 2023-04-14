@@ -1,4 +1,5 @@
 import { Fields } from '../../content/extra'
+import type { arXiv } from '../../content/arXiv'
 
 export interface Collection {
   // id?: string
@@ -65,7 +66,7 @@ export interface RegularItem extends ItemBase {
   cslVolumeTitle: string
   collections: string[]
   extraFields: Fields
-  arXiv: { source?: string, id: string, category?: string }
+  arXiv: arXiv,
 
   multi?: {
     _keys: {

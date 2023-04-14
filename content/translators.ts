@@ -107,21 +107,33 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
   }
 
   public getTranslatorId(name: string): string {
-    const name_lc = name.toLowerCase()
+    Zotero.debug(`getTranslatorId: resolving ${JSON.stringify(name)}`)
+    const name_lc = name.toLowerCase().replace(/ /g, '')
 
     // shortcuts
-    if (name_lc === 'jzon') return Translators.byLabel.BetterBibTeXJSON.translatorID
-    if (name_lc === 'bib') return Translators.byLabel.BetterBibLaTeX.translatorID
-
-    for (const [id, translator] of (Object.entries(this.byId))) {
-      if (! ['yaml', 'json', 'bib'].includes(translator.target) ) continue
-      if (! translator.label.startsWith('Better ') ) continue
-
-      if (translator.label.replace('Better ', '').replace(' ', '').toLowerCase() === name_lc) return id
-      if (translator.label.split(' ').pop().toLowerCase() === name_lc) return id
+    switch (name_lc) {
+      case 'json':
+        return Translators.byLabel.BetterCSLJSON.translatorID
+      case 'yaml':
+        return Translators.byLabel.BetterCSLYAML.translatorID
+      case 'jzon':
+        return Translators.byLabel.BetterBibTeXJSON.translatorID
+      case 'bib':
+      case 'biblatex':
+        return Translators.byLabel.BetterBibLaTeX.translatorID
+      case 'bibtex':
+        return Translators.byLabel.BetterBibTeX.translatorID
     }
 
-    // allowed to pass GUID
+    for (const [id, translator] of (Object.entries(this.byId))) {
+      if (name_lc === translator.label.toLowerCase().replace(/ /g, '') && ['yaml', 'json', 'bib'].includes(translator.target)) return id
+    }
+
+    if (typeof name !== 'string' || !name.match(/^[0-9a-fA-F]{8}-([0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}?$/)) {
+      Zotero.debug(`getTranslatorId: ${JSON.stringify(name)} is not a GUID`)
+      throw new Error(`getTranslatorId: ${JSON.stringify(name)} is not a GUID`)
+    }
+
     return name
   }
 
@@ -161,6 +173,12 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       }).map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`).join('&')
 
       this.worker = new ChromeWorker(`chrome://zotero-better-bibtex/content/worker/zotero.js?${environment}`)
+
+      // post dynamically to fix #2485
+      this.worker.postMessage({
+        kind: 'initialize',
+        CSL_MAPPINGS: Object.entries(Zotero.Schema).reduce((acc, [k, v]) => { if (k.startsWith('CSL')) acc[k] = v; return acc}, {}),
+      })
     }
     catch (err) {
       log.error('translate: worker not acquired', err)

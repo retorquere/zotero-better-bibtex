@@ -845,28 +845,23 @@ export class BetterBibTeX {
   public PrefPane = new PrefPane
 
   public ready: BluebirdPromise<boolean>
-  public loaded: BluebirdPromise<boolean>
+  private deferred = new Deferred<boolean>()
   public dir: string
 
   private firstRun: { citekeyFormat: string, dragndrop: boolean, unabbreviate: boolean, strings: boolean }
   private globals: Record<string, any>
   public debugEnabledAtStart: boolean
 
-  private deferred = {
-    loaded: new Deferred<boolean>(),
-    ready: new Deferred<boolean>(),
-  }
   private loads = 0
 
   constructor() {
     this.debugEnabledAtStart = Zotero.Prefs.get('debug.store')
 
-    this.ready = this.deferred.ready.promise
-    this.loaded = this.deferred.loaded.promise
+    this.ready = this.deferred.promise
   }
 
   public async scanAUX(target: string): Promise<void> {
-    await this.loaded
+    await this.ready
 
     const aux = await AUXScanner.pick()
     if (!aux) return
@@ -912,6 +907,15 @@ export class BetterBibTeX {
 
     log.debug('Loading Better BibTeX: starting...')
 
+    const progress = new Progress
+    Zotero.debug(`{better-bibtex-startup} waiting for Zotero @ ${Date.now() - $patch$.started}`)
+    progress.start(l10n.localize('BetterBibTeX.startup.waitingForZotero'))
+
+    // https://groups.google.com/d/msg/zotero-dev/QYNGxqTSpaQ/uvGObVNlCgAJ
+    // this is what really takes long
+    await Zotero.Schema.schemaUpdatePromise
+    Zotero.debug(`{better-bibtex-startup} Zotero ready @ ${Date.now() - $patch$.started}`)
+
     await TeXstudio.init()
 
     for (const node of [...this.globals.document.getElementsByClassName('bbt-texstudio')]) {
@@ -950,11 +954,6 @@ export class BetterBibTeX {
         20 // eslint-disable-line no-magic-numbers
       )
     }
-    const progress = new Progress
-    progress.start(l10n.localize('BetterBibTeX.startup.waitingForZotero'))
-
-    // https://groups.google.com/d/msg/zotero-dev/QYNGxqTSpaQ/uvGObVNlCgAJ
-    await Zotero.Schema.schemaUpdatePromise
 
     this.dir = OS.Path.join(Zotero.DataDirectory.dir, 'better-bibtex')
     await OS.File.makeDir(this.dir, { ignoreExisting: true })
@@ -974,13 +973,6 @@ export class BetterBibTeX {
     progress.update(l10n.localize('BetterBibTeX.startup.autoExport.load'), 30) // eslint-disable-line no-magic-numbers
     await AutoExport.init()
 
-    // not yet started
-    this.deferred.loaded.resolve(true)
-
-    // this is what really takes long
-    progress.update(l10n.localize('BetterBibTeX.startup.waitingForTranslators'), 40) // eslint-disable-line no-magic-numbers
-    await Zotero.Schema.schemaUpdatePromise
-
     progress.update(l10n.localize('BetterBibTeX.startup.journalAbbrev'), 60) // eslint-disable-line no-magic-numbers
     await JournalAbbrev.init()
 
@@ -993,7 +985,8 @@ export class BetterBibTeX {
     progress.update(l10n.localize('BetterBibTeX.startup.autoExport'), 90) // eslint-disable-line no-magic-numbers
     AutoExport.start()
 
-    this.deferred.ready.resolve(true)
+    this.deferred.resolve(true)
+    Zotero.debug(`{better-bibtex-startup} startup ready @ ${Date.now() - $patch$.started}`)
 
     progress.done()
 

@@ -17,7 +17,7 @@ import { Date as CSLDate, Data as CSLItem } from 'csl-json'
 
 type ExtendedItem = RegularItem & { extraFields: ParsedExtraFields }
 
-const validCSLTypes: string[] = require('../../gen/items/csl-types.json')
+const CSLField = require('../../gen/items/csl.json')
 
 const keyOrder = [
   'id',
@@ -109,20 +109,41 @@ export abstract class CSLExporter {
 
       // special case for #587... not pretty
       // checked separately because .type isn't actually a CSL var so wouldn't pass the ef.type test below
-      if (!validCSLTypes.includes(item.extraFields.kv['csl-type']) && validCSLTypes.includes(item.extraFields.kv.type)) {
+      if (!CSLField.type.enum.includes(item.extraFields.kv['csl-type']) && CSLField.type.enum.includes(item.extraFields.kv.type)) {
         csl.type = item.extraFields.kv.type
         delete item.extraFields.kv.type
       }
 
       for (const [name, value] of Object.entries(item.extraFields.kv)) {
+        if (!value) continue
+
+        const cslField = CSLField[name]
+        if (cslField) {
+          if (cslField.type === 'string' && cslField.enum?.includes(value)) {
+            csl[name] = value
+            delete item.extraFields.kv[name]
+            continue
+          }
+          if (cslField.$ref === '#/definitions/date-variable') {
+            csl[name] = this.date2CSL(dateparser.parse(value))
+            delete item.extraFields.kv[name]
+            continue
+          }
+          if (cslField.type === 'string' || (Array.isArray(cslField.type) || cslField.type.join(',') === 'number,string')) {
+            csl[name] = value
+            delete item.extraFields.kv[name]
+            continue
+          }
+        }
+
         const ef = ExtraFields[name]
-        if (!ef?.csl || !value) continue
+        if (!ef?.csl) continue
 
         if (ef.type === 'date') {
           csl[name] = this.date2CSL(dateparser.parse(value))
         }
         else if (name === 'csl-type') {
-          if (!validCSLTypes.includes(value)) continue // and keep the kv variable, maybe for postscripting
+          if (!CSLField.type.enum.includes(value)) continue // and keep the kv variable, maybe for postscripting
           csl.type = value
         }
         else if (!csl[name]) {

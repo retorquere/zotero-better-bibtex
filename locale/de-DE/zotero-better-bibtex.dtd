@@ -34,7 +34,7 @@
 <!ENTITY better-bibtex.ErrorReport.errors "Fehler">
 <!ENTITY better-bibtex.ErrorReport.includeCache "Cache einbeziehen">
 <!ENTITY better-bibtex.ErrorReport.debug "Debug-Log">
-<!ENTITY better-bibtex.ErrorReport.notReviewed "Debug logs cannot be reviewed unless referred to in the GitHub issue tracker by their ID.">
+<!ENTITY better-bibtex.ErrorReport.notReviewed "Debug-Reports können nicht überprüft werden, bis sie im GitHub Issue-Tracker genannt werden.">
 <!ENTITY better-bibtex.ErrorReport.postToGitHub "Bitte senden Sie eine Nachricht an den Issue-Tracker (https://github.com/retorquere/zotero-better-bibtex/issues) mit dieser Debug-Log-ID, einer Beschreibung des Problems und allen notwendigen Schritten zu seiner Reproduktion.">
 <!ENTITY better-bibtex.ErrorReport.items "Einträge">
 <!ENTITY better-bibtex.ErrorReport.reportID "Debug-Log-ID:">
@@ -57,7 +57,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.auto-export.explanation "Sie können hier Exporte nur einsehen oder löschen. Um einen automatischen Export hinzuzufügen, führen Sie einen gewöhnlichen Export durch und wählen sie dabei die Option 'Halte aktuell'.">
 <!ENTITY better-bibtex.Preferences.auto-export.idle "Wenn unbeschäftigt">
 <!ENTITY better-bibtex.Preferences.auto-export.immediate "Bei Veränderung">
-<!ENTITY better-bibtex.Preferences.auto-export.off "Paused">
+<!ENTITY better-bibtex.Preferences.auto-export.off "Pausiert">
 <!ENTITY better-bibtex.Preferences.auto-export.delay "Auto-Export verzögern für">
 <!ENTITY better-bibtex.Preferences.auto-export.run "Jetzt Exportieren">
 <!ENTITY better-bibtex.Preferences.auto-export.remove "Löschen">
@@ -93,14 +93,14 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.export.quickCopy.latex "LaTeX-Zitat">
 <!ENTITY better-bibtex.Preferences.export.quickCopy.rtfScan "RTF-Scan-Marker">
 <!ENTITY better-bibtex.Preferences.export.quickCopy.roamCiteKey "Roam-Zitierschlüssel">
-<!ENTITY better-bibtex.Preferences.export.quickCopy.orgMode "Org-mode select link">
+<!ENTITY better-bibtex.Preferences.export.quickCopy.orgMode "Org-Modus Auswahllink">
 <!ENTITY better-bibtex.Preferences.export.quickCopy.orgMode.zotero "Zotero-Eintragsschlüssel verwenden">
 <!ENTITY better-bibtex.Preferences.export.quickCopy.orgMode.citekey "Better-BibTeX-Zitierschlüssel verwenden">
 <!ENTITY better-bibtex.Preferences.export.quickCopy.orgRef "Org-Ref-Zitat">
 <!ENTITY better-bibtex.Preferences.export.quickCopy.orgRef3 "Org-Ref-V3-Zitat">
 <!ENTITY better-bibtex.Preferences.export.quickCopy.pandoc.brackets "Umschließe Pandoc-Zitate mit Klammern">
 <!ENTITY better-bibtex.Preferences.export.quickCopy.pandoc "Pandoc-Zitat">
-<!ENTITY better-bibtex.Preferences.export.quickCopy.selectLink "Zotero select link">
+<!ENTITY better-bibtex.Preferences.export.quickCopy.selectLink "Zotero Auswahllink">
 <!ENTITY better-bibtex.Preferences.export.quickCopy.selectLink.zotero "Zotero-Eintragsschlüssel verwenden">
 <!ENTITY better-bibtex.Preferences.export.quickCopy.selectLink.citekey "Better-BibTeX-Zitierschlüssel verwenden">
 <!ENTITY better-bibtex.Preferences.export.quickCopy.etaTemplate "Eta-Template">
@@ -120,34 +120,34 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.advanced "Erweitert">
 <!ENTITY better-bibtex.Preferences.advanced.warning "Diese Einstellungen werden die Leistung beeinträchtigen und können zu einem Abbruch der Exporte führen. Behandeln Sie sie mit Vorsicht.">
 <!ENTITY better-bibtex.Preferences.advanced.tab.import "Import">
-<!ENTITY better-bibtex.Preferences.advanced.import.sentenceCase "Sentence-case titles on import:">
+<!ENTITY better-bibtex.Preferences.advanced.import.sentenceCase "Satzbuchstaben beim Import:">
 <!ENTITY better-bibtex.Preferences.advanced.import.sentenceCase.off "nein (importiere Title wie sie sind)">
 <!ENTITY better-bibtex.Preferences.advanced.import.sentenceCase.on "ja">
-<!ENTITY better-bibtex.Preferences.advanced.import.sentenceCase.on_guess "yes, but try to exclude already-sentence-cased titles">
-<!ENTITY better-bibtex.Preferences.advanced.import.sentenceCase.warning "Bib(La)TeX entries must be stored in Title Case; Zotero items are expected to be entered as sentence-case.
+<!ENTITY better-bibtex.Preferences.advanced.import.sentenceCase.on_guess "Ja, aber versuchen Sie bereits zitierte Titel auszuschließen">
+<!ENTITY better-bibtex.Preferences.advanced.import.sentenceCase.warning "Bib(La)TeX-Einträge müssen im Titelfall gespeichert werden; Zotero-Einträge werden als Sätze erwartet.
 
-With this option on, BBT will try to sentence-case during import. This sentence-casing uses heuristics, no natural language processing is performed, and the results are not perfect.
+Mit dieser Option wird BBT versuchen, den Fall während des Imports zu senden. Dieses Satzgehäuse verwendet Heuristik, es wird keine natürliche Sprachverarbeitung durchgeführt und die Ergebnisse sind nicht perfekt.
 
-You can turn this off, but you may then also want to disable `Apply title-casing to titles` (which has its own problems, see the help entry for that option on this page).
-With 'yes, but try to exclude already-sentence-cased titles', BBT will attempt to detect titles that are already sentence cased and leave them as-is on import.">
+Du kannst dies deaktivieren, aber du kannst `Titelgehäuse auf Titel übertragen` deaktivieren (welches seine eigenen Probleme hat siehe den Hilfeeintrag für diese Option auf dieser Seite).
+Mit 'Ja, aber versuchen Sie bereits verurteilte Titel auszuschließen', BBT wird versuchen, bereits verurteilte Titel zu erkennen und sie wie beim Import zu belassen.">
 
-<!ENTITY better-bibtex.Preferences.advanced.import.caseProtection "Insert case-protection for braces:">
+<!ENTITY better-bibtex.Preferences.advanced.import.caseProtection "Fallschutz für Klammern einfügen:">
 <!ENTITY better-bibtex.Preferences.advanced.import.caseProtection.off "nein">
 <!ENTITY better-bibtex.Preferences.advanced.import.caseProtection.on "ja">
 <!ENTITY better-bibtex.Preferences.advanced.import.caseProtection.as_needed "minimal">
-<!ENTITY better-bibtex.Preferences.advanced.import.caseProtection.warning "On import, BBT will add case-protection (&lt;span class=&quot;nocase&quot;&gt;...&lt;span&gt;) to titles that have words in {Braces}.
+<!ENTITY better-bibtex.Preferences.advanced.import.caseProtection.warning "Beim Import fügt BBT den Titeln, die Wörter in {Braces}haben, den Groß-/Kleinschreibung (&lt;span class=&quot;nocase&quot;&gt;...&lt;span&gt;) hinzu.
 
-There's plenty of bib(la)tex files out there that do this a little overzealously, and you may not like the resulting HTML code in your items, even though this is what the braces mean in bib(la)tex, and Zotero supports it.
+Es gibt viele bib(la)tex-Dateien, die dies etwas übereifrig tun, und Sie können den resultierenden HTML-Code in Ihren Artikeln nicht mögen, auch wenn das die Klammern in bib(la)tex bedeuten, und Zotero unterstützt es.
 
-If you turn this off, the markup is omitted during import. When you select 'yes', all braces that bib(la)tex would interpret as case protection (which is not all of them) are converted to `span` elements. In `minimal` mode, the number of `span` elements is minimized.">
+Wenn Sie dies ausschalten, wird das Markup während des Imports weggelassen. Wenn du 'Ja' auswählst, werden alle Klammern, die bib(la)tex als Fallschutz interpretieren würde (was nicht alle ist) in `span` Elemente konvertiert. Im `minimal` Modus wird die Anzahl der `span` Elemente minimiert.">
 <!ENTITY better-bibtex.Preferences.advanced.import.unabbreviate "Abgekürzte Zeitschriftentitel beim Import erweitern anhand der Liste:">
 <!ENTITY better-bibtex.Preferences.advanced.import.unabbreviate.off "Kein">
 
 <!ENTITY better-bibtex.Preferences.advanced.tab.export "Export">
 <!ENTITY better-bibtex.Preferences.advanced.export.titleCase "Titel-Casing auf Titel anwenden">
-<!ENTITY better-bibtex.Preferences.advanced.export.titleCase.warning "If you're dead-set on ignoring both BibTeX/BibLaTeX best practice (see the BBT FAQ) and the Zotero recommendations on title/sentence casing, you can turn this off to suppress title casing for English items">
-<!ENTITY better-bibtex.Preferences.advanced.export.braceProtection "Apply case-protection to capitalized words by enclosing them in braces">
-<!ENTITY better-bibtex.Preferences.advanced.export.braceProtection.warning "If you're dead-set on ignoring both BibTeX/BibLaTeX best practice (see the BBT FAQ) and the Zotero recommendations on title/sentence casing, you can turn this off to suppress automatic brace-protection for words with uppercase letters.">
+<!ENTITY better-bibtex.Preferences.advanced.export.titleCase.warning "Wenn Sie sowohl BibTeX/BibLaTeX Best Practice (siehe BBT FAQ) als auch die Zotero-Empfehlungen zum Titel-/Satz-Casing ignorieren möchten, können Sie dies ausschalten, um das Titel-Casing für englische Referenzen zu unterdrücken">
+<!ENTITY better-bibtex.Preferences.advanced.export.braceProtection "Groß-/Kleinschreibung auf Groß- und Kleinschreibung anwenden, indem sie Klammern beigefügt wird">
+<!ENTITY better-bibtex.Preferences.advanced.export.braceProtection.warning "Wenn Sie sowohl BibTeX/BibLaTeX Best Practice (siehe BBT FAQ) als auch die Zotero-Empfehlungen zum Titel-/Satz-Casing ignorieren möchten, können Sie dies ausschalten, um das Titel-Casing für englische Referenzen zu unterdrücken">
 
 <!ENTITY better-bibtex.Preferences.advanced.export.retainCache "Export-Caches bei Upgrades behalten">
 <!ENTITY better-bibtex.Preferences.advanced.export.retainCache.warning "Standardmäßig löscht BBT alle Caches bei einem Upgrade von BBT oder Zotero. Ich kann nicht realistisch vorhersagen, ob eine Änderung in Zotero oder BBT die erzeugte Ausgabe für einen bestimmten Eintrag beeinflussen wird. Um sicher zu gehen, dass Sie immer die aktuellsten Behebungen haben, die sich auf den Export auswirken, werden die Caches verworfen, wenn eine neue Version von beiden erkannt wird. Wenn Sie jedoch eine sehr große Bibliothek haben, von der Sie regelmäßig erhebliche Teile exportieren, können Sie die zwischengespeicherten Einträge behalten wollen, auch wenn dies mit dem Risiko verbunden ist, dass Sie eine falsche Ausgabe beim Export erhalten, die in der Zwischenzeit repariert wurde.
@@ -234,7 +234,7 @@ Wenn Sie dies eingeschaltet haben und Sie Probleme haben außer der Löschung de
 <!ENTITY better-bibtex.BetterBibTeX.citekey.pinInspireHEP "Hefte BibTeX-Schlüssel aus InspireHEP an">
 <!ENTITY better-bibtex.BetterBibTeX.citekey.unpin "BibTeX-Key lösen">
 <!ENTITY better-bibtex.BetterBibTeX.citekey.refresh "Aktualisiere BibTeX key">
-<!ENTITY better-bibtex.BetterBibTeX.addCitationLinks "Citation Graph: add citation links...">
+<!ENTITY better-bibtex.BetterBibTeX.addCitationLinks "Zitier-Graph: Zitat-Links hinzufügen...">
 <!ENTITY better-bibtex.BetterBibTeX.sentenceCase "BBT Sentence-case">
 <!ENTITY better-bibtex.BetterBibTeX.patchDates "Kopiere date-added/date-modified aus Extra-Feld">
 <!ENTITY better-bibtex.ZoteroPane.tag-duplicates "Markiere doppelte Zitierschlüssel">

@@ -140,7 +140,7 @@ import itemCreators from '../../gen/items/creators.json'
 import { client } from '../../content/client'
 import { log } from '../../content/logger'
 import { Collection } from '../../gen/typings/serialized-item'
-import { CSL_MAPPINGS } from '../../gen/items/items'
+// import { CSL_MAPPINGS } from '../../gen/items/items'
 
 import zotero_schema from '../../schema/zotero.json'
 import jurism_schema from '../../schema/jurism.json'
@@ -367,9 +367,7 @@ class WorkerZotero {
   public ItemTypes  = new WorkerZoteroItemTypes
   public ItemFields  = new WorkerZoteroItemFields
   public Date = ZD
-  public Schema = {
-    ...CSL_MAPPINGS,
-  }
+  public Schema: any
 
   public init() {
     this.Date.init(dateFormats)
@@ -478,6 +476,10 @@ ctx.onmessage = function(e: { isTrusted?: boolean, data?: Translators.Worker.Mes
 
   try {
     switch (e.data.kind) {
+      case 'initialize':
+        Zotero.Schema = { ...e.data.CSL_MAPPINGS }
+        break
+
       case 'start':
         Object.assign(workerJob, JSON.parse(dec.decode(new Uint8Array(e.data.config))))
         importScripts(`resource://zotero-better-bibtex/${workerJob.translator}.js`)

@@ -71,6 +71,7 @@ Feature: Import
 
     Examples:
       | file                                                                                   | references |
+      | article with entrysubtype                                                              | 1          |
       | Qiqqa                                                                                  | 2          |
       | Import from Clipboard stopped working #2377                                            | 1          |
       | Child items that use the crossref field do not have their parent fields imported #2373 | 3          |
