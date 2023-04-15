@@ -214,6 +214,19 @@ async function rebuild() {
     ]
   })
 
+  // chinese for dynamic loading
+  await bundle({
+    entryPoints: [ 'content/key-manager/chinese-optional.ts' ],
+    exportGlobals: true,
+    plugins: [
+      loader.patcher('setup/patches'),
+      loader.__dirname,
+      // shims,
+    ],
+    // inject: ['./setup/loaders/globals.js'],
+    outfile: 'build/resource/key-manager/chinese.js',
+  })
+
   // worker code
   await bundle({
     entryPoints: [ 'content/worker/zotero.ts' ],
