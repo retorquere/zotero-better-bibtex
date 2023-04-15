@@ -465,11 +465,32 @@ export function generateBibTeX(translation: Translation): void {
 //   @item.publicationTitle = value
 //   return true
 
+const importJabRef = new class {
+  public unabbrevations: Record<string, string> = {}
+  public strings = ''
+
+  private loaded = {
+    unabbrevations: false,
+    strings: false,
+  }
+
+  load(translation: Translation) {
+    if (!this.loaded.unabbrevations && translation.preferences.importJabRefAbbreviations) {
+      Object.assign(this.unabbrevations, JSON.parse(Zotero.File.getContentsFromURL('resource://zotero-better-bibtex/bibtex/unabbrev.json')))
+      this.loaded.unabbrevations = true
+    }
+
+    if (!this.loaded.strings && translation.preferences.importJabRefStrings) {
+      this.strings = Zotero.File.getContentsFromURL('resource://zotero-better-bibtex/bibtex/strings.bib')
+      this.loaded.strings = true
+    }
+  }
+}
+
 export async function parseBibTeX(input: string, translation: Translation): Promise<bibtexParser.Bibliography> {
   translation.ZoteroItem = ZoteroItem
 
-  const unabbreviate = translation.preferences.importJabRefAbbreviations ? require('@retorquere/bibtex-parser/unabbrev.json') : undefined
-  const strings = translation.preferences.importJabRefStrings ? require('@retorquere/bibtex-parser/strings.bib') : undefined
+  importJabRef.load(translation)
 
   return bibtexParser.promises.parse(input, {
     // we are actually sure it's a valid enum value; stupid workaround for TS2322: Type 'string' is not assignable to type 'boolean | "as-needed" | "strict"'.
@@ -495,8 +516,8 @@ export async function parseBibTeX(input: string, translation: Translation): Prom
     guessAlreadySentenceCased: translation.preferences.importSentenceCase === 'on+guess',
     verbatimFields: translation.verbatimFields,
     raw: translation.preferences.rawImports,
-    unabbreviate,
-    strings,
+    unabbreviate: importJabRef.unabbrevations,
+    strings: importJabRef.strings,
   })
 }
 

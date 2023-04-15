@@ -178,7 +178,7 @@ async function bundle(config) {
   }
 
   const metafile = config.metafile
-  config.metafile = true
+  config.metafile = !!config.metafile
 
   console.log('* bundling', target)
   // console.log('  aliasing BigInt to Number for https://github.com/benjamn/ast-types/issues/750')
@@ -204,11 +204,11 @@ async function rebuild() {
       loader.__dirname,
       shims
     ],
+    metafile: 'gen/better-bibtex-esbuild.json',
     inject: ['./setup/loaders/globals.js'],
     outdir: 'build/content',
     banner: { js: 'if (!Zotero.BetterBibTeX) {\n' },
     footer: { js: '\n}' },
-    metafile: 'gen/plugin.json',
     external: [
       'zotero/itemTree',
     ]
