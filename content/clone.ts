@@ -1,6 +1,10 @@
 // https://www.measurethat.net/Benchmarks/Show/17971/0/lodash-clonedeep-vs-structuredclone-vs-json-parse
-import { cloneDeep } from 'lodash'
-// const clone = <T>(obj: T): T => JSON.parse(JSON.stringify(obj)) as T
+// https://www.measurethat.net/Benchmarks/Show/24742/0/lodash-clonedeep-vs-structuredclone-vs-json-parse-with
+
+// import { cloneDeep } from 'lodash'
+// export const clone = cloneDeep
+
+export const clone = <T>(obj: T): T => JSON.parse(JSON.stringify(obj)) as T
+
 // structuredClone
 
-export const clone = cloneDeep
