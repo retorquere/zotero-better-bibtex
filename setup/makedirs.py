@@ -6,7 +6,7 @@ import os.path
 root = os.path.join(os.path.dirname(__file__), '..')
 
 print('make build dirs')
-for d in ['build', 'build/resource/key-manager', 'build/resource/bibtex', 'build/defaults/preferences', 'gen', 'gen/preferences', 'gen/typings', 'xpi']:
+for d in ['build', 'build/content/key-manager', 'build/resource/bibtex', 'build/defaults/preferences', 'gen', 'gen/preferences', 'gen/typings', 'xpi']:
   print('  creating', d)
   d = os.path.join(root, d)
   if os.path.isdir(d): shutil.rmtree(d)

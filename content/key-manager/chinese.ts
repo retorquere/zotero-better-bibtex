@@ -14,7 +14,7 @@ export const chinese = new class {
   public pinyin: typeof pinyinFunc
 
   public load(on: boolean) {
-    if (on && !this.jieba) Services.scriptloader.loadSubScript('resource://zotero-better-bibtex/key-manager/chinese.js', this)
+    if (on && !this.jieba) Services.scriptloader.loadSubScript('chrome://zotero-better-bibtex/content/key-manager/chinese.js', this)
     return on
   }
 

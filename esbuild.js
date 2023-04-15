@@ -224,7 +224,7 @@ async function rebuild() {
       // shims,
     ],
     // inject: ['./setup/loaders/globals.js'],
-    outfile: 'build/resource/key-manager/chinese.js',
+    outfile: 'build/content/key-manager/chinese.js',
   })
 
   // worker code
