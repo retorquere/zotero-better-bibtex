@@ -261,6 +261,19 @@ export class ErrorReport {
     for (const key of ['export.quickCopy.setting']) {
       info += `  Zotero: ${key} = ${JSON.stringify(Zotero.Prefs.get(key))}\n`
     }
+
+    const autoExports = DB.getCollection('autoexport').find()
+    if (autoExports.length) {
+      info += 'Auto-exports:\n'
+      for (const ae of autoExports) {
+        for (const [k, v] of Object.entries(ae)) {
+          info += `  ${k}: ${JSON.stringify(v)}`
+          if (k === 'translatorID' && Translators.byId[v as string]) info += ` (${Translators.byId[v as string].label})`
+          info += '\n'
+        }
+      }
+    }
+
     info += `Zotero.Debug.enabled: ${Zotero.Debug.enabled}\n`
     info += `Zotero.Debug.enabled at start: ${Zotero.BetterBibTeX.debugEnabledAtStart}\n`
 

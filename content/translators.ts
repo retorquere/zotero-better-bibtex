@@ -221,6 +221,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     }
 
     const translator = this.byId[job.translatorID]
+    log.debug('starting background export with', translator.label)
 
     const start = Date.now()
 
