@@ -29,7 +29,7 @@ import { parseFragment } from 'parse5'
 
 import { sprintf } from 'sprintf-js'
 
-import { jieba, pinyin } from './chinese'
+import { chinese } from './chinese'
 import { kuroshiro } from './japanese'
 import { transliterate as arabic } from './arabic'
 import { transliterate } from 'transliteration/dist/node/src/node/index'
@@ -1243,10 +1243,10 @@ class PatternFormatter {
 
   /** word segmentation for Chinese items. Uses substantial memory, and adds about 7 seconds to BBTs startup time; must be enabled under Preferences -> Better BibTeX -> Advanced -> Citekeys */
   public _jieba(mode?: 'cn' | 'tw' | 'hant') {
-    if (!Preference.jieba) return this
+    if (!chinese.load(Preference.jieba)) return this
     if (mode === 'hant') mode = 'tw'
     mode = mode || (this.item.transliterateMode === 'chinese-traditional' ? 'tw' : 'cn')
-    return this.$text(jieba.cut(this.chunk, mode).join(' ').trim())
+    return this.$text(chinese.jieba(this.chunk, mode).join(' ').trim())
   }
 
   /** word segmentation for Japanese items. Uses substantial memory; must be enabled under Preferences -> Better BibTeX -> Advanced -> Citekeys */
@@ -1263,7 +1263,7 @@ class PatternFormatter {
 
   /** transliterates the citation key to pinyin */
   public _pinyin() {
-    return this.$text(pinyin(this.chunk))
+    return this.$text(chinese.load(Preference.jieba) ? chinese.pinyin(this.chunk) : this.chunk)
   }
 
   /**
@@ -1300,7 +1300,7 @@ class PatternFormatter {
       case 'zh':
       case 'chinese-traditional':
       case 'chinese':
-        str = pinyin(str)
+        if (chinese.load(Preference.jieba)) str = chinese.pinyin(str)
         break
 
       case 'ja':
@@ -1356,9 +1356,9 @@ class PatternFormatter {
       .filter((word: string) => word && !(options.skipWords && ucs2decode(word).length === 1 && !word.match(script.cjk)))
 
     // apply jieba.cut and flatten.
-    if (Preference.jieba && options.skipWords && this.item.transliterateMode.startsWith('chinese')) {
+    if (chinese.load(Preference.jieba) && options.skipWords && this.item.transliterateMode.startsWith('chinese')) {
       const mode = this.item.transliterateMode === 'chinese-traditional' ? 'tw' : 'cn'
-      words = [].concat(...words.map((word: string) => jieba.cut(word, mode)))
+      words = [].concat(...words.map((word: string) => chinese.jieba(word, mode)))
       // remove CJK skipwords
       words = words.filter((word: string) => !this.skipWords.has(word.toLowerCase()))
     }
@@ -1377,8 +1377,8 @@ class PatternFormatter {
         else if (Preference.kuroshiro && kuroshiro.enabled) {
           return this.transliterate(kuroshiro.convert(word, {to: 'romaji'}), 'minimal')
         }
-        else if (Preference.jieba) {
-          return this.transliterate(pinyin(word), 'minimal')
+        else if (chinese.load(Preference.jieba)) {
+          return this.transliterate(chinese.pinyin(word), 'minimal')
         }
         else {
           return this.transliterate(word)

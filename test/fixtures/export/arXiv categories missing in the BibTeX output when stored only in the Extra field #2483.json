@@ -1,0 +1,68 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "DOIandURL": "doi",
+      "autoAbbrev": true,
+      "bibtexURL": "url",
+      "citekeyFormat": "auth.nopunctordash + year + shorttitle(3,3) + postfix(\"%(A)s\")",
+      "extraMergeCSL": true,
+      "extraMergeCitekeys": true,
+      "extraMergeTeX": true,
+      "postscript": "if (Translator.BetterBibTeX) {\n    tex.remove('note');\n    if (item.extra) {\n        tex.remove('annotation');\n        tex.add({ name: 'note', value: item.extra.replace(/^\\d+\\s+citations\\s+\\([\\w\\s\\/]+\\)\\s+\\S+\\s*/mg, '') });\n    }\n    if (zotero.itemType === 'conferencePaper') {\n        const btFull = zotero.publicationTitle;\n        let btAbbr = tex.has.booktitle.value;\n        function recover(full, abbr, regex) {\n            const matches = full.match(regex);\n            if (matches) {\n                matches.forEach(match => {\n                    const word = match.replace(/[\\/()]/g, '');\n                    abbr = abbr.replace(word, match);\n                });\n            }\n            return abbr;\n        }\n        const sRegex = /\\b(\\w+\\/\\w+)\\b/g;\n        const pRegex = /\\((\\w+)\\)/g;\n        tex.add({ name: 'booktitle', value: recover(btFull, recover(btFull, btAbbr, sRegex), pRegex) });\n    }\n    if (zotero.itemType === 'preprint' && tex.has.howpublished && zotero.arXiv) {\n        if (zotero.arXiv.category) {\n            tex.add({ name: 'howpublished', value: zotero.arXiv.id + ' [' + zotero.arXiv.category + ']' });\n        }\n        else {\n            tex.add({ name: 'howpublished', value: zotero.arXiv.id });\n        }\n    }\n}",
+      "skipFields": "isbn, issn, abstract, keywords, file",
+      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc,groups"
+    }
+  },
+  "items": [
+    {
+      "DOI": "10.48550/arXiv.2206.07690",
+      "abstractNote": "Deep learning models have achieved remarkable success in different areas of machine learning over the past decade; however, the size and complexity of these models make them difficult to understand. In an effort to make them more interpretable, several recent works focus on explaining parts of a deep neural network through human-interpretable, semantic attributes. However, it may be impossible to completely explain complex models using only semantic attributes. In this work, we propose to augment these attributes with a small set of uninterpretable features. Specifically, we develop a novel explanation framework ELUDE (Explanation via Labelled and Unlabelled DEcomposition) that decomposes a model's prediction into two parts: one that is explainable through a linear combination of the semantic attributes, and another that is dependent on the set of uninterpretable features. By identifying the latter, we are able to analyze the \"unexplained\" portion of the model, obtaining insights into the information used by the model. We show that the set of unlabelled features can generalize to multiple models trained with the same feature space and compare our work to two popular attribute-oriented methods, Interpretable Basis Decomposition and Concept Bottleneck, and discuss the additional insights ELUDE provides.",
+      "accessDate": "2023-04-11T12:13:02Z",
+      "citationKey": "Ramaswamy2022ELUDEGeneratingInterpretable",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Vikram V.",
+          "lastName": "Ramaswamy"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Sunnie S. Y.",
+          "lastName": "Kim"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Nicole",
+          "lastName": "Meister"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Ruth",
+          "lastName": "Fong"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Olga",
+          "lastName": "Russakovsky"
+        }
+      ],
+      "date": "2022-06-16",
+      "extra": [
+        "arXiv:2206.07690 [cs, eess, q-bio]"
+      ],
+      "itemID": 1,
+      "itemType": "preprint",
+      "libraryCatalog": "arXiv.org",
+      "number": "arXiv:2206.07690",
+      "publisher": "arXiv",
+      "shortTitle": "ELUDE",
+      "title": "ELUDE: Generating interpretable explanations via a decomposition into labelled and unlabelled features",
+      "url": "http://arxiv.org/abs/2206.07690"
+    }
+  ]
+}

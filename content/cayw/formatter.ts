@@ -283,6 +283,9 @@ export const Formatter = new class { // eslint-disable-line @typescript-eslint/n
   }
 
   public async json(citations, _options) {
+    for (const citation of citations) {
+      citation.item = Zotero.Utilities.Internal.itemToExportFormat(await getItemsAsync(citation.id), false, true)
+    }
     return JSON.stringify(citations)
   }
 }

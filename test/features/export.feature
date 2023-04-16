@@ -189,6 +189,7 @@ Feature: Export
 
     Examples:
       | file                                                                                                               | references |
+      | arXiv categories missing in the BibTeX output when stored only in the Extra field #2483                            | 1          |
       | missing  before _ in url in .bib file #2466                                                                        | 1          |
       | {relax} in author also removes trailing dot '.' #2454                                                              | 1          |
       | Author multi-character initial gets shortened #2419                                                                | 1          |
@@ -604,22 +605,21 @@ Feature: Export
     Then an export using "Better BibLaTeX" should match "export/*.biblatex"
 
   # tests the cache
-#   @use.with_client=zotero @use.with_slow=true @timeout=3000 @whopper
-#   Scenario: Really Big whopping library
-#     When I restart Zotero with "1287" + "export/*.json"
-#     And I reset the cache
-#     And I export the library 1 times using "id:9cb70025-a888-4a29-a210-93ec52da40d4"
-#     And an export using "Better BibTeX" should match "export/*.bibtex"
-#     And an export using "Better BibTeX" should match "export/*.bibtex"
-#     When I set preference .cache to false
-#     Then an export using "Better BibTeX" should match "export/*.bibtex"
-#     When I reset the cache
-#     And I set preference .cache to false
-#     Then an export using "Better BibTeX" should match "export/*.bibtex"
-#     When I reset the cache
-#     Then an export using "Better CSL JSON" should match "export/*.csl.json"
-#     And an export using "Better CSL JSON" should match "export/*.csl.json", but take no more than 150 seconds
-
+  # @use.with_client=zotero @use.with_slow=true @timeout=3000 @whopper
+  # Scenario: Really Big whopping library
+  # When I restart Zotero with "1287" + "export/*.json"
+  # And I reset the cache
+  # And I export the library 1 times using "id:9cb70025-a888-4a29-a210-93ec52da40d4"
+  # And an export using "Better BibTeX" should match "export/*.bibtex"
+  # And an export using "Better BibTeX" should match "export/*.bibtex"
+  # When I set preference .cache to false
+  # Then an export using "Better BibTeX" should match "export/*.bibtex"
+  # When I reset the cache
+  # And I set preference .cache to false
+  # Then an export using "Better BibTeX" should match "export/*.bibtex"
+  # When I reset the cache
+  # Then an export using "Better CSL JSON" should match "export/*.csl.json"
+  # And an export using "Better CSL JSON" should match "export/*.csl.json", but take no more than 150 seconds
   # @use.with_client=zotero @use.with_slow=true @timeout=300
   # @1296
   # Scenario: Cache does not seem to fill #1296

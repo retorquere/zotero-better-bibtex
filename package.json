@@ -1,6 +1,6 @@
 {
   "name": "zotero-better-bibtex",
-  "version": "6.7.71",
+  "version": "6.7.75",
   "description": "Make Zotero useful for us LaTeX holdouts.",
   "homepage": "https://retorque.re/zotero-better-bibtex",
   "license": "ISC",
@@ -133,7 +133,7 @@
     "gray-matter": "^4.0.3",
     "he": "^1.2.0",
     "indent-string": "^5.0.0",
-    "ini": "^4.0.0",
+    "ini": "^4.1.0",
     "install": "^0.13.0",
     "is-isbn": "^1.1.0",
     "js-yaml": "^4.1.0",

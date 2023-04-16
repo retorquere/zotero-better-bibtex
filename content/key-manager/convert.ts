@@ -5,7 +5,7 @@ const b = types.builders
 import * as items from '../../gen/items/items'
 import { methods } from '../../gen/api/key-formatter'
 import { validator, noncoercing } from '../ajv'
-import _ from 'lodash'
+import { clone } from '../clone'
 
 import { stringify } from '../stringify'
 
@@ -115,7 +115,7 @@ function upgrade(type) {
 
   throw { notUpgradable: type } // eslint-disable-line no-throw-literal
 }
-const api: typeof methods = _.cloneDeep(methods)
+const api: typeof methods = clone(methods)
 for (const meta of Object.values(api)) {
   for (const property of Object.keys(meta.schema.properties)) {
     meta.schema.properties[property] = upgrade(meta.schema.properties[property])

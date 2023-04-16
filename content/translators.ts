@@ -173,6 +173,12 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       }).map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`).join('&')
 
       this.worker = new ChromeWorker(`chrome://zotero-better-bibtex/content/worker/zotero.js?${environment}`)
+
+      // post dynamically to fix #2485
+      this.worker.postMessage({
+        kind: 'initialize',
+        CSL_MAPPINGS: Object.entries(Zotero.Schema).reduce((acc, [k, v]) => { if (k.startsWith('CSL')) acc[k] = v; return acc}, {}),
+      })
     }
     catch (err) {
       log.error('translate: worker not acquired', err)
@@ -215,6 +221,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     }
 
     const translator = this.byId[job.translatorID]
+    log.debug('starting background export with', translator.label)
 
     const start = Date.now()
 

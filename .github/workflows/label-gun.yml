@@ -19,11 +19,15 @@ jobs:
           label.reopened: reopened
           log-id: "[A-Z0-9]{8}(-refs)?-(apse|euc)"
           message.log-required: |
-            It looks like you did not upload an debug log. The debug log is important; it gives `@retorquere` your current BBT settings and a copy of the items under consideration as a test case so he can best replicate your issue, or build towards the desired behavior. Without it, `@retorquere` is effectively blind. **debug logs are useful for both analysis and for enhancement requests**; in the case of export enhancements, I need the copy of the references you have in mind.
+            You did not submit a debug log. A longer explanation follows, but just submit a debug log.
 
             If you did try to submit a debug log, but the ID looked like `D<number>`, that is a Zotero debug report, which I cannot access. Please re-submit a BBT debug log by one of the methods below.
 
-            **This request is much more likely than not to apply to you too @{{username}}, _even if you think it unlikely_**. Please trust `@retorquere` when he says he will usually need one; he will more often than not just end up saying "please send a debug log". Let's just skip over the unnecesary delay this entails. Sending a debug log is very easy:
+            **The debug log is much more likely than not required to address your question, @{{username}}, _even if you think it unlikely_**. Debug logs are useful for both analysis and for enhancement requests, and the first response from `@retorquere` will usually be "please send a debug log".
+
+            The debug log gives `@retorquere` your current BBT settings and a copy of the items under consideration as a test case so he can best replicate your issue. Without it, `@retorquere` is effectively blind.
+
+            Sending a debug log is very easy:
 
             1. If your issue relates to how BBT behaves around a **specific reference(s)**, such as citekey generation or export, select at least one of the items(s) under consideration, right-click it, and submit an BBT debug log from that popup menu. If the problem is with export, please do include a sample of what you see exported, and what you expected to see exported for these references.
 

@@ -3,7 +3,7 @@ Components.utils.import('resource://gre/modules/Services.jsm')
 import ETA from 'node-eta'
 
 import { kuroshiro } from './key-manager/japanese'
-import { jieba } from './key-manager/chinese'
+import { chinese } from './key-manager/chinese'
 
 import { Scheduler } from './scheduler'
 import { log } from './logger'
@@ -168,7 +168,7 @@ export class KeyManager {
   public async init(): Promise<void> {
     log.debug('keymanager.init: kuroshiro/jieba')
     await kuroshiro.init()
-    jieba.init()
+    chinese.init()
 
     log.debug('keymanager.init: get keys')
     this.keys = DB.getCollection('citekey')
