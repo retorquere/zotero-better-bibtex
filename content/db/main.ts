@@ -47,12 +47,14 @@ class Main extends Loki {
 
     // https://github.com/retorquere/zotero-better-bibtex/issues/1073
     if (Preference.scrubDatabase) {
+      log.debug('scrubbing: stripping citekey extra')
       for (const citekey of citekeys.find()) {
         if (typeof(citekey.extra) !== 'undefined') {
           delete citekey.extra
           citekeys.update(citekey)
         }
       }
+      log.debug('scrubbing: stripping citekey extra done')
     }
 
     if (Zotero.Libraries.userLibraryID) {
@@ -96,19 +98,22 @@ class Main extends Loki {
     const autoexport = this.schemaCollection('autoexport', config)
 
     if (Preference.scrubDatabase) {
+      log.debug('scrubbing: stripping autoexport')
       // directly change the data objects and rebuild indexes https://github.com/techfort/LokiJS/issues/660
       const length = autoexport.data.length
       autoexport.data = autoexport.data.filter(doc => {
         const err = autoexport.validationError(doc)
         if (err) {
-          log.debug('auto-export validation error', err, doc)
+          log.debug('scrubbing: auto-export validation error:', err, doc)
           return false
         }
         return true
       })
       if (length !== autoexport.data.length) {
+        log.debug('scrubbing: stripping autoexport errors:', length - autoexport.data.length)
         autoexport.ensureId()
         autoexport.ensureAllIndexes(true)
+        log.debug('scrubbing: stripping autoexport errors: rebuilt indices')
       }
 
       // https://github.com/techfort/LokiJS/issues/47#issuecomment-362425639
@@ -118,16 +123,17 @@ class Main extends Loki {
           corrupt = coll.checkAllIndexes({ repair: true })
         }
         catch (err) {
+          log.debug('scrubbing: index error:', name, err)
           corrupt = [ '*' ]
           coll.ensureAllIndexes(true)
         }
         if (corrupt.length > 0) {
           for (const index of corrupt) {
             if (index === '*') {
-              Zotero.logError(new Error(`LokiJS: rebuilt index ${name}.${index}`))
+              log.debug(`scrubbing: LokiJS: rebuilt index ${name}.${index}`)
             }
             else {
-              Zotero.logError(new Error(`LokiJS: corrupt index ${name}.${index} repaired`))
+              log.debug(`scrubbing: LokiJS: corrupt index ${name}.${index} repaired`)
             }
           }
         }
@@ -145,11 +151,14 @@ class Main extends Loki {
 
         if (clean === extra) continue
 
+        log.debug('scrubbing: replaced old bibtex: syntax')
+
         item.setField('extra', clean)
         await item.saveTx()
       }
 
       Preference.scrubDatabase = false
+      log.debug('scrubbing: completed')
     }
 
     autoexport.on(['pre-insert', 'pre-update'], (ae: { path: string, $loki: number }) => {
