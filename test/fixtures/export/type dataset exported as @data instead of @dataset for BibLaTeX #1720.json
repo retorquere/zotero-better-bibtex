@@ -7,7 +7,6 @@
       "exportNotes": true
     },
     "preferences": {
-      "DOIandURL": "doi",
       "biblatexExtendedNameFormat": true,
       "bibtexURL": "url",
       "citekeyFold": false,
@@ -40,6 +39,46 @@
       "itemType": "journalArticle",
       "rights": "Restricted to linguistic research",
       "title": "Faulty Dataset Export"
+    },
+    {
+      "version": 0,
+      "itemType": "dataset",
+      "url": "the url",
+      "rights": "Restricted to linguistic research",
+      "date": "2021",
+      "callNumber": "the call number",
+      "archiveLocation": "the location in the archive",
+      "DOI": "the DOI",
+      "libraryCatalog": "the library catalogue",
+      "versionNumber": "3333",
+      "language": "the language",
+      "abstractNote": "This is the abstract",
+      "type": "This is the dataset type",
+      "identifier": "this is the identifier",
+      "title": "Faulty Dataset Export",
+      "shortTitle": "the short title",
+      "archive": "the archive",
+      "repository": "the repository",
+      "repositoryLocation": "the repo location",
+      "format": "the format",
+      "creators": [
+        {
+          "firstName": "John",
+          "lastName": "Foo",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [],
+      "relations": [],
+      "dateAdded": "2023-04-20T05:13:10Z",
+      "dateModified": "2023-04-20T05:21:08Z",
+      "uri": "http://zotero.org/users/8230813/items/5KFC3PL4",
+      "attachments": [],
+      "notes": [],
+      "citationKey": "foo2021",
+      "itemID": 102,
+      "itemKey": "5KFC3PL4",
+      "libraryID": 1
     }
   ]
 }

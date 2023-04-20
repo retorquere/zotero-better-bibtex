@@ -91,6 +91,7 @@ const config: Config = {
       computerProgram    : 'software',
       conferencePaper    : 'inproceedings',
       dictionaryEntry    : 'inreference',
+      dataset            : 'dataset',
       document           : 'misc',
       email              : 'letter',
       encyclopediaArticle: 'inreference',
@@ -440,9 +441,13 @@ export function generateBibLaTeX(translation: Translation): void {
         entry.add({ name: 'organization', value: item.publisher, bibtexStrings: true })
         break
 
+      case 'preprint':
+        // do nothing with publisher? Handled by eprint?
+        break
+
       default:
         // preprint is handled above
-        if (item.itemType !== 'preprint') entry.add({ name: 'publisher', value: item.publisher, bibtexStrings: true })
+        entry.add({ name: 'publisher', value: item.publisher, bibtexStrings: true })
     }
 
     switch (entry.entrytype) {
@@ -465,6 +470,11 @@ export function generateBibLaTeX(translation: Translation): void {
 
       case 'patent':
         entry.add({ name: 'type', value: patent.type(item) })
+        break
+
+      case 'dataset':
+        // https://github.com/zotero/zotero-bits/issues/22#issuecomment-1208195158
+        entry.add({ name: 'type', value: item.type || item.medium })
         break
 
       default:
