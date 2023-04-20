@@ -434,7 +434,6 @@ export function generateBibLaTeX(translation: Translation): void {
         break
 
       case 'jurisdiction':
-        Zotero.debug(`jurisdiction: ${JSON.stringify(item)}`)
         entry.add({ name: 'institution', value: item.authority || item.court, bibtexStrings: true })
         break
 
@@ -442,13 +441,9 @@ export function generateBibLaTeX(translation: Translation): void {
         entry.add({ name: 'organization', value: item.publisher, bibtexStrings: true })
         break
 
-      case 'preprint':
-        // do nothing with publisher? Handled by eprint?
-        break
-
       default:
-        // preprint is handled above
-        entry.add({ name: 'publisher', value: item.publisher, bibtexStrings: true })
+        // preprint uses eprint fields
+        if (item.itemType !== 'preprint') entry.add({ name: 'publisher', value: item.publisher, bibtexStrings: true })
     }
 
     switch (entry.entrytype) {
