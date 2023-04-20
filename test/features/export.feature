@@ -54,7 +54,7 @@ Feature: Export
       | Cite archive documents with BetterBibLaTeX #1799                                                                         | 1          |
       | biber 2.14 rejects the date field generated from Better BibLaTex #1695                                                   | 1          |
       | Export fails for duplicate "extra" field #1739                                                                           | 1          |
-      | type dataset exported as @data instead of @dataset for BibLaTeX #1720                                                    | 1          |
+      | type dataset exported as @data instead of @dataset for BibLaTeX #1720                                                    | 2          |
       | google-scholar like references #1705                                                                                     | 2          |
       | Book Title exports to Journaltitle for Biblatex @incollection reference type #1691                                       | 2          |
       | When exporting notes, also handle the blockquote tag #1656                                                               | 1          |

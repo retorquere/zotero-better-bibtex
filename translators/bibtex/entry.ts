@@ -309,6 +309,12 @@ export class Entry {
         item.arXiv = null
       }
     }
+    else if (item.itemType === 'dataset' && item.archive) {
+      this.add({ name: 'eprint', value: item.archiveLocation })
+      this.add({ name: eprinttype, value: item.archive })
+      this.add({ name: eprintclass, value: item.section })
+      item.arXiv = null
+    }
     else if (this.extractEprint()) {
       item.arXiv = null
     }

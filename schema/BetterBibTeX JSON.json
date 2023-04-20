@@ -539,6 +539,9 @@
             },
             "type": "array"
           },
+          "authority": {
+            "type": "string"
+          },
           "callNumber": {
             "type": "string"
           },
@@ -697,6 +700,7 @@
               "classic",
               "computerProgram",
               "conferencePaper",
+              "dataset",
               "dictionaryEntry",
               "document",
               "email",
