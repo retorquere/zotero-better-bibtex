@@ -434,7 +434,8 @@ export function generateBibLaTeX(translation: Translation): void {
         break
 
       case 'jurisdiction':
-        entry.add({ name: 'institution', value: item.court, bibtexStrings: true })
+        Zotero.debug(`jurisdiction: ${JSON.stringify(item)}`)
+        entry.add({ name: 'institution', value: item.authority || item.court, bibtexStrings: true })
         break
 
       case 'software':
