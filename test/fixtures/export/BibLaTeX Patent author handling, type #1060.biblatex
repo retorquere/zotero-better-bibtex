@@ -9,7 +9,8 @@
   pages = {247--261},
   location = {{Country}},
   editora = {Attorney/Agent, Some and Contributer, Some},
-  editoratype = {collaborator}
+  editoratype = {collaborator},
+  pubstate = {Legal Status}
 }
 
 @patent{laufenbergElektrischeEinrichtungUnd2005,
