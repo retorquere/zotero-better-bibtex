@@ -2,6 +2,7 @@ import { XULoki as Loki } from './loki'
 import { Preference } from '../prefs'
 import { schema } from '../../gen/preferences/meta'
 import { getItemsAsync } from '../get-items-async'
+import * as ZoteroDB from './zotero'
 
 import { SQLite } from './store/sqlite'
 import { log } from '../logger'
@@ -115,7 +116,9 @@ class Main extends Loki {
         autoexport.ensureAllIndexes(true)
         log.debug('scrubbing: stripping autoexport errors: rebuilt indices')
       }
+      log.debug('scrubbing: stripping autoexport done')
 
+      log.debug('scrubbing: fixing indices')
       // https://github.com/techfort/LokiJS/issues/47#issuecomment-362425639
       for (const [name, coll] of Object.entries({ citekeys, autoexport })) {
         let corrupt
@@ -138,10 +141,23 @@ class Main extends Loki {
           }
         }
       }
+      log.debug('scrubbing: fixing indices done')
 
+      log.debug('scrubbing: old bibtex: lines in extra')
       // old bibtex*: entries
       const re = /(?:^|\s)bibtex\*:[^\S\n]*([^\s]*)(?:\s|$)/
-      const itemIDs = await Zotero.DB.columnQueryAsync('SELECT itemID FROM items')
+
+      const itemIDs = await ZoteroDB.columnQueryAsync(`
+        SELECT item.itemID, item.key, extra.value as extra
+        FROM items item
+
+        LEFT JOIN itemData extraField ON extraField.itemID = item.itemID
+        JOIN fields ON fields.fieldID = extraField.fieldID AND fields.fieldName = 'extra'
+        LEFT JOIN itemDataValues extra ON extra.valueID = extraField.valueID AND extra.value LIKE '%bibtex:%'
+        JOIN itemTypes ON itemTypes.itemTypeID = item.itemTypeID AND itemTypes.typeName NOT IN ('attachment', 'note', 'annotation', 'note')
+        WHERE item.itemID NOT IN (SELECT itemID FROM deletedItems) AND item.itemID NOT IN (SELECT itemID from feedItems)
+      `)
+
       const items = await getItemsAsync(itemIDs)
       for (const item of items) {
         const extra = item.getField('extra')
@@ -156,6 +172,7 @@ class Main extends Loki {
         item.setField('extra', clean)
         await item.saveTx()
       }
+      log.debug('scrubbing: old bibtex: lines in extra done')
 
       Preference.scrubDatabase = false
       log.debug('scrubbing: completed')
