@@ -577,7 +577,10 @@ export function generateBibLaTeX(translation: Translation): void {
       case 'tvBroadcast':
         entry.add({ name: 'entrysubtype', value: 'tvbroadcast' })
         break
+      case 'videoRecording':
+        break
     }
+
     entry.complete()
   }
 

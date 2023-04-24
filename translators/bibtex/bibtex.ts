@@ -555,7 +555,7 @@ export class ZoteroItem {
     techreport:         'report',
     thesis:             'thesis',
     unpublished:        'manuscript',
-    video:              'film',
+    video:              'videoRecording',
     web_page:           'webpage', // mendeley made-up entry type
     webpage:            'webpage', // papers3 made-up entry type
   }
@@ -692,24 +692,33 @@ export class ZoteroItem {
   protected $entrysubtype(value: string): boolean {
     const type = value.toLowerCase()
 
-    if (this.item.itemType.endsWith('Article')) {
-      switch (type) {
-        case 'encyclopedia':
-        case 'magazine':
-        case 'newspaper':
-          this.item.itemType = `${type}Article`
-          return true
-      }
-    }
-    else if (this.item.itemType === 'film') {
-      switch (type) {
-        case 'film':
-          return true
-        case 'tvbroadcast':
-        case 'tvepisode':
-          this.item.itemType = 'tvBroadcast'
-          return true
-      }
+    switch (this.item.itemType) {
+      case 'encyclopediaArticle':
+      case 'journalArticle':
+      case 'magazineArticle':
+      case 'newspaperArticle':
+        switch (type) {
+          case 'encyclopedia':
+          case 'magazine':
+          case 'newspaper':
+            this.item.itemType = `${type}Article`
+            return true
+        }
+        break
+
+      case 'film':
+      case 'tvBroadcast':
+      case 'videoRecording':
+        switch (type) {
+          case 'film':
+            this.item.itemType = 'film'
+            return true
+          case 'tvbroadcast':
+          case 'tvepisode':
+            this.item.itemType = 'tvBroadcast'
+            return true
+        }
+        break
     }
 
     return false
@@ -1173,6 +1182,17 @@ export class ZoteroItem {
       editors: 'editor',
       scriptwriter: 'scriptwriter',
     }
+    const creatorTypeRemap: Record<string, string> = {}
+    for (const creator of creatorTypes) {
+      const creatortype = `${creator}type`
+      const remapped = creatorTypeMap[this.bibtex.fields[creatortype]?.[0]]
+      if (remapped) {
+        creatorTypeRemap[creator] = remapped
+        delete this.bibtex.fields[creatortype]
+      }
+    }
+    Object.assign(creatorTypeMap, creatorTypeRemap)
+
     const creatorsForType = Zotero.Utilities.getCreatorsForType(this.item.itemType)
     for (const type of creatorTypes.concat(Object.keys(this.bibtex.creators).filter(other => !creatorTypes.includes(other)))) {
       // 'assignee' is not a creator field for Zotero
