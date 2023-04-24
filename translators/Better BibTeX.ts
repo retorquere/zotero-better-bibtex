@@ -99,6 +99,7 @@ export async function doImport(): Promise<void> {
 
     try {
       const item = new Zotero.Item('journalArticle')
+      item.itemID = id
       const builder = new translation.ZoteroItem(translation, item, bibtex, bib.jabref)
       if (builder.import(errors)) await item.complete()
     }
