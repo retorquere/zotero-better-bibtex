@@ -1,4 +1,3 @@
-
 @report{Author2015,
   type = {working paper},
   title = {A Report},
@@ -24,7 +23,8 @@
   urldate = {2014-06-13}
 }
 
-@movie{Doe2015,
+@video{Doe2015,
+  entrysubtype = {film},
   title = {A Film},
   editor = {Doe, John and Roe, Rob},
   date = {2015},
@@ -56,6 +56,7 @@
 }
 
 @video{friends:leia:tv,
+  entrysubtype = {tvbroadcast},
   title = {The One with the {{Princess Leia}} Fantasy},
   booktitle = {Friends},
   editor = {Mancuso, Gail},
@@ -71,11 +72,10 @@
 }
 
 @video{Kubrick1964,
+  entrysubtype = {tvbroadcast},
   title = {Dr. {{Strangelove}} or: How {{I}} Learned to Stop Worrying and Love the Bomb},
   shorttitle = {Dr. {{Strangelove}}},
   editor = {Kubrick, Stanley},
   date = {1964},
   editortype = {director}
 }
-
-
