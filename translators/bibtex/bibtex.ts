@@ -690,15 +690,26 @@ export class ZoteroItem {
   }
 
   protected $entrysubtype(value: string): boolean {
-    if (!this.item.itemType.endsWith('Article')) return false
-
     const type = value.toLowerCase()
-    switch (type) {
-      case 'encyclopedia':
-      case 'magazine':
-      case 'newspaper':
-        this.item.itemType = `${type}Article`
-        return true
+
+    if (this.item.itemType.endsWith('Article')) {
+      switch (type) {
+        case 'encyclopedia':
+        case 'magazine':
+        case 'newspaper':
+          this.item.itemType = `${type}Article`
+          return true
+      }
+    }
+    else if (this.item.itemType === 'film') {
+      switch (type) {
+        case 'film':
+          return true
+        case 'tvbroadcast':
+        case 'tvepisode':
+          this.item.itemType = 'tvBroadcast'
+          return true
+      }
     }
 
     return false

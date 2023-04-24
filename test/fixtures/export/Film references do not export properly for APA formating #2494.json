@@ -1,0 +1,37 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {}
+  },
+  "items": [
+    {
+      "citationKey": "formanOneFlewCuckoo1975",
+      "creators": [
+        {
+          "creatorType": "director",
+          "firstName": "Milo\u0161",
+          "lastName": "Forman"
+        }
+      ],
+      "date": "1975",
+      "itemID": 1,
+      "itemType": "videoRecording",
+      "publisher": "United Artists",
+      "tags": [
+        {
+          "tag": "Drama",
+          "type": 1
+        },
+        {
+          "tag": "Mentally ill$$QMentally ill",
+          "type": 1
+        }
+      ],
+      "title": "One flew over the cuckoo's nest"
+    }
+  ]
+}

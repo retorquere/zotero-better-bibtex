@@ -13,6 +13,7 @@ Feature: Export
 
     Examples:
       | file                                                                                                                     | references |
+      | Film references do not export properly for APA formating #2494                                                           | 1          |
       | series = {none} #2469                                                                                                    | 1          |
       | Fail to delete fields for certain reference types in BibLaTeX output using postscript in version 6.7.59 #2445            | 1          |
       | Journal abbreviation not exported on its own #2443                                                                       | 1          |

@@ -39,6 +39,7 @@ import * as CSL from 'citeproc'
 
 const fieldOrder = [
   'type',
+  'entrysubtype',
   'ids',
   'title',
   'shorttitle',
