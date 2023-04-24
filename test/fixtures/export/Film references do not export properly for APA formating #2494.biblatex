@@ -4,7 +4,7 @@
   date = {1975},
   publisher = {{United Artists}},
   editortype = {director},
-  keywords = {Drama,Mentally illQMentally ill}
+  keywords = {Drama,Mentally ill\$\$QMentally ill}
 }
 
 @video{formanOneFlewCuckoo1975-epi,
@@ -14,7 +14,7 @@
   date = {1975},
   publisher = {{United Artists}},
   editortype = {director},
-  keywords = {Drama,Mentally illQMentally ill}
+  keywords = {Drama,Mentally ill\$\$QMentally ill}
 }
 
 @video{formanOneFlewCuckoo1975-film,
@@ -24,7 +24,7 @@
   date = {1975},
   publisher = {{United Artists}},
   editortype = {director},
-  keywords = {Drama,Mentally illQMentally ill}
+  keywords = {Drama,Mentally ill\$\$QMentally ill}
 }
 
 @video{formanOneFlewCuckoo1975-tv,
@@ -34,5 +34,5 @@
   date = {1975},
   publisher = {{United Artists}},
   editortype = {director},
-  keywords = {Drama,Mentally illQMentally ill}
+  keywords = {Drama,Mentally ill\$\$QMentally ill}
 }
