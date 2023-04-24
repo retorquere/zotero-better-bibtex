@@ -39,6 +39,7 @@ import * as CSL from 'citeproc'
 
 const fieldOrder = [
   'type',
+  'entrysubtype',
   'ids',
   'title',
   'shorttitle',
@@ -308,6 +309,12 @@ export class Entry {
         this.add({ name: eprintclass, value: item.section })
         item.arXiv = null
       }
+    }
+    else if (item.itemType === 'dataset' && item.archive) {
+      this.add({ name: 'eprint', value: item.archiveLocation })
+      this.add({ name: eprinttype, value: item.archive })
+      this.add({ name: eprintclass, value: item.section })
+      item.arXiv = null
     }
     else if (this.extractEprint()) {
       item.arXiv = null
@@ -1057,30 +1064,8 @@ export class Entry {
 
     tags.sort((a, b) => stringCompare(a.tag, b.tag))
 
-    for (const tag of tags) {
-      if (this.translation.BetterBibTeX) {
-        tag.tag = tag.tag.replace(/([#\\%&])/g, '\\$1')
-      }
-      else {
-        tag.tag = tag.tag.replace(/([#%\\])/g, '\\$1')
-      }
-
-      // the , -> ; is unfortunate, but I see no other way
-      tag.tag = tag.tag.replace(/,/g, ';')
-
-      // verbatim fields require balanced braces -- please just don't use braces in your tags
-      let balanced = 0
-      for (const ch of tag.tag) {
-        switch (ch) {
-          case '{': balanced += 1; break
-          case '}': balanced -= 1; break
-        }
-        if (balanced < 0) break
-      }
-      if (balanced !== 0) tag.tag = tag.tag.replace(/{/g, '(').replace(/}/g, ')')
-    }
-
-    return tags.map(tag => tag.tag).join(',')
+    // eslint-disable-next-line no-new-wrappers
+    return tags.map(tag => tag.tag.includes(',') ? new String(tag.tag) : tag.tag).map(tag => this.enc_latex({ value: tag })).join(',')
   }
 
   relPath(path) {

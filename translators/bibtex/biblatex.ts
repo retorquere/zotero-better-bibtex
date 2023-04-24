@@ -91,10 +91,11 @@ const config: Config = {
       computerProgram    : 'software',
       conferencePaper    : 'inproceedings',
       dictionaryEntry    : 'inreference',
+      dataset            : 'dataset',
       document           : 'misc',
       email              : 'letter',
       encyclopediaArticle: 'inreference',
-      film               : 'movie',
+      film               : 'video',
       forumPost          : 'online',
       gazette            : 'jurisdiction',
       hearing            : 'jurisdiction',
@@ -433,7 +434,7 @@ export function generateBibLaTeX(translation: Translation): void {
         break
 
       case 'jurisdiction':
-        entry.add({ name: 'institution', value: item.court, bibtexStrings: true })
+        entry.add({ name: 'institution', value: item.authority || item.court, bibtexStrings: true })
         break
 
       case 'software':
@@ -441,7 +442,7 @@ export function generateBibLaTeX(translation: Translation): void {
         break
 
       default:
-        // preprint is handled above
+        // preprint uses eprint fields
         if (item.itemType !== 'preprint') entry.add({ name: 'publisher', value: item.publisher, bibtexStrings: true })
     }
 
@@ -465,6 +466,11 @@ export function generateBibLaTeX(translation: Translation): void {
 
       case 'patent':
         entry.add({ name: 'type', value: patent.type(item) })
+        break
+
+      case 'dataset':
+        // https://github.com/zotero/zotero-bits/issues/22#issuecomment-1208195158
+        entry.add({ name: 'type', value: item.type || item.medium })
         break
 
       default:
@@ -563,6 +569,17 @@ export function generateBibLaTeX(translation: Translation): void {
     }
 
     if (item.arXiv && !entry.has.journaltitle && entry.entrytype === 'article') entry.entrytype = 'unpublished'
+
+    switch (item.itemType) {
+      case 'film':
+        entry.add({ name: 'entrysubtype', value: 'film' })
+        break
+      case 'tvBroadcast':
+        entry.add({ name: 'entrysubtype', value: 'tvbroadcast' })
+        break
+      case 'videoRecording':
+        break
+    }
 
     entry.complete()
   }

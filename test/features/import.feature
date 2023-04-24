@@ -71,6 +71,7 @@ Feature: Import
 
     Examples:
       | file                                                                                   | references |
+      | Film references do not export properly for APA formating #2494                         | 4          |
       | article with entrysubtype                                                              | 1          |
       | Qiqqa                                                                                  | 2          |
       | Import from Clipboard stopped working #2377                                            | 1          |

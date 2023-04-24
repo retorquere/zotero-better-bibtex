@@ -9,8 +9,20 @@
   pages = {247--261},
   location = {{Country}},
   editora = {Attorney/Agent, Some and Contributer, Some},
-  editoratype = {collaborator}
+  editoratype = {collaborator},
+  pubstate = {Legal Status}
 }
+% == BibLateX quality report for inventorCombinatorialProblemStabilityIssueDate:
+% Unexpected field 'pages'
+% Unexpected field 'editora'
+% Unexpected field 'editoratype'
+% ? unused Application number ("Application Number")
+% ? unused Assignee ("Assignee")
+% ? unused Authority ("Issueing Authority")
+% ? unused Filing date ("Filing date")
+% ? unused Place ("Place")
+% ? unused Priority numbers ("Priority Numbers")
+% ? unused References ("References")
 
 @patent{laufenbergElektrischeEinrichtungUnd2005,
   type = {patentde},
@@ -23,5 +35,9 @@
   urldate = {2018-09-05},
   abstract = {Die Erfindung betrifft eine elektrische Einrichtung mit einem Generator 12, insbesondere für die Verwendung in dem Bordnetz 13 eines Kraftfahrzeugs, mit einem Regler 12B für die Regelung der Generatorspannung. Bei der Einrichtung sind ein Bereich 30 für die Regelung vorgesehen, in dem eine Spannungsregelung durchgeführt wird, und Bereiche 31, 32, in denen eine Momentenregelung durchgeführt wird. Weiterhin betrifft die Erfindung Verfahren für den Betrieb einer solchen Einrichtung.}
 }
-
+% == BibLateX quality report for laufenbergElektrischeEinrichtungUnd2005:
+% ? unused Application number ("DE10361215A")
+% ? unused Assignee ("DaimlerChrysler AG (Stuttgart, 70567, DE) Bayerische Motoren Werke AG (München, 80809, DE) Robert Bosch GmbH (Stuttgart, 70469, DE)")
+% ? unused Filing date ("2003-12-24")
+% ? unused Number ("DE10361215")
 

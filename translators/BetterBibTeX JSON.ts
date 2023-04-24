@@ -53,6 +53,7 @@ export async function doImport(): Promise<void> {
 
     delete source.uri
     delete source.key
+    delete source.itemKey
     delete source.version
     delete source.libraryID
     delete source.collections

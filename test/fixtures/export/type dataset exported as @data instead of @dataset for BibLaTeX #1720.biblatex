@@ -1,8 +1,26 @@
-
 @dataset{Doe2021,
   title = {Faulty Dataset Export},
   author = {Doe, John},
   date = {2021}
 }
 
-
+@dataset{Foo2021,
+  type = {This is the dataset type},
+  title = {Faulty Dataset Export},
+  author = {Foo, John},
+  date = {2021},
+  number = {this is the identifier},
+  eprint = {the location in the archive},
+  eprinttype = {the archive},
+  publisher = {the repository},
+  location = {the repo location},
+  doi = {the DOI},
+  url = {the url},
+  langid = {the language},
+  version = {3333}
+}
+% == BibLateX quality report for Foo2021:
+% ? unused Call number ("the call number")
+% ? unused Library catalog ("the library catalogue")
+% ? unused Medium ("the format")
+% ? unused Short title ("the short title")
