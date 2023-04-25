@@ -1,4 +1,3 @@
-
 @online{heimburgerGererDocumentationQuelques2012,
   title = {G\'erer la documentation I - Quelques consid\'erations g\'en\'erales},
   author = {Heimburger, Franziska},
@@ -8,7 +7,7 @@
   abstract = {\'Emilien~a lanc\'e cet \'et\'e une~r\'eflexion~sur la gestion de la documentation, en partant de sa situation de fin de th\`ese et sp\'ecifiquement d'un incident qui l'amenait \`a revoir ses pratiques de sauvegarde. J'aimerais revenir sur ces questions \textendash{} dans un premier billet avec quelques possibilit\'es informatiques existantes pour g\'erer l'information n\'ecessaires \`a la r\'edaction d'un travail...},
   langid = {french},
   organization = {{La bo\^ite \`a outils des historien{$\cdot$}ne{$\cdot$}s}},
-  keywords = {archives,archivistiq,instrumentation,knowledge_infrastructures,knowledge_production,pratiq_sci,research_methods,tools,zotero},
+  keywords = {archives,archivistiq,instrumentation,knowledge\_infrastructures,knowledge\_production,pratiq\_sci,research\_methods,tools,zotero},
   note = {CONTENTS
 \par
 (extrait)
@@ -26,5 +25,3 @@ Luhmann notait toutes les id\'ees qui lui venaient de ses lectures ou d'ailleurs
 \par
 Voici une vid\'eo o\`u Luhmann lui-m\^eme explique le fonctionnement de son \guillemotleft ~Zettelkasten~\guillemotright :}
 }
-
-
