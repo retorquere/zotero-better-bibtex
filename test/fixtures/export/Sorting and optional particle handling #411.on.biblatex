@@ -1,4 +1,3 @@
-
 @book{macedo_catalogo_1799,
   title = {Catalogo dos livros, que se haõ de ler para a continuaçaõ do diccionario da lingua Portugueza: mandado publicar pela Academia Real das Sciencias de Lisboa},
   shorttitle = {Catalogo dos livros, que se haõ de ler...},
@@ -8,7 +7,7 @@
   location = {{Lisboa}},
   langid = {portuguese},
   pagetotal = {182},
-  keywords = {Literary Criticism / European / Spanish & Portuguese,Portuguese literature}
+  keywords = {Literary Criticism / European / Spanish \& Portuguese,Portuguese literature}
 }
 
 @thesis{oliveira_memoriam_2007,
@@ -21,5 +20,3 @@
   url = {http://repositorium.sdum.uminho.pt/handle/1822/6877},
   urldate = {2015-03-24}
 }
-
-
