@@ -9,6 +9,7 @@
   title = {Faulty Dataset Export},
   author = {Foo, John},
   date = {2021},
+  number = {this is the identifier},
   eprint = {the location in the archive},
   eprinttype = {the archive},
   publisher = {the repository},

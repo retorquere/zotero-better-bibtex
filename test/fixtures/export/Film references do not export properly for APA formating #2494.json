@@ -1,0 +1,236 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "preferences": {
+      "ascii": "",
+      "asciiBibLaTeX": false,
+      "asciiBibTeX": true,
+      "autoAbbrev": false,
+      "autoAbbrevStyle": "",
+      "autoExport": "immediate",
+      "autoExportDelay": 5,
+      "autoExportIdleWait": 10,
+      "autoExportPathReplaceDiacritics": false,
+      "autoExportPathReplaceDirSep": "-",
+      "autoExportPathReplaceSpace": " ",
+      "automaticTags": true,
+      "autoPinDelay": 0,
+      "auxImport": false,
+      "baseAttachmentPath": "",
+      "biblatexExtendedDateFormat": true,
+      "biblatexExtendedNameFormat": true,
+      "biblatexExtractEprint": true,
+      "bibtexParticleNoOp": false,
+      "bibtexURL": "off",
+      "cache": true,
+      "cacheFlushInterval": 5,
+      "charmap": "",
+      "citeCommand": "cite",
+      "citekeyFold": true,
+      "citekeyFormat": "auth + year",
+      "citekeySearch": true,
+      "citekeyUnsafeChars": "\\\"#%'(),={}~",
+      "csquotes": "",
+      "DOIandURL": "both",
+      "exportBibTeXStrings": "off",
+      "exportBraceProtection": true,
+      "exportTitleCase": true,
+      "extraMergeCitekeys": false,
+      "extraMergeCSL": false,
+      "extraMergeTeX": false,
+      "git": "config",
+      "import": true,
+      "importBibTeXStrings": true,
+      "importCaseProtection": "as-needed",
+      "importCitationKey": true,
+      "importExtra": true,
+      "importJabRefAbbreviations": true,
+      "importJabRefStrings": true,
+      "importNoteToExtra": "",
+      "importSentenceCase": "on+guess",
+      "importUnknownTexCommand": "ignore",
+      "itemObserverDelay": 5,
+      "jabrefFormat": 0,
+      "jieba": false,
+      "keyConflictPolicy": "keep",
+      "keyScope": "library",
+      "kuroshiro": false,
+      "language": "langid",
+      "mapMath": "",
+      "mapText": "",
+      "mapUnicode": "conservative",
+      "parseParticles": true,
+      "patchDates": "dateadded=dateAdded, date-added=dateAdded, datemodified=dateModified, date-modified=dateModified",
+      "postscript": "",
+      "postscriptOverride": "",
+      "preferencesOverride": "",
+      "qualityReport": false,
+      "quickCopyEta": "",
+      "quickCopyMode": "latex",
+      "quickCopyOrgMode": "zotero",
+      "quickCopyPandocBrackets": false,
+      "quickCopySelectLink": "zotero",
+      "rawImports": false,
+      "rawLaTag": "#LaTeX",
+      "relativeFilePaths": false,
+      "retainCache": false,
+      "separatorList": "and",
+      "separatorNames": "and",
+      "skipFields": "",
+      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
+      "startupProgress": "popup",
+      "strings": "",
+      "stringsOverride": "",
+      "verbatimFields": "url,doi,file,pdf,ids,eprint,/^verb[a-z]$/,groups,/^citeulike-linkout-[0-9]+$/, /^bdsk-url-[0-9]+$/",
+      "warnBulkModify": 10,
+      "warnTitleCased": false
+    },
+    "options": {
+      "exportNotes": true,
+      "exportFileData": false,
+      "keepUpdated": false,
+      "worker": false,
+      "Normalize": true
+    }
+  },
+  "version": {
+    "zotero": "6.0.26",
+    "bbt": "6.7.75.emile.limonia"
+  },
+  "collections": {},
+  "items": [
+    {
+      "version": 0,
+      "itemType": "videoRecording",
+      "date": "1975",
+      "extra": "Citation Key: formanOneFlewCuckoo1975",
+      "title": "One flew over the cuckoo's nest",
+      "creators": [
+        {
+          "firstName": "Miloš",
+          "lastName": "Forman",
+          "creatorType": "director"
+        }
+      ],
+      "tags": [
+        {
+          "tag": "Drama"
+        },
+        {
+          "tag": "Mentally ill$$QMentally ill"
+        }
+      ],
+      "relations": [],
+      "dateAdded": "2023-04-24T12:16:04Z",
+      "dateModified": "2023-04-24T12:16:04Z",
+      "uri": "http://zotero.org/users/8230813/items/QL8INU2Y",
+      "attachments": [],
+      "notes": [],
+      "citationKey": "formanOneFlewCuckoo1975",
+      "itemID": 104,
+      "itemKey": "QL8INU2Y",
+      "libraryID": 1,
+      "publisher": "United Artists"
+    },
+    {
+      "version": 0,
+      "itemType": "tvBroadcast",
+      "date": "1975",
+      "extra": "Citation Key: formanOneFlewCuckoo1975-epi",
+      "title": "One flew over the cuckoo's nest",
+      "creators": [
+        {
+          "firstName": "Miloš",
+          "lastName": "Forman",
+          "creatorType": "director"
+        }
+      ],
+      "tags": [
+        {
+          "tag": "Drama"
+        },
+        {
+          "tag": "Mentally ill$$QMentally ill"
+        }
+      ],
+      "relations": [],
+      "dateAdded": "2023-04-24T12:16:05Z",
+      "dateModified": "2023-04-24T12:16:05Z",
+      "uri": "http://zotero.org/users/8230813/items/REUI6LUD",
+      "attachments": [],
+      "notes": [],
+      "citationKey": "formanOneFlewCuckoo1975-epi",
+      "itemID": 107,
+      "itemKey": "REUI6LUD",
+      "libraryID": 1,
+      "publisher": "United Artists"
+    },
+    {
+      "version": 0,
+      "itemType": "film",
+      "date": "1975",
+      "extra": "Citation Key: formanOneFlewCuckoo1975-film",
+      "title": "One flew over the cuckoo's nest",
+      "creators": [
+        {
+          "firstName": "Miloš",
+          "lastName": "Forman",
+          "creatorType": "director"
+        }
+      ],
+      "tags": [
+        {
+          "tag": "Drama"
+        },
+        {
+          "tag": "Mentally ill$$QMentally ill"
+        }
+      ],
+      "relations": [],
+      "dateAdded": "2023-04-24T12:16:04Z",
+      "dateModified": "2023-04-24T12:16:04Z",
+      "uri": "http://zotero.org/users/8230813/items/9K9T7JVP",
+      "attachments": [],
+      "notes": [],
+      "citationKey": "formanOneFlewCuckoo1975-film",
+      "itemID": 105,
+      "itemKey": "9K9T7JVP",
+      "libraryID": 1,
+      "publisher": "United Artists"
+    },
+    {
+      "version": 0,
+      "itemType": "tvBroadcast",
+      "date": "1975",
+      "extra": "Citation Key: formanOneFlewCuckoo1975-tv",
+      "title": "One flew over the cuckoo's nest",
+      "creators": [
+        {
+          "firstName": "Miloš",
+          "lastName": "Forman",
+          "creatorType": "director"
+        }
+      ],
+      "tags": [
+        {
+          "tag": "Drama"
+        },
+        {
+          "tag": "Mentally ill$$QMentally ill"
+        }
+      ],
+      "relations": [],
+      "dateAdded": "2023-04-24T12:16:04Z",
+      "dateModified": "2023-04-24T12:16:04Z",
+      "uri": "http://zotero.org/users/8230813/items/WPBYRCKC",
+      "attachments": [],
+      "notes": [],
+      "citationKey": "formanOneFlewCuckoo1975-tv",
+      "itemID": 106,
+      "itemKey": "WPBYRCKC",
+      "libraryID": 1,
+      "publisher": "United Artists"
+    }
+  ]
+}

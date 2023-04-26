@@ -1,11 +1,8 @@
-
 @report{Vaishnavi&Kuechler2004,
   title = {Design Science Research in Information Systems},
   author = {Vaishnavi, Vijay and Kuechler, William},
   date = {2004},
   pages = {62},
   url = {http://www.desrist.org/design-research-in-information-systems/},
-  keywords = {process_model}
+  keywords = {process\_model}
 }
-
-

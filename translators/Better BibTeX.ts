@@ -92,14 +92,16 @@ export async function doImport(): Promise<void> {
   let id = 0
   for (const bibtex of bib.entries) {
     if (bibtex.key && whitelist && !whitelist.includes(bibtex.key.toLowerCase())) continue
+
     id++
 
     if (bibtex.key) itemIDS[bibtex.key] = id // Endnote has no citation keys
 
     try {
-      const builder = new translation.ZoteroItem(translation, id, bibtex, bib.jabref, errors)
-      const item = builder.import(new Zotero.Item(builder.type))
-      if (item) await item.complete()
+      const item = new Zotero.Item('journalArticle')
+      item.itemID = id
+      const builder = new translation.ZoteroItem(translation, item, bibtex, bib.jabref)
+      if (builder.import(errors)) await item.complete()
     }
     catch (err) {
       Zotero.debug('bbt import error:', err)

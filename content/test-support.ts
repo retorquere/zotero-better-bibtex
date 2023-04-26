@@ -86,6 +86,7 @@ export class TestSupport {
     preferences = preferences || {}
 
     for (let [pref, value] of Object.entries(preferences)) {
+      if (pref === 'texmap') continue
       if (typeof defaults[pref] === 'undefined') throw new Error(`Unsupported preference ${pref} in test case`)
       if (Array.isArray(value)) value = value.join(',')
       Zotero.Prefs.set(`translators.better-bibtex.${pref}`, value)

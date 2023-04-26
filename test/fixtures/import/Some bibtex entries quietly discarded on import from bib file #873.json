@@ -310,7 +310,7 @@
       "date": "September 1997",
       "extra": [
         "Citation Key: AICPub215:1997",
-        "tex.organization: Artificial Intelligence Center, SRI International"
+        "Authority: Artificial Intelligence Center, SRI International"
       ],
       "itemID": 9,
       "itemType": "report",
@@ -3586,7 +3586,7 @@
       "date": "1984",
       "extra": [
         "Citation Key: cheeseman84",
-        "tex.organization: IEEE"
+        "Authority: IEEE"
       ],
       "itemID": 143,
       "itemType": "conferencePaper",
@@ -4900,7 +4900,7 @@
       "date": "1984",
       "extra": [
         "Citation Key: Dean:84b",
-        "tex.organization: CSCSI"
+        "Authority: CSCSI"
       ],
       "itemID": 194,
       "itemType": "conferencePaper",
@@ -5133,8 +5133,8 @@
       "date": "December 1984",
       "extra": [
         "Citation Key: dean84a",
-        "tex.key: dean84a",
-        "tex.organization: IEEE"
+        "Authority: IEEE",
+        "tex.key: dean84a"
       ],
       "itemID": 204,
       "itemType": "conferencePaper",
@@ -5171,7 +5171,7 @@
       "date": "August 1985",
       "extra": [
         "Citation Key: dean85",
-        "tex.organization: IJCAI"
+        "Authority: IJCAI"
       ],
       "itemID": 206,
       "itemType": "conferencePaper",
@@ -5191,7 +5191,7 @@
       "date": "July 1986",
       "extra": [
         "Citation Key: dean86",
-        "tex.organization: AAAI"
+        "Authority: AAAI"
       ],
       "itemID": 207,
       "itemType": "conferencePaper",
@@ -5511,8 +5511,8 @@
       "date": "1998",
       "extra": [
         "Citation Key: desJardins:98",
-        "Number: WS-98-15",
-        "tex.organization: AAAI"
+        "Authority: AAAI",
+        "Number: WS-98-15"
       ],
       "itemID": 218,
       "itemType": "conferencePaper",
@@ -7483,7 +7483,7 @@
       "date": "1996-03",
       "extra": [
         "Citation Key: Gat:Trenches",
-        "tex.organization: AAAI"
+        "Authority: AAAI"
       ],
       "itemID": 295,
       "itemType": "conferencePaper",
@@ -14854,7 +14854,7 @@
       "date": "1985",
       "extra": [
         "Citation Key: miller85",
-        "tex.organization: IJCAI"
+        "Authority: IJCAI"
       ],
       "itemID": 603,
       "itemType": "conferencePaper",

@@ -42,6 +42,7 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
     if (this.testing) {
       return new Proxy(this, {
         set: (object, property, value) => {
+          if (property === 'texmap') return true
           if (!(property in object)) {
             const stack = (new Error).stack
             throw new TypeError(`Unsupported preference ${new String(property)} ${stack}`) // eslint-disable-line no-new-wrappers
@@ -50,6 +51,8 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
           return true
         },
         get: (object, property) => {
+          if (property === 'texmap') return this.texmap
+
           if (!(property in object)) {
             const stack = (new Error).stack
             throw new TypeError(`Unsupported preference ${new String(property)} ${stack}`) // eslint-disable-line no-new-wrappers

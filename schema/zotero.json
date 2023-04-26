@@ -1,5 +1,5 @@
 {
-  "version": 27,
+  "version": 28,
   "itemTypes": [
     {
       "itemType": "annotation",
@@ -720,9 +720,6 @@
         },
         {
           "field": "type"
-        },
-        {
-          "field": "number"
         },
         {
           "field": "versionNumber"

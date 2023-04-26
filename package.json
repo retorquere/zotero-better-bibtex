@@ -97,11 +97,11 @@
     "xregexp": "^5.1.1"
   },
   "devDependencies": {
-    "@retorquere/bibtex-parser": "^6.4.11",
+    "@retorquere/bibtex-parser": "^6.4.12",
     "@retorquere/zotero-sync": "^1.0.23",
     "@types/bluebird": "^3.5.38",
     "@types/lokijs": "^1.5.7",
-    "@types/node": "^18.15.11",
+    "@types/node": "^18.15.13",
     "@xmldom/xmldom": "^0.8.7",
     "ajv-keywords": "^5.1.0",
     "archiver": "^5.3.1",

@@ -95,7 +95,7 @@ const config: Config = {
       document           : 'misc',
       email              : 'letter',
       encyclopediaArticle: 'inreference',
-      film               : 'movie',
+      film               : 'video',
       forumPost          : 'online',
       gazette            : 'jurisdiction',
       hearing            : 'jurisdiction',
@@ -434,20 +434,16 @@ export function generateBibLaTeX(translation: Translation): void {
         break
 
       case 'jurisdiction':
-        entry.add({ name: 'institution', value: item.court, bibtexStrings: true })
+        entry.add({ name: 'institution', value: item.authority || item.court, bibtexStrings: true })
         break
 
       case 'software':
         entry.add({ name: 'organization', value: item.publisher, bibtexStrings: true })
         break
 
-      case 'preprint':
-        // do nothing with publisher? Handled by eprint?
-        break
-
       default:
-        // preprint is handled above
-        entry.add({ name: 'publisher', value: item.publisher, bibtexStrings: true })
+        // preprint uses eprint fields
+        if (item.itemType !== 'preprint') entry.add({ name: 'publisher', value: item.publisher, bibtexStrings: true })
     }
 
     switch (entry.entrytype) {
@@ -573,6 +569,17 @@ export function generateBibLaTeX(translation: Translation): void {
     }
 
     if (item.arXiv && !entry.has.journaltitle && entry.entrytype === 'article') entry.entrytype = 'unpublished'
+
+    switch (item.itemType) {
+      case 'film':
+        entry.add({ name: 'entrysubtype', value: 'film' })
+        break
+      case 'tvBroadcast':
+        entry.add({ name: 'entrysubtype', value: 'tvbroadcast' })
+        break
+      case 'videoRecording':
+        break
+    }
 
     entry.complete()
   }
