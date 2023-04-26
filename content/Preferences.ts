@@ -461,7 +461,7 @@ export class PrefPane {
       return
     }
 
-    this.PrefPane.checkCitekeyFormat()
+    this.checkCitekeyFormat()
     this.checkPostscript()
     this.setQuickCopy(currentWin.document.getElementById('translator-bbt-quick-copy') as unknown as XUL.Menuitem)
 
