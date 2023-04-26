@@ -331,6 +331,7 @@ export class PrefPane {
 
     const error = Formatter.update([Preference.citekeyFormatEditing, Preference.citekeyFormat])
 
+    log.debug('checkCitekeyFormat:', { active: Preference.citekeyFormat, editing: Preference.citekeyFormatEditing, error })
     const editing = currentWin.document.getElementById('id-better-bibtex-preferences-citekeyFormatEditing')
     editing.setAttribute('style', (error ? '-moz-appearance: none !important; background-color: DarkOrange' : ''))
     editing.setAttribute('tooltiptext', error)
