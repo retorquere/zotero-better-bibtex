@@ -2,6 +2,7 @@ import { XULoki as Loki } from './loki'
 import { Preference } from '../prefs'
 import { schema } from '../../gen/preferences/meta'
 import { getItemsAsync } from '../get-items-async'
+import * as ZoteroDB from './zotero'
 
 import { SQLite } from './store/sqlite'
 import { log } from '../logger'
@@ -47,12 +48,14 @@ class Main extends Loki {
 
     // https://github.com/retorquere/zotero-better-bibtex/issues/1073
     if (Preference.scrubDatabase) {
+      log.debug('scrubbing: stripping citekey extra')
       for (const citekey of citekeys.find()) {
         if (typeof(citekey.extra) !== 'undefined') {
           delete citekey.extra
           citekeys.update(citekey)
         }
       }
+      log.debug('scrubbing: stripping citekey extra done')
     }
 
     if (Zotero.Libraries.userLibraryID) {
@@ -96,21 +99,26 @@ class Main extends Loki {
     const autoexport = this.schemaCollection('autoexport', config)
 
     if (Preference.scrubDatabase) {
+      log.debug('scrubbing: stripping autoexport')
       // directly change the data objects and rebuild indexes https://github.com/techfort/LokiJS/issues/660
       const length = autoexport.data.length
       autoexport.data = autoexport.data.filter(doc => {
         const err = autoexport.validationError(doc)
         if (err) {
-          log.debug('auto-export validation error', err, doc)
+          log.debug('scrubbing: auto-export validation error:', err, doc)
           return false
         }
         return true
       })
       if (length !== autoexport.data.length) {
+        log.debug('scrubbing: stripping autoexport errors:', length - autoexport.data.length)
         autoexport.ensureId()
         autoexport.ensureAllIndexes(true)
+        log.debug('scrubbing: stripping autoexport errors: rebuilt indices')
       }
+      log.debug('scrubbing: stripping autoexport done')
 
+      log.debug('scrubbing: fixing indices')
       // https://github.com/techfort/LokiJS/issues/47#issuecomment-362425639
       for (const [name, coll] of Object.entries({ citekeys, autoexport })) {
         let corrupt
@@ -118,24 +126,40 @@ class Main extends Loki {
           corrupt = coll.checkAllIndexes({ repair: true })
         }
         catch (err) {
+          log.debug('scrubbing: index error:', name, err)
           corrupt = [ '*' ]
           coll.ensureAllIndexes(true)
         }
         if (corrupt.length > 0) {
           for (const index of corrupt) {
             if (index === '*') {
-              Zotero.logError(new Error(`LokiJS: rebuilt index ${name}.${index}`))
+              log.debug(`scrubbing: LokiJS: rebuilt index ${name}.${index}`)
             }
             else {
-              Zotero.logError(new Error(`LokiJS: corrupt index ${name}.${index} repaired`))
+              log.debug(`scrubbing: LokiJS: corrupt index ${name}.${index} repaired`)
             }
           }
         }
       }
+      log.debug('scrubbing: fixing indices done')
 
+      log.debug('scrubbing: old bibtex: lines in extra')
       // old bibtex*: entries
       const re = /(?:^|\s)bibtex\*:[^\S\n]*([^\s]*)(?:\s|$)/
-      const itemIDs = await Zotero.DB.columnQueryAsync('SELECT itemID FROM items')
+
+      // stupid "Please enter a LIKE clause with bindings"
+      const itemIDs = await ZoteroDB.columnQueryAsync(`
+        SELECT item.itemID, item.key, extra.value as extra
+        FROM items item
+
+        LEFT JOIN itemData extraField ON extraField.itemID = item.itemID
+        JOIN fields ON fields.fieldID = extraField.fieldID AND fields.fieldName = 'extra'
+        LEFT JOIN itemDataValues extra ON extra.valueID = extraField.valueID AND extra.value LIKE ?
+        JOIN itemTypes ON itemTypes.itemTypeID = item.itemTypeID AND itemTypes.typeName NOT IN ('attachment', 'note', 'annotation', 'note')
+        WHERE item.itemID NOT IN (SELECT itemID FROM deletedItems) AND item.itemID NOT IN (SELECT itemID from feedItems)
+      `, ['%bibtex:%'])
+
+      log.debug(`scrubbing: old bibtex: ${itemIDs.length} lines in extra`)
       const items = await getItemsAsync(itemIDs)
       for (const item of items) {
         const extra = item.getField('extra')
@@ -145,11 +169,15 @@ class Main extends Loki {
 
         if (clean === extra) continue
 
+        log.debug('scrubbing: replaced old bibtex: syntax')
+
         item.setField('extra', clean)
         await item.saveTx()
       }
+      log.debug('scrubbing: old bibtex: lines in extra done')
 
       Preference.scrubDatabase = false
+      log.debug('scrubbing: completed')
     }
 
     autoexport.on(['pre-insert', 'pre-update'], (ae: { path: string, $loki: number }) => {
