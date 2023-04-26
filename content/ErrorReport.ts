@@ -266,8 +266,10 @@ export class ErrorReport {
     if (autoExports.length) {
       info += 'Auto-exports:\n'
       for (const ae of autoExports) {
+        info += `  ${path}: ${JSON.stringify(ae.path)}`
         for (const [k, v] of Object.entries(ae)) {
-          info += `  ${k}: ${JSON.stringify(v)}`
+          if (k === 'path') continue
+          info += `    ${k}: ${JSON.stringify(v)}`
           if (k === 'translatorID' && Translators.byId[v as string]) info += ` (${Translators.byId[v as string].label})`
           info += '\n'
         }
