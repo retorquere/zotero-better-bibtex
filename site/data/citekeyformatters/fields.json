@@ -24,100 +24,106 @@
     "AudioRecordingFormat"
   ],
   [
+    "Authority<sup>Z</sup>",
     "BillNumber",
     "BlogTitle",
-    "BookAbbreviation<sup>JM</sup>",
-    "BookTitle"
+    "BookAbbreviation<sup>JM</sup>"
   ],
   [
+    "BookTitle",
     "CallNumber",
     "CaseName",
-    "Code",
-    "CodeNumber"
+    "Code"
   ],
   [
+    "CodeNumber",
     "CodePages",
     "CodeVolume",
-    "Committee",
-    "Company"
+    "Committee"
   ],
   [
+    "Company",
     "ConferenceDate<sup>JM</sup>",
     "ConferenceName",
-    "Country",
-    "Court"
+    "Country"
   ],
   [
+    "Court",
     "DOI",
     "Date",
-    "DateAmended<sup>JM</sup>",
-    "DateDecided"
+    "DateAmended<sup>JM</sup>"
   ],
   [
+    "DateDecided",
     "DateEnacted",
     "DictionaryTitle",
-    "Distributor",
-    "Division<sup>JM</sup>"
+    "Distributor"
   ],
   [
+    "Division<sup>JM</sup>",
     "DocketNumber",
     "DocumentName<sup>JM</sup>",
-    "DocumentNumber",
-    "Edition"
+    "DocumentNumber"
   ],
   [
+    "Edition",
     "EncyclopediaTitle",
     "EpisodeNumber",
-    "FilingDate",
-    "FirstPage"
+    "FilingDate"
   ],
   [
+    "FirstPage",
+    "Format<sup>Z</sup>",
     "ForumTitle",
-    "GazetteFlag<sup>JM</sup>",
+    "GazetteFlag<sup>JM</sup>"
+  ],
+  [
     "Genre",
-    "History"
-  ],
-  [
+    "History",
     "ISBN",
-    "ISSN",
-    "Institution",
-    "InterviewMedium"
+    "ISSN"
   ],
   [
-    "Issue",
+    "Identifier<sup>Z</sup>",
+    "Institution",
+    "InterviewMedium",
+    "Issue"
+  ],
+  [
     "IssueDate",
     "IssuingAuthority",
-    "JournalAbbreviation"
+    "JournalAbbreviation",
+    "Jurisdiction<sup>JM</sup>"
   ],
   [
-    "Jurisdiction<sup>JM</sup>",
     "Label",
     "Language",
-    "LegalStatus"
+    "LegalStatus",
+    "LegislativeBody"
   ],
   [
-    "LegislativeBody",
     "LetterType",
     "LibraryCatalog",
-    "ManuscriptType"
+    "ManuscriptType",
+    "MapType"
   ],
   [
-    "MapType",
     "Medium",
     "MeetingName",
-    "MeetingNumber<sup>JM</sup>"
+    "MeetingNumber<sup>JM</sup>",
+    "NameOfAct"
   ],
   [
-    "NameOfAct",
     "Network",
     "NewsCaseDate<sup>JM</sup>",
-    "NumPages"
+    "NumPages",
+    "Number"
   ],
   [
-    "Number",
     "NumberOfVolumes",
     "OpeningDate<sup>JM</sup>",
-    "Opus<sup>JM</sup>"
+    "Opus<sup>JM</sup>",
+    "Organization<sup>Z</sup>"
   ],
   [
     "OriginalDate<sup>JM</sup>",
@@ -162,51 +168,51 @@
     "Repository<sup>Z</sup>"
   ],
   [
+    "RepositoryLocation<sup>Z</sup>",
     "ResolutionLabel<sup>JM</sup>",
     "Rights",
-    "RunningTime",
-    "Scale"
+    "RunningTime"
   ],
   [
+    "Scale",
     "Section",
     "Series",
-    "SeriesNumber",
-    "SeriesText"
+    "SeriesNumber"
   ],
   [
+    "SeriesText",
     "SeriesTitle",
     "Session",
-    "SessionType<sup>JM</sup>",
-    "ShortTitle"
+    "SessionType<sup>JM</sup>"
   ],
   [
+    "ShortTitle",
     "SigningDate<sup>JM</sup>",
-    "Status<sup>JM</sup>",
-    "Studio",
-    "Subject"
+    "Status",
+    "Studio"
   ],
   [
+    "Subject",
     "SupplementName<sup>JM</sup>",
     "System",
-    "ThesisType",
-    "Title"
+    "ThesisType"
   ],
   [
+    "Title",
     "TreatyNumber<sup>JM</sup>",
     "Type",
-    "University",
-    "Url"
+    "University"
   ],
   [
+    "Url",
     "VersionNumber",
     "VideoRecordingFormat",
-    "Volume",
-    "VolumeTitle<sup>JM</sup>"
+    "Volume"
   ],
   [
+    "VolumeTitle<sup>JM</sup>",
     "WebsiteTitle",
     "WebsiteType",
-    "YearAsVolume<sup>JM</sup>",
-    ""
+    "YearAsVolume<sup>JM</sup>"
   ]
 ]
