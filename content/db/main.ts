@@ -147,17 +147,19 @@ class Main extends Loki {
       // old bibtex*: entries
       const re = /(?:^|\s)bibtex\*:[^\S\n]*([^\s]*)(?:\s|$)/
 
+      // stupid "Please enter a LIKE clause with bindings"
       const itemIDs = await ZoteroDB.columnQueryAsync(`
         SELECT item.itemID, item.key, extra.value as extra
         FROM items item
 
         LEFT JOIN itemData extraField ON extraField.itemID = item.itemID
         JOIN fields ON fields.fieldID = extraField.fieldID AND fields.fieldName = 'extra'
-        LEFT JOIN itemDataValues extra ON extra.valueID = extraField.valueID AND extra.value LIKE '%bibtex:%'
+        LEFT JOIN itemDataValues extra ON extra.valueID = extraField.valueID AND extra.value LIKE ?
         JOIN itemTypes ON itemTypes.itemTypeID = item.itemTypeID AND itemTypes.typeName NOT IN ('attachment', 'note', 'annotation', 'note')
         WHERE item.itemID NOT IN (SELECT itemID FROM deletedItems) AND item.itemID NOT IN (SELECT itemID from feedItems)
-      `)
+      `, ['%bibtex:%'])
 
+      log.debug(`scrubbing: old bibtex: ${itemIDs.length} lines in extra`)
       const items = await getItemsAsync(itemIDs)
       for (const item of items) {
         const extra = item.getField('extra')

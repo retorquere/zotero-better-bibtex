@@ -586,6 +586,7 @@ class Zotero:
     profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.testing', self.testing)
     profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.logEvents', self.testing)
     profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.caching', self.caching)
+    profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.scrubDatabase', True)
     # don't nag about the Z7 beta for a day
     profile.firefox.set_preference('extensions.zotero.hiddenNotices', json.dumps({ 'z7-beta-warning': time.time() + 86400 }))
     profile.firefox.set_preference('intl.accept_languages', 'en-GB')
