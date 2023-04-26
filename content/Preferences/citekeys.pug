@@ -8,6 +8,16 @@ vbox
     onblur="this.setAttribute('rows', '1')"
     multiline='true'
   )
+  textbox#better-bibtex-citekeyFormat-error(
+    preference='extensions.zotero.translators.better-bibtex.citekeyFormat'
+    flex='1'
+    rows=1
+    readonly='true'
+    multiline='true'
+    onfocus="this.setAttribute('rows', '5')"
+    onblur="this.setAttribute('rows', '1')"
+    style='-moz-appearance: none !important; background-color: DarkOrange'
+  )
 
   label#id-better-bibtex-label-citekeyFormat(bbt:preference="extensions.zotero.translators.better-bibtex.citekeyFormat") &better-bibtex.Preferences.citekey.format.installed;
   textbox#id-better-bibtex-preferences-citekeyFormat(
@@ -18,6 +28,7 @@ vbox
     multiline='true'
     onfocus="this.setAttribute('rows', '5')"
     onblur="this.setAttribute('rows', '1')"
+    style='-moz-appearance: none !important; background-color: LightGrey'
   )
 checkbox(preference="extensions.zotero.translators.better-bibtex.citekeyFold" label="&better-bibtex.Preferences.citekey.fold;")
 checkbox(preference="extensions.zotero.translators.better-bibtex.citekeySearch" label="&better-bibtex.Preferences.citekey.search;")

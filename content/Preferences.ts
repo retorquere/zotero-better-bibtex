@@ -330,14 +330,20 @@ export class PrefPane {
     if (!currentWin || Zotero.BetterBibTeX.ready.isPending()) return // itemTypes not available yet
 
     const error = Formatter.update([Preference.citekeyFormatEditing, Preference.citekeyFormat])
+    const style = error ? '-moz-appearance: none !important; background-color: DarkOrange' : ''
 
     log.debug('checkCitekeyFormat:', { active: Preference.citekeyFormat, editing: Preference.citekeyFormatEditing, error })
     const editing = currentWin.document.getElementById('id-better-bibtex-preferences-citekeyFormatEditing')
-    editing.setAttribute('style', (error ? '-moz-appearance: none !important; background-color: DarkOrange' : ''))
+    editing.setAttribute('style', style)
     editing.setAttribute('tooltiptext', error)
 
-    for (const id of ['id-better-bibtex-label-citekeyFormat', 'id-better-bibtex-preferences-citekeyFormat']) {
-      currentWin.document.getElementById(id).hidden = Preference.citekeyFormat === Preference.citekeyFormatEditing
+    const msg = currentWin.document.getElementById('better-bibtex-citekeyFormat-error') as HTMLInputElement
+    msg.setAttribute('style', style)
+    msg.value = error
+
+    const hidden = Preference.citekeyFormat === Preference.citekeyFormatEditing
+    for (const id of ['id-better-bibtex-label-citekeyFormat', 'id-better-bibtex-preferences-citekeyFormat', 'better-bibtex-citekeyFormat-error']) {
+      currentWin.document.getElementById(id).hidden = hidden
     }
   }
 
