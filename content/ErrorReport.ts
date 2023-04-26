@@ -266,7 +266,7 @@ export class ErrorReport {
     if (autoExports.length) {
       info += 'Auto-exports:\n'
       for (const ae of autoExports) {
-        info += `  ${path}: ${JSON.stringify(ae.path)}`
+        info += `  path: ${JSON.stringify(ae.path)}`
         for (const [k, v] of Object.entries(ae)) {
           if (k === 'path') continue
           info += `    ${k}: ${JSON.stringify(v)}`
