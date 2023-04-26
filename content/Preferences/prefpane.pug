@@ -29,7 +29,7 @@ prefpane#zotero-prefpane-better-bibtex(insertafter="zotero-prefpane-advanced" la
         tab(label='&better-bibtex.Preferences.advanced.tab.import;')
         tab(label='&better-bibtex.Preferences.export.misc;')
 
-      tabpanels#better-bibtex-prefs-tabpanels(flex="1")
+      tabpanels#better-bibtex-prefs-tabpanels(flex="1" style="overflow:auto")
         tabpanel(bbt:page='_index' flex="1" orient="vertical")
           include citekeys.pug
         tabpanel(bbt:page='export' flex="1" orient="vertical")

@@ -429,17 +429,6 @@ export class PrefPane {
 
     this.autoexport.load()
 
-    /*
-    if (currentWin.document.location.hash === '#better-bibtex') {
-      // runs into the 'TypeError: aId is undefined' problem for some reason unless I delay the activation of the pane
-      // eslint-disable-next-line no-magic-numbers, @typescript-eslint/no-unsafe-return
-      setTimeout(() => currentWin.document.getElementById('zotero-prefs').showPane(currentWin.document.getElementById('zotero-prefpane-better-bibtex')), 500)
-    }
-    */
-
-    // no other way that I know of to know that I've just been selected
-    // const observer = new IntersectionObserver(this.resize.bind(this), { rootMargin: '0px', threshold: 1.0 })
-    // observer.observe(tabbox)
     this.refresh()
     this.timer = typeof this.timer === 'number' ? this.timer : currentWin.setInterval(this.refresh.bind(this), 500)  // eslint-disable-line no-magic-numbers
   }
@@ -473,6 +462,7 @@ export class PrefPane {
       return
     }
 
+    this.checkCitekeyFormat()
     this.checkPostscript()
     this.setQuickCopy(currentWin.document.getElementById('translator-bbt-quick-copy') as unknown as XUL.Menuitem)
 
