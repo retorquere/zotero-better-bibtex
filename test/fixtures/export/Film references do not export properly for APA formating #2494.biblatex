@@ -1,4 +1,5 @@
 @video{formanOneFlewCuckoo1975,
+  entrysubtype = {video},
   title = {One Flew over the Cuckoo's Nest},
   editor = {Forman, Miloš},
   editortype = {director},
