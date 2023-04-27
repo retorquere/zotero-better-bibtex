@@ -27,10 +27,10 @@
   entrysubtype = {film},
   title = {A Film},
   editor = {Doe, John and Roe, Rob},
+  editortype = {director},
   date = {2015},
   publisher = {{The Distributor}},
-  location = {{US/GB}},
-  editortype = {director}
+  location = {{US/GB}}
 }
 
 @inreference{emptybook,
@@ -39,18 +39,19 @@
 }
 
 @video{friends:leia:dvd,
+  entrysubtype = {video},
   title = {The One with the {{Princess Leia}} Fantasy},
   booktitle = {Friends},
   editor = {Mancuso, Gail},
+  editortype = {director},
+  editora = {Curtis, Michael and Malins, Gregory S.},
+  editoratype = {scriptwriter},
   date = {2003},
   origdate = {1996-09-16},
   volume = {3},
   number = {1},
   publisher = {{Warner Home Video}},
   location = {{US}},
-  editora = {Curtis, Michael and Malins, Gregory S.},
-  editoratype = {scriptwriter},
-  editortype = {director},
   langid = {american},
   origpublisher = {{NBC}}
 }
@@ -60,14 +61,14 @@
   title = {The One with the {{Princess Leia}} Fantasy},
   booktitle = {Friends},
   editor = {Mancuso, Gail},
+  editortype = {director},
+  editora = {Curtis, Michael and Malins, Gregory S.},
+  editoratype = {scriptwriter},
   date = {1996-09-16},
   volume = {3},
   number = {1},
   publisher = {{NBC}},
   location = {{US}},
-  editora = {Curtis, Michael and Malins, Gregory S.},
-  editoratype = {scriptwriter},
-  editortype = {director},
   langid = {american}
 }
 
@@ -76,6 +77,6 @@
   title = {Dr. {{Strangelove}} or: How {{I}} Learned to Stop Worrying and Love the Bomb},
   shorttitle = {Dr. {{Strangelove}}},
   editor = {Kubrick, Stanley},
-  date = {1964},
-  editortype = {director}
+  editortype = {director},
+  date = {1964}
 }

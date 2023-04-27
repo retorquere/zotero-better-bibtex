@@ -4,11 +4,11 @@
   title = {Historians and {{Emotions}}: {{New Theories}}, {{New Questions}}},
   shorttitle = {Historians and {{Emotions}}},
   author = {Nagy, Piroska},
+  editora = {Boquet, Damien},
+  editoratype = {collaborator},
   date = {2008-10-24},
   url = {http://emma.hypotheses.org/147},
   urldate = {2017-12-12},
-  editora = {Boquet, Damien},
-  editoratype = {collaborator},
   organization = {{Les émotions au Moyen Âge, carnet d'EMMA}}
 }
 % == BibLateX quality report for NagyHistorians2008:

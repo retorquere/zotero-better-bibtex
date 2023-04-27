@@ -1,9 +1,10 @@
 @video{formanOneFlewCuckoo1975,
+  entrysubtype = {video},
   title = {One Flew over the Cuckoo's Nest},
   editor = {Forman, Miloš},
+  editortype = {director},
   date = {1975},
   publisher = {{United Artists}},
-  editortype = {director},
   keywords = {Drama,Mentally ill\$\$QMentally ill}
 }
 
@@ -11,9 +12,9 @@
   entrysubtype = {tvbroadcast},
   title = {One Flew over the Cuckoo's Nest},
   editor = {Forman, Miloš},
+  editortype = {director},
   date = {1975},
   publisher = {{United Artists}},
-  editortype = {director},
   keywords = {Drama,Mentally ill\$\$QMentally ill}
 }
 
@@ -21,9 +22,9 @@
   entrysubtype = {film},
   title = {One Flew over the Cuckoo's Nest},
   editor = {Forman, Miloš},
+  editortype = {director},
   date = {1975},
   publisher = {{United Artists}},
-  editortype = {director},
   keywords = {Drama,Mentally ill\$\$QMentally ill}
 }
 
@@ -31,8 +32,8 @@
   entrysubtype = {tvbroadcast},
   title = {One Flew over the Cuckoo's Nest},
   editor = {Forman, Miloš},
+  editortype = {director},
   date = {1975},
   publisher = {{United Artists}},
-  editortype = {director},
   keywords = {Drama,Mentally ill\$\$QMentally ill}
 }
