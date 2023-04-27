@@ -113,6 +113,7 @@ const config: Config = {
       presentation       : 'unpublished',
       radioBroadcast     : 'audio',
       report             : 'report',
+      standard           : 'standard',
       statute            : 'legislation',
       thesis             : 'thesis',
       tvBroadcast        : 'video',
