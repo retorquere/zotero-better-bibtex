@@ -1,0 +1,155 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "autoExportDelay": 2,
+      "bibtexURL": "url",
+      "citekeyFold": false,
+      "citekeyFormat": "auth.capitalize+year",
+      "exportBraceProtection": false,
+      "exportTitleCase": false,
+      "extraMergeCSL": true,
+      "extraMergeCitekeys": true,
+      "extraMergeTeX": true,
+      "itemObserverDelay": 100,
+      "keyConflictPolicy": "change",
+      "qualityReport": true
+    }
+  },
+  "items": [
+    {
+      "DOI": "10.25592/dgs.corpus-1.0",
+      "citationKey": "MyDGS_annotated",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Reiner",
+          "lastName": "Konrad"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Thomas",
+          "lastName": "Hanke"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Gabriele",
+          "lastName": "Langer"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Dolly",
+          "lastName": "Blanck"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Julian",
+          "lastName": "Bleicken"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Ilona",
+          "lastName": "Hofmann"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Olga",
+          "lastName": "Jeziorski"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Lutz",
+          "lastName": "K\u00f6nig"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Susanne",
+          "lastName": "K\u00f6nig"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Rie",
+          "lastName": "Nishio"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Anja",
+          "lastName": "Regen"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Uta",
+          "lastName": "Salden"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Sven",
+          "lastName": "Wagner"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Satu",
+          "lastName": "Worseck"
+        }
+      ],
+      "date": "2018",
+      "extra": [
+        "Citation Key: MyDGS_annotated"
+      ],
+      "itemID": 1,
+      "itemType": "dataset",
+      "publisher": "DGS-Korpus project, IDGS, Hamburg University",
+      "rights": "Restricted to linguistic research",
+      "shortTitle": "Public DGS Corpus",
+      "title": "MY DGS \u2013 annotated. Public Corpus of German Sign Language",
+      "versionNumber": "1.0"
+    },
+    {
+      "version": 0,
+      "itemType": "standard",
+      "url": "the url",
+      "rights": "Restricted to linguistic research",
+      "place": "the repo location",
+      "publisher": "the repository",
+      "date": "2021",
+      "callNumber": "the call number",
+      "archiveLocation": "the location in the archive",
+      "DOI": "the DOI",
+      "accessDate": "2022-03-03",
+      "committee": "This is the committee",
+      "number": "xxxxx",
+      "libraryCatalog": "the library catalogue",
+      "versionNumber": "3333",
+      "language": "the language",
+      "abstractNote": "This is the abstract",
+      "type": "This is the dataset type",
+      "title": "Faulty Standard Export",
+      "shortTitle": "the short title",
+      "archive": "the archive",
+      "citationKey": "foo2021",
+      "status": "The status",
+      "organization": "This is the organisation",
+      "creators": [
+        {
+          "firstName": "John",
+          "lastName": "Foo",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [],
+      "relations": [],
+      "dateAdded": "2023-04-27T11:41:32Z",
+      "dateModified": "2023-04-27T11:43:50Z",
+      "uri": "http://zotero.org/users/8230813/items/F2KMBYG2",
+      "attachments": [],
+      "notes": [],
+      "itemID": 104,
+      "itemKey": "F2KMBYG2",
+      "libraryID": 1
+    }
+  ]
+}
