@@ -39,6 +39,7 @@
 }
 
 @video{friends:leia:dvd,
+  entrysubtype = {video},
   title = {The One with the {{Princess Leia}} Fantasy},
   booktitle = {Friends},
   editor = {Mancuso, Gail},

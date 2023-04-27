@@ -13,9 +13,9 @@
   pubstate = {Legal Status}
 }
 % == BibLateX quality report for inventorCombinatorialProblemStabilityIssueDate:
-% Unexpected field 'pages'
 % Unexpected field 'editora'
 % Unexpected field 'editoratype'
+% Unexpected field 'pages'
 % ? unused Application number ("Application Number")
 % ? unused Assignee ("Assignee")
 % ? unused Authority ("Issueing Authority")
