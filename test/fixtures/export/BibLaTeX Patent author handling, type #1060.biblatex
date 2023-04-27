@@ -3,19 +3,19 @@
   type = {patent},
   title = {A Combinatorial Problem; Stability and Order for Models and Theories in Infinitary Languages},
   author = {Inventor, Some},
+  editora = {Attorney/Agent, Some and Contributer, Some},
+  editoratype = {collaborator},
   holder = {{Assignee}},
   year = {Issue Date},
   number = {Patent Number},
   pages = {247--261},
   location = {{Country}},
-  editora = {Attorney/Agent, Some and Contributer, Some},
-  editoratype = {collaborator},
   pubstate = {Legal Status}
 }
 % == BibLateX quality report for inventorCombinatorialProblemStabilityIssueDate:
-% Unexpected field 'pages'
 % Unexpected field 'editora'
 % Unexpected field 'editoratype'
+% Unexpected field 'pages'
 % ? unused Application number ("Application Number")
 % ? unused Assignee ("Assignee")
 % ? unused Authority ("Issueing Authority")

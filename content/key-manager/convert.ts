@@ -357,9 +357,10 @@ export function convert(formulas: string): string {
           try {
             if (path.node.name.match(/^[A-Z]/)) {
               const name = items.name.field[path.node.name.toLowerCase()]
-              if (!name) error(`No such field ${path.node.name}`, path.node)
-              if ((path.node as any).meta?.called) error('fields cannot be called', path.node)
-              if (namespace !== '$' || (path.node as any).meta?.called) error('field access not allowed here', path.node)
+              const reason = `Because it is capitalized, ${path.node.name} would have to be an item field, but `
+              if (!name) error(`${reason} Zotero items do not have a field ${path.node.name}`, path.node)
+              if ((path.node as any).meta?.called) error(`${reason} fields cannot be called as functions`, path.node)
+              if (namespace !== '$' || (path.node as any).meta?.called) error(`${reason} field access not allowed here`, path.node)
               return b.callExpression(b.memberExpression(b.thisExpression(), b.identifier('$getField')), [b.literal(name)])
             }
             else {

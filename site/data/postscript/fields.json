@@ -27,97 +27,103 @@
     "assignee",
     "audioFileType",
     "audioRecordingFormat",
-    "billNumber"
+    "authority<sup>Z</sup>"
   ],
   [
+    "billNumber",
     "blogTitle",
     "bookAbbreviation<sup>JM</sup>",
-    "bookTitle",
-    "callNumber"
+    "bookTitle"
   ],
   [
+    "callNumber",
     "caseName",
     "code",
-    "codeNumber",
-    "codePages"
+    "codeNumber"
   ],
   [
+    "codePages",
     "codeVolume",
     "committee",
-    "company",
-    "conferenceDate<sup>JM</sup>"
+    "company"
   ],
   [
+    "conferenceDate<sup>JM</sup>",
     "conferenceName",
     "country",
-    "court",
-    "date"
+    "court"
   ],
   [
+    "date",
     "dateAmended<sup>JM</sup>",
     "dateDecided",
-    "dateEnacted",
-    "dictionaryTitle"
+    "dateEnacted"
   ],
   [
+    "dictionaryTitle",
     "distributor",
     "division<sup>JM</sup>",
-    "docketNumber",
-    "documentName<sup>JM</sup>"
+    "docketNumber"
   ],
   [
+    "documentName<sup>JM</sup>",
     "documentNumber",
     "edition",
-    "encyclopediaTitle",
-    "episodeNumber"
+    "encyclopediaTitle"
   ],
   [
+    "episodeNumber",
     "filingDate",
     "firstPage",
+    "format<sup>Z</sup>"
+  ],
+  [
     "forumTitle",
-    "gazetteFlag<sup>JM</sup>"
-  ],
-  [
+    "gazetteFlag<sup>JM</sup>",
     "genre",
-    "history",
-    "institution",
-    "interviewMedium"
+    "history"
   ],
   [
-    "issue",
+    "identifier<sup>Z</sup>",
+    "institution",
+    "interviewMedium",
+    "issue"
+  ],
+  [
     "issueDate",
     "issuingAuthority",
-    "journalAbbreviation"
+    "journalAbbreviation",
+    "jurisdiction<sup>JM</sup>"
   ],
   [
-    "jurisdiction<sup>JM</sup>",
     "label",
     "language",
-    "legalStatus"
+    "legalStatus",
+    "legislativeBody"
   ],
   [
-    "legislativeBody",
     "letterType",
     "libraryCatalog",
-    "manuscriptType"
+    "manuscriptType",
+    "mapType"
   ],
   [
-    "mapType",
     "medium",
     "meetingName",
-    "meetingNumber<sup>JM</sup>"
+    "meetingNumber<sup>JM</sup>",
+    "nameOfAct"
   ],
   [
-    "nameOfAct",
     "network",
     "newsCaseDate<sup>JM</sup>",
-    "numPages"
+    "numPages",
+    "number"
   ],
   [
-    "number",
     "numberOfVolumes",
     "openingDate<sup>JM</sup>",
-    "opus<sup>JM</sup>"
+    "opus<sup>JM</sup>",
+    "organization<sup>Z</sup>"
   ],
   [
     "originalDate<sup>JM</sup>",
@@ -162,51 +168,51 @@
     "repository<sup>Z</sup>"
   ],
   [
+    "repositoryLocation<sup>Z</sup>",
     "resolutionLabel<sup>JM</sup>",
     "rights",
-    "runningTime",
-    "scale"
+    "runningTime"
   ],
   [
+    "scale",
     "section",
     "series",
-    "seriesNumber",
-    "seriesText"
+    "seriesNumber"
   ],
   [
+    "seriesText",
     "seriesTitle",
     "session",
-    "sessionType<sup>JM</sup>",
-    "shortTitle"
+    "sessionType<sup>JM</sup>"
   ],
   [
+    "shortTitle",
     "signingDate<sup>JM</sup>",
-    "status<sup>JM</sup>",
-    "studio",
-    "subject"
+    "status",
+    "studio"
   ],
   [
+    "subject",
     "supplementName<sup>JM</sup>",
     "system",
-    "thesisType",
-    "title"
+    "thesisType"
   ],
   [
+    "title",
     "treatyNumber<sup>JM</sup>",
     "type",
-    "university",
-    "url"
+    "university"
   ],
   [
+    "url",
     "versionNumber",
     "videoRecordingFormat",
-    "volume",
-    "volumeTitle<sup>JM</sup>"
+    "volume"
   ],
   [
+    "volumeTitle<sup>JM</sup>",
     "websiteTitle",
     "websiteType",
-    "yearAsVolume<sup>JM</sup>",
-    ""
+    "yearAsVolume<sup>JM</sup>"
   ]
 ]

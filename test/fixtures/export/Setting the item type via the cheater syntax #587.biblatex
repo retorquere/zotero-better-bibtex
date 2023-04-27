@@ -11,11 +11,11 @@
 @review{kamp_deconstructing_2006,
   title = {Deconstructing Dinner},
   author = {Kamp, David},
+  editora = {Pollan, Michael},
+  editoratype = {collaborator},
   date = {2006-04-23},
   url = {http://www.nytimes.com/2006/04/23/books/review/23kamp.html.},
   abstract = {Example from CMoS, 16e, 14.125},
-  editora = {Pollan, Michael},
-  editoratype = {collaborator},
   langid = {american}
 }
 
@@ -41,13 +41,13 @@
 @review{ratliff_mystery_1999,
   title = {The Mystery of Samba: {{Popular}} Music and National Identity in {{Brazil}}},
   author = {Ratliff, Ben},
+  editora = {{Hermano Vianna}},
+  editoratype = {collaborator},
   date = {1999-04},
   journaltitle = {Lingua Franca},
   volume = {9},
   pages = {B13--B14},
   abstract = {Example from CMoS, 16e, 14.215 “ed. and trans. John Charles Chasteen”},
-  editora = {{Hermano Vianna}},
-  editoratype = {collaborator},
   langid = {american},
   note = {biblatex-chicago example, adapted from \href{http://mirrors.ctan.org/macros/latex/contrib/biblatex-contrib/biblatex-chicago/doc/examples/dates-test.bib}{http://mirrors.ctan.org/macros/latex/contrib/biblatex-contrib/biblatex-chicago/doc/examples/dates-test.bib}
 \par

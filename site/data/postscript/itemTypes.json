@@ -18,51 +18,57 @@
     "conferencePaper"
   ],
   [
+    "dataset<sup>Z</sup>",
     "dictionaryEntry",
     "document",
-    "email",
-    "encyclopediaArticle"
+    "email"
   ],
   [
+    "encyclopediaArticle",
     "film",
     "forumPost",
-    "gazette<sup>JM</sup>",
-    "hearing"
+    "gazette<sup>JM</sup>"
   ],
   [
+    "hearing",
     "instantMessage",
     "interview",
-    "journalArticle",
-    "legalCommentary<sup>JM</sup>"
+    "journalArticle"
   ],
   [
+    "legalCommentary<sup>JM</sup>",
     "letter",
     "magazineArticle",
-    "manuscript",
-    "map"
+    "manuscript"
   ],
   [
+    "map",
     "newspaperArticle",
     "note",
-    "patent",
-    "podcast"
+    "patent"
   ],
   [
+    "podcast",
     "preprint<sup>Z</sup>",
     "presentation",
-    "radioBroadcast",
-    "regulation<sup>JM</sup>"
+    "radioBroadcast"
   ],
   [
+    "regulation<sup>JM</sup>",
     "report",
-    "standard<sup>JM</sup>",
-    "statute",
-    "thesis"
+    "standard",
+    "statute"
   ],
   [
+    "thesis",
     "treaty<sup>JM</sup>",
     "tvBroadcast",
-    "videoRecording",
-    "webpage"
+    "videoRecording"
+  ],
+  [
+    "webpage",
+    "",
+    "",
+    ""
   ]
 ]
