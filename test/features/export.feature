@@ -13,6 +13,7 @@ Feature: Export
 
     Examples:
       | file                                                                                                                     | references |
+      | Add support for new Zotero item types #2496                                                                              | 2          |
       | Film references do not export properly for APA formating #2494                                                           | 4          |
       | series = {none} #2469                                                                                                    | 1          |
       | Fail to delete fields for certain reference types in BibLaTeX output using postscript in version 6.7.59 #2445            | 1          |
