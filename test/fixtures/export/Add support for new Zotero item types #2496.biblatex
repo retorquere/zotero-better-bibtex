@@ -1,0 +1,42 @@
+@standard{Foo2021,
+  type = {This is the dataset type},
+  title = {Faulty Standard Export},
+  shorttitle = {the short title},
+  author = {Foo, John},
+  date = {2021},
+  number = {xxxxx},
+  publisher = {the repository},
+  location = {the repo location},
+  doi = {the DOI},
+  url = {the url},
+  urldate = {2022-03-03},
+  abstract = {This is the abstract},
+  langid = {the language},
+  pubstate = {The status},
+  version = {3333}
+}
+% == BibLateX quality report for Foo2021:
+% Unexpected field 'type'
+% Unexpected field 'title'
+% Unexpected field 'author'
+% Unexpected field 'number'
+% Unexpected field 'publisher'
+% Unexpected field 'location'
+% Unexpected field 'pubstate'
+% Unexpected field 'version'
+% ? unused Archive ("the archive")
+% ? unused Archive location ("the location in the archive")
+% ? unused Authority ("This is the organisation")
+% ? unused Call number ("the call number")
+% ? unused Committee ("This is the committee")
+% ? unused Library catalog ("the library catalogue")
+
+@dataset{MyDGS_annotated,
+  title = {MY DGS – annotated. Public Corpus of German Sign Language},
+  shorttitle = {Public DGS Corpus},
+  author = {Konrad, Reiner and Hanke, Thomas and Langer, Gabriele and Blanck, Dolly and Bleicken, Julian and Hofmann, Ilona and Jeziorski, Olga and König, Lutz and König, Susanne and Nishio, Rie and Regen, Anja and Salden, Uta and Wagner, Sven and Worseck, Satu},
+  date = {2018},
+  publisher = {DGS-Korpus project, IDGS, Hamburg University},
+  doi = {10.25592/dgs.corpus-1.0},
+  version = {1.0}
+}
