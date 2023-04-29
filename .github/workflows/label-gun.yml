@@ -37,3 +37,4 @@ jobs:
 
             Thank you!
           message.no-close: Thanks for the feedback; there's no way you could have known, but @retorquere prefers to keep bugreports/enhancements open as a reminder to merge the changes into a new release.
+          shortcode.hiddenprefs: go into the [hidden preferences](https://www.zotero.org/support/preferences/hidden_preferences)
