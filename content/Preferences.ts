@@ -29,7 +29,14 @@ Events.on('window-loaded', ({ win, href }: {win: Window, href: string}) => {
   }
 })
 Events.on('preference-changed', (pref: string) => {
-  if (pref === 'citekeyFormatEditing') Zotero.BetterBibTeX.PrefPane.checkCitekeyFormat()
+  switch (pref) {
+    case 'citekeyFormatEditing':
+      Zotero.BetterBibTeX.PrefPane.checkCitekeyFormat()
+      break
+    case 'postscript':
+      Zotero.BetterBibTeX.PrefPane.checkPostscript()
+      break
+  }
 })
 
 class AutoExportPane {
@@ -332,23 +339,22 @@ export class PrefPane {
     const error = Formatter.update([Preference.citekeyFormatEditing, Preference.citekeyFormat])
     const style = error ? '-moz-appearance: none !important; background-color: DarkOrange' : ''
 
-    log.debug('checkCitekeyFormat:', { active: Preference.citekeyFormat, editing: Preference.citekeyFormatEditing, error })
     const editing = currentWin.document.getElementById('id-better-bibtex-preferences-citekeyFormatEditing')
     editing.setAttribute('style', style)
     editing.setAttribute('tooltiptext', error)
 
     const msg = currentWin.document.getElementById('better-bibtex-citekeyFormat-error') as HTMLInputElement
+    msg.hidden = !error
     msg.setAttribute('style', style)
     msg.value = error
 
-    const hidden = Preference.citekeyFormat === Preference.citekeyFormatEditing
-    for (const id of ['id-better-bibtex-label-citekeyFormat', 'id-better-bibtex-preferences-citekeyFormat', 'better-bibtex-citekeyFormat-error']) {
-      currentWin.document.getElementById(id).hidden = hidden
-    }
+    const active = currentWin.document.getElementById('id-better-bibtex-preferences-citekeyFormat')
+    active.hidden = Preference.citekeyFormat === Preference.citekeyFormatEditing
+    const label = currentWin.document.getElementById('id-better-bibtex-label-citekeyFormat')
+    label.hidden = active.hidden
   }
 
   public checkPostscript(): void {
-
     let error = ''
     try {
       // don't care about the return value, just if it throws an error
@@ -435,6 +441,8 @@ export class PrefPane {
 
     this.autoexport.load()
 
+    this.checkCitekeyFormat()
+    this.checkPostscript()
     this.refresh()
     this.timer = typeof this.timer === 'number' ? this.timer : currentWin.setInterval(this.refresh.bind(this), 500)  // eslint-disable-line no-magic-numbers
   }
@@ -468,8 +476,6 @@ export class PrefPane {
       return
     }
 
-    this.checkCitekeyFormat()
-    this.checkPostscript()
     this.setQuickCopy(currentWin.document.getElementById('translator-bbt-quick-copy') as unknown as XUL.Menuitem)
 
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
