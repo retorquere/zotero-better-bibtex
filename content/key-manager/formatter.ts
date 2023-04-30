@@ -350,7 +350,7 @@ class PatternFormatter {
 
       if (formula[0] === '[') {
         try {
-          formula = legacyparser.parse(formula, { sprintf, items, methods })
+          formula = legacyparser.parse(formula, { items, methods })
         }
         catch (err) {
           error = `failed to upgrade legacy formula ${formula}`
