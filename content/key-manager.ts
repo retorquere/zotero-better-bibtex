@@ -208,17 +208,15 @@ export class KeyManager {
       }
     }
     if (search) {
-      /*
-      // 1829
-      try {
-        // no other way to detect column existence on attached databases
-        await Zotero.DB.valueQueryAsync('SELECT libraryID FROM betterbibtexsearch.citekeys LIMIT 1')
+      const tables = await Zotero.DB.columnQueryAsync("SELECT name FROM betterbibtexsearch.sqlite_master where type='table'")
+      if (tables.includes('citekeys')) {
+        const columns = await Zotero.DB.columnQueryAsync("SELECT name FROM PRAGMA_TABLE_INFO('citekeys', 'betterbibtexsearch')")
+        // 1829
+        if (!columns.includes('libraryID')) {
+          log.error('dropping betterbibtexsearch.citekeys, libraryID does not exist')
+          await Zotero.DB.queryAsync('DROP TABLE IF EXISTS betterbibtexsearch.citekeys')
+        }
       }
-      catch (err) {
-        log.error(`dropping betterbibtexsearch.citekeys, assuming libraryID does not exist: ${err}`)
-        await Zotero.DB.queryAsync('DROP TABLE IF EXISTS betterbibtexsearch.citekeys')
-      }
-      */
       await Zotero.DB.queryAsync('CREATE TABLE IF NOT EXISTS betterbibtexsearch.citekeys (itemID PRIMARY KEY, libraryID, itemKey, citekey)')
 
       const match: Record<string, CitekeySearchRecord> = this.keys.data
