@@ -353,7 +353,7 @@ class PatternFormatter {
           formula = legacyparser.parse(formula, { items, methods })
         }
         catch (err) {
-          error = `failed to upgrade legacy formula ${formula}`
+          error = `failed to upgrade legacy formula ${formula}: ${err.message}`
           continue
         }
       }
