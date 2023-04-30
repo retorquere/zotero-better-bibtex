@@ -109,18 +109,13 @@ class Main extends Loki {
           rebuild = true
           return false
         }
+        if (!doc.meta || typeof doc.$loki !== 'number') {
+          log.debug('scrubbing: auto-export missing metadata:', doc)
+          rebuild = true
+          return false
+        }
         return true
       })
-      // #2501
-      for (const doc of autoexport.find()) {
-        try {
-          autoexport.update(doc)
-        }
-        catch (err) {
-          log.debug('scrubbing: auto-export validation error:', err, doc)
-          rebuild = true
-        }
-      }
       if (rebuild) {
         log.debug('scrubbing: stripping autoexport errors:', length - autoexport.data.length)
         autoexport.ensureId()
