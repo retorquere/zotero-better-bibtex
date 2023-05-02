@@ -1,0 +1,41 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "citekeyFormat": "auth.fold.lower + year | type(forumPost, webpage) + auth.lower.capitalize + Date.formatDate(\"%Y-%m-%d.%H:%M:%S\").prefix(\".\") + PublicationTitle.lower.capitalize.prefix(\".\") + shorttitle(3,3).lower.capitalize.prefix(\".\") + Pages.prefix(\".p.\") + Volume.prefix(\".Vol.\") + NumberofVolumes.prefix(de) | auth.lower.capitalize + date(\"%oY\").prefix(\".\") + PublicationTitle.lower.capitalize.prefix(\".\") + shorttitle(3,3).lower.capitalize.prefix(\".\") + Pages.prefix(\".p.\") + Volume.prefix(\".Vol.\") + NumberofVolumes.prefix(de)",
+      "kuroshiro": true
+    }
+  },
+  "items": [
+    {
+      "citationKey": "GAP4.13dev",
+      "extra": [
+        "Citation Key: GAP4.13dev",
+        "Authority: The GAP Group",
+        "tex.key: GAP"
+      ],
+      "url": "https://www.gap-system.org",
+      "itemID": 1,
+      "itemType": "document",
+      "tags": [
+        {
+          "tag": "*"
+        },
+        {
+          "tag": "gap"
+        },
+        {
+          "tag": "groups"
+        },
+        {
+          "tag": "manual"
+        }
+      ],
+      "title": "GAP \u2013 Groups, Algorithms, and Programming, Version 4.13dev"
+    }
+  ]
+}
