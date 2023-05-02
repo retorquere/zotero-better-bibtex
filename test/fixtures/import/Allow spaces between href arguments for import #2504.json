@@ -103,6 +103,183 @@
     {
       "version": 0,
       "itemType": "document",
+      "url": "https://www.math.uni-bielefeld.de/~gaehler/gap/packages.php",
+      "date": "2022-07",
+      "extra": "Citation Key: CaratInterface2.3.4\ntex.printedkey: Gäh22",
+      "title": "CaratInterface, interface to CARAT, a crystallographic groups package, Version 2.3.4",
+      "creators": [
+        {
+          "firstName": "F.",
+          "lastName": "Gähler",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [
+        {
+          "tag": "crystallographic groups"
+        },
+        {
+          "tag": "finite unimodular groups"
+        },
+        {
+          "tag": "GLnZ"
+        }
+      ],
+      "relations": [],
+      "dateAdded": "2023-05-02T14:04:07Z",
+      "dateModified": "2023-05-02T14:04:07Z",
+      "uri": "http://zotero.org/users/8230813/items/HJZ7MCCF",
+      "attachments": [],
+      "notes": [
+        {
+          "key": "6WRLYPAU",
+          "version": 0,
+          "itemType": "note",
+          "parentItem": "HJZ7MCCF",
+          "note": "Refereed GAP package",
+          "tags": [],
+          "relations": {},
+          "dateAdded": "2023-05-02T14:04:07Z",
+          "dateModified": "2023-05-02T14:04:07Z",
+          "uri": "http://zotero.org/users/8230813/items/6WRLYPAU"
+        }
+      ],
+      "citationKey": "CaratInterface2.3.4",
+      "itemID": 104,
+      "itemKey": "HJZ7MCCF",
+      "libraryID": 1
+    },
+    {
+      "version": 0,
+      "itemType": "document",
+      "url": "https://www.math.uni-bielefeld.de/~gaehler/gap/packages.php",
+      "date": "2023-04",
+      "extra": "Citation Key: Cryst4.1.26\ntex.printedkey: EGN23",
+      "title": "Cryst, Computing with crystallographic groups, Version 4.1.26",
+      "creators": [
+        {
+          "firstName": "B.",
+          "lastName": "Eick",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "F.",
+          "lastName": "Gähler",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "W.",
+          "lastName": "Nickel",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [
+        {
+          "tag": "crystallographic groups"
+        },
+        {
+          "tag": "affine crystallographic groups"
+        },
+        {
+          "tag": "color groups"
+        },
+        {
+          "tag": "International Tables for Crystallography"
+        },
+        {
+          "tag": "maximal subgroups"
+        },
+        {
+          "tag": "normalizer"
+        },
+        {
+          "tag": "point group"
+        },
+        {
+          "tag": "space groups"
+        },
+        {
+          "tag": "Wyckoff positions"
+        }
+      ],
+      "relations": [],
+      "dateAdded": "2023-05-02T14:04:07Z",
+      "dateModified": "2023-05-02T14:04:07Z",
+      "uri": "http://zotero.org/users/8230813/items/QR8Q5VB5",
+      "attachments": [],
+      "notes": [
+        {
+          "key": "DBJHY38M",
+          "version": 0,
+          "itemType": "note",
+          "parentItem": "QR8Q5VB5",
+          "note": "Refereed GAP package",
+          "tags": [],
+          "relations": {},
+          "dateAdded": "2023-05-02T14:04:07Z",
+          "dateModified": "2023-05-02T14:04:07Z",
+          "uri": "http://zotero.org/users/8230813/items/DBJHY38M"
+        }
+      ],
+      "citationKey": "Cryst4.1.26",
+      "itemID": 107,
+      "itemKey": "QR8Q5VB5",
+      "libraryID": 1
+    },
+    {
+      "version": 0,
+      "itemType": "document",
+      "url": "https://www.math.uni-bielefeld.de/~gaehler/gap/packages.php",
+      "date": "2022-07",
+      "extra": "Citation Key: CrystCat1.1.10\ntex.printedkey: FG22",
+      "title": "CrystCat, The crystallographic groups catalog, Version 1.1.10",
+      "creators": [
+        {
+          "firstName": "V.",
+          "lastName": "Felsch",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "F.",
+          "lastName": "Gähler",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [
+        {
+          "tag": "crystallographic groups"
+        },
+        {
+          "tag": "space groups"
+        }
+      ],
+      "relations": [],
+      "dateAdded": "2023-05-02T14:04:07Z",
+      "dateModified": "2023-05-02T14:04:07Z",
+      "uri": "http://zotero.org/users/8230813/items/57KACB4M",
+      "attachments": [],
+      "notes": [
+        {
+          "key": "YZKTTG27",
+          "version": 0,
+          "itemType": "note",
+          "parentItem": "57KACB4M",
+          "note": "Refereed GAP package",
+          "tags": [],
+          "relations": {},
+          "dateAdded": "2023-05-02T14:04:07Z",
+          "dateModified": "2023-05-02T14:04:07Z",
+          "uri": "http://zotero.org/users/8230813/items/YZKTTG27"
+        }
+      ],
+      "citationKey": "CrystCat1.1.10",
+      "itemID": 109,
+      "itemKey": "57KACB4M",
+      "libraryID": 1
+    },
+    {
+      "version": 0,
+      "itemType": "document",
       "url": "https://www.gap-system.org",
       "publisher": "The GAP Group",
       "extra": "Citation Key: GAP4.13dev\ntex.key: GAP",
@@ -123,14 +300,14 @@
         }
       ],
       "relations": [],
-      "dateAdded": "2023-05-02T13:57:22Z",
-      "dateModified": "2023-05-02T13:57:22Z",
-      "uri": "http://zotero.org/users/8230813/items/CQCR483V",
+      "dateAdded": "2023-05-02T14:04:07Z",
+      "dateModified": "2023-05-02T14:04:07Z",
+      "uri": "http://zotero.org/users/8230813/items/ACF2Q7U2",
       "attachments": [],
       "notes": [],
       "citationKey": "GAP4.13dev",
-      "itemID": 104,
-      "itemKey": "CQCR483V",
+      "itemID": 106,
+      "itemKey": "ACF2Q7U2",
       "libraryID": 1
     }
   ]

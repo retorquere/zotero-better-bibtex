@@ -71,7 +71,7 @@ Feature: Import
 
     Examples:
       | file                                                                                   | references |
-      | Allow spaces between href arguments for import #2504                                   | 1          |
+      | Allow spaces between href arguments for import #2504                                   | 4          |
       | Film references do not export properly for APA formating #2494                         | 4          |
       | article with entrysubtype                                                              | 1          |
       | Qiqqa                                                                                  | 2          |
