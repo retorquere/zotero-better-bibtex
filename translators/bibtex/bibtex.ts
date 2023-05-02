@@ -984,6 +984,8 @@ export class ZoteroItem {
 
     if (this.item.url) return (this.item.url === url)
 
+    if (!this.validFields.url) return this.fallback(['url'], url)
+
     this.item.url = url
     return true
   }
