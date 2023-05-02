@@ -615,12 +615,14 @@ export class ZoteroItem {
       (this.bibtex.fields.publisher || []).join(' and '),
       (this.bibtex.fields.institution || []).join(' and '),
       (this.bibtex.fields.school || []).join(' and '),
+      (this.bibtex.fields.organization || []).join(' and '),
     ].filter(v => v.replace(/[ \t\r\n]+/g, ' ').trim()).join(' / ')
 
     return true
   }
   protected $institution(value: string | number, field: string): boolean { return this.$publisher(value, field) }
   protected $school(value: string | number, field: string): boolean { return this.$publisher(value, field) }
+  protected $organization(value: string | number, field: string): boolean { return this.$publisher(value, field) }
 
   protected $address(value: string | number): boolean {
     return this.set('place', value, ['place'])
