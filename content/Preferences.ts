@@ -19,7 +19,8 @@ import { flash } from './flash'
 
 let currentWin: Window & { sizeToContent(): void } = null
 Events.on('window-loaded', ({ win, href }: {win: Window, href: string}) => {
-  if (href === 'chrome://zotero/content/preferences/preferences.xul') {
+  Zotero.debug('window-loaded', href)
+  if (href === 'chrome://zotero-better-bibtex/content/Preferences.xul') {
     currentWin = win as any
     currentWin.addEventListener('unload', () => {
       Zotero.BetterBibTeX.PrefPane.unload()

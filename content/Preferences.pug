@@ -5,11 +5,9 @@
 | <?xml-stylesheet href="chrome://browser/skin/preferences/preferences.css"?>
 | <?xml-stylesheet href="chrome://zotero/skin/preferences.css"?>
 | <?xml-stylesheet href="chrome://zotero/skin/zotero.css"?>
-| <?xml-stylesheet href="chrome://zotero-platform/content/overlay.css"?>
+| <?xml-stylesheet href="chrome://zotero-platform/content/preferences.css"?>
 | <?xml-stylesheet href="chrome://zotero-better-bibtex/skin/preferences.css"?>
 | <?xml-stylesheet href="chrome://zotero-better-bibtex/skin/error-report.css" type="text/css"?>
-| <!DOCTYPE window SYSTEM "chrome://zotero-better-bibtex/locale/zotero-better-bibtex.dtd">
-overlay#zotero-better-bibtex-preferences(xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:bbt="http://retorque.re/zotero-better-bibtex/")
-  prefwindow#zotero-prefs
-    include Preferences/prefpane.pug
-  // http://udn.realityripple.com/docs/Archive/Mozilla/XUL/prefpane, "using multiple prefpanes"... ugh
+| <!DOCTYPE prefwindow SYSTEM "chrome://zotero-better-bibtex/locale/zotero-better-bibtex.dtd">
+prefwindow(title='&better-bibtex.Preferences.prefpane.better-bibtex;' xmlns='http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul' xmlns:html='http://www.w3.org/1999/xhtml')
+  include Preferences/prefpane.pug
