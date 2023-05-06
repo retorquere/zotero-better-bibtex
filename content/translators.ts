@@ -531,8 +531,9 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
     // importing AutoExports would be circular, so access DB directly
     const autoexports = DB.getCollection('autoexport')
-    for (const ae of autoexports.find($and({ translatorID: header.translatorID }))) {
-      autoexports.update({ ...ae, status: 'scheduled' })
+    for (const ae of autoexports.find({ $and: [ { translatorID: { $eq: header.translatorID } }, { status: { $ne: 'scheduled' } } ] })) {
+      ae.status = 'scheduled'
+      autoexports.update(ae)
     }
 
     try {

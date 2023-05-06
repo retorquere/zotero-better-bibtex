@@ -939,7 +939,7 @@ export class BetterBibTeX {
       ww.openWindow(null, 'chrome://zotero-better-bibtex/content/FirstRun.xul', 'better-bibtex-first-run', 'chrome,centerscreen,modal', params)
       this.firstRun = params.wrappedJSObject
 
-      Preference.citekeyFormat = (this.firstRun.citekeyFormat === 'zotero') ? '[zotero:clean]' : citekeyFormat.replace(/\u200B/g, '')
+      Preference.citekeyFormat = (this.firstRun.citekeyFormat === 'zotero') ? 'zotero.clean' : citekeyFormat.replace(/\u200B/g, '')
       Preference.importJabRefAbbreviations = this.firstRun.unabbreviate
       Preference.importJabRefStrings = this.firstRun.strings
     }

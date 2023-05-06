@@ -615,12 +615,14 @@ export class ZoteroItem {
       (this.bibtex.fields.publisher || []).join(' and '),
       (this.bibtex.fields.institution || []).join(' and '),
       (this.bibtex.fields.school || []).join(' and '),
+      (this.bibtex.fields.organization || []).join(' and '),
     ].filter(v => v.replace(/[ \t\r\n]+/g, ' ').trim()).join(' / ')
 
     return true
   }
   protected $institution(value: string | number, field: string): boolean { return this.$publisher(value, field) }
   protected $school(value: string | number, field: string): boolean { return this.$publisher(value, field) }
+  protected $organization(value: string | number, field: string): boolean { return this.$publisher(value, field) }
 
   protected $address(value: string | number): boolean {
     return this.set('place', value, ['place'])
@@ -972,24 +974,19 @@ export class ZoteroItem {
   }
 
   protected $url(value: string, field: string): boolean {
-    let m, url
-
     // no escapes needed in an verbatim field but people do it anyway
-    value = value.replace(/\\/g, '')
+    let url = value.replace(/\\/g, '')
 
-    if (m = value.match(/^(\\url{)(https?:\/\/|mailto:)}$/i)) {
-      url = m[2]
-    }
-    else if (field === 'url' || /^(https?:\/\/|mailto:)/i.test(value)) {
-      url = value
-    }
-    else {
-      url = null
-    }
+    // pluck out the URL if it is wrapped in an HREF -- discards the label unfortunately
+    let m
+    if (m = url.match(/<a href="([^"]+)/i)) url = m[1]
 
     if (!url) return false
+    if (field !== 'url' && ! url.match(/^(https?:\/\/|mailto:)/i)) return false
 
     if (this.item.url) return (this.item.url === url)
+
+    if (!this.validFields.url) return this.fallback(['url'], url)
 
     this.item.url = url
     return true

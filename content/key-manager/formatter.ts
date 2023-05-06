@@ -8,7 +8,6 @@ import rescape from '@stdlib/utils-escape-regexp-string'
 import ucs2decode = require('punycode2/ucs2/decode')
 import scripts = require('xregexp/tools/output/scripts')
 
-import { flash } from '../flash'
 import { Preference } from '../prefs'
 import { JournalAbbrev } from '../journal-abbrev'
 import * as Extra from '../extra'
@@ -351,10 +350,10 @@ class PatternFormatter {
 
       if (formula[0] === '[') {
         try {
-          formula = this.convertLegacy(formula)
+          formula = legacyparser.parse(formula, { items, methods })
         }
         catch (err) {
-          error = `failed to upgrade legacy formula ${formula}`
+          error = `failed to upgrade legacy formula ${formula}: ${err.message}`
           continue
         }
       }
@@ -389,18 +388,6 @@ class PatternFormatter {
     const code = Formula.convert(formula)
     if (Preference.testing) log.debug('parseFormula.compiled:', code)
     return code
-  }
-
-  public convertLegacy(pattern: string): string {
-    try {
-      const formula: string = legacyparser.parse(pattern, { sprintf, items, methods })
-      flash('legacy citation key pattern upgraded', `legacy citation key pattern ${pattern} upgraded to ${formula}`)
-      return formula
-    }
-    catch (err) {
-      flash('could not upgrade legacy citation key pattern', `could not upgrade lecacy citation key pattern ${pattern}`)
-      throw err
-    }
   }
 
   public reset() {
