@@ -448,7 +448,7 @@ export class PrefPane {
     this.timer = typeof this.timer === 'number' ? this.timer : currentWin.setInterval(this.refresh.bind(this), 500)  // eslint-disable-line no-magic-numbers
   }
 
-  private resize() {
+  public resize(): void {
     // https://stackoverflow.com/questions/4707712/prefwindow-sizing-itself-to-the-wrong-tab-when-browser-preferences-animatefade
     Zotero.Prefs.set('browser.preferences.animateFadeIn', false, true)
 
@@ -530,7 +530,7 @@ export class PrefPane {
     }
 
     if (this.autoexport) this.autoexport.refresh()
-    this.resize()
+    // this.resize()
   }
 
   private styleChanged(index) {
