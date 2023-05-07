@@ -49,6 +49,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 
 <!ENTITY better-bibtex.ItemPane.citekey_column	"Clé de citation">
 
+<!ENTITY better-bibtex.Preferences.open "Open Better BibTeX preferences...">
 <!ENTITY better-bibtex.Preferences.auto-abbrev "Abréger automatiquement le titre du journal si aucun n'est explicitement défini">
 <!ENTITY better-bibtex.Preferences.auto-abbrev.style "Style d'abréviation :">
 
@@ -214,7 +215,7 @@ Si cette option est activée et que vous rencontrez un problème autre que l'ann
 <!ENTITY better-bibtex.Preferences.export.map-unicode "Lors de la conversion en commandes LaTeX en texte brut :">
 <!ENTITY better-bibtex.Preferences.export.map-unicode.minimal-packages "Minimiser le nombre de packages LaTeX supplémentaires requis">
 <!ENTITY better-bibtex.Preferences.export.map-unicode.conservative "Minimiser le nombre de commutateurs entre les modes mathématique et texte">
-<!ENTITY better-bibtex.Preferences.export.map-unicode.creator "Ajouter des accolades aux caractères accentués pour aider les analyseurs latex simples">
+<!ENTITY better-bibtex.Preferences.export.map-unicode.creator "Add braces to accented characters to assist simplistic latex parsers">
 <!ENTITY better-bibtex.Preferences.export.map-unicode.text "Préférer les remplacements en mode texte">
 <!ENTITY better-bibtex.Preferences.export.map-unicode.math "Préférer les remplacements en mode mathématique">
 
