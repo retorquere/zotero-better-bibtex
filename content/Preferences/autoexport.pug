@@ -15,7 +15,9 @@ vbox(flex=1)
     hbox(flex=5)
 vbox#better-bibtex-prefs-auto-exports(hidden="true")
   hbox(flex=0)
-    html:select#better-bibtex-prefs-auto-export-select(onchange="document.getElementById('better-bibtex-prefs-auto-export-deck').selectedIndex = this.selectedIndex")
+    html:select#better-bibtex-prefs-auto-export-select(
+        onchange="document.getElementById('better-bibtex-prefs-auto-export-deck').selectedIndex = this.selectedIndex; resize()"
+      )
       html:option
     vbox
   deck#better-bibtex-prefs-auto-export-deck(flex=1)
