@@ -1,7 +1,7 @@
 groupbox
   caption &better-bibtex.Preferences.export.quickCopy.explanation;
-  vbox(style='height: 14em;' flex='1')
-    hbox(flex='0')
+  vbox(style='height: 14em;' flex=1)
+    hbox(flex=0)
       label(bbt:preference='extensions.zotero.translators.better-bibtex.quickCopyMode') &better-bibtex.Preferences.export.quickCopy.format;
       html:select#id-better-bibtex-preferences-quickCopyMode(preference='extensions.zotero.translators.better-bibtex.quickCopyMode' preference-editable='true' onchange='document.getElementById("quickCopyDetails").selectedIndex = this.selectedIndex')
         html:option(value='latex') &better-bibtex.Preferences.export.quickCopy.latex;
@@ -31,7 +31,7 @@ groupbox
         checkbox#id-better-bibtex-preferences-quickCopyPandocBrackets(preference='extensions.zotero.translators.better-bibtex.quickCopyPandocBrackets' label='&better-bibtex.Preferences.export.quickCopy.pandoc.brackets;')
 
       //- orgmode
-      hbox(align='start' flex='0')
+      hbox(align='start' flex=0)
         label(bbt:preference='extensions.zotero.translators.better-bibtex.quickCopyOrgMode') &better-bibtex.Preferences.export.quickCopy.orgMode;
         html:select(preference='extensions.zotero.translators.better-bibtex.quickCopyOrgMode')
           html:option(value='zotero') &better-bibtex.Preferences.export.quickCopy.orgMode.zotero;
@@ -56,7 +56,7 @@ groupbox
       hbox
 
       //- selectlink
-      hbox(align='start' flex='0')
+      hbox(align='start' flex=0)
         label(bbt:preference='extensions.zotero.translators.better-bibtex.quickCopySelectLink') &better-bibtex.Preferences.export.quickCopy.selectLink;
         html:select(preference='extensions.zotero.translators.better-bibtex.quickCopySelectLink')
           html:option(value='zotero') &better-bibtex.Preferences.export.quickCopy.selectLink.zotero;

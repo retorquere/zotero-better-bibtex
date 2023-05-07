@@ -101,7 +101,15 @@ class Swap extends ASTWalker {
 */
 
 class Flex extends ASTWalker {
+  flex(node): string {
+    const flex = node.attrs.find(attr => attr.name === 'flex')
+    if (!flex) return ''
+    if (typeof flex.val === 'number') return `${flex.val}`
+    return flex.mustEscape ? flex.val : eval(flex.val)
+  }
+
   Tag(node) {
+    const flex = this.flex(node)
     switch (node.name) {
       case 'vbox':
       case 'hbox':
@@ -114,17 +122,15 @@ class Flex extends ASTWalker {
       case 'groupbox':
       case 'textbox':
       case 'tabbox':
-      case 'tabs':
-      case 'tab':
       case 'tabpanels':
       case 'tabpanel':
       case 'deck':
-      case 'prefwindow':
       case 'prefpane':
-        if (!node.attrs.find(attr => attr.name === 'flex')) {
-          node.attrs.push({ name: 'flex', val: "'1'", mustEscape: false })
-        }
+        if (!flex) node.attrs.push({ name: 'flex', val: "'1'", mustEscape: false })
         break
+      case 'prefwindow':
+      case 'tabs':
+      case 'tab':
       case 'caption':
       case 'preferences':
       case 'preference':
@@ -141,6 +147,7 @@ class Flex extends ASTWalker {
       case 'html:input':
       case 'html:select':
       case 'html:option':
+        if (flex) throw new Error(`${node.name} has flex ${flex}`)
         break
       default:
         throw `no flex on ${node.name}` // eslint-disable-line no-throw-literal

@@ -2,14 +2,14 @@ checkbox#id-better-bibtex-preferences-autoAbbrev(label="&better-bibtex.Preferenc
 
 separator#better-bibtex-abbrev-style-separator.thin.jurism
 
-hbox(flex='0')
+hbox(flex=0)
   label#better-bibtex-abbrev-style-label.jurism(bbt:preference="extensions.zotero.translators.better-bibtex.autoAbbrevStyle") &better-bibtex.Preferences.auto-abbrev.style;
   html:select#better-bibtex-abbrev-style.jurism(onchange="Zotero.BetterBibTeX.PrefPane.styleChanged()")
 
 checkbox(label="&better-bibtex.Preferences.export.qualityReport;" preference="extensions.zotero.translators.better-bibtex.qualityReport")
 checkbox(label="&better-bibtex.Preferences.export.automaticTags;" preference="extensions.zotero.translators.better-bibtex.automaticTags")
 
-hbox(flex='0')
+hbox(flex=0)
   label(bbt:preference="extensions.zotero.translators.better-bibtex.mapUnicode") &better-bibtex.Preferences.export.map-unicode;
   html:select(preference="extensions.zotero.translators.better-bibtex.mapUnicode")
     html:option(value='minimal-packages') &better-bibtex.Preferences.export.map-unicode.minimal-packages;
@@ -32,6 +32,5 @@ groupbox
   hbox
     checkbox(preference="extensions.zotero.translators.better-bibtex.cache" label="&better-bibtex.Preferences.advanced.export.workers.cache;")
   label.better-bibtex-preferences-worker-state
-  hbox
+  hbox(flex=0)
     button(label="&better-bibtex.Preferences.resetCache;" oncommand="Zotero.BetterBibTeX.PrefPane.cacheReset()")
-    hbox(flex='1')

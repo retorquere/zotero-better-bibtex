@@ -2,53 +2,53 @@ vbox
   label(bbt:preference='extensions.zotero.translators.better-bibtex.citekeyFormatEditing') &better-bibtex.Preferences.citekey.format;
   textbox#id-better-bibtex-preferences-citekeyFormatEditing(
     preference='extensions.zotero.translators.better-bibtex.citekeyFormatEditing'
-    flex='1'
+    flex=1
     rows=1
-    onfocus="this.setAttribute('rows', '5'); window.sizeToContent()"
-    onblur="this.setAttribute('rows', '1'); window.sizeToContent()"
+    onfocus="this.setAttribute('rows', '5'); resize()"
+    onblur="this.setAttribute('rows', '1'); resize()"
     multiline='true'
   )
   textbox#better-bibtex-citekeyFormat-error(
     preference='extensions.zotero.translators.better-bibtex.citekeyFormat'
-    flex='1'
+    flex=1
     rows=1
     readonly='true'
     hidden='true'
     multiline='true'
-    onfocus="this.setAttribute('rows', '5'); window.sizeToContent()"
-    onblur="this.setAttribute('rows', '1'); window.sizeToContent()"
+    onfocus="this.setAttribute('rows', '5'); resize()"
+    onblur="this.setAttribute('rows', '1'); resize()"
     style='-moz-appearance: none !important; background-color: DarkOrange'
   )
 
   label#id-better-bibtex-label-citekeyFormat(bbt:preference="extensions.zotero.translators.better-bibtex.citekeyFormat") &better-bibtex.Preferences.citekey.format.installed;
   textbox#id-better-bibtex-preferences-citekeyFormat(
     preference='extensions.zotero.translators.better-bibtex.citekeyFormat'
-    flex='1'
+    flex=1
     rows=1
     readonly='true'
     multiline='true'
-    onfocus="this.setAttribute('rows', '5'); window.sizeToContent()"
-    onblur="this.setAttribute('rows', '1'); window.sizeToContent()"
+    onfocus="this.setAttribute('rows', '5'); resize()"
+    onblur="this.setAttribute('rows', '1'); resize()"
     style='-moz-appearance: none !important; background-color: LightGrey'
   )
 checkbox(preference="extensions.zotero.translators.better-bibtex.citekeyFold" label="&better-bibtex.Preferences.citekey.fold;")
 checkbox(preference="extensions.zotero.translators.better-bibtex.citekeySearch" label="&better-bibtex.Preferences.citekey.search;")
-hbox(flex='0')
+hbox(flex=0)
   label(bbt:preference="extensions.zotero.translators.better-bibtex.autoPinDelay") &better-bibtex.Preferences.citekey.autoPinDelay;
   html:input(type='range' min=0 max=30 preference="extensions.zotero.translators.better-bibtex.autoPinDelay")
   textbox(preference='extensions.zotero.translators.better-bibtex.autoPinDelay' size=2 rows=1 readonly='true')
   label &better-bibtex.seconds;
-  hbox(flex='5')
+  hbox(flex=5)
 
 groupbox(style='margin-bottom: 10px')
   caption(label="&better-bibtex.Preferences.citekey.uniqueness;")
   // <description>&better-bibtex.Preferences.citekey.uniqueness.pin.description;</description>
-  hbox(flex='0')
+  hbox(flex=0)
     label(bbt:preference="extensions.zotero.translators.better-bibtex.keyScope") &better-bibtex.Preferences.citekey.uniqueness.scope;
     html:select(preference="extensions.zotero.translators.better-bibtex.keyScope")
       html:option(value='global') &better-bibtex.Preferences.citekey.uniqueness.scope.global;
       html:option(value='library') &better-bibtex.Preferences.citekey.uniqueness.scope.library;
-  hbox(flex='0')
+  hbox(flex=0)
     label(bbt:preference="extensions.zotero.translators.better-bibtex.keyConflictPolicy") &better-bibtex.Preferences.citekey.uniqueness.conflict;
     html:select(preference="extensions.zotero.translators.better-bibtex.keyConflictPolicy")
       html:option(value='change') &better-bibtex.Preferences.citekey.uniqueness.conflict.change;
@@ -58,7 +58,7 @@ groupbox
   caption(label="&better-bibtex.Preferences.advanced.ideographs;")
   checkbox(preference="extensions.zotero.translators.better-bibtex.kuroshiro" label="&better-bibtex.Preferences.advanced.ideographs.kuroshiro;")
   checkbox(preference="extensions.zotero.translators.better-bibtex.jieba" label="&better-bibtex.Preferences.advanced.ideographs.jieba;")
-hbox
+hbox(flex=0)
   label(bbt:preference="extensions.zotero.translators.better-bibtex.warnBulkModify") &better-bibtex.Preferences.bulkWarning;
   textbox(size="5" preference="extensions.zotero.translators.better-bibtex.warnBulkModify")
 hbox
