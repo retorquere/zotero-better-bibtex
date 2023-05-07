@@ -31,9 +31,16 @@ const tgt = process.argv[3] || 'build/content/Preferences.xul'
 const l10n = new class {
   private strings = peggy.generate(fs.readFileSync('setup/dtd-file.peggy', 'utf-8')).parse(fs.readFileSync('locale/en-US/zotero-better-bibtex.dtd', 'utf-8')) as Record<string, string>
 
+  private find(id: string): string {
+    if (id.startsWith('zotero.general.')) return `&${id};`
+    if (id.startsWith('zotero.errorReport.')) return `&${id};`
+    if (this.strings[id]) return this.strings[id]
+    error(id, 'not in dtd')
+    return ''
+  }
   tr(txt: string): string {
     if (!txt) return txt
-    return txt.replace(/&([^;]+);/g, (entity, id) => this.strings[id] || (error(id, 'not in dtd')) as unknown as string)
+    return txt.replace(/&([^;]+);/g, (entity, id) => this.find(id))
   }
 }
 
@@ -477,3 +484,8 @@ const xul = pug.renderFile(src, options)
 const build = path.dirname(tgt)
 if (!fs.existsSync(build)) fs.mkdirSync(build, { recursive: true })
 fs.writeFileSync(tgt, xul.replace(/&amp;/g, '&').trim())
+
+for (const xul of glob.sync('content/*.xul')) {
+  const source = fs.readFileSync(xul, 'utf-8')
+  l10n.tr(source)
+}

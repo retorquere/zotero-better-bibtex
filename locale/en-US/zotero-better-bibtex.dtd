@@ -49,6 +49,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 
 <!ENTITY better-bibtex.ItemPane.citekey_column	"Citation Key">
 
+<!ENTITY better-bibtex.Preferences.open "Open Better BibTeX preferences...">
 <!ENTITY better-bibtex.Preferences.auto-abbrev "Automatically abbreviate journal title if none is set explicitly">
 <!ENTITY better-bibtex.Preferences.auto-abbrev.style "Abbreviation style:">
 
