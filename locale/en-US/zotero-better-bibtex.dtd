@@ -214,7 +214,7 @@ If you have this on, and you experience any problem that is not the cache gettin
 <!ENTITY better-bibtex.Preferences.export.map-unicode "When converting to plain-text latex commands:">
 <!ENTITY better-bibtex.Preferences.export.map-unicode.minimal-packages "Minimize additional latex packages required">
 <!ENTITY better-bibtex.Preferences.export.map-unicode.conservative "Minimize the number of switches between math-mode and text-mode">
-<!ENTITY better-bibtex.Preferences.export.map-unicode.creator "Add braces to accented characters to assist simple latex parsers">
+<!ENTITY better-bibtex.Preferences.export.map-unicode.creator "Add braces to accented characters to assist simplistic latex parsers">
 <!ENTITY better-bibtex.Preferences.export.map-unicode.text "Prefer text-mode replacements">
 <!ENTITY better-bibtex.Preferences.export.map-unicode.math "Prefer math-mode replacements">
 
