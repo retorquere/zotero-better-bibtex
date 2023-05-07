@@ -1,4 +1,4 @@
-hbox
+hbox(flex='0')
   groupbox
     caption(bbt:preference="extensions.zotero.translators.better-bibtex.importSentenceCase") &better-bibtex.Preferences.advanced.import.sentenceCase;
       image(tooltip="tooltip-importSentenceCase" src="chrome://zotero-better-bibtex/skin/attention.svg" width="16" height="16")
@@ -6,7 +6,7 @@ hbox
       radio(label="&better-bibtex.Preferences.advanced.import.sentenceCase.on_guess;" value="on+guess")
       radio(label="&better-bibtex.Preferences.advanced.import.sentenceCase.on;" value="on")
       radio(label="&better-bibtex.Preferences.advanced.import.sentenceCase.off;" value="off")
-hbox
+hbox(flex='0')
   label(bbt:preference="extensions.zotero.translators.better-bibtex.importCaseProtection") &better-bibtex.Preferences.advanced.import.caseProtection;
   html:select(preference="extensions.zotero.translators.better-bibtex.importCaseProtection")
     html:option(value='as-needed') &better-bibtex.Preferences.advanced.import.caseProtection.as_needed;
@@ -15,7 +15,6 @@ hbox
   image(tooltip="tooltip-importCaseProtection" src="chrome://zotero-better-bibtex/skin/attention.svg" width="16" height="16")
 
 checkbox(preference="extensions.zotero.translators.better-bibtex.auxImport" label="&better-bibtex.Preferences.citekey.AUXScanner.import;")
-hbox
+hbox(flex='0')
   button(label="&better-bibtex.Preferences.exportPrefs;" oncommand="Zotero.BetterBibTeX.PrefPane.exportPrefs()")
   button(label="&better-bibtex.Preferences.importPrefs;" oncommand="Zotero.BetterBibTeX.PrefPane.importPrefs()")
-  hbox(flex='1')

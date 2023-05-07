@@ -1,20 +1,20 @@
-hbox
+hbox(flex='0')
   label(bbt:preference="extensions.zotero.translators.better-bibtex.language") &better-bibtex.Preferences.export.fields.language;
   html:select(preference="extensions.zotero.translators.better-bibtex.language" preference-editable="true")
     html:option(value='langid') &better-bibtex.Preferences.export.fields.language.langid;
     html:option(value='language') &better-bibtex.Preferences.export.fields.language.language;
     html:option(value='both') &better-bibtex.Preferences.export.fields.language.both;
-hbox
+hbox(flex='0')
   label(bbt:preference="extensions.zotero.translators.better-bibtex.DOIandURL") &better-bibtex.Preferences.export.fields.doi-and-url;
   html:select(preference="extensions.zotero.translators.better-bibtex.DOIandURL" preference-editable="true")
     html:option(value='both') &better-bibtex.Preferences.export.fields.doi-and-url.both;
     html:option(value='doi') &better-bibtex.Preferences.export.fields.doi-and-url.DOI;
     html:option(value='url') &better-bibtex.Preferences.export.fields.doi-and-url.URL;
   image(tooltip="tooltip-bibtexURL" src="chrome://zotero-better-bibtex/skin/attention.svg" width="16" height="16")
-hbox
+hbox(flex=0)
   label(bbt:preference="extensions.zotero.translators.better-bibtex.skipFields") &better-bibtex.Preferences.export.fields.skip;:
   textbox#id-better-bibtex-preferences-skipFields(size='30' preference='extensions.zotero.translators.better-bibtex.skipFields')
-hbox
+hbox(flex='0')
   label(bbt:preference="extensions.zotero.translators.better-bibtex.jabrefFormat") &better-bibtex.Preferences.export.jabrefFormat;
   html:select(preference="extensions.zotero.translators.better-bibtex.jabrefFormat" preference-editable="true")
     html:option(value='0') &better-bibtex.Preferences.export.jabrefFormat.0;

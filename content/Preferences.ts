@@ -27,6 +27,7 @@ Events.on('window-loaded', ({ win, href }: {win: Window, href: string}) => {
       currentWin = null
     })
     Zotero.BetterBibTeX.PrefPane.load()
+    Zotero.BetterBibTeX.PrefPane.resize()
   }
 })
 Events.on('preference-changed', (pref: string) => {

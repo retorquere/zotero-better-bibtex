@@ -100,6 +100,55 @@ class Swap extends ASTWalker {
 }
 */
 
+class Flex extends ASTWalker {
+  Tag(node) {
+    switch (node.name) {
+      case 'vbox':
+      case 'hbox':
+      case 'grid':
+      case 'columns':
+      case 'column':
+      case 'rows':
+      case 'row':
+      case 'radiogroup':
+      case 'groupbox':
+      case 'textbox':
+      case 'tabbox':
+      case 'tabs':
+      case 'tab':
+      case 'tabpanels':
+      case 'tabpanel':
+      case 'deck':
+      case 'prefwindow':
+      case 'prefpane':
+        if (!node.attrs.find(attr => attr.name === 'flex')) {
+          node.attrs.push({ name: 'flex', val: "'1'", mustEscape: false })
+        }
+        break
+      case 'caption':
+      case 'preferences':
+      case 'preference':
+      case 'popupset':
+      case 'tooltip':
+      case 'description':
+      case 'label':
+      case 'checkbox':
+      case 'radio':
+      case 'button':
+      case 'image':
+      case 'separator':
+      case 'script':
+      case 'html:input':
+      case 'html:select':
+      case 'html:option':
+        break
+      default:
+        throw `no flex on ${node.name}` // eslint-disable-line no-throw-literal
+    }
+    this.walk(node.block)
+  }
+}
+
 class StripConfig extends ASTWalker {
   Tag(node) {
     node.attrs = node.attrs.filter(attr => !attr.name.startsWith('bbt:'))
@@ -473,7 +522,7 @@ const options = {
       walker.saveTypescript()
 
       walk(StripConfig, ast)
-      // walk(Convert, ast)
+      walk(Flex, ast)
 
       return ast
     },

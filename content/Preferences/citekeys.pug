@@ -4,8 +4,8 @@ vbox
     preference='extensions.zotero.translators.better-bibtex.citekeyFormatEditing'
     flex='1'
     rows=1
-    onfocus="this.setAttribute('rows', '5')"
-    onblur="this.setAttribute('rows', '1')"
+    onfocus="this.setAttribute('rows', '5'); window.sizeToContent()"
+    onblur="this.setAttribute('rows', '1'); window.sizeToContent()"
     multiline='true'
   )
   textbox#better-bibtex-citekeyFormat-error(
@@ -15,8 +15,8 @@ vbox
     readonly='true'
     hidden='true'
     multiline='true'
-    onfocus="this.setAttribute('rows', '5')"
-    onblur="this.setAttribute('rows', '1')"
+    onfocus="this.setAttribute('rows', '5'); window.sizeToContent()"
+    onblur="this.setAttribute('rows', '1'); window.sizeToContent()"
     style='-moz-appearance: none !important; background-color: DarkOrange'
   )
 
@@ -27,13 +27,13 @@ vbox
     rows=1
     readonly='true'
     multiline='true'
-    onfocus="this.setAttribute('rows', '5')"
-    onblur="this.setAttribute('rows', '1')"
+    onfocus="this.setAttribute('rows', '5'); window.sizeToContent()"
+    onblur="this.setAttribute('rows', '1'); window.sizeToContent()"
     style='-moz-appearance: none !important; background-color: LightGrey'
   )
 checkbox(preference="extensions.zotero.translators.better-bibtex.citekeyFold" label="&better-bibtex.Preferences.citekey.fold;")
 checkbox(preference="extensions.zotero.translators.better-bibtex.citekeySearch" label="&better-bibtex.Preferences.citekey.search;")
-hbox
+hbox(flex='0')
   label(bbt:preference="extensions.zotero.translators.better-bibtex.autoPinDelay") &better-bibtex.Preferences.citekey.autoPinDelay;
   html:input(type='range' min=0 max=30 preference="extensions.zotero.translators.better-bibtex.autoPinDelay")
   textbox(preference='extensions.zotero.translators.better-bibtex.autoPinDelay' size=2 rows=1 readonly='true')
@@ -43,12 +43,12 @@ hbox
 groupbox(style='margin-bottom: 10px')
   caption(label="&better-bibtex.Preferences.citekey.uniqueness;")
   // <description>&better-bibtex.Preferences.citekey.uniqueness.pin.description;</description>
-  hbox
+  hbox(flex='0')
     label(bbt:preference="extensions.zotero.translators.better-bibtex.keyScope") &better-bibtex.Preferences.citekey.uniqueness.scope;
     html:select(preference="extensions.zotero.translators.better-bibtex.keyScope")
       html:option(value='global') &better-bibtex.Preferences.citekey.uniqueness.scope.global;
       html:option(value='library') &better-bibtex.Preferences.citekey.uniqueness.scope.library;
-  hbox
+  hbox(flex='0')
     label(bbt:preference="extensions.zotero.translators.better-bibtex.keyConflictPolicy") &better-bibtex.Preferences.citekey.uniqueness.conflict;
     html:select(preference="extensions.zotero.translators.better-bibtex.keyConflictPolicy")
       html:option(value='change') &better-bibtex.Preferences.citekey.uniqueness.conflict.change;

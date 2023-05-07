@@ -1,20 +1,20 @@
 vbox(flex="1")
   label &better-bibtex.Preferences.auto-export.explanation;
   separator.thin
-  hbox
+  hbox(flex='0')
     label(bbt:preference="extensions.zotero.translators.better-bibtex.autoExport") &better-bibtex.Preferences.auto-export;
     html:select(preference="extensions.zotero.translators.better-bibtex.autoExport")
       html:option(value='off') &better-bibtex.Preferences.auto-export.off;
       html:option(value='immediate') &better-bibtex.Preferences.auto-export.immediate;
       html:option(value='idle') &better-bibtex.Preferences.auto-export.idle;
-  hbox
+  hbox(flex='0')
     label(bbt:preference="extensions.zotero.translators.better-bibtex.autoExportDelay") &better-bibtex.Preferences.auto-export.delay;
     html:input(type='range' min='2' max='300' preference='extensions.zotero.translators.better-bibtex.autoExportDelay')
     textbox(preference='extensions.zotero.translators.better-bibtex.autoExportDelay' size='3' rows=1 readonly='true')
     label &better-bibtex.seconds;
     hbox(flex=5)
 vbox#better-bibtex-prefs-auto-exports(hidden="true")
-  hbox
+  hbox(flex='0')
     html:select#better-bibtex-prefs-auto-export-select(onchange="document.getElementById('better-bibtex-prefs-auto-export-deck').selectedIndex = this.selectedIndex")
       html:option
     vbox
@@ -49,7 +49,7 @@ vbox#better-bibtex-prefs-auto-exports(hidden="true")
         checkbox(data-ae-id="" data-ae-field="bibtexParticleNoOp" label="&better-bibtex.Preferences.export.fields.bibtexParticleNoOp;" oncommand="Zotero.BetterBibTeX.PrefPane.autoexport.edit(this)")
         hbox
           label &better-bibtex.Preferences.export.bibtex.URLs;
-          hbox
+          hbox(flex='0')
             html:select(data-ae-id="" data-ae-field="bibtexURL" onchange="Zotero.BetterBibTeX.PrefPane.autoexport.edit(this)")
               html:option(value='off') &better-bibtex.Preferences.export.bibtex.URLs.off;
               html:option(value='note') &better-bibtex.Preferences.export.bibtex.URLs.note;
@@ -59,7 +59,7 @@ vbox#better-bibtex-prefs-auto-exports(hidden="true")
         checkbox(data-ae-id="" data-ae-field="asciiBibLaTeX" label="&better-bibtex.Preferences.export.biblatex.ascii;" oncommand="Zotero.BetterBibTeX.PrefPane.autoexport.edit(this)")
         checkbox(data-ae-id="" data-ae-field="biblatexExtendedNameFormat" label="&better-bibtex.Preferences.export.biblatex.extendedNameFormat;" oncommand="Zotero.BetterBibTeX.PrefPane.autoexport.edit(this)")
       vbox.autoexport-options.autoexport-BetterBibTeX.autoexport-BetterBibLaTeX(hidden="true")
-        hbox.autoexport-options.autoexport-BetterBibTeX.autoexport-BetterBibLaTeX
+        hbox.autoexport-options.autoexport-BetterBibTeX.autoexport-BetterBibLaTeX(flex='0')
           label &better-bibtex.Preferences.export.fields.doi-and-url;
           html:select(data-ae-id="" data-ae-field="DOIandURL" onchange="Zotero.BetterBibTeX.PrefPane.autoexport.edit(this)")
             html:option(value='both') &better-bibtex.Preferences.export.fields.doi-and-url.both;
