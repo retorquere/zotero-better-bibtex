@@ -1,3 +1,5 @@
+<!ENTITY better-bibtex.BetterBibTeX "Better BibTeX">
+
 <!ENTITY better-bibtex.seconds "secondes">
 
 <!ENTITY better-bibtex.FirstRun.title "Bienvenue dans Better BibTex pour Zotero">
@@ -222,7 +224,6 @@ Si cette option est activée et que vous rencontrez un problème autre que l'ann
 <!ENTITY better-bibtex.Preferences.advanced.tab.postscript "post script">
 <!ENTITY better-bibtex.Preferences.postscript.warn "L'utilisation de 'Translator.options.exportPath' dans les post scripts désactive le cache. Les exportations seront sensiblement plus lentes.">
 <!ENTITY better-bibtex.Preferences.advanced.tab.strings "Définitions des @string">
-<!ENTITY better-bibtex.Preferences.prefpane.better-bibtex "Better BibTeX">
 <!ENTITY better-bibtex.Preferences.prefpane.loading "Chargement de Better BibTeX en cours">
 <!ENTITY better-bibtex.Preferences.rescan-citekeys "Réanalyse des clés de citation verrouillées">
 <!ENTITY better-bibtex.Preferences.resetCache "Réinitialiser le cache">
@@ -230,7 +231,6 @@ Si cette option est activée et que vous rencontrez un problème autre que l'ann
 <!ENTITY better-bibtex.BetterBibTeX.auxScanner "Scanner le fichier BibTeX AUX/Markdown pour les références...">
 <!ENTITY better-bibtex.bulk-keys-confirm.message "Vous allez modifier plus de {treshold} éléments en une seule fois. Êtes-vous certain de vouloir poursuivre ?">
 <!ENTITY better-bibtex.bulk-keys-confirm.whatever "Oui, ne plus me le demander">
-<!ENTITY better-bibtex.BetterBibTeX.menu "Better BibTeX">
 <!ENTITY better-bibtex.BetterBibTeX.citekey.set "Changer la clé BibTeX...">
 <!ENTITY better-bibtex.BetterBibTeX.citekey.pin "Verrouiller la clé de citation">
 <!ENTITY better-bibtex.BetterBibTeX.citekey.pinInspireHEP "Verrouiller les clés BibTeX de InspireHEP">
