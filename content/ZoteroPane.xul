@@ -21,7 +21,7 @@
     <menu label="&better-bibtex.BetterBibTeX;" class="menu-iconic" image="chrome://zotero-better-bibtex/skin/bibtex-menu.svg">
       <menupopup>
         <menuitem label="&better-bibtex.BetterBibTeX.auxScanner;" oncommand="Zotero.BetterBibTeX.scanAUX('tag')"/>
-        <menuitem label="Better BibTeX Preferences..." oncommand="window.openDialog('chrome://zotero-better-bibtex/content/Preferences.xul', 'better-bibtex-prefs-window')"/>
+        <menuitem label="&better-bibtex.Preferences.open;" oncommand="window.openDialog('chrome://zotero-better-bibtex/content/Preferences.xul', 'better-bibtex-prefs-window')"/>
       </menupopup>
     </menu>
   </menupopup>
