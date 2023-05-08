@@ -18,9 +18,14 @@
   </script>
 
   <menupopup id="menu_ToolsPopup">
-    <menuitem label="&better-bibtex.BetterBibTeX.auxScanner;" oncommand="Zotero.BetterBibTeX.scanAUX('tag')"/>
-    <menuitem label="Better BibTeX Preferences..." oncommand="window.openDialog('chrome://zotero-better-bibtex/content/Preferences.xul', 'better-bibtex-prefs-window')"/>
+    <menu label="&better-bibtex.BetterBibTeX;" class="menu-iconic" image="chrome://zotero-better-bibtex/skin/bibtex-menu.svg">
+      <menupopup>
+        <menuitem label="&better-bibtex.BetterBibTeX.auxScanner;" oncommand="Zotero.BetterBibTeX.scanAUX('tag')"/>
+        <menuitem label="Better BibTeX Preferences..." oncommand="window.openDialog('chrome://zotero-better-bibtex/content/Preferences.xul', 'better-bibtex-prefs-window')"/>
+      </menupopup>
+    </menu>
   </menupopup>
+
   <menupopup id="menu_HelpPopup">
     <menuitem insertafter="reportErrors" label="&better-bibtex.BetterBibTeX.reportErrors;" oncommand="Zotero.BetterBibTeX.ZoteroPane.errorReport()"/>
   </menupopup>
