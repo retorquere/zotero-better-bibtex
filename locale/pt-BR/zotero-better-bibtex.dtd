@@ -1,3 +1,5 @@
+<!ENTITY better-bibtex.BetterBibTeX "Better BibTeX">
+
 <!ENTITY better-bibtex.seconds "seconds">
 
 <!ENTITY better-bibtex.FirstRun.title "Bem-vindo ao Better BibTeX para Zotero">
@@ -221,7 +223,6 @@ If you have this on, and you experience any problem that is not the cache gettin
 <!ENTITY better-bibtex.Preferences.advanced.tab.postscript "postscript">
 <!ENTITY better-bibtex.Preferences.postscript.warn "Use of 'Translator.options.exportPath' in postscripts disables the cache. Exports will be substantially slower.">
 <!ENTITY better-bibtex.Preferences.advanced.tab.strings "@string definitions">
-<!ENTITY better-bibtex.Preferences.prefpane.better-bibtex "Better BibTeX">
 <!ENTITY better-bibtex.Preferences.prefpane.loading "Better BibTeX is loading">
 <!ENTITY better-bibtex.Preferences.rescan-citekeys "Reler chaves de citação fixas">
 <!ENTITY better-bibtex.Preferences.resetCache "Zerar cache">
@@ -229,7 +230,6 @@ If you have this on, and you experience any problem that is not the cache gettin
 <!ENTITY better-bibtex.BetterBibTeX.auxScanner "Scan BibTeX AUX/Markdown file for references...">
 <!ENTITY better-bibtex.bulk-keys-confirm.message "Você está modificando mais que {treshold} items de uma vez. Tem certeza?">
 <!ENTITY better-bibtex.bulk-keys-confirm.whatever "OK e não perguntar novamente">
-<!ENTITY better-bibtex.BetterBibTeX.menu "Better BibTeX">
 <!ENTITY better-bibtex.BetterBibTeX.citekey.set "Change BibTeX key...">
 <!ENTITY better-bibtex.BetterBibTeX.citekey.pin "Fixar chave BibTeX">
 <!ENTITY better-bibtex.BetterBibTeX.citekey.pinInspireHEP "Fixar chave BibTeX do InspireHEP">
