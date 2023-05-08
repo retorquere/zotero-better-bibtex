@@ -5,7 +5,7 @@
     <prefpane
       id="zotero-prefpane-better-bibtex"
       insertafter="zotero-prefpane-advanced"
-      label="&better-bibtex.Preferences.prefpane.better-bibtex;"
+      label="&better-bibtex.BetterBibTeX;"
       image="chrome://zotero-better-bibtex/skin/bibtex.svg"
     >
       <vbox>

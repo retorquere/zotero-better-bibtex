@@ -55,7 +55,7 @@
   </menupopup>
 
   <menupopup id="zotero-itemmenu">
-    <menu id="zotero-itemmenu-BetterBibTeX-menu" label="&better-bibtex.BetterBibTeX.menu;" class="menu-iconic" image="chrome://zotero-better-bibtex/skin/bibtex-menu.svg">
+    <menu id="zotero-itemmenu-BetterBibTeX-menu" label="&better-bibtex.BetterBibTeX;" class="menu-iconic" image="chrome://zotero-better-bibtex/skin/bibtex-menu.svg">
       <menupopup id="zotero-itemmenu-BetterBibTeX-menupopup">
         <menuitem label="&better-bibtex.BetterBibTeX.citekey.set;" oncommand="Zotero.BetterBibTeX.KeyManager.set();"/>
         <menuitem label="&better-bibtex.BetterBibTeX.citekey.pin;" oncommand="Zotero.BetterBibTeX.KeyManager.pin('selected');"/>
