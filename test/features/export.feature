@@ -13,6 +13,7 @@ Feature: Export
 
     Examples:
       | file                                                                                                                     | references |
+      | booksubtitle and friends should be case-converted #2507                                                                  | 1          |
       | Add support for new Zotero item types #2496                                                                              | 2          |
       | Film references do not export properly for APA formating #2494                                                           | 4          |
       | series = {none} #2469                                                                                                    | 1          |

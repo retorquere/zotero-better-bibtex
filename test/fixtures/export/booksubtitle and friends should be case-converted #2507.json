@@ -1,0 +1,50 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "DOIandURL": "doi",
+      "autoExportDelay": 2,
+      "automaticTags": false,
+      "biblatexExtractEprint": false,
+      "citekeyFormat": "authIni(n=1,sep=\" \").abbr.lower+shortyear+title.abbr.lower",
+      "csquotes": "\u201c\u201d",
+      "importBibTeXStrings": false,
+      "postscript": "if (Translator.BetterBibLaTeX) {\n    const split = (title) => {\n        const m = title.match(/^(.+)([?:;]) (.+?)$/)\n        return m && { main: m[1] + m[2].replace(/:/, \"\"), sub: m[3] }\n    }\n\n    const add = (m, pre) => {\n        const params = { caseConversion: true }\n        const { main, sub } = m\n        reference.add({ name: pre(\"title\"), value: main, ...params })\n        reference.add({ name: pre(\"subtitle\"), value: sub, ...params })\n    }\n\n    if (reference.has.booktitle) {\n        const booktitle = split(reference.has.booktitle.value)\n        if (booktitle)\n            add(booktitle, (name) => \"book\" + name)\n    }\n\n    if (reference.has.title) {\n        const title = split(reference.has.title.value)\n        if (title && !title.title.match(/\\((?!.*\\))/))\n            add(title, (name) => name)\n    }\n}",
+      "warnBulkModify": 0,
+      "warnTitleCased": true
+    }
+  },
+  "items": [
+    {
+      "citationKey": "h69fnc",
+      "creators": [
+        {
+          "creatorType": "editor",
+          "firstName": "Jonathan P.",
+          "lastName": "Seldin"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "J. Roger",
+          "lastName": "Hindley"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "William A.",
+          "lastName": "Howard"
+        }
+      ],
+      "date": "1969",
+      "itemID": 1,
+      "itemType": "bookSection",
+      "place": "New York",
+      "publicationTitle": "To H.B. Curry: Essays on combinatory logic, lambda calculus and formalism",
+      "publisher": "Academic Press",
+      "title": "The formulae-as-types notion of construction"
+    }
+  ]
+}

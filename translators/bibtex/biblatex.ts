@@ -32,13 +32,17 @@ const config: Config = {
 
   caseConversion: {
     title: true,
+    subtitle: true,
     series: true,
     shorttitle: true,
     origtitle: true,
+    origsubtitle: true,
     booktitle: true,
+    booksubtitle: true,
     maintitle: true,
-    subtitle: true,
+    mainsubtitle: true,
     eventtitle: true,
+    eventsubtitle: true,
   },
 
   typeMap: {
