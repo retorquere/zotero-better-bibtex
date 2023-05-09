@@ -15,6 +15,7 @@ import json
 from pathlib import Path
 import shutil
 import string
+import configparser
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--all', action='store_true')
@@ -42,6 +43,14 @@ class Branches:
       branch = branch.name
       if branch not in ['master', 'gh-pages']:
         self.remote.append(branch)
+
+    behave = configparser.ConfigParser()
+    behave.read('behave.ini')
+    for k in behave['branch'].keys():
+      if k.startswith('gh-') and k not in self.local + self.remote + ['master', 'gh-pages']:
+        print('behave.ini has obsolete branch', k)
+        sys.exit(1)
+
 branches = Branches()
 
 if args.unsnyk:
@@ -84,6 +93,7 @@ if args.orphaned_remote or args.close_branch:
     if args.close_branch and issue.state != 'open':
       if issue.branch.local is not None:
         print(f'git branch -D {shlex.quote(issue.branch.local)}')
+
       if issue.branch.remote is not None:
         print(f'git push origin {shlex.quote(":" + issue.branch.remote)}')
   sys.exit()
