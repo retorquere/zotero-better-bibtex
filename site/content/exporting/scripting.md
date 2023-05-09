@@ -80,6 +80,7 @@ The postscript should be a `javascript` snippet. You can access the data with fo
       - `url`: encode as verbatim url
   - `sep`: if `value` is an array, and `enc` is `latex`, encode each array element using `latex` and join the results with the string in `sep`. Defaults to an empty string.
   - `html`: boolean indicating whether the `value` is full HTML (really only useful for notes)
+  - `caseConversion`: boolean indicating whether the field should have title-casing applied.
 
   e.g. change the value of year in output `tex.add({name: 'year', value: "your_year_value"})`
 
