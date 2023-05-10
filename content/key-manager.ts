@@ -195,19 +195,7 @@ export class KeyManager {
   public async start(): Promise<void> {
     await this.rescan()
 
-    let search = Preference.citekeySearch
-    if (search) {
-      try {
-        const path = OS.Path.join(Zotero.DataDirectory.dir, 'better-bibtex-search.sqlite')
-        await Zotero.DB.queryAsync(`ATTACH DATABASE '${path.replace(/'/g, "''")}' AS betterbibtexsearch`)
-      }
-      catch (err) {
-        log.error('failed to attach the search database:', err)
-        flash('Error loading citekey search database, citekey search is disabled')
-        search = false
-      }
-    }
-    if (search) {
+    if (Preference.citekeySearch) {
       const tables = await Zotero.DB.columnQueryAsync("SELECT name FROM betterbibtexsearch.sqlite_master where type='table'")
       if (tables.includes('citekeys')) {
         const columns = await Zotero.DB.columnQueryAsync("SELECT name FROM PRAGMA_TABLE_INFO('citekeys', 'betterbibtexsearch')")

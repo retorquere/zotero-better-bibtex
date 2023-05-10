@@ -913,8 +913,11 @@ export class BetterBibTeX {
 
     // https://groups.google.com/d/msg/zotero-dev/QYNGxqTSpaQ/uvGObVNlCgAJ
     // this is what really takes long
-    await Zotero.Schema.schemaUpdatePromise
+    await Zotero.initializationPromise
     Zotero.debug(`{better-bibtex-startup} Zotero ready @ ${Date.now() - $patch$.started}`)
+
+    await Zotero.DB.queryAsync('ATTACH DATABASE ? AS betterbibtex', [OS.Path.join(Zotero.DataDirectory.dir, 'better-bibtex.sqlite')])
+    await Zotero.DB.queryAsync('ATTACH DATABASE ? AS betterbibtexsearch', [OS.Path.join(Zotero.DataDirectory.dir, 'better-bibtex-search.sqlite')])
 
     await TeXstudio.init()
 
