@@ -227,15 +227,6 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
     job.preferences = job.preferences || {}
 
-    // undo override smuggling so I can pre-fetch the cache
-    const cloaked_override = 'preference_'
-    for (const [pref, value] of Object.entries(displayOptions)) {
-      if (pref.startsWith(cloaked_override)) {
-        job.preferences[pref.replace(cloaked_override, '')] = (value as string)
-        delete displayOptions[pref]
-      }
-    }
-
     const cache = Preference.cache && !(
       // when exporting file data you get relative paths, when not, you get absolute paths, only one version can go into the cache
       displayOptions.exportFileData

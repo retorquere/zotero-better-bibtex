@@ -1,8 +1,6 @@
 /* eslint-disable prefer-rest-params */
 import type BluebirdPromise from 'bluebird'
 
-Components.utils.import('resource://gre/modules/FileUtils.jsm')
-declare const FileUtils: any
 declare const ZoteroPane: any
 declare const __estrace: any // eslint-disable-line no-underscore-dangle
 
@@ -25,7 +23,6 @@ import { flash } from './flash'
 import { Deferred } from './deferred'
 
 import { Preference } from './prefs' // needs to be here early, initializes the prefs observer
-import * as preferences from '../gen/preferences/meta'
 require('./pull-export') // just require, initializes the pull-export end points
 require('./json-rpc') // just require, initializes the json-rpc end point
 import { AUXScanner } from './aux-scanner'
@@ -458,29 +455,6 @@ $patch$(Zotero.Utilities.Internal, 'extractExtraFields', original => function Zo
   return original.apply(this, arguments)
 })
 
-function findOverride(exportPath: string, extension: string, filename: string, load: (path: string) => any): any {
-  if (!exportPath || !filename) return null
-
-  const candidates = [
-    OS.Path.basename(exportPath).replace(/\.[^.]+$/, '') + extension,
-    filename,
-  ]
-  const exportDir = OS.Path.dirname(exportPath)
-  for (let candidate of candidates) {
-    candidate = OS.Path.join(exportDir, candidate)
-    // cannot use await OS.File.exists here because we may be invoked in noWait mode
-    if ((new FileUtils.File(candidate)).exists()) {
-      try {
-        const loaded = load(candidate)
-        if (typeof loaded === 'string' || loaded) return loaded
-      }
-      catch (err) {
-        log.error('failed to load override', candidate)
-      }
-    }
-  }
-  return null
-}
 $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zotero_Translate_Export_prototype_translate() {
   try {
     /* requested translator */
@@ -501,41 +475,6 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
           displayOptions.exportDir = this.location.parent.path
           displayOptions.exportPath = this.location.path
           displayOptions.cache = true
-        }
-      }
-      const override = {
-        postscript: findOverride(
-          displayOptions.exportPath, '.js',
-          Preference.postscriptOverride,
-          (path: string) => Zotero.File.getContents(path) // eslint-disable-line @typescript-eslint/no-unsafe-return
-        ),
-        preferences: findOverride(
-          displayOptions.exportPath, '.json',
-          Preference.preferencesOverride,
-          (path: any) => { const content = JSON.parse(Zotero.File.getContents(path)); return content.override?.preferences } // eslint-disable-line @typescript-eslint/no-unsafe-return
-        ),
-        strings: findOverride(
-          displayOptions.exportPath, '.bib',
-          Preference.stringsOverride,
-          (path: string) => Zotero.File.getContents(path) // eslint-disable-line @typescript-eslint/no-unsafe-return
-        ),
-      }
-      displayOptions.cache = displayOptions.cache && !override.postscript && !override.preferences && !override.strings
-
-      if (override.postscript) displayOptions.preference_postscript = override.postscript
-      if (typeof override.strings === 'string') displayOptions.preference_strings = override.strings
-      if (override.preferences) {
-        displayOptions.cache = false
-        for (const [pref, value] of Object.entries(override.preferences)) {
-          if (typeof value !== typeof preferences.defaults[pref]) {
-            log.error(`preference override for ${pref}: expected ${typeof preferences.defaults[pref]}, got ${typeof value}`)
-          }
-          else if (preferences.options[pref] && !preferences.options[pref][value]) {
-            log.error(`preference override for ${pref}: expected ${Object.keys(preferences.options[pref]).join(' / ')}, got ${value}`)
-          }
-          else {
-            displayOptions[`preference_${pref}`] = value
-          }
         }
       }
 

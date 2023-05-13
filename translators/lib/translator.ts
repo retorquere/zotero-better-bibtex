@@ -1,7 +1,11 @@
+(typeof importScripts !== 'undefined' ? importScripts : Components.utils.import)('resource://gre/modules/FileUtils.jsm')
+declare const FileUtils: any
+const fileUtils = new FileUtils
+
 declare const Zotero: any
 declare const __estrace: any // eslint-disable-line no-underscore-dangle
 
-import { affects, names as preferences, defaults, PreferenceName, Preferences as StoredPreferences, schema } from '../../gen/preferences/meta'
+import { affects, names as preference_names, defaults as preference_defaults, options as preference_options, PreferenceName, Preferences as StoredPreferences, schema } from '../../gen/preferences/meta'
 import { TeXMap } from '../../content/prefs'
 import { client } from '../../content/client'
 import { RegularItem, Item, Collection, Attachment } from '../../gen/typings/serialized-item'
@@ -221,6 +225,64 @@ export function collect(): Input {
   return { items, collections: new Collections(items) }
 }
 
+class Override {
+  private orig: Preferences
+  constructor(private preferences: Preferences, private exportPath: string) {
+    this.orig = {...this.preferences}
+  }
+
+  public override(preference: string, extension: string): boolean {
+    const override = this.orig[`${preference}Override`]
+    if (!this.exportPath || !override) return false
+
+    const candidates = [
+      OS.Path.basename(this.exportPath).replace(/\.[^.]+$/, '') + extension,
+      override,
+    ]
+
+    const exportDir = OS.Path.dirname(this.exportPath)
+    for (let candidate of candidates) {
+      candidate = OS.Path.join(exportDir, candidate)
+
+      // cannot use await OS.File.exists here because we may be invoked in noWait mode
+      if (fileUtils.File(candidate).exists()) {
+        try {
+          const content: string = Zotero.File.getContents(candidate)
+          let prefs: Partial<Preferences>
+          if (preference === 'preferences') {
+            prefs = JSON.parse(content).override?.preferences
+            if (!prefs) continue
+          }
+          else {
+            prefs = { [preference]: content }
+          }
+
+          for (const [pref, value] of Object.entries(prefs)) {
+            if (!preference_names.includes(pref as unknown as PreferenceName)) {
+              Zotero.debug(`better-bibtex: unexpected preference override for ${pref}`)
+            }
+            else if (typeof value !== typeof preference_defaults[pref]) {
+              Zotero.debug(`better-bibtex: preference override for ${pref}: expected ${typeof preference_defaults[pref]}, got ${typeof value}`)
+            }
+            else if (preference_options[pref] && !preference_options[pref][value]) {
+              Zotero.debug(`better-bibtex: preference override for ${pref}: expected ${Object.keys(preference_options[pref]).join(' / ')}, got ${value}`)
+            }
+            else {
+              this.preferences[pref] = value
+            }
+          }
+
+          return true
+        }
+        catch (err) {
+          Zotero.debug(`better-bibtex: failed to load override ${candidate}`)
+        }
+      }
+    }
+    return false
+  }
+}
+
 export class Translation { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   public preferences: Preferences
   public importToExtra: Record<string, 'plain' | 'force'>
@@ -364,7 +426,7 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
           // JSON.stringify will attempt to get this
           if (property as unknown as string === 'toJSON') return object[property]
           if (!ignored[property]) {
-            if (!preferences.includes(property)) throw new TypeError(`Unsupported preference ${property}`)
+            if (!preference_names.includes(property)) throw new TypeError(`Unsupported preference ${property}`)
             if (!affects[property]?.includes(translator.label)) throw new TypeError(`Preference ${property} claims not to affect ${translator.label}`)
           }
           return object[property] // eslint-disable-line @typescript-eslint/no-unsafe-return
@@ -410,10 +472,15 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
       }
     }
 
-    this.preferences = Object.entries(defaults).reduce((acc, [pref, dflt]) => {
-      acc[pref] = this.getPreferenceOverride(pref) ?? Zotero.getHiddenPref(`better-bibtex.${pref}`) ?? dflt
+    this.preferences = Object.entries(preference_defaults).reduce((acc, [pref, dflt]) => {
+      acc[pref] = Zotero.getHiddenPref(`better-bibtex.${pref}`) ?? dflt
       return acc
     }, {} as unknown as Preferences)
+
+    const override = new Override(this.preferences, this.export.path)
+    if (override.override('preferences', '.json')) this.cacheable = false
+    if (override.override('postscript', '.js')) this.cacheable = false
+    if (override.override('strings', '.bib')) this.cacheable = false
 
     // special handling
     try {
@@ -475,17 +542,6 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
     if (!this.output?.attachments.length) return
     for (const attachment of this.output.attachments) {
       attachment.saveFile(attachment.defaultPath, true)
-    }
-  }
-
-  getPreferenceOverride(pref) { // eslint-disable-line @typescript-eslint/explicit-module-boundary-types
-    try {
-      const override = Zotero.getOption(`preference_${pref}`)
-      if (typeof override !== 'undefined') this.cacheable = false
-      return override // eslint-disable-line @typescript-eslint/no-unsafe-return
-    }
-    catch (err) {
-      return undefined
     }
   }
 
