@@ -1,5 +1,5 @@
---- node_modules/ast-types/def/core.js	2022-04-29 20:15:23.000000000 +0200
-+++ node_modules/ast-types/def/core.js	2022-05-08 23:47:54.000000000 +0200
+--- node_modules/ast-types/lib/def/core.js	2022-04-29 20:15:23.000000000 +0200
++++ node_modules/ast-types/lib/def/core.js	2022-05-08 23:47:54.000000000 +0200
 @@ -262,7 +262,7 @@
      def("Literal")
          .bases("Expression")
