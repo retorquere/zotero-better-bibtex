@@ -1,7 +1,3 @@
-(typeof importScripts !== 'undefined' ? importScripts : Components.utils.import)('resource://gre/modules/FileUtils.jsm')
-declare const FileUtils: any
-const fileUtils = new FileUtils
-
 declare const Zotero: any
 declare const __estrace: any // eslint-disable-line no-underscore-dangle
 
@@ -244,8 +240,7 @@ class Override {
     for (let candidate of candidates) {
       candidate = OS.Path.join(exportDir, candidate)
 
-      // cannot use await OS.File.exists here because we may be invoked in noWait mode
-      if (fileUtils.File(candidate).exists()) {
+      if (Zotero.BetterBibTeX.fileExists(candidate)) {
         try {
           const content: string = Zotero.File.getContents(candidate)
           let prefs: Partial<Preferences>

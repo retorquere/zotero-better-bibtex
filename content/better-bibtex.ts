@@ -1,6 +1,9 @@
 /* eslint-disable prefer-rest-params */
 import type BluebirdPromise from 'bluebird'
 
+Components.utils.import('resource://gre/modules/FileUtils.jsm')
+declare const FileUtils: any
+
 declare const ZoteroPane: any
 declare const __estrace: any // eslint-disable-line no-underscore-dangle
 
@@ -403,6 +406,8 @@ Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
   // extractFields(_sandbox, item) { return Extra.get(item.extra) },
 
   strToISO(_sandbox: any, str: string) { return DateParser.strToISO(str) },
+  // cannot use await OS.File.exists here because we may be invoked in noWait mod
+  fileExists(_sandbox: any, path: string): boolean { return (new FileUtils).File(path).exists() as boolean },
 
   generateBibLaTeX(_sandbox: any, translation: Translation) { generateBibLaTeX(translation) },
   generateBibTeX(_sandbox: any, translation: Translation) { generateBibTeX(translation) },

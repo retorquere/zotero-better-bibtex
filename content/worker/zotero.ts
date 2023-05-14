@@ -180,6 +180,10 @@ class WorkerZoteroBetterBibTeX {
     Zotero.send({ kind: 'progress', percent, translator: workerJob.translator, autoExport: workerJob.autoExport })
   }
 
+  public fileExists(path: string): boolean {
+    return OS.File.exists(path) as unknown as boolean
+  }
+
   public cacheFetch(itemID: number) {
     return cacheFetch('', itemID, null, null)
   }
