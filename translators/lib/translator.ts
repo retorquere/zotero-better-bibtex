@@ -223,57 +223,69 @@ export function collect(): Input {
 
 class Override {
   private orig: Preferences
-  constructor(private preferences: Preferences, private exportPath: string) {
+  private exportPath: string
+  private exportDir: string
+
+  constructor(private preferences: Preferences) {
     this.orig = {...this.preferences}
+    this.exportPath = Zotero.getOption('exportPath')
+    this.exportDir = Zotero.getOption('exportDir')
   }
 
   public override(preference: string, extension: string): boolean {
     const override = this.orig[`${preference}Override`]
-    if (!this.exportPath || !override) return false
+    if (!this.exportPath || !override) {
+      return false
+    }
 
     const candidates = [
       OS.Path.basename(this.exportPath).replace(/\.[^.]+$/, '') + extension,
       override,
-    ]
+    ].map(filename => OS.Path.join(this.exportDir, filename))
 
-    const exportDir = OS.Path.dirname(this.exportPath)
-    for (let candidate of candidates) {
-      candidate = OS.Path.join(exportDir, candidate)
+    for (const candidate of candidates) {
+      Zotero.debug(`better-bibtex: looking for override ${preference} in ${candidate}`)
 
-      if (Zotero.BetterBibTeX.fileExists(candidate)) {
-        try {
-          const content: string = Zotero.File.getContents(candidate)
-          let prefs: Partial<Preferences>
-          if (preference === 'preferences') {
-            prefs = JSON.parse(content).override?.preferences
-            if (!prefs) continue
+      try {
+        const content: string = Zotero.BetterBibTeX.getContents(candidate)
+        if (content === null) {
+          Zotero.debug(`better-bibtex: override ${candidate} not found`)
+          continue
+        }
+
+        let prefs: Partial<Preferences>
+        if (preference === 'preferences') {
+          prefs = JSON.parse(content).override?.preferences
+          if (!prefs) continue
+        }
+        else {
+          prefs = { [preference]: content }
+        }
+
+        for (const [pref, value] of Object.entries(prefs)) {
+          if (!preference_names.includes(pref as unknown as PreferenceName)) {
+            Zotero.debug(`better-bibtex: unexpected preference override for ${pref}`)
+          }
+          else if (typeof value !== typeof preference_defaults[pref]) {
+            Zotero.debug(`better-bibtex: preference override for ${pref}: expected ${typeof preference_defaults[pref]}, got ${typeof value}`)
+          }
+          else if (preference_options[pref] && !preference_options[pref][value]) {
+            Zotero.debug(`better-bibtex: preference override for ${pref}: expected ${Object.keys(preference_options[pref]).join(' / ')}, got ${value}`)
           }
           else {
-            prefs = { [preference]: content }
+            this.preferences[pref] = value
           }
-
-          for (const [pref, value] of Object.entries(prefs)) {
-            if (!preference_names.includes(pref as unknown as PreferenceName)) {
-              Zotero.debug(`better-bibtex: unexpected preference override for ${pref}`)
-            }
-            else if (typeof value !== typeof preference_defaults[pref]) {
-              Zotero.debug(`better-bibtex: preference override for ${pref}: expected ${typeof preference_defaults[pref]}, got ${typeof value}`)
-            }
-            else if (preference_options[pref] && !preference_options[pref][value]) {
-              Zotero.debug(`better-bibtex: preference override for ${pref}: expected ${Object.keys(preference_options[pref]).join(' / ')}, got ${value}`)
-            }
-            else {
-              this.preferences[pref] = value
-            }
-          }
-
-          return true
         }
-        catch (err) {
-          Zotero.debug(`better-bibtex: failed to load override ${candidate}`)
-        }
+
+        Zotero.debug(`better-bibtex: override ${candidate} loaded`)
+
+        return true
+      }
+      catch (err) {
+        Zotero.debug(`better-bibtex: failed to load override ${candidate}: ${err}`)
       }
     }
+
     return false
   }
 }
@@ -472,7 +484,7 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
       return acc
     }, {} as unknown as Preferences)
 
-    const override = new Override(this.preferences, this.export.path)
+    const override = new Override(this.preferences)
     if (override.override('preferences', '.json')) this.cacheable = false
     if (override.override('postscript', '.js')) this.cacheable = false
     if (override.override('strings', '.bib')) this.cacheable = false

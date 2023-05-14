@@ -180,8 +180,16 @@ class WorkerZoteroBetterBibTeX {
     Zotero.send({ kind: 'progress', percent, translator: workerJob.translator, autoExport: workerJob.autoExport })
   }
 
-  public fileExists(path: string): boolean {
-    return OS.File.exists(path) as unknown as boolean
+  public getContents(path: string): string {
+    if (path && OS.File.exists(path)) {
+      // https://contest-server.cs.uchicago.edu/ref/JavaScript/developer.mozilla.org/en-US/docs/Mozilla/JavaScript_code_modules/OSFile.jsm/OS-2.html
+      const array = OS.File.read(path)
+      const decoder = new TextDecoder()
+      return decoder.decode(array as BufferSource)
+    }
+    else {
+      return null
+    }
   }
 
   public cacheFetch(itemID: number) {

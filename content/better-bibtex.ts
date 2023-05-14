@@ -406,8 +406,7 @@ Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
   // extractFields(_sandbox, item) { return Extra.get(item.extra) },
 
   strToISO(_sandbox: any, str: string) { return DateParser.strToISO(str) },
-  // cannot use await OS.File.exists here because we may be invoked in noWait mod
-  fileExists(_sandbox: any, path: string): boolean { return (new FileUtils).File(path).exists() as boolean },
+  getContents(_sandbox: any, path: string): string { return Zotero.BetterBibTeX.getContents(path) as string },
 
   generateBibLaTeX(_sandbox: any, translation: Translation) { generateBibLaTeX(translation) },
   generateBibTeX(_sandbox: any, translation: Translation) { generateBibTeX(translation) },
@@ -841,6 +840,7 @@ export class BetterBibTeX {
   }
 
   public async load(): Promise<void> { // eslint-disable-line @typescript-eslint/explicit-module-boundary-types
+    Zotero.debug(`load: FileUtils type ${typeof FileUtils}`)
     this.loads++
     if (this.loads > 1) {
       log.error('BBT.load', this.loads)
@@ -960,6 +960,16 @@ export class BetterBibTeX {
   public parseDate(date: string): ParsedDate { return DateParser.parse(date) }
   public unload(): void {
     Zotero.debug('Unloading BBT?')
+  }
+
+  getContents(path: string): string {
+    // cannot use await OS.File.exists here because we may be invoked in noWait mod
+    if (path && (new FileUtils.File(path)).exists()) {
+      return Zotero.File.getContents(path) as string
+    }
+    else {
+      return null
+    }
   }
 }
 

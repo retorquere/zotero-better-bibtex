@@ -446,7 +446,11 @@ class Zotero:
       config = data.get('config', {})
       preferences = config.get('preferences', {})
       localeDateOrder = config.get('localeDateOrder', None)
-      context.displayOptions = config.get('options', {})
+
+      displayOptions = dict(config.get('options', context.displayOptions))
+      if not 'worker' in displayOptions:
+        displayOptions['worker'] = context.displayOptions['worker']
+      context.displayOptions = displayOptions
 
       # TODO: this can go because the schema check will assure it won't get passed in
       if 'testing' in preferences: del preferences['testing']
@@ -465,7 +469,6 @@ class Zotero:
             path = os.path.join(os.path.dirname(references), path)
             assert os.path.exists(path), f'attachment {path} does not exist'
     else:
-      context.displayOptions = {}
       preferences = None
       localeDateOrder = None
 
