@@ -1,10 +1,8 @@
 declare const Zotero: any
-
-const ctx: DedicatedWorkerGlobalScope = typeof self === 'undefined' ? undefined : (self as any)
-export const worker = !!(ctx?.location?.search)
+declare const location: any
 
 function clientname(): string {
-  if (worker) return (new URLSearchParams(ctx.location.search)).get('clientName')
+  if (typeof location !== 'undefined' && location.search) return (new URLSearchParams(location.search)).get('clientName')
   if (Zotero.clientName) return Zotero.clientName as string
   if (Zotero.BetterBibTeX?.clientName) return Zotero.BetterBibTeX.clientName as string
   throw new Error('Unable to detect clientName')

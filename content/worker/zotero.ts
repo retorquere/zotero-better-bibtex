@@ -1,10 +1,23 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions, @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-assignment */
 
+const ctx: DedicatedWorkerGlobalScope = self as any
+
+export const workerEnvironment = {
+  version: '',
+  platform: '',
+  locale: '',
+}
+
+for(const [key, value] of (new URLSearchParams(ctx.location.search)).entries()) {
+  workerEnvironment[key] = value
+}
+
 declare const dump: (message: string) => void
 
 importScripts('resource://gre/modules/osfile.jsm')
 importScripts('resource://zotero/config.js') // import ZOTERO_CONFIG'
 
+import { client, clientName } from '../../content/client'
 import type { TranslatorMetadata } from '../../translators/lib/translator'
 import type { Translators } from '../../typings/translators'
 import { valid } from '../../gen/items/items'
@@ -137,7 +150,6 @@ declare const doExport: () => void
 import * as DateParser from '../../content/dateparser'
 // import * as Extra from '../../content/extra'
 import itemCreators from '../../gen/items/creators.json'
-import { client } from '../../content/client'
 import { log } from '../../content/logger'
 import { Collection } from '../../gen/typings/serialized-item'
 // import { CSL_MAPPINGS } from '../../gen/items/items'
@@ -146,18 +158,6 @@ import zotero_schema from '../../schema/zotero.json'
 import jurism_schema from '../../schema/jurism.json'
 const schema = client === 'zotero' ? zotero_schema : jurism_schema
 import dateFormats from '../../schema/dateFormats.json'
-
-const ctx: DedicatedWorkerGlobalScope = self as any
-
-export const workerEnvironment = {
-  version: '',
-  platform: '',
-  locale: '',
-}
-
-for(const [key, value] of (new URLSearchParams(ctx.location.search)).entries()) {
-  workerEnvironment[key] = value
-}
 
 export const workerJob: Partial<Translators.Worker.Job> = {}
 
@@ -171,6 +171,10 @@ function cacheStore(_translator: string, itemID: number, _options: any, _prefs: 
 }
 
 class WorkerZoteroBetterBibTeX {
+  public clientName = clientName
+  public client = client
+  public worker = true
+
   public Cache = {
     store: cacheStore,
     fetch: cacheFetch,

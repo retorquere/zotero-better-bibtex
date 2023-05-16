@@ -12,8 +12,8 @@ print('parsing babel language mapping')
 import sqlite3
 DB = sqlite3.connect(':memory:')
 
-#if os.path.exists('babel.sqlite'):
-#  os.remove('babel.sqlite')
+if os.path.exists('babel.sqlite'):
+  os.remove('babel.sqlite')
 #DB = sqlite3.connect('babel.sqlite', isolation_level=None)
 
 class Row(sqlite3.Row):
@@ -124,6 +124,7 @@ DB.execute('''
   SET prio = 0
   WHERE ROWID IN (SELECT ROWID FROM preferred WHERE ranking = 1)
 ''')
+
 # mark babel name as selected for all others
 DB.execute('''
   UPDATE babel
@@ -132,6 +133,12 @@ DB.execute('''
 ''')
 
 DB.execute('CREATE TABLE langmap (language NOT NULL PRIMARY KEY, langid NOT NULL)')
+
+for row in list(DB.execute('SELECT tag, count(*) FROM babel WHERE prio = 0 GROUP BY tag HAVING COUNT(*) > 1')):
+  if tuple(row) == ('ko', 2):
+    print('fixing', row)
+    # fix ko|0|name|korean-han as ko|0|name|korean also exists
+    DB.execute("UPDATE babel SET rel='alias', prio=1 WHERE tag='ko' AND langid='korean-han'")
 DB.execute('INSERT INTO langmap (language, langid) SELECT tag, langid FROM babel WHERE prio = 0')
 
 # set self-alias

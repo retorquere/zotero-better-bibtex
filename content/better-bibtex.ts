@@ -390,7 +390,6 @@ import type { ParsedDate } from './dateparser'
 
 Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
   clientName: Zotero.clientName,
-
   /*
   titleCase(_sandbox: any, text: string): string { return titleCase(text) },
   parseHTML(_sandbox: any, text: { toString: () => any }, options: HTMLParserOptions) {
