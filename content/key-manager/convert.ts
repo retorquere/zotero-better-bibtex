@@ -1,423 +1,335 @@
-/* eslint-disable prefer-arrow/prefer-arrow-functions, @typescript-eslint/no-unsafe-return */
-import { parse, types, prettyPrint } from 'recast'
-const b = types.builders
-// const { getFieldNames } = types
-import * as items from '../../gen/items/items'
+import { parse } from 'acorn'
 import { methods } from '../../gen/api/key-formatter'
-import { validator, noncoercing } from '../ajv'
-import { clone } from '../clone'
+const alias = require('./alias.json')
+import * as items from '../../gen/items/items'
 
-import { stringify } from '../stringify'
+type Node = {
+  type: string
+  optional: boolean
+  computed: boolean
 
-import alias = require('./alias.json')
+  // expression
+  expression: Node
 
-const object_or_null = { oneOf: [ { type: 'object' }, { type: 'null' } ] }
-const basics = {
-  loc: object_or_null,
-  comments: object_or_null,
-  regex: object_or_null,
-}
-function upgrade(type) {
-  switch (type.type) {
-    case 'string':
-    case 'number':
-    case 'boolean':
-      return {
-        type: 'object',
-        properties: {
-          type: { const: 'Literal' },
-          value: type,
-          raw: { type: 'string' },
-          ...basics,
-        },
-        required: [ 'type', 'value' ],
-        additionalProperties: false,
-      }
+  // program
+  body: Node[]
 
-    case 'array':
-      if (type.prefixItems) {
-        return {
-          type: 'object',
-          properties: {
-            type: { const: 'ArrayExpression' },
-            elements: {
-              type: 'array',
-              prefixItems: type.prefixItems.map(upgrade),
-              items: type.items,
-              minItems: type.minItems,
-              maxItems: type.maxItems,
-            },
-            ...basics,
-          },
-          required: [ 'type', 'elements' ],
-          additionalProperties: false,
-        }
-      }
-      else {
-        return {
-          type: 'object',
-          properties: {
-            type: { const: 'ArrayExpression' },
-            elements: { type: 'array', items: upgrade(type.items) },
-            ...basics,
-          },
-          required: [ 'type', 'elements' ],
-          additionalProperties: false,
-        }
-      }
+  // identifier
+  name: string
+
+  // assignment
+  left: Node
+  right: Node
+
+  // member
+  object: Node
+  property: Node
+
+  // unary and binary
+  operator: string
+
+  // literal
+  value: string | number
+  raw: string
+  regex?: {
+    pattern: string
+    flags: string
   }
 
-  if (typeof type.const !== 'undefined') {
-    return {
-      type: 'object',
-      properties: {
-        type: { const: 'Literal' },
-        value: { const: type.const },
-        raw: { type: 'string' },
-        ...basics,
-      },
-      required: [ 'type', 'value' ],
-      additionalProperties: false,
-    }
-  }
+  // unary
+  prefix: boolean
+  argument: Node
 
-  if (type.instanceof === 'RegExp') {
-    return {
-      type: 'object',
-      properties: {
-        type: { const: 'Literal' },
-        value: { type: 'object' },
-        raw: { type: 'string' },
-        ...basics,
-        regex: {
-          type: 'object',
-          properties: {
-            pattern: { type: 'string' },
-            flags: { type: 'string' },
-            ...basics,
-          },
-          required: [ 'pattern', 'flags' ],
-          additionalProperties: false,
-        },
-      },
-      required: [ 'type', 'regex' ],
-      additionalProperties: false,
-    }
-  }
+  // array
+  elements: Node[]
 
-  if (type.oneOf) {
-    return { oneOf: type.oneOf.map(t => upgrade(t)) }
-  }
+  // callexpression
+  callee: Node
+  arguments: Node[]
 
-  if (type.anyOf) {
-    return { anyOf: type.anyOf.map(t => upgrade(t)) }
-  }
-
-  throw { notUpgradable: type } // eslint-disable-line no-throw-literal
-}
-const api: typeof methods = clone(methods)
-for (const meta of Object.values(api)) {
-  for (const property of Object.keys(meta.schema.properties)) {
-    meta.schema.properties[property] = upgrade(meta.schema.properties[property])
-
-    if (meta.name === '_formatDate' || meta.name === '$date') {
-      meta.schema.properties[property].properties.value.pattern = '^([^%]|(%-?o?[ymdYDHMS]))+$'
-    }
-    else if (meta.name === '$postfix' && property === 'format') {
-      (meta.schema.properties[property] as any).properties.value = { postfix: true }
-    }
-    else if (meta.name === '$authors' && property === 'name') {
-      (meta.schema.properties[property] as any).properties.value = { creatorname: true }
+  start?: number
+  loc?: {
+    start: {
+      line: number
+      column: number
     }
   }
 }
-for (const method of Object.values(api) as any[]) {
-  method.validate = validator(method.schema, noncoercing)
+
+type Argument = {
+  name: string
+  value: Node
 }
 
-function assign(node: any, meta: any) {
-  node.meta = node.meta || {}
-  Object.assign(node.meta, meta)
-}
-
-/*
-function graphviz(ast) {
-  let gv = 'digraph G {'
-  let id = 0
-  types.visit(ast, {
-
-    visitNode(path) {
-      this.traverse(path)
-
-      assign(path.node, { id: id++ })
-
-      let children = {}
-      for (const child of getFieldNames(path.node)) {
-        if (path.node[child] && path.node[child].meta) {
-          children[child] = path.node[child].meta.id
-        }
+class Compiler {
+  error(node: Node, message) {
+    if (node) {
+      if (node.loc) {
+        if (node.loc.start.line > 1) throw new Error(`${message} at line ${node.loc.start.line}, position ${node.loc.start.column + 1}`)
+        throw new Error(`${message} at position ${node.loc.start.column + 1}`)
       }
-
-      let type = path.node.type
-      switch (path.node.type) {
-        case 'ArrayExpression':
-          type = '[...]'
-          path.node.elements.forEach((child, i) => {
-            children[i] = child.meta.id
-          })
-          break
-        case 'SequenceExpression':
-          type = '.., ..'
-          path.node.expressions.forEach((child, i) => {
-            children[i] = child.meta.id
-          })
-          break
-        case 'LogicalExpression':
-        case 'BinaryExpression':
-          type = path.node.operator
-          break
-        case 'Literal':
-          if (typeof path.node.value === 'string') {
-            type = "'" + path.node.value + "'"
-          }
-          else {
-            type = path.node.value
-          }
-          break
-        case 'Identifier':
-          type = path.node.name
-          break
-        case 'ConditionalExpression':
-          type = '?:'
-          break
-        case 'MemberExpression':
-          type = '.'
-          break
-        case 'CallExpression':
-          type = '(...)'
-          break
-        case 'ThisExpression':
-          type = 'this'
-          break
-        case 'ExpressionStatement':
-          type = 'expr'
-          break
-      }
-
-      gv += `node${path.node.meta.id} [label="${type}"]\n`
-      for (const [rel, id] of Object.entries(children)) {
-        gv += `node${path.node.meta.id} -> node${id} [label="${rel}"]\n`
-      }
+      if (typeof (node as unknown as any).start === 'number') throw new Error(`${message} at position ${node.start + 1}`)
     }
-  })
-  gv += '}'
-  return gv
-}
-*/
-
-function error(msg, node) {
-  if (node?.loc) {
-    msg += ' @ '
-    if (node.loc.start.line !== 1) msg += `line ${node.loc.start.line}, `
-    msg += `position ${(node.loc.start.column as number) + 1}`
-  }
-  throw new Error(msg)
-}
-
-function argname(node) {
-  if (node.type !== 'Identifier') error(`argument name must be identifier, not ${node.type}`, node)
-  return node.name
-}
-
-function argvalue(node) {
-  switch (node.type) {
-    case 'Literal':
-      return node
-    case 'ArrayExpression':
-      node.elements = node.elements.map(argvalue)
-      return node
-    case 'Identifier':
-      return b.literal(node.name)
-    case 'UnaryExpression':
-      if (node.operator !== '-' || node.argument.type !== 'Literal' || typeof node.argument.value !== 'number') {
-        error(`${node.operator}${node.argument.type} is not a number`, node)
-      }
-      return b.literal(-1 * node.argument.value)
-    default:
-      error(`argument value must be literal, array, or identifier, not ${node.type}`, node)
-      break
-  }
-}
-
-function resolveArguments(method, args, node) {
-  const parameters = {}
-
-  if (method.rest) {
-    parameters[method.rest] = b.arrayExpression(args.map(argvalue))
-  }
-  else {
-    if (method.parameters.length < args.length) error(`${method.name.slice(1)}: expected ${method.parameters.length} arguments, got ${args.length}`, node)
-
-    let hasNamed = false
-    // "shadowed" by the later let arg: any
-    args.forEach((arg, i) => { // eslint-disable-line @typescript-eslint/no-shadow
-      let name: string
-      let value: any
-      if (arg.type === 'AssignmentExpression') {
-        name = argname(arg.left)
-        // ignore deprecated parameter
-        if (method.name.startsWith('$auth') && name === 'clean') return
-        value = argvalue(arg.right)
-        hasNamed = true
-      }
-      else if (hasNamed) {
-        error('positional arguments cannot follow named arguments', arg)
-      }
-      else {
-        name = method.parameters[i]
-        value = argvalue(arg)
-      }
-      if (typeof parameters[name] !== 'undefined') error(`duplicate parameter ${name}`, arg)
-      parameters[name] = value
-    })
+    throw new Error(message)
   }
 
-  let err: string
-  if (err = method.validate(parameters)) error(`${method.name.slice(1)}: ${err} ${stringify(parameters)}`, node)
-
-  args = method.parameters.map((param: string, i: number) => parameters[param] || (typeof method.defaults[i] === 'undefined' ? b.identifier('undefined') : b.literal(method.defaults[i])))
-  let end: number
-  let arg: any
-  while((end = args.length - 1) >= 0 && (((arg = args[end]).type === 'Identifier' && arg.name === 'undefined') || (arg.type === 'Literal' && arg.value === method.defaults[end]))) {
-    args.pop()
+  get(node: Node, allowed): Node {
+    if (typeof allowed === 'string') allowed = [ allowed ]
+    if (!node) this.error(node, `expected ${allowed.join(' | ')} at end of input`)
+    if (!allowed.includes(node.type) && !allowed.includes(node.operator)) this.error(node, `expected ${allowed.join(' | ')}, got ${node.type}`)
+    if (node.computed) this.error(node, 'unsupported computed attribute')
+    if (node.optional) this.error(node, 'unsupported optional attribute')
+    return node
   }
 
-  return method.rest ? args[0].elements : args
-}
-
-function split(ast, operator) {
-  const parts = []
-  while (ast.type === 'BinaryExpression' && ast.operator === operator) {
-    parts.unshift(ast.right)
-    ast = ast.left
+  split(ast: Node, operator): Node[] {
+    const parts: Node[] = []
+    while (ast.type === 'BinaryExpression' && ast.operator === operator) {
+      parts.unshift(ast.right)
+      ast = ast.left
+    }
+    parts.unshift(ast)
+    return parts
   }
-  parts.unshift(ast)
 
-  /* the visitNode -> Error does an en-passant check on stray binary expressions
-  const CheckNesting = {
-    visitBinaryExpression(path) {
-      if (path.node.operator === operator) error(`improperly nested ${operator} expression ${print(path.node)}`, path.node)
-      this.traverse(path)
-    },
+  compile(formula: string): string {
+    // the typedefs from acorn are useless
+    const program = this.get(parse(formula, { locations: true, ecmaVersion: 2020 }) as unknown as Node, 'Program')
+    if (!program.body.length) this.error(null, 'No input')
+    const formulas: Node[] = program.body.length > 1
+      ? program.body.map((stmt: Node) => this.get(stmt, 'ExpressionStatement').expression)
+      : this.split(this.get(program.body[0], 'ExpressionStatement').expression, '|')
+
+    const compiled = formulas.map((candidate: Node) => `  () => this.finalize(this.reset() + ${this.split(candidate, '+').map((term: Node) => this.$term(term)).join(' + ')}),`).join('\n')
+    return `[
+${compiled}
+].find(formula => {
+  try {
+    return formula()
+  } catch (err) {
+    if (err.next) return ''
+    throw err
   }
-  return parts.map(part => types.visit(part, CheckNesting))
-  */
-  return parts
-}
-
-function stitch(terms, operator) {
-  if (terms.length === 1) return terms[0]
-  const left = terms.shift()
-  const right = terms.shift()
-  let ast = b.binaryExpression(operator, left, right)
-  for (const term of terms) {
-    ast = b.binaryExpression(operator, ast, term)
-  }
-  return ast
-}
-
-function print(ast): string {
-  return prettyPrint(ast, {tabWidth: 2, quote: 'single'}).code
-}
-
-export function convert(formulas: string): string {
-  let ast = parse(formulas).program
-  if (ast.body.length !== 1 || ast.body[0].type !== 'ExpressionStatement') throw new Error(`${stringify(formulas)}: expected 1 expression statement`)
-  ast = ast.body[0].expression
-
-  const asts = split(ast, '|').map(formula => {
-    formula = split(formula, '+').map(term => {
-      let namespace = '$'
-      return types.visit(term, {
-        visitCallExpression(path) {
-          if ((path.node as any).meta?.called) error('double call', path.node)
-          assign(path.node.callee, { called: path.node })
-          this.visitor.visitWithoutReset(path.get('callee'))
-
-          return false
-        },
-        visitMemberExpression(path) {
-          if (path.node.computed || path.node.property.type !== 'Identifier') error('computed property not supported', path.node)
-          if ((path.node as any).meta?.called) assign(path.node.property, { called: (path.node as any).meta.called })
-          this.traverse(path)
-        },
-        visitIdentifier(path) {
-          this.traverse(path)
-
-          try {
-            if (path.node.name.match(/^[A-Z]/)) {
-              const name = items.name.field[path.node.name.toLowerCase()]
-              const reason = `Because it is capitalized, ${path.node.name} would have to be an item field, but `
-              if (!name) error(`${reason} Zotero items do not have a field ${path.node.name}`, path.node)
-              if ((path.node as any).meta?.called) error(`${reason} fields cannot be called as functions`, path.node)
-              if (namespace !== '$' || (path.node as any).meta?.called) error(`${reason} field access not allowed here`, path.node)
-              return b.callExpression(b.memberExpression(b.thisExpression(), b.identifier('$getField')), [b.literal(name)])
-            }
-            else {
-              let name = `${namespace}${path.node.name.toLowerCase()}`
-              name = alias[name] || name
-              const method = api[name]
-              if (!method) {
-                const me = `${namespace === '$' ? 'function' : 'filter'} ${JSON.stringify(path.node.name)}`
-                error(`No such ${me}`, path.node)
-              }
-
-              if ((path.node as any).meta?.called) {
-                (path.node as any).meta.called.arguments = resolveArguments(method, (path.node as any).meta?.called.arguments || [], path.node)
-              }
-
-              if (namespace === '$') {
-                const node = b.memberExpression(b.thisExpression(), b.identifier(method.name))
-                if (!(path.node as any).meta?.called) return b.callExpression(node, [])
-                return node
-              }
-              else {
-                path.node.name = method.name
-                if (!(path.node as any).meta?.called) return b.callExpression(path.node, [])
-              }
-            }
-          }
-          finally {
-            namespace = '_'
-          }
-        },
-
-        visitLiteral(path) {
-          this.traverse(path)
-          return b.callExpression(b.memberExpression(b.thisExpression(), b.identifier('$text')), [b.literal(path.node.value)])
-        },
-
-        visitNode(path) {
-          this.traverse(path)
-          error(`Unexpected ${path.node.type}`, path.node)
-        },
-      })
-    })
-
-    // reset accumulator and force string coercion
-    formula.unshift(b.callExpression(b.memberExpression(b.thisExpression(), b.identifier('reset')), []))
-
-    formula = stitch(formula, '+')
-    return b.callExpression(b.memberExpression(b.thisExpression(), b.identifier('finalize')), [formula])
-  })
-
-  ast = types.visit(parse('formulas.find(pattern => { try { return pattern() } catch (err) { if (err.next) return ""; throw err } })'), {
-    visitIdentifier(path) {
-      if (path.node.name === 'formulas') return b.arrayExpression(asts.map(formula => b.arrowFunctionExpression([], formula, false)))
-      return false
-    },
-  })
-  return print(ast) + `;
+})
 // this.citekey is set as a side-effect
-return this.citekey || ('zotero-' + this.item.id)`
+return this.citekey || ('zotero-' + this.item.id)
+`
+  }
+
+  flatten(node: Node): Node[] {
+    switch (node.type) {
+      case 'MemberExpression':
+        return this.flatten(node.object).concat(this.flatten(node.property))
+      case 'CallExpression':
+        return this.flatten(node.callee).concat([node])
+      case 'Identifier':
+      // case 'ConditionalExpression':
+        return [node]
+      case 'Literal':
+        if (typeof node.value !== 'string') this.error(node, `expected string, got ${this.$typeof(node)}`)
+      default:
+        if (typeof node.value !== 'string') this.error(node, `unexpected ${node.type}`)
+    }
+  }
+
+  $term(node) {
+    if (node.type === 'Literal') {
+      if (typeof node.value !== 'string') this.error(node, `expected string, got ${this.$typeof(node)}`)
+      return `this.$text(${node.raw})`
+    }
+
+    const flat = this.flatten(node)
+    let compiled = 'this'
+    let prefix = '$'
+    while (flat.length) {
+      const identifier = this.get(flat.shift(), 'Identifier')
+
+      if (prefix === '$' && identifier.name[0] === identifier.name[0].toUpperCase()) {
+        if (flat[0] && flat[0].type === 'CallExpression') this.error(flat[0], `field "${identifier.name}" cannot be called as a function`)
+        const name = items.name.field[identifier.name.toLowerCase()]
+        if (!name) this.error(identifier, `Zotero items do not have a field named "${identifier.name}"`)
+        compiled += `.${prefix}getField("${name}")`
+      }
+      else {
+        const name = `${prefix}${identifier.name.toLowerCase()}`
+        const $name = alias[name] || name
+        const method = methods[$name]
+        if (!method) this.error(identifier, `Unknown ${prefix === '$' ? 'function' : 'filter'} ${identifier.name}`)
+
+        compiled += `.${method.name}(`
+        if (flat[0] && flat[0].type === 'CallExpression') {
+          compiled += this.$arguments(method, flat.shift())
+        }
+        compiled += ')'
+      }
+
+      prefix = '_'
+    }
+    return compiled
+  }
+
+  methodName(method) {
+    return `${method.name[0] === '$' ? 'function' : 'filter'} ${JSON.stringify(method.name.substring(1))}`
+  }
+
+  $arguments(method, node) {
+    let named: Argument
+    const allowed =  ['ArrayExpression', 'Identifier', 'UnaryExpression', 'Literal']
+    const args: Argument[] = node.arguments
+      .map(arg => {
+        switch (arg.type) {
+          case 'AssignmentExpression':
+            named = { name: this.get(arg.left, 'Identifier').name, value: this.get(arg.right, allowed) }
+            return named
+          default:
+            if (named) this.error(arg, `positional argument after named argument "${named.name}"`)
+            return { name: '', value: this.get(arg, allowed) }
+        }
+      })
+      .map((arg: Argument): Argument => {
+        arg.value = this.$value(arg.value)
+        if (!arg.value.raw) this.error(arg.value, `${arg.value.type} conversion error`)
+        return arg
+      })
+
+    if (method.rest) {
+      if (args.length) {
+        const error: Argument = args.find(arg => arg.name)
+        if (error) this.error(error.value, `${this.methodName(method)} does not support named arguments`)
+        this.validateArg(method, args)
+      }
+      return args.map((arg: Argument) => arg.value.raw).join(',')
+    }
+
+    if (args.length > method.parameters.length) this.error(node, `${this.methodName(method)} expected ${method.parameters.length} arguments, got ${args.length}`)
+
+    const resolved: { values: string[], params: Set<string>, required: Set<string> } = {
+      values: method.defaults.map(d => typeof d === 'undefined' ? 'undefined' : JSON.stringify(d)),
+      params: new Set,
+      required: new Set(method.schema.required),
+    }
+    args.forEach((arg: Argument, n: number) => {
+      // ignore deprecated parameter
+      if (method.name.startsWith('$auth') && arg.name === 'clean') return
+
+      if (arg.name) n = method.parameters.indexOf(arg.name)
+      if (n === -1) this.error(arg.value, `${this.methodName(method)} passed unsupported parameter "${arg.name}"`)
+      arg.name = arg.name || method.parameters[n]
+      if (resolved.params.has(arg.name)) this.error(arg.value, `duplicate parameter ${n} ("${arg.name}") to ${this.methodName(method)}`)
+
+      resolved.params.add(arg.name)
+      if (arg.value.raw !== 'undefined') resolved.required.delete(arg.name)
+      resolved.values[n] = this.validateArg(method, arg)
+    })
+
+    if (resolved.required.size) this.error(node, `missing required argument "${[...resolved.required][0]}" for ${this.methodName(method)}`)
+
+    return resolved.values.join(',')
+  }
+
+  validateArg(method, arg: Argument | Argument[]): string {
+    const name = Array.isArray(arg) ? method.rest : arg.name
+    const rule = method.schema.properties[name]
+    if (!rule) this.error(Array.isArray(arg) ? arg[0].value : arg.value, `${this.methodName(method)} passed unsupported parameter "${name}"`)
+
+    const context = `for "${name}" parameter of ${this.methodName(method)}`
+
+    if (Array.isArray(arg)) { // only passed for rest
+      if (!method.rest) this.error(arg[0]?.value, `variable number of arguments passed to non-rest ${this.methodName(method)}`)
+      if (rule.type !== 'array') throw new Error(`${rule.type} expected, got array for ${this.methodName(method)}`)
+      return `${arg.map(a => this.validate(rule.items, a.value, context)).join(',')}`
+    }
+    else {
+      if (method.rest) this.error(arg.value, `rest ${this.methodName(method)} expects a variable number of arguments`)
+      return this.validate(rule, arg.value, context)
+    }
+  }
+
+  validate(rule, value: Node, context: string, softfail=false): string {
+    const fail = (msg: string): string => {
+      if (!softfail) this.error(value, msg)
+      return null
+    }
+
+    if (rule.anyOf) {
+      for (const subrule of rule.anyOf) {
+        const validated = this.validate(subrule, value, context, true)
+        if (validated !== null) return validated
+      }
+      this.error(value, `expected ${rule.anyOf.map(r => (r.instanceof || r.type) as string).join(' | ')}, got ${this.$typeof(value)} ${context}`)
+    }
+
+    switch (rule.instanceof || rule.type) {
+      case 'RegExp':
+      case 'number':
+      case 'string':
+      case 'boolean':
+        if ((rule.instanceof || rule.type) !== this.$typeof(value)) return fail(`${rule.instanceof || rule.type} expected, got ${this.$typeof(value)} ${context}`)
+        if (rule.enum && !rule.enum.includes(value.value)) return fail(`${rule.enum.join(' | ')} expected, got ${value.value} ${context}`)
+        break
+
+      case 'array':
+        return fail(`array expected, got ${this.$typeof(value)} ${context}`)
+
+      default:
+        throw new Error(`cannot validate ${rule.type}`)
+    }
+
+    return value.raw
+  }
+
+  $typeof(node: Node): string {
+    switch (node.type) {
+      case 'Literal':
+        if (node.raw === 'null' || node.raw === 'undefined') return node.raw as string
+        if (node.regex) return 'RegExp'
+        return typeof node.value
+
+      default:
+        return node.type
+    }
+  }
+
+  $value(node: Node): Node {
+    let elements: Node[]
+
+    switch (node.type) {
+      case 'Identifier':
+        return {
+          ...node,
+          type: 'Literal',
+          value: node.name === 'undefined' ? undefined : node.name,
+          raw: node.name === 'undefined' ? 'undefined' : JSON.stringify(node.name),
+        }
+
+      case 'Literal':
+        return node
+
+      case 'ArrayExpression':
+        elements = node.elements.map(e => this.$value(e))
+        return {
+          ...node,
+          elements,
+          raw: `[${elements.map(e => e.raw).join(',')}]`,
+        }
+
+      case 'UnaryExpression':
+        if (node.operator !== '-' || !node.prefix) this.error(node, `unsupported unary ${node.prefix ? 'prefix' : 'postfix'} operator ${JSON.stringify(node.operator)}`)
+        if (typeof this.get(node.argument, 'Literal').value !== 'number') this.error(node.argument, `expected numeric value, found ${this.$typeof(node.argument)}`)
+        return {
+          ...node,
+          type: 'Literal',
+          value: -1 * (node.argument.value as number),
+          raw: `${node.operator}${node.argument.raw}`,
+        }
+
+      default:
+        this.error(node, `unexpected argument of type ${node.type}`)
+    }
+  }
+}
+
+const compiler =  new Compiler
+export function convert(formulas: string): string {
+  return compiler.compile(formulas)
 }

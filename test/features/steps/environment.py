@@ -108,6 +108,10 @@ def before_scenario(context, scenario):
     #scenario.skip(f"ONLY TESTING SCENARIOS WITH {context.config.userdata['test']}")
     scenario.skip()
     return
+  if 'inspireHEP' in context.config.userdata and context.config.userdata['inspireHEP'] != 'true' and 'inspire' in scenario.name.lower():
+    scenario.skip('skipping inspire-HEP')
+    scenario.skip()
+    return
 
   TestBin.start(scenario)
   context.zotero.reset(scenario.name)
