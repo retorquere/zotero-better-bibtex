@@ -271,15 +271,15 @@ Feature: Export
     Examples:
       | BibTeX export is incompatible with Zotero 6 Preprint item type. #2080 | 1 |
 
-#  @inspire
-#  Scenario Outline: Export <references> references for BibLaTeX to <file>
-#    When I import <references> references from "export/<file>.json"
-#    Then an export using "Better BibLaTeX" should match "export/*.biblatex"
-#
-#    Examples:
-#      | file                                                                                                                     | references |
-#      | inspireHep fetching broken #2201  | 1          |
-#      | fetch inspire-hep key #1879       | 1          |
+  @inspire
+  Scenario Outline: Export <references> references for BibLaTeX to <file>
+    When I import <references> references from "export/<file>.json"
+    Then an export using "Better BibLaTeX" should match "export/*.biblatex"
+
+    Examples:
+      | file                                                                                                                     | references |
+      | inspireHep fetching broken #2201  | 1          |
+      | fetch inspire-hep key #1879       | 1          |
 
   @csl @timeout=3000
   Scenario Outline: Export <references> references for CSL-JSON to <file>

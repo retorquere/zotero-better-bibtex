@@ -1,12 +1,10 @@
-
 @book{Proceedings:2019qno,
   title = {Neutrino {{Non-Standard Interactions}}: {{A Status Report}}},
   shorttitle = {Neutrino {{Non-Standard Interactions}}},
   author = {Bhupal Dev, P. S. and others},
-  year = {2019},
+  date = {2019},
   volume = {2},
   doi = {10.21468/SciPostPhysProc.2.001},
+  pagetotal = {001},
   keywords = {activity report,neutrino: interaction,neutrino: mass}
 }
-
-
