@@ -1,6 +1,8 @@
 from steps.zotero import Zotero
 from behave.contrib.scenario_autoretry import patch_scenario_with_autoretry
 from behave.tag_matcher import ActiveTagMatcher, setup_active_tag_values
+from behave.model import ScenarioOutline
+import functools
 import re
 from contextlib import contextmanager
 import urllib.request
@@ -19,6 +21,31 @@ active_tag_value_provider = {
 }
 active_tag_matcher = ActiveTagMatcher(active_tag_value_provider)
 
+def patch_scenario_with_softfail(scenario):
+  """Monkey-patches :func:`~behave.model.Scenario.run()` to soft-fail a
+  scenario that fails.
+
+  This is helpful when the test infrastructure (server/network environment)
+  is unreliable (which should be a rare case).
+
+  :param scenario:    Scenario or ScenarioOutline to patch.
+  """
+  def scenario_run_with_softfail(scenario_run, *args, **kwargs):
+    if not scenario_run(*args, **kwargs):
+      return False # -- NOT-FAILED = PASSED
+    # -- SCENARIO FAILED:
+    print("SOFT-FAIL")
+    return False
+
+  if isinstance(scenario, ScenarioOutline):
+    scenario_outline = scenario
+    for scenario in scenario_outline.scenarios:
+      scenario_run = scenario.run
+      scenario.run = functools.partial(scenario_run_with_softfail, scenario_run)
+  else:
+    scenario_run = scenario.run
+    scenario.run = functools.partial(scenario_run_with_softfail, scenario_run)
+
 def before_feature(context, feature):
   if lme:= context.config.userdata.get('log_memory_every'):
     context.zotero.execute('Zotero.BetterBibTeX.TestSupport.startTimedMemoryLog(msecs)', msecs=int(lme))
@@ -27,12 +54,17 @@ def before_feature(context, feature):
 
   for scenario in feature.walk_scenarios():
     retries = 0
+    optional = False
     for tag in scenario.effective_tags:
+      if tag.startswith('optional'):
+        optional = True
       if tag.startswith('retries='):
         retries = int(tag.split('=')[1])
 
     if retries > 0:
       patch_scenario_with_autoretry(scenario, max_attempts=retries + 1)
+    if optional:
+      patch_scenario_with_softfail(scenario)
 
 class TestBin:
   def __init__(self):

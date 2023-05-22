@@ -33,7 +33,6 @@ Feature: Export
       | authEtal2(sep='&') + year =  & disappears #2252                                                                          | 1          |
       | Apply Title Casing to tex.subtitle entry on export #2213                                                                 | 1          |
       | Citation key format backward compatibility issue. #2204                                                                  | 1          |
-      | inspireHep fetching broken #2201                                                                                         | 1          |
       | noclean                                                                                                                  | 1          |
       | date with fractional seconds                                                                                             | 1          |
       | Citation key add `_preprint` if URL contains `arxiv.org` #2163                                                           | 12         |
@@ -199,7 +198,6 @@ Feature: Export
       | accented character in 'journal' field is not brace protected by bibtex export #2337                                | 1          |
       | Non-breakable spaces in author fields should be exported as tilde #1430                                            | 1          |
       | University is exported as publisher as soon as tex.referencetype is specified in Extra field #1965                 | 1          |
-      | fetch inspire-hep key #1879                                                                                        | 1          |
       | Debugging translator issue for PhD Dissertation type #1950                                                         | 1          |
       | Customise name-separator and list-separator #1927                                                                  | 1          |
       | citation key format nopunctordash filter list #1880                                                                | 1          |
@@ -272,6 +270,16 @@ Feature: Export
     @use.with_client=zotero
     Examples:
       | BibTeX export is incompatible with Zotero 6 Preprint item type. #2080 | 1 |
+
+#  @inspire
+#  Scenario Outline: Export <references> references for BibLaTeX to <file>
+#    When I import <references> references from "export/<file>.json"
+#    Then an export using "Better BibLaTeX" should match "export/*.biblatex"
+#
+#    Examples:
+#      | file                                                                                                                     | references |
+#      | inspireHep fetching broken #2201  | 1          |
+#      | fetch inspire-hep key #1879       | 1          |
 
   @csl @timeout=3000
   Scenario Outline: Export <references> references for CSL-JSON to <file>
