@@ -76,7 +76,7 @@
 
 start
   = patterns:pattern+ {
-      return patterns.map(chunk => chunk.join(' + ')).join(' | ')
+      return patterns.map(chunk => chunk.join(' + ')).join(';\n') + (patterns.length > 1 ? ';' : '')
     }
 
 pattern

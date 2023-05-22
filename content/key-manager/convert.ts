@@ -100,20 +100,19 @@ class Compiler {
       ? program.body.map((stmt: Node) => this.get(stmt, 'ExpressionStatement').expression)
       : this.split(this.get(program.body[0], 'ExpressionStatement').expression, '|')
 
-    const compiled = formulas.map((candidate: Node) => `  () => this.finalize(this.reset() + ${this.split(candidate, '+').map((term: Node) => this.$term(term)).join(' + ')}),`).join('\n')
-    return `[
+    const compiled = formulas.map((candidate: Node) => `    () => this.finalize(this.reset() + ${this.split(candidate, '+').map((term: Node) => this.$term(term)).join(' + ')}),`).join('\n')
+    return `  return [
 ${compiled}
-].find(formula => {
-  try {
-    return formula()
-  } catch (err) {
-    if (err.next) return ''
-    throw err
-  }
-})
-// this.citekey is set as a side-effect
-return this.citekey || ('zotero-' + this.item.id)
-`
+  ].reduce((citekey, formula) => {
+    if (!citekey) {
+      try {
+        citekey = formula()
+      } catch (err) {
+        if (!err.next) throw err
+      }
+    }
+    return citekey
+  }, '') || ('zotero-' + this.item.id)`
   }
 
   flatten(node: Node): Node[] {

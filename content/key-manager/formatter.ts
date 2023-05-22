@@ -345,12 +345,13 @@ class PatternFormatter {
     let error = ''
     // the zero-width-space is a marker to re-save the current default so it doesn't get replaced when the default changes later, which would change new keys suddenly
     for (let formula of [...formulas, Preference.default.citekeyFormat.replace(/^\u200B/, '')]) {
-      log.debug('formula.update: trying', formula)
+      log.debug(`formula.update: trying\n${formula}`)
       if (!formula) continue
 
       if (formula[0] === '[') {
         try {
           formula = legacyparser.parse(formula, { items, methods })
+          log.debug(`formula.update: upgraded to\n${formula}`)
         }
         catch (err) {
           error = `failed to upgrade legacy formula ${formula}: ${err.message}`
@@ -386,7 +387,7 @@ class PatternFormatter {
 
   public parseFormula(formula): string {
     const code = Formula.convert(formula)
-    if (Preference.testing) log.debug('parseFormula.compiled:', code)
+    if (Preference.testing) log.debug(`parseFormula.compiled:\n${code}`)
     return code
   }
 
