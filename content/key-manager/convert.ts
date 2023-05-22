@@ -93,7 +93,7 @@ class Compiler {
   }
 
   compile(formula: string): string {
-    // the typedefs from acorn are useless
+    // the typedefs from acorn are worse than useless
     const program = this.get(parse(formula, { locations: true, ecmaVersion: 2020 }) as unknown as Node, 'Program')
     if (!program.body.length) this.error(null, 'No input')
     const formulas: Node[] = program.body.length > 1
