@@ -1,0 +1,77 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "autoExportDelay": 2,
+      "baseAttachmentPath": "/Users/coesite/Library/CloudStorage/Dropbox/1_Work/5_Content",
+      "citekeyFold": false,
+      "citekeyFormat": "auth+year+\"-\"+journal.abbr.len('<',5).len | auth+year+\"--\"+journal.abbr.substring(1, 8).len('<',8)"
+    }
+  },
+  "items": [
+    {
+      "DOI": "10.1007/s10909-022-02759-z",
+      "ISSN": "0022-2291, 1573-7357",
+      "abstractNote": "Precision measurements of nuclear \u03b2 decay are among the most sensitive methods to probe beyond Standard Model (BSM) physics in the neutrino sector. In particular, momentum conservation between the emitted decay products in the \ufb01nal state is sensitive to any massive new physics that couples to the neutrino mass. One way to observe these momentum recoil effects experimentally is through high-precision measurements of electroncapture (EC) nuclear decay, where the \ufb01nal state only contains the neutrino and a recoiling atom. The BeEST experiment precisely measures the eV-scale radiation that follows the radioactive decay of 7Be implanted into sensitive superconducting tunnel junction (STJ) quantum sensors. STJs are ideally suited for measurements of this type due to their high resolution at the low recoil energies in EC decay, and their high-rate counting capabilities. We present the motivation for the BeEST experiment and describe the various phases of the project.",
+      "accessDate": "2023-05-24T17:05:58Z",
+      "citationKey": "Leach2022--JLTP",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "K. G.",
+          "lastName": "Leach"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "S.",
+          "lastName": "Friedrich"
+        }
+      ],
+      "date": "12/2022",
+      "extra": [
+        "arXiv:2112.02029 [hep-ex, physics:nucl-ex, physics:physics, physics:quant-ph]"
+      ],
+      "issue": "5-6",
+      "itemID": 1,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "J Low Temp Phys",
+      "language": "en",
+      "libraryCatalog": "arXiv.org",
+      "notes": [
+        "Comment: 7 pages, 3 figures. Submitted as a proceeding for the 19th International Conference on Low-Temperature Detectors (LTD-19)"
+      ],
+      "pages": "796-803",
+      "publicationTitle": "Journal of Low Temperature Physics",
+      "shortTitle": "The BeEST Experiment",
+      "tags": [
+        {
+          "tag": "/unread",
+          "type": 1
+        },
+        {
+          "tag": "High Energy Physics - Experiment",
+          "type": 1
+        },
+        {
+          "tag": "Nuclear Experiment",
+          "type": 1
+        },
+        {
+          "tag": "Physics - Instrumentation and Detectors",
+          "type": 1
+        },
+        {
+          "tag": "Quantum Physics",
+          "type": 1
+        }
+      ],
+      "title": "The BeEST Experiment: Searching for Beyond Standard Model Neutrinos using $^7$Be Decay in STJs",
+      "url": "http://arxiv.org/abs/2112.02029",
+      "volume": "209"
+    }
+  ]
+}

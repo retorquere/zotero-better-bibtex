@@ -953,6 +953,7 @@ class PatternFormatter {
   }
 
   private len(value: string, relation: '<' | '<=' | '=' | '!=' | '>=' | '>', n: number) {
+    value = value.replace(/\s/g, '')
     switch (relation) {
       case '<':
         if (value.length < n) return this

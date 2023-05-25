@@ -13,6 +13,7 @@ Feature: Export
 
     Examples:
       | file                                                                                                                     | references |
+      | Length filter double-counting characters #2525                                                                           | 1          |
       | booksubtitle and friends should be case-converted #2507                                                                  | 1          |
       | Add support for new Zotero item types #2496                                                                              | 2          |
       | Film references do not export properly for APA formating #2494                                                           | 4          |
@@ -272,14 +273,14 @@ Feature: Export
       | BibTeX export is incompatible with Zotero 6 Preprint item type. #2080 | 1 |
 
   @inspire
-  Scenario Outline: Export <references> references for BibLaTeX to <file>
+  Scenario Outline: Fetch Inspire-HEP key for <file>
     When I import <references> references from "export/<file>.json"
     Then an export using "Better BibLaTeX" should match "export/*.biblatex"
 
     Examples:
-      | file                                                                                                                     | references |
-      | inspireHep fetching broken #2201  | 1          |
-      | fetch inspire-hep key #1879       | 1          |
+      | file                             | references |
+      | inspireHep fetching broken #2201 | 1          |
+      | fetch inspire-hep key #1879      | 1          |
 
   @csl @timeout=3000
   Scenario Outline: Export <references> references for CSL-JSON to <file>
