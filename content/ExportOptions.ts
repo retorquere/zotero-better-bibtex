@@ -1,31 +1,53 @@
 import { patch as $patch$, unpatch as $unpatch$, Trampoline } from './monkey-patch'
 import * as l10n from './l10n'
+import { Elements } from './create-element'
+import { Events } from './events'
+
+type XULWindow = Window & { arguments: any[], sizeToContent: () => void }
+var window: XULWindow // eslint-disable-line no-var
+var document: Document // eslint-disable-line no-var
+var Zotero_File_Interface_Export: any // eslint-disable-line no-var
+
+Events.on('window-loaded', ({ win, href }: {win: Window, href: string}) => {
+  if (href === 'chrome://zotero/content/exportOptions.xul') {
+    window = win as XULWindow
+    document = window.document
+    Zotero_File_Interface_Export = (window as any).Zotero_File_Interface_Export
+    Zotero.BetterBibTeX.ExportOptions.load()
+  }
+})
 
 export class ExportOptions {
-  private globals: Record<string, any>
   private DOM_OBSERVER: MutationObserver = null
   private reset = true
   private patched: Trampoline[] = []
+  private elements: Elements
 
-  public load(globals: Record<string, any>): void {
-    this.globals = globals
+  public load(): void {
     this.DOM_OBSERVER = new MutationObserver(this.addEventHandlers.bind(this))
-    this.DOM_OBSERVER.observe(this.globals.document.getElementById('translator-options'), { attributes: true, subtree: true, childList: true })
+    this.DOM_OBSERVER.observe(document.getElementById('translator-options'), { attributes: true, subtree: true, childList: true })
     this.addEventHandlers()
+    window.addEventListener('unload', () => {
+      this.unload()
+    })
+
+    this.elements = new Elements(document, 'export-options')
+    const translateOptions = document.getElementById('translator-options')
+    translateOptions.parentNode.insertBefore(this.elements.create('description', {style: 'color: red', hidden: 'true', id: 'better-bibtex-reminder'}), translateOptions)
 
     this.mutex()
     this.warning()
 
-    const self = this // eslint-disable-line @typescript-eslint/no-this-alias
-    $patch$(this.globals.Zotero_File_Interface_Export, 'init', original => function(_options) {
-      for (const translator of self.globals.window.arguments[0].translators) {
+    $patch$(Zotero_File_Interface_Export, 'init', original => function(_options) {
+      for (const translator of window.arguments[0].translators) {
         if (translator.label === 'BetterBibTeX JSON') translator.label = 'BetterBibTeX debug JSON'
       }
       // eslint-disable-next-line prefer-rest-params
       original.apply(this, arguments)
     }, this.patched)
 
-    $patch$(this.globals.Zotero_File_Interface_Export, 'updateOptions', original => function(_options) {
+    const self = this // eslint-disable-line @typescript-eslint/no-this-alias
+    $patch$(Zotero_File_Interface_Export, 'updateOptions', original => function(_options) {
       // eslint-disable-next-line prefer-rest-params
       original.apply(this, arguments)
       self.warning()
@@ -33,10 +55,10 @@ export class ExportOptions {
   }
 
   public warning(): void {
-    const index = this.globals.document.getElementById('format-menu').selectedIndex
-    const translator = (index >= 0) ? this.globals.window.arguments[0].translators[index].translatorID : null
+    const index = (document.getElementById('format-menu') as HTMLSelectElement).selectedIndex
+    const translator = (index >= 0) ? window.arguments[0].translators[index].translatorID : null
 
-    let hidden = false
+    let hidden = 'false'
     let textContent = ''
     switch (translator) {
       case 'b6e39b57-8942-4d11-8259-342c46ce395f':
@@ -48,26 +70,27 @@ export class ExportOptions {
         break
 
       default:
-        hidden = true
+        hidden = 'true'
         break
     }
 
-    const reminder = this.globals.document.getElementById('better-bibtex-reminder')
+    const reminder = document.getElementById('better-bibtex-reminder')
     reminder.setAttribute('hidden', hidden)
     reminder.textContent = textContent
 
-    this.globals.window.sizeToContent()
+    window.sizeToContent()
   }
 
   public unload(): void {
     this.DOM_OBSERVER.disconnect()
+    this.elements.remove()
     $unpatch$(this.patched)
   }
 
   mutex(e?: Event): void {
-    const exportFileData = this.globals.document.getElementById('export-option-exportFileData')
-    const keepUpdated = this.globals.document.getElementById('export-option-keepUpdated')
-    const worker = this.globals.document.getElementById('export-option-worker')
+    const exportFileData = document.getElementById('export-option-exportFileData') as HTMLInputElement
+    const keepUpdated = document.getElementById('export-option-keepUpdated') as HTMLInputElement
+    const worker = document.getElementById('export-option-worker') as HTMLInputElement
     const target = e ? e.target as Element : exportFileData
 
     if (!exportFileData || !keepUpdated) return null
@@ -86,7 +109,7 @@ export class ExportOptions {
 
   addEventHandlers(): void {
     for (const id of [ 'export-option-exportFileData', 'export-option-keepUpdated', 'export-option-worker' ]) {
-      const node = this.globals.document.getElementById(id)
+      const node = document.getElementById(id) as HTMLInputElement
       if (!node) {
         Zotero.debug(`exportoptions: ${id} not found`)
         break
