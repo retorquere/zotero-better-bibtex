@@ -755,12 +755,12 @@ class PatternFormatter {
    * it will use the same abbreviation filter Zotero uses in the wordprocessor integration. You might want to use the `abbr` filter on this.
    * Abbreviation behavior can be specified as `abbrev+auto` (the default) which uses the explicit journal abbreviation if present, and tries the automatic
    * abbreviator if not (if auto-abbrev is enabled in the preferences), `auto` (skip explicit journal abbreviation even if present), `abbrev`
-   * (no auto-abbrev even if it is enabled in the preferences) or `off` (no abbrevation).
+   * (no auto-abbrev even if it is enabled in the preferences) or `full`/`off` (no abbrevation).
    * @param abbrev abbreviation mode
    */
-  public $journal(abbrev: 'abbrev+auto' | 'abbrev' | 'auto' | 'off' = 'abbrev+auto') {
+  public $journal(abbrev: 'abbrev+auto' | 'abbrev' | 'auto' | 'full', 'off' = 'abbrev+auto') {
     // this.item.item is the native item stored inside the this.item sorta-proxy
-    return this.$text((abbrev === 'off' ? '' : JournalAbbrev.get(this.item.item, abbrev)) || this.item.getField('publicationTitle') as string || '')
+    return this.$text(((abbrev === 'off' || abbrev === 'full') ? '' : JournalAbbrev.get(this.item.item, abbrev)) || this.item.getField('publicationTitle') as string || '')
   }
 
   /**
