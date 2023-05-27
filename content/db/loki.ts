@@ -1,7 +1,39 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types, prefer-arrow/prefer-arrow-functions, prefer-rest-params, @typescript-eslint/no-unsafe-return */
 
-Components.utils.import('resource://gre/modules/AsyncShutdown.jsm')
-declare const AsyncShutdown: any
+const databases = []
+// need coroutine here because Zotero calls '.done()' on the nonexistent! result, added automagically by bluebird
+$patch$(Zotero, 'shutdown', original => Zotero.Promise.coroutine(function* () {
+  try {
+    while (databases.length) {
+      const db = databases.pop() // avoid memory leak
+      let store = 'Unknown'
+      try {
+        store = db.persistenceAdapter.constructor.name || 'Unknown'
+      }
+      catch (err) {
+        log.error(`could not get store name for ${db.filename}`)
+      }
+
+      try {
+        db.throttledSaves = false
+
+        log.debug(`Loki.${store}.shutdown: saving ${db.filename}`)
+        yield db.saveDatabaseAsync()
+        log.debug(`Loki.${store}.shutdown: closing ${db.filename}`)
+        yield db.closeAsync()
+        log.debug(`Loki.${store}.shutdown: shutdown of ${db.filename} completed`)
+      }
+      catch (err) {
+        log.error(`Loki.${store}.shutdown: shutdown of ${db.filename} failed`, err)
+      }
+    }
+  }
+  catch (err) {
+    log.error(`Loki.shutdown: shutdown of ${databases.length} databases failed`, err)
+  }
+
+  yield original.apply(this, arguments)
+}))
 
 // Components.utils.import('resource://gre/modules/Sqlite.jsm')
 // declare const Sqlite: any
@@ -110,31 +142,7 @@ export class XULoki extends Loki {
     }
 
     if (this.persistenceAdapter && !nullStore) {
-      (function(db, dbname) {
-        const store: string = db.persistenceAdapter.constructor.name || 'Unknown'
-        try {
-          AsyncShutdown.profileBeforeChange.addBlocker(`Loki.${store}.shutdown: closing ${dbname}`, async () => {
-          // Sqlite.shutdown.addBlocker(`Loki.${store}.shutdown: close of ${dbname}`, async () => {
-            // setTimeout is disabled during shutdown and throws errors
-            db.throttledSaves = false
-
-            try {
-              Zotero.debug(`Loki.${store}.shutdown: saving ${dbname}`)
-              await db.saveDatabaseAsync()
-              Zotero.debug(`Loki.${store}.shutdown: closing ${dbname}`)
-              await db.closeAsync()
-              Zotero.debug(`Loki.${store}.shutdown: shutdown of ${dbname} completed`)
-            }
-            catch (err) {
-              Zotero.debug(`Loki.${store}.shutdown: shutdown of ${dbname} failed`)
-              log.error(`Loki.${store}.shutdown: shutdown of ${dbname} failed`, err)
-            }
-          })
-        }
-        catch (err) {
-          log.error(`Loki.${store} failed to install shutdown blocker!`, err)
-        }
-      })(this, name)
+      databases.push(this)
     }
   }
 

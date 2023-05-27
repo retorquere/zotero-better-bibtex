@@ -21,6 +21,7 @@ import { $and, Query } from './db/loki'
 import { Events } from './events'
 import { Pinger } from './ping'
 import Puqeue from 'puqeue'
+import { is7 } from './client'
 
 class Queue extends Puqeue {
   get queued() {
@@ -170,6 +171,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
         platform: Preference.platform,
         locale: Zotero.locale,
         clientName: Zotero.clientName,
+        is7,
       }).map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`).join('&')
 
       this.worker = new ChromeWorker(`chrome://zotero-better-bibtex/content/worker/zotero.js?${environment}`)

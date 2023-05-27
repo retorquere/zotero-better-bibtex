@@ -89,7 +89,7 @@ export class ItemPane {
 
       const fieldHeader = document.createElement(client.is7 ? 'th' : 'label')
       fieldHeader.setAttribute('fieldname', 'citationKey')
-      const headerContent = l10n.localize('better-bibtex.ItemPane.citekey_column')
+      const headerContent = `${l10n.localize('better-bibtex.ItemPane.citekey_column')}${citekey.pinned ? ' \uD83D\uDCCC' : ''}`
       if (client.is7) {
         const label = document.createElement('label')
         label.className = 'key'
@@ -100,26 +100,13 @@ export class ItemPane {
         fieldHeader.setAttribute('value', headerContent)
       }
 
-      const clickable = this.clickable
-      this.clickable = false
-      // why beforeElement of 1099?
-      // eslint-disable-next-line no-magic-numbers
-      const fieldValue = this.createValueElement(`${citekey.citekey}${citekey.pinned ? ' \uD83D\uDCCC' : ''}`, 'citationKey', 1099) as HTMLElement
-      this.clickable = clickable
-
-      if (!client.is7) {
-        // disable multiline in Zotero 6
-        fieldValue.setAttribute('crop', 'end')
-        fieldValue.setAttribute('value', fieldValue.innerHTML)
-        fieldValue.innerHTML = ''
-      }
-
-      fieldHeader.addEventListener('click', e => {
-        const inputField = client.is7
-          ? (e.currentTarget as HTMLElement).nextElementSibling?.querySelector('input, textarea')
-          : ((e.currentTarget as HTMLElement).nextElementSibling as any)?.inputField
-        if (inputField) inputField.blur()
-      })
+      // can't be a read-only textbox because that makes blur in the itembox go bananas
+      const fieldValue = document.createElementNS('http://www.w3.org/1999/xhtml', 'input')
+      fieldValue.setAttribute('readonly', 'true')
+      fieldValue.setAttribute('value', citekey.citekey)
+      // required attributes
+      fieldValue.setAttribute('id', 'itembox-field-value-citationKey')
+      fieldValue.setAttribute('fieldName', 'citationKey')
 
       const table = client.is7 ? this._infoTable : this._dynamicFields // eslint-disable-line no-underscore-dangle
       const fieldIndex = 1

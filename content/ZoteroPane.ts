@@ -10,26 +10,155 @@ import * as CAYW from './cayw'
 import { $and } from './db/loki'
 import * as Extra from './extra'
 import * as DateParser from './dateparser'
+import * as l10n from './l10n'
+import { Elements } from './create-element'
+
+var window: Window // eslint-disable-line no-var
+var document: Document // eslint-disable-line no-var
 
 export class ZoteroPane {
-  private globals: Record<string, any>
   private patched: Trampoline[] = []
+  private elements: Elements
 
   public unload(): void {
     $unpatch$(this.patched)
+    this.elements.remove()
   }
 
   public load(): void {
+    window = Zotero.getMainWindow()
+    document = window.document
+
     const pane = Zotero.getActiveZoteroPane() // TODO: this is problematic if there can be multiple
 
-    const globals = this.globals
+    const elements = this.elements = new Elements(document, 'itempane')
+
+    if (!document.getElementById('better-bibtex-progress')) {
+      // progress bar
+      const progressToolbar = elements.create('hbox', { id: 'better-bibtex-progress', hidden: 'true', align: 'left', pack: 'start', flex: '1' })
+      const itemToolbar = document.getElementById('zotero-item-toolbar')
+      // after hbox-before-zotero-pq-buttons
+      itemToolbar.insertBefore(progressToolbar, itemToolbar.firstChild.nextSibling)
+      progressToolbar.appendChild(elements.create('hbox', { id: 'better-bibtex-progress-meter', class: 'bbt-progress-sprite', width: '20', height: '20' }))
+      progressToolbar.appendChild(elements.create('label', { id: 'better-bibtex-progress-label' }))
+
+      let menupopup = document.getElementById('menu_ToolsPopup')
+        .appendChild(elements.create('menu', { label: l10n.localize('better-bibtex.BetterBibTeX'), class: 'menu-iconic', image: 'chrome://zotero-better-bibtex/skin/bibtex-menu.svg' }))
+        .appendChild(elements.create('menupopup'))
+      menupopup.appendChild(elements.create('menuitem', {
+        label: 'better-bibtex.BetterBibTeX.auxScanner',
+        oncommand: 'Zotero.BetterBibTeX.scanAUX("tag")',
+      }))
+      menupopup.appendChild(elements.create('menuitem', {
+        label: 'better-bibtex.Preferences.open',
+        oncommand: 'window.openDialog("chrome://zotero-better-bibtex/content/Preferences.xul", "better-bibtex-prefs-window")',
+      }))
+
+      document.getElementById('menu_HelpPopup').insertBefore(elements.create('menuitem', {
+        label: 'better-bibtex.BetterBibTeX.reportErrors',
+        oncommand: 'Zotero.BetterBibTeX.ZoteroPane.errorReport()',
+      }), document.getElementById('reportErrors').nextSibling)
+
+      menupopup = document.getElementById('zotero-itemmenu')
+        .appendChild(elements.create('menu', {
+          id: 'zotero-itemmenu-BetterBibTeX-menu',
+          label: l10n.localize('better-bibtex.BetterBibTeX'),
+          class: 'menu-iconic',
+          image: 'chrome://zotero-better-bibtex/skin/bibtex-menu.svg',
+        }))
+        .appendChild(elements.create('menupopup', {
+          id: 'zotero-itemmenu-BetterBibTeX-menupopup',
+        }))
+
+      menupopup.appendChild(elements.create('menuitem', {
+        label: l10n.localize('better-bibtex.BetterBibTeX.citekey.set'),
+        oncommand: 'Zotero.BetterBibTeX.KeyManager.set()',
+      }))
+      menupopup.appendChild(elements.create('menuitem', {
+        label: l10n.localize('better-bibtex.BetterBibTeX.citekey.pin'),
+        oncommand: 'Zotero.BetterBibTeX.KeyManager.pin("selected")',
+      }))
+      menupopup.appendChild(elements.create('menuitem', {
+        label: l10n.localize('better-bibtex.BetterBibTeX.citekey.pinInspireHEP'),
+        oncommand: 'Zotero.BetterBibTeX.KeyManager.pin("selected", true)',
+      }))
+      menupopup.appendChild(elements.create('menuitem', {
+        label: l10n.localize('better-bibtex.BetterBibTeX.citekey.unpin'),
+        oncommand: 'Zotero.BetterBibTeX.KeyManager.unpin("selected")',
+      }))
+      menupopup.appendChild(elements.create('menuitem', {
+        label: l10n.localize('better-bibtex.BetterBibTeX.citekey.refresh'),
+        oncommand: 'Zotero.BetterBibTeX.KeyManager.refresh("selected", true)',
+      }))
+
+      menupopup.appendChild(elements.create('menuseparator'))
+      menupopup.appendChild(elements.create('menuitem', {
+        label: l10n.localize('better-bibtex.BetterBibTeX.patchDates'),
+        oncommand: 'Zotero.BetterBibTeX.ZoteroPane.patchDates()',
+      }))
+      menupopup.appendChild(elements.create('menuitem', {
+        label: l10n.localize('better-bibtex.BetterBibTeX.sentenceCase'),
+        oncommand: 'Zotero.BetterBibTeX.ZoteroPane.sentenceCase()',
+      }))
+      menupopup.appendChild(elements.create('menuitem', {
+        label: l10n.localize('better-bibtex.BetterBibTeX.addCitationLinks'),
+        oncommand: 'Zotero.BetterBibTeX.ZoteroPane.addCitationLinks()',
+      }))
+
+      menupopup.appendChild(elements.create('menuseparator', { class: 'bbt-texstudio' }))
+      menupopup.appendChild(elements.create('menuitem', {
+        class: 'bbt-texstudio',
+        label: l10n.localize('better-bibtex.BetterBibTeX.TeXstudio'),
+        oncommand: 'Zotero.BetterBibTeX.ZoteroPane.toTeXstudio()',
+      }))
+
+      menupopup.appendChild(elements.create('menuseparator'))
+      menupopup.appendChild(elements.create('menuitem', {
+        label: l10n.localize('better-bibtex.BetterBibTeX.reportErrors'),
+        oncommand: 'Zotero.BetterBibTeX.ZoteroPane.errorReport("items")',
+      }))
+    }
+
     $patch$(pane, 'buildCollectionContextMenu', original => async function() {
       // eslint-disable-next-line prefer-rest-params
       await original.apply(this, arguments)
 
-      if (!globals) {
-        log.error('buildCollectionContextMenu: globals not set')
-        return
+      if (!document.getElementById('bbt-collectionmenu-separator')) {
+        const collectionmenu = document.getElementById('zotero-collectionmenu')
+
+        collectionmenu.appendChild(elements.create('menuseparator', { class: 'zotero-collectionmenu-bbt-autoexport', id: 'bbt-collectionmenu-separator' }))
+        collectionmenu
+          .appendChild(elements.create('menu', { class: 'zotero-collectionmenu-bbt-autoexport', label: l10n.localize('better-bibtex.Preferences.tab.auto-export') }))
+          .appendChild(elements.create('menupopup', { id: 'zotero-collectionmenu-bbt-autoexport-menupopup' }))
+          .appendChild(elements.create('menuitem', { oncommand: 'event.stopPropagation(); Zotero.BetterBibTeX.ZoteroPane.startAutoExport(event)' }))
+
+        collectionmenu.appendChild(elements.create('menuitem', {
+          id: 'bbt-collectionmenu-pull-url',
+          label: l10n.localize('better-bibtex.BetterBibTeX.show-collection-key'),
+          oncommand: 'event.stopPropagation(); Zotero.BetterBibTeX.ZoteroPane.pullExport()',
+          class: 'menuitem-iconic',
+          image: 'chrome://zotero-better-bibtex/skin/bibtex-menu.svg',
+        }))
+
+        collectionmenu.appendChild(elements.create('menuitem', {
+          id: 'bbt-collectionmenu-scan-aux',
+          label: l10n.localize('better-bibtex.BetterBibTeX.auxScanner'),
+          oncommand: 'event.stopPropagation(); Zotero.BetterBibTeX.scanAUX("collection")',
+          class: 'menuitem-iconic',
+          image: 'chrome://zotero-better-bibtex/skin/bibtex-menu.svg',
+        }))
+
+        collectionmenu.appendChild(elements.create('menuitem', {
+          id: 'bbt-collectionmenu-tag-duplicates',
+          label: l10n.localize('better-bibtex.ZoteroPane.tag-duplicates'),
+          oncommand: 'event.stopPropagation(); Zotero.BetterBibTeX.KeyManager.tagDuplicates(parseInt(event.target.getAttribute("libraryID")))',
+        }))
+
+        collectionmenu.appendChild(elements.create('menuitem', {
+          id: 'bbt-collectionmenu-report-errors',
+          label: l10n.localize('better-bibtex.BetterBibTeX.reportErrors'),
+          oncommand: 'event.stopPropagation(); Zotero.BetterBibTeX.ZoteroPane.errorReport("collection")',
+        }))
       }
 
       try {
@@ -37,11 +166,11 @@ export class ZoteroPane {
         const isLibrary = treeRow && treeRow.isLibrary(true)
         const isCollection = treeRow && treeRow.isCollection()
 
-        globals.document.getElementById('bbt-collectionmenu-separator').hidden = !(isLibrary || isCollection)
-        globals.document.getElementById('bbt-collectionmenu-pull-url').hidden = !(isLibrary || isCollection)
-        globals.document.getElementById('bbt-collectionmenu-report-errors').hidden = !(isLibrary || isCollection)
+        document.getElementById('bbt-collectionmenu-separator').hidden = !(isLibrary || isCollection)
+        document.getElementById('bbt-collectionmenu-pull-url').hidden = !(isLibrary || isCollection)
+        document.getElementById('bbt-collectionmenu-report-errors').hidden = !(isLibrary || isCollection)
 
-        const tagDuplicates = globals.document.getElementById('bbt-collectionmenu-tag-duplicates')
+        const tagDuplicates = document.getElementById('bbt-collectionmenu-tag-duplicates')
         if (isLibrary) {
           tagDuplicates.hidden = false
           tagDuplicates.setAttribute('libraryID', treeRow.ref.libraryID.toString())
@@ -60,16 +189,16 @@ export class ZoteroPane {
           }
         }
 
-        for (const node of [...globals.document.getElementsByClassName('zotero-collectionmenu-bbt-autoexport')]) {
-          node.hidden = auto_exports.length === 0
+        for (const node of [...document.getElementsByClassName('zotero-collectionmenu-bbt-autoexport')]) {
+          (node as any).hidden = auto_exports.length === 0
         }
 
         if (auto_exports.length !== 0) {
-          const menupopup = globals.document.getElementById('zotero-collectionmenu-bbt-autoexport-menupopup')
+          const menupopup = document.getElementById('zotero-collectionmenu-bbt-autoexport-menupopup')
           while (menupopup.children.length > 1) menupopup.removeChild(menupopup.firstChild)
           for (const [index, ae] of auto_exports.entries()) {
-            const menuitem = (index === 0 ? menupopup.firstChild : menupopup.appendChild(menupopup.firstChild.cloneNode(true)))
-            menuitem.label = ae.path
+            const menuitem = (index === 0 ? menupopup.firstChild : menupopup.appendChild(menupopup.firstChild.cloneNode(true)));
+            (menuitem as any).label = ae.path
           }
         }
       }
@@ -121,7 +250,7 @@ export class ZoteroPane {
 
     if (!params.url.short) return
 
-    this.globals.window.openDialog('chrome://zotero-better-bibtex/content/ServerURL.xul', '', 'chrome,dialog,centerscreen,modal', params)
+    (window as any).openDialog('chrome://zotero-better-bibtex/content/ServerURL.xul', '', 'chrome,dialog,centerscreen,modal', params)
   }
 
   public startAutoExport(event: Event): void {
