@@ -935,6 +935,8 @@ export class BetterBibTeX {
     this.deferred.resolve(true)
     Zotero.debug(`{better-bibtex-startup} startup ready @ ${Date.now() - $patch$.started}`)
 
+    await this.ItemPane.load()
+
     progress.done()
 
     if (typeof Zotero.ItemTreeView === 'undefined') ZoteroPane.itemsView.refreshAndMaintainSelection()

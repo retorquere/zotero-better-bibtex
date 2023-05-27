@@ -1,6 +1,8 @@
 declare const Zotero: any
 declare const location: any
 
+export const is7 = Zotero.platformMajorVersion >= 102 // eslint-disable-line no-magic-numbers
+
 function clientname(): string {
   if (typeof location !== 'undefined' && location.search) return (new URLSearchParams(location.search)).get('clientName')
   // if (process.versions.node) return 'Zotero' // testing
