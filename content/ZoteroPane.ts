@@ -42,7 +42,7 @@ export class ZoteroPane {
       progressToolbar.appendChild(elements.create('hbox', { id: 'better-bibtex-progress-meter', class: 'bbt-progress-sprite', width: '20', height: '20' }))
       progressToolbar.appendChild(elements.create('label', { id: 'better-bibtex-progress-label' }))
 
-      let menupopup = document.getElementById('menu_ToolsPopup')
+      const menupopup = document.getElementById('menu_ToolsPopup')
         .appendChild(elements.create('menu', { label: l10n.localize('better-bibtex.BetterBibTeX'), class: 'menu-iconic', image: 'chrome://zotero-better-bibtex/skin/bibtex-menu.svg' }))
         .appendChild(elements.create('menupopup'))
       menupopup.appendChild(elements.create('menuitem', {
@@ -58,17 +58,24 @@ export class ZoteroPane {
         label: 'better-bibtex.BetterBibTeX.reportErrors',
         oncommand: 'Zotero.BetterBibTeX.ZoteroPane.errorReport()',
       }), document.getElementById('reportErrors').nextSibling)
+    }
 
-      menupopup = document.getElementById('zotero-itemmenu')
+    $patch$(pane, 'buildItemContextMenu', original => async function ZoteroPane_buildItemContextMenu() {
+      await original.apply(this, arguments) // eslint-disable-line prefer-rest-params
+
+      const id = 'better-bibtex-item-menu'
+      document.getElementById(id)?.remove()
+
+      if (!this.getSelectedItems()) return
+
+      const menupopup = document.getElementById('zotero-itemmenu')
         .appendChild(elements.create('menu', {
-          id: 'zotero-itemmenu-BetterBibTeX-menu',
+          id,
           label: l10n.localize('better-bibtex.BetterBibTeX'),
           class: 'menu-iconic',
           image: 'chrome://zotero-better-bibtex/skin/bibtex-menu.svg',
         }))
-        .appendChild(elements.create('menupopup', {
-          id: 'zotero-itemmenu-BetterBibTeX-menupopup',
-        }))
+        .appendChild(elements.create('menupopup'))
 
       menupopup.appendChild(elements.create('menuitem', {
         label: l10n.localize('better-bibtex.BetterBibTeX.citekey.set'),
@@ -105,19 +112,21 @@ export class ZoteroPane {
         oncommand: 'Zotero.BetterBibTeX.ZoteroPane.addCitationLinks()',
       }))
 
-      menupopup.appendChild(elements.create('menuseparator', { class: 'bbt-texstudio' }))
-      menupopup.appendChild(elements.create('menuitem', {
-        class: 'bbt-texstudio',
-        label: l10n.localize('better-bibtex.BetterBibTeX.TeXstudio'),
-        oncommand: 'Zotero.BetterBibTeX.ZoteroPane.toTeXstudio()',
-      }))
+      if (TeXstudio.enabled) {
+        menupopup.appendChild(elements.create('menuseparator', { class: 'bbt-texstudio' }))
+        menupopup.appendChild(elements.create('menuitem', {
+          class: 'bbt-texstudio',
+          label: l10n.localize('better-bibtex.BetterBibTeX.TeXstudio'),
+          oncommand: 'Zotero.BetterBibTeX.ZoteroPane.toTeXstudio()',
+        }))
+      }
 
       menupopup.appendChild(elements.create('menuseparator'))
       menupopup.appendChild(elements.create('menuitem', {
         label: l10n.localize('better-bibtex.BetterBibTeX.reportErrors'),
         oncommand: 'Zotero.BetterBibTeX.ZoteroPane.errorReport("items")',
       }))
-    }
+    })
 
     $patch$(pane, 'buildCollectionContextMenu', original => async function() {
       // eslint-disable-next-line prefer-rest-params
