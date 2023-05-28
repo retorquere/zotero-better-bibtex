@@ -426,7 +426,6 @@ Feature: Export
     Then an export using "Better BibTeX" should match "export/*.bibtex"
 
   Scenario: Postscript error aborts CSL JSON export #1155
-    When I set preference .ignorePostscriptErrors to true
     When I import 4 references from "export/*.json"
     Then an export using "Better CSL JSON" should match "export/*.csl.json"
 

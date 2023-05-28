@@ -680,7 +680,6 @@ class Preferences:
         for pref, tpe in schema.properties.config.properties.preferences.properties.items()
       }
     self.supported[self.prefix + 'removeStock'] = bool
-    self.supported[self.prefix + 'ignorePostscriptErrors'] = bool
 
   def __setitem__(self, key, value):
     if key[0] == '.': key = self.prefix + key[1:]
