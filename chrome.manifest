@@ -8,5 +8,3 @@ resource  zotero-better-bibtex          resource/
 
 overlay	chrome://zotero/content/zoteroPane.xul                chrome://zotero-better-bibtex/content/ZoteroPane.xul
 overlay chrome://zotero/content/preferences/preferences.xul   chrome://zotero-better-bibtex/content/zotero-preferences.xul
-overlay	chrome://zotero/content/exportOptions.xul             chrome://zotero-better-bibtex/content/ExportOptions.xul
-overlay	chrome://zotero/content/itemPane.xul                  chrome://zotero-better-bibtex/content/ItemPane.xul

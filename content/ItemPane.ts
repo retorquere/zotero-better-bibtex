@@ -1,6 +1,14 @@
 import { patch as $patch$ } from './monkey-patch'
-import { sentenceCase } from './text'
+// import { sentenceCase } from './text'
+import { Events } from './events'
+import * as client from './client'
+import * as l10n from './l10n'
 
+var window: Window // eslint-disable-line no-var
+var document: Document // eslint-disable-line no-var
+var ZoteroItemPane // eslint-disable-line no-var
+
+/*
 async function title_sentenceCase(label) {
   const val = this._getFieldValue(label)
   const newVal = sentenceCase(val)
@@ -22,84 +30,94 @@ async function title_sentenceCase(label) {
     await this.item.saveTx()
   }
 }
-
-export interface ItemPaneConstructable {
-  new(globals: any): ItemPane // eslint-disable-line @typescript-eslint/prefer-function-type
-}
+*/
 
 export class ItemPane {
-  globals: Record<string, any>
   observer: number
-
-  private display(itemID?: number): void {
-    const menuid = 'zotero-field-transform-menu-better-sentencecase'
-    let menuitem = this.globals.document.getElementById(menuid)
-    const menu = this.globals.document.getElementById('zotero-field-transform-menu')
-    if (menu && !menuitem) {
-      Zotero.debug('adding better-sentencecase')
-      menuitem = menu.appendChild(this.globals.document.createElementNS('http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul', 'menuitem'))
-      menuitem.setAttribute('id', menuid)
-      menuitem.setAttribute('label', 'BBT sentence case')
-      const itempane = this // eslint-disable-line @typescript-eslint/no-this-alias
-      menuitem.addEventListener('command', function(_e) { title_sentenceCase.call(itempane.globals.document.getBindingParent(this), itempane.globals.document.popupNode) }, false)
-    }
-
-    const pin = ' \uD83D\uDCCC'
-    const field = this.globals.document.getElementById('better-bibtex-citekey-display')
-    const label = this.globals.document.getElementById('better-bibtex-citekey-label')
-    const displayed = {
-      itemID: field.getAttribute('itemID') || '',
-      citekey: field.value || '',
-      pinned: (label.value || '').includes(pin),
-    }
-    if (typeof itemID === 'undefined') {
-      itemID = parseInt(displayed.itemID)
-      if (isNaN(itemID)) itemID = undefined
-    }
-    const item: { itemID?: string, citekey?: string, pinned?: boolean } = (typeof itemID === 'number' ? Zotero.BetterBibTeX.KeyManager.get(itemID) : undefined) || {}
-    if (typeof item.itemID !== 'undefined') item.itemID = `${item.itemID}`
-
-    if (typeof displayed.itemID === 'undefined' && typeof item.itemID === 'undefined') return
-    if (item.citekey === displayed.citekey && item.pinned === displayed.pinned) return
-
-    field.value = item.citekey || ''
-    field.setAttribute('itemID', item.itemID || '')
-    label.value = `${label.value.replace(pin, '')}${item.pinned ? pin : ''}`
-  }
 
   init(): boolean {
     if (typeof this.observer !== 'undefined' || !Zotero.BetterBibTeX.KeyManager.keys) return false
 
-    this.observer = Zotero.BetterBibTeX.KeyManager.keys.on(['update', 'insert'], citekey => {
-      this.display(citekey.itemID)
+    this.observer = Zotero.BetterBibTeX.KeyManager.keys.on(['update', 'insert'], () => {
+      this.refresh()
     })
-    this.display()
     return true
   }
 
-  public async load(globals: Record<string, any>): Promise<void> {
-    this.globals = globals
+  public refresh(): void {
+    // eslint disagrees with the typescript compiler on the return type of querySelector
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+    (document.querySelector('#zotero-editpane-item-box') as any).refresh()
+  }
+
+  public async load(): Promise<void> {
     await Zotero.BetterBibTeX.ready
 
+    window = Zotero.getMainWindow()
+    document = window.document
+    ZoteroItemPane = (window as any).ZoteroItemPane
+
+    window.addEventListener('unload', () => {
+      this.unload()
+    })
+
     const itempane = this // eslint-disable-line @typescript-eslint/no-this-alias
-    $patch$(this.globals.ZoteroItemPane, 'viewItem', original => async function(item, _mode, _index) {
+    $patch$(ZoteroItemPane, 'viewItem', original => async function(_item, _mode, _index) {
       // eslint-disable-next-line prefer-rest-params
       await original.apply(this, arguments)
       itempane.init()
-
-      itempane.display(item.id)
     })
 
     this.init()
 
-    const itemBox = this.globals.document.getElementById('zotero-editpane-item-box')
-    const citekeyBox = this.globals.document.getElementById('better-bibtex-editpane-item-box')
-
-    if (itemBox.parentNode !== citekeyBox.parentNode) {
-      itemBox.parentNode.appendChild(citekeyBox.parentNode) // move the vbox into the tabbox
-      citekeyBox.parentNode.appendChild(itemBox) // move the itembox into the vbox
+    let itemBoxInstance = document.querySelector('#zotero-editpane-item-box')
+    const wait = 5000 // eslint-disable-line no-magic-numbers
+    let t = 0
+    // WTF
+    while (!itemBoxInstance && t < wait) {
+      itemBoxInstance = window.document.querySelector('#zotero-editpane-item-box')
+      await Zotero.Promise.delay(10) // eslint-disable-line no-magic-numbers
+      t += 10 // eslint-disable-line no-magic-numbers
     }
-    this.display()
+
+    $patch$((itemBoxInstance as any).__proto__, 'refresh', original => function() {
+      // eslint-disable-next-line prefer-rest-params
+      original.apply(this, arguments)
+
+      const citekey = Zotero.BetterBibTeX.KeyManager.get(this.item.itemID)
+      if (!citekey) return
+
+      const fieldHeader = document.createElement(client.is7 ? 'th' : 'label')
+      fieldHeader.setAttribute('fieldname', 'citationKey')
+      const headerContent = `${l10n.localize('better-bibtex.ItemPane.citekey_column')}${citekey.pinned ? ' \uD83D\uDCCC' : ''}`
+      if (client.is7) {
+        const label = document.createElement('label')
+        label.className = 'key'
+        label.textContent = headerContent
+        fieldHeader.appendChild(label)
+      }
+      else {
+        fieldHeader.setAttribute('value', headerContent)
+      }
+
+      // can't be a read-only textbox because that makes blur in the itembox go bananas
+      const fieldValue = document.createElementNS('http://www.w3.org/1999/xhtml', 'input')
+      fieldValue.setAttribute('readonly', 'true')
+      fieldValue.setAttribute('value', citekey.citekey)
+      // required attributes
+      fieldValue.setAttribute('id', 'itembox-field-value-citationKey')
+      fieldValue.setAttribute('fieldName', 'citationKey')
+
+      const table = client.is7 ? this._infoTable : this._dynamicFields // eslint-disable-line no-underscore-dangle
+      const fieldIndex = 1
+      if (fieldIndex < table.children.length) {
+        this._beforeRow = table.children[fieldIndex]
+        this.addDynamicRow(fieldHeader, fieldValue, true)
+      }
+      else {
+        this.addDynamicRow(fieldHeader, fieldValue)
+      }
+    })
   }
 
   public unload(): void {
@@ -108,3 +126,10 @@ export class ItemPane {
     }
   }
 }
+
+Events.on('window-loaded', ({ href }: { href: string }) => {
+  Zotero.debug(`ItemPane: ${href}`)
+  if (href === 'xchrome://zotero/content/exportOptions.xul') {
+    Zotero.ItemPane.load().catch(err => { Zotero.debug(`${err}`) })
+  }
+})
