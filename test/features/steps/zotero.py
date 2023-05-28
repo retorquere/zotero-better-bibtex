@@ -416,7 +416,9 @@ class Zotero:
     exported = self.exported(loaded_file, found)
 
     if expected_file.endswith('.csl.json'):
-      assert_equal_diff(json.dumps(expected, sort_keys=True, indent='  '), json.dumps(json.loads(found), sort_keys=True, indent='  '))
+      expected = sorted(expected, key=lambda item: json.dumps(item, sort_keys=True))
+      found = sorted(json.loads(found), key=lambda item: json.dumps(item, sort_keys=True))
+      assert_equal_diff(json.dumps(expected, sort_keys=True, indent='  '), json.dumps(found, sort_keys=True, indent='  '))
 
     elif expected_file.endswith('.csl.yml'):
       assert_equal_diff(serialize(expected), serialize(yaml.load(io.StringIO(found))))

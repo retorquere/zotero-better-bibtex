@@ -3,6 +3,7 @@ import { patch as $patch$ } from './monkey-patch'
 import { Events } from './events'
 import * as client from './client'
 import * as l10n from './l10n'
+import { log } from './logger'
 
 var window: Window // eslint-disable-line no-var
 var document: Document // eslint-disable-line no-var
@@ -83,6 +84,11 @@ export class ItemPane {
     $patch$((itemBoxInstance as any).__proto__, 'refresh', original => function() {
       // eslint-disable-next-line prefer-rest-params
       original.apply(this, arguments)
+
+      if (!this.item) {
+        log.debug('itemBoxInstance.refresh without an item')
+        return
+      }
 
       const citekey = Zotero.BetterBibTeX.KeyManager.get(this.item.itemID)
       if (!citekey) return

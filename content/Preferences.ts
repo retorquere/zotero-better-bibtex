@@ -17,14 +17,14 @@ import { pick } from './file-picker'
 import { flash } from './flash'
 // const dtdparser = require('./dtd-file.peggy')
 
-let currentWin: Window & { sizeToContent(): void } = null
+var window: Window & { sizeToContent(): void } = null // eslint-disable-line no-var
 Events.on('window-loaded', ({ win, href }: {win: Window, href: string}) => {
   Zotero.debug('window-loaded', href)
   if (href === 'chrome://zotero-better-bibtex/content/Preferences.xul') {
-    currentWin = win as any
-    currentWin.addEventListener('unload', () => {
+    window = win as any
+    window.addEventListener('unload', () => {
       Zotero.BetterBibTeX.PrefPane.unload()
-      currentWin = null
+      window = null
     })
     Zotero.BetterBibTeX.PrefPane.load()
   }
@@ -62,15 +62,15 @@ class AutoExportPane {
   }
 
   public refresh() {
-    if (!currentWin || Zotero.BetterBibTeX.ready.isPending()) return null
+    if (!window || Zotero.BetterBibTeX.ready.isPending()) return null
 
     const ui = {
       data: AutoExport.db.find(),
-      select: currentWin.document.getElementById('better-bibtex-prefs-auto-export-select'),
-      deck: currentWin.document.getElementById('better-bibtex-prefs-auto-export-deck'),
+      select: window.document.getElementById('better-bibtex-prefs-auto-export-select'),
+      deck: window.document.getElementById('better-bibtex-prefs-auto-export-deck'),
     }
 
-    currentWin.document.getElementById('better-bibtex-prefs-auto-exports').setAttribute('hidden', `${!ui.data.length}`)
+    window.document.getElementById('better-bibtex-prefs-auto-exports').setAttribute('hidden', `${!ui.data.length}`)
     if (!ui.data.length) return null
 
     const rebuild = {
@@ -91,7 +91,7 @@ class AutoExportPane {
       let option, pane
 
       if (rebuild.rebuild) {
-        option = ui.select.appendChild(currentWin.document.createElementNS('http://www.w3.org/1999/xhtml', 'option'))
+        option = ui.select.appendChild(window.document.createElementNS('http://www.w3.org/1999/xhtml', 'option'))
         option.setAttribute('value', `${ae.$loki}`)
         option.setAttribute('data-ae-id', `${ae.$loki}`)
         option.setAttribute('data-ae-updated', `${ae.meta.updated || ae.meta.created}`)
@@ -335,27 +335,32 @@ export class PrefPane {
   }
 
   public checkCitekeyFormat(): void {
-    if (!currentWin || Zotero.BetterBibTeX.ready.isPending()) return // itemTypes not available yet
+    if (!window || Zotero.BetterBibTeX.ready.isPending()) return // itemTypes not available yet
 
     const error = Formatter.update([Preference.citekeyFormatEditing, Preference.citekeyFormat])
     const style = error ? '-moz-appearance: none !important; background-color: DarkOrange' : ''
 
-    const editing = currentWin.document.getElementById('id-better-bibtex-preferences-citekeyFormatEditing')
+    const editing = window.document.getElementById('id-better-bibtex-preferences-citekeyFormatEditing')
     editing.setAttribute('style', style)
     editing.setAttribute('tooltiptext', error)
 
-    const msg = currentWin.document.getElementById('better-bibtex-citekeyFormat-error') as HTMLInputElement
+    const msg = window.document.getElementById('better-bibtex-citekeyFormat-error') as HTMLInputElement
     msg.hidden = !error
     msg.setAttribute('style', style)
     msg.value = error
 
-    const active = currentWin.document.getElementById('id-better-bibtex-preferences-citekeyFormat')
+    const active = window.document.getElementById('id-better-bibtex-preferences-citekeyFormat')
     active.hidden = Preference.citekeyFormat === Preference.citekeyFormatEditing
-    const label = currentWin.document.getElementById('id-better-bibtex-label-citekeyFormat')
+    const label = window.document.getElementById('id-better-bibtex-label-citekeyFormat')
     label.hidden = active.hidden
   }
 
   public checkPostscript(): void {
+    if (!window) {
+      log.debug('Preferences.checkPostscript: window is null')
+      return
+    }
+
     let error = ''
     try {
       // don't care about the return value, just if it throws an error
@@ -366,10 +371,10 @@ export class PrefPane {
       error = `${err}`
     }
 
-    const postscript = currentWin.document.getElementById('zotero-better-bibtex-postscript')
+    const postscript = window.document.getElementById('zotero-better-bibtex-postscript')
     postscript.setAttribute('style', (error ? '-moz-appearance: none !important; background-color: DarkOrange' : ''))
     postscript.setAttribute('tooltiptext', error)
-    currentWin.document.getElementById('better-bibtex-cache-warn-postscript').setAttribute('hidden', `${!Preference.postscript.includes('Translator.options.exportPath')}`)
+    window.document.getElementById('better-bibtex-cache-warn-postscript').setAttribute('hidden', `${!Preference.postscript.includes('Translator.options.exportPath')}`)
   }
 
   public async rescanCitekeys(): Promise<void> {
@@ -423,20 +428,20 @@ export class PrefPane {
 
   public async load(): Promise<void> {
     this.observer = new MutationObserver(this.mutated.bind(this))
-    this.observed = currentWin.document.getElementById('zotero-prefpane-export') as unknown as XUL.Element
+    this.observed = window.document.getElementById('zotero-prefpane-export') as unknown as XUL.Element
     if (this.observed) this.observer.observe(this.observed, { childList: true, subtree: true })
 
-    const deck = currentWin.document.getElementById('better-bibtex-prefs-deck') as unknown as XUL.Deck
+    const deck = window.document.getElementById('better-bibtex-prefs-deck') as unknown as XUL.Deck
     deck.selectedIndex = 0
 
     await Zotero.BetterBibTeX.ready
 
     // bloody *@*&^@# html controls only sorta work for prefs
-    for (const node of Array.from(currentWin.document.querySelectorAll("select[preference], input[preference][type='range']"))) {
+    for (const node of Array.from(window.document.querySelectorAll("select[preference], input[preference][type='range']"))) {
       (node as HTMLInputElement).value = Preference[node.getAttribute('preference').replace('extensions.zotero.translators.better-bibtex.', '')]
     }
 
-    currentWin.document.getElementById('rescan-citekeys').hidden = !Zotero.Debug.enabled
+    window.document.getElementById('rescan-citekeys').hidden = !Zotero.Debug.enabled
 
     deck.selectedIndex = 1
 
@@ -445,30 +450,30 @@ export class PrefPane {
     this.checkCitekeyFormat()
     this.checkPostscript()
     this.refresh()
-    this.timer = typeof this.timer === 'number' ? this.timer : currentWin.setInterval(this.refresh.bind(this), 500)  // eslint-disable-line no-magic-numbers
+    this.timer = typeof this.timer === 'number' ? this.timer : window.setInterval(this.refresh.bind(this), 500)  // eslint-disable-line no-magic-numbers
   }
 
   private unload() {
     if (typeof this.timer === 'number') {
-      currentWin.clearInterval(this.timer)
+      window.clearInterval(this.timer)
       this.timer = null
     }
   }
 
   public refresh(): void {
-    if (!currentWin) return
+    if (!window) return
 
-    const pane = currentWin.document.getElementById('zotero-prefpane-better-bibtex')
+    const pane = window.document.getElementById('zotero-prefpane-better-bibtex')
     // unloaded
     if (!pane) {
       this.unload()
       return
     }
 
-    this.setQuickCopy(currentWin.document.getElementById('translator-bbt-quick-copy') as unknown as XUL.Menuitem)
+    this.setQuickCopy(window.document.getElementById('translator-bbt-quick-copy') as unknown as XUL.Menuitem)
 
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
-    for (const node of (Array.from(currentWin.document.getElementsByClassName('jurism')) as unknown[] as XUL.Element[])) {
+    for (const node of (Array.from(window.document.getElementsByClassName('jurism')) as unknown[] as XUL.Element[])) {
       node.hidden = client !== 'jurism'
     }
 
@@ -476,13 +481,13 @@ export class PrefPane {
       Zotero.Styles.init().then(() => {
         const styles = Zotero.Styles.getVisible().filter((style: { usesAbbreviation: boolean }) => style.usesAbbreviation)
 
-        const stylebox = currentWin.document.getElementById('better-bibtex-abbrev-style-popup') as unknown as XUL.Menulist
+        const stylebox = window.document.getElementById('better-bibtex-abbrev-style-popup') as unknown as XUL.Menulist
         const refill = stylebox.children.length === 0
         const selectedStyle = Preference.autoAbbrevStyle
         let selectedIndex = -1
         for (const [i, style] of styles.entries()) {
           if (refill) {
-            const itemNode = currentWin.document.createElement('menuitem')
+            const itemNode = window.document.createElement('menuitem')
             itemNode.setAttribute('value', style.styleID)
             itemNode.setAttribute('label', style.title)
             stylebox.appendChild(itemNode)
@@ -500,16 +505,16 @@ export class PrefPane {
     }
 
     /*
-    const quickCopy = currentWin.document.getElementById('id-better-bibtex-preferences-quickCopyMode') as HTMLSelectElement
+    const quickCopy = window.document.getElementById('id-better-bibtex-preferences-quickCopyMode') as HTMLSelectElement
     const quickCopyMode = quickCopy.options[quickCopy.selectedIndex]?.value
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
-    for (const node of (Array.from(currentWin.document.getElementsByClassName('better-bibtex-preferences-quickcopy-details')) as unknown[] as XUL.Element[])) {
+    for (const node of (Array.from(window.document.getElementsByClassName('better-bibtex-preferences-quickcopy-details')) as unknown[] as XUL.Element[])) {
       node.hidden = (node.id !== `better-bibtex-preferences-quickcopy-${quickCopyMode}`)
     }
     */
 
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
-    for (const state of (Array.from(currentWin.document.getElementsByClassName('better-bibtex-preferences-worker-state')) as unknown[] as XUL.Textbox[])) {
+    for (const state of (Array.from(window.document.getElementsByClassName('better-bibtex-preferences-worker-state')) as unknown[] as XUL.Textbox[])) {
       state.value = l10n.localize('BetterBibTeX.workers.status', {
         total: Translators.workers.total,
         running: Translators.workers.running.size,
@@ -524,7 +529,7 @@ export class PrefPane {
   private styleChanged(index) {
     if (client !== 'jurism') return null
 
-    const stylebox = currentWin.document.getElementById('better-bibtex-abbrev-style-popup') as unknown as XUL.Menulist
+    const stylebox = window.document.getElementById('better-bibtex-abbrev-style-popup') as unknown as XUL.Menulist
     const selectedItem: XUL.Element = typeof index !== 'undefined' ? stylebox.getItemAtIndex(index) : stylebox.selectedItem
     const styleID = selectedItem.getAttribute('value')
     Preference.autoAbbrevStyle = styleID
