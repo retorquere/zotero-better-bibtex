@@ -1082,7 +1082,7 @@ class PatternFormatter {
    * Abbreviates the text. Only the first character and subsequent characters following white space will be included.
    */
   public _abbr(chars=1) {
-    return this.$text(this.chunk.split(/\s+/).map(word => word.substring(0, chars)).join(' '))
+    return this.$text(this.chunk.split(/\s+/).map(word => word.substring(0, chars)).join(''))
   }
 
   /**
