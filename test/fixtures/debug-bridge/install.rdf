@@ -4,8 +4,9 @@
   <Description about="urn:mozilla:install-manifest">
     <em:id>debug-bridge@iris-advies.com</em:id>
     <em:name>Zotero Debug Bridge</em:name>
-    <em:version>0.1.5</em:version>
+    <em:version>1.0.0</em:version>
     <em:description>Zotero Debug Bridge</em:description>
+    <em:bootstrap>true</em:bootstrap>
     <em:creator>emile</em:creator>
     <em:updateURL>https://github.com/retorquere/zotero-debug-bridge/releases/download/release/update.rdf</em:updateURL>
     <em:type>2</em:type> <!-- type=extension -->

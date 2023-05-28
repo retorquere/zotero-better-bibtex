@@ -1,6 +1,0 @@
-<?xml version="1.0"?>
-<?xml-stylesheet href="chrome://zotero-debug-bridge/skin/overlay.css" type="text/css"?>
-<!DOCTYPE window SYSTEM "chrome://zotero-debug-bridge/locale/zotero-debug-bridge.dtd">
-<overlay id="zotero-debug-bridge-overlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
-  <script src="chrome://zotero-debug-bridge/content/debug-bridge.js"/>
-</overlay>
