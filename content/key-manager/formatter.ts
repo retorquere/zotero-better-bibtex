@@ -758,7 +758,7 @@ class PatternFormatter {
    * (no auto-abbrev even if it is enabled in the preferences) or `full`/`off` (no abbrevation).
    * @param abbrev abbreviation mode
    */
-  public $journal(abbrev: 'abbrev+auto' | 'abbrev' | 'auto' | 'full', 'off' = 'abbrev+auto') {
+  public $journal(abbrev: 'abbrev+auto' | 'abbrev' | 'auto' | 'full' | 'off' = 'abbrev+auto') {
     // this.item.item is the native item stored inside the this.item sorta-proxy
     return this.$text(((abbrev === 'off' || abbrev === 'full') ? '' : JournalAbbrev.get(this.item.item, abbrev)) || this.item.getField('publicationTitle') as string || '')
   }

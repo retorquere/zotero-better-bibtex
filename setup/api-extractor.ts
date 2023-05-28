@@ -115,7 +115,7 @@ export class API {
       method.schema.properties[p.name] = this.schema(param.type)
     }
     else {
-      assert(typeof p.default !== 'undefined', p.name)
+      assert(typeof p.default !== 'undefined', JSON.stringify(p))
       method.schema.properties[p.name] = { type: typeof p.default }
     }
 
