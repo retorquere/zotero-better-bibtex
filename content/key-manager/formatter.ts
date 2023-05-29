@@ -773,14 +773,14 @@ class PatternFormatter {
   public $firstpage() {
     const pages: string = this.item.getField('pages') as string
     if (!pages) return this.$text('')
-    return this.$text(pages.split(/page_range_splitter/)[0] || '')
+    return this.$text(pages.split(page_range_splitter)[0] || '')
   }
 
   /** The number of the last page of the publication (See the remark on `firstpage`) */
   public $lastpage() {
     const pages: string = this.item.getField('pages') as string
     if (!pages) return this.$text('')
-    return this.$text(pages.split(/page_range_splitter/)[0] || '')
+    return this.$text(pages.split(page_range_splitter)[0] || '')
   }
 
   /** Tag number `n`. Mostly for legacy compatibility -- order of tags is undefined */
