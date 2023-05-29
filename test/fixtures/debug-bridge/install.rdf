@@ -1,27 +1,38 @@
 <?xml version="1.0"?>
 <RDF xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:em="http://www.mozilla.org/2004/em-rdf#">
+    <Description about="urn:mozilla:install-manifest">
+        <em:id>debug-bridge@iris-advies.com</em:id>
+        <em:name>Zotero Debug Bridge</em:name>
+        <em:version>2.0.0</em:version>
+        <em:multiprocessCompatible>true</em:multiprocessCompatible>
+        <em:updateURL>https://github.com/retorquere/zotero-debug-bridge/releases/download/release/update.rdf</em:updateURL>
+        <em:localized>
+            <Description>
+                <em:locale>en-US</em:locale>
+                <em:name>Zotero Debug Bridge</em:name>
+                <em:description>Zotero Debug Bridge</em:description>
+            </Description>
+        </em:localized>
 
-  <Description about="urn:mozilla:install-manifest">
-    <em:id>debug-bridge@iris-advies.com</em:id>
-    <em:name>Zotero Debug Bridge</em:name>
-    <em:version>1.0.0</em:version>
-    <em:description>Zotero Debug Bridge</em:description>
-    <em:bootstrap>true</em:bootstrap>
-    <em:creator>emile</em:creator>
-    <em:updateURL>https://github.com/retorquere/zotero-debug-bridge/releases/download/release/update.rdf</em:updateURL>
-    <em:type>2</em:type> <!-- type=extension -->
+        <em:creator>Emiliano Heyns</em:creator>
+        <em:type>2</em:type> <!-- type=extension -->
+        <em:iconURL>chrome://make-it-red/skin/icon.png</em:iconURL>
+        <em:icon64URL>chrome://make-it-red/skin/icon64.png</em:icon64URL>
+        <em:bootstrap>true</em:bootstrap>
 
-    <em:targetApplication>
-      <Description>
-        <em:id>zotero@chnm.gmu.edu</em:id>
-        <em:minVersion>6.0</em:minVersion>
-        <em:maxVersion>7.0.*</em:maxVersion>
-      </Description>
-    	<Description>
-        <em:id>juris-m@juris-m.github.io</em:id>
-        <em:minVersion>6.0</em:minVersion>
-        <em:maxVersion>7.0.*</em:maxVersion>
-      </Description>
-    </em:targetApplication>
-  </Description>
+        <em:targetApplication>
+            <Description>
+                <em:id>zotero@chnm.gmu.edu</em:id>
+                <em:minVersion>6.0</em:minVersion>
+                <em:maxVersion>*</em:maxVersion>
+            </Description>
+        </em:targetApplication>
+        <em:targetApplication>
+            <Description>
+                <em:id>juris-m@juris-m.github.io</em:id>
+                <em:minVersion>6.0</em:minVersion>
+                <em:maxVersion>*</em:maxVersion>
+            </Description>
+        </em:targetApplication>
+    </Description>
 </RDF>
