@@ -1365,19 +1365,19 @@ class PatternFormatter {
     if (options.transliterate) {
       words = words.map((word: string) => {
         if (this.item.transliterateMode) {
-          log.debug('titleWords:', word, 'using', this.item.transliterateMode)
+          log.debug('titleWords:', word, 'using', this.item.transliterateMode, 'to', this.transliterate(word))
           return this.transliterate(word)
         }
         else if (Preference.kuroshiro && kuroshiro.enabled) {
-          log.debug('titleWords:', word, 'using kuroshiro')
+          log.debug('titleWords:', word, 'using kuroshiro to', this.transliterate(kuroshiro.convert(word, {to: 'romaji'}), 'minimal'))
           return this.transliterate(kuroshiro.convert(word, {to: 'romaji'}), 'minimal')
         }
         else if (chinese.load(Preference.jieba)) {
-          log.debug('titleWords:', word, 'using pinyin')
+          log.debug('titleWords:', word, 'using pinyin to', this.transliterate(chinese.pinyin(word), 'minimal'))
           return this.transliterate(chinese.pinyin(word), 'minimal')
         }
         else {
-          log.debug('titleWords:', word, 'using default')
+          log.debug('titleWords:', word, 'using default to', this.transliterate(word))
           return this.transliterate(word)
         }
       })
