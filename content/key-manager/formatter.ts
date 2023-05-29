@@ -1268,6 +1268,7 @@ class PatternFormatter {
   private transliterate(str: string, mode?: 'minimal' | 'de' | 'german' | 'ja' | 'japanese' | 'zh' | 'chinese' | 'tw' | 'zh-hant' | 'chinese-traditional' | 'ar' | 'arabic' | 'uk' | 'ukranian' | 'mn' | 'mongolian' | 'ru' | 'russian'): string {
     mode = mode || this.item.transliterateMode || 'minimal'
 
+    log.debug('transliterate:', str, mode)
     let replace: Record<string, string> = {}
     switch (mode) {
       case 'minimal':
@@ -1295,7 +1296,10 @@ class PatternFormatter {
 
       case 'ja':
       case 'japanese':
-        if (Preference.kuroshiro && kuroshiro.enabled) str = kuroshiro.convert(str, {to: 'romaji'})
+        if (Preference.kuroshiro && kuroshiro.enabled) {
+          str = kuroshiro.convert(str, {to: 'romaji'})
+          log.debug('transliterate: applied kuroshiro', str)
+        }
         break
 
       case 'ar':
@@ -1326,8 +1330,10 @@ class PatternFormatter {
       unknown: '\uFFFD', // unicode replacement char
       replace,
     })
+    log.debug('transliterate: applied transliteration', str)
 
     str = fold2ascii.foldMaintaining(str)
+    log.debug('transliterate: applied folding', str)
 
     return str
   }
