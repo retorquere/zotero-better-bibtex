@@ -298,6 +298,8 @@ class Item {
   }
 }
 
+const page_range_splitter = /[-\s,\u2013]/
+
 class PatternFormatter {
   public chunk = ''
   public citekey = ''
@@ -771,14 +773,14 @@ class PatternFormatter {
   public $firstpage() {
     const pages: string = this.item.getField('pages') as string
     if (!pages) return this.$text('')
-    return this.$text(pages.split(/[-\s,–]/)[0] || '')
+    return this.$text(pages.split(/page_range_splitter/)[0] || '')
   }
 
   /** The number of the last page of the publication (See the remark on `firstpage`) */
   public $lastpage() {
     const pages: string = this.item.getField('pages') as string
     if (!pages) return this.$text('')
-    return this.$text(pages.split(/[-\s,–]/).pop() || '')
+    return this.$text(pages.split(/page_range_splitter/)[0] || '')
   }
 
   /** Tag number `n`. Mostly for legacy compatibility -- order of tags is undefined */
@@ -1342,17 +1344,20 @@ class PatternFormatter {
     let words: string[] = Zotero.Utilities.XRegExp.matchChain(title, [this.re.word])
       .map((word: string) => word.replace(/-/g, ''))
       .filter((word: string) => word && !(options.skipWords && ucs2decode(word).length === 1 && !word.match(script.cjk)))
+    log.debug('titleWords: split to', words)
 
     // apply jieba.cut and flatten.
     if (chinese.load(Preference.jieba) && options.skipWords && this.item.transliterateMode.startsWith('chinese')) {
       const mode = this.item.transliterateMode === 'chinese-traditional' ? 'tw' : 'cn'
       words = [].concat(...words.map((word: string) => chinese.jieba(word, mode)))
+      log.debug('titleWords: jieba cut and flatten to', words)
       // remove CJK skipwords
       words = words.filter((word: string) => !this.skipWords.has(word.toLowerCase()))
     }
 
     if (Preference.kuroshiro && kuroshiro.enabled && options.skipWords && this.item.transliterateMode === 'japanese') {
       words = [].concat(...words.map((word: string) => kuroshiro.tokenize(word)))
+      log.debug('titleWords: kuroshiro tokenize to', words)
       // remove CJK skipwords
       words = words.filter((word: string) => !this.skipWords.has(word.toLowerCase()))
     }
@@ -1360,19 +1365,25 @@ class PatternFormatter {
     if (options.transliterate) {
       words = words.map((word: string) => {
         if (this.item.transliterateMode) {
+          log.debug('titleWords:', word, 'using', this.item.transliterateMode)
           return this.transliterate(word)
         }
         else if (Preference.kuroshiro && kuroshiro.enabled) {
+          log.debug('titleWords:', word, 'using kuroshiro')
           return this.transliterate(kuroshiro.convert(word, {to: 'romaji'}), 'minimal')
         }
         else if (chinese.load(Preference.jieba)) {
+          log.debug('titleWords:', word, 'using pinyin')
           return this.transliterate(chinese.pinyin(word), 'minimal')
         }
         else {
+          log.debug('titleWords:', word, 'using default')
           return this.transliterate(word)
         }
       })
     }
+
+    log.debug('titleWords: transliterated to', words)
 
     // remove transliterated and non-CJK skipwords
     if (options.skipWords) words = words.filter((word: string) => !this.skipWords.has(word.toLowerCase()))
