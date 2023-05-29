@@ -1268,7 +1268,6 @@ class PatternFormatter {
   private transliterate(str: string, mode?: 'minimal' | 'de' | 'german' | 'ja' | 'japanese' | 'zh' | 'chinese' | 'tw' | 'zh-hant' | 'chinese-traditional' | 'ar' | 'arabic' | 'uk' | 'ukranian' | 'mn' | 'mongolian' | 'ru' | 'russian'): string {
     mode = mode || this.item.transliterateMode || 'minimal'
 
-    log.debug('transliterate:', str, mode)
     let replace: Record<string, string> = {}
     switch (mode) {
       case 'minimal':
@@ -1296,10 +1295,7 @@ class PatternFormatter {
 
       case 'ja':
       case 'japanese':
-        if (Preference.kuroshiro && kuroshiro.enabled) {
-          str = kuroshiro.convert(str, {to: 'romaji'})
-          log.debug('transliterate: applied kuroshiro', str)
-        }
+        if (Preference.kuroshiro && kuroshiro.enabled) str = kuroshiro.convert(str, {to: 'romaji'})
         break
 
       case 'ar':
@@ -1330,10 +1326,8 @@ class PatternFormatter {
       unknown: '\uFFFD', // unicode replacement char
       replace,
     })
-    log.debug('transliterate: applied transliteration', str)
 
     str = fold2ascii.foldMaintaining(str)
-    log.debug('transliterate: applied folding', str)
 
     return str
   }
@@ -1350,20 +1344,17 @@ class PatternFormatter {
     let words: string[] = Zotero.Utilities.XRegExp.matchChain(title, [this.re.word])
       .map((word: string) => word.replace(/-/g, ''))
       .filter((word: string) => word && !(options.skipWords && ucs2decode(word).length === 1 && !word.match(script.cjk)))
-    log.debug('titleWords: split to', words)
 
     // apply jieba.cut and flatten.
     if (chinese.load(Preference.jieba) && options.skipWords && this.item.transliterateMode.startsWith('chinese')) {
       const mode = this.item.transliterateMode === 'chinese-traditional' ? 'tw' : 'cn'
       words = [].concat(...words.map((word: string) => chinese.jieba(word, mode)))
-      log.debug('titleWords: jieba cut and flatten to', words)
       // remove CJK skipwords
       words = words.filter((word: string) => !this.skipWords.has(word.toLowerCase()))
     }
 
     if (Preference.kuroshiro && kuroshiro.enabled && options.skipWords && this.item.transliterateMode === 'japanese') {
       words = [].concat(...words.map((word: string) => kuroshiro.tokenize(word)))
-      log.debug('titleWords: kuroshiro tokenize to', words)
       // remove CJK skipwords
       words = words.filter((word: string) => !this.skipWords.has(word.toLowerCase()))
     }
@@ -1371,25 +1362,19 @@ class PatternFormatter {
     if (options.transliterate) {
       words = words.map((word: string) => {
         if (this.item.transliterateMode) {
-          log.debug('titleWords:', word, 'using', this.item.transliterateMode, 'to', this.transliterate(word))
           return this.transliterate(word)
         }
         else if (Preference.kuroshiro && kuroshiro.enabled) {
-          log.debug('titleWords:', word, 'using kuroshiro to', this.transliterate(kuroshiro.convert(word, {to: 'romaji'}), 'minimal'))
           return this.transliterate(kuroshiro.convert(word, {to: 'romaji'}), 'minimal')
         }
         else if (chinese.load(Preference.jieba)) {
-          log.debug('titleWords:', word, 'using pinyin to', this.transliterate(chinese.pinyin(word), 'minimal'))
           return this.transliterate(chinese.pinyin(word), 'minimal')
         }
         else {
-          log.debug('titleWords:', word, 'using default to', this.transliterate(word))
           return this.transliterate(word)
         }
       })
     }
-
-    log.debug('titleWords: transliterated to', words)
 
     // remove transliterated and non-CJK skipwords
     if (options.skipWords) words = words.filter((word: string) => !this.skipWords.has(word.toLowerCase()))
