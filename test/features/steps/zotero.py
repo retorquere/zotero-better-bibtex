@@ -34,7 +34,8 @@ import socket
 from pathlib import PurePath
 from diff_match_patch import diff_match_patch
 from pygit2 import Repository
-from lxml import etree
+from  lxml import etree
+import zipfile
 
 from ruamel.yaml import YAML
 yaml = YAML(typ='safe')
@@ -47,6 +48,29 @@ FIXTURES = os.path.join(ROOT, 'test/fixtures')
 #  bbt_json_schema = json.load(f)
 #def validate_bbt_json(lib):
 #  jsonschema.validate(instance=lib, schema=bbt_json_schema)
+
+from selenium.webdriver.firefox.firefox_profile import AddonFormatError
+class FirefoxProfile(webdriver.FirefoxProfile):
+  def _addon_details(self, addon_path):
+    def parse_manifest_json(data):
+      manifest = json.loads(data)
+      return {
+        "id": manifest["applications"]["zotero"]["id"],
+        "version": manifest["version"],
+        "name": manifest["version"],
+        "unpack": False,
+      }
+
+    if zipfile.is_zipfile(addon_path):
+      compressed_file = zipfile.ZipFile(addon_path, "r")
+      if "manifest.json" in compressed_file.namelist():
+        return parse_manifest_json(compressed_file.read("manifest.json"))
+
+    if os.path.isdir(addon_path) and os.path.isfile(os.path.join(addon_path, 'manifest.json')):
+      with open(os.path.join(addon_path, 'manifest.json')) as f:
+        return parse_manifest_json(f.read())
+
+    return super()._addon_details(addon_path)
 
 def install_proxies(xpis, profile):
   for xpi in xpis:
@@ -574,12 +598,12 @@ class Zotero:
 
     # layout profile
     if self.config.profile:
-      profile.firefox = webdriver.FirefoxProfile(os.path.join(ROOT, 'test/db', self.config.profile))
+      profile.firefox = FirefoxProfile(os.path.join(ROOT, 'test/db', self.config.profile))
       profile.firefox.set_preference('extensions.zotero.dataDir', os.path.join(profile.path, self.client))
       profile.firefox.set_preference('extensions.zotero.useDataDir', True)
       profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.removeStock', False)
     else:
-      profile.firefox = webdriver.FirefoxProfile(os.path.join(FIXTURES, 'profile', self.client))
+      profile.firefox = FirefoxProfile(os.path.join(FIXTURES, 'profile', self.client))
 
     install_xpis(os.path.join(ROOT, 'xpi'), profile.firefox)
 

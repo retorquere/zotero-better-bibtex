@@ -57,6 +57,7 @@ class ClientAction(argparse.Action):
       raise ValueError(f'Unexpected argument {option_string} = {values}')
 parser = argparse.ArgumentParser()
 parser.add_argument('--start', dest='start', action=BooleanAction)
+parser.add_argument('--build', '--no-build', dest='build', action=BooleanAction, default=(not CI.service))
 parser.add_argument('--stop', '--no-stop', dest='stop', action=BooleanAction, default=(not CI.service))
 parser.add_argument('--jurism', dest='client', action='store_const', const='jurism', default=os.environ.get('CLIENT', 'zotero'))
 parser.add_argument('--client', dest='client', default=os.environ.get('CLIENT', 'zotero'))
@@ -90,7 +91,7 @@ if args.start:
   args.keep = True
   sys.argv += ['--tags', '@none']
 
-if not CI.service : # local run
+if args.build:
   process = subprocess.Popen(['npm', 'run', 'build'], stdout=subprocess.PIPE)
   while True:
     line = process.stdout.readline()
