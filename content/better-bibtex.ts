@@ -11,7 +11,7 @@ declare const ZoteroPane: any
 declare const __estrace: any // eslint-disable-line no-underscore-dangle
 
 import type { XUL } from '../typings/xul'
-import './startup' // disable monkey patching is unsupported environment
+import { started } from './startup' // disable monkey patching is unsupported environment
 
 import { ZoteroPane as ZoteroPaneHelper } from './ZoteroPane'
 import { ExportOptions } from './ExportOptions'
@@ -814,13 +814,13 @@ export class BetterBibTeX {
     log.debug('Loading Better BibTeX: starting...')
 
     const progress = new Progress
-    Zotero.debug(`{better-bibtex-startup} waiting for Zotero @ ${Date.now() - $patch$.started}`)
+    Zotero.debug(`{better-bibtex-startup} waiting for Zotero @ ${Date.now() - started}`)
     progress.start(l10n.localize('BetterBibTeX.startup.waitingForZotero'))
 
     // https://groups.google.com/d/msg/zotero-dev/QYNGxqTSpaQ/uvGObVNlCgAJ
     // this is what really takes long
     await Zotero.initializationPromise
-    Zotero.debug(`{better-bibtex-startup} Zotero ready @ ${Date.now() - $patch$.started}`)
+    Zotero.debug(`{better-bibtex-startup} Zotero ready @ ${Date.now() - started}`)
 
     window = Zotero.getMainWindow()
     document = window.document
@@ -899,7 +899,7 @@ export class BetterBibTeX {
     AutoExport.start()
 
     this.deferred.resolve(true)
-    Zotero.debug(`{better-bibtex-startup} startup ready @ ${Date.now() - $patch$.started}`)
+    Zotero.debug(`{better-bibtex-startup} startup ready @ ${Date.now() - started}`)
 
     this.ZoteroPane.load()
     await this.ItemPane.load()
