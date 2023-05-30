@@ -283,8 +283,9 @@ export class PrefPane {
   // private prefwindow: HTMLElement
 
   public async exportPrefs(): Promise<void> {
-    const file = await pick(Zotero.getString('fileInterface.export'), 'save', [['BBT JSON file', '*.json']])
+    let file = await pick(Zotero.getString('fileInterface.export'), 'save', [['BBT JSON file', '*.json']])
     if (!file) return
+    if (!file.match(/.json$/)) file = `${file}.json`
     Zotero.File.putContents(Zotero.File.pathToFile(file), JSON.stringify({ config: { preferences: Preference.all } }, null, 2))
   }
 
