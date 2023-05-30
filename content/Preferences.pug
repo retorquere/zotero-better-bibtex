@@ -18,7 +18,7 @@ prefwindow(title='&better-bibtex.BetterBibTeX;' xmlns='http://www.mozilla.org/ke
       }
       window.sizeToContent()
     }
-  include Preferences/prefpane.pug
   script(src='chrome://zotero/content/include.js')
+  include Preferences/prefpane.pug
   script.
     window.addEventListener('load', (event) => { resize() })
