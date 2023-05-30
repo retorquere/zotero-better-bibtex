@@ -46,16 +46,16 @@ export class ZoteroPane {
         .appendChild(elements.create('menu', { label: l10n.localize('better-bibtex.BetterBibTeX'), class: 'menu-iconic', image: 'chrome://zotero-better-bibtex/skin/bibtex-menu.svg' }))
         .appendChild(elements.create('menupopup'))
       menupopup.appendChild(elements.create('menuitem', {
-        label: 'better-bibtex.BetterBibTeX.auxScanner',
+        label: l10n.localize('better-bibtex.BetterBibTeX.auxScanner'),
         oncommand: 'Zotero.BetterBibTeX.scanAUX("tag")',
       }))
       menupopup.appendChild(elements.create('menuitem', {
-        label: 'better-bibtex.Preferences.open',
+        label: l10n.localize('better-bibtex.Preferences.open'),
         oncommand: 'window.openDialog("chrome://zotero-better-bibtex/content/Preferences.xul", "better-bibtex-prefs-window")',
       }))
 
       document.getElementById('menu_HelpPopup').insertBefore(elements.create('menuitem', {
-        label: 'better-bibtex.BetterBibTeX.reportErrors',
+        label: l10n.localize('better-bibtex.BetterBibTeX.reportErrors'),
         oncommand: 'Zotero.BetterBibTeX.ZoteroPane.errorReport()',
       }), document.getElementById('reportErrors').nextSibling)
     }
