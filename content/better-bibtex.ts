@@ -20,7 +20,7 @@ import { ItemPane } from './ItemPane'
 import { PrefPane } from './Preferences'
 import { FirstRun } from './FirstRun'
 import { ErrorReport } from './ErrorReport'
-import { patch as $patch$ } from './monkey-patch'
+import { patch as $patch$, unpatch as $unpatch$ } from './monkey-patch'
 import { clean_pane_persist } from './clean_pane_persist'
 import { flash } from './flash'
 import { Deferred } from './deferred'
@@ -885,6 +885,10 @@ export class BetterBibTeX {
         await OS.File.makeDir(this.dir, { ignoreExisting: true })
         await Preference.initAsync(this.dir)
       },
+      shutdown: async () => {
+        this.elements.remove()
+        $unpatch$()
+      },
     })
 
     orchestrator.add({
@@ -1002,9 +1006,6 @@ export class BetterBibTeX {
   }
 
   public parseDate(date: string): ParsedDate { return DateParser.parse(date) }
-  public unload(): void {
-    Zotero.debug('Unloading BBT?')
-  }
 
   getContents(path: string): string {
     // cannot use await OS.File.exists here because we may be invoked in noWait mod
