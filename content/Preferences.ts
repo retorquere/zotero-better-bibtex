@@ -346,14 +346,13 @@ export class PrefPane {
     editing.setAttribute('tooltiptext', error)
 
     const msg = window.document.getElementById('better-bibtex-citekeyFormat-error') as HTMLInputElement
-    msg.hidden = !error
-    msg.setAttribute('style', style)
     msg.value = error
+    msg.setAttribute('style', style)
+    msg.style.visibility = error ? 'visible' : 'hidden'
 
     const active = window.document.getElementById('id-better-bibtex-preferences-citekeyFormat')
-    active.hidden = Preference.citekeyFormat === Preference.citekeyFormatEditing
     const label = window.document.getElementById('id-better-bibtex-label-citekeyFormat')
-    label.hidden = active.hidden
+    active.style.visibility = label.style.visibility = Preference.citekeyFormat === Preference.citekeyFormatEditing ? 'hidden' : 'visible'
   }
 
   public checkPostscript(): void {

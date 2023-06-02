@@ -1,22 +1,17 @@
-vbox
+vbox(flex=1)
   label(bbt:preference='extensions.zotero.translators.better-bibtex.citekeyFormatEditing') &better-bibtex.Preferences.citekey.format;
   textbox#id-better-bibtex-preferences-citekeyFormatEditing(
     preference='extensions.zotero.translators.better-bibtex.citekeyFormatEditing'
     flex=1
-    rows=1
-    onfocus="this.setAttribute('rows', '5'); resize()"
-    onblur="this.setAttribute('rows', '1'); resize()"
+    rows=5
     multiline='true'
   )
   textbox#better-bibtex-citekeyFormat-error(
     preference='extensions.zotero.translators.better-bibtex.citekeyFormat'
     flex=1
-    rows=1
+    rows=2
     readonly='true'
-    hidden='true'
     multiline='true'
-    onfocus="this.setAttribute('rows', '5'); resize()"
-    onblur="this.setAttribute('rows', '1'); resize()"
     style='-moz-appearance: none !important; background-color: DarkOrange'
   )
 
@@ -24,11 +19,9 @@ vbox
   textbox#id-better-bibtex-preferences-citekeyFormat(
     preference='extensions.zotero.translators.better-bibtex.citekeyFormat'
     flex=1
-    rows=1
+    rows=5
     readonly='true'
     multiline='true'
-    onfocus="this.setAttribute('rows', '5'); resize()"
-    onblur="this.setAttribute('rows', '1'); resize()"
     style='-moz-appearance: none !important; background-color: LightGrey'
   )
 checkbox(preference="extensions.zotero.translators.better-bibtex.citekeyFold" label="&better-bibtex.Preferences.citekey.fold;")

@@ -11,12 +11,14 @@
 prefwindow(title='&better-bibtex.BetterBibTeX;' xmlns='http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul' xmlns:html='http://www.w3.org/1999/xhtml')
   script.
     function resize() {
+      /*
       window.sizeToContent()
       for (const tabbox of [...document.getElementsByTagName('tabbox')]) {
         tabbox.height = tabbox.boxObject.height
         tabbox.width = tabbox.boxObject.width
       }
       window.sizeToContent()
+      */
     }
   include Preferences/prefpane.pug
   script(src='chrome://zotero/content/include.js')
