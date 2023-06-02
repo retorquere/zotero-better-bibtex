@@ -209,11 +209,12 @@ export const DB = new Cache('cache', { // eslint-disable-line @typescript-eslint
 })
 
 // the preferences influence the output way too much, no keeping track of that
-Events.on('preference-changed', pref => {
-  Zotero.BetterBibTeX.ready.then(() => { DB.reset(`pref ${pref} changed`, affects[pref]) })
+Events.on('preference-changed', async pref => {
+  await Zotero.BetterBibTeX.ready
+  DB.reset(`pref ${pref} changed`, affects[pref])
 })
-Events.on('items-changed', ids => {
-  Zotero.BetterBibTeX.ready.then(() => { DB.remove(ids, 'items-changed') })
+Events.on('items-changed', async ids => {
+  await Zotero.BetterBibTeX.ready
   DB.remove(ids, 'items-changed')
 })
 
