@@ -13,6 +13,7 @@ declare const __estrace: any // eslint-disable-line no-underscore-dangle
 import type { XUL } from '../typings/xul'
 import { started } from './startup' // disable monkey patching is unsupported environment
 
+import { Elements } from './create-element'
 import { ZoteroPane as ZoteroPaneHelper } from './ZoteroPane'
 import { ExportOptions } from './ExportOptions'
 import { ItemPane } from './ItemPane'
@@ -23,6 +24,7 @@ import { patch as $patch$ } from './monkey-patch'
 import { clean_pane_persist } from './clean_pane_persist'
 import { flash } from './flash'
 import { Deferred } from './deferred'
+import { orchestrator } from './orchestrator'
 
 import { Preference } from './prefs' // needs to be here early, initializes the prefs observer
 require('./pull-export') // just require, initializes the pull-export end points
@@ -38,10 +40,8 @@ import { log } from './logger'
 import { Events, itemsChanged } from './events'
 
 import { Translators } from './translators'
-import { DB } from './db/main'
 import { DB as Cache } from './db/cache'
 import { Serializer } from './serializer'
-import { JournalAbbrev } from './journal-abbrev'
 import { AutoExport } from './auto-export'
 import { KeyManager } from './key-manager'
 import { TestSupport } from './test-support'
@@ -55,6 +55,18 @@ import { generateBibTeX, parseBibTeX } from '../translators/bibtex/bibtex'
 import { generateCSLYAML, parseCSLYAML } from '../translators/csl/yaml'
 import { generateCSLJSON } from '../translators/csl/json'
 import { Translation } from '../translators/lib/translator'
+
+// need coroutine here because Zotero calls '.done()' on the nonexistent! result, added automagically by bluebird
+$patch$(Zotero, 'shutdown', original => Zotero.Promise.coroutine(function* () { // eslint-disable-line @typescript-eslint/no-unsafe-return
+  try {
+    yield orchestrator.shutdown()
+  }
+  catch (err) {
+    log.error('BBT shutdown: shutdown failed', err)
+  }
+
+  yield original.apply(this, arguments)
+}))
 
 // UNINSTALL
 AddonManager.addAddonListener({
@@ -664,18 +676,8 @@ notify('collection-item', (_event: any, _type: any, collection_items: any) => {
   INIT
 */
 
-function setProgress(progress: number, msg: string) {
-  const progressbox = document.getElementById('better-bibtex-progress')
-  if (progressbox.hidden = (progress >= 100)) return
-
-  const progressmeter: XUL.Element = (document.getElementById('better-bibtex-progress-meter') as unknown as XUL.Element)
-  progressmeter.style.backgroundPosition = `-${Math.min(progress, 100) * 20}px 0` // eslint-disable-line no-magic-numbers
-
-  const label: XUL.Label = (document.getElementById('better-bibtex-progress-label') as unknown as XUL.Label)
-  label.value = msg
-}
-
 // type TimerHandle = ReturnType<typeof setInterval>
+/*
 class Progress {
   private timestamp: number
   private msg: string
@@ -741,16 +743,19 @@ class Progress {
     this.timestamp = ts
   }
 }
+*/
 
 export class BetterBibTeX {
   public uninstalled = false
+  public Orchestrator = orchestrator
   public Cache = Cache
 
   // eslint-disable-next-line prefer-arrow/prefer-arrow-functions, @typescript-eslint/no-unsafe-return, @typescript-eslint/explicit-module-boundary-types
   public CSL() { return CSL }
   public TestSupport = new TestSupport
-  public KeyManager = new KeyManager
+  public KeyManager = KeyManager
   public Text = { sentenceCase }
+  public elements: Elements
 
   // panes
   public ZoteroPane: ZoteroPaneHelper = new ZoteroPaneHelper
@@ -811,27 +816,109 @@ export class BetterBibTeX {
     (window as any).openDialog(url, title, properties, params)
   }
 
-  public async load(): Promise<void> { // eslint-disable-line @typescript-eslint/explicit-module-boundary-types
+  public setProgress(progress: number, msg: string): void {
+    if (!document.getElementById('better-bibtex-progress')) {
+      // progress bar
+      const progressToolbar = this.elements.create('hbox', {
+        id: 'better-bibtex-progress',
+        hidden: 'true',
+        align: 'left',
+        pack: 'start',
+        flex: '1',
+      })
+      const itemToolbar = document.getElementById('zotero-item-toolbar')
+      // after hbox-before-zotero-pq-buttons
+      itemToolbar.insertBefore(progressToolbar, itemToolbar.firstChild.nextSibling)
+      progressToolbar.appendChild(this.elements.create('hbox', {
+        id: 'better-bibtex-progress-meter',
+        width: '20',
+        height: '20',
+        style: `
+          position: absolute;
+          left: 0;
+          top:  0;
+
+          width: 20px;
+          height: 20px;
+
+          background-image: url(chrome://zotero-better-bibtex/skin/progress.svg);
+
+          background-position: 0 0;
+        `,
+      }))
+      progressToolbar.appendChild(this.elements.create('label', {
+        id: 'better-bibtex-progress-label',
+        value: 'nothing to see here',
+      }))
+    }
+
+    progress = Math.max(Math.min(Math.round(progress), 100), 0)
+    log.debug('progress:', progress, msg)
+    const progressbox = document.getElementById('better-bibtex-progress')
+    if (progressbox.hidden = (progress >= 100)) return
+
+    const progressmeter: XUL.Element = (document.getElementById('better-bibtex-progress-meter') as unknown as XUL.Element)
+    progressmeter.style.backgroundPosition = `-${progress * 20}px 0` // eslint-disable-line no-magic-numbers
+
+    const label: XUL.Label = (document.getElementById('better-bibtex-progress-label') as unknown as XUL.Label)
+    label.setAttribute('value', `better bibtex: ${msg}`)
+  }
+
+  public async startup(): Promise<void> {
     if (typeof this.ready.isPending !== 'function') throw new Error('Zotero.Promise is not using Bluebird')
-
-    log.debug('Loading Better BibTeX: starting...')
-
-    const progress = new Progress
-    Zotero.debug(`{better-bibtex-startup} waiting for Zotero @ ${Date.now() - started}`)
-    progress.start(l10n.localize('BetterBibTeX.startup.waitingForZotero'))
-
-    // https://groups.google.com/d/msg/zotero-dev/QYNGxqTSpaQ/uvGObVNlCgAJ
-    // this is what really takes long
-    await Zotero.initializationPromise
-    Zotero.debug(`{better-bibtex-startup} Zotero ready @ ${Date.now() - started}`)
 
     window = Zotero.getMainWindow()
     document = window.document
+    this.elements = new Elements(document, 'zoteropane')
 
-    await Zotero.DB.queryAsync('ATTACH DATABASE ? AS betterbibtex', [OS.Path.join(Zotero.DataDirectory.dir, 'better-bibtex.sqlite')])
-    await Zotero.DB.queryAsync('ATTACH DATABASE ? AS betterbibtexsearch', [OS.Path.join(Zotero.DataDirectory.dir, 'better-bibtex-search.sqlite')])
+    log.debug('Loading Better BibTeX: starting...')
 
-    await TeXstudio.init()
+    orchestrator.add({
+      id: 'start',
+      description: 'zotero',
+      startup: async () => {
+        // https://groups.google.com/d/msg/zotero-dev/QYNGxqTSpaQ/uvGObVNlCgAJ
+        // this is what really takes long
+        await Zotero.initializationPromise
+
+        this.dir = OS.Path.join(Zotero.DataDirectory.dir, 'better-bibtex')
+        await OS.File.makeDir(this.dir, { ignoreExisting: true })
+        await Preference.initAsync(this.dir)
+      },
+    })
+
+    orchestrator.add({
+      id: 'databases',
+      description: 'databases',
+      needs: ['start'],
+      startup: async () => {
+        await Zotero.DB.queryAsync('ATTACH DATABASE ? AS betterbibtex', [OS.Path.join(Zotero.DataDirectory.dir, 'better-bibtex.sqlite')])
+        await Zotero.DB.queryAsync('ATTACH DATABASE ? AS betterbibtexsearch', [OS.Path.join(Zotero.DataDirectory.dir, 'better-bibtex-search.sqlite')])
+      },
+      shutdown: async () => {
+        await Zotero.DB.queryAsync('DETACH DATABASE betterbibtex')
+        await Zotero.DB.queryAsync('DETACH DATABASE betterbibtexsearch')
+      },
+    })
+
+    orchestrator.add({
+      id: 'done',
+      description: 'user interface',
+      startup: async () => {
+        this.deferred.resolve(true)
+        await this.load()
+      },
+    })
+
+    await orchestrator.startup((phase: string, name: string, done: number, total: number, message: string): void => {
+      if (phase === 'startup') this.setProgress(done * 100 / total, message || `${phase}: ${name}`)
+    })
+    this.setProgress(100, 'finished')
+  }
+
+  public async load(): Promise<void> { // eslint-disable-line @typescript-eslint/explicit-module-boundary-types
+    Zotero.debug(`{better-bibtex-startup} waiting for Zotero @ ${Date.now() - started}`)
+    // progress.start(l10n.localize('BetterBibTeX.startup.waitingForZotero'))
 
     for (const node of [...document.getElementsByClassName('bbt-texstudio')]) {
       (node as any).hidden = !TeXstudio.enabled
@@ -870,44 +957,30 @@ export class BetterBibTeX {
       )
     }
 
-    this.dir = OS.Path.join(Zotero.DataDirectory.dir, 'better-bibtex')
-    await OS.File.makeDir(this.dir, { ignoreExisting: true })
+    // progress.update(l10n.localize('BetterBibTeX.startup.serializationCache'), 20) // eslint-disable-line no-magic-numbers
+    // Serializer.init()
 
-    log.debug("Zotero ready, let's roll!")
+    // progress.update(l10n.localize('BetterBibTeX.startup.autoExport.load'), 30) // eslint-disable-line no-magic-numbers
+    // await AutoExport.init()
 
-    await Preference.initAsync(this.dir)
+    // progress.update(l10n.localize('BetterBibTeX.startup.journalAbbrev'), 60) // eslint-disable-line no-magic-numbers
+    // await JournalAbbrev.init()
 
-    progress.update(l10n.localize('BetterBibTeX.startup.loadingDatabases'), 5) // eslint-disable-line no-magic-numbers
-    await Promise.all([Cache.init(), DB.init()])
+    // progress.update(l10n.localize('BetterBibTeX.startup.installingTranslators'), 70) // eslint-disable-line no-magic-numbers
+    // await Translators.init()
 
-    progress.update(l10n.localize('BetterBibTeX.startup.loadingKeys'), 10) // eslint-disable-line no-magic-numbers
-    await this.KeyManager.init() // loads the existing keys
+    // progress.update(l10n.localize('BetterBibTeX.startup.keyManager'), 80) // eslint-disable-line no-magic-numbers
+    // await this.KeyManager.start() // inits the key cache by scanning the DB and generating missing keys
 
-    progress.update(l10n.localize('BetterBibTeX.startup.serializationCache'), 20) // eslint-disable-line no-magic-numbers
-    Serializer.init()
+    // progress.update(l10n.localize('BetterBibTeX.startup.autoExport'), 90) // eslint-disable-line no-magic-numbers
+    // AutoExport.start()
 
-    progress.update(l10n.localize('BetterBibTeX.startup.autoExport.load'), 30) // eslint-disable-line no-magic-numbers
-    await AutoExport.init()
-
-    progress.update(l10n.localize('BetterBibTeX.startup.journalAbbrev'), 60) // eslint-disable-line no-magic-numbers
-    await JournalAbbrev.init()
-
-    progress.update(l10n.localize('BetterBibTeX.startup.installingTranslators'), 70) // eslint-disable-line no-magic-numbers
-    await Translators.init()
-
-    progress.update(l10n.localize('BetterBibTeX.startup.keyManager'), 80) // eslint-disable-line no-magic-numbers
-    await this.KeyManager.start() // inits the key cache by scanning the DB and generating missing keys
-
-    progress.update(l10n.localize('BetterBibTeX.startup.autoExport'), 90) // eslint-disable-line no-magic-numbers
-    AutoExport.start()
-
-    this.deferred.resolve(true)
     Zotero.debug(`{better-bibtex-startup} startup ready @ ${Date.now() - started}`)
 
     this.ZoteroPane.load()
     await this.ItemPane.load()
 
-    progress.done()
+    // progress.done()
 
     if (typeof Zotero.ItemTreeView === 'undefined') ZoteroPane.itemsView.refreshAndMaintainSelection()
 
@@ -924,7 +997,7 @@ export class BetterBibTeX {
       if (Translators.queue.queued) status += ` +${Translators.queue.queued}`
       setProgress(percent && percent < 100 && Math.abs(percent), status) // eslint-disable-line no-magic-numbers
       */
-      setProgress(pct, message) // eslint-disable-line no-magic-numbers
+      this.setProgress(pct, message) // eslint-disable-line no-magic-numbers
     })
   }
 

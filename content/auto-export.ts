@@ -16,6 +16,7 @@ import { pathSearch } from './path-search'
 import { Scheduler } from './scheduler'
 import { flash } from './flash'
 import * as l10n from './l10n'
+import { orchestrator } from './orchestrator'
 
 class Git {
   public enabled: boolean
@@ -366,27 +367,28 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
     Events.on('export-progress', ({ pct, ae }) => {
       if (typeof ae === 'number') this.progress.set(ae, pct)
     })
-  }
 
-  public async init() {
-    await git.init()
+    orchestrator.add({
+      id: 'auto-export',
+      description: 'auto-export',
+      needs: ['maindb', 'cache', 'translators'],
+      startup: async () => {
+        await git.init()
 
-    this.db = DB.getCollection('autoexport')
-    queue.init(this.db)
+        this.db = DB.getCollection('autoexport')
+        queue.init(this.db)
 
-    for (const ae of this.db.find({ status: { $ne: 'done' } })) {
-      queue.add(ae)
-    }
+        for (const ae of this.db.find({ status: { $ne: 'done' } })) {
+          queue.add(ae)
+        }
 
-    this.db.on(['delete'], ae => {
-      this.progress.delete(ae.$loki)
+        this.db.on(['delete'], ae => {
+          this.progress.delete(ae.$loki)
+        })
+
+        if (Preference.autoExport === 'immediate') queue.resume('startup')
+      },
     })
-
-    if (Preference.autoExport === 'immediate') queue.resume('startup')
-  }
-
-  public start() {
-    queue.start()
   }
 
   public add(ae, schedule = false) {

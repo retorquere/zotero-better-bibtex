@@ -31,19 +31,16 @@ export class ZoteroPane {
 
     const pane = Zotero.getActiveZoteroPane() // TODO: this is problematic if there can be multiple
 
-    const elements = this.elements = new Elements(document, 'itempane')
+    const elements = this.elements = new Elements(document, 'zoteropane')
 
-    if (!document.getElementById('better-bibtex-progress')) {
-      // progress bar
-      const progressToolbar = elements.create('hbox', { id: 'better-bibtex-progress', hidden: 'true', align: 'left', pack: 'start', flex: '1' })
-      const itemToolbar = document.getElementById('zotero-item-toolbar')
-      // after hbox-before-zotero-pq-buttons
-      itemToolbar.insertBefore(progressToolbar, itemToolbar.firstChild.nextSibling)
-      progressToolbar.appendChild(elements.create('hbox', { id: 'better-bibtex-progress-meter', class: 'bbt-progress-sprite', width: '20', height: '20' }))
-      progressToolbar.appendChild(elements.create('label', { id: 'better-bibtex-progress-label' }))
-
+    if (!document.getElementById('better-bibtex-tools-menu')) {
       const menupopup = document.getElementById('menu_ToolsPopup')
-        .appendChild(elements.create('menu', { label: l10n.localize('better-bibtex.BetterBibTeX'), class: 'menu-iconic', image: 'chrome://zotero-better-bibtex/skin/bibtex-menu.svg' }))
+        .appendChild(elements.create('menu', {
+          id: 'better-bibtex-tools-menu',
+          label: l10n.localize('better-bibtex.BetterBibTeX'),
+          class: 'menu-iconic',
+          image: 'chrome://zotero-better-bibtex/skin/bibtex-menu.svg',
+        }))
         .appendChild(elements.create('menupopup'))
       menupopup.appendChild(elements.create('menuitem', {
         label: l10n.localize('better-bibtex.BetterBibTeX.auxScanner'),
