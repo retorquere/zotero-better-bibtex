@@ -26,7 +26,7 @@ Events.on('window-loaded', ({ win, href }: {win: Window, href: string}) => {
       Zotero.BetterBibTeX.PrefPane.unload()
       window = null
     })
-    Zotero.BetterBibTeX.PrefPane.load()
+    Zotero.BetterBibTeX.PrefPane.load().catch(err => log.error(err))
   }
 })
 Events.on('preference-changed', (pref: string) => {
@@ -454,7 +454,7 @@ export class PrefPane {
     this.timer = typeof this.timer === 'number' ? this.timer : window.setInterval(this.refresh.bind(this), 500)  // eslint-disable-line no-magic-numbers
   }
 
-  private unload() {
+  public unload(): void {
     if (typeof this.timer === 'number') {
       window.clearInterval(this.timer)
       this.timer = null

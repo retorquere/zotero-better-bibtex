@@ -282,7 +282,7 @@ $patch$(Zotero.Item.prototype, 'getField', original => function Zotero_Item_prot
       case 'citekey':
       case 'citationKey':
         if (Zotero.BetterBibTeX.ready.isPending()) return '' // eslint-disable-line @typescript-eslint/no-use-before-define
-        return Zotero.BetterBibTeX.KeyManager.get(this.id).citekey as string
+        return Zotero.BetterBibTeX.KeyManager.get(this.id).citekey
 
       case 'itemID':
         return `${this.id}`
@@ -378,7 +378,7 @@ Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
   // extractFields(_sandbox, item) { return Extra.get(item.extra) },
 
   strToISO(_sandbox: any, str: string) { return DateParser.strToISO(str) },
-  getContents(_sandbox: any, path: string): string { return Zotero.BetterBibTeX.getContents(path) as string },
+  getContents(_sandbox: any, path: string): string { return Zotero.BetterBibTeX.getContents(path) },
 
   generateBibLaTeX(_sandbox: any, translation: Translation) { generateBibLaTeX(translation) },
   generateBibTeX(_sandbox: any, translation: Translation) { generateBibTeX(translation) },
@@ -743,6 +743,7 @@ class Progress {
 }
 
 export class BetterBibTeX {
+  public uninstalled = false
   public Cache = Cache
 
   // eslint-disable-next-line prefer-arrow/prefer-arrow-functions, @typescript-eslint/no-unsafe-return, @typescript-eslint/explicit-module-boundary-types
@@ -765,6 +766,8 @@ export class BetterBibTeX {
 
   private firstRun: { citekeyFormat: string, dragndrop: boolean, unabbreviate: boolean, strings: boolean }
   public debugEnabledAtStart: boolean
+
+  public generateCSLJSON = generateCSLJSON
 
   constructor() {
     this.debugEnabledAtStart = Zotero.Prefs.get('debug.store')

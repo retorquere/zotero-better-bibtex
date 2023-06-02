@@ -73,7 +73,7 @@ interface ZoteroItem {
 // https://stackoverflow.com/questions/39040108/import-class-in-definition-file-d-ts
 declare const Zotero: {
   [attr: string]: any
-  BetterBibTeX: import('../content/better-bibtex').CBetterBibTeX
+  BetterBibTeX: import('../content/better-bibtex').BetterBibTeX
 }
 
 declare const Components: any
