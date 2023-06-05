@@ -11,6 +11,17 @@ if (typeof Zotero == 'undefined') {
   var Zotero
 }
 
+const BOOTSTRAP_REASONS = {
+  1: 'APP_STARTUP',
+  2: 'APP_SHUTDOWN',
+  3: 'ADDON_ENABLE',
+  4: 'ADDON_DISABLE',
+  5: 'ADDON_INSTALL',
+  6: 'ADDON_UNINSTALL',
+  7: 'ADDON_UPGRADE',
+  8: 'ADDON_DOWNGRADE',
+};
+
 const prefix = 'Debug bridge:'
 function log(msg) {
   // `Zotero` object isn't available in `uninstall()` in Zotero 6, so log manually
@@ -101,8 +112,8 @@ function unpack(phase, data, reason) {
   let { id, version, installPath, resourceURI: rootURI } = data
   if (installPath) installPath = installPath.path
   if (rootURI) rootURI = rootURI.spec
-  data = { id, version, installPath, rootURI, reason }
-  log(`bootstrap@${phase} ${JSON.stringify(data)}`)
+  data = { id, version, installPath, rootURI, reason: BOOTSTRAP_REASONS[reason] || reason, keys: Object.keys(data) }
+  log(`bootstrap::${phase}(${data.reason}) ${JSON.stringify(data)}`)
   return data
 }
 
