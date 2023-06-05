@@ -11,8 +11,16 @@ if (typeof Zotero == 'undefined') {
   var Zotero
 }
 
+const prefix = 'Debug bridge:'
 function log(msg) {
-  Zotero.debug(`Debug bridge: ${msg}`)
+  // `Zotero` object isn't available in `uninstall()` in Zotero 6, so log manually
+  if (typeof Zotero === 'undefined') {
+    dump(`${prefix} ${msg}\n\n`)
+  }
+  else {
+    if (Zotero.DebugBridge) msg = `:${Zotero.DebugBridge}: ${msg}`
+    Zotero.debug(`${prefix} ${msg}`)
+  }
 }
 
 // In Zotero 6, bootstrap methods are called before Zotero is initialized, and using include.js
@@ -89,15 +97,23 @@ function setDefaultPrefs(rootURI) {
   }
 }
 
-async function install() {
-  await waitForZotero()
-  log('installed')
+function unpack(phase, data, reason) {
+  let { id, version, installPath, resourceURI: rootURI } = data
+  if (installPath) installPath = installPath.path
+  if (rootURI) rootURI = rootURI.spec
+  data = { id, version, installPath, rootURI, reason }
+  log(`bootstrap@${phase} ${JSON.stringify(data)}`)
+  return data
 }
 
-async function startup({ id, version, resourceURI, rootURI = resourceURI.spec }) {
+async function install(data, reason) {
   await waitForZotero()
+  unpack('install', data, reason)
+}
 
-  log('startup')
+async function startup(data, reason) {
+  await waitForZotero()
+  const { rootURI } = unpack('startup', data, reason)
 
   // 'Services' may not be available in Zotero 6
   if (typeof Services == 'undefined') {
@@ -144,17 +160,11 @@ async function startup({ id, version, resourceURI, rootURI = resourceURI.spec })
   }
 }
 
-function shutdown() {
-  log('shutdown')
-  delete Zotero.Server.Endpoints['/debug-bridge/execute']
+function shutdown(data, reason) {
+  unpack('shutdown', data, reason)
+  if (Zotero) delete Zotero.Server.Endpoints['/debug-bridge/execute']
 }
 
-function uninstall() {
-  // `Zotero` object isn't available in `uninstall()` in Zotero 6, so log manually
-  if (typeof Zotero == 'undefined') {
-    dump('Debug bridge: uninstall\n\n')
-    return
-  }
-
-  log('uninstall')
+function uninstall(data, reason) {
+  unpack('uninstall', data, reason)
 }

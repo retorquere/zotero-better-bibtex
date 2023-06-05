@@ -885,7 +885,7 @@ export class BetterBibTeX {
         await OS.File.makeDir(this.dir, { ignoreExisting: true })
         await Preference.initAsync(this.dir)
       },
-      shutdown: async () => {
+      shutdown: async () => { // eslint-disable-line @typescript-eslint/require-await
         this.elements.remove()
         $unpatch$()
       },
