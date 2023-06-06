@@ -25,7 +25,10 @@ class Cache extends Loki {
       id: 'cache',
       description: 'cache',
       needs: ['start', 'databases'],
-      startup: async () => { await this.init() },
+      startup: async () => {
+        await this.init()
+        return 'cache load ready'
+      },
       shutdown: async () => {
         const store = this.persistenceAdapter?.constructor?.name || 'Unknown'
         this.throttledSaves = false

@@ -59,7 +59,7 @@ import { Translation } from '../translators/lib/translator'
 // need coroutine here because Zotero calls '.done()' on the nonexistent! result, added automagically by bluebird
 $patch$(Zotero, 'shutdown', original => Zotero.Promise.coroutine(function* () { // eslint-disable-line @typescript-eslint/no-unsafe-return
   try {
-    yield orchestrator.shutdown()
+    yield orchestrator.shutdown('shutdown')
   }
   catch (err) {
     log.error('BBT shutdown: shutdown failed', err)
@@ -71,41 +71,20 @@ $patch$(Zotero, 'shutdown', original => Zotero.Promise.coroutine(function* () { 
 // UNINSTALL
 AddonManager.addAddonListener({
   // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
-  onUninstalling(addon: { id: string }, _needsRestart: any) {
-    if (addon.id !== 'better-bibtex@iris-advies.com') return null
-
-    clean_pane_persist()
-    const quickCopy = Zotero.Prefs.get('export.quickCopy.setting')
-    for (const [label, metadata] of (Object.entries(Translators.byName) )) {
-      if (quickCopy === `export=${metadata.translatorID}`) Zotero.Prefs.clear('export.quickCopy.setting')
-
-      try {
-        Translators.uninstall(label)
-      }
-      catch (error) {}
-    }
-
-    Zotero.BetterBibTeX.uninstalled = true
+  async onUninstalling(addon: { id: string }, _needsRestart: any) {
+    if (addon.id === 'better-bibtex@iris-advies.com') await orchestrator.shutdown('uninstall')
   },
 
-  onDisabling(addon: any, needsRestart: any) { this.onUninstalling(addon, needsRestart) },
+  async onDisabling(addon: any, needsRestart: any) { await this.onUninstalling(addon, needsRestart) },
 
   // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
-  async onOperationCancelled(addon: { id: string, pendingOperations: number }, _needsRestart: any) {
+  onOperationCancelled(addon: { id: string, pendingOperations: number }, _needsRestart: any) {
     if (addon.id !== 'better-bibtex@iris-advies.com') return null
+
     // eslint-disable-next-line no-bitwise
     if (addon.pendingOperations & (AddonManager.PENDING_UNINSTALL | AddonManager.PENDING_DISABLE)) return null
 
-    for (const header of Object.values(Translators.byId)) {
-      try {
-        await Translators.install(header)
-      }
-      catch (err) {
-        log.error(err)
-      }
-    }
-
-    delete Zotero.BetterBibTeX.uninstalled
+    flash('please restart Zotero to reactivate Better BibTeX')
   },
 })
 
@@ -886,8 +865,9 @@ export class BetterBibTeX {
         await Preference.initAsync(this.dir)
       },
       shutdown: async () => { // eslint-disable-line @typescript-eslint/require-await
-        this.elements.remove()
+        Elements.removeAll()
         $unpatch$()
+        clean_pane_persist()
       },
     })
 

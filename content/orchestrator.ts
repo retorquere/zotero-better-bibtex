@@ -2,11 +2,13 @@ export type Actor = 'start' | 'done' | 'auto-export' | 'translators' | 'TeXstudi
 
 export type Phase = 'startup' | 'shutdown'
 
+export type Reason = 'disable' | 'uninstall' | 'replace' | 'shutdown'
+
 export type Task = {
   id: Actor
   description: string
-  startup?: () => Promise<void>
-  shutdown?: () => Promise<void>
+  startup?: (reason?: Reason) => Promise<void | string>
+  shutdown?: (reason: Reason) => Promise<void | string>
   needs?: Actor[]
   dependencies?: Record<Phase, Set<Actor>>
 }
@@ -27,7 +29,7 @@ export class Orchestrator {
     this.tasks[task.id] = task
   }
 
-  private async run(phase: Phase, progress?: Progress): Promise<void> {
+  private async run(phase: Phase, reason?: Reason, progress?: Progress): Promise<void> {
     const total = Object.keys(this.tasks).length
     let ran = 0
 
@@ -38,19 +40,27 @@ export class Orchestrator {
       const promise: Promise<void> = this.promises[phase][name]
       if (promise != null) return promise
 
-      const { [phase]: action, description, dependencies: { [phase]: dependencies } } = this.tasks[name]
+      let { [phase]: action, description, dependencies: { [phase]: dependencies } } = this.tasks[name]
+      if (!action) action = async () => `nothing to do for ${name}.${phase} ${reason || ''}` // eslint-disable-line @typescript-eslint/require-await
 
       this.promises[phase][name] = circular
       return this.promises[phase][name] = Promise
         .all(Array.from(dependencies).map(run))
         .then(() => { if (phase === 'startup') progress?.(phase, name, ran, total, `starting ${description}`) })
-        .then(action || (async () => { await Zotero.debug(`nothing to do for ${name}.${phase}`) }))
-        .then(() => { progress?.(phase, name, ++ran, total, `${description} started`) })
+        .then(() => action(reason) as Promise<void | string>)
+        .then(result => {
+          result = result ? `: ${result}` : ''
+          progress?.(phase, name, ++ran, total, `${description} started${result}`)
+        })
+        .catch(err => {
+          Zotero.debug(`${name}.${phase} ${reason || ''} error: ${err}`)
+          throw err
+        })
     }
     await Promise.all(Object.keys(this.tasks).map(run))
   }
 
-  async startup(progress?: Progress): Promise<void> {
+  public async startup(progress?: Progress): Promise<void> {
     if (this.tasks[this.start]) {
       for (const [id, task] of Object.entries(this.tasks)) {
         if (id === this.start) continue
@@ -79,11 +89,11 @@ export class Orchestrator {
       }
     }
 
-    await this.run('startup', progress)
+    await this.run('startup', undefined, progress)
   }
 
-  async shutdown(progress?: Progress): Promise<void> {
-    await this.run('shutdown', progress)
+  public async shutdown(reason: Reason, progress?: Progress): Promise<void> {
+    await this.run('shutdown', reason, progress)
   }
 }
 

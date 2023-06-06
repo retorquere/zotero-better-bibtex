@@ -508,7 +508,6 @@ export class Entry {
       let bibstring = ''
       if ((typeof field.value === 'number') || (field.bibtexStrings && (bibstring = this.getBibString(field.value)))) {
         field.bibtex = `${bibstring || field.value}`
-
       }
       else {
         let value
@@ -549,8 +548,8 @@ export class Entry {
             throw new Error(`Unexpected field encoding: ${JSON.stringify(field.enc)}`)
         }
 
-        if (!value) {
-          log.error('add: no value after encoding', field.enc, field.name)
+        if (!value && field.name !== 'file' && field.name !== 'keywords') {
+          log.error('add: no value after encoding', field)
           return null
         }
 

@@ -22,7 +22,7 @@ import { Events } from './events'
 import { Pinger } from './ping'
 import Puqeue from 'puqeue'
 import { is7 } from './client'
-import { orchestrator } from './orchestrator'
+import { orchestrator, Reason } from './orchestrator'
 
 class Queue extends Puqeue {
   get queued() {
@@ -109,6 +109,20 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
             }
           }
         }
+      },
+      shutdown: async (reason: Reason) => {
+        if (reason !== 'uninstall') return
+
+        const quickCopy = Zotero.Prefs.get('export.quickCopy.setting')
+        for (const [label, metadata] of (Object.entries(Translators.byName) )) {
+          if (quickCopy === `export=${metadata.translatorID}`) Zotero.Prefs.clear('export.quickCopy.setting')
+
+          try {
+            Translators.uninstall(label)
+          }
+          catch (error) {}
+        }
+        await Zotero.Translators.reinit()
       },
     })
   }

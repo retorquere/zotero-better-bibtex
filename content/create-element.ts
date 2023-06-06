@@ -4,6 +4,18 @@ export const NAMESPACE = {
 }
 
 export class Elements {
+  static all: Set<HTMLElement> = new Set
+
+  static removeAll(): void {
+    for (const elt of Array.from(this.all)) {
+      try {
+        elt.remove()
+      }
+      catch (err) {}
+    }
+    this.all = new Set
+  }
+
   private className: string
   constructor(private document: Document, namespace: string) {
     this.className = `better-bibtex-${namespace}`
@@ -15,11 +27,13 @@ export class Elements {
     for (const [a, v] of Object.entries(attrs)) {
       elt.setAttribute(a, v)
     }
+    Elements.all.add(elt)
     return elt
   }
 
   remove(): void {
     for (const elt of Array.from(this.document.getElementsByClassName(this.className))) {
+      Elements.all.delete(elt as HTMLElement)
       elt.remove()
     }
   }
