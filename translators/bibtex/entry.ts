@@ -548,8 +548,8 @@ export class Entry {
             throw new Error(`Unexpected field encoding: ${JSON.stringify(field.enc)}`)
         }
 
-        if (!value && field.name !== 'file' && field.name !== 'keywords') {
-          log.error('add: no value after encoding', field)
+        if (!value) {
+          if (field.name !== 'file' && field.name !== 'keywords') log.error('add: no value after encoding', field)
           return null
         }
 
