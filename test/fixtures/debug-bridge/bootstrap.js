@@ -108,11 +108,8 @@ function setDefaultPrefs(rootURI) {
   }
 }
 
-function unpack(phase, data, reason) {
-  let { id, version, installPath, resourceURI: rootURI } = data
-  if (installPath) installPath = installPath.path
-  if (rootURI) rootURI = rootURI.spec
-  data = { id, version, installPath, rootURI, reason: BOOTSTRAP_REASONS[reason] || reason, keys: Object.keys(data) }
+function unpack(phase, { id, version, resourceURI, rootURI = resourceURI.spec }, reason) {
+  data = { id, version, rootURI, reason: BOOTSTRAP_REASONS[reason] || reason }
   log(`bootstrap::${phase}(${data.reason}) ${JSON.stringify(data)}`)
   return data
 }
