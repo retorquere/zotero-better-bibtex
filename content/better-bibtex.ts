@@ -326,6 +326,7 @@ $patch$(itemTree.prototype, '_renderCell', original => function Zotero_ItemTree_
   const item = this.getRow(index).ref
   const citekey = Zotero.BetterBibTeX.KeyManager.get(item.id)
 
+  const document: Document = this.window.document // eslint-disable-line @typescript-eslint/no-shadow
   const icon = document.createElementNS('http://www.w3.org/1999/xhtml', 'span')
   icon.innerText = citekey.pinned ? '\uD83D\uDCCC' : ''
   // icon.className = 'icon icon-bg cell-icon'
