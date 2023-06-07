@@ -7,8 +7,8 @@ export type Reason = 'disable' | 'uninstall' | 'replace' | 'shutdown'
 export type Task = {
   id: Actor
   description: string
-  startup?: (reason?: Reason) => Promise<void | string>
-  shutdown?: (reason: Reason) => Promise<void | string>
+  startup?: (reason?: Reason) => void | string | Promise<void | string>
+  shutdown?: (reason: Reason) => void | string | Promise<void | string>
   needs?: Actor[]
   dependencies?: Record<Phase, Set<Actor>>
 }

@@ -79,26 +79,6 @@
 
   <script src="chrome://zotero/content/include.js"/>
   <script>
-    Zotero.BetterBibTeX.ErrorReport.globals = Function('return this')();
-    window.addEventListener('load', async function() {
-      try {
-        Zotero.debug('loading ErrorReport')
-        await Zotero.BetterBibTeX.ErrorReport.load()
-        Zotero.debug('loaded ErrorReport')
-      }
-      catch (err) {
-        Zotero.debug('failed to load ErrorReport' + err.message)
-      }
-    })
-    window.addEventListener('unload', async function() {
-      try {
-        Zotero.debug('unloading ErrorReport')
-        await Zotero.BetterBibTeX.ErrorReport.unload()
-        Zotero.debug('unloaded ErrorReport')
-      }
-      catch (err) {
-        Zotero.debug('failed to unload ErrorReport' + err.message)
-      }
-    })
+    new Zotero.BetterBibTeX.ErrorReport(window)
   </script>
 </wizard>

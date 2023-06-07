@@ -4,6 +4,7 @@ import { Elements } from './create-element'
 import { Events } from './events'
 
 type XULWindow = Window & { arguments: any[], sizeToContent: () => void }
+// safe to keep these global as only one export window will ever be open at any one time
 var window: XULWindow // eslint-disable-line no-var
 var document: Document // eslint-disable-line no-var
 var Zotero_File_Interface_Export: any // eslint-disable-line no-var
@@ -31,7 +32,7 @@ export class ExportOptions {
       this.unload()
     })
 
-    this.elements = new Elements(document, 'export-options')
+    this.elements = new Elements(document)
     const translateOptions = document.getElementById('translator-options')
     translateOptions.parentNode.insertBefore(this.elements.create('description', {style: 'color: red', hidden: 'true', id: 'better-bibtex-reminder'}), translateOptions)
 

@@ -1,22 +1,21 @@
 /* eslint-disable prefer-rest-params */
 import type BluebirdPromise from 'bluebird'
 
-var window: Window // eslint-disable-line no-var
-var document: Document // eslint-disable-line no-var
+declare var window: Window // eslint-disable-line no-var, @typescript-eslint/no-unused-vars
+declare var document: Document // eslint-disable-line no-var
 
 Components.utils.import('resource://gre/modules/FileUtils.jsm')
 declare const FileUtils: any
 
-declare const ZoteroPane: any
 declare const __estrace: any // eslint-disable-line no-underscore-dangle
 
 import type { XUL } from '../typings/xul'
 import { started } from './startup' // disable monkey patching is unsupported environment
 
 import { Elements } from './create-element'
-import { ZoteroPane as ZoteroPaneHelper } from './ZoteroPane'
+import { ZoteroPane } from './ZoteroPane'
+import { newZoteroItemPane } from './ZoteroItemPane'
 import { ExportOptions } from './ExportOptions'
-import { ItemPane } from './ItemPane'
 import { PrefPane } from './Preferences'
 import { FirstRun } from './FirstRun'
 import { ErrorReport } from './ErrorReport'
@@ -45,7 +44,6 @@ import { Serializer } from './serializer'
 import { AutoExport } from './auto-export'
 import { KeyManager } from './key-manager'
 import { TestSupport } from './test-support'
-import { TeXstudio } from './tex-studio'
 import { $and } from './db/loki'
 import * as l10n from './l10n'
 import * as CSL from 'citeproc'
@@ -326,16 +324,16 @@ $patch$(itemTree.prototype, '_renderCell', original => function Zotero_ItemTree_
   const item = this.getRow(index).ref
   const citekey = Zotero.BetterBibTeX.KeyManager.get(item.id)
 
-  const document: Document = this.window.document // eslint-disable-line @typescript-eslint/no-shadow
-  const icon = document.createElementNS('http://www.w3.org/1999/xhtml', 'span')
+  const doc: Document = this.window.document
+  const icon = doc.createElementNS('http://www.w3.org/1999/xhtml', 'span')
   icon.innerText = citekey.pinned ? '\uD83D\uDCCC' : ''
   // icon.className = 'icon icon-bg cell-icon'
 
-  const text = document.createElementNS('http://www.w3.org/1999/xhtml', 'span')
+  const text = doc.createElementNS('http://www.w3.org/1999/xhtml', 'span')
   text.className = 'cell-text'
   text.innerText = data
 
-  const cell = document.createElementNS('http://www.w3.org/1999/xhtml', 'span')
+  const cell = doc.createElementNS('http://www.w3.org/1999/xhtml', 'span')
   cell.className = `cell ${col.className}`
   cell.append(text, icon)
 
@@ -738,11 +736,9 @@ export class BetterBibTeX {
   public elements: Elements
 
   // panes
-  public ZoteroPane: ZoteroPaneHelper = new ZoteroPaneHelper
   public ExportOptions: ExportOptions = new ExportOptions
-  public ItemPane: ItemPane = new ItemPane
-  public FirstRun = new FirstRun
-  public ErrorReport = new ErrorReport
+  public FirstRun = FirstRun
+  public ErrorReport = ErrorReport
   public PrefPane = new PrefPane
 
   public ready: BluebirdPromise<boolean>
@@ -793,23 +789,25 @@ export class BetterBibTeX {
   }
 
   public openDialog(url: string, title: string, properties: string, params: Record<string, any>): void {
-    (window as any).openDialog(url, title, properties, params)
+    Zotero.getMainWindow().openDialog(url, title, properties, params)
   }
 
   public setProgress(progress: number, msg: string): void {
-    if (!document.getElementById('better-bibtex-progress')) {
+    const doc = Zotero.getMainWindow().document
+    if (!doc.getElementById('better-bibtex-progress')) {
+      const elements = new Elements(doc)
       // progress bar
-      const progressToolbar = this.elements.create('hbox', {
+      const progressToolbar = elements.create('hbox', {
         id: 'better-bibtex-progress',
         hidden: 'true',
         align: 'left',
         pack: 'start',
         flex: '1',
       })
-      const itemToolbar = document.getElementById('zotero-item-toolbar')
+      const itemToolbar = doc.getElementById('zotero-item-toolbar')
       // after hbox-before-zotero-pq-buttons
       itemToolbar.insertBefore(progressToolbar, itemToolbar.firstChild.nextSibling)
-      progressToolbar.appendChild(this.elements.create('hbox', {
+      progressToolbar.appendChild(elements.create('hbox', {
         id: 'better-bibtex-progress-meter',
         width: '20',
         height: '20',
@@ -826,7 +824,7 @@ export class BetterBibTeX {
           background-position: 0 0;
         `,
       }))
-      progressToolbar.appendChild(this.elements.create('label', {
+      progressToolbar.appendChild(elements.create('label', {
         id: 'better-bibtex-progress-label',
         value: 'nothing to see here',
       }))
@@ -834,22 +832,20 @@ export class BetterBibTeX {
 
     progress = Math.max(Math.min(Math.round(progress), 100), 0)
     log.debug('progress:', progress, msg)
-    const progressbox = document.getElementById('better-bibtex-progress')
+    const progressbox = doc.getElementById('better-bibtex-progress')
     if (progressbox.hidden = (progress >= 100)) return
 
-    const progressmeter: XUL.Element = (document.getElementById('better-bibtex-progress-meter') as unknown as XUL.Element)
+    const progressmeter: XUL.Element = (doc.getElementById('better-bibtex-progress-meter') as unknown as XUL.Element)
     progressmeter.style.backgroundPosition = `-${progress * 20}px 0` // eslint-disable-line no-magic-numbers
 
-    const label: XUL.Label = (document.getElementById('better-bibtex-progress-label') as unknown as XUL.Label)
+    const label: XUL.Label = (doc.getElementById('better-bibtex-progress-label') as unknown as XUL.Label)
     label.setAttribute('value', `better bibtex: ${msg}`)
   }
 
   public async startup(): Promise<void> {
     if (typeof this.ready.isPending !== 'function') throw new Error('Zotero.Promise is not using Bluebird')
 
-    window = Zotero.getMainWindow()
-    document = window.document
-    this.elements = new Elements(document, 'zoteropane')
+    this.elements = new Elements(document)
 
     log.debug('Loading Better BibTeX: starting...')
 
@@ -891,7 +887,7 @@ export class BetterBibTeX {
       description: 'user interface',
       startup: async () => {
         this.deferred.resolve(true)
-        await this.load()
+        await this.load(document)
       },
     })
 
@@ -901,13 +897,9 @@ export class BetterBibTeX {
     this.setProgress(100, 'finished')
   }
 
-  public async load(): Promise<void> { // eslint-disable-line @typescript-eslint/explicit-module-boundary-types
+  public async load(doc: Document): Promise<void> {
     Zotero.debug(`{better-bibtex-startup} waiting for Zotero @ ${Date.now() - started}`)
     // progress.start(l10n.localize('BetterBibTeX.startup.waitingForZotero'))
-
-    for (const node of [...document.getElementsByClassName('bbt-texstudio')]) {
-      (node as any).hidden = !TeXstudio.enabled
-    }
 
     // the zero-width-space is a marker to re-save the current default so it doesn't get replaced when the default changes later, which would change new keys suddenly
     // its presence also indicates first-run, so right after the DB is ready, configure BBT
@@ -929,6 +921,7 @@ export class BetterBibTeX {
       Preference.citekeyFormat = (this.firstRun.citekeyFormat === 'zotero') ? 'zotero.clean' : citekeyFormat.replace(/\u200B/g, '')
       Preference.importJabRefAbbreviations = this.firstRun.unabbreviate
       Preference.importJabRefStrings = this.firstRun.strings
+      if (this.firstRun.dragndrop) Zotero.Prefs.set('export.quickCopy.setting', `export=${Translators.byLabel.BetterBibTeXCitationKeyQuickCopy.translatorID}`)
     }
     else {
       this.firstRun = null
@@ -962,17 +955,10 @@ export class BetterBibTeX {
 
     Zotero.debug(`{better-bibtex-startup} startup ready @ ${Date.now() - started}`)
 
-    this.ZoteroPane.load()
-    await this.ItemPane.load()
+    new ZoteroPane(doc)
+    await newZoteroItemPane(doc)
 
     // progress.done()
-
-    if (typeof Zotero.ItemTreeView === 'undefined') ZoteroPane.itemsView.refreshAndMaintainSelection()
-
-    const selected = ZoteroPane.getSelectedItems(true)
-    if (selected.length) Zotero.Notifier.trigger('refresh', 'item', selected)
-
-    if (this.firstRun && this.firstRun.dragndrop) Zotero.Prefs.set('export.quickCopy.setting', `export=${Translators.byLabel.BetterBibTeXCitationKeyQuickCopy.translatorID}`)
 
     void Events.emit('loaded')
 
@@ -998,5 +984,15 @@ export class BetterBibTeX {
     }
   }
 }
+
+Events.on('window-loaded', async ({ win, href }: {win: Window, href: string}) => {
+  if (href === 'chrome://zotero/content/standalone/standalone.xul') {
+    // set globals for libraries that for some reason need these -- probably a flawed env detection
+    window = win
+    document = win.document
+    new ZoteroPane(document)
+    await newZoteroItemPane(document)
+  }
+})
 
 Zotero.BetterBibTeX = Zotero.BetterBibTeX || new BetterBibTeX
