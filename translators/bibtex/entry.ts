@@ -748,6 +748,11 @@ export class Entry {
           case 'ISSN':
             name = key.toLowerCase()
             break
+
+          // https://github.com/retorquere/zotero-better-bibtex/issues/644
+          case 'event-place':
+            name = 'address'
+            break
         }
       }
 
