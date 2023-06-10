@@ -23,6 +23,7 @@ const BOOTSTRAP_REASONS = {
 };
 
 async function sleep(ms) {
+  return
   return new Promise(resolve => Zotero.setTimeout(resolve, ms));
 }
 
