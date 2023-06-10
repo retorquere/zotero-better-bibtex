@@ -47,20 +47,6 @@ export class ErrorReport {
     items?: string
   }
 
-  constructor(win: Window) {
-    window = win
-    document = window.document
-
-    window.addEventListener('unload', async function() {
-      try {
-        if (this.zipfile && await OS.File.exists(this.zipfile)) await OS.File.remove(this.zipfile, { ignoreAbsent: true })
-      }
-      catch (err) {
-        log.debug('failed to unload ErrorReport', err)
-      }
-    })
-  }
-
   public async send(): Promise<void> {
     const wizard = document.getElementById('better-bibtex-error-report')
     wizard.getButton('next').disabled = true
@@ -177,7 +163,20 @@ export class ErrorReport {
     return { region, ...s3.region[region] }
   }
 
-  public async load(): Promise<void> {
+  public async load(win: Window): Promise<void> {
+    window = win
+    document = window.document
+    window.ErrorReport = this
+
+    window.addEventListener('unload', async function() {
+      try {
+        if (this.zipfile && await OS.File.exists(this.zipfile)) await OS.File.remove(this.zipfile, { ignoreAbsent: true })
+      }
+      catch (err) {
+        log.debug('failed to unload ErrorReport', err)
+      }
+    })
+
     this.timestamp = (new Date()).toISOString().replace(/\..*/, '').replace(/:/g, '.')
 
     const wizard = document.getElementById('better-bibtex-error-report')

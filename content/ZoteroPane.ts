@@ -58,6 +58,8 @@ export class ZoteroPane {
       }), doc.getElementById('reportErrors').nextSibling)
     }
 
+    const bbt_zotero_pane_helper = this // eslint-disable-line @typescript-eslint/no-this-alias
+
     $patch$(this.ZoteroPane, 'buildItemContextMenu', original => async function ZoteroPane_buildItemContextMenu() {
       await original.apply(this, arguments) // eslint-disable-line prefer-rest-params
 
@@ -99,15 +101,15 @@ export class ZoteroPane {
       menupopup.appendChild(elements.create('menuseparator'))
       menupopup.appendChild(elements.create('menuitem', {
         label: l10n.localize('better-bibtex.BetterBibTeX.patchDates'),
-        oncommand: () => { this.patchDates() },
+        oncommand: () => { bbt_zotero_pane_helper.patchDates().catch(err => log.error('patchDates', err)) },
       }))
       menupopup.appendChild(elements.create('menuitem', {
         label: l10n.localize('better-bibtex.BetterBibTeX.sentenceCase'),
-        oncommand: () => { this.sentenceCase() },
+        oncommand: () => { bbt_zotero_pane_helper.sentenceCase().catch(err => log.error('sentenceCase', err)) },
       }))
       menupopup.appendChild(elements.create('menuitem', {
         label: l10n.localize('better-bibtex.BetterBibTeX.addCitationLinks'),
-        oncommand: () => { this.addCitationLinks() },
+        oncommand: () => { bbt_zotero_pane_helper.addCitationLinks().catch(err => log.error('addCitationLinks', err)) },
       }))
 
       if (TeXstudio.enabled) {
@@ -115,14 +117,14 @@ export class ZoteroPane {
         menupopup.appendChild(elements.create('menuitem', {
           class: 'bbt-texstudio',
           label: l10n.localize('better-bibtex.BetterBibTeX.TeXstudio'),
-          oncommand: () => { this.toTeXstudio() },
+          oncommand: () => { bbt_zotero_pane_helper.toTeXstudio().catch(err => log.error('toTeXstudio', err)) },
         }))
       }
 
       menupopup.appendChild(elements.create('menuseparator'))
       menupopup.appendChild(elements.create('menuitem', {
         label: l10n.localize('better-bibtex.BetterBibTeX.reportErrors'),
-        oncommand: () => { this.errorReport('items') },
+        oncommand: () => { bbt_zotero_pane_helper.errorReport('items') },
       }))
     })
 
@@ -143,13 +145,13 @@ export class ZoteroPane {
             id: 'zotero-collectionmenu-bbt-autoexport-menupopup',
           }))
           .appendChild(elements.create('menuitem', {
-            oncommand: event => { event.stopPropagation(); this.startAutoExport(event) },
+            oncommand: event => { event.stopPropagation(); bbt_zotero_pane_helper.startAutoExport(event) },
           }))
 
         collectionmenu.appendChild(elements.create('menuitem', {
           id: 'bbt-collectionmenu-pull-url',
           label: l10n.localize('better-bibtex.BetterBibTeX.show-collection-key'),
-          oncommand: event => { event.stopPropagation(); this.pullExport() },
+          oncommand: event => { event.stopPropagation(); bbt_zotero_pane_helper.pullExport() },
           class: 'menuitem-iconic',
           image: 'chrome://zotero-better-bibtex/skin/bibtex-menu.svg',
         }))
@@ -174,7 +176,7 @@ export class ZoteroPane {
         collectionmenu.appendChild(elements.create('menuitem', {
           id: 'bbt-collectionmenu-report-errors',
           label: l10n.localize('better-bibtex.BetterBibTeX.reportErrors'),
-          oncommand: event => { event.stopPropagation(); this.errorReport('collection') },
+          oncommand: event => { event.stopPropagation(); bbt_zotero_pane_helper.errorReport('collection') },
         }))
       }
 
