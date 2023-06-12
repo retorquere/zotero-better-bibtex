@@ -11,5 +11,7 @@ for line in fileinput.input(files=(os.path.expanduser('~/.BBTZ5TEST.log'),), enc
     continue
   elif "pdftotext returned exit status 1" in line:
     continue
+  elif 'has reached its Zotero File Storage quota' in line:
+    continue
   else:
     print(line, end='')
