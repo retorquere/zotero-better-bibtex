@@ -123,12 +123,11 @@ function defer() {
   return Object.assign(new Promise((resolve, reject) => Object.assign(bag, { resolve, reject })), bag)
 }
 
+const promises = []
 function serialize(rootURI) {
-  var bootstrap = {}
-  Components.utils.import(`${rootURI}/bootstrap-helper.js`, bootstrap)
   const promise = defer()
-  bootstrap.promises.push(promise)
-  return [ bootstrap.promises.slice(0, -1), promise ]
+  promises.push(promise)
+  return [ promises.slice(0, -1), promise ]
 }
 
 async function install(data, reason) {
