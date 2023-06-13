@@ -25,10 +25,8 @@ if action not in ['stash', 'fetch', 'pop']:
   sys.exit(1)
 
 generated = [
-  'gen/translators.json',
-  'gen/preferences/defaults.json',
-  'gen/preferences/preferences.json',
   'gen/update.rdf',
+  'gen/updates.json',
 ]
 
 expired = Munch(

@@ -168,7 +168,7 @@
     "words-to-numbers": "^1.5.1",
     "xml-parser": "^1.2.1",
     "xpath": "^0.0.32",
-    "zotero-plugin": "^1.4.22"
+    "zotero-plugin": "^1.4.23"
   },
   "repository": {
     "type": "git",
