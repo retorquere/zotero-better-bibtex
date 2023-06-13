@@ -42,8 +42,8 @@ export async function newZoteroItemPane(doc: Document): Promise<void> {
       await Zotero.Promise.delay(10) // eslint-disable-line no-magic-numbers
       t += 10 // eslint-disable-line no-magic-numbers
     }
-    if (!itemBoxInstance) throw new Error(`could not find #zotero-editpane-item-box after ${wait}ms`)
   }
+  if (!itemBoxInstance) throw new Error(`could not find #zotero-editpane-item-box after ${wait}ms`)
   new ZoteroItemPane(doc, itemBoxInstance)
 }
 
