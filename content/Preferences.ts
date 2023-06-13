@@ -20,15 +20,22 @@ import { flash } from './flash'
 var window: Window & { sizeToContent(): void } // eslint-disable-line no-var
 Events.on('window-loaded', ({ win, href }: {win: Window, href: string}) => {
   Zotero.debug('window-loaded', href)
-  if (href === 'chrome://zotero-better-bibtex/content/Preferences.xul') {
-    window = win as any
-    window.addEventListener('unload', () => {
-      Zotero.BetterBibTeX.PrefPane.unload()
-      window = null
-    })
-    Zotero.BetterBibTeX.PrefPane.load().catch(err => log.error(err))
+  switch (href) {
+    case 'chrome://zotero/content/preferences/preferences.xul':
+      // amend zotero preferences
+      break
+
+    case 'chrome://zotero-better-bibtex/content/Preferences.xul':
+      window = win as any
+      window.addEventListener('unload', () => {
+        Zotero.BetterBibTeX.PrefPane.unload()
+        window = null
+      })
+      Zotero.BetterBibTeX.PrefPane.load().catch(err => log.error(err))
+      break
   }
 })
+
 Events.on('preference-changed', (pref: string) => {
   switch (pref) {
     case 'citekeyFormatEditing':
@@ -504,14 +511,12 @@ export class PrefPane {
       })
     }
 
-    /*
     const quickCopy = window.document.getElementById('id-better-bibtex-preferences-quickCopyMode') as HTMLSelectElement
     const quickCopyMode = quickCopy.options[quickCopy.selectedIndex]?.value
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
     for (const node of (Array.from(window.document.getElementsByClassName('better-bibtex-preferences-quickcopy-details')) as unknown[] as XUL.Element[])) {
       node.hidden = (node.id !== `better-bibtex-preferences-quickcopy-${quickCopyMode}`)
     }
-    */
 
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
     for (const state of (Array.from(window.document.getElementsByClassName('better-bibtex-preferences-worker-state')) as unknown[] as XUL.Textbox[])) {

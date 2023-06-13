@@ -5,7 +5,7 @@ import * as l10n from './l10n'
 import { log } from './logger'
 import { Elements, NAMESPACE } from './create-element'
 
-/*
+/* REVIEW:
 async function title_sentenceCase(label) {
   const val = this._getFieldValue(label)
   const newVal = sentenceCase(val)
@@ -31,14 +31,19 @@ async function title_sentenceCase(label) {
 
 export async function newZoteroItemPane(doc: Document): Promise<void> {
   let itemBoxInstance: HTMLElement
-  const wait = 5000 // eslint-disable-line no-magic-numbers
-  let t = 0
-  // WTF
-  while (!(itemBoxInstance = doc.querySelector('#zotero-editpane-item-box')) && t < wait) {
-    await Zotero.Promise.delay(10) // eslint-disable-line no-magic-numbers
-    t += 10 // eslint-disable-line no-magic-numbers
+  if (client.is7) {
+    itemBoxInstance = (new (doc.defaultView.customElements.get('item-box')))()
   }
-  if (!itemBoxInstance) throw new Error(`could not find #zotero-editpane-item-box after ${wait}ms`)
+  else {
+    const wait = 5000 // eslint-disable-line no-magic-numbers
+    let t = 0
+    // WTF
+    while (!(itemBoxInstance = doc.querySelector('#zotero-editpane-item-box')) && t < wait) {
+      await Zotero.Promise.delay(10) // eslint-disable-line no-magic-numbers
+      t += 10 // eslint-disable-line no-magic-numbers
+    }
+    if (!itemBoxInstance) throw new Error(`could not find #zotero-editpane-item-box after ${wait}ms`)
+  }
   new ZoteroItemPane(doc, itemBoxInstance)
 }
 
