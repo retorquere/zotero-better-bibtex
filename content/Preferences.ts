@@ -357,7 +357,7 @@ export class PrefPane {
 
   public checkPostscript(): void {
     if (!window) {
-      log.debug('Preferences.checkPostscript: window is null')
+      log.debug('Preferences.checkPostscript: window not loaded yet?')
       return
     }
 
