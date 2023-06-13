@@ -78,6 +78,7 @@ export class ZoteroItemPane {
       original.apply(this, arguments)
 
       if (!this.item) {
+        // why is it refreshing if there is no item?!
         log.debug('itemBoxInstance.refresh without an item')
         return
       }
