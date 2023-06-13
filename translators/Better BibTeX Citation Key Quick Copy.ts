@@ -3,9 +3,8 @@ declare const Zotero: any
 
 import { simplifyForExport } from '../gen/items/simplify'
 
-import * as Eta from 'eta'
-
-Eta.config.autoEscape = false
+import { Eta } from 'eta'
+const eta = new Eta({ autoEscape: false })
 
 function select_by_key(item) {
   const [ , kind, lib, key ] = item.uri.match(/^https?:\/\/zotero\.org\/(users|groups)\/((?:local\/)?[^/]+)\/items\/(.+)/)
@@ -140,7 +139,7 @@ const Mode = {
 
   eta(items) {
     try {
-      Zotero.write(Eta.render(Zotero.getHiddenPref('better-bibtex.quickCopyEta'), { items: items.map(simplifyForExport) }))
+      Zotero.write(eta.renderString(Zotero.getHiddenPref('better-bibtex.quickCopyEta'), { items: items.map(simplifyForExport) }))
     }
     catch (err) {
       Zotero.write(`${err}`)
