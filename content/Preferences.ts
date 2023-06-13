@@ -17,7 +17,7 @@ import { pick } from './file-picker'
 import { flash } from './flash'
 
 // safe to keep "global" since only one pref pane will be loaded at any one time
-var window: Window & { sizeToContent(): void } = null // eslint-disable-line no-var
+var window: Window & { sizeToContent(): void } // eslint-disable-line no-var
 Events.on('window-loaded', ({ win, href }: {win: Window, href: string}) => {
   Zotero.debug('window-loaded', href)
   if (href === 'chrome://zotero-better-bibtex/content/Preferences.xul') {
