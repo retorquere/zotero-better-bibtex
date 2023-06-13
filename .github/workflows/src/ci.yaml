@@ -210,6 +210,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - uses: actions/github-script@v6
+      continue-on-error: true
       with:
         script: |
           if (process.env.XPI_RELEASED) {
