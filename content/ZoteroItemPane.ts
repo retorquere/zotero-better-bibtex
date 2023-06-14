@@ -32,7 +32,7 @@ async function title_sentenceCase(label) {
 export async function newZoteroItemPane(doc: Document): Promise<void> {
   let itemBoxInstance: HTMLElement
   if (client.is7) {
-    itemBoxInstance = (new (doc.defaultView.customElements.get('item-box')))()
+    itemBoxInstance = (new (doc.defaultView.customElements.get('item-box')) as any)()
   }
   else {
     const wait = 5000 // eslint-disable-line no-magic-numbers
@@ -43,7 +43,7 @@ export async function newZoteroItemPane(doc: Document): Promise<void> {
       t += 10 // eslint-disable-line no-magic-numbers
     }
   }
-  if (!itemBoxInstance) throw new Error(`could not find #zotero-editpane-item-box after ${wait}ms`)
+  if (!itemBoxInstance) throw new Error('could not find item-box')
   new ZoteroItemPane(doc, itemBoxInstance)
 }
 

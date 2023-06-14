@@ -57,7 +57,7 @@ import { Translation } from '../translators/lib/translator'
 // need coroutine here because Zotero calls '.done()' on the nonexistent! result, added automagically by bluebird
 $patch$(Zotero, 'shutdown', original => Zotero.Promise.coroutine(function* () { // eslint-disable-line @typescript-eslint/no-unsafe-return
   try {
-    yield orchestrator.shutdown('shutdown')
+    yield orchestrator.shutdown(Zotero.BetterBibTeX.uninstalled ? 'uninstall' : 'shutdown')
   }
   catch (err) {
     log.error('BBT shutdown: shutdown failed', err)
@@ -69,20 +69,21 @@ $patch$(Zotero, 'shutdown', original => Zotero.Promise.coroutine(function* () { 
 // UNINSTALL
 AddonManager.addAddonListener({
   // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
-  async onUninstalling(addon: { id: string }, _needsRestart: any) {
-    if (addon.id === 'better-bibtex@iris-advies.com') await orchestrator.shutdown('uninstall')
+  onUninstalling(addon: { id: string }) {
+    if (addon.id === 'better-bibtex@iris-advies.com') Zotero.BetterBibTeX.uninstalled = true
   },
 
-  async onDisabling(addon: any, needsRestart: any) { await this.onUninstalling(addon, needsRestart) },
+  // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
+  onDisabling(addon: { id: string }) {
+    if (addon.id === 'better-bibtex@iris-advies.com') Zotero.BetterBibTeX.uninstalled = true
+  },
 
   // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
-  onOperationCancelled(addon: { id: string, pendingOperations: number }, _needsRestart: any) {
+  onOperationCancelled(addon: { id: string, pendingOperations: number }) {
     if (addon.id !== 'better-bibtex@iris-advies.com') return null
 
     // eslint-disable-next-line no-bitwise
-    if (addon.pendingOperations & (AddonManager.PENDING_UNINSTALL | AddonManager.PENDING_DISABLE)) return null
-
-    flash('please restart Zotero to reactivate Better BibTeX')
+    if (addon.pendingOperations & (AddonManager.PENDING_UNINSTALL | AddonManager.PENDING_DISABLE)) Zotero.BetterBibTeX.uninstalled = false
   },
 })
 
