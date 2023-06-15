@@ -511,11 +511,10 @@ export class PrefPane {
       })
     }
 
-    const quickCopy = window.document.getElementById('id-better-bibtex-preferences-quickCopyMode') as HTMLSelectElement
-    const quickCopyMode = quickCopy.options[quickCopy.selectedIndex]?.value
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
     for (const node of (Array.from(window.document.getElementsByClassName('better-bibtex-preferences-quickcopy-details')) as unknown[] as XUL.Element[])) {
-      node.hidden = (node.id !== `better-bibtex-preferences-quickcopy-${quickCopyMode}`)
+      node.hidden = (node.id !== `better-bibtex-preferences-quickcopy-${Preference.quickCopyMode}`)
+      log.debug('quickcopy:', node.id, !node.hidden)
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
