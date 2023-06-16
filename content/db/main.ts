@@ -6,6 +6,7 @@ import * as ZoteroDB from './zotero'
 
 import { SQLite } from './store/sqlite'
 import { log } from '../logger'
+import { orchestrator } from '../orchestrator'
 
 import * as Translators from '../../gen/translators.json'
 
@@ -21,7 +22,26 @@ export function scrubAutoExport(ae: any): void { // eslint-disable-line @typescr
 }
 
 class Main extends Loki {
-  public async init() {
+  constructor(name, options) {
+    super(name, options)
+
+    orchestrator.add({
+      id: 'maindb',
+      description: 'citekey database',
+      needs: ['databases'],
+      startup: async () => { await this.init() },
+      shutdown: async () => {
+        const store = this.persistenceAdapter?.constructor?.name || 'Unknown'
+        this.throttledSaves = false
+        log.debug(`Loki.${store}.shutdown: saving ${this.filename}`)
+        await this.saveDatabaseAsync()
+        log.debug(`Loki.${store}.shutdown: closing ${this.filename}`)
+        await this.closeAsync()
+      },
+    })
+  }
+
+  private async init() {
     await this.loadDatabaseAsync()
 
     const citekeys = this.schemaCollection('citekey', {

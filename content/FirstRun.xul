@@ -61,6 +61,6 @@
 
   <script src="chrome://zotero/content/include.js"/>
   <script>
-    Zotero.BetterBibTeX.FirstRun.globals = Function('return this')()
+    new Zotero.BetterBibTeX.FirstRun(window)
   </script>
 </wizard>

@@ -1,15 +1,26 @@
 import { pathSearch } from './path-search'
 import { log } from './logger'
+import { orchestrator } from './orchestrator'
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export const TeXstudio = new class { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   public enabled: boolean
   public texstudio: string
 
-  public async init() {
-    this.texstudio = await pathSearch('texstudio', { mac: ['/Applications/texstudio.app/Contents/MacOS'], win: ['C:\\Program Files (x86)\\texstudio', 'C:\\Program Files\\texstudio'] })
-    this.enabled = !!this.texstudio
-    if (!this.enabled) log.debug('TeXstudio: not found')
+  constructor() {
+    orchestrator.add({
+      id: 'TeXstudio',
+      description: 'TeXstudio support',
+      needs: ['start'],
+      startup: async () => {
+        this.texstudio = await pathSearch('texstudio', {
+          mac: ['/Applications/texstudio.app/Contents/MacOS'],
+          win: ['C:\\Program Files (x86)\\texstudio', 'C:\\Program Files\\texstudio'],
+        })
+        this.enabled = !!this.texstudio
+        if (!this.enabled) log.debug('TeXstudio: not found')
+      },
+    })
   }
 
   public async push(citation?: string) {

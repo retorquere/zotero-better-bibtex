@@ -3,23 +3,47 @@ export const NAMESPACE = {
   HTML: 'http://www.w3.org/1999/xhtml',
 }
 
+type Handler = (event?: any) => void | Promise<void>
+
 export class Elements {
-  private className: string
-  constructor(private document: Document, namespace: string) {
-    this.className = `better-bibtex-${namespace}`
+  static all: Set<HTMLElement> = new Set
+
+  static removeAll(): void {
+    for (const elt of Array.from(this.all)) {
+      try {
+        elt.remove()
+      }
+      catch (err) {}
+    }
+    this.all = new Set
   }
 
-  create(name: string, attrs: Record<string, string> = {}, namespace = NAMESPACE.XUL): HTMLElement {
+  private className: string
+  constructor(private document: Document) {
+    this.className = `better-bibtex-${Zotero.Utilities.generateObjectKey()}`
+  }
+
+  create(name: string, attrs: Record<string, string | Handler> = {}, namespace = NAMESPACE.XUL): HTMLElement {
     const elt: HTMLElement = this.document.createElementNS(namespace, name) as HTMLElement
     attrs.class = `${this.className} ${attrs.class || ''}`.trim()
     for (const [a, v] of Object.entries(attrs)) {
-      elt.setAttribute(a, v)
+      if (typeof v === 'string') {
+        elt.setAttribute(a, v)
+      }
+      else if (a.startsWith('on')) {
+        elt.addEventListener(a.replace('on', ''), () => { (v() as Promise<void>)?.catch?.(err => { throw(err) }) })
+      }
+      else {
+        throw new Error(`unexpected attribute ${a}`)
+      }
     }
+    Elements.all.add(elt)
     return elt
   }
 
   remove(): void {
     for (const elt of Array.from(this.document.getElementsByClassName(this.className))) {
+      Elements.all.delete(elt as HTMLElement)
       elt.remove()
     }
   }

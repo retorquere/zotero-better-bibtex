@@ -22,6 +22,7 @@ import { Events } from './events'
 import { Pinger } from './ping'
 import Puqeue from 'puqeue'
 import { is7 } from './client'
+import { orchestrator, Reason } from './orchestrator'
 
 class Queue extends Puqeue {
   get queued() {
@@ -63,48 +64,67 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
   constructor() {
     Object.assign(this, translatorMetadata)
-  }
 
-  public async init() {
-    await this.start()
+    orchestrator.add({
+      id: 'translators',
+      description: 'translators',
+      needs: ['start'],
+      startup: async () => {
+        await this.start()
 
-    this.itemType = {
-      note: Zotero.ItemTypes.getID('note'),
-      attachment: Zotero.ItemTypes.getID('attachment'),
-      annotation: Zotero.ItemTypes.getID('annotation') || 'NULL',
-    }
-
-    // cleanup old translators
-    this.uninstall('Better BibTeX Quick Copy')
-    this.uninstall('\u672B BetterBibTeX JSON (for debugging)')
-    this.uninstall('BetterBibTeX JSON (for debugging)')
-
-    await Zotero.Translators.init()
-
-    const reinit: { header: Translator.Header, code: string }[] = []
-    let header: Translator.Header
-    let code: string
-    // fetch from resource because that has the hash
-    for (header of Object.keys(this.byName).map(name => JSON.parse(Zotero.File.getContentsFromURL(`resource://zotero-better-bibtex/${name}.json`)) as Translator.Header)) {
-      // workaround for mem limitations on Windows
-      if (typeof header.displayOptions?.worker === 'boolean') header.displayOptions.worker = !!Zotero.isWin
-      if (code = await this.install(header)) reinit.push({ header, code })
-    }
-
-    if (reinit.length) {
-      await Zotero.Translators.reinit()
-
-      for ({ header, code } of reinit) {
-        if (Zotero.Translators.getCodeForTranslator) {
-          const translator = Zotero.Translators.get(header.translatorID)
-          translator.cacheCode = true
-          await Zotero.Translators.getCodeForTranslator(translator)
+        this.itemType = {
+          note: Zotero.ItemTypes.getID('note'),
+          attachment: Zotero.ItemTypes.getID('attachment'),
+          annotation: Zotero.ItemTypes.getID('annotation') || 'NULL',
         }
-        else {
-          new Zotero.Translator({...header, cacheCode: true, code })
+
+        // cleanup old translators
+        this.uninstall('Better BibTeX Quick Copy')
+        this.uninstall('\u672B BetterBibTeX JSON (for debugging)')
+        this.uninstall('BetterBibTeX JSON (for debugging)')
+
+        await Zotero.Translators.init()
+
+        const reinit: { header: Translator.Header, code: string }[] = []
+        let header: Translator.Header
+        let code: string
+        // fetch from resource because that has the hash
+        for (header of Object.keys(this.byName).map(name => JSON.parse(Zotero.File.getContentsFromURL(`resource://zotero-better-bibtex/${name}.json`)) as Translator.Header)) {
+          // workaround for mem limitations on Windows
+          if (typeof header.displayOptions?.worker === 'boolean') header.displayOptions.worker = !!Zotero.isWin
+          if (code = await this.install(header)) reinit.push({ header, code })
         }
-      }
-    }
+
+        if (reinit.length) {
+          await Zotero.Translators.reinit()
+
+          for ({ header, code } of reinit) {
+            if (Zotero.Translators.getCodeForTranslator) {
+              const translator = Zotero.Translators.get(header.translatorID)
+              translator.cacheCode = true
+              await Zotero.Translators.getCodeForTranslator(translator)
+            }
+            else {
+              new Zotero.Translator({...header, cacheCode: true, code })
+            }
+          }
+        }
+      },
+      shutdown: async (reason: Reason) => {
+        if (reason !== 'uninstall') return
+
+        const quickCopy = Zotero.Prefs.get('export.quickCopy.setting')
+        for (const [label, metadata] of (Object.entries(Translators.byName) )) {
+          if (quickCopy === `export=${metadata.translatorID}`) Zotero.Prefs.clear('export.quickCopy.setting')
+
+          try {
+            Translators.uninstall(label)
+          }
+          catch (error) {}
+        }
+        await Zotero.Translators.reinit()
+      },
+    })
   }
 
   public getTranslatorId(name: string): string {

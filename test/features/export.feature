@@ -191,6 +191,7 @@ Feature: Export
 
     Examples:
       | file                                                                                                               | references |
+      | event-place in extra not exported to address #2533                                                                 | 1          |
       | arXiv categories missing in the BibTeX output when stored only in the Extra field #2483                            | 1          |
       | missing  before _ in url in .bib file #2466                                                                        | 1          |
       | {relax} in author also removes trailing dot '.' #2454                                                              | 1          |
@@ -277,9 +278,9 @@ Feature: Export
     Then an export using "Better BibLaTeX" should match "export/*.biblatex"
 
     Examples:
-      | file                                                                                                                     | references |
-      | inspireHep fetching broken #2201  | 1          |
-      | fetch inspire-hep key #1879       | 1          |
+      | file                             | references |
+      | inspireHep fetching broken #2201 | 1          |
+      | fetch inspire-hep key #1879      | 1          |
 
   @csl @timeout=3000
   Scenario Outline: Export <references> references for CSL-JSON to <file>

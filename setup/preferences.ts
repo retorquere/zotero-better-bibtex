@@ -8,8 +8,10 @@ import * as path from 'path'
 import * as glob from 'glob-promise'
 import * as peggy from 'peggy'
 import * as matter from 'gray-matter'
-import * as eta from 'eta'
 import * as _ from 'lodash'
+
+import { Eta } from 'eta'
+const eta = new Eta
 
 function error(...args) {
   console.log(...args)
@@ -454,7 +456,7 @@ The Better BibTeX hidden preferences are preceded by “extensions.zotero.transl
 
     for (const [slug, page] of Object.entries(this.pages)) {
       if (!page.path) error('no template for', slug)
-      page.matter.content = eta.render(`\n\n{{% preferences/header %}}\n\n${page.content}`, prefs)
+      page.matter.content = eta.renderString(`\n\n{{% preferences/header %}}\n\n${page.content}`, prefs)
       fs.writeFileSync(page.path, page.matter.stringify())
     }
   }
@@ -476,8 +478,8 @@ The Better BibTeX hidden preferences are preceded by “extensions.zotero.transl
       }
     }
 
-    fs.writeFileSync('gen/preferences.ts', eta.render(fs.readFileSync('setup/templates/preferences/preferences.ts.eta', 'utf-8'), { preferences }))
-    fs.writeFileSync('gen/preferences/meta.ts', eta.render(fs.readFileSync('setup/templates/preferences/meta.ts.eta', 'utf-8'), { preferences, translators }))
+    fs.writeFileSync('gen/preferences.ts', eta.renderString(fs.readFileSync('setup/templates/preferences/preferences.ts.eta', 'utf-8'), { preferences }))
+    fs.writeFileSync('gen/preferences/meta.ts', eta.renderString(fs.readFileSync('setup/templates/preferences/meta.ts.eta', 'utf-8'), { preferences, translators }))
   }
 }
 

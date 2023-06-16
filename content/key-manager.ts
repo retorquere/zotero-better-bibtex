@@ -1,5 +1,7 @@
 Components.utils.import('resource://gre/modules/Services.jsm')
 
+import { orchestrator } from './orchestrator'
+
 import ETA from 'node-eta'
 
 import { kuroshiro } from './key-manager/japanese'
@@ -31,7 +33,7 @@ import * as l10n from './l10n'
 
 type CitekeySearchRecord = { itemID: number, libraryID: number, itemKey: string, citekey: string }
 
-export class KeyManager {
+export const KeyManager = new class _KeyManager {
   public keys: any
   public query: {
     field: { extra?: number, title?: number }
@@ -165,34 +167,43 @@ export class KeyManager {
     if (updates.length) itemsChanged(updates)
   }
 
-  public async init(): Promise<void> {
-    log.debug('keymanager.init: kuroshiro/jieba')
-    await kuroshiro.init()
-    chinese.init()
+  constructor() {
+    orchestrator.add({
+      id: 'keymanager',
+      description: 'keymanager',
+      needs: ['databases', 'maindb'],
+      startup: async () => {
+        log.debug('keymanager.init: kuroshiro/jieba')
+        await kuroshiro.init()
+        chinese.init()
 
-    log.debug('keymanager.init: get keys')
-    this.keys = DB.getCollection('citekey')
+        log.debug('keymanager.init: get keys')
+        this.keys = DB.getCollection('citekey')
 
-    this.query = {
-      field: {},
-      type: {},
-    }
+        this.query = {
+          field: {},
+          type: {},
+        }
 
-    log.debug('keymanager.init: pre-fetching types/fields')
-    for (const type of await ZoteroDB.queryAsync('select itemTypeID, typeName from itemTypes')) { // 1 = attachment, 14 = note
-      this.query.type[type.typeName] = type.itemTypeID
-    }
+        log.debug('keymanager.init: pre-fetching types/fields')
+        for (const type of await ZoteroDB.queryAsync('select itemTypeID, typeName from itemTypes')) { // 1 = attachment, 14 = note
+          this.query.type[type.typeName] = type.itemTypeID
+        }
 
-    for (const field of await ZoteroDB.queryAsync('select fieldID, fieldName from fields')) {
-      this.query.field[field.fieldName] = field.fieldID
-    }
+        for (const field of await ZoteroDB.queryAsync('select fieldID, fieldName from fields')) {
+          this.query.field[field.fieldName] = field.fieldID
+        }
 
-    log.debug('keymanager.init: compiling', Preference.citekeyFormat)
-    Formatter.update([Preference.citekeyFormat])
-    log.debug('keymanager.init: done')
+        log.debug('keymanager.init: compiling', Preference.citekeyFormat)
+        Formatter.update([Preference.citekeyFormat])
+        log.debug('keymanager.init: done')
+
+        await this.start()
+      },
+    })
   }
 
-  public async start(): Promise<void> {
+  private async start(): Promise<void> {
     await this.rescan()
 
     if (Preference.citekeySearch) {

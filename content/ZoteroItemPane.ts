@@ -1,15 +1,11 @@
 import { patch as $patch$ } from './monkey-patch'
 // import { sentenceCase } from './text'
-import { Events } from './events'
 import * as client from './client'
 import * as l10n from './l10n'
 import { log } from './logger'
+import { Elements, NAMESPACE } from './create-element'
 
-var window: Window // eslint-disable-line no-var
-var document: Document // eslint-disable-line no-var
-var ZoteroItemPane // eslint-disable-line no-var
-
-/*
+/* REVIEW:
 async function title_sentenceCase(label) {
   const val = this._getFieldValue(label)
   const newVal = sentenceCase(val)
@@ -33,59 +29,56 @@ async function title_sentenceCase(label) {
 }
 */
 
-export class ItemPane {
-  observer: number
-
-  init(): boolean {
-    if (typeof this.observer !== 'undefined' || !Zotero.BetterBibTeX.KeyManager.keys) return false
-
-    this.observer = Zotero.BetterBibTeX.KeyManager.keys.on(['update', 'insert'], () => {
-      this.refresh()
-    })
-    return true
+export async function newZoteroItemPane(doc: Document): Promise<void> {
+  let itemBoxInstance: HTMLElement
+  if (client.is7) {
+    itemBoxInstance = (new (doc.defaultView.customElements.get('item-box')) as any)()
   }
+  else {
+    const wait = 5000 // eslint-disable-line no-magic-numbers
+    let t = 0
+    // WTF
+    while (!(itemBoxInstance = doc.querySelector('#zotero-editpane-item-box')) && t < wait) {
+      await Zotero.Promise.delay(10) // eslint-disable-line no-magic-numbers
+      t += 10 // eslint-disable-line no-magic-numbers
+    }
+  }
+  if (!itemBoxInstance) throw new Error('could not find item-box')
+  new ZoteroItemPane(doc, itemBoxInstance)
+}
+
+export class ZoteroItemPane {
+  observer: number
+  document: Document
+  elements: Elements
 
   public refresh(): void {
     // eslint disagrees with the typescript compiler on the return type of querySelector
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
-    (document.querySelector('#zotero-editpane-item-box') as any).refresh()
+    (this.document.querySelector('#zotero-editpane-item-box') as any).refresh()
   }
 
-  public async load(): Promise<void> {
-    await Zotero.BetterBibTeX.ready
+  constructor(doc: Document, itemBoxInstance: any) { // eslint-disable-line @typescript-eslint/explicit-module-boundary-types
+    this.document = doc
+    const elements = this.elements = new Elements(doc)
+    const win = doc.defaultView
+    const itemPane = (win as any).ZoteroItemPane
+    itemPane.BetterBibTeX = this
 
-    window = Zotero.getMainWindow()
-    document = window.document
-    ZoteroItemPane = (window as any).ZoteroItemPane
+    this.observer = Zotero.BetterBibTeX.KeyManager.keys.on(['update', 'insert'], () => {
+      this.refresh()
+    })
 
-    window.addEventListener('unload', () => {
+    win.addEventListener('unload', () => {
       this.unload()
     })
 
-    const itempane = this // eslint-disable-line @typescript-eslint/no-this-alias
-    $patch$(ZoteroItemPane, 'viewItem', original => async function(_item, _mode, _index) {
-      // eslint-disable-next-line prefer-rest-params
-      await original.apply(this, arguments)
-      itempane.init()
-    })
-
-    this.init()
-
-    let itemBoxInstance = document.querySelector('#zotero-editpane-item-box')
-    const wait = 5000 // eslint-disable-line no-magic-numbers
-    let t = 0
-    // WTF
-    while (!itemBoxInstance && t < wait) {
-      itemBoxInstance = window.document.querySelector('#zotero-editpane-item-box')
-      await Zotero.Promise.delay(10) // eslint-disable-line no-magic-numbers
-      t += 10 // eslint-disable-line no-magic-numbers
-    }
-
-    $patch$((itemBoxInstance as any).__proto__, 'refresh', original => function() {
+    $patch$(itemBoxInstance.__proto__, 'refresh', original => function() {
       // eslint-disable-next-line prefer-rest-params
       original.apply(this, arguments)
 
       if (!this.item) {
+        // why is it refreshing if there is no item?!
         log.debug('itemBoxInstance.refresh without an item')
         return
       }
@@ -93,11 +86,11 @@ export class ItemPane {
       const citekey = Zotero.BetterBibTeX.KeyManager.get(this.item.itemID)
       if (!citekey) return
 
-      const fieldHeader = document.createElement(client.is7 ? 'th' : 'label')
+      const fieldHeader = elements.create(client.is7 ? 'th' : 'label')
       fieldHeader.setAttribute('fieldname', 'citationKey')
       const headerContent = `${l10n.localize('better-bibtex.ItemPane.citekey_column')}${citekey.pinned ? ' \uD83D\uDCCC' : ''}`
       if (client.is7) {
-        const label = document.createElement('label')
+        const label = elements.create('label')
         label.className = 'key'
         label.textContent = headerContent
         fieldHeader.appendChild(label)
@@ -107,12 +100,12 @@ export class ItemPane {
       }
 
       // can't be a read-only textbox because that makes blur in the itembox go bananas
-      const fieldValue = document.createElementNS('http://www.w3.org/1999/xhtml', 'input')
-      fieldValue.setAttribute('readonly', 'true')
-      fieldValue.setAttribute('value', citekey.citekey)
-      // required attributes
-      fieldValue.setAttribute('id', 'itembox-field-value-citationKey')
-      fieldValue.setAttribute('fieldName', 'citationKey')
+      const fieldValue = elements.create('input', {
+        readonly: 'true',
+        value: citekey.citekey,
+        id: 'itembox-field-value-citationKey',
+        fieldName: 'citationKey',
+      }, NAMESPACE.HTML)
 
       const table = client.is7 ? this._infoTable : this._dynamicFields // eslint-disable-line no-underscore-dangle
       const fieldIndex = 1
@@ -132,10 +125,3 @@ export class ItemPane {
     }
   }
 }
-
-Events.on('window-loaded', ({ href }: { href: string }) => {
-  Zotero.debug(`ItemPane: ${href}`)
-  if (href === 'xchrome://zotero/content/exportOptions.xul') {
-    Zotero.ItemPane.load().catch(err => { Zotero.debug(`${err}`) })
-  }
-})

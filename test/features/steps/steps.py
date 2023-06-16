@@ -410,4 +410,4 @@ def step_impl(context):
 
 @step(u'I copy date-added/date-modified for the selected items from the extra field')
 def step_impl(context):
-  context.zotero.execute('Zotero.BetterBibTeX.ZoteroPane.patchDates()')
+  context.zotero.execute('Zotero.getActiveZoteroPane().BetterBibTeX.patchDates()')

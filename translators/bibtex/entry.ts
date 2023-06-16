@@ -508,7 +508,6 @@ export class Entry {
       let bibstring = ''
       if ((typeof field.value === 'number') || (field.bibtexStrings && (bibstring = this.getBibString(field.value)))) {
         field.bibtex = `${bibstring || field.value}`
-
       }
       else {
         let value
@@ -550,7 +549,7 @@ export class Entry {
         }
 
         if (!value) {
-          log.error('add: no value after encoding', field.enc, field.name)
+          if (field.name !== 'file' && field.name !== 'keywords') log.error('add: no value after encoding', field)
           return null
         }
 
@@ -748,6 +747,11 @@ export class Entry {
           case 'DOI':
           case 'ISSN':
             name = key.toLowerCase()
+            break
+
+          // https://github.com/retorquere/zotero-better-bibtex/issues/644
+          case 'event-place':
+            name = 'address'
             break
         }
       }

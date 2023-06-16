@@ -25,6 +25,7 @@ config.rules['@typescript-eslint/member-delimiter-style'] = [ 'error', {
 }]
 config.rules['@typescript-eslint/no-unused-vars'] = [ 'error', { "argsIgnorePattern": "^_" } ]
 config.rules['no-magic-numbers'] = [ "error", { "ignore": [ -1, 0, 1, 2, 100, 1000 ] } ]
+config.rules['max-len'] = [ 'warn', { code: 320 } ],
 
 config.ignorePatterns = [
   'webpack.config.ts',
