@@ -1,6 +1,11 @@
 /* eslint-disable prefer-rest-params */
 import type BluebirdPromise from 'bluebird'
 
+if (Zotero.platformMajorVersion < 102) { // eslint-disable-line no-magic-numbers
+  // Components.utils.importGlobalProperties(['require'])
+  Components.utils.importGlobalProperties(['fetch', 'TextEncoder', 'TextDecoder'])
+}
+
 declare var window: Window // eslint-disable-line no-var, @typescript-eslint/no-unused-vars
 declare var document: Document // eslint-disable-line no-var
 
