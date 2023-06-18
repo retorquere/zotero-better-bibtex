@@ -91,9 +91,7 @@ AddonManager.addAddonListener({
   },
 })
 
-/*
-  MONKEY PATCHES
-*/
+// MONKEY PATCHES
 
 // zotero moved itemToCSLJSON to Zotero.Utilities.Item, jurism for the moment keeps it on ZU
 $patch$(Zotero.Utilities.Item?.itemToCSLJSON ? Zotero.Utilities.Item : Zotero.Utilities, 'itemToCSLJSON', original => function itemToCSLJSON(zoteroItem: { itemID: any }) {
