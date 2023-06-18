@@ -14,7 +14,7 @@ declare const FileUtils: any
 declare const __estrace: any // eslint-disable-line no-underscore-dangle
 
 import type { XUL } from '../typings/xul'
-import { started } from './startup' // disable monkey patching is unsupported environment
+import { started } from './startup' // disable monkey patching is unsupported environment in Z6
 
 import { Elements } from './create-element'
 import { ZoteroPane } from './ZoteroPane'
