@@ -2,7 +2,6 @@
 import type BluebirdPromise from 'bluebird'
 
 if (Zotero.platformMajorVersion < 102) { // eslint-disable-line no-magic-numbers
-  // Components.utils.importGlobalProperties(['require'])
   Components.utils.importGlobalProperties(['fetch', 'TextEncoder', 'TextDecoder'])
 }
 
