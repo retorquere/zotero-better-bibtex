@@ -1,7 +1,7 @@
 declare const AddonManager: any
 
 import { flash } from './flash'
-import { client } from './client'
+import { client, is7 } from './client'
 import * as supported from '../schema/supported.json'
 import { clean_pane_persist } from './clean_pane_persist'
 
@@ -17,7 +17,7 @@ export const enabled = versionCompare.compare(approxVersion(Zotero.version), app
 export const started = Date.now()
 
 Zotero.debug(`{better-bibtex-startup} on ${Zotero.version} ${enabled ? 'en' : 'dis'}abled @ ${started}`)
-if (!enabled) {
+if (!is7 && !enabled) {
   clean_pane_persist()
   flash(`OUTDATED ${client.toUpperCase()} VERSION`, `BBT has been disabled\nNeed at least ${client} ${supported[client]}, found ${Zotero.version}, please upgrade.`, 30) // eslint-disable-line no-magic-numbers
 
