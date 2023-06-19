@@ -350,7 +350,6 @@ $patch$(Zotero.Integration, 'getApplication', original => function Zotero_Integr
   return original.apply(this, arguments)
 })
 
-/* bugger this, I don't want megabytes of shared code in the translators */
 import * as DateParser from './dateparser'
 import type { ParsedDate } from './dateparser'
 
