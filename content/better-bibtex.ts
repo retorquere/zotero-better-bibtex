@@ -355,19 +355,6 @@ import type { ParsedDate } from './dateparser'
 
 Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
   clientName: Zotero.clientName,
-  /*
-  titleCase(_sandbox: any, text: string): string { return titleCase(text) },
-  parseHTML(_sandbox: any, text: { toString: () => any }, options: HTMLParserOptions) {
-    options = {
-      ...options,
-      exportBraceProtection: Preference.exportBraceProtection,
-      csquotes: Preference.csquotes,
-      exportTitleCase: Preference.exportTitleCase,
-    }
-    return HTMLParser.parse(text.toString(), options)
-  },
-  */
-  // extractFields(_sandbox, item) { return Extra.get(item.extra) },
 
   strToISO(_sandbox: any, str: string) { return DateParser.strToISO(str) },
   getContents(_sandbox: any, path: string): string { return Zotero.BetterBibTeX.getContents(path) },
