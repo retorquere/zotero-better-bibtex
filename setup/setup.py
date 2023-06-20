@@ -9,3 +9,4 @@ import item
 import jieba
 import babel
 import scannablecite
+import manifest
