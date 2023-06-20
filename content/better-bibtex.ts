@@ -14,7 +14,6 @@ declare const FileUtils: any
 declare const __estrace: any // eslint-disable-line no-underscore-dangle
 
 import type { XUL } from '../typings/xul'
-import { started } from './startup' // disable monkey patching is unsupported environment in Z6
 
 import { Elements } from './create-element'
 import { ZoteroPane } from './ZoteroPane'
@@ -887,7 +886,6 @@ export class BetterBibTeX {
   }
 
   public async load(doc: Document): Promise<void> {
-    Zotero.debug(`{better-bibtex-startup} waiting for Zotero @ ${Date.now() - started}`)
     // progress.start(l10n.localize('BetterBibTeX.startup.waitingForZotero'))
 
     // the zero-width-space is a marker to re-save the current default so it doesn't get replaced when the default changes later, which would change new keys suddenly
@@ -941,8 +939,6 @@ export class BetterBibTeX {
 
     // progress.update(l10n.localize('BetterBibTeX.startup.autoExport'), 90) // eslint-disable-line no-magic-numbers
     // AutoExport.start()
-
-    Zotero.debug(`{better-bibtex-startup} startup ready @ ${Date.now() - started}`)
 
     new ZoteroPane(doc)
     await newZoteroItemPane(doc)
