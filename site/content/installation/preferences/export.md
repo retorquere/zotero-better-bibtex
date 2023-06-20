@@ -133,6 +133,8 @@ default: `LaTeX citation`
 Used for drag-and-drop/quick copy using Better BibTeX citation keys. In the Zotero "Export" pane, choose `Better BibTeX Quick Copy`
 as the default export format for quick copy, and choose the desired format for the drag-and-drop citations here.
 
+In the case of Eta templates, the selected items are available as `it.items`. `<%= JSON.stringify(it.items) %>` will show you the available data on the items.
+
 
 Options:
 
@@ -144,7 +146,7 @@ Options:
 * org-ref v3 citation
 * RTF Scan marker
 * Roam Cite Key
-* Atom (https://atom.io/packages/zotero-citations)
+* Atom
 * GitBook
 * Zotero select link
 * Eta template

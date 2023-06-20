@@ -42,6 +42,7 @@ groupbox
       hbox#better-bibtex-preferences-quickcopy-roamCiteKey
 
       hbox#better-bibtex-preferences-quickcopy-atom
+        label.text-link(onclick='Zotero.launchURL("https://atom.io/packages/zotero-citations")') https://atom.io/packages/zotero-citations
 
       hbox#better-bibtex-preferences-quickcopy-gitbook
 
@@ -51,9 +52,9 @@ groupbox
           html:option(value='zotero') &better-bibtex.Preferences.export.quickCopy.selectLink.zotero;
           html:option(value='citationkey') &better-bibtex.Preferences.export.quickCopy.selectLink.citekey;
 
-      vbox#better-bibtex-preferences-quickcopy-eta(align='start')
-        label.text-link(href='https://retorque.re/zotero-better-bibtex/installation/preferences/citation-keys/#quick-copydrag-and-drop-citations' bbt:preference='extensions.zotero.translators.better-bibtex.quickCopyEta') &better-bibtex.Preferences.export.quickCopy.etaTemplate;
-        textbox(rows='10' multiline='true' preference='extensions.zotero.translators.better-bibtex.quickCopyEta')
+      vbox#better-bibtex-preferences-quickcopy-eta(flex='1' align='start')
+        label.text-link(onclick='Zotero.launchURL("https://retorque.re/zotero-better-bibtex/installation/preferences/export/#quick-copydrag-and-drop-citations")' bbt:preference='extensions.zotero.translators.better-bibtex.quickCopyEta') &better-bibtex.Preferences.export.quickCopy.etaTemplate;
+        textbox(rows='10' multiline='true' flex='1' preference='extensions.zotero.translators.better-bibtex.quickCopyEta')
       script.
         var qcm = Zotero.Prefs.get('translators.better-bibtex.quickCopyMode')
         var si = Array.from(document.getElementById('id-better-bibtex-preferences-quickCopyMode').options).findIndex(option => option.value === qcm)
