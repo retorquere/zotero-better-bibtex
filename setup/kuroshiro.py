@@ -8,7 +8,7 @@ import gzip
 
 root = os.path.join(os.path.dirname(__file__), '..')
 
-unzipped = os.path.join(root, 'build/resource/kuromoji')
+unzipped = os.path.join(root, 'build/content/resource/kuromoji')
 os.makedirs(unzipped, exist_ok=True)
 
 def run(cmd):

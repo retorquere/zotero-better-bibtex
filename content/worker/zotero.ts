@@ -498,7 +498,7 @@ ctx.onmessage = function(e: { isTrusted?: boolean, data?: Translators.Worker.Mes
 
       case 'start':
         Object.assign(workerJob, JSON.parse(dec.decode(new Uint8Array(e.data.config))))
-        importScripts(`resource://zotero-better-bibtex/${workerJob.translator}.js`)
+        importScripts(`chrome://zotero-better-bibtex/content/resource/${workerJob.translator}.js`)
         Zotero.init()
         doExport()
         Zotero.done()

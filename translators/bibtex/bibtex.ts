@@ -476,12 +476,12 @@ const importJabRef = new class {
 
   load(translation: Translation) {
     if (!this.loaded.unabbrevations && translation.preferences.importJabRefAbbreviations) {
-      Object.assign(this.unabbrevations, JSON.parse(Zotero.File.getContentsFromURL('resource://zotero-better-bibtex/bibtex/unabbrev.json')))
+      Object.assign(this.unabbrevations, JSON.parse(Zotero.File.getContentsFromURL('chrome://zotero-better-bibtex/content/resource/bibtex/unabbrev.json')))
       this.loaded.unabbrevations = true
     }
 
     if (!this.loaded.strings && translation.preferences.importJabRefStrings) {
-      this.strings = Zotero.File.getContentsFromURL('resource://zotero-better-bibtex/bibtex/strings.bib')
+      this.strings = Zotero.File.getContentsFromURL('chrome://zotero-better-bibtex/content/resource/bibtex/strings.bib')
       this.loaded.strings = true
     }
   }

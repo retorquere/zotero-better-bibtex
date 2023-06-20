@@ -9,7 +9,7 @@ import { client } from '../client'
 
 if (client !== 'node') {
   NodeDictionaryLoader.prototype.loadArrayBuffer = function(url, callback) { // eslint-disable-line prefer-arrow/prefer-arrow-functions
-    url = `resource://zotero-better-bibtex/kuromoji/${url.replace(/.*[\\/]/, '').replace(/\.gz$/, '')}`
+    url = `chrome://zotero-better-bibtex/content/resource/kuromoji/${url.replace(/.*[\\/]/, '').replace(/\.gz$/, '')}`
     const xhr = new XMLHttpRequest()
 
     xhr.open('GET', url, true)
@@ -47,7 +47,7 @@ export const kuroshiro = new class {
       if (!Preference.kuroshiro || this.enabled) return
 
       this.kuroshiro = new Kuroshiro()
-      const analyzer = new KuromojiAnalyzer(client === 'node' ? undefined : 'resource://zotero-better-bibtex/kuromoji')
+      const analyzer = new KuromojiAnalyzer(client === 'node' ? undefined : 'chrome://zotero-better-bibtex/content/resource/kuromoji')
       await this.kuroshiro.init(analyzer)
       this.kuromoji = analyzer._analyzer // eslint-disable-line no-underscore-dangle
       this.enabled = true

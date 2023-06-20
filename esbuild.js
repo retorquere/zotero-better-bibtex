@@ -250,7 +250,7 @@ async function rebuild() {
   // translators
   for (const translator of (await glob('translators/*.json')).map(tr => path.parse(tr))) {
     const header = require('./' + path.join(translator.dir, translator.name + '.json'))
-    const outfile = path.join('build/resource', translator.name + '.js')
+    const outfile = path.join('build/content/resource', translator.name + '.js')
 
     // https://esbuild.github.io/api/#write
     // https://esbuild.github.io/api/#outbase
@@ -280,7 +280,7 @@ async function rebuild() {
     if (!header.configOptions) header.configOptions = {}
     header.configOptions.hash = checksum.digest('hex')
     header.lastUpdated = (new Date).toISOString().replace(/T.*/, '')
-    await fs.promises.writeFile(path.join('build/resource', translator.name + '.json'), JSON.stringify(header, null, 2))
+    await fs.promises.writeFile(path.join('build/content/resource', translator.name + '.json'), JSON.stringify(header, null, 2))
   }
 
   if (await branch() === 'headless') {
