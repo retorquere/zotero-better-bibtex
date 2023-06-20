@@ -54,4 +54,8 @@ groupbox
       vbox#better-bibtex-preferences-quickcopy-eta(align='start')
         label.text-link(href='https://retorque.re/zotero-better-bibtex/installation/preferences/citation-keys/#quick-copydrag-and-drop-citations' bbt:preference='extensions.zotero.translators.better-bibtex.quickCopyEta') &better-bibtex.Preferences.export.quickCopy.etaTemplate;
         textbox(rows='10' multiline='true' preference='extensions.zotero.translators.better-bibtex.quickCopyEta')
-
+      script.
+        var qcm = Zotero.Prefs.get('translators.better-bibtex.quickCopyMode')
+        var si = Array.from(document.getElementById('id-better-bibtex-preferences-quickCopyMode').options).findIndex(option => option.value === qcm)
+        dump(`quickCopyDetails: ${qcm} = ${si}\n`)
+        document.getElementById("quickCopyDetails").selectedIndex = si >= 0 ? si : 0
