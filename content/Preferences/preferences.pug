@@ -260,7 +260,7 @@ bbt:doc.
   You can use custom preferences per export directory:
 
   1. Edit the hidden preference `preferencesOverride`, and set it to a filename like `preferences.json`
-  2. In the directory where you intend to export to, create a file called `preferences.json` (or whatever you set the preference to), or called `[bibfile you are exporting to].json` and add the desired preference overrides in the format `{"override": "preferences": {"skipFields": "note"}}`. You can get your current preferences by exporting to `BetterBibTeX JSON` and removing everything except config.`preferences`, and renaming `config` to `override`.
+  2. In the directory where you intend to export to, create a file called `preferences.json` (or whatever you set the preference to), or called `[bibfile you are exporting to].json` and add the desired preference overrides in the format `{"override": { "preferences": {"skipFields": "note"} } }`. You can get your current preferences by exporting to `BetterBibTeX JSON` and removing everything except config.`preferences`, and renaming `config` to `override`.
   3. Export to that directory.
 
   A preferences override will disable caching for that export.
