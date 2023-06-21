@@ -46,12 +46,14 @@ export class Orchestrator {
       this.promises[phase][name] = circular
       return this.promises[phase][name] = Promise
         .all(Array.from(dependencies).map(run))
-        .then(() => { if (phase === 'startup') progress?.(phase, name, ran, total, `starting ${description}`) })
+        .then(() => { if (phase === 'startup') progress?.(phase, name, ran++, total, `starting ${description}`) })
         .then(() => action(reason) as Promise<void | string>)
+        /*
         .then(result => {
           result = result ? `: ${result}` : ''
           progress?.(phase, name, ++ran, total, `${description} started${result}`)
         })
+        */
         .catch(err => {
           Zotero.debug(`${name}.${phase} ${reason || ''} error: ${err}`)
           throw err
@@ -90,6 +92,7 @@ export class Orchestrator {
     }
 
     await this.run('startup', undefined, progress)
+    progress?.('startup', 'ready', 100, 100, 'ready')
   }
 
   public async shutdown(reason: Reason, progress?: Progress): Promise<void> {
