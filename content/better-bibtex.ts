@@ -15,6 +15,7 @@ declare const __estrace: any // eslint-disable-line no-underscore-dangle
 
 import type { XUL } from '../typings/xul'
 
+import { is7 } from './client'
 import { Elements } from './create-element'
 import { ZoteroPane } from './ZoteroPane'
 import { newZoteroItemPane } from './ZoteroItemPane'
@@ -34,9 +35,6 @@ require('./json-rpc') // just require, initializes the json-rpc end point
 import { AUXScanner } from './aux-scanner'
 import * as Extra from './extra'
 import { sentenceCase, HTMLParser, HTMLParserOptions } from './text'
-
-Components.utils.import('resource://gre/modules/AddonManager.jsm')
-declare const AddonManager: any
 
 import { log } from './logger'
 import { Events, itemsChanged } from './events'
@@ -69,26 +67,29 @@ $patch$(Zotero, 'shutdown', original => Zotero.Promise.coroutine(function* () { 
   yield original.apply(this, arguments)
 }))
 
-// UNINSTALL
-AddonManager.addAddonListener({
-  // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
-  onUninstalling(addon: { id: string }) {
-    if (addon.id === 'better-bibtex@iris-advies.com') Zotero.BetterBibTeX.uninstalled = true
-  },
+declare const AddonManager: any
+if (!is7) {
+  Components.utils.import('resource://gre/modules/AddonManager.jsm')
+  AddonManager.addAddonListener({
+    // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
+    onUninstalling(addon: { id: string }) {
+      if (addon.id === 'better-bibtex@iris-advies.com') Zotero.BetterBibTeX.uninstalled = true
+    },
 
-  // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
-  onDisabling(addon: { id: string }) {
-    if (addon.id === 'better-bibtex@iris-advies.com') Zotero.BetterBibTeX.uninstalled = true
-  },
+    // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
+    onDisabling(addon: { id: string }) {
+      if (addon.id === 'better-bibtex@iris-advies.com') Zotero.BetterBibTeX.uninstalled = true
+    },
 
-  // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
-  onOperationCancelled(addon: { id: string, pendingOperations: number }) {
-    if (addon.id !== 'better-bibtex@iris-advies.com') return null
+    // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
+    onOperationCancelled(addon: { id: string, pendingOperations: number }) {
+      if (addon.id !== 'better-bibtex@iris-advies.com') return null
 
-    // eslint-disable-next-line no-bitwise
-    if (addon.pendingOperations & (AddonManager.PENDING_UNINSTALL | AddonManager.PENDING_DISABLE)) Zotero.BetterBibTeX.uninstalled = false
-  },
-})
+      // eslint-disable-next-line no-bitwise
+      if (addon.pendingOperations & (AddonManager.PENDING_UNINSTALL | AddonManager.PENDING_DISABLE)) Zotero.BetterBibTeX.uninstalled = false
+    },
+  })
+}
 
 // MONKEY PATCHES
 
