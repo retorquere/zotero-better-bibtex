@@ -303,7 +303,7 @@ $patch$(Zotero.Item.prototype, 'clone', original => function Zotero_Item_prototy
   return item
 })
 
-
+if (is7) Services.scriptloader.loadSubScript('resource://zotero/require.js', this)
 const itemTree = require('zotero/itemTree')
 
 $patch$(itemTree.prototype, 'getColumns', original => function Zotero_ItemTree_prototype_getColumns() {
