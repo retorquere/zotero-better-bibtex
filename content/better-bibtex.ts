@@ -722,7 +722,6 @@ export class BetterBibTeX {
   public TestSupport = new TestSupport
   public KeyManager = KeyManager
   public Text = { sentenceCase }
-  public elements: Elements
 
   // panes
   public ExportOptions: ExportOptions = new ExportOptions
@@ -852,6 +851,10 @@ export class BetterBibTeX {
         Elements.removeAll()
         $unpatch$()
         clean_pane_persist()
+        Preference.shutdown()
+        for (const endpoint of Object.keys(Zotero.Server.Endpoints)) {
+          if (endpoint.startsWith('/better-bibtex/')) delete Zotero.Server.Endpoints[endpoint]
+        }
       },
     })
 
@@ -875,6 +878,9 @@ export class BetterBibTeX {
       startup: async () => {
         this.deferred.resolve(true)
         await this.load(document)
+      },
+      shutdown: async () => { // eslint-disable-line @typescript-eslint/require-await
+        Events.clearListeners()
       },
     })
 
