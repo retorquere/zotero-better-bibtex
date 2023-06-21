@@ -834,8 +834,6 @@ export class BetterBibTeX {
   public async startup(): Promise<void> {
     if (typeof this.ready.isPending !== 'function') throw new Error('Zotero.Promise is not using Bluebird')
 
-    this.elements = new Elements(document)
-
     log.debug('Loading Better BibTeX: starting...')
 
     orchestrator.add({
