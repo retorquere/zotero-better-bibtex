@@ -224,7 +224,7 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
     }
   }
 
-  public async initAsync(dir: string) {
+  public async init(dir: string) {
     // load from csv for easier editing
     this.texmap = {}
     await this.loadFromCSV('charmap', OS.Path.join(dir, 'charmap.csv'), '', (rows: Record<string, string>[]) => JSON.stringify(

@@ -846,7 +846,7 @@ export class BetterBibTeX {
 
         this.dir = OS.Path.join(Zotero.DataDirectory.dir, 'better-bibtex')
         await OS.File.makeDir(this.dir, { ignoreExisting: true })
-        await Preference.initAsync(this.dir)
+        await Preference.init(this.dir)
       },
       shutdown: async () => { // eslint-disable-line @typescript-eslint/require-await
         Elements.removeAll()
