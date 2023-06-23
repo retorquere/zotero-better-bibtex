@@ -58,7 +58,7 @@ import { Translation } from '../translators/lib/translator'
 // need coroutine here because Zotero calls '.done()' on the nonexistent! result, added automagically by bluebird
 $patch$(Zotero, 'shutdown', original => Zotero.Promise.coroutine(function* () { // eslint-disable-line @typescript-eslint/no-unsafe-return
   try {
-    yield orchestrator.shutdown(Zotero.BetterBibTeX.uninstalled ? 'uninstall' : 'shutdown')
+    yield orchestrator.shutdown(Zotero.BetterBibTeX.uninstalled ? 'ADDON_UNINSTALL' : 'APP_SHUTDOWN')
   }
   catch (err) {
     log.error('BBT shutdown: shutdown failed', err)
