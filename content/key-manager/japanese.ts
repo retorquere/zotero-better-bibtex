@@ -7,26 +7,23 @@ import KuromojiAnalyzer from 'kuroshiro-analyzer-kuromoji'
 import { Events } from '../events'
 import { client } from '../client'
 
+async function fetchArrayBuffer(url): Promise<ArrayBuffer> {
+  const response = await fetch(url)
+  if (!response.ok) throw new Error(`kuroshiro: loading ${url} failed: status = ${response.status}`)
+  return await response.arrayBuffer()
+}
 if (client !== 'node') {
   NodeDictionaryLoader.prototype.loadArrayBuffer = function(url, callback) { // eslint-disable-line prefer-arrow/prefer-arrow-functions
     url = `chrome://zotero-better-bibtex/content/resource/kuromoji/${url.replace(/.*[\\/]/, '').replace(/\.gz$/, '')}`
-    const xhr = new XMLHttpRequest()
-
-    xhr.open('GET', url, true)
-    xhr.responseType = 'arraybuffer'
-
-    xhr.onload = function() {
-      const err = this.status > 0 && this.status !== 200 // eslint-disable-line no-magic-numbers
-      callback(err ? new Error(xhr.statusText) : null, err ? null : this.response)
-    }
-
-    xhr.onerror = function(pge) { // eslint-disable-line prefer-arrow/prefer-arrow-functions
-      const err = new Error(`could not load ${url}: ${pge}`)
-      log.error('kuromoji: load failed', url, err)
-      callback(err, null)
-    }
-
-    xhr.send()
+    log.debug('kuroshiro: loading', url)
+    fetchArrayBuffer(url)
+      .then(arrayBuffer => {
+        callback(null, arrayBuffer)
+      })
+      .catch(err => {
+        log.debug(`kuroshiro: loading ${url} failed: ${err}`)
+        callback(err, null)
+      })
   }
 }
 
