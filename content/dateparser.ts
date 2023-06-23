@@ -134,7 +134,7 @@ function swap_day_month(day: number, month: number, fix_only = false): number[] 
 export function parse(value: string): ParsedDate {
   const date = parseToDate(value, false)
 
-  /*
+  /* REVIEW:
   if (date.type === 'verbatim') {
     const csl = CSL.DateParser.parseDateToObject(value)
     if (typeof csl.year === 'number') {
