@@ -50,8 +50,9 @@ export const kuroshiro = new class {
       this.enabled = true
     }
     catch (err) {
-      log.error('kuroshiro: initializing failed', err)
-      throw err
+      this.enabled = false
+      log.error(`kuroshiro: initializing failed ${await err}`)
+      throw await err
     }
   }
 
