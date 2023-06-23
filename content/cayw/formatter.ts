@@ -130,7 +130,7 @@ export const Formatter = new class { // eslint-disable-line @typescript-eslint/n
 
     if (citations.length === 0) return ''
 
-    /* test for simple case where multiple entries can be put in a single cite */
+    // test for simple case where multiple entries can be put in a single cite
     if (citations.length > 1) {
       const state = citations.reduce((acc, cit) => {
         for (const field of ['prefix', 'suffix', 'suppressAuthor', 'locator', 'label']) {
