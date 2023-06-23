@@ -243,7 +243,7 @@ function parseToDate(value: string, as_single_date: boolean): ParsedDate {
   }
 
   // 747 'jan 20-22 1977'
-  if (!as_single_date && (m = /^([a-zA-Z]+)\s+([0-9]+)(?:--|-|–)([0-9]+)[, ]\s*([0-9]+)$/.exec(value))) {
+  if (!as_single_date && (m = /^([a-zA-Z]+)\s+([0-9]+)(?:--|-|\u2013)([0-9]+)[, ]\s*([0-9]+)$/.exec(value))) {
     const [ , month, day1, day2, year ] = m
 
     const from = parseToDate(`${month} ${day1} ${year}`, true)
@@ -253,7 +253,7 @@ function parseToDate(value: string, as_single_date: boolean): ParsedDate {
   }
 
   // 747, January 30–February 3, 1989
-  if (!as_single_date && (m = /^([a-zA-Z]+\s+[0-9]+)(?:--|-|–)([a-zA-Z]+\s+[0-9]+)[, ]\s*([0-9]+)$/.exec(value))) {
+  if (!as_single_date && (m = /^([a-zA-Z]+\s+[0-9]+)(?:--|-|\u2013)([a-zA-Z]+\s+[0-9]+)[, ]\s*([0-9]+)$/.exec(value))) {
     const [ , date1, date2, year ] = m
 
     const from = parseToDate(`${date1} ${year}`, true)
@@ -263,7 +263,7 @@ function parseToDate(value: string, as_single_date: boolean): ParsedDate {
   }
 
   // 746, 22-26 June 2015, 29 June-1 July 2011
-  if (!as_single_date && (m = /^([0-9]+)\s*([a-zA-Z]+)?\s*(?:--|-|–)\s*([0-9]+)\s+([a-zA-Z]+)\s+([0-9]+)$/.exec(value))) {
+  if (!as_single_date && (m = /^([0-9]+)\s*([a-zA-Z]+)?\s*(?:--|-|\u2013)\s*([0-9]+)\s+([a-zA-Z]+)\s+([0-9]+)$/.exec(value))) {
     const [ , day1, month1, day2, month2, year ] = m
 
     const from = parseToDate(`${month1 || month2} ${day1} ${year}`, true)
@@ -273,7 +273,7 @@ function parseToDate(value: string, as_single_date: boolean): ParsedDate {
   }
 
   // July-October 1985
-  if (!as_single_date && (m = (/^([a-z]+)(?:--|-|–)([a-z]+)(?:--|-|–|\s+)([0-9]+)$/i).exec(value))) {
+  if (!as_single_date && (m = (/^([a-z]+)(?:--|-|\u2013)([a-z]+)(?:--|-|\u2013|\s+)([0-9]+)$/i).exec(value))) {
     const [ , month1, month2, year ] = m
 
     const from = parseToDate(`${month1} ${year}`, true)
@@ -368,7 +368,7 @@ function parseToDate(value: string, as_single_date: boolean): ParsedDate {
   }
 
   if (!as_single_date) { // try ranges
-    for (const sep of ['--', '-', '/', '_', '–']) {
+    for (const sep of ['--', '-', '/', '_', '\u2013']) {
       const split = value.split(sep)
       if (split.length === 2) {
         const from = parseToDate(split[0], true)
