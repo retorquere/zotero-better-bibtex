@@ -99,17 +99,3 @@ export class Orchestrator {
 }
 
 export const orchestrator = new Orchestrator
-/*
-for (const [id, task] of Object.entries(batch)) {
-  orchestrator.add({ id, ...task })
-}
-
-async function main() {
-  const progress = (phase, name, done, total) => { console.log(phase, name, done, '/', total) }
-  await orchestrator.startup(progress)
-  await orchestrator.startup(progress)
-  await orchestrator.shutdown(progress)
-  await orchestrator.shutdown(progress)
-}
-main()
-*/
