@@ -28,6 +28,7 @@ import { clean_pane_persist } from './clean_pane_persist'
 import { flash } from './flash'
 import { Deferred } from './deferred'
 import { orchestrator } from './orchestrator'
+import type { Reason } from './bootstrap'
 
 import { Preference } from './prefs' // needs to be here early, initializes the prefs observer
 require('./pull-export') // just require, initializes the pull-export end points
@@ -830,7 +831,7 @@ export class BetterBibTeX {
     label.setAttribute('value', `better bibtex: ${msg}`)
   }
 
-  public async startup(): Promise<void> {
+  public async startup(reason: Reason): Promise<void> {
     if (typeof this.ready.isPending !== 'function') throw new Error('Zotero.Promise is not using Bluebird')
 
     log.debug('Loading Better BibTeX: starting...')
@@ -884,7 +885,7 @@ export class BetterBibTeX {
       },
     })
 
-    await orchestrator.startup((phase: string, name: string, done: number, total: number, message: string): void => {
+    await orchestrator.startup(reason, (phase: string, name: string, done: number, total: number, message: string): void => {
       if (phase === 'startup') this.setProgress(done * 100 / total, message || `${phase}: ${name}`)
     })
     this.setProgress(100, 'finished')

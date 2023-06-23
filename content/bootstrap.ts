@@ -133,7 +133,7 @@ function setDefaultPrefs(rootURI) {
 
 export async function install(_data: any, reason: ReasonId) {
   await waitForZotero()
-  await Zotero.BetterBibTeX.orchestrator.startup(BOOTSTRAP_REASONS[reason])
+  await Zotero.BetterBibTeX.startup(BOOTSTRAP_REASONS[reason])
 }
 
 export async function startup({ resourceURI, rootURI = resourceURI.spec }, reason: ReasonId) {
@@ -171,19 +171,19 @@ export async function startup({ resourceURI, rootURI = resourceURI.spec }, reaso
     clearInterval: Zotero.clearInterval,
   }, 'utf-8')
 
-  await Zotero.BetterBibTeX.orchestrator.startup(BOOTSTRAP_REASONS[reason])
+  await Zotero.BetterBibTeX.startup(BOOTSTRAP_REASONS[reason])
 }
 
 export async function shutdown(data: any, reason: ReasonId) {
   if (Zotero.BetterBibTeX) {
-    await Zotero.BetterBibTeX.orchestrator.shutdown(BOOTSTRAP_REASONS[reason])
+    await Zotero.BetterBibTeX.shutdown(BOOTSTRAP_REASONS[reason])
     delete Zotero.BetterBibTeX
   }
 }
 
 export async function uninstall(data: any, reason: ReasonId) {
   if (Zotero.BetterBibTeX) {
-    await Zotero.BetterBibTeX.orchestrator.shutdown(BOOTSTRAP_REASONS[reason])
+    await Zotero.BetterBibTeX.shutdown(BOOTSTRAP_REASONS[reason])
     delete Zotero.BetterBibTeX
   }
 }

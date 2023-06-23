@@ -60,7 +60,7 @@ export class Orchestrator {
     await Promise.all(Object.keys(this.tasks).map(run))
   }
 
-  public async startup(progress?: Progress): Promise<void> {
+  public async startup(reason: Reason, progress?: Progress): Promise<void> {
     if (this.tasks[this.start]) {
       for (const [id, task] of Object.entries(this.tasks)) {
         if (id === this.start) continue
@@ -89,7 +89,7 @@ export class Orchestrator {
       }
     }
 
-    await this.run('startup', undefined, progress)
+    await this.run('startup', reason, progress)
     progress?.('startup', 'ready', 100, 100, 'ready')
   }
 

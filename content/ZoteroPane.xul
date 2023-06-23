@@ -7,7 +7,7 @@
   Zotero.debug(`{better-bibtex-startup} script load @ ${Date.now()}`)
     window.addEventListener('load', async function() {
       try {
-        await Zotero.BetterBibTeX.startup()
+        await Zotero.BetterBibTeX.startup('APP_STARTUP')
       }
       catch (err) {
         Zotero.debug(`{better-bibtex-startup} loading ZoteroPane error: ${err.message}\n${err.stack ||''}`)
