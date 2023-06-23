@@ -10,11 +10,19 @@ if (typeof Services == 'undefined') {
 import type { jieba as jiebaFunc, pinyin as pinyinFunc } from './chinese-optional'
 
 export const chinese = new class {
+  public window: Window
+  public document: Document
+
   public jieba: typeof jiebaFunc
   public pinyin: typeof pinyinFunc
 
   public load(on: boolean) {
-    if (on && !this.jieba) Services.scriptloader.loadSubScript('chrome://zotero-better-bibtex/content/key-manager/chinese.js', this)
+    if (on && !this.jieba) {
+      // needed because jieba-js does environment detection
+      this.window = this.window || Zotero.getMainWindow()
+      this.document = this.document || this.window.document
+      Services.scriptloader.loadSubScript('chrome://zotero-better-bibtex/content/key-manager/chinese.js', this)
+    }
     return on
   }
 
