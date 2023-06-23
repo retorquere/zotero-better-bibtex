@@ -27,7 +27,7 @@ export class Orchestrator {
     this.tasks[task.id] = task
   }
 
-  private async run(phase: Phase, reason?: Reason, progress?: Progress): Promise<void> {
+  private async run(phase: Phase, reason: Reason, progress?: Progress): Promise<void> {
     const total = Object.keys(this.tasks).length
     let ran = 0
 
