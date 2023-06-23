@@ -1,11 +1,9 @@
-import { log } from './logger'
-
 const seconds = 1000
 
 // eslint-disable-next-line no-magic-numbers
 export function flash(title: string, body?: string, timeout = 8): void {
   try {
-    log.debug('flash:', {title, body})
+    Zotero.debug(`{better-bibtex} flash: ${JSON.stringify({title, body})}`)
     const pw = new Zotero.ProgressWindow()
     pw.changeHeadline(`Better BibTeX: ${title}`)
     if (!body) body = title
@@ -15,6 +13,6 @@ export function flash(title: string, body?: string, timeout = 8): void {
     pw.startCloseTimer(timeout * seconds)
   }
   catch (err) {
-    log.error('@flash failed:', {title, body}, err)
+    Zotero.debug(`{better-bibtex} flash: ${JSON.stringify({title, body, err: `${err}`})}`)
   }
 }
