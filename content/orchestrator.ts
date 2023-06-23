@@ -1,6 +1,6 @@
 export type Actor = 'start' | 'done' | 'auto-export' | 'translators' | 'TeXstudio' | 'abbreviator' | 'keymanager' | 'serializer' | 'cache' | 'maindb' | 'databases'
-
 export type Phase = 'startup' | 'shutdown'
+import type { Reason } from './bootstrap'
 
 export type Task = {
   id: Actor

@@ -22,7 +22,8 @@ import { Events } from './events'
 import { Pinger } from './ping'
 import Puqeue from 'puqeue'
 import { is7 } from './client'
-import { orchestrator, Reason } from './orchestrator'
+import { orchestrator } from './orchestrator'
+import type { Reason } from './bootstrap'
 
 class Queue extends Puqeue {
   get queued() {
@@ -111,7 +112,13 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
         }
       },
       shutdown: async (reason: Reason) => {
-        if (reason !== 'uninstall') return
+        switch (reason) {
+          case 'ADDON_DISABLE':
+          case 'ADDON_UNINSTALL':
+            break
+          default:
+            return
+        }
 
         const quickCopy = Zotero.Prefs.get('export.quickCopy.setting')
         for (const [label, metadata] of (Object.entries(Translators.byName) )) {
