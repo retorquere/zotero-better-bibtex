@@ -28,6 +28,7 @@ import { clean_pane_persist } from './clean_pane_persist'
 import { flash } from './flash'
 import { Deferred } from './deferred'
 import { orchestrator } from './orchestrator'
+import type { Reason } from './bootstrap'
 
 import { Preference } from './prefs' // needs to be here early, initializes the prefs observer
 require('./pull-export') // just require, initializes the pull-export end points

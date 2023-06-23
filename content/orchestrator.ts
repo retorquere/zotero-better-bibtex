@@ -2,8 +2,6 @@ export type Actor = 'start' | 'done' | 'auto-export' | 'translators' | 'TeXstudi
 
 export type Phase = 'startup' | 'shutdown'
 
-export type Reason = 'disable' | 'uninstall' | 'replace' | 'shutdown'
-
 export type Task = {
   id: Actor
   description: string
