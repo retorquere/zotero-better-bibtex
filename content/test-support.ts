@@ -22,11 +22,13 @@ export class TestSupport {
   public timedMemoryLog: any
   public scenario: string
 
+  /* REVIEW:
   public startTimedMemoryLog(msecs: number): void {
     if (typeof this.timedMemoryLog === 'undefined') {
       this.timedMemoryLog = setInterval(() => { log.debug('memory use:', memory.state('periodic snapshot')) }, msecs)
     }
   }
+  */
 
   public memoryState(snapshot: string): memory.State {
     const state = memory.state(snapshot)
