@@ -49,9 +49,9 @@ re.char = re.Lu + re.lcChar
 re.L = `${re.Lu}${re.Ll}${re.Lt}${re.Lm}${re.Lo}`
 re.protectedWord = `[${re.lcChar}]*[${re.Lu}][-${re.char}]*`
 
-/* actual regexps */
+// actual regexps
 
-/* TODO: add punctuation */
+// TODO: add punctuation
 re.leadingUnprotectedWord = new RegExp(`^([${re.Lu}][${re.lcChar}]*)[${re.Whitespace}${re.P}]`)
 re.protectedWords = new RegExp(`^(${re.protectedWord})(([${re.Whitespace}])(${re.protectedWord}))*`)
 re.unprotectedWord = new RegExp(`^[${re.char}]+`)
@@ -83,7 +83,6 @@ const ligatures = {
   '\u01CC': 'nj',
 }
 /* eslint-enable */
-
 
 const titleCaseKeep = new RegExp(`(?:(?:[>:?]?[${re.Whitespace}]+)[${re.L}][${re.P}]?(?:[${re.Whitespace}]|$))|(?:(?:<span class="nocase">.*?</span>)|(?:<nc>.*?</nc>))`, 'gi')
 const singleLetter = new RegExp(`^([>:?])?[${re.Whitespace}]+(.)`)
