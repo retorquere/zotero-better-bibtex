@@ -14,9 +14,8 @@ function approxVersion(v: string): string {
 
 const versionCompare = Components.classes['@mozilla.org/xpcom/version-comparator;1'].getService(Components.interfaces.nsIVersionComparator)
 export const enabled = versionCompare.compare(approxVersion(Zotero.version), approxVersion(supported[client])) >= 0
-export const started = Date.now()
 
-Zotero.debug(`{better-bibtex-startup} on ${Zotero.version} ${enabled ? 'en' : 'dis'}abled @ ${started}`)
+Zotero.debug(`{better-bibtex-startup} on ${Zotero.version} ${enabled ? 'en' : 'dis'}abled`)
 if (!is7 && !enabled) {
   clean_pane_persist()
   flash(`OUTDATED ${client.toUpperCase()} VERSION`, `BBT has been disabled\nNeed at least ${client} ${supported[client]}, found ${Zotero.version}, please upgrade.`, 30) // eslint-disable-line no-magic-numbers
