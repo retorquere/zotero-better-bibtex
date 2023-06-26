@@ -88,7 +88,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 
 <!ENTITY better-bibtex.Preferences.export.quickCopy "Schnellkopie">
 <!ENTITY better-bibtex.Preferences.export.quickCopy.explanation "Schnellkopie/Drag-and-Drop-Zitat">
-<!ENTITY better-bibtex.Preferences.export.quickCopy.atom "Atom (https://atom.io/packages/zotero-citations)">
+<!ENTITY better-bibtex.Preferences.export.quickCopy.atom "Atom">
 <!ENTITY better-bibtex.Preferences.export.quickCopy.citekeys "Zitierschlüssel">
 <!ENTITY better-bibtex.Preferences.export.quickCopy.format "Schnellkopie-Format">
 <!ENTITY better-bibtex.Preferences.export.quickCopy.gitbook "GitBook">
