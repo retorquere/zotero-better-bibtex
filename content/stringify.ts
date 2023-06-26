@@ -34,6 +34,8 @@ function stringifyXPCOM(obj): string {
 
 function stringifyError(obj) {
   if (obj instanceof Error) return `[error: ${obj.message || '<unspecified error>'}\n${obj.stack}]`
+  // guess it is an errorevent
+  if (obj.error instanceof Error && obj.message) return `[errorevent: ${obj.message} ${stringifyError(obj.error)}]`
   if (obj instanceof ErrorEvent) return `[errorevent: ${obj.message || '<unspecified errorevent>'}]`
   return ''
 }
