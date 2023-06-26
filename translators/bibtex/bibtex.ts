@@ -5,15 +5,16 @@ import { Exporter as BibTeXExporter } from './exporter'
 import { parse as arXiv } from '../../content/arXiv'
 import { validItem } from '../../content/ajv'
 import { valid, label } from '../../gen/items/items'
-import wordsToNumbers from 'words-to-numbers'
+import wordsToNumbers from 'english2number'
+import { toOrdinal } from 'number-to-words'
+
 import { parse as parseDate, strToISO as strToISODate } from '../../content/dateparser'
 
 import { parseBuffer as parsePList } from 'bplist-parser'
 
-const toWordsOrdinal = require('number-to-words/src/toWordsOrdinal')
 function edition(n: string | number): string {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  if (typeof n === 'number' || (typeof n === 'string' && n.match(/^[0-9]+$/))) return toWordsOrdinal(n).replace(/^\w/, (c: string) => c.toUpperCase())
+  if (typeof n === 'number' || (typeof n === 'string' && n.match(/^[0-9]+$/))) return toOrdinal(n).replace(/^\w/, (c: string) => c.toUpperCase())
   return n
 }
 

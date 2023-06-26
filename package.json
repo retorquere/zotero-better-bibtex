@@ -74,6 +74,7 @@
     "edtf": "^4.4.1",
     "edtfy": "^0.0.8",
     "emittery": "^1.0.1",
+    "english2number": "^1.0.8",
     "fast-safe-stringify": "^2.1.1",
     "fold-to-ascii": "^5.0.1",
     "html-to-md": "^0.8.3",
@@ -165,7 +166,6 @@
     "unicode2latex": "^3.0.3",
     "uri-templates": "^0.2.0",
     "util": "^0.12.5",
-    "words-to-numbers": "^1.5.1",
     "xml-parser": "^1.2.1",
     "xpath": "^0.0.32",
     "zotero-plugin": "^1.4.23"
