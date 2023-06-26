@@ -5,7 +5,7 @@ import { Exporter as BibTeXExporter } from './exporter'
 import { parse as arXiv } from '../../content/arXiv'
 import { validItem } from '../../content/ajv'
 import { valid, label } from '../../gen/items/items'
-import wordsToNumbers from 'english2number'
+import wordsToNumbers from 'words-to-numbers'
 import { toOrdinal } from 'number-to-words'
 
 import { parse as parseDate, strToISO as strToISODate } from '../../content/dateparser'
