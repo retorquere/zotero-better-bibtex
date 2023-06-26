@@ -68,6 +68,7 @@ export class Scheduler {
         timer: 0 as unknown as TimerHandle,
       }
     }
+
     job.timer = setTimeout(j => {
       this.job.delete(id)
       j.handler()
