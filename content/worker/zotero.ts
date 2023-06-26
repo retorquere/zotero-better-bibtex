@@ -26,6 +26,7 @@ import { generateBibTeX } from '../../translators/bibtex/bibtex'
 import { generateCSLJSON } from '../../translators/csl/json'
 import { generateCSLYAML, parseCSLYAML } from '../../translators/csl/yaml'
 import { Translation } from '../../translators/lib/translator'
+import XRegExp from 'xregexp'
 
 import { DOMParser as XMLDOMParser } from '@xmldom/xmldom'
 
@@ -242,6 +243,7 @@ class WorkerZoteroBetterBibTeX {
 const WorkerZoteroUtilities = {
   ...ZU,
   Item: ZUI,
+  XRegExp,
 
   getVersion: () => workerEnvironment.version,
 

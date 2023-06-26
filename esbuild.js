@@ -141,11 +141,11 @@ async function bundle(config) {
   config = {
     bundle: true,
     format: 'iife',
-    // define: { BigInt: 'Number' },
     target: ['firefox60'],
     inject: [],
     treeShaking: true,
-    keepNames: true,
+    // keepNames: true,
+    minify: false,
     ...config,
   }
 
@@ -181,7 +181,6 @@ async function bundle(config) {
   config.metafile = !!config.metafile
 
   console.log('* bundling', target)
-  // console.log('  aliasing BigInt to Number for https://github.com/benjamn/ast-types/issues/750')
   const meta = (await esbuild.build(config)).metafile
   if (typeof metafile === 'string') await fs.promises.writeFile(metafile, JSON.stringify(meta, null, 2))
   if (exportGlobals) {

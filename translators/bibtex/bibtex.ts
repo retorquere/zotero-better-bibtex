@@ -5,7 +5,7 @@ import { Exporter as BibTeXExporter } from './exporter'
 import { parse as arXiv } from '../../content/arXiv'
 import { validItem } from '../../content/ajv'
 import { valid, label } from '../../gen/items/items'
-import wordsToNumbers from 'words-to-numbers'
+import { wordsToNumbers } from 'words-to-numbers'
 import { toOrdinal } from 'number-to-words'
 
 import { parse as parseDate, strToISO as strToISODate } from '../../content/dateparser'
@@ -644,9 +644,9 @@ export class ZoteroItem {
 
   protected $edition(value: string | number): boolean {
     if (typeof value === 'string') {
-      value = value.replace(/^([0-9]+)(nd|th)$/, '$1')
+      value = value.replace(/^([0-9]+)(st|nd|th)$/, '$1')
       const numbers = wordsToNumbers(value)
-      if (typeof numbers === 'number' || (typeof numbers === 'string' && numbers && !numbers.match(/\w/))) value = numbers
+      if (typeof numbers === 'number' || (typeof numbers === 'string' && numbers.match(/^[0-9]+$/))) value = numbers
     }
     return this.set('edition', value)
   }
