@@ -192,6 +192,13 @@ async function bundle(config) {
 }
 
 async function rebuild() {
+  // bootstrap code
+  await bundle({
+    entryPoints: [ 'content/bootstrap.ts' ],
+    outdir: 'build',
+    exportGlobals: true,
+  })
+
   // plugin code
   await bundle({
     entryPoints: [ 'content/better-bibtex.ts' ],
@@ -210,7 +217,11 @@ async function rebuild() {
     footer: { js: '\n}' },
     external: [
       'zotero/itemTree',
-    ]
+      'mock-aws-s3',
+      '@node-rs/jieba-darwin-x64',
+      'nock',
+      'aws-sdk',
+    ],
   })
 
   // chinese for dynamic loading
