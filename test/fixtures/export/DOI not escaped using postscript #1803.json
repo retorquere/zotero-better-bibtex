@@ -8,7 +8,7 @@
     },
     "preferences": {
       "bibtexURL": "url",
-      "postscript": "if (Translator.BetterBibTeX && reference.has.doi) { reference.add({ name: 'doi', value: reference.has.doi.value, enc: 'latex' }) }",
+      "postscript": "if (Translator.BetterBibTeX && zotero.doi) { reference.add({ name: 'doi', value: zotero.doi, enc: 'latex' }) }",
       "citekeyFormat": "[auth:lower][shorttitle3_3][year]"
     }
   },
