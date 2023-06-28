@@ -268,6 +268,7 @@ export function generateBibTeX(translation: Translation): void {
 
     ref.add({name: 'address', value: item.place})
     ref.add({name: 'chapter', value: item.section})
+    log.debug({ bibtexEditionOrdinal: translation.preferences, english: ref.english, edition: item.edition, ordinal: ref.toEnglishOrdinal(item.edition) })
     ref.add({name: 'edition', value: ref.english && translation.preferences.bibtexEditionOrdinal ? ref.toEnglishOrdinal(item.edition) : item.edition })
     ref.add({name: 'type', value: item.type})
     ref.add({name: 'series', value: item.series, bibtexStrings: true})
