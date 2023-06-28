@@ -6,17 +6,10 @@ import { parse as arXiv } from '../../content/arXiv'
 import { validItem } from '../../content/ajv'
 import { valid, label } from '../../gen/items/items'
 import { wordsToNumbers } from 'words-to-numbers'
-import { toOrdinal } from 'number-to-words'
 
 import { parse as parseDate, strToISO as strToISODate } from '../../content/dateparser'
 
 import { parseBuffer as parsePList } from 'bplist-parser'
-
-function edition(n: string | number): string {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  if (typeof n === 'number' || (typeof n === 'string' && n.match(/^[0-9]+$/))) return toOrdinal(n).replace(/^\w/, (c: string) => c.toUpperCase())
-  return n
-}
 
 import { Translation } from '../lib/translator'
 
@@ -275,7 +268,7 @@ export function generateBibTeX(translation: Translation): void {
 
     ref.add({name: 'address', value: item.place})
     ref.add({name: 'chapter', value: item.section})
-    ref.add({name: 'edition', value: ref.english && (typeof item.edition === 'number' || item.edition?.match(/^[0-9]+$/)) ? edition(item.edition) : item.edition })
+    ref.add({name: 'edition', value: ref.english && translation.preferences.bibtexEditionOrdinal ? ref.toEnglishOrdinal(item.edition) : item.edition })
     ref.add({name: 'type', value: item.type})
     ref.add({name: 'series', value: item.series, bibtexStrings: true})
     ref.add({name: 'title', value: item.title})

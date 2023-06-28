@@ -164,6 +164,9 @@
             "biblatexExtractEprint": {
               "type": "boolean"
             },
+            "bibtexEditionOrdinal": {
+              "type": "boolean"
+            },
             "bibtexParticleNoOp": {
               "type": "boolean"
             },

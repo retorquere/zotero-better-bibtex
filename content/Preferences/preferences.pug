@@ -115,6 +115,10 @@ preference(name="extensions.zotero.translators.better-bibtex.bibtexParticleNoOp"
 bbt:doc.
   Name handling is a lot more complex than I had ever thought it to be. A *lot* more complex. BibTeX has really limited ways of dealing with names with particles (van, von, de, etc). If you turn this on, BBT will add code to have `van Gogh` sorted under `Gogh`.
 
+preference(name="extensions.zotero.translators.better-bibtex.bibtexEditionOrdinal" bbt:affects="bibtex" type="bool" default="false")
+bbt:doc.
+  Try to convert a numeric edition value to English words during BibTeX exports
+
 preference(name="extensions.zotero.translators.better-bibtex.skipFields" bbt:affects="*" type="string" default="")
 bbt:doc If there are some fields you don't want in your bibtex files (such as `note` for example), add a list of them here, separated by comma's.
 

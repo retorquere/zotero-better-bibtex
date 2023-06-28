@@ -27,6 +27,8 @@ import { arXiv } from '../../content/arXiv'
 import { stringCompare } from '../lib/string-compare'
 import * as CSL from 'citeproc'
 
+import { toOrdinal } from 'number-to-words'
+
 /*
  * h1 class: Entry
  *
@@ -211,9 +213,6 @@ export class Entry {
       this.language = babelLanguage(item.language)
       this.english = BabelTag[this.language] === 'en'
     }
-
-    // remove ordinal from edition
-    item.edition = (item.edition || '').replace(/^([0-9]+)(nd|th)$/, '$1')
 
     this.extraFields = JSON.parse(JSON.stringify(item.extraFields))
 
@@ -1486,6 +1485,12 @@ export class Entry {
       if (uniq.indexOf(c) < 0) uniq += c
     }
     return uniq
+  }
+
+  public toEnglishOrdinal(n: number | string): string {
+    const sortaNum = typeof n === 'number' ? `${n}` : (n || '').replace(/(st|nd|th)$/, '')
+    if (sortaNum.match(/^[0-9]$/)) return toOrdinal(sortaNum).replace(/^\w/, (c: string) => c.toUpperCase())
+    return typeof n === 'string' ? n : ''
   }
 }
 
