@@ -25,6 +25,18 @@ export const affects: Partial<Record<PreferenceName, string[]>> = <%~ stringify(
   .reduce((acc, p) => { if (p.affects && p.affects.length) acc[p.shortName] = p.affects; return acc}, {})
 ) %>
 
+export const affectedBy: Record<string, PreferenceName[]> = <%~ stringify(
+  it
+  .preferences
+  .reduce((acc, p) => {
+    for (const tr of (p.affects || [])) {
+      acc[tr] = acc[tr] || []
+      acc[tr].push(p.shortName)
+    }
+    return acc
+  }, {})
+) %>
+
 
 export const options: Partial<Record<PreferenceName, Record<string, string>>> = <%~ stringify(
   it

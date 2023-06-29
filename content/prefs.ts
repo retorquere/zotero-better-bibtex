@@ -5,7 +5,7 @@ import { Events } from './events'
 
 declare const Zotero: any
 
-import { names, defaults } from '../gen/preferences/meta'
+import { defaults } from '../gen/preferences/meta'
 import { PreferenceManager as PreferenceManagerBase } from '../gen/preferences'
 import { dict as csv2dict } from './load-csv'
 import { log } from './logger'
@@ -235,7 +235,7 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
       }, {})
     ))
 
-    for (const pref of names) {
+    for (const pref of Object.keys(defaults)) {
       if (pref !== 'platform' && pref !== 'testing') {
         // install event emitter
         this.observe(pref)

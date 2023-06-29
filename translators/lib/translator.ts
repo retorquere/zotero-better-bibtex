@@ -1,14 +1,15 @@
 declare const Zotero: any
 declare const __estrace: any // eslint-disable-line no-underscore-dangle
 
-import { affects, names as preference_names, defaults as preference_defaults, options as preference_options, PreferenceName, Preferences as StoredPreferences, schema } from '../../gen/preferences/meta'
+import * as Prefs from '../../gen/preferences/meta'
+const PrefNames: Set<string> = new Set(Object.keys(Prefs.defaults))
 import { TeXMap } from '../../content/prefs'
 import { client } from '../../content/client'
 import { RegularItem, Item, Collection, Attachment } from '../../gen/typings/serialized-item'
 import type { Exporter as BibTeXExporter } from '../bibtex/exporter'
 import type { ZoteroItem } from '../bibtex/bibtex'
 
-type Preferences = StoredPreferences & { texmap?: TeXMap }
+type Preferences = Prefs.Preferences & { texmap?: TeXMap }
 
 type CacheableItem = Item & { $cacheable: boolean }
 type CacheableRegularItem = RegularItem & { $cacheable: boolean }
@@ -263,14 +264,14 @@ class Override {
         }
 
         for (const [pref, value] of Object.entries(prefs)) {
-          if (!preference_names.includes(pref as unknown as PreferenceName)) {
+          if (!PrefNames.has(pref as unknown as Prefs.PreferenceName)) {
             Zotero.debug(`better-bibtex: unexpected preference override for ${pref}`)
           }
-          else if (typeof value !== typeof preference_defaults[pref]) {
-            Zotero.debug(`better-bibtex: preference override for ${pref}: expected ${typeof preference_defaults[pref]}, got ${typeof value}`)
+          else if (typeof value !== typeof Prefs.defaults[pref]) {
+            Zotero.debug(`better-bibtex: preference override for ${pref}: expected ${typeof Prefs.defaults[pref]}, got ${typeof value}`)
           }
-          else if (preference_options[pref] && !preference_options[pref][value]) {
-            Zotero.debug(`better-bibtex: preference override for ${pref}: expected ${Object.keys(preference_options[pref]).join(' / ')}, got ${value}`)
+          else if (Prefs.options[pref] && !Prefs.options[pref][value]) {
+            Zotero.debug(`better-bibtex: preference override for ${pref}: expected ${Object.keys(Prefs.options[pref]).join(' / ')}, got ${value}`)
           }
           else {
             this.preferences[pref] = value
@@ -420,7 +421,7 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
       translation.preferences.separatorNames = ` ${translation.preferences.separatorNames} `
     }
 
-    if (translation.preferences.testing && typeof __estrace === 'undefined' && schema.translator[translator.label]?.cache) {
+    if (translation.preferences.testing && typeof __estrace === 'undefined' && Prefs.schema.translator[translator.label]?.cache) {
       const ignored = {
         testing: true,
         texmap: true,
@@ -429,12 +430,12 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
         set: (object, property, _value) => {
           throw new TypeError(`Unexpected set of preference ${String(property)}`)
         },
-        get: (object, property: PreferenceName) => {
+        get: (object, property: Prefs.PreferenceName) => {
           // JSON.stringify will attempt to get this
           if (property as unknown as string === 'toJSON') return object[property]
           if (!ignored[property]) {
-            if (!preference_names.includes(property)) throw new TypeError(`Unsupported preference ${property}`)
-            if (!affects[property]?.includes(translator.label)) throw new TypeError(`Preference ${property} claims not to affect ${translator.label}`)
+            if (!PrefNames.has(property)) throw new TypeError(`Unsupported preference ${property}`)
+            if (!Prefs.affects[property]?.includes(translator.label)) throw new TypeError(`Preference ${property} claims not to affect ${translator.label}`)
           }
           return object[property] // eslint-disable-line @typescript-eslint/no-unsafe-return
         },
@@ -479,7 +480,7 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
       }
     }
 
-    this.preferences = Object.entries(preference_defaults).reduce((acc, [pref, dflt]) => {
+    this.preferences = Object.entries(Prefs.defaults).reduce((acc, [pref, dflt]) => {
       acc[pref] = Zotero.getHiddenPref(`better-bibtex.${pref}`) ?? dflt
       return acc
     }, {} as unknown as Preferences)
