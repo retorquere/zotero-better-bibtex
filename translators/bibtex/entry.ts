@@ -27,7 +27,7 @@ import { arXiv } from '../../content/arXiv'
 import { stringCompare } from '../lib/string-compare'
 import * as CSL from 'citeproc'
 
-import { toOrdinal } from 'number-to-words'
+import { toWordsOrdinal, toOrdinal } from 'number-to-words'
 
 /*
  * h1 class: Entry
