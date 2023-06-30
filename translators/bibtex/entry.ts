@@ -1489,8 +1489,15 @@ export class Entry {
 
   public toEnglishOrdinal(n: number | string): string {
     const sortaNum = typeof n === 'number' ? `${n}` : (n || '').replace(/(st|nd|th)$/, '')
-    if (sortaNum.match(/^[0-9]+$/)) return toOrdinal(sortaNum).replace(/^\w/, (c: string) => c.toUpperCase())
-    return typeof n === 'string' ? n : ''
+    if (sortaNum.match(/^[0-9]{1,2}$/)) {
+      return toWordsOrdinal(sortaNum)
+    }
+    else if (sortaNum.match(/^[0-9]+$/)) {
+      return toOrdinal(sortaNum).replace(/^\w/, (c: string) => c.toUpperCase())
+    }
+    else {
+      return typeof n === 'string' ? n : ''
+    }
   }
 }
 
