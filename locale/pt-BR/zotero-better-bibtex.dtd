@@ -193,6 +193,7 @@ If you have this on, and you experience any problem that is not the cache gettin
 <!ENTITY better-bibtex.Preferences.export.bibtex.URLs.url-ish "in the 'url' field, but assuming the 'url' package is not loaded">
 <!ENTITY better-bibtex.Preferences.tab.export "Exportar">
 <!ENTITY better-bibtex.Preferences.export.fields.bibtexParticleNoOp "Ignorar prefixos de nomes ao ordenar">
+<!ENTITY better-bibtex.Preferences.export.fields.bibtexEditionOrdinal "Export numeric edition as English-written ordinals">
 <!ENTITY better-bibtex.Preferences.export.fields.language.langid "langid">
 <!ENTITY better-bibtex.Preferences.export.fields.language.language "language">
 <!ENTITY better-bibtex.Preferences.export.fields.language.both "both">
