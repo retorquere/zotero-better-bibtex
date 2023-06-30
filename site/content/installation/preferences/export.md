@@ -32,6 +32,14 @@ Name handling is a lot more complex than I had ever thought it to be. A *lot* mo
 
 
 
+### Export numeric edition as English-written ordinals
+
+default: `no`
+
+Try to convert a numeric edition value to English words during BibTeX exports
+
+
+
 ### Add URLs to BibTeX export:
 
 default: `no`

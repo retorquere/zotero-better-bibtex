@@ -37,12 +37,6 @@ Number of seconds to wait after your system goes idle before kicking off auto-ex
 default: `yes`
 
 Support for EDTF dates in biblatex
-## bibtexEditionOrdinal
-
-default: `no`
-
-Try to convert a numeric edition value to English words during BibTeX exports
-
 ## cacheFlushInterval
 
 default: `5`
