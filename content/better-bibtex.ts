@@ -801,17 +801,17 @@ export class BetterBibTeX {
       itemToolbar.insertBefore(progressToolbar, itemToolbar.firstChild.nextSibling)
       progressToolbar.appendChild(elements.create('hbox', {
         id: 'better-bibtex-progress-meter',
-        width: '20',
-        height: '20',
+        width: '16px',
+        height: '16px',
         style: `
           position: absolute;
           left: 0;
           top:  0;
 
-          width: 20px;
-          height: 20px;
+          width: 16px;
+          height: 16px;
 
-          background-image: url(chrome://zotero-better-bibtex/skin/progress.svg);
+          background-image: url(chrome://zotero/skin/progress_arcs.png);
 
           background-position: 0 0;
         `,
@@ -822,13 +822,15 @@ export class BetterBibTeX {
       }))
     }
 
-    progress = Math.max(Math.min(Math.round(progress), 100), 0)
     log.debug('progress:', progress, msg)
     const progressbox = doc.getElementById('better-bibtex-progress')
-    if (progressbox.hidden = (progress >= 100)) return
+    if (progressbox.hidden = (progress >= 100 || progress < 0)) return
 
     const progressmeter: XUL.Element = (doc.getElementById('better-bibtex-progress-meter') as unknown as XUL.Element)
-    progressmeter.style.backgroundPosition = `-${progress * 20}px 0` // eslint-disable-line no-magic-numbers
+    const nArcs = 20
+    progressmeter.style.backgroundPosition = `-${Math.round(progress/100 * nArcs) * 16}px 0` // eslint-disable-line no-magic-numbers
+    const progressbar: XUL.Element = (doc.getElementById('better-bibtex-progress') as unknown as XUL.Element)
+    progressbar.style.opacity = `${progress/200+.5}` // eslint-disable-line no-magic-numbers
 
     const label: XUL.Label = (doc.getElementById('better-bibtex-progress-label') as unknown as XUL.Label)
     label.setAttribute('value', `better bibtex: ${msg}`)
