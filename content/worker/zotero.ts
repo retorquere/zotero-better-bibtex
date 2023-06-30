@@ -162,23 +162,22 @@ import dateFormats from '../../schema/dateFormats.json'
 
 export const workerJob: Partial<Translators.Worker.Job> = {}
 
-function cacheFetch(_translator: string, itemID: number, _options: any, _prefs: any) {
-  // ignore all the other cacheFetch params because we have a targetted cache here
-  return workerJob.data.cache[itemID]
-}
-function cacheStore(_translator: string, itemID: number, _options: any, _prefs: any, entry: string, metadata: any) {
-  if (workerJob.preferences.cache) Zotero.send({ kind: 'cache', itemID, entry, metadata })
-  return true
-}
-
 class WorkerZoteroBetterBibTeX {
   public clientName = clientName
   public client = client
   public worker = true
 
   public Cache = {
-    store: cacheStore,
-    fetch: cacheFetch,
+    // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
+    store(_translator: string, itemID: number, _options: any, _prefs: any, entry: string, metadata: any) {
+      if (workerJob.preferences.cache) Zotero.send({ kind: 'cache', itemID, entry, metadata })
+      return true
+    },
+    // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
+    fetch(_translator: string, itemID: number, _options: any, _prefs: any) {
+      // ignore all the other cacheFetch params because we have a targeted cache here
+      return workerJob.data.cache[itemID]
+    },
   }
 
   public setProgress(percent: number) {
@@ -197,6 +196,7 @@ class WorkerZoteroBetterBibTeX {
     }
   }
 
+  /*
   public cacheFetch(itemID: number) {
     return cacheFetch('', itemID, null, null)
   }
@@ -204,6 +204,7 @@ class WorkerZoteroBetterBibTeX {
   public cacheStore(itemID: number, _options: any, _prefs: any, entry: string, metadata: any) {
     return cacheStore('', itemID, null, null, entry, metadata)
   }
+  */
 
   public parseDate(date) {
     return DateParser.parse(date)

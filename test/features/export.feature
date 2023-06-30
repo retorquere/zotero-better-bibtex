@@ -673,7 +673,7 @@ Feature: Export
     When I set preference .bibtexURL to "url-ish"
     Then an export using "Better BibTeX" should match "export/*.url-ish.bibtex"
     When I set preference .bibtexURL to "url"
-    And I set preference .verbatimFields to "doi,file,ids,eprint,verba,verbb,verbc,groups"
+    And I set preference .verbatimFields to "url,doi,file,ids,eprint,verba,verbb,verbc,groups"
     Then an export using "Better BibTeX" should match "export/*.bibtex"
 
   @use.with_client=zotero
