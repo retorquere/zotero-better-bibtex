@@ -323,8 +323,13 @@ export const KeyManager = new class _KeyManager {
         return
       }
 
-      // update display panes by issuing a fake item-update notification
-      Zotero.Notifier.trigger('modify', 'item', [citekey.itemID], { [citekey.itemID]: { bbtCitekeyUpdate: true } })
+      if (item.isFeedItem || !item.isRegularItem()) {
+        log.error('citekey registered for item of type', item.isFeedItem ? 'feedItem' : Zotero.ItemTypes.getName(item.itemTypeID))
+      }
+      else {
+        // update display panes by issuing a fake item-update notification
+        Zotero.Notifier.trigger('modify', 'item', [citekey.itemID], { [citekey.itemID]: { bbtCitekeyUpdate: true } })
+      }
 
       if (!citekey.pinned && this.autopin.enabled) {
         this.autopin.schedule(citekey.itemID, () => {
