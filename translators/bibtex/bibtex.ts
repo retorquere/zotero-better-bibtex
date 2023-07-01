@@ -423,41 +423,6 @@ export function generateBibTeX(translation: Translation): void {
   translation.bibtex.complete()
 }
 
-// ZoteroItem::$__note__ = ZoteroItem::$__key__ = -> true
-
-//
-// ZoteroItem::$entryType = (value) ->
-//   @item.thesisType = value if value in [ 'phdthesis', 'mastersthesis' ]
-//   return true
-//
-// ### these return the value which will be interpreted as 'true' ###
-//
-// ZoteroItem::$copyright    = (value) -> @item.rights = value
-// ZoteroItem::$assignee     = (value) -> @item.assignee = value
-// ZoteroItem::$issue        = (value) -> @item.issue = value
-//
-// ### ZoteroItem::$lccn = (value) -> @item.callNumber = value ###
-// ZoteroItem::$lccn = (value) -> @hackyFields.push("LCCB: #{value}")
-// ZoteroItem::$pmid = ZoteroItem::$pmcid = (value, field) -> @hackyFields.push("#{field.toUpperCase()}: #{value}")
-// ZoteroItem::$mrnumber = (value) -> @hackyFields.push("MR: #{value}")
-// ZoteroItem::$zmnumber = (value) -> @hackyFields.push("Zbl: #{value}")
-//
-// ZoteroItem::$subtitle = (value) ->
-//   @item.title = '' unless @item.title
-//   @item.title = @item.title.trim()
-//   value = value.trim()
-//   if not /[-–—:!?.;]$/.test(@item.title) and not /^[-–—:.;¡¿]/.test(value)
-//     @item.title += ': '
-//   else
-//   @item.title += ' ' if @item.title.length
-//   @item.title += value
-//   return true
-//
-// ZoteroItem::$fjournal = (value) ->
-//   @item.journalAbbreviation = @item.publicationTitle if @item.publicationTitle
-//   @item.publicationTitle = value
-//   return true
-
 const importJabRef = new class {
   public unabbrevations: Record<string, string> = {}
   public strings = ''
@@ -945,25 +910,18 @@ export class ZoteroItem {
   }
   protected $lastchecked(value: string | number): boolean { return this.$urldate(value) }
 
-  protected $number(value: string | number, field: string): boolean {
-    if (this.bibtex.fields.number && this.validFields.number && this.bibtex.fields.issue && this.validFields.issue) {
-      this.set('issue', this.bibtex.fields.issue[0])
-      this.set('number', this.bibtex.fields.number[0])
-      return true
-    }
-
-    const candidates = [field].concat(['seriesNumber', 'number', 'issue'])
-    field = candidates.find(f => this.validFields[f])
-    if (!field) return this.fallback(candidates, value)
-    this.set(field, value)
-    return true
+  protected $number(_value: string | number): boolean {
+    return this.set('issue', (this.bibtex.fields.number || []).concat(this.bibtex.fields.issue || []).map(v => `${v}`).join(', '))
   }
-  protected $issue(value: string | number, field: string): boolean { return this.$number(value, field) }
+  protected $issue(value: string | number): boolean { return this.$number(value) }
+
+  protected $eid(value: string | number): boolean {
+    return this.validFields.number ? this.set('number', value) : this.fallback(['number'], value)
+  }
+  protected '$article-number'(value: string | number): boolean { return this.$eid(value) }
 
   protected $issn(value: string | number): boolean {
-    if (!this.validFields.ISSN) return this.fallback(['ISSN'], value)
-
-    return this.set('ISSN', value)
+    return this.validFields.ISSN ? this.set('ISSN', value) : this.fallback(['ISSN'], value)
   }
 
   protected $url(value: string, field: string): boolean {

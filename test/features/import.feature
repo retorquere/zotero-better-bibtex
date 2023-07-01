@@ -71,6 +71,7 @@ Feature: Import
 
     Examples:
       | file                                                                                   | references |
+      | issuenumberarticle-number #2551                                                        | 1          |
       | Allow spaces between href arguments for import #2504                                   | 4          |
       | Film references do not export properly for APA formating #2494                         | 4          |
       | article with entrysubtype                                                              | 1          |
@@ -179,7 +180,6 @@ Feature: Import
   # Scenario: Unabbreviate on import #1436-3
   # When I import 7166 references from "import/*.bib" into a new collection
   # Then the library should match "import/*.json"
-
   Scenario: unknown command handler #1733
     Given I set preference .importUnknownTexCommand to "tex"
     When I import 1 reference from "import/*.bib"

@@ -1,0 +1,59 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "citekeyFormat": "auth + year"
+    }
+  },
+  "items": [
+    {
+      "DOI": "10.3390/rs12132114",
+      "ISSN": "2072-4292",
+      "abstractNote": "We present the new Precipitation REtrieval covering the TIbetan Plateau (PRETIP) as a feasibility study using the two geostationary (GEO) satellites Elektro-L2 and Insat-3D with reference to the GPM (Global Precipitation Measurement Mission) IMERG (Integrated Multi-satellitE Retrievals for GPM) product. The present study deals with the assignment of the rainfall rate. For precipitation rate assignment, the best-quality precipitation estimates from the gauge calibrated microwave (MW) within the IMERG product were combined with the GEO data by Random Forest (RF) regression. PRETIP was validated with independent MW precipitation information not considered for model training and revealed a good performance on 30 min and 11 km spatio-temporal resolution with a correlation coefficient of R = 0.59 and outperforms the validation of the independent MW precipitation with IMERG&rsquo;s IR only product (R = 0.18). A comparison of PRETIP precipitation rates in 4 km resolution with daily rain gauge measurements from the Chinese Ministry of Water Resources revealed a correlation of R = 0.49. No differences in the performance of PRETIP for various elevation ranges or between the rainy (July, August) and the dry (May, September) season could be found.",
+      "citationKey": "rs12132114",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Christine",
+          "lastName": "Kolbe"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Boris",
+          "lastName": "Thies"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Nazli",
+          "lastName": "Turini"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Zhiyu",
+          "lastName": "Liu"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "J\u00f6rg",
+          "lastName": "Bendix"
+        }
+      ],
+      "date": "2020",
+      "extra": [
+        "Citation Key: rs12132114",
+        "tex.article-number: 2114"
+      ],
+      "issue": "13",
+      "itemID": 1,
+      "itemType": "journalArticle",
+      "publicationTitle": "Remote Sensing",
+      "title": "Precipitation retrieval over the tibetan plateau from the geostationary Orbit\u2014Part 2: Precipitation rates with elektro-L2 and insat-3D",
+      "url": "https://www.mdpi.com/2072-4292/12/13/2114",
+      "volume": "12"
+    }
+  ]
+}
