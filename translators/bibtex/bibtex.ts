@@ -947,8 +947,8 @@ export class ZoteroItem {
 
   protected $number(value: string | number, field: string): boolean {
     if (this.bibtex.fields.number && this.validFields.number && this.bibtex.fields.issue && this.validFields.issue) {
-      this.set('issue', this.bibtex.fields.issue)
-      this.set('number', this.bibtex.fields.number)
+      this.set('issue', this.bibtex.fields.issue[0])
+      this.set('number', this.bibtex.fields.number[0])
       return true
     }
 
