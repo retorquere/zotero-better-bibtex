@@ -120,9 +120,8 @@ function setDefaultPrefs(rootURI) {
   Services.scriptloader.loadSubScript(`${rootURI}prefs.js`, obj)
 }
 
-export async function install(_data: any, reason: ReasonId) {
-  await waitForZotero()
-  await Zotero.BetterBibTeX.startup(BOOTSTRAP_REASONS[reason])
+export async function install(data: any, reason: ReasonId) {
+  await startup(data, reason)
 }
 
 export async function startup({ resourceURI, rootURI = resourceURI.spec }, reason: ReasonId) {
@@ -160,8 +159,5 @@ export async function shutdown(data: any, reason: ReasonId) {
 }
 
 export async function uninstall(data: any, reason: ReasonId) {
-  if (Zotero.BetterBibTeX) {
-    await Zotero.BetterBibTeX.shutdown(BOOTSTRAP_REASONS[reason])
-    delete Zotero.BetterBibTeX
-  }
+  await shutdown(data, reason)
 }
