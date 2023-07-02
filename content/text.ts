@@ -447,7 +447,7 @@ export function babelLanguage(language: string): string {
     || language
 }
 
-/*
+/* REVIEW:
 export function babelTag(langid: string): string {
   return (Tag[langid] as string) || ''
 }
