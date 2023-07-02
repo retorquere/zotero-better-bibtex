@@ -242,17 +242,26 @@ export class TestSupport {
 
     // zoteroPane.mergeSelectedItems()
 
-    if (typeof Zotero.getMainWindow().Zotero_Duplicates_Pane === 'undefined') {
-      Components.classes['@mozilla.org/moz/jssubscript-loader;1'].getService(Components.interfaces.mozIJSSubScriptLoader).loadSubScript('chrome://zotero/content/duplicatesMerge.js')
-    }
-
     selected.sort((a, b) => ids.indexOf(a.id) - ids.indexOf(b.id))
 
-    Zotero.getMainWindow().Zotero_Duplicates_Pane.setItems(selected)
+    const env = {
+      Zotero,
+      window: Zotero.getMainWindow(),
+      document: Zotero.getMainWindow().document,
+      Zotero_Duplicates_Pane: undefined,
+      setTimeout: Zotero.setTimeout,
+      clearTimeout: Zotero.clearTimeout,
+    }
+
+    Components.classes['@mozilla.org/moz/jssubscript-loader;1']
+      .getService(Components.interfaces.mozIJSSubScriptLoader)
+      .loadSubScript('chrome://zotero/content/duplicatesMerge.js', env)
+
+    env.Zotero_Duplicates_Pane.setItems(selected)
     await Zotero.Promise.delay(1500) // eslint-disable-line no-magic-numbers
 
     const before = await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, true, false, true)
-    await Zotero.getMainWindow().Zotero_Duplicates_Pane.merge()
+    await env.Zotero_Duplicates_Pane.merge()
 
     await Zotero.Promise.delay(1500) // eslint-disable-line no-magic-numbers
     const after = await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, true, false, true)
