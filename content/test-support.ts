@@ -1,6 +1,3 @@
-declare const Zotero_File_Interface: any
-declare const Zotero_Duplicates_Pane: any
-
 import { AutoExport } from './auto-export'
 import * as ZoteroDB from './db/zotero'
 import { log } from './logger'
@@ -105,7 +102,7 @@ export class TestSupport {
       await Zotero.Promise.delay(1500) // eslint-disable-line no-magic-numbers
     }
     else {
-      await Zotero_File_Interface.importFile({ file: Zotero.File.pathToFile(path), createNewCollection: !!createNewCollection })
+      await Zotero.getMainWindow().Zotero_File_Interface.importFile({ file: Zotero.File.pathToFile(path), createNewCollection: !!createNewCollection })
     }
 
     items = await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, true, false, true)
@@ -245,17 +242,17 @@ export class TestSupport {
 
     // zoteroPane.mergeSelectedItems()
 
-    if (typeof Zotero_Duplicates_Pane === 'undefined') {
+    if (typeof Zotero.getMainWindow().Zotero_Duplicates_Pane === 'undefined') {
       Components.classes['@mozilla.org/moz/jssubscript-loader;1'].getService(Components.interfaces.mozIJSSubScriptLoader).loadSubScript('chrome://zotero/content/duplicatesMerge.js')
     }
 
     selected.sort((a, b) => ids.indexOf(a.id) - ids.indexOf(b.id))
 
-    Zotero_Duplicates_Pane.setItems(selected)
+    Zotero.getMainWindow().Zotero_Duplicates_Pane.setItems(selected)
     await Zotero.Promise.delay(1500) // eslint-disable-line no-magic-numbers
 
     const before = await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, true, false, true)
-    await Zotero_Duplicates_Pane.merge()
+    await Zotero.getMainWindow().Zotero_Duplicates_Pane.merge()
 
     await Zotero.Promise.delay(1500) // eslint-disable-line no-magic-numbers
     const after = await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, true, false, true)
