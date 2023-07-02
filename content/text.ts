@@ -486,18 +486,15 @@ export function excelColumn(n: number): string {
   return col
 }
 
-let parser: DOMParser
+/* REVIEW:
 export function getDOMParser(): DOMParser {
-  return (parser = parser || Components.classes['@mozilla.org/xmlextras/domparser;1'].createInstance(Components.interfaces.nsIDOMParser) as DOMParser)
-  /*
-  if (!parser) {
-    try {
-      parser = new DOMParser
-    }
-    catch (err) {
-      parser = Components.classes['@mozilla.org/xmlextras/domparser;1'].createInstance(Components.interfaces.nsIDOMParser)
-    }
+  if (is7) return new DOMParser
+
+  try {
+    return new DOMParser
   }
-  return parser
-  */
+  catch (err) {
+    return Components.classes['@mozilla.org/xmlextras/domparser;1'].createInstance(Components.interfaces.nsIDOMParser)
+  }
 }
+*/

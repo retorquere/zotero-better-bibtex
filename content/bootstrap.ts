@@ -141,10 +141,12 @@ export async function startup({ resourceURI, rootURI = resourceURI.spec }, reaso
   Services.scriptloader.loadSubScript(`${rootURI}content/better-bibtex.js`, {
     Zotero,
 
-    setTimeout: Zotero.setTimeout,
-    clearTimeout: Zotero.clearTimeout,
-    setInterval: Zotero.setInterval,
-    clearInterval: Zotero.clearInterval,
+    setTimeout,
+    clearTimeout,
+    setInterval,
+    clearInterval,
+
+    // DOMParser,
   }, 'utf-8')
 
   await Zotero.BetterBibTeX.startup(BOOTSTRAP_REASONS[reason])
