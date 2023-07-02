@@ -1,6 +1,8 @@
 Components.utils.import('resource://gre/modules/FileUtils.jsm')
 declare const FileUtils: any
 
+import { is7 } from './client'
+
 import { log } from './logger'
 
 import { Events } from './events'
@@ -173,7 +175,9 @@ if (Preference.autoExportIdleWait < 1) Preference.autoExportIdleWait = 1
 const queue = new class TaskQueue {
   private scheduler = new Scheduler('autoExportDelay', 1000)
   private autoexports: any
-  private idleService = Components.classes['@mozilla.org/widget/idleservice;1'].getService(Components.interfaces.nsIIdleService)
+  private idleService = is7
+    ? Components.classes['@mozilla.org/widget/useridleservice;1'].getService(Components.interfaces.nsIUserIdleService)
+    : Components.classes['@mozilla.org/widget/idleservice;1'].getService(Components.interfaces.nsIIdleService)
 
   constructor() {
     this.pause('startup')

@@ -1,27 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument, @typescript-eslint/ban-types, prefer-rest-params, @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-unsafe-return */
 
 var Zotero: any // eslint-disable-line no-var
-declare const ChromeUtils: any
-declare const Components: any
+declare const Cc: any
+declare const Ci: any
 declare const dump: (msg: string) => void
-
-/*
-type Deferred = Promise<void> & { resolve: () => void, reject: (err: Error) => void }
-const defer = (): Deferred => {
-  const bag = {}
-  return Object.assign(
-    new Promise((resolve, reject) => Object.assign(bag, { resolve, reject })) as Partial<Deferred>,
-    bag
-  ) as Deferred
-}
-
-const bootstrap: {
-  install?: Deferred
-  startup?: Deferred
-  shutdown?: Deferred
-  uninstall?: Deferred
-} = {}
-*/
 
 const BOOTSTRAP_REASONS = {
   1: 'APP_STARTUP',
@@ -46,59 +28,8 @@ function log(msg) {
   }
 }
 
-// In Zotero 6, bootstrap methods are called before Zotero is initialized, and using include.js
-// to get the Zotero XPCOM service would risk breaking Zotero startup. Instead, wait for the main
-// Zotero window to open and get the Zotero object from there.
-//
-// In Zotero 7, bootstrap methods are not called until Zotero is initialized, and the 'Zotero' is
-// automatically made available.
-async function waitForZotero() {
-  if (typeof Zotero != 'undefined') {
-    await Zotero.initializationPromise
-    return
-  }
-
-  if (typeof Services == 'undefined') {
-    var { Services } = ChromeUtils.import('resource://gre/modules/Services.jsm') // eslint-disable-line no-var
-  }
-  const windows = Services.wm.getEnumerator('navigator:browser')
-  let found = false
-  while (windows.hasMoreElements()) {
-    const win = windows.getNext()
-    if (win.Zotero) {
-      Zotero = win.Zotero
-      found = true
-      break
-    }
-  }
-  if (!found) {
-    await new Promise(resolve => {
-      const listener = {
-        onOpenWindow: aWindow => {
-          // Wait for the window to finish loading
-          const domWindow = aWindow.QueryInterface(Components.interfaces.nsIInterfaceRequestor)
-            .getInterface(Components.interfaces.nsIDOMWindowInternal || Components.interfaces.nsIDOMWindow)
-          domWindow.addEventListener('load', () => {
-            domWindow.removeEventListener('load', arguments.callee, false) // eslint-disable-line no-caller
-            if (domWindow.Zotero) {
-              Services.wm.removeListener(listener)
-              Zotero = domWindow.Zotero
-              resolve(undefined)
-            }
-          }, false)
-        },
-      }
-      Services.wm.addListener(listener)
-    })
-  }
-  await Zotero.initializationPromise
-}
-
 // Loads default preferences from prefs.js in Zotero 6
 function setDefaultPrefs(rootURI) {
-  if (typeof Services == 'undefined') {
-    var { Services } = ChromeUtils.import('resource://gre/modules/Services.jsm') // eslint-disable-line no-var
-  }
   const branch = Services.prefs.getDefaultBranch('')
   const obj = {
     pref: (pref, value) => {
@@ -120,20 +51,21 @@ function setDefaultPrefs(rootURI) {
   Services.scriptloader.loadSubScript(`${rootURI}prefs.js`, obj)
 }
 
-export async function install(data: any, reason: ReasonId) {
-  await startup(data, reason)
+export function install(_data: any, _reason: ReasonId) {
+  log('install, nothing to do')
 }
 
+let chromeHandle
 export async function startup({ resourceURI, rootURI = resourceURI.spec }, reason: ReasonId) {
-  await waitForZotero()
+  log('startup started')
+
+  const aomStartup = Cc['@mozilla.org/addons/addon-manager-startup;1'].getService(Ci.amIAddonManagerStartup)
+  const manifestURI = Services.io.newURI(`${rootURI}manifest.json`)
+  chromeHandle = aomStartup.registerChrome(manifestURI, require('../chrome.json'))
 
   if (Zotero.BetterBibTeX) throw new Error('Better BibTeX is already started')
 
   log('Starting')
-  // 'Services' may not be available in Zotero 6
-  if (typeof Services == 'undefined') {
-    var { Services } = ChromeUtils.import('resource://gre/modules/Services.jsm') // eslint-disable-line no-var
-  }
 
   setDefaultPrefs(rootURI)
 
@@ -144,20 +76,26 @@ export async function startup({ resourceURI, rootURI = resourceURI.spec }, reaso
     clearTimeout,
     setInterval,
     clearInterval,
-
-    // DOMParser,
   }, 'utf-8')
 
   await Zotero.BetterBibTeX.startup(BOOTSTRAP_REASONS[reason])
+  log('startup done')
 }
 
 export async function shutdown(data: any, reason: ReasonId) {
+  log('shutdown started')
+
+  if (typeof chromeHandle !== 'undefined') {
+    chromeHandle.destruct()
+    chromeHandle = undefined
+  }
   if (Zotero.BetterBibTeX) {
     await Zotero.BetterBibTeX.shutdown(BOOTSTRAP_REASONS[reason])
     delete Zotero.BetterBibTeX
   }
+  log('shutdown done')
 }
 
-export async function uninstall(data: any, reason: ReasonId) {
-  await shutdown(data, reason)
+export function uninstall(_data: any, _reason: ReasonId) {
+  log('uninstall, nothing to do')
 }

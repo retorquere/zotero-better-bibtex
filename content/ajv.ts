@@ -69,8 +69,8 @@ const options  = {
   useDefaults: true,
 }
 
-export const noncoercing = new AJV(options)
-export const coercing = new AJV({...options, coerceTypes: true})
+export const noncoercing = new AJV({...options, logger: false })
+export const coercing = new AJV({...options, logger: false, coerceTypes: true})
 
 import keywords from 'ajv-keywords'
 for (const ajv of [coercing, noncoercing]) {

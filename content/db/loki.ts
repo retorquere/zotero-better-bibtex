@@ -3,6 +3,8 @@
 // Components.utils.import('resource://gre/modules/Sqlite.jsm')
 // declare const Sqlite: any
 
+import { is7 } from '../client'
+
 import { patch as $patch$ } from '../monkey-patch'
 import { Preference } from '../prefs'
 
@@ -70,7 +72,9 @@ class NullStore {
 
 const autoSaveOnIdle = []
 
-const idleService = Components.classes['@mozilla.org/widget/idleservice;1'].getService(Components.interfaces.nsIIdleService)
+const idleService = is7
+  ? Components.classes['@mozilla.org/widget/useridleservice;1'].getService(Components.interfaces.nsIUserIdleService)
+  : Components.classes['@mozilla.org/widget/idleservice;1'].getService(Components.interfaces.nsIIdleService)
 idleService.addIdleObserver({
   async observe(_subject: string, _topic: string, _data: any) {
     for (const db of autoSaveOnIdle) {
