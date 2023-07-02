@@ -911,7 +911,7 @@ export class ZoteroItem {
   protected $lastchecked(value: string | number): boolean { return this.$urldate(value) }
 
   protected $number(_value: string | number): boolean {
-    return this.set('issue', (this.bibtex.fields.number || []).concat(this.bibtex.fields.issue || []).map(v => `${v}`).join(', '))
+    return this.set('issue', (this.bibtex.fields.number || []).concat(this.bibtex.fields.issue || []).map(v => `${v}`).join(', '), ['issue'])
   }
   protected $issue(value: string | number): boolean { return this.$number(value) }
 
