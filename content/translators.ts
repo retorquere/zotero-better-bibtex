@@ -129,6 +129,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
           }
           catch (error) {}
         }
+
         await Zotero.Translators.reinit()
       },
     })
