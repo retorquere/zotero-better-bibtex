@@ -214,7 +214,7 @@ class WorkerZoteroBetterBibTeX {
     return DateParser.isEDTF(date, minuteLevelPrecision)
   }
 
-  /*
+  /* REVIEW:
   public titleCase(text) {
     return titleCase(text)
   }
@@ -248,7 +248,7 @@ const WorkerZoteroUtilities = {
 
   getVersion: () => workerEnvironment.version,
 
-  /*
+  /* REVIEW:
   public getCreatorsForType(itemType) {
     return itemCreators[client][itemType]
   }
