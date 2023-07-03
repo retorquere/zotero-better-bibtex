@@ -249,8 +249,8 @@ export class TestSupport {
       window: Zotero.getMainWindow(),
       document: Zotero.getMainWindow().document,
       Zotero_Duplicates_Pane: undefined,
-      setTimeout,
-      clearTimeout,
+      setTimeout: setTimeout.bind(Zotero.getMainWindow()),
+      clearTimeout: clearTimeout.bind(Zotero.getMainWindow()),
     }
 
     Components.classes['@mozilla.org/moz/jssubscript-loader;1']
