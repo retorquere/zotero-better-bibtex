@@ -17,6 +17,7 @@
     "releaseURL": "https://github.com/retorquere/zotero-better-bibtex/releases/download/release/"
   },
   "scripts": {
+    "action": "act -W .github/workflows/ci.yaml",
     "pretest": "npm run build",
     "test": "./test/behave --stop",
     "formatter": "rm -f gen/test-pattern.js && ./pattern.js && node --enable-source-maps gen/test-pattern.js",
