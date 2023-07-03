@@ -55,12 +55,10 @@ export class ZoteroItemPane {
   elements: Elements
 
   public refresh(): void {
-    // eslint disagrees with the typescript compiler on the return type of querySelector
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
-    (this.document.querySelector('#zotero-editpane-item-box') as any).refresh()
+    this.itemBoxInstance.refresh()
   }
 
-  constructor(win: Window, doc: Document, itemBoxInstance: any) { // eslint-disable-line @typescript-eslint/explicit-module-boundary-types
+  constructor(win: Window, doc: Document, private itemBoxInstance: any) { // eslint-disable-line @typescript-eslint/explicit-module-boundary-types
     this.document = doc
     const elements = this.elements = new Elements(doc)
     const itemPane = (win as any).ZoteroItemPane
