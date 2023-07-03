@@ -6,7 +6,7 @@
       id="zotero-prefpane-better-bibtex"
       insertafter="zotero-prefpane-advanced"
       label="&better-bibtex.BetterBibTeX;"
-      image="chrome://zotero-better-bibtex/skin/bibtex.svg"
+      image="chrome://zotero-better-bibtex/content/skin/bibtex.svg"
     >
       <vbox>
         <button

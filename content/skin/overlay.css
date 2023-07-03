@@ -7,7 +7,7 @@
   width: 20px;
   height: 20px;
 
-  background-image: url(chrome://zotero-better-bibtex/skin/progress.svg);
+  background-image: url(chrome://zotero-better-bibtex/content/skin/progress.svg);
 
   /* background coordinates */
   background-position: 0 0;
