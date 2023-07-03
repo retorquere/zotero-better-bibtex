@@ -5,6 +5,7 @@ import json
 from contextlib import suppress
 from munch import Munch
 
+print(sys.argv[1])
 github = json.loads(sys.argv[1], object_hook=Munch.fromDict)
 with open('package.json') as f:
   package = json.load(f, object_hook=Munch.fromDict)
