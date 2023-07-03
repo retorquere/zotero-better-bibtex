@@ -28,7 +28,7 @@ jobs:
     - name: set slow and beta flags
       env:
         GITHUB_CONTEXT: ${{ toJson(github) }}
-      run: ./util/action-flags $GITHUB_CONTEXT
+      run: ./util/action-flags
     - name: balance tests
       id: balance
       run: ./util/balance.py --durations $DURATIONS --bins $BINS --minutes 10 ${{ env.slow }} ${{ env.beta }}
