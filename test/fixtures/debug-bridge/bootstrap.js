@@ -22,18 +22,12 @@ const BOOTSTRAP_REASONS = {
   8: 'ADDON_DOWNGRADE',
 };
 
-async function sleep(ms) {
-  return
-  return new Promise(resolve => Zotero.setTimeout(resolve, ms));
-}
-
 function log(msg) {
   // `Zotero` object isn't available in `uninstall()` in Zotero 6, so log manually
   if (typeof Zotero === 'undefined') {
     dump(`Debug bridge: ${msg}\n\n`)
   }
   else {
-    if (Zotero.DebugBridge) msg = `:${Zotero.DebugBridge}: ${msg}`
     Zotero.debug(`Debug bridge: ${msg}`)
   }
 }
@@ -112,49 +106,13 @@ function setDefaultPrefs(rootURI) {
   }
 }
 
-function unpack(phase, { id, version, resourceURI, rootURI = resourceURI.spec }, reason) {
-  data = { id, version, rootURI, reason: BOOTSTRAP_REASONS[reason] || reason }
-  log(`bootstrap::${phase}(${data.reason}) ${JSON.stringify(data)}`)
-  return data
-}
-
-function defer() {
-  const bag = {}
-  return Object.assign(new Promise((resolve, reject) => Object.assign(bag, { resolve, reject })), bag)
-}
-
-const promises = []
-function serialize(rootURI) {
-  const promise = defer()
-  promises.push(promise)
-  return [ promises.slice(0, -1), promise ]
-}
-
-async function install(data, reason) {
+function install(data, reason) {
   log('async:install:start')
-  const { rootURI } = unpack('install', data, reason)
-  const [ predecessors, me ] = serialize(rootURI)
-  log(`async:install:waiting for ${predecessors.length} predecessors`)
-  if (predecessors.length) await Promise.all(predecessors)
-  log('async:install:predecessors done')
-  await waitForZotero()
-  log('async:install:Zotero ready')
-  await sleep(1000)
-  log('async:install:sleep ready')
-  me.resolve()
 }
 
-async function startup(data, reason) {
-  log('async:startup:start')
-  const { rootURI } = unpack('startup', data, reason)
-  const [ predecessors, me ] = serialize(rootURI)
-  log(`async:startup:waiting for ${predecessors.length} predecessors`)
-  if (predecessors.length) await Promise.all(predecessors)
-  log('async:startup:predecessors done')
+async function startup({ resourceURI, rootURI = resourceURI.spec }, reason) {
+  log(`async:startup:start, Zotero: ${!!Zotero}`)
   await waitForZotero()
-  log('async:startup:Zotero ready')
-  await sleep(1000)
-  log('async:startup:sleep ready')
 
   // 'Services' may not be available in Zotero 6
   if (typeof Services == 'undefined') {
@@ -199,34 +157,14 @@ async function startup(data, reason) {
       return [201, 'application/json', response]
     }
   }
-  me.resolve()
 }
 
 async function shutdown(data, reason) {
   log('async:shutdown:start')
-  const { rootURI } = unpack('shutdown', data, reason)
-  const [ predecessors, me ] = serialize(rootURI)
-  log(`async:shutdown:waiting for ${predecessors.length} predecessors`)
-  if (predecessors.length) await Promise.all(predecessors)
-  log('async:shutdown:predecessors done')
   await waitForZotero()
-  log('async:shutdown:Zotero ready')
-  await sleep(10000)
-  log('async:shutdown:sleep ready')
   if (Zotero) delete Zotero.Server.Endpoints['/debug-bridge/execute']
-  me.resolve()
 }
 
-async function uninstall(data, reason) {
+function uninstall(data, reason) {
   log('async:uninstall:start')
-  const { rootURI } = unpack('uninstall', data, reason)
-  const [ predecessors, me ] = serialize(rootURI)
-  log(`async:uninstall:waiting for ${predecessors.length} predecessors`)
-  if (predecessors.length) await Promise.all(predecessors)
-  log('async:uninstall:predecessors done')
-  await waitForZotero()
-  log('async:uninstall:Zotero ready')
-  await sleep(10000)
-  log('async:uninstall:sleep ready')
-  me.resolve()
 }
