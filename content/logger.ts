@@ -76,6 +76,10 @@ class Logger {
     this.print(this.format({}, msg))
   }
 
+  public info(...msg) {
+    this.print(this.format({}, msg))
+  }
+
   public error(...msg) {
     this.print(this.format({error: true}, msg))
   }
