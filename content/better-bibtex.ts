@@ -957,8 +957,8 @@ export class BetterBibTeX {
     // progress.update(l10n.localize('BetterBibTeX.startup.autoExport'), 90) // eslint-disable-line no-magic-numbers
     // AutoExport.start()
 
-    new ZoteroPane(doc)
-    await newZoteroItemPane(doc)
+    new ZoteroPane(window, doc)
+    await newZoteroItemPane(window, doc)
 
     // progress.done()
 
@@ -992,8 +992,8 @@ Events.on('window-loaded', async ({ win, href }: {win: Window, href: string}) =>
     // set globals for libraries that for some reason need these -- probably a flawed env detection
     window = win
     document = win.document
-    new ZoteroPane(document)
-    await newZoteroItemPane(document)
+    new ZoteroPane(window, document)
+    await newZoteroItemPane(window, document)
   }
 })
 

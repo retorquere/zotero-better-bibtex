@@ -36,6 +36,7 @@
     "odfscan": "echo curl -L -o xpi/odfscan.xpi `curl -s https://api.github.com/repos/Juris-M/zotero-odf-scan-plugin/releases/latest | grep browser_download_url | cut -d '\"' -f 4`",
     "jurism": "npm start -- --jurism",
     "start": "./test/behave --keep --tags=@none",
+    "beta": "./test/behave --beta --keep --tags=@none",
     "s3form": "zotero-plugin-s3form",
     "release": "zotero-plugin-release \"$(<setup/release-message.md)\"",
     "branches": "zotero-plugin-branches",

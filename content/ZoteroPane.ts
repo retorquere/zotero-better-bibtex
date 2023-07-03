@@ -24,9 +24,9 @@ export class ZoteroPane {
     this.elements.remove()
   }
 
-  constructor(doc: Document) {
+  constructor(win: Window, doc: Document) {
     const elements = this.elements = new Elements(doc)
-    this.window = doc.defaultView
+    this.window = win
     this.ZoteroPane = (this.window as any).ZoteroPane
     this.ZoteroPane.BetterBibTeX = this
 

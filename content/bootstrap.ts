@@ -56,7 +56,7 @@ export function install(_data: any, _reason: ReasonId) {
 
 let chromeHandle
 export async function startup({ resourceURI, rootURI = resourceURI.spec }, reason: ReasonId) {
-  log(`startup started, Zotero: ${typeof Zotero !== 'undefined'}`)
+  log('startup started')
 
   const aomStartup = Cc['@mozilla.org/addons/addon-manager-startup;1'].getService(Ci.amIAddonManagerStartup)
   const manifestURI = Services.io.newURI(`${rootURI}manifest.json`)
