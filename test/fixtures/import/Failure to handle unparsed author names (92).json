@@ -2,10 +2,11 @@
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "localeDateOrder": "dmy",
-    "options": {},
+    "options": {
+      "exportNotes": true
+    },
     "preferences": {
-      "citekeyFormat": "[auth][year]"
+      "citekeyFormat": "auth + year"
     }
   },
   "items": [
@@ -40,7 +41,7 @@
       "date": "1998",
       "extra": [
         "Citation Key: Madelung_1998_LB_10681727_56",
-        "DOI: 10.1007/10681727_56",
+        "DOI: 10.1007/10681727\u20856",
         "tex.owner: Francesco",
         "tex.timestamp: 2010.02.22"
       ],

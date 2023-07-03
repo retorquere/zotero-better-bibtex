@@ -40,7 +40,6 @@ const config: Config = {
   fieldEncoding: {
     groups: 'verbatim', // blegh jabref field
     url: 'verbatim',
-    doi: 'verbatim',
     // school: 'literal'
     institution: 'literal',
     publisher: 'literal',
@@ -324,11 +323,12 @@ export function generateBibTeX(translation: Translation): void {
     }
 
     const doi = item.DOI || item.extraFields.kv.DOI
+    let urlfield = null
     if (translation.preferences.DOIandURL === 'both' || !doi) {
       switch (translation.preferences.bibtexURL) {
         case 'url':
         case 'url-ish':
-          ref.add({
+          urlfield = ref.add({
             name: 'url',
             value: item.url || item.extraFields.kv.url,
             enc: translation.preferences.bibtexURL === 'url' && translation.isVerbatimField('url') ? 'url' : 'latex',
@@ -337,7 +337,7 @@ export function generateBibTeX(translation: Translation): void {
 
         case 'note':
         case 'note-url-ish':
-          ref.add({
+          urlfield = ref.add({
             name: (['misc', 'booklet'].includes(ref.entrytype) && !ref.has.howpublished ? 'howpublished' : 'note'),
             value: item.url || item.extraFields.kv.url,
             enc: translation.preferences.bibtexURL === 'note' ? 'url': 'latex',
@@ -346,12 +346,14 @@ export function generateBibTeX(translation: Translation): void {
 
         default:
           if (['csl.webpage', 'zotero.webpage', 'csl.post', 'csl.post-weblog'].includes(ref.entrytype_source)) {
-            ref.add({ name: 'howpublished', value: item.url || item.extraFields.kv.url })
+            urlfield = ref.add({ name: 'howpublished', value: item.url || item.extraFields.kv.url })
           }
           break
       }
     }
-    // if (translation.preferences.DOIandURL === 'both' || !urlfield) ref.add({ name: 'doi', value: (doi || '').replace(/^https?:\/\/doi.org\//i, '') })
+    if (translation.preferences.DOIandURL === 'both' || !urlfield) {
+      ref.add({ name: 'doi', value: (doi || '').replace(/^https?:\/\/doi.org\//i, ''), enc: translation.isVerbatimField('doi') ? 'verbatim' : 'latex' })
+    }
 
     if (ref.entrytype_source.split('.')[1] === 'thesis') {
       const thesistype = ref.thesistype(item.type, 'phdthesis', 'mastersthesis')
