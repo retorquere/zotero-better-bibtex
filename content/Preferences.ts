@@ -20,8 +20,11 @@ import { flash } from './flash'
 var window: Window & { sizeToContent(): void } // eslint-disable-line no-var
 Events.on('window-loaded', ({ win, href }: {win: Window, href: string}) => {
   switch (href) {
-    case 'chrome://zotero/content/preferences/preferences.xul':
+    case 'chrome://zotero/content/preferences/preferences.xul': // Z6
       new ZoteroPreferences(win)
+      break
+
+    case 'chrome://zotero/content/preferences/preferences.xhtml': // Z7
       break
 
     case 'chrome://zotero-better-bibtex/content/Preferences.xul':
