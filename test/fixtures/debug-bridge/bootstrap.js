@@ -111,7 +111,7 @@ function install(data, reason) {
 }
 
 async function startup({ resourceURI, rootURI = resourceURI.spec }, reason) {
-  log(`async:startup:start, Zotero: ${!!Zotero}`)
+  log(`async:startup:start, Zotero: ${typeof Zotero !== 'undefined'}`)
   await waitForZotero()
 
   // 'Services' may not be available in Zotero 6

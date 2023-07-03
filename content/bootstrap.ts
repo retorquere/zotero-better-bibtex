@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument, @typescript-eslint/ban-types, prefer-rest-params, @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-unsafe-return */
 
-var Zotero: any // eslint-disable-line no-var
 declare const Cc: any
 declare const Ci: any
 declare const dump: (msg: string) => void
@@ -57,15 +56,13 @@ export function install(_data: any, _reason: ReasonId) {
 
 let chromeHandle
 export async function startup({ resourceURI, rootURI = resourceURI.spec }, reason: ReasonId) {
-  log('startup started')
+  log(`startup started, Zotero: ${typeof Zotero !== 'undefined'}`)
 
   const aomStartup = Cc['@mozilla.org/addons/addon-manager-startup;1'].getService(Ci.amIAddonManagerStartup)
   const manifestURI = Services.io.newURI(`${rootURI}manifest.json`)
   chromeHandle = aomStartup.registerChrome(manifestURI, require('../chrome.json'))
 
   if (Zotero.BetterBibTeX) throw new Error('Better BibTeX is already started')
-
-  log('Starting')
 
   setDefaultPrefs(rootURI)
 

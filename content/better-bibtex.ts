@@ -57,16 +57,18 @@ import { generateCSLJSON } from '../translators/csl/json'
 import { Translation } from '../translators/lib/translator'
 
 // need coroutine here because Zotero calls '.done()' on the nonexistent! result, added automagically by bluebird
-$patch$(Zotero, 'shutdown', original => Zotero.Promise.coroutine(function* () { // eslint-disable-line @typescript-eslint/no-unsafe-return
-  try {
-    yield orchestrator.shutdown(Zotero.BetterBibTeX.uninstalled ? 'ADDON_UNINSTALL' : 'APP_SHUTDOWN')
-  }
-  catch (err) {
-    log.error('BBT shutdown: shutdown failed', err)
-  }
+if (!is7) {
+  $patch$(Zotero, 'shutdown', original => Zotero.Promise.coroutine(function* () { // eslint-disable-line @typescript-eslint/no-unsafe-return
+    try {
+      yield orchestrator.shutdown(Zotero.BetterBibTeX.uninstalled ? 'ADDON_UNINSTALL' : 'APP_SHUTDOWN')
+    }
+    catch (err) {
+      log.error('BBT shutdown: shutdown failed', err)
+    }
 
-  yield original.apply(this, arguments)
-}))
+    yield original.apply(this, arguments)
+  }))
+}
 
 declare const AddonManager: any
 if (!is7) {
@@ -894,6 +896,10 @@ export class BetterBibTeX {
       if (phase === 'startup') this.setProgress(done * 100 / total, message || `${phase}: ${name}`)
     })
     this.setProgress(100, 'finished')
+  }
+
+  public async shutdown(reason: Reason): Promise<void> {
+    await orchestrator.shutdown(reason)
   }
 
   public async load(doc: Document): Promise<void> {
