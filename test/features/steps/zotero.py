@@ -282,12 +282,7 @@ class Zotero:
     profile = self.create_profile()
     shutil.rmtree(os.path.join(profile.path, self.client, 'better-bibtex'), ignore_errors=True)
 
-    if self.client == 'zotero':
-      datadir_profile = '-datadir profile'
-    else:
-      utils.print('\n\n** WORKAROUNDS FOR JURIS-M IN PLACE -- SEE https://github.com/Juris-M/zotero/issues/34 **\n\n')
-      datadir_profile = ''
-    cmd = f'{shlex.quote(profile.binary)} -P {shlex.quote(profile.name)} -jsconsole -purgecaches -ZoteroDebugText {datadir_profile} {self.redir} {shlex.quote(profile.path + ".log")} 2>&1'
+    cmd = f'{shlex.quote(profile.binary)} -P {shlex.quote(profile.name)} -jsconsole -purgecaches -ZoteroDebugText {self.redir} {shlex.quote(profile.path + ".log")} 2>&1'
     utils.print(f'Starting {self.client}: {cmd}')
     self.proc = subprocess.Popen(cmd, shell=True)
     utils.print(f'{self.client} started: {self.proc.pid}')
@@ -600,11 +595,12 @@ class Zotero:
     # layout profile
     if self.config.profile:
       profile.firefox = FirefoxProfile(os.path.join(ROOT, 'test/db', self.config.profile))
-      profile.firefox.set_preference('extensions.zotero.dataDir', os.path.join(profile.path, self.client))
-      profile.firefox.set_preference('extensions.zotero.useDataDir', True)
       profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.removeStock', False)
     else:
       profile.firefox = FirefoxProfile(os.path.join(FIXTURES, 'profile', self.client))
+
+    profile.firefox.set_preference('extensions.zotero.dataDir', os.path.join(profile.path, self.client))
+    profile.firefox.set_preference('extensions.zotero.useDataDir', True)
 
     install_xpis(os.path.join(ROOT, 'xpi'), profile.firefox)
 
@@ -637,12 +633,6 @@ class Zotero:
 
     if not self.config.first_run:
       profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.citekeyFormat', "[auth:lower][year] | [=forumPost/WebPage][Auth:lower:capitalize][Date:format-date=%Y-%m-%d.%H\\:%M\\:%S:prefix=.][PublicationTitle:lower:capitalize:prefix=.][shorttitle3_3:lower:capitalize:prefix=.][Pages:prefix=.p.][Volume:prefix=.Vol.][NumberofVolumes:prefix=de] | [Auth:lower:capitalize][date=%oY:prefix=.][PublicationTitle:lower:capitalize:prefix=.][shorttitle3_3:lower:capitalize:prefix=.][Pages:prefix=.p.][Volume:prefix=.Vol.][NumberofVolumes:prefix=de]")
-
-    if self.client == 'jurism':
-      utils.print('\n\n** WORKAROUNDS FOR JURIS-M IN PLACE -- SEE https://github.com/Juris-M/zotero/issues/34 **\n\n')
-      profile.firefox.set_preference('extensions.zotero.dataDir', os.path.join(profile.path, 'jurism'))
-      profile.firefox.set_preference('extensions.zotero.useDataDir', True)
-      profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.removeStock', False)
 
     profile.firefox.update_preferences()
 
