@@ -552,7 +552,6 @@ class Zotero:
     profile.path = os.path.expanduser(f'~/.{profile.name}')
 
     profile.profiles = {
-      # 'Linux': os.path.expanduser(f'~/.{self.client}/{self.client}'),
       'Linux': os.path.expanduser(f'~/.{self.client}/zotero'),
       # 'Darwin': os.path.expanduser('~/Library/Application Support/' + {'zotero': 'Zotero', 'jurism': 'Juris-M'}[self.client]),
       'Darwin': os.path.expanduser('~/Library/Application Support/Zotero'),
@@ -569,6 +568,7 @@ class Zotero:
 
     # create profile
     profile.ini = os.path.join(profile.profiles, 'profiles.ini')
+    utils.print(f'profile.ini={profile.ini}')
 
     ini = configparser.RawConfigParser()
     ini.optionxform = str
@@ -595,6 +595,7 @@ class Zotero:
     ini.set(profile.id, 'Default', None)
     with open(profile.ini, 'w') as f:
       ini.write(f, space_around_delimiters=False)
+    utils.print(str(dict(ini[profile.id])))
 
     # layout profile
     if self.config.profile:
