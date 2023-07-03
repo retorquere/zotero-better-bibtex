@@ -166,7 +166,7 @@ jobs:
         curl -sL https://raw.githubusercontent.com/retorquere/zotero-deb/master/install.sh | sudo bash
         sudo apt-get update
         sudo apt-get install ${{ matrix.client }}
-        sudo apt-get install libegl-mesa0
+        sudo apt-get install mesa-utils libegl1-mesa xvfb
         curl -LO https://github.com/jgm/pandoc/releases/download/2.19.2/pandoc-2.19.2-linux-amd64.tar.gz
         tar xvzf pandoc-2.19.2-linux-amd64.tar.gz
         sudo mv pandoc-2.19.2/bin/pandoc /usr/bin
