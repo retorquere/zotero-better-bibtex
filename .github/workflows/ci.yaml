@@ -25,16 +25,10 @@ jobs:
       run: echo "version="`jq -r .version package.json` >> $GITHUB_ENV
     - name: get previous test durations
       run: curl -L https://github.com/retorquere/zotero-better-bibtex/releases/download/builds/`basename $DURATIONS` --create-dirs -o $DURATIONS
-    - name: enable slow tests for master, scheduled builds, or tagged builds
-      id: slow
-      if: (github.event.head_commit.message == env.version && startsWith(github.ref, 'refs/tags/')) || github.event_name == 'schedule' || github.ref == 'refs/heads/master'
-      run: echo "slow=--slow" >> $GITHUB_ENV
-    - name: enable beta for tagged builds and scheduled builds
-      run: echo ${{ github.ref_name }}
-    - name: enable beta for tagged builds and scheduled builds
-      id: beta
-      if: (github.event.head_commit.message == env.version && startsWith(github.ref, 'refs/tags/')) || github.event_name == 'schedule' || github.ref_name == 'gh-2522'
-      run: echo "beta=--beta" >> $GITHUB_ENV
+    - name: set slow and beta flags
+      env:
+        GITHUB_CONTEXT: ${{ toJson(github) }}
+      run: ./util/action-flags $GITHUB_CONTEXT
     - name: balance tests
       id: balance
       run: ./util/balance.py --durations $DURATIONS --bins $BINS --minutes 10 ${{ env.slow }} ${{ env.beta }}
