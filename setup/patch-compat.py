@@ -41,8 +41,10 @@ for client, version in min_version.items():
   listed = manifest['applications'][client]['strict_min_version']
   supported = max_version(listed, version)
 
-#  if 'CI' in os.environ:
-#    branch = subprocess.run('git branch --show-current'.split(' '), stdout=subprocess.PIPE).stdout.decode('utf-8').strip()
+  if 'CI' in os.environ:
+    branch = subprocess.run('git branch --show-current'.split(' '), stdout=subprocess.PIPE).stdout.decode('utf-8').strip()
+    if branch != 'master' and branch != 'gh-2522':
+       supported = '8.0'
 
   if supported == listed:
     print('minimum bootstrapped', client, 'version', supported)
