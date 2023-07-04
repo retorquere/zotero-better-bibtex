@@ -2,7 +2,6 @@
 
 import os
 import json
-from contextlib import suppress
 from munch import Munch
 
 github = json.loads(os.environ['GITHUB_CONTEXT'], object_hook=Munch.fromDict)
@@ -11,32 +10,27 @@ with open('package.json') as f:
 
 flags = set()
 
-with suppress(KeyError,AttributeError): # release build
-  if github.event.head_commit.message == package.version and github.ref == f'refs/tags/{package.version}':
-    print('release build')
-    flags.add('slow')
-    flags.add('beta')
+if github.event.head_commit.message == package.version and github.ref == f'refs/tags/{package.version}':
+  print('release build')
+  flags.add('slow')
+  flags.add('beta')
 
-with suppress(KeyError,AttributeError):
-  if github.event_name == 'schedule': # nightlies
-    print('nightly')
-    flags.add('slow')
-    flags.add('beta')
+if github.event_name == 'schedule': # nightlies
+  print('nightly')
+  flags.add('slow')
+  flags.add('beta')
 
-with suppress(KeyError,AttributeError):
-  if github.ref_name == 'master': # master
-    print('master')
-    flags.add('slow')
-    flags.add('beta')
+if github.ref_name == 'master': # master
+  print('master')
+  flags.add('slow')
+  flags.add('beta')
 
-#with suppress(KeyError,AttributeError):
-if True:
-  if os.path.isfile('beta.txt'):
-    with open('beta.txt') as f:
-      for branch in f.readlines():
-        if branch.strip() == github.ref_name:
-          print('beta for', github.ref_name)
-          flags.add('beta')
+if os.path.isfile('beta.txt'):
+  with open('beta.txt') as f:
+    for branch in f.readlines():
+      if branch.strip() == github.ref_name:
+        print('beta for', github.ref_name)
+        flags.add('beta')
 
 print('flags =', flags)
 
