@@ -370,7 +370,8 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
   private typefield(field: string): string {
     field = field.trim()
     if (field.startsWith('bibtex.')) return this.BetterBibTeX ? field.replace(/^bibtex\./, '') : ''
-    if (field.startsWith('biblatex.')) return this.BetterBibLaTeX ? field.replace(/^biblatex\./, '') : ''
+    // no input present => import => biblatex mode
+    if (field.startsWith('biblatex.')) return !this.input || this.BetterBibLaTeX ? field.replace(/^biblatex\./, '') : ''
     return field
   }
 
@@ -532,6 +533,7 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
       .split(',')
       .map(field => (m = field.trim().match(/^[/](.+)[/]$/)) ? new RegExp(m[1], 'i') : this.typefield(field))
       .filter((s: string | RegExp) => s)
+    Zotero.debug(`verbatimFields ${JSON.stringify(this.verbatimFields)}`)
 
     if (!this.verbatimFields.length) this.verbatimFields = null
     this.csquotes = this.preferences.csquotes ? { open: this.preferences.csquotes[0], close: this.preferences.csquotes[1] } : null
