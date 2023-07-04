@@ -371,15 +371,15 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
     field = field.trim()
     if (field.startsWith('bibtex.')) return this.BetterBibTeX ? field.replace(/^bibtex\./, '') : ''
     // no input present => import => biblatex mode
-    if (field.startsWith('biblatex.')) return !this.input || this.BetterBibLaTeX ? field.replace(/^biblatex\./, '') : ''
+    if (field.startsWith('biblatex.')) return this.mode === 'import' || this.BetterBibLaTeX ? field.replace(/^biblatex\./, '') : ''
     return field
   }
 
   static Import(translator: TranslatorMetadata): Translation {
-    return new this(translator)
+    return new this(translator, 'import')
   }
   static Export(translator: TranslatorMetadata, input: Input): Translation {
-    const translation = new this(translator)
+    const translation = new this(translator, 'export')
 
     translation.input = input
 
@@ -449,7 +449,7 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
     return translation
   }
 
-  private constructor(public translator: TranslatorMetadata) {
+  private constructor(public translator: TranslatorMetadata, private mode: 'import' | 'export') {
     this[translator.label.replace(/[^a-z]/ig, '')] = true
     this.BetterTeX = this.BetterBibTeX || this.BetterBibLaTeX
     this.BetterCSL = this.BetterCSLJSON || this.BetterCSLYAML
@@ -533,7 +533,6 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
       .split(',')
       .map(field => (m = field.trim().match(/^[/](.+)[/]$/)) ? new RegExp(m[1], 'i') : this.typefield(field))
       .filter((s: string | RegExp) => s)
-    Zotero.debug(`verbatimFields ${JSON.stringify(this.verbatimFields)}`)
 
     if (!this.verbatimFields.length) this.verbatimFields = null
     this.csquotes = this.preferences.csquotes ? { open: this.preferences.csquotes[0], close: this.preferences.csquotes[1] } : null
