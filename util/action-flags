@@ -10,6 +10,8 @@ with open('package.json') as f:
 
 flags = set()
 
+print(github)
+
 if github.event.head_commit.message == package.version and github.ref == f'refs/tags/{package.version}':
   print('release build')
   flags.add('slow')
