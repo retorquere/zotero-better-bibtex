@@ -71,6 +71,7 @@ Feature: Import
 
     Examples:
       | file                                                                                   | references |
+      | DOIs excluded from export in 6.7.86 #2555                                              | 1          |
       | issuenumberarticle-number #2551                                                        | 1          |
       | Allow spaces between href arguments for import #2504                                   | 4          |
       | Film references do not export properly for APA formating #2494                         | 4          |

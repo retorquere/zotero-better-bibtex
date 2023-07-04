@@ -370,15 +370,16 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
   private typefield(field: string): string {
     field = field.trim()
     if (field.startsWith('bibtex.')) return this.BetterBibTeX ? field.replace(/^bibtex\./, '') : ''
-    if (field.startsWith('biblatex.')) return this.BetterBibLaTeX ? field.replace(/^biblatex\./, '') : ''
+    // no input present => import => biblatex mode
+    if (field.startsWith('biblatex.')) return this.mode === 'import' || this.BetterBibLaTeX ? field.replace(/^biblatex\./, '') : ''
     return field
   }
 
   static Import(translator: TranslatorMetadata): Translation {
-    return new this(translator)
+    return new this(translator, 'import')
   }
   static Export(translator: TranslatorMetadata, input: Input): Translation {
-    const translation = new this(translator)
+    const translation = new this(translator, 'export')
 
     translation.input = input
 
@@ -448,7 +449,7 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
     return translation
   }
 
-  private constructor(public translator: TranslatorMetadata) {
+  private constructor(public translator: TranslatorMetadata, private mode: 'import' | 'export') {
     this[translator.label.replace(/[^a-z]/ig, '')] = true
     this.BetterTeX = this.BetterBibTeX || this.BetterBibLaTeX
     this.BetterCSL = this.BetterCSLJSON || this.BetterCSLYAML
