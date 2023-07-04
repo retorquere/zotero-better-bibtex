@@ -40,6 +40,7 @@ const config: Config = {
   fieldEncoding: {
     groups: 'verbatim', // blegh jabref field
     url: 'verbatim',
+    doi: 'verbatim',
     // school: 'literal'
     institution: 'literal',
     publisher: 'literal',
