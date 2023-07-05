@@ -149,6 +149,8 @@ class Flex extends ASTWalker {
       case 'html:input':
       case 'html:select':
       case 'html:option':
+      case 'html:linkset':
+      case 'html:link':
         if (flex) throw new Error(`${node.name} has flex ${flex}`)
         break
       default:
@@ -483,8 +485,7 @@ The Better BibTeX hidden preferences are preceded by “extensions.zotero.transl
   }
 }
 
-/*
-class Convert extends ASTWalker {
+class XHTML extends ASTWalker {
   children(node) {
     if (node.block.nodes.find(node => node.type !== 'Tag')) error('unexpected', node.block.nodes.find(node => node.type !== 'Tag').type)
     return node.block.nodes.map(node => node.name).join(',')
@@ -512,14 +513,22 @@ class Convert extends ASTWalker {
 
     this.walk(node.block, history)
   }
+
+  Text(node) {
+    if (node.val.startsWith('<?xml')) node.val = ''
+    if (node.val.startsWith('<!DOCTYPE')) node.val = ''
+  }
+
 }
-*/
+
+const build = path.dirname(tgt)
+if (!fs.existsSync(build)) fs.mkdirSync(build, { recursive: true })
 
 function walk(cls, ast) {
   (new cls).walk(ast)
 }
 
-const options = {
+let options = {
   pretty: true,
   plugins: [{
     preCodeGen(ast, _options) { // eslint-disable-line prefer-arrow/prefer-arrow-functions
@@ -537,11 +546,23 @@ const options = {
     },
   }],
 }
-
-const xul = pug.renderFile(src, options)
-const build = path.dirname(tgt)
-if (!fs.existsSync(build)) fs.mkdirSync(build, { recursive: true })
+let xul = pug.renderFile(src, options)
 fs.writeFileSync(tgt, xul.replace(/&amp;/g, '&').trim())
+
+options = {
+  pretty: true,
+  plugins: [{
+    preCodeGen(ast, _options) { // eslint-disable-line prefer-arrow/prefer-arrow-functions
+      walk(StripConfig, ast)
+      walk(Flex, ast)
+      walk(XHTML, ast)
+
+      return ast
+    },
+  }],
+}
+xul = pug.renderFile(src, options)
+fs.writeFileSync(tgt.replace(/[^/]+[.]xul$/, 'preferences.xhtml'), xul.replace(/&amp;/g, '&').trim())
 
 for (const xul of glob.sync('content/*.xul')) {
   const source = fs.readFileSync(xul, 'utf-8')
