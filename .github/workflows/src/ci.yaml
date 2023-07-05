@@ -68,6 +68,11 @@ _anchors:
     uses: actions/download-artifact@v3
     with:
       name: test-artifacts
+  action_flags: &action_flags
+    name: set slow and beta flags
+    env:
+      GITHUB_CONTEXT: ${{ toJson(github) }}
+    run: ./util/action-flags
 
 env:
   DURATIONS: logs/stats/durations.json
@@ -85,17 +90,15 @@ jobs:
     - *install_python
     - run: pip install munch ortools
     - *get_version
+    - *action_flags
+
     - name: get previous test durations
       run: curl -L https://github.com/retorquere/zotero-better-bibtex/releases/download/builds/`basename $DURATIONS` --create-dirs -o $DURATIONS
-
-    - name: set slow and beta flags
-      env:
-        GITHUB_CONTEXT: ${{ toJson(github) }}
-      run: ./util/action-flags
 
     - name: balance tests
       id: balance
       run: ./util/balance.py --durations $DURATIONS --bins $BINS --minutes 10 ${{ env.slow }} ${{ env.beta }}
+
     - *upload_test_artifacts
 
   build:
@@ -116,8 +119,9 @@ jobs:
     - *cache
     - *install_python_packages
     - *install_node_packages
+    - *action_flags
 
-    - run: npm run build
+    - run: npm run build ${{ env.beta }}
 
     - *upload_build_artifacts
 

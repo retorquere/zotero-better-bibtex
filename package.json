@@ -1,6 +1,6 @@
 {
   "name": "zotero-better-bibtex",
-  "version": "6.7.91",
+  "version": "6.7.94",
   "description": "Make Zotero useful for us LaTeX holdouts.",
   "homepage": "https://retorque.re/zotero-better-bibtex",
   "license": "ISC",
@@ -17,6 +17,7 @@
     "releaseURL": "https://github.com/retorquere/zotero-better-bibtex/releases/download/release/"
   },
   "scripts": {
+    "check-env": "node -e 'console.log(process.env)' | grep npm",
     "action": "act -W .github/workflows/ci.yaml",
     "pretest": "npm run build",
     "test": "./test/behave --stop",

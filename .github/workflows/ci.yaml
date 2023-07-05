@@ -23,12 +23,13 @@ jobs:
     - run: pip install munch ortools
     - name: get package version
       run: echo "version="`jq -r .version package.json` >> $GITHUB_ENV
-    - name: get previous test durations
-      run: curl -L https://github.com/retorquere/zotero-better-bibtex/releases/download/builds/`basename $DURATIONS` --create-dirs -o $DURATIONS
     - name: set slow and beta flags
       env:
         GITHUB_CONTEXT: ${{ toJson(github) }}
       run: ./util/action-flags
+
+    - name: get previous test durations
+      run: curl -L https://github.com/retorquere/zotero-better-bibtex/releases/download/builds/`basename $DURATIONS` --create-dirs -o $DURATIONS
     - name: balance tests
       id: balance
       run: ./util/balance.py --durations $DURATIONS --bins $BINS --minutes 10 ${{ env.slow }} ${{ env.beta }}
@@ -79,8 +80,12 @@ jobs:
         pip install -r requirements.txt
     - name: install node packages
       run: npm install
+    - name: set slow and beta flags
+      env:
+        GITHUB_CONTEXT: ${{ toJson(github) }}
+      run: ./util/action-flags
 
-    - run: npm run build
+    - run: npm run build ${{ env.beta }}
     - name: store build artifacts
       uses: actions/upload-artifact@v3
       with:

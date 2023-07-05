@@ -43,7 +43,7 @@ for client, version in min_version.items():
 
   if 'CI' in os.environ:
     branch = subprocess.run('git branch --show-current'.split(' '), stdout=subprocess.PIPE).stdout.decode('utf-8').strip()
-    if branch != 'master' and branch != 'gh-2522':
+    if os.environ.get('npm_config_beta', None) != 'true':
        supported = '8.0'
 
   if supported == listed:
