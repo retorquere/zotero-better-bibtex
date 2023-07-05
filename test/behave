@@ -90,8 +90,12 @@ if args.start:
   args.keep = True
   sys.argv += ['--tags', '@none']
 
+if args.client.endswith('-beta'):
+  args.client = args.client.split('-')[0]
+  args.beta = True
+
 if args.build:
-  process = subprocess.Popen(['npm', 'run', 'build'], stdout=subprocess.PIPE)
+  process = subprocess.Popen(['npm', 'run', 'build'] + if args.beta then ['--beta'] else [], stdout=subprocess.PIPE)
   while True:
     line = process.stdout.readline()
     print(line.decode('utf-8'), end='')
@@ -100,10 +104,6 @@ if args.build:
   if returncode != 0:
     print(f'Build exited with exit code {returncode}')
     sys.exit(returncode)
-
-if args.client.endswith('-beta'):
-  args.client = args.client.split('-')[0]
-  args.beta = True
 
 if args.this or args.test_this:
   assert re.match(r'^gh-[0-9]+$', BRANCH)
