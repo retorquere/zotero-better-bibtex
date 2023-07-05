@@ -95,7 +95,7 @@ if args.client.endswith('-beta'):
   args.beta = True
 
 if args.build:
-  process = subprocess.Popen(['npm', 'run', 'build'] + if args.beta then ['--beta'] else [], stdout=subprocess.PIPE)
+  process = subprocess.Popen(['npm', 'run', 'build'] + (['--beta'] if args.beta else []), stdout=subprocess.PIPE)
   while True:
     line = process.stdout.readline()
     print(line.decode('utf-8'), end='')
