@@ -10,6 +10,7 @@ const pugs = [
   'content/ErrorReport.pug',
   'content/FirstRun.pug',
   'content/ServerURL.pug',
+  'content/ZoteroPane.pug',
 ]
 
 for (const src of pugs) {
