@@ -1,0 +1,37 @@
+| <?xml version="1.0"?>
+| <!DOCTYPE window SYSTEM "chrome://zotero-better-bibtex/locale/zotero-better-bibtex.dtd">
+| <?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+dialog#btt-server-url(xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" xmlns:html="http://www.w3.org/1999/xhtml" title='&better-bibtex.ServerURL.title;' onload='update();' buttons='accept' buttonlabelaccept='&better-bibtex.ServerURL.OK;' buttonaccesskeyaccept='O')
+  dialogheader(title='&better-bibtex.ServerURL.title;')/
+  groupbox(flex='1')
+    vbox(flex='1')
+      hbox(flex='1')
+        label &better-bibtex.ServerURL.format;
+        html:select#formats(onchange='update();')
+          html:option(value='.biblatex') BibLaTeX
+          html:option(value='.bibtex') BibTeX
+          html:option(value='.yaml') CSL YAML
+          html:option(value='.json') CSL JSON
+      hbox(flex='1')
+        description &better-bibtex.ServerURL.description;
+        textbox#pull-export-short.plain(flex='1' readonly='true')/
+      hbox#pull-export-long-available(flex='1')
+        description &better-bibtex.ServerURL.or;
+        textbox#pull-export-long.plain(flex='1' readonly='true')/
+  script.
+    function setURL(id, url) {
+      const elt = document.getElementById(id);
+      elt.value = url
+      elt.setAttribute('style', `min-width: ${url.length / 2}em; color: blue;`)
+    }
+
+    function update() {
+      const params = window.arguments[0];
+      const ext = document.getElementById('formats').value
+
+      setURL('pull-export-short', params.url.short + ext)
+      setURL('pull-export-long', params.url.long + ext)
+      document.getElementById('pull-export-long-available').hidden = !params.url.long
+
+      window.sizeToContent();
+    }
