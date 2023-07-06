@@ -5,9 +5,13 @@
 import * as pug from 'pug'
 import * as fs from 'fs'
 
-const options = {
-  pretty: true,
-}
+const pugs = [
+  'content/zotero-preferences.pug',
+  'content/ErrorReport.pug',
+]
 
-const xul = pug.renderFile('content/zotero-preferences.pug', options)
-fs.writeFileSync('build/content/zotero-preferences.xul', xul.replace(/&amp;/g, '&').trim())
+for (const src of pugs) {
+  console.log(' ', src)
+  const xul = pug.renderFile(src, { pretty: true })
+  fs.writeFileSync(`build/${src.replace(/pug$/, 'xul')}`, xul.replace(/&amp;/g, '&').trim())
+}
