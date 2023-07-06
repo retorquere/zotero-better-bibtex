@@ -19,7 +19,7 @@ wizard#better-bibtex-error-report(xmlns='http://www.mozilla.org/keymaster/gateke
   wizardpage(onpageshow='window.ErrorReport.show()' label=' ')
     description.header(style='white-space: pre-wrap;') &better-bibtex.ErrorReport.review;
     textbox#better-bibtex-report-current.plain(flex='1' readonly='true')/
-    textbox#better-bibtex-report-latest.plain textbox-emph(flex='1' readonly='true')/
+    textbox#better-bibtex-report-latest.plain.textbox-emph(flex='1' readonly='true')/
     textbox#better-bibtex-report-cache.plain(flex='1' readonly='true')/
     checkbox#better-bibtex-error-report-include-db(label='&better-bibtex.ErrorReport.includeCache;')/
     tabbox.debug-on(flex='1')
@@ -48,7 +48,7 @@ wizard#better-bibtex-error-report(xmlns='http://www.mozilla.org/keymaster/gateke
     description#better-bibtex-report-result(hidden='true')
       description
         | &better-bibtex.ErrorReport.reportID; 
-        textbox#better-bibtex-report-id.plain textbox-emph(flex='1' readonly='true')/
+        textbox#better-bibtex-report-id.plain.textbox-emph(flex='1' readonly='true')/
     description &better-bibtex.ErrorReport.postToGitHub;
     description &better-bibtex.ErrorReport.notReviewed;
   script(src='chrome://zotero/content/include.js')
