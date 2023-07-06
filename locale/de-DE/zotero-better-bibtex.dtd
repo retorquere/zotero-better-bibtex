@@ -1,6 +1,6 @@
 <!ENTITY better-bibtex.BetterBibTeX "Better BibTeX">
 
-<!ENTITY better-bibtex.seconds "Sekunden">
+<!ENTITY better-bibtex_units_seconds "Sekunden">
 
 <!ENTITY better-bibtex.FirstRun.title "Willkommen bei Better BibTeX for Zotero">
 <!ENTITY better-bibtex.FirstRun.welcome "Better BibTeX for Zotero (oder BBT, wie es allgemein genannt wird) macht Zotero nützlicher für LaTeX- und Markdown-Holdouts. Es gibt viele Konfigurationsmöglichkeiten für BBT -- werfen Sie einen Blick in die Konigurationseinstellungen, wenn Sie neugierig sind -- aber lassen Sie uns mit einer einfachen Auswahl beginnen.">
@@ -51,11 +51,11 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 
 <!ENTITY better-bibtex.ItemPane.citekey_column	"Zitierschlüssel">
 
-<!ENTITY better-bibtex.Preferences.open "Open Better BibTeX preferences...">
+<!ENTITY better-bibtex_preferences_open_label "Open Better BibTeX preferences...">
 <!ENTITY better-bibtex.Preferences.auto-abbrev "Kürze Zeitschriftentitel automatisch ab, wenn kein Wert explizit gesetzt wurde">
 <!ENTITY better-bibtex.Preferences.auto-abbrev.style "Abkürzungsstil:">
 
-<!ENTITY better-bibtex.Preferences.tab.auto-export "Automatischer Export">
+<!ENTITY better-bibtex_preferences_tab_auto-export_label "Automatischer Export">
 <!ENTITY better-bibtex.Preferences.auto-export "Automatischer Export">
 <!ENTITY better-bibtex.Preferences.auto-export.explanation "Sie können hier Exporte nur einsehen oder löschen. Um einen automatischen Export hinzuzufügen, führen Sie einen gewöhnlichen Export durch und wählen sie dabei die Option 'Halte aktuell'.">
 <!ENTITY better-bibtex.Preferences.auto-export.idle "Wenn unbeschäftigt">
@@ -78,7 +78,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.auto-export.warn.long-running "Warne mich, wenn Auto-Exporte länger dauern als (seconds)">
 
 <!ENTITY better-bibtex.Preferences.bulkWarning "Warne mich, wenn mehrere Schlüssel auf einmal geändert werden">
-<!ENTITY better-bibtex.Preferences.tab.citekey "Zitierschlüssel">
+<!ENTITY better-bibtex_preferences_tab_citekey_label "Zitierschlüssel">
 <!ENTITY better-bibtex.Preferences.citekey.citekeys "Zitierschlüssel">
 <!ENTITY better-bibtex.Preferences.citekey.fold "Erzwinge Plaintext-Format bei Zitierschlüsseln">
 <!ENTITY better-bibtex.Preferences.citekey.search "Zitierschlüsselsuche aktivieren">
@@ -86,27 +86,27 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.citekey.format.installed "Aktiviere Zitierschlüssel-Formel">
 <!ENTITY better-bibtex.Preferences.citekey.autoPinDelay "Zitierschlüssel automatisch anpinnen nach">
 
-<!ENTITY better-bibtex.Preferences.export.quickCopy "Schnellkopie">
-<!ENTITY better-bibtex.Preferences.export.quickCopy.explanation "Schnellkopie/Drag-and-Drop-Zitat">
-<!ENTITY better-bibtex.Preferences.export.quickCopy.atom "Atom">
-<!ENTITY better-bibtex.Preferences.export.quickCopy.citekeys "Zitierschlüssel">
-<!ENTITY better-bibtex.Preferences.export.quickCopy.format "Schnellkopie-Format">
-<!ENTITY better-bibtex.Preferences.export.quickCopy.gitbook "GitBook">
-<!ENTITY better-bibtex.Preferences.export.quickCopy.latex.command "LaTeX-Befehl">
-<!ENTITY better-bibtex.Preferences.export.quickCopy.latex "LaTeX-Zitat">
-<!ENTITY better-bibtex.Preferences.export.quickCopy.rtfScan "RTF-Scan-Marker">
-<!ENTITY better-bibtex.Preferences.export.quickCopy.roamCiteKey "Roam-Zitierschlüssel">
-<!ENTITY better-bibtex.Preferences.export.quickCopy.orgMode "Org-Modus Auswahllink">
-<!ENTITY better-bibtex.Preferences.export.quickCopy.orgMode.zotero "Zotero-Eintragsschlüssel verwenden">
-<!ENTITY better-bibtex.Preferences.export.quickCopy.orgMode.citekey "Better-BibTeX-Zitierschlüssel verwenden">
-<!ENTITY better-bibtex.Preferences.export.quickCopy.orgRef "Org-Ref-Zitat">
-<!ENTITY better-bibtex.Preferences.export.quickCopy.orgRef3 "Org-Ref-V3-Zitat">
-<!ENTITY better-bibtex.Preferences.export.quickCopy.pandoc.brackets "Umschließe Pandoc-Zitate mit Klammern">
-<!ENTITY better-bibtex.Preferences.export.quickCopy.pandoc "Pandoc-Zitat">
-<!ENTITY better-bibtex.Preferences.export.quickCopy.selectLink "Zotero Auswahllink">
-<!ENTITY better-bibtex.Preferences.export.quickCopy.selectLink.zotero "Zotero-Eintragsschlüssel verwenden">
-<!ENTITY better-bibtex.Preferences.export.quickCopy.selectLink.citekey "Better-BibTeX-Zitierschlüssel verwenden">
-<!ENTITY better-bibtex.Preferences.export.quickCopy.etaTemplate "Eta-Template">
+<!ENTITY better-bibtex_preferences_export_quick-copy_label "Schnellkopie">
+<!ENTITY better-bibtex_preferences_export_quick-copy_explanation "Schnellkopie/Drag-and-Drop-Zitat">
+<!ENTITY better-bibtex_preferences_export_quick-copy_atom "Atom">
+<!ENTITY better-bibtex_preferences_export_quick-copy_citekeys "Zitierschlüssel">
+<!ENTITY better-bibtex_preferences_export_quick-copy_format "Schnellkopie-Format">
+<!ENTITY better-bibtex_preferences_export_quick-copy_gitbook "GitBook">
+<!ENTITY better-bibtex_preferences_export_quick-copy_latex_command "LaTeX-Befehl">
+<!ENTITY better-bibtex_preferences_export_quick-copy_latex "LaTeX-Zitat">
+<!ENTITY better-bibtex_preferences_export_quick-copy_rtf-scan "RTF-Scan-Marker">
+<!ENTITY better-bibtex_preferences_export_quick-copy_roam-cite-key "Roam-Zitierschlüssel">
+<!ENTITY better-bibtex_preferences_export_quick-copy_org-mode "Org-Modus Auswahllink">
+<!ENTITY better-bibtex_preferences_export_quick-copy_org-mode_zotero "Zotero-Eintragsschlüssel verwenden">
+<!ENTITY better-bibtex_preferences_export_quick-copy_org-mode_citekey "Better-BibTeX-Zitierschlüssel verwenden">
+<!ENTITY better-bibtex_preferences_export_quick-copy_org-ref "Org-Ref-Zitat">
+<!ENTITY better-bibtex_preferences_export_quick-copy_org-ref3 "Org-Ref-V3-Zitat">
+<!ENTITY better-bibtex_preferences_export_quick-copy_pandoc_brackets_label "Umschließe Pandoc-Zitate mit Klammern">
+<!ENTITY better-bibtex_preferences_export_quick-copy_pandoc "Pandoc-Zitat">
+<!ENTITY better-bibtex_preferences_export_quick-copy_select-link "Zotero Auswahllink">
+<!ENTITY better-bibtex_preferences_export_quick-copy_select-link_zotero "Zotero-Eintragsschlüssel verwenden">
+<!ENTITY better-bibtex_preferences_export_quick-copy_select-link_citekey "Better-BibTeX-Zitierschlüssel verwenden">
+<!ENTITY better-bibtex_preferences_export_quick-copy_eta-template "Eta-Template">
 <!ENTITY better-bibtex.Preferences.citekey.uniqueness "Halte Zitierschlüssel eindeutig">
 <!ENTITY better-bibtex.Preferences.citekey.uniqueness.conflict "Bei Konflikten mit einem angehefteten Schlüssel werden nicht angeheftete Schlüssel">
 <!ENTITY better-bibtex.Preferences.citekey.uniqueness.conflict.change "nachbearbeitet (führt zu Änderungen der Zitierschlüssel)">
@@ -117,8 +117,8 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 
 <!ENTITY better-bibtex.Preferences.citekey.AUXScanner "BibTeX AUX-/Markdown-Scanner">
 <!ENTITY better-bibtex.Preferences.citekey.AUXScanner.import "Versuche beim Scannen einer AUX-Datei, Einträge aus der angehängten Bib-Datei zu importieren, wenn sich deren Zitierschlüssel nicht in Zotero befinden">
-<!ENTITY better-bibtex.Preferences.importPrefs "BetterBibTeX-Einstellungen importieren...">
-<!ENTITY better-bibtex.Preferences.exportPrefs "BetterBibTeX-Einstellungen exportieren...">
+<!ENTITY better-bibtex_preferences_import-prefs_label "BetterBibTeX-Einstellungen importieren...">
+<!ENTITY better-bibtex_preferences_export-prefs_label "BetterBibTeX-Einstellungen exportieren...">
 
 <!ENTITY better-bibtex.Preferences.advanced "Erweitert">
 <!ENTITY better-bibtex.Preferences.advanced.warning "Diese Einstellungen werden die Leistung beeinträchtigen und können zu einem Abbruch der Exporte führen. Behandeln Sie sie mit Vorsicht.">
@@ -170,14 +170,14 @@ Wenn Sie dies eingeschaltet haben und Sie Probleme haben außer der Löschung de
 <!ENTITY better-bibtex.Preferences.advanced.ideographs.kuroshiro "Kuroshiro romajization in japanischen Namen/Titeln anwenden. Benötigt viel Speicher.">
 <!ENTITY better-bibtex.Preferences.advanced.ideographs.jieba "Aktiviere &quot;jieba&quot;/&quot;pinyin&quot;-Filter in Zitierschlüssel-Mustern. Benötigt viel Speicher.">
 
-<!ENTITY better-bibtex.Preferences.export.qualityReport "Kommentare über mögliche Probleme mit den exportieren Einträgen hinzufügen">
+<!ENTITY better-bibtex_preferences_export_quality-report_label "Kommentare über mögliche Probleme mit den exportieren Einträgen hinzufügen">
 <!ENTITY better-bibtex.Preferences.export.automaticTags "Inkludiere automatische Tags in den Export">
-<!ENTITY better-bibtex.Preferences.export.jabrefFormat "Füge JabRef-spezifische Meta-Informationen hinzu:">
-<!ENTITY better-bibtex.Preferences.export.jabrefFormat.0 "Keine">
-<!ENTITY better-bibtex.Preferences.export.jabrefFormat.3 "für JabRef 3">
-<!ENTITY better-bibtex.Preferences.export.jabrefFormat.4 "für JabRef 4">
-<!ENTITY better-bibtex.Preferences.export.jabrefFormat.5 "für JabRef 5">
-<!ENTITY better-bibtex.Preferences.export.jabrefFormat.warn "JabRef-spezifische Felder exportieren: Zeitstempel, Titel für Anhänge und Gruppen für jede Sammlung, zu der ein Artikel gehört. Beachten Sie, dass das Einschalten das Caching in Exporten deaktiviert, was speziell für Auto-Exporte nicht wünschenswert ist.">
+<!ENTITY better-bibtex_preferences_export_jabref-format "Füge JabRef-spezifische Meta-Informationen hinzu:">
+<!ENTITY better-bibtex_preferences_export_jabref-format_0 "Keine">
+<!ENTITY better-bibtex_preferences_export_jabref-format_3 "für JabRef 3">
+<!ENTITY better-bibtex_preferences_export_jabref-format_4 "für JabRef 4">
+<!ENTITY better-bibtex_preferences_export_jabref-format_5 "für JabRef 5">
+<!ENTITY better-bibtex_preferences_export_jabref-format_warn "JabRef-spezifische Felder exportieren: Zeitstempel, Titel für Anhänge und Gruppen für jede Sammlung, zu der ein Artikel gehört. Beachten Sie, dass das Einschalten das Caching in Exporten deaktiviert, was speziell für Auto-Exporte nicht wünschenswert ist.">
 <!ENTITY better-bibtex.Preferences.export.biblatex.ascii "Exportiere Latex-Befehle im Unicode-Format als Plaintext">
 <!ENTITY better-bibtex.Preferences.export.biblatex "BibLaTeX">
 <!ENTITY better-bibtex.Preferences.export.biblatex.extendedNameFormat "Verwende das erweiterte Namensformat von BibLaTeX (benötigt biblatex 3.5)">
@@ -191,13 +191,13 @@ Wenn Sie dies eingeschaltet haben und Sie Probleme haben außer der Löschung de
 <!-- https://texfaq.org/FAQ-citeURL -->
 <!ENTITY better-bibtex.Preferences.export.bibtex.URLs.url "im 'url'-Feld">
 <!ENTITY better-bibtex.Preferences.export.bibtex.URLs.url-ish "im &quot;url&quot;-Feld, aber davon ausgehend, dass das &quot;url&quot;-Paket nicht geladen wurde">
-<!ENTITY better-bibtex.Preferences.tab.export "Exportiere">
+<!ENTITY better-bibtex_preferences_tab_export_label "Exportiere">
 <!ENTITY better-bibtex.Preferences.export.fields.bibtexParticleNoOp "Ignoriere Namens-Präfixe beim Sortieren">
 <!ENTITY better-bibtex.Preferences.export.fields.bibtexEditionOrdinal "Export numeric edition as English-written ordinals">
-<!ENTITY better-bibtex.Preferences.export.fields.language.langid "langid">
-<!ENTITY better-bibtex.Preferences.export.fields.language.language "Sprache">
-<!ENTITY better-bibtex.Preferences.export.fields.language.both "beide">
-<!ENTITY better-bibtex.Preferences.export.fields.language "Sprache exportieren als">
+<!ENTITY better-bibtex_preferences_export_fields_language_langid "langid">
+<!ENTITY better-bibtex_preferences_export_fields_language_language "Sprache">
+<!ENTITY better-bibtex_preferences_export_fields_language_both "beide">
+<!ENTITY better-bibtex_preferences_export_fields_language "Sprache exportieren als">
 <!ENTITY better-bibtex.Preferences.export.fields.doi-and-url.both "beide">
 <!ENTITY better-bibtex.Preferences.export.fields.doi-and-url.DOI "DOI">
 <!ENTITY better-bibtex.Preferences.export.fields.doi-and-url.URL "URL">
@@ -205,28 +205,28 @@ Wenn Sie dies eingeschaltet haben und Sie Probleme haben außer der Löschung de
 <!ENTITY better-bibtex.Preferences.export.fields.doi-and-url.warning "Die meisten BibTeX-Stile unterstützen keine DOI/URL-Felder. Von den Stilen, die sie unterstützen, vergessen viele, das erforderliche 'url'-Paket zu laden, stellen Sie also sicher, dass Sie es selbst laden. DOI- und URL-Felder sind so genannte 'Verbatim'-Felder, und ohne die vom Paket 'url' geladene Kompilierung wird die Kompilierung wahrscheinlich fehlschlagen.">
 <!ENTITY better-bibtex.Preferences.export.fields "Felder">
 
-<!ENTITY better-bibtex.Preferences.export.fields.import-strings "Erweitere die folgenden @string-Variablen während des Imports">
+<!ENTITY better-bibtex_preferences_export_fields_import-strings_label "Erweitere die folgenden @string-Variablen während des Imports">
 <!ENTITY better-bibtex.Preferences.export.fields.export-strings "Wenn ein Feld eine @string-Referenz sein könnte, exportiere es als @string-Referenz ohne Klammern">
-<!ENTITY better-bibtex.Preferences.export.fields.export-strings.off "Nein">
+<!ENTITY better-bibtex_preferences_export_fields_export-strings_off "Nein">
 <!ENTITY better-bibtex.Preferences.export.fields.export-strings.detect "Behandle Felder mit nur einem Wort als @String-Variablen">
 <!ENTITY better-bibtex.Preferences.export.fields.export-strings.match "Mit den @string-Deklarationen unten vergleichen">
 <!ENTITY better-bibtex.Preferences.export.fields.export-strings.match_reverse "Mit den @string-Deklarationen und ihren Werten unten vergleichen">
 
-<!ENTITY better-bibtex.Preferences.export.fields.skip "Felder, die nicht exportiert werden sollen (mit Komma trennen)">
-<!ENTITY better-bibtex.Preferences.export.misc "Verschiedenes">
-<!ENTITY better-bibtex.Preferences.export.map-unicode "Beim Konvertieren von LaTeX-Befehlen im Plaintext:">
-<!ENTITY better-bibtex.Preferences.export.map-unicode.minimal-packages "Zusätzlich benötigte Latex-Pakete minimieren">
-<!ENTITY better-bibtex.Preferences.export.map-unicode.conservative "Minimiere die Anzahl der Wechsel zwischen dem Mathematik- und Textmodus">
-<!ENTITY better-bibtex.Preferences.export.map-unicode.creator "Add braces to accented characters to assist simplistic latex parsers">
-<!ENTITY better-bibtex.Preferences.export.map-unicode.text "Textmodus-Ersetzungen bevorzugen">
-<!ENTITY better-bibtex.Preferences.export.map-unicode.math "Mathematikmodus-Ersetzungen bevorzugen">
+<!ENTITY better-bibtex_preferences_export_fields_skip "Felder, die nicht exportiert werden sollen (mit Komma trennen)">
+<!ENTITY better-bibtex_preferences_export_misc_label "Verschiedenes">
+<!ENTITY better-bibtex_preferences_export_map-unicode "Beim Konvertieren von LaTeX-Befehlen im Plaintext:">
+<!ENTITY better-bibtex_preferences_export_map-unicode_minimal-packages "Zusätzlich benötigte Latex-Pakete minimieren">
+<!ENTITY better-bibtex_preferences_export_map-unicode_conservative "Minimiere die Anzahl der Wechsel zwischen dem Mathematik- und Textmodus">
+<!ENTITY better-bibtex_preferences_export_map-unicode_creator "Add braces to accented characters to assist simplistic latex parsers">
+<!ENTITY better-bibtex_preferences_export_map-unicode_text "Textmodus-Ersetzungen bevorzugen">
+<!ENTITY better-bibtex_preferences_export_map-unicode_math "Mathematikmodus-Ersetzungen bevorzugen">
 
 <!ENTITY better-bibtex.Preferences.advanced.tab.postscript "Postscript">
-<!ENTITY better-bibtex.Preferences.postscript.warn "Die Verwendung von 'Translator.options.exportPath' in Postscripts deaktiviert den Cache. Die Exporte werden sich deutlich verlangsamen.">
+<!ENTITY better-bibtex_preferences_postscript_warn_value "Die Verwendung von 'Translator.options.exportPath' in Postscripts deaktiviert den Cache. Die Exporte werden sich deutlich verlangsamen.">
 <!ENTITY better-bibtex.Preferences.advanced.tab.strings "@string-Definitionen">
-<!ENTITY better-bibtex.Preferences.prefpane.loading "Better BibTeX wird geladen">
-<!ENTITY better-bibtex.Preferences.rescan-citekeys "Scanne angeheftete Zitierschlüssel erneut">
-<!ENTITY better-bibtex.Preferences.resetCache "Cache zurücksetzen">
+<!ENTITY better-bibtex_preferences_prefpane_loading "Better BibTeX wird geladen">
+<!ENTITY better-bibtex_preferences_rescan-citekeys_label "Scanne angeheftete Zitierschlüssel erneut">
+<!ENTITY better-bibtex_preferences_reset-cache_label "Cache zurücksetzen">
 <!ENTITY better-bibtex.BetterBibTeX.reportErrors "Better BibTeX Debug-Log senden...">
 <!ENTITY better-bibtex.BetterBibTeX.auxScanner "BibTeX-AUX-/Markdown-Datei nach Verweisen durchsuchen...">
 <!ENTITY better-bibtex.bulk-keys-confirm.message "Sie ändern mehr als {treshold} Einträge auf einmal. Sind sie sicher?">
@@ -245,10 +245,10 @@ Wenn Sie dies eingeschaltet haben und Sie Probleme haben außer der Löschung de
 <!ENTITY better-bibtex.BetterBibTeX.server.disabled "Exportier über HTTP ausgestellt">
 <!ENTITY better-bibtex.BetterBibTeX.show-collection-key "Download Better-BibTeX-Export...">
 
-<!ENTITY better-bibtex.ServerURL.title "Better-BibTeX-Export via HTTP">
-<!ENTITY better-bibtex.ServerURL.description "Download-URL:">
-<!ENTITY better-bibtex.ServerURL.or "oder">
-<!ENTITY better-bibtex.ServerURL.format "Element herunterladen als">
+<!ENTITY better-bibtex_server-url_title "Better-BibTeX-Export via HTTP">
+<!ENTITY better-bibtex_server-url_description "Download-URL:">
+<!ENTITY better-bibtex_server-url_or "oder">
+<!ENTITY better-bibtex_server-url_format "Element herunterladen als">
 <!ENTITY better-bibtex.ServerURL.OK "OK">
 
 <!-- remove after reactified zoteropane is in release -->

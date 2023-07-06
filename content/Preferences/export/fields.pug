@@ -1,9 +1,9 @@
 hbox(flex=0)
-  label(bbt:preference="extensions.zotero.translators.better-bibtex.language") &better-bibtex.Preferences.export.fields.language;
+  label(bbt:preference="extensions.zotero.translators.better-bibtex.language") &better-bibtex_preferences_export_fields_language;
   html:select(preference="extensions.zotero.translators.better-bibtex.language" preference-editable="true")
-    html:option(value='langid') &better-bibtex.Preferences.export.fields.language.langid;
-    html:option(value='language') &better-bibtex.Preferences.export.fields.language.language;
-    html:option(value='both') &better-bibtex.Preferences.export.fields.language.both;
+    html:option(value='langid') &better-bibtex_preferences_export_fields_language_langid;
+    html:option(value='language') &better-bibtex_preferences_export_fields_language_language;
+    html:option(value='both') &better-bibtex_preferences_export_fields_language_both;
 hbox(flex=0)
   label(bbt:preference="extensions.zotero.translators.better-bibtex.DOIandURL") &better-bibtex.Preferences.export.fields.doi-and-url;
   html:select(preference="extensions.zotero.translators.better-bibtex.DOIandURL" preference-editable="true")
@@ -12,13 +12,13 @@ hbox(flex=0)
     html:option(value='url') &better-bibtex.Preferences.export.fields.doi-and-url.URL;
   image(tooltip="tooltip-bibtexURL" src="chrome://zotero-better-bibtex/content/skin/attention.svg" width="16" height="16")
 hbox(flex=0)
-  label(bbt:preference="extensions.zotero.translators.better-bibtex.skipFields") &better-bibtex.Preferences.export.fields.skip;:
+  label(bbt:preference="extensions.zotero.translators.better-bibtex.skipFields") &better-bibtex_preferences_export_fields_skip;:
   textbox#id-better-bibtex-preferences-skipFields(size='30' preference='extensions.zotero.translators.better-bibtex.skipFields')
 hbox(flex=0)
-  label(bbt:preference="extensions.zotero.translators.better-bibtex.jabrefFormat") &better-bibtex.Preferences.export.jabrefFormat;
+  label(bbt:preference="extensions.zotero.translators.better-bibtex.jabrefFormat") &better-bibtex_preferences_export_jabref-format;
   html:select(preference="extensions.zotero.translators.better-bibtex.jabrefFormat" preference-editable="true")
-    html:option(value='0') &better-bibtex.Preferences.export.jabrefFormat.0;
-    html:option(value='3') &better-bibtex.Preferences.export.jabrefFormat.3;
-    html:option(value='4') &better-bibtex.Preferences.export.jabrefFormat.4;
-    html:option(value='5') &better-bibtex.Preferences.export.jabrefFormat.5;
+    html:option(value='0') &better-bibtex_preferences_export_jabref-format_0;
+    html:option(value='3') &better-bibtex_preferences_export_jabref-format_3;
+    html:option(value='4') &better-bibtex_preferences_export_jabref-format_4;
+    html:option(value='5') &better-bibtex_preferences_export_jabref-format_5;
   image(tooltip="tooltip-jabrefFormat" src="chrome://zotero-better-bibtex/content/skin/attention.svg" width="16" height="16")

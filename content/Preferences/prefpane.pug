@@ -6,7 +6,7 @@ prefpane#zotero-prefpane-better-bibtex(insertafter="zotero-prefpane-advanced" la
     tooltip#tooltip-bibtexURL
       description &better-bibtex.Preferences.export.fields.doi-and-url.warning;
     tooltip#tooltip-jabrefFormat
-      description &better-bibtex.Preferences.export.jabrefFormat.warn;
+      description &better-bibtex_preferences_export_jabref-format_warn;
     tooltip#tooltip-importSentenceCase
       description &better-bibtex.Preferences.advanced.import.sentenceCase.warning;
     tooltip#tooltip-importCaseProtection
@@ -19,15 +19,15 @@ prefpane#zotero-prefpane-better-bibtex(insertafter="zotero-prefpane-advanced" la
       description &better-bibtex.Preferences.advanced.export.retainCache.warning;
 
   deck#better-bibtex-prefs-deck(selectedIndex='0')
-    label#better-bibtex-loading &better-bibtex.Preferences.prefpane.loading;
+    label#better-bibtex-loading &better-bibtex_preferences_prefpane_loading;
 
     tabbox#better-bibtex-prefs-tabbox
       tabs#better-bibtex-prefs-tabs(onselect="Zotero.BetterBibTeX.PrefPane.refresh()")
-        tab#better-bibtex-prefs-citekey(label="&better-bibtex.Preferences.tab.citekey;")
-        tab#better-bibtex-prefs-export(label="&better-bibtex.Preferences.tab.export;")
-        tab#better-bibtex-prefs-auto-export(label="&better-bibtex.Preferences.tab.auto-export;")
+        tab#better-bibtex-prefs-citekey(label="&better-bibtex_preferences_tab_citekey_label;")
+        tab#better-bibtex-prefs-export(label="&better-bibtex_preferences_tab_export_label;")
+        tab#better-bibtex-prefs-auto-export(label="&better-bibtex_preferences_tab_auto-export_label;")
         tab(label='&better-bibtex.Preferences.advanced.tab.import;')
-        tab(label='&better-bibtex.Preferences.export.misc;')
+        tab(label='&better-bibtex_preferences_export_misc_label;')
 
       tabpanels#better-bibtex-prefs-tabpanels(flex=1)
         tabpanel(bbt:page='_index' flex=1 orient="vertical")
