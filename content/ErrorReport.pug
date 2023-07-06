@@ -12,7 +12,7 @@
 |   <!ENTITY % BBTDTD SYSTEM "chrome://zotero-better-bibtex/locale/zotero-better-bibtex.dtd"> %BBTDTD;
 |   <!ENTITY % standaloneDTD SYSTEM "chrome://zotero/locale/standalone.dtd"> %standaloneDTD;
 | ]>
-wizard#better-bibtex-error-report(title='&better-bibtex.ErrorReport.title;' width='550' height='550')
+wizard#better-bibtex-error-report(xmlns='http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul' title='&better-bibtex.ErrorReport.title;' width='550' height='550')
   wizardpage(onpageshow='window.ErrorReport.show()' label=' ')
     description.header(style='white-space: pre-wrap;') &better-bibtex.ErrorReport.enableDebug;
     button(label='&better-bibtex.ErrorReport.restartWithLoggingEnabled;' oncommand='window.ErrorReport.restartWithDebugEnabled()')/

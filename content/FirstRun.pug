@@ -1,0 +1,51 @@
+| <?xml version="1.0"?>
+| <?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+| <?xml-stylesheet href="chrome://global/skin/global.css"?>
+| <?xml-stylesheet href="chrome://browser/skin/preferences/preferences.css"?>
+| <?xml-stylesheet href="chrome://zotero/skin/preferences.css"?>
+| <?xml-stylesheet href="chrome://zotero/skin/zotero.css"?>
+| <?xml-stylesheet href="chrome://zotero-platform/content/overlay.css"?>
+| <?xml-stylesheet href="chrome://zotero-better-bibtex/skin/preferences.css"?>
+| <?xml-stylesheet href="chrome://zotero-better-bibtex/skin/error-report.css" type="text/css"?>
+| <!DOCTYPE window [
+|   <!ENTITY % ZoteroDTD SYSTEM "chrome://zotero/locale/zotero.dtd"> %ZoteroDTD;
+|   <!ENTITY % BBTDTD SYSTEM "chrome://zotero-better-bibtex/locale/zotero-better-bibtex.dtd"> %BBTDTD;
+|   <!ENTITY % standaloneDTD SYSTEM "chrome://zotero/locale/standalone.dtd"> %standaloneDTD;
+| ]>
+wizard#better-bibtex-first-run(xmlns='http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul' title='&better-bibtex.FirstRun.title;' width='550' height='500')
+  wizardpage(onpageshow='Zotero.BetterBibTeX.FirstRun.load()' label='&better-bibtex.FirstRun.title;')
+    description(style='white-space: pre-wrap;') &better-bibtex.FirstRun.welcome;
+  wizardpage(label=' ' onpageshow='Zotero.BetterBibTeX.FirstRun.update()')
+    description.header(style='white-space: pre-wrap;') &better-bibtex.FirstRun.citekeyFormat;
+    description(style='white-space: pre-wrap;') &better-bibtex.FirstRun.citekeyFormat.explanation;
+    radiogroup#better-bibtex-first-run-citekeyFormat(oncommand='Zotero.BetterBibTeX.FirstRun.update();')
+      radio(label='&better-bibtex.FirstRun.citekeyFormat.bbt;' value='bbt')/
+      radio(label='&better-bibtex.FirstRun.citekeyFormat.zotero;' value='zotero')/
+    separator/
+    description#better-bibtex-first-run-citekeyFormat-bbt(style='white-space: pre-wrap;')
+      | &better-bibtex.FirstRun.citekeyFormat.explanation.bbt;; &better-bibtex.FirstRun.citekeyFormat.explanation.example; 
+      box.textbox-emph goffmanForms1981
+    description#better-bibtex-first-run-citekeyFormat-zotero(style='white-space: pre-wrap;')
+      | &better-bibtex.FirstRun.citekeyFormat.explanation.zotero;; &better-bibtex.FirstRun.citekeyFormat.explanation.example; 
+      box.textbox-emph goffman_forms_1981
+  wizardpage(label=' ' onpageshow='Zotero.BetterBibTeX.FirstRun.update()')
+    description.header(style='white-space: pre-wrap;') &better-bibtex.FirstRun.dragndrop;
+    description &better-bibtex.FirstRun.dragndrop.explanation;
+    checkbox#better-bibtex-first-run-dragndrop(label='&better-bibtex.FirstRun.dragndrop.enable;' oncommand='Zotero.BetterBibTeX.FirstRun.update()')/
+  wizardpage(label=' ' onpageshow='Zotero.BetterBibTeX.FirstRun.update()')
+    description.header(style='white-space: pre-wrap;') &better-bibtex.FirstRun.importUnabbreviate;
+    description &better-bibtex.FirstRun.importUnabbreviate.explanation;
+    checkbox#better-bibtex-first-run-unabbreviate(label='&better-bibtex.FirstRun.importUnabbreviate.enable;' checked='true' oncommand='Zotero.BetterBibTeX.FirstRun.update()')/
+    description &better-bibtex.FirstRun.importStrings.explanation;
+    checkbox#better-bibtex-first-run-strings(label='&better-bibtex.FirstRun.importStrings.enable;' checked='true' oncommand='Zotero.BetterBibTeX.FirstRun.update()')/
+  wizardpage(label=' ')
+    description.header(style='white-space: pre-wrap;') &better-bibtex.FirstRun.exporting;
+    description
+      | &better-bibtex.FirstRun.exporting.explanation; 
+      box.textbox-emph Better BibTeX
+  wizardpage(label=' ')
+    description.header(style='white-space: pre-wrap;') &better-bibtex.FirstRun.done;
+    description &better-bibtex.FirstRun.done.explanation;
+  script(src='chrome://zotero/content/include.js')
+  script.
+    new Zotero.BetterBibTeX.FirstRun(window)

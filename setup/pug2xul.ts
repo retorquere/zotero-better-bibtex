@@ -8,6 +8,7 @@ import * as fs from 'fs'
 const pugs = [
   'content/zotero-preferences.pug',
   'content/ErrorReport.pug',
+  'content/FirstRun.pug',
 ]
 
 for (const src of pugs) {
