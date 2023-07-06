@@ -51,7 +51,7 @@ wizard#better-bibtex-error-report(xmlns='http://www.mozilla.org/keymaster/gateke
         textbox#better-bibtex-report-id.plain.textbox-emph(flex='1' readonly='true')/
     description &better-bibtex.ErrorReport.postToGitHub;
     description &better-bibtex.ErrorReport.notReviewed;
-  script(src='chrome://zotero/content/include.js')
+  script(src='chrome://zotero/content/include.js')/
   script.
     window.addEventListener('load', function() {
       (new Zotero.BetterBibTeX.ErrorReport).load(window).catch(err => Zotero.debug(`BBT.ErrorReport: ${err}`))

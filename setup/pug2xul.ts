@@ -1,9 +1,10 @@
 #!/usr/bin/env npx ts-node
 
-/* eslint-disable @typescript-eslint/no-unsafe-return, no-magic-numbers, no-console, @typescript-eslint/no-shadow, no-eval, @typescript-eslint/no-empty-function, id-blacklist */
+/* eslint-disable prefer-arrow/prefer-arrow-functions, @typescript-eslint/no-unsafe-return, no-magic-numbers, no-console, @typescript-eslint/no-shadow, no-eval, @typescript-eslint/no-empty-function, id-blacklist */
 
 import * as pug from 'pug'
 import * as fs from 'fs'
+import { ASTWalker } from './pug-ast-walker'
 
 const pugs = [
   'content/Preferences.pug',
@@ -14,33 +15,73 @@ const pugs = [
   'content/ZoteroPane.pug',
 ]
 
+class WizardDetector extends ASTWalker {
+  public foundWizard = false
+
+  Tag(node) {
+    if (node.name === 'wizard') this.foundWizard = true
+    return node
+  }
+}
+
+class Z7Wizard extends ASTWalker {
+  Tag(node) {
+    if (node.name === 'wizard') {
+      return {
+        type: 'Tag',
+        name: 'window',
+        attrs: node.attrs.filter(a => a.name.startsWith('xmlns')),
+        attributeBlocks: [],
+        block: {
+          type: 'Block',
+          nodes: [
+            {
+              type: 'Tag',
+              name: 'script',
+              selfClosing: true,
+              block: { type: 'Block', nodes: [] },
+              attrs: [ { name: 'src', val: '"chrome://global/content/customElements.js"', mustEscape: true } ],
+              attributeBlocks: []
+            },
+            { ...node, attrs: node.attrs.filter(a => !a.name.startsWith('xmlns')) },
+          ],
+        }
+      }
+    }
+
+    return node
+  }
+}
+
+function render(src, options) {
+  return pug.renderFile(src, options).replace(/&amp;/g, '&').trim()
+}
+
 for (let src of pugs) {
   console.log(' ', src)
   const tgt = `build/${src.replace(/pug$/, 'xul')}`
-  src = fs.readFileSync(src, 'utf-8')
 
-  fs.writeFileSync(tgt, pug.render(src, { pretty: true }).replace(/&amp;/g, '&').trim())
+  const wizardDetector = new WizardDetector
+  fs.writeFileSync(tgt, render(src, {
+    pretty: true,
+    plugins: [{
+      preCodeGen(ast) {
+        return wizardDetector.walk(ast)
+      }
+    }],
+  }))
 
-  if (src.match(/\nwizard/)) {
-    src = src
-      .split('\n')
-      .map(line => {
-        if (line.startsWith('|')) {
-          return line
-        }
-        else if (line.startsWith('wizard')) {
-          return [
-            'window(xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" xmlns:html="http://www.w3.org/1999/xhtml")',
-            '  script(src="chrome://global/content/customElements.js")/',
-            `  ${line.replace(/xmlns=['"]http:[/][/]www.mozilla.org.+?['"]\s*/, '')}`,
-          ].join('\n')
-        }
-        else {
-          return `  ${line}`
-        }
+  if (wizardDetector.foundWizard) {
+    fs.writeFileSync(
+      tgt.replace('.', '-7.'),
+      render(src, {
+        pretty: true,
+        plugins: [{
+          preCodeGen(ast) {
+            return (new Z7Wizard).walk(ast)
+          },
+        }],
       })
-      .join('\n')
-
-    fs.writeFileSync(tgt.replace('.', '-7.'), pug.render(src, { pretty: true }).replace(/&amp;/g, '&').trim())
+    )
   }
 }
