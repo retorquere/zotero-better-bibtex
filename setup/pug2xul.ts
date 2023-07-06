@@ -6,6 +6,7 @@ import * as pug from 'pug'
 import * as fs from 'fs'
 
 const pugs = [
+  'content/Preferences.pug',
   'content/zotero-preferences.pug',
   'content/ErrorReport.pug',
   'content/FirstRun.pug',
