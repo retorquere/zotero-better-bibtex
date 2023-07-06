@@ -9,6 +9,7 @@ const pugs = [
   'content/zotero-preferences.pug',
   'content/ErrorReport.pug',
   'content/FirstRun.pug',
+  'content/ServerURL.pug',
 ]
 
 for (const src of pugs) {
