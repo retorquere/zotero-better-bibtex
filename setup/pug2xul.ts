@@ -13,8 +13,33 @@ const pugs = [
   'content/ZoteroPane.pug',
 ]
 
-for (const src of pugs) {
+for (let src of pugs) {
   console.log(' ', src)
-  const xul = pug.renderFile(src, { pretty: true })
-  fs.writeFileSync(`build/${src.replace(/pug$/, 'xul')}`, xul.replace(/&amp;/g, '&').trim())
+  const tgt = `build/${src.replace(/pug$/, 'xul')}`
+  src = fs.readFileSync(src, 'utf-8')
+
+  fs.writeFileSync(tgt, pug.render(src, { pretty: true }).replace(/&amp;/g, '&').trim())
+
+  if (src.match(/\nwizard/)) {
+    src = src
+      .split('\n')
+      .map(line => {
+        if (line.startsWith('|')) {
+          return line
+        }
+        else if (line.startsWith('wizard')) {
+          return [
+            'window(xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" xmlns:html="http://www.w3.org/1999/xhtml")',
+            '  script(src="chrome://global/content/customElements.js")/',
+            `  ${line.replace(/xmlns=['"]http:[/][/]www.mozilla.org.+?['"]\s*/, '')}`,
+          ].join('\n')
+        }
+        else {
+          return `  ${line}`
+        }
+      })
+      .join('\n')
+
+    fs.writeFileSync(tgt.replace('.', '-7.'), pug.render(src, { pretty: true }).replace(/&amp;/g, '&').trim())
+  }
 }

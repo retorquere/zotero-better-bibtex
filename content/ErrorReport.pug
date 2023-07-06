@@ -53,6 +53,6 @@ wizard#better-bibtex-error-report(xmlns='http://www.mozilla.org/keymaster/gateke
     description &better-bibtex.ErrorReport.notReviewed;
   script(src='chrome://zotero/content/include.js')
   script.
-    | window.addEventListener('load', function() {
-    |   (new Zotero.BetterBibTeX.ErrorReport).load(window).catch(err => Zotero.debug(`BBT.ErrorReport: ${err}`))
-    | })
+    window.addEventListener('load', function() {
+      (new Zotero.BetterBibTeX.ErrorReport).load(window).catch(err => Zotero.debug(`BBT.ErrorReport: ${err}`))
+    })

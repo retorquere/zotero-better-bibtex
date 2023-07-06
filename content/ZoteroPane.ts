@@ -12,6 +12,7 @@ import * as Extra from './extra'
 import * as DateParser from './dateparser'
 import * as l10n from './l10n'
 import { Elements } from './create-element'
+import { is7 } from './client'
 
 export class ZoteroPane {
   private patched: Trampoline[] = []
@@ -382,7 +383,7 @@ export class ZoteroPane {
     const params = {wrappedJSObject: { scope }}
 
     const ww = Components.classes['@mozilla.org/embedcomp/window-watcher;1'].getService(Components.interfaces.nsIWindowWatcher)
-    ww.openWindow(null, 'chrome://zotero-better-bibtex/content/ErrorReport.xul', 'better-bibtex-error-report', 'chrome,centerscreen,modal', params)
+    ww.openWindow(null, `chrome://zotero-better-bibtex/content/ErrorReport${ is7 ? '-7' : ''}.xul`, 'better-bibtex-error-report', 'chrome,centerscreen,modal', params)
   }
 
   public async sentenceCase(): Promise<void> {
