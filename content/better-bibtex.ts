@@ -919,7 +919,7 @@ export class BetterBibTeX {
         },
       }
       const ww = Components.classes['@mozilla.org/embedcomp/window-watcher;1'].getService(Components.interfaces.nsIWindowWatcher)
-      ww.openWindow(null, 'chrome://zotero-better-bibtex/content/FirstRun.xul', 'better-bibtex-first-run', 'chrome,centerscreen,modal', params)
+      ww.openWindow(null, `chrome://zotero-better-bibtex/content/FirstRun.${is7 ? 'xhtml' : 'xul'}`, 'better-bibtex-first-run', 'chrome,centerscreen,modal', params)
       this.firstRun = params.wrappedJSObject
 
       Preference.citekeyFormat = (this.firstRun.citekeyFormat === 'zotero') ? 'zotero.clean' : citekeyFormat.replace(/\u200B/g, '')
