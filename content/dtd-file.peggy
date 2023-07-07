@@ -1,6 +1,9 @@
 start = strings:string* {
       return strings.reduce((acc, string) => {
-        if (string) acc[string.key] = string.value
+        if (string) {
+          if (acc[string.key] && acc[string.key] !== string.value) throw new Error(`duplicate definition of ${string.key}`)
+          acc[string.key] = string.value
+        }
         return acc
       }, {})
     }
