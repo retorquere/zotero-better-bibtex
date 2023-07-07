@@ -18,7 +18,7 @@ wizard#better-bibtex-error-report(xmlns='http://www.mozilla.org/keymaster/gateke
     description.header(style='white-space: pre-wrap;') &better-bibtex_error-report_enable-debug;
     button(label='&better-bibtex.ErrorReport.restartWithLoggingEnabled;' oncommand='window.ErrorReport.restartWithDebugEnabled()')/
   wizardpage(onpageshow='window.ErrorReport.show()' label=' ')
-    description.header(style='white-space: pre-wrap;') &better-bibtex.ErrorReport.review;
+    description.header(style='white-space: pre-wrap;') &better-bibtex_error-report_review;
     textbox#better-bibtex-report-current.plain(flex='1' readonly='true')/
     textbox#better-bibtex-report-latest.plain.textbox-emph(flex='1' readonly='true')/
     textbox#better-bibtex-report-cache.plain(flex='1' readonly='true')/
@@ -43,15 +43,15 @@ wizard#better-bibtex-error-report(xmlns='http://www.mozilla.org/keymaster/gateke
       hbox(flex='1')/
     description#better-bibtex-error-memory-use(style='white-space: pre-wrap;')/
   wizardpage(onpageshow='window.ErrorReport.send()' label=' ')
-    description &better-bibtex.ErrorReport.submissionInProgress;
+    description &better-bibtex_error-report_submission-in-progress;
   wizardpage(onpageshow='window.ErrorReport.show()' label=' ')
-    description &better-bibtex.ErrorReport.submitted;
+    description &better-bibtex_error-report_submitted;
     description#better-bibtex-report-result(hidden='true')
       description
-        | &better-bibtex.ErrorReport.reportID; 
+        | &better-bibtex_error-report_report-id; 
         textbox#better-bibtex-report-id.plain.textbox-emph(flex='1' readonly='true')/
-    description &better-bibtex.ErrorReport.postToGitHub;
-    description &better-bibtex.ErrorReport.notReviewed;
+    description &better-bibtex_error-report_post-to-github;
+    description &better-bibtex_error-report_not-reviewed;
   script(src='chrome://zotero/content/include.js')/
   script.
     window.addEventListener('load', function() {

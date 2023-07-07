@@ -22,6 +22,7 @@ class L10NDetector extends ASTWalker {
 
     id = id
       .replace(/GitHub/g, 'Github')
+      .replace(/TeX/g, 'Tex')
       .replace(/[.]([A-Z]+)/g, (m, c) => `_${c.toLowerCase()}`)
       .replace(/([a-z])([A-Z]+)/g, (m, pre, post) => `${pre}-${post.toLowerCase()}`)
       .replace(/[.]/g, '_')
@@ -35,7 +36,7 @@ class L10NDetector extends ASTWalker {
         let c = this.cleanup(id)
         const postfix = `_${attr.name}`
         if (!c.endsWith(postfix)) c += postfix
-        // if (id !== c) corrections[id] = c
+        if (id !== c) corrections[id] = c
       })
     }
     this.walk(node.block, history)
@@ -123,9 +124,4 @@ for (const src of pugs) {
   }
 }
 
-for (const old of Object.keys(corrections).sort().reverse()) {
-  const correction = corrections[old]
-  delete corrections[old]
-  corrections[old] = correction
-}
 console.log(JSON.stringify(corrections, null, 2))
