@@ -1,4 +1,4 @@
-<!ENTITY -better-bibtex_brand-name_label "Better BibTeX">
+<!ENTITY better-bibtex_brand-name "Better BibTeX">
 
 <!ENTITY better-bibtex_units_seconds "Sekunden">
 
@@ -228,16 +228,16 @@ Wenn Sie dies eingeschaltet haben und Sie Probleme haben außer der Löschung de
 <!ENTITY better-bibtex_preferences_prefpane_loading "Better BibTeX wird geladen">
 <!ENTITY better-bibtex_preferences_rescan-citekeys_label "Scanne angeheftete Zitierschlüssel erneut">
 <!ENTITY better-bibtex_preferences_reset-cache_label "Cache zurücksetzen">
-<!ENTITY -better-bibtex_brand-name_label.reportErrors "Better BibTeX Debug-Log senden...">
-<!ENTITY -better-bibtex_brand-name_label.auxScanner "BibTeX-AUX-/Markdown-Datei nach Verweisen durchsuchen...">
+<!ENTITY better-bibtex_zotero-pane_report-errors "Better BibTeX Debug-Log senden...">
+<!ENTITY better-bibtex_zotero-pane_aux-scanner "BibTeX-AUX-/Markdown-Datei nach Verweisen durchsuchen...">
 <!ENTITY better-bibtex.bulk-keys-confirm.message "Sie ändern mehr als {treshold} Einträge auf einmal. Sind sie sicher?">
 <!ENTITY better-bibtex.bulk-keys-confirm.whatever "OK, nicht noch mal fragen">
-<!ENTITY -better-bibtex_brand-name_label.citekey.set "BibTeX-Key ändern...">
-<!ENTITY -better-bibtex_brand-name_label.citekey.pin "BibTeX-Key anheften">
-<!ENTITY -better-bibtex_brand-name_label.citekey.pinInspireHEP "Hefte BibTeX-Schlüssel aus InspireHEP an">
-<!ENTITY -better-bibtex_brand-name_label.citekey.unpin "BibTeX-Key lösen">
-<!ENTITY -better-bibtex_brand-name_label.citekey.refresh "Aktualisiere BibTeX key">
-<!ENTITY -better-bibtex_brand-name_label.addCitationLinks "Zitier-Graph: Zitat-Links hinzufügen...">
+<!ENTITY better-bibtex_zotero-pane_citekey_set "BibTeX-Key ändern...">
+<!ENTITY better-bibtex_zotero-pane_citekey_pin "BibTeX-Key anheften">
+<!ENTITY better-bibtex_zotero-pane_citekey_pin-inspire-hep "Hefte BibTeX-Schlüssel aus InspireHEP an">
+<!ENTITY better-bibtex_zotero-pane_citekey_unpin "BibTeX-Key lösen">
+<!ENTITY better-bibtex_zotero-pane_citekey_refresh "Aktualisiere BibTeX key">
+<!ENTITY better-bibtex_zotero-pane_add-citation-links "Zitier-Graph: Zitat-Links hinzufügen...">
 <!ENTITY -better-bibtex_brand-name_label.sentenceCase "BBT Sentence-case">
 <!ENTITY -better-bibtex_brand-name_label.patchDates "Kopiere date-added/date-modified aus Extra-Feld">
 <!ENTITY better-bibtex.ZoteroPane.tag-duplicates "Markiere doppelte Zitierschlüssel">

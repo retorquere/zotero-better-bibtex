@@ -1,4 +1,4 @@
-<!ENTITY -better-bibtex_brand-name_label "Better BibTeX">
+<!ENTITY better-bibtex_brand-name "Better BibTeX">
 
 <!ENTITY better-bibtex_units_seconds "seconds">
 
@@ -228,16 +228,16 @@ If you have this on, and you experience any problem that is not the cache gettin
 <!ENTITY better-bibtex_preferences_prefpane_loading "Better BibTeX is loading">
 <!ENTITY better-bibtex_preferences_rescan-citekeys_label "Reler chaves de citação fixas">
 <!ENTITY better-bibtex_preferences_reset-cache_label "Zerar cache">
-<!ENTITY -better-bibtex_brand-name_label.reportErrors "Send Better BibTeX debug log...">
-<!ENTITY -better-bibtex_brand-name_label.auxScanner "Scan BibTeX AUX/Markdown file for references...">
+<!ENTITY better-bibtex_zotero-pane_report-errors "Send Better BibTeX debug log...">
+<!ENTITY better-bibtex_zotero-pane_aux-scanner "Scan BibTeX AUX/Markdown file for references...">
 <!ENTITY better-bibtex.bulk-keys-confirm.message "Você está modificando mais que {treshold} items de uma vez. Tem certeza?">
 <!ENTITY better-bibtex.bulk-keys-confirm.whatever "OK e não perguntar novamente">
-<!ENTITY -better-bibtex_brand-name_label.citekey.set "Change BibTeX key...">
-<!ENTITY -better-bibtex_brand-name_label.citekey.pin "Fixar chave BibTeX">
-<!ENTITY -better-bibtex_brand-name_label.citekey.pinInspireHEP "Fixar chave BibTeX do InspireHEP">
-<!ENTITY -better-bibtex_brand-name_label.citekey.unpin "Des-fixar chave BibTeX">
-<!ENTITY -better-bibtex_brand-name_label.citekey.refresh "Atualizar chave BibTeX">
-<!ENTITY -better-bibtex_brand-name_label.addCitationLinks "Citation Graph: add citation links...">
+<!ENTITY better-bibtex_zotero-pane_citekey_set "Change BibTeX key...">
+<!ENTITY better-bibtex_zotero-pane_citekey_pin "Fixar chave BibTeX">
+<!ENTITY better-bibtex_zotero-pane_citekey_pin-inspire-hep "Fixar chave BibTeX do InspireHEP">
+<!ENTITY better-bibtex_zotero-pane_citekey_unpin "Des-fixar chave BibTeX">
+<!ENTITY better-bibtex_zotero-pane_citekey_refresh "Atualizar chave BibTeX">
+<!ENTITY better-bibtex_zotero-pane_add-citation-links "Citation Graph: add citation links...">
 <!ENTITY -better-bibtex_brand-name_label.sentenceCase "BBT Sentence-case">
 <!ENTITY -better-bibtex_brand-name_label.patchDates "Copy date-added/date-modified from extra field">
 <!ENTITY better-bibtex.ZoteroPane.tag-duplicates "Etiquetar chaves de citação duplicadas">
