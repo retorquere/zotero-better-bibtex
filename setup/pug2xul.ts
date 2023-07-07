@@ -15,43 +15,6 @@ const pugs = [
   'content/ZoteroPane.pug',
 ]
 
-const corrections: Record<string, string> = {}
-class L10NDetector extends ASTWalker {
-  cleanup(id) {
-    if (id === 'better-bibtex.BetterBibTeX') return '-better-bibtex_brand-name'
-
-    id = id
-      .replace(/GitHub/g, 'Github')
-      .replace(/TeX/g, 'Tex')
-      .replace(/[.]([A-Z]+)/g, (m, c) => `_${c.toLowerCase()}`)
-      .replace(/([a-z])([A-Z]+)/g, (m, pre, post) => `${pre}-${post.toLowerCase()}`)
-      .replace(/[.]/g, '_')
-    if (!id.startsWith('better-bibtex_')) id = `better-bibtex_${id}`
-    return id
-  }
-
-  Tag(node, history) {
-    for (const attr of node.attrs) {
-      attr.val.replace(/&(.+?);/, (m, id) => {
-        let c = this.cleanup(id)
-        const postfix = `_${attr.name}`
-        if (!c.endsWith(postfix)) c += postfix
-        if (id !== c) corrections[id] = c
-      })
-    }
-    this.walk(node.block, history)
-    return node
-  }
-
-  Text(node) {
-    node.val.replace(/&(.+?);/, (m, id) => {
-      const c = this.cleanup(id)
-      if (id !== c) corrections[id] = c
-    })
-    return node
-  }
-}
-
 class WizardDetector extends ASTWalker {
   public foundWizard = false
 
@@ -103,7 +66,6 @@ for (const src of pugs) {
     pretty: true,
     plugins: [{
       preCodeGen(ast) {
-        (new L10NDetector).walk(ast, [])
         return wizardDetector.walk(ast)
       },
     }],
@@ -123,5 +85,3 @@ for (const src of pugs) {
     )
   }
 }
-
-console.log(JSON.stringify(corrections, null, 2))

@@ -2,7 +2,8 @@
 
 <!ENTITY better-bibtex_units_seconds "seconds">
 
-<!ENTITY better-bibtex_first-run_title_label "Welcome to Better BibTeX for Zotero">
+<!ENTITY better-bibtex_first-run_title "Welcome to Better BibTeX for Zotero">
+<!ENTITY better-bibtex_first-run_label "Welcome to Better BibTeX for Zotero">
 <!ENTITY better-bibtex_first-run_welcome "Better BibTeX for Zotero (or BBT as it is commonly named) aims to make Zotero more useful for LaTeX and Markdown holdouts. There's a lot to configure about BBT -- take a look in the preferences if you're curious -- but let's start you off with a few simple choices.">
 
 <!ENTITY better-bibtex_first-run_citekey-format "Your citation keys">

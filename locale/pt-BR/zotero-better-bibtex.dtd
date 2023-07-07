@@ -2,7 +2,8 @@
 
 <!ENTITY better-bibtex_units_seconds "seconds">
 
-<!ENTITY better-bibtex_first-run_title_label "Bem-vindo ao Better BibTeX para Zotero">
+<!ENTITY better-bibtex_first-run_title "Bem-vindo ao Better BibTeX para Zotero">
+<!ENTITY better-bibtex_first-run_label "Bem-vindo ao Better BibTeX para Zotero">
 <!ENTITY better-bibtex_first-run_welcome "Better BibTeX para Zotero (ou simplesmente BBT) procura tornar Zotero mais útil para tradicionalistas do LaTeX e do Markdown. Há muitas opções para configurar no BBT -- dê uma olhada nas preferências se estiver curioso -- mas vamos acertrar o básico com algumas escolhas simples.">
 
 <!ENTITY better-bibtex_first-run_citekey-format "Suas chaves de citação">

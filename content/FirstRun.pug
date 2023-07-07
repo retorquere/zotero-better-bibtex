@@ -12,8 +12,8 @@
 |   <!ENTITY % BBTDTD SYSTEM "chrome://zotero-better-bibtex/locale/zotero-better-bibtex.dtd"> %BBTDTD;
 |   <!ENTITY % standaloneDTD SYSTEM "chrome://zotero/locale/standalone.dtd"> %standaloneDTD;
 | ]>
-wizard#better-bibtex-first-run(xmlns='http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul' title='&better-bibtex_first-run_title_label;' width='550' height='500')
-  wizardpage(onpageshow='Zotero.BetterBibTeX.FirstRun.load()' label='&better-bibtex_first-run_title_label;')
+wizard#better-bibtex-first-run(xmlns='http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul' title='&better-bibtex_first-run_title;' width='550' height='500')
+  wizardpage(onpageshow='Zotero.BetterBibTeX.FirstRun.load()' label='&better-bibtex_first-run_label;')
     description(style='white-space: pre-wrap;') &better-bibtex_first-run_welcome;
   wizardpage(label=' ' onpageshow='Zotero.BetterBibTeX.FirstRun.update()')
     description.header(style='white-space: pre-wrap;') &better-bibtex_first-run_citekey-format;
