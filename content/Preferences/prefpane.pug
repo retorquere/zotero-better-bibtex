@@ -1,4 +1,4 @@
-prefpane#zotero-prefpane-better-bibtex(insertafter="zotero-prefpane-advanced" label="&better-bibtex_label;" image="chrome://zotero-better-bibtex/content/skin/bibtex.svg" onpaneload="load()" helpTopic="BetterBibTeX")
+prefpane#zotero-prefpane-better-bibtex(insertafter="zotero-prefpane-advanced" label="&better-bibtex.label;" image="chrome://zotero-better-bibtex/content/skin/bibtex.svg" onpaneload="load()" helpTopic="BetterBibTeX")
   preferences#zotero-preferences-cite
     include preferences.pug
 
@@ -23,11 +23,11 @@ prefpane#zotero-prefpane-better-bibtex(insertafter="zotero-prefpane-advanced" la
 
     tabbox#better-bibtex-prefs-tabbox
       tabs#better-bibtex-prefs-tabs(onselect="Zotero.BetterBibTeX.PrefPane.refresh()")
-        tab#better-bibtex-prefs-citekey(label="&better-bibtex_preferences_tab_citekey_label;")
-        tab#better-bibtex-prefs-export(label="&better-bibtex_preferences_tab_export_label;")
-        tab#better-bibtex-prefs-auto-export(label="&better-bibtex_preferences_tab_auto-export_label;")
-        tab(label='&better-bibtex_preferences_advanced_tab_import_label;')
-        tab(label='&better-bibtex_preferences_export_misc_label;')
+        tab#better-bibtex-prefs-citekey(label="&better-bibtex_preferences_tab_citekey.label;")
+        tab#better-bibtex-prefs-export(label="&better-bibtex_preferences_tab_export.label;")
+        tab#better-bibtex-prefs-auto-export(label="&better-bibtex_preferences_tab_auto-export.label;")
+        tab(label='&better-bibtex_preferences_advanced_tab_import.label;')
+        tab(label='&better-bibtex_preferences_export_misc.label;')
 
       tabpanels#better-bibtex-prefs-tabpanels(flex=1)
         tabpanel(bbt:page='_index' flex=1 orient="vertical")

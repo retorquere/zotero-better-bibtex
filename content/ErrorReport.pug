@@ -13,22 +13,22 @@
 | <?xml-stylesheet href="chrome://zotero-platform/content/zotero.css"?>
 | <?xml-stylesheet href="chrome://zotero-better-bibtex/skin/preferences.css"?>
 | <?xml-stylesheet href="chrome://zotero-better-bibtex/skin/error-report.css" type="text/css"?>
-wizard#better-bibtex-error-report(xmlns='http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul' title='&better-bibtex_error-report_title;' width='550' height='550')
+wizard#better-bibtex-error-report(xmlns='http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul' title='&better-bibtex_error-report.title;' width='550' height='550')
   wizardpage(onpageshow='window.ErrorReport.show()' label=' ')
     description.header(style='white-space: pre-wrap;') &better-bibtex_error-report_enable-debug;
-    button(label='&better-bibtex_error-report_restart-with-logging-enabled_label;' oncommand='window.ErrorReport.restartWithDebugEnabled()')/
+    button(label='&better-bibtex_error-report_restart-with-logging-enabled.label;' oncommand='window.ErrorReport.restartWithDebugEnabled()')/
   wizardpage(onpageshow='window.ErrorReport.show()' label=' ')
     description.header(style='white-space: pre-wrap;') &better-bibtex_error-report_review;
     textbox#better-bibtex-report-current.plain(flex='1' readonly='true')/
     textbox#better-bibtex-report-latest.plain.textbox-emph(flex='1' readonly='true')/
     textbox#better-bibtex-report-cache.plain(flex='1' readonly='true')/
-    checkbox#better-bibtex-error-report-include-db(label='&better-bibtex_error-report_include-cache_label;')/
+    checkbox#better-bibtex-error-report-include-db(label='&better-bibtex_error-report_include-cache.label;')/
     tabbox.debug-on(flex='1')
       tabs
-        tab(label='&better-bibtex_error-report_context_label;')/
-        tab(label='&better-bibtex_error-report_errors_label;')/
-        tab(label='&better-bibtex_error-report_debug_label;')/
-        tab#better-bibtex-error-tab-items(label='&better-bibtex_error-report_items_label;')/
+        tab(label='&better-bibtex_error-report_context.label;')/
+        tab(label='&better-bibtex_error-report_errors.label;')/
+        tab(label='&better-bibtex_error-report_debug.label;')/
+        tab#better-bibtex-error-tab-items(label='&better-bibtex_error-report_items.label;')/
       tabpanels
         tabpanel(orient='vertical')
           textbox#better-bibtex-error-context.plain(readonly='true' multiline='true' flex='1' style='min-height: 8em;')/
@@ -39,7 +39,7 @@ wizard#better-bibtex-error-report(xmlns='http://www.mozilla.org/keymaster/gateke
         tabpanel(orient='vertical')
           textbox#better-bibtex-error-items.plain(readonly='true' multiline='true' flex='1' style='min-height: 8em;')/
     hbox
-      button(label='&better-bibtex_error-report_save_label;' oncommand='window.ErrorReport.save()')/
+      button(label='&better-bibtex_error-report_save.label;' oncommand='window.ErrorReport.save()')/
       hbox(flex='1')/
     description#better-bibtex-error-memory-use(style='white-space: pre-wrap;')/
   wizardpage(onpageshow='window.ErrorReport.send()' label=' ')

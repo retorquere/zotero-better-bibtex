@@ -87,7 +87,7 @@ export class ZoteroItemPane {
 
       const fieldHeader = elements.create(client.is7 ? 'th' : 'label')
       fieldHeader.setAttribute('fieldname', 'citationKey')
-      const headerContent = `${l10n.localize('better-bibtex.ItemPane.citekey_column')}${citekey.pinned ? ' \uD83D\uDCCC' : ''}`
+      const headerContent = `${l10n.localize('better-bibtex_item-pane_citekey_label')}${citekey.pinned ? ' \uD83D\uDCCC' : ''}`
       if (client.is7) {
         const label = elements.create('label')
         label.className = 'key'

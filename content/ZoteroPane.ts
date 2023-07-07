@@ -140,7 +140,7 @@ export class ZoteroPane {
         collectionmenu
           .appendChild(elements.create('menu', {
             class: 'zotero-collectionmenu-bbt-autoexport',
-            label: l10n.localize('better-bibtex_preferences_tab_auto-export_label'),
+            label: l10n.localize('better-bibtex_preferences_tab_auto-export.label'),
           }))
           .appendChild(elements.create('menupopup', {
             id: 'zotero-collectionmenu-bbt-autoexport-menupopup',
@@ -167,7 +167,7 @@ export class ZoteroPane {
 
         collectionmenu.appendChild(elements.create('menuitem', {
           id: 'bbt-collectionmenu-tag-duplicates',
-          label: l10n.localize('better-bibtex.ZoteroPane.tag-duplicates'),
+          label: l10n.localize('better-bibtex_zotero-pane_tag_duplicates'),
           oncommand: async event => {
             event.stopPropagation()
             await Zotero.BetterBibTeX.KeyManager.tagDuplicates(parseInt(event.target.getAttribute('libraryID')))
