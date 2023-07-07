@@ -238,13 +238,13 @@ If you have this on, and you experience any problem that is not the cache gettin
 <!ENTITY better-bibtex_zotero-pane_citekey_unpin "Des-fixar chave BibTeX">
 <!ENTITY better-bibtex_zotero-pane_citekey_refresh "Atualizar chave BibTeX">
 <!ENTITY better-bibtex_zotero-pane_add-citation-links "Citation Graph: add citation links...">
-<!ENTITY -better-bibtex_brand-name_label.sentenceCase "BBT Sentence-case">
-<!ENTITY -better-bibtex_brand-name_label.patchDates "Copy date-added/date-modified from extra field">
+<!ENTITY better-bibtex_zotero-pane_sentence_case "BBT Sentence-case">
+<!ENTITY better-bibtex_zotero-pane_patch-dates "Copy date-added/date-modified from extra field">
 <!ENTITY better-bibtex.ZoteroPane.tag-duplicates "Etiquetar chaves de citação duplicadas">
-<!ENTITY -better-bibtex_brand-name_label.TeXstudio "Push entries to TeXstudio">
+<!ENTITY better-bibtex_zotero-pane_tex-studio "Push entries to TeXstudio">
 <!ENTITY zotero.better-bibtex.csquotes "Substituir aspas duplas ou angulares por \\enquote{...} (exige csquotes)">
-<!ENTITY -better-bibtex_brand-name_label.server.disabled "Exportação via HTTP desativada">
-<!ENTITY -better-bibtex_brand-name_label.show-collection-key "Download Better BibTeX export...">
+<!ENTITY better-bibtex_zotero-pane_server_disabled "Exportação via HTTP desativada">
+<!ENTITY better-bibtex_zotero-pane_show-collection-key "Download Better BibTeX export...">
 
 <!ENTITY better-bibtex_server-url_title "Better BibTeX export via HTTP">
 <!ENTITY better-bibtex_server-url_description "Download URL:">
