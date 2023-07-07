@@ -15,11 +15,20 @@ const pugs = [
   'content/ZoteroPane.pug',
 ]
 
+// const attributes: Set<string> = new Set
 class WizardDetector extends ASTWalker {
   public foundWizard = false
 
   Tag(node) {
+    /*
+    for (const attr of node.attrs) {
+      attr.val.replace(/&([^;]+);/g, (m, id) => {
+        attributes.add(id)
+      })
+    }
+    */
     if (node.name === 'wizard') this.foundWizard = true
+    this.walk(node.block)
     return node
   }
 }
@@ -85,3 +94,5 @@ for (const src of pugs) {
     )
   }
 }
+
+// console.log(JSON.stringify([...attributes], null, 2))
