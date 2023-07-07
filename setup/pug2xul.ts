@@ -15,12 +15,13 @@ const pugs = [
   'content/ZoteroPane.pug',
 ]
 
-const corrections: Set<string> = new Set
+const corrections: Record<string, string> = {}
 class L10NDetector extends ASTWalker {
   cleanup(id) {
     if (id === 'better-bibtex.BetterBibTeX') return '-better-bibtex_brand-name'
 
     id = id
+      .replace(/GitHub/g, 'Github')
       .replace(/[.]([A-Z]+)/g, (m, c) => `_${c.toLowerCase()}`)
       .replace(/([a-z])([A-Z]+)/g, (m, pre, post) => `${pre}-${post.toLowerCase()}`)
       .replace(/[.]/g, '_')
@@ -34,7 +35,7 @@ class L10NDetector extends ASTWalker {
         let c = this.cleanup(id)
         const postfix = `_${attr.name}`
         if (!c.endsWith(postfix)) c += postfix
-        if (id !== c) corrections.add(`${id} => ${c} (attr)`)
+        // if (id !== c) corrections[id] = c
       })
     }
     this.walk(node.block, history)
@@ -44,7 +45,7 @@ class L10NDetector extends ASTWalker {
   Text(node) {
     node.val.replace(/&(.+?);/, (m, id) => {
       const c = this.cleanup(id)
-      if (id !== c) corrections.add(`${id} => ${c}`)
+      if (id !== c) corrections[id] = c
     })
     return node
   }
@@ -122,6 +123,9 @@ for (const src of pugs) {
   }
 }
 
-for (const line of [...corrections].sort()) {
-  console.log(line.replace(/[.]/g, '[.]'))
+for (const old of Object.keys(corrections).sort().reverse()) {
+  const correction = corrections[old]
+  delete corrections[old]
+  corrections[old] = correction
 }
+console.log(JSON.stringify(corrections, null, 2))
