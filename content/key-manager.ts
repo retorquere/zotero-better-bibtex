@@ -59,11 +59,11 @@ export const KeyManager = new class _KeyManager {
 
   public async set(): Promise<void> {
     const ids = this.expandSelection('selected')
-    if (ids.length !== 1) return alert(l10n.localize('Citekey.set.toomany'))
+    if (ids.length !== 1) return alert(l10n.localize('better-bibtex_citekey_set_toomany'))
 
     Cache.remove(ids, `setting key for ${ids}`)
     const existingKey = this.get(ids[0]).citekey
-    const citationKey = prompt(l10n.localize('Citekey.set.change'), existingKey) || existingKey
+    const citationKey = prompt(l10n.localize('better-bibtex_citekey_set_change'), existingKey) || existingKey
     if (citationKey === existingKey) return
 
     const item = await getItemsAsync(ids[0])

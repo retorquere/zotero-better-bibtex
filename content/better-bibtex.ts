@@ -314,7 +314,7 @@ $patch$(itemTree.prototype, 'getColumns', original => function Zotero_ItemTree_p
   const insertAfter: number = columns.findIndex(column => column.dataKey === 'title')
   columns.splice(insertAfter + 1, 0, {
     dataKey: 'citationKey',
-    label: l10n.localize('ZoteroPane.column.citekey'),
+    label: l10n.localize('better-bibtex_zotero-pane_column_citekey'),
     flex: '1',
     zoteroPersist: new Set(['width', 'ordinal', 'hidden', 'sortActive', 'sortDirection']),
   })
@@ -770,7 +770,7 @@ export class BetterBibTeX {
         name = name.lastIndexOf('.') > 0 ? name.substr(0, name.lastIndexOf('.')) : name
         // eslint-disable-next-line no-case-declarations
         const tag = { value: name }
-        if (!ps.prompt(null, l10n.localize(`BetterBibTeX.auxScan.title.${aux.endsWith('.aux') ? 'aux' : 'md'}`), l10n.localize('BetterBibTeX.auxScan.prompt'), tag, null, {})) return
+        if (!ps.prompt(null, l10n.localize(`BetterBibTeX.auxScan.title.${aux.endsWith('.aux') ? 'aux' : 'md'}`), l10n.localize('better-bibtex_aux-scan_prompt'), tag, null, {})) return
         if (!tag.value) return
 
         await AUXScanner.scan(aux, { tag: tag.value })
@@ -903,7 +903,7 @@ export class BetterBibTeX {
   }
 
   public async load(doc: Document): Promise<void> {
-    // progress.start(l10n.localize('BetterBibTeX.startup.waitingForZotero'))
+    // progress.start(l10n.localize('better-bibtex_startup_waiting-for-zotero'))
 
     // the zero-width-space is a marker to re-save the current default so it doesn't get replaced when the default changes later, which would change new keys suddenly
     // its presence also indicates first-run, so right after the DB is ready, configure BBT
@@ -939,22 +939,22 @@ export class BetterBibTeX {
       )
     }
 
-    // progress.update(l10n.localize('BetterBibTeX.startup.serializationCache'), 20) // eslint-disable-line no-magic-numbers
+    // progress.update(l10n.localize('better-bibtex_startup_serialization-cache'), 20) // eslint-disable-line no-magic-numbers
     // Serializer.init()
 
-    // progress.update(l10n.localize('BetterBibTeX.startup.autoExport.load'), 30) // eslint-disable-line no-magic-numbers
+    // progress.update(l10n.localize('better-bibtex_startup_auto-export_load'), 30) // eslint-disable-line no-magic-numbers
     // await AutoExport.init()
 
-    // progress.update(l10n.localize('BetterBibTeX.startup.journalAbbrev'), 60) // eslint-disable-line no-magic-numbers
+    // progress.update(l10n.localize('better-bibtex_startup_journal-abbrev'), 60) // eslint-disable-line no-magic-numbers
     // await JournalAbbrev.init()
 
-    // progress.update(l10n.localize('BetterBibTeX.startup.installingTranslators'), 70) // eslint-disable-line no-magic-numbers
+    // progress.update(l10n.localize('better-bibtex_startup_installing-translators'), 70) // eslint-disable-line no-magic-numbers
     // await Translators.init()
 
-    // progress.update(l10n.localize('BetterBibTeX.startup.keyManager'), 80) // eslint-disable-line no-magic-numbers
+    // progress.update(l10n.localize('better-bibtex_startup_key-manager'), 80) // eslint-disable-line no-magic-numbers
     // await this.KeyManager.start() // inits the key cache by scanning the DB and generating missing keys
 
-    // progress.update(l10n.localize('BetterBibTeX.startup.autoExport'), 90) // eslint-disable-line no-magic-numbers
+    // progress.update(l10n.localize('better-bibtex_startup_auto-export'), 90) // eslint-disable-line no-magic-numbers
     // AutoExport.start()
 
     new ZoteroPane(window, doc)
@@ -966,7 +966,7 @@ export class BetterBibTeX {
 
     Events.on('export-progress', ({ pct, message }) => {
       /*
-      let status = `${percent < 0 ? l10n.localize('Preferences.auto-export.status.preparing') : ''} ${translator}`.trim()
+      let status = `${percent < 0 ? l10n.localize('better-bibtex_preferences_auto-export_status_preparing') : ''} ${translator}`.trim()
       if (Translators.queue.queued) status += ` +${Translators.queue.queued}`
       setProgress(percent && percent < 100 && Math.abs(percent), status) // eslint-disable-line no-magic-numbers
       */

@@ -63,11 +63,11 @@ export class ExportOptions {
     let textContent = ''
     switch (translator) {
       case 'b6e39b57-8942-4d11-8259-342c46ce395f':
-        textContent = l10n.localize('exportOptions.reminder', { translator: 'Better BibLaTeX' })
+        textContent = l10n.localize('better-bibtex_export-options_reminder', { translator: 'Better BibLaTeX' })
         break
 
       case '9cb70025-a888-4a29-a210-93ec52da40d4':
-        textContent = l10n.localize('exportOptions.reminder', { translator: 'Better BibTeX' })
+        textContent = l10n.localize('better-bibtex_export-options_reminder', { translator: 'Better BibTeX' })
         break
 
       default:
@@ -117,7 +117,7 @@ export class ExportOptions {
       }
 
       if (id === 'export-option-keepUpdated') {
-        node.setAttribute('label', l10n.localize('exportOptions.keepUpdated'))
+        node.setAttribute('label', l10n.localize('better-bibtex_export-options_keep-updated'))
         if (this.reset) {
           node.checked = false
           this.reset = false
@@ -125,7 +125,7 @@ export class ExportOptions {
       }
 
       if (id === 'export-option-worker') {
-        node.setAttribute('label', l10n.localize('exportOptions.worker'))
+        node.setAttribute('label', l10n.localize('better-bibtex_export-options_worker'))
       }
 
       if (node.getAttribute('better-bibtex')) return null

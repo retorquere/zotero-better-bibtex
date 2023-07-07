@@ -316,7 +316,7 @@ const queue = new class TaskQueue {
 
       await Promise.all(jobs.map(job => Translators.queueJob(job)))
 
-      await repo.push(l10n.localize('Preferences.auto-export.git.message', { type: Translators.byId[ae.translatorID].label.replace('Better ', '') }))
+      await repo.push(l10n.localize('better-bibtex_preferences_auto-export_git_message', { type: Translators.byId[ae.translatorID].label.replace('Better ', '') }))
 
       ae.error = ''
     }

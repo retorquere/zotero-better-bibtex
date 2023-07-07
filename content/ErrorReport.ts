@@ -211,7 +211,7 @@ export class ErrorReport {
     document.getElementById('better-bibtex-error-tab-items').hidden = !this.errorlog.items
 
     const current = require('../gen/version.js')
-    document.getElementById('better-bibtex-report-current').value = l10n.localize('ErrorReport.better-bibtex.current', { version: current })
+    document.getElementById('better-bibtex-report-current').value = l10n.localize('better-bibtex_error-report_better-bibtex_current', { version: current })
 
     try {
       const latest = await this.latest()
@@ -221,11 +221,11 @@ export class ErrorReport {
         show_latest.hidden = true
       }
       else {
-        show_latest.value = l10n.localize('ErrorReport.better-bibtex.latest', { version: latest || '<could not be established>' })
+        show_latest.value = l10n.localize('better-bibtex_error-report_better-bibtex_latest', { version: latest || '<could not be established>' })
         show_latest.hidden = false
       }
 
-      document.getElementById('better-bibtex-report-cache').value = this.cacheState = l10n.localize('ErrorReport.better-bibtex.cache', Cache.state())
+      document.getElementById('better-bibtex-report-cache').value = this.cacheState = l10n.localize('better-bibtex_error-report_better-bibtex_cache', Cache.state())
 
       const region = await Zotero.Promise.any(Object.keys(s3.region).map(this.ping.bind(this)))
       this.bucket = `https://${s3.bucket}-${region.short}.s3-${region.region}.amazonaws.com${region.tld || ''}`

@@ -374,7 +374,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     const prepare = new Pinger({
       total: items.length,
       callback: pct => {
-        let preparing = `${l10n.localize('Preferences.auto-export.status.preparing')} ${translator.label}`.trim()
+        let preparing = `${l10n.localize('better-bibtex_preferences_auto-export_status_preparing')} ${translator.label}`.trim()
         if (this.queue.queued) preparing += ` +${Translators.queue.queued}`
         void Events.emit('export-progress', { pct, message: preparing, ae: job.autoExport })
       },
@@ -494,13 +494,13 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
         file = null
       }
       if (!file) {
-        deferred.reject(l10n.localize('Translate.error.target.notaFile', { path: job.path }))
+        deferred.reject(l10n.localize('better-bibtex_translate_error_target_nota-file', { path: job.path }))
         return deferred.promise
       }
 
       // the parent directory could have been removed
       if (!file.parent || !file.parent.exists()) {
-        deferred.reject(l10n.localize('Translate.error.target.noParent', { path: job.path }))
+        deferred.reject(l10n.localize('better-bibtex_translate_error_target_no-parent', { path: job.path }))
         return deferred.promise
       }
 
