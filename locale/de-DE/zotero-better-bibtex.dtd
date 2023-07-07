@@ -31,7 +31,7 @@
 
 <!ENTITY better-bibtex.ErrorReport.title "Better BibTeX Debug-Log">
 <!ENTITY better-bibtex.ErrorReport.restartWithLoggingEnabled  "Mit aktiviertem Logging neustarten…">
-<!ENTITY better-bibtex.ErrorReport.enableDebug "Das Zotero Debug-Logging ist derzeit deaktiviert. Es ist einfacher, das Problem zu diagnostizieren, wenn Sie es aktivieren, bevor Sie ein Debug-Log senden.">
+<!ENTITY better-bibtex_error-report_enable-debug "Das Zotero Debug-Logging ist derzeit deaktiviert. Es ist einfacher, das Problem zu diagnostizieren, wenn Sie es aktivieren, bevor Sie ein Debug-Log senden.">
 <!ENTITY better-bibtex.ErrorReport.context "Anwendungskontext">
 <!ENTITY better-bibtex.ErrorReport.errors "Fehler">
 <!ENTITY better-bibtex.ErrorReport.includeCache "Cache einbeziehen">

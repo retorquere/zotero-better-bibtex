@@ -31,7 +31,7 @@
 
 <!ENTITY better-bibtex.ErrorReport.title "Journal de débogage Better BibTeX">
 <!ENTITY better-bibtex.ErrorReport.restartWithLoggingEnabled  "Redémarrer avec le journal activé…">
-<!ENTITY better-bibtex.ErrorReport.enableDebug "Le journal de débogage de Zotero est actuellement désactivé. Il sera plus facile de diagnostiquer le problème si vous l'activez avant de soumettre un rapport d'erreur.">
+<!ENTITY better-bibtex_error-report_enable-debug "Le journal de débogage de Zotero est actuellement désactivé. Il sera plus facile de diagnostiquer le problème si vous l'activez avant de soumettre un rapport d'erreur.">
 <!ENTITY better-bibtex.ErrorReport.context "Contexte d'application">
 <!ENTITY better-bibtex.ErrorReport.errors "Erreurs">
 <!ENTITY better-bibtex.ErrorReport.includeCache "Inclure le cache">
