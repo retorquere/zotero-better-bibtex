@@ -380,10 +380,12 @@ export class ZoteroPane {
         break
     }
 
-    const params = {wrappedJSObject: { scope }}
-
-    const ww = Components.classes['@mozilla.org/embedcomp/window-watcher;1'].getService(Components.interfaces.nsIWindowWatcher)
-    ww.openWindow(null, `chrome://zotero-better-bibtex/content/ErrorReport${ is7 ? '-7' : ''}.xul`, 'better-bibtex-error-report', 'chrome,centerscreen,modal', params)
+    (this.window as any).openDialog(
+      `chrome://zotero-better-bibtex/content/ErrorReport.${ is7 ? 'xhtml' : 'xul'}`,
+      'better-bibtex-error-report',
+      'chrome,centerscreen,modal',
+      { wrappedJSObject: { scope } }
+    )
   }
 
   public async sentenceCase(): Promise<void> {

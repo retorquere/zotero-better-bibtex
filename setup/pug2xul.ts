@@ -41,8 +41,7 @@ class L10NDetector extends ASTWalker {
     return node
   }
 
-  Text(node, history) {
-    // console.log(history)
+  Text(node) {
     node.val.replace(/&(.+?);/, (m, id) => {
       const c = this.cleanup(id)
       if (id !== c) corrections.add(`${id} => ${c}`)
@@ -77,11 +76,11 @@ class Z7Wizard extends ASTWalker {
               selfClosing: true,
               block: { type: 'Block', nodes: [] },
               attrs: [ { name: 'src', val: '"chrome://global/content/customElements.js"', mustEscape: true } ],
-              attributeBlocks: []
+              attributeBlocks: [],
             },
             { ...node, attrs: node.attrs.filter(a => !a.name.startsWith('xmlns')) },
           ],
-        }
+        },
       }
     }
 
@@ -93,7 +92,7 @@ function render(src, options) {
   return pug.renderFile(src, options).replace(/&amp;/g, '&').trim()
 }
 
-for (let src of pugs) {
+for (const src of pugs) {
   console.log(' ', src)
   const tgt = `build/${src.replace(/pug$/, 'xul')}`
 
@@ -104,13 +103,13 @@ for (let src of pugs) {
       preCodeGen(ast) {
         (new L10NDetector).walk(ast, [])
         return wizardDetector.walk(ast)
-      }
+      },
     }],
   }))
 
   if (wizardDetector.foundWizard) {
     fs.writeFileSync(
-      tgt.replace('.', '-7.'),
+      tgt.replace('.xul', '.xhtml'),
       render(src, {
         pretty: true,
         plugins: [{

@@ -209,8 +209,8 @@ If you have this on, and you experience any problem that is not the cache gettin
 <!ENTITY better-bibtex.Preferences.export.fields.export-strings "If a field could be a @string reference, export it as an unbraced @string reference">
 <!ENTITY better-bibtex_preferences_export_fields_export-strings_off "No">
 <!ENTITY better-bibtex.Preferences.export.fields.export-strings.detect "Assume single-word fields to be @string vars">
-<!ENTITY better-bibtex.Preferences.export.fields.export-strings.match "Match against the @string declarations below">
-<!ENTITY better-bibtex.Preferences.export.fields.export-strings.match_reverse "Match against the @string declarations and their values below">
+<!ENTITY better-bibtex_preferences_export_fields_export-strings_match "Match against the @string declarations below">
+<!ENTITY better-bibtex_preferences_export_fields_export-strings_match_reverse "Match against the @string declarations and their values below">
 
 <!ENTITY better-bibtex_preferences_export_fields_skip "Fields to omit from export (comma-separated)">
 <!ENTITY better-bibtex_preferences_export_misc_label "Miscellaneous">

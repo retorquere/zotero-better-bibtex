@@ -209,8 +209,8 @@ Wenn Sie dies eingeschaltet haben und Sie Probleme haben außer der Löschung de
 <!ENTITY better-bibtex.Preferences.export.fields.export-strings "Wenn ein Feld eine @string-Referenz sein könnte, exportiere es als @string-Referenz ohne Klammern">
 <!ENTITY better-bibtex_preferences_export_fields_export-strings_off "Nein">
 <!ENTITY better-bibtex.Preferences.export.fields.export-strings.detect "Behandle Felder mit nur einem Wort als @String-Variablen">
-<!ENTITY better-bibtex.Preferences.export.fields.export-strings.match "Mit den @string-Deklarationen unten vergleichen">
-<!ENTITY better-bibtex.Preferences.export.fields.export-strings.match_reverse "Mit den @string-Deklarationen und ihren Werten unten vergleichen">
+<!ENTITY better-bibtex_preferences_export_fields_export-strings_match "Mit den @string-Deklarationen unten vergleichen">
+<!ENTITY better-bibtex_preferences_export_fields_export-strings_match_reverse "Mit den @string-Deklarationen und ihren Werten unten vergleichen">
 
 <!ENTITY better-bibtex_preferences_export_fields_skip "Felder, die nicht exportiert werden sollen (mit Komma trennen)">
 <!ENTITY better-bibtex_preferences_export_misc_label "Verschiedenes">
