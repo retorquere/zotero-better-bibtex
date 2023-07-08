@@ -1,4 +1,5 @@
-<!ENTITY better-bibtex.BetterBibTeX "Better BibTeX">
+<!ENTITY better-bibtex.title "Better BibTeX">
+<!ENTITY better-bibtex.label "Better BibTeX">
 
 <!ENTITY better-bibtex_units_seconds "secondes">
 
@@ -32,11 +33,11 @@
 
 <!ENTITY better-bibtex_error-report.title "Journal de débogage Better BibTeX">
 <!ENTITY better-bibtex_error-report_restart-with-logging-enabled.label  "Redémarrer avec le journal activé…">
-<!ENTITY better-bibtex.ErrorReport.enableDebug "Le journal de débogage de Zotero est actuellement désactivé. Il sera plus facile de diagnostiquer le problème si vous l'activez avant de soumettre un rapport d'erreur.">
-<!ENTITY better-bibtex.ErrorReport.context "Contexte d'application">
-<!ENTITY better-bibtex.ErrorReport.errors "Erreurs">
-<!ENTITY better-bibtex.ErrorReport.includeCache "Inclure le cache">
-<!ENTITY better-bibtex.ErrorReport.debug "Journal de débogage">
+<!ENTITY better-bibtex_error-report_enable-debug "Le journal de débogage de Zotero est actuellement désactivé. Il sera plus facile de diagnostiquer le problème si vous l'activez avant de soumettre un rapport d'erreur.">
+<!ENTITY better-bibtex_error-report_context.label "Contexte d'application">
+<!ENTITY better-bibtex_error-report_errors.label "Erreurs">
+<!ENTITY better-bibtex_error-report_include-cache.label "Inclure le cache">
+<!ENTITY better-bibtex_error-report_debug.label "Journal de débogage">
 <!ENTITY better-bibtex_error-report_not-reviewed "Les journaux de débogage ne peuvent pas être vérifiés à moins d'être référencés dans le gestionnaire de tickets GitHub par leur ID.">
 <!ENTITY better-bibtex_error-report_post-to-git-hub "Merci d'envoyer un message au gestionnaire de tickets de GitHub (https://github.com/retorquere/zotero-better-bibtex/issues), en précisant cet identifiant de débogage, une description du problème ainsi que toutes les étapes nécessaires pour le reproduire.">
 <!ENTITY better-bibtex_error-report_items.label "Références">

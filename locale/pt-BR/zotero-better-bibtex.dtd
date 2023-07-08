@@ -1,4 +1,5 @@
-<!ENTITY better-bibtex.BetterBibTeX "Better BibTeX">
+<!ENTITY better-bibtex.title "Better BibTeX">
+<!ENTITY better-bibtex.label "Better BibTeX">
 
 <!ENTITY better-bibtex_units_seconds "seconds">
 
@@ -32,11 +33,11 @@
 
 <!ENTITY better-bibtex_error-report.title "Better BibTeX debug log">
 <!ENTITY better-bibtex_error-report_restart-with-logging-enabled.label  "Reiniciar com registro ativado…">
-<!ENTITY better-bibtex.ErrorReport.enableDebug "Zotero debug logging is currently disabled. It will be easier to diagnose the problem if you enable it before submitting a debug log.">
-<!ENTITY better-bibtex.ErrorReport.context "Contexto da aplicação">
-<!ENTITY better-bibtex.ErrorReport.errors "Erros">
-<!ENTITY better-bibtex.ErrorReport.includeCache "Include cache">
-<!ENTITY better-bibtex.ErrorReport.debug "Debug log">
+<!ENTITY better-bibtex_error-report_enable-debug "Zotero debug logging is currently disabled. It will be easier to diagnose the problem if you enable it before submitting a debug log.">
+<!ENTITY better-bibtex_error-report_context.label "Contexto da aplicação">
+<!ENTITY better-bibtex_error-report_errors.label "Erros">
+<!ENTITY better-bibtex_error-report_include-cache.label "Include cache">
+<!ENTITY better-bibtex_error-report_debug.label "Debug log">
 <!ENTITY better-bibtex_error-report_not-reviewed "Debug logs cannot be reviewed unless referred to in the GitHub issue tracker by their ID.">
 <!ENTITY better-bibtex_error-report_post-to-git-hub "Please post a message to the issue tracker (https://github.com/retorquere/zotero-better-bibtex/issues) with this debug log ID, a description of the problem, and any steps necessary to reproduce it.">
 <!ENTITY better-bibtex_error-report_items.label "Items">

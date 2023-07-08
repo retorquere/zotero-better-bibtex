@@ -1,4 +1,5 @@
-<!ENTITY better-bibtex.BetterBibTeX "Better BibTeX">
+<!ENTITY better-bibtex.title "Better BibTeX">
+<!ENTITY better-bibtex.label "Better BibTeX">
 
 <!ENTITY better-bibtex_units_seconds "Sekunden">
 
@@ -32,11 +33,11 @@
 
 <!ENTITY better-bibtex_error-report.title "Better BibTeX Debug-Log">
 <!ENTITY better-bibtex_error-report_restart-with-logging-enabled.label  "Mit aktiviertem Logging neustarten…">
-<!ENTITY better-bibtex.ErrorReport.enableDebug "Das Zotero Debug-Logging ist derzeit deaktiviert. Es ist einfacher, das Problem zu diagnostizieren, wenn Sie es aktivieren, bevor Sie ein Debug-Log senden.">
-<!ENTITY better-bibtex.ErrorReport.context "Anwendungskontext">
-<!ENTITY better-bibtex.ErrorReport.errors "Fehler">
-<!ENTITY better-bibtex.ErrorReport.includeCache "Cache einbeziehen">
-<!ENTITY better-bibtex.ErrorReport.debug "Debug-Log">
+<!ENTITY better-bibtex_error-report_enable-debug "Das Zotero Debug-Logging ist derzeit deaktiviert. Es ist einfacher, das Problem zu diagnostizieren, wenn Sie es aktivieren, bevor Sie ein Debug-Log senden.">
+<!ENTITY better-bibtex_error-report_context.label "Anwendungskontext">
+<!ENTITY better-bibtex_error-report_errors.label "Fehler">
+<!ENTITY better-bibtex_error-report_include-cache.label "Cache einbeziehen">
+<!ENTITY better-bibtex_error-report_debug.label "Debug-Log">
 <!ENTITY better-bibtex_error-report_not-reviewed "Debug-Reports können nicht überprüft werden, bis sie im GitHub Issue-Tracker genannt werden.">
 <!ENTITY better-bibtex_error-report_post-to-git-hub "Bitte senden Sie eine Nachricht an den Issue-Tracker (https://github.com/retorquere/zotero-better-bibtex/issues) mit dieser Debug-Log-ID, einer Beschreibung des Problems und allen notwendigen Schritten zu seiner Reproduktion.">
 <!ENTITY better-bibtex_error-report_items.label "Einträge">
