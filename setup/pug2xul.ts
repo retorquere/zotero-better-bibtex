@@ -5,35 +5,60 @@
 import * as pug from 'pug'
 import * as fs from 'fs'
 import { ASTWalker } from './pug-ast-walker'
+import fast_safe_stringify from 'fast-safe-stringify'
 
 const pugs = [
-  'content/Preferences.pug',
-  'content/zotero-preferences.pug',
   'content/ErrorReport.pug',
   'content/FirstRun.pug',
+  'content/Preferences.pug',
   'content/ServerURL.pug',
   'content/ZoteroPane.pug',
   'content/bulk-keys-confirm.pug',
   'content/regenerate-keys.pug',
+  'content/zotero-preferences.pug',
 ]
 
+const bulk_mod: Record<string, string> = {}
+function correction(ist, attr = '') {
+  const soll = ist
+    .replace(/[.]/g, '_')
+    .replace(/^[A-Z]/, m => m.toLowerCase())
+    .replace(/_[A-Z]/g, m => m.toLowerCase())
+    .replace(/([a-z])([A-Z]+)/g, (m, pre, post) => `${pre}-${post.toLowerCase()}`)
+  bulk_mod[ist] = soll + attr
+}
+
 const attributes: Set<string> = new Set
-const corrections: Set<string> = new Set
 class WizardDetector extends ASTWalker {
   public foundWizard = false
 
+  public valid = {
+    text: /^[-a-z0-9_]+$/,
+    attr: /^[-a-z0-9_]+[.][a-z0-9]+$/,
+  }
+
   Tag(node) {
+    if (node.name === 'wizard') this.foundWizard = true
+
     for (const attr of node.attrs) {
       attr.val.replace(/&([^;]+);/g, (m, id) => {
-        if (!id.endsWith(`.${attr.name}`)) {
-          corrections[id] = id.replace(new RegExp(`_${attr.name}$`), '') + `.${attr.name}`
+        if (!id.match(this.valid.attr) || !id.endsWith(`.${attr.name}`)) {
+          correction(id, `.${attr.name}`)
         }
         attributes.add(id)
       })
     }
-    if (node.name === 'wizard') this.foundWizard = true
+
     this.walk(node.block)
     return node
+  }
+
+  Text(node) {
+    node.val.replace(/&([^;]+);/g, (m, id) => {
+      if (!id.match(this.valid.text)) {
+        correction(id)
+      }
+    })
   }
 }
 
@@ -100,4 +125,4 @@ for (const src of pugs) {
 }
 
 fs.writeFileSync('attributes.json', JSON.stringify([...attributes], null, 2))
-fs.writeFileSync('bulk-mod.json', JSON.stringify(corrections, null, 2))
+fs.writeFileSync('bulk-mod.json', fast_safe_stringify.stable(bulk_mod, null, 2))
