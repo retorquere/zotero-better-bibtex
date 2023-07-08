@@ -32,7 +32,7 @@ const src = process.argv[2] || 'content/Preferences.pug'
 const tgt = process.argv[3] || 'build/content/Preferences.xul'
 
 const l10n = new class {
-  private strings = peggy.generate(fs.readFileSync('content/dtd-file.peggy', 'utf-8')).parse(fs.readFileSync('locale/en-US/zotero-better-bibtex.dtd', 'utf-8')) as Record<string, string>
+  private strings = peggy.generate(fs.readFileSync('content/dtd-file.peggy', 'utf-8')).parse(fs.readFileSync('build/locale/en-US/zotero-better-bibtex.dtd', 'utf-8')) as Record<string, string>
 
   private find(id: string): string {
     if (id.startsWith('zotero.general.')) return `&${id};`

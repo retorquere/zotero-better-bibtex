@@ -8,6 +8,7 @@ from fluent.runtime import FluentBundle, FluentResource
 
 from pathlib import Path
 from html import escape
+import os
 
 params = {
   "entries": "{entries}",
@@ -60,7 +61,9 @@ def entity(key, value):
   return f'<!ENTITY {key} "' + escape(value).replace('\u2068', '').replace('\u2069', '').replace('&#x27;', "'") + '">'
 
 for ftl in Path('locale').rglob('*/better-bibtex.ftl'):
-  with open(str(ftl).replace('/better-bibtex.ftl', '/zotero-better-bibtex.dtd'), 'w') as dtd:
+  dtd = 'build/' + str(ftl).replace('/better-bibtex.ftl', '/zotero-better-bibtex.dtd')
+  os.makedirs(os.path.dirname(dtd), exist_ok=True)
+  with open(dtd, 'w') as dtd:
     locale = str(ftl).split('/')[1]
     bundle = FluentBundle([locale])
     resource = parse(ftl.read_text())
