@@ -1,6 +1,6 @@
 <!ENTITY better-bibtex.BetterBibTeX "Better BibTeX">
 
-<!ENTITY better-bibtex.seconds "seconds">
+<!ENTITY better-bibtex_units_seconds "seconds">
 
 <!ENTITY better-bibtex.FirstRun.title "Bem-vindo ao Better BibTeX para Zotero">
 <!ENTITY better-bibtex.FirstRun.welcome "Better BibTeX para Zotero (ou simplesmente BBT) procura tornar Zotero mais útil para tradicionalistas do LaTeX e do Markdown. Há muitas opções para configurar no BBT -- dê uma olhada nas preferências se estiver curioso -- mas vamos acertrar o básico com algumas escolhas simples.">
@@ -229,8 +229,8 @@ If you have this on, and you experience any problem that is not the cache gettin
 <!ENTITY better-bibtex.Preferences.resetCache "Zerar cache">
 <!ENTITY better-bibtex.BetterBibTeX.reportErrors "Send Better BibTeX debug log...">
 <!ENTITY better-bibtex.BetterBibTeX.auxScanner "Scan BibTeX AUX/Markdown file for references...">
-<!ENTITY better-bibtex.bulk-keys-confirm.message "Você está modificando mais que {treshold} items de uma vez. Tem certeza?">
-<!ENTITY better-bibtex.bulk-keys-confirm.whatever "OK e não perguntar novamente">
+<!ENTITY better-bibtex_bulk-keys-confirm.value "Você está modificando mais que {treshold} items de uma vez. Tem certeza?">
+<!ENTITY better-bibtex_bulk-keys-confirm.buttonlabelextra1 "OK e não perguntar novamente">
 <!ENTITY better-bibtex.BetterBibTeX.citekey.set "Change BibTeX key...">
 <!ENTITY better-bibtex.BetterBibTeX.citekey.pin "Fixar chave BibTeX">
 <!ENTITY better-bibtex.BetterBibTeX.citekey.pinInspireHEP "Fixar chave BibTeX do InspireHEP">
@@ -245,10 +245,10 @@ If you have this on, and you experience any problem that is not the cache gettin
 <!ENTITY better-bibtex.BetterBibTeX.server.disabled "Exportação via HTTP desativada">
 <!ENTITY better-bibtex.BetterBibTeX.show-collection-key "Download Better BibTeX export...">
 
-<!ENTITY better-bibtex.ServerURL.title "Better BibTeX export via HTTP">
+<!ENTITY better-bibtex_server-url.title "Better BibTeX export via HTTP">
 <!ENTITY better-bibtex.ServerURL.description "Download URL:">
-<!ENTITY better-bibtex.ServerURL.or "or">
-<!ENTITY better-bibtex.ServerURL.format "Download items as">
+<!ENTITY better-bibtex_server-url_or "or">
+<!ENTITY better-bibtex_server-url_format "Download items as">
 <!ENTITY better-bibtex.ServerURL.OK "OK">
 
 <!-- remove after reactified zoteropane is in release -->
