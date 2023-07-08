@@ -113,7 +113,7 @@ class AutoExportPane {
     if (!this.label) {
       this.label = {}
       for (const status of ['scheduled', 'running', 'done', 'error', 'preparing']) {
-        this.label[label] = l10n.localize(`better-bibtex_preferences_auto-export_status_${status}`)
+        this.label[status] = l10n.localize(`better-bibtex_preferences_auto-export_status_${status}`)
       }
     }
 

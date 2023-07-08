@@ -33,7 +33,7 @@ Options:
 
 default: `minimal`
 
-On import, BBT will add case-protection (&lt;span class=&quot;nocase&quot;&gt;...&lt;span&gt;) to titles that have words in {Braces}.
+On import, BBT will add case-protection (&lt;span class="nocase"&gt;...&lt;span&gt;) to titles that have words in {Braces}.
 
 There's plenty of bib(la)tex files out there that do this a little overzealously, and you may not like the resulting HTML code in your items, even though this is what the braces mean in bib(la)tex, and Zotero supports it.
 

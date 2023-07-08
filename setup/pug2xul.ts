@@ -18,13 +18,12 @@ const pugs = [
   'content/zotero-preferences.pug',
 ]
 
+const bulk_mod: Record<string, string> = {}
+const l10nKeys: Set<string> = new Set
 const valid = {
   text: /^[-a-z0-9_]+$/,
   attr: /^[-a-z0-9_]+[.][a-z0-9]+$/,
 }
-
-const bulk_mod: Record<string, string> = {}
-const l10nKeys: Set<string> = new Set
 function correction(ist, attr = '') {
   let soll = ist
     .replace(/[.]/g, '_')
@@ -33,13 +32,12 @@ function correction(ist, attr = '') {
     .replace(/([a-z])([A-Z]+)/g, (m, pre, post) => `${pre}-${post.toLowerCase()}`)
   soll += attr
   const prefix = 'better-bibtex_'
-  if (!soll.startsWith(prefix)) soll = prefix + soll
+  if (!soll.startsWith(prefix)) soll = `${prefix}${soll}`
   if (attr && !soll.match(valid.attr)) throw new Error(soll)
   if (!attr && !soll.match(valid.text)) throw new Error(soll)
   if (soll !== ist) bulk_mod[ist] = soll
 }
 
-// const attributes: Set<string> = new Set
 class WizardDetector extends ASTWalker {
   public foundWizard = false
 
@@ -61,7 +59,6 @@ class WizardDetector extends ASTWalker {
             throw new Error(`${id} should start with ${prefix}`)
           }
         }
-        // attributes.add(id)
       })
     }
 
@@ -76,6 +73,7 @@ class WizardDetector extends ASTWalker {
         correction(id)
       }
     })
+    return node
   }
 }
 
@@ -121,7 +119,8 @@ for (const src of pugs) {
     pretty: true,
     plugins: [{
       preCodeGen(ast) {
-        return wizardDetector.walk(ast)
+        wizardDetector.walk(ast)
+        return ast
       },
     }],
   }))

@@ -1,8 +1,9 @@
 | <?xml version="1.0"?>
 | <?xml-stylesheet href="chrome://zotero-better-bibtex/skin/overlay.css" type="text/css"?>
 overlay#zotero-better-bibtex-zoteroPane-overlay(xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul")
-  script var startup = !Zotero.BetterBibTeX
-  script(src='chrome://zotero-better-bibtex/content/better-bibtex.js')
+  script.
+    var startup = !Zotero.BetterBibTeX
+  script(src='chrome://zotero-better-bibtex/content/better-bibtex.js')/
   script.
     Zotero.debug(`{better-bibtex-startup} script load, startup: ${startup}`)
     if (startup) {

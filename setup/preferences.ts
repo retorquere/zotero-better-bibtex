@@ -271,7 +271,7 @@ class Docs extends ASTWalker {
     this.doc(doc, pref, 'label')
   }
   description(doc, pref?) {
-    this.doc(doc, pref, 'description')
+    this.doc(doc.replace(/</g, '&lt;').replace(/>/g, '&gt;'), pref, 'description')
   }
   doc(doc, pref, kind) {
     pref = pref || this.preference
