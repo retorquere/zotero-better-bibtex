@@ -94,16 +94,16 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.export.quickCopy.gitbook "GitBook">
 <!ENTITY better-bibtex.Preferences.export.quickCopy.latex.command "LaTeX-Befehl">
 <!ENTITY better-bibtex.Preferences.export.quickCopy.latex "LaTeX-Zitat">
-<!ENTITY better-bibtex.Preferences.export.quickCopy.rtfScan "RTF-Scan-Marker">
-<!ENTITY better-bibtex.Preferences.export.quickCopy.roamCiteKey "Roam-Zitierschlüssel">
+<!ENTITY better-bibtex_preferences_export_quick-copy_rtf-scan "RTF-Scan-Marker">
+<!ENTITY better-bibtex_preferences_export_quick-copy_roam-cite-key "Roam-Zitierschlüssel">
 <!ENTITY better-bibtex.Preferences.export.quickCopy.orgMode "Org-Modus Auswahllink">
 <!ENTITY better-bibtex.Preferences.export.quickCopy.orgMode.zotero "Zotero-Eintragsschlüssel verwenden">
 <!ENTITY better-bibtex.Preferences.export.quickCopy.orgMode.citekey "Better-BibTeX-Zitierschlüssel verwenden">
 <!ENTITY better-bibtex.Preferences.export.quickCopy.orgRef "Org-Ref-Zitat">
-<!ENTITY better-bibtex.Preferences.export.quickCopy.orgRef3 "Org-Ref-V3-Zitat">
-<!ENTITY better-bibtex.Preferences.export.quickCopy.pandoc.brackets "Umschließe Pandoc-Zitate mit Klammern">
-<!ENTITY better-bibtex.Preferences.export.quickCopy.pandoc "Pandoc-Zitat">
-<!ENTITY better-bibtex.Preferences.export.quickCopy.selectLink "Zotero Auswahllink">
+<!ENTITY better-bibtex_preferences_export_quick-copy_org-ref3 "Org-Ref-V3-Zitat">
+<!ENTITY better-bibtex_preferences_export_quick-copy_pandoc_brackets.label "Umschließe Pandoc-Zitate mit Klammern">
+<!ENTITY better-bibtex_preferences_export_quick-copy_pandoc "Pandoc-Zitat">
+<!ENTITY better-bibtex_preferences_export_quick-copy_select-link "Zotero Auswahllink">
 <!ENTITY better-bibtex_preferences_export_quick-copy_select-link_zotero "Zotero-Eintragsschlüssel verwenden">
 <!ENTITY better-bibtex_preferences_export_quick-copy_select-link_citekey "Better-BibTeX-Zitierschlüssel verwenden">
 <!ENTITY better-bibtex.Preferences.export.quickCopy.etaTemplate "Eta-Template">

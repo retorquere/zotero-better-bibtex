@@ -94,16 +94,16 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.export.quickCopy.gitbook "GitBook">
 <!ENTITY better-bibtex.Preferences.export.quickCopy.latex.command "Commande LaTeX">
 <!ENTITY better-bibtex.Preferences.export.quickCopy.latex "Citation LaTeX">
-<!ENTITY better-bibtex.Preferences.export.quickCopy.rtfScan "Marqueur de scan RTF">
-<!ENTITY better-bibtex.Preferences.export.quickCopy.roamCiteKey "Clé de citation Roam">
+<!ENTITY better-bibtex_preferences_export_quick-copy_rtf-scan "Marqueur de scan RTF">
+<!ENTITY better-bibtex_preferences_export_quick-copy_roam-cite-key "Clé de citation Roam">
 <!ENTITY better-bibtex.Preferences.export.quickCopy.orgMode "Lien de sélection Org-mode">
 <!ENTITY better-bibtex.Preferences.export.quickCopy.orgMode.zotero "en utilisant la clé d'élément de Zotero">
 <!ENTITY better-bibtex.Preferences.export.quickCopy.orgMode.citekey "en utilisant la clé de citation de Better BibTeX">
 <!ENTITY better-bibtex.Preferences.export.quickCopy.orgRef "Citation org-ref">
-<!ENTITY better-bibtex.Preferences.export.quickCopy.orgRef3 "Citation org-ref v3">
-<!ENTITY better-bibtex.Preferences.export.quickCopy.pandoc.brackets "Encadrer les citations 'Pandoc' avec des crochets">
-<!ENTITY better-bibtex.Preferences.export.quickCopy.pandoc "Citation Pandoc">
-<!ENTITY better-bibtex.Preferences.export.quickCopy.selectLink "Lien de sélection de Zotero">
+<!ENTITY better-bibtex_preferences_export_quick-copy_org-ref3 "Citation org-ref v3">
+<!ENTITY better-bibtex_preferences_export_quick-copy_pandoc_brackets.label "Encadrer les citations 'Pandoc' avec des crochets">
+<!ENTITY better-bibtex_preferences_export_quick-copy_pandoc "Citation Pandoc">
+<!ENTITY better-bibtex_preferences_export_quick-copy_select-link "Lien de sélection de Zotero">
 <!ENTITY better-bibtex_preferences_export_quick-copy_select-link_zotero "en utilisant la clé d'élément de Zotero">
 <!ENTITY better-bibtex_preferences_export_quick-copy_select-link_citekey "en utilisant la clé de citation de Better BibTeX">
 <!ENTITY better-bibtex.Preferences.export.quickCopy.etaTemplate "Canevas Eta">
