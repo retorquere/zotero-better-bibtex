@@ -134,7 +134,7 @@ With this option on, BBT will try to sentence-case during import. This sentence-
 You can turn this off, but you may then also want to disable `Apply title-casing to titles` (which has its own problems, see the help entry for that option on this page).
 With 'yes, but try to exclude already-sentence-cased titles', BBT will attempt to detect titles that are already sentence cased and leave them as-is on import.">
 
-<!ENTITY better-bibtex.Preferences.advanced.import.caseProtection "Insert case-protection for braces:">
+<!ENTITY better-bibtex_preferences_advanced_import_case-protection "Insert case-protection for braces:">
 <!ENTITY better-bibtex_preferences_advanced_import_case-protection_off "no">
 <!ENTITY better-bibtex_preferences_advanced_import_case-protection_on "yes">
 <!ENTITY better-bibtex_preferences_advanced_import_case-protection_as-needed "minimal">
@@ -162,13 +162,13 @@ If you have this on, and you experience any problem that is not the cache gettin
 <!ENTITY better-bibtex.Preferences.advanced.tab.citekeys "Citation keys">
 
 <!ENTITY better-bibtex.Preferences.advanced.extraMerge "When merging items, also merge:">
-<!ENTITY better-bibtex.Preferences.advanced.extraMergeCitekeys "their citation keys into an bib(la)tex `ids` field">
+<!ENTITY better-bibtex_preferences_advanced_extra_merge-citekeys.label "their citation keys into an bib(la)tex `ids` field">
 <!ENTITY better-bibtex.Preferences.advanced.extraMergeCSL "fields that are understood to be CSL fields by Zotero">
-<!ENTITY better-bibtex.Preferences.advanced.extraMergeTeX "their `tex.*` fields">
+<!ENTITY better-bibtex_preferences_advanced_extra_merge-tex.label "their `tex.*` fields">
 
-<!ENTITY better-bibtex.Preferences.advanced.ideographs "Ideographs in citekeys">
-<!ENTITY better-bibtex.Preferences.advanced.ideographs.kuroshiro "Apply kuroshiro romajization in Japanese names/titles. Uses a lot of memory.">
-<!ENTITY better-bibtex.Preferences.advanced.ideographs.jieba "Enable 'jieba'/'pinyin' filters in citekey patterns. Uses a lot of memory.">
+<!ENTITY better-bibtex_preferences_advanced_ideographs.label "Ideographs in citekeys">
+<!ENTITY better-bibtex_preferences_advanced_ideographs_kuroshiro.label "Apply kuroshiro romajization in Japanese names/titles. Uses a lot of memory.">
+<!ENTITY better-bibtex_preferences_advanced_ideographs_jieba.label "Enable 'jieba'/'pinyin' filters in citekey patterns. Uses a lot of memory.">
 
 <!ENTITY better-bibtex_preferences_export_quality-report.label "Include comments about potential problems with the exported entries">
 <!ENTITY better-bibtex_preferences_export_automatic-tags.label "Include automatic tags in export">

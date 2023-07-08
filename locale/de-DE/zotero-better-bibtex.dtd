@@ -134,7 +134,7 @@ Mit dieser Option wird BBT versuchen, den Fall während des Imports zu senden. D
 Du kannst dies deaktivieren, aber du kannst `Titelgehäuse auf Titel übertragen` deaktivieren (welches seine eigenen Probleme hat siehe den Hilfeeintrag für diese Option auf dieser Seite).
 Mit 'Ja, aber versuchen Sie bereits verurteilte Titel auszuschließen', BBT wird versuchen, bereits verurteilte Titel zu erkennen und sie wie beim Import zu belassen.">
 
-<!ENTITY better-bibtex.Preferences.advanced.import.caseProtection "Fallschutz für Klammern einfügen:">
+<!ENTITY better-bibtex_preferences_advanced_import_case-protection "Fallschutz für Klammern einfügen:">
 <!ENTITY better-bibtex_preferences_advanced_import_case-protection_off "nein">
 <!ENTITY better-bibtex_preferences_advanced_import_case-protection_on "ja">
 <!ENTITY better-bibtex_preferences_advanced_import_case-protection_as-needed "minimal">
@@ -162,13 +162,13 @@ Wenn Sie dies eingeschaltet haben und Sie Probleme haben außer der Löschung de
 <!ENTITY better-bibtex.Preferences.advanced.tab.citekeys "Zitierschlüssel">
 
 <!ENTITY better-bibtex.Preferences.advanced.extraMerge "Beim Zusammenführen von Items auch zusammenführen:">
-<!ENTITY better-bibtex.Preferences.advanced.extraMergeCitekeys "ihre Zitierschlüssel in Bib(La)TeX &quot;ids&quot;-Feld">
+<!ENTITY better-bibtex_preferences_advanced_extra_merge-citekeys.label "ihre Zitierschlüssel in Bib(La)TeX &quot;ids&quot;-Feld">
 <!ENTITY better-bibtex.Preferences.advanced.extraMergeCSL "Felder, die von Zotero als CSL-Felder verstanden werden">
-<!ENTITY better-bibtex.Preferences.advanced.extraMergeTeX "ihre &quot;tex.*&quot;-Felder">
+<!ENTITY better-bibtex_preferences_advanced_extra_merge-tex.label "ihre &quot;tex.*&quot;-Felder">
 
-<!ENTITY better-bibtex.Preferences.advanced.ideographs "Ideographen in Zitierschlüsseln">
-<!ENTITY better-bibtex.Preferences.advanced.ideographs.kuroshiro "Kuroshiro romajization in japanischen Namen/Titeln anwenden. Benötigt viel Speicher.">
-<!ENTITY better-bibtex.Preferences.advanced.ideographs.jieba "Aktiviere &quot;jieba&quot;/&quot;pinyin&quot;-Filter in Zitierschlüssel-Mustern. Benötigt viel Speicher.">
+<!ENTITY better-bibtex_preferences_advanced_ideographs.label "Ideographen in Zitierschlüsseln">
+<!ENTITY better-bibtex_preferences_advanced_ideographs_kuroshiro.label "Kuroshiro romajization in japanischen Namen/Titeln anwenden. Benötigt viel Speicher.">
+<!ENTITY better-bibtex_preferences_advanced_ideographs_jieba.label "Aktiviere &quot;jieba&quot;/&quot;pinyin&quot;-Filter in Zitierschlüssel-Mustern. Benötigt viel Speicher.">
 
 <!ENTITY better-bibtex_preferences_export_quality-report.label "Kommentare über mögliche Probleme mit den exportieren Einträgen hinzufügen">
 <!ENTITY better-bibtex_preferences_export_automatic-tags.label "Inkludiere automatische Tags in den Export">

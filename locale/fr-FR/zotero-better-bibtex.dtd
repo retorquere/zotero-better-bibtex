@@ -134,7 +134,7 @@ Avec cette option activée, BBT essaiera d'appliquer la casse de phrase lors de 
 Vous pouvez désactiver cette option, mais vous pouvez aussi vouloir désactiver « Appliquer la capitalisation aux titres » (qui a ses propres problèmes, voir l'aide pour cette option sur cette page).
 Avec « oui, mais en essayant d'exclure les titres déjà avec casse de phrase », BBT tentera de détecter les titres déjà avec casse de phrase et ne les modifiera pas à l'importation.">
 
-<!ENTITY better-bibtex.Preferences.advanced.import.caseProtection "Protéger la casse pour les accolades :">
+<!ENTITY better-bibtex_preferences_advanced_import_case-protection "Protéger la casse pour les accolades :">
 <!ENTITY better-bibtex_preferences_advanced_import_case-protection_off "non">
 <!ENTITY better-bibtex_preferences_advanced_import_case-protection_on "oui">
 <!ENTITY better-bibtex_preferences_advanced_import_case-protection_as-needed "minimal">
@@ -163,13 +163,13 @@ Si cette option est activée et que vous rencontrez un problème autre que l'ann
 <!ENTITY better-bibtex.Preferences.advanced.tab.citekeys "Clés de citation">
 
 <!ENTITY better-bibtex.Preferences.advanced.extraMerge "Lors de la fusion d'éléments, fusionner également :">
-<!ENTITY better-bibtex.Preferences.advanced.extraMergeCitekeys "leurs clés de citation dans un champ bib(la)tex `ids`">
+<!ENTITY better-bibtex_preferences_advanced_extra_merge-citekeys.label "leurs clés de citation dans un champ bib(la)tex `ids`">
 <!ENTITY better-bibtex.Preferences.advanced.extraMergeCSL "les champs qui sont reconnus comme champs CSL par Zotero">
-<!ENTITY better-bibtex.Preferences.advanced.extraMergeTeX "leurs champs `tex.*`">
+<!ENTITY better-bibtex_preferences_advanced_extra_merge-tex.label "leurs champs `tex.*`">
 
-<!ENTITY better-bibtex.Preferences.advanced.ideographs "Idéographes dans les clés de citation">
-<!ENTITY better-bibtex.Preferences.advanced.ideographs.kuroshiro "Appliquer la romanisation kuroshiro dans les noms/titres japonais. Monopolise beaucoup de mémoire.">
-<!ENTITY better-bibtex.Preferences.advanced.ideographs.jieba "Activer les filtres 'jieba'/'pinyin' dans les motifs de clés de citation. Utilise beaucoup de mémoire.">
+<!ENTITY better-bibtex_preferences_advanced_ideographs.label "Idéographes dans les clés de citation">
+<!ENTITY better-bibtex_preferences_advanced_ideographs_kuroshiro.label "Appliquer la romanisation kuroshiro dans les noms/titres japonais. Monopolise beaucoup de mémoire.">
+<!ENTITY better-bibtex_preferences_advanced_ideographs_jieba.label "Activer les filtres 'jieba'/'pinyin' dans les motifs de clés de citation. Utilise beaucoup de mémoire.">
 
 <!ENTITY better-bibtex_preferences_export_quality-report.label "Inclure des commentaires concernant de potentiels problèmes avec les entrées exportées">
 <!ENTITY better-bibtex_preferences_export_automatic-tags.label "Inclure les tags automatiques dans l'export">
