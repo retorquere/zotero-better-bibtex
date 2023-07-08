@@ -172,8 +172,8 @@ If you have this on, and you experience any problem that is not the cache gettin
 
 <!ENTITY better-bibtex_preferences_export_quality-report.label "Include comments about potential problems with the exported entries">
 <!ENTITY better-bibtex.Preferences.export.automaticTags "Include automatic tags in export">
-<!ENTITY better-bibtex.Preferences.export.jabrefFormat "Include JabRef-specific metadata:">
-<!ENTITY better-bibtex.Preferences.export.jabrefFormat.0 "no">
+<!ENTITY better-bibtex_preferences_export_jabref-format "Include JabRef-specific metadata:">
+<!ENTITY better-bibtex_preferences_export_jabref-format_0 "no">
 <!ENTITY better-bibtex_preferences_export_jabref-format_3 "for JabRef 3">
 <!ENTITY better-bibtex_preferences_export_jabref-format_4 "for JabRef 4">
 <!ENTITY better-bibtex_preferences_export_jabref-format_5 "for JabRef 5">
@@ -194,10 +194,10 @@ If you have this on, and you experience any problem that is not the cache gettin
 <!ENTITY better-bibtex_preferences_tab_export.label "Export">
 <!ENTITY better-bibtex.Preferences.export.fields.bibtexParticleNoOp "Disregard name prefixes when sorting">
 <!ENTITY better-bibtex.Preferences.export.fields.bibtexEditionOrdinal "Export numeric edition as English-written ordinals">
-<!ENTITY better-bibtex.Preferences.export.fields.language.langid "langid">
-<!ENTITY better-bibtex.Preferences.export.fields.language.language "language">
-<!ENTITY better-bibtex.Preferences.export.fields.language.both "both">
-<!ENTITY better-bibtex.Preferences.export.fields.language "Export language as">
+<!ENTITY better-bibtex_preferences_export_fields_language_langid "langid">
+<!ENTITY better-bibtex_preferences_export_fields_language_language "language">
+<!ENTITY better-bibtex_preferences_export_fields_language_both "both">
+<!ENTITY better-bibtex_preferences_export_fields_language "Export language as">
 <!ENTITY better-bibtex.Preferences.export.fields.doi-and-url.both "both">
 <!ENTITY better-bibtex.Preferences.export.fields.doi-and-url.DOI "DOI">
 <!ENTITY better-bibtex.Preferences.export.fields.doi-and-url.URL "URL">
@@ -212,7 +212,7 @@ If you have this on, and you experience any problem that is not the cache gettin
 <!ENTITY better-bibtex.Preferences.export.fields.export-strings.match "Match against the @string declarations below">
 <!ENTITY better-bibtex.Preferences.export.fields.export-strings.match_reverse "Match against the @string declarations and their values below">
 
-<!ENTITY better-bibtex.Preferences.export.fields.skip "Fields to omit from export (comma-separated)">
+<!ENTITY better-bibtex_preferences_export_fields_skip "Fields to omit from export (comma-separated)">
 <!ENTITY better-bibtex_preferences_export_misc.label "Miscellaneous">
 <!ENTITY better-bibtex_preferences_export_map-unicode "When converting to plain-text latex commands:">
 <!ENTITY better-bibtex_preferences_export_map-unicode_minimal-packages "Minimize additional latex packages required">
