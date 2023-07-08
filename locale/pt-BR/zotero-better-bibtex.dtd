@@ -2,8 +2,9 @@
 
 <!ENTITY better-bibtex_units_seconds "seconds">
 
-<!ENTITY better-bibtex.FirstRun.title "Bem-vindo ao Better BibTeX para Zotero">
-<!ENTITY better-bibtex.FirstRun.welcome "Better BibTeX para Zotero (ou simplesmente BBT) procura tornar Zotero mais útil para tradicionalistas do LaTeX e do Markdown. Há muitas opções para configurar no BBT -- dê uma olhada nas preferências se estiver curioso -- mas vamos acertrar o básico com algumas escolhas simples.">
+<!ENTITY better-bibtex_first-run.title "Bem-vindo ao Better BibTeX para Zotero">
+<!ENTITY better-bibtex_first-run.label "Bem-vindo ao Better BibTeX para Zotero">
+<!ENTITY better-bibtex_first-run_welcome "Better BibTeX para Zotero (ou simplesmente BBT) procura tornar Zotero mais útil para tradicionalistas do LaTeX e do Markdown. Há muitas opções para configurar no BBT -- dê uma olhada nas preferências se estiver curioso -- mas vamos acertrar o básico com algumas escolhas simples.">
 
 <!ENTITY better-bibtex.FirstRun.citekeyFormat "Suas chaves de citação">
 <!ENTITY better-bibtex.FirstRun.citekeyFormat.explanation "BBT will generate citation keys for your items. The citekey generation is highly configurable, and you can choose to override the generation, but you will need to select the default now. You can always go into the preferences and change this at any time.">
@@ -20,9 +21,9 @@
 <!ENTITY better-bibtex.FirstRun.dragndrop.explanation "Com BBT, é possível arrastar e soltar citações no seu editor LaTeX preferido. Você quer ativar isso?">
 <!ENTITY better-bibtex.FirstRun.dragndrop.enable "Ativar arrastar-e-soltar citações">
 
-<!ENTITY better-bibtex.FirstRun.importUnabbreviate "Expand bibtex strings and journal abbreviations during import">
-<!ENTITY better-bibtex.FirstRun.importUnabbreviate.explanation "Some bibtex files have journal abbreviations in the 'journal' field. If you enable this, BBT will attempt to replace those abbreviations with the full journal name during import of bibtex files">
-<!ENTITY better-bibtex.FirstRun.importUnabbreviate.enable "Unabbreviate journal names on import">
+<!ENTITY better-bibtex_first-run_import_unabbreviate "Expand bibtex strings and journal abbreviations during import">
+<!ENTITY better-bibtex_first-run_import_unabbreviate_explanation "Some bibtex files have journal abbreviations in the 'journal' field. If you enable this, BBT will attempt to replace those abbreviations with the full journal name during import of bibtex files">
+<!ENTITY better-bibtex_first-run_import_unabbreviate_enable.label "Unabbreviate journal names on import">
 <!ENTITY better-bibtex.FirstRun.importStrings.explanation "Some bibtex files use @string variables for journal names. If you enable this, BBT will use a list of common journal IDs to replace these variables with the full journal name">
 <!ENTITY better-bibtex.FirstRun.importStrings.enable "Expand @string journal names on import">
 
@@ -149,8 +150,8 @@ If you turn this off, the markup is omitted during import. When you select 'yes'
 <!ENTITY better-bibtex.Preferences.advanced.tab.export "Export">
 <!ENTITY better-bibtex_preferences_advanced_export_title-case.label "Apply title-casing to titles">
 <!ENTITY better-bibtex_preferences_advanced_export_title-case_warning "If you're dead-set on ignoring both BibTeX/BibLaTeX best practice (see the BBT FAQ) and the Zotero recommendations on title/sentence casing, you can turn this off to suppress title casing for English items">
-<!ENTITY better-bibtex.Preferences.advanced.export.braceProtection "Apply case-protection to capitalized words by enclosing them in braces">
-<!ENTITY better-bibtex.Preferences.advanced.export.braceProtection.warning "If you're dead-set on ignoring both BibTeX/BibLaTeX best practice (see the BBT FAQ) and the Zotero recommendations on title/sentence casing, you can turn this off to suppress automatic brace-protection for words with uppercase letters.">
+<!ENTITY better-bibtex_preferences_advanced_export_brace-protection.label "Apply case-protection to capitalized words by enclosing them in braces">
+<!ENTITY better-bibtex_preferences_advanced_export_brace-protection_warning "If you're dead-set on ignoring both BibTeX/BibLaTeX best practice (see the BBT FAQ) and the Zotero recommendations on title/sentence casing, you can turn this off to suppress automatic brace-protection for words with uppercase letters.">
 
 <!ENTITY better-bibtex_preferences_advanced_export_retain-cache.label "Retain export cache across upgrades">
 <!ENTITY better-bibtex_preferences_advanced_export_retain-cache_warning "By default, BBT clears all caches whenever BBT or Zotero is upgraded. I can't realistically predict whether a change in Zotero or BBT is going to affect the output generated for any given item, so to be sure you always have the latest export-affecting fixes, the caches are discarded when a new version of either is detected. If you have a very large library however, of which you regularly export significant portions, you might want to retain the cached items even if that does come with the risk that you get wrong output on export that has been fixed in the interim.

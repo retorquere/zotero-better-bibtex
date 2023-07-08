@@ -12,9 +12,9 @@
 |   <!ENTITY % BBTDTD SYSTEM "chrome://zotero-better-bibtex/locale/zotero-better-bibtex.dtd"> %BBTDTD;
 |   <!ENTITY % standaloneDTD SYSTEM "chrome://zotero/locale/standalone.dtd"> %standaloneDTD;
 | ]>
-wizard#better-bibtex-first-run(xmlns='http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul' title='&better-bibtex.FirstRun.title;' width='550' height='500')
-  wizardpage(onpageshow='Zotero.BetterBibTeX.FirstRun.load()' label='&better-bibtex.FirstRun.title;')
-    description(style='white-space: pre-wrap;') &better-bibtex.FirstRun.welcome;
+wizard#better-bibtex-first-run(xmlns='http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul' title='&better-bibtex_first-run.title;' width='550' height='500')
+  wizardpage(onpageshow='Zotero.BetterBibTeX.FirstRun.load()' label='&better-bibtex_first-run.label;')
+    description(style='white-space: pre-wrap;') &better-bibtex_first-run_welcome;
   wizardpage(label=' ' onpageshow='Zotero.BetterBibTeX.FirstRun.update()')
     description.header(style='white-space: pre-wrap;') &better-bibtex.FirstRun.citekeyFormat;
     description(style='white-space: pre-wrap;') &better-bibtex.FirstRun.citekeyFormat.explanation;
@@ -33,9 +33,9 @@ wizard#better-bibtex-first-run(xmlns='http://www.mozilla.org/keymaster/gatekeepe
     description &better-bibtex.FirstRun.dragndrop.explanation;
     checkbox#better-bibtex-first-run-dragndrop(label='&better-bibtex.FirstRun.dragndrop.enable;' oncommand='Zotero.BetterBibTeX.FirstRun.update()')/
   wizardpage(label=' ' onpageshow='Zotero.BetterBibTeX.FirstRun.update()')
-    description.header(style='white-space: pre-wrap;') &better-bibtex.FirstRun.importUnabbreviate;
-    description &better-bibtex.FirstRun.importUnabbreviate.explanation;
-    checkbox#better-bibtex-first-run-unabbreviate(label='&better-bibtex.FirstRun.importUnabbreviate.enable;' checked='true' oncommand='Zotero.BetterBibTeX.FirstRun.update()')/
+    description.header(style='white-space: pre-wrap;') &better-bibtex_first-run_import_unabbreviate;
+    description &better-bibtex_first-run_import_unabbreviate_explanation;
+    checkbox#better-bibtex-first-run-unabbreviate(label='&better-bibtex_first-run_import_unabbreviate_enable.label;' checked='true' oncommand='Zotero.BetterBibTeX.FirstRun.update()')/
     description &better-bibtex.FirstRun.importStrings.explanation;
     checkbox#better-bibtex-first-run-strings(label='&better-bibtex.FirstRun.importStrings.enable;' checked='true' oncommand='Zotero.BetterBibTeX.FirstRun.update()')/
   wizardpage(label=' ')

@@ -2,8 +2,9 @@
 
 <!ENTITY better-bibtex_units_seconds "secondes">
 
-<!ENTITY better-bibtex.FirstRun.title "Bienvenue dans Better BibTex pour Zotero">
-<!ENTITY better-bibtex.FirstRun.welcome "Better BibTex pour Zotero (ou BBT) ajoute à Zotero une compatibilité étendue avec LaTeX ou Markdown. BBT est totalement configurable -- rendez-vous dans les préférences si vous êtes curieux -- mais nous allons commencer avec quelques choix simples.">
+<!ENTITY better-bibtex_first-run.title "Bienvenue dans Better BibTex pour Zotero">
+<!ENTITY better-bibtex_first-run.label "Bienvenue dans Better BibTex pour Zotero">
+<!ENTITY better-bibtex_first-run_welcome "Better BibTex pour Zotero (ou BBT) ajoute à Zotero une compatibilité étendue avec LaTeX ou Markdown. BBT est totalement configurable -- rendez-vous dans les préférences si vous êtes curieux -- mais nous allons commencer avec quelques choix simples.">
 
 <!ENTITY better-bibtex.FirstRun.citekeyFormat "Vos clés de citation">
 <!ENTITY better-bibtex.FirstRun.citekeyFormat.explanation "BBT générera des clés de citation pour vos éléments. La génération de clés de citation est hautement configurable, et vous pouvez choisir de remplacer la génération, mais vous allez devoir maintenant sélectionner la valeur par défaut. Vous pourrez toujours aller dans les préférences et modifier cela à tout moment.">
@@ -20,9 +21,9 @@
 <!ENTITY better-bibtex.FirstRun.dragndrop.explanation "BBT vous permet de glisser-déposer vos références dans l'éditeur LaTeX de votre choix. Voulez-vous activer cette fonctionnalité dès maintenant ?">
 <!ENTITY better-bibtex.FirstRun.dragndrop.enable "Activer les citations par glisser déposer">
 
-<!ENTITY better-bibtex.FirstRun.importUnabbreviate "Développer les chaînes de caractères bibtex et les abréviations de journaux pendant l'importation">
-<!ENTITY better-bibtex.FirstRun.importUnabbreviate.explanation "Certains fichiers bibtex ont des abréviations de journaux dans le champ « journal ». Si vous activez ceci, BBT tentera de remplacer ces abréviations par le nom complet du journal lors de l'importation de fichiers bibtex">
-<!ENTITY better-bibtex.FirstRun.importUnabbreviate.enable "Développer les noms de journaux lors de l'importation">
+<!ENTITY better-bibtex_first-run_import_unabbreviate "Développer les chaînes de caractères bibtex et les abréviations de journaux pendant l'importation">
+<!ENTITY better-bibtex_first-run_import_unabbreviate_explanation "Certains fichiers bibtex ont des abréviations de journaux dans le champ « journal ». Si vous activez ceci, BBT tentera de remplacer ces abréviations par le nom complet du journal lors de l'importation de fichiers bibtex">
+<!ENTITY better-bibtex_first-run_import_unabbreviate_enable.label "Développer les noms de journaux lors de l'importation">
 <!ENTITY better-bibtex.FirstRun.importStrings.explanation "Certains fichiers bibtex utilisent des variables @string pour les noms de journaux. Si vous activez ceci, BBT utilisera une liste d'ID de journaux communs pour remplacer ces variables par les noms complets de ces journaux">
 <!ENTITY better-bibtex.FirstRun.importStrings.enable "Développer les noms de journaux @string à l'importation">
 
@@ -150,8 +151,8 @@ En mode « minimal », le nombre d'éléments `span` est minimisé.">
 <!ENTITY better-bibtex.Preferences.advanced.tab.export "Exportation">
 <!ENTITY better-bibtex_preferences_advanced_export_title-case.label "Appliquer la capitalisation aux titres">
 <!ENTITY better-bibtex_preferences_advanced_export_title-case_warning "Si vous n'êtes pas prêt à ignorer à la fois les meilleures pratiques BibTeX/BibLaTeX (voir la FAQ BBT) et les recommandations de Zotero sur la casse des titres/phrases, vous pouvez désactiver cette option pour supprimer la casse de titre pour les entrées en anglais">
-<!ENTITY better-bibtex.Preferences.advanced.export.braceProtection "Appliquer la protection de la casse aux mots en capitales en les insérant entre paires d'accolades">
-<!ENTITY better-bibtex.Preferences.advanced.export.braceProtection.warning "Si vous n'êtes pas prêt à ignorer à la fois les meilleures pratiques BibTeX/BibLaTeX (voir la FAQ BBT) et les recommandations de Zotero sur le tire/phrase, vous pouvez désactiver cette option pour supprimer la protection automatique des accolades pour les mots avec des lettres capitales.">
+<!ENTITY better-bibtex_preferences_advanced_export_brace-protection.label "Appliquer la protection de la casse aux mots en capitales en les insérant entre paires d'accolades">
+<!ENTITY better-bibtex_preferences_advanced_export_brace-protection_warning "Si vous n'êtes pas prêt à ignorer à la fois les meilleures pratiques BibTeX/BibLaTeX (voir la FAQ BBT) et les recommandations de Zotero sur le tire/phrase, vous pouvez désactiver cette option pour supprimer la protection automatique des accolades pour les mots avec des lettres capitales.">
 
 <!ENTITY better-bibtex_preferences_advanced_export_retain-cache.label "Conserver le cache d'exportation entre les mises à jour">
 <!ENTITY better-bibtex_preferences_advanced_export_retain-cache_warning "Par défaut, BBT efface tous les caches chaque fois que lui ou Zotero est mis à jour. Je ne peux pas prédire de manière certaine si un changement dans Zotero ou BBT va affecter la sortie générée pour un élément donné donc, pour être sûr(e) que vous avez toujours les dernières corrections affectant les exportations, les caches sont supprimés lorsqu'une nouvelle version de l'un ou l'autre est détectée. Cependant, si vous avez une très grande bibliothèque dont vous exportez régulièrement des portions significatives, vous pourriez vouloir conserver les éléments mis en cache même si cela comporte le risque que vous obteniez une sortie incorrecte sur l'exportation qui a été corrigée dans l'intervalle.
