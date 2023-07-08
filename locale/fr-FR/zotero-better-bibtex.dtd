@@ -48,8 +48,8 @@ Si vous êtes d'accord pour envoyer ces données, veuillez passer à l'écran su
 
 https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex_error-report_submission-in-progress   "Veuillez patienter pendant que le journal de débogage est soumis.">
-<!ENTITY unuses_better-bibtex_error-report_submitted      "Votre journal de débogage a été envoyé.">
-<!ENTITY unused_better-bibtex_error-report_save      "Enregistrer la copie du journal">
+<!ENTITY better-bibtex_error-report_submitted      "Votre journal de débogage a été envoyé.">
+<!ENTITY better-bibtex_error-report_save.label      "Enregistrer la copie du journal">
 
 <!ENTITY unused_better-bibtex_item-pane_citekey_column "Clé de citation">
 
@@ -242,7 +242,7 @@ Si cette option est activée et que vous rencontrez un problème autre que l'ann
 <!ENTITY better-bibtex_zotero-pane_add-citation-links "Graphique de citation : ajouter des liens de citation...">
 <!ENTITY better-bibtex_zotero-pane_sentence-case "BBT Casse de la phrase">
 <!ENTITY better-bibtex_zotero-pane_patch-dates "Copier date-added/date-modified à partir du champ extra">
-<!ENTITY unused_better-bibtex_zotero-pane-tag-duplicates "Tagguer les clés de citation doublons">
+<!ENTITY better-bibtex_zotero-pane_tag_duplicates "Tagguer les clés de citation doublons">
 <!ENTITY better-bibtex_zotero-pane_tex-studio "Envoyer les citations vers TeXstudio">
 <!ENTITY unused_zotero_better-bibtex_csquotes "Remplacer les guillemets par la commande '\\enquote{...}' (nécessite le package « csquotes »)">
 <!ENTITY unused_better-bibtex_zotero-pane_server_disabled "Exportation par HTTP désactivée">
@@ -255,4 +255,4 @@ Si cette option est activée et que vous rencontrez un problème autre que l'ann
 <!ENTITY better-bibtex_server-url.buttonlabelaccept "OK">
 
 <!-- remove after reactified zoteropane is in release -->
-<!ENTITY unused_better-bibtex_zotero-pane_column_citekey "Clé de citation">
+<!ENTITY better-bibtex_zotero-pane_column_citekey "Clé de citation">

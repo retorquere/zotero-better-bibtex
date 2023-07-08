@@ -494,13 +494,13 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
         file = null
       }
       if (!file) {
-        deferred.reject(l10n.localize('better-bibtex_translate_error_target_nota-file', { path: job.path }))
+        deferred.reject(l10n.localize('better-bibtex_translate_error_target_not_a_file', { path: job.path }))
         return deferred.promise
       }
 
       // the parent directory could have been removed
       if (!file.parent || !file.parent.exists()) {
-        deferred.reject(l10n.localize('better-bibtex_translate_error_target_no-parent', { path: job.path }))
+        deferred.reject(l10n.localize('better-bibtex_translate_error_target_no_parent', { path: job.path }))
         return deferred.promise
       }
 

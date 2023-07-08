@@ -48,8 +48,8 @@ Wenn Sie mit dem Senden einverstanden sind, bitte fahren Sie mit der nächsten A
 
 https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex_error-report_submission-in-progress   "Bitte warten Sie, während der Debug-Log übermittelt wird.">
-<!ENTITY unuses_better-bibtex_error-report_submitted      "Ihr Debug-Log wurde übermittelt.">
-<!ENTITY unused_better-bibtex_error-report_save      "Kopie des Logs speichern">
+<!ENTITY better-bibtex_error-report_submitted      "Ihr Debug-Log wurde übermittelt.">
+<!ENTITY better-bibtex_error-report_save.label      "Kopie des Logs speichern">
 
 <!ENTITY unused_better-bibtex_item-pane_citekey_column "Zitierschlüssel">
 
@@ -241,7 +241,7 @@ Wenn Sie dies eingeschaltet haben und Sie Probleme haben außer der Löschung de
 <!ENTITY better-bibtex_zotero-pane_add-citation-links "Zitier-Graph: Zitat-Links hinzufügen...">
 <!ENTITY better-bibtex_zotero-pane_sentence-case "BBT Sentence-case">
 <!ENTITY better-bibtex_zotero-pane_patch-dates "Kopiere date-added/date-modified aus Extra-Feld">
-<!ENTITY unused_better-bibtex_zotero-pane-tag-duplicates "Markiere doppelte Zitierschlüssel">
+<!ENTITY better-bibtex_zotero-pane_tag_duplicates "Markiere doppelte Zitierschlüssel">
 <!ENTITY better-bibtex_zotero-pane_tex-studio "Einträge an TeXstudio senden">
 <!ENTITY unused_zotero_better-bibtex_csquotes "Ersetze links/rechts (doppelte) Anführungszeichen mit \\enquote{...} (benötigt csquotes)">
 <!ENTITY unused_better-bibtex_zotero-pane_server_disabled "Exportier über HTTP ausgestellt">
@@ -254,4 +254,4 @@ Wenn Sie dies eingeschaltet haben und Sie Probleme haben außer der Löschung de
 <!ENTITY better-bibtex_server-url.buttonlabelaccept "OK">
 
 <!-- remove after reactified zoteropane is in release -->
-<!ENTITY unused_better-bibtex_zotero-pane_column_citekey "Zitierschlüssel">
+<!ENTITY better-bibtex_zotero-pane_column_citekey "Zitierschlüssel">

@@ -24,6 +24,7 @@ const valid = {
 }
 
 const bulk_mod: Record<string, string> = {}
+const l10nKeys: Set<string> = new Set
 function correction(ist, attr = '') {
   let soll = ist
     .replace(/[.]/g, '_')
@@ -48,6 +49,7 @@ class WizardDetector extends ASTWalker {
     for (const attr of node.attrs) {
       let prefix = ''
       attr.val.replace(/&([^;]+);/g, (m, id) => {
+        l10nKeys.add(id)
         if (!id.match(valid.attr) || !id.endsWith(`.${attr.name}`)) {
           correction(id, `.${attr.name}`)
         }
@@ -69,6 +71,7 @@ class WizardDetector extends ASTWalker {
 
   Text(node) {
     node.val.replace(/&([^;]+);/g, (m, id) => {
+      l10nKeys.add(id)
       if (!id.match(valid.text)) {
         correction(id)
       }
@@ -138,5 +141,5 @@ for (const src of pugs) {
   }
 }
 
-// fs.writeFileSync('attributes.json', JSON.stringify([...attributes], null, 2))
+fs.writeFileSync('l10nkeys-static.json', JSON.stringify([...l10nKeys], null, 2))
 fs.writeFileSync('bulk-mod.json', fast_safe_stringify.stable(bulk_mod, null, 2))

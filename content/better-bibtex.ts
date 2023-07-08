@@ -770,7 +770,7 @@ export class BetterBibTeX {
         name = name.lastIndexOf('.') > 0 ? name.substr(0, name.lastIndexOf('.')) : name
         // eslint-disable-next-line no-case-declarations
         const tag = { value: name }
-        if (!ps.prompt(null, l10n.localize(`BetterBibTeX.auxScan.title.${aux.endsWith('.aux') ? 'aux' : 'md'}`), l10n.localize('better-bibtex_aux-scan_prompt'), tag, null, {})) return
+        if (!ps.prompt(null, l10n.localize(`better-bibtex_aux-scan_title_${aux.endsWith('.aux') ? 'aux' : 'md'}`), l10n.localize('better-bibtex_aux-scan_prompt'), tag, null, {})) return
         if (!tag.value) return
 
         await AUXScanner.scan(aux, { tag: tag.value })
