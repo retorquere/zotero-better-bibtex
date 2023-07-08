@@ -52,11 +52,11 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.ItemPane.citekey_column	"Chave de Citação">
 
 <!ENTITY better-bibtex_preferences_open.label "Open Better BibTeX preferences...">
-<!ENTITY better-bibtex.Preferences.auto-abbrev "Abreviar o título de periódicos automaticamente se nada foi definido explicitamente">
-<!ENTITY better-bibtex.Preferences.auto-abbrev.style "Estilo de abreviação:">
+<!ENTITY better-bibtex_preferences_auto-abbrev.label "Abreviar o título de periódicos automaticamente se nada foi definido explicitamente">
+<!ENTITY better-bibtex_preferences_auto-abbrev_style "Estilo de abreviação:">
 
 <!ENTITY better-bibtex_preferences_tab_auto-export.label "Exportação automática">
-<!ENTITY better-bibtex.Preferences.auto-export "Exportação automática">
+<!ENTITY better-bibtex_preferences_auto-export "Exportação automática">
 <!ENTITY better-bibtex_preferences_auto-export_explanation "Aqui só é possível ver e remover exportações. Para adicionar uma exportação automática, faça uma exportação normal e ative a opção 'Manter atualizado' na lista de opções.">
 <!ENTITY better-bibtex_preferences_auto-export_idle "Quando ocioso">
 <!ENTITY better-bibtex_preferences_auto-export_immediate "Imediatamente">
@@ -122,12 +122,12 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 
 <!ENTITY better-bibtex.Preferences.advanced "Avançado">
 <!ENTITY better-bibtex.Preferences.advanced.warning "Estas opções afetam o desempenho e podem causar falhas na exportação. Seja cuidadoso.">
-<!ENTITY better-bibtex.Preferences.advanced.tab.import "Import">
+<!ENTITY better-bibtex_preferences_advanced_tab_import.label "Import">
 <!ENTITY better-bibtex.Preferences.advanced.import.sentenceCase "Sentence-case titles on import:">
 <!ENTITY better-bibtex.Preferences.advanced.import.sentenceCase.off "no (import titles as-is)">
 <!ENTITY better-bibtex.Preferences.advanced.import.sentenceCase.on "yes">
 <!ENTITY better-bibtex.Preferences.advanced.import.sentenceCase.on_guess "yes, but try to exclude already-sentence-cased titles">
-<!ENTITY better-bibtex.Preferences.advanced.import.sentenceCase.warning "Bib(La)TeX entries must be stored in Title Case; Zotero items are expected to be entered as sentence-case.
+<!ENTITY better-bibtex_preferences_advanced_import_sentence-case_warning "Bib(La)TeX entries must be stored in Title Case; Zotero items are expected to be entered as sentence-case.
 
 With this option on, BBT will try to sentence-case during import. This sentence-casing uses heuristics, no natural language processing is performed, and the results are not perfect.
 
@@ -221,9 +221,9 @@ If you have this on, and you experience any problem that is not the cache gettin
 <!ENTITY better-bibtex_preferences_export_map-unicode_text "Prefer text-mode replacements">
 <!ENTITY better-bibtex_preferences_export_map-unicode_math "Prefer math-mode replacements">
 
-<!ENTITY better-bibtex.Preferences.advanced.tab.postscript "postscript">
+<!ENTITY better-bibtex_preferences_advanced_tab_postscript.label "postscript">
 <!ENTITY better-bibtex_preferences_postscript_warn.value "Use of 'Translator.options.exportPath' in postscripts disables the cache. Exports will be substantially slower.">
-<!ENTITY better-bibtex.Preferences.advanced.tab.strings "@string definitions">
+<!ENTITY better-bibtex_preferences_advanced_tab_strings.label "@string definitions">
 <!ENTITY better-bibtex_preferences_prefpane_loading "Better BibTeX is loading">
 <!ENTITY better-bibtex_preferences_rescan-citekeys.label "Reler chaves de citação fixas">
 <!ENTITY better-bibtex_preferences_reset-cache.label "Zerar cache">

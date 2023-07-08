@@ -52,11 +52,11 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.ItemPane.citekey_column	"Clé de citation">
 
 <!ENTITY better-bibtex_preferences_open.label "Ouvrir les préférences Better BibTeX...">
-<!ENTITY better-bibtex.Preferences.auto-abbrev "Abréger automatiquement le titre du journal si aucun n'est explicitement défini">
-<!ENTITY better-bibtex.Preferences.auto-abbrev.style "Style d'abréviation :">
+<!ENTITY better-bibtex_preferences_auto-abbrev.label "Abréger automatiquement le titre du journal si aucun n'est explicitement défini">
+<!ENTITY better-bibtex_preferences_auto-abbrev_style "Style d'abréviation :">
 
 <!ENTITY better-bibtex_preferences_tab_auto-export.label "Synchronisation">
-<!ENTITY better-bibtex.Preferences.auto-export "Exportation automatique">
+<!ENTITY better-bibtex_preferences_auto-export "Exportation automatique">
 <!ENTITY better-bibtex_preferences_auto-export_explanation "Vous pouvez consulter et supprimer les exportations uniquement ici. Pour ajouter une exportation automatique, effectuez une exportation normale et cochez l'option « Garder à jour ».">
 <!ENTITY better-bibtex_preferences_auto-export_idle "à la mise en veille">
 <!ENTITY better-bibtex_preferences_auto-export_immediate "au changement">
@@ -122,12 +122,12 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 
 <!ENTITY better-bibtex.Preferences.advanced "Avancé">
 <!ENTITY better-bibtex.Preferences.advanced.warning "Les paramètres ci-dessous ont un impact sur les performances et peuvent faire échouer les exportations. Procéder avec attention.">
-<!ENTITY better-bibtex.Preferences.advanced.tab.import "Importation">
+<!ENTITY better-bibtex_preferences_advanced_tab_import.label "Importation">
 <!ENTITY better-bibtex.Preferences.advanced.import.sentenceCase "Titres avec casse de phrase lors de l'importation :">
 <!ENTITY better-bibtex.Preferences.advanced.import.sentenceCase.off "non (importer les titres tels quels)">
 <!ENTITY better-bibtex.Preferences.advanced.import.sentenceCase.on "oui">
 <!ENTITY better-bibtex.Preferences.advanced.import.sentenceCase.on_guess "oui, mais en essayant d'exclure les titres déjà avec casse de phrase">
-<!ENTITY better-bibtex.Preferences.advanced.import.sentenceCase.warning "Les entrées Bib(La)TeX devraient être stockées capitalisées (NdT : c.-à-d. avec l'initiale de chaque mot en capitale ; cette règle est conforme à la typographie anglaise mais pas française) ; les entrées Zotero devraient être saisies avec casse de phrase (NdT : c.-à-d. avec seule l'initiale de la phrase en capitale).
+<!ENTITY better-bibtex_preferences_advanced_import_sentence-case_warning "Les entrées Bib(La)TeX devraient être stockées capitalisées (NdT : c.-à-d. avec l'initiale de chaque mot en capitale ; cette règle est conforme à la typographie anglaise mais pas française) ; les entrées Zotero devraient être saisies avec casse de phrase (NdT : c.-à-d. avec seule l'initiale de la phrase en capitale).
 
 Avec cette option activée, BBT essaiera d'appliquer la casse de phrase lors de l'importation. Le mécanisme sous-jacent utilise des heuristiques : aucun traitement de langage naturel n'est effectué, et les résultats ne sont pas parfaits.
 
@@ -222,9 +222,9 @@ Si cette option est activée et que vous rencontrez un problème autre que l'ann
 <!ENTITY better-bibtex_preferences_export_map-unicode_text "Préférer les remplacements en mode texte">
 <!ENTITY better-bibtex_preferences_export_map-unicode_math "Préférer les remplacements en mode mathématique">
 
-<!ENTITY better-bibtex.Preferences.advanced.tab.postscript "post script">
+<!ENTITY better-bibtex_preferences_advanced_tab_postscript.label "post script">
 <!ENTITY better-bibtex_preferences_postscript_warn.value "L'utilisation de 'Translator.options.exportPath' dans les post scripts désactive le cache. Les exportations seront sensiblement plus lentes.">
-<!ENTITY better-bibtex.Preferences.advanced.tab.strings "Définitions des @string">
+<!ENTITY better-bibtex_preferences_advanced_tab_strings.label "Définitions des @string">
 <!ENTITY better-bibtex_preferences_prefpane_loading "Chargement de Better BibTeX en cours">
 <!ENTITY better-bibtex_preferences_rescan-citekeys.label "Réanalyse des clés de citation verrouillées">
 <!ENTITY better-bibtex_preferences_reset-cache.label "Réinitialiser le cache">
