@@ -193,18 +193,18 @@ Si cette option est activée et que vous rencontrez un problème autre que l'ann
 <!ENTITY better-bibtex.Preferences.export.bibtex.URLs.url "dans le champ « url »">
 <!ENTITY better-bibtex.Preferences.export.bibtex.URLs.url-ish "dans le champ « url » mais en supposant que le package « url » n'est pas chargé">
 <!ENTITY better-bibtex_preferences_tab_export.label "Exportation">
-<!ENTITY better-bibtex.Preferences.export.fields.bibtexParticleNoOp "Ne pas tenir compte des préfixes de noms lors du tri">
-<!ENTITY better-bibtex.Preferences.export.fields.bibtexEditionOrdinal "Exporter l'édition numérique sous forme d'ordinaux écrits en anglais">
+<!ENTITY better-bibtex_preferences_export_fields_bibtex-particle-no-op.label "Ne pas tenir compte des préfixes de noms lors du tri">
+<!ENTITY better-bibtex_preferences_export_fields_bibtex-edition-ordinal.label "Exporter l'édition numérique sous forme d'ordinaux écrits en anglais">
 <!ENTITY better-bibtex_preferences_export_fields_language_langid "identifiant de langue">
 <!ENTITY better-bibtex_preferences_export_fields_language_language "langue">
 <!ENTITY better-bibtex_preferences_export_fields_language_both "les deux">
 <!ENTITY better-bibtex_preferences_export_fields_language "Exporter la langue en tant que">
 <!ENTITY better-bibtex_preferences_export_fields_doi-and-url_both "les deux">
-<!ENTITY better-bibtex.Preferences.export.fields.doi-and-url.DOI "le DOI seulement">
-<!ENTITY better-bibtex.Preferences.export.fields.doi-and-url.URL "l'URL seulement">
-<!ENTITY better-bibtex.Preferences.export.fields.doi-and-url "Lorsqu'une entrée comporte à la fois un DOI et une URL, exporter">
+<!ENTITY better-bibtex_preferences_export_fields_doi-and-url_doi "le DOI seulement">
+<!ENTITY better-bibtex_preferences_export_fields_doi-and-url_url "l'URL seulement">
+<!ENTITY better-bibtex_preferences_export_fields_doi-and-url "Lorsqu'une entrée comporte à la fois un DOI et une URL, exporter">
 <!ENTITY better-bibtex_preferences_export_fields_doi-and-url_warning "La plupart des styles BibTeX ne supportent pas les champs « doi »/« url ». Parmi les styles qui les supportent, beaucoup oublient de charger le package « url » requis si bien que vous devez vous assurer de le charger vous-même. Les champs « doi » et « url » sont dits « verbatim » et, sans le package « url », la compilation échouera probablement.">
-<!ENTITY better-bibtex.Preferences.export.fields "Gestion des champs">
+<!ENTITY better-bibtex_preferences_export_fields.label "Gestion des champs">
 
 <!ENTITY better-bibtex_preferences_export_fields_import-strings.label "Remplacer les variables @string ci-dessous lors des importations">
 <!ENTITY better-bibtex_preferences_export_fields_export-strings "Si un champ peut être une référence @string, il doit être exporté comme une référence @string sans paire d'accolades">

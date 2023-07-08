@@ -18,6 +18,11 @@ const pugs = [
   'content/zotero-preferences.pug',
 ]
 
+const valid = {
+  text: /^[-a-z0-9_]+$/,
+  attr: /^[-a-z0-9_]+[.][a-z0-9]+$/,
+}
+
 const bulk_mod: Record<string, string> = {}
 function correction(ist, attr = '') {
   let soll = ist
@@ -28,6 +33,8 @@ function correction(ist, attr = '') {
   soll += attr
   const prefix = 'better-bibtex_'
   if (!soll.startsWith(prefix)) soll = prefix + soll
+  if (attr && !soll.match(valid.attr)) throw new Error(soll)
+  if (!attr && !soll.match(valid.text)) throw new Error(soll)
   if (soll !== ist) bulk_mod[ist] = soll
 }
 
@@ -35,17 +42,12 @@ function correction(ist, attr = '') {
 class WizardDetector extends ASTWalker {
   public foundWizard = false
 
-  public valid = {
-    text: /^[-a-z0-9_]+$/,
-    attr: /^[-a-z0-9_]+[.][a-z0-9]+$/,
-  }
-
   Tag(node) {
     if (node.name === 'wizard') this.foundWizard = true
 
     for (const attr of node.attrs) {
       attr.val.replace(/&([^;]+);/g, (m, id) => {
-        if (!id.match(this.valid.attr) || !id.endsWith(`.${attr.name}`)) {
+        if (!id.match(valid.attr) || !id.endsWith(`.${attr.name}`)) {
           correction(id, `.${attr.name}`)
         }
         // attributes.add(id)
@@ -58,7 +60,7 @@ class WizardDetector extends ASTWalker {
 
   Text(node) {
     node.val.replace(/&([^;]+);/g, (m, id) => {
-      if (!id.match(this.valid.text)) {
+      if (!id.match(valid.text)) {
         correction(id)
       }
     })

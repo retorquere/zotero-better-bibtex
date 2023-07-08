@@ -192,18 +192,18 @@ If you have this on, and you experience any problem that is not the cache gettin
 <!ENTITY better-bibtex.Preferences.export.bibtex.URLs.url "in the 'url' field">
 <!ENTITY better-bibtex.Preferences.export.bibtex.URLs.url-ish "in the 'url' field, but assuming the 'url' package is not loaded">
 <!ENTITY better-bibtex_preferences_tab_export.label "Export">
-<!ENTITY better-bibtex.Preferences.export.fields.bibtexParticleNoOp "Disregard name prefixes when sorting">
-<!ENTITY better-bibtex.Preferences.export.fields.bibtexEditionOrdinal "Export numeric edition as English-written ordinals">
+<!ENTITY better-bibtex_preferences_export_fields_bibtex-particle-no-op.label "Disregard name prefixes when sorting">
+<!ENTITY better-bibtex_preferences_export_fields_bibtex-edition-ordinal.label "Export numeric edition as English-written ordinals">
 <!ENTITY better-bibtex_preferences_export_fields_language_langid "langid">
 <!ENTITY better-bibtex_preferences_export_fields_language_language "language">
 <!ENTITY better-bibtex_preferences_export_fields_language_both "both">
 <!ENTITY better-bibtex_preferences_export_fields_language "Export language as">
 <!ENTITY better-bibtex_preferences_export_fields_doi-and-url_both "both">
-<!ENTITY better-bibtex.Preferences.export.fields.doi-and-url.DOI "DOI">
-<!ENTITY better-bibtex.Preferences.export.fields.doi-and-url.URL "URL">
-<!ENTITY better-bibtex.Preferences.export.fields.doi-and-url "When an item has both a DOI and a URL, export">
+<!ENTITY better-bibtex_preferences_export_fields_doi-and-url_doi "DOI">
+<!ENTITY better-bibtex_preferences_export_fields_doi-and-url_url "URL">
+<!ENTITY better-bibtex_preferences_export_fields_doi-and-url "When an item has both a DOI and a URL, export">
 <!ENTITY better-bibtex_preferences_export_fields_doi-and-url_warning "Most BibTeX styles do not support DOI/URL fields. Of the styles that do support them, many forget to load the required 'url' package, so make sure to load it yourself. DOI and URL fields are so-called 'verbatim' fields, and without the 'url' package loaded compilation will likely fail.">
-<!ENTITY better-bibtex.Preferences.export.fields "Fields">
+<!ENTITY better-bibtex_preferences_export_fields.label "Fields">
 
 <!ENTITY better-bibtex_preferences_export_fields_import-strings.label "Expand the @string vars below during imports">
 <!ENTITY better-bibtex_preferences_export_fields_export-strings "If a field could be a @string reference, export it as an unbraced @string reference">

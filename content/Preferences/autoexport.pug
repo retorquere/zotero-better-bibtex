@@ -48,7 +48,7 @@ vbox#better-bibtex-prefs-auto-exports(hidden="true")
           row
       vbox.autoexport-options.autoexport-BetterBibTeX(hidden="true")
         checkbox(data-ae-id="" data-ae-field="asciiBibTeX" label="&better-bibtex.Preferences.export.bibtex.ascii;" oncommand="Zotero.BetterBibTeX.PrefPane.autoexport.edit(this)")
-        checkbox(data-ae-id="" data-ae-field="bibtexParticleNoOp" label="&better-bibtex.Preferences.export.fields.bibtexParticleNoOp;" oncommand="Zotero.BetterBibTeX.PrefPane.autoexport.edit(this)")
+        checkbox(data-ae-id="" data-ae-field="bibtexParticleNoOp" label="&better-bibtex_preferences_export_fields_bibtex-particle-no-op.label;" oncommand="Zotero.BetterBibTeX.PrefPane.autoexport.edit(this)")
         hbox
           label &better-bibtex.Preferences.export.bibtex.URLs;
           hbox(flex=0)
@@ -62,11 +62,11 @@ vbox#better-bibtex-prefs-auto-exports(hidden="true")
         checkbox(data-ae-id="" data-ae-field="biblatexExtendedNameFormat" label="&better-bibtex.Preferences.export.biblatex.extendedNameFormat;" oncommand="Zotero.BetterBibTeX.PrefPane.autoexport.edit(this)")
       vbox.autoexport-options.autoexport-BetterBibTeX.autoexport-BetterBibLaTeX(hidden="true")
         hbox.autoexport-options.autoexport-BetterBibTeX.autoexport-BetterBibLaTeX(flex=0)
-          label &better-bibtex.Preferences.export.fields.doi-and-url;
+          label &better-bibtex_preferences_export_fields_doi-and-url;
           html:select(data-ae-id="" data-ae-field="DOIandURL" onchange="Zotero.BetterBibTeX.PrefPane.autoexport.edit(this)")
             html:option(value='both') &better-bibtex_preferences_export_fields_doi-and-url_both;
-            html:option(value='doi') &better-bibtex.Preferences.export.fields.doi-and-url.DOI;
-            html:option(value='url') &better-bibtex.Preferences.export.fields.doi-and-url.URL;
+            html:option(value='doi') &better-bibtex_preferences_export_fields_doi-and-url_doi;
+            html:option(value='url') &better-bibtex_preferences_export_fields_doi-and-url_url;
         checkbox.autoexport-options.autoexport-BetterBibTeX.autoexport-BetterBibLaTeX(data-ae-id="" data-ae-field="exportNotes" label="&better-bibtex.Preferences.auto-export.fields.notes;" oncommand="Zotero.BetterBibTeX.PrefPane.autoexport.edit(this)")
         checkbox.autoexport-options.autoexport-BetterBibTeX.autoexport-BetterBibLaTeX(data-ae-id="" data-ae-field="useJournalAbbreviation" label="&better-bibtex.Preferences.auto-export.fields.journalAbbrev;" oncommand="Zotero.BetterBibTeX.PrefPane.autoexport.edit(this)")
         checkbox(data-ae-id="" data-ae-field="recursive" label="&better-bibtex.Preferences.auto-export.fields.recursive;" oncommand="Zotero.BetterBibTeX.PrefPane.autoexport.edit(this)")
