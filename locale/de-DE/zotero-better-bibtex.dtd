@@ -14,18 +14,18 @@
 <!ENTITY better-bibtex.FirstRun.citekeyFormat.explanation.zotero "Wählen Sie diese Option, wenn Sie bereits Dokumente mit Zitierschlüsseln haben, die von Zotero ohne die Hilfe von BBT erzeugt wurden. Dadurch werden die von Zotero generierten Schlüssel originalgetreu repliziert, einschließlich der bekannten Einschränkungen im Zotero-Schlüsselgenerator. Verwenden Sie diese Option nur, wenn Sie die Schlüssel exakt so benötigen, wie Zotero sie erzeugt.">
 <!ENTITY better-bibtex.FirstRun.citekeyFormat.explanation.example "Ihre Zitier-Schlüssel sehen folgendermaßen aus:">
 
-<!ENTITY better-bibtex.FirstRun.exporting "Exportieren mit BBT">
-<!ENTITY better-bibtex.FirstRun.exporting.explanation "Das Exportieren mit BBT funktioniert wie gewöhnlich, Sie müssen aber das richtige Export-Format auswählen; Wählen sie in der Auswahlliste der Export-Formate an Stelle von 'BibTeX'">
+<!ENTITY better-bibtex_first-run_exporting "Exportieren mit BBT">
+<!ENTITY better-bibtex_first-run_exporting_explanation "Das Exportieren mit BBT funktioniert wie gewöhnlich, Sie müssen aber das richtige Export-Format auswählen; Wählen sie in der Auswahlliste der Export-Formate an Stelle von 'BibTeX'">
 
-<!ENTITY better-bibtex.FirstRun.dragndrop "Drag-and-Drop-Zitate">
-<!ENTITY better-bibtex.FirstRun.dragndrop.explanation "Mit BBT können Sie per Drag-and-Drop Zitate in ihren Lieblings-LaTeX-Editor einfügen. Wollen Sie diese Option aktivieren?">
-<!ENTITY better-bibtex.FirstRun.dragndrop.enable "Aktiviere Drag-and-Drop-Zitate">
+<!ENTITY better-bibtex_first-run_drag-and-drop "Drag-and-Drop-Zitate">
+<!ENTITY better-bibtex_first-run_drag-and-drop_explanation "Mit BBT können Sie per Drag-and-Drop Zitate in ihren Lieblings-LaTeX-Editor einfügen. Wollen Sie diese Option aktivieren?">
+<!ENTITY better-bibtex_first-run_drag-and-drop_enable.label "Aktiviere Drag-and-Drop-Zitate">
 
 <!ENTITY better-bibtex_first-run_import_unabbreviate "BibTeX-Strings und Zeitschriftenabkürzungen beim Import erweitern">
 <!ENTITY better-bibtex_first-run_import_unabbreviate_explanation "Einige bibtex-Dateien haben Zeitschriftenabkürzungen im Feld 'Journal'. Wenn Sie dies aktivieren, wird BBT versuchen, diese Abkürzungen beim Import von bibtex-Dateien durch den vollständigen Journalnamen zu ersetzen">
 <!ENTITY better-bibtex_first-run_import_unabbreviate_enable.label "Zeitschriftennamen beim Import nicht abkürzen">
-<!ENTITY better-bibtex.FirstRun.importStrings.explanation "Einige bibtex-Dateien verwenden @string-Variablen für Zeitschriftennamen. Wenn Sie dies aktivieren, wird BBT eine Liste gemeinsamer Zeitschriften-IDs verwenden, um diese Variablen durch den vollständigen Journalnamen zu ersetzen">
-<!ENTITY better-bibtex.FirstRun.importStrings.enable "@string-Zeitschriftennamen beim Import erweitern">
+<!ENTITY better-bibtex_first-run_import-strings_explanation "Einige bibtex-Dateien verwenden @string-Variablen für Zeitschriftennamen. Wenn Sie dies aktivieren, wird BBT eine Liste gemeinsamer Zeitschriften-IDs verwenden, um diese Variablen durch den vollständigen Journalnamen zu ersetzen">
+<!ENTITY better-bibtex_first-run_import-strings_enable.label "@string-Zeitschriftennamen beim Import erweitern">
 
 <!ENTITY better-bibtex.FirstRun.done "Fertig!">
 <!ENTITY better-bibtex.FirstRun.done.explanation "BBT kann nun verwendet werden. Sie können alle Einstellungen über den BBT-Reiter in den Zotero-Einstellungen ändern.">

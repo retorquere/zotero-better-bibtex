@@ -14,18 +14,18 @@
 <!ENTITY better-bibtex.FirstRun.citekeyFormat.explanation.zotero "Choisissez cette option si vous avez des documents qui font référence à des clés générées par Zotero sans l'aide de BBT. Cela va reproduire fidèlement les clés générées par Zotero, y compris les limitations connues du générateur de clé de Zotero. N'utilisez ceci que s'il vous est nécessaire que les clés soient exactement les mêmes que celles générées par Zotero.">
 <!ENTITY better-bibtex.FirstRun.citekeyFormat.explanation.example "vos clés de citation ressembleront à">
 
-<!ENTITY better-bibtex.FirstRun.exporting "Exporter en utilisant BBT">
-<!ENTITY better-bibtex.FirstRun.exporting.explanation "L'exportation via BBT fonctionne de manière transparente dans Zotero. Assurez-vous simplement d'avoir sélectionné le bon format : dans la liste des formats, au lieu de « BibTeX », sélectionnez">
+<!ENTITY better-bibtex_first-run_exporting "Exporter en utilisant BBT">
+<!ENTITY better-bibtex_first-run_exporting_explanation "L'exportation via BBT fonctionne de manière transparente dans Zotero. Assurez-vous simplement d'avoir sélectionné le bon format : dans la liste des formats, au lieu de « BibTeX », sélectionnez">
 
-<!ENTITY better-bibtex.FirstRun.dragndrop "Citations par glisser déposer">
-<!ENTITY better-bibtex.FirstRun.dragndrop.explanation "BBT vous permet de glisser-déposer vos références dans l'éditeur LaTeX de votre choix. Voulez-vous activer cette fonctionnalité dès maintenant ?">
-<!ENTITY better-bibtex.FirstRun.dragndrop.enable "Activer les citations par glisser déposer">
+<!ENTITY better-bibtex_first-run_drag-and-drop "Citations par glisser déposer">
+<!ENTITY better-bibtex_first-run_drag-and-drop_explanation "BBT vous permet de glisser-déposer vos références dans l'éditeur LaTeX de votre choix. Voulez-vous activer cette fonctionnalité dès maintenant ?">
+<!ENTITY better-bibtex_first-run_drag-and-drop_enable.label "Activer les citations par glisser déposer">
 
 <!ENTITY better-bibtex_first-run_import_unabbreviate "Développer les chaînes de caractères bibtex et les abréviations de journaux pendant l'importation">
 <!ENTITY better-bibtex_first-run_import_unabbreviate_explanation "Certains fichiers bibtex ont des abréviations de journaux dans le champ « journal ». Si vous activez ceci, BBT tentera de remplacer ces abréviations par le nom complet du journal lors de l'importation de fichiers bibtex">
 <!ENTITY better-bibtex_first-run_import_unabbreviate_enable.label "Développer les noms de journaux lors de l'importation">
-<!ENTITY better-bibtex.FirstRun.importStrings.explanation "Certains fichiers bibtex utilisent des variables @string pour les noms de journaux. Si vous activez ceci, BBT utilisera une liste d'ID de journaux communs pour remplacer ces variables par les noms complets de ces journaux">
-<!ENTITY better-bibtex.FirstRun.importStrings.enable "Développer les noms de journaux @string à l'importation">
+<!ENTITY better-bibtex_first-run_import-strings_explanation "Certains fichiers bibtex utilisent des variables @string pour les noms de journaux. Si vous activez ceci, BBT utilisera une liste d'ID de journaux communs pour remplacer ces variables par les noms complets de ces journaux">
+<!ENTITY better-bibtex_first-run_import-strings_enable.label "Développer les noms de journaux @string à l'importation">
 
 <!ENTITY better-bibtex.FirstRun.done "Félicitations !">
 <!ENTITY better-bibtex.FirstRun.done.explanation "BBT est maintenant configuré. Vous pouvez toujours modifier l'un de ces paramètres dans les préférences de Zotero, onglet 'Better BibTex'.">

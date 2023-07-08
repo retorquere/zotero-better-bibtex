@@ -29,19 +29,19 @@ wizard#better-bibtex-first-run(xmlns='http://www.mozilla.org/keymaster/gatekeepe
       | &better-bibtex.FirstRun.citekeyFormat.explanation.zotero;; &better-bibtex.FirstRun.citekeyFormat.explanation.example; 
       box.textbox-emph goffman_forms_1981
   wizardpage(label=' ' onpageshow='Zotero.BetterBibTeX.FirstRun.update()')
-    description.header(style='white-space: pre-wrap;') &better-bibtex.FirstRun.dragndrop;
-    description &better-bibtex.FirstRun.dragndrop.explanation;
-    checkbox#better-bibtex-first-run-dragndrop(label='&better-bibtex.FirstRun.dragndrop.enable;' oncommand='Zotero.BetterBibTeX.FirstRun.update()')/
+    description.header(style='white-space: pre-wrap;') &better-bibtex_first-run_drag-and-drop;
+    description &better-bibtex_first-run_drag-and-drop_explanation;
+    checkbox#better-bibtex-first-run-dragndrop(label='&better-bibtex_first-run_drag-and-drop_enable.label;' oncommand='Zotero.BetterBibTeX.FirstRun.update()')/
   wizardpage(label=' ' onpageshow='Zotero.BetterBibTeX.FirstRun.update()')
     description.header(style='white-space: pre-wrap;') &better-bibtex_first-run_import_unabbreviate;
     description &better-bibtex_first-run_import_unabbreviate_explanation;
     checkbox#better-bibtex-first-run-unabbreviate(label='&better-bibtex_first-run_import_unabbreviate_enable.label;' checked='true' oncommand='Zotero.BetterBibTeX.FirstRun.update()')/
-    description &better-bibtex.FirstRun.importStrings.explanation;
-    checkbox#better-bibtex-first-run-strings(label='&better-bibtex.FirstRun.importStrings.enable;' checked='true' oncommand='Zotero.BetterBibTeX.FirstRun.update()')/
+    description &better-bibtex_first-run_import-strings_explanation;
+    checkbox#better-bibtex-first-run-strings(label='&better-bibtex_first-run_import-strings_enable.label;' checked='true' oncommand='Zotero.BetterBibTeX.FirstRun.update()')/
   wizardpage(label=' ')
-    description.header(style='white-space: pre-wrap;') &better-bibtex.FirstRun.exporting;
+    description.header(style='white-space: pre-wrap;') &better-bibtex_first-run_exporting;
     description
-      | &better-bibtex.FirstRun.exporting.explanation; 
+      | &better-bibtex_first-run_exporting_explanation; 
       box.textbox-emph Better BibTeX
   wizardpage(label=' ')
     description.header(style='white-space: pre-wrap;') &better-bibtex.FirstRun.done;
