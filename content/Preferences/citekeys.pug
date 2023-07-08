@@ -30,7 +30,7 @@ hbox(flex=0)
   label(bbt:preference="extensions.zotero.translators.better-bibtex.autoPinDelay") &better-bibtex.Preferences.citekey.autoPinDelay;
   html:input(type='range' min=0 max=30 preference="extensions.zotero.translators.better-bibtex.autoPinDelay")
   textbox(preference='extensions.zotero.translators.better-bibtex.autoPinDelay' size=2 rows=1 readonly='true')
-  label &better-bibtex_units_seconds;
+  label &better-bibtex.seconds;
   hbox(flex=5)
 
 groupbox(style='margin-bottom: 10px')
@@ -55,4 +55,4 @@ hbox(flex=0)
   label(bbt:preference="extensions.zotero.translators.better-bibtex.warnBulkModify") &better-bibtex.Preferences.bulkWarning;
   textbox(size="5" preference="extensions.zotero.translators.better-bibtex.warnBulkModify")
 hbox
-  button#rescan-citekeys.hidden(label="&better-bibtex_preferences_rescan-citekeys.label;" oncommand="Zotero.BetterBibTeX.PrefPane.rescanCitekeys()")
+  button#rescan-citekeys.hidden(label="&better-bibtex.Preferences.rescan-citekeys;" oncommand="Zotero.BetterBibTeX.PrefPane.rescanCitekeys()")

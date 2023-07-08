@@ -47,7 +47,7 @@ export class ZoteroPane {
         oncommand: () => Zotero.BetterBibTeX.scanAUX('tag'),
       }))
       menupopup.appendChild(elements.create('menuitem', {
-        label: l10n.localize('better-bibtex.Preferences.open'),
+        label: l10n.localize('better-bibtex_preferences_open.label'),
         oncommand: () => {
           (this.window as any).openDialog('chrome://zotero-better-bibtex/content/Preferences.xul', 'better-bibtex-prefs-window')
         },
