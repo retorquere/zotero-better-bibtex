@@ -58,21 +58,21 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex_preferences_tab_auto-export.label "Synchronisation">
 <!ENTITY better-bibtex.Preferences.auto-export "Exportation automatique">
 <!ENTITY better-bibtex.Preferences.auto-export.explanation "Vous pouvez consulter et supprimer les exportations uniquement ici. Pour ajouter une exportation automatique, effectuez une exportation normale et cochez l'option « Garder à jour ».">
-<!ENTITY better-bibtex.Preferences.auto-export.idle "à la mise en veille">
-<!ENTITY better-bibtex.Preferences.auto-export.immediate "au changement">
-<!ENTITY better-bibtex.Preferences.auto-export.off "En pause">
+<!ENTITY better-bibtex_preferences_auto-export_idle "à la mise en veille">
+<!ENTITY better-bibtex_preferences_auto-export_immediate "au changement">
+<!ENTITY better-bibtex_preferences_auto-export_off "En pause">
 <!ENTITY better-bibtex.Preferences.auto-export.delay "Retarder l'export automatique de">
-<!ENTITY better-bibtex.Preferences.auto-export.run "Exporter maintenant">
-<!ENTITY better-bibtex.Preferences.auto-export.remove "Supprimer">
+<!ENTITY better-bibtex_preferences_auto-export_run.label "Exporter maintenant">
+<!ENTITY better-bibtex_preferences_auto-export_remove.label "Supprimer">
 <!ENTITY better-bibtex.Preferences.auto-export.collection "Collection">
 <!ENTITY better-bibtex.Preferences.auto-export.library "Bibliothèque">
-<!ENTITY better-bibtex.Preferences.auto-export.target "Fichier de sortie">
-<!ENTITY better-bibtex.Preferences.auto-export.status "Statut">
+<!ENTITY better-bibtex_preferences_auto-export_target "Fichier de sortie">
+<!ENTITY better-bibtex_preferences_auto-export_status "Statut">
 <!ENTITY better-bibtex_preferences_auto-export_updated "Mis à jour">
 <!ENTITY better-bibtex_preferences_auto-export_translator "Format">
 <!ENTITY better-bibtex.Preferences.auto-export.fields.notes "Export des notes">
 <!ENTITY better-bibtex.Preferences.auto-export.fields.journalAbbrev "Abréviations de journaux">
-<!ENTITY better-bibtex.Preferences.auto-export.fields.recursive "Exporter toutes les collections enfants">
+<!ENTITY better-bibtex_preferences_auto-export_fields_recursive.label "Exporter toutes les collections enfants">
 <!ENTITY better-bibtex.Preferences.auto-export.fields.error "Erreur">
 <!ENTITY better-bibtex.Preferences.auto-export.fields.cached "En cache">
 <!ENTITY better-bibtex.Preferences.auto-export.warn.long-running "M'avertir lorsque les exportations automatiques durent plus de (en secondes)">
