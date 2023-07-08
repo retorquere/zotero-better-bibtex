@@ -51,7 +51,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 
 <!ENTITY better-bibtex.ItemPane.citekey_column	"Zitierschlüssel">
 
-<!ENTITY better-bibtex.Preferences.open "Open Better BibTeX preferences...">
+<!ENTITY better-bibtex_preferences_open.label "Open Better BibTeX preferences...">
 <!ENTITY better-bibtex.Preferences.auto-abbrev "Kürze Zeitschriftentitel automatisch ab, wenn kein Wert explizit gesetzt wurde">
 <!ENTITY better-bibtex.Preferences.auto-abbrev.style "Abkürzungsstil:">
 
@@ -104,8 +104,8 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.export.quickCopy.pandoc.brackets "Umschließe Pandoc-Zitate mit Klammern">
 <!ENTITY better-bibtex.Preferences.export.quickCopy.pandoc "Pandoc-Zitat">
 <!ENTITY better-bibtex.Preferences.export.quickCopy.selectLink "Zotero Auswahllink">
-<!ENTITY better-bibtex.Preferences.export.quickCopy.selectLink.zotero "Zotero-Eintragsschlüssel verwenden">
-<!ENTITY better-bibtex.Preferences.export.quickCopy.selectLink.citekey "Better-BibTeX-Zitierschlüssel verwenden">
+<!ENTITY better-bibtex_preferences_export_quick-copy_select-link_zotero "Zotero-Eintragsschlüssel verwenden">
+<!ENTITY better-bibtex_preferences_export_quick-copy_select-link_citekey "Better-BibTeX-Zitierschlüssel verwenden">
 <!ENTITY better-bibtex.Preferences.export.quickCopy.etaTemplate "Eta-Template">
 <!ENTITY better-bibtex.Preferences.citekey.uniqueness "Halte Zitierschlüssel eindeutig">
 <!ENTITY better-bibtex.Preferences.citekey.uniqueness.conflict "Bei Konflikten mit einem angehefteten Schlüssel werden nicht angeheftete Schlüssel">
@@ -117,8 +117,8 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 
 <!ENTITY better-bibtex.Preferences.citekey.AUXScanner "BibTeX AUX-/Markdown-Scanner">
 <!ENTITY better-bibtex.Preferences.citekey.AUXScanner.import "Versuche beim Scannen einer AUX-Datei, Einträge aus der angehängten Bib-Datei zu importieren, wenn sich deren Zitierschlüssel nicht in Zotero befinden">
-<!ENTITY better-bibtex.Preferences.importPrefs "BetterBibTeX-Einstellungen importieren...">
-<!ENTITY better-bibtex.Preferences.exportPrefs "BetterBibTeX-Einstellungen exportieren...">
+<!ENTITY better-bibtex_preferences_import-prefs.label "BetterBibTeX-Einstellungen importieren...">
+<!ENTITY better-bibtex_preferences_export-prefs.label "BetterBibTeX-Einstellungen exportieren...">
 
 <!ENTITY better-bibtex.Preferences.advanced "Erweitert">
 <!ENTITY better-bibtex.Preferences.advanced.warning "Diese Einstellungen werden die Leistung beeinträchtigen und können zu einem Abbruch der Exporte führen. Behandeln Sie sie mit Vorsicht.">
@@ -222,10 +222,10 @@ Wenn Sie dies eingeschaltet haben und Sie Probleme haben außer der Löschung de
 <!ENTITY better-bibtex.Preferences.export.map-unicode.math "Mathematikmodus-Ersetzungen bevorzugen">
 
 <!ENTITY better-bibtex.Preferences.advanced.tab.postscript "Postscript">
-<!ENTITY better-bibtex.Preferences.postscript.warn "Die Verwendung von 'Translator.options.exportPath' in Postscripts deaktiviert den Cache. Die Exporte werden sich deutlich verlangsamen.">
+<!ENTITY better-bibtex_preferences_postscript_warn.value "Die Verwendung von 'Translator.options.exportPath' in Postscripts deaktiviert den Cache. Die Exporte werden sich deutlich verlangsamen.">
 <!ENTITY better-bibtex.Preferences.advanced.tab.strings "@string-Definitionen">
-<!ENTITY better-bibtex.Preferences.prefpane.loading "Better BibTeX wird geladen">
-<!ENTITY better-bibtex.Preferences.rescan-citekeys "Scanne angeheftete Zitierschlüssel erneut">
+<!ENTITY better-bibtex_preferences_prefpane_loading "Better BibTeX wird geladen">
+<!ENTITY better-bibtex_preferences_rescan-citekeys.label "Scanne angeheftete Zitierschlüssel erneut">
 <!ENTITY better-bibtex_preferences_reset-cache.label "Cache zurücksetzen">
 <!ENTITY better-bibtex.BetterBibTeX.reportErrors "Better BibTeX Debug-Log senden...">
 <!ENTITY better-bibtex.BetterBibTeX.auxScanner "BibTeX-AUX-/Markdown-Datei nach Verweisen durchsuchen...">

@@ -51,7 +51,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 
 <!ENTITY better-bibtex.ItemPane.citekey_column	"Citation Key">
 
-<!ENTITY better-bibtex.Preferences.open "Open Better BibTeX preferences...">
+<!ENTITY better-bibtex_preferences_open.label "Open Better BibTeX preferences...">
 <!ENTITY better-bibtex.Preferences.auto-abbrev "Automatically abbreviate journal title if none is set explicitly">
 <!ENTITY better-bibtex.Preferences.auto-abbrev.style "Abbreviation style:">
 
@@ -104,8 +104,8 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.export.quickCopy.pandoc.brackets "Surround Pandoc citations with brackets">
 <!ENTITY better-bibtex.Preferences.export.quickCopy.pandoc "Pandoc citation">
 <!ENTITY better-bibtex.Preferences.export.quickCopy.selectLink "Zotero select link">
-<!ENTITY better-bibtex.Preferences.export.quickCopy.selectLink.zotero "using Zotero item key">
-<!ENTITY better-bibtex.Preferences.export.quickCopy.selectLink.citekey "using Better BibTeX citation key">
+<!ENTITY better-bibtex_preferences_export_quick-copy_select-link_zotero "using Zotero item key">
+<!ENTITY better-bibtex_preferences_export_quick-copy_select-link_citekey "using Better BibTeX citation key">
 <!ENTITY better-bibtex.Preferences.export.quickCopy.etaTemplate "Eta template">
 <!ENTITY better-bibtex.Preferences.citekey.uniqueness "Keeping citation keys unique">
 <!ENTITY better-bibtex.Preferences.citekey.uniqueness.conflict "On conflict with a pinned key, non-pinned keys will be">
@@ -117,8 +117,8 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 
 <!ENTITY better-bibtex.Preferences.citekey.AUXScanner "BibTeX AUX/Markdown scanner">
 <!ENTITY better-bibtex.Preferences.citekey.AUXScanner.import "When scanning an AUX file, attempt to import entries from the attached bib file when their citation keys are not in Zotero">
-<!ENTITY better-bibtex.Preferences.importPrefs "Import BetterBibTeX preferences...">
-<!ENTITY better-bibtex.Preferences.exportPrefs "Export BetterBibTeX preferences...">
+<!ENTITY better-bibtex_preferences_import-prefs.label "Import BetterBibTeX preferences...">
+<!ENTITY better-bibtex_preferences_export-prefs.label "Export BetterBibTeX preferences...">
 
 <!ENTITY better-bibtex.Preferences.advanced "Advanced">
 <!ENTITY better-bibtex.Preferences.advanced.warning "Settings here will impact performance, and can cause breakage of exports. Proceed with care.">
@@ -222,10 +222,10 @@ If you have this on, and you experience any problem that is not the cache gettin
 <!ENTITY better-bibtex.Preferences.export.map-unicode.math "Prefer math-mode replacements">
 
 <!ENTITY better-bibtex.Preferences.advanced.tab.postscript "postscript">
-<!ENTITY better-bibtex.Preferences.postscript.warn "Use of 'Translator.options.exportPath' in postscripts disables the cache. Exports will be substantially slower.">
+<!ENTITY better-bibtex_preferences_postscript_warn.value "Use of 'Translator.options.exportPath' in postscripts disables the cache. Exports will be substantially slower.">
 <!ENTITY better-bibtex.Preferences.advanced.tab.strings "@string definitions">
-<!ENTITY better-bibtex.Preferences.prefpane.loading "Better BibTeX is loading">
-<!ENTITY better-bibtex.Preferences.rescan-citekeys "Re-scan pinned citekeys">
+<!ENTITY better-bibtex_preferences_prefpane_loading "Better BibTeX is loading">
+<!ENTITY better-bibtex_preferences_rescan-citekeys.label "Re-scan pinned citekeys">
 <!ENTITY better-bibtex_preferences_reset-cache.label "Reset cache">
 <!ENTITY better-bibtex.BetterBibTeX.reportErrors "Send Better BibTeX debug log...">
 <!ENTITY better-bibtex.BetterBibTeX.auxScanner "Scan BibTeX AUX/Markdown file for references...">

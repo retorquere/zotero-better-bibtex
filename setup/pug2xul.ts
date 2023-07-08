@@ -20,12 +20,15 @@ const pugs = [
 
 const bulk_mod: Record<string, string> = {}
 function correction(ist, attr = '') {
-  const soll = ist
+  let soll = ist
     .replace(/[.]/g, '_')
     .replace(/^[A-Z]/, m => m.toLowerCase())
     .replace(/_[A-Z]/g, m => m.toLowerCase())
     .replace(/([a-z])([A-Z]+)/g, (m, pre, post) => `${pre}-${post.toLowerCase()}`)
-  bulk_mod[ist] = soll + attr
+  soll += attr
+  const prefix = 'better-bibtex_'
+  if (!soll.startsWith(prefix)) soll = prefix + soll
+  if (soll !== ist) bulk_mod[ist] = soll
 }
 
 // const attributes: Set<string> = new Set
