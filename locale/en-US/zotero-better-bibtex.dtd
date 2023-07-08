@@ -112,7 +112,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.citekey.uniqueness.conflict.change "postfixed (causes key changes)">
 <!ENTITY better-bibtex.Preferences.citekey.uniqueness.conflict.keep "kept (causes key duplicates)">
 <!ENTITY better-bibtex.Preferences.citekey.uniqueness.scope "Keep keys unique">
-<!ENTITY better-bibtex.Preferences.citekey.uniqueness.scope.library "within each library">
+<!ENTITY better-bibtex_preferences_citekey_uniqueness_scope_library "within each library">
 <!ENTITY better-bibtex.Preferences.citekey.uniqueness.scope.global "across all libraries">
 
 <!ENTITY better-bibtex.Preferences.citekey.AUXScanner "BibTeX AUX/Markdown scanner">
@@ -171,17 +171,17 @@ If you have this on, and you experience any problem that is not the cache gettin
 <!ENTITY better-bibtex.Preferences.advanced.ideographs.jieba "Enable 'jieba'/'pinyin' filters in citekey patterns. Uses a lot of memory.">
 
 <!ENTITY better-bibtex_preferences_export_quality-report.label "Include comments about potential problems with the exported entries">
-<!ENTITY better-bibtex.Preferences.export.automaticTags "Include automatic tags in export">
+<!ENTITY better-bibtex_preferences_export_automatic-tags.label "Include automatic tags in export">
 <!ENTITY better-bibtex_preferences_export_jabref-format "Include JabRef-specific metadata:">
 <!ENTITY better-bibtex_preferences_export_jabref-format_0 "no">
 <!ENTITY better-bibtex_preferences_export_jabref-format_3 "for JabRef 3">
 <!ENTITY better-bibtex_preferences_export_jabref-format_4 "for JabRef 4">
 <!ENTITY better-bibtex_preferences_export_jabref-format_5 "for JabRef 5">
 <!ENTITY better-bibtex_preferences_export_jabref-format_warn "Export JabRef-specific fields: timestamps, titles for attachments, and groups for each collection an item is part of. Note that having this on will disable caching in exports, which is really undesirable specifically for auto-exports.">
-<!ENTITY better-bibtex.Preferences.export.biblatex.ascii "Export unicode as plain-text latex commands">
-<!ENTITY better-bibtex.Preferences.export.biblatex "BibLaTeX">
-<!ENTITY better-bibtex.Preferences.export.biblatex.extendedNameFormat "Use BibLaTeX extended name format (requires biblatex 3.5)">
-<!ENTITY better-bibtex.Preferences.export.biblatex.biblatexExtractEprint "Extract JSTOR/Google Books/PubMed info from the URL field into eprint fields">
+<!ENTITY better-bibtex_preferences_export_biblatex_ascii.label "Export unicode as plain-text latex commands">
+<!ENTITY better-bibtex_preferences_export_biblatex.label "BibLaTeX">
+<!ENTITY better-bibtex_preferences_export_biblatex_extended-name-format.label "Use BibLaTeX extended name format (requires biblatex 3.5)">
+<!ENTITY better-bibtex_preferences_export_biblatex_biblatex-extract-eprint.label "Extract JSTOR/Google Books/PubMed info from the URL field into eprint fields">
 <!ENTITY better-bibtex_preferences_export_bibtex_ascii.label "Export unicode as plain-text latex commands (recommended)">
 <!ENTITY better-bibtex_preferences_export_bibtex.label "BibTeX">
 <!ENTITY better-bibtex_preferences_export_bibtex_urls "Add URLs to BibTeX export">

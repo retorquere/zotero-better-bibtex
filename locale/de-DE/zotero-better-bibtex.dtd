@@ -112,7 +112,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.citekey.uniqueness.conflict.change "nachbearbeitet (führt zu Änderungen der Zitierschlüssel)">
 <!ENTITY better-bibtex.Preferences.citekey.uniqueness.conflict.keep "beibehalten (führt zu Duplikaten von Zitierschlüsseln)">
 <!ENTITY better-bibtex.Preferences.citekey.uniqueness.scope "Schlüssel eindeutig halten">
-<!ENTITY better-bibtex.Preferences.citekey.uniqueness.scope.library "innerhalb jeder Bibliothek">
+<!ENTITY better-bibtex_preferences_citekey_uniqueness_scope_library "innerhalb jeder Bibliothek">
 <!ENTITY better-bibtex.Preferences.citekey.uniqueness.scope.global "über alle Bibliotheken hinweg">
 
 <!ENTITY better-bibtex.Preferences.citekey.AUXScanner "BibTeX AUX-/Markdown-Scanner">
@@ -171,17 +171,17 @@ Wenn Sie dies eingeschaltet haben und Sie Probleme haben außer der Löschung de
 <!ENTITY better-bibtex.Preferences.advanced.ideographs.jieba "Aktiviere &quot;jieba&quot;/&quot;pinyin&quot;-Filter in Zitierschlüssel-Mustern. Benötigt viel Speicher.">
 
 <!ENTITY better-bibtex_preferences_export_quality-report.label "Kommentare über mögliche Probleme mit den exportieren Einträgen hinzufügen">
-<!ENTITY better-bibtex.Preferences.export.automaticTags "Inkludiere automatische Tags in den Export">
+<!ENTITY better-bibtex_preferences_export_automatic-tags.label "Inkludiere automatische Tags in den Export">
 <!ENTITY better-bibtex_preferences_export_jabref-format "Füge JabRef-spezifische Meta-Informationen hinzu:">
 <!ENTITY better-bibtex_preferences_export_jabref-format_0 "Keine">
 <!ENTITY better-bibtex_preferences_export_jabref-format_3 "für JabRef 3">
 <!ENTITY better-bibtex_preferences_export_jabref-format_4 "für JabRef 4">
 <!ENTITY better-bibtex_preferences_export_jabref-format_5 "für JabRef 5">
 <!ENTITY better-bibtex_preferences_export_jabref-format_warn "JabRef-spezifische Felder exportieren: Zeitstempel, Titel für Anhänge und Gruppen für jede Sammlung, zu der ein Artikel gehört. Beachten Sie, dass das Einschalten das Caching in Exporten deaktiviert, was speziell für Auto-Exporte nicht wünschenswert ist.">
-<!ENTITY better-bibtex.Preferences.export.biblatex.ascii "Exportiere Latex-Befehle im Unicode-Format als Plaintext">
-<!ENTITY better-bibtex.Preferences.export.biblatex "BibLaTeX">
-<!ENTITY better-bibtex.Preferences.export.biblatex.extendedNameFormat "Verwende das erweiterte Namensformat von BibLaTeX (benötigt biblatex 3.5)">
-<!ENTITY better-bibtex.Preferences.export.biblatex.biblatexExtractEprint "Extrahiere JSTOR-/Google-Books-/PubMed-Informationen aus dem URL-Feld in die eprint-Felder">
+<!ENTITY better-bibtex_preferences_export_biblatex_ascii.label "Exportiere Latex-Befehle im Unicode-Format als Plaintext">
+<!ENTITY better-bibtex_preferences_export_biblatex.label "BibLaTeX">
+<!ENTITY better-bibtex_preferences_export_biblatex_extended-name-format.label "Verwende das erweiterte Namensformat von BibLaTeX (benötigt biblatex 3.5)">
+<!ENTITY better-bibtex_preferences_export_biblatex_biblatex-extract-eprint.label "Extrahiere JSTOR-/Google-Books-/PubMed-Informationen aus dem URL-Feld in die eprint-Felder">
 <!ENTITY better-bibtex_preferences_export_bibtex_ascii.label "Exportiere Latex-Befehle im Unicode-Format als Plaintext (empfohlen)">
 <!ENTITY better-bibtex_preferences_export_bibtex.label "BibTeX">
 <!ENTITY better-bibtex_preferences_export_bibtex_urls "Füge URLs zu BibTeX-Export hinzu">
