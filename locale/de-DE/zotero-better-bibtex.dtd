@@ -86,9 +86,9 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.citekey.format.installed "Aktiviere Zitierschlüssel-Formel">
 <!ENTITY better-bibtex.Preferences.citekey.autoPinDelay "Zitierschlüssel automatisch anpinnen nach">
 
-<!ENTITY better-bibtex.Preferences.export.quickCopy "Schnellkopie">
+<!ENTITY better-bibtex_preferences_export_quick-copy.label "Schnellkopie">
 <!ENTITY better-bibtex_preferences_export_quick-copy_explanation "Schnellkopie/Drag-and-Drop-Zitat">
-<!ENTITY better-bibtex.Preferences.export.quickCopy.atom "Atom">
+<!ENTITY better-bibtex_preferences_export_quick-copy_atom "Atom">
 <!ENTITY better-bibtex_preferences_export_quick-copy_citekeys "Zitierschlüssel">
 <!ENTITY better-bibtex_preferences_export_quick-copy_format "Schnellkopie-Format">
 <!ENTITY better-bibtex_preferences_export_quick-copy_gitbook "GitBook">
@@ -170,7 +170,7 @@ Wenn Sie dies eingeschaltet haben und Sie Probleme haben außer der Löschung de
 <!ENTITY better-bibtex.Preferences.advanced.ideographs.kuroshiro "Kuroshiro romajization in japanischen Namen/Titeln anwenden. Benötigt viel Speicher.">
 <!ENTITY better-bibtex.Preferences.advanced.ideographs.jieba "Aktiviere &quot;jieba&quot;/&quot;pinyin&quot;-Filter in Zitierschlüssel-Mustern. Benötigt viel Speicher.">
 
-<!ENTITY better-bibtex.Preferences.export.qualityReport "Kommentare über mögliche Probleme mit den exportieren Einträgen hinzufügen">
+<!ENTITY better-bibtex_preferences_export_quality-report.label "Kommentare über mögliche Probleme mit den exportieren Einträgen hinzufügen">
 <!ENTITY better-bibtex.Preferences.export.automaticTags "Inkludiere automatische Tags in den Export">
 <!ENTITY better-bibtex.Preferences.export.jabrefFormat "Füge JabRef-spezifische Meta-Informationen hinzu:">
 <!ENTITY better-bibtex.Preferences.export.jabrefFormat.0 "Keine">
@@ -213,13 +213,13 @@ Wenn Sie dies eingeschaltet haben und Sie Probleme haben außer der Löschung de
 <!ENTITY better-bibtex.Preferences.export.fields.export-strings.match_reverse "Mit den @string-Deklarationen und ihren Werten unten vergleichen">
 
 <!ENTITY better-bibtex.Preferences.export.fields.skip "Felder, die nicht exportiert werden sollen (mit Komma trennen)">
-<!ENTITY better-bibtex.Preferences.export.misc "Verschiedenes">
+<!ENTITY better-bibtex_preferences_export_misc.label "Verschiedenes">
 <!ENTITY better-bibtex.Preferences.export.map-unicode "Beim Konvertieren von LaTeX-Befehlen im Plaintext:">
-<!ENTITY better-bibtex.Preferences.export.map-unicode.minimal-packages "Zusätzlich benötigte Latex-Pakete minimieren">
+<!ENTITY better-bibtex_preferences_export_map-unicode_minimal-packages "Zusätzlich benötigte Latex-Pakete minimieren">
 <!ENTITY better-bibtex.Preferences.export.map-unicode.conservative "Minimiere die Anzahl der Wechsel zwischen dem Mathematik- und Textmodus">
 <!ENTITY better-bibtex.Preferences.export.map-unicode.creator "Add braces to accented characters to assist simplistic latex parsers">
-<!ENTITY better-bibtex.Preferences.export.map-unicode.text "Textmodus-Ersetzungen bevorzugen">
-<!ENTITY better-bibtex.Preferences.export.map-unicode.math "Mathematikmodus-Ersetzungen bevorzugen">
+<!ENTITY better-bibtex_preferences_export_map-unicode_text "Textmodus-Ersetzungen bevorzugen">
+<!ENTITY better-bibtex_preferences_export_map-unicode_math "Mathematikmodus-Ersetzungen bevorzugen">
 
 <!ENTITY better-bibtex.Preferences.advanced.tab.postscript "Postscript">
 <!ENTITY better-bibtex_preferences_postscript_warn.value "Die Verwendung von 'Translator.options.exportPath' in Postscripts deaktiviert den Cache. Die Exporte werden sich deutlich verlangsamen.">
