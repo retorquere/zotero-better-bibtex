@@ -9,10 +9,10 @@
 <!ENTITY better-bibtex.FirstRun.citekeyFormat "Ihre Zitierschlüssel">
 <!ENTITY better-bibtex.FirstRun.citekeyFormat.explanation "BBT generiert Zitierschlüssel für ihre Einträge. Dieser Prozess ist in hohem Maße konfigurierbar und kann übersprungen werden, allerdings müssen Sie jetzt einen Defaultwert setzen. Sie können die Auswahl jederzeit im Konfigurationsmenü ändern.">
 <!ENTITY better-bibtex.FirstRun.citekeyFormat.bbt "Verwende das Standard-Zitierschlüssel-Format von BBT">
-<!ENTITY better-bibtex.FirstRun.citekeyFormat.zotero "Verwende das Standard-Zitierschlüssel-Format von Zotero">
-<!ENTITY better-bibtex.FirstRun.citekeyFormat.explanation.bbt "Neue Schlüssel werden im BBT-Standardformat generiert. Wenn Sie ein anderes Format verwenden wollen, ändern Sie es in den Einstellungen, anschließend alle Elemente markieren, Rechtsklick und &quot;Aktualisieren&quot; auswählen">
-<!ENTITY better-bibtex.FirstRun.citekeyFormat.explanation.zotero "Wählen Sie diese Option, wenn Sie bereits Dokumente mit Zitierschlüsseln haben, die von Zotero ohne die Hilfe von BBT erzeugt wurden. Dadurch werden die von Zotero generierten Schlüssel originalgetreu repliziert, einschließlich der bekannten Einschränkungen im Zotero-Schlüsselgenerator. Verwenden Sie diese Option nur, wenn Sie die Schlüssel exakt so benötigen, wie Zotero sie erzeugt.">
-<!ENTITY better-bibtex.FirstRun.citekeyFormat.explanation.example "Ihre Zitier-Schlüssel sehen folgendermaßen aus:">
+<!ENTITY better-bibtex_first-run_citekey-format_zotero.label "Verwende das Standard-Zitierschlüssel-Format von Zotero">
+<!ENTITY better-bibtex_first-run_citekey-format_explanation_bbt "Neue Schlüssel werden im BBT-Standardformat generiert. Wenn Sie ein anderes Format verwenden wollen, ändern Sie es in den Einstellungen, anschließend alle Elemente markieren, Rechtsklick und &quot;Aktualisieren&quot; auswählen">
+<!ENTITY better-bibtex_first-run_citekey-format_explanation_zotero "Wählen Sie diese Option, wenn Sie bereits Dokumente mit Zitierschlüsseln haben, die von Zotero ohne die Hilfe von BBT erzeugt wurden. Dadurch werden die von Zotero generierten Schlüssel originalgetreu repliziert, einschließlich der bekannten Einschränkungen im Zotero-Schlüsselgenerator. Verwenden Sie diese Option nur, wenn Sie die Schlüssel exakt so benötigen, wie Zotero sie erzeugt.">
+<!ENTITY better-bibtex_first-run_citekey-format_explanation_example "Ihre Zitier-Schlüssel sehen folgendermaßen aus:">
 
 <!ENTITY better-bibtex_first-run_exporting "Exportieren mit BBT">
 <!ENTITY better-bibtex_first-run_exporting_explanation "Das Exportieren mit BBT funktioniert wie gewöhnlich, Sie müssen aber das richtige Export-Format auswählen; Wählen sie in der Auswahlliste der Export-Formate an Stelle von 'BibTeX'">
@@ -27,8 +27,8 @@
 <!ENTITY better-bibtex_first-run_import-strings_explanation "Einige bibtex-Dateien verwenden @string-Variablen für Zeitschriftennamen. Wenn Sie dies aktivieren, wird BBT eine Liste gemeinsamer Zeitschriften-IDs verwenden, um diese Variablen durch den vollständigen Journalnamen zu ersetzen">
 <!ENTITY better-bibtex_first-run_import-strings_enable.label "@string-Zeitschriftennamen beim Import erweitern">
 
-<!ENTITY better-bibtex.FirstRun.done "Fertig!">
-<!ENTITY better-bibtex.FirstRun.done.explanation "BBT kann nun verwendet werden. Sie können alle Einstellungen über den BBT-Reiter in den Zotero-Einstellungen ändern.">
+<!ENTITY better-bibtex_first-run_done "Fertig!">
+<!ENTITY better-bibtex_first-run_done_explanation "BBT kann nun verwendet werden. Sie können alle Einstellungen über den BBT-Reiter in den Zotero-Einstellungen ändern.">
 
 <!ENTITY better-bibtex.ErrorReport.title "Better BibTeX Debug-Log">
 <!ENTITY better-bibtex.ErrorReport.restartWithLoggingEnabled  "Mit aktiviertem Logging neustarten…">

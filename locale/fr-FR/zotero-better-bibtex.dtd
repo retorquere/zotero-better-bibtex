@@ -9,10 +9,10 @@
 <!ENTITY better-bibtex.FirstRun.citekeyFormat "Vos clés de citation">
 <!ENTITY better-bibtex.FirstRun.citekeyFormat.explanation "BBT générera des clés de citation pour vos éléments. La génération de clés de citation est hautement configurable, et vous pouvez choisir de remplacer la génération, mais vous allez devoir maintenant sélectionner la valeur par défaut. Vous pourrez toujours aller dans les préférences et modifier cela à tout moment.">
 <!ENTITY better-bibtex.FirstRun.citekeyFormat.bbt "Utiliser le format par défaut de BBT pour la clé de citation">
-<!ENTITY better-bibtex.FirstRun.citekeyFormat.zotero "Utiliser le format par défaut de Zotero pour la clé de citation">
-<!ENTITY better-bibtex.FirstRun.citekeyFormat.explanation.bbt "Les nouvelles clés de citation seront par défaut générées en utilisant le format de BBT. Si vous voulez un format différent, modifiez-le dans les préférences, puis sélectionnez tous les éléments, cliquez avec le bouton droit et sélectionnez Actualiser">
-<!ENTITY better-bibtex.FirstRun.citekeyFormat.explanation.zotero "Choisissez cette option si vous avez des documents qui font référence à des clés générées par Zotero sans l'aide de BBT. Cela va reproduire fidèlement les clés générées par Zotero, y compris les limitations connues du générateur de clé de Zotero. N'utilisez ceci que s'il vous est nécessaire que les clés soient exactement les mêmes que celles générées par Zotero.">
-<!ENTITY better-bibtex.FirstRun.citekeyFormat.explanation.example "vos clés de citation ressembleront à">
+<!ENTITY better-bibtex_first-run_citekey-format_zotero.label "Utiliser le format par défaut de Zotero pour la clé de citation">
+<!ENTITY better-bibtex_first-run_citekey-format_explanation_bbt "Les nouvelles clés de citation seront par défaut générées en utilisant le format de BBT. Si vous voulez un format différent, modifiez-le dans les préférences, puis sélectionnez tous les éléments, cliquez avec le bouton droit et sélectionnez Actualiser">
+<!ENTITY better-bibtex_first-run_citekey-format_explanation_zotero "Choisissez cette option si vous avez des documents qui font référence à des clés générées par Zotero sans l'aide de BBT. Cela va reproduire fidèlement les clés générées par Zotero, y compris les limitations connues du générateur de clé de Zotero. N'utilisez ceci que s'il vous est nécessaire que les clés soient exactement les mêmes que celles générées par Zotero.">
+<!ENTITY better-bibtex_first-run_citekey-format_explanation_example "vos clés de citation ressembleront à">
 
 <!ENTITY better-bibtex_first-run_exporting "Exporter en utilisant BBT">
 <!ENTITY better-bibtex_first-run_exporting_explanation "L'exportation via BBT fonctionne de manière transparente dans Zotero. Assurez-vous simplement d'avoir sélectionné le bon format : dans la liste des formats, au lieu de « BibTeX », sélectionnez">
@@ -27,8 +27,8 @@
 <!ENTITY better-bibtex_first-run_import-strings_explanation "Certains fichiers bibtex utilisent des variables @string pour les noms de journaux. Si vous activez ceci, BBT utilisera une liste d'ID de journaux communs pour remplacer ces variables par les noms complets de ces journaux">
 <!ENTITY better-bibtex_first-run_import-strings_enable.label "Développer les noms de journaux @string à l'importation">
 
-<!ENTITY better-bibtex.FirstRun.done "Félicitations !">
-<!ENTITY better-bibtex.FirstRun.done.explanation "BBT est maintenant configuré. Vous pouvez toujours modifier l'un de ces paramètres dans les préférences de Zotero, onglet 'Better BibTex'.">
+<!ENTITY better-bibtex_first-run_done "Félicitations !">
+<!ENTITY better-bibtex_first-run_done_explanation "BBT est maintenant configuré. Vous pouvez toujours modifier l'un de ces paramètres dans les préférences de Zotero, onglet 'Better BibTex'.">
 
 <!ENTITY better-bibtex.ErrorReport.title "Journal de débogage Better BibTeX">
 <!ENTITY better-bibtex.ErrorReport.restartWithLoggingEnabled  "Redémarrer avec le journal activé…">

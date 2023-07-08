@@ -20,13 +20,13 @@ wizard#better-bibtex-first-run(xmlns='http://www.mozilla.org/keymaster/gatekeepe
     description(style='white-space: pre-wrap;') &better-bibtex.FirstRun.citekeyFormat.explanation;
     radiogroup#better-bibtex-first-run-citekeyFormat(oncommand='Zotero.BetterBibTeX.FirstRun.update();')
       radio(label='&better-bibtex.FirstRun.citekeyFormat.bbt;' value='bbt')/
-      radio(label='&better-bibtex.FirstRun.citekeyFormat.zotero;' value='zotero')/
+      radio(label='&better-bibtex_first-run_citekey-format_zotero.label;' value='zotero')/
     separator/
     description#better-bibtex-first-run-citekeyFormat-bbt(style='white-space: pre-wrap;')
-      | &better-bibtex.FirstRun.citekeyFormat.explanation.bbt;; &better-bibtex.FirstRun.citekeyFormat.explanation.example; 
+      | &better-bibtex_first-run_citekey-format_explanation_bbt;; &better-bibtex_first-run_citekey-format_explanation_example; 
       box.textbox-emph goffmanForms1981
     description#better-bibtex-first-run-citekeyFormat-zotero(style='white-space: pre-wrap;')
-      | &better-bibtex.FirstRun.citekeyFormat.explanation.zotero;; &better-bibtex.FirstRun.citekeyFormat.explanation.example; 
+      | &better-bibtex_first-run_citekey-format_explanation_zotero;; &better-bibtex_first-run_citekey-format_explanation_example; 
       box.textbox-emph goffman_forms_1981
   wizardpage(label=' ' onpageshow='Zotero.BetterBibTeX.FirstRun.update()')
     description.header(style='white-space: pre-wrap;') &better-bibtex_first-run_drag-and-drop;
@@ -44,8 +44,8 @@ wizard#better-bibtex-first-run(xmlns='http://www.mozilla.org/keymaster/gatekeepe
       | &better-bibtex_first-run_exporting_explanation; 
       box.textbox-emph Better BibTeX
   wizardpage(label=' ')
-    description.header(style='white-space: pre-wrap;') &better-bibtex.FirstRun.done;
-    description &better-bibtex.FirstRun.done.explanation;
+    description.header(style='white-space: pre-wrap;') &better-bibtex_first-run_done;
+    description &better-bibtex_first-run_done_explanation;
   script(src='chrome://zotero/content/include.js')
   script.
     new Zotero.BetterBibTeX.FirstRun(window)
