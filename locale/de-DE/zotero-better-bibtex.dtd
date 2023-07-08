@@ -31,17 +31,17 @@
 <!ENTITY better-bibtex_first-run_done_explanation "BBT kann nun verwendet werden. Sie können alle Einstellungen über den BBT-Reiter in den Zotero-Einstellungen ändern.">
 
 <!ENTITY better-bibtex_error-report.title "Better BibTeX Debug-Log">
-<!ENTITY better-bibtex.ErrorReport.restartWithLoggingEnabled  "Mit aktiviertem Logging neustarten…">
+<!ENTITY better-bibtex_error-report_restart-with-logging-enabled.label  "Mit aktiviertem Logging neustarten…">
 <!ENTITY better-bibtex.ErrorReport.enableDebug "Das Zotero Debug-Logging ist derzeit deaktiviert. Es ist einfacher, das Problem zu diagnostizieren, wenn Sie es aktivieren, bevor Sie ein Debug-Log senden.">
 <!ENTITY better-bibtex.ErrorReport.context "Anwendungskontext">
 <!ENTITY better-bibtex.ErrorReport.errors "Fehler">
 <!ENTITY better-bibtex.ErrorReport.includeCache "Cache einbeziehen">
 <!ENTITY better-bibtex.ErrorReport.debug "Debug-Log">
-<!ENTITY better-bibtex.ErrorReport.notReviewed "Debug-Reports können nicht überprüft werden, bis sie im GitHub Issue-Tracker genannt werden.">
-<!ENTITY better-bibtex.ErrorReport.postToGitHub "Bitte senden Sie eine Nachricht an den Issue-Tracker (https://github.com/retorquere/zotero-better-bibtex/issues) mit dieser Debug-Log-ID, einer Beschreibung des Problems und allen notwendigen Schritten zu seiner Reproduktion.">
-<!ENTITY better-bibtex.ErrorReport.items "Einträge">
-<!ENTITY better-bibtex.ErrorReport.reportID "Debug-Log-ID:">
-<!ENTITY better-bibtex.ErrorReport.review "Die unten aufgeführten Daten werden für die Fehlerbehebung an Better BibTeX gesendet. Bitte prüfen Sie sie auf sensible Daten, die sie nicht senden wollen.
+<!ENTITY better-bibtex_error-report_not-reviewed "Debug-Reports können nicht überprüft werden, bis sie im GitHub Issue-Tracker genannt werden.">
+<!ENTITY better-bibtex_error-report_post-to-git-hub "Bitte senden Sie eine Nachricht an den Issue-Tracker (https://github.com/retorquere/zotero-better-bibtex/issues) mit dieser Debug-Log-ID, einer Beschreibung des Problems und allen notwendigen Schritten zu seiner Reproduktion.">
+<!ENTITY better-bibtex_error-report_items.label "Einträge">
+<!ENTITY better-bibtex_error-report_report-id "Debug-Log-ID:">
+<!ENTITY better-bibtex_error-report_review "Die unten aufgeführten Daten werden für die Fehlerbehebung an Better BibTeX gesendet. Bitte prüfen Sie sie auf sensible Daten, die sie nicht senden wollen.
 
 Wenn Sie mit dem Senden einverstanden sind, bitte fahren Sie mit der nächsten Anzeige fort und posten Sie die dort erscheinende Debug-ID im Issue-Tracker bei
 

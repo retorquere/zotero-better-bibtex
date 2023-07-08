@@ -31,17 +31,17 @@
 <!ENTITY better-bibtex_first-run_done_explanation "BBT est maintenant configuré. Vous pouvez toujours modifier l'un de ces paramètres dans les préférences de Zotero, onglet 'Better BibTex'.">
 
 <!ENTITY better-bibtex_error-report.title "Journal de débogage Better BibTeX">
-<!ENTITY better-bibtex.ErrorReport.restartWithLoggingEnabled  "Redémarrer avec le journal activé…">
+<!ENTITY better-bibtex_error-report_restart-with-logging-enabled.label  "Redémarrer avec le journal activé…">
 <!ENTITY better-bibtex.ErrorReport.enableDebug "Le journal de débogage de Zotero est actuellement désactivé. Il sera plus facile de diagnostiquer le problème si vous l'activez avant de soumettre un rapport d'erreur.">
 <!ENTITY better-bibtex.ErrorReport.context "Contexte d'application">
 <!ENTITY better-bibtex.ErrorReport.errors "Erreurs">
 <!ENTITY better-bibtex.ErrorReport.includeCache "Inclure le cache">
 <!ENTITY better-bibtex.ErrorReport.debug "Journal de débogage">
-<!ENTITY better-bibtex.ErrorReport.notReviewed "Les journaux de débogage ne peuvent pas être vérifiés à moins d'être référencés dans le gestionnaire de tickets GitHub par leur ID.">
-<!ENTITY better-bibtex.ErrorReport.postToGitHub "Merci d'envoyer un message au gestionnaire de tickets de GitHub (https://github.com/retorquere/zotero-better-bibtex/issues), en précisant cet identifiant de débogage, une description du problème ainsi que toutes les étapes nécessaires pour le reproduire.">
-<!ENTITY better-bibtex.ErrorReport.items "Références">
-<!ENTITY better-bibtex.ErrorReport.reportID "ID du journal de débogage :">
-<!ENTITY better-bibtex.ErrorReport.review "Les données ci-dessous sont sur le point d'être soumises à Better BibTeX à fins de débogage. Vous pouvez les examiner pour contrôler s'il y a des informations sensibles que vous ne souhaitez pas envoyer.
+<!ENTITY better-bibtex_error-report_not-reviewed "Les journaux de débogage ne peuvent pas être vérifiés à moins d'être référencés dans le gestionnaire de tickets GitHub par leur ID.">
+<!ENTITY better-bibtex_error-report_post-to-git-hub "Merci d'envoyer un message au gestionnaire de tickets de GitHub (https://github.com/retorquere/zotero-better-bibtex/issues), en précisant cet identifiant de débogage, une description du problème ainsi que toutes les étapes nécessaires pour le reproduire.">
+<!ENTITY better-bibtex_error-report_items.label "Références">
+<!ENTITY better-bibtex_error-report_report-id "ID du journal de débogage :">
+<!ENTITY better-bibtex_error-report_review "Les données ci-dessous sont sur le point d'être soumises à Better BibTeX à fins de débogage. Vous pouvez les examiner pour contrôler s'il y a des informations sensibles que vous ne souhaitez pas envoyer.
 
 Si vous êtes d'accord pour envoyer ces données, veuillez passer à l'écran suivant et publier l'ID de débogage qui y figure dans le gestionnaire de problèmes à l'adresse suivante :
 

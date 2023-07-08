@@ -31,17 +31,17 @@
 <!ENTITY better-bibtex_first-run_done_explanation "BBT is now set up for use. You can still change any of these settings by going into the Zotero preferences and opening the BBT tab.">
 
 <!ENTITY better-bibtex_error-report.title "Better BibTeX debug log">
-<!ENTITY better-bibtex.ErrorReport.restartWithLoggingEnabled  "Restart with Logging Enabled…">
+<!ENTITY better-bibtex_error-report_restart-with-logging-enabled.label  "Restart with Logging Enabled…">
 <!ENTITY better-bibtex.ErrorReport.enableDebug "Zotero debug logging is currently disabled. It will be easier to diagnose the problem if you enable it before submitting a debug log.">
 <!ENTITY better-bibtex.ErrorReport.context "Application context">
 <!ENTITY better-bibtex.ErrorReport.errors "Errors">
 <!ENTITY better-bibtex.ErrorReport.includeCache "Include cache">
 <!ENTITY better-bibtex.ErrorReport.debug "Debug log">
-<!ENTITY better-bibtex.ErrorReport.notReviewed "Debug logs cannot be reviewed unless referred to in the GitHub issue tracker by their ID.">
-<!ENTITY better-bibtex.ErrorReport.postToGitHub "Please post a message to the issue tracker (https://github.com/retorquere/zotero-better-bibtex/issues) with this debug log ID, a description of the problem, and any steps necessary to reproduce it.">
-<!ENTITY better-bibtex.ErrorReport.items "Items">
-<!ENTITY better-bibtex.ErrorReport.reportID "Debug log ID:">
-<!ENTITY better-bibtex.ErrorReport.review "The data below is about to submitted to Better BibTeX for debugging. You can review the data to see whether there's sensitive information that you do not wish to send.
+<!ENTITY better-bibtex_error-report_not-reviewed "Debug logs cannot be reviewed unless referred to in the GitHub issue tracker by their ID.">
+<!ENTITY better-bibtex_error-report_post-to-git-hub "Please post a message to the issue tracker (https://github.com/retorquere/zotero-better-bibtex/issues) with this debug log ID, a description of the problem, and any steps necessary to reproduce it.">
+<!ENTITY better-bibtex_error-report_items.label "Items">
+<!ENTITY better-bibtex_error-report_report-id "Debug log ID:">
+<!ENTITY better-bibtex_error-report_review "The data below is about to submitted to Better BibTeX for debugging. You can review the data to see whether there's sensitive information that you do not wish to send.
 
 If you are OK with sending this data, please proceed to the next screen and post the debug ID presented in the next screen in the issue tracker at
 
