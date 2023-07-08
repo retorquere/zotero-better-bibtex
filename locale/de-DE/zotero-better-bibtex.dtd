@@ -47,11 +47,11 @@
 Wenn Sie mit dem Senden einverstanden sind, bitte fahren Sie mit der nächsten Anzeige fort und posten Sie die dort erscheinende Debug-ID im Issue-Tracker bei
 
 https://github.com/retorquere/zotero-better-bibtex/issue">
-<!ENTITY better-bibtex.ErrorReport.submissionInProgress			"Bitte warten Sie, während der Debug-Log übermittelt wird.">
-<!ENTITY better-bibtex.ErrorReport.submitted						"Ihr Debug-Log wurde übermittelt.">
-<!ENTITY better-bibtex.ErrorReport.save						"Kopie des Logs speichern">
+<!ENTITY better-bibtex_error-report_submission-in-progress   "Bitte warten Sie, während der Debug-Log übermittelt wird.">
+<!ENTITY better-bibtex.ErrorReport.submitted      "Ihr Debug-Log wurde übermittelt.">
+<!ENTITY better-bibtex.ErrorReport.save      "Kopie des Logs speichern">
 
-<!ENTITY better-bibtex.ItemPane.citekey_column	"Zitierschlüssel">
+<!ENTITY better-bibtex.ItemPane.citekey_column "Zitierschlüssel">
 
 <!ENTITY better-bibtex_preferences_open.label "Open Better BibTeX preferences...">
 <!ENTITY better-bibtex_preferences_auto-abbrev.label "Kürze Zeitschriftentitel automatisch ab, wenn kein Wert explizit gesetzt wurde">

@@ -47,11 +47,11 @@
 If you are OK with sending this data, please proceed to the next screen and post the debug ID presented in the next screen in the issue tracker at
 
 https://github.com/retorquere/zotero-better-bibtex/issue">
-<!ENTITY better-bibtex.ErrorReport.submissionInProgress			"Please wait while the debug log is submitted.">
-<!ENTITY better-bibtex.ErrorReport.submitted						"Your debug log has been submitted.">
-<!ENTITY better-bibtex.ErrorReport.save						"Save copy of log">
+<!ENTITY better-bibtex_error-report_submission-in-progress   "Please wait while the debug log is submitted.">
+<!ENTITY better-bibtex.ErrorReport.submitted      "Your debug log has been submitted.">
+<!ENTITY better-bibtex.ErrorReport.save      "Save copy of log">
 
-<!ENTITY better-bibtex.ItemPane.citekey_column	"Chave de Citação">
+<!ENTITY better-bibtex.ItemPane.citekey_column "Chave de Citação">
 
 <!ENTITY better-bibtex_preferences_open.label "Open Better BibTeX preferences...">
 <!ENTITY better-bibtex_preferences_auto-abbrev.label "Abreviar o título de periódicos automaticamente se nada foi definido explicitamente">
