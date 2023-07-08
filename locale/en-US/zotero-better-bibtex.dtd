@@ -55,7 +55,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.auto-abbrev "Automatically abbreviate journal title if none is set explicitly">
 <!ENTITY better-bibtex.Preferences.auto-abbrev.style "Abbreviation style:">
 
-<!ENTITY better-bibtex.Preferences.tab.auto-export "Automatic export">
+<!ENTITY better-bibtex_preferences_tab_auto-export.label "Automatic export">
 <!ENTITY better-bibtex.Preferences.auto-export "Automatic export">
 <!ENTITY better-bibtex.Preferences.auto-export.explanation "You can only review and remove exports here. To add an auto-export, perform an export as usual and check the 'Keep updated' option presented there.">
 <!ENTITY better-bibtex.Preferences.auto-export.idle "When Idle">
@@ -78,7 +78,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.auto-export.warn.long-running "Warn me when auto-exports take longer than (seconds)">
 
 <!ENTITY better-bibtex.Preferences.bulkWarning "Warn me when changing citation keys in bulk">
-<!ENTITY better-bibtex.Preferences.tab.citekey "Citation keys">
+<!ENTITY better-bibtex_preferences_tab_citekey.label "Citation keys">
 <!ENTITY better-bibtex.Preferences.citekey.citekeys "Citation keys">
 <!ENTITY better-bibtex.Preferences.citekey.fold "Force citation key to plain text">
 <!ENTITY better-bibtex.Preferences.citekey.search "Enable citation key search">
@@ -191,7 +191,7 @@ If you have this on, and you experience any problem that is not the cache gettin
 <!-- https://texfaq.org/FAQ-citeURL -->
 <!ENTITY better-bibtex.Preferences.export.bibtex.URLs.url "in the 'url' field">
 <!ENTITY better-bibtex.Preferences.export.bibtex.URLs.url-ish "in the 'url' field, but assuming the 'url' package is not loaded">
-<!ENTITY better-bibtex.Preferences.tab.export "Export">
+<!ENTITY better-bibtex_preferences_tab_export.label "Export">
 <!ENTITY better-bibtex.Preferences.export.fields.bibtexParticleNoOp "Disregard name prefixes when sorting">
 <!ENTITY better-bibtex.Preferences.export.fields.bibtexEditionOrdinal "Export numeric edition as English-written ordinals">
 <!ENTITY better-bibtex.Preferences.export.fields.language.langid "langid">
@@ -226,7 +226,7 @@ If you have this on, and you experience any problem that is not the cache gettin
 <!ENTITY better-bibtex.Preferences.advanced.tab.strings "@string definitions">
 <!ENTITY better-bibtex.Preferences.prefpane.loading "Better BibTeX is loading">
 <!ENTITY better-bibtex.Preferences.rescan-citekeys "Re-scan pinned citekeys">
-<!ENTITY better-bibtex.Preferences.resetCache "Reset cache">
+<!ENTITY better-bibtex_preferences_reset-cache.label "Reset cache">
 <!ENTITY better-bibtex.BetterBibTeX.reportErrors "Send Better BibTeX debug log...">
 <!ENTITY better-bibtex.BetterBibTeX.auxScanner "Scan BibTeX AUX/Markdown file for references...">
 <!ENTITY better-bibtex_bulk-keys-confirm.value "You are changing more than {treshold} items in one go. Are you sure?">
@@ -246,10 +246,10 @@ If you have this on, and you experience any problem that is not the cache gettin
 <!ENTITY better-bibtex.BetterBibTeX.show-collection-key "Download Better BibTeX export...">
 
 <!ENTITY better-bibtex_server-url.title "Better BibTeX export via HTTP">
-<!ENTITY better-bibtex.ServerURL.description "Download URL:">
+<!ENTITY better-bibtex_server-url_description "Download URL:">
 <!ENTITY better-bibtex_server-url_or "or">
 <!ENTITY better-bibtex_server-url_format "Download items as">
-<!ENTITY better-bibtex.ServerURL.OK "OK">
+<!ENTITY better-bibtex_server-url.buttonlabelaccept "OK">
 
 <!-- remove after reactified zoteropane is in release -->
 <!ENTITY ZoteroPane.column.citekey "Citation Key">

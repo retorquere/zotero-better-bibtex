@@ -55,7 +55,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.auto-abbrev "Abréger automatiquement le titre du journal si aucun n'est explicitement défini">
 <!ENTITY better-bibtex.Preferences.auto-abbrev.style "Style d'abréviation :">
 
-<!ENTITY better-bibtex.Preferences.tab.auto-export "Synchronisation">
+<!ENTITY better-bibtex_preferences_tab_auto-export.label "Synchronisation">
 <!ENTITY better-bibtex.Preferences.auto-export "Exportation automatique">
 <!ENTITY better-bibtex.Preferences.auto-export.explanation "Vous pouvez consulter et supprimer les exportations uniquement ici. Pour ajouter une exportation automatique, effectuez une exportation normale et cochez l'option « Garder à jour ».">
 <!ENTITY better-bibtex.Preferences.auto-export.idle "à la mise en veille">
@@ -78,7 +78,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.auto-export.warn.long-running "M'avertir lorsque les exportations automatiques durent plus de (en secondes)">
 
 <!ENTITY better-bibtex.Preferences.bulkWarning "M'avertir si un changement par lot touche plus de X éléments (où X = le nb. à rentrer ci-dessous) :">
-<!ENTITY better-bibtex.Preferences.tab.citekey "Clés de citation">
+<!ENTITY better-bibtex_preferences_tab_citekey.label "Clés de citation">
 <!ENTITY better-bibtex.Preferences.citekey.citekeys "Clés de citation">
 <!ENTITY better-bibtex.Preferences.citekey.fold "Forcer le formatage des clés de citation en texte brut">
 <!ENTITY better-bibtex.Preferences.citekey.search "Activer la recherche par clé de citation">
@@ -192,7 +192,7 @@ Si cette option est activée et que vous rencontrez un problème autre que l'ann
 <!-- https://texfaq.org/FAQ-citeURL -->
 <!ENTITY better-bibtex.Preferences.export.bibtex.URLs.url "dans le champ « url »">
 <!ENTITY better-bibtex.Preferences.export.bibtex.URLs.url-ish "dans le champ « url » mais en supposant que le package « url » n'est pas chargé">
-<!ENTITY better-bibtex.Preferences.tab.export "Exportation">
+<!ENTITY better-bibtex_preferences_tab_export.label "Exportation">
 <!ENTITY better-bibtex.Preferences.export.fields.bibtexParticleNoOp "Ne pas tenir compte des préfixes de noms lors du tri">
 <!ENTITY better-bibtex.Preferences.export.fields.bibtexEditionOrdinal "Exporter l'édition numérique sous forme d'ordinaux écrits en anglais">
 <!ENTITY better-bibtex.Preferences.export.fields.language.langid "identifiant de langue">
@@ -227,7 +227,7 @@ Si cette option est activée et que vous rencontrez un problème autre que l'ann
 <!ENTITY better-bibtex.Preferences.advanced.tab.strings "Définitions des @string">
 <!ENTITY better-bibtex.Preferences.prefpane.loading "Chargement de Better BibTeX en cours">
 <!ENTITY better-bibtex.Preferences.rescan-citekeys "Réanalyse des clés de citation verrouillées">
-<!ENTITY better-bibtex.Preferences.resetCache "Réinitialiser le cache">
+<!ENTITY better-bibtex_preferences_reset-cache.label "Réinitialiser le cache">
 <!ENTITY better-bibtex.BetterBibTeX.reportErrors "Envoyer le journal de débogage Better BibTeX...">
 <!ENTITY better-bibtex.BetterBibTeX.auxScanner "Scanner le fichier BibTeX AUX/Markdown pour les références...">
 <!ENTITY better-bibtex_bulk-keys-confirm.value "Vous allez modifier plus de {treshold} éléments en une seule fois. Êtes-vous certain de vouloir poursuivre ?">
@@ -247,10 +247,10 @@ Si cette option est activée et que vous rencontrez un problème autre que l'ann
 <!ENTITY better-bibtex.BetterBibTeX.show-collection-key "Télécharger l'export de Better BibTeX...">
 
 <!ENTITY better-bibtex_server-url.title "Export Better BibTeX via HTTP">
-<!ENTITY better-bibtex.ServerURL.description "URL de téléchargement :">
+<!ENTITY better-bibtex_server-url_description "URL de téléchargement :">
 <!ENTITY better-bibtex_server-url_or "ou">
 <!ENTITY better-bibtex_server-url_format "Télécharger les éléments en tant que">
-<!ENTITY better-bibtex.ServerURL.OK "OK">
+<!ENTITY better-bibtex_server-url.buttonlabelaccept "OK">
 
 <!-- remove after reactified zoteropane is in release -->
 <!ENTITY ZoteroPane.column.citekey "Clé de citation">

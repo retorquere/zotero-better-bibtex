@@ -55,7 +55,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.auto-abbrev "Kürze Zeitschriftentitel automatisch ab, wenn kein Wert explizit gesetzt wurde">
 <!ENTITY better-bibtex.Preferences.auto-abbrev.style "Abkürzungsstil:">
 
-<!ENTITY better-bibtex.Preferences.tab.auto-export "Automatischer Export">
+<!ENTITY better-bibtex_preferences_tab_auto-export.label "Automatischer Export">
 <!ENTITY better-bibtex.Preferences.auto-export "Automatischer Export">
 <!ENTITY better-bibtex.Preferences.auto-export.explanation "Sie können hier Exporte nur einsehen oder löschen. Um einen automatischen Export hinzuzufügen, führen Sie einen gewöhnlichen Export durch und wählen sie dabei die Option 'Halte aktuell'.">
 <!ENTITY better-bibtex.Preferences.auto-export.idle "Wenn unbeschäftigt">
@@ -78,7 +78,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.auto-export.warn.long-running "Warne mich, wenn Auto-Exporte länger dauern als (seconds)">
 
 <!ENTITY better-bibtex.Preferences.bulkWarning "Warne mich, wenn mehrere Schlüssel auf einmal geändert werden">
-<!ENTITY better-bibtex.Preferences.tab.citekey "Zitierschlüssel">
+<!ENTITY better-bibtex_preferences_tab_citekey.label "Zitierschlüssel">
 <!ENTITY better-bibtex.Preferences.citekey.citekeys "Zitierschlüssel">
 <!ENTITY better-bibtex.Preferences.citekey.fold "Erzwinge Plaintext-Format bei Zitierschlüsseln">
 <!ENTITY better-bibtex.Preferences.citekey.search "Zitierschlüsselsuche aktivieren">
@@ -191,7 +191,7 @@ Wenn Sie dies eingeschaltet haben und Sie Probleme haben außer der Löschung de
 <!-- https://texfaq.org/FAQ-citeURL -->
 <!ENTITY better-bibtex.Preferences.export.bibtex.URLs.url "im 'url'-Feld">
 <!ENTITY better-bibtex.Preferences.export.bibtex.URLs.url-ish "im &quot;url&quot;-Feld, aber davon ausgehend, dass das &quot;url&quot;-Paket nicht geladen wurde">
-<!ENTITY better-bibtex.Preferences.tab.export "Exportiere">
+<!ENTITY better-bibtex_preferences_tab_export.label "Exportiere">
 <!ENTITY better-bibtex.Preferences.export.fields.bibtexParticleNoOp "Ignoriere Namens-Präfixe beim Sortieren">
 <!ENTITY better-bibtex.Preferences.export.fields.bibtexEditionOrdinal "Export numeric edition as English-written ordinals">
 <!ENTITY better-bibtex.Preferences.export.fields.language.langid "langid">
@@ -226,7 +226,7 @@ Wenn Sie dies eingeschaltet haben und Sie Probleme haben außer der Löschung de
 <!ENTITY better-bibtex.Preferences.advanced.tab.strings "@string-Definitionen">
 <!ENTITY better-bibtex.Preferences.prefpane.loading "Better BibTeX wird geladen">
 <!ENTITY better-bibtex.Preferences.rescan-citekeys "Scanne angeheftete Zitierschlüssel erneut">
-<!ENTITY better-bibtex.Preferences.resetCache "Cache zurücksetzen">
+<!ENTITY better-bibtex_preferences_reset-cache.label "Cache zurücksetzen">
 <!ENTITY better-bibtex.BetterBibTeX.reportErrors "Better BibTeX Debug-Log senden...">
 <!ENTITY better-bibtex.BetterBibTeX.auxScanner "BibTeX-AUX-/Markdown-Datei nach Verweisen durchsuchen...">
 <!ENTITY better-bibtex_bulk-keys-confirm.value "Sie ändern mehr als {treshold} Einträge auf einmal. Sind sie sicher?">
@@ -246,10 +246,10 @@ Wenn Sie dies eingeschaltet haben und Sie Probleme haben außer der Löschung de
 <!ENTITY better-bibtex.BetterBibTeX.show-collection-key "Download Better-BibTeX-Export...">
 
 <!ENTITY better-bibtex_server-url.title "Better-BibTeX-Export via HTTP">
-<!ENTITY better-bibtex.ServerURL.description "Download-URL:">
+<!ENTITY better-bibtex_server-url_description "Download-URL:">
 <!ENTITY better-bibtex_server-url_or "oder">
 <!ENTITY better-bibtex_server-url_format "Element herunterladen als">
-<!ENTITY better-bibtex.ServerURL.OK "OK">
+<!ENTITY better-bibtex_server-url.buttonlabelaccept "OK">
 
 <!-- remove after reactified zoteropane is in release -->
 <!ENTITY ZoteroPane.column.citekey "Zitierschlüssel">
