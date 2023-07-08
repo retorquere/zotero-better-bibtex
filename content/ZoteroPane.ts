@@ -37,7 +37,7 @@ export class ZoteroPane {
       const menupopup = doc.getElementById('menu_ToolsPopup')
         .appendChild(elements.create('menu', {
           id: 'better-bibtex-tools-menu',
-          label: l10n.localize('better-bibtex.BetterBibTeX'),
+          label: 'Better BibTeX',
           class: 'menu-iconic',
           image: 'chrome://zotero-better-bibtex/content/skin/bibtex-menu.svg',
         }))
@@ -72,7 +72,7 @@ export class ZoteroPane {
       const menupopup = doc.getElementById('zotero-itemmenu')
         .appendChild(elements.create('menu', {
           id,
-          label: l10n.localize('better-bibtex.BetterBibTeX'),
+          label: 'Better BibTeX',
           class: 'menu-iconic',
           image: 'chrome://zotero-better-bibtex/content/skin/bibtex-menu.svg',
         }))

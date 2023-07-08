@@ -112,8 +112,8 @@ class AutoExportPane {
   public load() {
     if (!this.label) {
       this.label = {}
-      for (const label of ['scheduled', 'running', 'done', 'error', 'preparing']) {
-        this.label[label] = l10n.localize(`Preferences.auto-export.status.${label}`)
+      for (const status of ['scheduled', 'running', 'done', 'error', 'preparing']) {
+        this.label[label] = l10n.localize(`better-bibtex_preferences_auto-export_status_${status}`)
       }
     }
 
@@ -191,7 +191,7 @@ class AutoExportPane {
 
         switch (field) {
           case 'type':
-            (node as XUL.Textbox).value = `${l10n.localize(`Preferences.auto-export.type.${ae.type}`)}:`
+            (node as XUL.Textbox).value = `${l10n.localize(`better-bibtex_preferences_auto-export_type_${ae.type}`)}:`
             break
 
           case 'name':

@@ -51,7 +51,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex_error-report_submitted      "Votre journal de débogage a été envoyé.">
 <!ENTITY better-bibtex_error-report_save.label      "Enregistrer la copie du journal">
 
-<!ENTITY unused_better-bibtex_item-pane_citekey_column "Clé de citation">
+<!ENTITY better-bibtex_item-pane_citekey "Clé de citation">
 
 <!ENTITY better-bibtex_preferences_open.label "Ouvrir les préférences Better BibTeX...">
 <!ENTITY better-bibtex_preferences_auto-abbrev.label "Abréger automatiquement le titre du journal si aucun n'est explicitement défini">
