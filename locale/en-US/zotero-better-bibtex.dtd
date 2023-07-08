@@ -48,10 +48,10 @@ If you are OK with sending this data, please proceed to the next screen and post
 
 https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex_error-report_submission-in-progress   "Please wait while the debug log is submitted.">
-<!ENTITY better-bibtex.ErrorReport.submitted      "Your debug log has been submitted.">
-<!ENTITY better-bibtex.ErrorReport.save      "Save copy of log">
+<!ENTITY unuses_better-bibtex_error-report_submitted      "Your debug log has been submitted.">
+<!ENTITY unused_better-bibtex_error-report_save      "Save copy of log">
 
-<!ENTITY better-bibtex.ItemPane.citekey_column "Citation Key">
+<!ENTITY unused_better-bibtex_item-pane_citekey_column "Citation Key">
 
 <!ENTITY better-bibtex_preferences_open.label "Open Better BibTeX preferences...">
 <!ENTITY better-bibtex_preferences_auto-abbrev.label "Automatically abbreviate journal title if none is set explicitly">
@@ -66,8 +66,8 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex_preferences_auto-export_delay "Delay auto-export for">
 <!ENTITY better-bibtex_preferences_auto-export_run.label "Export now">
 <!ENTITY better-bibtex_preferences_auto-export_remove.label "Remove">
-<!ENTITY better-bibtex.Preferences.auto-export.collection "Collection">
-<!ENTITY better-bibtex.Preferences.auto-export.library "Library">
+<!ENTITY unused_better-bibtex_preferences_auto-export_collection "Collection">
+<!ENTITY unused_better-bibtex_preferences_auto-export_library "Library">
 <!ENTITY better-bibtex_preferences_auto-export_target "Output file">
 <!ENTITY better-bibtex_preferences_auto-export_status "Status">
 <!ENTITY better-bibtex_preferences_auto-export_updated "Updated">
@@ -77,11 +77,11 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex_preferences_auto-export_fields_recursive.label "Export all child collections">
 <!ENTITY better-bibtex_preferences_auto-export_fields_error "Error">
 <!ENTITY better-bibtex_preferences_auto-export_fields_cached.label "Cached">
-<!ENTITY better-bibtex.Preferences.auto-export.warn.long-running "Warn me when auto-exports take longer than (seconds)">
+<!ENTITY unused_better-bibtex_preferences_auto-export_warn_long-running "Warn me when auto-exports take longer than (seconds)">
 
 <!ENTITY better-bibtex_preferences_bulk-warning "Warn me when changing citation keys in bulk">
 <!ENTITY better-bibtex_preferences_tab_citekey.label "Citation keys">
-<!ENTITY better-bibtex.Preferences.citekey.citekeys "Citation keys">
+<!ENTITY unused_better-bibtex_preferences_citekey_citekeys "Citation keys">
 <!ENTITY better-bibtex_preferences_citekey_fold.label "Force citation key to plain text">
 <!ENTITY better-bibtex_preferences_citekey_search.label "Enable citation key search">
 <!ENTITY better-bibtex_preferences_citekey_format "Citation key formula">
@@ -117,13 +117,13 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex_preferences_citekey_uniqueness_scope_library "within each library">
 <!ENTITY better-bibtex_preferences_citekey_uniqueness_scope_global "across all libraries">
 
-<!ENTITY better-bibtex.Preferences.citekey.AUXScanner "BibTeX AUX/Markdown scanner">
+<!ENTITY unused_better-bibtex_preferences_citekey_aux-scanner "BibTeX AUX/Markdown scanner">
 <!ENTITY better-bibtex_preferences_citekey_aux-scanner_import.label "When scanning an AUX file, attempt to import entries from the attached bib file when their citation keys are not in Zotero">
 <!ENTITY better-bibtex_preferences_import-prefs.label "Import BetterBibTeX preferences...">
 <!ENTITY better-bibtex_preferences_export-prefs.label "Export BetterBibTeX preferences...">
 
-<!ENTITY better-bibtex.Preferences.advanced "Advanced">
-<!ENTITY better-bibtex.Preferences.advanced.warning "Settings here will impact performance, and can cause breakage of exports. Proceed with care.">
+<!ENTITY unused_better-bibtex_preferences_advanced "Advanced">
+<!ENTITY unused_better-bibtex_preferences_advanced_warning "Settings here will impact performance, and can cause breakage of exports. Proceed with care.">
 <!ENTITY better-bibtex_preferences_advanced_tab_import.label "Import">
 <!ENTITY better-bibtex_preferences_advanced_import_sentence-case "Sentence-case titles on import:">
 <!ENTITY better-bibtex_preferences_advanced_import_sentence-case_off.label "no (import titles as-is)">
@@ -145,10 +145,10 @@ With 'yes, but try to exclude already-sentence-cased titles', BBT will attempt t
 There's plenty of bib(la)tex files out there that do this a little overzealously, and you may not like the resulting HTML code in your items, even though this is what the braces mean in bib(la)tex, and Zotero supports it.
 
 If you turn this off, the markup is omitted during import. When you select 'yes', all braces that bib(la)tex would interpret as case protection (which is not all of them) are converted to `span` elements. In `minimal` mode, the number of `span` elements is minimized.">
-<!ENTITY better-bibtex.Preferences.advanced.import.unabbreviate "Expand abbreviated journal titles on import using list:">
-<!ENTITY better-bibtex.Preferences.advanced.import.unabbreviate.off "None">
+<!ENTITY unused_better-bibtex_preferences_advanced_import_unabbreviate "Expand abbreviated journal titles on import using list:">
+<!ENTITY unused_better-bibtex_preferences_advanced_import_unabbreviate_off "None">
 
-<!ENTITY better-bibtex.Preferences.advanced.tab.export "Export">
+<!ENTITY unused_better-bibtex_preferences_advanced_tab_export "Export">
 <!ENTITY better-bibtex_preferences_advanced_export_title-case.label "Apply title-casing to titles">
 <!ENTITY better-bibtex_preferences_advanced_export_title-case_warning "If you're dead-set on ignoring both BibTeX/BibLaTeX best practice (see the BBT FAQ) and the Zotero recommendations on title/sentence casing, you can turn this off to suppress title casing for English items">
 <!ENTITY better-bibtex_preferences_advanced_export_brace-protection.label "Apply case-protection to capitalized words by enclosing them in braces">
@@ -158,10 +158,10 @@ If you turn this off, the markup is omitted during import. When you select 'yes'
 <!ENTITY better-bibtex_preferences_advanced_export_retain-cache_warning "By default, BBT clears all caches whenever BBT or Zotero is upgraded. I can't realistically predict whether a change in Zotero or BBT is going to affect the output generated for any given item, so to be sure you always have the latest export-affecting fixes, the caches are discarded when a new version of either is detected. If you have a very large library however, of which you regularly export significant portions, you might want to retain the cached items even if that does come with the risk that you get wrong output on export that has been fixed in the interim.
 
 If you have this on, and you experience any problem that is not the cache getting dropped on upgrade, you *must* clear the cache and reproduce the problem. When you change this setting, as with any setting change, the cache will be dropped.">
-<!ENTITY better-bibtex.Preferences.advanced.export.workers "Parallel background exports:">
+<!ENTITY unused_better-bibtex_preferences_advanced_export_workers "Parallel background exports:">
 <!ENTITY better-bibtex_preferences_advanced_export_workers_cache.label "Enable caching for background exports">
 
-<!ENTITY better-bibtex.Preferences.advanced.tab.citekeys "Citation keys">
+<!ENTITY unused_better-bibtex_preferences_advanced_tab_citekeys "Citation keys">
 
 <!ENTITY better-bibtex_preferences_advanced_extra-merge.label "When merging items, also merge:">
 <!ENTITY better-bibtex_preferences_advanced_extra_merge-citekeys.label "their citation keys into an bib(la)tex `ids` field">
@@ -229,12 +229,12 @@ If you have this on, and you experience any problem that is not the cache gettin
 <!ENTITY better-bibtex_preferences_prefpane_loading "Better BibTeX is loading">
 <!ENTITY better-bibtex_preferences_rescan-citekeys.label "Re-scan pinned citekeys">
 <!ENTITY better-bibtex_preferences_reset-cache.label "Reset cache">
-<!ENTITY better-bibtex.BetterBibTeX.reportErrors "Send Better BibTeX debug log...">
-<!ENTITY better-bibtex.BetterBibTeX.auxScanner "Scan BibTeX AUX/Markdown file for references...">
+<!ENTITY better-bibtex_report-errors "Send Better BibTeX debug log...">
+<!ENTITY better-bibtex_aux-scanner "Scan BibTeX AUX/Markdown file for references...">
 <!ENTITY better-bibtex_bulk-keys-confirm.value "You are changing more than {treshold} items in one go. Are you sure?">
 <!ENTITY better-bibtex_bulk-keys-confirm.buttonlabelextra1 "OK, and don't ask me again">
-<!ENTITY better-bibtex.BetterBibTeX.citekey.set "Change BibTeX key...">
-<!ENTITY better-bibtex.BetterBibTeX.citekey.pin "Pin BibTeX key">
+<!ENTITY better-bibtex_citekey_set "Change BibTeX key...">
+<!ENTITY better-bibtex_citekey_pin "Pin BibTeX key">
 <!ENTITY better-bibtex.BetterBibTeX.citekey.pinInspireHEP "Pin BibTeX key from InspireHEP">
 <!ENTITY better-bibtex.BetterBibTeX.citekey.unpin "Unpin BibTeX key">
 <!ENTITY better-bibtex.BetterBibTeX.citekey.refresh "Refresh BibTeX key">
