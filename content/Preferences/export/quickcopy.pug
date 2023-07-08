@@ -7,8 +7,8 @@ groupbox
         html:option(value='latex') &better-bibtex.Preferences.export.quickCopy.latex;
         html:option(value='citekeys') &better-bibtex.Preferences.export.quickCopy.citekeys;
         html:option(value='pandoc') &better-bibtex_preferences_export_quick-copy_pandoc;
-        html:option(value='orgmode') &better-bibtex.Preferences.export.quickCopy.orgMode;
-        html:option(value='orgRef') &better-bibtex.Preferences.export.quickCopy.orgRef;
+        html:option(value='orgmode') &better-bibtex_preferences_export_quick-copy_org-mode;
+        html:option(value='orgRef') &better-bibtex_preferences_export_quick-copy_org-ref;
         html:option(value='orgRef3') &better-bibtex_preferences_export_quick-copy_org-ref3;
         html:option(value='rtfScan') &better-bibtex_preferences_export_quick-copy_rtf-scan;
         html:option(value='roamCiteKey') &better-bibtex_preferences_export_quick-copy_roam-cite-key;
@@ -19,7 +19,7 @@ groupbox
 
     deck#quickCopyDetails
       hbox#better-bibtex-preferences-quickcopy-latex(align='start')
-        label(bbt:preference='extensions.zotero.translators.better-bibtex.citeCommand') &better-bibtex.Preferences.export.quickCopy.latex.command;
+        label(bbt:preference='extensions.zotero.translators.better-bibtex.citeCommand') &better-bibtex_preferences_export_quick-copy_latex_command;
         textbox(size='10' preference='extensions.zotero.translators.better-bibtex.citeCommand' onchange='Zotero.BetterBibTeX.PrefPane.refresh();' onkeypress='Zotero.setTimeout(function() { Zotero.BetterBibTeX.PrefPane.refresh() }, 1);')
 
       hbox#better-bibtex-preferences-quickcopy-citekeys
@@ -28,10 +28,10 @@ groupbox
         checkbox#id-better-bibtex-preferences-quickCopyPandocBrackets(preference='extensions.zotero.translators.better-bibtex.quickCopyPandocBrackets' label='&better-bibtex_preferences_export_quick-copy_pandoc_brackets.label;')
 
       hbox#better-bibtex-preferences-quickcopy-orgmode(align='start' flex=0)
-        label(bbt:preference='extensions.zotero.translators.better-bibtex.quickCopyOrgMode') &better-bibtex.Preferences.export.quickCopy.orgMode;
+        label(bbt:preference='extensions.zotero.translators.better-bibtex.quickCopyOrgMode') &better-bibtex_preferences_export_quick-copy_org-mode;
         html:select(preference='extensions.zotero.translators.better-bibtex.quickCopyOrgMode')
-          html:option(value='zotero') &better-bibtex.Preferences.export.quickCopy.orgMode.zotero;
-          html:option(value='citationkey') &better-bibtex.Preferences.export.quickCopy.orgMode.citekey;
+          html:option(value='zotero') &better-bibtex_preferences_export_quick-copy_org-mode_zotero;
+          html:option(value='citationkey') &better-bibtex_preferences_export_quick-copy_org-mode_citekey;
 
       hbox#better-bibtex-preferences-quickcopy-orgRef
 
