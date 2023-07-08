@@ -13,7 +13,7 @@
 <!ENTITY better-bibtex_first-run_citekey-format_zotero.label "Utiliser le format par défaut de Zotero pour la clé de citation">
 <!ENTITY better-bibtex_first-run_citekey-format_explanation_bbt "Les nouvelles clés de citation seront par défaut générées en utilisant le format de BBT. Si vous voulez un format différent, modifiez-le dans les préférences, puis sélectionnez tous les éléments, cliquez avec le bouton droit et sélectionnez Actualiser">
 <!ENTITY better-bibtex_first-run_citekey-format_explanation_zotero "Choisissez cette option si vous avez des documents qui font référence à des clés générées par Zotero sans l'aide de BBT. Cela va reproduire fidèlement les clés générées par Zotero, y compris les limitations connues du générateur de clé de Zotero. N'utilisez ceci que s'il vous est nécessaire que les clés soient exactement les mêmes que celles générées par Zotero.">
-<!ENTITY better-bibtex_first-run_citekey-format_explanation.example "vos clés de citation ressembleront à">
+<!ENTITY better-bibtex_first-run_citekey-format_explanation_example "vos clés de citation ressembleront à">
 
 <!ENTITY better-bibtex_first-run_exporting "Exporter en utilisant BBT">
 <!ENTITY better-bibtex_first-run_exporting_explanation "L'exportation via BBT fonctionne de manière transparente dans Zotero. Assurez-vous simplement d'avoir sélectionné le bon format : dans la liste des formats, au lieu de « BibTeX », sélectionnez">
@@ -66,8 +66,8 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex_preferences_auto-export_delay "Retarder l'export automatique de">
 <!ENTITY better-bibtex_preferences_auto-export_run.label "Exporter maintenant">
 <!ENTITY better-bibtex_preferences_auto-export_remove.label "Supprimer">
-<!ENTITY better-bibtex_preferences_auto-export.collection "Collection">
-<!ENTITY better-bibtex_preferences_auto-export.library "Bibliothèque">
+<!ENTITY better-bibtex_preferences_auto-export_collection "Collection">
+<!ENTITY better-bibtex_preferences_auto-export_library "Bibliothèque">
 <!ENTITY better-bibtex_preferences_auto-export_target "Fichier de sortie">
 <!ENTITY better-bibtex_preferences_auto-export_status "Statut">
 <!ENTITY better-bibtex_preferences_auto-export_updated "Mis à jour">
@@ -77,11 +77,11 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex_preferences_auto-export_fields_recursive.label "Exporter toutes les collections enfants">
 <!ENTITY better-bibtex_preferences_auto-export_fields_error "Erreur">
 <!ENTITY better-bibtex_preferences_auto-export_fields_cached.label "En cache">
-<!ENTITY better-bibtex_preferences_auto-export.warn.long-running "M'avertir lorsque les exportations automatiques durent plus de (en secondes)">
+<!ENTITY better-bibtex_preferences_auto-export_warn_long-running "M'avertir lorsque les exportations automatiques durent plus de (en secondes)">
 
 <!ENTITY better-bibtex_preferences_bulk-warning "M'avertir si un changement par lot touche plus de X éléments (où X = le nb. à rentrer ci-dessous) :">
 <!ENTITY better-bibtex_preferences_tab_citekey.label "Clés de citation">
-<!ENTITY better-bibtex.Preferences.citekey.citekeys "Clés de citation">
+<!ENTITY better-bibtex_preferences_citekey_citekeys "Clés de citation">
 <!ENTITY better-bibtex_preferences_citekey_fold.label "Forcer le formatage des clés de citation en texte brut">
 <!ENTITY better-bibtex_preferences_citekey_search.label "Activer la recherche par clé de citation">
 <!ENTITY better-bibtex_preferences_citekey_format "Formule de clé de citation">
@@ -117,13 +117,13 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex_preferences_citekey_uniqueness_scope_library "chaque collection">
 <!ENTITY better-bibtex_preferences_citekey_uniqueness_scope_global "toutes les collections">
 
-<!ENTITY better-bibtex.Preferences.citekey.AUXScanner "Scanner BibTeX AUX/Markdown">
+<!ENTITY better-bibtex_preferences_citekey_aux-scanner "Scanner BibTeX AUX/Markdown">
 <!ENTITY better-bibtex_preferences_citekey_auxscanner_import.label "Lors de l'analyse d'un fichier `.aux`, tenter d'importer les références depuis le fichier `.bib` joint lorsque leurs clés de citation ne sont pas dans Zotero">
 <!ENTITY better-bibtex_preferences_import-prefs.label "Importer les préférences de BetterBibTeX...">
 <!ENTITY better-bibtex_preferences_export-prefs.label "Export des préférences de BetterBibTeX...">
 
-<!ENTITY better-bibtex.Preferences.advanced "Avancé">
-<!ENTITY better-bibtex.Preferences.advanced.warning "Les paramètres ci-dessous ont un impact sur les performances et peuvent faire échouer les exportations. Procéder avec attention.">
+<!ENTITY better-bibtex_preferences_advanced "Avancé">
+<!ENTITY better-bibtex_preferences_advanced_warning "Les paramètres ci-dessous ont un impact sur les performances et peuvent faire échouer les exportations. Procéder avec attention.">
 <!ENTITY better-bibtex_preferences_advanced_tab_import.label "Importation">
 <!ENTITY better-bibtex_preferences_advanced_import_sentence-case "Titres avec casse de phrase lors de l'importation :">
 <!ENTITY better-bibtex_preferences_advanced_import_sentence-case_off.label "non (importer les titres tels quels)">
@@ -146,10 +146,10 @@ Beaucoup de fichiers bib(la)tex le font de façon un peu trop zélée et vous n'
 
 Si vous désactivez cette option, le balisage est omis lors de l'importation. Lorsque vous sélectionnez « oui », toutes les accolades que bib(la)tex interpréterait comme une protection de casse (ce qui n'est pas le cas de toutes) sont converties en éléments `span`.
 En mode « minimal », le nombre d'éléments `span` est minimisé.">
-<!ENTITY better-bibtex.Preferences.advanced.import.unabbreviate "Développer les titres abrégés de journaux à importer à l'aide de la liste :">
-<!ENTITY better-bibtex.Preferences.advanced.import.unabbreviate.off "Aucun">
+<!ENTITY better-bibtex_preferences_advanced_import_unabbreviate "Développer les titres abrégés de journaux à importer à l'aide de la liste :">
+<!ENTITY better-bibtex_preferences_advanced_import_unabbreviate_off "Aucun">
 
-<!ENTITY better-bibtex.Preferences.advanced.tab.export "Exportation">
+<!ENTITY better-bibtex_preferences_advanced_tab_export "Exportation">
 <!ENTITY better-bibtex_preferences_advanced_export_title-case.label "Appliquer la capitalisation aux titres">
 <!ENTITY better-bibtex_preferences_advanced_export_title-case_warning "Si vous n'êtes pas prêt à ignorer à la fois les meilleures pratiques BibTeX/BibLaTeX (voir la FAQ BBT) et les recommandations de Zotero sur la casse des titres/phrases, vous pouvez désactiver cette option pour supprimer la casse de titre pour les entrées en anglais">
 <!ENTITY better-bibtex_preferences_advanced_export_brace-protection.label "Appliquer la protection de la casse aux mots en capitales en les insérant entre paires d'accolades">
@@ -159,10 +159,10 @@ En mode « minimal », le nombre d'éléments `span` est minimisé.">
 <!ENTITY better-bibtex_preferences_advanced_export_retain-cache_warning "Par défaut, BBT efface tous les caches chaque fois que lui ou Zotero est mis à jour. Je ne peux pas prédire de manière certaine si un changement dans Zotero ou BBT va affecter la sortie générée pour un élément donné donc, pour être sûr(e) que vous avez toujours les dernières corrections affectant les exportations, les caches sont supprimés lorsqu'une nouvelle version de l'un ou l'autre est détectée. Cependant, si vous avez une très grande bibliothèque dont vous exportez régulièrement des portions significatives, vous pourriez vouloir conserver les éléments mis en cache même si cela comporte le risque que vous obteniez une sortie incorrecte sur l'exportation qui a été corrigée dans l'intervalle.
 
 Si cette option est activée et que vous rencontrez un problème autre que l'annulation du cache lors d'une mise à jour, vous *devez* vider le cache et reproduire le problème. Lorsque vous modifiez ce paramètre, le cache est supprimé (comme c'est le cas pour toute modification de paramètre).">
-<!ENTITY better-bibtex.Preferences.advanced.export.workers "Exportation parallèle en arrière-plan :">
+<!ENTITY better-bibtex_preferences_advanced_export_workers "Exportation parallèle en arrière-plan :">
 <!ENTITY better-bibtex_preferences_advanced_export_workers_cache.label "Activer la mise en cache pour les exportations en arrière-plan">
 
-<!ENTITY better-bibtex.Preferences.advanced.tab.citekeys "Clés de citation">
+<!ENTITY better-bibtex_preferences_advanced_tab_citekeys "Clés de citation">
 
 <!ENTITY better-bibtex_preferences_advanced_extra-merge.label "Lors de la fusion d'éléments, fusionner également :">
 <!ENTITY better-bibtex_preferences_advanced_extra-merge-citekeys.label "leurs clés de citation dans un champ bib(la)tex `ids`">
@@ -232,8 +232,8 @@ Si cette option est activée et que vous rencontrez un problème autre que l'ann
 <!ENTITY better-bibtex_preferences_reset-cache.label "Réinitialiser le cache">
 <!ENTITY better-bibtex_zotero-pane_report-errors "Envoyer le journal de débogage Better BibTeX...">
 <!ENTITY better-bibtex_zotero-pane_aux-scanner "Scanner le fichier BibTeX AUX/Markdown pour les références...">
-<!ENTITY better-bibtex.bulk-keys-confirm.message "Vous allez modifier plus de {treshold} éléments en une seule fois. Êtes-vous certain de vouloir poursuivre ?">
-<!ENTITY better-bibtex.bulk-keys-confirm.whatever "Oui, ne plus me le demander">
+<!ENTITY better-bibtex_bulk-keys_confirm_message.value "Vous allez modifier plus de {treshold} éléments en une seule fois. Êtes-vous certain de vouloir poursuivre ?">
+<!ENTITY better-bibtex_bulk-keys_confirm.buttonlabelextra1 "Oui, ne plus me le demander">
 <!ENTITY better-bibtex_zotero-pane_citekey_set "Changer la clé BibTeX...">
 <!ENTITY better-bibtex_zotero-pane_citekey_pin "Verrouiller la clé de citation">
 <!ENTITY better-bibtex_zotero-pane_citekey_pin-inspire-hep "Verrouiller les clés BibTeX de InspireHEP">
@@ -244,7 +244,7 @@ Si cette option est activée et que vous rencontrez un problème autre que l'ann
 <!ENTITY better-bibtex_zotero-pane_patch-dates "Copier date-added/date-modified à partir du champ extra">
 <!ENTITY better-bibtex_zotero-pane_tag_duplicates "Tagguer les clés de citation doublons">
 <!ENTITY better-bibtex_zotero-pane_tex-studio "Envoyer les citations vers TeXstudio">
-<!ENTITY zotero.better-bibtex.csquotes "Remplacer les guillemets par la commande '\\enquote{...}' (nécessite le package « csquotes »)">
+<!ENTITY better-bibtex_preferences_export_csquotes "Remplacer les guillemets par la commande '\\enquote{...}' (nécessite le package « csquotes »)">
 <!ENTITY better-bibtex_zotero-pane_server_disabled "Exportation par HTTP désactivée">
 <!ENTITY better-bibtex_zotero-pane_show-collection-key "Télécharger l'export de Better BibTeX...">
 

@@ -11,7 +11,18 @@ start = strings:string* {
 string
   = _ { return null }
   / '<!--' comment* '-->' { return null }
-  / '<!' _? 'entity'i _ key:key _ value:value _? '>' { return { key, value } }
+  / '<!' _? 'entity'i _ key:key _ value:value _? '>' {
+      value = value.replace(/&([^;]+);/g, (m, name) => {
+        switch (name) {
+          case 'amp': return '&'
+          case 'quot': return '"'
+          case 'lt': return '<'
+          case 'gt': return '>'
+          default: throw new Error(`Unhandled entity ${m}`)
+        }
+      })
+      return { key, value }
+    }
 
 comment
   = !'-->' '-'

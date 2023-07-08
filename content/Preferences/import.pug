@@ -1,20 +1,20 @@
 hbox(flex=0)
   groupbox
-    caption(bbt:preference="extensions.zotero.translators.better-bibtex.importSentenceCase") &better-bibtex_preferences_advanced_import_sentence-case;
-      image(tooltip="tooltip-importSentenceCase" src="chrome://zotero-better-bibtex/content/skin/attention.svg" width="16" height="16")
+    caption(bbt:preference="extensions.zotero.translators.better-bibtex.importSentenceCase") &better-bibtex.Preferences.advanced.import.sentenceCase;
+      image(tooltip="tooltip-importSentenceCase" src="chrome://zotero-better-bibtex/skin/attention.svg" width="16" height="16")
     radiogroup(preference="extensions.zotero.translators.better-bibtex.importSentenceCase")
-      radio(label="&better-bibtex_preferences_advanced_import_sentence-case_on_guess.label;" value="on+guess")
-      radio(label="&better-bibtex_preferences_advanced_import_sentence-case_on.label;" value="on")
-      radio(label="&better-bibtex_preferences_advanced_import_sentence-case_off.label;" value="off")
+      radio(label="&better-bibtex.Preferences.advanced.import.sentenceCase.on_guess;" value="on+guess")
+      radio(label="&better-bibtex.Preferences.advanced.import.sentenceCase.on;" value="on")
+      radio(label="&better-bibtex.Preferences.advanced.import.sentenceCase.off;" value="off")
 hbox(flex=0)
-  label(bbt:preference="extensions.zotero.translators.better-bibtex.importCaseProtection") &better-bibtex_preferences_advanced_import_case-protection;
+  label(bbt:preference="extensions.zotero.translators.better-bibtex.importCaseProtection") &better-bibtex.Preferences.advanced.import.caseProtection;
   html:select(preference="extensions.zotero.translators.better-bibtex.importCaseProtection")
-    html:option(value='as-needed') &better-bibtex_preferences_advanced_import_case-protection_as_needed;
-    html:option(value='on') &better-bibtex_preferences_advanced_import_case-protection_on;
-    html:option(value='off') &better-bibtex_preferences_advanced_import_case-protection_off;
-  image(tooltip="tooltip-importCaseProtection" src="chrome://zotero-better-bibtex/content/skin/attention.svg" width="16" height="16")
+    html:option(value='as-needed') &better-bibtex.Preferences.advanced.import.caseProtection.as_needed;
+    html:option(value='on') &better-bibtex.Preferences.advanced.import.caseProtection.on;
+    html:option(value='off') &better-bibtex.Preferences.advanced.import.caseProtection.off;
+  image(tooltip="tooltip-importCaseProtection" src="chrome://zotero-better-bibtex/skin/attention.svg" width="16" height="16")
 
-checkbox(preference="extensions.zotero.translators.better-bibtex.auxImport" label="&better-bibtex_preferences_citekey_auxscanner_import.label;")
+checkbox(preference="extensions.zotero.translators.better-bibtex.auxImport" label="&better-bibtex.Preferences.citekey.AUXScanner.import;")
 hbox(flex=0)
-  button(label="&better-bibtex_preferences_export-prefs.label;" oncommand="Zotero.BetterBibTeX.PrefPane.exportPrefs()")
-  button(label="&better-bibtex_preferences_import-prefs.label;" oncommand="Zotero.BetterBibTeX.PrefPane.importPrefs()")
+  button(label="&better-bibtex.Preferences.exportPrefs;" oncommand="Zotero.BetterBibTeX.PrefPane.exportPrefs()")
+  button(label="&better-bibtex.Preferences.importPrefs;" oncommand="Zotero.BetterBibTeX.PrefPane.importPrefs()")

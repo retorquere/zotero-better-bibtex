@@ -39,3 +39,6 @@ ruamel.yaml
 selenium
 snakemake>=7.16
 toml
+fluent
+fluent.runtime
+babel

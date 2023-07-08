@@ -13,6 +13,8 @@ const pugs = [
   'content/FirstRun.pug',
   'content/ServerURL.pug',
   'content/ZoteroPane.pug',
+  'content/bulk-keys-confirm.pug',
+  'content/regenerate-keys.pug',
 ]
 
 const attributes: Set<string> = new Set
