@@ -174,10 +174,10 @@ Wenn Sie dies eingeschaltet haben und Sie Probleme haben außer der Löschung de
 <!ENTITY better-bibtex.Preferences.export.automaticTags "Inkludiere automatische Tags in den Export">
 <!ENTITY better-bibtex.Preferences.export.jabrefFormat "Füge JabRef-spezifische Meta-Informationen hinzu:">
 <!ENTITY better-bibtex.Preferences.export.jabrefFormat.0 "Keine">
-<!ENTITY better-bibtex.Preferences.export.jabrefFormat.3 "für JabRef 3">
-<!ENTITY better-bibtex.Preferences.export.jabrefFormat.4 "für JabRef 4">
-<!ENTITY better-bibtex.Preferences.export.jabrefFormat.5 "für JabRef 5">
-<!ENTITY better-bibtex.Preferences.export.jabrefFormat.warn "JabRef-spezifische Felder exportieren: Zeitstempel, Titel für Anhänge und Gruppen für jede Sammlung, zu der ein Artikel gehört. Beachten Sie, dass das Einschalten das Caching in Exporten deaktiviert, was speziell für Auto-Exporte nicht wünschenswert ist.">
+<!ENTITY better-bibtex_preferences_export_jabref-format_3 "für JabRef 3">
+<!ENTITY better-bibtex_preferences_export_jabref-format_4 "für JabRef 4">
+<!ENTITY better-bibtex_preferences_export_jabref-format_5 "für JabRef 5">
+<!ENTITY better-bibtex_preferences_export_jabref-format_warn "JabRef-spezifische Felder exportieren: Zeitstempel, Titel für Anhänge und Gruppen für jede Sammlung, zu der ein Artikel gehört. Beachten Sie, dass das Einschalten das Caching in Exporten deaktiviert, was speziell für Auto-Exporte nicht wünschenswert ist.">
 <!ENTITY better-bibtex.Preferences.export.biblatex.ascii "Exportiere Latex-Befehle im Unicode-Format als Plaintext">
 <!ENTITY better-bibtex.Preferences.export.biblatex "BibLaTeX">
 <!ENTITY better-bibtex.Preferences.export.biblatex.extendedNameFormat "Verwende das erweiterte Namensformat von BibLaTeX (benötigt biblatex 3.5)">
@@ -214,10 +214,10 @@ Wenn Sie dies eingeschaltet haben und Sie Probleme haben außer der Löschung de
 
 <!ENTITY better-bibtex.Preferences.export.fields.skip "Felder, die nicht exportiert werden sollen (mit Komma trennen)">
 <!ENTITY better-bibtex_preferences_export_misc.label "Verschiedenes">
-<!ENTITY better-bibtex.Preferences.export.map-unicode "Beim Konvertieren von LaTeX-Befehlen im Plaintext:">
+<!ENTITY better-bibtex_preferences_export_map-unicode "Beim Konvertieren von LaTeX-Befehlen im Plaintext:">
 <!ENTITY better-bibtex_preferences_export_map-unicode_minimal-packages "Zusätzlich benötigte Latex-Pakete minimieren">
-<!ENTITY better-bibtex.Preferences.export.map-unicode.conservative "Minimiere die Anzahl der Wechsel zwischen dem Mathematik- und Textmodus">
-<!ENTITY better-bibtex.Preferences.export.map-unicode.creator "Add braces to accented characters to assist simplistic latex parsers">
+<!ENTITY better-bibtex_preferences_export_map-unicode_conservative "Minimiere die Anzahl der Wechsel zwischen dem Mathematik- und Textmodus">
+<!ENTITY better-bibtex_preferences_export_map-unicode_creator "Add braces to accented characters to assist simplistic latex parsers">
 <!ENTITY better-bibtex_preferences_export_map-unicode_text "Textmodus-Ersetzungen bevorzugen">
 <!ENTITY better-bibtex_preferences_export_map-unicode_math "Mathematikmodus-Ersetzungen bevorzugen">
 

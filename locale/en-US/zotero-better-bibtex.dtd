@@ -174,10 +174,10 @@ If you have this on, and you experience any problem that is not the cache gettin
 <!ENTITY better-bibtex.Preferences.export.automaticTags "Include automatic tags in export">
 <!ENTITY better-bibtex.Preferences.export.jabrefFormat "Include JabRef-specific metadata:">
 <!ENTITY better-bibtex.Preferences.export.jabrefFormat.0 "no">
-<!ENTITY better-bibtex.Preferences.export.jabrefFormat.3 "for JabRef 3">
-<!ENTITY better-bibtex.Preferences.export.jabrefFormat.4 "for JabRef 4">
-<!ENTITY better-bibtex.Preferences.export.jabrefFormat.5 "for JabRef 5">
-<!ENTITY better-bibtex.Preferences.export.jabrefFormat.warn "Export JabRef-specific fields: timestamps, titles for attachments, and groups for each collection an item is part of. Note that having this on will disable caching in exports, which is really undesirable specifically for auto-exports.">
+<!ENTITY better-bibtex_preferences_export_jabref-format_3 "for JabRef 3">
+<!ENTITY better-bibtex_preferences_export_jabref-format_4 "for JabRef 4">
+<!ENTITY better-bibtex_preferences_export_jabref-format_5 "for JabRef 5">
+<!ENTITY better-bibtex_preferences_export_jabref-format_warn "Export JabRef-specific fields: timestamps, titles for attachments, and groups for each collection an item is part of. Note that having this on will disable caching in exports, which is really undesirable specifically for auto-exports.">
 <!ENTITY better-bibtex.Preferences.export.biblatex.ascii "Export unicode as plain-text latex commands">
 <!ENTITY better-bibtex.Preferences.export.biblatex "BibLaTeX">
 <!ENTITY better-bibtex.Preferences.export.biblatex.extendedNameFormat "Use BibLaTeX extended name format (requires biblatex 3.5)">
@@ -214,10 +214,10 @@ If you have this on, and you experience any problem that is not the cache gettin
 
 <!ENTITY better-bibtex.Preferences.export.fields.skip "Fields to omit from export (comma-separated)">
 <!ENTITY better-bibtex_preferences_export_misc.label "Miscellaneous">
-<!ENTITY better-bibtex.Preferences.export.map-unicode "When converting to plain-text latex commands:">
+<!ENTITY better-bibtex_preferences_export_map-unicode "When converting to plain-text latex commands:">
 <!ENTITY better-bibtex_preferences_export_map-unicode_minimal-packages "Minimize additional latex packages required">
-<!ENTITY better-bibtex.Preferences.export.map-unicode.conservative "Minimize the number of switches between math-mode and text-mode">
-<!ENTITY better-bibtex.Preferences.export.map-unicode.creator "Add braces to accented characters to assist simplistic latex parsers">
+<!ENTITY better-bibtex_preferences_export_map-unicode_conservative "Minimize the number of switches between math-mode and text-mode">
+<!ENTITY better-bibtex_preferences_export_map-unicode_creator "Add braces to accented characters to assist simplistic latex parsers">
 <!ENTITY better-bibtex_preferences_export_map-unicode_text "Prefer text-mode replacements">
 <!ENTITY better-bibtex_preferences_export_map-unicode_math "Prefer math-mode replacements">
 
