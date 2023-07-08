@@ -57,11 +57,11 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 
 <!ENTITY better-bibtex_preferences_tab_auto-export.label "Exportação automática">
 <!ENTITY better-bibtex.Preferences.auto-export "Exportação automática">
-<!ENTITY better-bibtex.Preferences.auto-export.explanation "Aqui só é possível ver e remover exportações. Para adicionar uma exportação automática, faça uma exportação normal e ative a opção 'Manter atualizado' na lista de opções.">
+<!ENTITY better-bibtex_preferences_auto-export_explanation "Aqui só é possível ver e remover exportações. Para adicionar uma exportação automática, faça uma exportação normal e ative a opção 'Manter atualizado' na lista de opções.">
 <!ENTITY better-bibtex_preferences_auto-export_idle "Quando ocioso">
 <!ENTITY better-bibtex_preferences_auto-export_immediate "Imediatamente">
 <!ENTITY better-bibtex_preferences_auto-export_off "Paused">
-<!ENTITY better-bibtex.Preferences.auto-export.delay "Delay auto-export for">
+<!ENTITY better-bibtex_preferences_auto-export_delay "Delay auto-export for">
 <!ENTITY better-bibtex_preferences_auto-export_run.label "Exportar agora">
 <!ENTITY better-bibtex_preferences_auto-export_remove.label "Remover">
 <!ENTITY better-bibtex.Preferences.auto-export.collection "Coleção">
@@ -70,11 +70,11 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex_preferences_auto-export_status "Status">
 <!ENTITY better-bibtex_preferences_auto-export_updated "Atualizado">
 <!ENTITY better-bibtex_preferences_auto-export_translator "Formato">
-<!ENTITY better-bibtex.Preferences.auto-export.fields.notes "Exportar notas">
-<!ENTITY better-bibtex.Preferences.auto-export.fields.journalAbbrev "Usar abreviações de periódicos">
+<!ENTITY better-bibtex_preferences_auto-export_fields_notes.label "Exportar notas">
+<!ENTITY better-bibtex_preferences_auto-export_fields_journal-abbrev.label "Usar abreviações de periódicos">
 <!ENTITY better-bibtex_preferences_auto-export_fields_recursive.label "Export all child collections">
-<!ENTITY better-bibtex.Preferences.auto-export.fields.error "Erro">
-<!ENTITY better-bibtex.Preferences.auto-export.fields.cached "Cached">
+<!ENTITY better-bibtex_preferences_auto-export_fields_error "Erro">
+<!ENTITY better-bibtex_preferences_auto-export_fields_cached.label "Cached">
 <!ENTITY better-bibtex.Preferences.auto-export.warn.long-running "Avisar quando exportações automáticas demorarem mais que (seconds)">
 
 <!ENTITY better-bibtex_preferences_bulk-warning "Avisar ao modificar chaves de citação em massa">

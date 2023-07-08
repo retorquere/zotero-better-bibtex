@@ -57,11 +57,11 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 
 <!ENTITY better-bibtex_preferences_tab_auto-export.label "Automatischer Export">
 <!ENTITY better-bibtex.Preferences.auto-export "Automatischer Export">
-<!ENTITY better-bibtex.Preferences.auto-export.explanation "Sie können hier Exporte nur einsehen oder löschen. Um einen automatischen Export hinzuzufügen, führen Sie einen gewöhnlichen Export durch und wählen sie dabei die Option 'Halte aktuell'.">
+<!ENTITY better-bibtex_preferences_auto-export_explanation "Sie können hier Exporte nur einsehen oder löschen. Um einen automatischen Export hinzuzufügen, führen Sie einen gewöhnlichen Export durch und wählen sie dabei die Option 'Halte aktuell'.">
 <!ENTITY better-bibtex_preferences_auto-export_idle "Wenn unbeschäftigt">
 <!ENTITY better-bibtex_preferences_auto-export_immediate "Bei Veränderung">
 <!ENTITY better-bibtex_preferences_auto-export_off "Pausiert">
-<!ENTITY better-bibtex.Preferences.auto-export.delay "Auto-Export verzögern für">
+<!ENTITY better-bibtex_preferences_auto-export_delay "Auto-Export verzögern für">
 <!ENTITY better-bibtex_preferences_auto-export_run.label "Jetzt Exportieren">
 <!ENTITY better-bibtex_preferences_auto-export_remove.label "Löschen">
 <!ENTITY better-bibtex.Preferences.auto-export.collection "Sammlung">
@@ -70,11 +70,11 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex_preferences_auto-export_status "Status">
 <!ENTITY better-bibtex_preferences_auto-export_updated "Aktualisiert">
 <!ENTITY better-bibtex_preferences_auto-export_translator "Format">
-<!ENTITY better-bibtex.Preferences.auto-export.fields.notes "Exportiere Notizen">
-<!ENTITY better-bibtex.Preferences.auto-export.fields.journalAbbrev "Zeitschriften-Abkürzungen verwenden">
+<!ENTITY better-bibtex_preferences_auto-export_fields_notes.label "Exportiere Notizen">
+<!ENTITY better-bibtex_preferences_auto-export_fields_journal-abbrev.label "Zeitschriften-Abkürzungen verwenden">
 <!ENTITY better-bibtex_preferences_auto-export_fields_recursive.label "Exportiere alle Untersammlungen">
-<!ENTITY better-bibtex.Preferences.auto-export.fields.error "Fehler">
-<!ENTITY better-bibtex.Preferences.auto-export.fields.cached "Zwischengespeichert">
+<!ENTITY better-bibtex_preferences_auto-export_fields_error "Fehler">
+<!ENTITY better-bibtex_preferences_auto-export_fields_cached.label "Zwischengespeichert">
 <!ENTITY better-bibtex.Preferences.auto-export.warn.long-running "Warne mich, wenn Auto-Exporte länger dauern als (seconds)">
 
 <!ENTITY better-bibtex_preferences_bulk-warning "Warne mich, wenn mehrere Schlüssel auf einmal geändert werden">
