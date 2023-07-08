@@ -68,8 +68,8 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.auto-export.library "Bibliothèque">
 <!ENTITY better-bibtex.Preferences.auto-export.target "Fichier de sortie">
 <!ENTITY better-bibtex.Preferences.auto-export.status "Statut">
-<!ENTITY better-bibtex.Preferences.auto-export.updated "Mis à jour">
-<!ENTITY better-bibtex.Preferences.auto-export.translator "Format">
+<!ENTITY better-bibtex_preferences_auto-export_updated "Mis à jour">
+<!ENTITY better-bibtex_preferences_auto-export_translator "Format">
 <!ENTITY better-bibtex.Preferences.auto-export.fields.notes "Export des notes">
 <!ENTITY better-bibtex.Preferences.auto-export.fields.journalAbbrev "Abréviations de journaux">
 <!ENTITY better-bibtex.Preferences.auto-export.fields.recursive "Exporter toutes les collections enfants">
@@ -77,14 +77,14 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.auto-export.fields.cached "En cache">
 <!ENTITY better-bibtex.Preferences.auto-export.warn.long-running "M'avertir lorsque les exportations automatiques durent plus de (en secondes)">
 
-<!ENTITY better-bibtex.Preferences.bulkWarning "M'avertir si un changement par lot touche plus de X éléments (où X = le nb. à rentrer ci-dessous) :">
+<!ENTITY better-bibtex_preferences_bulk-warning "M'avertir si un changement par lot touche plus de X éléments (où X = le nb. à rentrer ci-dessous) :">
 <!ENTITY better-bibtex_preferences_tab_citekey.label "Clés de citation">
 <!ENTITY better-bibtex.Preferences.citekey.citekeys "Clés de citation">
-<!ENTITY better-bibtex.Preferences.citekey.fold "Forcer le formatage des clés de citation en texte brut">
+<!ENTITY better-bibtex_preferences_citekey_fold.label "Forcer le formatage des clés de citation en texte brut">
 <!ENTITY better-bibtex_preferences_citekey_search.label "Activer la recherche par clé de citation">
-<!ENTITY better-bibtex.Preferences.citekey.format "Formule de clé de citation">
-<!ENTITY better-bibtex.Preferences.citekey.format.installed "Formule de clé de citation active">
-<!ENTITY better-bibtex.Preferences.citekey.autoPinDelay "Épingler automatiquement la clé de citation après coup">
+<!ENTITY better-bibtex_preferences_citekey_format "Formule de clé de citation">
+<!ENTITY better-bibtex_preferences_citekey_format_installed "Formule de clé de citation active">
+<!ENTITY better-bibtex_preferences_citekey_auto-pin-delay "Épingler automatiquement la clé de citation après coup">
 
 <!ENTITY better-bibtex_preferences_export_quick-copy.label "Copie rapide">
 <!ENTITY better-bibtex_preferences_export_quick-copy_explanation "Copie rapide/glissé-déposé des citations">
@@ -116,7 +116,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex_preferences_citekey_uniqueness_scope_global "toutes les collections">
 
 <!ENTITY better-bibtex.Preferences.citekey.AUXScanner "Scanner BibTeX AUX/Markdown">
-<!ENTITY better-bibtex.Preferences.citekey.AUXScanner.import "Lors de l'analyse d'un fichier `.aux`, tenter d'importer les références depuis le fichier `.bib` joint lorsque leurs clés de citation ne sont pas dans Zotero">
+<!ENTITY better-bibtex_preferences_citekey_aux-scanner_import.label "Lors de l'analyse d'un fichier `.aux`, tenter d'importer les références depuis le fichier `.bib` joint lorsque leurs clés de citation ne sont pas dans Zotero">
 <!ENTITY better-bibtex_preferences_import-prefs.label "Importer les préférences de BetterBibTeX...">
 <!ENTITY better-bibtex_preferences_export-prefs.label "Export des préférences de BetterBibTeX...">
 

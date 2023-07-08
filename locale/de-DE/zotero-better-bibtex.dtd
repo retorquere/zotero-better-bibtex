@@ -68,8 +68,8 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.auto-export.library "Bibliothek">
 <!ENTITY better-bibtex.Preferences.auto-export.target "Zieldatei">
 <!ENTITY better-bibtex.Preferences.auto-export.status "Status">
-<!ENTITY better-bibtex.Preferences.auto-export.updated "Aktualisiert">
-<!ENTITY better-bibtex.Preferences.auto-export.translator "Format">
+<!ENTITY better-bibtex_preferences_auto-export_updated "Aktualisiert">
+<!ENTITY better-bibtex_preferences_auto-export_translator "Format">
 <!ENTITY better-bibtex.Preferences.auto-export.fields.notes "Exportiere Notizen">
 <!ENTITY better-bibtex.Preferences.auto-export.fields.journalAbbrev "Zeitschriften-Abkürzungen verwenden">
 <!ENTITY better-bibtex.Preferences.auto-export.fields.recursive "Exportiere alle Untersammlungen">
@@ -77,14 +77,14 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.auto-export.fields.cached "Zwischengespeichert">
 <!ENTITY better-bibtex.Preferences.auto-export.warn.long-running "Warne mich, wenn Auto-Exporte länger dauern als (seconds)">
 
-<!ENTITY better-bibtex.Preferences.bulkWarning "Warne mich, wenn mehrere Schlüssel auf einmal geändert werden">
+<!ENTITY better-bibtex_preferences_bulk-warning "Warne mich, wenn mehrere Schlüssel auf einmal geändert werden">
 <!ENTITY better-bibtex_preferences_tab_citekey.label "Zitierschlüssel">
 <!ENTITY better-bibtex.Preferences.citekey.citekeys "Zitierschlüssel">
-<!ENTITY better-bibtex.Preferences.citekey.fold "Erzwinge Plaintext-Format bei Zitierschlüsseln">
+<!ENTITY better-bibtex_preferences_citekey_fold.label "Erzwinge Plaintext-Format bei Zitierschlüsseln">
 <!ENTITY better-bibtex_preferences_citekey_search.label "Zitierschlüsselsuche aktivieren">
-<!ENTITY better-bibtex.Preferences.citekey.format "Zitierschlüssel-Formel">
-<!ENTITY better-bibtex.Preferences.citekey.format.installed "Aktiviere Zitierschlüssel-Formel">
-<!ENTITY better-bibtex.Preferences.citekey.autoPinDelay "Zitierschlüssel automatisch anpinnen nach">
+<!ENTITY better-bibtex_preferences_citekey_format "Zitierschlüssel-Formel">
+<!ENTITY better-bibtex_preferences_citekey_format_installed "Aktiviere Zitierschlüssel-Formel">
+<!ENTITY better-bibtex_preferences_citekey_auto-pin-delay "Zitierschlüssel automatisch anpinnen nach">
 
 <!ENTITY better-bibtex_preferences_export_quick-copy.label "Schnellkopie">
 <!ENTITY better-bibtex_preferences_export_quick-copy_explanation "Schnellkopie/Drag-and-Drop-Zitat">
@@ -116,7 +116,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex_preferences_citekey_uniqueness_scope_global "über alle Bibliotheken hinweg">
 
 <!ENTITY better-bibtex.Preferences.citekey.AUXScanner "BibTeX AUX-/Markdown-Scanner">
-<!ENTITY better-bibtex.Preferences.citekey.AUXScanner.import "Versuche beim Scannen einer AUX-Datei, Einträge aus der angehängten Bib-Datei zu importieren, wenn sich deren Zitierschlüssel nicht in Zotero befinden">
+<!ENTITY better-bibtex_preferences_citekey_aux-scanner_import.label "Versuche beim Scannen einer AUX-Datei, Einträge aus der angehängten Bib-Datei zu importieren, wenn sich deren Zitierschlüssel nicht in Zotero befinden">
 <!ENTITY better-bibtex_preferences_import-prefs.label "BetterBibTeX-Einstellungen importieren...">
 <!ENTITY better-bibtex_preferences_export-prefs.label "BetterBibTeX-Einstellungen exportieren...">
 

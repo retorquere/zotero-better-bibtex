@@ -1,5 +1,5 @@
 vbox(flex=1)
-  label(bbt:preference='extensions.zotero.translators.better-bibtex.citekeyFormatEditing') &better-bibtex.Preferences.citekey.format;
+  label(bbt:preference='extensions.zotero.translators.better-bibtex.citekeyFormatEditing') &better-bibtex_preferences_citekey_format;
   textbox#id-better-bibtex-preferences-citekeyFormatEditing(
     preference='extensions.zotero.translators.better-bibtex.citekeyFormatEditing'
     flex=1
@@ -15,7 +15,7 @@ vbox(flex=1)
     style='-moz-appearance: none !important; background-color: DarkOrange'
   )
 
-  label#id-better-bibtex-label-citekeyFormat(bbt:preference="extensions.zotero.translators.better-bibtex.citekeyFormat") &better-bibtex.Preferences.citekey.format.installed;
+  label#id-better-bibtex-label-citekeyFormat(bbt:preference="extensions.zotero.translators.better-bibtex.citekeyFormat") &better-bibtex_preferences_citekey_format_installed;
   textbox#id-better-bibtex-preferences-citekeyFormat(
     preference='extensions.zotero.translators.better-bibtex.citekeyFormat'
     flex=1
@@ -24,10 +24,10 @@ vbox(flex=1)
     multiline='true'
     style='-moz-appearance: none !important; background-color: LightGrey'
   )
-checkbox(preference="extensions.zotero.translators.better-bibtex.citekeyFold" label="&better-bibtex.Preferences.citekey.fold;")
+checkbox(preference="extensions.zotero.translators.better-bibtex.citekeyFold" label="&better-bibtex_preferences_citekey_fold.label;")
 checkbox(preference="extensions.zotero.translators.better-bibtex.citekeySearch" label="&better-bibtex_preferences_citekey_search.label;")
 hbox(flex=0)
-  label(bbt:preference="extensions.zotero.translators.better-bibtex.autoPinDelay") &better-bibtex.Preferences.citekey.autoPinDelay;
+  label(bbt:preference="extensions.zotero.translators.better-bibtex.autoPinDelay") &better-bibtex_preferences_citekey_auto-pin-delay;
   html:input(type='range' min=0 max=30 preference="extensions.zotero.translators.better-bibtex.autoPinDelay")
   textbox(preference='extensions.zotero.translators.better-bibtex.autoPinDelay' size=2 rows=1 readonly='true')
   label &better-bibtex_units_seconds;
@@ -52,7 +52,7 @@ groupbox
   checkbox(preference="extensions.zotero.translators.better-bibtex.kuroshiro" label="&better-bibtex.Preferences.advanced.ideographs.kuroshiro;")
   checkbox(preference="extensions.zotero.translators.better-bibtex.jieba" label="&better-bibtex.Preferences.advanced.ideographs.jieba;")
 hbox(flex=0)
-  label(bbt:preference="extensions.zotero.translators.better-bibtex.warnBulkModify") &better-bibtex.Preferences.bulkWarning;
+  label(bbt:preference="extensions.zotero.translators.better-bibtex.warnBulkModify") &better-bibtex_preferences_bulk-warning;
   textbox(size="5" preference="extensions.zotero.translators.better-bibtex.warnBulkModify")
 hbox
   button#rescan-citekeys.hidden(label="&better-bibtex_preferences_rescan-citekeys.label;" oncommand="Zotero.BetterBibTeX.PrefPane.rescanCitekeys()")

@@ -68,8 +68,8 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.auto-export.library "Library">
 <!ENTITY better-bibtex.Preferences.auto-export.target "Output file">
 <!ENTITY better-bibtex.Preferences.auto-export.status "Status">
-<!ENTITY better-bibtex.Preferences.auto-export.updated "Updated">
-<!ENTITY better-bibtex.Preferences.auto-export.translator "Format">
+<!ENTITY better-bibtex_preferences_auto-export_updated "Updated">
+<!ENTITY better-bibtex_preferences_auto-export_translator "Format">
 <!ENTITY better-bibtex.Preferences.auto-export.fields.notes "Export notes">
 <!ENTITY better-bibtex.Preferences.auto-export.fields.journalAbbrev "Use journal abbreviations">
 <!ENTITY better-bibtex.Preferences.auto-export.fields.recursive "Export all child collections">
@@ -77,14 +77,14 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.auto-export.fields.cached "Cached">
 <!ENTITY better-bibtex.Preferences.auto-export.warn.long-running "Warn me when auto-exports take longer than (seconds)">
 
-<!ENTITY better-bibtex.Preferences.bulkWarning "Warn me when changing citation keys in bulk">
+<!ENTITY better-bibtex_preferences_bulk-warning "Warn me when changing citation keys in bulk">
 <!ENTITY better-bibtex_preferences_tab_citekey.label "Citation keys">
 <!ENTITY better-bibtex.Preferences.citekey.citekeys "Citation keys">
-<!ENTITY better-bibtex.Preferences.citekey.fold "Force citation key to plain text">
+<!ENTITY better-bibtex_preferences_citekey_fold.label "Force citation key to plain text">
 <!ENTITY better-bibtex_preferences_citekey_search.label "Enable citation key search">
-<!ENTITY better-bibtex.Preferences.citekey.format "Citation key formula">
-<!ENTITY better-bibtex.Preferences.citekey.format.installed "Active citation key formula">
-<!ENTITY better-bibtex.Preferences.citekey.autoPinDelay "Automatically pin citation key after">
+<!ENTITY better-bibtex_preferences_citekey_format "Citation key formula">
+<!ENTITY better-bibtex_preferences_citekey_format_installed "Active citation key formula">
+<!ENTITY better-bibtex_preferences_citekey_auto-pin-delay "Automatically pin citation key after">
 
 <!ENTITY better-bibtex_preferences_export_quick-copy.label "Quick-Copy">
 <!ENTITY better-bibtex_preferences_export_quick-copy_explanation "Quick-Copy/drag-and-drop citations">
@@ -116,7 +116,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex_preferences_citekey_uniqueness_scope_global "across all libraries">
 
 <!ENTITY better-bibtex.Preferences.citekey.AUXScanner "BibTeX AUX/Markdown scanner">
-<!ENTITY better-bibtex.Preferences.citekey.AUXScanner.import "When scanning an AUX file, attempt to import entries from the attached bib file when their citation keys are not in Zotero">
+<!ENTITY better-bibtex_preferences_citekey_aux-scanner_import.label "When scanning an AUX file, attempt to import entries from the attached bib file when their citation keys are not in Zotero">
 <!ENTITY better-bibtex_preferences_import-prefs.label "Import BetterBibTeX preferences...">
 <!ENTITY better-bibtex_preferences_export-prefs.label "Export BetterBibTeX preferences...">
 
