@@ -28,7 +28,7 @@ function correction(ist, attr = '') {
   bulk_mod[ist] = soll + attr
 }
 
-const attributes: Set<string> = new Set
+// const attributes: Set<string> = new Set
 class WizardDetector extends ASTWalker {
   public foundWizard = false
 
@@ -45,7 +45,7 @@ class WizardDetector extends ASTWalker {
         if (!id.match(this.valid.attr) || !id.endsWith(`.${attr.name}`)) {
           correction(id, `.${attr.name}`)
         }
-        attributes.add(id)
+        // attributes.add(id)
       })
     }
 
@@ -124,5 +124,5 @@ for (const src of pugs) {
   }
 }
 
-fs.writeFileSync('attributes.json', JSON.stringify([...attributes], null, 2))
+// fs.writeFileSync('attributes.json', JSON.stringify([...attributes], null, 2))
 fs.writeFileSync('bulk-mod.json', fast_safe_stringify.stable(bulk_mod, null, 2))

@@ -251,7 +251,7 @@ Wenn Sie dies eingeschaltet haben und Sie Probleme haben außer der Löschung de
 <!ENTITY better-bibtex_server-url_description "Download-URL:">
 <!ENTITY better-bibtex_server-url_or "oder">
 <!ENTITY better-bibtex_server-url_format "Element herunterladen als">
-<!ENTITY better-bibtex.ServerURL.OK "OK">
+<!ENTITY better-bibtex_server-url.buttonlabelaccept "OK">
 
 <!-- remove after reactified zoteropane is in release -->
 <!ENTITY better-bibtex_zotero-pane_column_citekey "Zitierschlüssel">
