@@ -235,17 +235,17 @@ If you have this on, and you experience any problem that is not the cache gettin
 <!ENTITY better-bibtex_bulk-keys-confirm.buttonlabelextra1 "OK, and don't ask me again">
 <!ENTITY better-bibtex_citekey_set "Change BibTeX key...">
 <!ENTITY better-bibtex_citekey_pin "Pin BibTeX key">
-<!ENTITY better-bibtex.BetterBibTeX.citekey.pinInspireHEP "Pin BibTeX key from InspireHEP">
-<!ENTITY better-bibtex.BetterBibTeX.citekey.unpin "Unpin BibTeX key">
-<!ENTITY better-bibtex.BetterBibTeX.citekey.refresh "Refresh BibTeX key">
-<!ENTITY better-bibtex.BetterBibTeX.addCitationLinks "Citation Graph: add citation links...">
-<!ENTITY better-bibtex.BetterBibTeX.sentenceCase "BBT Sentence-case">
-<!ENTITY better-bibtex.BetterBibTeX.patchDates "Copy date-added/date-modified from extra field">
-<!ENTITY better-bibtex.ZoteroPane.tag-duplicates "Tag duplicate citation keys">
-<!ENTITY better-bibtex.BetterBibTeX.TeXstudio "Push entries to TeXstudio">
-<!ENTITY zotero.better-bibtex.csquotes "Replace left/right guillemets/double quotes with \\enquote{...} (requires csquotes)">
-<!ENTITY better-bibtex.BetterBibTeX.server.disabled "Export by HTTP disabled">
-<!ENTITY better-bibtex.BetterBibTeX.show-collection-key "Download Better BibTeX export...">
+<!ENTITY better-bibtex_zotero-pane_citekey_pin_inspire-hep "Pin BibTeX key from InspireHEP">
+<!ENTITY better-bibtex_zotero-pane_citekey_unpin "Unpin BibTeX key">
+<!ENTITY better-bibtex_zotero-pane_citekey_refresh "Refresh BibTeX key">
+<!ENTITY better-bibtex_zotero-pane_add-citation-links "Citation Graph: add citation links...">
+<!ENTITY better-bibtex_zotero-pane_sentence-case "BBT Sentence-case">
+<!ENTITY better-bibtex_zotero-pane_patch-dates "Copy date-added/date-modified from extra field">
+<!ENTITY unused_better-bibtex_zotero-pane-tag-duplicates "Tag duplicate citation keys">
+<!ENTITY better-bibtex_zotero-pane_tex-studio "Push entries to TeXstudio">
+<!ENTITY unused_zotero_better-bibtex_csquotes "Replace left/right guillemets/double quotes with \\enquote{...} (requires csquotes)">
+<!ENTITY unused_better-bibtex_zotero-pane_server_disabled "Export by HTTP disabled">
+<!ENTITY better-bibtex_zotero-pane_show_collection-key "Download Better BibTeX export...">
 
 <!ENTITY better-bibtex_server-url.title "Better BibTeX export via HTTP">
 <!ENTITY better-bibtex_server-url_description "Download URL:">
@@ -254,4 +254,4 @@ If you have this on, and you experience any problem that is not the cache gettin
 <!ENTITY better-bibtex_server-url.buttonlabelaccept "OK">
 
 <!-- remove after reactified zoteropane is in release -->
-<!ENTITY ZoteroPane.column.citekey "Citation Key">
+<!ENTITY unused_better-bibtex_zotero-pane_column_citekey "Citation Key">

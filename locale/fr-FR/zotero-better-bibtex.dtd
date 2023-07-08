@@ -236,17 +236,17 @@ Si cette option est activée et que vous rencontrez un problème autre que l'ann
 <!ENTITY better-bibtex_bulk-keys-confirm.buttonlabelextra1 "Oui, ne plus me le demander">
 <!ENTITY better-bibtex_citekey_set "Changer la clé BibTeX...">
 <!ENTITY better-bibtex_citekey_pin "Verrouiller la clé de citation">
-<!ENTITY better-bibtex.BetterBibTeX.citekey.pinInspireHEP "Verrouiller les clés BibTeX de InspireHEP">
-<!ENTITY better-bibtex.BetterBibTeX.citekey.unpin "Déverrouiller la clé de citation">
-<!ENTITY better-bibtex.BetterBibTeX.citekey.refresh "Rafraichir la clé de citation">
-<!ENTITY better-bibtex.BetterBibTeX.addCitationLinks "Graphique de citation : ajouter des liens de citation...">
-<!ENTITY better-bibtex.BetterBibTeX.sentenceCase "BBT Casse de la phrase">
-<!ENTITY better-bibtex.BetterBibTeX.patchDates "Copier date-added/date-modified à partir du champ extra">
-<!ENTITY better-bibtex.ZoteroPane.tag-duplicates "Tagguer les clés de citation doublons">
-<!ENTITY better-bibtex.BetterBibTeX.TeXstudio "Envoyer les citations vers TeXstudio">
-<!ENTITY zotero.better-bibtex.csquotes "Remplacer les guillemets par la commande '\\enquote{...}' (nécessite le package « csquotes »)">
-<!ENTITY better-bibtex.BetterBibTeX.server.disabled "Exportation par HTTP désactivée">
-<!ENTITY better-bibtex.BetterBibTeX.show-collection-key "Télécharger l'export de Better BibTeX...">
+<!ENTITY better-bibtex_zotero-pane_citekey_pin_inspire-hep "Verrouiller les clés BibTeX de InspireHEP">
+<!ENTITY better-bibtex_zotero-pane_citekey_unpin "Déverrouiller la clé de citation">
+<!ENTITY better-bibtex_zotero-pane_citekey_refresh "Rafraichir la clé de citation">
+<!ENTITY better-bibtex_zotero-pane_add-citation-links "Graphique de citation : ajouter des liens de citation...">
+<!ENTITY better-bibtex_zotero-pane_sentence-case "BBT Casse de la phrase">
+<!ENTITY better-bibtex_zotero-pane_patch-dates "Copier date-added/date-modified à partir du champ extra">
+<!ENTITY unused_better-bibtex_zotero-pane-tag-duplicates "Tagguer les clés de citation doublons">
+<!ENTITY better-bibtex_zotero-pane_tex-studio "Envoyer les citations vers TeXstudio">
+<!ENTITY unused_zotero_better-bibtex_csquotes "Remplacer les guillemets par la commande '\\enquote{...}' (nécessite le package « csquotes »)">
+<!ENTITY unused_better-bibtex_zotero-pane_server_disabled "Exportation par HTTP désactivée">
+<!ENTITY better-bibtex_zotero-pane_show_collection-key "Télécharger l'export de Better BibTeX...">
 
 <!ENTITY better-bibtex_server-url.title "Export Better BibTeX via HTTP">
 <!ENTITY better-bibtex_server-url_description "URL de téléchargement :">
@@ -255,4 +255,4 @@ Si cette option est activée et que vous rencontrez un problème autre que l'ann
 <!ENTITY better-bibtex_server-url.buttonlabelaccept "OK">
 
 <!-- remove after reactified zoteropane is in release -->
-<!ENTITY ZoteroPane.column.citekey "Clé de citation">
+<!ENTITY unused_better-bibtex_zotero-pane_column_citekey "Clé de citation">

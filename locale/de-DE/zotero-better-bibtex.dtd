@@ -235,17 +235,17 @@ Wenn Sie dies eingeschaltet haben und Sie Probleme haben außer der Löschung de
 <!ENTITY better-bibtex_bulk-keys-confirm.buttonlabelextra1 "OK, nicht noch mal fragen">
 <!ENTITY better-bibtex_citekey_set "BibTeX-Key ändern...">
 <!ENTITY better-bibtex_citekey_pin "BibTeX-Key anheften">
-<!ENTITY better-bibtex.BetterBibTeX.citekey.pinInspireHEP "Hefte BibTeX-Schlüssel aus InspireHEP an">
-<!ENTITY better-bibtex.BetterBibTeX.citekey.unpin "BibTeX-Key lösen">
-<!ENTITY better-bibtex.BetterBibTeX.citekey.refresh "Aktualisiere BibTeX key">
-<!ENTITY better-bibtex.BetterBibTeX.addCitationLinks "Zitier-Graph: Zitat-Links hinzufügen...">
-<!ENTITY better-bibtex.BetterBibTeX.sentenceCase "BBT Sentence-case">
-<!ENTITY better-bibtex.BetterBibTeX.patchDates "Kopiere date-added/date-modified aus Extra-Feld">
-<!ENTITY better-bibtex.ZoteroPane.tag-duplicates "Markiere doppelte Zitierschlüssel">
-<!ENTITY better-bibtex.BetterBibTeX.TeXstudio "Einträge an TeXstudio senden">
-<!ENTITY zotero.better-bibtex.csquotes "Ersetze links/rechts (doppelte) Anführungszeichen mit \\enquote{...} (benötigt csquotes)">
-<!ENTITY better-bibtex.BetterBibTeX.server.disabled "Exportier über HTTP ausgestellt">
-<!ENTITY better-bibtex.BetterBibTeX.show-collection-key "Download Better-BibTeX-Export...">
+<!ENTITY better-bibtex_zotero-pane_citekey_pin_inspire-hep "Hefte BibTeX-Schlüssel aus InspireHEP an">
+<!ENTITY better-bibtex_zotero-pane_citekey_unpin "BibTeX-Key lösen">
+<!ENTITY better-bibtex_zotero-pane_citekey_refresh "Aktualisiere BibTeX key">
+<!ENTITY better-bibtex_zotero-pane_add-citation-links "Zitier-Graph: Zitat-Links hinzufügen...">
+<!ENTITY better-bibtex_zotero-pane_sentence-case "BBT Sentence-case">
+<!ENTITY better-bibtex_zotero-pane_patch-dates "Kopiere date-added/date-modified aus Extra-Feld">
+<!ENTITY unused_better-bibtex_zotero-pane-tag-duplicates "Markiere doppelte Zitierschlüssel">
+<!ENTITY better-bibtex_zotero-pane_tex-studio "Einträge an TeXstudio senden">
+<!ENTITY unused_zotero_better-bibtex_csquotes "Ersetze links/rechts (doppelte) Anführungszeichen mit \\enquote{...} (benötigt csquotes)">
+<!ENTITY unused_better-bibtex_zotero-pane_server_disabled "Exportier über HTTP ausgestellt">
+<!ENTITY better-bibtex_zotero-pane_show_collection-key "Download Better-BibTeX-Export...">
 
 <!ENTITY better-bibtex_server-url.title "Better-BibTeX-Export via HTTP">
 <!ENTITY better-bibtex_server-url_description "Download-URL:">
@@ -254,4 +254,4 @@ Wenn Sie dies eingeschaltet haben und Sie Probleme haben außer der Löschung de
 <!ENTITY better-bibtex_server-url.buttonlabelaccept "OK">
 
 <!-- remove after reactified zoteropane is in release -->
-<!ENTITY ZoteroPane.column.citekey "Zitierschlüssel">
+<!ENTITY unused_better-bibtex_zotero-pane_column_citekey "Zitierschlüssel">
