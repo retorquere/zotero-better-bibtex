@@ -6,9 +6,9 @@
 <!ENTITY better-bibtex_first-run.label "Bem-vindo ao Better BibTeX para Zotero">
 <!ENTITY better-bibtex_first-run_welcome "Better BibTeX para Zotero (ou simplesmente BBT) procura tornar Zotero mais útil para tradicionalistas do LaTeX e do Markdown. Há muitas opções para configurar no BBT -- dê uma olhada nas preferências se estiver curioso -- mas vamos acertrar o básico com algumas escolhas simples.">
 
-<!ENTITY better-bibtex.FirstRun.citekeyFormat "Suas chaves de citação">
-<!ENTITY better-bibtex.FirstRun.citekeyFormat.explanation "BBT will generate citation keys for your items. The citekey generation is highly configurable, and you can choose to override the generation, but you will need to select the default now. You can always go into the preferences and change this at any time.">
-<!ENTITY better-bibtex.FirstRun.citekeyFormat.bbt "Use the BBT default citekey format">
+<!ENTITY better-bibtex_first-run_citekey-format "Suas chaves de citação">
+<!ENTITY better-bibtex_first-run_citekey-format_explanation "BBT will generate citation keys for your items. The citekey generation is highly configurable, and you can choose to override the generation, but you will need to select the default now. You can always go into the preferences and change this at any time.">
+<!ENTITY better-bibtex_first-run_citekey-format_bbt.label "Use the BBT default citekey format">
 <!ENTITY better-bibtex_first-run_citekey-format_zotero.label "Use the Zotero default citekey format">
 <!ENTITY better-bibtex_first-run_citekey-format_explanation_bbt "New keys will be generated using the default BBT format. If you want a different format, change it in the preferences, then select all items, right-click, and select Refresh">
 <!ENTITY better-bibtex_first-run_citekey-format_explanation_zotero "Escolha esta opção se você tiver documentos existentes que se referem a chaves geradas por Zotero sem a ajuda do BBT. Isso irá reproduzir fielmente as chaves geradas por Zotero, incluindo as limitações conhecidas do gerador de chaves do Zotero. Apenas use esta opção se precisar que as chaves sejam exatamente como geradas por Zotero.">
@@ -30,7 +30,7 @@
 <!ENTITY better-bibtex_first-run_done "Tudo pronto!">
 <!ENTITY better-bibtex_first-run_done_explanation "BBT já está configurado. Você ainda pode mudar qualquer uma dessas opções nas preferências do Zotero, abrindo a aba BBT.">
 
-<!ENTITY better-bibtex.ErrorReport.title "Better BibTeX debug log">
+<!ENTITY better-bibtex_error-report.title "Better BibTeX debug log">
 <!ENTITY better-bibtex.ErrorReport.restartWithLoggingEnabled  "Reiniciar com registro ativado…">
 <!ENTITY better-bibtex.ErrorReport.enableDebug "Zotero debug logging is currently disabled. It will be easier to diagnose the problem if you enable it before submitting a debug log.">
 <!ENTITY better-bibtex.ErrorReport.context "Contexto da aplicação">

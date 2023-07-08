@@ -12,7 +12,7 @@
 |   <!ENTITY % BBTDTD SYSTEM "chrome://zotero-better-bibtex/locale/zotero-better-bibtex.dtd"> %BBTDTD;
 |   <!ENTITY % standaloneDTD SYSTEM "chrome://zotero/locale/standalone.dtd"> %standaloneDTD;
 | ]>
-wizard#better-bibtex-error-report(xmlns='http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul' title='&better-bibtex.ErrorReport.title;' width='550' height='550')
+wizard#better-bibtex-error-report(xmlns='http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul' title='&better-bibtex_error-report.title;' width='550' height='550')
   wizardpage(onpageshow='window.ErrorReport.show()' label=' ')
     description.header(style='white-space: pre-wrap;') &better-bibtex.ErrorReport.enableDebug;
     button(label='&better-bibtex.ErrorReport.restartWithLoggingEnabled;' oncommand='window.ErrorReport.restartWithDebugEnabled()')/
@@ -38,13 +38,13 @@ wizard#better-bibtex-error-report(xmlns='http://www.mozilla.org/keymaster/gateke
         tabpanel(orient='vertical')
           textbox#better-bibtex-error-items.plain(readonly='true' multiline='true' flex='1' style='min-height: 8em;')/
     hbox
-      button(label='&better-bibtex.ErrorReport.save;' oncommand='window.ErrorReport.save()')/
+      button(label='&better-bibtex_error-report_save.label;' oncommand='window.ErrorReport.save()')/
       hbox(flex='1')/
     description#better-bibtex-error-memory-use(style='white-space: pre-wrap;')/
   wizardpage(onpageshow='window.ErrorReport.send()' label=' ')
-    description &better-bibtex.ErrorReport.submissionInProgress;
+    description &better-bibtex_error-report_submission-in-progress;
   wizardpage(onpageshow='window.ErrorReport.show()' label=' ')
-    description &better-bibtex.ErrorReport.submitted;
+    description &better-bibtex_error-report_submitted;
     description#better-bibtex-report-result(hidden='true')
       description
         | &better-bibtex.ErrorReport.reportID; 

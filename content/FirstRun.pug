@@ -16,10 +16,10 @@ wizard#better-bibtex-first-run(xmlns='http://www.mozilla.org/keymaster/gatekeepe
   wizardpage(onpageshow='Zotero.BetterBibTeX.FirstRun.load()' label='&better-bibtex_first-run.label;')
     description(style='white-space: pre-wrap;') &better-bibtex_first-run_welcome;
   wizardpage(label=' ' onpageshow='Zotero.BetterBibTeX.FirstRun.update()')
-    description.header(style='white-space: pre-wrap;') &better-bibtex.FirstRun.citekeyFormat;
-    description(style='white-space: pre-wrap;') &better-bibtex.FirstRun.citekeyFormat.explanation;
+    description.header(style='white-space: pre-wrap;') &better-bibtex_first-run_citekey-format;
+    description(style='white-space: pre-wrap;') &better-bibtex_first-run_citekey-format_explanation;
     radiogroup#better-bibtex-first-run-citekeyFormat(oncommand='Zotero.BetterBibTeX.FirstRun.update();')
-      radio(label='&better-bibtex.FirstRun.citekeyFormat.bbt;' value='bbt')/
+      radio(label='&better-bibtex_first-run_citekey-format_bbt.label;' value='bbt')/
       radio(label='&better-bibtex_first-run_citekey-format_zotero.label;' value='zotero')/
     separator/
     description#better-bibtex-first-run-citekeyFormat-bbt(style='white-space: pre-wrap;')
