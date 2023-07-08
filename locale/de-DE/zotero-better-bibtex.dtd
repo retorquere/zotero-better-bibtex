@@ -81,7 +81,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex_preferences_tab_citekey.label "Zitierschlüssel">
 <!ENTITY better-bibtex.Preferences.citekey.citekeys "Zitierschlüssel">
 <!ENTITY better-bibtex.Preferences.citekey.fold "Erzwinge Plaintext-Format bei Zitierschlüsseln">
-<!ENTITY better-bibtex.Preferences.citekey.search "Zitierschlüsselsuche aktivieren">
+<!ENTITY better-bibtex_preferences_citekey_search.label "Zitierschlüsselsuche aktivieren">
 <!ENTITY better-bibtex.Preferences.citekey.format "Zitierschlüssel-Formel">
 <!ENTITY better-bibtex.Preferences.citekey.format.installed "Aktiviere Zitierschlüssel-Formel">
 <!ENTITY better-bibtex.Preferences.citekey.autoPinDelay "Zitierschlüssel automatisch anpinnen nach">
@@ -107,13 +107,13 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex_preferences_export_quick-copy_select-link_zotero "Zotero-Eintragsschlüssel verwenden">
 <!ENTITY better-bibtex_preferences_export_quick-copy_select-link_citekey "Better-BibTeX-Zitierschlüssel verwenden">
 <!ENTITY better-bibtex_preferences_export_quick-copy_eta-template "Eta-Template">
-<!ENTITY better-bibtex.Preferences.citekey.uniqueness "Halte Zitierschlüssel eindeutig">
-<!ENTITY better-bibtex.Preferences.citekey.uniqueness.conflict "Bei Konflikten mit einem angehefteten Schlüssel werden nicht angeheftete Schlüssel">
-<!ENTITY better-bibtex.Preferences.citekey.uniqueness.conflict.change "nachbearbeitet (führt zu Änderungen der Zitierschlüssel)">
-<!ENTITY better-bibtex.Preferences.citekey.uniqueness.conflict.keep "beibehalten (führt zu Duplikaten von Zitierschlüsseln)">
-<!ENTITY better-bibtex.Preferences.citekey.uniqueness.scope "Schlüssel eindeutig halten">
+<!ENTITY better-bibtex_preferences_citekey_uniqueness.label "Halte Zitierschlüssel eindeutig">
+<!ENTITY better-bibtex_preferences_citekey_uniqueness_conflict "Bei Konflikten mit einem angehefteten Schlüssel werden nicht angeheftete Schlüssel">
+<!ENTITY better-bibtex_preferences_citekey_uniqueness_conflict_change "nachbearbeitet (führt zu Änderungen der Zitierschlüssel)">
+<!ENTITY better-bibtex_preferences_citekey_uniqueness_conflict_keep "beibehalten (führt zu Duplikaten von Zitierschlüsseln)">
+<!ENTITY better-bibtex_preferences_citekey_uniqueness_scope "Schlüssel eindeutig halten">
 <!ENTITY better-bibtex_preferences_citekey_uniqueness_scope_library "innerhalb jeder Bibliothek">
-<!ENTITY better-bibtex.Preferences.citekey.uniqueness.scope.global "über alle Bibliotheken hinweg">
+<!ENTITY better-bibtex_preferences_citekey_uniqueness_scope_global "über alle Bibliotheken hinweg">
 
 <!ENTITY better-bibtex.Preferences.citekey.AUXScanner "BibTeX AUX-/Markdown-Scanner">
 <!ENTITY better-bibtex.Preferences.citekey.AUXScanner.import "Versuche beim Scannen einer AUX-Datei, Einträge aus der angehängten Bib-Datei zu importieren, wenn sich deren Zitierschlüssel nicht in Zotero befinden">

@@ -81,7 +81,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex_preferences_tab_citekey.label "Clés de citation">
 <!ENTITY better-bibtex.Preferences.citekey.citekeys "Clés de citation">
 <!ENTITY better-bibtex.Preferences.citekey.fold "Forcer le formatage des clés de citation en texte brut">
-<!ENTITY better-bibtex.Preferences.citekey.search "Activer la recherche par clé de citation">
+<!ENTITY better-bibtex_preferences_citekey_search.label "Activer la recherche par clé de citation">
 <!ENTITY better-bibtex.Preferences.citekey.format "Formule de clé de citation">
 <!ENTITY better-bibtex.Preferences.citekey.format.installed "Formule de clé de citation active">
 <!ENTITY better-bibtex.Preferences.citekey.autoPinDelay "Épingler automatiquement la clé de citation après coup">
@@ -107,13 +107,13 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex_preferences_export_quick-copy_select-link_zotero "en utilisant la clé d'élément de Zotero">
 <!ENTITY better-bibtex_preferences_export_quick-copy_select-link_citekey "en utilisant la clé de citation de Better BibTeX">
 <!ENTITY better-bibtex_preferences_export_quick-copy_eta-template "Canevas Eta">
-<!ENTITY better-bibtex.Preferences.citekey.uniqueness "Garder les clés de citation uniques">
-<!ENTITY better-bibtex.Preferences.citekey.uniqueness.conflict "En cas de conflit, les clés non verrouillées seront">
-<!ENTITY better-bibtex.Preferences.citekey.uniqueness.conflict.change "modifiées (risque de changements)">
-<!ENTITY better-bibtex.Preferences.citekey.uniqueness.conflict.keep "conservées (risque de doublons)">
-<!ENTITY better-bibtex.Preferences.citekey.uniqueness.scope "Conserver les clés de citation uniques dans">
+<!ENTITY better-bibtex_preferences_citekey_uniqueness.label "Garder les clés de citation uniques">
+<!ENTITY better-bibtex_preferences_citekey_uniqueness_conflict "En cas de conflit, les clés non verrouillées seront">
+<!ENTITY better-bibtex_preferences_citekey_uniqueness_conflict_change "modifiées (risque de changements)">
+<!ENTITY better-bibtex_preferences_citekey_uniqueness_conflict_keep "conservées (risque de doublons)">
+<!ENTITY better-bibtex_preferences_citekey_uniqueness_scope "Conserver les clés de citation uniques dans">
 <!ENTITY better-bibtex_preferences_citekey_uniqueness_scope_library "chaque collection">
-<!ENTITY better-bibtex.Preferences.citekey.uniqueness.scope.global "toutes les collections">
+<!ENTITY better-bibtex_preferences_citekey_uniqueness_scope_global "toutes les collections">
 
 <!ENTITY better-bibtex.Preferences.citekey.AUXScanner "Scanner BibTeX AUX/Markdown">
 <!ENTITY better-bibtex.Preferences.citekey.AUXScanner.import "Lors de l'analyse d'un fichier `.aux`, tenter d'importer les références depuis le fichier `.bib` joint lorsque leurs clés de citation ne sont pas dans Zotero">

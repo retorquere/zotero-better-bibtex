@@ -81,7 +81,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex_preferences_tab_citekey.label "Chaves de citação">
 <!ENTITY better-bibtex.Preferences.citekey.citekeys "Chaves de citação">
 <!ENTITY better-bibtex.Preferences.citekey.fold "Força chave de citação em texto puro">
-<!ENTITY better-bibtex.Preferences.citekey.search "Enable citation key search">
+<!ENTITY better-bibtex_preferences_citekey_search.label "Enable citation key search">
 <!ENTITY better-bibtex.Preferences.citekey.format "Citation key formula">
 <!ENTITY better-bibtex.Preferences.citekey.format.installed "Active citation key formula">
 <!ENTITY better-bibtex.Preferences.citekey.autoPinDelay "Automatically pin citation key after">
@@ -107,13 +107,13 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex_preferences_export_quick-copy_select-link_zotero "using Zotero item key">
 <!ENTITY better-bibtex_preferences_export_quick-copy_select-link_citekey "using Better BibTeX citation key">
 <!ENTITY better-bibtex_preferences_export_quick-copy_eta-template "Eta template">
-<!ENTITY better-bibtex.Preferences.citekey.uniqueness "Evitando chaves de citação em duplicata">
-<!ENTITY better-bibtex.Preferences.citekey.uniqueness.conflict "Caso haja conflito com uma chave fixa, chaves não-fixas serão">
-<!ENTITY better-bibtex.Preferences.citekey.uniqueness.conflict.change "postfixadas (modifica a chave)">
-<!ENTITY better-bibtex.Preferences.citekey.uniqueness.conflict.keep "mantidas (causa chaves duplicadas)">
-<!ENTITY better-bibtex.Preferences.citekey.uniqueness.scope "Manter chaves sem duplicatas">
+<!ENTITY better-bibtex_preferences_citekey_uniqueness.label "Evitando chaves de citação em duplicata">
+<!ENTITY better-bibtex_preferences_citekey_uniqueness_conflict "Caso haja conflito com uma chave fixa, chaves não-fixas serão">
+<!ENTITY better-bibtex_preferences_citekey_uniqueness_conflict_change "postfixadas (modifica a chave)">
+<!ENTITY better-bibtex_preferences_citekey_uniqueness_conflict_keep "mantidas (causa chaves duplicadas)">
+<!ENTITY better-bibtex_preferences_citekey_uniqueness_scope "Manter chaves sem duplicatas">
 <!ENTITY better-bibtex_preferences_citekey_uniqueness_scope_library "dentro de cada biblioteca">
-<!ENTITY better-bibtex.Preferences.citekey.uniqueness.scope.global "em todas as bibliotecas">
+<!ENTITY better-bibtex_preferences_citekey_uniqueness_scope_global "em todas as bibliotecas">
 
 <!ENTITY better-bibtex.Preferences.citekey.AUXScanner "BibTeX AUX/Markdown scanner">
 <!ENTITY better-bibtex.Preferences.citekey.AUXScanner.import "When scanning an AUX file, attempt to import entries from the attached bib file when their citation keys are not in Zotero">

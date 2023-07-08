@@ -81,7 +81,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex_preferences_tab_citekey.label "Citation keys">
 <!ENTITY better-bibtex.Preferences.citekey.citekeys "Citation keys">
 <!ENTITY better-bibtex.Preferences.citekey.fold "Force citation key to plain text">
-<!ENTITY better-bibtex.Preferences.citekey.search "Enable citation key search">
+<!ENTITY better-bibtex_preferences_citekey_search.label "Enable citation key search">
 <!ENTITY better-bibtex.Preferences.citekey.format "Citation key formula">
 <!ENTITY better-bibtex.Preferences.citekey.format.installed "Active citation key formula">
 <!ENTITY better-bibtex.Preferences.citekey.autoPinDelay "Automatically pin citation key after">
@@ -107,13 +107,13 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex_preferences_export_quick-copy_select-link_zotero "using Zotero item key">
 <!ENTITY better-bibtex_preferences_export_quick-copy_select-link_citekey "using Better BibTeX citation key">
 <!ENTITY better-bibtex_preferences_export_quick-copy_eta-template "Eta template">
-<!ENTITY better-bibtex.Preferences.citekey.uniqueness "Keeping citation keys unique">
-<!ENTITY better-bibtex.Preferences.citekey.uniqueness.conflict "On conflict with a pinned key, non-pinned keys will be">
-<!ENTITY better-bibtex.Preferences.citekey.uniqueness.conflict.change "postfixed (causes key changes)">
-<!ENTITY better-bibtex.Preferences.citekey.uniqueness.conflict.keep "kept (causes key duplicates)">
-<!ENTITY better-bibtex.Preferences.citekey.uniqueness.scope "Keep keys unique">
+<!ENTITY better-bibtex_preferences_citekey_uniqueness.label "Keeping citation keys unique">
+<!ENTITY better-bibtex_preferences_citekey_uniqueness_conflict "On conflict with a pinned key, non-pinned keys will be">
+<!ENTITY better-bibtex_preferences_citekey_uniqueness_conflict_change "postfixed (causes key changes)">
+<!ENTITY better-bibtex_preferences_citekey_uniqueness_conflict_keep "kept (causes key duplicates)">
+<!ENTITY better-bibtex_preferences_citekey_uniqueness_scope "Keep keys unique">
 <!ENTITY better-bibtex_preferences_citekey_uniqueness_scope_library "within each library">
-<!ENTITY better-bibtex.Preferences.citekey.uniqueness.scope.global "across all libraries">
+<!ENTITY better-bibtex_preferences_citekey_uniqueness_scope_global "across all libraries">
 
 <!ENTITY better-bibtex.Preferences.citekey.AUXScanner "BibTeX AUX/Markdown scanner">
 <!ENTITY better-bibtex.Preferences.citekey.AUXScanner.import "When scanning an AUX file, attempt to import entries from the attached bib file when their citation keys are not in Zotero">

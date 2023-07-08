@@ -25,7 +25,7 @@ vbox(flex=1)
     style='-moz-appearance: none !important; background-color: LightGrey'
   )
 checkbox(preference="extensions.zotero.translators.better-bibtex.citekeyFold" label="&better-bibtex.Preferences.citekey.fold;")
-checkbox(preference="extensions.zotero.translators.better-bibtex.citekeySearch" label="&better-bibtex.Preferences.citekey.search;")
+checkbox(preference="extensions.zotero.translators.better-bibtex.citekeySearch" label="&better-bibtex_preferences_citekey_search.label;")
 hbox(flex=0)
   label(bbt:preference="extensions.zotero.translators.better-bibtex.autoPinDelay") &better-bibtex.Preferences.citekey.autoPinDelay;
   html:input(type='range' min=0 max=30 preference="extensions.zotero.translators.better-bibtex.autoPinDelay")
@@ -34,18 +34,18 @@ hbox(flex=0)
   hbox(flex=5)
 
 groupbox(style='margin-bottom: 10px')
-  caption(label="&better-bibtex.Preferences.citekey.uniqueness;")
+  caption(label="&better-bibtex_preferences_citekey_uniqueness.label;")
   // <description>&better-bibtex.Preferences.citekey.uniqueness.pin.description;</description>
   hbox(flex=0)
-    label(bbt:preference="extensions.zotero.translators.better-bibtex.keyScope") &better-bibtex.Preferences.citekey.uniqueness.scope;
+    label(bbt:preference="extensions.zotero.translators.better-bibtex.keyScope") &better-bibtex_preferences_citekey_uniqueness_scope;
     html:select(preference="extensions.zotero.translators.better-bibtex.keyScope")
-      html:option(value='global') &better-bibtex.Preferences.citekey.uniqueness.scope.global;
+      html:option(value='global') &better-bibtex_preferences_citekey_uniqueness_scope_global;
       html:option(value='library') &better-bibtex_preferences_citekey_uniqueness_scope_library;
   hbox(flex=0)
-    label(bbt:preference="extensions.zotero.translators.better-bibtex.keyConflictPolicy") &better-bibtex.Preferences.citekey.uniqueness.conflict;
+    label(bbt:preference="extensions.zotero.translators.better-bibtex.keyConflictPolicy") &better-bibtex_preferences_citekey_uniqueness_conflict;
     html:select(preference="extensions.zotero.translators.better-bibtex.keyConflictPolicy")
-      html:option(value='change') &better-bibtex.Preferences.citekey.uniqueness.conflict.change;
-      html:option(value='keep') &better-bibtex.Preferences.citekey.uniqueness.conflict.keep;
+      html:option(value='change') &better-bibtex_preferences_citekey_uniqueness_conflict_change;
+      html:option(value='keep') &better-bibtex_preferences_citekey_uniqueness_conflict_keep;
 
 groupbox
   caption(label="&better-bibtex.Preferences.advanced.ideographs;")
