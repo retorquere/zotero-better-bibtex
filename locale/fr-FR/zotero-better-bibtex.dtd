@@ -183,15 +183,15 @@ Si cette option est activée et que vous rencontrez un problème autre que l'ann
 <!ENTITY better-bibtex.Preferences.export.biblatex "BibLaTeX">
 <!ENTITY better-bibtex.Preferences.export.biblatex.extendedNameFormat "Utiliser le format de nom étendu BibLaTeX (nécessite BibLaTeX 3.5)">
 <!ENTITY better-bibtex.Preferences.export.biblatex.biblatexExtractEprint "Extraire les informations JSTOR/Google Books/PubMed du champ « url » dans les champs « eprint »">
-<!ENTITY better-bibtex.Preferences.export.bibtex.ascii "Exporter les caractères Unicode en commandes LaTeX (recommandé)">
-<!ENTITY better-bibtex.Preferences.export.bibtex "BibTeX">
-<!ENTITY better-bibtex.Preferences.export.bibtex.URLs "Ajouter les URLs à l'exportation :">
-<!ENTITY better-bibtex.Preferences.export.bibtex.URLs.off "Non">
-<!ENTITY better-bibtex.Preferences.export.bibtex.URLs.note "dans le champ « note »">
-<!ENTITY better-bibtex.Preferences.export.bibtex.URLs.note-url-ish "dans le champ « note », mais en supposant que le package « url » n'est pas chargé">
+<!ENTITY better-bibtex_preferences_export_bibtex_ascii.label "Exporter les caractères Unicode en commandes LaTeX (recommandé)">
+<!ENTITY better-bibtex_preferences_export_bibtex.label "BibTeX">
+<!ENTITY better-bibtex_preferences_export_bibtex_urls "Ajouter les URLs à l'exportation :">
+<!ENTITY better-bibtex_preferences_export_bibtex_urls_off "Non">
+<!ENTITY better-bibtex_preferences_export_bibtex_urls_note "dans le champ « note »">
+<!ENTITY better-bibtex_preferences_export_bibtex_urls_note-url-ish "dans le champ « note », mais en supposant que le package « url » n'est pas chargé">
 <!-- https://texfaq.org/FAQ-citeURL -->
-<!ENTITY better-bibtex.Preferences.export.bibtex.URLs.url "dans le champ « url »">
-<!ENTITY better-bibtex.Preferences.export.bibtex.URLs.url-ish "dans le champ « url » mais en supposant que le package « url » n'est pas chargé">
+<!ENTITY better-bibtex_preferences_export_bibtex_urls_url "dans le champ « url »">
+<!ENTITY better-bibtex_preferences_export_bibtex_urls_url-ish "dans le champ « url » mais en supposant que le package « url » n'est pas chargé">
 <!ENTITY better-bibtex_preferences_tab_export.label "Exportation">
 <!ENTITY better-bibtex_preferences_export_fields_bibtex-particle-no-op.label "Ne pas tenir compte des préfixes de noms lors du tri">
 <!ENTITY better-bibtex_preferences_export_fields_bibtex-edition-ordinal.label "Exporter l'édition numérique sous forme d'ordinaux écrits en anglais">

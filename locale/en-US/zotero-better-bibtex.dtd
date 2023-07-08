@@ -182,15 +182,15 @@ If you have this on, and you experience any problem that is not the cache gettin
 <!ENTITY better-bibtex.Preferences.export.biblatex "BibLaTeX">
 <!ENTITY better-bibtex.Preferences.export.biblatex.extendedNameFormat "Use BibLaTeX extended name format (requires biblatex 3.5)">
 <!ENTITY better-bibtex.Preferences.export.biblatex.biblatexExtractEprint "Extract JSTOR/Google Books/PubMed info from the URL field into eprint fields">
-<!ENTITY better-bibtex.Preferences.export.bibtex.ascii "Export unicode as plain-text latex commands (recommended)">
-<!ENTITY better-bibtex.Preferences.export.bibtex "BibTeX">
-<!ENTITY better-bibtex.Preferences.export.bibtex.URLs "Add URLs to BibTeX export">
-<!ENTITY better-bibtex.Preferences.export.bibtex.URLs.off "no">
-<!ENTITY better-bibtex.Preferences.export.bibtex.URLs.note "in the 'note' field">
-<!ENTITY better-bibtex.Preferences.export.bibtex.URLs.note-url-ish "in the 'note' field, but assuming the 'url' package is not loaded">
+<!ENTITY better-bibtex_preferences_export_bibtex_ascii.label "Export unicode as plain-text latex commands (recommended)">
+<!ENTITY better-bibtex_preferences_export_bibtex.label "BibTeX">
+<!ENTITY better-bibtex_preferences_export_bibtex_urls "Add URLs to BibTeX export">
+<!ENTITY better-bibtex_preferences_export_bibtex_urls_off "no">
+<!ENTITY better-bibtex_preferences_export_bibtex_urls_note "in the 'note' field">
+<!ENTITY better-bibtex_preferences_export_bibtex_urls_note-url-ish "in the 'note' field, but assuming the 'url' package is not loaded">
 <!-- https://texfaq.org/FAQ-citeURL -->
-<!ENTITY better-bibtex.Preferences.export.bibtex.URLs.url "in the 'url' field">
-<!ENTITY better-bibtex.Preferences.export.bibtex.URLs.url-ish "in the 'url' field, but assuming the 'url' package is not loaded">
+<!ENTITY better-bibtex_preferences_export_bibtex_urls_url "in the 'url' field">
+<!ENTITY better-bibtex_preferences_export_bibtex_urls_url-ish "in the 'url' field, but assuming the 'url' package is not loaded">
 <!ENTITY better-bibtex_preferences_tab_export.label "Export">
 <!ENTITY better-bibtex_preferences_export_fields_bibtex-particle-no-op.label "Disregard name prefixes when sorting">
 <!ENTITY better-bibtex_preferences_export_fields_bibtex-edition-ordinal.label "Export numeric edition as English-written ordinals">

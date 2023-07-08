@@ -182,15 +182,15 @@ Wenn Sie dies eingeschaltet haben und Sie Probleme haben außer der Löschung de
 <!ENTITY better-bibtex.Preferences.export.biblatex "BibLaTeX">
 <!ENTITY better-bibtex.Preferences.export.biblatex.extendedNameFormat "Verwende das erweiterte Namensformat von BibLaTeX (benötigt biblatex 3.5)">
 <!ENTITY better-bibtex.Preferences.export.biblatex.biblatexExtractEprint "Extrahiere JSTOR-/Google-Books-/PubMed-Informationen aus dem URL-Feld in die eprint-Felder">
-<!ENTITY better-bibtex.Preferences.export.bibtex.ascii "Exportiere Latex-Befehle im Unicode-Format als Plaintext (empfohlen)">
-<!ENTITY better-bibtex.Preferences.export.bibtex "BibTeX">
-<!ENTITY better-bibtex.Preferences.export.bibtex.URLs "Füge URLs zu BibTeX-Export hinzu">
-<!ENTITY better-bibtex.Preferences.export.bibtex.URLs.off "Nein">
-<!ENTITY better-bibtex.Preferences.export.bibtex.URLs.note "im 'note'-Feld">
-<!ENTITY better-bibtex.Preferences.export.bibtex.URLs.note-url-ish "im &quot;note&quot;-Feld, aber davon ausgehend, dass das &quot;url&quot;-Paket nicht geladen wurde">
+<!ENTITY better-bibtex_preferences_export_bibtex_ascii.label "Exportiere Latex-Befehle im Unicode-Format als Plaintext (empfohlen)">
+<!ENTITY better-bibtex_preferences_export_bibtex.label "BibTeX">
+<!ENTITY better-bibtex_preferences_export_bibtex_urls "Füge URLs zu BibTeX-Export hinzu">
+<!ENTITY better-bibtex_preferences_export_bibtex_urls_off "Nein">
+<!ENTITY better-bibtex_preferences_export_bibtex_urls_note "im 'note'-Feld">
+<!ENTITY better-bibtex_preferences_export_bibtex_urls_note-url-ish "im &quot;note&quot;-Feld, aber davon ausgehend, dass das &quot;url&quot;-Paket nicht geladen wurde">
 <!-- https://texfaq.org/FAQ-citeURL -->
-<!ENTITY better-bibtex.Preferences.export.bibtex.URLs.url "im 'url'-Feld">
-<!ENTITY better-bibtex.Preferences.export.bibtex.URLs.url-ish "im &quot;url&quot;-Feld, aber davon ausgehend, dass das &quot;url&quot;-Paket nicht geladen wurde">
+<!ENTITY better-bibtex_preferences_export_bibtex_urls_url "im 'url'-Feld">
+<!ENTITY better-bibtex_preferences_export_bibtex_urls_url-ish "im &quot;url&quot;-Feld, aber davon ausgehend, dass das &quot;url&quot;-Paket nicht geladen wurde">
 <!ENTITY better-bibtex_preferences_tab_export.label "Exportiere">
 <!ENTITY better-bibtex_preferences_export_fields_bibtex-particle-no-op.label "Ignoriere Namens-Präfixe beim Sortieren">
 <!ENTITY better-bibtex_preferences_export_fields_bibtex-edition-ordinal.label "Export numeric edition as English-written ordinals">

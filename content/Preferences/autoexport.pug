@@ -47,15 +47,15 @@ vbox#better-bibtex-prefs-auto-exports(hidden="true")
             textbox.plain(size='30' readonly="true" value="" data-ae-field="error" data-ae-id="")
           row
       vbox.autoexport-options.autoexport-BetterBibTeX(hidden="true")
-        checkbox(data-ae-id="" data-ae-field="asciiBibTeX" label="&better-bibtex.Preferences.export.bibtex.ascii;" oncommand="Zotero.BetterBibTeX.PrefPane.autoexport.edit(this)")
+        checkbox(data-ae-id="" data-ae-field="asciiBibTeX" label="&better-bibtex_preferences_export_bibtex_ascii.label;" oncommand="Zotero.BetterBibTeX.PrefPane.autoexport.edit(this)")
         checkbox(data-ae-id="" data-ae-field="bibtexParticleNoOp" label="&better-bibtex_preferences_export_fields_bibtex-particle-no-op.label;" oncommand="Zotero.BetterBibTeX.PrefPane.autoexport.edit(this)")
         hbox
-          label &better-bibtex.Preferences.export.bibtex.URLs;
+          label &better-bibtex_preferences_export_bibtex_urls;
           hbox(flex=0)
             html:select(data-ae-id="" data-ae-field="bibtexURL" onchange="Zotero.BetterBibTeX.PrefPane.autoexport.edit(this)")
-              html:option(value='off') &better-bibtex.Preferences.export.bibtex.URLs.off;
-              html:option(value='note') &better-bibtex.Preferences.export.bibtex.URLs.note;
-              html:option(value='url') &better-bibtex.Preferences.export.bibtex.URLs.url;
+              html:option(value='off') &better-bibtex_preferences_export_bibtex_urls_off;
+              html:option(value='note') &better-bibtex_preferences_export_bibtex_urls_note;
+              html:option(value='url') &better-bibtex_preferences_export_bibtex_urls_url;
             image(tooltip="tooltip-bibtexURL" src="chrome://zotero-better-bibtex/skin/attention.svg" width="16" height="16")
       vbox.autoexport-options.autoexport-BetterBibLaTeX(hidden="true")
         checkbox(data-ae-id="" data-ae-field="asciiBibLaTeX" label="&better-bibtex.Preferences.export.biblatex.ascii;" oncommand="Zotero.BetterBibTeX.PrefPane.autoexport.edit(this)")
