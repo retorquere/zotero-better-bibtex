@@ -87,13 +87,13 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.citekey.autoPinDelay "Automatically pin citation key after">
 
 <!ENTITY better-bibtex.Preferences.export.quickCopy "Quick-Copy">
-<!ENTITY better-bibtex.Preferences.export.quickCopy.explanation "Quick-Copy/drag-and-drop citations">
+<!ENTITY better-bibtex_preferences_export_quick-copy_explanation "Quick-Copy/drag-and-drop citations">
 <!ENTITY better-bibtex.Preferences.export.quickCopy.atom "Atom">
-<!ENTITY better-bibtex.Preferences.export.quickCopy.citekeys "Cite Keys">
-<!ENTITY better-bibtex.Preferences.export.quickCopy.format "Quick-Copy format">
-<!ENTITY better-bibtex.Preferences.export.quickCopy.gitbook "GitBook">
+<!ENTITY better-bibtex_preferences_export_quick-copy_citekeys "Cite Keys">
+<!ENTITY better-bibtex_preferences_export_quick-copy_format "Quick-Copy format">
+<!ENTITY better-bibtex_preferences_export_quick-copy_gitbook "GitBook">
 <!ENTITY better-bibtex_preferences_export_quick-copy_latex_command "LaTeX command">
-<!ENTITY better-bibtex.Preferences.export.quickCopy.latex "LaTeX citation">
+<!ENTITY better-bibtex_preferences_export_quick-copy_latex "LaTeX citation">
 <!ENTITY better-bibtex_preferences_export_quick-copy_rtf-scan "RTF Scan marker">
 <!ENTITY better-bibtex_preferences_export_quick-copy_roam-cite-key "Roam Cite Key">
 <!ENTITY better-bibtex_preferences_export_quick-copy_org-mode "Org-mode select link">
@@ -106,7 +106,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex_preferences_export_quick-copy_select-link "Zotero select link">
 <!ENTITY better-bibtex_preferences_export_quick-copy_select-link_zotero "using Zotero item key">
 <!ENTITY better-bibtex_preferences_export_quick-copy_select-link_citekey "using Better BibTeX citation key">
-<!ENTITY better-bibtex.Preferences.export.quickCopy.etaTemplate "Eta template">
+<!ENTITY better-bibtex_preferences_export_quick-copy_eta-template "Eta template">
 <!ENTITY better-bibtex.Preferences.citekey.uniqueness "Keeping citation keys unique">
 <!ENTITY better-bibtex.Preferences.citekey.uniqueness.conflict "On conflict with a pinned key, non-pinned keys will be">
 <!ENTITY better-bibtex.Preferences.citekey.uniqueness.conflict.change "postfixed (causes key changes)">

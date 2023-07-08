@@ -87,13 +87,13 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.citekey.autoPinDelay "Épingler automatiquement la clé de citation après coup">
 
 <!ENTITY better-bibtex.Preferences.export.quickCopy "Copie rapide">
-<!ENTITY better-bibtex.Preferences.export.quickCopy.explanation "Copie rapide/glissé-déposé des citations">
+<!ENTITY better-bibtex_preferences_export_quick-copy_explanation "Copie rapide/glissé-déposé des citations">
 <!ENTITY better-bibtex.Preferences.export.quickCopy.atom "Atom">
-<!ENTITY better-bibtex.Preferences.export.quickCopy.citekeys "Clés de citation">
-<!ENTITY better-bibtex.Preferences.export.quickCopy.format "Format de copie rapide">
-<!ENTITY better-bibtex.Preferences.export.quickCopy.gitbook "GitBook">
+<!ENTITY better-bibtex_preferences_export_quick-copy_citekeys "Clés de citation">
+<!ENTITY better-bibtex_preferences_export_quick-copy_format "Format de copie rapide">
+<!ENTITY better-bibtex_preferences_export_quick-copy_gitbook "GitBook">
 <!ENTITY better-bibtex_preferences_export_quick-copy_latex_command "Commande LaTeX">
-<!ENTITY better-bibtex.Preferences.export.quickCopy.latex "Citation LaTeX">
+<!ENTITY better-bibtex_preferences_export_quick-copy_latex "Citation LaTeX">
 <!ENTITY better-bibtex_preferences_export_quick-copy_rtf-scan "Marqueur de scan RTF">
 <!ENTITY better-bibtex_preferences_export_quick-copy_roam-cite-key "Clé de citation Roam">
 <!ENTITY better-bibtex_preferences_export_quick-copy_org-mode "Lien de sélection Org-mode">
@@ -106,7 +106,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex_preferences_export_quick-copy_select-link "Lien de sélection de Zotero">
 <!ENTITY better-bibtex_preferences_export_quick-copy_select-link_zotero "en utilisant la clé d'élément de Zotero">
 <!ENTITY better-bibtex_preferences_export_quick-copy_select-link_citekey "en utilisant la clé de citation de Better BibTeX">
-<!ENTITY better-bibtex.Preferences.export.quickCopy.etaTemplate "Canevas Eta">
+<!ENTITY better-bibtex_preferences_export_quick-copy_eta-template "Canevas Eta">
 <!ENTITY better-bibtex.Preferences.citekey.uniqueness "Garder les clés de citation uniques">
 <!ENTITY better-bibtex.Preferences.citekey.uniqueness.conflict "En cas de conflit, les clés non verrouillées seront">
 <!ENTITY better-bibtex.Preferences.citekey.uniqueness.conflict.change "modifiées (risque de changements)">

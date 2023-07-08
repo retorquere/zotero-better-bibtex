@@ -87,13 +87,13 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.citekey.autoPinDelay "Zitierschlüssel automatisch anpinnen nach">
 
 <!ENTITY better-bibtex.Preferences.export.quickCopy "Schnellkopie">
-<!ENTITY better-bibtex.Preferences.export.quickCopy.explanation "Schnellkopie/Drag-and-Drop-Zitat">
+<!ENTITY better-bibtex_preferences_export_quick-copy_explanation "Schnellkopie/Drag-and-Drop-Zitat">
 <!ENTITY better-bibtex.Preferences.export.quickCopy.atom "Atom">
-<!ENTITY better-bibtex.Preferences.export.quickCopy.citekeys "Zitierschlüssel">
-<!ENTITY better-bibtex.Preferences.export.quickCopy.format "Schnellkopie-Format">
-<!ENTITY better-bibtex.Preferences.export.quickCopy.gitbook "GitBook">
+<!ENTITY better-bibtex_preferences_export_quick-copy_citekeys "Zitierschlüssel">
+<!ENTITY better-bibtex_preferences_export_quick-copy_format "Schnellkopie-Format">
+<!ENTITY better-bibtex_preferences_export_quick-copy_gitbook "GitBook">
 <!ENTITY better-bibtex_preferences_export_quick-copy_latex_command "LaTeX-Befehl">
-<!ENTITY better-bibtex.Preferences.export.quickCopy.latex "LaTeX-Zitat">
+<!ENTITY better-bibtex_preferences_export_quick-copy_latex "LaTeX-Zitat">
 <!ENTITY better-bibtex_preferences_export_quick-copy_rtf-scan "RTF-Scan-Marker">
 <!ENTITY better-bibtex_preferences_export_quick-copy_roam-cite-key "Roam-Zitierschlüssel">
 <!ENTITY better-bibtex_preferences_export_quick-copy_org-mode "Org-Modus Auswahllink">
@@ -106,7 +106,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex_preferences_export_quick-copy_select-link "Zotero Auswahllink">
 <!ENTITY better-bibtex_preferences_export_quick-copy_select-link_zotero "Zotero-Eintragsschlüssel verwenden">
 <!ENTITY better-bibtex_preferences_export_quick-copy_select-link_citekey "Better-BibTeX-Zitierschlüssel verwenden">
-<!ENTITY better-bibtex.Preferences.export.quickCopy.etaTemplate "Eta-Template">
+<!ENTITY better-bibtex_preferences_export_quick-copy_eta-template "Eta-Template">
 <!ENTITY better-bibtex.Preferences.citekey.uniqueness "Halte Zitierschlüssel eindeutig">
 <!ENTITY better-bibtex.Preferences.citekey.uniqueness.conflict "Bei Konflikten mit einem angehefteten Schlüssel werden nicht angeheftete Schlüssel">
 <!ENTITY better-bibtex.Preferences.citekey.uniqueness.conflict.change "nachbearbeitet (führt zu Änderungen der Zitierschlüssel)">
