@@ -198,19 +198,19 @@ Wenn Sie dies eingeschaltet haben und Sie Probleme haben außer der Löschung de
 <!ENTITY better-bibtex_preferences_export_fields_language_language "Sprache">
 <!ENTITY better-bibtex_preferences_export_fields_language_both "beide">
 <!ENTITY better-bibtex_preferences_export_fields_language "Sprache exportieren als">
-<!ENTITY better-bibtex.Preferences.export.fields.doi-and-url.both "beide">
+<!ENTITY better-bibtex_preferences_export_fields_doi-and-url_both "beide">
 <!ENTITY better-bibtex.Preferences.export.fields.doi-and-url.DOI "DOI">
 <!ENTITY better-bibtex.Preferences.export.fields.doi-and-url.URL "URL">
 <!ENTITY better-bibtex.Preferences.export.fields.doi-and-url "Wenn ein Eintrag über DOI und URL verfügt, exportiere">
-<!ENTITY better-bibtex.Preferences.export.fields.doi-and-url.warning "Die meisten BibTeX-Stile unterstützen keine DOI/URL-Felder. Von den Stilen, die sie unterstützen, vergessen viele, das erforderliche 'url'-Paket zu laden, stellen Sie also sicher, dass Sie es selbst laden. DOI- und URL-Felder sind so genannte 'Verbatim'-Felder, und ohne die vom Paket 'url' geladene Kompilierung wird die Kompilierung wahrscheinlich fehlschlagen.">
+<!ENTITY better-bibtex_preferences_export_fields_doi-and-url_warning "Die meisten BibTeX-Stile unterstützen keine DOI/URL-Felder. Von den Stilen, die sie unterstützen, vergessen viele, das erforderliche 'url'-Paket zu laden, stellen Sie also sicher, dass Sie es selbst laden. DOI- und URL-Felder sind so genannte 'Verbatim'-Felder, und ohne die vom Paket 'url' geladene Kompilierung wird die Kompilierung wahrscheinlich fehlschlagen.">
 <!ENTITY better-bibtex.Preferences.export.fields "Felder">
 
-<!ENTITY better-bibtex.Preferences.export.fields.import-strings "Erweitere die folgenden @string-Variablen während des Imports">
-<!ENTITY better-bibtex.Preferences.export.fields.export-strings "Wenn ein Feld eine @string-Referenz sein könnte, exportiere es als @string-Referenz ohne Klammern">
-<!ENTITY better-bibtex.Preferences.export.fields.export-strings.off "Nein">
-<!ENTITY better-bibtex.Preferences.export.fields.export-strings.detect "Behandle Felder mit nur einem Wort als @String-Variablen">
-<!ENTITY better-bibtex.Preferences.export.fields.export-strings.match "Mit den @string-Deklarationen unten vergleichen">
-<!ENTITY better-bibtex.Preferences.export.fields.export-strings.match_reverse "Mit den @string-Deklarationen und ihren Werten unten vergleichen">
+<!ENTITY better-bibtex_preferences_export_fields_import-strings.label "Erweitere die folgenden @string-Variablen während des Imports">
+<!ENTITY better-bibtex_preferences_export_fields_export-strings "Wenn ein Feld eine @string-Referenz sein könnte, exportiere es als @string-Referenz ohne Klammern">
+<!ENTITY better-bibtex_preferences_export_fields_export-strings_off "Nein">
+<!ENTITY better-bibtex_preferences_export_fields_export-strings_detect "Behandle Felder mit nur einem Wort als @String-Variablen">
+<!ENTITY better-bibtex_preferences_export_fields_export-strings_match "Mit den @string-Deklarationen unten vergleichen">
+<!ENTITY better-bibtex_preferences_export_fields_export-strings_match_reverse "Mit den @string-Deklarationen und ihren Werten unten vergleichen">
 
 <!ENTITY better-bibtex_preferences_export_fields_skip "Felder, die nicht exportiert werden sollen (mit Komma trennen)">
 <!ENTITY better-bibtex_preferences_export_misc.label "Verschiedenes">
