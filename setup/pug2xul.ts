@@ -46,9 +46,18 @@ class WizardDetector extends ASTWalker {
     if (node.name === 'wizard') this.foundWizard = true
 
     for (const attr of node.attrs) {
+      let prefix = ''
       attr.val.replace(/&([^;]+);/g, (m, id) => {
         if (!id.match(valid.attr) || !id.endsWith(`.${attr.name}`)) {
           correction(id, `.${attr.name}`)
+        }
+        else {
+          if (!prefix) {
+            prefix = id.split('.')[0]
+          }
+          else if (id.split('.')[0] !== prefix) {
+            throw new Error(`${id} should start with ${prefix}`)
+          }
         }
         // attributes.add(id)
       })
