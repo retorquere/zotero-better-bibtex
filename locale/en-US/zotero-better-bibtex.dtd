@@ -123,10 +123,10 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.advanced "Advanced">
 <!ENTITY better-bibtex.Preferences.advanced.warning "Settings here will impact performance, and can cause breakage of exports. Proceed with care.">
 <!ENTITY better-bibtex_preferences_advanced_tab_import.label "Import">
-<!ENTITY better-bibtex.Preferences.advanced.import.sentenceCase "Sentence-case titles on import:">
-<!ENTITY better-bibtex.Preferences.advanced.import.sentenceCase.off "no (import titles as-is)">
-<!ENTITY better-bibtex.Preferences.advanced.import.sentenceCase.on "yes">
-<!ENTITY better-bibtex.Preferences.advanced.import.sentenceCase.on_guess "yes, but try to exclude already-sentence-cased titles">
+<!ENTITY better-bibtex_preferences_advanced_import_sentence-case "Sentence-case titles on import:">
+<!ENTITY better-bibtex_preferences_advanced_import_sentence-case_off.label "no (import titles as-is)">
+<!ENTITY better-bibtex_preferences_advanced_import_sentence-case_on.label "yes">
+<!ENTITY better-bibtex_preferences_advanced_import_sentence-case_on-guess.label "yes, but try to exclude already-sentence-cased titles">
 <!ENTITY better-bibtex_preferences_advanced_import_sentence-case_warning "Bib(La)TeX entries must be stored in Title Case; Zotero items are expected to be entered as sentence-case.
 
 With this option on, BBT will try to sentence-case during import. This sentence-casing uses heuristics, no natural language processing is performed, and the results are not perfect.
@@ -135,10 +135,10 @@ You can turn this off, but you may then also want to disable `Apply title-casing
 With 'yes, but try to exclude already-sentence-cased titles', BBT will attempt to detect titles that are already sentence cased and leave them as-is on import.">
 
 <!ENTITY better-bibtex.Preferences.advanced.import.caseProtection "Insert case-protection for braces:">
-<!ENTITY better-bibtex.Preferences.advanced.import.caseProtection.off "no">
-<!ENTITY better-bibtex.Preferences.advanced.import.caseProtection.on "yes">
-<!ENTITY better-bibtex.Preferences.advanced.import.caseProtection.as_needed "minimal">
-<!ENTITY better-bibtex.Preferences.advanced.import.caseProtection.warning "On import, BBT will add case-protection (&lt;span class=&quot;nocase&quot;&gt;...&lt;span&gt;) to titles that have words in {Braces}.
+<!ENTITY better-bibtex_preferences_advanced_import_case-protection_off "no">
+<!ENTITY better-bibtex_preferences_advanced_import_case-protection_on "yes">
+<!ENTITY better-bibtex_preferences_advanced_import_case-protection_as-needed "minimal">
+<!ENTITY better-bibtex_preferences_advanced_import_case-protection_warning "On import, BBT will add case-protection (&lt;span class=&quot;nocase&quot;&gt;...&lt;span&gt;) to titles that have words in {Braces}.
 
 There's plenty of bib(la)tex files out there that do this a little overzealously, and you may not like the resulting HTML code in your items, even though this is what the braces mean in bib(la)tex, and Zotero supports it.
 

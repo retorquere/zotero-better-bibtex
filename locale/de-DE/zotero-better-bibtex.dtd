@@ -123,10 +123,10 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.advanced "Erweitert">
 <!ENTITY better-bibtex.Preferences.advanced.warning "Diese Einstellungen werden die Leistung beeinträchtigen und können zu einem Abbruch der Exporte führen. Behandeln Sie sie mit Vorsicht.">
 <!ENTITY better-bibtex_preferences_advanced_tab_import.label "Import">
-<!ENTITY better-bibtex.Preferences.advanced.import.sentenceCase "Satzbuchstaben beim Import:">
-<!ENTITY better-bibtex.Preferences.advanced.import.sentenceCase.off "nein (importiere Title wie sie sind)">
-<!ENTITY better-bibtex.Preferences.advanced.import.sentenceCase.on "ja">
-<!ENTITY better-bibtex.Preferences.advanced.import.sentenceCase.on_guess "Ja, aber versuchen Sie bereits zitierte Titel auszuschließen">
+<!ENTITY better-bibtex_preferences_advanced_import_sentence-case "Satzbuchstaben beim Import:">
+<!ENTITY better-bibtex_preferences_advanced_import_sentence-case_off.label "nein (importiere Title wie sie sind)">
+<!ENTITY better-bibtex_preferences_advanced_import_sentence-case_on.label "ja">
+<!ENTITY better-bibtex_preferences_advanced_import_sentence-case_on-guess.label "Ja, aber versuchen Sie bereits zitierte Titel auszuschließen">
 <!ENTITY better-bibtex_preferences_advanced_import_sentence-case_warning "Bib(La)TeX-Einträge müssen im Titelfall gespeichert werden; Zotero-Einträge werden als Sätze erwartet.
 
 Mit dieser Option wird BBT versuchen, den Fall während des Imports zu senden. Dieses Satzgehäuse verwendet Heuristik, es wird keine natürliche Sprachverarbeitung durchgeführt und die Ergebnisse sind nicht perfekt.
@@ -135,10 +135,10 @@ Du kannst dies deaktivieren, aber du kannst `Titelgehäuse auf Titel übertragen
 Mit 'Ja, aber versuchen Sie bereits verurteilte Titel auszuschließen', BBT wird versuchen, bereits verurteilte Titel zu erkennen und sie wie beim Import zu belassen.">
 
 <!ENTITY better-bibtex.Preferences.advanced.import.caseProtection "Fallschutz für Klammern einfügen:">
-<!ENTITY better-bibtex.Preferences.advanced.import.caseProtection.off "nein">
-<!ENTITY better-bibtex.Preferences.advanced.import.caseProtection.on "ja">
-<!ENTITY better-bibtex.Preferences.advanced.import.caseProtection.as_needed "minimal">
-<!ENTITY better-bibtex.Preferences.advanced.import.caseProtection.warning "Beim Import fügt BBT den Titeln, die Wörter in {Braces}haben, den Groß-/Kleinschreibung (&lt;span class=&quot;nocase&quot;&gt;...&lt;span&gt;) hinzu.
+<!ENTITY better-bibtex_preferences_advanced_import_case-protection_off "nein">
+<!ENTITY better-bibtex_preferences_advanced_import_case-protection_on "ja">
+<!ENTITY better-bibtex_preferences_advanced_import_case-protection_as-needed "minimal">
+<!ENTITY better-bibtex_preferences_advanced_import_case-protection_warning "Beim Import fügt BBT den Titeln, die Wörter in {Braces}haben, den Groß-/Kleinschreibung (&lt;span class=&quot;nocase&quot;&gt;...&lt;span&gt;) hinzu.
 
 Es gibt viele bib(la)tex-Dateien, die dies etwas übereifrig tun, und Sie können den resultierenden HTML-Code in Ihren Artikeln nicht mögen, auch wenn das die Klammern in bib(la)tex bedeuten, und Zotero unterstützt es.
 

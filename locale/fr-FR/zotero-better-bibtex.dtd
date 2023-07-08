@@ -123,10 +123,10 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.advanced "Avancé">
 <!ENTITY better-bibtex.Preferences.advanced.warning "Les paramètres ci-dessous ont un impact sur les performances et peuvent faire échouer les exportations. Procéder avec attention.">
 <!ENTITY better-bibtex_preferences_advanced_tab_import.label "Importation">
-<!ENTITY better-bibtex.Preferences.advanced.import.sentenceCase "Titres avec casse de phrase lors de l'importation :">
-<!ENTITY better-bibtex.Preferences.advanced.import.sentenceCase.off "non (importer les titres tels quels)">
-<!ENTITY better-bibtex.Preferences.advanced.import.sentenceCase.on "oui">
-<!ENTITY better-bibtex.Preferences.advanced.import.sentenceCase.on_guess "oui, mais en essayant d'exclure les titres déjà avec casse de phrase">
+<!ENTITY better-bibtex_preferences_advanced_import_sentence-case "Titres avec casse de phrase lors de l'importation :">
+<!ENTITY better-bibtex_preferences_advanced_import_sentence-case_off.label "non (importer les titres tels quels)">
+<!ENTITY better-bibtex_preferences_advanced_import_sentence-case_on.label "oui">
+<!ENTITY better-bibtex_preferences_advanced_import_sentence-case_on-guess.label "oui, mais en essayant d'exclure les titres déjà avec casse de phrase">
 <!ENTITY better-bibtex_preferences_advanced_import_sentence-case_warning "Les entrées Bib(La)TeX devraient être stockées capitalisées (NdT : c.-à-d. avec l'initiale de chaque mot en capitale ; cette règle est conforme à la typographie anglaise mais pas française) ; les entrées Zotero devraient être saisies avec casse de phrase (NdT : c.-à-d. avec seule l'initiale de la phrase en capitale).
 
 Avec cette option activée, BBT essaiera d'appliquer la casse de phrase lors de l'importation. Le mécanisme sous-jacent utilise des heuristiques : aucun traitement de langage naturel n'est effectué, et les résultats ne sont pas parfaits.
@@ -135,10 +135,10 @@ Vous pouvez désactiver cette option, mais vous pouvez aussi vouloir désactiver
 Avec « oui, mais en essayant d'exclure les titres déjà avec casse de phrase », BBT tentera de détecter les titres déjà avec casse de phrase et ne les modifiera pas à l'importation.">
 
 <!ENTITY better-bibtex.Preferences.advanced.import.caseProtection "Protéger la casse pour les accolades :">
-<!ENTITY better-bibtex.Preferences.advanced.import.caseProtection.off "non">
-<!ENTITY better-bibtex.Preferences.advanced.import.caseProtection.on "oui">
-<!ENTITY better-bibtex.Preferences.advanced.import.caseProtection.as_needed "minimal">
-<!ENTITY better-bibtex.Preferences.advanced.import.caseProtection.warning "À l'importation, BBT protègera la casse (&lt;span class=&quot;nocase&quot;&gt;...&lt;span&gt;) des mots entre {Braces} dans les titres.
+<!ENTITY better-bibtex_preferences_advanced_import_case-protection_off "non">
+<!ENTITY better-bibtex_preferences_advanced_import_case-protection_on "oui">
+<!ENTITY better-bibtex_preferences_advanced_import_case-protection_as-needed "minimal">
+<!ENTITY better-bibtex_preferences_advanced_import_case-protection_warning "À l'importation, BBT protègera la casse (&lt;span class=&quot;nocase&quot;&gt;...&lt;span&gt;) des mots entre {Braces} dans les titres.
 
 Beaucoup de fichiers bib(la)tex le font de façon un peu trop zélée et vous n'aimez peut-être pas le code HTML qui en résulte dans vos entrées, même si c'est ce que les accolades signifient en bib(la)tex, et Zotero fournit cette fonctionnalité.
 
