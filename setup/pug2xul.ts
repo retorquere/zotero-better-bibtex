@@ -41,7 +41,7 @@ function correction(ist, attr = '') {
 class Z7Detector extends ASTWalker {
   public is7 = false
 
-  Conditional(node, history) {
+  Conditional(node) {
     if (node.test === 'is7') this.is7 = true
 
     this.walk(node.consequent)
