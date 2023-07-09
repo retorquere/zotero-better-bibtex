@@ -27,7 +27,7 @@
     "setup": "./setup/setup.py && ts-node setup/index.ts && ts-node setup/bbtjsonschema",
     "prebuild": "npm install && npm run setup",
     "build": "npm run rebuild",
-    "rebuild": "npm-run-all lint esbuild tsc",
+    "rebuild": "npm-run-all -p --aggregate-output lint esbuild tsc",
     "postbuild": "./setup/patch-compat.py && npm run zipup-better-bibtex && npm run zipup-debug-bridge",
     "tsc": "tsc --noEmit",
     "esbuild": "node esbuild.js",
@@ -53,7 +53,7 @@
     "test:nightly": "./test/behave --tags @nightly",
     "xsubmodules": "git submodule update --init --recursive --remote && git submodule foreach git reset --hard && git submodule foreach git pull origin",
 
-    "preupgrades": "npm-run-all submodules ncu get-schema",
+    "preupgrades": "npm-run-all -p --aggregate-output submodules ncu get-schema",
     "submodules": "./setup/submodules.py",
     "ncu": "ncu -u && npm i",
     "get-schema": "./setup/item.py",
