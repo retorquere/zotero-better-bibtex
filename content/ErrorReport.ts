@@ -12,29 +12,23 @@ import { DB } from './db/main'
 import { DB as Cache } from './db/cache'
 import { pick } from './file-picker'
 import * as l10n from './l10n'
+import { is7 } from './client'
+
+import Tar from 'tar-js'
+import { gzip } from 'pako'
 
 import * as s3 from './s3.json'
 
 import * as PACKAGE from '../package.json'
 
 const kB = 1024
-const COMPRESSION_BEST = 9
-
-// PR_RDONLY       0x01
-const PR_WRONLY = 0x02
-// const PR_RDWR = 0x04
-const PR_CREATE_FILE =0x08
-// define PR_APPEND       0x10
-// define PR_TRUNCATE     0x20
-// define PR_SYNC         0x40
-// define PR_EXCL         0x80
 
 export class ErrorReport {
   private previewSize = 3 * kB // eslint-disable-line no-magic-numbers, yoda
 
   private key: string
   private timestamp: string
-  private zipfile: string
+  private tarball: string
 
   private bucket: string
   private params: any
@@ -54,7 +48,7 @@ export class ErrorReport {
     wizard.canRewind = false
 
     try {
-      await Zotero.HTTP.request('PUT', `${this.bucket}/${OS.Path.basename(this.zipfile)}`, {
+      await Zotero.HTTP.request('PUT', `${this.bucket}/${OS.Path.basename(this.tarball)}`, {
         noCache: true,
         // followRedirects: true,
         // noCache: true,
@@ -62,9 +56,9 @@ export class ErrorReport {
         headers: {
           'x-amz-storage-class': 'STANDARD',
           'x-amz-acl': 'bucket-owner-full-control',
-          'Content-Type': 'application/zip',
+          'Content-Type': 'application/x-gzip',
         },
-        body: new Uint8Array(await OS.File.read(await this.zip(), {})),
+        body: this.tar(),
       })
 
       wizard.advance()
@@ -120,41 +114,30 @@ export class ErrorReport {
     }
   }
 
-  public async zip(): Promise<string> {
-    if (!await OS.File.exists(this.zipfile)) {
-      const zipWriter = Components.classes['@mozilla.org/zipwriter;1'].createInstance(Components.interfaces.nsIZipWriter)
-      // 0x02 = Read and Write
+  public tar(): Uint8Array {
+    const tape = new Tar
+    let out: Uint8Array
 
-      zipWriter.open(Zotero.File.pathToFile(this.zipfile), PR_WRONLY + PR_CREATE_FILE)
-      const converter = Components.classes['@mozilla.org/intl/scriptableunicodeconverter'].createInstance(Components.interfaces.nsIScriptableUnicodeConverter)
-      converter.charset = 'UTF-8'
+    out = tape.append(`${this.key}/debug.txt`, [
+      this.errorlog.info,
+      this.cacheState,
+      this.errorlog.errors,
+      this.errorlog.debug,
+    ].filter(chunk => chunk).join('\n\n'))
 
-      function add(filename, body) { // eslint-disable-line no-inner-declarations, prefer-arrow/prefer-arrow-functions
-        const istream = converter.convertToInputStream(body)
-        zipWriter.addEntryStream(filename, Date.now(), COMPRESSION_BEST, istream, false)
-        istream.close()
-      }
+    if (this.errorlog.items) out = tape.append(`${this.key}/items.json`, this.errorlog.items)
 
-      add(
-        `${this.key}/debug.txt`,
-        [ this.errorlog.info, this.cacheState, this.errorlog.errors, this.errorlog.debug ].filter(chunk => chunk).join('\n\n')
-      )
-
-      if (this.errorlog.items) add(`${this.key}/items.json`, this.errorlog.items)
-
-      if (document.getElementById('better-bibtex-error-report-include-db').checked) {
-        add(`${this.key}/database.json`, DB.serialize({ serializationMethod: 'pretty' }))
-        add(`${this.key}/cache.json`, Cache.serialize({ serializationMethod: 'pretty' }))
-      }
-
-      zipWriter.close()
+    if (document.getElementById('better-bibtex-error-report-include-db').checked) {
+      out = tape.append(`${this.key}/database.json`, DB.serialize({ serializationMethod: 'pretty' }))
+      out = tape.append(`${this.key}/cache.json`, Cache.serialize({ serializationMethod: 'pretty' }))
     }
-    return this.zipfile
+
+    return gzip(out)
   }
 
   public async save(): Promise<void> {
-    const filename = await pick('Logs', 'save', [['Zip Archive (*.zip)', '*.zip']], `${this.key}.zip`)
-    if (filename) await OS.File.copy(await this.zip(), filename)
+    const filename = await pick('Logs', 'save', [['Tape Archive (*.tgz)', '*.tgz']], `${this.key}.tgz`)
+    if (filename) await OS.File.writeAtomic(filename, this.tar(), { tmpPath: filename + '.tmp' })
   }
 
   private async ping(region: string) {
@@ -168,18 +151,16 @@ export class ErrorReport {
     document = window.document
     window.ErrorReport = this
 
-    window.addEventListener('unload', async function() {
-      try {
-        if (this.zipfile && await OS.File.exists(this.zipfile)) await OS.File.remove(this.zipfile, { ignoreAbsent: true })
-      }
-      catch (err) {
-        log.debug('failed to unload ErrorReport', err)
-      }
-    })
-
     this.timestamp = (new Date()).toISOString().replace(/\..*/, '').replace(/:/g, '.')
 
     const wizard = document.getElementById('better-bibtex-error-report')
+
+    if (is7) {
+      wizard.getPageById('page-enable-debug').addEventListener('pageshow', this.show.bind(this))
+      wizard.getPageById('page-review').addEventListener('pageshow', this.show.bind(this))
+      wizard.getPageById('page-send').addEventListener('pageshow', () => { this.send().catch(err => log.debug('could not send debug log:', err)) })
+      wizard.getPageById('page-done').addEventListener('pageshow', this.show.bind(this))
+    }
 
     if (Zotero.Debug.enabled) wizard.pageIndex = 1
 
@@ -231,7 +212,7 @@ export class ErrorReport {
       this.bucket = `https://${s3.bucket}-${region.short}.s3-${region.region}.amazonaws.com${region.tld || ''}`
       this.key = `${Zotero.Utilities.generateObjectKey()}${this.params.scope ? '-refs' : ''}-${region.short}`
 
-      this.zipfile = OS.Path.join(Zotero.getTempDirectory().path, `${this.key}-${this.timestamp}.zip`)
+      this.tarball = OS.Path.join(Zotero.getTempDirectory().path, `${this.key}-${this.timestamp}.tgz`)
 
       continueButton.disabled = false
       continueButton.focus()

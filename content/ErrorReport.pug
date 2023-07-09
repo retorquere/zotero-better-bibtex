@@ -6,8 +6,8 @@
 | <?xml-stylesheet href="chrome://zotero/skin/preferences.css"?>
 | <?xml-stylesheet href="chrome://zotero/skin/zotero.css"?>
 | <?xml-stylesheet href="chrome://zotero-platform/content/overlay.css"?>
-| <?xml-stylesheet href="chrome://zotero-better-bibtex/skin/preferences.css"?>
-| <?xml-stylesheet href="chrome://zotero-better-bibtex/skin/error-report.css" type="text/css"?>
+| <?xml-stylesheet href="chrome://zotero-better-bibtex/content/skin/preferences.css"?>
+| <?xml-stylesheet href="chrome://zotero-better-bibtex/content/skin/error-report.css" type="text/css"?>
 | <!DOCTYPE window [
 |   <!ENTITY % ZoteroDTD SYSTEM "chrome://zotero/locale/zotero.dtd"> %ZoteroDTD;
 |   <!ENTITY % BBTDTD SYSTEM "chrome://zotero-better-bibtex/locale/zotero-better-bibtex.dtd"> %BBTDTD;
@@ -19,10 +19,10 @@ mixin wizard
       xmlns:html="http://www.w3.org/1999/xhtml"
       title='&better-bibtex_error-report.title;' width='550' height='550'
     )
-    wizardpage(onpageshow='window.ErrorReport.show()' label=' ')
+    wizardpage(pageid='page-enable-debug' onpageshow='window.ErrorReport.show()' label=' ')
       description.header(style='white-space: pre-wrap;') &better-bibtex_error-report_enable-debug;
       button(label='&better-bibtex_error-report_restart-with-logging-enabled.label;' oncommand='window.ErrorReport.restartWithDebugEnabled()')/
-    wizardpage(onpageshow='window.ErrorReport.show()' label=' ')
+    wizardpage(pageid='page-review' onpageshow='window.ErrorReport.show()' label=' ')
       description.header(style='white-space: pre-wrap;') &better-bibtex_error-report_review;
       textbox#better-bibtex-report-current.plain(flex='1' readonly='true')/
       textbox#better-bibtex-report-latest.plain.textbox-emph(flex='1' readonly='true')/
@@ -47,14 +47,14 @@ mixin wizard
         button(label='&better-bibtex_error-report_save.label;' oncommand='window.ErrorReport.save()')/
         hbox(flex='1')/
       description#better-bibtex-error-memory-use(style='white-space: pre-wrap;')/
-    wizardpage(onpageshow='window.ErrorReport.send()' label=' ')
+    wizardpage(pageid='page-send' onpageshow='window.ErrorReport.send()' label=' ')
       description &better-bibtex_error-report_submission-in-progress;
-    wizardpage(onpageshow='window.ErrorReport.show()' label=' ')
+    wizardpage(pageid='page-done' onpageshow='window.ErrorReport.show()' label=' ')
       description &better-bibtex_error-report_submitted;
       description#better-bibtex-report-result(hidden='true')
         description
           | &better-bibtex_error-report_report-id; 
-          textbox#better-bibtex-report-id.plain textbox-emph(flex='1' readonly='true')/
+          textbox#better-bibtex-report-id.plain.textbox-emph(flex='1' readonly='true')/
       description &better-bibtex_error-report_post-to-git-hub;
       description &better-bibtex_error-report_not-reviewed;
     script(src='chrome://zotero/content/include.js')
