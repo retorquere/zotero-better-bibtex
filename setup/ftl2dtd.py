@@ -58,14 +58,14 @@ class KeyLister(Visitor):
         self.generic_visit(message)
 
 def entity(key, value):
-  return f'<!ENTITY {key} "' + escape(value).replace('\u2068', '').replace('\u2069', '').replace('&#x27;', "'") + '">'
+  return f'<!ENTITY {key} "' + escape(value).replace('&#x27;', "'") + '">'
 
 for ftl in Path('locale').rglob('*/better-bibtex.ftl'):
   dtd = 'build/' + str(ftl).replace('/better-bibtex.ftl', '/zotero-better-bibtex.dtd')
   os.makedirs(os.path.dirname(dtd), exist_ok=True)
   with open(dtd, 'w') as dtd:
     locale = str(ftl).split('/')[1]
-    bundle = FluentBundle([locale])
+    bundle = FluentBundle([locale], use_isolating=False)
     resource = parse(ftl.read_text())
     bundle.add_resource(resource)
     for key in KeyLister.list(resource):
