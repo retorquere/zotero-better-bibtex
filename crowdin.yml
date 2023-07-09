@@ -1,5 +1,3 @@
 files:
-  - source: /locale/en-US/*.dtd
-    translation: /locale/%locale%/%original_file_name%
-  - source: /locale/en-US/*.properties
+  - source: /locale/en-US/*.ftl
     translation: /locale/%locale%/%original_file_name%
