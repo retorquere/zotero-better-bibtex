@@ -1,7 +1,3 @@
-better-bibtex = 
-  .title = Better BibTeX
-  .label = Better BibTeX
-
 better-bibtex_auto-export_delete = Deleting auto-export
 better-bibtex_auto-export_delete_confirm = Are you sure you want to delete this auto-export? This cannot be undone.
 better-bibtex_aux-scan_prompt = Tag name
@@ -256,9 +252,6 @@ better-bibtex_preferences_export-prefs =
 better-bibtex_preferences_export_automatic-tags = 
   .label = Include automatic tags in export
 
-better-bibtex_preferences_export_biblatex = 
-  .label = BibLaTeX
-
 better-bibtex_preferences_export_biblatex_ascii = 
   .label = Export unicode as plain-text latex commands
 
@@ -267,9 +260,6 @@ better-bibtex_preferences_export_biblatex_biblatex-extract-eprint =
 
 better-bibtex_preferences_export_biblatex_extended-name-format = 
   .label = Use BibLaTeX extended name format (requires biblatex 3.5)
-
-better-bibtex_preferences_export_bibtex = 
-  .label = BibTeX
 
 better-bibtex_preferences_export_bibtex_ascii = 
   .label = Export unicode as plain-text latex commands (recommended)
