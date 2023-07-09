@@ -38,12 +38,18 @@ function correction(ist, attr = '') {
   if (soll !== ist) bulk_mod[ist] = soll
 }
 
-class WizardDetector extends ASTWalker {
-  public foundWizard = false
+class Z7Detector extends ASTWalker {
+  public is7 = false
+
+  Conditional(node, history) {
+    if (node.test === 'is7') this.is7 = true
+
+    this.walk(node.consequent)
+    this.walk(node.alternate)
+    return node
+  }
 
   Tag(node) {
-    if (node.name === 'wizard') this.foundWizard = true
-
     for (const attr of node.attrs) {
       let prefix = ''
       attr.val.replace(/&([^;]+);/g, (m, id) => {
@@ -85,18 +91,18 @@ for (const src of pugs) {
   console.log(' ', src)
   const tgt = `build/${src.replace(/pug$/, 'xul')}`
 
-  const wizardDetector = new WizardDetector
+  const detector = new Z7Detector
   fs.writeFileSync(tgt, render(src, {
     pretty: true,
     plugins: [{
       preCodeGen(ast) {
-        wizardDetector.walk(ast)
+        detector.walk(ast)
         return ast
       },
     }],
   }))
 
-  if (wizardDetector.foundWizard) {
+  if (detector.is7) {
     fs.writeFileSync(tgt.replace('.xul', '.xhtml'), render(src, { pretty: true, is7: true }))
   }
 }
