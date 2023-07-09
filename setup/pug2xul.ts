@@ -77,35 +77,6 @@ class WizardDetector extends ASTWalker {
   }
 }
 
-class Z7Wizard extends ASTWalker {
-  Tag(node) {
-    if (node.name === 'wizard') {
-      return {
-        type: 'Tag',
-        name: 'window',
-        attrs: node.attrs.filter(a => a.name.startsWith('xmlns')),
-        attributeBlocks: [],
-        block: {
-          type: 'Block',
-          nodes: [
-            {
-              type: 'Tag',
-              name: 'script',
-              selfClosing: true,
-              block: { type: 'Block', nodes: [] },
-              attrs: [ { name: 'src', val: '"chrome://global/content/customElements.js"', mustEscape: true } ],
-              attributeBlocks: [],
-            },
-            { ...node, attrs: node.attrs.filter(a => !a.name.startsWith('xmlns')) },
-          ],
-        },
-      }
-    }
-
-    return node
-  }
-}
-
 function render(src, options) {
   return pug.renderFile(src, options).replace(/&amp;/g, '&').trim()
 }
@@ -126,17 +97,7 @@ for (const src of pugs) {
   }))
 
   if (wizardDetector.foundWizard) {
-    fs.writeFileSync(
-      tgt.replace('.xul', '.xhtml'),
-      render(src, {
-        pretty: true,
-        plugins: [{
-          preCodeGen(ast) {
-            return (new Z7Wizard).walk(ast)
-          },
-        }],
-      })
-    )
+    fs.writeFileSync(tgt.replace('.xul', '.xhtml'), render(src, { pretty: true, is7: true }))
   }
 }
 

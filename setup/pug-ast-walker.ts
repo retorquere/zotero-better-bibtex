@@ -5,7 +5,7 @@ export class ASTWalker {
 
     if (this[node.type]) return this[node.type](node, history)
 
-    throw new Error(`No handler for ${node.type}`)
+    throw new Error(`No handler for ${node.type} ${Object.keys(node)}`)
   }
 
   attr(node, name: string, required=false): string {
@@ -14,8 +14,25 @@ export class ASTWalker {
     return attr ? eval(attr.val) : null
   }
 
-  Tag(node, _history) {
-    node.block = this.walk(node.block)
+  Mixin(node, history) {
+    if (node.block) node.block = this.walk(node.block, history)
+    return node
+  }
+
+  NamedBlock(node, history) {
+    node.nodes = node.nodes.map(child => this.walk(child, history)).filter(child => child)
+    return node
+  }
+
+  Conditional(node, history) {
+    let keep = true
+    if (!(node.consequent = this.walk(node.consequent, history))) keep = false
+    if (!(node.alternate = this.walk(node.alternate, history))) keep = false
+    if (keep) return node
+  }
+
+  Tag(node, history) {
+    node.block = this.walk(node.block, history)
     return node
   }
 
