@@ -19,10 +19,10 @@ mixin wizard
       xmlns:html="http://www.w3.org/1999/xhtml"
       title='&better-bibtex_error-report.title;' width='550' height='550'
     )
-    wizardpage(pageid='page-enable-debug' onpageshow='window.ErrorReport.show()' label=' ')
+    wizardpage(pageid='page-enable-debug' label=' ')
       description.header(style='white-space: pre-wrap;') &better-bibtex_error-report_enable-debug;
       button(label='&better-bibtex_error-report_restart-with-logging-enabled.label;' oncommand='window.ErrorReport.restartWithDebugEnabled()')/
-    wizardpage(pageid='page-review' onpageshow='window.ErrorReport.show()' label=' ')
+    wizardpage(pageid='page-review' label=' ')
       description.header(style='white-space: pre-wrap;') &better-bibtex_error-report_review;
       textbox#better-bibtex-report-current.plain(flex='1' readonly='true')/
       textbox#better-bibtex-report-latest.plain.textbox-emph(flex='1' readonly='true')/
@@ -47,9 +47,9 @@ mixin wizard
         button(label='&better-bibtex_error-report_save.label;' oncommand='window.ErrorReport.save()')/
         hbox(flex='1')/
       description#better-bibtex-error-memory-use(style='white-space: pre-wrap;')/
-    wizardpage(pageid='page-send' onpageshow='window.ErrorReport.send()' label=' ')
+    wizardpage(pageid='page-send' label=' ')
       description &better-bibtex_error-report_submission-in-progress;
-    wizardpage(pageid='page-done' onpageshow='window.ErrorReport.show()' label=' ')
+    wizardpage(pageid='page-done' label=' ')
       description &better-bibtex_error-report_submitted;
       description#better-bibtex-report-result(hidden='true')
         description

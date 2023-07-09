@@ -12,7 +12,6 @@ import { DB } from './db/main'
 import { DB as Cache } from './db/cache'
 import { pick } from './file-picker'
 import * as l10n from './l10n'
-import { is7 } from './client'
 
 import Tar from 'tar-js'
 import { gzip } from 'pako'
@@ -154,13 +153,10 @@ export class ErrorReport {
     this.timestamp = (new Date()).toISOString().replace(/\..*/, '').replace(/:/g, '.')
 
     const wizard = document.getElementById('better-bibtex-error-report')
-
-    if (is7) {
-      wizard.getPageById('page-enable-debug').addEventListener('pageshow', this.show.bind(this))
-      wizard.getPageById('page-review').addEventListener('pageshow', this.show.bind(this))
-      wizard.getPageById('page-send').addEventListener('pageshow', () => { this.send().catch(err => log.debug('could not send debug log:', err)) })
-      wizard.getPageById('page-done').addEventListener('pageshow', this.show.bind(this))
-    }
+    wizard.getPageById('page-enable-debug').addEventListener('pageshow', this.show.bind(this))
+    wizard.getPageById('page-review').addEventListener('pageshow', this.show.bind(this))
+    wizard.getPageById('page-send').addEventListener('pageshow', () => { this.send().catch(err => log.debug('could not send debug log:', err)) })
+    wizard.getPageById('page-done').addEventListener('pageshow', this.show.bind(this))
 
     if (Zotero.Debug.enabled) wizard.pageIndex = 1
 
