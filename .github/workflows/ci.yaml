@@ -41,6 +41,56 @@ jobs:
           logs/
           minitests/
 
+  site:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        persist-credentials: false
+        submodules: true
+        fetch-depth: 0
+    - name: get package version
+      run: echo "version="`jq -r .version package.json` >> $GITHUB_ENV
+    - name: cancel spurious build on tagged version
+      uses: andymckay/cancel-action@master
+      if: github.event.head_commit.message == env.version && !startsWith(github.ref, 'refs/tags/')
+    - name: install python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+    - name: install node
+      uses: actions/setup-node@v3
+      with:
+        node-version: 16.x
+    - name: Cache python/node dependencies
+      id: cache
+      uses: actions/cache@v3
+      env:
+        cache-name: v3
+      with:
+        path: |
+          ~/.npm
+          ~/.nocache/pip
+          ${{ env.pythonLocation }}
+        key: ${{ runner.os }}-build-${{ env.pythonLocation }}-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('requirements.txt') }}
+    - name: install python packages
+      run: |
+        pip install packaging
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    - name: install node packages
+      run: npm install
+    - uses: peaceiris/actions-hugo@v2
+      with:
+        hugo-version: latest
+        extended: true
+    - run: npm run docs:deploy
+    - run: find site/public -type f
+    - uses: peaceiris/actions-gh-pages@v3
+      if: ${{ github.event_name == 'push' && (github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/tags/')) }}
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./site/public
   build:
     runs-on: ubuntu-latest
     steps:
@@ -94,17 +144,6 @@ jobs:
           xpi/
           gen/
 
-    - uses: peaceiris/actions-hugo@v2
-      with:
-        hugo-version: latest
-        extended: true
-    - run: npm run docs:deploy
-    - run: find site/public -type f | wc -l
-    - uses: peaceiris/actions-gh-pages@v3
-      if: ${{ github.event_name == 'push' && (github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/tags/')) }}
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./site/public
   test:
     needs:
     - build
