@@ -16,9 +16,9 @@
 mixin textbox
   if is7
     if attributes.multiline != 'true'
-      html:input(style='border: 0; background-color: lightgray')&attributes(attributes)/
+      html:input(type='text')&attributes(attributes)/
     else
-      html:textarea(style='border: 0; background-color: lightgray' cols='40' rows='5')&attributes(attributes)/
+      html:textarea(cols='40' rows='5')&attributes(attributes)/
   else
     textbox&attributes(attributes)/
 mixin wizard

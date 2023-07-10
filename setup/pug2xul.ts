@@ -10,7 +10,8 @@ import fast_safe_stringify from 'fast-safe-stringify'
 const pugs = [
   'content/ErrorReport.pug',
   'content/FirstRun.pug',
-  'content/Preferences.pug',
+  'content/Preferences/xul.pug',
+  'content/Preferences/xhtml.pug',
   'content/ServerURL.pug',
   'content/ZoteroPane.pug',
   'content/bulk-keys-confirm.pug',
@@ -89,7 +90,12 @@ function render(src, options) {
 
 for (const src of pugs) {
   console.log(' ', src)
-  const tgt = `build/${src.replace(/pug$/, 'xul')}`
+  let tgt = `build/${src.replace(/pug$/, 'xul')}`
+  switch (src) {
+    case 'content/Preferences/xul.pug':
+    case 'content/Preferences/xhtml.pug':
+      tgt = '/dev/null'
+  }
 
   const detector = new Z7Detector
   fs.writeFileSync(tgt, render(src, {

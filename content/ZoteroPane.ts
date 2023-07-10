@@ -49,7 +49,7 @@ export class ZoteroPane {
       menupopup.appendChild(elements.create('menuitem', {
         label: l10n.localize('better-bibtex_preferences_open.label'),
         oncommand: () => {
-          (this.window as any).openDialog('chrome://zotero-better-bibtex/content/Preferences.xul', 'better-bibtex-prefs-window')
+          (this.window as any).openDialog('chrome://zotero-better-bibtex/content/preferences.xul', 'better-bibtex-prefs-window')
         },
       }))
 

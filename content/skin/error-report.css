@@ -40,3 +40,13 @@ description {
 	color: red;
 	/* font-weight: bold; */
 }
+input[type='text']:read-only {
+  border: 0;
+  background-color: lightgrey;
+  outline: none;
+}
+textarea:read-only {
+  border: 0;
+  background-color: lightgrey;
+  outline: none;
+}

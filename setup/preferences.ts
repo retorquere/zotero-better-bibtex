@@ -16,7 +16,14 @@ const eta = new Eta
 
 function error(...args) {
   console.log(...args)
-  process.exit(1)
+  // process.exit(1)
+  throw new Error('oops')
+}
+
+
+function ensureDir(file) {
+  const parent = path.dirname(file)
+  if (!fs.existsSync(parent)) fs.mkdirSync(parent, { recursive: true })
 }
 
 const translators = glob.sync('translators/*.json')
@@ -28,8 +35,6 @@ const translators = glob.sync('translators/*.json')
     return tr
   })
 
-const src = process.argv[2] || 'content/Preferences.pug'
-const tgt = process.argv[3] || 'build/content/Preferences.xul'
 
 const l10n = new class {
   private strings = peggy.generate(fs.readFileSync('content/dtd-file.peggy', 'utf-8')).parse(fs.readFileSync('build/locale/en-US/zotero-better-bibtex.dtd', 'utf-8')) as Record<string, string>
@@ -446,11 +451,13 @@ The Better BibTeX hidden preferences are preceded by “extensions.zotero.transl
     for (const [slug, page] of Object.entries(this.pages)) {
       if (!page.path) error('no template for', slug)
       page.matter.content = eta.renderString(`\n\n{{% preferences/header %}}\n\n${page.content}`, prefs)
+      ensureDir(page.path)
       fs.writeFileSync(page.path, page.matter.stringify())
     }
   }
 
   saveDefaults(defaults) {
+    ensureDir(defaults)
     fs.writeFileSync(defaults, Object.values(this.preferences).map(p => `pref(${JSON.stringify(p.name)}, ${JSON.stringify(p.default)})\n`).join(''))
   }
 
@@ -467,6 +474,7 @@ The Better BibTeX hidden preferences are preceded by “extensions.zotero.transl
       }
     }
 
+    ensureDir('gen/preferences/meta.ts')
     fs.writeFileSync('gen/preferences.ts', eta.renderString(fs.readFileSync('setup/templates/preferences/preferences.ts.eta', 'utf-8'), { preferences }))
     fs.writeFileSync('gen/preferences/meta.ts', eta.renderString(fs.readFileSync('setup/templates/preferences/meta.ts.eta', 'utf-8'), { preferences, translators }))
   }
@@ -527,30 +535,34 @@ class XHTML extends BaseASTWalker {
 
   Text(node, history) {
     const id = this.l10n(node.val)
-    if (id) {
-      if (!id.match(/^[^.]+$/)) throw new Error(`not a valid l10n id ${id}`)
-      const parent = history[2]
-      const existing = parent.attr?.find(a => a.name === 'data-l10n-id')
-      if (existing) {
-        if (existing.val !== JSON.stringify(id)) throw new Error(`expected ${existing.val}, found ${JSON.stringify(id)}`)
-      }
-      else {
-        parent.attr = parent.attr || []
-        parent.attr.push({ name: 'data-l10n-id', val: JSON.stringify(id), mustEscape: false })
-      }
+    if (!id) return node
+
+    if (!id.match(/^[^.]+$/)) throw new Error(`not a valid l10n id ${id}`)
+    const parent = history.find(n => n.type === 'Tag')
+    const existing = parent.attrs?.find(a => a.name === 'data-l10n-id')
+    if (existing) {
+      if (existing.val !== JSON.stringify(id)) throw new Error(`expected ${existing.val}, found ${JSON.stringify(id)}`)
     }
-    return node
+    else {
+      parent.attrs = parent.attrs || []
+      parent.attrs.push({ name: 'data-l10n-id', val: JSON.stringify(id), mustEscape: false })
+    }
+
+    return undefined
   }
 }
 
-const build = path.dirname(tgt)
-if (!fs.existsSync(build)) fs.mkdirSync(build, { recursive: true })
+function render(src, tgt, options) {
+  const xul = pug.renderFile(src, options)
+  ensureDir(tgt)
+  fs.writeFileSync(tgt, xul.replace(/&amp;/g, '&').trim())
+}
 
 function walk(cls, ast) {
   (new cls).walk(ast, [])
 }
 
-let options = {
+render('content/Preferences/xul.pug', 'build/content/preferences.xul', {
   pretty: true,
   plugins: [{
     preCodeGen(ast, _options) { // eslint-disable-line prefer-arrow/prefer-arrow-functions
@@ -567,11 +579,10 @@ let options = {
       return ast
     },
   }],
-}
-let xul = pug.renderFile(src, options)
-fs.writeFileSync(tgt, xul.replace(/&amp;/g, '&').trim())
+})
 
-options = {
+render('content/Preferences/xhtml.pug', 'build/content/preferences.xhtml', {
+  is7: true,
   pretty: true,
   plugins: [{
     preCodeGen(ast, _options) { // eslint-disable-line prefer-arrow/prefer-arrow-functions
@@ -581,9 +592,7 @@ options = {
       return ast
     },
   }],
-}
-xul = pug.renderFile(src, options)
-fs.writeFileSync(tgt.replace(/[^/]+[.]xul$/, 'preferences.xhtml'), xul.replace(/&amp;/g, '&').trim())
+})
 
 for (const xul of glob.sync('content/*.xul')) {
   const source = fs.readFileSync(xul, 'utf-8')
