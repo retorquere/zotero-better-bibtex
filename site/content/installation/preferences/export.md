@@ -40,7 +40,7 @@ Try to convert a numeric edition value to English words during BibTeX exports
 
 
 
-### Add URLs to BibTeX export:
+### Add URLs to BibTeX export
 
 default: `no`
 
@@ -109,7 +109,7 @@ Options:
 * URL
 
 
-### Fields to omit from export (comma-separated):
+### Fields to omit from export (comma-separated)
 
 default: `<not set>`
 
