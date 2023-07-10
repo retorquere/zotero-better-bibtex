@@ -16,7 +16,7 @@
             {{ $weigth := div (sub (math.Log $count) (math.Log $min)) (sub (math.Log $max) (math.Log $min)) }}
             {{ $currentFontSize := (add $smallestFontSize (mul (sub $largestFontSize $smallestFontSize) $weigth) ) }}
             <!--Current font size: {{$currentFontSize}}-->
-            <span style="white-space: nowrap"><a href="{{ "/tags/" | relLangURL }}{{ $name | urlize }}" style="font-size:{{$currentFontSize}}{{$fontUnit}}"><i class="fas fa-tag"></i>{{ $name }}</a></span>
+            <span style="white-space: nowrap"><a href="{{ "/zotero-better-bibtex/tags/" | relLangURL }}{{ $name | urlize }}" style="font-size:{{$currentFontSize}}{{$fontUnit}}"><i class="fas fa-tag"></i>{{ $name }}</a></span>
         {{ end }}
     </div>
 {{ end }}
