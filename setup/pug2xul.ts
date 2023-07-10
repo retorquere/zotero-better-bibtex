@@ -42,7 +42,7 @@ class Z7Detector extends ASTWalker {
   public is7 = false
 
   Conditional(node) {
-    if (node.test === 'is7') this.is7 = true
+    if (node.test === 'is7' || node.test === '!is7') this.is7 = true
 
     this.walk(node.consequent)
     this.walk(node.alternate)

@@ -472,10 +472,19 @@ The Better BibTeX hidden preferences are preceded by “extensions.zotero.transl
   }
 }
 
-class XHTML extends ASTWalker {
+class XHTML extends BaseASTWalker {
   children(node) {
     if (node.block.nodes.find(node => node.type !== 'Tag')) error('unexpected', node.block.nodes.find(node => node.type !== 'Tag').type)
     return node.block.nodes.map(node => node.name).join(',')
+  }
+
+  l10n(val) {
+    if (typeof val !== 'string') return ''
+    const m = val.match(/(.*)&([^;]+);(.*)/)
+    if (!m) return ''
+    const [, pre, id, post ] = m
+    if (pre || post) throw new Error(`unexpected data around translation id in ${val}`)
+    return id
   }
 
   Tag(node, history) {
@@ -498,13 +507,38 @@ class XHTML extends ASTWalker {
         break
     }
 
+    let l10n_id = ''
+    for (const attr of node.attrs) {
+      const id = this.l10n(this.attr(node, attr.name))
+      if (id) {
+        if (!id.match(/^[^.]+[.][^.]+$/)) throw new Error(`no . in l10n attribute ${attr.name}`)
+        const [base, a] = id.split('.')
+        l10n_id = l10n_id || base
+        if (base !== l10n_id) throw new Error(`unexpected l10n base in ${id}, expected ${l10n_id}`)
+        if (a !== attr.name) throw new Error(`unexpected l10n attribute in ${id}, expected ${attr.name}`)
+        attr.val = '""'
+      }
+    }
+    if (l10n_id) node.attrs = [ ...node.attrs, { ...node.attrs[0], name: 'data-l10n-id', val: JSON.stringify(l10n_id) } ]
+
     this.walk(node.block, history)
     return node
   }
 
-  Text(node) {
-    if (node.val.startsWith('<?xml')) node.val = ''
-    if (node.val.startsWith('<!DOCTYPE')) node.val = ''
+  Text(node, history) {
+    const id = this.l10n(node.val)
+    if (id) {
+      if (!id.match(/^[^.]+$/)) throw new Error(`not a valid l10n id ${id}`)
+      const parent = history[2]
+      const existing = parent.attr?.find(a => a.name === 'data-l10n-id')
+      if (existing) {
+        if (existing.val !== JSON.stringify(id)) throw new Error(`expected ${existing.val}, found ${JSON.stringify(id)}`)
+      }
+      else {
+        parent.attr = parent.attr || []
+        parent.attr.push({ name: 'data-l10n-id', val: JSON.stringify(id), mustEscape: false })
+      }
+    }
     return node
   }
 }
@@ -513,7 +547,7 @@ const build = path.dirname(tgt)
 if (!fs.existsSync(build)) fs.mkdirSync(build, { recursive: true })
 
 function walk(cls, ast) {
-  (new cls).walk(ast)
+  (new cls).walk(ast, [])
 }
 
 let options = {
@@ -542,7 +576,6 @@ options = {
   plugins: [{
     preCodeGen(ast, _options) { // eslint-disable-line prefer-arrow/prefer-arrow-functions
       walk(StripConfig, ast)
-      walk(Flex, ast)
       walk(XHTML, ast)
 
       return ast
