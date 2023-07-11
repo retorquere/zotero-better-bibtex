@@ -1,6 +1,3 @@
-better-bibtex = 
-    .title = Better BibTeX
-    .label = Better BibTeX
 better-bibtex_auto-export_delete = Suppression de l'export automatique
 better-bibtex_auto-export_delete_confirm = Êtes-vous sûr de vouloir supprimer cette exportation automatique ? Cette opération est irréversible.
 better-bibtex_aux-scan_prompt = Nom de tag
@@ -130,8 +127,8 @@ better-bibtex_preferences_advanced_import_sentence-case_warning =
     
     Vous pouvez désactiver cette option, mais vous pouvez aussi vouloir désactiver « Appliquer la capitalisation aux titres » (qui a ses propres problèmes, voir l'aide pour cette option sur cette page).
     Avec « oui, mais en essayant d'exclure les titres déjà avec casse de phrase », BBT tentera de détecter les titres déjà avec casse de phrase et ne les modifiera pas à l'importation.
-better-bibtex_preferences_advanced_tab_import = 
-    .label = Importation
+better-bibtex_preferences_tab_import = 
+    .label = Import
 better-bibtex_preferences_advanced_tab_postscript = 
     .label = post script
 better-bibtex_preferences_advanced_tab_strings = 
@@ -192,16 +189,12 @@ better-bibtex_preferences_export-prefs =
     .label = Export des préférences de BetterBibTeX...
 better-bibtex_preferences_export_automatic-tags = 
     .label = Inclure les tags automatiques dans l'export
-better-bibtex_preferences_export_biblatex = 
-    .label = BibLaTeX
 better-bibtex_preferences_export_biblatex_ascii = 
     .label = Exporter les caractères Unicode en commandes LaTeX
 better-bibtex_preferences_export_biblatex_biblatex-extract-eprint = 
     .label = Extraire les informations JSTOR/Google Books/PubMed du champ « url » dans les champs « eprint »
 better-bibtex_preferences_export_biblatex_extended-name-format = 
     .label = Utiliser le format de nom étendu BibLaTeX (nécessite BibLaTeX 3.5)
-better-bibtex_preferences_export_bibtex = 
-    .label = BibTeX
 better-bibtex_preferences_export_bibtex_ascii = 
     .label = Exporter les caractères Unicode en commandes LaTeX (recommandé)
 better-bibtex_preferences_export_bibtex_urls = Ajouter les URLs à l'exportation :
@@ -245,8 +238,8 @@ better-bibtex_preferences_export_map-unicode_creator = Ajouter des accolades aux
 better-bibtex_preferences_export_map-unicode_math = Préférer les remplacements en mode mathématique
 better-bibtex_preferences_export_map-unicode_minimal-packages = Minimiser le nombre de packages LaTeX supplémentaires requis
 better-bibtex_preferences_export_map-unicode_text = Préférer les remplacements en mode texte
-better-bibtex_preferences_export_misc = 
-    .label = Divers
+better-bibtex_preferences_tab_misc = 
+    .label = Miscellaneous
 better-bibtex_preferences_export_quality-report = 
     .label = Inclure des commentaires concernant de potentiels problèmes avec les entrées exportées
 better-bibtex_preferences_export_quick-copy = 
