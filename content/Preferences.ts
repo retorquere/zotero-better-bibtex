@@ -24,14 +24,8 @@ Events.on('window-loaded', ({ win, href }: {win: Window, href: string}) => {
       new ZoteroPreferences(win)
       break
 
-    case 'chrome://zotero-better-bibtex/content/preferences.xul':
-      window = win as any;
-      (window as any).Zotero = Zotero
-      window.addEventListener('unload', () => {
-        Zotero.BetterBibTeX.PrefPane.unload()
-        window = null
-      })
-      Zotero.BetterBibTeX.PrefPane.load().catch(err => log.error(err))
+    case 'chrome://zotero-better-bibtex/content/preferences.xul': // BBT's own Z6 preferences
+      Zotero.BetterBibTeX.PrefPane.load(win).catch(err => log.error(err))
       break
   }
 })
@@ -445,10 +439,18 @@ export class PrefPane {
     Cache.reset('user-initiated')
   }
 
-  public async load(): Promise<void> {
+  public async load(win: Window): Promise<void> {
+    window = win as any;
+    (window as any).Zotero = Zotero
+    window.addEventListener('unload', () => {
+      Zotero.BetterBibTeX.PrefPane.unload()
+      window = null
+    })
+
     const deck = window.document.getElementById('better-bibtex-prefs-deck') as unknown as XUL.Deck
     deck.selectedIndex = 0
 
+    log.debug('preference.load', Zotero.BetterBibTeX.ready.isPending())
     await Zotero.BetterBibTeX.ready
 
     // bloody *@*&^@# html controls only sorta work for prefs

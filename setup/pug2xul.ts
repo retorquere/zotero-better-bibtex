@@ -4,12 +4,11 @@
 
 import * as pug from 'pug'
 import * as fs from 'fs'
-import { ASTWalker } from './pug-ast-walker'
+import { walk, SelfClosing, ASTWalker } from './pug-ast-walker'
 import fast_safe_stringify from 'fast-safe-stringify'
 
 const pugs = [
   'content/ErrorReport.pug',
-  'content/FirstRun.pug',
   'content/Preferences/xul.pug',
   'content/Preferences/xhtml.pug',
   'content/ServerURL.pug',
@@ -103,6 +102,7 @@ for (const src of pugs) {
     plugins: [{
       preCodeGen(ast) {
         detector.walk(ast)
+        walk(SelfClosing, ast)
         return ast
       },
     }],

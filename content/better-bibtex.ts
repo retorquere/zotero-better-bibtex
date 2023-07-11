@@ -21,7 +21,6 @@ import { ZoteroPane } from './ZoteroPane'
 import { newZoteroItemPane } from './ZoteroItemPane'
 import { ExportOptions } from './ExportOptions'
 import { PrefPane } from './Preferences'
-import { FirstRun } from './FirstRun'
 import { ErrorReport } from './ErrorReport'
 import { patch as $patch$, unpatch as $unpatch$ } from './monkey-patch'
 import { clean_pane_persist } from './clean_pane_persist'
@@ -731,7 +730,6 @@ export class BetterBibTeX {
 
   // panes
   public ExportOptions: ExportOptions = new ExportOptions
-  public FirstRun = FirstRun
   public ErrorReport = ErrorReport
   public PrefPane = new PrefPane
 
@@ -739,7 +737,6 @@ export class BetterBibTeX {
   private deferred = new Deferred<boolean>()
   public dir: string
 
-  private firstRun: { citekeyFormat: string, dragndrop: boolean, unabbreviate: boolean, strings: boolean }
   public debugEnabledAtStart: boolean
 
   public generateCSLJSON = generateCSLJSON
@@ -903,33 +900,10 @@ export class BetterBibTeX {
   }
 
   public async load(doc: Document): Promise<void> {
-    // progress.start(l10n.localize('better-bibtex_startup_waiting-for-zotero'))
-
-    // the zero-width-space is a marker to re-save the current default so it doesn't get replaced when the default changes later, which would change new keys suddenly
-    // its presence also indicates first-run, so right after the DB is ready, configure BBT
+    // the zero-width-space is a marker to re-save the current default so it doesn't get replaced
+    // when the default changes later, which would change new keys suddenly
     if (!Preference.citekeyFormat) Preference.citekeyFormat = Preference.default.citekeyFormat
-    const citekeyFormat = Preference.citekeyFormat
-    if (citekeyFormat.includes('\u200B')) {
-      const params = {
-        wrappedJSObject: {
-          citekeyFormat: 'bbt',
-          dragndrop: true,
-          unabbreviate: Preference.importJabRefAbbreviations,
-          strings: Preference.importJabRefStrings,
-        },
-      }
-      const ww = Components.classes['@mozilla.org/embedcomp/window-watcher;1'].getService(Components.interfaces.nsIWindowWatcher)
-      ww.openWindow(null, `chrome://zotero-better-bibtex/content/FirstRun.${is7 ? 'xhtml' : 'xul'}`, 'better-bibtex-first-run', 'chrome,centerscreen,modal', params)
-      this.firstRun = params.wrappedJSObject
-
-      Preference.citekeyFormat = (this.firstRun.citekeyFormat === 'zotero') ? 'zotero.clean' : citekeyFormat.replace(/\u200B/g, '')
-      Preference.importJabRefAbbreviations = this.firstRun.unabbreviate
-      Preference.importJabRefStrings = this.firstRun.strings
-      if (this.firstRun.dragndrop) Zotero.Prefs.set('export.quickCopy.setting', `export=${Translators.byLabel.BetterBibTeXCitationKeyQuickCopy.translatorID}`)
-    }
-    else {
-      this.firstRun = null
-    }
+    Preference.citekeyFormat = Preference.citekeyFormat.replace(/\u200B/g, '')
 
     if (typeof __estrace !== 'undefined') {
       flash(

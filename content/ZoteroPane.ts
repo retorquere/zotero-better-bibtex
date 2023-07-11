@@ -46,11 +46,17 @@ export class ZoteroPane {
         label: l10n.localize('better-bibtex_aux-scanner'),
         oncommand: () => Zotero.BetterBibTeX.scanAUX('tag'),
       }))
+      if (!is7) {
+        menupopup.appendChild(elements.create('menuitem', {
+          label: l10n.localize('better-bibtex_preferences_open.label'),
+          oncommand: () => {
+            (this.window as any).openDialog('chrome://zotero-better-bibtex/content/preferences.xul', 'better-bibtex-prefs-window')
+          },
+        }))
+      }
       menupopup.appendChild(elements.create('menuitem', {
-        label: l10n.localize('better-bibtex_preferences_open.label'),
-        oncommand: () => {
-          (this.window as any).openDialog('chrome://zotero-better-bibtex/content/preferences.xul', 'better-bibtex-prefs-window')
-        },
+        label: l10n.localize('better-bibtex_report-errors'),
+        oncommand: () => this.errorReport(),
       }))
 
       doc.getElementById('menu_HelpPopup').insertBefore(elements.create('menuitem', {

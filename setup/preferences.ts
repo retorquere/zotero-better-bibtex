@@ -9,7 +9,7 @@ import * as glob from 'glob-promise'
 import * as peggy from 'peggy'
 import * as matter from 'gray-matter'
 import * as _ from 'lodash'
-import { ASTWalker as BaseASTWalker } from './pug-ast-walker'
+import { walk, SelfClosing, ASTWalker as BaseASTWalker } from './pug-ast-walker'
 
 import { Eta } from 'eta'
 const eta = new Eta
@@ -513,6 +513,18 @@ class XHTML extends BaseASTWalker {
         }]
         node.attrs = node.attrs.filter(attr => attr.name !== 'label')
         break
+      case 'textbox':
+        if (node.attrs.find(a => a.name === 'multiline')) {
+          node.name = 'html:textarea'
+          // arbitrary size
+          for (const [name, val] of Object.entries({ cols: '40', rows: '5' })) {
+            if (!node.attrs.find(a => a.name === name)) node.attrs.push({ name, val: JSON.stringify(val), mustEscape: false })
+          }
+        }
+        else {
+          node.name = 'html:input'
+          node.attrs.push({ name: 'type', val: '"text"', mustEscape: false })
+        }
     }
 
     let l10n_id = ''
@@ -530,6 +542,17 @@ class XHTML extends BaseASTWalker {
     if (l10n_id) node.attrs = [ ...node.attrs, { ...node.attrs[0], name: 'data-l10n-id', val: JSON.stringify(l10n_id) } ]
 
     this.walk(node.block, history)
+
+    const duplicate: Record<string, string> = {}
+    for (const attr of node.attrs) {
+      if (attr.name !== 'class' && duplicate[attr.name]) {
+        throw new Error(`${node.name}.${attr.name}=${attr.val}`)
+      }
+      else {
+        duplicate[attr.name] = attr.val
+      }
+    }
+
     return node
   }
 
@@ -558,23 +581,19 @@ function render(src, tgt, options) {
   fs.writeFileSync(tgt, xul.replace(/&amp;/g, '&').trim())
 }
 
-function walk(cls, ast) {
-  (new cls).walk(ast, [])
-}
-
 render('content/Preferences/xul.pug', 'build/content/preferences.xul', {
   pretty: true,
   plugins: [{
     preCodeGen(ast, _options) { // eslint-disable-line prefer-arrow/prefer-arrow-functions
-      const walker = new Docs
-      walker.walk(ast, [])
-      walker.savePages('site/content/installation/preferences')
-      walker.saveDefaults('build/defaults/preferences/defaults.js')
-      walker.saveDefaults('build/prefs.js')
-      walker.saveTypescript()
+      const docs = walk(Docs, ast)
+      docs.savePages('site/content/installation/preferences')
+      docs.saveDefaults('build/defaults/preferences/defaults.js')
+      docs.saveDefaults('build/prefs.js')
+      docs.saveTypescript()
 
       walk(StripConfig, ast)
       walk(Flex, ast)
+      walk(SelfClosing, ast)
 
       return ast
     },
@@ -588,6 +607,7 @@ render('content/Preferences/xhtml.pug', 'build/content/preferences.xhtml', {
     preCodeGen(ast, _options) { // eslint-disable-line prefer-arrow/prefer-arrow-functions
       walk(StripConfig, ast)
       walk(XHTML, ast)
+      walk(SelfClosing, ast)
 
       return ast
     },
