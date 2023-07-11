@@ -173,9 +173,6 @@ better-bibtex_preferences_advanced_import_sentence-case_warning = Bib(La)TeX ent
     You can turn this off, but you may then also want to disable `Apply title-casing to titles` (which has its own problems, see the help entry for that option on this page).
     With 'yes, but try to exclude already-sentence-cased titles', BBT will attempt to detect titles that are already sentence cased and leave them as-is on import.
 
-better-bibtex_preferences_tab_import = 
-  .label = Import
-
 better-bibtex_preferences_advanced_tab_postscript = 
   .label = postscript
 
@@ -312,8 +309,6 @@ better-bibtex_preferences_export_map-unicode_creator = Add braces to accented ch
 better-bibtex_preferences_export_map-unicode_math = Prefer math-mode replacements
 better-bibtex_preferences_export_map-unicode_minimal-packages = Minimize additional latex packages required
 better-bibtex_preferences_export_map-unicode_text = Prefer text-mode replacements
-better-bibtex_preferences_tab_misc = 
-  .label = Miscellaneous
 
 better-bibtex_preferences_export_quality-report = 
   .label = Include comments about potential problems with the exported entries
@@ -359,14 +354,20 @@ better-bibtex_preferences_rescan-citekeys =
 better-bibtex_preferences_reset-cache = 
   .label = Reset cache
 
-better-bibtex_preferences_tab_auto-export = 
-  .label = Automatic export
+better-bibtex_preferences_tab_auto-export = Automatic export
+  .label = { better-bibtex_preferences_tab_auto-export }
 
-better-bibtex_preferences_tab_citekey = 
-  .label = Citation keys
+better-bibtex_preferences_tab_citekey = Citation keys
+  .label = { better-bibtex_preferences_tab_citekey }
 
-better-bibtex_preferences_tab_export = 
-  .label = Export
+better-bibtex_preferences_tab_export = Export
+  .label = { better-bibtex_preferences_tab_export }
+
+better-bibtex_preferences_tab_import = Import
+  .label = { better-bibtex_preferences_tab_import }
+
+better-bibtex_preferences_tab_misc = Miscellaneous
+  .label = { better-bibtex_preferences_tab_misc }
 
 better-bibtex_report-errors = Send Better BibTeX debug log...
 better-bibtex_server-url = 
