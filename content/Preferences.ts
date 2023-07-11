@@ -15,6 +15,7 @@ import * as l10n from './l10n'
 import { Events } from './events'
 import { pick } from './file-picker'
 import { flash } from './flash'
+import { is7 } from './client'
 
 // safe to keep "global" since only one pref pane will be loaded at any one time
 var window: Window & { sizeToContent(): void } // eslint-disable-line no-var
@@ -402,11 +403,11 @@ export class PrefPane {
     const msg = window.document.getElementById('better-bibtex-citekeyFormat-error') as HTMLInputElement
     msg.value = error
     msg.setAttribute('style', style)
-    msg.style.visibility = error ? 'visible' : 'hidden'
+    msg.style.display = error ? 'block' : 'none'
 
     const active = window.document.getElementById('id-better-bibtex-preferences-citekeyFormat')
     const label = window.document.getElementById('id-better-bibtex-label-citekeyFormat')
-    active.style.visibility = label.style.visibility = Preference.citekeyFormat === Preference.citekeyFormatEditing ? 'hidden' : 'visible'
+    active.style.display = label.style.display = Preference.citekeyFormat === Preference.citekeyFormatEditing ? 'none' : 'block'
   }
 
   public checkPostscript(): void {
@@ -448,20 +449,22 @@ export class PrefPane {
         window = null
       })
 
-      const deck = window.document.getElementById('better-bibtex-prefs-deck') as unknown as XUL.Deck
-      deck.selectedIndex = 0
+      if (!is7) {
+        const deck = window.document.getElementById('better-bibtex-prefs-deck') as unknown as XUL.Deck
+        deck.selectedIndex = 0
 
-      log.debug('preference.load', Zotero.BetterBibTeX.ready.isPending())
-      await Zotero.BetterBibTeX.ready
+        await Zotero.BetterBibTeX.ready
 
-      // bloody *@*&^@# html controls only sorta work for prefs
-      for (const node of Array.from(window.document.querySelectorAll("select[preference], input[preference][type='range']"))) {
-        (node as HTMLInputElement).value = Preference[node.getAttribute('preference').replace('extensions.zotero.translators.better-bibtex.', '')]
+        // bloody *@*&^@# html controls only sorta work for prefs
+        for (const node of Array.from(window.document.querySelectorAll("select[preference], input[preference][type='range']"))) {
+          (node as HTMLInputElement).value = Preference[node.getAttribute('preference').replace('extensions.zotero.translators.better-bibtex.', '')]
+        }
+
+        deck.selectedIndex = 1
       }
 
       window.document.getElementById('rescan-citekeys').hidden = !Zotero.Debug.enabled
 
-      deck.selectedIndex = 1
 
       this.autoexport.load()
 

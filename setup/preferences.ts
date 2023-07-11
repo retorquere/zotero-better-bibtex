@@ -103,49 +103,46 @@ class Flex extends ASTWalker {
 
   Tag(node) {
     const flex = this.flex(node)
-    switch (node.name) {
-      case 'vbox':
-      case 'hbox':
-      case 'grid':
-      case 'columns':
-      case 'column':
-      case 'rows':
-      case 'row':
-      case 'radiogroup':
-      case 'groupbox':
-      case 'textbox':
-      case 'tabbox':
-      case 'tabpanels':
-      case 'tabpanel':
-      case 'deck':
-      case 'prefpane':
-        if (!flex) node.attrs.push({ name: 'flex', val: "'1'", mustEscape: false })
-        break
-      case 'prefwindow':
-      case 'tabs':
-      case 'tab':
-      case 'caption':
-      case 'preferences':
-      case 'preference':
-      case 'popupset':
-      case 'tooltip':
-      case 'description':
-      case 'label':
-      case 'checkbox':
-      case 'radio':
-      case 'button':
-      case 'image':
-      case 'separator':
-      case 'script':
-      case 'html:input':
-      case 'html:select':
-      case 'html:option':
-      case 'html:linkset':
-      case 'html:link':
-        if (flex) throw new Error(`${node.name} has flex ${flex}`)
-        break
-      default:
-        throw `no flex on ${node.name}` // eslint-disable-line no-throw-literal
+    if (!node.name.startsWith('html:')) {
+      switch (node.name) {
+        case 'vbox':
+        case 'hbox':
+        case 'grid':
+        case 'columns':
+        case 'column':
+        case 'rows':
+        case 'row':
+        case 'radiogroup':
+        case 'groupbox':
+        case 'textbox':
+        case 'tabbox':
+        case 'tabpanels':
+        case 'tabpanel':
+        case 'deck':
+        case 'prefpane':
+          if (!flex) node.attrs.push({ name: 'flex', val: "'1'", mustEscape: false })
+          break
+        case 'prefwindow':
+        case 'tabs':
+        case 'tab':
+        case 'caption':
+        case 'preferences':
+        case 'preference':
+        case 'popupset':
+        case 'tooltip':
+        case 'description':
+        case 'label':
+        case 'checkbox':
+        case 'radio':
+        case 'button':
+        case 'image':
+        case 'separator':
+        case 'script':
+          if (flex) throw new Error(`${node.name} has flex ${flex}`)
+          break
+        default:
+          throw `no flex on ${node.name}` // eslint-disable-line no-throw-literal
+      }
     }
     node.block = this.walk(node.block)
     return node
@@ -290,6 +287,22 @@ class Docs extends ASTWalker {
     const level = history.filter(n => n.$section).length + 1 + offset
     if (label.includes('<%') && this.pages[this.page].content.includes(label)) error('duplicate', label)
     this.pages[this.page].content += `${'#'.repeat(level)} ${label}\n\n`
+  }
+
+  Conditional(node, history) {
+    // only walk non-7 for docs
+    switch (node.test) {
+      case 'is7':
+        this.walk(node.alternate, history)
+        break
+      case '!is7':
+        this.walk(node.consequent, history)
+        break
+      default:
+        throw new Error(`Unexpected conditional test ${node.test}`)
+    }
+
+    return node
   }
 
   Tag(node, history) {
