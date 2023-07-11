@@ -126,7 +126,7 @@ better-bibtex_preferences_advanced_import_sentence-case_warning =
     
     Du kannst dies deaktivieren, aber du kannst `Titelgehäuse auf Titel übertragen` deaktivieren (welches seine eigenen Probleme hat siehe den Hilfeeintrag für diese Option auf dieser Seite).
     Mit 'Ja, aber versuchen Sie bereits verurteilte Titel auszuschließen', BBT wird versuchen, bereits verurteilte Titel zu erkennen und sie wie beim Import zu belassen.
-better-bibtex_preferences_advanced_tab_import = 
+better-bibtex_preferences_tab_import = 
     .label = Import
 better-bibtex_preferences_advanced_tab_postscript = 
     .label = Postscript
@@ -237,8 +237,8 @@ better-bibtex_preferences_export_map-unicode_creator = Add braces to accented ch
 better-bibtex_preferences_export_map-unicode_math = Mathematikmodus-Ersetzungen bevorzugen
 better-bibtex_preferences_export_map-unicode_minimal-packages = Zusätzlich benötigte Latex-Pakete minimieren
 better-bibtex_preferences_export_map-unicode_text = Textmodus-Ersetzungen bevorzugen
-better-bibtex_preferences_export_misc = 
-    .label = Verschiedenes
+better-bibtex_preferences_tab_misc = 
+    .label = Miscellaneous
 better-bibtex_preferences_export_quality-report = 
     .label = Kommentare über mögliche Probleme mit den exportieren Einträgen hinzufügen
 better-bibtex_preferences_export_quick-copy = 
