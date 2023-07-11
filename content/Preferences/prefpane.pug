@@ -14,52 +14,25 @@ popupset
   tooltip#tooltip-retainCache
     description &better-bibtex_preferences_advanced_export_retain-cache_warning;
 
-if is7
-  html:hr
-  groupbox
-    label
-      html:h2(data-l10n-id='better-bibtex_preferences_tab_citekey')
-      include citekeys.pug
-  html:hr
-  groupbox
-    label
-      html:h2(data-l10n-id='better-bibtex_preferences_tab_export')
-      include export.pug
-  html:hr
-  groupbox
-    label
-      html:h2(data-l10n-id='better-bibtex_preferences_tab_auto-export')
-      include autoexport.pug
-  html:hr
-  groupbox
-    label
-      html:h2(data-l10n-id='better-bibtex_preferences_tab_import')
-      include import.pug
-  html:hr
-  groupbox
-    label
-      html:h2(data-l10n-id='better-bibtex_preferences_tab_misc')
-      include misc.pug
-else
-  deck#better-bibtex-prefs-deck(selectedIndex='0')
-    label#better-bibtex-loading &better-bibtex_preferences_prefpane_loading;
+deck#better-bibtex-prefs-deck(selectedIndex='0')
+  label#better-bibtex-loading &better-bibtex_preferences_prefpane_loading;
 
-    tabbox#better-bibtex-prefs-tabbox
-      tabs#better-bibtex-prefs-tabs(onselect="Zotero.BetterBibTeX.PrefPane.refresh()")
-        tab#better-bibtex-prefs-citekey(label="&better-bibtex_preferences_tab_citekey.label;")
-        tab#better-bibtex-prefs-export(label="&better-bibtex_preferences_tab_export.label;")
-        tab#better-bibtex-prefs-auto-export(label="&better-bibtex_preferences_tab_auto-export.label;")
-        tab(label='&better-bibtex_preferences_tab_import.label;')
-        tab(label='&better-bibtex_preferences_tab_misc.label;')
+  tabbox#better-bibtex-prefs-tabbox
+    tabs#better-bibtex-prefs-tabs(onselect="Zotero.BetterBibTeX.PrefPane.refresh()")
+      tab#better-bibtex-prefs-citekey(label="&better-bibtex_preferences_tab_citekey.label;")
+      tab#better-bibtex-prefs-export(label="&better-bibtex_preferences_tab_export.label;")
+      tab#better-bibtex-prefs-auto-export(label="&better-bibtex_preferences_tab_auto-export.label;")
+      tab(label='&better-bibtex_preferences_tab_import.label;')
+      tab(label='&better-bibtex_preferences_tab_misc.label;')
 
-      tabpanels#better-bibtex-prefs-tabpanels(flex=1)
-        tabpanel(bbt:page='_index' flex=1 orient="vertical")
-          include citekeys.pug
-        tabpanel(bbt:page='export' flex=1 orient="vertical")
-          include export.pug
-        tabpanel(bbt:page='automatic-export' flex=1 orient="vertical")
-          include autoexport.pug
-        tabpanel(bbt:page='import' flex=1 orient="vertical")
-          include import.pug
-        tabpanel(bbt:page='miscellaneous' flex=1 orient="vertical")
-          include misc.pug
+    tabpanels#better-bibtex-prefs-tabpanels(flex=1)
+      tabpanel(bbt:page='_index' flex=1 orient="vertical")
+        include citekeys.pug
+      tabpanel(bbt:page='export' flex=1 orient="vertical")
+        include export.pug
+      tabpanel(bbt:page='automatic-export' flex=1 orient="vertical")
+        include autoexport.pug
+      tabpanel(bbt:page='import' flex=1 orient="vertical")
+        include import.pug
+      tabpanel(bbt:page='miscellaneous' flex=1 orient="vertical")
+        include misc.pug

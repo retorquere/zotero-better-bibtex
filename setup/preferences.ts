@@ -508,6 +508,39 @@ class XHTML extends BaseASTWalker {
     return id
   }
 
+  tag(name, attrs = {}, nodes = []) {
+    return {
+      type: 'Tag',
+      name,
+      block: {
+        type: 'Block',
+        nodes,
+      },
+      attrs: Object.entries(attrs).map(([k, v]) => ({ name: k, val: JSON.stringify(v), mustEscape: false })),
+      attributeBlocks: [],
+    }
+  }
+
+  tabbox(node, indent) {
+    const tabs = node.block.nodes.find(n => n.name === 'tabs').block.nodes
+    const tabpanels = node.block.nodes.find(n => n.name === 'tabpanels').block.nodes
+
+    const nodes = []
+    tabs.forEach((tab, i) => {
+      const tabpanel = tabpanels[i]
+
+      const label = this.attr(tab, 'label', true)
+      const l10n = label.includes('&') ? { 'data-l10n-id': label.replace(/&([^;.]+).label;/, '$1') }: {}
+      nodes.push(this.tag('groupbox', { style: `border-top: 1px solid black; border-left: 1px solid black; margin-left: ${indent}em` }, [
+        this.tag('label', {}, [
+          this.tag('html:h2', l10n, label.includes('&') ? [] : [ { type: 'Text', val: label } ]),
+        ]),
+        ...tabpanel.block.nodes,
+      ]))
+    })
+    return nodes
+  }
+
   Tag(node, history) {
     switch (node.name) {
       case 'menulist':
@@ -538,6 +571,7 @@ class XHTML extends BaseASTWalker {
           node.name = 'html:input'
           node.attrs.push({ name: 'type', val: '"text"', mustEscape: false })
         }
+        break
     }
 
     let l10n_id = ''
@@ -554,7 +588,7 @@ class XHTML extends BaseASTWalker {
     }
     if (l10n_id) node.attrs = [ ...node.attrs, { name: 'data-l10n-id', val: JSON.stringify(l10n_id), mustEscape: false } ]
 
-    this.walk(node.block, history)
+    node.block = this.walk(node.block, history)
 
     const duplicate: Record<string, string> = {}
     for (const attr of node.attrs) {
@@ -567,6 +601,25 @@ class XHTML extends BaseASTWalker {
     }
 
     return node
+  }
+
+  Block(block, history) {
+    let nodes = []
+    for (let node of block.nodes) {
+      if (node.type === 'Tag' && node.name === 'deck' && this.attr(node, 'id') === 'better-bibtex-prefs-deck') {
+        node = node.block.nodes.find(n => n.type === 'Tag' && n.name === 'tabbox')
+      }
+
+      if (node.type === 'Tag' && node.name === 'tabbox') {
+        const indent = history.filter(n => n.name === 'groupbox' && n.attrs.find(a => a.name === 'style')).length
+        nodes = [...nodes, ...(this.tabbox(node, indent).map(n => this.walk(n, history))) ]
+      }
+      else {
+        nodes.push(this.walk(node, history))
+      }
+    }
+    block.nodes = nodes.filter(n => n)
+    return block
   }
 
   Text(node, history) {
