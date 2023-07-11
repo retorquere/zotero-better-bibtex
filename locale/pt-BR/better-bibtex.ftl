@@ -126,7 +126,7 @@ better-bibtex_preferences_advanced_import_sentence-case_warning =
     
     You can turn this off, but you may then also want to disable `Apply title-casing to titles` (which has its own problems, see the help entry for that option on this page).
     With 'yes, but try to exclude already-sentence-cased titles', BBT will attempt to detect titles that are already sentence cased and leave them as-is on import.
-better-bibtex_preferences_advanced_tab_import = 
+better-bibtex_preferences_tab_import = 
     .label = Import
 better-bibtex_preferences_advanced_tab_postscript = 
     .label = postscript
@@ -237,7 +237,7 @@ better-bibtex_preferences_export_map-unicode_creator = Add braces to accented ch
 better-bibtex_preferences_export_map-unicode_math = Prefer math-mode replacements
 better-bibtex_preferences_export_map-unicode_minimal-packages = Minimize additional latex packages required
 better-bibtex_preferences_export_map-unicode_text = Prefer text-mode replacements
-better-bibtex_preferences_export_misc = 
+better-bibtex_preferences_tab_misc = 
     .label = Miscellaneous
 better-bibtex_preferences_export_quality-report = 
     .label = Include comments about potential problems with the exported entries
