@@ -440,34 +440,39 @@ export class PrefPane {
   }
 
   public async load(win: Window): Promise<void> {
-    window = win as any;
-    (window as any).Zotero = Zotero
-    window.addEventListener('unload', () => {
-      Zotero.BetterBibTeX.PrefPane.unload()
-      window = null
-    })
+    try {
+      window = win as any;
+      (window as any).Zotero = Zotero
+      window.addEventListener('unload', () => {
+        Zotero.BetterBibTeX.PrefPane.unload()
+        window = null
+      })
 
-    const deck = window.document.getElementById('better-bibtex-prefs-deck') as unknown as XUL.Deck
-    deck.selectedIndex = 0
+      const deck = window.document.getElementById('better-bibtex-prefs-deck') as unknown as XUL.Deck
+      deck.selectedIndex = 0
 
-    log.debug('preference.load', Zotero.BetterBibTeX.ready.isPending())
-    await Zotero.BetterBibTeX.ready
+      log.debug('preference.load', Zotero.BetterBibTeX.ready.isPending())
+      await Zotero.BetterBibTeX.ready
 
-    // bloody *@*&^@# html controls only sorta work for prefs
-    for (const node of Array.from(window.document.querySelectorAll("select[preference], input[preference][type='range']"))) {
-      (node as HTMLInputElement).value = Preference[node.getAttribute('preference').replace('extensions.zotero.translators.better-bibtex.', '')]
+      // bloody *@*&^@# html controls only sorta work for prefs
+      for (const node of Array.from(window.document.querySelectorAll("select[preference], input[preference][type='range']"))) {
+        (node as HTMLInputElement).value = Preference[node.getAttribute('preference').replace('extensions.zotero.translators.better-bibtex.', '')]
+      }
+
+      window.document.getElementById('rescan-citekeys').hidden = !Zotero.Debug.enabled
+
+      deck.selectedIndex = 1
+
+      this.autoexport.load()
+
+      this.checkCitekeyFormat()
+      this.checkPostscript()
+      this.refresh()
+      this.timer = typeof this.timer === 'number' ? this.timer : window.setInterval(this.refresh.bind(this), 500)  // eslint-disable-line no-magic-numbers
     }
-
-    window.document.getElementById('rescan-citekeys').hidden = !Zotero.Debug.enabled
-
-    deck.selectedIndex = 1
-
-    this.autoexport.load()
-
-    this.checkCitekeyFormat()
-    this.checkPostscript()
-    this.refresh()
-    this.timer = typeof this.timer === 'number' ? this.timer : window.setInterval(this.refresh.bind(this), 500)  // eslint-disable-line no-magic-numbers
+    catch (err) {
+      log.debug('error loading preferences:', err)
+    }
   }
 
   public unload(): void {

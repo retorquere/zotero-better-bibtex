@@ -80,7 +80,7 @@ export async function startup({ resourceURI, rootURI = resourceURI.spec }, reaso
     pluginID: 'better-bibtex@iris-advies.com',
     src: `${rootURI}content/preferences.xhtml`,
     label: 'Better BibTeX',
-    scripts: [`${rootURI}content/preferences.js`],
+    // scripts: [`${rootURI}content/preferences.js`],
     defaultXUL: true,
   })
   log('startup done')

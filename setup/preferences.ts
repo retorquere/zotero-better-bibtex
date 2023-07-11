@@ -539,7 +539,7 @@ class XHTML extends BaseASTWalker {
         attr.val = '""'
       }
     }
-    if (l10n_id) node.attrs = [ ...node.attrs, { ...node.attrs[0], name: 'data-l10n-id', val: JSON.stringify(l10n_id) } ]
+    if (l10n_id) node.attrs = [ ...node.attrs, { name: 'data-l10n-id', val: JSON.stringify(l10n_id), mustEscape: false } ]
 
     this.walk(node.block, history)
 
