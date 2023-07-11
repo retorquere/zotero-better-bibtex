@@ -128,7 +128,7 @@ better-bibtex_preferences_advanced_import_sentence-case_warning =
     Vous pouvez désactiver cette option, mais vous pouvez aussi vouloir désactiver « Appliquer la capitalisation aux titres » (qui a ses propres problèmes, voir l'aide pour cette option sur cette page).
     Avec « oui, mais en essayant d'exclure les titres déjà avec casse de phrase », BBT tentera de détecter les titres déjà avec casse de phrase et ne les modifiera pas à l'importation.
 better-bibtex_preferences_tab_import = 
-    .label = Import
+    .label = Importation
 better-bibtex_preferences_advanced_tab_postscript = 
     .label = post script
 better-bibtex_preferences_advanced_tab_strings = 
@@ -239,7 +239,7 @@ better-bibtex_preferences_export_map-unicode_math = Préférer les remplacements
 better-bibtex_preferences_export_map-unicode_minimal-packages = Minimiser le nombre de packages LaTeX supplémentaires requis
 better-bibtex_preferences_export_map-unicode_text = Préférer les remplacements en mode texte
 better-bibtex_preferences_tab_misc = 
-    .label = Miscellaneous
+    .label = Divers
 better-bibtex_preferences_export_quality-report = 
     .label = Inclure des commentaires concernant de potentiels problèmes avec les entrées exportées
 better-bibtex_preferences_export_quick-copy = 
