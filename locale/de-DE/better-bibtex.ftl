@@ -129,10 +129,10 @@ better-bibtex_preferences_advanced_import_sentence-case_warning =
     
     Du kannst dies deaktivieren, aber du kannst `Titelgehäuse auf Titel übertragen` deaktivieren (welches seine eigenen Probleme hat siehe den Hilfeeintrag für diese Option auf dieser Seite).
     Mit 'Ja, aber versuchen Sie bereits verurteilte Titel auszuschließen', BBT wird versuchen, bereits verurteilte Titel zu erkennen und sie wie beim Import zu belassen.
-better-bibtex_preferences_advanced_tab_postscript = 
-    .label = Postscript
-better-bibtex_preferences_advanced_tab_strings = 
-    .label = @string-Definitionen
+better-bibtex_preferences_advanced_tab_postscript = postscript
+    .label = { better-bibtex_preferences_advanced_tab_postscript }
+better-bibtex_preferences_advanced_tab_strings = @string definitions
+    .label = { better-bibtex_preferences_advanced_tab_strings }
 better-bibtex_preferences_auto-abbrev = 
     .label = Kürze Zeitschriftentitel automatisch ab, wenn kein Wert explizit gesetzt wurde
 better-bibtex_preferences_auto-abbrev_style = Abkürzungsstil:
@@ -215,8 +215,8 @@ better-bibtex_preferences_export_bibtex_urls_url = im 'url'-Feld
     .label = { better-bibtex_preferences_export_bibtex_urls_url }
 better-bibtex_preferences_export_bibtex_urls_url-ish = im "url"-Feld, aber davon ausgehend, dass das "url"-Paket nicht geladen wurde
     .label = { better-bibtex_preferences_export_bibtex_urls_url-ish }
-better-bibtex_preferences_export_fields = 
-    .label = Felder
+better-bibtex_preferences_export_fields = Fields
+    .label = { better-bibtex_preferences_export_fields }
 better-bibtex_preferences_export_fields_bibtex-edition-ordinal = 
     .label = Export numeric edition as English-written ordinals
 better-bibtex_preferences_export_fields_bibtex-particle-no-op = 
@@ -267,8 +267,8 @@ better-bibtex_preferences_export_map-unicode_text = Textmodus-Ersetzungen bevorz
     .label = { better-bibtex_preferences_export_map-unicode_text }
 better-bibtex_preferences_export_quality-report = 
     .label = Kommentare über mögliche Probleme mit den exportieren Einträgen hinzufügen
-better-bibtex_preferences_export_quick-copy = 
-    .label = Schnellkopie
+better-bibtex_preferences_export_quick-copy = Quick-Copy
+    .label = .label = { better-bibtex_preferences_export_quick-copy }
 better-bibtex_preferences_export_quick-copy_explanation = Schnellkopie/Drag-and-Drop-Zitat
 better-bibtex_preferences_export_quick-copy_format = Schnellkopie-Format
 better-bibtex_preferences_export_quick-copy_atom = Atom
