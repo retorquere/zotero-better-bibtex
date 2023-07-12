@@ -132,7 +132,7 @@ better-bibtex_preferences_advanced_import_sentence-case_warning =
     Avec « oui, mais en essayant d'exclure les titres déjà avec casse de phrase », BBT tentera de détecter les titres déjà avec casse de phrase et ne les modifiera pas à l'importation.
 better-bibtex_preferences_advanced_tab_postscript = postscript
     .label = { better-bibtex_preferences_advanced_tab_postscript }
-better-bibtex_preferences_advanced_tab_strings = @string definitions
+better-bibtex_preferences_advanced_tab_strings = Définitions des @string
     .label = { better-bibtex_preferences_advanced_tab_strings }
 better-bibtex_preferences_auto-abbrev = 
     .label = Abréger automatiquement le titre du journal si aucun n'est explicitement défini
@@ -216,7 +216,7 @@ better-bibtex_preferences_export_bibtex_urls_url = dans le champ « url »
     .label = { better-bibtex_preferences_export_bibtex_urls_url }
 better-bibtex_preferences_export_bibtex_urls_url-ish = dans le champ « url » mais en supposant que le package « url » n'est pas chargé
     .label = { better-bibtex_preferences_export_bibtex_urls_url-ish }
-better-bibtex_preferences_export_fields = Fields
+better-bibtex_preferences_export_fields = Gestion des champs
     .label = { better-bibtex_preferences_export_fields }
 better-bibtex_preferences_export_fields_bibtex-edition-ordinal = 
     .label = Exporter l'édition numérique sous forme d'ordinaux écrits en anglais
@@ -268,7 +268,7 @@ better-bibtex_preferences_export_map-unicode_text = Préférer les remplacements
     .label = { better-bibtex_preferences_export_map-unicode_text }
 better-bibtex_preferences_export_quality-report = 
     .label = Inclure des commentaires concernant de potentiels problèmes avec les entrées exportées
-better-bibtex_preferences_export_quick-copy = Quick-Copy
+better-bibtex_preferences_export_quick-copy = Copie rapide
     .label = .label = { better-bibtex_preferences_export_quick-copy }
 better-bibtex_preferences_export_quick-copy_explanation = Copie rapide/glissé-déposé des citations
 better-bibtex_preferences_export_quick-copy_format = Format de copie rapide
