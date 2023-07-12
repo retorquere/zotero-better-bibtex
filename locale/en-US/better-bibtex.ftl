@@ -176,11 +176,11 @@ better-bibtex_preferences_advanced_import_sentence-case_warning = Bib(La)TeX ent
     You can turn this off, but you may then also want to disable `Apply title-casing to titles` (which has its own problems, see the help entry for that option on this page).
     With 'yes, but try to exclude already-sentence-cased titles', BBT will attempt to detect titles that are already sentence cased and leave them as-is on import.
 
-better-bibtex_preferences_advanced_tab_postscript = 
-  .label = postscript
+better-bibtex_preferences_advanced_tab_postscript = postscript
+  .label = { better-bibtex_preferences_advanced_tab_postscript }
 
-better-bibtex_preferences_advanced_tab_strings = 
-  .label = @string definitions
+better-bibtex_preferences_advanced_tab_strings = @string definitions
+  .label = { better-bibtex_preferences_advanced_tab_strings }
 
 better-bibtex_preferences_auto-abbrev = 
   .label = Automatically abbreviate journal title if none is set explicitly
@@ -285,8 +285,8 @@ better-bibtex_preferences_export_bibtex_urls_url = in the 'url' field
 better-bibtex_preferences_export_bibtex_urls_url-ish = in the 'url' field, but assuming the 'url' package is not loaded
   .label = { better-bibtex_preferences_export_bibtex_urls_url-ish }
 
-better-bibtex_preferences_export_fields = 
-  .label = Fields
+better-bibtex_preferences_export_fields = Fields
+  .label = { better-bibtex_preferences_export_fields }
 
 better-bibtex_preferences_export_fields_bibtex-edition-ordinal = 
   .label = Export numeric edition as English-written ordinals
@@ -348,8 +348,8 @@ better-bibtex_preferences_export_map-unicode_text = Prefer text-mode replacement
 better-bibtex_preferences_export_quality-report = 
   .label = Include comments about potential problems with the exported entries
 
-better-bibtex_preferences_export_quick-copy = 
-  .label = Quick-Copy
+better-bibtex_preferences_export_quick-copy = Quick-Copy
+  .label = .label = { better-bibtex_preferences_export_quick-copy }
 better-bibtex_preferences_export_quick-copy_explanation = Quick-Copy/drag-and-drop citations
 better-bibtex_preferences_export_quick-copy_format = Quick-Copy format
 better-bibtex_preferences_export_quick-copy_atom = Atom
