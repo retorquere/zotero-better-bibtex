@@ -257,7 +257,7 @@ if (typeof Zotero.DataObjects.prototype.parseLibraryKey === 'function') {
 
 // otherwise the display of the citekey in the item pane flames out
 $patch$(Zotero.ItemFields, 'isFieldOfBase', original => function Zotero_ItemFields_isFieldOfBase(field: string, _baseField: any) {
-  if (['citekey', 'itemID'].includes(field)) return false
+  if (['citationKey', 'citekey', 'itemID'].includes(field)) return false
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   return original.apply(this, arguments)
 })

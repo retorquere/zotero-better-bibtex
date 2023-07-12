@@ -98,13 +98,25 @@ export class ZoteroItemPane {
         fieldHeader.setAttribute('value', headerContent)
       }
 
-      // can't be a read-only textbox because that makes blur in the itembox go bananas
-      const fieldValue = elements.create('input', {
-        readonly: 'true',
-        value: citekey.citekey,
-        id: 'itembox-field-value-citationKey',
-        fieldName: 'citationKey',
-      }, NAMESPACE.HTML)
+      let fieldValue: HTMLElement
+      if (client.is7) {
+        // can't be a read-only textbox because that makes blur in the itembox go bananas
+        fieldValue = elements.create('span', {
+          id: 'itembox-field-value-citationKey',
+          fieldName: 'citationKey',
+          style: 'color: black; user-select: text;',
+        }, NAMESPACE.HTML)
+        fieldValue.textContent = citekey.citekey
+      }
+      else {
+        fieldValue = elements.create('input', {
+          id: 'itembox-field-value-citationKey',
+          fieldName: 'citationKey',
+          type: 'text',
+          readonly: 'true',
+          value: citekey.citekey,
+        }, NAMESPACE.HTML)
+      }
 
       const table = client.is7 ? this._infoTable : this._dynamicFields // eslint-disable-line no-underscore-dangle
       const fieldIndex = 1
