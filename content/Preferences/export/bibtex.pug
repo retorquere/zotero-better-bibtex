@@ -5,10 +5,11 @@ hbox(flex=0)
   label(bbt:preference="extensions.zotero.translators.better-bibtex.bibtexURL") &better-bibtex_preferences_export_bibtex_urls;
   image(tooltip="tooltip-bibtexURL" src="chrome://zotero-better-bibtex/content/skin/attention.svg" width="16" height="16")
 hbox(flex=0)
-  html:select(preference="extensions.zotero.translators.better-bibtex.bibtexURL")
-    html:option(value='off') &better-bibtex_preferences_export_bibtex_urls_off;
-    html:option(value='note') &better-bibtex_preferences_export_bibtex_urls_note;
-    html:option(value='note-url-ish') &better-bibtex_preferences_export_bibtex_urls_note-url-ish;
-    html:option(value='url') &better-bibtex_preferences_export_bibtex_urls_url;
-    html:option(value='url-ish') &better-bibtex_preferences_export_bibtex_urls_url-ish;
+  menulist(preference="extensions.zotero.translators.better-bibtex.bibtexURL")
+    menupopup
+      menuitem(value='off' label='&better-bibtex_preferences_export_bibtex_urls_off.label;')
+      menuitem(value='note' label='&better-bibtex_preferences_export_bibtex_urls_note.label;')
+      menuitem(value='note-url-ish' label='&better-bibtex_preferences_export_bibtex_urls_note-url-ish.label;')
+      menuitem(value='url' label='&better-bibtex_preferences_export_bibtex_urls_url.label;')
+      menuitem(value='url-ish' label='&better-bibtex_preferences_export_bibtex_urls_url-ish.label;')
   hbox(flex=1)

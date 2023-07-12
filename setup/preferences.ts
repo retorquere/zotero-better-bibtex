@@ -16,8 +16,7 @@ const eta = new Eta
 
 function error(...args) {
   console.log(...args)
-  // process.exit(1)
-  throw new Error('oops')
+  process.exit(1)
 }
 
 
@@ -138,6 +137,9 @@ class Flex extends ASTWalker {
         case 'image':
         case 'separator':
         case 'script':
+        case 'menulist':
+        case 'menupopup':
+        case 'menuitem':
           if (flex) throw new Error(`${node.name} has flex ${flex}`)
           break
         default:
@@ -372,15 +374,7 @@ class Docs extends ASTWalker {
         this.description(this.text(node))
         break
 
-      case 'html:option':
-        if (!hidden) {
-          pref = this.attr(history.find(n => n.name === 'html:select'), 'preference')
-          if (pref) this.option(pref, this.text(node), this.attr(node, 'value', true))
-        }
-        break
-
       case 'menuitem':
-        error('menulists are deprecated')
         if (!hidden) {
           pref = this.attr(history.find(n => n.name === 'menulist'), 'preference')
           if (pref) this.option(pref, this.attr(node, 'label', true), this.attr(node, 'value', true))
@@ -543,22 +537,6 @@ class XHTML extends BaseASTWalker {
 
   Tag(node, history) {
     switch (node.name) {
-      case 'menulist':
-        node.name = 'html:select'
-        if (this.children(node) !== 'menupopup') error('unexpected menulist content', this.children(node))
-        node.block = node.block.nodes[0].block
-        break
-      case 'menupopup':
-        error('should not find menupopups')
-        break
-      case 'menuitem':
-        node.name = 'html:option'
-        node.block.nodes = [{
-          type: 'Text',
-          val: eval(node.attrs.find(attr => attr.name === 'label').val),
-        }]
-        node.attrs = node.attrs.filter(attr => attr.name !== 'label')
-        break
       case 'textbox':
         if (node.attrs.find(a => a.name === 'multiline')) {
           node.name = 'html:textarea'
@@ -578,7 +556,7 @@ class XHTML extends BaseASTWalker {
     for (const attr of node.attrs) {
       const id = this.l10n(this.attr(node, attr.name))
       if (id) {
-        if (!id.match(/^[^.]+[.][^.]+$/)) throw new Error(`no . in l10n attribute ${attr.name}`)
+        if (!id.match(/^[^.]+[.][^.]+$/)) throw new Error(`no '.' in l10n attribute ${attr.name}`)
         const [base, a] = id.split('.')
         l10n_id = l10n_id || base
         if (base !== l10n_id) throw new Error(`unexpected l10n base in ${id}, expected ${l10n_id}`)

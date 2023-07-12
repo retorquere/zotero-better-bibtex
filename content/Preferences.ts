@@ -123,7 +123,7 @@ class AutoExportPane {
 
     const ui = {
       data: AutoExport.db.find(),
-      select: window.document.getElementById('better-bibtex-prefs-auto-export-select'),
+      menupopup: window.document.querySelector('#better-bibtex-prefs-auto-export-select menupopup'),
       deck: window.document.getElementById('better-bibtex-prefs-auto-export-deck'),
     }
 
@@ -131,7 +131,7 @@ class AutoExportPane {
     if (!ui.data.length) return null
 
     const rebuild = {
-      tabs: Array.from(ui.select.children).map((node: Element) => ({ updated: parseInt(node.getAttribute('data-ae-updated')), id: parseInt(node.getAttribute('data-ae-id')) })),
+      tabs: Array.from(ui.menupopup.children).map((node: Element) => ({ updated: parseInt(node.getAttribute('data-ae-updated')), id: parseInt(node.getAttribute('data-ae-id')) })),
       exports: ui.data.map(ae => ({ updated: ae.meta.updated || ae.meta.created, id: ae.$loki })),
       rebuild: false,
       refresh: false,
@@ -140,18 +140,18 @@ class AutoExportPane {
     rebuild.refresh = rebuild.rebuild || (rebuild.tabs.length !== rebuild.exports.length) || (typeof rebuild.tabs.find((tab, index) => rebuild.exports[index].updated !== tab.updated) !== 'undefined')
 
     if (rebuild.rebuild) {
-      while (ui.select.children.length) ui.select.removeChild(ui.select.firstChild)
+      while (ui.menupopup.children.length) ui.menupopup.removeChild(ui.menupopup.firstChild)
       while (ui.deck.children.length > 1) ui.deck.removeChild(ui.deck.firstChild)
     }
 
     for (const [index, ae] of ui.data.entries()) {
-      let option, pane
+      let menuitem, pane
 
       if (rebuild.rebuild) {
-        option = ui.select.appendChild(window.document.createElementNS('http://www.w3.org/1999/xhtml', 'option'))
-        option.setAttribute('value', `${ae.$loki}`)
-        option.setAttribute('data-ae-id', `${ae.$loki}`)
-        option.setAttribute('data-ae-updated', `${ae.meta.updated || ae.meta.created}`)
+        menuitem = ui.menupopup.appendChild(window.document.createElementNS('http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul', 'menuitem'))
+        menuitem.setAttribute('value', `${ae.$loki}`)
+        menuitem.setAttribute('data-ae-id', `${ae.$loki}`)
+        menuitem.setAttribute('data-ae-updated', `${ae.meta.updated || ae.meta.created}`)
 
         pane = (index === 0 ? ui.deck.firstChild : ui.deck.appendChild(ui.deck.firstChild.cloneNode(true)))
 
@@ -168,12 +168,12 @@ class AutoExportPane {
         }
       }
       else {
-        option = ui.select.children[index]
+        menuitem = ui.menupopup.children[index]
         pane = ui.deck.children[index]
       }
 
       const path = ae.path.startsWith(OS.Constants.Path.homeDir) ? ae.path.replace(OS.Constants.Path.homeDir, '~') : ae.path
-      option.textContent = `${{ library: '\ud83d\udcbb', collection: '\ud83d\udcc2' }[ae.type]} ${this.name(ae, 'short')} (${Translators.byId[ae.translatorID].label}) ${path}`
+      menuitem.label = `${{ library: '\ud83d\udcbb', collection: '\ud83d\udcc2' }[ae.type]} ${this.name(ae, 'short')} (${Translators.byId[ae.translatorID].label}) ${path}`
 
       const progress = AutoExport.progress.get(ae.$loki)
       for (const node of Array.from(pane.querySelectorAll('*[data-ae-field]'))) {

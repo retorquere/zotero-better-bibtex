@@ -3,19 +3,20 @@ groupbox
   vbox(style='height: 14em;' flex=1)
     hbox(flex=0)
       label(bbt:preference='extensions.zotero.translators.better-bibtex.quickCopyMode') &better-bibtex_preferences_export_quick-copy_format;
-      html:select#id-better-bibtex-preferences-quickCopyMode(preference='extensions.zotero.translators.better-bibtex.quickCopyMode' preference-editable='true' onchange='document.getElementById("quickCopyDetails").selectedIndex = this.selectedIndex')
-        html:option(value='latex') &better-bibtex_preferences_export_quick-copy_latex;
-        html:option(value='citekeys') &better-bibtex_preferences_export_quick-copy_citekeys;
-        html:option(value='pandoc') &better-bibtex_preferences_export_quick-copy_pandoc;
-        html:option(value='orgmode') &better-bibtex_preferences_export_quick-copy_org-mode;
-        html:option(value='orgRef') &better-bibtex_preferences_export_quick-copy_org-ref;
-        html:option(value='orgRef3') &better-bibtex_preferences_export_quick-copy_org-ref3;
-        html:option(value='rtfScan') &better-bibtex_preferences_export_quick-copy_rtf-scan;
-        html:option(value='roamCiteKey') &better-bibtex_preferences_export_quick-copy_roam-cite-key;
-        html:option(value='atom') &better-bibtex_preferences_export_quick-copy_atom;
-        html:option(value='gitbook') &better-bibtex_preferences_export_quick-copy_gitbook;
-        html:option(value='selectlink') &better-bibtex_preferences_export_quick-copy_select-link;
-        html:option(value='eta') &better-bibtex_preferences_export_quick-copy_eta-template;
+      menulist#id-better-bibtex-preferences-quickCopyMode(preference='extensions.zotero.translators.better-bibtex.quickCopyMode' preference-editable='true' onchange='document.getElementById("quickCopyDetails").selectedIndex = this.selectedIndex')
+        menupopup
+          menuitem(value='latex' label='&better-bibtex_preferences_export_quick-copy_latex.label;')
+          menuitem(value='citekeys' label='&better-bibtex_preferences_export_quick-copy_citekeys.label;')
+          menuitem(value='pandoc' label='&better-bibtex_preferences_export_quick-copy_pandoc.label;')
+          menuitem(value='orgmode' label='&better-bibtex_preferences_export_quick-copy_org-mode.label;')
+          menuitem(value='orgRef' label='&better-bibtex_preferences_export_quick-copy_org-ref.label;')
+          menuitem(value='orgRef3' label='&better-bibtex_preferences_export_quick-copy_org-ref3.label;')
+          menuitem(value='rtfScan' label='&better-bibtex_preferences_export_quick-copy_rtf-scan.label;')
+          menuitem(value='roamCiteKey' label='&better-bibtex_preferences_export_quick-copy_roam-cite-key.label;')
+          menuitem(value='atom' label='&better-bibtex_preferences_export_quick-copy_atom.label;')
+          menuitem(value='gitbook' label='&better-bibtex_preferences_export_quick-copy_gitbook.label;')
+          menuitem(value='selectlink' label='&better-bibtex_preferences_export_quick-copy_select-link.label;')
+          menuitem(value='eta' label='&better-bibtex_preferences_export_quick-copy_eta-template.label;')
 
     deck#quickCopyDetails
       hbox#better-bibtex-preferences-quickcopy-latex(align='start')
@@ -29,9 +30,10 @@ groupbox
 
       hbox#better-bibtex-preferences-quickcopy-orgmode(align='start' flex=0)
         label(bbt:preference='extensions.zotero.translators.better-bibtex.quickCopyOrgMode') &better-bibtex_preferences_export_quick-copy_org-mode;
-        html:select(preference='extensions.zotero.translators.better-bibtex.quickCopyOrgMode')
-          html:option(value='zotero') &better-bibtex_preferences_export_quick-copy_org-mode_zotero;
-          html:option(value='citationkey') &better-bibtex_preferences_export_quick-copy_org-mode_citekey;
+        menulist(preference='extensions.zotero.translators.better-bibtex.quickCopyOrgMode')
+          menupopup
+            menuitem(value='zotero' label='&better-bibtex_preferences_export_quick-copy_org-mode_zotero.label;')
+            menuitem(value='citationkey' label='&better-bibtex_preferences_export_quick-copy_org-mode_citekey.label;')
 
       hbox#better-bibtex-preferences-quickcopy-orgRef
 
@@ -48,9 +50,10 @@ groupbox
 
       hbox#better-bibtex-preferences-quickcopy-selectLink(align='start' flex=0)
         label(bbt:preference='extensions.zotero.translators.better-bibtex.quickCopySelectLink') &better-bibtex_preferences_export_quick-copy_select-link;
-        html:select(preference='extensions.zotero.translators.better-bibtex.quickCopySelectLink')
-          html:option(value='zotero') &better-bibtex_preferences_export_quick-copy_select-link_zotero;
-          html:option(value='citationkey') &better-bibtex_preferences_export_quick-copy_select-link_citekey;
+        menulist(preference='extensions.zotero.translators.better-bibtex.quickCopySelectLink')
+          menupopup
+            menuitem(value='zotero' label='&better-bibtex_preferences_export_quick-copy_select-link_zotero.label;')
+            menuitem(value='citationkey' label='&better-bibtex_preferences_export_quick-copy_select-link_citekey.label;')
 
       vbox#better-bibtex-preferences-quickcopy-eta(flex='1' align='start')
         label.text-link(onclick='Zotero.launchURL("https://retorque.re/zotero-better-bibtex/installation/preferences/export/#quick-copydrag-and-drop-citations")' bbt:preference='extensions.zotero.translators.better-bibtex.quickCopyEta') &better-bibtex_preferences_export_quick-copy_eta-template;

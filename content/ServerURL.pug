@@ -7,11 +7,12 @@ dialog#btt-server-url(xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.i
     vbox(flex='1')
       hbox(flex='1')
         label &better-bibtex_server-url_format;
-        html:select#formats(onchange='update();')
-          html:option(value='.biblatex') BibLaTeX
-          html:option(value='.bibtex') BibTeX
-          html:option(value='.yaml') CSL YAML
-          html:option(value='.json') CSL JSON
+        menulist#formats(onchange='update();')
+          menupopup
+            menuitem(value='.biblatex' label='BibLaTeX')
+            menuitem(value='.bibtex' label='BibTeX')
+            menuitem(value='.yaml' label='CSL YAML')
+            menuitem(value='.json' label='CSL JSON')
       hbox(flex='1')
         description &better-bibtex_server-url_description;
         textbox#pull-export-short.plain(flex='1' readonly='true')/

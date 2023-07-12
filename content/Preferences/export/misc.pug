@@ -4,19 +4,21 @@ separator#better-bibtex-abbrev-style-separator.thin.jurism
 
 hbox(flex=0)
   label#better-bibtex-abbrev-style-label.jurism(bbt:preference="extensions.zotero.translators.better-bibtex.autoAbbrevStyle") &better-bibtex_preferences_auto-abbrev_style;
-  html:select#better-bibtex-abbrev-style.jurism(onchange="Zotero.BetterBibTeX.PrefPane.styleChanged()")
+  menulist#better-bibtex-abbrev-style.jurism(onchange="Zotero.BetterBibTeX.PrefPane.styleChanged()")
+    menupopup
 
 checkbox(label="&better-bibtex_preferences_export_quality-report.label;" preference="extensions.zotero.translators.better-bibtex.qualityReport")
 checkbox(label="&better-bibtex_preferences_export_automatic-tags.label;" preference="extensions.zotero.translators.better-bibtex.automaticTags")
 
 hbox(flex=0)
   label(bbt:preference="extensions.zotero.translators.better-bibtex.mapUnicode") &better-bibtex_preferences_export_map-unicode;
-  html:select(preference="extensions.zotero.translators.better-bibtex.mapUnicode")
-    html:option(value='minimal-packages') &better-bibtex_preferences_export_map-unicode_minimal-packages;
-    html:option(value='conservative') &better-bibtex_preferences_export_map-unicode_conservative;
-    html:option(value='text') &better-bibtex_preferences_export_map-unicode_text;
-    html:option(value='math') &better-bibtex_preferences_export_map-unicode_math;
-    html:option(value='creator') &better-bibtex_preferences_export_map-unicode_creator;
+  menulist(preference="extensions.zotero.translators.better-bibtex.mapUnicode")
+    menupopup
+      menuitem(value='minimal-packages' label='&better-bibtex_preferences_export_map-unicode_minimal-packages.label;')
+      menuitem(value='conservative' label='&better-bibtex_preferences_export_map-unicode_conservative.label;')
+      menuitem(value='text' label='&better-bibtex_preferences_export_map-unicode_text.label;')
+      menuitem(value='math' label='&better-bibtex_preferences_export_map-unicode_math.label;')
+      menuitem(value='creator' label='&better-bibtex_preferences_export_map-unicode_creator.label;')
 
 hbox
   checkbox(preference="extensions.zotero.translators.better-bibtex.exportTitleCase" label="&better-bibtex_preferences_advanced_export_title-case.label;")
