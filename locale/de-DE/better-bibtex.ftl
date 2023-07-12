@@ -215,7 +215,7 @@ better-bibtex_preferences_export_bibtex_urls_url = im 'url'-Feld
     .label = { better-bibtex_preferences_export_bibtex_urls_url }
 better-bibtex_preferences_export_bibtex_urls_url-ish = im "url"-Feld, aber davon ausgehend, dass das "url"-Paket nicht geladen wurde
     .label = { better-bibtex_preferences_export_bibtex_urls_url-ish }
-better-bibtex_preferences_export_fields = Fields
+better-bibtex_preferences_export_fields = Felder
     .label = { better-bibtex_preferences_export_fields }
 better-bibtex_preferences_export_fields_bibtex-edition-ordinal = 
     .label = Export numeric edition as English-written ordinals
@@ -267,7 +267,7 @@ better-bibtex_preferences_export_map-unicode_text = Textmodus-Ersetzungen bevorz
     .label = { better-bibtex_preferences_export_map-unicode_text }
 better-bibtex_preferences_export_quality-report = 
     .label = Kommentare über mögliche Probleme mit den exportieren Einträgen hinzufügen
-better-bibtex_preferences_export_quick-copy = Quick-Copy
+better-bibtex_preferences_export_quick-copy = Schnellkopie
     .label = .label = { better-bibtex_preferences_export_quick-copy }
 better-bibtex_preferences_export_quick-copy_explanation = Schnellkopie/Drag-and-Drop-Zitat
 better-bibtex_preferences_export_quick-copy_format = Schnellkopie-Format
