@@ -525,7 +525,11 @@ class XHTML extends BaseASTWalker {
 
       const label = this.attr(tab, 'label', true)
       const l10n = label.includes('&') ? { 'data-l10n-id': label.replace(/&([^;.]+).label;/, '$1') }: {}
-      nodes.push(this.tag('groupbox', { style: `border-top: ${indent}px solid black; margin-left: ${indent}em` }, [
+      const style = indent
+        ? 'margin-left: 1em; box-shadow: -3px -3px 4px rgba(0,0,0,.1);'
+        : 'border-top: 3px double black'
+
+      nodes.push(this.tag('groupbox', { style }, [
         this.tag('label', {}, [
           this.tag('html:h2', l10n, label.includes('&') ? [] : [ { type: 'Text', val: label } ]),
         ]),
