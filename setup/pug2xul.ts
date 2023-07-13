@@ -18,12 +18,11 @@ const pugs = [
   'content/zotero-preferences.pug',
 ]
 
-const bulk_mod: Record<string, string> = {}
-const l10nKeys: Set<string> = new Set
 const valid = {
   text: /^[-a-z0-9_]+$/,
   attr: /^[-a-z0-9_]+[.][a-z0-9]+$/,
 }
+const l10n: { used: Set<string>, available: Set<string> } = { used: new Set, available: new Set }
 function correction(ist, attr = '') {
   let soll = ist
     .replace(/[.]/g, '_')
@@ -35,7 +34,7 @@ function correction(ist, attr = '') {
   if (!soll.startsWith(prefix)) soll = `${prefix}${soll}`
   if (attr && !soll.match(valid.attr)) throw new Error(soll)
   if (!attr && !soll.match(valid.text)) throw new Error(soll)
-  if (soll !== ist) bulk_mod[ist] = soll
+  if (soll !== ist) throw new Error(`${ist} should be ${soll}`)
 }
 
 class Z7Detector extends ASTWalker {
@@ -53,7 +52,7 @@ class Z7Detector extends ASTWalker {
     for (const attr of node.attrs) {
       let prefix = ''
       attr.val.replace(/&([^;]+);/g, (m, id) => {
-        l10nKeys.add(id)
+        l10n.used.add(id)
         if (!id.match(valid.attr) || !id.endsWith(`.${attr.name}`)) {
           correction(id, `.${attr.name}`)
         }
@@ -74,7 +73,7 @@ class Z7Detector extends ASTWalker {
 
   Text(node) {
     node.val.replace(/&([^;]+);/g, (m, id) => {
-      l10nKeys.add(id)
+      l10n.used.add(id)
       if (!id.match(valid.text)) {
         correction(id)
       }
@@ -112,6 +111,3 @@ for (const src of pugs) {
     fs.writeFileSync(tgt.replace('.xul', '.xhtml'), render(src, { pretty: true, is7: true }))
   }
 }
-
-fs.writeFileSync('l10nkeys-static.json', JSON.stringify([...l10nKeys], null, 2))
-fs.writeFileSync('bulk-mod.json', fast_safe_stringify.stable(bulk_mod, null, 2))
