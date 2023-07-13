@@ -4,6 +4,8 @@ import { orchestrator } from './orchestrator'
 
 import ETA from 'node-eta'
 
+import { alert, prompt } from './prompt'
+
 import { kuroshiro } from './key-manager/japanese'
 import { chinese } from './key-manager/chinese'
 
@@ -59,12 +61,14 @@ export const KeyManager = new class _KeyManager {
 
   public async set(): Promise<void> {
     const ids = this.expandSelection('selected')
-    if (ids.length !== 1) return alert(l10n.localize('better-bibtex_citekey_set_toomany'))
+
+    if (ids.length !== 1) return alert({ text: l10n.localize('better-bibtex_citekey_set_toomany') })
+
+    const existingKey = this.get(ids[0]).citekey
+    const citationKey = prompt({ text: l10n.localize('better-bibtex_citekey_set_change'), value: existingKey }) || existingKey
+    if (citationKey === existingKey) return
 
     Cache.remove(ids, `setting key for ${ids}`)
-    const existingKey = this.get(ids[0]).citekey
-    const citationKey = prompt(l10n.localize('better-bibtex_citekey_set_change'), existingKey) || existingKey
-    if (citationKey === existingKey) return
 
     const item = await getItemsAsync(ids[0])
     item.setField('extra', Extra.set(item.getField('extra'), { citationKey }))
@@ -378,7 +382,7 @@ export const KeyManager = new class _KeyManager {
         }
       }
 
-      if (errors) alert(`Better BibTeX: ${errors} errors found in the citekey database, please report on the Better BibTeX project site`)
+      if (errors) alert({ text: `Better BibTeX: ${errors} errors found in the citekey database, please report on the Better BibTeX project site` })
     }
 
     if (Array.isArray(this.regenerate)) {

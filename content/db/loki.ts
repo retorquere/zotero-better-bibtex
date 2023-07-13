@@ -7,6 +7,7 @@ import { is7 } from '../client'
 
 import { patch as $patch$ } from '../monkey-patch'
 import { Preference } from '../prefs'
+import { alert } from '../prompt'
 
 import { log } from '../logger'
 // import { Preferences as Prefs } from '../prefs'
@@ -30,7 +31,7 @@ function oops(collection, action, doc, errors) {
   const error = new Error(`${collection} ${action} ${JSON.stringify(doc)}: ${errors}`)
   Preference.scrubDatabase = true
   log.error(error)
-  alert(`Better BibTeX: error ${action} ${collection}, restart to repair`)
+  alert({ text: `Better BibTeX: error ${action} ${collection}, restart to repair` })
   throw error
 }
 

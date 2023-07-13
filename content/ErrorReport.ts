@@ -16,6 +16,8 @@ import * as l10n from './l10n'
 import Tar from 'tar-js'
 import { gzip } from 'pako'
 
+import { alert } from './prompt'
+
 import * as s3 from './s3.json'
 
 import * as PACKAGE from '../package.json'
@@ -67,8 +69,7 @@ export class ErrorReport {
     }
     catch (err) {
       log.error('failed to submit', this.key, err)
-      const ps = Components.classes['@mozilla.org/embedcomp/prompt-service;1'].getService(Components.interfaces.nsIPromptService)
-      ps.alert(null, Zotero.getString('general.error'), `${err} (${this.key}, items: ${!!this.errorlog.items})`)
+      alert({ text: `${err} (${this.key}, items: ${!!this.errorlog.items})`, title: Zotero.getString('general.error') })
       if (wizard.rewind) wizard.rewind()
     }
   }
@@ -83,7 +84,7 @@ export class ErrorReport {
   }
 
   public restartWithDebugEnabled(): void {
-    const ps = Services.prompt
+    const ps = Components.classes['@mozilla.org/embedcomp/prompt-service;1'].getService(Components.interfaces.nsIPromptService)
     const buttonFlags = ps.BUTTON_POS_0 * ps.BUTTON_TITLE_IS_STRING
         + ps.BUTTON_POS_1 * ps.BUTTON_TITLE_CANCEL
         + ps.BUTTON_POS_2 * ps.BUTTON_TITLE_IS_STRING
@@ -214,7 +215,7 @@ export class ErrorReport {
       continueButton.focus()
     }
     catch (err) {
-      alert(`No AWS region can be reached: ${err.message}`)
+      alert({ text: `No AWS region can be reached: ${err.message}` })
       wizard.getButton('cancel').disabled = false
     }
   }

@@ -15,6 +15,7 @@ declare const __estrace: any // eslint-disable-line no-underscore-dangle
 
 import type { XUL } from '../typings/xul'
 
+import { prompt } from './prompt'
 import { is7 } from './client'
 import { Elements } from './create-element'
 import { ZoteroPane } from './ZoteroPane'
@@ -760,17 +761,17 @@ export class BetterBibTeX {
 
       case 'tag':
         // eslint-disable-next-line no-case-declarations
-        const ps = Components.classes['@mozilla.org/embedcomp/prompt-service;1'].getService(Components.interfaces.nsIPromptService)
-
-        // eslint-disable-next-line no-case-declarations
         let name = OS.Path.basename(aux)
         name = name.lastIndexOf('.') > 0 ? name.substr(0, name.lastIndexOf('.')) : name
         // eslint-disable-next-line no-case-declarations
-        const tag = { value: name }
-        if (!ps.prompt(null, l10n.localize(`better-bibtex_aux-scan_title_${aux.endsWith('.aux') ? 'aux' : 'md'}`), l10n.localize('better-bibtex_aux-scan_prompt'), tag, null, {})) return
-        if (!tag.value) return
+        const tag = prompt({
+          title: l10n.localize(`better-bibtex_aux-scan_title_${aux.endsWith('.aux') ? 'aux' : 'md'}`),
+          text: l10n.localize('better-bibtex_aux-scan_prompt'),
+          value: name,
+        })
+        if (!tag) return
 
-        await AUXScanner.scan(aux, { tag: tag.value })
+        await AUXScanner.scan(aux, { tag })
         break
 
       default:
