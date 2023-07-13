@@ -64,9 +64,11 @@ jswalk.simple(parse(fs.readFileSync('build/content/better-bibtex.js', 'utf-8'), 
           l10n.used.add(`better-bibtex_preferences_auto-export_status_${status}`)
         }
         break
+      default:
+        if (id) l10n.used.add(id)
+        break
     }
 
-    if (id) l10n.used.add(id)
   },
 })
 
@@ -76,12 +78,14 @@ class L10NDetector extends ASTWalker {
       let prefix = ''
       attr.val.replace(/&([^;]+);/g, (m, id) => {
         l10n.used.add(id)
+
         if (!id.match(valid.attr) || !id.endsWith(`.${attr.name}`)) {
           lint(id, `.${attr.name}`)
         }
         else {
           if (!prefix) {
             prefix = id.split('.')[0]
+            l10n.used.add(`:${prefix}`)
           }
           else if (id.split('.')[0] !== prefix) {
             throw new Error(`${id} should start with ${prefix}`)
@@ -97,6 +101,7 @@ class L10NDetector extends ASTWalker {
   Text(node) {
     node.val.replace(/&([^;]+);/g, (m, id) => {
       l10n.used.add(id)
+
       if (!id.match(valid.text)) {
         lint(id)
       }
@@ -118,5 +123,5 @@ for (const src of pugs('content')) {
   }))
 }
 
-console.log('used but not defined:', [...l10n.used].filter(id => !l10n.defined.has(id)))
-console.log('defined but not used:', [...l10n.defined].filter(id => !id.startsWith('unused_') && !l10n.used.has(id)))
+console.log('used but not defined:', [...l10n.used].filter(id => !id.startsWith(':') && !l10n.defined.has(id)))
+console.log('defined but not used:', [...l10n.defined].filter(id => !id.startsWith('unused_') && !l10n.used.has(id) && !l10n.used.has(`:${id}`)))
