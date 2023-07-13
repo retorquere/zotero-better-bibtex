@@ -1,4 +1,25 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types, no-eval, @typescript-eslint/no-unsafe-return */
+
+
+import fs from 'fs'
+import path from 'path'
+
+export function pugs(directory: string) {
+  let fileList: string[] = []
+
+  const files = fs.readdirSync(directory)
+  for (const file of files) {
+    const p = path.join(directory, file)
+    if (fs.statSync(p).isDirectory()) {
+      fileList = [...fileList, ...pugs(p)]
+    } else if (path.extname(p) === '.pug' && fs.statSync(p).isFile()) {
+      fileList.push(p)
+    }
+  }
+
+  return fileList
+}
+
 export class ASTWalker {
   walk(node, history?) {
     if (history) history = [node, ...history]
