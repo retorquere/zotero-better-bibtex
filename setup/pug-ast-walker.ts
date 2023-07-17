@@ -12,7 +12,8 @@ export function pugs(directory: string) {
     const p = path.join(directory, file)
     if (fs.statSync(p).isDirectory()) {
       fileList = [...fileList, ...pugs(p)]
-    } else if (path.extname(p) === '.pug' && fs.statSync(p).isFile()) {
+    }
+    else if (path.extname(p) === '.pug' && fs.statSync(p).isFile()) {
       fileList.push(p)
     }
   }

@@ -4,7 +4,7 @@
 
 import * as pug from 'pug'
 import * as fs from 'fs'
-import { pugs, walk, SelfClosing, ASTWalker } from './pug-ast-walker'
+import { walk, SelfClosing, ASTWalker } from './pug-ast-walker'
 
 class Z7Detector extends ASTWalker {
   public is7 = false
@@ -20,7 +20,17 @@ function render(src, options) {
   return pug.renderFile(src, options).replace(/&amp;/g, '&').trim()
 }
 
-for (const src of pugs('content')) {
+const pugs = [
+  'content/ErrorReport.pug',
+  'content/Preferences/xul.pug',
+  'content/Preferences/xhtml.pug',
+  'content/ServerURL.pug',
+  'content/ZoteroPane.pug',
+  'content/bulk-keys-confirm.pug',
+  'content/regenerate-keys.pug',
+  'content/zotero-preferences.pug',
+]
+for (const src of pugs) {
   // handled in preferences.ts
   switch (src) {
     case 'content/Preferences/xul.pug':

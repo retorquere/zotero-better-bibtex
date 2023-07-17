@@ -213,7 +213,7 @@ async function rebuild() {
     metafile: 'gen/better-bibtex-esbuild.json',
     inject: ['./setup/loaders/globals.js'],
     outdir: 'build/content',
-    banner: { js: 'if (!Zotero.BetterBibTeX) { var window = Zotero.getMainWindow(); var document = window.document; \n' },
+    banner: { js: 'if (!Zotero.BetterBibTeX) {\n' },
     footer: { js: '\n}' },
     external: [
       'zotero/itemTree',

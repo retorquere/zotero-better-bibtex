@@ -5,8 +5,7 @@ if (Zotero.platformMajorVersion < 102) { // eslint-disable-line no-magic-numbers
   Components.utils.importGlobalProperties(['fetch', 'TextEncoder', 'TextDecoder'])
 }
 
-declare var window: Window // eslint-disable-line no-var, @typescript-eslint/no-unused-vars
-declare var document: Document // eslint-disable-line no-var
+let $window: Window
 
 Components.utils.import('resource://gre/modules/FileUtils.jsm')
 declare const FileUtils: any
@@ -702,7 +701,7 @@ class Progress {
       this.progressWin.startCloseTimer(500) // eslint-disable-line no-magic-numbers
     }
     else {
-      document.getElementById('better-bibtex-progress').hidden = true
+      $window.document.getElementById('better-bibtex-progress').hidden = true
     }
 
     log.debug(`${this.name}: done`)
@@ -883,7 +882,7 @@ export class BetterBibTeX {
       description: 'user interface',
       startup: async () => {
         this.deferred.resolve(true)
-        await this.load(document)
+        await this.load(Zotero.getMainWindow())
       },
       shutdown: async () => { // eslint-disable-line @typescript-eslint/require-await
         Events.clearListeners()
@@ -900,7 +899,7 @@ export class BetterBibTeX {
     await orchestrator.shutdown(reason)
   }
 
-  public async load(doc: Document): Promise<void> {
+  public async load(win: Window): Promise<void> {
     // the zero-width-space is a marker to re-save the current default so it doesn't get replaced
     // when the default changes later, which would change new keys suddenly
     if (!Preference.citekeyFormat) Preference.citekeyFormat = Preference.default.citekeyFormat
@@ -932,8 +931,7 @@ export class BetterBibTeX {
     // progress.update(l10n.localize('better-bibtex_startup_auto-export'), 90) // eslint-disable-line no-magic-numbers
     // AutoExport.start()
 
-    new ZoteroPane(window, doc)
-    await newZoteroItemPane(window, doc)
+    await this.loadUI(win)
 
     // progress.done()
 
@@ -947,6 +945,20 @@ export class BetterBibTeX {
       */
       this.setProgress(pct, message) // eslint-disable-line no-magic-numbers
     })
+  }
+
+  async loadUI(win: Window): Promise<void> {
+    log.debug('loading main UI')
+    // set globals for libraries that for some reason need these -- probably a flawed env detection
+    $window = win
+
+    try {
+      new ZoteroPane($window, document)
+      await newZoteroItemPane($window, document)
+    }
+    catch (err) {
+      log.debug('loadUI error:', err)
+    }
   }
 
   public parseDate(date: string): ParsedDate { return DateParser.parse(date) }
@@ -963,12 +975,9 @@ export class BetterBibTeX {
 }
 
 Events.on('window-loaded', async ({ win, href }: {win: Window, href: string}) => {
+  log.debug('window-loaded:', href)
   if (href === 'chrome://zotero/content/standalone/standalone.xul') {
-    // set globals for libraries that for some reason need these -- probably a flawed env detection
-    window = win
-    document = win.document
-    new ZoteroPane(window, document)
-    await newZoteroItemPane(window, document)
+    await Zotero.BetterBibTeX.loadUI(win)
   }
 })
 

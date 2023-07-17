@@ -69,6 +69,10 @@ export async function startup({ resourceURI, rootURI = resourceURI.spec }, reaso
   Services.scriptloader.loadSubScript(`${rootURI}content/better-bibtex.js`, {
     Zotero,
 
+    // to pacify libraries that do env-detection
+    window: Zotero.getMainWindow(),
+    document: Zotero.getMainWindow().document,
+
     setTimeout,
     clearTimeout,
     setInterval,
