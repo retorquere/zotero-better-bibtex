@@ -554,6 +554,11 @@ class XHTML extends BaseASTWalker {
           node.attrs.push({ name: 'type', val: '"text"', mustEscape: false })
         }
         break
+      case 'checkbox':
+      case 'radio':
+      case 'menulist':
+        node.attrs.push({ name: 'native', val: '"true"', mustEscape: false })
+        break
     }
 
     let l10n_id = ''
