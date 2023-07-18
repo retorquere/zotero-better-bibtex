@@ -68,7 +68,6 @@ jswalk.simple(parse(fs.readFileSync('build/content/better-bibtex.js', 'utf-8'), 
         if (id) l10n.used.add(id)
         break
     }
-
   },
 })
 

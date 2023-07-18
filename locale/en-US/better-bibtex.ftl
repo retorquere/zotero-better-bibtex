@@ -123,8 +123,8 @@ better-bibtex_preferences_advanced_export_title-case_warning = If you're dead-se
 better-bibtex_preferences_advanced_export_workers_cache = 
   .label = Enable caching for background exports
 
-better-bibtex_preferences_advanced_extra-merge = 
-  .label = When merging items, also merge:
+better-bibtex_preferences_advanced_extra-merge = When merging items, also merge:
+  .label = { better-bibtex_preferences_advanced_extra-merge }
 
 better-bibtex_preferences_advanced_extra-merge-csl = 
   .label = fields that are understood to be CSL fields by Zotero
@@ -135,8 +135,8 @@ better-bibtex_preferences_advanced_extra_merge-citekeys =
 better-bibtex_preferences_advanced_extra_merge-tex = 
   .label = their `tex.*` fields
 
-better-bibtex_preferences_advanced_ideographs = 
-  .label = Ideographs in citekeys
+better-bibtex_preferences_advanced_ideographs = Ideographs in citekeys
+  .label = { better-bibtex_preferences_advanced_ideographs }
 
 better-bibtex_preferences_advanced_ideographs_jieba = 
   .label = Enable 'jieba'/'pinyin' filters in citekey patterns. Uses a lot of memory.

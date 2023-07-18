@@ -559,6 +559,23 @@ class XHTML extends BaseASTWalker {
       case 'menulist':
         node.attrs.push({ name: 'native', val: '"true"', mustEscape: false })
         break
+      case 'groupbox':
+        node.block.nodes = node.block.nodes.map(child => {
+          if (child.name === 'caption') {
+            if (!node.attrs.find(a => a.name === 'style')) {
+              node.attrs.push({
+                name: 'style',
+                val: JSON.stringify('margin-left: 1em; padding-left: 1em; padding-bottom: 1em; box-shadow: -3px -3px 4px rgba(0,0,0,.1);'),
+                mustEscape: false,
+              })
+            }
+            return this.tag('label', {}, [ {...child, name: 'html:h2' }])
+          }
+          else {
+            return child
+          }
+        })
+        break
     }
 
     let l10n_id = ''
