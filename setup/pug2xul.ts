@@ -4,7 +4,7 @@
 
 import * as pug from 'pug'
 import * as fs from 'fs'
-import { walk, SelfClosing, ASTWalker } from './pug-ast-walker'
+import { walk, Lint, SelfClosing, ASTWalker } from './pug-ast-walker'
 
 class Z7Detector extends ASTWalker {
   public is7 = false
@@ -47,6 +47,7 @@ for (const src of pugs) {
       preCodeGen(ast) {
         detector.walk(ast)
         walk(SelfClosing, ast)
+        walk(Lint, ast)
         return ast
       },
     }],

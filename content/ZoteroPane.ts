@@ -278,7 +278,7 @@ export class ZoteroPane {
 
     if (!params.url.short) return
 
-    (this.window as any).openDialog('chrome://zotero-better-bibtex/content/ServerURL.xul', '', 'chrome,dialog,centerscreen,modal', params)
+    (this.window as any).openDialog(`chrome://zotero-better-bibtex/content/ServerURL.${is7 ? 'xhtml' : 'xul'}` , '', 'chrome,dialog,centerscreen,modal', params)
   }
 
   public startAutoExport(event: Event): void {

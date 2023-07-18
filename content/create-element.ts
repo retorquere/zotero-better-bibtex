@@ -31,7 +31,7 @@ export class Elements {
         elt.setAttribute(a, v)
       }
       else if (a.startsWith('on')) {
-        elt.addEventListener(a.replace('on', ''), () => { (v() as Promise<void>)?.catch?.(err => { throw(err) }) })
+        elt.addEventListener(a.replace('on', ''), event => { (v(event) as Promise<void>)?.catch?.(err => { throw(err) }) })
       }
       else {
         throw new Error(`unexpected attribute ${a}`)

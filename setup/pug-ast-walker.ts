@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types, no-eval, @typescript-eslint/no-unsafe-return */
 
-
 import fs from 'fs'
 import path from 'path'
 
@@ -80,6 +79,20 @@ export class SelfClosing extends ASTWalker {
   Tag(tag) {
     this.walk(tag.block)
     if (!tag.block.nodes.length) tag.selfClosing = true
+    return tag
+  }
+}
+
+export class Lint extends ASTWalker {
+  Tag(tag) {
+    this.walk(tag.block)
+    switch (tag.name) {
+      case 'menulist':
+        if (tag.attrs.find(a => a.name === 'onchange')) throw new Error('menulist with onchange')
+        break
+      case ':textbox':
+        throw new Error(tag.name)
+    }
     return tag
   }
 }
