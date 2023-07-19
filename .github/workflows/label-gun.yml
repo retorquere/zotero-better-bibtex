@@ -19,7 +19,7 @@ jobs:
           label.reopened: reopened
           log-id: "[A-Z0-9]{8}(-refs)?-(apse|euc)"
           message.log-required: |
-            You did not submit a debug log. A longer explanation follows, but just submit a debug log.
+            You did not submit a debug log. A longer explanation follows, but please just submit a debug log. It takes less time to submit a debug log than to argue its necessity.
 
             If you did try to submit a debug log, but the ID looked like `D<number>`, that is a Zotero debug report, which I cannot access. Please re-submit a BBT debug log by one of the methods below.
 
