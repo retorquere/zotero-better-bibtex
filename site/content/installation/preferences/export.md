@@ -130,7 +130,7 @@ Options:
 * for JabRef 5
 
 
-## .label = Quick-Copy
+## Quick-Copy
 
 ### Quick-Copy/drag-and-drop citations
 
