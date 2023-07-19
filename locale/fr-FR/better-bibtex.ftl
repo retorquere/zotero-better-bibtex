@@ -269,7 +269,7 @@ better-bibtex_preferences_export_map-unicode_text = Préférer les remplacements
 better-bibtex_preferences_export_quality-report = 
     .label = Inclure des commentaires concernant de potentiels problèmes avec les entrées exportées
 better-bibtex_preferences_export_quick-copy = Copie rapide
-    .label = .label = { better-bibtex_preferences_export_quick-copy }
+    .label = { better-bibtex_preferences_export_quick-copy }
 better-bibtex_preferences_export_quick-copy_explanation = Copie rapide/glissé-déposé des citations
 better-bibtex_preferences_export_quick-copy_format = Format de copie rapide
 unused_better-bibtex_preferences_export_quick-copy_atom = Atom

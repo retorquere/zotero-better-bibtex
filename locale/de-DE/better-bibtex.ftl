@@ -268,7 +268,7 @@ better-bibtex_preferences_export_map-unicode_text = Textmodus-Ersetzungen bevorz
 better-bibtex_preferences_export_quality-report = 
     .label = Kommentare über mögliche Probleme mit den exportieren Einträgen hinzufügen
 better-bibtex_preferences_export_quick-copy = Schnellkopie
-    .label = .label = { better-bibtex_preferences_export_quick-copy }
+    .label = { better-bibtex_preferences_export_quick-copy }
 better-bibtex_preferences_export_quick-copy_explanation = Schnellkopie/Drag-and-Drop-Zitat
 better-bibtex_preferences_export_quick-copy_format = Schnellkopie-Format
 unused_better-bibtex_preferences_export_quick-copy_atom = Atom
