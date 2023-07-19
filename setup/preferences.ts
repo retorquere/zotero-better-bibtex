@@ -137,10 +137,11 @@ class Flex extends ASTWalker {
         case 'image':
         case 'separator':
         case 'script':
-        case 'menulist':
         case 'menupopup':
         case 'menuitem':
           if (flex) throw new Error(`${node.name} has flex ${flex}`)
+          break
+        case 'menulist':
           break
         default:
           throw `no flex on ${node.name}` // eslint-disable-line no-throw-literal
