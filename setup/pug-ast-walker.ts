@@ -98,14 +98,12 @@ export class SelfClosing extends ASTWalker {
 
 export class Lint extends ASTWalker {
   Tag(tag) {
-    this.walk(tag.block)
     switch (tag.name) {
       case 'menulist':
         if (tag.attrs.find(a => a.name === 'onchange')) throw new Error('menulist with onchange')
         break
-      case ':textbox':
-        throw new Error(tag.name)
     }
+    this.walk(tag.block)
     return tag
   }
 }

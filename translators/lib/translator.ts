@@ -271,6 +271,7 @@ class Override {
             Zotero.debug(`better-bibtex: preference override for ${pref}: expected ${typeof Prefs.defaults[pref]}, got ${typeof value}`)
           }
           else if (Prefs.options[pref] && !Prefs.options[pref][value]) {
+            // eslint-disable-next-line @typescript-eslint/no-base-to-string
             Zotero.debug(`better-bibtex: preference override for ${pref}: expected ${Object.keys(Prefs.options[pref]).join(' / ')}, got ${value}`)
           }
           else {

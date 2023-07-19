@@ -9,7 +9,7 @@ import * as glob from 'glob-promise'
 import * as peggy from 'peggy'
 import * as matter from 'gray-matter'
 import * as _ from 'lodash'
-import { walk, SelfClosing, ASTWalker as BaseASTWalker } from './pug-ast-walker'
+import { walk, Lint, SelfClosing, ASTWalker as BaseASTWalker } from './pug-ast-walker'
 
 import { Eta } from 'eta'
 const eta = new Eta
@@ -635,6 +635,7 @@ render('content/Preferences/xul.pug', 'build/content/preferences.xul', {
       walk(StripConfig, ast)
       walk(Flex, ast)
       walk(SelfClosing, ast)
+      walk(Lint, ast)
 
       return ast
     },
@@ -649,6 +650,7 @@ render('content/Preferences/xhtml.pug', 'build/content/preferences.xhtml', {
       walk(StripConfig, ast)
       walk(XHTML, ast)
       walk(SelfClosing, ast)
+      walk(Lint, ast)
 
       return ast
     },

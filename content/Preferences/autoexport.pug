@@ -17,7 +17,7 @@ vbox(flex=1)
 vbox#better-bibtex-prefs-auto-exports(hidden="true")
   hbox(flex=0)
     menulist#better-bibtex-prefs-auto-export-select(
-        onchange="document.getElementById('better-bibtex-prefs-auto-export-deck').selectedIndex = this.selectedIndex"
+        oncommand="document.getElementById('better-bibtex-prefs-auto-export-deck').selectedIndex = this.selectedIndex"
       )
       menupopup
         menuitem
@@ -54,7 +54,7 @@ vbox#better-bibtex-prefs-auto-exports(hidden="true")
         hbox
           label &better-bibtex_preferences_export_bibtex_urls;
           hbox(flex=0)
-            menulist(data-ae-id="" data-ae-field="bibtexURL" onchange="Zotero.BetterBibTeX.PrefPane.autoexport.edit(this)")
+            menulist(data-ae-id="" data-ae-field="bibtexURL" oncommand="Zotero.BetterBibTeX.PrefPane.autoexport.edit(this)")
               menupopup
                 menuitem(value='off' label='&better-bibtex_preferences_export_bibtex_urls_off.label;')
                 menuitem(value='note' label='&better-bibtex_preferences_export_bibtex_urls_note.label;')
@@ -66,7 +66,7 @@ vbox#better-bibtex-prefs-auto-exports(hidden="true")
       vbox.autoexport-options.autoexport-BetterBibTeX.autoexport-BetterBibLaTeX(hidden="true")
         hbox.autoexport-options.autoexport-BetterBibTeX.autoexport-BetterBibLaTeX(flex=0)
           label &better-bibtex_preferences_export_fields_doi-and-url;
-          menulist(data-ae-id="" data-ae-field="DOIandURL" onchange="Zotero.BetterBibTeX.PrefPane.autoexport.edit(this)")
+          menulist(data-ae-id="" data-ae-field="DOIandURL" oncommand="Zotero.BetterBibTeX.PrefPane.autoexport.edit(this)")
             menupopup
               menuitem(value='both' label='&better-bibtex_preferences_export_fields_doi-and-url_both.label;')
               menuitem(value='doi' label='&better-bibtex_preferences_export_fields_doi-and-url_doi.label;')

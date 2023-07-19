@@ -9,11 +9,11 @@ import { walk, Lint, SelfClosing, ASTWalker } from './pug-ast-walker'
 class XHTML extends ASTWalker {
   public modified = false
 
-  Mixin(mixin) {
+  Mixin(_mixin) {
     throw new Error('mixin')
   }
 
-  Conditional(node) {
+  Conditional(_node) {
     throw new Error('conditional')
   }
 

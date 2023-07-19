@@ -1,4 +1,4 @@
-export async function getItemsAsync(ids: number | number[]): Promise<any | any[]> {
+export async function getItemsAsync(ids: number | number[]): Promise<any> {
   let returnSingle: boolean
   if (Array.isArray(ids)) {
     returnSingle = false

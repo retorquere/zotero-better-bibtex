@@ -6,6 +6,7 @@ config.rules['no-new-func'] = 'off'
 config.rules['no-underscore-dangle'] = [ 'error', { "allowAfterThis": true } ]
 config.rules['prefer-template'] = 'off'
 
+config.rules['@typescript-eslint/no-redundant-type-constituents'] = 'off'
 config.rules['@typescript-eslint/consistent-type-assertions'] = 'off'
 config.rules['@typescript-eslint/consistent-type-definitions'] = 'off'
 config.rules['@typescript-eslint/explicit-module-boundary-types'] = 'error'

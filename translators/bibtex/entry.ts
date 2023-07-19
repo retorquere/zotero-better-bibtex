@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-types */
 /* eslint-disable @typescript-eslint/no-unsafe-return, @typescript-eslint/explicit-module-boundary-types */
+/* eslint-disable @typescript-eslint/restrict-plus-operands */
 
 declare const Zotero: any
 
