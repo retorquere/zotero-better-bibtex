@@ -13,72 +13,51 @@
 |   <!ENTITY % BBTDTD SYSTEM "chrome://zotero-better-bibtex/locale/zotero-better-bibtex.dtd"> %BBTDTD;
 |   <!ENTITY % standaloneDTD SYSTEM "chrome://zotero/locale/standalone.dtd"> %standaloneDTD;
 | ]>
-mixin textbox
-  if is7
-    if attributes.multiline != 'true'
-      html:input(type='text')&attributes(attributes)/
-    else
-      html:textarea(cols='40' rows='5')&attributes(attributes)/
-  else
-    textbox&attributes(attributes)/
-mixin wizard
-  wizard#better-bibtex-error-report(
-      xmlns='http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul'
-      xmlns:html="http://www.w3.org/1999/xhtml"
-      title='&better-bibtex_error-report.title;' width='550' height='550'
-    )
-    wizardpage(pageid='page-enable-debug' label=' ')
-      description.header(style='white-space: pre-wrap;') &better-bibtex_error-report_enable-debug;
-      button(label='&better-bibtex_error-report_restart-with-logging-enabled.label;' oncommand='window.ErrorReport.restartWithDebugEnabled()')/
-    wizardpage(pageid='page-review' label=' ')
-      description.header(style='white-space: pre-wrap;') &better-bibtex_error-report_review;
-      +textbox#better-bibtex-report-current.plain(flex='1' readonly='true')
-      +textbox#better-bibtex-report-latest.plain.textbox-emph(flex='1' readonly='true')
-      +textbox#better-bibtex-report-cache.plain(flex='1' readonly='true')
-      checkbox#better-bibtex-error-report-include-db(label='&better-bibtex_error-report_include-cache.label;')/
-      tabbox.debug-on(flex='1')
-        tabs
-          tab(label='&better-bibtex_error-report_context.label;')/
-          tab(label='&better-bibtex_error-report_errors.label;')/
-          tab(label='&better-bibtex_error-report_debug.label;')/
-          tab#better-bibtex-error-tab-items(label='&better-bibtex_error-report_items.label;')/
-        tabpanels
-          tabpanel(orient='vertical')
-            +textbox#better-bibtex-error-context.plain(readonly='true' multiline='true' flex='1' style='min-height: 8em;')
-          tabpanel(orient='vertical')
-            +textbox#better-bibtex-error-errors.plain(readonly='true' multiline='true' flex='1' style='min-height: 8em;')
-          tabpanel(orient='vertical')
-            +textbox#better-bibtex-error-debug.plain(readonly='true' multiline='true' flex='1' style='min-height: 8em;')
-          tabpanel(orient='vertical')
-            +textbox#better-bibtex-error-items.plain(readonly='true' multiline='true' flex='1' style='min-height: 8em;')
-      hbox
-        button(label='&better-bibtex_error-report_save.label;' oncommand='window.ErrorReport.save()')/
-        hbox(flex='1')/
-      description#better-bibtex-error-memory-use(style='white-space: pre-wrap;')/
-    wizardpage(pageid='page-send' label=' ')
-      description &better-bibtex_error-report_submission-in-progress;
-    wizardpage(pageid='page-done' label=' ')
-      description &better-bibtex_error-report_submitted;
-      description#better-bibtex-report-result(hidden='true')
-        description
-          | &better-bibtex_error-report_report-id; 
-          +textbox#better-bibtex-report-id.plain.textbox-emph(flex='1' readonly='true')
-      description &better-bibtex_error-report_post-to-git-hub;
-      description &better-bibtex_error-report_not-reviewed;
-    script(src='chrome://zotero/content/include.js')
-    script.
-      window.addEventListener('load', function() {
-        (new Zotero.BetterBibTeX.ErrorReport).load(window).catch(err => Zotero.debug(`BBT.ErrorReport: ${err}`))
-      })
-if is7
-  window(
+wizard#better-bibtex-error-report(
     xmlns='http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul'
     xmlns:html="http://www.w3.org/1999/xhtml"
     title='&better-bibtex_error-report.title;' width='550' height='550'
   )
-    linkset
-      html:link(rel="localization" href="better-bibtex.ftl")/
-    script(src="chrome://global/content/customElements.js")/
-    +wizard
-else
-  +wizard
+  wizardpage(pageid='page-enable-debug' label=' ')
+    description.header(style='white-space: pre-wrap;') &better-bibtex_error-report_enable-debug;
+    button(label='&better-bibtex_error-report_restart-with-logging-enabled.label;' oncommand='window.ErrorReport.restartWithDebugEnabled()')/
+  wizardpage(pageid='page-review' label=' ')
+    description.header(style='white-space: pre-wrap;') &better-bibtex_error-report_review;
+    textbox#better-bibtex-report-current.plain(flex='1' readonly='true')
+    textbox#better-bibtex-report-latest.plain.textbox-emph(flex='1' readonly='true')
+    textbox#better-bibtex-report-cache.plain(flex='1' readonly='true')
+    checkbox#better-bibtex-error-report-include-db(label='&better-bibtex_error-report_include-cache.label;')/
+    tabbox.debug-on(flex='1')
+      tabs
+        tab(label='&better-bibtex_error-report_context.label;')/
+        tab(label='&better-bibtex_error-report_errors.label;')/
+        tab(label='&better-bibtex_error-report_debug.label;')/
+        tab#better-bibtex-error-tab-items(label='&better-bibtex_error-report_items.label;')/
+      tabpanels
+        tabpanel(orient='vertical')
+          textbox#better-bibtex-error-context.plain(readonly='true' multiline='true' flex='1' style='min-height: 8em;')
+        tabpanel(orient='vertical')
+          textbox#better-bibtex-error-errors.plain(readonly='true' multiline='true' flex='1' style='min-height: 8em;')
+        tabpanel(orient='vertical')
+          textbox#better-bibtex-error-debug.plain(readonly='true' multiline='true' flex='1' style='min-height: 8em;')
+        tabpanel(orient='vertical')
+          textbox#better-bibtex-error-items.plain(readonly='true' multiline='true' flex='1' style='min-height: 8em;')
+    hbox
+      button(label='&better-bibtex_error-report_save.label;' oncommand='window.ErrorReport.save()')/
+      hbox(flex='1')/
+    description#better-bibtex-error-memory-use(style='white-space: pre-wrap;')/
+  wizardpage(pageid='page-send' label=' ')
+    description &better-bibtex_error-report_submission-in-progress;
+  wizardpage(pageid='page-done' label=' ')
+    description &better-bibtex_error-report_submitted;
+    description#better-bibtex-report-result(hidden='true')
+      description
+        | &better-bibtex_error-report_report-id; 
+        textbox#better-bibtex-report-id.plain.textbox-emph(flex='1' readonly='true')
+    description &better-bibtex_error-report_post-to-git-hub;
+    description &better-bibtex_error-report_not-reviewed;
+  script(src='chrome://zotero/content/include.js')
+  script.
+    window.addEventListener('load', function() {
+      (new Zotero.BetterBibTeX.ErrorReport).load(window).catch(err => Zotero.debug(`BBT.ErrorReport: ${err}`))
+    })

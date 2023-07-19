@@ -6,13 +6,49 @@ import * as pug from 'pug'
 import * as fs from 'fs'
 import { walk, Lint, SelfClosing, ASTWalker } from './pug-ast-walker'
 
-class Z7Detector extends ASTWalker {
-  public is7 = false
+class XHTML extends ASTWalker {
+  public modified = false
+
+  Mixin(mixin) {
+    throw new Error('mixin')
+  }
 
   Conditional(node) {
-    if (node.test === 'is7' || node.test === '!is7') this.is7 = true
+    throw new Error('conditional')
+  }
 
-    return node
+  Tag(tag, history) {
+    switch (tag.name) {
+      case 'textbox':
+        this.modified = true
+        if (tag.attrs.find(a => a.name === 'multiline')) {
+          tag.name = 'html:textarea'
+          tag.attrs.push({ name: 'cols', val: '"40"', mustEscape: false })
+          tag.attrs.push({ name: 'rows', val: '"5"', mustEscape: false })
+        }
+        else {
+          tag.name = 'html:input'
+          tag.attrs.push({ name: 'type', val: '"text"', mustEscape: false })
+        }
+        break
+
+      case 'wizard':
+      case 'dialog':
+        if (!history.find(n => n.name === 'window')) {
+          this.modified = true
+          const attrs = tag.attrs
+          tag = this.tag('window', {}, [
+            this.tag('linkset', {}, [ this.tag('html:link', { rel: 'localization', href: 'better-bibtex.ftl' }) ]),
+            this.tag('script', { src: 'chrome://global/content/customElements.js' }),
+            tag,
+          ])
+          tag.attrs = attrs
+        }
+        break
+    }
+
+    this.walk(tag.block, [tag].concat(history.slice(1)))
+    return tag
   }
 }
 
@@ -39,13 +75,11 @@ for (const src of pugs) {
   }
   let tgt = `build/${src.replace(/pug$/, 'xul')}`
 
-  const detector = new Z7Detector
   console.log(' ', tgt)
   fs.writeFileSync(tgt, render(src, {
     pretty: true,
     plugins: [{
       preCodeGen(ast) {
-        detector.walk(ast)
         walk(SelfClosing, ast)
         walk(Lint, ast)
         return ast
@@ -53,9 +87,23 @@ for (const src of pugs) {
     }],
   }))
 
-  if (detector.is7) {
-    tgt = tgt.replace('.xul', '.xhtml')
+  tgt = tgt.replace('.xul', '.xhtml')
+  const xhtml = new XHTML
+  fs.writeFileSync(tgt, render(src, {
+    pretty: true,
+    plugins: [{
+      preCodeGen(ast) {
+        xhtml.walk(ast, [])
+        walk(SelfClosing, ast)
+        walk(Lint, ast)
+        return ast
+      },
+    }],
+  }))
+  if (xhtml.modified) {
     console.log(' ', tgt)
-    fs.writeFileSync(tgt, render(src, { pretty: true, is7: true }))
+  }
+  else {
+    fs.unlinkSync(tgt)
   }
 }

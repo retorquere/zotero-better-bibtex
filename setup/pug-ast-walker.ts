@@ -29,6 +29,19 @@ export class ASTWalker {
     throw new Error(`No handler for ${node.type} ${Object.keys(node)}`)
   }
 
+  tag(name: string, attrs = {}, nodes = []) {
+    return {
+      type: 'Tag',
+      name,
+      block: {
+        type: 'Block',
+        nodes,
+      },
+      attrs: Object.entries(attrs).map(([k, v]) => ({ name: k, val: JSON.stringify(v), mustEscape: false })),
+      attributeBlocks: [],
+    }
+  }
+
   attr(node, name: string, required=false): string {
     const attr = node.attrs.find(a => a.name === name)
     if (!attr && required) throw new Error(`could not find ${node.name}.${name} in ${node.attrs.map(a => a.name)}`)

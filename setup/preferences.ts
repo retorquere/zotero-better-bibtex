@@ -291,22 +291,6 @@ class Docs extends ASTWalker {
     this.pages[this.page].content += `${'#'.repeat(level)} ${label}\n\n`
   }
 
-  Conditional(node, history) {
-    // only walk non-7 for docs
-    switch (node.test) {
-      case 'is7':
-        this.walk(node.alternate, history)
-        break
-      case '!is7':
-        this.walk(node.consequent, history)
-        break
-      default:
-        throw new Error(`Unexpected conditional test ${node.test}`)
-    }
-
-    return node
-  }
-
   Tag(node, history) {
     let bbt, pref, id, label, page
 
@@ -500,19 +484,6 @@ class XHTML extends BaseASTWalker {
     const [, pre, id, post ] = m
     if (pre || post) throw new Error(`unexpected data around translation id in ${val}`)
     return id
-  }
-
-  tag(name, attrs = {}, nodes = []) {
-    return {
-      type: 'Tag',
-      name,
-      block: {
-        type: 'Block',
-        nodes,
-      },
-      attrs: Object.entries(attrs).map(([k, v]) => ({ name: k, val: JSON.stringify(v), mustEscape: false })),
-      attributeBlocks: [],
-    }
   }
 
   tabbox(node, indent) {
