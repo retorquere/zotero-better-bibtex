@@ -120,56 +120,49 @@ class AutoExportPane {
 
   public refresh() {
     if (!$window || Zotero.BetterBibTeX.ready.isPending()) return null
+    const doc = $window.document
 
-    const ui = {
-      data: AutoExport.db.find(),
-      menupopup: $window.document.querySelector('#better-bibtex-prefs-auto-export-select menupopup'),
-      deck: $window.document.getElementById('better-bibtex-prefs-auto-export-deck'),
-    }
+    const menulist: XUL.Menulist = doc.querySelector('#better-bibtex-prefs-auto-export-select') as unknown as XUL.Menulist
+    const menupopup = doc.querySelector('#better-bibtex-prefs-auto-export-select menupopup')
+    const deck = doc.getElementById('better-bibtex-prefs-auto-export-deck')
+    const menuitems = Array.from(menupopup.children).map((node: Element) => ({ updated: parseInt(node.getAttribute('data-ae-updated')), id: parseInt(node.getAttribute('data-ae-id')) }))
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    const auto_exports = AutoExport.db.find().map(ae => ({ ...ae, updated: ae.meta.updated || ae.meta.created, id: ae.$loki }))
 
-    $window.document.getElementById('better-bibtex-prefs-auto-exports').setAttribute('hidden', `${!ui.data.length}`)
-    if (!ui.data.length) return null
+    const hidden = !auto_exports.length
+    doc.getElementById('better-bibtex-prefs-auto-exports').setAttribute('hidden', `${hidden}`)
+    if (hidden) return null
 
-    const rebuild = {
-      tabs: Array.from(ui.menupopup.children).map((node: Element) => ({ updated: parseInt(node.getAttribute('data-ae-updated')), id: parseInt(node.getAttribute('data-ae-id')) })),
-      exports: ui.data.map(ae => ({ updated: ae.meta.updated || ae.meta.created, id: ae.$loki })),
-      rebuild: false,
-      refresh: false,
-    }
-    rebuild.rebuild = (rebuild.tabs.length !== rebuild.exports.length) || (typeof rebuild.tabs.find((tab, index) => rebuild.exports[index].id !== tab.id) !== 'undefined')
-    rebuild.refresh = rebuild.rebuild || (rebuild.tabs.length !== rebuild.exports.length) || (typeof rebuild.tabs.find((tab, index) => rebuild.exports[index].updated !== tab.updated) !== 'undefined')
+    const rebuild = auto_exports.lenght !== menuitems.length || auto_exports.find((ae, i) => ae.id !== menuitems[i].id || ae.updated !== menuitems[i].updated)
+    if (!rebuild) return null
 
-    if (rebuild.rebuild) {
-      while (ui.menupopup.children.length) ui.menupopup.removeChild(ui.menupopup.firstChild)
-      while (ui.deck.children.length > 1) ui.deck.removeChild(ui.deck.firstChild)
-    }
+    const selected = menulist.selectedItem?.getAttribute('data-ae-id')
+    let selectedIndex = 0
 
-    for (const [index, ae] of ui.data.entries()) {
-      let menuitem, pane
+    while (menupopup.children.length) menupopup.removeChild(menupopup.firstChild)
+    while (deck.children.length > 1) deck.removeChild(deck.firstChild)
 
-      if (rebuild.rebuild) {
-        menuitem = ui.menupopup.appendChild($window.document.createElementNS('http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul', 'menuitem'))
-        menuitem.setAttribute('value', `${ae.$loki}`)
-        menuitem.setAttribute('data-ae-id', `${ae.$loki}`)
-        menuitem.setAttribute('data-ae-updated', `${ae.meta.updated || ae.meta.created}`)
+    auto_exports.forEach((ae, index) => {
+      const menuitem: XUL.Menuitem = menupopup.appendChild(doc.createElementNS('http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul', 'menuitem')) as unknown as XUL.Menuitem
+      const id = `${ae.$loki}`
+      menuitem.setAttribute('value', id)
+      menuitem.setAttribute('data-ae-id', id)
+      if (selected === id) selectedIndex = index
 
-        pane = (index === 0 ? ui.deck.firstChild : ui.deck.appendChild(ui.deck.firstChild.cloneNode(true)))
+      menuitem.setAttribute('data-ae-updated', `${ae.meta.updated || ae.meta.created}`)
 
-        // set IDs on clone
-        for (const node of Array.from(pane.querySelectorAll('*[data-ae-id]'))) {
-          (node as Element).setAttribute('data-ae-id', `${ae.$loki}`)
-        }
+      const pane: Element = (index === 0 ? deck.firstChild : deck.appendChild(deck.firstChild.cloneNode(true))) as unknown as Element
 
-        const enabled = `autoexport-${Translators.byId[ae.translatorID].label.replace(/ /g, '')}`
-        // eslint is wrong here. tsc complains that hidden is not present on element, and I think tsc is correct here
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
-        for (const node of (Array.from(pane.getElementsByClassName('autoexport-options')) as XUL.Element[])) {
-          node.hidden = !node.classList.contains(enabled)
-        }
+      // set IDs on clone
+      for (const node of Array.from(pane.querySelectorAll('*[data-ae-id]'))) {
+        node.setAttribute('data-ae-id', `${ae.$loki}`)
       }
-      else {
-        menuitem = ui.menupopup.children[index]
-        pane = ui.deck.children[index]
+
+      const enabled = `autoexport-${Translators.byId[ae.translatorID].label.replace(/ /g, '')}`
+      // eslint is wrong here. tsc complains that hidden is not present on element, and I think tsc is correct here
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+      for (const node of (Array.from(pane.getElementsByClassName('autoexport-options')) as unknown[] as XUL.Element[])) {
+        node.hidden = !node.classList.contains(enabled)
       }
 
       const path = ae.path.startsWith(OS.Constants.Path.homeDir) ? ae.path.replace(OS.Constants.Path.homeDir, '~') : ae.path
@@ -177,43 +170,41 @@ class AutoExportPane {
 
       const progress = AutoExport.progress.get(ae.$loki)
       for (const node of Array.from(pane.querySelectorAll('*[data-ae-field]'))) {
-        const field = (node as Element).getAttribute('data-ae-field')
-
-        if (!rebuild.refresh && (node as XUL.Textbox).readonly) continue
+        const field = node.getAttribute('data-ae-field')
 
         switch (field) {
           case 'type':
-            (node as XUL.Textbox).value = `${l10n.localize(`better-bibtex_preferences_auto-export_type_${ae.type}`)}:`
+            (node as unknown as XUL.Textbox).value = `${l10n.localize(`better-bibtex_preferences_auto-export_type_${ae.type}`)}:`
             break
 
           case 'name':
-            (node as XUL.Textbox).value = this.name(ae, 'long')
+            (node as unknown as XUL.Textbox).value = this.name(ae, 'long')
             break
 
           case 'status':
             if (ae.status === 'running' && typeof progress === 'number') {
-              (node as XUL.Textbox).value = progress < 0 ? `${this.label?.preparing || 'preparing'} ${-progress}%` : `${progress}%`
+              (node as unknown as XUL.Textbox).value = progress < 0 ? `${this.label?.preparing || 'preparing'} ${-progress}%` : `${progress}%`
             }
             else {
-              (node as XUL.Textbox).value = this.label?.[ae.status] || ae.status
+              (node as unknown as XUL.Textbox).value = this.label?.[ae.status] || ae.status
             }
             break
 
           case 'updated':
-            (node as XUL.Textbox).value = `${new Date(ae.meta.updated || ae.meta.created)}`
+            (node as unknown as XUL.Textbox).value = `${new Date(ae.meta.updated || ae.meta.created)}`
             break
 
           case 'translator':
-            (node as XUL.Textbox).value = Translators.byId[ae.translatorID].label
+            (node as unknown as XUL.Textbox).value = Translators.byId[ae.translatorID].label
             break
 
           case 'path':
-            (node as XUL.Textbox).value = ae[field]
+            (node as unknown as XUL.Textbox).value = ae[field]
             break
 
           case 'error':
-            ((node as Element).parentElement as unknown as XUL.Element).hidden = !ae[field];
-            (node as XUL.Textbox).value = ae[field]
+            (node.parentElement as unknown as XUL.Element).hidden = !ae[field];
+            (node as unknown as XUL.Textbox).value = ae[field]
             break
 
           case 'exportNotes':
@@ -223,23 +214,25 @@ class AutoExportPane {
           case 'asciiBibLaTeX':
           case 'biblatexExtendedNameFormat':
           case 'recursive':
-            (node as XUL.Checkbox).checked = ae[field]
+            (node as unknown as XUL.Checkbox).checked = ae[field]
             break
 
           case 'DOIandURL':
           case 'bibtexURL':
-            (node as XUL.Menulist).value = ae[field]
+            (node as unknown as XUL.Menulist).value = ae[field]
             break
 
           case 'cacherate':
-            (node as XUL.Textbox).value = typeof this.cacherate[ae.$loki] === 'number' ? `${this.cacherate[ae.$loki]}%`: '? %'
+            (node as unknown as XUL.Textbox).value = typeof this.cacherate[ae.$loki] === 'number' ? `${this.cacherate[ae.$loki]}%`: '? %'
             break
 
           default:
             throw new Error(`Unexpected field in auto-export refresh: ${field}`)
         }
       }
-    }
+    })
+
+    menulist.selectedIndex = selectedIndex
   }
 
   public remove(node) {
@@ -279,6 +272,8 @@ class AutoExportPane {
     const ae = AutoExport.db.get(parseInt(node.getAttribute('data-ae-id')))
     Cache.getCollection(Translators.byId[ae.translatorID].label).removeDataOnly()
 
+    log.debug('edit autoexport:', field)
+
     switch (field) {
       case 'exportNotes':
       case 'useJournalAbbreviation':
@@ -287,17 +282,21 @@ class AutoExportPane {
       case 'asciiBibLaTeX':
       case 'biblatexExtendedNameFormat':
       case 'recursive':
+        log.debug('edit autoexport:', field, node.checked)
         ae[field] = node.checked
         break
 
       case 'DOIandURL':
       case 'bibtexURL':
+        log.debug('edit autoexport:', field, node.value)
         ae[field] = node.value
         break
 
       default:
         log.error('unexpected field', field)
     }
+
+    log.debug('edit autoexport:', ae)
 
     AutoExport.db.update(ae)
     AutoExport.run(ae.$loki)

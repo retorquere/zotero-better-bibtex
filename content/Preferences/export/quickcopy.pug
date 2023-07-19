@@ -3,7 +3,7 @@ groupbox
   vbox(style='height: 14em;' flex=1)
     hbox(flex=0)
       label(bbt:preference='extensions.zotero.translators.better-bibtex.quickCopyMode') &better-bibtex_preferences_export_quick-copy_format;
-      menulist#id-better-bibtex-preferences-quickCopyMode(preference='extensions.zotero.translators.better-bibtex.quickCopyMode' preference-editable='true' oncommand='document.getElementById("quickCopyDetails").selectedIndex = this.selectedIndex')
+      menulist#id-better-bibtex-preferences-quickCopyMode(preference='extensions.zotero.translators.better-bibtex.quickCopyMode' preference-editable='true' oncommand="document.getElementById('quickCopyDetails').selectedIndex = this.selectedIndex")
         menupopup
           menuitem(value='latex' label='&better-bibtex_preferences_export_quick-copy_latex.label;')
           menuitem(value='citekeys' label='&better-bibtex_preferences_export_quick-copy_citekeys.label;')
@@ -59,7 +59,9 @@ groupbox
         label.text-link(onclick='Zotero.launchURL("https://retorque.re/zotero-better-bibtex/installation/preferences/export/#quick-copydrag-and-drop-citations")' bbt:preference='extensions.zotero.translators.better-bibtex.quickCopyEta') &better-bibtex_preferences_export_quick-copy_eta-template;
         textbox(rows='10' multiline='true' flex='1' preference='extensions.zotero.translators.better-bibtex.quickCopyEta')
       script.
-        var qcm = Zotero.Prefs.get('translators.better-bibtex.quickCopyMode')
-        var si = Array.from(document.getElementById('id-better-bibtex-preferences-quickCopyMode').options).findIndex(option => option.value === qcm)
-        dump(`quickCopyDetails: ${qcm} = ${si}\n`)
-        document.getElementById("quickCopyDetails").selectedIndex = si >= 0 ? si : 0
+        window.addEventListener('load', function() {
+          var qcm = Zotero.Prefs.get('translators.better-bibtex.quickCopyMode')
+          var selectedIndex = Array.from(document.querySelector('#id-better-bibtex-preferences-quickCopyMode menupopup').children).findIndex(option => option.value === qcm)
+          dump(`quickCopyDetails: ${qcm} = ${selectedIndex}\n`)
+          document.getElementById("quickCopyDetails").selectedIndex = selectedIndex
+        })

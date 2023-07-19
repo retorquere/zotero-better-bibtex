@@ -20,7 +20,6 @@ vbox#better-bibtex-prefs-auto-exports(hidden="true")
         oncommand="document.getElementById('better-bibtex-prefs-auto-export-deck').selectedIndex = this.selectedIndex"
       )
       menupopup
-        menuitem
     vbox
   deck#better-bibtex-prefs-auto-export-deck(flex=1)
     vbox(flex=1)
@@ -54,7 +53,7 @@ vbox#better-bibtex-prefs-auto-exports(hidden="true")
         hbox
           label &better-bibtex_preferences_export_bibtex_urls;
           hbox(flex=0)
-            menulist(data-ae-id="" data-ae-field="bibtexURL" oncommand="Zotero.BetterBibTeX.PrefPane.autoexport.edit(this)")
+            menulist(flex=0 data-ae-id="" data-ae-field="bibtexURL" oncommand="Zotero.BetterBibTeX.PrefPane.autoexport.edit(this)")
               menupopup
                 menuitem(value='off' label='&better-bibtex_preferences_export_bibtex_urls_off.label;')
                 menuitem(value='note' label='&better-bibtex_preferences_export_bibtex_urls_note.label;')
