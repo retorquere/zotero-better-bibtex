@@ -349,7 +349,7 @@ better-bibtex_preferences_export_quality-report =
   .label = Include comments about potential problems with the exported entries
 
 better-bibtex_preferences_export_quick-copy = Quick-Copy
-  .label = .label = { better-bibtex_preferences_export_quick-copy }
+  .label = { better-bibtex_preferences_export_quick-copy }
 better-bibtex_preferences_export_quick-copy_explanation = Quick-Copy/drag-and-drop citations
 better-bibtex_preferences_export_quick-copy_format = Quick-Copy format
 unused_better-bibtex_preferences_export_quick-copy_atom = Atom
