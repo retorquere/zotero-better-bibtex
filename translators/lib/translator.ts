@@ -425,11 +425,10 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
     if (translation.preferences.testing && typeof __estrace === 'undefined' && Prefs.schema.translator[translator.label]?.cache) {
       const allowedPreferences: Prefs.Preferences = Prefs.affectedBy[translator.label]
         .concat([ 'testing' ])
-        // @ts-ignore
-        .reduce((acc: Prefs.Preferences, pref: Prefs.PreferenceName) => {
+        .reduce((acc: any, pref: Prefs.PreferenceName) => {
           acc[pref] = translation.preferences[pref]
-          return acc
-        }, {} as Partial<Prefs.Preferences>) as unknown as Prefs.Preferences
+          return acc as Prefs.Preferences
+        }, {}) as unknown as Prefs.Preferences
 
       translation.preferences = new Proxy(allowedPreferences, {
         set: (object, property, _value) => {
