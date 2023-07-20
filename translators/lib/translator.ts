@@ -9,8 +9,6 @@ import { RegularItem, Item, Collection, Attachment } from '../../gen/typings/ser
 import type { Exporter as BibTeXExporter } from '../bibtex/exporter'
 import type { ZoteroItem } from '../bibtex/bibtex'
 
-type Preferences = Prefs.Preferences & { texmap?: TeXMap }
-
 type CacheableItem = Item & { $cacheable: boolean }
 type CacheableRegularItem = RegularItem & { $cacheable: boolean }
 
@@ -223,11 +221,11 @@ export function collect(): Input {
 }
 
 class Override {
-  private orig: Preferences
+  private orig: Prefs.Preferences
   private exportPath: string
   private exportDir: string
 
-  constructor(private preferences: Preferences) {
+  constructor(private preferences: Prefs.Preferences) {
     this.orig = {...this.preferences}
     this.exportPath = Zotero.getOption('exportPath')
     this.exportDir = Zotero.getOption('exportDir')
@@ -254,7 +252,7 @@ class Override {
           continue
         }
 
-        let prefs: Partial<Preferences>
+        let prefs: Partial<Prefs.Preferences>
         if (preference === 'preferences') {
           prefs = JSON.parse(content).override?.preferences
           if (!prefs) continue
@@ -293,7 +291,7 @@ class Override {
 }
 
 export class Translation { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
-  public preferences: Preferences
+  public preferences: Prefs.Preferences
   public importToExtra: Record<string, 'plain' | 'force'>
   public skipFields: string[]
   public skipField: RegExp
@@ -303,6 +301,7 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
     dir: undefined,
     path: undefined,
   }
+  public texmap: TeXMap
 
   public options: {
     quickCopyMode?: string
@@ -424,21 +423,22 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
     }
 
     if (translation.preferences.testing && typeof __estrace === 'undefined' && Prefs.schema.translator[translator.label]?.cache) {
-      const ignored = {
-        testing: true,
-        texmap: true,
-      }
-      translation.preferences = new Proxy(translation.preferences, {
+      const allowedPreferences: Prefs.Preferences = Prefs.affectedBy[translator.label]
+        .concat([ 'testing' ])
+        // @ts-ignore
+        .reduce((acc: Prefs.Preferences, pref: Prefs.PreferenceName) => {
+          acc[pref] = translation.preferences[pref]
+          return acc
+        }, {} as Partial<Prefs.Preferences>) as unknown as Prefs.Preferences
+
+      translation.preferences = new Proxy(allowedPreferences, {
         set: (object, property, _value) => {
           throw new TypeError(`Unexpected set of preference ${String(property)}`)
         },
         get: (object, property: Prefs.PreferenceName) => {
           // JSON.stringify will attempt to get this
           if (property as unknown as string === 'toJSON') return object[property]
-          if (!ignored[property]) {
-            if (!PrefNames.has(property)) throw new TypeError(`Unsupported preference ${property}`)
-            if (!Prefs.affects[property]?.includes(translator.label)) throw new TypeError(`Preference ${property} claims not to affect ${translator.label}`)
-          }
+          if (!(property in allowedPreferences)) new TypeError(`Preference ${property} claims not to affect ${translator.label}`)
           return object[property] // eslint-disable-line @typescript-eslint/no-unsafe-return
         },
       })
@@ -485,7 +485,7 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
     this.preferences = Object.entries(Prefs.defaults).reduce((acc, [pref, dflt]) => {
       acc[pref] = Zotero.getHiddenPref(`better-bibtex.${pref}`) ?? dflt
       return acc
-    }, {} as unknown as Preferences)
+    }, {} as unknown as Prefs.Preferences)
 
     const override = new Override(this.preferences)
     if (override.override('preferences', '.json')) this.cacheable = false
@@ -494,10 +494,10 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
 
     // special handling
     try {
-      this.preferences.texmap = JSON.parse(this.preferences.charmap)
+      this.texmap = JSON.parse(this.preferences.charmap)
     }
     catch (err) {
-      this.preferences.texmap = {}
+      this.texmap = {}
     }
 
     this.importToExtra = {}
