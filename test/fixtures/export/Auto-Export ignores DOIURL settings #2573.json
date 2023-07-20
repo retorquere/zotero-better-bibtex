@@ -1,0 +1,104 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "DOIandURL": "doi",
+      "autoExportDelay": 6,
+      "bibtexURL": "url-ish",
+      "citekeyFold": false,
+      "citekeyFormat": "zotero.clean",
+      "skipFields": "file"
+    }
+  },
+  "items": [
+    {
+      "DOI": "10.1109/INDIN51773.2022.9976107",
+      "ISBN": "978-1-72817-568-3",
+      "accessDate": "2023-01-02T15:23:50Z",
+      "citationKey": "radler_integration_2022",
+      "conferenceName": "2022 IEEE 20th International Conference on Industrial Informatics (INDIN)",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Simon",
+          "lastName": "R\u00e4dler"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Eugen",
+          "lastName": "Rigger"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Juergen",
+          "lastName": "Mangler"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Stefanie",
+          "lastName": "Rinderle-Ma"
+        }
+      ],
+      "date": "2022-7-25",
+      "itemID": 1,
+      "itemType": "conferencePaper",
+      "libraryCatalog": "DOI.org (Crossref)",
+      "pages": "546-551",
+      "place": "Perth, Australia",
+      "publicationTitle": "2022 IEEE 20th International Conference on Industrial Informatics (INDIN)",
+      "publisher": "IEEE",
+      "tags": [
+        {
+          "tag": "Artificial Intelligence",
+          "type": 1
+        },
+        {
+          "tag": "Cyber-Physical Systems",
+          "type": 1
+        },
+        {
+          "tag": "Digital twin",
+          "type": 1
+        },
+        {
+          "tag": "Digital Twin",
+          "type": 1
+        },
+        {
+          "tag": "Education",
+          "type": 1
+        },
+        {
+          "tag": "Electronic learning",
+          "type": 1
+        },
+        {
+          "tag": "Java",
+          "type": 1
+        },
+        {
+          "tag": "Multi-agent Systems",
+          "type": 1
+        },
+        {
+          "tag": "Pandemics",
+          "type": 1
+        },
+        {
+          "tag": "Production facilities",
+          "type": 1
+        },
+        {
+          "tag": "Production systems",
+          "type": 1
+        }
+      ],
+      "title": "Integration of Machine Learning Task Definition in Model-Based Systems Engineering using SysML",
+      "url": "https://ieeexplore.ieee.org/document/9976107/"
+    }
+  ]
+}

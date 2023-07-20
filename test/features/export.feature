@@ -581,6 +581,14 @@ Feature: Export
     Then "~/autoexport.bib" should match "export/*.after.biblatex"
     And "~/autoexport.coll.bib" should match "export/*.after.coll.biblatex"
 
+  Scenario: Auto-Export ignores DOIURL settings #2573
+    Given I import 1 reference from "export/*.json"
+    And I set preference .autoExport to "immediate"
+    Then an auto-export to "~/autoexport.bib" using "Better BibTeX" should match "export/*.before.bibtex"
+    When I change DOIandURL to "url" on the auto-export
+    And I wait 15 seconds
+    Then "~/autoexport.bib" should match "export/*.after.bibtex"
+
   Scenario: Choose fields to exclude for each exported file #1827
     Given I import 1 reference from "export/*.json"
     And I set preference .skipFields to "title"

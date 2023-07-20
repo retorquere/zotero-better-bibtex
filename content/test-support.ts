@@ -312,4 +312,18 @@ export class TestSupport {
 
     return deferred.promise
   }
+
+  public editAutoExport(field: string, value: boolean | string): void {
+    Zotero.BetterBibTeX.PrefPane.autoexport.edit({
+      getAttribute(name: string): string | number { // eslint-disable-line prefer-arrow/prefer-arrow-functions
+        switch (name) {
+          case 'data-ae-field': return field
+          case 'data-ae-id': return AutoExport.db.find()[0].$loki as number
+          default: throw new Error(`unexpected attribute ${name}`)
+        }
+      },
+      checked: value,
+      value,
+    })
+  }
 }
