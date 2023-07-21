@@ -183,9 +183,6 @@ Feature: Export
       | URL-DOI exclusive export broken for item types with no dedicated DOI field #1331                                         | 1          |
       | date ranges #747+#746                                                                                                    | 5          |
       | preserve @strings between import-export #1162                                                                            | 1          |
-
-    @inspire
-    Examples:
       | inspireHep fetching broken #2201 | 1 |
       | fetch inspire-hep key #1879      | 1 |
 
