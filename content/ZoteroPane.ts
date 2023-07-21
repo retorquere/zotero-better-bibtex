@@ -13,8 +13,16 @@ import * as DateParser from './dateparser'
 import * as l10n from './l10n'
 import { Elements } from './create-element'
 import { is7 } from './client'
+import { busyWait } from './busy-wait'
 
-export class ZoteroPane {
+export async function newZoteroPane(win: Window): Promise<void> {
+  const zp = (win as any).ZoteroPane
+  await busyWait(() => typeof zp.itemsView.waitForLoad === 'function')
+  await zp.itemsView.waitForLoad()
+  new ZoteroPane(win)
+}
+
+class ZoteroPane {
   private patched: Trampoline[] = []
   private elements: Elements
   private ZoteroPane: any
@@ -25,7 +33,8 @@ export class ZoteroPane {
     this.elements.remove()
   }
 
-  constructor(win: Window, doc: Document) {
+  constructor(win: Window) {
+    const doc = win.document
     const elements = this.elements = new Elements(doc)
     this.window = win
     this.ZoteroPane = (this.window as any).ZoteroPane

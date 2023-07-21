@@ -17,7 +17,7 @@ import type { XUL } from '../typings/xul'
 import { prompt } from './prompt'
 import { is7 } from './client'
 import { Elements } from './create-element'
-import { ZoteroPane } from './ZoteroPane'
+import { newZoteroPane } from './ZoteroPane'
 import { newZoteroItemPane } from './ZoteroItemPane'
 import { ExportOptions } from './ExportOptions'
 import { PrefPane } from './Preferences'
@@ -953,8 +953,8 @@ export class BetterBibTeX {
     $window = win
 
     try {
-      new ZoteroPane($window, document)
-      await newZoteroItemPane($window, document)
+      await newZoteroPane($window)
+      await newZoteroItemPane($window)
     }
     catch (err) {
       log.debug('loadUI error:', err)

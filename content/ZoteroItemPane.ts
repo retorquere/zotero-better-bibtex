@@ -4,6 +4,7 @@ import * as client from './client'
 import * as l10n from './l10n'
 import { log } from './logger'
 import { Elements, NAMESPACE } from './create-element'
+import { busyWait } from './busy-wait'
 
 /* REVIEW:
 async function title_sentenceCase(label) {
@@ -29,7 +30,7 @@ async function title_sentenceCase(label) {
 }
 */
 
-export async function newZoteroItemPane(win: Window, doc: Document): Promise<void> {
+export async function newZoteroItemPane(win: Window): Promise<void> {
   let itemBoxInstance: HTMLElement
   if (client.is7) {
     const ItemBox = win.customElements.get('item-box')
@@ -37,16 +38,10 @@ export async function newZoteroItemPane(win: Window, doc: Document): Promise<voi
     itemBoxInstance = new ItemBox
   }
   else {
-    const wait = 5000 // eslint-disable-line no-magic-numbers
-    let t = 0
-    // WTF
-    while (!(itemBoxInstance = doc.querySelector('#zotero-editpane-item-box')) && t < wait) {
-      await Zotero.Promise.delay(10) // eslint-disable-line no-magic-numbers
-      t += 10 // eslint-disable-line no-magic-numbers
-    }
+    const getItemBox = () => (itemBoxInstance = win.document.querySelector('#zotero-editpane-item-box'))
+    await busyWait(() => !!getItemBox())
   }
-  if (!itemBoxInstance) throw new Error('could not find item-box')
-  new ZoteroItemPane(win, doc, itemBoxInstance)
+  new ZoteroItemPane(win, itemBoxInstance)
 }
 
 export class ZoteroItemPane {
@@ -58,9 +53,9 @@ export class ZoteroItemPane {
     this.itemBoxInstance.refresh()
   }
 
-  constructor(win: Window, doc: Document, private itemBoxInstance: any) { // eslint-disable-line @typescript-eslint/explicit-module-boundary-types
-    this.document = doc
-    const elements = this.elements = new Elements(doc)
+  constructor(win: Window, private itemBoxInstance: any) { // eslint-disable-line @typescript-eslint/explicit-module-boundary-types
+    this.document = win.document
+    const elements = this.elements = new Elements(this.document)
     const itemPane = (win as any).ZoteroItemPane
     itemPane.BetterBibTeX = this
 

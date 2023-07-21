@@ -218,13 +218,26 @@ class Docs extends ASTWalker {
       }, [])
       .sort()
 
+    let type: 'string' | 'number' | 'boolean' = 'string'
+    switch (this.attr(node, 'type', true)) {
+      case 'int':
+        type = 'number'
+        break
+      case 'string':
+        type = 'string'
+        break
+      case 'bool':
+        type = 'boolean'
+        break
+      default:
+        error('unsupported type', this.attr(node, 'type'))
+    }
     const pref: Preference = {
       name,
       shortName: name.replace(/^([^.]+[.])*/, ''),
       label: '',
       description: '',
-      // @ts-ignore
-      type: { int: 'number', string: 'string', bool: 'boolean' }[this.attr(node, 'type', true)] || error('unsupported type', this.attr(node, 'type')),
+      type,
       default: this.attr(node, 'default', true),
       affects,
     }
