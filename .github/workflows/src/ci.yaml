@@ -19,7 +19,7 @@ _anchors:
     name: install node
     uses: actions/setup-node@v3
     with:
-      node-version: 16.x
+      node-version: 19.x
   cache: &cache
     name: Cache python/node dependencies
     id: cache
