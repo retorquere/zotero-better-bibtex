@@ -11,7 +11,7 @@ import { DB as Cache } from './db/cache'
 import { $and } from './db/loki'
 import { Translators, ExportJob } from './translators'
 import { Preference } from './prefs'
-import { Preferences, schema } from '../gen/preferences/meta'
+import { Preferences, schema, affectedBy } from '../gen/preferences/meta'
 import * as ini from 'ini'
 import fold2ascii from 'fold-to-ascii'
 import { pathSearch } from './path-search'
@@ -237,7 +237,8 @@ const queue = new class TaskQueue {
     await Zotero.BetterBibTeX.ready
 
     const ae = this.autoexports.get($loki)
-    void Events.emit('export-progress', { pct: 0, message: `Starting ${Translators.byId[ae.translatorID].label}`, ae: $loki })
+    const translator = Translators.byId[ae.translatorID]
+    void Events.emit('export-progress', { pct: 0, message: `Starting ${translator.label}`, ae: $loki })
     if (!ae) throw new Error(`AutoExport ${$loki} not found`)
 
     ae.status = 'running'
@@ -264,30 +265,22 @@ const queue = new class TaskQueue {
         worker: true,
       }
 
-      /*
-        the reason this is reasonable and works is the following:
-
-        1. If you have an auto-export, you really want to use the cache. Trust me.
-        2. If you have jabrefFormat set to 4 or higher, BBT will not cache because the contents of any given item is dependent on which groups you happen to export (BTW Jabref: booh)
-        3. Since it's not in the cache, whatever we choose here will not matter, because any other exports will bypass the cache and generate fresh jabrefFormat 4+ items
-        4. If you change the jabrefFormat to anything back to 3 or 0, all caches will be dropped anyhow, and we will follow that cache format from that point on
-      */
-
-      for (const pref of schema.translator[Translators.byId[ae.translatorID].label].preferences) {
-        displayOptions[`preference_${pref}`] = ae[pref]
-      }
-
       const jobs: ExportJob[] = [{
         translatorID: ae.translatorID,
         autoExport: ae.$loki,
         displayOptions,
         scope,
         path: ae.path,
+        preferences: affectedBy[translator.label].reduce((acc: any, k: string): any => {
+          if (k in ae) acc[k] = ae[k]
+          return acc
+        }, {} as any) as Partial<Preferences>,
       }]
+      log.debug('scheduling auto-export:', jobs)
 
       if (ae.recursive) {
         const collections = scope.type === 'library' ? Zotero.Collections.getByLibrary(scope.id, true) : Zotero.Collections.getByParent(scope.collection, true)
-        const ext = `.${Translators.byId[ae.translatorID].target}`
+        const ext = `.${translator.target}`
 
         const root = scope.type === 'collection' ? scope.collection : false
 
@@ -316,7 +309,7 @@ const queue = new class TaskQueue {
 
       await Promise.all(jobs.map(job => Translators.queueJob(job)))
 
-      await repo.push(l10n.localize('better-bibtex_preferences_auto-export_git_message', { type: Translators.byId[ae.translatorID].label.replace('Better ', '') }))
+      await repo.push(l10n.localize('better-bibtex_preferences_auto-export_git_message', { type: translator.label.replace('Better ', '') }))
 
       ae.error = ''
     }
@@ -444,6 +437,7 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
       }
     })
 
+    const translator = Translators.byId[ae.translatorID]
     const itemIDset: Set<number> = new Set
     await this.itemIDs(ae, ae.id, itemTypeIDs, itemIDset)
     if (itemIDset.size === 0) return 100 // eslint-disable-line no-magic-numbers
@@ -452,12 +446,12 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
       exportNotes: !!ae.exportNotes,
       useJournalAbbreviation: !!ae.useJournalAbbreviation,
     }
-    const prefs: Partial<Preferences> = schema.translator[Translators.byId[ae.translatorID].label].preferences.reduce((acc, pref) => {
-      acc[pref] = ae[pref]
+    const prefs: Partial<Preferences> = affectedBy[translator.label].reduce((acc: any, k: string): any => {
+      if (k in ae) acc[k] = ae[k]
       return acc
-    }, {})
+    }, {} as any) as Partial<Preferences>
 
-    const label = Translators.byId[ae.translatorID].label
+    const label = translator.label
     const selector = Cache.selector(label, options, prefs)
     const itemIDs = [...itemIDset]
     const query = $and({...selector, itemID: { $in: itemIDs } })

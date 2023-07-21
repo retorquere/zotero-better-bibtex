@@ -325,7 +325,7 @@ export function generateBibTeX(translation: Translation): void {
 
     const doi = item.DOI || item.extraFields.kv.DOI
     let urlfield = null
-    if (translation.preferences.DOIandURL === 'both' || !doi) {
+    if (translation.preferences.DOIandURL !== 'doi' || !doi) {
       switch (translation.preferences.bibtexURL) {
         case 'url':
         case 'url-ish':
@@ -352,7 +352,7 @@ export function generateBibTeX(translation: Translation): void {
           break
       }
     }
-    if (translation.preferences.DOIandURL === 'both' || !urlfield) {
+    if (translation.preferences.DOIandURL !== 'url' || !urlfield) {
       ref.add({ name: 'doi', value: (doi || '').replace(/^https?:\/\/doi.org\//i, ''), enc: translation.isVerbatimField('doi') ? 'verbatim' : 'latex' })
     }
 

@@ -17,7 +17,7 @@ import { log } from './logger'
 import { DB as Cache } from './db/cache'
 import { DB } from './db/main'
 import { flash } from './flash'
-import { $and, Query } from './db/loki'
+import { $and } from './db/loki'
 import { Events } from './events'
 import { Pinger } from './ping'
 import Puqeue from 'puqeue'
@@ -223,19 +223,8 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     }
   }
 
-  public async exportItemsByWorker(job: ExportJob) {
-    await this.start()
-
-    if (!this.worker) {
-      // this returns a promise for a new export, but for a foreground export
-      return this.exportItems(job)
-    }
-    else {
-      return this.queueJob(job)
-    }
-  }
-
   public async queueJob(job: ExportJob) {
+    await this.start()
     return this.queue.add(() => this.exportItemsByQueuedWorker(job))
   }
 
@@ -251,21 +240,20 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     }
 
     const translator = this.byId[job.translatorID]
-    log.debug('starting background export with', translator.label)
 
     const start = Date.now()
 
-    job.preferences = job.preferences || {}
+    const preferences = job.preferences || {}
 
     const cache = Preference.cache && !(
       // when exporting file data you get relative paths, when not, you get absolute paths, only one version can go into the cache
       displayOptions.exportFileData
 
       // jabref 4 stores collection info inside the entry, and collection info depends on which part of your library you're exporting
-      || (translator.label.includes('TeX') && job.preferences.jabrefFormat >= 4) // eslint-disable-line no-magic-numbers
+      || (translator.label.includes('TeX') && preferences.jabrefFormat >= 4) // eslint-disable-line no-magic-numbers
 
       // relative file paths are going to be different based on the file being exported to
-      || job.preferences.relativeFilePaths
+      || preferences.relativeFilePaths
     ) && Cache.getCollection(translator.label)
 
     this.workers.total += 1
@@ -275,7 +263,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     const deferred = new Deferred<string>()
 
     const config: Translator.Worker.Job = {
-      preferences: { ...Preference.all, ...job.preferences },
+      preferences: { ...Preference.all, ...preferences },
       options: displayOptions,
       data: {
         items: [],
@@ -567,48 +555,6 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     }
 
     return code
-  }
-
-  public async uncached(translatorID: string, displayOptions: any, scope: any): Promise<any[]> {
-    // get all itemIDs in cache
-    const cache = Preference.cache && Cache.getCollection(this.byId[translatorID].label)
-    if (!cache) return []
-
-    const query: Query = {$and: [
-      { exportNotes: {$eq: !!displayOptions.exportNotes} },
-      { useJournalAbbreviation: {$eq: !!displayOptions.useJournalAbbreviation} },
-    ]}
-    for (const pref of schema.translator[this.byId[translatorID].label].preferences) {
-      if (typeof displayOptions[`preference_${pref}`] === 'undefined') {
-        query.$and.push({ [pref]: {$eq: Preference[pref]} })
-      }
-      else {
-        query.$and.push({ [pref]: {$eq: displayOptions[`preference_${pref}`]} })
-      }
-    }
-    const cached = new Set(cache.find(query).map(item => item.itemID))
-
-    if (scope.items) {
-      return scope.items.filter(item => !cached.has(item.id))
-    }
-
-    let sql: string = null
-    const cond = `i.itemTypeID NOT IN (${this.itemType.note}, ${this.itemType.attachment}, ${this.itemType.annotation}) AND i.itemID NOT IN (SELECT itemID FROM deletedItems)`
-    if (scope.library) {
-      sql = `SELECT i.itemID FROM items i WHERE i.libraryID = ${scope.library} AND ${cond}`
-
-    }
-    else if (scope.collection) {
-      sql = `SELECT i.itemID FROM collectionItems ci JOIN items i ON i.itemID = ci.itemID WHERE ci.collectionID = ${scope.collection.id} AND ${cond}`
-
-    }
-    else {
-      log.error('Translators.uncached: no active scope')
-      return []
-
-    }
-
-    return (await Zotero.DB.queryAsync(sql)).map(item => parseInt(item.itemID)).filter(itemID => !cached.has(itemID))
   }
 
   private exportScope(scope: ExportScope): ExportScope {
