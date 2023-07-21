@@ -1,0 +1,66 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "autoExportDelay": 2,
+      "bibtexURL": "url",
+      "citekeyFormat": "auth.lower+year",
+      "quickCopyMode": "citekeys"
+    }
+  },
+  "items": [
+    {
+      "DOI": "10.1007/978-3-030-29007-8_8",
+      "citationKey": "brausse2019",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Franz",
+          "lastName": "Brau\u00dfe"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Konstantin",
+          "lastName": "Korovin"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Margarita V.",
+          "lastName": "Korovina"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Norbert Th.",
+          "lastName": "M\u00fcller"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "Andreas",
+          "lastName": "Herzig"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "Andrei",
+          "lastName": "Popescu"
+        }
+      ],
+      "date": "2019",
+      "extra": [
+        "Citation Key: brausse2019"
+      ],
+      "itemID": 1,
+      "itemType": "conferencePaper",
+      "pages": "131\u2013148",
+      "publicationTitle": "Frontiers of Combining Systems - 12th International Symposium, FroCoS 2019, London, UK, September 4-6, 2019, Proceedings",
+      "publisher": "Springer",
+      "series": "Lecture Notes in Computer Science",
+      "title": "A CDCL-Style Calculus for Solving Non-linear Constraints",
+      "url": "https://doi.org/10.1007/978-3-030-29007-8\\_8",
+      "volume": "11715"
+    }
+  ]
+}
