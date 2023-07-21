@@ -34,12 +34,10 @@ export async function newZoteroItemPane(win: Window): Promise<void> {
   let itemBoxInstance: HTMLElement
   if (client.is7) {
     const ItemBox = win.customElements.get('item-box')
-    log.debug('customElements:', typeof win.customElements, 'ItemBox:', ItemBox)
     itemBoxInstance = new ItemBox
   }
   else {
-    const getItemBox = () => (itemBoxInstance = win.document.querySelector('#zotero-editpane-item-box'))
-    await busyWait(() => !!getItemBox())
+    await busyWait(() => { itemBoxInstance = win.document.querySelector('#zotero-editpane-item-box'); return !!itemBoxInstance })
   }
   new ZoteroItemPane(win, itemBoxInstance)
 }
