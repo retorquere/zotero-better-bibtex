@@ -57,7 +57,8 @@ groupbox
 
       vbox#better-bibtex-preferences-quickcopy-eta(flex='1' align='start')
         label.text-link(onclick='Zotero.launchURL("https://retorque.re/zotero-better-bibtex/installation/preferences/export/#quick-copydrag-and-drop-citations")' bbt:preference='extensions.zotero.translators.better-bibtex.quickCopyEta') &better-bibtex_preferences_export_quick-copy_eta-template;
-        textbox(rows='10' multiline='true' flex='1' preference='extensions.zotero.translators.better-bibtex.quickCopyEta')
+        // textbox(rows='10' multiline='true' flex='1' preference='extensions.zotero.translators.better-bibtex.quickCopyEta')
+        html:textarea(rows='10' cols='80' flex='1' preference='extensions.zotero.translators.better-bibtex.quickCopyEta')
       script.
         window.addEventListener('load', function() {
           var qcm = Zotero.Prefs.get('translators.better-bibtex.quickCopyMode')
