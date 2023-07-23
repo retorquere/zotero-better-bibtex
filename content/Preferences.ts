@@ -127,6 +127,14 @@ class AutoExportPane {
     return label
   }
 
+  /*
+  public selected() {
+    const menulist: XUL.Menulist = $window.document.querySelector('#better-bibtex-prefs-auto-export-select') as unknown as XUL.Menulist
+    if (!menulist.selectedItem) return null
+    const $loki = menulist.selectedItem
+  }
+  */
+
   public refresh() {
     if (!$window) return
     const doc = $window.document
@@ -152,7 +160,7 @@ class AutoExportPane {
     if (Array.from(menupopup.children).map(ae => (ae as unknown as XUL.Menuitem).value).join('/') !== auto_exports.map(ae => `${ae.$loki}`).join('/')) {
       menulist.removeAllItems()
       for (const ae of auto_exports) {
-        const menuitem = menulist.appendItem(this.label(ae), `${ae.loki}`)
+        const menuitem = menulist.appendItem(this.label(ae), `${ae.$loki}`)
         if (ae.$loki === selected.$loki) menulist.selectedItem = menuitem
       }
     }
