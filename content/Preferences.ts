@@ -240,7 +240,7 @@ class AutoExportPane {
   }
 
   public remove() {
-    const menulist: XUL.Menulist = doc.querySelector('#better-bibtex-prefs-auto-export-select') as unknown as XUL.Menulist
+    const menulist: XUL.Menulist = $window.document.querySelector('#better-bibtex-prefs-auto-export-select') as unknown as XUL.Menulist
     if (!menulist.selectedItem) return
 
     if (!Services.prompt.confirm(null, l10n.localize('better-bibtex_auto-export_delete'), l10n.localize('better-bibtex_auto-export_delete_confirm'))) return
@@ -252,7 +252,7 @@ class AutoExportPane {
   }
 
   public run() {
-    const menulist: XUL.Menulist = doc.querySelector('#better-bibtex-prefs-auto-export-select') as unknown as XUL.Menulist
+    const menulist: XUL.Menulist = $window.document.querySelector('#better-bibtex-prefs-auto-export-select') as unknown as XUL.Menulist
     if (!menulist.selectedItem) return
 
     AutoExport.run(parseInt(menulist.selectedItem.getAttribute('value')))
@@ -260,7 +260,7 @@ class AutoExportPane {
   }
 
   public edit(node) {
-    const menulist: XUL.Menulist = doc.querySelector('#better-bibtex-prefs-auto-export-select') as unknown as XUL.Menulist
+    const menulist: XUL.Menulist = $window.document.querySelector('#better-bibtex-prefs-auto-export-select') as unknown as XUL.Menulist
     if (!menulist.selectedItem) return
 
     const field = node.getAttribute('data-ae-field')
