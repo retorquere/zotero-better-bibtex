@@ -268,11 +268,15 @@ class AutoExportPane {
   }
 
   public edit(node) {
-    const menulist: XUL.Menulist = $window.document.querySelector('#better-bibtex-prefs-auto-export-select') as unknown as XUL.Menulist
-    if (!menulist.selectedItem) return
+    let id: string
+    // add data-ae-id check for testing
+    if (!(id = node.getAttribute('data-ae-id'))) {
+      const menulist: XUL.Menulist = $window.document.querySelector('#better-bibtex-prefs-auto-export-select') as unknown as XUL.Menulist
+      id = menulist.selectedItem.getAttribute('value')
+    }
+    const ae = AutoExport.db.get(parseInt(id))
 
     const field = node.getAttribute('data-ae-field')
-    const ae = AutoExport.db.get(parseInt(menulist.selectedItem.getAttribute('value')))
     Cache.getCollection(Translators.byId[ae.translatorID].label).removeDataOnly()
 
     log.debug('edit autoexport:', field)
