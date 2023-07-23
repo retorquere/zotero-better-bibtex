@@ -51,8 +51,10 @@ export namespace XUL {
     public selectedItem: Menuitem
     public selectedIndex: number
     public value: string
-    public getItemAtIndex(index: number): XUL.MenuItem
+    public getItemAtIndex(index: number): XUL.Menuitem
     public ensureIndexIsVisible(index: number): void
+    public appendItem(label: string, value: string, description?: string): XUL.Menuitem
+    public removeAllItems(): void
   }
 
   class Deck extends XUL.Element {
