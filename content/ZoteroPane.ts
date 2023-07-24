@@ -1,3 +1,5 @@
+import type { XUL } from '../typings/xul'
+
 import { log } from './logger'
 import { TeXstudio } from './tex-studio'
 import { patch as $patch$, unpatch as $unpatch$, Trampoline } from './monkey-patch'
@@ -47,7 +49,7 @@ class ZoteroPane {
         .appendChild(elements.create('menu', {
           id: 'better-bibtex-tools-menu',
           label: 'Better BibTeX',
-          class: 'menu-iconic',
+          class: 'menuitem-iconic',
           image: 'chrome://zotero-better-bibtex/content/skin/bibtex-menu.svg',
         }))
         .appendChild(elements.create('menupopup'))
@@ -88,7 +90,7 @@ class ZoteroPane {
         .appendChild(elements.create('menu', {
           id,
           label: 'Better BibTeX',
-          class: 'menu-iconic',
+          class: 'menuitem-iconic',
           image: 'chrome://zotero-better-bibtex/content/skin/bibtex-menu.svg',
         }))
         .appendChild(elements.create('menupopup'))
@@ -148,39 +150,42 @@ class ZoteroPane {
       // eslint-disable-next-line prefer-rest-params
       await original.apply(this, arguments)
 
-      if (!doc.getElementById('bbt-collectionmenu-separator')) {
-        const collectionmenu = doc.getElementById('zotero-collectionmenu')
+      const id = 'better-bibtex-collection-menu'
 
-        collectionmenu.appendChild(elements.create('menuseparator', { class: 'zotero-collectionmenu-bbt-autoexport', id: 'bbt-collectionmenu-separator' }))
-        collectionmenu
+      if (!doc.getElementById(id)) {
+        const menupopup = doc.getElementById('zotero-collectionmenu')
           .appendChild(elements.create('menu', {
-            class: 'zotero-collectionmenu-bbt-autoexport',
+            id,
+            label: 'Better BibTeX',
+            class: 'menuitem-iconic',
+            image: 'chrome://zotero-better-bibtex/content/skin/bibtex-menu.svg',
+          }))
+          .appendChild(elements.create('menupopup'))
+
+        menupopup
+          .appendChild(elements.create('menu', {
+            id: 'zotero-collectionmenu-bbt-autoexport',
             label: l10n.localize('better-bibtex_preferences_tab_auto-export.label'),
           }))
-          .appendChild(elements.create('menupopup', {
-            id: 'zotero-collectionmenu-bbt-autoexport-menupopup',
-          }))
-          .appendChild(elements.create('menuitem', {
-            oncommand: event => { event.stopPropagation(); bbt_zotero_pane_helper.startAutoExport(event) },
-          }))
+          .appendChild(elements.create('menupopup'))
 
-        collectionmenu.appendChild(elements.create('menuitem', {
+        menupopup.appendChild(elements.create('menuitem', {
           id: 'bbt-collectionmenu-pull-url',
           label: l10n.localize('better-bibtex_zotero-pane_show_collection-key'),
           oncommand: event => { event.stopPropagation(); bbt_zotero_pane_helper.pullExport() },
-          class: 'menuitem-iconic',
-          image: 'chrome://zotero-better-bibtex/content/skin/bibtex-menu.svg',
+          // class: 'menuitem-iconic',
+          // image: 'chrome://zotero-better-bibtex/content/skin/bibtex-menu.svg',
         }))
 
-        collectionmenu.appendChild(elements.create('menuitem', {
+        menupopup.appendChild(elements.create('menuitem', {
           id: 'bbt-collectionmenu-scan-aux',
           label: l10n.localize('better-bibtex_aux-scanner'),
           oncommand: async event => { event.stopPropagation(); await Zotero.BetterBibTeX.scanAUX('collection') },
-          class: 'menuitem-iconic',
-          image: 'chrome://zotero-better-bibtex/content/skin/bibtex-menu.svg',
+          // class: 'menuitem-iconic',
+          // image: 'chrome://zotero-better-bibtex/content/skin/bibtex-menu.svg',
         }))
 
-        collectionmenu.appendChild(elements.create('menuitem', {
+        menupopup.appendChild(elements.create('menuitem', {
           id: 'bbt-collectionmenu-tag-duplicates',
           label: l10n.localize('better-bibtex_zotero-pane_tag_duplicates'),
           oncommand: async event => {
@@ -189,7 +194,7 @@ class ZoteroPane {
           },
         }))
 
-        collectionmenu.appendChild(elements.create('menuitem', {
+        menupopup.appendChild(elements.create('menuitem', {
           id: 'bbt-collectionmenu-report-errors',
           label: l10n.localize('better-bibtex_report-errors'),
           oncommand: event => { event.stopPropagation(); bbt_zotero_pane_helper.errorReport('collection') },
@@ -201,7 +206,6 @@ class ZoteroPane {
         const isLibrary = treeRow && treeRow.isLibrary(true)
         const isCollection = treeRow && treeRow.isCollection()
 
-        doc.getElementById('bbt-collectionmenu-separator').hidden = !(isLibrary || isCollection)
         doc.getElementById('bbt-collectionmenu-pull-url').hidden = !(isLibrary || isCollection)
         doc.getElementById('bbt-collectionmenu-report-errors').hidden = !(isLibrary || isCollection)
 
@@ -223,18 +227,17 @@ class ZoteroPane {
             auto_exports = AutoExport.db.find($and({ type: 'library', id: treeRow.ref.libraryID }))
           }
         }
+        auto_exports = [...auto_exports].sort((a: { path: string }, b: { path: string }) => a.path.localeCompare(b.path))
 
-        for (const node of [...doc.getElementsByClassName('zotero-collectionmenu-bbt-autoexport')]) {
-          (node as any).hidden = auto_exports.length === 0
-        }
+        const menulist: XUL.Menulist = doc.getElementById('zotero-collectionmenu-bbt-autoexport')
+        menulist.hidden = auto_exports.length === 0
+        log.debug('2578 auto-exports should be hidden:', menulist.hidden, auto_exports.length === 0)
 
         if (auto_exports.length !== 0) {
-          const menupopup = doc.getElementById('zotero-collectionmenu-bbt-autoexport-menupopup')
-          while (menupopup.children.length > 1) menupopup.removeChild(menupopup.firstChild)
-          for (const [index, ae] of auto_exports.entries()) {
-            const menuitem = (index === 0 ? menupopup.firstChild : menupopup.appendChild(menupopup.firstChild.cloneNode(true)));
-            (menuitem as any).label = ae.path
-          }
+          menulist.removeAllItems()
+          auto_exports.forEach(ae => {
+            menulist.appendItem(ae.path, `${ae.$loki}`).addEventListener('command', () => AutoExport.run(ae.$loki))
+          })
         }
       }
       catch (err) {
@@ -292,19 +295,6 @@ class ZoteroPane {
     if (!params.url.short) return
 
     (this.window as any).openDialog(`chrome://zotero-better-bibtex/content/ServerURL.${is7 ? 'xhtml' : 'xul'}` , '', 'chrome,dialog,centerscreen,modal', params)
-  }
-
-  public startAutoExport(event: Event): void {
-    event.stopPropagation()
-    const path = (event.target as Element).getAttribute('label')
-    const ae = AutoExport.db.findOne($and({ path }))
-
-    if (ae) {
-      AutoExport.run(ae.$loki)
-    }
-    else {
-      log.error('cannot find ae for', { path })
-    }
   }
 
   public padNum(n: number, width: number): string {

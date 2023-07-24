@@ -132,43 +132,38 @@ class AutoExportPane {
     const doc = $window.document
 
     const auto_exports = [...AutoExport.db.find()].sort((a: { path: string }, b: { path: string }) => a.path.localeCompare(b.path))
-    const hidden = !auto_exports.length
-    doc.getElementById('better-bibtex-prefs-auto-exports').setAttribute('hidden', `${hidden}`)
-    if (hidden) return null
+    const display = doc.querySelector<HTMLElement>('#better-bibtex-prefs-auto-exports')
+    display.style.display = auto_exports.length ? 'grid' : 'none'
+    if (!auto_exports.length) return null
 
-    const menulist: XUL.Menulist = doc.querySelector('#better-bibtex-prefs-auto-export-select') as unknown as XUL.Menulist
+    const menulist: XUL.Menulist = doc.querySelector<HTMLElement>('#better-bibtex-prefs-auto-export-select') as XUL.Menulist
+    const menupopup = doc.querySelector('#better-bibtex-prefs-auto-export-select menupopup')
     let selected
     if (menulist.selectedItem) {
       const $loki = parseInt(menulist.selectedItem.value)
       selected = auto_exports.find(ae => ae.$loki === $loki)
     }
-    if (!selected) {
-      selected = auto_exports[0]
-      menulist.selectedIndex = 0
-    }
 
-    const menupopup = doc.querySelector('#better-bibtex-prefs-auto-export-select menupopup')
     // list changed
     if (Array.from(menupopup.children).map(ae => (ae as unknown as XUL.Menuitem).value).join('/') !== auto_exports.map(ae => `${ae.$loki}`).join('/')) {
       menulist.removeAllItems()
       for (const ae of auto_exports) {
         const menuitem = menulist.appendItem(this.label(ae), `${ae.$loki}`)
-        if (ae.$loki === selected.$loki) menulist.selectedItem = menuitem
+        if (selected && ae.$loki === selected.$loki) menulist.selectedItem = menuitem
       }
     }
-    if (!menulist.selectedItem) {
+    if (!selected || !menulist.selectedItem) {
       selected = auto_exports[0]
       menulist.selectedIndex = 0
     }
 
-    const display = doc.querySelector('#better-bibtex-prefs-auto-export-display')
     if (display.getAttribute('data-ae-id') !== `${selected.$loki}` || display.getAttribute('data-ae-updated') !== `${selected.meta.updated || selected.meta.created}`) {
       display.setAttribute('data-ae-id', `${selected.$loki}`)
       display.setAttribute('data-ae-updated', `${selected.meta.updated || selected.meta.created}`)
 
       const displayed = `autoexport-${Translators.byId[selected.translatorID].label.replace(/ /g, '')}`
       for (const node of (Array.from(display.getElementsByClassName('autoexport-options')) as unknown[] as XUL.Element[])) {
-        node.hidden = !node.classList.contains(displayed)
+        node.style.display = node.classList.contains(displayed) ? 'revert': 'none'
       }
 
       for (const node of Array.from(display.querySelectorAll('*[data-ae-field]'))) {
@@ -196,7 +191,7 @@ class AutoExportPane {
             break
 
           case 'error':
-            (node.parentElement as unknown as XUL.Element).hidden = !selected[field];
+            (node.parentElement as unknown as XUL.Element).style.display = selected[field] ? 'revert' : 'none';
             (node as unknown as XUL.Textbox).value = selected[field] || ''
             break
 
@@ -401,11 +396,11 @@ export class PrefPane {
     const msg = $window.document.getElementById('better-bibtex-citekeyFormat-error') as HTMLInputElement
     msg.value = error
     msg.setAttribute('style', style)
-    msg.style.display = error ? 'block' : 'none'
+    msg.style.display = error ? 'revert' : 'none'
 
     const active = $window.document.getElementById('id-better-bibtex-preferences-citekeyFormat')
     const label = $window.document.getElementById('id-better-bibtex-label-citekeyFormat')
-    active.style.display = label.style.display = Preference.citekeyFormat === Preference.citekeyFormatEditing ? 'none' : 'block'
+    active.style.display = label.style.display = Preference.citekeyFormat === Preference.citekeyFormatEditing ? 'none' : 'revert'
   }
 
   public checkPostscript(): void {
@@ -463,7 +458,6 @@ export class PrefPane {
       }
 
       $window.document.getElementById('rescan-citekeys').hidden = !Zotero.Debug.enabled
-
 
       this.autoexport.load()
 
