@@ -47,7 +47,7 @@ function setDefaultPrefs(rootURI) {
       }
     },
   }
-  Services.scriptloader.loadSubScript(`${rootURI}prefs.js`, obj)
+  Services.scriptloader.loadSubScript(`${rootURI}prefs.js`, obj, 'utf-8')
 }
 
 export function install(_data: any, _reason: ReasonId) {

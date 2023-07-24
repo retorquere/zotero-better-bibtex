@@ -19,7 +19,7 @@ export async function newZoteroPane(win: Window): Promise<void> {
   const zp = (win as any).ZoteroPane
   await busyWait(() => typeof zp.itemsView.waitForLoad === 'function')
   await zp.itemsView.waitForLoad()
-  new ZoteroPane(win)
+  await (new ZoteroPane).load(win)
 }
 
 class ZoteroPane {
@@ -33,7 +33,7 @@ class ZoteroPane {
     this.elements.remove()
   }
 
-  constructor(win: Window) {
+  public async load(win: Window) {
     const doc = win.document
     const elements = this.elements = new Elements(doc)
     this.window = win
@@ -249,9 +249,13 @@ class ZoteroPane {
       if (Zotero.BetterBibTeX.uninstalled) clean_pane_persist()
     }, this.patched)
 
-    if (!is7) this.ZoteroPane.itemsView.refreshAndMaintainSelection()
+    if (!is7) {
+      await busyWait(() => !!this.ZoteroPane.itemsView.collectionTreeRow)
+      await this.ZoteroPane.itemsView.refreshAndMaintainSelection()
+    }
+
     const selected = this.ZoteroPane.getSelectedItems(true)
-    if (selected.length) Zotero.Notifier.trigger('refresh', 'item', selected)
+    if (selected.length === 1) Zotero.Notifier.trigger('refresh', 'item', selected)
   }
 
   public pullExport(): void {
