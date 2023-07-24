@@ -7,6 +7,8 @@
       "exportNotes": true
     },
     "preferences": {
+      "cache": false,
+      "bibtexEditionOrdinal": true,
       "DOIandURL": "doi",
       "bibtexURL": "url",
       "citekeyFold": false,

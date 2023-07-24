@@ -57,12 +57,12 @@ class ClientAction(argparse.Action):
       raise ValueError(f'Unexpected argument {option_string} = {values}')
 parser = argparse.ArgumentParser()
 parser.add_argument('--start', dest='start', action=BooleanAction)
+parser.add_argument('--build', '--no-build', dest='build', action=BooleanAction, default=(not CI.service))
 parser.add_argument('--stop', '--no-stop', dest='stop', action=BooleanAction, default=(not CI.service))
 parser.add_argument('--jurism', dest='client', action='store_const', const='jurism', default=os.environ.get('CLIENT', 'zotero'))
 parser.add_argument('--client', dest='client', default=os.environ.get('CLIENT', 'zotero'))
 parser.add_argument('--log-memory-every', dest='log_memory_every', type=int)
 parser.add_argument('--beta', action='store_true', default=('#beta' in CI.message))
-parser.add_argument('--dev', action='store_true', default=('#dev' in CI.message))
 parser.add_argument('--keep', '--no-keep', dest='keep', action=BooleanAction, default=False)
 parser.add_argument('--inspire-hep', '--no-inspire-hep', dest='inspireHEP', action=BooleanAction, default=True)
 parser.add_argument('--worker', '--no-worker', dest='worker', action=BooleanAction, default=False)
@@ -90,8 +90,12 @@ if args.start:
   args.keep = True
   sys.argv += ['--tags', '@none']
 
-if not CI.service : # local run
-  process = subprocess.Popen(['npm', 'run', 'build'], stdout=subprocess.PIPE)
+if args.client.endswith('-beta'):
+  args.client = args.client.split('-')[0]
+  args.beta = True
+
+if args.build:
+  process = subprocess.Popen(['npm', 'run', 'build'] + (['--beta'] if args.beta else []), stdout=subprocess.PIPE)
   while True:
     line = process.stdout.readline()
     print(line.decode('utf-8'), end='')
@@ -101,23 +105,12 @@ if not CI.service : # local run
     print(f'Build exited with exit code {returncode}')
     sys.exit(returncode)
 
-if args.client.endswith('-beta'):
-  args.client = args.client.split('-')[0]
-  args.beta = True
-elif args.client.endswith('-dev'):
-  args.client = args.client.split('-')[0]
-  args.dev = True
-
-if args.dev and args.beta:
-  print('cannot test beta + dev')
-  sys.exit(1)
-
 if args.this or args.test_this:
   assert re.match(r'^gh-[0-9]+$', BRANCH)
   if args.this: args.this = BRANCH.replace('gh-', '@')
   if args.test_this: args.test = BRANCH.replace('gh-', '')
 
-if args.test or args.this or args.nightly or args.tagged or args.beta or args.dev: args.slow = True
+if args.test or args.this or args.nightly or args.tagged or args.beta: args.slow = True
 
 if args.client == 'jurism':
   print(f"********* JURISM NO LONGER SUPPORTED ***********")
@@ -135,7 +128,6 @@ if args.stop: sys.argv.append('--stop')
 if args.slow: sys.argv.extend(['--define', 'slow=true'])
 
 if args.beta: sys.argv.extend(['--define', 'beta=true'])
-elif args.dev: sys.argv.extend(['--define', 'dev=true'])
 
 if args.test: sys.argv.extend(['--define', f'test={args.test}'])
 if args.durations: sys.argv.extend(['--define', f'durations={args.durations}'])

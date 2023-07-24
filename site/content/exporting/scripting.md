@@ -182,8 +182,9 @@ if (Translator.BetterTeX) {
   // If a field is not in this list, it will show up after the ordered fields.
   // https://github.com/retorquere/zotero-better-bibtex/issues/512
 
-  const order = ['author', 'date', 'title', 'publisher']
-  for (const [field, value] of order.filter(front => tex.has[first]).concat(Object.keys(tex.has).filter(other => !order.includes(other))).map(f => [f, tex.has[f]])) {
+  const front = ['author', 'date', 'title', 'publisher']
+  const order = front.filter(field => tex.has[field]).concat(Object.keys(tex.has).filter(field => !front.includes(field)))
+  for (const [field, value] of order.map(f => [f, tex.has[f]])) {
     delete tex.has[field]
     tex.has[field] = value
   }

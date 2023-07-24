@@ -1,45 +1,13 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types, prefer-arrow/prefer-arrow-functions, prefer-rest-params, @typescript-eslint/no-unsafe-return */
 
-const databases = []
-// need coroutine here because Zotero calls '.done()' on the nonexistent! result, added automagically by bluebird
-$patch$(Zotero, 'shutdown', original => Zotero.Promise.coroutine(function* () {
-  try {
-    while (databases.length) {
-      const db = databases.pop() // avoid memory leak
-      let store = 'Unknown'
-      try {
-        store = db.persistenceAdapter.constructor.name || 'Unknown'
-      }
-      catch (err) {
-        log.error(`could not get store name for ${db.filename}`)
-      }
-
-      try {
-        db.throttledSaves = false
-
-        log.debug(`Loki.${store}.shutdown: saving ${db.filename}`)
-        yield db.saveDatabaseAsync()
-        log.debug(`Loki.${store}.shutdown: closing ${db.filename}`)
-        yield db.closeAsync()
-        log.debug(`Loki.${store}.shutdown: shutdown of ${db.filename} completed`)
-      }
-      catch (err) {
-        log.error(`Loki.${store}.shutdown: shutdown of ${db.filename} failed`, err)
-      }
-    }
-  }
-  catch (err) {
-    log.error(`Loki.shutdown: shutdown of ${databases.length} databases failed`, err)
-  }
-
-  yield original.apply(this, arguments)
-}))
-
 // Components.utils.import('resource://gre/modules/Sqlite.jsm')
 // declare const Sqlite: any
 
+import { is7 } from '../client'
+
 import { patch as $patch$ } from '../monkey-patch'
 import { Preference } from '../prefs'
+import { alert } from '../prompt'
 
 import { log } from '../logger'
 // import { Preferences as Prefs } from '../prefs'
@@ -63,7 +31,7 @@ function oops(collection, action, doc, errors) {
   const error = new Error(`${collection} ${action} ${JSON.stringify(doc)}: ${errors}`)
   Preference.scrubDatabase = true
   log.error(error)
-  alert(`Better BibTeX: error ${action} ${collection}, restart to repair`)
+  alert({ text: `Better BibTeX: error ${action} ${collection}, restart to repair` })
   throw error
 }
 
@@ -105,7 +73,9 @@ class NullStore {
 
 const autoSaveOnIdle = []
 
-const idleService = Components.classes['@mozilla.org/widget/idleservice;1'].getService(Components.interfaces.nsIIdleService)
+const idleService = is7
+  ? Components.classes['@mozilla.org/widget/useridleservice;1'].getService(Components.interfaces.nsIUserIdleService)
+  : Components.classes['@mozilla.org/widget/idleservice;1'].getService(Components.interfaces.nsIIdleService)
 idleService.addIdleObserver({
   async observe(_subject: string, _topic: string, _data: any) {
     for (const db of autoSaveOnIdle) {
@@ -124,7 +94,7 @@ idleService.addIdleObserver({
 // https://github.com/Microsoft/TypeScript/issues/17032
 export class XULoki extends Loki {
   constructor(name: string, options: any = {}) {
-    const nullStore = !options.adapter
+    // const nullStore = !options.adapter
     options.adapter = options.adapter || new NullStore()
     options.env = 'XUL-Chrome'
 
@@ -139,10 +109,6 @@ export class XULoki extends Loki {
     else {
       // workaround for https://github.com/techfort/LokiJS/issues/597
       this.autosaveDisable()
-    }
-
-    if (this.persistenceAdapter && !nullStore) {
-      databases.push(this)
     }
   }
 

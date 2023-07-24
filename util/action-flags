@@ -1,0 +1,38 @@
+#!/usr/bin/env python3
+
+import os
+import json
+from munch import Munch
+
+github = json.loads(os.environ['GITHUB_CONTEXT'], object_hook=Munch.fromDict)
+with open('package.json') as f:
+  package = json.load(f, object_hook=Munch.fromDict)
+
+flags = set()
+
+if github.event_name == 'push':
+  if github.event.head_commit.message == package.version and github.ref == f'refs/tags/v{package.version}':
+    print('release build')
+    flags.add('slow')
+  elif github.ref_name == 'master': # builds on master.
+    print('master')
+    flags.add('slow')
+    flags.add('beta')
+  elif os.path.isfile('beta.txt'):
+    with open('beta.txt') as f:
+      for branch in f.readlines():
+        if branch.strip() == github.ref_name:
+          print('beta for', github.ref_name)
+          flags.add('beta')
+
+if github.event_name == 'schedule': # nightlies
+  print('nightly')
+  flags.add('slow')
+  flags.add('beta')
+
+print('flags =', flags)
+
+if len(flags) > 0:
+  with open(os.environ['GITHUB_ENV'], 'a') as env:
+    for flag in flags:
+      print(f'{flag}=--{flag}', file=env)

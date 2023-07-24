@@ -80,7 +80,7 @@ module.exports.__dirname = {
   setup(build) {
     build.onLoad({ filter: /\/node_modules\/.+\.js$/ }, async (args) => {
       let contents = await fs.promises.readFile(args.path, 'utf-8')
-      const filename = 'resource://zotero-better-bibtex/' + (args.path.includes('/node_modules/') ? args.path.replace(/.*\/node_modules\//, '') : path.resolve(__dirname, args.path))
+      const filename = 'chrome://zotero-better-bibtex/' + (args.path.includes('/node_modules/') ? args.path.replace(/.*\/node_modules\//, '') : path.resolve(__dirname, args.path))
       const dirname = path.dirname(filename)
 
       contents = [

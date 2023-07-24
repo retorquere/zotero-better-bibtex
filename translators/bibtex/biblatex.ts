@@ -327,7 +327,8 @@ export function generateBibLaTeX(translation: Translation): void {
     */
     entry.add({ name: 'title', value: item.title })
 
-    entry.add({ name: 'edition', value: item.edition })
+    // remove ordinal from edition
+    entry.add({ name: 'edition', value: typeof item.edition === 'number' ? item.edition : (item.edition || '').replace(/^([0-9]+)(st|nd|th)$/, '$1') })
     // entry.add({ name: 'rights', value: item.rights })
     entry.add({ name: 'isbn', value: item.ISBN })
     entry.add({ name: 'issn', value: item.ISSN })

@@ -2,8 +2,7 @@
 
 declare const Zotero: any
 
-import { Preferences, names, defaults } from './preferences/meta'
-import { fromEntries } from '../content/object'
+import { Preferences, defaults } from './preferences/meta'
 
 export class PreferenceManager {
   public default = defaults
@@ -48,6 +47,6 @@ it.preferences.forEach(pref => {
 -%>
   get all(): Preferences {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return fromEntries(names.map(pref => [ pref, this[pref] ])) as Preferences
+    return Object.keys(defaults).reduce((acc: Partial<Preferences>, pref: string) => { acc[pref] = this[pref]; return acc }, {} as Partial<Preferences>) as Preferences
   }
 }

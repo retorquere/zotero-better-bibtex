@@ -5,9 +5,19 @@ function stringify(o, indent=true) {
 }
 %>
 
-export const names = <%~ stringify(it.preferences.map(p => p.shortName)) %> as const
+export type Preferences = {
+<% for (const pref of it.preferences) { %>
+  <%=pref.shortName %>: <%~ pref.valid %>
 
-export type PreferenceName = typeof names[number]
+<% } %>
+}
+export type PreferenceName = keyof Preferences
+
+export const defaults: Preferences = {
+<% for (const pref of it.preferences) { %>
+  <%= pref.shortName %>: <%~ stringify(pref.shortName === 'citekeyFormat' ? pref.default.replace('\u200b', '') : pref.default, false) %>,
+<% } %>
+}
 
 export const affects: Partial<Record<PreferenceName, string[]>> = <%~ stringify(
   it
@@ -15,19 +25,18 @@ export const affects: Partial<Record<PreferenceName, string[]>> = <%~ stringify(
   .reduce((acc, p) => { if (p.affects && p.affects.length) acc[p.shortName] = p.affects; return acc}, {})
 ) %>
 
+export const affectedBy: Record<string, PreferenceName[]> = <%~ stringify(
+  it
+  .preferences
+  .reduce((acc, p) => {
+    for (const tr of (p.affects || [])) {
+      acc[tr] = acc[tr] || []
+      acc[tr].push(p.shortName)
+    }
+    return acc
+  }, {})
+) %>
 
-export type Preferences = {
-<% for (const pref of it.preferences) { %>
-  <%=pref.shortName %>: <%~ pref.valid %>
-
-<% } %>
-}
-
-export const defaults: Preferences = {
-<% for (const pref of it.preferences) { %>
-  <%= pref.shortName %>: <%~ stringify(pref.shortName === 'citekeyFormat' ? pref.default.replace('\u200b', '') : pref.default, false) %>,
-<% } %>
-}
 
 export const options: Partial<Record<PreferenceName, Record<string, string>>> = <%~ stringify(
   it

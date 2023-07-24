@@ -3,6 +3,7 @@ import { JournalAbbrev } from './journal-abbrev'
 import { DB as Cache } from './db/cache'
 import { $and } from './db/loki'
 import { Preference } from './prefs'
+import { orchestrator } from './orchestrator'
 
 type CacheEntry = {
   itemID: number
@@ -13,11 +14,19 @@ type CacheEntry = {
 export const Serializer = new class { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   private cache
 
-  public init() {
-    JournalAbbrev.init().then(() => {
-      this.cache = Cache.getCollection('itemToExportFormat')
-    }).catch(err => {
-      Zotero.debug(`Serializer.init failed: ${err.message}`)
+  constructor() {
+    orchestrator.add({
+      id: 'serializer',
+      description: 'object serializer',
+      needs: ['cache', 'keymanager', 'abbreviator'],
+      startup: async () => { // eslint-disable-line @typescript-eslint/require-await
+        try {
+          this.cache = Cache.getCollection('itemToExportFormat')
+        }
+        catch (err) {
+          Zotero.debug(`Serializer.init failed: ${err.message}`)
+        }
+      },
     })
   }
 

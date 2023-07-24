@@ -1,0 +1,26 @@
+| <?xml version="1.0"?>
+| <!DOCTYPE window SYSTEM "chrome://zotero-better-bibtex/locale/zotero-better-bibtex.dtd">
+| <?xml-stylesheet href="chrome://global/skin/global.css" type="text/css"?>
+dialog#bulk-confirm(title='Better BibTeX for Zotero' buttons='accept,cancel,extra1' onload='onLoad();' ondialogaccept='return onAccept();' ondialogcancel='return onCancel();' ondialogextra1='return onWhatever();' buttonlabelextra1='&better-bibtex_bulk-keys-confirm.buttonlabelextra1;' xmlns='http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul' xmlns:html='http://www.w3.org/1999/xhtml')
+  script(type='application/javascript').
+    
+        function onLoad() {
+          window.arguments[0].response = null;
+          message = document.getElementById('message');
+          message.value = message.value.replace('{treshold}', window.arguments[0].treshold);
+        }
+        function onCancel() {
+          window.arguments[0].response = null;
+          return true;
+        }
+        function onAccept() {
+          window.arguments[0].response = window.arguments[0].response || 'ok';
+          return true;
+        }
+        function onWhatever() {
+          window.arguments[0].response = 'whatever';
+          document.getElementById('bulk-confirm').acceptDialog();
+          return true;
+        }
+      
+  description#message(value='&better-bibtex_bulk-keys-confirm.value;')/

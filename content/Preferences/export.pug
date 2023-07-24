@@ -1,13 +1,13 @@
 tabbox
   tabs
-    tab(label='&better-bibtex.Preferences.export.bibtex;')
-    tab(label='&better-bibtex.Preferences.export.biblatex;')
-    tab(label='&better-bibtex.Preferences.export.fields;')
-    tab(label="&better-bibtex.Preferences.export.quickCopy;")
-    tab(bbt:preference="extensions.zotero.translators.better-bibtex.postscript" label="&better-bibtex.Preferences.advanced.tab.postscript;")
-    tab(label='&better-bibtex.Preferences.export.misc;')
+    tab(label='BibTeX')
+    tab(label='BibLaTeX')
+    tab(label='&better-bibtex_preferences_export_fields.label;')
+    tab(label="&better-bibtex_preferences_export_quick-copy.label;")
+    tab(bbt:preference="extensions.zotero.translators.better-bibtex.postscript" label="&better-bibtex_preferences_advanced_tab_postscript.label;")
+    tab(label='&better-bibtex_preferences_tab_misc.label;')
 
-  tabpanels(onselect='resize()')
+  tabpanels
     tabpanel(orient="vertical")
       include export/bibtex.pug
 

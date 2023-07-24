@@ -2,6 +2,7 @@ import fs from 'fs'
 import root from 'zotero-plugin/root'
 process.chdir(root)
 
+import './pug2xul'
 import './preferences'
 import 'zotero-plugin/copy-assets'
 import 'zotero-plugin/rdf'
@@ -10,5 +11,5 @@ import './extract-apis'
 import './bibertool'
 require('./javascript-identifier-regex')
 
-fs.copyFileSync(require.resolve('@retorquere/bibtex-parser/unabbrev.json'), 'build/resource/bibtex/unabbrev.json')
-fs.copyFileSync(require.resolve('@retorquere/bibtex-parser/strings.bib'), 'build/resource/bibtex/strings.bib')
+fs.copyFileSync(require.resolve('@retorquere/bibtex-parser/unabbrev.json'), 'build/content/resource/bibtex/unabbrev.json')
+fs.copyFileSync(require.resolve('@retorquere/bibtex-parser/strings.bib'), 'build/content/resource/bibtex/strings.bib')

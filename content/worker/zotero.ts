@@ -26,6 +26,7 @@ import { generateBibTeX } from '../../translators/bibtex/bibtex'
 import { generateCSLJSON } from '../../translators/csl/json'
 import { generateCSLYAML, parseCSLYAML } from '../../translators/csl/yaml'
 import { Translation } from '../../translators/lib/translator'
+import XRegExp from 'xregexp'
 
 import { DOMParser as XMLDOMParser } from '@xmldom/xmldom'
 
@@ -161,23 +162,22 @@ import dateFormats from '../../schema/dateFormats.json'
 
 export const workerJob: Partial<Translators.Worker.Job> = {}
 
-function cacheFetch(_translator: string, itemID: number, _options: any, _prefs: any) {
-  // ignore all the other cacheFetch params because we have a targetted cache here
-  return workerJob.data.cache[itemID]
-}
-function cacheStore(_translator: string, itemID: number, _options: any, _prefs: any, entry: string, metadata: any) {
-  if (workerJob.preferences.cache) Zotero.send({ kind: 'cache', itemID, entry, metadata })
-  return true
-}
-
 class WorkerZoteroBetterBibTeX {
   public clientName = clientName
   public client = client
   public worker = true
 
   public Cache = {
-    store: cacheStore,
-    fetch: cacheFetch,
+    // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
+    store(_translator: string, itemID: number, _options: any, _prefs: any, entry: string, metadata: any) {
+      if (workerJob.preferences.cache) Zotero.send({ kind: 'cache', itemID, entry, metadata })
+      return true
+    },
+    // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
+    fetch(_translator: string, itemID: number, _options: any, _prefs: any) {
+      // ignore all the other cacheFetch params because we have a targeted cache here
+      return workerJob.data.cache[itemID]
+    },
   }
 
   public setProgress(percent: number) {
@@ -196,6 +196,7 @@ class WorkerZoteroBetterBibTeX {
     }
   }
 
+  /*
   public cacheFetch(itemID: number) {
     return cacheFetch('', itemID, null, null)
   }
@@ -203,6 +204,7 @@ class WorkerZoteroBetterBibTeX {
   public cacheStore(itemID: number, _options: any, _prefs: any, entry: string, metadata: any) {
     return cacheStore('', itemID, null, null, entry, metadata)
   }
+  */
 
   public parseDate(date) {
     return DateParser.parse(date)
@@ -212,7 +214,7 @@ class WorkerZoteroBetterBibTeX {
     return DateParser.isEDTF(date, minuteLevelPrecision)
   }
 
-  /*
+  /* REVIEW:
   public titleCase(text) {
     return titleCase(text)
   }
@@ -242,10 +244,11 @@ class WorkerZoteroBetterBibTeX {
 const WorkerZoteroUtilities = {
   ...ZU,
   Item: ZUI,
+  XRegExp,
 
   getVersion: () => workerEnvironment.version,
 
-  /*
+  /* REVIEW:
   public getCreatorsForType(itemType) {
     return itemCreators[client][itemType]
   }
@@ -498,7 +501,7 @@ ctx.onmessage = function(e: { isTrusted?: boolean, data?: Translators.Worker.Mes
 
       case 'start':
         Object.assign(workerJob, JSON.parse(dec.decode(new Uint8Array(e.data.config))))
-        importScripts(`resource://zotero-better-bibtex/${workerJob.translator}.js`)
+        importScripts(`chrome://zotero-better-bibtex/content/resource/${workerJob.translator}.js`)
         Zotero.init()
         doExport()
         Zotero.done()

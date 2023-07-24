@@ -5,7 +5,7 @@ import { Events } from './events'
 
 declare const Zotero: any
 
-import { names, defaults } from '../gen/preferences/meta'
+import { defaults } from '../gen/preferences/meta'
 import { PreferenceManager as PreferenceManagerBase } from '../gen/preferences'
 import { dict as csv2dict } from './load-csv'
 import { log } from './logger'
@@ -17,12 +17,13 @@ export type TeXMap = Record<string, TexChar>
 export const Preference = new class PreferenceManager extends PreferenceManagerBase {
   public prefix = 'translators.better-bibtex.'
   public texmap: TeXMap = {}
+  private observers: number[] = []
 
   constructor() {
     super()
 
     this.baseAttachmentPath = Zotero.Prefs.get('baseAttachmentPath')
-    Zotero.Prefs.registerObserver('baseAttachmentPath', val => { this.baseAttachmentPath = val })
+    this.observers.push(Zotero.Prefs.registerObserver('baseAttachmentPath', val => { this.baseAttachmentPath = val }))
 
     this.migrate()
     this.setDefaultPrefs()
@@ -98,14 +99,14 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
   }
 
   observe(pref: string) {
-    Zotero.Prefs.registerObserver(`${this.prefix}${pref}`, this.changed.bind(this, pref))
+    this.observers.push(Zotero.Prefs.registerObserver(`${this.prefix}${pref}`, this.changed.bind(this, pref)))
   }
 
   changed(pref: string) {
     void Events.emit('preference-changed', pref)
   }
 
-  /*
+  /* REVIEW:
   set cache(v: boolean | undefined) {
     if (!v) {
       const e = new Error
@@ -224,7 +225,7 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
     }
   }
 
-  public async initAsync(dir: string) {
+  public async init(dir: string) {
     // load from csv for easier editing
     this.texmap = {}
     await this.loadFromCSV('charmap', OS.Path.join(dir, 'charmap.csv'), '', (rows: Record<string, string>[]) => JSON.stringify(
@@ -234,11 +235,15 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
       }, {})
     ))
 
-    for (const pref of names) {
+    for (const pref of Object.keys(defaults)) {
       if (pref !== 'platform' && pref !== 'testing') {
         // install event emitter
         this.observe(pref)
       }
     }
+  }
+
+  public shutdown() {
+    this.observers.forEach(id => { Zotero.Prefs.unregisterObserver(id) })
   }
 }

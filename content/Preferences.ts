@@ -15,20 +15,22 @@ import * as l10n from './l10n'
 import { Events } from './events'
 import { pick } from './file-picker'
 import { flash } from './flash'
-// const dtdparser = require('./dtd-file.peggy')
+import { is7 } from './client'
 
-let currentWin: Window & { sizeToContent(): void } = null
+// safe to keep "global" since only one pref pane will be loaded at any one time
+let $window: Window & { sizeToContent(): void } // eslint-disable-line no-var
 Events.on('window-loaded', ({ win, href }: {win: Window, href: string}) => {
-  Zotero.debug('window-loaded', href)
-  if (href === 'chrome://zotero-better-bibtex/content/Preferences.xul') {
-    currentWin = win as any
-    currentWin.addEventListener('unload', () => {
-      Zotero.BetterBibTeX.PrefPane.unload()
-      currentWin = null
-    })
-    Zotero.BetterBibTeX.PrefPane.load()
+  switch (href) {
+    case 'chrome://zotero/content/preferences/preferences.xul': // Zotero's own preferences on Z6
+      new ZoteroPreferences(win)
+      break
+
+    case 'chrome://zotero-better-bibtex/content/preferences.xul': // BBT's own Z6 preferences
+      Zotero.BetterBibTeX.PrefPane.load(win).catch(err => log.error(err))
+      break
   }
 })
+
 Events.on('preference-changed', (pref: string) => {
   switch (pref) {
     case 'citekeyFormatEditing':
@@ -40,6 +42,61 @@ Events.on('preference-changed', (pref: string) => {
   }
 })
 
+function setQuickCopy(node: XUL.Menuitem): void {
+  if (!node) return
+
+  let mode = ''
+  let cmd = ''
+  switch (Preference.quickCopyMode) {
+    case 'latex':
+      cmd = `${Preference.citeCommand}`.trim()
+      mode = (cmd === '') ? 'citation keys' : `\\${cmd}{citation keys}`
+      break
+
+    case 'pandoc':
+      mode = Preference.quickCopyPandocBrackets ? '[@citekeys]' : '@citekeys'
+      break
+
+    default:
+      mode = preferenceOptions.quickCopyMode[Preference.quickCopyMode] || Preference.quickCopyMode
+  }
+
+  node.label = `Better BibTeX Quick Copy: ${mode}`
+}
+
+class ZoteroPreferences {
+  private observer: MutationObserver
+  private observed: XUL.Element
+
+  constructor(win: Window) {
+    this.observer = new MutationObserver(this.mutated.bind(this))
+    this.observed = win.document.getElementById('zotero-prefpane-export') as unknown as XUL.Element
+    this.observer.observe(this.observed, { childList: true, subtree: true })
+    win.addEventListener('unload', () => {
+      this.observer.disconnect()
+    })
+  }
+
+  mutated(mutations: MutationRecord[], observer: MutationObserver): void {
+    let node
+    for (const mutation of mutations) {
+      if (!mutation.addedNodes) continue
+
+      if (this.observed?.id === 'zotero-prefpane-export' && (node = [...mutation.addedNodes].find((added: XUL.Element) => added.id === 'zotero-prefpane-export-groupbox'))) {
+        observer.disconnect()
+        this.observer = new MutationObserver(this.mutated.bind(this))
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+        this.observed = [...node.getElementsByTagNameNS('http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul', 'menulist')].find(added => added.id === 'zotero-quickCopy-menu')
+        this.observer.observe(this.observed, { childList: true, subtree: true })
+      }
+      else if (this.observed?.tagName === 'menulist' && (node = [...mutation.addedNodes].find((added: XUL.Menuitem) => added.tagName === 'menuitem' && added.label?.match(/Better BibTeX.*Quick Copy/)))) {
+        node.id = 'translator-bbt-quick-copy'
+        setQuickCopy(node)
+      }
+    }
+  }
+}
+
 class AutoExportPane {
   private label: { [key: string]: string }
   private cacherate: Record<number, number> = {}
@@ -47,8 +104,8 @@ class AutoExportPane {
   public load() {
     if (!this.label) {
       this.label = {}
-      for (const label of ['scheduled', 'running', 'done', 'error', 'preparing']) {
-        this.label[label] = l10n.localize(`Preferences.auto-export.status.${label}`)
+      for (const status of ['scheduled', 'running', 'done', 'error', 'preparing']) {
+        this.label[status] = l10n.localize(`better-bibtex_preferences_auto-export_status_${status}`)
       }
     }
 
@@ -62,101 +119,92 @@ class AutoExportPane {
   }
 
   public refresh() {
-    if (!currentWin || Zotero.BetterBibTeX.ready.isPending()) return null
+    if (!$window || Zotero.BetterBibTeX.ready.isPending()) return null
+    const doc = $window.document
 
-    const ui = {
-      data: AutoExport.db.find(),
-      select: currentWin.document.getElementById('better-bibtex-prefs-auto-export-select'),
-      deck: currentWin.document.getElementById('better-bibtex-prefs-auto-export-deck'),
-    }
+    const menulist: XUL.Menulist = doc.querySelector('#better-bibtex-prefs-auto-export-select') as unknown as XUL.Menulist
+    const menupopup = doc.querySelector('#better-bibtex-prefs-auto-export-select menupopup')
+    const deck = doc.getElementById('better-bibtex-prefs-auto-export-deck')
+    const menuitems = Array.from(menupopup.children).map((node: Element) => ({ updated: parseInt(node.getAttribute('data-ae-updated')), id: parseInt(node.getAttribute('data-ae-id')) }))
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    const auto_exports = AutoExport.db.find().map(ae => ({ ...ae, updated: ae.meta.updated || ae.meta.created, id: ae.$loki }))
 
-    currentWin.document.getElementById('better-bibtex-prefs-auto-exports').setAttribute('hidden', `${!ui.data.length}`)
-    if (!ui.data.length) return null
+    const hidden = !auto_exports.length
+    doc.getElementById('better-bibtex-prefs-auto-exports').setAttribute('hidden', `${hidden}`)
+    if (hidden) return null
 
-    const rebuild = {
-      tabs: Array.from(ui.select.children).map((node: Element) => ({ updated: parseInt(node.getAttribute('data-ae-updated')), id: parseInt(node.getAttribute('data-ae-id')) })),
-      exports: ui.data.map(ae => ({ updated: ae.meta.updated || ae.meta.created, id: ae.$loki })),
-      rebuild: false,
-      refresh: false,
-    }
-    rebuild.rebuild = (rebuild.tabs.length !== rebuild.exports.length) || (typeof rebuild.tabs.find((tab, index) => rebuild.exports[index].id !== tab.id) !== 'undefined')
-    rebuild.refresh = rebuild.rebuild || (rebuild.tabs.length !== rebuild.exports.length) || (typeof rebuild.tabs.find((tab, index) => rebuild.exports[index].updated !== tab.updated) !== 'undefined')
+    const rebuild = auto_exports.lenght !== menuitems.length || auto_exports.find((ae, i) => ae.id !== menuitems[i].id || ae.updated !== menuitems[i].updated)
+    if (!rebuild) return null
 
-    if (rebuild.rebuild) {
-      while (ui.select.children.length) ui.select.removeChild(ui.select.firstChild)
-      while (ui.deck.children.length > 1) ui.deck.removeChild(ui.deck.firstChild)
-    }
+    const selected = menulist.selectedItem?.getAttribute('data-ae-id')
+    let selectedIndex = 0
 
-    for (const [index, ae] of ui.data.entries()) {
-      let option, pane
+    while (menupopup.children.length) menupopup.removeChild(menupopup.firstChild)
+    while (deck.children.length > 1) deck.removeChild(deck.firstChild)
 
-      if (rebuild.rebuild) {
-        option = ui.select.appendChild(currentWin.document.createElementNS('http://www.w3.org/1999/xhtml', 'option'))
-        option.setAttribute('value', `${ae.$loki}`)
-        option.setAttribute('data-ae-id', `${ae.$loki}`)
-        option.setAttribute('data-ae-updated', `${ae.meta.updated || ae.meta.created}`)
+    auto_exports.forEach((ae, index) => {
+      const menuitem: XUL.Menuitem = menupopup.appendChild(doc.createElementNS('http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul', 'menuitem')) as unknown as XUL.Menuitem
+      const id = `${ae.$loki}`
+      menuitem.setAttribute('value', id)
+      menuitem.setAttribute('data-ae-id', id)
+      if (selected === id) selectedIndex = index
 
-        pane = (index === 0 ? ui.deck.firstChild : ui.deck.appendChild(ui.deck.firstChild.cloneNode(true)))
+      menuitem.setAttribute('data-ae-updated', `${ae.meta.updated || ae.meta.created}`)
 
-        // set IDs on clone
-        for (const node of Array.from(pane.querySelectorAll('*[data-ae-id]'))) {
-          (node as Element).setAttribute('data-ae-id', `${ae.$loki}`)
-        }
+      const pane: Element = (index === 0 ? deck.firstChild : deck.appendChild(deck.firstChild.cloneNode(true))) as unknown as Element
 
-        const enabled = `autoexport-${Translators.byId[ae.translatorID].label.replace(/ /g, '')}`
-        // eslint is wrong here. tsc complains that hidden is not present on element, and I think tsc is correct here
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
-        for (const node of (Array.from(pane.getElementsByClassName('autoexport-options')) as XUL.Element[])) {
-          node.hidden = !node.classList.contains(enabled)
-        }
+      // set IDs on clone
+      for (const node of Array.from(pane.querySelectorAll('*[data-ae-id]'))) {
+        node.setAttribute('data-ae-id', `${ae.$loki}`)
       }
-      else {
-        option = ui.select.children[index]
-        pane = ui.deck.children[index]
+
+      const enabled = `autoexport-${Translators.byId[ae.translatorID].label.replace(/ /g, '')}`
+      // eslint is wrong here. tsc complains that hidden is not present on element, and I think tsc is correct here
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+      for (const node of (Array.from(pane.getElementsByClassName('autoexport-options')) as unknown[] as XUL.Element[])) {
+        node.hidden = !node.classList.contains(enabled)
       }
 
       const path = ae.path.startsWith(OS.Constants.Path.homeDir) ? ae.path.replace(OS.Constants.Path.homeDir, '~') : ae.path
-      option.textContent = `${{ library: '\ud83d\udcbb', collection: '\ud83d\udcc2' }[ae.type]} ${this.name(ae, 'short')} (${Translators.byId[ae.translatorID].label}) ${path}`
+      menuitem.label = `${{ library: '\ud83d\udcbb', collection: '\ud83d\udcc2' }[ae.type]} ${this.name(ae, 'short')} (${Translators.byId[ae.translatorID].label}) ${path}`
 
       const progress = AutoExport.progress.get(ae.$loki)
       for (const node of Array.from(pane.querySelectorAll('*[data-ae-field]'))) {
-        const field = (node as Element).getAttribute('data-ae-field')
-
-        if (!rebuild.refresh && (node as XUL.Textbox).readonly) continue
+        const field = node.getAttribute('data-ae-field')
 
         switch (field) {
           case 'type':
-            (node as XUL.Textbox).value = `${l10n.localize(`Preferences.auto-export.type.${ae.type}`)}:`
+            (node as unknown as XUL.Textbox).value = `${l10n.localize(`better-bibtex_preferences_auto-export_type_${ae.type}`)}:`
             break
 
           case 'name':
-            (node as XUL.Textbox).value = this.name(ae, 'long')
+            (node as unknown as XUL.Textbox).value = this.name(ae, 'long')
             break
 
           case 'status':
             if (ae.status === 'running' && typeof progress === 'number') {
-              (node as XUL.Textbox).value = progress < 0 ? `${this.label?.preparing || 'preparing'} ${-progress}%` : `${progress}%`
+              (node as unknown as XUL.Textbox).value = progress < 0 ? `${this.label?.preparing || 'preparing'} ${-progress}%` : `${progress}%`
             }
             else {
-              (node as XUL.Textbox).value = this.label?.[ae.status] || ae.status
+              (node as unknown as XUL.Textbox).value = this.label?.[ae.status] || ae.status
             }
             break
 
           case 'updated':
-            (node as XUL.Textbox).value = `${new Date(ae.meta.updated || ae.meta.created)}`
+            (node as unknown as XUL.Textbox).value = `${new Date(ae.meta.updated || ae.meta.created)}`
             break
 
           case 'translator':
-            (node as XUL.Textbox).value = Translators.byId[ae.translatorID].label
+            (node as unknown as XUL.Textbox).value = Translators.byId[ae.translatorID].label
             break
 
           case 'path':
-            (node as XUL.Textbox).value = ae[field]
+            (node as unknown as XUL.Textbox).value = ae[field]
             break
 
           case 'error':
-            ((node as Element).parentElement as unknown as XUL.Element).hidden = !ae[field];
-            (node as XUL.Textbox).value = ae[field]
+            (node.parentElement as unknown as XUL.Element).hidden = !ae[field];
+            (node as unknown as XUL.Textbox).value = ae[field]
             break
 
           case 'exportNotes':
@@ -166,27 +214,29 @@ class AutoExportPane {
           case 'asciiBibLaTeX':
           case 'biblatexExtendedNameFormat':
           case 'recursive':
-            (node as XUL.Checkbox).checked = ae[field]
+            (node as unknown as XUL.Checkbox).checked = ae[field]
             break
 
           case 'DOIandURL':
           case 'bibtexURL':
-            (node as XUL.Menulist).value = ae[field]
+            (node as unknown as XUL.Menulist).value = ae[field]
             break
 
           case 'cacherate':
-            (node as XUL.Textbox).value = typeof this.cacherate[ae.$loki] === 'number' ? `${this.cacherate[ae.$loki]}%`: '? %'
+            (node as unknown as XUL.Textbox).value = typeof this.cacherate[ae.$loki] === 'number' ? `${this.cacherate[ae.$loki]}%`: '? %'
             break
 
           default:
-            throw new Error(`Unexpected field in refresh: ${field}`)
+            throw new Error(`Unexpected field in auto-export refresh: ${field}`)
         }
       }
-    }
+    })
+
+    menulist.selectedIndex = selectedIndex
   }
 
   public remove(node) {
-    if (!Services.prompt.confirm(null, l10n.localize('AutoExport.delete'), l10n.localize('AutoExport.delete.confirm'))) return
+    if (!Services.prompt.confirm(null, l10n.localize('better-bibtex_auto-export_delete'), l10n.localize('better-bibtex_auto-export_delete_confirm'))) return
 
     const ae = AutoExport.db.get(parseInt(node.getAttribute('data-ae-id')))
     Cache.getCollection(Translators.byId[ae.translatorID].label)?.removeDataOnly()
@@ -222,6 +272,8 @@ class AutoExportPane {
     const ae = AutoExport.db.get(parseInt(node.getAttribute('data-ae-id')))
     Cache.getCollection(Translators.byId[ae.translatorID].label).removeDataOnly()
 
+    log.debug('edit autoexport:', field)
+
     switch (field) {
       case 'exportNotes':
       case 'useJournalAbbreviation':
@@ -230,17 +282,21 @@ class AutoExportPane {
       case 'asciiBibLaTeX':
       case 'biblatexExtendedNameFormat':
       case 'recursive':
+        log.debug('edit autoexport:', field, node.checked)
         ae[field] = node.checked
         break
 
       case 'DOIandURL':
       case 'bibtexURL':
+        log.debug('edit autoexport:', field, node.value)
         ae[field] = node.value
         break
 
       default:
         log.error('unexpected field', field)
     }
+
+    log.debug('edit autoexport:', ae)
 
     AutoExport.db.update(ae)
     AutoExport.run(ae.$loki)
@@ -277,14 +333,13 @@ class AutoExportPane {
 
 export class PrefPane {
   public autoexport = new AutoExportPane
-  private timer: number
-  private observer: MutationObserver
-  private observed: XUL.Element
+  private timer: ReturnType<typeof setInterval>
   // private prefwindow: HTMLElement
 
   public async exportPrefs(): Promise<void> {
-    const file = await pick(Zotero.getString('fileInterface.export'), 'save', [['BBT JSON file', '*.json']])
+    let file = await pick(Zotero.getString('fileInterface.export'), 'save', [['BBT JSON file', '*.json']])
     if (!file) return
+    if (!file.match(/.json$/)) file = `${file}.json`
     Zotero.File.putContents(Zotero.File.pathToFile(file), JSON.stringify({ config: { preferences: Preference.all } }, null, 2))
   }
 
@@ -335,27 +390,31 @@ export class PrefPane {
   }
 
   public checkCitekeyFormat(): void {
-    if (!currentWin || Zotero.BetterBibTeX.ready.isPending()) return // itemTypes not available yet
+    if (!$window || Zotero.BetterBibTeX.ready.isPending()) return // itemTypes not available yet
 
     const error = Formatter.update([Preference.citekeyFormatEditing, Preference.citekeyFormat])
     const style = error ? '-moz-appearance: none !important; background-color: DarkOrange' : ''
 
-    const editing = currentWin.document.getElementById('id-better-bibtex-preferences-citekeyFormatEditing')
+    const editing = $window.document.getElementById('id-better-bibtex-preferences-citekeyFormatEditing')
     editing.setAttribute('style', style)
     editing.setAttribute('tooltiptext', error)
 
-    const msg = currentWin.document.getElementById('better-bibtex-citekeyFormat-error') as HTMLInputElement
-    msg.hidden = !error
-    msg.setAttribute('style', style)
+    const msg = $window.document.getElementById('better-bibtex-citekeyFormat-error') as HTMLInputElement
     msg.value = error
+    msg.setAttribute('style', style)
+    msg.style.display = error ? 'block' : 'none'
 
-    const active = currentWin.document.getElementById('id-better-bibtex-preferences-citekeyFormat')
-    active.hidden = Preference.citekeyFormat === Preference.citekeyFormatEditing
-    const label = currentWin.document.getElementById('id-better-bibtex-label-citekeyFormat')
-    label.hidden = active.hidden
+    const active = $window.document.getElementById('id-better-bibtex-preferences-citekeyFormat')
+    const label = $window.document.getElementById('id-better-bibtex-label-citekeyFormat')
+    active.style.display = label.style.display = Preference.citekeyFormat === Preference.citekeyFormatEditing ? 'none' : 'block'
   }
 
   public checkPostscript(): void {
+    if (!$window) {
+      log.debug('Preferences.checkPostscript: window not loaded yet?')
+      return
+    }
+
     let error = ''
     try {
       // don't care about the return value, just if it throws an error
@@ -366,10 +425,10 @@ export class PrefPane {
       error = `${err}`
     }
 
-    const postscript = currentWin.document.getElementById('zotero-better-bibtex-postscript')
+    const postscript = $window.document.getElementById('zotero-better-bibtex-postscript')
     postscript.setAttribute('style', (error ? '-moz-appearance: none !important; background-color: DarkOrange' : ''))
     postscript.setAttribute('tooltiptext', error)
-    currentWin.document.getElementById('better-bibtex-cache-warn-postscript').setAttribute('hidden', `${!Preference.postscript.includes('Translator.options.exportPath')}`)
+    $window.document.getElementById('better-bibtex-cache-warn-postscript').setAttribute('hidden', `${!Preference.postscript.includes('Translator.options.exportPath')}`)
   }
 
   public async rescanCitekeys(): Promise<void> {
@@ -380,95 +439,68 @@ export class PrefPane {
     Cache.reset('user-initiated')
   }
 
-  public setQuickCopy(node: XUL.Menuitem): void {
-    if (node) {
-      let mode = ''
-      let cmd = ''
-      switch (Preference.quickCopyMode) {
-        case 'latex':
-          cmd = `${Preference.citeCommand}`.trim()
-          mode = (cmd === '') ? 'citation keys' : `\\${cmd}{citation keys}`
-          break
+  public async load(win: Window): Promise<void> {
+    try {
+      $window = win as any
 
-        case 'pandoc':
-          mode = Preference.quickCopyPandocBrackets ? '[@citekeys]' : '@citekeys'
-          break
+      ($window as any).Zotero = Zotero
+      $window.addEventListener('unload', () => {
+        Zotero.BetterBibTeX.PrefPane.unload()
+        $window = null
+      })
 
-        default:
-          mode = preferenceOptions.quickCopyMode[Preference.quickCopyMode] || Preference.quickCopyMode
+      if (!is7) {
+        const deck = $window.document.getElementById('better-bibtex-prefs-deck') as unknown as XUL.Deck
+        deck.selectedIndex = 0
+
+        await Zotero.BetterBibTeX.ready
+
+        // bloody *@*&^@# html controls only sorta work for prefs
+        for (const node of Array.from($window.document.querySelectorAll("input[preference][type='range']"))) {
+          (node as HTMLInputElement).value = Preference[node.getAttribute('preference').replace('extensions.zotero.translators.better-bibtex.', '')]
+        }
+
+        deck.selectedIndex = 1
       }
 
-      node.label = `Better BibTeX Quick Copy: ${mode}`
+      $window.document.getElementById('rescan-citekeys').hidden = !Zotero.Debug.enabled
+
+
+      this.autoexport.load()
+
+      this.checkCitekeyFormat()
+      this.checkPostscript()
+      this.refresh()
+      if (typeof this.timer === 'undefined') this.timer = setInterval(this.refresh.bind(this), 500)  // eslint-disable-line no-magic-numbers
+    }
+    catch (err) {
+      log.debug('error loading preferences:', err)
     }
   }
 
-  mutated(mutations: MutationRecord[], observer: MutationObserver): void {
-    let node
-    for (const mutation of mutations) {
-      if (!mutation.addedNodes) continue
-
-      if (this.observed?.id === 'zotero-prefpane-export' && (node = [...mutation.addedNodes].find((added: XUL.Element) => added.id === 'zotero-prefpane-export-groupbox'))) {
-        observer.disconnect()
-        this.observer = new MutationObserver(this.mutated.bind(this))
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-        this.observed = [...node.getElementsByTagNameNS('http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul', 'menulist')].find(added => added.id === 'zotero-quickCopy-menu')
-        this.observer.observe(this.observed, { childList: true, subtree: true })
-      }
-      else if (this.observed?.tagName === 'menulist' && (node = [...mutation.addedNodes].find((added: XUL.Menuitem) => added.tagName === 'menuitem' && added.label?.match(/Better BibTeX.*Quick Copy/)))) {
-        node.id = 'translator-bbt-quick-copy'
-        this.setQuickCopy(node)
-      }
-    }
-  }
-
-  public async load(): Promise<void> {
-    this.observer = new MutationObserver(this.mutated.bind(this))
-    this.observed = currentWin.document.getElementById('zotero-prefpane-export') as unknown as XUL.Element
-    if (this.observed) this.observer.observe(this.observed, { childList: true, subtree: true })
-
-    const deck = currentWin.document.getElementById('better-bibtex-prefs-deck') as unknown as XUL.Deck
-    deck.selectedIndex = 0
-
-    await Zotero.BetterBibTeX.ready
-
-    // bloody *@*&^@# html controls only sorta work for prefs
-    for (const node of Array.from(currentWin.document.querySelectorAll("select[preference], input[preference][type='range']"))) {
-      (node as HTMLInputElement).value = Preference[node.getAttribute('preference').replace('extensions.zotero.translators.better-bibtex.', '')]
-    }
-
-    currentWin.document.getElementById('rescan-citekeys').hidden = !Zotero.Debug.enabled
-
-    deck.selectedIndex = 1
-
-    this.autoexport.load()
-
-    this.checkCitekeyFormat()
-    this.checkPostscript()
-    this.refresh()
-    this.timer = typeof this.timer === 'number' ? this.timer : currentWin.setInterval(this.refresh.bind(this), 500)  // eslint-disable-line no-magic-numbers
-  }
-
-  private unload() {
-    if (typeof this.timer === 'number') {
-      currentWin.clearInterval(this.timer)
-      this.timer = null
+  public unload(): void {
+    if (typeof this.timer !== 'undefined') {
+      clearInterval(this.timer)
+      this.timer = undefined
     }
   }
 
   public refresh(): void {
-    if (!currentWin) return
+    if (!$window) return
 
-    const pane = currentWin.document.getElementById('zotero-prefpane-better-bibtex')
+    const pane = $window.document.getElementById('zotero-prefpane-better-bibtex')
     // unloaded
     if (!pane) {
       this.unload()
       return
     }
 
-    this.setQuickCopy(currentWin.document.getElementById('translator-bbt-quick-copy') as unknown as XUL.Menuitem)
+    const quickCopyDetails: XUL.Deck = $window.document.getElementById('quickCopyDetails') as unknown as XUL.Deck
+    const quickCopyId = `better-bibtex-preferences-quickcopy-${Preference.quickCopyMode}`
+    quickCopyDetails.selectedIndex = Array.from(quickCopyDetails.children).findIndex(details => details.id === quickCopyId)
 
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
-    for (const node of (Array.from(currentWin.document.getElementsByClassName('jurism')) as unknown[] as XUL.Element[])) {
+    for (const node of (Array.from($window.document.getElementsByClassName('jurism')) as unknown[] as XUL.Element[])) {
       node.hidden = client !== 'jurism'
     }
 
@@ -476,13 +508,13 @@ export class PrefPane {
       Zotero.Styles.init().then(() => {
         const styles = Zotero.Styles.getVisible().filter((style: { usesAbbreviation: boolean }) => style.usesAbbreviation)
 
-        const stylebox = currentWin.document.getElementById('better-bibtex-abbrev-style-popup') as unknown as XUL.Menulist
+        const stylebox = $window.document.getElementById('better-bibtex-abbrev-style-popup') as unknown as XUL.Menulist
         const refill = stylebox.children.length === 0
         const selectedStyle = Preference.autoAbbrevStyle
         let selectedIndex = -1
         for (const [i, style] of styles.entries()) {
           if (refill) {
-            const itemNode = currentWin.document.createElement('menuitem')
+            const itemNode = $window.document.createElement('menuitem')
             itemNode.setAttribute('value', style.styleID)
             itemNode.setAttribute('label', style.title)
             stylebox.appendChild(itemNode)
@@ -499,18 +531,9 @@ export class PrefPane {
       })
     }
 
-    /*
-    const quickCopy = currentWin.document.getElementById('id-better-bibtex-preferences-quickCopyMode') as HTMLSelectElement
-    const quickCopyMode = quickCopy.options[quickCopy.selectedIndex]?.value
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
-    for (const node of (Array.from(currentWin.document.getElementsByClassName('better-bibtex-preferences-quickcopy-details')) as unknown[] as XUL.Element[])) {
-      node.hidden = (node.id !== `better-bibtex-preferences-quickcopy-${quickCopyMode}`)
-    }
-    */
-
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
-    for (const state of (Array.from(currentWin.document.getElementsByClassName('better-bibtex-preferences-worker-state')) as unknown[] as XUL.Textbox[])) {
-      state.value = l10n.localize('BetterBibTeX.workers.status', {
+    for (const state of (Array.from($window.document.getElementsByClassName('better-bibtex-preferences-worker-state')) as unknown[] as XUL.Textbox[])) {
+      state.value = l10n.localize('better-bibtex_workers_status', {
         total: Translators.workers.total,
         running: Translators.workers.running.size,
       })
@@ -518,13 +541,12 @@ export class PrefPane {
     }
 
     if (this.autoexport) this.autoexport.refresh()
-    // this.resize()
   }
 
   private styleChanged(index) {
     if (client !== 'jurism') return null
 
-    const stylebox = currentWin.document.getElementById('better-bibtex-abbrev-style-popup') as unknown as XUL.Menulist
+    const stylebox = $window.document.getElementById('better-bibtex-abbrev-style-popup') as unknown as XUL.Menulist
     const selectedItem: XUL.Element = typeof index !== 'undefined' ? stylebox.getItemAtIndex(index) : stylebox.selectedItem
     const styleID = selectedItem.getAttribute('value')
     Preference.autoAbbrevStyle = styleID

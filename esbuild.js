@@ -141,11 +141,11 @@ async function bundle(config) {
   config = {
     bundle: true,
     format: 'iife',
-    // define: { BigInt: 'Number' },
     target: ['firefox60'],
     inject: [],
     treeShaking: true,
-    keepNames: true,
+    // keepNames: true,
+    minify: false,
     ...config,
   }
 
@@ -181,7 +181,6 @@ async function bundle(config) {
   config.metafile = !!config.metafile
 
   console.log('* bundling', target)
-  // console.log('  aliasing BigInt to Number for https://github.com/benjamn/ast-types/issues/750')
   const meta = (await esbuild.build(config)).metafile
   if (typeof metafile === 'string') await fs.promises.writeFile(metafile, JSON.stringify(meta, null, 2))
   if (exportGlobals) {
@@ -193,6 +192,13 @@ async function bundle(config) {
 }
 
 async function rebuild() {
+  // bootstrap code
+  await bundle({
+    entryPoints: [ 'content/bootstrap.ts' ],
+    outdir: 'build',
+    exportGlobals: true,
+  })
+
   // plugin code
   await bundle({
     entryPoints: [ 'content/better-bibtex.ts' ],
@@ -211,7 +217,11 @@ async function rebuild() {
     footer: { js: '\n}' },
     external: [
       'zotero/itemTree',
-    ]
+      'mock-aws-s3',
+      '@node-rs/jieba-darwin-x64',
+      'nock',
+      'aws-sdk',
+    ],
   })
 
   // chinese for dynamic loading
@@ -250,7 +260,7 @@ async function rebuild() {
   // translators
   for (const translator of (await glob('translators/*.json')).map(tr => path.parse(tr))) {
     const header = require('./' + path.join(translator.dir, translator.name + '.json'))
-    const outfile = path.join('build/resource', translator.name + '.js')
+    const outfile = path.join('build/content/resource', translator.name + '.js')
 
     // https://esbuild.github.io/api/#write
     // https://esbuild.github.io/api/#outbase
@@ -280,7 +290,7 @@ async function rebuild() {
     if (!header.configOptions) header.configOptions = {}
     header.configOptions.hash = checksum.digest('hex')
     header.lastUpdated = (new Date).toISOString().replace(/T.*/, '')
-    await fs.promises.writeFile(path.join('build/resource', translator.name + '.json'), JSON.stringify(header, null, 2))
+    await fs.promises.writeFile(path.join('build/content/resource', translator.name + '.json'), JSON.stringify(header, null, 2))
   }
 
   if (await branch() === 'headless') {

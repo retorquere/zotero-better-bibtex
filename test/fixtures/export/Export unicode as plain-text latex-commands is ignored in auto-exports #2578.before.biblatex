@@ -1,0 +1,13 @@
+@inproceedings{brausse2019,
+  title = {A {{CDCL-Style Calculus}} for {{Solving Non-linear Constraints}}},
+  booktitle = {Frontiers of {{Combining Systems}} - 12th {{International Symposium}}, {{FroCoS}} 2019, {{London}}, {{UK}}, {{September}} 4-6, 2019, {{Proceedings}}},
+  author = {Brauße, Franz and Korovin, Konstantin and Korovina, Margarita V. and Müller, Norbert Th.},
+  editor = {Herzig, Andreas and Popescu, Andrei},
+  date = {2019},
+  series = {Lecture {{Notes}} in {{Computer Science}}},
+  volume = {11715},
+  pages = {131--148},
+  publisher = {{Springer}},
+  doi = {10.1007/978-3-030-29007-8_8},
+  url = {https://doi.org/10.1007/978-3-030-29007-8\_8}
+}

@@ -34,7 +34,9 @@ function stringifyXPCOM(obj): string {
 
 function stringifyError(obj) {
   if (obj instanceof Error) return `[error: ${obj.message || '<unspecified error>'}\n${obj.stack}]`
-  if (obj instanceof ErrorEvent) return `[errorevent: ${obj.message || '<unspecified errorevent>'}]`
+  // guess it is an errorevent
+  if (obj.error instanceof Error && obj.message) return `[errorevent: ${obj.message} ${stringifyError(obj.error)}]`
+  if (typeof ErrorEvent !== 'undefined' && obj instanceof ErrorEvent) return `[errorevent: ${obj.message || '<unspecified errorevent>'}]`
   return ''
 }
 
@@ -56,7 +58,10 @@ export function stringify(obj, indent: number | string = 2, ucode?: boolean) { /
       if (value === null) return value
       if (cache.includes(value)) return '[circular]'
 
-      if (replacement = stringifyXPCOM(value)) {
+      if (value instanceof RegExp) {
+        value = value.source
+      }
+      else if (replacement = stringifyXPCOM(value)) {
         value = replacement
       }
       else if (replacement = stringifyError(value)) {

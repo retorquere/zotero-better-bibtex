@@ -1,6 +1,7 @@
 // 2020 for prefixItems
 import AJV from 'ajv/dist/2020'
 import { sprintf } from 'sprintf-js'
+import { log } from './logger'
 
 type AjvFormatValidator = {
   (schema: any, format: string): boolean
@@ -67,6 +68,7 @@ const options  = {
   strict: false,
   discriminator: true,
   useDefaults: true,
+  logger: log,
 }
 
 export const noncoercing = new AJV(options)

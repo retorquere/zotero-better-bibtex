@@ -1,10 +1,9 @@
 tabbox
   tabs
-    tab(label="&better-bibtex.Preferences.export.fields;")
-    tab(bbt:preference="extensions.zotero.translators.better-bibtex.strings" label="&better-bibtex.Preferences.advanced.tab.strings;")
-    // tab(label="Hidden preferences" hidden="false")
+    tab(label="&better-bibtex_preferences_export_fields.label;")
+    tab(bbt:preference="extensions.zotero.translators.better-bibtex.strings" label="&better-bibtex_preferences_advanced_tab_strings.label;")
 
-  tabpanels(onselect='resize()')
+  tabpanels
     tabpanel(orient="vertical")
       include misc/fields.pug
 

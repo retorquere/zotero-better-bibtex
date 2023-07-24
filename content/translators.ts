@@ -17,11 +17,13 @@ import { log } from './logger'
 import { DB as Cache } from './db/cache'
 import { DB } from './db/main'
 import { flash } from './flash'
-import { $and, Query } from './db/loki'
+import { $and } from './db/loki'
 import { Events } from './events'
 import { Pinger } from './ping'
 import Puqeue from 'puqeue'
 import { is7 } from './client'
+import { orchestrator } from './orchestrator'
+import type { Reason } from './bootstrap'
 
 class Queue extends Puqeue {
   get queued() {
@@ -63,48 +65,74 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
   constructor() {
     Object.assign(this, translatorMetadata)
-  }
 
-  public async init() {
-    await this.start()
+    orchestrator.add({
+      id: 'translators',
+      description: 'translators',
+      needs: ['start'],
+      startup: async () => {
+        await this.start()
 
-    this.itemType = {
-      note: Zotero.ItemTypes.getID('note'),
-      attachment: Zotero.ItemTypes.getID('attachment'),
-      annotation: Zotero.ItemTypes.getID('annotation') || 'NULL',
-    }
-
-    // cleanup old translators
-    this.uninstall('Better BibTeX Quick Copy')
-    this.uninstall('\u672B BetterBibTeX JSON (for debugging)')
-    this.uninstall('BetterBibTeX JSON (for debugging)')
-
-    await Zotero.Translators.init()
-
-    const reinit: { header: Translator.Header, code: string }[] = []
-    let header: Translator.Header
-    let code: string
-    // fetch from resource because that has the hash
-    for (header of Object.keys(this.byName).map(name => JSON.parse(Zotero.File.getContentsFromURL(`resource://zotero-better-bibtex/${name}.json`)) as Translator.Header)) {
-      // workaround for mem limitations on Windows
-      if (typeof header.displayOptions?.worker === 'boolean') header.displayOptions.worker = !!Zotero.isWin
-      if (code = await this.install(header)) reinit.push({ header, code })
-    }
-
-    if (reinit.length) {
-      await Zotero.Translators.reinit()
-
-      for ({ header, code } of reinit) {
-        if (Zotero.Translators.getCodeForTranslator) {
-          const translator = Zotero.Translators.get(header.translatorID)
-          translator.cacheCode = true
-          await Zotero.Translators.getCodeForTranslator(translator)
+        this.itemType = {
+          note: Zotero.ItemTypes.getID('note'),
+          attachment: Zotero.ItemTypes.getID('attachment'),
+          annotation: Zotero.ItemTypes.getID('annotation') || 'NULL',
         }
-        else {
-          new Zotero.Translator({...header, cacheCode: true, code })
+
+        // cleanup old translators
+        this.uninstall('Better BibTeX Quick Copy')
+        this.uninstall('\u672B BetterBibTeX JSON (for debugging)')
+        this.uninstall('BetterBibTeX JSON (for debugging)')
+
+        await Zotero.Translators.init()
+
+        const reinit: { header: Translator.Header, code: string }[] = []
+        let header: Translator.Header
+        let code: string
+        // fetch from resource because that has the hash
+        for (header of Object.keys(this.byName).map(name => JSON.parse(Zotero.File.getContentsFromURL(`chrome://zotero-better-bibtex/content/resource/${name}.json`)) as Translator.Header)) {
+          // workaround for mem limitations on Windows
+          if (typeof header.displayOptions?.worker === 'boolean') header.displayOptions.worker = !!Zotero.isWin
+          if (code = await this.install(header)) reinit.push({ header, code })
         }
-      }
-    }
+
+        if (reinit.length) {
+          await Zotero.Translators.reinit()
+
+          for ({ header, code } of reinit) {
+            if (Zotero.Translators.getCodeForTranslator) {
+              const translator = Zotero.Translators.get(header.translatorID)
+              translator.cacheCode = true
+              await Zotero.Translators.getCodeForTranslator(translator)
+            }
+            else {
+              new Zotero.Translator({...header, cacheCode: true, code })
+            }
+          }
+        }
+      },
+      shutdown: async (reason: Reason) => {
+        switch (reason) {
+          case 'ADDON_DISABLE':
+          case 'ADDON_UNINSTALL':
+            break
+          default:
+            return
+        }
+
+        const quickCopy = Zotero.Prefs.get('export.quickCopy.setting')
+        for (const [label, metadata] of (Object.entries(Translators.byName) )) {
+          if (quickCopy === `export=${metadata.translatorID}`) Zotero.Prefs.clear('export.quickCopy.setting')
+
+          try {
+            Translators.uninstall(label)
+          }
+          catch (error) {}
+        }
+
+        await Zotero.Translators.reinit()
+      },
+    })
   }
 
   public getTranslatorId(name: string): string {
@@ -195,19 +223,8 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     }
   }
 
-  public async exportItemsByWorker(job: ExportJob) {
-    await this.start()
-
-    if (!this.worker) {
-      // this returns a promise for a new export, but for a foreground export
-      return this.exportItems(job)
-    }
-    else {
-      return this.queueJob(job)
-    }
-  }
-
   public async queueJob(job: ExportJob) {
+    await this.start()
     return this.queue.add(() => this.exportItemsByQueuedWorker(job))
   }
 
@@ -223,21 +240,20 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     }
 
     const translator = this.byId[job.translatorID]
-    log.debug('starting background export with', translator.label)
 
     const start = Date.now()
 
-    job.preferences = job.preferences || {}
+    const preferences = job.preferences || {}
 
     const cache = Preference.cache && !(
       // when exporting file data you get relative paths, when not, you get absolute paths, only one version can go into the cache
       displayOptions.exportFileData
 
       // jabref 4 stores collection info inside the entry, and collection info depends on which part of your library you're exporting
-      || (translator.label.includes('TeX') && job.preferences.jabrefFormat >= 4) // eslint-disable-line no-magic-numbers
+      || (translator.label.includes('TeX') && preferences.jabrefFormat >= 4) // eslint-disable-line no-magic-numbers
 
       // relative file paths are going to be different based on the file being exported to
-      || job.preferences.relativeFilePaths
+      || preferences.relativeFilePaths
     ) && Cache.getCollection(translator.label)
 
     this.workers.total += 1
@@ -247,7 +263,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     const deferred = new Deferred<string>()
 
     const config: Translator.Worker.Job = {
-      preferences: { ...Preference.all, ...job.preferences },
+      preferences: { ...Preference.all, ...preferences },
       options: displayOptions,
       data: {
         items: [],
@@ -346,7 +362,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     const prepare = new Pinger({
       total: items.length,
       callback: pct => {
-        let preparing = `${l10n.localize('Preferences.auto-export.status.preparing')} ${translator.label}`.trim()
+        let preparing = `${l10n.localize('better-bibtex_preferences_auto-export_status_preparing')} ${translator.label}`.trim()
         if (this.queue.queued) preparing += ` +${Translators.queue.queued}`
         void Events.emit('export-progress', { pct, message: preparing, ae: job.autoExport })
       },
@@ -466,13 +482,13 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
         file = null
       }
       if (!file) {
-        deferred.reject(l10n.localize('Translate.error.target.notaFile', { path: job.path }))
+        deferred.reject(l10n.localize('better-bibtex_translate_error_target_not_a_file', { path: job.path }))
         return deferred.promise
       }
 
       // the parent directory could have been removed
       if (!file.parent || !file.parent.exists()) {
-        deferred.reject(l10n.localize('Translate.error.target.noParent', { path: job.path }))
+        deferred.reject(l10n.localize('better-bibtex_translate_error_target_no_parent', { path: job.path }))
         return deferred.promise
       }
 
@@ -517,7 +533,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
     const code = [
       `ZOTERO_CONFIG = ${JSON.stringify(ZOTERO_CONFIG)}`,
-      Zotero.File.getContentsFromURL(`resource://zotero-better-bibtex/${header.label}.js`),
+      Zotero.File.getContentsFromURL(`chrome://zotero-better-bibtex/content/resource/${header.label}.js`),
     ].join('\n')
 
     if (schema.translator[header.label]?.cache) Cache.getCollection(header.label).removeDataOnly()
@@ -539,48 +555,6 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     }
 
     return code
-  }
-
-  public async uncached(translatorID: string, displayOptions: any, scope: any): Promise<any[]> {
-    // get all itemIDs in cache
-    const cache = Preference.cache && Cache.getCollection(this.byId[translatorID].label)
-    if (!cache) return []
-
-    const query: Query = {$and: [
-      { exportNotes: {$eq: !!displayOptions.exportNotes} },
-      { useJournalAbbreviation: {$eq: !!displayOptions.useJournalAbbreviation} },
-    ]}
-    for (const pref of schema.translator[this.byId[translatorID].label].preferences) {
-      if (typeof displayOptions[`preference_${pref}`] === 'undefined') {
-        query.$and.push({ [pref]: {$eq: Preference[pref]} })
-      }
-      else {
-        query.$and.push({ [pref]: {$eq: displayOptions[`preference_${pref}`]} })
-      }
-    }
-    const cached = new Set(cache.find(query).map(item => item.itemID))
-
-    if (scope.items) {
-      return scope.items.filter(item => !cached.has(item.id))
-    }
-
-    let sql: string = null
-    const cond = `i.itemTypeID NOT IN (${this.itemType.note}, ${this.itemType.attachment}, ${this.itemType.annotation}) AND i.itemID NOT IN (SELECT itemID FROM deletedItems)`
-    if (scope.library) {
-      sql = `SELECT i.itemID FROM items i WHERE i.libraryID = ${scope.library} AND ${cond}`
-
-    }
-    else if (scope.collection) {
-      sql = `SELECT i.itemID FROM collectionItems ci JOIN items i ON i.itemID = ci.itemID WHERE ci.collectionID = ${scope.collection.id} AND ${cond}`
-
-    }
-    else {
-      log.error('Translators.uncached: no active scope')
-      return []
-
-    }
-
-    return (await Zotero.DB.queryAsync(sql)).map(item => parseInt(item.itemID)).filter(itemID => !cached.has(itemID))
   }
 
   private exportScope(scope: ExportScope): ExportScope {

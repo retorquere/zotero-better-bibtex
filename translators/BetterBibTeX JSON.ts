@@ -135,7 +135,6 @@ export function doExport(): void {
   delete preferences.platform
   delete preferences.logEvents
   delete preferences.scrubDatabase
-  delete preferences.texmap
 
   const data = {
     config: {

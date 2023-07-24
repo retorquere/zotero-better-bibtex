@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-types */
 /* eslint-disable @typescript-eslint/no-unsafe-return, @typescript-eslint/explicit-module-boundary-types */
+/* eslint-disable @typescript-eslint/restrict-plus-operands */
 
 declare const Zotero: any
 
@@ -26,6 +27,8 @@ import { arXiv } from '../../content/arXiv'
 
 import { stringCompare } from '../lib/string-compare'
 import * as CSL from 'citeproc'
+
+import { toWordsOrdinal, toOrdinal } from 'number-to-words'
 
 /*
  * h1 class: Entry
@@ -211,9 +214,6 @@ export class Entry {
       this.language = babelLanguage(item.language)
       this.english = BabelTag[this.language] === 'en'
     }
-
-    // remove ordinal from edition
-    item.edition = (item.edition || '').replace(/^([0-9]+)(nd|th)$/, '$1')
 
     this.extraFields = JSON.parse(JSON.stringify(item.extraFields))
 
@@ -508,7 +508,6 @@ export class Entry {
       let bibstring = ''
       if ((typeof field.value === 'number') || (field.bibtexStrings && (bibstring = this.getBibString(field.value)))) {
         field.bibtex = `${bibstring || field.value}`
-
       }
       else {
         let value
@@ -550,7 +549,7 @@ export class Entry {
         }
 
         if (!value) {
-          log.error('add: no value after encoding', field.enc, field.name)
+          if (field.name !== 'file' && field.name !== 'keywords') log.error('add: no value after encoding', field)
           return null
         }
 
@@ -748,6 +747,11 @@ export class Entry {
           case 'DOI':
           case 'ISSN':
             name = key.toLowerCase()
+            break
+
+          // https://github.com/retorquere/zotero-better-bibtex/issues/644
+          case 'event-place':
+            name = 'address'
             break
         }
       }
@@ -1428,10 +1432,11 @@ export class Entry {
 
       report = report.concat(this.quality_report)
 
-      const used_values: Array<string | number> = Object.values(this.has) // eslint-disable-line @typescript-eslint/array-type
+      let used_values: Array<string | number> = Object.values(this.has) // eslint-disable-line @typescript-eslint/array-type
         .filter(field => typeof field.value === 'string' || typeof field.value === 'number')
-        .map(field => this.valueish(field.value))
-        .filter(value => value !== '')
+        .map(field => `${field.value}`)
+        .filter(value => value)
+      used_values = used_values.concat(used_values.map(value => this.valueish(value)))
 
       const ignore_unused_props = [
         'abstractNote',
@@ -1456,7 +1461,7 @@ export class Entry {
       const unused_props = Object.entries(this.item.extraFields.kv).map(([p, v]) => [ `extra: ${propertyLabel[p.toLowerCase()] || p}`, v ])
         .concat(Object.entries(this.item))
         .map(([p, v]) => [p, v, this.valueish(v) ])
-        .filter(([p, _v, vi]) => vi !== '' && !ignore_unused_props.includes(p) && !used_values.includes(vi))
+        .filter(([p, v, vi]) => !ignore_unused_props.includes(p) && !used_values.includes(v) && (vi && !used_values.includes(vi)))
         .sort(property_sort)
 
       for (const [prop, value, valueish] of unused_props) {
@@ -1482,6 +1487,19 @@ export class Entry {
       if (uniq.indexOf(c) < 0) uniq += c
     }
     return uniq
+  }
+
+  public toEnglishOrdinal(n: number | string): string {
+    const sortaNum = typeof n === 'number' ? `${n}` : (n || '').replace(/(st|nd|th)$/, '')
+    if (sortaNum.match(/^[0-9]{1,2}$/)) {
+      return toWordsOrdinal(sortaNum).replace(/^\w/, (c: string) => c.toUpperCase())
+    }
+    else if (sortaNum.match(/^[0-9]+$/)) {
+      return toOrdinal(sortaNum).replace(/^\w/, (c: string) => c.toUpperCase())
+    }
+    else {
+      return typeof n === 'string' ? n : ''
+    }
   }
 }
 

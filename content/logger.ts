@@ -45,23 +45,49 @@ class Logger {
     return (
       (typeof workerJob !== 'undefined' && workerJob.debugEnabled)
       ||
+      !Zotero
+      ||
       Zotero.Debug?.enabled
       ||
       Zotero.Prefs?.get('debug.store')
     ) as boolean
   }
 
+  public print(msg: string) {
+    if (!this.enabled) return
+
+    if (typeof Zotero !== 'undefined') {
+      Zotero.debug(msg)
+    }
+    else {
+      print(msg)
+    }
+  }
+
+  public log(...msg) {
+    this.print(this.format({}, msg))
+  }
+
   public debug(...msg) {
-    if (this.enabled) Zotero.debug(this.format({}, msg))
+    this.print(this.format({}, msg))
+  }
+
+  public warn(...msg) {
+    this.print(this.format({}, msg))
+  }
+
+  public info(...msg) {
+    this.print(this.format({}, msg))
+  }
+
+  public error(...msg) {
+    this.print(this.format({error: true}, msg))
   }
 
   public dump(...msg) {
     if (this.enabled) print(this.format({}, msg))
   }
 
-  public error(...msg) {
-    Zotero.debug(this.format({error: true}, msg))
-  }
   public status({ error=false }, ...msg) {
     if (error || this.enabled) Zotero.debug(this.format({error}, msg))
   }

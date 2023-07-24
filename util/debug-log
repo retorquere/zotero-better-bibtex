@@ -58,7 +58,7 @@ for target, partials in merge.items():
     for i, partial in enumerate(sorted(partials, key=lambda p: p.key)):
       if len(partials) != 1: print(f'  {i+1}/{len(partials)}')
       f.write(partial.get()['Body'].read())
-  if log.endswith('.tar') or log.endswith('.tar.gz'):
+  if log.endswith('.tar') or log.endswith('.tar.gz') or log.endswith('.tgz') :
     tar = tarfile.open(log)
     tar.extractall('logs')
     tar.close()

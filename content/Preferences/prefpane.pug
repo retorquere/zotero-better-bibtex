@@ -1,42 +1,38 @@
-prefpane#zotero-prefpane-better-bibtex(insertafter="zotero-prefpane-advanced" label="&better-bibtex.BetterBibTeX;" image="chrome://zotero-better-bibtex/skin/bibtex.svg" onpaneload="load()" helpTopic="BetterBibTeX")
-  preferences#zotero-preferences-cite
-    include preferences.pug
+popupset
+  tooltip#tooltip-bibtexURL
+    description &better-bibtex_preferences_export_fields_doi-and-url_warning;
+  tooltip#tooltip-jabrefFormat
+    description &better-bibtex_preferences_export_jabref-format_warn;
+  tooltip#tooltip-importSentenceCase
+    description &better-bibtex_preferences_advanced_import_sentence-case_warning;
+  tooltip#tooltip-importCaseProtection
+    description &better-bibtex_preferences_advanced_import_case-protection_warning;
+  tooltip#tooltip-exportTitleCase
+    description &better-bibtex_preferences_advanced_export_title-case_warning;
+  tooltip#tooltip-exportBraceProtection
+    description &better-bibtex_preferences_advanced_export_brace-protection_warning;
+  tooltip#tooltip-retainCache
+    description &better-bibtex_preferences_advanced_export_retain-cache_warning;
 
-  popupset
-    tooltip#tooltip-bibtexURL
-      description &better-bibtex.Preferences.export.fields.doi-and-url.warning;
-    tooltip#tooltip-jabrefFormat
-      description &better-bibtex.Preferences.export.jabrefFormat.warn;
-    tooltip#tooltip-importSentenceCase
-      description &better-bibtex.Preferences.advanced.import.sentenceCase.warning;
-    tooltip#tooltip-importCaseProtection
-      description &better-bibtex.Preferences.advanced.import.caseProtection.warning;
-    tooltip#tooltip-exportTitleCase
-      description &better-bibtex.Preferences.advanced.export.titleCase.warning;
-    tooltip#tooltip-exportBraceProtection
-      description &better-bibtex.Preferences.advanced.export.braceProtection.warning;
-    tooltip#tooltip-retainCache
-      description &better-bibtex.Preferences.advanced.export.retainCache.warning;
+deck#better-bibtex-prefs-deck(selectedIndex='0')
+  label#better-bibtex-loading &better-bibtex_preferences_prefpane_loading;
 
-  deck#better-bibtex-prefs-deck(selectedIndex='0')
-    label#better-bibtex-loading &better-bibtex.Preferences.prefpane.loading;
+  tabbox#better-bibtex-prefs-tabbox
+    tabs#better-bibtex-prefs-tabs(onselect="Zotero.BetterBibTeX.PrefPane.refresh()")
+      tab#better-bibtex-prefs-citekey(label="&better-bibtex_preferences_tab_citekey.label;")
+      tab#better-bibtex-prefs-export(label="&better-bibtex_preferences_tab_export.label;")
+      tab#better-bibtex-prefs-auto-export(label="&better-bibtex_preferences_tab_auto-export.label;")
+      tab(label='&better-bibtex_preferences_tab_import.label;')
+      tab(label='&better-bibtex_preferences_tab_misc.label;')
 
-    tabbox#better-bibtex-prefs-tabbox
-      tabs#better-bibtex-prefs-tabs(onselect="Zotero.BetterBibTeX.PrefPane.refresh()")
-        tab#better-bibtex-prefs-citekey(label="&better-bibtex.Preferences.tab.citekey;")
-        tab#better-bibtex-prefs-export(label="&better-bibtex.Preferences.tab.export;")
-        tab#better-bibtex-prefs-auto-export(label="&better-bibtex.Preferences.tab.auto-export;")
-        tab(label='&better-bibtex.Preferences.advanced.tab.import;')
-        tab(label='&better-bibtex.Preferences.export.misc;')
-
-      tabpanels#better-bibtex-prefs-tabpanels(onselect='resize()' flex=1)
-        tabpanel(bbt:page='_index' flex=1 orient="vertical")
-          include citekeys.pug
-        tabpanel(bbt:page='export' flex=1 orient="vertical")
-          include export.pug
-        tabpanel(bbt:page='automatic-export' flex=1 orient="vertical")
-          include autoexport.pug
-        tabpanel(bbt:page='import' flex=1 orient="vertical")
-          include import.pug
-        tabpanel(bbt:page='miscellaneous' flex=1 orient="vertical")
-          include misc.pug
+    tabpanels#better-bibtex-prefs-tabpanels(flex=1)
+      tabpanel(bbt:page='_index' flex=1 orient="vertical")
+        include citekeys.pug
+      tabpanel(bbt:page='export' flex=1 orient="vertical")
+        include export.pug
+      tabpanel(bbt:page='automatic-export' flex=1 orient="vertical")
+        include autoexport.pug
+      tabpanel(bbt:page='import' flex=1 orient="vertical")
+        include import.pug
+      tabpanel(bbt:page='miscellaneous' flex=1 orient="vertical")
+        include misc.pug

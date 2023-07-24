@@ -56,8 +56,8 @@ export class Scheduler {
       return
     }
 
-    let job: Job
-    if (job = this.job.get(id)) {
+    let job = this.job.get(id)
+    if (job) {
       clearTimeout(job.timer)
     }
     else {
@@ -68,10 +68,12 @@ export class Scheduler {
         timer: 0 as unknown as TimerHandle,
       }
     }
+
     job.timer = setTimeout(j => {
       this.job.delete(id)
       j.handler()
     }, this.delay, job)
+
     this.job.set(id, job)
   }
 

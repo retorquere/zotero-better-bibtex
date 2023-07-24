@@ -1,6 +1,3 @@
-declare const Zotero_File_Interface: any
-declare const Zotero_Duplicates_Pane: any
-
 import { AutoExport } from './auto-export'
 import * as ZoteroDB from './db/zotero'
 import { log } from './logger'
@@ -22,11 +19,13 @@ export class TestSupport {
   public timedMemoryLog: any
   public scenario: string
 
+  /* REVIEW:
   public startTimedMemoryLog(msecs: number): void {
     if (typeof this.timedMemoryLog === 'undefined') {
       this.timedMemoryLog = setInterval(() => { log.debug('memory use:', memory.state('periodic snapshot')) }, msecs)
     }
   }
+  */
 
   public memoryState(snapshot: string): memory.State {
     const state = memory.state(snapshot)
@@ -103,7 +102,7 @@ export class TestSupport {
       await Zotero.Promise.delay(1500) // eslint-disable-line no-magic-numbers
     }
     else {
-      await Zotero_File_Interface.importFile({ file: Zotero.File.pathToFile(path), createNewCollection: !!createNewCollection })
+      await Zotero.getMainWindow().Zotero_File_Interface.importFile({ file: Zotero.File.pathToFile(path), createNewCollection: !!createNewCollection })
     }
 
     items = await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, true, false, true)
@@ -243,17 +242,26 @@ export class TestSupport {
 
     // zoteroPane.mergeSelectedItems()
 
-    if (typeof Zotero_Duplicates_Pane === 'undefined') {
-      Components.classes['@mozilla.org/moz/jssubscript-loader;1'].getService(Components.interfaces.mozIJSSubScriptLoader).loadSubScript('chrome://zotero/content/duplicatesMerge.js')
-    }
-
     selected.sort((a, b) => ids.indexOf(a.id) - ids.indexOf(b.id))
 
-    Zotero_Duplicates_Pane.setItems(selected)
+    const env = {
+      Zotero,
+      window: Zotero.getMainWindow(),
+      document: Zotero.getMainWindow().document,
+      Zotero_Duplicates_Pane: undefined,
+      setTimeout: setTimeout.bind(Zotero.getMainWindow()),
+      clearTimeout: clearTimeout.bind(Zotero.getMainWindow()),
+    }
+
+    Components.classes['@mozilla.org/moz/jssubscript-loader;1']
+      .getService(Components.interfaces.mozIJSSubScriptLoader)
+      .loadSubScript('chrome://zotero/content/duplicatesMerge.js', env)
+
+    env.Zotero_Duplicates_Pane.setItems(selected)
     await Zotero.Promise.delay(1500) // eslint-disable-line no-magic-numbers
 
     const before = await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, true, false, true)
-    await Zotero_Duplicates_Pane.merge()
+    await env.Zotero_Duplicates_Pane.merge()
 
     await Zotero.Promise.delay(1500) // eslint-disable-line no-magic-numbers
     const after = await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, true, false, true)
@@ -303,5 +311,19 @@ export class TestSupport {
     })
 
     return deferred.promise
+  }
+
+  public editAutoExport(field: string, value: boolean | string): void {
+    Zotero.BetterBibTeX.PrefPane.autoexport.edit({
+      getAttribute(name: string): string | number { // eslint-disable-line prefer-arrow/prefer-arrow-functions
+        switch (name) {
+          case 'data-ae-field': return field
+          case 'data-ae-id': return AutoExport.db.find()[0].$loki as number
+          default: throw new Error(`unexpected attribute ${name}`)
+        }
+      },
+      checked: value,
+      value,
+    })
   }
 }

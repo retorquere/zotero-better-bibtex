@@ -25,7 +25,7 @@ export class Exporter {
   constructor(translation: Translation) {
     this.translation = translation
     this.jabref = new JabRef(translation)
-    this.htmlconverter = new HTMLConverter(translation.preferences.texmap, translation)
+    this.htmlconverter = new HTMLConverter(translation.texmap, translation)
   }
 
   public prepare_strings(): void {

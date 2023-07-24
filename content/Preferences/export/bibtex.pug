@@ -1,13 +1,15 @@
-checkbox(preference="extensions.zotero.translators.better-bibtex.asciiBibTeX" label="&better-bibtex.Preferences.export.bibtex.ascii;")
-checkbox(preference="extensions.zotero.translators.better-bibtex.bibtexParticleNoOp" label="&better-bibtex.Preferences.export.fields.bibtexParticleNoOp;")
+checkbox(preference="extensions.zotero.translators.better-bibtex.asciiBibTeX" label="&better-bibtex_preferences_export_bibtex_ascii.label;")
+checkbox(preference="extensions.zotero.translators.better-bibtex.bibtexParticleNoOp" label="&better-bibtex_preferences_export_fields_bibtex-particle-no-op.label;")
+checkbox(preference="extensions.zotero.translators.better-bibtex.bibtexEditionOrdinal" label="&better-bibtex_preferences_export_fields_bibtex-edition-ordinal.label;")
 hbox(flex=0)
-  label(bbt:preference="extensions.zotero.translators.better-bibtex.bibtexURL") &better-bibtex.Preferences.export.bibtex.URLs;:
-  image(tooltip="tooltip-bibtexURL" src="chrome://zotero-better-bibtex/skin/attention.svg" width="16" height="16")
+  label(bbt:preference="extensions.zotero.translators.better-bibtex.bibtexURL") &better-bibtex_preferences_export_bibtex_urls;
+  image(tooltip="tooltip-bibtexURL" src="chrome://zotero-better-bibtex/content/skin/attention.svg" width="16" height="16")
 hbox(flex=0)
-  html:select(preference="extensions.zotero.translators.better-bibtex.bibtexURL")
-    html:option(value='off') &better-bibtex.Preferences.export.bibtex.URLs.off;
-    html:option(value='note') &better-bibtex.Preferences.export.bibtex.URLs.note;
-    html:option(value='note-url-ish') &better-bibtex.Preferences.export.bibtex.URLs.note-url-ish;
-    html:option(value='url') &better-bibtex.Preferences.export.bibtex.URLs.url;
-    html:option(value='url-ish') &better-bibtex.Preferences.export.bibtex.URLs.url-ish;
+  menulist(preference="extensions.zotero.translators.better-bibtex.bibtexURL")
+    menupopup
+      menuitem(value='off' label='&better-bibtex_preferences_export_bibtex_urls_off.label;')
+      menuitem(value='note' label='&better-bibtex_preferences_export_bibtex_urls_note.label;')
+      menuitem(value='note-url-ish' label='&better-bibtex_preferences_export_bibtex_urls_note-url-ish.label;')
+      menuitem(value='url' label='&better-bibtex_preferences_export_bibtex_urls_url.label;')
+      menuitem(value='url-ish' label='&better-bibtex_preferences_export_bibtex_urls_url-ish.label;')
   hbox(flex=1)

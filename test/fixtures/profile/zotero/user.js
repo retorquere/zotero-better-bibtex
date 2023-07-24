@@ -80,5 +80,4 @@ user_pref("extensions.zotero.debug-bridge.password", "a53edfac-3773-4ce1-93a5-a1
 user_pref("extensions.zotero.translators.better-bibtex.kuroshiro", true);
 user_pref("extensions.zotero.translators.better-bibtex.lockedInit", false);
 user_pref("extensions.zotero.translators.better-bibtex.removeStock", true);
-user_pref("extensions.zotero.translators.better-bibtex.ignorePostscriptErrors", false);
 user_pref("extensions.zotero.translators.better-bibtex.citekeyFormat", "[auth:lower][year] | [=forumPost/WebPage][Auth:lower:capitalize][Date:format-date=%Y-%m-%d.%H\\:%M\\:%S:prefix=.][PublicationTitle:lower:capitalize:prefix=.][shorttitle3_3:lower:capitalize:prefix=.][Pages:prefix=.p.][Volume:prefix=.Vol.][NumberofVolumes:prefix=de] | [Auth:lower:capitalize][date:%oY:prefix=.][PublicationTitle:lower:capitalize:prefix=.][shorttitle3_3:lower:capitalize:prefix=.][Pages:prefix=.p.][Volume:prefix=.Vol.][NumberofVolumes:prefix=de]");

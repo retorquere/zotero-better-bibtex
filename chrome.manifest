@@ -1,10 +1,8 @@
 content   zotero-better-bibtex          content/
 locale    zotero-better-bibtex  en-US   locale/en-US/
 locale    zotero-better-bibtex  fr-FR   locale/fr-FR/
-#locale    zotero-better-bibtex  de-DE   locale/de-DE/
 locale    zotero-better-bibtex  pt-BR   locale/pt-BR/
 skin      zotero-better-bibtex  default skin/
-resource  zotero-better-bibtex          resource/
 
 overlay	chrome://zotero/content/zoteroPane.xul                chrome://zotero-better-bibtex/content/ZoteroPane.xul
 overlay chrome://zotero/content/preferences/preferences.xul   chrome://zotero-better-bibtex/content/zotero-preferences.xul

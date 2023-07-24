@@ -1,0 +1,65 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "citekeyFormat": "auth + year"
+    }
+  },
+  "items": [
+    {
+      "ISBN": "978-3-540-44190-8",
+      "citationKey": "minock-kraus-LIAI02",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Michael",
+          "lastName": "Minock"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Hansi",
+          "lastName": "Kraus"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "Sergio",
+          "lastName": "Flesca"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "Sergio",
+          "lastName": "Greco"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "Giovambattista",
+          "lastName": "Ianni"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "Nicola",
+          "lastName": "Leone"
+        }
+      ],
+      "date": "2002",
+      "extra": [
+        "Citation Key: minock-kraus-LIAI02",
+        "DOI: 10.1007/3-540-45757-7_52"
+      ],
+      "itemID": 1,
+      "itemType": "bookSection",
+      "language": "English",
+      "pages": "545-548",
+      "publicationTitle": "Logics in artificial intelligence",
+      "publisher": "Springer Berlin Heidelberg",
+      "series": "Lecture notes in computer science",
+      "title": "Z-log: Applying system-Z",
+      "url": "http://dx.doi.org/10.1007/3-540-45757-7_52",
+      "volume": "2424"
+    }
+  ]
+}

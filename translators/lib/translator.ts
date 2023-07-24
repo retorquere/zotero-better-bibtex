@@ -1,14 +1,13 @@
 declare const Zotero: any
 declare const __estrace: any // eslint-disable-line no-underscore-dangle
 
-import { affects, names as preference_names, defaults as preference_defaults, options as preference_options, PreferenceName, Preferences as StoredPreferences, schema } from '../../gen/preferences/meta'
+import * as Prefs from '../../gen/preferences/meta'
+const PrefNames: Set<string> = new Set(Object.keys(Prefs.defaults))
 import { TeXMap } from '../../content/prefs'
 import { client } from '../../content/client'
 import { RegularItem, Item, Collection, Attachment } from '../../gen/typings/serialized-item'
 import type { Exporter as BibTeXExporter } from '../bibtex/exporter'
 import type { ZoteroItem } from '../bibtex/bibtex'
-
-type Preferences = StoredPreferences & { texmap?: TeXMap }
 
 type CacheableItem = Item & { $cacheable: boolean }
 type CacheableRegularItem = RegularItem & { $cacheable: boolean }
@@ -222,11 +221,11 @@ export function collect(): Input {
 }
 
 class Override {
-  private orig: Preferences
+  private orig: Prefs.Preferences
   private exportPath: string
   private exportDir: string
 
-  constructor(private preferences: Preferences) {
+  constructor(private preferences: Prefs.Preferences) {
     this.orig = {...this.preferences}
     this.exportPath = Zotero.getOption('exportPath')
     this.exportDir = Zotero.getOption('exportDir')
@@ -253,7 +252,7 @@ class Override {
           continue
         }
 
-        let prefs: Partial<Preferences>
+        let prefs: Partial<Prefs.Preferences>
         if (preference === 'preferences') {
           prefs = JSON.parse(content).override?.preferences
           if (!prefs) continue
@@ -263,14 +262,15 @@ class Override {
         }
 
         for (const [pref, value] of Object.entries(prefs)) {
-          if (!preference_names.includes(pref as unknown as PreferenceName)) {
+          if (!PrefNames.has(pref as unknown as Prefs.PreferenceName)) {
             Zotero.debug(`better-bibtex: unexpected preference override for ${pref}`)
           }
-          else if (typeof value !== typeof preference_defaults[pref]) {
-            Zotero.debug(`better-bibtex: preference override for ${pref}: expected ${typeof preference_defaults[pref]}, got ${typeof value}`)
+          else if (typeof value !== typeof Prefs.defaults[pref]) {
+            Zotero.debug(`better-bibtex: preference override for ${pref}: expected ${typeof Prefs.defaults[pref]}, got ${typeof value}`)
           }
-          else if (preference_options[pref] && !preference_options[pref][value]) {
-            Zotero.debug(`better-bibtex: preference override for ${pref}: expected ${Object.keys(preference_options[pref]).join(' / ')}, got ${value}`)
+          else if (Prefs.options[pref] && !Prefs.options[pref][value]) {
+            // eslint-disable-next-line @typescript-eslint/no-base-to-string
+            Zotero.debug(`better-bibtex: preference override for ${pref}: expected ${Object.keys(Prefs.options[pref]).join(' / ')}, got ${value}`)
           }
           else {
             this.preferences[pref] = value
@@ -291,7 +291,7 @@ class Override {
 }
 
 export class Translation { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
-  public preferences: Preferences
+  public preferences: Prefs.Preferences
   public importToExtra: Record<string, 'plain' | 'force'>
   public skipFields: string[]
   public skipField: RegExp
@@ -301,6 +301,7 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
     dir: undefined,
     path: undefined,
   }
+  public texmap: TeXMap
 
   public options: {
     quickCopyMode?: string
@@ -369,15 +370,16 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
   private typefield(field: string): string {
     field = field.trim()
     if (field.startsWith('bibtex.')) return this.BetterBibTeX ? field.replace(/^bibtex\./, '') : ''
-    if (field.startsWith('biblatex.')) return this.BetterBibLaTeX ? field.replace(/^biblatex\./, '') : ''
+    // no input present => import => biblatex mode
+    if (field.startsWith('biblatex.')) return this.mode === 'import' || this.BetterBibLaTeX ? field.replace(/^biblatex\./, '') : ''
     return field
   }
 
   static Import(translator: TranslatorMetadata): Translation {
-    return new this(translator)
+    return new this(translator, 'import')
   }
   static Export(translator: TranslatorMetadata, input: Input): Translation {
-    const translation = new this(translator)
+    const translation = new this(translator, 'export')
 
     translation.input = input
 
@@ -420,22 +422,22 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
       translation.preferences.separatorNames = ` ${translation.preferences.separatorNames} `
     }
 
-    if (translation.preferences.testing && typeof __estrace === 'undefined' && schema.translator[translator.label]?.cache) {
-      const ignored = {
-        testing: true,
-        texmap: true,
-      }
-      translation.preferences = new Proxy(translation.preferences, {
+    if (translation.preferences.testing && typeof __estrace === 'undefined' && Prefs.schema.translator[translator.label]?.cache) {
+      const allowedPreferences: Prefs.Preferences = Prefs.affectedBy[translator.label]
+        .concat([ 'testing' ])
+        .reduce((acc: any, pref: Prefs.PreferenceName) => {
+          acc[pref] = translation.preferences[pref]
+          return acc as Prefs.Preferences
+        }, {}) as unknown as Prefs.Preferences
+
+      translation.preferences = new Proxy(allowedPreferences, {
         set: (object, property, _value) => {
           throw new TypeError(`Unexpected set of preference ${String(property)}`)
         },
-        get: (object, property: PreferenceName) => {
+        get: (object, property: Prefs.PreferenceName) => {
           // JSON.stringify will attempt to get this
           if (property as unknown as string === 'toJSON') return object[property]
-          if (!ignored[property]) {
-            if (!preference_names.includes(property)) throw new TypeError(`Unsupported preference ${property}`)
-            if (!affects[property]?.includes(translator.label)) throw new TypeError(`Preference ${property} claims not to affect ${translator.label}`)
-          }
+          if (!(property in allowedPreferences)) new TypeError(`Preference ${property} claims not to affect ${translator.label}`)
           return object[property] // eslint-disable-line @typescript-eslint/no-unsafe-return
         },
       })
@@ -447,7 +449,7 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
     return translation
   }
 
-  private constructor(public translator: TranslatorMetadata) {
+  private constructor(public translator: TranslatorMetadata, private mode: 'import' | 'export') {
     this[translator.label.replace(/[^a-z]/ig, '')] = true
     this.BetterTeX = this.BetterBibTeX || this.BetterBibLaTeX
     this.BetterCSL = this.BetterCSLJSON || this.BetterCSLYAML
@@ -479,10 +481,10 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
       }
     }
 
-    this.preferences = Object.entries(preference_defaults).reduce((acc, [pref, dflt]) => {
+    this.preferences = Object.entries(Prefs.defaults).reduce((acc, [pref, dflt]) => {
       acc[pref] = Zotero.getHiddenPref(`better-bibtex.${pref}`) ?? dflt
       return acc
-    }, {} as unknown as Preferences)
+    }, {} as unknown as Prefs.Preferences)
 
     const override = new Override(this.preferences)
     if (override.override('preferences', '.json')) this.cacheable = false
@@ -491,10 +493,10 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
 
     // special handling
     try {
-      this.preferences.texmap = JSON.parse(this.preferences.charmap)
+      this.texmap = JSON.parse(this.preferences.charmap)
     }
     catch (err) {
-      this.preferences.texmap = {}
+      this.texmap = {}
     }
 
     this.importToExtra = {}

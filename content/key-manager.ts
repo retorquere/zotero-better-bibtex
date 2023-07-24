@@ -1,6 +1,10 @@
 Components.utils.import('resource://gre/modules/Services.jsm')
 
+import { orchestrator } from './orchestrator'
+
 import ETA from 'node-eta'
+
+import { alert, prompt } from './prompt'
 
 import { kuroshiro } from './key-manager/japanese'
 import { chinese } from './key-manager/chinese'
@@ -31,7 +35,7 @@ import * as l10n from './l10n'
 
 type CitekeySearchRecord = { itemID: number, libraryID: number, itemKey: string, citekey: string }
 
-export class KeyManager {
+export const KeyManager = new class _KeyManager {
   public keys: any
   public query: {
     field: { extra?: number, title?: number }
@@ -57,12 +61,14 @@ export class KeyManager {
 
   public async set(): Promise<void> {
     const ids = this.expandSelection('selected')
-    if (ids.length !== 1) return alert(l10n.localize('Citekey.set.toomany'))
+
+    if (ids.length !== 1) return alert({ text: l10n.localize('better-bibtex_citekey_set_toomany') })
+
+    const existingKey = this.get(ids[0]).citekey
+    const citationKey = prompt({ text: l10n.localize('better-bibtex_citekey_set_change'), value: existingKey }) || existingKey
+    if (citationKey === existingKey) return
 
     Cache.remove(ids, `setting key for ${ids}`)
-    const existingKey = this.get(ids[0]).citekey
-    const citationKey = prompt(l10n.localize('Citekey.set.change'), existingKey) || existingKey
-    if (citationKey === existingKey) return
 
     const item = await getItemsAsync(ids[0])
     item.setField('extra', Extra.set(item.getField('extra'), { citationKey }))
@@ -165,34 +171,43 @@ export class KeyManager {
     if (updates.length) itemsChanged(updates)
   }
 
-  public async init(): Promise<void> {
-    log.debug('keymanager.init: kuroshiro/jieba')
-    await kuroshiro.init()
-    chinese.init()
+  constructor() {
+    orchestrator.add({
+      id: 'keymanager',
+      description: 'keymanager',
+      needs: ['databases', 'maindb'],
+      startup: async () => {
+        log.debug('keymanager.init: kuroshiro/jieba')
+        await kuroshiro.init()
+        chinese.init()
 
-    log.debug('keymanager.init: get keys')
-    this.keys = DB.getCollection('citekey')
+        log.debug('keymanager.init: get keys')
+        this.keys = DB.getCollection('citekey')
 
-    this.query = {
-      field: {},
-      type: {},
-    }
+        this.query = {
+          field: {},
+          type: {},
+        }
 
-    log.debug('keymanager.init: pre-fetching types/fields')
-    for (const type of await ZoteroDB.queryAsync('select itemTypeID, typeName from itemTypes')) { // 1 = attachment, 14 = note
-      this.query.type[type.typeName] = type.itemTypeID
-    }
+        log.debug('keymanager.init: pre-fetching types/fields')
+        for (const type of await ZoteroDB.queryAsync('select itemTypeID, typeName from itemTypes')) { // 1 = attachment, 14 = note
+          this.query.type[type.typeName] = type.itemTypeID
+        }
 
-    for (const field of await ZoteroDB.queryAsync('select fieldID, fieldName from fields')) {
-      this.query.field[field.fieldName] = field.fieldID
-    }
+        for (const field of await ZoteroDB.queryAsync('select fieldID, fieldName from fields')) {
+          this.query.field[field.fieldName] = field.fieldID
+        }
 
-    log.debug('keymanager.init: compiling', Preference.citekeyFormat)
-    Formatter.update([Preference.citekeyFormat])
-    log.debug('keymanager.init: done')
+        log.debug('keymanager.init: compiling', Preference.citekeyFormat)
+        Formatter.update([Preference.citekeyFormat])
+        log.debug('keymanager.init: done')
+
+        await this.start()
+      },
+    })
   }
 
-  public async start(): Promise<void> {
+  private async start(): Promise<void> {
     await this.rescan()
 
     if (Preference.citekeySearch) {
@@ -312,8 +327,13 @@ export class KeyManager {
         return
       }
 
-      // update display panes by issuing a fake item-update notification
-      Zotero.Notifier.trigger('modify', 'item', [citekey.itemID], { [citekey.itemID]: { bbtCitekeyUpdate: true } })
+      if (item.isFeedItem || !item.isRegularItem()) {
+        log.error('citekey registered for item of type', item.isFeedItem ? 'feedItem' : Zotero.ItemTypes.getName(item.itemTypeID))
+      }
+      else {
+        // update display panes by issuing a fake item-update notification
+        Zotero.Notifier.trigger('modify', 'item', [citekey.itemID], { [citekey.itemID]: { bbtCitekeyUpdate: true } })
+      }
 
       if (!citekey.pinned && this.autopin.enabled) {
         this.autopin.schedule(citekey.itemID, () => {
@@ -362,7 +382,7 @@ export class KeyManager {
         }
       }
 
-      if (errors) alert(`Better BibTeX: ${errors} errors found in the citekey database, please report on the Better BibTeX project site`)
+      if (errors) alert({ text: `Better BibTeX: ${errors} errors found in the citekey database, please report on the Better BibTeX project site` })
     }
 
     if (Array.isArray(this.regenerate)) {

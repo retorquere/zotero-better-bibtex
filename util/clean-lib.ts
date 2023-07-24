@@ -11,8 +11,8 @@ import { normalize } from '../translators/lib/normalize'
 import { stable_stringify as stringify } from '../content/stringify'
 import * as fs from 'fs'
 
-import { defaults, names } from '../gen/preferences/meta'
-const supported: string[] = names.filter(name => !['client', 'testing', 'platform', 'newTranslatorsAskRestart'].includes(name))
+import { defaults } from '../gen/preferences/meta'
+const supported: string[] = Object.keys(defaults).filter(name => !['client', 'testing', 'platform', 'newTranslatorsAskRestart'].includes(name))
 
 const argv = require("clp")()
 if (argv.attachments && typeof argv.attachments !== 'boolean') {

@@ -1,30 +1,28 @@
 import { Preference } from './prefs'
 import { Events } from './events'
 import { client } from './client'
+import { orchestrator } from './orchestrator'
 
 import { simplifyForExport as simplify } from '../gen/items/simplify'
 
 export const JournalAbbrev = new class { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
-  private initialized: boolean
   private style: any
   private abbrevs: any
 
   constructor() {
-    this.initialized = false
-  }
+    orchestrator.add({
+      id: 'abbreviator',
+      description: 'journal abbreviator',
+      needs: ['start'],
+      startup: async () => {
+        if (client === 'jurism') await Zotero.Styles.init() // otherwise Juris-M throws 'Styles not yet loaded'
+        this.reset()
 
-  public async init() {
-    if (this.initialized) return null
-    await Zotero.Styles.init() // otherwise Juris-M throws 'Styles not yet loaded'
-    this.initialized = true
-
-    Events.on('preference-changed', pref => {
-      if (pref !== 'autoAbbrevStyle') return null
-
-      this.reset()
+        Events.on('preference-changed', pref => {
+          if (pref === 'autoAbbrevStyle') this.reset()
+        })
+      },
     })
-
-    this.reset()
   }
 
   public reset() {

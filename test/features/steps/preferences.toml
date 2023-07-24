@@ -49,7 +49,6 @@ extensions.zotero.reportTranslationFailure = false
 extensions.zotero.translators.better-bibtex.kuroshiro = true
 extensions.zotero.translators.better-bibtex.lockedInit = false
 extensions.zotero.translators.better-bibtex.removeStock = true
-extensions.zotero.translators.better-bibtex.ignorePostscriptErrors = false
 
 extensions.zotero.debug.log = true
 extensions.zotero.debug.time = true

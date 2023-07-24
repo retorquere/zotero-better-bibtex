@@ -1,0 +1,20 @@
+| <?xml version="1.0"?>
+| <?xml-stylesheet href="chrome://global/skin/global.css"?>
+| <?xml-stylesheet href="chrome://zotero-platform/content/preferences.css"?>
+| <?xml-stylesheet href="chrome://browser/skin/preferences/preferences.css"?>
+| <?xml-stylesheet href="chrome://zotero/skin/preferences.css"?>
+| <?xml-stylesheet href="chrome://zotero/skin/zotero.css"?>
+| <?xml-stylesheet href="chrome://zotero-platform/content/overlay.css"?>
+| <?xml-stylesheet href="chrome://zotero-platform-version/content/style.css"?>
+| <?xml-stylesheet href="chrome://zotero-better-bibtex/content/skin/preferences.css"?>
+| <!DOCTYPE prefwindow SYSTEM "chrome://zotero-better-bibtex/locale/zotero-better-bibtex.dtd">
+prefwindow(title='Better BibTeX' xmlns='http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul' xmlns:html='http://www.w3.org/1999/xhtml')
+  script(src='chrome://zotero/content/include.js')
+  prefpane#zotero-prefpane-better-bibtex(
+      insertafter="zotero-prefpane-advanced"
+      label="Better BibTeX"
+      image="chrome://zotero-better-bibtex/content/skin/bibtex.svg"
+      helpTopic="BetterBibTeX"
+    )
+    include preferences.pug
+    include prefpane.pug

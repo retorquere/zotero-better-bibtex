@@ -8,12 +8,21 @@ import * as path from 'path'
 import * as glob from 'glob-promise'
 import * as peggy from 'peggy'
 import * as matter from 'gray-matter'
-import * as eta from 'eta'
 import * as _ from 'lodash'
+import { walk, Lint, SelfClosing, ASTWalker as BaseASTWalker } from './pug-ast-walker'
+
+import { Eta } from 'eta'
+const eta = new Eta
 
 function error(...args) {
   console.log(...args)
   process.exit(1)
+}
+
+
+function ensureDir(file) {
+  const parent = path.dirname(file)
+  if (!fs.existsSync(parent)) fs.mkdirSync(parent, { recursive: true })
 }
 
 const translators = glob.sync('translators/*.json')
@@ -25,11 +34,9 @@ const translators = glob.sync('translators/*.json')
     return tr
   })
 
-const src = process.argv[2] || 'content/Preferences.pug'
-const tgt = process.argv[3] || 'build/content/Preferences.xul'
 
 const l10n = new class {
-  private strings = peggy.generate(fs.readFileSync('setup/dtd-file.peggy', 'utf-8')).parse(fs.readFileSync('locale/en-US/zotero-better-bibtex.dtd', 'utf-8')) as Record<string, string>
+  private strings = peggy.generate(fs.readFileSync('content/dtd-file.peggy', 'utf-8')).parse(fs.readFileSync('build/locale/en-US/zotero-better-bibtex.dtd', 'utf-8')) as Record<string, string>
 
   private find(id: string): string {
     if (id.startsWith('zotero.general.')) return `&${id};`
@@ -44,21 +51,7 @@ const l10n = new class {
   }
 }
 
-class ASTWalker {
-  walk(node, history?) {
-    if (history) history = [node, ...history]
-
-    if (this[node.type]) return this[node.type](node, history)
-
-    error('No handler for', node.type)
-  }
-
-  attr(node, name: string, required=false): string {
-    const attr = node.attrs.find(attr => attr.name === name)
-    if (!attr && required) error(`could not find ${node.name}.${name} in`, node.attrs.map(a => a.name))
-    return attr ? l10n.tr(eval(attr.val)) : null
-  }
-
+class ASTWalker extends BaseASTWalker {
   text(node) {
     switch (node.type) {
       case 'Text': return l10n.tr(node.val)
@@ -68,19 +61,18 @@ class ASTWalker {
     }
   }
 
-  Block(node, history) {
-    for (const sub of node.nodes) {
-      this.walk(sub, history)
+  attr(node, name: string, required=false): string {
+    const val = super.attr(node, name, required)
+    switch (typeof val) {
+      case 'object':
+        return null
+      case 'string':
+        return l10n.tr(val)
+      case 'number':
+        return val
+      default:
+        error('unexpected type', typeof val)
     }
-  }
-
-  Text(_node) {
-  }
-
-  Comment(_node) {
-  }
-
-  BlockComment(_node) {
   }
 }
 
@@ -110,63 +102,66 @@ class Flex extends ASTWalker {
 
   Tag(node) {
     const flex = this.flex(node)
-    switch (node.name) {
-      case 'vbox':
-      case 'hbox':
-      case 'grid':
-      case 'columns':
-      case 'column':
-      case 'rows':
-      case 'row':
-      case 'radiogroup':
-      case 'groupbox':
-      case 'textbox':
-      case 'tabbox':
-      case 'tabpanels':
-      case 'tabpanel':
-      case 'deck':
-      case 'prefpane':
-        if (!flex) node.attrs.push({ name: 'flex', val: "'1'", mustEscape: false })
-        break
-      case 'prefwindow':
-      case 'tabs':
-      case 'tab':
-      case 'caption':
-      case 'preferences':
-      case 'preference':
-      case 'popupset':
-      case 'tooltip':
-      case 'description':
-      case 'label':
-      case 'checkbox':
-      case 'radio':
-      case 'button':
-      case 'image':
-      case 'separator':
-      case 'script':
-      case 'html:input':
-      case 'html:select':
-      case 'html:option':
-        if (flex) throw new Error(`${node.name} has flex ${flex}`)
-        break
-      default:
-        throw `no flex on ${node.name}` // eslint-disable-line no-throw-literal
+    if (!node.name.startsWith('html:')) {
+      switch (node.name) {
+        case 'vbox':
+        case 'hbox':
+        case 'grid':
+        case 'columns':
+        case 'column':
+        case 'rows':
+        case 'row':
+        case 'radiogroup':
+        case 'groupbox':
+        case 'textbox':
+        case 'tabbox':
+        case 'tabpanels':
+        case 'tabpanel':
+        case 'deck':
+        case 'prefpane':
+          if (!flex) node.attrs.push({ name: 'flex', val: "'1'", mustEscape: false })
+          break
+        case 'prefwindow':
+        case 'tabs':
+        case 'tab':
+        case 'caption':
+        case 'preferences':
+        case 'preference':
+        case 'popupset':
+        case 'tooltip':
+        case 'description':
+        case 'label':
+        case 'checkbox':
+        case 'radio':
+        case 'button':
+        case 'image':
+        case 'separator':
+        case 'script':
+        case 'menupopup':
+        case 'menuitem':
+          if (flex) throw new Error(`${node.name} has flex ${flex}`)
+          break
+        case 'menulist':
+          break
+        default:
+          throw `no flex on ${node.name}` // eslint-disable-line no-throw-literal
+      }
     }
-    this.walk(node.block)
+    node.block = this.walk(node.block)
+    return node
   }
 }
 
 class StripConfig extends ASTWalker {
   Tag(node) {
     node.attrs = node.attrs.filter(attr => !attr.name.startsWith('bbt:'))
-    this.walk(node.block)
+    node.block = this.walk(node.block)
+    return node
   }
 
   Block(node) {
-    node.nodes = node.nodes.filter(n => !n.name || !n.name.startsWith('bbt:'))
-    for (const n of node.nodes) {
-      this.walk(n)
-    }
+    node.nodes = node.nodes.filter(n => !n.name || !n.name.startsWith('bbt:')).map(n => this.walk(n)).filter(n => n)
+    return node
   }
 }
 
@@ -223,13 +218,26 @@ class Docs extends ASTWalker {
       }, [])
       .sort()
 
+    let type: 'string' | 'number' | 'boolean' = 'string'
+    switch (this.attr(node, 'type', true)) {
+      case 'int':
+        type = 'number'
+        break
+      case 'string':
+        type = 'string'
+        break
+      case 'bool':
+        type = 'boolean'
+        break
+      default:
+        error('unsupported type', this.attr(node, 'type'))
+    }
     const pref: Preference = {
       name,
       shortName: name.replace(/^([^.]+[.])*/, ''),
       label: '',
       description: '',
-      // @ts-ignore
-      type: { int: 'number', string: 'string', bool: 'boolean' }[this.attr(node, 'type', true)] || error('unsupported type', this.attr(node, 'type')),
+      type,
       default: this.attr(node, 'default', true),
       affects,
     }
@@ -281,7 +289,7 @@ class Docs extends ASTWalker {
     this.doc(doc, pref, 'label')
   }
   description(doc, pref?) {
-    this.doc(doc, pref, 'description')
+    this.doc(doc.replace(/</g, '&lt;').replace(/>/g, '&gt;'), pref, 'description')
   }
   doc(doc, pref, kind) {
     pref = pref || this.preference
@@ -343,7 +351,7 @@ class Docs extends ASTWalker {
         break
 
       case 'script':
-        return
+        return node
 
       case 'preference':
         this.register(node)
@@ -364,15 +372,7 @@ class Docs extends ASTWalker {
         this.description(this.text(node))
         break
 
-      case 'html:option':
-        if (!hidden) {
-          pref = this.attr(history.find(n => n.name === 'html:select'), 'preference')
-          if (pref) this.option(pref, this.text(node), this.attr(node, 'value', true))
-        }
-        break
-
       case 'menuitem':
-        error('menulists are deprecated')
         if (!hidden) {
           pref = this.attr(history.find(n => n.name === 'menulist'), 'preference')
           if (pref) this.option(pref, this.attr(node, 'label', true), this.attr(node, 'value', true))
@@ -408,6 +408,7 @@ class Docs extends ASTWalker {
     }
 
     this.walk(node.block, history)
+    return node
   }
 
   savePages(dir) {
@@ -454,12 +455,14 @@ The Better BibTeX hidden preferences are preceded by “extensions.zotero.transl
 
     for (const [slug, page] of Object.entries(this.pages)) {
       if (!page.path) error('no template for', slug)
-      page.matter.content = eta.render(`\n\n{{% preferences/header %}}\n\n${page.content}`, prefs)
+      page.matter.content = eta.renderString(`\n\n{{% preferences/header %}}\n\n${page.content}`, prefs)
+      ensureDir(page.path)
       fs.writeFileSync(page.path, page.matter.stringify())
     }
   }
 
   saveDefaults(defaults) {
+    ensureDir(defaults)
     fs.writeFileSync(defaults, Object.values(this.preferences).map(p => `pref(${JSON.stringify(p.name)}, ${JSON.stringify(p.default)})\n`).join(''))
   }
 
@@ -476,70 +479,197 @@ The Better BibTeX hidden preferences are preceded by “extensions.zotero.transl
       }
     }
 
-    fs.writeFileSync('gen/preferences.ts', eta.render(fs.readFileSync('setup/templates/preferences/preferences.ts.eta', 'utf-8'), { preferences }))
-    fs.writeFileSync('gen/preferences/meta.ts', eta.render(fs.readFileSync('setup/templates/preferences/meta.ts.eta', 'utf-8'), { preferences, translators }))
+    ensureDir('gen/preferences/meta.ts')
+    fs.writeFileSync('gen/preferences.ts', eta.renderString(fs.readFileSync('setup/templates/preferences/preferences.ts.eta', 'utf-8'), { preferences }))
+    fs.writeFileSync('gen/preferences/meta.ts', eta.renderString(fs.readFileSync('setup/templates/preferences/meta.ts.eta', 'utf-8'), { preferences, translators }))
   }
 }
 
-/*
-class Convert extends ASTWalker {
+class XHTML extends BaseASTWalker {
   children(node) {
     if (node.block.nodes.find(node => node.type !== 'Tag')) error('unexpected', node.block.nodes.find(node => node.type !== 'Tag').type)
     return node.block.nodes.map(node => node.name).join(',')
   }
 
+  l10n(val) {
+    if (typeof val !== 'string') return ''
+    const m = val.match(/(.*)&([^;]+);(.*)/)
+    if (!m) return ''
+    const [, pre, id, post ] = m
+    if (pre || post) throw new Error(`unexpected data around translation id in ${val}`)
+    return id
+  }
+
+  tabbox(node, indent) {
+    const tabs = node.block.nodes.find(n => n.name === 'tabs').block.nodes
+    const tabpanels = node.block.nodes.find(n => n.name === 'tabpanels').block.nodes
+
+    const nodes = []
+    tabs.forEach((tab, i) => {
+      const tabpanel = tabpanels[i]
+
+      const label = this.attr(tab, 'label', true)
+      const l10n = label.includes('&') ? { 'data-l10n-id': label.replace(/&([^;.]+).label;/, '$1') }: {}
+      const style = indent
+        ? 'margin-left: 1em; padding-left: 1em; padding-bottom: 1em; box-shadow: -3px -3px 4px rgba(0,0,0,.1);'
+        : 'border-top: 3px double black'
+
+      nodes.push(this.tag('groupbox', { style }, [
+        this.tag('label', {}, [
+          this.tag('html:h2', l10n, label.includes('&') ? [] : [ { type: 'Text', val: label } ]),
+        ]),
+        ...tabpanel.block.nodes,
+      ]))
+    })
+    return nodes
+  }
+
   Tag(node, history) {
     switch (node.name) {
+      case 'textbox':
+        if (node.attrs.find(a => a.name === 'multiline')) {
+          node.name = 'html:textarea'
+          // arbitrary size
+          for (const [name, val] of Object.entries({ cols: '40', rows: '5' })) {
+            if (!node.attrs.find(a => a.name === name)) node.attrs.push({ name, val: JSON.stringify(val), mustEscape: false })
+          }
+        }
+        else {
+          node.name = 'html:input'
+          node.attrs.push({ name: 'type', val: '"text"', mustEscape: false })
+        }
+        break
+      case 'checkbox':
+      case 'radio':
       case 'menulist':
-        node.name = 'html:select'
-        if (this.children(node) !== 'menupopup') error('unexpected menulist content', this.children(node))
-        node.block = node.block.nodes[0].block
+        node.attrs.push({ name: 'native', val: '"true"', mustEscape: false })
         break
-      case 'menupopup':
-        error('should not find menupopups')
-        break
-      case 'menuitem':
-        node.name = 'html:option'
-        node.block.nodes = [{
-          type: 'Text',
-          val: eval(node.attrs.find(attr => attr.name === 'label').val),
-        }]
-        node.attrs = node.attrs.filter(attr => attr.name !== 'label')
+      case 'groupbox':
+        node.block.nodes = node.block.nodes.map(child => {
+          if (child.name === 'caption') {
+            if (!node.attrs.find(a => a.name === 'style')) {
+              node.attrs.push({
+                name: 'style',
+                val: JSON.stringify('margin-left: 1em; padding-left: 1em; padding-bottom: 1em; box-shadow: -3px -3px 4px rgba(0,0,0,.1);'),
+                mustEscape: false,
+              })
+            }
+            return this.tag('label', {}, [ {...child, name: 'html:h2' }])
+          }
+          else {
+            return child
+          }
+        })
         break
     }
 
-    this.walk(node.block, history)
+    let l10n_id = ''
+    for (const attr of node.attrs) {
+      const id = this.l10n(this.attr(node, attr.name))
+      if (id) {
+        if (!id.match(/^[^.]+[.][^.]+$/)) throw new Error(`no '.' in l10n attribute ${attr.name}`)
+        const [base, a] = id.split('.')
+        l10n_id = l10n_id || base
+        if (base !== l10n_id) throw new Error(`unexpected l10n base in ${id}, expected ${l10n_id}`)
+        if (a !== attr.name) throw new Error(`unexpected l10n attribute in ${id}, expected ${attr.name}`)
+        attr.val = '""'
+      }
+    }
+    if (l10n_id) node.attrs = [ ...node.attrs, { name: 'data-l10n-id', val: JSON.stringify(l10n_id), mustEscape: false } ]
+
+    node.block = this.walk(node.block, history)
+
+    const duplicate: Record<string, string> = {}
+    for (const attr of node.attrs) {
+      if (attr.name !== 'class' && duplicate[attr.name]) {
+        throw new Error(`${node.name}.${attr.name}=${attr.val}`)
+      }
+      else {
+        duplicate[attr.name] = attr.val
+      }
+    }
+
+    return node
+  }
+
+  Block(block, history) {
+    let nodes = []
+    for (let node of block.nodes) {
+      if (node.type === 'Tag' && node.name === 'deck' && this.attr(node, 'id') === 'better-bibtex-prefs-deck') {
+        node = node.block.nodes.find(n => n.type === 'Tag' && n.name === 'tabbox')
+      }
+
+      if (node.type === 'Tag' && node.name === 'tabbox') {
+        const indent = history.filter(n => n.name === 'groupbox' && n.attrs.find(a => a.name === 'style')).length
+        nodes = [...nodes, ...(this.tabbox(node, indent).map(n => this.walk(n, history))) ]
+      }
+      else {
+        nodes.push(this.walk(node, history))
+      }
+    }
+    block.nodes = nodes.filter(n => n)
+    return block
+  }
+
+  Text(node, history) {
+    const id = this.l10n(node.val)
+    if (!id) return node
+
+    if (!id.match(/^[^.]+$/)) throw new Error(`not a valid l10n id ${id}`)
+    const parent = history.find(n => n.type === 'Tag')
+    const existing = parent.attrs?.find(a => a.name === 'data-l10n-id')
+    if (existing) {
+      if (existing.val !== JSON.stringify(id)) throw new Error(`expected ${existing.val}, found ${JSON.stringify(id)}`)
+    }
+    else {
+      parent.attrs = parent.attrs || []
+      parent.attrs.push({ name: 'data-l10n-id', val: JSON.stringify(id), mustEscape: false })
+    }
+
+    return undefined
   }
 }
-*/
 
-function walk(cls, ast) {
-  (new cls).walk(ast)
+function render(src, tgt, options) {
+  const xul = pug.renderFile(src, options)
+  ensureDir(tgt)
+  fs.writeFileSync(tgt, xul.replace(/&amp;/g, '&').trim())
 }
 
-const options = {
+render('content/Preferences/xul.pug', 'build/content/preferences.xul', {
   pretty: true,
   plugins: [{
     preCodeGen(ast, _options) { // eslint-disable-line prefer-arrow/prefer-arrow-functions
-      const walker = new Docs
-      walker.walk(ast, [])
-      walker.savePages('site/content/installation/preferences')
-      walker.saveDefaults('build/defaults/preferences/defaults.js')
-      walker.saveDefaults('build/prefs.js')
-      walker.saveTypescript()
+      const docs = walk(Docs, ast)
+      docs.savePages('site/content/installation/preferences')
+      docs.saveDefaults('build/defaults/preferences/defaults.js')
+      docs.saveDefaults('build/prefs.js')
+      docs.saveTypescript()
 
       walk(StripConfig, ast)
       walk(Flex, ast)
+      walk(SelfClosing, ast)
+      walk(Lint, ast)
 
       return ast
     },
   }],
-}
+})
 
-const xul = pug.renderFile(src, options)
-const build = path.dirname(tgt)
-if (!fs.existsSync(build)) fs.mkdirSync(build, { recursive: true })
-fs.writeFileSync(tgt, xul.replace(/&amp;/g, '&').trim())
+render('content/Preferences/xhtml.pug', 'build/content/preferences.xhtml', {
+  is7: true,
+  pretty: true,
+  plugins: [{
+    preCodeGen(ast, _options) { // eslint-disable-line prefer-arrow/prefer-arrow-functions
+      walk(StripConfig, ast)
+      walk(XHTML, ast)
+      walk(SelfClosing, ast)
+      walk(Lint, ast)
+
+      return ast
+    },
+  }],
+})
 
 for (const xul of glob.sync('content/*.xul')) {
   const source = fs.readFileSync(xul, 'utf-8')

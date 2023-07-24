@@ -1,0 +1,7 @@
+| <?xml version="1.0"?>
+| <!DOCTYPE window SYSTEM "chrome://zotero-better-bibtex/locale/zotero-better-bibtex.dtd">
+overlay(xmlns='http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul')
+  prefwindow#zotero-prefs
+    prefpane#zotero-prefpane-better-bibtex(insertafter='zotero-prefpane-advanced', label='Better BibTeX;', image='chrome://zotero-better-bibtex/content/skin/bibtex.svg')
+      button(label='&better-bibtex_preferences_open.label;', oncommand="window.openDialog('chrome://zotero-better-bibtex/content/preferences.xul', 'better-bibtex-prefs-window')")
+

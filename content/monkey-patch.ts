@@ -4,7 +4,6 @@ export type Trampoline = Function & { disabled?: boolean }
 const trampolines: Trampoline[] = []
 
 export function patch(object: any, method: string, patcher: (f: Function) => Function, mem?: Trampoline[]): void {
-  if (!patch.enabled) return
   if (typeof object[method] !== 'function') throw new Error(`monkey-patch: ${method} is not a function`)
 
   const orig = object[method]
@@ -21,6 +20,3 @@ export function unpatch(functions?: Trampoline[]) {
     trampoline.disabled = true
   }
 }
-
-patch.enabled = true
-patch.started = 0

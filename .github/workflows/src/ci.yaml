@@ -19,7 +19,7 @@ _anchors:
     name: install node
     uses: actions/setup-node@v3
     with:
-      node-version: 16.x
+      node-version: 19.x
   cache: &cache
     name: Cache python/node dependencies
     id: cache
@@ -68,6 +68,11 @@ _anchors:
     uses: actions/download-artifact@v3
     with:
       name: test-artifacts
+  action_flags: &action_flags
+    name: set slow and beta flags
+    env:
+      GITHUB_CONTEXT: ${{ toJson(github) }}
+    run: ./util/action-flags
 
 env:
   DURATIONS: logs/stats/durations.json
@@ -85,24 +90,46 @@ jobs:
     - *install_python
     - run: pip install munch ortools
     - *get_version
+    - *action_flags
+
     - name: get previous test durations
       run: curl -L https://github.com/retorquere/zotero-better-bibtex/releases/download/builds/`basename $DURATIONS` --create-dirs -o $DURATIONS
-
-    - name: enable slow tests for master, scheduled builds, or tagged builds
-      id: slow
-      if:
-        (github.event.head_commit.message == env.version && startsWith(github.ref, 'refs/tags/')) || github.event_name == 'schedule' || github.ref == 'refs/heads/master'
-      run: echo "slow=--slow" >> $GITHUB_ENV
-
-    - name: enable beta for tagged builds and scheduled builds
-      id: beta
-      if: (github.event.head_commit.message == env.version && startsWith(github.ref, 'refs/tags/')) || github.event_name == 'schedule'
-      run: echo "beta=--beta" >> $GITHUB_ENV
 
     - name: balance tests
       id: balance
       run: ./util/balance.py --durations $DURATIONS --bins $BINS --minutes 10 ${{ env.slow }} ${{ env.beta }}
+
     - *upload_test_artifacts
+
+  site:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        persist-credentials: false
+        submodules: true  # Fetch Hugo themes (true OR recursive)
+        fetch-depth: 0    # Fetch all history for .GitInfo and .Lastmod
+    - *get_version
+    - name: cancel spurious build on tagged version
+      uses: andymckay/cancel-action@master
+      if: github.event.head_commit.message == env.version && !startsWith(github.ref, 'refs/tags/')
+
+    - *install_python
+    - *install_node
+    - *cache
+    - *install_python_packages
+    - *install_node_packages
+    - uses: peaceiris/actions-hugo@v2
+      with:
+        hugo-version: latest
+        extended: true
+    - run: npm run docs:deploy
+    - run: find site/public -type f
+    - uses: peaceiris/actions-gh-pages@v3
+      if: ${{ github.event_name == 'push' && (github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/tags/')) }}
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./site/public
 
   build:
     runs-on: ubuntu-latest
@@ -122,21 +149,11 @@ jobs:
     - *cache
     - *install_python_packages
     - *install_node_packages
+    - *action_flags
 
-    - run: npm run build
+    - run: npm run build ${{ env.beta }}
 
     - *upload_build_artifacts
-
-    - uses: peaceiris/actions-hugo@v2
-      with:
-        hugo-version: latest
-        extended: true
-    - run: npm run docs:deploy
-    - uses: peaceiris/actions-gh-pages@v3
-      if: ${{ github.event_name == 'push' && (github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/tags/')) }}
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./site/public
 
   test:
     needs:
@@ -166,6 +183,7 @@ jobs:
         curl -sL https://raw.githubusercontent.com/retorquere/zotero-deb/master/install.sh | sudo bash
         sudo apt-get update
         sudo apt-get install ${{ matrix.client }}
+        sudo apt-get install mesa-utils libegl1-mesa xvfb
         curl -LO https://github.com/jgm/pandoc/releases/download/2.19.2/pandoc-2.19.2-linux-amd64.tar.gz
         tar xvzf pandoc-2.19.2-linux-amd64.tar.gz
         sudo mv pandoc-2.19.2/bin/pandoc /usr/bin
@@ -210,6 +228,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - uses: actions/github-script@v6
+      continue-on-error: true
       with:
         script: |
           if (process.env.XPI_RELEASED) {

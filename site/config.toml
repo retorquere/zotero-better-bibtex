@@ -5,7 +5,7 @@ defaultContentLanguage = "en"
 title = "Better BibTeX for Zotero"
 theme = "learn"
 metaDataFormat = "yaml"
-defaultContentLanguageInSubdir= true
+defaultContentLanguageInSubdir = false
 
 [markup.goldmark.renderer]
 unsafe= true

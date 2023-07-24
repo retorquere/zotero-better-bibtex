@@ -7,26 +7,23 @@ import KuromojiAnalyzer from 'kuroshiro-analyzer-kuromoji'
 import { Events } from '../events'
 import { client } from '../client'
 
+async function fetchArrayBuffer(url): Promise<ArrayBuffer> {
+  const response = await fetch(url)
+  if (!response.ok) throw new Error(`kuroshiro: loading ${url} failed: status = ${response.status}`)
+  return await response.arrayBuffer()
+}
 if (client !== 'node') {
   NodeDictionaryLoader.prototype.loadArrayBuffer = function(url, callback) { // eslint-disable-line prefer-arrow/prefer-arrow-functions
-    url = `resource://zotero-better-bibtex/kuromoji/${url.replace(/.*[\\/]/, '').replace(/\.gz$/, '')}`
-    const xhr = new XMLHttpRequest()
-
-    xhr.open('GET', url, true)
-    xhr.responseType = 'arraybuffer'
-
-    xhr.onload = function() {
-      const err = this.status > 0 && this.status !== 200 // eslint-disable-line no-magic-numbers
-      callback(err ? new Error(xhr.statusText) : null, err ? null : this.response)
-    }
-
-    xhr.onerror = function(pge) { // eslint-disable-line prefer-arrow/prefer-arrow-functions
-      const err = new Error(`could not load ${url}: ${pge}`)
-      log.error('kuromoji: load failed', url, err)
-      callback(err, null)
-    }
-
-    xhr.send()
+    url = `chrome://zotero-better-bibtex/content/resource/kuromoji/${url.replace(/.*[\\/]/, '').replace(/\.gz$/, '')}`
+    log.debug('kuroshiro: loading', url)
+    fetchArrayBuffer(url)
+      .then(arrayBuffer => {
+        callback(null, arrayBuffer)
+      })
+      .catch(err => {
+        log.debug(`kuroshiro: loading ${url} failed: ${err}`)
+        callback(err, null)
+      })
   }
 }
 
@@ -47,14 +44,15 @@ export const kuroshiro = new class {
       if (!Preference.kuroshiro || this.enabled) return
 
       this.kuroshiro = new Kuroshiro()
-      const analyzer = new KuromojiAnalyzer(client === 'node' ? undefined : 'resource://zotero-better-bibtex/kuromoji')
+      const analyzer = new KuromojiAnalyzer(client === 'node' ? undefined : 'chrome://zotero-better-bibtex/content/resource/kuromoji')
       await this.kuroshiro.init(analyzer)
       this.kuromoji = analyzer._analyzer // eslint-disable-line no-underscore-dangle
       this.enabled = true
     }
     catch (err) {
-      log.error('kuroshiro: initializing failed', err)
-      throw err
+      this.enabled = false
+      log.error(`kuroshiro: initializing failed ${await err}`)
+      throw await err
     }
   }
 

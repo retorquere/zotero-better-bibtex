@@ -1,3 +1,8 @@
+let $window: Window & {
+  arguments?: any[]
+  ErrorReport?: ErrorReport
+}
+
 Components.utils.import('resource://gre/modules/Services.jsm')
 
 import { Preference } from './prefs'
@@ -10,32 +15,38 @@ import { DB as Cache } from './db/cache'
 import { pick } from './file-picker'
 import * as l10n from './l10n'
 
+import Tar from 'tar-js'
+import { gzip } from 'pako'
+
+import { alert } from './prompt'
+
 import * as s3 from './s3.json'
 
 import * as PACKAGE from '../package.json'
 
 const kB = 1024
-const COMPRESSION_BEST = 9
 
-// PR_RDONLY       0x01
-const PR_WRONLY = 0x02
-// const PR_RDWR = 0x04
-const PR_CREATE_FILE =0x08
-// define PR_APPEND       0x10
-// define PR_TRUNCATE     0x20
-// define PR_SYNC         0x40
-// define PR_EXCL         0x80
+type WizardButton = HTMLElement & { disabled: boolean }
+
+type Wizard = HTMLElement & {
+  getButton: (name: string) => WizardButton
+  getPageById: (id: string) => HTMLElement
+  canRewind: boolean
+  onLastPage: boolean
+  pageIndex: number
+  advance: () => void
+  rewind: () => void
+}
 
 export class ErrorReport {
   private previewSize = 3 * kB // eslint-disable-line no-magic-numbers, yoda
 
   private key: string
   private timestamp: string
-  private zipfile: string
+  private tarball: string
 
   private bucket: string
   private params: any
-  private globals: Record<string, any>
   private cacheState: string
 
   private errorlog: {
@@ -46,13 +57,14 @@ export class ErrorReport {
   }
 
   public async send(): Promise<void> {
-    const wizard = this.globals.document.getElementById('better-bibtex-error-report')
+    const doc = $window.document
+    const wizard: Wizard = doc.getElementById('better-bibtex-error-report') as Wizard
     wizard.getButton('next').disabled = true
     wizard.getButton('cancel').disabled = true
     wizard.canRewind = false
 
     try {
-      await Zotero.HTTP.request('PUT', `${this.bucket}/${OS.Path.basename(this.zipfile)}`, {
+      await Zotero.HTTP.request('PUT', `${this.bucket}/${OS.Path.basename(this.tarball)}`, {
         noCache: true,
         // followRedirects: true,
         // noCache: true,
@@ -60,26 +72,26 @@ export class ErrorReport {
         headers: {
           'x-amz-storage-class': 'STANDARD',
           'x-amz-acl': 'bucket-owner-full-control',
-          'Content-Type': 'application/zip',
+          'Content-Type': 'application/x-gzip',
         },
-        body: new Uint8Array(await OS.File.read(await this.zip(), {})),
+        body: this.tar(),
       })
 
-      wizard.advance()
+      wizard.advance();
 
-      this.globals.document.getElementById('better-bibtex-report-id').value = this.key
-      this.globals.document.getElementById('better-bibtex-report-result').hidden = false
+      (doc.getElementById('better-bibtex-report-id') as HTMLInputElement).value = this.key
+      doc.getElementById('better-bibtex-report-result').hidden = false
     }
     catch (err) {
       log.error('failed to submit', this.key, err)
-      const ps = Components.classes['@mozilla.org/embedcomp/prompt-service;1'].getService(Components.interfaces.nsIPromptService)
-      ps.alert(null, Zotero.getString('general.error'), `${err} (${this.key}, items: ${!!this.errorlog.items})`)
+      alert({ text: `${err} (${this.key}, items: ${!!this.errorlog.items})`, title: Zotero.getString('general.error') })
       if (wizard.rewind) wizard.rewind()
     }
   }
 
   public show(): void {
-    const wizard = this.globals.document.getElementById('better-bibtex-error-report')
+    const doc = $window.document
+    const wizard: Wizard = doc.getElementById('better-bibtex-error-report') as Wizard
 
     if (wizard.onLastPage) wizard.canRewind = false
     else if (wizard.pageIndex === 0) wizard.canRewind = false
@@ -88,7 +100,7 @@ export class ErrorReport {
   }
 
   public restartWithDebugEnabled(): void {
-    const ps = Services.prompt
+    const ps = Components.classes['@mozilla.org/embedcomp/prompt-service;1'].getService(Components.interfaces.nsIPromptService)
     const buttonFlags = ps.BUTTON_POS_0 * ps.BUTTON_TITLE_IS_STRING
         + ps.BUTTON_POS_1 * ps.BUTTON_TITLE_CANCEL
         + ps.BUTTON_POS_2 * ps.BUTTON_TITLE_IS_STRING
@@ -118,41 +130,30 @@ export class ErrorReport {
     }
   }
 
-  public async zip(): Promise<string> {
-    if (!await OS.File.exists(this.zipfile)) {
-      const zipWriter = Components.classes['@mozilla.org/zipwriter;1'].createInstance(Components.interfaces.nsIZipWriter)
-      // 0x02 = Read and Write
+  public tar(): Uint8Array {
+    const tape = new Tar
+    let out: Uint8Array
 
-      zipWriter.open(Zotero.File.pathToFile(this.zipfile), PR_WRONLY + PR_CREATE_FILE)
-      const converter = Components.classes['@mozilla.org/intl/scriptableunicodeconverter'].createInstance(Components.interfaces.nsIScriptableUnicodeConverter)
-      converter.charset = 'UTF-8'
+    out = tape.append(`${this.key}/debug.txt`, [
+      this.errorlog.info,
+      this.cacheState,
+      this.errorlog.errors,
+      this.errorlog.debug,
+    ].filter(chunk => chunk).join('\n\n'))
 
-      function add(filename, body) { // eslint-disable-line no-inner-declarations, prefer-arrow/prefer-arrow-functions
-        const istream = converter.convertToInputStream(body)
-        zipWriter.addEntryStream(filename, Date.now(), COMPRESSION_BEST, istream, false)
-        istream.close()
-      }
+    if (this.errorlog.items) out = tape.append(`${this.key}/items.json`, this.errorlog.items)
 
-      add(
-        `${this.key}/debug.txt`,
-        [ this.errorlog.info, this.cacheState, this.errorlog.errors, this.errorlog.debug ].filter(chunk => chunk).join('\n\n')
-      )
-
-      if (this.errorlog.items) add(`${this.key}/items.json`, this.errorlog.items)
-
-      if (this.globals.document.getElementById('better-bibtex-error-report-include-db').checked) {
-        add(`${this.key}/database.json`, DB.serialize({ serializationMethod: 'pretty' }))
-        add(`${this.key}/cache.json`, Cache.serialize({ serializationMethod: 'pretty' }))
-      }
-
-      zipWriter.close()
+    if (($window.document.getElementById('better-bibtex-error-report-include-db') as HTMLInputElement).checked) {
+      out = tape.append(`${this.key}/database.json`, DB.serialize({ serializationMethod: 'pretty' }))
+      out = tape.append(`${this.key}/cache.json`, Cache.serialize({ serializationMethod: 'pretty' }))
     }
-    return this.zipfile
+
+    return gzip(out)
   }
 
   public async save(): Promise<void> {
-    const filename = await pick('Logs', 'save', [['Zip Archive (*.zip)', '*.zip']], `${this.key}.zip`)
-    if (filename) await OS.File.copy(await this.zip(), filename)
+    const filename = await pick('Logs', 'save', [['Tape Archive (*.tgz)', '*.tgz']], `${this.key}.tgz`)
+    if (filename) await OS.File.writeAtomic(filename, this.tar(), { tmpPath: filename + '.tmp' })
   }
 
   private async ping(region: string) {
@@ -161,17 +162,29 @@ export class ErrorReport {
     return { region, ...s3.region[region] }
   }
 
-  public async load(): Promise<void> {
+  private setValue(id: string, value: string) {
+    ($window.document.getElementById(id) as HTMLInputElement).value = value
+  }
+
+  public async load(win: Window): Promise<void> {
+    $window = win as any
+    $window.ErrorReport = this
+    const doc = win.document
+
     this.timestamp = (new Date()).toISOString().replace(/\..*/, '').replace(/:/g, '.')
 
-    const wizard = this.globals.document.getElementById('better-bibtex-error-report')
+    const wizard: Wizard = doc.getElementById('better-bibtex-error-report') as Wizard
+    wizard.getPageById('page-enable-debug').addEventListener('pageshow', this.show.bind(this))
+    wizard.getPageById('page-review').addEventListener('pageshow', this.show.bind(this))
+    wizard.getPageById('page-send').addEventListener('pageshow', () => { this.send().catch(err => log.debug('could not send debug log:', err)) })
+    wizard.getPageById('page-done').addEventListener('pageshow', this.show.bind(this))
 
     if (Zotero.Debug.enabled) wizard.pageIndex = 1
 
     const continueButton = wizard.getButton('next')
     continueButton.disabled = true
 
-    this.params = this.globals.window.arguments[0].wrappedJSObject
+    this.params = $window.arguments[0].wrappedJSObject
 
     this.errorlog = {
       info: await this.info(),
@@ -189,45 +202,42 @@ export class ErrorReport {
       })
     }
 
-    this.globals.document.getElementById('better-bibtex-error-context').value = this.errorlog.info
-    this.globals.document.getElementById('better-bibtex-error-errors').value = this.errorlog.errors
-    this.globals.document.getElementById('better-bibtex-error-debug').value = this.preview(this.errorlog.debug)
-    if (this.errorlog.items) this.globals.document.getElementById('better-bibtex-error-items').value = this.preview(this.errorlog.items)
-    this.globals.document.getElementById('better-bibtex-error-tab-items').hidden = !this.errorlog.items
+    this.setValue('better-bibtex-error-context', this.errorlog.info)
+    this.setValue('better-bibtex-error-errors', this.errorlog.errors)
+    this.setValue('better-bibtex-error-debug', this.preview(this.errorlog.debug))
+    if (this.errorlog.items) this.setValue('better-bibtex-error-items', this.preview(this.errorlog.items))
+    doc.getElementById('better-bibtex-error-tab-items').hidden = !this.errorlog.items
 
     const current = require('../gen/version.js')
-    this.globals.document.getElementById('better-bibtex-report-current').value = l10n.localize('ErrorReport.better-bibtex.current', { version: current })
+    this.setValue('better-bibtex-report-current', l10n.localize('better-bibtex_error-report_better-bibtex_current', { version: current }))
 
     try {
       const latest = await this.latest()
 
-      const show_latest = this.globals.document.getElementById('better-bibtex-report-latest')
+      const show_latest: HTMLInputElement = doc.getElementById('better-bibtex-report-latest') as HTMLInputElement
       if (current === latest) {
         show_latest.hidden = true
       }
       else {
-        show_latest.value = l10n.localize('ErrorReport.better-bibtex.latest', { version: latest || '<could not be established>' })
+        show_latest.value = l10n.localize('better-bibtex_error-report_better-bibtex_latest', { version: latest || '<could not be established>' })
         show_latest.hidden = false
       }
 
-      this.globals.document.getElementById('better-bibtex-report-cache').value = this.cacheState = l10n.localize('ErrorReport.better-bibtex.cache', Cache.state())
+      this.setValue('better-bibtex-report-cache', this.cacheState = l10n.localize('better-bibtex_error-report_better-bibtex_cache', Cache.state()))
 
       const region = await Zotero.Promise.any(Object.keys(s3.region).map(this.ping.bind(this)))
       this.bucket = `https://${s3.bucket}-${region.short}.s3-${region.region}.amazonaws.com${region.tld || ''}`
       this.key = `${Zotero.Utilities.generateObjectKey()}${this.params.scope ? '-refs' : ''}-${region.short}`
 
-      this.zipfile = OS.Path.join(Zotero.getTempDirectory().path, `${this.key}-${this.timestamp}.zip`)
+      this.tarball = OS.Path.join(Zotero.getTempDirectory().path, `${this.key}-${this.timestamp}.tgz`)
 
       continueButton.disabled = false
       continueButton.focus()
     }
     catch (err) {
-      alert(`No AWS region can be reached: ${err.message}`)
+      alert({ text: `No AWS region can be reached: ${err.message}` })
       wizard.getButton('cancel').disabled = false
     }
-  }
-  public async unload(): Promise<void> {
-    if (await OS.File.exists(this.zipfile)) await OS.File.remove(this.zipfile, { ignoreAbsent: true })
   }
 
   private preview(text: string): string {

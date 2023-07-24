@@ -49,9 +49,9 @@ re.char = re.Lu + re.lcChar
 re.L = `${re.Lu}${re.Ll}${re.Lt}${re.Lm}${re.Lo}`
 re.protectedWord = `[${re.lcChar}]*[${re.Lu}][-${re.char}]*`
 
-/* actual regexps */
+// actual regexps
 
-/* TODO: add punctuation */
+// TODO: add punctuation
 re.leadingUnprotectedWord = new RegExp(`^([${re.Lu}][${re.lcChar}]*)[${re.Whitespace}${re.P}]`)
 re.protectedWords = new RegExp(`^(${re.protectedWord})(([${re.Whitespace}])(${re.protectedWord}))*`)
 re.unprotectedWord = new RegExp(`^[${re.char}]+`)
@@ -83,7 +83,6 @@ const ligatures = {
   '\u01CC': 'nj',
 }
 /* eslint-enable */
-
 
 const titleCaseKeep = new RegExp(`(?:(?:[>:?]?[${re.Whitespace}]+)[${re.L}][${re.P}]?(?:[${re.Whitespace}]|$))|(?:(?:<span class="nocase">.*?</span>)|(?:<nc>.*?</nc>))`, 'gi')
 const singleLetter = new RegExp(`^([>:?])?[${re.Whitespace}]+(.)`)
@@ -448,7 +447,7 @@ export function babelLanguage(language: string): string {
     || language
 }
 
-/*
+/* REVIEW:
 export function babelTag(langid: string): string {
   return (Tag[langid] as string) || ''
 }
@@ -487,18 +486,15 @@ export function excelColumn(n: number): string {
   return col
 }
 
-let parser: DOMParser
+/* REVIEW:
 export function getDOMParser(): DOMParser {
-  return (parser = parser || Components.classes['@mozilla.org/xmlextras/domparser;1'].createInstance(Components.interfaces.nsIDOMParser) as DOMParser)
-  /*
-  if (!parser) {
-    try {
-      parser = new DOMParser
-    }
-    catch (err) {
-      parser = Components.classes['@mozilla.org/xmlextras/domparser;1'].createInstance(Components.interfaces.nsIDOMParser)
-    }
+  if (is7) return new DOMParser
+
+  try {
+    return new DOMParser
   }
-  return parser
-  */
+  catch (err) {
+    return Components.classes['@mozilla.org/xmlextras/domparser;1'].createInstance(Components.interfaces.nsIDOMParser)
+  }
 }
+*/
