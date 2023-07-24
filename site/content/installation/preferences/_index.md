@@ -23,8 +23,9 @@ Set the pattern used to generate citation keys. The format of the keys is docume
 
 default: `yes`
 
-By default, BBT will try to replace non-ASCII characters (such as accented characters) with their ASCII counterparts
-(by removing such accents), but this will also transliterate e.g. CJK characters. If you do not want this, turn this off.
+If you have deviated from the default citation key format pattern by [specifying your own]({{ ref . "citing" }}), you may
+wind up with non-ASCII characters in your citation keys. You can prevent that using the `fold` function at the
+appropriate place in your pattern, but checking this checkbox will just apply `fold` to all your keys.
 
 
 
