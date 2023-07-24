@@ -118,7 +118,7 @@ class AutoExportPane {
     })
   }
 
-  label(ae) {
+  private label(ae) {
     let label: string = { library: '\ud83d\udcbb', collection: '\ud83d\udcc2' }[ae.type]
     label += ` ${this.name(ae, 'short')}`
     label += ` (${Translators.byId[ae.translatorID].label})`
@@ -126,14 +126,6 @@ class AutoExportPane {
     label += ` ${path}`
     return label
   }
-
-  /*
-  public selected() {
-    const menulist: XUL.Menulist = $window.document.querySelector('#better-bibtex-prefs-auto-export-select') as unknown as XUL.Menulist
-    if (!menulist.selectedItem) return null
-    const $loki = menulist.selectedItem
-  }
-  */
 
   public refresh() {
     if (!$window) return
@@ -205,7 +197,7 @@ class AutoExportPane {
 
           case 'error':
             (node.parentElement as unknown as XUL.Element).hidden = !selected[field];
-            (node as unknown as XUL.Textbox).value = selected[field]
+            (node as unknown as XUL.Textbox).value = selected[field] || ''
             break
 
           case 'exportNotes':
