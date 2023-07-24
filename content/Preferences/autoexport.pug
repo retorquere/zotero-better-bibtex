@@ -23,30 +23,24 @@ vbox#better-bibtex-prefs-auto-exports(hidden="true")
     vbox
   deck#better-bibtex-prefs-auto-export-deck(flex=1)
     vbox(flex=1)
-      grid(flex=1)
-        columns
-          column
-          column(flex=1)
-        rows
-          row
-            label(data-ae-id="" data-ae-field="type")
-            textbox.plain(readonly="true" value="" data-ae-field="name" data-ae-id="")
-          row
-            label &better-bibtex_preferences_auto-export_status;
-            textbox.plain(readonly="true" value="" data-ae-field="status" data-ae-id="")
-          row
-            label &better-bibtex_preferences_auto-export_updated;
-            textbox.plain(readonly="true" value="" data-ae-field="updated" data-ae-id="")
-          row
-            label &better-bibtex_preferences_auto-export_translator;
-            textbox.plain(readonly="true" value="" data-ae-field="translator")
-          row
-            label &better-bibtex_preferences_auto-export_target;
-            textbox.plain(size='30' readonly="true" value="" data-ae-field="path")
-          row
-            label &better-bibtex_preferences_auto-export_fields_error;
-            textbox.plain(size='30' readonly="true" value="" data-ae-field="error" data-ae-id="")
-          row
+      vbox(style='margin-bottom: 1em; display: grid; grid-template-columns: 1fr 4fr;')
+        label(data-ae-id="" data-ae-field="type")
+        textbox.plain(readonly="true" value="" data-ae-field="name" data-ae-id="")
+
+        label &better-bibtex_preferences_auto-export_status;
+        textbox.plain(readonly="true" value="" data-ae-field="status" data-ae-id="")
+
+        label &better-bibtex_preferences_auto-export_updated;
+        textbox.plain(readonly="true" value="" data-ae-field="updated" data-ae-id="")
+
+        label &better-bibtex_preferences_auto-export_translator;
+        textbox.plain(readonly="true" value="" data-ae-field="translator")
+
+        label &better-bibtex_preferences_auto-export_target;
+        textbox.plain(size='30' readonly="true" value="" data-ae-field="path")
+
+        label &better-bibtex_preferences_auto-export_fields_error;
+        textbox.plain(size='30' readonly="true" value="" data-ae-field="error" data-ae-id="")
       vbox.autoexport-options.autoexport-BetterBibTeX(hidden="true")
         checkbox(data-ae-id="" data-ae-field="asciiBibTeX" label="&better-bibtex_preferences_export_bibtex_ascii.label;" oncommand="Zotero.BetterBibTeX.PrefPane.autoexport.edit(this)")
         checkbox(data-ae-id="" data-ae-field="bibtexParticleNoOp" label="&better-bibtex_preferences_export_fields_bibtex-particle-no-op.label;" oncommand="Zotero.BetterBibTeX.PrefPane.autoexport.edit(this)")
