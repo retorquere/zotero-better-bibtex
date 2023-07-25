@@ -1,10 +1,10 @@
-checkbox#id-better-bibtex-preferences-autoAbbrev(label="&better-bibtex_preferences_auto-abbrev.label;" preference="extensions.zotero.translators.better-bibtex.autoAbbrev")
+checkbox(label="&better-bibtex_preferences_auto-abbrev.label;" preference="extensions.zotero.translators.better-bibtex.autoAbbrev")
 
-separator#better-bibtex-abbrev-style-separator.thin.jurism
+separator.bbt-jurism
 
 html:div
-  label#better-bibtex-abbrev-style-label.jurism(bbt:preference="extensions.zotero.translators.better-bibtex.autoAbbrevStyle") &better-bibtex_preferences_auto-abbrev_style;
-  menulist#better-bibtex-abbrev-style.jurism(oncommand="Zotero.BetterBibTeX.PrefPane.styleChanged()")
+  label.bbt-jurism(bbt:preference="extensions.zotero.translators.better-bibtex.autoAbbrevStyle") &better-bibtex_preferences_auto-abbrev_style;
+  menulist#bbt-abbrev-style.bbt-jurism(oncommand="Zotero.BetterBibTeX.PrefPane.styleChanged()")
     menupopup
 
 checkbox(label="&better-bibtex_preferences_export_quality-report.label;" preference="extensions.zotero.translators.better-bibtex.qualityReport")
@@ -34,5 +34,5 @@ groupbox
     checkbox(preference="extensions.zotero.translators.better-bibtex.retainCache" label="&better-bibtex_preferences_advanced_export_retain-cache.label;")
     image(tooltip="tooltip-retainCache" src="chrome://zotero-better-bibtex/content/skin/attention.svg" width="16" height="16")
   checkbox(preference="extensions.zotero.translators.better-bibtex.cache" label="&better-bibtex_preferences_advanced_export_workers_cache.label;")
-  label.better-bibtex-preferences-worker-state
+  label.bbt-preferences-worker-state
   button(label="&better-bibtex_preferences_reset-cache.label;" oncommand="Zotero.BetterBibTeX.PrefPane.cacheReset()")

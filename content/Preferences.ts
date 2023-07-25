@@ -133,12 +133,12 @@ class AutoExportPane {
     const doc = $window.document
 
     const auto_exports = [...AutoExport.db.find()].sort((a: { path: string }, b: { path: string }) => a.path.localeCompare(b.path))
-    const details = doc.querySelector<HTMLElement>('#better-bibtex-prefs-auto-exports')
+    const details = doc.querySelector<HTMLElement>('#bbt-prefs-auto-exports')
     details.style.display = auto_exports.length ? 'grid' : 'none'
     if (!auto_exports.length) return null
 
-    const menulist: XUL.Menulist = doc.querySelector<HTMLElement>('#better-bibtex-prefs-auto-export-select') as XUL.Menulist
-    const menupopup = doc.querySelector('#better-bibtex-prefs-auto-export-select menupopup')
+    const menulist: XUL.Menulist = doc.querySelector<HTMLElement>('#bbt-prefs-auto-export-select') as XUL.Menulist
+    const menupopup = doc.querySelector('#bbt-prefs-auto-export-select menupopup')
     let selected
     if (menulist.selectedItem) {
       const $loki = parseInt(menulist.selectedItem.value)
@@ -240,7 +240,7 @@ class AutoExportPane {
   }
 
   public remove() {
-    const menulist: XUL.Menulist = $window.document.querySelector('#better-bibtex-prefs-auto-export-select') as unknown as XUL.Menulist
+    const menulist: XUL.Menulist = $window.document.querySelector('#bbt-prefs-auto-export-select') as unknown as XUL.Menulist
     if (!menulist.selectedItem) return
 
     if (!Services.prompt.confirm(null, l10n.localize('better-bibtex_auto-export_delete'), l10n.localize('better-bibtex_auto-export_delete_confirm'))) return
@@ -252,7 +252,7 @@ class AutoExportPane {
   }
 
   public run() {
-    const menulist: XUL.Menulist = $window.document.querySelector('#better-bibtex-prefs-auto-export-select') as unknown as XUL.Menulist
+    const menulist: XUL.Menulist = $window.document.querySelector('#bbt-prefs-auto-export-select') as unknown as XUL.Menulist
     if (!menulist.selectedItem) return
 
     AutoExport.run(parseInt(menulist.selectedItem.getAttribute('value')))
@@ -263,7 +263,7 @@ class AutoExportPane {
     let id: string
     // add data-ae-id check for testing
     if (!(id = node.getAttribute('data-ae-id'))) {
-      const menulist: XUL.Menulist = $window.document.querySelector('#better-bibtex-prefs-auto-export-select') as unknown as XUL.Menulist
+      const menulist: XUL.Menulist = $window.document.querySelector('#bbt-prefs-auto-export-select') as unknown as XUL.Menulist
       id = menulist.selectedItem.getAttribute('value')
     }
     const ae = AutoExport.db.get(parseInt(id))
@@ -424,10 +424,10 @@ export class PrefPane {
       error = `${err}`
     }
 
-    const postscript = $window.document.getElementById('zotero-better-bibtex-postscript')
+    const postscript = $window.document.getElementById('bbt-postscript')
     postscript.setAttribute('style', (error ? '-moz-appearance: none !important; background-color: DarkOrange' : ''))
     postscript.setAttribute('tooltiptext', error)
-    $window.document.getElementById('better-bibtex-cache-warn-postscript').setAttribute('hidden', `${!Preference.postscript.includes('Translator.options.exportPath')}`)
+    $window.document.getElementById('bbt-cache-warn-postscript').setAttribute('hidden', `${!Preference.postscript.includes('Translator.options.exportPath')}`)
   }
 
   public async rescanCitekeys(): Promise<void> {
@@ -494,11 +494,11 @@ export class PrefPane {
     }
 
     const quickCopyDetails: XUL.Deck = $window.document.getElementById('quickCopyDetails') as unknown as XUL.Deck
-    const quickCopyId = `better-bibtex-preferences-quickcopy-${Preference.quickCopyMode}`
+    const quickCopyId = `bbt-preferences-quickcopy-${Preference.quickCopyMode}`
     quickCopyDetails.selectedIndex = Array.from(quickCopyDetails.children).findIndex(details => details.id === quickCopyId)
 
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
-    for (const node of (Array.from($window.document.getElementsByClassName('jurism')) as unknown[] as XUL.Element[])) {
+    for (const node of (Array.from($window.document.getElementsByClassName('bbt-jurism')) as unknown[] as XUL.Element[])) {
       node.hidden = client !== 'jurism'
     }
 
@@ -506,7 +506,7 @@ export class PrefPane {
       Zotero.Styles.init().then(() => {
         const styles = Zotero.Styles.getVisible().filter((style: { usesAbbreviation: boolean }) => style.usesAbbreviation)
 
-        const stylebox = $window.document.getElementById('better-bibtex-abbrev-style-popup') as unknown as XUL.Menulist
+        const stylebox = $window.document.getElementById('bbt-abbrev-style') as unknown as XUL.Menulist
         const refill = stylebox.children.length === 0
         const selectedStyle = Preference.autoAbbrevStyle
         let selectedIndex = -1
@@ -530,12 +530,11 @@ export class PrefPane {
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
-    for (const state of (Array.from($window.document.getElementsByClassName('better-bibtex-preferences-worker-state')) as unknown[] as XUL.Textbox[])) {
+    for (const state of (Array.from($window.document.getElementsByClassName('bbt-preferences-worker-state')) as unknown[] as XUL.Textbox[])) {
       state.value = l10n.localize('better-bibtex_workers_status', {
         total: Translators.workers.total,
         running: Translators.workers.running.size,
       })
-      state.classList.remove('textbox-emph')
     }
 
     if (this.autoexport) this.autoexport.refresh()
@@ -544,7 +543,7 @@ export class PrefPane {
   private styleChanged(index) {
     if (client !== 'jurism') return null
 
-    const stylebox = $window.document.getElementById('better-bibtex-abbrev-style-popup') as unknown as XUL.Menulist
+    const stylebox = $window.document.getElementById('bbt-abbrev-style') as unknown as XUL.Menulist
     const selectedItem: XUL.Element = typeof index !== 'undefined' ? stylebox.getItemAtIndex(index) : stylebox.selectedItem
     const styleID = selectedItem.getAttribute('value')
     Preference.autoAbbrevStyle = styleID

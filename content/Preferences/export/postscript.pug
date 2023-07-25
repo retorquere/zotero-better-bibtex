@@ -1,4 +1,4 @@
-textbox#zotero-better-bibtex-postscript(
+textbox#bbt-postscript(
   rows='10'
   multiline='true'
   preference='extensions.zotero.translators.better-bibtex.postscript'
@@ -6,7 +6,8 @@ textbox#zotero-better-bibtex-postscript(
   oninput='Zotero.BetterBibTeX.PrefPane.checkPostscript();'
   onkeypress='Zotero.setTimeout(function() { Zotero.BetterBibTeX.PrefPane.checkPostscript() }, 1);'
 )
-textbox#better-bibtex-cache-warn-postscript.plain.textbox-emph(
+textbox#bbt-cache-warn-postscript.plain(
+  style='color: red'
   rows='2'
   multiline='true'
   readonly='true'

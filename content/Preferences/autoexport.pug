@@ -14,8 +14,8 @@ html:div(style='display: grid; grid-template-columns: auto;')
     textbox(preference='extensions.zotero.translators.better-bibtex.autoExportDelay' size='3' rows=1 readonly='true')
     label &better-bibtex_units_seconds;
 
-html:div#better-bibtex-prefs-auto-exports(style='display: grid; grid-template-columns: 1fr 4fr;')
-  menulist#better-bibtex-prefs-auto-export-select(style='grid-column: span 2' oncommand='Zotero.BetterBibTeX.PrefPane.autoexport.refresh()')
+html:div#bbt-prefs-auto-exports(style='display: grid; grid-template-columns: 1fr 4fr;')
+  menulist#bbt-prefs-auto-export-select(style='grid-column: span 2' oncommand='Zotero.BetterBibTeX.PrefPane.autoexport.refresh()')
     menupopup
 
   label(data-ae-field='type')
