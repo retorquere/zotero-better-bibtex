@@ -2,7 +2,7 @@ checkbox#id-better-bibtex-preferences-autoAbbrev(label="&better-bibtex_preferenc
 
 separator#better-bibtex-abbrev-style-separator.thin.jurism
 
-hbox(flex=0)
+html:div
   label#better-bibtex-abbrev-style-label.jurism(bbt:preference="extensions.zotero.translators.better-bibtex.autoAbbrevStyle") &better-bibtex_preferences_auto-abbrev_style;
   menulist#better-bibtex-abbrev-style.jurism(oncommand="Zotero.BetterBibTeX.PrefPane.styleChanged()")
     menupopup
@@ -10,7 +10,7 @@ hbox(flex=0)
 checkbox(label="&better-bibtex_preferences_export_quality-report.label;" preference="extensions.zotero.translators.better-bibtex.qualityReport")
 checkbox(label="&better-bibtex_preferences_export_automatic-tags.label;" preference="extensions.zotero.translators.better-bibtex.automaticTags")
 
-hbox(flex=0)
+html:div
   label(bbt:preference="extensions.zotero.translators.better-bibtex.mapUnicode") &better-bibtex_preferences_export_map-unicode;
   menulist(preference="extensions.zotero.translators.better-bibtex.mapUnicode")
     menupopup
@@ -20,19 +20,19 @@ hbox(flex=0)
       menuitem(value='math' label='&better-bibtex_preferences_export_map-unicode_math.label;')
       menuitem(value='creator' label='&better-bibtex_preferences_export_map-unicode_creator.label;')
 
-hbox
+html:div
   checkbox(preference="extensions.zotero.translators.better-bibtex.exportTitleCase" label="&better-bibtex_preferences_advanced_export_title-case.label;")
   image(tooltip="tooltip-exportTitleCase" src="chrome://zotero-better-bibtex/content/skin/attention.svg" width="16" height="16")
-hbox
+
+html:div
   checkbox(preference="extensions.zotero.translators.better-bibtex.exportBraceProtection" label="&better-bibtex_preferences_advanced_export_brace-protection.label;")
   image(tooltip="tooltip-exportBraceProtection" src="chrome://zotero-better-bibtex/content/skin/attention.svg" width="16" height="16")
+
 groupbox
   caption Cache
-  hbox
+  html:div
     checkbox(preference="extensions.zotero.translators.better-bibtex.retainCache" label="&better-bibtex_preferences_advanced_export_retain-cache.label;")
     image(tooltip="tooltip-retainCache" src="chrome://zotero-better-bibtex/content/skin/attention.svg" width="16" height="16")
-  hbox
-    checkbox(preference="extensions.zotero.translators.better-bibtex.cache" label="&better-bibtex_preferences_advanced_export_workers_cache.label;")
+  checkbox(preference="extensions.zotero.translators.better-bibtex.cache" label="&better-bibtex_preferences_advanced_export_workers_cache.label;")
   label.better-bibtex-preferences-worker-state
-  hbox(flex=0)
-    button(label="&better-bibtex_preferences_reset-cache.label;" oncommand="Zotero.BetterBibTeX.PrefPane.cacheReset()")
+  button(label="&better-bibtex_preferences_reset-cache.label;" oncommand="Zotero.BetterBibTeX.PrefPane.cacheReset()")
