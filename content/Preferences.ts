@@ -128,20 +128,13 @@ class AutoExportPane {
     return label
   }
 
-  private show(node: HTMLElement, show: boolean, revert = 'revert'): void {
-    if ((node.style.display === 'none') !== !show) {
-      node.style.display = show ? revert : 'none'
-      log.debug('2522 showing node', revert)
-    }
-  }
-
   public refresh() {
     if (!$window) return
     const doc = $window.document
 
     const auto_exports = [...AutoExport.db.find()].sort((a: { path: string }, b: { path: string }) => a.path.localeCompare(b.path))
     const details = doc.querySelector<HTMLElement>('#better-bibtex-prefs-auto-exports')
-    this.show(details, auto_exports.length > 0, 'grid')
+    details.style.display = auto_exports.length ? 'grid' : 'none'
     if (!auto_exports.length) return null
 
     const menulist: XUL.Menulist = doc.querySelector<HTMLElement>('#better-bibtex-prefs-auto-export-select') as XUL.Menulist
@@ -171,7 +164,7 @@ class AutoExportPane {
 
       const displayed = `autoexport-${Translators.byId[selected.translatorID].label.replace(/ /g, '')}`
       for (const node of (Array.from(details.getElementsByClassName('autoexport-options')) as unknown[] as XUL.Element[])) {
-        this.show(node, node.classList.contains(displayed))
+        node.style.display = node.classList.contains(displayed) ? 'initial' : 'none'
       }
 
       for (const node of Array.from(details.querySelectorAll('*[data-ae-field]'))) {
@@ -408,11 +401,11 @@ export class PrefPane {
     const msg = $window.document.getElementById('better-bibtex-citekeyFormat-error') as HTMLInputElement
     msg.value = error
     msg.setAttribute('style', style)
-    msg.style.display = error ? 'revert' : 'none'
+    msg.style.display = error ? 'initial' : 'none'
 
     const active = $window.document.getElementById('id-better-bibtex-preferences-citekeyFormat')
     const label = $window.document.getElementById('id-better-bibtex-label-citekeyFormat')
-    active.style.display = label.style.display = Preference.citekeyFormat === Preference.citekeyFormatEditing ? 'none' : 'revert'
+    active.style.display = label.style.display = Preference.citekeyFormat === Preference.citekeyFormatEditing ? 'none' : 'initial'
   }
 
   public checkPostscript(): void {
