@@ -21,17 +21,6 @@ const Mode = {
     Zotero.write(citations.join(''))
   },
 
-  atom(items) {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    const keys = items.map(item => item.citationKey)
-    if (keys.length === 1) {
-      Zotero.write(`[](#@${keys[0]})`)
-    }
-    else {
-      Zotero.write(`[](?@${keys.join(', ')})`)
-    }
-  },
-
   latex(items) {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     const keys = items.map(item => item.citationKey)
