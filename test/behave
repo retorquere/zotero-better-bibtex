@@ -138,6 +138,21 @@ if args.log_memory_every: sys.argv.extend(['--define', f'log_memory_every={args.
 print('prepped with', args)
 print('starting with', ' '.join(sys.argv))
 
-#https://stackoverflow.com/questions/28829350/run-python-behave-from-python-instead-of-command-line
-from behave.__main__ import Configuration, run_behave
-sys.exit(run_behave(Configuration(None)))
+# https://stackoverflow.com/questions/28829350/run-python-behave-from-python-instead-of-command-line
+from behave.__main__ import Configuration, run_behave, Runner
+
+# https://stackoverflow.com/questions/64855049/behave-run-features-in-random-order
+class InstallLastRunner(Runner):
+  def feature_locations(self):
+    install = None
+    locations = []
+    for feature in super().feature_locations():
+      if os.path.basename(feature.filename) == 'install.feature':
+        install = feature
+      else:
+        locations.append(feature)
+    if install: locations.append(install)
+    return locations
+
+config = Configuration()
+sys.exit(run_behave(config, runner_class=InstallLastRunner))
