@@ -21,33 +21,33 @@ groupbox
         menuitem(value='eta' label='&better-bibtex_preferences_export_quick-copy_eta-template.label;')
 
   deck#quickCopyDetails
-    hbox#better-bibtex-preferences-quickcopy-latex(align='start')
+    html:div#better-bibtex-preferences-quickcopy-latex
       label(bbt:preference='extensions.zotero.translators.better-bibtex.citeCommand') &better-bibtex_preferences_export_quick-copy_latex_command;
       textbox(size='10' preference='extensions.zotero.translators.better-bibtex.citeCommand' onchange='Zotero.BetterBibTeX.PrefPane.refresh();' onkeypress='Zotero.setTimeout(function() { Zotero.BetterBibTeX.PrefPane.refresh() }, 1);')
 
-    hbox#better-bibtex-preferences-quickcopy-citekeys
+    html:div#better-bibtex-preferences-quickcopy-citekeys
 
-    hbox#better-bibtex-preferences-quickcopy-pandoc(align='start')
+    html:div#better-bibtex-preferences-quickcopy-pandoc
       checkbox#id-better-bibtex-preferences-quickCopyPandocBrackets(preference='extensions.zotero.translators.better-bibtex.quickCopyPandocBrackets' label='&better-bibtex_preferences_export_quick-copy_pandoc_brackets.label;')
 
-    hbox#better-bibtex-preferences-quickcopy-orgmode(align='start' flex=0)
+    html:div#better-bibtex-preferences-quickcopy-orgmode
       label(bbt:preference='extensions.zotero.translators.better-bibtex.quickCopyOrgMode') &better-bibtex_preferences_export_quick-copy_org-mode;
       menulist(preference='extensions.zotero.translators.better-bibtex.quickCopyOrgMode')
         menupopup
           menuitem(value='zotero' label='&better-bibtex_preferences_export_quick-copy_org-mode_zotero.label;')
           menuitem(value='citationkey' label='&better-bibtex_preferences_export_quick-copy_org-mode_citekey.label;')
 
-    hbox#better-bibtex-preferences-quickcopy-orgRef
+    html:div#better-bibtex-preferences-quickcopy-orgRef
 
-    hbox#better-bibtex-preferences-quickcopy-orgRef3
+    html:div#better-bibtex-preferences-quickcopy-orgRef3
 
-    hbox#better-bibtex-preferences-quickcopy-rtfScan
+    html:div#better-bibtex-preferences-quickcopy-rtfScan
 
-    hbox#better-bibtex-preferences-quickcopy-roamCiteKey
+    html:div#better-bibtex-preferences-quickcopy-roamCiteKey
 
-    hbox#better-bibtex-preferences-quickcopy-gitbook
+    html:div#better-bibtex-preferences-quickcopy-gitbook
 
-    hbox#better-bibtex-preferences-quickcopy-selectLink(align='start' flex=0)
+    html:div#better-bibtex-preferences-quickcopy-selectLink
       label(bbt:preference='extensions.zotero.translators.better-bibtex.quickCopySelectLink') &better-bibtex_preferences_export_quick-copy_select-link;
       menulist(preference='extensions.zotero.translators.better-bibtex.quickCopySelectLink')
         menupopup

@@ -154,7 +154,6 @@ Options:
 * org-ref v3 citation
 * RTF Scan marker
 * Roam Cite Key
-* Atom
 * GitBook
 * Zotero select link
 * Eta template
