@@ -25,8 +25,7 @@ class Main extends Loki {
   constructor(name, options) {
     super(name, options)
 
-    orchestrator.add({
-      id: 'maindb',
+    orchestrator.add('maindb', {
       description: 'citekey database',
       needs: ['databases'],
       startup: async () => { await this.init() },

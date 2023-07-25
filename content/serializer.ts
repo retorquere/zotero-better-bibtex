@@ -15,8 +15,7 @@ export const Serializer = new class { // eslint-disable-line @typescript-eslint/
   private cache
 
   constructor() {
-    orchestrator.add({
-      id: 'serializer',
+    orchestrator.add('serializer', {
       description: 'object serializer',
       needs: ['cache', 'keymanager', 'abbreviator'],
       startup: async () => { // eslint-disable-line @typescript-eslint/require-await

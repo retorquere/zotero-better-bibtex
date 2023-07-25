@@ -66,8 +66,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
   constructor() {
     Object.assign(this, translatorMetadata)
 
-    orchestrator.add({
-      id: 'translators',
+    orchestrator.add('translators', {
       description: 'translators',
       needs: ['start'],
       startup: async () => {

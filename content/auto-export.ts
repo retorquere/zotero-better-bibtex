@@ -365,8 +365,7 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
       if (typeof ae === 'number') this.progress.set(ae, pct)
     })
 
-    orchestrator.add({
-      id: 'auto-export',
+    orchestrator.add('auto-export', {
       description: 'auto-export',
       needs: ['maindb', 'cache', 'translators'],
       startup: async () => {

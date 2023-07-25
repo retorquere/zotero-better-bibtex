@@ -172,8 +172,7 @@ export const KeyManager = new class _KeyManager {
   }
 
   constructor() {
-    orchestrator.add({
-      id: 'keymanager',
+    orchestrator.add('keymanager', {
       description: 'keymanager',
       needs: ['databases', 'maindb'],
       startup: async () => {

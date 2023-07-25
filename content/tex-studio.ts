@@ -8,8 +8,7 @@ export const TeXstudio = new class { // eslint-disable-line @typescript-eslint/n
   public texstudio: string
 
   constructor() {
-    orchestrator.add({
-      id: 'TeXstudio',
+    orchestrator.add('TeXstudio', {
       description: 'TeXstudio support',
       needs: ['start'],
       startup: async () => {

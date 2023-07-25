@@ -2,12 +2,22 @@ export type Actor = 'start' | 'done' | 'auto-export' | 'translators' | 'TeXstudi
 export type Phase = 'startup' | 'shutdown'
 import type { Reason } from './bootstrap'
 
+type Handler = (reason: Reason) => void | string | Promise<void | string>
+
+interface TaskOptions {
+  description?: string
+  startup?: Handler
+  shutdown?: Handler
+  needs?: Actor[]
+}
+
 export type Task = {
   id: Actor
   description: string
-  startup?: (reason: Reason) => void | string | Promise<void | string>
-  shutdown?: (reason: Reason) => void | string | Promise<void | string>
-  needs?: Actor[]
+  startup: (reason: Reason) => void | string | Promise<void | string>
+  shutdown: (reason: Reason) => void | string | Promise<void | string>
+  needs: Actor[]
+  needed: boolean
   dependencies?: Record<Phase, Set<Actor>>
 }
 
@@ -20,11 +30,19 @@ export class Orchestrator {
   private tasks: Partial<Record<Actor, Task>> = {}
   private promises: Record<Phase, Partial<Record<Actor, Promise<void>>>> = { startup: {}, shutdown: {} }
 
-  public add(task: Task): void {
-    if (this.tasks[task.id]) throw new Error(`${task.id} exists`)
-    if (task.id === this.start && task.needs) throw new Error('start task cannot have dependencies')
-    if (task.id === this.done && task.needs) throw new Error('done task has dependencies auto-assigned')
-    this.tasks[task.id] = task
+  public add(id: Actor, { startup, shutdown, needs, description }: TaskOptions): void {
+    if (!startup && !shutdown) throw new Error(`${id}: no-op task`)
+    if (this.tasks[id]) throw new Error(`${id} exists`)
+    if (id === this.start && needs) throw new Error('start task cannot have dependencies')
+    if (id === this.done && needs) throw new Error('done task has dependencies auto-assigned')
+    this.tasks[id] = {
+      id,
+      description: description || id,
+      startup,
+      shutdown,
+      needed: false,
+      needs: needs || [],
+    }
   }
 
   private async run(phase: Phase, reason: Reason, progress?: Progress): Promise<void> {

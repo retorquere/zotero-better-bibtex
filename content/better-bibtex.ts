@@ -840,8 +840,7 @@ export class BetterBibTeX {
 
     log.debug('Loading Better BibTeX: starting...')
 
-    orchestrator.add({
-      id: 'start',
+    orchestrator.add('start', {
       description: 'zotero',
       startup: async () => {
         // https://groups.google.com/d/msg/zotero-dev/QYNGxqTSpaQ/uvGObVNlCgAJ
@@ -863,8 +862,7 @@ export class BetterBibTeX {
       },
     })
 
-    orchestrator.add({
-      id: 'databases',
+    orchestrator.add('databases', {
       description: 'databases',
       needs: ['start'],
       startup: async () => {
@@ -877,8 +875,7 @@ export class BetterBibTeX {
       },
     })
 
-    orchestrator.add({
-      id: 'done',
+    orchestrator.add('done', {
       description: 'user interface',
       startup: async () => {
         this.deferred.resolve(true)
