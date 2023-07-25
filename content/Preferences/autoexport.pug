@@ -33,9 +33,6 @@ html:div#better-bibtex-prefs-auto-exports(style='display: grid; grid-template-co
   label &better-bibtex_preferences_auto-export_target;
   textbox.plain(size='80' readonly='true' value='' data-ae-field='path')
 
-  label &better-bibtex_preferences_auto-export_fields_error;
-  textbox.plain(size='80' readonly='true' value='' data-ae-field='error')
-
   // bibtex
   html:div.autoexport-options.autoexport-BetterBibTeX(style='grid-column: span 2')
     label.autoexport-options.autoexport-BetterBibTeX &better-bibtex_preferences_export_bibtex_urls;
@@ -43,7 +40,9 @@ html:div#better-bibtex-prefs-auto-exports(style='display: grid; grid-template-co
       menupopup
         menuitem(value='off' label='&better-bibtex_preferences_export_bibtex_urls_off.label;')
         menuitem(value='note' label='&better-bibtex_preferences_export_bibtex_urls_note.label;')
+        menuitem(value='note-url-ish' label='&better-bibtex_preferences_export_bibtex_urls_note-url-ish.label;')
         menuitem(value='url' label='&better-bibtex_preferences_export_bibtex_urls_url.label;')
+        menuitem(value='url-ish' label='&better-bibtex_preferences_export_bibtex_urls_url-ish.label;')
     image(tooltip='tooltip-bibtexURL' src='chrome://zotero-better-bibtex/content/skin/attention.svg' width='16' height='16')
 
   // biblatex

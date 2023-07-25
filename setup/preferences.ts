@@ -106,21 +106,16 @@ class Flex extends ASTWalker {
       switch (node.name) {
         case 'vbox':
         case 'hbox':
-        case 'grid':
-        case 'columns':
-        case 'column':
-        case 'rows':
-        case 'row':
         case 'radiogroup':
-        case 'groupbox':
         case 'textbox':
         case 'tabbox':
         case 'tabpanels':
         case 'tabpanel':
         case 'deck':
-        case 'prefpane':
           if (!flex) node.attrs.push({ name: 'flex', val: "'1'", mustEscape: false })
           break
+        case 'prefpane':
+        case 'groupbox':
         case 'prefwindow':
         case 'tabs':
         case 'tab':
@@ -139,9 +134,8 @@ class Flex extends ASTWalker {
         case 'script':
         case 'menupopup':
         case 'menuitem':
-          if (flex) throw new Error(`${node.name} has flex ${flex}`)
-          break
         case 'menulist':
+          if (flex) throw new Error(`${node.name} has flex ${flex}`)
           break
         default:
           throw `no flex on ${node.name}` // eslint-disable-line no-throw-literal
@@ -595,7 +589,7 @@ class XHTML extends BaseASTWalker {
   Block(block, history) {
     let nodes = []
     for (let node of block.nodes) {
-      if (node.type === 'Tag' && node.name === 'deck' && this.attr(node, 'id') === 'better-bibtex-prefs-deck') {
+      if (node.type === 'Tag' && node.name === 'deck' && this.attr(node, 'id') === 'bbt-prefs-deck') {
         node = node.block.nodes.find(n => n.type === 'Tag' && n.name === 'tabbox')
       }
 

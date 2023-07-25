@@ -16,6 +16,7 @@ import { Events } from './events'
 import { pick } from './file-picker'
 import { flash } from './flash'
 import { is7 } from './client'
+import { icons } from './icons'
 
 // safe to keep "global" since only one pref pane will be loaded at any one time
 let $window: Window & { sizeToContent(): void } // eslint-disable-line no-var
@@ -119,7 +120,7 @@ class AutoExportPane {
   }
 
   private label(ae) {
-    let label: string = { library: '\ud83d\udcbb', collection: '\ud83d\udcc2' }[ae.type]
+    let label: string = { library: icons.computer, collection: icons.folder }[ae.type]
     label += ` ${this.name(ae, 'short')}`
     label += ` (${Translators.byId[ae.translatorID].label})`
     const path = ae.path.startsWith(OS.Constants.Path.homeDir) ? ae.path.replace(OS.Constants.Path.homeDir, '~') : ae.path
@@ -127,13 +128,20 @@ class AutoExportPane {
     return label
   }
 
+  private show(node: HTMLElement, show: boolean, revert = 'revert'): void {
+    if ((node.style.display === 'none') !== !show) {
+      node.style.display = show ? revert : 'none'
+      log.debug('2522 showing node', revert)
+    }
+  }
+
   public refresh() {
     if (!$window) return
     const doc = $window.document
 
     const auto_exports = [...AutoExport.db.find()].sort((a: { path: string }, b: { path: string }) => a.path.localeCompare(b.path))
-    const display = doc.querySelector<HTMLElement>('#better-bibtex-prefs-auto-exports')
-    display.style.display = auto_exports.length ? 'grid' : 'none'
+    const details = doc.querySelector<HTMLElement>('#better-bibtex-prefs-auto-exports')
+    this.show(details, auto_exports.length > 0, 'grid')
     if (!auto_exports.length) return null
 
     const menulist: XUL.Menulist = doc.querySelector<HTMLElement>('#better-bibtex-prefs-auto-export-select') as XUL.Menulist
@@ -157,16 +165,16 @@ class AutoExportPane {
       menulist.selectedIndex = 0
     }
 
-    if (display.getAttribute('data-ae-id') !== `${selected.$loki}` || display.getAttribute('data-ae-updated') !== `${selected.meta.updated || selected.meta.created}`) {
-      display.setAttribute('data-ae-id', `${selected.$loki}`)
-      display.setAttribute('data-ae-updated', `${selected.meta.updated || selected.meta.created}`)
+    if (details.getAttribute('data-ae-id') !== `${selected.$loki}` || details.getAttribute('data-ae-updated') !== `${selected.meta.updated || selected.meta.created}`) {
+      details.setAttribute('data-ae-id', `${selected.$loki}`)
+      details.setAttribute('data-ae-updated', `${selected.meta.updated || selected.meta.created}`)
 
       const displayed = `autoexport-${Translators.byId[selected.translatorID].label.replace(/ /g, '')}`
-      for (const node of (Array.from(display.getElementsByClassName('autoexport-options')) as unknown[] as XUL.Element[])) {
-        node.style.display = node.classList.contains(displayed) ? 'revert': 'none'
+      for (const node of (Array.from(details.getElementsByClassName('autoexport-options')) as unknown[] as XUL.Element[])) {
+        this.show(node, node.classList.contains(displayed))
       }
 
-      for (const node of Array.from(display.querySelectorAll('*[data-ae-field]'))) {
+      for (const node of Array.from(details.querySelectorAll('*[data-ae-field]'))) {
         const field = node.getAttribute('data-ae-field')
 
         switch (field) {
@@ -190,11 +198,6 @@ class AutoExportPane {
             (node as unknown as XUL.Textbox).value = selected[field]
             break
 
-          case 'error':
-            (node.parentElement as unknown as XUL.Element).style.display = selected[field] ? 'revert' : 'none';
-            (node as unknown as XUL.Textbox).value = selected[field] || ''
-            break
-
           case 'exportNotes':
           case 'useJournalAbbreviation':
           case 'asciiBibTeX':
@@ -207,6 +210,7 @@ class AutoExportPane {
 
           case 'DOIandURL':
           case 'bibtexURL':
+            log.debug('2522 setting', field, 'to', selected[field]);
             (node as unknown as XUL.Menulist).value = selected[field]
             break
 
@@ -221,16 +225,24 @@ class AutoExportPane {
       }
     }
 
-    const status = display.querySelector("*[data-ae-field='status']") as unknown as XUL.Textbox
+    const status = details.querySelector("*[data-ae-field='status']") as unknown as XUL.Textbox
     const progress = AutoExport.progress.get(selected.$loki)
     if (selected.status === 'running' && typeof progress === 'number') {
-      status.value = progress < 0 ? `${this.status?.preparing || 'preparing'} ${-progress}%` : `${progress}%`
+      status.value = progress < 0 ? `${icons.running} ${this.status?.preparing || 'preparing'} ${-progress}%` : `${icons.running} ${progress}%`
     }
     else {
-      status.value = this.status?.[selected.status] || selected.status
+      const icon: string = {
+        running: icons.running,
+        done: icons.check,
+        scheduled: icons.waiting,
+        error: icons.error,
+        preparing: `${icons.running}${icons.waiting}`,
+      }[selected.status] || selected.status
+
+      status.value = `${icon} ${selected.error || ''}`.trim()
     }
 
-    const cacherate = display.querySelector("*[data-ae-field='cacherate']") as unknown as XUL.Textbox
+    const cacherate = details.querySelector("*[data-ae-field='cacherate']") as unknown as XUL.Textbox
     cacherate.value = typeof this.cacherate[selected.$loki] === 'number' ? `${this.cacherate[selected.$loki]}%`: '? %'
   }
 

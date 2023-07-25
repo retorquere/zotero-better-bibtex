@@ -5,6 +5,7 @@ import * as l10n from './l10n'
 import { log } from './logger'
 import { Elements, NAMESPACE } from './create-element'
 import { busyWait } from './busy-wait'
+import { icons } from './icons'
 
 /* REVIEW:
 async function title_sentenceCase(label) {
@@ -80,7 +81,7 @@ export class ZoteroItemPane {
 
       const fieldHeader = elements.create(client.is7 ? 'th' : 'label')
       fieldHeader.setAttribute('fieldname', 'citationKey')
-      const headerContent = `${l10n.localize('better-bibtex_item-pane_citekey')}${citekey.pinned ? ' \uD83D\uDCCC' : ''}`
+      const headerContent = `${l10n.localize('better-bibtex_item-pane_citekey')}${citekey.pinned ? ` ${icons.pin}` : ''}`
       if (client.is7) {
         const label = elements.create('label')
         label.className = 'key'

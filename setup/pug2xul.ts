@@ -67,21 +67,23 @@ const pugs = [
   'content/zotero-preferences.pug',
 ]
 for (const src of pugs) {
-  // handled in preferences.ts
+  let tgt = `build/${src.replace(/pug$/, 'xul')}`
   switch (src) {
     case 'content/Preferences/xul.pug':
     case 'content/Preferences/xhtml.pug':
-      continue
+      // handled in preferences.ts
+      tgt = '/dev/null'
+      break
   }
-  let tgt = `build/${src.replace(/pug$/, 'xul')}`
 
-  console.log(' ', tgt)
+  const lint = new Lint(!!src.match(/(xul|xhtml).pug$/))
+  if (tgt !== '/dev/null') console.log(' ', tgt)
   fs.writeFileSync(tgt, render(src, {
     pretty: true,
     plugins: [{
       preCodeGen(ast) {
         walk(SelfClosing, ast)
-        walk(Lint, ast)
+        lint.walk(ast)
         return ast
       },
     }],
@@ -101,7 +103,7 @@ for (const src of pugs) {
     }],
   }))
   if (xhtml.modified) {
-    console.log(' ', tgt)
+    if (tgt !== '/dev/null') console.log(' ', tgt)
   }
   else {
     fs.unlinkSync(tgt)

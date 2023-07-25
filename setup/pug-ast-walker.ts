@@ -1,9 +1,9 @@
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types, no-eval, @typescript-eslint/no-unsafe-return */
+/* eslint-disable no-console, @typescript-eslint/explicit-module-boundary-types, no-eval, @typescript-eslint/no-unsafe-return */
 
 import fs from 'fs'
 import path from 'path'
 
-export function pugs(directory: string) {
+export function pugs(directory: string): string[] {
   let fileList: string[] = []
 
   const files = fs.readdirSync(directory)
@@ -97,12 +97,33 @@ export class SelfClosing extends ASTWalker {
 }
 
 export class Lint extends ASTWalker {
+  private ids: string[] = []
+
+  constructor(private needsNamespace=false) {
+    super()
+  }
+
   Tag(tag) {
     switch (tag.name) {
       case 'menulist':
         if (tag.attrs.find(a => a.name === 'onchange')) throw new Error('menulist with onchange')
         break
     }
+
+    if (this.needsNamespace) {
+      const nns = name => {
+        const attrs = tag.attrs.filter(a => a.name === name).map(a => ({ name: a.name, val: eval(a.val) }))
+        const nnsa = attrs.filter(a => !a.val.match(/^bbt-[^-]/) && (name !== 'class' || !['plain', 'text-link'].includes(a.val)))
+        if (nnsa.length) console.log('non-namespaced', name, nnsa.map(a => a.val), 'in', tag.filename)
+        if (name === 'id' && attrs.length) {
+          if (attrs.length > 1 || this.ids.includes(attrs[0].val)) throw new Error(`duplicate IDs ${attrs}`)
+          this.ids.push(attrs[0].val)
+        }
+      }
+      nns('id')
+      nns('class')
+    }
+
     this.walk(tag.block)
     return tag
   }
