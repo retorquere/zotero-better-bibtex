@@ -1,31 +1,31 @@
 popupset
-  tooltip#tooltip-bibtexURL
+  tooltip#bbt-tooltip-bibtexURL
     description &better-bibtex_preferences_export_fields_doi-and-url_warning;
-  tooltip#tooltip-jabrefFormat
+  tooltip#bbt-tooltip-jabrefFormat
     description &better-bibtex_preferences_export_jabref-format_warn;
-  tooltip#tooltip-importSentenceCase
+  tooltip#bbt-tooltip-importSentenceCase
     description &better-bibtex_preferences_advanced_import_sentence-case_warning;
-  tooltip#tooltip-importCaseProtection
+  tooltip#bbt-tooltip-importCaseProtection
     description &better-bibtex_preferences_advanced_import_case-protection_warning;
-  tooltip#tooltip-exportTitleCase
+  tooltip#bbt-tooltip-exportTitleCase
     description &better-bibtex_preferences_advanced_export_title-case_warning;
-  tooltip#tooltip-exportBraceProtection
+  tooltip#bbt-tooltip-exportBraceProtection
     description &better-bibtex_preferences_advanced_export_brace-protection_warning;
-  tooltip#tooltip-retainCache
+  tooltip#bbt-tooltip-retainCache
     description &better-bibtex_preferences_advanced_export_retain-cache_warning;
 
-deck#better-bibtex-prefs-deck(selectedIndex='0')
-  label#better-bibtex-loading &better-bibtex_preferences_prefpane_loading;
+deck#bbt-prefs-deck(selectedIndex='0')
+  label &better-bibtex_preferences_prefpane_loading;
 
-  tabbox#better-bibtex-prefs-tabbox
-    tabs#better-bibtex-prefs-tabs(onselect="Zotero.BetterBibTeX.PrefPane.refresh()")
-      tab#better-bibtex-prefs-citekey(label="&better-bibtex_preferences_tab_citekey.label;")
-      tab#better-bibtex-prefs-export(label="&better-bibtex_preferences_tab_export.label;")
-      tab#better-bibtex-prefs-auto-export(label="&better-bibtex_preferences_tab_auto-export.label;")
+  tabbox
+    tabs(onselect="Zotero.BetterBibTeX.PrefPane.refresh()")
+      tab(label="&better-bibtex_preferences_tab_citekey.label;")
+      tab(label="&better-bibtex_preferences_tab_export.label;")
+      tab(label="&better-bibtex_preferences_tab_auto-export.label;")
       tab(label='&better-bibtex_preferences_tab_import.label;')
       tab(label='&better-bibtex_preferences_tab_misc.label;')
 
-    tabpanels#better-bibtex-prefs-tabpanels(flex=1)
+    tabpanels(flex=1)
       tabpanel(bbt:page='_index' flex=1 orient="vertical")
         include citekeys.pug
       tabpanel(bbt:page='export' flex=1 orient="vertical")

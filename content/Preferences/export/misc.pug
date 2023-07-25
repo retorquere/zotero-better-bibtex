@@ -22,17 +22,17 @@ html:div
 
 html:div
   checkbox(preference="extensions.zotero.translators.better-bibtex.exportTitleCase" label="&better-bibtex_preferences_advanced_export_title-case.label;")
-  image(tooltip="tooltip-exportTitleCase" src="chrome://zotero-better-bibtex/content/skin/attention.svg" width="16" height="16")
+  image(tooltip="bbt-tooltip-exportTitleCase" src="chrome://zotero-better-bibtex/content/skin/attention.svg" width="16" height="16")
 
 html:div
   checkbox(preference="extensions.zotero.translators.better-bibtex.exportBraceProtection" label="&better-bibtex_preferences_advanced_export_brace-protection.label;")
-  image(tooltip="tooltip-exportBraceProtection" src="chrome://zotero-better-bibtex/content/skin/attention.svg" width="16" height="16")
+  image(tooltip="bbt-tooltip-exportBraceProtection" src="chrome://zotero-better-bibtex/content/skin/attention.svg" width="16" height="16")
 
 groupbox
   caption Cache
   html:div
     checkbox(preference="extensions.zotero.translators.better-bibtex.retainCache" label="&better-bibtex_preferences_advanced_export_retain-cache.label;")
-    image(tooltip="tooltip-retainCache" src="chrome://zotero-better-bibtex/content/skin/attention.svg" width="16" height="16")
+    image(tooltip="bbt-tooltip-retainCache" src="chrome://zotero-better-bibtex/content/skin/attention.svg" width="16" height="16")
   checkbox(preference="extensions.zotero.translators.better-bibtex.cache" label="&better-bibtex_preferences_advanced_export_workers_cache.label;")
   label.bbt-preferences-worker-state
   button(label="&better-bibtex_preferences_reset-cache.label;" oncommand="Zotero.BetterBibTeX.PrefPane.cacheReset()")

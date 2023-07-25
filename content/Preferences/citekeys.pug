@@ -1,11 +1,11 @@
 label(bbt:preference='extensions.zotero.translators.better-bibtex.citekeyFormatEditing') &better-bibtex_preferences_citekey_format;
-textbox#id-better-bibtex-preferences-citekeyFormatEditing(
+textbox#bbt-preferences-citekeyFormatEditing(
   preference='extensions.zotero.translators.better-bibtex.citekeyFormatEditing'
   flex=1
   rows=5
   multiline='true'
 )
-textbox#better-bibtex-citekeyFormat-error(
+textbox#bbt-citekeyFormat-error(
   preference='extensions.zotero.translators.better-bibtex.citekeyFormat'
   flex=1
   rows=2
@@ -13,8 +13,8 @@ textbox#better-bibtex-citekeyFormat-error(
   multiline='true'
   style='-moz-appearance: none !important; background-color: DarkOrange'
 )
-label#id-better-bibtex-label-citekeyFormat(bbt:preference="extensions.zotero.translators.better-bibtex.citekeyFormat") &better-bibtex_preferences_citekey_format_installed;
-textbox#id-better-bibtex-preferences-citekeyFormat(
+label#bbt-label-citekeyFormat(bbt:preference="extensions.zotero.translators.better-bibtex.citekeyFormat") &better-bibtex_preferences_citekey_format_installed;
+textbox#bbt-preferences-citekeyFormat(
   preference='extensions.zotero.translators.better-bibtex.citekeyFormat'
   flex=1
   rows=5
@@ -54,4 +54,4 @@ groupbox
 html:div
   label(bbt:preference="extensions.zotero.translators.better-bibtex.warnBulkModify") &better-bibtex_preferences_bulk-warning;
   textbox(size="5" preference="extensions.zotero.translators.better-bibtex.warnBulkModify")
-button#rescan-citekeys.hidden(label="&better-bibtex_preferences_rescan-citekeys.label;" oncommand="Zotero.BetterBibTeX.PrefPane.rescanCitekeys()")
+button#bbt-rescan-citekeys(label="&better-bibtex_preferences_rescan-citekeys.label;" oncommand="Zotero.BetterBibTeX.PrefPane.rescanCitekeys()")

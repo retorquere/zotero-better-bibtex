@@ -394,17 +394,17 @@ export class PrefPane {
     const error = Formatter.update([Preference.citekeyFormatEditing, Preference.citekeyFormat])
     const style = error ? '-moz-appearance: none !important; background-color: DarkOrange' : ''
 
-    const editing = $window.document.getElementById('id-better-bibtex-preferences-citekeyFormatEditing')
+    const editing = $window.document.getElementById('bbt-preferences-citekeyFormatEditing')
     editing.setAttribute('style', style)
     editing.setAttribute('tooltiptext', error)
 
-    const msg = $window.document.getElementById('better-bibtex-citekeyFormat-error') as HTMLInputElement
+    const msg = $window.document.getElementById('bbt-citekeyFormat-error') as HTMLInputElement
     msg.value = error
     msg.setAttribute('style', style)
     msg.style.display = error ? 'initial' : 'none'
 
-    const active = $window.document.getElementById('id-better-bibtex-preferences-citekeyFormat')
-    const label = $window.document.getElementById('id-better-bibtex-label-citekeyFormat')
+    const active = $window.document.getElementById('bbt-preferences-citekeyFormat')
+    const label = $window.document.getElementById('bbt-label-citekeyFormat')
     active.style.display = label.style.display = Preference.citekeyFormat === Preference.citekeyFormatEditing ? 'none' : 'initial'
   }
 
@@ -449,7 +449,7 @@ export class PrefPane {
       })
 
       if (!is7) {
-        const deck = $window.document.getElementById('better-bibtex-prefs-deck') as unknown as XUL.Deck
+        const deck = $window.document.getElementById('bbt-prefs-deck') as unknown as XUL.Deck
         deck.selectedIndex = 0
 
         await Zotero.BetterBibTeX.ready
@@ -462,7 +462,7 @@ export class PrefPane {
         deck.selectedIndex = 1
       }
 
-      $window.document.getElementById('rescan-citekeys').hidden = !Zotero.Debug.enabled
+      $window.document.getElementById('bbt-rescan-citekeys').hidden = !Zotero.Debug.enabled
 
       this.autoexport.load()
 
@@ -486,14 +486,14 @@ export class PrefPane {
   public refresh(): void {
     if (!$window) return
 
-    const pane = $window.document.getElementById('zotero-prefpane-better-bibtex')
+    const pane = $window.document.getElementById('bbt-zotero-prefpane')
     // unloaded
     if (!pane) {
       this.unload()
       return
     }
 
-    const quickCopyDetails: XUL.Deck = $window.document.getElementById('quickCopyDetails') as unknown as XUL.Deck
+    const quickCopyDetails: XUL.Deck = $window.document.getElementById('bbt-quick-copy-details') as unknown as XUL.Deck
     const quickCopyId = `bbt-preferences-quickcopy-${Preference.quickCopyMode}`
     quickCopyDetails.selectedIndex = Array.from(quickCopyDetails.children).findIndex(details => details.id === quickCopyId)
 

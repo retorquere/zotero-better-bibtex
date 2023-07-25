@@ -2,10 +2,10 @@ groupbox
   caption &better-bibtex_preferences_export_quick-copy_explanation;
   html:div
     label(bbt:preference='extensions.zotero.translators.better-bibtex.quickCopyMode') &better-bibtex_preferences_export_quick-copy_format;
-    menulist#id-better-bibtex-preferences-quickCopyMode(
+    menulist#bbt-preferences-quickCopyMode(
         preference='extensions.zotero.translators.better-bibtex.quickCopyMode'
         preference-editable='true'
-        oncommand="document.getElementById('quickCopyDetails').selectedIndex = this.selectedIndex"
+        oncommand="document.getElementById('bbt-quick-copy-details').selectedIndex = this.selectedIndex"
     )
       menupopup
         menuitem(value='latex' label='&better-bibtex_preferences_export_quick-copy_latex.label;')
@@ -20,7 +20,7 @@ groupbox
         menuitem(value='selectlink' label='&better-bibtex_preferences_export_quick-copy_select-link.label;')
         menuitem(value='eta' label='&better-bibtex_preferences_export_quick-copy_eta-template.label;')
 
-  deck#quickCopyDetails
+  deck#bbt-quick-copy-details
     html:div#bbt-preferences-quickcopy-latex
       label(bbt:preference='extensions.zotero.translators.better-bibtex.citeCommand') &better-bibtex_preferences_export_quick-copy_latex_command;
       textbox(size='10' preference='extensions.zotero.translators.better-bibtex.citeCommand' onchange='Zotero.BetterBibTeX.PrefPane.refresh();' onkeypress='Zotero.setTimeout(function() { Zotero.BetterBibTeX.PrefPane.refresh() }, 1);')
@@ -28,7 +28,7 @@ groupbox
     html:div#bbt-preferences-quickcopy-citekeys
 
     html:div#bbt-preferences-quickcopy-pandoc
-      checkbox#id-better-bibtex-preferences-quickCopyPandocBrackets(preference='extensions.zotero.translators.better-bibtex.quickCopyPandocBrackets' label='&better-bibtex_preferences_export_quick-copy_pandoc_brackets.label;')
+      checkbox(preference='extensions.zotero.translators.better-bibtex.quickCopyPandocBrackets' label='&better-bibtex_preferences_export_quick-copy_pandoc_brackets.label;')
 
     html:div#bbt-preferences-quickcopy-orgmode
       label(bbt:preference='extensions.zotero.translators.better-bibtex.quickCopyOrgMode') &better-bibtex_preferences_export_quick-copy_org-mode;
@@ -61,7 +61,7 @@ groupbox
 script.
   window.addEventListener('load', function() {
     var qcm = Zotero.Prefs.get('translators.better-bibtex.quickCopyMode')
-    var selectedIndex = Array.from(document.querySelector('#id-better-bibtex-preferences-quickCopyMode menupopup').children).findIndex(option => option.value === qcm)
-    dump(`quickCopyDetails: ${qcm} = ${selectedIndex}\n`)
-    document.getElementById("quickCopyDetails").selectedIndex = selectedIndex
+    var selectedIndex = Array.from(document.querySelector('#bbt-preferences-quickCopyMode menupopup').children).findIndex(option => option.value === qcm)
+    dump(`bbt-quick-copy-details: ${qcm} = ${selectedIndex}\n`)
+    document.getElementById("bbt-quick-copy-details").selectedIndex = selectedIndex
   })

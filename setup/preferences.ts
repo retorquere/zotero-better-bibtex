@@ -356,7 +356,7 @@ class Docs extends ASTWalker {
 
       case 'tooltip':
         if (id = this.attr(node, 'id', true)) {
-          pref = id.replace('tooltip-', 'extensions.zotero.translators.better-bibtex.')
+          pref = id.replace('bbt-tooltip-', 'extensions.zotero.translators.better-bibtex.')
           if (!this.preferences[pref]) error(pref, 'does not exist')
           this.description(this.text(node), pref)
         }

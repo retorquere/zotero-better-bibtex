@@ -12,10 +12,10 @@ html:div
       menuitem(value='both' label='&better-bibtex_preferences_export_fields_doi-and-url_both.label;')
       menuitem(value='doi' label='&better-bibtex_preferences_export_fields_doi-and-url_doi.label;')
       menuitem(value='url' label='&better-bibtex_preferences_export_fields_doi-and-url_url.label;')
-  image(tooltip="tooltip-DOIandURL" src="chrome://zotero-better-bibtex/content/skin/attention.svg" width="16" height="16")
+  image(tooltip="bbt-tooltip-DOIandURL" src="chrome://zotero-better-bibtex/content/skin/attention.svg" width="16" height="16")
 html:div
   label(bbt:preference="extensions.zotero.translators.better-bibtex.skipFields") &better-bibtex_preferences_export_fields_skip;
-  textbox#id-better-bibtex-preferences-skipFields(size='30' preference='extensions.zotero.translators.better-bibtex.skipFields')
+  textbox(size='30' preference='extensions.zotero.translators.better-bibtex.skipFields')
 html:div
   label(bbt:preference="extensions.zotero.translators.better-bibtex.jabrefFormat") &better-bibtex_preferences_export_jabref-format;
   menulist(preference="extensions.zotero.translators.better-bibtex.jabrefFormat" preference-editable="true")
@@ -24,4 +24,4 @@ html:div
       menuitem(value='3' label='&better-bibtex_preferences_export_jabref-format_3.label;')
       menuitem(value='4' label='&better-bibtex_preferences_export_jabref-format_4.label;')
       menuitem(value='5' label='&better-bibtex_preferences_export_jabref-format_5.label;')
-  image(tooltip="tooltip-jabrefFormat" src="chrome://zotero-better-bibtex/content/skin/attention.svg" width="16" height="16")
+  image(tooltip="bbt-tooltip-jabrefFormat" src="chrome://zotero-better-bibtex/content/skin/attention.svg" width="16" height="16")
