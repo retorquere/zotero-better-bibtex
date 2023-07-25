@@ -1,11 +1,11 @@
-hbox(flex=0)
+html:div
   label(bbt:preference="extensions.zotero.translators.better-bibtex.language") &better-bibtex_preferences_export_fields_language;
   menulist(preference="extensions.zotero.translators.better-bibtex.language" preference-editable="true")
     menupopup
       menuitem(value='langid' label='langid')
       menuitem(value='language' label='language')
       menuitem(value='both' label='&better-bibtex_preferences_export_fields_language_both.label;')
-hbox(flex=0)
+html:div
   label(bbt:preference="extensions.zotero.translators.better-bibtex.DOIandURL") &better-bibtex_preferences_export_fields_doi-and-url;
   menulist(preference="extensions.zotero.translators.better-bibtex.DOIandURL" preference-editable="true")
     menupopup
@@ -13,10 +13,10 @@ hbox(flex=0)
       menuitem(value='doi' label='&better-bibtex_preferences_export_fields_doi-and-url_doi.label;')
       menuitem(value='url' label='&better-bibtex_preferences_export_fields_doi-and-url_url.label;')
   image(tooltip="tooltip-bibtexURL" src="chrome://zotero-better-bibtex/content/skin/attention.svg" width="16" height="16")
-hbox(flex=0)
+html:div
   label(bbt:preference="extensions.zotero.translators.better-bibtex.skipFields") &better-bibtex_preferences_export_fields_skip;
   textbox#id-better-bibtex-preferences-skipFields(size='30' preference='extensions.zotero.translators.better-bibtex.skipFields')
-hbox(flex=0)
+html:div
   label(bbt:preference="extensions.zotero.translators.better-bibtex.jabrefFormat") &better-bibtex_preferences_export_jabref-format;
   menulist(preference="extensions.zotero.translators.better-bibtex.jabrefFormat" preference-editable="true")
     menupopup
