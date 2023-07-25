@@ -19,6 +19,9 @@ export type Task = {
   needs: Actor[]
   needed: boolean
   dependencies?: Record<Phase, Set<Actor>>
+
+  started: number
+  finished: number
 }
 
 export type Progress = (phase: string, name: string, done: number, total: number, message?: string) => void
@@ -26,6 +29,7 @@ export type Progress = (phase: string, name: string, done: number, total: number
 export class Orchestrator {
   public start: Actor = 'start'
   public done: Actor = 'done'
+  public started: number
 
   private tasks: Partial<Record<Actor, Task>> = {}
   private promises: Record<Phase, Partial<Record<Actor, Promise<void>>>> = { startup: {}, shutdown: {} }
@@ -42,6 +46,8 @@ export class Orchestrator {
       shutdown,
       needed: false,
       needs: needs || [],
+      started: 0,
+      finished: 0,
     }
   }
 
@@ -62,14 +68,24 @@ export class Orchestrator {
       this.promises[phase][name] = circular
       return this.promises[phase][name] = Promise
         .all(Array.from(dependencies).map(run))
-        .then(() => { if (phase === 'startup') progress?.(phase, name, ran++, total, `starting ${description}`) })
-        .then(() => action(reason) as Promise<void | string>)
-        /*
-        .then(result => {
-          result = result ? `: ${result}` : ''
-          progress?.(phase, name, ++ran, total, `${description} started${result}`)
+
+        .then(() => {
+          if (phase === 'startup') {
+            this.tasks[name].started = Date.now()
+            progress?.(phase, name, ran++, total, `starting ${description}`)
+          }
         })
-        */
+
+        .then(() => action(reason) as Promise<void | string>)
+
+        .then(_result => {
+          if (phase === 'startup') {
+            this.tasks[name].finished = Date.now()
+          }
+          // result = result ? `: ${result}` : ''
+          // progress?.(phase, name, ++ran, total, `${description} started${result}`)
+        })
+
         .catch(err => {
           Zotero.debug(`${name}.${phase} ${reason || ''} error: ${err}`)
           throw err
@@ -82,12 +98,14 @@ export class Orchestrator {
     let g = 'digraph {\n'
 
     for (const phase of ['startup', 'shutdown']) {
+      const v = (id: string) => JSON.stringify(`${phase}.${id}`)
+      const l = (task: Task) => phase === 'startup' ? `${task.id}\n+${task.started - this.started}+${task.finished - task.started}` : `${task.id}`
+
       g += `  subgraph cluster_${phase} {\n`
       g += `    label=${JSON.stringify(phase)}\n`
-      const v = (id: string) => JSON.stringify(`${phase}.${id}`)
 
       for (const task of Object.values(this.tasks)) {
-        g += `    ${v(task.id)} [label=${JSON.stringify(task.id)}]\n`
+        g += `    ${v(task.id)} [label=${JSON.stringify(l(task))}]\n`
 
         for (const dep of task.dependencies[phase]) {
           g += `    ${v(dep)} -> ${v(task.id)}\n`
@@ -139,10 +157,11 @@ export class Orchestrator {
       }
     }
 
-    Zotero.debug(`orchestrator:\n${this.graphviz()}`)
-
+    this.started = Date.now()
     await this.run('startup', reason, progress)
     progress?.('startup', 'ready', 100, 100, 'ready')
+
+    Zotero.debug(`orchestrator:\n${this.graphviz()}`)
   }
 
   public async shutdown(reason: Reason, progress?: Progress): Promise<void> {
