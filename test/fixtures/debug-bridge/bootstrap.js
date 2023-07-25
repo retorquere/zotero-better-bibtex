@@ -7,6 +7,8 @@ const {
 
 const AsyncFunction = Object.getPrototypeOf(async function(){}).constructor
 
+Cu.import('resource://gre/modules/AddonManager.jsm')
+
 if (typeof Zotero == 'undefined') {
   var Zotero
 }
@@ -110,6 +112,13 @@ function install(data, reason) {
   log('async:install:start')
 }
 
+class DebugBridge {
+  async install(xpi) {
+    await AddonManager.readyPromise
+    AddonManager.installTemporaryAddon(Zotero.File.pathToFile(xpi))
+  }
+}
+
 async function startup({ resourceURI, rootURI = resourceURI.spec }, reason) {
   log(`async:startup:start, Zotero: ${typeof Zotero !== 'undefined'}`)
   await waitForZotero()
@@ -157,12 +166,17 @@ async function startup({ resourceURI, rootURI = resourceURI.spec }, reason) {
       return [201, 'application/json', response]
     }
   }
+
+  Zotero.DebugBridge = new DebugBridge
 }
 
 async function shutdown(data, reason) {
   log('async:shutdown:start')
   await waitForZotero()
-  if (Zotero) delete Zotero.Server.Endpoints['/debug-bridge/execute']
+  if (Zotero) {
+    delete Zotero.Server.Endpoints['/debug-bridge/execute']
+    delete Zotero.DebugBridge
+  }
 }
 
 function uninstall(data, reason) {

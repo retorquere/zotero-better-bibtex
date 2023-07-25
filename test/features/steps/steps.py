@@ -416,3 +416,10 @@ def step_impl(context):
 def step_impl(context, param, value):
   value = json.loads(value)
   context.zotero.execute('Zotero.BetterBibTeX.TestSupport.editAutoExport(field, value)', field=param, value=value)
+
+@step('I install {xpi}')
+def step_impl(context, xpi):
+  xpis = glob.glob(xpi)
+  assert len(xpis) > 0, f'{xpi} not found'
+  assert len(xpis) == 1, f'multiple candidates for {xpi}'
+  context.zotero.execute('Zotero.DebugBridge.install(xpi)', xpi=os.path.abspath(xpis[0]))

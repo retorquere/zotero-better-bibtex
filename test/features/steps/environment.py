@@ -18,6 +18,7 @@ from pathlib import Path
 active_tag_value_provider = {
   'client': 'zotero',
   'slow': 'false',
+  'beta': 'false',
 }
 active_tag_matcher = ActiveTagMatcher(active_tag_value_provider)
 

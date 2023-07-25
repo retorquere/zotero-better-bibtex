@@ -4,6 +4,8 @@ import type { Reason } from './bootstrap'
 
 type Handler = (reason: Reason) => void | string | Promise<void | string>
 
+import { print } from './logger'
+
 interface TaskOptions {
   description?: string
   startup?: Handler
@@ -70,6 +72,7 @@ export class Orchestrator {
         .all(Array.from(dependencies).map(run))
 
         .then(() => {
+          print(`better-bibtex orchestrator: running ${phase}.${name}`)
           if (phase === 'startup') {
             this.tasks[name].started = Date.now()
             progress?.(phase, name, ran++, total, `starting ${description}`)
@@ -79,6 +82,7 @@ export class Orchestrator {
         .then(() => action(reason) as Promise<void | string>)
 
         .then(_result => {
+          print(`better-bibtex orchestrator: finished ${phase}.${name}`)
           if (phase === 'startup') {
             this.tasks[name].finished = Date.now()
           }
@@ -87,7 +91,7 @@ export class Orchestrator {
         })
 
         .catch(err => {
-          Zotero.debug(`${name}.${phase} ${reason || ''} error: ${err}`)
+          print(`better-bibtex orchestrator: ${name}.${phase} ${reason || ''} error: ${err}`)
           throw err
         })
     }
