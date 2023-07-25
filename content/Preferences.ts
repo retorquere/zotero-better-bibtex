@@ -162,8 +162,8 @@ class AutoExportPane {
       details.setAttribute('data-ae-id', `${selected.$loki}`)
       details.setAttribute('data-ae-updated', `${selected.meta.updated || selected.meta.created}`)
 
-      const displayed = `autoexport-${Translators.byId[selected.translatorID].label.replace(/ /g, '')}`
-      for (const node of (Array.from(details.getElementsByClassName('autoexport-options')) as unknown[] as XUL.Element[])) {
+      const displayed = `bbt-autoexport-${Translators.byId[selected.translatorID].label.replace(/ /g, '')}`
+      for (const node of (Array.from(details.getElementsByClassName('bbt-autoexport-options')) as unknown[] as XUL.Element[])) {
         node.style.display = node.classList.contains(displayed) ? 'initial' : 'none'
       }
 
