@@ -367,7 +367,7 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
 
     orchestrator.add('auto-export', {
       description: 'auto-export',
-      needs: ['maindb', 'cache', 'translators'],
+      needs: ['database', 'cache', 'translators'],
       startup: async () => {
         await git.init()
 

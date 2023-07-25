@@ -1,4 +1,4 @@
-export type Actor = 'start' | 'done' | 'auto-export' | 'translators' | 'TeXstudio' | 'abbreviator' | 'keymanager' | 'serializer' | 'cache' | 'maindb' | 'databases'
+export type Actor = 'start' | 'done' | 'auto-export' | 'translators' | 'TeXstudio' | 'abbreviator' | 'keymanager' | 'serializer' | 'cache' | 'database' | 'sqlite'
 export type Phase = 'startup' | 'shutdown'
 import type { Reason } from './bootstrap'
 
@@ -78,34 +78,68 @@ export class Orchestrator {
     await Promise.all(Object.keys(this.tasks).map(run))
   }
 
+  private graphviz() {
+    let g = 'digraph {\n'
+
+    for (const phase of ['startup', 'shutdown']) {
+      g += `  subgraph cluster_${phase} {\n`
+      g += `    label=${JSON.stringify(phase)}\n`
+      const v = (id: string) => JSON.stringify(`${phase}.${id}`)
+
+      for (const task of Object.values(this.tasks)) {
+        g += `    ${v(task.id)} [label=${JSON.stringify(task.id)}]\n`
+
+        for (const dep of task.dependencies[phase]) {
+          g += `    ${v(dep)} -> ${v(task.id)}\n`
+        }
+      }
+
+      g += '  }\n'
+    }
+
+    g += '}\n'
+    return g
+  }
+
   public async startup(reason: Reason, progress?: Progress): Promise<void> {
-    if (this.tasks[this.start]) {
-      for (const [id, task] of Object.entries(this.tasks)) {
-        if (id === this.start) continue
-        task.needs = task.needs || []
+    const tasks: Task[] = Object.values(this.tasks)
+    const has = {
+      start: this.tasks[this.start],
+      done: this.tasks[this.done],
+    }
+
+    for (const task of tasks) {
+      if (has.start && task.id !== this.start && !task.needs.length) {
         task.needs.push(this.start)
       }
-    }
 
-    if (this.tasks[this.done]) {
-      this.tasks[this.done].needs = (Object.keys(this.tasks) as Actor[]).filter(task => task !== this.done)
-    }
+      for (const needed of task.needs) {
+        if (!this.tasks[needed]) throw new Error(`orchestrator: ${task.id} needs non-existent ${needed}`)
+        this.tasks[needed].needed = true
+      }
 
-    for (const task of Object.values(this.tasks)) {
       task.dependencies = {
-        startup: new Set(task.needs || []),
+        startup: new Set(task.needs),
         shutdown: new Set,
       }
-      for (const dep of task.dependencies.startup) {
-        if (!this.tasks[dep]) throw new Error(`${task.id} relies on non-existent task ${dep}`)
+    }
+
+    if (has.done) {
+      has.done.needs = tasks.filter(task => task.id !== this.done && !task.needed).map(task => task.id)
+
+      has.done.dependencies = {
+        startup: new Set(has.done.needs),
+        shutdown: new Set,
       }
     }
 
-    for (const [id, task] of Object.entries(this.tasks) as [Actor, Task][]) {
+    for (const task of tasks) {
       for (const dep of task.dependencies.startup) {
-        this.tasks[dep].dependencies.shutdown.add(id)
+        this.tasks[dep].dependencies.shutdown.add(task.id)
       }
     }
+
+    Zotero.debug(`orchestrator:\n${this.graphviz()}`)
 
     await this.run('startup', reason, progress)
     progress?.('startup', 'ready', 100, 100, 'ready')

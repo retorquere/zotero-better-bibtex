@@ -23,7 +23,7 @@ class Cache extends Loki {
 
     orchestrator.add('cache', {
       description: 'cache',
-      needs: ['start', 'databases'],
+      needs: ['sqlite'],
       startup: async () => {
         await this.init()
         return 'cache load ready'

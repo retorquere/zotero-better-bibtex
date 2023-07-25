@@ -862,8 +862,7 @@ export class BetterBibTeX {
       },
     })
 
-    orchestrator.add('databases', {
-      description: 'databases',
+    orchestrator.add('sqlite', {
       needs: ['start'],
       startup: async () => {
         await Zotero.DB.queryAsync('ATTACH DATABASE ? AS betterbibtex', [OS.Path.join(Zotero.DataDirectory.dir, 'better-bibtex.sqlite')])
