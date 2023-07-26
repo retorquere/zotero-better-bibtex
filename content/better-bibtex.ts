@@ -14,6 +14,7 @@ declare const __estrace: any // eslint-disable-line no-underscore-dangle
 
 import type { XUL } from '../typings/xul'
 
+import { icons } from './icons'
 import { prompt } from './prompt'
 import { is7 } from './client'
 import { Elements } from './create-element'
@@ -305,45 +306,46 @@ $patch$(Zotero.Item.prototype, 'clone', original => function Zotero_Item_prototy
   return item
 })
 
-if (is7) Services.scriptloader.loadSubScript('resource://zotero/require.js', this)
-const itemTree = require('zotero/itemTree')
+if (!is7) {
+  const itemTree = require('zotero/itemTree')
 
-$patch$(itemTree.prototype, 'getColumns', original => function Zotero_ItemTree_prototype_getColumns() {
-  const columns = original.apply(this, arguments)
-  const insertAfter: number = columns.findIndex(column => column.dataKey === 'title')
-  columns.splice(insertAfter + 1, 0, {
-    dataKey: 'citationKey',
-    label: l10n.localize('better-bibtex_zotero-pane_column_citekey'),
-    flex: '1',
-    zoteroPersist: new Set(['width', 'ordinal', 'hidden', 'sortActive', 'sortDirection']),
+  $patch$(itemTree.prototype, 'getColumns', original => function Zotero_ItemTree_prototype_getColumns() {
+    const columns = original.apply(this, arguments)
+    const insertAfter: number = columns.findIndex(column => column.dataKey === 'title')
+    columns.splice(insertAfter + 1, 0, {
+      dataKey: 'citationKey',
+      label: l10n.localize('better-bibtex_zotero-pane_column_citekey'),
+      flex: '1',
+      zoteroPersist: new Set(['width', 'ordinal', 'hidden', 'sortActive', 'sortDirection']),
+    })
+
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    return columns
   })
 
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  return columns
-})
+  $patch$(itemTree.prototype, '_renderCell', original => function Zotero_ItemTree_prototype_renderCell(index, data, col) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    if (col.dataKey !== 'citationKey') return original.apply(this, arguments)
 
-$patch$(itemTree.prototype, '_renderCell', original => function Zotero_ItemTree_prototype_renderCell(index, data, col) {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  if (col.dataKey !== 'citationKey') return original.apply(this, arguments)
+    const item = this.getRow(index).ref
+    const citekey = Zotero.BetterBibTeX.KeyManager.get(item.id)
 
-  const item = this.getRow(index).ref
-  const citekey = Zotero.BetterBibTeX.KeyManager.get(item.id)
+    const doc: Document = this.window.document
+    const icon = doc.createElementNS('http://www.w3.org/1999/xhtml', 'span')
+    icon.innerText = citekey.pinned ? icons.pin : ''
+    // icon.className = 'icon icon-bg cell-icon'
 
-  const doc: Document = this.window.document
-  const icon = doc.createElementNS('http://www.w3.org/1999/xhtml', 'span')
-  icon.innerText = citekey.pinned ? '\uD83D\uDCCC' : ''
-  // icon.className = 'icon icon-bg cell-icon'
+    const text = doc.createElementNS('http://www.w3.org/1999/xhtml', 'span')
+    text.className = 'cell-text'
+    text.innerText = data
 
-  const text = doc.createElementNS('http://www.w3.org/1999/xhtml', 'span')
-  text.className = 'cell-text'
-  text.innerText = data
+    const cell = doc.createElementNS('http://www.w3.org/1999/xhtml', 'span')
+    cell.className = `cell ${col.className}`
+    cell.append(text, icon)
 
-  const cell = doc.createElementNS('http://www.w3.org/1999/xhtml', 'span')
-  cell.className = `cell ${col.className}`
-  cell.append(text, icon)
-
-  return cell
-})
+    return cell
+  })
+}
 
 import * as CAYW from './cayw'
 $patch$(Zotero.Integration, 'getApplication', original => function Zotero_Integration_getApplication(agent: string, _command: any, _docId: any) {
@@ -879,6 +881,18 @@ export class BetterBibTeX {
       startup: async () => {
         this.deferred.resolve(true)
         await this.load(Zotero.getMainWindow())
+
+        if (is7) {
+          await Zotero.ItemTreeManager.registerColumns({
+            dataKey: 'citationKey',
+            label: 'Citation key',
+            pluginID: 'better-bibtex@iris-advies.com',
+            dataProvider: (item, _dataKey) => {
+              const citekey = Zotero.BetterBibTeX.KeyManager.get(item.id)
+              return citekey ? `${citekey.citekey}${citekey.pinned ? icons.pin : ''}`.trim() : ''
+            },
+          })
+        }
       },
       shutdown: async () => { // eslint-disable-line @typescript-eslint/require-await
         Events.clearListeners()
