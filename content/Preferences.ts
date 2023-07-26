@@ -112,9 +112,10 @@ class AutoExportPane {
 
     this.refresh()
 
-    Events.on('export-progress', ( { pct, ae }) => {
+    Events.on('export-progress', async ( { pct, ae }) => {
+      this.cacherate[ae] = await AutoExport.cached(ae)
       if (pct >= 100 && typeof ae === 'number') {
-        this.refresh()
+        this.refresh(ae)
       }
     })
   }
@@ -128,7 +129,7 @@ class AutoExportPane {
     return label
   }
 
-  public refresh() {
+  public refresh($loki?: number) {
     if (!$window) return
     const doc = $window.document
 
@@ -141,8 +142,8 @@ class AutoExportPane {
     const menupopup = doc.querySelector('#bbt-prefs-auto-export-select menupopup')
     let selected
     if (menulist.selectedItem) {
-      const $loki = parseInt(menulist.selectedItem.value)
-      selected = auto_exports.find(ae => ae.$loki === $loki)
+      const selected$loki = parseInt(menulist.selectedItem.value)
+      selected = auto_exports.find(ae => ae.$loki === selected$loki)
     }
 
     // list changed
@@ -157,6 +158,8 @@ class AutoExportPane {
       selected = auto_exports[0]
       menulist.selectedIndex = 0
     }
+
+    if (typeof $loki === 'number' && $loki !== selected.$loki) return
 
     if (details.getAttribute('data-ae-id') !== `${selected.$loki}` || details.getAttribute('data-ae-updated') !== `${selected.meta.updated || selected.meta.created}`) {
       details.setAttribute('data-ae-id', `${selected.$loki}`)
@@ -235,8 +238,9 @@ class AutoExportPane {
       status.value = `${icon} ${selected.error || ''}`.trim()
     }
 
+    if (typeof this.cacherate[selected.$loki] === 'undefined') this.cacherate[selected.$loki] = 0
     const cacherate = details.querySelector("*[data-ae-field='cacherate']") as unknown as XUL.Textbox
-    cacherate.value = typeof this.cacherate[selected.$loki] === 'number' ? `${this.cacherate[selected.$loki]}%`: '? %'
+    cacherate.value = `${this.cacherate[selected.$loki]}%`
   }
 
   public remove() {
