@@ -3,7 +3,7 @@ import { patch as $patch$ } from './monkey-patch'
 import * as client from './client'
 import * as l10n from './l10n'
 import { log } from './logger'
-import { Elements, NAMESPACE } from './create-element'
+import { Elements } from './create-element'
 import { busyWait } from './busy-wait'
 import { icons } from './icons'
 
@@ -97,38 +97,11 @@ export class ZoteroItemPane {
             fieldname: 'citationKey',
           })
 
-      /*
-      let value: HTMLElement
-      if (client.is7) {
-        // can't be a read-only textbox because that makes blur in the itembox go bananas
-        value = elements.create('span', {
-          id: 'itembox-field-value-citationKey',
-          fieldName: 'citationKey',
-          style: 'color: black; user-select: text;',
-        }, NAMESPACE.HTML)
-        value.textContent = citekey.citekey
-      }
-      else {
-        value = elements.create('input', {
-          id: 'itembox-field-value-citationKey',
-          fieldName: 'citationKey',
-          type: 'text',
-          readonly: 'true',
-          value: citekey.citekey,
-        }, NAMESPACE.HTML)
-      }
-      */
-      const value = elements.create('input', {
-        id: 'itembox-field-value-citationKey',
-        fieldname: 'citationKey',
-        type: 'text',
-        readonly: 'true',
-        value: citekey.citekey,
-      }, NAMESPACE.HTML)
-
       const table = client.is7 ? this._infoTable : this._dynamicFields // eslint-disable-line no-underscore-dangle
       const beforeRow = table.children[1] // item type must be first
       if (beforeRow) this._beforeRow = beforeRow
+
+      const value = this.createValueElement(citekey.citekey, 'citationKey', 1099) // eslint-disable-line no-magic-numbers
       this.addDynamicRow(header, value, beforeRow)
     })
   }
