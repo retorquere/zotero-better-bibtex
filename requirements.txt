@@ -3,11 +3,14 @@ Mako
 PyGithub
 PyHamcrest
 addict
+babel
 beautifulsoup4
 behave
 boto3
 bs4
 diff-match-patch
+fluent
+fluent.runtime
 gherkin-official
 github3.py
 inflect
@@ -33,12 +36,8 @@ python-slugify
 readmd
 redo
 reformat_gherkin
-reformat_gherkin
 requests
 ruamel.yaml
 selenium
 snakemake>=7.16
 toml
-fluent
-fluent.runtime
-babel
