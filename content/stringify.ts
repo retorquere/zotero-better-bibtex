@@ -13,23 +13,9 @@ export function stable_stringify(obj: any, replacer?: any, indent?: string | num
 
 function stringifyXPCOM(obj): string {
   if (!obj.QueryInterface) return ''
-  let str: string
-
-  try {
-    str = obj.toString?.() || ''
-  }
-  catch (err) {
-    str = err.message || '<toString error>'
-  }
-
-  try {
-    if (obj.message) return `[XPCOM error ${obj.message} ${str}`
-    if (obj.name) return `[XPCOM object ${obj.name} ${str}]`
-    return `[XPCOM object ${str}]`
-  }
-  catch (err) {
-    return `[unserialisable XPCOM object ${str}]`
-  }
+  if (obj.message) return `[XPCOM error ${obj.message}]`
+  if (obj.name) return `[XPCOM object ${obj.name}]`
+  return '[XPCOM object]'
 }
 
 function stringifyError(obj) {

@@ -79,31 +79,37 @@ export class ZoteroItemPane {
       const citekey = Zotero.BetterBibTeX.KeyManager.get(this.item.itemID)
       if (!citekey) return
 
-      const fieldHeader = elements.create(client.is7 ? 'th' : 'label')
-      fieldHeader.setAttribute('fieldname', 'citationKey')
       const headerContent = `${l10n.localize('better-bibtex_item-pane_citekey')}${citekey.pinned ? ` ${icons.pin}` : ''}`
-      if (client.is7) {
-        const label = elements.create('label')
-        label.className = 'key'
-        label.textContent = headerContent
-        fieldHeader.appendChild(label)
-      }
-      else {
-        fieldHeader.setAttribute('value', headerContent)
-      }
+      const header = client.is7
 
-      let fieldValue: HTMLElement
+        ? elements
+          .create('th', {
+            onclick: ev => { ev.currentTarget.nextElementSibling?.querySelector('input, textarea')?.blur() },
+            fieldname: 'citationKey',
+          })
+          .appendChild(elements.create('label', { class: 'key', value: headerContent }))
+          .parentElement
+
+        : elements
+          .create('label', {
+            onclick: ev => { ((ev.currentTarget as HTMLElement).nextElementSibling as any)?.inputField?.blur() },
+            value: headerContent,
+            fieldname: 'citationKey',
+          })
+
+      /*
+      let value: HTMLElement
       if (client.is7) {
         // can't be a read-only textbox because that makes blur in the itembox go bananas
-        fieldValue = elements.create('span', {
+        value = elements.create('span', {
           id: 'itembox-field-value-citationKey',
           fieldName: 'citationKey',
           style: 'color: black; user-select: text;',
         }, NAMESPACE.HTML)
-        fieldValue.textContent = citekey.citekey
+        value.textContent = citekey.citekey
       }
       else {
-        fieldValue = elements.create('input', {
+        value = elements.create('input', {
           id: 'itembox-field-value-citationKey',
           fieldName: 'citationKey',
           type: 'text',
@@ -111,16 +117,19 @@ export class ZoteroItemPane {
           value: citekey.citekey,
         }, NAMESPACE.HTML)
       }
+      */
+      const value = elements.create('input', {
+        id: 'itembox-field-value-citationKey',
+        fieldname: 'citationKey',
+        type: 'text',
+        readonly: 'true',
+        value: citekey.citekey,
+      }, NAMESPACE.HTML)
 
       const table = client.is7 ? this._infoTable : this._dynamicFields // eslint-disable-line no-underscore-dangle
-      const fieldIndex = 1
-      if (fieldIndex < table.children.length) {
-        this._beforeRow = table.children[fieldIndex]
-        this.addDynamicRow(fieldHeader, fieldValue, true)
-      }
-      else {
-        this.addDynamicRow(fieldHeader, fieldValue)
-      }
+      const beforeRow = table.children[1] // item type must be first
+      if (beforeRow) this._beforeRow = beforeRow
+      this.addDynamicRow(header, value, beforeRow)
     })
   }
 

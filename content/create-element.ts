@@ -38,6 +38,7 @@ export class Elements {
       }
     }
     Elements.all.add(elt)
+
     return elt
   }
 

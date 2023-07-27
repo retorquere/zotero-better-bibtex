@@ -2,7 +2,7 @@
 import type BluebirdPromise from 'bluebird'
 
 if (Zotero.platformMajorVersion < 102) { // eslint-disable-line no-magic-numbers
-  Components.utils.importGlobalProperties(['fetch', 'TextEncoder', 'TextDecoder'])
+  Components.utils.importGlobalProperties(['fetch', 'TextEncoder', 'TextDecoder', 'XMLSerializer'])
 }
 
 let $window: Window
@@ -265,7 +265,7 @@ $patch$(Zotero.ItemFields, 'isFieldOfBase', original => function Zotero_ItemFiel
 
 // because the zotero item editor does not check whether a textbox is read-only. *sigh*
 $patch$(Zotero.Item.prototype, 'setField', original => function Zotero_Item_prototype_setField(field: string, _value: any, _loadIn: any) {
-  if (['citekey', 'itemID'].includes(field)) return false
+  if (['citationKey', 'itemID'].includes(field)) return false
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   return original.apply(this, arguments)
 })
