@@ -1,0 +1,9 @@
+#!/bin/bash
+
+rm -f zotero-beta.dmg
+curl -L -o zotero-beta.dmg 'https://www.zotero.org/download/client/dl?platform=mac&channel=beta'
+hdiutil attach zotero-beta.dmg
+rm -rf /Applications/Zotero-beta.app
+cp -r /Volumes/Zotero/Zotero.app /Applications/Zotero-beta.app
+hdiutil detach /Volumes/Zotero
+./util/macos-zotero-startup-p

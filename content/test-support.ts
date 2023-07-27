@@ -40,7 +40,8 @@ export class TestSupport {
     return (AutoExport.db.find($and({ status: 'running' })).length > 0)
   }
 
-  public async reset(_scenario: string): Promise<void> {
+  public async reset(scenario: string): Promise<void> {
+    log.debug('test environment reset for', scenario)
     Cache.reset('test environment reset')
 
     let collections
