@@ -124,12 +124,19 @@ export const KeyManager = new class _KeyManager {
     if (warnAt > 0 && ids.length > warnAt) {
       const affected = this.keys.find({ $and: [{ itemID: { $in: ids } }, { pinned: { $eq: false } } ] }).length
       if (affected > warnAt) {
-        const params = { treshold: warnAt, response: null }
-        Zotero.BetterBibTeX.openDialog('chrome://zotero-better-bibtex/content/bulk-keys-confirm.xul', '', 'chrome,dialog,centerscreen,modal', params)
-        switch (params.response) {
-          case 'ok':
+        const ps = Components.classes['@mozilla.org/embedcomp/prompt-service;1'].getService(Components.interfaces.nsIPromptService)
+        const index = ps.confirmEx(
+          null, // no parent
+          'Better BibTeX for Zotero', // dialog title
+          l10n.localize('better-bibtex_bulk-keys-confirm.value', { treshold: warnAt }),
+          ps.STD_OK_CANCEL_BUTTONS + ps.BUTTON_POS_2 * ps.BUTTON_TITLE_IS_STRING, // buttons
+          null, null, l10n.localize('better-bibtex_bulk-keys-confirm.buttonlabelextra1'), // button labels
+          null, {} // no checkbox
+        )
+        switch (index) {
+          case 0: // OK
             break
-          case 'whatever':
+          case 2: // don't ask again
             Preference.warnBulkModify = 0
             break
           default:
