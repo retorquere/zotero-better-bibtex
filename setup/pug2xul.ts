@@ -37,8 +37,9 @@ class XHTML extends ASTWalker {
         if (!history.find(n => n.name === 'window')) {
           this.modified = true
           const attrs = tag.attrs
+          tag.attrs = []
           tag = this.tag('window', {}, [
-            this.tag('linkset', {}, [ this.tag('html:link', { rel: 'localization', href: 'better-bibtex.ftl' }) ]),
+            // this.tag('linkset', {}, [ this.tag('html:link', { rel: 'localization', href: 'better-bibtex.ftl' }) ]),
             this.tag('script', { src: 'chrome://global/content/customElements.js' }),
             tag,
           ])
@@ -62,8 +63,6 @@ const pugs = [
   'content/Preferences/xhtml.pug',
   'content/ServerURL.pug',
   'content/ZoteroPane.pug',
-  'content/bulk-keys-confirm.pug',
-  'content/regenerate-keys.pug',
   'content/zotero-preferences.pug',
 ]
 for (const src of pugs) {
