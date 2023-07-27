@@ -55,7 +55,9 @@ export class Orchestrator {
 
   private async run(phase: Phase, reason: Reason, progress?: Progress): Promise<void> {
     const total = Object.keys(this.tasks).length
-    let ran = 0
+
+    const finished: Set<string> = new Set
+    const running: Set<string> = new Set
 
     const circular = Promise.reject(new Error('circular dependency'))
     circular.catch(() => { /* ignore */ }) // prevent unhandled rejection
@@ -71,23 +73,28 @@ export class Orchestrator {
       return this.promises[phase][name] = Promise
         .all(Array.from(dependencies).map(run))
 
-        .then(() => {
-          print(`better-bibtex orchestrator: running ${phase}.${name}`)
+        .then(async () => {
           if (phase === 'startup') {
+            Zotero.debug(`orchestrator progress: starting ${name}, running ${[...running]}`)
             this.tasks[name].started = Date.now()
-            progress?.(phase, name, ran++, total, `starting ${description}`)
+            running.add(name)
+            progress?.(phase, name, finished.size, total, description)
           }
-        })
 
-        .then(() => action(reason) as Promise<void | string>)
-
-        .then(_result => {
-          print(`better-bibtex orchestrator: finished ${phase}.${name}`)
-          if (phase === 'startup') {
-            this.tasks[name].finished = Date.now()
+          try {
+            return await action(reason) as Promise<void | string>
           }
-          // result = result ? `: ${result}` : ''
-          // progress?.(phase, name, ++ran, total, `${description} started${result}`)
+
+          finally {
+            if (phase === 'startup') {
+              this.tasks[name].finished = Date.now()
+              finished.add(name)
+              running.delete(name)
+              Zotero.debug(`orchestrator progress: finished ${name}, running ${[...running]}`)
+
+              progress?.(phase, name, finished.size, total, running.size ? this.tasks[[...running][0]].description : '')
+            }
+          }
         })
 
         .catch(err => {
@@ -95,31 +102,43 @@ export class Orchestrator {
           throw err
         })
     }
+
     await Promise.all(Object.keys(this.tasks).map(run))
   }
 
-  private graphviz() {
-    let g = 'digraph {\n'
-
-    for (const phase of ['startup', 'shutdown']) {
-      const v = (id: string) => JSON.stringify(`${phase}.${id}`)
-      const l = (task: Task) => phase === 'startup' ? `${task.id}\n+${task.started - this.started}+${task.finished - task.started}` : `${task.id}`
-
-      g += `  subgraph cluster_${phase} {\n`
-      g += `    label=${JSON.stringify(phase)}\n`
-
-      for (const task of Object.values(this.tasks)) {
-        g += `    ${v(task.id)} [label=${JSON.stringify(l(task))}]\n`
-
-        for (const dep of task.dependencies[phase]) {
-          g += `    ${v(dep)} -> ${v(task.id)}\n`
+  private gantt() {
+    let unsorted = Object.values(this.tasks)
+    const sorted: string[] = []
+    const tasks: Task[] = []
+    while (unsorted.length) {
+      unsorted = unsorted.filter(task => {
+        if (task.needs.filter(needed => !sorted.includes(needed)).length) {
+          return true
         }
-      }
-
-      g += '  }\n'
+        else {
+          sorted.push(task.id)
+          tasks.push(task)
+          return false
+        }
+      })
     }
 
-    g += '}\n'
+    const scale = n => Math.ceil(n/100)
+
+    let g = '@startgantt\n'
+    for (const task of tasks) {
+      g += `  [${task.id}] lasts ${scale(task.finished - task.started)} days\n`
+      for (const needed of task.needs) {
+        g += `  [${task.id}] starts at [${needed}]'s end\n`
+      }
+    }
+    g += '@endgantt\n'
+
+    g += '@startgantt\n'
+    for (const task of tasks) {
+      g += `  [${task.id}] starts D+${scale(task.started - this.started)} and ends D+${scale(task.finished - this.started)}\n`
+    }
+    g += '@endgantt\n'
     return g
   }
 
@@ -140,6 +159,7 @@ export class Orchestrator {
         this.tasks[needed].needed = true
       }
 
+      task.needs = [...(new Set(task.needs))].sort()
       task.dependencies = {
         startup: new Set(task.needs),
         shutdown: new Set,
@@ -165,7 +185,7 @@ export class Orchestrator {
     await this.run('startup', reason, progress)
     progress?.('startup', 'ready', 100, 100, 'ready')
 
-    Zotero.debug(`orchestrator:\n${this.graphviz()}`)
+    Zotero.debug(`orchestrator:\n${this.gantt()}`)
   }
 
   public async shutdown(reason: Reason, progress?: Progress): Promise<void> {
