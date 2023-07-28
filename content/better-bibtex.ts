@@ -1,9 +1,7 @@
 /* eslint-disable prefer-rest-params */
 import type BluebirdPromise from 'bluebird'
 
-if (Zotero.platformMajorVersion < 102) { // eslint-disable-line no-magic-numbers
-  Components.utils.importGlobalProperties(['fetch', 'TextEncoder', 'TextDecoder', 'XMLSerializer'])
-}
+import { is7 } from './client'
 
 let $window: Window
 
@@ -16,7 +14,6 @@ import type { XUL } from '../typings/xul'
 
 import { icons } from './icons'
 import { prompt } from './prompt'
-import { is7 } from './client'
 import { Elements } from './create-element'
 import { newZoteroPane } from './ZoteroPane'
 import { newZoteroItemPane } from './ZoteroItemPane'
