@@ -91,6 +91,8 @@ sys.argv = sys.argv[:1] + unknownargs
 if args.start:
   args.keep = True
   sys.argv += ['--tags', '@none']
+if args.keep:
+  args.headless = False
 
 if args.client.endswith('-beta'):
   args.client = args.client.split('-')[0]
