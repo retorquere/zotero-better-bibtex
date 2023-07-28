@@ -1,7 +1,7 @@
 @install
 Feature: Install
 
-  @use.with_beta=true
+  @use.with_install=true
   Scenario: reinstall the bootstrapped XPI
     When I install xpi/zotero-better-bibtex-*.xpi
     And I import 1 reference from "export/*.json"
