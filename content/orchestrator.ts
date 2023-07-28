@@ -85,6 +85,11 @@ export class Orchestrator {
             return await action(reason) as Promise<void | string>
           }
 
+          catch (err) {
+            print(`orchestrator error: ${phase}.${name} failed: ${err}\n${err.stack}`)
+            throw err
+          }
+
           finally {
             if (phase === 'startup') {
               this.tasks[name].finished = Date.now()

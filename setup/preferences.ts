@@ -1,4 +1,4 @@
-#!/usr/bin/env npx ts-node
+#!/usr/bin/env -S npx ts-node
 
 /* eslint-disable @typescript-eslint/no-unsafe-return, no-magic-numbers, no-console, @typescript-eslint/no-shadow, no-eval, @typescript-eslint/no-empty-function, id-blacklist */
 
@@ -36,7 +36,9 @@ const translators = glob.sync('translators/*.json')
 
 
 const l10n = new class {
-  private strings = peggy.generate(fs.readFileSync('content/dtd-file.peggy', 'utf-8')).parse(fs.readFileSync('build/locale/en-US/zotero-better-bibtex.dtd', 'utf-8')) as Record<string, string>
+  private strings = peggy
+    .generate(fs.readFileSync('content/dtd-file.peggy', 'utf-8'))
+    .parse(fs.readFileSync('build/locale/en-US/zotero-better-bibtex.dtd', 'utf-8')) as Record<string, string>
 
   private find(id: string): string {
     if (id.startsWith('zotero.general.')) return `&${id};`

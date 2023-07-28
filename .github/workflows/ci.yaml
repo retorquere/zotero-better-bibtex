@@ -76,7 +76,7 @@ jobs:
         key: ${{ runner.os }}-build-${{ env.pythonLocation }}-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('requirements.txt') }}
     - name: install python packages
       run: |
-        pip install packaging
+        pip install packaging xvfbwrapper
         python -m pip install --upgrade pip
         pip install -r requirements.txt
     - name: install node packages
@@ -124,7 +124,7 @@ jobs:
         key: ${{ runner.os }}-build-${{ env.pythonLocation }}-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('requirements.txt') }}
     - name: install python packages
       run: |
-        pip install packaging
+        pip install packaging xvfbwrapper
         python -m pip install --upgrade pip
         pip install -r requirements.txt
     - name: install node packages
@@ -184,7 +184,7 @@ jobs:
         key: ${{ runner.os }}-build-${{ env.pythonLocation }}-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('requirements.txt') }}
     - name: install python packages
       run: |
-        pip install packaging
+        pip install packaging xvfbwrapper
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
@@ -199,7 +199,7 @@ jobs:
         sudo mv pandoc-2.19.2/bin/pandoc /usr/bin
         pandoc -v
     - name: Run tests
-      run: xvfb-run --auto-servernum ./test/behave --client ${{ matrix.client }} ${{ matrix.worker }} --format ci --bin ${{ matrix.bin }} --bins $BINS --durations logs/stats/durations-${{ matrix.client }}-${{ matrix.bin }}${{ matrix.worker }}.json ${{ needs.balance.outputs.slow }}
+      run: ./test/behave --client ${{ matrix.client }} ${{ matrix.worker }} --format ci --bin ${{ matrix.bin }} --bins $BINS --durations logs/stats/durations-${{ matrix.client }}-${{ matrix.bin }}${{ matrix.worker }}.json ${{ needs.balance.outputs.slow }}
       env:
         PYTHONUNBUFFERED: true
     - uses: actions/upload-artifact@v3
@@ -252,7 +252,7 @@ jobs:
         key: ${{ runner.os }}-build-${{ env.pythonLocation }}-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('requirements.txt') }}
     - name: install python packages
       run: |
-        pip install packaging
+        pip install packaging xvfbwrapper
         python -m pip install --upgrade pip
         pip install -r requirements.txt
     - name: install node packages

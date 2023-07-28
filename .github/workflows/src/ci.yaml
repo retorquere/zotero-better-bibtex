@@ -35,7 +35,7 @@ _anchors:
   install_python_packages: &install_python_packages
     name: install python packages
     run: |
-      pip install packaging
+      pip install packaging xvfbwrapper
       python -m pip install --upgrade pip
       pip install -r requirements.txt
   install_node_packages: &install_node_packages
@@ -191,7 +191,7 @@ jobs:
     # needs logs/logs to have them show up as logs in the artifact... no idea why
     - name: Run tests
       # continue-on-error: ${{ matrix.client == 'jurism' }}
-      run: xvfb-run --auto-servernum ./test/behave --client ${{ matrix.client }} ${{ matrix.worker }} --format ci --bin ${{ matrix.bin }} --bins $BINS --durations logs/stats/durations-${{ matrix.client }}-${{ matrix.bin }}${{ matrix.worker }}.json ${{ needs.balance.outputs.slow }}
+      run: ./test/behave --client ${{ matrix.client }} ${{ matrix.worker }} --format ci --bin ${{ matrix.bin }} --bins $BINS --durations logs/stats/durations-${{ matrix.client }}-${{ matrix.bin }}${{ matrix.worker }}.json ${{ needs.balance.outputs.slow }}
       env:
         PYTHONUNBUFFERED: true
 
