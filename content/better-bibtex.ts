@@ -255,33 +255,54 @@ if (typeof Zotero.DataObjects.prototype.parseLibraryKey === 'function') {
 
 // otherwise the display of the citekey in the item pane flames out
 $patch$(Zotero.ItemFields, 'isFieldOfBase', original => function Zotero_ItemFields_isFieldOfBase(field: string, _baseField: any) {
-  if (['citationKey', 'citekey', 'itemID'].includes(field)) return false
+  if (field === 'citationKey') return false
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   return original.apply(this, arguments)
 })
 
 // because the zotero item editor does not check whether a textbox is read-only. *sigh*
-$patch$(Zotero.Item.prototype, 'setField', original => function Zotero_Item_prototype_setField(field: string, _value: any, _loadIn: any) {
-  if (['citationKey', 'itemID'].includes(field)) return false
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  return original.apply(this, arguments)
+$patch$(Zotero.Item.prototype, 'setField', original => function Zotero_Item_prototype_setField(field: string, value: string | undefined, _loadIn: any) {
+  if (field === 'citationKey') {
+    const bbt = Zotero.BetterBibTeX // eslint-disable-line @typescript-eslint/no-use-before-define
+    if (bbt.ready.isPending()) return false
+
+    const citekey = bbt.KeyManager.get(this.id)
+    if (citekey.retry) return false
+
+    if (typeof value !== 'string') value = ''
+    if (!value) {
+      this.setField('extra', Extra.get(this.getField('extra') as string, 'zotero', { citationKey: true }).extra)
+      bbt.KeyManager.update(this)
+      return true
+    }
+    else if (value !== citekey.citekey) {
+      this.setField('extra', Extra.set(this.getField('extra'), { citationKey: value }))
+      citekey.pinned = true
+      citekey.citekey = value
+      bbt.KeyManager.keys.update(citekey)
+      return true
+    }
+    else {
+      return false
+    }
+  }
+  else {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    return original.apply(this, arguments)
+  }
 })
 
 // To show the citekey in the item list
 $patch$(Zotero.Item.prototype, 'getField', original => function Zotero_Item_prototype_getField(field: any, unformatted: any, includeBaseMapped: any) {
   try {
-    switch (field) {
-      case 'citekey':
-      case 'citationKey':
-        if (Zotero.BetterBibTeX.ready.isPending()) return '' // eslint-disable-line @typescript-eslint/no-use-before-define
-        return Zotero.BetterBibTeX.KeyManager.get(this.id).citekey
-
-      case 'itemID':
-        return `${this.id}`
+    if (field === 'citationKey') {
+      if (Zotero.BetterBibTeX.ready.isPending()) return '' // eslint-disable-line @typescript-eslint/no-use-before-define
+      return Zotero.BetterBibTeX.KeyManager.get(this.id).citekey
     }
   }
   catch (err) {
     log.error('patched getField:', {field, unformatted, includeBaseMapped, err})
+    return ''
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
