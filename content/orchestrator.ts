@@ -86,7 +86,7 @@ export class Orchestrator {
           }
 
           catch (err) {
-            log.error('orchestrator error:', phase, name, 'failed:', err)
+            print(`orchestrator error: ${phase}.${name} failed: ${err}\n${err.stack}`)
             throw err
           }
 
