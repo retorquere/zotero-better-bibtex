@@ -33,31 +33,38 @@ export function stringify(obj, indent: number | string = 2, ucode?: boolean) { /
   const stringified = JSON.stringify(
     obj,
     (key, value): any => {
-      switch (typeof value) {
-        case 'number':
-        case 'string':
-        case 'boolean':
-        case 'undefined':
-          return value
-      }
+      try {
+        switch (typeof value) {
+          case 'number':
+          case 'string':
+          case 'boolean':
+          case 'undefined':
+            return value
+          case 'function':
+            return `[function ${key}]`
+        }
 
-      if (value === null) return value
-      if (cache.includes(value)) return '[circular]'
+        if (value === null) return value
+        if (cache.includes(value)) return '[circular]'
 
-      if (value instanceof RegExp) {
-        value = value.source
+        if (value instanceof RegExp) {
+          value = value.source
+        }
+        else if (replacement = stringifyXPCOM(value)) {
+          value = replacement
+        }
+        else if (replacement = stringifyError(value)) {
+          value = replacement
+        }
+        else {
+          replacement = ''
+        }
+        if (!replacement) cache.push(value)
+        return replacement || value
       }
-      else if (replacement = stringifyXPCOM(value)) {
-        value = replacement
+      catch (err) {
+        return `[stringify error: ${err}\n${err.stack}]`
       }
-      else if (replacement = stringifyError(value)) {
-        value = replacement
-      }
-      else {
-        replacement = ''
-      }
-      if (!replacement) cache.push(value)
-      return replacement || value
     },
     indent
   )

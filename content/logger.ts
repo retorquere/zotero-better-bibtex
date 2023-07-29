@@ -21,6 +21,7 @@ function toString(obj): string {
 
 class Logger {
   protected timestamp: number
+  public prefix = ''
 
   private format({ error=false }, msg) {
     let diff = null
@@ -38,7 +39,7 @@ class Logger {
 
     if (error) prefix += ' error:'
 
-    return `{better-bibtex${prefix}} +${diff} ${asciify(msg)}`
+    return `{better-bibtex${this.prefix}${prefix}} +${diff} ${asciify(msg)}`
   }
 
   public get enabled(): boolean {
