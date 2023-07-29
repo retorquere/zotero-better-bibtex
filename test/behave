@@ -71,7 +71,6 @@ parser.add_argument('--logging', '--no-logging', dest='logging', action=BooleanA
 parser.add_argument('--caching', '--no-caching', dest='caching', action=BooleanAction, default=True)
 parser.add_argument('--headless', '--no-headless', dest='headless', action=BooleanAction, default=platform.system() == 'Linux')
 parser.add_argument('--this', action='store_true')
-parser.add_argument('--install', action='store_true')
 parser.add_argument('--test-this', action='store_true')
 parser.add_argument('--slow', action='store_true',
   default = CI.branch == 'master' or
@@ -88,9 +87,6 @@ parser.add_argument('--tagged', action='store_true', default=CI.tag != '')
 parser.add_argument('--nightly', action='store_true', default=(CI.event == 'schedule') or ('#nightly' in CI.message))
 args, unknownargs = parser.parse_known_args()
 sys.argv = sys.argv[:1] + unknownargs
-
-if args.install:
-  args.beta = True
 
 if args.start:
   args.keep = True
@@ -136,7 +132,6 @@ if args.stop: sys.argv.append('--stop')
 if args.slow: sys.argv.extend(['--define', 'slow=true'])
 
 if args.beta: sys.argv.extend(['--define', 'beta=true'])
-if args.install: sys.argv.extend(['--define', 'install=true'])
 
 if args.test: sys.argv.extend(['--define', f'test={args.test}'])
 if args.durations: sys.argv.extend(['--define', f'durations={args.durations}'])

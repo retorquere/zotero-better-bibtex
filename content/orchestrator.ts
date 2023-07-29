@@ -29,6 +29,7 @@ export type Task = {
 export type Progress = (phase: string, name: string, done: number, total: number, message?: string) => void
 
 export class Orchestrator {
+  public id: string = Zotero.Utilities.generateObjectKey()
   public start: Actor = 'start'
   public done: Actor = 'done'
   public started: number
@@ -54,20 +55,34 @@ export class Orchestrator {
   }
 
   private async run(phase: Phase, reason: Reason, progress?: Progress): Promise<void> {
-    const total = Object.keys(this.tasks).length
-
-    const finished: Set<string> = new Set
-    const running: Set<string> = new Set
+    const tasks = Object.values(this.tasks)
 
     const circular = Promise.reject(new Error('circular dependency'))
     circular.catch(() => { /* ignore */ }) // prevent unhandled rejection
+
+    const time = ts => (new Date(ts)).toISOString()
+
+    const report = name => {
+      if (phase !== 'startup') return
+
+      const task = this.tasks[name]
+
+      const runname = `[${this.id}.${name}]`.padEnd(30, ' ') // eslint-disable-line no-magic-numbers
+      const mark = (task.finished ? ' finished at ' : ' started at ').padEnd(15, ' ') // eslint-disable-line no-magic-numbers
+      print(`orchestrator: ${runname}${mark}${time(task.finished || task.started)}`)
+
+      progress?.(phase, name, tasks.filter(t => t.finished).length, tasks.length, task.description)
+    }
+    const running = () => tasks.filter(task => task.started && !task.finished).map(task => task.id)
 
     const run = name => {
       const promise: Promise<void> = this.promises[phase][name]
       if (promise != null) return promise
 
-      let { [phase]: action, description, dependencies: { [phase]: dependencies } } = this.tasks[name]
+      const task = this.tasks[name]
+      let { [phase]: action, dependencies: { [phase]: dependencies } } = task
       if (!action) action = async () => `nothing to do for ${name}.${phase} ${reason || ''}` // eslint-disable-line @typescript-eslint/require-await
+
 
       this.promises[phase][name] = circular
       return this.promises[phase][name] = Promise
@@ -75,10 +90,9 @@ export class Orchestrator {
 
         .then(async () => {
           if (phase === 'startup') {
-            Zotero.debug(`orchestrator progress: starting ${name}, running ${[...running]}`)
-            this.tasks[name].started = Date.now()
-            running.add(name)
-            progress?.(phase, name, finished.size, total, description)
+            Zotero.debug(`orchestrator progress: starting ${name}, running [${running()}]`)
+            task.started = Date.now()
+            report(name)
           }
 
           try {
@@ -92,12 +106,9 @@ export class Orchestrator {
 
           finally {
             if (phase === 'startup') {
-              this.tasks[name].finished = Date.now()
-              finished.add(name)
-              running.delete(name)
-              Zotero.debug(`orchestrator progress: finished ${name}, running ${[...running]}`)
-
-              progress?.(phase, name, finished.size, total, running.size ? this.tasks[[...running][0]].description : '')
+              task.finished = Date.now()
+              Zotero.debug(`orchestrator progress: finished ${name}, running [${running()}]`)
+              report(name)
             }
           }
         })
