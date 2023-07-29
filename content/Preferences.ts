@@ -400,7 +400,8 @@ export class PrefPane {
 
     const editing = $window.document.getElementById('bbt-preferences-citekeyFormatEditing')
     editing.setAttribute('style', style)
-    editing.setAttribute('tooltiptext', error)
+    editing.setAttribute(is7 ? 'title' : 'tooltiptext', error)
+    if (is7) editing.setAttribute('tooltip', 'html-tooltip')
 
     const msg = $window.document.getElementById('bbt-citekeyFormat-error') as HTMLInputElement
     msg.value = error
@@ -430,7 +431,8 @@ export class PrefPane {
 
     const postscript = $window.document.getElementById('bbt-postscript')
     postscript.setAttribute('style', (error ? '-moz-appearance: none !important; background-color: DarkOrange' : ''))
-    postscript.setAttribute('tooltiptext', error)
+    postscript.setAttribute(is7 ? 'title' : 'tooltiptext', error)
+    if (is7) postscript.setAttribute('tooltip', 'html-tooltip')
     $window.document.getElementById('bbt-cache-warn-postscript').setAttribute('hidden', `${!Preference.postscript.includes('Translator.options.exportPath')}`)
   }
 
