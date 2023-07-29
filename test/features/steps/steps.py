@@ -422,4 +422,8 @@ def step_impl(context, xpi):
   xpis = glob.glob(xpi)
   assert len(xpis) > 0, f'{xpi} not found'
   assert len(xpis) == 1, f'multiple candidates for {xpi}'
-  context.zotero.execute('Zotero.DebugBridge.install(xpi)', xpi=os.path.abspath(xpis[0]))
+  context.zotero.execute('''
+    await Zotero.DebugBridge.install(xpi)
+    await Zotero.DebugBridge.busyWait(() => Zotero.BetterBibTeX && Zotero.BetterBibTeX.ready)
+    await Zotero.BetterBibTeX.ready
+  ''', xpi=os.path.abspath(xpis[0]))

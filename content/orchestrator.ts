@@ -153,9 +153,14 @@ export class Orchestrator {
       let { action, needs } = task
       if (!action) action = async () => `nothing to do for ${name}.${phase} ${reason || ''}` // eslint-disable-line @typescript-eslint/require-await
 
+      const needed = async () => {
+        await Promise.all(needs.map(run))
+        // for (const dep of needs) await run(dep)
+      }
+
       promises[name] = circular
-      return promises[name] = Promise
-        .all(needs.map(run))
+
+      return promises[name] = needed()
 
         .then(async () => {
           task.started = Date.now()

@@ -7,7 +7,7 @@ const {
 
 const AsyncFunction = Object.getPrototypeOf(async function(){}).constructor
 
-Cu.import('resource://gre/modules/AddonManager.jsm')
+const { AddonManager } = ChromeUtils.import('resource://gre/modules/AddonManager.jsm')
 
 if (typeof Zotero == 'undefined') {
   var Zotero
@@ -113,9 +113,26 @@ function install(data, reason) {
 }
 
 class DebugBridge {
+  async enable(id) {
+    const addon = await AddonManager.getAddonByID(addonID)
+    addon.userDisabled = false
+  }
+  async disable(id) {
+    const addon = await AddonManager.getAddonByID(addonID)
+    addon.userDisabled = true
+  }
   async install(xpi) {
-    await AddonManager.readyPromise
-    AddonManager.installTemporaryAddon(Zotero.File.pathToFile(xpi))
+    const addon = await AddonManager.getInstallForFile(Zotero.File.pathToFile(xpi))
+    if (addon && addon.state === AddonManager.STATE_AVAILABLE) addon.install()
+  }
+
+  async busyWait(test, msecs = 5000) {
+    const start = Date.now()
+    const delay = 10
+    while (!test()) {
+      await Zotero.Promise.delay(delay)
+      if (Date.now() - start > msecs) throw new Error(`timeout after ${msecs}ms`)
+    }
   }
 }
 

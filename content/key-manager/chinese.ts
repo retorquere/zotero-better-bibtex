@@ -23,7 +23,11 @@ export const chinese = new class {
       // needed because jieba-js does environment detection
       this.window = this.window || Zotero.getMainWindow()
       this.document = this.document || this.window.document
-      Services.scriptloader.loadSubScript('chrome://zotero-better-bibtex/content/key-manager/chinese.js', this)
+      Services.scriptloader.loadSubScriptWithOptions('chrome://zotero-better-bibtex/content/key-manager/chinese.js', {
+        target: this,
+        charset: 'utf-8',
+        // ignoreCache: true,
+      })
     }
     return on
   }
