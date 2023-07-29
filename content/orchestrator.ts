@@ -22,8 +22,7 @@ export type Task = {
   needed: boolean
   dependencies?: Record<Phase, Set<Actor>>
 
-  started: number
-  finished: number
+  time: Record<Phase, { started: number, finished: number }>
 }
 
 export type Progress = (phase: string, name: string, done: number, total: number, message?: string) => void
@@ -49,8 +48,10 @@ export class Orchestrator {
       shutdown,
       needed: false,
       needs: needs || [],
-      started: 0,
-      finished: 0,
+      time: {
+        startup: { started: 0, finished: 0 },
+        shutdown: { started: 0, finished: 0 },
+      },
     }
   }
 
@@ -62,18 +63,17 @@ export class Orchestrator {
 
     const time = ts => (new Date(ts)).toISOString()
 
-    const report = name => {
-      if (phase !== 'startup') return
-
+    const running = () => tasks.filter(task => task.time[phase].started && !task.time[phase].finished).map(task => task.id)
+    const report = (name: string) => {
       const task = this.tasks[name]
 
       const runname = `[${this.id}.${name}]`.padEnd(30, ' ') // eslint-disable-line no-magic-numbers
-      const mark = (task.finished ? ' finished at ' : ' started at ').padEnd(15, ' ') // eslint-disable-line no-magic-numbers
-      print(`orchestrator: ${runname}${mark}${time(task.finished || task.started)}`)
+      const mark = (task.time[phase].finished ? ' finished at ' : ' started at ').padEnd(15, ' ') // eslint-disable-line no-magic-numbers
+      // eslint-disable-next-line no-magic-numbers
+      print(`orchestrator: ${runname} ${phase.padEnd(10, ' ')} ${mark}${time(task.time[phase].finished || task.time[phase].started)} running [${running()}]`)
 
-      progress?.(phase, name, tasks.filter(t => t.finished).length, tasks.length, task.description)
+      if (phase === 'startup') progress?.(phase, name, tasks.filter(t => t.time[phase].finished).length, tasks.length, task.description)
     }
-    const running = () => tasks.filter(task => task.started && !task.finished).map(task => task.id)
 
     const run = name => {
       const promise: Promise<void> = this.promises[phase][name]
@@ -89,11 +89,8 @@ export class Orchestrator {
         .all(Array.from(dependencies).map(run))
 
         .then(async () => {
-          if (phase === 'startup') {
-            Zotero.debug(`orchestrator progress: starting ${name}, running [${running()}]`)
-            task.started = Date.now()
-            report(name)
-          }
+          task.time[phase].started = Date.now()
+          report(name)
 
           try {
             return await action(reason) as Promise<void | string>
@@ -105,11 +102,8 @@ export class Orchestrator {
           }
 
           finally {
-            if (phase === 'startup') {
-              task.finished = Date.now()
-              Zotero.debug(`orchestrator progress: finished ${name}, running [${running()}]`)
-              report(name)
-            }
+            task.time[phase].finished = Date.now()
+            report(name)
           }
         })
 
@@ -143,7 +137,7 @@ export class Orchestrator {
 
     let g = '@startgantt\n'
     for (const task of tasks) {
-      g += `  [${task.id}] lasts ${scale(task.finished - task.started)} days\n`
+      g += `  [${task.id}] lasts ${scale(task.time.startup.finished - task.time.startup.started)} days\n`
       for (const needed of task.needs) {
         g += `  [${task.id}] starts at [${needed}]'s end\n`
       }
@@ -152,7 +146,7 @@ export class Orchestrator {
 
     g += '@startgantt\n'
     for (const task of tasks) {
-      g += `  [${task.id}] starts D+${scale(task.started - this.started)} and ends D+${scale(task.finished - this.started)}\n`
+      g += `  [${task.id}] starts D+${scale(task.time.startup.started - this.started)} and ends D+${scale(task.time.startup.finished - this.started)}\n`
     }
     g += '@endgantt\n'
     return g
