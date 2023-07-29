@@ -1,4 +1,4 @@
-@article{shelah1972,
+@article{bentley_academic_2011,
   title = {A Combinatorial Problem; Stability and Order for Models and Theories in Infinitary Languages},
   author = {Shelah, Saharon},
   date = {1972},
@@ -6,6 +6,5 @@
   volume = {41},
   pages = {247261},
   xref = {welker_andreas_1999},
-  annotation = {BBTCitation Key: bentley\_academic\_2011},
   note = {MR 46:7018}
 }
