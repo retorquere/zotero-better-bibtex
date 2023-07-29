@@ -76,8 +76,8 @@ jobs:
         key: ${{ runner.os }}-build-${{ env.pythonLocation }}-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('requirements.txt') }}
     - name: install python packages
       run: |
-        pip install packaging xvfbwrapper
         python -m pip install --upgrade pip
+        pip install packaging xvfbwrapper autopy
         pip install -r requirements.txt
     - name: install node packages
       run: npm install
@@ -124,8 +124,8 @@ jobs:
         key: ${{ runner.os }}-build-${{ env.pythonLocation }}-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('requirements.txt') }}
     - name: install python packages
       run: |
-        pip install packaging xvfbwrapper
         python -m pip install --upgrade pip
+        pip install packaging xvfbwrapper autopy
         pip install -r requirements.txt
     - name: install node packages
       run: npm install
@@ -184,8 +184,8 @@ jobs:
         key: ${{ runner.os }}-build-${{ env.pythonLocation }}-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('requirements.txt') }}
     - name: install python packages
       run: |
-        pip install packaging xvfbwrapper
         python -m pip install --upgrade pip
+        pip install packaging xvfbwrapper autopy
         pip install -r requirements.txt
 
     - name: install ${{ matrix.client }}
@@ -252,8 +252,8 @@ jobs:
         key: ${{ runner.os }}-build-${{ env.pythonLocation }}-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('requirements.txt') }}
     - name: install python packages
       run: |
-        pip install packaging xvfbwrapper
         python -m pip install --upgrade pip
+        pip install packaging xvfbwrapper autopy
         pip install -r requirements.txt
     - name: install node packages
       run: npm install

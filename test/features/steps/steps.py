@@ -17,6 +17,7 @@ import io
 import zipfile
 import html, re
 import timeit
+import platform
 
 from contextlib import contextmanager
 
@@ -428,3 +429,9 @@ def step_impl(context, action, xpi):
     context.zotero.execute('await Zotero.DebugBridge[action](addon)', action=action, addon=xpi)
   else:
     raise ValueError(f'Unsupported extension action {action}')
+
+@step('save a screenshot to {file}')
+def step_impl(context, file):
+  if platform.system() == 'Linux':
+    import autopy
+    autopy.bitmap.capture_screen().save(file)

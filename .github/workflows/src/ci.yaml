@@ -35,8 +35,8 @@ _anchors:
   install_python_packages: &install_python_packages
     name: install python packages
     run: |
-      pip install packaging xvfbwrapper
       python -m pip install --upgrade pip
+      pip install packaging xvfbwrapper autopy
       pip install -r requirements.txt
   install_node_packages: &install_node_packages
     name: install node packages

@@ -134,6 +134,7 @@ if args.slow: sys.argv.extend(['--define', 'slow=true'])
 if args.beta: sys.argv.extend(['--define', 'beta=true'])
 
 if args.test: sys.argv.extend(['--define', f'test={args.test}'])
+if args.headless: sys.argv.extend(['--define', f'headless=true'])
 if args.durations: sys.argv.extend(['--define', f'durations={args.durations}'])
 if args.import_at_start: sys.argv.extend(['--define', f'import={args.import_at_start}'])
 if args.this: sys.argv.extend(['--tags', args.this ])
