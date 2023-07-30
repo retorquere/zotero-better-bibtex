@@ -145,7 +145,7 @@ export const KeyManager = new class _KeyManager {
       }
     }
 
-    const updates = []
+    const updates: ZoteroItem[] = []
     for (const item of await getItemsAsync(ids)) {
       if (item.isFeedItem || !item.isRegularItem()) continue
 
@@ -154,7 +154,8 @@ export const KeyManager = new class _KeyManager {
       let citekey = Extra.get(extra, 'zotero', { citationKey: true }).extraFields.citationKey
       if (citekey) continue // pinned, leave it alone
 
-      this.update(item)
+      citekey = this.get(item.id).citekey
+      if (this.update(item) === citekey) continue
 
       // remove the new citekey from the aliases if present
       citekey = this.get(item.id).citekey
@@ -175,7 +176,7 @@ export const KeyManager = new class _KeyManager {
       }
     }
 
-    if (updates.length) void Events.emit('items-changed', { ids: updates, action: 'modify' })
+    if (updates.length) void Events.emit('items-changed', { items: updates, action: 'modify', reason: 'refresh' })
   }
 
   constructor() {
@@ -312,7 +313,7 @@ export const KeyManager = new class _KeyManager {
         Formatter.update([Preference.citekeyFormat])
       }
     })
-    Events.on('items-changed', ({ ids, action }) => {
+    Events.on('items-changed-prep', ({ ids, action }) => {
       let warn_titlecase = 0
       switch (action) {
         case 'delete':

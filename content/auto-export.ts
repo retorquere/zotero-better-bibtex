@@ -199,31 +199,6 @@ const queue = new class TaskQueue {
           break
       }
     })
-
-    Events.on('items-changed', ({ ids }) => {
-      if (!ids.length) return
-
-      const items = Zotero.Items.get(ids)
-
-      const collections: Set<number> = new Set
-      const libraries: Set<number> = new Set
-
-      for (const item of items) {
-        libraries.add(item.libraryID)
-
-        for (let collectionID of item.getCollections()) {
-          if (collections.has(collectionID)) continue
-
-          while (collectionID) {
-            collections.add(collectionID)
-            collectionID = Zotero.Collections.get(collectionID).parentID
-          }
-        }
-      }
-
-      if (collections.size) void Events.emit('collections-changed', [...collections])
-      if (libraries.size) void Events.emit('libraries-changed', [...libraries])
-    })
   }
 
   public init(autoexports) {
@@ -423,6 +398,7 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
 
   public schedule(type, ids) {
     for (const ae of this.db.find({$and: [{ type: {$eq: type} }, {id: { $in: ids } }] })) {
+      log.debug('emit: schedule', ae)
       queue.add(ae)
     }
   }

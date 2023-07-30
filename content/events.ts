@@ -22,7 +22,8 @@ class Emitter extends Emittery<{
   'collections-changed': number[]
   'collections-removed': number[]
   'export-progress': { pct: number, message: string, ae?: number }
-  'items-changed': { ids: number[], action: Action }
+  'items-changed-prep': { ids: number[], action: Action }
+  'items-changed': { items: ZoteroItem[], action: Action, reason?: string }
   'libraries-changed': number[]
   'libraries-removed': number[]
   'loaded': undefined
@@ -63,10 +64,10 @@ export const Events = new Emitter({
     logger: (type, debugName, eventName, eventData) => {
       try {
         if (typeof eventName === 'symbol') return
-        log.debug(debugName, type, eventName, eventData)
+        log.debug('emit:', debugName, type, eventName, eventData)
       }
       catch (err) {
-        log.debug(`${err}`)
+        log.debug(`emit: ${err}`)
       }
     },
   },
@@ -124,38 +125,59 @@ class ItemListener extends ZoteroListener {
     await Zotero.BetterBibTeX.ready
 
     // prevents update loop -- see KeyManager.init()
-    if (action === 'modify' && extraData) ids = ids.filter(id => !extraData[id].bbtCitekeyUpdate)
+    if (action === 'modify') ids = ids.filter(id => !extraData?.[id]?.bbtCitekeyUpdate)
     if (!ids.length) return
 
-    const parents: number[] = []
+    const parentIDs: number[] = []
+    // safe to use Zotero.Items.get(...) rather than Zotero.Items.getAsync here
+    // https://groups.google.com/forum/#!topic/zotero-dev/99wkhAk-jm0
+    const items = action === 'deleted' ? [] : Zotero.Items.get(ids).filter((item: ZoteroItem) => {
+      // check .deleted for #2401 -- we're getting *updated* (?!) notifications for trashed items which reinstates them into the BBT DB
+      if (action === 'modify' && item.deleted) return false
+      if (item.isFeedItem) return false
 
-    switch (action) {
-      case 'modify':
-      case 'add':
-        // safe to use Zotero.Items.get(...) rather than Zotero.Items.getAsync here
-        // https://groups.google.com/forum/#!topic/zotero-dev/99wkhAk-jm0
-        ids = Zotero.Items.get(ids).filter((item: ZoteroItem) => {
-          // check .deleted for #2401 -- we're getting *updated* (?!) notifications for trashed items which reinstates them into the BBT DB
-          if (action === 'modify' && item.deleted) return false
-          if (item.isFeedItem) return false
+      if (item.isAttachment() || item.isNote() || item.isAnnotation?.()) { // should I keep top-level notes/attachments for BBT-JSON?
+        if (typeof item.parentID === 'number') parentIDs.push(item.parentID)
+        return false
+      }
 
-          if (item.isAttachment() || item.isNote() || item.isAnnotation?.()) { // should I keep top-level notes/attachments for BBT-JSON?
-            if (typeof item.parentID === 'number') parents.push(item.parentID)
-            return false
-          }
+      return true
+    }) as ZoteroItem[]
 
-          return true
-        }).map((item: ZoteroItem) => item.id)
-        void Events.emit('items-changed', { ids, action })
-        break
-
-      case 'delete':
-      case 'trash':
-        void Events.emit('items-changed', { ids, action: 'delete' })
-        break
+    if (action === 'trash') action = 'delete'
+    if (items.length) {
+      await Events.emit('items-changed-prep', { ids, action: (action as Action) })
+      void Events.emit('items-changed', { items, action: (action as Action) })
     }
 
-    if (parents.length) void Events.emit('items-changed', { ids: parents, action: 'modify' })
+    let parents: ZoteroItem[] = []
+    if (parentIDs.length) {
+      parents = Zotero.Items.get(parents)
+      void Events.emit('items-changed', { items: Zotero.Items.get(parents), action: 'modify', reason: `parent-${action}` })
+    }
+
+    if (items.length + parents.length) {
+      const collections: Set<number> = new Set
+      const libraries: Set<number> = new Set
+
+      for (const item of items.concat(parents)) {
+        libraries.add(typeof item.libraryID === 'number' ? item.libraryID : Zotero.Libraries.userLibraryID)
+
+        for (let collectionID of item.getCollections()) {
+          if (collections.has(collectionID)) continue
+
+          while (collectionID) {
+            collections.add(collectionID)
+            collectionID = Zotero.Collections.get(collectionID).parentID
+          }
+        }
+      }
+
+      log.debug('emit: items touched', [...libraries])
+
+      if (collections.size) void Events.emit('collections-changed', [...collections])
+      if (libraries.size) void Events.emit('libraries-changed', [...libraries])
+    }
   }
 }
 
@@ -167,7 +189,9 @@ class TagListener extends ZoteroListener {
   public async notify(action: string, type: string, pairs: string[]) {
     await Zotero.BetterBibTeX.ready
 
-    void Events.emit('items-changed', { ids: pairs.map(pair => parseInt(pair.split('-')[0])), action: 'modify' })
+    const ids = [...new Set(pairs.map(pair => parseInt(pair.split('-')[0])))]
+    await Events.emit('items-changed-prep', { ids, action: 'modify' })
+    void Events.emit('items-changed', { items: Zotero.Items.get(ids), action: 'modify', reason: 'tagged' })
   }
 }
 

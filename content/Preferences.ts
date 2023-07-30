@@ -206,7 +206,6 @@ class AutoExportPane {
 
           case 'DOIandURL':
           case 'bibtexURL':
-            log.debug('2522 setting', field, 'to', selected[field]);
             (node as unknown as XUL.Menulist).value = selected[field]
             break
 
