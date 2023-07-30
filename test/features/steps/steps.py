@@ -430,8 +430,8 @@ def step_impl(context, action, xpi):
   else:
     raise ValueError(f'Unsupported extension action {action}')
 
-@step('save a screenshot to {file}')
-def step_impl(context, file):
-  if platform.system() == 'Linux':
-    import autopy
-    autopy.bitmap.capture_screen().save(file)
+#@step('save a screenshot to {file}')
+#def step_impl(context, file):
+#  if platform.system() == 'Linux':
+#    import autopy
+#    autopy.bitmap.capture_screen().save(file)
