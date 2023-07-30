@@ -106,8 +106,11 @@ export async function shutdown(data: any, reason: ReasonId) {
     chromeHandle = undefined
   }
   if (Zotero.BetterBibTeX) {
+    log('shutdown started')
     await Zotero.BetterBibTeX.shutdown(BOOTSTRAP_REASONS[reason])
+    log('shutdown completed')
     delete Zotero.BetterBibTeX
+    log('BBT deleted')
   }
   log('shutdown done')
 }

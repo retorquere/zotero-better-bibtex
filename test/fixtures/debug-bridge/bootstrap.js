@@ -113,27 +113,22 @@ function install(data, reason) {
 }
 
 class DebugBridge {
-  async xable(addonID, disabled) {
-    log(`${disabled ? 'dis' : 'en'}abling ${addonID}`)
-    const addon = await AddonManager.getAddonByID(addonID)
-    if (addon) {
-      addon.userDisabled = disabled
-    }
-    else {
-      log(`error: ${disabled ? 'dis' : 'en'}abling ${addonID}: not found`)
-    }
-  }
-
   async enable(addonID) {
-    await this.xable(addonID, false)
+    const addon = await AddonManager.getAddonByID(addonID)
+    addon.enable()
   }
   async disable(addonID) {
-    await this.xable(addonID, true)
+    const addon = await AddonManager.getAddonByID(addonID)
+    addon.disable()
   }
   async install(xpi) {
     log(`installing ${xpi}`)
     const addon = await AddonManager.getInstallForFile(Zotero.File.pathToFile(xpi))
     if (addon.state === AddonManager.STATE_AVAILABLE) addon.install()
+  }
+  async uninstall(xpi) {
+    const addon = await AddonManager.getAddonByID(addonID)
+    addon.uninstall()
   }
 
   async busyWait(test, msecs = 5000) {
