@@ -12,6 +12,8 @@ declare const __estrace: any // eslint-disable-line no-underscore-dangle
 
 import type { XUL } from '../typings/xul'
 
+import { DebugLog as DebugLogSender } from 'zotero-plugin/debug-log'
+
 import { icons } from './icons'
 import { prompt } from './prompt'
 import { Elements } from './create-element'
@@ -35,7 +37,7 @@ import * as Extra from './extra'
 import { sentenceCase, HTMLParser, HTMLParserOptions } from './text'
 
 import { log } from './logger'
-import { Events, itemsChanged } from './events'
+import { Events } from './events'
 
 import { Translators } from './translators'
 import { DB as Cache } from './db/cache'
@@ -548,195 +550,6 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
   return original.apply(this, arguments)
 })
 
-/*
-  EVENTS
-*/
-
-function notify(event: string, handler: any) {
-  Zotero.Notifier.registerObserver({
-    // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
-    notify(...args: any[]) {
-      Zotero.BetterBibTeX.ready.then(() => { // eslint-disable-line @typescript-eslint/no-use-before-define, @typescript-eslint/no-floating-promises
-        // eslint-disable-next-line prefer-spread
-        handler.apply(null, args)
-      })
-    },
-  }, [event], 'BetterBibTeX', 1)
-}
-
-notify('item-tag', (_action: any, _type: any, ids: any[], _extraData: any) => {
-  ids = ids.map((item_tag: string) => parseInt(item_tag.split('-')[0]))
-
-  Cache.remove(ids, `item ${ids} changed`)
-  void Events.emit('items-changed', ids)
-})
-
-notify('item', (action: string, type: any, ids: any[], extraData: { [x: string]: { bbtCitekeyUpdate: any } }) => {
-  // prevents update loop -- see KeyManager.init()
-  if (action === 'modify') {
-    ids = ids.filter((id: string | number) => !extraData[id] || !extraData[id].bbtCitekeyUpdate)
-    if (!ids.length) {
-      log.debug('item.notify: no items actually changed')
-      return
-    }
-  }
-
-  Cache.remove(ids, `item ${ids} changed`)
-
-  // safe to use Zotero.Items.get(...) rather than Zotero.Items.getAsync here
-  // https://groups.google.com/forum/#!topic/zotero-dev/99wkhAk-jm0
-  const parentIDs = []
-  const items = action === 'delete' ? [] : Zotero.Items.get(ids).filter((item: ZoteroItem) => {
-    // check .deleted for #2401 -- we're getting *updated* (?!) notifications for trashed items which reinstates them into the BBT DB
-    if (action === 'modify' && item.deleted) return false
-    if (item.isFeedItem) return false
-
-    if (item.isAttachment() || item.isNote()) {
-      const parentID = item.parentID
-      if (typeof parentID === 'number') parentIDs.push(parentID)
-      return false
-    }
-    if (item.isAnnotation?.()) {
-      const parentID = item.parentItem?.parentID
-      if (typeof parentID === 'number') parentIDs.push(parentID)
-      return false
-    }
-
-    return true
-  })
-  if (parentIDs.length) Cache.remove(parentIDs, `parent items ${parentIDs} changed`)
-  const parents = parentIDs.length ? Zotero.Items.get(parentIDs) : []
-
-  switch (action) {
-    case 'delete':
-    case 'trash':
-      Zotero.BetterBibTeX.KeyManager.remove(ids)
-      void Events.emit('items-removed', ids)
-      break
-
-    case 'add':
-    case 'modify':
-      // eslint-disable-next-line no-case-declarations
-      let warn_titlecase = Preference.warnTitleCased ? 0 : null
-      for (const item of items) {
-        Zotero.BetterBibTeX.KeyManager.update(item)
-        if (typeof warn_titlecase === 'number' && item.isRegularItem()) {
-          const title = item.getField('title')
-          if (title !== sentenceCase(title)) warn_titlecase += 1
-        }
-      }
-      if (typeof warn_titlecase === 'number' && warn_titlecase) {
-        const actioned = action === 'add' ? 'added' : 'saved'
-        const msg = warn_titlecase === 1
-          ? `${warn_titlecase} item ${actioned} which looks like it has a title-cased title`
-          : `${warn_titlecase} items ${actioned} which look like they have title-cased titles`
-        flash(`Possibly title-cased title${warn_titlecase > 1 ? 's' : ''} ${actioned}`, msg, 3) // eslint-disable-line no-magic-numbers
-      }
-      break
-
-    default:
-      return
-  }
-
-  itemsChanged(items.concat(parents))
-})
-
-notify('collection', (event: string, _type: any, ids: number[], _extraData: any) => {
-  if ((event === 'delete') && ids.length) void Events.emit('collections-removed', ids)
-})
-
-notify('group', (event: string, _type: any, ids: number[], _extraData: any) => {
-  if ((event === 'delete') && ids.length) void Events.emit('libraries-removed', ids)
-})
-
-notify('collection-item', (_event: any, _type: any, collection_items: any) => {
-  const changed: Set<number> = new Set()
-
-  for (const collection_item of collection_items) {
-    let collectionID = parseInt(collection_item.split('-')[0])
-    if (changed.has(collectionID)) continue
-    while (collectionID) {
-      changed.add(collectionID)
-      collectionID = Zotero.Collections.get(collectionID).parentID
-    }
-  }
-
-  if (changed.size) void Events.emit('collections-changed', Array.from(changed))
-})
-
-/*
-  INIT
-*/
-
-// type TimerHandle = ReturnType<typeof setInterval>
-/*
-class Progress {
-  private timestamp: number
-  private msg: string
-  private progressWin: any
-  private progress: any
-  private name = 'Startup progress'
-  private mode: string
-
-  public start(msg: string) {
-    this.timestamp = Date.now()
-
-    this.msg = msg || 'Initializing'
-
-    if (!['progressbar', 'popup'].includes(Preference.startupProgress)) Preference.startupProgress = 'popup'
-    this.mode = Preference.startupProgress
-
-    log.debug(`${this.name}: waiting for Zotero locks...`)
-    log.debug(`${this.name}: ${msg}...`)
-    if (this.mode === 'popup') {
-      this.progressWin = new Zotero.ProgressWindow({ closeOnClick: false })
-      this.progressWin.changeHeadline('Better BibTeX: Initializing')
-      // this.progressWin.addDescription(`Found ${this.scanning.length} items without a citation key`)
-      const icon = `chrome://zotero/skin/treesource-unfiled${Zotero.hiDPI ? '@2x' : ''}.png`
-      this.progress = new this.progressWin.ItemProgress(icon, `${this.msg}...`)
-      this.progressWin.show()
-    }
-    else {
-      setProgress(0, msg)
-    }
-  }
-
-  public update(msg: string, progress: number) {
-    this.bench(msg)
-
-    log.debug(`${this.name}: ${msg}...`)
-    if (this.mode === 'popup') {
-      this.progress.setText(msg)
-    }
-    else {
-      setProgress(progress, msg)
-    }
-  }
-
-  public done() {
-    this.bench(null)
-
-    if (this.mode === 'popup') {
-      this.progress.setText('Ready')
-      this.progressWin.startCloseTimer(500) // eslint-disable-line no-magic-numbers
-    }
-    else {
-      $window.document.getElementById('better-bibtex-progress').hidden = true
-    }
-
-    log.debug(`${this.name}: done`)
-  }
-
-  private bench(msg: string) {
-    const ts = Date.now()
-    // eslint-disable-next-line no-magic-numbers
-    if (this.msg) log.debug(`${this.name}:`, this.msg, 'took', (ts - this.timestamp) / 1000.0, 's')
-    this.msg = msg
-    this.timestamp = ts
-  }
-}
-*/
-
 export class BetterBibTeX {
   public uninstalled = false
   public Orchestrator = orchestrator
@@ -869,7 +682,9 @@ export class BetterBibTeX {
 
         this.dir = OS.Path.join(Zotero.DataDirectory.dir, 'better-bibtex')
         await OS.File.makeDir(this.dir, { ignoreExisting: true })
-        await Preference.init(this.dir)
+        await Preference.startup(this.dir)
+        Events.startup()
+        DebugLogSender.register('BBT', [])
       },
       shutdown: async () => { // eslint-disable-line @typescript-eslint/require-await
         Elements.removeAll()
@@ -883,7 +698,6 @@ export class BetterBibTeX {
     })
 
     orchestrator.add('sqlite', {
-      needs: ['start'],
       startup: async () => {
         await Zotero.DB.queryAsync('ATTACH DATABASE ? AS betterbibtex', [OS.Path.join(Zotero.DataDirectory.dir, 'better-bibtex.sqlite')])
         await Zotero.DB.queryAsync('ATTACH DATABASE ? AS betterbibtexsearch', [OS.Path.join(Zotero.DataDirectory.dir, 'better-bibtex-search.sqlite')])
@@ -913,7 +727,7 @@ export class BetterBibTeX {
         }
       },
       shutdown: async () => { // eslint-disable-line @typescript-eslint/require-await
-        Events.clearListeners()
+        Events.shutdown()
       },
     })
 

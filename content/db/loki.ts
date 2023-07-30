@@ -3,11 +3,10 @@
 // Components.utils.import('resource://gre/modules/Sqlite.jsm')
 // declare const Sqlite: any
 
-import { is7 } from '../client'
-
 import { patch as $patch$ } from '../monkey-patch'
 import { Preference } from '../prefs'
 import { alert } from '../prompt'
+import { Events } from '../events'
 
 import { log } from '../logger'
 // import { Preferences as Prefs } from '../prefs'
@@ -72,24 +71,20 @@ class NullStore {
 }
 
 const autoSaveOnIdle = []
+Events.on('idle-savedb', async state => {
+  if (state !== 'idle') return
 
-const idleService = is7
-  ? Components.classes['@mozilla.org/widget/useridleservice;1'].getService(Components.interfaces.nsIUserIdleService)
-  : Components.classes['@mozilla.org/widget/idleservice;1'].getService(Components.interfaces.nsIIdleService)
-idleService.addIdleObserver({
-  async observe(_subject: string, _topic: string, _data: any) {
-    for (const db of autoSaveOnIdle) {
-      if (!db.autosaveDirty()) continue
+  for (const db of autoSaveOnIdle) {
+    if (!db.autosaveDirty()) continue
 
-      try {
-        await db.saveDatabaseAsync()
-      }
-      catch (err) {
-        log.error('idle, saving failed', db.filename, err)
-      }
+    try {
+      await db.saveDatabaseAsync()
     }
-  },
-}, 5) // eslint-disable-line no-magic-numbers
+    catch (err) {
+      log.error('idle, saving failed', db.filename, err)
+    }
+  }
+})
 
 // https://github.com/Microsoft/TypeScript/issues/17032
 export class XULoki extends Loki {
