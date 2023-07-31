@@ -22,7 +22,7 @@
       "./gen/typings",
       "./typings"
     ],
-    "lib": [ "es2017", "dom", "dom.iterable", "webworker" ]
+    "lib": [ "es2017", "dom", "dom.iterable", "webworker", "ES2021.WeakRef" ]
   },
   "include": [
     "content/**/*",

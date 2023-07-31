@@ -123,5 +123,6 @@ export class ZoteroItemPane {
     if (Zotero.BetterBibTeX.KeyManager.keys && this.observer) {
       Zotero.BetterBibTeX.KeyManager.keys.removeListener(this.observer)
     }
+    this.elements.remove()
   }
 }

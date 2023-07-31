@@ -133,19 +133,23 @@ export class Orchestrator {
     const circular = Promise.reject(new Error('circular dependency'))
     circular.catch(() => { /* ignore */ }) // prevent unhandled rejection
 
+    const running = (): string[] => tasks.filter((t: Task) => t.started && !t.finished).map(t => t.id)
     const time = ts => (new Date(ts)).toISOString()
+    const line = (name: string, event: string, timestamp: number) => { // eslint-disable-line arrow-body-style
+      // eslint-disable-next-line no-magic-numbers
+      return `orchestrator: [${name.padEnd(50, ' ')}] ${phase.padEnd(10, ' ')} ${event.padEnd(15, ' ')} at ${time(timestamp)} running [${running()}]`
+    }
 
     const report = (name: string) => {
       const task = taskmap[name]
-      const running: string[] = tasks.filter((t: Task) => t.started && !t.finished).map(t => t.id)
 
-      const runname = `[${this.id}.${name}]`.padEnd(30, ' ') // eslint-disable-line no-magic-numbers
-      const mark = (task.finished ? ' finished at ' : ' started at ').padEnd(15, ' ') // eslint-disable-line no-magic-numbers
-      // eslint-disable-next-line no-magic-numbers
-      print(`orchestrator: ${runname} ${phase.padEnd(10, ' ')} ${mark}${time(task.finished || task.started)} running [${running}]`)
+      for (const timestamp of [...task.milestones.keys()].sort()) {
+        print(line(`${this.id}.${name}.${task.milestones.get(timestamp)}`, 'finished', timestamp))
+      }
+      print(line(`${this.id}.${name}`, task.finished ? 'finished' : 'started', task.finished || task.started))
 
       if (phase === 'startup') progress?.(phase, name, tasks.filter(t => t.finished).length, tasks.length, task.description)
-      log.prefix = running.length ? ` ${phase}: [${running}]` : ''
+      log.prefix = running().length ? ` ${phase}: [${running()}]` : ''
     }
 
     const run = name => {
