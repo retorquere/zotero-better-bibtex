@@ -87,7 +87,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
         const before = Date.now()
         await Zotero.Translators.init()
-        log.debug('translators: Zotero.Translators.init() took', (Date.now() - before)/1000, 'seconds')
+        log.debug('startup: Zotero.Translators.init() took', (Date.now() - before)/1000, 'seconds')
         task.milestones.set(Date.now(), 'zotero translators init')
 
         const reinit: { header: Translator.Header, code: string }[] = []

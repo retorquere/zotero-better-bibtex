@@ -148,7 +148,7 @@ export class Orchestrator {
       }
       print(line(`${this.id}.${name}`, task.finished ? 'finished' : 'started', task.finished || task.started))
 
-      if (phase === 'startup') progress?.(phase, name, tasks.filter(t => t.finished).length, tasks.length, task.description)
+      progress?.(phase, name, tasks.filter(t => t.finished).length, tasks.length, (task.finished ? running()[0] : task.description) || task.description)
       log.prefix = running().length ? ` ${phase}: [${running()}]` : ''
     }
 

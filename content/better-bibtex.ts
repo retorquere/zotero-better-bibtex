@@ -678,7 +678,9 @@ export class BetterBibTeX {
       startup: async () => {
         // https://groups.google.com/d/msg/zotero-dev/QYNGxqTSpaQ/uvGObVNlCgAJ
         // this is what really takes long
+        const before = Date.now()
         await Zotero.initializationPromise
+        log.debug('startup: Zotero.initializationPromise took', (Date.now() - before)/1000, 'seconds')
 
         this.dir = OS.Path.join(Zotero.DataDirectory.dir, 'better-bibtex')
         await OS.File.makeDir(this.dir, { ignoreExisting: true })
