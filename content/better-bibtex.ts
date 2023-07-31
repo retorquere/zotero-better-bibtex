@@ -12,8 +12,6 @@ declare const __estrace: any // eslint-disable-line no-underscore-dangle
 
 import type { XUL } from '../typings/xul'
 
-import { DebugLog as DebugLogSender } from 'zotero-plugin/debug-log'
-
 import { icons } from './icons'
 import { prompt } from './prompt'
 import { Elements } from './create-element'
@@ -686,7 +684,6 @@ export class BetterBibTeX {
         await OS.File.makeDir(this.dir, { ignoreExisting: true })
         await Preference.startup(this.dir)
         Events.startup()
-        DebugLogSender.register('BBT', [])
       },
     })
 
