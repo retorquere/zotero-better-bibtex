@@ -36,14 +36,18 @@ class XHTML extends ASTWalker {
       case 'dialog':
         if (!history.find(n => n.name === 'window')) {
           this.modified = true
-          const attrs = tag.attrs
-          tag.attrs = []
+          const linkset = this.tag('linkset', {}, [
+            this.tag('html:link', { rel: 'localization', href: 'better-bibtex.ftl' }),
+            tag.name === 'wizard' ? this.tag('html:link', { rel: 'localization', href: 'toolkit/global/wizard.ftl' }) : null,
+          ].filter(link => link))
+          const windowAttrs = tag.attrs.filter(a => a.name.startsWith('xmlns') || a.name === 'onload')
+          tag.attrs = tag.attrs.filter(a => !windowAttrs.find(wa => wa.name === a.name))
           tag = this.tag('window', {}, [
-            // this.tag('linkset', {}, [ this.tag('html:link', { rel: 'localization', href: 'better-bibtex.ftl' }) ]),
+            linkset,
             this.tag('script', { src: 'chrome://global/content/customElements.js' }),
-            tag,
+            { ...tag },
           ])
-          tag.attrs = attrs
+          tag.attrs = windowAttrs
         }
         break
     }

@@ -1,7 +1,11 @@
 #!/bin/bash
 
+# https://www.zotero.org/download/client/manifests/beta/updates-mac.json
+BETA="https://www.zotero.org/download/client/dl?platform=mac&channel=beta&version=7.0.0-beta.22%2B676f820f8"
+BETA="https://www.zotero.org/download/client/dl?platform=mac&channel=beta"
+
 rm -f zotero-beta.dmg
-curl -L -o zotero-beta.dmg 'https://www.zotero.org/download/client/dl?platform=mac&channel=beta'
+curl -L -o zotero-beta.dmg "$BETA"
 hdiutil attach zotero-beta.dmg
 rm -rf /Applications/Zotero-beta.app
 cp -r /Volumes/Zotero/Zotero.app /Applications/Zotero-beta.app
