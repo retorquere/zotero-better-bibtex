@@ -60,6 +60,7 @@ export class ZoteroItemPane {
     itemPane.BetterBibTeX = this
 
     if (!this.document.getElementById('better-bibtex-transform-sentence-case')) {
+      log.debug('BBTSC: Adding menu item')
       this.document.getElementById('zotero-field-transform-menu').appendChild(
         elements.create('menuitem', {
           label: 'BBT sentence-case',
