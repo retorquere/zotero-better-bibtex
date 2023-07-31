@@ -314,6 +314,7 @@ export const KeyManager = new class _KeyManager {
       }
     })
     Events.on('items-changed-prep', ({ ids, action }) => {
+      log.debug('keymanager.emit:', ids, action)
       let warn_titlecase = 0
       switch (action) {
         case 'delete':
