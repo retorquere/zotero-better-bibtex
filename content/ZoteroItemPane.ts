@@ -1,5 +1,5 @@
 import { patch as $patch$ } from './monkey-patch'
-// import { sentenceCase } from './text'
+import { sentenceCase } from './text'
 import * as client from './client'
 import * as l10n from './l10n'
 import { log } from './logger'
@@ -7,8 +7,10 @@ import { Elements } from './create-element'
 import { busyWait } from './busy-wait'
 import { icons } from './icons'
 
-/* REVIEW:
-async function title_sentenceCase(label) {
+/**
+ * TODO: work with textboxes too // FROM ZOTERO
+ */
+async function textTransformField(label) {
   const val = this._getFieldValue(label)
   const newVal = sentenceCase(val)
   this._setFieldValue(label, newVal)
@@ -29,7 +31,6 @@ async function title_sentenceCase(label) {
     await this.item.saveTx()
   }
 }
-*/
 
 export async function newZoteroItemPane(win: Window): Promise<void> {
   let itemBoxInstance: HTMLElement
@@ -57,6 +58,17 @@ export class ZoteroItemPane {
     const elements = this.elements = new Elements(this.document)
     const itemPane = (win as any).ZoteroItemPane
     itemPane.BetterBibTeX = this
+
+    if (!this.document.getElementById('better-bibtex-transform-sentence-case')) {
+      this.document.getElementById('zotero-field-transform-menu').appendChild(
+        elements.create('menuitem', {
+          label: 'BBT sentence-case',
+          id: 'better-bibtex-transform-sentence-case',
+          class: 'menuitem-non-iconic',
+          oncommand: () => { textTransformField.call(this.itemBoxInstance, (this.document as any).popupNode) },
+        })
+      )
+    }
 
     this.observer = Zotero.BetterBibTeX.KeyManager.keys.on(['update', 'insert'], () => {
       this.refresh()
