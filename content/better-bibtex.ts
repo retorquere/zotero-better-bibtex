@@ -730,7 +730,7 @@ export class BetterBibTeX {
     })
 
     await orchestrator.startup(reason, (phase: string, name: string, done: number, total: number, message: string): void => {
-      if (phase === 'startup') this.setProgress(done * 100 / total, message || `${phase}: ${name}`)
+      this.setProgress(done * 100 / total, message || name)
     })
     this.setProgress(100, 'finished')
   }

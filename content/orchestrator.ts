@@ -3,7 +3,7 @@ export type PhaseID = 'startup' | 'shutdown'
 import type { Reason } from './bootstrap'
 import { log } from './logger'
 
-type Handler = (reason: Reason) => void | string | Promise<void | string>
+type Handler = (reason: Reason, task?: Task) => void | string | Promise<void | string>
 
 import { print } from './logger'
 
@@ -14,7 +14,7 @@ interface TaskOptions {
   needs?: Actor[]
 }
 
-type Task = {
+export type Task = {
   id: Actor
   description: string
   action: Handler
@@ -23,6 +23,7 @@ type Task = {
 
   started: number
   finished: number
+  milestones: Map<number, string>
 }
 
 export type Progress = (phase: string, name: string, done: number, total: number, message?: string) => void
@@ -67,12 +68,14 @@ export class Orchestrator {
       needed: false,
       started: 0,
       finished: 0,
+      milestones: new Map,
     }
 
     this.phase.shutdown.tasks[id] = {
       ...this.phase.startup.tasks[id],
       action: shutdown,
       needs: [],
+      milestones: new Map,
     }
   }
 
@@ -167,7 +170,7 @@ export class Orchestrator {
           report(name)
 
           try {
-            return await action(reason) as Promise<void | string>
+            return await action(reason, task) as Promise<void | string>
           }
 
           catch (err) {
@@ -191,7 +194,7 @@ export class Orchestrator {
   }
 
   private gantt(phase: PhaseID) {
-    const start = phase === 'startup' ? this.started : this.phase.shutdown.started
+    // const start = phase === 'startup' ? this.started : this.phase.shutdown.started
     const taskmap = this.phase[phase].tasks
     let unsorted = Object.values(taskmap)
     const sorted: string[] = []
@@ -210,22 +213,44 @@ export class Orchestrator {
     }
 
     const scale = n => Math.ceil(n/100)
+    // const url = g => `http://plantuml.com/plantuml/uml/~h${Array.from(g).map((c: string) => c.charCodeAt(0).toString(16)).join('')}\n` // eslint-disable-line no-magic-numbers
 
     let g = '@startgantt\n'
+    g += `  header ${phase}\n\n`
     for (const task of tasks) {
-      g += `  [${task.id}] lasts ${scale(task.finished - task.started)} days\n`
       for (const needed of task.needs) {
         g += `  [${task.id}] starts at [${needed}]'s end\n`
       }
+      g += `  [${task.id}] lasts ${scale(task.finished - task.started)} days\n`
+      let last = { milestone: '', ended: task.started }
+      for (const timestamp of [...task.milestones.keys()].sort()) {
+        const milestone = `${task.id}:${task.milestones.get(timestamp)}`
+        g += `    [${milestone}] starts at [${last.milestone || task.id}]'s ${last.milestone ? 'end' : 'start'} and lasts ${scale(timestamp - last.ended)} days\n`
+        g += `    [${milestone}] is colored in Fuchsia/FireBrick\n`
+        last = { milestone, ended: timestamp }
+      }
+      g += '\n'
     }
     g += '@endgantt\n'
+    // g += url(g)
+    const g1 = g
 
-    g += '@startgantt\n'
+    /*
+    g = '@startgantt\n'
+    g += `  header ${phase}\n\n`
     for (const task of tasks) {
       g += `  [${task.id}] starts D+${scale(task.started - start)} and ends D+${scale(task.finished - start)}\n`
+      for (const milestone of [...task.milestones.keys()].sort()) {
+        g += `  [${task.id}:${task.milestones.get(milestone)}] happens on D+${scale(milestone - task.started)}\n`
+      }
+      g += '\n'
     }
     g += '@endgantt\n'
-    return g
+    // g += url(g)
+    const g2 = g
+    */
+
+    return g1
   }
 
   public async startup(reason: Reason, progress?: Progress): Promise<void> {

@@ -4,6 +4,8 @@ declare const Cc: any
 declare const Ci: any
 declare const dump: (msg: string) => void
 
+import { alert } from './prompt'
+
 const BOOTSTRAP_REASONS = {
   1: 'APP_STARTUP',
   2: 'APP_SHUTDOWN',
@@ -60,58 +62,68 @@ export function install(_data: any, _reason: ReasonId) {
 
 let chromeHandle
 export async function startup({ resourceURI, rootURI = resourceURI.spec }, reason: ReasonId) {
-  log('startup started')
+  try {
+    log('startup started')
 
-  const aomStartup = Cc['@mozilla.org/addons/addon-manager-startup;1'].getService(Ci.amIAddonManagerStartup)
-  const manifestURI = Services.io.newURI(`${rootURI}manifest.json`)
-  chromeHandle = aomStartup.registerChrome(manifestURI, require('../chrome.json'))
+    const aomStartup = Cc['@mozilla.org/addons/addon-manager-startup;1'].getService(Ci.amIAddonManagerStartup)
+    const manifestURI = Services.io.newURI(`${rootURI}manifest.json`)
+    chromeHandle = aomStartup.registerChrome(manifestURI, require('../chrome.json'))
 
-  if (Zotero.BetterBibTeX) throw new Error('Better BibTeX is already started')
+    if (Zotero.BetterBibTeX) throw new Error('Better BibTeX is already started')
 
-  setDefaultPrefs(rootURI)
+    setDefaultPrefs(rootURI)
 
-  Services.scriptloader.loadSubScriptWithOptions(`${rootURI}content/better-bibtex.js`, {
-    charset: 'utf=8',
-    // ignoreCache: true,
-    target: {
-      Zotero,
+    Services.scriptloader.loadSubScriptWithOptions(`${rootURI}content/better-bibtex.js`, {
+      charset: 'utf=8',
+      // ignoreCache: true,
+      target: {
+        Zotero,
 
-      // to pacify libraries that do env-detection
-      window: Zotero.getMainWindow(),
-      document: Zotero.getMainWindow().document,
+        // to pacify libraries that do env-detection
+        window: Zotero.getMainWindow(),
+        document: Zotero.getMainWindow().document,
 
-      setTimeout,
-      clearTimeout,
-      setInterval,
-      clearInterval,
-    },
-  })
+        setTimeout,
+        clearTimeout,
+        setInterval,
+        clearInterval,
+      },
+    })
 
-  await Zotero.BetterBibTeX.startup(BOOTSTRAP_REASONS[reason])
-  Zotero.PreferencePanes.register({
-    pluginID: 'better-bibtex@iris-advies.com',
-    src: `${rootURI}content/preferences.xhtml`,
-    label: 'Better BibTeX',
-    defaultXUL: true,
-  })
-  log('startup done')
+    await Zotero.BetterBibTeX.startup(BOOTSTRAP_REASONS[reason])
+    Zotero.PreferencePanes.register({
+      pluginID: 'better-bibtex@iris-advies.com',
+      src: `${rootURI}content/preferences.xhtml`,
+      label: 'Better BibTeX',
+      defaultXUL: true,
+    })
+    log('startup done')
+  }
+  catch (err) {
+    alert({ title: 'Better BibTeX startup failed', text: `${err}` })
+  }
 }
 
 export async function shutdown(data: any, reason: ReasonId) {
-  log('shutdown started')
-
-  if (typeof chromeHandle !== 'undefined') {
-    chromeHandle.destruct()
-    chromeHandle = undefined
-  }
-  if (Zotero.BetterBibTeX) {
+  try {
     log('shutdown started')
-    await Zotero.BetterBibTeX.shutdown(BOOTSTRAP_REASONS[reason])
-    log('shutdown completed')
-    delete Zotero.BetterBibTeX
-    log('BBT deleted')
+
+    if (typeof chromeHandle !== 'undefined') {
+      chromeHandle.destruct()
+      chromeHandle = undefined
+    }
+    if (Zotero.BetterBibTeX) {
+      log('shutdown started')
+      await Zotero.BetterBibTeX.shutdown(BOOTSTRAP_REASONS[reason])
+      log('shutdown completed')
+      delete Zotero.BetterBibTeX
+      log('BBT deleted')
+    }
+    log('shutdown done')
   }
-  log('shutdown done')
+  catch (err) {
+    alert({ title: 'Better BibTeX shutdown failed', text: `${err}` })
+  }
 }
 
 export function uninstall(_data: any, _reason: ReasonId) {
