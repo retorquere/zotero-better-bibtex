@@ -686,15 +686,6 @@ export class BetterBibTeX {
         Events.startup()
         DebugLogSender.register('BBT', [])
       },
-      shutdown: async () => { // eslint-disable-line @typescript-eslint/require-await
-        Elements.removeAll()
-        $unpatch$()
-        clean_pane_persist()
-        Preference.shutdown()
-        for (const endpoint of Object.keys(Zotero.Server.Endpoints)) {
-          if (endpoint.startsWith('/better-bibtex/')) delete Zotero.Server.Endpoints[endpoint]
-        }
-      },
     })
 
     orchestrator.add('sqlite', {
@@ -728,6 +719,13 @@ export class BetterBibTeX {
       },
       shutdown: async () => { // eslint-disable-line @typescript-eslint/require-await
         Events.shutdown()
+        Elements.removeAll()
+        $unpatch$()
+        clean_pane_persist()
+        Preference.shutdown()
+        for (const endpoint of Object.keys(Zotero.Server.Endpoints)) {
+          if (endpoint.startsWith('/better-bibtex/')) delete Zotero.Server.Endpoints[endpoint]
+        }
       },
     })
 

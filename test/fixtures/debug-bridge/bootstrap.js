@@ -115,20 +115,20 @@ function install(data, reason) {
 class DebugBridge {
   async enable(addonID) {
     const addon = await AddonManager.getAddonByID(addonID)
-    addon.enable()
+    await addon.enable()
   }
   async disable(addonID) {
     const addon = await AddonManager.getAddonByID(addonID)
-    addon.disable()
+    await addon.disable()
   }
   async install(xpi) {
     log(`installing ${xpi}`)
     const addon = await AddonManager.getInstallForFile(Zotero.File.pathToFile(xpi))
-    if (addon.state === AddonManager.STATE_AVAILABLE) addon.install()
+    if (addon.state === AddonManager.STATE_AVAILABLE) await addon.install()
   }
   async uninstall(xpi) {
     const addon = await AddonManager.getAddonByID(addonID)
-    addon.uninstall()
+    await addon.uninstall()
   }
 
   async busyWait(test, msecs = 5000) {
