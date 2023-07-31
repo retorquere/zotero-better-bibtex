@@ -6,12 +6,12 @@ export const NAMESPACE = {
 type Handler = (event?: any) => void | Promise<void>
 
 export class Elements {
-  static all: Set<HTMLElement> = new Set
+  static all: Set<WeakRef<HTMLElement>> = new Set
 
   static removeAll(): void {
-    for (const elt of Array.from(this.all)) {
+    for (const eltRef of this.all) {
       try {
-        elt.remove()
+        eltRef.deref()?.remove()
       }
       catch (err) {}
     }
@@ -37,14 +37,13 @@ export class Elements {
         throw new Error(`unexpected attribute ${a}`)
       }
     }
-    Elements.all.add(elt)
+    Elements.all.add(new WeakRef(elt))
 
     return elt
   }
 
   remove(): void {
     for (const elt of Array.from(this.document.getElementsByClassName(this.className))) {
-      Elements.all.delete(elt as HTMLElement)
       elt.remove()
     }
   }
