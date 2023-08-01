@@ -2,6 +2,7 @@ import { patch as $patch$, unpatch as $unpatch$, Trampoline } from './monkey-pat
 import * as l10n from './l10n'
 import { Elements } from './create-element'
 import { Events } from './events'
+import { log } from './logger'
 
 type XULWindow = Window & { Zotero_File_Interface_Export?: any, arguments?: any[], sizeToContent?: () => void }
 // safe to keep these global as only one export window will ever be open at any one time
@@ -43,13 +44,14 @@ export class ExportOptions {
   private selected(): any {
     const index = ($window.document.getElementById('format-menu') as HTMLSelectElement).selectedIndex
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return (index >= 0) ? $window.arguments[0].translators[index].translatorID : null
+    return (index >= 0) ? $window.arguments[0].translators[index] : null
   }
 
   public show(): void {
     const doc = $window.document
 
     const selected = this.selected()
+    log.debug('export-options.show:', selected)
     let reminder = doc.getElementById('better-bibtex-reminder')
     if (!selected) {
       if (reminder) reminder.hidden = true
@@ -59,6 +61,7 @@ export class ExportOptions {
     if (!reminder) {
       const translateOptions = doc.getElementById('translator-options')
       translateOptions.parentNode.insertBefore(reminder = this.elements.create('description', {style: 'color: red', hidden: 'true', id: 'better-bibtex-reminder'}), translateOptions)
+      log.debug('export-options.show: added reminder')
     }
 
     switch (selected.translatorID) {
@@ -79,6 +82,7 @@ export class ExportOptions {
 
     for (const node of [...doc.querySelectorAll('#export-option-exportFileData, #export-option-keepUpdated, #export-option-worker')]) {
       if (node.classList.contains('better-bibex-export-options')) continue
+      log.debug('export-options.show: added listener to', node.getAttribute('id'))
       node.classList.add('better-bibex-export-options')
       node.addEventListener('command', this.mutex.bind(this))
 
@@ -109,6 +113,8 @@ export class ExportOptions {
     const keepUpdated = doc.getElementById('export-option-keepUpdated') as HTMLInputElement
     const worker = doc.getElementById('export-option-worker') as HTMLInputElement
     const target = e ? e.target as Element : exportFileData
+
+    log.debug('export-options.mutex:', { exportFileData: !!exportFileData, keepUpdated: !!keepUpdated, worker: !!worker })
 
     if (!exportFileData || !keepUpdated) return null
 
