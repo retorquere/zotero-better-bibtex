@@ -273,13 +273,14 @@ $patch$(Zotero.Item.prototype, 'setField', original => function Zotero_Item_prot
     if (!value) {
       this.setField('extra', Extra.get(this.getField('extra') as string, 'zotero', { citationKey: true }).extra)
       Zotero.BetterBibTeX.KeyManager.update(this)
+      Zotero.Notifier.trigger('modify', 'item', [this.id])
       return true
     }
     else if (value !== citekey.citekey) {
       this.setField('extra', Extra.set(this.getField('extra'), { citationKey: value }))
-      citekey.pinned = true
-      citekey.citekey = value
-      Zotero.BetterBibTeX.KeyManager.keys.update(citekey)
+      // citekey.pinned = true
+      // citekey.citekey = value
+      // Zotero.BetterBibTeX.KeyManager.keys.update(citekey)
       return true
     }
     else {
