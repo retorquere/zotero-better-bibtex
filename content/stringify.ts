@@ -28,9 +28,6 @@ function stringifyError(obj) {
 
 
 function $stringify(key, value, cache): any {
-  if (value.openDialog || value.querySelector) return value.toString()
-
-  let replacement: string
   switch (typeof value) {
     case 'number':
     case 'string':
@@ -42,7 +39,10 @@ function $stringify(key, value, cache): any {
   }
 
   if (value === null) return value
+  if (value.openDialog || value.querySelector) return value.toString() // window/document
   if (cache.includes(value)) return '[circular]'
+
+  let replacement: string
 
   if (value instanceof RegExp) {
     value = value.source
@@ -66,7 +66,6 @@ export function stringify(obj, indent: number | string = 2, ucode?: boolean) { /
   const stringified = JSON.stringify(
     obj,
     (key, value): any => {
-      Zotero.debug(`:stringify:${key}`)
       try {
         return $stringify(key, value, cache)
       }

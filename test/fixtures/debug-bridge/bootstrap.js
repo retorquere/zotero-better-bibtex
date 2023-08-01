@@ -114,12 +114,17 @@ function install(data, reason) {
 
 class DebugBridge {
   async enable(addonID) {
+    log(`plugin management: enabling ${addonID}`)
     const addon = await AddonManager.getAddonByID(addonID)
     await addon.enable()
+    log(`plugin management: ${addonID} enabled`)
   }
   async disable(addonID) {
+    log(`plugin management: disabling ${addonID}`)
     const addon = await AddonManager.getAddonByID(addonID)
     await addon.disable()
+    if (addonID === 'better-bibtex@iris-advies.com') await this.busyWait(() => !Zotero.BetterBibTeX)
+    log(`plugin management: ${addonID} disabled`)
   }
   async install(xpi) {
     log(`installing ${xpi}`)

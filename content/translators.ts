@@ -74,7 +74,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
     orchestrator.add('translators', {
       description: 'translators',
-      needs: ['start'],
+      needs: ['database'],
       startup: async (_reason: string, task: Task) => {
         await this.start()
         task.milestones.set(Date.now(), 'worker start')
