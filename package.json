@@ -38,7 +38,6 @@
     "jurism": "npm start -- --jurism",
     "start": "./test/behave --no-headless --keep --tags=@none",
     "beta": "./test/behave --beta --no-headless --keep --tags=@none",
-    "s3form": "zotero-plugin-s3form",
     "release": "zotero-plugin-release \"$(<setup/release-message.md)\"",
     "branches": "zotero-plugin-branches",
     "fix-fixtures": "ts-node ./util/fix-test-fixtures.ts",
@@ -104,7 +103,8 @@
     "title-case": "^3.0.3",
     "transliteration": "^2.3.5",
     "words-to-numbers": "^1.5.1",
-    "xregexp": "^5.1.1"
+    "xregexp": "^5.1.1",
+    "zotero-plugin": "^2.0.0"
   },
   "devDependencies": {
     "@retorquere/bibtex-parser": "^6.4.14",
@@ -176,8 +176,7 @@
     "uri-templates": "^0.2.0",
     "util": "^0.12.5",
     "xml-parser": "^1.2.1",
-    "xpath": "^0.0.33",
-    "zotero-plugin": "^1.4.26"
+    "xpath": "^0.0.33"
   },
   "repository": {
     "type": "git",
