@@ -101,6 +101,7 @@ export async function startup({ resourceURI, rootURI = resourceURI.spec }, reaso
   }
   catch (err) {
     alert({ title: 'Better BibTeX startup failed', text: `${err}` })
+    log(`${err}\n${err.stack}`)
   }
 }
 
@@ -123,6 +124,7 @@ export async function shutdown(data: any, reason: ReasonId) {
   }
   catch (err) {
     alert({ title: 'Better BibTeX shutdown failed', text: `${err}` })
+    log(`${err}\n${err.stack}`)
   }
 }
 

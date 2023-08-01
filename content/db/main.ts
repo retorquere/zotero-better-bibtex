@@ -120,23 +120,23 @@ class Main extends Loki {
     if (Preference.scrubDatabase) {
       log.debug('scrubbing: stripping autoexport')
       // directly change the data objects and rebuild indexes https://github.com/techfort/LokiJS/issues/660
-      let rebuild = false
+      let removed = 0
       autoexport.data = autoexport.data.filter(doc => {
         const err = autoexport.validationError(doc)
         if (err) {
           log.debug('scrubbing: auto-export validation error:', err, doc)
-          rebuild = true
+          removed += 1
           return false
         }
         if (!doc.meta || typeof doc.$loki !== 'number') {
           log.debug('scrubbing: auto-export missing metadata:', doc)
-          rebuild = true
+          removed += 1
           return false
         }
         return true
       })
-      if (rebuild) {
-        log.debug('scrubbing: stripping autoexport errors:', length - autoexport.data.length)
+      if (removed) {
+        log.debug('scrubbing: stripping autoexport errors:', removed)
         autoexport.ensureId()
         autoexport.ensureAllIndexes(true)
         log.debug('scrubbing: stripping autoexport errors: rebuilt indices')
