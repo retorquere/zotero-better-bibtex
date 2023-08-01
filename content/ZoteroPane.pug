@@ -5,6 +5,7 @@ overlay#zotero-better-bibtex-zoteroPane-overlay(xmlns="http://www.mozilla.org/ke
   script.
     (function() {
       try {
+        Zotero.DebugLogSender.register('Better BibTeX')
         const startup = Zotero.BetterBibTeX.ready.isPending()
         Zotero.debug(`{better-bibtex-startup} script load, ${startup ? 'startup' : 'window-reload'}`)
         if (startup) {
