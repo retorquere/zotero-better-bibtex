@@ -1,5 +1,7 @@
 /* eslint-disable no-case-declarations, @typescript-eslint/no-unsafe-return */
 
+import type BluebirdPromise from 'bluebird'
+
 Components.utils.import('resource://gre/modules/Services.jsm')
 
 declare class ChromeWorker extends Worker { }
@@ -57,6 +59,9 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
   public queue = new Queue
   public worker: ChromeWorker
 
+  public ready: BluebirdPromise<boolean>
+  private deferred = new Deferred<boolean>()
+
   public workers: { total: number, running: Set<number>, startup: number } = {
     total: 0,
     running: new Set,
@@ -65,6 +70,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
   constructor() {
     Object.assign(this, translatorMetadata)
+    this.ready = this.deferred.promise
 
     orchestrator.add('translators', {
       description: 'translators',
@@ -119,6 +125,8 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
           }
           task.milestones.set(Date.now(), 'code cached')
         }
+
+        this.deferred.resolve(true)
       },
       shutdown: async (reason: Reason) => {
         switch (reason) {

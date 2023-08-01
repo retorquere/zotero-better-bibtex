@@ -26,7 +26,9 @@ export class Elements {
   }
 
   create(name: string, attrs: Record<string, string | Handler> = {}, namespace = NAMESPACE.XUL): HTMLElement {
-    const elt: HTMLElement = this.document.createElementNS(namespace, name) as HTMLElement
+    const elt: HTMLElement = is7
+      ? this.document[ namespace === NAMESPACE.XUL ? 'createXULElement' : 'createElement'](name) as HTMLElement
+      : this.document.createElementNS(namespace, name) as HTMLElement
     attrs.class = `${this.className} ${attrs.class || ''}`.trim()
     for (const [a, v] of Object.entries(attrs)) {
       if (typeof v === 'string') {
