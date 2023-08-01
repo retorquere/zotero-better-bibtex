@@ -26,41 +26,49 @@ function stringifyError(obj) {
   return ''
 }
 
+
+function $stringify(key, value, cache): any {
+  if (value.openDialog || value.querySelector) return value.toString()
+
+  let replacement: string
+  switch (typeof value) {
+    case 'number':
+    case 'string':
+    case 'boolean':
+    case 'undefined':
+      return value
+    case 'function':
+      return `[function ${key}]`
+  }
+
+  if (value === null) return value
+  if (cache.includes(value)) return '[circular]'
+
+  if (value instanceof RegExp) {
+    value = value.source
+  }
+  else if (replacement = stringifyXPCOM(value)) {
+    value = replacement
+  }
+  else if (replacement = stringifyError(value)) {
+    value = replacement
+  }
+  else {
+    replacement = ''
+  }
+  if (!replacement) cache.push(value)
+  return replacement || value
+}
+
 // safely handles circular references
 export function stringify(obj, indent: number | string = 2, ucode?: boolean) { // eslint-disable-line @typescript-eslint/explicit-module-boundary-types
   let cache = []
-  let replacement: string
   const stringified = JSON.stringify(
     obj,
     (key, value): any => {
+      Zotero.debug(`:stringify:${key}`)
       try {
-        switch (typeof value) {
-          case 'number':
-          case 'string':
-          case 'boolean':
-          case 'undefined':
-            return value
-          case 'function':
-            return `[function ${key}]`
-        }
-
-        if (value === null) return value
-        if (cache.includes(value)) return '[circular]'
-
-        if (value instanceof RegExp) {
-          value = value.source
-        }
-        else if (replacement = stringifyXPCOM(value)) {
-          value = replacement
-        }
-        else if (replacement = stringifyError(value)) {
-          value = replacement
-        }
-        else {
-          replacement = ''
-        }
-        if (!replacement) cache.push(value)
-        return replacement || value
+        return $stringify(key, value, cache)
       }
       catch (err) {
         return `[stringify error: ${err}\n${err.stack}]`

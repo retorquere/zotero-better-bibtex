@@ -34,7 +34,7 @@ export const affectedBy: Record<string, PreferenceName[]> = <%~ stringify(
       acc[tr].push(p.shortName)
     }
     return acc
-  }, {})
+  }, { 'BetterBibTeX JSON': []})
 ) %>
 
 
