@@ -422,7 +422,8 @@ def step_impl(context, param, value):
 def step_impl(context, field, value):
   assert len(context.selected) == 1
   context.zotero.execute('''
-    const item = await Zotero.Items.getAsync([id])[0]
+    const items = await Zotero.Items.getAsync([id])
+    const item = items[0]
     await item.loadAllData()
     item.setField(field, value)
     await item.saveTx()

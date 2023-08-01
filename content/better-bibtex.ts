@@ -264,23 +264,22 @@ $patch$(Zotero.ItemFields, 'isFieldOfBase', original => function Zotero_ItemFiel
 // because the zotero item editor does not check whether a textbox is read-only. *sigh*
 $patch$(Zotero.Item.prototype, 'setField', original => function Zotero_Item_prototype_setField(field: string, value: string | undefined, _loadIn: any) {
   if (field === 'citationKey') {
-    const bbt = Zotero.BetterBibTeX // eslint-disable-line @typescript-eslint/no-use-before-define
-    if (bbt.ready.isPending()) return false
+    if (Zotero.BetterBibTeX.ready.isPending()) return false
 
-    const citekey = bbt.KeyManager.get(this.id)
+    const citekey = Zotero.BetterBibTeX.KeyManager.get(this.id)
     if (citekey.retry) return false
 
     if (typeof value !== 'string') value = ''
     if (!value) {
       this.setField('extra', Extra.get(this.getField('extra') as string, 'zotero', { citationKey: true }).extra)
-      bbt.KeyManager.update(this)
+      Zotero.BetterBibTeX.KeyManager.update(this)
       return true
     }
     else if (value !== citekey.citekey) {
       this.setField('extra', Extra.set(this.getField('extra'), { citationKey: value }))
       citekey.pinned = true
       citekey.citekey = value
-      bbt.KeyManager.keys.update(citekey)
+      Zotero.BetterBibTeX.KeyManager.keys.update(citekey)
       return true
     }
     else {
