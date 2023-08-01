@@ -582,6 +582,14 @@ Feature: Export
     And I wait 15 seconds
     Then "~/autoexport.bib" should match "export/*.after.bibtex"
 
+  Scenario: Auto-Export citekey edits #citekey-edit
+    Given I import 1 reference from "export/*.json"
+    Then an auto-export to "~/autoexport.bib" using "Better BibTeX" should match "export/*.before.bibtex"
+    When I select the item with a field that contains "SysML"
+    When I change its "citationKey" field to "edited"
+    And I wait 15 seconds
+    Then "~/autoexport.bib" should match "export/*.after.bibtex"
+
   Scenario: Export unicode as plain-text latex-commands is ignored in auto-exports #2578
     Given I import 1 reference from "export/*.json"
     And I set preference .autoExport to "immediate"

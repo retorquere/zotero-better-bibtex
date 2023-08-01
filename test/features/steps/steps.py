@@ -418,6 +418,16 @@ def step_impl(context, param, value):
   value = json.loads(value)
   context.zotero.execute('Zotero.BetterBibTeX.TestSupport.editAutoExport(field, value)', field=param, value=value)
 
+@step('I change its {field} field to {value}')
+def step_impl(context, field, value):
+  assert len(context.selected) == 1
+  context.zotero.execute('''
+    const item = await Zotero.Items.getAsync([id])[0]
+    await item.loadAllData()
+    item.setField(field, value)
+    await item.saveTx()
+  ''', id=context.selected[0], field=json.loads(field), value=json.loads(value))
+
 @step('I {action} extension {xpi}')
 def step_impl(context, action, xpi):
   if action == 'install':
