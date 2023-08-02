@@ -1,4 +1,4 @@
-html:div(style='display: grid; grid-template-columns: auto;')
+html:div(class='bbt-prefs-1col')
   label(bbt:preference='extensions.zotero.translators.better-bibtex.citekeyFormatEditing') &better-bibtex_preferences_citekey_format;
   textbox#bbt-preferences-citekeyFormatEditing(
     preference='extensions.zotero.translators.better-bibtex.citekeyFormatEditing'
@@ -12,7 +12,7 @@ html:div(style='display: grid; grid-template-columns: auto;')
     rows=2
     readonly='true'
     multiline='true'
-    style='-moz-appearance: none !important; background-color: DarkOrange'
+    class='bbt-prefs-error'
   )
   label#bbt-label-citekeyFormat(bbt:preference="extensions.zotero.translators.better-bibtex.citekeyFormat") &better-bibtex_preferences_citekey_format_installed;
   textbox#bbt-preferences-citekeyFormat(
@@ -21,7 +21,7 @@ html:div(style='display: grid; grid-template-columns: auto;')
     rows=5
     readonly='true'
     multiline='true'
-    style='-moz-appearance: none !important; background-color: LightGrey'
+    class='bbt-prefs-error'
   )
 
   checkbox(preference="extensions.zotero.translators.better-bibtex.citekeyFold" label="&better-bibtex_preferences_citekey_fold.label;")

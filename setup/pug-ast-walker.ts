@@ -116,7 +116,7 @@ export class Lint extends ASTWalker {
         const nnsa = attrs.filter(a => !a.val.match(/^bbt-[^-]/) && (name !== 'class' || !['plain', 'text-link'].includes(a.val)))
         if (nnsa.length) console.log('non-namespaced', name, nnsa.map(a => a.val), 'in', tag.filename)
         if (name === 'id' && attrs.length) {
-          if (attrs.length > 1 || this.ids.includes(attrs[0].val)) throw new Error(`duplicate IDs ${attrs}`)
+          if (attrs.length > 1 || this.ids.includes(attrs[0].val)) throw new Error(`duplicate IDs ${attrs.map(a => a.val)}`)
           this.ids.push(attrs[0].val)
         }
       }

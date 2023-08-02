@@ -1,0 +1,33 @@
+.bbt-prefs-1col {
+  display: flex;
+  flex-direction: column;
+}
+
+.bbt-prefs-2col {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+}
+
+.bbt-prefs-2col-span {
+  grid-column: span 2;
+}
+
+.bbt-prefs-error {
+  -moz-appearance: none !important;
+  background-color: DarkOrange;
+}
+
+.bbt-prefs-emph {
+  color: red;
+}
+
+.bbt-prefs-group-main {
+  margin-left: 1em;
+  padding-left: 1em;
+  padding-bottom: 1em;
+  box-shadow: -3px -3px 4px rgba(0,0,0,.1);
+}
+
+.bbt-prefs-group-sub {
+  border-top: 3px double black;
+}

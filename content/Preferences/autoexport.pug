@@ -1,4 +1,4 @@
-html:div(style='display: grid; grid-template-columns: auto;')
+html:div(class='bbt-prefs-1col')
   label &better-bibtex_preferences_auto-export_explanation;
 
   html:div
@@ -14,8 +14,8 @@ html:div(style='display: grid; grid-template-columns: auto;')
     textbox(preference='extensions.zotero.translators.better-bibtex.autoExportDelay' size='3' rows=1 readonly='true')
     label &better-bibtex_units_seconds;
 
-html:div#bbt-prefs-auto-exports(style='display: grid; grid-template-columns: 1fr 4fr;')
-  menulist#bbt-prefs-auto-export-select(style='grid-column: span 2' oncommand='Zotero.BetterBibTeX.PrefPane.autoexport.refresh()')
+html:div#bbt-prefs-auto-exports(class='bbt-prefs-2col')
+  menulist#bbt-prefs-auto-export-select(class='bbt-prefs-2col-span' oncommand='Zotero.BetterBibTeX.PrefPane.autoexport.refresh()')
     menupopup
 
   label(data-ae-field='type')
@@ -34,7 +34,7 @@ html:div#bbt-prefs-auto-exports(style='display: grid; grid-template-columns: 1fr
   textbox.plain(size='80' readonly='true' value='' data-ae-field='path')
 
   // bibtex
-  html:div.bbt-autoexport-options.bbt-autoexport-BetterBibTeX(style='grid-column: span 2')
+  html:div.bbt-autoexport-options.bbt-autoexport-BetterBibTeX(class='bbt-prefs-2col-span')
     label.bbt-autoexport-options.bbt-autoexport-BetterBibTeX &better-bibtex_preferences_export_bibtex_urls;
     menulist(data-ae-field='bibtexURL' oncommand='Zotero.BetterBibTeX.PrefPane.autoexport.edit(this)')
       menupopup
@@ -47,20 +47,20 @@ html:div#bbt-prefs-auto-exports(style='display: grid; grid-template-columns: 1fr
 
   // biblatex
   checkbox.bbt-autoexport-options.bbt-autoexport-BetterBibLaTeX(
-    style='grid-column: span 2'
+    class='bbt-prefs-2col-span'
     data-ae-field='asciiBibLaTeX'
     label='&better-bibtex_preferences_export_biblatex_ascii.label;'
     oncommand='Zotero.BetterBibTeX.PrefPane.autoexport.edit(this)'
   )
   checkbox.bbt-autoexport-options.bbt-autoexport-BetterBibLaTeX(
-    style='grid-column: span 2'
+    class='bbt-prefs-2col-span'
     data-ae-field='biblatexExtendedNameFormat'
     label='&better-bibtex_preferences_export_biblatex_extended-name-format.label;'
     oncommand='Zotero.BetterBibTeX.PrefPane.autoexport.edit(this)'
   )
 
   // both bibtex and biblatex
-  html:div.bbt-autoexport-options.bbt-autoexport-BetterBibTeX.bbt-autoexport-BetterBibLaTeX(style='grid-column: span 2')
+  html:div.bbt-autoexport-options.bbt-autoexport-BetterBibTeX.bbt-autoexport-BetterBibLaTeX(class='bbt-prefs-2col-span')
     label &better-bibtex_preferences_export_fields_doi-and-url;
     menulist(data-ae-field='DOIandURL' oncommand='Zotero.BetterBibTeX.PrefPane.autoexport.edit(this)')
       menupopup
@@ -69,13 +69,13 @@ html:div#bbt-prefs-auto-exports(style='display: grid; grid-template-columns: 1fr
         menuitem(value='url' label='&better-bibtex_preferences_export_fields_doi-and-url_url.label;')
 
   checkbox.bbt-autoexport-options.bbt-autoexport-BetterBibTeX.bbt-autoexport-BetterBibLaTeX(
-    style='grid-column: span 2'
+    class='bbt-prefs-2col-span'
     data-ae-field='exportNotes'
     label='&better-bibtex_preferences_auto-export_fields_notes.label;'
     oncommand='Zotero.BetterBibTeX.PrefPane.autoexport.edit(this)'
   )
   checkbox.bbt-autoexport-options.bbt-autoexport-BetterBibTeX.bbt-autoexport-BetterBibLaTeX(
-    style='grid-column: span 2'
+    class='bbt-prefs-2col-span'
     data-ae-field='useJournalAbbreviation'
     label='&better-bibtex_preferences_auto-export_fields_journal-abbrev.label;'
     oncommand='Zotero.BetterBibTeX.PrefPane.autoexport.edit(this)'
@@ -83,13 +83,13 @@ html:div#bbt-prefs-auto-exports(style='display: grid; grid-template-columns: 1fr
 
   // all
   checkbox(
-    style='grid-column: span 2'
+    class='bbt-prefs-2col-span'
     data-ae-field='recursive'
     label='&better-bibtex_preferences_auto-export_fields_recursive.label;'
     oncommand='Zotero.BetterBibTeX.PrefPane.autoexport.edit(this)'
   )
 
-  html:div(style='grid-column: span 2')
+  html:div(class='bbt-prefs-2col-span')
     button(label='&better-bibtex_preferences_auto-export_remove.label;' oncommand='Zotero.BetterBibTeX.PrefPane.autoexport.remove()')
     button(label='&better-bibtex_preferences_auto-export_run.label;' oncommand='Zotero.BetterBibTeX.PrefPane.autoexport.run()')
     button(label='&better-bibtex_preferences_auto-export_fields_cached.label;' oncommand='Zotero.BetterBibTeX.PrefPane.autoexport.refresh()')
