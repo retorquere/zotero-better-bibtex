@@ -32,6 +32,12 @@ async function textTransformField(label) {
   }
 }
 
+function canTextTransformField(label) {
+  if (!this.item) return false
+  const val = this._getFieldValue(label)
+  return sentenceCase(val) !== val
+}
+
 export async function newZoteroItemPane(win: Window): Promise<void> {
   let itemBoxInstance: HTMLElement
   if (client.is7) {
@@ -59,17 +65,24 @@ export class ZoteroItemPane {
     const itemPane = (win as any).ZoteroItemPane
     itemPane.BetterBibTeX = this
 
-    if (!this.document.getElementById('better-bibtex-transform-sentence-case')) {
-      log.debug('BBTSC: Adding menu item')
-      this.document.getElementById('zotero-field-transform-menu').appendChild(
-        elements.create('menuitem', {
-          label: 'BBT sentence-case',
-          id: 'better-bibtex-transform-sentence-case',
-          class: 'menuitem-non-iconic',
-          oncommand: () => { textTransformField.call(this.itemBoxInstance, (this.document as any).popupNode) },
-        })
-      )
-    }
+    const transform_menupopup: any = this.document.getElementById('zotero-field-transform-menu')
+    const bbt_sentencecase_id = 'better-bibtex-transform-sentence-case'
+    transform_menupopup.addEventListener('popupshowing', () => {
+      Zotero.debug('popup showing: running')
+      let bbt_sentencecase: any = this.document.getElementById(bbt_sentencecase_id)
+      if (!bbt_sentencecase) {
+        bbt_sentencecase = transform_menupopup .appendChild(
+          this.elements.create('menuitem', {
+            label: 'BBT sentence-case',
+            id: bbt_sentencecase_id,
+            class: 'menuitem-non-iconic',
+            oncommand: () => { textTransformField.call(this.itemBoxInstance, (this.document as any).popupNode) },
+          })
+        )
+      }
+
+      bbt_sentencecase.disabled = !canTextTransformField.call(this.itemBoxInstance, (this.document as any).popupNode)
+    })
 
     this.observer = Zotero.BetterBibTeX.KeyManager.keys.on(['update', 'insert'], () => {
       this.refresh()
