@@ -522,6 +522,7 @@ class XHTML extends BaseASTWalker {
       const pcls = this.attr(history.slice(1).find(n => n.type === 'Tag'), 'class')
       if (! pcls?.includes('bbt-prefs-2col')) throw new Error('2-col span not in a 2-col parent')
     }
+    if (node.name === 'script') throw new Error("scripts don't work in preference panes")
 
     switch (node.name) {
       case 'textbox':

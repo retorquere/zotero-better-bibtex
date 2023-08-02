@@ -471,6 +471,9 @@ export class PrefPane {
 
       this.autoexport.load()
 
+      this.quickCopy()
+      $window.document.getElementById('bbt-preferences-quickcopy').addEventListener('command', () => this.quickCopy())
+
       this.checkCitekeyFormat()
       this.checkPostscript()
       this.refresh()
@@ -478,6 +481,14 @@ export class PrefPane {
     }
     catch (err) {
       log.debug('error loading preferences:', err)
+    }
+  }
+
+  private quickCopy() {
+    const quickcopy = 'bbt-preferences-quickcopy-details'
+    const selected = `${quickcopy}-${Zotero.Prefs.get('translators.better-bibtex.quickCopyMode')}`
+    for (const details of ([...$window.document.querySelectorAll(`.${quickcopy}`)] as HTMLElement[])) {
+      details.style.display = details.id === selected ? 'initial' : 'none'
     }
   }
 
@@ -497,10 +508,6 @@ export class PrefPane {
       this.unload()
       return
     }
-
-    const quickCopyDetails: XUL.Deck = $window.document.getElementById('bbt-quick-copy-details') as unknown as XUL.Deck
-    const quickCopyId = `bbt-preferences-quickcopy-${Preference.quickCopyMode}`
-    quickCopyDetails.selectedIndex = Array.from(quickCopyDetails.children).findIndex(details => details.id === quickCopyId)
 
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
     for (const node of (Array.from($window.document.getElementsByClassName('bbt-jurism')) as unknown[] as XUL.Element[])) {
