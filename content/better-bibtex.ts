@@ -3,6 +3,8 @@ import type BluebirdPromise from 'bluebird'
 
 import { is7 } from './client'
 
+if (is7) Components.utils.importGlobalProperties(['FormData'])
+
 let $window: Window
 
 Components.utils.import('resource://gre/modules/FileUtils.jsm')

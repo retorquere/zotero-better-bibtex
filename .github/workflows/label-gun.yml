@@ -17,7 +17,7 @@ jobs:
           label.awaiting: awaiting-user-feedback
           label.log-required: needs-debug-log
           label.reopened: reopened
-          log-id: "[A-Z0-9]{8}(-refs)?-(apse|euc)"
+          log-id: "([A-Z0-9]{8}(-refs)?-(apse|euc))|([^-]+-[A-Z0-9]{8})"
           message.log-required: |
             You did not submit a debug log. A longer explanation follows, but please just submit a debug log. It takes less time to submit a debug log than to argue its necessity.
 
@@ -32,6 +32,8 @@ jobs:
             1. If your issue relates to how BBT behaves around a **specific reference(s)**, such as citekey generation or export, select at least one of the items(s) under consideration, right-click it, and submit an BBT debug log from that popup menu. If the problem is with export, please do include a sample of what you see exported, and what you expected to see exported for these references.
 
             2. If the issue **does not relate to references** and is of a more general nature, generate an debug log by restarting Zotero with debugging enabled (Help -> Debug Output Logging -> Restart with logging enabled), reproducing your problem, and selecting "Send Better BibTeX debug report..." from the help menu.
+
+            If Better BibTeX failed to start, and the regular debug log options do not work, choose "Send debug log to file.io" from the Help menu.
 
             Once done, you will see a debug ID in red. Please post that debug id in the issue here.
 
