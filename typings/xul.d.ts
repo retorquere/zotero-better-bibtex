@@ -2,6 +2,7 @@ export namespace XUL {
   class Element extends HTMLElement {
     // public tagName: string
     public hidden: boolean
+    public disabled: boolean
     // public getAttribute(name: string): string
     // public setAttribute(name: string, value: string): void
     // public classList: ClassList

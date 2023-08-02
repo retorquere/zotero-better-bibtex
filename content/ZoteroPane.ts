@@ -229,7 +229,7 @@ class ZoteroPane {
         }
         auto_exports = [...auto_exports].sort((a: { path: string }, b: { path: string }) => a.path.localeCompare(b.path))
 
-        const menulist: XUL.Menulist = doc.getElementById('zotero-collectionmenu-bbt-autoexport')
+        const menulist: XUL.Menulist = doc.getElementById('zotero-collectionmenu-bbt-autoexport') as XUL.Menulist
         menulist.hidden = auto_exports.length === 0
         log.debug('2578 auto-exports should be hidden:', menulist.hidden, auto_exports.length === 0)
 
