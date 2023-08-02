@@ -1,5 +1,5 @@
 /* eslint-disable no-magic-numbers */
-declare const XPCOMUtils: any
+declare const ChromeUtils: any
 
 import { stringify } from './stringify'
 
@@ -9,13 +9,11 @@ import * as escape from './escape'
 import { flash } from './flash'
 import { log } from './logger'
 
-Components.utils.import('resource://gre/modules/XPCOMUtils.jsm')
-
 /* eslint-disable max-classes-per-file */
 
 class FieldEnumerator {
   // eslint-disable-next-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
-  public QueryInterface = XPCOMUtils.generateQI([Components.interfaces.nsISupports, Components.interfaces.nsISimpleEnumerator])
+  public QueryInterface = ChromeUtils.generateQI([Components.interfaces.nsISupports, Components.interfaces.nsISimpleEnumerator])
   public doc: Document
   public idx: number
 
