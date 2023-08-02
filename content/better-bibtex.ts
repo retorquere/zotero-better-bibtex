@@ -706,7 +706,7 @@ export class BetterBibTeX {
       startup: async () => {
         this.deferred.resolve(true)
         await this.load(Zotero.getMainWindow())
-        debugLogUnregister('Better BibTeX')
+        debugLogUnregister('XBetter BibTeX')
 
         if (is7) {
           await Zotero.ItemTreeManager.registerColumns({
