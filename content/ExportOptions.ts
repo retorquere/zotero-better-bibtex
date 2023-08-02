@@ -114,7 +114,11 @@ export class ExportOptions {
     const worker = doc.getElementById('export-option-worker') as HTMLInputElement
     const target = e ? e.target as Element : exportFileData
 
-    log.debug('export-options.mutex:', { exportFileData: !!exportFileData, keepUpdated: !!keepUpdated, worker: !!worker })
+    log.debug('export-options.mutex: start:', {
+      exportFileData: exportFileData ? exportFileData.checked : null,
+      keepUpdated: keepUpdated ? keepUpdated.checked : null,
+      worker: worker ? worker.checked : null,
+    })
 
     if (!exportFileData || !keepUpdated) return null
 
@@ -128,5 +132,11 @@ export class ExportOptions {
 
     keepUpdated.disabled = exportFileData.checked
     worker.disabled = keepUpdated.checked
+
+    log.debug('export-options.mutex: done:', {
+      exportFileData: exportFileData ? exportFileData.checked : null,
+      keepUpdated: keepUpdated ? keepUpdated.checked : null,
+      worker: worker ? worker.checked : null,
+    })
   }
 }
