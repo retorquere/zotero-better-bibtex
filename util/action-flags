@@ -14,16 +14,20 @@ if github.event_name == 'push':
   if github.event.head_commit.message == package.version and github.ref == f'refs/tags/v{package.version}':
     print('release build')
     flags.add('slow')
-  elif github.ref_name == 'master': # builds on master.
-    print('master')
+  else:
+    print('debug build')
     flags.add('slow')
     flags.add('beta')
-  elif os.path.isfile('beta.txt'):
-    with open('beta.txt') as f:
-      for branch in f.readlines():
-        if branch.strip() == github.ref_name:
-          print('beta for', github.ref_name)
-          flags.add('beta')
+#  elif github.ref_name == 'master': # builds on master.
+#    print('master')
+#    flags.add('slow')
+#    flags.add('beta')
+#  elif os.path.isfile('beta.txt'):
+#    with open('beta.txt') as f:
+#      for branch in f.readlines():
+#        if branch.strip() == github.ref_name:
+#          print('beta for', github.ref_name)
+#          flags.add('beta')
 
 if github.event_name == 'schedule': # nightlies
   print('nightly')
