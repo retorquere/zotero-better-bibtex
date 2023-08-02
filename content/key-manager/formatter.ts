@@ -319,7 +319,7 @@ class PatternFormatter {
     dash: Zotero.Utilities.XRegExp('\\p{Pd}|\u2500|\uFF0D|\u2015', 'g'), // additional pseudo-dashes from #1880
     caseNotUpperTitle: Zotero.Utilities.XRegExp('[^\\p{Lu}\\p{Lt}]', 'g'),
     caseNotUpper: Zotero.Utilities.XRegExp('[^\\p{Lu}]', 'g'),
-    word: Zotero.Utilities.XRegExp('[\\p{L}\\p{Nd}\\{Pc}\\p{M}]+(-[\\p{L}\\p{Nd}\\{Pc}\\p{M}]+)*', 'g'),
+    word: Zotero.Utilities.XRegExp('[\\p{L}\\p{Nd}\\p{Pc}\\p{M}]+(-[\\p{L}\\p{Nd}\\p{Pc}\\p{M}]+)*', 'g'),
   }
 
   private acronyms: Record<string, Record<string, string>> = {}
