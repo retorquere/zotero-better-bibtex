@@ -1,6 +1,5 @@
 import { patch as $patch$ } from './monkey-patch'
 import { sentenceCase } from './text'
-import * as client from './client'
 import * as l10n from './l10n'
 import { log } from './logger'
 import { Elements } from './create-element'
@@ -27,13 +26,7 @@ async function title_sentenceCase(label) {
 
 export async function newZoteroItemPane(win: Window): Promise<void> {
   let itemBoxInstance: HTMLElement
-  if (client.is7) {
-    const ItemBox = win.customElements.get('item-box')
-    itemBoxInstance = new ItemBox
-  }
-  else {
-    await busyWait(() => { itemBoxInstance = win.document.querySelector('#zotero-editpane-item-box'); return !!itemBoxInstance })
-  }
+  await busyWait(() => { itemBoxInstance = win.document.querySelector(is7 ? 'item-box' : '#zotero-editpane-item-box'); return !!itemBoxInstance })
   new ZoteroItemPane(win, itemBoxInstance)
 }
 
@@ -67,7 +60,7 @@ export class ZoteroItemPane {
       }
 
       if (!this.document.getElementById('better-bibtex-editpane-item-box')) {
-        itemBoxInstance.parentNode.appendChild(elements.create('vbox', { flex: 1, margin: 0, padding: 0, $: [
+        itemBoxInstance.parentNode.appendChild(elements.create('vbox', { flex: 1, style: 'margin: 0; padding: 0', $: [
 
           elements.create('grid', { id: 'better-bibtex-editpane-item-box', $: [
             elements.create('columns', { $: [
@@ -82,6 +75,19 @@ export class ZoteroItemPane {
                 // elements.create('label', { id: 'better-bibtex-citekey-pin', value: icons.pin }),
               ]}),
             ]}),
+          ]}),
+
+          itemBoxInstance,
+        ]}))
+      }
+    }
+    else {
+      if (!this.document.getElementById('better-bibtex-editpane-item-box')) {
+        itemBoxInstance.parentNode.appendChild(elements.create('html:div', { style: 'display: flex; flex-direction: column;' , $: [
+
+          elements.create('html:div', { id: 'better-bibtex-editpane-item-box', style: 'display: flex; flex-direction: row', $: [
+            elements.create('label', { id: 'better-bibtex-citekey-label', style: 'flex: 0 0 auto; width: 9em; text-align: right; color: #7F7F7F', value: '' }),
+            elements.create('html:input', { id: 'better-bibtex-citekey-display', type: 'text', style: 'flex: 0 0 auto', readonly: 'true', value: '' }),
           ]}),
 
           itemBoxInstance,
