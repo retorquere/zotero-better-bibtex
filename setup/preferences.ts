@@ -526,14 +526,14 @@ class XHTML extends BaseASTWalker {
 
     switch (node.name) {
       case 'textbox':
-        node.attrs.forEach(a => {
-          if (a.name === 'size') a.name = 'cols'
-        })
+        node.attrs = node.attrs.filter(a => a.name !== 'flex')
 
         if (node.attrs.find(a => a.name === 'multiline')) {
           node.name = 'html:textarea'
-
-          node.attrs = node.attrs.filter(a => a.name !== 'multiline' && a.name !== 'flex')
+          node.attrs.forEach(a => {
+            if (a.name === 'size') a.name = 'cols'
+          })
+          node.attrs = node.attrs.filter(a => a.name !== 'multiline')
           // arbitrary size
           for (const [name, val] of Object.entries({ cols: '80', rows: '5' })) {
             if (!node.attrs.find(a => a.name === name)) node.attrs.push({ name, val: JSON.stringify(val), mustEscape: false })
