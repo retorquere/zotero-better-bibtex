@@ -298,7 +298,7 @@ $patch$(Zotero.Item.prototype, 'setField', original => function Zotero_Item_prot
 // To show the citekey in the item list
 $patch$(Zotero.Item.prototype, 'getField', original => function Zotero_Item_prototype_getField(field: any, unformatted: any, includeBaseMapped: any) {
   try {
-    if (field === 'citationKey') {
+    if (field === 'citationKey' || field === 'citekey') {
       if (Zotero.BetterBibTeX.ready.isPending()) return '' // eslint-disable-line @typescript-eslint/no-use-before-define
       return Zotero.BetterBibTeX.KeyManager.get(this.id).citekey
     }
