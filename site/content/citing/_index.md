@@ -66,19 +66,19 @@ A common pattern is `auth.lower + year`, which means
 
 Changing a pattern will only affect items created/changed after you changed the pattern; existing keys are not automatically regenerated when you change the pattern. If you want your keys to update after a pattern change you will have to select your items, right-click, and select `Refresh`. This will not affect keys you have pinned.
 
-If you want to get fancy, you can set multiple patterns separated by a vertical bar, of which the first will be applied
+If you want to get fancy, you can set multiple patterns separated by a semicolon (`;`) or vertical bar (`|`), of which the first will be applied
 that yields a non-empty string. If all return a empty string, a random key will be generated.
 
 An example application for this behavior is to use the `tex.shortauthor` from the [extra field]({{< ref "../exporting/extra-fields" >}}) when defined to generate short citation keys for entries with long group author names, but to default to `auth.lower` otherwise:
 
 ```text
-extra('tex.shortauthor').transliterate.clean.lower.len + year | auth.lower + year
+extra('tex.shortauthor').transliterate.clean.lower.len + year; auth.lower + year
 ```
 
 You can add a verbatim text by just including it in single or double quotes:
 
 ```text
-extra('tex.shortauthor').transliterate.clean.lower.len + year | 'default' + auth.lower + year
+extra('tex.shortauthor').transliterate.clean.lower.len + year; 'default' + auth.lower + year
 ```
 
 ### Generating citekeys
