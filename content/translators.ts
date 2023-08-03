@@ -83,7 +83,9 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
         this.uninstall('\u672B BetterBibTeX JSON (for debugging)')
         this.uninstall('BetterBibTeX JSON (for debugging)')
 
-        await this.lateInit()
+        this.lateInit().catch(err => {
+          log.debug('translators startup failure', err)
+        })
       },
       shutdown: async (reason: Reason) => {
         switch (reason) {
@@ -174,6 +176,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
   }
 
   public async importString(str) {
+    await this.ready
     const translation = new Zotero.Translate.Import()
     translation.setString(str)
 
@@ -431,6 +434,8 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
   // public async exportItems(translatorID: string, displayOptions: any, scope: ExportScope, path: string = null): Promise<string> {
   public async exportItems(job: ExportJob): Promise<string> {
     await Zotero.BetterBibTeX.ready
+    await this.ready
+
     const displayOptions = this.displayOptions(job.translatorID, job.displayOptions)
 
     const start = Date.now()
