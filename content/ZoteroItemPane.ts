@@ -67,10 +67,7 @@ export class ZoteroItemPane {
       }
 
       if (!this.document.getElementById('better-bibtex-editpane-item-box')) {
-        const itemBox = this.document.getElementById('zotero-editpane-item-box')
-        const label = l10n.localize('better-bibtex_item-pane_citekey')
-
-        itemBox.parentNode.appendChild(elements.create('vbox', { flex: 1, margin: 0, padding: 0, $: [
+        itemBoxInstance.parentNode.appendChild(elements.create('vbox', { flex: 1, margin: 0, padding: 0, $: [
 
           elements.create('grid', { id: 'better-bibtex-editpane-item-box', $: [
             elements.create('columns', { $: [
@@ -80,14 +77,14 @@ export class ZoteroItemPane {
             ]}),
             elements.create('rows', { id: 'better-bibtex-fields', flex: 1, $: [
               elements.create('row', { class: 'zotero-item-first-row', $: [
-                elements.create('label', { id: 'better-bibtex-citekey-label', style: 'width: 9em; text-align: right; color: #7F7F7F', value: label }),
-                elements.create('textbox', { id: 'better-bibtex-citekey-display', class: 'plain', readonly: 'true', value: 'citekey' }),
+                elements.create('label', { id: 'better-bibtex-citekey-label', style: 'width: 9em; text-align: right; color: #7F7F7F', value: '' }),
+                elements.create('textbox', { id: 'better-bibtex-citekey-display', class: 'plain', readonly: 'true', value: '' }),
                 // elements.create('label', { id: 'better-bibtex-citekey-pin', value: icons.pin }),
               ]}),
             ]}),
           ]}),
 
-          itemBox,
+          itemBoxInstance,
         ]}))
       }
     }
