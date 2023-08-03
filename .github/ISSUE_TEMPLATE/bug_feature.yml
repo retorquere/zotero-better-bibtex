@@ -16,7 +16,16 @@ body:
         4. choose `BBT debug log` from the popup menu.
 
         If you are sure your question does not relate to items in your library at all, just select any one item in your library.
-
+  - type: dropdown
+    attributes:
+      label: Zotero version
+      description: What version of Zotero are you running?
+      multiple: false
+      options:
+        - 6
+        - 7
+  validations:
+    required: true
   - type: input
     id: debug-log
     attributes:
