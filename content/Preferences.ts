@@ -539,14 +539,6 @@ export class PrefPane {
       })
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
-    for (const state of (Array.from($window.document.getElementsByClassName('bbt-preferences-worker-state')) as unknown[] as XUL.Textbox[])) {
-      state.value = l10n.localize('better-bibtex_workers_status', {
-        total: Translators.workers.total,
-        running: Translators.workers.running.size,
-      })
-    }
-
     if (this.autoexport) this.autoexport.refresh()
   }
 

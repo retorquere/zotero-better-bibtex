@@ -10,7 +10,6 @@ export namespace Translators {
     }
 
     type Job = {
-      job: number
       translator: string
       autoExport?: number
 

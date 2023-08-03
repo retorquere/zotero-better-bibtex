@@ -62,12 +62,6 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
   public ready: BluebirdPromise<boolean>
   private deferred = new Deferred<boolean>()
 
-  public workers: { total: number, running: Set<number>, startup: number } = {
-    total: 0,
-    running: new Set,
-    startup: 0,
-  }
-
   constructor() {
     Object.assign(this, translatorMetadata)
     this.ready = this.deferred.promise
@@ -273,10 +267,6 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       || preferences.relativeFilePaths
     ) && Cache.getCollection(translator.label)
 
-    this.workers.total += 1
-    const id = this.workers.total
-    this.workers.running.add(id)
-
     const deferred = new Deferred<string>()
 
     const config: Translator.Worker.Job = {
@@ -292,7 +282,6 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       translator: translator.label,
       output: job.path || '',
       debugEnabled: !!Zotero.Debug.enabled,
-      job: id,
     }
 
     let items: any[] = []
@@ -302,7 +291,6 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
           log.status({error: true}, 'QBW failed:', Date.now() - start, e.data)
           job.translate?._runHandler('error', e.data) // eslint-disable-line no-underscore-dangle
           deferred.reject(e.data.message)
-          this.workers.running.delete(id)
           break
 
         case 'debug':
@@ -317,7 +305,6 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
         case 'done':
           void Events.emit('export-progress', { pct: 100, message: translator.label, ae: job.autoExport })
           deferred.resolve(typeof e.data.output === 'boolean' ? '' : e.data.output)
-          this.workers.running.delete(id)
           break
 
         case 'cache':
@@ -342,7 +329,6 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       log.status({error: true}, 'QBW: failed:', Date.now() - start, 'message:', e)
       job.translate?._runHandler('error', e) // eslint-disable-line no-underscore-dangle
       deferred.reject(e.message)
-      this.workers.running.delete(id)
     }
 
     const scope = this.exportScope(job.scope)
@@ -427,13 +413,6 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     }
 
     prepare.done()
-
-    // if the average startup time is greater than the autoExportDelay, bump up the delay to prevent stall-cascades
-    this.workers.startup += Math.ceil((Date.now() - start) / 1000) // eslint-disable-line no-magic-numbers
-    // eslint-disable-next-line no-magic-numbers
-    if (this.workers.total > 5 && (this.workers.startup / this.workers.total) > Preference.autoExportDelay) {
-      Preference.autoExportDelay = Math.ceil(this.workers.startup / this.workers.total)
-    }
 
     const enc = new TextEncoder()
     // stringify gets around 'object could not be cloned', and arraybuffers can be passed zero-copy. win-win
