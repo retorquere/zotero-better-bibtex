@@ -25,7 +25,13 @@ export class Elements {
     this.className = `better-bibtex-${Zotero.Utilities.generateObjectKey()}`
   }
 
-  create(name: string, attrs: Record<string, string | Handler> = {}, namespace = NAMESPACE.XUL): HTMLElement {
+  create(name: string, attrs: Record<string, number | string | Handler | HTMLElement[]> = {}): HTMLElement {
+    const children: HTMLElement[] = (attrs.$ as unknown as HTMLElement[]) || []
+    delete attrs.$
+
+    const namespace = name.startsWith('html:') ? NAMESPACE.HTML : NAMESPACE.XUL
+    name = name.replace('html:', '')
+
     const elt: HTMLElement = is7
       ? this.document[ namespace === NAMESPACE.XUL ? 'createXULElement' : 'createElement'](name) as HTMLElement
       : this.document.createElementNS(namespace, name) as HTMLElement
@@ -34,13 +40,20 @@ export class Elements {
       if (typeof v === 'string') {
         elt.setAttribute(a, v)
       }
-      else if (a.startsWith('on')) {
+      else if (typeof v === 'number') {
+        elt.setAttribute(a, `${v}`)
+      }
+      else if (a.startsWith('on') && typeof v === 'function') {
         elt.addEventListener(a.replace('on', ''), event => { (v(event) as Promise<void>)?.catch?.(err => { throw(err) }) })
       }
       else {
         throw new Error(`unexpected attribute ${a}`)
       }
     }
+    for (const child of children) {
+      elt.appendChild(child)
+    }
+
     if (is7) Elements.all.add(new WeakRef(elt))
 
     return elt
