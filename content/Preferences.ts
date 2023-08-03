@@ -395,16 +395,14 @@ export class PrefPane {
     if (!$window || Zotero.BetterBibTeX.ready.isPending()) return // itemTypes not available yet
 
     const error = Formatter.update([Preference.citekeyFormatEditing, Preference.citekeyFormat])
-    const style = error ? '-moz-appearance: none !important; background-color: DarkOrange' : ''
 
     const editing = $window.document.getElementById('bbt-preferences-citekeyFormatEditing')
-    editing.setAttribute('style', style)
+    editing.classList[error ? 'add' : 'remove']('bbt-prefs-error')
     editing.setAttribute(is7 ? 'title' : 'tooltiptext', error)
     if (is7) editing.setAttribute('tooltip', 'html-tooltip')
 
     const msg = $window.document.getElementById('bbt-citekeyFormat-error') as HTMLInputElement
     msg.value = error
-    msg.setAttribute('style', style)
     msg.style.display = error ? 'initial' : 'none'
 
     const active = $window.document.getElementById('bbt-preferences-citekeyFormat')
