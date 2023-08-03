@@ -52,7 +52,6 @@ export class ExportOptions {
     const doc = $window.document
 
     const selected = this.selected()
-    log.debug('export-options.show:', selected)
     let reminder = doc.getElementById('better-bibtex-reminder')
     if (!selected) {
       if (reminder) reminder.hidden = true
@@ -62,7 +61,6 @@ export class ExportOptions {
     if (!reminder) {
       const translateOptions = doc.getElementById('translator-options')
       translateOptions.parentNode.insertBefore(reminder = this.elements.create('description', {style: 'color: red', hidden: 'true', id: 'better-bibtex-reminder'}), translateOptions)
-      log.debug('export-options.show: added reminder')
     }
 
     switch (selected.translatorID) {
@@ -83,7 +81,6 @@ export class ExportOptions {
 
     for (const node of [...doc.querySelectorAll('#export-option-exportFileData, #export-option-keepUpdated, #export-option-worker')]) {
       if (node.classList.contains('better-bibex-export-options')) continue
-      log.debug('export-options.show: added listener to', node.getAttribute('id'))
       node.classList.add('better-bibex-export-options')
       node.addEventListener('command', this.mutex.bind(this))
 
