@@ -110,10 +110,9 @@ export class ZoteroItemPane {
       const { citekey, pinned } = Zotero.BetterBibTeX.KeyManager.get(this.item.id)
       const label = this.parentNode.querySelector('#better-bibtex-citekey-label')
       const value = this.parentNode.querySelector('#better-bibtex-citekey-display')
-      // const pin = this.parentNode.querySelector('#better-bibtex-citekey-pin')
+      if (!value) return // merge pane uses itembox
 
       label.hidden = value.hidden = !citekey
-      // pin.hidden = !pinned
 
       label.value = `${pinned ? icons.pin : ''}${l10n.localize('better-bibtex_item-pane_citekey')}`
       value.value = citekey
