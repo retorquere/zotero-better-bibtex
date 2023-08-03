@@ -24,7 +24,7 @@ import { Events } from './events'
 import { Pinger } from './ping'
 import Puqeue from 'puqeue'
 import { is7 } from './client'
-import { orchestrator, Task } from './orchestrator'
+import { orchestrator } from './orchestrator'
 import type { Reason } from './bootstrap'
 
 class Queue extends Puqeue {
@@ -69,9 +69,8 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     orchestrator.add('translators', {
       description: 'translators',
       needs: ['database'],
-      startup: async (_reason: string, task: Task) => {
+      startup: async () => {
         await this.start()
-        task.milestones.set(Date.now(), 'worker start')
 
         this.itemType = {
           note: Zotero.ItemTypes.getID('note'),
@@ -83,44 +82,8 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
         this.uninstall('Better BibTeX Quick Copy')
         this.uninstall('\u672B BetterBibTeX JSON (for debugging)')
         this.uninstall('BetterBibTeX JSON (for debugging)')
-        task.milestones.set(Date.now(), 'cleanup')
 
-        const before = Date.now()
-        await Zotero.Translators.init()
-        log.debug('startup: Zotero.Translators.init() took', (Date.now() - before)/1000, 'seconds')
-        task.milestones.set(Date.now(), 'zotero translators init')
-
-        const reinit: { header: Translator.Header, code: string }[] = []
-        let header: Translator.Header
-        let code: string
-        // fetch from resource because that has the hash
-        const headers: Translator.Header[] = Object.keys(this.byName)
-          .map(name => JSON.parse(Zotero.File.getContentsFromURL(`chrome://zotero-better-bibtex/content/resource/${name}.json`)))
-        for (header of headers) {
-          // workaround for mem limitations on Windows
-          if (!is7 && typeof header.displayOptions?.worker === 'boolean') header.displayOptions.worker = !!Zotero.isWin
-          if (code = await this.install(header)) reinit.push({ header, code })
-        }
-        task.milestones.set(Date.now(), 'translators installed')
-
-        if (reinit.length) {
-          await Zotero.Translators.reinit()
-          task.milestones.set(Date.now(), 'zotero translators reinit')
-
-          for ({ header, code } of reinit) {
-            if (Zotero.Translators.getCodeForTranslator) {
-              const translator = Zotero.Translators.get(header.translatorID)
-              translator.cacheCode = true
-              await Zotero.Translators.getCodeForTranslator(translator)
-            }
-            else {
-              new Zotero.Translator({...header, cacheCode: true, code })
-            }
-          }
-          task.milestones.set(Date.now(), 'code cached')
-        }
-
-        this.deferred.resolve(true)
+        await this.lateInit()
       },
       shutdown: async (reason: Reason) => {
         switch (reason) {
@@ -144,6 +107,39 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
         await Zotero.Translators.reinit()
       },
     })
+  }
+
+  private async lateInit() {
+    await Zotero.Translators.init()
+
+    const reinit: { header: Translator.Header, code: string }[] = []
+    let header: Translator.Header
+    let code: string
+    // fetch from resource because that has the hash
+    const headers: Translator.Header[] = Object.keys(this.byName)
+      .map(name => JSON.parse(Zotero.File.getContentsFromURL(`chrome://zotero-better-bibtex/content/resource/${name}.json`)))
+    for (header of headers) {
+      // workaround for mem limitations on Windows
+      if (!is7 && typeof header.displayOptions?.worker === 'boolean') header.displayOptions.worker = !!Zotero.isWin
+      if (code = await this.install(header)) reinit.push({ header, code })
+    }
+
+    if (reinit.length) {
+      await Zotero.Translators.reinit()
+
+      for ({ header, code } of reinit) {
+        if (Zotero.Translators.getCodeForTranslator) {
+          const translator = Zotero.Translators.get(header.translatorID)
+          translator.cacheCode = true
+          await Zotero.Translators.getCodeForTranslator(translator)
+        }
+        else {
+          new Zotero.Translator({...header, cacheCode: true, code })
+        }
+      }
+    }
+
+    this.deferred.resolve(true)
   }
 
   public getTranslatorId(name: string): string {
