@@ -68,18 +68,21 @@ export class ZoteroItemPane {
 
       if (!this.document.getElementById('better-bibtex-editpane-item-box')) {
         const itemBox = this.document.getElementById('zotero-editpane-item-box')
+        const label = l10n.localize('better-bibtex_item-pane_citekey')
 
         itemBox.parentNode.appendChild(elements.create('vbox', { flex: 1, margin: 0, padding: 0, $: [
 
           elements.create('grid', { id: 'better-bibtex-editpane-item-box', $: [
             elements.create('columns', { $: [
               elements.create('column'),
-              elements.create('column', { flex: 1 }),
+              elements.create('column'),
+              // elements.create('column', { flex: 100 }),
             ]}),
             elements.create('rows', { id: 'better-bibtex-fields', flex: 1, $: [
               elements.create('row', { class: 'zotero-item-first-row', $: [
-                elements.create('label', { id: 'better-bibtex-citekey-label', value: `${l10n.localize('better-bibtex.ItemPane.citekey_column')}:` }),
+                elements.create('label', { id: 'better-bibtex-citekey-label', style: 'width: 9em; text-align: right; color: #7F7F7F', value: label }),
                 elements.create('textbox', { id: 'better-bibtex-citekey-display', class: 'plain', readonly: 'true', value: 'citekey' }),
+                // elements.create('label', { id: 'better-bibtex-citekey-pin', value: icons.pin }),
               ]}),
             ]}),
           ]}),
@@ -110,12 +113,13 @@ export class ZoteroItemPane {
       const { citekey, pinned } = Zotero.BetterBibTeX.KeyManager.get(this.item.id)
       const label = this.parentNode.querySelector('#better-bibtex-citekey-label')
       const value = this.parentNode.querySelector('#better-bibtex-citekey-display')
+      // const pin = this.parentNode.querySelector('#better-bibtex-citekey-pin')
 
       label.hidden = value.hidden = !citekey
-      if (citekey) {
-        label.value = `Citation Key: ${pinned ? icons.pin : ''}`
-        value.value = citekey
-      }
+      // pin.hidden = !pinned
+
+      label.value = `${pinned ? icons.pin : ''}${l10n.localize('better-bibtex_item-pane_citekey')}`
+      value.value = citekey
     })
   }
 

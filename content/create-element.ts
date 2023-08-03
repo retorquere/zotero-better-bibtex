@@ -25,6 +25,11 @@ export class Elements {
     this.className = `better-bibtex-${Zotero.Utilities.generateObjectKey()}`
   }
 
+  public serialize(node: HTMLElement): string {
+    const s = new XMLSerializer
+    return s.serializeToString(node)
+  }
+
   create(name: string, attrs: Record<string, number | string | Handler | HTMLElement[]> = {}): HTMLElement {
     const children: HTMLElement[] = (attrs.$ as unknown as HTMLElement[]) || []
     delete attrs.$
