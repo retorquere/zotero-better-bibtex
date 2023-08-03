@@ -1,10 +1,9 @@
 html:div(class='bbt-prefs-1col')
   label(bbt:preference='extensions.zotero.translators.better-bibtex.citekeyFormatEditing') &better-bibtex_preferences_citekey_format;
-  textbox#bbt-preferences-citekeyFormatEditing(
+  html:textarea#bbt-preferences-citekeyFormatEditing(
     preference='extensions.zotero.translators.better-bibtex.citekeyFormatEditing'
-    rows=5
-    size=80
-    multiline='true'
+    rows=10
+    cols=80
   )
   textbox#bbt-citekeyFormat-error(
     preference='extensions.zotero.translators.better-bibtex.citekeyFormat'

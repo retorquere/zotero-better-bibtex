@@ -458,8 +458,10 @@ export class PrefPane {
         await Zotero.BetterBibTeX.ready
 
         // bloody *@*&^@# html controls only sorta work for prefs
-        for (const node of Array.from($window.document.querySelectorAll("input[preference][type='range']"))) {
-          (node as HTMLInputElement).value = Preference[node.getAttribute('preference').replace('extensions.zotero.translators.better-bibtex.', '')]
+        for (const node of Array.from($window.document.querySelectorAll<HTMLInputElement>("input[preference][type='range'], input[preference][type='text'], textarea[preference]"))) {
+          node.value = Preference[node.getAttribute('preference').replace('extensions.zotero.translators.better-bibtex.', '')]
+          log.debug('prefence-input:', node.tagName)
+          if (!is7 && node.tagName === 'textarea') node.style.marginBottom = '20px'
         }
 
         deck.selectedIndex = 1
