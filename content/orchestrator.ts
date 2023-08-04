@@ -172,13 +172,15 @@ export class Orchestrator {
         .then(async () => {
           task.started = Date.now()
           report(name)
+          print(`orchestrator: ${phase}.${name} starting`)
 
           try {
             return await action(reason, task) as Promise<void | string>
+            print(`orchestrator: ${phase}.${name} finished`)
           }
 
           catch (err) {
-            print(`orchestrator error: ${phase}.${name} failed: ${err}\n${err.stack}`)
+            print(`orchestrator: error: ${phase}.${name} failed: ${err}\n${err.stack}`)
             throw err
           }
 
