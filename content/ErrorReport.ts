@@ -13,6 +13,7 @@ import { log } from './logger'
 import { DB } from './db/main'
 import { DB as Cache } from './db/cache'
 import { pick } from './file-picker'
+import { is7 } from './client'
 import * as l10n from './l10n'
 
 import Tar from 'tar-js'
@@ -227,7 +228,7 @@ export class ErrorReport {
 
       const region = await Zotero.Promise.any(Object.keys(s3.region).map(this.ping.bind(this)))
       this.bucket = `https://${s3.bucket}-${region.short}.s3-${region.region}.amazonaws.com${region.tld || ''}`
-      this.key = `${Zotero.Utilities.generateObjectKey()}${this.params.scope ? '-refs' : ''}-${region.short}`
+      this.key = `${Zotero.Utilities.generateObjectKey()}${this.params.scope ? '-refs' : ''}-${region.short}-${ is7 ? 7 : 6}` // eslint-disable-line no-magic-numbers
 
       this.tarball = OS.Path.join(Zotero.getTempDirectory().path, `${this.key}-${this.timestamp}.tgz`)
 
