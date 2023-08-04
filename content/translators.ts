@@ -537,9 +537,19 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
     // importing AutoExports would be circular, so access DB directly
     const autoexports = DB.getCollection('autoexport')
-    for (const ae of autoexports.find({ $and: [ { translatorID: { $eq: header.translatorID } }, { status: { $ne: 'scheduled' } } ] })) {
-      ae.status = 'scheduled'
-      autoexports.update(ae)
+    if (autoexports) {
+      for (const ae of autoexports.find({ $and: [ { translatorID: { $eq: header.translatorID } }, { status: { $ne: 'scheduled' } } ] })) {
+        ae.status = 'scheduled'
+        autoexports.update(ae)
+      }
+    }
+    else { // THIS SHOULD NOT BE POSSIBLE! HOW DOES THIS KEEP HAPPENING?
+      log.error('translator upgrade error: could not get autoexport collection while installing', header.label)
+      flash(
+        'Failed to schedule auto-export',
+        `Failed to schedule auto-exports after ${installed ? 'upgrade' : 'installation'} of ${header.label}, please report this on the Better BibTeX github project`,
+        15 // eslint-disable-line no-magic-numbers
+      )
     }
 
     try {

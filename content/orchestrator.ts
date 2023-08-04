@@ -137,7 +137,7 @@ export class Orchestrator {
     const time = ts => (new Date(ts)).toISOString()
     const line = (name: string, event: string, timestamp: number) => { // eslint-disable-line arrow-body-style
       // eslint-disable-next-line no-magic-numbers
-      return `orchestrator: [${name.padEnd(50, ' ')}] ${phase.padEnd(10, ' ')} ${event.padEnd(15, ' ')} at ${time(timestamp)} running [${running()}]`
+      return `better-bibtex orchestrator: [${name.padEnd(50, ' ')}] ${phase.padEnd(10, ' ')} ${event.padEnd(15, ' ')} at ${time(timestamp)} running [${running()}]`
     }
 
     const report = (name: string) => {
@@ -166,32 +166,34 @@ export class Orchestrator {
       }
 
       promises[name] = circular
+      let error: Error = null
 
       return promises[name] = needed()
 
         .then(async () => {
           task.started = Date.now()
           report(name)
-          print(`orchestrator: ${phase}.${name} starting`)
+          print(`better-bibtex orchestrator: task ${phase}.${name} starting`)
 
           try {
             return await action(reason, task) as Promise<void | string>
-            print(`orchestrator: ${phase}.${name} finished`)
+            print(`better-bibtex orchestrator: task ${phase}.${name} finished`)
           }
 
           catch (err) {
-            print(`orchestrator: error: ${phase}.${name} failed: ${err}\n${err.stack}`)
-            throw err
+            error = err
           }
 
           finally {
+            if (error) print(`better-bibtex orchestrator: error: task ${phase}.${name} failed: ${err}\n${err.stack}`)
             task.finished = Date.now()
             report(name)
+            if (error) throw error
           }
         })
 
         .catch(err => {
-          print(`better-bibtex orchestrator: ${name}.${phase} ${reason || ''} error: ${err}`)
+          print(`better-bibtex better-bibtex orchestrator: ${name}.${phase} ${reason || ''} error: ${err}`)
           throw err
         })
     }
