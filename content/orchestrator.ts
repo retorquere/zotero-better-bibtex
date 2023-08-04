@@ -157,38 +157,44 @@ export class Orchestrator {
       if (promise != null) return promise
 
       const task = taskmap[name]
-      let { action, needs } = task
-      if (!action) action = async () => `nothing to do for ${name}.${phase} ${reason || ''}` // eslint-disable-line @typescript-eslint/require-await
+      const { action, needs } = task
+      if (!action) {
+        promises[name] = Promise.resolve()
+        return
+      }
 
       const needed = async () => {
         await Promise.all(needs.map(run))
         // for (const dep of needs) await run(dep)
       }
 
+      const perform = async (): Promise<void | string> => {
+        print(`better-bibtex orchestrator: task ${phase}.${name} starting`)
+        try {
+          const res = await action(reason, task) as Promise<void | string>
+          print(`better-bibtex orchestrator: task ${phase}.${name} finished`)
+          return res
+        }
+        catch (err) {
+          print(`better-bibtex orchestrator: error: task ${phase}.${name} failed: ${err}\n${err.stack}`)
+          throw err
+        }
+      }
+
       promises[name] = circular
-      let error: Error = null
 
       return promises[name] = needed()
 
         .then(async () => {
           task.started = Date.now()
           report(name)
-          print(`better-bibtex orchestrator: task ${phase}.${name} starting`)
 
           try {
-            return await action(reason, task) as Promise<void | string>
-            print(`better-bibtex orchestrator: task ${phase}.${name} finished`)
+            return await perform()
           }
-
-          catch (err) {
-            error = err
-          }
-
           finally {
-            if (error) print(`better-bibtex orchestrator: error: task ${phase}.${name} failed: ${err}\n${err.stack}`)
             task.finished = Date.now()
             report(name)
-            if (error) throw error
           }
         })
 
