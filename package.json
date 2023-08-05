@@ -107,7 +107,7 @@
     "zotero-plugin": "^2.0.2"
   },
   "devDependencies": {
-    "@retorquere/bibtex-parser": "^6.4.17",
+    "@retorquere/bibtex-parser": "^6.4.19",
     "@retorquere/zotero-sync": "^1.0.23",
     "@types/bluebird": "^3.5.38",
     "@types/lokijs": "^1.5.8",
@@ -128,7 +128,7 @@
     "dom-parser": "^0.1.6",
     "dotenv": "^16.3.1",
     "ejs": "^3.1.9",
-    "esbuild": "^0.18.17",
+    "esbuild": "^0.18.18",
     "eslint": "^8.46.0",
     "estrace": "^4.2.1",
     "eta": "^3.1.0",
