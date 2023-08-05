@@ -64,6 +64,8 @@ export class ErrorReport {
     wizard.getButton('cancel').disabled = true
     wizard.canRewind = false
 
+    const version = require('../gen/version.js')
+
     try {
       await Zotero.HTTP.request('PUT', `${this.bucket}/${OS.Path.basename(this.tarball)}`, {
         noCache: true,
@@ -80,7 +82,8 @@ export class ErrorReport {
 
       wizard.advance();
 
-      (doc.getElementById('better-bibtex-report-id') as HTMLInputElement).value = this.key
+      // eslint-disable-next-line no-magic-numbers
+      (doc.getElementById('better-bibtex-report-id') as HTMLInputElement).value = `${this.key}/${version}-${is7 ? 7 : 6}`
       doc.getElementById('better-bibtex-report-result').hidden = false
     }
     catch (err) {
@@ -228,7 +231,7 @@ export class ErrorReport {
 
       const region = await Zotero.Promise.any(Object.keys(s3.region).map(this.ping.bind(this)))
       this.bucket = `https://${s3.bucket}-${region.short}.s3-${region.region}.amazonaws.com${region.tld || ''}`
-      this.key = `${Zotero.Utilities.generateObjectKey()}${this.params.scope ? '-refs' : ''}-${region.short}-${ is7 ? 7 : 6}` // eslint-disable-line no-magic-numbers
+      this.key = `${Zotero.Utilities.generateObjectKey()}${this.params.scope ? '-refs' : ''}-${region.short}` // eslint-disable-line no-magic-numbers
 
       this.tarball = OS.Path.join(Zotero.getTempDirectory().path, `${this.key}-${this.timestamp}.tgz`)
 

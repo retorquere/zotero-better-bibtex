@@ -6,6 +6,7 @@ addict
 babel
 beautifulsoup4
 behave
+binpacking
 boto3
 bs4
 diff-match-patch
@@ -22,7 +23,6 @@ markdown
 markdownify
 munch
 networkx
-ortools
 pathvalidate
 psutil
 pushbullet.py
