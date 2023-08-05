@@ -46,19 +46,6 @@ export class ZoteroItemPane {
     // itemPane.BetterBibTeX = this
 
     if (!is7) {
-      const menuid = 'zotero-field-transform-menu-better-sentencecase'
-      let menuitem = this.document.getElementById(menuid)
-      const menu = this.document.getElementById('zotero-field-transform-menu')
-      if (menu && !menuitem) {
-        menuitem = menu.appendChild(elements.create('menuitem', {
-          id: menuid,
-          label: 'BBT sentence case',
-          oncommand: () => {
-            title_sentenceCase.call((this.document as any).getBindingParent(this), (this.document as any).popupNode)
-          },
-        }))
-      }
-
       if (!this.document.getElementById('better-bibtex-editpane-item-box')) {
         itemBoxInstance.parentNode.appendChild(elements.create('vbox', { flex: 1, style: 'margin: 0; padding: 0', $: [
 
@@ -111,6 +98,22 @@ export class ZoteroItemPane {
         // why is it refreshing if there is no item?!
         log.debug('itemBoxInstance.refresh without an item')
         return
+      }
+
+      if (!is7) {
+        const menuid = 'zotero-field-transform-menu-better-sentencecase'
+        let menuitem = this.ownerDocument.getElementById(menuid)
+        const menu = this.ownerDocument.getElementById('zotero-field-transform-menu')
+        if (menu && !menuitem) {
+          log.debug('bbt sentencecase: adding', menuid)
+          menuitem = menu.appendChild(elements.create('menuitem', {
+            id: menuid,
+            label: 'BBT sentence case',
+            oncommand: () => {
+              title_sentenceCase.call(this.ownerDocument.getBindingParent(this), this.ownerDocument.popupNode)
+            },
+          }))
+        }
       }
 
       const { citekey, pinned } = Zotero.BetterBibTeX.KeyManager.get(this.item.id)
