@@ -6,6 +6,8 @@ from fluent.syntax import ast
 # from fluent.runtime import FluentLocalization, FluentResourceLoader
 from fluent.runtime import FluentBundle, FluentResource
 
+import javaproperties
+
 from pathlib import Path
 from html import escape
 import os
@@ -57,13 +59,12 @@ class KeyLister(Visitor):
         self.keys.append(message.id.name)
         self.generic_visit(message)
 
-def entity(key, value):
-  return f'<!ENTITY {key} "' + escape(value).replace('&#x27;', "'") + '">'
-
 for ftl in Path('locale').rglob('*/better-bibtex.ftl'):
   dtd = 'build/' + str(ftl).replace('/better-bibtex.ftl', '/zotero-better-bibtex.dtd')
+  props = 'build/' + str(ftl).replace('/better-bibtex.ftl', '/zotero-better-bibtex.properties')
   os.makedirs(os.path.dirname(dtd), exist_ok=True)
-  with open(dtd, 'w') as dtd:
+  with open(dtd, 'w') as dtd, open(props, 'w') as props:
+    properties = {}
     locale = str(ftl).split('/')[1]
     bundle = FluentBundle([locale], use_isolating=False)
     resource = parse(ftl.read_text())
@@ -71,9 +72,12 @@ for ftl in Path('locale').rglob('*/better-bibtex.ftl'):
     for key in KeyLister.list(resource):
       message = bundle.get_message(key)
       if message.value is not None:
-        print(entity(key, bundle.format_pattern(message.value, params)[0]), file=dtd)
+        properties[key] = bundle.format_pattern(message.value, params)[0]
 
       if message.attributes is not None:
         for attr, pattern in message.attributes.items():
-          print(entity(key + '.' + attr, bundle.format_pattern(pattern, params)[0]), file=dtd)
+          properties[key + '.' + attr] = bundle.format_pattern(pattern, params)[0]
 
+    print(javaproperties.dumps(properties), file=props)
+    for key, value in properties.items():
+      print(f'<!ENTITY {key} "' + escape(value).replace('&#x27;', "'") + '">', file=dtd)

@@ -15,6 +15,7 @@ fluent.runtime
 gherkin-official
 github3.py
 inflect
+javaproperties
 jsonpatch
 jsonpath_ng
 jsonschema
