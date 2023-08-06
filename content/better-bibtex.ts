@@ -332,13 +332,18 @@ if (!is7) {
 
   $patch$(itemTree.prototype, 'getColumns', original => function Zotero_ItemTree_prototype_getColumns() {
     const columns = original.apply(this, arguments)
-    const insertAfter: number = columns.findIndex(column => column.dataKey === 'title')
-    columns.splice(insertAfter + 1, 0, {
-      dataKey: 'citationKey',
-      label: l10n.localize('better-bibtex_zotero-pane_column_citekey'),
-      flex: '1',
-      zoteroPersist: new Set(['width', 'ordinal', 'hidden', 'sortActive', 'sortDirection']),
-    })
+    try {
+      const insertAfter: number = columns.findIndex(column => column.dataKey === 'title')
+      columns.splice(insertAfter + 1, 0, {
+        dataKey: 'citationKey',
+        label: l10n.localize('better-bibtex_zotero-pane_column_citekey'),
+        flex: '1',
+        zoteroPersist: new Set(['width', 'ordinal', 'hidden', 'sortActive', 'sortDirection']),
+      })
+    }
+    catch (err) {
+      log.debug('could not install itemtree column')
+    }
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return columns
