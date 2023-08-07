@@ -19,23 +19,26 @@ jobs:
           label.reopened: reopened
           log-id: "([A-Z0-9]{8}(-refs)?-(apse|euc))|([^-]+-[A-Z0-9]{8})"
           message.log-required: |
-            You did not submit a debug log. A longer explanation follows, but please just submit a debug log. It takes less time to submit a debug log than to argue its necessity.
-
-            If you did try to submit a debug log, but the ID looked like `D<number>`, that is a Zotero debug report, which I cannot access. Please re-submit a BBT debug log by one of the methods below.
-
-            If Better BibTeX failed to start, and the regular debug log options do not work, choose "Send debug log to file.io" from the Help menu.
-
-            **The debug log is much more likely than not required to address your question, @{{username}}, _even if you think it unlikely_**. Debug logs are useful for both analysis and for enhancement requests, and the first response from `@retorquere` will usually be "please send a debug log".
-
-            The debug log gives `@retorquere` your current BBT settings and a copy of the items under consideration as a test case so he can best replicate your issue. Without it, `@retorquere` is effectively blind.
-
-            Sending a debug log is very easy:
-
-            1. If your issue relates to how BBT behaves around a **specific reference(s)**, such as citekey generation or export, select at least one of the items(s) under consideration, right-click it, and submit an BBT debug log from that popup menu. If the problem is with export, please do include a sample of what you see exported, and what you expected to see exported for these references.
-
-            2. If the issue **does not relate to references** and is of a more general nature, generate an debug log by restarting Zotero with debugging enabled (Help -> Debug Output Logging -> Restart with logging enabled), reproducing your problem, and selecting "Send Better BibTeX debug report..." from the help menu.
-
-            Once done, you will see a debug ID in red. Please post that debug id in the issue here.
-
-            Thank you!
+            Hello there,
+            
+            Hope you're doing well! `@retorquere` is here to help you get the most out of your experience with Better BibTeX. To make sure he can assist you effectively, he kindly asks for your cooperation in providing a debug log – it's like giving him the key to understanding and solving the puzzle!
+            
+            Getting your debug log is a breeze and will save us both time in the long run. Trust us, it's way quicker than discussing why it's important. :smiley:
+            
+            **How to Share Your Debug Log:**
+            
+            1. If the issue involves specific references or exports, just right-click on the relevant item(s) and choose "Better BibTeX -> Submit Better BibTeX debug log" from the menu.
+               
+            2. For other issues, follow these simple steps:
+               * Restart Zotero with debugging enabled (Help -> Debug Output Logging -> Restart with logging enabled).
+               * Reproduce the problem.
+               * Select "Send Better BibTeX debug report..." from the help menu.
+            
+            Once you hit that submit button, you'll get a special red debug ID. Just share that with us in the issue thread. If the question is regarding an export, don't forget to include what you see exported and what you expected.
+            
+            By sharing your debug log, you're giving `@retorquere` a clearer picture of your setup and the items causing the issue. It's like a superhero cape for him – he can swoop in and tackle the problem much faster.
+            
+            We totally get that your time is valuable, and we appreciate your effort in helping us help you. @{{ username }}, you might be surprised at how much this simple step speeds up the whole process.
+            
+            Thanks a bunch!
           message.no-close: Thanks for the feedback; there's no way you could have known, but @retorquere prefers to keep bugreports/enhancements open as a reminder to merge the changes into a new release.
