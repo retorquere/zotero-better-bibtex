@@ -271,6 +271,9 @@
               ],
               "type": "string"
             },
+            "importSentenceCaseQuoted": {
+              "type": "boolean"
+            },
             "importUnknownTexCommand": {
               "type": "string"
             },

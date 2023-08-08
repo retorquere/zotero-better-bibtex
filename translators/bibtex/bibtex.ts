@@ -475,6 +475,7 @@ export async function parseBibTeX(input: string, translation: Translation): Prom
     markup: (translation.csquotes ? { enquote: translation.csquotes } : {}),
     sentenceCase: translation.preferences.importSentenceCase !== 'off',
     guessAlreadySentenceCased: translation.preferences.importSentenceCase === 'on+guess',
+    sentenceCasePreserveQuoted: !translation.preferences.importSentenceCaseQuoted,
     verbatimFields: translation.verbatimFields,
     raw: translation.preferences.rawImports,
     unabbreviate: importJabRef.unabbrevations,
