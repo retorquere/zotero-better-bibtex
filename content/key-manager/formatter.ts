@@ -401,6 +401,7 @@ class PatternFormatter {
   }
 
   public finalize(_citekey: string) {
+    // log.debug('ternary:', { citekey: this.citekey, next: this.next })
     if (this.next) return ''
     if (this.citekey && Preference.citekeyFold) this.citekey = this.transliterate(this.citekey)
     this.citekey = this.citekey.replace(this.re.unsafechars, '')
@@ -932,7 +933,7 @@ class PatternFormatter {
    * @param length value to compare length with
    */
   public _len(relation: '<' | '<=' | '=' | '!=' | '>=' | '>' = '>', length=0) {
-    this.len(this.citekey, relation, length)
+    this.len(this.chunk, relation, length)
     return this
   }
 
