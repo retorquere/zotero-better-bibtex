@@ -911,8 +911,7 @@ class PatternFormatter {
    * @param length value to compare length with
    */
   public $len(relation: '<' | '<=' | '=' | '!=' | '>=' | '>' = '>', length=0) {
-    this.len(this.citekey, relation, length)
-    return this.$text('')
+    return this.len(this.citekey, relation, length).$text('')
   }
 
   private padYear(year: string, length: number): string {
@@ -933,8 +932,7 @@ class PatternFormatter {
    * @param length value to compare length with
    */
   public _len(relation: '<' | '<=' | '=' | '!=' | '>=' | '>' = '>', length=0) {
-    this.len(this.chunk, relation, length)
-    return this
+    return this.len(this.chunk, relation, length)
   }
 
   /**
@@ -960,7 +958,7 @@ class PatternFormatter {
   }
 
   private len(value: string, relation: '<' | '<=' | '=' | '!=' | '>=' | '>', n: number) {
-    if (this.next) return
+    if (this.next) return this
 
     value = value.replace(/\s/g, '')
     switch (relation) {
@@ -985,6 +983,8 @@ class PatternFormatter {
       default:
         throw new Error(`Unexpected length comparison ${relation}`)
     }
+
+    return this
   }
 
   /** discards the input */
