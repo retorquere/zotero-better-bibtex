@@ -81,6 +81,18 @@ You can add a verbatim text by just including it in single or double quotes:
 extra('tex.shortauthor').transliterate.clean.lower.len + year; 'default' + auth.lower + year
 ```
 
+Formulas have some ternary support; you can use them in formulas instead of a function, but not in parameters; you can for example use
+
+```
+(title ? title : auth).lower + year
+```
+
+instead of
+
+```
+title.len + year | auth + year
+```
+
 ### Generating citekeys
 
 To generate your citekeys, you use a formula composed of functions and filters. Broadly, functions grab text from your item, and filters transform that text. **Note that the formula syntax has changed from a bracketed format to a javascript-ish format**. The old syntax was getting harder to maintain and its inflexibility prevented new extensions to the functions being implemented cleanly. **The old syntax still works** but will be translated to the new format automatically.
