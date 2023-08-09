@@ -92,6 +92,12 @@ class Compiler {
     return parts
   }
 
+  $formula(ast: Node, wrap=false): string {
+    let formula = `this.finalize(this.reset() + ${this.split(ast, '+').map((term: Node) => this.$term(term)).join(' + ')})`
+    if (wrap) formula = `(function() { return ${formula} }).call(Object.create(this))`
+    return formula
+  }
+
   compile(formula: string): string {
     // the typedefs from acorn are worse than useless
     const program = this.get(parse(formula, { locations: true, ecmaVersion: 2020 }) as unknown as Node, 'Program')
@@ -100,7 +106,7 @@ class Compiler {
       ? program.body.map((stmt: Node) => this.get(stmt, 'ExpressionStatement').expression)
       : this.split(this.get(program.body[0], 'ExpressionStatement').expression, '|')
 
-    const compiled = formulas.map((candidate: Node) => `    () => this.finalize(this.reset() + ${this.split(candidate, '+').map((term: Node) => this.$term(term)).join(' + ')}),`).join('\n')
+    const compiled = formulas.map((candidate: Node) => `    () => ${this.$formula(candidate)},`).join('\n')
     return `  return [
 ${compiled}
   ].reduce((citekey, formula) => citekey || formula(), '') || ('zotero-' + this.item.id)`
@@ -113,12 +119,12 @@ ${compiled}
       case 'CallExpression':
         return this.flatten(node.callee).concat([node])
       case 'Identifier':
-      // case 'ConditionalExpression':
         return [node]
       case 'Literal':
         if (typeof node.value !== 'string') this.error(node, `expected string, got ${this.$typeof(node)}`)
+        return [node]
       default:
-        if (typeof node.value !== 'string') this.error(node, `unexpected ${node.type}`)
+        this.error(node, `unexpected ${node.type}`)
     }
   }
 
@@ -126,6 +132,13 @@ ${compiled}
     if (node.type === 'Literal') {
       if (typeof node.value !== 'string') this.error(node, `expected string, got ${this.$typeof(node)}`)
       return `this.$text(${node.raw})`
+    }
+
+    if (node.type === 'ConditionalExpression') {
+      const test = this.$formula(node.test, true)
+      const consequent = this.$formula(node.consequent, true)
+      const alternate = this.$formula(node.alternate, true)
+      return `this.$text(${test} ? ${consequent} : ${alternate})`
     }
 
     const flat = this.flatten(node)
