@@ -301,6 +301,7 @@ class Item {
 const page_range_splitter = /[-\s,\u2013]/
 
 class PatternFormatter {
+  public next = false
   public chunk = ''
   public citekey = ''
 
@@ -394,11 +395,13 @@ class PatternFormatter {
   }
 
   public reset() {
+    this.next = false
     this.citekey = ''
     return ''
   }
 
   public finalize(_citekey: string) {
+    if (this.next) return ''
     if (this.citekey && Preference.citekeyFold) this.citekey = this.transliterate(this.citekey)
     this.citekey = this.citekey.replace(this.re.unsafechars, '')
     return this.citekey
@@ -437,11 +440,8 @@ class PatternFormatter {
   public $type(...allowed: ZoteroItemType[]) {
     if (!allowed.length) return this.$text(this.item.itemType)
 
-    if (allowed.map(type => type.toLowerCase()).includes(this.item.itemType.toLowerCase())) {
-      return this.$text('')
-    }
-
-    throw { next: true } // eslint-disable-line no-throw-literal
+    this.next = this.next || !allowed.map(type => type.toLowerCase()).includes(this.item.itemType.toLowerCase())
+    return this.$text('')
   }
 
   /**
@@ -449,12 +449,8 @@ class PatternFormatter {
    * @param name one or more language codes
    */
   public $language(...name: (BabelLanguage | BabelLanguageTag)[]) {
-    if (name.concat(name.map(n => BabelTag[n] as string).filter(n => n)).includes(this.item.babelTag())) {
-      return this.$text('')
-    }
-    else {
-      throw { next: true } // eslint-disable-line no-throw-literal
-    }
+    this.next = this.next || !name.concat(name.map(n => BabelTag[n] as string).filter(n => n)).includes(this.item.babelTag())
+    return this.$text('')
   }
 
   /**
@@ -490,7 +486,8 @@ class PatternFormatter {
     }
     catch (err) {
       log.error('inspire-hep returned an error:', err)
-      throw { next: true } // eslint-disable-line no-throw-literal
+      this.next = true
+      return this.$text('')
     }
   }
 
@@ -539,8 +536,11 @@ class PatternFormatter {
     max=0
   ) {
     let authors = this.creators(creator, name)
-    if (min && authors.length < min) throw { next: true } // eslint-disable-line no-throw-literal
-    if (max && authors.length > max) throw { next: true } // eslint-disable-line no-throw-literal
+    if ((min && authors.length < min) || (max && authors.length > max)) {
+      this.next = true
+      return this.$text('')
+    }
+
     if (!n) {
       etal = ''
     }
@@ -910,7 +910,8 @@ class PatternFormatter {
    * @param length value to compare length with
    */
   public $len(relation: '<' | '<=' | '=' | '!=' | '>=' | '>' = '>', length=0) {
-    return this.len(this.citekey, relation, length).$text('')
+    this.len(this.citekey, relation, length)
+    return this.$text('')
   }
 
   private padYear(year: string, length: number): string {
@@ -931,7 +932,8 @@ class PatternFormatter {
    * @param length value to compare length with
    */
   public _len(relation: '<' | '<=' | '=' | '!=' | '>=' | '>' = '>', length=0) {
-    return this.len(this.chunk, relation, length)
+    this.len(this.citekey, relation, length)
+    return this
   }
 
   /**
@@ -950,33 +952,38 @@ class PatternFormatter {
     else if ((clean ? this.clean(this.chunk, true) : this.chunk).match(match)) {
       return this
     }
-
-    throw { next: true } // eslint-disable-line no-throw-literal
+    else {
+      this.next = true
+      return this.$text('')
+    }
   }
 
   private len(value: string, relation: '<' | '<=' | '=' | '!=' | '>=' | '>', n: number) {
+    if (this.next) return
+
     value = value.replace(/\s/g, '')
     switch (relation) {
       case '<':
-        if (value.length < n) return this
+        this.next = !(value.length < n)
         break
       case '<=':
-        if (value.length <= n) return this
+        this.next = !(value.length <= n)
         break
       case '=':
-        if (value.length === n) return this
+        this.next = !(value.length === n)
         break
       case '!=':
-        if (value.length !== n) return this
+        this.next = !(value.length !== n)
         break
       case '>':
-        if (value.length > n) return this
+        this.next = !(value.length > n)
         break
       case '>=':
-        if (value.length >= n) return this
+        this.next = !(value.length >= n)
         break
+      default:
+        throw new Error(`Unexpected length comparison ${relation}`)
     }
-    throw { next: true } // eslint-disable-line no-throw-literal
   }
 
   /** discards the input */

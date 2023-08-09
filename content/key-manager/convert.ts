@@ -103,16 +103,7 @@ class Compiler {
     const compiled = formulas.map((candidate: Node) => `    () => this.finalize(this.reset() + ${this.split(candidate, '+').map((term: Node) => this.$term(term)).join(' + ')}),`).join('\n')
     return `  return [
 ${compiled}
-  ].reduce((citekey, formula) => {
-    if (!citekey) {
-      try {
-        citekey = formula()
-      } catch (err) {
-        if (!err.next) throw err
-      }
-    }
-    return citekey
-  }, '') || ('zotero-' + this.item.id)`
+  ].reduce((citekey, formula) => citekey || formula(), '') || ('zotero-' + this.item.id)`
   }
 
   flatten(node: Node): Node[] {
