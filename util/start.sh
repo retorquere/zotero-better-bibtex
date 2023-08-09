@@ -1,3 +1,3 @@
 #!/bin/bash
 
-/Applications/Zotero.app/Contents/MacOS/zotero -P BBTZ5TEST -jsconsole -ZoteroDebugText -datadir profile 2>&1 > ~/.BBTZ5TEST.log &
+/Applications/Zotero.app/Contents/MacOS/zotero -P BBTTEST -jsconsole -ZoteroDebugText -datadir profile 2>&1 > ~/.BBTTEST.log &

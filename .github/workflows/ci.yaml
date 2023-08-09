@@ -206,7 +206,7 @@ jobs:
       if: ${{ failure() || cancelled() }}
       with:
         name: debug log ${{ matrix.client }} ${{ matrix.bin }}
-        path: ~/.BBTZ5TEST.log
+        path: ~/.BBTTEST.log
     - name: store test artifacts
       uses: actions/upload-artifact@v3
       with:

@@ -13,8 +13,8 @@ Manually:
 
 Automated:
 
-* The tests will create a Zotero profile called `BBTZ5TEST`. **This profile gets clobbered everytime you start the tests. DO NOT PUT IMPORTANT DATA HERE.**
-* The test runner starts Zoteru using `-datadir profile -P BBTZ5TEST` which means I force it to use that profile, and it should leave your production profile alone
+* The tests will create a Zotero profile called `BBTTEST`. **This profile gets clobbered everytime you start the tests. DO NOT PUT IMPORTANT DATA HERE.**
+* The test runner starts Zoteru using `-datadir profile -P BBTTEST` which means I force it to use that profile, and it should leave your production profile alone
 
 If you try to start up Zotero for your regular work and it's empty or you see test data, try running it with `-P` and the profile picker will pop up. Select your actual profile and tick the checkbox that says `start up with this profile by default`.
 

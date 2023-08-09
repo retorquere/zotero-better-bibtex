@@ -8,7 +8,7 @@ import json
 import sys
 from configparser import ConfigParser
 
-root = os.path.expanduser('~/.BBTZ5TEST')
+root = os.path.expanduser('~/.BBTTEST')
 
 false = False
 true = True

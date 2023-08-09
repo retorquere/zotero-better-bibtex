@@ -14,6 +14,6 @@ errors = [
   'error: resource://gre/modules/amInstallTrigger.jsm, line 52: TypeError: this.mm is null',
   'JavaScript error: , line 0: uncaught exception: undefined',
 ]
-for line in fileinput.input(files=(os.path.expanduser('~/.BBTZ5TEST.log'),), encoding='utf-8', inplace=True):
+for line in fileinput.input(files=(os.path.expanduser('~/.BBTTEST.log'),), encoding='utf-8', inplace=True):
   if any([error in line for error in errors]): continue
   print(line, end='')

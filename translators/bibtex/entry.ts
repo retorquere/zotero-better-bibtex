@@ -1138,7 +1138,7 @@ export class Entry {
           att.path = relative
         }
       }
-      if (this.translation.preferences.testing) att.path = att.path.replace(/.*[.]BBTZ5TEST\/(zotero|jurism)\//, '~/BBTZ5TEST/').replace(/\/storage\/[^/]+\//, '/storage/')
+      if (this.translation.preferences.testing) att.path = att.path.replace(/.*[.]BBTTEST\/(zotero|jurism)\//, '~/BBTTEST/').replace(/\/storage\/[^/]+\//, '/storage/')
 
       if (modify) att.path = modify(att.path)
       attachments.push(att)

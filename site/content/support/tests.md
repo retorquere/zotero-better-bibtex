@@ -28,14 +28,14 @@ this is all temporary, and when all is verified to be setup correctly, we'll und
 
 `~/Library/Application\ Support/Zotero` / `~/.zotero` holds the administration of your Zotero profiles. The test setup will add a new profile leaving your existing profile(s) untouched. But better safe than sorry, which is why we're holding a copy.
 
-The `mv` sets aside your library so that Zotero won't be able to find it. The `touch` creates an empty file in its place. The tests don't use that location, they use `~/.BBTZ5TEST` instead, but if for whatever reason that doesn't work, Zotero will try to write to `~/Zotero/something`, and since `~/Zotero` is now a file instead of a directory, Zotero will complain loudly if that happens, and we know we must back out.
+The `mv` sets aside your library so that Zotero won't be able to find it. The `touch` creates an empty file in its place. The tests don't use that location, they use `~/.BBTTEST` instead, but if for whatever reason that doesn't work, Zotero will try to write to `~/Zotero/something`, and since `~/Zotero` is now a file instead of a directory, Zotero will complain loudly if that happens, and we know we must back out.
 
 Now then:
 
 * make sure you're in `zotero-better-bibtex`
 * `./test/behave --tags @438`
 
-and be amazed. Zotero will pop up, load the test library, executes one test, and shuts down. The log file after the tests run will be `~/.BBTZ5TEST.log`. The tests do not touch your own library.
+and be amazed. Zotero will pop up, load the test library, executes one test, and shuts down. The log file after the tests run will be `~/.BBTTEST.log`. The tests do not touch your own library.
 
 To restore access to your regular library so you can run either a test suite or just work with your library (but **not** both at the same time. **always** fully close Zotero between these).
 

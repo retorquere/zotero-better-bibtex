@@ -64,7 +64,7 @@ user_pref("extensions.pendingOperations", false);
 user_pref("extensions.systemAddonSet", "{\"schema\":1,\"addons\":{}}");
 user_pref("extensions.update.enabled", false);
 user_pref("extensions.update.notifyUser", false);
-user_pref("extensions.zotero.dataDir", "/Users/emile/.BBTZ5TEST/jurism");
+user_pref("extensions.zotero.dataDir", "/Users/emile/.BBTTEST/jurism");
 user_pref("extensions.zotero.debug-bridge.password", "f4c8ecac-bbf1-49c1-9a5b-ebc6ce81fcff");
 user_pref("extensions.zotero.debug.log", true);
 user_pref("extensions.zotero.debug.time", true);

@@ -69,7 +69,7 @@ user_pref("extensions.ui.dictionary.hidden", true);
 user_pref("extensions.ui.locale.hidden", true);
 user_pref("extensions.update.enabled", false);
 user_pref("extensions.update.notifyUser", false);
-user_pref("extensions.zotero.dataDir", "/Users/emile/.BBTZ5TEST/zotero");
+user_pref("extensions.zotero.dataDir", "/Users/emile/.BBTTEST/zotero");
 user_pref("extensions.zotero.debug-bridge.password", "a53edfac-3773-4ce1-93a5-a1bbfcc74a46");
 user_pref("extensions.zotero.debug.log", true);
 user_pref("extensions.zotero.debug.time", true);

@@ -7,7 +7,7 @@ reload = {
   'content/BetterBibTeX.ts': True,
 }
 
-with open(os.path.expanduser('~/.BBTZ5TEST.log')) as log:
+with open(os.path.expanduser('~/.BBTTEST.log')) as log:
   for line in log.readlines():
     if line.strip() == '': continue
     if 'BBT: loading ' not in line: continue

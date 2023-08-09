@@ -541,7 +541,7 @@ class Zotero:
 
   def create_profile(self):
     profile = Munch(
-      name='BBTZ5TEST'
+      name='BBTTEST'
     )
 
     profile.path = os.path.expanduser(f'~/.{profile.name}')

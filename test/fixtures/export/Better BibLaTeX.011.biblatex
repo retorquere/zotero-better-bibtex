@@ -10,7 +10,7 @@
   owner = {sstudent},
   annotation = {svm liniowe najlepsze},
   groups = {klasyfikacja},
-  file = {~/BBTZ5TEST/storage/Klassen2010.pdf}
+  file = {~/BBTTEST/storage/Klassen2010.pdf}
 }
 
 

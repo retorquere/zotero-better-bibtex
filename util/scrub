@@ -14,7 +14,7 @@ ignore = [
   'Error: .*pdftotext',
 ]
 import os
-with open(os.path.expanduser('~/.BBTZ5TEST.log')) as log, open(os.path.expanduser('~/.BBTZ5TEST.log.scrubbed'), 'w') as scrubbed:
+with open(os.path.expanduser('~/.BBTTEST.log')) as log, open(os.path.expanduser('~/.BBTTEST.log.scrubbed'), 'w') as scrubbed:
   for line in log.readlines():
     if any(re.search(pat, line) for pat in ignore): continue
     print(line, end='', file=scrubbed)
