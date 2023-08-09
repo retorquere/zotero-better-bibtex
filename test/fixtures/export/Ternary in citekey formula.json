@@ -1,0 +1,30 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "localeDateOrder": "ymd",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "biblatexExtendedNameFormat": true,
+      "citekeyFormat": "(shorttitle ? shorttitle : '[no title]') + year",
+      "itemObserverDelay": 100,
+      "skipFields": "rights"
+    }
+  },
+  "items": [
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Walter",
+          "lastName": "\"de la Mare\""
+        }
+      ],
+      "date": "2017",
+      "itemID": 1,
+      "itemType": "journalArticle"
+    }
+  ]
+}
