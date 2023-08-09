@@ -47,6 +47,11 @@ type Node = {
   callee: Node
   arguments: Node[]
 
+  // conditionalexpression
+  test: Node
+  consequent: Node
+  alternate: Node
+
   start?: number
   loc?: {
     start: {
@@ -119,6 +124,7 @@ ${compiled}
       case 'CallExpression':
         return this.flatten(node.callee).concat([node])
       case 'Identifier':
+      case 'ConditionalExpression':
         return [node]
       case 'Literal':
         if (typeof node.value !== 'string') this.error(node, `expected string, got ${this.$typeof(node)}`)
@@ -134,20 +140,19 @@ ${compiled}
       return `this.$text(${node.raw})`
     }
 
-    if (node.type === 'ConditionalExpression') {
-      const test = this.$formula(node.test, true)
-      const consequent = this.$formula(node.consequent, true)
-      const alternate = this.$formula(node.alternate, true)
-      return `this.$text(${test} ? ${consequent} : ${alternate})`
-    }
-
     const flat = this.flatten(node)
     let compiled = 'this'
     let prefix = '$'
     while (flat.length) {
-      const identifier = this.get(flat.shift(), 'Identifier')
+      const identifier = this.get(flat.shift(), ['Identifier'].concat(prefix === '$' ? ['ConditionalExpression'] : []))
 
-      if (prefix === '$' && identifier.name[0] === identifier.name[0].toUpperCase()) {
+      if (identifier.type === 'ConditionalExpression') {
+        const test = this.$formula(identifier.test, true)
+        const consequent = this.$formula(identifier.consequent, true)
+        const alternate = this.$formula(identifier.alternate, true)
+        compiled += `.$text(${test} ? ${consequent} : ${alternate})`
+      }
+      else if (prefix === '$' && identifier.name[0] === identifier.name[0].toUpperCase()) {
         if (flat[0] && flat[0].type === 'CallExpression') this.error(flat[0], `field "${identifier.name}" cannot be called as a function`)
         const name = items.name.field[identifier.name.toLowerCase()]
         if (!name) this.error(identifier, `Zotero items do not have a field named "${identifier.name}"`)

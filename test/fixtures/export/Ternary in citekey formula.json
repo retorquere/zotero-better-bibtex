@@ -8,7 +8,7 @@
     },
     "preferences": {
       "biblatexExtendedNameFormat": true,
-      "citekeyFormat": "(shorttitle ? shorttitle : '[no title]') + year",
+      "citekeyFormat": "(shorttitle ? shorttitle : '[no title]').upper + year",
       "itemObserverDelay": 100,
       "skipFields": "rights"
     }
