@@ -144,7 +144,7 @@ async function bundle(config) {
     target: ['firefox60'],
     inject: [],
     treeShaking: true,
-    // keepNames: true,
+    plugins: [],
     minify: false,
     ...config,
   }
@@ -160,9 +160,12 @@ async function bundle(config) {
     target = `${config.outdir} [${config.entryPoints.map(js).join(', ')}]`
   }
 
+  loader.patcher.current = null
+
   const exportGlobals = config.exportGlobals
   delete config.exportGlobals
   if (exportGlobals) {
+    loader.patcher.silent = true
     const esm = await esbuild.build({ ...config, logLevel: 'silent', format: 'esm', metafile: true, write: false })
     if (process.env.GML) {
       console.log('  generating dependency graph', target + '.gml')
@@ -175,8 +178,10 @@ async function bundle(config) {
         // make these var, not const, so they get hoisted and are available in the global scope.
       }
     }
+    loader.patcher.silent = false
   }
 
+  if (config.plugins.find(p => p === loader.patcher.plugin)) loader.patcher.current = target
   const metafile = config.metafile
   config.metafile = !!config.metafile
 
@@ -192,6 +197,8 @@ async function bundle(config) {
 }
 
 async function rebuild() {
+  loader.patcher.load('setup/patches')
+
   // bootstrap code
   await bundle({
     entryPoints: [ 'content/bootstrap.ts' ],
@@ -204,7 +211,7 @@ async function rebuild() {
     entryPoints: [ 'content/better-bibtex.ts' ],
     plugins: [
       loader.trace('plugin'),
-      loader.patcher('setup/patches'),
+      loader.patcher.plugin,
       loader.bib,
       loader.peggy,
       loader.__dirname,
@@ -229,12 +236,12 @@ async function rebuild() {
     entryPoints: [ 'content/key-manager/chinese-optional.ts' ],
     exportGlobals: true,
     plugins: [
-      loader.patcher('setup/patches'),
+      loader.patcher.plugin,
       loader.__dirname,
       // shims,
     ],
     // inject: ['./setup/loaders/globals.js'],
-    outfile: 'build/content/key-manager/chinese.js',
+    outfile: 'build/content/key-manager/chinese-optional.js',
   })
 
   // worker code
@@ -242,7 +249,7 @@ async function rebuild() {
     entryPoints: [ 'content/worker/zotero.ts' ],
     plugins: [
       loader.trace('worker'),
-      loader.patcher('setup/patches'),
+      loader.patcher.plugin,
       loader.bib,
       // loader.peggy,
       loader.__dirname,
@@ -291,53 +298,6 @@ async function rebuild() {
     header.configOptions.hash = checksum.digest('hex')
     header.lastUpdated = (new Date).toISOString().replace(/T.*/, '')
     await fs.promises.writeFile(path.join('build/content/resource', translator.name + '.json'), JSON.stringify(header, null, 2))
-  }
-
-  if (await branch() === 'headless') {
-    let node_modules = loader.node_modules('setup/patches')
-    await bundle({
-      platform: 'node',
-      // target: ['node12'],
-      // inject: [ './headless/inject.js' ],
-      plugins: [node_modules.plugin, loader.patcher('setup/patches'), loader.peggy ],
-      inject: ['./setup/loaders/globals.js'],
-      bundle: true,
-      globalName: 'Headless',
-      entryPoints: [ 'headless/zotero.ts' ],
-      outfile: 'gen/headless/zotero.js',
-      banner: {
-        js: 'var ZOTERO_CONFIG = { GUID: "zotero@" };\n',
-      },
-      exportGlobals: true,
-      metafile: 'gen/headless/zotero.json',
-    })
-    let external = node_modules.external
-
-    node_modules = loader.node_modules('setup/patches')
-    await bundle({
-      platform: 'node',
-      // target: ['node12'],
-      // inject: [ './headless/inject.js' ],
-      plugins: [node_modules.plugin, loader.patcher('setup/patches'), loader.peggy ],
-      bundle: true,
-      globalName: 'Headless',
-      entryPoints: [ 'headless/index.ts' ],
-      outfile: 'gen/headless/index.js',
-      metafile: 'gen/headless/index.json',
-      banner: {
-        js: await fs.promises.readFile('gen/headless/zotero.js', 'utf-8')
-      }
-    })
-    external = [...new Set(external.concat(node_modules.external))].sort()
-
-    const package_json = JSON.parse(await fs.promises.readFile('package.json', 'utf-8'))
-    const move = Object.keys(package_json.dependencies).filter(pkg => !external.includes(pkg))
-    if (move.length) {
-      console.log('  the following packages should be moved to devDependencies')
-      for (const pkg of move.sort()) {
-        console.log('  *', pkg)
-      }
-    }
   }
 }
 

@@ -1,4 +1,4 @@
-const fs = require('fs')
+const fs = require('fs-extra')
 const path = require('path')
 const diff = require('diff')
 const peggy = require('peggy')
@@ -6,41 +6,61 @@ const shell = require('shelljs')
 const { filePathFilter } = require('file-path-filter')
 const esbuild = require('esbuild')
 const putout = require('putout')
+const child_process = require('child_process')
 
-function load_patches(dir) {
-  const patches = {}
-  for (let patchfile of fs.readdirSync(dir)) {
-    for (const patch of diff.parsePatch(fs.readFileSync(path.join(dir, patchfile), 'utf-8'))) {
-      if (patch.oldFileName != patch.newFileName) throw new Error(`${patchfile} renames ${JSON.stringify(patch.oldFileName)} to ${JSON.stringify(patch.newFileName)}`)
-      if (patches[patch.oldFileName]) throw new Error(`${patchfile} re-patches ${JSON.stringify(patch.oldFileName)}`)
-      if (!patch.oldFileName.startsWith('node_modules/')) throw new Error(`${patchfile} patches ${JSON.stringify(patch.oldFileName)} outside node_modules`)
-      patches[patch.oldFileName] = patch
-    }
+const patcher = module.exports.patcher = new class {
+  constructor() {
+    this.loaded = {}
+    this.current = null
+    this.silent = false
   }
-  return patches
-}
 
-module.exports.patcher = function(dir) {
-  const patches = load_patches(dir)
-  const filter = '.*\\/(' + Object.keys(patches).map(source => source.replace(/[.*+?^${}()\|\[\]\\\/]/g, '\\$&')).join('|') + ')$'
+  load(dir) {
+    if (this.loaded[dir]) return
+    this.loaded[dir] = true
 
-  return {
-    name: 'patcher',
-    setup(build) {
-      build.onLoad({ filter: new RegExp(filter) }, async (args) => {
-        const target = args.path.replace(/.*?[/]node_modules[/]/, 'node_modules/')
-        console.log('  patching', target)
-        const source = await fs.promises.readFile(args.path, 'utf-8')
-        const patch = patches[target]
-        const contents = diff.applyPatch(source, patch)
-
-        if (contents === false) throw new Error(`failed to apply ${patch}`)
-
-        return {
-          contents,
-          loader: 'js',
+    this.patched = {}
+    let filter = []
+    for (let patchfile of fs.readdirSync(dir)) {
+      patchfile = path.join(dir, patchfile)
+      const patches = diff.parsePatch(fs.readFileSync(patchfile, 'utf-8'))
+      if (patches.length !== 1) throw new Error(`${patchfile} has ${patches.length} patches, expected 1`)
+      for (const patch of patches) {
+        if (!patch.oldFileName.endsWith('.js')) throw new Error(`${patchfile} patches non-js file ${patch.oldFileName}`)
+        if (patch.newFileName != patch.oldFileName) {
+          throw new Error(`${patchfile} renames ${JSON.stringify(patch.oldFileName)} to ${JSON.stringify(patch.newFileName)}`)
         }
-      })
+        if (!patch.oldFileName.match(/^(node_modules|submodules)/)) {
+          throw new Error(`${patchfile} patches ${JSON.stringify(patch.oldFileName)} outside node_modules/submodules`)
+        }
+        filter.push(patch.oldFileName)
+
+        const patched = path.join(process.cwd(), patch.oldFileName)
+
+        if (this.patched[patched]) throw new Error(`${patchfile} re-patches ${JSON.stringify(patch.oldFileName)}`)
+        if (!fs.existsSync(patched)) throw new Error(`${patchfile} patches non-existent ${JSON.stringify(patch.oldFileName)}`)
+
+        const cmd = `patch --quiet -o - ${JSON.stringify(patched)} ${JSON.stringify(patchfile)}`
+        this.patched[patched] = child_process.execSync(cmd).toString()
+        if (!this.patched[patched]) throw new Error(`${cmd} failed:\n${stderr || ''}`)
+      }
+    }
+    
+    filter = filter
+      .map(p => p.replace(/[.*+?^${}()\|\[\]\\\/]/g, c => c === '[' || c === ']' ? `\\${c}` : `[${c}]`))
+      .map(p => `([/]${p}$)`)
+      .join('|')
+
+    this.plugin = {
+      name: 'patcher',
+      setup(build) {
+        build.onLoad({ filter: new RegExp(filter) }, (args) => {
+          const contents = patcher.patched[args.path]
+          if (!contents) throw new Error(`${args.path} should have been patched, but no patch was found among ${JSON.stringify(Object.keys(patcher.patched))}`)
+          if (!patcher.silent) console.log('  loading patched', path.relative(process.cwd(), args.path))
+          return { contents, loader: 'js' }
+        })
+      }
     }
   }
 }
@@ -94,41 +114,6 @@ module.exports.__dirname = {
         loader: 'js'
       }
     })
-  }
-}
-
-function modulename(source) {
-  source = source.replace(/.*(^|\/)node_modules\//, '')
-  if (source[0] === '.') return null
-  const dirs = source.split('/')
-
-  if (dirs[0][0] === '@') {
-    return dirs.unshift(2).join('/')
-  }
-  else {
-    return dirs[0]
-  }
-}
-module.exports.modulename = modulename
-module.exports.node_modules = function(dir) {
-  const patched = [...new Set(Object.keys(load_patches(dir)).map(modulename))]
-  const external = []
-
-  return {
-    patched,
-    external,
-    // plugin: nodeExternalsPlugin({ allowList: patched }),
-    plugin: {
-      name: 'node-externals',
-      setup(build) {
-        build.onResolve({ namespace: 'file', filter: /.*/ }, args => {
-          const name = modulename(args.path)
-          if (!name || patched.includes(name)) return null
-          if (!external.includes(name)) external.push(name)
-          return { path: args.path, external: true }
-        })
-      }
-    }
   }
 }
 
