@@ -7,11 +7,27 @@ import os
 import sys
 import tarfile
 from zipfile import ZipFile
+import requests
 
-logs = [log.lower() for log in sys.argv[1:]]
+logs = sys.argv[1:]
 if len(logs) == 0:
   print('please provide one or more log IDs')
   sys.exit(1)
+
+if len(logs) == 1 and not logs[0].endswith('-euc') and not logs[0].endswith('-apse'):
+  # assume file.io
+  remote, local = logs[0].split('-')
+  url = 'https://file.io/' + remote
+  log = 'logs/' + local + '.tgz'
+  r = requests.get(url, allow_redirects=True)
+  with open(log, 'wb') as f:
+    f.write(r.content)
+  tar = tarfile.open(log)
+  tar.extractall('logs')
+  tar.close()
+  os.remove(log)
+  print(log)
+  sys.exit(0)
 
 postfixes = set([])
 for log in logs:
@@ -48,7 +64,7 @@ for region, details in regions.region.items():
 if not os.path.exists('logs'): os.makedirs('logs')
 for target, partials in merge.items():
   log = os.path.join('logs', target)
-  if len([log for log in logs if log in target.lower()]) == 0: continue
+  if len([log for log in logs if log in target]) == 0: continue
   if os.path.exists(log):
     print(f'skipping {target}')
     continue
