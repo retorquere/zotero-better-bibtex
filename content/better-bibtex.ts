@@ -13,7 +13,8 @@ declare const FileUtils: any
 declare const __estrace: any // eslint-disable-line no-underscore-dangle
 
 import type { XUL } from '../typings/xul'
-import { unregister as debugLogUnregister } from 'zotero-plugin/debug-log'
+import { DebugLog } from 'zotero-plugin/debug-log'
+DebugLog.register('Better BibTeX')
 
 import { icons } from './icons'
 import { prompt } from './prompt'
@@ -711,7 +712,11 @@ export class BetterBibTeX {
       startup: async () => {
         this.deferred.resolve(true)
         await this.load(Zotero.getMainWindow())
-        debugLogUnregister('XBetter BibTeX')
+        DebugLog.unregister('XBetter BibTeX')
+
+        Events.on('idle-savedb', async state => { // eslint-disable-line @typescript-eslint/require-await
+          if (state === 'idle') DebugLog.convertLegacy()
+        })
 
         if (is7) {
           await Zotero.ItemTreeManager.registerColumns({

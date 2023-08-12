@@ -5,7 +5,6 @@ declare const Ci: any
 declare const dump: (msg: string) => void
 
 import { alert } from './prompt'
-import { DebugLog as DebugLogSender } from 'zotero-plugin/debug-log'
 
 const BOOTSTRAP_REASONS = {
   1: 'APP_STARTUP',
@@ -74,9 +73,6 @@ export async function startup({ resourceURI, rootURI = resourceURI.spec }, reaso
 
     setDefaultPrefs(rootURI)
 
-    log('DebugLogSender')
-    DebugLogSender.register('Better BibTeX')
-    log('DebugLogSender installed')
     Services.scriptloader.loadSubScriptWithOptions(`${rootURI}content/better-bibtex.js`, {
       charset: 'utf=8',
       // ignoreCache: true,

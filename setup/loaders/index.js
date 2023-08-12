@@ -10,16 +10,13 @@ const child_process = require('child_process')
 
 const patcher = module.exports.patcher = new class {
   constructor() {
-    this.loaded = {}
     this.current = null
     this.silent = false
+    this.patched = {}
+    this.used = new Set
   }
 
   load(dir) {
-    if (this.loaded[dir]) return
-    this.loaded[dir] = true
-
-    this.patched = {}
     let filter = []
     for (let patchfile of fs.readdirSync(dir)) {
       patchfile = path.join(dir, patchfile)
@@ -57,7 +54,9 @@ const patcher = module.exports.patcher = new class {
         build.onLoad({ filter: new RegExp(filter) }, (args) => {
           const contents = patcher.patched[args.path]
           if (!contents) throw new Error(`${args.path} should have been patched, but no patch was found among ${JSON.stringify(Object.keys(patcher.patched))}`)
+          patcher.used.add(args.path)
           if (!patcher.silent) console.log('  loading patched', path.relative(process.cwd(), args.path))
+          // , Object.keys(patcher.patched).filter(p => !patcher.used.has(p)).length, 'unused')
           return { contents, loader: 'js' }
         })
       }
