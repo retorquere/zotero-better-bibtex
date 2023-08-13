@@ -81,10 +81,16 @@ You can add a verbatim text by just including it in single or double quotes:
 extra('tex.shortauthor').transliterate.clean.lower.len + year; 'default' + auth.lower + year
 ```
 
-Formulas have some ternary support; you can use them in formulas instead of a function, but not in parameters; you can for example use
+Formulas have some ternary and or-style choice support; you can use them in formulas instead of a function, but not in parameters; you can for example use
 
 ```
 (title ? title : auth).lower + year
+```
+
+or
+
+```
+(title || auth).lower + year
 ```
 
 instead of

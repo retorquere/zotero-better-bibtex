@@ -99,7 +99,7 @@ class Compiler {
 
   $formula(ast: Node, wrap=false): string {
     let formula = `this.finalize(this.reset() + ${this.split(ast, '+').map((term: Node) => this.$term(term)).join(' + ')})`
-    if (wrap) formula = `(function() { return ${formula} }).call(Object.create(this))`
+    if (wrap) formula = `sub(function() { return ${formula} })`
     return formula
   }
 
@@ -112,7 +112,8 @@ class Compiler {
       : this.split(this.get(program.body[0], 'ExpressionStatement').expression, '|')
 
     const compiled = formulas.map((candidate: Node) => `    () => ${this.$formula(candidate)},`).join('\n')
-    return `  return [
+    return `  const sub = f => f.call(Object.create(this))
+  return [
 ${compiled}
   ].reduce((citekey, formula) => citekey || formula(), '') || ('zotero-' + this.item.id)`
   }
@@ -125,6 +126,9 @@ ${compiled}
         return this.flatten(node.callee).concat([node])
       case 'Identifier':
       case 'ConditionalExpression':
+        return [node]
+      case 'LogicalExpression':
+        if (node.operator !== '||') this.error(node, `unexpected ${node.type} operator ${node.operator}`)
         return [node]
       case 'Literal':
         if (typeof node.value !== 'string') this.error(node, `expected string, got ${this.$typeof(node)}`)
@@ -144,13 +148,18 @@ ${compiled}
     let compiled = 'this'
     let prefix = '$'
     while (flat.length) {
-      const identifier = this.get(flat.shift(), ['Identifier'].concat(prefix === '$' ? ['ConditionalExpression'] : []))
+      const identifier = this.get(flat.shift(), ['Identifier'].concat(prefix === '$' ? ['LogicalExpression', 'ConditionalExpression'] : []))
 
       if (identifier.type === 'ConditionalExpression') {
         const test = this.$formula(identifier.test, true)
         const consequent = this.$formula(identifier.consequent, true)
         const alternate = this.$formula(identifier.alternate, true)
         compiled += `.$text(${test} ? ${consequent} : ${alternate})`
+      }
+      else if (identifier.type === 'LogicalExpression') {
+        const left = this.$formula(identifier.left, true)
+        const right = this.$formula(identifier.right, true)
+        compiled += `.$text(${left} || ${right})`
       }
       else if (prefix === '$' && identifier.name[0] === identifier.name[0].toUpperCase()) {
         if (flat[0] && flat[0].type === 'CallExpression') this.error(flat[0], `field "${identifier.name}" cannot be called as a function`)

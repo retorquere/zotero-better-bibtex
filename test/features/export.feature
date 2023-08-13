@@ -195,6 +195,7 @@ Feature: Export
     Examples:
       | file                                                                                                               | references |
       | Ternary in citekey formula                                                                                         | 1          |
+      | LogicalOr in citekey formula                                                                                       | 1          |
       | event-place in extra not exported to address #2533                                                                 | 1          |
       | arXiv categories missing in the BibTeX output when stored only in the Extra field #2483                            | 1          |
       | missing  before _ in url in .bib file #2466                                                                        | 1          |

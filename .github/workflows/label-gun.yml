@@ -20,25 +20,25 @@ jobs:
           log-id: "([A-Z0-9]{8}(-refs)?-(apse|euc))|([^-]+-[A-Z0-9]{8})"
           message.log-required: |
             Hello there @{{username}},
-            
+
             Hope you're doing well! `@retorquere` is here to help you get the most out of your experience with Better BibTeX. To make sure he can assist you effectively, he kindly asks for your cooperation in providing a debug log – it's like giving him the key to understanding and solving the puzzle!
-            
+
             Getting your debug log is a breeze and will save us both time. Trust me, it's way quicker than discussing why it's important. :smiley:
-            
+
             **How to Share Your Debug Log:**
-            
+
             1. If the issue involves specific references or exports, just right-click on the relevant item(s) and choose "Better BibTeX -> Submit Better BibTeX debug log" from the menu.
-               
+
             2. For other issues, follow these simple steps:
                * Restart Zotero with debugging enabled (Help -> Debug Output Logging -> Restart with logging enabled).
                * Reproduce the problem.
                * Select "Send Better BibTeX debug report..." from the help menu.
-            
+
             Once you hit that submit button, you'll get a special red debug ID. Just share that with `@retorquere` in this issue thread. If the question is regarding an export, don't forget to include what you see exported and what you expected.
-            
+
             By sharing your debug log, you're giving `@retorquere` a clearer picture of your setup and the items causing the issue. It's like a superhero cape for him – he can swoop in and tackle the problem much faster.
-            
+
             We totally get that your time is valuable, and we appreciate your effort in helping `@retorquere` help you. You might be surprised at how much this simple step speeds up the whole process.
-            
+
             Thanks a bunch!
           message.no-close: Thanks for the feedback; there's no way you could have known, but @retorquere prefers to keep bugreports/enhancements open as a reminder to merge the changes into a new release.
