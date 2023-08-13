@@ -444,6 +444,7 @@ export function generateBibLaTeX(translation: Translation): void {
         break
 
       case 'software':
+      case 'misc':
         entry.add({ name: 'organization', value: item.publisher, bibtexStrings: true })
         break
 
