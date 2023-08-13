@@ -248,7 +248,7 @@ jobs:
     - *install_python
     - *download_test_artifacts
     - name: rebalance tests
-      run: ./util/merge-durations.py -c zotero -o $DURATIONS logs/stats/durations--*.json
+      run: ./util/merge-durations.py --client zotero --output $DURATIONS logs/stats/durations--*.json
     - name: Store build stats
       run: |
         gh release upload builds $DURATIONS --clobber --repo ${{ github.repository }}
