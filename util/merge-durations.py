@@ -26,7 +26,7 @@ for job in args.durations:
     durations[key] = durations[key] | json.load(f)
 
 for key, dur in durations.items():
-  print(key, sum([test['seconds'] for test in dur]))
+  print(key, sum([test['seconds'] for test in dur.values()]))
 
 if args.worker:
   key = f'{args.client}-worker'
