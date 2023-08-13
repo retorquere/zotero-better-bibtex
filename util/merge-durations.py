@@ -3,6 +3,7 @@
 import os, sys
 import json
 import glob
+from datetime import timedelta
 
 import argparse
 parser = argparse.ArgumentParser()
@@ -13,8 +14,7 @@ parser.add_argument('durations', nargs='+')
 args = parser.parse_args()
 
 durations = {}
-for job in args.durations:
-  print('adding', job)
+for job in sorted(args.durations):
   dur, client, bin, worker = os.path.basename(job).replace('.json', '').split('--')
   if worker == 'worker':
     key = f'{client}-worker'
@@ -26,7 +26,7 @@ for job in args.durations:
     durations[key] = durations[key] | json.load(f)
 
 for key, dur in durations.items():
-  print(key, sum([test['seconds'] for test in dur.values()]))
+  print(key, timedelta(seconds=sum([test['seconds']) for test in dur.values()]))
 
 if args.worker:
   key = f'{args.client}-worker'
