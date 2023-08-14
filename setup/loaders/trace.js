@@ -10,7 +10,7 @@ const __estrace = {
     if (!Zotero
       || !Zotero.BetterBibTeX
       || !Zotero.BetterBibTeX.ready
-      || Zotero.BetterBibTeX.ready.isPending()
+      || Zotero.BetterBibTeX.ready.pending
       || !Zotero.BetterBibTeX.TestSupport
     ) return false
 

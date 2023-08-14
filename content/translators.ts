@@ -1,7 +1,5 @@
 /* eslint-disable no-case-declarations, @typescript-eslint/no-unsafe-return */
 
-import type BluebirdPromise from 'bluebird'
-
 Components.utils.import('resource://gre/modules/Services.jsm')
 
 declare class ChromeWorker extends Worker { }
@@ -59,12 +57,10 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
   public queue = new Queue
   public worker: ChromeWorker
 
-  public ready: BluebirdPromise<boolean>
-  private deferred = new Deferred<boolean>()
+  public ready = new Deferred<boolean>()
 
   constructor() {
     Object.assign(this, translatorMetadata)
-    this.ready = this.deferred.promise
 
     orchestrator.add('translators', {
       description: 'translators',
@@ -141,7 +137,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       }
     }
 
-    this.deferred.resolve(true)
+    this.ready.resolve(true)
   }
 
   public getTranslatorId(name: string): string {
@@ -266,7 +262,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       || preferences.relativeFilePaths
     ) && Cache.getCollection(translator.label)
 
-    const deferred = new Deferred<string>()
+    const result = new Deferred<string>
 
     const config: Translator.Worker.Job = {
       preferences: { ...Preference.all, ...preferences },
@@ -289,7 +285,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
         case 'error':
           log.status({error: true}, 'QBW failed:', Date.now() - start, e.data)
           job.translate?._runHandler('error', e.data) // eslint-disable-line no-underscore-dangle
-          deferred.reject(e.data.message)
+          result.reject(new Error(e.data.message))
           break
 
         case 'debug':
@@ -303,7 +299,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
         case 'done':
           void Events.emit('export-progress', { pct: 100, message: translator.label, ae: job.autoExport })
-          deferred.resolve(typeof e.data.output === 'boolean' ? '' : e.data.output)
+          result.resolve(typeof e.data.output === 'boolean' ? '' : e.data.output)
           break
 
         case 'cache':
@@ -327,7 +323,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     this.worker.onerror = e => {
       log.status({error: true}, 'QBW: failed:', Date.now() - start, 'message:', e)
       job.translate?._runHandler('error', e) // eslint-disable-line no-underscore-dangle
-      deferred.reject(e.message)
+      result.reject(new Error(e.message))
     }
 
     const scope = this.exportScope(job.scope)
@@ -419,7 +415,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
     this.worker.postMessage({ kind: 'start', config: abconfig }, [ abconfig ])
 
-    return deferred.promise
+    return result
   }
 
   public displayOptions(translatorID: string, displayOptions: any): any {
@@ -440,7 +436,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
     const start = Date.now()
 
-    const deferred = Zotero.Promise.defer()
+    const result = new Deferred<string>
     const translation = new Zotero.Translate.Export()
 
     const scope = this.exportScope(job.scope)
@@ -479,14 +475,14 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
         file = null
       }
       if (!file) {
-        deferred.reject(l10n.localize('better-bibtex_translate_error_target_not_a_file', { path: job.path }))
-        return deferred.promise
+        result.reject(new Error(l10n.localize('better-bibtex_translate_error_target_not_a_file', { path: job.path })))
+        return result
       }
 
       // the parent directory could have been removed
       if (!file.parent || !file.parent.exists()) {
-        deferred.reject(l10n.localize('better-bibtex_translate_error_target_no_parent', { path: job.path }))
-        return deferred.promise
+        result.reject(new Error(l10n.localize('better-bibtex_translate_error_target_no_parent', { path: job.path })))
+        return result
       }
 
       translation.setLocation(file)
@@ -494,17 +490,17 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
     translation.setHandler('done', (obj, success) => {
       if (success) {
-        deferred.resolve(obj ? obj.string : undefined)
+        result.resolve(obj ? obj.string : undefined)
       }
       else {
         log.error('error: Translators.exportItems failed in', { time: Date.now() - start, ...job, translate: undefined })
-        deferred.reject('error: translation failed')
+        result.reject(new Error('translation failed'))
       }
     })
 
     translation.translate()
 
-    return deferred.promise
+    return result
   }
 
   public uninstall(label) {

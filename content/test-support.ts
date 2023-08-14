@@ -11,7 +11,6 @@ import { $and } from './db/loki'
 import  { defaults } from '../gen/preferences/meta'
 import { Preference } from './prefs'
 import * as memory from './memory'
-import { Deferred } from './deferred'
 
 const setatstart: string[] = ['testing', 'cache'].filter(p => Preference[p] !== defaults[p])
 
@@ -300,18 +299,17 @@ export class TestSupport {
       id: Translators.byName[translator]?.translatorID || translator,
       locale: '',
     }
-    const deferred = new Deferred<string>()
 
-    Zotero.QuickCopy.getContentFromItems(Zotero.Items.get(itemIDs), format, (obj, worked) => {
-      if (worked) {
-        deferred.resolve(obj.string.replace(/\r\n/g, '\n'))
-      }
-      else {
-        deferred.reject(new Error(Zotero.getString('fileInterface.exportError')))
-      }
+    return new Promise((resolve, reject) => {
+      Zotero.QuickCopy.getContentFromItems(Zotero.Items.get(itemIDs), format, (obj, worked) => {
+        if (worked) {
+          resolve(obj.string.replace(/\r\n/g, '\n'))
+        }
+        else {
+          reject(new Error(Zotero.getString('fileInterface.exportError')))
+        }
+      })
     })
-
-    return deferred.promise
   }
 
   public editAutoExport(field: string, value: boolean | string): void {

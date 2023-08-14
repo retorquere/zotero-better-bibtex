@@ -2,6 +2,7 @@ export type Actor = | 'start' | 'done' | 'auto-export' | 'translators' | 'TeXstu
 export type PhaseID = 'startup' | 'shutdown'
 import type { Reason } from './bootstrap'
 import { log } from './logger'
+import { Preference } from './prefs'
 
 type Handler = (reason: Reason, task?: Task) => void | string | Promise<void | string>
 
@@ -272,7 +273,7 @@ export class Orchestrator {
     await this.run('startup', reason, progress)
     progress?.('startup', 'ready', 100, 100, 'ready')
 
-    Zotero.debug(`orchestrator:\n${this.gantt('startup')}`)
+    if (Preference.testing) Zotero.debug(`orchestrator:\n${this.gantt('startup')}`)
   }
 
   public async shutdown(reason: Reason): Promise<void> {
