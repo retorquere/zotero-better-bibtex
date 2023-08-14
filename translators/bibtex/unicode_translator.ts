@@ -169,67 +169,67 @@ export class HTMLConverter {
 
     this.stack.unshift(tag)
 
-    let latex = '\uFFFD' // default to no-op
+    let latex = '...' // default to no-op
     switch (tag.nodeName) {
       case 'i':
       case 'em':
       case 'italic':
       case 'emphasis':
-        latex = '\\emph{\uFFFD}'
+        latex = '\\emph{...}'
         break
 
       case 'b':
       case 'strong':
-        latex = '\\textbf{\uFFFD}'
+        latex = '\\textbf{...}'
         break
 
       case 'tt':
       case 'code':
-        latex = '\\texttt{\uFFFD}'
+        latex = '\\texttt{...}'
         break
 
       case 'a':
         /* zotero://open-pdf/0_5P2KA4XM/7 is actually a reference. */
-        if (tag.attr.href && tag.attr.href.length) latex = `\\href{${tag.attr.href.replace(/[{}]/g, '').replace(/#/g, '\\#')}}{\uFFFD}`
+        if (tag.attr.href && tag.attr.href.length) latex = `\\href{${tag.attr.href.replace(/[{}]/g, '').replace(/#/g, '\\#')}}{...}`
         break
 
       case 'sup':
-        latex = '\\textsuperscript{\uFFFD}'
+        latex = '\\textsuperscript{...}'
         break
 
       case 'sub':
-        latex = '\\textsubscript{\uFFFD}'
+        latex = '\\textsubscript{...}'
         break
 
       case 'br':
         latex = ''
         /* line-breaks on empty line makes LaTeX sad */
         if (this.latex !== '' && this.latex[this.latex.length - 1] !== '\n') latex = '\\\\'
-        latex += '\n\uFFFD'
+        latex += '\n...'
         break
 
       case 'p':
       case 'div':
       case 'table':
       case 'tr':
-        latex = '\n\\par\n\uFFFD\n\\par\n'
+        latex = '\n\\par\n...\n\\par\n'
         break
 
       case 'h1':
       case 'h2':
       case 'h3':
       case 'h4':
-        latex = `\n\n\\${'sub'.repeat(parseInt(tag.nodeName[1]) - 1)}section{\uFFFD}\n\n`
+        latex = `\n\n\\${'sub'.repeat(parseInt(tag.nodeName[1]) - 1)}section{...}\n\n`
         break
 
       case 'ol':
-        latex = '\n\n\\begin{enumerate}\n\uFFFD\n\n\\end{enumerate}\n'
+        latex = '\n\n\\begin{enumerate}\n...\n\n\\end{enumerate}\n'
         break
       case 'ul':
-        latex = '\n\n\\begin{itemize}\n\uFFFD\n\n\\end{itemize}\n'
+        latex = '\n\n\\begin{itemize}\n...\n\n\\end{itemize}\n'
         break
       case 'li':
-        latex = '\n\\item \uFFFD'
+        latex = '\n\\item ...'
         break
 
       case 'span':
@@ -243,7 +243,7 @@ export class HTMLConverter {
 
       case 'td':
       case 'th':
-        latex = ' \uFFFD '
+        latex = ' ... '
         break
 
       case '#comment':
@@ -256,7 +256,7 @@ export class HTMLConverter {
         break // ignore
 
       case 'blockquote':
-        latex = '\n\n\\begin{quotation}\n\uFFFD\n\n\\end{quotation}\n'
+        latex = '\n\n\\begin{quotation}\n...\n\n\\end{quotation}\n'
         break
 
       case 'img':
@@ -270,7 +270,7 @@ export class HTMLConverter {
         break
     }
 
-    if (latex !== '\uFFFD') latex = this.embrace(latex, /^\\[a-z]+{\.\.\.}$/.test(latex))
+    if (latex !== '...') latex = this.embrace(latex, /^\\[a-z]+{\.\.\.}$/.test(latex))
     if (tag.smallcaps) latex = this.embrace(`\\textsc{${latex}}`, true)
     if (tag.nocase) latex = `{{${latex}}}`
     if (tag.relax) latex = `{\\relax ${latex}}`
@@ -283,7 +283,7 @@ export class HTMLConverter {
       }
     }
 
-    const [prefix, postfix] = latex.split('\uFFFD')
+    const [prefix, postfix] = latex.split('...')
 
     this.latex += prefix
     for (const child of tag.childNodes) {
@@ -305,7 +305,6 @@ export class HTMLConverter {
   }
 
   private chars(text, nocased) {
-    text = text.replace(/\uFFFD/g, '')
     if (this.options.html) text = HE.decode(text, { isAttributeValue: true })
 
     let latex = ''
