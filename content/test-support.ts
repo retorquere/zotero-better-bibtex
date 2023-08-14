@@ -71,7 +71,6 @@ export class TestSupport {
 
     AutoExport.db.findAndRemove({ type: { $ne: '' } })
 
-
     items = await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, false, true, true)
     if (items.length !== 0) throw new Error('library not empty after reset')
   }

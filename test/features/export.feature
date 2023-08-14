@@ -194,7 +194,8 @@ Feature: Export
 
     Examples:
       | file                                                                                                               | references |
-      | BBT does not escape # in first argument of href in note #2617                                                      | 1          |
+      | BBT does not escape # in first argument of href in note #2617                                                      | 2          |
+      | BBT does not escape # in first argument of href in note #2617-note                                                 | 2          |
       | Ternary in citekey formula                                                                                         | 1          |
       | LogicalOr in citekey formula                                                                                       | 1          |
       | event-place in extra not exported to address #2533                                                                 | 1          |
