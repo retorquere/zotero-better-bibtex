@@ -184,8 +184,8 @@ Feature: Export
       | URL-DOI exclusive export broken for item types with no dedicated DOI field #1331                                         | 1          |
       | date ranges #747+#746                                                                                                    | 5          |
       | preserve @strings between import-export #1162                                                                            | 1          |
-      | inspireHep fetching broken #2201 | 1 |
-      | fetch inspire-hep key #1879      | 1 |
+      | inspireHep fetching broken #2201                                                                                         | 1          |
+      | fetch inspire-hep key #1879                                                                                              | 1          |
 
   @bibtex
   Scenario Outline: Export <references> references for BibTeX to <file>
@@ -194,6 +194,7 @@ Feature: Export
 
     Examples:
       | file                                                                                                               | references |
+      | BBT does not escape # in first argument of href in note #2617                                                      | 1          |
       | Ternary in citekey formula                                                                                         | 1          |
       | LogicalOr in citekey formula                                                                                       | 1          |
       | event-place in extra not exported to address #2533                                                                 | 1          |

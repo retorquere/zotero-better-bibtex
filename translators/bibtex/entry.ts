@@ -914,7 +914,8 @@ export class Entry {
       return (f.value || '').replace(/([#\\%&{}])/g, '\\$1') // or maybe enc_latex?
     }
     else if (this.translation.BetterBibTeX && this.translation.preferences.bibtexURL === 'note') {
-      return `\\url{${this.enc_verbatim(f)}}`
+      // https://github.com/retorquere/zotero-better-bibtex/issues/2617
+      return `\\url{${this.enc_verbatim(f).replace(/#/g, '\\#')}}`
     }
     else {
       return this.enc_verbatim(f)
