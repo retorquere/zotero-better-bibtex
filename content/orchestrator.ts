@@ -247,8 +247,6 @@ export class Orchestrator {
       g += '\n'
     }
     g += '@endgantt\n'
-    // g += url(g)
-    const g1 = g
 
     /*
     g = '@startgantt\n'
@@ -265,7 +263,7 @@ export class Orchestrator {
     const g2 = g
     */
 
-    return g1
+    Zotero.File.putContents(Zotero.File.pathToFile(OS.Path.join(Zotero.BetterBibTeX.dir, `${phase}.plantuml`)), g)
   }
 
   public async startup(reason: Reason, progress?: Progress): Promise<void> {
@@ -273,13 +271,14 @@ export class Orchestrator {
     await this.run('startup', reason, progress)
     progress?.('startup', 'ready', 100, 100, 'ready')
 
-    if (Preference.testing) Zotero.debug(`orchestrator:\n${this.gantt('startup')}`)
+    if (Preference.testing) this.gantt('startup')
   }
 
   public async shutdown(reason: Reason): Promise<void> {
     if (!this.resolved) throw new Error('orchestrator: shutdown before startup')
     await this.run('shutdown', reason)
-    Zotero.debug(`orchestrator:\n${this.gantt('shutdown')}`)
+
+    if (Preference.testing) this.gantt('shutdown')
   }
 }
 
