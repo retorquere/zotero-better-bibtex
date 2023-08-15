@@ -25,9 +25,9 @@ async function title_sentenceCase(label) {
 }
 
 export async function newZoteroItemPane(win: Window): Promise<void> {
-  let itemBoxInstance: HTMLElement
-  await busyWait(() => { itemBoxInstance = win.document.querySelector(is7 ? 'item-box' : '#zotero-editpane-item-box'); return !!itemBoxInstance })
-  new ZoteroItemPane(win, itemBoxInstance)
+  let itemBox: HTMLElement
+  await busyWait(() => { itemBox = win.document.querySelector(is7 ? 'item-box' : '#zotero-editpane-item-box'); return !!itemBox })
+  new ZoteroItemPane(win, itemBox)
 }
 
 export class ZoteroItemPane {
@@ -36,10 +36,10 @@ export class ZoteroItemPane {
   elements: Elements
 
   public refresh(): void {
-    this.itemBoxInstance.refresh()
+    this.itemBox.refresh()
   }
 
-  constructor(win: Window, private itemBoxInstance: any) { // eslint-disable-line @typescript-eslint/explicit-module-boundary-types
+  constructor(win: Window, private itemBox: any) { // eslint-disable-line @typescript-eslint/explicit-module-boundary-types
     this.document = win.document
     const elements = this.elements = new Elements(this.document)
     // const itemPane = (win as any).ZoteroItemPane
@@ -47,7 +47,7 @@ export class ZoteroItemPane {
 
     if (!is7) {
       if (!this.document.getElementById('better-bibtex-editpane-item-box')) {
-        itemBoxInstance.parentNode.appendChild(elements.create('vbox', { flex: 1, style: 'margin: 0; padding: 0', $: [
+        itemBox.parentNode.appendChild(elements.create('vbox', { flex: 1, style: 'margin: 0; padding: 0', $: [
 
           elements.create('grid', { id: 'better-bibtex-editpane-item-box', $: [
             elements.create('columns', { $: [
@@ -64,20 +64,20 @@ export class ZoteroItemPane {
             ]}),
           ]}),
 
-          itemBoxInstance,
+          itemBox,
         ]}))
       }
     }
     else {
       if (!this.document.getElementById('better-bibtex-editpane-item-box')) {
-        itemBoxInstance.parentNode.appendChild(elements.create('html:div', { style: 'display: flex; flex-direction: column;' , $: [
+        itemBox.parentNode.appendChild(elements.create('html:div', { style: 'display: flex; flex-direction: column;' , $: [
 
           elements.create('html:div', { id: 'better-bibtex-editpane-item-box', style: 'display: flex; flex-direction: row', $: [
             elements.create('label', { id: 'better-bibtex-citekey-label', style: 'flex: 0 0 auto; width: 9em; text-align: right; color: #7F7F7F', value: '' }),
             elements.create('html:input', { id: 'better-bibtex-citekey-display', type: 'text', style: 'flex: 0 0 auto', readonly: 'true', value: '' }),
           ]}),
 
-          itemBoxInstance,
+          itemBox,
         ]}))
       }
     }
@@ -90,13 +90,13 @@ export class ZoteroItemPane {
       this.unload()
     })
 
-    $patch$(itemBoxInstance.__proto__, 'refresh', original => function() {
+    $patch$(itemBox.__proto__, 'refresh', original => function() {
       // eslint-disable-next-line prefer-rest-params
       original.apply(this, arguments)
 
       if (!this.item) {
         // why is it refreshing if there is no item?!
-        log.debug('itemBoxInstance.refresh without an item')
+        log.debug('itemBox.refresh without an item')
         return
       }
 
@@ -109,8 +109,8 @@ export class ZoteroItemPane {
           menuitem = menu.appendChild(elements.create('menuitem', {
             id: menuid,
             label: 'BBT sentence case',
-            oncommand: () => {
-              title_sentenceCase.call(this.ownerDocument.getBindingParent(this), this.ownerDocument.popupNode)
+            oncommand: event => {
+              title_sentenceCase.call(event.currentTarget.ownerDocument.getBindingParent(event.currentTarget), event.currentTarget.ownerDocument.popupNode)
             },
           }))
         }

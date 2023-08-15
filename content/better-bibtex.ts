@@ -822,7 +822,7 @@ export class BetterBibTeX {
 }
 
 Events.on('window-loaded', async ({ win, href }: {win: Window, href: string}) => {
-  log.debug('window-loaded:', href)
+  if (Preference.testing) log.debug('window-loaded:', href)
   if (href === 'chrome://zotero/content/standalone/standalone.xul') {
     await Zotero.BetterBibTeX.loadUI(win)
   }
