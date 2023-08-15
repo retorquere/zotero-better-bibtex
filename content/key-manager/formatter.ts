@@ -1146,24 +1146,7 @@ class PatternFormatter {
    * after adding `jr` to the skipWords list.
    * Note that this filter is always applied if you use `title` (which is different from `Title`) or `shorttitle`.
    */
-  public _skipwords(/* ...words: string[] */) {
-    /*
-    let skipWords: Set<string> = new Set([...this.skipWords])
-
-    for (const word of words) {
-      if (!word) continue
-
-      if (word === '_') {
-        skipWords = new Set
-      }
-      else if (word[0] === '_') {
-        skipWords.delete(word.substr(1))
-      }
-      else {
-        skipWords.add(word)
-      }
-    }
-    */
+  public _skipwords() {
     const words = this.titleWords(this.chunk, { skipWords: true })
     return this.$text(words ? words.join(' ') : '')
   }
