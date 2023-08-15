@@ -1144,10 +1144,11 @@ class PatternFormatter {
    *
    * If you want to strip words like 'Jr.' from names, you could use something like `Auth.nopunct.skipwords.fold`
    * after adding `jr` to the skipWords list.
-   * Note that this filter is always applied if you use `title` (which is different from `Title`) or `shorttitle`.
+   * Note that this filter is always applied with `nopunct` on if you use `title` (which is different from `Title`) or `shorttitle`.
+   * @param nopunct remove punctuation from words
    */
-  public _skipwords() {
-    const words = this.titleWords(this.chunk, { skipWords: true })
+  public _skipwords(nopunct: boolean = false) { // eslint-disable-line @typescript-eslint/no-inferrable-types
+    const words = this.titleWords(this.chunk, { skipWords: true, nopunct })
     return this.$text(words ? words.join(' ') : '')
   }
 

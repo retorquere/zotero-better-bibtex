@@ -97,7 +97,9 @@ export class API {
       if (ts.isParameter(param)) this.ParameterDeclaration(this.classes[className][methodName], param, params)
     })
     const orphans = Object.keys(params).join('/')
-    if (orphans) throw new Error(`orphaned param docs for ${orphans}`)
+    if (orphans) {
+      throw new Error(`orphaned param docs for ${orphans}`)
+    }
   }
 
   private ParameterDeclaration(method: Method, param: ts.ParameterDeclaration, doc: Record<string, string>) {
