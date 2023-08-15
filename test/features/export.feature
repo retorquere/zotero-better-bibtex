@@ -13,6 +13,7 @@ Feature: Export
 
     Examples:
       | file                                                                                                                     | references |
+      | skipwords removes dashes #2614                                                                                           | 1          |
       | Length filter double-counting characters #2525                                                                           | 1          |
       | booksubtitle and friends should be case-converted #2507                                                                  | 1          |
       | Add support for new Zotero item types #2496                                                                              | 2          |
@@ -184,8 +185,8 @@ Feature: Export
       | URL-DOI exclusive export broken for item types with no dedicated DOI field #1331                                         | 1          |
       | date ranges #747+#746                                                                                                    | 5          |
       | preserve @strings between import-export #1162                                                                            | 1          |
-      | inspireHep fetching broken #2201 | 1 |
-      | fetch inspire-hep key #1879      | 1 |
+      | inspireHep fetching broken #2201                                                                                         | 1          |
+      | fetch inspire-hep key #1879                                                                                              | 1          |
 
   @bibtex
   Scenario Outline: Export <references> references for BibTeX to <file>

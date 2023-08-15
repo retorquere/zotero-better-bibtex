@@ -1,0 +1,65 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "citekeyFold": false,
+      "citekeyFormat": "Title.skipwords.condense(\"-\")",
+      "skipFields": "file,abstract,urldate,annotation",
+      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc,groups"
+    }
+  },
+  "items": [
+    {
+      "DOI": "10.1109/TPWRS.2018.2846744",
+      "abstractNote": "This paper develops a robust generalized maximum-likelihood Koopman operator-based Kalman filter (GM-KKF) to estimate the rotor angle and speed of synchronous generators. The approach is data-driven and model independent. Its design phase is carried out offline and requires estimates of the synchronous generators' rotor angle and speed, along with active and reactive power at the generators' terminal; in real-time operation, only measurements of the rotor speed, active and reactive power are used. We first investigate the probability distribution of the transformed dynamic states by means of Q-Q plots and verify that the states of the GM-KKF approximately follow a Student's t-distribution with 20 degrees of freedom when the initial state vector is normally distributed. Under this assumption, our filter presents high statistical efficiency. Numerical simulations carried out on the IEEE 39-bus test system reveal that the GM-KKF has a faster convergence rate than the non-robust Koopman operator-based Kalman filter thanks to the adoption of a batch-mode regression formulation. They also show that the computing time of the GM-KKF is roughly reduced by one-third as compared to the one taken by our previously developed robust GM-extended Kalman filter. IEEE",
+      "attachments": [
+        {
+          "accessDate": "2021-05-05T10:42:59Z",
+          "itemType": "attachment",
+          "title": "ResearchGate Link",
+          "url": "https://www.researchgate.net/publication/325750054_A_Robust_Data-Driven_Koopman_Kalman_Filter_for_Power_Systems_Dynamic_State_Estimation"
+        },
+        {
+          "accessDate": "2021-11-14T18:58:40Z",
+          "itemType": "attachment",
+          "title": "ResearchGate Link",
+          "url": "https://www.researchgate.net/publication/325750054_A_Robust_Data-Driven_Koopman_Kalman_Filter_for_Power_Systems_Dynamic_State_Estimation"
+        }
+      ],
+      "citationKey": "A-Robust-Data-Driven-Koopman-Kalman-Filter-for-Power-Systems-Dynamic-State-Estimation",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Marcos",
+          "lastName": "Netto"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Lamine",
+          "lastName": "Mili"
+        }
+      ],
+      "date": "June 13, 2018",
+      "extra": [
+        "45 citations (Semantic Scholar/DOI) [2022-07-11]"
+      ],
+      "itemID": 1,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "IEEE Transactions on Power Systems",
+      "libraryCatalog": "ResearchGate",
+      "pages": "7228-7237",
+      "publicationTitle": "IEEE Transactions on Power Systems",
+      "tags": [
+        {
+          "tag": "Kalman Filter"
+        }
+      ],
+      "title": "A Robust Data-Driven Koopman Kalman Filter for Power Systems Dynamic State Estimation",
+      "volume": "33"
+    }
+  ]
+}

@@ -1351,7 +1351,7 @@ class PatternFormatter {
 
     // 551
     let words: string[] = Zotero.Utilities.XRegExp.matchChain(title, [this.re.word])
-      .map((word: string) => word.replace(/-/g, ''))
+      // .map((word: string) => word.replace(/-/g, ''))
       .filter((word: string) => word && !(options.skipWords && ucs2decode(word).length === 1 && !word.match(script.cjk)))
 
     // apply jieba.cut and flatten.
