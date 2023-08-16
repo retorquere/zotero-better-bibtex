@@ -796,7 +796,7 @@ class PatternFormatter {
    * @param m number of words to capitalize. `0` means no words will be capitalized. Mind that existing capitals are not removed.
    */
   public $shorttitle(n: number = 3, m: number = 0) { // eslint-disable-line no-magic-numbers, @typescript-eslint/no-inferrable-types
-    const words = this.titleWords(this.item.title, { skipWords: true, transliterate: true})
+    const words = this.titleWords(this.item.title, { skipWords: true, nopunct: true, transliterate: true})
     if (!words) return this.$text('')
 
     return this.$text(words.slice(0, n).map((word, i) => i < m ? word.charAt(0).toUpperCase() + word.slice(1) : word).join(' '))
@@ -872,7 +872,7 @@ class PatternFormatter {
 
   /** Capitalize all the significant words of the title, and concatenate them. For example, `An awesome paper on JabRef` will become `AnAwesomePaperJabref` */
   public $title() {
-    return this.$text((this.titleWords(this.item.title, { skipWords: true }) || []).join(' '))
+    return this.$text((this.titleWords(this.item.title, { skipWords: true, nopunct: true }) || []).join(' '))
   }
 
   /**
@@ -1144,27 +1144,11 @@ class PatternFormatter {
    *
    * If you want to strip words like 'Jr.' from names, you could use something like `Auth.nopunct.skipwords.fold`
    * after adding `jr` to the skipWords list.
-   * Note that this filter is always applied if you use `title` (which is different from `Title`) or `shorttitle`.
+   * Note that this filter is always applied with `nopunct` on if you use `title` (which is different from `Title`) or `shorttitle`.
+   * @param nopunct remove punctuation from words
    */
-  public _skipwords(/* ...words: string[] */) {
-    /*
-    let skipWords: Set<string> = new Set([...this.skipWords])
-
-    for (const word of words) {
-      if (!word) continue
-
-      if (word === '_') {
-        skipWords = new Set
-      }
-      else if (word[0] === '_') {
-        skipWords.delete(word.substr(1))
-      }
-      else {
-        skipWords.add(word)
-      }
-    }
-    */
-    const words = this.titleWords(this.chunk, { skipWords: true })
+  public _skipwords(nopunct: boolean = false) { // eslint-disable-line @typescript-eslint/no-inferrable-types
+    const words = this.titleWords(this.chunk, { skipWords: true, nopunct })
     return this.$text(words ? words.join(' ') : '')
   }
 
@@ -1223,11 +1207,15 @@ class PatternFormatter {
     return this.$text(this.chunk.replace(/((^|\s)[a-z])/g, m => m.toUpperCase()))
   }
 
+  private nopunct(text: string, dash='-') {
+    text = Zotero.Utilities.XRegExp.replace(text, this.re.dash, dash, 'all')
+    text = Zotero.Utilities.XRegExp.replace(text, this.re.punct, '', 'all')
+    return text
+  }
+
   /** Removes punctuation */
   public _nopunct(dash='-') {
-    let value = Zotero.Utilities.XRegExp.replace(this.chunk, this.re.dash, dash, 'all')
-    value = Zotero.Utilities.XRegExp.replace(value, this.re.punct, '', 'all')
-    return this.$text(value)
+    return this.$text(this.nopunct(this.chunk, dash))
   }
 
   /** Removes punctuation and word-connecting dashes. alias for `nopunct(dash='')` */
@@ -1346,12 +1334,12 @@ class PatternFormatter {
     return this.transliterate(str).replace(allow_spaces ? this.re.unsafechars_allow_spaces : this.re.unsafechars, '').trim()
   }
 
-  private titleWords(title, options: { transliterate?: boolean, skipWords?: boolean} = {}): string[] {
+  private titleWords(title, options: { transliterate?: boolean, skipWords?: boolean, nopunct?: boolean } = {}): string[] {
     if (!title) return null
 
     // 551
     let words: string[] = Zotero.Utilities.XRegExp.matchChain(title, [this.re.word])
-      .map((word: string) => word.replace(/-/g, ''))
+      .map((word: string) => options.nopunct ? this.nopunct(word, '') : word)
       .filter((word: string) => word && !(options.skipWords && ucs2decode(word).length === 1 && !word.match(script.cjk)))
 
     // apply jieba.cut and flatten.

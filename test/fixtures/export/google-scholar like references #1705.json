@@ -7,7 +7,7 @@
       "exportNotes": true
     },
     "preferences": {
-      "citekeyFormat": "[Auth:lower:replace=\\[-\\ \\].*,,regex:alphanum][year][Title:skipwords:replace=\\[-\\ \\].*,,regex:alphanum:lower]"
+      "citekeyFormat": "[Auth:lower:replace=\\[-\\ \\].*,,regex:alphanum][year][Title:skipwords=true:replace=\\[-\\ \\].*,,regex:alphanum:lower]"
     }
   },
   "items": [

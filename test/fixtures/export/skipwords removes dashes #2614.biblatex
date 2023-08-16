@@ -1,0 +1,11 @@
+@article{Robust-Data-Driven-Koopman-Kalman-Filter-Power-Systems-Dynamic-State-Estimation,
+  title = {A {{Robust Data-Driven Koopman Kalman Filter}} for {{Power Systems Dynamic State Estimation}}},
+  author = {Netto, Marcos and Mili, Lamine},
+  date = {2018-06-13},
+  journaltitle = {IEEE Transactions on Power Systems},
+  shortjournal = {IEEE Transactions on Power Systems},
+  volume = {33},
+  pages = {7228--7237},
+  doi = {10.1109/TPWRS.2018.2846744},
+  keywords = {Kalman Filter}
+}
