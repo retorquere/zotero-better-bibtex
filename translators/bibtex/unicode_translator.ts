@@ -190,7 +190,7 @@ export class HTMLConverter {
 
       case 'a':
         /* zotero://open-pdf/0_5P2KA4XM/7 is actually a reference. */
-        if (tag.attr.href && tag.attr.href.length) latex = `\\href{${tag.attr.href.replace(/[{}]/g, '').replace(/#/g, '\\#')}}{...}`
+        if (tag.attr.href && tag.attr.href.length) latex = `\\href{${tag.attr.href.replace(/[{}]/g, '').replace(/([\\%#])/g, '\\$1')}}{...}`
         break
 
       case 'sup':

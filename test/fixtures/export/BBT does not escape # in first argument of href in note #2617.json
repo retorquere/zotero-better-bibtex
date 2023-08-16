@@ -21,7 +21,7 @@
       "itemID": 1,
       "itemType": "document",
       "notes": [
-        "<div data-schema-version=\"8\"><p><a href=\"https://www.example.com/#foo\" rel=\"noopener noreferrer nofollow\">https://www.example.com/#foo</a></p>\n</div>"
+        "<div data-schema-version=\"8\"><p><a href=\"https://www.example.com/#f%20o\\o\" rel=\"noopener noreferrer nofollow\">https://www.example.com/#f%20o\\o</a></p>\n</div>"
       ],
       "title": "TheTitle"
     },
