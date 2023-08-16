@@ -14,6 +14,8 @@ if len(logs) == 0:
   print('please provide one or more log IDs')
   sys.exit(1)
 
+logs = [log.split('/')[0] for log in logs]
+
 if len(logs) == 1 and not logs[0].endswith('-euc') and not logs[0].endswith('-apse'):
   # assume file.io
   remote, local = logs[0].split('-')
