@@ -7013,7 +7013,7 @@
       "itemID": 276,
       "itemType": "conferencePaper",
       "notes": [
-        "http://www.dur.ac.uk/computer.science/research/stanstuff/html/dpgpublications.html"
+        "<a href=\"http://www.dur.ac.uk/computer.science/research/stanstuff/html/dpgpublications.html\">http://www.dur.ac.uk/computer.science/research/stanstuff/html/dpgpublications.html</a>"
       ],
       "publicationTitle": "Proceedings of the 3rd international NASA workshop on planning and scheduling for space",
       "title": "PDDL+: Modeling continuous time dependent effects"
@@ -8148,7 +8148,7 @@
       "itemID": 323,
       "itemType": "conferencePaper",
       "notes": [
-        "Paper accompanying invited talk to be presented at the 1999 European Conference on Planning (ECP-99). Available through http://afrodite.itc.it:1024/~leaf/"
+        "Paper accompanying invited talk to be presented at the 1999 European Conference on Planning (ECP-99). Available through <a href=\"http://afrodite.itc.it:1024/~leaf/\">http://afrodite.itc.it:1024/~leaf/</a>"
       ],
       "publicationTitle": "Proceedings of ECP-99",
       "publisher": "SPRINGER",
@@ -16775,8 +16775,8 @@
       "itemID": 678,
       "itemType": "journalArticle",
       "notes": [
-        "Describes the HITaP Hierarchical (HTN/decomposition) planner for RETSINA.",
-        "http://www.ida.liu.se/ext/epa/ej/etai/2000/003/epapage.html"
+        "<a href=\"http://www.ida.liu.se/ext/epa/ej/etai/2000/003/epapage.html\">http://www.ida.liu.se/ext/epa/ej/etai/2000/003/epapage.html</a>",
+        "Describes the HITaP Hierarchical (HTN/decomposition) planner for RETSINA."
       ],
       "pages": "23\u201343",
       "publicationTitle": "ETAI",
