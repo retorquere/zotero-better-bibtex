@@ -916,7 +916,7 @@ export class Entry {
     }
     else if (this.translation.BetterBibTeX && this.translation.preferences.bibtexURL === 'note') {
       // https://github.com/retorquere/zotero-better-bibtex/issues/2617
-      return `\\url{${this.enc_verbatim(f).replace(/#/g, '\\#')}}`
+      return `\\url{${this.enc_verbatim(f).replace(/([\\%#])/g, '\\$1')}}`
     }
     else {
       return this.enc_verbatim(f)
