@@ -406,14 +406,7 @@ Zotero.Server.Endpoints['/better-bibtex/cayw'] = class {
     try {
       const citation = options.selected ? (await selected(options)) : (await pick(options))
 
-      if (options.minimize) {
-        const wm = Components.classes['@mozilla.org/appshell/window-mediator;1'].getService(Components.interfaces.nsIWindowMediator)
-        const windows = wm.getEnumerator(null)
-        while (windows.hasMoreElements()) {
-          const win = windows.getNext().QueryInterface(Components.interfaces.nsIDOMChromeWindow)
-          win.minimize()
-        }
-      }
+      if (options.minimize) Zotero.getMainWindow().minimize()
 
       if (options.texstudio) {
         if (!TeXstudio.enabled) return [this.SERVER_ERROR, 'application/text', 'TeXstudio not found']
