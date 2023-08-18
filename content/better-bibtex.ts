@@ -13,7 +13,7 @@ declare const __estrace: any // eslint-disable-line no-underscore-dangle
 
 import type { XUL } from '../typings/xul'
 import { DebugLog } from 'zotero-plugin/debug-log'
-DebugLog.register('Better BibTeX')
+DebugLog.register('Better BibTeX', ['extensions.zotero.translators.better-bibtex.'])
 
 import { icons } from './icons'
 import { prompt } from './prompt'
