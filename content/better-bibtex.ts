@@ -580,7 +580,7 @@ export class BetterBibTeX {
   public generateCSLJSON = generateCSLJSON
 
   constructor() {
-    this.debugEnabledAtStart = Zotero.Prefs.get('debug.store')
+    this.debugEnabledAtStart = Zotero.Prefs.get('debug.store') || Zotero.Debug.enabled
   }
 
   public async scanAUX(target: string): Promise<void> {
