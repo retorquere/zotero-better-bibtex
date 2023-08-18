@@ -104,7 +104,7 @@
     "transliteration": "^2.3.5",
     "words-to-numbers": "^1.5.1",
     "xregexp": "^5.1.1",
-    "zotero-plugin": "2.0.4"
+    "zotero-plugin": "2.0.5"
   },
   "devDependencies": {
     "@retorquere/bibtex-parser": "^7.0.5",
