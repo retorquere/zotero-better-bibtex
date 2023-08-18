@@ -706,7 +706,12 @@ export class BetterBibTeX {
       startup: async () => {
         this.ready.resolve(true)
         await this.load(Zotero.getMainWindow())
-        DebugLog.unregister('XBetter BibTeX')
+
+        // eslint-disable-next-line no-magic-numbers
+        Zotero.Promise.delay(15000).then(() => {
+          log.debug('removing fallback debug logger')
+          DebugLog.unregister('Better BibTeX')
+        })
 
         Events.on('idle-savedb', async state => { // eslint-disable-line @typescript-eslint/require-await
           if (state === 'idle') DebugLog.convertLegacy()

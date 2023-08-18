@@ -41,4 +41,9 @@ jobs:
             We totally get that your time is valuable, and we appreciate your effort in helping `@retorquere` help you. You might be surprised at how much this simple step speeds up the whole process.
 
             Thanks a bunch!
+
+            **PS: If the Debug Log menu does not appear, or it does not send the debug log**
+
+            A fallback option is available under "Help" > "Send debug log to file.io".
+
           message.no-close: Thanks for the feedback; there's no way you could have known, but @retorquere prefers to keep bugreports/enhancements open as a reminder to merge the changes into a new release.
