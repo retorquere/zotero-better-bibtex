@@ -27,7 +27,7 @@ jobs:
 
             **How to Share Your Debug Log:**
 
-            1. If the issue involves specific references or exports, just right-click on the relevant item(s) and choose "Better BibTeX -> Submit Better BibTeX debug log" from the menu.
+            1. If the issue involves specific references, citekey generation, or exports, just right-click on the relevant item(s) and choose "Better BibTeX -> Submit Better BibTeX debug log" from the menu.
 
             2. For other issues, follow these simple steps:
                * Restart Zotero with debugging enabled (Help -> Debug Output Logging -> Restart with logging enabled).
