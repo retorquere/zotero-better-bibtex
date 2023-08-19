@@ -943,18 +943,11 @@ class PatternFormatter {
   public _match(match: RegExp | string, clean=false) {
     if (!match) return this
 
-    if (typeof match === 'string') {
-      const chunk = (clean ? this.clean(this.chunk, true) : this.chunk).toLowerCase()
-      match = (clean ? this.clean(match, true) : match).toLowerCase()
-      if (chunk.includes(match)) return this
-    }
-    else if ((clean ? this.clean(this.chunk, true) : this.chunk).match(match)) {
-      return this
-    }
-    else {
-      this.next = true
-      return this.$text('')
-    }
+    const cleaned = (t: string) => clean ? this.clean(t, true) : t
+
+    if (typeof match === 'string') match = new RegExp(rescape(cleaned(match)), 'i')
+    if (!cleaned(this.chunk).match(match)) this.next = true
+    return this
   }
 
   private len(value: string, relation: '<' | '<=' | '=' | '!=' | '>=' | '>', n: number) {
@@ -1055,7 +1048,7 @@ class PatternFormatter {
    */
   public _replace(find: string | RegExp, replace: string) {
     if (!find) return this
-    if (typeof find === 'string') find = new RegExp(find.replace(/[[\](){}*+?|^$.\\]/g, '\\$&'), 'ig')
+    if (typeof find === 'string') find = new RegExp(rescape(find), 'ig')
     return this.$text(this.chunk.replace(find, replace))
   }
 
