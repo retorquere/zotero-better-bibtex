@@ -1,6 +1,7 @@
 import { Preference } from '../prefs'
 import { Events } from '../events'
 import { log } from '../logger'
+import { CJK } from '../text'
 
 declare const ChromeUtils: any
 
@@ -9,6 +10,7 @@ if (typeof Services == 'undefined') {
 }
 
 import type { jieba as jiebaFunc, pinyin as pinyinFunc } from './chinese-optional'
+const surnames = require('./chinese-surnames.json')
 
 export const chinese = new class {
   public window: Window
@@ -30,6 +32,27 @@ export const chinese = new class {
       })
     }
     return on
+  }
+
+  // eslint-disable-next-line @typescript-eslint/array-type
+  public familyName(name: string, lang: 'zh-hans' | 'zh-hant', tables: Array<'compound' | 'single' | 'common'> = ['compound', 'single', 'common']): string {
+    if (!this.load(Preference.jieba) || !name.match(CJK) || !tables.length) return name
+
+    const candidates: ['compound' | 'single' | 'common', number][] = [
+      ['compound', 2],
+      ['compound', 3],
+      ['single', 1],
+      ['single', 2],
+      ['common', 1],
+      ['common', 2],
+    ]
+
+    let familyname = ''
+    for (const [table, length] of candidates) {
+      if (!tables.includes(table)) continue
+      if (surnames[lang][table].includes(familyname = name.substr(0, length))) return familyname
+    }
+    return name
   }
 
   init() {
