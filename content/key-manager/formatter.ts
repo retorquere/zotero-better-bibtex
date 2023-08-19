@@ -570,7 +570,7 @@ class PatternFormatter {
   public $auth(n=0, m=1, creator: Creator = '*', initials=false) {
     const family = n ? `%(f).${n}s` : '%(f)s'
     const name = initials ? `${family}%(I)s` : family
-    return this.$authors([m, m], creator, name, undefined, undefined)
+    return this.$authors([m, m], creator, name)
   }
 
   /**
