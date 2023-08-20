@@ -4,7 +4,7 @@
     "label": "BetterBibTeX JSON",
     "options": {},
     "preferences": {
-      "citekeyFormat": "auth.cjk_familyname('zh-hant').fold.lower + year;\ntype(forumPost, webpage) + auth.cjk_familyname('zh-hant').lower.capitalize + Date.formatDate(\"%Y-%m-%d.%H:%M:%S\").prefix(\".\") + PublicationTitle.lower.capitalize.prefix(\".\") + shorttitle(3,3).lower.capitalize.prefix(\".\") + Pages.prefix(\".p.\") + Volume.prefix(\".Vol.\") + NumberofVolumes.prefix(de);\nauth.cjk_familyname('zh-hant').lower.capitalize + date(\"%oY\").prefix(\".\") + PublicationTitle.lower.capitalize.prefix(\".\") + shorttitle(3,3).lower.capitalize.prefix(\".\") + Pages.prefix(\".p.\") + Volume.prefix(\".Vol.\") + NumberofVolumes.prefix(de);",
+      "citekeyFormat": "'hant:' + auth.cjk_familyname('zh-hant') +':'",
       "kuroshiro": true,
       "jieba": true
     }

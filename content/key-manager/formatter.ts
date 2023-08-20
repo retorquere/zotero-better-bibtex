@@ -983,7 +983,7 @@ class PatternFormatter {
   /** extracts the family-name from Chinese names written in single-field mode
    * @param lang language table to take family names from
    */
-  public _cjkfamilyname(lang: 'zh-hans' | 'zh-hant' = 'zh-hans') {
+  public _cjk_familyname(lang: 'zh-hans' | 'zh-hant' = 'zh-hans') {
     log.debug('cjk_familyname:', { chunk: this.chunk, names: this.chunk.split(' '), capped: this.chunk.split(' ').map(name => chinese.familyName(name, lang)) })
     return this.$text(this.chunk.split(' ').map(name => chinese.familyName(name, lang)).join(''))
   }

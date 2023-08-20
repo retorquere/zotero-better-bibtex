@@ -1,82 +1,82 @@
-@book{changsunwujiPossiblyWrongPinyin,
+@book{hant:changsun:,
   title = {(Possibly wrong pinyin) Hant Author: Zhangsun Wuji},
   author = {{長孫無忌}},
   langid = {chinese-traditional}
 }
 
-@book{dongfangbubaiHantAuthorDongfang,
+@book{hant:dongfang:,
   title = {Hant Author: Dongfang Bubai},
   author = {{東方不敗}},
   langid = {chinese-traditional}
 }
 
-@book{linghuchongHantAuthorLinghu,
+@book{hant:linghu:,
   title = {Hant Author: Linghu Chong},
   author = {{令狐沖}},
   langid = {chinese-traditional}
 }
 
-@book{murongfuHantAuthorMurong,
+@book{hant:murong:,
   title = {Hant Author: Murong Fu},
   author = {{慕容復}},
   langid = {chinese-traditional}
 }
 
-@book{ouyangfengHantAuthorOuyang,
+@book{hant:ouyang:,
   title = {Hant Author: Ouyang Feng},
   author = {{歐陽鋒}},
   langid = {chinese-traditional}
 }
 
-@book{renwohangHantAuthorRen,
+@book{hant:ren:,
   title = {Hant Author: Ren Woxing},
   author = {{任我行}},
   langid = {chinese-traditional}
 }
 
-@book{shangguanyunHantAuthorShangguan,
+@book{hant:shangguan:,
   title = {Hant Author: Shangguan Yun},
   author = {{上官雲}},
   langid = {chinese-traditional}
 }
 
-@book{simayiHantAuthorSima,
+@book{hant:sima:,
   title = {Hant Author: Sima Yi},
   author = {{司馬懿}},
   langid = {chinese-traditional}
 }
 
-@book{simazhongdaHantAuthorSima,
+@book{hant:sima:a,
   title = {Hant Author: Sima Zhongda},
   author = {{司馬仲達}},
   langid = {chinese-traditional}
 }
 
-@book{weichirongPossiblyWrongPinyin,
+@book{hant:weichi:,
   title = {(Possibly wrong pinyin) Hant Author: Yuchi Rong},
   author = {{尉遲融}},
   langid = {chinese-traditional}
 }
 
-@book{xiahoudunHantAuthorXiahou,
+@book{hant:xiahou:,
   title = {Hant Author: Xiahou Dun},
   author = {{夏侯惇}},
   langid = {chinese-traditional}
 }
 
-@book{yangliantingHantAuthorYang,
+@book{hant:yang:,
   title = {Hant Author: Yang Lianting},
   author = {{楊蓮亭}},
   langid = {chinese-traditional}
 }
 
-@book{zhugekongmingHantAuthorZhuge,
+@book{hant:zhuge:,
   title = {Hant Author: Zhuge Kongming},
   author = {{諸葛孔明}},
   langid = {chinese-traditional}
 }
 
-@book{zhugeliangHantAuthorZhuge,
+@book{hant:zhuge:a,
   title = {Hant Author: Zhuge Liang},
   author = {{諸葛亮}},
   langid = {chinese-traditional}
