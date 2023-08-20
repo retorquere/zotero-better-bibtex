@@ -17,7 +17,6 @@ class FormatterAPI {
 
   constructor(source: string) {
     this.formatter = new API(source).classes.PatternFormatter
-    console.log(Object.keys(this.formatter))
     for (const [name, method] of Object.entries(this.formatter)) {
       const kind = {$: 'function', _: 'filter'}[name[0]]
       if (!kind) continue

@@ -980,7 +980,7 @@ class PatternFormatter {
     return this.$text(date.toISOString().replace('.000Z', '').replace('T', ' '))
   }
 
-  /** extracts the family-name from Chinese names written in single-field mode */
+  /** extracts the family-name from Chinese names written in single-field mode
    * @param lang language table to take family names from
    */
   public _cjkfamilyname(lang: 'zh-hans' | 'zh-hant' = 'zh-hans') {

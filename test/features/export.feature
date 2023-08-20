@@ -13,7 +13,8 @@ Feature: Export
 
     Examples:
       | file                                                                                                                     | references |
-      | Split CJK names #2624                                                                                                    | 28         |
+      | Split CJK names HANS #2624                                                                                               | 14         |
+      | Split CJK names HANT #2624                                                                                               | 14         |
       | skipwords removes dashes #2614                                                                                           | 1          |
       | Length filter double-counting characters #2525                                                                           | 1          |
       | booksubtitle and friends should be case-converted #2507                                                                  | 1          |

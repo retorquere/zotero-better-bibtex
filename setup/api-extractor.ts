@@ -71,7 +71,6 @@ export class API {
   }
   private MethodDeclaration(className: string, method: ts.MethodDeclaration): void {
     const methodName: string = method.name.getText(this.ast)
-    console.log(methodName)
     if (!methodName) return
 
     const comment_ranges = ts.getLeadingCommentRanges(this.ast.getFullText(), method.getFullStart())

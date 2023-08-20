@@ -1,0 +1,83 @@
+@book{changsunwujiPossiblyWrongPinyin,
+  title = {(Possibly wrong pinyin) Hans Author: Zhangsun Wuji},
+  author = {{长孙无忌}},
+  langid = {chinese}
+}
+
+@book{dongfangbubaiHansAuthorDongfang,
+  title = {Hans Author: Dongfang Bubai},
+  author = {{东方不败}},
+  langid = {chinese}
+}
+
+@book{linghuchongHansAuthorLinghu,
+  title = {Hans Author: Linghu Chong},
+  author = {{令狐冲}},
+  langid = {chinese}
+}
+
+@book{murongfuHansAuthorMurong,
+  title = {Hans Author: Murong Fu},
+  author = {{慕容复}},
+  langid = {chinese}
+}
+
+@book{ouyangfengHansAuthorOuyang,
+  title = {Hans Author: Ouyang Feng},
+  author = {{欧阳锋}},
+  langid = {chinese}
+}
+
+@book{renwohangHansAuthorRen,
+  title = {Hans Author: Ren Woxing},
+  author = {{任我行}},
+  langid = {chinese}
+}
+
+@book{shangguanyunHansAuthorShangguan,
+  title = {Hans Author: Shangguan Yun},
+  author = {{上官云}},
+  langid = {chinese}
+}
+
+@book{simayiHansAuthorSima,
+  title = {Hans Author: Sima Yi},
+  author = {{司马懿}},
+  langid = {chinese}
+}
+
+@book{simazhongdaHansAuthorSima,
+  title = {Hans Author: Sima Zhongda},
+  author = {{司马仲达}},
+  langid = {chinese}
+}
+
+@book{weichirongPossiblyWrongPinyin,
+  title = {(Possibly wrong pinyin) Hans Author: Yuchi Rong},
+  author = {{尉迟融}},
+  langid = {chinese}
+}
+
+@book{xiahoudunHansAuthorXiahou,
+  title = {Hans Author: Xiahou Dun},
+  author = {{夏侯惇}},
+  langid = {chinese}
+}
+
+@book{yangliantingHansAuthorYang,
+  title = {Hans Author: Yang Lianting},
+  author = {{杨莲亭}},
+  langid = {chinese}
+}
+
+@book{zhugekongmingHansAuthorZhuge,
+  title = {Hans Author: Zhuge Kongming},
+  author = {{诸葛孔明}},
+  langid = {chinese}
+}
+
+@book{zhugeliangHansAuthorZhuge,
+  title = {Hans Author: Zhuge Liang},
+  author = {{诸葛亮}},
+  langid = {chinese}
+}
