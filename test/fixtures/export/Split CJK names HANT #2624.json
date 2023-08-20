@@ -2,28 +2,18 @@
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "options": {},
+    "options": {
+      "Normalize": false
+    },
     "preferences": {
-      "citekeyFormat": "'hant:' + auth.cjk_familyname('zh-hant') +':'",
-      "kuroshiro": true,
-      "jieba": true
+      "citekeyFormat": "'hant:' + auth.cjk_familyname('zh-hant').jieba +':'",
+      "jieba": true,
+      "kuroshiro": true
     }
   },
   "items": [
     {
-      "citationKey": "changsunwujia",
-      "creators": [
-        {
-          "creatorType": "author",
-          "name": "\u9577\u5b6b\u7121\u5fcc"
-        }
-      ],
-      "itemID": 2,
-      "itemType": "book",
-      "language": "zh-TW",
-      "title": "(Possibly wrong pinyin) Hant Author: Zhangsun Wuji"
-    },
-    {
+      "abstractNote": "DongfangBubai",
       "citationKey": "dongfangbubaia",
       "creators": [
         {
@@ -31,12 +21,13 @@
           "name": "\u6771\u65b9\u4e0d\u6557"
         }
       ],
-      "itemID": 4,
+      "itemID": 1,
       "itemType": "book",
       "language": "zh-TW",
       "title": "Hant Author: Dongfang Bubai"
     },
     {
+      "abstractNote": "LinghuChong",
       "citationKey": "linghuchonga",
       "creators": [
         {
@@ -44,12 +35,13 @@
           "name": "\u4ee4\u72d0\u6c96"
         }
       ],
-      "itemID": 6,
+      "itemID": 2,
       "itemType": "book",
       "language": "zh-TW",
       "title": "Hant Author: Linghu Chong"
     },
     {
+      "abstractNote": "MurongFu",
       "citationKey": "murongfua",
       "creators": [
         {
@@ -57,12 +49,13 @@
           "name": "\u6155\u5bb9\u5fa9"
         }
       ],
-      "itemID": 8,
+      "itemID": 3,
       "itemType": "book",
       "language": "zh-TW",
       "title": "Hant Author: Murong Fu"
     },
     {
+      "abstractNote": "OuyangFeng",
       "citationKey": "ouyangfenga",
       "creators": [
         {
@@ -70,25 +63,27 @@
           "name": "\u6b50\u967d\u92d2"
         }
       ],
-      "itemID": 10,
+      "itemID": 4,
       "itemType": "book",
       "language": "zh-TW",
       "title": "Hant Author: Ouyang Feng"
     },
     {
-      "citationKey": "renwoxinga",
+      "abstractNote": "RenWoxing",
+      "citationKey": "renwohanga",
       "creators": [
         {
           "creatorType": "author",
           "name": "\u4efb\u6211\u884c"
         }
       ],
-      "itemID": 12,
+      "itemID": 5,
       "itemType": "book",
       "language": "zh-TW",
       "title": "Hant Author: Ren Woxing"
     },
     {
+      "abstractNote": "ShangguanYun",
       "citationKey": "shangguanyuna",
       "creators": [
         {
@@ -96,12 +91,13 @@
           "name": "\u4e0a\u5b98\u96f2"
         }
       ],
-      "itemID": 14,
+      "itemID": 6,
       "itemType": "book",
       "language": "zh-TW",
       "title": "Hant Author: Shangguan Yun"
     },
     {
+      "abstractNote": "SimaYi",
       "citationKey": "simayia",
       "creators": [
         {
@@ -109,12 +105,13 @@
           "name": "\u53f8\u99ac\u61ff"
         }
       ],
-      "itemID": 16,
+      "itemID": 7,
       "itemType": "book",
       "language": "zh-TW",
       "title": "Hant Author: Sima Yi"
     },
     {
+      "abstractNote": "SimaZhongda",
       "citationKey": "simazhongdaa",
       "creators": [
         {
@@ -122,25 +119,13 @@
           "name": "\u53f8\u99ac\u4ef2\u9054"
         }
       ],
-      "itemID": 18,
+      "itemID": 8,
       "itemType": "book",
       "language": "zh-TW",
       "title": "Hant Author: Sima Zhongda"
     },
     {
-      "citationKey": "weichironga",
-      "creators": [
-        {
-          "creatorType": "author",
-          "name": "\u5c09\u9072\u878d"
-        }
-      ],
-      "itemID": 20,
-      "itemType": "book",
-      "language": "zh-TW",
-      "title": "(Possibly wrong pinyin) Hant Author: Yuchi Rong"
-    },
-    {
+      "abstractNote": "XiahouDun",
       "citationKey": "xiahouduna",
       "creators": [
         {
@@ -148,12 +133,13 @@
           "name": "\u590f\u4faf\u60c7"
         }
       ],
-      "itemID": 22,
+      "itemID": 9,
       "itemType": "book",
       "language": "zh-TW",
       "title": "Hant Author: Xiahou Dun"
     },
     {
+      "abstractNote": "YangLianting",
       "citationKey": "yangliantinga",
       "creators": [
         {
@@ -161,12 +147,41 @@
           "name": "\u694a\u84ee\u4ead"
         }
       ],
-      "itemID": 24,
+      "itemID": 10,
       "itemType": "book",
       "language": "zh-TW",
       "title": "Hant Author: Yang Lianting"
     },
     {
+      "abstractNote": "YuchiRong",
+      "citationKey": "weichironga",
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "\u5c09\u9072\u878d"
+        }
+      ],
+      "itemID": 11,
+      "itemType": "book",
+      "language": "zh-TW",
+      "title": "(Possibly wrong pinyin) Hant Author: Yuchi Rong"
+    },
+    {
+      "abstractNote": "ZhangsunWuji",
+      "citationKey": "changsunwujia",
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "\u9577\u5b6b\u7121\u5fcc"
+        }
+      ],
+      "itemID": 12,
+      "itemType": "book",
+      "language": "zh-TW",
+      "title": "(Possibly wrong pinyin) Hant Author: Zhangsun Wuji"
+    },
+    {
+      "abstractNote": "ZhugeKongming",
       "citationKey": "zhugekongminga",
       "creators": [
         {
@@ -174,20 +189,21 @@
           "name": "\u8af8\u845b\u5b54\u660e"
         }
       ],
-      "itemID": 26,
+      "itemID": 13,
       "itemType": "book",
       "language": "zh-TW",
       "title": "Hant Author: Zhuge Kongming"
     },
     {
-      "citationKey": "zhugeliang",
+      "abstractNote": "ZhugeLiang",
+      "citationKey": "zhugelianga",
       "creators": [
         {
           "creatorType": "author",
           "name": "\u8af8\u845b\u4eae"
         }
       ],
-      "itemID": 27,
+      "itemID": 14,
       "itemType": "book",
       "language": "zh-TW",
       "title": "Hant Author: Zhuge Liang"

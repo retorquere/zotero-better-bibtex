@@ -13,7 +13,7 @@ Feature: Export
 
     Examples:
       | file                                                                                                                     | references |
-      | Split CJK names HANS #2624                                                                                               | 14         |
+      | Split CJK names HANS #2624                                                                                               | 15         |
       | Split CJK names HANT #2624                                                                                               | 14         |
       | skipwords removes dashes #2614                                                                                           | 1          |
       | Length filter double-counting characters #2525                                                                           | 1          |
