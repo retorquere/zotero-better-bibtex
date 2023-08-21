@@ -6,7 +6,7 @@
       "Normalize": false
     },
     "preferences": {
-      "citekeyFormat": "'hant:' + auth.cjk_familyname('zh-hant').jieba +':'",
+      "citekeyFormat": "'hant:' + auth.cjk_familyname('zh-hant') +':'",
       "jieba": true,
       "kuroshiro": true
     }

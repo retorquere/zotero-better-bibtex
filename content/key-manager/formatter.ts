@@ -895,8 +895,8 @@ class PatternFormatter {
    * If the length of the output does not match the given number, skip to the next pattern.
    * @param relation comparison operator
    * @param length value to compare length with
-   */
-  public $len(relation: '<' | '<=' | '=' | '!=' | '>=' | '>' = '>', length=0) {
+  */
+  public $legacy_len(relation: '<' | '<=' | '=' | '!=' | '>=' | '>' = '>', length=0) {
     return this.len(this.citekey, relation, length).$text('')
   }
 
