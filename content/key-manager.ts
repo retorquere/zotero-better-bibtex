@@ -36,6 +36,8 @@ import * as l10n from './l10n'
 type CitekeySearchRecord = { itemID: number, libraryID: number, itemKey: string, citekey: string }
 
 export const KeyManager = new class _KeyManager {
+  public searchEnabled = false
+
   public keys: any
   public query: {
     field: { extra?: number, title?: number }
@@ -214,103 +216,116 @@ export const KeyManager = new class _KeyManager {
     })
   }
 
-  private async start(): Promise<void> {
-    await this.rescan()
+  private async enableSearch(): Promise<void> {
+    if (!Preference.citekeySearch || this.searchEnabled) return
+    this.searchEnabled = true
 
-    if (Preference.citekeySearch) {
-      const tables = await Zotero.DB.columnQueryAsync("SELECT name FROM betterbibtexsearch.sqlite_master where type='table'")
-      if (tables.includes('citekeys')) {
-        const columns = await Zotero.DB.columnQueryAsync("SELECT name FROM PRAGMA_TABLE_INFO('citekeys', 'betterbibtexsearch')")
-        // 1829
-        if (!columns.includes('libraryID')) {
-          log.error('dropping betterbibtexsearch.citekeys, libraryID does not exist')
-          await Zotero.DB.queryAsync('DROP TABLE IF EXISTS betterbibtexsearch.citekeys')
-        }
+    const tables = await Zotero.DB.columnQueryAsync("SELECT name FROM betterbibtexsearch.sqlite_master where type='table'")
+    if (tables.includes('citekeys')) {
+      const columns = await Zotero.DB.columnQueryAsync("SELECT name FROM PRAGMA_TABLE_INFO('citekeys', 'betterbibtexsearch')")
+      // 1829
+      if (!columns.includes('libraryID')) {
+        log.error('dropping betterbibtexsearch.citekeys, libraryID does not exist')
+        await Zotero.DB.queryAsync('DROP TABLE IF EXISTS betterbibtexsearch.citekeys')
       }
-      await Zotero.DB.queryAsync('CREATE TABLE IF NOT EXISTS betterbibtexsearch.citekeys (itemID PRIMARY KEY, libraryID, itemKey, citekey)')
+    }
+    await Zotero.DB.queryAsync('CREATE TABLE IF NOT EXISTS betterbibtexsearch.citekeys (itemID PRIMARY KEY, libraryID, itemKey, citekey)')
 
-      const match: Record<string, CitekeySearchRecord> = this.keys.data
-        .reduce((acc: Record<string, CitekeySearchRecord>, k: CitekeySearchRecord) => {
-          acc[`${k.itemID}\t${k.libraryID}\t${k.itemKey}\t${k.citekey}`] = k
-          return acc
-        }, {})
+    const match: Record<string, CitekeySearchRecord> = this.keys.data
+      .reduce((acc: Record<string, CitekeySearchRecord>, k: CitekeySearchRecord) => {
+        acc[`${k.itemID}\t${k.libraryID}\t${k.itemKey}\t${k.citekey}`] = k
+        return acc
+      }, {})
 
-      const remove: string[] = []
-      for (const row of await Zotero.DB.queryAsync('SELECT itemID, libraryID, itemKey, citekey FROM betterbibtexsearch.citekeys')) {
-        const key = `${row.itemID}\t${row.libraryID}\t${row.itemKey}\t${row.citekey}`
-        if (match[key]) {
-          delete match[key]
-        }
-        else {
-          remove.push(`${row.itemID}`)
-        }
+    const remove: string[] = []
+    for (const row of await Zotero.DB.queryAsync('SELECT itemID, libraryID, itemKey, citekey FROM betterbibtexsearch.citekeys')) {
+      const key = `${row.itemID}\t${row.libraryID}\t${row.itemKey}\t${row.citekey}`
+      if (match[key]) {
+        delete match[key]
       }
-      const insert = Object.values(match)
+      else {
+        remove.push(`${row.itemID}`)
+      }
+    }
+    const insert = Object.values(match)
 
-      if (remove.length + insert.length) {
-        await Zotero.DB.executeTransaction(async () => {
-          if (remove.length) await Zotero.DB.queryAsync(`DELETE FROM betterbibtexsearch.citekeys WHERE itemID in (${remove.join(',')})`)
+    if (remove.length + insert.length) {
+      await Zotero.DB.executeTransaction(async () => {
+        if (remove.length) await Zotero.DB.queryAsync(`DELETE FROM betterbibtexsearch.citekeys WHERE itemID in (${remove.join(',')})`)
 
-          if (insert.length) {
-            for (const row of insert) {
-              await ZoteroDB.queryAsync('INSERT INTO betterbibtexsearch.citekeys (itemID, libraryID, itemKey, citekey) VALUES (?, ?, ?, ?)', [ row.itemID, row.libraryID, row.itemKey, row.citekey ])
-            }
+        if (insert.length) {
+          for (const row of insert) {
+            await ZoteroDB.queryAsync('INSERT INTO betterbibtexsearch.citekeys (itemID, libraryID, itemKey, citekey) VALUES (?, ?, ?, ?)', [ row.itemID, row.libraryID, row.itemKey, row.citekey ])
           }
-        })
-      }
-
-      const citekeySearchCondition = {
-        name: 'citationKey',
-        operators: {
-          is: true,
-          isNot: true,
-          contains: true,
-          doesNotContain: true,
-        },
-        table: 'betterbibtexsearch.citekeys',
-        field: 'citekey',
-        localized: 'Citation Key',
-      }
-      $patch$(Zotero.Search.prototype, 'addCondition', original => function addCondition(condition: string, operator: any, value: any, _required: any) {
-        // detect a quick search being set up
-        if (condition.match(/^quicksearch/)) this.__add_bbt_citekey = true
-        // creator is always added in a quick search so use it as a trigger
-        if (condition === 'creator' && this.__add_bbt_citekey) {
-          original.call(this, citekeySearchCondition.name, operator, value, false)
-          delete this.__add_bbt_citekey
         }
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-return, prefer-rest-params
-        return original.apply(this, arguments)
-      })
-      $patch$(Zotero.SearchConditions, 'hasOperator', original => function hasOperator(condition: string, operator: string | number) {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-        if (condition === citekeySearchCondition.name) return citekeySearchCondition.operators[operator]
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-return, prefer-rest-params
-        return original.apply(this, arguments)
-      })
-      $patch$(Zotero.SearchConditions, 'get', original => function get(condition: string) {
-        if (condition === citekeySearchCondition.name) return citekeySearchCondition
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-return, prefer-rest-params
-        return original.apply(this, arguments)
-      })
-      $patch$(Zotero.SearchConditions, 'getStandardConditions', original => function getStandardConditions() {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-return, prefer-rest-params
-        return original.apply(this, arguments).concat({
-          name: citekeySearchCondition.name,
-          localized: citekeySearchCondition.localized,
-          operators: citekeySearchCondition.operators,
-        }).sort((a: { localized: string }, b: { localized: any }) => a.localized.localeCompare(b.localized))
-      })
-      $patch$(Zotero.SearchConditions, 'getLocalizedName', original => function getLocalizedName(str: string) {
-        if (str === citekeySearchCondition.name) return citekeySearchCondition.localized
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-return, prefer-rest-params
-        return original.apply(this, arguments)
       })
     }
 
+    const citekeySearchCondition = {
+      name: 'citationKey',
+      operators: {
+        is: true,
+        isNot: true,
+        contains: true,
+        doesNotContain: true,
+      },
+      table: 'betterbibtexsearch.citekeys',
+      field: 'citekey',
+      localized: 'Citation Key',
+    }
+    $patch$(Zotero.Search.prototype, 'addCondition', original => function addCondition(condition: string, operator: any, value: any, _required: any) {
+      // detect a quick search being set up
+      if (condition.match(/^quicksearch/)) this.__add_bbt_citekey = true
+      // creator is always added in a quick search so use it as a trigger
+      if (condition === 'creator' && this.__add_bbt_citekey) {
+        original.call(this, citekeySearchCondition.name, operator, value, false)
+        delete this.__add_bbt_citekey
+      }
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return, prefer-rest-params
+      return original.apply(this, arguments)
+    })
+    $patch$(Zotero.SearchConditions, 'hasOperator', original => function hasOperator(condition: string, operator: string | number) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+      if (condition === citekeySearchCondition.name) return citekeySearchCondition.operators[operator]
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return, prefer-rest-params
+      return original.apply(this, arguments)
+    })
+    $patch$(Zotero.SearchConditions, 'get', original => function get(condition: string) {
+      if (condition === citekeySearchCondition.name) return citekeySearchCondition
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return, prefer-rest-params
+      return original.apply(this, arguments)
+    })
+    $patch$(Zotero.SearchConditions, 'getStandardConditions', original => function getStandardConditions() {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return, prefer-rest-params
+      return original.apply(this, arguments).concat({
+        name: citekeySearchCondition.name,
+        localized: citekeySearchCondition.localized,
+        operators: citekeySearchCondition.operators,
+      }).sort((a: { localized: string }, b: { localized: any }) => a.localized.localeCompare(b.localized))
+    })
+    $patch$(Zotero.SearchConditions, 'getLocalizedName', original => function getLocalizedName(str: string) {
+      if (str === citekeySearchCondition.name) return citekeySearchCondition.localized
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return, prefer-rest-params
+      return original.apply(this, arguments)
+    })
+  }
+
+  private async start(): Promise<void> {
+    await this.rescan()
+
+    void this.enableSearch()
+
     Events.on('preference-changed', pref => {
-      if (['autoAbbrevStyle', 'citekeyFormat', 'citekeyFold', 'citekeyUnsafeChars', 'skipWords'].includes(pref)) {
-        Formatter.update([Preference.citekeyFormat])
+      switch (pref) {
+        case 'autoAbbrevStyle':
+        case 'citekeyFormat':
+        case 'citekeyFold':
+        case 'citekeyUnsafeChars':
+        case 'skipWords':
+          Formatter.update([Preference.citekeyFormat])
+          break
+        case 'citekeySearch':
+          void this.enableSearch()
       }
     })
     Events.on('items-changed-prep', ({ ids, action }) => {
