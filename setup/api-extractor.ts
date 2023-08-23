@@ -225,48 +225,115 @@ export class API {
 
   private TypeReference(typeref: ts.TypeReferenceNode) {
     const typeName = typeref.typeName.getText(this.ast)
-    if (typeName === 'BabelLanguage') {
-      return {
-        type: 'string',
-        enum: Object.keys(BabelTag).sort(),
-      }
-    }
-    else if (typeName === 'BabelLanguageTag') {
-      return {
-        type: 'string',
-        enum: Object.values(BabelTag).sort(),
-      }
-    }
-    else if (typeName === 'ZoteroItemType') {
-      const itemTypes: Set<string> = new Set
-      for (const schema of [zoteroSchema, jurismSchema]) {
-        for (const itemType of schema.itemTypes) {
-          if (itemType.creatorTypes?.length) itemTypes.add(itemType.itemType)
+    let key: any
+    let kind: string
+    let variables: Record<string, string>
+
+    switch (typeName) {
+      case 'BabelLanguage':
+        return {
+          type: 'string',
+          enum: Object.keys(BabelTag).sort(),
         }
-      }
-      return {
-        type: 'string',
-        enum: Array.from(itemTypes).sort(),
-      }
-    }
-    else if (typeName === 'RegExp') {
-      return { instanceof: typeName }
-    }
-    else if (typeName === 'Creator') {
-      return {
-        type: 'string',
-        enum: [ 'author', 'editor', 'translator', 'collaborator', '*' ],
-      }
-    }
-    assert(typeName === 'Record', `unexpected TypeReference ${typeName}`)
-    assert(typeref.typeArguments.length === 2, `expected 2 types, found ${typeref.typeArguments.length}`)
 
-    const key = this.schema(typeref.typeArguments[0])
-    assert(key.type === 'string', key)
+      case 'BabelLanguageTag':
+        return {
+          type: 'string',
+          enum: Object.values(BabelTag).sort(),
+        }
 
-    return {
-      type: 'object',
-      additionalProperties: this.schema(typeref.typeArguments[1]),
+      case 'ZoteroItemType':
+        return {
+          type: 'string',
+          enum: Array.from([zoteroSchema, jurismSchema].reduce((itemTypes, schema) => {
+            for (const itemType of schema.itemTypes) {
+              if (itemType.creatorTypes?.length) itemTypes.add(itemType.itemType)
+            }
+            return itemTypes
+          }, new Set)),
+        }
+
+      case 'RegExp':
+        return { instanceof: typeName }
+
+      case 'Creator':
+        return {
+          type: 'string',
+          enum: [ 'author', 'editor', 'translator', 'collaborator', '*' ],
+        }
+
+      case 'Record':
+        assert(typeref.typeArguments.length === 2, `expected 2 types, found ${typeref.typeArguments.length}`)
+
+        key = this.schema(typeref.typeArguments[0])
+        assert(key.type === 'string', key)
+
+        return {
+          type: 'object',
+          additionalProperties: this.schema(typeref.typeArguments[1]),
+        }
+
+      case 'DateTemplate':
+        return {
+          type: 'template',
+          kind: 'date',
+          variables: {
+            Y: 'year',
+            y: 'short year',
+            m: 'month',
+            d: 'day',
+            oY: 'original year if present, year otherwise',
+            oy: 'original short year if present, short year otherwise',
+            om: 'original month if present, month otherwise',
+            od: 'original day if present, day otherwise',
+            H: 'hour',
+            M: 'minutes',
+            S: 'seconds',
+          },
+        }
+
+      case 'Template':
+        assert(typeref.typeArguments.length === 1, `expected 1 type argument, got ${typeref.typeArguments.length}`)
+        kind = (typeref.typeArguments[0] as any).literal.text
+        switch (kind) {
+          case 'datetime':
+            variables = {
+              Y: 'year',
+              y: 'short year',
+              m: 'month',
+              d: 'day',
+              oY: 'original year if present, year otherwise',
+              oy: 'original short year if present, short year otherwise',
+              om: 'original month if present, month otherwise',
+              od: 'original day if present, day otherwise',
+              H: 'hour',
+              M: 'minutes',
+              S: 'seconds',
+            }
+            break
+          case 'postfix':
+            variables = {
+              a: 'alpha postfix',
+              A: 'alpha postfix uppercase',
+              n: 'numeric postfix',
+            }
+            break
+          case 'creator':
+            variables = {
+              f: 'family name',
+              g: 'given name',
+              i: 'first initial',
+              I: 'all initials',
+            }
+            break
+          default:
+            assert(false, `expected template kind "datetime", "postfix" or "creator", got ${kind}`)
+        }
+
+        return { type: 'template', kind, variables }
+
+      default:
+        assert(false, `unexpected TypeReference ${typeName}`)
     }
   }
 

@@ -357,18 +357,20 @@ export const KeyManager = new class _KeyManager {
         item = await Zotero.Items.getAsync(citekey.itemID)
       }
       catch (err) {
+        item = undefined
+      }
+      if (!item) {
         // assume item has been deleted before we could get to it -- did I mention I hate async? I hate async
-        log.error('could not load', citekey.itemID, err)
+        log.error('could not load', citekey.itemID)
+        return
+      }
+      if (item.isFeedItem || !item.isRegularItem()) {
+        log.error('citekey registered for item of type', item.isFeedItem ? 'feedItem' : Zotero.ItemTypes.getName(item.itemTypeID))
         return
       }
 
-      if (item.isFeedItem || !item.isRegularItem()) {
-        log.error('citekey registered for item of type', item.isFeedItem ? 'feedItem' : Zotero.ItemTypes.getName(item.itemTypeID))
-      }
-      else {
-        // update display panes by issuing a fake item-update notification
-        Zotero.Notifier.trigger('modify', 'item', [citekey.itemID], { [citekey.itemID]: { bbtCitekeyUpdate: true } })
-      }
+      // update display panes by issuing a fake item-update notification
+      Zotero.Notifier.trigger('modify', 'item', [citekey.itemID], { [citekey.itemID]: { bbtCitekeyUpdate: true } })
 
       if (!citekey.pinned && this.autopin.enabled) {
         this.autopin.schedule(citekey.itemID, () => {
@@ -564,6 +566,7 @@ export const KeyManager = new class _KeyManager {
     if (citekey) return { citekey, pinned: true }
 
     citekey = Formatter.format(item)
+    log.debug('formatter.propose:', Preference.citekeyFormat, Preference.citekeyFormatEditing, citekey)
 
     const conflictQuery: Query = { $and: [ { citekey: { $eq: '' } }, { itemID: { $ne: item.id } } ] }
     if (Preference.keyScope !== 'global') conflictQuery.$and.push({ libraryID: { $eq: item.libraryID } })

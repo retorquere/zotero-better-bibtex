@@ -33,7 +33,6 @@ import { transliterate as arabic } from './arabic'
 import { transliterate } from 'transliteration/dist/node/src/node/index'
 import { ukranian, mongolian, russian } from './cyrillic'
 
-import { validator, coercing } from '../ajv'
 import { dictsync as csv2dict } from '../load-csv'
 
 import BabelTag from '../../gen/babel/tag.json'
@@ -42,9 +41,7 @@ type BabelLanguageTag = ValueOf<typeof BabelTag>
 type BabelLanguage = keyof typeof BabelTag
 type ZoteroItemType = keyof typeof items.valid.type
 
-for (const meta of Object.values(methods)) {
-  (meta as unknown as any).validate = validator((meta as any).schema, coercing)
-}
+class Template<K> extends String {} // eslint-disable-line @typescript-eslint/no-unused-vars
 
 function innerText(node): string {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
@@ -370,7 +367,7 @@ class PatternFormatter {
 
     // we should never get here
     log.error('CitekeyFormatter.update: no formula?!')
-    return 'failed to install citekey formula'
+    return `failed to install citekey formula: ${error}`.trim()
   }
 
   public parseFormula(formula): string {
@@ -515,13 +512,13 @@ class PatternFormatter {
   public $authors(
     n: number | [number, number] = 0,
     creator: Creator = '*',
-    name='%(f)s',
+    name: Template<'creator'> = '%(f)s',
     etal='',
     sep=' ',
     min=0,
     max=0
   ) {
-    let authors = this.creators(creator, name)
+    let authors = this.creators(creator, name as string)
     if ((min && authors.length < min) || (max && authors.length > max)) {
       this.next = true
       return this.$text('')
@@ -878,8 +875,8 @@ class PatternFormatter {
    * @param format sprintf-style format template
    * @param start start value for postfix
    */
-  public $postfix(format='%(a)s', start=0) {
-    this.postfix.template = format
+  public $postfix(format: Template<'postfix'> = '%(a)s', start=0) {
+    this.postfix.template = format as string
     this.postfix.offset = start
     return this.$text('')
   }

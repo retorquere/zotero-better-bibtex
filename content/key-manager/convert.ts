@@ -1,7 +1,10 @@
+/* eslint-disable no-case-declarations */
+
 import { parse } from 'acorn'
 import { methods } from '../../gen/api/key-formatter'
 const alias = require('./alias.json')
 import * as items from '../../gen/items/items'
+import * as sprintf from 'sprintf-js'
 
 type Node = {
   type: string
@@ -287,6 +290,26 @@ ${compiled}
 
       case 'array':
         return fail(`array expected, got ${this.$typeof(value)} ${context}`)
+
+      case 'template':
+        if (typeof value.value !== 'string') return fail(`string expected, got ${this.$typeof(value)} ${context}`)
+
+        let template = value.value
+        if (rule.kind === 'datetime') {
+          // old-style date templates
+          template = template.replace(/%(-?)(o?[a-z])|%%/ig, (match, pad, par) => rule.variables[par] ? `%(${par})0${par.endsWith('Y') ? 4 : 2}s` : match)
+        }
+
+        let used: string[]
+        try {
+          used = sprintf.parse(template).filter(v => typeof v !== 'string').map((v: { keys: string[] }) => v.keys[0])
+        }
+        catch (err) {
+          return fail(`could not parse template ${JSON.stringify(value.value)}${template !== value.value ? `/${JSON.stringify(template)}` : ''} ${context}: ${err}`)
+        }
+        const unknown: string = used.length === 0 ? 'none' : used.find(v => !rule.variables[v])
+        if (unknown) return fail(`${Object.keys(rule.variables).join('/')} expected, got ${unknown} ${context}`)
+        return JSON.stringify(template)
 
       default:
         throw new Error(`cannot validate ${rule.type}`)

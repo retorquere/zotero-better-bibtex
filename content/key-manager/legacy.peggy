@@ -22,7 +22,7 @@
       case 'string':
         return !noident && identifier.test(v) ? v : JSON.stringify(v)
     }
-    throw new Error(`unexpected argument value ${v}`)
+    throw new Error(`unexpected argument value ${typeof v} ${JSON.stringify(v)}`)
   }
 
   function match(fn, args, text, error) {
@@ -45,32 +45,66 @@
 
     if (args.length > method.parameters.length) error(`too many arguments for ${text}`)
 
-    const params = args.reduce((acc, v, i) => {
-      if (typeof v !== 'undefined' && v !== method.defaults[i]) acc[method.parameters[i]] = v
-      return acc
+    function validate(rule, value, indent='') {
+      if (typeof value !== 'string') return value
+
+      if (rule.anyOf) {
+        for (const r of rule.anyOf) {
+          try {
+            return validate(r, value, indent + '  ')
+          }
+          catch (err) {
+          }
+        }
+        error(`could not validate ${typeof value} ${value} against ${JSON.stringify(rule)}`)
+      }
+
+      switch (rule.type) {
+        case 'string':
+        case 'template':
+          return value
+        case 'boolean':
+          return value.toLowerCase() === 'true'
+        case 'number':
+          if (!value.trim().match(/^-?[0-9]+$/)) error(`${value} is not a number`)
+          return parseInt(value)
+        default:
+          error(`unexpected argument ${JSON.stringify(rule)} ${typeof value} ${value}`)
+      }
+    }
+
+    const params = {}
+    args.forEach((arg, i) => {
+      if (typeof arg === 'undefined') return
+
+      const name = method.parameters[i]
+      if (typeof arg === 'string') arg = validate(method.schema.properties[name], arg)
+      params[name] = arg
     }, {})
 
+    /*
     const argerror = method.validate(params) // validates and coerces
     if (argerror) {
       error(`${text}: ${argerror}`)
     }
     else {
-      const passed = method.parameters.filter(p => p in params)
-      const passed_j = ',' + passed.join(',') + ','
-      const all_j = ',' + method.parameters.join(',') + ','
+    */
+    const passed = method.parameters.filter(p => p in params)
+    const passed_j = ',' + passed.join(',') + ','
+    const all_j = ',' + method.parameters.join(',') + ','
 
-      if (!passed.length) {
-        args = ''
-      }
-      else if (method.parameters.length === 1 || (method.parameters.length === 2 && all_j.startsWith(passed_j) && passed_j.match(/,(start|n),/))) {
-        args = passed.map(p => literal(params[p]))
-      }
-      else {
-        args = passed.map(p => `${p}=${literal(params[p])}`).join(',')
-      }
-      if (args) args = `(${args})`
-      return `${method.name.substr(1)}${args}`
+    if (!passed.length) {
+      args = ''
     }
+    else if (method.parameters.length === 1 || (method.parameters.length === 2 && all_j.startsWith(passed_j) && passed_j.match(/,(start|n),/))) {
+      args = passed.map(p => literal(params[p]))
+    }
+    else {
+      args = passed.map(p => `${p}=${literal(params[p])}`).join(',')
+    }
+    if (args) args = `(${args})`
+    return `${method.name.substr(1)}${args}`
+    // }
   }
 }
 
