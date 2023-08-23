@@ -103,12 +103,14 @@ class Compiler {
   wrap(formula: string): string {
     return `sub(function() { return ${formula} })`
   }
-
+  finalize(formula: string): string {
+    return `this.finalize(this.reset() + ${formula})`
+  }
   $formula(ast: Node, wrap=false): string {
     let formula = ''
     for (const term of this.split(ast, '+').map((t: Node) => this.$term(t))) {
       if (term.startsWith('this._len')) { // convert function len to filter
-        formula = `this.$text(${this.wrap(formula)}).${term.replace(/^this[.]/, '')}`
+        formula = `this.$text(${this.wrap(this.finalize(formula))}).${term.replace(/^this[.]/, '')}
       }
       else if (formula) {
         formula += ` + ${term}`
@@ -117,7 +119,7 @@ class Compiler {
         formula = term
       }
     }
-    formula = `this.finalize(this.reset() + ${formula})`
+    formula = this.finalize(formula)
     // let formula = `this.finalize(this.reset() + ${this.split(ast, '+').map((term: Node) => this.$term(term)).join(' + ')})`
     if (wrap) formula = this.wrap(formula)
     return formula
