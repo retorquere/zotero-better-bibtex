@@ -110,7 +110,7 @@ class Compiler {
     let formula = ''
     for (const term of this.split(ast, '+').map((t: Node) => this.$term(t))) {
       if (term.startsWith('this._len')) { // convert function len to filter
-        formula = `this.$text(${this.wrap(this.finalize(formula))}).${term.replace(/^this[.]/, '')}
+        formula = `this.$text(${this.wrap(this.finalize(formula))}).${term.replace(/^this[.]/, '')}`
       }
       else if (formula) {
         formula += ` + ${term}`
