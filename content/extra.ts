@@ -22,7 +22,7 @@ type ZoteroCreator = { name?: string, lastName?: string, firstName?: string, cre
 
 export function cslCreator(value: string): CSLCreator {
   const creator = value.split(/\s*\|\|\s*/)
-  if (creator.length === 2) { // eslint-disable-line no-magic-numbers
+  if (creator.length === 2) {
     const csl_creator = { family: creator[0] || '', given: creator[1] || ''}
     CSL.parseParticles(csl_creator)
     return csl_creator
@@ -35,7 +35,7 @@ export function cslCreator(value: string): CSLCreator {
 
 export function zoteroCreator(value: string, creatorType: string): ZoteroCreator {
   const creator = value.split(/\s*\|\|\s*/)
-  if (creator.length === 2) { // eslint-disable-line no-magic-numbers
+  if (creator.length === 2) {
     return { lastName: creator[0] || '', firstName: creator[1] || '', creatorType }
   }
   else {

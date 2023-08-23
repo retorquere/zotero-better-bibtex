@@ -7,7 +7,7 @@ import { parseFragment } from 'parse5'
 
 import Language from '../gen/babel/langmap.json'
 // import Tag from '../gen/babel/tag.json'
-const LanguagePrefixes = Object.keys(Language).sort().reverse().filter(prefix => prefix.length > 3) // eslint-disable-line no-magic-numbers
+const LanguagePrefixes = Object.keys(Language).sort().reverse().filter(prefix => prefix.length > 3)
 
 import charCategories = require('xregexp/tools/output/categories')
 
@@ -464,22 +464,22 @@ export function excelColumn(n: number): string {
 
   // Step 1: Converting to number assuming 0 in number system
   while (n) {
-    arr[i] = n % 26 // eslint-disable-line no-magic-numbers
-    n = Math.floor(n / 26) // eslint-disable-line no-magic-numbers
+    arr[i] = n % 26
+    n = Math.floor(n / 26)
     i++
   }
 
   // Step 2: Getting rid of 0, as 0 is not part of number system
   for (let j = 0; j < i - 1; j++) {
     if (arr[j] <= 0) {
-      arr[j] += 26 // eslint-disable-line no-magic-numbers
+      arr[j] += 26
       arr[j + 1] = arr[j + 1] - 1
     }
   }
 
   let col = ''
   for (let j = i; j >= 0; j--) {
-    if (arr[j] > 0) col += String.fromCharCode(65 + arr[j] - 1) // eslint-disable-line no-magic-numbers
+    if (arr[j] > 0) col += String.fromCharCode(65 + arr[j] - 1)
   }
   excelColumnCache.set(n, col)
 

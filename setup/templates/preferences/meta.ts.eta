@@ -1,4 +1,4 @@
-/* eslint-disable no-magic-numbers, @typescript-eslint/quotes, max-len, quote-props, comma-dangle, eol-last */
+/* eslint-disable @typescript-eslint/quotes, max-len, quote-props, comma-dangle, eol-last */
 <%
 function stringify(o, indent=true) {
   return JSON.stringify(o, null, indent ? 2 : undefined)

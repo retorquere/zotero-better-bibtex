@@ -1,6 +1,5 @@
 const seconds = 1000
 
-// eslint-disable-next-line no-magic-numbers
 export function flash(title: string, body?: string, timeout = 8): void {
   try {
     Zotero.debug(`{better-bibtex} flash: ${JSON.stringify({title, body})}`)

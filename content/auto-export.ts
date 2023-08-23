@@ -105,7 +105,7 @@ class Git {
       await this.exec(this.git, ['-C', this.path, 'checkout', this.bib])
       await this.exec(this.git, ['-C', this.path, 'pull'])
       // fixes #2356
-      await Zotero.Promise.delay(2000) // eslint-disable-line no-magic-numbers
+      await Zotero.Promise.delay(2000)
       await this.exec(this.git, ['-C', this.path, 'pull'])
     }
     catch (err) {
@@ -431,7 +431,7 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
     const translator = Translators.byId[ae.translatorID]
     const itemIDset: Set<number> = new Set
     await this.itemIDs(ae, ae.id, itemTypeIDs, itemIDset)
-    if (itemIDset.size === 0) return 100 // eslint-disable-line no-magic-numbers
+    if (itemIDset.size === 0) return 100
 
     const options = {
       exportNotes: !!ae.exportNotes,
@@ -451,7 +451,7 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
       export: Cache.getCollection(label).find(query).length,
     }
 
-    return Math.min(Math.round((100 * (cached.serialized + cached.export)) / (itemIDs.length * 2)), 100) // eslint-disable-line no-magic-numbers
+    return Math.min(Math.round((100 * (cached.serialized + cached.export)) / (itemIDs.length * 2)), 100)
   }
 
   private async itemIDs(ae, id: number, itemTypeIDs: number[], itemIDs: Set<number>) {

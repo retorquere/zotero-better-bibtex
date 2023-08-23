@@ -513,7 +513,7 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
     if (this.skipFields.length) {
       this.skipField = new RegExp('^(' + this.skipFields.map(field => {
         if (m = field.match(/^(csl|tex|bibtex|biblatex)[.]([-a-z]+)[.]([-a-z]+)$/)) {
-          return `(${ m[1] === 'tex' ? 'bib(la)?' : '' }[.]${ m[2] }[.]${ m[3] })` // eslint-disable-line no-magic-numbers
+          return `(${ m[1] === 'tex' ? 'bib(la)?' : '' }[.]${ m[2] }[.]${ m[3] })`
         }
         if (m = field.match(/^(tex|bibtex|biblatex)[.]([-a-z]+)$/)) {
           return `(${ m[1] === 'tex' ? 'bib(la)?' : '' }[.][-a-z]+[.]${ m[2] })`

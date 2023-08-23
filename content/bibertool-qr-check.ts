@@ -16,12 +16,11 @@ export function qualityReport(value: string, test: string, params = null): strin
     case 'ismn':
       value = value.replace(/[ -]/g, '')
 
-      if (value.length === 10) { // eslint-disable-line no-magic-numbers
+      if (value.length === 10) {
         if (value[0] !== 'M') return 'not a valid ISMN'
         value = ismn_prefix + value.substring(1)
       }
 
-      // eslint-disable-next-line no-magic-numbers
       if (value.length !== 13 || !value.startsWith(ismn_prefix)) return 'not a valid ISMN'
 
       return EAN.validate(value) ? '' : 'not a valid ISMN'

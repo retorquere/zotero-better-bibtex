@@ -1,4 +1,3 @@
-/* eslint-disable no-magic-numbers */
 import { is7 } from './client'
 
 declare const ChromeUtils: any
@@ -151,7 +150,7 @@ class Document {
       automaticJournalAbbreviations: true,
     }
     data.style = {styleID: options.style, locale: 'en-US', hasBibliography: true, bibliographyStyleHasBeenSet: true}
-    data.sessionID = Zotero.Utilities.randomString(10) // eslint-disable-line no-magic-numbers
+    data.sessionID = Zotero.Utilities.randomString(10)
     this.data = (data.serialize() as DocumentData)
   }
 

@@ -38,7 +38,7 @@ class Emitter extends Emittery<{
 
   public startup(): void {
     log.debug('events.startup:', typeof this.idleService, typeof this.idleService.addIdleObserver)
-    this.listeners.push(new IdleListener('idle-savedb', 5)) // eslint-disable-line no-magic-numbers
+    this.listeners.push(new IdleListener('idle-savedb', 5))
     this.listeners.push(new IdleListener('idle-autoexport', (Preference.autoExportIdleWait = Math.max(1, Preference.autoExportIdleWait))))
     this.listeners.push(new WindowListener)
     this.listeners.push(new ItemListener)

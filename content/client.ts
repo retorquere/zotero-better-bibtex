@@ -1,7 +1,6 @@
 declare const Zotero: any
 declare const location: any
 
-// eslint-disable-next-line no-magic-numbers
 export const is7 = (typeof location !== 'undefined' && location.search) ? ((new URLSearchParams(location.search)).get('is7') === 'true') : Zotero.platformMajorVersion >= 102
 
 function clientname(): string {

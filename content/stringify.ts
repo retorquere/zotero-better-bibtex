@@ -1,7 +1,7 @@
 import fast_safe_stringify from 'fast-safe-stringify'
 
 export function asciify(str: string): string {
-  return str.replace(/[\u007F-\uFFFF]/g, chr => `\\u${(`0000${chr.charCodeAt(0).toString(16)}`).substr(-4)}`) // eslint-disable-line no-magic-numbers
+  return str.replace(/[\u007F-\uFFFF]/g, chr => `\\u${(`0000${chr.charCodeAt(0).toString(16)}`).substr(-4)}`)
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types

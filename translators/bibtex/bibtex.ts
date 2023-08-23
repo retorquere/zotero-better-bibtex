@@ -789,7 +789,7 @@ export class ZoteroItem {
 
     let month = (this.bibtex.fields.month && this.bibtex.fields.month[0]) || ''
     const monthno: number = months.indexOf(month.toLowerCase())
-    if (monthno >= 0) month = `0${monthno + 1}`.slice(-2) // eslint-disable-line no-magic-numbers
+    if (monthno >= 0) month = `0${monthno + 1}`.slice(-2)
 
     const day = (this.bibtex.fields.day && this.bibtex.fields.day[0]) || ''
 
@@ -863,10 +863,10 @@ export class ZoteroItem {
           att.path = parts[0]
           break
 
-        case 3: // eslint-disable-line no-magic-numbers
+        case 3:
           att.title = parts[0]
           att.path = parts[1]
-          att.mimeType = parts[2] // eslint-disable-line no-magic-numbers
+          att.mimeType = parts[2]
           break
 
         default:

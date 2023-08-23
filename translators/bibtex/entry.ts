@@ -629,7 +629,7 @@ export class Entry {
   }
 
   public complete(): void {
-    if (this.translation.preferences.jabrefFormat >= 4 && this.item.collections?.length) { // eslint-disable-line no-magic-numbers
+    if (this.translation.preferences.jabrefFormat >= 4 && this.item.collections?.length) {
       const groups = Array.from(new Set(this.item.collections.map(key => this.translation.collections[key]?.name).filter(name => name))).sort()
       this.add({ name: 'groups', value: groups.join(',') })
     }
@@ -1131,7 +1131,7 @@ export class Entry {
 
       if (!att.title) att.title = att.path.replace(/.*[\\/]/, '') || 'attachment'
 
-      if (!att.mimetype && (att.path.slice(-4).toLowerCase() === '.pdf')) att.mimetype = 'application/pdf' // eslint-disable-line no-magic-numbers
+      if (!att.mimetype && (att.path.slice(-4).toLowerCase() === '.pdf')) att.mimetype = 'application/pdf'
 
       if (this.translation.preferences.relativeFilePaths && this.translation.export.dir) {
         const relative = this.relPath(att.path)
@@ -1206,7 +1206,7 @@ export class Entry {
       if (m[1] !== 'I' || m[2] !== 'J') m[2] = m[2].toLowerCase()
 
       initials += `${m[1]}${m[2]}. `
-      given += `${m[1]}${m[2]}${m[3]} ` // eslint-disable-line no-magic-numbers
+      given += `${m[1]}${m[2]}${m[3]} `
     }
     if (multiChar) {
       name.initials = initials.trim()

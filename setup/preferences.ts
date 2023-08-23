@@ -1,6 +1,6 @@
 #!/usr/bin/env -S npx ts-node
 
-/* eslint-disable @typescript-eslint/no-unsafe-return, no-magic-numbers, no-console, @typescript-eslint/no-shadow, no-eval, @typescript-eslint/no-empty-function, id-blacklist */
+/* eslint-disable @typescript-eslint/no-unsafe-return, no-console, @typescript-eslint/no-shadow, no-eval, @typescript-eslint/no-empty-function, id-blacklist */
 
 import * as pug from 'pug'
 import * as fs from 'fs'

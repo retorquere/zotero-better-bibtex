@@ -223,7 +223,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       flash(
         'Failed to start background export',
         `Could not start background export (${err.message}). Background exports have been disabled until restart -- report this as a bug at the Better BibTeX github project`,
-        15 // eslint-disable-line no-magic-numbers
+        15
       )
       this.worker = null
     }
@@ -256,7 +256,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       displayOptions.exportFileData
 
       // jabref 4 stores collection info inside the entry, and collection info depends on which part of your library you're exporting
-      || (translator.label.includes('TeX') && preferences.jabrefFormat >= 4) // eslint-disable-line no-magic-numbers
+      || (translator.label.includes('TeX') && preferences.jabrefFormat >= 4)
 
       // relative file paths are going to be different based on the file being exported to
       || preferences.relativeFilePaths
@@ -370,8 +370,8 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       config.data.items.push(Serializer.fast(item))
 
       // sleep occasionally so the UI gets a breather
-      if ((Date.now() - worked) > 100) { // eslint-disable-line no-magic-numbers
-        await Zotero.Promise.delay(0) // eslint-disable-line no-magic-numbers
+      if ((Date.now() - worked) > 100) {
+        await Zotero.Promise.delay(0)
         worked = Date.now()
       }
 
@@ -544,7 +544,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       flash(
         'Failed to schedule auto-export',
         `Failed to schedule auto-exports after ${installed ? 'upgrade' : 'installation'} of ${header.label}, please report this on the Better BibTeX github project`,
-        15 // eslint-disable-line no-magic-numbers
+        15
       )
     }
 

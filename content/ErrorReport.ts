@@ -40,7 +40,7 @@ type Wizard = HTMLElement & {
 }
 
 export class ErrorReport {
-  private previewSize = 3 * kB // eslint-disable-line no-magic-numbers, yoda
+  private previewSize = 3 * kB // eslint-disable-line yoda
 
   private key: string
   private timestamp: string

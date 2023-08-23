@@ -74,7 +74,7 @@ export async function doImport(): Promise<void> {
 
   let read
   let input = ''
-  while ((read = Zotero.read(0x100000)) !== false) { // eslint-disable-line no-magic-numbers
+  while ((read = Zotero.read(0x100000)) !== false) {
     input += read
   }
 
@@ -109,7 +109,7 @@ export async function doImport(): Promise<void> {
     }
 
     imported += 1
-    Zotero.setProgress(imported / bib.entries.length * 100) // eslint-disable-line no-magic-numbers
+    Zotero.setProgress(imported / bib.entries.length * 100)
   }
 
   for (const group of bib.jabref.root || []) {
@@ -138,5 +138,5 @@ export async function doImport(): Promise<void> {
     await item.complete()
   }
 
-  Zotero.setProgress(100) // eslint-disable-line no-magic-numbers
+  Zotero.setProgress(100)
 }

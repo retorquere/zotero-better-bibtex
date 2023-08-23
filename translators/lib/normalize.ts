@@ -148,7 +148,7 @@ export function normalize(library: Library, sort=true): void {
     const collectionOrder: Collection[] = Object.values(library.collections)
       .sort((a: Collection, b: Collection): number => stringify({...a, key: '', parent: ''}).localeCompare(stringify({...b, key: '', parent: ''})))
     const collectionKeys: Record<string, string> = collectionOrder.reduce((acc: Record<string, string>, coll: Collection, i: number): Record<string, string> => {
-      coll.key = acc[coll.key] = `coll:${rjust(i, 5, '0')}` // eslint-disable-line no-magic-numbers
+      coll.key = acc[coll.key] = `coll:${rjust(i, 5, '0')}`
       return acc
     }, {})
     library.collections = collectionOrder.reduce((acc, coll) => {

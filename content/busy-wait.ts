@@ -1,4 +1,4 @@
-export async function busyWait(test: () => boolean, msecs = 5000): Promise<void> { // eslint-disable-line no-magic-numbers
+export async function busyWait(test: () => boolean, msecs = 5000): Promise<void> {
   const start = Date.now()
   const delay = 10
   while (!test()) {

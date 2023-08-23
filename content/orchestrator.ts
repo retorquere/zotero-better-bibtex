@@ -137,7 +137,6 @@ export class Orchestrator {
     const running = (): string[] => tasks.filter((t: Task) => t.started && !t.finished).map(t => t.id)
     const time = ts => (new Date(ts)).toISOString()
     const line = (name: string, event: string, timestamp: number) => { // eslint-disable-line arrow-body-style
-      // eslint-disable-next-line no-magic-numbers
       return `better-bibtex orchestrator: [${name.padEnd(50, ' ')}] ${phase.padEnd(10, ' ')} ${event.padEnd(15, ' ')} at ${time(timestamp)} running [${running()}]`
     }
 
@@ -228,7 +227,7 @@ export class Orchestrator {
     }
 
     const scale = n => Math.ceil(n/100)
-    // const url = g => `http://plantuml.com/plantuml/uml/~h${Array.from(g).map((c: string) => c.charCodeAt(0).toString(16)).join('')}\n` // eslint-disable-line no-magic-numbers
+    // const url = g => `http://plantuml.com/plantuml/uml/~h${Array.from(g).map((c: string) => c.charCodeAt(0).toString(16)).join('')}\n`
 
     let g = '@startgantt\n'
     g += `  header ${phase}\n\n`

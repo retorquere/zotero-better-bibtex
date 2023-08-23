@@ -13,7 +13,7 @@ export function doExport(): void {
 function parseInput(): any {
   let src = ''
   let chunk: string
-  while (chunk = Zotero.read(102400)) { // eslint-disable-line no-magic-numbers
+  while (chunk = Zotero.read(102400)) {
     src += chunk
   }
 
@@ -78,7 +78,7 @@ function cslDate(date): string {
     season = date.season
   }
   else {
-    for (const offset of [20, 12]) { // eslint-disable-line no-magic-numbers
+    for (const offset of [20, 12]) {
       if (month && month > offset) {
         season = month - offset
         month = undefined
@@ -102,7 +102,7 @@ function yamlDate(date): string {
   if (date.year < 0) date.year += 1
 
   if (!date.season) {
-    for (const offset of [20, 12]) { // eslint-disable-line no-magic-numbers
+    for (const offset of [20, 12]) {
       if (date.month && date.month > offset) {
         date.season = date.month - offset
         delete date.month
