@@ -1,4 +1,3 @@
-/* eslint-disable no-magic-numbers */
 declare const Zotero: any
 
 type Parameters = {

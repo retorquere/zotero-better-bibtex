@@ -8,7 +8,7 @@ import * as months from '../gen/dateparser-months.json'
 
 import { getLocaleDateOrder } from '../submodules/zotero-utilities/date'
 
-type SeasonID = 1 | 2 | 3 | 4 // eslint-disable-line no-magic-numbers
+type SeasonID = 1 | 2 | 3 | 4
 
 export type ParsedDate = {
   type?: 'date' | 'open' | 'verbatim' | 'season' | 'interval' | 'list'
@@ -38,8 +38,8 @@ const months_re = new RegExp(Object.keys(months).sort((a, b) => b.length - a.len
 
 const Season = new class {
   private ranges = [
-    [ 13, 14, 15, 16 ], // eslint-disable-line no-magic-numbers
-    [ 21, 22, 23, 24 ], // eslint-disable-line no-magic-numbers
+    [ 13, 14, 15, 16 ],
+    [ 21, 22, 23, 24 ],
   ]
 
   public fromMonth(month: number): SeasonID {
@@ -70,7 +70,6 @@ function normalize_edtf(date: any): ParsedDate {
       return { type: 'date', year, month, day, hour, minute, seconds, offset: date.offset, approximate: date.approximate || date.unspecified, uncertain: date.uncertain }
 
     case 'Interval':
-      // eslint-disable-next-line no-magic-numbers
       if (date.values.length !== 2) throw new Error(JSON.stringify(date))
       const from: ParsedDate = date.values[0] ? normalize_edtf(date.values[0]) : { type: 'open' }
       const to: ParsedDate = date.values[1] ? normalize_edtf(date.values[1]) : { type: 'open' }
@@ -100,7 +99,7 @@ function upgrade_edtf(date: string): string {
 }
 
 function is_valid_month(month: number, allowseason: boolean) {
-  if (month >= 1 && month <= 12) return true // eslint-disable-line no-magic-numbers
+  if (month >= 1 && month <= 12) return true
   if (allowseason && Season.fromMonth(month)) return true
 
   return false
@@ -160,7 +159,7 @@ function parseEDTF(value: string): ParsedDate {
   let m: RegExpMatchArray
   if (m = /^(\d+)[^\d]+(\d+)[^\d]+(\d+)[^\d]+(\d{2}:\d{2}:\d{2}(?:[.]\d+)?)(.*)/.exec(date)) {
     const [, year, month, day, time, tz] = m
-    date = `${year.padStart(4, '0')}-${month.padStart(2, '0')}-${day.padStart(2, '0')}T${time}${(tz || '').replace(/\s/g, '')}` // eslint-disable-line no-magic-numbers
+    date = `${year.padStart(4, '0')}-${month.padStart(2, '0')}-${day.padStart(2, '0')}T${time}${(tz || '').replace(/\s/g, '')}`
   }
 
   try {
@@ -205,13 +204,12 @@ function parseToDate(value: string, as_single_date: boolean): ParsedDate {
   if (m = (/^(-?[0-9]+)-00-00$/.exec(value) || /^(-?[0-9]+)\/00\/00$/.exec(value) || /^(-?[0-9]+-[0-9]+)-00$/.exec(value))) return parseToDate(m[1], true)
 
   // https://github.com/retorquere/zotero-better-bibtex/issues/1513
-  // eslint-disable-next-line no-magic-numbers
   if ((m = (/^([0-9]+) (de )?([a-z]+) (de )?([0-9]+)$/i).exec(value)) && (m[2] || m[4]) && (months[m[3].toLowerCase()])) return parseToDate(`${m[1]} ${m[3]} ${m[5]}`, true)
 
   // '30-Mar-2020'
   if (m = (/^([0-9]+)-([a-z]+)-([0-9]+)$/i).exec(value)) {
     let [ , day, month, year ] = m
-    if (parseInt(day) > 31 && parseInt(year) < 31) [ day, year ] = [ year, day ] // eslint-disable-line no-magic-numbers
+    if (parseInt(day) > 31 && parseInt(year) < 31) [ day, year ] = [ year, day ]
     date = parseToDate(`${month} ${day} ${year}`, true)
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     if (date.type === 'date') return date
@@ -288,7 +286,7 @@ function parseToDate(value: string, as_single_date: boolean): ParsedDate {
       time_doubt.hour = parseInt(H)
       time_doubt.minute = parseInt(M)
       if (S) time_doubt.seconds = parseFloat(S)
-      if (offsetH) time_doubt.offset = 60 * parseInt(offsetH) // eslint-disable-line no-magic-numbers
+      if (offsetH) time_doubt.offset = 60 * parseInt(offsetH)
       if (offsetM) time_doubt.offset += (offsetH[0] === '-' ? -1 : 1) * parseInt(offsetM)
       if (doubt && doubt.indexOf('~') >= 0) time_doubt.approximate = true
       if (doubt && doubt.indexOf('?') >= 0) time_doubt.uncertain = true
@@ -404,7 +402,7 @@ export function strToISO(str: string): string {
 
   if (typeof date.year !== 'number') return ''
 
-  let iso = `${date.year}`.padStart(4, '0') // eslint-disable-line no-magic-numbers
+  let iso = `${date.year}`.padStart(4, '0')
 
   if (typeof date.month === 'number') {
     const month = `${date.month}`.padStart(2, '0')

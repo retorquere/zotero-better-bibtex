@@ -477,7 +477,7 @@ export class PrefPane {
       this.checkCitekeyFormat()
       this.checkPostscript()
       this.refresh()
-      if (typeof this.timer === 'undefined') this.timer = setInterval(this.refresh.bind(this), 500)  // eslint-disable-line no-magic-numbers
+      if (typeof this.timer === 'undefined') this.timer = setInterval(this.refresh.bind(this), 500)
     }
     catch (err) {
       log.debug('error loading preferences:', err)

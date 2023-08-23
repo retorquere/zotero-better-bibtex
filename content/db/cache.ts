@@ -66,8 +66,8 @@ class Cache extends Loki {
 
     // this reaps unused cache entries -- make sure that cacheFetchs updates the object
     //                  secs    mins  hours days
-    const ttl =         1000  * 60  * 60  * 24 * 30 // eslint-disable-line no-magic-numbers
-    const ttlInterval = 1000  * 60  * 60  * 4       // eslint-disable-line no-magic-numbers
+    const ttl =         1000  * 60  * 60  * 24 * 30
+    const ttlInterval = 1000  * 60  * 60  * 4
 
     const modified = {}
     // SQLITE gives time in seconds, LokiJS time is in milliseconds

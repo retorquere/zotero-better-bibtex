@@ -23,7 +23,6 @@ function urls(item): { type: string, id: string, url: string }[] {
 }
 
 function parse(type, id, response): string {
-  // eslint-disable-next-line no-magic-numbers
   if (response.status && (response.status < 200 || response.status > 299)) {
     log.error('Could not fetch inspireHEP key for', type, id, 'InspireHEP says:', response.message)
     return null

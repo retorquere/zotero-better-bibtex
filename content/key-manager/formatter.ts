@@ -114,11 +114,11 @@ function parseDate(v): PartialDate {
 
   res.m = (typeof parsed.m !== 'undefined') ? (`${parsed.m}`) : ''
   res.d = (typeof parsed.d !== 'undefined') ? (`${parsed.d}`) : ''
-  res.y = (typeof parsed.y !== 'undefined') ? (`${parsed.y % 100}`) : '' // eslint-disable-line no-magic-numbers
+  res.y = (typeof parsed.y !== 'undefined') ? (`${parsed.y % 100}`) : ''
   res.Y = (typeof parsed.y !== 'undefined') ? (`${parsed.y}`) : ''
   res.om = (typeof parsed.om !== 'undefined') ? (`${parsed.om}`) : ''
   res.od = (typeof parsed.od !== 'undefined') ? (`${parsed.od}`) : ''
-  res.oy = (typeof parsed.oy !== 'undefined') ? (`${parsed.oy % 100}`) : '' // eslint-disable-line no-magic-numbers
+  res.oy = (typeof parsed.oy !== 'undefined') ? (`${parsed.oy % 100}`) : ''
   res.oY = (typeof parsed.oy !== 'undefined') ? (`${parsed.oy}`) : ''
   if (date.type !== 'verbatim') {
     const [ , H, M, S ] = v.match(/(?: |T)([0-9]{2}):([0-9]{2})(?::([0-9]{2}))?(?:[A-Z]+|[-+][0-9]+)?$/) || [null, '', '', '']
@@ -363,7 +363,6 @@ class PatternFormatter {
       }
       catch (err) {
         if (!error) error = err.message
-        // eslint-disable-next-line no-magic-numbers
         log.error('CitekeyFormatter.update: Error parsing citekeyFormat ', formula)
         log.error(err, err.location)
       }
@@ -602,18 +601,17 @@ class PatternFormatter {
 
     let author: string
     switch (authors.length) {
-      case 1: // eslint-disable-line no-magic-numbers
-        author = authors[0].substring(0, 3) // eslint-disable-line no-magic-numbers
+      case 1:
+        author = authors[0].substring(0, 3)
         break
 
-      case 2: // eslint-disable-line no-magic-numbers
-      case 3: // eslint-disable-line no-magic-numbers
-      case 4: // eslint-disable-line no-magic-numbers
+      case 2:
+      case 3:
+      case 4:
         author = authors.map(auth => auth.substring(0, 1)).join(sep)
         break
 
       default:
-        // eslint-disable-next-line no-magic-numbers
         author = `${authors.slice(0, 3).map(auth => auth.substring(0, 1)).join(sep)}+`
         break
     }
@@ -645,7 +643,6 @@ class PatternFormatter {
     if (!authors.length) return this.$text('')
     const firstAuthor = authors.shift()
 
-    // eslint-disable-next-line no-magic-numbers
     const author = [firstAuthor.substring(0, 5)].concat(authors.map(name => name.substring(0, 1)).join(sep)).join(sep)
     return this.$text(author)
   }
@@ -660,7 +657,6 @@ class PatternFormatter {
     const authors = this.creators(creator, initials ? '%(f)s%(I)s' : '%(f)s')
     if (!authors.length) return this.$text('')
 
-    // eslint-disable-next-line no-magic-numbers
     const author = authors.slice(0, 2).concat(authors.length > 2 ? ['ea'] : []).join(sep)
     return this.$text(author)
   }
@@ -680,7 +676,6 @@ class PatternFormatter {
     if (!authors.length) return this.$text('')
 
     let author
-    // eslint-disable-next-line no-magic-numbers
     if (authors.length === 2) {
       author = authors.join(sep)
     }
@@ -701,7 +696,6 @@ class PatternFormatter {
     if (!authors.length) return this.$text('')
 
     let author
-    // eslint-disable-next-line no-magic-numbers
     if (authors.length === 2) {
       author = authors.join(sep)
     }
@@ -733,7 +727,6 @@ class PatternFormatter {
         break
 
       default:
-        // eslint-disable-next-line no-magic-numbers
         author = authors.slice(0, 3).map(auth => auth.substring(0, 1)).join(sep) + (authors.length > 3 ? '+' : '')
     }
     return this.$text(author)
@@ -781,7 +774,7 @@ class PatternFormatter {
    * @param n number of words to select
    * @param m number of words to capitalize. `0` means no words will be capitalized. Mind that existing capitals are not removed.
    */
-  public $shorttitle(n: number = 3, m: number = 0) { // eslint-disable-line no-magic-numbers, @typescript-eslint/no-inferrable-types
+  public $shorttitle(n: number = 3, m: number = 0) { // eslint-disable-line @typescript-eslint/no-inferrable-types
     const words = this.titleWords(this.item.title, { skipWords: true, nopunct: true, transliterate: true})
     if (!words) return this.$text('')
 
@@ -793,7 +786,7 @@ class PatternFormatter {
    * @param n number of words to select
    * @param m number of words to capitalize. `0` means no words will be capitalized. Mind that existing capitals are not removed.
    */
-  public $veryshorttitle(n: number = 1, m: number = 0) { // eslint-disable-line no-magic-numbers, @typescript-eslint/no-inferrable-types
+  public $veryshorttitle(n: number = 1, m: number = 0) { // eslint-disable-line @typescript-eslint/no-inferrable-types
     return this.$shorttitle(n, m)
   }
 
@@ -896,7 +889,7 @@ class PatternFormatter {
    * @param relation comparison operator
    * @param length value to compare length with
   */
-  public $legacy_len(relation: '<' | '<=' | '=' | '!=' | '>=' | '>' = '>', length=0) {
+  public $len(relation: '<' | '<=' | '=' | '!=' | '>=' | '>' = '>', length=0) {
     return this.len(this.citekey, relation, length).$text('')
   }
 
@@ -980,14 +973,6 @@ class PatternFormatter {
     return this.$text(date.toISOString().replace('.000Z', '').replace('T', ' '))
   }
 
-  /** extracts the family-name from Chinese names written in single-field mode
-   * @param lang language table to take family names from
-   */
-  public _cjk_familyname(lang: 'zh-hans' | 'zh-hant' = 'zh-hans') {
-    log.debug('cjk_familyname:', { chunk: this.chunk, names: this.chunk.split(' '), capped: this.chunk.split(' ').map(name => chinese.familyName(name, lang)) })
-    return this.$text(this.chunk.split(' ').map(name => chinese.familyName(name, lang)).join(''))
-  }
-
   /**
    * formats date as by replacing y, m and d in the format
    * @param format sprintf-style format template
@@ -1012,7 +997,7 @@ class PatternFormatter {
       if (typeof repl !== 'string') throw new Error(`:format-date: unsupported formatter ${JSON.stringify(spec)}`)
       if (!repl) return null
 
-      if (pad) repl = this.padYear(repl, (field === 'Y' || field === 'oY') ? 4 : 2) // eslint-disable-line no-magic-numbers
+      if (pad) repl = this.padYear(repl, (field === 'Y' || field === 'oY') ? 4 : 2)
 
       return repl
 

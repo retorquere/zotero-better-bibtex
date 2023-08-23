@@ -663,9 +663,9 @@ export class BetterBibTeX {
 
     const progressmeter: XUL.Element = (doc.getElementById('better-bibtex-progress-meter') as unknown as XUL.Element)
     const nArcs = 20
-    progressmeter.style.backgroundPosition = `-${Math.round(progress/100 * nArcs) * 16}px 0` // eslint-disable-line no-magic-numbers
+    progressmeter.style.backgroundPosition = `-${Math.round(progress/100 * nArcs) * 16}px 0`
     const progressbar: XUL.Element = (doc.getElementById('better-bibtex-progress') as unknown as XUL.Element)
-    progressbar.style.opacity = `${progress/200+.5}` // eslint-disable-line no-magic-numbers
+    progressbar.style.opacity = `${progress/200+.5}`
 
     const label: XUL.Label = (doc.getElementById('better-bibtex-progress-label') as unknown as XUL.Label)
     label.setAttribute('value', `better bibtex: ${msg}`)
@@ -707,7 +707,6 @@ export class BetterBibTeX {
         this.ready.resolve(true)
         await this.load(Zotero.getMainWindow())
 
-        // eslint-disable-next-line no-magic-numbers
         Zotero.Promise.delay(15000).then(() => {
           log.debug('removing fallback debug logger')
           DebugLog.unregister('Better BibTeX')
@@ -761,26 +760,26 @@ export class BetterBibTeX {
       flash(
         'BBT TRACE LOGGING IS ENABLED',
         'BBT trace logging is enabled in this build.\nZotero will run very slowly.\nThis is intended for debugging ONLY.',
-        20 // eslint-disable-line no-magic-numbers
+        20
       )
     }
 
-    // progress.update(l10n.localize('better-bibtex_startup_serialization-cache'), 20) // eslint-disable-line no-magic-numbers
+    // progress.update(l10n.localize('better-bibtex_startup_serialization-cache'), 20)
     // Serializer.init()
 
-    // progress.update(l10n.localize('better-bibtex_startup_auto-export_load'), 30) // eslint-disable-line no-magic-numbers
+    // progress.update(l10n.localize('better-bibtex_startup_auto-export_load'), 30)
     // await AutoExport.init()
 
-    // progress.update(l10n.localize('better-bibtex_startup_journal-abbrev'), 60) // eslint-disable-line no-magic-numbers
+    // progress.update(l10n.localize('better-bibtex_startup_journal-abbrev'), 60)
     // await JournalAbbrev.init()
 
-    // progress.update(l10n.localize('better-bibtex_startup_installing-translators'), 70) // eslint-disable-line no-magic-numbers
+    // progress.update(l10n.localize('better-bibtex_startup_installing-translators'), 70)
     // await Translators.init()
 
-    // progress.update(l10n.localize('better-bibtex_startup_key-manager'), 80) // eslint-disable-line no-magic-numbers
+    // progress.update(l10n.localize('better-bibtex_startup_key-manager'), 80)
     // await this.KeyManager.start() // inits the key cache by scanning the DB and generating missing keys
 
-    // progress.update(l10n.localize('better-bibtex_startup_auto-export'), 90) // eslint-disable-line no-magic-numbers
+    // progress.update(l10n.localize('better-bibtex_startup_auto-export'), 90)
     // AutoExport.start()
 
     await this.loadUI(win)
@@ -793,9 +792,9 @@ export class BetterBibTeX {
       /*
       let status = `${percent < 0 ? l10n.localize('better-bibtex_preferences_auto-export_status_preparing') : ''} ${translator}`.trim()
       if (Translators.queue.queued) status += ` +${Translators.queue.queued}`
-      setProgress(percent && percent < 100 && Math.abs(percent), status) // eslint-disable-line no-magic-numbers
+      setProgress(percent && percent < 100 && Math.abs(percent), status)
       */
-      this.setProgress(pct, message) // eslint-disable-line no-magic-numbers
+      this.setProgress(pct, message)
     })
   }
 

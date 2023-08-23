@@ -1,4 +1,4 @@
-/* eslint-disable no-magic-numbers, @typescript-eslint/quotes, max-len */
+/* eslint-disable @typescript-eslint/quotes, max-len */
 declare const Services: any
 
 import { Events } from './events'

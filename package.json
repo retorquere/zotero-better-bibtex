@@ -86,7 +86,6 @@
     "jieba-zh-cn": "^1.0.12",
     "jieba-zh-tw": "^1.0.12",
     "js-jieba": "^1.0.12",
-    "jsesc": "^3.0.2",
     "jslingua": "^0.13.0",
     "kuromoji": "^0.1.2",
     "lodash": "^4.17.21",
@@ -107,10 +106,8 @@
     "zotero-plugin": "2.0.6"
   },
   "devDependencies": {
-    "@microsoft/tsdoc": "^0.14.2",
     "@retorquere/bibtex-parser": "^7.0.5",
     "@retorquere/zotero-sync": "^1.0.23",
-    "@ts-ast-parser/core": "^0.5.0",
     "@types/bluebird": "^3.5.38",
     "@types/lokijs": "^1.5.8",
     "@types/node": "^20.5.1",
@@ -149,6 +146,7 @@
     "install": "^0.13.0",
     "is-isbn": "^1.1.0",
     "js-yaml": "^4.1.0",
+    "jsesc": "^3.0.2",
     "kuroshiro": "^1.2.0",
     "kuroshiro-analyzer-kuromoji": "^1.1.0",
     "lodash.template": "^4.5.0",

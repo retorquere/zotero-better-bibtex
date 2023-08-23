@@ -10,12 +10,10 @@ function pad(v:string, padding: string): string {
 }
 
 function year(y) {
-  // eslint-disable-next-line no-magic-numbers
   if (Math.abs(y) > 999) {
     return `${y}`
   }
   else {
-    // eslint-disable-next-line no-magic-numbers
     return (y < 0 ? '-' : '') + (`000${Math.abs(y)}`).slice(-4)
   }
 }
@@ -28,7 +26,6 @@ function format(date, translation: Translation): string {
 
   }
   else if (typeof date.year === 'number' && (date.month || date.season)) {
-    // eslint-disable-next-line no-magic-numbers
     formatted = `${year(date.year)}-${pad((date.month || ((date.season as number)+ 20)), '00')}`
 
   }

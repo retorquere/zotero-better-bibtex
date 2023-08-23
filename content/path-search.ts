@@ -99,9 +99,8 @@ export async function pathSearch(bin: string, installationDirectory: { mac?: str
         const stat = await OS.File.stat(cmd)
         if (stat.isDir) continue
 
-        // eslint-disable-next-line no-bitwise, no-magic-numbers
+        // eslint-disable-next-line no-bitwise
         if (!Zotero.isWin && (stat.unixMode & 111) === 0) { // bit iffy -- we don't know if *we* can execute this.
-          // eslint-disable-next-line no-magic-numbers
           log.error(`pathSearch: ${cmd} exists but has mode ${(stat.unixMode).toString(8)}`)
           continue
         }

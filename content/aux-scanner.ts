@@ -206,7 +206,7 @@ export const AUXScanner = new class { // eslint-disable-line @typescript-eslint/
       let timestamp = ''
 
       while (siblings.has(target.basename + timestamp)) {
-        await Zotero.Promise.delay(1500) // eslint-disable-line no-magic-numbers
+        await Zotero.Promise.delay(1500)
         timestamp = (new Date).toLocaleDateString('nl', { year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: false })
       }
 
