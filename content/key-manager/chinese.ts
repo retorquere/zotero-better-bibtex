@@ -1,6 +1,7 @@
 import { Preference } from '../prefs'
 import { Events } from '../events'
 import { log } from '../logger'
+// import { CJK } from '../text'
 
 declare const ChromeUtils: any
 

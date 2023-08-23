@@ -6,13 +6,12 @@ import { log } from '../logger'
 import fold2ascii from 'fold-to-ascii'
 import rescape from '@stdlib/utils-escape-regexp-string'
 import ucs2decode = require('punycode2/ucs2/decode')
-import scripts = require('xregexp/tools/output/scripts')
 
 import { Preference } from '../prefs'
 import { JournalAbbrev } from '../journal-abbrev'
 import * as Extra from '../extra'
 import { buildCiteKey as zotero_buildCiteKey } from './formatter-zotero'
-import { babelLanguage } from '../text'
+import { babelLanguage, CJK } from '../text'
 import { fetchSync as fetchInspireHEP } from '../inspire-hep'
 
 const legacyparser = require('./legacy.peggy')
@@ -131,19 +130,6 @@ function parseDate(v): PartialDate {
   }
 
   return res
-}
-
-const script = {
-  cjk: new RegExp('([' + scripts.map((s: { name: string, bmp: string }): string => { // eslint-disable-line @typescript-eslint/restrict-plus-operands, prefer-template
-    switch (s.name) {
-      case 'Katakana':
-      case 'Hiragana':
-      case 'Han':
-        return s.bmp
-      default:
-        return ''
-    }
-  }).join('') + '])', 'g'), // eslint-disable-line @typescript-eslint/restrict-plus-operands,prefer-template
 }
 
 type PartialDate = {
@@ -902,8 +888,8 @@ class PatternFormatter {
    * If the length of the output does not match the given number, skip to the next pattern.
    * @param relation comparison operator
    * @param length value to compare length with
-   */
-  public $len(relation: '<' | '<=' | '=' | '!=' | '>=' | '>' = '>', length=0) {
+  */
+  public $legacy_len(relation: '<' | '<=' | '=' | '!=' | '>=' | '>' = '>', length=0) {
     return this.len(this.citekey, relation, length).$text('')
   }
 
@@ -1211,7 +1197,7 @@ class PatternFormatter {
 
   /** Treat ideaographs as individual words */
   public _ideographs() {
-    return this.$text(this.chunk.replace(script.cjk, ' $1 ').trim())
+    return this.$text(this.chunk.replace(CJK, ' $1 ').trim())
   }
 
   /** word segmentation for Chinese items. Uses substantial memory, and adds about 7 seconds to BBTs startup time; must be enabled under Preferences -> Better BibTeX -> Advanced -> Citekeys */
@@ -1326,7 +1312,7 @@ class PatternFormatter {
     // 551
     let words: string[] = Zotero.Utilities.XRegExp.matchChain(title, [this.re.word])
       .map((word: string) => options.nopunct ? this.nopunct(word, '') : word)
-      .filter((word: string) => word && !(options.skipWords && ucs2decode(word).length === 1 && !word.match(script.cjk)))
+      .filter((word: string) => word && !(options.skipWords && ucs2decode(word).length === 1 && !word.match(CJK)))
 
     // apply jieba.cut and flatten.
     if (chinese.load(Preference.jieba) && options.skipWords && this.item.transliterateMode.startsWith('chinese')) {
