@@ -889,7 +889,7 @@ class PatternFormatter {
    * @param relation comparison operator
    * @param length value to compare length with
   */
-  public $legacy_len(relation: '<' | '<=' | '=' | '!=' | '>=' | '>' = '>', length=0) {
+  public $len(relation: '<' | '<=' | '=' | '!=' | '>=' | '>' = '>', length=0) {
     return this.len(this.citekey, relation, length).$text('')
   }
 
