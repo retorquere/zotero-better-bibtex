@@ -881,15 +881,6 @@ class PatternFormatter {
     return this.$text('')
   }
 
-  /**
-   * If the length of the output does not match the given number, skip to the next pattern.
-   * @param relation comparison operator
-   * @param length value to compare length with
-  */
-  public $len(relation: '<' | '<=' | '=' | '!=' | '>=' | '>' = '>', length=0) {
-    return this.len(this.citekey, relation, length).$text('')
-  }
-
   private padYear(year: string, length: number): string {
     return year ? year.replace(/[0-9]+/, y => y.length >= length ? y : (`0000${y}`).slice(-length)): ''
   }

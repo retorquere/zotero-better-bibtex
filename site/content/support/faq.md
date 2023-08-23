@@ -157,12 +157,11 @@ which is clearly not correct. The proper way to fix this is to sentence case thi
 JabRef import works generally well but has a few gotchas:
 
 *   If you have dynamic (query-based) groups these will not be imported.
-*   If you have set a default folder for the pdf files in your JabRef
-    preferences, the file paths in your JabRef database will be relative to that
-    directory, but BBT can't read those preferences, so all attachments will
-    fail to import. You can fix this by going into Jabref and selecting `File` -
-    `Library properties` option, then filling out the path to the attachments
-    directory in `general file directory`.
+*   If you have set a default folder for the PDF files in JabRef
+    (`Options -> Preferences -> Linked Files -> Main File Directory`), the file paths in your JabRef database will be relative to that
+    directory, but BBT can't read those preferences, so all attachments would
+    fail to import. Make imports work with JabRef's library-specific setting `Library -> Library Properties -> General File Directory`.
+    Make sure the latter path is correct, as JabRef might continue finding files and not notify you if it contains errors.
 
 ## [Background exports]({{< relref "../exporting/#background-exports" >}}) have been disabled
 

@@ -36,6 +36,7 @@ class Main extends Loki {
         await this.saveDatabaseAsync()
         log.debug(`Loki.${store}.shutdown: closing ${this.filename}`)
         await this.closeAsync()
+        log.debug(`Loki.${store}.shutdown: closed ${this.filename}`)
       },
     })
   }

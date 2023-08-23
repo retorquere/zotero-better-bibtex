@@ -100,9 +100,28 @@ class Compiler {
     return parts
   }
 
+  wrap(formula: string): string {
+    return `sub(function() { return ${formula} })`
+  }
+  finalize(formula: string): string {
+    return `this.finalize(this.reset() + ${formula})`
+  }
   $formula(ast: Node, wrap=false): string {
-    let formula = `this.finalize(this.reset() + ${this.split(ast, '+').map((term: Node) => this.$term(term)).join(' + ')})`
-    if (wrap) formula = `sub(function() { return ${formula} })`
+    let formula = ''
+    for (const term of this.split(ast, '+').map((t: Node) => this.$term(t))) {
+      if (term.startsWith('this._len')) { // convert function len to filter
+        formula = `this.$text(${this.wrap(this.finalize(formula))}).${term.replace(/^this[.]/, '')}`
+      }
+      else if (formula) {
+        formula += ` + ${term}`
+      }
+      else {
+        formula = term
+      }
+    }
+    formula = this.finalize(formula)
+    // let formula = `this.finalize(this.reset() + ${this.split(ast, '+').map((term: Node) => this.$term(term)).join(' + ')})`
+    if (wrap) formula = this.wrap(formula)
     return formula
   }
 
@@ -124,7 +143,13 @@ ${compiled}
   flatten(node: Node): Node[] {
     switch (node.type) {
       case 'MemberExpression':
-        return this.flatten(node.object).concat(this.flatten(node.property))
+        if (node.object.type === 'BinaryExpression') {
+          if (node.object.operator !== '+') this.error(node, `unexpected ${node.type} operator ${node.operator}`)
+          return [node.object].concat(this.flatten(node.property))
+        }
+        else {
+          return this.flatten(node.object).concat(this.flatten(node.property))
+        }
       case 'CallExpression':
         return this.flatten(node.callee).concat([node])
       case 'Identifier':
@@ -132,6 +157,9 @@ ${compiled}
         return [node]
       case 'LogicalExpression':
         if (node.operator !== '||') this.error(node, `unexpected ${node.type} operator ${node.operator}`)
+        return [node]
+      case 'BinaryExpression':
+        if (node.operator !== '+') this.error(node, `unexpected ${node.type} operator ${node.operator}`)
         return [node]
       case 'Literal':
         if (typeof node.value !== 'string') this.error(node, `expected string, got ${this.$typeof(node)}`)
@@ -151,7 +179,7 @@ ${compiled}
     let compiled = 'this'
     let prefix = '$'
     while (flat.length) {
-      const identifier = this.get(flat.shift(), ['Identifier'].concat(prefix === '$' ? ['LogicalExpression', 'ConditionalExpression'] : []))
+      const identifier = this.get(flat.shift(), ['Identifier'].concat(prefix === '$' ? ['BinaryExpression', 'LogicalExpression', 'ConditionalExpression'] : []))
 
       if (identifier.type === 'ConditionalExpression') {
         const test = this.$formula(identifier.test, true)
@@ -164,7 +192,11 @@ ${compiled}
         const right = this.$formula(identifier.right, true)
         compiled += `.$text(${left} || ${right})`
       }
-      else if (prefix === '$' && identifier.name[0] === identifier.name[0].toUpperCase()) {
+      else if (identifier.type === 'BinaryExpression') {
+        const formula = this.$formula(identifier, true)
+        compiled += `.$text(${formula})`
+      }
+      else if (prefix === '$' && identifier.name[0] === identifier.name[0].toUpperCase()) { // direct property access
         if (flat[0] && flat[0].type === 'CallExpression') this.error(flat[0], `field "${identifier.name}" cannot be called as a function`)
         const name = items.name.field[identifier.name.toLowerCase()]
         if (!name) this.error(identifier, `Zotero items do not have a field named "${identifier.name}"`)
@@ -173,7 +205,7 @@ ${compiled}
       else {
         const name = `${prefix}${identifier.name.toLowerCase()}`
         const $name = alias[name] || name
-        const method = methods[$name]
+        const method = methods[$name === '$len' ? '_len' : $name] // fake out $len resolution by resolving it as _len
         if (!method) this.error(identifier, `Unknown ${prefix === '$' ? 'function' : 'filter'} ${identifier.name}`)
 
         compiled += `.${method.name}(`
