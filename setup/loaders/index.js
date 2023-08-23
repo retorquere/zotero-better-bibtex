@@ -7,6 +7,7 @@ const { filePathFilter } = require('file-path-filter')
 const esbuild = require('esbuild')
 const putout = require('putout')
 const child_process = require('child_process')
+const jsesc = require('jsesc')
 
 const patcher = module.exports.patcher = new class {
   constructor() {
@@ -71,6 +72,19 @@ module.exports.bib = {
       return {
         contents: await fs.promises.readFile(args.path, 'utf-8'),
         loader: 'text'
+      }
+    })
+  }
+}
+
+module.exports.json = {
+  name: 'json',
+  setup(build) {
+    build.onLoad({ filter: /\.json$/ }, async (args) => {
+      const json = JSON.parse(await fs.promises.readFile(args.path, 'utf-8'))
+      return {
+        contents: `module.exports = ${jsesc(json)}`,
+        loader: 'js'
       }
     })
   }

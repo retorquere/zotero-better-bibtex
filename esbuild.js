@@ -148,6 +148,7 @@ async function bundle(config) {
     minify: false,
     ...config,
   }
+  if (!config.plugins.includes(loader.json)) config.plugins.push(loader.json)
 
   let target
   if (config.outfile) {
