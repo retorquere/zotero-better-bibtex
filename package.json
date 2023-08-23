@@ -107,10 +107,8 @@
     "zotero-plugin": "2.0.6"
   },
   "devDependencies": {
-    "@microsoft/tsdoc": "^0.14.2",
     "@retorquere/bibtex-parser": "^7.0.5",
     "@retorquere/zotero-sync": "^1.0.23",
-    "@ts-ast-parser/core": "^0.5.0",
     "@types/bluebird": "^3.5.38",
     "@types/lokijs": "^1.5.8",
     "@types/node": "^20.5.1",

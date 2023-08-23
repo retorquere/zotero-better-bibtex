@@ -10,7 +10,6 @@ import Language from '../gen/babel/langmap.json'
 const LanguagePrefixes = Object.keys(Language).sort().reverse().filter(prefix => prefix.length > 3) // eslint-disable-line no-magic-numbers
 
 import charCategories = require('xregexp/tools/output/categories')
-import scripts = require('xregexp/tools/output/scripts')
 
 const re = {
   Nl: charCategories.find(cat => cat.alias === 'Letter_Number').bmp,
@@ -487,13 +486,15 @@ export function excelColumn(n: number): string {
   return col
 }
 
-export const CJK = new RegExp(`([${ scripts.map((s: { name: string, bmp: string }): string => {
-  switch (s.name) {
-    case 'Katakana':
-    case 'Hiragana':
-    case 'Han':
-      return s.bmp
-    default:
-      return ''
+/* REVIEW:
+export function getDOMParser(): DOMParser {
+  if (is7) return new DOMParser
+
+  try {
+    return new DOMParser
   }
-}).join('') }])`, 'g')
+  catch (err) {
+    return Components.classes['@mozilla.org/xmlextras/domparser;1'].createInstance(Components.interfaces.nsIDOMParser)
+  }
+}
+*/
