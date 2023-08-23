@@ -18,6 +18,7 @@ from pathlib import Path
 active_tag_value_provider = {
   'client': 'zotero',
   'slow': 'false',
+  'whopper': 'false',
   'beta': 'false',
 }
 active_tag_matcher = ActiveTagMatcher(active_tag_value_provider)
@@ -102,7 +103,7 @@ class TestBin:
     self.durations[self.nameof(scenario)] = Munch(
       start=math.floor(time.time()),
       stop=None,
-      slow=any([True for tag in scenario.effective_tags if tag == 'use.with_slow=true'])
+      slow=any([True for tag in scenario.effective_tags if tag in ['use.with_slow=true', 'use.with_whopper=true']])
     )
   def stop(self, scenario):
     test = self.nameof(scenario)
@@ -162,6 +163,8 @@ def before_scenario(context, scenario):
   for tag in scenario.effective_tags:
     if tag == 'use.with_slow=true':
       context.timeout = max(context.timeout, 300)
+    if tag == 'use.with_whopper=true':
+      context.timeout = max(context.timeout, 30000)
     elif tag.startswith('timeout='):
       context.timeout = max(context.timeout, int(tag.split('=')[1]))
   context.zotero.config.timeout = context.timeout

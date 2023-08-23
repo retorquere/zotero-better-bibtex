@@ -33,6 +33,7 @@ if github.event_name == 'schedule': # nightlies
   print('nightly')
   flags.add('slow')
   flags.add('beta')
+  flags.add('whopper')
 
 print('flags =', flags)
 
