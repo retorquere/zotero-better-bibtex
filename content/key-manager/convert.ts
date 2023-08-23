@@ -144,6 +144,7 @@ ${compiled}
     switch (node.type) {
       case 'MemberExpression':
         if (node.object.type === 'BinaryExpression') {
+          if (node.object.operator !== '+') this.error(node, `unexpected ${node.type} operator ${node.operator}`)
           return [node.object].concat(this.flatten(node.property))
         }
         else {
@@ -178,7 +179,7 @@ ${compiled}
     let compiled = 'this'
     let prefix = '$'
     while (flat.length) {
-      const identifier = this.get(flat.shift(), ['Identifier'].concat(prefix === '$' ? ['LogicalExpression', 'ConditionalExpression'] : []))
+      const identifier = this.get(flat.shift(), ['Identifier'].concat(prefix === '$' ? ['BinaryExpression', 'LogicalExpression', 'ConditionalExpression'] : []))
 
       if (identifier.type === 'ConditionalExpression') {
         const test = this.$formula(identifier.test, true)

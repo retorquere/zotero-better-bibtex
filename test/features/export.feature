@@ -195,6 +195,8 @@ Feature: Export
 
     Examples:
       | file                                                                                                               | references |
+      | formula grouping                                                                                                   | 1          |
+      | formula grouping-upgrade                                                                                           | 1          |
       | BBT does not escape # in first argument of href in note #2617                                                      | 2          |
       | BBT does not escape # in first argument of href in note #2617-note                                                 | 2          |
       | Ternary in citekey formula                                                                                         | 1          |

@@ -1,0 +1,51 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "DOIandURL": "doi",
+      "autoAbbrev": true,
+      "automaticTags": false,
+      "bibtexURL": "url",
+      "citekeyFormat": "(auth + title).len",
+      "keyConflictPolicy": "change",
+      "skipFields": "language, keywords, abstract, langid, file, copyright, ids, archiveprefix, shorttitle, issn, accessed, urldate"
+    }
+  },
+  "items": [
+    {
+      "DOI": "10.1016/0031-8914(69)90116-5",
+      "ISSN": "0031-8914",
+      "abstractNote": "A point contact, weakly connecting two superconductors, can be represented by an ideal Josephson junction (is = i1 sin\u03d5) and an effective resistance (Rn = V/in; V = = \u2212(h\u0335/2e)(\u2202\u03d5/\u2202t)) shunted in parallel to it. By solving the equation i = is + in = = i1 sin \u03d5(t) \u2212 (1/Rn)(h\u0335/2e)(\u2202\u03d5(t)/\u2202t) = constant, the d.c. current (t\u0304) \u2212 d.c. voltage (V\u0304) characteristic for a single point contact is found to be V(t) = Rn\u221a(i2 \u2212 i21), independent of the magnetic field B\u22a5. The relationship between d.c. current (\u012b), d.c. voltage (V\u0304) and magnetic field (B\u22a5) is also derived for a double junction, taking the self-inductance (L) of the area (O) embraced by the contacts into account. If \u03c0Li1 \u2aa1 h/2e then the self-induced flux is ignored and the current i=2i1sin\u03c6tcoseh\u0335 B\u22a5O \u2212 1Rn h\u03352e \u2202\u03d5\u2202t = constant and ovbar|V(t) = Rn\u221a(i2 \u2212 i2c(B\u22a5)) for ic = 2i1 |cos(e/h\u0335) B\u22a5 O|. This result explains the observed voltage oscillations in the resistive-superconductive region as a function of the external magnetic field B\u22a5 when the applied current is constant and exceeds the critical value. If the self-induced flux is taken into account it is impossible to give a simple analytical solution and numerical methods are used. The total magnetic flux enclosed appears to be approximately quantized: B\u22a5 O + Licirc \u2248 n h/2e, giving rise to a circulating current (icirc) which adds to the applied current in one of the contacts and subtracts in the other. The modulation in the critical current is approximately given by ic \u2248 2i1 \u2212 (2/L) |n h/2e \u2212 B\u22a5 O|, when \u03c0Li1 \u2aa1h/2e. The relationship between \u012b, V\u0304 and B\u22a5 is in agreement with experiment and can be represented by a corrugated surface periodic in B\u22a5.",
+      "accessDate": "2021-05-04T09:47:30Z",
+      "citationKey": "de_waele_quantum-interference_1969",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "A. Th. A. M.",
+          "lastName": "de Waele"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "R.",
+          "lastName": "de Bruyn Ouboter"
+        }
+      ],
+      "date": "February 28, 1969",
+      "issue": "2",
+      "itemID": 1,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "Physica",
+      "language": "en",
+      "libraryCatalog": "ScienceDirect",
+      "pages": "225-254",
+      "publicationTitle": "Physica",
+      "title": "Quantum-interference phenomena in point contacts between two superconductors",
+      "url": "https://www.sciencedirect.com/science/article/pii/0031891469901165",
+      "volume": "41"
+    }
+  ]
+}
