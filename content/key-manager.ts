@@ -251,12 +251,15 @@ export const KeyManager = new class _KeyManager {
 
     if (remove.length + insert.length) {
       await Zotero.DB.executeTransaction(async () => {
-        if (remove.length) await Zotero.DB.queryAsync(`DELETE FROM betterbibtexsearch.citekeys WHERE itemID in (${remove.join(',')})`)
+        while (remove.length) {
+          await Zotero.DB.queryAsync(`DELETE FROM betterbibtexsearch.citekeys WHERE itemID in (${remove.splice(0, 1000).join(',')})`)
+        }
 
-        if (insert.length) {
-          for (const row of insert) {
-            await ZoteroDB.queryAsync('INSERT INTO betterbibtexsearch.citekeys (itemID, libraryID, itemKey, citekey) VALUES (?, ?, ?, ?)', [ row.itemID, row.libraryID, row.itemKey, row.citekey ])
-          }
+        while (insert.length) {
+          const chunk = insert.splice(0, 1000)
+          const q = `INSERT INTO betterbibtexsearch.citekeys (itemID, libraryID, itemKey, citekey) VALUES ${Array(chunk.length).fill('(?, ?, ?, ?)').join(',')}`
+          const args = [].concat(...chunk.map(row => [ row.itemID, row.libraryID, row.itemKey, row.citekey ]))
+          await ZoteroDB.queryAsync(q, args)
         }
       })
     }
