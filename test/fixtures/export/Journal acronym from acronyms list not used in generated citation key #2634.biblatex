@@ -1,0 +1,18 @@
+@article{Archer_etal_EPSL2004,
+  title = {The Importance of Ocean Temperature to Global Biogeochemistry},
+  author = {Archer, David and Martin, Pamela and Buffett, Bruce and Brovkin, Victor and Rahmstorf, Stefan and Ganopolski, Andrey},
+  date = {2004-05-30},
+  journaltitle = {Earth and Planetary Science Letters},
+  shortjournal = {Earth and Planetary Science Letters},
+  volume = {222},
+  number = {2},
+  pages = {333--348},
+  issn = {0012-821X},
+  doi = {10.1016/j.epsl.2004.03.011},
+  url = {https://www.sciencedirect.com/science/article/pii/S0012821X04001839},
+  urldate = {2023-08-28},
+  abstract = {Variations in the mean temperature of the ocean, on time scales from millennial to millions of years, in the past and projected for the future, are large enough to impact the geochemistry of the carbon, oxygen, and methane geochemical systems. In each system, the time scale of the temperature perturbation is key. On time frames of 1100 ky, atmospheric CO2 is controlled by the ocean. CO2 temperature-dependent solubility and greenhouse forcing combine to create an amplifying feedback with ocean temperature; the CaCO3 cycle increases this effect somewhat on time scales longer than {$<$}510 ky. The CO2/T feedback can be seen in the climate record from Vostok, and a model including the temperature feedback predicts that 10\% of the fossil fuel CO2 will reside in the atmosphere for longer than 100 ky. Timing is important for oxygen, as well; the atmosphere controls the ocean on short time scales, but ocean anoxia controls atmospheric pO2 on million-year time scales and longer. Warming the ocean to Cretaceous temperatures might eventually increase pO2 by approximately 25\%, in the absence of other perturbations. The response of methane clathrate to climate change in the coming century will probably be small, but on longer time scales of 110 ky, there may be a positive feedback with ocean temperature, amplifying the long-term climate impact of anthropogenic CO2 release.},
+  keywords = {carbon cycle,climate,ocean temperature}
+}
+% == BibLateX quality report for Archer_etal_EPSL2004:
+% ? unused Library catalog ("ScienceDirect")
