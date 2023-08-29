@@ -24,7 +24,7 @@ function readsync(path: string): string {
 function string2dict(path: string, data: string): Record<string, any>[] {
   if (!data) return []
 
-  const parsed: any = csv.parse(data, { skipEmptyLines: true, header: true })
+  const parsed: any = csv.parse(data, { skipEmptyLines: 'greedy', header: true })
   if (parsed.errors.length) log.error('parsing', path, parsed.errors)
   return parsed.data as Record<string, any>[]
 }
@@ -32,7 +32,7 @@ function string2dict(path: string, data: string): Record<string, any>[] {
 function string2list(path: string, data: string): string[][] {
   if (!data) return []
 
-  const parsed: any = csv.parse(data, { skipEmptyLines: true }) as string[][]
+  const parsed: any = csv.parse(data, { skipEmptyLines: 'greedy' }) as string[][]
   if (parsed.errors.length) log.error('parsing', path, parsed.errors)
   return parsed.data as string[][]
 }

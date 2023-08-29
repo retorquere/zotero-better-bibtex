@@ -1062,26 +1062,27 @@ class PatternFormatter {
   public _acronym(list='acronyms') {
     list = list.replace(/\.csv$/i, '')
 
-    try {
-      if (!this.acronyms[list]) {
-        this.acronyms[list] = csv2dict(OS.Path.join(Zotero.BetterBibTeX.dir, `${list}.csv`))
-          .reduce((acc: Record<string, string>, row: Record<string, string>) => {
-            row.full = (row.full || '').trim().toLowerCase()
-            row.acronym = (row.acronym || '').trim()
-            if (row.full && row.acronym) {
-              if (acc[row.full]) log.error('acronyms: parsing', list, row, 'duplicate')
-              acc[row.full] = row.acronym
-            }
-            else {
-              log.error('acronyms: parsing', list, row, 'incomplete')
-            }
-            return acc
-          }, {} as Record<string, string>)
+    if (!this.acronyms[list]) {
+      const acronyms: Record<string, string> = {}
+
+      try {
+        for (const row of csv2dict(OS.Path.join(Zotero.BetterBibTeX.dir, `${list}.csv`))) {
+          row.full = (row.full || '').trim().toLowerCase()
+          row.acronym = (row.acronym || '').trim()
+          if (row.full && row.acronym) {
+            if (acc[row.full]) log.error('acronyms: parsing', list, row, 'duplicate')
+            acronyms[row.full] = row.acronym
+          }
+          else {
+            log.error('acronyms: parsing', list, row, 'incomplete')
+          }
+        }
       }
-    }
-    catch (err) {
-      log.error('error parsing acronym list', list)
-      this.acronyms[list] = {}
+      catch (err) {
+        log.error('error parsing acronym list', list)
+      }
+
+      this.acronyms[list] = acronyms
     }
 
     return this.$text(this.acronyms[list][this.chunk.toLowerCase()] || this.chunk)
