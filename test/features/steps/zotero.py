@@ -34,7 +34,7 @@ import socket
 from pathlib import PurePath
 from diff_match_patch import diff_match_patch
 from pygit2 import Repository
-from  lxml import etree
+from lxml import etree
 import zipfile
 
 from ruamel.yaml import YAML
@@ -279,7 +279,7 @@ class Zotero:
 
   def start(self):
     self.needs_restart = False
-    profile = self.create_profile()
+    self.profile = profile = self.create_profile()
     shutil.rmtree(os.path.join(profile.path, self.client, 'better-bibtex'), ignore_errors=True)
 
     cmd = f'{shlex.quote(profile.binary)} -P {shlex.quote(profile.name)} -jsconsole -purgecaches -ZoteroDebugText {self.redir} {shlex.quote(profile.path + ".log")} 2>&1'
@@ -342,6 +342,8 @@ class Zotero:
 
     self.execute('await Zotero.BetterBibTeX.TestSupport.reset(scenario)', scenario=scenario)
     self.preferences = Preferences(self)
+    for csv in glob.glob(os.path.join(self.profile.path, 'better-bibtex', '*.csv')):
+      os.remove(csv)
 
   def reset_cache(self):
     self.execute('Zotero.BetterBibTeX.TestSupport.resetCache()')

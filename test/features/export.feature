@@ -304,6 +304,11 @@ Feature: Export
     Examples:
       | Export library to Better CSL JSONYAML failed when standard items included. #2212 | 1 |
 
+  Scenario: Journal acronym from acronyms list not used in generated citation key #2634
+    And I install "export/*.csv" in the better bibtex directory as "acronyms.csv"
+    And I import 1 reference from "export/*.json"
+    Then an export using "Better BibLaTeX" should match "export/*.biblatex"
+
   Scenario: Omit URL export when DOI present. #131
     When I import 3 references with 2 attachments from "export/*.json" into a new collection
     And I set preference .DOIandURL to "both"
@@ -645,8 +650,9 @@ Feature: Export
   # tests the cache
   @use.with_client=zotero @use.with_whopper=true @timeout=3000 @whopper
   Scenario: Really Big whopping library
-  When I set preference .citekeySearch to false
-  And I restart Zotero with "1287" + "export/*.json"
+    When I set preference .citekeySearch to false
+    And I restart Zotero with "1287" + "export/*.json"
+
   # And I reset the cache
   # And I export the library 1 times using "id:9cb70025-a888-4a29-a210-93ec52da40d4"
   # And an export using "Better BibTeX" should match "export/*.bibtex"
@@ -672,7 +678,6 @@ Feature: Export
   # And I wait 5 seconds
   # And I wait at most 100 seconds until all auto-exports are done
   # Then "/tmp/autoexport.bib" should match "export/*.bibtex"
-
   @1495
   Scenario: use author dash separation rather than camel casing in citekey #1495
     Given I import 1 reference from "export/*.json"

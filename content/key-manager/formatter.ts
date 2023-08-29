@@ -33,7 +33,7 @@ import { transliterate as arabic } from './arabic'
 import { transliterate } from 'transliteration/dist/node/src/node/index'
 import { ukranian, mongolian, russian } from './cyrillic'
 
-import { dictsync as csv2dict } from '../load-csv'
+import { listsync as csv2list } from '../load-csv'
 
 import BabelTag from '../../gen/babel/tag.json'
 type ValueOf<T> = T[keyof T]
@@ -1066,12 +1066,19 @@ class PatternFormatter {
       const acronyms: Record<string, string> = {}
 
       try {
-        for (const row of csv2dict(OS.Path.join(Zotero.BetterBibTeX.dir, `${list}.csv`))) {
-          row.full = (row.full || '').trim().toLowerCase()
-          row.acronym = (row.acronym || '').trim()
-          if (row.full && row.acronym) {
-            if (acronyms[row.full]) log.error('acronyms: parsing', list, row, 'duplicate')
-            acronyms[row.full] = row.acronym
+        for (const row of csv2list(OS.Path.join(Zotero.BetterBibTeX.dir, `${list}.csv`))) {
+          if (row.length !== 2) {
+            log.error('unexpected row in', `${list}.csv`, ':', row)
+            continue
+          }
+          if (row[0] === 'full' && row[1] === 'acronym') continue
+
+          let [full, acronym] = row
+          full = full.trim().toLowerCase()
+          acronym = acronym.trim()
+          if (full && acronym) {
+            if (acronyms[full]) log.error('acronyms: parsing', list, row, 'duplicate')
+            acronyms[full] = acronym
           }
           else {
             log.error('acronyms: parsing', list, row, 'incomplete')

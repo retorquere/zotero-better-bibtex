@@ -162,6 +162,11 @@ def step_impl(context, source, target, baseline):
 
   assert_equal_diff(citations(baseline), citations(target))
 
+@step(r'I install "{source}" in the better bibtex directory as "{target}"')
+def step_impl(context, source, target):
+  source = expand_scenario_variables(context, source)
+  shutil.copyfile(os.path.join('test/fixtures', source), os.path.join(context.zotero.profile.path, 'zotero/better-bibtex', target))
+
 @step(r'I import {references:d} references from "{source}"')
 def step_impl(context, references, source):
   source = expand_scenario_variables(context, source)

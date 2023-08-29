@@ -11,16 +11,6 @@ async function read(path: string): Promise<string> {
   }
 }
 
-function readsync(path: string): string {
-  try {
-    return Zotero.File.getContents(path) as string
-  }
-  catch (err) {
-    log.error('csv.readsync', path, 'error:', err)
-    return ''
-  }
-}
-
 function string2dict(path: string, data: string): Record<string, any>[] {
   if (!data) return []
 
@@ -46,9 +36,9 @@ export async function dict(path: string): Promise<Record<string, any>[]> {
 }
 
 export function listsync(path: string): string[][] {
-  return string2list(path, readsync(path))
+  return string2list(path, Zotero.BetterBibTeX.getContents(path))
 }
 
 export function dictsync(path: string): Record<string, any>[] {
-  return string2dict(path, readsync(path))
+  return string2dict(path, Zotero.BetterBibTeX.getContents(path))
 }

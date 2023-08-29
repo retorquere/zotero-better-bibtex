@@ -1,0 +1,82 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "autoAbbrev": true,
+      "citekeyFormat": "authEtal2(sep=_).postfix(_) + journal(abbrev=\"off\").acronym + year\n",
+      "keyScope": "global",
+      "qualityReport": true,
+      "warnBulkModify": 0
+    }
+  },
+  "items": [
+    {
+      "DOI": "10.1016/j.epsl.2004.03.011",
+      "ISSN": "0012-821X",
+      "abstractNote": "Variations in the mean temperature of the ocean, on time scales from millennial to millions of years, in the past and projected for the future, are large enough to impact the geochemistry of the carbon, oxygen, and methane geochemical systems. In each system, the time scale of the temperature perturbation is key. On time frames of 1100 ky, atmospheric CO2 is controlled by the ocean. CO2 temperature-dependent solubility and greenhouse forcing combine to create an amplifying feedback with ocean temperature; the CaCO3 cycle increases this effect somewhat on time scales longer than <510 ky. The CO2/T feedback can be seen in the climate record from Vostok, and a model including the temperature feedback predicts that 10% of the fossil fuel CO2 will reside in the atmosphere for longer than 100 ky. Timing is important for oxygen, as well; the atmosphere controls the ocean on short time scales, but ocean anoxia controls atmospheric pO2 on million-year time scales and longer. Warming the ocean to Cretaceous temperatures might eventually increase pO2 by approximately 25%, in the absence of other perturbations. The response of methane clathrate to climate change in the coming century will probably be small, but on longer time scales of 110 ky, there may be a positive feedback with ocean temperature, amplifying the long-term climate impact of anthropogenic CO2 release.",
+      "accessDate": "2023-08-28T06:04:40Z",
+      "citationKey": "Archer_etal_EarthandPlanetaryScienceLetters2004",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "David",
+          "lastName": "Archer"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Pamela",
+          "lastName": "Martin"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Bruce",
+          "lastName": "Buffett"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Victor",
+          "lastName": "Brovkin"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Stefan",
+          "lastName": "Rahmstorf"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Andrey",
+          "lastName": "Ganopolski"
+        }
+      ],
+      "date": "2004-05-30",
+      "issue": "2",
+      "itemID": 1,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "Earth and Planetary Science Letters",
+      "libraryCatalog": "ScienceDirect",
+      "pages": "333-348",
+      "publicationTitle": "Earth and Planetary Science Letters",
+      "tags": [
+        {
+          "tag": "carbon cycle",
+          "type": 1
+        },
+        {
+          "tag": "climate",
+          "type": 1
+        },
+        {
+          "tag": "ocean temperature",
+          "type": 1
+        }
+      ],
+      "title": "The importance of ocean temperature to global biogeochemistry",
+      "url": "https://www.sciencedirect.com/science/article/pii/S0012821X04001839",
+      "volume": "222"
+    }
+  ]
+}
