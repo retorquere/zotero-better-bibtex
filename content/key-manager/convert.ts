@@ -213,7 +213,7 @@ ${compiled}
 
         if (!field) this.error(identifier, `Zotero items do not have a field named "${identifier.name}"`)
 
-        compiled += `.${prefix}getField("${name}")`
+        compiled += `.${prefix}getField("${field}")`
       }
       else {
         const name = `${prefix}${identifier.name.toLowerCase()}`
