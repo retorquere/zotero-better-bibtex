@@ -822,7 +822,7 @@ export class BetterBibTeX {
 
     const file = new FileUtils.File(path)
     // cannot use await OS.File.exists here because we may be invoked in noWait mod
-    if (!file.exists())) {
+    if (!file.exists()) {
       log.error('BetterBibTeX.getContents:', path, 'does not exist')
       return null
     }
