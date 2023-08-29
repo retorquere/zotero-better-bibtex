@@ -179,53 +179,56 @@ ${compiled}
     let compiled = 'this'
     let prefix = '$'
     while (flat.length) {
-      const identifier = this.get(flat.shift(), ['Identifier'].concat(prefix === '$' ? ['BinaryExpression', 'LogicalExpression', 'ConditionalExpression'] : []))
+      const head = this.get(flat.shift(), ['Identifier'].concat(prefix === '$' ? ['BinaryExpression', 'LogicalExpression', 'ConditionalExpression'] : []))
 
-      if (identifier.type === 'ConditionalExpression') {
-        const test = this.$formula(identifier.test, true)
-        const consequent = this.$formula(identifier.consequent, true)
-        const alternate = this.$formula(identifier.alternate, true)
+      if (head.type === 'ConditionalExpression') {
+        const test = this.$formula(head.test, true)
+        const consequent = this.$formula(head.consequent, true)
+        const alternate = this.$formula(head.alternate, true)
         compiled += `.$text(${test} ? ${consequent} : ${alternate})`
       }
-      else if (identifier.type === 'LogicalExpression') {
-        const left = this.$formula(identifier.left, true)
-        const right = this.$formula(identifier.right, true)
+      else if (head.type === 'LogicalExpression') {
+        const left = this.$formula(head.left, true)
+        const right = this.$formula(head.right, true)
         compiled += `.$text(${left} || ${right})`
       }
-      else if (identifier.type === 'BinaryExpression') {
-        const formula = this.$formula(identifier, true)
+      else if (head.type === 'BinaryExpression') {
+        const formula = this.$formula(head, true)
         compiled += `.$text(${formula})`
       }
-      else if (prefix === '$' && identifier.name[0] === identifier.name[0].toUpperCase()) { // direct property access
-        const field = items.name.field[identifier.name.toLowerCase()]
-
-        if (flat[0] && flat[0].type === 'CallExpression') {
-          const name = `${prefix}${identifier.name.toLowerCase()}`
-          const $name = alias[name] || name
-          const method = methods[$name === '$len' ? '_len' : $name] // fake out $len resolution by resolving it as _len
-          if (method) {
-            this.error(flat[0], `did you mean to use "${name}" instead of "${identifier.name}"?`)
-          }
-          else if (field) {
-            this.error(flat[0], `"${field}" does not take arguments`)
-          }
-        }
-
-        if (!field) this.error(identifier, `Zotero items do not have a field named "${identifier.name}"`)
-
-        compiled += `.${prefix}getField("${field}")`
-      }
       else {
-        const name = `${prefix}${identifier.name.toLowerCase()}`
-        const $name = alias[name] || name
-        const method = methods[$name === '$len' ? '_len' : $name] // fake out $len resolution by resolving it as _len
-        if (!method) this.error(identifier, `Unknown ${prefix === '$' ? 'function' : 'filter'} ${identifier.name}`)
+        const looks_like_field = prefix === '$' && head.name[0] === head.name[0].toUpperCase()
+        const field = items.name.field[head.name.toLowerCase()]
 
-        compiled += `.${method.name}(`
-        if (flat[0] && flat[0].type === 'CallExpression') {
-          compiled += this.$arguments(method, flat.shift())
+        const looks_like_method = !looks_like_field
+        let method_name = `${prefix}${head.name.toLowerCase()}`
+        method_name = alias[method_name] || method_name
+        const method = methods[method_name === '$len' ? '_len' : method_name] // fake out $len resolution by resolving it as _len
+        const methodCall = flat[0]?.type === 'CallExpression'
+
+        if (looks_like_field && field && !methodCall) {
+          compiled += `.${prefix}getField("${field}")`
         }
-        compiled += ')'
+        else if (looks_like_method && method) {
+          compiled += `.${method.name}(`
+          if (methodCall) compiled += this.$arguments(method, flat.shift())
+          compiled += ')'
+        }
+        else if (looks_like_field && method) {
+          this.error(head, `did you mean to use "${head.name.replace(/^./, match => match.toLowerCase())}" instead of "${head.name}"?`)
+        }
+        else if (looks_like_method && prefix === '$' && field) {
+          this.error(head, `did you mean to use "${head.name.replace(/^./, match => match.toUpperCase())}" instead of "${head.name}"?`)
+        }
+        else if (looks_like_field && field && methodCall) {
+          this.error(head, `item field access "${head.name}" does not take arguments`)
+        }
+        else if (looks_like_field) {
+          this.error(head, `Zotero items do not have a field named "${head.name}"`)
+        }
+        else {
+          this.error(head, `Unknown ${prefix === '$' ? 'function' : 'filter'} ${head.name}`)
+        }
       }
 
       prefix = '_'
