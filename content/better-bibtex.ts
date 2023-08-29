@@ -819,13 +819,16 @@ export class BetterBibTeX {
       log.error('BetterBibTeX.getContents: no path')
       return null
     }
+
+    const file = new FileUtils.File(path)
     // cannot use await OS.File.exists here because we may be invoked in noWait mod
-    else if (!((new FileUtils.File(path)).exists())) {
+    if (!file.exists())) {
       log.error('BetterBibTeX.getContents:', path, 'does not exist')
       return null
     }
+
     try {
-      return Zotero.File.getContents(path) as string
+      return Zotero.File.getContents(file) as string
     }
     catch (err) {
       log.error('BetterBibTeX.getContents:', path, `${err}`)

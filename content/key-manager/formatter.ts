@@ -1057,7 +1057,7 @@ class PatternFormatter {
 
   /**
    * Does an acronym lookup for the text.
-   * @param list lookup list. The list must be a CSV file and live in the `Zotero/better-bibtex` directory in your Zotero profile, and must use commas as the delimiter.
+   * @param list lookup list. The list must be a CSV file and live in the `Zotero/better-bibtex` directory in your Zotero profile, and must use commas as the delimiter. Changes to this list are detected at BBT start; you must either restart Zotero (Zotero 6) or disable/enable BBT (Zotero 7) to pick them up.
    */
   public _acronym(list='acronyms') {
     list = list.replace(/\.csv$/i, '')
