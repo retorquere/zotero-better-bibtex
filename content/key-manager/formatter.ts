@@ -1070,7 +1070,7 @@ class PatternFormatter {
           row.full = (row.full || '').trim().toLowerCase()
           row.acronym = (row.acronym || '').trim()
           if (row.full && row.acronym) {
-            if (acc[row.full]) log.error('acronyms: parsing', list, row, 'duplicate')
+            if (acronyms[row.full]) log.error('acronyms: parsing', list, row, 'duplicate')
             acronyms[row.full] = row.acronym
           }
           else {

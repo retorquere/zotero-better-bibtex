@@ -197,9 +197,22 @@ ${compiled}
         compiled += `.$text(${formula})`
       }
       else if (prefix === '$' && identifier.name[0] === identifier.name[0].toUpperCase()) { // direct property access
-        if (flat[0] && flat[0].type === 'CallExpression') this.error(flat[0], `field "${identifier.name}" cannot be called as a function`)
-        const name = items.name.field[identifier.name.toLowerCase()]
-        if (!name) this.error(identifier, `Zotero items do not have a field named "${identifier.name}"`)
+        const field = items.name.field[identifier.name.toLowerCase()]
+
+        if (flat[0] && flat[0].type === 'CallExpression') {
+          const name = `${prefix}${identifier.name.toLowerCase()}`
+          const $name = alias[name] || name
+          const method = methods[$name === '$len' ? '_len' : $name] // fake out $len resolution by resolving it as _len
+          if (method) {
+            this.error(flat[0], `did you mean to use "${name}" instead of "${identifier.name}"?`)
+          }
+          else if (field) {
+            this.error(flat[0], `"${field}" does not take arguments`)
+          }
+        }
+
+        if (!field) this.error(identifier, `Zotero items do not have a field named "${identifier.name}"`)
+
         compiled += `.${prefix}getField("${name}")`
       }
       else {
