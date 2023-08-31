@@ -67,7 +67,7 @@ export async function startup({ resourceURI, rootURI = resourceURI.spec }, reaso
 
     const aomStartup = Cc['@mozilla.org/addons/addon-manager-startup;1'].getService(Ci.amIAddonManagerStartup)
     const manifestURI = Services.io.newURI(`${rootURI}manifest.json`)
-    chromeHandle = aomStartup.registerChrome(manifestURI, require('../chrome.json'))
+    chromeHandle = aomStartup.registerChrome(manifestURI, require('../gen/chrome.json'))
 
     if (Zotero.BetterBibTeX) throw new Error('Better BibTeX is already started')
 

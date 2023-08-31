@@ -9,6 +9,7 @@ behave
 binpacking
 boto3
 bs4
+compact-json
 diff-match-patch
 fluent
 fluent.runtime

@@ -2,6 +2,12 @@
 
 import json
 import re
+from compact_json import Formatter, EolStyle
+
+formatter = Formatter()
+formatter.indent_spaces = 2
+formatter.max_inline_complexity = 10
+formatter.json_eol_style = EolStyle.LF
 
 manifest = []
 with open('chrome.manifest') as f:
@@ -11,5 +17,5 @@ with open('chrome.manifest') as f:
     line = re.split(r'\s+', line)
     if line[0] in ['content', 'locale']:
       manifest.append(line)
-with open('chrome.json', 'w') as f:
-  json.dump(manifest, f, indent='  ')
+with open('gen/chrome.json', 'w') as f:
+  f.write(formatter.serialize(manifest))
