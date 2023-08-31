@@ -98,7 +98,7 @@ What to do when encountering a TeX command the parser does not know about. Pleas
 
 default: `5`
 
-I've had reports where Zotero notifies extensions that items have changed, but if BBT then actually
+I've had reports where Zotero notifies plugins that items have changed, but if BBT then actually
 retrieves those same items, Zotero complains they "haven't been saved yet". Super. This preference sets
 the number of microseconds BBT should wait after being notified before acting on the changed items.
 
