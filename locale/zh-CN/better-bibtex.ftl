@@ -364,38 +364,38 @@ unused_better-bibtex_auto-export_too-long_suggest-idle = 为了最大程度地�
 unused_better-bibtex_auto-export_too-long_title = 高耗时自动导出
 unused_better-bibtex_db_corrupt = 打开您的数据库时出错
 unused_better-bibtex_db_corrupt_explanation =
-    There was en error opening your database. This could mean your database is corrupt. The error reported by Zotero is: { $error }.
+    打开数据库时出现错误。这可能意味着您的数据库已损坏。Zotero 报告的错误为：{ $error }。
     
-    To proceed, choose whether you want to:
+    如要继续，请选择您是否希望：
     
-    1. have Zotero attempt to roll back to a previous backup by restarting now
-    2. reset the Better BibTeX database and proceed
-    3. quit Zotero and seek support to attempt to restore the database.
+    1. 通过立即重新启动 Zotero 使其尝试回滚至以前的备份
+    2. 重置 Better BibTeX 数据库并继续
+    3. 退出 Zotero 并寻求数据库恢复支持
     
-    Resetting will allow you to proceed, but your citation keys will be regenerated, and auto-exports will have to be set up anew. A backup of the corrupt database will be retained in case.
-unused_better-bibtex_db_corrupt_quit = Quit Zotero now
-unused_better-bibtex_db_corrupt_reset = Reset and proceed
-unused_better-bibtex_db_corrupt_restore = Restart Zotero and attempt restore
-unused_better-bibtex_error-report_out-of-memory = Your system likely ran out of memory assembling the log file. Please set '{ $preference }' to a value lower than the current { $limit }, restart, and try again.
-unused_better-bibtex_key-manager_regenerate = (re)generating citation keys
-unused_better-bibtex_key-manager_regenerate_confirm = (re)generating { $n } citekeys, proceed?
-unused_better-bibtex_preferences_advanced = Advanced
-unused_better-bibtex_preferences_advanced_export_workers = Parallel background exports:
-unused_better-bibtex_preferences_advanced_import_unabbreviate = Expand abbreviated journal titles on import using list:
-unused_better-bibtex_preferences_advanced_import_unabbreviate_off = None
+    重置将允许您继续，但您的引用将被重新生成，且自动导出需要重新配置。已损坏的数据库将被备份。
+unused_better-bibtex_db_corrupt_quit = 立即退出 Zotero
+unused_better-bibtex_db_corrupt_reset = 重置并继续
+unused_better-bibtex_db_corrupt_restore = 重启 Zotero 并尝试恢复
+unused_better-bibtex_error-report_out-of-memory = 你的系统可能因为组装日志文件而耗尽了内存。请将“{ $preference }”设置为低于当前的 { $limit }，重新启动，然后再次尝试。
+unused_better-bibtex_key-manager_regenerate = 正在（重新）生成引用
+unused_better-bibtex_key-manager_regenerate_confirm = 正在（重新）生成 { $n } 条引用，继续吗？
+unused_better-bibtex_preferences_advanced = 高级
+unused_better-bibtex_preferences_advanced_export_workers = 并行后台导出：
+unused_better-bibtex_preferences_advanced_import_unabbreviate = 使用该列表展开期刊名缩写：
+unused_better-bibtex_preferences_advanced_import_unabbreviate_off = 无
 unused_better-bibtex_preferences_advanced_tab_citekeys = 引用
 unused_better-bibtex_preferences_advanced_tab_export = 导出
-unused_better-bibtex_preferences_advanced_warning = Settings here will impact performance, and can cause breakage of exports. Proceed with care.
+unused_better-bibtex_preferences_advanced_warning = 这里的设置会影响性能，并且会造成导出终端。请小心操作。
 unused_better-bibtex_preferences_auto-export_collection = 分类
 unused_better-bibtex_preferences_auto-export_library = 库
-unused_better-bibtex_preferences_auto-export_warn_long-running = Warn me when auto-exports take longer than (seconds)
-unused_better-bibtex_preferences_citekey_aux-scanner = BibTeX AUX/Markdown scanner
+unused_better-bibtex_preferences_auto-export_warn_long-running = 发出警告，若自动导出耗时超过（秒）
+unused_better-bibtex_preferences_citekey_aux-scanner = BibTeX AUX/Markdown 扫描器
 unused_better-bibtex_preferences_citekey_citekeys = 引用
-unused_better-bibtex_startup_db-upgrade = Database cleanup { $n }/{ $total }...
-unused_better-bibtex_startup_db-upgrade_not-editable = { $n } items not upgraded because they are read-only
-unused_better-bibtex_startup_db-upgrade_saving = Database cleanup, saving...
-unused_better-bibtex_startup_installing_translators_new = Better BibTeX: new translators installed
-unused_better-bibtex_startup_installing_translators_new_dont-ask-again = Don't ask again
+unused_better-bibtex_startup_db-upgrade = 数据库清理 { $n }/{ $total }…
+unused_better-bibtex_startup_db-upgrade_not-editable = { $n } 个条目未被更新，因为它们是只读的
+unused_better-bibtex_startup_db-upgrade_saving = 数据库清理完成，保存中…
+unused_better-bibtex_startup_installing_translators_new = Better BibTeX：新的翻译器已安装
+unused_better-bibtex_startup_installing_translators_new_dont-ask-again = 不再询问
 unused_better-bibtex_startup_installing_translators_new_drag-and-drop = New Better BibTeX translators have been installed. If you want to use these for drag-and-drop (e.g. to drag and drop citekeys or citations), you will need to restart once to activate them.
 unused_better-bibtex_startup_loading-keys = Loading citation keys
 unused_better-bibtex_startup_loading_databases = Loading databases
