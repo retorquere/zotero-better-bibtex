@@ -43,7 +43,7 @@ better-bibtex_error-report_save =
 better-bibtex_error-report_submission-in-progress = 正在提交调试日志，请稍候。
 better-bibtex_error-report_submitted = 您的调试日志已被提交。
 better-bibtex_export-options_keep-updated = 保持更新
-better-bibtex_export-options_reminder = 您确定不使用"{ $translator }"吗？
+better-bibtex_export-options_reminder = 您确定不使用“{ $translator }”吗？
 better-bibtex_export-options_worker = 后台导出
 unused_better-bibtex_first-run = 
     .title = 欢迎使用 Better BibTeX for Zotero
@@ -64,14 +64,14 @@ unused_better-bibtex_first-run_drag-and-drop_enable =
     .label = 启用拖放引用
 unused_better-bibtex_first-run_drag-and-drop_explanation = 在 BBT 的帮助下，您可以将条目拖放至您选择的 LaTeX 编辑器来输入引用。您希望现在启用该功能吗？
 unused_better-bibtex_first-run_exporting = 使用 BBT 导出
-unused_better-bibtex_first-run_exporting_explanation = 使用 BBT 导出与使用 Zotero 提供的格式导出方法相同，但请确保您选择了正确的格式：在格式列表中，不要选择”BibTeX“，请选择
+unused_better-bibtex_first-run_exporting_explanation = 使用 BBT 导出与使用 Zotero 提供的格式导出方法相同，但请确保您选择了正确的格式：在格式列表中，不要选择“BibTeX”，请选择
 unused_better-bibtex_first-run_import-strings_enable = 
     .label = 导入时展开 @string 期刊名
 unused_better-bibtex_first-run_import-strings_explanation = 某些 bibtex 文件使用 @string 变量表示期刊名。若您启用此项，BBT 将参考一个常见期刊 ID 列表以将这些变量替换为完整期刊名。
 unused_better-bibtex_first-run_import_unabbreviate = 导入时展开 bibtex 字符串和期刊缩写
 unused_better-bibtex_first-run_import_unabbreviate_enable = 
     .label = 导入时展开期刊名缩写
-unused_better-bibtex_first-run_import_unabbreviate_explanation = 某些 bibtex 文件在 "journal" 字段中使用了期刊名缩写。若您启用此项，导入 bibtex 文件时 BBT 会尝试将期刊名缩写展开为全名。
+unused_better-bibtex_first-run_import_unabbreviate_explanation = 某些 bibtex 文件在“journal”字段中使用了期刊名缩写。若您启用此项，导入 bibtex 文件时 BBT 会尝试将期刊名缩写展开为全名。
 unused_better-bibtex_first-run_welcome = Better BibTeX for Zotero（通常简称为 BBT） 旨在增强 Zotero 对 LaTeX 和 Markdown 用户而言的实用性。BBT 有很多配置选项——如果您感兴趣，可以在首选项中查看——但让我们从几个简单的选择开始。
 better-bibtex_item-pane_citekey = 引用
 better-bibtex_preferences_advanced_export_brace-protection = 
@@ -93,15 +93,15 @@ better-bibtex_preferences_advanced_extra-merge = 合并条目时，也合并：
 better-bibtex_preferences_advanced_extra-merge-csl = 
     .label = 被 Zotero 识别为 CSL 字段的字段
 better-bibtex_preferences_advanced_extra_merge-citekeys = 
-    .label = 引用，合并至 bib(la)tex 的 "ids" 字段
+    .label = 引用，合并至 bib(la)tex 的“ids”字段
 better-bibtex_preferences_advanced_extra_merge-tex = 
-    .label = 它们的 "tex.*" 字段
+    .label = 它们的“tex.*”字段
 better-bibtex_preferences_advanced_ideographs = 引用中的表意文字
     .label = { better-bibtex_preferences_advanced_ideographs }
 better-bibtex_preferences_advanced_ideographs_jieba = 
-    .label = 启用引用格式的 "jieba"/"pinyin" 过滤器。使用大量内存。
+    .label = 启用引用格式的“jieba”/“pinyin”过滤器。使用大量内存。
 better-bibtex_preferences_advanced_ideographs_kuroshiro = 
-    .label = 使用 kuroshiro 将日文姓名/标题转换为罗马音。使用大量内存。
+    .label = 使用“kuroshiro”将日文姓名/标题转换为罗马音。使用大量内存。
 better-bibtex_preferences_advanced_import_case-protection = 为括号插入大小写保护：
 better-bibtex_preferences_advanced_import_case-protection_as-needed = 最少
     .label = { better-bibtex_preferences_advanced_import_case-protection_as-needed }
@@ -110,35 +110,36 @@ better-bibtex_preferences_advanced_import_case-protection_off = 否
 better-bibtex_preferences_advanced_import_case-protection_on = 是
     .label = { better-bibtex_preferences_advanced_import_case-protection_on }
 better-bibtex_preferences_advanced_import_case-protection_warning =
-    On import, BBT will add case-protection (<span class="nocase">...<span>) to titles that have words in { "{" }Braces{ "}" }.
+    导入时，BBT 将为标题中用{"{"}大括号{"}"}括起来的单词添加大小写保护（<span class="nocase">...</span>）。
     
-    There's plenty of bib(la)tex files out there that do this a little overzealously, and you may not like the resulting HTML code in your items, even though this is what the braces mean in bib(la)tex, and Zotero supports it.
+    该做法对许多 bib(la)tex 文件来说过于热心，且您可能不希望条目含有 HTML 代码，尽管这就是大括号在 bib(la)tex 中的含义，而且 Zotero 也支持它。
     
-    If you turn this off, the markup is omitted during import. When you select 'yes', all braces that bib(la)tex would interpret as case protection (which is not all of them) are converted to `span` elements. In `minimal` mode, the number of `span` elements is minimized.
-better-bibtex_preferences_advanced_import_sentence-case = Sentence-case titles on import:
+    若您选择“否”，导入时标记符号将被省略。若您选择“是”，bib(la)tex 认为需要大小写保护（并非所有情况）的大括号将被转换为“span”元素。若您选择“最少”，“span”元素的数量将尽可能地少。
+better-bibtex_preferences_advanced_import_sentence-case = 导入时格式化标题为句首大写：
 better-bibtex_preferences_advanced_import_sentence-case_off = 
-    .label = no (import titles as-is)
+    .label = 否（按原样导入标题）
 better-bibtex_preferences_advanced_import_sentence-case_on = 
     .label = 是
 better-bibtex_preferences_advanced_import_sentence-case_on-guess = 
-    .label = yes, but try to exclude already-sentence-cased titles
+    .label = 是，但尝试排除已句首大写的标题
 better-bibtex_preferences_advanced_import_sentence-case_warning =
-    Bib(La)TeX entries must be stored in Title Case; Zotero items are expected to be entered as sentence-case.
+    Bib(La)TeX 条目必须按标题格式大小写保存；Zotero 条目应为句首大写。
     
-    With this option on, BBT will try to sentence-case during import. This sentence-casing uses heuristics, no natural language processing is performed, and the results are not perfect.
+    若您选择“是”，BBT 将尝试在导入时按句首大写格式化标题。该过程使用启发式算法，没有进行自然语言处理，结果并不完美。
     
-    You can turn this off, but you may then also want to disable `Apply title-casing to titles` (which has its own problems, see the help entry for that option on this page).
-    With 'yes, but try to exclude already-sentence-cased titles', BBT will attempt to detect titles that are already sentence cased and leave them as-is on import.
+    您可以禁用该选项，这时或许您还希望禁用“对标题应用标题大小写格式”（该选项自身也有问题，详见本页上该选项的帮助）。
+    
+    若您选择“是，但尝试排除已句首大写的标题”，BBT 将尝试检测标题是否已经为句首大写，若是，则将按原样导入。
 better-bibtex_preferences_advanced_tab_postscript = postscript
     .label = { better-bibtex_preferences_advanced_tab_postscript }
 better-bibtex_preferences_advanced_tab_strings = @string definitions
     .label = { better-bibtex_preferences_advanced_tab_strings }
 better-bibtex_preferences_auto-abbrev = 
-    .label = Automatically abbreviate journal title if none is set explicitly
-better-bibtex_preferences_auto-abbrev_style = Abbreviation style:
-better-bibtex_preferences_auto-export = Automatic export
-better-bibtex_preferences_auto-export_delay = Delay auto-export for
-better-bibtex_preferences_auto-export_explanation = You can only review and remove exports here. To add an auto-export, perform an export as usual and check the 'Keep updated' option presented there.
+    .label = 若无显式设置，自动缩写期刊标题
+better-bibtex_preferences_auto-abbrev_style = 缩写格式：
+better-bibtex_preferences_auto-export = 自动导出
+better-bibtex_preferences_auto-export_delay = 延迟自动导出
+better-bibtex_preferences_auto-export_explanation = 您只能在这里查看和移除导出。要添加自动导出，照常执行导出并启用那里的“保持更新”选项。
 better-bibtex_preferences_auto-export_fields_cached = 
     .label = Cached
 better-bibtex_preferences_auto-export_fields_error = Error
@@ -318,7 +319,7 @@ better-bibtex_preferences_rescan-citekeys =
     .label = Re-scan pinned citekeys
 better-bibtex_preferences_reset-cache = 
     .label = Reset cache
-better-bibtex_preferences_tab_auto-export = Automatic export
+better-bibtex_preferences_tab_auto-export = 自动导出
     .label = { better-bibtex_preferences_tab_auto-export }
 better-bibtex_preferences_tab_citekey = Citation keys
     .label = { better-bibtex_preferences_tab_citekey }
