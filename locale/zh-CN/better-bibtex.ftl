@@ -27,7 +27,7 @@ better-bibtex_error-report_include-cache =
     .label = 包含缓存
 better-bibtex_error-report_items = 
     .label = 条目
-better-bibtex_error-report_not-reviewed = 仅当 ID 在 GitHub Issues 中被引用时，调试日志才会被审阅。
+better-bibtex_error-report_not-reviewed = 仅当您在 GitHub Issues 中引用了日志 ID 时，调试日志才会被审阅。
 better-bibtex_error-report_post-to-git-hub = 请在 GitHub 上发布相关信息 (https://github.com/retorquere/zotero-better-bibtex/issues)。您提交的 Issue 描述中应包含该调试日志 ID，问题描述，以及重现该问题的必要步骤。
 better-bibtex_error-report_report-id = 调试日志 ID：
 better-bibtex_error-report_restart-with-logging-enabled = 
@@ -51,7 +51,7 @@ unused_better-bibtex_first-run =
 unused_better-bibtex_first-run_citekey-format = 您的引用
 unused_better-bibtex_first-run_citekey-format_bbt = 
     .label = 使用 BBT 默认引用格式
-unused_better-bibtex_first-run_citekey-format_explanation = BBT 将为您的条目生成引用。引用的生成是高度可配置的，且您可以覆盖已生成的引用，但现在您需要选择默认生成格式。您可以随时在首选项中修改相关配置。
+unused_better-bibtex_first-run_citekey-format_explanation = BBT 将为您的条目生成引用。引用的生成是高度可配置的，且您可以覆写已生成的引用，但现在您需要选择默认生成格式。您可以随时在首选项中修改相关配置。
 unused_better-bibtex_first-run_citekey-format_explanation_bbt = 将按 BBT 默认格式生成新引用。若您希望使用不同的格式，请在首选项中修改相应配置，保存后选中所有条目，然后在右键菜单中选择“刷新”。
 unused_better-bibtex_first-run_citekey-format_explanation_example = 您的引用将形如
 unused_better-bibtex_first-run_citekey-format_explanation_zotero = 如果您已经有文档在使用由 Zotero 而不是 BBT 生成的引用，请选择该选项。这将忠实地复制 Zotero 生成的引用，包括 Zotero 引用生成器中已知的限制。仅在您需要引用与 Zotero 生成的完全相同时使用此选项。
@@ -99,9 +99,9 @@ better-bibtex_preferences_advanced_extra_merge-tex =
 better-bibtex_preferences_advanced_ideographs = 引用中的表意文字
     .label = { better-bibtex_preferences_advanced_ideographs }
 better-bibtex_preferences_advanced_ideographs_jieba = 
-    .label = 启用引用格式的“jieba”/“pinyin”过滤器。使用大量内存。
+    .label = 启用引用格式的“jieba”/“pinyin”过滤器。将消耗大量内存。
 better-bibtex_preferences_advanced_ideographs_kuroshiro = 
-    .label = 使用“kuroshiro”将日文姓名/标题转换为罗马音。使用大量内存。
+    .label = 使用“kuroshiro”将日文姓名/标题转换为罗马音。将消耗大量内存。
 better-bibtex_preferences_advanced_import_case-protection = 为括号插入大小写保护：
 better-bibtex_preferences_advanced_import_case-protection_as-needed = 最少
     .label = { better-bibtex_preferences_advanced_import_case-protection_as-needed }
@@ -112,9 +112,9 @@ better-bibtex_preferences_advanced_import_case-protection_on = 是
 better-bibtex_preferences_advanced_import_case-protection_warning =
     导入时，BBT 将为标题中用{"{"}大括号{"}"}括起来的单词添加大小写保护（<span class="nocase">...</span>）。
     
-    该做法对许多 bib(la)tex 文件来说过于热心，且您可能不希望条目含有 HTML 代码，尽管这就是大括号在 bib(la)tex 中的含义，而且 Zotero 也支持它。
+    该功能对许多 bib(la)tex 文件来说是多余的，且您可能不希望条目含有 HTML 代码，尽管这就是大括号在 bib(la)tex 中的含义，而且 Zotero 也支持它。
     
-    若您选择“否”，导入时标记符号将被省略。若您选择“是”，bib(la)tex 认为需要大小写保护（并非所有情况）的大括号将被转换为“span”元素。若您选择“最少”，“span”元素的数量将尽可能地少。
+    若您选择“否”，导入时标记符号将被省略。若您选择“是”，需要大小写保护的大括号（由 bib(la)tex 决定，并非所有情况）将被转换为“span”元素。若您选择“最少”，“span”元素的数量将尽可能地少。
 better-bibtex_preferences_advanced_import_sentence-case = 导入时格式化标题为句首大写：
 better-bibtex_preferences_advanced_import_sentence-case_off = 
     .label = 否（按原样导入标题）
@@ -125,9 +125,9 @@ better-bibtex_preferences_advanced_import_sentence-case_on-guess =
 better-bibtex_preferences_advanced_import_sentence-case_warning =
     Bib(La)TeX 条目必须按标题格式大小写保存；Zotero 条目应为句首大写。
     
-    若您选择“是”，BBT 将尝试在导入时按句首大写格式化标题。该过程使用启发式算法，没有进行自然语言处理，结果并不完美。
+    若您选择“是”，BBT 将尝试在导入时按句首大写格式化标题。该过程使用启发式算法，没有进行自然语言处理，所以结果并不完美。
     
-    您可以禁用该选项，这时或许您还希望禁用“对标题应用标题大小写格式”（该选项自身也有问题，详见本页上该选项的帮助）。
+    您可以禁用该选项，这时或许您还希望禁用“对标题应用标题大小写格式”（该选项自身也有问题，详见本页上关于该选项的帮助）。
     
     若您选择“是，但尝试排除已句首大写的标题”，BBT 将尝试检测标题是否已经为句首大写，若是，则将按原样导入。
 better-bibtex_preferences_advanced_tab_postscript = postscript
@@ -135,7 +135,7 @@ better-bibtex_preferences_advanced_tab_postscript = postscript
 better-bibtex_preferences_advanced_tab_strings = @string 定义
     .label = { better-bibtex_preferences_advanced_tab_strings }
 better-bibtex_preferences_auto-abbrev = 
-    .label = 若无显式设置，自动缩写期刊标题
+    .label = 若无额外设置，自动缩写期刊名
 better-bibtex_preferences_auto-abbrev_style = 缩写格式：
 better-bibtex_preferences_auto-export = 自动导出
 better-bibtex_preferences_auto-export_delay = 延迟自动导出，等待
