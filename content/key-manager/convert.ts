@@ -207,7 +207,7 @@ ${compiled}
         const methodCall = flat[0]?.type === 'CallExpression'
 
         if (looks_like_field && field && !methodCall) {
-          compiled += `.${prefix}getField("${field}")`
+          compiled += `.${prefix}field("${field}")`
         }
         else if (looks_like_method && method) {
           compiled += `.${method.name}(`

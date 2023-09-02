@@ -56,7 +56,7 @@ class FormatterAPI {
         `
       }
 
-      if (key !== '$text' && key !== '$getfield') this.doc[kind][`<code>${name.substr(1)}</code>`] = `${params}${showdown.makeHtml(method.doc)}`
+      if (! key.match(/^[$](text|getfield|field)$/i)) this.doc[kind][`<code>${name.substr(1)}</code>`] = `${params}${showdown.makeHtml(method.doc)}`
     }
 
     /* re-enable this after the formatter migration

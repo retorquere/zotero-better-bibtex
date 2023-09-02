@@ -1,4 +1,5 @@
 {
   "_fold": "_transliterate",
-  "_splitideographs": "_ideographs"
+  "_splitideographs": "_ideographs",
+  "$getField": "$field"
 }

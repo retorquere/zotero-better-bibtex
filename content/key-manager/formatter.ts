@@ -478,8 +478,11 @@ class PatternFormatter {
    * Gets the value of the item field
    * @param name name of the field
    */
-  public $getField(name: string) {
-    const value = this.item.getField(name)
+  public $field(name: string) {
+    const field = items.name.field[name.replace(/ /g, '').toLowerCase()]
+    if (!field) throw new Error(`Unknown item field ${name}`)
+
+    const value = this.item.getField(field)
     switch (typeof value) {
       case 'number':
         return this.$text(`${value}`)
@@ -488,7 +491,7 @@ class PatternFormatter {
       case 'undefined':
         return this.$text('')
       default:
-        throw new Error(`Unexpected value ${JSON.stringify(value)} of type ${typeof value}`)
+        throw new Error(`Unexpected value ${JSON.stringify(value)} of type ${typeof value} for item field ${name}`)
     }
   }
 

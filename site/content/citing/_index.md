@@ -69,7 +69,7 @@ There are 3 ways you can build subformulae:
 2. alternates: `(auth || title)` (use the first thing that returns any text, so `auth` if that returns text, otherwise `title`). 
 3. ternaries: `(auth ? year : title)` (if `auth` returns any text, use `year`, otherwise use `title`). Ternary operators have the format `condition ? output_if_true : output_if_false`, and you can use it like an if-or statement.
 
-these can be combined, eg `(auth || shorttitle || year) ? (auth + title) : (year || title)`, but subformulae cannot appear in parameters, so `title.select(auth ? 3 : 4)` is not valid. filtes (explained below) can be applied to subformulae, so `(title || auth).lower` checks whether the `title` function produces output (i.e. not empty). If it does, the `title` function is used; otherwise, the formula will use the `auth` function. It then converts the output of `(title || auth)` to lowercase.
+these can be combined, eg `(auth || shorttitle || year) ? (auth + title) : (year || title)`, but subformulae cannot appear in parameters, so `title.select(auth ? 3 : 4)` is not valid. Filters (explained below) can be applied to subformulae, so `(title || auth).lower` checks whether the `title` function produces output (i.e. not empty). If it does, the `title` function is used; otherwise, the formula will use the `auth` function. It then converts the output of `(title || auth)` to lowercase.
 
 You can also explicitly test whether a formula part is not empty and jump to the next formula if not:
 
