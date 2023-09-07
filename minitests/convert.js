@@ -129,10 +129,11 @@ const addCallExpression = {
 
   visitIdentifier(path) {
     if (path.parent.node.type === 'CallExpression') {
-      const prefix = (path.parent.parent.node.type.match(/^(ArrowFunction|Conditional|Binary)Expression$/)) ? '$' : '_'
+      let prefix = (path.parent.parent.node.type.match(/^(ArrowFunction|Conditional|Binary)Expression$/)) ? '$' : '_'
+      if (path.parent.parent.node.type === 'MemberExpression' && path.parent.parent.node.object === path.parent.node) prefix = '$'
       path.node.name = `${prefix}${path.node.name}`
 
-      console.log(path.node.name, path.parent.parent.node.type)
+      console.log(path.node.name, parents(path).join(', '))
       return false
     }
     if (path.parent.node.type === 'MemberExpression' && path.parent.node.property === path.node && path.parent.parent.node.type === 'CallExpression') {
@@ -140,7 +141,7 @@ const addCallExpression = {
       return false
     }
 
-    console.log(path.node.name, path.parent.parent.node.type)
+    // console.log('?', path.node.name, parents(path).join(', '))
     return b.callExpression(path.node, [])
   }
 }
@@ -218,6 +219,6 @@ console.log(formula)
 let ast = parse(formula)
 ast = visit(ast, toArrayExpression)
 ast = visit(ast, addCallExpression)
-console.log(prettyPrint(ast).code)
+// console.log(prettyPrint(ast).code)
 // ast = visit(ast, nameSpace)
 console.log(prettyPrint(ast).code)
