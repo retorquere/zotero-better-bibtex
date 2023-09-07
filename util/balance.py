@@ -66,11 +66,15 @@ class Tests:
     print('Total test time:', str(datetime.timedelta(seconds=sum(data.weights))))
     print('Bin capacity:', data.bin_capacity, 'seconds')
 
-    bins = binpacking.to_constant_volume(data.weights, args.minutes * 60)
-    self.bins = [
-      [ data.bytime[weight].pop().name for weight in bin ]
-      for bin in bins
-    ]
+    try:
+      bins = binpacking.to_constant_volume(data.weights, args.minutes * 60)
+      self.bins = [
+        [ data.bytime[weight].pop().name for weight in bin ]
+        for bin in bins
+      ]
+    except:
+      self.bins = [ tests ]
+
     print([
       (bin, sum([data.byname[test].seconds for test in tests]))
       for bin, tests in enumerate(self.bins)

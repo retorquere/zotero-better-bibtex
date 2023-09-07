@@ -1,16 +1,19 @@
 const { parse, print, prettyPrint } = require('recast')
-const { visit, builders, namedTypes } = require('ast-types')
+const { visit, builders, namedTypes, eachField } = require('ast-types')
 const b = builders
 
 // const formula = '(auth + title).lower + year'
 // const formula = '(auth(creator="*").lower(1) + year).postfix(_) + (title > 0).lower | title.lower | year'
-const formula = '(x() ? y : z) + y() + len + ((auth(creator="*").lower(1) + year) > 0).postfix(_) + (title > 0).lower + other | x'
+const formula = '(x ? y : z) + a() + len + ((auth(creator="*").lower(1) + year) > 0).postfix(_) + (title > 0).lower + other | b'
 
 function error(node, msg) {
   throw new Error(`${print(node).code} ${msg}`)
 }
 function assert(cond, node, msg) {
   if (!cond) error(node, msg)
+}
+function context(node) {
+  return (node.context = node.context || {})
 }
 
 const toArrayExpression = {
@@ -101,38 +104,44 @@ function parents(path) {
 
 const markArgument = {
   visitNode(path) {
-    path.node.inArgument = true
+    context(path.node).inArgument = true
     this.traverse(path)
   }
 }
 
-const makeMethod = {
+const addCallExpression = {
   visitUnaryExpression(path) {
     assert(path.node.operator === '-', path.node, 'unexpected unary expression')
     assert(path.node.argument.type === 'Literal' && typeof path.node.argument.value === 'number', path.node, '- can only be applied to literal')
-    return b.literal(-1 * path.node.argument.value)
+    path.node.argument.value = -1 * path.node.argument.value
+    return false
   },
 
   visitCallExpression(path) {
-    for (const arg of path.node.arguments) {
-      visit(arg, markArgument)
-    }
+    const args = path.node.arguments
+    path.node.arguments = []
+
     this.traverse(path)
+    // do something with args here
+
+    path.node.arguments = args
   },
 
   visitIdentifier(path) {
-    const par = parents(path).join(' ')
-    if (path.node.inArgument || par.match(/^([.]p )?CallExpression/)) {
-      // pass
+    if (path.parent.node.type === 'CallExpression') {
+      const prefix = (path.parent.parent.node.type.match(/^(ArrowFunction|Conditional|Binary)Expression$/)) ? '$' : '_'
+      path.node.name = `${prefix}${path.node.name}`
+
+      console.log(path.node.name, path.parent.parent.node.type)
+      return false
     }
-    else if (par.match(/^([+.]|ConditionalExpression|ArrowFunctionExpression)/)) {
-      return b.callExpression(path.node, [], false)
-    }
-    else {
-      console.log('unhandled', path.node.name, par)
+    if (path.parent.node.type === 'MemberExpression' && path.parent.node.property === path.node && path.parent.parent.node.type === 'CallExpression') {
+      path.node.name = `_${path.node.name}`
+      return false
     }
 
-    this.traverse(path)
+    console.log(path.node.name, path.parent.parent.node.type)
+    return b.callExpression(path.node, [])
   }
 }
 
@@ -149,6 +158,22 @@ function finalize(formula) {
 }
 
 const nameSpace = {
+  visitIdentifier(path) {
+    this.traverse(path)
+  },
+
+  visitCallExpression(path) {
+    const args = path.node.arguments
+    path.node.arguments = []
+
+    this.traverse(path)
+    // do something with args here
+
+    path.node.arguments = args
+  },
+}
+
+const _nameSpace = {
   visitIdentifier(path) {
     if (!path.node.inArgument) {
       const par = parents(path).join(' ')
@@ -192,6 +217,7 @@ const nameSpace = {
 console.log(formula)
 let ast = parse(formula)
 ast = visit(ast, toArrayExpression)
-ast = visit(ast, makeMethod)
-ast = visit(ast, nameSpace)
+ast = visit(ast, addCallExpression)
+console.log(prettyPrint(ast).code)
+// ast = visit(ast, nameSpace)
 console.log(prettyPrint(ast).code)
