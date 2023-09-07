@@ -131,18 +131,42 @@ const addCallExpression = {
     if (path.parent.node.type === 'CallExpression') {
       let prefix = (path.parent.parent.node.type.match(/^(ArrowFunction|Conditional|Binary)Expression$/)) ? '$' : '_'
       if (path.parent.parent.node.type === 'MemberExpression' && path.parent.parent.node.object === path.parent.node) prefix = '$'
+
       path.node.name = `${prefix}${path.node.name}`
 
-      console.log(path.node.name, parents(path).join(', '))
-      return false
+      if (prefix === '$') {
+        path.replace(b.memberExpression(b.thisExpression(), path.node))
+        return false
+      }
+      else {
+        this.traverse(path)
+      }
     }
-    if (path.parent.node.type === 'MemberExpression' && path.parent.node.property === path.node && path.parent.parent.node.type === 'CallExpression') {
+    else if (path.parent.node.type === 'MemberExpression' && path.parent.node.property === path.node && path.parent.parent.node.type === 'CallExpression') {
       path.node.name = `_${path.node.name}`
-      return false
+      this.traverse(path)
     }
+    else {
+      return b.callExpression(path.node, [])
+    }
+  },
 
-    // console.log('?', path.node.name, parents(path).join(', '))
-    return b.callExpression(path.node, [])
+  visitConditionalExpression(path) {
+    const ifStatement = b.ifStatement(b.memberExpression(b.identifier('err'), b.identifier('next')), b.returnStatement(b.literal('')))
+    const throwStatement = b.throwStatement(b.identifier('err'))
+    const handler = b.blockStatement([ ifStatement, throwStatement ])
+    const catchClause = b.catchClause(b.identifier('err'), handler)
+    /*
+    const tryCatch = b.TryStatement(b.blockStatement([b.returnStatement(path.node.test)]), catchClause)
+    const funcEx = b.functionExpression([], b.blockStatement([ tryCatch ]))
+    const callee = b.memberExpression(funcEx, b.identifier('call'))
+    const args = [ b.callExpression(b.memberExpression(b.identifier('Object', b.identifier('create'))), [ b.thisExpression() ]) ]
+    const call = b.callExpression(callee, args)
+    */
+    // path.get('test').replace(call)
+
+
+    this.traverse(path)
   }
 }
 

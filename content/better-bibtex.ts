@@ -711,9 +711,8 @@ export class BetterBibTeX {
           log.debug('removing fallback debug logger')
           DebugLog.unregister('Better BibTeX')
         })
-
-        Events.on('idle-savedb', async state => { // eslint-disable-line @typescript-eslint/require-await
-          if (state === 'idle') DebugLog.convertLegacy()
+        Zotero.Promise.delay(3000).then(() => {
+          DebugLog.convertLegacy()
         })
 
         if (is7) {
