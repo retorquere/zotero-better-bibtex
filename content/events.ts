@@ -97,7 +97,7 @@ class IdleListener {
   }
 
   observe(_subject: string, topic: IdleState, _data: any) {
-    log.debug('idle:', this.event)
+    log.debug(`idle: ${new Date}, ${this.event} ${topic}`)
     void Events.emit(this.event, topic)
   }
 
