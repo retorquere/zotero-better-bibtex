@@ -71,8 +71,9 @@ class NullStore {
 }
 
 const autoSaveOnIdle = []
-Events.on('idle-savedb', async state => {
-  if (state !== 'idle') return
+Events.addIdleListener('save-database', 5)
+Events.on('idle', async state => {
+  if (state.topic !== 'save-database' || state.state !== 'idle') return
 
   for (const db of autoSaveOnIdle) {
     if (!db.autosaveDirty()) continue

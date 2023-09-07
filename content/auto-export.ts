@@ -181,10 +181,11 @@ const queue = new class TaskQueue {
   public start() {
     if (Preference.autoExport === 'immediate') this.resume('startup')
 
-    Events.on('idle-autoexport', async state => { // eslint-disable-line @typescript-eslint/require-await
-      if (Preference.autoExport !== 'idle') return
+    Events.addIdleListener('auto-export', Preference.autoExportIdleWait)
+    Events.on('idle', async state => { // eslint-disable-line @typescript-eslint/require-await
+      if (state.topic !== 'auto-export' || Preference.autoExport !== 'idle') return
 
-      switch (state) {
+      switch (state.state) {
         case 'back':
         case 'active':
           this.pause('end-of-idle')
@@ -359,8 +360,8 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
     orchestrator.add('auto-export', {
       description: 'auto-export',
       needs: ['database', 'cache', 'translators'],
-      startup: async () => {
-        await git.init()
+      startup: () => {
+        void git.init()
 
         this.db = DB.getCollection('autoexport')
         queue.init(this.db)
