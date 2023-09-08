@@ -74,7 +74,7 @@ async function pathSearch(bin: string, installationDirectory: { mac?: string[], 
     env.pathext = getEnv('PATHEXT').split(';').filter(pe => pe.length > 1 && pe.startsWith('.'))
     if (!env.pathext.length) {
       log.error('pathSearch: PATHEXT not set')
-      return null
+      return ''
     }
 
   }
@@ -91,7 +91,7 @@ async function pathSearch(bin: string, installationDirectory: { mac?: string[], 
 
   if (!env.path.length) {
     log.error('pathSearch: PATH not set')
-    return null
+    return ''
   }
   log.debug('pathSearch: looking for', bin, 'in', env)
 
@@ -121,5 +121,5 @@ async function pathSearch(bin: string, installationDirectory: { mac?: string[], 
   }
   log.debug('pathSearch:', bin, 'not found in', env.path)
 
-  return null
+  return ''
 }
