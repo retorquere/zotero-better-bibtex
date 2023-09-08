@@ -178,30 +178,6 @@ const queue = new class TaskQueue {
     this.pause('startup')
   }
 
-  public start() {
-    if (Preference.autoExport === 'immediate') this.resume('startup')
-
-    Events.addIdleListener('auto-export', Preference.autoExportIdleWait)
-    Events.on('idle', async state => { // eslint-disable-line @typescript-eslint/require-await
-      if (state.topic !== 'auto-export' || Preference.autoExport !== 'idle') return
-
-      switch (state.state) {
-        case 'back':
-        case 'active':
-          this.pause('end-of-idle')
-          break
-
-        case 'idle':
-          this.resume('start-of-idle')
-          break
-
-        default:
-          log.error('Unexpected idle state', state)
-          break
-      }
-    })
-  }
-
   public init(autoexports) {
     this.autoexports = autoexports
   }
@@ -211,28 +187,12 @@ const queue = new class TaskQueue {
   }
 
   public resume(_reason: 'startup' | 'start-of-idle' | 'preference-change') {
-    const is_idle = Events.idleService.idleTime >= Preference.autoExportIdleWait * 1000
-    switch (Preference.autoExport) {
-      case 'off':
-        this.scheduler.paused = true
-        return
-
-      case 'idle':
-        if (!is_idle) {
-          this.scheduler.paused = true
-          return
-        }
-        break
-
-      case 'immediate':
-        break
-    }
-
     this.scheduler.paused = false
   }
 
   public add(ae) {
     const $loki = (typeof ae === 'number' ? ae : ae.$loki)
+    log.error('add-ae:', { ae, $loki })
     void Events.emit('export-progress', { pct: 0, message: `Scheduled ${Translators.byId[ae.translatorID].label}`, ae: $loki })
     this.scheduler.schedule($loki, this.run.bind(this, $loki))
   }
@@ -249,9 +209,10 @@ const queue = new class TaskQueue {
     await Zotero.BetterBibTeX.ready
 
     const ae = this.autoexports.get($loki)
+    if (!ae) throw new Error(`AutoExport ${$loki} does not exist`)
+
     const translator = Translators.byId[ae.translatorID]
     void Events.emit('export-progress', { pct: 0, message: `Starting ${translator.label}`, ae: $loki })
-    if (!ae) throw new Error(`AutoExport ${$loki} not found`)
 
     ae.status = 'running'
     this.autoexports.update(scrubAutoExport(ae))
@@ -371,10 +332,32 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
         }
 
         this.db.on(['delete'], ae => {
+          queue.cancel(ae)
           this.progress.delete(ae.$loki)
         })
 
         if (Preference.autoExport === 'immediate') queue.resume('startup')
+        Events.addIdleListener('auto-export', Preference.autoExportIdleWait)
+        Events.on('idle', state => {
+          log.debug('idle: auto-export:', { state, pref: { autoExport: Preference.autoExport, autoExportIdleWait: Preference.autoExportIdleWait }})
+          if (state.topic !== 'auto-export' || Preference.autoExport !== 'idle') return
+
+          switch (state.state) {
+            case 'active':
+              log.debug('idle: stopping queue')
+              queue.pause('end-of-idle')
+              break
+
+            case 'idle':
+              log.debug('idle: starting queue')
+              queue.resume('start-of-idle')
+              break
+
+            default:
+              log.error('idle: nexpected idle state', state)
+              break
+          }
+        })
       },
     })
   }
@@ -406,7 +389,12 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
 
   public remove(type, ids) {
     for (const ae of this.db.find({$and: [{ type: {$eq: type} }, {id: { $in: ids } }] })) {
-      queue.cancel(ae)
+      this.db.remove(ae)
+    }
+  }
+
+  public removeAll() {
+    for (const ae of this.db.data) {
       this.db.remove(ae)
     }
   }
@@ -481,6 +469,11 @@ Events.on('preference-changed', pref => {
     case 'immediate':
       queue.resume('preference-change')
       break
+
+    case 'idle':
+      if (Events.idle['auto-export'] === 'idle') queue.resume('start-of-idle')
+      break
+
     default: // off / idle
       queue.pause('preference-change')
   }

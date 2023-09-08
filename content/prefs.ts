@@ -18,9 +18,18 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
   public prefix = 'translators.better-bibtex.'
   public texmap: TeXMap = {}
   private observers: number[] = []
+  private minimum = {
+    autoExportIdleWait: 1,
+    autoExportDelay: 1,
+    itemObserverDelay: 5,
+  }
 
   constructor() {
     super()
+
+    for (const pref of Object.keys(this.minimum)) {
+      this.repair(pref)
+    }
 
     this.baseAttachmentPath = Zotero.Prefs.get('baseAttachmentPath')
     this.observers.push(Zotero.Prefs.registerObserver('baseAttachmentPath', val => { this.baseAttachmentPath = val }))
@@ -102,7 +111,22 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
     this.observers.push(Zotero.Prefs.registerObserver(`${this.prefix}${pref}`, this.changed.bind(this, pref)))
   }
 
+  repair(pref) {
+    const min = this.minimum[pref]
+    if (typeof min === 'undefined') return
+
+    if (this[pref] < min) {
+      this[pref] = min
+      return true
+    }
+    else {
+      return false
+    }
+  }
+
   changed(pref: string) {
+    // prevent foot-guns
+    if (this.repair(pref)) return
     void Events.emit('preference-changed', pref)
   }
 
