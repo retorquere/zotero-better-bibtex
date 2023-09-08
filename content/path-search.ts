@@ -49,16 +49,24 @@ function expandWinVars(value: string): string {
 }
 
 // https://searchfox.org/mozilla-central/source/toolkit/modules/subprocess/subprocess_win.jsm#135 doesn't seem to work on Windows.
-export async function pathSearch(bin: string, installationDirectory: { mac?: string[], win?: string[] } = {}): Promise<string> {
-  const env: {path: string[], pathext: string[], sep: string} = {
+export async function findBinary(bin: string, installationDirectory: { mac?: string[], win?: string[] } = {}): Promise<string> {
+  const pref = `extensions.zotero.translators.better-bibtex.path.${bin}`
+  let location: string = Zotero.Prefs.get(pref)
+  if (typeof location !== 'string') location = ''
+  if (location === 'false') return ''
+  if (location && (await OS.File.exists(location))) return location
+  location = await pathSearch(bin, installationDirectory)
+  Zotero.Prefs.set(pref, location)
+  return location
+}
+
+async function pathSearch(bin: string, installationDirectory: { mac?: string[], win?: string[] } = {}): Promise<string> {
+  const env: {path: string[], pathext: string[]} = {
     path: [],
     pathext: [],
-    sep: '',
   }
 
   if (Zotero.isWin) {
-    env.sep = '\\'
-
     env.path = []
     if (installationDirectory.win) env.path.push(...installationDirectory.win)
     env.path = env.path.concat(getEnv('PATH').split(';').filter(p => p).map(expandWinVars))
@@ -72,8 +80,6 @@ export async function pathSearch(bin: string, installationDirectory: { mac?: str
   }
   else {
     const ENV = Components.classes['@mozilla.org/process/environment;1'].getService(Components.interfaces.nsIEnvironment)
-    env.sep = '/'
-
     env.path = []
     if (Zotero.isMac && installationDirectory.mac) env.path.push(...installationDirectory.mac)
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return

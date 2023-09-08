@@ -12,7 +12,7 @@ import { Preference } from './prefs'
 import { Preferences, schema, affectedBy } from '../gen/preferences/meta'
 import * as ini from 'ini'
 import fold2ascii from 'fold-to-ascii'
-import { pathSearch } from './path-search'
+import { findBinary } from './path-search'
 import { Scheduler } from './scheduler'
 import { flash } from './flash'
 import * as l10n from './l10n'
@@ -34,7 +34,7 @@ class Git {
   }
 
   public async init() {
-    this.git = await pathSearch('git')
+    this.git = await findBinary('git')
 
     return this
   }
@@ -134,7 +134,7 @@ class Git {
 
   private async exec(exe: string, args?: string[]): Promise<boolean> { // eslint-disable-line @typescript-eslint/require-await
     // args = ['/K', exe].concat(args || [])
-    // exe = await pathSearch('CMD')
+    // exe = await findBinary('CMD')
 
     const cmd = new FileUtils.File(exe)
 
@@ -192,8 +192,7 @@ const queue = new class TaskQueue {
 
   public add(ae) {
     const $loki = (typeof ae === 'number' ? ae : ae.$loki)
-    log.error('add-ae:', { ae, $loki })
-    void Events.emit('export-progress', { pct: 0, message: `Scheduled ${Translators.byId[ae.translatorID].label}`, ae: $loki })
+    log.debug('auth-export: scheduled', Translators.byId[ae.translatorID].label, ae)
     this.scheduler.schedule($loki, this.run.bind(this, $loki))
   }
 
@@ -354,7 +353,7 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
               break
 
             default:
-              log.error('idle: nexpected idle state', state)
+              log.error('idle: unexpected idle state', state)
               break
           }
         })
