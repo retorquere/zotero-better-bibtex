@@ -586,6 +586,20 @@ Feature: Export
     Then "~/autoexport.bib" should match "export/*.after.biblatex"
     And "~/autoexport.coll.bib" should match "export/*.after.coll.biblatex"
 
+  # for idle
+  @use.with_client=zotero @use.with_slow=true @timeout=3000
+  Scenario: auto-export
+    Given I import 3 references with 2 attachments from "export/*.json" into a new collection
+    And I set preference .autoExport to "idle"
+    And I set preference .jabrefFormat to 3
+    Then an auto-export to "~/autoexport.bib" using "Better BibLaTeX" should match "export/*.before.biblatex"
+    And an auto-export of "/auto-export" to "~/autoexport.coll.bib" using "Better BibLaTeX" should match "export/*.before.coll.biblatex"
+    When I select the item with a field that is "IEEE"
+    And I remove the selected item
+    And I wait 180 seconds
+    Then "~/autoexport.bib" should match "export/*.after.biblatex"
+    And "~/autoexport.coll.bib" should match "export/*.after.coll.biblatex"
+
   Scenario: Auto-Export ignores DOIURL settings #2573
     Given I import 1 reference from "export/*.json"
     And I set preference .autoExport to "immediate"
