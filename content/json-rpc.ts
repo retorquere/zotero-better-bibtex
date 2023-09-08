@@ -102,21 +102,30 @@ class NSItem {
   /**
    * Quick-search for items in Zotero.
    *
-   * @param terms  Terms as typed into the search box in Zotero
+   * @param terms  Terms as a single string as typed into the search box in Zotero, or an array of tuples as typed into the advanced search box in Zotero
    */
-  public async search(terms: string, library?: string | number) {
-    // quicksearch-titleCreatorYear / quicksearch-fields
-    // const mode = Prefs.get('caywAPIsearchMode')
-
-    terms = terms.replace(/ (?:&|and) /g, ' ')
-    if (!/[\w\u007F-\uFFFF]/.test(terms)) return []
+  public async search(terms: string | [string, string, string][], library?: string | number) {
 
     const search = new Zotero.Search()
+
+    if (typeof terms === 'string') {
+      terms = terms.replace(/ (?:&|and) /g, ' ')
+      if (!/[\w\u007F-\uFFFF]/.test(terms)) return []
+      search.addCondition('quicksearch-titleCreatorYear', 'contains', terms)
+    }
+    else {
+      if (!terms.length) return []
+      for (const [name, operator, value] of terms) {
+        search.addCondition(name, operator, value)
+      }
+    }
+
     for (const feed of Zotero.Feeds.getAll()) {
       search.addCondition('libraryID', 'isNot', feed.libraryID)
     }
-    search.addCondition('quicksearch-titleCreatorYear', 'contains', terms)
+
     search.addCondition('itemType', 'isNot', 'attachment')
+
     if (typeof library !== 'undefined' && library !== '*') {
       try {
         search.addCondition('libraryID', 'is', Library.get(library).libraryID)
@@ -126,60 +135,17 @@ class NSItem {
       }
     }
 
-    const ids: Set<number> = new Set(await search.search())
+    const ids = new Set(await search.search() as number[])
 
-    // add partial-citekey search results.
-    for (const partialCitekey of terms.split(/\s+/)) {
-      for (const item of Zotero.BetterBibTeX.KeyManager.keys.find({ citekey: { $contains: partialCitekey } })) {
-        ids.add(item.itemID)
+    if (typeof terms === 'string') {
+      // add partial-citekey search results.
+      for (const partialCitekey of terms.split(/\s+/)) {
+        for (const item of Zotero.BetterBibTeX.KeyManager.keys.find({ citekey: { $contains: partialCitekey } })) {
+          ids.add(item.itemID)
+        }
       }
     }
 
-    const items = await getItemsAsync(Array.from(ids))
-    const libraries = {}
-
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return items.map(item => {
-      libraries[item.libraryID] = libraries[item.libraryID] || Zotero.Libraries.get(item.libraryID).name
-
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      return {
-        ...Zotero.Utilities.Item.itemToCSLJSON(item),
-        library: libraries[item.libraryID],
-        citekey: Zotero.BetterBibTeX.KeyManager.keys.findOne($and({ libraryID: item.libraryID, itemID: item.id })).citekey,
-      }
-    })
-  }
-
-  /**
-   * Advanced search for items in Zotero.
-   *
-   * @param params  Search parameters as typed into the advanced search box in Zotero
-   */
-  public async advancedsearch(params: [string, string, string][], library?: string | number) {
-    if (!params.length) return []
-
-    const search = new Zotero.Search()
-    for (const feed of Zotero.Feeds.getAll()) {
-      search.addCondition('libraryID', 'isNot', feed.libraryID)
-    }
-
-    search.addCondition('itemType', 'isNot', 'attachment')
-
-    for (const [name, operator, value] of params) {
-      search.addCondition(name, operator, value)
-    }
-
-    if (typeof library !== 'undefined') {
-      try {
-        search.addCondition('libraryID', 'is', Library.get(library).id)
-      }
-      catch (err) {
-        throw new Error(`library ${JSON.stringify(library)} not found`)
-      }
-    }
-
-    const ids: Set<number> = new Set(await search.search())
     const items = await getItemsAsync(Array.from(ids))
     const libraries = {}
 
