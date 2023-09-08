@@ -3,7 +3,7 @@ Components.utils.import('resource://gre/modules/osfile.jsm')
 import { Translators } from './translators'
 import { Preference } from './prefs'
 import { pick } from './file-picker'
-import { pathSearch } from './path-search'
+import { findBinary } from './path-search'
 import { log } from './logger'
 import { alert } from './prompt'
 
@@ -15,7 +15,7 @@ export const AUXScanner = new class { // eslint-disable-line @typescript-eslint/
   private pandoc: string
 
   public async pick(): Promise<string> { // eslint-disable-line @typescript-eslint/no-unsafe-return
-    if (typeof this.pandoc !== 'string') this.pandoc = await pathSearch('pandoc')
+    if (typeof this.pandoc !== 'string') this.pandoc = await findBinary('pandoc')
     const filters: [string, string][] = this.pandoc ? [['AUX/Markdown', '*.aux; *.md; *.txt; *.markdown']] : [['AUX file', '*.aux']]
     return await pick(Zotero.getString('fileInterface.import'), 'open', filters)
   }

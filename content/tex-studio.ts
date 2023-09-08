@@ -1,4 +1,4 @@
-import { pathSearch } from './path-search'
+import { findBinary } from './path-search'
 import { log } from './logger'
 import { orchestrator } from './orchestrator'
 import { Deferred } from './deferred'
@@ -14,7 +14,7 @@ export const TeXstudio = new class { // eslint-disable-line @typescript-eslint/n
       description: 'TeXstudio support',
       needs: ['start'],
       startup: async () => {
-        this.texstudio = await pathSearch('texstudio', {
+        this.texstudio = await findBinary('texstudio', {
           mac: ['/Applications/texstudio.app/Contents/MacOS'],
           win: ['C:\\Program Files (x86)\\texstudio', 'C:\\Program Files\\texstudio'],
         })

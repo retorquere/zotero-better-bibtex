@@ -49,16 +49,24 @@ function expandWinVars(value: string): string {
 }
 
 // https://searchfox.org/mozilla-central/source/toolkit/modules/subprocess/subprocess_win.jsm#135 doesn't seem to work on Windows.
-export async function pathSearch(bin: string, installationDirectory: { mac?: string[], win?: string[] } = {}): Promise<string> {
-  const env: {path: string[], pathext: string[], sep: string} = {
+export async function findBinary(bin: string, installationDirectory: { mac?: string[], win?: string[] } = {}): Promise<string> {
+  const pref = `extensions.zotero.translators.better-bibtex.path.${bin}`
+  let location: string = Zotero.Prefs.get(pref)
+  if (typeof location !== 'string') location = ''
+  if (location === 'false') return ''
+  if (location && (await OS.File.exists(location))) return location
+  location = await pathSearch(bin, installationDirectory)
+  Zotero.Prefs.set(pref, location)
+  return location
+}
+
+async function pathSearch(bin: string, installationDirectory: { mac?: string[], win?: string[] } = {}): Promise<string> {
+  const env: {path: string[], pathext: string[]} = {
     path: [],
     pathext: [],
-    sep: '',
   }
 
   if (Zotero.isWin) {
-    env.sep = '\\'
-
     env.path = []
     if (installationDirectory.win) env.path.push(...installationDirectory.win)
     env.path = env.path.concat(getEnv('PATH').split(';').filter(p => p).map(expandWinVars))
@@ -66,14 +74,12 @@ export async function pathSearch(bin: string, installationDirectory: { mac?: str
     env.pathext = getEnv('PATHEXT').split(';').filter(pe => pe.length > 1 && pe.startsWith('.'))
     if (!env.pathext.length) {
       log.error('pathSearch: PATHEXT not set')
-      return null
+      return ''
     }
 
   }
   else {
     const ENV = Components.classes['@mozilla.org/process/environment;1'].getService(Components.interfaces.nsIEnvironment)
-    env.sep = '/'
-
     env.path = []
     if (Zotero.isMac && installationDirectory.mac) env.path.push(...installationDirectory.mac)
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
@@ -85,7 +91,7 @@ export async function pathSearch(bin: string, installationDirectory: { mac?: str
 
   if (!env.path.length) {
     log.error('pathSearch: PATH not set')
-    return null
+    return ''
   }
   log.debug('pathSearch: looking for', bin, 'in', env)
 
@@ -115,5 +121,5 @@ export async function pathSearch(bin: string, installationDirectory: { mac?: str
   }
   log.debug('pathSearch:', bin, 'not found in', env.path)
 
-  return null
+  return ''
 }
