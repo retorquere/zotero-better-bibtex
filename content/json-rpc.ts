@@ -152,6 +152,51 @@ class NSItem {
   }
 
   /**
+   * Advanced search for items in Zotero.
+   *
+   * @param params  Search parameters as typed into the advanced search box in Zotero
+   */
+  public async advancedsearch(params: [string, string, string][], library?: string | number) {
+    if (!params.length) return []
+
+    const search = new Zotero.Search()
+    for (const feed of Zotero.Feeds.getAll()) {
+      search.addCondition('libraryID', 'isNot', feed.libraryID)
+    }
+
+    search.addCondition('itemType', 'isNot', 'attachment')
+
+    for (const [name, operator, value] of params) {
+      search.addCondition(name, operator, value)
+    }
+
+    if (typeof library !== 'undefined') {
+      try {
+        search.addCondition('libraryID', 'is', Library.get(library).id)
+      }
+      catch (err) {
+        throw new Error(`library ${JSON.stringify(library)} not found`)
+      }
+    }
+
+    const ids: Set<number> = new Set(await search.search())
+    const items = await getItemsAsync(Array.from(ids))
+    const libraries = {}
+
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    return items.map(item => {
+      libraries[item.libraryID] = libraries[item.libraryID] || Zotero.Libraries.get(item.libraryID).name
+
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+      return {
+        ...Zotero.Utilities.Item.itemToCSLJSON(item),
+        library: libraries[item.libraryID],
+        citekey: Zotero.BetterBibTeX.KeyManager.keys.findOne($and({ libraryID: item.libraryID, itemID: item.id })).citekey,
+      }
+    })
+  }
+
+  /**
    * List attachments for an item with the given citekey
    *
    * @param citekey  The citekey to search for
