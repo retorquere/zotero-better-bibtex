@@ -226,18 +226,22 @@ class ZoteroPane {
           else if (isLibrary) {
             auto_exports = AutoExport.db.find($and({ type: 'library', id: treeRow.ref.libraryID }))
           }
+          auto_exports = [...auto_exports].sort((a: { path: string }, b: { path: string }) => a.path.localeCompare(b.path))
+          log.debug('mae:', auto_exports)
         }
-        auto_exports = [...auto_exports].sort((a: { path: string }, b: { path: string }) => a.path.localeCompare(b.path))
 
         const menulist: XUL.Menulist = doc.getElementById('zotero-collectionmenu-bbt-autoexport') as XUL.Menulist
-        menulist.hidden = auto_exports.length === 0
-        log.debug('2578 auto-exports should be hidden:', menulist.hidden, auto_exports.length === 0)
-
-        if (auto_exports.length !== 0) {
-          menulist.removeAllItems()
-          auto_exports.forEach(ae => {
-            menulist.appendItem(ae.path, `${ae.$loki}`).addEventListener('command', () => AutoExport.run(ae.$loki))
-          })
+        if (!(menulist.hidden = auto_exports.length === 0)) {
+          const menupopup = doc.querySelector<HTMLElement>('#zotero-collectionmenu-bbt-autoexport menupopup')
+          while (menupopup.firstChild) menupopup.firstChild.remove()
+          log.debug('mae: reconstructing menu:', auto_exports.length, 'items')
+          for (const ae of auto_exports) {
+            log.debug('mae:', ae.path)
+            menupopup.appendChild(elements.create('menuitem', {
+              label: ae.path,
+              oncommand: () => AutoExport.run(ae.$loki),
+            }))
+          }
         }
       }
       catch (err) {

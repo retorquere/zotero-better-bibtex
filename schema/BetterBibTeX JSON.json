@@ -122,9 +122,9 @@
             },
             "autoExport": {
               "enum": [
-                "off",
                 "immediate",
-                "idle"
+                "idle",
+                "off"
               ],
               "type": "string"
             },
