@@ -25,9 +25,9 @@ idle. You mostly want this if your computer is performance-constrained (aka slow
 
 Options:
 
-* Paused
 * On Change
 * When Idle
+* Paused
 
 
 ## Delay auto-export for

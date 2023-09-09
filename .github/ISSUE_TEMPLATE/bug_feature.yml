@@ -1,6 +1,5 @@
 name: Bug Report/Feature request
 description: File a bug report or a feature request
-title: "[Bug/Feature]: "
 body:
   - type: markdown
     attributes:
@@ -30,8 +29,7 @@ body:
     id: request
     attributes:
       label: What happened?
-      description: What did you expect to happen?
+      description: and what did you expect to happen?
       placeholder: Tell us what you see!
-      value: "A bug happened!"
     validations:
       required: true
