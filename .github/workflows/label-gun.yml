@@ -46,4 +46,4 @@ jobs:
 
             A fallback option is available under "Help" > "Send debug log to file.io".
 
-          message.no-close: Thanks for the feedback; there's no way you could have known, but @retorquere prefers to keep bugreports/enhancements open as a reminder to merge the changes into a new release.
+          message.no-close: Thanks for the feedback! Just so you know, GitHub doesn't let me control who can close issues, and @retorquere likes to leave bug reports and enhancements open as a nudge to merge them into the next release.
