@@ -576,11 +576,21 @@ export class BetterBibTeX {
   public dir: string
 
   public debugEnabledAtStart: boolean
+  public outOfMemory = false
 
   public generateCSLJSON = generateCSLJSON
 
   constructor() {
     this.debugEnabledAtStart = Zotero.Prefs.get('debug.store') || Zotero.Debug.enabled
+    if (Zotero.isWin && !is7) Zotero.Debug.addListener(this.logListener.bind(this))
+  }
+
+  private logListener(message: string): void {
+    if (Preference.cache && !this.outOfMemory && message.match(/Translate: Translation using Better .* failed:[\s\S]*out of memory/)) {
+      this.outOfMemory = true
+      flash('Zotero is out of memory', 'Zotero is out of memory. I will turn off the cache to help release memory pressure, but this is only a temporary fix until Zotero 7 comes out')
+      Preference.cache = false
+    }
   }
 
   public async scanAUX(target: string): Promise<void> {
