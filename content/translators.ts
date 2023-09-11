@@ -63,7 +63,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     for (const header of translatorMetadata) {
       this.byId[header.translatorID] = header
       this.byName[header.label] = header
-      this.byLabel[header.label.replace(/[^A-Z]/i, '')] = header
+      this.byLabel[header.label.replace(/ /g, '')] = header
     }
 
     orchestrator.add('translators', {
