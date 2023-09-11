@@ -83,7 +83,7 @@ export class ErrorReport {
       wizard.advance();
 
       // eslint-disable-next-line no-magic-numbers
-      (doc.getElementById('better-bibtex-report-id') as HTMLInputElement).value = `${this.key}/${version}-${is7 ? 7 : 6}`
+      (<HTMLInputElement>doc.getElementById('better-bibtex-report-id')).value = `${this.key}/${version}-${is7 ? 7 : 6}${Zotero.BetterBibTeX.outOfMemory ? '/oom' : ''}`
       doc.getElementById('better-bibtex-report-result').hidden = false
     }
     catch (err) {
@@ -147,7 +147,7 @@ export class ErrorReport {
 
     if (this.errorlog.items) out = tape.append(`${this.key}/items.json`, this.errorlog.items)
 
-    if (($window.document.getElementById('better-bibtex-error-report-include-db') as HTMLInputElement).checked) {
+    if ((<HTMLInputElement>$window.document.getElementById('better-bibtex-error-report-include-db')).checked) {
       out = tape.append(`${this.key}/database.json`, DB.serialize({ serializationMethod: 'pretty' }))
       out = tape.append(`${this.key}/cache.json`, Cache.serialize({ serializationMethod: 'pretty' }))
     }
@@ -167,7 +167,7 @@ export class ErrorReport {
   }
 
   private setValue(id: string, value: string) {
-    ($window.document.getElementById(id) as HTMLInputElement).value = value
+    (<HTMLInputElement>$window.document.getElementById(id)).value = value
   }
 
   public async load(win: Window): Promise<void> {
@@ -218,7 +218,7 @@ export class ErrorReport {
     try {
       const latest = await this.latest()
 
-      const show_latest: HTMLInputElement = doc.getElementById('better-bibtex-report-latest') as HTMLInputElement
+      const show_latest = <HTMLInputElement>doc.getElementById('better-bibtex-report-latest')
       if (current === latest) {
         show_latest.hidden = true
       }
@@ -226,6 +226,8 @@ export class ErrorReport {
         show_latest.value = l10n.localize('better-bibtex_error-report_better-bibtex_latest', { version: latest || '<could not be established>' })
         show_latest.hidden = false
       }
+
+      (<HTMLInputElement>doc.getElementById('better-bibtex-report-latest')).hidden = !Zotero.BetterBibTeX.outOfMemory
 
       this.setValue('better-bibtex-report-cache', this.cacheState = l10n.localize('better-bibtex_error-report_better-bibtex_cache', Cache.state()))
 

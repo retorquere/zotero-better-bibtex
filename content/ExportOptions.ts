@@ -10,13 +10,29 @@ type XULWindow = Window & { Zotero_File_Interface_Export?: any, arguments?: any[
 let $window: XULWindow // eslint-disable-line no-var
 var Zotero_File_Interface_Export: any // eslint-disable-line no-var
 
+/*
+function show(label) {
+  const exportFileData = $window.document.getElementById('export-option-exportFileData') as XUL.Checkbox // eslint-disable-line no-case-declarations
+  const keepUpdated = $window.document.getElementById('export-option-keepUpdated') as XUL.Checkbox // eslint-disable-line no-case-declarations
+  const worker = $window.document.getElementById('export-option-worker') as XUL.Checkbox // eslint-disable-line no-case-declarations
+
+  log.debug(`export-options.${label}:`, {
+    exportFileData: exportFileData ? exportFileData.checked : null,
+    keepUpdated: keepUpdated ? keepUpdated.checked : null,
+    worker: worker ? worker.checked : null,
+  })
+}
+*/
+
 Events.on('window-loaded', ({ win, href }: {win: Window, href: string}) => {
   switch (href) {
     case 'chrome://zotero/content/exportOptions.xul':
     case 'chrome://zotero/content/exportOptions.xhtml':
       $window = win as XULWindow
       Zotero_File_Interface_Export = $window.Zotero_File_Interface_Export
+
       Zotero.BetterBibTeX.ExportOptions.load()
+
       break
   }
 })
@@ -79,17 +95,17 @@ export class ExportOptions {
         break
     }
 
-    for (const node of [...doc.querySelectorAll('#export-option-exportFileData, #export-option-keepUpdated, #export-option-worker')]) {
+    for (const node of [...doc.querySelectorAll('#export-option-exportFileData, #export-option-worker, #export-option-keepUpdated')] as HTMLInputElement[]) {
       if (node.classList.contains('better-bibex-export-options')) continue
       node.classList.add('better-bibex-export-options')
       node.addEventListener('command', this.mutex.bind(this))
 
-      switch (node.getAttribute('id')) {
+      switch (node.id) {
         case 'export-option-keepUpdated':
+          node.checked = false
           node.setAttribute('label', l10n.localize('better-bibtex_export-options_keep-updated'))
           break
         case 'export-option-worker':
-          (node as any).checked = false
           node.setAttribute('label', l10n.localize('better-bibtex_export-options_worker'))
           break
       }
