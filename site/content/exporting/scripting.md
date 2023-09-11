@@ -396,3 +396,13 @@ if (Translator.BetterCSLJSON) {
 	entry.file = item.attachments.map(a => a.localPath).join(";");
 }
 ```
+
+### Convert Windows attachment paths to Unix
+
+```
+if (Translator.BetterTeX && !Translator.options.exportFileData && item.attachments && Translator.exportPath.includes('\\\\')) {
+  if (item.attachments) {
+    reference.add({ name: 'file', bibtex: reference.enc_attachments({ value: item.attachments }, path => path.replace(/^[A-Z]:/i, '').replace(/\\\\/g, '/')) })
+  }
+}
+```
