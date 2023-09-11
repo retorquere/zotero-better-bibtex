@@ -1156,7 +1156,8 @@ export class Entry {
     })
 
     if (this.translation.preferences.jabrefFormat) return attachments.map(att => [att.title, att.path, att.mimetype].map(part => part.replace(/([\\{}:;])/g, '\\$1')).join(':')).join(';')
-    return attachments.map(att => att.path.replace(/([\\{}:;])/g, '\\$1')).join(';')
+    if (attachments.length > 1) return attachments.map(att => att.path.replace(/([\\{}:;])/g, '\\$1')).join(';')
+    return this.enc_verbatim({ value: attachments[0].path })
   }
 
   private _enc_creators_pad_particle(particle: string, relax = false): string {
