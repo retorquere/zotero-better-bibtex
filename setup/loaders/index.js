@@ -70,7 +70,6 @@ module.exports.text = {
   setup(build) {
     build.onLoad({ filter: /[.](bib|sql)$/i }, async (args) => {
       let text = await fs.promises.readFile(args.path, 'utf-8')
-      if (args.path.match(/[.]sql$/)) text = text.replace(/[\r\n]+/g, ' ')
       return {
         contents: text,
         loader: 'text'
