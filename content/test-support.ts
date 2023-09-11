@@ -31,12 +31,8 @@ export class TestSupport {
     return state
   }
 
-  public removeAutoExports(): void {
-    AutoExport.db.findAndRemove({ type: { $ne: '' } })
-  }
-
-  public autoExportRunning(): boolean {
-    return (AutoExport.db.find($and({ status: 'running' })).length > 0)
+  public async autoExportRunning(): Promise<number> {
+    return await Zotero.DB.valueQueryAsync("SELECT COUNT(*) FROM betterbibtex.autoExport WHERE status = 'running'") as number
   }
 
   public async reset(scenario: string): Promise<void> {
@@ -68,8 +64,7 @@ export class TestSupport {
 
     await Zotero.Items.emptyTrash(Zotero.Libraries.userLibraryID)
 
-    AutoExport.removeAll()
-    log.debug('test-support reset:', AutoExport.db.data.length, 'auto-exports remaining')
+    await AutoExport.removeAll()
 
     items = await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, false, true, true)
     if (items.length !== 0) throw new Error('library not empty after reset')
@@ -310,12 +305,13 @@ export class TestSupport {
     })
   }
 
-  public editAutoExport(field: string, value: boolean | string): void {
-    Zotero.BetterBibTeX.PrefPane.autoexport.edit({
+  public async editAutoExport(field: string, value: boolean | string): Promise<void> {
+    const path: string = await Zotero.DB.valueQueryAsync('SELECT path FROM beterbibtex.autoExport')
+    await Zotero.BetterBibTeX.PrefPane.autoexport.edit({
       getAttribute(name: string): string | number { // eslint-disable-line prefer-arrow/prefer-arrow-functions
         switch (name) {
           case 'data-ae-field': return field
-          case 'data-ae-id': return AutoExport.db.find()[0].$loki as number
+          case 'data-ae-path': return path
           default: throw new Error(`unexpected attribute ${name}`)
         }
       },

@@ -9,7 +9,6 @@ import { AutoExport } from './auto-export'
 import { flash } from './flash'
 import { sentenceCase } from './text'
 import * as CAYW from './cayw'
-import { $and } from './db/loki'
 import * as Extra from './extra'
 import * as DateParser from './dateparser'
 import * as l10n from './l10n'
@@ -219,14 +218,9 @@ class ZoteroPane {
         }
 
         let auto_exports = []
-        if (Preference.autoExport !== 'immediate') {
-          if (isCollection) {
-            auto_exports = AutoExport.db.find($and({ type: 'collection', id: treeRow.ref.id }))
-          }
-          else if (isLibrary) {
-            auto_exports = AutoExport.db.find($and({ type: 'library', id: treeRow.ref.libraryID }))
-          }
-          auto_exports = [...auto_exports].sort((a: { path: string }, b: { path: string }) => a.path.localeCompare(b.path))
+        const type = isCollection ? 'collection' : isLibrary ? 'library' : ''
+        if (Preference.autoExport !== 'immediate' && type) {
+          auto_exports = await Zotero.DB.querySync('SELECT * from betterbibtex.autoExport WHERE type = ? AND id = ? ORDER BY path', [ type, treeRow.ref.id ])
           log.debug('mae:', auto_exports)
         }
 

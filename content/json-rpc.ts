@@ -56,17 +56,15 @@ class NSAutoExport {
 
     const coll = await getCollection(collection, true)
 
-    const ae = AutoExport.db.findOne($and({ path }))
+    const ae = (await Zotero.DB.queryAsync('SELECT * FROM betterbibtex.autoExport WHERE path = ?', path))[0]
     if (ae && ae.translatorID === translatorID && ae.type === 'collection' && ae.id === coll.id) {
-      AutoExport.schedule(ae.type, [ae.id])
-
+      await AutoExport.schedule(ae.type, [ae.id])
     }
     else if (ae && !replace) {
       throw { code: INVALID_PARAMETERS, message: "Auto-export exists with incompatible parameters, but no 'replace' was requested" }
-
     }
     else {
-      AutoExport.add({
+      await AutoExport.add({
         type: 'collection',
         id: coll.id,
         path,

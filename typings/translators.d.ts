@@ -11,7 +11,7 @@ export namespace Translators {
 
     type Job = {
       translator: string
-      autoExport?: number
+      autoExport?: string
 
       preferences: any
       options: any
@@ -37,7 +37,7 @@ export namespace Translators {
       | { kind: 'item', item: number }
       | { kind: 'ping' }
       | { kind: 'stop' }
-      | { kind: 'progress', percent: number, translator: string, autoExport: number }
+      | { kind: 'progress', percent: number, translator: string, autoExport: string }
   }
 
   namespace BibTeX {

@@ -47,7 +47,7 @@ export const KeyManager = new class _KeyManager {
       annotation?: number
     }
   }
-  public autopin: Scheduler = new Scheduler('autoPinDelay', 1000)
+  public autopin: Scheduler<number> = new Scheduler<number>('autoPinDelay', 1000)
 
   private regenerate: number[]
   private started = false
@@ -252,14 +252,14 @@ export const KeyManager = new class _KeyManager {
     if (remove.length + insert.length) {
       await Zotero.DB.executeTransaction(async () => {
         while (remove.length) {
-          await Zotero.DB.queryAsync(`DELETE FROM betterbibtexsearch.citekeys WHERE itemID in (${remove.splice(0, 1000).join(',')})`)
+          await Zotero.DB.queryTx(`DELETE FROM betterbibtexsearch.citekeys WHERE itemID in (${remove.splice(0, 1000).join(',')})`)
         }
 
         while (insert.length) {
           const chunk = insert.splice(0, 1000)
           const q = `INSERT INTO betterbibtexsearch.citekeys (itemID, libraryID, itemKey, citekey) VALUES ${Array(chunk.length).fill('(?, ?, ?, ?)').join(',')}`
           const args = [].concat(...chunk.map(row => [ row.itemID, row.libraryID, row.itemKey, row.citekey ]))
-          await ZoteroDB.queryAsync(q, args)
+          await ZoteroDB.queryTx(q, args)
         }
       })
     }
@@ -362,7 +362,7 @@ export const KeyManager = new class _KeyManager {
 
     this.keys.on(['insert', 'update'], async (citekey: { itemID: number, itemKey: any, citekey: any, pinned: any }) => {
       if (Preference.citekeySearch) {
-        await ZoteroDB.queryAsync('INSERT OR REPLACE INTO betterbibtexsearch.citekeys (itemID, itemKey, citekey) VALUES (?, ?, ?)', [ citekey.itemID, citekey.itemKey, citekey.citekey ])
+        await ZoteroDB.queryTx('INSERT OR REPLACE INTO betterbibtexsearch.citekeys (itemID, itemKey, citekey) VALUES (?, ?, ?)', [ citekey.itemID, citekey.itemKey, citekey.citekey ])
       }
 
       // async is just a heap of fun. Who doesn't enjoy a good race condition?
@@ -412,7 +412,7 @@ export const KeyManager = new class _KeyManager {
 
     this.keys.on('delete', async (citekey: { itemID: any }) => {
       if (Preference.citekeySearch) {
-        await ZoteroDB.queryAsync('DELETE FROM betterbibtexsearch.citekeys WHERE itemID = ?', [ citekey.itemID ])
+        await ZoteroDB.queryTx('DELETE FROM betterbibtexsearch.citekeys WHERE itemID = ?', [ citekey.itemID ])
       }
     })
 

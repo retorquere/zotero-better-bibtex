@@ -209,7 +209,12 @@ class Zotero:
     self.jurism = self.client == 'jurism'
 
     with open(os.path.join(ROOT, 'gen/translators.json')) as f:
-      self.translators = json.load(f, object_hook=Munch)
+      translators = json.load(f, object_hook=Munch)
+      self.translators = Munch(
+        byId = { tr.translatorID : tr for tr in translators },
+        byName = { tr.label : tr for tr in translators },
+        byLabel = { tr.label.replace(' ', '') : tr for tr in translators }
+      )
 
     if userdata.get('kill', 'true') == 'true':
       atexit.register(self.shutdown)

@@ -40,7 +40,7 @@ export type ExportJob = {
   translatorID: string
   displayOptions: Record<string, boolean>
   scope: ExportScope
-  autoExport?: number
+  autoExport?: string
   preferences?: Partial<Preferences>
   path?: string
   started?: number
@@ -50,9 +50,9 @@ export type ExportJob = {
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export const Translators = new class { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
-  public byId: Record<string, Translator.Header>
-  public byName: Record<string, Translator.Header>
-  public byLabel: Record<string, Translator.Header>
+  public byId: Record<string, Translator.Header> = {}
+  public byName: Record<string, Translator.Header> = {}
+  public byLabel: Record<string, Translator.Header> = {}
   public itemType: { note: number, attachment: number, annotation: number }
   public queue = new Queue
   public worker: ChromeWorker
@@ -60,7 +60,11 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
   public ready = new Deferred<boolean>()
 
   constructor() {
-    Object.assign(this, translatorMetadata)
+    for (const header of translatorMetadata) {
+      this.byId[header.translatorID] = header
+      this.byName[header.label] = header
+      this.byLabel[header.label.replace(/[^A-Z]/i, '')] = header
+    }
 
     orchestrator.add('translators', {
       description: 'translators',

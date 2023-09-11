@@ -488,7 +488,7 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
       }
 
       if (capture) {
-        AutoExport.add({
+        void AutoExport.add({
           type: this._export.type,
           id: this._export.type === 'library' ? this._export.id : this._export.collection.id,
           path: this.location.path,
@@ -696,68 +696,11 @@ export class BetterBibTeX {
         await Zotero.DB.queryAsync('ATTACH DATABASE ? AS betterbibtexsearch', [OS.Path.join(Zotero.DataDirectory.dir, 'better-bibtex-search.sqlite')])
 
         const tables = await Zotero.DB.columnQueryAsync("SELECT name FROM betterbibtex.sqlite_master where type='table'")
-        if (!tables.includes('citationKey')) {
-          await Zotero.DB.queryTx('CREATE TABLE citationKey (itemID NOT NULL UNIQUE, itemKey NOT NULL UNIQUE, libraryID NOT NULL, citationKey NOT NULL CHECK (citationKey <> ''), pinned NOT NULL)')
-        }
-        if (!tables.includes('autoExport')) {
-          await Zotero.DB.queryTx(`CREATE TABLE autoExport (
-            scope CHECK (scope IN (0, 1)),
-            id NOT NULL,
-            path NOT NULL UNIQUE,
-            status CHECK (status in ('scheduled', 'running', 'done', 'error')),
-            translatorID CHECK (translatorID IN ('36a3b0b5-bad0-4a04-b79b-441c7cef77db', '0f238e69-043e-4882-93bf-342de007de19', 'f4b52ab0-f878-4556-85a0-c7aeedd09dfc', 'ca65189f-8815-4afe-8c8b-8c7c15f0edca', 'f895aa0d-f28e-47fe-b247-2ea77c6ed583')),
-            exportNotes CHECK (exportNotes IN (0, 1)),
-            useJournalAbbreviation CHECK (useJournalAbbreviation IN (0, 1)),
-            asciiBibLaTeX CHECK ((asciiBibLaTeX IN (0, 1) AND translatorID IN ('f895aa0d-f28e-47fe-b247-2ea77c6ed583',)) OR (asciiBibLaTeX IS NULL AND translatorID NOT IN ('f895aa0d-f28e-47fe-b247-2ea77c6ed583')))
-            biblatexExtendedNameFormat CHECK ((biblatexExtendedNameFormat IN (0, 1) AND translatorID IN ('f895aa0d-f28e-47fe-b247-2ea77c6ed583')) OR (biblatexExtendedNameFormat IS NULL AND translatorID NOT IN ('f895aa0d-f28e-47fe-b247-2ea77c6ed583'))),
-            DOIandURL CHECK ((DOIandURL IN (0, 1) AND translatorID IN ('ca65189f-8815-4afe-8c8b-8c7c15f0edca', 'f895aa0d-f28e-47fe-b247-2ea77c6ed583')) OR (DOIandURL IS NULL AND translatorID NOT IN ('ca65189f-8815-4afe-8c8b-8c7c15f0edca', 'f895aa0d-f28e-47fe-b247-2ea77c6ed583'))),
-            error NOT NULL,
-            recursive CHECK (recursive IN (0, 1)),
-            bibtexURL CHECK ((bibtexURL IN (0, 1) AND translatorID IN ('ca65189f-8815-4afe-8c8b-8c7c15f0edca')) OR (bibtexURL IS NULL AND translatorID NOT IN ('ca65189f-8815-4afe-8c8b-8c7c15f0edca')))
-          )`.replace(/\n/g, ' '))
-        }
-
         if (tables.includes('better-bibtex')) {
-          let data = await Zotero.DB.valueQueryAsync('SELECT data FROM betterbibtex."better-bibtex" WHERE name=?, ['better-bibtex.citekey'])
-          if (data) {
-            await Zotero.DB.executeTransaction(async () => {
-              for (const { itemID, itemKey, libraryID, citationKey, pinned } of JSON.parse(data).data) {
-                Zotero.DB.queryAsync('REPLACE INTO betterbibtex.citationKey (itemID, itemKey, libraryID, citationKey, pinned) VALUES (?, ?, ?, ?, ?)', [ itemID, itemKey, libraryID, citationKey, pinned ? 1 : 0 ])
-              }
-              await Zotero.DB.queryAsync('UPDATE betterbibtex."better-bibtex" SET name = ? WHERE name = ?', ['migrated.citekey', 'better-bibtex.citekey'])
-            })
-          }
-
-          let data = await Zotero.DB.valueQueryAsync('SELECT data FROM betterbibtex."better-bibtex" WHERE name=?, ['better-bibtex.auto-export'])
-          if (data) {
-            await Zotero.DB.executeTransaction(async () => {
-              for (const row of JSON.parse(data).data) {
-                for (const k of Object.keys(row)) {
-                  switch (typeof row[k]) {
-                    case 'undefined':
-                      row[k] = null
-                      break
-                    case 'boolean':
-                      row[k] = row[k] ? 1 : 0
-                      break
-                }
-                const { type, id, path, status, translatorID, exportNotes, useJournalAbbreviation, asciiBibLaTeX, biblatexExtendedNameFormat, DOIandURL, error, recursive, bibtexURL } = row
-                Zotero.DB.queryAsync(`
-                  REPLACE INTO betterbibtex.autoExport (scope, id, path, status, translatorID, exportNotes, useJournalAbbreviation, asciiBibLaTeX, biblatexExtendedNameFormat, DOIandURL, error, recursive, bibtexURL)
-                  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, [
-                    type, id, path, status, translatorID, exportNotes, useJournalAbbreviation, asciiBibLaTeX, biblatexExtendedNameFormat, DOIandURL, error, recursive, bibtexURL
-                  ])
-              }
-              await Zotero.DB.queryAsync('UPDATE betterbibtex."better-bibtex" SET name = ? WHERE name = ?', ['migrated.auto-export', 'better-bibtex.auto-export'])
-            })
-          }
+          // eslint-disable-next-line @typescript-eslint/quotes
+          const used = await Zotero.DB.valueQueryAsync(`SELECT COUNT(*) FROM betterbibtex."better-bibtex" WHERE name <> ? AND name LIKE '?%'`, ['better-bibtex', 'better-bibtex.'])
+          if (!used) await Zotero.DB.queryAsync('ALTER TABLE betterbibtex."better-bibtex" TO betterbibtex."migrated-better-bibtex"')
         }
-
-        if (tables.includes('better-bibtex')) {
-          const used = await Zotero.DB.valueQueryAsync('SELECT COUNT(*) FROM betterbibtex."better-bibtex" WHERE name <> ? AND name NOT LIKE '?%', ['better-bibtex', 'better-bibtex.'])
-          if (!used) await Zotero.DB.queryTx('ALTER TABLE betterbibtex."better-bibtex" TO betterbibtex."migrated-better-bibtex"')
-        }
-        // const columns = await Zotero.DB.columnQueryAsync("SELECT name FROM PRAGMA_TABLE_INFO('citationKey', 'betterbibtex')")
       },
       shutdown: async () => {
         await Zotero.DB.queryAsync('DETACH DATABASE betterbibtex')

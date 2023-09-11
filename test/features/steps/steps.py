@@ -397,7 +397,7 @@ def step_impl(context, seconds):
   printed = False
   timeout = True
   for n in range(seconds):
-    if not context.zotero.execute('return Zotero.BetterBibTeX.TestSupport.autoExportRunning()'):
+    if not context.zotero.execute('return await Zotero.BetterBibTeX.TestSupport.autoExportRunning()'):
       timeout = False
       break
     time.sleep(1)
@@ -421,7 +421,7 @@ def step_impl(context):
 @step('I change {param} to {value} on the auto-export')
 def step_impl(context, param, value):
   value = json.loads(value)
-  context.zotero.execute('Zotero.BetterBibTeX.TestSupport.editAutoExport(field, value)', field=param, value=value)
+  context.zotero.execute('await Zotero.BetterBibTeX.TestSupport.editAutoExport(field, value)', field=param, value=value)
 
 @step('I change its {field} field to {value}')
 def step_impl(context, field, value):

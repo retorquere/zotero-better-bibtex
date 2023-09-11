@@ -10,7 +10,7 @@ print('translators')
 
 root = os.path.join(os.path.dirname(__file__), '..')
 
-translators = Dict()
+translators = []
 variables = Dict()
 
 def jstype(v):
@@ -24,10 +24,6 @@ for header in sorted(glob.glob(os.path.join(root, 'translators/*.json'))):
     header = Dict(json.load(f))
     print(f'  {header.label}')
 
-    translators.byId[header.translatorID] = header
-    translators.byName[header.label] = header
-    translators.byLabel[re.sub(r'[^a-zA-Z]', '', header.label)] = header
-
     for key, value in header.items():
       if key == 'displayOptions':
         for option, default in value.items():
@@ -39,6 +35,8 @@ for header in sorted(glob.glob(os.path.join(root, 'translators/*.json'))):
 
       else:
         variables.header[key] = jstype(value)
+
+    translators.append(header)
 
 with open(os.path.join(root, 'gen/translators.json'), 'w') as out:
   json.dump(translators, out, indent=2, sort_keys=True)

@@ -6,6 +6,9 @@ function normalize(query: string): string {
 export async function queryAsync(query: string, args?: any[]): Promise<any[]> {
   return Zotero.DB.queryAsync(normalize(query), args) as Promise<any[]>
 }
+export async function queryTx(query: string, args?: any[]): Promise<any[]> {
+  return Zotero.DB.queryTx(normalize(query), args) as Promise<any[]>
+}
 export async function columnQueryAsync(query: string, args?: any[]): Promise<any[]> {
   return Zotero.DB.columnQueryAsync(normalize(query), args) as Promise<any[]>
 }

@@ -23,7 +23,7 @@ const idleService: IdleService = Components.classes[`@mozilla.org/widget/${is7 ?
 class Emitter extends Emittery<{
   'collections-changed': number[]
   'collections-removed': number[]
-  'export-progress': { pct: number, message: string, ae?: number }
+  'export-progress': { pct: number, message: string, ae?: string }
   'items-changed-prep': { ids: number[], action: Action }
   'items-changed': { items: ZoteroItem[], action: Action, reason?: string }
   'libraries-changed': number[]

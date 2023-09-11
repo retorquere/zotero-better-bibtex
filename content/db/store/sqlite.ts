@@ -30,11 +30,11 @@ export class SQLite {
       for (const coll of dbref.collections) {
         const collname = `${name}.${coll.name}`
         if (coll.dirty || !names.includes(collname)) {
-          parts.push(Zotero.DB.queryAsync('REPLACE INTO betterbibtex."better-bibtex" (name, data) VALUES (?, ?)', [collname, JSON.stringify(coll)]))
+          parts.push(Zotero.DB.queryTx('REPLACE INTO betterbibtex."better-bibtex" (name, data) VALUES (?, ?)', [collname, JSON.stringify(coll)]))
         }
       }
 
-      parts.push(Zotero.DB.queryAsync('REPLACE INTO betterbibtex."better-bibtex" (name, data) VALUES (?, ?)', [
+      parts.push(Zotero.DB.queryTx('REPLACE INTO betterbibtex."better-bibtex" (name, data) VALUES (?, ?)', [
         name,
         JSON.stringify({ ...dbref, ...{collections: dbref.collections.map(coll => `${name}.${coll.name}`)} }),
       ]))
