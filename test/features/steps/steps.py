@@ -392,6 +392,11 @@ def step_impl(context, expected, found):
 def step_impl(context, seconds):
   time.sleep(seconds)
 
+@step(u'I wait until Zotero is idle')
+def step_impl(context):
+  while not context.zotero.execute('return await Zotero.BetterBibTeX.TestSupport.isIdle("auto-export")'):
+    time.sleep(5)
+
 @step(u'I wait at most {seconds:d} seconds until all auto-exports are done')
 def step_impl(context, seconds):
   printed = False

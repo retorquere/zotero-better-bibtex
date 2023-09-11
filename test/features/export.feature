@@ -596,7 +596,8 @@ Feature: Export
     And an auto-export of "/auto-export" to "~/autoexport.coll.bib" using "Better BibLaTeX" should match "export/*.before.coll.biblatex"
     When I select the item with a field that is "IEEE"
     And I remove the selected item
-    And I wait 180 seconds
+    And I wait until Zotero is idle
+    And I wait 10 seconds
     Then "~/autoexport.bib" should match "export/*.after.biblatex"
     And "~/autoexport.coll.bib" should match "export/*.after.coll.biblatex"
 

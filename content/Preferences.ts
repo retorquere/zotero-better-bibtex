@@ -183,7 +183,7 @@ class AutoExportPane {
             break
 
           case 'updated':
-            (node as unknown as XUL.Textbox).value = `${new Date(selected.meta.updated || selected.meta.created)}`
+            (node as unknown as XUL.Textbox).value = `${new Date(selected.updated)}`
             break
 
           case 'translator':
@@ -270,11 +270,10 @@ class AutoExportPane {
       path = menulist.selectedItem.getAttribute('value')
     }
     const ae = await AutoExport.get(path)
+    log.debug('edit autoexport: before', ae)
 
     const field = node.getAttribute('data-ae-field')
     Cache.getCollection(Translators.byId[ae.translatorID].label).removeDataOnly()
-
-    log.debug('edit autoexport:', field)
 
     switch (field) {
       case 'exportNotes':
@@ -295,12 +294,11 @@ class AutoExportPane {
         break
 
       default:
-        log.error('unexpected field', field)
+        log.error('edit autoexport: unexpected field', field)
     }
 
-    log.debug('edit autoexport:', ae)
-
     await AutoExport.add(ae, true)
+    log.debug('edit autoexport: after', await AutoExport.get(path))
     await this.refresh()
   }
 

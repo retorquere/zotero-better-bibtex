@@ -31,27 +31,27 @@ CREATE TABLE betterbibtex.autoExport (
     CONSTRAINT asciiBibLaTeX_boolean CHECK (
       ((translatorID = 'Better BibLaTeX') = (asciiBibLaTeX IS NOT NULL))
       AND
-      (asciiBibLaTeX IN (0, 1) OR asciiBibLaTeX IS NULL)
+      COALESCE(asciiBibLaTeX, 0) IN (0, 1)
     ),
 
   biblatexExtendedNameFormat
     CONSTRAINT biblatexExtendedNameFormat_boolean CHECK (
       ((translatorID = 'Better BibLaTeX') = (biblatexExtendedNameFormat IS NOT NULL))
       AND
-      (biblatexExtendedNameFormat IN (0, 1) OR biblatexExtendedNameFormat IS NULL)
+      COALESCE(biblatexExtendedNameFormat, 0) IN (0, 1)
     ),
 
   DOIandURL
     CONSTRAINT DOIandURL_domain CHECK (
       ((translatorID IN ('Better BibTeX', 'Better BibLaTeX')) = (DOIandURL IS NOT NULL))
       AND
-      (DOIandURL IN ('both', 'doi', 'url') OR DOIandURL IS NULL)
+      COALESCE(DOIandURL, 'both') IN ('both', 'doi', 'url')
     ),
 
   bibtexURL
-    CONSTRAINT bibtexURL_boolean CHECK (
+    CONSTRAINT bibtexURL_domain CHECK (
       ((translatorID = 'Better BibTeX') = (bibtexURL IS NOT NULL))
       AND
-      (bibtexURL IN (0, 1) OR bibtexURL IS NULL)
+      COALESCE(bibtexURL, 'off') IN ('off', 'note', 'note-url-ish', 'url', 'url-ish')
     )
 )

@@ -11,6 +11,7 @@ import { $and } from './db/loki'
 import  { defaults } from '../gen/preferences/meta'
 import { Preference } from './prefs'
 import * as memory from './memory'
+import { Events } from './events'
 
 const setatstart: string[] = ['testing', 'cache'].filter(p => Preference[p] !== defaults[p])
 
@@ -25,6 +26,10 @@ export class TestSupport {
     }
   }
   */
+
+  public isIdle(topic: string): boolean {
+    return Events.idle[topic] === 'idle'
+  }
 
   public memoryState(snapshot: string): memory.State {
     const state = memory.state(snapshot)
@@ -306,7 +311,7 @@ export class TestSupport {
   }
 
   public async editAutoExport(field: string, value: boolean | string): Promise<void> {
-    const path: string = await Zotero.DB.valueQueryAsync('SELECT path FROM beterbibtex.autoExport')
+    const path: string = await Zotero.DB.valueQueryAsync('SELECT path FROM betterbibtex.autoExport')
     await Zotero.BetterBibTeX.PrefPane.autoexport.edit({
       getAttribute(name: string): string | number { // eslint-disable-line prefer-arrow/prefer-arrow-functions
         switch (name) {
