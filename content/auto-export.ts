@@ -395,6 +395,9 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
       log.debug(ddl)
       await Zotero.DB.queryAsync(ddl.replace(/\n/g, ' '))
     }
+    for (const db of await Zotero.DB.queryAsync("select * FROM betterbibtex.sqlite_master where type='table'")) {
+      log.debug(db.name, db.sql)
+    }
 
     // migration
     if (tables.includes('better-bibtex')) {
