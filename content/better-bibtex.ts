@@ -698,7 +698,7 @@ export class BetterBibTeX {
         const tables = await Zotero.DB.columnQueryAsync("SELECT name FROM betterbibtex.sqlite_master where type='table'")
         if (tables.includes('better-bibtex')) {
           // eslint-disable-next-line @typescript-eslint/quotes
-          const used = await Zotero.DB.valueQueryAsync(`SELECT COUNT(*) FROM betterbibtex."better-bibtex" WHERE name <> ? AND name LIKE '?%'`, ['better-bibtex', 'better-bibtex.'])
+          const used = await Zotero.DB.valueQueryAsync('SELECT COUNT(*) FROM betterbibtex."better-bibtex" WHERE name <> ? AND name LIKE ?', ['better-bibtex', 'better-bibtex.%'])
           if (!used) await Zotero.DB.queryAsync('ALTER TABLE betterbibtex."better-bibtex" TO betterbibtex."migrated-better-bibtex"')
         }
       },
