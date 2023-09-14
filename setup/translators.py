@@ -18,9 +18,9 @@ import type {{ Translators }} from '../typings/translators.d.ts'
 
 export const headers: Translators.Header[] = {json.dumps(headers, indent='  ')}
 export const byId: Record<string, Translators.Header> = {{}}
-export const byName: Record<string, Translators.Header> = {{}}
 export const byLabel: Record<string, Translators.Header> = {{}}
+export const bySlug: Record<string, Translators.Header> = {{}}
 for (const header of headers) {{
-  byId[header.translatorID] = byName[header.label] = byLabel[header.label.replace(/ /g, '')] = header
+  byId[header.translatorID] = byLabel[header.label] = bySlug[header.label.replace(/ /g, '')] = header
 }}
 """)

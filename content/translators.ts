@@ -23,7 +23,7 @@ import Puqeue from 'puqeue'
 import { is7 } from './client'
 import { orchestrator } from './orchestrator'
 import type { Reason } from './bootstrap'
-import { headers as Headers, byName, byId, byLabel } from '../gen/translators'
+import { headers as Headers, byLabel, byId, bySlug } from '../gen/translators'
 
 class Queue extends Puqeue {
   get queued() {
@@ -49,8 +49,8 @@ export type ExportJob = {
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export const Translators = new class { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   public byId: Record<string, Translator.Header> = {}
-  public byName: Record<string, Translator.Header> = {}
   public byLabel: Record<string, Translator.Header> = {}
+  public bySlug: Record<string, Translator.Header> = {}
   public itemType: { note: number, attachment: number, annotation: number }
   public queue = new Queue
   public worker: ChromeWorker
@@ -58,7 +58,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
   public ready = new Deferred<boolean>()
 
   constructor() {
-    Object.assign(this, { byName, byId, byLabel })
+    Object.assign(this, { byLabel, byId, bySlug })
 
     orchestrator.add('translators', {
       description: 'translators',
@@ -144,16 +144,16 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     // shortcuts
     switch (name_lc) {
       case 'json':
-        return Translators.byLabel.BetterCSLJSON.translatorID
+        return Translators.bySlug.BetterCSLJSON.translatorID
       case 'yaml':
-        return Translators.byLabel.BetterCSLYAML.translatorID
+        return Translators.bySlug.BetterCSLYAML.translatorID
       case 'jzon':
-        return Translators.byLabel.BetterBibTeXJSON.translatorID
+        return Translators.bySlug.BetterBibTeXJSON.translatorID
       case 'bib':
       case 'biblatex':
-        return Translators.byLabel.BetterBibLaTeX.translatorID
+        return Translators.bySlug.BetterBibLaTeX.translatorID
       case 'bibtex':
-        return Translators.byLabel.BetterBibTeX.translatorID
+        return Translators.bySlug.BetterBibTeX.translatorID
     }
 
     for (const [id, translator] of (Object.entries(this.byId))) {

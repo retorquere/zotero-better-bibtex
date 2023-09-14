@@ -200,7 +200,7 @@ export class ErrorReport {
     if (this.params.scope) {
       await Zotero.BetterBibTeX.ready
       this.errorlog.items = await Translators.exportItems({
-        translatorID: Translators.byLabel.BetterBibTeXJSON.translatorID,
+        translatorID: Translators.bySlug.BetterBibTeXJSON.translatorID,
         displayOptions: {exportNotes: true, dropAttachments: true, Normalize: true},
         scope: this.params.scope,
       })

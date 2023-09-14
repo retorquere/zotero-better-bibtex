@@ -294,7 +294,7 @@ export class TestSupport {
     const format = {
       mode: 'export',
       contentType: '',
-      id: Translators.byName[translator]?.translatorID || translator,
+      id: Translators.byLabel[translator]?.translatorID || translator,
       locale: '',
     }
 
