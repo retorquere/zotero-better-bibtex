@@ -64,14 +64,37 @@ export namespace Translators {
   interface Header {
     translatorID: string
     label: string
+    description: string
+    creator: string
+    minVersion: string
+    maxVersion: string
+    translatorType: number
+    browserSupport: string
+    inRepository: false
+    priority: number
     target: string
+    browserSupport: 'gcsv'
     configOptions?: {
       getCollections?: boolean
+      async?: boolean
       hash?: string
+      cached?: boolean
     }
     displayOptions?: {
+      exportNotes?: boolean,
+      exportFileData?: boolean
+      useJournalAbbreviation?: boolean
       keepUpdated?: boolean
       worker?: boolean
+      markdown?: boolean
+
+      Normalize?: boolean
+
+      Authors?: boolean
+      Title?: boolean
+      Year?: boolean
+
+      quickCopyMode?: string
     }
   }
 }

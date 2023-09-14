@@ -1,6 +1,5 @@
 import { XULoki as Loki } from './loki'
 import { Preference } from '../prefs'
-import { schema } from '../../gen/preferences/meta'
 import { getItemsAsync } from '../get-items-async'
 import * as ZoteroDB from './zotero'
 
@@ -80,80 +79,30 @@ class Main extends Loki {
       }
     }
 
-    const config = {
-      indices: [
-        'type',
-        'id',
-        'status',
-        'path',
-        'translatorID',
-
-        ...schema.autoExport.displayOptions,
-        ...schema.autoExport.preferences,
-      ],
-      unique: [ 'path' ],
-      // logging: true,
-      schema: {
-        type: 'object',
-        discriminator: { propertyName: 'translatorID' },
-        oneOf: [],
-      },
-    }
-    for (const translator of Object.values(schema.translator)) {
-      if (translator.autoexport) config.schema.oneOf.push(translator.autoexport)
-    }
-
-    const autoexport = this.schemaCollection('autoexport', config)
-
     if (Preference.scrubDatabase) {
-      log.debug('scrubbing: stripping autoexport')
-      // directly change the data objects and rebuild indexes https://github.com/techfort/LokiJS/issues/660
-      let removed = 0
-      autoexport.data = autoexport.data.filter(doc => {
-        const err = autoexport.validationError(doc)
-        if (err) {
-          log.debug('scrubbing: auto-export validation error:', err, doc)
-          removed += 1
-          return false
-        }
-        if (!doc.meta || typeof doc.$loki !== 'number') {
-          log.debug('scrubbing: auto-export missing metadata:', doc)
-          removed += 1
-          return false
-        }
-        return true
-      })
-      if (removed) {
-        log.debug('scrubbing: stripping autoexport errors:', removed)
-        autoexport.ensureId()
-        autoexport.ensureAllIndexes(true)
-        log.debug('scrubbing: stripping autoexport errors: rebuilt indices')
-      }
-      log.debug('scrubbing: stripping autoexport done')
-
       log.debug('scrubbing: fixing indices')
+
       // https://github.com/techfort/LokiJS/issues/47#issuecomment-362425639
-      for (const [name, coll] of Object.entries({ citekeys, autoexport })) {
-        let corrupt
-        try {
-          corrupt = coll.checkAllIndexes({ repair: true })
-        }
-        catch (err) {
-          log.debug('scrubbing: index error:', name, err)
-          corrupt = [ '*' ]
-          coll.ensureAllIndexes(true)
-        }
-        if (corrupt.length > 0) {
-          for (const index of corrupt) {
-            if (index === '*') {
-              log.debug(`scrubbing: LokiJS: rebuilt index ${name}.${index}`)
-            }
-            else {
-              log.debug(`scrubbing: LokiJS: corrupt index ${name}.${index} repaired`)
-            }
+      let corrupt
+      try {
+        corrupt = citekeys.checkAllIndexes({ repair: true })
+      }
+      catch (err) {
+        log.debug('scrubbing: index error: citekeys', err)
+        corrupt = [ '*' ]
+        citekeys.ensureAllIndexes(true)
+      }
+      if (corrupt.length > 0) {
+        for (const index of corrupt) {
+          if (index === '*') {
+            log.debug(`scrubbing: LokiJS: rebuilt index citekeys.${index}`)
+          }
+          else {
+            log.debug(`scrubbing: LokiJS: corrupt index citekeys.${index} repaired`)
           }
         }
       }
+
       log.debug('scrubbing: fixing indices done')
 
       log.debug('scrubbing: old bibtex: lines in extra')
@@ -192,10 +141,6 @@ class Main extends Loki {
       Preference.scrubDatabase = false
       log.debug('scrubbing: completed')
     }
-
-    autoexport.on(['pre-insert', 'pre-update'], (ae: { path: string, $loki: number }) => {
-      autoexport.removeWhere({ $and: [ { path: ae.path }, { $loki: { $ne: ae.$loki } } ] })
-    })
   }
 }
 

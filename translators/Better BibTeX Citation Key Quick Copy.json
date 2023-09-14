@@ -5,6 +5,7 @@
   "creator": "Emiliano heyns",
   "target": "txt",
   "minVersion": "4.0.27",
+  "maxVersion": "",
   "translatorType": 2,
   "browserSupport": "gcsv",
   "priority": 100,

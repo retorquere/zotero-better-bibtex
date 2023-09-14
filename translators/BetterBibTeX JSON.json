@@ -8,13 +8,14 @@
   "maxVersion": "",
   "configOptions": {
     "async": true,
-    "getCollections": true
+    "getCollections": true,
+    "cached": true
   },
   "displayOptions": {
     "exportNotes": true,
     "exportFileData": false,
     "keepUpdated": false,
-    "worker": false,
+    "worker": true,
     "Normalize": false
   },
   "translatorType": 3,

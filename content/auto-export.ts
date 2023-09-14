@@ -7,9 +7,9 @@ import { Events } from './events'
 import { DB as Cache } from './db/cache'
 import { $and } from './db/loki'
 import { Translators, ExportJob } from './translators'
-import * as translatorHeaders from '../gen/translators.json'
+import { headers } from '../gen/translators'
 import { Preference } from './prefs'
-import { Preferences, schema, affects, affectedBy } from '../gen/preferences/meta'
+import { Preferences, autoExport, affects, affectedBy } from '../gen/preferences/meta'
 import * as ini from 'ini'
 import fold2ascii from 'fold-to-ascii'
 import { findBinary } from './path-search'
@@ -390,7 +390,7 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
 
     if (!tables.includes('autoExport')) {
       let ddl = require('./db/auto-export.sql')
-      for (const header of translatorHeaders) {
+      for (const header of headers) {
         ddl = ddl.replace(new RegExp(`'${header.label}'`, 'g'), `'${header.translatorID}'`)
       }
       log.debug(ddl)
@@ -423,11 +423,12 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
   }
 
   public async add(ae, schedule = false) {
-    const translator = schema.translator[Translators.byId[ae.translatorID].label]
-    for (const pref of translator.preferences) {
+    const translator = Translators.byId[ae.translatorID]
+    for (const [pref, affected] of Object.entries(autoExport.preferences)) {
+      if (!affected.includes(translator.label)) continue
       if (typeof ae[pref] === 'undefined' || ae[pref] === null) ae[pref] = Preference[pref]
     }
-    for (const option of translator.displayOptions) {
+    for (const option of autoExport.displayOptions) {
       if (typeof ae[option] === 'undefined' || ae[option] === null) ae[option] = translator.displayOptions[option]
     }
 

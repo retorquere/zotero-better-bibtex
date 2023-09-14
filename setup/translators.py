@@ -1,42 +1,26 @@
 #!/usr/bin/env python3
 
+import glob
 import json
 import os
-import glob
-from addict import Dict
-import re
 
 print('translators')
+headers = []
+for tr in sorted(glob.glob('translators/*.json')):
+  with open(tr) as f:
+    tr = json.load(f)
+    print(' ', tr['label'])
+    headers.append(tr)
 
-root = os.path.join(os.path.dirname(__file__), '..')
+open('gen/translators.ts', 'w').write(f"""
+/* eslint-disable @typescript-eslint/quotes, quote-props, comma-dangle */
+import type {{ Translators }} from '../typings/translators.d.ts'
 
-translators = []
-variables = Dict()
-
-def jstype(v):
-  if type(v) == bool: return 'boolean'
-  if type(v) == str: return 'string'
-  if type(v) == int: return 'number'
-  raise ValueError(f'Unexpected type {type(v)}')
-
-for header in sorted(glob.glob(os.path.join(root, 'translators/*.json'))):
-  with open(header) as f:
-    header = Dict(json.load(f))
-    print(f'  {header.label}')
-
-    for key, value in header.items():
-      if key == 'displayOptions':
-        for option, default in value.items():
-          variables.displayOptions[option] = jstype(default)
-
-      elif key == 'configOptions':
-        for option, default in value.items():
-          variables.configOptions[option] = jstype(default)
-
-      else:
-        variables.header[key] = jstype(value)
-
-    translators.append(header)
-
-with open(os.path.join(root, 'gen/translators.json'), 'w') as out:
-  json.dump(translators, out, indent=2, sort_keys=True)
+export const headers: Translators.Header[] = {json.dumps(headers, indent='  ')}
+export const byId: Record<string, Translators.Header> = {{}}
+export const byName: Record<string, Translators.Header> = {{}}
+export const byLabel: Record<string, Translators.Header> = {{}}
+for (const header of headers) {{
+  byId[header.translatorID] = byName[header.label] = byLabel[header.label.replace(/ /g, '')] = header
+}}
+""")
