@@ -6,7 +6,7 @@ import * as preference from '../../gen/preferences/meta'
 import { headers } from '../../gen/translators'
 import { log } from '../logger'
 import { Cache as CacheTypes } from '../../typings/cache'
-import { clone } from '../clone'
+import { clone } from '../object'
 import { fromPairs } from 'lodash'
 
 import { orchestrator } from '../orchestrator'

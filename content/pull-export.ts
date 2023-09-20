@@ -9,7 +9,7 @@ import { Translators } from './translators'
 import { get as getCollection } from './collection'
 import { get as getLibrary } from './library'
 import { getItemsAsync } from './get-items-async'
-import { fromEntries } from './object'
+import { fromPairs } from './object'
 import { $and } from './db/loki'
 
 function displayOptions(request) {
@@ -173,7 +173,7 @@ Zotero.Server.Endpoints['/better-bibtex/export/item'] = class {
 
       if (!Object.keys(itemIDs).length) return [ SERVER_ERROR, 'text/plain', 'no items found' ]
       // itemID => zotero item
-      const items = fromEntries((await getItemsAsync(Object.values(itemIDs))).map(item => [ item.itemID , item ]))
+      const items = fromPairs((await getItemsAsync(Object.values(itemIDs))).map(item => [ item.itemID , item ]))
       let contents = await Translators.exportItems({translatorID, displayOptions: displayOptions(request), scope: { type: 'items', items: Object.values(items) }})
 
       if (pandocFilterData) {

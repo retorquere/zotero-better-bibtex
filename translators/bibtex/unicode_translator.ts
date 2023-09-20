@@ -1,4 +1,4 @@
-import { clone } from '../../content/clone'
+import { clone } from '../../content/object'
 import { Translation } from '../lib/translator'
 import { HTMLParser } from '../../content/text'
 

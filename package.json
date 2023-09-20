@@ -17,6 +17,7 @@
     "releaseURL": "https://github.com/retorquere/zotero-better-bibtex/releases/download/release/"
   },
   "scripts": {
+    "ae": "./test/behave --test 2573",
     "check-env": "node -e 'console.log(process.env)' | grep npm",
     "action": "act -W .github/workflows/ci.yaml",
     "pretest": "npm run build",
@@ -96,6 +97,7 @@
     "pinyin": "^3.0.0-alpha.5",
     "punycode2": "^1.0.1",
     "puqeue": "^1.0.15",
+    "remeda": "^1.27.0",
     "sprintf-js": "^1.1.3",
     "tar-js": "^0.3.0",
     "text-title-case": "^1.0.2",
