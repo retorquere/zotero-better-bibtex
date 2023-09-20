@@ -7,7 +7,6 @@ import { Events } from './events'
 import { DB as Cache } from './db/cache'
 import { $and } from './db/loki'
 import { Translators, ExportJob } from './translators'
-import { headers } from '../gen/translators'
 import { Preference } from './prefs'
 import { Preferences, autoExport, affects, affectedBy } from '../gen/preferences/meta'
 import * as ini from 'ini'
@@ -208,7 +207,7 @@ const queue = new class TaskQueue {
     const translator = Translators.byId[ae.translatorID]
     void Events.emit('export-progress', { pct: 0, message: `Starting ${translator.label}`, ae: path })
 
-    await Zotero.DB.queryTx("UPDATE betterbibtex.autoExport SET status = 'running' WHERE path = ?", [path])
+    await Zotero.DB.queryTx("UPDATE betterbibtex.autoexport SET status = 'running' WHERE path = ?", [path])
 
     try {
       let scope
@@ -286,7 +285,7 @@ const queue = new class TaskQueue {
       ae.error = `${err}`
     }
 
-    await Zotero.DB.queryTx("UPDATE betterbibtex.autoExport SET status = 'done', updated = ? WHERE path = ?", [Date.now(), path])
+    await Zotero.DB.queryTx("UPDATE betterbibtex.autoexport SET status = 'done', updated = ? WHERE path = ?", [Date.now(), path])
   }
 
   private getCollectionPath(coll: {name: string, parentID: number}, root: number): string[] {
@@ -325,7 +324,7 @@ const columns = [
   'DOIandURL', 'bibtexURL',
 ]
 
-const insert = `REPLACE INTO betterbibtex.autoExport (${columns.join(',')}) VALUES (${Array(columns.length).fill('?').join(',')})`
+const insert = `REPLACE INTO betterbibtex.autoexport (${columns.join(',')}) VALUES (${Array(columns.length).fill('?').join(',')})`
 
 function makeRow(ae: Config): any[] {
   const translator = Translators.byId[ae.translatorID].label
@@ -354,7 +353,7 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
 
         await this.initDB()
 
-        for (const path of await Zotero.DB.columnQueryAsync("SELECT path FROM betterbibtex.autoExport WHERE status <> 'done'")) {
+        for (const path of await Zotero.DB.columnQueryAsync("SELECT path FROM betterbibtex.autoexport WHERE status <> 'done'")) {
           queue.add(path)
         }
 
@@ -385,16 +384,14 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
   }
 
   private async initDB() {
-    const tables = await Zotero.DB.columnQueryAsync("SELECT name FROM betterbibtex.sqlite_master where type='table'")
+    const tables = await Zotero.DB.columnQueryAsync("SELECT LOWER(name) FROM betterbibtex.sqlite_master where type='table'")
     log.debug('mae:', tables)
 
     if (!tables.includes('autoExport')) {
-      let ddl = require('./db/auto-export.sql')
-      for (const header of headers) {
-        ddl = ddl.replace(new RegExp(`'${header.label}'`, 'g'), `'${header.translatorID}'`)
+      const ddl = require('./db/auto-export.sql')
+      for (const create of ddl) {
+        await Zotero.DB.queryAsync(create, [], { noParseParams: true })
       }
-      log.debug(ddl)
-      await Zotero.DB.queryAsync(ddl.replace(/\n/g, ' '))
     }
     for (const db of await Zotero.DB.queryAsync("SELECT * FROM betterbibtex.sqlite_master WHERE type='table'")) {
       log.debug(db.name, db.sql)
@@ -442,7 +439,7 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
     */
     log.debug('aedb: insert', ae)
     await Zotero.DB.queryTx(insert, makeRow(ae), { noParseParams: true })
-    log.debug('aedb: inserted, now', await Zotero.DB.valueQueryAsync('SELECT COUNT(*) FROM betterbibtex.autoExport'))
+    log.debug('aedb: inserted, now', await Zotero.DB.valueQueryAsync('SELECT COUNT(*) FROM betterbibtex.autoexport'))
 
     try {
       const repo = await git.repo(ae.path)
@@ -456,7 +453,7 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
   public async schedule(type: string, ids: number[]) {
     if (!ids.length) return
 
-    const select = `FROM betterbibtex.autoExport WHERE type = ? AND id IN (${Array(ids.length).fill('?').join(',')})`
+    const select = `FROM betterbibtex.autoexport WHERE type = ? AND id IN (${Array(ids.length).fill('?').join(',')})`
     for (const path of await Zotero.DB.columnQueryAsync(`SELECT path ${select}`, [type, ...ids])) {
       log.debug('ae.schedule: enqueueing', path)
       queue.add(path)
@@ -468,12 +465,12 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
     return fromPairs(columns.map((col: string) => [col, row[col]]).filter(pair => pair[1] !== null)) as Config
   }
   public async get(path: string): Promise<Config> {
-    for (const ae of await Zotero.DB.queryAsync('SELECT * FROM betterbibtex.autoExport WHERE path = ?', path)) {
+    for (const ae of await Zotero.DB.queryAsync('SELECT * FROM betterbibtex.autoexport WHERE path = ?', path)) {
       return this._get(ae)
     }
   }
   public async all(): Promise<Config[]> {
-    return (await Zotero.DB.queryAsync('SELECT * FROM betterbibtex.autoExport ORDER BY path')).map(ae => this._get(ae)) as Config[]
+    return (await Zotero.DB.queryAsync('SELECT * FROM betterbibtex.autoexport ORDER BY path')).map(ae => this._get(ae)) as Config[]
   }
 
   public async remove(path: string): Promise<void>
@@ -485,7 +482,7 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
     }
     else {
       if (!ids.length) return
-      const select = `SELECT path FROM betterbibtex.autoExport WHERE type = ? AND path IN (${Array(ids.length).fill('?').join(',')})`
+      const select = `SELECT path FROM betterbibtex.autoexport WHERE type = ? AND path IN (${Array(ids.length).fill('?').join(',')})`
       paths = await Zotero.DB.columnQueryAsync(select, [arg, ...ids])
     }
 
@@ -494,13 +491,13 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
       this.progress.delete(path)
     }
 
-    await Zotero.DB.queryTx(`DELETE FROM betterbibtex.autoExport WHERE path IN (${Array(paths.length).fill('?').join(',')})`, paths)
+    await Zotero.DB.queryTx(`DELETE FROM betterbibtex.autoexport WHERE path IN (${Array(paths.length).fill('?').join(',')})`, paths)
   }
 
   public async removeAll() {
     queue.clear()
     this.progress = new Map
-    await Zotero.DB.queryTx('DELETE FROM betterbibtex.autoExport')
+    await Zotero.DB.queryTx('DELETE FROM betterbibtex.autoexport')
   }
 
   public run(path: string) {

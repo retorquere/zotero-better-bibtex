@@ -214,6 +214,7 @@ async function rebuild() {
       loader.trace('plugin'),
       loader.patcher.plugin,
       loader.text,
+      loader.sql,
       loader.peggy,
       loader.__dirname,
       shims
