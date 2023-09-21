@@ -48,20 +48,25 @@ export const options: Partial<Record<PreferenceName, Record<string, string>>> = 
 ) %>
 
 <%
-const ignoreOptions = ['worker', 'exportFileData', 'keepUpdated', 'Normalize']
 const overrides = it.preferences.filter(pref => pref.override)
 
-const autoExport = {
-  preferences: Object.fromEntries(overrides.map(pref => [pref.shortName, pref.affects || []])),
-  displayOptions: it.translators.reduce((acc, tr) => {
-    if (typeof tr.displayOptions?.keepUpdated === 'boolean') {
-      for (const option in (tr.displayOptions || {})) {
-        if (!ignoreOptions.includes(option) && !acc.includes(option)) acc.push(option)
-      }
-    }
-    return acc
-  }, []),
+let autoExport = {}
+for (const header of it.translators) {
+  if (typeof header.displayOptions?.keepUpdated !== 'boolean') continue
+
+  autoExport[header.translatorID] = {
+    options: Object.keys(header.displayOptions).filter(o => it.displayOptions.includes(o)),
+    preferences: overrides.filter(p => p.affects.includes(header.label)).map(p => p.shortName),
+  }
+}
+
+autoExport = stringify(autoExport)
+for (const header of it.translators) {
+  autoExport = autoExport
+    .split('\n')
+    .map(line => line.includes(header.translatorID) ? `${line} // ${header.label}` : line)
+    .join('\n')
 }
 %>
 
-export const autoExport: { preferences: Partial<Record<PreferenceName, string[]>>, displayOptions: string[] } = <%~ stringify(autoExport) %>
+export const autoExport: Record<string, { options: string[], preferences: PreferenceName[] }> = <%~ autoExport %>

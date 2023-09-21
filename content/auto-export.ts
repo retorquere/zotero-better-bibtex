@@ -16,7 +16,7 @@ import { Scheduler } from './scheduler'
 import { flash } from './flash'
 import * as l10n from './l10n'
 import { orchestrator } from './orchestrator'
-import { fromPairs } from 'lodash'
+import { fromPairs } from './object'
 
 class Git {
   public enabled: boolean
@@ -299,13 +299,15 @@ const queue = new class TaskQueue {
   }
 }
 
-type Config = {
+type Job = {
+  enabled: boolean
   type: 'collection' | 'library'
   id: number
-  translatorID: 'string'
+  translatorID: string
   path: string
   recursive: boolean
   status: 'scheduled' | 'running' | 'done' | 'error'
+  updated: number
   error: string
   exportNotes: boolean
   useJournalAbbreviation: boolean
@@ -314,8 +316,9 @@ type Config = {
   DOIandURL?: boolean
   bibtexURL?: boolean
 }
+type JobSetting = keyof Job
 
-const columns = [
+const columns: JobSetting[] = [
   'type', 'id', 'translatorID',
   'path', 'recursive',
   'status', 'error', 'updated',
@@ -326,7 +329,7 @@ const columns = [
 
 const insert = `REPLACE INTO betterbibtex.autoexport (${columns.join(',')}) VALUES (${Array(columns.length).fill('?').join(',')})`
 
-function makeRow(ae: Config): any[] {
+function makeRow(ae: Job): any[] {
   const translator = Translators.byId[ae.translatorID].label
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   return columns.map(col => !(col in affects) || affects[col].includes(translator) ? ae[col] : null)
@@ -421,22 +424,16 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
 
   public async add(ae, schedule = false) {
     const translator = Translators.byId[ae.translatorID]
-    for (const [pref, affected] of Object.entries(autoExport.preferences)) {
-      if (!affected.includes(translator.label)) continue
-      if (typeof ae[pref] === 'undefined' || ae[pref] === null) ae[pref] = Preference[pref]
+    for (const pref of autoExport[ae.translatorID].preferences) {
+      ae[pref] = ae[pref] ?? Preference[pref]
     }
-    for (const option of autoExport.displayOptions) {
-      if (typeof ae[option] === 'undefined' || ae[option] === null) ae[option] = translator.displayOptions[option]
+    for (const option of autoExport[ae.translatorID].options) {
+      ae[option] = ae[option] ?? translator.displayOptions[option]
     }
 
     ae.error = ae.error || ''
     ae.updated = Date.now()
     ae.recursive = ae.recursive || 0
-    /*
-    for (const [k, v] of Object.entries(ae)) {
-      if (typeof v === 'boolean') ae[k] = v ? 1 : 0
-    }
-    */
     log.debug('aedb: insert', ae)
     await Zotero.DB.queryTx(insert, makeRow(ae), { noParseParams: true })
     log.debug('aedb: inserted, now', await Zotero.DB.valueQueryAsync('SELECT COUNT(*) FROM betterbibtex.autoexport'))
@@ -460,17 +457,17 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
     }
   }
 
-  private _get(row: any): Config {
+  private _get(row: any): Job {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return fromPairs(columns.map((col: string) => [col, row[col]]).filter(pair => pair[1] !== null)) as Config
+    return fromPairs(columns.map((col: JobSetting) => [col, row[col]] as [JobSetting, number | string | boolean]).filter(pair => pair[1] !== null)) as Job
   }
-  public async get(path: string): Promise<Config> {
+  public async get(path: string): Promise<Job> {
     for (const ae of await Zotero.DB.queryAsync('SELECT * FROM betterbibtex.autoexport WHERE path = ?', path)) {
       return this._get(ae)
     }
   }
-  public async all(): Promise<Config[]> {
-    return (await Zotero.DB.queryAsync('SELECT * FROM betterbibtex.autoexport ORDER BY path')).map(ae => this._get(ae)) as Config[]
+  public async all(): Promise<Job[]> {
+    return (await Zotero.DB.queryAsync('SELECT * FROM betterbibtex.autoexport ORDER BY path')).map(ae => this._get(ae)) as Job[]
   }
 
   public async remove(path: string): Promise<void>
@@ -544,7 +541,7 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
     return Math.min(Math.round((100 * (cached.serialized + cached.export)) / (itemIDs.length * 2)), 100)
   }
 
-  private async itemIDs(ae: Config, id: number, itemTypeIDs: number[], itemIDs: Set<number>) {
+  private async itemIDs(ae: Job, id: number, itemTypeIDs: number[], itemIDs: Set<number>) {
     let items
     if (ae.type === 'collection') {
       const coll = await Zotero.Collections.getAsync(id)

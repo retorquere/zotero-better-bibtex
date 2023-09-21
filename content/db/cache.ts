@@ -3,11 +3,10 @@ import { Events } from '../events'
 import { File } from './store/file'
 import { Preference } from '../prefs'
 import * as preference from '../../gen/preferences/meta'
-import { headers } from '../../gen/translators'
+import { headers, byLabel } from '../../gen/translators'
 import { log } from '../logger'
 import { Cache as CacheTypes } from '../../typings/cache'
-import { clone } from '../object'
-import { fromPairs } from 'lodash'
+import { clone, fromPairs } from '../object'
 
 import { orchestrator } from '../orchestrator'
 
@@ -77,24 +76,19 @@ class Cache extends Loki {
       modified[item.itemID] = item.modified
     }
 
-    const cachedOptions = preference.autoExport.displayOptions
-      .reduce((acc, option) => { acc[option] = { type: 'boolean' }; return acc }, {})
-
     for (const header of headers) {
       if (!header.configOptions?.cached) continue
 
       const cachedPrefs = fromPairs(
-        Object.entries(preference.autoExport.preferences)
-          .filter(([_pref, affected]) => affected.includes(header.label))
-          .map(([pref, _affected]) => [
-            pref,
-            preference.options[pref] ? { enum: Object.keys(preference.options[pref]) } : { type: typeof preference.defaults[pref] },
-          ])
+        preference.autoExport[header.translatorID].preferences.map(pref => [
+          pref,
+          preference.options[pref] ? { enum: Object.keys(preference.options[pref]) } : { type: typeof preference.defaults[pref] },
+        ])
       )
 
       coll = this.schemaCollection(header.label, {
         logging: false,
-        indices: [ 'itemID', 'exportNotes', 'useJournalAbbreviation', ...(Object.keys(cachedPrefs)) ],
+        indices: [ 'itemID', 'exportNotes', 'useJournalAbbreviation', ...Object.keys(cachedPrefs) ],
         schema: {
           type: 'object',
           additionalProperties: false,
@@ -103,7 +97,8 @@ class Cache extends Loki {
             entry: { type: 'string' },
 
             // displayOptions
-            ...cachedOptions,
+            exportNotes: { type: 'boolean' },
+            useJournalAbbreviation: { type: 'boolean' },
 
             // preferences
             ...cachedPrefs,
@@ -115,7 +110,7 @@ class Cache extends Loki {
             meta: { type: 'object' },
             $loki: { type: 'integer' },
           },
-          required: [ 'itemID', 'entry', ...Object.keys(cachedOptions), ...Object.keys(cachedPrefs) ],
+          required: [ 'itemID', 'entry', 'exportNotes', 'useJournalAbbreviation', ...Object.keys(cachedPrefs) ],
         },
         ttl,
         ttlInterval,
@@ -184,14 +179,15 @@ class Cache extends Loki {
   }
 
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  selector(translator: string, options: any, prefs: Partial<Preferences>) {
+  selector(translatorLabel: string, options: any, prefs: Partial<Preferences>) {
     const query = {
       exportNotes: !!options.exportNotes,
       useJournalAbbreviation: !!options.useJournalAbbreviation,
       // itemID: Array.isArray(itemID) ? {$in: itemID} : itemID,
     }
-    for (const [pref, affected] of Object.entries(preference.autoExport.preferences)) {
-      if (affected.includes(translator)) query[pref] = prefs[pref]
+    const translatorID = byLabel[translatorLabel].translatorID
+    for (const pref of preference.autoExport[translatorID].preferences) {
+      query[pref] = prefs[pref]
     }
     return query
   }
