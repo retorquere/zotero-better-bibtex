@@ -431,6 +431,7 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
       ae[option] = ae[option] ?? translator.displayOptions[option]
     }
 
+    ae.enabled = ae.enabled ?? true
     ae.error = ae.error || ''
     ae.updated = Date.now()
     ae.recursive = ae.recursive || 0

@@ -56,7 +56,7 @@ class NSAutoExport {
 
     const coll = await getCollection(collection, true)
 
-    const ae = (await Zotero.DB.queryAsync('SELECT * FROM betterbibtex.autoExport WHERE path = ?', path))[0]
+    const ae = await AutoExport.get(path)
     if (ae && ae.translatorID === translatorID && ae.type === 'collection' && ae.id === coll.id) {
       await AutoExport.schedule(ae.type, [ae.id])
     }
@@ -65,10 +65,14 @@ class NSAutoExport {
     }
     else {
       await AutoExport.add({
+        enabled: true,
         type: 'collection',
         id: coll.id,
         path,
         status: 'done',
+        recursive: false,
+        updated: Date.now(),
+        error: '',
         translatorID,
         exportNotes: displayOptions.exportNotes,
         useJournalAbbreviation: displayOptions.useJournalAbbreviation,

@@ -1,4 +1,6 @@
 CREATE TABLE betterbibtex.autoExport (
+  enabled
+    CONSTRAINT recursive_boolean CHECK (recursive IN (0, 1)),
   type
     CONSTRAINT type_domain CHECK (type IN ('library', 'collection')),
   id NOT NULL,
