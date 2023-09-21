@@ -275,6 +275,8 @@ class AutoExportPane {
     const field = node.getAttribute('data-ae-field')
     Cache.getCollection(Translators.byId[ae.translatorID].label).removeDataOnly()
 
+    let value: number | boolean | string
+
     switch (field) {
       case 'exportNotes':
       case 'useJournalAbbreviation':
@@ -284,20 +286,19 @@ class AutoExportPane {
       case 'biblatexExtendedNameFormat':
       case 'recursive':
         log.debug('edit autoexport:', field, node.checked)
-        ae[field] = node.checked
+        value = node.checked
         break
 
       case 'DOIandURL':
       case 'bibtexURL':
         log.debug('edit autoexport:', field, node.value)
-        ae[field] = node.value
+        value = node.value
         break
 
       default:
         log.error('edit autoexport: unexpected field', field)
     }
-
-    await AutoExport.add(ae, true)
+    await AutoExport.edit(path, field, value)
     log.debug('edit autoexport: after', await AutoExport.get(path))
     await this.refresh()
   }

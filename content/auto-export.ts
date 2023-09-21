@@ -454,6 +454,10 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
     return Promise.all(paths.map(path => this.get(path)))
   }
 
+  public async edit(path: string, setting: JobSetting, value: boolean | string | number): Promise<void> {
+    await Zotero.DB.queryTx(`UPDATE betterbibtex.autoexport SET ${setting} = ?`, [value])
+  }
+
   public async schedule(type: string, ids: number[]) {
     if (!ids.length) return
 
