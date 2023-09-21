@@ -390,7 +390,7 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
     const tables = await Zotero.DB.columnQueryAsync("SELECT LOWER(name) FROM betterbibtex.sqlite_master where type='table'")
     log.debug('mae:', tables)
 
-    if (!tables.includes('autoExport')) {
+    if (!tables.includes('autoexport')) {
       const ddl = require('./db/auto-export.sql')
       for (const create of ddl) {
         await Zotero.DB.queryAsync(create, [], { noParseParams: true })
