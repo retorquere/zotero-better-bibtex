@@ -448,6 +448,12 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
     }
   }
 
+  public async find(type: 'collection' | 'library', ids: number[]): Promise<Job[]> {
+    if (!ids.length) return []
+    const paths: string[] = await Zotero.DB.columnQueryAsync(`SELECT path FROM betterbibtex.autoexport WHERE type = ? AND id IN (${Array(ids.length).fill('?').join(',')})`, [ type, ...ids ])
+    return Promise.all(paths.map(path => this.get(path)))
+  }
+
   public async schedule(type: string, ids: number[]) {
     if (!ids.length) return
 

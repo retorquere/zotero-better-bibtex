@@ -220,7 +220,7 @@ class ZoteroPane {
         let auto_exports = []
         const type = isCollection ? 'collection' : isLibrary ? 'library' : ''
         if (Preference.autoExport !== 'immediate' && type) {
-          auto_exports = await Zotero.DB.querySync('SELECT * from betterbibtex.autoExport WHERE type = ? AND id = ? ORDER BY path', [ type, treeRow.ref.id ])
+          auto_exports = await AutoExport.find(type, [ treeRow.ref.id ])
           log.debug('mae:', auto_exports)
         }
 

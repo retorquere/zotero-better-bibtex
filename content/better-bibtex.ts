@@ -489,9 +489,13 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
 
       if (capture) {
         void AutoExport.add({
-          type: this._export.type,
-          id: this._export.type === 'library' ? this._export.id : this._export.collection.id,
+          enabled: true,
           path: this.location.path,
+          type: this._export.type as 'collection' | 'library',
+          id: this._export.type === 'library' ? this._export.id : this._export.collection.id,
+          recursive: false,
+          error: '',
+          updated: Date.now(),
           status: 'done',
           translatorID,
           exportNotes: displayOptions.exportNotes,
