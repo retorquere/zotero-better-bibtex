@@ -311,6 +311,7 @@ export class TestSupport {
   }
 
   public async editAutoExport(field: string, value: boolean | string): Promise<void> {
+    // assumes only one auto-export is set up
     const path: string = await Zotero.DB.valueQueryAsync('SELECT path FROM betterbibtex.autoExport')
     await Zotero.BetterBibTeX.PrefPane.autoexport.edit({
       getAttribute(name: string): string | number { // eslint-disable-line prefer-arrow/prefer-arrow-functions

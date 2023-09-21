@@ -528,6 +528,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
     if (header.configOptions?.cached) Cache.getCollection(header.label).removeDataOnly()
 
+    // will be started later by the scheduler
     await Zotero.DB.queryTx("UPDATE betterbibtex.autoExport SET status = 'scheduled' WHERE translatorID = ?", [ header.translatorID ])
 
     try {
