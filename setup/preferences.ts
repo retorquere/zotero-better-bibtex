@@ -510,18 +510,24 @@ The Better BibTeX hidden preferences are preceded by “extensions.zotero.transl
           test += `  WHERE TYPEOF(NEW.${name}) <> 'text' OR LENGTH(NEW.${name}) < ${schema.minLength};\n`
         }
       }
-      /*
-      else {
-        const type = { number: 'integer', string: 'text' }[schema.type]
-        test += `  SELECT RAISE(FAIL, "${name} must be a ${schema.type}")\n`
+      else if (schema.type === 'string') {
+        test += `  SELECT RAISE(FAIL, "${name} must be a string")\n`
         if (isSetting) {
-          test += `  WHERE NEW.setting = '${name}' AND TYPEOF(NEW.value) <> '${type}';\n`
+          test += `  WHERE NEW.setting = '${name}' AND TYPEOF(NEW.value) <> 'text';\n`
         }
         else {
-          test += `  WHERE TYPEOF(NEW.${name}) <> '${type}';\n`
+          test += `  WHERE TYPEOF(NEW.${name}) <> 'text';\n`
         }
       }
-      */
+      else if (schema.type === 'number') {
+        test += `  SELECT RAISE(FAIL, "${name} must be a number")\n`
+        if (isSetting) {
+          test += `  WHERE NEW.setting = '${name}' AND TYPEOF(NEW.value) NOT IN ('integer', 'real');\n`
+        }
+        else {
+          test += `  WHERE TYPEOF(NEW.${name}) NOT IN ('integer', 'real');\n`
+        }
+      }
 
       if (schema.affects) {
         test += `  SELECT RAISE(FAIL, "${name} is only applicable to ${schema.affects.map(tr => tr.label).join(' / ')}")\n`
@@ -599,21 +605,23 @@ The Better BibTeX hidden preferences are preceded by “extensions.zotero.transl
 
     const unsupported = `  SELECT RAISE(FAIL, "unsupported auto-export setting")\n  WHERE NEW.setting NOT IN (${set(Object.keys(settings))});\n`
     conditions = Object.entries(settings).map(([ setting, schema ]) => check(setting, schema, true)).join('\n')
-    triggers.push('DROP TRIGGER IF EXISTS betterbibtex.autoexportsetting_insert')
+    triggers.push('DROP TRIGGER IF EXISTS betterbibtex.autoexport_setting_insert')
     triggers.push([
-      'CREATE TRIGGER betterbibtex.autoexportsetting_insert',
-      'BEFORE INSERT ON autoexportsetting',
+      'CREATE TRIGGER betterbibtex.autoexport_setting_insert',
+      'BEFORE INSERT ON autoexport_setting',
       'BEGIN',
       unsupported,
       conditions,
       'END;',
     ].join('\n'))
 
-    triggers.push('DROP TRIGGER IF EXISTS betterbibtex.autoexportsetting_update')
+    triggers.push('DROP TRIGGER IF EXISTS betterbibtex.autoexport_setting_update')
     triggers.push([
-      'CREATE TRIGGER betterbibtex.autoexportsetting_update',
-      'BEFORE UPDATE ON autoexportsetting',
+      'CREATE TRIGGER betterbibtex.autoexport_setting_update',
+      'BEFORE UPDATE ON autoexport_setting',
       'BEGIN',
+      fixate('path'),
+      fixate('setting'),
       unsupported,
       conditions,
       'END;',

@@ -83,9 +83,11 @@ module.exports.sql = {
   setup(build) {
     build.onLoad({ filter: /[.]sql$/i }, async (args) => {
       let text = await fs.promises.readFile(args.path, 'utf-8')
+      const ddl = text.split('\n--\n')
+        //.map(ddl => ddl.replace(/[\s\n]+/g, ' '))
+        .filter(stmt => !stmt.startsWith('#'))
       return {
-        contents: text,
-        contents: `module.exports = ${jsesc(text.split('\n--\n')/* .map(ddl => ddl.replace(/[\s\n]+/g, ' ')) */)}`,
+        contents: `module.exports = ${jsesc(ddl)}`,
         loader: 'js'
       }
     })

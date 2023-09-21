@@ -16,7 +16,7 @@ CREATE INDEX IF NOT EXISTS betterbibtex.autoexport_type_id ON autoexport(type, i
 --
 CREATE INDEX IF NOT EXISTS betterbibtex.autoexport_status ON autoexport(status)
 --
-CREATE TABLE IF NOT EXISTS betterbibtex.autoexportsetting (
+CREATE TABLE IF NOT EXISTS betterbibtex.autoexport_setting (
   path NOT NULL,
   setting NOT NULL,
   value NOT NULL,
@@ -24,6 +24,6 @@ CREATE TABLE IF NOT EXISTS betterbibtex.autoexportsetting (
   FOREIGN KEY(path) REFERENCES autoexport(path) ON DELETE CASCADE
 )
 --
-CREATE INDEX IF NOT EXISTS betterbibtex.autoexportsetting_path ON autoexportsetting(path)
+CREATE INDEX IF NOT EXISTS betterbibtex.autoexport_setting_path ON autoexport_setting(path)
 --
-CREATE INDEX IF NOT EXISTS betterbibtex.autoexportsetting_setting ON autoexportsetting(path, setting)
+CREATE INDEX IF NOT EXISTS betterbibtex.autoexport_setting_setting ON autoexport_setting(path, setting)

@@ -28,7 +28,7 @@ const SQL = new class {
   }
   public sql = {
     create: 'INSERT INTO betterbibtex.autoexport',
-    setting: 'REPLACE INTO betterbibtex.autoexportsetting (path, setting, value) VALUES (:path, :setting, :value)',
+    setting: 'REPLACE INTO betterbibtex.autoexport_setting (path, setting, value) VALUES (:path, :setting, :value)',
   }
 
   constructor() {
@@ -49,7 +49,7 @@ const SQL = new class {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     Object.assign(job, fromPairs(settings.options.map((option: PreferenceName) => [ option, job[option] ?? displayOptions[option] ?? false ])))
 
-    for (const { setting, value } of await Zotero.DB.queryAsync('SELECT setting, value FROM betterbibtex.autoexportsetting WHERE PATH = ?', [ path ])) {
+    for (const { setting, value } of await Zotero.DB.queryAsync('SELECT setting, value FROM betterbibtex.autoexport_setting WHERE PATH = ?', [ path ])) {
       job[setting] = value
     }
 
@@ -462,10 +462,12 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
     log.debug('mae:', tables)
 
     if (!tables.includes('autoexport')) {
-      const ddl = require('./db/auto-export.sql')
-      for (const create of ddl) {
-        await Zotero.DB.queryAsync(create, [], NoParse)
+      for (const ddl of require('./db/auto-export.sql')) {
+        await Zotero.DB.queryAsync(ddl, [], NoParse)
       }
+    }
+    for (const ddl of require('../gen/auto-export-triggers.sql')) {
+      await Zotero.DB.queryAsync(ddl, [], NoParse)
     }
     for (const db of await Zotero.DB.queryAsync("SELECT * FROM betterbibtex.sqlite_master WHERE type='table'")) {
       log.debug(db.name, db.sql)
