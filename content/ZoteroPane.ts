@@ -276,7 +276,7 @@ class ZoteroPane {
       let path = `/${encodeURIComponent(collection.name)}`
       while (collection.parent) {
         collection = Zotero.Collections.get(collection.parent)
-        path = `/${encodeURIComponent(collection.name)}/${path}`
+        path = `/${encodeURIComponent(collection.name)}${path}`
       }
       params.url.long = `${root}/collection?/${collection.libraryID || 0}${path}`
     }
