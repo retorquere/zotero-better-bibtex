@@ -53,7 +53,6 @@ const SQL = new class {
       job[setting] = value
     }
 
-    log.debug('ae.get:', job)
     return job as Job
   }
 
@@ -459,7 +458,6 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
 
   private async initDB() {
     const tables = await Zotero.DB.columnQueryAsync("SELECT LOWER(name) FROM betterbibtex.sqlite_master where type='table'")
-    log.debug('mae:', tables)
 
     if (!tables.includes('autoexport')) {
       for (const ddl of require('./db/auto-export.sql')) {
@@ -475,9 +473,10 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
 
     // migration
     if (tables.includes('better-bibtex')) {
-      const data = await Zotero.DB.valueQueryAsync('SELECT data FROM betterbibtex."better-bibtex" WHERE name=?', ['better-bibtex.auto-export'])
+      const data = await Zotero.DB.valueQueryAsync('SELECT data FROM betterbibtex."better-bibtex" WHERE name=?', ['better-bibtex.autoexport'])
       if (data) {
-        for (const ae of JSON.parse(data).data) {
+        const db = JSON.parse(data)
+        for (const ae of db.data) {
           ae.error = ae.error || ''
           ae.updated = ae.meta.updated
           ae.recursive = ae.recursive || 0
@@ -485,7 +484,7 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
           await SQL.create(ae)
         }
 
-        await Zotero.DB.queryTx('UPDATE betterbibtex."better-bibtex" SET name = ? WHERE name = ?', ['migrated.auto-export', 'better-bibtex.auto-export'])
+        await Zotero.DB.queryTx('UPDATE betterbibtex."better-bibtex" SET name = ? WHERE name = ?', ['migrated.autoexport', 'better-bibtex.autoexport'])
       }
     }
   }
@@ -519,8 +518,10 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
   public async get(path: string): Promise<Job> {
     return await SQL.get(path)
   }
+
   public async all(): Promise<Job[]> {
-    return (await Zotero.DB.queryAsync('SELECT * FROM betterbibtex.autoexport ORDER BY path')).map(ae => this.get(ae)) as Job[]
+    const paths = await Zotero.DB.columnQueryAsync('SELECT path FROM betterbibtex.autoexport ORDER BY path')
+    return await Promise.all(paths.map(path => this.get(path))) as Job[]
   }
 
   public async edit(path: string, setting: JobSetting, value: number | boolean | string): Promise<void> {
