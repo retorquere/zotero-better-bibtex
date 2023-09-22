@@ -29,6 +29,8 @@ export class SQLite {
       const parts = []
       for (const coll of dbref.collections) {
         const collname = `${name}.${coll.name}`
+        if (collname.toLowerCase() === 'better-bibtex.autoexport') continue
+
         if (coll.dirty || !names.includes(collname)) {
           parts.push(Zotero.DB.queryAsync('REPLACE INTO betterbibtex."better-bibtex" (name, data) VALUES (?, ?)', [collname, JSON.stringify(coll)]))
         }
@@ -63,7 +65,7 @@ export class SQLite {
           if (row.name === name) {
             db = JSON.parse(row.data)
           }
-          else {
+          else if (row.name.toLowerCase() !== 'better-bibtex.autoexport') {
             collections[row.name] = JSON.parse(row.data)
 
             collections[row.name].cloneObjects = true // https://github.com/techfort/LokiJS/issues/47#issuecomment-362425639

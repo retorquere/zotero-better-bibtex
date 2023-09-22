@@ -39,7 +39,10 @@ const SQL = new class {
   public async get(path: string): Promise<Job> {
     const job: Partial<Job> = {}
 
-    for (const meta of await Zotero.DB.queryAsync('SELECT * FROM betterbibtex.autoexport WHERE PATH = ?', [ path ])) {
+    if (typeof path !== 'string') throw new Error(`ae:sql:get: ${typeof path}`)
+
+    log.debug('ae:sql:get', {path})
+    for (const meta of await Zotero.DB.queryAsync('SELECT * FROM betterbibtex.autoexport WHERE path = ?', [ path ])) {
       Object.assign(job, pick(meta, this.columns.job))
     }
 
