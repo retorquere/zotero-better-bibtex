@@ -707,18 +707,17 @@ export class BetterBibTeX {
     orchestrator.add('sqlite', {
       startup: async () => {
         await Zotero.DB.queryAsync('ATTACH DATABASE ? AS betterbibtex', [OS.Path.join(Zotero.DataDirectory.dir, 'better-bibtex.sqlite')])
-        await Zotero.DB.queryAsync('ATTACH DATABASE ? AS betterbibtexsearch', [OS.Path.join(Zotero.DataDirectory.dir, 'better-bibtex-search.sqlite')])
+        // await Zotero.DB.queryAsync('ATTACH DATABASE ? AS betterbibtexsearch', [OS.Path.join(Zotero.DataDirectory.dir, 'better-bibtex-search.sqlite')])
 
         const tables = await Zotero.DB.columnQueryAsync("SELECT name FROM betterbibtex.sqlite_master where type='table'")
         if (tables.includes('better-bibtex')) {
           // eslint-disable-next-line @typescript-eslint/quotes
           const used = await Zotero.DB.valueQueryAsync('SELECT COUNT(*) FROM betterbibtex."better-bibtex" WHERE name <> ? AND name LIKE ?', ['better-bibtex', 'better-bibtex.%'])
-          if (!used) await Zotero.DB.queryAsync('ALTER TABLE betterbibtex."better-bibtex" TO betterbibtex."migrated-better-bibtex"')
+          if (!used) await Zotero.DB.queryAsync('ALTER TABLE betterbibtex."better-bibtex" RENAME TO betterbibtex."migrated-better-bibtex"')
         }
       },
       shutdown: async () => {
         await Zotero.DB.queryAsync('DETACH DATABASE betterbibtex')
-        await Zotero.DB.queryAsync('DETACH DATABASE betterbibtexsearch')
       },
     })
 
