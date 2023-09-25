@@ -1,0 +1,6398 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "citekeyFormat": "auth + year"
+    }
+  },
+  "items": [
+    {
+      "accessDate": "2019-04-16",
+      "citationKey": "10.15:108",
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "The New York Public Library"
+        }
+      ],
+      "extra": [
+        "Citation Key: 10.15:108",
+        "tex.author+an:username: 1=\"@nypl\"",
+        "tex.entrysubtype: Highlight",
+        "tex.eprint: Instagram"
+      ],
+      "itemID": 1,
+      "itemType": "webpage",
+      "title": "The raven",
+      "url": "https://bitly.com/2FV8bu3"
+    },
+    {
+      "accessDate": "2019-05-05",
+      "citationKey": "10.2:33b",
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "Merriam-Webster"
+        }
+      ],
+      "extra": [
+        "Citation Key: 10.2:33b"
+      ],
+      "itemID": 2,
+      "itemType": "book",
+      "title": "Merriam-Webster.com dictionary",
+      "url": "https://www.merriam-webster.com/"
+    },
+    {
+      "accessDate": "2019-06-14",
+      "citationKey": "10.2:33a",
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "American Psychological Association"
+        }
+      ],
+      "extra": [
+        "Citation Key: 10.2:33a"
+      ],
+      "itemID": 3,
+      "itemType": "book",
+      "title": "APA dictionary of psychology",
+      "url": "https://dictionary.apa.org/"
+    },
+    {
+      "accessDate": "2019-06-22",
+      "citationKey": "10.15:106",
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "Smithsonian's National Zoo and Conservation Biology Institute"
+        }
+      ],
+      "extra": [
+        "Citation Key: 10.15:106",
+        "tex.entrysubtype: Facebook page",
+        "tex.eprint: Facebook"
+      ],
+      "itemID": 4,
+      "itemType": "webpage",
+      "title": "Home",
+      "url": "https://www.facebookcom/nationalzoo"
+    },
+    {
+      "accessDate": "2019-07-03",
+      "citationKey": "10.16:114",
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "U.S. Census Bureau"
+        }
+      ],
+      "extra": [
+        "Citation Key: 10.16:114",
+        "Authority: U.S. Department of Commerce"
+      ],
+      "itemID": 5,
+      "itemType": "webpage",
+      "title": "U.S. and world population clock",
+      "url": "https://www.census.gov/popclock/"
+    },
+    {
+      "accessDate": "2019-07-12",
+      "citationKey": "10.3:47b",
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "Merriam-Webster"
+        }
+      ],
+      "extra": [
+        "Citation Key: 10.3:47b"
+      ],
+      "itemID": 6,
+      "itemType": "bookSection",
+      "publicationTitle": "Merriam-Webster.com dictionary",
+      "title": "Self-report",
+      "url": "https://www.merriam-webster.com/dictionary/self-report"
+    },
+    {
+      "accessDate": "2019-07-22",
+      "citationKey": "10.1:14",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "M. C.",
+          "lastName": "Morey"
+        }
+      ],
+      "date": "2019",
+      "extra": [
+        "Citation Key: 10.1:14"
+      ],
+      "itemID": 7,
+      "itemType": "journalArticle",
+      "publicationTitle": "UpToDate",
+      "title": "Physical activity and exercise in older adults",
+      "url": "https://www.uptodate.com/contents/physical-activity-and-exercise-in-older-adults"
+    },
+    {
+      "accessDate": "2019-08-31",
+      "citationKey": "10.3:47a",
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "American Psychological Association"
+        }
+      ],
+      "extra": [
+        "Citation Key: 10.3:47a"
+      ],
+      "itemID": 8,
+      "itemType": "bookSection",
+      "publicationTitle": "APA dictionary of psychology",
+      "title": "Positive transference",
+      "url": "https://dictionary.apa.org/positive-transference"
+    },
+    {
+      "accessDate": "2019-11-01",
+      "citationKey": "10.15:104",
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "APA Style"
+        }
+      ],
+      "extra": [
+        "Citation Key: 10.15:104",
+        "tex.author+an:username: 1=\"@APA_Style\"",
+        "tex.entrysubtype: Twitter profile",
+        "tex.eprint: Twitter"
+      ],
+      "itemID": 9,
+      "itemType": "webpage",
+      "title": "Tweets",
+      "url": "https://twitter.com/APA_Style"
+    },
+    {
+      "accessDate": "2020-02-16",
+      "citationKey": "10.14:100b",
+      "creators": [
+        {
+          "creatorType": "contributor",
+          "name": "Google"
+        }
+      ],
+      "extra": [
+        "Citation Key: 10.14:100b"
+      ],
+      "itemID": 10,
+      "itemType": "artwork",
+      "title": "Google Maps directions for driving from La Paz, Bolivia, to Lima, Peru",
+      "url": "https://goo.gl/YYE3GR"
+    },
+    {
+      "citationKey": "10.1:12a",
+      "creators": [
+        {
+          "creatorType": "editor",
+          "firstName": "S. O.",
+          "lastName": "Lilienfeld"
+        }
+      ],
+      "date": "2018",
+      "extra": [
+        "Citation Key: 10.1:12a",
+        "Issue: 1",
+        "Pages: 51\u2013104",
+        "Volume: 6",
+        "tex.entrytype: periodical",
+        "tex.issuetitle: Special section"
+      ],
+      "itemID": 11,
+      "itemType": "document",
+      "title": "Heterodox issues in psychology"
+    },
+    {
+      "citationKey": "10.1:12b",
+      "creators": [
+        {
+          "creatorType": "editor",
+          "firstName": "S. H.",
+          "lastName": "McDaniel"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "E.",
+          "lastName": "Salas"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "A. E.",
+          "lastName": "Kazak"
+        }
+      ],
+      "date": "2018",
+      "extra": [
+        "Citation Key: 10.1:12b",
+        "Issue: 4",
+        "Volume: 73",
+        "tex.entrytype: periodical",
+        "tex.issuetitle: Special issue"
+      ],
+      "itemID": 12,
+      "itemType": "document",
+      "title": "The science of teamwork"
+    },
+    {
+      "citationKey": "10.1:15b",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "M.",
+          "lastName": "Bustillos"
+        }
+      ],
+      "date": "2013-03-19",
+      "extra": [
+        "Citation Key: 10.1:15b",
+        "tex.entrysubtype: nonacademic"
+      ],
+      "itemID": 13,
+      "itemType": "journalArticle",
+      "publicationTitle": "The New Yorker",
+      "title": "On video games and storytelling. An Interview with Tom Bissell",
+      "url": "https://www.newyorker.com/books/page-turner/on-video-games-and-storytelling-an-interview-with-tom-bissell"
+    },
+    {
+      "citationKey": "10.1:15c",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "K.",
+          "lastName": "Wier"
+        }
+      ],
+      "date": "2017-01",
+      "extra": [
+        "Citation Key: 10.1:15c",
+        "tex.entrysubtype: nonacademic"
+      ],
+      "issue": "1",
+      "itemID": 14,
+      "itemType": "journalArticle",
+      "pages": "30",
+      "publicationTitle": "Monitor on Psychology",
+      "title": "Forgiveness can improve mental and physical health",
+      "volume": "48"
+    },
+    {
+      "citationKey": "10.1:16a",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "B.",
+          "lastName": "Guarino"
+        }
+      ],
+      "date": "2017-12-04",
+      "extra": [
+        "Citation Key: 10.1:16a",
+        "tex.entrysubtype: nonacademic"
+      ],
+      "itemID": 15,
+      "itemType": "journalArticle",
+      "publicationTitle": "The Washington Post",
+      "title": "How will humanity react to alien life? Psychologists have some predictions",
+      "url": "https://www.washingtonpost.com/news/speaking-of-science/wp/2017/12/04/how-will-humanity-react-to-alien-life-psychologists-have-some-predictions"
+    },
+    {
+      "citationKey": "10.1:16b",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "A.",
+          "lastName": "Hess"
+        }
+      ],
+      "date": "2019-01-03",
+      "extra": [
+        "Citation Key: 10.1:16b",
+        "tex.entrysubtype: nonacademic"
+      ],
+      "itemID": 16,
+      "itemType": "journalArticle",
+      "pages": "C1",
+      "publicationTitle": "The New York Times",
+      "title": "Cats who take direction"
+    },
+    {
+      "citationKey": "10.1:17",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "M.",
+          "lastName": "Klymkowsky"
+        }
+      ],
+      "date": "2018-09-15",
+      "extra": [
+        "Citation Key: 10.1:17"
+      ],
+      "itemID": 17,
+      "itemType": "document",
+      "publisher": "Sci-Ed",
+      "title": "Can we talk scientifically about free will?",
+      "url": "https://blogs.plos.org/scied/2018/09/15/can-we-talk-scientifically-about-free-will/"
+    },
+    {
+      "citationKey": "10.1:18",
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "KS in NJ"
+        }
+      ],
+      "date": "2019-01-15",
+      "extra": [
+        "Citation Key: 10.1:18",
+        "tex.entrysubtype: nonacademic",
+        "tex.related: 10.1:18r",
+        "tex.relatedstring: Comment on the article",
+        "tex.relatedtype: commenton"
+      ],
+      "itemID": 18,
+      "itemType": "journalArticle",
+      "publicationTitle": "The Washington Post",
+      "title": "From this article, it sounds like men are figuring something out that women have known forever. I know of many",
+      "url": "https://wapo.st/2HDToGJ"
+    },
+    {
+      "citationKey": "10.1:18r",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "A.",
+          "lastName": "Author"
+        }
+      ],
+      "date": "2019-01-15",
+      "extra": [
+        "Citation Key: 10.1:18r"
+      ],
+      "itemID": 19,
+      "itemType": "journalArticle",
+      "publicationTitle": "The Washington Post",
+      "title": "How workout buddies can help stave off loneliness"
+    },
+    {
+      "citationKey": "10.1:2",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "E.",
+          "lastName": "Ahmann"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "L. J.",
+          "lastName": "Tuttle"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "M.",
+          "lastName": "Saviet"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "S. D.",
+          "lastName": "Wright"
+        }
+      ],
+      "date": "2018",
+      "extra": [
+        "Citation Key: 10.1:2"
+      ],
+      "issue": "1",
+      "itemID": 20,
+      "itemType": "journalArticle",
+      "pages": "17\u201339",
+      "publicationTitle": "Journal of Postsecondary Education and Disability",
+      "title": "A descriptive review of ADHD coaching research. Implications for College Students",
+      "url": "https://www.ahead.org/professional-resources/publications/jped/archived-jped/jped-volume-31",
+      "volume": "31"
+    },
+    {
+      "citationKey": "10.1:3a",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "M.",
+          "lastName": "Anderson"
+        }
+      ],
+      "date": "2018",
+      "extra": [
+        "Citation Key: 10.1:3a"
+      ],
+      "issue": "1",
+      "itemID": 21,
+      "itemType": "journalArticle",
+      "pages": "26-33",
+      "publicationTitle": "Educational Leadership",
+      "title": "Getting consistent with consequences",
+      "volume": "76"
+    },
+    {
+      "citationKey": "10.1:3b",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "C.",
+          "lastName": "Goldman"
+        }
+      ],
+      "date": "2018-11-28",
+      "extra": [
+        "Citation Key: 10.1:3b",
+        "tex.entrysubtype: nonacademic"
+      ],
+      "itemID": 22,
+      "itemType": "journalArticle",
+      "publicationTitle": "Chicago Tribune",
+      "title": "The complicated calibration of love, especially in adoption"
+    },
+    {
+      "citationKey": "10.1:8",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "T.",
+          "lastName": "Pachur"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "B.",
+          "lastName": "Scheibehenne"
+        }
+      ],
+      "extra": [
+        "Citation Key: 10.1:8",
+        "tex.pubstate: inpress"
+      ],
+      "itemID": 23,
+      "itemType": "journalArticle",
+      "publicationTitle": "Psychonomic Bulletin & Review",
+      "title": "Unpacking buyer-seller differences in valuation from experience. A Cognitive Modeling Approach"
+    },
+    {
+      "citationKey": "10.10:77",
+      "creators": [
+        {
+          "creatorType": "programmer",
+          "firstName": "M.",
+          "lastName": "Borenstein"
+        },
+        {
+          "creatorType": "programmer",
+          "firstName": "L.",
+          "lastName": "Hedges"
+        },
+        {
+          "creatorType": "programmer",
+          "firstName": "J.",
+          "lastName": "Higgins"
+        },
+        {
+          "creatorType": "programmer",
+          "firstName": "H.",
+          "lastName": "Rothstein"
+        }
+      ],
+      "date": "2014",
+      "extra": [
+        "Citation Key: 10.10:77",
+        "tex.entrysubtype: Computer software"
+      ],
+      "itemID": 24,
+      "itemType": "computerProgram",
+      "publisher": "Biostat",
+      "title": "Comprehensive meta-analysis",
+      "url": "https://www.meta-analysis.com/",
+      "versionNumber": "3.3.070"
+    },
+    {
+      "citationKey": "10.10:78a",
+      "creators": [
+        {
+          "creatorType": "programmer",
+          "name": "SR Research"
+        }
+      ],
+      "date": "2016",
+      "extra": [
+        "Citation Key: 10.10:78a",
+        "tex.entrysubtype: Apparatus and software"
+      ],
+      "itemID": 25,
+      "itemType": "computerProgram",
+      "title": "Eyelink 1000 plus",
+      "url": "https://www.sr-research.com/eyelink1000plus.html"
+    },
+    {
+      "citationKey": "10.10:78b",
+      "creators": [
+        {
+          "creatorType": "programmer",
+          "name": "Tactile Labs"
+        }
+      ],
+      "date": "2015",
+      "extra": [
+        "Citation Key: 10.10:78b",
+        "tex.entrysubtype: Apparatus"
+      ],
+      "itemID": 26,
+      "itemType": "computerProgram",
+      "title": "Latero tactile display",
+      "url": "https://www.tactilelabs.com/products/haptics/latero-tactile-display/"
+    },
+    {
+      "citationKey": "10.10:79",
+      "creators": [
+        {
+          "creatorType": "programmer",
+          "name": "Epocrates"
+        }
+      ],
+      "date": "2019",
+      "extra": [
+        "Citation Key: 10.10:79",
+        "tex.entrysubtype: Mobile app"
+      ],
+      "itemID": 27,
+      "itemType": "computerProgram",
+      "publisher": "App Store",
+      "title": "Epocrates medical references",
+      "url": "https://itunes.apple.com/us/app/epocrates/id281935788?mt=8",
+      "versionNumber": "18.12"
+    },
+    {
+      "citationKey": "10.10:80",
+      "creators": [
+        {
+          "creatorType": "programmer",
+          "name": "Epocrates"
+        }
+      ],
+      "date": "2019",
+      "extra": [
+        "Citation Key: 10.10:80",
+        "tex.appentry: Interaction Check: Aspirin + Sertraline",
+        "tex.entrysubtype: Mobile app"
+      ],
+      "itemID": 28,
+      "itemType": "computerProgram",
+      "publisher": "Google Play Store",
+      "title": "Epocrates medical references",
+      "url": "https://play.google.com/store/apps/details?id=com.epocrates&hl=en_US",
+      "versionNumber": "18.12"
+    },
+    {
+      "citationKey": "10.11:81",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "A.",
+          "lastName": "Tellegen"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Y. S.",
+          "lastName": "Ben-Porath"
+        }
+      ],
+      "date": "2011",
+      "extra": [
+        "Citation Key: 10.11:81"
+      ],
+      "itemID": 29,
+      "itemType": "report",
+      "publisher": "Pearson",
+      "title": "Minnesota Multiphasic Personality Inventory\u20132 Restructured Form (MMPI-2-RF). Technical Manual",
+      "type": "manual"
+    },
+    {
+      "citationKey": "10.11:82",
+      "creators": [
+        {
+          "creatorType": "programmer",
+          "name": "Project Implicit"
+        }
+      ],
+      "extra": [
+        "Citation Key: 10.11:82"
+      ],
+      "itemID": 30,
+      "itemType": "computerProgram",
+      "title": "Gender-Science IAT",
+      "url": "https://implicit.harvard.edi/implicit/takeatest.html"
+    },
+    {
+      "citationKey": "10.11:83a",
+      "creators": [
+        {
+          "creatorType": "programmer",
+          "firstName": "J.",
+          "lastName": "Alonso-Tapia"
+        },
+        {
+          "creatorType": "programmer",
+          "firstName": "C.",
+          "lastName": "Nieto"
+        },
+        {
+          "creatorType": "programmer",
+          "firstName": "E.",
+          "lastName": "Merino-Tejedor"
+        },
+        {
+          "creatorType": "programmer",
+          "firstName": "J. A.",
+          "lastName": "Huertas"
+        },
+        {
+          "creatorType": "programmer",
+          "firstName": "M.",
+          "lastName": "Ruiz"
+        }
+      ],
+      "date": "2018",
+      "extra": [
+        "Citation Key: 10.11:83a",
+        "DOI: 10.1037/t66267-000",
+        "tex.entrysubtype: Database record"
+      ],
+      "itemID": 31,
+      "itemType": "computerProgram",
+      "publisher": "PsycTESTS",
+      "title": "Situated Goals Questionnaire for University Students (SGQ-U, CMS-U)"
+    },
+    {
+      "citationKey": "10.11:83b",
+      "creators": [
+        {
+          "creatorType": "programmer",
+          "firstName": "D.",
+          "lastName": "Cardoza"
+        },
+        {
+          "creatorType": "programmer",
+          "firstName": "J. K.",
+          "lastName": "Morris"
+        },
+        {
+          "creatorType": "programmer",
+          "firstName": "H. F.",
+          "lastName": "Myers"
+        },
+        {
+          "creatorType": "programmer",
+          "firstName": "N.",
+          "lastName": "Rodriguez"
+        }
+      ],
+      "date": "2000",
+      "extra": [
+        "Citation Key: 10.11:83b",
+        "Issue: TC022704",
+        "tex.entrysubtype: Database record"
+      ],
+      "itemID": 32,
+      "itemType": "computerProgram",
+      "publisher": "ETS TestLink",
+      "title": "Acculturative Stress Inventory (ASI)"
+    },
+    {
+      "citationKey": "10.12:84a",
+      "creators": [
+        {
+          "creatorType": "director",
+          "firstName": "M.",
+          "lastName": "Forman"
+        }
+      ],
+      "date": "1975",
+      "extra": [
+        "Citation Key: 10.12:84a",
+        "tex.author+an:role: 1=director"
+      ],
+      "itemID": 33,
+      "itemType": "film",
+      "publisher": "United Artists",
+      "title": "One flew over the cuckoo's nest"
+    },
+    {
+      "citationKey": "10.12:84b",
+      "creators": [
+        {
+          "creatorType": "director",
+          "firstName": "D.",
+          "lastName": "Fosha"
+        },
+        {
+          "creatorType": "director",
+          "firstName": "H.",
+          "lastName": "Levenson"
+        }
+      ],
+      "date": "2017",
+      "extra": [
+        "Citation Key: 10.12:84b",
+        "tex.author+an:role: 1=guestexpert;2=host"
+      ],
+      "itemID": 34,
+      "itemType": "film",
+      "notes": [
+        "educational DVD"
+      ],
+      "publisher": "American Pychological Association",
+      "title": "Accelerated experiental dynamic psychotherapy (AEDP) supervision",
+      "url": "http://www.apa.org/pubs/videos/4310958.aspx"
+    },
+    {
+      "citationKey": "10.12:84c",
+      "creators": [
+        {
+          "creatorType": "director",
+          "firstName": "P.",
+          "lastName": "Jackson"
+        }
+      ],
+      "date": "2001",
+      "extra": [
+        "Citation Key: 10.12:84c",
+        "tex.author+an:role: 1=director"
+      ],
+      "itemID": 35,
+      "itemType": "film",
+      "notes": [
+        "four-disc special extended ed. on DVD"
+      ],
+      "publisher": "WingNut Films and The Saul Zaentz Company",
+      "title": "The lord of the rings. The Fellowship of the Ring"
+    },
+    {
+      "citationKey": "10.12:85",
+      "creators": [
+        {
+          "creatorType": "director",
+          "firstName": "L.",
+          "lastName": "Malle"
+        }
+      ],
+      "date": "1987",
+      "extra": [
+        "Citation Key: 10.12:85",
+        "Original title: Au revoir les enfants",
+        "tex.author+an:role: 1=director"
+      ],
+      "itemID": 36,
+      "itemType": "film",
+      "publisher": "Nouvelles \u00c9ditions de Films",
+      "title": "Goodbye children"
+    },
+    {
+      "citationKey": "10.12:86",
+      "creators": [
+        {
+          "creatorType": "director",
+          "firstName": "D.",
+          "lastName": "Simon"
+        },
+        {
+          "creatorType": "director",
+          "firstName": "R. F.",
+          "lastName": "Colesberry"
+        },
+        {
+          "creatorType": "director",
+          "firstName": "N.",
+          "lastName": "Kostroff Noble"
+        }
+      ],
+      "date": "2002/2008",
+      "extra": [
+        "Citation Key: 10.12:86",
+        "tex.author+an:role: =execproducers",
+        "tex.entrysubtype: tvseries"
+      ],
+      "itemID": 37,
+      "itemType": "videoRecording",
+      "publisher": "Blown Deadline Productions and HBO",
+      "title": "The wire"
+    },
+    {
+      "citationKey": "10.12:87a",
+      "creators": [
+        {
+          "creatorType": "director",
+          "firstName": "K.",
+          "lastName": "Barris"
+        }
+      ],
+      "date": "2017-01-11",
+      "extra": [
+        "Citation Key: 10.12:87a",
+        "tex.author+an:role: 1=director,writer",
+        "tex.execproducer: K. Barris and J. Groff and A. Anderson and E. B. Dobbins and L. Fishburne and H. Sugland",
+        "tex.maintitle: Black-ish"
+      ],
+      "itemID": 38,
+      "itemType": "tvBroadcast",
+      "publisher": "Wilmore Films and Artists First and Cinema Gypsy Productions and ABC Studios",
+      "title": "Lemons (Season 3, Episode 12)"
+    },
+    {
+      "citationKey": "10.12:87b",
+      "creators": [
+        {
+          "creatorType": "director",
+          "firstName": "B.",
+          "lastName": "Oakley"
+        },
+        {
+          "creatorType": "director",
+          "firstName": "J.",
+          "lastName": "Weinstein"
+        },
+        {
+          "creatorType": "director",
+          "firstName": "J.",
+          "lastName": "Lynch"
+        }
+      ],
+      "date": "1995-05-21",
+      "extra": [
+        "Citation Key: 10.12:87b",
+        "tex.author+an:role: 1=writer;2=writer;3=director",
+        "tex.execproducer: D. Mirkin and J. L. Brooks and M. Groening and S. Simon",
+        "tex.maintitle: The simpsons"
+      ],
+      "itemID": 39,
+      "itemType": "tvBroadcast",
+      "publisher": "Gracie Films and Twentieth Century Fox Film Corporation",
+      "title": "Who shot Mr. Burns? (Part One) (Season 6, Episode 25)"
+    },
+    {
+      "citationKey": "10.12:88a",
+      "creators": [
+        {
+          "creatorType": "director",
+          "firstName": "S.",
+          "lastName": "Giertz"
+        }
+      ],
+      "date": "2018-04",
+      "extra": [
+        "Citation Key: 10.12:88a",
+        "tex.entrysubtype: video"
+      ],
+      "itemID": 40,
+      "itemType": "videoRecording",
+      "publisher": "TED Conferences",
+      "title": "Why you should make useless things",
+      "url": "https://www.ted.com/talks/simone_giertz_why_you_should_make_useless_things"
+    },
+    {
+      "citationKey": "10.12:88b",
+      "creators": [
+        {
+          "creatorType": "director",
+          "name": "TED"
+        }
+      ],
+      "date": "2012-03-16",
+      "extra": [
+        "Citation Key: 10.12:88b",
+        "tex.entrysubtype: video"
+      ],
+      "itemID": 41,
+      "itemType": "videoRecording",
+      "publisher": "YouTube",
+      "title": "Bren\u00e9 Brown. Listening to Shame",
+      "url": "https://www.youtube.com/watch?v=psN1DORYYV0"
+    },
+    {
+      "citationKey": "10.12:89",
+      "creators": [
+        {
+          "creatorType": "director",
+          "firstName": "J. F.",
+          "lastName": "Goldberg"
+        }
+      ],
+      "date": "2018",
+      "extra": [
+        "Citation Key: 10.12:89",
+        "tex.entrysubtype: Webinar"
+      ],
+      "itemID": 42,
+      "itemType": "videoRecording",
+      "publisher": "American Psychiatric Association",
+      "title": "Evaluating adverse drug effects",
+      "url": "https://education.psychiatry.org/Users/ProductDetails.aspx?ActivityID=6172"
+    },
+    {
+      "citationKey": "10.12:90a",
+      "creators": [
+        {
+          "creatorType": "director",
+          "firstName": "S.",
+          "lastName": "Cutts"
+        }
+      ],
+      "date": "2017-11-24",
+      "extra": [
+        "Citation Key: 10.12:90a",
+        "tex.entrysubtype: video"
+      ],
+      "itemID": 43,
+      "itemType": "videoRecording",
+      "publisher": "Vimeo",
+      "title": "Happiness",
+      "url": "https://vimeo.com/244405542"
+    },
+    {
+      "citationKey": "10.12:90b",
+      "creators": [
+        {
+          "creatorType": "director",
+          "firstName": "M.",
+          "lastName": "Fogarty"
+        }
+      ],
+      "date": "2016-09-30",
+      "extra": [
+        "Citation Key: 10.12:90b",
+        "tex.author+an:username: 1=\"Grammar Girl\"",
+        "tex.entrysubtype: video"
+      ],
+      "itemID": 44,
+      "itemType": "videoRecording",
+      "publisher": "YouTube",
+      "title": "How to diagram a sentence (absolute basics)",
+      "url": "https://youtube.be/deiEY5Yq1ql"
+    },
+    {
+      "citationKey": "10.12:90c",
+      "creators": [
+        {
+          "creatorType": "director",
+          "name": "University of Oxford"
+        }
+      ],
+      "date": "2016-12-06",
+      "extra": [
+        "Citation Key: 10.12:90c",
+        "tex.entrysubtype: video"
+      ],
+      "itemID": 45,
+      "itemType": "videoRecording",
+      "publisher": "YouTube",
+      "title": "How do geckos walk on water?",
+      "url": "https://www.youtube.com/watch?v=qm1xGfOZJc8"
+    },
+    {
+      "citationKey": "10.13:91a",
+      "creators": [
+        {
+          "creatorType": "contributor",
+          "firstName": "J. S.",
+          "lastName": "Bach"
+        }
+      ],
+      "date": "2010",
+      "extra": [
+        "Citation Key: 10.13:91a",
+        "Original Date: 1721",
+        "tex.entrysubtype: Album recorded by Academy of St Martin in the Fields"
+      ],
+      "itemID": 46,
+      "itemType": "audioRecording",
+      "publisher": "Decca",
+      "title": "The Brandenburg concertos. Concertos BVW 1043 & 1060"
+    },
+    {
+      "citationKey": "10.13:91b",
+      "creators": [
+        {
+          "creatorType": "contributor",
+          "firstName": "D.",
+          "lastName": "Bowie"
+        }
+      ],
+      "date": "2016",
+      "extra": [
+        "Citation Key: 10.13:91b",
+        "tex.entrysubtype: album"
+      ],
+      "itemID": 47,
+      "itemType": "audioRecording",
+      "publisher": "Columbia",
+      "title": "Blackstar"
+    },
+    {
+      "citationKey": "10.13:92a",
+      "creators": [
+        {
+          "creatorType": "contributor",
+          "firstName": "L.",
+          "lastName": "van Beethoven"
+        }
+      ],
+      "date": "2012",
+      "extra": [
+        "Citation Key: 10.13:92a",
+        "Original Date: 1804",
+        "tex.entrysubtype: Song recorded by Staatskapelle Dresden",
+        "tex.maintitle: Beethoven: Complete Symphonies",
+        "tex.options: useprefix=false"
+      ],
+      "itemID": 48,
+      "itemType": "audioRecording",
+      "publisher": "Brilliant Classics",
+      "title": "Symphony No. 3 in E-flat major"
+    },
+    {
+      "citationKey": "10.13:92b",
+      "creators": [
+        {
+          "creatorType": "contributor",
+          "name": "Beyonc\u00e9"
+        }
+      ],
+      "date": "2016",
+      "extra": [
+        "Citation Key: 10.13:92b",
+        "tex.entrysubtype: song",
+        "tex.maintitle: Lemonade"
+      ],
+      "itemID": 49,
+      "itemType": "audioRecording",
+      "publisher": "Parkwood and Columbia",
+      "title": "Formation"
+    },
+    {
+      "citationKey": "10.13:92c",
+      "creators": [
+        {
+          "creatorType": "contributor",
+          "name": "Childish Gambino"
+        }
+      ],
+      "date": "2018",
+      "extra": [
+        "Citation Key: 10.13:92c",
+        "tex.entrysubtype: song"
+      ],
+      "itemID": 50,
+      "itemType": "audioRecording",
+      "publisher": "mcDJ and RCA",
+      "title": "This is America"
+    },
+    {
+      "citationKey": "10.13:92d",
+      "creators": [
+        {
+          "creatorType": "contributor",
+          "firstName": "K.",
+          "lastName": "Lamar"
+        }
+      ],
+      "date": "2017",
+      "extra": [
+        "Citation Key: 10.13:92d",
+        "tex.entrysubtype: song",
+        "tex.maintitle: Damn"
+      ],
+      "itemID": 51,
+      "itemType": "audioRecording",
+      "publisher": "Aftermath Entertainment and Interscope Records and Top Dawg Entertainment",
+      "title": "Humble"
+    },
+    {
+      "citationKey": "10.13:93",
+      "creators": [
+        {
+          "creatorType": "contributor",
+          "firstName": "S.",
+          "lastName": "Vedantam"
+        }
+      ],
+      "date": "2015/",
+      "extra": [
+        "Citation Key: 10.13:93",
+        "tex.author+an:role: 1=host",
+        "tex.entrysubtype: podcast"
+      ],
+      "itemID": 52,
+      "itemType": "audioRecording",
+      "publisher": "NPR",
+      "title": "Hidden brain",
+      "url": "https://www.npr.org/series/423302056/hidden-brain"
+    },
+    {
+      "citationKey": "10.13:94",
+      "creators": [
+        {
+          "creatorType": "contributor",
+          "firstName": "I.",
+          "lastName": "Glass"
+        }
+      ],
+      "date": "2011-08-12",
+      "extra": [
+        "Citation Key: 10.13:94",
+        "Issue: 443",
+        "tex.author+an:role: 1=host",
+        "tex.entrysubtype: podcastepisode",
+        "tex.maintitle: This American Life"
+      ],
+      "itemID": 53,
+      "itemType": "audioRecording",
+      "publisher": "WBEZ Chicago",
+      "title": "Amusement park",
+      "url": "https://www.thisamericanlife.org/radio-archives/episode/443/amusement-park"
+    },
+    {
+      "citationKey": "10.13:95",
+      "creators": [
+        {
+          "creatorType": "contributor",
+          "firstName": "S.",
+          "lastName": "de Beauvoir"
+        }
+      ],
+      "date": "1960-05-04",
+      "extra": [
+        "Citation Key: 10.13:95",
+        "tex.entrysubtype: interview"
+      ],
+      "itemID": 54,
+      "itemType": "audioRecording",
+      "publisher": "Studs Terkel Radio Archive and The Chicago History Museum",
+      "title": "Simone de Beauvoir discusses the art of writing",
+      "url": "https://studsterkel.wfmt.com/programs/simone-de-beauvoir-discusses-art-writing"
+    },
+    {
+      "citationKey": "10.13:96",
+      "creators": [
+        {
+          "creatorType": "contributor",
+          "firstName": "M. L.",
+          "lastName": "King, Jr."
+        }
+      ],
+      "date": "1963-08-28",
+      "extra": [
+        "Citation Key: 10.13:96",
+        "tex.entrysubtype: speech"
+      ],
+      "itemID": 55,
+      "itemType": "audioRecording",
+      "publisher": "American Rhetoric",
+      "title": "I have a dream",
+      "url": "https://www.americanrhetoric.com/speeches/mlkihaveadream.htm"
+    },
+    {
+      "citationKey": "10.14:100a",
+      "creators": [
+        {
+          "creatorType": "contributor",
+          "firstName": "D.",
+          "lastName": "Cable"
+        }
+      ],
+      "date": "2013",
+      "extra": [
+        "Citation Key: 10.14:100a",
+        "Place: University of Virginia",
+        "Publisher: Weldon Cooper Center for Public Service",
+        "tex.entrysubtype: map"
+      ],
+      "itemID": 56,
+      "itemType": "artwork",
+      "title": "The racial dot map",
+      "url": "https://demographics.coopercenter.org/Racial-Dot-Map"
+    },
+    {
+      "citationKey": "10.14:101a",
+      "creators": [
+        {
+          "creatorType": "contributor",
+          "firstName": "S.",
+          "lastName": "McCurry"
+        }
+      ],
+      "date": "1985",
+      "extra": [
+        "Citation Key: 10.14:101a",
+        "Publisher: National Geographic",
+        "tex.entrysubtype: photograph"
+      ],
+      "itemID": 57,
+      "itemType": "artwork",
+      "title": "Afghan girl",
+      "url": "https://www.nationalgeographic.com/magazine/national-geographic-magazine-50-years-of-covers/#/ngm-1985-jun-714.jpg"
+    },
+    {
+      "citationKey": "10.14:101b",
+      "creators": [
+        {
+          "creatorType": "contributor",
+          "firstName": "Jessica",
+          "lastName": "Rinaldi"
+        }
+      ],
+      "date": "2016",
+      "extra": [
+        "Citation Key: 10.14:101b",
+        "Publisher: The Pulitzer Prizes"
+      ],
+      "itemID": 58,
+      "itemType": "artwork",
+      "title": "Photograph series of a boy who finds his footing after abuse by those he trusted",
+      "url": "https://www.pulitzer.org/winners/jessica-rinaldi"
+    },
+    {
+      "citationKey": "10.14:102a",
+      "creators": [
+        {
+          "creatorType": "contributor",
+          "firstName": "E.",
+          "lastName": "Canan"
+        },
+        {
+          "creatorType": "contributor",
+          "firstName": "J.",
+          "lastName": "Vasilev"
+        }
+      ],
+      "date": "2019-05-22",
+      "extra": [
+        "Citation Key: 10.14:102a",
+        "Place: Department of Management Control and Information Systems",
+        "Publisher: University of Chile"
+      ],
+      "itemID": 59,
+      "itemType": "artwork",
+      "title": "Lecture notes on resource allocation",
+      "url": "https://uchilefau.academia.edu/ElseZCanan"
+    },
+    {
+      "citationKey": "10.14:102b",
+      "creators": [
+        {
+          "creatorType": "contributor",
+          "firstName": "Brian",
+          "lastName": "Housand"
+        }
+      ],
+      "date": "2016",
+      "extra": [
+        "Citation Key: 10.14:102b",
+        "Publisher: SlideShare",
+        "tex.entrysubtype: powerpoint"
+      ],
+      "itemID": 60,
+      "itemType": "artwork",
+      "title": "Game on! Integrating games and simulations in the classroom",
+      "url": "https://www.slideshare.net/brianhousand/game-on-iagc-2016/"
+    },
+    {
+      "citationKey": "10.14:102c",
+      "creators": [
+        {
+          "creatorType": "contributor",
+          "firstName": "R.",
+          "lastName": "Mack"
+        },
+        {
+          "creatorType": "contributor",
+          "firstName": "G.",
+          "lastName": "Spake"
+        }
+      ],
+      "date": "2018",
+      "extra": [
+        "Citation Key: 10.14:102c",
+        "Publisher: Canvas@FNU",
+        "tex.entrysubtype: powerpoint"
+      ],
+      "itemID": 61,
+      "itemType": "artwork",
+      "title": "Citing open source images and formatting references for presentations",
+      "url": "https://fnu.onelogin.com/login"
+    },
+    {
+      "citationKey": "10.14:97a",
+      "creators": [
+        {
+          "creatorType": "contributor",
+          "firstName": "E.",
+          "lastName": "Delacroix"
+        }
+      ],
+      "date": "1826/1827",
+      "extra": [
+        "Citation Key: 10.14:97a",
+        "Place: The Louvre, Paris, France",
+        "tex.entrysubtype: lithograph"
+      ],
+      "itemID": 62,
+      "itemType": "artwork",
+      "title": "Faust attempts to seduce Marguerite"
+    },
+    {
+      "citationKey": "10.14:97b",
+      "creators": [
+        {
+          "creatorType": "contributor",
+          "firstName": "G.",
+          "lastName": "Wood"
+        }
+      ],
+      "date": "1930",
+      "extra": [
+        "Citation Key: 10.14:97b",
+        "Place: Art Institute of Chicago, Chicago, IL, United States",
+        "tex.entrysubtype: painting"
+      ],
+      "itemID": 63,
+      "itemType": "artwork",
+      "title": "American gothic",
+      "url": "https://www.artic.edu/aic/collections/artwork/6565"
+    },
+    {
+      "citationKey": "10.14:98",
+      "creators": [
+        {
+          "creatorType": "contributor",
+          "name": "GDJ"
+        }
+      ],
+      "date": "2018",
+      "extra": [
+        "Citation Key: 10.14:98",
+        "Publisher: Openclipart",
+        "tex.entrysubtype: Clip art"
+      ],
+      "itemID": 64,
+      "itemType": "artwork",
+      "title": "Neural network deep learning prismatic",
+      "url": "https://openclipart.org/detail/309343/neural-network-deep-learning-prismatic"
+    },
+    {
+      "citationKey": "10.14:99",
+      "creators": [
+        {
+          "creatorType": "contributor",
+          "firstName": "J.",
+          "lastName": "Rossman"
+        },
+        {
+          "creatorType": "contributor",
+          "firstName": "R.",
+          "lastName": "Palmer"
+        }
+      ],
+      "date": "2015",
+      "extra": [
+        "Citation Key: 10.14:99",
+        "Publisher: World Science Festival",
+        "tex.entrysubtype: Infographic"
+      ],
+      "itemID": 65,
+      "itemType": "artwork",
+      "title": "Sorting through our space junk",
+      "url": "https://www.worldsciencefestival.com/2015/11/space-junk-infographic/"
+    },
+    {
+      "citationKey": "10.15:103a",
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "APA Education"
+        }
+      ],
+      "date": "2018-06-29",
+      "extra": [
+        "Citation Key: 10.15:103a",
+        "tex.author+an:username: 1=\"@APAEducation\"",
+        "tex.entrysubtype: Tweet",
+        "tex.eprint: Twitter"
+      ],
+      "itemID": 66,
+      "itemType": "webpage",
+      "title": "College students are forming mental-health Clubs\u2013and they're making a difference @washingtonpost. Thumbnail with link attached",
+      "url": "https://twitter.com/apaeducation/status/1012810490530140161"
+    },
+    {
+      "citationKey": "10.15:103b",
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "Badlands National Park"
+        }
+      ],
+      "date": "2018-02-26",
+      "extra": [
+        "Citation Key: 10.15:103b",
+        "tex.author+an:username: 1=\"@BadlandsNPS\"",
+        "tex.entrysubtype: Tweet",
+        "tex.eprint: Twitter"
+      ],
+      "itemID": 67,
+      "itemType": "webpage",
+      "title": "Biologists have identified more than 400 different plant species growing in @BadlandsNPS #DYK #biodoversity",
+      "url": "https://twitter.com/BadlandsNPS/status/968196500412133379"
+    },
+    {
+      "citationKey": "10.15:103c",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "B.",
+          "lastName": "White"
+        }
+      ],
+      "date": "2018-06-21",
+      "extra": [
+        "Citation Key: 10.15:103c",
+        "tex.author+an:username: 1=\"@BettyMWhite\"",
+        "tex.entrysubtype: Tweet",
+        "tex.eprint: Twitter"
+      ],
+      "itemID": 68,
+      "itemType": "webpage",
+      "title": "I treasure every minute we spent together #koko. Image attached",
+      "url": "https://twitter.com/BettyMWhite/status/1009951892846227456"
+    },
+    {
+      "citationKey": "10.15:105a",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "N.",
+          "lastName": "Gaiman"
+        }
+      ],
+      "date": "2018-03-22",
+      "extra": [
+        "Citation Key: 10.15:105a",
+        "tex.entrysubtype: Status update",
+        "tex.eprint: Facebook"
+      ],
+      "itemID": 69,
+      "itemType": "webpage",
+      "title": "100,000+ Rohingya refugees could be at serious risk during Bangladesh's monsoon season. My fellow UNHCR Goodwill Ambassador Cate Blanchett is. Image attached",
+      "url": "http://bit.ly/2JQxPAD"
+    },
+    {
+      "citationKey": "10.15:105b",
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "National Institute of Mental Health"
+        }
+      ],
+      "date": "2018-11-28",
+      "extra": [
+        "Citation Key: 10.15:105b",
+        "tex.entrysubtype: Infographic",
+        "tex.eprint: Facebook"
+      ],
+      "itemID": 70,
+      "itemType": "webpage",
+      "title": "Suicide affects all ages, genders, races, and ethnicities. Check out these 5 Action Steps for Helping Someone in Emotional Pain",
+      "url": "http://bit.ly/321Qstq"
+    },
+    {
+      "citationKey": "10.15:105c",
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "News From Science"
+        }
+      ],
+      "date": "2018-06-26",
+      "extra": [
+        "Citation Key: 10.15:105c",
+        "tex.entrysubtype: video",
+        "tex.eprint: Facebook"
+      ],
+      "itemID": 71,
+      "itemType": "webpage",
+      "title": "These frogs walk instead of hop. https://scimag.2KlriwH",
+      "url": "https://www.facebook.com/ScienceNOW/videos/10155508587605108"
+    },
+    {
+      "citationKey": "10.15:107",
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "Zeitz MOCAA"
+        }
+      ],
+      "date": "2018-11-26",
+      "extra": [
+        "Citation Key: 10.15:107",
+        "tex.author+an:username: 1=\"@zeitzmocaa\"",
+        "tex.entrysubtype: photographs",
+        "tex.eprint: Instagram"
+      ],
+      "itemID": 72,
+      "itemType": "webpage",
+      "title": "Grade 6 learners from Parkfields Primary School in Hanover Park visited the museum for a tour and workshop hosted by",
+      "url": "https://www.instagram.com/p/BqpHpjFBs3b"
+    },
+    {
+      "citationKey": "10.15:109",
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "National Aeronautics Space Administration"
+        }
+      ],
+      "date": "2018-09-12",
+      "extra": [
+        "Citation Key: 10.15:109",
+        "tex.author+an:username: 1=\"nasa\"",
+        "tex.entrysubtype: Online forum post",
+        "tex.eprint: Reddit"
+      ],
+      "itemID": 73,
+      "itemType": "webpage",
+      "title": "I'm NASA Astronaut Scott Tingle. Ask me anything about adjusting to being back on Earth after my first spaceflight!",
+      "url": "https://www.reddit.com/r/IAmA/comments/9fagqy/im_nasa_astronaut_scott_tingle_ask_me_anything/"
+    },
+    {
+      "citationKey": "10.16:110a",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "N.",
+          "lastName": "Avramova"
+        }
+      ],
+      "date": "2019-01-03",
+      "extra": [
+        "Citation Key: 10.16:110a",
+        "tex.eprint: CNN"
+      ],
+      "itemID": 74,
+      "itemType": "webpage",
+      "title": "The secret to a long, happy, health life? Think age-positive",
+      "url": "https://www.cnn.com/2019/01/03/health/respect-towards-elderly-leads-to-long-life-intl/index.html"
+    },
+    {
+      "citationKey": "10.16:110b",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "C.",
+          "lastName": "Bologna"
+        }
+      ],
+      "date": "2018-06-27",
+      "extra": [
+        "Citation Key: 10.16:110b",
+        "tex.eprint: HuffPost"
+      ],
+      "itemID": 75,
+      "itemType": "webpage",
+      "title": "What happens to your mind and body when you feel homesick?",
+      "url": "https://www.huffingtonpost.com/entry/what-happens-mind-body-homesick_us_5b201ebde4b09d7a3d77eee1"
+    },
+    {
+      "citationKey": "10.16:111a",
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "Centers for Disease Control and Prevention"
+        }
+      ],
+      "date": "2018-01-23",
+      "extra": [
+        "Citation Key: 10.16:111a"
+      ],
+      "itemID": 76,
+      "itemType": "webpage",
+      "title": "People at high risk of developing flu-related complications",
+      "url": "https://www.cdc.gov/flu/about/disease/high_risk.htm"
+    },
+    {
+      "citationKey": "10.16:111b",
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "World Health Organization"
+        }
+      ],
+      "date": "2018-03",
+      "extra": [
+        "Citation Key: 10.16:111b"
+      ],
+      "itemID": 77,
+      "itemType": "webpage",
+      "title": "Questions and answers on immunization and vaccine safety",
+      "url": "https://www.who.int/features/qa/84/en/"
+    },
+    {
+      "citationKey": "10.16:112",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "C. M.",
+          "lastName": "Martin Lillie"
+        }
+      ],
+      "date": "2016-12-29",
+      "extra": [
+        "Citation Key: 10.16:112",
+        "tex.eprint: Mayo Clinic"
+      ],
+      "itemID": 78,
+      "itemType": "webpage",
+      "title": "Be kind to yourself. How Self-Compassion can Improve Your Resiliency",
+      "url": "https://www.mayoclinic.org/healthy-lifestyle/adult-health/in-depth/self-compassion-can-improve-your-resiliency/art-20267193"
+    },
+    {
+      "citationKey": "10.16:113a",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "J.",
+          "lastName": "Boddy"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "T.",
+          "lastName": "Neumann"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "S.",
+          "lastName": "Jennings"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "V.",
+          "lastName": "Morrow"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "P.",
+          "lastName": "Alderson"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "R.",
+          "lastName": "Rees"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "W.",
+          "lastName": "Gibson"
+        }
+      ],
+      "extra": [
+        "Citation Key: 10.16:113a",
+        "tex.eprint: The Research Ethics Guidebook: A Resource for Social Scientists"
+      ],
+      "itemID": 79,
+      "itemType": "webpage",
+      "title": "Ethics principles",
+      "url": "http://www.ethicsguidebook.ac.uk/EthicsPrinciples"
+    },
+    {
+      "citationKey": "10.16:113b",
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "National Nurses United"
+        }
+      ],
+      "extra": [
+        "Citation Key: 10.16:113b"
+      ],
+      "itemID": 80,
+      "itemType": "webpage",
+      "title": "What employers should do to protect nurses from Zika",
+      "url": "https://www.nationalnursesunited.org/pages/what-employers-should-do-to-protect-rns-from-zika"
+    },
+    {
+      "citationKey": "10.2:20",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "L. S.",
+          "lastName": "Brown"
+        }
+      ],
+      "date": "2018",
+      "edition": "2",
+      "extra": [
+        "Citation Key: 10.2:20",
+        "DOI: 10.1037/0000092-000"
+      ],
+      "itemID": 81,
+      "itemType": "book",
+      "publisher": "American Psychological Association",
+      "title": "Feminist therapy"
+    },
+    {
+      "citationKey": "10.2:21",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "R.",
+          "lastName": "Burgess"
+        }
+      ],
+      "date": "2019",
+      "extra": [
+        "Citation Key: 10.2:21"
+      ],
+      "itemID": 82,
+      "itemType": "book",
+      "publisher": "Routledge",
+      "title": "Rethinking global health. Frameworks of Power"
+    },
+    {
+      "citationKey": "10.2:22a",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "S.",
+          "lastName": "Cain"
+        }
+      ],
+      "date": "2012",
+      "extra": [
+        "Citation Key: 10.2:22a",
+        "tex.entrysubtype: Audiobook",
+        "tex.narrator: K. Mazur"
+      ],
+      "itemID": 83,
+      "itemType": "book",
+      "publisher": "Random House Audio",
+      "title": "Quiet. The Power of Introverts in a World that Can't Stop Talking",
+      "url": "http://bit.ly/2GOBpbl"
+    },
+    {
+      "citationKey": "10.2:22b",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "B.",
+          "lastName": "Christian"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "T.",
+          "lastName": "Griffiths"
+        }
+      ],
+      "date": "2016",
+      "extra": [
+        "Citation Key: 10.2:22b"
+      ],
+      "itemID": 84,
+      "itemType": "book",
+      "publisher": "Henry Holt and Co.",
+      "title": "Algorithms to live by. The Computer Science of Human Decisions",
+      "url": "http://a.co/7qGBZAk"
+    },
+    {
+      "citationKey": "10.2:23",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "D. H.",
+          "lastName": "Meadows"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "D.",
+          "lastName": "Wright"
+        }
+      ],
+      "date": "2008",
+      "extra": [
+        "Citation Key: 10.2:23"
+      ],
+      "itemID": 85,
+      "itemType": "book",
+      "publisher": "Chelsea Green Publishing",
+      "title": "Thinking in systems. A Primer"
+    },
+    {
+      "citationKey": "10.2:24",
+      "creators": [
+        {
+          "creatorType": "editor",
+          "firstName": "Henry-James",
+          "lastName": "Schmid"
+        }
+      ],
+      "date": "2017",
+      "extra": [
+        "Citation Key: 10.2:24",
+        "DOI: 10.1037/15969-000"
+      ],
+      "itemID": 86,
+      "itemType": "book",
+      "publisher": "American Psychological Association and De Gruyter Mouton",
+      "title": "Entrenchment and the psychology of language learning. How we Reorganize and Adapt Linguistic Knowledge"
+    },
+    {
+      "citationKey": "10.2:25",
+      "creators": [
+        {
+          "creatorType": "editor",
+          "firstName": "J.",
+          "lastName": "Hacker Hughes"
+        }
+      ],
+      "date": "2017",
+      "extra": [
+        "Citation Key: 10.2:25"
+      ],
+      "itemID": 87,
+      "itemType": "book",
+      "publisher": "Routledge",
+      "title": "Military veteran psychological health and social care. Contemporary Approaches"
+    },
+    {
+      "citationKey": "10.2:26",
+      "creators": [
+        {
+          "creatorType": "editor",
+          "firstName": "K. F.",
+          "lastName": "Pridham"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "R.",
+          "lastName": "Limbo"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "M.",
+          "lastName": "Schroeder"
+        }
+      ],
+      "date": "2018",
+      "extra": [
+        "Citation Key: 10.2:26"
+      ],
+      "itemID": 88,
+      "itemType": "book",
+      "publisher": "Springer Publishing Company",
+      "title": "Guided participation in pediatric nursing practice. Relationship-based Teaching and Learning with Parents, Children and Adolescents",
+      "url": "http://a.co/0IAiVgt"
+    },
+    {
+      "citationKey": "10.2:27a",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "N.",
+          "lastName": "Amano"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "H.",
+          "lastName": "Kondo"
+        }
+      ],
+      "date": "2000",
+      "extra": [
+        "Citation Key: 10.2:27a",
+        "Original title: Nihongo no goi tokusei"
+      ],
+      "itemID": 89,
+      "itemType": "book",
+      "publisher": "Sansei-do",
+      "title": "Lexical characteristics of Japanese language",
+      "volume": "7"
+    },
+    {
+      "citationKey": "10.2:27b",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "J.",
+          "lastName": "Piaget"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "B.",
+          "lastName": "Inhelder"
+        }
+      ],
+      "date": "1966",
+      "extra": [
+        "Citation Key: 10.2:27b",
+        "Original title: La psychologie de l'enfant"
+      ],
+      "itemID": 90,
+      "itemType": "book",
+      "publisher": "Quadrige",
+      "title": "The psychology of the child"
+    },
+    {
+      "citationKey": "10.2:28",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "J.",
+          "lastName": "Piaget"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "B.",
+          "lastName": "Inhelder"
+        },
+        {
+          "creatorType": "translator",
+          "firstName": "H.",
+          "lastName": "Weaver"
+        }
+      ],
+      "date": "1969",
+      "edition": "2",
+      "extra": [
+        "Citation Key: 10.2:28",
+        "Original Date: 1966"
+      ],
+      "itemID": 91,
+      "itemType": "book",
+      "publisher": "Basic Books",
+      "title": "The psychology of the child"
+    },
+    {
+      "citationKey": "10.2:29a",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "S.",
+          "lastName": "Freud"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "J.",
+          "lastName": "Strachey"
+        },
+        {
+          "creatorType": "translator",
+          "firstName": "J.",
+          "lastName": "Strachey"
+        }
+      ],
+      "date": "2010",
+      "extra": [
+        "Citation Key: 10.2:29a",
+        "Original Date: 1900"
+      ],
+      "itemID": 92,
+      "itemType": "book",
+      "publisher": "Basic Books",
+      "title": "The interpretation of dreams. The Complete and Definitive Text"
+    },
+    {
+      "citationKey": "10.2:29b",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "J. K.",
+          "lastName": "Rowling"
+        }
+      ],
+      "date": "2015",
+      "extra": [
+        "Citation Key: 10.2:29b",
+        "Original Date: 1997",
+        "tex.narrator: J. Dale"
+      ],
+      "itemID": 93,
+      "itemType": "book",
+      "publisher": "Pottermore Publishing",
+      "title": "Harry Potter and the sorceror's stone. Audiobook",
+      "url": "http://bit.ly/2TcHchx"
+    },
+    {
+      "citationKey": "10.2:30a",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "S. T.",
+          "lastName": "Fiske"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "D. T.",
+          "lastName": "Gilbert"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "G.",
+          "lastName": "Lindzey"
+        }
+      ],
+      "date": "2010",
+      "edition": "5",
+      "extra": [
+        "Citation Key: 10.2:30a",
+        "DOI: 10.1002/9780470561119"
+      ],
+      "itemID": 94,
+      "itemType": "book",
+      "publisher": "John Wiley & Sons",
+      "title": "Handbook of social psychology",
+      "volume": "1"
+    },
+    {
+      "citationKey": "10.2:30b",
+      "creators": [
+        {
+          "creatorType": "editor",
+          "firstName": "C. B.",
+          "lastName": "Travis"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "J. W.",
+          "lastName": "White"
+        }
+      ],
+      "date": "2018",
+      "extra": [
+        "Citation Key: 10.2:30b",
+        "DOI: 10.1037/0000059-000"
+      ],
+      "itemID": 95,
+      "itemType": "book",
+      "publisher": "American Psychological Association",
+      "title": "APA handbook of the psychology of women. Vol. 1. History, theory, and Battlegrounds"
+    },
+    {
+      "citationKey": "10.2:31",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "S.",
+          "lastName": "Madigan"
+        }
+      ],
+      "date": "2019",
+      "edition": "2",
+      "extra": [
+        "Citation Key: 10.2:31",
+        "DOI: 10.1037/00000131-000"
+      ],
+      "itemID": 96,
+      "itemType": "book",
+      "publisher": "American Psychological Association",
+      "series": "Theories of psychotherapy series",
+      "title": "Narrative therapy"
+    },
+    {
+      "citationKey": "10.2:32a",
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "American Psychiatric Association"
+        }
+      ],
+      "date": "2013",
+      "extra": [
+        "Citation Key: 10.2:32a",
+        "DOI: 10.1176/appi.books.9780890425596",
+        "Edition: 5",
+        "tex.shorthand: DSM-5"
+      ],
+      "itemID": 97,
+      "itemType": "report",
+      "publisher": "American Psychiatric Association",
+      "title": "Diagnostic and statistical manual of mental disorders",
+      "type": "manual"
+    },
+    {
+      "citationKey": "10.2:32b",
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "World Health Organization"
+        }
+      ],
+      "date": "2019",
+      "extra": [
+        "Citation Key: 10.2:32b",
+        "Edition: 11",
+        "tex.shorthand: ICD-11"
+      ],
+      "itemID": 98,
+      "itemType": "report",
+      "publisher": "World Health Organization",
+      "title": "International statistical classification of diseases and related health problems",
+      "type": "manual",
+      "url": "https://icd.who.int/"
+    },
+    {
+      "citationKey": "10.2:33c",
+      "creators": [
+        {
+          "creatorType": "editor",
+          "firstName": "E. N.",
+          "lastName": "Zalta"
+        }
+      ],
+      "date": "2019",
+      "edition": "Summer 2019 ed.",
+      "extra": [
+        "Citation Key: 10.2:33c"
+      ],
+      "itemID": 99,
+      "itemType": "book",
+      "publisher": "Stanford University",
+      "title": "The Stanford encyclopedia of philosophy",
+      "url": "https://plato.stanford.edu/archives/sum2019/"
+    },
+    {
+      "citationKey": "10.2:34",
+      "creators": [
+        {
+          "creatorType": "editor",
+          "firstName": "M.",
+          "lastName": "Gold"
+        }
+      ],
+      "date": "1999",
+      "extra": [
+        "Citation Key: 10.2:34",
+        "DOI: 10.1037/10319-000"
+      ],
+      "itemID": 100,
+      "itemType": "book",
+      "publisher": "American Psychological Association",
+      "title": "The complete social scientist. A Kurt Lewin Reader"
+    },
+    {
+      "citationKey": "10.2:35a",
+      "date": "2017",
+      "extra": [
+        "Citation Key: 10.2:35a",
+        "Original Date: 1769",
+        "tex.urldescription: King James Bible Online"
+      ],
+      "itemID": 101,
+      "itemType": "book",
+      "title": "King James Bible",
+      "url": "https://www.kingjamesbibleonline.org/"
+    },
+    {
+      "citationKey": "10.2:35b",
+      "creators": [
+        {
+          "creatorType": "translator",
+          "firstName": "M. A. S.",
+          "lastName": "Abdel Haleem"
+        }
+      ],
+      "date": "2004",
+      "extra": [
+        "Citation Key: 10.2:35b"
+      ],
+      "itemID": 102,
+      "itemType": "book",
+      "publisher": "Oxford University Press",
+      "title": "The Qur'an"
+    },
+    {
+      "citationKey": "10.2:35c",
+      "date": "2015",
+      "edition": "3",
+      "extra": [
+        "Citation Key: 10.2:35c",
+        "Original Date: 1962"
+      ],
+      "itemID": 103,
+      "itemType": "book",
+      "publisher": "The Jewish Publication Society",
+      "title": "The Torah. The Five Books of Moses"
+    },
+    {
+      "citationKey": "10.2:35d",
+      "creators": [
+        {
+          "creatorType": "editor",
+          "firstName": "John J.",
+          "lastName": "Grabowski"
+        }
+      ],
+      "date": "2022",
+      "extra": [
+        "Citation Key: 10.2:35d",
+        "Publication title: Encyclopedia of Cleveland history"
+      ],
+      "itemID": 104,
+      "itemType": "encyclopediaArticle",
+      "publicationTitle": "Cleveland FreeNet",
+      "publisher": "Case Western Reserve University"
+    },
+    {
+      "citationKey": "10.2:36",
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "Aristotle"
+        },
+        {
+          "creatorType": "translator",
+          "firstName": "S. H.",
+          "lastName": "Butcher"
+        }
+      ],
+      "date": "1994",
+      "extra": [
+        "Citation Key: 10.2:36",
+        "Original Date: -0349"
+      ],
+      "itemID": 105,
+      "itemType": "book",
+      "publisher": "The Internet Classics Archive",
+      "title": "Poetics",
+      "url": "http://classics.mit.edu/Aristotle/poetics.html"
+    },
+    {
+      "citationKey": "10.2:37",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "W.",
+          "lastName": "Shakespeare"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "B. A.",
+          "lastName": "Mowat"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "P.",
+          "lastName": "Werstine"
+        }
+      ],
+      "date": "1995",
+      "extra": [
+        "Citation Key: 10.2:37",
+        "Original Date: 1623"
+      ],
+      "itemID": 106,
+      "itemType": "book",
+      "publisher": "Washington Square Press",
+      "title": "Much ado about nothing"
+    },
+    {
+      "citationKey": "10.3:38",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "K. F.",
+          "lastName": "Balsam"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "C. R.",
+          "lastName": "Martell"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "K. P.",
+          "lastName": "Jones"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "S. A.",
+          "lastName": "Safren"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "G. Y.",
+          "lastName": "Iwamasa"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "P. A.",
+          "lastName": "Hays"
+        }
+      ],
+      "date": "2019",
+      "edition": "2",
+      "extra": [
+        "Citation Key: 10.3:38",
+        "DOI: 10.1037/0000119-012",
+        "tex.booksubtitle: Practice and Supervision"
+      ],
+      "itemID": 107,
+      "itemType": "bookSection",
+      "pages": "287\u2013314",
+      "publicationTitle": "Culturally responsive cognitive behaviour therapy",
+      "publisher": "American Psychological Association",
+      "title": "Affirmative cognitive behaviour therapy with sexual and gender minority people"
+    },
+    {
+      "citationKey": "10.3:39",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "R.",
+          "lastName": "Weinstock"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "G. B.",
+          "lastName": "Leong"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "J. A.",
+          "lastName": "Silva"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "R.",
+          "lastName": "Rosner"
+        }
+      ],
+      "date": "2003",
+      "edition": "2",
+      "extra": [
+        "Citation Key: 10.3:39"
+      ],
+      "itemID": 108,
+      "itemType": "bookSection",
+      "pages": "7\u201313",
+      "publicationTitle": "Principles and practise of forensic psychiatry",
+      "publisher": "CRC Press",
+      "title": "Defining forensic psychiatry. Roles and Responsibilities"
+    },
+    {
+      "citationKey": "10.3:40",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "N.",
+          "lastName": "Tafoya"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "A.",
+          "lastName": "Del Vecchio"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "M.",
+          "lastName": "McGoldrick"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "J.",
+          "lastName": "Giordano"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "N.",
+          "lastName": "Garcia-Preto"
+        }
+      ],
+      "date": "2005",
+      "edition": "3",
+      "extra": [
+        "Citation Key: 10.3:40"
+      ],
+      "itemID": 109,
+      "itemType": "bookSection",
+      "pages": "55\u201363",
+      "publicationTitle": "Ethnicity and family therapy",
+      "publisher": "Guilford Press",
+      "title": "Back to the future. An Examination of the Native American Holocaust experience",
+      "url": "http://a.co/36xRhBT"
+    },
+    {
+      "citationKey": "10.3:41",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "N.",
+          "lastName": "Carcavilla Gonz\u00e1lez"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "J. J.",
+          "lastName": "Garcia Meil\u00e1n"
+        }
+      ],
+      "date": "2015",
+      "extra": [
+        "Citation Key: 10.3:41",
+        "Original title: Terapia senorial auditiva: Activation cerebral por medio de la m\u00fasica"
+      ],
+      "itemID": 110,
+      "itemType": "bookSection",
+      "pages": "67\u201386",
+      "publicationTitle": "Gu\u00eda pr\u00e1ctica de terapias estimulativas en el Alzh\u00e9imer",
+      "publisher": "Editorial S\u00edntesis",
+      "title": "Auditory sensory therapy. Brain Activation Through Music",
+      "url": "http://www.sintesis.com/guias-profesionales-203/guia-practica-de-terapias-estimulativas-en-el-alzheimer-libro-1943.html"
+    },
+    {
+      "citationKey": "10.3:42",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "M.",
+          "lastName": "Heidegger"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "D. F.",
+          "lastName": "Krell"
+        },
+        {
+          "creatorType": "translator",
+          "firstName": "J.",
+          "lastName": "Sallis"
+        }
+      ],
+      "date": "2008",
+      "extra": [
+        "Citation Key: 10.3:42",
+        "Original Date: 1961"
+      ],
+      "itemID": 111,
+      "itemType": "bookSection",
+      "pages": "111\u2013138",
+      "publicationTitle": "Basic writings",
+      "publisher": "Harper Perennial Modern Thought",
+      "title": "On the essence of truth"
+    },
+    {
+      "citationKey": "10.3:43",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "C.",
+          "lastName": "Sacchett"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "G. W.",
+          "lastName": "Humphreys"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "D. A.",
+          "lastName": "Balota"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "E. J.",
+          "lastName": "Marsh"
+        }
+      ],
+      "date": "2004",
+      "extra": [
+        "Citation Key: 10.3:43",
+        "tex.booksubtitle: Key Readings in Cognition",
+        "tex.related: 10.3:43r",
+        "tex.relatedtype: reprintfrom"
+      ],
+      "itemID": 112,
+      "itemType": "bookSection",
+      "pages": "100\u2013108",
+      "publicationTitle": "Cognitive psychology",
+      "publisher": "Psychology Press",
+      "title": "Calling a squirrel and squirrel but a canoe a wigwam. A Category-specific Deficit for Artefactual Objects and Body Parts"
+    },
+    {
+      "citationKey": "10.3:44",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "U.",
+          "lastName": "Bronfenbrenner"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "U.",
+          "lastName": "Bronfenbrenner"
+        }
+      ],
+      "date": "2005",
+      "extra": [
+        "Citation Key: 10.3:44",
+        "tex.booksubtitle: Bioecological Perspectives on Human Development",
+        "tex.related: 10.3:44r",
+        "tex.relatedtype: reprintfrom"
+      ],
+      "itemID": 113,
+      "itemType": "bookSection",
+      "pages": "72\u201340",
+      "publicationTitle": "Making human beings human",
+      "publisher": "SAGE Publications",
+      "title": "The social ecology of human development. A Retrospective Conclusion"
+    },
+    {
+      "citationKey": "10.3:44r",
+      "creators": [
+        {
+          "creatorType": "editor",
+          "firstName": "F.",
+          "lastName": "Richardson"
+        }
+      ],
+      "date": "1973",
+      "extra": [
+        "Citation Key: 10.3:44r",
+        "Pages: 113\u2013123"
+      ],
+      "itemID": 114,
+      "itemType": "book",
+      "publisher": "National Education Press",
+      "title": "Brain and intelligence. The Ecology of Child Development"
+    },
+    {
+      "citationKey": "10.3:45",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "S.",
+          "lastName": "Goldin-Meadow"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "L. S.",
+          "lastName": "Lisben"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "U.",
+          "lastName": "Mueller"
+        }
+      ],
+      "date": "2015",
+      "edition": "7",
+      "extra": [
+        "Citation Key: 10.3:45",
+        "DOI: 10.1002/9781118963418.childpsy209",
+        "tex.booksubtitle: Vol. 2. Cognitive Processes"
+      ],
+      "itemID": 115,
+      "itemType": "bookSection",
+      "pages": "339\u2013380",
+      "publicationTitle": "Handbook of child psychology and developmental science",
+      "publisher": "John Wiley & Sons",
+      "title": "Gesture and cognitive development"
+    },
+    {
+      "citationKey": "10.3:46",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "K.",
+          "lastName": "Lewin"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "M.",
+          "lastName": "Gold"
+        }
+      ],
+      "date": "1999",
+      "extra": [
+        "Citation Key: 10.3:46",
+        "DOI: 10.1037/10319-000",
+        "Original Date: 1948",
+        "tex.booksubtitle: A Kurt Lewin Reader"
+      ],
+      "itemID": 116,
+      "itemType": "bookSection",
+      "pages": "265\u2013284",
+      "publicationTitle": "The complete social scientist",
+      "publisher": "American Psychological Association",
+      "title": "Group decision and social change"
+    },
+    {
+      "citationKey": "10.3:48",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "G.",
+          "lastName": "Graham"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "E. N.",
+          "lastName": "Zalta"
+        }
+      ],
+      "date": "2019",
+      "edition": "Summer 2019 ed.",
+      "extra": [
+        "Citation Key: 10.3:48",
+        "Publication title: The Stanford encyclopedia of philosophy"
+      ],
+      "itemID": 117,
+      "itemType": "encyclopediaArticle",
+      "publicationTitle": "Behaviourism",
+      "publisher": "Stanford University",
+      "url": "https://plato.stanford.edu/archives/sum2019/entries/behaviourism"
+    },
+    {
+      "citationKey": "10.3:49",
+      "date": "2019-01-13",
+      "extra": [
+        "Citation Key: 10.3:49"
+      ],
+      "itemID": 118,
+      "itemType": "bookSection",
+      "publicationTitle": "Wikipedia",
+      "title": "List of oldest companies",
+      "url": "https://en.wikipedia.org/w/index.php?title=List_of_oldest_companies&oldid=878158136"
+    },
+    {
+      "citationKey": "10.4:50a",
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "Australian Government Productivity Commission"
+        },
+        {
+          "creatorType": "author",
+          "name": "New Zealand Productivity Commission"
+        }
+      ],
+      "date": "2012",
+      "extra": [
+        "Citation Key: 10.4:50a"
+      ],
+      "itemID": 119,
+      "itemType": "report",
+      "title": "Strengthening trans-Tasman economic relations",
+      "url": "https://www.pc.gov.au/inquiries/completed/australia-new-zealand/report/trans-tasman.pdf"
+    },
+    {
+      "citationKey": "10.4:50b",
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "Canada Council for the Arts"
+        }
+      ],
+      "date": "2013",
+      "extra": [
+        "Citation Key: 10.4:50b"
+      ],
+      "itemID": 120,
+      "itemType": "report",
+      "title": "What we heard. Summary of Key Findings: 2013 Canada Council's Inter-Arts Office Consultation",
+      "url": "http://publications.gc.ca/collections/collection_2017/canadacouncil/K23-65-2013-eng.pdf"
+    },
+    {
+      "citationKey": "10.4:50c",
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "National Cancer Institute"
+        }
+      ],
+      "date": "2018",
+      "extra": [
+        "Citation Key: 10.4:50c",
+        "Issue: 18-2424"
+      ],
+      "itemID": 121,
+      "itemType": "report",
+      "title": "Facing forward. Life After Cancer Treatment",
+      "type": "NIH publication",
+      "url": "https://www.cancer.gov/publications/patient-education/life-after-cancer-treatment.pdf"
+    },
+    {
+      "citationKey": "10.4:51a",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "D.",
+          "lastName": "Fried"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "A.",
+          "lastName": "Polyakova"
+        }
+      ],
+      "date": "2018",
+      "extra": [
+        "Citation Key: 10.4:51a"
+      ],
+      "itemID": 122,
+      "itemType": "report",
+      "publisher": "Atlantic Council",
+      "title": "Democratic defense against disinformation",
+      "url": "https://www.atlantic.org/images/publications/Democratic_Defense_Against_Disinformation_FINAL.pdf"
+    },
+    {
+      "citationKey": "10.4:51b",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "A.",
+          "lastName": "Segaert"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "A.",
+          "lastName": "Bauer"
+        }
+      ],
+      "date": "2015",
+      "extra": [
+        "Citation Key: 10.4:51b"
+      ],
+      "itemID": 123,
+      "itemType": "report",
+      "publisher": "Employment and Social Development Canada",
+      "title": "The extent and nature of veteran homelessness in Canada",
+      "url": "https://www.canada.ca/en/employment-social-development/programs/communities/homelessness/publications-bulletins/veterans-report.html"
+    },
+    {
+      "citationKey": "10.4:52",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "D. L.",
+          "lastName": "Blackwell"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "J. W.",
+          "lastName": "Lucas"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "T. C.",
+          "lastName": "Clarke"
+        }
+      ],
+      "date": "2014",
+      "extra": [
+        "Citation Key: 10.4:52",
+        "Issue: 10, Issue 260, Vital and Health Statistics Series",
+        "Issue: 10, Issue 260, Vital and Health Statistics Series"
+      ],
+      "itemID": 124,
+      "itemType": "report",
+      "publisher": "Centers for Disease Control and Prevention",
+      "title": "Summary health statistics for U.S. adults. National Health Interview Survey, 2012",
+      "url": "https://www.atlantic.org/images/publications/Democratic_Defense_Against_Disinformation_FINAL.pdf"
+    },
+    {
+      "citationKey": "10.4:53",
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "British Cardiovascular Society Working Group"
+        }
+      ],
+      "date": "2016",
+      "extra": [
+        "Citation Key: 10.4:53"
+      ],
+      "itemID": 125,
+      "itemType": "report",
+      "publisher": "British Cardiovascular Society",
+      "title": "British Cardiovascular Society Working Group report. Out-of-hours Cardiovascular Care: Management of Cardiac Emergencies and Hospital In-patients",
+      "url": "http://www.bcs.com/documents/BCSOOHWP_Final_Report_05092016.pdf"
+    },
+    {
+      "citationKey": "10.4:54",
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "U.S. Securities and Exchange Commission"
+        }
+      ],
+      "date": "2017",
+      "extra": [
+        "Citation Key: 10.4:54"
+      ],
+      "itemID": 126,
+      "itemType": "report",
+      "title": "Agency financial report. Fiscal Year 2017",
+      "url": "https://www.sec.gov/files/sec-2017-agency-financial-report.pdf"
+    },
+    {
+      "citationKey": "10.4:55a",
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "American Counseling Association"
+        }
+      ],
+      "date": "2014",
+      "extra": [
+        "Citation Key: 10.4:55a"
+      ],
+      "itemID": 127,
+      "itemType": "report",
+      "title": "2014 ACA code of ethics",
+      "url": "https://www.counseling.org/knowledge-center"
+    },
+    {
+      "citationKey": "10.4:55b",
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "American Nurses Association"
+        }
+      ],
+      "date": "2015",
+      "extra": [
+        "Citation Key: 10.4:55b"
+      ],
+      "itemID": 128,
+      "itemType": "report",
+      "title": "Code of ethics for nurses with interpretive statements",
+      "url": "https://www.nursingworld.org/coe-view-only"
+    },
+    {
+      "citationKey": "10.4:55c",
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "American Psychological Association"
+        }
+      ],
+      "date": "2017",
+      "extra": [
+        "Citation Key: 10.4:55c"
+      ],
+      "itemID": 129,
+      "itemType": "report",
+      "notes": [
+        "2002, amended effective June 1, 2010, and January 1, 2017"
+      ],
+      "title": "Ethical principles of psychologists and code of conduct",
+      "url": "https://www.apa.org/ethics/code/index.aspx"
+    },
+    {
+      "citationKey": "10.4:56",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "C. B.",
+          "lastName": "Blair"
+        }
+      ],
+      "date": "2015/2020",
+      "extra": [
+        "Citation Key: 10.4:56",
+        "Issue: 5R01HD081252-04",
+        "tex.author+an:role: 1=\"Principal Investigator\""
+      ],
+      "itemID": 130,
+      "itemType": "report",
+      "publisher": "Eunice Kennedy Shriver National Institute of Child Health & Human Development",
+      "title": "Stress, self-regulation and psychopathology in middle childhood. Grant",
+      "type": "Project",
+      "url": "https://projectreporter.nih.gov/project_info_details.cfm?aid=9473071&icde=40092311"
+    },
+    {
+      "citationKey": "10.4:57",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "J.",
+          "lastName": "Lichtenstein"
+        }
+      ],
+      "date": "2013",
+      "extra": [
+        "Citation Key: 10.4:57",
+        "Issue: 1"
+      ],
+      "itemID": 131,
+      "itemType": "report",
+      "publisher": "U.S. Small Business Administration, Office of Advocacy",
+      "title": "Profile of veteran business owners. More Young Veterans Appear to be Starting Businesses",
+      "type": "Issue brief",
+      "url": "https://www.sba.org/sites/default/files/Issue%20Brief%201,%20Veteran%20Business%20Owners.pdf"
+    },
+    {
+      "citationKey": "10.4:58",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "M.",
+          "lastName": "Harwell"
+        }
+      ],
+      "date": "2018",
+      "extra": [
+        "Citation Key: 10.4:58"
+      ],
+      "itemID": 132,
+      "itemType": "report",
+      "publisher": "National Education Policy Center",
+      "title": "Don't expect too much. Policy Brief. The Limited Usefulness of Common SES Measures and a Prescription for Change",
+      "url": "https://nepc.colorado.edu/publication/SES"
+    },
+    {
+      "citationKey": "10.4:59",
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "U.S. Food and Drug Administration"
+        }
+      ],
+      "date": "2019-02-14",
+      "extra": [
+        "Citation Key: 10.4:59"
+      ],
+      "itemID": 133,
+      "itemType": "report",
+      "publisher": "U.S. Food and Drug Administration",
+      "title": "FDA authorizes first interoperable insulin pup intended to allow patients to customize treatment through their individual diabetes management devices. Press release",
+      "url": "https://www.fds.gov/NewsEvents/Newsroom/PressAnnouncements/ucm631412.htm"
+    },
+    {
+      "citationKey": "10.5:60",
+      "creators": [
+        {
+          "creatorType": "contributor",
+          "firstName": "A.",
+          "lastName": "Fistek"
+        },
+        {
+          "creatorType": "contributor",
+          "firstName": "E.",
+          "lastName": "Jester"
+        },
+        {
+          "creatorType": "contributor",
+          "firstName": "K.",
+          "lastName": "Sonnenberg"
+        }
+      ],
+      "extra": [
+        "Citation Key: 10.5:60",
+        "tex.eventdate: 2017-07-12/2017-07-15",
+        "tex.eventtitle: Autism society national conference",
+        "tex.venue: Milwaukee, WI, United States"
+      ],
+      "itemID": 134,
+      "itemType": "presentation",
+      "title": "Everybody's got a little music in them. Conference session. Using Music Therapy to Connect, Engage, and Motivate",
+      "url": "https://asa.confex.com/asa/2017/webprogramarchives/Session9517.html"
+    },
+    {
+      "citationKey": "10.5:61",
+      "creators": [
+        {
+          "creatorType": "contributor",
+          "firstName": "S.",
+          "lastName": "Maddox"
+        },
+        {
+          "creatorType": "contributor",
+          "firstName": "J.",
+          "lastName": "Hurling"
+        },
+        {
+          "creatorType": "contributor",
+          "firstName": "E.",
+          "lastName": "Stewart"
+        },
+        {
+          "creatorType": "contributor",
+          "firstName": "A.",
+          "lastName": "Edwards"
+        }
+      ],
+      "extra": [
+        "Citation Key: 10.5:61",
+        "tex.eventdate: 2016-03-30/2016-04-02",
+        "tex.eventtitle: Southeastern psychological association 62nd annual meeting",
+        "tex.venue: New Orleans, LA, United States"
+      ],
+      "itemID": 135,
+      "itemType": "presentation",
+      "title": "If mama ain't happy, nobody's happy. Paper presentation. The Effect of Parental Depression on Mood Dysregulation in Children"
+    },
+    {
+      "citationKey": "10.5:62",
+      "creators": [
+        {
+          "creatorType": "contributor",
+          "firstName": "J.",
+          "lastName": "Pearson"
+        }
+      ],
+      "extra": [
+        "Citation Key: 10.5:62",
+        "tex.eventdate: 2018-09-27/2018-09-30",
+        "tex.eventtitle: Australian psychological society congress",
+        "tex.venue: Sydney, NSW, Australia"
+      ],
+      "itemID": 136,
+      "itemType": "presentation",
+      "title": "Fat talk and its effects on state-based body image in women. Poster presentation",
+      "url": "http://bit.ly/2XGSThP"
+    },
+    {
+      "citationKey": "10.5:63",
+      "creators": [
+        {
+          "creatorType": "contributor",
+          "firstName": "D.",
+          "lastName": "De Boer"
+        },
+        {
+          "creatorType": "contributor",
+          "firstName": "T.",
+          "lastName": "LaFavour"
+        },
+        {
+          "creatorType": "contributor",
+          "firstName": "A. M.",
+          "lastName": "Schmidt"
+        },
+        {
+          "creatorType": "contributor",
+          "firstName": "A.",
+          "lastName": "Kryvanos"
+        }
+      ],
+      "extra": [
+        "Citation Key: 10.5:63",
+        "tex.editoratype: chair",
+        "tex.eventdate: 2018-04-26/2018-04-29",
+        "tex.eventtitle: Western psychological association 98th annual convention",
+        "tex.maintitle: Perspectives on resilience: Conceptualization, measurement, and enhancement",
+        "tex.maintitleaddon: Symposium",
+        "tex.venue: Portland, OR, United States"
+      ],
+      "itemID": 137,
+      "itemType": "presentation",
+      "title": "The art and significance of successfully identifying resilient individuals. A Person-Focused Approach"
+    },
+    {
+      "citationKey": "10.5:A2",
+      "creators": [
+        {
+          "creatorType": "editor",
+          "firstName": "E.",
+          "lastName": "Kushilevitz"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "T.",
+          "lastName": "Malkin"
+        }
+      ],
+      "date": "2016",
+      "extra": [
+        "Citation Key: 10.5:A2",
+        "DOI: 10.1007/978-3-662-49096-9",
+        "tex.mainsubtitle: Vol. 9562",
+        "tex.maintitle: Lecture notes in computer science"
+      ],
+      "itemID": 138,
+      "itemType": "book",
+      "publisher": "Springer",
+      "title": "Theory of cryptography"
+    },
+    {
+      "citationKey": "10.6:64",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "L.",
+          "lastName": "Harris"
+        }
+      ],
+      "date": "2014",
+      "extra": [
+        "Citation Key: 10.6:64"
+      ],
+      "itemID": 139,
+      "itemType": "thesis",
+      "publisher": "University of Virginia",
+      "title": "Instructional leadership perceptions and practices of elementary school leaders",
+      "type": "Unpublished doctoral dissertation"
+    },
+    {
+      "citationKey": "10.6:65",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "M. M.",
+          "lastName": "Hollander"
+        }
+      ],
+      "date": "2017",
+      "extra": [
+        "Citation Key: 10.6:65",
+        "Issue: 10289373"
+      ],
+      "itemID": 140,
+      "itemType": "thesis",
+      "publisher": "ProQuest Dissertations and Theses Global / University of Wisconsin\u2013Madison",
+      "title": "Resistance to authority. Methodological Innovations and New Lessons from the Milgram Experiment",
+      "type": "phd"
+    },
+    {
+      "citationKey": "10.6:66",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "V. H.",
+          "lastName": "Hutcheson"
+        }
+      ],
+      "date": "2012",
+      "extra": [
+        "Citation Key: 10.6:66"
+      ],
+      "itemID": 141,
+      "itemType": "thesis",
+      "publisher": "William & Mary Digital Archive / The College of William & Mary",
+      "title": "Dealing with dual differences. Social Coping Strategies of Gifted and Lesbian, Gay, Bisexual, Transgender, and Queer Adolescents",
+      "type": "master",
+      "url": "https://digitalarchive.wm.edu/bitstream/handle/10288/16594/HutchesonVirginia2012.pdf"
+    },
+    {
+      "citationKey": "10.7:67r",
+      "creators": [
+        {
+          "creatorType": "director",
+          "firstName": "E.",
+          "lastName": "Brodsky"
+        }
+      ],
+      "date": "2016",
+      "extra": [
+        "Citation Key: 10.7:67r",
+        "tex.author+an:role: 1=director"
+      ],
+      "itemID": 142,
+      "itemType": "film",
+      "title": "The year we thought about love"
+    },
+    {
+      "citationKey": "10.7:68",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "F.",
+          "lastName": "Santos"
+        }
+      ],
+      "date": "2019-01-11",
+      "extra": [
+        "Citation Key: 10.7:68",
+        "tex.entrysubtype: nonacademic",
+        "tex.related: 10.7:68r",
+        "tex.relatedstring: Review of the book",
+        "tex.relatedtype: reviewof"
+      ],
+      "itemID": 143,
+      "itemType": "journalArticle",
+      "publicationTitle": "The New York Times",
+      "title": "Reframing refugee children's stories",
+      "url": "https://nyt.ms/2Hlgjk3"
+    },
+    {
+      "citationKey": "10.7:68r",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "M.",
+          "lastName": "Yousafzai"
+        }
+      ],
+      "date": "2016",
+      "extra": [
+        "Citation Key: 10.7:68r"
+      ],
+      "itemID": 144,
+      "itemType": "book",
+      "title": "We are displaced. My Journey and Stories From Refugee Girls Around the World"
+    },
+    {
+      "citationKey": "10.7:69",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "D.",
+          "lastName": "Perkins"
+        }
+      ],
+      "date": "2018-02-01",
+      "extra": [
+        "Citation Key: 10.7:69",
+        "tex.eprint: A.V. Club",
+        "tex.related: 10.7:69r",
+        "tex.relatedstring: Review of the TV series episode",
+        "tex.relatedtype: reviewof"
+      ],
+      "itemID": 145,
+      "itemType": "webpage",
+      "title": "<span class=\"nocase\">The good place</span> ends its remarkable second season with irrational hope, unexpected gifts, and a smile",
+      "url": "https://www.avclub.com/the-good-place-ends-its-remarkable-second-season-with-i-1822649316"
+    },
+    {
+      "citationKey": "10.7:69r",
+      "creators": [
+        {
+          "creatorType": "director",
+          "firstName": "M.",
+          "lastName": "Schur"
+        }
+      ],
+      "date": "2018",
+      "extra": [
+        "Citation Key: 10.7:69r",
+        "tex.author+an:role: 1=writer,director"
+      ],
+      "itemID": 146,
+      "itemType": "tvBroadcast",
+      "title": "Somewhere else"
+    },
+    {
+      "citationKey": "10.8:70",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "J.",
+          "lastName": "Yoo"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Y.",
+          "lastName": "Miyamoto"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "A.",
+          "lastName": "Rigotti"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "C.",
+          "lastName": "Ryff"
+        }
+      ],
+      "date": "2016",
+      "extra": [
+        "Citation Key: 10.8:70",
+        "Publisher: University of Wisconsin-Madison",
+        "tex.howpublished: manunpub",
+        "tex.venue: Department of Psychology"
+      ],
+      "itemID": 147,
+      "itemType": "manuscript",
+      "title": "Linking positive affect to blood lipids. A Cultural Perspective"
+    },
+    {
+      "citationKey": "10.8:71",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "M.",
+          "lastName": "O'Shea"
+        }
+      ],
+      "date": "2018",
+      "extra": [
+        "Citation Key: 10.8:71",
+        "Publisher: University of Kansas",
+        "tex.howpublished: maninprep",
+        "tex.venue: Department of Management"
+      ],
+      "itemID": 148,
+      "itemType": "manuscript",
+      "title": "Understanding proactive behaviour in the workplace as a function of gender"
+    },
+    {
+      "citationKey": "10.8:72",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "T.",
+          "lastName": "Lippincott"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "E. K.",
+          "lastName": "Poindexter"
+        }
+      ],
+      "date": "2019",
+      "extra": [
+        "Citation Key: 10.8:72",
+        "Publisher: University of Washington",
+        "tex.howpublished: mansub",
+        "tex.venue: Department of Psychology"
+      ],
+      "itemID": 149,
+      "itemType": "manuscript",
+      "title": "Emotion recognition as a function of facial cues. Implications for Practice"
+    },
+    {
+      "citationKey": "10.8:73a",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "C.",
+          "lastName": "Leuker"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "L.",
+          "lastName": "Samartzidis"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "R.",
+          "lastName": "Hertwig"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "T. J.",
+          "lastName": "Pleskac"
+        }
+      ],
+      "date": "2018",
+      "extra": [
+        "Citation Key: 10.8:73a",
+        "DOI: 10.17605/OSF.IO/9P7CB",
+        "tex.eprint: PsyArXiv"
+      ],
+      "itemID": 150,
+      "itemType": "webpage",
+      "title": "When money talks. Judging Risk and Coercion in High-Paying Clinical Trials"
+    },
+    {
+      "citationKey": "10.8:73b",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "M. A.",
+          "lastName": "Stults-Kolehmainen"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "R.",
+          "lastName": "Sinha"
+        }
+      ],
+      "date": "2015",
+      "extra": [
+        "Citation Key: 10.8:73b",
+        "tex.eprint: PubMed Central"
+      ],
+      "itemID": 151,
+      "itemType": "webpage",
+      "title": "The effects of stress on physical activity and exercise",
+      "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3894304"
+    },
+    {
+      "citationKey": "10.8:74",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "H-K",
+          "lastName": "Ho"
+        }
+      ],
+      "date": "2014",
+      "extra": [
+        "Citation Key: 10.8:74",
+        "tex.eprint: ERIC",
+        "tex.version: ED545393"
+      ],
+      "itemID": 152,
+      "itemType": "webpage",
+      "title": "Teacher preparation for early childhood special education in Taiwan",
+      "url": "https://files.eric.ed.gov/fulltext/ED545393.pdf"
+    },
+    {
+      "citationKey": "10.9:75c",
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "Pew Research Center"
+        }
+      ],
+      "date": "2018",
+      "extra": [
+        "Citation Key: 10.9:75c",
+        "tex.entrysubtype: Data set"
+      ],
+      "itemID": 153,
+      "itemType": "dataset",
+      "title": "American trends panel Wave 26",
+      "url": "https://www.pewsocialtrends.org/dataset/american-trends-panel-wave-26/"
+    },
+    {
+      "citationKey": "10.9:76a",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "R. A.",
+          "lastName": "Baer"
+        }
+      ],
+      "date": "2015",
+      "extra": [
+        "Citation Key: 10.9:76a"
+      ],
+      "itemID": 154,
+      "itemType": "dataset",
+      "publisher": "University of Kentucky",
+      "title": "Unpublished raw data on the correlations between the Five Facet Mindfulness Questionnaire and the Kentucky Inventory of Mindfulness Skills"
+    },
+    {
+      "citationKey": "10.9:76b",
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "Oregan Youth Authority"
+        }
+      ],
+      "date": "2011",
+      "extra": [
+        "Citation Key: 10.9:76b",
+        "tex.entrysubtype: Unpublished raw data"
+      ],
+      "itemID": 155,
+      "itemType": "dataset",
+      "title": "Recidivism outcomes"
+    },
+    {
+      "citationKey": "11.10:29",
+      "date": "1989-11-20",
+      "extra": [
+        "Citation Key: 11.10:29",
+        "tex.entrytype: legal"
+      ],
+      "itemID": 156,
+      "itemType": "document",
+      "title": "United nations convention on the rights of the child",
+      "url": "https://www.ohchr.org/en/professionalinterest/pages/crc.aspx"
+    },
+    {
+      "citationKey": "11.4:1",
+      "date": "1954",
+      "extra": [
+        "Citation Key: 11.4:1",
+        "tex.citation: 347 U.S. 483",
+        "tex.entrytype: jurisdiction"
+      ],
+      "itemID": 157,
+      "itemType": "document",
+      "title": "Brown v. Board of education",
+      "url": "http://www.oyez.org/cases/1940-1955/347us483"
+    },
+    {
+      "citationKey": "11.4:2",
+      "date": "2015",
+      "extra": [
+        "Citation Key: 11.4:2",
+        "tex.citation: 576 U.S. ___",
+        "tex.entrytype: jurisdiction"
+      ],
+      "itemID": 158,
+      "itemType": "document",
+      "title": "Obergefell v. Hodges",
+      "url": "https://www.supremecourt.gov/opinions/14pdf/14-556_3204.pdf"
+    },
+    {
+      "citationKey": "11.4:3",
+      "date": "1991",
+      "extra": [
+        "Citation Key: 11.4:3",
+        "tex.citation: 951 F.2d 1128",
+        "tex.entrytype: jurisdiction"
+      ],
+      "itemID": 159,
+      "itemType": "document",
+      "publisher": "9th Cir.",
+      "title": "Daubert v. Merrell dow pharmaceuticals, inc.",
+      "url": "https://openjurist.org/951/f2d/1128/william-dabert-v-merrell-dow-pharmaceuticals"
+    },
+    {
+      "citationKey": "11.4:4",
+      "date": "2001",
+      "extra": [
+        "Citation Key: 11.4:4",
+        "tex.citation: 133 F.Supp.2d 1034",
+        "tex.entrytype: jurisdiction"
+      ],
+      "itemID": 160,
+      "itemType": "document",
+      "publisher": "N.D. Ohio",
+      "title": "Burriola v. Greater toledo YMCA",
+      "url": "https://law.justia.com/cases/federal/district-courts/FSupp2/133/1034/2293141/"
+    },
+    {
+      "citationKey": "11.4:5",
+      "date": "1984",
+      "extra": [
+        "Citation Key: 11.4:5",
+        "Original Date: 1981",
+        "tex.citation: 563 F.Supp. 332 and aff'd and 727 F.2d 888",
+        "tex.citation+an:citedate: 1=\"1981\";3=\"1984\"",
+        "tex.citation+an:citeinfo: 2=appeal",
+        "tex.citation+an:citeorg: 1=\"D. Kan.\";3=\"10th Cir.\"",
+        "tex.entrytype: jurisdiction"
+      ],
+      "itemID": 161,
+      "itemType": "document",
+      "title": "Durflinger v. Artiles",
+      "url": "https://openjurist.org/727/f2d/888/durflinger-v-artiles"
+    },
+    {
+      "citationKey": "11.4:6",
+      "date": "1976",
+      "extra": [
+        "Citation Key: 11.4:6",
+        "tex.citation: 17 Cal.3d 425 and 131 Cal. Rptr. 14 and 551 P.2d 334",
+        "tex.entrytype: jurisdiction"
+      ],
+      "itemID": 162,
+      "itemType": "document",
+      "title": "Tarasoff v. Regents of the university of california",
+      "url": "https://www.casebriefs.com/blog/law/torts/tors-keyed-to-dobbs/the-duty-to-protect-from-third-persons/tarasoff-v-regents-of-university-of-california"
+    },
+    {
+      "citationKey": "11.4:7",
+      "date": "1992",
+      "extra": [
+        "Citation Key: 11.4:7",
+        "tex.citation: 826 S.W.2d 201",
+        "tex.citation+an:citedate: 1=\"1992\"",
+        "tex.citation+an:citeorg: 1=\"Tex. Ct. App.\"",
+        "tex.entrytype: jurisdiction"
+      ],
+      "itemID": 163,
+      "itemType": "document",
+      "title": "Texas v. Morales",
+      "url": "https://www.leagle.com/decision/19921027826sw2d20111010"
+    },
+    {
+      "citationKey": "11.5:10",
+      "date": "2015",
+      "extra": [
+        "Citation Key: 11.5:10",
+        "Place: 20 U.S.C \u00a7 6301",
+        "tex.entrytype: legislation"
+      ],
+      "itemID": 164,
+      "itemType": "document",
+      "title": "Every student succeeds act",
+      "url": "https://www.congress.gov/114/plaws/publ95/PLAW-114publ95.pdf"
+    },
+    {
+      "citationKey": "11.5:11",
+      "date": "2009",
+      "extra": [
+        "Citation Key: 11.5:11",
+        "Place: Pub. L. No. 111-2, 123 Stat. 5",
+        "tex.entrytype: legislation"
+      ],
+      "itemID": 165,
+      "itemType": "document",
+      "title": "Lilly leadbetter fair play act. of 2009",
+      "url": "https://www.govinfo.gov/content/pkg/PLAW-111publ2/pdf/PLAW-111publ2.pdf"
+    },
+    {
+      "citationKey": "11.5:12",
+      "date": "1972",
+      "extra": [
+        "Citation Key: 11.5:12",
+        "Place: 20 U.S.C \u00a7 1681 <i>et seq.</i>",
+        "tex.entrytype: legislation"
+      ],
+      "itemID": 166,
+      "itemType": "document",
+      "title": "Patsy mink equal opportunity in education act",
+      "url": "https://www.justice.org/crt/title-ix-education-amendments-1972"
+    },
+    {
+      "citationKey": "11.5:13",
+      "date": "2009",
+      "extra": [
+        "Citation Key: 11.5:13",
+        "Original Date: 1971",
+        "Place: Fla. Stat. \u00a7 394",
+        "tex.entrytype: legislation"
+      ],
+      "itemID": 167,
+      "itemType": "document",
+      "title": "Florida mental health act",
+      "url": "http://www.leg.state.fl.us/statues/index.cfm?App_mode=Display_Statute&URL=0300-0399/0394/0394.html"
+    },
+    {
+      "citationKey": "11.5:8",
+      "date": "1990",
+      "extra": [
+        "Citation Key: 11.5:8",
+        "Place: 42 U.S.C \u00a7 12101 <i>et seq.</i>",
+        "tex.entrytype: legislation"
+      ],
+      "itemID": 168,
+      "itemType": "document",
+      "title": "American with disabilities act. of 1990",
+      "url": "https://www.ada.gov/pubs/adastatute08.htm"
+    },
+    {
+      "citationKey": "11.5:9",
+      "date": "1964",
+      "extra": [
+        "Citation Key: 11.5:9",
+        "Place: Pub. L. No. 88\u2013352, 78 Stat. 241",
+        "tex.entrytype: legislation"
+      ],
+      "itemID": 169,
+      "itemType": "document",
+      "title": "Civil rights act. of 1964",
+      "url": "https://www.govinfo.gov/content/pkg/STATUE-78/pdf/STATUTE-78-Pg241.pdf"
+    },
+    {
+      "citationKey": "11.6:14",
+      "date": "2016",
+      "extra": [
+        "Citation Key: 11.6:14",
+        "Place: 114th Cong.",
+        "tex.entrytype: legmaterial"
+      ],
+      "itemID": 170,
+      "itemType": "document",
+      "notes": [
+        "testimony of Norman Dong"
+      ],
+      "title": "Federal real property reform. How cutting red tape and better management count achieve billions in savings, U.S. Senate Committee on Homeland Security and Governmental Affairs",
+      "url": "http://www.gsa.gov/portal/content/233107"
+    },
+    {
+      "citationKey": "11.6:15",
+      "date": "2014",
+      "extra": [
+        "Citation Key: 11.6:15",
+        "Place: 113th Cong.",
+        "tex.entrytype: legmaterial"
+      ],
+      "itemID": 171,
+      "itemType": "document",
+      "shortTitle": "Strengthening the federal student loan program",
+      "title": "Strengthening the federal student loan program for borrowers. Hearing before the U.S. Senate Committee on Health, Education, Labor & Pensions",
+      "url": "https://www.help.senate.gov/hearings/strengthening-the-federal-student-load-program-for-borrowers"
+    },
+    {
+      "citationKey": "11.6:16",
+      "date": "2013",
+      "extra": [
+        "Citation Key: 11.6:16",
+        "Place: H.R 1100, 113th Cong.",
+        "tex.entrytype: legislation"
+      ],
+      "itemID": 172,
+      "itemType": "document",
+      "title": "Mental health on campus improvement act",
+      "url": "https://www.congress.gov/bill/113th-congress/house-bill/1100"
+    },
+    {
+      "citationKey": "11.6:17",
+      "date": "2016",
+      "extra": [
+        "Citation Key: 11.6:17",
+        "Issue: 438",
+        "Place: 114th Cong. and 162 Cong. Rec. 2394",
+        "Type: resolution",
+        "tex.entrytype: legmaterial",
+        "tex.source: senate"
+      ],
+      "itemID": 173,
+      "itemType": "document",
+      "notes": [
+        "enacted"
+      ],
+      "url": "https://www.congress.gov/congressional-record/2016/04/21/senate-section/article/S2394-2"
+    },
+    {
+      "citationKey": "11.6:18",
+      "date": "2015",
+      "extra": [
+        "Citation Key: 11.6:18",
+        "Issue: 114-358",
+        "tex.entrytype: legmaterial",
+        "tex.source: houseofrepresentatives"
+      ],
+      "itemID": 174,
+      "itemType": "report",
+      "url": "https://www.gpo.gov/fdsys/pkg/CRPT-114rpt358/pdf/CRPT-114hrpt358.pdf"
+    },
+    {
+      "citationKey": "11.7:19",
+      "date": "2009",
+      "extra": [
+        "Citation Key: 11.7:19",
+        "tex.citation: 45 C.F.R. \u00a7 46",
+        "tex.entrytype: legadminmaterial"
+      ],
+      "itemID": 175,
+      "itemType": "document",
+      "title": "Protection of human subjects",
+      "url": "https://www.hhs.gov/ohrp/sites/default/files/ohrp/policy/ohrpregulations.pdf"
+    },
+    {
+      "citationKey": "11.7:20",
+      "date": "2016-05-23",
+      "extra": [
+        "Citation Key: 11.7:20",
+        "tex.citation: 81 F.R. 32391",
+        "tex.entrytype: legadminmaterial"
+      ],
+      "itemID": 176,
+      "itemType": "document",
+      "notes": [
+        "to be codified at 29 C.F.R. \u00a7 541"
+      ],
+      "shortTitle": "Defining and delimiting",
+      "tags": [
+        {
+          "tag": "proposed"
+        }
+      ],
+      "title": "Defining and delimiting the exemptions for executive, administrative, professional, outside sales and computer employees",
+      "url": "https://www.federalregister.gov/articles/2016/05/23/2016-11754/defining-and-delimiting-the-exemptions-for-executive-administrative-professional-outside-sales-and"
+    },
+    {
+      "citationKey": "11.7:21",
+      "date": "2014",
+      "extra": [
+        "Citation Key: 11.7:21",
+        "Issue: 13,676",
+        "Type: execorder",
+        "tex.citation: 3 C.F.R. 294",
+        "tex.entrytype: legadminmaterial"
+      ],
+      "itemID": 177,
+      "itemType": "document",
+      "url": "https://www.govinfo.gov/content/pkg/CFR-2015-title3-vol1/pdf/CFR-2015-title3-vol1-eo13676.pdf"
+    },
+    {
+      "citationKey": "11.8:22",
+      "creators": [
+        {
+          "creatorType": "inventor",
+          "firstName": "S. C.",
+          "lastName": "Hiremath"
+        },
+        {
+          "creatorType": "inventor",
+          "firstName": "S.",
+          "lastName": "Kumar"
+        },
+        {
+          "creatorType": "inventor",
+          "firstName": "F.",
+          "lastName": "Lu"
+        },
+        {
+          "creatorType": "inventor",
+          "firstName": "A",
+          "lastName": "Salehi"
+        }
+      ],
+      "date": "2016",
+      "extra": [
+        "Citation Key: 11.8:22",
+        "Publisher: U.S. Patent and Trademark Office",
+        "Type: U.S. patent"
+      ],
+      "itemID": 178,
+      "itemType": "patent",
+      "number": "9,367,592",
+      "title": "Using metaphors to present concepts across different intellectual domains",
+      "url": "http://patft.uspto.gov/netacgi/nph-Parser?patentnumber=9367592"
+    },
+    {
+      "citationKey": "11.9:23",
+      "extra": [
+        "Citation Key: 11.9:23",
+        "Section: 3",
+        "Type: constitution",
+        "tex.article: I",
+        "tex.entrytype: constitution",
+        "tex.source: us"
+      ],
+      "itemID": 179,
+      "itemType": "document"
+    },
+    {
+      "citationKey": "11.9:24",
+      "extra": [
+        "Citation Key: 11.9:24",
+        "Section: 3",
+        "Type: constitution",
+        "tex.article: IX",
+        "tex.entrytype: constitution",
+        "tex.source: southcarolina"
+      ],
+      "itemID": 180,
+      "itemType": "document"
+    },
+    {
+      "citationKey": "11.9:25",
+      "extra": [
+        "Citation Key: 11.9:25",
+        "Type: constitution",
+        "tex.amendment: XIX",
+        "tex.entrytype: constitution",
+        "tex.source: us"
+      ],
+      "itemID": 181,
+      "itemType": "document"
+    },
+    {
+      "citationKey": "11.9:26",
+      "extra": [
+        "Citation Key: 11.9:26",
+        "Type: constitution",
+        "tex.amendment: XIX",
+        "tex.entrytype: constitution",
+        "tex.eventdate: 1933",
+        "tex.source: us"
+      ],
+      "itemID": 182,
+      "itemType": "document",
+      "tags": [
+        {
+          "tag": "repealed"
+        }
+      ]
+    },
+    {
+      "citationKey": "11.9:27",
+      "extra": [
+        "Citation Key: 11.9:27",
+        "Type: constitution",
+        "tex.amendment: I\u2013X",
+        "tex.entrytype: constitution",
+        "tex.source: us"
+      ],
+      "itemID": 183,
+      "itemType": "document"
+    },
+    {
+      "citationKey": "11.9:28",
+      "extra": [
+        "Citation Key: 11.9:28",
+        "Type: charter",
+        "tex.article: 1",
+        "tex.entrytype: constitution",
+        "tex.part: 3",
+        "tex.source: unitednations"
+      ],
+      "itemID": 184,
+      "itemType": "document"
+    },
+    {
+      "citationKey": "9.14:1",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Arthur",
+          "lastName": "Test"
+        }
+      ],
+      "date": "2012-22",
+      "extra": [
+        "Citation Key: 9.14:1"
+      ],
+      "issue": "2",
+      "itemID": 185,
+      "itemType": "journalArticle",
+      "publicationTitle": "Seasonal Journal",
+      "title": "Test title",
+      "volume": "33"
+    },
+    {
+      "citationKey": "9.14:2",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Arthur",
+          "lastName": "Test"
+        }
+      ],
+      "date": "2012-22/2012-23",
+      "extra": [
+        "Citation Key: 9.14:2"
+      ],
+      "issue": "3",
+      "itemID": 186,
+      "itemType": "journalArticle",
+      "publicationTitle": "Seasonal Journal",
+      "title": "Test title 2",
+      "volume": "34"
+    },
+    {
+      "citationKey": "9.44:10a",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Q. E",
+          "lastName": "San Martin"
+        }
+      ],
+      "extra": [
+        "Citation Key: 9.44:10a",
+        "tex.entrytype: nameonly"
+      ],
+      "itemID": 187,
+      "itemType": "document"
+    },
+    {
+      "citationKey": "9.44:10b",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "M.",
+          "lastName": "Santa Maria"
+        }
+      ],
+      "extra": [
+        "Citation Key: 9.44:10b",
+        "tex.entrytype: nameonly"
+      ],
+      "itemID": 188,
+      "itemType": "document"
+    },
+    {
+      "citationKey": "9.44:10c",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "F. E.",
+          "lastName": "Santayana"
+        }
+      ],
+      "extra": [
+        "Citation Key: 9.44:10c",
+        "tex.entrytype: nameonly"
+      ],
+      "itemID": 189,
+      "itemType": "document"
+    },
+    {
+      "citationKey": "9.44:11a",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "J.",
+          "lastName": "Santiago, Sr."
+        }
+      ],
+      "extra": [
+        "Citation Key: 9.44:11a",
+        "tex.entrytype: nameonly",
+        "tex.sortname: SantiagoJ1"
+      ],
+      "itemID": 190,
+      "itemType": "document"
+    },
+    {
+      "citationKey": "9.44:11b",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "J.",
+          "lastName": "Santiago, Jr."
+        }
+      ],
+      "extra": [
+        "Citation Key: 9.44:11b",
+        "tex.entrytype: nameonly",
+        "tex.sortname: SantiagoJ2"
+      ],
+      "itemID": 191,
+      "itemType": "document"
+    },
+    {
+      "citationKey": "9.44:12a",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "S. A.",
+          "lastName": "Villafuerte"
+        }
+      ],
+      "extra": [
+        "Citation Key: 9.44:12a",
+        "tex.entrytype: nameonly"
+      ],
+      "itemID": 192,
+      "itemType": "document"
+    },
+    {
+      "citationKey": "9.44:12b",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "J.",
+          "lastName": "Villa-Lobos"
+        }
+      ],
+      "extra": [
+        "Citation Key: 9.44:12b",
+        "tex.entrytype: nameonly"
+      ],
+      "itemID": 193,
+      "itemType": "document"
+    },
+    {
+      "citationKey": "9.44:1a",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "A. S.",
+          "lastName": "Benjamin"
+        }
+      ],
+      "extra": [
+        "Citation Key: 9.44:1a",
+        "tex.entrytype: nameonly"
+      ],
+      "itemID": 194,
+      "itemType": "document"
+    },
+    {
+      "citationKey": "9.44:1b",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "D.",
+          "lastName": "ben Yaakov"
+        }
+      ],
+      "extra": [
+        "Citation Key: 9.44:1b",
+        "tex.entrytype: nameonly"
+      ],
+      "itemID": 195,
+      "itemType": "document"
+    },
+    {
+      "citationKey": "9.44:2a",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "N. K.",
+          "lastName": "Denzin"
+        }
+      ],
+      "extra": [
+        "Citation Key: 9.44:2a",
+        "tex.entrytype: nameonly"
+      ],
+      "itemID": 196,
+      "itemType": "document"
+    },
+    {
+      "citationKey": "9.44:2b",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "C.",
+          "lastName": "de On\u00eds"
+        }
+      ],
+      "extra": [
+        "Citation Key: 9.44:2b",
+        "tex.entrytype: nameonly"
+      ],
+      "itemID": 197,
+      "itemType": "document"
+    },
+    {
+      "citationKey": "9.44:2c",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "J. T.",
+          "lastName": "Devlin"
+        }
+      ],
+      "extra": [
+        "Citation Key: 9.44:2c",
+        "tex.entrytype: nameonly"
+      ],
+      "itemID": 198,
+      "itemType": "document"
+    },
+    {
+      "citationKey": "9.44:3a",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "John-Bill",
+          "lastName": "Girard"
+        }
+      ],
+      "extra": [
+        "Citation Key: 9.44:3a",
+        "tex.entrytype: nameonly"
+      ],
+      "itemID": 199,
+      "itemType": "document"
+    },
+    {
+      "citationKey": "9.44:3b",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "A. S.",
+          "lastName": "Girard-Perregaux"
+        }
+      ],
+      "extra": [
+        "Citation Key: 9.44:3b",
+        "tex.entrytype: nameonly"
+      ],
+      "itemID": 200,
+      "itemType": "document"
+    },
+    {
+      "citationKey": "9.44:4a",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "T.",
+          "lastName": "Ibn Abdulaziz"
+        }
+      ],
+      "extra": [
+        "Citation Key: 9.44:4a",
+        "tex.entrytype: nameonly"
+      ],
+      "itemID": 201,
+      "itemType": "document"
+    },
+    {
+      "citationKey": "9.44:4b",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "A. K. M.",
+          "lastName": "Ibn Nidal"
+        }
+      ],
+      "extra": [
+        "Citation Key: 9.44:4b",
+        "tex.entrytype: nameonly"
+      ],
+      "itemID": 202,
+      "itemType": "document"
+    },
+    {
+      "citationKey": "9.44:5a",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "M. E.",
+          "lastName": "L\u00f3pez"
+        }
+      ],
+      "extra": [
+        "Citation Key: 9.44:5a",
+        "tex.entrytype: nameonly"
+      ],
+      "itemID": 203,
+      "itemType": "document"
+    },
+    {
+      "citationKey": "9.44:5b",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "G.",
+          "lastName": "L\u00f3pez de Molina"
+        }
+      ],
+      "extra": [
+        "Citation Key: 9.44:5b",
+        "tex.entrytype: nameonly"
+      ],
+      "itemID": 204,
+      "itemType": "document"
+    },
+    {
+      "citationKey": "9.44:6a",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "T.",
+          "lastName": "MacCallum, II"
+        }
+      ],
+      "extra": [
+        "Citation Key: 9.44:6a",
+        "tex.entrytype: nameonly"
+      ],
+      "itemID": 205,
+      "itemType": "document"
+    },
+    {
+      "citationKey": "9.44:6b",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "T.",
+          "lastName": "MacCallum, III"
+        }
+      ],
+      "extra": [
+        "Citation Key: 9.44:6b",
+        "tex.entrytype: nameonly"
+      ],
+      "itemID": 206,
+      "itemType": "document"
+    },
+    {
+      "citationKey": "9.44:7a",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "E.",
+          "lastName": "MacNeil"
+        }
+      ],
+      "extra": [
+        "Citation Key: 9.44:7a",
+        "tex.entrytype: nameonly"
+      ],
+      "itemID": 207,
+      "itemType": "document"
+    },
+    {
+      "citationKey": "9.44:7b",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Z. C. E.",
+          "lastName": "McAdoo"
+        }
+      ],
+      "extra": [
+        "Citation Key: 9.44:7b",
+        "tex.entrytype: nameonly"
+      ],
+      "itemID": 208,
+      "itemType": "document"
+    },
+    {
+      "citationKey": "9.44:7c",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "L. L.",
+          "lastName": "M'Carthy"
+        }
+      ],
+      "extra": [
+        "Citation Key: 9.44:7c",
+        "tex.entrytype: nameonly"
+      ],
+      "itemID": 209,
+      "itemType": "document"
+    },
+    {
+      "citationKey": "9.44:8a",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "S. R.",
+          "lastName": "Olson"
+        }
+      ],
+      "extra": [
+        "Citation Key: 9.44:8a",
+        "tex.entrytype: nameonly"
+      ],
+      "itemID": 210,
+      "itemType": "document"
+    },
+    {
+      "citationKey": "9.44:8b",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "U.",
+          "lastName": "O'Neil"
+        }
+      ],
+      "extra": [
+        "Citation Key: 9.44:8b",
+        "tex.entrytype: nameonly"
+      ],
+      "itemID": 211,
+      "itemType": "document"
+    },
+    {
+      "citationKey": "9.44:8c",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "R.",
+          "lastName": "Oppenheimer"
+        }
+      ],
+      "extra": [
+        "Citation Key: 9.44:8c",
+        "tex.entrytype: nameonly"
+      ],
+      "itemID": 212,
+      "itemType": "document"
+    },
+    {
+      "citationKey": "9.44:9a",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "F.",
+          "lastName": "Partridge"
+        }
+      ],
+      "extra": [
+        "Citation Key: 9.44:9a",
+        "tex.entrytype: nameonly"
+      ],
+      "itemID": 213,
+      "itemType": "document"
+    },
+    {
+      "citationKey": "9.44:9b",
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "Plato"
+        }
+      ],
+      "extra": [
+        "Citation Key: 9.44:9b",
+        "tex.entrytype: nameonly"
+      ],
+      "itemID": 214,
+      "itemType": "document"
+    },
+    {
+      "citationKey": "9.46:1",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "S. N.",
+          "lastName": "Patel"
+        }
+      ],
+      "extra": [
+        "Citation Key: 9.46:1"
+      ],
+      "itemID": 215,
+      "itemType": "book"
+    },
+    {
+      "citationKey": "9.46:10",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "T. E.",
+          "lastName": "Jacobson"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "B.",
+          "lastName": "Duncan"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "S. E.",
+          "lastName": "Young"
+        }
+      ],
+      "date": "2019",
+      "extra": [
+        "Citation Key: 9.46:10"
+      ],
+      "itemID": 216,
+      "itemType": "book"
+    },
+    {
+      "citationKey": "9.46:11",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "T. E.",
+          "lastName": "Jacobson"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "K. M.",
+          "lastName": "Raymond"
+        }
+      ],
+      "date": "2017",
+      "extra": [
+        "Citation Key: 9.46:11"
+      ],
+      "itemID": 217,
+      "itemType": "book"
+    },
+    {
+      "citationKey": "9.46:12",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "S. J.",
+          "lastName": "Pfeiffer"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Wan-Wan",
+          "lastName": "Chu"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "S. H.",
+          "lastName": "Park"
+        }
+      ],
+      "date": "2018",
+      "extra": [
+        "Citation Key: 9.46:12"
+      ],
+      "itemID": 218,
+      "itemType": "book"
+    },
+    {
+      "citationKey": "9.46:13",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "S. J.",
+          "lastName": "Pfeiffer"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Wan-Wan",
+          "lastName": "Chu"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "T. L.",
+          "lastName": "Wall"
+        }
+      ],
+      "date": "2018",
+      "extra": [
+        "Citation Key: 9.46:13"
+      ],
+      "itemID": 219,
+      "itemType": "book"
+    },
+    {
+      "citationKey": "9.46:2",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "S. N.",
+          "lastName": "Patel"
+        }
+      ],
+      "date": "2016",
+      "extra": [
+        "Citation Key: 9.46:2"
+      ],
+      "itemID": 220,
+      "itemType": "book"
+    },
+    {
+      "citationKey": "9.46:3",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "S. N.",
+          "lastName": "Patel"
+        }
+      ],
+      "date": "2020",
+      "extra": [
+        "Citation Key: 9.46:3"
+      ],
+      "itemID": 221,
+      "itemType": "book"
+    },
+    {
+      "citationKey": "9.46:4",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "S. N.",
+          "lastName": "Patel"
+        }
+      ],
+      "date": "2020-04",
+      "extra": [
+        "Citation Key: 9.46:4"
+      ],
+      "itemID": 222,
+      "itemType": "book"
+    },
+    {
+      "citationKey": "9.46:5",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "S. N.",
+          "lastName": "Patel"
+        }
+      ],
+      "extra": [
+        "Citation Key: 9.46:5",
+        "tex.pubstate: inpress"
+      ],
+      "itemID": 223,
+      "itemType": "book"
+    },
+    {
+      "citationKey": "9.46:6",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "T. E.",
+          "lastName": "Davidson"
+        }
+      ],
+      "date": "2019",
+      "extra": [
+        "Citation Key: 9.46:6"
+      ],
+      "itemID": 224,
+      "itemType": "book"
+    },
+    {
+      "citationKey": "9.46:7",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "T. E.",
+          "lastName": "Davidson"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "M. P.",
+          "lastName": "McCabe"
+        }
+      ],
+      "date": "2015",
+      "extra": [
+        "Citation Key: 9.46:7"
+      ],
+      "itemID": 225,
+      "itemType": "book"
+    },
+    {
+      "citationKey": "9.46:8",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "P. T.",
+          "lastName": "Costa, Jr."
+        },
+        {
+          "creatorType": "author",
+          "firstName": "R. R.",
+          "lastName": "McCrae"
+        }
+      ],
+      "date": "2013",
+      "extra": [
+        "Citation Key: 9.46:8"
+      ],
+      "itemID": 226,
+      "itemType": "book"
+    },
+    {
+      "citationKey": "9.46:9",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "P. T.",
+          "lastName": "Costa, Jr."
+        },
+        {
+          "creatorType": "author",
+          "firstName": "R. R.",
+          "lastName": "McCrae"
+        }
+      ],
+      "date": "2014",
+      "extra": [
+        "Citation Key: 9.46:9"
+      ],
+      "itemID": 227,
+      "itemType": "book"
+    },
+    {
+      "citationKey": "9.47:1",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "H.",
+          "lastName": "Azikiwe"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "A.",
+          "lastName": "Bello"
+        }
+      ],
+      "date": "2020",
+      "extra": [
+        "Citation Key: 9.47:1"
+      ],
+      "itemID": 228,
+      "itemType": "book"
+    },
+    {
+      "citationKey": "9.47:10",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "B.",
+          "lastName": "Brown"
+        }
+      ],
+      "extra": [
+        "Citation Key: 9.47:10"
+      ],
+      "itemID": 229,
+      "itemType": "book"
+    },
+    {
+      "citationKey": "9.47:11",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "B.",
+          "lastName": "Brown"
+        }
+      ],
+      "extra": [
+        "Citation Key: 9.47:11"
+      ],
+      "itemID": 230,
+      "itemType": "book"
+    },
+    {
+      "citationKey": "9.47:12",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "B.",
+          "lastName": "Brown"
+        }
+      ],
+      "extra": [
+        "Citation Key: 9.47:12",
+        "tex.pubstate: inpress"
+      ],
+      "itemID": 231,
+      "itemType": "book"
+    },
+    {
+      "citationKey": "9.47:13",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "B.",
+          "lastName": "Brown"
+        }
+      ],
+      "extra": [
+        "Citation Key: 9.47:13",
+        "tex.pubstate: inpress"
+      ],
+      "itemID": 232,
+      "itemType": "book"
+    },
+    {
+      "citationKey": "9.47:2",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "H.",
+          "lastName": "Azikiwe"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "A.",
+          "lastName": "Bello"
+        }
+      ],
+      "date": "2020-03-26",
+      "extra": [
+        "Citation Key: 9.47:2"
+      ],
+      "itemID": 233,
+      "itemType": "book"
+    },
+    {
+      "citationKey": "9.47:3",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "H.",
+          "lastName": "Azikiwe"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "A.",
+          "lastName": "Bello"
+        }
+      ],
+      "date": "2020-04-02",
+      "extra": [
+        "Citation Key: 9.47:3"
+      ],
+      "itemID": 234,
+      "itemType": "book"
+    },
+    {
+      "citationKey": "9.47:6",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "A.",
+          "lastName": "Smith"
+        }
+      ],
+      "date": "2014",
+      "extra": [
+        "Citation Key: 9.47:6"
+      ],
+      "itemID": 235,
+      "itemType": "book",
+      "title": "Interesting things"
+    },
+    {
+      "citationKey": "9.47:7",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "A.",
+          "lastName": "Smith"
+        }
+      ],
+      "date": "2014",
+      "extra": [
+        "Citation Key: 9.47:7"
+      ],
+      "itemID": 236,
+      "itemType": "book",
+      "title": "A litany of special things"
+    },
+    {
+      "citationKey": "9.47:8",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "A.",
+          "lastName": "Smith"
+        }
+      ],
+      "date": "2014",
+      "extra": [
+        "Citation Key: 9.47:8"
+      ],
+      "itemID": 237,
+      "itemType": "book",
+      "title": "An awful lot of special things"
+    },
+    {
+      "citationKey": "9.47:9",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "A.",
+          "lastName": "Smith"
+        }
+      ],
+      "date": "2014",
+      "extra": [
+        "Citation Key: 9.47:9"
+      ],
+      "itemID": 238,
+      "itemType": "book",
+      "title": "The banality of special things"
+    },
+    {
+      "citationKey": "9.48:1",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "J. M.",
+          "lastName": "Taylor"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "G. J.",
+          "lastName": "Neimeyer"
+        }
+      ],
+      "date": "2015",
+      "extra": [
+        "Citation Key: 9.48:1"
+      ],
+      "itemID": 239,
+      "itemType": "book"
+    },
+    {
+      "citationKey": "9.48:2",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "T.",
+          "lastName": "Taylor"
+        }
+      ],
+      "date": "2014",
+      "extra": [
+        "Citation Key: 9.48:2"
+      ],
+      "itemID": 240,
+      "itemType": "book"
+    },
+    {
+      "citationKey": "9.49:1",
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "Anonymous"
+        }
+      ],
+      "date": "-3000",
+      "extra": [
+        "Citation Key: 9.49:1"
+      ],
+      "itemID": 241,
+      "itemType": "book",
+      "title": "The pnakotic manuscript"
+    },
+    {
+      "citationKey": "9.49:2",
+      "date": "-2000",
+      "extra": [
+        "Citation Key: 9.49:2"
+      ],
+      "itemID": 242,
+      "itemType": "book",
+      "title": "The book of eibon"
+    },
+    {
+      "citationKey": "9.49:3",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "A.",
+          "lastName": "Smith"
+        }
+      ],
+      "date": "2019",
+      "extra": [
+        "Citation Key: 9.49:3",
+        "tex.sorttitle: Top One Hundred Silliest Reference List Sorting Requirements"
+      ],
+      "itemID": 243,
+      "itemType": "book",
+      "title": "Top 100 silliest reference list sorting requirements"
+    },
+    {
+      "citationKey": "9.49:4",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "A.",
+          "lastName": "Smith"
+        }
+      ],
+      "date": "2019",
+      "extra": [
+        "Citation Key: 9.49:4",
+        "tex.sorttitle: Top Ten Political Pandering Epithets in Psychology"
+      ],
+      "itemID": 244,
+      "itemType": "book",
+      "title": "Top 10 political pandering epithets in psychology"
+    },
+    {
+      "citationKey": "9.49:5",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "J.",
+          "lastName": "Jones"
+        }
+      ],
+      "date": "2012",
+      "extra": [
+        "Citation Key: 9.49:5",
+        "tex.sorttitle: Annoyingly Casual Titles Part 1"
+      ],
+      "itemID": 245,
+      "itemType": "journalArticle",
+      "publicationTitle": "Journal of the Decline of Academia",
+      "title": "Annoyingly casual titles. How to Exhaust all Effort on the Title Alone"
+    },
+    {
+      "citationKey": "9.49:6",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "J.",
+          "lastName": "Jones"
+        }
+      ],
+      "date": "2012",
+      "extra": [
+        "Citation Key: 9.49:6",
+        "tex.sorttitle: Annoyingly Casual Titles Part 2"
+      ],
+      "itemID": 246,
+      "itemType": "journalArticle",
+      "publicationTitle": "Journal of the Decline of Academia",
+      "title": "Annoyingly casual titles. Creating Titles to Distract from Vacuity"
+    },
+    {
+      "citationKey": "9.51:1",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "L. K.",
+          "lastName": "Barber"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "M. J.",
+          "lastName": "Grawitch"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "P. W.",
+          "lastName": "Maloney"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "M. J.",
+          "lastName": "Grawitch"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "D. W.",
+          "lastName": "Ballard"
+        }
+      ],
+      "date": "2016",
+      "extra": [
+        "Citation Key: 9.51:1",
+        "DOI: 10.1037/14731-006",
+        "tex.booksubtitle: Building a Win-Win Environment for Organizations and Employees"
+      ],
+      "itemID": 247,
+      "itemType": "bookSection",
+      "notes": [
+        "This book chapter provides an overview of the psychosociological concept of work-life balance. The authors discuss findings from studies showing harmful effects of work-life conflict on psychological and behavioural health as well as beneficial effects of work-life facilitation, wherein one role makes a positive contribution to the other. The chapter concludes with a description of work-life balance initiatives that organizations have adopted to help employees manage their dual work and nonwork obligations and some of the key factors influencing their effectiveness."
+      ],
+      "pages": "111\u2013113",
+      "publicationTitle": "The psychologically healthy workplace",
+      "publisher": "American Psychological Association",
+      "title": "Work-life balance. Contemporary Perspectives"
+    },
+    {
+      "citationKey": "9.52:2",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "J. R.",
+          "lastName": "Finley"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "J. G.",
+          "lastName": "Tullis"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "A. S.",
+          "lastName": "Benjamin"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "M. S.",
+          "lastName": "Khine"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "I. M.",
+          "lastName": "Saleh"
+        }
+      ],
+      "date": "2010",
+      "extra": [
+        "Citation Key: 9.52:2",
+        "DOI: 10.1007/978-1-4419-57160_6",
+        "tex.booksubtitle: Cognition, Computers and Collaboration in Education"
+      ],
+      "itemID": 248,
+      "itemType": "bookSection",
+      "pages": "109\u2013131",
+      "publicationTitle": "New science of learning",
+      "publisher": "Springer",
+      "title": "Metacognitive control of learning and remembering"
+    },
+    {
+      "citationKey": "9.8:1",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "A. A.",
+          "lastName": "Author"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "B. B.",
+          "lastName": "Author"
+        }
+      ],
+      "date": "2014",
+      "extra": [
+        "Citation Key: 9.8:1"
+      ],
+      "itemID": 249,
+      "itemType": "book"
+    },
+    {
+      "citationKey": "9.8:10",
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "Plato"
+        }
+      ],
+      "date": "2014",
+      "extra": [
+        "Citation Key: 9.8:10"
+      ],
+      "itemID": 250,
+      "itemType": "book"
+    },
+    {
+      "citationKey": "9.8:11",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "U.",
+          "lastName": "Author"
+        }
+      ],
+      "date": "2014",
+      "extra": [
+        "Citation Key: 9.8:11",
+        "tex.author+an:username: 1=\"@ausername\""
+      ],
+      "itemID": 251,
+      "itemType": "book"
+    },
+    {
+      "citationKey": "9.8:2",
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "American Psychological Association"
+        },
+        {
+          "creatorType": "author",
+          "name": "National Institutes of Health"
+        }
+      ],
+      "date": "2014",
+      "extra": [
+        "Citation Key: 9.8:2"
+      ],
+      "itemID": 252,
+      "itemType": "book"
+    },
+    {
+      "citationKey": "9.8:3",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "A. A.",
+          "lastName": "Author"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "B. B.",
+          "lastName": "Author"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "C. C.",
+          "lastName": "Author"
+        }
+      ],
+      "date": "2014",
+      "extra": [
+        "Citation Key: 9.8:3"
+      ],
+      "itemID": 253,
+      "itemType": "book"
+    },
+    {
+      "citationKey": "9.8:4",
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "First"
+        },
+        {
+          "creatorType": "author",
+          "name": "Second"
+        },
+        {
+          "creatorType": "author",
+          "name": "Third"
+        },
+        {
+          "creatorType": "author",
+          "name": "Fourth"
+        },
+        {
+          "creatorType": "author",
+          "name": "Fifth"
+        },
+        {
+          "creatorType": "author",
+          "name": "Sixth"
+        },
+        {
+          "creatorType": "author",
+          "name": "Seventh"
+        },
+        {
+          "creatorType": "author",
+          "name": "Eighth"
+        },
+        {
+          "creatorType": "author",
+          "name": "Ninth"
+        },
+        {
+          "creatorType": "author",
+          "name": "Tenth"
+        },
+        {
+          "creatorType": "author",
+          "name": "Eleventh"
+        },
+        {
+          "creatorType": "author",
+          "name": "Twelfth"
+        },
+        {
+          "creatorType": "author",
+          "name": "Thirteenth"
+        },
+        {
+          "creatorType": "author",
+          "name": "Fourteenth"
+        },
+        {
+          "creatorType": "author",
+          "name": "Fifteenth"
+        },
+        {
+          "creatorType": "author",
+          "name": "Sixteenth"
+        },
+        {
+          "creatorType": "author",
+          "name": "Seventeenth"
+        },
+        {
+          "creatorType": "author",
+          "name": "Eighteenth"
+        },
+        {
+          "creatorType": "author",
+          "name": "Nineteenth"
+        },
+        {
+          "creatorType": "author",
+          "name": "Twentieth"
+        }
+      ],
+      "date": "2014",
+      "extra": [
+        "Citation Key: 9.8:4"
+      ],
+      "itemID": 254,
+      "itemType": "book"
+    },
+    {
+      "citationKey": "9.8:5",
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "First"
+        },
+        {
+          "creatorType": "author",
+          "name": "Second"
+        },
+        {
+          "creatorType": "author",
+          "name": "Third"
+        },
+        {
+          "creatorType": "author",
+          "name": "Fourth"
+        },
+        {
+          "creatorType": "author",
+          "name": "Fifth"
+        },
+        {
+          "creatorType": "author",
+          "name": "Sixth"
+        },
+        {
+          "creatorType": "author",
+          "name": "Seventh"
+        },
+        {
+          "creatorType": "author",
+          "name": "Eighth"
+        },
+        {
+          "creatorType": "author",
+          "name": "Ninth"
+        },
+        {
+          "creatorType": "author",
+          "name": "Tenth"
+        },
+        {
+          "creatorType": "author",
+          "name": "Eleventh"
+        },
+        {
+          "creatorType": "author",
+          "name": "Twelfth"
+        },
+        {
+          "creatorType": "author",
+          "name": "Thirteenth"
+        },
+        {
+          "creatorType": "author",
+          "name": "Fourteenth"
+        },
+        {
+          "creatorType": "author",
+          "name": "Fifteenth"
+        },
+        {
+          "creatorType": "author",
+          "name": "Sixteenth"
+        },
+        {
+          "creatorType": "author",
+          "name": "Seventeenth"
+        },
+        {
+          "creatorType": "author",
+          "name": "Eighteenth"
+        },
+        {
+          "creatorType": "author",
+          "name": "Nineteenth"
+        },
+        {
+          "creatorType": "author",
+          "name": "Twentieth"
+        },
+        {
+          "creatorType": "author",
+          "name": "Twentyfirst"
+        },
+        {
+          "creatorType": "author",
+          "name": "Twentysecond"
+        }
+      ],
+      "date": "2014",
+      "extra": [
+        "Citation Key: 9.8:5"
+      ],
+      "itemID": 255,
+      "itemType": "book"
+    },
+    {
+      "citationKey": "9.8:6",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Ai-Jun",
+          "lastName": "Xu"
+        }
+      ],
+      "date": "2014",
+      "extra": [
+        "Citation Key: 9.8:6"
+      ],
+      "itemID": 256,
+      "itemType": "book"
+    },
+    {
+      "citationKey": "9.8:7",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Lee-ann",
+          "lastName": "Raboso"
+        }
+      ],
+      "date": "2014",
+      "extra": [
+        "Citation Key: 9.8:7"
+      ],
+      "itemID": 257,
+      "itemType": "book"
+    },
+    {
+      "citationKey": "9.8:8",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "A. A.",
+          "lastName": "Author, Jr."
+        },
+        {
+          "creatorType": "author",
+          "firstName": "B. B.",
+          "lastName": "Author"
+        }
+      ],
+      "date": "2014",
+      "extra": [
+        "Citation Key: 9.8:8"
+      ],
+      "itemID": 258,
+      "itemType": "book"
+    },
+    {
+      "citationKey": "9.8:9",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "K.",
+          "lastName": "Meyers"
+        }
+      ],
+      "date": "2014",
+      "extra": [
+        "Citation Key: 9.8:9",
+        "tex.with: W. T. Long"
+      ],
+      "itemID": 259,
+      "itemType": "book",
+      "title": "Withering worrying"
+    },
+    {
+      "DOI": "10.1002/14651858.CD006876.pub5",
+      "citationKey": "10.1:13",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "J.",
+          "lastName": "Mehrholz"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "M.",
+          "lastName": "Pohl"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "T.",
+          "lastName": "Platz"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "J.",
+          "lastName": "Kugler"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "B.",
+          "lastName": "Elsner"
+        }
+      ],
+      "date": "2018",
+      "extra": [
+        "Citation Key: 10.1:13"
+      ],
+      "itemID": 260,
+      "itemType": "journalArticle",
+      "publicationTitle": "Cochrane Database of Systematic Reviews",
+      "title": "Electromechanical and robot-assisted arm training for improving activities of daily living, arm function, and arm muscle strength after stroke"
+    },
+    {
+      "DOI": "10.1002/job.764",
+      "citationKey": "9.47:4",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "T. A.",
+          "lastName": "Judge"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "J. D",
+          "lastName": "Kammeyer-Mueller"
+        }
+      ],
+      "date": "2012",
+      "extra": [
+        "Citation Key: 9.47:4"
+      ],
+      "issue": "2",
+      "itemID": 261,
+      "itemType": "journalArticle",
+      "pages": "161\u2013174",
+      "publicationTitle": "Organizational Behaviour",
+      "title": "General and specific measures in organizational behaviour research. Considerations, Examples, and Recommandations for Researchers",
+      "volume": "33"
+    },
+    {
+      "DOI": "10.1007/978-3-030-05348-2_21",
+      "citationKey": "10.5:A3",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Alan-Louis.",
+          "lastName": "Bedenel"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "L.",
+          "lastName": "Jourdan"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "C.",
+          "lastName": "Biernacki"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "R.",
+          "lastName": "Battiti"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "M.",
+          "lastName": "Brunato"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "I.",
+          "lastName": "Kotsireas"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "P.",
+          "lastName": "Pardalos"
+        }
+      ],
+      "date": "2019",
+      "extra": [
+        "Citation Key: 10.5:A3",
+        "tex.mainsubtitle: Vol. 11353",
+        "tex.maintitle: Lecture notes in computer science"
+      ],
+      "itemID": 262,
+      "itemType": "conferencePaper",
+      "pages": "225-\u2013240",
+      "publicationTitle": "Learning and intelligent optimization",
+      "publisher": "Springer",
+      "title": "Probability estimation by an adapted genetic algorithm in web insurance"
+    },
+    {
+      "DOI": "10.1007/s10072-011-0748-4",
+      "citationKey": "9.52:3",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "R.",
+          "lastName": "Hanaki"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "N.",
+          "lastName": "Abe"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "T.",
+          "lastName": "Fujii"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "A.",
+          "lastName": "Ueno"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Y.",
+          "lastName": "Nishio"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "K.",
+          "lastName": "Hiraoka"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "T.",
+          "lastName": "Shimomura"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "O.",
+          "lastName": "Iizuka"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "M.",
+          "lastName": "Shinohara"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "K.",
+          "lastName": "Hirayama"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "E.",
+          "lastName": "Mori"
+        }
+      ],
+      "date": "2011",
+      "extra": [
+        "Citation Key: 9.52:3"
+      ],
+      "issue": "6",
+      "itemID": 263,
+      "itemType": "journalArticle",
+      "pages": "1115\u20131122",
+      "publicationTitle": "Neurological Sciences",
+      "tags": [
+        {
+          "tag": "meta"
+        }
+      ],
+      "title": "The effects of aging and alzheimer's disease on associative recognition memory",
+      "volume": "32"
+    },
+    {
+      "DOI": "10.1016/j.clysa.2017.04.002",
+      "citationKey": "10.1:9",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "V.",
+          "lastName": "Chaves-Morillo"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "C.",
+          "lastName": "G\u00f3mez Calero"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "J. J.",
+          "lastName": "Fern\u00e1ndez-Mu\u00f1oz"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "A.",
+          "lastName": "Toledano-Mu\u00f1oz"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "J.",
+          "lastName": "Fern\u00e1ndez-Heute"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "N.",
+          "lastName": "Martinez-Monge"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "D.",
+          "lastName": "Palacios-Ce\u00f1a"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "C.",
+          "lastName": "Pe\u00f1acoba-Puente"
+        }
+      ],
+      "date": "2018",
+      "extra": [
+        "Citation Key: 10.1:9",
+        "Original title: La anosmia neurosensorial: Relaci\u00f3n entre subtipo, tiempo de reconocimiento y edad"
+      ],
+      "issue": "3",
+      "itemID": 264,
+      "itemType": "journalArticle",
+      "pages": "155\u2013161",
+      "publicationTitle": "Cl\u00ednica y Salud",
+      "title": "Sensorineural anosmia. Relationship Between Subtype, Recognition Time, and Age",
+      "volume": "28"
+    },
+    {
+      "DOI": "10.1016/j.cortex.2012.10.002",
+      "citationKey": "9.52:1",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "L.",
+          "lastName": "Angel"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "C.",
+          "lastName": "Bastin"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "S.",
+          "lastName": "Genon"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "E.",
+          "lastName": "Balteau"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "C.",
+          "lastName": "Phillips"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "A.",
+          "lastName": "Luxen"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "P.",
+          "lastName": "Maquet"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "E.",
+          "lastName": "Salmon"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "F.",
+          "lastName": "Collette"
+        }
+      ],
+      "date": "2013",
+      "extra": [
+        "Citation Key: 9.52:1"
+      ],
+      "issue": "6",
+      "itemID": 265,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "Cortex",
+      "pages": "1585\u20131597",
+      "publicationTitle": "Cortex; a journal devoted to the study of the nervous system and behavior",
+      "tags": [
+        {
+          "tag": "meta"
+        }
+      ],
+      "title": "Differential effects of aging on the neural correlates of recollection and familiarity",
+      "volume": "49"
+    },
+    {
+      "DOI": "10.1016/j.midw.2013.07.007",
+      "citationKey": "10.1:5",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "R.",
+          "lastName": "De Vries"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "M.",
+          "lastName": "Nieuwenhuijze"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "S. E.",
+          "lastName": "Buitendijk"
+        },
+        {
+          "creatorType": "author",
+          "name": "the members of Midwifery Science Work Group"
+        }
+      ],
+      "date": "2013",
+      "extra": [
+        "Citation Key: 10.1:5"
+      ],
+      "issue": "10",
+      "itemID": 266,
+      "itemType": "journalArticle",
+      "pages": "1122\u20131128",
+      "publicationTitle": "Midwifery",
+      "title": "What does it take to have a strong and independent profession of midwifery? Lessons from the Netherlands",
+      "volume": "29"
+    },
+    {
+      "DOI": "10.1027/1618-3169/a000440",
+      "citationKey": "10.1:7",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "S. M.",
+          "lastName": "Huestegge"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "T.",
+          "lastName": "Raettig"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "L.",
+          "lastName": "Huestegge"
+        }
+      ],
+      "date": "2019",
+      "extra": [
+        "Citation Key: 10.1:7",
+        "tex.howpublished: Advance online publication"
+      ],
+      "itemID": 267,
+      "itemType": "journalArticle",
+      "publicationTitle": "Experimental Psychology",
+      "title": "Are face-incongruent voices harder to process? Effects of face-voice gender incongruity on basic cognitive information processing"
+    },
+    {
+      "DOI": "10.1037/a0028084",
+      "citationKey": "9.47:5",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "T. A.",
+          "lastName": "Judge"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "J. D",
+          "lastName": "Kammeyer-Mueller"
+        }
+      ],
+      "date": "2012",
+      "extra": [
+        "Citation Key: 9.47:5"
+      ],
+      "issue": "4",
+      "itemID": 268,
+      "itemType": "journalArticle",
+      "pages": "758\u2013775",
+      "publicationTitle": "Journal of Applied Psychology",
+      "title": "On the value of aiming high. The Causes and Consequences of Ambition",
+      "volume": "97"
+    },
+    {
+      "DOI": "10.1037/apl0000348",
+      "citationKey": "9.51:2",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "D. S.",
+          "lastName": "Carlson"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "M. J.",
+          "lastName": "Thompson"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "K. M.",
+          "lastName": "Kacmar"
+        }
+      ],
+      "date": "2019",
+      "extra": [
+        "Citation Key: 9.51:2"
+      ],
+      "issue": "2",
+      "itemID": 269,
+      "itemType": "journalArticle",
+      "notes": [
+        "9.51:2 conducted an empirical study to examine the multiple paths through which work and family variables can affect work outcomes. Whereas 9.51:1 explored how work obligations can increase stress or enhance fulfillment at home, 9.51:2 viewed work demands as raising family stress, with potential negative consequences on work performance. Results supported a model in which direct effects of work demands and spillover effects of work demands to work-to-family conflict led to a lower job satisfaction and affective commitment, as well as crossover effects of work-to-family conflict, spousal stress transmission, and later family-to-work conflict on organizational citizenship and absenteeism. Overall, the study demonstrated a link from work demands to work outcomes when considering the family, but those paths differed depending on whether attitudinal or behavioural work outcomes were examined."
+      ],
+      "pages": "214\u2013228",
+      "publicationTitle": "Journal of Applied Psychology",
+      "title": "Double crossed. The Spillover and Crossover Effect of Work Demands on Work Outcomes Through the Family",
+      "volume": "104"
+    },
+    {
+      "DOI": "10.1037/h0100165",
+      "citationKey": "10.1:11",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "M. F.",
+          "lastName": "Shore"
+        }
+      ],
+      "date": "2014",
+      "extra": [
+        "Citation Key: 10.1:11",
+        "tex.related: 10.1:11r",
+        "tex.relatedtype: reprintfrom"
+      ],
+      "issue": "6",
+      "itemID": 270,
+      "itemType": "journalArticle",
+      "pages": "611\u2013618",
+      "publicationTitle": "American Journal of Orthopsychiatry",
+      "title": "Marking time in the land of plenty. Reflections on Mental Health in the United States",
+      "volume": "84"
+    },
+    {
+      "DOI": "10.1037/rev0000126",
+      "citationKey": "10.1:1",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "S. M.",
+          "lastName": "McCauley"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "M. H.",
+          "lastName": "Christiansen"
+        }
+      ],
+      "date": "2019",
+      "extra": [
+        "Citation Key: 10.1:1"
+      ],
+      "issue": "1",
+      "itemID": 271,
+      "itemType": "journalArticle",
+      "pages": "1\u201351",
+      "publicationTitle": "Psychological Review",
+      "title": "Language learning as language use. A Cross-linguistic Model of Child Language Development",
+      "url": "http://some.url",
+      "volume": "126"
+    },
+    {
+      "DOI": "10.1037/sgd0000205",
+      "citationKey": "10.7:67",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "L. A.",
+          "lastName": "Mirabito"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "N. C.",
+          "lastName": "Heck"
+        }
+      ],
+      "date": "2016",
+      "extra": [
+        "Citation Key: 10.7:67",
+        "tex.related: 10.7:67r",
+        "tex.relatedstring: Review of the film",
+        "tex.relatedtype: reviewof"
+      ],
+      "issue": "4",
+      "itemID": 272,
+      "itemType": "journalArticle",
+      "pages": "499\u2013500",
+      "publicationTitle": "Psychology of Sexual Orientation and Gender Diversity",
+      "title": "Bringing LGBTQ youth theater into the spotlight",
+      "volume": "3"
+    },
+    {
+      "DOI": "10.1073/pnas.1910510116",
+      "citationKey": "10.5:A1",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "A. L.",
+          "lastName": "Duckworth"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "A.",
+          "lastName": "Quirk"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "R.",
+          "lastName": "Gallop"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "R. H.",
+          "lastName": "Hoyle"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "D. R.",
+          "lastName": "Kelly"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "M. D.",
+          "lastName": "Matthews"
+        }
+      ],
+      "date": "2019",
+      "extra": [
+        "Citation Key: 10.5:A1",
+        "Issue: 47"
+      ],
+      "itemID": 273,
+      "itemType": "conferencePaper",
+      "pages": "23499\u201323504",
+      "publicationTitle": "Proceedings of the national academy of sciences, USA",
+      "title": "Cognitive and noncognitive predictors of success",
+      "volume": "116"
+    },
+    {
+      "DOI": "10.1080/09658211.2018.1441423",
+      "citationKey": "9.52:4",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "M. B.",
+          "lastName": "Hargis"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "A. D.",
+          "lastName": "Castel"
+        }
+      ],
+      "date": "2018",
+      "extra": [
+        "Citation Key: 9.52:4"
+      ],
+      "issue": "8",
+      "itemID": 274,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "Memory",
+      "pages": "1151\u20131158",
+      "publicationTitle": "Memory (Hove, England)",
+      "title": "Younger and older adults' associative memory for medication interactions of varying severity",
+      "volume": "26"
+    },
+    {
+      "DOI": "10.1111/j.1939-0025.1981.tb01388.x",
+      "citationKey": "10.1:11r",
+      "date": "1981",
+      "extra": [
+        "Citation Key: 10.1:11r"
+      ],
+      "issue": "3",
+      "itemID": 275,
+      "itemType": "journalArticle",
+      "pages": "391\u2013402",
+      "publicationTitle": "American Journal of Orthopsychiatry",
+      "title": "Marking time in the land of plenty. Reflections on Mental Health in the United States",
+      "volume": "51"
+    },
+    {
+      "DOI": "10.1126/science.aau7988",
+      "citationKey": "10.1:15a",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "S.",
+          "lastName": "Bergeson"
+        }
+      ],
+      "date": "2019-01-04",
+      "extra": [
+        "Citation Key: 10.1:15a",
+        "tex.entrysubtype: nonacademic"
+      ],
+      "issue": "6422",
+      "itemID": 276,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "Science",
+      "pages": "33\u201334",
+      "publicationTitle": "Science (New York, N.Y.)",
+      "title": "Really cool neutral plasmas",
+      "volume": "363"
+    },
+    {
+      "DOI": "10.1159/00027/1225",
+      "citationKey": "10.1:10",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "J.",
+          "lastName": "Piaget"
+        },
+        {
+          "creatorType": "translator",
+          "firstName": "J.",
+          "lastName": "Bliss"
+        },
+        {
+          "creatorType": "translator",
+          "firstName": "H.",
+          "lastName": "Furth"
+        }
+      ],
+      "date": "1972",
+      "extra": [
+        "Citation Key: 10.1:10",
+        "Original Date: 1970"
+      ],
+      "issue": "1",
+      "itemID": 277,
+      "itemType": "journalArticle",
+      "pages": "1\u201312",
+      "publicationTitle": "Human Development",
+      "title": "Intellectual evolution from adolescence to adulthood",
+      "volume": "15"
+    },
+    {
+      "DOI": "10.1177/1043659616638722",
+      "citationKey": "10.1:19",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "N. G.",
+          "lastName": "Cuellar"
+        }
+      ],
+      "date": "2016",
+      "extra": [
+        "Citation Key: 10.1:19"
+      ],
+      "issue": "3",
+      "itemID": 278,
+      "itemType": "journalArticle",
+      "pages": "209",
+      "publicationTitle": "Journal of Transcultural Nursing",
+      "title": "Study abroad programs. Editorial",
+      "volume": "27"
+    },
+    {
+      "DOI": "10.1371/journal.pone.0209899",
+      "citationKey": "10.1:6",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "D.",
+          "lastName": "Burin"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "K.",
+          "lastName": "Kilteni"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "M.",
+          "lastName": "Rabuffetti"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "M.",
+          "lastName": "Slater"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "L.",
+          "lastName": "Pia"
+        }
+      ],
+      "date": "2019",
+      "extra": [
+        "Citation Key: 10.1:6",
+        "Number: e0209899"
+      ],
+      "issue": "1",
+      "itemID": 279,
+      "itemType": "journalArticle",
+      "publicationTitle": "PLOS ONE",
+      "title": "Body ownership increases the interference between observed and executed movements",
+      "volume": "14"
+    },
+    {
+      "DOI": "10.3886/ICPSR335531.v3",
+      "citationKey": "10.9:75b",
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "National Center for Education Statistics"
+        }
+      ],
+      "date": "2016",
+      "extra": [
+        "Citation Key: 10.9:75b",
+        "Issue: ICPSR 35531",
+        "tex.entrysubtype: Data set and code book"
+      ],
+      "itemID": 280,
+      "itemType": "dataset",
+      "publisher": "National Archive of Data on Arts and Culture",
+      "title": "Fast response survey system (FRSS). Teacher's Use of Educational Technology in U.S. Public Schools, 2009",
+      "versionNumber": "V3"
+    },
+    {
+      "DOI": "10.3886/ICPSR37080.1",
+      "citationKey": "10.9:75a",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "A.",
+          "lastName": "D'Souza"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "M.",
+          "lastName": "Wiseheart"
+        }
+      ],
+      "date": "2018",
+      "extra": [
+        "Citation Key: 10.9:75a",
+        "Issue: ICPSR 37080",
+        "tex.entrysubtype: Data Set"
+      ],
+      "itemID": 281,
+      "itemType": "dataset",
+      "publisher": "ICPSR",
+      "title": "Cognitive effects of music and dance training in children",
+      "versionNumber": "V1"
+    },
+    {
+      "DOI": "d4vb59",
+      "citationKey": "10.3:43r",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "C.",
+          "lastName": "Sacchett"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "G. W.",
+          "lastName": "Humphreys"
+        }
+      ],
+      "date": "1992",
+      "extra": [
+        "Citation Key: 10.3:43r"
+      ],
+      "issue": "1",
+      "itemID": 282,
+      "itemType": "journalArticle",
+      "pages": "73\u201386",
+      "publicationTitle": "Cognitive Neuropsychology",
+      "title": "Calling a squirrel and squirrel but a canoe a wigwam. A Category-specific Deficit for Artefactual Objects and Body Parts",
+      "volume": "9"
+    },
+    {
+      "DOI": "fg6rf9",
+      "citationKey": "10.1:4",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "E.",
+          "lastName": "Kalnay"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "M.",
+          "lastName": "Kanamitsu"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "R.",
+          "lastName": "Kistler"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "W.",
+          "lastName": "Collins"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "D.",
+          "lastName": "Deaven"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "L.",
+          "lastName": "Gandin"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "M.",
+          "lastName": "Iredell"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "S.",
+          "lastName": "Saha"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "G.",
+          "lastName": "White"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "J.",
+          "lastName": "Wollen"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Y.",
+          "lastName": "Zhu"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "M.",
+          "lastName": "Chelliah"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "W.",
+          "lastName": "Ebisuzaki"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "W.",
+          "lastName": "Higgins"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "J.",
+          "lastName": "Janowiak"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "K. C.",
+          "lastName": "Mo"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "C.",
+          "lastName": "Ropelewski"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "J.",
+          "lastName": "Wang"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "A.",
+          "lastName": "Leetma"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "A.",
+          "lastName": "Aaron"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "B. Baron C.",
+          "lastName": "Court"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "D.",
+          "lastName": "Joseph"
+        }
+      ],
+      "date": "1996-01-01",
+      "extra": [
+        "Citation Key: 10.1:4"
+      ],
+      "issue": "3",
+      "itemID": 283,
+      "itemType": "journalArticle",
+      "pages": "437\u2013471",
+      "publicationTitle": "Bulletin of the American Meteorological Society",
+      "title": "The NCEP/NCAR 40-year reanalysis project",
+      "volume": "77"
+    }
+  ]
+}
