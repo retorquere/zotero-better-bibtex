@@ -487,15 +487,19 @@ const months = [ 'jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 
 export class ZoteroItem {
   public typeMap = {
     article:            'journalArticle',
+    audio:              'audioRecording',
     book:               'book',
     book_section:       'bookSection', // mendeley made-up entry type
     booklet:            'book',
     codefragment:       'computerProgram',
     collection:         'book',
     conference:         'conferencePaper',
+    dataset:            'dataset',
     film:               'film', // mendeley made-up entry type
     generic:            'journalArticle', // mendeley made-up entry type
+    hardware:           'computerProgram',
     inbook:             'bookSection',
+    image:              'artwork',
     incollection:       'bookSection',
     inproceedings:      'conferencePaper',
     inreference:        'encyclopediaArticle',
@@ -508,7 +512,9 @@ export class ZoteroItem {
     online:             'webpage',
     patent:             'patent',
     phdthesis:          'thesis',
+    presentation:       'presentation',
     proceedings:        'book',
+    reference:          'book',
     report:             'report',
     software:           'computerProgram',
     softwaremodule:     'computerProgram',
@@ -520,6 +526,16 @@ export class ZoteroItem {
     video:              'videoRecording',
     web_page:           'webpage', // mendeley made-up entry type
     webpage:            'webpage', // papers3 made-up entry type
+
+    // need better equivalents
+    nameonly:          '$document',
+    periodical:        '$document',
+    jurisdiction:      '$document',
+    legislation:       '$document',
+    legmaterial:       '$document',
+    legadminmaterial:  '$document',
+    constitution:      '$document',
+    legal:             '$document',
   }
 
   private extra: string[] = []
@@ -1070,10 +1086,16 @@ export class ZoteroItem {
     }
 
     this.bibtex.type = this.bibtex.type.toLowerCase()
-    this.item.itemType = this.typeMap[this.bibtex.type]
-    if (!this.item.itemType) {
-      errors.push({ message: `Don't know what Zotero type to make of '${this.bibtex.type}' for ${this.bibtex.key ? `@${this.bibtex.key}` : 'unnamed item'}, importing as ${this.item.itemType = 'document'}` })
-      this.extra.push(`tex.entrytype: ${this.bibtex.type}`)
+    this.item.itemType = this.typeMap[this.bibtex.type] || '$'
+    if (this.item.itemType[0] === '$') {
+      const unknown = this.item.itemType === '$'
+      this.item.itemType = this.item.itemType.substr(1) || 'document'
+
+      const msg = `Don't know what Zotero type to make of '${this.bibtex.type}' for ${this.bibtex.key ? `@${this.bibtex.key}` : 'unnamed item'}, importing as ${this.item.itemType}`
+      log.debug(msg)
+      if (unknown) errors.push({ message: msg })
+
+      if (this.bibtex.type) this.extra.push(`tex.entrytype: ${this.bibtex.type}`)
     }
 
     if (
@@ -1090,22 +1112,24 @@ export class ZoteroItem {
     if (!valid.type[this.item.itemType]) this.error(`import error: unexpected item ${this.bibtex.key} of type ${this.item.itemType}`)
     this.validFields = valid.field[this.item.itemType]
 
-    switch (this.bibtex.type) {
-      case 'manual':
-        if (this.item.itemType === 'report') this.$type('manual')
-        break
-      case 'phdthesis':
-        this.$type('phd')
-        break
-      case 'mastersthesis':
-        this.$type('master')
-        break
-      case 'bathesis':
-        this.$type('bachelor')
-        break
-      case 'candthesis':
-        this.$type('candidate')
-        break
+    if (!this.bibtex.fields.type) {
+      switch (this.bibtex.type) {
+        case 'manual':
+          if (this.item.itemType === 'report') this.$type('manual')
+          break
+        case 'phdthesis':
+          this.$type('phd')
+          break
+        case 'mastersthesis':
+          this.$type('master')
+          break
+        case 'bathesis':
+          this.$type('bachelor')
+          break
+        case 'candthesis':
+          this.$type('candidate')
+          break
+      }
     }
 
     for (const subtitle of ['titleaddon', 'subtitle']) {
