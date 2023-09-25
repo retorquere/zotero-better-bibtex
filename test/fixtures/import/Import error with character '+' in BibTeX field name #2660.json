@@ -3130,6 +3130,25 @@
       "title": "Theory of cryptography"
     },
     {
+      "citationKey": "10.6:64",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "L.",
+          "lastName": "Harris"
+        }
+      ],
+      "date": "2014",
+      "extra": [
+        "Citation Key: 10.6:64"
+      ],
+      "itemID": 139,
+      "itemType": "thesis",
+      "publisher": "University of Virginia",
+      "title": "Instructional leadership perceptions and practices of elementary school leaders",
+      "type": "Unpublished doctoral dissertation"
+    },
+    {
       "citationKey": "10.6:65",
       "creators": [
         {
@@ -3143,7 +3162,7 @@
         "Citation Key: 10.6:65",
         "Issue: 10289373"
       ],
-      "itemID": 139,
+      "itemID": 140,
       "itemType": "thesis",
       "publisher": "ProQuest Dissertations and Theses Global / University of Wisconsin\u2013Madison",
       "title": "Resistance to authority. Methodological Innovations and New Lessons from the Milgram Experiment",
@@ -3162,7 +3181,7 @@
       "extra": [
         "Citation Key: 10.6:66"
       ],
-      "itemID": 140,
+      "itemID": 141,
       "itemType": "thesis",
       "publisher": "William & Mary Digital Archive / The College of William & Mary",
       "title": "Dealing with dual differences. Social Coping Strategies of Gifted and Lesbian, Gay, Bisexual, Transgender, and Queer Adolescents",
@@ -3183,7 +3202,7 @@
         "Citation Key: 10.7:67r",
         "tex.author+an:role: 1=director"
       ],
-      "itemID": 141,
+      "itemID": 142,
       "itemType": "film",
       "title": "The year we thought about love"
     },
@@ -3204,7 +3223,7 @@
         "tex.relatedstring: Review of the book",
         "tex.relatedtype: reviewof"
       ],
-      "itemID": 142,
+      "itemID": 143,
       "itemType": "journalArticle",
       "publicationTitle": "The New York Times",
       "title": "Reframing refugee children's stories",
@@ -3223,7 +3242,7 @@
       "extra": [
         "Citation Key: 10.7:68r"
       ],
-      "itemID": 143,
+      "itemID": 144,
       "itemType": "book",
       "title": "We are displaced. My Journey and Stories From Refugee Girls Around the World"
     },
@@ -3244,7 +3263,7 @@
         "tex.relatedstring: Review of the TV series episode",
         "tex.relatedtype: reviewof"
       ],
-      "itemID": 144,
+      "itemID": 145,
       "itemType": "webpage",
       "title": "<span class=\"nocase\">The good place</span> ends its remarkable second season with irrational hope, unexpected gifts, and a smile",
       "url": "https://www.avclub.com/the-good-place-ends-its-remarkable-second-season-with-i-1822649316"
@@ -3263,7 +3282,7 @@
         "Citation Key: 10.7:69r",
         "tex.author+an:role: 1=writer,director"
       ],
-      "itemID": 145,
+      "itemID": 146,
       "itemType": "tvBroadcast",
       "title": "Somewhere else"
     },
@@ -3298,7 +3317,7 @@
         "tex.howpublished: manunpub",
         "tex.venue: Department of Psychology"
       ],
-      "itemID": 146,
+      "itemID": 147,
       "itemType": "manuscript",
       "title": "Linking positive affect to blood lipids. A Cultural Perspective"
     },
@@ -3318,7 +3337,7 @@
         "tex.howpublished: maninprep",
         "tex.venue: Department of Management"
       ],
-      "itemID": 147,
+      "itemID": 148,
       "itemType": "manuscript",
       "title": "Understanding proactive behaviour in the workplace as a function of gender"
     },
@@ -3343,7 +3362,7 @@
         "tex.howpublished: mansub",
         "tex.venue: Department of Psychology"
       ],
-      "itemID": 148,
+      "itemID": 149,
       "itemType": "manuscript",
       "title": "Emotion recognition as a function of facial cues. Implications for Practice"
     },
@@ -3377,7 +3396,7 @@
         "DOI: 10.17605/OSF.IO/9P7CB",
         "tex.eprint: PsyArXiv"
       ],
-      "itemID": 149,
+      "itemID": 150,
       "itemType": "webpage",
       "title": "When money talks. Judging Risk and Coercion in High-Paying Clinical Trials"
     },
@@ -3400,7 +3419,7 @@
         "Citation Key: 10.8:73b",
         "tex.eprint: PubMed Central"
       ],
-      "itemID": 150,
+      "itemID": 151,
       "itemType": "webpage",
       "title": "The effects of stress on physical activity and exercise",
       "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3894304"
@@ -3420,7 +3439,7 @@
         "tex.eprint: ERIC",
         "tex.version: ED545393"
       ],
-      "itemID": 151,
+      "itemID": 152,
       "itemType": "webpage",
       "title": "Teacher preparation for early childhood special education in Taiwan",
       "url": "https://files.eric.ed.gov/fulltext/ED545393.pdf"
@@ -3438,7 +3457,7 @@
         "Citation Key: 10.9:75c",
         "tex.entrysubtype: Data set"
       ],
-      "itemID": 152,
+      "itemID": 153,
       "itemType": "dataset",
       "title": "American trends panel Wave 26",
       "url": "https://www.pewsocialtrends.org/dataset/american-trends-panel-wave-26/"
@@ -3456,7 +3475,7 @@
       "extra": [
         "Citation Key: 10.9:76a"
       ],
-      "itemID": 153,
+      "itemID": 154,
       "itemType": "dataset",
       "publisher": "University of Kentucky",
       "title": "Unpublished raw data on the correlations between the Five Facet Mindfulness Questionnaire and the Kentucky Inventory of Mindfulness Skills"
@@ -3474,7 +3493,7 @@
         "Citation Key: 10.9:76b",
         "tex.entrysubtype: Unpublished raw data"
       ],
-      "itemID": 154,
+      "itemID": 155,
       "itemType": "dataset",
       "title": "Recidivism outcomes"
     },
@@ -3485,7 +3504,7 @@
         "Citation Key: 11.10:29",
         "tex.entrytype: legal"
       ],
-      "itemID": 155,
+      "itemID": 156,
       "itemType": "document",
       "title": "United nations convention on the rights of the child",
       "url": "https://www.ohchr.org/en/professionalinterest/pages/crc.aspx"
@@ -3498,7 +3517,7 @@
         "tex.citation: 347 U.S. 483",
         "tex.entrytype: jurisdiction"
       ],
-      "itemID": 156,
+      "itemID": 157,
       "itemType": "document",
       "title": "Brown v. Board of education",
       "url": "http://www.oyez.org/cases/1940-1955/347us483"
@@ -3511,7 +3530,7 @@
         "tex.citation: 576 U.S. ___",
         "tex.entrytype: jurisdiction"
       ],
-      "itemID": 157,
+      "itemID": 158,
       "itemType": "document",
       "title": "Obergefell v. Hodges",
       "url": "https://www.supremecourt.gov/opinions/14pdf/14-556_3204.pdf"
@@ -3524,7 +3543,7 @@
         "tex.citation: 951 F.2d 1128",
         "tex.entrytype: jurisdiction"
       ],
-      "itemID": 158,
+      "itemID": 159,
       "itemType": "document",
       "publisher": "9th Cir.",
       "title": "Daubert v. Merrell dow pharmaceuticals, inc.",
@@ -3538,7 +3557,7 @@
         "tex.citation: 133 F.Supp.2d 1034",
         "tex.entrytype: jurisdiction"
       ],
-      "itemID": 159,
+      "itemID": 160,
       "itemType": "document",
       "publisher": "N.D. Ohio",
       "title": "Burriola v. Greater toledo YMCA",
@@ -3556,7 +3575,7 @@
         "tex.citation+an:citeorg: 1=\"D. Kan.\";3=\"10th Cir.\"",
         "tex.entrytype: jurisdiction"
       ],
-      "itemID": 160,
+      "itemID": 161,
       "itemType": "document",
       "title": "Durflinger v. Artiles",
       "url": "https://openjurist.org/727/f2d/888/durflinger-v-artiles"
@@ -3569,7 +3588,7 @@
         "tex.citation: 17 Cal.3d 425 and 131 Cal. Rptr. 14 and 551 P.2d 334",
         "tex.entrytype: jurisdiction"
       ],
-      "itemID": 161,
+      "itemID": 162,
       "itemType": "document",
       "title": "Tarasoff v. Regents of the university of california",
       "url": "https://www.casebriefs.com/blog/law/torts/tors-keyed-to-dobbs/the-duty-to-protect-from-third-persons/tarasoff-v-regents-of-university-of-california"
@@ -3584,7 +3603,7 @@
         "tex.citation+an:citeorg: 1=\"Tex. Ct. App.\"",
         "tex.entrytype: jurisdiction"
       ],
-      "itemID": 162,
+      "itemID": 163,
       "itemType": "document",
       "title": "Texas v. Morales",
       "url": "https://www.leagle.com/decision/19921027826sw2d20111010"
@@ -3597,7 +3616,7 @@
         "Place: 20 U.S.C \u00a7 6301",
         "tex.entrytype: legislation"
       ],
-      "itemID": 163,
+      "itemID": 164,
       "itemType": "document",
       "title": "Every student succeeds act",
       "url": "https://www.congress.gov/114/plaws/publ95/PLAW-114publ95.pdf"
@@ -3610,7 +3629,7 @@
         "Place: Pub. L. No. 111-2, 123 Stat. 5",
         "tex.entrytype: legislation"
       ],
-      "itemID": 164,
+      "itemID": 165,
       "itemType": "document",
       "title": "Lilly leadbetter fair play act. of 2009",
       "url": "https://www.govinfo.gov/content/pkg/PLAW-111publ2/pdf/PLAW-111publ2.pdf"
@@ -3623,7 +3642,7 @@
         "Place: 20 U.S.C \u00a7 1681 <i>et seq.</i>",
         "tex.entrytype: legislation"
       ],
-      "itemID": 165,
+      "itemID": 166,
       "itemType": "document",
       "title": "Patsy mink equal opportunity in education act",
       "url": "https://www.justice.org/crt/title-ix-education-amendments-1972"
@@ -3637,7 +3656,7 @@
         "Place: Fla. Stat. \u00a7 394",
         "tex.entrytype: legislation"
       ],
-      "itemID": 166,
+      "itemID": 167,
       "itemType": "document",
       "title": "Florida mental health act",
       "url": "http://www.leg.state.fl.us/statues/index.cfm?App_mode=Display_Statute&URL=0300-0399/0394/0394.html"
@@ -3650,7 +3669,7 @@
         "Place: 42 U.S.C \u00a7 12101 <i>et seq.</i>",
         "tex.entrytype: legislation"
       ],
-      "itemID": 167,
+      "itemID": 168,
       "itemType": "document",
       "title": "American with disabilities act. of 1990",
       "url": "https://www.ada.gov/pubs/adastatute08.htm"
@@ -3663,7 +3682,7 @@
         "Place: Pub. L. No. 88\u2013352, 78 Stat. 241",
         "tex.entrytype: legislation"
       ],
-      "itemID": 168,
+      "itemID": 169,
       "itemType": "document",
       "title": "Civil rights act. of 1964",
       "url": "https://www.govinfo.gov/content/pkg/STATUE-78/pdf/STATUTE-78-Pg241.pdf"
@@ -3676,7 +3695,7 @@
         "Place: 114th Cong.",
         "tex.entrytype: legmaterial"
       ],
-      "itemID": 169,
+      "itemID": 170,
       "itemType": "document",
       "notes": [
         "testimony of Norman Dong"
@@ -3692,7 +3711,7 @@
         "Place: 113th Cong.",
         "tex.entrytype: legmaterial"
       ],
-      "itemID": 170,
+      "itemID": 171,
       "itemType": "document",
       "shortTitle": "Strengthening the federal student loan program",
       "title": "Strengthening the federal student loan program for borrowers. Hearing before the U.S. Senate Committee on Health, Education, Labor & Pensions",
@@ -3706,7 +3725,7 @@
         "Place: H.R 1100, 113th Cong.",
         "tex.entrytype: legislation"
       ],
-      "itemID": 171,
+      "itemID": 172,
       "itemType": "document",
       "title": "Mental health on campus improvement act",
       "url": "https://www.congress.gov/bill/113th-congress/house-bill/1100"
@@ -3722,7 +3741,7 @@
         "tex.entrytype: legmaterial",
         "tex.source: senate"
       ],
-      "itemID": 172,
+      "itemID": 173,
       "itemType": "document",
       "notes": [
         "enacted"
@@ -3738,7 +3757,7 @@
         "tex.entrytype: legmaterial",
         "tex.source: houseofrepresentatives"
       ],
-      "itemID": 173,
+      "itemID": 174,
       "itemType": "report",
       "url": "https://www.gpo.gov/fdsys/pkg/CRPT-114rpt358/pdf/CRPT-114hrpt358.pdf"
     },
@@ -3750,7 +3769,7 @@
         "tex.citation: 45 C.F.R. \u00a7 46",
         "tex.entrytype: legadminmaterial"
       ],
-      "itemID": 174,
+      "itemID": 175,
       "itemType": "document",
       "title": "Protection of human subjects",
       "url": "https://www.hhs.gov/ohrp/sites/default/files/ohrp/policy/ohrpregulations.pdf"
@@ -3763,7 +3782,7 @@
         "tex.citation: 81 F.R. 32391",
         "tex.entrytype: legadminmaterial"
       ],
-      "itemID": 175,
+      "itemID": 176,
       "itemType": "document",
       "notes": [
         "to be codified at 29 C.F.R. \u00a7 541"
@@ -3787,7 +3806,7 @@
         "tex.citation: 3 C.F.R. 294",
         "tex.entrytype: legadminmaterial"
       ],
-      "itemID": 176,
+      "itemID": 177,
       "itemType": "document",
       "url": "https://www.govinfo.gov/content/pkg/CFR-2015-title3-vol1/pdf/CFR-2015-title3-vol1-eo13676.pdf"
     },
@@ -3821,7 +3840,7 @@
         "Publisher: U.S. Patent and Trademark Office",
         "Type: U.S. patent"
       ],
-      "itemID": 177,
+      "itemID": 178,
       "itemType": "patent",
       "number": "9,367,592",
       "title": "Using metaphors to present concepts across different intellectual domains",
@@ -3837,7 +3856,7 @@
         "tex.entrytype: constitution",
         "tex.source: us"
       ],
-      "itemID": 178,
+      "itemID": 179,
       "itemType": "document"
     },
     {
@@ -3850,7 +3869,7 @@
         "tex.entrytype: constitution",
         "tex.source: southcarolina"
       ],
-      "itemID": 179,
+      "itemID": 180,
       "itemType": "document"
     },
     {
@@ -3862,7 +3881,7 @@
         "tex.entrytype: constitution",
         "tex.source: us"
       ],
-      "itemID": 180,
+      "itemID": 181,
       "itemType": "document"
     },
     {
@@ -3875,7 +3894,7 @@
         "tex.eventdate: 1933",
         "tex.source: us"
       ],
-      "itemID": 181,
+      "itemID": 182,
       "itemType": "document",
       "tags": [
         {
@@ -3892,7 +3911,7 @@
         "tex.entrytype: constitution",
         "tex.source: us"
       ],
-      "itemID": 182,
+      "itemID": 183,
       "itemType": "document"
     },
     {
@@ -3905,7 +3924,7 @@
         "tex.part: 3",
         "tex.source: unitednations"
       ],
-      "itemID": 183,
+      "itemID": 184,
       "itemType": "document"
     },
     {
@@ -3922,7 +3941,7 @@
         "Citation Key: 9.14:1"
       ],
       "issue": "2",
-      "itemID": 184,
+      "itemID": 185,
       "itemType": "journalArticle",
       "publicationTitle": "Seasonal Journal",
       "title": "Test title",
@@ -3942,7 +3961,7 @@
         "Citation Key: 9.14:2"
       ],
       "issue": "3",
-      "itemID": 185,
+      "itemID": 186,
       "itemType": "journalArticle",
       "publicationTitle": "Seasonal Journal",
       "title": "Test title 2",
@@ -3958,9 +3977,10 @@
         }
       ],
       "extra": [
-        "Citation Key: 9.44:10a"
+        "Citation Key: 9.44:10a",
+        "tex.entrytype: nameonly"
       ],
-      "itemID": 186,
+      "itemID": 187,
       "itemType": "document"
     },
     {
@@ -3973,9 +3993,10 @@
         }
       ],
       "extra": [
-        "Citation Key: 9.44:10b"
+        "Citation Key: 9.44:10b",
+        "tex.entrytype: nameonly"
       ],
-      "itemID": 187,
+      "itemID": 188,
       "itemType": "document"
     },
     {
@@ -3988,9 +4009,10 @@
         }
       ],
       "extra": [
-        "Citation Key: 9.44:10c"
+        "Citation Key: 9.44:10c",
+        "tex.entrytype: nameonly"
       ],
-      "itemID": 188,
+      "itemID": 189,
       "itemType": "document"
     },
     {
@@ -4004,9 +4026,10 @@
       ],
       "extra": [
         "Citation Key: 9.44:11a",
+        "tex.entrytype: nameonly",
         "tex.sortname: SantiagoJ1"
       ],
-      "itemID": 189,
+      "itemID": 190,
       "itemType": "document"
     },
     {
@@ -4020,9 +4043,10 @@
       ],
       "extra": [
         "Citation Key: 9.44:11b",
+        "tex.entrytype: nameonly",
         "tex.sortname: SantiagoJ2"
       ],
-      "itemID": 190,
+      "itemID": 191,
       "itemType": "document"
     },
     {
@@ -4035,9 +4059,10 @@
         }
       ],
       "extra": [
-        "Citation Key: 9.44:12a"
+        "Citation Key: 9.44:12a",
+        "tex.entrytype: nameonly"
       ],
-      "itemID": 191,
+      "itemID": 192,
       "itemType": "document"
     },
     {
@@ -4050,9 +4075,10 @@
         }
       ],
       "extra": [
-        "Citation Key: 9.44:12b"
+        "Citation Key: 9.44:12b",
+        "tex.entrytype: nameonly"
       ],
-      "itemID": 192,
+      "itemID": 193,
       "itemType": "document"
     },
     {
@@ -4065,9 +4091,10 @@
         }
       ],
       "extra": [
-        "Citation Key: 9.44:1a"
+        "Citation Key: 9.44:1a",
+        "tex.entrytype: nameonly"
       ],
-      "itemID": 193,
+      "itemID": 194,
       "itemType": "document"
     },
     {
@@ -4080,9 +4107,10 @@
         }
       ],
       "extra": [
-        "Citation Key: 9.44:1b"
+        "Citation Key: 9.44:1b",
+        "tex.entrytype: nameonly"
       ],
-      "itemID": 194,
+      "itemID": 195,
       "itemType": "document"
     },
     {
@@ -4095,9 +4123,10 @@
         }
       ],
       "extra": [
-        "Citation Key: 9.44:2a"
+        "Citation Key: 9.44:2a",
+        "tex.entrytype: nameonly"
       ],
-      "itemID": 195,
+      "itemID": 196,
       "itemType": "document"
     },
     {
@@ -4110,9 +4139,10 @@
         }
       ],
       "extra": [
-        "Citation Key: 9.44:2b"
+        "Citation Key: 9.44:2b",
+        "tex.entrytype: nameonly"
       ],
-      "itemID": 196,
+      "itemID": 197,
       "itemType": "document"
     },
     {
@@ -4125,9 +4155,10 @@
         }
       ],
       "extra": [
-        "Citation Key: 9.44:2c"
+        "Citation Key: 9.44:2c",
+        "tex.entrytype: nameonly"
       ],
-      "itemID": 197,
+      "itemID": 198,
       "itemType": "document"
     },
     {
@@ -4140,9 +4171,10 @@
         }
       ],
       "extra": [
-        "Citation Key: 9.44:3a"
+        "Citation Key: 9.44:3a",
+        "tex.entrytype: nameonly"
       ],
-      "itemID": 198,
+      "itemID": 199,
       "itemType": "document"
     },
     {
@@ -4155,9 +4187,10 @@
         }
       ],
       "extra": [
-        "Citation Key: 9.44:3b"
+        "Citation Key: 9.44:3b",
+        "tex.entrytype: nameonly"
       ],
-      "itemID": 199,
+      "itemID": 200,
       "itemType": "document"
     },
     {
@@ -4170,9 +4203,10 @@
         }
       ],
       "extra": [
-        "Citation Key: 9.44:4a"
+        "Citation Key: 9.44:4a",
+        "tex.entrytype: nameonly"
       ],
-      "itemID": 200,
+      "itemID": 201,
       "itemType": "document"
     },
     {
@@ -4185,9 +4219,10 @@
         }
       ],
       "extra": [
-        "Citation Key: 9.44:4b"
+        "Citation Key: 9.44:4b",
+        "tex.entrytype: nameonly"
       ],
-      "itemID": 201,
+      "itemID": 202,
       "itemType": "document"
     },
     {
@@ -4200,9 +4235,10 @@
         }
       ],
       "extra": [
-        "Citation Key: 9.44:5a"
+        "Citation Key: 9.44:5a",
+        "tex.entrytype: nameonly"
       ],
-      "itemID": 202,
+      "itemID": 203,
       "itemType": "document"
     },
     {
@@ -4215,9 +4251,10 @@
         }
       ],
       "extra": [
-        "Citation Key: 9.44:5b"
+        "Citation Key: 9.44:5b",
+        "tex.entrytype: nameonly"
       ],
-      "itemID": 203,
+      "itemID": 204,
       "itemType": "document"
     },
     {
@@ -4230,9 +4267,10 @@
         }
       ],
       "extra": [
-        "Citation Key: 9.44:6a"
+        "Citation Key: 9.44:6a",
+        "tex.entrytype: nameonly"
       ],
-      "itemID": 204,
+      "itemID": 205,
       "itemType": "document"
     },
     {
@@ -4245,9 +4283,10 @@
         }
       ],
       "extra": [
-        "Citation Key: 9.44:6b"
+        "Citation Key: 9.44:6b",
+        "tex.entrytype: nameonly"
       ],
-      "itemID": 205,
+      "itemID": 206,
       "itemType": "document"
     },
     {
@@ -4260,9 +4299,10 @@
         }
       ],
       "extra": [
-        "Citation Key: 9.44:7a"
+        "Citation Key: 9.44:7a",
+        "tex.entrytype: nameonly"
       ],
-      "itemID": 206,
+      "itemID": 207,
       "itemType": "document"
     },
     {
@@ -4275,9 +4315,10 @@
         }
       ],
       "extra": [
-        "Citation Key: 9.44:7b"
+        "Citation Key: 9.44:7b",
+        "tex.entrytype: nameonly"
       ],
-      "itemID": 207,
+      "itemID": 208,
       "itemType": "document"
     },
     {
@@ -4290,9 +4331,10 @@
         }
       ],
       "extra": [
-        "Citation Key: 9.44:7c"
+        "Citation Key: 9.44:7c",
+        "tex.entrytype: nameonly"
       ],
-      "itemID": 208,
+      "itemID": 209,
       "itemType": "document"
     },
     {
@@ -4305,9 +4347,10 @@
         }
       ],
       "extra": [
-        "Citation Key: 9.44:8a"
+        "Citation Key: 9.44:8a",
+        "tex.entrytype: nameonly"
       ],
-      "itemID": 209,
+      "itemID": 210,
       "itemType": "document"
     },
     {
@@ -4320,9 +4363,10 @@
         }
       ],
       "extra": [
-        "Citation Key: 9.44:8b"
+        "Citation Key: 9.44:8b",
+        "tex.entrytype: nameonly"
       ],
-      "itemID": 210,
+      "itemID": 211,
       "itemType": "document"
     },
     {
@@ -4335,9 +4379,10 @@
         }
       ],
       "extra": [
-        "Citation Key: 9.44:8c"
+        "Citation Key: 9.44:8c",
+        "tex.entrytype: nameonly"
       ],
-      "itemID": 211,
+      "itemID": 212,
       "itemType": "document"
     },
     {
@@ -4350,9 +4395,10 @@
         }
       ],
       "extra": [
-        "Citation Key: 9.44:9a"
+        "Citation Key: 9.44:9a",
+        "tex.entrytype: nameonly"
       ],
-      "itemID": 212,
+      "itemID": 213,
       "itemType": "document"
     },
     {
@@ -4364,9 +4410,10 @@
         }
       ],
       "extra": [
-        "Citation Key: 9.44:9b"
+        "Citation Key: 9.44:9b",
+        "tex.entrytype: nameonly"
       ],
-      "itemID": 213,
+      "itemID": 214,
       "itemType": "document"
     },
     {
@@ -4381,7 +4428,7 @@
       "extra": [
         "Citation Key: 9.46:1"
       ],
-      "itemID": 214,
+      "itemID": 215,
       "itemType": "book"
     },
     {
@@ -4407,7 +4454,7 @@
       "extra": [
         "Citation Key: 9.46:10"
       ],
-      "itemID": 215,
+      "itemID": 216,
       "itemType": "book"
     },
     {
@@ -4428,7 +4475,7 @@
       "extra": [
         "Citation Key: 9.46:11"
       ],
-      "itemID": 216,
+      "itemID": 217,
       "itemType": "book"
     },
     {
@@ -4454,7 +4501,7 @@
       "extra": [
         "Citation Key: 9.46:12"
       ],
-      "itemID": 217,
+      "itemID": 218,
       "itemType": "book"
     },
     {
@@ -4480,7 +4527,7 @@
       "extra": [
         "Citation Key: 9.46:13"
       ],
-      "itemID": 218,
+      "itemID": 219,
       "itemType": "book"
     },
     {
@@ -4496,7 +4543,7 @@
       "extra": [
         "Citation Key: 9.46:2"
       ],
-      "itemID": 219,
+      "itemID": 220,
       "itemType": "book"
     },
     {
@@ -4512,7 +4559,7 @@
       "extra": [
         "Citation Key: 9.46:3"
       ],
-      "itemID": 220,
+      "itemID": 221,
       "itemType": "book"
     },
     {
@@ -4528,7 +4575,7 @@
       "extra": [
         "Citation Key: 9.46:4"
       ],
-      "itemID": 221,
+      "itemID": 222,
       "itemType": "book"
     },
     {
@@ -4544,7 +4591,7 @@
         "Citation Key: 9.46:5",
         "tex.pubstate: inpress"
       ],
-      "itemID": 222,
+      "itemID": 223,
       "itemType": "book"
     },
     {
@@ -4560,7 +4607,7 @@
       "extra": [
         "Citation Key: 9.46:6"
       ],
-      "itemID": 223,
+      "itemID": 224,
       "itemType": "book"
     },
     {
@@ -4581,7 +4628,7 @@
       "extra": [
         "Citation Key: 9.46:7"
       ],
-      "itemID": 224,
+      "itemID": 225,
       "itemType": "book"
     },
     {
@@ -4602,7 +4649,7 @@
       "extra": [
         "Citation Key: 9.46:8"
       ],
-      "itemID": 225,
+      "itemID": 226,
       "itemType": "book"
     },
     {
@@ -4623,7 +4670,7 @@
       "extra": [
         "Citation Key: 9.46:9"
       ],
-      "itemID": 226,
+      "itemID": 227,
       "itemType": "book"
     },
     {
@@ -4644,7 +4691,7 @@
       "extra": [
         "Citation Key: 9.47:1"
       ],
-      "itemID": 227,
+      "itemID": 228,
       "itemType": "book"
     },
     {
@@ -4659,7 +4706,7 @@
       "extra": [
         "Citation Key: 9.47:10"
       ],
-      "itemID": 228,
+      "itemID": 229,
       "itemType": "book"
     },
     {
@@ -4674,7 +4721,7 @@
       "extra": [
         "Citation Key: 9.47:11"
       ],
-      "itemID": 229,
+      "itemID": 230,
       "itemType": "book"
     },
     {
@@ -4690,7 +4737,7 @@
         "Citation Key: 9.47:12",
         "tex.pubstate: inpress"
       ],
-      "itemID": 230,
+      "itemID": 231,
       "itemType": "book"
     },
     {
@@ -4706,7 +4753,7 @@
         "Citation Key: 9.47:13",
         "tex.pubstate: inpress"
       ],
-      "itemID": 231,
+      "itemID": 232,
       "itemType": "book"
     },
     {
@@ -4727,7 +4774,7 @@
       "extra": [
         "Citation Key: 9.47:2"
       ],
-      "itemID": 232,
+      "itemID": 233,
       "itemType": "book"
     },
     {
@@ -4748,7 +4795,7 @@
       "extra": [
         "Citation Key: 9.47:3"
       ],
-      "itemID": 233,
+      "itemID": 234,
       "itemType": "book"
     },
     {
@@ -4764,7 +4811,7 @@
       "extra": [
         "Citation Key: 9.47:6"
       ],
-      "itemID": 234,
+      "itemID": 235,
       "itemType": "book",
       "title": "Interesting things"
     },
@@ -4781,7 +4828,7 @@
       "extra": [
         "Citation Key: 9.47:7"
       ],
-      "itemID": 235,
+      "itemID": 236,
       "itemType": "book",
       "title": "A litany of special things"
     },
@@ -4798,7 +4845,7 @@
       "extra": [
         "Citation Key: 9.47:8"
       ],
-      "itemID": 236,
+      "itemID": 237,
       "itemType": "book",
       "title": "An awful lot of special things"
     },
@@ -4815,7 +4862,7 @@
       "extra": [
         "Citation Key: 9.47:9"
       ],
-      "itemID": 237,
+      "itemID": 238,
       "itemType": "book",
       "title": "The banality of special things"
     },
@@ -4837,7 +4884,7 @@
       "extra": [
         "Citation Key: 9.48:1"
       ],
-      "itemID": 238,
+      "itemID": 239,
       "itemType": "book"
     },
     {
@@ -4853,7 +4900,7 @@
       "extra": [
         "Citation Key: 9.48:2"
       ],
-      "itemID": 239,
+      "itemID": 240,
       "itemType": "book"
     },
     {
@@ -4868,7 +4915,7 @@
       "extra": [
         "Citation Key: 9.49:1"
       ],
-      "itemID": 240,
+      "itemID": 241,
       "itemType": "book",
       "title": "The pnakotic manuscript"
     },
@@ -4878,7 +4925,7 @@
       "extra": [
         "Citation Key: 9.49:2"
       ],
-      "itemID": 241,
+      "itemID": 242,
       "itemType": "book",
       "title": "The book of eibon"
     },
@@ -4896,7 +4943,7 @@
         "Citation Key: 9.49:3",
         "tex.sorttitle: Top One Hundred Silliest Reference List Sorting Requirements"
       ],
-      "itemID": 242,
+      "itemID": 243,
       "itemType": "book",
       "title": "Top 100 silliest reference list sorting requirements"
     },
@@ -4914,7 +4961,7 @@
         "Citation Key: 9.49:4",
         "tex.sorttitle: Top Ten Political Pandering Epithets in Psychology"
       ],
-      "itemID": 243,
+      "itemID": 244,
       "itemType": "book",
       "title": "Top 10 political pandering epithets in psychology"
     },
@@ -4932,7 +4979,7 @@
         "Citation Key: 9.49:5",
         "tex.sorttitle: Annoyingly Casual Titles Part 1"
       ],
-      "itemID": 244,
+      "itemID": 245,
       "itemType": "journalArticle",
       "publicationTitle": "Journal of the Decline of Academia",
       "title": "Annoyingly casual titles. How to Exhaust all Effort on the Title Alone"
@@ -4951,7 +4998,7 @@
         "Citation Key: 9.49:6",
         "tex.sorttitle: Annoyingly Casual Titles Part 2"
       ],
-      "itemID": 245,
+      "itemID": 246,
       "itemType": "journalArticle",
       "publicationTitle": "Journal of the Decline of Academia",
       "title": "Annoyingly casual titles. Creating Titles to Distract from Vacuity"
@@ -4991,7 +5038,7 @@
         "DOI: 10.1037/14731-006",
         "tex.booksubtitle: Building a Win-Win Environment for Organizations and Employees"
       ],
-      "itemID": 246,
+      "itemID": 247,
       "itemType": "bookSection",
       "notes": [
         "This book chapter provides an overview of the psychosociological concept of work-life balance. The authors discuss findings from studies showing harmful effects of work-life conflict on psychological and behavioural health as well as beneficial effects of work-life facilitation, wherein one role makes a positive contribution to the other. The chapter concludes with a description of work-life balance initiatives that organizations have adopted to help employees manage their dual work and nonwork obligations and some of the key factors influencing their effectiveness."
@@ -5036,7 +5083,7 @@
         "DOI: 10.1007/978-1-4419-57160_6",
         "tex.booksubtitle: Cognition, Computers and Collaboration in Education"
       ],
-      "itemID": 247,
+      "itemID": 248,
       "itemType": "bookSection",
       "pages": "109\u2013131",
       "publicationTitle": "New science of learning",
@@ -5061,7 +5108,7 @@
       "extra": [
         "Citation Key: 9.8:1"
       ],
-      "itemID": 248,
+      "itemID": 249,
       "itemType": "book"
     },
     {
@@ -5076,7 +5123,7 @@
       "extra": [
         "Citation Key: 9.8:10"
       ],
-      "itemID": 249,
+      "itemID": 250,
       "itemType": "book"
     },
     {
@@ -5093,7 +5140,7 @@
         "Citation Key: 9.8:11",
         "tex.author+an:username: 1=\"@ausername\""
       ],
-      "itemID": 250,
+      "itemID": 251,
       "itemType": "book"
     },
     {
@@ -5112,7 +5159,7 @@
       "extra": [
         "Citation Key: 9.8:2"
       ],
-      "itemID": 251,
+      "itemID": 252,
       "itemType": "book"
     },
     {
@@ -5138,7 +5185,7 @@
       "extra": [
         "Citation Key: 9.8:3"
       ],
-      "itemID": 252,
+      "itemID": 253,
       "itemType": "book"
     },
     {
@@ -5229,7 +5276,7 @@
       "extra": [
         "Citation Key: 9.8:4"
       ],
-      "itemID": 253,
+      "itemID": 254,
       "itemType": "book"
     },
     {
@@ -5328,7 +5375,7 @@
       "extra": [
         "Citation Key: 9.8:5"
       ],
-      "itemID": 254,
+      "itemID": 255,
       "itemType": "book"
     },
     {
@@ -5344,7 +5391,7 @@
       "extra": [
         "Citation Key: 9.8:6"
       ],
-      "itemID": 255,
+      "itemID": 256,
       "itemType": "book"
     },
     {
@@ -5360,7 +5407,7 @@
       "extra": [
         "Citation Key: 9.8:7"
       ],
-      "itemID": 256,
+      "itemID": 257,
       "itemType": "book"
     },
     {
@@ -5381,7 +5428,7 @@
       "extra": [
         "Citation Key: 9.8:8"
       ],
-      "itemID": 257,
+      "itemID": 258,
       "itemType": "book"
     },
     {
@@ -5398,20 +5445,9 @@
         "Citation Key: 9.8:9",
         "tex.with: W. T. Long"
       ],
-      "itemID": 258,
+      "itemID": 259,
       "itemType": "book",
       "title": "Withering worrying"
-    },
-    {
-      "itemID": 259,
-      "itemType": "note",
-      "note": "Import errors found: <ul><li>Don&#39;t know what Zotero type to make of &#39;periodical&#39; for @10.1:12a, importing as document</li><li>Don&#39;t know what Zotero type to make of &#39;periodical&#39; for @10.1:12b, importing as document</li><li>import error: duplicate type on thesis 10.6:64 (old: phd, new: Unpublished doctoral dissertation)</li><li>Don&#39;t know what Zotero type to make of &#39;jurisdiction&#39; for @11.4:1, importing as document</li><li>Don&#39;t know what Zotero type to make of &#39;jurisdiction&#39; for @11.4:2, importing as document</li><li>Don&#39;t know what Zotero type to make of &#39;jurisdiction&#39; for @11.4:3, importing as document</li><li>Don&#39;t know what Zotero type to make of &#39;jurisdiction&#39; for @11.4:4, importing as document</li><li>Don&#39;t know what Zotero type to make of &#39;jurisdiction&#39; for @11.4:5, importing as document</li><li>Don&#39;t know what Zotero type to make of &#39;jurisdiction&#39; for @11.4:6, importing as document</li><li>Don&#39;t know what Zotero type to make of &#39;jurisdiction&#39; for @11.4:7, importing as document</li><li>Don&#39;t know what Zotero type to make of &#39;legislation&#39; for @11.5:8, importing as document</li><li>Don&#39;t know what Zotero type to make of &#39;legislation&#39; for @11.5:9, importing as document</li><li>Don&#39;t know what Zotero type to make of &#39;legislation&#39; for @11.5:10, importing as document</li><li>Don&#39;t know what Zotero type to make of &#39;legislation&#39; for @11.5:11, importing as document</li><li>Don&#39;t know what Zotero type to make of &#39;legislation&#39; for @11.5:12, importing as document</li><li>Don&#39;t know what Zotero type to make of &#39;legislation&#39; for @11.5:13, importing as document</li><li>Don&#39;t know what Zotero type to make of &#39;legmaterial&#39; for @11.6:14, importing as document</li><li>Don&#39;t know what Zotero type to make of &#39;legmaterial&#39; for @11.6:15, importing as document</li><li>Don&#39;t know what Zotero type to make of &#39;legislation&#39; for @11.6:16, importing as document</li><li>Don&#39;t know what Zotero type to make of &#39;legmaterial&#39; for @11.6:17, importing as document</li><li>Don&#39;t know what Zotero type to make of &#39;legmaterial&#39; for @11.6:18, importing as document</li><li>Don&#39;t know what Zotero type to make of &#39;legadminmaterial&#39; for @11.7:19, importing as document</li><li>Don&#39;t know what Zotero type to make of &#39;legadminmaterial&#39; for @11.7:20, importing as document</li><li>Don&#39;t know what Zotero type to make of &#39;legadminmaterial&#39; for @11.7:21, importing as document</li><li>Don&#39;t know what Zotero type to make of &#39;constitution&#39; for @11.9:23, importing as document</li><li>Don&#39;t know what Zotero type to make of &#39;constitution&#39; for @11.9:24, importing as document</li><li>Don&#39;t know what Zotero type to make of &#39;constitution&#39; for @11.9:25, importing as document</li><li>Don&#39;t know what Zotero type to make of &#39;constitution&#39; for @11.9:26, importing as document</li><li>Don&#39;t know what Zotero type to make of &#39;constitution&#39; for @11.9:27, importing as document</li><li>Don&#39;t know what Zotero type to make of &#39;constitution&#39; for @11.9:28, importing as document</li><li>Don&#39;t know what Zotero type to make of &#39;legal&#39; for @11.10:29, importing as document</li></ul>",
-      "tags": [
-        {
-          "tag": "#Better BibTeX import error",
-          "type": 1
-        }
-      ]
     },
     {
       "DOI": "10.1002/14651858.CD006876.pub5",

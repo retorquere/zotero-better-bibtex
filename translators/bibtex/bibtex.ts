@@ -1093,7 +1093,10 @@ export class ZoteroItem {
 
       const msg = `Don't know what Zotero type to make of '${this.bibtex.type}' for ${this.bibtex.key ? `@${this.bibtex.key}` : 'unnamed item'}, importing as ${this.item.itemType}`
       log.debug(msg)
-      if (unknown) errors.push({ message: msg })
+      if (unknown) {
+        if (this.translation.preferences.testing) throw new Error(msg)
+        errors.push({ message: msg })
+      }
 
       if (this.bibtex.type) this.extra.push(`tex.entrytype: ${this.bibtex.type}`)
     }
