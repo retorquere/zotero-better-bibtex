@@ -84,9 +84,6 @@
     "fracturedjsonjs": "^3.1.0",
     "html-to-md": "^0.8.3",
     "i": "^0.3.7",
-    "jieba-zh-cn": "^1.0.12",
-    "jieba-zh-tw": "^1.0.12",
-    "js-jieba": "^1.0.12",
     "jslingua": "^0.13.0",
     "kuromoji": "^0.1.2",
     "lodash": "^4.17.21",
@@ -102,6 +99,7 @@
     "title": "^3.5.3",
     "title-case": "^3.0.3",
     "transliteration": "^2.3.5",
+    "wasmjieba-web": "^1.0.9",
     "words-to-numbers": "^1.5.1",
     "xregexp": "^5.1.1",
     "zotero-plugin": "2.0.9"
