@@ -256,7 +256,7 @@ export const KeyManager = new class _KeyManager {
         }
 
         while (insert.length) {
-          const chunk = insert.splice(0, 1000)
+          const chunk = insert.splice(0, 500)
           const q = `INSERT INTO betterbibtexsearch.citekeys (itemID, libraryID, itemKey, citekey) VALUES ${Array(chunk.length).fill('(?, ?, ?, ?)').join(',')}`
           const args = [].concat(...chunk.map(row => [ row.itemID, row.libraryID, row.itemKey, row.citekey ]))
           await ZoteroDB.queryAsync(q, args)
