@@ -317,12 +317,18 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
       if (typeof ae === 'number') this.progress.set(ae, pct)
     })
 
+    orchestrator.add('git-push', {
+      description: 'git support',
+      needs: ['start'],
+      startup: async () => {
+        await git.init()
+      },
+    })
+
     orchestrator.add('auto-export', {
       description: 'auto-export',
       needs: ['database', 'cache', 'translators'],
       startup: () => {
-        void git.init()
-
         this.db = DB.getCollection('autoexport')
         queue.init(this.db)
 

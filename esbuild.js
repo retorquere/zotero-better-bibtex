@@ -215,6 +215,7 @@ async function rebuild() {
       loader.patcher.plugin,
       loader.bib,
       loader.peggy,
+      loader.pug,
       loader.__dirname,
       shims
     ],

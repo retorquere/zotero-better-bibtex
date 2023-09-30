@@ -8,6 +8,7 @@ const esbuild = require('esbuild')
 const putout = require('putout')
 const child_process = require('child_process')
 const jsesc = require('jsesc')
+const pug = require('pug')
 
 const patcher = module.exports.patcher = new class {
   constructor() {
@@ -189,5 +190,27 @@ module.exports.trace = function(section) {
         }
       })
     }
+  }
+}
+
+module.exports.pug = {
+  name: 'pug',
+  setup(build) {
+    build.onLoad({ filter: /\.pug$/ }, async (args) => {
+      const template = await fs.promises.readFile(args.path, 'utf-8')
+      const template_function = pug.compileClient(template, { globals: [ 'Date', 'Math' ] })
+        .split('\n')
+        .filter(line => !line.trim().match(/^;pug_debug_line = [0-9]+;$/))
+        .join('\n')
+        .replace(/\\u003C/g, '<')
+        .replace(/\\u003E/g, '>')
+        .replace(/\\u002F/g, '/')
+      console.log(template_function);
+
+      return {
+        contents: `module.exports = ${template_function}`,
+        loader: 'js'
+      }
+    })
   }
 }
