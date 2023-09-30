@@ -226,7 +226,6 @@ export class Orchestrator {
     }
 
     const today = new Date().toISOString().slice(0, 10)
-    const scale = n => Math.ceil(n/100)
     let gantt = `<?xml version="1.0" encoding="UTF-8"?>
       <project
         name="Better BibTeX ${phase}"
@@ -242,7 +241,7 @@ export class Orchestrator {
         <description/>
         <view zooming-state="default:7" id="gantt-chart">
           <field id="tpd3" name="Name" width="140" order="0"/>
-          <field id="tpd6" name="Duration" width="104" order="1"/>
+          <field id="tpc0" name="Runtime" width="58" order="2"/>
         </view>
         <calendars>
           <day-types>
@@ -264,6 +263,7 @@ export class Orchestrator {
             <taskproperty id="tpd7" name="completion" type="default" valuetype="int"/>
             <taskproperty id="tpd8" name="coordinator" type="default" valuetype="text"/>
             <taskproperty id="tpd9" name="predecessorsr" type="default" valuetype="text"/>
+            <taskproperty id="tpc0" name="Runtime" type="custom" valuetype="double"/>
           </taskproperties>
     `
     for (const task of tasks) {
@@ -273,7 +273,7 @@ export class Orchestrator {
             uid="${task.id}${Math.random()}"
             name="${task.id}" meeting="false"
             ${task.needs.length ? '' : `start="${today}"`}
-            duration="${scale(task.finished - task.started)}"
+            duration="${Math.ceil((task.finished - task.started)/100)}"
             complete="0"
             expand="true"
           >`
@@ -283,6 +283,7 @@ export class Orchestrator {
         `
       }
       gantt += `
+            <customproperty taskproperty-id="tpc0" value="${((task.finished - task.started)/1000).toFixed(2)}"/>
           </task>
       `
     }
