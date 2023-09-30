@@ -421,12 +421,18 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
       if (typeof ae === 'string') this.progress.set(ae, pct)
     })
 
+    orchestrator.add('git-push', {
+      description: 'git support',
+      needs: ['start'],
+      startup: async () => {
+        await git.init()
+      },
+    })
+
     orchestrator.add('auto-export', {
       description: 'auto-export',
       needs: ['sqlite', 'cache', 'translators'],
       startup: async () => {
-        void git.init()
-
         await this.initDB()
 
         for (const path of await Zotero.DB.columnQueryAsync("SELECT path FROM betterbibtex.autoexport WHERE status <> 'done'")) {

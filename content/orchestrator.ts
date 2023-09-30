@@ -1,4 +1,4 @@
-export type Actor = | 'start' | 'done' | 'auto-export' | 'translators' | 'TeXstudio' | 'abbreviator' | 'keymanager' | 'serializer' | 'cache' | 'database' | 'sqlite'
+export type Actor = | 'start' | 'done' | 'auto-export' | 'translators' | 'TeXstudio' | 'abbreviator' | 'keymanager' | 'serializer' | 'cache' | 'database' | 'sqlite' | 'git-push' | 'citekeysearch'
 export type PhaseID = 'startup' | 'shutdown'
 import type { Reason } from './bootstrap'
 import { log } from './logger'
@@ -208,11 +208,10 @@ export class Orchestrator {
   }
 
   private gantt(phase: PhaseID) {
-    // const start = phase === 'startup' ? this.started : this.phase.shutdown.started
     const taskmap = this.phase[phase].tasks
     let unsorted = Object.values(taskmap)
     const sorted: string[] = []
-    const tasks: Task[] = []
+    const tasks: (Task & { taskid: number })[] = []
     while (unsorted.length) {
       unsorted = unsorted.filter(task => {
         if (task.needs.filter(needed => !sorted.includes(needed)).length) {
@@ -220,49 +219,85 @@ export class Orchestrator {
         }
         else {
           sorted.push(task.id)
-          tasks.push(task)
+          tasks.push({...task, taskid: tasks.length})
           return false
         }
       })
     }
 
+    const today = new Date().toISOString().slice(0, 10)
     const scale = n => Math.ceil(n/100)
-    // const url = g => `http://plantuml.com/plantuml/uml/~h${Array.from(g).map((c: string) => c.charCodeAt(0).toString(16)).join('')}\n`
-
-    let g = '@startgantt\n'
-    g += `  header ${phase}\n\n`
+    let gantt = `<?xml version="1.0" encoding="UTF-8"?>
+      <project
+        name="Better BibTeX ${phase}"
+        company=""
+        webLink="https://"
+        view-date="${today}"
+        view-index="0"
+        gantt-divider-location="614"
+        resource-divider-location="300"
+        version="3.3.3295"
+        locale="en_GB"
+      >
+        <description/>
+        <view zooming-state="default:7" id="gantt-chart">
+          <field id="tpd3" name="Name" width="140" order="0"/>
+          <field id="tpd6" name="Duration" width="104" order="1"/>
+        </view>
+        <calendars>
+          <day-types>
+            <day-type id="0"/>
+            <day-type id="1"/>
+            <default-week id="1" name="default" sun="0" mon="0" tue="0" wed="0" thu="0" fri="0" sat="0"/>
+            <days/>
+          </day-types>
+        </calendars>
+        <tasks empty-milestones="true">
+          <taskproperties>
+            <taskproperty id="tpd0" name="type" type="default" valuetype="icon"/>
+            <taskproperty id="tpd1" name="priority" type="default" valuetype="icon"/>
+            <taskproperty id="tpd2" name="info" type="default" valuetype="icon"/>
+            <taskproperty id="tpd3" name="name" type="default" valuetype="text"/>
+            <taskproperty id="tpd4" name="begindate" type="default" valuetype="date"/>
+            <taskproperty id="tpd5" name="enddate" type="default" valuetype="date"/>
+            <taskproperty id="tpd6" name="duration" type="default" valuetype="int"/>
+            <taskproperty id="tpd7" name="completion" type="default" valuetype="int"/>
+            <taskproperty id="tpd8" name="coordinator" type="default" valuetype="text"/>
+            <taskproperty id="tpd9" name="predecessorsr" type="default" valuetype="text"/>
+          </taskproperties>
+    `
     for (const task of tasks) {
-      for (const needed of task.needs) {
-        g += `  [${task.id}] starts at [${needed}]'s end\n`
+      gantt += `
+          <task
+            id="${task.taskid}"
+            uid="${task.id}${Math.random()}"
+            name="${task.id}" meeting="false"
+            ${task.needs.length ? '' : `start="${today}"`}
+            duration="${scale(task.finished - task.started)}"
+            complete="0"
+            expand="true"
+          >`
+      for (const dependent of tasks.filter(t => t.needs.includes(task.id))) {
+        gantt += `
+            <depend id="${dependent.taskid}" type="2" difference="0" hardness="Strong"/>
+        `
       }
-      g += `  [${task.id}] lasts ${scale(task.finished - task.started)} days\n`
-      let last = { milestone: '', ended: task.started }
-      for (const timestamp of [...task.milestones.keys()].sort()) {
-        const milestone = `${task.id}:${task.milestones.get(timestamp)}`
-        g += `    [${milestone}] starts at [${last.milestone || task.id}]'s ${last.milestone ? 'end' : 'start'} and lasts ${scale(timestamp - last.ended)} days\n`
-        g += `    [${milestone}] is colored in Fuchsia/FireBrick\n`
-        last = { milestone, ended: timestamp }
-      }
-      g += '\n'
+      gantt += `
+          </task>
+      `
     }
-    g += '@endgantt\n'
+    gantt += `
+        </tasks>
+        <resources/>
+        <allocations/>
+        <vacations/>
+        <previous/>
+        <roles roleset-name="Default"/>
+        <roles roleset-name="SoftwareDevelopment"/>
+      </project>
+    `
 
-    /*
-    g = '@startgantt\n'
-    g += `  header ${phase}\n\n`
-    for (const task of tasks) {
-      g += `  [${task.id}] starts D+${scale(task.started - start)} and ends D+${scale(task.finished - start)}\n`
-      for (const milestone of [...task.milestones.keys()].sort()) {
-        g += `  [${task.id}:${task.milestones.get(milestone)}] happens on D+${scale(milestone - task.started)}\n`
-      }
-      g += '\n'
-    }
-    g += '@endgantt\n'
-    // g += url(g)
-    const g2 = g
-    */
-
-    Zotero.File.putContents(Zotero.File.pathToFile(OS.Path.join(Zotero.BetterBibTeX.dir, `${phase}.plantuml`)), g)
+    Zotero.File.putContents(Zotero.File.pathToFile(OS.Path.join(Zotero.BetterBibTeX.dir, `${phase}.gan`)), gantt)
   }
 
   public async startup(reason: Reason, progress?: Progress): Promise<void> {

@@ -216,6 +216,7 @@ async function rebuild() {
       loader.text,
       loader.sql,
       loader.peggy,
+      loader.pug,
       loader.__dirname,
       shims
     ],

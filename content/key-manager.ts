@@ -214,6 +214,13 @@ export const KeyManager = new class _KeyManager {
         await this.start()
       },
     })
+    orchestrator.add('citekeysearch', {
+      description: 'citation key search',
+      needs: ['keymanager'],
+      startup: async () => {
+        await this.enableSearch()
+      },
+    })
   }
 
   private async enableSearch(): Promise<void> {
@@ -315,8 +322,6 @@ export const KeyManager = new class _KeyManager {
 
   private async start(): Promise<void> {
     await this.rescan()
-
-    void this.enableSearch()
 
     Events.on('preference-changed', pref => {
       switch (pref) {
