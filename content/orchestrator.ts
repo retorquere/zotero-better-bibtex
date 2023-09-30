@@ -240,6 +240,10 @@ export class Orchestrator {
         locale="en_GB"
       >
         <description/>
+        <view zooming-state="default:7" id="gantt-chart">
+          <field id="tpd3" name="Name" width="140" order="0"/>
+          <field id="tpd6" name="Duration" width="104" order="1"/>
+        </view>
         <calendars>
           <day-types>
             <day-type id="0"/>
