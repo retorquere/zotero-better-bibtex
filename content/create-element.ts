@@ -52,7 +52,7 @@ export class Elements {
         elt.addEventListener(a.replace('on', ''), event => { (v(event) as Promise<void>)?.catch?.(err => { throw(err) }) })
       }
       else {
-        throw new Error(`unexpected attribute ${a}`)
+        throw new Error(`unexpected attribute ${a} of type ${typeof v}`)
       }
     }
     for (const child of children) {

@@ -594,7 +594,7 @@ export const KeyManager = new class _KeyManager {
     const conflictQuery: Query = { $and: [ { citekey: { $eq: '' } }, { itemID: { $ne: item.id } } ] }
     if (Preference.keyScope !== 'global') conflictQuery.$and.push({ libraryID: { $eq: item.libraryID } })
 
-    const seen = {}
+    const seen: Set<string> = new Set
     // eslint-disable-next-line no-constant-condition
     for (let n = Formatter.postfix.offset; true; n += 1) {
       const postfixed = citekey.replace(Formatter.postfix.marker, () => {
@@ -604,8 +604,8 @@ export const KeyManager = new class _KeyManager {
           postfix = sprintf(Formatter.postfix.template, { a: alpha.toLowerCase(), A: alpha, n })
         }
         // this should never happen, it'd mean the postfix pattern doesn't have placeholders, which should have been caught by parsePattern
-        if (seen[postfix]) throw new Error(`${JSON.stringify(Formatter.postfix)} does not generate unique postfixes`)
-        seen[postfix] = true
+        if (seen.has(postfix)) throw new Error(`${JSON.stringify(Formatter.postfix)} does not generate unique postfixes`)
+        seen.add(postfix)
         return postfix
       })
 
