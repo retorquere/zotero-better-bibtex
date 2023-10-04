@@ -77,7 +77,7 @@ export class TestSupport {
     await Zotero.Promise.delay(1000)
 
     if (Zotero.BetterBibTeX.KeyManager.keys.data.length !== 0) throw new Error(`keystore has ${Zotero.BetterBibTeX.KeyManager.keys.data.length} entries after reset`)
-    if (Zotero.BetterBibTeX.KeyManager.bucket.size !== 0) throw new Error(`keymap has ${Zotero.BetterBibTeX.KeyManager.bucket.size} entries after reset`)
+    if (Zotero.BetterBibTeX.KeyManager.bucket.size !== 0) throw new Error(`keymap has ${Zotero.BetterBibTeX.KeyManager.bucket.size} entries after reset: ${[...Zotero.BetterBibTeX.KeyManager.bucket.entries()]}`)
   }
 
   public async librarySize(): Promise<number> {
