@@ -9,11 +9,11 @@ const strings = is7
   : Services.strings.createBundle('chrome://zotero-better-bibtex/locale/zotero-better-bibtex.properties')
 
 export const localizev = is7
-  ? (id: string, params: any = null): string => {
+  ? (id: string, params: any = null): string => strings.formatValueSync(id, params || {}) as string
+  : (id: string, params: any = null): string => {
     const str: string = strings.GetStringFromName(id)
     return params ? (format(str, params) as string) : str
   }
-  : (id: string, params: any = null): string => strings.formatValueSync(id, params || {}) as string
 
 export function localize(id: string, params: any = null): string {
   try {

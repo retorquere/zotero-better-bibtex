@@ -79,7 +79,7 @@ Events.on('idle', async state => {
     if (!db.autosaveDirty()) continue
 
     try {
-      await db.saveDatabaseAsync()
+      await db.saveDatabase()
     }
     catch (err) {
       log.error('idle, saving failed', db.filename, err)
@@ -118,8 +118,7 @@ export class XULoki extends Loki {
   }
 
   public saveDatabase(): Promise<void> {
-    const store = this.persistenceAdapter.constructor.name
-    Zotero.debug(`BBT: ${store}.saveDatabaseAsync started`)
+    // const store = this.persistenceAdapter.constructor.name
     return new Promise((resolve, reject) => {
       super.saveDatabase(err => {
         if (err) {

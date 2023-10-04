@@ -39,6 +39,7 @@ export const KeyManager = new class _KeyManager {
   public searchEnabled = false
 
   public keys: any
+  public bucket: Map<string, CitekeySearchRecord[]>
   public query: {
     field: { extra?: number, title?: number }
     type: {
@@ -172,6 +173,7 @@ export const KeyManager = new class _KeyManager {
           item.setField('extra', aliases.extra)
         }
         await item.saveTx()
+        await Zotero.Promise.delay(10)
       }
       else {
         updates.push(item)
@@ -186,19 +188,20 @@ export const KeyManager = new class _KeyManager {
       description: 'keymanager',
       needs: ['sqlite', 'database'],
       startup: async () => {
-        log.debug('keymanager.init: kuroshiro/jieba')
+
+        log.debug('keymanager: init: kuroshiro/jieba')
         await kuroshiro.init()
         chinese.init()
 
-        log.debug('keymanager.init: get keys')
-        this.keys = DB.getCollection('citekey')
+        log.debug('keymanager: init: get keys')
+        this.keys = this.watch(DB.getCollection('citekey'))
 
         this.query = {
           field: {},
           type: {},
         }
 
-        log.debug('keymanager.init: pre-fetching types/fields')
+        log.debug('keymanager: init: pre-fetching types/fields')
         for (const type of await ZoteroDB.queryAsync('select itemTypeID, typeName from itemTypes')) { // 1 = attachment, 14 = note
           this.query.type[type.typeName] = type.itemTypeID
         }
@@ -207,9 +210,9 @@ export const KeyManager = new class _KeyManager {
           this.query.field[field.fieldName] = field.fieldID
         }
 
-        log.debug('keymanager.init: compiling', Preference.citekeyFormat)
+        log.debug('keymanager: init: compiling', Preference.citekeyFormat)
         Formatter.update([Preference.citekeyFormat])
-        log.debug('keymanager.init: done')
+        log.debug('keymanager: init: done')
 
         await this.start()
       },
@@ -320,6 +323,60 @@ export const KeyManager = new class _KeyManager {
     })
   }
 
+  private watch(keys: any): any {
+    const insert = item => {
+      const bucket = this.bucket.get(item.citekey)
+      if (!bucket) {
+        this.bucket.set(item.citekey, [item])
+      }
+      else {
+        bucket.push(item)
+      }
+    }
+
+    const remove = item => {
+      let bucket = this.bucket.get(item.citekey)
+      if (!bucket) return
+      bucket = bucket.filter(i => i.itemID !== item.itemID)
+      if (bucket.length) {
+        this.bucket.set(item.citekey, bucket)
+      }
+      else {
+        this.bucket.delete(item.citekey)
+      }
+    }
+
+    this.bucket = new Map
+    for (const item of keys.data) {
+      insert(item)
+    }
+
+    keys.on(['delete', 'pre-update'], items => {
+      log.debug('keymanager: delete:pre-update:', items)
+      if (Array.isArray(items)) {
+        for (const item of items) {
+          remove(item)
+        }
+      }
+      else {
+        remove(items)
+      }
+    })
+    keys.on(['insert', 'update'], items => {
+      log.debug('keymanager: update:insert:', items)
+      if (Array.isArray(items)) {
+        for (const item of items) {
+          insert(item)
+        }
+      }
+      else {
+        insert(items)
+      }
+    })
+
+    return keys
+  }
+
   private async start(): Promise<void> {
     await this.rescan()
 
@@ -337,7 +394,7 @@ export const KeyManager = new class _KeyManager {
       }
     })
     Events.on('items-changed-prep', ({ ids, action }) => {
-      log.debug('keymanager.emit:', ids, action)
+      log.debug('keymanager: items-changed-prep:', action, ids)
       let warn_titlecase = 0
       switch (action) {
         case 'delete':
@@ -426,7 +483,7 @@ export const KeyManager = new class _KeyManager {
 
   public async rescan(clean?: boolean): Promise<void> {
     if (Preference.scrubDatabase) {
-      log.debug('scrubbing database')
+      log.debug('keymanager: scrubbing database')
       this.keys.removeWhere(i => !i.citekey) // 2047
 
       let errors = 0
@@ -508,7 +565,7 @@ export const KeyManager = new class _KeyManager {
 
       inzdb.delete(bbt.itemID)
     }
-    log.debug('keymanager.rescan:', activity)
+    log.debug('keymanager: rescan:', activity)
 
     this.keys.findAndRemove({ itemID: { $in: [...deleted, ...this.regenerate] } })
     this.regenerate.push(...inzdb.keys()) // generate new keys for items that are in the Z db but not in the BBT db
@@ -533,7 +590,7 @@ export const KeyManager = new class _KeyManager {
         eta.iterate()
 
         if ((eta.done % 10) === 1) {
-          log.debug('keymanager.rescan: regenerated', eta.done)
+          log.debug('keymanager: rescan: regenerated', eta.done)
           progress.setProgress((eta.done * 100) / eta.count)
           progress.setText(eta.format(`${eta.done} / ${eta.count}, {{etah}} remaining`))
         }
@@ -583,16 +640,14 @@ export const KeyManager = new class _KeyManager {
     return { citekey: '', pinned: false, retry: true }
   }
 
-  public propose(item: ZoteroItem, transient: string[] = []): { citekey: string, pinned: boolean } {
+  public propose(item: ZoteroItem): { citekey: string, pinned: boolean } {
     let citekey: string = Extra.get(item.getField('extra') as string, 'zotero', { citationKey: true }).extraFields.citationKey
 
     if (citekey) return { citekey, pinned: true }
 
     citekey = Formatter.format(item)
-    log.debug('formatter.propose:', Preference.citekeyFormat, Preference.citekeyFormatEditing, citekey)
 
-    const conflictQuery: Query = { $and: [ { citekey: { $eq: '' } }, { itemID: { $ne: item.id } } ] }
-    if (Preference.keyScope !== 'global') conflictQuery.$and.push({ libraryID: { $eq: item.libraryID } })
+    const g = Preference.keyScope === 'global'
 
     const seen: Set<string> = new Set
     // eslint-disable-next-line no-constant-condition
@@ -609,9 +664,8 @@ export const KeyManager = new class _KeyManager {
         return postfix
       })
 
-      conflictQuery.$and[0] = { citekey: { $eq: postfixed } }
-      const conflict = transient.includes(postfixed) || this.keys.findOne(conflictQuery)
-      if (conflict) continue
+      log.debug('keymanager: propose:', { item: { itemID: item.id, libraryID: item.libraryID }, postfixed, bucket: this.bucket.get(postfixed) || [], conflict: this.bucket.get(postfixed)?.find(i => i.itemID !== item.id && (g || i.libraryID === item.libraryID)) || false })
+      if (this.bucket.get(postfixed)?.find(i => i.itemID !== item.id && (g || i.libraryID === item.libraryID))) continue
 
       return { citekey: postfixed, pinned: false }
     }
