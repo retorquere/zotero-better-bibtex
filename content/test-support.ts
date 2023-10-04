@@ -10,6 +10,7 @@ import * as Extra from './extra'
 import { $and } from './db/loki'
 import  { defaults } from '../gen/preferences/meta'
 import { Preference } from './prefs'
+import { fromEntries } from './object'
 import * as memory from './memory'
 
 const setatstart: string[] = ['testing', 'cache'].filter(p => Preference[p] !== defaults[p])
@@ -77,7 +78,7 @@ export class TestSupport {
     await Zotero.Promise.delay(1000)
 
     if (Zotero.BetterBibTeX.KeyManager.keys.data.length !== 0) throw new Error(`keystore has ${Zotero.BetterBibTeX.KeyManager.keys.data.length} entries after reset`)
-    if (Zotero.BetterBibTeX.KeyManager.bucket.size !== 0) throw new Error(`keymap has ${Zotero.BetterBibTeX.KeyManager.bucket.size} entries after reset: ${[...Zotero.BetterBibTeX.KeyManager.bucket.entries()]}`)
+    if (Zotero.BetterBibTeX.KeyManager.bucket.size !== 0) throw new Error(`keymap has ${Zotero.BetterBibTeX.KeyManager.bucket.size} entries after reset: ${JSON.stringify(fromEntries([...Zotero.BetterBibTeX.KeyManager.bucket.entries()]))}`)
   }
 
   public async librarySize(): Promise<number> {
