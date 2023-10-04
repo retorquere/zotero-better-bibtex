@@ -108,21 +108,20 @@ export class XULoki extends Loki {
     }
   }
 
-  public loadDatabaseAsync(options = {}): Promise<void> {
+  public loadDatabase(options = {}): Promise<void> {
     return new Promise((resolve, reject) => {
-      this.loadDatabase(options, err => {
+      super.loadDatabase(options, err => {
         if (err) return reject(err)
         resolve(null)
       })
     })
   }
 
-  public saveDatabaseAsync(): Promise<void> {
+  public saveDatabase(): Promise<void> {
     const store = this.persistenceAdapter.constructor.name
     Zotero.debug(`BBT: ${store}.saveDatabaseAsync started`)
     return new Promise((resolve, reject) => {
-      this.saveDatabase(err => {
-        Zotero.debug(`BBT: ${store}.saveDatabaseAsync finished: ${err}`)
+      super.saveDatabase(err => {
         if (err) {
           reject(err)
         }
@@ -133,12 +132,11 @@ export class XULoki extends Loki {
     })
   }
 
-  public closeAsync(): Promise<void> {
+  public close(): Promise<void> {
     const store = this.persistenceAdapter.constructor.name
     Zotero.debug(`BBT: ${store}.closeAsync started`)
     return new Promise((resolve, reject) => {
-      this.close(err => {
-        Zotero.debug(`BBT: ${store}.closeAsync finished`)
+      super.close(err => {
         if (err) {
           reject(err)
         }
