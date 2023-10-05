@@ -48,6 +48,7 @@ class Main extends Loki {
       indices: [ 'itemID', 'itemKey', 'libraryID', 'citekey', 'pinned' ],
       unique: [ 'itemID' ],
       logging: true,
+      clone: true,
       schema: {
         type: 'object',
         properties: {

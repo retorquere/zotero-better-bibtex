@@ -325,6 +325,13 @@ export const KeyManager = new class _KeyManager {
 
   private watch(keys: any): any {
     const insert = item => {
+      if (!item) return
+
+      if (Array.isArray(item)) {
+        item.map(insert)
+        return
+      }
+
       const bucket = this.bucket.get(item.citekey)
       if (!bucket) {
         this.bucket.set(item.citekey, [item])
@@ -335,6 +342,13 @@ export const KeyManager = new class _KeyManager {
     }
 
     const remove = item => {
+      if (!item) return
+
+      if (Array.isArray(item)) {
+        item.map(remove)
+        return
+      }
+
       let bucket = this.bucket.get(item.citekey)
       if (!bucket) return
       bucket = bucket.filter(i => i.itemID !== item.itemID)
@@ -351,27 +365,23 @@ export const KeyManager = new class _KeyManager {
       insert(item)
     }
 
-    keys.on(['delete', 'pre-update'], items => {
-      log.debug('keymanager: delete:pre-update:', items)
-      if (Array.isArray(items)) {
-        for (const item of items) {
-          remove(item)
-        }
+    keys.on(['pre-update'], item => {
+      log.debug('keymanager: pre-update:', item)
+      if (Array.isArray(item)) {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+        remove(item.map(i => this.keys.get(i.$loki)))
       }
       else {
-        remove(items)
+        remove(this.keys.get(item.$loki))
       }
     })
-    keys.on(['insert', 'update'], items => {
-      log.debug('keymanager: update:insert:', items)
-      if (Array.isArray(items)) {
-        for (const item of items) {
-          insert(item)
-        }
-      }
-      else {
-        insert(items)
-      }
+    keys.on(['delete'], item => {
+      log.debug('keymanager: delete:', item)
+      remove(item)
+    })
+    keys.on(['insert', 'update'], item => {
+      log.debug('keymanager: update:insert:', item)
+      insert(item)
     })
 
     return keys
