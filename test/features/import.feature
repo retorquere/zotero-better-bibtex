@@ -65,13 +65,17 @@ Feature: Import
     And I copy date-added/date-modified for the selected items from the extra field
     Then the library should match "import/*.json"
 
+  @use.with_slow=true @timeout=3000
+  Scenario: Import error with character '+' in BibTeX field name #2660
+    When I import 283 references from "import/*.bib"
+    Then the library should match "import/*.json"
+
   Scenario Outline: Import <references> references from <file>
     When I import <references> references from "import/<file>.bib"
     Then the library should match "import/*.json"
 
     Examples:
       | file                                                                                   | references |
-      | Import error with character '+' in BibTeX field name #2660                             | 283        |
       | DOIs excluded from export in 6.7.86 #2555                                              | 1          |
       | issuenumberarticle-number #2551                                                        | 1          |
       | Allow spaces between href arguments for import #2504                                   | 4          |
