@@ -35,6 +35,38 @@ import * as l10n from './l10n'
 
 type CitekeySearchRecord = { itemID: number, libraryID: number, itemKey: string, citekey: string }
 
+class Progress {
+  private win: any
+  private progress: any
+  private eta: ETA
+
+  constructor(total: number, message: string) {
+    this.win = new Zotero.ProgressWindow({ closeOnClick: false })
+    this.win.changeHeadline(`Better BibTeX: ${message}`)
+    // this.win.addDescription(`Found ${this.regenerate.length} items without a citation key`)
+    const icon = `chrome://zotero/skin/treesource-unfiled${Zotero.hiDPI ? '@2x' : ''}.png`
+    this.progress = new this.win.ItemProgress(icon, message)
+    this.win.show()
+
+    this.eta = new ETA(total, { autoStart: true })
+  }
+
+  next() {
+    this.eta.iterate()
+
+    if ((this.eta.done % 10) === 1) {
+      this.progress.setProgress((this.eta.done * 100) / this.eta.count)
+      this.progress.setText(this.eta.format(`${this.eta.done} / ${this.eta.count}, {{etah}} remaining`))
+    }
+  }
+
+  done() {
+    this.progress.setProgress(100)
+    this.progress.setText('Ready')
+    this.win.startCloseTimer(500)
+  }
+}
+
 export const KeyManager = new class _KeyManager {
   public searchEnabled = false
 
@@ -149,6 +181,7 @@ export const KeyManager = new class _KeyManager {
     }
 
     const updates: ZoteroItem[] = []
+    const progress: Progress = ids.length > 10 ? new Progress(ids.length, 'Refreshing citation keys') : null
     for (const item of await getItemsAsync(ids)) {
       if (item.isFeedItem || !item.isRegularItem()) continue
 
@@ -178,7 +211,10 @@ export const KeyManager = new class _KeyManager {
       else {
         updates.push(item)
       }
+
+      progress?.next()
     }
+    progress?.done()
 
     if (updates.length) void Events.emit('items-changed', { items: updates, action: 'modify', reason: 'refresh' })
   }
@@ -581,34 +617,20 @@ export const KeyManager = new class _KeyManager {
     this.regenerate.push(...inzdb.keys()) // generate new keys for items that are in the Z db but not in the BBT db
 
     if (this.regenerate.length) {
-      const progressWin = new Zotero.ProgressWindow({ closeOnClick: false })
-      progressWin.changeHeadline('Better BibTeX: Assigning citation keys')
-      progressWin.addDescription(`Found ${this.regenerate.length} items without a citation key`)
-      const icon = `chrome://zotero/skin/treesource-unfiled${Zotero.hiDPI ? '@2x' : ''}.png`
-      const progress = new progressWin.ItemProgress(icon, 'Assigning citation keys')
-      progressWin.show()
+      const progress: Progress = this.regenerate.length > 10 ? new Progress(this.regenerate.length, 'Assigning citation keys') : null
 
-      const eta = new ETA(this.regenerate.length, { autoStart: true })
       for (const itemID of this.regenerate) {
         try {
           this.update(await getItemsAsync(itemID))
         }
         catch (err) {
-          log.error('KeyManager.rescan: update', (eta.done as number) + 1, 'failed:', err.message || err, err.stack)
+          log.error('KeyManager.rescan: update failed:', err.message || `${err}`, err.stack)
         }
 
-        eta.iterate()
-
-        if ((eta.done % 10) === 1) {
-          log.debug('keymanager: rescan: regenerated', eta.done)
-          progress.setProgress((eta.done * 100) / eta.count)
-          progress.setText(eta.format(`${eta.done} / ${eta.count}, {{etah}} remaining`))
-        }
+        progress?.next()
       }
 
-      progress.setProgress(100)
-      progress.setText('Ready')
-      progressWin.startCloseTimer(500)
+      progress?.done()
     }
 
     this.regenerate = null
