@@ -17,10 +17,10 @@ export const localizev = is7
 
 export function localize(id: string, params: any = null): string {
   try {
-    return localizev(id, params)
+    return localizev(id, params) || `@${id}`
   }
   catch (err) {
     log.error('l10n.get error:', id, err)
-    return id
+    return `!${id}`
   }
 }
