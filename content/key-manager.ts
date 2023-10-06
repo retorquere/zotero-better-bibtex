@@ -163,9 +163,9 @@ export const KeyManager = new class _KeyManager {
         const index = ps.confirmEx(
           null, // no parent
           'Better BibTeX for Zotero', // dialog title
-          l10n.localize('better-bibtex_bulk-keys-confirm.value', { treshold: warnAt }),
+          l10n.localize('better-bibtex_bulk-keys-confirm_warning', { treshold: warnAt }),
           ps.STD_OK_CANCEL_BUTTONS + ps.BUTTON_POS_2 * ps.BUTTON_TITLE_IS_STRING, // buttons
-          null, null, l10n.localize('better-bibtex_bulk-keys-confirm.buttonlabelextra1'), // button labels
+          null, null, l10n.localize('better-bibtex_bulk-keys-confirm_stop_asking'), // button labels
           null, {} // no checkbox
         )
         switch (index) {
