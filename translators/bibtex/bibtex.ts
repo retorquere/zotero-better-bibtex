@@ -494,6 +494,7 @@ export class ZoteroItem {
     codefragment:       'computerProgram',
     collection:         'book',
     conference:         'conferencePaper',
+    constitution:       'statute',
     dataset:            'dataset',
     film:               'film', // mendeley made-up entry type
     generic:            'journalArticle', // mendeley made-up entry type
@@ -503,6 +504,11 @@ export class ZoteroItem {
     incollection:       'bookSection',
     inproceedings:      'conferencePaper',
     inreference:        'encyclopediaArticle',
+    jurisdiction:       'case',
+    legadminmaterial:   'statute',
+    legal:              'statute',
+    legislation:        'statute',
+    legmaterial:        'bill', // could also be 'hearing'
     magazine_article:   'magazineArticle', // mendeley made-up entry type
     manual:             'report',
     mastersthesis:      'thesis',
@@ -511,6 +517,7 @@ export class ZoteroItem {
     newspaper_article:  'newspaperArticle', // mendeley made-up entry type
     online:             'webpage',
     patent:             'patent',
+    periodical:         'document',
     phdthesis:          'thesis',
     presentation:       'presentation',
     proceedings:        'book',
@@ -529,13 +536,6 @@ export class ZoteroItem {
 
     // need better equivalents
     nameonly:          '$document',
-    periodical:        '$document',
-    jurisdiction:      '$document',
-    legislation:       '$document',
-    legmaterial:       '$document',
-    legadminmaterial:  '$document',
-    constitution:      '$document',
-    legal:             '$document',
   }
 
   private extra: string[] = []
@@ -1117,6 +1117,15 @@ export class ZoteroItem {
 
     if (!this.bibtex.fields.type) {
       switch (this.bibtex.type) {
+        case 'legal':
+          this.$type('treaty')
+          break
+        case 'legmaterial':
+          this.$type('regulation')
+          break
+        case 'periodical':
+          this.$type('periodical')
+          break
         case 'manual':
           if (this.item.itemType === 'report') this.$type('manual')
           break
