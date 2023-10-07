@@ -24,6 +24,11 @@ Feature: Import
     When I import 11 references from "import/*.yml"
     Then the library should match "import/*.json"
 
+  Scenario: detect-urls
+    When I set preference .verbatimFields to "url,doi,file,pdf,ids,eprint,/^verb[a-z]$/,groups,/^citeulike-linkout-[0-9]+$/,/^bdsk-url-[0-9]+$/, /^url_/"
+    And I import 1 reference from "import/*.bib"
+    Then the library should match "import/*.json"
+
   @1358
   Scenario: Import support for the online type in BBT #1358
     When I import 1 references from "import/*.bib"
