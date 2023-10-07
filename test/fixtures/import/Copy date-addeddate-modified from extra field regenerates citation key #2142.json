@@ -2,63 +2,179 @@
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "options": {
-      "exportNotes": true
-    },
     "preferences": {
-      "citekeyFormat": "auth + year"
+      "ascii": "",
+      "asciiBibLaTeX": false,
+      "asciiBibTeX": true,
+      "autoAbbrev": false,
+      "autoAbbrevStyle": "",
+      "autoExport": "immediate",
+      "autoExportDelay": 5,
+      "autoExportIdleWait": 10,
+      "autoExportPathReplaceDiacritics": false,
+      "autoExportPathReplaceDirSep": "-",
+      "autoExportPathReplaceSpace": " ",
+      "automaticTags": true,
+      "autoPinDelay": 0,
+      "auxImport": false,
+      "baseAttachmentPath": "",
+      "biblatexExtendedDateFormat": true,
+      "biblatexExtendedNameFormat": true,
+      "biblatexExtractEprint": true,
+      "bibtexEditionOrdinal": false,
+      "bibtexParticleNoOp": false,
+      "bibtexURL": "off",
+      "cache": true,
+      "cacheFlushInterval": 5,
+      "charmap": "",
+      "citeCommand": "cite",
+      "citekeyFold": true,
+      "citekeyFormat": "auth + year",
+      "citekeySearch": true,
+      "citekeyUnsafeChars": "\\\"#%'(),={}~",
+      "csquotes": "",
+      "DOIandURL": "both",
+      "exportBibTeXStrings": "off",
+      "exportBraceProtection": true,
+      "exportTitleCase": true,
+      "extraMergeCitekeys": false,
+      "extraMergeCSL": false,
+      "extraMergeTeX": false,
+      "git": "config",
+      "import": true,
+      "importBibTeXStrings": true,
+      "importCaseProtection": "as-needed",
+      "importCitationKey": true,
+      "importDetectURLs": true,
+      "importExtra": true,
+      "importJabRefAbbreviations": true,
+      "importJabRefStrings": true,
+      "importNoteToExtra": "",
+      "importSentenceCase": "on+guess",
+      "importSentenceCaseQuoted": true,
+      "importUnknownTexCommand": "ignore",
+      "itemObserverDelay": 5,
+      "jabrefFormat": 0,
+      "jieba": false,
+      "keyConflictPolicy": "keep",
+      "keyScope": "library",
+      "kuroshiro": false,
+      "language": "langid",
+      "mapMath": "",
+      "mapText": "",
+      "mapUnicode": "conservative",
+      "parseParticles": true,
+      "patchDates": "dateadded=dateAdded, date-added=dateAdded, datemodified=dateModified, date-modified=dateModified",
+      "postscript": "",
+      "postscriptOverride": "",
+      "preferencesOverride": "",
+      "qualityReport": false,
+      "quickCopyEta": "",
+      "quickCopyMode": "latex",
+      "quickCopyOrgMode": "zotero",
+      "quickCopyPandocBrackets": false,
+      "quickCopySelectLink": "zotero",
+      "rawImports": false,
+      "rawLaTag": "#LaTeX",
+      "relativeFilePaths": false,
+      "retainCache": false,
+      "separatorList": "and",
+      "separatorNames": "and",
+      "skipFields": "",
+      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
+      "startupProgress": "popup",
+      "strings": "",
+      "stringsOverride": "",
+      "verbatimFields": "url,doi,file,pdf,ids,eprint,/^verb[a-z]$/,groups,/^citeulike-linkout-[0-9]+$/, /^bdsk-url-[0-9]+$/",
+      "warnBulkModify": 10,
+      "warnTitleCased": false
+    },
+    "options": {
+      "exportNotes": true,
+      "exportFileData": false,
+      "keepUpdated": false,
+      "worker": false,
+      "Normalize": true
     }
   },
+  "version": {
+    "zotero": "6.0.27",
+    "bbt": "6.7.122.emile.limonia"
+  },
+  "collections": {},
   "items": [
     {
-      "DOI": "10.1017/S0022381608081152",
-      "ISSN": "1468-2508",
-      "abstractNote": "Existing research on power and war contends that the distribution of power exerts an independent effect on the chances of armed conflict. However, theories of bargaining indicate that power's influence on war depends on the ex ante distribution of benefits and has a specific functional form. We test that claim, showing that the effect of power on war rests heavily on the distribution of benefits. Our findings strongly suggest bargaining explanations may subsume other arguments about power and war both theoretically and empirically.",
-      "accessDate": "2015-07-25",
-      "citationKey": "ReedClark2008War-Power",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "William",
-          "lastName": "Reed"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "David H.",
-          "lastName": "Clark"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "Timothy",
-          "lastName": "Nordstrom"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "Wonjae",
-          "lastName": "Hwang"
-        }
-      ],
-      "date": "October 2008",
-      "extra": [
-        "Citation Key: ReedClark2008War-Power",
-        "tex.bdsk-url-2: http://dx.doi.org/10.1017/S0022381608081152",
-        "tex.bdsk-url-3: http://dx.doi.org/10.1017/S0022381608081152",
-        "tex.bdsk-url-4: http://dx.doi.org/10.1017/S0022381608081152",
-        "tex.local-url: War/Bargain/ReedClark2008War-Power.pdf"
-      ],
-      "issue": "4",
-      "itemID": 1,
+      "version": 0,
       "itemType": "journalArticle",
+      "url": "http://journals.cambridge.org/article_S0022381608081152",
+      "volume": "70",
+      "issue": "4",
       "pages": "1203-1216",
       "publicationTitle": "The Journal of Politics",
+      "ISSN": "1468-2508",
+      "date": "October 2008",
+      "extra": "Citation Key: ReedClark2008War-Power\ntex.local-url: War/Bargain/ReedClark2008War-Power.pdf",
+      "DOI": "10.1017/S0022381608081152",
+      "accessDate": "2015-07-25",
+      "abstractNote": "Existing research on power and war contends that the distribution of power exerts an independent effect on the chances of armed conflict. However, theories of bargaining indicate that power's influence on war depends on the ex ante distribution of benefits and has a specific functional form. We test that claim, showing that the effect of power on war rests heavily on the distribution of benefits. Our findings strongly suggest bargaining explanations may subsume other arguments about power and war both theoretically and empirically.",
+      "title": "War, Power, and Bargaining",
+      "creators": [
+        {
+          "firstName": "William",
+          "lastName": "Reed",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "David H.",
+          "lastName": "Clark",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Timothy",
+          "lastName": "Nordstrom",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Wonjae",
+          "lastName": "Hwang",
+          "creatorType": "author"
+        }
+      ],
       "tags": [
         {
           "tag": "War/Bargain"
         }
       ],
-      "title": "War, Power, and Bargaining",
-      "url": "http://journals.cambridge.org/article_S0022381608081152",
-      "volume": "70"
+      "relations": [],
+      "dateAdded": "2022-05-05T11:53:38Z",
+      "dateModified": "2022-05-05T11:54:51Z",
+      "uri": "http://zotero.org/users/8230813/items/PBIRUHK3",
+      "attachments": [
+        {
+          "version": 0,
+          "itemType": "attachment",
+          "url": "http://dx.doi.org/10.1017/S0022381608081152",
+          "accessDate": "2023-10-07T19:50:05Z",
+          "title": "bdsk-url-2",
+          "parentItem": "PBIRUHK3",
+          "linkMode": "linked_url",
+          "contentType": "",
+          "charset": "",
+          "tags": [],
+          "relations": {},
+          "dateAdded": "2023-10-07T19:50:05Z",
+          "dateModified": "2023-10-07T19:50:05Z",
+          "uri": "http://zotero.org/users/8230813/items/HASSZ3ZI",
+          "itemID": 103,
+          "itemKey": "HASSZ3ZI",
+          "libraryID": 1
+        }
+      ],
+      "notes": [],
+      "citationKey": "ReedClark2008War-Power",
+      "itemID": 102,
+      "itemKey": "PBIRUHK3",
+      "libraryID": 1
     }
   ]
 }
