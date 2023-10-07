@@ -961,54 +961,37 @@ export class ZoteroItem {
     return this.validFields.ISSN ? this.set('ISSN', value) : this.fallback(['ISSN'], value)
   }
 
-  protected $url(value: string, field: string, title=''): boolean {
+  protected $url(value: string, field: string, urls: Set<string>): boolean {
     // no escapes needed in an verbatim field but people do it anyway
     let url = value.replace(/\\/g, '')
 
     // pluck out the URL if it is wrapped in an HREF
-    let m
+    let m, title = ''
     if (m = url.match(/<a href="([^"]+)"[^>]*>([^<]*)/i)) {
       url = m[1]
       title = m[2] || title
     }
     title = title || field
 
-    if (!url) return true
+    if (urls.has(url)) return true
+    urls.add(url)
 
-    const isURL = this.isURL(url)
+    const isURL = field === 'url' || this.isURL(url)
 
-    if (field === 'url') {
-      if (this.item.url === url) return true
-
+    if (isURL) {
       if (this.validFields.url && !this.item.url) {
         this.item.url = url
         return true
       }
-      else if (this.translation.preferences.importDetectURLs && isURL) {
-        this.item.attachments.push({ itemType: 'attachment', url, title, linkMode: 'linked_url' })
-        return true
-      }
 
-      return this.fallback(['url'], url)
-    }
-
-    if (!this.bibtex.fields.url && !this.item.url && isURL && this.validFields.url) {
-      this.item.url = url
-      return true
-    }
-
-    if (isURL) {
       if (this.translation.preferences.importDetectURLs) {
         this.item.attachments.push({ itemType: 'attachment', url, title, linkMode: 'linked_url' })
         return true
       }
-      return this.fallback(['url'], url)
     }
 
-    return false
+    return this.fallback(['url'], url)
   }
-  protected $howpublished(value: string, field: string): boolean { return this.$url(value, field) }
-  protected '$remote-url'(value: string, field: string): boolean { return this.$url(value, field) }
 
   protected $type(value: string): boolean {
     if (this.item.itemType === 'patent') return !!this.patentNumberPrefix
@@ -1260,13 +1243,23 @@ export class ZoteroItem {
       }[this.bibtex.fields.type[0].toLowerCase()] || ''
     }
 
+    const urls: Set<string> = new Set
+    for (const field of ['url', 'howpublished', 'remote-url']) {
+      if (this.bibtex.fields[field]) {
+        for (const url of this.bibtex.fields[field]) {
+          this.$url(url, field, urls)
+        }
+        delete this.bibtex.fields[field]
+      }
+    }
+
     for (const [field, values] of Object.entries(this.bibtex.fields)) {
       for (const value of values) {
         if (field.match(/^(local-zo-url-[0-9]+|file-[0-9]+)$/)) {
           if (this.$file(value)) continue
         }
         else if (field.match(/^bdsk-url-[0-9]+$/)) {
-          if (this.$url(value, field)) continue
+          if (this.$url(value, field, urls)) continue
         }
         else if (field.match(/^bdsk-file-[0-9]+$/)) {
           let imported = false
