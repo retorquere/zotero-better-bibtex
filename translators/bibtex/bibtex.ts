@@ -976,18 +976,16 @@ export class ZoteroItem {
     if (urls.has(url)) return true
     urls.add(url)
 
-    const isURL = field === 'url' || this.isURL(url)
+    if (field !== 'url' && !this.isURL(url)) return false
 
-    if (isURL) {
-      if (this.validFields.url && !this.item.url) {
-        this.item.url = url
-        return true
-      }
+    if (this.validFields.url && !this.item.url) {
+      this.item.url = url
+      return true
+    }
 
-      if (this.translation.preferences.importDetectURLs) {
-        this.item.attachments.push({ itemType: 'attachment', url, title, linkMode: 'linked_url' })
-        return true
-      }
+    if (this.translation.preferences.importDetectURLs) {
+      this.item.attachments.push({ itemType: 'attachment', url, title, linkMode: 'linked_url' })
+      return true
     }
 
     return this.fallback(['url'], url)
