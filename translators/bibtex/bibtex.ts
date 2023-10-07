@@ -975,30 +975,37 @@ export class ZoteroItem {
 
     if (!url) return true
 
-    const isURL = this.translation.preferences.importDetectURLs && this.isURL(url)
+    const isURL = this.isURL(url)
 
     if (field === 'url') {
       if (this.item.url === url) return true
-      if (this.item.url && isURL) {
-        this.item.attachments.push({ itemType: 'attachment', url, title, linkMode: 'linked_url' })
-        return true
-      }
-      if (!this.item.url) {
+
+      if (this.validFields.url && !this.item.url) {
         this.item.url = url
         return true
       }
-      return false
+      else if (this.translation.preferences.importDetectURLs && isURL) {
+        this.item.attachments.push({ itemType: 'attachment', url, title, linkMode: 'linked_url' })
+        return true
+      }
+
+      return this.fallback(['url'], url)
     }
-    else if (!this.bibtex.fields.url && !this.item.url && isURL && this.validFields.url) {
+
+    if (!this.bibtex.fields.url && !this.item.url && isURL && this.validFields.url) {
       this.item.url = url
       return true
     }
-    else if (isURL) {
-      this.item.attachments.push({ itemType: 'attachment', url, title, linkMode: 'linked_url' })
-      return true
+
+    if (isURL) {
+      if (this.translation.preferences.importDetectURLs) {
+        this.item.attachments.push({ itemType: 'attachment', url, title, linkMode: 'linked_url' })
+        return true
+      }
+      return this.fallback(['url'], url)
     }
 
-    return this.fallback(['url'], url)
+    return false
   }
   protected $howpublished(value: string, field: string): boolean { return this.$url(value, field) }
   protected '$remote-url'(value: string, field: string): boolean { return this.$url(value, field) }
