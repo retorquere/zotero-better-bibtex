@@ -1244,10 +1244,7 @@ export class ZoteroItem {
     const urls: Set<string> = new Set
     for (const field of ['url', 'howpublished', 'remote-url']) {
       if (this.bibtex.fields[field]) {
-        for (const url of this.bibtex.fields[field]) {
-          this.$url(url, field, urls)
-        }
-        delete this.bibtex.fields[field]
+        this.bibtex.fields[field] = this.bibtex.fields[field].filter(url => !this.$url(url, field, urls))
       }
     }
 
