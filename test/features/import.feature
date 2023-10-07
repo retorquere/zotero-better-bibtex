@@ -140,6 +140,7 @@ Feature: Import
 
   @use.with_slow=true @timeout=3000
   Scenario: Some bibtex entries quietly discarded on import from bib file #873
+    Given I set preference .importDetectURLs to false
     When I import 989 references from "import/*.bib"
     Then the library should match "import/*.json"
 
