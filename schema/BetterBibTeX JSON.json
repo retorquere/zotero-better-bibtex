@@ -251,6 +251,9 @@
             "importCitationKey": {
               "type": "boolean"
             },
+            "importDetectURLs": {
+              "type": "boolean"
+            },
             "importExtra": {
               "type": "boolean"
             },

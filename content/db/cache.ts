@@ -33,15 +33,15 @@ class Cache extends Loki {
         const store = this.persistenceAdapter?.constructor?.name || 'Unknown'
         this.throttledSaves = false
         log.debug(`Loki.${store}.shutdown: saving ${this.filename}`)
-        await this.saveDatabaseAsync()
+        await this.saveDatabase()
         log.debug(`Loki.${store}.shutdown: closing ${this.filename}`)
-        await this.closeAsync()
+        await this.close()
       },
     })
   }
 
   private async init() {
-    await this.loadDatabaseAsync()
+    await this.loadDatabase()
 
     let coll = this.schemaCollection('itemToExportFormat', {
       indices: [ 'itemID' ],

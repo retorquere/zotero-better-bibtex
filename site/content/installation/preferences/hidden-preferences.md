@@ -74,6 +74,11 @@ Use BBTs importer instead of Zotero's importer
 default: `yes`
 
 On import, assign the existing citation key to the item being imported
+## importDetectURLs
+
+default: `yes`
+
+On import, detect URLs in non-standard bib(la)tex fields and import them as attachments
 ## importExtra
 
 default: `yes`

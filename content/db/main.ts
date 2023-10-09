@@ -19,21 +19,22 @@ class Main extends Loki {
         const store = this.persistenceAdapter?.constructor?.name || 'Unknown'
         this.throttledSaves = false
         log.debug(`Loki.${store}.shutdown: saving ${this.filename}`)
-        await this.saveDatabaseAsync()
+        await this.saveDatabase()
         log.debug(`Loki.${store}.shutdown: closing ${this.filename}`)
-        await this.closeAsync()
+        await this.close()
         log.debug(`Loki.${store}.shutdown: closed ${this.filename}`)
       },
     })
   }
 
   private async init() {
-    await this.loadDatabaseAsync()
+    await this.loadDatabase()
 
     const citekeys = this.schemaCollection('citekey', {
       indices: [ 'itemID', 'itemKey', 'libraryID', 'citekey', 'pinned' ],
       unique: [ 'itemID' ],
       logging: true,
+      clone: true,
       schema: {
         type: 'object',
         properties: {

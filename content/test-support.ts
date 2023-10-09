@@ -10,6 +10,7 @@ import * as Extra from './extra'
 import { $and } from './db/loki'
 import  { defaults } from '../gen/preferences/meta'
 import { Preference } from './prefs'
+import { fromEntries } from './object'
 import * as memory from './memory'
 import { Events } from './events'
 
@@ -73,6 +74,11 @@ export class TestSupport {
 
     items = await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, false, true, true)
     if (items.length !== 0) throw new Error('library not empty after reset')
+
+    await Zotero.Promise.delay(1000)
+
+    if (Zotero.BetterBibTeX.KeyManager.keys.data.length !== 0) throw new Error(`keystore has ${Zotero.BetterBibTeX.KeyManager.keys.data.length} entries after reset`)
+    if (Zotero.BetterBibTeX.KeyManager.bucket.size !== 0) throw new Error(`keymap has ${Zotero.BetterBibTeX.KeyManager.bucket.size} entries after reset: ${JSON.stringify(fromEntries([...Zotero.BetterBibTeX.KeyManager.bucket.entries()]))}`)
   }
 
   public async librarySize(): Promise<number> {

@@ -208,8 +208,8 @@
         "Citation Key: 10.1:12a",
         "Issue: 1",
         "Pages: 51\u2013104",
+        "Type: periodical",
         "Volume: 6",
-        "tex.entrytype: periodical",
         "tex.issuetitle: Special section"
       ],
       "itemID": 11,
@@ -239,8 +239,8 @@
       "extra": [
         "Citation Key: 10.1:12b",
         "Issue: 4",
+        "Type: periodical",
         "Volume: 73",
-        "tex.entrytype: periodical",
         "tex.issuetitle: Special issue"
       ],
       "itemID": 12,
@@ -3502,10 +3502,10 @@
       "date": "1989-11-20",
       "extra": [
         "Citation Key: 11.10:29",
-        "tex.entrytype: legal"
+        "Type: treaty"
       ],
       "itemID": 156,
-      "itemType": "document",
+      "itemType": "statute",
       "title": "United nations convention on the rights of the child",
       "url": "https://www.ohchr.org/en/professionalinterest/pages/crc.aspx"
     },
@@ -3514,11 +3514,10 @@
       "date": "1954",
       "extra": [
         "Citation Key: 11.4:1",
-        "tex.citation: 347 U.S. 483",
-        "tex.entrytype: jurisdiction"
+        "tex.citation: 347 U.S. 483"
       ],
       "itemID": 157,
-      "itemType": "document",
+      "itemType": "case",
       "title": "Brown v. Board of education",
       "url": "http://www.oyez.org/cases/1940-1955/347us483"
     },
@@ -3527,11 +3526,10 @@
       "date": "2015",
       "extra": [
         "Citation Key: 11.4:2",
-        "tex.citation: 576 U.S. ___",
-        "tex.entrytype: jurisdiction"
+        "tex.citation: 576 U.S. ___"
       ],
       "itemID": 158,
-      "itemType": "document",
+      "itemType": "case",
       "title": "Obergefell v. Hodges",
       "url": "https://www.supremecourt.gov/opinions/14pdf/14-556_3204.pdf"
     },
@@ -3540,12 +3538,11 @@
       "date": "1991",
       "extra": [
         "Citation Key: 11.4:3",
-        "tex.citation: 951 F.2d 1128",
-        "tex.entrytype: jurisdiction"
+        "Authority: 9th Cir.",
+        "tex.citation: 951 F.2d 1128"
       ],
       "itemID": 159,
-      "itemType": "document",
-      "publisher": "9th Cir.",
+      "itemType": "case",
       "title": "Daubert v. Merrell dow pharmaceuticals, inc.",
       "url": "https://openjurist.org/951/f2d/1128/william-dabert-v-merrell-dow-pharmaceuticals"
     },
@@ -3554,12 +3551,11 @@
       "date": "2001",
       "extra": [
         "Citation Key: 11.4:4",
-        "tex.citation: 133 F.Supp.2d 1034",
-        "tex.entrytype: jurisdiction"
+        "Authority: N.D. Ohio",
+        "tex.citation: 133 F.Supp.2d 1034"
       ],
       "itemID": 160,
-      "itemType": "document",
-      "publisher": "N.D. Ohio",
+      "itemType": "case",
       "title": "Burriola v. Greater toledo YMCA",
       "url": "https://law.justia.com/cases/federal/district-courts/FSupp2/133/1034/2293141/"
     },
@@ -3572,11 +3568,10 @@
         "tex.citation: 563 F.Supp. 332 and aff'd and 727 F.2d 888",
         "tex.citation+an:citedate: 1=\"1981\";3=\"1984\"",
         "tex.citation+an:citeinfo: 2=appeal",
-        "tex.citation+an:citeorg: 1=\"D. Kan.\";3=\"10th Cir.\"",
-        "tex.entrytype: jurisdiction"
+        "tex.citation+an:citeorg: 1=\"D. Kan.\";3=\"10th Cir.\""
       ],
       "itemID": 161,
-      "itemType": "document",
+      "itemType": "case",
       "title": "Durflinger v. Artiles",
       "url": "https://openjurist.org/727/f2d/888/durflinger-v-artiles"
     },
@@ -3585,11 +3580,10 @@
       "date": "1976",
       "extra": [
         "Citation Key: 11.4:6",
-        "tex.citation: 17 Cal.3d 425 and 131 Cal. Rptr. 14 and 551 P.2d 334",
-        "tex.entrytype: jurisdiction"
+        "tex.citation: 17 Cal.3d 425 and 131 Cal. Rptr. 14 and 551 P.2d 334"
       ],
       "itemID": 162,
-      "itemType": "document",
+      "itemType": "case",
       "title": "Tarasoff v. Regents of the university of california",
       "url": "https://www.casebriefs.com/blog/law/torts/tors-keyed-to-dobbs/the-duty-to-protect-from-third-persons/tarasoff-v-regents-of-university-of-california"
     },
@@ -3600,11 +3594,10 @@
         "Citation Key: 11.4:7",
         "tex.citation: 826 S.W.2d 201",
         "tex.citation+an:citedate: 1=\"1992\"",
-        "tex.citation+an:citeorg: 1=\"Tex. Ct. App.\"",
-        "tex.entrytype: jurisdiction"
+        "tex.citation+an:citeorg: 1=\"Tex. Ct. App.\""
       ],
       "itemID": 163,
-      "itemType": "document",
+      "itemType": "case",
       "title": "Texas v. Morales",
       "url": "https://www.leagle.com/decision/19921027826sw2d20111010"
     },
@@ -3613,11 +3606,10 @@
       "date": "2015",
       "extra": [
         "Citation Key: 11.5:10",
-        "Place: 20 U.S.C \u00a7 6301",
-        "tex.entrytype: legislation"
+        "Place: 20 U.S.C \u00a7 6301"
       ],
       "itemID": 164,
-      "itemType": "document",
+      "itemType": "statute",
       "title": "Every student succeeds act",
       "url": "https://www.congress.gov/114/plaws/publ95/PLAW-114publ95.pdf"
     },
@@ -3626,11 +3618,10 @@
       "date": "2009",
       "extra": [
         "Citation Key: 11.5:11",
-        "Place: Pub. L. No. 111-2, 123 Stat. 5",
-        "tex.entrytype: legislation"
+        "Place: Pub. L. No. 111-2, 123 Stat. 5"
       ],
       "itemID": 165,
-      "itemType": "document",
+      "itemType": "statute",
       "title": "Lilly leadbetter fair play act. of 2009",
       "url": "https://www.govinfo.gov/content/pkg/PLAW-111publ2/pdf/PLAW-111publ2.pdf"
     },
@@ -3639,11 +3630,10 @@
       "date": "1972",
       "extra": [
         "Citation Key: 11.5:12",
-        "Place: 20 U.S.C \u00a7 1681 <i>et seq.</i>",
-        "tex.entrytype: legislation"
+        "Place: 20 U.S.C \u00a7 1681 <i>et seq.</i>"
       ],
       "itemID": 166,
-      "itemType": "document",
+      "itemType": "statute",
       "title": "Patsy mink equal opportunity in education act",
       "url": "https://www.justice.org/crt/title-ix-education-amendments-1972"
     },
@@ -3653,11 +3643,10 @@
       "extra": [
         "Citation Key: 11.5:13",
         "Original Date: 1971",
-        "Place: Fla. Stat. \u00a7 394",
-        "tex.entrytype: legislation"
+        "Place: Fla. Stat. \u00a7 394"
       ],
       "itemID": 167,
-      "itemType": "document",
+      "itemType": "statute",
       "title": "Florida mental health act",
       "url": "http://www.leg.state.fl.us/statues/index.cfm?App_mode=Display_Statute&URL=0300-0399/0394/0394.html"
     },
@@ -3666,11 +3655,10 @@
       "date": "1990",
       "extra": [
         "Citation Key: 11.5:8",
-        "Place: 42 U.S.C \u00a7 12101 <i>et seq.</i>",
-        "tex.entrytype: legislation"
+        "Place: 42 U.S.C \u00a7 12101 <i>et seq.</i>"
       ],
       "itemID": 168,
-      "itemType": "document",
+      "itemType": "statute",
       "title": "American with disabilities act. of 1990",
       "url": "https://www.ada.gov/pubs/adastatute08.htm"
     },
@@ -3679,11 +3667,10 @@
       "date": "1964",
       "extra": [
         "Citation Key: 11.5:9",
-        "Place: Pub. L. No. 88\u2013352, 78 Stat. 241",
-        "tex.entrytype: legislation"
+        "Place: Pub. L. No. 88\u2013352, 78 Stat. 241"
       ],
       "itemID": 169,
-      "itemType": "document",
+      "itemType": "statute",
       "title": "Civil rights act. of 1964",
       "url": "https://www.govinfo.gov/content/pkg/STATUE-78/pdf/STATUTE-78-Pg241.pdf"
     },
@@ -3693,10 +3680,10 @@
       "extra": [
         "Citation Key: 11.6:14",
         "Place: 114th Cong.",
-        "tex.entrytype: legmaterial"
+        "Type: regulation"
       ],
       "itemID": 170,
-      "itemType": "document",
+      "itemType": "bill",
       "notes": [
         "testimony of Norman Dong"
       ],
@@ -3709,10 +3696,10 @@
       "extra": [
         "Citation Key: 11.6:15",
         "Place: 113th Cong.",
-        "tex.entrytype: legmaterial"
+        "Type: regulation"
       ],
       "itemID": 171,
-      "itemType": "document",
+      "itemType": "bill",
       "shortTitle": "Strengthening the federal student loan program",
       "title": "Strengthening the federal student loan program for borrowers. Hearing before the U.S. Senate Committee on Health, Education, Labor & Pensions",
       "url": "https://www.help.senate.gov/hearings/strengthening-the-federal-student-load-program-for-borrowers"
@@ -3722,11 +3709,10 @@
       "date": "2013",
       "extra": [
         "Citation Key: 11.6:16",
-        "Place: H.R 1100, 113th Cong.",
-        "tex.entrytype: legislation"
+        "Place: H.R 1100, 113th Cong."
       ],
       "itemID": 172,
-      "itemType": "document",
+      "itemType": "statute",
       "title": "Mental health on campus improvement act",
       "url": "https://www.congress.gov/bill/113th-congress/house-bill/1100"
     },
@@ -3738,11 +3724,10 @@
         "Issue: 438",
         "Place: 114th Cong. and 162 Cong. Rec. 2394",
         "Type: resolution",
-        "tex.entrytype: legmaterial",
         "tex.source: senate"
       ],
       "itemID": 173,
-      "itemType": "document",
+      "itemType": "bill",
       "notes": [
         "enacted"
       ],
@@ -3754,7 +3739,6 @@
       "extra": [
         "Citation Key: 11.6:18",
         "Issue: 114-358",
-        "tex.entrytype: legmaterial",
         "tex.source: houseofrepresentatives"
       ],
       "itemID": 174,
@@ -3766,11 +3750,10 @@
       "date": "2009",
       "extra": [
         "Citation Key: 11.7:19",
-        "tex.citation: 45 C.F.R. \u00a7 46",
-        "tex.entrytype: legadminmaterial"
+        "tex.citation: 45 C.F.R. \u00a7 46"
       ],
       "itemID": 175,
-      "itemType": "document",
+      "itemType": "statute",
       "title": "Protection of human subjects",
       "url": "https://www.hhs.gov/ohrp/sites/default/files/ohrp/policy/ohrpregulations.pdf"
     },
@@ -3779,11 +3762,10 @@
       "date": "2016-05-23",
       "extra": [
         "Citation Key: 11.7:20",
-        "tex.citation: 81 F.R. 32391",
-        "tex.entrytype: legadminmaterial"
+        "tex.citation: 81 F.R. 32391"
       ],
       "itemID": 176,
-      "itemType": "document",
+      "itemType": "statute",
       "notes": [
         "to be codified at 29 C.F.R. \u00a7 541"
       ],
@@ -3803,11 +3785,10 @@
         "Citation Key: 11.7:21",
         "Issue: 13,676",
         "Type: execorder",
-        "tex.citation: 3 C.F.R. 294",
-        "tex.entrytype: legadminmaterial"
+        "tex.citation: 3 C.F.R. 294"
       ],
       "itemID": 177,
-      "itemType": "document",
+      "itemType": "statute",
       "url": "https://www.govinfo.gov/content/pkg/CFR-2015-title3-vol1/pdf/CFR-2015-title3-vol1-eo13676.pdf"
     },
     {
@@ -3850,27 +3831,25 @@
       "citationKey": "11.9:23",
       "extra": [
         "Citation Key: 11.9:23",
-        "Section: 3",
         "Type: constitution",
         "tex.article: I",
-        "tex.entrytype: constitution",
         "tex.source: us"
       ],
       "itemID": 179,
-      "itemType": "document"
+      "itemType": "statute",
+      "section": "3"
     },
     {
       "citationKey": "11.9:24",
       "extra": [
         "Citation Key: 11.9:24",
-        "Section: 3",
         "Type: constitution",
         "tex.article: IX",
-        "tex.entrytype: constitution",
         "tex.source: southcarolina"
       ],
       "itemID": 180,
-      "itemType": "document"
+      "itemType": "statute",
+      "section": "3"
     },
     {
       "citationKey": "11.9:25",
@@ -3878,11 +3857,10 @@
         "Citation Key: 11.9:25",
         "Type: constitution",
         "tex.amendment: XIX",
-        "tex.entrytype: constitution",
         "tex.source: us"
       ],
       "itemID": 181,
-      "itemType": "document"
+      "itemType": "statute"
     },
     {
       "citationKey": "11.9:26",
@@ -3890,12 +3868,11 @@
         "Citation Key: 11.9:26",
         "Type: constitution",
         "tex.amendment: XIX",
-        "tex.entrytype: constitution",
         "tex.eventdate: 1933",
         "tex.source: us"
       ],
       "itemID": 182,
-      "itemType": "document",
+      "itemType": "statute",
       "tags": [
         {
           "tag": "repealed"
@@ -3908,11 +3885,10 @@
         "Citation Key: 11.9:27",
         "Type: constitution",
         "tex.amendment: I\u2013X",
-        "tex.entrytype: constitution",
         "tex.source: us"
       ],
       "itemID": 183,
-      "itemType": "document"
+      "itemType": "statute"
     },
     {
       "citationKey": "11.9:28",
@@ -3920,12 +3896,11 @@
         "Citation Key: 11.9:28",
         "Type: charter",
         "tex.article: 1",
-        "tex.entrytype: constitution",
         "tex.part: 3",
         "tex.source: unitednations"
       ],
       "itemID": 184,
-      "itemType": "document"
+      "itemType": "statute"
     },
     {
       "citationKey": "9.14:1",

@@ -494,6 +494,7 @@ export class ZoteroItem {
     codefragment:       'computerProgram',
     collection:         'book',
     conference:         'conferencePaper',
+    constitution:       'statute',
     dataset:            'dataset',
     film:               'film', // mendeley made-up entry type
     generic:            'journalArticle', // mendeley made-up entry type
@@ -503,6 +504,11 @@ export class ZoteroItem {
     incollection:       'bookSection',
     inproceedings:      'conferencePaper',
     inreference:        'encyclopediaArticle',
+    jurisdiction:       'case',
+    legadminmaterial:   'statute',
+    legal:              'statute',
+    legislation:        'statute',
+    legmaterial:        'bill', // could also be 'hearing'
     magazine_article:   'magazineArticle', // mendeley made-up entry type
     manual:             'report',
     mastersthesis:      'thesis',
@@ -511,6 +517,7 @@ export class ZoteroItem {
     newspaper_article:  'newspaperArticle', // mendeley made-up entry type
     online:             'webpage',
     patent:             'patent',
+    periodical:         'document',
     phdthesis:          'thesis',
     presentation:       'presentation',
     proceedings:        'book',
@@ -529,13 +536,6 @@ export class ZoteroItem {
 
     // need better equivalents
     nameonly:          '$document',
-    periodical:        '$document',
-    jurisdiction:      '$document',
-    legislation:       '$document',
-    legmaterial:       '$document',
-    legadminmaterial:  '$document',
-    constitution:      '$document',
-    legal:             '$document',
   }
 
   private extra: string[] = []
@@ -961,26 +961,35 @@ export class ZoteroItem {
     return this.validFields.ISSN ? this.set('ISSN', value) : this.fallback(['ISSN'], value)
   }
 
-  protected $url(value: string, field: string): boolean {
+  protected $url(value: string, field: string, urls: Set<string>): boolean {
     // no escapes needed in an verbatim field but people do it anyway
     let url = value.replace(/\\/g, '')
 
-    // pluck out the URL if it is wrapped in an HREF -- discards the label unfortunately
-    let m
-    if (m = url.match(/<a href="([^"]+)/i)) url = m[1]
+    // pluck out the URL if it is wrapped in an HREF
+    let m, title = ''
+    if (m = url.match(/<a href="([^"]+)"[^>]*>([^<]*)/i)) {
+      url = m[1]
+      title = m[2] || title
+    }
+    title = title || field
 
-    if (!url) return false
-    if (field !== 'url' && ! url.match(/^(https?:\/\/|mailto:)/i)) return false
+    if (urls.has(url)) return true
+    urls.add(url)
 
-    if (this.item.url) return (this.item.url === url)
+    if (field !== 'url' && !this.isURL(url)) return false
 
-    if (!this.validFields.url) return this.fallback(['url'], url)
+    if (this.validFields.url && !this.item.url) {
+      this.item.url = url
+      return true
+    }
 
-    this.item.url = url
-    return true
+    if (this.translation.preferences.importDetectURLs) {
+      this.item.attachments.push({ itemType: 'attachment', url, title, linkMode: 'linked_url' })
+      return true
+    }
+
+    return this.fallback(['url'], url)
   }
-  protected $howpublished(value: string, field: string): boolean { return this.$url(value, field) }
-  protected '$remote-url'(value: string, field: string): boolean { return this.$url(value, field) }
 
   protected $type(value: string): boolean {
     if (this.item.itemType === 'patent') return !!this.patentNumberPrefix
@@ -1117,6 +1126,15 @@ export class ZoteroItem {
 
     if (!this.bibtex.fields.type) {
       switch (this.bibtex.type) {
+        case 'legal':
+          this.$type('treaty')
+          break
+        case 'legmaterial':
+          this.$type('regulation')
+          break
+        case 'periodical':
+          this.$type('periodical')
+          break
         case 'manual':
           if (this.item.itemType === 'report') this.$type('manual')
           break
@@ -1232,13 +1250,20 @@ export class ZoteroItem {
       }[this.bibtex.fields.type[0].toLowerCase()] || ''
     }
 
+    const urls: Set<string> = new Set
+    for (const field of ['url', 'howpublished', 'remote-url']) {
+      if (this.bibtex.fields[field]) {
+        this.bibtex.fields[field] = this.bibtex.fields[field].filter(url => !this.$url(url, field, urls))
+      }
+    }
+
     for (const [field, values] of Object.entries(this.bibtex.fields)) {
       for (const value of values) {
         if (field.match(/^(local-zo-url-[0-9]+|file-[0-9]+)$/)) {
           if (this.$file(value)) continue
         }
         else if (field.match(/^bdsk-url-[0-9]+$/)) {
-          if (this.$url(value, field)) continue
+          if (this.$url(value, field, urls)) continue
         }
         else if (field.match(/^bdsk-file-[0-9]+$/)) {
           let imported = false
@@ -1288,7 +1313,10 @@ export class ZoteroItem {
             break
 
           default:
-            if (value.indexOf('\n') >= 0) {
+            if (this.translation.preferences.importDetectURLs && this.isURL(value)) {
+              this.item.attachments.push({ itemType: 'attachment', url: value, title: field, linkMode: 'linked_url' })
+            }
+            else if (value.indexOf('\n') >= 0) {
               this.item.notes.push(`<p><b>${Zotero.Utilities.text2html(field, false)}</b></p>${Zotero.Utilities.text2html(value, false)}`)
             }
             else {
@@ -1374,6 +1402,15 @@ export class ZoteroItem {
     }
 
     return true
+  }
+
+  private isURL(url: string): boolean {
+    try {
+      return (new URL(url)).protocol.match(/^https?:$/) as unknown as boolean
+    }
+    catch (err) {
+      return false
+    }
   }
 
   private addToExtra(str) {

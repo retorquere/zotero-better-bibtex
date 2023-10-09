@@ -24,6 +24,11 @@ Feature: Import
     When I import 11 references from "import/*.yml"
     Then the library should match "import/*.json"
 
+  Scenario: detect-urls
+    When I set preference .verbatimFields to "url,doi,file,pdf,ids,eprint,/^verb[a-z]$/,groups,/^citeulike-linkout-[0-9]+$/,/^bdsk-url-[0-9]+$/, /^url_/"
+    And I import 1 reference from "import/*.bib"
+    Then the library should match "import/*.json"
+
   @1358
   Scenario: Import support for the online type in BBT #1358
     When I import 1 references from "import/*.bib"
@@ -65,13 +70,17 @@ Feature: Import
     And I copy date-added/date-modified for the selected items from the extra field
     Then the library should match "import/*.json"
 
+  @use.with_slow=true @timeout=3000
+  Scenario: Import error with character '+' in BibTeX field name #2660
+    When I import 283 references from "import/*.bib"
+    Then the library should match "import/*.json"
+
   Scenario Outline: Import <references> references from <file>
     When I import <references> references from "import/<file>.bib"
     Then the library should match "import/*.json"
 
     Examples:
       | file                                                                                   | references |
-      | Import error with character '+' in BibTeX field name #2660                             | 283        |
       | DOIs excluded from export in 6.7.86 #2555                                              | 1          |
       | issuenumberarticle-number #2551                                                        | 1          |
       | Allow spaces between href arguments for import #2504                                   | 4          |
@@ -131,6 +140,7 @@ Feature: Import
 
   @use.with_slow=true @timeout=3000
   Scenario: Some bibtex entries quietly discarded on import from bib file #873
+    Given I set preference .importDetectURLs to false
     When I import 989 references from "import/*.bib"
     Then the library should match "import/*.json"
 
