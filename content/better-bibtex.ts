@@ -576,7 +576,7 @@ export class BetterBibTeX {
   public dir: string
 
   public debugEnabledAtStart: boolean
-  public outOfMemory = false
+  public outOfMemory = ''
 
   public generateCSLJSON = generateCSLJSON
 
@@ -587,7 +587,7 @@ export class BetterBibTeX {
 
   private logListener(message: string): void {
     if (Preference.cache && !this.outOfMemory && message.match(/Translate: Translation using Better .* failed:[\s\S]*out of memory/)) {
-      this.outOfMemory = true
+      this.outOfMemory = message
       flash('Zotero is out of memory', 'Zotero is out of memory. I will turn off the cache to help release memory pressure, but this is only a temporary fix until Zotero 7 comes out')
       Preference.cache = false
     }

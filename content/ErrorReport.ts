@@ -192,7 +192,7 @@ export class ErrorReport {
 
     this.errorlog = {
       info: await this.info(),
-      errors: Zotero.getErrors(true).join('\n'),
+      errors: `${Zotero.BetterBibTeX.outOfMemory}\n${Zotero.getErrors(true).join('\n')}`.trim(),
       // # 1896
       debug: Zotero.Debug.getConsoleViewerOutput().slice(-500000).join('\n'), // eslint-disable-line no-magic-numbers
     }
