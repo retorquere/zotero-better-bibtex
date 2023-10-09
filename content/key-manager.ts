@@ -447,9 +447,13 @@ export const KeyManager = new class _KeyManager {
               key.pinned ? 1 : 0,
             ])
           }
+          await Zotero.DB.queryAsync('UPDATE betterbibtex."better-bibtex" SET name = ? WHERE name = ?', ['migrated.citekey', 'better-bibtex.citekey'])
         })
-        await Zotero.DB.queryTx('UPDATE betterbibtex."better-bibtex" SET name = ? WHERE name = ?', ['migrated.citekey', 'better-bibtex.citekey'])
       }
+    }
+
+    if (Zotero.Libraries.userLibraryID > 1) {
+      await Zotero.DB.queryAsync('UPDATE betterbibtex.citationkey SET libraryID = ? WHERE libraryID in (0, 1)', [Zotero.Libraries.userLibraryID])
     }
 
     await this.rescan()
