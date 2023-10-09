@@ -35,6 +35,8 @@ import * as l10n from './l10n'
 
 type CitekeySearchRecord = { itemID: number, libraryID: number, itemKey: string, citekey: string }
 
+const NoParse = { noParseParams: true }
+
 class Progress {
   private win: any
   private progress: any
@@ -424,6 +426,32 @@ export const KeyManager = new class _KeyManager {
   }
 
   private async start(): Promise<void> {
+    const tables = await Zotero.DB.columnQueryAsync("SELECT LOWER(name) FROM betterbibtex.sqlite_master where type='table'")
+    if (!tables.includes('citationkey')) {
+      for (const ddl of require('./db/citation-key.sql')) {
+        await Zotero.DB.queryAsync(ddl, [], NoParse)
+      }
+    }
+
+    if (tables.includes('better-bibtex')) {
+      const data = await Zotero.DB.valueQueryAsync('SELECT data FROM betterbibtex."better-bibtex" WHERE name=?', ['better-bibtex.citekey'])
+      if (data) {
+        const db = JSON.parse(data)
+        await Zotero.DB.executeTransaction(async () => {
+          for (const key of db.data) {
+            Zotero.DB.queryAsync('REPLACE INTO betterbibtex.citationkey (itemID, itemKey, libraryID, citationKey, pinned) VALUES (?, ?, ?, ?, ?)', [
+              key.itemID,
+              key.itemKey,
+              key.libraryID,
+              key.citationKey,
+              key.pinned ? 1 : 0,
+            ])
+          }
+        })
+        await Zotero.DB.queryTx('UPDATE betterbibtex."better-bibtex" SET name = ? WHERE name = ?', ['migrated.citekey', 'better-bibtex.citekey'])
+      }
+    }
+
     await this.rescan()
 
     Events.on('preference-changed', pref => {
