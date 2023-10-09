@@ -453,7 +453,7 @@ export const KeyManager = new class _KeyManager {
     }
 
     if (Zotero.Libraries.userLibraryID > 1) {
-      await Zotero.DB.queryAsync('UPDATE betterbibtex.citationkey SET libraryID = ? WHERE libraryID in (0, 1)', [Zotero.Libraries.userLibraryID])
+      await Zotero.DB.queryAsync('UPDATE betterbibtex.citationkey SET libraryID = ? WHERE libraryID IN (0, 1)', [Zotero.Libraries.userLibraryID])
     }
 
     await this.rescan()
@@ -560,24 +560,14 @@ export const KeyManager = new class _KeyManager {
   }
 
   public async rescan(clean?: boolean): Promise<void> {
-    if (Preference.scrubDatabase) {
-      log.debug('keymanager: scrubbing database')
-      this.keys.removeWhere(i => !i.citekey) // 2047
+    await Zotero.DB.queryTx('DELETE FROM betterbibtex.citationkey WHERE itemID NOT IN (SELECT itemID FROM items)')
+    const keys: any[]
+    for (const key of await Zotero.DB.queryAsync('SELECT * from betterbibtex.citationkey')) {
+      keys.push({ itemID: key.itemID, itemKey: key.itemKey, libraryID: key.libraryID, citationKey: key.citationKey, pinned: key.pinned })
+    }
+    await insertMany(this.keys, keys)
+    for (const itemID of await Zotero.DB.columnQueryAsync('SELECT itemID FROM items WHERE itemID NOT IN (SELECT itemID from betterbibtex.citationkey)')) {
 
-      let errors = 0
-      for (const item of this.keys.data) {
-        if ('extra' in item) { // 799, tests for existence even if it is empty
-          delete item.extra
-          this.keys.update(item)
-        }
-
-        if (!this.keys.validate(item)) {
-          log.error('KeyManager.rescan, scrub error:', item, this.keys.validate.errors)
-          errors += 1
-        }
-      }
-
-      if (errors) alert({ text: `Better BibTeX: ${errors} errors found in the citekey database, please report on the Better BibTeX project site` })
     }
 
     if (Array.isArray(this.regenerate)) {
@@ -607,6 +597,7 @@ export const KeyManager = new class _KeyManager {
       WHERE item.itemID NOT IN (SELECT itemID FROM deletedItems)
         AND item.itemTypeID NOT IN (${this.query.type.attachment}, ${this.query.type.note}, ${this.query.type.annotation || this.query.type.note})
         AND item.itemID NOT IN (SELECT itemID from feedItems)
+        ANDkkkkkkkkkkkkkk
     `)).reduce((acc: DBState, item) => {
       acc.set(item.itemID, {
         itemKey: item.key,
