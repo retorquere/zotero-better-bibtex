@@ -718,6 +718,7 @@ export class BetterBibTeX {
       },
       shutdown: async () => {
         await Zotero.DB.queryAsync('DETACH DATABASE betterbibtex')
+        await Zotero.DB.queryAsync('DETACH DATABASE betterbibtexsearch')
       },
     })
 
