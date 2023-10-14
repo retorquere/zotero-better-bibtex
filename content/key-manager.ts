@@ -24,6 +24,7 @@ import { getItemsAsync } from './get-items-async'
 import { Preference } from './prefs'
 import { Formatter } from './key-manager/formatter'
 import { DB as Cache } from './db/cache'
+import { createDB, createTable, insertMany, many, use, key } from 'blinkdb'
 
 import { patch as $patch$ } from './monkey-patch'
 
