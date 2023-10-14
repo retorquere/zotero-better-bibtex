@@ -27,7 +27,7 @@ const SQL = new class {
     editable: [ 'enabled', 'recursive', 'status', 'error', 'updated' ],
   }
   public sql = {
-    create: 'INSERT INTO betterbibtex.autoexport',
+    create: 'REPLACE INTO betterbibtex.autoexport',
     setting: 'REPLACE INTO betterbibtex.autoexport_setting (path, setting, value) VALUES (:path, :setting, :value)',
   }
 
