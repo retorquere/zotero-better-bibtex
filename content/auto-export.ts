@@ -482,6 +482,7 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
 
     // migration
     if (tables.includes('better-bibtex')) {
+      log.debug('autoexport migration?', await Zotero.DB.columnQueryAsync('SELECT name FROM betterbibtex."better-bibtex"'))
       const data = await Zotero.DB.valueQueryAsync('SELECT data FROM betterbibtex."better-bibtex" WHERE name=?', ['better-bibtex.autoexport'])
       if (data) {
         const db = JSON.parse(data)
@@ -493,7 +494,8 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
           await SQL.create(ae)
         }
 
-        await Zotero.DB.queryTx('DELETE FROM betterbibtex."better-bibtex" WHERE name=?', ['migrated.autoexport']) // WHY?!?!
+
+        await Zotero.DB.queryTx('DELETE FROM betterbibtex."better-bibtex" WHERE name=?', ['migrated.autoexport']) // HOW?!?!
         await Zotero.DB.queryTx('UPDATE betterbibtex."better-bibtex" SET name = ? WHERE name = ?', ['migrated.autoexport', 'better-bibtex.autoexport'])
       }
     }
