@@ -33,7 +33,7 @@ const SQL = new class {
 
   constructor() {
     this.columns.job = this.columns.job.concat(this.columns.editable)
-    this.sql.create = `INSERT INTO betterbibtex.autoexport (${this.columns.job.join(',')}) VALUES (${this.columns.job.map(col => `:${col}`)})`
+    this.sql.create += ` (${this.columns.job.join(',')}) VALUES (${this.columns.job.map(col => `:${col}`)})`
   }
 
   public async get(path: string): Promise<Job> {
