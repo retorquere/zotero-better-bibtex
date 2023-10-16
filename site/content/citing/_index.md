@@ -32,7 +32,7 @@ You can also
 
 ## Set your own, fixed citation keys
 
-By default, BBT generates the citation key from the item information, and this key may change when you edit the item. Such keys are called `dynamic` keys, which are marked with a pushpin the item list view and in the item details to distinguish them from dynamic keys.
+By default, BBT generates the citation key from the item information, and this key may change when you edit the item. Such keys are called `dynamic` keys. In contrast, `fixed` keys are marked with a pushpin in the item list view and in the item details to distinguish them from dynamic keys.
 
 You can fix the citation key (called `pinning` in BBT) for an item by adding the text `Citation Key: <your citekey>` anywhere in the
 `extra` field of the item on a line of its own. You can generate a pinned citation key by selecting one or more items, right-clicking, and selecting `Generate BibTeX key`, which will add the current citation key to the `extra` field, thereby pinning it.
