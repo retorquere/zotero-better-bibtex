@@ -491,7 +491,7 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
       await ZoteroDB.queryTx(`
         DELETE FROM betterbibtex."better-bibtex"
         WHERE name = 'better-bibtex.autoexport' AND EXISTS (
-          SELECT 1 FROM FROM betterbibtex."better-bibtex" WHERE name = 'migrated.autoexport'
+          SELECT 1 FROM betterbibtex."better-bibtex" WHERE name = 'migrated.autoexport'
         )
       `)
 
