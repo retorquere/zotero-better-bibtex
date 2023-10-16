@@ -18,6 +18,7 @@ import { flash } from './flash'
 import * as l10n from './l10n'
 import { orchestrator } from './orchestrator'
 import { pick, fromPairs } from './object'
+import * as ZoteroDB from './db/zotero'
 
 const NoParse = { noParseParams: true }
 
@@ -482,25 +483,32 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
 
     // migration
     if (tables.includes('better-bibtex')) {
+      // HOW?!?!
       const collections = await Zotero.DB.columnQueryAsync('SELECT name FROM betterbibtex."better-bibtex"')
       if (collections.includes('migrated.autoexport') && collections.includes('better-bibtex.autoexport')) {
         flash('stale auto-export migration')
       }
-      if (!collections.includes('migrated.autoexport')) {
-        const data = await Zotero.DB.valueQueryAsync('SELECT data FROM betterbibtex."better-bibtex" WHERE name=?', ['better-bibtex.autoexport'])
-        if (data) {
-          const db = JSON.parse(data)
-          for (const ae of db.data) {
-            ae.error = ae.error || ''
-            ae.updated = ae.meta.updated
-            ae.recursive = ae.recursive || 0
-            log.debug('aedb: upgrade', ae)
-            await SQL.create(ae)
-          }
+      await ZoteroDB.queryTx(`
+        DELETE FROM betterbibtex."better-bibtex"
+        WHERE name = 'better-bibtex.autoexport' AND EXISTS (
+          SELECT 1 FROM FROM betterbibtex."better-bibtex" WHERE name = 'migrated.autoexport'
+        )
+      `)
 
-          await Zotero.DB.queryTx('DELETE FROM betterbibtex."better-bibtex" WHERE name=?', ['migrated.autoexport']) // HOW?!?!
-          await Zotero.DB.queryTx('UPDATE betterbibtex."better-bibtex" SET name = ? WHERE name = ?', ['migrated.autoexport', 'better-bibtex.autoexport'])
+      // eslint-disable-next-line @typescript-eslint/quotes
+      const data = await Zotero.DB.valueQueryAsync(`SELECT data FROM betterbibtex."better-bibtex" WHERE name = 'better-bibtex.autoexport'`)
+      if (data) {
+        const db = JSON.parse(data)
+        for (const ae of db.data) {
+          ae.error = ae.error || ''
+          ae.updated = ae.meta.updated
+          ae.recursive = ae.recursive || 0
+          log.debug('aedb: upgrade', ae)
+          await SQL.create(ae)
         }
+
+        // eslint-disable-next-line @typescript-eslint/quotes
+        await Zotero.DB.queryTx(`UPDATE betterbibtex."better-bibtex" SET name = 'migrated.autoexport' WHERE name = 'better-bibtex.autoexport'`)
       }
     }
   }
