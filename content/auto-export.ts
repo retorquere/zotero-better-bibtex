@@ -484,16 +484,18 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
     // migration
     if (tables.includes('better-bibtex')) {
       // HOW?!?!
-      const collections = await Zotero.DB.columnQueryAsync('SELECT name FROM betterbibtex."better-bibtex"')
-      if (collections.includes('migrated.autoexport') && collections.includes('better-bibtex.autoexport')) {
-        flash('stale auto-export migration')
-      }
       await ZoteroDB.queryTx(`
-        DELETE FROM betterbibtex."better-bibtex"
-        WHERE name = 'better-bibtex.autoexport' AND EXISTS (
-          SELECT 1 FROM betterbibtex."better-bibtex" WHERE name = 'migrated.autoexport'
-        )
+        UPDATE betterbibtex."better-bibtex"
+        SET name = 'migrated.autoexport.${Zotero.Utilities.generateObjectKey()}'
+        WHERE name = 'better-bibtex.autoexport' AND EXISTS (SELECT 1 FROM betterbibtex."better-bibtex" WHERE name = 'migrated.autoexport')
       `)
+      const stale = await Zotero.DB.valueQueryAsync('SELECT COUNT(*) FROM betterbibtex."better-bibtex" WHERE name LIKE ?', [ 'migrated.autoexport.%' ])
+      if (stale > 1) {
+        flash(
+          'stale auto-export migrations',
+          `${stale} stale auto-export migrations found, please report on https://github.com/retorquere/zotero-better-bibtex/issues/2522`
+        )
+      }
 
       // eslint-disable-next-line @typescript-eslint/quotes
       const data = await Zotero.DB.valueQueryAsync(`SELECT data FROM betterbibtex."better-bibtex" WHERE name = 'better-bibtex.autoexport'`)
