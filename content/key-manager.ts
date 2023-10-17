@@ -5,7 +5,6 @@ import { orchestrator } from './orchestrator'
 import ETA from 'node-eta'
 
 import { alert, prompt } from './prompt'
-import * as blink from './db/blink'
 
 import { kuroshiro } from './key-manager/japanese'
 import { chinese } from './key-manager/chinese'
@@ -25,7 +24,9 @@ import { getItemsAsync } from './get-items-async'
 import { Preference } from './prefs'
 import { Formatter } from './key-manager/formatter'
 import { DB as Cache } from './db/cache'
-import { createDB, createTable, insertMany, many, use, key } from 'blinkdb'
+
+import { createDB, createTable, insert, insertMany, removeMany, use, many, update, Query } from 'blinkdb'
+import * as blink from './db/blink'
 
 import { patch as $patch$ } from './monkey-patch'
 
@@ -33,7 +34,13 @@ import { sprintf } from 'sprintf-js'
 
 import * as l10n from './l10n'
 
-type CitekeyRecord = { itemID: number, libraryID: number, itemKey: string, citekey: string }
+type CitekeyRecord = {
+  itemID: number
+  libraryID: number
+  itemKey: string
+  citationKey: string
+  pinned: boolean | 0 | 1
+}
 
 const NoParse = { noParseParams: true }
 
@@ -71,8 +78,12 @@ class Progress {
 export const KeyManager = new class _KeyManager {
   public searchEnabled = false
 
-  public keys: any
-  public bucket: Map<string, CitekeySearchRecord[]>
+  // Table<CitekeyRecord, "itemID">
+  private keys = createTable<CitekeyRecord>(createDB({ clone: true }), 'citationKeys')({
+    primary: 'itemID',
+    indexes: ['itemKey', 'libraryID', 'citationKey'],
+  })
+
   public query: {
     field: { extra?: number, title?: number }
     type: {
@@ -99,7 +110,7 @@ export const KeyManager = new class _KeyManager {
 
     if (ids.length !== 1) return alert({ text: l10n.localize('better-bibtex_citekey_set_toomany') })
 
-    const existingKey = this.get(ids[0]).citekey
+    const existingKey = this.get(ids[0]).citationKey
     const citationKey = prompt({ text: l10n.localize('better-bibtex_citekey_set_change'), value: existingKey }) || existingKey
     if (citationKey === existingKey) return
 
@@ -127,7 +138,7 @@ export const KeyManager = new class _KeyManager {
       else {
         if (parsed.extraFields.citationKey) continue
 
-        citationKey = this.get(item.id).citekey || this.update(item)
+        citationKey = this.get(item.id).citationKey || await this.update(item)
       }
 
       item.setField('extra', Extra.set(extra, { citationKey }))
@@ -190,17 +201,16 @@ export const KeyManager = new class _KeyManager {
 
       const extra = item.getField('extra')
 
-      let citekey = Extra.get(extra, 'zotero', { citationKey: true }).extraFields.citationKey
-      if (citekey) continue // pinned, leave it alone
+      let citationKey = Extra.get(extra, 'zotero', { citationKey: true }).extraFields.citationKey
+      if (citationKey) continue // pinned, leave it alone
 
-      citekey = this.get(item.id).citekey
-      if (await this.update(item) === citekey) continue
+      citationKey = this.get(item.id).citationKey
+      if (await this.update(item) === citationKey) continue
 
       // remove the new citekey from the aliases if present
-      citekey = this.get(item.id).citekey
       const aliases = Extra.get(extra, 'zotero', { aliases: true })
-      if (aliases.extraFields.aliases.includes(citekey)) {
-        aliases.extraFields.aliases = aliases.extraFields.aliases.filter(alias => alias !== citekey)
+      if (aliases.extraFields.aliases.includes(citationKey)) {
+        aliases.extraFields.aliases = aliases.extraFields.aliases.filter(alias => alias !== citationKey)
 
         if (aliases.extraFields.aliases.length) {
           item.setField('extra', Extra.set(aliases.extra, { aliases: aliases.extraFields.aliases }))
@@ -230,12 +240,6 @@ export const KeyManager = new class _KeyManager {
         log.debug('keymanager: init: kuroshiro/jieba')
         await kuroshiro.init()
         chinese.init()
-
-        const db = createDB({ clone: true })
-        this.keys = createTable(db, 'citationKeys')({
-          primary: 'itemID',
-          indexes: ['key', 'libraryID', 'citationKey'],
-        })
 
         this.query = {
           field: {},
@@ -328,20 +332,67 @@ export const KeyManager = new class _KeyManager {
       key.citationKey,
       key.pinned ? 1 : 0,
     ])
+
+    // async is just a heap of fun. Who doesn't enjoy a good race condition?
+    // https://github.com/retorquere/zotero-better-bibtex/issues/774
+    // https://groups.google.com/forum/#!topic/zotero-dev/yGP4uJQCrMc
+    await Zotero.Promise.delay(Preference.itemObserverDelay)
+
+    let item
+    try {
+      item = await Zotero.Items.getAsync(key.itemID)
+    }
+    catch (err) {
+      item = undefined
+    }
+    if (!item) {
+      // assume item has been deleted before we could get to it -- did I mention I hate async? I hate async
+      log.error('could not load', key.itemID)
+      return
+    }
+
+    if (item.isFeedItem || !item.isRegularItem()) {
+      log.error('citekey registered for item of type', item.isFeedItem ? 'feedItem' : Zotero.ItemTypes.getName(item.itemTypeID))
+      return
+    }
+
+    // update display panes by issuing a fake item-update notification
+    Zotero.Notifier.trigger('refresh', 'item', [key.itemID])
+
+    if (!key.pinned && this.autopin.enabled) {
+      this.autopin.schedule(key.itemID, () => {
+        this.pin([key.itemID]).catch(err => log.error('failed to pin', key.itemID, ':', err))
+      })
+    }
+
+    if (key.pinned && Preference.keyConflictPolicy === 'change') {
+      const where: Query<CitekeyRecord, 'itemID'> = {
+        where: {
+          pinned: { in: [0, false] },
+          citationKey: { eq: key.citationKey },
+        },
+      }
+      if (Preference.keyScope === 'global') where.where.libraryID = { eq: key.libraryID }
+
+      for (const conflict of await many(this.keys, where)) {
+        item = await Zotero.Items.getAsync(conflict.itemID)
+        this.update(item, conflict)
+      }
+    }
   }
 
   async remove(keys: CitekeyRecord | CitekeyRecord[]) {
     if (Array.isArray(keys)) {
       let pos = 0
       while (pos < keys.length) {
-        const slice = keys.slice(pos, pos + 100)
+        const slice = keys.slice(pos, pos + 20)
         if (!slice.length) break
         pos += slice.length
         await Zotero.DB.queryAsync(`DELETE FROM betterbibtex.citationkey WERE itemID IN (${Array(slice.length).fill('?').join(',')})`, slice.map(key => key.itemID))
       }
     }
     else {
-      await Zotero.DB.queryAsync('DELETE FROM betterbibtex.citationkey WERE itemID = ?, [ keys.itemID ])
+      await Zotero.DB.queryAsync('DELETE FROM betterbibtex.citationkey WERE itemID = ?', [ keys.itemID ])
     }
   }
 
@@ -359,7 +410,7 @@ export const KeyManager = new class _KeyManager {
         const db = JSON.parse(data)
         await Zotero.DB.executeTransaction(async () => {
           for (const key of db.data) {
-            await this.store(key)
+            await this.store({ ...key, citationKey: key.citekey })
           }
           await Zotero.DB.queryAsync('UPDATE betterbibtex."better-bibtex" SET name = ? WHERE name = ?', ['migrated.citekey', 'better-bibtex.citekey'])
         })
@@ -383,18 +434,18 @@ export const KeyManager = new class _KeyManager {
           break
       }
     })
-    Events.on('items-changed-prep', ({ ids, action }) => {
+    Events.on('items-changed-prep', async ({ ids, action }) => {
       log.debug('keymanager: items-changed-prep:', action, ids)
       let warn_titlecase = 0
       switch (action) {
         case 'delete':
-          this.remove(ids)
+          await removeMany(this.keys, ids.map(itemID => ({ itemID })))
           break
 
         case 'add':
         case 'modify':
           for (const item of Zotero.Items.get(ids).filter(i => i.isRegularItem() && !i.isFeedItem)) {
-            this.update(item)
+            await this.update(item)
             if (Preference.warnTitleCased) {
               const title = item.getField('title')
               if (title !== sentenceCase(title)) warn_titlecase += 1
@@ -412,58 +463,6 @@ export const KeyManager = new class _KeyManager {
       }
     })
 
-
-    this.keys.on(['insert', 'update'], async (citekey: { itemID: number, itemKey: any, citekey: any, pinned: any }) => {
-      // async is just a heap of fun. Who doesn't enjoy a good race condition?
-      // https://github.com/retorquere/zotero-better-bibtex/issues/774
-      // https://groups.google.com/forum/#!topic/zotero-dev/yGP4uJQCrMc
-      await Zotero.Promise.delay(Preference.itemObserverDelay)
-
-      let item
-      try {
-        item = await Zotero.Items.getAsync(citekey.itemID)
-      }
-      catch (err) {
-        item = undefined
-      }
-      if (!item) {
-        // assume item has been deleted before we could get to it -- did I mention I hate async? I hate async
-        log.error('could not load', citekey.itemID)
-        return
-      }
-      if (item.isFeedItem || !item.isRegularItem()) {
-        log.error('citekey registered for item of type', item.isFeedItem ? 'feedItem' : Zotero.ItemTypes.getName(item.itemTypeID))
-        return
-      }
-
-      // update display panes by issuing a fake item-update notification
-      Zotero.Notifier.trigger('modify', 'item', [citekey.itemID], { [citekey.itemID]: { bbtCitekeyUpdate: true } })
-
-      if (!citekey.pinned && this.autopin.enabled) {
-        this.autopin.schedule(citekey.itemID, () => {
-          this.pin([citekey.itemID]).catch(err => log.error('failed to pin', citekey.itemID, ':', err))
-        })
-      }
-      if (citekey.pinned && Preference.keyConflictPolicy === 'change') {
-        const conflictQuery: Query = { $and: [
-          { itemID: { $ne: item.id } },
-          { pinned: { $eq: false } },
-          { citekey: { $eq: citekey.citekey } },
-        ]}
-        if (Preference.keyScope !== 'global')  conflictQuery.$and.push( { libraryID: { $eq: item.libraryID } } )
-
-        for (const conflict of this.keys.find(conflictQuery)) {
-          item = await Zotero.Items.getAsync(conflict.itemID)
-          this.update(item, conflict)
-        }
-      }
-    })
-
-    this.keys.on('delete', async (citekey: { itemID: any }) => {
-      if (Preference.citekeySearch) {
-        await ZoteroDB.queryAsync('DELETE FROM betterbibtexsearch.citekeys WHERE itemID = ?', [ citekey.itemID ])
-      }
-    })
 
     this.started = true
   }
@@ -499,7 +498,7 @@ export const KeyManager = new class _KeyManager {
 
       let pinned: string
       let key: CitekeyRecord
-      for const (item of (await ZoteroDB.queryAsync(`
+      for (const item of (await ZoteroDB.queryAsync(`
         SELECT item.itemID, item.key, item.libraryID, extra.value as extra
         FROM ${items} item
         LEFT JOIN itemData extraField ON extraField.itemID = item.itemID AND extraField.fieldID = ${this.query.field.extra}
@@ -520,28 +519,31 @@ export const KeyManager = new class _KeyManager {
     })
 
     use(this.keys, async ctx => {
-      // let itemID: number
-      let key: CitekeyRecord
-      let keys: CitekeyRecord[]
       switch (ctx.action) {
         case 'update':
         case 'insert':
-          key = ctx.params[1]
-          void this.store(key)
-          break
+          break // handled after update
         case 'remove':
-          key = ctx.params[1]
-          void this.remove(key)
+          void this.remove(ctx.params[1] as CitekeyRecord)
           break
         case 'removeMany':
-          keys = ctx.params[1]
-          void this.remove(keys)
+          void this.remove(ctx.params[1] as CitekeyRecord[])
           break
         default:
           if (Preference.testing) throw new Error(`Unexpected middleware action ${ctx.action}`)
       }
-      return await await ctx.next(...ctx.params)
-    }
+
+      const result = await await ctx.next(...ctx.params)
+
+      switch (ctx.action) {
+        case 'update':
+        case 'insert':
+          void this.store(ctx.params[1] as CitekeyRecord)
+          break
+      }
+
+      return result
+    })
 
     // generate keys for entries that don't have them yet
     const progress = new Progress(missing.length, 'Assigning citation keys')
@@ -559,50 +561,52 @@ export const KeyManager = new class _KeyManager {
     progress.done()
   }
 
-  private async update(item: ZoteroItem, current?: { pinned: boolean, citekey: string }): string {
+  private async update(item: ZoteroItem, current?: CitekeyRecord): Promise<string> {
     if (item.isFeedItem || !item.isRegularItem()) return null
 
     current = current || blink.first(this.keys, { where: { itemID: item.id } })
 
     const proposed = this.propose(item)
 
-    if (current && (current.pinned || !this.autopin.enabled) && (current.pinned === proposed.pinned) && (current.citekey === proposed.citekey)) return current.citekey
+    if (current && (current.pinned || !this.autopin.enabled) && (current.pinned === proposed.pinned) && (current.citationKey === proposed.citationKey)) return current.citationKey
 
     if (current) {
       current.pinned = proposed.pinned
-      current.citekey = proposed.citekey
+      current.citationKey = proposed.citationKey
       await update(this.keys, current)
     }
     else {
-      await insert(this.keys, { itemID: item.id, libraryID: item.libraryID, itemKey: item.key, pinned: proposed.pinned, citekey: proposed.citekey })
+      await insert(this.keys, { itemID: item.id, libraryID: item.libraryID, itemKey: item.key, pinned: proposed.pinned, citationKey: proposed.citationKey })
     }
 
-    return proposed.citekey
+    return proposed.citationKey
   }
 
-  public get(itemID: number): { citekey: string, pinned: boolean, retry?: boolean } {
+  public get(itemID: number): Partial<CitekeyRecord> & { retry?: boolean } {
     // I cannot prevent being called before the init is done because Zotero unlocks the UI *way* before I'm getting the
     // go-ahead to *start* my init.
-    if (!this.keys || !this.started) return { citekey: '', pinned: false, retry: true }
+    if (!this.keys || !this.started) return { citationKey: '', pinned: false, retry: true }
 
-    const key = blink.first(this.keys, { where: { itemID: item.id } })
+    const key = blink.first(this.keys, { where: { itemID } })
     if (key) return key
-    return { citekey: '', pinned: false, retry: true }
+    return { citationKey: '', pinned: false, retry: true }
   }
 
-  public propose(item: ZoteroItem): { citekey: string, pinned: boolean } {
-    let citekey: string = Extra.get(item.getField('extra') as string, 'zotero', { citationKey: true }).extraFields.citationKey
+  public propose(item: ZoteroItem): Partial<CitekeyRecord> {
+    let citationKey: string = Extra.get(item.getField('extra') as string, 'zotero', { citationKey: true }).extraFields.citationKey
 
-    if (citekey) return { citekey, pinned: true }
+    if (citationKey) return { citationKey, pinned: true }
 
-    citekey = Formatter.format(item)
+    citationKey = Formatter.format(item)
 
-    const g = Preference.keyScope === 'global'
+    const where = Preference.keyScope === 'global'
+      ? { citationKey: '' }
+      : { citationKey: '', libraryID: item.libraryID }
 
     const seen: Set<string> = new Set
     // eslint-disable-next-line no-constant-condition
     for (let n = Formatter.postfix.offset; true; n += 1) {
-      const postfixed = citekey.replace(Formatter.postfix.marker, () => {
+      const postfixed = citationKey.replace(Formatter.postfix.marker, () => {
         let postfix = ''
         if (n) {
           const alpha = excelColumn(n)
@@ -614,10 +618,10 @@ export const KeyManager = new class _KeyManager {
         return postfix
       })
 
-      log.debug('keymanager: propose:', { item: { itemID: item.id, libraryID: item.libraryID }, postfixed, bucket: this.bucket.get(postfixed) || [], conflict: this.bucket.get(postfixed)?.find(i => i.itemID !== item.id && (g || i.libraryID === item.libraryID)) || false })
-      if (this.bucket.get(postfixed)?.find(i => i.itemID !== item.id && (g || i.libraryID === item.libraryID))) continue
+      where.citationKey = postfixed
+      if (blink.many(this.keys, { where }).filter(i =>  i.itemID !== item.id).length) continue
 
-      return { citekey: postfixed, pinned: false }
+      return { citationKey: postfixed, pinned: false }
     }
   }
 
@@ -633,10 +637,10 @@ export const KeyManager = new class _KeyManager {
     `, [ libraryID, Preference.keyScope, tag ])).map((item: { itemID: number }) => item.itemID)
 
     const citekeys: Record<string, any[]> = {}
-    for (const item of blink.many(this.keys, Preference.keyScope === 'global' ? undefined, { where: { libraryID } }) {
-      if (!citekeys[item.citekey]) citekeys[item.citekey] = []
-      citekeys[item.citekey].push({ itemID: item.itemID, tagged: tagged.includes(item.itemID), duplicate: false })
-      if (citekeys[item.citekey].length > 1) citekeys[item.citekey].forEach(i => i.duplicate = true)
+    for (const item of blink.many(this.keys, Preference.keyScope === 'global' ? undefined : { where: { libraryID } })) {
+      if (!citekeys[item.citationKey]) citekeys[item.citationKey] = []
+      citekeys[item.citationKey].push({ itemID: item.itemID, tagged: tagged.includes(item.itemID), duplicate: false })
+      if (citekeys[item.citationKey].length > 1) citekeys[item.citationKey].forEach(i => i.duplicate = true)
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return

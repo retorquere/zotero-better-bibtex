@@ -431,10 +431,6 @@ export class PrefPane {
     $window.document.getElementById('bbt-cache-warn-postscript').setAttribute('hidden', `${!Preference.postscript.includes('Translator.options.exportPath')}`)
   }
 
-  public async rescanCitekeys(): Promise<void> {
-    await Zotero.BetterBibTeX.KeyManager.rescan()
-  }
-
   public cacheReset(): void {
     Cache.reset('user-initiated')
   }

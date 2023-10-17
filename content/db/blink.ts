@@ -1,4 +1,4 @@
-import { Entity, PrimaryKeyOf, Table, Query } from 'blinkdb'
+import { Entity, PrimaryKeyOf, Table, Query, BlinkKey } from 'blinkdb'
 
 export function first<T extends Entity<T>, P extends PrimaryKeyOf<T>>(table: Table<T, P>, queryOrId?: Query<T, P> | T[P]): T | null {
   if (queryOrId === undefined) {

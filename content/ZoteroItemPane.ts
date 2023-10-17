@@ -83,10 +83,6 @@ export class ZoteroItemPane {
       }
     }
 
-    this.observer = Zotero.BetterBibTeX.KeyManager.keys.on(['update', 'insert'], () => {
-      this.refresh()
-    })
-
     win.addEventListener('unload', () => {
       this.unload()
     })

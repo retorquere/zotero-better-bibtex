@@ -120,12 +120,10 @@ Zotero.Server.Endpoints['/better-bibtex/export/item'] = class {
       let { translator, citationKeys, groupID, libraryID, library, group, pandocFilterData } = request.query
       if ((isSet(libraryID) + isSet(library) + isSet(groupID) + isSet(group)) > 1) {
         return [BAD_REQUEST, 'text/plain', 'specify at most one of library(/ID) or group(/ID)' ]
-
       }
       else if (libraryID) {
         if (!libraryID.match(/^[0-9]+$/)) return [BAD_REQUEST, 'text/plain', `${libraryID} is not a number` ]
         libraryID = parseInt(libraryID)
-
       }
       else if (groupID) {
         if (!groupID.match(/^[0-9]+$/)) return [BAD_REQUEST, 'text/plain', `${libraryID} is not a number` ]
@@ -136,11 +134,9 @@ Zotero.Server.Endpoints['/better-bibtex/export/item'] = class {
         catch (err) {
           libraryID = null
         }
-
       }
       else if (library || group) {
         libraryID = getLibrary(library || group).libraryID
-
       }
       else {
         libraryID = Zotero.Libraries.userLibraryID
