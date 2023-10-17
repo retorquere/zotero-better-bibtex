@@ -5,6 +5,7 @@ import { orchestrator } from './orchestrator'
 import ETA from 'node-eta'
 
 import { alert, prompt } from './prompt'
+import * as blink from './db/blink'
 
 import { kuroshiro } from './key-manager/japanese'
 import { chinese } from './key-manager/chinese'
@@ -380,6 +381,20 @@ export const KeyManager = new class _KeyManager {
     return keys
   }
 
+  async store(key: CitekeyRecord) {
+    await Zotero.DB.queryAsync('REPLACE INTO betterbibtex.citationkey (itemID, itemKey, libraryID, citationKey, pinned) VALUES (?, ?, ?, ?, ?)', [
+      key.itemID,
+      key.itemKey,
+      key.libraryID,
+      key.citationKey,
+      key.pinned ? 1 : 0,
+    ])
+  }
+
+  async remove(key: CitekeyRecord) {
+    await Zotero.DB.queryAsync('DELETE FROM betterbibtex.citationkey WERE itemID = ?, [ key.itemID ])
+  }
+
   private async start(): Promise<void> {
     const tables = await Zotero.DB.columnQueryAsync("SELECT LOWER(name) FROM betterbibtex.sqlite_master where type='table'")
     if (!tables.includes('citationkey')) {
@@ -394,13 +409,7 @@ export const KeyManager = new class _KeyManager {
         const db = JSON.parse(data)
         await Zotero.DB.executeTransaction(async () => {
           for (const key of db.data) {
-            Zotero.DB.queryAsync('REPLACE INTO betterbibtex.citationkey (itemID, itemKey, libraryID, citationKey, pinned) VALUES (?, ?, ?, ?, ?)', [
-              key.itemID,
-              key.itemKey,
-              key.libraryID,
-              key.citationKey,
-              key.pinned ? 1 : 0,
-            ])
+            await this.store(key)
           }
           await Zotero.DB.queryAsync('UPDATE betterbibtex."better-bibtex" SET name = ? WHERE name = ?', ['migrated.citekey', 'better-bibtex.citekey'])
         })
@@ -456,7 +465,7 @@ export const KeyManager = new class _KeyManager {
 
     this.keys.on(['insert', 'update'], async (citekey: { itemID: number, itemKey: any, citekey: any, pinned: any }) => {
       if (Preference.citekeySearch) {
-        await ZoteroDB.queryAsync('INSERT OR REPLACE INTO betterbibtexsearch.citekeys (itemID, itemKey, citekey) VALUES (?, ?, ?)', [ citekey.itemID, citekey.itemKey, citekey.citekey ])
+        await ZoteroDB.queryAsync('REPLACE INTO betterbibtexsearch.citekeys (itemID, itemKey, citekey) VALUES (?, ?, ?)', [ citekey.itemID, citekey.itemKey, citekey.citekey ])
       }
 
       // async is just a heap of fun. Who doesn't enjoy a good race condition?
@@ -543,7 +552,7 @@ export const KeyManager = new class _KeyManager {
       }
 
       let pinned: string
-      let key: CitationkeyRecord
+      let key: CitekeyRecord
       for const (item of (await ZoteroDB.queryAsync(`
         SELECT item.itemID, item.key, item.libraryID, extra.value as extra
         FROM ${items} item
@@ -565,11 +574,23 @@ export const KeyManager = new class _KeyManager {
     })
 
     use(this.keys, async ctx => {
-      let itemID
-      let citation.*rec
+      // let itemID: number
+      let key: CitekeyRecord
       switch (ctx.action) {
         case 'update':
-          void Zotero.DB.queryTx
+        case 'insert':
+          key = ctx.params[1]
+          void this.store(key)
+          break
+        case 'remove':
+          key = ctx.params[1]
+          void this.remove(key)
+          break
+        default:
+          if (Preference.testing) throw new Error(`Unexpected middleware action ${ctx.action}`)
+      }
+      return await await ctx.next(...ctx.params)
+    }
 
     // generate keys for entries that don't have them yet
     const progress = new Progress(missing.length, 'Assigning citation keys')
@@ -587,10 +608,10 @@ export const KeyManager = new class _KeyManager {
     progress.done()
   }
 
-  public update(item: ZoteroItem, current?: { pinned: boolean, citekey: string }): string {
+  private async update(item: ZoteroItem, current?: { pinned: boolean, citekey: string }): string {
     if (item.isFeedItem || !item.isRegularItem()) return null
 
-    current = current || this.keys.findOne($and({ itemID: item.id }))
+    current = current || first(this.keys, { where: { itemID: item.id } })
 
     const proposed = this.propose(item)
 
@@ -599,10 +620,10 @@ export const KeyManager = new class _KeyManager {
     if (current) {
       current.pinned = proposed.pinned
       current.citekey = proposed.citekey
-      this.keys.update(current)
+      await update(this.keys, current)
     }
     else {
-      this.keys.insert({ itemID: item.id, libraryID: item.libraryID, itemKey: item.key, pinned: proposed.pinned, citekey: proposed.citekey })
+      await insert(this.keys, { itemID: item.id, libraryID: item.libraryID, itemKey: item.key, pinned: proposed.pinned, citekey: proposed.citekey })
     }
 
     return proposed.citekey

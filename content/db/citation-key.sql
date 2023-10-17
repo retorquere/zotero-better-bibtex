@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS betterbibtex.citationkey (
-  itemID NOT NULL UNIQUE,
+  itemID NOT NULL PRIMARY KEY,
   itemKey NOT NULL,
   libraryID NOT NULL,
   citationKey NOT NULL CHECK (citationKey <> ''),
