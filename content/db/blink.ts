@@ -1,4 +1,6 @@
 import { Entity, PrimaryKeyOf, Table, Query, BlinkKey } from 'blinkdb'
+import { TableUtils } from 'blinkdb/src/core/table.utils'
+import { get } from 'blinkdb/src/query'
 
 export function first<T extends Entity<T>, P extends PrimaryKeyOf<T>>(table: Table<T, P>, queryOrId?: Query<T, P> | T[P]): T | null {
   if (queryOrId === undefined) {
