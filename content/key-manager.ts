@@ -156,27 +156,30 @@ export const KeyManager = new class _KeyManager {
     Cache.remove(ids, `refreshing keys for ${ids}`)
 
     const warnAt = manual ? Preference.warnBulkModify : 0
-    if (warnAt > 0 && ids.length > warnAt) {
-      const affected = this.keys.find({ $and: [{ itemID: { $in: ids } }, { pinned: { $eq: false } } ] }).length
-      if (affected > warnAt) {
-        const ps = Components.classes['@mozilla.org/embedcomp/prompt-service;1'].getService(Components.interfaces.nsIPromptService)
-        const index = ps.confirmEx(
-          null, // no parent
-          'Better BibTeX for Zotero', // dialog title
-          l10n.localize('better-bibtex_bulk-keys-confirm_warning', { treshold: warnAt }),
-          ps.STD_OK_CANCEL_BUTTONS + ps.BUTTON_POS_2 * ps.BUTTON_TITLE_IS_STRING, // buttons
-          null, null, l10n.localize('better-bibtex_bulk-keys-confirm_stop_asking'), // button labels
-          null, {} // no checkbox
-        )
-        switch (index) {
-          case 0: // OK
-            break
-          case 2: // don't ask again
-            Preference.warnBulkModify = 0
-            break
-          default:
-            return
-        }
+    const affected = blink.many(this.keys, {
+      where: {
+        itemID: { in: ids },
+        pinned: { in: [0, false] },
+      },
+    }).length
+    if (warnAt > 0 && affected > warnAt) {
+      const ps = Components.classes['@mozilla.org/embedcomp/prompt-service;1'].getService(Components.interfaces.nsIPromptService)
+      const index = ps.confirmEx(
+        null, // no parent
+        'Better BibTeX for Zotero', // dialog title
+        l10n.localize('better-bibtex_bulk-keys-confirm_warning', { treshold: warnAt }),
+        ps.STD_OK_CANCEL_BUTTONS + ps.BUTTON_POS_2 * ps.BUTTON_TITLE_IS_STRING, // buttons
+        null, null, l10n.localize('better-bibtex_bulk-keys-confirm_stop_asking'), // button labels
+        null, {} // no checkbox
+      )
+      switch (index) {
+        case 0: // OK
+          break
+        case 2: // don't ask again
+          Preference.warnBulkModify = 0
+          break
+        default:
+          return
       }
     }
 
@@ -191,7 +194,7 @@ export const KeyManager = new class _KeyManager {
       if (citekey) continue // pinned, leave it alone
 
       citekey = this.get(item.id).citekey
-      if (this.update(item) === citekey) continue
+      if (await this.update(item) === citekey) continue
 
       // remove the new citekey from the aliases if present
       citekey = this.get(item.id).citekey
@@ -317,70 +320,6 @@ export const KeyManager = new class _KeyManager {
     })
   }
 
-  private watch(keys: any): any {
-    const insert = item => {
-      if (!item) return
-
-      if (Array.isArray(item)) {
-        item.map(insert)
-        return
-      }
-
-      const bucket = this.bucket.get(item.citekey)
-      if (!bucket) {
-        this.bucket.set(item.citekey, [item])
-      }
-      else {
-        bucket.push(item)
-      }
-    }
-
-    const remove = item => {
-      if (!item) return
-
-      if (Array.isArray(item)) {
-        item.map(remove)
-        return
-      }
-
-      let bucket = this.bucket.get(item.citekey)
-      if (!bucket) return
-      bucket = bucket.filter(i => i.itemID !== item.itemID)
-      if (bucket.length) {
-        this.bucket.set(item.citekey, bucket)
-      }
-      else {
-        this.bucket.delete(item.citekey)
-      }
-    }
-
-    this.bucket = new Map
-    for (const item of keys.data) {
-      insert(item)
-    }
-
-    keys.on(['pre-update'], item => {
-      log.debug('keymanager: pre-update:', item)
-      if (Array.isArray(item)) {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-        remove(item.map(i => this.keys.get(i.$loki)))
-      }
-      else {
-        remove(this.keys.get(item.$loki))
-      }
-    })
-    keys.on(['delete'], item => {
-      log.debug('keymanager: delete:', item)
-      remove(item)
-    })
-    keys.on(['insert', 'update'], item => {
-      log.debug('keymanager: update:insert:', item)
-      insert(item)
-    })
-
-    return keys
-  }
-
   async store(key: CitekeyRecord) {
     await Zotero.DB.queryAsync('REPLACE INTO betterbibtex.citationkey (itemID, itemKey, libraryID, citationKey, pinned) VALUES (?, ?, ?, ?, ?)', [
       key.itemID,
@@ -391,8 +330,19 @@ export const KeyManager = new class _KeyManager {
     ])
   }
 
-  async remove(key: CitekeyRecord) {
-    await Zotero.DB.queryAsync('DELETE FROM betterbibtex.citationkey WERE itemID = ?, [ key.itemID ])
+  async remove(keys: CitekeyRecord | CitekeyRecord[]) {
+    if (Array.isArray(keys)) {
+      let pos = 0
+      while (pos < keys.length) {
+        const slice = keys.slice(pos, pos + 100)
+        if (!slice.length) break
+        pos += slice.length
+        await Zotero.DB.queryAsync(`DELETE FROM betterbibtex.citationkey WERE itemID IN (${Array(slice.length).fill('?').join(',')})`, slice.map(key => key.itemID))
+      }
+    }
+    else {
+      await Zotero.DB.queryAsync('DELETE FROM betterbibtex.citationkey WERE itemID = ?, [ keys.itemID ])
+    }
   }
 
   private async start(): Promise<void> {
@@ -464,10 +414,6 @@ export const KeyManager = new class _KeyManager {
 
 
     this.keys.on(['insert', 'update'], async (citekey: { itemID: number, itemKey: any, citekey: any, pinned: any }) => {
-      if (Preference.citekeySearch) {
-        await ZoteroDB.queryAsync('REPLACE INTO betterbibtexsearch.citekeys (itemID, itemKey, citekey) VALUES (?, ?, ?)', [ citekey.itemID, citekey.itemKey, citekey.citekey ])
-      }
-
       // async is just a heap of fun. Who doesn't enjoy a good race condition?
       // https://github.com/retorquere/zotero-better-bibtex/issues/774
       // https://groups.google.com/forum/#!topic/zotero-dev/yGP4uJQCrMc
@@ -576,6 +522,7 @@ export const KeyManager = new class _KeyManager {
     use(this.keys, async ctx => {
       // let itemID: number
       let key: CitekeyRecord
+      let keys: CitekeyRecord[]
       switch (ctx.action) {
         case 'update':
         case 'insert':
@@ -585,6 +532,10 @@ export const KeyManager = new class _KeyManager {
         case 'remove':
           key = ctx.params[1]
           void this.remove(key)
+          break
+        case 'removeMany':
+          keys = ctx.params[1]
+          void this.remove(keys)
           break
         default:
           if (Preference.testing) throw new Error(`Unexpected middleware action ${ctx.action}`)
@@ -611,7 +562,7 @@ export const KeyManager = new class _KeyManager {
   private async update(item: ZoteroItem, current?: { pinned: boolean, citekey: string }): string {
     if (item.isFeedItem || !item.isRegularItem()) return null
 
-    current = current || first(this.keys, { where: { itemID: item.id } })
+    current = current || blink.first(this.keys, { where: { itemID: item.id } })
 
     const proposed = this.propose(item)
 
@@ -629,17 +580,12 @@ export const KeyManager = new class _KeyManager {
     return proposed.citekey
   }
 
-  public remove(ids: number[] | number): void {
-    if (!Array.isArray(ids)) ids = [ids]
-    this.keys.findAndRemove({ itemID : { $in : ids } })
-  }
-
   public get(itemID: number): { citekey: string, pinned: boolean, retry?: boolean } {
     // I cannot prevent being called before the init is done because Zotero unlocks the UI *way* before I'm getting the
     // go-ahead to *start* my init.
     if (!this.keys || !this.started) return { citekey: '', pinned: false, retry: true }
 
-    const key = (this.keys.findOne($and({ itemID })) as { citekey: string, pinned: boolean })
+    const key = blink.first(this.keys, { where: { itemID: item.id } })
     if (key) return key
     return { citekey: '', pinned: false, retry: true }
   }
@@ -686,8 +632,8 @@ export const KeyManager = new class _KeyManager {
       WHERE (items.libraryID = ? OR 'global' = ?) AND tags.name = ? AND items.itemID NOT IN (select itemID from deletedItems)
     `, [ libraryID, Preference.keyScope, tag ])).map((item: { itemID: number }) => item.itemID)
 
-    const citekeys: {[key: string]: any[]} = {}
-    for (const item of this.keys.find(Preference.keyScope === 'global' ? undefined : $and({ libraryID }))) {
+    const citekeys: Record<string, any[]> = {}
+    for (const item of blink.many(this.keys, Preference.keyScope === 'global' ? undefined, { where: { libraryID } }) {
       if (!citekeys[item.citekey]) citekeys[item.citekey] = []
       citekeys[item.citekey].push({ itemID: item.itemID, tagged: tagged.includes(item.itemID), duplicate: false })
       if (citekeys[item.citekey].length > 1) citekeys[item.citekey].forEach(i => i.duplicate = true)
