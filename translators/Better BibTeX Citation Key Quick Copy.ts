@@ -134,7 +134,7 @@ const Mode = {
     Zotero.write(`{${reference.join('; ')}}`)
   },
 
-  nbconvert(items) {
+  jupyter(items) {
     Zotero.write(items.map(item => `<cite data-cite="${escapeHtml(item.citationKey)}">(${escapeHtml(authorOf(item))}, ${escapeHtml(yearOf(item))})</cite>`).join(''))
   },
 
