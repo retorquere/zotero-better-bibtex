@@ -358,15 +358,16 @@
               "enum": [
                 "latex",
                 "citekeys",
-                "pandoc",
-                "orgmode",
+                "eta",
+                "gitbook",
                 "orgRef",
                 "orgRef3",
-                "rtfScan",
+                "orgmode",
+                "pandoc",
                 "roamCiteKey",
-                "gitbook",
+                "rtfScan",
                 "selectlink",
-                "eta"
+                "jupyter"
               ],
               "type": "string"
             },
