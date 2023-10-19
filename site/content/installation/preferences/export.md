@@ -157,8 +157,7 @@ Options:
 * Roam Cite Key
 * RTF Scan marker
 * Zotero select link
-* nbconvert
-
+* Jupyter notebook
 
 #### LaTeX command
 

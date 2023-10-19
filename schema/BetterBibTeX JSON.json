@@ -367,7 +367,7 @@
                 "roamCiteKey",
                 "rtfScan",
                 "selectlink",
-                "nbconvert"
+                "jupyter"
               ],
               "type": "string"
             },
