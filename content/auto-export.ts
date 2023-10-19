@@ -18,11 +18,10 @@ import { flash } from './flash'
 import * as l10n from './l10n'
 import { orchestrator } from './orchestrator'
 import { pick, fromPairs } from './object'
-import * as ZoteroDB from './db/zotero'
 
 const NoParse = { noParseParams: true }
 
-const SQL = new class {
+export const SQL = new class {
   public columns: { job: JobSetting[], editable: JobSetting[] } = {
     job: [ 'type', 'id', 'translatorID', 'path' ],
     editable: [ 'enabled', 'recursive', 'status', 'error', 'updated' ],
@@ -73,25 +72,29 @@ const SQL = new class {
   }
 
   public async create(job: Job) {
+    await Zotero.DB.executeTransaction(async () => {
+      await this.store(job)
+    })
+  }
+
+  public async store(job: Job) {
     job.error = job.error || ''
     job.recursive = job.recursive ?? false
     job.updated = job.updated || Date.now()
     job.enabled = true
 
-    await Zotero.DB.executeTransaction(async () => {
-      await Zotero.DB.queryAsync(this.sql.create, pick(job, this.columns.job), NoParse)
+    await Zotero.DB.queryAsync(this.sql.create, pick(job, this.columns.job), NoParse)
 
-      const settings = autoExport[job.translatorID]
-      const displayOptions = byId[job.translatorID]?.displayOptions || {}
+    const settings = autoExport[job.translatorID]
+    const displayOptions = byId[job.translatorID]?.displayOptions || {}
 
-      const preferences = settings.preferences.map(setting => ({ path: job.path, setting, value: job[setting] ?? Preference[setting] }))
-      const options = settings.options.map(setting => ({ path: job.path, setting, value: job[setting] ?? displayOptions[setting] ?? false }))
+    const preferences = settings.preferences.map(setting => ({ path: job.path, setting, value: job[setting] ?? Preference[setting] }))
+    const options = settings.options.map(setting => ({ path: job.path, setting, value: job[setting] ?? displayOptions[setting] ?? false }))
 
-      // await Promise.all(options.concat(preferences).map(setting => ZoteroDB.queryAsync(this.sql.setting, setting, NoParse) as Promise<void>))
-      for (const setting of options.concat(preferences)) {
-        await Zotero.DB.queryAsync(this.sql.setting, setting, NoParse)
-      }
-    })
+    // await Promise.all(options.concat(preferences).map(setting => ZoteroDB.queryAsync(this.sql.setting, setting, NoParse) as Promise<void>))
+    for (const setting of options.concat(preferences)) {
+      await Zotero.DB.queryAsync(this.sql.setting, setting, NoParse)
+    }
   }
 
   public async delete(path: string): Promise<void> {
@@ -434,8 +437,6 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
       description: 'auto-export',
       needs: ['sqlite', 'cache', 'translators'],
       startup: async () => {
-        await this.initDB()
-
         for (const path of await Zotero.DB.columnQueryAsync("SELECT path FROM betterbibtex.autoexport WHERE status <> 'done'")) {
           queue.add(path)
         }
@@ -464,55 +465,6 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
         })
       },
     })
-  }
-
-  private async initDB() {
-    const tables = await Zotero.DB.columnQueryAsync("SELECT LOWER(name) FROM betterbibtex.sqlite_master where type='table'")
-
-    if (!tables.includes('autoexport')) {
-      for (const ddl of require('./db/auto-export.sql')) {
-        await Zotero.DB.queryAsync(ddl, [], NoParse)
-      }
-    }
-    for (const ddl of require('../gen/auto-export-triggers.sql')) {
-      await Zotero.DB.queryAsync(ddl, [], NoParse)
-    }
-    for (const db of await Zotero.DB.queryAsync("SELECT * FROM betterbibtex.sqlite_master WHERE type='table'")) {
-      log.debug(db.name, db.sql)
-    }
-
-    // migration
-    if (tables.includes('better-bibtex')) {
-      // HOW?!?!
-      await ZoteroDB.queryTx(`
-        UPDATE betterbibtex."better-bibtex"
-        SET name = 'migrated.autoexport.${Zotero.Utilities.generateObjectKey()}'
-        WHERE name = 'better-bibtex.autoexport' AND EXISTS (SELECT 1 FROM betterbibtex."better-bibtex" WHERE name = 'migrated.autoexport')
-      `)
-      const stale = await Zotero.DB.valueQueryAsync('SELECT COUNT(*) FROM betterbibtex."better-bibtex" WHERE name LIKE ?', [ 'migrated.autoexport.%' ])
-      if (stale > 1) {
-        flash(
-          'stale auto-export migrations',
-          `${stale} stale auto-export migrations found, please report on https://github.com/retorquere/zotero-better-bibtex/issues/2522`
-        )
-      }
-
-      // eslint-disable-next-line @typescript-eslint/quotes
-      const data = await Zotero.DB.valueQueryAsync(`SELECT data FROM betterbibtex."better-bibtex" WHERE name = 'better-bibtex.autoexport'`)
-      if (data) {
-        const db = JSON.parse(data)
-        for (const ae of db.data) {
-          ae.error = ae.error || ''
-          ae.updated = ae.meta.updated
-          ae.recursive = ae.recursive || 0
-          log.debug('aedb: upgrade', ae)
-          await SQL.create(ae)
-        }
-
-        // eslint-disable-next-line @typescript-eslint/quotes
-        await Zotero.DB.queryTx(`UPDATE betterbibtex."better-bibtex" SET name = 'migrated.autoexport' WHERE name = 'better-bibtex.autoexport'`)
-      }
-    }
   }
 
   public async add(ae, schedule = false) {

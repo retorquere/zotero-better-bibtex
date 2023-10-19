@@ -31,7 +31,6 @@ export async function newZoteroItemPane(win: Window): Promise<void> {
 }
 
 export class ZoteroItemPane {
-  observer: number
   document: Document
   elements: Elements
 
@@ -113,22 +112,19 @@ export class ZoteroItemPane {
         }
       }
 
-      const { citekey, pinned } = Zotero.BetterBibTeX.KeyManager.get(this.item.id)
+      const { citationKey, pinned } = Zotero.BetterBibTeX.KeyManager.get(this.item.id)
       const label = this.parentNode.querySelector('#better-bibtex-citekey-label')
       const value = this.parentNode.querySelector('#better-bibtex-citekey-display')
       if (!value) return // merge pane uses itembox
 
-      label.hidden = value.hidden = !citekey
+      label.hidden = value.hidden = !citationKey
 
       label.value = `${pinned ? icons.pin : ''}${l10n.localize('better-bibtex_item-pane_citekey')}`
-      value.value = citekey
+      value.value = citationKey
     })
   }
 
   public unload(): void {
-    if (Zotero.BetterBibTeX.KeyManager.keys && this.observer) {
-      Zotero.BetterBibTeX.KeyManager.keys.removeListener(this.observer)
-    }
     this.elements.remove()
   }
 }

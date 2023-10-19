@@ -1,6 +1,6 @@
 import { Entity, PrimaryKeyOf, Table, Query, BlinkKey } from 'blinkdb'
-import { TableUtils } from 'blinkdb/src/core/table.utils'
-import { get } from 'blinkdb/src/query'
+import { get } from 'blinkdb/dist/query'
+import { TableUtils } from 'blinkdb/dist/core/table.utils'
 
 export function first<T extends Entity<T>, P extends PrimaryKeyOf<T>>(table: Table<T, P>, queryOrId?: Query<T, P> | T[P]): T | null {
   if (queryOrId === undefined) {
@@ -9,7 +9,7 @@ export function first<T extends Entity<T>, P extends PrimaryKeyOf<T>>(table: Tab
     const entity = minKey ? btree.get(minKey) ?? null : null
     return TableUtils.cloneIfNecessary(table, entity)
   }
-  else if (typeof queryOrId !== "object") {
+  else if (typeof queryOrId !== 'object') {
     const entity = table[BlinkKey].storage.primary.get(queryOrId) ?? null
     return TableUtils.cloneIfNecessary(table, entity)
   }

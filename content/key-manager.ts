@@ -42,8 +42,6 @@ type CitekeyRecord = {
   pinned: boolean | 0 | 1
 }
 
-const NoParse = { noParseParams: true }
-
 class Progress {
   private win: any
   private progress: any
@@ -265,14 +263,14 @@ export const KeyManager = new class _KeyManager {
     orchestrator.add('citekeysearch', {
       description: 'citation key search',
       needs: ['keymanager'],
-      startup: async () => {
-        await this.enableSearch()
+      startup: async () => { // eslint-disable-line @typescript-eslint/require-await
+        this.enableSearch()
       },
     })
   }
 
-  private async enableSearch(): Promise<void> {
-    if (!Preference.citekeySearch || this.searchEnabled) return
+  private enableSearch(): void {
+    if (this.searchEnabled) return
     this.searchEnabled = true
 
     const citekeySearchCondition = {
@@ -287,6 +285,7 @@ export const KeyManager = new class _KeyManager {
       field: 'citationKey',
       localized: 'Citation Key',
     }
+
     $patch$(Zotero.Search.prototype, 'addCondition', original => function addCondition(condition: string, operator: any, value: any, _required: any) {
       // detect a quick search being set up
       if (condition.match(/^quicksearch/)) this.__add_bbt_citekey = true
@@ -366,57 +365,43 @@ export const KeyManager = new class _KeyManager {
     }
 
     if (key.pinned && Preference.keyConflictPolicy === 'change') {
-      const where: Query<CitekeyRecord, 'itemID'> = {
+      const where = {
         where: {
           pinned: { in: [0, false] },
           citationKey: { eq: key.citationKey },
+          libraryID: key.libraryID,
         },
-      }
-      if (Preference.keyScope === 'global') where.where.libraryID = { eq: key.libraryID }
+      } satisfies Query<CitekeyRecord, 'itemID'>
+      if (Preference.keyScope === 'global') delete where.where.libraryID
 
       for (const conflict of await many(this.keys, where)) {
         item = await Zotero.Items.getAsync(conflict.itemID)
-        this.update(item, conflict)
+        await this.update(item, conflict)
       }
     }
   }
 
   async remove(keys: CitekeyRecord | CitekeyRecord[]) {
     if (Array.isArray(keys)) {
-      let pos = 0
-      while (pos < keys.length) {
-        const slice = keys.slice(pos, pos + 20)
-        if (!slice.length) break
-        pos += slice.length
-        await Zotero.DB.queryAsync(`DELETE FROM betterbibtex.citationkey WERE itemID IN (${Array(slice.length).fill('?').join(',')})`, slice.map(key => key.itemID))
-      }
+      await Zotero.DB.executeTransaction(async () => {
+        log.debug('removing', keys.length, 'keys')
+        let pos = 0
+        const chunk = 50
+        while (pos < keys.length) {
+          const slice = keys.slice(pos, chunk + pos)
+          if (!slice.length) break
+          log.debug('removing', slice.length, 'at position', pos)
+          pos += chunk
+          await Zotero.DB.queryAsync(`DELETE FROM betterbibtex.citationkey WHERE itemID IN (${Array(slice.length).fill('?').join(',')})`, slice.map(key => key.itemID))
+        }
+      })
     }
     else {
-      await Zotero.DB.queryAsync('DELETE FROM betterbibtex.citationkey WERE itemID = ?', [ keys.itemID ])
+      await Zotero.DB.queryTx('DELETE FROM betterbibtex.citationkey WHERE itemID = ?', [ keys.itemID ])
     }
   }
 
   private async start(): Promise<void> {
-    const tables = await Zotero.DB.columnQueryAsync("SELECT LOWER(name) FROM betterbibtex.sqlite_master where type='table'")
-    if (!tables.includes('citationkey')) {
-      for (const ddl of require('./db/citation-key.sql')) {
-        await Zotero.DB.queryAsync(ddl, [], NoParse)
-      }
-    }
-
-    if (tables.includes('better-bibtex')) {
-      const data = await Zotero.DB.valueQueryAsync('SELECT data FROM betterbibtex."better-bibtex" WHERE name=?', ['better-bibtex.citekey'])
-      if (data) {
-        const db = JSON.parse(data)
-        await Zotero.DB.executeTransaction(async () => {
-          for (const key of db.data) {
-            await this.store({ ...key, citationKey: key.citekey })
-          }
-          await Zotero.DB.queryAsync('UPDATE betterbibtex."better-bibtex" SET name = ? WHERE name = ?', ['migrated.citekey', 'better-bibtex.citekey'])
-        })
-      }
-    }
-
     if (Zotero.Libraries.userLibraryID > 1) {
       await Zotero.DB.queryAsync('UPDATE betterbibtex.citationkey SET libraryID = ? WHERE libraryID IN (0, 1)', [Zotero.Libraries.userLibraryID])
     }
@@ -435,11 +420,18 @@ export const KeyManager = new class _KeyManager {
       }
     })
     Events.on('items-changed-prep', async ({ ids, action }) => {
+      const now = Date.now()
       log.debug('keymanager: items-changed-prep:', action, ids)
       let warn_titlecase = 0
       switch (action) {
         case 'delete':
-          await removeMany(this.keys, ids.map(itemID => ({ itemID })))
+          log.debug(now, 'keymanager.db: zotero DB', await Zotero.DB.columnQueryAsync('SELECT itemID FROM items ORDER BY itemID'))
+          log.debug(now, 'keymanager.db: citekey DB', await Zotero.DB.columnQueryAsync('SELECT itemID FROM betterbibtex.citationkey ORDER BY itemID'))
+          log.debug(now, 'keymanager.db: before remove', blink.many(this.keys))
+          const deletes = ids.map(itemID => ({ itemID })) // eslint-disable-line no-case-declarations
+          log.debug(now, 'keymanager.db: delete', deletes)
+          await removeMany(this.keys, deletes)
+          log.debug(now, 'keymanager.db: after remove', blink.many(this.keys))
           break
 
         case 'add':
@@ -472,22 +464,27 @@ export const KeyManager = new class _KeyManager {
 
     await Zotero.DB.executeTransaction(async () => {
       const items = `BBTITEMS${Zotero.Utilities.generateObjectKey()}`
+      log.debug('keymanager.load: select valid items into', items)
       await ZoteroDB.queryAsync(`
         CREATE TEMPORARY TABLE ${items}
         AS
-        SELECT itemID, key, libraryID FROM items
+        SELECT itemID, key as itemKey, libraryID
+        FROM items
         WHERE itemID NOT IN (SELECT itemID FROM deletedItems)
         AND itemTypeID NOT IN (${this.query.type.attachment}, ${this.query.type.note}, ${this.query.type.annotation || this.query.type.note})
         AND itemID NOT IN (SELECT itemID from feedItems)
       `)
+      log.debug('keymanager.load: delete orphaned')
       await Zotero.DB.queryAsync(`DELETE FROM betterbibtex.citationkey WHERE itemID NOT IN (SELECT itemID FROM ${items})`)
 
       const keys: Map<number, CitekeyRecord> = new Map
-      // basic load
-      for (const key of await Zotero.DB.queryAsync('SELECT * from betterbibtex.citationkey')) {
+      let key: CitekeyRecord
+      log.debug('keymanager.load: load existing')
+      for (key of await Zotero.DB.queryAsync('SELECT * from betterbibtex.citationkey')) {
         keys.set(key.itemID, { itemID: key.itemID, itemKey: key.itemKey, libraryID: key.libraryID, citationKey: key.citationKey, pinned: key.pinned })
       }
 
+      log.debug('keymanager.load: restore pin status')
       // fetch pinned keys to be sure
       const keyLine = /(^|\n)Citation Key\s*:\s*(.+?)(\n|$)/i
       const getKey = (extra: string) => {
@@ -497,9 +494,8 @@ export const KeyManager = new class _KeyManager {
       }
 
       let pinned: string
-      let key: CitekeyRecord
       for (const item of (await ZoteroDB.queryAsync(`
-        SELECT item.itemID, item.key, item.libraryID, extra.value as extra
+        SELECT item.itemID, item.itemKey, item.libraryID, extra.value as extra
         FROM ${items} item
         LEFT JOIN itemData extraField ON extraField.itemID = item.itemID AND extraField.fieldID = ${this.query.field.extra}
         LEFT JOIN itemDataValues extra ON extra.valueID = extraField.valueID
@@ -513,32 +509,41 @@ export const KeyManager = new class _KeyManager {
         }
       }
 
+      log.debug('keymanager.load: insert into blinkdb')
       await insertMany(this.keys, [...keys.values()])
-      missing =  await Zotero.DB.columnQueryAsync(`SELECT itemID FROM ${items} WHERE item.itemID NOT IN (SELECT itemID from betterbibtex.citationkey)`)
+
+      log.debug('keymanager.load: detect missing')
+      missing =  await Zotero.DB.columnQueryAsync(`SELECT itemID FROM ${items} WHERE itemID NOT IN (SELECT itemID from betterbibtex.citationkey)`)
+      log.debug('keymanager.load: drop temp table')
       await Zotero.DB.queryAsync(`DROP TABLE temp.${items}`)
     })
 
+    log.debug('keymanager.load: set up listener')
     use(this.keys, async ctx => {
+      log.debug('keymanager.db:', ctx.action)
       switch (ctx.action) {
         case 'update':
         case 'insert':
           break // handled after update
         case 'remove':
-          void this.remove(ctx.params[1] as CitekeyRecord)
+          log.debug('keymanager.db:', ctx.action, (ctx.params[1] as CitekeyRecord).itemKey)
+          void this.remove(ctx.params[1] as CitekeyRecord).catch(err => log.error(`keymanager.${ctx.action}`, err))
           break
         case 'removeMany':
-          void this.remove(ctx.params[1] as CitekeyRecord[])
+          log.debug('keymanager.db:', ctx.action, (ctx.params[1] as CitekeyRecord[]).map(key => key.itemID))
+          void this.remove(ctx.params[1] as CitekeyRecord[]).catch(err => log.error(`keymanager.${ctx.action}`, err))
           break
         default:
           if (Preference.testing) throw new Error(`Unexpected middleware action ${ctx.action}`)
       }
 
-      const result = await await ctx.next(...ctx.params)
+      const result = await ctx.next(...ctx.params)
 
       switch (ctx.action) {
         case 'update':
         case 'insert':
-          void this.store(ctx.params[1] as CitekeyRecord)
+          log.debug('keymanager.db:', ctx.action, (ctx.params[1] as CitekeyRecord).itemID)
+          void this.store(ctx.params[1] as CitekeyRecord).catch(err => log.error(`keymanager.${ctx.action}`, err))
           break
       }
 
@@ -546,10 +551,11 @@ export const KeyManager = new class _KeyManager {
     })
 
     // generate keys for entries that don't have them yet
+    log.debug('keymanager.load: regenerate', missing.length)
     const progress = new Progress(missing.length, 'Assigning citation keys')
     for (const itemID of missing) {
       try {
-        this.update(await getItemsAsync(itemID))
+        await this.update(await getItemsAsync(itemID))
       }
       catch (err) {
         log.error('KeyManager.rescan: update failed:', err.message || `${err}`, err.stack)
@@ -559,9 +565,10 @@ export const KeyManager = new class _KeyManager {
     }
 
     progress.done()
+    log.debug('keymanager.load: done')
   }
 
-  private async update(item: ZoteroItem, current?: CitekeyRecord): Promise<string> {
+  public async update(item: ZoteroItem, current?: CitekeyRecord): Promise<string> {
     if (item.isFeedItem || !item.isRegularItem()) return null
 
     current = current || blink.first(this.keys, { where: { itemID: item.id } })
@@ -590,6 +597,16 @@ export const KeyManager = new class _KeyManager {
     const key = blink.first(this.keys, { where: { itemID } })
     if (key) return key
     return { citationKey: '', pinned: false, retry: true }
+  }
+
+  public first(query: Query<CitekeyRecord, 'itemID'>): CitekeyRecord {
+    return blink.first(this.keys, query)
+  }
+  public find(query: Query<CitekeyRecord, 'itemID'>): CitekeyRecord[] {
+    return blink.many(this.keys, query)
+  }
+  public all(): CitekeyRecord[] {
+    return blink.many(this.keys)
   }
 
   public propose(item: ZoteroItem): Partial<CitekeyRecord> {

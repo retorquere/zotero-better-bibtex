@@ -10,7 +10,6 @@ import { get as getCollection } from './collection'
 import { get as getLibrary } from './library'
 import { getItemsAsync } from './get-items-async'
 import { fromPairs } from './object'
-import { $and } from './db/loki'
 
 function displayOptions(request) {
   const isTrue = new Set([ 'y', 'yes', 'true' ])
@@ -151,18 +150,18 @@ Zotero.Server.Endpoints['/better-bibtex/export/item'] = class {
       const response: { items: Record<string, any>, zotero: Record<string, { itemID: number, uri: string }>, errors: Record<string, string> } = { items: {}, zotero: {}, errors: {} }
 
       const itemIDs: Record<string, number> = {}
-      for (const citekey of citationKeys) {
-        const key = Zotero.BetterBibTeX.KeyManager.keys.find($and({ libraryID, citekey }))
+      for (const citationKey of citationKeys) {
+        const key = Zotero.BetterBibTeX.KeyManager.find({ where: { libraryID, citationKey } })
 
         switch (key.length) {
           case 0:
-            response.errors[citekey] = 'not found'
+            response.errors[citationKey] = 'not found'
             break
           case 1:
-            itemIDs[citekey] = key[0].itemID
+            itemIDs[citationKey] = key[0].itemID
             break
           default:
-            response.errors[citekey] = `${key.length} items found with key "${citekey}"`
+            response.errors[citationKey] = `${key.length} items found with key "${citationKey}"`
             break
         }
       }

@@ -7,10 +7,8 @@ import { getItemsAsync } from './get-items-async'
 import { AUXScanner } from './aux-scanner'
 import { DB as Cache } from './db/cache'
 import * as Extra from './extra'
-import { $and } from './db/loki'
 import  { defaults } from '../gen/preferences/meta'
 import { Preference } from './prefs'
-import { fromPairs } from './object'
 import * as memory from './memory'
 import { Events } from './events'
 
@@ -77,8 +75,7 @@ export class TestSupport {
 
     await Zotero.Promise.delay(1000)
 
-    if (Zotero.BetterBibTeX.KeyManager.keys.data.length !== 0) throw new Error(`keystore has ${Zotero.BetterBibTeX.KeyManager.keys.data.length} entries after reset`)
-    if (Zotero.BetterBibTeX.KeyManager.bucket.size !== 0) throw new Error(`keymap has ${Zotero.BetterBibTeX.KeyManager.bucket.size} entries after reset: ${JSON.stringify(fromPairs([...Zotero.BetterBibTeX.KeyManager.bucket.entries()]))}`)
+    if (Zotero.BetterBibTeX.KeyManager.all().length !== 0) throw new Error(`keystore has ${Zotero.BetterBibTeX.KeyManager.all().length} entries after reset`)
   }
 
   public async librarySize(): Promise<number> {
@@ -159,8 +156,8 @@ export class TestSupport {
 
     let ids: number[] = []
 
-    if (query.contains) ids = ids.concat(Zotero.BetterBibTeX.KeyManager.keys.where( (item: { citekey: string }) => item.citekey.toLowerCase().includes(query.contains.toLowerCase()) ).map((item: { itemID: number }) => item.itemID))
-    if (query.is) ids = ids.concat(Zotero.BetterBibTeX.KeyManager.keys.find($and({ citekey: query.is })).map((item: { itemID: number }) => item.itemID))
+    if (query.contains) ids = ids.concat(Zotero.BetterBibTeX.KeyManager.all().filter(key => key.citationKey.toLowerCase().includes(query.contains.toLowerCase())).map(key => key.itemID))
+    if (query.is) ids = ids.concat(Zotero.BetterBibTeX.KeyManager.find({ where: { citationKey: query.is } }).map(key => key.itemID))
 
     const s = new Zotero.Search()
     for (const [mode, text] of Object.entries(query)) {
@@ -178,7 +175,7 @@ export class TestSupport {
   public async pick(format: string, citations: {id: number[], uri: string, citekey: string}[]): Promise<string> {
     for (const citation of citations) {
       if (citation.id.length !== 1) throw new Error(`Expected 1 item, got ${citation.id.length}`)
-      citation.citekey = Zotero.BetterBibTeX.KeyManager.get(citation.id[0]).citekey
+      citation.citekey = Zotero.BetterBibTeX.KeyManager.get(citation.id[0]).citationKey
       citation.uri = Zotero.URI.getItemURI(await getItemsAsync(citation.id[0]))
     }
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
