@@ -228,7 +228,7 @@ export class ErrorReport {
         show_latest.hidden = false
       }
 
-      (<HTMLInputElement>doc.getElementById('better-bibtex-report-latest')).hidden = !Zotero.BetterBibTeX.outOfMemory
+      (<HTMLInputElement>doc.getElementById('better-bibtex-report-oom')).hidden = !Zotero.BetterBibTeX.outOfMemory
 
       this.setValue('better-bibtex-report-cache', this.cacheState = l10n.localize('better-bibtex_error-report_better-bibtex_cache', Cache.state()))
 
