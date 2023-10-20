@@ -424,18 +424,11 @@ export const KeyManager = new class _KeyManager {
       }
     })
     Events.on('items-changed-prep', async ({ ids, action }) => {
-      const now = Date.now()
       log.debug('keymanager: items-changed-prep:', action, ids)
       let warn_titlecase = 0
       switch (action) {
         case 'delete':
-          log.debug(now, 'keymanager.db: zotero DB', await Zotero.DB.columnQueryAsync('SELECT itemID FROM items ORDER BY itemID'))
-          log.debug(now, 'keymanager.db: citekey DB', await Zotero.DB.columnQueryAsync('SELECT itemID FROM betterbibtex.citationkey ORDER BY itemID'))
-          log.debug(now, 'keymanager.db: before remove', blink.many(this.keys))
-          const deletes = ids.map(itemID => ({ itemID })) // eslint-disable-line no-case-declarations
-          log.debug(now, 'keymanager.db: delete', deletes)
-          await removeMany(this.keys, deletes)
-          log.debug(now, 'keymanager.db: after remove', blink.many(this.keys))
+          await removeMany(this.keys, ids.map(itemID => ({ itemID })))
           break
 
         case 'add':
