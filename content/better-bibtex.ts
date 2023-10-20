@@ -755,7 +755,14 @@ export class BetterBibTeX {
               }
             }
 
+            log.debug('renaming table after migration')
             await Zotero.DB.queryAsync('ALTER TABLE betterbibtex."better-bibtex" RENAME TO "migrated-better-bibtex"')
+            if ((await Zotero.DB.valueQueryAsync("SELECT count(*) FROM betterbibtex.sqlite_master where type='table' AND name IN ('better-bibtex', 'migrated-better-bibtex')")) > 1) {
+              flash('table rename yields duplicate!')
+            }
+            else {
+              log.debug('renaming table after migration finished')
+            }
           }
         })
       },
