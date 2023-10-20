@@ -245,24 +245,30 @@ export class TestSupport {
 
     selected.sort((a, b) => ids.indexOf(a.id) - ids.indexOf(b.id))
 
+    const win = Zotero.getMainWindow()
+
+    /*
     const env = {
       Zotero,
-      window: Zotero.getMainWindow(),
-      document: Zotero.getMainWindow().document,
-      Zotero_Duplicates_Pane: undefined,
-      setTimeout: setTimeout.bind(Zotero.getMainWindow()),
-      clearTimeout: clearTimeout.bind(Zotero.getMainWindow()),
+      window: win,
+      document: win.document,
+      Zotero_Duplicates_Pane: win.Zotero_Duplicates_Pane,
+      setTimeout: setTimeout.bind(win),
+      clearTimeout: clearTimeout.bind(win),
+    }
+    */
+
+    if (!win.Zotero_Duplicates_Pane) {
+      Components.classes['@mozilla.org/moz/jssubscript-loader;1']
+        .getService(Components.interfaces.mozIJSSubScriptLoader)
+        .loadSubScript('chrome://zotero/content/duplicatesMerge.js', win)
     }
 
-    Components.classes['@mozilla.org/moz/jssubscript-loader;1']
-      .getService(Components.interfaces.mozIJSSubScriptLoader)
-      .loadSubScript('chrome://zotero/content/duplicatesMerge.js', env)
-
-    env.Zotero_Duplicates_Pane.setItems(selected)
+    win.Zotero_Duplicates_Pane.setItems(selected)
     await Zotero.Promise.delay(1500)
 
     const before = await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, true, false, true)
-    await env.Zotero_Duplicates_Pane.merge()
+    await win.Zotero_Duplicates_Pane.merge()
 
     await Zotero.Promise.delay(1500)
     const after = await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, true, false, true)

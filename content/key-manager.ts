@@ -199,16 +199,20 @@ export const KeyManager = new class _KeyManager {
 
       const extra = item.getField('extra')
 
-      let citationKey = Extra.get(extra, 'zotero', { citationKey: true }).extraFields.citationKey
-      if (citationKey) continue // pinned, leave it alone
+      const citationKey = {
+        old: Extra.get(extra, 'zotero', { citationKey: true }).extraFields.citationKey,
+        new: '',
+      }
+      if (citationKey.old) continue // pinned, leave it alone
 
-      citationKey = this.get(item.id).citationKey
-      if (await this.update(item) === citationKey) continue
+      citationKey.old = this.get(item.id).citationKey
+      citationKey.new = await this.update(item)
+      if (citationKey.old === citationKey.new) continue
 
       // remove the new citekey from the aliases if present
       const aliases = Extra.get(extra, 'zotero', { aliases: true })
-      if (aliases.extraFields.aliases.includes(citationKey)) {
-        aliases.extraFields.aliases = aliases.extraFields.aliases.filter(alias => alias !== citationKey)
+      if (aliases.extraFields.aliases.includes(citationKey.new)) {
+        aliases.extraFields.aliases = aliases.extraFields.aliases.filter(alias => alias !== citationKey.new)
 
         if (aliases.extraFields.aliases.length) {
           item.setField('extra', Extra.set(aliases.extra, { aliases: aliases.extraFields.aliases }))
