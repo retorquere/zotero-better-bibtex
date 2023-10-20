@@ -18,7 +18,6 @@ import { flash } from './flash'
 import * as l10n from './l10n'
 import { orchestrator } from './orchestrator'
 import { pick, fromPairs } from './object'
-import * as ZoteroDB from './db/zotero'
 
 const NoParse = { noParseParams: true }
 
@@ -28,13 +27,13 @@ const SQL = new class {
     editable: [ 'enabled', 'recursive', 'status', 'error', 'updated' ],
   }
   public sql = {
-    create: 'REPLACE INTO betterbibtex.autoexport',
+    create: 'INSERT INTO betterbibtex.autoexport',
     setting: 'REPLACE INTO betterbibtex.autoexport_setting (path, setting, value) VALUES (:path, :setting, :value)',
   }
 
   constructor() {
     this.columns.job = this.columns.job.concat(this.columns.editable)
-    this.sql.create += ` (${this.columns.job.join(',')}) VALUES (${this.columns.job.map(col => `:${col}`)})`
+    this.sql.create = `INSERT INTO betterbibtex.autoexport (${this.columns.job.join(',')}) VALUES (${this.columns.job.map(col => `:${col}`)})`
   }
 
   public async get(path: string): Promise<Job> {
@@ -483,22 +482,7 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
 
     // migration
     if (tables.includes('better-bibtex')) {
-      // HOW?!?!
-      await ZoteroDB.queryTx(`
-        UPDATE betterbibtex."better-bibtex"
-        SET name = 'migrated.autoexport.${Zotero.Utilities.generateObjectKey()}'
-        WHERE name = 'better-bibtex.autoexport' AND EXISTS (SELECT 1 FROM betterbibtex."better-bibtex" WHERE name = 'migrated.autoexport')
-      `)
-      const stale = await Zotero.DB.valueQueryAsync('SELECT COUNT(*) FROM betterbibtex."better-bibtex" WHERE name LIKE ?', [ 'migrated.autoexport.%' ])
-      if (stale > 1) {
-        flash(
-          'stale auto-export migrations',
-          `${stale} stale auto-export migrations found, please report on https://github.com/retorquere/zotero-better-bibtex/issues/2522`
-        )
-      }
-
-      // eslint-disable-next-line @typescript-eslint/quotes
-      const data = await Zotero.DB.valueQueryAsync(`SELECT data FROM betterbibtex."better-bibtex" WHERE name = 'better-bibtex.autoexport'`)
+      const data = await Zotero.DB.valueQueryAsync('SELECT data FROM betterbibtex."better-bibtex" WHERE name=?', ['better-bibtex.autoexport'])
       if (data) {
         const db = JSON.parse(data)
         for (const ae of db.data) {
@@ -509,8 +493,7 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
           await SQL.create(ae)
         }
 
-        // eslint-disable-next-line @typescript-eslint/quotes
-        await Zotero.DB.queryTx(`UPDATE betterbibtex."better-bibtex" SET name = 'migrated.autoexport' WHERE name = 'better-bibtex.autoexport'`)
+        await Zotero.DB.queryTx('UPDATE betterbibtex."better-bibtex" SET name = ? WHERE name = ?', ['migrated.autoexport', 'better-bibtex.autoexport'])
       }
     }
   }

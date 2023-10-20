@@ -9,7 +9,6 @@ import { Preference } from './prefs'
 import { defaults } from '../gen/preferences/meta'
 import { Translators } from './translators'
 import { log } from './logger'
-import { AutoExport } from './auto-export'
 
 import { DB } from './db/main'
 import { DB as Cache } from './db/cache'
@@ -228,7 +227,7 @@ export class ErrorReport {
         show_latest.hidden = false
       }
 
-      (<HTMLInputElement>doc.getElementById('better-bibtex-report-oom')).hidden = !Zotero.BetterBibTeX.outOfMemory
+      (<HTMLInputElement>doc.getElementById('better-bibtex-report-latest')).hidden = !Zotero.BetterBibTeX.outOfMemory
 
       this.setValue('better-bibtex-report-cache', this.cacheState = l10n.localize('better-bibtex_error-report_better-bibtex_cache', Cache.state()))
 
@@ -279,7 +278,7 @@ export class ErrorReport {
       info += `  Zotero: ${key} = ${JSON.stringify(Zotero.Prefs.get(key))}\n`
     }
 
-    const autoExports = await AutoExport.all()
+    const autoExports = DB.getCollection('autoexport').find()
     if (autoExports.length) {
       info += 'Auto-exports:\n'
       for (const ae of autoExports) {

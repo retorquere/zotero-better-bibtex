@@ -14,32 +14,6 @@ function select_by_citekey(item) {
   return `zotero://select/items/@${encodeURIComponent(item.citationKey)}`
 }
 
-function escapeHtml(unsafe: string): string {
-  return unsafe
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-}
-
-function authorOf(item): string {
-  const creators = item.creators || []
-  const creator = creators[0] || {}
-  let name: string = creator.name || creator.lastName || 'no author'
-  if (creators.length > 1) name += ' et al.'
-  return name
-}
-
-function yearOf(item): string {
-  if (!item.date) return 'no date'
-
-  let date = Zotero.BetterBibTeX.parseDate(item.date)
-  if (date.type === 'interval') date = date.from
-
-  if (date.type === 'verbatim' || !date.year) return item.date as string
-  return `${date.year}`
-}
-
 const Mode = {
   // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
   gitbook(items) {
@@ -121,21 +95,35 @@ const Mode = {
     const reference = items.map(item => {
       const ref = []
 
-      ref.push(authorOf(item))
+      // author
+      const creators = item.creators || []
+      const creator = creators[0] || {}
+      let name = creator.name || creator.lastName || 'no author'
+      if (creators.length > 1) name += ' et al.'
+      ref.push(name)
 
       // title
       if (item.title) ref.push(JSON.stringify(item.title))
 
       // year
-      ref.push(yearOf(item))
+      if (item.date) {
+        let date = Zotero.BetterBibTeX.parseDate(item.date)
+        if (date.type === 'interval') date = date.from
+
+        if (date.type === 'verbatim' || !date.year) {
+          ref.push(item.date)
+        }
+        else {
+          ref.push(date.year)
+        }
+      }
+      else {
+        ref.push('no date')
+      }
 
       return ref.join(', ')
     })
     Zotero.write(`{${reference.join('; ')}}`)
-  },
-
-  jupyter(items) {
-    Zotero.write(items.map(item => `<cite data-cite="${escapeHtml(item.citationKey)}">(${escapeHtml(authorOf(item))}, ${escapeHtml(yearOf(item))})</cite>`).join(''))
   },
 
   eta(items) {

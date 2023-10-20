@@ -43,10 +43,6 @@ class Cache extends Loki {
   private async init() {
     await this.loadDatabase()
 
-    // cleanup
-    if (this.getCollection('cache')) { this.removeCollection('cache') }
-    if (this.getCollection('serialized')) { this.removeCollection('serialized') }
-
     let coll = this.schemaCollection('itemToExportFormat', {
       indices: [ 'itemID' ],
       logging: false,
@@ -275,3 +271,7 @@ Events.on('items-changed-prep', async ({ ids }) => {
   await Zotero.BetterBibTeX.ready
   DB.remove(ids, 'items-changed')
 })
+
+// cleanup
+if (DB.getCollection('cache')) { DB.removeCollection('cache') }
+if (DB.getCollection('serialized')) { DB.removeCollection('serialized') }

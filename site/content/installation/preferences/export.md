@@ -148,16 +148,15 @@ Options:
 
 * LaTeX citation
 * Cite Keys
-* Eta template
-* GitBook
+* Pandoc citation
+* Org-mode select link
 * org-ref citation
 * org-ref v3 citation
-* Org-mode select link
-* Pandoc citation
-* Roam Cite Key
 * RTF Scan marker
+* Roam Cite Key
+* GitBook
 * Zotero select link
-* Jupyter notebook
+* Eta template
 
 
 #### LaTeX command
