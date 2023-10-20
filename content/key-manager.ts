@@ -25,7 +25,7 @@ import { Preference } from './prefs'
 import { Formatter } from './key-manager/formatter'
 import { DB as Cache } from './db/cache'
 
-import { createDB, createTable, insert, insertMany, removeMany, use, many, update, Query } from 'blinkdb'
+import { createDB, createTable, insert, insertMany, removeMany, use, update, Query } from 'blinkdb'
 import * as blink from './db/blink'
 
 import { patch as $patch$ } from './monkey-patch'
@@ -374,7 +374,7 @@ export const KeyManager = new class _KeyManager {
       } satisfies Query<CitekeyRecord, 'itemID'>
       if (Preference.keyScope === 'global') delete where.where.libraryID
 
-      for (const conflict of await many(this.keys, where)) {
+      for (const conflict of blink.many(this.keys, where)) {
         item = await Zotero.Items.getAsync(conflict.itemID)
         await this.update(item, conflict)
       }
