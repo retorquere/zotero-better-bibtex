@@ -159,6 +159,7 @@ Options:
 * Zotero select link
 * Jupyter notebook
 
+
 #### LaTeX command
 
 default: `cite`
