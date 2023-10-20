@@ -72,7 +72,7 @@
     "ajv": "^8.12.0",
     "base64-js": "^1.5.1",
     "better-ajv-errors": "^1.2.0",
-    "blinkdb": "^0.13.3",
+    "blinkdb": "^0.14.0",
     "bplist-parser": "^0.3.2",
     "case": "^1.6.3",
     "citeproc": "^2.4.63",
