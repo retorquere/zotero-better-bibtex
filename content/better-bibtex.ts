@@ -707,62 +707,60 @@ export class BetterBibTeX {
       startup: async () => {
         await Zotero.DB.queryAsync('ATTACH DATABASE ? AS betterbibtex', [OS.Path.join(Zotero.DataDirectory.dir, 'better-bibtex.sqlite')])
 
-        await Zotero.DB.executeTransaction(async () => {
-          const tables: Record<string, boolean> = {}
-          for (const table of await Zotero.DB.columnQueryAsync("SELECT LOWER(REPLACE(name, '-', '')) FROM betterbibtex.sqlite_master where type='table'")) {
-            tables[table] = true
-          }
+        const tables: Record<string, boolean> = {}
+        for (const table of await Zotero.DB.columnQueryAsync("SELECT LOWER(REPLACE(name, '-', '')) FROM betterbibtex.sqlite_master where type='table'")) {
+          tables[table] = true
+        }
 
-          const NoParse = { noParseParams: true }
+        const NoParse = { noParseParams: true }
 
-          if (!tables.citationkey) {
-            for (const ddl of require('./db/citation-key.sql')) {
-              await Zotero.DB.queryAsync(ddl, [], NoParse)
-            }
-          }
-
-          if (!tables.autoexport) {
-            for (const ddl of require('./db/auto-export.sql')) {
-              await Zotero.DB.queryAsync(ddl, [], NoParse)
-            }
-          }
-          for (const ddl of require('../gen/auto-export-triggers.sql')) {
+        if (!tables.citationkey) {
+          for (const ddl of require('./db/citation-key.sql')) {
             await Zotero.DB.queryAsync(ddl, [], NoParse)
           }
+        }
 
-          if (tables.betterbibtex) {
-            for (let { name, data } of await Zotero.DB.queryAsync('SELECT name, data FROM betterbibtex."better-bibtex"')) {
-              log.debug('migrating', { name, data })
-              data = JSON.parse(data)
-              switch (name) {
-                case 'better-bibtex.citekey':
-                  for (const key of data.data) {
-                    await Zotero.DB.queryAsync('REPLACE INTO betterbibtex.citationkey (itemID, itemKey, libraryID, citationKey, pinned) VALUES (?, ?, ?, ?, ?)', [
-                      key.itemID,
-                      key.itemKey,
-                      key.libraryID,
-                      key.citekey,
-                      key.pinned ? 1 : 0,
-                    ])
-                  }
-                  break
+        if (!tables.autoexport) {
+          for (const ddl of require('./db/auto-export.sql')) {
+            await Zotero.DB.queryAsync(ddl, [], NoParse)
+          }
+        }
+        for (const ddl of require('../gen/auto-export-triggers.sql')) {
+          await Zotero.DB.queryAsync(ddl, [], NoParse)
+        }
 
-                case 'better-bibtex.autoexport':
-                  for (const ae of data.data) {
-                    await AE.store({ ...ae, updated: ae.meta.updated })
-                  }
-                  break
-              }
-            }
+        if (tables.betterbibtex) {
+          if (!(await Zotero.DB.queryAsync('PRAGMA betterbibtex.table_info("better-bibtex")')).find(info => info.name === 'migrated')) {
+            Zotero.DB.queryAsync('ALTER TABLE betterbibtex."better-bibtex" ADD migrated')
+          }
+        }
 
-            log.debug('renaming table after migration')
-            await Zotero.DB.queryAsync('ALTER TABLE betterbibtex."better-bibtex" RENAME TO "migrated-better-bibtex"')
-            if ((await Zotero.DB.valueQueryAsync("SELECT count(*) FROM betterbibtex.sqlite_master where type='table' AND name IN ('better-bibtex', 'migrated-better-bibtex')")) > 1) {
-              flash('table rename yields duplicate!')
+        await Zotero.DB.executeTransaction(async () => {
+          for (let { name, data } of await Zotero.DB.queryAsync('SELECT * FROM betterbibtex."better-bibtex" WHERE migrated IS NULL')) {
+            log.debug('migrating', { name, data })
+            data = JSON.parse(data)
+            switch (name) {
+              case 'better-bibtex.citekey':
+                log.debug('converting', { name, data })
+                for (const key of data.data) {
+                  await Zotero.DB.queryAsync('REPLACE INTO betterbibtex.citationkey (itemID, itemKey, libraryID, citationKey, pinned) VALUES (?, ?, ?, ?, ?)', [
+                    key.itemID,
+                    key.itemKey,
+                    key.libraryID,
+                    key.citekey,
+                    key.pinned ? 1 : 0,
+                  ])
+                }
+                break
+
+              case 'better-bibtex.autoexport':
+                log.debug('converting', { name, data })
+                for (const ae of data.data) {
+                  await AE.store({ ...ae, updated: ae.meta.updated })
+                }
+                break
             }
-            else {
-              log.debug('renaming table after migration finished')
-            }
+            await Zotero.DB.queryAsync('UPDATE betterbibtex."better-bibtex" SET migrated = 1 WHERE name = ?', [ name ])
           }
         })
       },
