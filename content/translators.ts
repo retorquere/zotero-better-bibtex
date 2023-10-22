@@ -62,7 +62,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
     orchestrator.add('translators', {
       description: 'translators',
-      needs: ['database'],
+      needs: ['keymanager', 'cache'],
       startup: async () => {
         await this.start()
 

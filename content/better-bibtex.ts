@@ -743,14 +743,19 @@ export class BetterBibTeX {
               switch (name) {
                 case 'better-bibtex.citekey':
                   log.debug('converting', { name, records: data.data.length })
-                  for (const key of data.data) {
-                    await Zotero.DB.queryAsync('REPLACE INTO betterbibtex.citationkey (itemID, itemKey, libraryID, citationKey, pinned) VALUES (?, ?, ?, ?, ?)', [
-                      key.itemID,
-                      key.itemKey,
-                      key.libraryID,
-                      key.citekey,
-                      key.pinned ? 1 : 0,
-                    ])
+                  try {
+                    for (const key of data.data) {
+                      await Zotero.DB.queryAsync('REPLACE INTO betterbibtex.citationkey (itemID, itemKey, libraryID, citationKey, pinned) VALUES (?, ?, ?, ?, ?)', [
+                        key.itemID,
+                        key.itemKey,
+                        key.libraryID,
+                        key.citekey,
+                        key.pinned ? 1 : 0,
+                      ])
+                    }
+                  }
+                  catch (err) {
+                    log.error('not migrated:', name, err)
                   }
                   break
 

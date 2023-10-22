@@ -10,8 +10,8 @@ import { defaults } from '../gen/preferences/meta'
 import { Translators } from './translators'
 import { log } from './logger'
 import { AutoExport } from './auto-export'
+import { KeyManager } from './key-manager'
 
-import { DB } from './db/main'
 import { DB as Cache } from './db/cache'
 import { pick } from './file-picker'
 import { is7 } from './client'
@@ -149,7 +149,7 @@ export class ErrorReport {
     if (this.errorlog.items) out = tape.append(`${this.key}/items.json`, this.errorlog.items)
 
     if ((<HTMLInputElement>$window.document.getElementById('better-bibtex-error-report-include-db')).checked) {
-      out = tape.append(`${this.key}/database.json`, DB.serialize({ serializationMethod: 'pretty' }))
+      out = tape.append(`${this.key}/database.json`, JSON.stringify(KeyManager.all()))
       out = tape.append(`${this.key}/cache.json`, Cache.serialize({ serializationMethod: 'pretty' }))
     }
 
