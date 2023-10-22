@@ -736,12 +736,13 @@ export class BetterBibTeX {
           }
 
           await Zotero.DB.executeTransaction(async () => {
-            for (let { name, data } of await Zotero.DB.queryAsync('SELECT * FROM betterbibtex."better-bibtex" WHERE migrated IS NULL')) {
-              log.debug('migrating', { name, data })
+            for (let { name, data } of await Zotero.DB.queryAsync('SELECT name, data FROM betterbibtex."better-bibtex" WHERE migrated IS NULL')) {
+              log.debug('migrating', { name })
               data = JSON.parse(data)
+              let migrated = name
               switch (name) {
                 case 'better-bibtex.citekey':
-                  log.debug('converting', { name, data })
+                  log.debug('converting', { name, records: data.data.length })
                   for (const key of data.data) {
                     await Zotero.DB.queryAsync('REPLACE INTO betterbibtex.citationkey (itemID, itemKey, libraryID, citationKey, pinned) VALUES (?, ?, ?, ?, ?)', [
                       key.itemID,
@@ -754,15 +755,24 @@ export class BetterBibTeX {
                   break
 
                 case 'better-bibtex.autoexport':
-                  log.debug('converting', { name, data })
+                  log.debug('converting', { name, records: data.data.length })
                   for (const ae of data.data) {
                     await AE.store({ ...ae, updated: ae.meta.updated })
                   }
                   break
+                default:
+                  migrated = ''
+                  break
               }
-              await Zotero.DB.queryAsync('UPDATE betterbibtex."better-bibtex" SET migrated = 1 WHERE name = ?', [ name ])
+              if (migrated) await Zotero.DB.queryAsync('UPDATE betterbibtex."better-bibtex" SET migrated = 1 WHERE name = ?', [ migrated ])
             }
           })
+
+          const status = {}
+          for (const { name, migrated } of await Zotero.DB.queryAsync('SELECT name, migrated FROM betterbibtex."better-bibtex"')) {
+            status[name] = migrated
+          }
+          log.debug('migrated:', status)
         }
       },
       shutdown: async () => {

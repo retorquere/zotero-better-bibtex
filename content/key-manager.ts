@@ -26,7 +26,7 @@ import { Formatter } from './key-manager/formatter'
 import { DB as Cache } from './db/cache'
 
 import { createDB, createTable, Query, BlinkKey } from 'blinkdb'
-import * as blink from './db/blink'
+import * as blink from '../gen/blinkdb'
 
 import { patch as $patch$ } from './monkey-patch'
 

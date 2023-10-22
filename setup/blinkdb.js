@@ -42,11 +42,15 @@ function mksync(src) {
 }
 
 console.log('blinkdb.sync:')
-for (const f of 'first many insert insertMany update updateMany remove removeMany'.split(' ')) {
+let xface = ''
+for (const f of 'one first many insert insertMany update updateMany remove removeMany'.split(' ')) {
   console.log(' ', f)
   fs.writeFileSync(`gen/blinkdb/${f}.js`, mksync(`blinkdb/dist/core/${f}.js`))
   const d_ts = fs.readFileSync(`node_modules/blinkdb/dist/core/${f}.d.ts`, 'utf-8')
     .replace(/Promise<([^>]+)>/g, '$1')
     .replace(/"[.][.]?[/][^"]+"/g, '"blinkdb"')
   fs.writeFileSync(`gen/blinkdb/${f}.d.ts`, d_ts)
+
+  xface += `export { internal${f.replace(/^(.)/, c => c.toUpperCase())} as ${f} } from './${f}'\n`
 }
+fs.writeFileSync('gen/blinkdb/index.ts', xface)

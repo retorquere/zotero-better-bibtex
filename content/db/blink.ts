@@ -1,8 +1,0 @@
-export { internalFirst as first } from '../../gen/blinkdb/first'
-export { internalMany as many } from '../../gen/blinkdb/many'
-export { internalInsert as insert } from '../../gen/blinkdb/insert'
-export { internalInsertMany as insertMany } from '../../gen/blinkdb/insertMany'
-export { internalRemove as remove } from '../../gen/blinkdb/remove'
-export { internalRemoveMany as removeMany } from '../../gen/blinkdb/removeMany'
-export { internalUpdate as update } from '../../gen/blinkdb/update'
-export { internalUpdateMany as updateMany } from '../../gen/blinkdb/updateMany'
