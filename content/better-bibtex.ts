@@ -733,36 +733,36 @@ export class BetterBibTeX {
           if (!(await Zotero.DB.queryAsync('PRAGMA betterbibtex.table_info("better-bibtex")')).find(info => info.name === 'migrated')) {
             Zotero.DB.queryAsync('ALTER TABLE betterbibtex."better-bibtex" ADD migrated')
           }
-        }
 
-        await Zotero.DB.executeTransaction(async () => {
-          for (let { name, data } of await Zotero.DB.queryAsync('SELECT * FROM betterbibtex."better-bibtex" WHERE migrated IS NULL')) {
-            log.debug('migrating', { name, data })
-            data = JSON.parse(data)
-            switch (name) {
-              case 'better-bibtex.citekey':
-                log.debug('converting', { name, data })
-                for (const key of data.data) {
-                  await Zotero.DB.queryAsync('REPLACE INTO betterbibtex.citationkey (itemID, itemKey, libraryID, citationKey, pinned) VALUES (?, ?, ?, ?, ?)', [
-                    key.itemID,
-                    key.itemKey,
-                    key.libraryID,
-                    key.citekey,
-                    key.pinned ? 1 : 0,
-                  ])
-                }
-                break
+          await Zotero.DB.executeTransaction(async () => {
+            for (let { name, data } of await Zotero.DB.queryAsync('SELECT * FROM betterbibtex."better-bibtex" WHERE migrated IS NULL')) {
+              log.debug('migrating', { name, data })
+              data = JSON.parse(data)
+              switch (name) {
+                case 'better-bibtex.citekey':
+                  log.debug('converting', { name, data })
+                  for (const key of data.data) {
+                    await Zotero.DB.queryAsync('REPLACE INTO betterbibtex.citationkey (itemID, itemKey, libraryID, citationKey, pinned) VALUES (?, ?, ?, ?, ?)', [
+                      key.itemID,
+                      key.itemKey,
+                      key.libraryID,
+                      key.citekey,
+                      key.pinned ? 1 : 0,
+                    ])
+                  }
+                  break
 
-              case 'better-bibtex.autoexport':
-                log.debug('converting', { name, data })
-                for (const ae of data.data) {
-                  await AE.store({ ...ae, updated: ae.meta.updated })
-                }
-                break
+                case 'better-bibtex.autoexport':
+                  log.debug('converting', { name, data })
+                  for (const ae of data.data) {
+                    await AE.store({ ...ae, updated: ae.meta.updated })
+                  }
+                  break
+              }
+              await Zotero.DB.queryAsync('UPDATE betterbibtex."better-bibtex" SET migrated = 1 WHERE name = ?', [ name ])
             }
-            await Zotero.DB.queryAsync('UPDATE betterbibtex."better-bibtex" SET migrated = 1 WHERE name = ?', [ name ])
-          }
-        })
+          })
+        }
       },
       shutdown: async () => {
         await Zotero.DB.queryAsync('DETACH DATABASE betterbibtex')
