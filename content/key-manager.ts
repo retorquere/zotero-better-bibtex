@@ -25,7 +25,7 @@ import { Preference } from './prefs'
 import { Formatter } from './key-manager/formatter'
 import { DB as Cache } from './db/cache'
 
-import { createDB, createTable, insert, insertMany, removeMany, use, update, Query } from 'blinkdb'
+import { createDB, createTable, Query, BlinkKey } from 'blinkdb'
 import * as blink from './db/blink'
 
 import { patch as $patch$ } from './monkey-patch'
@@ -41,6 +41,8 @@ type CitekeyRecord = {
   citationKey: string
   pinned: boolean | 0 | 1
 }
+
+type UnwatchCallback = () => void
 
 class Progress {
   private win: any
@@ -81,6 +83,7 @@ export const KeyManager = new class _KeyManager {
     primary: 'itemID',
     indexes: ['itemKey', 'libraryID', 'citationKey'],
   })
+  private unwatch: UnwatchCallback[]
 
   public query: {
     field: { extra?: number, title?: number }
@@ -136,7 +139,7 @@ export const KeyManager = new class _KeyManager {
       else {
         if (parsed.extraFields.citationKey) continue
 
-        citationKey = this.get(item.id).citationKey || await this.update(item)
+        citationKey = this.get(item.id).citationKey || this.update(item)
       }
 
       item.setField('extra', Extra.set(extra, { citationKey }))
@@ -206,7 +209,7 @@ export const KeyManager = new class _KeyManager {
       if (citationKey.old) continue // pinned, leave it alone
 
       citationKey.old = this.get(item.id).citationKey
-      citationKey.new = await this.update(item)
+      citationKey.new = this.update(item)
       if (citationKey.old === citationKey.new) continue
 
       // remove the new citekey from the aliases if present
@@ -262,6 +265,11 @@ export const KeyManager = new class _KeyManager {
         log.debug('keymanager: init: done')
 
         await this.start()
+      },
+      shutdown: () => {
+        for (const cb of this.unwatch) {
+          cb()
+        }
       },
     })
     orchestrator.add('citekeysearch', {
@@ -380,7 +388,7 @@ export const KeyManager = new class _KeyManager {
 
       for (const conflict of blink.many(this.keys, where)) {
         item = await Zotero.Items.getAsync(conflict.itemID)
-        await this.update(item, conflict)
+        this.update(item, conflict)
       }
     }
   }
@@ -423,18 +431,18 @@ export const KeyManager = new class _KeyManager {
           break
       }
     })
-    Events.on('items-changed-prep', async ({ ids, action }) => {
+    Events.on('items-changed-prep', ({ ids, action }) => {
       log.debug('keymanager: items-changed-prep:', action, ids)
       let warn_titlecase = 0
       switch (action) {
         case 'delete':
-          await removeMany(this.keys, ids.map(itemID => ({ itemID })))
+          blink.removeMany(this.keys, ids.map(itemID => ({ itemID })))
           break
 
         case 'add':
         case 'modify':
           for (const item of Zotero.Items.get(ids).filter(i => i.isRegularItem() && !i.isFeedItem)) {
-            await this.update(item)
+            this.update(item)
             if (Preference.warnTitleCased) {
               const title = item.getField('title')
               if (title !== sentenceCase(title)) warn_titlecase += 1
@@ -507,7 +515,7 @@ export const KeyManager = new class _KeyManager {
       }
 
       log.debug('keymanager.load: insert into blinkdb')
-      await insertMany(this.keys, [...keys.values()])
+      blink.insertMany(this.keys, [...keys.values()])
 
       log.debug('keymanager.load: detect missing')
       missing =  await Zotero.DB.columnQueryAsync(`SELECT itemID FROM ${items} WHERE itemID NOT IN (SELECT itemID from betterbibtex.citationkey)`)
@@ -516,43 +524,34 @@ export const KeyManager = new class _KeyManager {
     })
 
     log.debug('keymanager.load: set up listener')
-    use(this.keys, async ctx => {
-      log.debug('keymanager.db:', ctx.action)
-      switch (ctx.action) {
-        case 'update':
-        case 'insert':
-          break // handled after update
-        case 'remove':
-          log.debug('keymanager.db:', ctx.action, (ctx.params[1] as CitekeyRecord).itemKey)
-          void this.remove(ctx.params[1] as CitekeyRecord).catch(err => log.error(`keymanager.${ctx.action}`, err))
-          break
-        case 'removeMany':
-          log.debug('keymanager.db:', ctx.action, (ctx.params[1] as CitekeyRecord[]).map(key => key.itemID))
-          void this.remove(ctx.params[1] as CitekeyRecord[]).catch(err => log.error(`keymanager.${ctx.action}`, err))
-          break
-        default:
-          if (Preference.testing) throw new Error(`Unexpected middleware action ${ctx.action}`)
-      }
-
-      const result = await ctx.next(...ctx.params)
-
-      switch (ctx.action) {
-        case 'update':
-        case 'insert':
-          log.debug('keymanager.db:', ctx.action, (ctx.params[1] as CitekeyRecord).itemID)
-          void this.store(ctx.params[1] as CitekeyRecord).catch(err => log.error(`keymanager.${ctx.action}`, err))
-          break
-      }
-
-      return result
-    })
+    this.unwatch = [
+      this.keys[BlinkKey].events.onInsert.register(changes => {
+        for (const change of changes) {
+          void this.store(change.entity).catch(err => log.error('keymanager.remove', err))
+        }
+      }),
+      this.keys[BlinkKey].events.onUpdate.register(changes => {
+        for (const change of changes) {
+          void this.store(change.newEntity).catch(err => log.error('keymanager.remove', err))
+        }
+      }),
+      this.keys[BlinkKey].events.onRemove.register(changes => {
+        for (const change of changes) {
+          void this.remove(change.entity).catch(err => log.error('keymanager.remove', err))
+        }
+      }),
+      this.keys[BlinkKey].events.onClear.register(_changes => {
+        log.error('error: do not clear the keys database!')
+        throw new Error('do not clear the keys database!')
+      }),
+    ]
 
     // generate keys for entries that don't have them yet
     log.debug('keymanager.load: regenerate', missing.length)
     const progress = new Progress(missing.length, 'Assigning citation keys')
     for (const itemID of missing) {
       try {
-        await this.update(await getItemsAsync(itemID))
+        this.update(await getItemsAsync(itemID))
       }
       catch (err) {
         log.error('KeyManager.rescan: update failed:', err.message || `${err}`, err.stack)
@@ -565,7 +564,7 @@ export const KeyManager = new class _KeyManager {
     log.debug('keymanager.load: done')
   }
 
-  public async update(item: ZoteroItem, current?: CitekeyRecord): Promise<string> {
+  public update(item: ZoteroItem, current?: CitekeyRecord): string {
     if (item.isFeedItem || !item.isRegularItem()) return null
 
     current = current || blink.first(this.keys, { where: { itemID: item.id } })
@@ -577,10 +576,10 @@ export const KeyManager = new class _KeyManager {
     if (current) {
       current.pinned = proposed.pinned
       current.citationKey = proposed.citationKey
-      await update(this.keys, current)
+      blink.update(this.keys, current)
     }
     else {
-      await insert(this.keys, { itemID: item.id, libraryID: item.libraryID, itemKey: item.key, pinned: proposed.pinned, citationKey: proposed.citationKey })
+      blink.insert(this.keys, { itemID: item.id, libraryID: item.libraryID, itemKey: item.key, pinned: proposed.pinned, citationKey: proposed.citationKey })
     }
 
     return proposed.citationKey

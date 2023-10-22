@@ -1,31 +1,8 @@
-import { Entity, PrimaryKeyOf, Table, Query, BlinkKey } from 'blinkdb'
-import { get } from 'blinkdb/dist/query'
-import { TableUtils } from 'blinkdb/dist/core/table.utils'
-
-export function first<T extends Entity<T>, P extends PrimaryKeyOf<T>>(table: Table<T, P>, queryOrId?: Query<T, P> | T[P]): T | null {
-  if (queryOrId === undefined) {
-    const btree = table[BlinkKey].storage.primary
-    const minKey = btree.minKey()
-    const entity = minKey ? btree.get(minKey) ?? null : null
-    return TableUtils.cloneIfNecessary(table, entity)
-  }
-  else if (typeof queryOrId !== 'object') {
-    const entity = table[BlinkKey].storage.primary.get(queryOrId) ?? null
-    return TableUtils.cloneIfNecessary(table, entity)
-  }
-
-  const res = get(table, queryOrId)
-  if (!res[0]) return null
-  return TableUtils.cloneIfNecessary(table, res[0])
-}
-
-export function many<T extends Entity<T>, P extends PrimaryKeyOf<T>>(table: Table<T, P>, query?: Query<T, P>): T[] {
-  if (query === undefined) {
-    const allItems = table[BlinkKey].storage.primary.valuesArray()
-    return TableUtils.cloneIfNecessary(table, allItems)
-  }
-
-  const items = get(table, query)
-
-  return TableUtils.cloneIfNecessary(table, items)
-}
+export { internalFirst as first } from '../../gen/blinkdb/first'
+export { internalMany as many } from '../../gen/blinkdb/many'
+export { internalInsert as insert } from '../../gen/blinkdb/insert'
+export { internalInsertMany as insertMany } from '../../gen/blinkdb/insertMany'
+export { internalRemove as remove } from '../../gen/blinkdb/remove'
+export { internalRemoveMany as removeMany } from '../../gen/blinkdb/removeMany'
+export { internalUpdate as update } from '../../gen/blinkdb/update'
+export { internalUpdateMany as updateMany } from '../../gen/blinkdb/updateMany'
