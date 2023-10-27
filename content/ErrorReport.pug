@@ -60,5 +60,5 @@ wizard#better-bibtex-error-report(
   script(src='chrome://zotero/content/include.js')
   script.
     window.addEventListener('load', function() {
-      (new Zotero.BetterBibTeX.ErrorReport).load(window).catch(err => Zotero.debug(`BBT.ErrorReport: ${err}`))
+      (new Zotero.BetterBibTeX.ErrorReport).load(window).catch(err => Zotero.debug(`BBT.ErrorReport: error: ${err}`))
     })

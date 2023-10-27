@@ -1,13 +1,8 @@
-let $window: Window & {
-  arguments?: any[]
-  ErrorReport?: ErrorReport
-}
-
 Components.utils.import('resource://gre/modules/Services.jsm')
 
 import { Preference } from './prefs'
 import { defaults } from '../gen/preferences/meta'
-import { Translators } from './translators'
+import { byId } from '../gen/translators'
 import { log } from './logger'
 import { AutoExport } from './auto-export'
 import { KeyManager } from './key-manager'
@@ -42,13 +37,13 @@ type Wizard = HTMLElement & {
 
 export class ErrorReport {
   private previewSize = 3 * kB // eslint-disable-line yoda
+  private document: Document
 
   private key: string
   private timestamp: string
   private tarball: string
 
   private bucket: string
-  private params: any
   private cacheState: string
 
   private errorlog: {
@@ -59,8 +54,8 @@ export class ErrorReport {
   }
 
   public async send(): Promise<void> {
-    const doc = $window.document
-    const wizard: Wizard = doc.getElementById('better-bibtex-error-report') as Wizard
+    const wizard: Wizard = this.document.getElementById('better-bibtex-error-report') as Wizard
+
     wizard.getButton('next').disabled = true
     wizard.getButton('cancel').disabled = true
     wizard.canRewind = false
@@ -84,8 +79,8 @@ export class ErrorReport {
       wizard.advance();
 
       // eslint-disable-next-line no-magic-numbers
-      (<HTMLInputElement>doc.getElementById('better-bibtex-report-id')).value = `${this.key}/${version}-${is7 ? 7 : 6}${Zotero.BetterBibTeX.outOfMemory ? '/oom' : ''}`
-      doc.getElementById('better-bibtex-report-result').hidden = false
+      (<HTMLInputElement>this.document.getElementById('better-bibtex-report-id')).value = `${this.key}/${version}-${is7 ? 7 : 6}${Zotero.BetterBibTeX.outOfMemory ? '/oom' : ''}`
+      this.document.getElementById('better-bibtex-report-result').hidden = false
     }
     catch (err) {
       log.error('failed to submit', this.key, err)
@@ -95,8 +90,7 @@ export class ErrorReport {
   }
 
   public show(): void {
-    const doc = $window.document
-    const wizard: Wizard = doc.getElementById('better-bibtex-error-report') as Wizard
+    const wizard: Wizard = this.document.getElementById('better-bibtex-error-report') as Wizard
 
     if (wizard.onLastPage) wizard.canRewind = false
     else if (wizard.pageIndex === 0) wizard.canRewind = false
@@ -148,7 +142,7 @@ export class ErrorReport {
 
     if (this.errorlog.items) out = tape.append(`${this.key}/items.json`, this.errorlog.items)
 
-    if ((<HTMLInputElement>$window.document.getElementById('better-bibtex-error-report-include-db')).checked) {
+    if ((<HTMLInputElement>this.document.getElementById('better-bibtex-error-report-include-db')).checked) {
       out = tape.append(`${this.key}/database.json`, JSON.stringify(KeyManager.all()))
       out = tape.append(`${this.key}/cache.json`, Cache.serialize({ serializationMethod: 'pretty' }))
     }
@@ -168,17 +162,16 @@ export class ErrorReport {
   }
 
   private setValue(id: string, value: string) {
-    (<HTMLInputElement>$window.document.getElementById(id)).value = value
+    (<HTMLInputElement>this.document.getElementById(id)).value = value
   }
 
-  public async load(win: Window): Promise<void> {
-    $window = win as any
-    $window.ErrorReport = this
-    const doc = win.document
+  public async load(win: Window & { ErrorReport: ErrorReport, arguments: any[] }): Promise<void> {
+    this.document = win.document
+    win.ErrorReport = this
 
     this.timestamp = (new Date()).toISOString().replace(/\..*/, '').replace(/:/g, '.')
 
-    const wizard: Wizard = doc.getElementById('better-bibtex-error-report') as Wizard
+    const wizard: Wizard = this.document.getElementById('better-bibtex-error-report') as Wizard
     wizard.getPageById('page-enable-debug').addEventListener('pageshow', this.show.bind(this))
     wizard.getPageById('page-review').addEventListener('pageshow', this.show.bind(this))
     wizard.getPageById('page-send').addEventListener('pageshow', () => { this.send().catch(err => log.debug('could not send debug log:', err)) })
@@ -189,29 +182,19 @@ export class ErrorReport {
     const continueButton = wizard.getButton('next')
     continueButton.disabled = true
 
-    this.params = $window.arguments[0].wrappedJSObject
-
     this.errorlog = {
       info: await this.info(),
       errors: `${Zotero.BetterBibTeX.outOfMemory}\n${Zotero.getErrors(true).join('\n')}`.trim(),
       // # 1896
-      debug: Zotero.Debug.getConsoleViewerOutput().slice(-500000).join('\n'), // eslint-disable-line no-magic-numbers
-    }
-
-    if (this.params.scope) {
-      await Zotero.BetterBibTeX.ready
-      this.errorlog.items = await Translators.exportItems({
-        translatorID: Translators.bySlug.BetterBibTeXJSON.translatorID,
-        displayOptions: {exportNotes: true, dropAttachments: true, Normalize: true},
-        scope: this.params.scope,
-      })
+      debug: Zotero.Debug.getConsoleViewerOutput().slice(-500000).join('\n'),
+      items: win.arguments[0].wrappedJSObject.items,
     }
 
     this.setValue('better-bibtex-error-context', this.errorlog.info)
     this.setValue('better-bibtex-error-errors', this.errorlog.errors)
     this.setValue('better-bibtex-error-debug', this.preview(this.errorlog.debug))
-    if (this.errorlog.items) this.setValue('better-bibtex-error-items', this.preview(this.errorlog.items))
-    doc.getElementById('better-bibtex-error-tab-items').hidden = !this.errorlog.items
+    this.setValue('better-bibtex-error-items', this.preview(this.errorlog.items))
+    this.document.getElementById('better-bibtex-error-tab-items').hidden = !this.errorlog.items
 
     const current = require('../gen/version.js')
     this.setValue('better-bibtex-report-current', l10n.localize('better-bibtex_error-report_better-bibtex_current', { version: current }))
@@ -219,7 +202,7 @@ export class ErrorReport {
     try {
       const latest = await this.latest()
 
-      const show_latest = <HTMLInputElement>doc.getElementById('better-bibtex-report-latest')
+      const show_latest = <HTMLInputElement>this.document.getElementById('better-bibtex-report-latest')
       if (current === latest) {
         show_latest.hidden = true
       }
@@ -228,13 +211,13 @@ export class ErrorReport {
         show_latest.hidden = false
       }
 
-      (<HTMLInputElement>doc.getElementById('better-bibtex-report-oom')).hidden = !Zotero.BetterBibTeX.outOfMemory
+      (<HTMLInputElement>this.document.getElementById('better-bibtex-report-oom')).hidden = !Zotero.BetterBibTeX.outOfMemory
 
       this.setValue('better-bibtex-report-cache', this.cacheState = l10n.localize('better-bibtex_error-report_better-bibtex_cache', Cache.state()))
 
       const region = await Zotero.Promise.any(Object.keys(s3.region).map(this.ping.bind(this)))
       this.bucket = `https://${s3.bucket}-${region.short}.s3-${region.region}.amazonaws.com${region.tld || ''}`
-      this.key = `${Zotero.Utilities.generateObjectKey()}${this.params.scope ? '-refs' : ''}-${region.short}` // eslint-disable-line no-magic-numbers
+      this.key = `${Zotero.Utilities.generateObjectKey()}${this.errorlog.items ? '-refs' : ''}-${region.short}` // eslint-disable-line no-magic-numbers
 
       this.tarball = OS.Path.join(Zotero.getTempDirectory().path, `${this.key}-${this.timestamp}.tgz`)
 
@@ -242,6 +225,7 @@ export class ErrorReport {
       continueButton.focus()
     }
     catch (err) {
+      log.error('errorreport:', err)
       alert({ text: `No AWS region can be reached: ${err.message}` })
       wizard.getButton('cancel').disabled = false
     }
@@ -287,7 +271,7 @@ export class ErrorReport {
         for (const [k, v] of Object.entries(ae)) {
           if (k === 'path') continue
           info += `    ${k}: ${JSON.stringify(v)}`
-          if (k === 'translatorID' && Translators.byId[v as string]) info += ` (${Translators.byId[v as string].label})`
+          if (k === 'translatorID' && byId[v as string]) info += ` (${byId[v as string].label})`
           info += '\n'
         }
       }
