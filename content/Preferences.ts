@@ -461,8 +461,6 @@ export class PrefPane {
         deck.selectedIndex = 1
       }
 
-      $window.document.getElementById('bbt-rescan-citekeys').hidden = !Zotero.Debug.enabled
-
       await this.autoexport.load()
 
       this.quickCopy()
