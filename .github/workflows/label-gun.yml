@@ -17,7 +17,7 @@ jobs:
           label.awaiting: awaiting-user-feedback
           label.log-required: needs-debug-log
           label.reopened: reopened
-          log-id: "([A-Z0-9]{8}(-refs)?-(apse|euc))|([^-]+-[A-Z0-9]{8})"
+          log-id: "([A-Z0-9]{8}(-refs)?-(apse|euc))|([A-Z0-9]{8}-[^-]+)"
           message.log-required: |
             Hello there @{{username}},
 
