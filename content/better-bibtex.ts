@@ -715,16 +715,11 @@ export class BetterBibTeX {
 
         const NoParse = { noParseParams: true }
 
-        if (!tables.citationkey) {
-          for (const ddl of require('./db/citation-key.sql')) {
-            await Zotero.DB.queryAsync(ddl, [], NoParse)
-          }
+        for (const ddl of require('./db/citation-key.sql')) {
+          await Zotero.DB.queryAsync(ddl, [], NoParse)
         }
-
-        if (!tables.autoexport) {
-          for (const ddl of require('./db/auto-export.sql')) {
-            await Zotero.DB.queryAsync(ddl, [], NoParse)
-          }
+        for (const ddl of require('./db/auto-export.sql')) {
+          await Zotero.DB.queryAsync(ddl, [], NoParse)
         }
         for (const ddl of require('../gen/auto-export-triggers.sql')) {
           await Zotero.DB.queryAsync(ddl, [], NoParse)
