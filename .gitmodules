@@ -30,3 +30,6 @@
 	path = submodules/citation-style-language-schema
 	url = https://github.com/citation-style-language/schema
 	branch = master
+[submodule "site/themes/relearn"]
+	path = site/themes/relearn
+	url = https://github.com/McShelby/hugo-theme-relearn.git
