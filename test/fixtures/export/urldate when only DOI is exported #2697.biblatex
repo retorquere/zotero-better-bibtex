@@ -1,0 +1,10 @@
+@article{Markus2017,
+  title = {The {{Ice}}, {{Cloud}}, and Land {{Elevation Satellite-2}} ({{ICESat-2}}): {{Science}} Requirements, Concept, and Implementation},
+  author = {Markus, Thorsten and Neumann, Tom and Martino, Anthony and Abdalati, Waleed and Brunt, Kelly and Csatho, Beata and Farrell, Sinead and Fricker, Helen and Gardner, Alex and Harding, David and Jasinski, Michael and Kwok, Ron and Magruder, Lori and Lubin, Dan and Luthcke, Scott and Morison, James and Nelson, Ross and Neuenschwander, Amy and Palm, Stephen and Popescu, Sorin and Shum, C K and Schutz, Bob E and Smith, Benjamin and Yang, Yuekui and Zwally, Jay},
+  date = {2017},
+  journaltitle = {Remote Sensing of Environment},
+  volume = {190},
+  pages = {260--273},
+  doi = {10.1016/j.rse.2016.12.029},
+  keywords = {Climate change,ICE,Land ice,Sat-2,Satellite mission,Sea ice,Vegetation}
+}
