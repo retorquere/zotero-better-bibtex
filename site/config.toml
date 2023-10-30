@@ -3,7 +3,7 @@ languageCode = "en-US"
 defaultContentLanguage = "en"
 
 title = "Better BibTeX for Zotero"
-theme = "learn"
+theme = "relearn"
 metaDataFormat = "yaml"
 defaultContentLanguageInSubdir = false
 
