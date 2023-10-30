@@ -863,6 +863,7 @@ export class Entry {
           break
         case 'doi':
           delete this.has.url
+          delete this.has.urldate
           break
       }
     }

@@ -1,0 +1,190 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "options": {
+      "exportNotes": true,
+      "worker": true
+    },
+    "preferences": {
+      "DOIandURL": "doi",
+      "citekeyFormat": "auth+year",
+      "keyScope": "global",
+      "skipFields": "abstract",
+      "warnBulkModify": 0
+    }
+  },
+  "items": [
+    {
+      "DOI": "10.1016/j.rse.2016.12.029",
+      "abstractNote": "a r t i c l e i n f o The Ice, Cloud, and land Elevation Satellite (ICESat) mission used laser altimetry measurements to determine changes in elevations of glaciers and ice sheets, as well as sea ice thickness distribution. These measurements have provided important information on the response of the cryopshere (Earth's frozen surfaces) to changes in atmosphere and ocean condition. ICESat operated from 2003 to 2009 and provided repeat altimetry measurements not only to the cryosphere scientific community but also to the ocean, terrestrial and atmospheric scientific communities. The conclusive assessment of significant ongoing rapid changes in the Earth's ice cover, in part supported by ICESat observations, has strengthened the need for sustained, high accuracy, repeat observations similar to what was provided by the ICESat mission. Following recommendations from the National Research Council for an ICESat follow-on mission, the ICESat-2 mission is now under development for planned launch in 2018. The primary scientific aims of the ICESat-2 mission are to continue measurements of sea ice freeboard and ice sheet elevation to determine their changes at scales from outlet glaciers to the entire ice sheet, and from 10s of meters to the entire polar oceans for sea ice freeboard. ICESat carried a single beam profiling laser al-timeter that produced ~70 m diameter footprints on the surface of the Earth at ~150 m along-track intervals. In contrast, ICESat-2 will operate with three pairs of beams, each pair separated by about 3 km cross-track with a pair spacing of 90 m. Each of the beams will have a nominal 17 m diameter footprint with an along-track sampling interval of 0.7 m. The differences in the ICESat-2 measurement concept are a result of overcoming some limitations associated with the approach used in the ICESat mission. The beam pair configuration of ICESat-2 allows for the determination of local cross-track slope, a significant factor in measuring elevation change for the outlet glaciers surrounding the Greenland and Antarctica coasts. The multiple beam pairs also provide improved spatial coverage. The dense spatial sampling eliminates along-track measurement gaps, and the small footprint diameter is especially useful for sea surface height measurements in the often narrow leads needed for sea ice freeboard and ice thickness retrievals. The ICESat-2 instrumentation concept uses a low energy 532 nm (green) laser in conjunction with single-photon sensitive detectors to measure range. Combining ICESat-2 data with altimetry data collected since the start of the ICESat mission in 2003, such as Operation IceBridge and ESA's CryoSat-2, will yield a 15+ year record of changes in ice sheet elevation and sea ice thickness. ICESat-2 will also provide information of mountain glacier and ice cap elevations changes, land and vegetation heights, inland water elevations, sea surface heights, and cloud layering and optical thickness. Published by Elsevier Inc. This is an open access article under the CC BY license (http://creativecommons.org/licenses/by/4.0/).",
+      "accessDate": "2023-10-30",
+      "citationKey": "Markus2017",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Thorsten",
+          "lastName": "Markus"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Tom",
+          "lastName": "Neumann"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Anthony",
+          "lastName": "Martino"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Waleed",
+          "lastName": "Abdalati"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Kelly",
+          "lastName": "Brunt"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Beata",
+          "lastName": "Csatho"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Sinead",
+          "lastName": "Farrell"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Helen",
+          "lastName": "Fricker"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Alex",
+          "lastName": "Gardner"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "David",
+          "lastName": "Harding"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Michael",
+          "lastName": "Jasinski"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Ron",
+          "lastName": "Kwok"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Lori",
+          "lastName": "Magruder"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Dan",
+          "lastName": "Lubin"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Scott",
+          "lastName": "Luthcke"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "James",
+          "lastName": "Morison"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Ross",
+          "lastName": "Nelson"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Amy",
+          "lastName": "Neuenschwander"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Stephen",
+          "lastName": "Palm"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Sorin",
+          "lastName": "Popescu"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "C K",
+          "lastName": "Shum"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Bob E",
+          "lastName": "Schutz"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Benjamin",
+          "lastName": "Smith"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Yuekui",
+          "lastName": "Yang"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Jay",
+          "lastName": "Zwally"
+        }
+      ],
+      "date": "2017",
+      "itemID": 1,
+      "itemType": "journalArticle",
+      "pages": "260-273",
+      "publicationTitle": "Remote Sensing of Environment",
+      "tags": [
+        {
+          "tag": "Climate change",
+          "type": 1
+        },
+        {
+          "tag": "ICE",
+          "type": 1
+        },
+        {
+          "tag": "Land ice",
+          "type": 1
+        },
+        {
+          "tag": "Sat-2",
+          "type": 1
+        },
+        {
+          "tag": "Satellite mission",
+          "type": 1
+        },
+        {
+          "tag": "Sea ice",
+          "type": 1
+        },
+        {
+          "tag": "Vegetation",
+          "type": 1
+        }
+      ],
+      "title": "The Ice, Cloud, and land Elevation Satellite-2 (ICESat-2): Science requirements, concept, and implementation",
+      "url": "https://doi.org/10.1016/j.rse.2016.12.029",
+      "volume": "190"
+    }
+  ]
+}
