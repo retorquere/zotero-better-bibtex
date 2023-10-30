@@ -2,8 +2,11 @@
 
 import sys, os, stat
 from pathlib import Path
-from ruamel.yaml import YAML
-yaml=YAML()
+
+import ruamel.yaml
+ruamel.yaml.representer.RoundTripRepresenter.ignore_aliases = lambda x, y: True
+yaml=ruamel.yaml.YAML()
+
 import subprocess
 
 script = Path(__file__)

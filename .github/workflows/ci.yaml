@@ -1,8 +1,8 @@
 name: automated tests
 
 on:
-  push:
-  pull_request:
+  push: null
+  pull_request: null
   schedule:
   - cron: 0 0 * * *
 
@@ -19,17 +19,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - &install_python
-      name: install python
+    - name: install python
       uses: actions/setup-python@v4
       with:
         python-version: '3.10'
     - run: pip install munch binpacking
-    - &get_version
-      name: get package version
+    - name: get package version
       run: echo "version="`jq -r .version package.json` >> $GITHUB_ENV
-    - &action_flags
-      name: set slow and beta flags
+    - name: set slow and beta flags
       env:
         GITHUB_CONTEXT: ${{ toJson(github) }}
       run: ./util/action-flags
@@ -45,8 +42,7 @@ jobs:
       run: ./util/balance.py --durations $DURATIONS --bins $BINS --minutes 10 ${{
         env.slow }} ${{ env.beta }}
 
-    - &upload_test_artifacts
-      name: store test artifacts
+    - name: store test artifacts
       uses: actions/upload-artifact@v3
       with:
         name: test-artifacts
@@ -64,20 +60,22 @@ jobs:
         persist-credentials: false
         submodules: true  # Fetch Hugo themes (true OR recursive)
         fetch-depth: 0    # Fetch all history for .GitInfo and .Lastmod
-    - *get_version
+    - name: get package version
+      run: echo "version="`jq -r .version package.json` >> $GITHUB_ENV
     - name: cancel spurious build on tagged version
       uses: andymckay/cancel-action@master
       if: github.event.head_commit.message == env.version && !startsWith(github.ref,
         'refs/tags/')
 
-    - *install_python
-    - &install_node
-      name: install node
+    - name: install python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+    - name: install node
       uses: actions/setup-node@v3
       with:
         node-version: 19.x
-    - &cache
-      name: Cache python/node dependencies
+    - name: Cache python/node dependencies
       id: cache
       uses: actions/cache@v3
       env:
@@ -89,14 +87,12 @@ jobs:
           ${{ env.pythonLocation }}
         key: ${{ runner.os }}-build-${{ env.pythonLocation }}-${{ env.cache-name }}-${{
           hashFiles('package-lock.json') }}-${{ hashFiles('requirements.txt') }}
-    - &install_python_packages
-      name: install python packages
+    - name: install python packages
       run: |
         python -m pip install --upgrade pip
         pip install packaging xvfbwrapper
         pip install -r requirements.txt
-    - &install_node_packages
-      name: install node packages
+    - name: install node packages
       run: npm install
     - uses: peaceiris/actions-hugo@v2
       with:
@@ -116,18 +112,45 @@ jobs:
         persist-credentials: false
         submodules: true  # Fetch Hugo themes (true OR recursive)
         fetch-depth: 0    # Fetch all history for .GitInfo and .Lastmod
-    - *get_version
+    - name: get package version
+      run: echo "version="`jq -r .version package.json` >> $GITHUB_ENV
     - name: cancel spurious build on tagged version
       uses: andymckay/cancel-action@master
       if: github.event.head_commit.message == env.version && !startsWith(github.ref,
         'refs/tags/')
 
-    - *install_python
-    - *install_node
-    - *cache
-    - *install_python_packages
-    - *install_node_packages
-    - *action_flags
+    - name: install python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+    - name: install node
+      uses: actions/setup-node@v3
+      with:
+        node-version: 19.x
+    - name: Cache python/node dependencies
+      id: cache
+      uses: actions/cache@v3
+      env:
+        cache-name: v3
+      with:
+        path: |
+          ~/.npm
+          ~/.nocache/pip
+          ${{ env.pythonLocation }}
+        key: ${{ runner.os }}-build-${{ env.pythonLocation }}-${{ env.cache-name }}-${{
+          hashFiles('package-lock.json') }}-${{ hashFiles('requirements.txt') }}
+    - name: install python packages
+      run: |
+        python -m pip install --upgrade pip
+        pip install packaging xvfbwrapper
+        pip install -r requirements.txt
+    - name: install node packages
+      run: npm install
+    - name: set slow and beta flags
+      env:
+        GITHUB_CONTEXT: ${{ toJson(github) }}
+      run: ./util/action-flags
+
 
     - run: npm run build ${{ env.beta }}
 
@@ -156,20 +179,36 @@ jobs:
           #  worker: '--worker'
     steps:
     - uses: actions/checkout@v3
-    - &download_build_artifacts
-      name: fetch build artifacts
+    - name: fetch build artifacts
       uses: actions/download-artifact@v3
       with:
         name: build-artifacts
   # dummy directory minitests because otherwise dir structure is not maintained?!
-    - &download_test_artifacts
-      name: fetch test artifacts
+    - name: fetch test artifacts
       uses: actions/download-artifact@v3
       with:
         name: test-artifacts
-    - *install_python
-    - *cache
-    - *install_python_packages
+    - name: install python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+    - name: Cache python/node dependencies
+      id: cache
+      uses: actions/cache@v3
+      env:
+        cache-name: v3
+      with:
+        path: |
+          ~/.npm
+          ~/.nocache/pip
+          ${{ env.pythonLocation }}
+        key: ${{ runner.os }}-build-${{ env.pythonLocation }}-${{ env.cache-name }}-${{
+          hashFiles('package-lock.json') }}-${{ hashFiles('requirements.txt') }}
+    - name: install python packages
+      run: |
+        python -m pip install --upgrade pip
+        pip install packaging xvfbwrapper
+        pip install -r requirements.txt
 
     - name: install ${{ matrix.client }}
       run: |
@@ -198,7 +237,13 @@ jobs:
         name: debug log ${{ matrix.client }} ${{ matrix.bin }}
         path: ~/.BBTTEST.log
 
-    - *upload_test_artifacts
+    - name: store test artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: test-artifacts
+        path: |
+          logs/
+          minitests/
 
 #    - name: Setup tmate session
 #      if: ${{ failure() }}
@@ -213,12 +258,38 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    - *download_build_artifacts
-    - *install_python
-    - *install_node
-    - *cache
-    - *install_python_packages
-    - *install_node_packages
+    - name: fetch build artifacts
+      uses: actions/download-artifact@v3
+      with:
+        name: build-artifacts
+  # dummy directory minitests because otherwise dir structure is not maintained?!
+    - name: install python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+    - name: install node
+      uses: actions/setup-node@v3
+      with:
+        node-version: 19.x
+    - name: Cache python/node dependencies
+      id: cache
+      uses: actions/cache@v3
+      env:
+        cache-name: v3
+      with:
+        path: |
+          ~/.npm
+          ~/.nocache/pip
+          ${{ env.pythonLocation }}
+        key: ${{ runner.os }}-build-${{ env.pythonLocation }}-${{ env.cache-name }}-${{
+          hashFiles('package-lock.json') }}-${{ hashFiles('requirements.txt') }}
+    - name: install python packages
+      run: |
+        python -m pip install --upgrade pip
+        pip install packaging xvfbwrapper
+        pip install -r requirements.txt
+    - name: install node packages
+      run: npm install
 
     - run: npm run release
       env:
@@ -242,8 +313,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - *install_python
-    - *download_test_artifacts
+    - name: install python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+    - name: fetch test artifacts
+      uses: actions/download-artifact@v3
+      with:
+        name: test-artifacts
     - name: rebalance tests
       run: ./util/merge-durations.py --client zotero --output $DURATIONS logs/stats/durations--*.json
     - name: Store build stats
