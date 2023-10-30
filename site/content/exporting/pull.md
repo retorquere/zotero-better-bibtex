@@ -32,7 +32,7 @@ You can fetch your library as part of your build, using something like `curl` fr
 **Pull export will *only* work if you are compiling your document on the
 same system your Zotero client with BBT runs on**. *Technically*
 it can be made to work for pulling from other systems, but it's
-even more arcane to set up than [git support]({{< ref "auto#git-support" >}}).
+even more arcane to set up than [git support]({{% ref "auto#git-support" %}}).
 
 Note that as of Zotero 5.0.71, access to this URL will no longer work from the browser for security reasons; `curl` and other programmatic access will work.
 

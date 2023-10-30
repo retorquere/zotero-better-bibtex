@@ -40,7 +40,7 @@ You can fix the citation key (called `pinning` in BBT) for an item by adding the
 ## Drag and drop/hotkey citations
 
 You can drag and drop citations into your LaTeX/Markdown/Orgmode editor, and it will add a proper `\cite{citekey}`/`[@citekey]`/`[[zotero://select...][@citekey]`. The `cite` command is
-configurable for LaTeX by setting the config option in the [preferences]({{< ref "installation/preferences" >}}). Do not include the leading backslash.
+configurable for LaTeX by setting the config option in the [preferences]({{% ref "installation/preferences" %}}). Do not include the leading backslash.
 
 This feature requires a one-time setup: choose the Quick Copy format under the `Citation keys` preferences for BBT, and go to Zotero preferences, tab Export, under Default Output Format, select "Better BibTeX Quick Copy: [format you just selected]".
 
@@ -99,7 +99,7 @@ Changing a pattern will only affect items created/changed after you changed the 
 If you want to get fancy, you can set multiple patterns separated by a semicolon (`;`) or vertical bar (`|`), of which the first will be applied
 that yields a non-empty string. If all return a empty string, a random key will be generated.
 
-An example application for this behavior is to use the `tex.shortauthor` from the [extra field]({{< ref "../exporting/extra-fields" >}}) when defined to generate short citation keys for entries with long group author names, but to default to `auth.lower` otherwise:
+An example application for this behavior is to use the `tex.shortauthor` from the [extra field]({{% ref "../exporting/extra-fields" %}}) when defined to generate short citation keys for entries with long group author names, but to default to `auth.lower` otherwise:
 
 ```text
 extra('tex.shortauthor').transliterate.clean.lower.len + year; auth.lower + year
@@ -151,7 +151,7 @@ Note: a number of functions below talk about the author's lastname; you can read
 
 #### Functions
 
-{{< citekey-formatters/functions >}}
+{{% citekey-formatters/functions %}}
 
 **Note**: All `auth...` functions will fall back to editors if no authors are present on the item.
 
@@ -161,13 +161,13 @@ Note: a number of functions below talk about the author's lastname; you can read
 
 The above functions all retrieve information stored in the item's fields and process it in some way. If you don't want this, you can instead call field contents without any processing. To access Zotero fields, refer to them as given in the table below:
 
-{{< citekey-formatters/fields >}}
+{{% citekey-formatters/fields %}}
 
 (fields marked <sup>Z</sup> are only available in Zotero, fields marked with <sup>JM</sup> are only available in Juris-M).
 
 #### Filters
 
-{{< citekey-formatters/filters >}}
+{{% citekey-formatters/filters %}}
 
 *Usage note*: the functions `condense`, `skipwords`, `capitalize` and `select` rely on whitespaces for word handling. Most functions strip
 whitespace and thereby make these filter functions sort of useless. You will in general want to use the fields from the

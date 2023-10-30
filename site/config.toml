@@ -21,7 +21,7 @@ unsafe= true
   themeVariant = "green"
 
 [outputs]
-home = [ "HTML", "RSS", "JSON"]
+home = [ "HTML", "RSS", "SEARCH"]
 
 [Languages]
 [Languages.en]

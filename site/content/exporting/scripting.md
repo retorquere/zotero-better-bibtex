@@ -102,11 +102,11 @@ There isn't really an API. You can use regular javascript to manipulate the `csl
 
 In a postscript `zotero.itemType` will have one of these values:
 
-{{< postscript/itemtypes >}}
+{{% postscript/itemtypes %}}
 
 Other fields on the `zotero` object are:
 
-{{< postscript/fields >}}
+{{% postscript/fields %}}
 
 (types/fields marked <sup>Z</sup> are only available in Zotero, fields marked with <sup>JM</sup> are only available in Juris-M).
 
@@ -303,7 +303,7 @@ that either biblatex-apa or biblatex-chicago would use it for a
 physical archive.)
 
 Given all of this, I'm going to leave referencing of physical
-location to postscripts for now. If you enable the [quality report]({{< ref "/installation/preferences/export" >}}#include-comments-about-potential-problems-with-the-references), BBT
+location to postscripts for now. If you enable the [quality report]({{% ref "/installation/preferences/export" %}}#include-comments-about-potential-problems-with-the-references), BBT
 will list Zotero fields with data that has not been used in the
 export:
 
