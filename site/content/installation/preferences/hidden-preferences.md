@@ -111,15 +111,13 @@ the number of microseconds BBT should wait after being notified before acting on
 
 default: `<not set>`
 
-Any characters entered here will prefer a math-mode LaTeX-command counterpart over a math-mode,
-if a math-mode command is available. Only useful when `mapUnicode` is `conservative`.
+Any characters entered here will prefer a math-mode LaTeX-command counterpart over a math-mode, if a math-mode command is available.
 
 ## mapText
 
 default: `<not set>`
 
 Any characters entered here will prefer a text-mode LaTeX-command counterpart over a math-mode, if a text-mode command is available.
-Only useful when `mapUnicode` is `conservative`. Characters specified in `mapMath` take presedence over characters specified in `mapText`.
 
 ## parseParticles
 

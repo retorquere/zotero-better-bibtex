@@ -19,7 +19,6 @@
       "extraMergeTeX": true,
       "importCaseProtection": "off",
       "jieba": true,
-      "mapUnicode": "minimal-packages",
       "qualityReport": true,
       "quickCopyMode": "orgRef",
       "skipFields": "abstract, keywords",

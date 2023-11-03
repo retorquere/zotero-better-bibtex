@@ -323,16 +323,6 @@
             "mapText": {
               "type": "string"
             },
-            "mapUnicode": {
-              "enum": [
-                "minimal-packages",
-                "conservative",
-                "text",
-                "math",
-                "creator"
-              ],
-              "type": "string"
-            },
             "parseParticles": {
               "type": "boolean"
             },

@@ -250,27 +250,6 @@ they are descriptive of the item. When this is off, such tags will not be includ
 
 
 
-### When converting to plain-text latex commands:
-
-default: `Minimize the number of switches between math-mode and text-mode`
-
-When a unicode character can be exported as either a math-mode or text-mode command, map to:
-
-* `minimal-packages`: if both a math-mode and a text-mode mapping is available, use the version that does not require extra packages to be loaded.
-* `conservative`: if both a math-mode and a text-mode mapping is available, stay in the mode of the previously mapped character if possible. This minimizes the number of generated `$`s in the output.
-* `text`: if both a math-mode and a text-mode mapping is available, prefer text.
-* `math`: if both a math-mode and a text-mode mapping is available, prefer math.
-
-
-Options:
-
-* Minimize additional latex packages required
-* Minimize the number of switches between math-mode and text-mode
-* Prefer text-mode replacements
-* Prefer math-mode replacements
-* Add braces to accented characters to assist simplistic latex parsers
-
-
 ### Apply title-casing to titles
 
 default: `yes`
@@ -300,10 +279,8 @@ If you have this on, and you experience any problem that is not the cache gettin
 
 default: `yes`
 
-Even though BBT exports happen in a separate thread, some
-work needs to be done before the background export can
-start. Part of this work is preloading the cache. You can
-shorten the (blocking) preparation time by turning off
+Even though BBT exports happen in a separate thread, some work needs to be done before the background export can
+start. Part of this work is preloading the cache. You can shorten the (blocking) preparation time by turning off
 the cache, at the cost of longer export times.
 
 

@@ -7,8 +7,7 @@
       "exportNotes": true
     },
     "preferences": {
-      "citekeyFormat": "[auth:lower][shorttitle3_3][year]",
-      "mapUnicode": "minimal-packages"
+      "citekeyFormat": "[auth:lower][shorttitle3_3][year]"
     }
   },
   "items": [

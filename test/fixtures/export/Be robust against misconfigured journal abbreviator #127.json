@@ -10,8 +10,7 @@
       "asciiBibLaTeX": true,
       "autoAbbrevStyle": "http://www.zotero.org/styles/american-physics-society",
       "bibtexURL": "note",
-      "citekeyFormat": "[auth][year]",
-      "mapUnicode": "math"
+      "citekeyFormat": "[auth][year]"
     }
   },
   "items": [
