@@ -196,6 +196,10 @@ export const Formatter = new class { // eslint-disable-line @typescript-eslint/n
     return formatted.join('')
   }
 
+  public async jekyll(citations, _options) {
+    return citations.map(cit => `{% cite ${cit.citekey} %}`).join('')
+  }
+
   public async pandoc(citations, options) {
     const formatted = []
     for (const citation of citations) {

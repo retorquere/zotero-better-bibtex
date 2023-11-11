@@ -146,6 +146,10 @@ const Mode = {
       Zotero.write(`${err}`)
     }
   },
+
+  jekyll(items) {
+    Zotero.write(items.map(item => `{% cite ${item.citationKey} %}`).join(''))
+  },
 }
 
 export function doExport(): void {
