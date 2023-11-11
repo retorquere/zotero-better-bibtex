@@ -357,7 +357,8 @@
                 "roamCiteKey",
                 "rtfScan",
                 "selectlink",
-                "jupyter"
+                "jupyter",
+                "jekyll"
               ],
               "type": "string"
             },

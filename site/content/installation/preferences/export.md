@@ -158,6 +158,7 @@ Options:
 * RTF Scan marker
 * Zotero select link
 * Jupyter notebook
+* Jekyll cite
 
 
 #### LaTeX command
