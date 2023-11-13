@@ -8,6 +8,7 @@ import os
 import json
 from munch import Munch
 from types import SimpleNamespace
+from glob import glob
 
 from subprocess import call
 
@@ -43,6 +44,7 @@ parser.add_argument('--export',     '-e', dest='mode', action='store_const', con
 parser.add_argument('--import'          , dest='mode', action='store_const', const='import')
 parser.add_argument('--prefs'           , action='store_true')
 parser.add_argument('--attachments'     , action='store_true')
+parser.add_argument('--attach'     , action='store_true')
 args, unknownargs = parser.parse_known_args()
 sys.argv = sys.argv[:1] + unknownargs
 
@@ -75,6 +77,18 @@ args.title = re.sub(r'^\[[^\]]+\]\s*:', '', issue.title).strip()
 args.title = re.sub(r'^(Bug|Feature)\s*:', '', args.title, re.IGNORECASE).strip()
 args.title = sanitize_filename(f'{args.title} #{issue.number}'.strip()).replace('`', '')
 
+if args.attach:
+  candidates = { os.path.splitext(att)[1]: att for att in glob('attachments/*.*', root_dir = 'test/fixtures/export') }
+  with open(args.data) as f:
+    data = json.load(f)
+    for item in data['items']:
+      if 'attachments' in item:
+        for att in item['attachments']:
+          if 'path' in att:
+            att['path'] = candidates[os.path.splitext(att['path'])[1]]
+  with open(args.data, 'w') as f:
+    json.dump(data, f)
+
 # clean lib before putting it in place
 cleanlib = ["./util/clean-lib.ts", args.data]
 if args.prefs: cleanlib.append('--prefs')
@@ -83,8 +97,12 @@ assert call(cleanlib, cwd=root) == 0, 'clean failed'
 with open(args.data) as f:
   data = json.load(f)
   args.n = len(data['items'])
-  if not args.attachments and any(['attachment' in item for item in data['items']]):
-    print('*** WARNING ***:', args.data, 'has attachments')
+  for item in data['items']:
+    if 'attachments' in item:
+      for att in item['attachments']:
+        if 'path' in att:
+          if not os.path.exists(os.path.join('test/fixtures/export', att['path'])):
+            print('*** WARNING ***:', args.data, 'has non-existing attachment', att['path'])
 
 # insert example
 parser = Parser()
