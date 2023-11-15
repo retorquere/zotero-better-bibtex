@@ -17,10 +17,6 @@ body:
         If the regular debug log submission does not work, use "send to file.io" from the help menu.
 
         If you are sure your question does not relate to items in your library at all, just select any one item in your library.
-
-        ## DO NOT just write "N/A" for the debug log ID.
-
-        It is usually false, and if you think it's nonetheless true, provide an explanation. If you just can't imagine what it is useful for, simply submit one. When you omit it, the issue bot will chime in explaining how to generate a debug log ID. Please read that message attentively.
   - type: input
     id: debug-log
     attributes:
@@ -37,3 +33,9 @@ body:
       placeholder: Tell us what you see!
     validations:
       required: true
+  - type: markdown
+    attributes:
+      value: |
+        ## DO NOT just write "N/A" for the debug log ID.
+
+        It is usually false, and if you think it's nonetheless true, provide an explanation. If you just can't imagine what it is useful for, simply submit one. When you omit it, the issue bot will chime in explaining how to generate a debug log ID. Please read that message attentively.
