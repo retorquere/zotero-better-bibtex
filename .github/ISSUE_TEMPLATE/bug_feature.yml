@@ -21,7 +21,7 @@ body:
     id: debug-log
     attributes:
       label: Debug log ID
-      description: Please fill in an actual debug log ID here. Logs that look like `D<number>` are Zotero logs, `@retorquere` has no access to those. Better BibTeX Debug logs will end in `-euc` or `-apse`, and if you are sending item samples, there will be `-refs-` in the ID.
+      description: Please fill in an actual debug log ID here. Logs that look like `D<number>` are Zotero logs, `@retorquere` has no access to those. Better BibTeX Debug logs will end in `-euc` or `-apse`, and if you are sending item samples, there will be `-refs-` in the ID. DO NOT just write "N/A" here. It is usually false, and if it's true, provide an explanation.
       placeholder: ex. ABCD1234-ref-euc or nNwplUbkYrQu-ABCD1234 for file.io.
     validations:
       required: true
