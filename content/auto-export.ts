@@ -60,7 +60,8 @@ export const SQL = new class {
   }
 
   public async edit(path: string, setting: JobSetting, value: boolean | number | string): Promise<void> {
-    log.debug('ae.edit: pre', await this.get(path))
+    if (typeof value === 'boolean') value = value ? 1 : 0
+    log.debug('ae.edit: pre', await this.get(path), 'apply:', { setting, value })
     if (this.columns.editable.includes(setting)) {
       await Zotero.DB.queryTx(`UPDATE betterbibtex.autoexport SET ${setting} = ? WHERE path = ?`, [ value, path ])
     }
@@ -82,6 +83,10 @@ export const SQL = new class {
     job.recursive = job.recursive ?? false
     job.updated = job.updated || Date.now()
     job.enabled = true
+
+    for (const [k, v] of Object.entries(job)) {
+      if (typeof v === 'boolean') job[k] = v ? 1 : 0
+    }
 
     await Zotero.DB.queryAsync(this.sql.create, pick(job, this.columns.job), NoParse)
 
