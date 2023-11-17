@@ -544,7 +544,7 @@ for creatorTypes in jsonpath.parse('*.itemTypes.*.creatorTypes').find(SCHEMA):
   for creatorType in creatorTypes.value:
     creators[client][itemType].append(creatorType)
 with open(os.path.join(ITEMS, 'creators.json'), 'w') as f:
-  json.dump(creators, f, indent='  ', default=lambda x: list(x))
+  json.dump(creators, f, indent='  ', default=lambda x: sorted(list(x)) if isinstance(x, set) else x)
 
 def template(tmpl):
   return Template(filename=os.path.join(root, 'setup/templates', tmpl))
