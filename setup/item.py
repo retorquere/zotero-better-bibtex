@@ -545,6 +545,13 @@ for creatorTypes in jsonpath.parse('*.itemTypes.*.creatorTypes').find(SCHEMA):
     creators[client][itemType].append(creatorType)
 with open(os.path.join(ITEMS, 'creators.json'), 'w') as f:
   json.dump(creators, f, indent='  ', default=lambda x: sorted(list(x)) if isinstance(x, set) else x)
+with open(os.path.join(root, 'site/layouts/shortcodes/citekey-formatters/creatortypes.html'), 'w') as f:
+  creators = sorted(list(set(sum([crs
+    for itemtypes in creators.values()
+    for crs in itemtypes.values()
+  ], []))))
+  creators = [f'`{cr}`' for cr in creators]
+  f.write(', '.join(creators))
 
 def template(tmpl):
   return Template(filename=os.path.join(root, 'setup/templates', tmpl))
