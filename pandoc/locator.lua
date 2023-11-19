@@ -42,7 +42,7 @@ local pseudo_locator = lpeg.C(lpeg.P(',')^-1 * whitespace) * lpeg.P('{') * lpeg.
 
 local module = {}
 
-function module.parse(input, shortlabel)
+function module.parse(input)
   local parsed = lpeg.Ct(suffix):match(input)
   if parsed then
     local _prefix, _label, _locator, _suffix = table.unpack(parsed)
