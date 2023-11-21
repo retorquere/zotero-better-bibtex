@@ -213,8 +213,10 @@ async function rebuild() {
     plugins: [
       loader.trace('plugin'),
       loader.patcher.plugin,
-      loader.bib,
+      loader.text,
+      loader.sql,
       loader.peggy,
+      loader.pug,
       loader.__dirname,
       shims
     ],
@@ -251,7 +253,7 @@ async function rebuild() {
     plugins: [
       loader.trace('worker'),
       loader.patcher.plugin,
-      loader.bib,
+      loader.text,
       // loader.peggy,
       loader.__dirname,
       shims

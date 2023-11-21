@@ -9,8 +9,7 @@ import { Translators } from './translators'
 import { get as getCollection } from './collection'
 import { get as getLibrary } from './library'
 import { getItemsAsync } from './get-items-async'
-import { fromEntries } from './object'
-import { $and } from './db/loki'
+import { fromPairs } from './object'
 
 function displayOptions(request) {
   const isTrue = new Set([ 'y', 'yes', 'true' ])
@@ -120,12 +119,10 @@ Zotero.Server.Endpoints['/better-bibtex/export/item'] = class {
       let { translator, citationKeys, groupID, libraryID, library, group, pandocFilterData } = request.query
       if ((isSet(libraryID) + isSet(library) + isSet(groupID) + isSet(group)) > 1) {
         return [BAD_REQUEST, 'text/plain', 'specify at most one of library(/ID) or group(/ID)' ]
-
       }
       else if (libraryID) {
         if (!libraryID.match(/^[0-9]+$/)) return [BAD_REQUEST, 'text/plain', `${libraryID} is not a number` ]
         libraryID = parseInt(libraryID)
-
       }
       else if (groupID) {
         if (!groupID.match(/^[0-9]+$/)) return [BAD_REQUEST, 'text/plain', `${libraryID} is not a number` ]
@@ -136,11 +133,9 @@ Zotero.Server.Endpoints['/better-bibtex/export/item'] = class {
         catch (err) {
           libraryID = null
         }
-
       }
       else if (library || group) {
         libraryID = getLibrary(library || group).libraryID
-
       }
       else {
         libraryID = Zotero.Libraries.userLibraryID
@@ -155,25 +150,25 @@ Zotero.Server.Endpoints['/better-bibtex/export/item'] = class {
       const response: { items: Record<string, any>, zotero: Record<string, { itemID: number, uri: string }>, errors: Record<string, string> } = { items: {}, zotero: {}, errors: {} }
 
       const itemIDs: Record<string, number> = {}
-      for (const citekey of citationKeys) {
-        const key = Zotero.BetterBibTeX.KeyManager.keys.find($and({ libraryID, citekey }))
+      for (const citationKey of citationKeys) {
+        const key = Zotero.BetterBibTeX.KeyManager.find({ where: { libraryID, citationKey } })
 
         switch (key.length) {
           case 0:
-            response.errors[citekey] = 'not found'
+            response.errors[citationKey] = 'not found'
             break
           case 1:
-            itemIDs[citekey] = key[0].itemID
+            itemIDs[citationKey] = key[0].itemID
             break
           default:
-            response.errors[citekey] = `${key.length} items found with key "${citekey}"`
+            response.errors[citationKey] = `${key.length} items found with key "${citationKey}"`
             break
         }
       }
 
       if (!Object.keys(itemIDs).length) return [ SERVER_ERROR, 'text/plain', 'no items found' ]
       // itemID => zotero item
-      const items = fromEntries((await getItemsAsync(Object.values(itemIDs))).map(item => [ item.itemID , item ]))
+      const items = fromPairs((await getItemsAsync(Object.values(itemIDs))).map(item => [ item.itemID , item ]))
       let contents = await Translators.exportItems({translatorID, displayOptions: displayOptions(request), scope: { type: 'items', items: Object.values(items) }})
 
       if (pandocFilterData) {

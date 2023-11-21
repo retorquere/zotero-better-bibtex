@@ -8,6 +8,7 @@ const esbuild = require('esbuild')
 const putout = require('putout')
 const child_process = require('child_process')
 const jsesc = require('jsesc')
+const pug = require('pug')
 
 const patcher = module.exports.patcher = new class {
   constructor() {
@@ -65,13 +66,30 @@ const patcher = module.exports.patcher = new class {
   }
 }
 
-module.exports.bib = {
-  name: 'bib',
+module.exports.text = {
+  name: 'text',
   setup(build) {
-    build.onLoad({ filter: /\.bib$/ }, async (args) => {
+    build.onLoad({ filter: /[.]bib$/i }, async (args) => {
+      let text = await fs.promises.readFile(args.path, 'utf-8')
       return {
-        contents: await fs.promises.readFile(args.path, 'utf-8'),
+        contents: text,
         loader: 'text'
+      }
+    })
+  }
+}
+
+module.exports.sql = {
+  name: 'text',
+  setup(build) {
+    build.onLoad({ filter: /[.]sql$/i }, async (args) => {
+      let text = await fs.promises.readFile(args.path, 'utf-8')
+      const ddl = text.split('\n--\n')
+        //.map(ddl => ddl.replace(/[\s\n]+/g, ' '))
+        .filter(stmt => !stmt.startsWith('#'))
+      return {
+        contents: `module.exports = ${jsesc(ddl)}`,
+        loader: 'js'
       }
     })
   }
@@ -189,5 +207,27 @@ module.exports.trace = function(section) {
         }
       })
     }
+  }
+}
+
+module.exports.pug = {
+  name: 'pug',
+  setup(build) {
+    build.onLoad({ filter: /\.pug$/ }, async (args) => {
+      const template = await fs.promises.readFile(args.path, 'utf-8')
+      const template_function = pug.compileClient(template, { globals: [ 'Date', 'Math' ] })
+        .split('\n')
+        .filter(line => !line.trim().match(/^;pug_debug_line = [0-9]+;$/))
+        .join('\n')
+        .replace(/\\u003C/g, '<')
+        .replace(/\\u003E/g, '>')
+        .replace(/\\u002F/g, '/')
+      console.log(template_function);
+
+      return {
+        contents: `module.exports = ${template_function}`,
+        loader: 'js'
+      }
+    })
   }
 }

@@ -9,8 +9,7 @@
     "preferences": {
       "autoAbbrevStyle": "http://www.zotero.org/styles/elsevier-harvard",
       "bibtexURL": "note",
-      "citekeyFormat": "[auth:fold:lower]_[Title:fold:nopunct:skipwords:select,1,1:lower]_[year]",
-      "mapUnicode": "math"
+      "citekeyFormat": "[auth:fold:lower]_[Title:fold:nopunct:skipwords:select,1,1:lower]_[year]"
     }
   },
   "items": [

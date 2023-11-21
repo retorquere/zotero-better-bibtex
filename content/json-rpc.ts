@@ -5,7 +5,6 @@ import { AUXScanner } from './aux-scanner'
 import { AutoExport } from './auto-export'
 import { Translators } from './translators'
 import { get as getCollection } from './collection'
-import { $and, Query } from './db/loki'
 import * as Library from './library'
 import { log } from './logger'
 
@@ -56,21 +55,23 @@ class NSAutoExport {
 
     const coll = await getCollection(collection, true)
 
-    const ae = AutoExport.db.findOne($and({ path }))
+    const ae = await AutoExport.get(path)
     if (ae && ae.translatorID === translatorID && ae.type === 'collection' && ae.id === coll.id) {
-      AutoExport.schedule(ae.type, [ae.id])
-
+      await AutoExport.schedule(ae.type, [ae.id])
     }
     else if (ae && !replace) {
       throw { code: INVALID_PARAMETERS, message: "Auto-export exists with incompatible parameters, but no 'replace' was requested" }
-
     }
     else {
-      AutoExport.add({
+      await AutoExport.add({
+        enabled: true,
         type: 'collection',
         id: coll.id,
         path,
         status: 'done',
+        recursive: false,
+        updated: Date.now(),
+        error: '',
         translatorID,
         exportNotes: displayOptions.exportNotes,
         useJournalAbbreviation: displayOptions.useJournalAbbreviation,
@@ -112,11 +113,13 @@ class NSItem {
       terms = terms.replace(/ (?:&|and) /g, ' ')
       if (!/[\w\u007F-\uFFFF]/.test(terms)) return []
       search.addCondition('quicksearch-titleCreatorYear', 'contains', terms)
+      search.addCondition('citationKey', 'contains', terms)
     }
     else {
       if (!terms.length) return []
       for (const [name, operator, value] of terms) {
         search.addCondition(name, operator, value)
+        search.addCondition('citationKey', 'contains', value)
       }
     }
 
@@ -137,15 +140,6 @@ class NSItem {
 
     const ids = new Set(await search.search() as number[])
 
-    if (typeof terms === 'string') {
-      // add partial-citekey search results.
-      for (const partialCitekey of terms.split(/\s+/)) {
-        for (const item of Zotero.BetterBibTeX.KeyManager.keys.find({ citekey: { $contains: partialCitekey } })) {
-          ids.add(item.itemID)
-        }
-      }
-    }
-
     const items = await getItemsAsync(Array.from(ids))
     const libraries = {}
 
@@ -157,7 +151,7 @@ class NSItem {
       return {
         ...Zotero.Utilities.Item.itemToCSLJSON(item),
         library: libraries[item.libraryID],
-        citekey: Zotero.BetterBibTeX.KeyManager.keys.findOne($and({ libraryID: item.libraryID, itemID: item.id })).citekey,
+        citekey: Zotero.BetterBibTeX.KeyManager.get(item.id).citationKey,
       }
     })
   }
@@ -168,7 +162,7 @@ class NSItem {
    * @param citekey  The citekey to search for
    */
   public async attachments(citekey: string) {
-    const key = Zotero.BetterBibTeX.KeyManager.keys.findOne($and({ citekey: citekey.replace(/^@/, '') }))
+    const key = Zotero.BetterBibTeX.KeyManager.first({ where: { citationKey: citekey.replace(/^@/, '') } })
     if (!key) throw { code: INVALID_PARAMETERS, message: `${citekey} not found` }
     const item = await getItemsAsync(key.itemID)
 
@@ -207,7 +201,7 @@ class NSItem {
    * @param includeParents Include all parent collections back to the library root
    */
   public async collections(citekeys: string[], includeParents?: boolean) {
-    const keys = Zotero.BetterBibTeX.KeyManager.keys.find({ citekey: { $in: citekeys.map(citekey => citekey.replace('@', '')) } })
+    const keys = Zotero.BetterBibTeX.KeyManager.find({ where: { citationKey: { in: citekeys.map(citekey => citekey.replace('@', '')) } } })
     if (!keys.length) throw { code: INVALID_PARAMETERS, message: `zero matches for ${citekeys.join(',')}` }
 
     const seen = {}
@@ -236,7 +230,7 @@ class NSItem {
     const collections = {}
     for (const key of keys) {
       const item = await getItemsAsync(key.itemID)
-      collections[key.citekey] = item.getCollections().map(id => {
+      collections[key.citationKey] = item.getCollections().map(id => {
         const col = Zotero.Collections.get(id).toJSON()
 
         delete col.relations
@@ -262,14 +256,14 @@ class NSItem {
    * @param citekeys An array of citekeys
    */
   public async notes(citekeys: string[]) {
-    const keys = Zotero.BetterBibTeX.KeyManager.keys.find({ citekey: { $in: citekeys.map(citekey => citekey.replace('@', '')) } })
+    const keys = Zotero.BetterBibTeX.KeyManager.find({ where: { citationKey: { in: citekeys.map(citekey => citekey.replace('@', '')) } } })
     if (!keys.length) throw { code: INVALID_PARAMETERS, message: `zero matches for ${citekeys.join(',')}` }
 
     const notes = {}
     for (const key of keys) {
       const item = await getItemsAsync(key.itemID)
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      notes[key.citekey] = (await getItemsAsync(item.getNotes())).map(note => note.getNote())
+      notes[key.citationKey] = (await getItemsAsync(item.getNotes())).map(note => note.getNote())
     }
     return notes
   }
@@ -303,11 +297,14 @@ class NSItem {
 
     if (((format as any).mode || 'bibliography') !== 'bibliography') throw new Error(`mode must be bibliograpy, not ${(format as any).mode}`)
 
-    const query: Query = { $and: [ { citekey: { $in: citekeys.map((citekey: string) => citekey.replace('@', '')) } } ] }
-    if (library !== '*') query.$and.push({ libraryID: Library.get(library).libraryID })
+    const where = {
+      citationKey: { in: citekeys.map((citekey: string) => citekey.replace('@', '')) },
+      libraryID: Library.get(library).libraryID,
+    }
+    if (library === '*') delete where.libraryID
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    const items = await getItemsAsync(Zotero.BetterBibTeX.KeyManager.keys.find(query).map((key: { itemID: number }) => key.itemID))
+    const items = await getItemsAsync(Zotero.BetterBibTeX.KeyManager.find({ where }).map(key => key.itemID))
 
     const bibliography = Zotero.QuickCopy.getContentFromItems(items, { ...format, mode: 'bibliography' }, null, false)
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
@@ -337,7 +334,7 @@ class NSItem {
         itemKey = key
       }
 
-      keys[key] = Zotero.BetterBibTeX.KeyManager.keys.findOne($and({ libraryID, itemKey }))?.citekey || null
+      keys[key] = Zotero.BetterBibTeX.KeyManager.first({ where: { libraryID, itemKey } })?.citationKey || null
     }
 
     return keys
@@ -351,22 +348,19 @@ class NSItem {
    * @param libraryID  ID of library to select the items from. When omitted, assume 'My Library'
    */
   public async export(citekeys: string[], translator: string, libraryID?: string | number) {
-
-    const query: Query = {
-      $and: [
-        { citekey: { $in: citekeys } },
-        { libraryID: { $eq: Library.get(libraryID).libraryID } },
-      ],
+    const where = {
+      citationKey: { in: citekeys },
+      libraryID: Library.get(libraryID).libraryID,
     }
 
-    const found = Zotero.BetterBibTeX.KeyManager.keys.find(query)
+    const found = Zotero.BetterBibTeX.KeyManager.find({ where })
 
     const status: Record<string, number> = {}
     for (const citekey of citekeys) {
       status[citekey] = 0
     }
     for (const item of found) {
-      status[item.citekey] += 1
+      status[item.citationKey] += 1
     }
     const error = { missing: [], duplicates: [] }
     for (const [citekey, n] of Object.entries(status)) {

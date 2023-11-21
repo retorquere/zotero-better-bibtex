@@ -2,101 +2,228 @@
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "localeDateOrder": "ymd",
-    "options": {
-      "exportNotes": true
-    },
     "preferences": {
-      "citekeyFormat": "[auth][year]",
-      "itemObserverDelay": 100
+      "ascii": "",
+      "asciiBibLaTeX": false,
+      "asciiBibTeX": true,
+      "autoAbbrev": false,
+      "autoAbbrevStyle": "",
+      "autoExport": "immediate",
+      "autoExportDelay": 5,
+      "autoExportIdleWait": 10,
+      "autoExportPathReplaceDiacritics": false,
+      "autoExportPathReplaceDirSep": "-",
+      "autoExportPathReplaceSpace": " ",
+      "automaticTags": true,
+      "autoPinDelay": 0,
+      "auxImport": false,
+      "baseAttachmentPath": "",
+      "biblatexExtendedDateFormat": true,
+      "biblatexExtendedNameFormat": true,
+      "biblatexExtractEprint": true,
+      "bibtexEditionOrdinal": false,
+      "bibtexParticleNoOp": false,
+      "bibtexURL": "off",
+      "cache": true,
+      "cacheFlushInterval": 5,
+      "charmap": "",
+      "citeCommand": "cite",
+      "citekeyFold": true,
+      "citekeyFormat": "auth + year",
+      "citekeySearch": true,
+      "citekeyUnsafeChars": "\\\"#%'(),={}~",
+      "csquotes": "",
+      "DOIandURL": "both",
+      "exportBibTeXStrings": "off",
+      "exportBraceProtection": true,
+      "exportTitleCase": true,
+      "extraMergeCitekeys": false,
+      "extraMergeCSL": false,
+      "extraMergeTeX": false,
+      "git": "config",
+      "import": true,
+      "importBibTeXStrings": true,
+      "importCaseProtection": "as-needed",
+      "importCitationKey": true,
+      "importDetectURLs": true,
+      "importExtra": true,
+      "importJabRefAbbreviations": true,
+      "importJabRefStrings": true,
+      "importNoteToExtra": "",
+      "importSentenceCase": "on+guess",
+      "importSentenceCaseQuoted": true,
+      "importUnknownTexCommand": "ignore",
+      "itemObserverDelay": 5,
+      "jabrefFormat": 0,
+      "jieba": false,
+      "keyConflictPolicy": "keep",
+      "keyScope": "library",
+      "kuroshiro": false,
+      "language": "langid",
+      "mapMath": "",
+      "mapText": "",
+      "parseParticles": true,
+      "patchDates": "dateadded=dateAdded, date-added=dateAdded, datemodified=dateModified, date-modified=dateModified",
+      "postscript": "",
+      "postscriptOverride": "",
+      "preferencesOverride": "",
+      "qualityReport": false,
+      "quickCopyEta": "",
+      "quickCopyMode": "latex",
+      "quickCopyOrgMode": "zotero",
+      "quickCopyPandocBrackets": false,
+      "quickCopySelectLink": "zotero",
+      "rawImports": false,
+      "rawLaTag": "#LaTeX",
+      "relativeFilePaths": false,
+      "retainCache": false,
+      "separatorList": "and",
+      "separatorNames": "and",
+      "skipFields": "",
+      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
+      "startupProgress": "popup",
+      "strings": "",
+      "stringsOverride": "",
+      "verbatimFields": "url,doi,file,pdf,ids,eprint,/^verb[a-z]$/,groups,/^citeulike-linkout-[0-9]+$/, /^bdsk-url-[0-9]+$/",
+      "warnBulkModify": 10,
+      "warnTitleCased": false
+    },
+    "options": {
+      "exportNotes": true,
+      "exportFileData": false,
+      "keepUpdated": false,
+      "worker": false,
+      "Normalize": true
     }
   },
+  "version": {
+    "zotero": "6.0.27",
+    "bbt": "6.7.122.emile.limonia"
+  },
+  "collections": {},
   "items": [
     {
+      "version": 0,
+      "itemType": "conferencePaper",
+      "url": "http://dblp.uni-trier.de/db/conf/icdm/icdmw2009.html#HulseKNW09",
+      "publisher": "IEEE Computer Society",
+      "pages": "507-514",
       "ISBN": "978-0-7695-3902-7",
-      "citationKey": "Hulse2009",
+      "date": "2010-01-27",
+      "extra": "Citation Key: Hulse2009\ntex.added-at: 2010-01-27T00:00:00.000+0100\ntex.crossref: conf/icdm/2009w\ntex.description: dblp\ntex.interhash: aad604c231737dbf8f6155082e3535ae\ntex.intrahash: c97a29e90fbd958a0990360f70252458\ntex.owner: sstudent\ntex.timestamp: 2011.01.03",
+      "title": "Feature selection with high-dimensional imbalanced data#",
       "creators": [
         {
-          "creatorType": "author",
           "firstName": "Jason Van",
-          "lastName": "Hulse"
+          "lastName": "Hulse",
+          "creatorType": "author"
         },
         {
-          "creatorType": "author",
           "firstName": "Taghi M.",
-          "lastName": "Khoshgoftaar"
+          "lastName": "Khoshgoftaar",
+          "creatorType": "author"
         },
         {
-          "creatorType": "author",
           "firstName": "Amri",
-          "lastName": "Napolitano"
+          "lastName": "Napolitano",
+          "creatorType": "author"
         },
         {
-          "creatorType": "author",
           "firstName": "Randall",
-          "lastName": "Wald"
+          "lastName": "Wald",
+          "creatorType": "author"
         },
         {
-          "creatorType": "editor",
-          "firstName": "Y\u00fccel",
-          "lastName": "Saygin"
+          "firstName": "Yücel",
+          "lastName": "Saygin",
+          "creatorType": "editor"
         },
         {
-          "creatorType": "editor",
           "firstName": "Jeffrey Xu",
-          "lastName": "Yu"
+          "lastName": "Yu",
+          "creatorType": "editor"
         },
         {
-          "creatorType": "editor",
           "firstName": "Hillol",
-          "lastName": "Kargupta"
+          "lastName": "Kargupta",
+          "creatorType": "editor"
         },
         {
-          "creatorType": "editor",
           "firstName": "Wei",
-          "lastName": "Wang"
+          "lastName": "Wang",
+          "creatorType": "editor"
         },
         {
-          "creatorType": "editor",
           "firstName": "Sanjay",
-          "lastName": "Ranka"
+          "lastName": "Ranka",
+          "creatorType": "editor"
         },
         {
-          "creatorType": "editor",
           "firstName": "Philip S.",
-          "lastName": "Yu"
+          "lastName": "Yu",
+          "creatorType": "editor"
         },
         {
-          "creatorType": "editor",
           "firstName": "Xindong",
-          "lastName": "Wu"
+          "lastName": "Wu",
+          "creatorType": "editor"
         }
       ],
-      "date": "2010-01-27",
-      "extra": [
-        "Citation Key: Hulse2009",
-        "tex.added-at: 2010-01-27T00:00:00.000+0100",
-        "tex.biburl: http://www.bibsonomy.org/bibtex/2c97a29e90fbd958a0990360f70252458/dblp",
-        "tex.crossref: conf/icdm/2009w",
-        "tex.description: dblp",
-        "tex.ee: http://doi.ieeecomputersociety.org/10.1109/ICDMW.2009.35",
-        "tex.interhash: aad604c231737dbf8f6155082e3535ae",
-        "tex.intrahash: c97a29e90fbd958a0990360f70252458",
-        "tex.owner: sstudent",
-        "tex.timestamp: 2011.01.03"
-      ],
-      "itemID": 1,
-      "itemType": "conferencePaper",
-      "pages": "507-514",
-      "publicationTitle": "ICDM workshops",
-      "publisher": "IEEE Computer Society",
       "tags": [
         {
           "tag": "dblp"
         }
       ],
-      "title": "Feature selection with high-dimensional imbalanced data#",
-      "url": "http://dblp.uni-trier.de/db/conf/icdm/icdmw2009.html#HulseKNW09"
+      "relations": [],
+      "dateAdded": "2023-10-07T20:22:32Z",
+      "dateModified": "2023-10-07T20:22:32Z",
+      "uri": "http://zotero.org/users/8230813/items/9IGTWAGK",
+      "attachments": [
+        {
+          "version": 0,
+          "itemType": "attachment",
+          "url": "http://www.bibsonomy.org/bibtex/2c97a29e90fbd958a0990360f70252458/dblp",
+          "accessDate": "2023-10-07T20:22:32Z",
+          "title": "biburl",
+          "parentItem": "9IGTWAGK",
+          "linkMode": "linked_url",
+          "contentType": "",
+          "charset": "",
+          "tags": [],
+          "relations": {},
+          "dateAdded": "2023-10-07T20:22:32Z",
+          "dateModified": "2023-10-07T20:22:32Z",
+          "uri": "http://zotero.org/users/8230813/items/B4BF4LJR",
+          "itemID": 103,
+          "itemKey": "B4BF4LJR",
+          "libraryID": 1
+        },
+        {
+          "version": 0,
+          "itemType": "attachment",
+          "url": "http://doi.ieeecomputersociety.org/10.1109/ICDMW.2009.35",
+          "accessDate": "2023-10-07T20:22:32Z",
+          "title": "ee",
+          "parentItem": "9IGTWAGK",
+          "linkMode": "linked_url",
+          "contentType": "",
+          "charset": "",
+          "tags": [],
+          "relations": {},
+          "dateAdded": "2023-10-07T20:22:32Z",
+          "dateModified": "2023-10-07T20:22:32Z",
+          "uri": "http://zotero.org/users/8230813/items/WNHNHZR9",
+          "itemID": 104,
+          "itemKey": "WNHNHZR9",
+          "libraryID": 1
+        }
+      ],
+      "notes": [],
+      "citationKey": "Hulse2009",
+      "itemID": 102,
+      "itemKey": "9IGTWAGK",
+      "libraryID": 1,
+      "publicationTitle": "ICDM workshops"
     }
   ]
 }

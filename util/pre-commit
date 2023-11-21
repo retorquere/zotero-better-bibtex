@@ -1,0 +1,36 @@
+#!/usr/bin/env python3
+
+import sys, os, stat
+from pathlib import Path
+
+import ruamel.yaml
+ruamel.yaml.representer.RoundTripRepresenter.ignore_aliases = lambda x, y: True
+yaml=ruamel.yaml.YAML()
+
+import subprocess
+
+script = Path(__file__)
+
+if script.parent.name == 'util':
+  hook = (script.parent.parent / '.git/hooks/pre-commit').absolute()
+  if not hook.exists():
+    hook.symlink_to(script)
+
+if script.parent.name != 'hooks':
+  print('run script from .git/hooks')
+  sys.exit(1)
+
+src = script.parent.parent.parent / '.github/workflows/src/ci.yaml'
+tgt = src.parent.parent / src.name
+
+if not tgt.exists() or src.stat().st_mtime > tgt.stat().st_mtime:
+  print(src, '=>', tgt)
+
+  with open(str(src)) as f:
+    action = yaml.load(f)
+
+  action.pop('_anchors', None)
+
+  with open(str(tgt), 'w') as f:
+    yaml.dump(action, f)
+  subprocess.run(['git', 'add', str(tgt)])

@@ -24,7 +24,7 @@ or the older format you migh have seen, which is supported but considered deprac
 
 The full list of labels and the Zotero/CSL variables they translate to can be found in the table at the end.
 
-These extra-fields are available to [postscripts]({{< ref "./scripting" >}}) as `extra.kv.<variable-name>`. Which variable it is depends (sorry):
+These extra-fields are available to [postscripts]({{% ref "./scripting" %}}) as `extra.kv.<variable-name>`. Which variable it is depends (sorry):
 
 * when you export to CSL, it is attempted to map it to the corrsponding CSL fields; if none are available, it is available under their *zotero* name
 * when you export to Better BibTeX/Better BibLaTeX, it is attempted to map it to the corresponding zotero fields; if none are available, it is available under their *csl variable* name

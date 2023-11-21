@@ -8,10 +8,11 @@
   "maxVersion": "",
   "displayOptions": {
     "keepUpdated": false,
-    "worker": false
+    "worker": true
   },
   "configOptions": {
-    "getCollections": true
+    "getCollections": true,
+    "cached": true
   },
   "translatorType": 3,
   "browserSupport": "gcsv",

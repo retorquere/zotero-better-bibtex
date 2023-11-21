@@ -3,7 +3,7 @@ languageCode = "en-US"
 defaultContentLanguage = "en"
 
 title = "Better BibTeX for Zotero"
-theme = "learn"
+theme = "relearn"
 metaDataFormat = "yaml"
 defaultContentLanguageInSubdir = false
 
@@ -13,7 +13,6 @@ unsafe= true
 [params]
   editURL = "https://github.com/retorquere/zotero-better-bibtex/edit/master/site/content/"
   description = "Make Zotero more useful for us LaTeX holdouts"
-  author = "Emiliano Heyns"
   showVisitedLinks = false
   disableBreadcrumb = false
   disableNextPrev = false
@@ -22,7 +21,7 @@ unsafe= true
   themeVariant = "green"
 
 [outputs]
-home = [ "HTML", "RSS", "JSON"]
+home = [ "HTML", "RSS", "SEARCH"]
 
 [Languages]
 [Languages.en]

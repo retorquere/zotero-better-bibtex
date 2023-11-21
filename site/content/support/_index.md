@@ -55,4 +55,4 @@ For the fastest fix:
 
 ## Known problems
 
-If Zotero stalls after installing BBT, it is often a one-time thing as the [cache fills]({{< ref "performance" >}}).
+If Zotero stalls after installing BBT, it is often a one-time thing as the [cache fills]({{% ref "performance" %}}).

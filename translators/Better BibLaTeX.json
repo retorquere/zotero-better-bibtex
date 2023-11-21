@@ -7,15 +7,17 @@
   "target": "bib",
   "minVersion": "4.0.27",
   "maxVersion": "",
+  "browserSupport": "gcsv",
   "configOptions": {
-    "getCollections": true
+    "getCollections": true,
+    "cached": true
   },
   "displayOptions": {
     "exportNotes": false,
     "exportFileData": false,
     "useJournalAbbreviation": false,
     "keepUpdated": false,
-    "worker": false
+    "worker": true
   },
   "priority": 50,
   "inRepository": false

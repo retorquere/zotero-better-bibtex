@@ -251,6 +251,9 @@
             "importCitationKey": {
               "type": "boolean"
             },
+            "importDetectURLs": {
+              "type": "boolean"
+            },
             "importExtra": {
               "type": "boolean"
             },
@@ -320,16 +323,6 @@
             "mapText": {
               "type": "string"
             },
-            "mapUnicode": {
-              "enum": [
-                "minimal-packages",
-                "conservative",
-                "text",
-                "math",
-                "creator"
-              ],
-              "type": "string"
-            },
             "parseParticles": {
               "type": "boolean"
             },
@@ -355,15 +348,17 @@
               "enum": [
                 "latex",
                 "citekeys",
-                "pandoc",
-                "orgmode",
+                "eta",
+                "gitbook",
                 "orgRef",
                 "orgRef3",
-                "rtfScan",
+                "orgmode",
+                "pandoc",
                 "roamCiteKey",
-                "gitbook",
+                "rtfScan",
                 "selectlink",
-                "eta"
+                "jupyter",
+                "jekyll"
               ],
               "type": "string"
             },

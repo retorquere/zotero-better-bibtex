@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 
-import { Translation, TranslatorMetadata, collect } from './lib/translator'
+import { Translation, collect } from './lib/translator'
+import type { Translators } from '../typings/translators.d.ts'
 
 declare const Zotero: any
-declare var ZOTERO_TRANSLATOR_INFO: TranslatorMetadata // eslint-disable-line no-var
+declare var ZOTERO_TRANSLATOR_INFO: Translators.Header // eslint-disable-line no-var
 
 import html2md from 'html-to-md'
 

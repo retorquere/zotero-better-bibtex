@@ -17,13 +17,13 @@ jobs:
           label.awaiting: awaiting-user-feedback
           label.log-required: needs-debug-log
           label.reopened: reopened
-          log-id: "([A-Z0-9]{8}(-refs)?-(apse|euc))|([^-]+-[A-Z0-9]{8})"
+          log-id: "([A-Z0-9]{8}(-refs)?-(apse|euc))|([A-Z0-9]{8}-[^-]+)"
           message.log-required: |
             Hello there @{{username}},
 
             Hope you're doing well! `@retorquere` is here to help you get the most out of your experience with Better BibTeX. To make sure he can assist you effectively, he kindly asks for your cooperation in providing a debug log – it's like giving him the key to understanding and solving the puzzle!
 
-            Getting your debug log is a breeze and will save us both time. Trust me, it's way quicker than discussing why it's important. :smiley:
+            Getting your debug log is a breeze and will save us both time in getting your problem resolved or the new feature you'd like implemented. Trust me, it's way quicker than discussing why it's important. :smiley:
 
             **How to Share Your Debug Log:**
 

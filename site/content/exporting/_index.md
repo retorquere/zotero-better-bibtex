@@ -12,17 +12,17 @@ aliases:
 ---
 
 Better BibTex adds a couple of export formats to Zotero's export dialog and several ways to improve export for plaintext-based authoring.
-The Better BibTeX [configuration]({{< ref "installation/preferences" >}}) pane can be found under the regular Zotero preferences pane, tab 'Better BibTeX' where you can tweak the exports, such as
+The Better BibTeX [configuration]({{% ref "installation/preferences" %}}) pane can be found under the regular Zotero preferences pane, tab 'Better BibTeX' where you can tweak the exports, such as
 
-* [Omitting fields from exports]({{< ref "installation/preferences/export#fields-to-omit-from-export-comma-separated" >}}) to slim down your bib files.
-* Configuring how [citation keys are generated]({{< ref "citing" >}}).
-* And really a [ton more]({{< ref "installation/preferences" >}}).
+* [Omitting fields from exports]({{% ref "installation/preferences/export#fields-to-omit-from-export-comma-separated" %}}) to slim down your bib files.
+* Configuring how [citation keys are generated]({{% ref "citing" %}}).
+* And really a [ton more]({{% ref "installation/preferences" %}}).
 
-Additionally you can automate exporting (parts of) your library either using [auto-export]({{< ref "auto" >}}) or [pull export]({{< ref "pull" >}}).
+Additionally you can automate exporting (parts of) your library either using [auto-export]({{% ref "auto" %}}) or [pull export]({{% ref "pull" %}}).
 
 ## Pinning (fixing) the citation key
 
-By default, BBT will generate citation keys from your items using the [formatting pattern]({{< ref "citing" >}}) you specified. If you want the key to be stable even when you change the item, 
+By default, BBT will generate citation keys from your items using the [formatting pattern]({{% ref "citing" %}}) you specified. If you want the key to be stable even when you change the item, 
 you can fix its citation key to a value of your choosing by adding the text `Citation Key: [your citekey]` on a line of its own in the `extra` field of the item.
 
 ## Add your own BibLaTeX fields

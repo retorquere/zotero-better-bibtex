@@ -8,14 +8,15 @@
   "maxVersion": "",
   "configOptions": {
     "async": true,
-    "getCollections": true
+    "getCollections": true,
+    "cached": true
   },
   "displayOptions": {
     "exportNotes": false,
     "exportFileData": false,
     "useJournalAbbreviation": false,
     "keepUpdated": false,
-    "worker": false
+    "worker": true
   },
   "translatorType": 3,
   "browserSupport": "gcsv",

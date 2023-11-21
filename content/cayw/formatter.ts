@@ -3,12 +3,12 @@
 import { Translators } from '../translators'
 import { getItemsAsync } from '../get-items-async'
 import { Preference } from '../prefs'
-import { fromEntries } from '../object'
+import { fromPairs } from '../object'
 import { scannableCite } from '../../gen/ScannableCite'
 
 import * as unicode_table from 'unicode2latex/tables/unicode.json'
 
-const unicode2latex = (fromEntries(
+const unicode2latex = (fromPairs(
   Object
     .entries(unicode_table)
     .map(([unicode, latex]: [string, { text: string, math: string }]) => [ unicode, { text: latex.text || latex.math, math: !(latex.text) }])
@@ -194,6 +194,10 @@ export const Formatter = new class { // eslint-disable-line @typescript-eslint/n
       }
     }
     return formatted.join('')
+  }
+
+  public async jekyll(citations, _options) {
+    return citations.map(cit => `{% cite ${cit.citekey} %}`).join('')
   }
 
   public async pandoc(citations, options) {

@@ -102,11 +102,11 @@ There isn't really an API. You can use regular javascript to manipulate the `csl
 
 In a postscript `zotero.itemType` will have one of these values:
 
-{{< postscript/itemtypes >}}
+{{% postscript/itemtypes %}}
 
 Other fields on the `zotero` object are:
 
-{{< postscript/fields >}}
+{{% postscript/fields %}}
 
 (types/fields marked <sup>Z</sup> are only available in Zotero, fields marked with <sup>JM</sup> are only available in Juris-M).
 
@@ -273,7 +273,7 @@ if (Translator.BetterBibLaTeX) {
 
 ### Set the entry type to `misc` for arXiv preprints in BibTeX
 
-```
+```javascript
 if (Translator.BetterBibTeX && tex.entrytype === 'article' && zotero.arXiv) {
   if (tex.has.journal && zotero.arXiv.source === 'publicationTitle') {
     tex.remove('journal');
@@ -303,11 +303,11 @@ that either biblatex-apa or biblatex-chicago would use it for a
 physical archive.)
 
 Given all of this, I'm going to leave referencing of physical
-location to postscripts for now. If you enable the [quality report]({{< ref "/installation/preferences/export" >}}#include-comments-about-potential-problems-with-the-references), BBT
+location to postscripts for now. If you enable the [quality report]({{% ref "/installation/preferences/export" %}}#include-comments-about-potential-problems-with-the-references), BBT
 will list Zotero fields with data that has not been used in the
 export:
 
-```
+```bibtex
 @letter{MillionDemiInfirmes1968,
   title = {Un Million et Demi d'infirmes, Handicapés Physiques et Mentaux},
   date = {1968-05-31},
@@ -325,7 +325,7 @@ export:
 
 if you then apply a postscript such as 
 
-```
+```javascript
 if (Translator.BetterBibLaTeX) {
   // biblatex-mla
   if (zotero.archive && zotero.archiveLocation) {
@@ -339,7 +339,7 @@ if (Translator.BetterBibLaTeX) {
 
 you get
 
-```
+```bibtex
 @unpublished{MillionDemiInfirmes1968,
   title = {Un Million et Demi d'infirmes, Handicapés Physiques et Mentaux},
   date = {1968-05-31},
@@ -356,7 +356,7 @@ you get
 
 ### Export season for BibTeX
 
-```
+```javascript
 if (Translator.BetterBibTeX && tex.date.type === 'season') {
   tex.add({ name: 'month', value: ['', 'spring', 'summer', 'fall', 'winter'][tex.date.season] })
 }
@@ -364,7 +364,7 @@ if (Translator.BetterBibTeX && tex.date.type === 'season') {
 
 ### Adding rights field in BibLaTeX
 
-```
+```javascript
 if (Translator.BetterBibLaTeX) {
   tex.add({ name: 'rights', value: zotero.rights});
 }
@@ -399,7 +399,7 @@ if (Translator.BetterCSLJSON) {
 
 ### Convert Windows attachment paths to Unix
 
-```
+```javascript
 if (Translator.BetterTeX && !Translator.options.exportFileData && item.attachments && Translator.exportPath.includes('\\\\')) {
   if (item.attachments) {
     reference.add({ name: 'file', bibtex: reference.enc_attachments({ value: item.attachments }, path => path.replace(/^[A-Z]:/i, '').replace(/\\\\/g, '/')) })

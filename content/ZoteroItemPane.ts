@@ -31,7 +31,6 @@ export async function newZoteroItemPane(win: Window): Promise<void> {
 }
 
 export class ZoteroItemPane {
-  observer: number
   document: Document
   elements: Elements
 
@@ -66,13 +65,13 @@ export class ZoteroItemPane {
           elements.create('grid', { id: 'better-bibtex-editpane-item-box', $: [
             elements.create('columns', { $: [
               elements.create('column'),
-              elements.create('column'),
+              elements.create('column', { flex: '1' }),
               // elements.create('column', { flex: 100 }),
             ]}),
             elements.create('rows', { id: 'better-bibtex-fields', flex: 1, $: [
               elements.create('row', { class: 'zotero-item-first-row', $: [
                 elements.create('label', { id: 'better-bibtex-citekey-label', style: 'width: 9em; text-align: right; color: #7F7F7F', value: '' }),
-                elements.create('textbox', { id: 'better-bibtex-citekey-display', class: 'plain', readonly: 'true', value: '' }),
+                elements.create('textbox', { id: 'better-bibtex-citekey-display', flex: '1', class: 'plain', readonly: 'true', value: '' }),
                 // elements.create('label', { id: 'better-bibtex-citekey-pin', value: icons.pin }),
               ]}),
             ]}),
@@ -82,10 +81,6 @@ export class ZoteroItemPane {
         ]}))
       }
     }
-
-    this.observer = Zotero.BetterBibTeX.KeyManager.keys.on(['update', 'insert'], () => {
-      this.refresh()
-    })
 
     win.addEventListener('unload', () => {
       this.unload()
@@ -117,22 +112,19 @@ export class ZoteroItemPane {
         }
       }
 
-      const { citekey, pinned } = Zotero.BetterBibTeX.KeyManager.get(this.item.id)
+      const { citationKey, pinned } = Zotero.BetterBibTeX.KeyManager.get(this.item.id)
       const label = this.parentNode.querySelector('#better-bibtex-citekey-label')
       const value = this.parentNode.querySelector('#better-bibtex-citekey-display')
       if (!value) return // merge pane uses itembox
 
-      label.hidden = value.hidden = !citekey
+      label.hidden = value.hidden = !citationKey
 
       label.value = `${pinned ? icons.pin : ''}${l10n.localize('better-bibtex_item-pane_citekey')}`
-      value.value = citekey
+      value.value = citationKey
     })
   }
 
   public unload(): void {
-    if (Zotero.BetterBibTeX.KeyManager.keys && this.observer) {
-      Zotero.BetterBibTeX.KeyManager.keys.removeListener(this.observer)
-    }
     this.elements.remove()
   }
 }

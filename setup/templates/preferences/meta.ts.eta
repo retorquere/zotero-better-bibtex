@@ -48,98 +48,25 @@ export const options: Partial<Record<PreferenceName, Record<string, string>>> = 
 ) %>
 
 <%
-const ignoreOptions = ['worker', 'exportFileData', 'keepUpdated', 'Normalize']
 const overrides = it.preferences.filter(pref => pref.override)
 
-const schema = {}
+let autoExport = {}
+for (const header of it.translators) {
+  if (typeof header.displayOptions?.keepUpdated !== 'boolean') continue
 
-schema.autoExport = {
-  preferences: overrides.map(pref => pref.shortName),
-  displayOptions: it.translators.reduce((acc, tr) => {
-    if (typeof tr.displayOptions?.keepUpdated === 'boolean') {
-      for (const option in (tr.displayOptions || {})) {
-        if (!ignoreOptions.includes(option) && !acc.includes(option)) acc.push(option)
-      }
-    }
-    return acc
-  }, []),
+  autoExport[header.translatorID] = {
+    options: Object.keys(header.displayOptions).filter(o => it.displayOptions.includes(o)),
+    preferences: overrides.filter(p => p.affects.includes(header.label)).map(p => p.shortName),
+  }
 }
 
-schema.translator = {}
-for (const tr of it.translators) {
-  if (!tr.keepUpdated && !tr.cached) continue
-
-  const options = Object.keys(tr.displayOptions)
-    .filter(option => !ignoreOptions.includes(option))
-    .reduce((acc, option) => { acc[option] = { type: 'boolean' }; return acc }, {})
-  const prefs = overrides
-    .filter(pref => tr.affectedBy.includes(pref.shortName))
-    .reduce((acc, pref) => { acc[pref.shortName] = pref.options ? { enum: [...pref.options.keys()] } : { type: pref.type }; return acc }, {})
-
-  schema.translator[tr.label] = {
-    autoexport: {
-      type: 'object',
-      additionalProperties: false,
-      properties: {
-        type: { enum: ['collection', 'library'] },
-        id: { type: 'integer' },
-        path: { type: 'string', minLength: 1 },
-        status: { enum: [ 'scheduled', 'running', 'done', 'error' ] },
-        translatorID: { const: tr.translatorID },
-
-        // options
-        exportNotes: { type: 'boolean' },
-        useJournalAbbreviation: { type: 'boolean' },
-
-        ...prefs,
-
-        // status
-        error: { type: 'string' },
-        recursive: { type: 'boolean' },
-
-        // LokiJS
-        meta: { type: 'object' },
-        $loki: { type: 'integer' },
-      },
-      required: [ 'type', 'id', 'path', 'status', 'translatorID', ...Object.keys(options), ...Object.keys(prefs) ],
-    },
-    cache: !tr.cached ? false : {
-      type: 'object',
-      additionalProperties: false,
-      properties: {
-        itemID: { type: 'integer' },
-        entry: { type: 'string' },
-
-        // options
-        exportNotes: { type: 'boolean' },
-        useJournalAbbreviation: { type: 'boolean' },
-
-        ...prefs,
-
-        // Optional
-        metadata: { type: 'object' },
-
-        // LokiJS
-        meta: { type: 'object' },
-        $loki: { type: 'integer' },
-      },
-      required: [],
-      required: [ 'itemID', 'exportNotes', 'useJournalAbbreviation', ...Object.keys(prefs), 'entry'],
-    },
-    preferences: Object.keys(prefs),
-    displayOptions: Object.keys(options),
-  }
+autoExport = stringify(autoExport)
+for (const header of it.translators) {
+  autoExport = autoExport
+    .split('\n')
+    .map(line => line.includes(header.translatorID) ? `${line} // ${header.label}` : line)
+    .join('\n')
 }
 %>
 
-type LokiRecord = {
-  type: 'object'
-  additionalProperties: false
-  properties: any
-  required: string[]
-}
-export const schema: {
-  autoExport: { preferences: PreferenceName[], displayOptions: string[] }
-  translator: Record<string, { cache: false | LokiRecord, autoexport: false | LokiRecord, displayOptions: string[], preferences: PreferenceName[] }>
-} = <%~ stringify(schema) %>
-
+export const autoExport: Record<string, { options: string[], preferences: PreferenceName[] }> = <%~ autoExport %>

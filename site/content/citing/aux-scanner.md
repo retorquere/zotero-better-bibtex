@@ -31,15 +31,7 @@ text file formatted like this:
 \citation{CITEKEY2}
 ```
 
-Where `CITEKEY1`, `CITEKEY2` etc are the [citation keys]({{< ref "../" >}})
+Where `CITEKEY1`, `CITEKEY2` etc are the [citation keys]({{% ref "../" %}})
 that you want to include in the collection.
 
-For pandoc-markdown scanning, BBT needs to actually run pandoc, and for that pandoc must be in your `$PATH`. On MacOS, if you installed pandoc using homebrew, it will likely not be in the `PATH` that Zotero can see. This can be fixed using
-
-```
-sudo launchctl config user path $PATH
-```
-
-which will set set the PATH-for-GUI-apps once to your current shell=`PATH`; if you update your PATH later and you want that reflected in Zotero, you'd have to run this again.
-
-Note that you should not take advice from strangers on the internet asking you to run `sudo <anything>`... and I only found this by applying google-fu, not any deep understanding of MacOS (which I do use). It Worked For Me, but you might want to consult a MacOS-guru pal.
+For pandoc-markdown scanning, BBT needs to actually run pandoc, and for that pandoc must be in your `$PATH`. On MacOS, if you installed pandoc using homebrew, it will likely not be in the `PATH` that Zotero can see. You can enter the path manually by going into the Zotero preferences, Advanced tab, open the config editor, and create a text entry named `extensions.zotero.translators.better-bibtex.path.pandoc` and setting it to the full path of the pandoc binary.

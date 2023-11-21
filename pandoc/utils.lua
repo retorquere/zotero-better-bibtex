@@ -26,7 +26,7 @@ function module.xmlescape(str)
 end
 
 function module.trim(s)
-  return (s:gsub("^%s*(.-)%s*$", "%1"))
+  return s:gsub("^%s*(.-)%s*$", "%1")
 end
 
 function module.deepcopy(orig)

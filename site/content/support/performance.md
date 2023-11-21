@@ -13,7 +13,7 @@ you will not likely notice this, but if you have several thousand items, and you
 substantial parts of your library, this gets annoying really fast.
 
 To deal with this problem, Better BibTeX implements an extensive caching system. With a filled cache, Better BibTeX is
-substantially faster than the default Zotero exporters.  Specifically for [automatic background exports]({{< ref "exporting" >}}), a filled cache is
+substantially faster than the default Zotero exporters.  Specifically for [automatic background exports]({{% ref "exporting" %}}), a filled cache is
 a good thing to have.
 
 For technical reasons, if you export the file attachments as part of your export, the cache is skipped altogether, so
@@ -57,11 +57,11 @@ cached already, they will be before subsequent auto-exports.
 The cache entry for a item is retained as long as you do not make any changes to that item. Any change you
 make will drop all cache entries for that item (so all variants you had for different export options). The cache
 for that item will be refreshed as soon as you export it again, either manually or
-[automatically]({{< ref "exporting" >}}).
+[automatically]({{% ref "exporting" %}}).
 
 ### Cache drop
 
-*Any* change you make to the Better BibTeX [preferences]({{< ref "installation/preferences" >}}) will drop the whole cache. The behavior of
+*Any* change you make to the Better BibTeX [preferences]({{% ref "installation/preferences" %}}) will drop the whole cache. The behavior of
 the Better BibTeX exporters are highly configurable, and it is impossible for me to figure out which entries would be
 affected specifically. Keep this in mind for large libraries; if you want to make changes to your configuration, make them all at once.
 

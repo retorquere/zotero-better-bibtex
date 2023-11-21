@@ -11,16 +11,6 @@ checkbox(label="&better-bibtex_preferences_export_quality-report.label;" prefere
 checkbox(label="&better-bibtex_preferences_export_automatic-tags.label;" preference="extensions.zotero.translators.better-bibtex.automaticTags")
 
 html:div
-  label(bbt:preference="extensions.zotero.translators.better-bibtex.mapUnicode") &better-bibtex_preferences_export_map-unicode;
-  menulist(preference="extensions.zotero.translators.better-bibtex.mapUnicode")
-    menupopup
-      menuitem(value='minimal-packages' label='&better-bibtex_preferences_export_map-unicode_minimal-packages.label;')
-      menuitem(value='conservative' label='&better-bibtex_preferences_export_map-unicode_conservative.label;')
-      menuitem(value='text' label='&better-bibtex_preferences_export_map-unicode_text.label;')
-      menuitem(value='math' label='&better-bibtex_preferences_export_map-unicode_math.label;')
-      menuitem(value='creator' label='&better-bibtex_preferences_export_map-unicode_creator.label;')
-
-html:div
   checkbox(preference="extensions.zotero.translators.better-bibtex.exportTitleCase" label="&better-bibtex_preferences_advanced_export_title-case.label;")
   image(tooltip="bbt-tooltip-exportTitleCase" src="chrome://zotero-better-bibtex/content/skin/attention.svg" width="16" height="16")
 

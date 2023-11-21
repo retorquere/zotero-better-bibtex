@@ -276,7 +276,7 @@ class Document {
       prefix: item.prefix || '',
       suffix: item.suffix || '',
       label: item.locator ? (item.label || 'page') : '',
-      citekey: Zotero.BetterBibTeX.KeyManager.get(item.id).citekey,
+      citekey: Zotero.BetterBibTeX.KeyManager.get(item.id).citationKey,
 
       uri: Array.isArray(item.uri) ? item.uri[0] : undefined,
       itemType: item.itemData ? item.itemData.type : undefined,
@@ -362,7 +362,7 @@ async function selected(options): Promise<string> {
     prefix: '',
     suffix: '',
     label: '',
-    citekey: Zotero.BetterBibTeX.KeyManager.get(item.id).citekey,
+    citekey: Zotero.BetterBibTeX.KeyManager.get(item.id).citationKey,
 
     uri: undefined,
     itemType: undefined,

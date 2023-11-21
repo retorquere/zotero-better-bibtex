@@ -7,10 +7,10 @@ import { getItemsAsync } from './get-items-async'
 import { AUXScanner } from './aux-scanner'
 import { DB as Cache } from './db/cache'
 import * as Extra from './extra'
-import { $and } from './db/loki'
 import  { defaults } from '../gen/preferences/meta'
 import { Preference } from './prefs'
 import * as memory from './memory'
+import { Events } from './events'
 
 const setatstart: string[] = ['testing', 'cache'].filter(p => Preference[p] !== defaults[p])
 
@@ -26,17 +26,17 @@ export class TestSupport {
   }
   */
 
+  public isIdle(topic: string): boolean {
+    return Events.idle[topic] === 'idle'
+  }
+
   public memoryState(snapshot: string): memory.State {
     const state = memory.state(snapshot)
     return state
   }
 
-  public removeAutoExports(): void {
-    AutoExport.db.findAndRemove({ type: { $ne: '' } })
-  }
-
-  public autoExportRunning(): boolean {
-    return (AutoExport.db.find($and({ status: 'running' })).length > 0)
+  public async autoExportRunning(): Promise<number> {
+    return await Zotero.DB.valueQueryAsync("SELECT COUNT(*) FROM betterbibtex.autoExport WHERE status = 'running'") as number
   }
 
   public async reset(scenario: string): Promise<void> {
@@ -68,11 +68,14 @@ export class TestSupport {
 
     await Zotero.Items.emptyTrash(Zotero.Libraries.userLibraryID)
 
-    AutoExport.removeAll()
-    log.debug('test-support reset:', AutoExport.db.data.length, 'auto-exports remaining')
+    await AutoExport.removeAll()
 
     items = await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, false, true, true)
     if (items.length !== 0) throw new Error('library not empty after reset')
+
+    await Zotero.Promise.delay(1000)
+
+    if (Zotero.BetterBibTeX.KeyManager.all().length !== 0) throw new Error(`keystore has ${Zotero.BetterBibTeX.KeyManager.all().length} entries after reset`)
   }
 
   public async librarySize(): Promise<number> {
@@ -153,8 +156,8 @@ export class TestSupport {
 
     let ids: number[] = []
 
-    if (query.contains) ids = ids.concat(Zotero.BetterBibTeX.KeyManager.keys.where( (item: { citekey: string }) => item.citekey.toLowerCase().includes(query.contains.toLowerCase()) ).map((item: { itemID: number }) => item.itemID))
-    if (query.is) ids = ids.concat(Zotero.BetterBibTeX.KeyManager.keys.find($and({ citekey: query.is })).map((item: { itemID: number }) => item.itemID))
+    if (query.contains) ids = ids.concat(Zotero.BetterBibTeX.KeyManager.all().filter(key => key.citationKey.toLowerCase().includes(query.contains.toLowerCase())).map(key => key.itemID))
+    if (query.is) ids = ids.concat(Zotero.BetterBibTeX.KeyManager.find({ where: { citationKey: query.is } }).map(key => key.itemID))
 
     const s = new Zotero.Search()
     for (const [mode, text] of Object.entries(query)) {
@@ -172,7 +175,7 @@ export class TestSupport {
   public async pick(format: string, citations: {id: number[], uri: string, citekey: string}[]): Promise<string> {
     for (const citation of citations) {
       if (citation.id.length !== 1) throw new Error(`Expected 1 item, got ${citation.id.length}`)
-      citation.citekey = Zotero.BetterBibTeX.KeyManager.get(citation.id[0]).citekey
+      citation.citekey = Zotero.BetterBibTeX.KeyManager.get(citation.id[0]).citationKey
       citation.uri = Zotero.URI.getItemURI(await getItemsAsync(citation.id[0]))
     }
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
@@ -242,24 +245,30 @@ export class TestSupport {
 
     selected.sort((a, b) => ids.indexOf(a.id) - ids.indexOf(b.id))
 
+    const win = Zotero.getMainWindow()
+
+    /*
     const env = {
       Zotero,
-      window: Zotero.getMainWindow(),
-      document: Zotero.getMainWindow().document,
-      Zotero_Duplicates_Pane: undefined,
-      setTimeout: setTimeout.bind(Zotero.getMainWindow()),
-      clearTimeout: clearTimeout.bind(Zotero.getMainWindow()),
+      window: win,
+      document: win.document,
+      Zotero_Duplicates_Pane: win.Zotero_Duplicates_Pane,
+      setTimeout: setTimeout.bind(win),
+      clearTimeout: clearTimeout.bind(win),
+    }
+    */
+
+    if (!win.Zotero_Duplicates_Pane) {
+      Components.classes['@mozilla.org/moz/jssubscript-loader;1']
+        .getService(Components.interfaces.mozIJSSubScriptLoader)
+        .loadSubScript('chrome://zotero/content/duplicatesMerge.js', win)
     }
 
-    Components.classes['@mozilla.org/moz/jssubscript-loader;1']
-      .getService(Components.interfaces.mozIJSSubScriptLoader)
-      .loadSubScript('chrome://zotero/content/duplicatesMerge.js', env)
-
-    env.Zotero_Duplicates_Pane.setItems(selected)
+    win.Zotero_Duplicates_Pane.setItems(selected)
     await Zotero.Promise.delay(1500)
 
     const before = await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, true, false, true)
-    await env.Zotero_Duplicates_Pane.merge()
+    await win.Zotero_Duplicates_Pane.merge()
 
     await Zotero.Promise.delay(1500)
     const after = await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, true, false, true)
@@ -294,7 +303,7 @@ export class TestSupport {
     const format = {
       mode: 'export',
       contentType: '',
-      id: Translators.byName[translator]?.translatorID || translator,
+      id: Translators.byLabel[translator]?.translatorID || translator,
       locale: '',
     }
 
@@ -310,12 +319,14 @@ export class TestSupport {
     })
   }
 
-  public editAutoExport(field: string, value: boolean | string): void {
-    Zotero.BetterBibTeX.PrefPane.autoexport.edit({
+  public async editAutoExport(field: string, value: boolean | string): Promise<void> {
+    // assumes only one auto-export is set up
+    const path: string = await Zotero.DB.valueQueryAsync('SELECT path FROM betterbibtex.autoExport')
+    await Zotero.BetterBibTeX.PrefPane.autoexport.edit({
       getAttribute(name: string): string | number { // eslint-disable-line prefer-arrow/prefer-arrow-functions
         switch (name) {
           case 'data-ae-field': return field
-          case 'data-ae-id': return AutoExport.db.find()[0].$loki as number
+          case 'data-ae-path': return path
           default: throw new Error(`unexpected attribute ${name}`)
         }
       },

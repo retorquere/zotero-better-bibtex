@@ -4,9 +4,8 @@ better-bibtex_aux-scan_prompt = Tag name
 better-bibtex_aux-scan_title_aux = Tag cited items from AUX file
 better-bibtex_aux-scan_title_md = Tag cited items from Markdown file
 better-bibtex_aux-scanner = Scan BibTeX AUX/Markdown file for references...
-better-bibtex_bulk-keys-confirm = 
-  .value = You are changing more than { $treshold } items in one go. Are you sure?
-  .buttonlabelextra1 = OK, and don't ask me again
+better-bibtex_bulk-keys-confirm_warning = You are changing more than { $treshold } items in one go. Are you sure?
+better-bibtex_bulk-keys-confirm_stop_asking = OK, and don't ask me again
 
 better-bibtex_citekey_pin = Pin BibTeX key
 better-bibtex_citekey_set = Change BibTeX key...
@@ -335,17 +334,6 @@ better-bibtex_preferences_export_jabref-format_5 = for JabRef 5
   .label = { better-bibtex_preferences_export_jabref-format_5 }
 
 better-bibtex_preferences_export_jabref-format_warn = Export JabRef-specific fields: timestamps, titles for attachments, and groups for each collection an item is part of. Note that having this on will disable caching in exports, which is really undesirable specifically for auto-exports.
-better-bibtex_preferences_export_map-unicode = When converting to plain-text latex commands:
-better-bibtex_preferences_export_map-unicode_conservative = Minimize the number of switches between math-mode and text-mode
-  .label = { better-bibtex_preferences_export_map-unicode_conservative }
-better-bibtex_preferences_export_map-unicode_creator = Add braces to accented characters to assist simplistic latex parsers
-  .label = { better-bibtex_preferences_export_map-unicode_creator }
-better-bibtex_preferences_export_map-unicode_math = Prefer math-mode replacements
-  .label = { better-bibtex_preferences_export_map-unicode_math }
-better-bibtex_preferences_export_map-unicode_minimal-packages = Minimize additional latex packages required
-  .label = { better-bibtex_preferences_export_map-unicode_minimal-packages }
-better-bibtex_preferences_export_map-unicode_text = Prefer text-mode replacements
-  .label = { better-bibtex_preferences_export_map-unicode_text }
 
 better-bibtex_preferences_export_quality-report = 
   .label = Include comments about potential problems with the exported entries

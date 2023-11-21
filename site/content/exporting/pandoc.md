@@ -7,8 +7,8 @@ aliases:
 
 In addition to LaTeX, BBT plays very well with pandoc:
 
-* you can [drag and drop]({{< ref "/installation/preferences/#quick-copydrag-and-drop-citations" >}}) citations from Zotero into your markdown documents.
-* you can [cite as you write]({{< ref "/citing/cayw" >}}) in your favorite editor with varying levels of comfort, mostly depending on how easy (VSCode, Sublime) or hard (looking at you Scrivener) it is to extend your editor.
+* you can [drag and drop]({{% ref "/installation/preferences/#quick-copydrag-and-drop-citations" %}}) citations from Zotero into your markdown documents.
+* you can [cite as you write]({{% ref "/citing/cayw" %}}) in your favorite editor with varying levels of comfort, mostly depending on how easy (VSCode, Sublime) or hard (looking at you Scrivener) it is to extend your editor.
 * you can even convert your markdown document into a LibreOffice/Word document with actual live Zotero items as if you had entered them into Zotero all along (see below)
 
 ## Use CSL, not bibtex with pandoc
@@ -18,7 +18,7 @@ citations seem to use bibtex as a bibliography format. I would
 encourage the use of CSL instead. Internally, both Zotero and pandoc-citeproc use
 CSL citation engines; the two options you have are:
 
-{{< gravizo " " >}}
+{{% gravizo " " %}}
   digraph G {
     aize ="4,4";
     node [shape=box];
@@ -30,7 +30,7 @@ CSL citation engines; the two options you have are:
     pandoc_citeproc_convert [label="pandoc-citeproc in convert mode"];
     pandoc_citeproc [label="pandoc-citeproc"];
   }
-{{< /gravizo >}}
+{{% /gravizo %}}
 
 Not only is the extra step through "pandoc-citeproc in convert mode" unnecesary, the translation between bibtex and CSL is complex and often lossy:
 

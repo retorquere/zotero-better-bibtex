@@ -1,4 +1,5 @@
 ---
+archetype: home
 title: Better BibTeX for Zotero
 weight: 5
 aliases:
@@ -6,17 +7,14 @@ aliases:
 ---
 <!-- WARNING: GENERATED FROM https://github.com/retorquere/zotero-better-bibtex/blob/master/README.md. EDITS WILL BE OVERWRITTEN -->
 
-# Better BibTeX for Zotero
-
-
 Better BibTeX (BBT) is a plugin for [Zotero](https://www.zotero.org) and [Juris-M](https://juris-m.github.io) that makes it easier to manage bibliographic data, especially for people authoring documents using text-based toolchains (e.g. based on [LaTeX](https://www.latex-project.org) / [Markdown](https://www.markdownguide.org)).
 
 ## Features
 
 ### Facilities for generating citation keys
 
-* Automatically generate [citation keys]({{< ref "/citing" >}}) without key clashes! Generate citation keys that take into account existing keys in your library even when they are not part of the items you export. Prevent random breakage!
-* Generate citation keys based on contents of your items using [citekey formulas]({{< ref "/citing/#configurable-citekey-generator" >}}).
+* Automatically generate [citation keys]({{% ref "/citing" %}}) without key clashes! Generate citation keys that take into account existing keys in your library even when they are not part of the items you export. Prevent random breakage!
+* Generate citation keys based on contents of your items using [citekey formulas]({{% ref "/citing/#configurable-citekey-generator" %}}).
 * Set your own, stable citation keys, drag and drop LaTeX citations, add other custom BibLaTeX fields.
 
 
@@ -38,15 +36,15 @@ in your items that Bib(La)TeX won't understand.
   If you need literal LaTeX in your export: surround it with `<script>`...`</script>` (or `<pre>`...`</pre>`, which do the same) markers.
   
 ### Facilities for exporting data from Zotero
-* Highly [customized exports]({{< ref "/exporting" >}}).
+* Highly [customized exports]({{% ref "/exporting" %}}).
 * Fixes date field exports: export dates like 'forthcoming' as 'forthcoming' instead of empty, but normalize valid dates
   to unambiguous international format.
-* [Auto export]({{< ref "/exporting/auto" >}}) of collections or entire libraries when they change.
-* [Pull export]({{< ref "/exporting/pull" >}}) from the embedded webserver.
-* Automatic [journal abbreviation]({{< ref "/citing" >}}).
+* [Auto export]({{% ref "/exporting/auto" %}}) of collections or entire libraries when they change.
+* [Pull export]({{% ref "/exporting/pull" %}}) from the embedded webserver.
+* Automatic [journal abbreviation]({{% ref "/citing" %}}).
 
 ## Getting started
-To get started, read the [installation instructions]({{< ref "/installation" >}}).
+To get started, read the [installation instructions]({{% ref "/installation" %}}).
 
 ## How does it work ?
 At its core, BBT behaves like any Zotero import/export module; anywhere you can export or import bibliography items in Zotero,
@@ -64,7 +62,7 @@ editors/processors, I'm pragmatic about implementing what works.
 
 If you have any questions on BBT's use, do not hesitate to [file a GitHub issue](https://github.com/retorquere/zotero-better-bibtex/issues/new/choose) and ask for help. 
 
-If you're reporting a bug in BBT, please take a moment to glance through the [support request guidelines]({{< ref "/support" >}}); it will make sure I get your problem fixed as quick as possible.
+If you're reporting a bug in BBT, please take a moment to glance through the [support request guidelines]({{% ref "/support" %}}); it will make sure I get your problem fixed as quick as possible.
 Clear bug reports commonly have really short time-to-fix, so if you report something, stick around -- it may be done as you wait.
 
 The support request guidelines are very detailed, perhaps to the point of being off-putting, but please do not fret; these guidelines simply express my ideal bug submission.

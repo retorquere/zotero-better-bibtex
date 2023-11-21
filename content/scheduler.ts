@@ -3,17 +3,16 @@ import { Preference } from './prefs'
 type Handler = () => void
 type TimerHandle = ReturnType<typeof setTimeout>
 type Job = {
-  id: number
   start: number
   handler: Handler
   timer: TimerHandle
 }
 
-export class Scheduler {
+export class Scheduler<T> {
   private _delay: string | number
   private factor: number
-  private job: Map<number, Job> = new Map
-  private held: Map<number, Handler> = null
+  private job: Map<T, Job & { id: T }> = new Map
+  private held: Map<T, Handler> = null
 
   constructor(delay: string | number, factor = 1) {
     this._delay = delay
@@ -50,7 +49,7 @@ export class Scheduler {
     }
   }
 
-  public schedule(id: number, handler: Handler): void {
+  public schedule(id: T, handler: Handler): void {
     if (this.held) {
       this.held.set(id, handler)
       return
@@ -77,14 +76,26 @@ export class Scheduler {
     this.job.set(id, job)
   }
 
-  public cancel(id: number): void {
-    let job: Job
+  public cancel(id: T): void {
+    let job: Job & { id: T }
     if (this.held) {
       this.held.delete(id)
     }
     else if (job = this.job.get(id)) {
       clearTimeout(job.timer)
       this.job.delete(id)
+    }
+  }
+
+  public clear(): void {
+    if (this.held) {
+      this.held = new Map
+    }
+    else {
+      for (const job of this.job.values()) {
+        clearTimeout(job.timer)
+      }
+      this.job = new Map
     }
   }
 }

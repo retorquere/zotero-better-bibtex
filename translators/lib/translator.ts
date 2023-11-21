@@ -8,6 +8,7 @@ import { client } from '../../content/client'
 import { RegularItem, Item, Collection, Attachment } from '../../gen/typings/serialized-item'
 import type { Exporter as BibTeXExporter } from '../bibtex/exporter'
 import type { ZoteroItem } from '../bibtex/bibtex'
+import type { Translators } from '../../typings/translators.d.ts'
 
 type CacheableItem = Item & { $cacheable: boolean }
 type CacheableRegularItem = RegularItem & { $cacheable: boolean }
@@ -43,39 +44,6 @@ type NestedCollection = {
   items: CacheableItem[]
   collections: NestedCollection[]
   parent?: NestedCollection
-}
-
-export type TranslatorMetadata = {
-  translatorID: string
-  translatorType: number
-  label: string
-  description: string
-  creator: string
-  target: string
-  minVersion: string
-  maxVersion: string
-  priority: number
-  inRepository: boolean
-  lastUpdated: string
-  browserSupport: string
-
-  displayOptions: {
-    exportNotes?: boolean
-    exportFileData?: boolean
-    useJournalAbbreviation?: boolean
-    keepUpdated?: boolean
-    quickCopyMode?: string
-    Title?: boolean
-    Authors?: boolean
-    Year?: boolean
-    Normalize?: boolean
-    markdown?: boolean
-  }
-
-  configOptions: {
-    getCollections: boolean
-    async: boolean
-  }
 }
 
 export class Items {
@@ -375,10 +343,10 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
     return field
   }
 
-  static Import(translator: TranslatorMetadata): Translation {
+  static Import(translator: Translators.Header): Translation {
     return new this(translator, 'import')
   }
-  static Export(translator: TranslatorMetadata, input: Input): Translation {
+  static Export(translator: Translators.Header, input: Input): Translation {
     const translation = new this(translator, 'export')
 
     translation.input = input
@@ -422,7 +390,7 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
       translation.preferences.separatorNames = ` ${translation.preferences.separatorNames} `
     }
 
-    if (translation.preferences.testing && typeof __estrace === 'undefined' && Prefs.schema.translator[translator.label]?.cache) {
+    if (translation.preferences.testing && typeof __estrace === 'undefined' && translator.configOptions?.cached) {
       const allowedPreferences: Prefs.Preferences = Prefs.affectedBy[translator.label]
         .concat([ 'testing' ])
         .reduce((acc: any, pref: Prefs.PreferenceName) => {
@@ -449,7 +417,7 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
     return translation
   }
 
-  private constructor(public translator: TranslatorMetadata, private mode: 'import' | 'export') {
+  private constructor(public translator: Translators.Header, private mode: 'import' | 'export') {
     this[translator.label.replace(/[^a-z]/ig, '')] = true
     this.BetterTeX = this.BetterBibTeX || this.BetterBibLaTeX
     this.BetterCSL = this.BetterCSLJSON || this.BetterCSLYAML

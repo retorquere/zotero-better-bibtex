@@ -102,7 +102,7 @@ class AutoExportPane {
   private status: { [key: string]: string }
   private cacherate: Record<number, number> = {}
 
-  public load() {
+  public async load() {
     if (!this.status) {
       this.status = {}
       for (const status of ['scheduled', 'running', 'done', 'error', 'preparing']) {
@@ -110,12 +110,12 @@ class AutoExportPane {
       }
     }
 
-    this.refresh()
+    await this.refresh()
 
     Events.on('export-progress', async ( { pct, ae }) => {
       this.cacherate[ae] = await AutoExport.cached(ae)
       if (pct >= 100 && typeof ae === 'number') {
-        this.refresh(ae)
+        await this.refresh(ae)
       }
     })
   }
@@ -129,11 +129,11 @@ class AutoExportPane {
     return label
   }
 
-  public refresh($loki?: number) {
+  public async refresh(path?: string) {
     if (!$window) return
     const doc = $window.document
 
-    const auto_exports = [...AutoExport.db.find()].sort((a: { path: string }, b: { path: string }) => a.path.localeCompare(b.path))
+    const auto_exports = await AutoExport.all()
     const details = doc.querySelector<HTMLElement>('#bbt-prefs-auto-exports')
     details.style.display = auto_exports.length ? 'grid' : 'none'
     if (!auto_exports.length) return null
@@ -142,16 +142,16 @@ class AutoExportPane {
     const menupopup = doc.querySelector('#bbt-prefs-auto-export-select menupopup')
     let selected
     if (menulist.selectedItem) {
-      const selected$loki = parseInt(menulist.selectedItem.value)
-      selected = auto_exports.find(ae => ae.$loki === selected$loki)
+      const selected$path = menulist.selectedItem.value
+      selected = auto_exports.find(ae => ae.path === selected$path)
     }
 
     // list changed
-    if (Array.from(menupopup.children).map(ae => (ae as unknown as XUL.Menuitem).value).join('/') !== auto_exports.map(ae => `${ae.$loki}`).join('/')) {
+    if (Array.from(menupopup.children).map(ae => (ae as unknown as XUL.Menuitem).value).join('\t') !== auto_exports.map(ae => ae.path).join('\t')) {
       menulist.removeAllItems()
       for (const ae of auto_exports) {
-        const menuitem = menulist.appendItem(this.label(ae), `${ae.$loki}`)
-        if (selected && ae.$loki === selected.$loki) menulist.selectedItem = menuitem
+        const menuitem = menulist.appendItem(this.label(ae), ae.path)
+        if (selected && ae.path === selected.path) menulist.selectedItem = menuitem
       }
     }
     if (!selected || !menulist.selectedItem) {
@@ -159,11 +159,11 @@ class AutoExportPane {
       menulist.selectedIndex = 0
     }
 
-    if (typeof $loki === 'number' && $loki !== selected.$loki) return
+    if (typeof path === 'string' && path !== selected.path) return
 
-    if (details.getAttribute('data-ae-id') !== `${selected.$loki}` || details.getAttribute('data-ae-updated') !== `${selected.meta.updated || selected.meta.created}`) {
-      details.setAttribute('data-ae-id', `${selected.$loki}`)
-      details.setAttribute('data-ae-updated', `${selected.meta.updated || selected.meta.created}`)
+    if (details.getAttribute('data-ae-path') !== selected.path || details.getAttribute('data-ae-updated') !== `${selected.updated}`) {
+      details.setAttribute('data-ae-path', selected.path)
+      details.setAttribute('data-ae-updated', `${selected.updated}`)
 
       const displayed = `bbt-autoexport-${Translators.byId[selected.translatorID].label.replace(/ /g, '')}`
       for (const node of (Array.from(details.getElementsByClassName('bbt-autoexport-options')) as unknown[] as XUL.Element[])) {
@@ -183,7 +183,7 @@ class AutoExportPane {
             break
 
           case 'updated':
-            (node as unknown as XUL.Textbox).value = `${new Date(selected.meta.updated || selected.meta.created)}`
+            (node as unknown as XUL.Textbox).value = `${new Date(selected.updated)}`
             break
 
           case 'translator':
@@ -242,39 +242,40 @@ class AutoExportPane {
     cacherate.value = `${this.cacherate[selected.$loki]}%`
   }
 
-  public remove() {
+  public async remove() {
     const menulist: XUL.Menulist = $window.document.querySelector('#bbt-prefs-auto-export-select') as unknown as XUL.Menulist
     if (!menulist.selectedItem) return
 
     if (!Services.prompt.confirm(null, l10n.localize('better-bibtex_auto-export_delete'), l10n.localize('better-bibtex_auto-export_delete_confirm'))) return
 
-    const ae = AutoExport.db.get(parseInt(menulist.selectedItem.getAttribute('value')))
+    const path = menulist.selectedItem.getAttribute('value')
+    const ae = await AutoExport.get(path)
     Cache.getCollection(Translators.byId[ae.translatorID].label)?.removeDataOnly()
-    AutoExport.db.remove(ae)
-    this.refresh()
+    await AutoExport.remove(path)
+    await this.refresh()
   }
 
-  public run() {
+  public async run() {
     const menulist: XUL.Menulist = $window.document.querySelector('#bbt-prefs-auto-export-select') as unknown as XUL.Menulist
     if (!menulist.selectedItem) return
 
-    AutoExport.run(parseInt(menulist.selectedItem.getAttribute('value')))
-    this.refresh()
+    AutoExport.run(menulist.selectedItem.getAttribute('value'))
+    await this.refresh()
   }
 
-  public edit(node) {
-    let id: string
-    // add data-ae-id check for testing
-    if (!(id = node.getAttribute('data-ae-id'))) {
+  public async edit(node) {
+    let path: string
+    if (!(path = node.getAttribute('data-ae-path'))) {
       const menulist: XUL.Menulist = $window.document.querySelector('#bbt-prefs-auto-export-select') as unknown as XUL.Menulist
-      id = menulist.selectedItem.getAttribute('value')
+      path = menulist.selectedItem.getAttribute('value')
     }
-    const ae = AutoExport.db.get(parseInt(id))
+    const ae = await AutoExport.get(path)
+    log.debug('edit autoexport: before', ae)
 
     const field = node.getAttribute('data-ae-field')
     Cache.getCollection(Translators.byId[ae.translatorID].label).removeDataOnly()
 
-    log.debug('edit autoexport:', field)
+    let value: number | boolean | string
 
     switch (field) {
       case 'exportNotes':
@@ -285,24 +286,21 @@ class AutoExportPane {
       case 'biblatexExtendedNameFormat':
       case 'recursive':
         log.debug('edit autoexport:', field, node.checked)
-        ae[field] = node.checked
+        value = node.checked
         break
 
       case 'DOIandURL':
       case 'bibtexURL':
         log.debug('edit autoexport:', field, node.value)
-        ae[field] = node.value
+        value = node.value
         break
 
       default:
-        log.error('unexpected field', field)
+        log.error('edit autoexport: unexpected field', field)
     }
-
-    log.debug('edit autoexport:', ae)
-
-    AutoExport.db.update(ae)
-    AutoExport.run(ae.$loki)
-    this.refresh()
+    await AutoExport.edit(path, field, value)
+    log.debug('edit autoexport: after', await AutoExport.get(path))
+    await this.refresh()
   }
 
   private collection(id: number | string, form: 'long' | 'short'): string {
@@ -433,10 +431,6 @@ export class PrefPane {
     $window.document.getElementById('bbt-cache-warn-postscript').setAttribute('hidden', `${!Preference.postscript.includes('Translator.options.exportPath')}`)
   }
 
-  public async rescanCitekeys(): Promise<void> {
-    await Zotero.BetterBibTeX.KeyManager.rescan()
-  }
-
   public cacheReset(): void {
     Cache.reset('user-initiated')
   }
@@ -467,16 +461,14 @@ export class PrefPane {
         deck.selectedIndex = 1
       }
 
-      $window.document.getElementById('bbt-rescan-citekeys').hidden = !Zotero.Debug.enabled
-
-      this.autoexport.load()
+      await this.autoexport.load()
 
       this.quickCopy()
       $window.document.getElementById('bbt-preferences-quickcopy').addEventListener('command', () => this.quickCopy())
 
       this.checkCitekeyFormat()
       this.checkPostscript()
-      this.refresh()
+      await this.refresh()
       if (typeof this.timer === 'undefined') this.timer = setInterval(this.refresh.bind(this), 500)
     }
     catch (err) {
@@ -499,7 +491,7 @@ export class PrefPane {
     }
   }
 
-  public refresh(): void {
+  public async refresh(): Promise<void> {
     if (!$window) return
 
     const pane = $window.document.getElementById('bbt-zotero-prefpane')
@@ -541,7 +533,7 @@ export class PrefPane {
       })
     }
 
-    if (this.autoexport) this.autoexport.refresh()
+    if (this.autoexport) await this.autoexport.refresh()
   }
 
   private styleChanged(index) {

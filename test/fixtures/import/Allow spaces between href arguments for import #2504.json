@@ -59,7 +59,6 @@
       "language": "langid",
       "mapMath": "",
       "mapText": "",
-      "mapUnicode": "conservative",
       "parseParticles": true,
       "patchDates": "dateadded=dateAdded, date-added=dateAdded, datemodified=dateModified, date-modified=dateModified",
       "postscript": "",

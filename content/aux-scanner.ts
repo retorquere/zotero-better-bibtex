@@ -44,11 +44,11 @@ export const AUXScanner = new class { // eslint-disable-line @typescript-eslint/
       libraryID = collection ? collection.libraryID : azp.getSelectedLibraryID()
     }
 
-    const found = (Zotero.BetterBibTeX.KeyManager.keys.find({$and: [{ libraryID: {$eq: libraryID} }, { citekey: { $in: citekeys } }]}) as { itemID: number, citekey: string }[])
+    const found = Zotero.BetterBibTeX.KeyManager.find({ where: { libraryID, citationKey: { in: citekeys } } })
 
     const itemIDs = found.map(key => key.itemID)
 
-    const found_keys = found.map(key => key.citekey)
+    const found_keys = found.map(key => key.citationKey)
     let missing = citekeys.filter(key => !found_keys.includes(key))
 
     let newImports = []

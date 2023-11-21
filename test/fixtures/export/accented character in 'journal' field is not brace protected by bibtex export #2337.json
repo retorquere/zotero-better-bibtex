@@ -10,7 +10,6 @@
       "citekeyFormat": "auth.capitalize+year",
       "keyScope": "global",
       "skipFields": "file, abstract",
-      "mapUnicode": "creator",
       "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc,groups"
     }
   },

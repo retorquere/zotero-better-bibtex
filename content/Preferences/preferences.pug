@@ -235,6 +235,9 @@ preferences
   preference(name="extensions.zotero.translators.better-bibtex.importExtra" bbt:affects="" type="bool" default="true")
   bbt:doc On import, place all bib(la)tex field Zotero doesn't have an existing field for in the Zotero `extra` field of the item
 
+  preference(name="extensions.zotero.translators.better-bibtex.importDetectURLs" bbt:affects="" type="bool" default="true")
+  bbt:doc On import, detect URLs in non-standard bib(la)tex fields and import them as attachments
+
   preference(name="extensions.zotero.translators.better-bibtex.importNoteToExtra" bbt:affects="" type="string" default="")
   bbt:doc On import, import note-like fields in this comma-separated list to the `extra` field, unless the note has rich text.
 
@@ -294,31 +297,18 @@ preferences
   preference(name="extensions.zotero.translators.better-bibtex.git" bbt:affects="" type="string" default="config")
   bbt:doc Can be `off`, `config` or `always`
 
-  preference(name="extensions.zotero.translators.better-bibtex.mapUnicode" bbt:affects="tex" type="string" default="conservative")
-  bbt:doc.
-    When a unicode character can be exported as either a math-mode or text-mode command, map to:
-
-    * `minimal-packages`: if both a math-mode and a text-mode mapping is available, use the version that does not require extra packages to be loaded.
-    * `conservative`: if both a math-mode and a text-mode mapping is available, stay in the mode of the previously mapped character if possible. This minimizes the number of generated `$`s in the output.
-    * `text`: if both a math-mode and a text-mode mapping is available, prefer text.
-    * `math`: if both a math-mode and a text-mode mapping is available, prefer math.
-
   preference(name="extensions.zotero.translators.better-bibtex.mapText" bbt:affects="tex" type="string" default="")
   bbt:doc.
     Any characters entered here will prefer a text-mode LaTeX-command counterpart over a math-mode, if a text-mode command is available.
-    Only useful when `mapUnicode` is `conservative`. Characters specified in `mapMath` take presedence over characters specified in `mapText`.
 
   preference(name="extensions.zotero.translators.better-bibtex.mapMath" bbt:affects="tex" type="string" default="")
   bbt:doc.
-    Any characters entered here will prefer a math-mode LaTeX-command counterpart over a math-mode,
-    if a math-mode command is available. Only useful when `mapUnicode` is `conservative`.
+    Any characters entered here will prefer a math-mode LaTeX-command counterpart over a math-mode, if a math-mode command is available.
 
   preference(name="extensions.zotero.translators.better-bibtex.cache" bbt:affects="*" type="bool" default="true")
   bbt:doc.
-    Even though BBT exports happen in a separate thread, some
-    work needs to be done before the background export can
-    start. Part of this work is preloading the cache. You can
-    shorten the (blocking) preparation time by turning off
+    Even though BBT exports happen in a separate thread, some work needs to be done before the background export can
+    start. Part of this work is preloading the cache. You can shorten the (blocking) preparation time by turning off
     the cache, at the cost of longer export times.
 
   preference(name="extensions.zotero.translators.better-bibtex.separatorList" bbt:affects="tex" type="string" default="and")

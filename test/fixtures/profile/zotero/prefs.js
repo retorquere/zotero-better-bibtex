@@ -88,7 +88,7 @@ user_pref("extensions.zotero.sync.storage.enabled", false);
 user_pref("extensions.zotero.sync.storage.groups.enabled", false);
 user_pref("extensions.zotero.useDataDir", true);
 user_pref("extensions.zoteroMacWordIntegration.installed", true);
-user_pref("extensions.zoteroMacWordIntegration.version", "6.0.6.SA.6.0.23");
+user_pref("extensions.zoteroMacWordIntegration.version", "6.0.7.SA.6.0.27");
 user_pref("extensions.zoteroOpenOfficeIntegration.skipInstallation", true);
 user_pref("gecko.handlerService.migrated", true);
 user_pref("intl.accept_languages", "en-GB, en");

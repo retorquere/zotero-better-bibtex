@@ -9,8 +9,7 @@
     "preferences": {
       "bibtexURL": "note",
       "citekeyFormat": "[auth:lower][shorttitle3_3][year]",
-      "itemObserverDelay": 100,
-      "mapUnicode": "math"
+      "itemObserverDelay": 100
     }
   },
   "items": [

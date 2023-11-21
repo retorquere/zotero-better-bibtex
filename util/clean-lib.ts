@@ -57,7 +57,6 @@ function clean(item) {
   delete item.select
   delete item.itemKey
   delete item.contentType
-  delete item.linkMode
   delete item.filename
   delete item.localPath
 }
@@ -102,7 +101,7 @@ for (const lib of argv._) {
         }
 
         if (argv.attachments && item.attachments) {
-          item.attachments = item.attachments.filter(att => !att.path)
+          item.attachments = item.attachments.filter(att => !att.url && !att.path)
           if (!item.attachments.length) delete item.attachments
         }
         if (item.attachments) {
