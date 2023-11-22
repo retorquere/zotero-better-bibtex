@@ -241,6 +241,7 @@ async function rebuild() {
     plugins: [
       loader.patcher.plugin,
       loader.__dirname,
+      loader.resettableBinary,
       // shims,
     ],
     // inject: ['./setup/loaders/globals.js'],

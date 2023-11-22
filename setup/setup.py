@@ -6,7 +6,6 @@ import submodules
 import months
 import kuroshiro
 import item
-import jieba
 import babel_languages
 import scannablecite
 import manifest

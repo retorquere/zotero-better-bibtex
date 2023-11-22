@@ -13,6 +13,7 @@ Feature: Export
 
     Examples:
       | file                                                                                                                     | references |
+      | Split CJK names #2624                                                                                                    | 28         |
       | urldate when only DOI is exported #2697                                                                                  | 1          |
       | skipwords removes dashes #2614                                                                                           | 1          |
       | Length filter double-counting characters #2525                                                                           | 1          |

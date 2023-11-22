@@ -19,6 +19,11 @@ export const chinese = new class {
   public jieba: typeof jiebaFunc
   public pinyin: typeof pinyinFunc
 
+  constructor() {
+    // this should give jieba time to load the dicts
+    this.load(Preference.jieba)
+  }
+
   public load(on: boolean) {
     if (on && !this.jieba) {
       // needed because jieba-js does environment detection
