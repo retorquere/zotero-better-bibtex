@@ -5,7 +5,10 @@
     "options": {
       "Normalize": false
     },
-    "preferences": { "jieba": true }
+    "preferences": {
+      "jieba": true,
+      "citekeyFormat": "auth.jieba + '::' + Title"
+    }
   },
   "items": [
     {
