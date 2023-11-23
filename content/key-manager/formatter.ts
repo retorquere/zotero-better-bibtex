@@ -941,7 +941,7 @@ class PatternFormatter {
       this.next = !m
       return this
     }
-    return this.text(m.slice(1).join(''))
+    return this.$text(m.slice(1).join(''))
   }
 
   private len(value: string, relation: '<' | '<=' | '=' | '!=' | '>=' | '>', n: number) {
