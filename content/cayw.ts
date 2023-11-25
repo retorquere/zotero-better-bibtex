@@ -268,8 +268,8 @@ class Document {
   public citation(): Citation[] {
     if (!this.fields[0] || !this.fields[0].code || !this.fields[0].code.startsWith('ITEM CSL_CITATION ')) return []
 
-    const citationItems = JSON.parse(this.fields[0].code.replace(/ITEM CSL_CITATION /, '')).citationItems
-    const items = (citationItems.map(item => ({
+    const citationItems: (Citation & { itemData: any })[] = JSON.parse(this.fields[0].code.replace(/ITEM CSL_CITATION /, '')).citationItems
+    const items = citationItems.map(item => ({
       id: item.id,
       locator: item.locator || '',
       suppressAuthor: !!item['suppress-author'],
@@ -281,7 +281,9 @@ class Document {
       uri: Array.isArray(item.uri) ? item.uri[0] : undefined,
       itemType: item.itemData ? item.itemData.type : undefined,
       title: item.itemData ? item.itemData.title : undefined,
-    } as Citation)) as Citation[])
+    }) as Citation)
+
+    log.debug('picked:', citationItems, items)
     return items
   }
 }
