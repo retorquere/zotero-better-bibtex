@@ -97,7 +97,8 @@ The following formats are available:
   * `exportNotes`: set to `true` to export notes
   * `useJournalAbbreviation`: set to `true` to use journal abbreviations
 * `json`: the full pick information Zotero provides.
-* `eta`: formats the pick using [Eta](https://eta.js.org/), with the picks exposed as `it.items`. To see what the items look like, use the `json` formatter.
+* `eta`: formats the pick using [Eta](https://eta.js.org/), with the picks exposed as `it.items`. To see what the items look like, use the `json` formatter. URL parameter required:
+  * `template`: the Eta template to render
 
 The picker passes the following data along with your picked items if you filled them out:
 

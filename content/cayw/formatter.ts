@@ -299,6 +299,7 @@ export const Formatter = new class { // eslint-disable-line @typescript-eslint/n
   }
 
   public async eta(citations, options) {
+    if (!options.template) throw new Error('No template provided')
     const items = await getItemsAsync(citations.map(cit => cit.id))
     for (const cit of citations) {
       cit.item = serialized(items.find(item => item.id === cit.id))
