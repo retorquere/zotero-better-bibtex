@@ -4,7 +4,9 @@ import { Translators } from '../translators'
 import { getItemsAsync } from '../get-items-async'
 import { Preference } from '../prefs'
 import { fromPairs } from '../object'
+import { escapeHTML } from '../text'
 import { scannableCite } from '../../gen/ScannableCite'
+import { citeCreators, yearFromDate } from '../../translators/Better BibTeX Citation Key Quick Copy'
 
 import * as unicode_table from 'unicode2latex/tables/unicode.json'
 
@@ -85,7 +87,7 @@ function citation2latex(citation, options) {
     formatted += '[]'
   }
 
-  formatted += `{${citation.citekey}}`
+  formatted += `{${citation.citationKey}}`
 
   return formatted
 }
@@ -112,12 +114,12 @@ function prepCSL(options) {
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export const Formatter = new class { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   public async playground(citations, options) {
-    const formatted = await citations.map(cit => `${options.keyprefix || ''}${cit.citekey}${options.keypostfix || ''}`)
+    const formatted = await citations.map(cit => `${options.keyprefix || ''}${cit.citationKey}${options.keypostfix || ''}`)
     return formatted.length ? `${options.citeprefix || ''}${formatted.join(options.separator || ',')}${options.citepostfix || ''}` : ''
   }
 
   public async citationLinks(citations, _options): Promise<string> {
-    return await citations.map(citation => `cites: ${citation.citekey}`).join('\n')
+    return await citations.map(citation => `cites: ${citation.citationKey}`).join('\n')
   }
 
   public async cite(citations, options) { return this.natbib(citations, options) }
@@ -141,7 +143,7 @@ export const Formatter = new class { // eslint-disable-line @typescript-eslint/n
       }, {})
 
       if (state.suffix === 0 && state.prefix === 0 && state.locator === 0 && (state.suppressAuthor === 0 || state.suppressAuthor === citations.length)) {
-        return `\\${citations[0].suppressAuthor ? 'citeyear' : options.command}{${citations.map(citation => citation.citekey).join(',')}}`
+        return `\\${citations[0].suppressAuthor ? 'citeyear' : options.command}{${citations.map(citation => citation.citationKey).join(',')}}`
       }
     }
 
@@ -187,17 +189,17 @@ export const Formatter = new class { // eslint-disable-line @typescript-eslint/n
 
     for (const citation of citations) {
       if (citation.prefix) {
-        formatted.push(`[${citation.prefix}][#${citation.citekey}]`)
+        formatted.push(`[${citation.prefix}][#${citation.citationKey}]`)
       }
       else {
-        formatted.push(`[#${citation.citekey}][]`)
+        formatted.push(`[#${citation.citationKey}][]`)
       }
     }
     return formatted.join('')
   }
 
   public async jekyll(citations, _options) {
-    return citations.map(cit => `{% cite ${cit.citekey} %}`).join('')
+    return citations.map(cit => `{% cite ${cit.citationKey} %}`).join('')
   }
 
   public async pandoc(citations, options) {
@@ -206,7 +208,7 @@ export const Formatter = new class { // eslint-disable-line @typescript-eslint/n
       let cite = ''
       if (citation.prefix) cite += `${citation.prefix} `
       if (citation.suppressAuthor) cite += '-'
-      cite += `@${citation.citekey}`
+      cite += `@${citation.citationKey}`
       if (citation.locator) cite += `, ${shortLabel(citation.label, options)} ${citation.locator}`.replace(/\s+/, ' ')
       if (citation.suffix) cite += ` ${citation.suffix}`
       formatted.push(cite)
@@ -218,7 +220,7 @@ export const Formatter = new class { // eslint-disable-line @typescript-eslint/n
   public async 'asciidoctor-bibtex'(citations, options) {
     const formatted = []
     for (const citation of citations) {
-      let cite = citation.citekey
+      let cite = citation.citationKey
       if (citation.locator) {
         const label = `${shortLabel(citation.label, { page: '', ...options })} ${citation.locator}`.trim()
         cite += `(${label})`
@@ -270,6 +272,17 @@ export const Formatter = new class { // eslint-disable-line @typescript-eslint/n
     const items = await getItemsAsync(citations.map(item => item.id))
 
     return Zotero.QuickCopy.getContentFromItems(items, format, null, false)[format.contentType]
+  }
+
+  public async jupyter(citations, _options) {
+    const items = await getItemsAsync(citations.map(cit => cit.id))
+    let picked = ''
+    for (const cit of citations) {
+      const i = items.find(item => item.id === cit.id)
+      const item = i ? { creators: i.getCreatorsJSON(), date: i.getField('date') } : {}
+      picked += `<cite data-cite="${escapeHTML(cit.citationKey)}">(${escapeHTML(citeCreators(item.creators))}, ${escapeHTML(yearFromDate(item.date))})</cite>`
+    }
+    return picked
   }
 
   public async translate(citations, options) {
