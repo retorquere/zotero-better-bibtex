@@ -1,4 +1,4 @@
-print('zotero-live-citations 106228b0e')
+print('zotero-live-citations fe07f88fe')
 do
 local _ENV = _ENV
 package.preload[ "locator" ] = function( ... ) local arg = _G.arg;
