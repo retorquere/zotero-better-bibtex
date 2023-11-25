@@ -161,7 +161,7 @@ local function zotero_ref(cite)
       end
       citation.prefix = pandoc.utils.stringify(item.prefix)
       local label, locator, suffix = csl_locator.parse(pandoc.utils.stringify(item.suffix))
-      citation.suffix = suffix
+      citation.suffix = suffix:gsub("(%S+)%s+", "%1 "):gsub("^%s*(.-)%s*$", "%1")
       citation.label = label
       citation.locator = locator
 

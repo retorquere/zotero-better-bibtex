@@ -1,11 +1,4 @@
-
-  print('zotero-live-citations f47be20')
-  local mt, latest = pandoc.mediabag.fetch('https://retorque.re/zotero-better-bibtex/exporting/zotero.lua.revision')
-  latest = string.sub(latest, 1, 10)
-  if 'f47be20' ~= latest then
-    print('new version "' .. latest .. '" available at https://retorque.re/zotero-better-bibtex/exporting')
-  end
-
+print('zotero-live-citations 106228b0e')
 do
 local _ENV = _ENV
 package.preload[ "locator" ] = function( ... ) local arg = _G.arg;
@@ -53,7 +46,7 @@ local pseudo_locator = lpeg.C(lpeg.P(',')^-1 * whitespace) * lpeg.P('{') * lpeg.
 
 local module = {}
 
-function module.parse(input, shortlabel)
+function module.parse(input)
   local parsed = lpeg.Ct(suffix):match(input)
   if parsed then
     local _prefix, _label, _locator, _suffix = table.unpack(parsed)
@@ -1561,7 +1554,7 @@ function module.xmlescape(str)
 end
 
 function module.trim(s)
-  return (s:gsub("^%s*(.-)%s*$", "%1"))
+  return s:gsub("^%s*(.-)%s*$", "%1")
 end
 
 function module.deepcopy(orig)
@@ -1862,7 +1855,7 @@ local function zotero_ref(cite)
       end
       citation.prefix = pandoc.utils.stringify(item.prefix)
       local label, locator, suffix = csl_locator.parse(pandoc.utils.stringify(item.suffix))
-      citation.suffix = suffix
+      citation.suffix = suffix:gsub("(%S+)%s+", "%1 "):gsub("^%s*(.-)%s*$", "%1")
       citation.label = label
       citation.locator = locator
 
@@ -2115,4 +2108,3 @@ return {
   { Div = Div },
   { Doc = Doc },
 }
-
