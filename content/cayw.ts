@@ -122,7 +122,7 @@ type Citation = {
   prefix: string
   suffix: string
   label: string
-  citekey: string
+  citationKey: string
 
   uri: string
   itemType: string
@@ -268,20 +268,22 @@ class Document {
   public citation(): Citation[] {
     if (!this.fields[0] || !this.fields[0].code || !this.fields[0].code.startsWith('ITEM CSL_CITATION ')) return []
 
-    const citationItems = JSON.parse(this.fields[0].code.replace(/ITEM CSL_CITATION /, '')).citationItems
-    const items = (citationItems.map(item => ({
+    const citationItems: (Citation & { itemData: any })[] = JSON.parse(this.fields[0].code.replace(/ITEM CSL_CITATION /, '')).citationItems
+    const items = citationItems.map(item => ({
       id: item.id,
       locator: item.locator || '',
       suppressAuthor: !!item['suppress-author'],
       prefix: item.prefix || '',
       suffix: item.suffix || '',
       label: item.locator ? (item.label || 'page') : '',
-      citekey: Zotero.BetterBibTeX.KeyManager.get(item.id).citationKey,
+      citationKey: Zotero.BetterBibTeX.KeyManager.get(item.id).citationKey,
 
       uri: Array.isArray(item.uri) ? item.uri[0] : undefined,
       itemType: item.itemData ? item.itemData.type : undefined,
       title: item.itemData ? item.itemData.title : undefined,
-    } as Citation)) as Citation[])
+    }) as Citation)
+
+    log.debug('picked:', citationItems, items)
     return items
   }
 }
@@ -362,7 +364,7 @@ async function selected(options): Promise<string> {
     prefix: '',
     suffix: '',
     label: '',
-    citekey: Zotero.BetterBibTeX.KeyManager.get(item.id).citationKey,
+    citationKey: Zotero.BetterBibTeX.KeyManager.get(item.id).citationKey,
 
     uri: undefined,
     itemType: undefined,
