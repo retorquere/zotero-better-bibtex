@@ -88,6 +88,7 @@ The following formats are available:
 * `mmd`: MultiMarkdown
 * `pandoc`. Accepts additional URL parameter `brackets`; any non-empty value surrounds the citation with brackets
 * `asciidoctor-bibtex`
+* `jupyter`
 * `scannable-cite` for the [ODF scanner](https://zotero-odf-scan.github.io/zotero-odf-scan/)
 * `formatted-citation`: output formatted citation as per the current Zotero quick-export setting, if it is set to a citation style, and not an export format
 * `formatted-bibliography`: output formatted bibliography as per the current Zotero quick-export setting, if it is set to a citation style, and not an export format
@@ -96,6 +97,7 @@ The following formats are available:
   * `exportNotes`: set to `true` to export notes
   * `useJournalAbbreviation`: set to `true` to use journal abbreviations
 * `json`: the full pick information Zotero provides.
+* `eta`: formats the pick using [Eta](https://eta.js.org/), with the picks exposed as `it.items`. To see what the items look like, use the `json` formatter.
 
 The picker passes the following data along with your picked items if you filled them out:
 

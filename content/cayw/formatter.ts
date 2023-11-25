@@ -7,6 +7,9 @@ import { fromPairs } from '../object'
 import { escapeHTML } from '../text'
 import { scannableCite } from '../../gen/ScannableCite'
 import { citeCreators, yearFromDate } from '../../translators/Better BibTeX Citation Key Quick Copy'
+import { Eta } from 'eta'
+const eta = new Eta({ autoEscape: true })
+import { simplifyForExport } from '../../gen/items/simplify'
 
 import * as unicode_table from 'unicode2latex/tables/unicode.json'
 
@@ -15,6 +18,16 @@ const unicode2latex = (fromPairs(
     .entries(unicode_table)
     .map(([unicode, latex]: [string, { text: string, math: string }]) => [ unicode, { text: latex.text || latex.math, math: !(latex.text) }])
 ) as Record<string, { text: string, math: boolean }>)
+
+function serialized(item) {
+  if (item) {
+    const ser = simplifyForExport(Zotero.Utilities.Internal.itemToExportFormat(item, false, true))
+    ser.uri = Zotero.URI.getItemURI(item)
+    ser.itemID = item.id
+    return ser
+  }
+  return undefined
+}
 
 function tolatex(s: string): string {
   if (!s) return ''
@@ -285,6 +298,14 @@ export const Formatter = new class { // eslint-disable-line @typescript-eslint/n
     return picked
   }
 
+  public async eta(citations, options) {
+    const items = await getItemsAsync(citations.map(cit => cit.id))
+    for (const cit of citations) {
+      cit.item = serialized(items.find(item => item.id === cit.id))
+    }
+    return eta.renderString(options.template, { items: citations })
+  }
+
   public async translate(citations, options) {
     const items = await getItemsAsync(citations.map(citation => citation.id))
 
@@ -300,8 +321,9 @@ export const Formatter = new class { // eslint-disable-line @typescript-eslint/n
   }
 
   public async json(citations, _options) {
-    for (const citation of citations) {
-      citation.item = Zotero.Utilities.Internal.itemToExportFormat(await getItemsAsync(citation.id), false, true)
+    const items = await getItemsAsync(citations.map(cit => cit.id))
+    for (const cit of citations) {
+      cit.item = serialized(items.find(item => item.id === cit.id))
     }
     return JSON.stringify(citations)
   }

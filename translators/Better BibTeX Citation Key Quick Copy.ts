@@ -5,7 +5,7 @@ import { simplifyForExport } from '../gen/items/simplify'
 import { escapeHTML } from '../content/text'
 
 import { Eta } from 'eta'
-const eta = new Eta({ autoEscape: false })
+const eta = new Eta({ autoEscape: true })
 
 function select_by_key(item) {
   const [ , kind, lib, key ] = item.uri.match(/^https?:\/\/zotero\.org\/(users|groups)\/((?:local\/)?[^/]+)\/items\/(.+)/)
