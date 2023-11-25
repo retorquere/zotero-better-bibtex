@@ -14,6 +14,8 @@ body:
         3. right-clicking them
         4. choose `BBT debug log` from the popup menu.
 
+        Please be available in the days following your report for follow-up questions and testing.
+
         ## Please don't enter "N/A" in the debug log ID field.
 
         "N/A" is usually inaccurate (for bugs and feature requests alike); if you're unsure of its relevance, please generate one anyway. When you omit it, the issue bot will guide you on creating a debug log ID. Please carefully review that message. If you genuinely believe it doesn't apply, kindly explain why. Your cooperation is appreciated.
