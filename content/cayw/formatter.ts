@@ -126,11 +126,6 @@ function prepCSL(options) {
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export const Formatter = new class { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
-  public async playground(citations, options) {
-    const formatted = await citations.map(cit => `${options.keyprefix || ''}${cit.citationKey}${options.keypostfix || ''}`)
-    return formatted.length ? `${options.citeprefix || ''}${formatted.join(options.separator || ',')}${options.citepostfix || ''}` : ''
-  }
-
   public async citationLinks(citations, _options): Promise<string> {
     return await citations.map(citation => `cites: ${citation.citationKey}`).join('\n')
   }

@@ -1,4 +1,4 @@
-print('zotero-live-citations fe07f88fe')
+print('zotero-live-citations a17b97b56')
 do
 local _ENV = _ENV
 package.preload[ "locator" ] = function( ... ) local arg = _G.arg;
@@ -1550,6 +1550,10 @@ function module.urlencode(str)
 end
 
 function module.xmlescape(str)
+  return string.gsub(str, '[<>&]', { ['&'] = '&amp;', ['<'] = '&lt;', ['>'] = '&gt;' })
+end
+
+function module.xmlattr(str)
   return string.gsub(str, '["<>&]', { ['&'] = '&amp;', ['<'] = '&lt;', ['>'] = '&gt;', ['"'] = '&quot;' })
 end
 

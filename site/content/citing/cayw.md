@@ -100,6 +100,8 @@ The following formats are available:
 * `eta`: formats the pick using [Eta](https://eta.js.org/), with the picks exposed as `it.items`. To see what the items look like, use the `json` formatter. URL parameter required:
   * `template`: the Eta template to render
 
+The `eta` formatter is great for experimentation, but if you need a format for a common target application, feel free to request a change to have that added to this list.
+
 The picker passes the following data along with your picked items if you filled them out:
 
 | field             |                                               |
@@ -162,19 +164,5 @@ For example, if you call up http://127.0.0.1:23119/better-bibtex/cayw?format=mmd
 * `[#adams2001][][#brigge2002][]` will be left on the clipboard
 
 More of a gimmick than anything else, but if you add `select=true`, BBT will select the picked items in Zotero.
-
-## Playing around
-
-For testing for other markdown formatters, you can construct simple references yourself, using the `playground` formatter, with parameters:
-
-* `citeprefix`, default empty, for text to put before the full citation.
-* `citepostfix`, default empty, for text to put after the full citation.
-* `keyprefix`, default empty, for text to put before each individual citekey
-* `keypostfix`, default empty, for text to put after each individual citekey
-* `separator`, default `,`, for text to put between citekeys
-
-Alternately, the `json` formatter will just give you the picks as JSON which you can turn into pretty much anything if you can code.
-
-but if you need an extra format, just ask.
 
 [^1]: For Juris-M, the port number `23119` must be replaced with `24119`.
