@@ -1,4 +1,4 @@
-print('zotero-live-citations a17b97b56')
+print('zotero-live-citations 38da58118')
 do
 local _ENV = _ENV
 package.preload[ "locator" ] = function( ... ) local arg = _G.arg;
@@ -1859,7 +1859,7 @@ local function zotero_ref(cite)
       end
       citation.prefix = pandoc.utils.stringify(item.prefix)
       local label, locator, suffix = csl_locator.parse(pandoc.utils.stringify(item.suffix))
-      citation.suffix = suffix:gsub("(%S+)%s+", "%1 "):gsub("^%s*(.-)%s*$", "%1")
+      citation.suffix = suffix -- :gsub("(%S+)%s+", "%1 "):gsub("^%s*(.-)%s*$", "%1")
       citation.label = label
       citation.locator = locator
 
