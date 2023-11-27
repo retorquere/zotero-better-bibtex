@@ -33,7 +33,7 @@ def odt(fname, n):
           cit.append(c)
 
       if len(cit) != n: raise AssertionError(f'Expected {n} citations, found {len(cit)}')
-      return json.dumps(cit, indent='  ', ensure_ascii=True, sort_keys=True)
+      return json.dumps(cit, indent='  ', sort_keys=True)
 
 def docx(fname, n):
   with zipfile.ZipFile(fname) as zf:
@@ -51,7 +51,7 @@ def docx(fname, n):
           cit.append(c)
 
       if len(cit) != n: raise AssertionError(f'Expected {n} citations, found {len(cit)}')
-      return json.dumps(cit, indent='  ', ensure_ascii=True, sort_keys=True)
+      return json.dumps(cit, indent='  ', sort_keys=True)
 
 if __name__ == "__main__":
   assert len(sys.argv) == 2, sys.argv
