@@ -502,26 +502,6 @@ class PatternFormatter {
     return this.$text(Zotero.Libraries.get(this.item.libraryID).name)
   }
 
-  /*
-   * This will return a comma-separated list of creator type information for all creators on the item
-   * in the form `<1 or 2><creator-type>`, where `1` or `2` denotes a 1-part or 2-part creator, and `creator-type` is one of {{% citekey-formatters/creatortypes %}}, or `primary` for
-   * the primary creator-type of the Zotero item under consideration. The list is prefixed by the item type, so might look like `audioRecording:2performer,2performer,1composer`.
-   * @param match  Regex to test the creator-type list. When passed, and the creator-type list does not match the regex, jump to the next formule. When it matches, return nothing but stay in the current formule. When no regex is passed, output the creator-type list for the item (mainly useful for debugging).
-  public $creators(match?: RegExp) {
-    let creators = this.item.creators?.map(cr => `${typeof cr.name === 'string' ? 1 : 2}${cr.creatorType}`).join(',') || ''
-    creators = `${this.item.itemType}:${creators}`
-    if (match) {
-      const primary = (itemCreators[client][this.item.itemType] || [])[0]
-      if (primary && match.source.includes('primary')) match = new RegExp(match.source.replace(/primary/g, primary), match.flags)
-      this.next = !creators.match(match)
-      return this
-    }
-    else {
-      return this.$text(creators)
-    }
-  }
-   */
-
   /**
    * Author/editor information.
    * @param n       select the first `n` authors (when passing a number) or the authors in this range (inclusive, when passing two values); negative numbers mean "from the end", default = 0 = all
@@ -1462,6 +1442,26 @@ class PatternFormatter {
     return this.chunk
   }
 }
+
+//  /*
+//   * This will return a comma-separated list of creator type information for all creators on the item
+//   * in the form `<1 or 2><creator-type>`, where `1` or `2` denotes a 1-part or 2-part creator, and `creator-type` is one of {{% citekey-formatters/creatortypes %}}, or `primary` for
+//   * the primary creator-type of the Zotero item under consideration. The list is prefixed by the item type, so might look like `audioRecording:2performer,2performer,1composer`.
+//   * @param match  Regex to test the creator-type list. When passed, and the creator-type list does not match the regex, jump to the next formule. When it matches, return nothing but stay in the current formule. When no regex is passed, output the creator-type list for the item (mainly useful for debugging).
+//   */
+//  public $creators(match?: RegExp) {
+//    let creators = this.item.creators?.map(cr => `${typeof cr.name === 'string' ? 1 : 2}${cr.creatorType}`).join(',') || ''
+//    creators = `${this.item.itemType}:${creators}`
+//    if (match) {
+//      const primary = (itemCreators[client][this.item.itemType] || [])[0]
+//      if (primary && match.source.includes('primary')) match = new RegExp(match.source.replace(/primary/g, primary), match.flags)
+//      this.next = !creators.match(match)
+//      return this
+//    }
+//    else {
+//      return this.$text(creators)
+//    }
+//  }
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export const Formatter = new PatternFormatter // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
