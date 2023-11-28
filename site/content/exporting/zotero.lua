@@ -1,8 +1,8 @@
 
-  print('zotero-live-citations 1fb47fe')
+  print('zotero-live-citations eb50b70')
   local mt, latest = pandoc.mediabag.fetch('https://retorque.re/zotero-better-bibtex/exporting/zotero.lua.revision')
   latest = string.sub(latest, 1, 10)
-  if '1fb47fe' ~= latest then
+  if 'eb50b70' ~= latest then
     print('new version "' .. latest .. '" available at https://retorque.re/zotero-better-bibtex/exporting')
   end
 
@@ -1833,7 +1833,7 @@ local function zotero_ref(cite)
     citationID = utils.next_id(8),
     properties = {
       formattedCitation = content,
-      plainCitation = nil, -- effectively the same as not including this like -- keep an eye on whether Zotero is OK with this missing. Maybe switch to a library that allows json.null
+      plainCitation = nil, -- otherwise we get a barrage of "you have edited this citation" popups
       -- dontUpdate = false,
       noteIndex = 0
     },
@@ -1852,7 +1852,7 @@ local function zotero_ref(cite)
       local citation = {
         id = zoteroData.itemID,
         uris = { zoteroData.uri },
-        uri = { zoteroData.uri },
+        -- uri = { zoteroData.uri },
         itemData = itemData,
       }
 
@@ -1875,9 +1875,9 @@ local function zotero_ref(cite)
       end
       citation.prefix = pandoc.utils.stringify(item.prefix)
       local label, locator, suffix = csl_locator.parse(pandoc.utils.stringify(item.suffix))
-      citation.suffix = suffix
-      citation.label = label
-      citation.locator = locator
+      if suffix and suffix ~= '' then citation.suffix = suffix end
+      if label and label ~= '' then citation.label = label end
+      if locator and locator ~= '' then citation.locator = locator end
 
       table.insert(csl.citationItems, citation)
     end
