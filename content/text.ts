@@ -497,3 +497,11 @@ export const CJK = new RegExp(`([${ scripts.map((s: { name: string, bmp: string 
       return ''
   }
 }).join('') }])`, 'g')
+
+export function escapeHTML(unsafe: string): string {
+  return unsafe
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+}

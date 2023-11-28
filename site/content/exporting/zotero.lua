@@ -1,8 +1,8 @@
 
-  print('zotero-live-citations f47be20')
+  print('zotero-live-citations 1fb47fe')
   local mt, latest = pandoc.mediabag.fetch('https://retorque.re/zotero-better-bibtex/exporting/zotero.lua.revision')
   latest = string.sub(latest, 1, 10)
-  if 'f47be20' ~= latest then
+  if '1fb47fe' ~= latest then
     print('new version "' .. latest .. '" available at https://retorque.re/zotero-better-bibtex/exporting')
   end
 
@@ -53,23 +53,32 @@ local pseudo_locator = lpeg.C(lpeg.P(',')^-1 * whitespace) * lpeg.P('{') * lpeg.
 
 local module = {}
 
-function module.parse(input, shortlabel)
-  local parsed = lpeg.Ct(suffix):match(input)
+function module.parse(input)
+  local parsed, _prefix, _label, _locator, _suffix
+
+  parsed = lpeg.Ct(suffix):match(input)
   if parsed then
-    local _prefix, _label, _locator, _suffix = table.unpack(parsed)
-    if utils.trim(_prefix) == ',' then _prefix = '' end
-    return _label, _locator, _prefix .. _suffix
+    _prefix, _label, _locator, _suffix = table.unpack(parsed)
+  else
+    parsed = lpeg.Ct(pseudo_locator):match(input)
+    if parsed then
+      _label = 'page'
+      _prefix, _locator, _suffix = table.unpack(parsed)
+    else
+      return nil, nil, input
+    end
   end
 
-  parsed = lpeg.Ct(pseudo_locator):match(input)
-  if parsed then
-    local _prefix, _locator, _suffix = table.unpack(parsed)
-    if utils.trim(_prefix) == ',' then _prefix = '' end
-    -- return nil, nil, _prefix .. _locator .. _suffix
-    return 'page', _locator, _prefix .. _suffix
-  end
+  if utils.trim(_prefix) == ',' then _prefix = '' end
+  local _space = ''
+  if (utils.trim(_prefix) ~= _prefix) then _space = ' ' end
 
-  return nil, nil, input
+  _prefix = utils.trim(_prefix)
+  _label = utils.trim(_label)
+  _locator = utils.trim(_locator)
+  _suffix = utils.trim(_suffix)
+
+  return _label, _locator, utils.trim(_prefix .. _space .. _suffix)
 end
 
 return module
@@ -1557,11 +1566,15 @@ function module.urlencode(str)
 end
 
 function module.xmlescape(str)
+  return string.gsub(str, '[<>&]', { ['&'] = '&amp;', ['<'] = '&lt;', ['>'] = '&gt;' })
+end
+
+function module.xmlattr(str)
   return string.gsub(str, '["<>&]', { ['&'] = '&amp;', ['<'] = '&lt;', ['>'] = '&gt;', ['"'] = '&quot;' })
 end
 
 function module.trim(s)
-  return (s:gsub("^%s*(.-)%s*$", "%1"))
+  return s:gsub("^%s*(.-)%s*$", "%1")
 end
 
 function module.deepcopy(orig)
@@ -1810,7 +1823,7 @@ local function zotero_bibl_odt()
       .. utils.xmlescape(message)
       .. '</text:p>'
       ..'</text:section>',
-    'ZOTERO_BIBL ' .. utils.xmlescape(bib_settings) .. ' CSL_BIBLIOGRAPHY' .. ' RND' .. utils.next_id(10))
+    'ZOTERO_BIBL ' .. utils.xmlattr(bib_settings) .. ' CSL_BIBLIOGRAPHY' .. ' RND' .. utils.next_id(10))
 end
 
 -- -- -- citation market generators -- -- --
@@ -1894,7 +1907,7 @@ local function zotero_ref(cite)
       return pandoc.RawInline('opendocument', field)
     end
 
-    csl = 'ZOTERO_ITEM CSL_CITATION ' .. utils.xmlescape(json.encode(csl)) .. ' RND' .. utils.next_id(10)
+    csl = 'ZOTERO_ITEM CSL_CITATION ' .. utils.xmlattr(json.encode(csl)) .. ' RND' .. utils.next_id(10)
     local field = author_in_text .. '<text:reference-mark-start text:name="' .. csl .. '"/>'
     field = field .. utils.xmlescape(message)
     field = field .. '<text:reference-mark-end text:name="' .. csl .. '"/>'

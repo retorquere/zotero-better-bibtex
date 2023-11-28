@@ -25,6 +25,7 @@ endif
 test-deployed:
 	@rm -f *.docx *.odt *.json
 	pandoc -s --lua-filter=$(DEPLOYED) -o paper$(TIMESTAMP).odt main.md
+	pandoc -s --lua-filter=$(DEPLOYED) -o paper$(TIMESTAMP).docx main.md
 test:
 	@rm -f *.docx *.odt *.json
 	#@pandoc -s --lua-filter=$(MAIN) -o paper$(TIMESTAMP).docx main.md
@@ -94,6 +95,7 @@ mwe: clean mwe.md
 	@pandoc -s --metadata=zotero_csl_style=chicago-author-date --lua-filter=$(MAIN) -o mwe.odt mwe.md
 
 rocks:
+	brew install luarocks
 	luarocks install lunajson
 	luarocks install penlight
 	luarocks install amalg

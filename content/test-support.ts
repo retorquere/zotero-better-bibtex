@@ -172,10 +172,10 @@ export class TestSupport {
     return Array.from(new Set(ids))
   }
 
-  public async pick(format: string, citations: {id: number[], uri: string, citekey: string}[]): Promise<string> {
+  public async pick(format: string, citations: {id: number[], uri: string, citationKey: string}[]): Promise<string> {
     for (const citation of citations) {
       if (citation.id.length !== 1) throw new Error(`Expected 1 item, got ${citation.id.length}`)
-      citation.citekey = Zotero.BetterBibTeX.KeyManager.get(citation.id[0]).citationKey
+      citation.citationKey = Zotero.BetterBibTeX.KeyManager.get(citation.id[0]).citationKey
       citation.uri = Zotero.URI.getItemURI(await getItemsAsync(citation.id[0]))
     }
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return

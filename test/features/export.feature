@@ -729,7 +729,8 @@ Feature: Export
   @use.with_client=zotero
   Scenario: Using zotero.lua .md to .docx to add canonic number after comma without 'p.' #2248
     Given I import 2 references from "export/*.json"
-    When I compile "export/*.md" to "~/*.odt" it should match "export/*.odt"
+    When I compile "export/*.md" to "~/*.odt" it should match "export/*.odt" with 22 citations
+    When I compile "export/*.md" to "~/*.docx" it should match "export/*.docx" with 22 citations
 
   @use.with_client=zotero @use.with_slow=true @timeout=3000
   Scenario: Compare export times

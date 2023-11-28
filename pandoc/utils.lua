@@ -22,6 +22,10 @@ function module.urlencode(str)
 end
 
 function module.xmlescape(str)
+  return string.gsub(str, '[<>&]', { ['&'] = '&amp;', ['<'] = '&lt;', ['>'] = '&gt;' })
+end
+
+function module.xmlattr(str)
   return string.gsub(str, '["<>&]', { ['&'] = '&amp;', ['<'] = '&lt;', ['>'] = '&gt;', ['"'] = '&quot;' })
 end
 
