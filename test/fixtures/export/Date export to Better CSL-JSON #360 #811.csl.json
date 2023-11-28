@@ -1,1 +1,453 @@
-[{"id": "doe10_edtf_2011", "author": [{"family": "Doe10", "given": "John"}], "issued": {"circa": true, "date-parts": [[2011, 5, 25], [2012, 6, 26]]}, "title": "EDTF date range, circa begin & end: 2011-05-25~/2012-06-26~", "type": "webpage", "citation-key": "doe10_edtf_2011"}, {"id": "doe11_edtf_2011", "author": [{"family": "Doe11", "given": "John"}], "issued": {"circa": true, "date-parts": [[2011, 5, 25], [2012, 6, 26]]}, "title": "EDTF date range, circa end: 2011-05-25/2012-06-26~", "type": "webpage", "citation-key": "doe11_edtf_2011"}, {"id": "doe12_edtf_2011", "author": [{"family": "Doe12", "given": "John"}], "issued": {"circa": true, "date-parts": [[2011, 5]]}, "title": "EDTF date YYYY-MM~ [month precision & circa]: 2011-05~", "type": "webpage", "citation-key": "doe12_edtf_2011"}, {"id": "doe13_season_2017", "author": [{"family": "Doe13", "given": "John"}], "issued": {"season": 4, "circa": true, "date-parts": [[2017]]}, "title": "Season circa: : 2017-24~", "type": "webpage", "citation-key": "doe13_season_2017"}, {"id": "doe14_date2010_2010", "author": [{"literal": "Doe14"}], "issued": {"date-parts": [[2011]]}, "title": "Date=2010 & Extra=issued:2011", "type": "book", "citation-key": "doe14_date2010_2010"}, {"id": "doe15_multiple_2017", "author": [{"literal": "Doe15"}], "ISBN": "0-943396-04-2 0-85131-041-9", "issued": {"date-parts": [[2017]]}, "title": "multiple ISBNs", "type": "book", "citation-key": "doe15_multiple_2017"}, {"id": "doe7_politics_1985", "accessed": {"date-parts": [[2015, 4, 30]]}, "author": [{"family": "Doe7", "given": "John"}], "container-title": "Cinema Journal", "issue": "3", "issued": {"season": 1, "date-parts": [[1985]]}, "page": "4\u201323", "title": "The Politics of Film Canons: printemps 1985", "type": "article-journal", "URL": "http://www.jstor.org/stable/1225428", "volume": "24", "citation-key": "doe7_politics_1985"}, {"id": "doe8_title_2017", "author": [{"family": "Doe8", "given": "John"}], "issued": {"season": 3, "date-parts": [[2017]]}, "title": "Title: 2017-23", "type": "webpage", "citation-key": "doe8_title_2017"}, {"id": "doe9_edtf_2011", "author": [{"family": "Doe9", "given": "John"}], "issued": {"circa": true, "date-parts": [[2011, 5, 25], [2012, 6, 26]]}, "title": "EDTF date range, circa begin: 2011-05-25~/2012-06-26", "type": "webpage", "citation-key": "doe9_edtf_2011"}, {"id": "t1", "accessed": {"circa": true, "date-parts": [[2014, 12, 31]]}, "author": [{"family": "Doe1", "given": "John"}], "event-date": {"date-parts": [[1888, 8, 28]]}, "issued": {"date-parts": [[2014, 12, 31], [2015, 1, 1]]}, "original-date": {"date-parts": [[1777, 7, 27], [1888, 8, 28]]}, "submitted": {"date-parts": [[1999, 9, 29], [0]]}, "title": "A manuscript: 2014-12-31/2015-01-01", "type": "manuscript", "citation-key": "t1"}, {"id": "t2", "accessed": {"literal": "13th cent"}, "author": [{"family": "Doe2", "given": "John"}], "event-date": {"date-parts": [[1800, 1, 1], [1800, 12, 31]]}, "submitted": {"date-parts": [[1900, 1, 1], [1900, 12, 31]]}, "title": "event-date and submitted test", "type": "book", "citation-key": "t2"}, {"id": "t3", "author": [{"family": "Doe3", "given": "John"}], "issued": {"date-parts": [[2014, 12, 31], [0]]}, "title": "open-ended date range test: 2014-12-31/", "type": "book", "citation-key": "t3"}, {"id": "t4", "author": [{"family": "Doe4", "given": "John"}], "issued": {"date-parts": [[2014, 12, 31]]}, "title": "single date test: 2014-12-31", "type": "book", "citation-key": "t4"}, {"id": "t5", "accessed": {"date-parts": [[-333, 11, 5]]}, "author": [{"family": "Doe5", "given": "John"}], "event-date": {"date-parts": [[-1]]}, "issued": {"date-parts": [[-334]]}, "original-date": {"date-parts": [[-334], [-333]]}, "submitted": {"date-parts": [[-2]]}, "title": "BC tests: -0333", "type": "book", "citation-key": "t5"}, {"id": "t6", "author": [{"family": "Doe6", "given": "John"}], "issued": {"date-parts": [[-100, 7, 12], [-44, 3, 15]]}, "title": "BC tests 2: -0099-07-12/-0043-03-15", "type": "book", "citation-key": "t6"}]
+[
+  {
+    "author": [
+      {
+        "family": "Doe10",
+        "given": "John"
+      }
+    ],
+    "citation-key": "doe10_edtf_2011",
+    "id": "doe10_edtf_2011",
+    "issued": {
+      "circa": true,
+      "date-parts": [
+        [
+          "2011",
+          5,
+          25
+        ],
+        [
+          "2012",
+          6,
+          26
+        ]
+      ]
+    },
+    "title": "EDTF date range, circa begin & end: 2011-05-25~/2012-06-26~",
+    "type": "webpage"
+  },
+  {
+    "author": [
+      {
+        "family": "Doe11",
+        "given": "John"
+      }
+    ],
+    "citation-key": "doe11_edtf_2011",
+    "id": "doe11_edtf_2011",
+    "issued": {
+      "circa": true,
+      "date-parts": [
+        [
+          "2011",
+          5,
+          25
+        ],
+        [
+          "2012",
+          6,
+          26
+        ]
+      ]
+    },
+    "title": "EDTF date range, circa end: 2011-05-25/2012-06-26~",
+    "type": "webpage"
+  },
+  {
+    "author": [
+      {
+        "family": "Doe12",
+        "given": "John"
+      }
+    ],
+    "citation-key": "doe12_edtf_2011",
+    "id": "doe12_edtf_2011",
+    "issued": {
+      "circa": true,
+      "date-parts": [
+        [
+          "2011",
+          5
+        ]
+      ]
+    },
+    "title": "EDTF date YYYY-MM~ [month precision & circa]: 2011-05~",
+    "type": "webpage"
+  },
+  {
+    "author": [
+      {
+        "family": "Doe13",
+        "given": "John"
+      }
+    ],
+    "citation-key": "doe13_season_2017",
+    "id": "doe13_season_2017",
+    "issued": {
+      "circa": true,
+      "date-parts": [
+        [
+          2017
+        ]
+      ],
+      "season": 4
+    },
+    "title": "Season circa: : 2017-24~",
+    "type": "webpage"
+  },
+  {
+    "author": [
+      {
+        "literal": "Doe14"
+      }
+    ],
+    "citation-key": "doe14_date2010_2010",
+    "id": "doe14_date2010_2010",
+    "issued": {
+      "date-parts": [
+        [
+          "2011"
+        ]
+      ]
+    },
+    "title": "Date=2010 & Extra=issued:2011",
+    "type": "book"
+  },
+  {
+    "ISBN": "0-943396-04-2 0-85131-041-9",
+    "author": [
+      {
+        "literal": "Doe15"
+      }
+    ],
+    "citation-key": "doe15_multiple_2017",
+    "id": "doe15_multiple_2017",
+    "issued": {
+      "date-parts": [
+        [
+          "2017"
+        ]
+      ]
+    },
+    "title": "multiple ISBNs",
+    "type": "book"
+  },
+  {
+    "URL": "http://www.jstor.org/stable/1225428",
+    "accessed": {
+      "date-parts": [
+        [
+          "2015",
+          4,
+          30
+        ]
+      ]
+    },
+    "author": [
+      {
+        "family": "Doe7",
+        "given": "John"
+      }
+    ],
+    "citation-key": "doe7_politics_1985",
+    "container-title": "Cinema Journal",
+    "id": "doe7_politics_1985",
+    "issue": "3",
+    "issued": {
+      "date-parts": [
+        [
+          1985
+        ]
+      ],
+      "season": 1
+    },
+    "page": "4\u201323",
+    "title": "The Politics of Film Canons: printemps 1985",
+    "type": "article-journal",
+    "volume": "24"
+  },
+  {
+    "author": [
+      {
+        "family": "Doe8",
+        "given": "John"
+      }
+    ],
+    "citation-key": "doe8_title_2017",
+    "id": "doe8_title_2017",
+    "issued": {
+      "date-parts": [
+        [
+          2017
+        ]
+      ],
+      "season": 3
+    },
+    "title": "Title: 2017-23",
+    "type": "webpage"
+  },
+  {
+    "author": [
+      {
+        "family": "Doe9",
+        "given": "John"
+      }
+    ],
+    "citation-key": "doe9_edtf_2011",
+    "id": "doe9_edtf_2011",
+    "issued": {
+      "circa": true,
+      "date-parts": [
+        [
+          "2011",
+          5,
+          25
+        ],
+        [
+          "2012",
+          6,
+          26
+        ]
+      ]
+    },
+    "title": "EDTF date range, circa begin: 2011-05-25~/2012-06-26",
+    "type": "webpage"
+  },
+  {
+    "accessed": {
+      "circa": true,
+      "date-parts": [
+        [
+          "2014",
+          12,
+          31
+        ]
+      ]
+    },
+    "author": [
+      {
+        "family": "Doe1",
+        "given": "John"
+      }
+    ],
+    "citation-key": "t1",
+    "event-date": {
+      "date-parts": [
+        [
+          "1888",
+          8,
+          28
+        ]
+      ]
+    },
+    "id": "t1",
+    "issued": {
+      "date-parts": [
+        [
+          "2014",
+          12,
+          31
+        ],
+        [
+          "2015",
+          1,
+          1
+        ]
+      ]
+    },
+    "original-date": {
+      "date-parts": [
+        [
+          "1777",
+          7,
+          27
+        ],
+        [
+          "1888",
+          8,
+          28
+        ]
+      ]
+    },
+    "submitted": {
+      "date-parts": [
+        [
+          "1999",
+          9,
+          29
+        ],
+        [
+          0
+        ]
+      ]
+    },
+    "title": "A manuscript: 2014-12-31/2015-01-01",
+    "type": "manuscript"
+  },
+  {
+    "accessed": {
+      "literal": "13th cent"
+    },
+    "author": [
+      {
+        "family": "Doe2",
+        "given": "John"
+      }
+    ],
+    "citation-key": "t2",
+    "event-date": {
+      "date-parts": [
+        [
+          "1800",
+          1,
+          1
+        ],
+        [
+          "1800",
+          12,
+          31
+        ]
+      ]
+    },
+    "id": "t2",
+    "submitted": {
+      "date-parts": [
+        [
+          "1900",
+          1,
+          1
+        ],
+        [
+          "1900",
+          12,
+          31
+        ]
+      ]
+    },
+    "title": "event-date and submitted test",
+    "type": "book"
+  },
+  {
+    "author": [
+      {
+        "family": "Doe3",
+        "given": "John"
+      }
+    ],
+    "citation-key": "t3",
+    "id": "t3",
+    "issued": {
+      "date-parts": [
+        [
+          "2014",
+          12,
+          31
+        ],
+        [
+          0
+        ]
+      ]
+    },
+    "title": "open-ended date range test: 2014-12-31/",
+    "type": "book"
+  },
+  {
+    "author": [
+      {
+        "family": "Doe4",
+        "given": "John"
+      }
+    ],
+    "citation-key": "t4",
+    "id": "t4",
+    "issued": {
+      "date-parts": [
+        [
+          "2014",
+          12,
+          31
+        ]
+      ]
+    },
+    "title": "single date test: 2014-12-31",
+    "type": "book"
+  },
+  {
+    "accessed": {
+      "date-parts": [
+        [
+          "-333",
+          11,
+          5
+        ]
+      ]
+    },
+    "author": [
+      {
+        "family": "Doe5",
+        "given": "John"
+      }
+    ],
+    "citation-key": "t5",
+    "event-date": {
+      "date-parts": [
+        [
+          "-1"
+        ]
+      ]
+    },
+    "id": "t5",
+    "issued": {
+      "date-parts": [
+        [
+          "-334"
+        ]
+      ]
+    },
+    "original-date": {
+      "date-parts": [
+        [
+          "-334"
+        ],
+        [
+          "-333"
+        ]
+      ]
+    },
+    "submitted": {
+      "date-parts": [
+        [
+          "-2"
+        ]
+      ]
+    },
+    "title": "BC tests: -0333",
+    "type": "book"
+  },
+  {
+    "author": [
+      {
+        "family": "Doe6",
+        "given": "John"
+      }
+    ],
+    "citation-key": "t6",
+    "id": "t6",
+    "issued": {
+      "date-parts": [
+        [
+          "-100",
+          7,
+          12
+        ],
+        [
+          "-44",
+          3,
+          15
+        ]
+      ]
+    },
+    "title": "BC tests 2: -0099-07-12/-0043-03-15",
+    "type": "book"
+  }
+]
