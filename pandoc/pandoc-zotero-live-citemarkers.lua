@@ -109,7 +109,7 @@ local function zotero_bibl_odt()
       .. utils.xmlescape(message)
       .. '</text:p>'
       ..'</text:section>',
-    'ZOTERO_BIBL ' .. utils.xmlescape(bib_settings) .. ' CSL_BIBLIOGRAPHY' .. ' RND' .. utils.next_id(10))
+    'ZOTERO_BIBL ' .. utils.xmlattr(bib_settings) .. ' CSL_BIBLIOGRAPHY' .. ' RND' .. utils.next_id(10))
 end
 
 -- -- -- citation market generators -- -- --
@@ -193,7 +193,7 @@ local function zotero_ref(cite)
       return pandoc.RawInline('opendocument', field)
     end
 
-    csl = 'ZOTERO_ITEM CSL_CITATION ' .. utils.xmlescape(json.encode(csl)) .. ' RND' .. utils.next_id(10)
+    csl = 'ZOTERO_ITEM CSL_CITATION ' .. utils.xmlattr(json.encode(csl)) .. ' RND' .. utils.next_id(10)
     local field = author_in_text .. '<text:reference-mark-start text:name="' .. csl .. '"/>'
     field = field .. utils.xmlescape(message)
     field = field .. '<text:reference-mark-end text:name="' .. csl .. '"/>'
