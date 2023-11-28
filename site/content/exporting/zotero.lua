@@ -1,4 +1,4 @@
-print('zotero-live-citations 45c2f0116')
+print('zotero-live-citations cb47f2717')
 do
 local _ENV = _ENV
 package.preload[ "locator" ] = function( ... ) local arg = _G.arg;
@@ -47,24 +47,31 @@ local pseudo_locator = lpeg.C(lpeg.P(',')^-1 * whitespace) * lpeg.P('{') * lpeg.
 local module = {}
 
 function module.parse(input)
-  local parsed = lpeg.Ct(suffix):match(input)
+  local parsed, _prefix, _label, _locator, _suffix
+
+  parsed = lpeg.Ct(suffix):match(input)
   if parsed then
-    local _prefix, _label, _locator, _suffix = table.unpack(parsed)
-    if utils.trim(_prefix) == ',' then _prefix = '' end
-    if _suffix then _suffix = utils.trim(_suffix) end
-    return _label, _locator, _prefix .. _suffix
+    _prefix, _label, _locator, _suffix = table.unpack(parsed)
+  else
+    parsed = lpeg.Ct(pseudo_locator):match(input)
+    if parsed then
+      _label = 'page'
+      _prefix, _locator, _suffix = table.unpack(parsed)
+    else
+      return nil, nil, input
+    end
   end
 
-  parsed = lpeg.Ct(pseudo_locator):match(input)
-  if parsed then
-    local _prefix, _locator, _suffix = table.unpack(parsed)
-    if utils.trim(_prefix) == ',' then _prefix = '' end
-    if _suffix then _suffix = utils.trim(_suffix) end
-    -- return nil, nil, _prefix .. _locator .. _suffix
-    return 'page', _locator, _prefix .. _suffix
-  end
+  if utils.trim(_prefix) == ',' then _prefix = '' end
+  local _space = ''
+  if (utils.trim(_prefix) ~= _prefix) then _space = ' ' end
 
-  return nil, nil, input
+  _prefix = utils.trim(_prefix)
+  _label = utils.trim(_label)
+  _locator = utils.trim(_locator)
+  _suffix = utils.trim(_suffix)
+
+  return _label, _locator, utils.trim(_prefix .. _space .. _suffix)
 end
 
 return module
