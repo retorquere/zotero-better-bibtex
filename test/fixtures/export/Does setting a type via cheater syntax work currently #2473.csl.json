@@ -1,3 +1,25 @@
 [
-  {"id":"nachwilliamshakespeareHamlet2001","abstract":"Theateraufführung","citation-key":"nachwilliamshakespeareHamlet2001","director":[{"family":"Schlingensief","given":"Christoph"}],"issued":{"date-parts":[[2001,5,10]]},"publisher-place":"Schauspielhaus Zürich, Pfauen","title":"Hamlet nach William Shakespeare","type":"performance"}
+  {
+    "abstract": "Theaterauff\u00fchrung",
+    "citation-key": "nachwilliamshakespeareHamlet2001",
+    "director": [
+      {
+        "family": "Schlingensief",
+        "given": "Christoph"
+      }
+    ],
+    "id": "nachwilliamshakespeareHamlet2001",
+    "issued": {
+      "date-parts": [
+        [
+          "2001",
+          5,
+          10
+        ]
+      ]
+    },
+    "publisher-place": "Schauspielhaus Z\u00fcrich, Pfauen",
+    "title": "Hamlet nach William Shakespeare",
+    "type": "performance"
+  }
 ]

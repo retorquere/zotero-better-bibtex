@@ -1,3 +1,21 @@
 [
-  {"id":"WhiteState1966","authority":"Md.","citation-key":"WhiteState1966","container-title":"A.2d","issued":{"date-parts":[[1966,10,19]]},"page":"259","title":"White v. State","type":"legal_case","volume":"223"}
+  {
+    "authority": "Md.",
+    "citation-key": "WhiteState1966",
+    "container-title": "A.2d",
+    "id": "WhiteState1966",
+    "issued": {
+      "date-parts": [
+        [
+          "1966",
+          10,
+          19
+        ]
+      ]
+    },
+    "page": "259",
+    "title": "White v. State",
+    "type": "legal_case",
+    "volume": "223"
+  }
 ]

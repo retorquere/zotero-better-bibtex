@@ -1,8 +1,125 @@
 [
-  {"id":"00002100002400","citation-key":"00002100002400","issued":{"date-parts":[[-1,13],[-1,16]]},"title":"0000-21/0000-24","type":"webpage"},
-  {"id":"001121001222-11","citation-key":"001121001222-11","issued":{"date-parts":[[-12,13],[-13,14]]},"title":"-0011-21/-0012-22","type":"webpage"},
-  {"id":"00112100122211","citation-key":"00112100122211","issued":{"date-parts":[[11,13],[12,14]]},"title":"0011-21/0012-22","type":"webpage"},
-  {"id":"201121201222-2011","citation-key":"201121201222-2011","issued":{"date-parts":[[-2012,13],[-2013,14]]},"title":"-2011-21/-2012-22","type":"webpage"},
-  {"id":"monthsoutrange2017","citation-key":"monthsoutrange2017","issued":{"date-parts":[[2017,14],[2017,15]]},"original-date":{"literal":"2017-14/2017-99"},"title":"months out of range","type":"webpage"},
-  {"id":"SeasonrangesEDTF2017","citation-key":"SeasonrangesEDTF2017","issued":{"date-parts":[[2017,15],[2017,16]]},"original-date":{"date-parts":[[2015,13],[2016,14]]},"title":"Season ranges: EDTF and literal","type":"webpage"}
+  {
+    "citation-key": "00002100002400",
+    "id": "00002100002400",
+    "issued": {
+      "date-parts": [
+        [
+          "-1",
+          13
+        ],
+        [
+          "-1",
+          16
+        ]
+      ]
+    },
+    "title": "0000-21/0000-24",
+    "type": "webpage"
+  },
+  {
+    "citation-key": "001121001222-11",
+    "id": "001121001222-11",
+    "issued": {
+      "date-parts": [
+        [
+          "-12",
+          13
+        ],
+        [
+          "-13",
+          14
+        ]
+      ]
+    },
+    "title": "-0011-21/-0012-22",
+    "type": "webpage"
+  },
+  {
+    "citation-key": "00112100122211",
+    "id": "00112100122211",
+    "issued": {
+      "date-parts": [
+        [
+          "11",
+          13
+        ],
+        [
+          "12",
+          14
+        ]
+      ]
+    },
+    "title": "0011-21/0012-22",
+    "type": "webpage"
+  },
+  {
+    "citation-key": "201121201222-2011",
+    "id": "201121201222-2011",
+    "issued": {
+      "date-parts": [
+        [
+          "-2012",
+          13
+        ],
+        [
+          "-2013",
+          14
+        ]
+      ]
+    },
+    "title": "-2011-21/-2012-22",
+    "type": "webpage"
+  },
+  {
+    "citation-key": "monthsoutrange2017",
+    "id": "monthsoutrange2017",
+    "issued": {
+      "date-parts": [
+        [
+          "2017",
+          14
+        ],
+        [
+          "2017",
+          15
+        ]
+      ]
+    },
+    "original-date": {
+      "literal": "2017-14/2017-99"
+    },
+    "title": "months out of range",
+    "type": "webpage"
+  },
+  {
+    "citation-key": "SeasonrangesEDTF2017",
+    "id": "SeasonrangesEDTF2017",
+    "issued": {
+      "date-parts": [
+        [
+          "2017",
+          15
+        ],
+        [
+          "2017",
+          16
+        ]
+      ]
+    },
+    "original-date": {
+      "date-parts": [
+        [
+          "2015",
+          13
+        ],
+        [
+          "2016",
+          14
+        ]
+      ]
+    },
+    "title": "Season ranges: EDTF and literal",
+    "type": "webpage"
+  }
 ]

@@ -1,1 +1,135 @@
-[{"id": "clark_mesopotamia_1957", "abstract": "Example from CMoS, 16e, 14.249", "author": [{"family": "Clark", "given": "Hazel V."}], "event-place": "Mesopotamia, OH", "issued": {"date-parts": [[1957]]}, "publisher": "Trumbull County Historical Society", "publisher-place": "Mesopotamia, OH", "title": "Mesopotamia: between two rivers", "type": "pamphlet", "citation-key": "clark_mesopotamia_1957"}, {"id": "kamp_deconstructing_2006", "abstract": "Example from CMoS, 16e, 14.125", "author": [{"family": "Kamp", "given": "David"}], "issued": {"date-parts": [[2006, 4, 23]]}, "language": "en-US", "reviewed-author": [{"family": "Pollan", "given": "Michael"}], "reviewed-title": "The omnivore\u2019s dilemma: a natural history of four meals", "section": "Sunday Book Review", "title": "Deconstructing dinner", "type": "review-book", "URL": "http://www.nytimes.com/2006/04/23/books/review/23kamp.html.", "citation-key": "kamp_deconstructing_2006"}, {"id": "mozart_sonatas_1960", "abstract": "Example from CMoS, 16e, 14.269\n\u201cPrepared from the autographs and earliest printed sources by Nathan\nBroder\u201d", "author": [{"family": "Mozart", "given": "Wolfgang Amadeus"}], "edition": "Rev. ed.", "editor": [{"family": "Broder", "given": "Nathan"}], "event-place": "Bryn Mawr, PA", "issued": {"date-parts": [[1960]]}, "publisher": "Theodore Presser", "publisher-place": "Bryn Mawr, PA", "title": "Sonatas and fantasies for the piano", "type": "musical_score", "citation-key": "mozart_sonatas_1960"}, {"id": "noauthor_object_nodate", "abstract": "Example from CMoS, 16e, 14.272", "accessed": {"date-parts": [[2009, 10, 6]]}, "container-title": "NASA/IPAC Extragalactic Database", "title": "object name IRAS F00400+4059", "type": "dataset", "URL": "http://nedwww.ipac.caltech.edu/", "citation-key": "noauthor_object_nodate"}, {"id": "ratliff_mystery_1999", "abstract": "Example from CMoS, 16e, 14.215\n\u201ced. and trans. John Charles Chasteen\u201d", "author": [{"family": "Ratliff", "given": "Ben"}], "container-title": "Lingua Franca", "issued": {"date-parts": [[1999, 4]]}, "language": "en-US", "page": "B13\u2013B14", "reviewed-author": [{"literal": "Hermano Vianna"}], "title": "The mystery of samba: Popular music and national identity in Brazil", "type": "review-book", "volume": "9", "citation-key": "ratliff_mystery_1999"}]
+[
+  {
+    "abstract": "Example from CMoS, 16e, 14.249",
+    "author": [
+      {
+        "family": "Clark",
+        "given": "Hazel V."
+      }
+    ],
+    "citation-key": "clark_mesopotamia_1957",
+    "event-place": "Mesopotamia, OH",
+    "id": "clark_mesopotamia_1957",
+    "issued": {
+      "date-parts": [
+        [
+          "1957"
+        ]
+      ]
+    },
+    "publisher": "Trumbull County Historical Society",
+    "publisher-place": "Mesopotamia, OH",
+    "title": "Mesopotamia: between two rivers",
+    "type": "pamphlet"
+  },
+  {
+    "URL": "http://www.nytimes.com/2006/04/23/books/review/23kamp.html.",
+    "abstract": "Example from CMoS, 16e, 14.125",
+    "author": [
+      {
+        "family": "Kamp",
+        "given": "David"
+      }
+    ],
+    "citation-key": "kamp_deconstructing_2006",
+    "id": "kamp_deconstructing_2006",
+    "issued": {
+      "date-parts": [
+        [
+          "2006",
+          4,
+          23
+        ]
+      ]
+    },
+    "language": "en-US",
+    "reviewed-author": [
+      {
+        "family": "Pollan",
+        "given": "Michael"
+      }
+    ],
+    "reviewed-title": "The omnivore\u2019s dilemma: a natural history of four meals",
+    "section": "Sunday Book Review",
+    "title": "Deconstructing dinner",
+    "type": "review-book"
+  },
+  {
+    "abstract": "Example from CMoS, 16e, 14.269\n\u201cPrepared from the autographs and earliest printed sources by Nathan\nBroder\u201d",
+    "author": [
+      {
+        "family": "Mozart",
+        "given": "Wolfgang Amadeus"
+      }
+    ],
+    "citation-key": "mozart_sonatas_1960",
+    "edition": "Rev. ed.",
+    "editor": [
+      {
+        "family": "Broder",
+        "given": "Nathan"
+      }
+    ],
+    "event-place": "Bryn Mawr, PA",
+    "id": "mozart_sonatas_1960",
+    "issued": {
+      "date-parts": [
+        [
+          "1960"
+        ]
+      ]
+    },
+    "publisher": "Theodore Presser",
+    "publisher-place": "Bryn Mawr, PA",
+    "title": "Sonatas and fantasies for the piano",
+    "type": "musical_score"
+  },
+  {
+    "URL": "http://nedwww.ipac.caltech.edu/",
+    "abstract": "Example from CMoS, 16e, 14.272",
+    "accessed": {
+      "date-parts": [
+        [
+          "2009",
+          10,
+          6
+        ]
+      ]
+    },
+    "citation-key": "noauthor_object_nodate",
+    "container-title": "NASA/IPAC Extragalactic Database",
+    "id": "noauthor_object_nodate",
+    "title": "object name IRAS F00400+4059",
+    "type": "dataset"
+  },
+  {
+    "abstract": "Example from CMoS, 16e, 14.215\n\u201ced. and trans. John Charles Chasteen\u201d",
+    "author": [
+      {
+        "family": "Ratliff",
+        "given": "Ben"
+      }
+    ],
+    "citation-key": "ratliff_mystery_1999",
+    "container-title": "Lingua Franca",
+    "id": "ratliff_mystery_1999",
+    "issued": {
+      "date-parts": [
+        [
+          "1999",
+          4
+        ]
+      ]
+    },
+    "language": "en-US",
+    "page": "B13\u2013B14",
+    "reviewed-author": [
+      {
+        "literal": "Hermano Vianna"
+      }
+    ],
+    "title": "The mystery of samba: Popular music and national identity in Brazil",
+    "type": "review-book",
+    "volume": "9"
+  }
+]
