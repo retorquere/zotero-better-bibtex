@@ -1230,7 +1230,7 @@ class PatternFormatter {
 
   /**
    * transliterates the citation key. If you don't specify a mode, the mode is derived from the item language field
-   * @param mode specialized translateration modes for german, japanese or chinese. default is minimal
+   * @param mode specialized translateration modes for german, japanese or chinese.
    */
   public _transliterate(mode?: 'minimal' | 'de' | 'german' | 'ja' | 'japanese' | 'zh' | 'chinese' | 'tw' | 'zh-hant' | 'ar' | 'arabic' | 'uk' | 'ukranian' | 'mn' | 'mongolian' | 'ru' | 'russian') {
     if (!this.chunk) return this
