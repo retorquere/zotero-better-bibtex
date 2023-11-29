@@ -1,0 +1,17 @@
+name: Comment when opened
+on:
+  issues:                                     
+    types: [labeled]
+
+jobs:
+  comment:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - if: github.event.label.name == 'user-bailed'
+        run: gh issue close $ISSUE -r 'not planned' -c 'closing for inactivity'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE: ${{ github.event.issue_comment.issue.html_url }}
+
