@@ -1,8 +1,8 @@
 
-  print('zotero-live-citations eb50b70')
+  print('zotero-live-citations caf41cc')
   local mt, latest = pandoc.mediabag.fetch('https://retorque.re/zotero-better-bibtex/exporting/zotero.lua.revision')
   latest = string.sub(latest, 1, 10)
-  if 'eb50b70' ~= latest then
+  if 'caf41cc' ~= latest then
     print('new version "' .. latest .. '" available at https://retorque.re/zotero-better-bibtex/exporting')
   end
 
@@ -1873,8 +1873,8 @@ local function zotero_ref(cite)
       if item.mode == 'SuppressAuthor' then
         citation['suppress-author'] = true
       end
-      citation.prefix = pandoc.utils.stringify(item.prefix)
-      local label, locator, suffix = csl_locator.parse(pandoc.utils.stringify(item.suffix))
+      citation.prefix = pandoc.utils.stringify(item.prefix):gsub('\194\160', ' ')
+      local label, locator, suffix = csl_locator.parse(pandoc.utils.stringify(item.suffix):gsub('\194\160', ' '))
       if suffix and suffix ~= '' then citation.suffix = suffix end
       if label and label ~= '' then citation.label = label end
       if locator and locator ~= '' then citation.locator = locator end

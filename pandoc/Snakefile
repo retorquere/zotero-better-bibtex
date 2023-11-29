@@ -38,10 +38,12 @@ rule test:
   run:
     shell('rm -f *.docx *.odt *.json')
     shell('pandoc -s --lua-filter={DEPLOYED} -o paper{TIMESTAMP}.odt main.md')
+    shell('pandoc -s --lua-filter={DEPLOYED} -o paper{TIMESTAMP}.docx main.md')
     shell('pandoc -s --metadata=zotero_scannable_cite:true --lua-filter={DEPLOYED} -o paper{TIMESTAMP}-scannable-cite.odt main.md')
 
 rule rocks:
   run:
+    shell("brew install luarocks")
     shell("luarocks install lunajson ")
     shell("luarocks install penlight")
     shell("luarocks install amalg")
