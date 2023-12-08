@@ -101,40 +101,56 @@ class NSUser {
 
 class NSItem {
   /**
-   * Quick-search for items in Zotero.
+   * Search for items in Zotero.
    *
-   * @param terms  Terms as a single string as typed into the search box in Zotero, or an array of tuples as typed into the advanced search box in Zotero
+   * Examples
+   *
+   * - search('') or search([]): return every entries
+   * - search('Zotero'): quick search for 'Zotero'
+   * - search([['title', 'contains', 'Zotero']]): search for 'Zotero' in the Title
+   * - search([['library', 'is', 'My Library']]): search for entries in 'My Library'
+   *   (this function try to resolve the string 'My Library' into is own libraryId number)
+   * - search([['ignore_feeds']]): custom action for ignoring the feeds
+   * - search([['ignore_feeds'], ['quicksearch-titleCreatorYear', 'contains', 'Zotero']]): quick search for 'Zotero' ignoring the Feeds
+   * - search([['creator', 'contains', 'Johnny'], ['title', 'contains', 'Zotero']]): search for entries with Creator 'Johnny' AND Title 'Zotero'
+   * - search([['blockStart'], ['creator', 'contains', 'Johnny'], ['title', 'contains', 'Zotero'], ['blockEnd']]): search for entries with Creator 'Johnny' OR Title 'Zotero'
+   *
+   * @param terms  Single string as typed into the search box in Zotero (search for Title Creator Year)
+   *               Array of tuples similar as typed into the advanced search box in Zotero
+   *               (https://github.com/zotero/zotero/blob/9971f15e617f19f1bc72f8b24bb00b72d2a4736f/chrome/content/zotero/xpcom/data/searchConditions.js#L72-L610)
    */
-  public async search(terms: string | [string, string, string][], library?: string | number) {
+  public async search(terms: string
+  | ([string] | [string, string] | [string, string, string | number] | [string, string, string | number, boolean])[]) {
 
     const search = new Zotero.Search()
 
-    if (typeof terms === 'string') {
-      terms = terms.replace(/ (?:&|and) /g, ' ')
-      if (!/[\w\u007F-\uFFFF]/.test(terms)) return []
+    if (!terms.length) {/* */}
+    else if (typeof terms === 'string') {
       search.addCondition('quicksearch-titleCreatorYear', 'contains', terms)
-      search.addCondition('citationKey', 'contains', terms)
     }
     else {
-      if (!terms.length) return []
-      for (const [name, operator, value] of terms) {
-        search.addCondition(name, operator, value)
-        search.addCondition('citationKey', 'contains', value)
-      }
-    }
-
-    for (const feed of Zotero.Feeds.getAll()) {
-      search.addCondition('libraryID', 'isNot', feed.libraryID)
-    }
-
-    search.addCondition('itemType', 'isNot', 'attachment')
-
-    if (typeof library !== 'undefined' && library !== '*') {
-      try {
-        search.addCondition('libraryID', 'is', Library.get(library).libraryID)
-      }
-      catch (err) {
-        throw new Error(`library ${JSON.stringify(library)} not found`)
+      blk: for (const term of terms) {
+        // Custom Actions
+        if ((term.length === 1)) {
+          switch (term[0]) {
+            case 'ignore_feeds': {
+              for (const feed of Zotero.Feeds.getAll()) {
+                search.addCondition('libraryID', 'isNot', feed.libraryID)
+              }
+              continue blk
+            }
+          }
+        }
+        // libraryId can be provided as Library Name
+        else if ((term.length >= 3) && (term[0] === 'libraryID')) {
+          try {
+            term[2] = Library.get(term[2]).libraryID
+          }
+          catch (err) {
+            throw new Error(`library ${JSON.stringify(term[2])} not found`)
+          }
+        }
+        search.addCondition(...term)
       }
     }
 
