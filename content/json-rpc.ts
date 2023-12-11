@@ -393,12 +393,40 @@ class NSItem {
   }
 }
 
+class NSViewer {
+  /**
+   * Open the PDF associated with an entry with a given id.
+   * the id can be retrieve with e.g. item.search("mypdf") -> result[0].id
+   *
+   * @param id      id in the form of http://zotero.org/users/12345678/items/ABCDEFG0
+   * @param page    Page Number, counting from zero
+   */
+  public async viewPDF(id: string, page: number) {
+    const item = await Zotero.URI.getURIItem(id)
+    if (!item) throw { code: INVALID_PARAMETERS, message: `invalid URI ${id}` }
+    let attachments = await item.getBestAttachments()
+
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    attachments = attachments.filter(x => x.isPDFAttachment())
+
+    if (!attachments.length) throw {code: INVALID_PARAMETERS, message: `no PDF found for URI ${id}` }
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    return await Zotero.OpenPDF.openToPage(
+      attachments[0],
+      page + 1
+    )
+  }
+
+}
+
+
 const api = new class API {
   public $user = new NSUser
   public $item = new NSItem
   public $items: NSItem
   public $collection = new NSCollection
   public $autoexport = new NSAutoExport
+  public $viewer = new NSViewer
 
   constructor() {
     this.$items = this.$item
