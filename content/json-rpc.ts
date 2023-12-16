@@ -165,33 +165,43 @@ class NSItem {
     const key = Zotero.BetterBibTeX.KeyManager.first({ where: { citationKey: citekey.replace(/^@/, '') } })
     if (!key) throw { code: INVALID_PARAMETERS, message: `${citekey} not found` }
     const item = await getItemsAsync(key.itemID)
+    const attachments = await getItemsAsync(item.getAttachments())
+    const output: Record<string, any>[] = []
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return (await getItemsAsync(item.getAttachments())).map(att => {
+    for (const att of attachments) {
       const data: Record<string, any> = {
         open: `zotero://open-pdf/${Zotero.API.getLibraryPrefix(item.libraryID || Zotero.Libraries.userLibraryID)}/items/${att.key}`,
         path: att.getFilePath(),
       }
 
       if (att.isPDFAttachment()) {
-        data.annotations = att.getAnnotations().map(raw => {
+        const rawAnnotations = att.getAnnotations()
+        const annotations: Record<string, any>[] = []
+
+        for (const raw of rawAnnotations) {
           const annot = raw.toJSON()
 
           if (annot.annotationType === 'image') {
-            annot.annotationImagePath = Zotero.Annotations.getCacheImagePath(item)
+            if (!await Zotero.Annotations.hasCacheImage(raw)) {
+              await Zotero.PDFRenderer.renderAttachmentAnnotations(raw.parentID)
+            }
+            annot.annotationImagePath = Zotero.Annotations.getCacheImagePath(raw)
           }
 
           if (annot.annotationPosition && typeof annot.annotationPosition === 'string') {
             annot.annotationPosition = JSON.parse(annot.annotationPosition)
           }
 
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-          return annot
-        })
+          annotations.push(annot)
+        }
+
+        data.annotations = annotations
       }
 
-      return data
-    })
+      output.push(data)
+    }
+
+    return output
   }
 
   /**
