@@ -1,12 +1,4 @@
 hbox(flex=0)
-  groupbox
-    caption(bbt:preference="extensions.zotero.translators.better-bibtex.importSentenceCase") &better-bibtex_preferences_advanced_import_sentence-case;
-      image(tooltip="bbt-tooltip-importSentenceCase" src="chrome://zotero-better-bibtex/content/skin/attention.svg" width="16" height="16")
-    radiogroup(preference="extensions.zotero.translators.better-bibtex.importSentenceCase")
-      radio(label="&better-bibtex_preferences_advanced_import_sentence-case_on-guess.label;" value="on+guess")
-      radio(label="&better-bibtex_preferences_advanced_import_sentence-case_on.label;" value="on")
-      radio(label="&better-bibtex_preferences_advanced_import_sentence-case_off.label;" value="off")
-hbox(flex=0)
   label(bbt:preference="extensions.zotero.translators.better-bibtex.importCaseProtection") &better-bibtex_preferences_advanced_import_case-protection;
   menulist(preference="extensions.zotero.translators.better-bibtex.importCaseProtection")
     menupopup
@@ -17,5 +9,15 @@ hbox(flex=0)
 
 checkbox(preference="extensions.zotero.translators.better-bibtex.auxImport" label="&better-bibtex_preferences_citekey_aux-scanner_import.label;")
 hbox(flex=0)
-  button(label="&better-bibtex_preferences_export-prefs.label;" oncommand="Zotero.BetterBibTeX.PrefPane.exportPrefs()")
-  button(label="&better-bibtex_preferences_import-prefs.label;" oncommand="Zotero.BetterBibTeX.PrefPane.importPrefs()")
+  groupbox
+    caption(bbt:preference="extensions.zotero.translators.better-bibtex.importSentenceCase") &better-bibtex_preferences_advanced_import_sentence-case;
+      image(tooltip="bbt-tooltip-importSentenceCase" src="chrome://zotero-better-bibtex/content/skin/attention.svg" width="16" height="16")
+    radiogroup(preference="extensions.zotero.translators.better-bibtex.importSentenceCase")
+      radio(label="&better-bibtex_preferences_advanced_import_sentence-case_on-guess.label;" value="on+guess")
+      radio(label="&better-bibtex_preferences_advanced_import_sentence-case_on.label;" value="on")
+      radio(label="&better-bibtex_preferences_advanced_import_sentence-case_off.label;" value="off")
+hbox(flex=0)
+  groupbox
+    caption &better-bibtex_preferences_advanced_import_sentence-case;
+  button(label="&better-bibtex_preferences_advanced_import_export-prefs.label;" oncommand="Zotero.BetterBibTeX.PrefPane.exportPrefs()")
+  button(label="&better-bibtex_preferences_advanced_import_prefs.label;" oncommand="Zotero.BetterBibTeX.PrefPane.importPrefs()")

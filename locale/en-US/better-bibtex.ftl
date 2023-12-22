@@ -177,6 +177,12 @@ better-bibtex_preferences_advanced_import_sentence-case_warning = Bib(La)TeX ent
     You can turn this off, but you may then also want to disable `Apply title-casing to titles` (which has its own problems, see the help entry for that option on this page).
     With 'yes, but try to exclude already-sentence-cased titles', BBT will attempt to detect titles that are already sentence cased and leave them as-is on import.
 
+better-bibtex_preferences_advanced_import_export-prefs = 
+  .label = Export BetterBibTeX preferences...
+
+better-bibtex_preferences_advanced_import_prefs = 
+  .label = Import BetterBibTeX preferences...
+
 better-bibtex_preferences_advanced_tab_postscript = postscript
   .label = { better-bibtex_preferences_advanced_tab_postscript }
 
@@ -255,9 +261,6 @@ better-bibtex_preferences_citekey_uniqueness_scope_global = across all libraries
   .label = { better-bibtex_preferences_citekey_uniqueness_scope_global }
 better-bibtex_preferences_citekey_uniqueness_scope_library = within each library
   .label = { better-bibtex_preferences_citekey_uniqueness_scope_library }
-
-better-bibtex_preferences_export-prefs = 
-  .label = Export BetterBibTeX preferences...
 
 better-bibtex_preferences_export_automatic-tags = 
   .label = Include automatic tags in export
@@ -378,9 +381,6 @@ better-bibtex_preferences_export_quick-copy_select-link_citekey = using Better B
   .label = { better-bibtex_preferences_export_quick-copy_select-link_citekey }
 better-bibtex_preferences_export_quick-copy_select-link_zotero = using Zotero item key
   .label = { better-bibtex_preferences_export_quick-copy_select-link_zotero }
-
-better-bibtex_preferences_import-prefs = 
-  .label = Import BetterBibTeX preferences...
 
 better-bibtex_preferences_open = 
   .label = Open Better BibTeX preferences...
