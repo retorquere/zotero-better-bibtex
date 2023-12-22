@@ -177,6 +177,7 @@ better-bibtex_preferences_advanced_import_sentence-case_warning = Bib(La)TeX ent
     You can turn this off, but you may then also want to disable `Apply title-casing to titles` (which has its own problems, see the help entry for that option on this page).
     With 'yes, but try to exclude already-sentence-cased titles', BBT will attempt to detect titles that are already sentence cased and leave them as-is on import.
 
+better-bibtex_preferences_advanced_import_migrate = Migrate BetterBibTeX preferences/citation keys
 better-bibtex_preferences_advanced_import_export-prefs = 
   .label = Export BetterBibTeX preferences...
 
