@@ -130,6 +130,11 @@ better-bibtex_preferences_advanced_import_sentence-case_warning =
     
     Si può disattivare questa opzione, ma allora è consigliabile anche disattivare 'Scrivi i titoli con ogni iniziale maiuscola' (che ha altri problemi, vedi l'aiuto di quella opzione in questa pagina).
     Con 'sì, ma cerca di escludere titoli che hanno già solo la prima iniziale maiuscola, BBT proverà a individuare quei titoli che sono già scritti con solo l'iniziale della prima parola maiuscola, e importarli così come sono.
+better-bibtex_preferences_advanced_import_migrate = Migrate BetterBibTeX preferences/citation keys
+better-bibtex_preferences_advanced_import_export-prefs = 
+    .label = Export BetterBibTeX preferences...
+better-bibtex_preferences_advanced_import_prefs = 
+    .label = Import BetterBibTeX preferences...
 better-bibtex_preferences_advanced_tab_postscript = postscript
     .label = { better-bibtex_preferences_advanced_tab_postscript }
 better-bibtex_preferences_advanced_tab_strings = Definizioni delle variabili @string
@@ -193,8 +198,6 @@ better-bibtex_preferences_citekey_uniqueness_scope_global = in tutte le librerie
     .label = { better-bibtex_preferences_citekey_uniqueness_scope_global }
 better-bibtex_preferences_citekey_uniqueness_scope_library = dentro a ogni singola libreria
     .label = { better-bibtex_preferences_citekey_uniqueness_scope_library }
-better-bibtex_preferences_export-prefs = 
-    .label = Esporta le preferenze di BetterBibTeX...
 better-bibtex_preferences_export_automatic-tags = 
     .label = Includi i tag automatici nell'esportazione
 better-bibtex_preferences_export_biblatex_ascii = 
@@ -297,8 +300,6 @@ better-bibtex_preferences_export_quick-copy_select-link_citekey = usa chiave di 
     .label = { better-bibtex_preferences_export_quick-copy_select-link_citekey }
 better-bibtex_preferences_export_quick-copy_select-link_zotero = using la chiave dell'elemento di Zotero
     .label = { better-bibtex_preferences_export_quick-copy_select-link_zotero }
-better-bibtex_preferences_import-prefs = 
-    .label = Importa preferenze di BetterBibTeX...
 better-bibtex_preferences_open = 
     .label = Apri preferenze di BetterBibTeX...
 better-bibtex_preferences_postscript_warn = 

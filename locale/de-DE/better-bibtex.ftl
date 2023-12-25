@@ -130,6 +130,11 @@ better-bibtex_preferences_advanced_import_sentence-case_warning =
     
     Du kannst dies deaktivieren, aber du kannst `Titelgehäuse auf Titel übertragen` deaktivieren (welches seine eigenen Probleme hat siehe den Hilfeeintrag für diese Option auf dieser Seite).
     Mit 'Ja, aber versuchen Sie bereits verurteilte Titel auszuschließen', BBT wird versuchen, bereits verurteilte Titel zu erkennen und sie wie beim Import zu belassen.
+better-bibtex_preferences_advanced_import_migrate = Migrate BetterBibTeX preferences/citation keys
+better-bibtex_preferences_advanced_import_export-prefs = 
+    .label = Export BetterBibTeX preferences...
+better-bibtex_preferences_advanced_import_prefs = 
+    .label = Import BetterBibTeX preferences...
 better-bibtex_preferences_advanced_tab_postscript = postscript
     .label = { better-bibtex_preferences_advanced_tab_postscript }
 better-bibtex_preferences_advanced_tab_strings = @string definitions
@@ -193,8 +198,6 @@ better-bibtex_preferences_citekey_uniqueness_scope_global = über alle Bibliothe
     .label = { better-bibtex_preferences_citekey_uniqueness_scope_global }
 better-bibtex_preferences_citekey_uniqueness_scope_library = innerhalb jeder Bibliothek
     .label = { better-bibtex_preferences_citekey_uniqueness_scope_library }
-better-bibtex_preferences_export-prefs = 
-    .label = BetterBibTeX-Einstellungen exportieren...
 better-bibtex_preferences_export_automatic-tags = 
     .label = Inkludiere automatische Tags in den Export
 better-bibtex_preferences_export_biblatex_ascii = 
@@ -297,8 +300,6 @@ better-bibtex_preferences_export_quick-copy_select-link_citekey = Better-BibTeX-
     .label = { better-bibtex_preferences_export_quick-copy_select-link_citekey }
 better-bibtex_preferences_export_quick-copy_select-link_zotero = Zotero-Eintragsschlüssel verwenden
     .label = { better-bibtex_preferences_export_quick-copy_select-link_zotero }
-better-bibtex_preferences_import-prefs = 
-    .label = BetterBibTeX-Einstellungen importieren...
 better-bibtex_preferences_open = 
     .label = Open Better BibTeX preferences...
 better-bibtex_preferences_postscript_warn = 

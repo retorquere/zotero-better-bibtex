@@ -131,6 +131,11 @@ better-bibtex_preferences_advanced_import_sentence-case_warning =
     您可以禁用该选项，这时或许您还希望禁用“对标题应用标题大小写格式”（该选项自身也有问题，详见本页上关于该选项的帮助）。
     
     若您选择“是，但尝试排除已句首大写的标题”，BBT 将尝试检测标题是否已经为句首大写，若是，则将按原样导入。
+better-bibtex_preferences_advanced_import_migrate = 迁移 BetterBibTeX 设置/引用
+better-bibtex_preferences_advanced_import_export-prefs = 
+    .label = 导出 Better BibTeX 设置…
+better-bibtex_preferences_advanced_import_prefs = 
+    .label = 导入 Better BibTeX 设置…
 better-bibtex_preferences_advanced_tab_postscript = postscript
     .label = { better-bibtex_preferences_advanced_tab_postscript }
 better-bibtex_preferences_advanced_tab_strings = @string 定义
@@ -194,8 +199,6 @@ better-bibtex_preferences_citekey_uniqueness_scope_global = 在所有库中
     .label = { better-bibtex_preferences_citekey_uniqueness_scope_global }
 better-bibtex_preferences_citekey_uniqueness_scope_library = 在每个库中
     .label = { better-bibtex_preferences_citekey_uniqueness_scope_library }
-better-bibtex_preferences_export-prefs = 
-    .label = 导出 Better BibTeX 首选项…
 better-bibtex_preferences_export_automatic-tags = 
     .label = 导出时包含自动标签
 better-bibtex_preferences_export_biblatex_ascii = 
@@ -298,8 +301,6 @@ better-bibtex_preferences_export_quick-copy_select-link_citekey = 使用 Better 
     .label = { better-bibtex_preferences_export_quick-copy_select-link_citekey }
 better-bibtex_preferences_export_quick-copy_select-link_zotero = 使用 Zotero 条目键
     .label = { better-bibtex_preferences_export_quick-copy_select-link_zotero }
-better-bibtex_preferences_import-prefs = 
-    .label = 导入 Better BibTeX 首选项…
 better-bibtex_preferences_open = 
     .label = 打开 Better BibTeX 首选项…
 better-bibtex_preferences_postscript_warn = 
