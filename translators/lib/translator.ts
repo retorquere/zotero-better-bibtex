@@ -391,7 +391,7 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
     }
 
     if (translation.preferences.testing && typeof __estrace === 'undefined' && translator.configOptions?.cached) {
-      const allowedPreferences: Prefs.Preferences = Prefs.affectedBy[translator.label]
+      const allowedPreferences: Prefs.Preferences = (translator.label === 'BetterBibTeX JSON' ? Object.keys(Prefs.defaults) : Prefs.affectedBy[translator.label])
         .concat([ 'testing' ])
         .reduce((acc: any, pref: Prefs.PreferenceName) => {
           acc[pref] = translation.preferences[pref]

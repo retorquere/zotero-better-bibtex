@@ -9,6 +9,8 @@
 // - modify it via the UI (e.g. via about:config in the browser); or
 // - set it within a user.js file in your profile.
 
+user_pref("extensions.zotero.export.lastTranslator", "36a3b0b5-bad0-4a04-b79b-441c7cef77db");
+
 user_pref("app.update.auto", false);
 user_pref("app.update.download.attempts", 0);
 user_pref("app.update.enabled", false);
@@ -88,7 +90,7 @@ user_pref("extensions.zotero.sync.storage.enabled", false);
 user_pref("extensions.zotero.sync.storage.groups.enabled", false);
 user_pref("extensions.zotero.useDataDir", true);
 user_pref("extensions.zoteroMacWordIntegration.installed", true);
-user_pref("extensions.zoteroMacWordIntegration.version", "6.0.7.SA.6.0.27");
+user_pref("extensions.zoteroMacWordIntegration.version", "6.0.10.SA.6.0.30");
 user_pref("extensions.zoteroOpenOfficeIntegration.skipInstallation", true);
 user_pref("gecko.handlerService.migrated", true);
 user_pref("intl.accept_languages", "en-GB, en");
