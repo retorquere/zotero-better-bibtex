@@ -638,6 +638,16 @@ export const KeyManager = new class _KeyManager {
     }
   }
 
+  public import(keymap:  Record<string, string>): void {
+    const citekeys = blink.many(this.keys, { where: { itemKey: { in: Object.keys(keymap) } } })
+
+    for (const item of citekeys) {
+      item.citationKey = keymap[item.itemKey]
+    }
+    blink.updateMany(this.keys, citekeys)
+    flash(`Imported ${citekeys.length} citation keys`)
+  }
+
   public async tagDuplicates(libraryID: number): Promise<void> {
     const tag = '#duplicate-citation-key'
 

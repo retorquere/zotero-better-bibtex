@@ -365,13 +365,13 @@ export class PrefPane {
       return
     }
 
-    if (typeof preferences.parsed?.config?.preferences !== 'object') {
-      flash(`no preferences in ${preferences.path}`)
+    if (typeof preferences.parsed?.config?.preferences !== 'object' && !Array.isArray(preferences.parsed.items)) {
+      flash(`no preferences or items in ${preferences.path}`)
       return
     }
 
     try {
-      for (let [pref, value] of Object.entries(preferences.parsed.config.preferences)) {
+      for (let [pref, value] of Object.entries(preferences.parsed.config.preferences || {})) {
         if (pref === 'citekeyFormatEditing') continue
         if (pref === 'citekeyFormat') pref = 'citekeyFormatEditing'
 
@@ -383,6 +383,16 @@ export class PrefPane {
           flash(`${pref} set`, `${pref} set to ${JSON.stringify(value)}`)
         }
       }
+    }
+    catch (err) {
+      flash(err.message)
+    }
+
+    try {
+      Zotero.BetterBibTeX.KeyManager.import((preferences.parsed.items || []).reduce((updates, item) => {
+        if (item.citationKey && item.itemKey) updates[item.itemKey] = item.citationKey
+        return updates as Record<string, string>
+      }, {}))
     }
     catch (err) {
       flash(err.message)
