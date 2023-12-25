@@ -89,6 +89,8 @@ export namespace Translators {
       markdown?: boolean
 
       Normalize?: boolean
+      Items?: boolean
+      Preferences?: boolean
 
       Authors?: boolean
       Title?: boolean

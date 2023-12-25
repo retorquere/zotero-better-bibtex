@@ -60,7 +60,13 @@
             "Authors": {
               "type": "boolean"
             },
+            "Items": {
+              "type": "boolean"
+            },
             "Normalize": {
+              "type": "boolean"
+            },
+            "Preferences": {
               "type": "boolean"
             },
             "Title": {

@@ -283,6 +283,8 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
     Authors?: boolean
     Year?: boolean
     Normalize?: boolean
+    Preferences?: boolean
+    Items?: boolean
     worker?: boolean
   }
 
