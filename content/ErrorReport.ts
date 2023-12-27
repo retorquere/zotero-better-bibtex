@@ -51,6 +51,7 @@ export class ErrorReport {
     errors: string
     debug: string
     items?: string
+    acronyms?: string
   }
 
   public async send(): Promise<void> {
@@ -141,6 +142,7 @@ export class ErrorReport {
     ].filter(chunk => chunk).join('\n\n'))
 
     if (this.errorlog.items) out = tape.append(`${this.key}/items.json`, this.errorlog.items)
+    if (this.errorlog.acronyms) out = tape.append(`${this.key}/acronyms.csv`, this.errorlog.acronyms)
 
     if ((<HTMLInputElement>this.document.getElementById('better-bibtex-error-report-include-db')).checked) {
       out = tape.append(`${this.key}/database.json`, JSON.stringify(KeyManager.all()))
@@ -190,6 +192,9 @@ export class ErrorReport {
       items: win.arguments[0].wrappedJSObject.items,
     }
 
+    const acronyms = OS.Path.join(Zotero.BetterBibTeX.dir, 'acronyms.csv')
+    if (await OS.File.exists(acronyms)) this.errorlog.acronyms = await OS.File.read(acronyms, { encoding: 'utf-8' }) as unknown as string
+
     this.setValue('better-bibtex-error-context', this.errorlog.info)
     this.setValue('better-bibtex-error-errors', this.errorlog.errors)
     this.setValue('better-bibtex-error-debug', this.preview(this.errorlog.debug))
@@ -219,7 +224,7 @@ export class ErrorReport {
       this.bucket = `https://${s3.bucket}-${region.short}.s3-${region.region}.amazonaws.com${region.tld || ''}`
       this.key = `${Zotero.Utilities.generateObjectKey()}${this.errorlog.items ? '-refs' : ''}-${region.short}` // eslint-disable-line no-magic-numbers
 
-      this.tarball = OS.Path.join(Zotero.getTempDirectory().path, `${this.key}-${this.timestamp}.tgz`)
+      this.tarball = `${this.key}-${this.timestamp}.tgz`
 
       continueButton.disabled = false
       continueButton.focus()
