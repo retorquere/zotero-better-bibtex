@@ -2,6 +2,8 @@ import type { Tag, RegularItem as SerializedRegularItem, Item as SerializedItem 
 
 import { client } from '../client'
 
+import { Events } from '../events'
+
 import { log } from '../logger'
 import fold2ascii from 'fold-to-ascii'
 import rescape from '@stdlib/utils-escape-regexp-string'
@@ -320,6 +322,16 @@ class PatternFormatter {
   private item: Item
 
   private skipWords: Set<string>
+
+  constructor() {
+    Events.on('preference-changed', pref => {
+      switch (pref) {
+        case 'citekeyFormat':
+          this.acronyms = {}
+          break
+      }
+    })
+  }
 
   // private fold: boolean
   public update(formulas: string[]): string {
@@ -1064,11 +1076,14 @@ class PatternFormatter {
 
   /**
    * Does an acronym lookup for the text.
-   * @param list lookup list. The list must be a CSV file and live in the `Zotero/better-bibtex` directory in your Zotero profile, and must use commas as the delimiter. Changes to this list are detected at BBT start; you must either restart Zotero (Zotero 6) or disable/enable BBT (Zotero 7) to pick them up.
+   * @param list lookup list. The list must be a CSV file and live in the `Zotero/better-bibtex` directory in your Zotero profile, and must use commas as the delimiter.
+   * @param match if no match is found, return empty.
+   * @param reload reload the list for every call. When off, the list will only be read at startup of Better BibTeX.
    */
-  public _acronym(list='acronyms') {
+  public _acronym(list='acronyms', match=false, reload=false) {
     list = list.replace(/\.csv$/i, '')
 
+    if (reload) this.acronyms[list] = {}
     if (!this.acronyms[list]) {
       const acronyms: Record<string, string> = {}
 
@@ -1099,7 +1114,7 @@ class PatternFormatter {
       this.acronyms[list] = acronyms
     }
 
-    return this.$text(this.acronyms[list][this.chunk.toLowerCase()] || this.chunk)
+    return this.$text(this.acronyms[list][this.chunk.toLowerCase()] || (match ? '' : this.chunk))
   }
 
   /** Forces the text inserted by the field marker to be in lowercase. For example, `auth.lower` expands to the last name of the first author in lowercase. */
