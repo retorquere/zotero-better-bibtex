@@ -1,0 +1,25 @@
+@inproceedings{liu2022,
+  title = {A {{ConvNet}} for the 2020s},
+  booktitle = {2022 {{IEEE}}/{{CVF Conference}} on {{Computer Vision}} and {{Pattern Recognition}} ({{CVPR}})},
+  author = {{liu}, zhuang},
+  date = {2022-06},
+  pages = {11966--11976},
+  publisher = {{IEEE}},
+  location = {{New Orleans, United States}},
+  doi = {10.1109/CVPR52688.2022.01167},
+  eventtitle = {{{CVPR}} 2022},
+  langid = {english}
+}
+
+@inproceedings{Liu2022a,
+  title = {A {{ConvNet}} for the 2020s},
+  booktitle = {2022 {{IEEE}}/{{CVF Conference}} on {{Computer Vision}} and {{Pattern Recognition}} ({{CVPR}})},
+  author = {Liu, Zhuang},
+  date = {2022-06},
+  pages = {11966--11976},
+  publisher = {{IEEE}},
+  location = {{New Orleans, United States}},
+  doi = {10.1109/CVPR52688.2022.01167},
+  eventtitle = {{{CVPR}} 2022},
+  langid = {english}
+}
