@@ -439,6 +439,8 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     for (const [k, v] of Object.entries(defaults)) {
       if (typeof displayOptions[k] === 'undefined') displayOptions[k] = v
     }
+    if (this.byId[translatorID].label === 'BetterBibTeX JSON') displayOptions.exportCharset = 'UTF-8xBOM'
+
     return displayOptions
   }
 

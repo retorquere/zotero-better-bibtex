@@ -45,6 +45,13 @@ When &gt; 0, BBT will automatically pin the first citation keys it generates for
 
 ## Keeping citation keys unique
 
+### "Ignore upper/lowercase when comparing for uniqueness
+
+default: `yes`
+
+Treat "AugusteComte" and "augustecomte" as the same key when testing for uniqueness
+
+
 ### Keep keys unique
 
 default: `within each library`

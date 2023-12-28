@@ -1,0 +1,66 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "options": {
+      "exportNotes": true
+    },
+    "preferences": {
+      "DOIandURL": "doi",
+      "autoAbbrev": true,
+      "bibtexURL": "url",
+      "citekeyFormat": "auth + year",
+      "extraMergeCSL": true,
+      "extraMergeCitekeys": true,
+      "extraMergeTeX": true,
+      "skipFields": "isbn, issn, abstract, keywords, file",
+      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc,groups"
+    }
+  },
+  "items": [
+    {
+      "DOI": "10.1109/CVPR52688.2022.01167",
+      "ISBN": "978-1-66546-946-3",
+      "conferenceName": "CVPR 2022",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "zhuang",
+          "lastName": "liu"
+        }
+      ],
+      "date": "2022-06",
+      "itemID": 1,
+      "itemType": "conferencePaper",
+      "language": "en",
+      "pages": "11966-11976",
+      "place": "New Orleans, United States",
+      "publicationTitle": "2022 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)",
+      "publisher": "IEEE",
+      "title": "A ConvNet for the 2020s",
+      "url": "https://ieeexplore.ieee.org/document/9879745/"
+    },
+    {
+      "DOI": "10.1109/CVPR52688.2022.01167",
+      "ISBN": "978-1-66546-946-3",
+      "conferenceName": "CVPR 2022",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Zhuang",
+          "lastName": "Liu"
+        }
+      ],
+      "date": "2022-06",
+      "itemID": 2,
+      "itemType": "conferencePaper",
+      "language": "en",
+      "pages": "11966-11976",
+      "place": "New Orleans, United States",
+      "publicationTitle": "2022 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)",
+      "publisher": "IEEE",
+      "title": "A ConvNet for the 2020s",
+      "url": "https://ieeexplore.ieee.org/document/9879745/"
+    }
+  ]
+}

@@ -78,6 +78,7 @@
     "citeproc": "^2.4.63",
     "csl-json": "^0.1.0",
     "cyrillic-to-translit-js": "^3.2.1",
+    "detect-file-encoding-and-language": "^2.4.0",
     "edtf": "^4.5.1",
     "edtfy": "^0.0.8",
     "emittery": "^1.0.1",

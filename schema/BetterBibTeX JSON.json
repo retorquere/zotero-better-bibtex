@@ -198,6 +198,9 @@
             "citeCommand": {
               "type": "string"
             },
+            "citekeyCaseInsensitive": {
+              "type": "boolean"
+            },
             "citekeyFold": {
               "type": "boolean"
             },
