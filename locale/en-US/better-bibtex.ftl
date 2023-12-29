@@ -252,7 +252,7 @@ better-bibtex_preferences_citekey_uniqueness =
   .label = Keeping citation keys unique
 
 better-bibtex_preferences_citekey_uniqueness_case =
-  .label = "Ignore upper/lowercase when comparing for uniqueness
+  .label = Ignore upper/lowercase when comparing for uniqueness
 better-bibtex_preferences_citekey_uniqueness_conflict = On conflict with a pinned key, non-pinned keys will be
 better-bibtex_preferences_citekey_uniqueness_conflict_change = postfixed (causes key changes)
   .label = { better-bibtex_preferences_citekey_uniqueness_conflict_change }
