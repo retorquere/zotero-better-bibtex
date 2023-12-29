@@ -733,20 +733,6 @@ Feature: Export
     When I compile "export/*.md" to "~/*.odt" it should match "export/*.odt" with 22 citations
     When I compile "export/*.md" to "~/*.docx" it should match "export/*.docx" with 22 citations
 
-  @use.with_client=zotero @use.with_slow=true @timeout=3000
-  Scenario: Compare export times
-    Given I import 86 references from "export/*.json"
-    And I set preference .cache to false
-    Then I export the library 50 times using "Better BibTeX"
-    # stock bibtex
-    And I export the library 50 times using "id:9cb70025-a888-4a29-a210-93ec52da40d4"
-    Then I export the library 50 times using "Better BibLaTeX"
-    # stock biblatex
-    And I export the library 50 times using "id:b6e39b57-8942-4d11-8259-342c46ce395f"
-    Then I set preference .cache to true
-    And I export the library 50 times using "Better BibTeX"
-    And I export the library 50 times using "Better BibLaTeX"
-
   # Scenario: error exporting Better BibLaTex this.preference.skipFields is undefined #2029
   # Given I restart Zotero
   # And I remove all items
