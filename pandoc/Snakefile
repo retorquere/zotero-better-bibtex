@@ -48,6 +48,12 @@ rule this:
   run:
     shell('pandoc -s --lua-filter=bundled.lua -o paper{TIMESTAMP}.docx 2736.md')
 
+rule using:
+  input: rules.bundle.output
+  run:
+    shutil.copy("../test/fixtures/export/Using zotero.lua .md to .docx to add canonic number after comma without 'p.' #2248.md", "using.md")
+    shell('pandoc -s --lua-filter=bundled.lua -o using.odt using.md')
+
 rule rocks:
   run:
     shell("brew install luarocks")

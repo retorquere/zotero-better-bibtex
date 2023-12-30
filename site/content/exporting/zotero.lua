@@ -1,8 +1,8 @@
 
-  print('zotero-live-citations 80dbd87')
+  print('zotero-live-citations b76cb52')
   local mt, latest = pandoc.mediabag.fetch('https://retorque.re/zotero-better-bibtex/exporting/zotero.lua.revision')
   latest = string.sub(latest, 1, 10)
-  if '80dbd87' ~= latest then
+  if 'b76cb52' ~= latest then
     print('new version "' .. latest .. '" available at https://retorque.re/zotero-better-bibtex/exporting')
   end
 
@@ -1851,11 +1851,12 @@ end
 -- -- -- citation marker generators -- -- --
 
 function clean_csl(item)
-  -- http://lua-users.org/wiki/CopyTable
-  item = { table.unpack(item) }
-  item.custom = nil
-  return item
+  local cleaned = { }
+  for k, v in pairs(item) do cleaned[k] = v end
+  cleaned.custom = nil
+  return setmetatable(cleaned, getmetatable(item))
 end
+
 local function zotero_ref(cite)
   local content = pandoc.utils.stringify(cite.content)
   local csl = {
