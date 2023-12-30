@@ -69,6 +69,7 @@ zotero:
   client: <zotero or jurism> # defaults to zotero
   author-in-text: false # when true, enabled fake author-name-only cites by replacing it with the text of the last names of the authors
   csl-style: apa # pre-fill the style
+  sorted: true # sort clustered citations by author.
 ...
 ```
 
@@ -91,3 +92,5 @@ and you must use ODT.
 You can also specify `transferable: true` to create a [transferable document](https://www.zotero.org/support/kb/moving_documents_between_word_processors). You don't really need this for ODT or DOCX (just use Pandoc to create those directly using this filter), but it will allow transferring your document to GDocs.
 
 Zotero needs to be running, with BBT installed, while you compile your document.
+
+With regards to sorting citations within a cluster, this is how Zotero does it by default, where pandoc keeps citations in the order you entered them. You can override this by setting `sorted` to `false`, for example to retain a prefix at the front, but it may generated citations that are not style-compliant.
