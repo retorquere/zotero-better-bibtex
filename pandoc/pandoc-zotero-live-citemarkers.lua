@@ -115,11 +115,12 @@ end
 -- -- -- citation marker generators -- -- --
 
 function clean_csl(item)
-  -- http://lua-users.org/wiki/CopyTable
-  item = { table.unpack(item) }
-  item.custom = nil
-  return item
+  local cleaned = { }
+  for k, v in pairs(item) do cleaned[k] = v end
+  cleaned.custom = nil
+  return setmetatable(cleaned, getmetatable(item))
 end
+
 local function zotero_ref(cite)
   local content = pandoc.utils.stringify(cite.content)
   local csl = {
