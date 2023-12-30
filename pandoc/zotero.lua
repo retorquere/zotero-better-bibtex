@@ -72,7 +72,11 @@ local function load_items()
   local mt, body = pandoc.mediabag.fetch(url, '.')
   local ok, response = pcall(json.decode, body)
   if not ok then
-    print('could not fetch Zotero items: ' .. response)
+    print('could not fetch Zotero items: ' .. body)
+    return
+  end
+  if response.error ~= nil then
+    print('could not fetch Zotero items: ' .. response.error.message)
     return
   end
   state.fetched = response.result
