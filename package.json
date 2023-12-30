@@ -14,7 +14,8 @@
     "optionsURL": "chrome://zotero/content/preferences/preferences.xul#better-bibtex",
     "updateLink": "https://github.com/retorquere/zotero-better-bibtex/releases/download/v{version}/zotero-better-bibtex-{version}.xpi",
     "updateInfoURL": "https://github.com/retorquere/zotero-better-bibtex/releases/latest",
-    "releaseURL": "https://github.com/retorquere/zotero-better-bibtex/releases/download/release/"
+    "releaseURL": "https://github.com/retorquere/zotero-better-bibtex/releases/download/release/",
+    "bootstrapped": true
   },
   "scripts": {
     "ae": "./test/behave --test 2573",
