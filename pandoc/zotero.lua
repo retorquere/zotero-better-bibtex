@@ -67,15 +67,15 @@ local function load_items()
     return
   end
 
-  citekeys = table.concat(citekeys, ',')
-  local url = module.url .. utils.urlencode(citekeys)
-  local mt, contents = pandoc.mediabag.fetch(url, '.')
-  local ok, fetched = pcall(json.decode, contents)
+  module.request.params.citekeys = citekeys
+  local url = module.url .. utils.urlencode(json.encode(module.request))
+  local mt, body = pandoc.mediabag.fetch(url, '.')
+  local ok, response = pcall(json.decode, body)
   if not ok then
-    print('could not fetch Zotero items: ' .. contents)
+    print('could not fetch Zotero items: ' .. response)
     return
   end
-  state.fetched = fetched
+  state.fetched = response.result
 end
 
 function module.get(citekey)
@@ -87,7 +87,11 @@ function module.get(citekey)
 
   if state.fetched.errors[citekey] ~= nil then
     state.reported[citekey] = true
-    print('@' .. citekey .. ': ' .. state.fetched.errors[citekey])
+    if state.fetched.errors[citekey] == 0 then
+      print('@' .. citekey .. ': not found')
+    else
+      print('@' .. citekey .. ': duplicates found')
+    end
     return nil
   end
 
@@ -97,7 +101,7 @@ function module.get(citekey)
     return nil
   end
 
-  return state.fetched.items[citekey], state.fetched.zotero[citekey]
+  return state.fetched.items[citekey]
 end
 
 return module

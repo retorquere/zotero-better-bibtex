@@ -51,4 +51,4 @@ rule rocks:
     shell("luarocks install lpeg")
 
 rule start:
-	shell: "ZOTERO_IMPORT={BIB} npm start"
+	shell: "npm start -- --import {BIB}"
