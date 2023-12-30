@@ -1,8 +1,8 @@
 
-  print('zotero-live-citations 2bfc534')
+  print('zotero-live-citations 80dbd87')
   local mt, latest = pandoc.mediabag.fetch('https://retorque.re/zotero-better-bibtex/exporting/zotero.lua.revision')
   latest = string.sub(latest, 1, 10)
-  if '2bfc534' ~= latest then
+  if '80dbd87' ~= latest then
     print('new version "' .. latest .. '" available at https://retorque.re/zotero-better-bibtex/exporting')
   end
 
@@ -54,7 +54,6 @@ local pseudo_locator = lpeg.C(lpeg.P(',')^-1 * whitespace) * lpeg.P('{') * lpeg.
 local module = {}
 
 function module.parse(input)
-  print('parsing locator: ' .. input)
   local parsed, _prefix, _label, _locator, _suffix
 
   parsed = lpeg.Ct(suffix):match(input)
@@ -1862,6 +1861,7 @@ local function zotero_ref(cite)
   local csl = {
     citationID = utils.next_id(8),
     properties = {
+      unsorted = true,
       formattedCitation = content,
       plainCitation = nil, -- otherwise we get a barrage of "you have edited this citation" popups
       -- dontUpdate = false,
@@ -1874,7 +1874,6 @@ local function zotero_ref(cite)
 
   notfound = false
   for k, item in pairs(cite.citations) do
-    print(utils.dump(item))
     local itemData = zotero.get(item.id)
     if itemData == nil then
       notfound = true

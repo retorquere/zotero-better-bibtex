@@ -125,6 +125,7 @@ local function zotero_ref(cite)
   local csl = {
     citationID = utils.next_id(8),
     properties = {
+      unsorted = true,
       formattedCitation = content,
       plainCitation = nil, -- otherwise we get a barrage of "you have edited this citation" popups
       -- dontUpdate = false,
