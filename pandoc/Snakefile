@@ -33,6 +33,7 @@ rule bundle:
 
     with open(DEPLOYED + '.revision', 'w') as deployed:
       deployed.write(VERSION)
+    shutil.copy(DEPLOYED, 'bundled.lua')
 
 rule test:
   input: rules.bundle.output

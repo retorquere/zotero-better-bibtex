@@ -1,8 +1,8 @@
 
-  print('zotero-live-citations 242fdd8')
+  print('zotero-live-citations 2bfc534')
   local mt, latest = pandoc.mediabag.fetch('https://retorque.re/zotero-better-bibtex/exporting/zotero.lua.revision')
   latest = string.sub(latest, 1, 10)
-  if '242fdd8' ~= latest then
+  if '2bfc534' ~= latest then
     print('new version "' .. latest .. '" available at https://retorque.re/zotero-better-bibtex/exporting')
   end
 
@@ -54,6 +54,7 @@ local pseudo_locator = lpeg.C(lpeg.P(',')^-1 * whitespace) * lpeg.P('{') * lpeg.
 local module = {}
 
 function module.parse(input)
+  print('parsing locator: ' .. input)
   local parsed, _prefix, _label, _locator, _suffix
 
   parsed = lpeg.Ct(suffix):match(input)
@@ -1694,7 +1695,11 @@ local function load_items()
   local mt, body = pandoc.mediabag.fetch(url, '.')
   local ok, response = pcall(json.decode, body)
   if not ok then
-    print('could not fetch Zotero items: ' .. response)
+    print('could not fetch Zotero items: ' .. body)
+    return
+  end
+  if response.error ~= nil then
+    print('could not fetch Zotero items: ' .. response.error.message)
     return
   end
   state.fetched = response.result
@@ -1869,6 +1874,7 @@ local function zotero_ref(cite)
 
   notfound = false
   for k, item in pairs(cite.citations) do
+    print(utils.dump(item))
     local itemData = zotero.get(item.id)
     if itemData == nil then
       notfound = true

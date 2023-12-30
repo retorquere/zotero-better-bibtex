@@ -15,3 +15,6 @@ rocks:
 
 start:
 	snakemake start
+
+this:
+	snakemake this

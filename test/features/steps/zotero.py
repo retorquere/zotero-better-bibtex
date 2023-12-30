@@ -24,6 +24,7 @@ import atexit
 import time
 import datetime
 import jsonschema
+import traceback
 
 from collections import OrderedDict
 from collections.abc import MutableMapping
@@ -329,12 +330,17 @@ class Zotero:
 
     if self.import_at_start:
       prefs = {}
-      if self.import_at_start.endswith('.json'):
-        with open(self.import_at_start) as f:
-          data = json.load(f)
-          prefs = data.get('config', {}).get('preferences', {})
-      utils.print(f'import at start: {json.dumps(self.import_at_start)}, {json.dumps(prefs)}')
-      self.execute('return await Zotero.BetterBibTeX.TestSupport.importFile(file, true, prefs)', file=self.import_at_start, prefs=prefs)
+      try:
+        if self.import_at_start.endswith('.json'):
+          with open(self.import_at_start) as f:
+            data = json.load(f)
+            prefs = data.get('config', {}).get('preferences', {})
+        utils.print(f'import at start: {json.dumps(self.import_at_start)}, {json.dumps(prefs)}')
+        self.execute('return await Zotero.BetterBibTeX.TestSupport.importFile(file, true, prefs)', file=self.import_at_start, prefs=prefs)
+      except Exception as e:
+        utils.print(f'failed to import at start: {json.dumps(self.import_at_start)}, {json.dumps(prefs)}')
+        utils.print(traceback.format_exc())
+        raise e
       self.import_at_start = None
 
   def reset(self, scenario):
