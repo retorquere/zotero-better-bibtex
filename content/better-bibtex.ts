@@ -575,6 +575,7 @@ export class BetterBibTeX {
   public ExportOptions: ExportOptions = new ExportOptions
   public ErrorReport = ErrorReport
   public PrefPane = new PrefPane
+  public Translators = Translators
 
   public ready = new Deferred<boolean>()
   public dir: string
