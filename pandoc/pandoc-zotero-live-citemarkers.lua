@@ -38,7 +38,8 @@ local config = {
   scannable_cite = false,
   csl_style = 'apa7',
   format = nil, -- more to document than anything else -- Lua does not store nils in tables
-  transferable = false
+  transferable = false,
+  sorted = true,
 }
 
 -- -- -- bibliography marker generator -- -- --
@@ -126,7 +127,7 @@ local function zotero_ref(cite)
   local csl = {
     citationID = utils.next_id(8),
     properties = {
-      unsorted = true,
+      unsorted = not config.sorted,
       formattedCitation = content,
       plainCitation = nil, -- otherwise we get a barrage of "you have edited this citation" popups
       -- dontUpdate = false,
