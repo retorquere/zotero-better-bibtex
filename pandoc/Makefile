@@ -14,4 +14,4 @@ rocks:
 	snakemake rocks
 
 start:
-	snakemake rocks
+	snakemake start

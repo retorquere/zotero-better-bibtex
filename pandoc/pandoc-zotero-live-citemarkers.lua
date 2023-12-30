@@ -112,7 +112,14 @@ local function zotero_bibl_odt()
     'ZOTERO_BIBL ' .. utils.xmlattr(bib_settings) .. ' CSL_BIBLIOGRAPHY' .. ' RND' .. utils.next_id(10))
 end
 
--- -- -- citation market generators -- -- --
+-- -- -- citation marker generators -- -- --
+
+function clean_csl(item)
+  -- http://lua-users.org/wiki/CopyTable
+  item = { table.unpack(item) }
+  item.custom = nil
+  return item
+end
 local function zotero_ref(cite)
   local content = pandoc.utils.stringify(cite.content)
   local csl = {
@@ -130,16 +137,16 @@ local function zotero_ref(cite)
 
   notfound = false
   for k, item in pairs(cite.citations) do
-    local itemData, zoteroData = zotero.get(item.id)
+    local itemData = zotero.get(item.id)
     if itemData == nil then
       notfound = true
     else
 
       local citation = {
-        id = zoteroData.itemID,
-        uris = { zoteroData.uri },
+        id = itemData.custom.itemID,
+        uris = { itemData.custom.uri },
         -- uri = { zoteroData.uri },
-        itemData = itemData,
+        itemData = clean_csl(itemData),
       }
 
       if item.mode == 'AuthorInText' then -- not formally supported in Zotero
@@ -334,25 +341,29 @@ function Meta(meta)
   config.client = meta.zotero.client
 
   if config.client == 'zotero' then
-    zotero.url = 'http://127.0.0.1:23119/better-bibtex/export/item?pandocFilterData=true'
+    zotero.url = 'http://127.0.0.1:23119/better-bibtex/json-rpc?'
   elseif config.client == 'jurism' then
-    zotero.url = 'http://127.0.0.1:24119/better-bibtex/export/item?pandocFilterData=true'
+    zotero.url = 'http://127.0.0.1:24119/better-bibtex/json-rpc?'
   end
 
+  zotero.request = {
+    jsonrpc = "2.0",
+    method = "item.pandoc_filter",
+    params = {
+    },
+  }
   if string.match(FORMAT, 'odt') and config.scannable_cite then
     -- scannable-cite takes precedence over csl-style
     config.format = 'scannable-cite'
-    zotero.url = zotero.url .. '&translator=jzon'
+    zotero.request.params.csl = false
   elseif string.match(FORMAT, 'odt') or string.match(FORMAT, 'docx') then
     config.format = FORMAT
-    zotero.url = zotero.url .. '&translator=json'
+    zotero.request.params.csl = true
   end
 
   if type(meta.zotero.library) ~= 'nil' then
-    zotero.url = zotero.url .. '&library=' .. utils.urlencode(meta.zotero.library)
+    zotero.request.params.libraryID = meta.zotero.library
   end
-
-  zotero.url = zotero.url .. '&citationKeys='
 
   if config.format == 'odt' and config.csl_style then
     -- These will be added to the document metadata by pandoc automatically
