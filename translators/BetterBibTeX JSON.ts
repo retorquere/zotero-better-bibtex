@@ -10,7 +10,7 @@ const version = require('../gen/version.js')
 // import { stringify } from '../content/stringify'
 // import { log } from '../content/logger'
 import type { Library } from './lib/normalize'
-import  { asciify } from '../content/stringify'
+import  { asciify } from '../content/text'
 
 const chunkSize = 0x100000
 
