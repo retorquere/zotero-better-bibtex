@@ -1,8 +1,8 @@
 
-  print('zotero-live-citations 67d5e8e')
+  print('zotero-live-citations 927e76a')
   local mt, latest = pandoc.mediabag.fetch('https://retorque.re/zotero-better-bibtex/exporting/zotero.lua.revision')
   latest = string.sub(latest, 1, 10)
-  if '67d5e8e' ~= latest then
+  if '927e76a' ~= latest then
     print('new version "' .. latest .. '" available at https://retorque.re/zotero-better-bibtex/exporting')
   end
 
@@ -1694,7 +1694,7 @@ local function load_items()
   local mt, body = pandoc.mediabag.fetch(url, '.')
   local ok, response = pcall(json.decode, body)
   if not ok then
-    print('could not fetch Zotero items: ' .. body)
+    print('could not fetch Zotero items: ' .. response .. '(' .. body .. ')')
     return
   end
   if response.error ~= nil then
