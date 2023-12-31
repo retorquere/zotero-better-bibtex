@@ -159,6 +159,7 @@ local function zotero_ref(cite)
             return cite
           else
             author_in_text = pandoc.utils.stringify(pandoc.Str(authors)) .. ' '
+            author_in_text = '<w:r><w:t xml:space="preserve">' .. utils.xmlescape(author_in_text) .. '</w:t></w:r>'
             citation['suppress-author'] = true
           end
         else

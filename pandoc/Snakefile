@@ -46,7 +46,7 @@ rule test:
 rule this:
   input: rules.bundle.output
   run:
-    shell('pandoc -s --lua-filter=bundled.lua -o paper{TIMESTAMP}.docx 2736.md')
+    shell('pandoc -s --lua-filter=bundled.lua -o 2736.docx 2736.md')
 
 rule using:
   input: rules.bundle.output
