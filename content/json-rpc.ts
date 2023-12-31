@@ -427,11 +427,11 @@ class NSItem {
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return [OK, 'text/plain', await Translators.queueJob({
+    return await Translators.queueJob({
       translatorID: Translators.getTranslatorId(translator),
       displayOptions: {},
       scope: { type: 'items', items: await getItemsAsync(found.map(key => key.itemID)) }, // eslint-disable-line @typescript-eslint/no-unsafe-return
-    })]
+    })
   }
 
   /**
