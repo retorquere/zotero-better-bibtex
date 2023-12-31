@@ -1,8 +1,8 @@
 
-  print('zotero-live-citations af0f95b')
+  print('zotero-live-citations 67d5e8e')
   local mt, latest = pandoc.mediabag.fetch('https://retorque.re/zotero-better-bibtex/exporting/zotero.lua.revision')
   latest = string.sub(latest, 1, 10)
-  if 'af0f95b' ~= latest then
+  if '67d5e8e' ~= latest then
     print('new version "' .. latest .. '" available at https://retorque.re/zotero-better-bibtex/exporting')
   end
 
@@ -2094,10 +2094,10 @@ function Meta(meta)
   if string.match(FORMAT, 'odt') and config.scannable_cite then
     -- scannable-cite takes precedence over csl-style
     config.format = 'scannable-cite'
-    zotero.request.params.csl = false
+    zotero.request.params.asCSL = false
   elseif string.match(FORMAT, 'odt') or string.match(FORMAT, 'docx') then
     config.format = FORMAT
-    zotero.request.params.csl = true
+    zotero.request.params.asCSL = true
   end
 
   if type(meta.zotero.library) ~= 'nil' then

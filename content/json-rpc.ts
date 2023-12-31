@@ -427,7 +427,7 @@ class NSItem {
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return [OK, 'text/plain', await Translators.exportItems({
+    return [OK, 'text/plain', await Translators.queueJob({
       translatorID: Translators.getTranslatorId(translator),
       displayOptions: {},
       scope: { type: 'items', items: await getItemsAsync(found.map(key => key.itemID)) }, // eslint-disable-line @typescript-eslint/no-unsafe-return
@@ -438,10 +438,10 @@ class NSItem {
    * Generate an export for a list of citekeys, tailored for the pandoc zotero filter
    *
    * @param citekeys      Array of citekeys
-   * @param csl           Convert the items to CSL
+   * @param asCSL         Return the items as CSL
    * @param libraryID     ID of library to select the items from. When omitted, assume 'My Library'
    */
-  public async pandoc_filter(citekeys: string[], csl: boolean, libraryID?: string | number) {
+  public async pandoc_filter(citekeys: string[], asCSL: boolean, libraryID?: string | number) {
     citekeys = [...(new Set(citekeys))]
     const ci = Preference.citekeyCaseInsensitive
     const result: { errors: Record<string, number>, items: Record<string, any> } = { errors: {}, items: {} }
@@ -463,10 +463,24 @@ class NSItem {
 
     if (!itemIDs.length) return result
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    for (const item of (await getItemsAsync(itemIDs)).map(i => Zotero.Utilities.Internal.itemToExportFormat(i, false, true))) {
-      // https://github.com/citation-style-language/schema/pull/280
-      result.items[item.citationKey] = csl ? { ...Zotero.Utilities.Item.itemToCSLJSON(item), custom: { uri: item.uri, itemID: item.itemID } } : item
+    const items = await getItemsAsync(itemIDs)
+
+    if (asCSL) {
+      // I need the cleanup BCJ does
+      const csl = JSON.parse(await Translators.queueJob({
+        translatorID: Translators.getTranslatorId('Better CSL JSON'),
+        displayOptions: { custom: true},
+        scope: { type: 'items', items },
+      }))
+      for (const item of csl) {
+        result.items[item['citation-key']] = item
+      }
+    }
+    else {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+      for (const item of items.map(i => Zotero.Utilities.Internal.itemToExportFormat(i, false, true))) {
+        result.items[item.citationKey] = item
+      }
     }
 
     return result
