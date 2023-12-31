@@ -358,10 +358,10 @@ function Meta(meta)
   if string.match(FORMAT, 'odt') and config.scannable_cite then
     -- scannable-cite takes precedence over csl-style
     config.format = 'scannable-cite'
-    zotero.request.params.csl = false
+    zotero.request.params.asCSL = false
   elseif string.match(FORMAT, 'odt') or string.match(FORMAT, 'docx') then
     config.format = FORMAT
-    zotero.request.params.csl = true
+    zotero.request.params.asCSL = true
   end
 
   if type(meta.zotero.library) ~= 'nil' then

@@ -78,7 +78,10 @@ export abstract class CSLExporter {
       item.journalAbbreviation = item.journalAbbreviation || item.autoJournalAbbreviation
 
       let csl = Zotero.Utilities.Item.itemToCSLJSON(item)
+
       csl['citation-key'] = item.citationKey
+      if (Zotero.getOption('custom')) csl.custom = { uri: item.uri, itemID: item.itemID }
+
       if (Zotero.worker) csl.note = item.extra || undefined
 
       if (item.place) csl[item.itemType === 'presentation' ? 'event-place' : 'publisher-place'] = item.place
