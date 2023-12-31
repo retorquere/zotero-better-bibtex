@@ -1,8 +1,8 @@
 
-  print('zotero-live-citations 927e76a')
+  print('zotero-live-citations 48ec0f9')
   local mt, latest = pandoc.mediabag.fetch('https://retorque.re/zotero-better-bibtex/exporting/zotero.lua.revision')
   latest = string.sub(latest, 1, 10)
-  if '927e76a' ~= latest then
+  if '48ec0f9' ~= latest then
     print('new version "' .. latest .. '" available at https://retorque.re/zotero-better-bibtex/exporting')
   end
 
@@ -1895,6 +1895,7 @@ local function zotero_ref(cite)
             return cite
           else
             author_in_text = pandoc.utils.stringify(pandoc.Str(authors)) .. ' '
+            author_in_text = '<w:r><w:t xml:space="preserve">' .. utils.xmlescape(author_in_text) .. '</w:t></w:r>'
             citation['suppress-author'] = true
           end
         else
