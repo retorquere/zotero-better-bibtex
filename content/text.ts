@@ -505,3 +505,7 @@ export function escapeHTML(unsafe: string): string {
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;')
 }
+
+export function asciify(str: string): string {
+  return str.replace(/[\u007F-\uFFFF]/g, chr => `\\u${(`0000${chr.charCodeAt(0).toString(16)}`).substr(-4)}`)
+}
