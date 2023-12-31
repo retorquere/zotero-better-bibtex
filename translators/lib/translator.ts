@@ -286,6 +286,7 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
     Preferences?: boolean
     Items?: boolean
     worker?: boolean
+    custom?: boolean // for pandoc-filter CSL
   }
 
   public BetterBibLaTeX?: boolean                   // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
@@ -450,6 +451,7 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
         this.options[key] = !!Zotero.getOption(key)
       }
     }
+    this.options.custom = Zotero.getOption('custom') // for pandoc-filter CSL
 
     this.preferences = Object.entries(Prefs.defaults).reduce((acc, [pref, dflt]) => {
       acc[pref] = Zotero.getHiddenPref(`better-bibtex.${pref}`) ?? dflt

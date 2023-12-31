@@ -80,7 +80,7 @@ export abstract class CSLExporter {
       let csl = Zotero.Utilities.Item.itemToCSLJSON(item)
 
       csl['citation-key'] = item.citationKey
-      if (Zotero.getOption('custom')) csl.custom = { uri: item.uri, itemID: item.itemID }
+      if (this.translation.options.custom) csl.custom = { uri: item.uri, itemID: item.itemID }
 
       if (Zotero.worker) csl.note = item.extra || undefined
 
