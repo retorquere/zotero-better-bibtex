@@ -477,7 +477,14 @@ class NSItem {
       if (!style.includes('/')) style = `http://www.zotero.org/styles/${style}`
       locale = locale || Zotero.Prefs.get('export.quickCopy.locale')
       Zotero.debug(`pandoc-filter: getting citeproc for ${style} / ${locale}`)
-      const citeproc = Zotero.Styles.get(style).getCiteProc(locale)
+
+      let citeproc
+      try {
+        citeproc = Zotero.Styles.get(style).getCiteProc(locale)
+      }
+      catch (err) {
+        throw new Error(`Could not load citation style ${style}`)
+      }
 
       for (const item of csl) {
         result.items[item['citation-key']] = item
