@@ -154,8 +154,8 @@ local function zotero_ref(cite)
 
       if item.mode == 'AuthorInText' then -- not formally supported in Zotero
         if config.author_in_text then
-          local authors = zotero.authors(itemData)
-          if authors == nil then
+          local authors = itemData.custom.author
+          if authors == nil or authors == '' then
             return cite
           else
             author_in_text = pandoc.utils.stringify(pandoc.Str(authors)) .. ' '
@@ -354,6 +354,7 @@ function Meta(meta)
     jsonrpc = "2.0",
     method = "item.pandoc_filter",
     params = {
+      style = config.csl_style or 'apa',
     },
   }
   if string.match(FORMAT, 'odt') and config.scannable_cite then

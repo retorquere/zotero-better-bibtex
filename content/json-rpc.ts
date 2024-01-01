@@ -441,7 +441,7 @@ class NSItem {
    * @param asCSL         Return the items as CSL
    * @param libraryID     ID of library to select the items from. When omitted, assume 'My Library'
    */
-  public async pandoc_filter(citekeys: string[], asCSL: boolean, libraryID?: string | number) {
+  public async pandoc_filter(citekeys: string[], asCSL: boolean, libraryID?: string | number, style?: string, locale?: string) {
     citekeys = [...(new Set(citekeys))]
     const ci = Preference.citekeyCaseInsensitive
     const result: { errors: Record<string, number>, items: Record<string, any> } = { errors: {}, items: {} }
@@ -472,9 +472,47 @@ class NSItem {
         displayOptions: { custom: true},
         scope: { type: 'items', items },
       }))
+
+      style = style || 'apa'
+      if (!style.includes('/')) style = `http://www.zotero.org/styles/${style}`
+      locale = locale || Zotero.Prefs.get('export.quickCopy.locale')
+      const citeproc = Zotero.Styles.get(style).getCiteProc(locale)
+
       for (const item of csl) {
         result.items[item['citation-key']] = item
+
+        let [ authorDate, date ] = [false, true].map(suppress => {
+          citeproc.updateItems([ item.custom.itemID ])
+          const citation = {
+            citationItems: [ { id: item.custom.itemID, 'suppress-author': suppress } ],
+            properties: {},
+          }
+          return citeproc.previewCitationCluster(citation, [], [], 'text') as string
+        })
+
+        while (authorDate.length && date.length && authorDate[0] === date[0] && !authorDate.endsWith(date)) {
+          authorDate = authorDate.slice(1)
+          date = date.slice(1)
+        }
+
+        if (authorDate.endsWith(date)) {
+          item.custom.author = authorDate.replace(date, '').replace(/\s*,\s*$/, '')
+        }
+        else {
+          item.custom.author = items.find(i => i.id === item.custom.itemID)?.getField('firstCreator')
+          item.custom.author = item.custom.author || ['author', 'creators', 'reporter']
+            .map(cr => item[cr] as { literal: string, family: string} [])
+            .find(cr => cr)
+            ?.map(cr => cr.literal || cr.family)
+            .filter(cr => cr)
+            .join(', ')
+            .replace(/(, )(?!.*\1)/, ' and ')
+          item.custom.author = item.custom.author || ''
+        }
       }
+
+      citeproc.free()
+
     }
     else {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return

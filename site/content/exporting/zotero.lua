@@ -1,8 +1,8 @@
 
-  print('zotero-live-citations 48ec0f9')
+  print('zotero-live-citations e9fb621')
   local mt, latest = pandoc.mediabag.fetch('https://retorque.re/zotero-better-bibtex/exporting/zotero.lua.revision')
   latest = string.sub(latest, 1, 10)
-  if '48ec0f9' ~= latest then
+  if 'e9fb621' ~= latest then
     print('new version "' .. latest .. '" available at https://retorque.re/zotero-better-bibtex/exporting')
   end
 
@@ -1632,44 +1632,6 @@ local state = {
 
 module.citekeys = {}
 
-function module.authors(csl_or_item)
-  local authors = {}
-  local author
-
-  if csl_or_item.author ~= nil then
-    for _, author in ipairs(csl_or_item.author) do
-      if author.literal ~= nil then
-        table.insert(authors, author.literal)
-      elseif author.family ~= nil then
-        table.insert(authors, author.family)
-      end
-    end
-
-  elseif csl_or_item.creators ~= nil then
-    for _, author in ipairs(csl_or_item.creators) do
-      if author.name ~= nil then
-        table.insert(authors, author.name)
-      elseif author.lastName ~= nil then
-        table.insert(authors, author.lastName)
-      end
-    end
-
-  elseif csl_or_item.reporter ~= nil then
-    table.insert(authors, csl_or_item.reporter)
-  end
-
-  if utils.tablelength(authors) == 0 then
-    return nil
-  end
-
-  local last = table.remove(authors)
-  if utils.tablelength(authors) == 0 then
-    return last
-  end
-  authors = table.concat(authors, ', ')
-  return table.concat({ authors, last }, ' and ')
-end
-
 local function load_items()
   if state.fetched ~= nil then
     return
@@ -1890,8 +1852,8 @@ local function zotero_ref(cite)
 
       if item.mode == 'AuthorInText' then -- not formally supported in Zotero
         if config.author_in_text then
-          local authors = zotero.authors(itemData)
-          if authors == nil then
+          local authors = itemData.custom.author
+          if authors == nil or authors == '' then
             return cite
           else
             author_in_text = pandoc.utils.stringify(pandoc.Str(authors)) .. ' '
@@ -2090,6 +2052,7 @@ function Meta(meta)
     jsonrpc = "2.0",
     method = "item.pandoc_filter",
     params = {
+      style = config.csl_style or 'apa',
     },
   }
   if string.match(FORMAT, 'odt') and config.scannable_cite then
