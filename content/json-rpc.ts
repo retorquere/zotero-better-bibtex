@@ -476,6 +476,7 @@ class NSItem {
       style = style || 'apa'
       if (!style.includes('/')) style = `http://www.zotero.org/styles/${style}`
       locale = locale || Zotero.Prefs.get('export.quickCopy.locale')
+      Zotero.debug(`pandoc-filter: getting citeproc for ${style} / ${locale}`)
       const citeproc = Zotero.Styles.get(style).getCiteProc(locale)
 
       for (const item of csl) {
