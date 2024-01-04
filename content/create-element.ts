@@ -8,21 +8,23 @@ export const NAMESPACE = {
 type Handler = (event?: any) => void | Promise<void>
 
 export class Elements {
-  static all: Set<WeakRef<HTMLElement>> = new Set
+  static all: WeakRef<Elements>[] = []
 
   static removeAll(): void {
-    for (const eltRef of this.all) {
+    for (const ref of this.all) {
       try {
-        eltRef.deref()?.remove()
+        const elements = ref.deref()
+        if (elements) elements.document.querySelectorAll(`.${elements.className}`).forEach(e => e.remove())
       }
       catch (err) {}
     }
-    this.all = new Set
+    this.all = []
   }
 
   private className: string
   constructor(private document: Document) {
     this.className = `better-bibtex-${Zotero.Utilities.generateObjectKey()}`
+    if (is7) Elements.all.push(new WeakRef(this))
   }
 
   public serialize(node: HTMLElement): string {
@@ -58,8 +60,6 @@ export class Elements {
     for (const child of children) {
       elt.appendChild(child)
     }
-
-    if (is7) Elements.all.add(new WeakRef(elt))
 
     return elt
   }
