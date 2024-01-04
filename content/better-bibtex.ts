@@ -694,9 +694,7 @@ export class BetterBibTeX {
       startup: async () => {
         // https://groups.google.com/d/msg/zotero-dev/QYNGxqTSpaQ/uvGObVNlCgAJ
         // this is what really takes long
-        const before = Date.now()
         await Zotero.initializationPromise
-        log.debug('startup: Zotero.initializationPromise took', (Date.now() - before)/1000, 'seconds')
 
         this.dir = OS.Path.join(Zotero.DataDirectory.dir, 'better-bibtex')
         await OS.File.makeDir(this.dir, { ignoreExisting: true })
@@ -843,36 +841,11 @@ export class BetterBibTeX {
       )
     }
 
-    // progress.update(l10n.localize('better-bibtex_startup_serialization-cache'), 20)
-    // Serializer.init()
-
-    // progress.update(l10n.localize('better-bibtex_startup_auto-export_load'), 30)
-    // await AutoExport.init()
-
-    // progress.update(l10n.localize('better-bibtex_startup_journal-abbrev'), 60)
-    // await JournalAbbrev.init()
-
-    // progress.update(l10n.localize('better-bibtex_startup_installing-translators'), 70)
-    // await Translators.init()
-
-    // progress.update(l10n.localize('better-bibtex_startup_key-manager'), 80)
-    // await this.KeyManager.start() // inits the key cache by scanning the DB and generating missing keys
-
-    // progress.update(l10n.localize('better-bibtex_startup_auto-export'), 90)
-    // AutoExport.start()
-
     await this.loadUI(win)
-
-    // progress.done()
 
     void Events.emit('loaded')
 
     Events.on('export-progress', ({ pct, message }) => {
-      /*
-      let status = `${percent < 0 ? l10n.localize('better-bibtex_preferences_auto-export_status_preparing') : ''} ${translator}`.trim()
-      if (Translators.queue.queued) status += ` +${Translators.queue.queued}`
-      setProgress(percent && percent < 100 && Math.abs(percent), status)
-      */
       this.setProgress(pct, message)
     })
   }
