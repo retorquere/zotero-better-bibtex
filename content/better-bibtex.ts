@@ -4,8 +4,6 @@ import { is7 } from './client'
 
 if (is7) Components.utils.importGlobalProperties(['FormData'])
 
-let $window: Window
-
 Components.utils.import('resource://gre/modules/FileUtils.jsm')
 declare const FileUtils: any
 
@@ -851,13 +849,10 @@ export class BetterBibTeX {
   }
 
   async loadUI(win: Window): Promise<void> {
-    log.debug('loading main UI')
-    // set globals for libraries that for some reason need these -- probably a flawed env detection
-    $window = win
-
     try {
-      await newZoteroPane($window)
-      await newZoteroItemPane($window)
+      log.debug('loading main UI')
+      await newZoteroPane(win)
+      await newZoteroItemPane(win)
     }
     catch (err) {
       log.debug('loadUI error:', err)
