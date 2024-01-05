@@ -113,7 +113,8 @@ class NSItem {
    * - search([['ignore_feeds']]): custom action for ignoring the feeds
    * - search([['ignore_feeds'], ['quicksearch-titleCreatorYear', 'contains', 'Zotero']]): quick search for 'Zotero' ignoring the Feeds
    * - search([['creator', 'contains', 'Johnny'], ['title', 'contains', 'Zotero']]): search for entries with Creator 'Johnny' AND Title 'Zotero'
-   * - search([['blockStart'], ['creator', 'contains', 'Johnny'], ['title', 'contains', 'Zotero'], ['blockEnd']]): search for entries with Creator 'Johnny' OR Title 'Zotero'
+   * - search([['joinMode', 'any'], ['creator', 'contains', 'Johnny'], ['title', 'contains', 'Zotero']]): search for entries with Creator 'Johnny' OR Title 'Zotero'
+   * - search([['blockStart'], ['creator', 'contains', 'Johnny'], ['title', 'contains', 'Zotero'], ['blockEnd'], ['creator', 'contains', 'Smith']]): search for entries with (Creator 'Johnny' OR Title 'Zotero') AND (Creator 'Smith')
    *
    * @param terms  Single string as typed into the search box in Zotero (search for Title Creator Year)
    *               Array of tuples similar as typed into the advanced search box in Zotero
@@ -126,7 +127,36 @@ class NSItem {
 
     if (!terms.length) {/* */}
     else if (typeof terms === 'string') {
-      search.addCondition('quicksearch-titleCreatorYear', 'contains', terms)
+      // Custom action for only string.
+      // Similar behavior as quicksearch-titleCreateorYear, but search also in citationKey and ignore feeds and attachments
+
+      // Credit #2740
+      const fields = [
+        // search the quicksearch-titleCreatorYear fields
+        'title',
+        'publicationTitle',
+        'shortTitle',
+        'court',
+        'year',
+
+        // plus the citationKey
+        'citationKey',
+      ]
+
+      search.addCondition('blockStart')
+      for (const field of fields) {
+        search.addCondition(field, 'contains', terms, false)
+      }
+      search.addCondition('blockEnd')
+
+      // Ignore Feeds
+      for (const feed of Zotero.Feeds.getAll()) {
+        search.addCondition('libraryID', 'isNot', feed.libraryID, true)
+      }
+
+      // Do not list attachments
+      search.addCondition('itemType', 'isNot', 'attachment', true)
+
     }
     else {
       blk: for (const term of terms) {
