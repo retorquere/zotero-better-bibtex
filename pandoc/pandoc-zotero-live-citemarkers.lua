@@ -36,7 +36,7 @@ local zotero = require('zotero')
 local config = {
   client = 'zotero',
   scannable_cite = false,
-  csl_style = 'apa7',
+  csl_style = 'apa',
   format = nil, -- more to document than anything else -- Lua does not store nils in tables
   transferable = false,
   sorted = true,
@@ -325,6 +325,9 @@ function Meta(meta)
 
   if meta.zotero['csl-style'] ~= nil then
     config.csl_style = pandoc.utils.stringify(meta.zotero['csl-style'])
+    if config.csl_style == 'apa7' then
+      config.csl_style = 'apa'
+    end
   end
 
   config.transferable = test_boolean('transferable', meta.zotero['transferable'])
