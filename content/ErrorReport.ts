@@ -167,6 +167,20 @@ export class ErrorReport {
     (<HTMLInputElement>this.document.getElementById(id)).value = value
   }
 
+  private errors(): string {
+    const ignore = [
+      /NS_NOINTERFACE.*ComponentUtils[.]jsm/,
+      /Addon must include an id, version, and type/,
+      /NS_ERROR_NOT_AVAILABLE.*PartitioningExceptionListService[.]jsm/,
+      /NS_ERROR_FAILURE:.*getHistogramById/,
+      /Upload request .* failed/,
+      /You have reached your Zotero File Storage quota/,
+      /Could not get children of.*CrashManager.jsm/,
+    ]
+
+    return (Zotero.getErrors(true) as string[]).filter(line => !ignore.find(re => line.match(re))).join('\n')
+  }
+
   public async load(win: Window & { ErrorReport: ErrorReport, arguments: any[] }): Promise<void> {
     this.document = win.document
     win.ErrorReport = this
@@ -186,7 +200,7 @@ export class ErrorReport {
 
     this.errorlog = {
       info: await this.info(),
-      errors: `${Zotero.BetterBibTeX.outOfMemory}\n${Zotero.getErrors(true).join('\n')}`.trim(),
+      errors: `${Zotero.BetterBibTeX.outOfMemory}\n${this.errors()}`.trim(),
       // # 1896
       debug: Zotero.Debug.getConsoleViewerOutput().slice(-500000).join('\n'),
       items: win.arguments[0].wrappedJSObject.items,
