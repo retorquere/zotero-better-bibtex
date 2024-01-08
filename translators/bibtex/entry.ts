@@ -549,7 +549,7 @@ export class Entry {
         }
 
         if (!value) {
-          if (field.name !== 'file' && field.name !== 'keywords') log.error('add: no value after encoding', field)
+          if (field.name !== 'file' && field.name !== 'keywords') log.debug('add: no value after encoding', field)
           return null
         }
 
