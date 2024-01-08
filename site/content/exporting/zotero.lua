@@ -1,8 +1,8 @@
 
-  print('zotero-live-citations 1a085c5')
+  print('zotero-live-citations 56897b3')
   local mt, latest = pandoc.mediabag.fetch('https://retorque.re/zotero-better-bibtex/exporting/zotero.lua.revision')
   latest = string.sub(latest, 1, 10)
-  if '1a085c5' ~= latest then
+  if '56897b3' ~= latest then
     print('new version "' .. latest .. '" available at https://retorque.re/zotero-better-bibtex/exporting')
   end
 
@@ -2024,7 +2024,7 @@ function Meta(meta)
   if meta.zotero['csl-style'] ~= nil then
     config.csl_style = pandoc.utils.stringify(meta.zotero['csl-style'])
     if config.csl_style == 'apa7' then
-      config.csl_style == 'apa'
+      config.csl_style = 'apa'
     end
   end
 
