@@ -3,12 +3,12 @@ declare const __estrace: any // eslint-disable-line no-underscore-dangle
 
 import * as Prefs from '../../gen/preferences/meta'
 const PrefNames: Set<string> = new Set(Object.keys(Prefs.defaults))
-import { TeXMap } from '../../content/prefs'
 import { client } from '../../content/client'
 import { RegularItem, Item, Collection, Attachment } from '../../gen/typings/serialized-item'
 import type { Exporter as BibTeXExporter } from '../bibtex/exporter'
 import type { ZoteroItem } from '../bibtex/bibtex'
 import type { Translators } from '../../typings/translators.d.ts'
+import type { CharMap } from 'unicode2latex'
 
 type CacheableItem = Item & { $cacheable: boolean }
 type CacheableRegularItem = RegularItem & { $cacheable: boolean }
@@ -269,7 +269,7 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
     dir: undefined,
     path: undefined,
   }
-  public texmap: TeXMap
+  public charmap: CharMap
 
   public options: {
     quickCopyMode?: string
@@ -465,10 +465,10 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
 
     // special handling
     try {
-      this.texmap = JSON.parse(this.preferences.charmap)
+      this.charmap = JSON.parse(this.preferences.charmap)
     }
     catch (err) {
-      this.texmap = {}
+      this.charmap = {}
     }
 
     this.importToExtra = {}
