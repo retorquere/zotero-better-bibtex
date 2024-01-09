@@ -1,15 +1,13 @@
-import { clone } from '../../content/object'
 import { Translation } from '../lib/translator'
 import { HTMLParser } from '../../content/text'
 
 import type { MarkupNode } from '../../typings/markup'
-import type { TeXMap } from '../../content/prefs'
 
 import { log } from '../../content/logger'
 import HE = require('he')
 const combining_diacritics = /^[^\u0300-\u036F][\u0300-\u036F]+/
 
-import * as unicode2latex from 'unicode2latex'
+import { CharMap, load, diacritics } from 'unicode2latex'
 
 const switchMode = {
   math: 'text',
@@ -33,61 +31,22 @@ type LatexRepresentation = { text?: string, math?: string, textpackages?: string
 
 export class HTMLConverter {
   private latex = ''
-  private mapping: TeXMap
+  private mapping: CharMap
   private stack: any[] = []
   private options: ConverterOptions = {}
   private embraced: boolean
   private packages: { [key: string]: boolean } = {}
   private translation: Translation
 
-  constructor(charmap: TeXMap, translation: Translation) {
+  constructor(charmap: CharMap, translation: Translation) {
     this.translation = translation
-    this.mapping = this.init(charmap)
-  }
-
-  private init(charmap: TeXMap): TeXMap {
-    let mapping: TeXMap
-
-    if (this.translation.unicode) {
-      mapping = unicode2latex.unicode
-    }
-    else if (this.translation.BetterBibTeX) {
-      /* https://github.com/retorquere/zotero-better-bibtex/issues/1189
-        Needed so that composite characters are counted as single characters
-        for in-text citation generation. This messes with the {} cleanup
-        so the resulting TeX will be more verbose; doing this only for
-        bibtex because biblatex doesn't appear to need it.
-
-        Only testing ascii.text because that's the only place (so far)
-        that these have turned up.
-      */
-      mapping = unicode2latex.ascii_bibtex_creator
-    }
-    else {
-      mapping = unicode2latex.ascii
-    }
-
-    // safeguard against modifications for reusable workers
-    mapping = clone({
-      ...mapping,
-      ...(charmap || {}),
+    this.mapping = load(this.translation.unicode ? 'minimal' : (this.translation.BetterBibTeX ? 'bibtex' : 'biblatex'), {
+      math: this.translation.preferences.mapMath,
+      text: this.translation.preferences.mapText,
+      charmap,
+      ascii: this.translation.preferences.ascii,
+      packages: this.translation.preferences.packages.trim().split(/\s*,\s*/),
     })
-
-    for (const c of this.translation.preferences.ascii) {
-      mapping[c] = unicode2latex.ascii[c]
-    }
-
-    for (const keep of Object.keys(switchMode).sort()) {
-      const remove = switchMode[keep]
-      const unicode = this.translation.preferences[`map${keep[0].toUpperCase()}${keep.slice(1)}`]
-      for (const c of unicode) {
-        if (mapping[c] && mapping[c].text && mapping[c].math) {
-          delete mapping[c][remove]
-        }
-      }
-    }
-
-    return mapping
   }
 
   public tolatex(source: string, options: ConverterOptions): ParseResult {
@@ -305,7 +264,7 @@ export class HTMLConverter {
           mapped = this.mapping[m[0].normalize('NFC')]
 
           // normal char + 1 or two following combining diacritics
-          if (!mapped && (diacritic = unicode2latex.diacritics.tolatex[m[0].substr(1,2)])) {
+          if (!mapped && (diacritic = diacritics.tolatex[m[0].substr(1,2)])) {
             const char = (this.mapping[text[i]] || { text: text[i], math: text[i] })[diacritic.mode]
             if (char) {
               const cmd = diacritic.command.match(/[a-z]/)

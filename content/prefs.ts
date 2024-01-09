@@ -2,6 +2,7 @@
 declare const Services: any
 
 import { Events } from './events'
+import type { CharMap } from 'unicode2latex'
 
 declare const Zotero: any
 
@@ -11,12 +12,8 @@ import { dict as csv2dict } from './load-csv'
 import { log } from './logger'
 import { flash } from './flash'
 
-type TexChar = { unicode?: string, math?: string, text?: string }
-export type TeXMap = Record<string, TexChar>
-
 export const Preference = new class PreferenceManager extends PreferenceManagerBase {
   public prefix = 'translators.better-bibtex.'
-  public texmap: TeXMap = {}
   private observers: number[] = []
   private minimum = {
     autoExportIdleWait: 1,
@@ -52,7 +49,6 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
     if (this.testing) {
       return new Proxy(this, {
         set: (object, property, value) => {
-          if (property === 'texmap') return true
           if (!(property in object)) {
             const stack = (new Error).stack
             throw new TypeError(`Unsupported preference ${new String(property)} ${stack}`) // eslint-disable-line no-new-wrappers
@@ -61,8 +57,6 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
           return true
         },
         get: (object, property) => {
-          if (property === 'texmap') return this.texmap
-
           if (!(property in object)) {
             const stack = (new Error).stack
             throw new TypeError(`Unsupported preference ${new String(property)} ${stack}`) // eslint-disable-line no-new-wrappers
@@ -251,11 +245,10 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
 
   public async startup(dir: string) {
     // load from csv for easier editing
-    this.texmap = {}
-    await this.loadFromCSV('charmap', OS.Path.join(dir, 'charmap.csv'), '', (rows: Record<string, string>[]) => JSON.stringify(
-      rows.reduce((acc: TeXMap, row: TexChar) => {
+    await this.loadFromCSV('charmap', OS.Path.join(dir, 'charmap.csv'), '{}', (rows: Record<string, string>[]) => JSON.stringify(
+      rows.reduce((acc: CharMap, row: { unicode: string, text: string, math: string }) => {
         if (row.unicode && (row.math || row.text)) acc[row.unicode] = { text: row.text, math: row.math }
-        return (this.texmap = acc)
+        return acc
       }, {})
     ))
 

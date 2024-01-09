@@ -332,6 +332,9 @@
             "mapText": {
               "type": "string"
             },
+            "packages": {
+              "type": "string"
+            },
             "parseParticles": {
               "type": "boolean"
             },
