@@ -286,7 +286,16 @@ export class ErrorReport {
     if (autoExports.length) {
       info += 'Auto-exports:\n'
       for (const ae of autoExports) {
-        info += `  path: ${JSON.stringify(ae.path)}\n`
+        info += `  path: ${JSON.stringify(ae.path)}`
+        switch (ae.type) {
+          case 'collection':
+            info += `(${Zotero.Collections.get(ae.id)?.name || '<collection>'})`
+            break
+          case 'library':
+            info += `(${Zotero.Libraries.get(ae.id)?.name || '<library>'})`
+            break
+        }
+        info += '\n'
         for (const [k, v] of Object.entries(ae)) {
           if (k === 'path') continue
           info += `    ${k}: ${JSON.stringify(v)}`
