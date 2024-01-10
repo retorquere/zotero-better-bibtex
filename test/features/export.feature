@@ -13,6 +13,7 @@ Feature: Export
 
     Examples:
       | file                                                                                                                     | references |
+      | Unicode replacement results in undefined mathsl command #2722                                                            | 1          |
       | CitationKeys are case-insensitive in bibtex #2720                                                                        | 2          |
       | urldate when only DOI is exported #2697                                                                                  | 1          |
       | skipwords removes dashes #2614                                                                                           | 1          |

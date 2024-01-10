@@ -1,0 +1,40 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "options": {
+      "Items": true,
+      "Preferences": true,
+      "exportNotes": true,
+      "worker": true
+    },
+    "preferences": {
+      "asciiBibLaTeX": true,
+      "asciiBibTeX": false,
+      "autoExportDelay": 2,
+      "citekeyFormat": "auth.lower+shorttitle(3,3)+year",
+      "citekeySearch": false,
+      "extraMergeCSL": true,
+      "extraMergeCitekeys": true,
+      "extraMergeTeX": true,
+      "skipFields": "note",
+      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc,groups"
+    }
+  },
+  "items": [
+    {
+      "citationKey": "lastAreUnicode",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "First",
+          "lastName": "Last"
+        }
+      ],
+      "itemID": 1,
+      "itemType": "journalArticle",
+      "publicationTitle": "The Publication",
+      "title": "The \u2113, \ud835\udc58, and \ud835\udf0c are in unicode"
+    }
+  ]
+}
