@@ -173,5 +173,5 @@ Among the reasons to just prefer Zotero over Mendeley outright you will find:
 But wrt bibtex export, I don't think the Mendeley engineers actively use bib(la)tex:
 
 * Mendeley is still double-bracing titles -- a behavior so wrong (yet unfortunately ubiquitous), biblatex started [ignoring double-braced titles]() (see [here](https://tex.stackexchange.com/a/327387/27603) and [here](https://tex.stackexchange.com/a/233976/27603)).
-* Mendeley uses CSL, so items should be entered in sentence case (as is the case in Zotero). But bib(la)tex expects title-case, so titles should be ocnverted to title case during export. This is difficult, so Mendeley just doesn't bother doing it.
+* Mendeley uses CSL, so items should be entered in sentence case (as is the case in Zotero). But bib(la)tex expects title-case, so titles should be converted to title case during export. This is difficult, so Mendeley just doesn't bother doing it.
 * Verbatim fields that should per spec be exported as regular fields by Mendeley. This will get you compilation errors.

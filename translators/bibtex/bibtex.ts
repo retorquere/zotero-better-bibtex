@@ -779,15 +779,19 @@ export class ZoteroItem {
 
   protected $keywords(): boolean {
     let tags = this.bibtex.fields.keywords || []
-    tags = tags.concat(this.bibtex.fields.keyword || [])
-    for (const mesh of this.bibtex.fields.mesh || []) {
-      tags = tags.concat((mesh || '').trim().split(/\s*;\s*/).filter(tag => tag)) // eslint-disable-line @typescript-eslint/no-unsafe-return
+
+    const split = (data: string[]): string[] => {
+      if (!Array.isArray(data)) return []
+      let arr: string[] = []
+      for (const line of data) {
+        arr = [...arr, ...line.trim().split(/\s*,\s*/).filter(t => t)]
+      }
+      return arr
     }
-    for (const tag of this.bibtex.fields.tags || []) {
-      tags = tags.concat((tag || '').trim().split(/\s*;\s*/).filter(t => t)) // eslint-disable-line @typescript-eslint/no-unsafe-return
-    }
-    tags = tags.sort()
-    tags = tags.filter((item, pos, ary) => !pos || (item !== ary[pos - 1]))
+
+    tags = [...tags, ...split(this.bibtex.fields.mesh)]
+    tags = [...tags, ...split(this.bibtex.fields.tags)]
+    tags = [...(new Set(tags))].sort()
 
     this.item.tags = tags
     return true
