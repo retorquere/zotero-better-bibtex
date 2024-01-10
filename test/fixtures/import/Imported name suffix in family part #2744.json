@@ -1,0 +1,37 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "options": {
+      "Items": true,
+      "Preferences": true,
+      "exportNotes": true
+    },
+    "preferences": {
+      "citekeyFormat": "auth + year"
+    }
+  },
+  "items": [
+    {
+      "citationKey": "apa-test.9.46:8",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "P. T., Jr.",
+          "lastName": "Costa"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "R. R.",
+          "lastName": "McCrae"
+        }
+      ],
+      "date": "2013",
+      "extra": [
+        "Citation Key: apa-test.9.46:8"
+      ],
+      "itemID": 1,
+      "itemType": "book"
+    }
+  ]
+}
