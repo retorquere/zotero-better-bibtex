@@ -127,7 +127,7 @@ class NSItem {
    *               (https://github.com/zotero/zotero/blob/9971f15e617f19f1bc72f8b24bb00b72d2a4736f/chrome/content/zotero/xpcom/data/searchConditions.js#L72-L610)
    */
   public async search(terms: string
-  | ([string] | [string, string] | [string, string, string | number] | [string, string, string | number, boolean])[]) {
+  | ([string] | [string, string] | [string, string, string | number] | [string, string, string | number, boolean])[], library?: string | number) {
 
     const search = new Zotero.Search()
 
@@ -163,6 +163,14 @@ class NSItem {
       // Do not list attachments
       search.addCondition('itemType', 'isNot', 'attachment', true)
 
+      if (typeof library !== 'undefined' && library !== '*') {
+        try {
+          search.addCondition('libraryID', 'is', Library.get(library).libraryID, true)
+        }
+        catch (err) {
+          throw new Error(`library ${JSON.stringify(library)} not found`)
+        }
+      }
     }
     else {
       blk: for (const term of terms) {
@@ -171,7 +179,7 @@ class NSItem {
           switch (term[0]) {
             case 'ignore_feeds': {
               for (const feed of Zotero.Feeds.getAll()) {
-                search.addCondition('libraryID', 'isNot', feed.libraryID)
+                search.addCondition('libraryID', 'isNot', feed.libraryID, true)
               }
               continue blk
             }
