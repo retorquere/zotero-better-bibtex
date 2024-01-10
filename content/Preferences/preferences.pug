@@ -326,7 +326,7 @@ preferences
     If you have unicode turned on you can still selectively replace some characters to plain-text commands; any characters entered here will always
     be replaced by their LaTeX-command counterparts.
 
-  preference(name="extensions.zotero.translators.better-bibtex.packages" bbt:affects="tex" type="string" default="")
+  preference(name="extensions.zotero.translators.better-bibtex.packages" bbt:affects="tex" type="string" default="textcomp")
   bbt:doc.
     Some LaTeX commands only work when certain packages are loaded. By default, BBT will export Bib(La)TeX that requires no extra packages, but
     you can provide a comma-separated list here of packages to load to get higher fidelity export (for some admittedly niche characters). Currently
