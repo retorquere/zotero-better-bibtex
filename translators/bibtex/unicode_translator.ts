@@ -7,7 +7,7 @@ import { log } from '../../content/logger'
 import HE = require('he')
 const combining_diacritics = /^[^\u0300-\u036F][\u0300-\u036F]+/
 
-import { CharMap, load, diacritics } from 'unicode2latex'
+import { TeXChar, CharMap, load, diacritics } from 'unicode2latex'
 
 const switchMode = {
   math: 'text',
@@ -27,15 +27,13 @@ export function replace_command_spacers(latex: string): string {
 
 export type ParseResult = { latex: string, raw: boolean, packages: string[] }
 
-type LatexRepresentation = { text?: string, math?: string, textpackages?: string[], mathpackages?: string[], commandspacer?: boolean }
-
 export class HTMLConverter {
   private latex = ''
-  private mapping: CharMap
+  private mapping: TeXChar
   private stack: any[] = []
   private options: ConverterOptions = {}
   private embraced: boolean
-  private packages: { [key: string]: boolean } = {}
+  private packages: Record<string, boolean> = {}
   private translation: Translation
 
   constructor(charmap: CharMap, translation: Translation) {
@@ -241,7 +239,7 @@ export class HTMLConverter {
     }
 
     text = text.normalize('NFD') // required for multi-diacritics
-    let mapped: LatexRepresentation
+    let mapped: TeXChar
     let switched: boolean
     let m: RegExpExecArray | RegExpMatchArray
     let i: number
@@ -271,19 +269,19 @@ export class HTMLConverter {
 
               if (this.translation.BetterBibTeX && diacritic.mode === 'text') {
                 // needs to be braced to count as a single char for name abbreviation
-                mapped = ({ [diacritic.mode]: `{\\${diacritic.command}${cmd ? ' ': ''}${char}}` } as LatexRepresentation)
+                mapped = ({ [diacritic.mode]: `{\\${diacritic.command}${cmd ? ' ': ''}${char}}` } as TeXChar)
 
               }
               else if (cmd && char.length === 1) {
-                mapped = ({ [diacritic.mode]: `\\${diacritic.command} ${char}` } as LatexRepresentation)
+                mapped = ({ [diacritic.mode]: `\\${diacritic.command} ${char}` } as TeXChar)
 
               }
               else if (cmd) {
-                mapped = ({ [diacritic.mode]: `\\${diacritic.command}{${char}}` } as LatexRepresentation)
+                mapped = ({ [diacritic.mode]: `\\${diacritic.command}{${char}}` } as TeXChar)
 
               }
               else {
-                mapped = ({ [diacritic.mode]: `\\${diacritic.command}${char}` } as LatexRepresentation)
+                mapped = ({ [diacritic.mode]: `\\${diacritic.command}${char}` } as TeXChar)
               }
 
               // support for multiple-diacritics is taken from tipa, which doesn't support more than 2
@@ -336,9 +334,8 @@ export class HTMLConverter {
         latex = latex.slice(0, latex.length - m[0].length) + m[1] + m[3]
       }
 
-      const pkgs = (mapped[`${mode}packages`] as string[])
-      if (pkgs) {
-        for (const pkg of pkgs) {
+      if (mapped.alt) {
+        for (const pkg of mapped.alt) {
           this.packages[pkg] = true
         }
       }
