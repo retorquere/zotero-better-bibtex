@@ -120,11 +120,11 @@ Any characters entered here will prefer a text-mode LaTeX-command counterpart ov
 
 ## packages
 
-default: `textcomp`
+default: `textcomp,amsmath`
 
 Some LaTeX commands only work when certain packages are loaded. By default, BBT will export Bib(La)TeX that requires no extra packages, but
-you can provide a comma-separated list here of packages to load to get higher fidelity export (for some admittedly niche characters). Currently
-supported are `amsmath`, `amssymb`, `arevmath`, `graphics`, `mathabx`, `mathrsfs`, `mathscinet`, `textcomp`, `tipa`, `unicode`, `wasysym` and `xecjk`.
+you can provide a comma-separated list here of packages to load to get higher fidelity export (for some admittedly niche characters).
+Details of these packages and what they add can be found [here]({{ ref . "unicode" }}).
 
 ## parseParticles
 
