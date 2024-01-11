@@ -784,11 +784,12 @@ export class ZoteroItem {
       if (!Array.isArray(data)) return []
       let arr: string[] = []
       for (const line of data) {
-        arr = [...arr, ...line.trim().split(/\s*,\s*/).filter(t => t)]
+        arr = [...arr, ...line.trim().split(/\s*[,;]\s*/).filter(t => t)]
       }
       return arr
     }
 
+    tags = [...tags, ...split(this.bibtex.fields.keyword)]
     tags = [...tags, ...split(this.bibtex.fields.mesh)]
     tags = [...tags, ...split(this.bibtex.fields.tags)]
     tags = [...(new Set(tags))].sort()
