@@ -124,7 +124,7 @@ default: `textcomp,amsmath`
 
 Some LaTeX commands only work when certain packages are loaded. By default, BBT will export Bib(La)TeX that requires no extra packages, but
 you can provide a comma-separated list here of packages to load to get higher fidelity export (for some admittedly niche characters).
-Details of these packages and what they add can be found [here]({{ ref . "unicode" }}).
+Details of these packages and what they add can be found [here]({{ ref . "exporting/unicode.md" }}).
 
 ## parseParticles
 
