@@ -81,6 +81,7 @@ Feature: Import
 
     Examples:
       | file                                                                                   | references |
+      | Imported name suffix in family part #2744                                              | 1          |
       | DOIs excluded from export in 6.7.86 #2555                                              | 1          |
       | issuenumberarticle-number #2551                                                        | 1          |
       | Allow spaces between href arguments for import #2504                                   | 4          |
