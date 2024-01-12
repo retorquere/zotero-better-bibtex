@@ -1223,7 +1223,8 @@ export class ZoteroItem {
           name.firstName = creator.firstName || ''
           name.lastName = creator.lastName || ''
           if (creator.prefix) name.lastName = `${creator.prefix} ${name.lastName}`.trim()
-          if (creator.suffix) name.firstName = name.firstName ? `${name.firstName}, ${creator.suffix}` : creator.suffix
+          // if (creator.suffix) name.firstName = name.firstName ? `${name.firstName}, ${creator.suffix}` : creator.suffix
+          if (creator.suffix) name.lastName = name.lastName ? `${name.lastName}, ${creator.suffix}` : creator.suffix
           name.firstName = name.firstName.replace(/\u00A0/g, ' ').trim()
           name.lastName = name.lastName.replace(/\u00A0/g, ' ').trim()
           if (name.lastName && !name.firstName) name.fieldMode = 1
