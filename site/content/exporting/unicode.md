@@ -590,11 +590,11 @@ Some of us though are bound to outlets that still demand BibTeX, and there's gee
 
 | **character** | **text** | **math** | **character** | **text** | **math** | **character** | **text** | **math** | **character** | **text** | **math** |
 |---------------|----------|----------|---------------|----------|----------|---------------|----------|----------|---------------|----------|----------|
-|  ¢ | \textcent |  |  £ | \textsterling |  |  ¤ | \textcurrency |  |  ¥ | \textyen |  |
-|  ¦ | \textbrokenbar |  |  § | \textsection |  |  © | \textcopyright |  |  ª | \textordfeminine |  |
-|  ® | \textregistered |  |  ° | \textdegree |  |  ¶ | \textparagraph |  |  º | \textordmasculine |  |
-|  ð | \textdh |  |  ˙ | \textperiodcentered |  |  • | \textbullet |  |  ‰ | \textperthousand |  |
-|  ‱ | \textpertenthousand |  |  ℞ | \textrecipe |  |  ™ | \texttrademark |  |  → | \textrightarrow |  |
+|  ¢ | \textcent |  |  ¤ | \textcurrency |  |  ¥ | \textyen |  |  ¦ | \textbrokenbar |  |
+|  § | \textsection |  |  © | \textcopyright |  |  ª | \textordfeminine |  |  ® | \textregistered |  |
+|  ° | \textdegree |  |  ¶ | \textparagraph |  |  º | \textordmasculine |  |  ð | \textdh |  |
+|  ˙ | \textperiodcentered |  |  • | \textbullet |  |  ‰ | \textperthousand |  |  ‱ | \textpertenthousand |  |
+|  ℞ | \textrecipe |  |  ™ | \texttrademark |  |  → | \textrightarrow |  |  | |  |
 
 
 ### tipa

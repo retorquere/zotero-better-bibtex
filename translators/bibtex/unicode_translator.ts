@@ -5,14 +5,14 @@ import type { MarkupNode } from '../../typings/markup'
 
 import { log } from '../../content/logger'
 import HE = require('he')
-const combining_diacritics = /^[^\u0300-\u036F][\u0300-\u036F]+/
+// const combining_diacritics = /^[^\u0300-\u036F][\u0300-\u036F]+/
+// import { TeXChar, CharMap, load, diacritics } from 'unicode2latex'
+import { CharMap, load, tolatex } from 'unicode2latex'
 
-import { TeXChar, CharMap, load, diacritics } from 'unicode2latex'
-
-const switchMode = {
-  math: 'text',
-  text: 'math',
-}
+// const switchMode = {
+//  math: 'text',
+//  text: 'math',
+// }
 
 export type ConverterOptions = {
   caseConversion?: boolean
@@ -29,11 +29,11 @@ export type ParseResult = { latex: string, raw: boolean, packages: string[] }
 
 export class HTMLConverter {
   private latex = ''
-  private mapping: TeXChar
+  private mapping: CharMap
   private stack: any[] = []
   private options: ConverterOptions = {}
   private embraced: boolean
-  private packages: Record<string, boolean> = {}
+  private packages: Set<string> = new Set
   private translation: Translation
 
   constructor(charmap: CharMap, translation: Translation) {
@@ -51,7 +51,7 @@ export class HTMLConverter {
     this.embraced = false
     this.options = options
     this.latex = ''
-    this.packages = {}
+    this.packages = new Set
     this.stack = []
 
     const ast: MarkupNode = HTMLParser.parse(source, {
@@ -73,7 +73,7 @@ export class HTMLConverter {
       .replace(/\n*\\par\n*$/, '')
       .replace(/^\n*\\par\n*/, '')
 
-    return { latex: this.latex, raw: ast.nodeName === 'pre', packages: Object.keys(this.packages) }
+    return { latex: this.latex, raw: ast.nodeName === 'pre', packages: [...this.packages] }
   }
 
   private walk(tag: MarkupNode, nocased = false) {
@@ -226,6 +226,7 @@ export class HTMLConverter {
     return `{${latex}}`
   }
 
+  /*
   private chars(text, nocased) {
     if (this.options.html) text = HE.decode(text, { isAttributeValue: true })
 
@@ -357,5 +358,17 @@ export class HTMLConverter {
     if (mode === 'math') latex += switchTo.text
 
     this.latex += latex.normalize('NFC')
+  }
+  */
+
+  private chars(text, nocased) {
+    if (this.options.html) text = HE.decode(text, { isAttributeValue: true })
+
+    this.latex += tolatex(text, this.mapping, {
+      bracemath: !nocased,
+      mode: this.translation.unicode ? 'minimal' : (this.translation.BetterBibTeX ? 'bibtex' : 'biblatex'),
+      preservecommandspacers: true,
+      packages: this.packages,
+    })
   }
 }
