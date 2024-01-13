@@ -5,14 +5,7 @@ import type { MarkupNode } from '../../typings/markup'
 
 import { log } from '../../content/logger'
 import HE = require('he')
-// const combining_diacritics = /^[^\u0300-\u036F][\u0300-\u036F]+/
-// import { TeXChar, CharMap, load, diacritics } from 'unicode2latex'
-import { CharMap, load, tolatex } from 'unicode2latex'
-
-// const switchMode = {
-//  math: 'text',
-//  text: 'math',
-// }
+import { CharMap, Transform } from 'unicode2latex'
 
 export type ConverterOptions = {
   caseConversion?: boolean
@@ -29,7 +22,7 @@ export type ParseResult = { latex: string, raw: boolean, packages: string[] }
 
 export class HTMLConverter {
   private latex = ''
-  private mapping: CharMap
+  private tx: Transform
   private stack: any[] = []
   private options: ConverterOptions = {}
   private embraced: boolean
@@ -38,7 +31,7 @@ export class HTMLConverter {
 
   constructor(charmap: CharMap, translation: Translation) {
     this.translation = translation
-    this.mapping = load(this.translation.unicode ? 'minimal' : (this.translation.BetterBibTeX ? 'bibtex' : 'biblatex'), {
+    this.tx = new Transform(this.translation.unicode ? 'minimal' : (this.translation.BetterBibTeX ? 'bibtex' : 'biblatex'), {
       math: this.translation.preferences.mapMath,
       text: this.translation.preferences.mapText,
       charmap,
@@ -226,149 +219,8 @@ export class HTMLConverter {
     return `{${latex}}`
   }
 
-  /*
   private chars(text, nocased) {
     if (this.options.html) text = HE.decode(text, { isAttributeValue: true })
-
-    let latex = ''
-    let mode = 'text'
-    let braced = 0
-
-    const switchTo = {
-      math: (nocased ? '$' : '{$'),
-      text: (nocased ? '$' : '$}'),
-    }
-
-    text = text.normalize('NFD') // required for multi-diacritics
-    let mapped: TeXChar
-    let switched: boolean
-    let m: RegExpExecArray | RegExpMatchArray
-    let i: number
-    let diacritic: { command: string, mode: string }
-    const l: number = text.length
-    for (i = 0; i < l; i++) {
-      mapped = null
-
-      // tie "i","︠","a","︡"
-      if (text[i + 1] === '\ufe20' && text[i + 3] === '\ufe21') {
-        mapped = this.mapping[text.substr(i, 4)] || { text: `${text[i]}${text[i + 2]}` }
-        i += 3
-      }
-
-      if (!mapped && !this.translation.unicode) {
-        // combining diacritics. Relies on NFD always being mapped, otherwise NFC won't be tested
-
-        if (m = combining_diacritics.exec(text.substring(i))) {
-          // try compact representation first
-          mapped = this.mapping[m[0].normalize('NFC')]
-
-          // normal char + 1 or two following combining diacritics
-          if (!mapped && (diacritic = diacritics.tolatex[m[0].substr(1,2)])) {
-            const char = (this.mapping[text[i]] || { text: text[i], math: text[i] })[diacritic.mode]
-            if (char) {
-              const cmd = diacritic.command.match(/[a-z]/)
-
-              if (this.translation.BetterBibTeX && diacritic.mode === 'text') {
-                // needs to be braced to count as a single char for name abbreviation
-                mapped = ({ [diacritic.mode]: `{\\${diacritic.command}${cmd ? ' ': ''}${char}}` } as TeXChar)
-
-              }
-              else if (cmd && char.length === 1) {
-                mapped = ({ [diacritic.mode]: `\\${diacritic.command} ${char}` } as TeXChar)
-
-              }
-              else if (cmd) {
-                mapped = ({ [diacritic.mode]: `\\${diacritic.command}{${char}}` } as TeXChar)
-
-              }
-              else {
-                mapped = ({ [diacritic.mode]: `\\${diacritic.command}${char}` } as TeXChar)
-              }
-
-              // support for multiple-diacritics is taken from tipa, which doesn't support more than 2
-              if (m[0].length > 3) log.error('discarding diacritics > 2 from', m[0])
-            }
-          }
-
-          if (mapped) i += m[0].length - 1
-        }
-      }
-
-      // ??
-      if (!mapped && text[i + 1] && (mapped = this.mapping[text.substr(i, 2)])) {
-        i += 1
-      }
-
-      // fallback -- single char mapping
-      if (!mapped) mapped = this.mapping[text[i]] || { text: text[i] }
-
-      // in and out of math mode
-      if (!mapped[mode]) {
-        mode = switchMode[mode]
-        latex += switchTo[mode]
-        switched = true
-      }
-      else {
-        switched = false
-      }
-
-      // balance out braces with invisible braces until http://tex.stackexchange.com/questions/230750/open-brace-in-bibtex-fields/230754#comment545453_230754 is widely deployed
-      switch (mapped[mode]) {
-        case '\\{': braced += 1; break
-        case '\\}': braced -= 1; break
-      }
-      if (braced < 0) {
-        latex += '\\vphantom\\{'
-        braced = 0
-      }
-
-      // if we just switched out of math mode, and there's a lone sup/sub at the end, unpack it. The extra option brace is for when we're in nocased mode (see switchTo)
-      if (switched && mode === 'text' && (m = latex.match(/([\^_])\{(.)\}(\$\}?)$/))) {
-        latex = latex.slice(0, latex.length - m[0].length) + m[1] + m[2] + m[3]
-      }
-
-      latex += mapped[mode]
-      if (mapped.commandspacer) latex += '\0' // clean up below
-
-      // only try to merge sup/sub if we were already in math mode, because if we were previously in text mode, testing for _^ is tricky.
-      if (!switched && mode === 'math' && (m = latex.match(/(([\^_])\{[^{}]+)\}\2{(.\})$/))) {
-        latex = latex.slice(0, latex.length - m[0].length) + m[1] + m[3]
-      }
-
-      if (mapped.alt) {
-        for (const pkg of mapped.alt) {
-          this.packages[pkg] = true
-        }
-      }
-    }
-
-    // add any missing closing phantom braces
-    switch (braced) {
-      case 0:
-        break
-      case 1:
-        latex += '\\vphantom\\}'
-        break
-      default:
-        latex += `\\vphantom{${'\\}'.repeat(braced)}}`
-        break
-    }
-
-    // might still be in math mode at the end
-    if (mode === 'math') latex += switchTo.text
-
-    this.latex += latex.normalize('NFC')
-  }
-  */
-
-  private chars(text, nocased) {
-    if (this.options.html) text = HE.decode(text, { isAttributeValue: true })
-
-    this.latex += tolatex(text, this.mapping, {
-      bracemath: !nocased,
-      mode: this.translation.unicode ? 'minimal' : (this.translation.BetterBibTeX ? 'bibtex' : 'biblatex'),
-      preservecommandspacers: true,
-      packages: this.packages,
-    })
+    this.latex += this.tx.tolatex(text, { bracemath: !nocased, preservecommandspacers: true, packages: this.packages })
   }
 }
