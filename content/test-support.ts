@@ -75,8 +75,10 @@ export class TestSupport {
 
     await Zotero.Promise.delay(1000)
 
-    Zotero.Prefs.set('purge.tags', true)
-    await Zotero.Tags.purge()
+    await Zotero.DB.executeTransaction(async () => {
+      Zotero.Prefs.set('purge.tags', true)
+      await Zotero.Tags.purge()
+    })
 
     if (Zotero.BetterBibTeX.KeyManager.all().length !== 0) throw new Error(`keystore has ${Zotero.BetterBibTeX.KeyManager.all().length} entries after reset`)
   }
