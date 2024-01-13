@@ -1,4 +1,3 @@
-
 @article{ISI:000270196200011-0,
   title = {A {{MODIFIED TIKHONOV REGULARIZATION FOR STABLE ANALYTIC CONTINUATION}}},
   author = {F},
@@ -9,10 +8,10 @@
   pages = {2982--3000},
   issn = {0036-1429},
   doi = {10.1137/080730196},
-  abstract = {This paper is devoted to a new regularization method for solving the  numerical analytic continuation of an analytic function f(z) = f(x +  iy) on a strip domain Omega(+) = \{z = x + iy is an element of C  vertical bar x is an element of R, 0 {$<$} y {$<$} y(0)\}, where the data is  given approximately only on the line y = 0. This problem is severely  ill-posed and has important practical applications. The theoretical  optimal error bound for the problem is proved which is independent of  the selected regularization methods. A modified Tikhonov regularization  method with asymptotic order optimal error estimates is proposed. This  method can be numerically implemented easily by the fast Fourier  transform. Some numerical examples are provided and a comparison with a  Fourier regularization method is given, which show the modified  Tikhonov method works very well.},
+  abstract = {This paper is devoted to a new regularization method for solving the numerical analytic continuation of an analytic function f(z) = f(x + iy) on a strip domain Omega(+) = \{z = x + iy is an element of C vertical bar x is an element of R, 0 {$<$} y {$<$} y(0)\}, where the data is given approximately only on the line y = 0. This problem is severely ill-posed and has important practical applications. The theoretical optimal error bound for the problem is proved which is independent of the selected regularization methods. A modified Tikhonov regularization method with asymptotic order optimal error estimates is proposed. This method can be numerically implemented easily by the fast Fourier transform. Some numerical examples are provided and a comparison with a Fourier regularization method is given, which show the modified Tikhonov method works very well.},
   langid = {english},
-  keywords = {error estimate,ill-posed problems,modified Tikhonov  regularization,numerical analytic continuation},
-  annotation = {biblatexdata*[affiliation=Fu, CL (Reprint Author), Lanzhou Univ, Sch Math \& Stat, Lanzhou 730000, Peoples R China.  [Fu, Chu-Li; Deng, Zhi-Liang; Feng, Xiao-Li; Dou, Fang-Fang] Lanzhou Univ, Sch Math \& Stat, Lanzhou 730000, Peoples R China.  [Deng, Zhi-Liang] Heilongjiang Univ, Sch Math Sci, Harbin 150080, Peoples R China.;author-email=fuchuli@lzu.edu.cn  zhiliangdeng@gmail.com  fengxl05@163.com  doufang566@163.com;doc-delivery-number=499DD;funding-acknowledgement=National Natural Science Foundation of China [10671085];funding-text=This project was supported by the National Natural Science Foundation  of China (grant 10671085).;journal-iso=SIAM J. Numer. Anal.;keywords-plus=TRANSFORM;number-of-cited-references=13;subject-category=Mathematics, Applied;times-cited=0]}
+  keywords = {error estimate,ill-posed problems,modified Tikhonov regularization,numerical analytic continuation},
+  annotation = {biblatexdata*[affiliation=Fu, CL (Reprint Author), Lanzhou Univ, Sch Math \& Stat, Lanzhou 730000, Peoples R China. [Fu, Chu-Li; Deng, Zhi-Liang; Feng, Xiao-Li; Dou, Fang-Fang] Lanzhou Univ, Sch Math \& Stat, Lanzhou 730000, Peoples R China. [Deng, Zhi-Liang] Heilongjiang Univ, Sch Math Sci, Harbin 150080, Peoples R China.;author-email=fuchuli@lzu.edu.cn zhiliangdeng@gmail.com fengxl05@163.com doufang566@163.com;doc-delivery-number=499DD;funding-acknowledgement=National Natural Science Foundation of China [10671085];funding-text=This project was supported by the National Natural Science Foundation of China (grant 10671085).;journal-iso=SIAM J. Numer. Anal.;keywords-plus=TRANSFORM;number-of-cited-references=13;subject-category=Mathematics, Applied;times-cited=0]}
 }
 
 @article{ISI:000270196200011-1,
@@ -25,19 +24,19 @@
   pages = {2982--3000},
   issn = {0036-1429},
   doi = {10.1137/080730196},
-  abstract = {This paper is devoted to a new regularization method for solving the  numerical analytic continuation of an analytic function f(z) = f(x +  iy) on a strip domain Omega(+) = \{z = x + iy is an element of C  vertical bar x is an element of R, 0 {$<$} y {$<$} y(0)\}, where the data is  given approximately only on the line y = 0. This problem is severely  ill-posed and has important practical applications. The theoretical  optimal error bound for the problem is proved which is independent of  the selected regularization methods. A modified Tikhonov regularization  method with asymptotic order optimal error estimates is proposed. This  method can be numerically implemented easily by the fast Fourier  transform. Some numerical examples are provided and a comparison with a  Fourier regularization method is given, which show the modified  Tikhonov method works very well.},
-  affiliation = {Fu, CL (Reprint Author), Lanzhou Univ, Sch Math \& Stat, Lanzhou 730000, Peoples R China.  (Fu, Chu-Li, Deng, Zhi-Liang, Feng, Xiao-Li, Dou, Fang-Fang) Lanzhou Univ, Sch Math \& Stat, Lanzhou 730000, Peoples R China.  (Deng, Zhi-Liang) Heilongjiang Univ, Sch Math Sci, Harbin 150080, Peoples R China.},
-  author-email = {fuchuli@lzu.edu.cn  zhiliangdeng@gmail.com  fengxl05@163.com  doufang566@163.com},
+  abstract = {This paper is devoted to a new regularization method for solving the numerical analytic continuation of an analytic function f(z) = f(x + iy) on a strip domain Omega(+) = \{z = x + iy is an element of C vertical bar x is an element of R, 0 {$<$} y {$<$} y(0)\}, where the data is given approximately only on the line y = 0. This problem is severely ill-posed and has important practical applications. The theoretical optimal error bound for the problem is proved which is independent of the selected regularization methods. A modified Tikhonov regularization method with asymptotic order optimal error estimates is proposed. This method can be numerically implemented easily by the fast Fourier transform. Some numerical examples are provided and a comparison with a Fourier regularization method is given, which show the modified Tikhonov method works very well.},
+  affiliation = {Fu, CL (Reprint Author), Lanzhou Univ, Sch Math \& Stat, Lanzhou 730000, Peoples R China. (Fu, Chu-Li, Deng, Zhi-Liang, Feng, Xiao-Li, Dou, Fang-Fang) Lanzhou Univ, Sch Math \& Stat, Lanzhou 730000, Peoples R China. (Deng, Zhi-Liang) Heilongjiang Univ, Sch Math Sci, Harbin 150080, Peoples R China.},
+  author-email = {fuchuli@lzu.edu.cn zhiliangdeng@gmail.com fengxl05@163.com doufang566@163.com},
   doc-delivery-number = {499DD},
   funding-acknowledgement = {National Natural Science Foundation of China (10671085)},
-  funding-text = {This project was supported by the National Natural Science Foundation  of China (grant 10671085).},
+  funding-text = {This project was supported by the National Natural Science Foundation of China (grant 10671085).},
   journal-iso = {SIAM J. Numer. Anal.},
   keywords-plus = {TRANSFORM},
   langid = {english},
   number-of-cited-references = {13},
   subject-category = {Mathematics, Applied},
   times-cited = {0},
-  keywords = {error estimate,ill-posed problems,modified Tikhonov  regularization,numerical analytic continuation}
+  keywords = {error estimate,ill-posed problems,modified Tikhonov regularization,numerical analytic continuation}
 }
 
 @article{ISI:000270196200011-2,
@@ -50,19 +49,17 @@
   pages = {2982--3000},
   issn = {0036-1429},
   doi = {10.1137/080730196},
-  abstract = {This paper is devoted to a new regularization method for solving the  numerical analytic continuation of an analytic function f(z) = f(x +  iy) on a strip domain Omega(+) = \{z = x + iy is an element of C  vertical bar x is an element of R, 0 {$<$} y {$<$} y(0)\}, where the data is  given approximately only on the line y = 0. This problem is severely  ill-posed and has important practical applications. The theoretical  optimal error bound for the problem is proved which is independent of  the selected regularization methods. A modified Tikhonov regularization  method with asymptotic order optimal error estimates is proposed. This  method can be numerically implemented easily by the fast Fourier  transform. Some numerical examples are provided and a comparison with a  Fourier regularization method is given, which show the modified  Tikhonov method works very well.},
-  affiliation = {Fu, CL (Reprint Author), Lanzhou Univ, Sch Math \& Stat, Lanzhou 730000, Peoples R China.  [Fu, Chu-Li; Deng, Zhi-Liang; Feng, Xiao-Li; Dou, Fang-Fang] Lanzhou Univ, Sch Math \& Stat, Lanzhou 730000, Peoples R China.  [Deng, Zhi-Liang] Heilongjiang Univ, Sch Math Sci, Harbin 150080, Peoples R China.},
-  author-email = {fuchuli@lzu.edu.cn  zhiliangdeng@gmail.com  fengxl05@163.com  doufang566@163.com},
+  abstract = {This paper is devoted to a new regularization method for solving the numerical analytic continuation of an analytic function f(z) = f(x + iy) on a strip domain Omega(+) = \{z = x + iy is an element of C vertical bar x is an element of R, 0 {$<$} y {$<$} y(0)\}, where the data is given approximately only on the line y = 0. This problem is severely ill-posed and has important practical applications. The theoretical optimal error bound for the problem is proved which is independent of the selected regularization methods. A modified Tikhonov regularization method with asymptotic order optimal error estimates is proposed. This method can be numerically implemented easily by the fast Fourier transform. Some numerical examples are provided and a comparison with a Fourier regularization method is given, which show the modified Tikhonov method works very well.},
+  affiliation = {Fu, CL (Reprint Author), Lanzhou Univ, Sch Math \& Stat, Lanzhou 730000, Peoples R China. [Fu, Chu-Li; Deng, Zhi-Liang; Feng, Xiao-Li; Dou, Fang-Fang] Lanzhou Univ, Sch Math \& Stat, Lanzhou 730000, Peoples R China. [Deng, Zhi-Liang] Heilongjiang Univ, Sch Math Sci, Harbin 150080, Peoples R China.},
+  author-email = {fuchuli@lzu.edu.cn zhiliangdeng@gmail.com fengxl05@163.com doufang566@163.com},
   doc-delivery-number = {499DD},
   funding-acknowledgement = {National Natural Science Foundation of China [10671085]},
-  funding-text = {This project was supported by the National Natural Science Foundation  of China (grant 10671085).},
+  funding-text = {This project was supported by the National Natural Science Foundation of China (grant 10671085).},
   journal-iso = {SIAM J. Numer. Anal.},
   keywords-plus = {TRANSFORM},
   langid = {english},
   number-of-cited-references = {13},
   subject-category = {Mathematics, Applied},
   times-cited = {0},
-  keywords = {error estimate,ill-posed problems,modified Tikhonov  regularization,numerical analytic continuation}
+  keywords = {error estimate,ill-posed problems,modified Tikhonov regularization,numerical analytic continuation}
 }
-
-
