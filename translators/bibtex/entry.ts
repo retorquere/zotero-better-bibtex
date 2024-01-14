@@ -445,7 +445,7 @@ export class Entry {
       if (this.translation.BetterBibLaTeX && this.translation.preferences.biblatexExtendedDateFormat && DateParser.isEDTF(field.value as string, true)) {
         return this.add({
           ...field,
-          value: (field.value as string).replace(/[.][0-9]{3,}[a-z]+$/i, ''),
+          value: (field.value as string).replace(/[.][0-9]+[a-z]+$/i, ''),
           enc: 'verbatim',
         })
       }
