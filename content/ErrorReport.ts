@@ -286,13 +286,13 @@ export class ErrorReport {
     if (autoExports.length) {
       info += 'Auto-exports:\n'
       for (const ae of autoExports) {
-        info += `  path: ${JSON.stringify(ae.path)}`
+        info += `  path: ...${JSON.stringify(OS.Path.split(ae.path).components.pop())}`
         switch (ae.type) {
           case 'collection':
-            info += `(${Zotero.Collections.get(ae.id)?.name || '<collection>'})`
+            info += ` (${Zotero.Collections.get(ae.id)?.name || '<collection>'})`
             break
           case 'library':
-            info += `(${Zotero.Libraries.get(ae.id)?.name || '<library>'})`
+            info += ` (${Zotero.Libraries.get(ae.id)?.name || '<library>'})`
             break
         }
         info += '\n'
