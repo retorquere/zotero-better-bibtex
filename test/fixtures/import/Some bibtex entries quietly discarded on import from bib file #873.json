@@ -7167,8 +7167,13 @@
         },
         {
           "creatorType": "author",
-          "firstName": "D., M.and Kortenkamp",
+          "firstName": "M.",
           "lastName": "Ingham"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "D.",
+          "lastName": "Kortenkamp"
         },
         {
           "creatorType": "author",
