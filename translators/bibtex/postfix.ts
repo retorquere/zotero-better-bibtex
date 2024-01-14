@@ -38,7 +38,7 @@ export class Postfix {
     if (this.qr) {
       const packages = Object.keys(this.packages).sort()
       if (packages.length) {
-        postfix += '\n% Required packages:\n'
+        postfix += '\n% The following packages could be loaded to get more precise latex output:\n'
         for (const pkg of packages) {
           postfix += `% * ${pkg}\n`
         }
