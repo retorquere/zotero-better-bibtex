@@ -7164,8 +7164,8 @@
         },
         {
           "creatorType": "author",
-          "firstName": "D.",
-          "lastName": "Ingham, M.and Kortenkamp"
+          "firstName": "D., M.and Kortenkamp",
+          "lastName": "Ingham"
         },
         {
           "creatorType": "author",
@@ -11440,8 +11440,8 @@
         },
         {
           "creatorType": "editor",
-          "firstName": "et al.",
-          "lastName": "Dowty, D.R."
+          "firstName": "et al., D.R.",
+          "lastName": "Dowty"
         }
       ],
       "date": "1985",
@@ -14841,8 +14841,8 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "Firby, J.",
-          "lastName": "Miller, D."
+          "firstName": "Firby, J., D.",
+          "lastName": "Miller"
         },
         {
           "creatorType": "author",
