@@ -705,7 +705,7 @@ const api = new class API {
 
 Zotero.Server.Endpoints['/better-bibtex/json-rpc'] = class {
   public supportedMethods = ['GET', 'POST']
-  public supportedDataTypes = 'application/json'
+  public supportedDataTypes = ['application/json']
   public permitBookmarklet = false
 
   public async init({ method, data, query }) {
