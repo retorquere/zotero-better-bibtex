@@ -110,7 +110,7 @@ the number of microseconds BBT should wait after being notified before acting on
 
 default: `<not set>`
 
-Any characters entered here will prefer a math-mode LaTeX-command counterpart over a math-mode, if a math-mode command is available.
+Any characters entered here will prefer a math-mode LaTeX-command counterpart over a text-mode mapping, if a math-mode command is available.
 
 ## mapText
 
