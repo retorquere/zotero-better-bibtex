@@ -11,17 +11,6 @@ Some of us though are bound to outlets that still demand BibTeX, and there's gee
 <!-- generated tables below -->
 
 
-### textcomp
-
-| **character** | **text** | **math** | **character** | **text** | **math** | **character** | **text** | **math** | **character** | **text** | **math** |
-|---------------|----------|----------|---------------|----------|----------|---------------|----------|----------|---------------|----------|----------|
-|  ¢ | \textcent |  |  ¤ | \textcurrency |  |  ¥ | \textyen |  |  ¦ | \textbrokenbar |  |
-|  © | \textcopyright |  |  ª | \textordfeminine |  |  ® | \textregistered |  |  ° | \textdegree |  |
-|  ¶ | \textparagraph |  |  º | \textordmasculine |  |  ð | \textdh |  |  ˙ | \textperiodcentered |  |
-|  • | \textbullet |  |  ‰ | \textperthousand |  |  ‱ | \textpertenthousand |  |  ℞ | \textrecipe |  |
-|  ™ | \texttrademark |  |  → | \textrightarrow |  |  | |  |  | |  |
-
-
 ### amssymb
 
 | **character** | **text** | **math** | **character** | **text** | **math** | **character** | **text** | **math** | **character** | **text** | **math** |
@@ -35,39 +24,6 @@ Some of us though are bound to outlets that still demand BibTeX, and there's gee
 | **character** | **text** | **math** | **character** | **text** | **math** | **character** | **text** | **math** | **character** | **text** | **math** |
 |---------------|----------|----------|---------------|----------|----------|---------------|----------|----------|---------------|----------|----------|
 |  ð |  | \eth |  | |  |  | |  |  | |  |
-
-
-### tipa
-
-| **character** | **text** | **math** | **character** | **text** | **math** | **character** | **text** | **math** | **character** | **text** | **math** |
-|---------------|----------|----------|---------------|----------|----------|---------------|----------|----------|---------------|----------|----------|
-|  ħ | \textcrh |  |  ĸ | ?? |  |  ƕ | \texthvlig |  |  ƞ | \textipa{\textnrleg} |  |
-|  ɐ | \textipa{\textturna} |  |  ɒ | textipa{\textopeno} |  |  ɔ | \textipa{O} |  |  ɖ | \textrtaild |  |
-|  ə | \textschwa |  |  ɤ | \textrevscripta |  |  ɸ | \textphi |  |  ʞ | \textturnk |  |
-|  ˥ | \tone{55} |  |  ˦ | \tone{44} |  |  ˧ | \tone{33} |  |  ˨ | \tone{22} |  |
-|  ˩ | \tone{11} |  |  ̀̄ | \textgravemacron |  |  ̀̇ | \textgravedot |  |  ́̄ | \textacutemacron |  |
-|  ́̌ | \textacutewedge |  |  ̂̇ | \textcircumdot |  |  ̃̇ | \texttildedot |  |  ̄̆ | \textbrevemacron |  |
-|  ́̇ | \textdotacute |  |  ̆̇ | \textdotbreve |  |  ̄̊ | \textringmacron |  |  ̍ | \textvbaraccent |  |
-|  ̎ | \textdoublevbaraccent |  |  ̐ | \textdotbreve |  |  ̘ | \textadvancing |  |  ̙ | \textretracting |  |
-|  ̚ | \textcorner |  |  ̜ | \textsublhalfring |  |  ̝ | \textraising |  |  ̞ | \textlowering |  |
-|  ̟ | \textsubplus |  |  ̤ | \textsubumlaut |  |  ̥ | \textsubring |  |  ̩ | \textsyllabic |  |
-|  ̪ | \textsubbridge |  |  ̬ | \textsubwedge |  |  ̯ | \textsubarch |  |  ̰ | \textsubtilde |  |
-|  ̱ | \textsubbar |  |  ̴ | \textsuperimposetilde |  |  ̹ | \textsubrhalfring |  |  ̺ | \textinvsubbridge |  |
-|  ̻ | \textsubsquare |  |  ̼ | \textseagull |  |  ̽ | \textovercross |  |  ₔ | \textsubscript{\textschwa} |  |
-
-
-### ipa
-
-| **character** | **text** | **math** | **character** | **text** | **math** | **character** | **text** | **math** | **character** | **text** | **math** |
-|---------------|----------|----------|---------------|----------|----------|---------------|----------|----------|---------------|----------|----------|
-|  ɯ | \textturnm |  |  | |  |  | |  |  | |  |
-
-
-### mathscinet
-
-| **character** | **text** | **math** | **character** | **text** | **math** | **character** | **text** | **math** | **character** | **text** | **math** |
-|---------------|----------|----------|---------------|----------|----------|---------------|----------|----------|---------------|----------|----------|
-|  ʿ | \lasp |  |  | |  |  | |  |  | |  |
 
 
 ### unicode-math
@@ -609,13 +565,6 @@ Some of us though are bound to outlets that still demand BibTeX, and there's gee
 |  𝓌 |  | \mathscr{w} |  𝓍 |  | \mathscr{x} |  𝓎 |  | \mathscr{y} |  𝓏 |  | \mathscr{z} |
 
 
-### graphics
-
-| **character** | **text** | **math** | **character** | **text** | **math** | **character** | **text** | **math** | **character** | **text** | **math** |
-|---------------|----------|----------|---------------|----------|----------|---------------|----------|----------|---------------|----------|----------|
-|  ↳ | \reflectbox{\carriagereturn} |  |  | |  |  | |  |  | |  |
-
-
 ### MnSymbol
 
 | **character** | **text** | **math** | **character** | **text** | **math** | **character** | **text** | **math** | **character** | **text** | **math** |
@@ -635,6 +584,58 @@ Some of us though are bound to outlets that still demand BibTeX, and there's gee
 | **character** | **text** | **math** | **character** | **text** | **math** | **character** | **text** | **math** | **character** | **text** | **math** |
 |---------------|----------|----------|---------------|----------|----------|---------------|----------|----------|---------------|----------|----------|
 |  ≂ |  | \texteqsim |  | |  |  | |  |  | |  |
+
+
+### textcomp
+
+| **character** | **text** | **math** | **character** | **text** | **math** | **character** | **text** | **math** | **character** | **text** | **math** |
+|---------------|----------|----------|---------------|----------|----------|---------------|----------|----------|---------------|----------|----------|
+|  ¢ | \textcent |  |  ¤ | \textcurrency |  |  ¥ | \textyen |  |  ¦ | \textbrokenbar |  |
+|  § | \textsection |  |  © | \textcopyright |  |  ª | \textordfeminine |  |  ® | \textregistered |  |
+|  ° | \textdegree |  |  ¶ | \textparagraph |  |  º | \textordmasculine |  |  ð | \textdh |  |
+|  ˙ | \textperiodcentered |  |  • | \textbullet |  |  ‰ | \textperthousand |  |  ‱ | \textpertenthousand |  |
+|  ℞ | \textrecipe |  |  ™ | \texttrademark |  |  → | \textrightarrow |  |  | |  |
+
+
+### tipa
+
+| **character** | **text** | **math** | **character** | **text** | **math** | **character** | **text** | **math** | **character** | **text** | **math** |
+|---------------|----------|----------|---------------|----------|----------|---------------|----------|----------|---------------|----------|----------|
+|  ħ | \textcrh |  |  ĸ | ?? |  |  ƕ | \texthvlig |  |  ƞ | \textipa{\textnrleg} |  |
+|  ɐ | \textipa{\textturna} |  |  ɒ | textipa{\textopeno} |  |  ɔ | \textipa{O} |  |  ɖ | \textrtaild |  |
+|  ə | \textschwa |  |  ɤ | \textrevscripta |  |  ɸ | \textphi |  |  ʞ | \textturnk |  |
+|  ˥ | \tone{55} |  |  ˦ | \tone{44} |  |  ˧ | \tone{33} |  |  ˨ | \tone{22} |  |
+|  ˩ | \tone{11} |  |  ̀̄ | \textgravemacron |  |  ̀̇ | \textgravedot |  |  ́̄ | \textacutemacron |  |
+|  ́̌ | \textacutewedge |  |  ̂̇ | \textcircumdot |  |  ̃̇ | \texttildedot |  |  ̄̀ | \textgravemacron |  |
+|  ̆̄ | \textbrevemacron |  |  ̇́ | \textdotacute |  |  ̇̆ | \textdotbreve |  |  ̊̄ | \textringmacron |  |
+|  ̍ | \textvbaraccent |  |  ̎ | \textdoublevbaraccent |  |  ̐ | \textdotbreve |  |  ̘ | \textadvancing |  |
+|  ̙ | \textretracting |  |  ̚ | \textcorner |  |  ̜ | \textsublhalfring |  |  ̝ | \textraising |  |
+|  ̞ | \textlowering |  |  ̟ | \textsubplus |  |  ̤ | \textsubumlaut |  |  ̥ | \textsubring |  |
+|  ̩ | \textsyllabic |  |  ̪ | \textsubbridge |  |  ̬ | \textsubwedge |  |  ̯ | \textsubarch |  |
+|  ̰ | \textsubtilde |  |  ̱ | \textsubbar |  |  ̴ | \textsuperimposetilde |  |  ̹ | \textsubrhalfring |  |
+|  ̺ | \textinvsubbridge |  |  ̻ | \textsubsquare |  |  ̼ | \textseagull |  |  ̽ | \textovercross |  |
+|  ₔ | \textsubscript{\textschwa} |  |  | |  |  | |  |  | |  |
+
+
+### ipa
+
+| **character** | **text** | **math** | **character** | **text** | **math** | **character** | **text** | **math** | **character** | **text** | **math** |
+|---------------|----------|----------|---------------|----------|----------|---------------|----------|----------|---------------|----------|----------|
+|  ɯ | \textturnm |  |  | |  |  | |  |  | |  |
+
+
+### mathscinet
+
+| **character** | **text** | **math** | **character** | **text** | **math** | **character** | **text** | **math** | **character** | **text** | **math** |
+|---------------|----------|----------|---------------|----------|----------|---------------|----------|----------|---------------|----------|----------|
+|  ʿ | \lasp |  |  | |  |  | |  |  | |  |
+
+
+### graphics
+
+| **character** | **text** | **math** | **character** | **text** | **math** | **character** | **text** | **math** | **character** | **text** | **math** |
+|---------------|----------|----------|---------------|----------|----------|---------------|----------|----------|---------------|----------|----------|
+|  ↳ | \reflectbox{\carriagereturn} |  |  | |  |  | |  |  | |  |
 
 
 ### pmboxdraw

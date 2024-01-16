@@ -345,8 +345,6 @@ export const HTMLParser = new class { // eslint-disable-line @typescript-eslint/
 
     if (normalized_node.attr.nocase || normalized_node.class.nocase) normalized_node.nocase = !isNocased
     if (normalized_node.attr.relax || normalized_node.class.relax) normalized_node.relax = true
-    if (normalized_node.attr.text || normalized_node.class.text) normalized_node.mode = 'text'
-    if (normalized_node.attr.math || normalized_node.class.math) normalized_node.mode = 'math'
     if (normalized_node.class.enquote || normalized_node.attr.enquote) normalized_node.enquote = true
     if (!normalized_node.attr.smallcaps && (normalized_node.attr.style || '').match(/small-caps/i)) normalized_node.attr.smallcaps = 'smallcaps'
     if (normalized_node.class.smallcaps || normalized_node.attr.smallcaps) normalized_node.smallcaps = true

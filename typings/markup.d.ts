@@ -5,7 +5,6 @@ export interface MarkupNode {
   class?: { [key: string]: boolean }
   value?: string
 
-  mode?: '' | 'text' | 'math'
   smallcaps?: boolean
   nocase?: boolean
   relax?: boolean
