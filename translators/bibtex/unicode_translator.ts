@@ -69,7 +69,7 @@ export class HTMLConverter {
     return { latex: this.latex, raw: ast.nodeName === 'pre', packages: [...this.packages] }
   }
 
-  private walk(tag: MarkupNode, nocased = false) {
+  private walk(tag: MarkupNode, nocased = false, mode: '' | 'math' | 'text' = '') {
     if (!tag) return
 
     switch (tag.nodeName) {
@@ -202,7 +202,7 @@ export class HTMLConverter {
 
     this.latex += prefix
     for (const child of tag.childNodes) {
-      this.walk(child, nocased || tag.nocase)
+      this.walk(child, nocased || tag.nocase, tag.mode || mode || '')
     }
     this.latex += postfix
 
