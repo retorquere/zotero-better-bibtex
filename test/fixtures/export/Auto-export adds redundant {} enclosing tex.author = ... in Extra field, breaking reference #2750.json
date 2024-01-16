@@ -1,6 +1,7 @@
 {
   "config": {
     "id": "REDACTED",
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "options": {
       "Items": true,
@@ -30,10 +31,10 @@
       ],
       "extra": [
         "Issued: 1-1-2024",
-        "Container title: Podcast Title",
-        "tex.author = {family={Lastname}, given={First second (Host)}, given-i={F. S. (Host)} and family={LastnameOtherauthor}, given={FirstOtherauthor (Guest)}, given-i={F. (Guest)}}",
-        "tex.entrysubtype  = {Audio podcast episode}",
-        "tex.maintitle = {Podcast Title}"
+        "Container title: Podcast series title",
+        "tex.author = family={Lastname}, given={First second (Host)}, given-i={F. S. (Host)} and family={LastnameOtherauthor}, given={FirstOtherauthor (Guest)}, given-i={F. (Guest)}",
+        "tex.entrysubtype  = Audio podcast episode",
+        "tex.maintitle = Podcast series title"
       ],
       "itemID": 1,
       "itemType": "podcast",
