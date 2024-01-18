@@ -945,12 +945,17 @@ export class ZoteroItem {
     let numbers = (this.bibtex.fields.number || []).map(n => `${n}`)
     const issues = (this.bibtex.fields.issue || []).map(n => `${n}`)
 
-    if (this.item.itemType === 'patent') {
-      field = 'number'
-      if (this.patentNumberPrefix) {
-        const patentNumberPrefix = this.patentNumberPrefix.toLowerCase()
-        numbers = numbers.map(n => n.toLowerCase().startsWith(patentNumberPrefix) ? n : `${this.patentNumberPrefix}${n}`)
-      }
+    switch (this.item.itemType) {
+      case 'patent':
+        field = 'number'
+        if (this.patentNumberPrefix) {
+          const patentNumberPrefix = this.patentNumberPrefix.toLowerCase()
+          numbers = numbers.map(n => n.toLowerCase().startsWith(patentNumberPrefix) ? n : `${this.patentNumberPrefix}${n}`)
+        }
+        break
+      case 'report':
+        field = 'number'
+        break
     }
 
     return this.set(field, numbers.concat(issues).join(', '), [field])
