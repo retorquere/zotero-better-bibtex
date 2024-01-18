@@ -286,11 +286,11 @@
       "date": "1999-01",
       "extra": [
         "Citation Key: UMCP-CSD//CS-TR-3981",
-        "Issue: CS-TR-3981",
         "tex.bibdate: March 17, 1999"
       ],
       "itemID": 8,
       "itemType": "report",
+      "number": "CS-TR-3981",
       "publisher": "University of Maryland, College Park",
       "title": "SHOP: Simple hierarchical ordered planner",
       "type": "Technical report"
@@ -1112,11 +1112,11 @@
       ],
       "date": "February 1994",
       "extra": [
-        "Citation Key: Barrett:UCPOP",
-        "Issue: 93\u201309\u201306"
+        "Citation Key: Barrett:UCPOP"
       ],
       "itemID": 40,
       "itemType": "report",
+      "number": "93\u201309\u201306",
       "place": "Seattle, WA",
       "publisher": "Department of Computer Science and Engineering, University of Washington",
       "title": "UCPOP user's manual (version 2.0)"
@@ -1353,11 +1353,11 @@
       ],
       "date": "September 1989",
       "extra": [
-        "Citation Key: Barto:89",
-        "Issue: 89\u201389"
+        "Citation Key: Barto:89"
       ],
       "itemID": 50,
       "itemType": "report",
+      "number": "89\u201389",
       "place": "Amherst, MA",
       "publisher": "Department of Computer and Information Science, University of Massachusetts, Amherst",
       "title": "Connectionist learning for control: An overview",
@@ -1884,11 +1884,11 @@
       ],
       "date": "December 1986",
       "extra": [
-        "Citation Key: Birnbaum:86",
-        "Issue: 489"
+        "Citation Key: Birnbaum:86"
       ],
       "itemID": 72,
       "itemType": "report",
+      "number": "489",
       "publisher": "Yale University Department of Computer Science",
       "title": "Integrated processing in planning and understanding"
     },
@@ -2825,11 +2825,11 @@
       ],
       "date": "September 1987",
       "extra": [
-        "Citation Key: Brooks:87",
-        "Issue: Working Paper 303"
+        "Citation Key: Brooks:87"
       ],
       "itemID": 111,
       "itemType": "report",
+      "number": "Working Paper 303",
       "publisher": "MITAI",
       "title": "Planning is just a way of avoiding figuring out what to do next"
     },
@@ -4167,11 +4167,11 @@
       ],
       "date": "1987",
       "extra": [
-        "Citation Key: Col87",
-        "Issue: 599"
+        "Citation Key: Col87"
       ],
       "itemID": 165,
       "itemType": "report",
+      "number": "599",
       "place": "New Haven, CT",
       "publisher": "Department of Computer Science, Yale University",
       "title": "Plan creation: Using strategies as blueprints",
@@ -5668,11 +5668,11 @@
       ],
       "date": "December 1993",
       "extra": [
-        "Citation Key: Draper:93",
-        "Issue: 93-12-04"
+        "Citation Key: Draper:93"
       ],
       "itemID": 224,
       "itemType": "report",
+      "number": "93-12-04",
       "place": "Seattle, WA",
       "publisher": "UDUB",
       "title": "Probabilistic planning with information gathering and contingent execution"
@@ -6151,11 +6151,11 @@
       ],
       "date": "1994",
       "extra": [
-        "Citation Key: Erol:HTNSemantics",
-        "Issue: CS-TR-3239 and UMIACS-TR-94-31"
+        "Citation Key: Erol:HTNSemantics"
       ],
       "itemID": 242,
       "itemType": "report",
+      "number": "CS-TR-3239 and UMIACS-TR-94-31",
       "place": "College Park, MD",
       "publisher": "Computer Science Department, University of Maryland",
       "title": "Semantics for hierarchical task-network planning"
@@ -6176,11 +6176,11 @@
       ],
       "date": "1994",
       "extra": [
-        "Citation Key: Ersan:94",
-        "Issue: BU-CEIS-94-30"
+        "Citation Key: Ersan:94"
       ],
       "itemID": 243,
       "itemType": "report",
+      "number": "BU-CEIS-94-30",
       "publisher": "Bilkent University, Department of Computer Engineering and Information Science",
       "title": "Situated modeling of epistemic puzzles"
     },
@@ -6788,11 +6788,11 @@
       ],
       "date": "1992-03",
       "extra": [
-        "Citation Key: Fink:92",
-        "Issue: CMU-CS-94-123"
+        "Citation Key: Fink:92"
       ],
       "itemID": 266,
       "itemType": "report",
+      "number": "CMU-CS-94-123",
       "place": "CMU-ADDRESS",
       "publisher": "CMUSCS",
       "title": "Prodigy planning algorithm"
@@ -7424,14 +7424,14 @@
       ],
       "date": "1979",
       "extra": [
-        "Citation Key: Gaschnig:79",
-        "Issue: CMU-CS-79-124"
+        "Citation Key: Gaschnig:79"
       ],
       "itemID": 293,
       "itemType": "report",
       "notes": [
         "Reference for backjumping, cited in Ginsberg's texbook."
       ],
+      "number": "CMU-CS-79-124",
       "publisher": "Carnegie-Mellon University",
       "title": "Performance measurement and analysis of certain search algorithms"
     },
@@ -7529,14 +7529,14 @@
       ],
       "date": "September 1985",
       "extra": [
-        "Citation Key: Gazdar:85",
-        "Issue: CSLI-85-32"
+        "Citation Key: Gazdar:85"
       ],
       "itemID": 297,
       "itemType": "report",
       "notes": [
         "Review of <i>Two-level Morphology</i>"
       ],
+      "number": "CSLI-85-32",
       "place": "Stanford University, Stanford, CA",
       "publisher": "CSLI",
       "title": "Finite state morphology: A review of Koskenniemi (1983)"
@@ -7637,11 +7637,11 @@
       ],
       "date": "June 1992",
       "extra": [
-        "Citation Key: Genesereth:KIF3",
-        "Issue: Logic-92-1"
+        "Citation Key: Genesereth:KIF3"
       ],
       "itemID": 302,
       "itemType": "report",
+      "number": "Logic-92-1",
       "publisher": "Computer Science Department, Stanford University",
       "title": "Knowledge interchange format, version 3.0 reference manual",
       "type": "Logic group report"
@@ -7687,11 +7687,11 @@
       ],
       "date": "1987-01",
       "extra": [
-        "Citation Key: Georgeff:87",
-        "Issue: 411"
+        "Citation Key: Georgeff:87"
       ],
       "itemID": 304,
       "itemType": "report",
+      "number": "411",
       "place": "SRI-ADDRESS",
       "publisher": "SRI",
       "title": "Procedural knowledge"
@@ -7761,11 +7761,11 @@
       ],
       "date": "2005",
       "extra": [
-        "Citation Key: GereviniLong05:PDDL3",
-        "Issue: RT 2005-08-47"
+        "Citation Key: GereviniLong05:PDDL3"
       ],
       "itemID": 307,
       "itemType": "report",
+      "number": "RT 2005-08-47",
       "place": "Brescia, Italy",
       "publisher": "Dept. of Electronics for Automation, University of Brescia",
       "title": "Plan constraints and preferences in PDDL3",
@@ -8416,11 +8416,11 @@
       ],
       "date": "1980",
       "extra": [
-        "Citation Key: Granger",
-        "Issue: Research Report 171"
+        "Citation Key: Granger"
       ],
       "itemID": 334,
       "itemType": "report",
+      "number": "Research Report 171",
       "publisher": "Yale University Department of Computer Science",
       "title": "Adaptive understanding: Correcting erroneous inferences"
     },
@@ -8751,8 +8751,7 @@
       ],
       "date": "1993-04",
       "extra": [
-        "Citation Key: Gruber:93",
-        "Issue: KSL 92-71"
+        "Citation Key: Gruber:93"
       ],
       "itemID": 348,
       "itemType": "report",
@@ -8760,6 +8759,7 @@
         "Discussion of using ontologies to translate between knowledge-based systems. Nothing earth-shattering. They have rules for translating between Ontolingua and other KR systems.",
         "revised version"
       ],
+      "number": "KSL 92-71",
       "place": "STANFORD-ADDRESS",
       "publisher": "KSL",
       "title": "A translation approach to portable ontology specifications"
@@ -8775,14 +8775,14 @@
       ],
       "date": "1993-08",
       "extra": [
-        "Citation Key: Gruber:93b",
-        "Issue: KSL 93-04"
+        "Citation Key: Gruber:93b"
       ],
       "itemID": 349,
       "itemType": "report",
       "notes": [
         "revised version"
       ],
+      "number": "KSL 93-04",
       "place": "STANFORD-ADDRESS",
       "publisher": "KSL",
       "title": "Toward principles for the design of ontologies used for knowledge sharing"
@@ -8881,11 +8881,11 @@
       ],
       "date": "June 1993",
       "extra": [
-        "Citation Key: Haddawy:93",
-        "Issue: 93-06-04"
+        "Citation Key: Haddawy:93"
       ],
       "itemID": 354,
       "itemType": "report",
+      "number": "93-06-04",
       "place": "Seattle, WA",
       "publisher": "UDUB",
       "title": "Utility models for goal-directed decision-theoretic planners"
@@ -9910,11 +9910,11 @@
       ],
       "date": "December 1990",
       "extra": [
-        "Citation Key: Hobbs:IasATR",
-        "Issue: 499"
+        "Citation Key: Hobbs:IasATR"
       ],
       "itemID": 399,
       "itemType": "report",
+      "number": "499",
       "place": "SRI-ADDRESS",
       "publisher": "Artificial Intelligence Center, SRI International",
       "title": "Interpretation as abduction"
@@ -10619,11 +10619,11 @@
       ],
       "date": "October 1986",
       "extra": [
-        "Citation Key: Johnson:86",
-        "Issue: CSLI-86-63"
+        "Citation Key: Johnson:86"
       ],
       "itemID": 424,
       "itemType": "report",
+      "number": "CSLI-86-63",
       "place": "CSLI-ADDRESS",
       "publisher": "CSLI",
       "title": "Discourse, anaphora and parsing"
@@ -10990,11 +10990,11 @@
       ],
       "date": "1997",
       "extra": [
-        "Citation Key: Kabanza:97TR",
-        "Issue: 197"
+        "Citation Key: Kabanza:97TR"
       ],
       "itemID": 437,
       "itemType": "report",
+      "number": "197",
       "publisher": "Computer Science Dept., University of Sherbrooke",
       "title": "Planning control rules for reactive agents"
     },
@@ -11369,11 +11369,11 @@
       ],
       "date": "May 1987",
       "extra": [
-        "Citation Key: Kautz:thesis",
-        "Issue: TR 215"
+        "Citation Key: Kautz:thesis"
       ],
       "itemID": 453,
       "itemType": "report",
+      "number": "TR 215",
       "place": "Rochester, NY",
       "publisher": "Department of Computer Science, University of Rochester",
       "title": "A formal theory of plan recognition"
@@ -12156,14 +12156,14 @@
       ],
       "date": "June 1993",
       "extra": [
-        "Citation Key: Kushmerick:93",
-        "Issue: 93-06-03"
+        "Citation Key: Kushmerick:93"
       ],
       "itemID": 487,
       "itemType": "report",
       "notes": [
         "This citation should be replaced with Kushmerick, et. al., <i>Artificial Intelligence/</i>, 1995"
       ],
+      "number": "93-06-03",
       "place": "Seattle, WA",
       "publisher": "UDUB",
       "title": "An algorithm for probabilistic planning"
@@ -12330,11 +12330,11 @@
       ],
       "date": "1993-06",
       "extra": [
-        "Citation Key: Lansky:93",
-        "Issue: FIA-93-17"
+        "Citation Key: Lansky:93"
       ],
       "itemID": 494,
       "itemType": "report",
+      "number": "FIA-93-17",
       "publisher": "NASA Ames Research Center",
       "title": "Localized planning with diversified plan construction methods"
     },
@@ -12735,11 +12735,11 @@
       ],
       "date": "June 1991",
       "extra": [
-        "Citation Key: Leong:91",
-        "Issue: MIT/LCS/TR\u2013504"
+        "Citation Key: Leong:91"
       ],
       "itemID": 510,
       "itemType": "report",
+      "number": "MIT/LCS/TR\u2013504",
       "place": "545 Technology Square, Cambridge, MA",
       "publisher": "MIT Laboratory for Computer Science",
       "title": "Knowledge representation for supporting decision model formulation in medicine"
@@ -13483,11 +13483,11 @@
       ],
       "date": "November 1990",
       "extra": [
-        "Citation Key: Marcus:90",
-        "Issue: 41"
+        "Citation Key: Marcus:90"
       ],
       "itemID": 541,
       "itemType": "report",
+      "number": "41",
       "place": "Cambridge, MA",
       "publisher": "MIT Center for Cognitive Science",
       "title": "Overregularization",
@@ -13719,11 +13719,11 @@
       ],
       "date": "January 1980",
       "extra": [
-        "Citation Key: McAllester:80",
-        "Issue: AI-TR-550"
+        "Citation Key: McAllester:80"
       ],
       "itemID": 550,
       "itemType": "report",
+      "number": "AI-TR-550",
       "place": "Cambridge, Mass.",
       "publisher": "Massachusetts Institute of Technology, Artificial Intelligence Laboratory",
       "title": "The use of equality in deduction and knowledge representation"
@@ -14564,11 +14564,11 @@
       ],
       "date": "1998-10",
       "extra": [
-        "Citation Key: McDermott:98:pddl",
-        "Issue: CVC TR-98-003"
+        "Citation Key: McDermott:98:pddl"
       ],
       "itemID": 589,
       "itemType": "report",
+      "number": "CVC TR-98-003",
       "place": "New Haven, CT",
       "publisher": "Yale Center for Computational Vision and Control",
       "title": "PDDL \u2013 the planning domain definition language"
@@ -14900,11 +14900,11 @@
       ],
       "date": "1990-07",
       "extra": [
-        "Citation Key: MillerETAL:90",
-        "Issue: 43"
+        "Citation Key: MillerETAL:90"
       ],
       "itemID": 604,
       "itemType": "report",
+      "number": "43",
       "publisher": "Cognitive Science Laboratory, Princeton University",
       "title": "Five papers on WordNet",
       "type": "CSL report"
@@ -14920,11 +14920,11 @@
       ],
       "date": "1992",
       "extra": [
-        "Citation Key: Mills:92",
-        "Issue: 363a"
+        "Citation Key: Mills:92"
       ],
       "itemID": 605,
       "itemType": "report",
+      "number": "363a",
       "place": "Bloomington, IN",
       "publisher": "Computer Science Department, Indiana University",
       "title": "Stiquito: A Small, simple, inexpensive hexapod robot; Part 1. Locomotion and Hard-wired control"
@@ -15956,11 +15956,11 @@
       ],
       "date": "2004-06",
       "extra": [
-        "Citation Key: nau04:applicSHOP2",
-        "Issue: CS-TR-4604, UMIACS-TR-2004-46"
+        "Citation Key: nau04:applicSHOP2"
       ],
       "itemID": 645,
       "itemType": "report",
+      "number": "CS-TR-4604, UMIACS-TR-2004-46",
       "place": "College Park, MD",
       "publisher": "Computer Science Department, University of Maryland",
       "title": "Applications of SHOP and SHOP2",
@@ -16000,11 +16000,11 @@
       ],
       "date": "1997-04",
       "extra": [
-        "Citation Key: Nebel:97",
-        "Issue: 89"
+        "Citation Key: Nebel:97"
       ],
       "itemID": 647,
       "itemType": "report",
+      "number": "89",
       "place": "Freiburg, Germany",
       "publisher": "Albert-Ludwigs-Universit\u00e4t, Institut f\u00fcr Informatik",
       "title": "Ignoring Irrelevant Facts and operators in plan generation"
@@ -18030,11 +18030,11 @@
       ],
       "date": "1994",
       "extra": [
-        "Citation Key: Pryor:94TR",
-        "Issue: 53"
+        "Citation Key: Pryor:94TR"
       ],
       "itemID": 725,
       "itemType": "report",
+      "number": "53",
       "publisher": "The Institute for the Learning Sciences, Northwestern University",
       "title": "Opportunities and planning in an unpredictable world"
     },
@@ -18130,11 +18130,11 @@
       ],
       "date": "June 1993",
       "extra": [
-        "Citation Key: Pryor:CassandraORIG",
-        "Issue: 41"
+        "Citation Key: Pryor:CassandraORIG"
       ],
       "itemID": 729,
       "itemType": "report",
+      "number": "41",
       "publisher": "The Institute for the Learning Sciences, Northwestern University",
       "title": "Cassandra: Planning for contingencies"
     },
@@ -18149,11 +18149,11 @@
       ],
       "date": "1990-09",
       "extra": [
-        "Citation Key: Purdy:90a",
-        "Issue: SU-CIS-90-15"
+        "Citation Key: Purdy:90a"
       ],
       "itemID": 730,
       "itemType": "report",
+      "number": "SU-CIS-90-15",
       "place": "Syracuse, NY",
       "publisher": "School of Computer and Information Science, Syracuse University",
       "title": "Surface reasoning"
@@ -18169,11 +18169,11 @@
       ],
       "date": "1990-07",
       "extra": [
-        "Citation Key: Purdy:90b",
-        "Issue: SU-CIS-90-02"
+        "Citation Key: Purdy:90b"
       ],
       "itemID": 731,
       "itemType": "report",
+      "number": "SU-CIS-90-02",
       "place": "Syracuse, NY",
       "publisher": "School of Computer and Information Science, Syracuse University",
       "title": "A logic for natural language"
@@ -18189,11 +18189,11 @@
       ],
       "date": "1990-05",
       "extra": [
-        "Citation Key: Purdy:90c",
-        "Issue: SU-CIS-90-07"
+        "Citation Key: Purdy:90c"
       ],
       "itemID": 732,
       "itemType": "report",
+      "number": "SU-CIS-90-07",
       "place": "Syracuse, NY",
       "publisher": "School of Computer and Information Science, Syracuse University",
       "title": "A lexical extension of montague semantics"
@@ -19572,14 +19572,14 @@
       ],
       "date": "1992-09",
       "extra": [
-        "Citation Key: Sandewall:92",
-        "Issue: LiTH-IDA-R-92-30"
+        "Citation Key: Sandewall:92"
       ],
       "itemID": 791,
       "itemType": "report",
       "notes": [
         "Preliminary version of Chapters 1-9 of a book"
       ],
+      "number": "LiTH-IDA-R-92-30",
       "publisher": "Link\u00f6ping University",
       "title": "Features and fluents"
     },
@@ -20765,11 +20765,11 @@
       ],
       "date": "1993",
       "extra": [
-        "Citation Key: Siskind:93a",
-        "Issue: IRCS\u201393\u201303"
+        "Citation Key: Siskind:93a"
       ],
       "itemID": 841,
       "itemType": "report",
+      "number": "IRCS\u201393\u201303",
       "place": "Philadelphia, PA",
       "publisher": "University of Pennsylvania Institute for Research in Cognitive Science",
       "title": "Screamer: A portable efficient implementation of nondeterministic common lisp"
@@ -20950,14 +20950,14 @@
       ],
       "date": "1993-06",
       "extra": [
-        "Citation Key: SonnenbergETAL:93",
-        "Issue: 26"
+        "Citation Key: SonnenbergETAL:93"
       ],
       "itemID": 847,
       "itemType": "report",
       "notes": [
         "Revised version of 1993, original July, 1992"
       ],
+      "number": "26",
       "place": "Carlton, AUSTRALIA",
       "publisher": "AAII",
       "title": "Planned team activity",
@@ -21306,11 +21306,11 @@
       ],
       "date": "November 1993",
       "extra": [
-        "Citation Key: Stolcke:93",
-        "Issue: TR-93-065"
+        "Citation Key: Stolcke:93"
       ],
       "itemID": 863,
       "itemType": "report",
+      "number": "TR-93-065",
       "place": "Berkeley, CA",
       "publisher": "ICSI",
       "title": "An efficient probabilistic context-free parsing algorithm that computes prefix probabilities"
@@ -21783,11 +21783,11 @@
       ],
       "date": "1993-05",
       "extra": [
-        "Citation Key: Thiebaux:93",
-        "Issue: TR\u201393\u2013027"
+        "Citation Key: Thiebaux:93"
       ],
       "itemID": 883,
       "itemType": "report",
+      "number": "TR\u201393\u2013027",
       "publisher": "ICSI",
       "title": "A stochastic model of actions and plans for anytime planning under uncertainty"
     },
@@ -21886,11 +21886,11 @@
       ],
       "date": "2004-04",
       "extra": [
-        "Citation Key: trueg04:_apply_autom_plann_system_airpor",
-        "Issue: 199"
+        "Citation Key: trueg04:_apply_autom_plann_system_airpor"
       ],
       "itemID": 887,
       "itemType": "report",
+      "number": "199",
       "publisher": "Insitut f\u00fcr Informatik, Universit\u00e4t Freiburg",
       "title": "Applying automatic planning systems to airport ground-traffic control \u2014 A feasibility study"
     },
@@ -22799,11 +22799,11 @@
       ],
       "date": "1978",
       "extra": [
-        "Citation Key: Wilensky:thesis",
-        "Issue: 140"
+        "Citation Key: Wilensky:thesis"
       ],
       "itemID": 926,
       "itemType": "report",
+      "number": "140",
       "publisher": "Yale University Department of Computer Science",
       "title": "Understanding goal-based stories"
     },
@@ -23050,11 +23050,11 @@
       ],
       "date": "unknown",
       "extra": [
-        "Citation Key: WilksFass",
-        "Issue: MCCS-90-194"
+        "Citation Key: WilksFass"
       ],
       "itemID": 937,
       "itemType": "report",
+      "number": "MCCS-90-194",
       "publisher": "Computing Research Laboratory, New Mexico State University",
       "title": "Preference semantics: a family history"
     },
@@ -23708,11 +23708,11 @@
       ],
       "date": "1990",
       "extra": [
-        "Citation Key: Yen:90",
-        "Issue: CS-90-37"
+        "Citation Key: Yen:90"
       ],
       "itemID": 967,
       "itemType": "report",
+      "number": "CS-90-37",
       "publisher": "Department of Computer Science, Brown University",
       "title": "CI2 \u2013 a logic for plural representation"
     },
