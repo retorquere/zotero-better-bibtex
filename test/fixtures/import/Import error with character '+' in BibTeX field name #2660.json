@@ -6180,10 +6180,10 @@
       "date": "2016",
       "extra": [
         "Citation Key: 10.9:75b",
-        "Issue: ICPSR 35531",
         "tex.entrysubtype: Data set and code book"
       ],
       "itemID": 280,
+      "number" : "ICPSR 35531",
       "itemType": "dataset",
       "publisher": "National Archive of Data on Arts and Culture",
       "title": "Fast response survey system (FRSS). Teacher's Use of Educational Technology in U.S. Public Schools, 2009",
@@ -6207,10 +6207,10 @@
       "date": "2018",
       "extra": [
         "Citation Key: 10.9:75a",
-        "Issue: ICPSR 37080",
         "tex.entrysubtype: Data Set"
       ],
       "itemID": 281,
+      "number": "ICPSR 37080",
       "itemType": "dataset",
       "publisher": "ICPSR",
       "title": "Cognitive effects of music and dance training in children",
