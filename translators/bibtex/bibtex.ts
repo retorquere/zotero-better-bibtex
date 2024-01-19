@@ -550,6 +550,7 @@ export class ZoteroItem {
   private fallback(fields: string[], value: string): boolean {
     const field = fields.find((f: string) => label[f])
     if (field) {
+      log.debug('label by fallback', name)
       if (typeof value === 'string') value = value.replace(/\n+/g, '')
       this.extra.push(`${label[field]}: ${value}`)
       return true
@@ -950,6 +951,7 @@ export class ZoteroItem {
   }
 
   protected $issue(value: string): boolean {
+    if (this.validFields.number && this.bibtex.fields.number && this.validFields.seriesTitle) return this.set('seriesTitle', value)
     const field = ['issue', 'number'].find(f => this.validFields[f])
     return field && this.set(field, value)
   }
@@ -1283,7 +1285,7 @@ export class ZoteroItem {
           if (this.$note(value, 'note')) continue
         }
 
-        if (this[`$${field}`] && this[`$${field}`](value, field)) continue
+        if (this[`$${field}`]?.(value, field)) continue
 
         switch (field) {
           case 'pst':
@@ -1328,6 +1330,7 @@ export class ZoteroItem {
                 this.item[name] = value
               }
               else if (name = candidates.find(f => label[f])) {
+                log.debug('label by default', candidates, name)
                 this.extra.push(`${label[name]}: ${value}`)
               }
               else {

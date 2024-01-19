@@ -232,7 +232,7 @@
       "date": "2000",
       "extra": [
         "Citation Key: 10.11:83b",
-        "Issue: TC022704",
+        "Number: TC022704",
         "tex.entrysubtype: Database record"
       ],
       "itemID": 32,
@@ -681,7 +681,7 @@
       "date": "2011-08-12",
       "extra": [
         "Citation Key: 10.13:94",
-        "Issue: 443",
+        "Number: 443",
         "tex.author+an:role: 1=host",
         "tex.entrysubtype: podcastepisode",
         "tex.maintitle: This American Life"
@@ -1465,7 +1465,7 @@
       "date": "2018",
       "extra": [
         "Citation Key: 10.1:12a",
-        "Issue: 1",
+        "Number: 1",
         "Pages: 51\u2013104",
         "Type: periodical",
         "Volume: 6",
@@ -1497,7 +1497,7 @@
       "date": "2018",
       "extra": [
         "Citation Key: 10.1:12b",
-        "Issue: 4",
+        "Number: 4",
         "Type: periodical",
         "Volume: 73",
         "tex.issuetitle: Special issue"
@@ -3314,8 +3314,9 @@
       ],
       "itemID": 124,
       "itemType": "report",
-      "number": "10, Issue 260, Vital and Health Statistics Series",
+      "number": "10, Issue 260",
       "publisher": "Centers for Disease Control and Prevention",
+      "seriesTitle": "Vital and Health Statistics Series",
       "title": "Summary health statistics for U.S. adults. National Health Interview Survey, 2012",
       "url": "https://www.atlantic.org/images/publications/Democratic_Defense_Against_Disinformation_FINAL.pdf"
     },
@@ -3766,7 +3767,7 @@
       "date": "2017",
       "extra": [
         "Citation Key: 10.6:65",
-        "Issue: 10289373"
+        "Number: 10289373"
       ],
       "itemID": 140,
       "itemType": "thesis",
@@ -4405,7 +4406,6 @@
       "date": "2016",
       "extra": [
         "Citation Key: 11.6:17",
-        "Issue: 438",
         "Place: 114th Cong. and 162 Cong. Rec. 2394",
         "Type: resolution",
         "tex.source: senate"
@@ -4415,6 +4415,7 @@
       "notes": [
         "enacted"
       ],
+      "number": "438",
       "url": "https://www.congress.gov/congressional-record/2016/04/21/senate-section/article/S2394-2"
     },
     {
@@ -4422,11 +4423,11 @@
       "date": "2015",
       "extra": [
         "Citation Key: 11.6:18",
-        "Issue: 114-358",
         "tex.source: houseofrepresentatives"
       ],
       "itemID": 174,
       "itemType": "report",
+      "number": "114-358",
       "url": "https://www.gpo.gov/fdsys/pkg/CRPT-114rpt358/pdf/CRPT-114hrpt358.pdf"
     },
     {
@@ -4467,12 +4468,12 @@
       "date": "2014",
       "extra": [
         "Citation Key: 11.7:21",
-        "Issue: 13,676",
         "Type: execorder",
         "tex.citation: 3 C.F.R. 294"
       ],
       "itemID": 177,
       "itemType": "statute",
+      "number": "13,676",
       "url": "https://www.govinfo.gov/content/pkg/CFR-2015-title3-vol1/pdf/CFR-2015-title3-vol1-eo13676.pdf"
     },
     {
