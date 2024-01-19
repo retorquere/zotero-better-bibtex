@@ -526,6 +526,7 @@ class NSItem {
         displayOptions: { custom: true},
         scope: { type: 'items', items },
       }))
+      log.debug('fetched', csl)
 
       style = style || 'apa'
       if (!style.includes('/')) style = `http://www.zotero.org/styles/${style}`
