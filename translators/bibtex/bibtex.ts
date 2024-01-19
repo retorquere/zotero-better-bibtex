@@ -550,7 +550,6 @@ export class ZoteroItem {
   private fallback(fields: string[], value: string): boolean {
     const field = fields.find((f: string) => label[f])
     if (field) {
-      log.debug('label by fallback', name)
       if (typeof value === 'string') value = value.replace(/\n+/g, '')
       this.extra.push(`${label[field]}: ${value}`)
       return true
@@ -1330,7 +1329,6 @@ export class ZoteroItem {
                 this.item[name] = value
               }
               else if (name = candidates.find(f => label[f])) {
-                log.debug('label by default', candidates, name)
                 this.extra.push(`${label[name]}: ${value}`)
               }
               else {
