@@ -4,9 +4,12 @@
     "label": "BetterBibTeX JSON",
     "options": {
       "Items": true,
-      "Normalize": false
+      "Preferences": true,
+      "exportNotes": true
     },
-    "preferences": {}
+    "preferences": {
+      "citekeyFormat": "auth + year"
+    }
   },
   "items": [
     {
@@ -19,14 +22,139 @@
       ],
       "date": "1995-01",
       "extra": [
-        "Citation Key: customCitationKey"
+        "Citation Key: customCitationKey",
+        "Pages: 6"
       ],
       "itemID": 1,
+      "itemType": "dataset",
+      "language": "english",
+      "number": "mypreciousreportnumber",
+      "title": "What a great report"
+    },
+    {
+      "citationKey": "customCitationKey",
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "A very well-known and serious institution"
+        }
+      ],
+      "date": "1995-01",
+      "extra": [
+        "Citation Key: customCitationKey"
+      ],
+      "itemID": 2,
+      "itemType": "case",
+      "language": "english",
+      "number": "mypreciousreportnumber",
+      "pages": "6",
+      "title": "What a great report"
+    },
+    {
+      "citationKey": "customCitationKey",
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "A very well-known and serious institution"
+        }
+      ],
+      "date": "1995-01",
+      "extra": [
+        "Citation Key: customCitationKey"
+      ],
+      "itemID": 3,
       "itemType": "report",
       "language": "english",
-      "pages": "6",
       "number": "my_precious_report_number",
+      "pages": "6",
       "title": "What a great report"
+    },
+    {
+      "citationKey": "customCitationKey",
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "A very well-known and serious institution"
+        }
+      ],
+      "date": "1995-01",
+      "extra": [
+        "Citation Key: customCitationKey"
+      ],
+      "itemID": 4,
+      "itemType": "report",
+      "language": "english",
+      "number": "mypreciousreportnumber",
+      "pages": "6",
+      "title": "What a great report"
+    },
+    {
+      "citationKey": "customCitationKey",
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "A very well-known and serious institution"
+        }
+      ],
+      "date": "1995-01",
+      "extra": [
+        "Citation Key: customCitationKey"
+      ],
+      "itemID": 5,
+      "itemType": "statute",
+      "language": "english",
+      "number": "mypreciousreportnumber",
+      "pages": "6",
+      "title": "What a great report"
+    },
+    {
+      "citationKey": "customCitationKey",
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "A very well-known and serious institution"
+        }
+      ],
+      "date": "1995-01",
+      "extra": [
+        "Citation Key: customCitationKey"
+      ],
+      "itemID": 6,
+      "itemType": "statute",
+      "language": "english",
+      "number": "mypreciousreportnumber",
+      "pages": "6",
+      "title": "What a great report"
+    },
+    {
+      "citationKey": "customCitationKey",
+      "creators": [
+        {
+          "creatorType": "inventor",
+          "name": "A very well-known and serious institution"
+        }
+      ],
+      "date": "1995-01",
+      "extra": [
+        "Citation Key: customCitationKey"
+      ],
+      "itemID": 9,
+      "itemType": "patent",
+      "language": "english",
+      "number": "mypreciousreportnumber",
+      "pages": "6",
+      "title": "What a great report"
+    },
+    {
+      "itemID": 10,
+      "itemType": "note",
+      "note": "Import errors found: <ul><li>Don&#39;t know what Zotero type to make of &#39;standard&#39; for @customCitationKey, importing as document</li></ul>",
+      "tags": [
+        {
+          "tag": "#Better BibTeX import error",
+          "type": 1
+        }
+      ]
     }
   ]
 }

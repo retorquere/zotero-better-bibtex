@@ -587,6 +587,7 @@ with open(os.path.join(ITEMS, 'items.ts'), 'w') as items, open(os.path.join(ITEM
         valid.field[itemType][field] = client
       elif valid.field[itemType][field] != client:
         valid.field[itemType][field] = 'true'
+  valid.field['patent']['number'] = 'true'
 
   jsonschema = sqlite3.connect(':memory:')
   jsonschema.execute('CREATE TABLE valid (client, itemType, field)')
