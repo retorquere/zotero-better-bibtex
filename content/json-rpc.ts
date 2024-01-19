@@ -515,6 +515,7 @@ class NSItem {
       }
     }
 
+    log.debug('pandoc-csl', { result, itemIDs })
     if (!itemIDs.length) return result
 
     const items = await getItemsAsync(itemIDs)
@@ -526,7 +527,7 @@ class NSItem {
         displayOptions: { custom: true},
         scope: { type: 'items', items },
       }))
-      log.debug('fetched', csl)
+      log.debug('pandoc-csl', { custom: csl.map(c => c.custom) }) // eslint-disable-line @typescript-eslint/no-unsafe-return
 
       style = style || 'apa'
       if (!style.includes('/')) style = `http://www.zotero.org/styles/${style}`
