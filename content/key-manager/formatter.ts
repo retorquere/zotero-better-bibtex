@@ -1077,13 +1077,13 @@ class PatternFormatter {
   /**
    * Does an acronym lookup for the text.
    * @param list lookup list. The list must be a CSV file and live in the `Zotero/better-bibtex` directory in your Zotero profile, and must use commas as the delimiter.
-   * @param match if no match is found, return empty.
-   * @param reload reload the list for every call. When off, the list will only be read at startup of Better BibTeX.
+   * @param reload reload the list for every call. When off, the list will only be read at startup of Better BibTeX. You can set this to true temporarily to live-reload a list.
+   * @param passthrough if no match is found, pass through input. This is mostly for backwards compatibility, and I would encourage use of `(<input>.acronym || <input>)` over `<input>.acronym(passthrough=true)`. This option will be removed at some point in the future.
    */
-  public _acronym(list='acronyms', match=false, reload=false) {
+  public _acronym(list='acronyms', reload=false, passthrough=false) {
     list = list.replace(/\.csv$/i, '')
 
-    if (reload) this.acronyms[list] = {}
+    if (reload) delete this.acronyms[list]
     if (!this.acronyms[list]) {
       const acronyms: Record<string, string> = {}
 
@@ -1114,7 +1114,7 @@ class PatternFormatter {
       this.acronyms[list] = acronyms
     }
 
-    return this.$text(this.acronyms[list][this.chunk.toLowerCase()] || (match ? '' : this.chunk))
+    return this.$text(this.acronyms[list][this.chunk.toLowerCase()] || (passthrough ? this.chunk : ''))
   }
 
   /** Forces the text inserted by the field marker to be in lowercase. For example, `auth.lower` expands to the last name of the first author in lowercase. */
