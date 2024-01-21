@@ -7,6 +7,7 @@ import { Translators } from './translators'
 import { get as getCollection } from './collection'
 import * as Library from './library'
 import { log } from './logger'
+import { Preference } from './prefs'
 
 import methods from '../gen/api/json-rpc.json'
 import { validator, noncoercing } from './ajv'
@@ -22,6 +23,11 @@ const INVALID_REQUEST = -32600 // The JSON sent is not a valid Request object.
 const METHOD_NOT_FOUND = -32601 // The method does not exist / is not available.
 const INVALID_PARAMETERS = -32602 // Invalid method parameter(s).
 const INTERNAL_ERROR = -32603 // Internal JSON-RPC error.
+
+type QueryPrimitive = number | boolean | string
+type Query
+  = Record<string, Record<'in', QueryPrimitive[]>>
+  | Record<string, QueryPrimitive>
 
 class NSCollection {
   /**
@@ -101,40 +107,94 @@ class NSUser {
 
 class NSItem {
   /**
-   * Quick-search for items in Zotero.
+   * Search for items in Zotero.
    *
-   * @param terms  Terms as a single string as typed into the search box in Zotero, or an array of tuples as typed into the advanced search box in Zotero
+   * Examples
+   *
+   * - search('') or search([]): return every entries
+   * - search('Zotero'): quick search for 'Zotero'
+   * - search([['title', 'contains', 'Zotero']]): search for 'Zotero' in the Title
+   * - search([['library', 'is', 'My Library']]): search for entries in 'My Library'
+   *   (this function try to resolve the string 'My Library' into is own libraryId number)
+   * - search([['ignore_feeds']]): custom action for ignoring the feeds
+   * - search([['ignore_feeds'], ['quicksearch-titleCreatorYear', 'contains', 'Zotero']]): quick search for 'Zotero' ignoring the Feeds
+   * - search([['creator', 'contains', 'Johnny'], ['title', 'contains', 'Zotero']]): search for entries with Creator 'Johnny' AND Title 'Zotero'
+   * - search([['joinMode', 'any'], ['creator', 'contains', 'Johnny'], ['title', 'contains', 'Zotero']]): search for entries with Creator 'Johnny' OR Title 'Zotero'
+   * - search([['joinMode', 'any'], ['creator', 'contains', 'Johnny'], ['title', 'contains', 'Zotero'], ['creator', 'contains', 'Smith', true]]): search for entries with (Creator 'Johnny' OR Title 'Zotero') AND (Creator 'Smith')
+   *
+   * @param terms  Single string as typed into the search box in Zotero (search for Title Creator Year)
+   *               Array of tuples similar as typed into the advanced search box in Zotero
+   *               (https://github.com/zotero/zotero/blob/9971f15e617f19f1bc72f8b24bb00b72d2a4736f/chrome/content/zotero/xpcom/data/searchConditions.js#L72-L610)
    */
-  public async search(terms: string | [string, string, string][], library?: string | number) {
+  public async search(terms: string
+  | ([string] | [string, string] | [string, string, string | number] | [string, string, string | number, boolean])[], library?: string | number) {
 
     const search = new Zotero.Search()
 
-    if (typeof terms === 'string') {
-      terms = terms.replace(/ (?:&|and) /g, ' ')
-      if (!/[\w\u007F-\uFFFF]/.test(terms)) return []
-      search.addCondition('quicksearch-titleCreatorYear', 'contains', terms)
-      search.addCondition('citationKey', 'contains', terms)
+    if (!terms.length) {/* */}
+    else if (typeof terms === 'string') {
+      // Custom action for only string.
+      // Similar behavior as quicksearch-titleCreateorYear, but search also in citationKey and ignore feeds and attachments
+
+      // Credit #2740
+      const fields = [
+        // search the quicksearch-titleCreatorYear fields
+        'title',
+        'publicationTitle',
+        'shortTitle',
+        'court',
+        'year',
+
+        // plus the citationKey
+        'citationKey',
+      ]
+
+      search.addCondition('blockStart')
+      for (const field of fields) {
+        search.addCondition(field, 'contains', terms, false)
+      }
+      search.addCondition('blockEnd')
+
+      // Ignore Feeds
+      for (const feed of Zotero.Feeds.getAll()) {
+        search.addCondition('libraryID', 'isNot', feed.libraryID, true)
+      }
+
+      // Do not list attachments
+      search.addCondition('itemType', 'isNot', 'attachment', true)
+
+      if (typeof library !== 'undefined' && library !== '*') {
+        try {
+          search.addCondition('libraryID', 'is', Library.get(library).libraryID, true)
+        }
+        catch (err) {
+          throw new Error(`library ${JSON.stringify(library)} not found`)
+        }
+      }
     }
     else {
-      if (!terms.length) return []
-      for (const [name, operator, value] of terms) {
-        search.addCondition(name, operator, value)
-        search.addCondition('citationKey', 'contains', value)
-      }
-    }
-
-    for (const feed of Zotero.Feeds.getAll()) {
-      search.addCondition('libraryID', 'isNot', feed.libraryID)
-    }
-
-    search.addCondition('itemType', 'isNot', 'attachment')
-
-    if (typeof library !== 'undefined' && library !== '*') {
-      try {
-        search.addCondition('libraryID', 'is', Library.get(library).libraryID)
-      }
-      catch (err) {
-        throw new Error(`library ${JSON.stringify(library)} not found`)
+      blk: for (const term of terms) {
+        // Custom Actions
+        if ((term.length === 1)) {
+          switch (term[0]) {
+            case 'ignore_feeds': {
+              for (const feed of Zotero.Feeds.getAll()) {
+                search.addCondition('libraryID', 'isNot', feed.libraryID, true)
+              }
+              continue blk
+            }
+          }
+        }
+        // libraryId can be provided as Library Name
+        else if ((term.length >= 3) && (term[0] === 'libraryID')) {
+          try {
+            term[2] = Library.get(term[2]).libraryID
+          }
+          catch (err) {
+            throw new Error(`library ${JSON.stringify(term[2])} not found`)
+          }
+        }
+        search.addCondition(...term)
       }
     }
 
@@ -211,7 +271,15 @@ class NSItem {
    * @param includeParents Include all parent collections back to the library root
    */
   public async collections(citekeys: string[], includeParents?: boolean) {
-    const keys = Zotero.BetterBibTeX.KeyManager.find({ where: { citationKey: { in: citekeys.map(citekey => citekey.replace('@', '')) } } })
+    citekeys = citekeys.map(citekey => citekey.replace('@', ''))
+    const q: Query = {}
+    if (Preference.citekeyCaseInsensitive) {
+      q.lcCitationKey = { in: citekeys.map(citekey => citekey.toLowerCase()) }
+    }
+    else {
+      q.citationKey = { in: citekeys }
+    }
+    const keys = Zotero.BetterBibTeX.KeyManager.find({ where: q })
     if (!keys.length) throw { code: INVALID_PARAMETERS, message: `zero matches for ${citekeys.join(',')}` }
 
     const seen = {}
@@ -266,7 +334,15 @@ class NSItem {
    * @param citekeys An array of citekeys
    */
   public async notes(citekeys: string[]) {
-    const keys = Zotero.BetterBibTeX.KeyManager.find({ where: { citationKey: { in: citekeys.map(citekey => citekey.replace('@', '')) } } })
+    citekeys = citekeys.map(citekey => citekey.replace('@', ''))
+    const q = { where : {} }
+    if (Preference.citekeyCaseInsensitive) {
+      q.where = { lcCitationKey: { in: citekeys.map(citekey => citekey.toLowerCase()) } }
+    }
+    else {
+      q.where = { citationKey: { in: citekeys } }
+    }
+    const keys = Zotero.BetterBibTeX.KeyManager.find(q)
     if (!keys.length) throw { code: INVALID_PARAMETERS, message: `zero matches for ${citekeys.join(',')}` }
 
     const notes = {}
@@ -307,11 +383,15 @@ class NSItem {
 
     if (((format as any).mode || 'bibliography') !== 'bibliography') throw new Error(`mode must be bibliograpy, not ${(format as any).mode}`)
 
-    const where = {
-      citationKey: { in: citekeys.map((citekey: string) => citekey.replace('@', '')) },
-      libraryID: Library.get(library).libraryID,
+    const where : Query = {}
+    if (library !== '*') where.libraryID = Library.get(library).libraryID
+    citekeys = citekeys.map(citekey => citekey.replace('@', ''))
+    if (Preference.citekeyCaseInsensitive) {
+      where.lcCitationKey = { in: citekeys.map(citekey => citekey.toLowerCase()) }
     }
-    if (library === '*') delete where.libraryID
+    else {
+      where.citationKey = { in: citekeys }
+    }
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     const items = await getItemsAsync(Zotero.BetterBibTeX.KeyManager.find({ where }).map(key => key.itemID))
@@ -353,14 +433,20 @@ class NSItem {
   /**
    * Generate an export for a list of citekeys
    *
-   * @param citekeys   Array of citekeys
-   * @param translator BBT translator name or GUID
-   * @param libraryID  ID of library to select the items from. When omitted, assume 'My Library'
+   * @param citekeys      Array of citekeys
+   * @param translator    BBT translator name or GUID
+   * @param libraryID     ID of library to select the items from. When omitted, assume 'My Library'
    */
   public async export(citekeys: string[], translator: string, libraryID?: string | number) {
-    const where = {
-      citationKey: { in: citekeys },
+    const where : Query = {
       libraryID: Library.get(libraryID).libraryID,
+    }
+    citekeys = citekeys.map(citekey => citekey.replace('@', ''))
+    if (Preference.citekeyCaseInsensitive) {
+      where.lcCitationKey = { in: citekeys.map(citekey => citekey.toLowerCase()) }
+    }
+    else {
+      where.citationKey = { in: citekeys }
     }
 
     const found = Zotero.BetterBibTeX.KeyManager.find({ where })
@@ -395,11 +481,108 @@ class NSItem {
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return [OK, 'text/plain', await Translators.exportItems({
+    return await Translators.queueJob({
       translatorID: Translators.getTranslatorId(translator),
       displayOptions: {},
       scope: { type: 'items', items: await getItemsAsync(found.map(key => key.itemID)) }, // eslint-disable-line @typescript-eslint/no-unsafe-return
-    })]
+    })
+  }
+
+  /**
+   * Generate an export for a list of citekeys, tailored for the pandoc zotero filter
+   *
+   * @param citekeys      Array of citekeys
+   * @param asCSL         Return the items as CSL
+   * @param libraryID     ID of library to select the items from. When omitted, assume 'My Library'
+   */
+  public async pandoc_filter(citekeys: string[], asCSL: boolean, libraryID?: string | number, style?: string, locale?: string) {
+    citekeys = [...(new Set(citekeys))]
+    const ci = Preference.citekeyCaseInsensitive
+    const result: { errors: Record<string, number>, items: Record<string, any> } = { errors: {}, items: {} }
+
+    const where : Query = {
+      libraryID: Library.get(libraryID).libraryID,
+    }
+    const itemIDs: number[] = []
+    for (const citationKey of citekeys.map(citekey => citekey.replace('@', ''))) {
+      where[ci ? 'lcCitationKey' : 'citationKey'] = ci ? citationKey.toLowerCase() : citationKey
+      const found = Zotero.BetterBibTeX.KeyManager.find({ where })
+      if (found.length === 1) {
+        itemIDs.push(found[0].itemID)
+      }
+      else {
+        result.errors[citationKey] = found.length
+      }
+    }
+
+    if (!itemIDs.length) return result
+
+    const items = await getItemsAsync(itemIDs)
+
+    if (asCSL) {
+      // I need the cleanup BCJ does
+      const csl = JSON.parse(await Translators.queueJob({
+        translatorID: Translators.getTranslatorId('Better CSL JSON'),
+        displayOptions: { custom: true },
+        scope: { type: 'items', items },
+      }))
+
+      style = style || 'apa'
+      if (!style.includes('/')) style = `http://www.zotero.org/styles/${style}`
+      locale = locale || Zotero.Prefs.get('export.quickCopy.locale')
+
+      let citeproc
+      try {
+        citeproc = Zotero.Styles.get(style).getCiteProc(locale)
+      }
+      catch (err) {
+        throw new Error(`Could not load citation style ${style}`)
+      }
+
+      for (const item of csl) {
+        result.items[item['citation-key']] = item
+
+        let [ authorDate, date ] = [false, true].map(suppress => {
+          citeproc.updateItems([ item.custom.itemID ])
+          const citation = {
+            citationItems: [ { id: item.custom.itemID, 'suppress-author': suppress } ],
+            properties: {},
+          }
+          return citeproc.previewCitationCluster(citation, [], [], 'text') as string
+        })
+
+        while (authorDate.length && date.length && authorDate[0] === date[0] && !authorDate.endsWith(date)) {
+          authorDate = authorDate.slice(1)
+          date = date.slice(1)
+        }
+
+        if (authorDate.endsWith(date)) {
+          item.custom.author = authorDate.replace(date, '').replace(/\s*,\s*$/, '')
+        }
+        else {
+          item.custom.author = items.find(i => i.id === item.custom.itemID)?.getField('firstCreator')
+          item.custom.author = item.custom.author || ['author', 'creators', 'reporter']
+            .map(cr => item[cr] as { literal: string, family: string} [])
+            .find(cr => cr)
+            ?.map(cr => cr.literal || cr.family)
+            .filter(cr => cr)
+            .join(', ')
+            .replace(/(, )(?!.*\1)/, ' and ')
+          item.custom.author = item.custom.author || ''
+        }
+      }
+
+      citeproc.free()
+
+    }
+    else {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+      for (const item of items.map(i => Zotero.Utilities.Internal.itemToExportFormat(i, false, true))) {
+        result.items[item.citationKey] = item
+      }
+    }
+
+    return result
   }
 }
 
@@ -429,6 +612,11 @@ class NSViewer {
 
 }
 
+class NSAPI {
+  public async ready() {
+    return { zotero: Zotero.version, betterbibtex: require('../gen/version.js') }
+  }
+}
 
 const api = new class API {
   public $user = new NSUser
@@ -437,6 +625,7 @@ const api = new class API {
   public $collection = new NSCollection
   public $autoexport = new NSAutoExport
   public $viewer = new NSViewer
+  public $api = new NSAPI
 
   constructor() {
     this.$items = this.$item
@@ -514,14 +703,16 @@ const api = new class API {
 }
 
 Zotero.Server.Endpoints['/better-bibtex/json-rpc'] = class {
-  public supportedMethods = ['POST']
-  public supportedDataTypes = 'application/json'
+  public supportedMethods = ['GET', 'POST']
+  public supportedDataTypes = ['application/json']
   public permitBookmarklet = false
 
-  public async init({ data }) {
+  public async init({ method, data, query }) {
     await Zotero.BetterBibTeX.ready
 
     try {
+      if (method === 'GET') data = JSON.parse(query[''])
+
       const response = await (Array.isArray(data) ? Promise.all(data.map(req => api.handle(req))) : api.handle(data))
       return [OK, 'application/json', JSON.stringify(response)]
     }

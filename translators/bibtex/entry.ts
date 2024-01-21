@@ -445,7 +445,7 @@ export class Entry {
       if (this.translation.BetterBibLaTeX && this.translation.preferences.biblatexExtendedDateFormat && DateParser.isEDTF(field.value as string, true)) {
         return this.add({
           ...field,
-          value: (field.value as string).replace(/\.[0-9]{3}[a-z]+$/i, ''),
+          value: (field.value as string).replace(/[.][0-9]+[a-z]+$/i, ''),
           enc: 'verbatim',
         })
       }
@@ -549,7 +549,7 @@ export class Entry {
         }
 
         if (!value) {
-          if (field.name !== 'file' && field.name !== 'keywords') log.error('add: no value after encoding', field)
+          if (field.name !== 'file' && field.name !== 'keywords') log.debug('add: no value after encoding', field)
           return null
         }
 

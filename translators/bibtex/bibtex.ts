@@ -779,15 +779,20 @@ export class ZoteroItem {
 
   protected $keywords(): boolean {
     let tags = this.bibtex.fields.keywords || []
-    tags = tags.concat(this.bibtex.fields.keyword || [])
-    for (const mesh of this.bibtex.fields.mesh || []) {
-      tags = tags.concat((mesh || '').trim().split(/\s*;\s*/).filter(tag => tag)) // eslint-disable-line @typescript-eslint/no-unsafe-return
+
+    const split = (data: string[]): string[] => {
+      if (!Array.isArray(data)) return []
+      let arr: string[] = []
+      for (const line of data) {
+        arr = [...arr, ...line.trim().split(/\s*[,;]\s*/).filter(t => t)]
+      }
+      return arr
     }
-    for (const tag of this.bibtex.fields.tags || []) {
-      tags = tags.concat((tag || '').trim().split(/\s*;\s*/).filter(t => t)) // eslint-disable-line @typescript-eslint/no-unsafe-return
-    }
-    tags = tags.sort()
-    tags = tags.filter((item, pos, ary) => !pos || (item !== ary[pos - 1]))
+
+    tags = [...tags, ...split(this.bibtex.fields.keyword)]
+    tags = [...tags, ...split(this.bibtex.fields.mesh)]
+    tags = [...tags, ...split(this.bibtex.fields.tags)]
+    tags = [...(new Set(tags))].sort()
 
     this.item.tags = tags
     return true
@@ -935,22 +940,20 @@ export class ZoteroItem {
   }
   protected $lastchecked(value: string): boolean { return this.$urldate(value) }
 
-  protected $number(_value: string): boolean {
-    let field = 'issue'
-    let numbers = (this.bibtex.fields.number || []).map(n => `${n}`)
-    const issues = (this.bibtex.fields.issue || []).map(n => `${n}`)
-
-    if (this.item.itemType === 'patent') {
-      field = 'number'
-      if (this.patentNumberPrefix) {
-        const patentNumberPrefix = this.patentNumberPrefix.toLowerCase()
-        numbers = numbers.map(n => n.toLowerCase().startsWith(patentNumberPrefix) ? n : `${this.patentNumberPrefix}${n}`)
-      }
+  protected $number(value: string): boolean {
+    if (this.item.itemType === 'patent' && this.patentNumberPrefix) {
+      const pnp = this.patentNumberPrefix.toLowerCase()
+      value = value.toLowerCase().startsWith(pnp) ? value : `${this.patentNumberPrefix}${value}`
     }
 
-    return this.set(field, numbers.concat(issues).join(', '), [field])
+    return this.set(this.item.itemType === 'journalArticle' ? 'issue' : 'number', value)
   }
-  protected $issue(value: string): boolean { return this.$number(value) }
+
+  protected $issue(value: string): boolean {
+    if (this.validFields.number && this.bibtex.fields.number && this.validFields.seriesTitle) return this.set('seriesTitle', value)
+    const field = ['issue', 'number'].find(f => this.validFields[f])
+    return field && this.set(field, value)
+  }
 
   protected $eid(value: string): boolean {
     return this.validFields.number ? this.set('number', value) : this.fallback(['number'], value)
@@ -1218,7 +1221,7 @@ export class ZoteroItem {
           name.firstName = creator.firstName || ''
           name.lastName = creator.lastName || ''
           if (creator.prefix) name.lastName = `${creator.prefix} ${name.lastName}`.trim()
-          if (creator.suffix) name.lastName = name.lastName ? `${name.lastName}, ${creator.suffix}` : creator.suffix
+          if (creator.suffix) name.firstName = name.firstName ? `${name.firstName}, ${creator.suffix}` : creator.suffix
           name.firstName = name.firstName.replace(/\u00A0/g, ' ').trim()
           name.lastName = name.lastName.replace(/\u00A0/g, ' ').trim()
           if (name.lastName && !name.firstName) name.fieldMode = 1
@@ -1281,7 +1284,7 @@ export class ZoteroItem {
           if (this.$note(value, 'note')) continue
         }
 
-        if (this[`$${field}`] && this[`$${field}`](value, field)) continue
+        if (this[`$${field}`]?.(value, field)) continue
 
         switch (field) {
           case 'pst':
@@ -1329,7 +1332,7 @@ export class ZoteroItem {
                 this.extra.push(`${label[name]}: ${value}`)
               }
               else {
-                this.extra.push(`tex.${field}: ${value}`)
+                this.extra.push(`tex.${field.match(/[:=]/) ? `"${field}"` : field}: ${value}`)
               }
             }
             break

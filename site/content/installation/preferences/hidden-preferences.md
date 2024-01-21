@@ -51,7 +51,6 @@ default: `<not set>`
 a JSON mapping from single character to raw LaTeX, to augment the default mapping; these will be applied when you export as ASCII. **DO NOT** edit this preferencedirectly,
 but create a CSV (not semicolons) file named `charmap.csv` in the zotero data directory under the `better-bibtex` folder with columns `unicode` (the source character),
 `text` (representation in LaTeX text mode, if any) and `math` (representation in LaTeX math mode, if any, without dollar signs).
-
 ## csquotes
 
 default: `<not set>`
@@ -111,13 +110,21 @@ the number of microseconds BBT should wait after being notified before acting on
 
 default: `<not set>`
 
-Any characters entered here will prefer a math-mode LaTeX-command counterpart over a math-mode, if a math-mode command is available.
+Any characters entered here will prefer a math-mode LaTeX-command counterpart over a text-mode mapping, if a math-mode command is available.
 
 ## mapText
 
 default: `<not set>`
 
 Any characters entered here will prefer a text-mode LaTeX-command counterpart over a math-mode, if a text-mode command is available.
+
+## packages
+
+default: `textcomp,amsmath`
+
+Some LaTeX commands only work when certain packages are loaded. By default, BBT will export Bib(La)TeX that requires no extra packages, but
+you can provide a comma-separated list here of packages to load to get higher fidelity export (for some admittedly niche characters).
+Details of these packages and what they add can be found [here]({{ ref . "exporting/unicode.md" }}).
 
 ## parseParticles
 

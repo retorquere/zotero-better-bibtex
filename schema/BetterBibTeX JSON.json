@@ -198,6 +198,9 @@
             "citeCommand": {
               "type": "string"
             },
+            "citekeyCaseInsensitive": {
+              "type": "boolean"
+            },
             "citekeyFold": {
               "type": "boolean"
             },
@@ -327,6 +330,9 @@
               "type": "string"
             },
             "mapText": {
+              "type": "string"
+            },
+            "packages": {
               "type": "string"
             },
             "parseParticles": {

@@ -11,11 +11,11 @@ import { Eta } from 'eta'
 const eta = new Eta({ autoEscape: true })
 import { simplifyForExport } from '../../gen/items/simplify'
 
-import * as unicode_table from 'unicode2latex/tables/unicode.json'
+import * as unicode_table from 'unicode2latex/tables/minimal.json'
 
 const unicode2latex = (fromPairs(
   Object
-    .entries(unicode_table)
+    .entries(unicode_table.base)
     .map(([unicode, latex]: [string, { text: string, math: string }]) => [ unicode, { text: latex.text || latex.math, math: !(latex.text) }])
 ) as Record<string, { text: string, math: boolean }>)
 

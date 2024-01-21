@@ -14,6 +14,8 @@ Feature: Export
     Examples:
       | file                                                                                                                     | references |
       | Citation key from abbreviationacronym from within field #2717                                                            | 3          |
+      | raw bibtex fields with colon in extra #2750                                                                              | 1          |
+      | Unicode replacement results in undefined mathsl command #2722                                                            | 1          |
       | urldate when only DOI is exported #2697                                                                                  | 1          |
       | skipwords removes dashes #2614                                                                                           | 1          |
       | Length filter double-counting characters #2525                                                                           | 1          |
@@ -228,7 +230,7 @@ Feature: Export
       | BibTeX journal article QR reports missing field number #1589                                                       | 2          |
       | Format disambiguations #1554                                                                                       | 2          |
       | BibTeX Warning for Inbook Entries with Author and Editor Fields #1541                                              | 1          |
-      | Unicode ø in author name is exported with trailing space which does not work in bibtex #1538                       | 1          |
+      | Unicode oslash in author name is exported with trailing space which does not work in bibtex #1538                  | 1          |
       | lone ogonek should have brace                                                                                      | 1          |
       | Regression in export to better biblatex #1491                                                                      | 1          |
       | add date, origdate functions, and format-date filter #1488                                                         | 4          |
@@ -732,20 +734,6 @@ Feature: Export
     Given I import 2 references from "export/*.json"
     When I compile "export/*.md" to "~/*.odt" it should match "export/*.odt" with 22 citations
     When I compile "export/*.md" to "~/*.docx" it should match "export/*.docx" with 22 citations
-
-  @use.with_client=zotero @use.with_slow=true @timeout=3000
-  Scenario: Compare export times
-    Given I import 86 references from "export/*.json"
-    And I set preference .cache to false
-    Then I export the library 50 times using "Better BibTeX"
-    # stock bibtex
-    And I export the library 50 times using "id:9cb70025-a888-4a29-a210-93ec52da40d4"
-    Then I export the library 50 times using "Better BibLaTeX"
-    # stock biblatex
-    And I export the library 50 times using "id:b6e39b57-8942-4d11-8259-342c46ce395f"
-    Then I set preference .cache to true
-    And I export the library 50 times using "Better BibTeX"
-    And I export the library 50 times using "Better BibLaTeX"
 
   # Scenario: error exporting Better BibLaTex this.preference.skipFields is undefined #2029
   # Given I restart Zotero

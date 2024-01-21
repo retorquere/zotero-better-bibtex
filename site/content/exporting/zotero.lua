@@ -1,8 +1,8 @@
 
-  print('zotero-live-citations caf41cc')
+  print('zotero-live-citations cd1ef3f')
   local mt, latest = pandoc.mediabag.fetch('https://retorque.re/zotero-better-bibtex/exporting/zotero.lua.revision')
   latest = string.sub(latest, 1, 10)
-  if 'caf41cc' ~= latest then
+  if 'cd1ef3f' ~= latest then
     print('new version "' .. latest .. '" available at https://retorque.re/zotero-better-bibtex/exporting')
   end
 
@@ -1592,6 +1592,20 @@ function module.deepcopy(orig)
   return copy
 end
 
+function module.dump(o)
+   if type(o) == 'table' then
+      local s = '{ '
+      for k,v in pairs(o) do
+         if type(k) ~= 'number' then k = '"'..k..'"' end
+         s = s .. '['..k..'] = ' .. module.dump(v) .. ','
+      end
+      return s .. '} '
+   else
+      return tostring(o)
+   end
+end
+
+
 function module.trim(s)
   if s == nil then
     return s
@@ -1618,44 +1632,6 @@ local state = {
 
 module.citekeys = {}
 
-function module.authors(csl_or_item)
-  local authors = {}
-  local author
-
-  if csl_or_item.author ~= nil then
-    for _, author in ipairs(csl_or_item.author) do
-      if author.literal ~= nil then
-        table.insert(authors, author.literal)
-      elseif author.family ~= nil then
-        table.insert(authors, author.family)
-      end
-    end
-
-  elseif csl_or_item.creators ~= nil then
-    for _, author in ipairs(csl_or_item.creators) do
-      if author.name ~= nil then
-        table.insert(authors, author.name)
-      elseif author.lastName ~= nil then
-        table.insert(authors, author.lastName)
-      end
-    end
-
-  elseif csl_or_item.reporter ~= nil then
-    table.insert(authors, csl_or_item.reporter)
-  end
-
-  if utils.tablelength(authors) == 0 then
-    return nil
-  end
-
-  local last = table.remove(authors)
-  if utils.tablelength(authors) == 0 then
-    return last
-  end
-  authors = table.concat(authors, ', ')
-  return table.concat({ authors, last }, ' and ')
-end
-
 local function load_items()
   if state.fetched ~= nil then
     return
@@ -1675,15 +1651,19 @@ local function load_items()
     return
   end
 
-  citekeys = table.concat(citekeys, ',')
-  local url = module.url .. utils.urlencode(citekeys)
-  local mt, contents = pandoc.mediabag.fetch(url, '.')
-  local ok, fetched = pcall(json.decode, contents)
+  module.request.params.citekeys = citekeys
+  local url = module.url .. utils.urlencode(json.encode(module.request))
+  local mt, body = pandoc.mediabag.fetch(url, '.')
+  local ok, response = pcall(json.decode, body)
   if not ok then
-    print('could not fetch Zotero items: ' .. contents)
+    print('could not fetch Zotero items: ' .. response .. '(' .. body .. ')')
     return
   end
-  state.fetched = fetched
+  if response.error ~= nil then
+    print('could not fetch Zotero items: ' .. response.error.message)
+    return
+  end
+  state.fetched = response.result
 end
 
 function module.get(citekey)
@@ -1695,7 +1675,11 @@ function module.get(citekey)
 
   if state.fetched.errors[citekey] ~= nil then
     state.reported[citekey] = true
-    print('@' .. citekey .. ': ' .. state.fetched.errors[citekey])
+    if state.fetched.errors[citekey] == 0 then
+      print('@' .. citekey .. ': not found')
+    else
+      print('@' .. citekey .. ': duplicates found')
+    end
     return nil
   end
 
@@ -1705,7 +1689,7 @@ function module.get(citekey)
     return nil
   end
 
-  return state.fetched.items[citekey], state.fetched.zotero[citekey]
+  return state.fetched.items[citekey]
 end
 
 return module
@@ -1750,12 +1734,13 @@ local zotero = require('zotero')
 local config = {
   client = 'zotero',
   scannable_cite = false,
-  csl_style = 'apa7',
+  csl_style = 'apa',
   format = nil, -- more to document than anything else -- Lua does not store nils in tables
-  transferable = false
+  transferable = false,
+  sorted = true,
 }
 
--- -- -- bibliography marker generator -- -- --
+-- -- bibliography marker generator -- --
 function zotero_docpreferences_odt(csl_style)
   return string.format(
     '<data data-version="3" zotero-version="5.0.89">'
@@ -1826,12 +1811,21 @@ local function zotero_bibl_odt()
     'ZOTERO_BIBL ' .. utils.xmlattr(bib_settings) .. ' CSL_BIBLIOGRAPHY' .. ' RND' .. utils.next_id(10))
 end
 
--- -- -- citation market generators -- -- --
+-- -- -- citation marker generators -- -- --
+
+function clean_csl(item)
+  local cleaned = { }
+  for k, v in pairs(item) do cleaned[k] = v end
+  cleaned.custom = nil
+  return setmetatable(cleaned, getmetatable(item))
+end
+
 local function zotero_ref(cite)
   local content = pandoc.utils.stringify(cite.content)
   local csl = {
     citationID = utils.next_id(8),
     properties = {
+      unsorted = not config.sorted,
       formattedCitation = content,
       plainCitation = nil, -- otherwise we get a barrage of "you have edited this citation" popups
       -- dontUpdate = false,
@@ -1844,25 +1838,26 @@ local function zotero_ref(cite)
 
   notfound = false
   for k, item in pairs(cite.citations) do
-    local itemData, zoteroData = zotero.get(item.id)
+    local itemData = zotero.get(item.id)
     if itemData == nil then
       notfound = true
     else
 
       local citation = {
-        id = zoteroData.itemID,
-        uris = { zoteroData.uri },
+        id = itemData.custom.itemID,
+        uris = { itemData.custom.uri },
         -- uri = { zoteroData.uri },
-        itemData = itemData,
+        itemData = clean_csl(itemData),
       }
 
       if item.mode == 'AuthorInText' then -- not formally supported in Zotero
         if config.author_in_text then
-          local authors = zotero.authors(itemData)
-          if authors == nil then
+          local authors = itemData.custom.author
+          if authors == nil or authors == '' then
             return cite
           else
             author_in_text = pandoc.utils.stringify(pandoc.Str(authors)) .. ' '
+            author_in_text = '<w:r><w:t xml:space="preserve">' .. utils.xmlescape(author_in_text) .. '</w:t></w:r>'
             citation['suppress-author'] = true
           end
         else
@@ -2028,6 +2023,9 @@ function Meta(meta)
 
   if meta.zotero['csl-style'] ~= nil then
     config.csl_style = pandoc.utils.stringify(meta.zotero['csl-style'])
+    if config.csl_style == 'apa7' then
+      config.csl_style = 'apa'
+    end
   end
 
   config.transferable = test_boolean('transferable', meta.zotero['transferable'])
@@ -2048,25 +2046,30 @@ function Meta(meta)
   config.client = meta.zotero.client
 
   if config.client == 'zotero' then
-    zotero.url = 'http://127.0.0.1:23119/better-bibtex/export/item?pandocFilterData=true'
+    zotero.url = 'http://127.0.0.1:23119/better-bibtex/json-rpc?'
   elseif config.client == 'jurism' then
-    zotero.url = 'http://127.0.0.1:24119/better-bibtex/export/item?pandocFilterData=true'
+    zotero.url = 'http://127.0.0.1:24119/better-bibtex/json-rpc?'
   end
 
+  zotero.request = {
+    jsonrpc = "2.0",
+    method = "item.pandoc_filter",
+    params = {
+      style = config.csl_style or 'apa',
+    },
+  }
   if string.match(FORMAT, 'odt') and config.scannable_cite then
     -- scannable-cite takes precedence over csl-style
     config.format = 'scannable-cite'
-    zotero.url = zotero.url .. '&translator=jzon'
+    zotero.request.params.asCSL = false
   elseif string.match(FORMAT, 'odt') or string.match(FORMAT, 'docx') then
     config.format = FORMAT
-    zotero.url = zotero.url .. '&translator=json'
+    zotero.request.params.asCSL = true
   end
 
   if type(meta.zotero.library) ~= 'nil' then
-    zotero.url = zotero.url .. '&library=' .. utils.urlencode(meta.zotero.library)
+    zotero.request.params.libraryID = meta.zotero.library
   end
-
-  zotero.url = zotero.url .. '&citationKeys='
 
   if config.format == 'odt' and config.csl_style then
     -- These will be added to the document metadata by pandoc automatically

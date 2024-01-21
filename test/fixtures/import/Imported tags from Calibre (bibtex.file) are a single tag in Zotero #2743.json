@@ -1,0 +1,60 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "options": {
+      "Items": true,
+      "Preferences": true,
+      "exportNotes": true
+    },
+    "preferences": {
+      "citekeyFormat": "auth + year"
+    }
+  },
+  "items": [
+    {
+      "ISBN": "978-3-89942-241-2",
+      "citationKey": "BielefeldtHeiner-RechtenationalerMinderheiten:ethischeBegrundungrechtlicheVerankerungundhistorischeErfahrung",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Heiner",
+          "lastName": "Bielefeldt"
+        }
+      ],
+      "date": "2004-01",
+      "extra": [
+        "Citation Key: BielefeldtHeiner-RechtenationalerMinderheiten:ethischeBegrundungrechtlicheVerankerungundhistorischeErfahrung",
+        "tex.cover: /myfolder/b\u00fccher/Calibre-Bibliothek/Heiner Bielefeldt/Rechte nationaler Minderheiten_ ethische Begrundung, rechtliche Verankerung und historische Erf (194)/cover.jpg",
+        "tex.formats: pdf",
+        "tex.identifiers: google:yryPAAAAMAAJ,amazon_de:3899422414,isbn:9783899422412",
+        "tex.languages: deu"
+      ],
+      "itemID": 1,
+      "itemType": "book",
+      "notes": [
+        "Der Schutz nationaler Minderheiten bildet eine wichtige Herausforderung der staatlichen Innenpolitik, Au\u00dfenpolitik und nicht zuletzt der Europapolitik. Obwohl in j\u00fcngerer Zeit sowohl auf der Ebene der Vereinten Nationen als auch im Rahmen des Europarats und der OSZE Instrumente zur St\u00e4rkung von Minderheitenrechten diskutiert bzw. geschaffen worden sind, besteht nach wie vor Unsicherheit \u00fcber Reichweite, Anspruchsinhalte und Grenzen von Minderheitenrechten. Der Band, der aus einem von der Deutschen Kommission Justitia et Pax (Gerechtigkeit und Frieden) organisierten interdisziplin\u00e4ren Gespr\u00e4chskreis hervorgegangen ist, reflektiert diese Situation und legt Beitr\u00e4ge zur ethischen Begr\u00fcndung, rechtlichen Verankerungen und zu historischen Erfahrungen mit Minderheitenrechten vor."
+      ],
+      "publisher": "Transcript",
+      "tags": [
+        {
+          "tag": "Begr\u00fcndung Menschenrechte"
+        },
+        {
+          "tag": "Ethik"
+        },
+        {
+          "tag": "Geschichte"
+        },
+        {
+          "tag": "Menschenrechte"
+        },
+        {
+          "tag": "Minderheiten"
+        }
+      ],
+      "title": "Rechte nationaler minderheiten: ethische begr\u00fcndung, rechtliche verankerung und historische erfahrung",
+      "volume": "1"
+    }
+  ]
+}

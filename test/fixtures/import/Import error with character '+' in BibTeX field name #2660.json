@@ -3,6 +3,8 @@
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "options": {
+      "Items": true,
+      "Preferences": true,
       "exportNotes": true
     },
     "preferences": {
@@ -21,7 +23,7 @@
       ],
       "extra": [
         "Citation Key: 10.15:108",
-        "tex.author+an:username: 1=\"@nypl\"",
+        "tex.\"author+an:username\": 1=\"@nypl\"",
         "tex.entrysubtype: Highlight",
         "tex.eprint: Instagram"
       ],
@@ -168,7 +170,7 @@
       ],
       "extra": [
         "Citation Key: 10.15:104",
-        "tex.author+an:username: 1=\"@APA_Style\"",
+        "tex.\"author+an:username\": 1=\"@APA_Style\"",
         "tex.entrysubtype: Twitter profile",
         "tex.eprint: Twitter"
       ],
@@ -206,7 +208,7 @@
       "date": "2018",
       "extra": [
         "Citation Key: 10.1:12a",
-        "Issue: 1",
+        "Number: 1",
         "Pages: 51\u2013104",
         "Type: periodical",
         "Volume: 6",
@@ -238,7 +240,7 @@
       "date": "2018",
       "extra": [
         "Citation Key: 10.1:12b",
-        "Issue: 4",
+        "Number: 4",
         "Type: periodical",
         "Volume: 73",
         "tex.issuetitle: Special issue"
@@ -708,7 +710,7 @@
       "date": "2000",
       "extra": [
         "Citation Key: 10.11:83b",
-        "Issue: TC022704",
+        "Number: TC022704",
         "tex.entrysubtype: Database record"
       ],
       "itemID": 32,
@@ -728,7 +730,7 @@
       "date": "1975",
       "extra": [
         "Citation Key: 10.12:84a",
-        "tex.author+an:role: 1=director"
+        "tex.\"author+an:role\": 1=director"
       ],
       "itemID": 33,
       "itemType": "film",
@@ -752,7 +754,7 @@
       "date": "2017",
       "extra": [
         "Citation Key: 10.12:84b",
-        "tex.author+an:role: 1=guestexpert;2=host"
+        "tex.\"author+an:role\": 1=guestexpert;2=host"
       ],
       "itemID": 34,
       "itemType": "film",
@@ -775,7 +777,7 @@
       "date": "2001",
       "extra": [
         "Citation Key: 10.12:84c",
-        "tex.author+an:role: 1=director"
+        "tex.\"author+an:role\": 1=director"
       ],
       "itemID": 35,
       "itemType": "film",
@@ -798,7 +800,7 @@
       "extra": [
         "Citation Key: 10.12:85",
         "Original title: Au revoir les enfants",
-        "tex.author+an:role: 1=director"
+        "tex.\"author+an:role\": 1=director"
       ],
       "itemID": 36,
       "itemType": "film",
@@ -827,7 +829,7 @@
       "date": "2002/2008",
       "extra": [
         "Citation Key: 10.12:86",
-        "tex.author+an:role: =execproducers",
+        "tex.\"author+an:role\": =execproducers",
         "tex.entrysubtype: tvseries"
       ],
       "itemID": 37,
@@ -847,7 +849,7 @@
       "date": "2017-01-11",
       "extra": [
         "Citation Key: 10.12:87a",
-        "tex.author+an:role: 1=director,writer",
+        "tex.\"author+an:role\": 1=director,writer",
         "tex.execproducer: K. Barris and J. Groff and A. Anderson and E. B. Dobbins and L. Fishburne and H. Sugland",
         "tex.maintitle: Black-ish"
       ],
@@ -878,7 +880,7 @@
       "date": "1995-05-21",
       "extra": [
         "Citation Key: 10.12:87b",
-        "tex.author+an:role: 1=writer;2=writer;3=director",
+        "tex.\"author+an:role\": 1=writer;2=writer;3=director",
         "tex.execproducer: D. Mirkin and J. L. Brooks and M. Groening and S. Simon",
         "tex.maintitle: The simpsons"
       ],
@@ -978,7 +980,7 @@
       "date": "2016-09-30",
       "extra": [
         "Citation Key: 10.12:90b",
-        "tex.author+an:username: 1=\"Grammar Girl\"",
+        "tex.\"author+an:username\": 1=\"Grammar Girl\"",
         "tex.entrysubtype: video"
       ],
       "itemID": 44,
@@ -1136,7 +1138,7 @@
       "date": "2015/",
       "extra": [
         "Citation Key: 10.13:93",
-        "tex.author+an:role: 1=host",
+        "tex.\"author+an:role\": 1=host",
         "tex.entrysubtype: podcast"
       ],
       "itemID": 52,
@@ -1157,8 +1159,8 @@
       "date": "2011-08-12",
       "extra": [
         "Citation Key: 10.13:94",
-        "Issue: 443",
-        "tex.author+an:role: 1=host",
+        "Number: 443",
+        "tex.\"author+an:role\": 1=host",
         "tex.entrysubtype: podcastepisode",
         "tex.maintitle: This American Life"
       ],
@@ -1193,8 +1195,8 @@
       "creators": [
         {
           "creatorType": "contributor",
-          "firstName": "M. L.",
-          "lastName": "King, Jr."
+          "firstName": "M. L., Jr.",
+          "lastName": "King"
         }
       ],
       "date": "1963-08-28",
@@ -1432,7 +1434,7 @@
       "date": "2018-06-29",
       "extra": [
         "Citation Key: 10.15:103a",
-        "tex.author+an:username: 1=\"@APAEducation\"",
+        "tex.\"author+an:username\": 1=\"@APAEducation\"",
         "tex.entrysubtype: Tweet",
         "tex.eprint: Twitter"
       ],
@@ -1452,7 +1454,7 @@
       "date": "2018-02-26",
       "extra": [
         "Citation Key: 10.15:103b",
-        "tex.author+an:username: 1=\"@BadlandsNPS\"",
+        "tex.\"author+an:username\": 1=\"@BadlandsNPS\"",
         "tex.entrysubtype: Tweet",
         "tex.eprint: Twitter"
       ],
@@ -1473,7 +1475,7 @@
       "date": "2018-06-21",
       "extra": [
         "Citation Key: 10.15:103c",
-        "tex.author+an:username: 1=\"@BettyMWhite\"",
+        "tex.\"author+an:username\": 1=\"@BettyMWhite\"",
         "tex.entrysubtype: Tweet",
         "tex.eprint: Twitter"
       ],
@@ -1551,7 +1553,7 @@
       "date": "2018-11-26",
       "extra": [
         "Citation Key: 10.15:107",
-        "tex.author+an:username: 1=\"@zeitzmocaa\"",
+        "tex.\"author+an:username\": 1=\"@zeitzmocaa\"",
         "tex.entrysubtype: photographs",
         "tex.eprint: Instagram"
       ],
@@ -1571,7 +1573,7 @@
       "date": "2018-09-12",
       "extra": [
         "Citation Key: 10.15:109",
-        "tex.author+an:username: 1=\"nasa\"",
+        "tex.\"author+an:username\": 1=\"nasa\"",
         "tex.entrysubtype: Online forum post",
         "tex.eprint: Reddit"
       ],
@@ -2725,11 +2727,11 @@
       ],
       "date": "2018",
       "extra": [
-        "Citation Key: 10.4:50c",
-        "Issue: 18-2424"
+        "Citation Key: 10.4:50c"
       ],
       "itemID": 121,
       "itemType": "report",
+      "number": "18-2424",
       "title": "Facing forward. Life After Cancer Treatment",
       "type": "NIH publication",
       "url": "https://www.cancer.gov/publications/patient-education/life-after-cancer-treatment.pdf"
@@ -2803,13 +2805,13 @@
       ],
       "date": "2014",
       "extra": [
-        "Citation Key: 10.4:52",
-        "Issue: 10, Issue 260, Vital and Health Statistics Series",
-        "Issue: 10, Issue 260, Vital and Health Statistics Series"
+        "Citation Key: 10.4:52"
       ],
       "itemID": 124,
       "itemType": "report",
+      "number": "10, Issue 260",
       "publisher": "Centers for Disease Control and Prevention",
+      "seriesTitle": "Vital and Health Statistics Series",
       "title": "Summary health statistics for U.S. adults. National Health Interview Survey, 2012",
       "url": "https://www.atlantic.org/images/publications/Democratic_Defense_Against_Disinformation_FINAL.pdf"
     },
@@ -2914,11 +2916,11 @@
       "date": "2015/2020",
       "extra": [
         "Citation Key: 10.4:56",
-        "Issue: 5R01HD081252-04",
-        "tex.author+an:role: 1=\"Principal Investigator\""
+        "tex.\"author+an:role\": 1=\"Principal Investigator\""
       ],
       "itemID": 130,
       "itemType": "report",
+      "number": "5R01HD081252-04",
       "publisher": "Eunice Kennedy Shriver National Institute of Child Health & Human Development",
       "title": "Stress, self-regulation and psychopathology in middle childhood. Grant",
       "type": "Project",
@@ -2935,11 +2937,11 @@
       ],
       "date": "2013",
       "extra": [
-        "Citation Key: 10.4:57",
-        "Issue: 1"
+        "Citation Key: 10.4:57"
       ],
       "itemID": 131,
       "itemType": "report",
+      "number": "1",
       "publisher": "U.S. Small Business Administration, Office of Advocacy",
       "title": "Profile of veteran business owners. More Young Veterans Appear to be Starting Businesses",
       "type": "Issue brief",
@@ -3160,7 +3162,7 @@
       "date": "2017",
       "extra": [
         "Citation Key: 10.6:65",
-        "Issue: 10289373"
+        "Number: 10289373"
       ],
       "itemID": 140,
       "itemType": "thesis",
@@ -3200,7 +3202,7 @@
       "date": "2016",
       "extra": [
         "Citation Key: 10.7:67r",
-        "tex.author+an:role: 1=director"
+        "tex.\"author+an:role\": 1=director"
       ],
       "itemID": 142,
       "itemType": "film",
@@ -3280,7 +3282,7 @@
       "date": "2018",
       "extra": [
         "Citation Key: 10.7:69r",
-        "tex.author+an:role: 1=writer,director"
+        "tex.\"author+an:role\": 1=writer,director"
       ],
       "itemID": 146,
       "itemType": "tvBroadcast",
@@ -3565,10 +3567,10 @@
       "extra": [
         "Citation Key: 11.4:5",
         "Original Date: 1981",
-        "tex.citation: 563 F.Supp. 332 and aff'd and 727 F.2d 888",
-        "tex.citation+an:citedate: 1=\"1981\";3=\"1984\"",
-        "tex.citation+an:citeinfo: 2=appeal",
-        "tex.citation+an:citeorg: 1=\"D. Kan.\";3=\"10th Cir.\""
+        "tex.\"citation+an:citedate\": 1=\"1981\";3=\"1984\"",
+        "tex.\"citation+an:citeinfo\": 2=appeal",
+        "tex.\"citation+an:citeorg\": 1=\"D. Kan.\";3=\"10th Cir.\"",
+        "tex.citation: 563 F.Supp. 332 and aff'd and 727 F.2d 888"
       ],
       "itemID": 161,
       "itemType": "case",
@@ -3592,9 +3594,9 @@
       "date": "1992",
       "extra": [
         "Citation Key: 11.4:7",
-        "tex.citation: 826 S.W.2d 201",
-        "tex.citation+an:citedate: 1=\"1992\"",
-        "tex.citation+an:citeorg: 1=\"Tex. Ct. App.\""
+        "tex.\"citation+an:citedate\": 1=\"1992\"",
+        "tex.\"citation+an:citeorg\": 1=\"Tex. Ct. App.\"",
+        "tex.citation: 826 S.W.2d 201"
       ],
       "itemID": 163,
       "itemType": "case",
@@ -3721,7 +3723,6 @@
       "date": "2016",
       "extra": [
         "Citation Key: 11.6:17",
-        "Issue: 438",
         "Place: 114th Cong. and 162 Cong. Rec. 2394",
         "Type: resolution",
         "tex.source: senate"
@@ -3731,6 +3732,7 @@
       "notes": [
         "enacted"
       ],
+      "number": "438",
       "url": "https://www.congress.gov/congressional-record/2016/04/21/senate-section/article/S2394-2"
     },
     {
@@ -3738,11 +3740,11 @@
       "date": "2015",
       "extra": [
         "Citation Key: 11.6:18",
-        "Issue: 114-358",
         "tex.source: houseofrepresentatives"
       ],
       "itemID": 174,
       "itemType": "report",
+      "number": "114-358",
       "url": "https://www.gpo.gov/fdsys/pkg/CRPT-114rpt358/pdf/CRPT-114hrpt358.pdf"
     },
     {
@@ -3783,12 +3785,12 @@
       "date": "2014",
       "extra": [
         "Citation Key: 11.7:21",
-        "Issue: 13,676",
         "Type: execorder",
         "tex.citation: 3 C.F.R. 294"
       ],
       "itemID": 177,
       "itemType": "statute",
+      "number": "13,676",
       "url": "https://www.govinfo.gov/content/pkg/CFR-2015-title3-vol1/pdf/CFR-2015-title3-vol1-eo13676.pdf"
     },
     {
@@ -3995,8 +3997,8 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "J.",
-          "lastName": "Santiago, Sr."
+          "firstName": "J., Sr.",
+          "lastName": "Santiago"
         }
       ],
       "extra": [
@@ -4012,8 +4014,8 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "J.",
-          "lastName": "Santiago, Jr."
+          "firstName": "J., Jr.",
+          "lastName": "Santiago"
         }
       ],
       "extra": [
@@ -4237,8 +4239,8 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "T.",
-          "lastName": "MacCallum, II"
+          "firstName": "T., II",
+          "lastName": "MacCallum"
         }
       ],
       "extra": [
@@ -4253,8 +4255,8 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "T.",
-          "lastName": "MacCallum, III"
+          "firstName": "T., III",
+          "lastName": "MacCallum"
         }
       ],
       "extra": [
@@ -4611,8 +4613,8 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "P. T.",
-          "lastName": "Costa, Jr."
+          "firstName": "P. T., Jr.",
+          "lastName": "Costa"
         },
         {
           "creatorType": "author",
@@ -4632,8 +4634,8 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "P. T.",
-          "lastName": "Costa, Jr."
+          "firstName": "P. T., Jr.",
+          "lastName": "Costa"
         },
         {
           "creatorType": "author",
@@ -5113,7 +5115,7 @@
       "date": "2014",
       "extra": [
         "Citation Key: 9.8:11",
-        "tex.author+an:username: 1=\"@ausername\""
+        "tex.\"author+an:username\": 1=\"@ausername\""
       ],
       "itemID": 251,
       "itemType": "book"
@@ -5390,8 +5392,8 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "A. A.",
-          "lastName": "Author, Jr."
+          "firstName": "A. A., Jr.",
+          "lastName": "Author"
         },
         {
           "creatorType": "author",
@@ -5994,7 +5996,7 @@
       "date": "2019",
       "extra": [
         "Citation Key: 10.5:A1",
-        "Issue: 47"
+        "Number: 47"
       ],
       "itemID": 273,
       "itemType": "conferencePaper",
@@ -6179,11 +6181,11 @@
       "date": "2016",
       "extra": [
         "Citation Key: 10.9:75b",
-        "Issue: ICPSR 35531",
         "tex.entrysubtype: Data set and code book"
       ],
       "itemID": 280,
       "itemType": "dataset",
+      "number": "ICPSR 35531",
       "publisher": "National Archive of Data on Arts and Culture",
       "title": "Fast response survey system (FRSS). Teacher's Use of Educational Technology in U.S. Public Schools, 2009",
       "versionNumber": "V3"
@@ -6206,11 +6208,11 @@
       "date": "2018",
       "extra": [
         "Citation Key: 10.9:75a",
-        "Issue: ICPSR 37080",
         "tex.entrysubtype: Data Set"
       ],
       "itemID": 281,
       "itemType": "dataset",
+      "number": "ICPSR 37080",
       "publisher": "ICPSR",
       "title": "Cognitive effects of music and dance training in children",
       "versionNumber": "V1"

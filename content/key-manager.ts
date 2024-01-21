@@ -39,10 +39,16 @@ type CitekeyRecord = {
   libraryID: number
   itemKey: string
   citationKey: string
+  lcCitationKey: string
   pinned: boolean | 0 | 1
 }
 
 type UnwatchCallback = () => void
+
+function lc(record : Partial<CitekeyRecord>): CitekeyRecord {
+  record.lcCitationKey = record.citationKey.toLowerCase()
+  return record as unknown as CitekeyRecord
+}
 
 class Progress {
   private win: any
@@ -81,7 +87,7 @@ export const KeyManager = new class _KeyManager {
   // Table<CitekeyRecord, "itemID">
   private keys = createTable<CitekeyRecord>(createDB({ clone: true }), 'citationKeys')({
     primary: 'itemID',
-    indexes: ['itemKey', 'libraryID', 'citationKey'],
+    indexes: ['itemKey', 'libraryID', 'citationKey', 'lcCitationKey'],
   })
   private unwatch: UnwatchCallback[]
 
@@ -381,10 +387,12 @@ export const KeyManager = new class _KeyManager {
         where: {
           pinned: { in: [0, false] },
           citationKey: { eq: key.citationKey },
+          lcCitationKey: { eq: key.citationKey.toLowerCase() },
           libraryID: key.libraryID,
         },
       } satisfies Query<CitekeyRecord, 'itemID'>
       if (Preference.keyScope === 'global') delete where.where.libraryID
+      delete where.where[Preference.citekeyCaseInsensitive ? 'citationKey' : 'lcCitationKey']
 
       for (const conflict of blink.many(this.keys, where)) {
         item = await Zotero.Items.getAsync(conflict.itemID)
@@ -425,6 +433,7 @@ export const KeyManager = new class _KeyManager {
         case 'autoAbbrevStyle':
         case 'citekeyFormat':
         case 'citekeyFold':
+        case 'citekeyCaseInsensitive':
         case 'citekeyUnsafeChars':
         case 'skipWords':
           Formatter.update([Preference.citekeyFormat])
@@ -486,7 +495,7 @@ export const KeyManager = new class _KeyManager {
       let key: CitekeyRecord
       log.debug('keymanager.load: load existing')
       for (key of await Zotero.DB.queryAsync('SELECT * from betterbibtex.citationkey')) {
-        keys.set(key.itemID, { itemID: key.itemID, itemKey: key.itemKey, libraryID: key.libraryID, citationKey: key.citationKey, pinned: key.pinned })
+        keys.set(key.itemID, lc({ itemID: key.itemID, itemKey: key.itemKey, libraryID: key.libraryID, citationKey: key.citationKey, pinned: key.pinned }))
       }
 
       log.debug('keymanager.load: restore pin status')
@@ -507,7 +516,7 @@ export const KeyManager = new class _KeyManager {
       `))) {
         pinned = getKey(item.extra)
         if (pinned) {
-          keys.set(item.itemID, { itemID: item.itemID, itemKey: item.itemKey, libraryID: item.libraryID, citationKey: pinned, pinned: true })
+          keys.set(item.itemID, lc({ itemID: item.itemID, itemKey: item.itemKey, libraryID: item.libraryID, citationKey: pinned, pinned: true }))
         }
         else if (key = keys.get(item.itemID)) {
           key.pinned = false
@@ -576,10 +585,10 @@ export const KeyManager = new class _KeyManager {
     if (current) {
       current.pinned = proposed.pinned
       current.citationKey = proposed.citationKey
-      blink.update(this.keys, current)
+      blink.update(this.keys, lc(current))
     }
     else {
-      blink.insert(this.keys, { itemID: item.id, libraryID: item.libraryID, itemKey: item.key, pinned: proposed.pinned, citationKey: proposed.citationKey })
+      blink.insert(this.keys, lc({ itemID: item.id, libraryID: item.libraryID, itemKey: item.key, pinned: proposed.pinned, citationKey: proposed.citationKey }))
     }
 
     return proposed.citationKey
@@ -612,9 +621,9 @@ export const KeyManager = new class _KeyManager {
 
     citationKey = Formatter.format(item)
 
-    const where = Preference.keyScope === 'global'
-      ? { citationKey: '' }
-      : { citationKey: '', libraryID: item.libraryID }
+    const where : { citationKey?: string, lcCitationKey?: string, libraryID?: number } = {}
+    if (Preference.keyScope !== 'global') where.libraryID = item.libraryID
+    const ci = Preference.citekeyCaseInsensitive
 
     const seen: Set<string> = new Set
     // eslint-disable-next-line no-constant-condition
@@ -631,7 +640,13 @@ export const KeyManager = new class _KeyManager {
         return postfix
       })
 
-      where.citationKey = postfixed
+      if (ci) {
+        where.lcCitationKey = postfixed.toLowerCase()
+      }
+      else {
+        where.citationKey = postfixed
+      }
+
       if (blink.many(this.keys, { where }).filter(i =>  i.itemID !== item.id).length) continue
 
       return { citationKey: postfixed, pinned: false }
@@ -644,7 +659,7 @@ export const KeyManager = new class _KeyManager {
     for (const item of citekeys) {
       item.citationKey = keymap[item.itemKey]
     }
-    blink.updateMany(this.keys, citekeys)
+    blink.updateMany(this.keys, citekeys.map(lc))
     flash(`Imported ${citekeys.length} citation keys`)
   }
 

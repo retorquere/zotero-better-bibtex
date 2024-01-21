@@ -63,7 +63,7 @@ export abstract class CSLExporter {
       order.push({ citationKey: item.citationKey, i: items.length })
 
       let cached: Cache.ExportedItem
-      if (cached = Zotero.BetterBibTeX.Cache.fetch(this.translation.translator.label, item.itemID, this.translation.options, this.translation.preferences)) {
+      if (!this.translation.options.custom && (cached = Zotero.BetterBibTeX.Cache.fetch(this.translation.translator.label, item.itemID, this.translation.options, this.translation.preferences))) {
         items.push(cached.entry)
         continue
       }
@@ -78,7 +78,10 @@ export abstract class CSLExporter {
       item.journalAbbreviation = item.journalAbbreviation || item.autoJournalAbbreviation
 
       let csl = Zotero.Utilities.Item.itemToCSLJSON(item)
+
       csl['citation-key'] = item.citationKey
+      if (this.translation.options.custom) csl.custom = { uri: item.uri, itemID: item.itemID }
+
       if (Zotero.worker) csl.note = item.extra || undefined
 
       if (item.place) csl[item.itemType === 'presentation' ? 'event-place' : 'publisher-place'] = item.place

@@ -12,3 +12,5 @@ curl http://localhost:23119/better-bibtex/json-rpc -X POST -H "Content-Type: app
 The available methods are:
 
 {{% json-rpc %}}
+
+mind that the `items.export` method had a bug where it would double-wrap the JSON-RPC response; the extra layer has been removed in 6.7.143, but if you were expecting the previous result you will have to update your code.

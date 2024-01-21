@@ -19,11 +19,6 @@ preferences
     BibLaTeX actually has really good Unicode support, so you generally want this off. But for some geezers such as me it is
     simply more pleasing to have things like accented characters translated to their equivalent LaTeX constructs on export.
 
-  preference(name="extensions.zotero.translators.better-bibtex.ascii" bbt:affects="tex" type="string" default="")
-  bbt:doc.
-    If you have unicode turned on you can still selectively replace some characters to plain-text commands; any characters entered here will always
-    be replaced by their LaTeX-command counterparts.
-
   preference(name="extensions.zotero.translators.better-bibtex.asciiBibTeX" bbt:affects="bibtex" type="bool" default="true")
   bbt:doc.
     BibTeX has really spotty Unicode support, so you generally want this on. It will translate things like accented characters
@@ -78,6 +73,9 @@ preferences
   preference(name="extensions.zotero.translators.better-bibtex.citekeySearch" bbt:affects="" type="bool" default="true")
   bbt:doc Enable searching on citation keys. Slows down startup on very large libraries. Requires Zotero restart to enable/disable.
 
+  preference(name="extensions.zotero.translators.better-bibtex.citekeyCaseInsensitive" bbt:affects="" type="bool" default="true")
+  bbt:doc Treat "AugusteComte" and "augustecomte" as the same key when testing for uniqueness
+    
   preference(name="extensions.zotero.translators.better-bibtex.citekeyFold" bbt:affects="" type="bool" default="true")
   bbt:doc.
     If you have deviated from the default citation key format pattern by [specifying your own]({{ ref . "citing" }}), you may
@@ -297,14 +295,6 @@ preferences
   preference(name="extensions.zotero.translators.better-bibtex.git" bbt:affects="" type="string" default="config")
   bbt:doc Can be `off`, `config` or `always`
 
-  preference(name="extensions.zotero.translators.better-bibtex.mapText" bbt:affects="tex" type="string" default="")
-  bbt:doc.
-    Any characters entered here will prefer a text-mode LaTeX-command counterpart over a math-mode, if a text-mode command is available.
-
-  preference(name="extensions.zotero.translators.better-bibtex.mapMath" bbt:affects="tex" type="string" default="")
-  bbt:doc.
-    Any characters entered here will prefer a math-mode LaTeX-command counterpart over a math-mode, if a math-mode command is available.
-
   preference(name="extensions.zotero.translators.better-bibtex.cache" bbt:affects="*" type="bool" default="true")
   bbt:doc.
     Even though BBT exports happen in a separate thread, some work needs to be done before the background export can
@@ -323,6 +313,24 @@ preferences
     a JSON mapping from single character to raw LaTeX, to augment the default mapping; these will be applied when you export as ASCII. **DO NOT** edit this preferencedirectly,
     but create a CSV (not semicolons) file named `charmap.csv` in the zotero data directory under the `better-bibtex` folder with columns `unicode` (the source character),
     `text` (representation in LaTeX text mode, if any) and `math` (representation in LaTeX math mode, if any, without dollar signs).
+  preference(name="extensions.zotero.translators.better-bibtex.mapText" bbt:affects="tex" type="string" default="")
+  bbt:doc.
+    Any characters entered here will prefer a text-mode LaTeX-command counterpart over a math-mode, if a text-mode command is available.
+
+  preference(name="extensions.zotero.translators.better-bibtex.mapMath" bbt:affects="tex" type="string" default="")
+  bbt:doc.
+    Any characters entered here will prefer a math-mode LaTeX-command counterpart over a text-mode mapping, if a math-mode command is available.
+
+  preference(name="extensions.zotero.translators.better-bibtex.ascii" bbt:affects="tex" type="string" default="")
+  bbt:doc.
+    If you have unicode turned on you can still selectively replace some characters to plain-text commands; any characters entered here will always
+    be replaced by their LaTeX-command counterparts.
+
+  preference(name="extensions.zotero.translators.better-bibtex.packages" bbt:affects="tex" type="string" default="textcomp,amsmath")
+  bbt:doc.
+    Some LaTeX commands only work when certain packages are loaded. By default, BBT will export Bib(La)TeX that requires no extra packages, but
+    you can provide a comma-separated list here of packages to load to get higher fidelity export (for some admittedly niche characters).
+    Details of these packages and what they add can be found [here]({{ ref . "exporting/unicode.md" }}).
 
   // documented in tooltip
   preference(name="extensions.zotero.translators.better-bibtex.retainCache" bbt:affects="" type="bool" default="false")

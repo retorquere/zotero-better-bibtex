@@ -4,8 +4,6 @@ import { is7 } from './client'
 
 if (is7) Components.utils.importGlobalProperties(['FormData'])
 
-let $window: Window
-
 Components.utils.import('resource://gre/modules/FileUtils.jsm')
 declare const FileUtils: any
 
@@ -575,6 +573,7 @@ export class BetterBibTeX {
   public ExportOptions: ExportOptions = new ExportOptions
   public ErrorReport = ErrorReport
   public PrefPane = new PrefPane
+  public Translators = Translators
 
   public ready = new Deferred<boolean>()
   public dir: string
@@ -693,9 +692,7 @@ export class BetterBibTeX {
       startup: async () => {
         // https://groups.google.com/d/msg/zotero-dev/QYNGxqTSpaQ/uvGObVNlCgAJ
         // this is what really takes long
-        const before = Date.now()
         await Zotero.initializationPromise
-        log.debug('startup: Zotero.initializationPromise took', (Date.now() - before)/1000, 'seconds')
 
         this.dir = OS.Path.join(Zotero.DataDirectory.dir, 'better-bibtex')
         await OS.File.makeDir(this.dir, { ignoreExisting: true })
@@ -842,48 +839,20 @@ export class BetterBibTeX {
       )
     }
 
-    // progress.update(l10n.localize('better-bibtex_startup_serialization-cache'), 20)
-    // Serializer.init()
-
-    // progress.update(l10n.localize('better-bibtex_startup_auto-export_load'), 30)
-    // await AutoExport.init()
-
-    // progress.update(l10n.localize('better-bibtex_startup_journal-abbrev'), 60)
-    // await JournalAbbrev.init()
-
-    // progress.update(l10n.localize('better-bibtex_startup_installing-translators'), 70)
-    // await Translators.init()
-
-    // progress.update(l10n.localize('better-bibtex_startup_key-manager'), 80)
-    // await this.KeyManager.start() // inits the key cache by scanning the DB and generating missing keys
-
-    // progress.update(l10n.localize('better-bibtex_startup_auto-export'), 90)
-    // AutoExport.start()
-
     await this.loadUI(win)
-
-    // progress.done()
 
     void Events.emit('loaded')
 
     Events.on('export-progress', ({ pct, message }) => {
-      /*
-      let status = `${percent < 0 ? l10n.localize('better-bibtex_preferences_auto-export_status_preparing') : ''} ${translator}`.trim()
-      if (Translators.queue.queued) status += ` +${Translators.queue.queued}`
-      setProgress(percent && percent < 100 && Math.abs(percent), status)
-      */
       this.setProgress(pct, message)
     })
   }
 
   async loadUI(win: Window): Promise<void> {
-    log.debug('loading main UI')
-    // set globals for libraries that for some reason need these -- probably a flawed env detection
-    $window = win
-
     try {
-      await newZoteroPane($window)
-      await newZoteroItemPane($window)
+      log.debug('loading main UI')
+      await newZoteroPane(win)
+      await newZoteroItemPane(win)
     }
     catch (err) {
       log.debug('loadUI error:', err)
