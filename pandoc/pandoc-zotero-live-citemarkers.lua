@@ -42,7 +42,7 @@ local config = {
   sorted = true,
 }
 
--- -- -- bibliography marker generator -- -- --
+-- -- bibliography marker generator -- --
 function zotero_docpreferences_odt(csl_style)
   return string.format(
     '<data data-version="3" zotero-version="5.0.89">'
