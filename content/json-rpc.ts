@@ -496,8 +496,6 @@ class NSItem {
    * @param libraryID     ID of library to select the items from. When omitted, assume 'My Library'
    */
   public async pandoc_filter(citekeys: string[], asCSL: boolean, libraryID?: string | number, style?: string, locale?: string) {
-    Zotero.debug(`json-rpc:pandoc-filter ${JSON.stringify({ asCSL })}`)
-
     citekeys = [...(new Set(citekeys))]
     const ci = Preference.citekeyCaseInsensitive
     const result: { errors: Record<string, number>, items: Record<string, any> } = { errors: {}, items: {} }
@@ -517,7 +515,6 @@ class NSItem {
       }
     }
 
-    Zotero.debug(`json-rpc:pandoc-filter: ${JSON.stringify({ result, itemIDs })}`)
     if (!itemIDs.length) return result
 
     const items = await getItemsAsync(itemIDs)
@@ -529,7 +526,6 @@ class NSItem {
         displayOptions: { custom: true },
         scope: { type: 'items', items },
       }))
-      Zotero.debug(`json-rpc:pandoc-filter ${JSON.stringify({ custom: csl.map(c => c.custom) })}`) // eslint-disable-line @typescript-eslint/no-unsafe-return
 
       style = style || 'apa'
       if (!style.includes('/')) style = `http://www.zotero.org/styles/${style}`
