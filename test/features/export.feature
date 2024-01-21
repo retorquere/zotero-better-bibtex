@@ -13,6 +13,7 @@ Feature: Export
 
     Examples:
       | file                                                                                                                     | references |
+      | raw bibtex fields with colon in extra #2750                                                                              | 1          |
       | Unicode replacement results in undefined mathsl command #2722                                                            | 1          |
       | CitationKeys are case-insensitive in bibtex #2720                                                                        | 2          |
       | urldate when only DOI is exported #2697                                                                                  | 1          |

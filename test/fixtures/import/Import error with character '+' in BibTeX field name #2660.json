@@ -13,6 +13,484 @@
   },
   "items": [
     {
+      "accessDate": "2019-04-16",
+      "citationKey": "10.15:108",
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "The New York Public Library"
+        }
+      ],
+      "extra": [
+        "Citation Key: 10.15:108",
+        "tex.\"author+an:username\": 1=\"@nypl\"",
+        "tex.entrysubtype: Highlight",
+        "tex.eprint: Instagram"
+      ],
+      "itemID": 1,
+      "itemType": "webpage",
+      "title": "The raven",
+      "url": "https://bitly.com/2FV8bu3"
+    },
+    {
+      "accessDate": "2019-05-05",
+      "citationKey": "10.2:33b",
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "Merriam-Webster"
+        }
+      ],
+      "extra": [
+        "Citation Key: 10.2:33b"
+      ],
+      "itemID": 2,
+      "itemType": "book",
+      "title": "Merriam-Webster.com dictionary",
+      "url": "https://www.merriam-webster.com/"
+    },
+    {
+      "accessDate": "2019-06-14",
+      "citationKey": "10.2:33a",
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "American Psychological Association"
+        }
+      ],
+      "extra": [
+        "Citation Key: 10.2:33a"
+      ],
+      "itemID": 3,
+      "itemType": "book",
+      "title": "APA dictionary of psychology",
+      "url": "https://dictionary.apa.org/"
+    },
+    {
+      "accessDate": "2019-06-22",
+      "citationKey": "10.15:106",
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "Smithsonian's National Zoo and Conservation Biology Institute"
+        }
+      ],
+      "extra": [
+        "Citation Key: 10.15:106",
+        "tex.entrysubtype: Facebook page",
+        "tex.eprint: Facebook"
+      ],
+      "itemID": 4,
+      "itemType": "webpage",
+      "title": "Home",
+      "url": "https://www.facebookcom/nationalzoo"
+    },
+    {
+      "accessDate": "2019-07-03",
+      "citationKey": "10.16:114",
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "U.S. Census Bureau"
+        }
+      ],
+      "extra": [
+        "Citation Key: 10.16:114",
+        "Authority: U.S. Department of Commerce"
+      ],
+      "itemID": 5,
+      "itemType": "webpage",
+      "title": "U.S. and world population clock",
+      "url": "https://www.census.gov/popclock/"
+    },
+    {
+      "accessDate": "2019-07-12",
+      "citationKey": "10.3:47b",
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "Merriam-Webster"
+        }
+      ],
+      "extra": [
+        "Citation Key: 10.3:47b"
+      ],
+      "itemID": 6,
+      "itemType": "bookSection",
+      "publicationTitle": "Merriam-Webster.com dictionary",
+      "title": "Self-report",
+      "url": "https://www.merriam-webster.com/dictionary/self-report"
+    },
+    {
+      "accessDate": "2019-07-22",
+      "citationKey": "10.1:14",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "M. C.",
+          "lastName": "Morey"
+        }
+      ],
+      "date": "2019",
+      "extra": [
+        "Citation Key: 10.1:14"
+      ],
+      "itemID": 7,
+      "itemType": "journalArticle",
+      "publicationTitle": "UpToDate",
+      "title": "Physical activity and exercise in older adults",
+      "url": "https://www.uptodate.com/contents/physical-activity-and-exercise-in-older-adults"
+    },
+    {
+      "accessDate": "2019-08-31",
+      "citationKey": "10.3:47a",
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "American Psychological Association"
+        }
+      ],
+      "extra": [
+        "Citation Key: 10.3:47a"
+      ],
+      "itemID": 8,
+      "itemType": "bookSection",
+      "publicationTitle": "APA dictionary of psychology",
+      "title": "Positive transference",
+      "url": "https://dictionary.apa.org/positive-transference"
+    },
+    {
+      "accessDate": "2019-11-01",
+      "citationKey": "10.15:104",
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "APA Style"
+        }
+      ],
+      "extra": [
+        "Citation Key: 10.15:104",
+        "tex.\"author+an:username\": 1=\"@APA_Style\"",
+        "tex.entrysubtype: Twitter profile",
+        "tex.eprint: Twitter"
+      ],
+      "itemID": 9,
+      "itemType": "webpage",
+      "title": "Tweets",
+      "url": "https://twitter.com/APA_Style"
+    },
+    {
+      "accessDate": "2020-02-16",
+      "citationKey": "10.14:100b",
+      "creators": [
+        {
+          "creatorType": "contributor",
+          "name": "Google"
+        }
+      ],
+      "extra": [
+        "Citation Key: 10.14:100b"
+      ],
+      "itemID": 10,
+      "itemType": "artwork",
+      "title": "Google Maps directions for driving from La Paz, Bolivia, to Lima, Peru",
+      "url": "https://goo.gl/YYE3GR"
+    },
+    {
+      "citationKey": "10.1:12a",
+      "creators": [
+        {
+          "creatorType": "editor",
+          "firstName": "S. O.",
+          "lastName": "Lilienfeld"
+        }
+      ],
+      "date": "2018",
+      "extra": [
+        "Citation Key: 10.1:12a",
+        "Number: 1",
+        "Pages: 51\u2013104",
+        "Type: periodical",
+        "Volume: 6",
+        "tex.issuetitle: Special section"
+      ],
+      "itemID": 11,
+      "itemType": "document",
+      "title": "Heterodox issues in psychology"
+    },
+    {
+      "citationKey": "10.1:12b",
+      "creators": [
+        {
+          "creatorType": "editor",
+          "firstName": "S. H.",
+          "lastName": "McDaniel"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "E.",
+          "lastName": "Salas"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "A. E.",
+          "lastName": "Kazak"
+        }
+      ],
+      "date": "2018",
+      "extra": [
+        "Citation Key: 10.1:12b",
+        "Number: 4",
+        "Type: periodical",
+        "Volume: 73",
+        "tex.issuetitle: Special issue"
+      ],
+      "itemID": 12,
+      "itemType": "document",
+      "title": "The science of teamwork"
+    },
+    {
+      "citationKey": "10.1:15b",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "M.",
+          "lastName": "Bustillos"
+        }
+      ],
+      "date": "2013-03-19",
+      "extra": [
+        "Citation Key: 10.1:15b",
+        "tex.entrysubtype: nonacademic"
+      ],
+      "itemID": 13,
+      "itemType": "journalArticle",
+      "publicationTitle": "The New Yorker",
+      "title": "On video games and storytelling. An Interview with Tom Bissell",
+      "url": "https://www.newyorker.com/books/page-turner/on-video-games-and-storytelling-an-interview-with-tom-bissell"
+    },
+    {
+      "citationKey": "10.1:15c",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "K.",
+          "lastName": "Wier"
+        }
+      ],
+      "date": "2017-01",
+      "extra": [
+        "Citation Key: 10.1:15c",
+        "tex.entrysubtype: nonacademic"
+      ],
+      "issue": "1",
+      "itemID": 14,
+      "itemType": "journalArticle",
+      "pages": "30",
+      "publicationTitle": "Monitor on Psychology",
+      "title": "Forgiveness can improve mental and physical health",
+      "volume": "48"
+    },
+    {
+      "citationKey": "10.1:16a",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "B.",
+          "lastName": "Guarino"
+        }
+      ],
+      "date": "2017-12-04",
+      "extra": [
+        "Citation Key: 10.1:16a",
+        "tex.entrysubtype: nonacademic"
+      ],
+      "itemID": 15,
+      "itemType": "journalArticle",
+      "publicationTitle": "The Washington Post",
+      "title": "How will humanity react to alien life? Psychologists have some predictions",
+      "url": "https://www.washingtonpost.com/news/speaking-of-science/wp/2017/12/04/how-will-humanity-react-to-alien-life-psychologists-have-some-predictions"
+    },
+    {
+      "citationKey": "10.1:16b",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "A.",
+          "lastName": "Hess"
+        }
+      ],
+      "date": "2019-01-03",
+      "extra": [
+        "Citation Key: 10.1:16b",
+        "tex.entrysubtype: nonacademic"
+      ],
+      "itemID": 16,
+      "itemType": "journalArticle",
+      "pages": "C1",
+      "publicationTitle": "The New York Times",
+      "title": "Cats who take direction"
+    },
+    {
+      "citationKey": "10.1:17",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "M.",
+          "lastName": "Klymkowsky"
+        }
+      ],
+      "date": "2018-09-15",
+      "extra": [
+        "Citation Key: 10.1:17"
+      ],
+      "itemID": 17,
+      "itemType": "document",
+      "publisher": "Sci-Ed",
+      "title": "Can we talk scientifically about free will?",
+      "url": "https://blogs.plos.org/scied/2018/09/15/can-we-talk-scientifically-about-free-will/"
+    },
+    {
+      "citationKey": "10.1:18",
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "KS in NJ"
+        }
+      ],
+      "date": "2019-01-15",
+      "extra": [
+        "Citation Key: 10.1:18",
+        "tex.entrysubtype: nonacademic",
+        "tex.related: 10.1:18r",
+        "tex.relatedstring: Comment on the article",
+        "tex.relatedtype: commenton"
+      ],
+      "itemID": 18,
+      "itemType": "journalArticle",
+      "publicationTitle": "The Washington Post",
+      "title": "From this article, it sounds like men are figuring something out that women have known forever. I know of many",
+      "url": "https://wapo.st/2HDToGJ"
+    },
+    {
+      "citationKey": "10.1:18r",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "A.",
+          "lastName": "Author"
+        }
+      ],
+      "date": "2019-01-15",
+      "extra": [
+        "Citation Key: 10.1:18r"
+      ],
+      "itemID": 19,
+      "itemType": "journalArticle",
+      "publicationTitle": "The Washington Post",
+      "title": "How workout buddies can help stave off loneliness"
+    },
+    {
+      "citationKey": "10.1:2",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "E.",
+          "lastName": "Ahmann"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "L. J.",
+          "lastName": "Tuttle"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "M.",
+          "lastName": "Saviet"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "S. D.",
+          "lastName": "Wright"
+        }
+      ],
+      "date": "2018",
+      "extra": [
+        "Citation Key: 10.1:2"
+      ],
+      "issue": "1",
+      "itemID": 20,
+      "itemType": "journalArticle",
+      "pages": "17\u201339",
+      "publicationTitle": "Journal of Postsecondary Education and Disability",
+      "title": "A descriptive review of ADHD coaching research. Implications for College Students",
+      "url": "https://www.ahead.org/professional-resources/publications/jped/archived-jped/jped-volume-31",
+      "volume": "31"
+    },
+    {
+      "citationKey": "10.1:3a",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "M.",
+          "lastName": "Anderson"
+        }
+      ],
+      "date": "2018",
+      "extra": [
+        "Citation Key: 10.1:3a"
+      ],
+      "issue": "1",
+      "itemID": 21,
+      "itemType": "journalArticle",
+      "pages": "26-33",
+      "publicationTitle": "Educational Leadership",
+      "title": "Getting consistent with consequences",
+      "volume": "76"
+    },
+    {
+      "citationKey": "10.1:3b",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "C.",
+          "lastName": "Goldman"
+        }
+      ],
+      "date": "2018-11-28",
+      "extra": [
+        "Citation Key: 10.1:3b",
+        "tex.entrysubtype: nonacademic"
+      ],
+      "itemID": 22,
+      "itemType": "journalArticle",
+      "publicationTitle": "Chicago Tribune",
+      "title": "The complicated calibration of love, especially in adoption"
+    },
+    {
+      "citationKey": "10.1:8",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "T.",
+          "lastName": "Pachur"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "B.",
+          "lastName": "Scheibehenne"
+        }
+      ],
+      "extra": [
+        "Citation Key: 10.1:8",
+        "tex.pubstate: inpress"
+      ],
+      "itemID": 23,
+      "itemType": "journalArticle",
+      "publicationTitle": "Psychonomic Bulletin & Review",
+      "title": "Unpacking buyer-seller differences in valuation from experience. A Cognitive Modeling Approach"
+    },
+    {
       "citationKey": "10.10:77",
       "creators": [
         {
@@ -252,7 +730,7 @@
       "date": "1975",
       "extra": [
         "Citation Key: 10.12:84a",
-        "tex.author+an:role: 1=director"
+        "tex.\"author+an:role\": 1=director"
       ],
       "itemID": 33,
       "itemType": "film",
@@ -276,7 +754,7 @@
       "date": "2017",
       "extra": [
         "Citation Key: 10.12:84b",
-        "tex.author+an:role: 1=guestexpert;2=host"
+        "tex.\"author+an:role\": 1=guestexpert;2=host"
       ],
       "itemID": 34,
       "itemType": "film",
@@ -299,7 +777,7 @@
       "date": "2001",
       "extra": [
         "Citation Key: 10.12:84c",
-        "tex.author+an:role: 1=director"
+        "tex.\"author+an:role\": 1=director"
       ],
       "itemID": 35,
       "itemType": "film",
@@ -322,7 +800,7 @@
       "extra": [
         "Citation Key: 10.12:85",
         "Original title: Au revoir les enfants",
-        "tex.author+an:role: 1=director"
+        "tex.\"author+an:role\": 1=director"
       ],
       "itemID": 36,
       "itemType": "film",
@@ -351,7 +829,7 @@
       "date": "2002/2008",
       "extra": [
         "Citation Key: 10.12:86",
-        "tex.author+an:role: =execproducers",
+        "tex.\"author+an:role\": =execproducers",
         "tex.entrysubtype: tvseries"
       ],
       "itemID": 37,
@@ -371,7 +849,7 @@
       "date": "2017-01-11",
       "extra": [
         "Citation Key: 10.12:87a",
-        "tex.author+an:role: 1=director,writer",
+        "tex.\"author+an:role\": 1=director,writer",
         "tex.execproducer: K. Barris and J. Groff and A. Anderson and E. B. Dobbins and L. Fishburne and H. Sugland",
         "tex.maintitle: Black-ish"
       ],
@@ -402,7 +880,7 @@
       "date": "1995-05-21",
       "extra": [
         "Citation Key: 10.12:87b",
-        "tex.author+an:role: 1=writer;2=writer;3=director",
+        "tex.\"author+an:role\": 1=writer;2=writer;3=director",
         "tex.execproducer: D. Mirkin and J. L. Brooks and M. Groening and S. Simon",
         "tex.maintitle: The simpsons"
       ],
@@ -502,7 +980,7 @@
       "date": "2016-09-30",
       "extra": [
         "Citation Key: 10.12:90b",
-        "tex.author+an:username: 1=\"Grammar Girl\"",
+        "tex.\"author+an:username\": 1=\"Grammar Girl\"",
         "tex.entrysubtype: video"
       ],
       "itemID": 44,
@@ -660,7 +1138,7 @@
       "date": "2015/",
       "extra": [
         "Citation Key: 10.13:93",
-        "tex.author+an:role: 1=host",
+        "tex.\"author+an:role\": 1=host",
         "tex.entrysubtype: podcast"
       ],
       "itemID": 52,
@@ -682,7 +1160,7 @@
       "extra": [
         "Citation Key: 10.13:94",
         "Number: 443",
-        "tex.author+an:role: 1=host",
+        "tex.\"author+an:role\": 1=host",
         "tex.entrysubtype: podcastepisode",
         "tex.maintitle: This American Life"
       ],
@@ -752,23 +1230,6 @@
       "itemType": "artwork",
       "title": "The racial dot map",
       "url": "https://demographics.coopercenter.org/Racial-Dot-Map"
-    },
-    {
-      "accessDate": "2020-02-16",
-      "citationKey": "10.14:100b",
-      "creators": [
-        {
-          "creatorType": "contributor",
-          "name": "Google"
-        }
-      ],
-      "extra": [
-        "Citation Key: 10.14:100b"
-      ],
-      "itemID": 10,
-      "itemType": "artwork",
-      "title": "Google Maps directions for driving from La Paz, Bolivia, to Lima, Peru",
-      "url": "https://goo.gl/YYE3GR"
     },
     {
       "citationKey": "10.14:101a",
@@ -973,7 +1434,7 @@
       "date": "2018-06-29",
       "extra": [
         "Citation Key: 10.15:103a",
-        "tex.author+an:username: 1=\"@APAEducation\"",
+        "tex.\"author+an:username\": 1=\"@APAEducation\"",
         "tex.entrysubtype: Tweet",
         "tex.eprint: Twitter"
       ],
@@ -993,7 +1454,7 @@
       "date": "2018-02-26",
       "extra": [
         "Citation Key: 10.15:103b",
-        "tex.author+an:username: 1=\"@BadlandsNPS\"",
+        "tex.\"author+an:username\": 1=\"@BadlandsNPS\"",
         "tex.entrysubtype: Tweet",
         "tex.eprint: Twitter"
       ],
@@ -1014,7 +1475,7 @@
       "date": "2018-06-21",
       "extra": [
         "Citation Key: 10.15:103c",
-        "tex.author+an:username: 1=\"@BettyMWhite\"",
+        "tex.\"author+an:username\": 1=\"@BettyMWhite\"",
         "tex.entrysubtype: Tweet",
         "tex.eprint: Twitter"
       ],
@@ -1022,26 +1483,6 @@
       "itemType": "webpage",
       "title": "I treasure every minute we spent together #koko. Image attached",
       "url": "https://twitter.com/BettyMWhite/status/1009951892846227456"
-    },
-    {
-      "accessDate": "2019-11-01",
-      "citationKey": "10.15:104",
-      "creators": [
-        {
-          "creatorType": "author",
-          "name": "APA Style"
-        }
-      ],
-      "extra": [
-        "Citation Key: 10.15:104",
-        "tex.author+an:username: 1=\"@APA_Style\"",
-        "tex.entrysubtype: Twitter profile",
-        "tex.eprint: Twitter"
-      ],
-      "itemID": 9,
-      "itemType": "webpage",
-      "title": "Tweets",
-      "url": "https://twitter.com/APA_Style"
     },
     {
       "citationKey": "10.15:105a",
@@ -1102,25 +1543,6 @@
       "url": "https://www.facebook.com/ScienceNOW/videos/10155508587605108"
     },
     {
-      "accessDate": "2019-06-22",
-      "citationKey": "10.15:106",
-      "creators": [
-        {
-          "creatorType": "author",
-          "name": "Smithsonian's National Zoo and Conservation Biology Institute"
-        }
-      ],
-      "extra": [
-        "Citation Key: 10.15:106",
-        "tex.entrysubtype: Facebook page",
-        "tex.eprint: Facebook"
-      ],
-      "itemID": 4,
-      "itemType": "webpage",
-      "title": "Home",
-      "url": "https://www.facebookcom/nationalzoo"
-    },
-    {
       "citationKey": "10.15:107",
       "creators": [
         {
@@ -1131,7 +1553,7 @@
       "date": "2018-11-26",
       "extra": [
         "Citation Key: 10.15:107",
-        "tex.author+an:username: 1=\"@zeitzmocaa\"",
+        "tex.\"author+an:username\": 1=\"@zeitzmocaa\"",
         "tex.entrysubtype: photographs",
         "tex.eprint: Instagram"
       ],
@@ -1139,26 +1561,6 @@
       "itemType": "webpage",
       "title": "Grade 6 learners from Parkfields Primary School in Hanover Park visited the museum for a tour and workshop hosted by",
       "url": "https://www.instagram.com/p/BqpHpjFBs3b"
-    },
-    {
-      "accessDate": "2019-04-16",
-      "citationKey": "10.15:108",
-      "creators": [
-        {
-          "creatorType": "author",
-          "name": "The New York Public Library"
-        }
-      ],
-      "extra": [
-        "Citation Key: 10.15:108",
-        "tex.author+an:username: 1=\"@nypl\"",
-        "tex.entrysubtype: Highlight",
-        "tex.eprint: Instagram"
-      ],
-      "itemID": 1,
-      "itemType": "webpage",
-      "title": "The raven",
-      "url": "https://bitly.com/2FV8bu3"
     },
     {
       "citationKey": "10.15:109",
@@ -1171,7 +1573,7 @@
       "date": "2018-09-12",
       "extra": [
         "Citation Key: 10.15:109",
-        "tex.author+an:username: 1=\"nasa\"",
+        "tex.\"author+an:username\": 1=\"nasa\"",
         "tex.entrysubtype: Online forum post",
         "tex.eprint: Reddit"
       ],
@@ -1334,816 +1736,6 @@
       "itemType": "webpage",
       "title": "What employers should do to protect nurses from Zika",
       "url": "https://www.nationalnursesunited.org/pages/what-employers-should-do-to-protect-rns-from-zika"
-    },
-    {
-      "accessDate": "2019-07-03",
-      "citationKey": "10.16:114",
-      "creators": [
-        {
-          "creatorType": "author",
-          "name": "U.S. Census Bureau"
-        }
-      ],
-      "extra": [
-        "Citation Key: 10.16:114",
-        "Authority: U.S. Department of Commerce"
-      ],
-      "itemID": 5,
-      "itemType": "webpage",
-      "title": "U.S. and world population clock",
-      "url": "https://www.census.gov/popclock/"
-    },
-    {
-      "DOI": "10.1037/rev0000126",
-      "citationKey": "10.1:1",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "S. M.",
-          "lastName": "McCauley"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "M. H.",
-          "lastName": "Christiansen"
-        }
-      ],
-      "date": "2019",
-      "extra": [
-        "Citation Key: 10.1:1"
-      ],
-      "issue": "1",
-      "itemID": 271,
-      "itemType": "journalArticle",
-      "pages": "1\u201351",
-      "publicationTitle": "Psychological Review",
-      "title": "Language learning as language use. A Cross-linguistic Model of Child Language Development",
-      "url": "http://some.url",
-      "volume": "126"
-    },
-    {
-      "DOI": "10.1159/00027/1225",
-      "citationKey": "10.1:10",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "J.",
-          "lastName": "Piaget"
-        },
-        {
-          "creatorType": "translator",
-          "firstName": "J.",
-          "lastName": "Bliss"
-        },
-        {
-          "creatorType": "translator",
-          "firstName": "H.",
-          "lastName": "Furth"
-        }
-      ],
-      "date": "1972",
-      "extra": [
-        "Citation Key: 10.1:10",
-        "Original Date: 1970"
-      ],
-      "issue": "1",
-      "itemID": 277,
-      "itemType": "journalArticle",
-      "pages": "1\u201312",
-      "publicationTitle": "Human Development",
-      "title": "Intellectual evolution from adolescence to adulthood",
-      "volume": "15"
-    },
-    {
-      "DOI": "10.1037/h0100165",
-      "citationKey": "10.1:11",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "M. F.",
-          "lastName": "Shore"
-        }
-      ],
-      "date": "2014",
-      "extra": [
-        "Citation Key: 10.1:11",
-        "tex.related: 10.1:11r",
-        "tex.relatedtype: reprintfrom"
-      ],
-      "issue": "6",
-      "itemID": 270,
-      "itemType": "journalArticle",
-      "pages": "611\u2013618",
-      "publicationTitle": "American Journal of Orthopsychiatry",
-      "title": "Marking time in the land of plenty. Reflections on Mental Health in the United States",
-      "volume": "84"
-    },
-    {
-      "DOI": "10.1111/j.1939-0025.1981.tb01388.x",
-      "citationKey": "10.1:11r",
-      "date": "1981",
-      "extra": [
-        "Citation Key: 10.1:11r"
-      ],
-      "issue": "3",
-      "itemID": 275,
-      "itemType": "journalArticle",
-      "pages": "391\u2013402",
-      "publicationTitle": "American Journal of Orthopsychiatry",
-      "title": "Marking time in the land of plenty. Reflections on Mental Health in the United States",
-      "volume": "51"
-    },
-    {
-      "citationKey": "10.1:12a",
-      "creators": [
-        {
-          "creatorType": "editor",
-          "firstName": "S. O.",
-          "lastName": "Lilienfeld"
-        }
-      ],
-      "date": "2018",
-      "extra": [
-        "Citation Key: 10.1:12a",
-        "Number: 1",
-        "Pages: 51\u2013104",
-        "Type: periodical",
-        "Volume: 6",
-        "tex.issuetitle: Special section"
-      ],
-      "itemID": 11,
-      "itemType": "document",
-      "title": "Heterodox issues in psychology"
-    },
-    {
-      "citationKey": "10.1:12b",
-      "creators": [
-        {
-          "creatorType": "editor",
-          "firstName": "S. H.",
-          "lastName": "McDaniel"
-        },
-        {
-          "creatorType": "editor",
-          "firstName": "E.",
-          "lastName": "Salas"
-        },
-        {
-          "creatorType": "editor",
-          "firstName": "A. E.",
-          "lastName": "Kazak"
-        }
-      ],
-      "date": "2018",
-      "extra": [
-        "Citation Key: 10.1:12b",
-        "Number: 4",
-        "Type: periodical",
-        "Volume: 73",
-        "tex.issuetitle: Special issue"
-      ],
-      "itemID": 12,
-      "itemType": "document",
-      "title": "The science of teamwork"
-    },
-    {
-      "DOI": "10.1002/14651858.CD006876.pub5",
-      "citationKey": "10.1:13",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "J.",
-          "lastName": "Mehrholz"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "M.",
-          "lastName": "Pohl"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "T.",
-          "lastName": "Platz"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "J.",
-          "lastName": "Kugler"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "B.",
-          "lastName": "Elsner"
-        }
-      ],
-      "date": "2018",
-      "extra": [
-        "Citation Key: 10.1:13"
-      ],
-      "itemID": 260,
-      "itemType": "journalArticle",
-      "publicationTitle": "Cochrane Database of Systematic Reviews",
-      "title": "Electromechanical and robot-assisted arm training for improving activities of daily living, arm function, and arm muscle strength after stroke"
-    },
-    {
-      "accessDate": "2019-07-22",
-      "citationKey": "10.1:14",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "M. C.",
-          "lastName": "Morey"
-        }
-      ],
-      "date": "2019",
-      "extra": [
-        "Citation Key: 10.1:14"
-      ],
-      "itemID": 7,
-      "itemType": "journalArticle",
-      "publicationTitle": "UpToDate",
-      "title": "Physical activity and exercise in older adults",
-      "url": "https://www.uptodate.com/contents/physical-activity-and-exercise-in-older-adults"
-    },
-    {
-      "DOI": "10.1126/science.aau7988",
-      "citationKey": "10.1:15a",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "S.",
-          "lastName": "Bergeson"
-        }
-      ],
-      "date": "2019-01-04",
-      "extra": [
-        "Citation Key: 10.1:15a",
-        "tex.entrysubtype: nonacademic"
-      ],
-      "issue": "6422",
-      "itemID": 276,
-      "itemType": "journalArticle",
-      "journalAbbreviation": "Science",
-      "pages": "33\u201334",
-      "publicationTitle": "Science (New York, N.Y.)",
-      "title": "Really cool neutral plasmas",
-      "volume": "363"
-    },
-    {
-      "citationKey": "10.1:15b",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "M.",
-          "lastName": "Bustillos"
-        }
-      ],
-      "date": "2013-03-19",
-      "extra": [
-        "Citation Key: 10.1:15b",
-        "tex.entrysubtype: nonacademic"
-      ],
-      "itemID": 13,
-      "itemType": "journalArticle",
-      "publicationTitle": "The New Yorker",
-      "title": "On video games and storytelling. An Interview with Tom Bissell",
-      "url": "https://www.newyorker.com/books/page-turner/on-video-games-and-storytelling-an-interview-with-tom-bissell"
-    },
-    {
-      "citationKey": "10.1:15c",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "K.",
-          "lastName": "Wier"
-        }
-      ],
-      "date": "2017-01",
-      "extra": [
-        "Citation Key: 10.1:15c",
-        "tex.entrysubtype: nonacademic"
-      ],
-      "issue": "1",
-      "itemID": 14,
-      "itemType": "journalArticle",
-      "pages": "30",
-      "publicationTitle": "Monitor on Psychology",
-      "title": "Forgiveness can improve mental and physical health",
-      "volume": "48"
-    },
-    {
-      "citationKey": "10.1:16a",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "B.",
-          "lastName": "Guarino"
-        }
-      ],
-      "date": "2017-12-04",
-      "extra": [
-        "Citation Key: 10.1:16a",
-        "tex.entrysubtype: nonacademic"
-      ],
-      "itemID": 15,
-      "itemType": "journalArticle",
-      "publicationTitle": "The Washington Post",
-      "title": "How will humanity react to alien life? Psychologists have some predictions",
-      "url": "https://www.washingtonpost.com/news/speaking-of-science/wp/2017/12/04/how-will-humanity-react-to-alien-life-psychologists-have-some-predictions"
-    },
-    {
-      "citationKey": "10.1:16b",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "A.",
-          "lastName": "Hess"
-        }
-      ],
-      "date": "2019-01-03",
-      "extra": [
-        "Citation Key: 10.1:16b",
-        "tex.entrysubtype: nonacademic"
-      ],
-      "itemID": 16,
-      "itemType": "journalArticle",
-      "pages": "C1",
-      "publicationTitle": "The New York Times",
-      "title": "Cats who take direction"
-    },
-    {
-      "citationKey": "10.1:17",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "M.",
-          "lastName": "Klymkowsky"
-        }
-      ],
-      "date": "2018-09-15",
-      "extra": [
-        "Citation Key: 10.1:17"
-      ],
-      "itemID": 17,
-      "itemType": "document",
-      "publisher": "Sci-Ed",
-      "title": "Can we talk scientifically about free will?",
-      "url": "https://blogs.plos.org/scied/2018/09/15/can-we-talk-scientifically-about-free-will/"
-    },
-    {
-      "citationKey": "10.1:18",
-      "creators": [
-        {
-          "creatorType": "author",
-          "name": "KS in NJ"
-        }
-      ],
-      "date": "2019-01-15",
-      "extra": [
-        "Citation Key: 10.1:18",
-        "tex.entrysubtype: nonacademic",
-        "tex.related: 10.1:18r",
-        "tex.relatedstring: Comment on the article",
-        "tex.relatedtype: commenton"
-      ],
-      "itemID": 18,
-      "itemType": "journalArticle",
-      "publicationTitle": "The Washington Post",
-      "title": "From this article, it sounds like men are figuring something out that women have known forever. I know of many",
-      "url": "https://wapo.st/2HDToGJ"
-    },
-    {
-      "citationKey": "10.1:18r",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "A.",
-          "lastName": "Author"
-        }
-      ],
-      "date": "2019-01-15",
-      "extra": [
-        "Citation Key: 10.1:18r"
-      ],
-      "itemID": 19,
-      "itemType": "journalArticle",
-      "publicationTitle": "The Washington Post",
-      "title": "How workout buddies can help stave off loneliness"
-    },
-    {
-      "DOI": "10.1177/1043659616638722",
-      "citationKey": "10.1:19",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "N. G.",
-          "lastName": "Cuellar"
-        }
-      ],
-      "date": "2016",
-      "extra": [
-        "Citation Key: 10.1:19"
-      ],
-      "issue": "3",
-      "itemID": 278,
-      "itemType": "journalArticle",
-      "pages": "209",
-      "publicationTitle": "Journal of Transcultural Nursing",
-      "title": "Study abroad programs. Editorial",
-      "volume": "27"
-    },
-    {
-      "citationKey": "10.1:2",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "E.",
-          "lastName": "Ahmann"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "L. J.",
-          "lastName": "Tuttle"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "M.",
-          "lastName": "Saviet"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "S. D.",
-          "lastName": "Wright"
-        }
-      ],
-      "date": "2018",
-      "extra": [
-        "Citation Key: 10.1:2"
-      ],
-      "issue": "1",
-      "itemID": 20,
-      "itemType": "journalArticle",
-      "pages": "17\u201339",
-      "publicationTitle": "Journal of Postsecondary Education and Disability",
-      "title": "A descriptive review of ADHD coaching research. Implications for College Students",
-      "url": "https://www.ahead.org/professional-resources/publications/jped/archived-jped/jped-volume-31",
-      "volume": "31"
-    },
-    {
-      "citationKey": "10.1:3a",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "M.",
-          "lastName": "Anderson"
-        }
-      ],
-      "date": "2018",
-      "extra": [
-        "Citation Key: 10.1:3a"
-      ],
-      "issue": "1",
-      "itemID": 21,
-      "itemType": "journalArticle",
-      "pages": "26-33",
-      "publicationTitle": "Educational Leadership",
-      "title": "Getting consistent with consequences",
-      "volume": "76"
-    },
-    {
-      "citationKey": "10.1:3b",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "C.",
-          "lastName": "Goldman"
-        }
-      ],
-      "date": "2018-11-28",
-      "extra": [
-        "Citation Key: 10.1:3b",
-        "tex.entrysubtype: nonacademic"
-      ],
-      "itemID": 22,
-      "itemType": "journalArticle",
-      "publicationTitle": "Chicago Tribune",
-      "title": "The complicated calibration of love, especially in adoption"
-    },
-    {
-      "DOI": "fg6rf9",
-      "citationKey": "10.1:4",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "E.",
-          "lastName": "Kalnay"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "M.",
-          "lastName": "Kanamitsu"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "R.",
-          "lastName": "Kistler"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "W.",
-          "lastName": "Collins"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "D.",
-          "lastName": "Deaven"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "L.",
-          "lastName": "Gandin"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "M.",
-          "lastName": "Iredell"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "S.",
-          "lastName": "Saha"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "G.",
-          "lastName": "White"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "J.",
-          "lastName": "Wollen"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "Y.",
-          "lastName": "Zhu"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "M.",
-          "lastName": "Chelliah"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "W.",
-          "lastName": "Ebisuzaki"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "W.",
-          "lastName": "Higgins"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "J.",
-          "lastName": "Janowiak"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "K. C.",
-          "lastName": "Mo"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "C.",
-          "lastName": "Ropelewski"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "J.",
-          "lastName": "Wang"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "A.",
-          "lastName": "Leetma"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "A.",
-          "lastName": "Aaron"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "B. Baron C.",
-          "lastName": "Court"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "D.",
-          "lastName": "Joseph"
-        }
-      ],
-      "date": "1996-01-01",
-      "extra": [
-        "Citation Key: 10.1:4"
-      ],
-      "issue": "3",
-      "itemID": 283,
-      "itemType": "journalArticle",
-      "pages": "437\u2013471",
-      "publicationTitle": "Bulletin of the American Meteorological Society",
-      "title": "The NCEP/NCAR 40-year reanalysis project",
-      "volume": "77"
-    },
-    {
-      "DOI": "10.1016/j.midw.2013.07.007",
-      "citationKey": "10.1:5",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "R.",
-          "lastName": "De Vries"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "M.",
-          "lastName": "Nieuwenhuijze"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "S. E.",
-          "lastName": "Buitendijk"
-        },
-        {
-          "creatorType": "author",
-          "name": "the members of Midwifery Science Work Group"
-        }
-      ],
-      "date": "2013",
-      "extra": [
-        "Citation Key: 10.1:5"
-      ],
-      "issue": "10",
-      "itemID": 266,
-      "itemType": "journalArticle",
-      "pages": "1122\u20131128",
-      "publicationTitle": "Midwifery",
-      "title": "What does it take to have a strong and independent profession of midwifery? Lessons from the Netherlands",
-      "volume": "29"
-    },
-    {
-      "DOI": "10.1371/journal.pone.0209899",
-      "citationKey": "10.1:6",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "D.",
-          "lastName": "Burin"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "K.",
-          "lastName": "Kilteni"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "M.",
-          "lastName": "Rabuffetti"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "M.",
-          "lastName": "Slater"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "L.",
-          "lastName": "Pia"
-        }
-      ],
-      "date": "2019",
-      "extra": [
-        "Citation Key: 10.1:6",
-        "Number: e0209899"
-      ],
-      "issue": "1",
-      "itemID": 279,
-      "itemType": "journalArticle",
-      "publicationTitle": "PLOS ONE",
-      "title": "Body ownership increases the interference between observed and executed movements",
-      "volume": "14"
-    },
-    {
-      "DOI": "10.1027/1618-3169/a000440",
-      "citationKey": "10.1:7",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "S. M.",
-          "lastName": "Huestegge"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "T.",
-          "lastName": "Raettig"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "L.",
-          "lastName": "Huestegge"
-        }
-      ],
-      "date": "2019",
-      "extra": [
-        "Citation Key: 10.1:7",
-        "tex.howpublished: Advance online publication"
-      ],
-      "itemID": 267,
-      "itemType": "journalArticle",
-      "publicationTitle": "Experimental Psychology",
-      "title": "Are face-incongruent voices harder to process? Effects of face-voice gender incongruity on basic cognitive information processing"
-    },
-    {
-      "citationKey": "10.1:8",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "T.",
-          "lastName": "Pachur"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "B.",
-          "lastName": "Scheibehenne"
-        }
-      ],
-      "extra": [
-        "Citation Key: 10.1:8",
-        "tex.pubstate: inpress"
-      ],
-      "itemID": 23,
-      "itemType": "journalArticle",
-      "publicationTitle": "Psychonomic Bulletin & Review",
-      "title": "Unpacking buyer-seller differences in valuation from experience. A Cognitive Modeling Approach"
-    },
-    {
-      "DOI": "10.1016/j.clysa.2017.04.002",
-      "citationKey": "10.1:9",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "V.",
-          "lastName": "Chaves-Morillo"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "C.",
-          "lastName": "G\u00f3mez Calero"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "J. J.",
-          "lastName": "Fern\u00e1ndez-Mu\u00f1oz"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "A.",
-          "lastName": "Toledano-Mu\u00f1oz"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "J.",
-          "lastName": "Fern\u00e1ndez-Heute"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "N.",
-          "lastName": "Martinez-Monge"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "D.",
-          "lastName": "Palacios-Ce\u00f1a"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "C.",
-          "lastName": "Pe\u00f1acoba-Puente"
-        }
-      ],
-      "date": "2018",
-      "extra": [
-        "Citation Key: 10.1:9",
-        "Original title: La anosmia neurosensorial: Relaci\u00f3n entre subtipo, tiempo de reconocimiento y edad"
-      ],
-      "issue": "3",
-      "itemID": 264,
-      "itemType": "journalArticle",
-      "pages": "155\u2013161",
-      "publicationTitle": "Cl\u00ednica y Salud",
-      "title": "Sensorineural anosmia. Relationship Between Subtype, Recognition Time, and Age",
-      "volume": "28"
     },
     {
       "citationKey": "10.2:20",
@@ -2565,40 +2157,6 @@
       "url": "https://icd.who.int/"
     },
     {
-      "accessDate": "2019-06-14",
-      "citationKey": "10.2:33a",
-      "creators": [
-        {
-          "creatorType": "author",
-          "name": "American Psychological Association"
-        }
-      ],
-      "extra": [
-        "Citation Key: 10.2:33a"
-      ],
-      "itemID": 3,
-      "itemType": "book",
-      "title": "APA dictionary of psychology",
-      "url": "https://dictionary.apa.org/"
-    },
-    {
-      "accessDate": "2019-05-05",
-      "citationKey": "10.2:33b",
-      "creators": [
-        {
-          "creatorType": "author",
-          "name": "Merriam-Webster"
-        }
-      ],
-      "extra": [
-        "Citation Key: 10.2:33b"
-      ],
-      "itemID": 2,
-      "itemType": "book",
-      "title": "Merriam-Webster.com dictionary",
-      "url": "https://www.merriam-webster.com/"
-    },
-    {
       "citationKey": "10.2:33c",
       "creators": [
         {
@@ -2976,33 +2534,6 @@
       "title": "Calling a squirrel and squirrel but a canoe a wigwam. A Category-specific Deficit for Artefactual Objects and Body Parts"
     },
     {
-      "DOI": "d4vb59",
-      "citationKey": "10.3:43r",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "C.",
-          "lastName": "Sacchett"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "G. W.",
-          "lastName": "Humphreys"
-        }
-      ],
-      "date": "1992",
-      "extra": [
-        "Citation Key: 10.3:43r"
-      ],
-      "issue": "1",
-      "itemID": 282,
-      "itemType": "journalArticle",
-      "pages": "73\u201386",
-      "publicationTitle": "Cognitive Neuropsychology",
-      "title": "Calling a squirrel and squirrel but a canoe a wigwam. A Category-specific Deficit for Artefactual Objects and Body Parts",
-      "volume": "9"
-    },
-    {
       "citationKey": "10.3:44",
       "creators": [
         {
@@ -3109,42 +2640,6 @@
       "publicationTitle": "The complete social scientist",
       "publisher": "American Psychological Association",
       "title": "Group decision and social change"
-    },
-    {
-      "accessDate": "2019-08-31",
-      "citationKey": "10.3:47a",
-      "creators": [
-        {
-          "creatorType": "author",
-          "name": "American Psychological Association"
-        }
-      ],
-      "extra": [
-        "Citation Key: 10.3:47a"
-      ],
-      "itemID": 8,
-      "itemType": "bookSection",
-      "publicationTitle": "APA dictionary of psychology",
-      "title": "Positive transference",
-      "url": "https://dictionary.apa.org/positive-transference"
-    },
-    {
-      "accessDate": "2019-07-12",
-      "citationKey": "10.3:47b",
-      "creators": [
-        {
-          "creatorType": "author",
-          "name": "Merriam-Webster"
-        }
-      ],
-      "extra": [
-        "Citation Key: 10.3:47b"
-      ],
-      "itemID": 6,
-      "itemType": "bookSection",
-      "publicationTitle": "Merriam-Webster.com dictionary",
-      "title": "Self-report",
-      "url": "https://www.merriam-webster.com/dictionary/self-report"
     },
     {
       "citationKey": "10.3:48",
@@ -3421,7 +2916,7 @@
       "date": "2015/2020",
       "extra": [
         "Citation Key: 10.4:56",
-        "tex.author+an:role: 1=\"Principal Investigator\""
+        "tex.\"author+an:role\": 1=\"Principal Investigator\""
       ],
       "itemID": 130,
       "itemType": "report",
@@ -3611,53 +3106,6 @@
       "title": "The art and significance of successfully identifying resilient individuals. A Person-Focused Approach"
     },
     {
-      "DOI": "10.1073/pnas.1910510116",
-      "citationKey": "10.5:A1",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "A. L.",
-          "lastName": "Duckworth"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "A.",
-          "lastName": "Quirk"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "R.",
-          "lastName": "Gallop"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "R. H.",
-          "lastName": "Hoyle"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "D. R.",
-          "lastName": "Kelly"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "M. D.",
-          "lastName": "Matthews"
-        }
-      ],
-      "date": "2019",
-      "extra": [
-        "Citation Key: 10.5:A1",
-        "Number: 47"
-      ],
-      "itemID": 273,
-      "itemType": "conferencePaper",
-      "pages": "23499\u201323504",
-      "publicationTitle": "Proceedings of the national academy of sciences, USA",
-      "title": "Cognitive and noncognitive predictors of success",
-      "volume": "116"
-    },
-    {
       "citationKey": "10.5:A2",
       "creators": [
         {
@@ -3682,59 +3130,6 @@
       "itemType": "book",
       "publisher": "Springer",
       "title": "Theory of cryptography"
-    },
-    {
-      "DOI": "10.1007/978-3-030-05348-2_21",
-      "citationKey": "10.5:A3",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Alan-Louis.",
-          "lastName": "Bedenel"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "L.",
-          "lastName": "Jourdan"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "C.",
-          "lastName": "Biernacki"
-        },
-        {
-          "creatorType": "editor",
-          "firstName": "R.",
-          "lastName": "Battiti"
-        },
-        {
-          "creatorType": "editor",
-          "firstName": "M.",
-          "lastName": "Brunato"
-        },
-        {
-          "creatorType": "editor",
-          "firstName": "I.",
-          "lastName": "Kotsireas"
-        },
-        {
-          "creatorType": "editor",
-          "firstName": "P.",
-          "lastName": "Pardalos"
-        }
-      ],
-      "date": "2019",
-      "extra": [
-        "Citation Key: 10.5:A3",
-        "tex.mainsubtitle: Vol. 11353",
-        "tex.maintitle: Lecture notes in computer science"
-      ],
-      "itemID": 262,
-      "itemType": "conferencePaper",
-      "pages": "225-\u2013240",
-      "publicationTitle": "Learning and intelligent optimization",
-      "publisher": "Springer",
-      "title": "Probability estimation by an adapted genetic algorithm in web insurance"
     },
     {
       "citationKey": "10.6:64",
@@ -3796,36 +3191,6 @@
       "url": "https://digitalarchive.wm.edu/bitstream/handle/10288/16594/HutchesonVirginia2012.pdf"
     },
     {
-      "DOI": "10.1037/sgd0000205",
-      "citationKey": "10.7:67",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "L. A.",
-          "lastName": "Mirabito"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "N. C.",
-          "lastName": "Heck"
-        }
-      ],
-      "date": "2016",
-      "extra": [
-        "Citation Key: 10.7:67",
-        "tex.related: 10.7:67r",
-        "tex.relatedstring: Review of the film",
-        "tex.relatedtype: reviewof"
-      ],
-      "issue": "4",
-      "itemID": 272,
-      "itemType": "journalArticle",
-      "pages": "499\u2013500",
-      "publicationTitle": "Psychology of Sexual Orientation and Gender Diversity",
-      "title": "Bringing LGBTQ youth theater into the spotlight",
-      "volume": "3"
-    },
-    {
       "citationKey": "10.7:67r",
       "creators": [
         {
@@ -3837,7 +3202,7 @@
       "date": "2016",
       "extra": [
         "Citation Key: 10.7:67r",
-        "tex.author+an:role: 1=director"
+        "tex.\"author+an:role\": 1=director"
       ],
       "itemID": 142,
       "itemType": "film",
@@ -3917,7 +3282,7 @@
       "date": "2018",
       "extra": [
         "Citation Key: 10.7:69r",
-        "tex.author+an:role: 1=writer,director"
+        "tex.\"author+an:role\": 1=writer,director"
       ],
       "itemID": 146,
       "itemType": "tvBroadcast",
@@ -4082,54 +3447,6 @@
       "url": "https://files.eric.ed.gov/fulltext/ED545393.pdf"
     },
     {
-      "DOI": "10.3886/ICPSR37080.1",
-      "citationKey": "10.9:75a",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "A.",
-          "lastName": "D'Souza"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "M.",
-          "lastName": "Wiseheart"
-        }
-      ],
-      "date": "2018",
-      "extra": [
-        "Citation Key: 10.9:75a",
-        "tex.entrysubtype: Data Set"
-      ],
-      "itemID": 281,
-      "itemType": "dataset",
-      "number": "ICPSR 37080",
-      "publisher": "ICPSR",
-      "title": "Cognitive effects of music and dance training in children",
-      "versionNumber": "V1"
-    },
-    {
-      "DOI": "10.3886/ICPSR335531.v3",
-      "citationKey": "10.9:75b",
-      "creators": [
-        {
-          "creatorType": "author",
-          "name": "National Center for Education Statistics"
-        }
-      ],
-      "date": "2016",
-      "extra": [
-        "Citation Key: 10.9:75b",
-        "tex.entrysubtype: Data set and code book"
-      ],
-      "itemID": 280,
-      "itemType": "dataset",
-      "number": "ICPSR 35531",
-      "publisher": "National Archive of Data on Arts and Culture",
-      "title": "Fast response survey system (FRSS). Teacher's Use of Educational Technology in U.S. Public Schools, 2009",
-      "versionNumber": "V3"
-    },
-    {
       "citationKey": "10.9:75c",
       "creators": [
         {
@@ -4250,10 +3567,10 @@
       "extra": [
         "Citation Key: 11.4:5",
         "Original Date: 1981",
-        "tex.citation: 563 F.Supp. 332 and aff'd and 727 F.2d 888",
-        "tex.citation+an:citedate: 1=\"1981\";3=\"1984\"",
-        "tex.citation+an:citeinfo: 2=appeal",
-        "tex.citation+an:citeorg: 1=\"D. Kan.\";3=\"10th Cir.\""
+        "tex.\"citation+an:citedate\": 1=\"1981\";3=\"1984\"",
+        "tex.\"citation+an:citeinfo\": 2=appeal",
+        "tex.\"citation+an:citeorg\": 1=\"D. Kan.\";3=\"10th Cir.\"",
+        "tex.citation: 563 F.Supp. 332 and aff'd and 727 F.2d 888"
       ],
       "itemID": 161,
       "itemType": "case",
@@ -4277,9 +3594,9 @@
       "date": "1992",
       "extra": [
         "Citation Key: 11.4:7",
-        "tex.citation: 826 S.W.2d 201",
-        "tex.citation+an:citedate: 1=\"1992\"",
-        "tex.citation+an:citeorg: 1=\"Tex. Ct. App.\""
+        "tex.\"citation+an:citedate\": 1=\"1992\"",
+        "tex.\"citation+an:citeorg\": 1=\"Tex. Ct. App.\"",
+        "tex.citation: 826 S.W.2d 201"
       ],
       "itemID": 163,
       "itemType": "case",
@@ -5459,60 +4776,6 @@
       "itemType": "book"
     },
     {
-      "DOI": "10.1002/job.764",
-      "citationKey": "9.47:4",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "T. A.",
-          "lastName": "Judge"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "J. D",
-          "lastName": "Kammeyer-Mueller"
-        }
-      ],
-      "date": "2012",
-      "extra": [
-        "Citation Key: 9.47:4"
-      ],
-      "issue": "2",
-      "itemID": 261,
-      "itemType": "journalArticle",
-      "pages": "161\u2013174",
-      "publicationTitle": "Organizational Behaviour",
-      "title": "General and specific measures in organizational behaviour research. Considerations, Examples, and Recommandations for Researchers",
-      "volume": "33"
-    },
-    {
-      "DOI": "10.1037/a0028084",
-      "citationKey": "9.47:5",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "T. A.",
-          "lastName": "Judge"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "J. D",
-          "lastName": "Kammeyer-Mueller"
-        }
-      ],
-      "date": "2012",
-      "extra": [
-        "Citation Key: 9.47:5"
-      ],
-      "issue": "4",
-      "itemID": 268,
-      "itemType": "journalArticle",
-      "pages": "758\u2013775",
-      "publicationTitle": "Journal of Applied Psychology",
-      "title": "On the value of aiming high. The Causes and Consequences of Ambition",
-      "volume": "97"
-    },
-    {
       "citationKey": "9.47:6",
       "creators": [
         {
@@ -5763,109 +5026,6 @@
       "title": "Work-life balance. Contemporary Perspectives"
     },
     {
-      "DOI": "10.1037/apl0000348",
-      "citationKey": "9.51:2",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "D. S.",
-          "lastName": "Carlson"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "M. J.",
-          "lastName": "Thompson"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "K. M.",
-          "lastName": "Kacmar"
-        }
-      ],
-      "date": "2019",
-      "extra": [
-        "Citation Key: 9.51:2"
-      ],
-      "issue": "2",
-      "itemID": 269,
-      "itemType": "journalArticle",
-      "notes": [
-        "9.51:2 conducted an empirical study to examine the multiple paths through which work and family variables can affect work outcomes. Whereas 9.51:1 explored how work obligations can increase stress or enhance fulfillment at home, 9.51:2 viewed work demands as raising family stress, with potential negative consequences on work performance. Results supported a model in which direct effects of work demands and spillover effects of work demands to work-to-family conflict led to a lower job satisfaction and affective commitment, as well as crossover effects of work-to-family conflict, spousal stress transmission, and later family-to-work conflict on organizational citizenship and absenteeism. Overall, the study demonstrated a link from work demands to work outcomes when considering the family, but those paths differed depending on whether attitudinal or behavioural work outcomes were examined."
-      ],
-      "pages": "214\u2013228",
-      "publicationTitle": "Journal of Applied Psychology",
-      "title": "Double crossed. The Spillover and Crossover Effect of Work Demands on Work Outcomes Through the Family",
-      "volume": "104"
-    },
-    {
-      "DOI": "10.1016/j.cortex.2012.10.002",
-      "citationKey": "9.52:1",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "L.",
-          "lastName": "Angel"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "C.",
-          "lastName": "Bastin"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "S.",
-          "lastName": "Genon"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "E.",
-          "lastName": "Balteau"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "C.",
-          "lastName": "Phillips"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "A.",
-          "lastName": "Luxen"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "P.",
-          "lastName": "Maquet"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "E.",
-          "lastName": "Salmon"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "F.",
-          "lastName": "Collette"
-        }
-      ],
-      "date": "2013",
-      "extra": [
-        "Citation Key: 9.52:1"
-      ],
-      "issue": "6",
-      "itemID": 265,
-      "itemType": "journalArticle",
-      "journalAbbreviation": "Cortex",
-      "pages": "1585\u20131597",
-      "publicationTitle": "Cortex; a journal devoted to the study of the nervous system and behavior",
-      "tags": [
-        {
-          "tag": "meta"
-        }
-      ],
-      "title": "Differential effects of aging on the neural correlates of recollection and familiarity",
-      "volume": "49"
-    },
-    {
       "citationKey": "9.52:2",
       "creators": [
         {
@@ -5906,111 +5066,6 @@
       "publicationTitle": "New science of learning",
       "publisher": "Springer",
       "title": "Metacognitive control of learning and remembering"
-    },
-    {
-      "DOI": "10.1007/s10072-011-0748-4",
-      "citationKey": "9.52:3",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "R.",
-          "lastName": "Hanaki"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "N.",
-          "lastName": "Abe"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "T.",
-          "lastName": "Fujii"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "A.",
-          "lastName": "Ueno"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "Y.",
-          "lastName": "Nishio"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "K.",
-          "lastName": "Hiraoka"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "T.",
-          "lastName": "Shimomura"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "O.",
-          "lastName": "Iizuka"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "M.",
-          "lastName": "Shinohara"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "K.",
-          "lastName": "Hirayama"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "E.",
-          "lastName": "Mori"
-        }
-      ],
-      "date": "2011",
-      "extra": [
-        "Citation Key: 9.52:3"
-      ],
-      "issue": "6",
-      "itemID": 263,
-      "itemType": "journalArticle",
-      "pages": "1115\u20131122",
-      "publicationTitle": "Neurological Sciences",
-      "tags": [
-        {
-          "tag": "meta"
-        }
-      ],
-      "title": "The effects of aging and alzheimer's disease on associative recognition memory",
-      "volume": "32"
-    },
-    {
-      "DOI": "10.1080/09658211.2018.1441423",
-      "citationKey": "9.52:4",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "M. B.",
-          "lastName": "Hargis"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "A. D.",
-          "lastName": "Castel"
-        }
-      ],
-      "date": "2018",
-      "extra": [
-        "Citation Key: 9.52:4"
-      ],
-      "issue": "8",
-      "itemID": 274,
-      "itemType": "journalArticle",
-      "journalAbbreviation": "Memory",
-      "pages": "1151\u20131158",
-      "publicationTitle": "Memory (Hove, England)",
-      "title": "Younger and older adults' associative memory for medication interactions of varying severity",
-      "volume": "26"
     },
     {
       "citationKey": "9.8:1",
@@ -6060,7 +5115,7 @@
       "date": "2014",
       "extra": [
         "Citation Key: 9.8:11",
-        "tex.author+an:username: 1=\"@ausername\""
+        "tex.\"author+an:username\": 1=\"@ausername\""
       ],
       "itemID": 251,
       "itemType": "book"
@@ -6370,6 +5425,951 @@
       "itemID": 259,
       "itemType": "book",
       "title": "Withering worrying"
+    },
+    {
+      "DOI": "10.1002/14651858.CD006876.pub5",
+      "citationKey": "10.1:13",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "J.",
+          "lastName": "Mehrholz"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "M.",
+          "lastName": "Pohl"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "T.",
+          "lastName": "Platz"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "J.",
+          "lastName": "Kugler"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "B.",
+          "lastName": "Elsner"
+        }
+      ],
+      "date": "2018",
+      "extra": [
+        "Citation Key: 10.1:13"
+      ],
+      "itemID": 260,
+      "itemType": "journalArticle",
+      "publicationTitle": "Cochrane Database of Systematic Reviews",
+      "title": "Electromechanical and robot-assisted arm training for improving activities of daily living, arm function, and arm muscle strength after stroke"
+    },
+    {
+      "DOI": "10.1002/job.764",
+      "citationKey": "9.47:4",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "T. A.",
+          "lastName": "Judge"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "J. D",
+          "lastName": "Kammeyer-Mueller"
+        }
+      ],
+      "date": "2012",
+      "extra": [
+        "Citation Key: 9.47:4"
+      ],
+      "issue": "2",
+      "itemID": 261,
+      "itemType": "journalArticle",
+      "pages": "161\u2013174",
+      "publicationTitle": "Organizational Behaviour",
+      "title": "General and specific measures in organizational behaviour research. Considerations, Examples, and Recommandations for Researchers",
+      "volume": "33"
+    },
+    {
+      "DOI": "10.1007/978-3-030-05348-2_21",
+      "citationKey": "10.5:A3",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Alan-Louis.",
+          "lastName": "Bedenel"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "L.",
+          "lastName": "Jourdan"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "C.",
+          "lastName": "Biernacki"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "R.",
+          "lastName": "Battiti"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "M.",
+          "lastName": "Brunato"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "I.",
+          "lastName": "Kotsireas"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "P.",
+          "lastName": "Pardalos"
+        }
+      ],
+      "date": "2019",
+      "extra": [
+        "Citation Key: 10.5:A3",
+        "tex.mainsubtitle: Vol. 11353",
+        "tex.maintitle: Lecture notes in computer science"
+      ],
+      "itemID": 262,
+      "itemType": "conferencePaper",
+      "pages": "225-\u2013240",
+      "publicationTitle": "Learning and intelligent optimization",
+      "publisher": "Springer",
+      "title": "Probability estimation by an adapted genetic algorithm in web insurance"
+    },
+    {
+      "DOI": "10.1007/s10072-011-0748-4",
+      "citationKey": "9.52:3",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "R.",
+          "lastName": "Hanaki"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "N.",
+          "lastName": "Abe"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "T.",
+          "lastName": "Fujii"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "A.",
+          "lastName": "Ueno"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Y.",
+          "lastName": "Nishio"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "K.",
+          "lastName": "Hiraoka"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "T.",
+          "lastName": "Shimomura"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "O.",
+          "lastName": "Iizuka"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "M.",
+          "lastName": "Shinohara"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "K.",
+          "lastName": "Hirayama"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "E.",
+          "lastName": "Mori"
+        }
+      ],
+      "date": "2011",
+      "extra": [
+        "Citation Key: 9.52:3"
+      ],
+      "issue": "6",
+      "itemID": 263,
+      "itemType": "journalArticle",
+      "pages": "1115\u20131122",
+      "publicationTitle": "Neurological Sciences",
+      "tags": [
+        {
+          "tag": "meta"
+        }
+      ],
+      "title": "The effects of aging and alzheimer's disease on associative recognition memory",
+      "volume": "32"
+    },
+    {
+      "DOI": "10.1016/j.clysa.2017.04.002",
+      "citationKey": "10.1:9",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "V.",
+          "lastName": "Chaves-Morillo"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "C.",
+          "lastName": "G\u00f3mez Calero"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "J. J.",
+          "lastName": "Fern\u00e1ndez-Mu\u00f1oz"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "A.",
+          "lastName": "Toledano-Mu\u00f1oz"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "J.",
+          "lastName": "Fern\u00e1ndez-Heute"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "N.",
+          "lastName": "Martinez-Monge"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "D.",
+          "lastName": "Palacios-Ce\u00f1a"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "C.",
+          "lastName": "Pe\u00f1acoba-Puente"
+        }
+      ],
+      "date": "2018",
+      "extra": [
+        "Citation Key: 10.1:9",
+        "Original title: La anosmia neurosensorial: Relaci\u00f3n entre subtipo, tiempo de reconocimiento y edad"
+      ],
+      "issue": "3",
+      "itemID": 264,
+      "itemType": "journalArticle",
+      "pages": "155\u2013161",
+      "publicationTitle": "Cl\u00ednica y Salud",
+      "title": "Sensorineural anosmia. Relationship Between Subtype, Recognition Time, and Age",
+      "volume": "28"
+    },
+    {
+      "DOI": "10.1016/j.cortex.2012.10.002",
+      "citationKey": "9.52:1",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "L.",
+          "lastName": "Angel"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "C.",
+          "lastName": "Bastin"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "S.",
+          "lastName": "Genon"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "E.",
+          "lastName": "Balteau"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "C.",
+          "lastName": "Phillips"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "A.",
+          "lastName": "Luxen"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "P.",
+          "lastName": "Maquet"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "E.",
+          "lastName": "Salmon"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "F.",
+          "lastName": "Collette"
+        }
+      ],
+      "date": "2013",
+      "extra": [
+        "Citation Key: 9.52:1"
+      ],
+      "issue": "6",
+      "itemID": 265,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "Cortex",
+      "pages": "1585\u20131597",
+      "publicationTitle": "Cortex; a journal devoted to the study of the nervous system and behavior",
+      "tags": [
+        {
+          "tag": "meta"
+        }
+      ],
+      "title": "Differential effects of aging on the neural correlates of recollection and familiarity",
+      "volume": "49"
+    },
+    {
+      "DOI": "10.1016/j.midw.2013.07.007",
+      "citationKey": "10.1:5",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "R.",
+          "lastName": "De Vries"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "M.",
+          "lastName": "Nieuwenhuijze"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "S. E.",
+          "lastName": "Buitendijk"
+        },
+        {
+          "creatorType": "author",
+          "name": "the members of Midwifery Science Work Group"
+        }
+      ],
+      "date": "2013",
+      "extra": [
+        "Citation Key: 10.1:5"
+      ],
+      "issue": "10",
+      "itemID": 266,
+      "itemType": "journalArticle",
+      "pages": "1122\u20131128",
+      "publicationTitle": "Midwifery",
+      "title": "What does it take to have a strong and independent profession of midwifery? Lessons from the Netherlands",
+      "volume": "29"
+    },
+    {
+      "DOI": "10.1027/1618-3169/a000440",
+      "citationKey": "10.1:7",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "S. M.",
+          "lastName": "Huestegge"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "T.",
+          "lastName": "Raettig"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "L.",
+          "lastName": "Huestegge"
+        }
+      ],
+      "date": "2019",
+      "extra": [
+        "Citation Key: 10.1:7",
+        "tex.howpublished: Advance online publication"
+      ],
+      "itemID": 267,
+      "itemType": "journalArticle",
+      "publicationTitle": "Experimental Psychology",
+      "title": "Are face-incongruent voices harder to process? Effects of face-voice gender incongruity on basic cognitive information processing"
+    },
+    {
+      "DOI": "10.1037/a0028084",
+      "citationKey": "9.47:5",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "T. A.",
+          "lastName": "Judge"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "J. D",
+          "lastName": "Kammeyer-Mueller"
+        }
+      ],
+      "date": "2012",
+      "extra": [
+        "Citation Key: 9.47:5"
+      ],
+      "issue": "4",
+      "itemID": 268,
+      "itemType": "journalArticle",
+      "pages": "758\u2013775",
+      "publicationTitle": "Journal of Applied Psychology",
+      "title": "On the value of aiming high. The Causes and Consequences of Ambition",
+      "volume": "97"
+    },
+    {
+      "DOI": "10.1037/apl0000348",
+      "citationKey": "9.51:2",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "D. S.",
+          "lastName": "Carlson"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "M. J.",
+          "lastName": "Thompson"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "K. M.",
+          "lastName": "Kacmar"
+        }
+      ],
+      "date": "2019",
+      "extra": [
+        "Citation Key: 9.51:2"
+      ],
+      "issue": "2",
+      "itemID": 269,
+      "itemType": "journalArticle",
+      "notes": [
+        "9.51:2 conducted an empirical study to examine the multiple paths through which work and family variables can affect work outcomes. Whereas 9.51:1 explored how work obligations can increase stress or enhance fulfillment at home, 9.51:2 viewed work demands as raising family stress, with potential negative consequences on work performance. Results supported a model in which direct effects of work demands and spillover effects of work demands to work-to-family conflict led to a lower job satisfaction and affective commitment, as well as crossover effects of work-to-family conflict, spousal stress transmission, and later family-to-work conflict on organizational citizenship and absenteeism. Overall, the study demonstrated a link from work demands to work outcomes when considering the family, but those paths differed depending on whether attitudinal or behavioural work outcomes were examined."
+      ],
+      "pages": "214\u2013228",
+      "publicationTitle": "Journal of Applied Psychology",
+      "title": "Double crossed. The Spillover and Crossover Effect of Work Demands on Work Outcomes Through the Family",
+      "volume": "104"
+    },
+    {
+      "DOI": "10.1037/h0100165",
+      "citationKey": "10.1:11",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "M. F.",
+          "lastName": "Shore"
+        }
+      ],
+      "date": "2014",
+      "extra": [
+        "Citation Key: 10.1:11",
+        "tex.related: 10.1:11r",
+        "tex.relatedtype: reprintfrom"
+      ],
+      "issue": "6",
+      "itemID": 270,
+      "itemType": "journalArticle",
+      "pages": "611\u2013618",
+      "publicationTitle": "American Journal of Orthopsychiatry",
+      "title": "Marking time in the land of plenty. Reflections on Mental Health in the United States",
+      "volume": "84"
+    },
+    {
+      "DOI": "10.1037/rev0000126",
+      "citationKey": "10.1:1",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "S. M.",
+          "lastName": "McCauley"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "M. H.",
+          "lastName": "Christiansen"
+        }
+      ],
+      "date": "2019",
+      "extra": [
+        "Citation Key: 10.1:1"
+      ],
+      "issue": "1",
+      "itemID": 271,
+      "itemType": "journalArticle",
+      "pages": "1\u201351",
+      "publicationTitle": "Psychological Review",
+      "title": "Language learning as language use. A Cross-linguistic Model of Child Language Development",
+      "url": "http://some.url",
+      "volume": "126"
+    },
+    {
+      "DOI": "10.1037/sgd0000205",
+      "citationKey": "10.7:67",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "L. A.",
+          "lastName": "Mirabito"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "N. C.",
+          "lastName": "Heck"
+        }
+      ],
+      "date": "2016",
+      "extra": [
+        "Citation Key: 10.7:67",
+        "tex.related: 10.7:67r",
+        "tex.relatedstring: Review of the film",
+        "tex.relatedtype: reviewof"
+      ],
+      "issue": "4",
+      "itemID": 272,
+      "itemType": "journalArticle",
+      "pages": "499\u2013500",
+      "publicationTitle": "Psychology of Sexual Orientation and Gender Diversity",
+      "title": "Bringing LGBTQ youth theater into the spotlight",
+      "volume": "3"
+    },
+    {
+      "DOI": "10.1073/pnas.1910510116",
+      "citationKey": "10.5:A1",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "A. L.",
+          "lastName": "Duckworth"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "A.",
+          "lastName": "Quirk"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "R.",
+          "lastName": "Gallop"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "R. H.",
+          "lastName": "Hoyle"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "D. R.",
+          "lastName": "Kelly"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "M. D.",
+          "lastName": "Matthews"
+        }
+      ],
+      "date": "2019",
+      "extra": [
+        "Citation Key: 10.5:A1",
+        "Number: 47"
+      ],
+      "itemID": 273,
+      "itemType": "conferencePaper",
+      "pages": "23499\u201323504",
+      "publicationTitle": "Proceedings of the national academy of sciences, USA",
+      "title": "Cognitive and noncognitive predictors of success",
+      "volume": "116"
+    },
+    {
+      "DOI": "10.1080/09658211.2018.1441423",
+      "citationKey": "9.52:4",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "M. B.",
+          "lastName": "Hargis"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "A. D.",
+          "lastName": "Castel"
+        }
+      ],
+      "date": "2018",
+      "extra": [
+        "Citation Key: 9.52:4"
+      ],
+      "issue": "8",
+      "itemID": 274,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "Memory",
+      "pages": "1151\u20131158",
+      "publicationTitle": "Memory (Hove, England)",
+      "title": "Younger and older adults' associative memory for medication interactions of varying severity",
+      "volume": "26"
+    },
+    {
+      "DOI": "10.1111/j.1939-0025.1981.tb01388.x",
+      "citationKey": "10.1:11r",
+      "date": "1981",
+      "extra": [
+        "Citation Key: 10.1:11r"
+      ],
+      "issue": "3",
+      "itemID": 275,
+      "itemType": "journalArticle",
+      "pages": "391\u2013402",
+      "publicationTitle": "American Journal of Orthopsychiatry",
+      "title": "Marking time in the land of plenty. Reflections on Mental Health in the United States",
+      "volume": "51"
+    },
+    {
+      "DOI": "10.1126/science.aau7988",
+      "citationKey": "10.1:15a",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "S.",
+          "lastName": "Bergeson"
+        }
+      ],
+      "date": "2019-01-04",
+      "extra": [
+        "Citation Key: 10.1:15a",
+        "tex.entrysubtype: nonacademic"
+      ],
+      "issue": "6422",
+      "itemID": 276,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "Science",
+      "pages": "33\u201334",
+      "publicationTitle": "Science (New York, N.Y.)",
+      "title": "Really cool neutral plasmas",
+      "volume": "363"
+    },
+    {
+      "DOI": "10.1159/00027/1225",
+      "citationKey": "10.1:10",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "J.",
+          "lastName": "Piaget"
+        },
+        {
+          "creatorType": "translator",
+          "firstName": "J.",
+          "lastName": "Bliss"
+        },
+        {
+          "creatorType": "translator",
+          "firstName": "H.",
+          "lastName": "Furth"
+        }
+      ],
+      "date": "1972",
+      "extra": [
+        "Citation Key: 10.1:10",
+        "Original Date: 1970"
+      ],
+      "issue": "1",
+      "itemID": 277,
+      "itemType": "journalArticle",
+      "pages": "1\u201312",
+      "publicationTitle": "Human Development",
+      "title": "Intellectual evolution from adolescence to adulthood",
+      "volume": "15"
+    },
+    {
+      "DOI": "10.1177/1043659616638722",
+      "citationKey": "10.1:19",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "N. G.",
+          "lastName": "Cuellar"
+        }
+      ],
+      "date": "2016",
+      "extra": [
+        "Citation Key: 10.1:19"
+      ],
+      "issue": "3",
+      "itemID": 278,
+      "itemType": "journalArticle",
+      "pages": "209",
+      "publicationTitle": "Journal of Transcultural Nursing",
+      "title": "Study abroad programs. Editorial",
+      "volume": "27"
+    },
+    {
+      "DOI": "10.1371/journal.pone.0209899",
+      "citationKey": "10.1:6",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "D.",
+          "lastName": "Burin"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "K.",
+          "lastName": "Kilteni"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "M.",
+          "lastName": "Rabuffetti"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "M.",
+          "lastName": "Slater"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "L.",
+          "lastName": "Pia"
+        }
+      ],
+      "date": "2019",
+      "extra": [
+        "Citation Key: 10.1:6",
+        "Number: e0209899"
+      ],
+      "issue": "1",
+      "itemID": 279,
+      "itemType": "journalArticle",
+      "publicationTitle": "PLOS ONE",
+      "title": "Body ownership increases the interference between observed and executed movements",
+      "volume": "14"
+    },
+    {
+      "DOI": "10.3886/ICPSR335531.v3",
+      "citationKey": "10.9:75b",
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "National Center for Education Statistics"
+        }
+      ],
+      "date": "2016",
+      "extra": [
+        "Citation Key: 10.9:75b",
+        "tex.entrysubtype: Data set and code book"
+      ],
+      "itemID": 280,
+      "itemType": "dataset",
+      "number": "ICPSR 35531",
+      "publisher": "National Archive of Data on Arts and Culture",
+      "title": "Fast response survey system (FRSS). Teacher's Use of Educational Technology in U.S. Public Schools, 2009",
+      "versionNumber": "V3"
+    },
+    {
+      "DOI": "10.3886/ICPSR37080.1",
+      "citationKey": "10.9:75a",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "A.",
+          "lastName": "D'Souza"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "M.",
+          "lastName": "Wiseheart"
+        }
+      ],
+      "date": "2018",
+      "extra": [
+        "Citation Key: 10.9:75a",
+        "tex.entrysubtype: Data Set"
+      ],
+      "itemID": 281,
+      "itemType": "dataset",
+      "number": "ICPSR 37080",
+      "publisher": "ICPSR",
+      "title": "Cognitive effects of music and dance training in children",
+      "versionNumber": "V1"
+    },
+    {
+      "DOI": "d4vb59",
+      "citationKey": "10.3:43r",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "C.",
+          "lastName": "Sacchett"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "G. W.",
+          "lastName": "Humphreys"
+        }
+      ],
+      "date": "1992",
+      "extra": [
+        "Citation Key: 10.3:43r"
+      ],
+      "issue": "1",
+      "itemID": 282,
+      "itemType": "journalArticle",
+      "pages": "73\u201386",
+      "publicationTitle": "Cognitive Neuropsychology",
+      "title": "Calling a squirrel and squirrel but a canoe a wigwam. A Category-specific Deficit for Artefactual Objects and Body Parts",
+      "volume": "9"
+    },
+    {
+      "DOI": "fg6rf9",
+      "citationKey": "10.1:4",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "E.",
+          "lastName": "Kalnay"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "M.",
+          "lastName": "Kanamitsu"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "R.",
+          "lastName": "Kistler"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "W.",
+          "lastName": "Collins"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "D.",
+          "lastName": "Deaven"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "L.",
+          "lastName": "Gandin"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "M.",
+          "lastName": "Iredell"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "S.",
+          "lastName": "Saha"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "G.",
+          "lastName": "White"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "J.",
+          "lastName": "Wollen"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Y.",
+          "lastName": "Zhu"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "M.",
+          "lastName": "Chelliah"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "W.",
+          "lastName": "Ebisuzaki"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "W.",
+          "lastName": "Higgins"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "J.",
+          "lastName": "Janowiak"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "K. C.",
+          "lastName": "Mo"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "C.",
+          "lastName": "Ropelewski"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "J.",
+          "lastName": "Wang"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "A.",
+          "lastName": "Leetma"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "A.",
+          "lastName": "Aaron"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "B. Baron C.",
+          "lastName": "Court"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "D.",
+          "lastName": "Joseph"
+        }
+      ],
+      "date": "1996-01-01",
+      "extra": [
+        "Citation Key: 10.1:4"
+      ],
+      "issue": "3",
+      "itemID": 283,
+      "itemType": "journalArticle",
+      "pages": "437\u2013471",
+      "publicationTitle": "Bulletin of the American Meteorological Society",
+      "title": "The NCEP/NCAR 40-year reanalysis project",
+      "volume": "77"
     }
   ]
 }

@@ -1,0 +1,55 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "options": {
+      "Items": true,
+      "Preferences": true,
+      "exportNotes": true,
+      "worker": true
+    },
+    "preferences": {
+      "autoExport": "idle",
+      "keyScope": "global"
+    }
+  },
+  "items": [
+    {
+      "abstractNote": "Amazon Ring CEO Hamren talks about the new era of AI and Ring's direction under her leadership, almost a year after she took the role.",
+      "citationKey": "bishopUnfinishedBusinessRing2024",
+      "creators": [
+        {
+          "creatorType": "podcaster",
+          "firstName": "Todd Joel",
+          "lastName": "Bishop"
+        },
+        {
+          "creatorType": "podcaster",
+          "firstName": "Liz",
+          "lastName": "Hamren"
+        }
+      ],
+      "extra": [
+        "Issued: 13-1-2024",
+        "tex.entrysubtype: Audio podcast episode",
+        "tex.maintitle: GeekWire Podcast",
+        "tex.\"author+an:role\": 1=host,2=producer"
+      ],
+      "itemID": 1,
+      "itemType": "podcast",
+      "notes": [
+        "<div data-schema-version=\"8\"><p><a href=\"https://retorque.re/zotero-better-bibtex/exporting/index.html\" rel=\"noopener noreferrer nofollow\">https://retorque.re/zotero-better-bibtex/exporting/index.html</a> + <a href=\"https://tex.stackexchange.com/a/579758\" rel=\"noopener noreferrer nofollow\">https://tex.stackexchange.com/a/579758</a> for exporting automatically to betterbibtex in apa7 format for podcasts <a href=\"https://apastyle.apa.org/style-grammar-guidelines/references/examples/podcast-references\" rel=\"noopener noreferrer nofollow\">https://apastyle.apa.org/style-grammar-guidelines/references/examples/podcast-references</a></p>\n</div>",
+        "<div data-schema-version=\"8\"><p>als hij niet in de litlijst komt, dan de redundante {} om author weghalen</p>\n</div>"
+      ],
+      "seriesTitle": "GeekWire Podcast",
+      "tags": [
+        {
+          "tag": "/unread",
+          "type": 1
+        }
+      ],
+      "title": "\u2018Unfinished business\u2019: Ring CEO Liz Hamren leads Amazon\u2019s home monitoring products into the AI era",
+      "url": "https://www.geekwire.com/2024/unfinished-business-ring-ceo-liz-hamren-leads-amazons-home-monitoring-products-into-the-ai-era/"
+    }
+  ]
+}

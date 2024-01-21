@@ -148,7 +148,7 @@ class AutoExportPane {
 
     // list changed
     if (Array.from(menupopup.children).map(ae => (ae as unknown as XUL.Menuitem).value).join('\t') !== auto_exports.map(ae => ae.path).join('\t')) {
-      menulist.removeAllItems()
+      menulist.querySelectorAll('menuitem').forEach(e => e.remove())
       for (const ae of auto_exports) {
         const menuitem = menulist.appendItem(this.label(ae), ae.path)
         if (selected && ae.path === selected.path) menulist.selectedItem = menuitem
