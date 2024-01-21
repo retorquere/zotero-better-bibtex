@@ -496,7 +496,7 @@ class NSItem {
    * @param libraryID     ID of library to select the items from. When omitted, assume 'My Library'
    */
   public async pandoc_filter(citekeys: string[], asCSL: boolean, libraryID?: string | number, style?: string, locale?: string) {
-    Zotero.debug(`json-rpc:pandoc-filter ${JSON.stringify({ asCSL })
+    Zotero.debug(`json-rpc:pandoc-filter ${JSON.stringify({ asCSL })}`)
 
     citekeys = [...(new Set(citekeys))]
     const ci = Preference.citekeyCaseInsensitive

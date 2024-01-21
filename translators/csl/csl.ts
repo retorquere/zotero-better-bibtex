@@ -59,13 +59,13 @@ export abstract class CSLExporter {
   public doExport(): void {
     const items = []
     const order: { citationKey: string, i: number}[] = []
-    Zotero.debug(`CSL export:pandoc-filter:${JSON.stringify({ options: this.translation.options })`)
+    Zotero.debug(`CSL export:pandoc-filter:${JSON.stringify({ options: this.translation.options })}`)
     for (const item of (this.translation.input.items.regular as Generator<ExtendedItem, void, unknown>)) {
       order.push({ citationKey: item.citationKey, i: items.length })
 
       let cached: Cache.ExportedItem
       if (!this.translation.options.custom && (cached = Zotero.BetterBibTeX.Cache.fetch(this.translation.translator.label, item.itemID, this.translation.options, this.translation.preferences))) {
-        Zotero.debug(`CSL export:cached:pandoc-filter:${JSON.stringify({ cached })`)
+        Zotero.debug(`CSL export:cached:pandoc-filter:${JSON.stringify({ cached })}`)
         items.push(cached.entry)
         continue
       }
