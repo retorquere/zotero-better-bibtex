@@ -1332,7 +1332,7 @@ export class ZoteroItem {
                 this.extra.push(`${label[name]}: ${value}`)
               }
               else {
-                this.extra.push(`tex.${field}: ${value}`)
+                this.extra.push(`tex.${field.match(/[:=]/) ? `"${field}"` : field}: ${value}`)
               }
             }
             break
