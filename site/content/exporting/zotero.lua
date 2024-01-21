@@ -1,8 +1,8 @@
 
-  print('zotero-live-citations 56897b3')
+  print('zotero-live-citations cd1ef3f')
   local mt, latest = pandoc.mediabag.fetch('https://retorque.re/zotero-better-bibtex/exporting/zotero.lua.revision')
   latest = string.sub(latest, 1, 10)
-  if '56897b3' ~= latest then
+  if 'cd1ef3f' ~= latest then
     print('new version "' .. latest .. '" available at https://retorque.re/zotero-better-bibtex/exporting')
   end
 
@@ -1740,7 +1740,7 @@ local config = {
   sorted = true,
 }
 
--- -- -- bibliography marker generator -- -- --
+-- -- bibliography marker generator -- --
 function zotero_docpreferences_odt(csl_style)
   return string.format(
     '<data data-version="3" zotero-version="5.0.89">'

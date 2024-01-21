@@ -3,6 +3,8 @@
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "options": {
+      "Items": true,
+      "Preferences": true,
       "exportNotes": true
     },
     "preferences": {
@@ -14,11 +16,11 @@
       "citationKey": "TBD",
       "extra": [
         "Citation Key: TBD",
-        "Issue: 2PTE3",
         "tex.accessed: 2023-01-13"
       ],
       "itemID": 1,
       "itemType": "report",
+      "number": "2PTE3",
       "publisher": "Research Institute X",
       "title": "Report number 2PTE3 - 3D transport model under operative regime",
       "url": "https://website.org/?uid=2PTE3"

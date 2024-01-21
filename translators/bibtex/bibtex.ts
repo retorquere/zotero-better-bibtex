@@ -940,22 +940,20 @@ export class ZoteroItem {
   }
   protected $lastchecked(value: string): boolean { return this.$urldate(value) }
 
-  protected $number(_value: string): boolean {
-    let field = 'issue'
-    let numbers = (this.bibtex.fields.number || []).map(n => `${n}`)
-    const issues = (this.bibtex.fields.issue || []).map(n => `${n}`)
-
-    if (this.item.itemType === 'patent') {
-      field = 'number'
-      if (this.patentNumberPrefix) {
-        const patentNumberPrefix = this.patentNumberPrefix.toLowerCase()
-        numbers = numbers.map(n => n.toLowerCase().startsWith(patentNumberPrefix) ? n : `${this.patentNumberPrefix}${n}`)
-      }
+  protected $number(value: string): boolean {
+    if (this.item.itemType === 'patent' && this.patentNumberPrefix) {
+      const pnp = this.patentNumberPrefix.toLowerCase()
+      value = value.toLowerCase().startsWith(pnp) ? value : `${this.patentNumberPrefix}${value}`
     }
 
-    return this.set(field, numbers.concat(issues).join(', '), [field])
+    return this.set(this.item.itemType === 'journalArticle' ? 'issue' : 'number', value)
   }
-  protected $issue(value: string): boolean { return this.$number(value) }
+
+  protected $issue(value: string): boolean {
+    if (this.validFields.number && this.bibtex.fields.number && this.validFields.seriesTitle) return this.set('seriesTitle', value)
+    const field = ['issue', 'number'].find(f => this.validFields[f])
+    return field && this.set(field, value)
+  }
 
   protected $eid(value: string): boolean {
     return this.validFields.number ? this.set('number', value) : this.fallback(['number'], value)
@@ -1286,7 +1284,7 @@ export class ZoteroItem {
           if (this.$note(value, 'note')) continue
         }
 
-        if (this[`$${field}`] && this[`$${field}`](value, field)) continue
+        if (this[`$${field}`]?.(value, field)) continue
 
         switch (field) {
           case 'pst':
