@@ -37,6 +37,19 @@ inoremap <C-z> <C-r>=ZoteroCite()<CR>
 
 This inserts the citation at the cursor using the shortcut ctrl-z (in insert mode) or `<leader>`z (in normal, visual etc. modes, `<leader>` being backslash by default).
 
+### emacs
+
+@newhallroad wrote a function in elisp, which brings up the CAYW input, adds the chosen items as pandoc citations to the buffer, and moves the point to after the citations. This is for markdown-mode. Emacs users who use org-mode may (or may not) need something different.
+
+```
+(defun alk/bbt-zotero-insert-key ()
+  "Run shell command to bring up better bibtex cayw input and insert pandoc citation at point"
+  (interactive)
+  (shell-command "curl -s http://127.0.0.1:23119/better-bibtex/cayw?format=pandoc^&brackets=true" t nil) ; caret escapes ampersand 
+  (search-forward "]") ; place cursor after inserted citation
+  )
+```
+
 ###  Zotero Citations for Atom
 
 A sample implementation of real integration (rather than the working-but-clunky workarounds using paste) can be found in the [Zotero Citations](https://atom.io/packages/zotero-citations) package for the [Atom](http://atom.io) editor.
