@@ -305,8 +305,8 @@ export function generateBibLaTeX(translation: Translation): void {
     // if (item.itemType === 'preprint' && entry.entrytype === 'online' && item.ISSN && item.publicationTitle) entry.entrytype = 'article'
     if (item.itemType === 'preprint') entry.add({ name: 'pubstate', value: 'preprint' })
 
-    if (['langid', 'both'].includes(translation.preferences.language)) entry.add({ name: 'langid', value: entry.language })
-    if (['language', 'both'].includes(translation.preferences.language)) entry.add({ name: 'language', value: item.language })
+    entry.add({ name: 'langid', value: entry.language })
+    entry.add({ name: 'language', value: item.language })
 
     if (entry.entrytype === 'patent') {
       if (item.country && !patent.region(item)) entry.add({ name: 'location', value: item.country || item.extraFields.kv['publisher-place'] })
