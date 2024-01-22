@@ -89,7 +89,7 @@ the following URL parameters:
 | `minimize` | Any non-empty value will minimize Zotero windows after a pick |
 | `texstudio` | Any non-empty value will try to push the pick to TeXstudio |
 | `selected` | Any non-empty value will use the current selection in Zotero rather than popping up the pick window |
-
+| `select` | More of a gimmick than anything else, but if you add select=true, BBT will select the picked items in Zotero. |
 
 The following formats are available:
 
@@ -175,7 +175,5 @@ For example, if you call up http://127.0.0.1:23119/better-bibtex/cayw?format=mmd
 
 * the response body will be `[#adams2001][][#brigge2002][]`, and
 * `[#adams2001][][#brigge2002][]` will be left on the clipboard
-
-More of a gimmick than anything else, but if you add `select=true`, BBT will select the picked items in Zotero.
 
 [^1]: For Juris-M, the port number `23119` must be replaced with `24119`.
