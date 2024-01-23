@@ -137,65 +137,41 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
   */
 
   private migrate() {
-    let old, key
+    let key
 
     // clear out old keys
     const oops = 'extensions.translators.better-bibtex.'
     for (key of Services.prefs.getBranch(oops).getChildList('', {}) as string[]) {
       Zotero.Prefs.clear(oops + key, true) // eslint-disable-line @typescript-eslint/restrict-plus-operands
     }
-    if (typeof Zotero.Prefs.get(key = 'translators.better-bibtex.citeprocNoteCitekey') !== 'undefined') Zotero.Prefs.clear(key)
-    if (typeof Zotero.Prefs.get(key = 'translators.better-bibtex.newTranslatorsAskRestart') !== 'undefined') Zotero.Prefs.clear(key)
-    if (typeof Zotero.Prefs.get(key = 'translators.better-bibtex.caching') !== 'undefined') Zotero.Prefs.clear(key)
-    if (typeof Zotero.Prefs.get(key = 'translators.better-bibtex.citekeyFormatBackup') !== 'undefined') Zotero.Prefs.clear(key)
 
     // migrate ancient keys
-    if ((old = Zotero.Prefs.get(key = 'translators.better-bibtex.quickCopyMode')) === 'orgmode_citekey') {
+    if (Zotero.Prefs.get(key = 'translators.better-bibtex.quickCopyMode') === 'orgmode_citekey') {
       Zotero.Prefs.set(key, 'orgmode')
       Zotero.Prefs.set('translators.better-bibtex.quickCopyOrgMode', 'citationkey')
     }
-    if ((old = Zotero.Prefs.get(key = 'translators.better-bibtex.quickCopyMode')) === 'selectLink_citekey') {
+    if (Zotero.Prefs.get(key = 'translators.better-bibtex.quickCopyMode') === 'selectLink_citekey') {
       Zotero.Prefs.set(key, 'selectlink')
       Zotero.Prefs.set('translators.better-bibtex.quickCopySelectLink', 'citationkey')
-    }
-    if ((old = Zotero.Prefs.get(key = 'translators.better-bibtex.quickCopyMode')) === 'selectLink') {
-      Zotero.Prefs.set(key, 'selectlink')
-    }
-    if (typeof Zotero.Prefs.get(key = 'translators.better-bibtex.worker') !== 'undefined') {
-      Zotero.Prefs.clear(key)
-    }
-    if (typeof Zotero.Prefs.get(key = 'translators.better-bibtex.workers') !== 'undefined') {
-      Zotero.Prefs.clear(key)
-    }
-    if (typeof Zotero.Prefs.get(key = 'translators.better-bibtex.workersMax') !== 'undefined') {
-      Zotero.Prefs.clear(key)
-    }
-    if (typeof (old = Zotero.Prefs.get(key = 'translators.better-bibtex.workersCache')) !== 'undefined') {
-      Zotero.Prefs.clear(key)
-    }
-    if (typeof (old = Zotero.Prefs.get(key = 'translators.better-bibtex.suppressTitleCase')) !== 'undefined') {
-      Zotero.Prefs.clear(key)
-      Zotero.Prefs.set('translators.better-bibtex.exportTitleCase', !old)
-    }
-    if (typeof (old = Zotero.Prefs.get(key = 'translators.better-bibtex.suppressBraceProtection')) !== 'undefined') {
-      Zotero.Prefs.clear(key)
-      Zotero.Prefs.set('translators.better-bibtex.exportBraceProtection', !old)
-    }
-    if (typeof (old = Zotero.Prefs.get(key = 'translators.better-bibtex.suppressSentenceCase')) !== 'undefined') {
-      Zotero.Prefs.clear(key)
-      Zotero.Prefs.set('translators.better-bibtex.importSentenceCase', old ? 'off' : 'on+guess')
-    }
-    if (typeof (old = Zotero.Prefs.get(key = 'translators.better-bibtex.suppressNoCase')) !== 'undefined') {
-      Zotero.Prefs.clear(key)
-      Zotero.Prefs.set('translators.better-bibtex.importCaseProtection', old ? 'off' : 'as-needed')
-    }
-    if (typeof (old = Zotero.Prefs.get(key = 'translators.better-bibtex.autoPin')) !== 'undefined') {
-      Zotero.Prefs.clear(key)
-      Zotero.Prefs.set('translators.better-bibtex.autoPinDelay', old ? 1 : 0)
     }
     if (Zotero.Prefs.get(key = 'translators.better-bibtex.autoExportDelay') === 1) {
       Zotero.Prefs.set(key, defaults.autoExportDelay)
     }
+
+    Zotero.Prefs.clear('translators.better-bibtex.worker')
+    Zotero.Prefs.clear('translators.better-bibtex.workersCache')
+    Zotero.Prefs.clear('translators.better-bibtex.workersMax')
+    Zotero.Prefs.clear('translators.better-bibtex.workers')
+    Zotero.Prefs.clear('translators.better-bibtex.citeprocNoteCitekey')
+    Zotero.Prefs.clear('translators.better-bibtex.newTranslatorsAskRestart')
+    Zotero.Prefs.clear('translators.better-bibtex.caching')
+    Zotero.Prefs.clear('translators.better-bibtex.citekeyFormatBackup')
+
+    this.move('autoPin', 'autoPinDelay', old => old ? 1 : 0)
+    this.move('suppressNoCase', 'importCaseProtection', old => old ? 'off' : 'as-needed')
+    this.move('suppressSentenceCase', 'importSentenceCase', old => old ? 'off' : 'on+guess')
+    this.move('suppressBraceProtection', 'exportBraceProtection', old => !old)
+    this.move('suppressTitleCase', 'exportTitleCase', old => !old)
 
     // put this in a preference so that translators can access this.
     if (Zotero.isWin) {
@@ -222,6 +198,15 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
         },
       })
     }
+  }
+
+  private move(ist: string, soll: string, convert: (v: any) => any) {
+    if (!ist.match(/[.]/)) ist = `translators.better-bibtex.${ist}`
+    if (!soll.match(/[.]/)) soll = `translators.better-bibtex.${soll}`
+    const old = Zotero.Prefs.get(ist)
+    if (typeof old === 'undefined') return
+    Zotero.Prefs.clear(ist)
+    Zotero.Prefs.set(soll, convert(old))
   }
 
   private async loadFromCSV(pref: string, path: string, dflt: string, transform: (row: any) => any) {
