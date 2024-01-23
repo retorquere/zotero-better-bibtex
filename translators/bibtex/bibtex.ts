@@ -281,9 +281,6 @@ export function generateBibTeX(translation: Translation): void {
     ref.add({name: 'nationality', value: item.country})
     ref.add({name: 'assignee', value: item.assignee})
 
-    if (['langid', 'both'].includes(translation.preferences.language)) ref.add({name: 'langid', value: babelLanguage(item.language) })
-    if (['language', 'both'].includes(translation.preferences.language)) ref.add({name: 'language', value: item.language })
-
     // this needs to be order volume - number for #1475
     ref.add({name: 'volume', value: ref.normalizeDashes(item.volume) })
     if (!['book', 'inbook', 'incollection', 'proceedings', 'inproceedings'].includes(ref.entrytype) || !ref.has.volume) ref.add({ name: 'number', value: item.number || item.issue || item.seriesNumber })

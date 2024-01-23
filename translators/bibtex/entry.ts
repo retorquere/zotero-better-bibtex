@@ -634,6 +634,9 @@ export class Entry {
       this.add({ name: 'groups', value: groups.join(',') })
     }
 
+    if (['langid', 'both'].includes(this.translation.preferences.language)) this.add({name: 'langid', value: babelLanguage(this.item.language) })
+    if (['language', 'both'].includes(this.translation.preferences.language)) this.add({name: 'language', value: this.item.language })
+
     // extra-fields has parsed & removed 'ids' to put it into aliases
     if (this.item.extraFields.aliases.length) {
       this.add({ name: 'ids', value: this.item.extraFields.aliases.filter(alias => alias !== this.item.citationKey).join(','), enc: 'verbatim' })
@@ -869,7 +872,6 @@ export class Entry {
     }
 
     if (!Object.keys(this.has).length) this.add({name: 'type', value: this.entrytype})
-
 
     let ref = `@${this.entrytype}{${this.item.citationKey},\n`
     ref += Object.values(this.has).map(field => `  ${field.name} = ${field.bibtex}`).join(',\n') + '\n'
