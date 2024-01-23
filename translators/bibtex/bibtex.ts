@@ -17,8 +17,6 @@ import { Entry as BaseEntry, Config } from './entry'
 
 import * as bibtexParser from '@retorquere/bibtex-parser'
 
-import { babelLanguage } from '../../content/text'
-
 function unique(value, index, self) {
   return self.indexOf(value) === index
 }

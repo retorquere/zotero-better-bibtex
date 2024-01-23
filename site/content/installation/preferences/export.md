@@ -55,20 +55,6 @@ Options:
 * in the 'url' field, but assuming the 'url' package is not loaded
 
 
-### Export language as
-
-default: `language`
-
-Export either langid, language or both fields based on the item language (if present).
-
-
-Options:
-
-* langid
-* language
-* both
-
-
 ## BibLaTeX
 
 ### Export unicode as plain-text latex commands
@@ -92,6 +78,20 @@ you can enable it here
 
 
 ## Fields
+
+### Export language as
+
+default: `language`
+
+Export either langid, language or both fields based on the item language (if any).
+
+
+Options:
+
+* langid
+* language
+* both
+
 
 ### When an item has both a DOI and a URL, export
 
