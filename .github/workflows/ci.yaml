@@ -7,8 +7,8 @@ on:
   - cron: 0 0 * * *
 
 env:
-  DURATIONS: logs/stats/durations.json
-  BINS: logs/stats/bins.json
+  DURATIONS: test/stats/durations.json
+  BINS: test/stats/bins.json
 
 jobs:
   balance:
@@ -43,14 +43,14 @@ jobs:
         env.slow }} ${{ env.beta }}
 
     - name: show logs
-      run: find logs -type f
-    - name: store test artifacts
+    - name: store build artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: test-artifacts
+        name: build-artifacts
         path: |
-          logs/
-          minitests/
+          xpi/
+          gen/
+          test/stats/
 
   site:
     if: ${{ github.event_name == 'push' && (github.ref == 'refs/heads/master' || startsWith(github.ref,
@@ -163,6 +163,7 @@ jobs:
         path: |
           xpi/
           gen/
+          test/stats/
 
   test:
     needs:

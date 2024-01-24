@@ -49,6 +49,7 @@ _anchors:
       path: |
         xpi/
         gen/
+        test/stats/
   download_build_artifacts: &download_build_artifacts
     name: fetch build artifacts
     uses: actions/download-artifact@v4
@@ -75,8 +76,8 @@ _anchors:
     run: ./util/action-flags
 
 env:
-  DURATIONS: logs/stats/durations.json
-  BINS: logs/stats/bins.json
+  DURATIONS: test/stats/durations.json
+  BINS: test/stats/bins.json
 
 jobs:
   balance:
@@ -100,8 +101,7 @@ jobs:
       run: ./util/balance.py --durations $DURATIONS --bins $BINS --minutes 10 ${{ env.slow }} ${{ env.beta }}
 
     - name: show logs
-      run: find logs -type f
-    - *upload_test_artifacts
+    - *upload_build_artifacts
 
   site:
     if: ${{ github.event_name == 'push' && (github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/tags/')) }}
