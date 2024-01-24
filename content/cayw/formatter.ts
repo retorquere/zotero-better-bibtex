@@ -108,6 +108,7 @@ function citation2latex(citation, options) {
 
 function prepCSL(options) {
   const format = Zotero.QuickCopy.unserializeSetting(Zotero.Prefs.get('export.quickCopy.setting'))
+  log.debug('CAYW.prepCSL', { options, format })
 
   if (!options.style) {
     if (format.mode !== 'bibliography') {
