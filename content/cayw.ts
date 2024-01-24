@@ -405,6 +405,7 @@ Zotero.Server.Endpoints['/better-bibtex/cayw'] = class {
     if (options.probe) return [this.OK, 'text/plain', Zotero.BetterBibTeX.ready.pending ? 'starting' : 'ready' ]
 
     try {
+      log.debug('CAYW:', options)
       const citation = options.selected ? (await selected(options)) : (await pick(options))
 
       if (options.minimize) Zotero.getMainWindow().minimize()

@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/require-await, @typescript-eslint/no-unsafe-return, @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-shadow */
 
+import { log } from '../logger'
 import { Translators } from '../translators'
 import { getItemsAsync } from '../get-items-async'
 import { Preference } from '../prefs'
@@ -259,6 +260,7 @@ export const Formatter = new class { // eslint-disable-line @typescript-eslint/n
 
   public async 'formatted-citation'(citations, options) {
     const format = prepCSL(options)
+    log.debug('CAYW.formatted-citation', { format })
 
     // items must be pre-loaded for the citation processor
     await getItemsAsync(citations.map(item => item.id))
@@ -271,7 +273,9 @@ export const Formatter = new class { // eslint-disable-line @typescript-eslint/n
       properties: {},
     }
 
-    return csl.previewCitationCluster(citation, [], [], format.contentType)
+    const output = csl.previewCitationCluster(citation, [], [], format.contentType)
+    log.debug('CAYW.formatted-citation', { format, output })
+    return output
   }
 
   public async 'formatted-bibliography'(citations, options) {
