@@ -81,7 +81,7 @@ you can enable it here
 
 ### Export language as
 
-default: `language`
+default: `langid`
 
 Export either langid, language or both fields based on the item language (if any).
 
