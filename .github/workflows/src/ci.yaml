@@ -17,13 +17,13 @@ _anchors:
       python-version: '3.10'
   install_node: &install_node
     name: install node
-    uses: actions/setup-node@v3
+    uses: actions/setup-node@v4
     with:
       node-version: 19.x
   cache: &cache
     name: Cache python/node dependencies
     id: cache
-    uses: actions/cache@v3
+    uses: actions/cache@v4
     env:
       cache-name: v3
     with:
@@ -43,7 +43,7 @@ _anchors:
     run: npm install
   upload_build_artifacts: &upload_build_artifacts
     name: store build artifacts
-    uses: actions/upload-artifact@v3
+    uses: actions/upload-artifact@v4
     with:
       name: build-artifacts
       path: |
@@ -51,13 +51,13 @@ _anchors:
         gen/
   download_build_artifacts: &download_build_artifacts
     name: fetch build artifacts
-    uses: actions/download-artifact@v3
+    uses: actions/download-artifact@v4
     with:
       name: build-artifacts
   # dummy directory minitests because otherwise dir structure is not maintained?!
   upload_test_artifacts: &upload_test_artifacts
     name: store test artifacts
-    uses: actions/upload-artifact@v3
+    uses: actions/upload-artifact@v4
     with:
       name: test-artifacts
       path: |
@@ -65,7 +65,7 @@ _anchors:
         minitests/
   download_test_artifacts: &download_test_artifacts
     name: fetch test artifacts
-    uses: actions/download-artifact@v3
+    uses: actions/download-artifact@v4
     with:
       name: test-artifacts
   action_flags: &action_flags
@@ -86,7 +86,7 @@ jobs:
       slow: ${{ env.test_slow }}
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - *install_python
     - run: pip install munch binpacking
     - *get_version
@@ -105,7 +105,7 @@ jobs:
     if: ${{ github.event_name == 'push' && (github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/tags/')) }}
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         persist-credentials: false
         submodules: true  # Fetch Hugo themes (true OR recursive)
@@ -133,7 +133,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         persist-credentials: false
         submodules: true  # Fetch Hugo themes (true OR recursive)
@@ -170,7 +170,7 @@ jobs:
           - client: jurism
           #  worker: '--worker'
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - *download_build_artifacts
     - *download_test_artifacts
     - *install_python
@@ -183,19 +183,20 @@ jobs:
         sudo apt-get update
         sudo apt-get install ${{ matrix.client }}
         sudo apt-get install mesa-utils libegl1-mesa xvfb
-        curl -LO https://github.com/jgm/pandoc/releases/download/2.19.2/pandoc-2.19.2-linux-amd64.tar.gz
-        tar xvzf pandoc-2.19.2-linux-amd64.tar.gz
-        sudo mv pandoc-2.19.2/bin/pandoc /usr/bin
+        curl -LO https://github.com/jgm/pandoc/releases/download/3.1.11.1/pandoc-3.1.11.1-linux-amd64.tar.gz
+        tar xvzf pandoc-3.1.11.1-linux-amd64.tar.gz
+        sudo mv pandoc-3.1.11.1/bin/pandoc /usr/bin
         pandoc -v
 
     # needs logs/logs to have them show up as logs in the artifact... no idea why
     - name: Run tests
+      timeout-minutes: 15
       # continue-on-error: ${{ matrix.client == 'jurism' }}
       run: ./test/behave --client ${{ matrix.client }} ${{ matrix.worker }} --format ci --bin ${{ matrix.bin }} --bins $BINS --durations logs/stats/durations--${{ matrix.client }}--${{ matrix.bin }}${{ matrix.worker }}.json ${{ needs.balance.outputs.slow }}
       env:
         PYTHONUNBUFFERED: true
 
-    - uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v4
       if: ${{ failure() || cancelled() }}
       with:
         name: debug log ${{ matrix.client }} ${{ matrix.bin }}
@@ -214,7 +215,7 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - *download_build_artifacts
     - *install_python
@@ -244,7 +245,7 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - *install_python
     - *download_test_artifacts
     - name: rebalance tests

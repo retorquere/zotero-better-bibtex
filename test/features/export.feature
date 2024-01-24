@@ -13,6 +13,7 @@ Feature: Export
 
     Examples:
       | file                                                                                                                     | references |
+      | Export unicode character o as latex command broken #2761                                                                 | 1          |
       | Citation key from abbreviationacronym from within field #2717                                                            | 3          |
       | raw bibtex fields with colon in extra #2750                                                                              | 1          |
       | Unicode replacement results in undefined mathsl command #2722                                                            | 1          |
