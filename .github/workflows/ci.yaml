@@ -216,13 +216,14 @@ jobs:
         sudo apt-get update
         sudo apt-get install ${{ matrix.client }}
         sudo apt-get install mesa-utils libegl1-mesa xvfb
-        curl -LO https://github.com/jgm/pandoc/releases/download/2.19.2/pandoc-2.19.2-linux-amd64.tar.gz
-        tar xvzf pandoc-2.19.2-linux-amd64.tar.gz
-        sudo mv pandoc-2.19.2/bin/pandoc /usr/bin
+        curl -LO https://github.com/jgm/pandoc/releases/download/3.1.11.1/pandoc-3.1.11.1-linux-amd64.tar.gz
+        tar xvzf pandoc-3.1.11.1-linux-amd64.tar.gz
+        sudo mv pandoc-3.1.11.1/bin/pandoc /usr/bin
         pandoc -v
 
     # needs logs/logs to have them show up as logs in the artifact... no idea why
     - name: Run tests
+      timeout-minutes: 15
       # continue-on-error: ${{ matrix.client == 'jurism' }}
       run: ./test/behave --client ${{ matrix.client }} ${{ matrix.worker }} --format
         ci --bin ${{ matrix.bin }} --bins $BINS --durations logs/stats/durations--${{
