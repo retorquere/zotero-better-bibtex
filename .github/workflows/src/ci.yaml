@@ -100,7 +100,6 @@ jobs:
       id: balance
       run: ./util/balance.py --durations $DURATIONS --bins $BINS --minutes 10 ${{ env.slow }} ${{ env.beta }}
 
-    - name: show logs
     - *upload_build_artifacts
 
   site:
@@ -203,8 +202,6 @@ jobs:
         name: debug log ${{ matrix.client }} ${{ matrix.bin }}
         path: ~/.BBTTEST.log
 
-    - name: show logs
-      run: find logs -type f
     - *upload_test_artifacts
 
 #    - name: Setup tmate session
