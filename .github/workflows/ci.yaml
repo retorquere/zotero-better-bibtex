@@ -18,7 +18,7 @@ jobs:
       slow: ${{ env.test_slow }}
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: install python
       uses: actions/setup-python@v4
       with:
@@ -43,7 +43,7 @@ jobs:
         env.slow }} ${{ env.beta }}
 
     - name: store test artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: test-artifacts
         path: |
@@ -55,7 +55,7 @@ jobs:
       'refs/tags/')) }}
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         persist-credentials: false
         submodules: true  # Fetch Hugo themes (true OR recursive)
@@ -72,12 +72,12 @@ jobs:
       with:
         python-version: '3.10'
     - name: install node
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4
       with:
         node-version: 19.x
     - name: Cache python/node dependencies
       id: cache
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       env:
         cache-name: v3
       with:
@@ -107,7 +107,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         persist-credentials: false
         submodules: true  # Fetch Hugo themes (true OR recursive)
@@ -124,12 +124,12 @@ jobs:
       with:
         python-version: '3.10'
     - name: install node
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4
       with:
         node-version: 19.x
     - name: Cache python/node dependencies
       id: cache
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       env:
         cache-name: v3
       with:
@@ -155,7 +155,7 @@ jobs:
     - run: npm run build ${{ env.beta }}
 
     - name: store build artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: build-artifacts
         path: |
@@ -178,7 +178,7 @@ jobs:
         - client: jurism
           #  worker: '--worker'
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: fetch build artifacts
       uses: actions/download-artifact@v3
       with:
@@ -194,7 +194,7 @@ jobs:
         python-version: '3.10'
     - name: Cache python/node dependencies
       id: cache
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       env:
         cache-name: v3
       with:
@@ -231,14 +231,14 @@ jobs:
       env:
         PYTHONUNBUFFERED: true
 
-    - uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v4
       if: ${{ failure() || cancelled() }}
       with:
         name: debug log ${{ matrix.client }} ${{ matrix.bin }}
         path: ~/.BBTTEST.log
 
     - name: store test artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: test-artifacts
         path: |
@@ -256,7 +256,7 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: fetch build artifacts
       uses: actions/download-artifact@v3
@@ -268,12 +268,12 @@ jobs:
       with:
         python-version: '3.10'
     - name: install node
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4
       with:
         node-version: 19.x
     - name: Cache python/node dependencies
       id: cache
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       env:
         cache-name: v3
       with:
@@ -312,7 +312,7 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: install python
       uses: actions/setup-python@v4
       with:
