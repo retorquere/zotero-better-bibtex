@@ -326,11 +326,9 @@ class Zotero:
             Zotero.debug('{better-bibtex:debug bridge}: startup: BetterBibTeX ready!');
             return true;
           """, testing = self.testing)
-          utils.print(str(ready))
           if ready: break
 
         except requests.exceptions.RequestException:
-          utils.print('no response')
           pass
 
     assert ready, f'{self.client} did not start'

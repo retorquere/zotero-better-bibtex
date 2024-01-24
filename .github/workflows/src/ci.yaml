@@ -190,7 +190,6 @@ jobs:
 
     # needs logs/logs to have them show up as logs in the artifact... no idea why
     - name: Run tests
-      timeout-minutes: 15
       # continue-on-error: ${{ matrix.client == 'jurism' }}
       run: ./test/behave --client ${{ matrix.client }} ${{ matrix.worker }} --format ci --bin ${{ matrix.bin }} --bins $BINS --durations logs/stats/durations--${{ matrix.client }}--${{ matrix.bin }}${{ matrix.worker }}.json ${{ needs.balance.outputs.slow }}
       env:
