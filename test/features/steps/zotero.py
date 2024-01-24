@@ -10,6 +10,7 @@ import glob
 from selenium import webdriver
 import toml
 import urllib
+import requests
 import tempfile
 from munch import *
 from steps.utils import running, nested_dict_iter, benchmark, ROOT, assert_equal_diff, serialize, html2md, clean_html, extra_lower
@@ -186,7 +187,7 @@ class Zotero:
     self.client = userdata.get('client', 'zotero')
     self.beta = userdata.get('beta') == 'true'
     self.dev = userdata.get('dev') == 'true'
-    self.password = str(uuid.uuid4())
+    self.token = str(uuid.uuid4())
     self.import_at_start = userdata.get('import', None)
     if self.import_at_start:
       self.import_at_start = os.path.abspath(self.import_at_start)
@@ -231,10 +232,15 @@ class Zotero:
     for var, value in args.items():
       script = f'const {var} = {json.dumps(value)};\n' + script
 
+    headers = {
+      'Authorization': f'Bearer {self.token}',
+      'Content-Type': 'application/javascript'
+    }
+
     with Pinger(20):
-      req = urllib.request.Request(f'http://127.0.0.1:{self.port}/debug-bridge/execute?password={self.password}', data=script.encode('utf-8'), headers={'Content-type': 'application/javascript'})
-      res = urllib.request.urlopen(req, timeout=self.config.timeout * self.config.trace_factor).read().decode()
-      return json.loads(res)
+      resp = requests.post(f'http://127.0.0.1:{self.port}/debug-bridge/execute', headers=headers, data=script.encode('utf-8'))
+      resp.raise_for_status()
+      return resp.json()
 
   def shutdown(self):
     if self.proc is None: return
@@ -320,9 +326,11 @@ class Zotero:
             Zotero.debug('{better-bibtex:debug bridge}: startup: BetterBibTeX ready!');
             return true;
           """, testing = self.testing)
+          utils.print(str(ready))
           if ready: break
 
-        except (urllib.error.HTTPError, urllib.error.URLError,socket.timeout):
+        except requests.exceptions.RequestException:
+          utils.print('no response')
           pass
 
     assert ready, f'{self.client} did not start'
@@ -629,7 +637,7 @@ class Zotero:
     profile.firefox.set_preference('intl.accept_languages', 'en-GB')
     profile.firefox.set_preference('intl.locale.requested', 'en-GB')
 
-    profile.firefox.set_preference('extensions.zotero.debug-bridge.password', self.password)
+    profile.firefox.set_preference('extensions.zotero.debug-bridge.token', self.token)
     profile.firefox.set_preference('dom.max_chrome_script_run_time', self.config.timeout)
     utils.print(f'dom.max_chrome_script_run_time={self.config.timeout}')
 
