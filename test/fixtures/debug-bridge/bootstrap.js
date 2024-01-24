@@ -175,7 +175,10 @@ async function startup({ resourceURI, rootURI = resourceURI.spec }, reason) {
 
       if (!password.expected) return [500, 'text/plain', 'password not configured'];
       if (!password.found) return [401, 'text/plain', 'password required'];
-      if (password.expected !== password.found)  return [401, 'text/plain', 'invalid password'];
+      if (password.expected !== password.found) {
+        Zotero.debug(`debug bridge auth: ${JSON.stringify(password)}`)
+        return [401, 'text/plain', 'invalid password']
+      }
 
       log(`executing\n${options.data}`)
       let start = new Date
