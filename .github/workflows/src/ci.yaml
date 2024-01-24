@@ -51,7 +51,7 @@ _anchors:
         gen/
   download_build_artifacts: &download_build_artifacts
     name: fetch build artifacts
-    uses: actions/download-artifact@v3
+    uses: actions/download-artifact@v4
     with:
       name: build-artifacts
   # dummy directory minitests because otherwise dir structure is not maintained?!
@@ -65,7 +65,7 @@ _anchors:
         minitests/
   download_test_artifacts: &download_test_artifacts
     name: fetch test artifacts
-    uses: actions/download-artifact@v3
+    uses: actions/download-artifact@v4
     with:
       name: test-artifacts
   action_flags: &action_flags
