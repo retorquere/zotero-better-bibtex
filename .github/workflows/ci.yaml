@@ -43,7 +43,7 @@ jobs:
         env.slow }} ${{ env.beta }}
 
     - name: show logs
-      run: ls logs
+      run: find logs -type f
     - name: store test artifacts
       uses: actions/upload-artifact@v4
       with:
@@ -240,7 +240,7 @@ jobs:
         path: ~/.BBTTEST.log
 
     - name: show logs
-      run: ls logs
+      run: find logs -type f
     - name: store test artifacts
       uses: actions/upload-artifact@v4
       with:

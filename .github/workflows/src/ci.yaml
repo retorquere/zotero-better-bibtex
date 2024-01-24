@@ -100,7 +100,7 @@ jobs:
       run: ./util/balance.py --durations $DURATIONS --bins $BINS --minutes 10 ${{ env.slow }} ${{ env.beta }}
 
     - name: show logs
-      run: ls logs
+      run: find logs -type f
     - *upload_test_artifacts
 
   site:
@@ -204,7 +204,7 @@ jobs:
         path: ~/.BBTTEST.log
 
     - name: show logs
-      run: ls logs
+      run: find logs -type f
     - *upload_test_artifacts
 
 #    - name: Setup tmate session
