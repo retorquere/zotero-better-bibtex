@@ -42,6 +42,8 @@ jobs:
       run: ./util/balance.py --durations $DURATIONS --bins $BINS --minutes 10 ${{
         env.slow }} ${{ env.beta }}
 
+    - name: show logs
+      run: ls logs
     - name: store test artifacts
       uses: actions/upload-artifact@v4
       with:
@@ -237,6 +239,8 @@ jobs:
         name: debug log ${{ matrix.client }} ${{ matrix.bin }}
         path: ~/.BBTTEST.log
 
+    - name: show logs
+      run: ls logs
     - name: store test artifacts
       uses: actions/upload-artifact@v4
       with:
