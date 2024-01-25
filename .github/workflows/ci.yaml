@@ -166,11 +166,15 @@ jobs:
       env:
         PYTHONUNBUFFERED: true
 
-    - uses: actions/upload-artifact@v4
-      if: ${{ failure() || cancelled() }}
+    - if: ${{ failure() || cancelled() }}
+      run: |
+        touch ~/.BBTTEST.log
+        cp ~/.BBTTEST.log ~/BBTTEST--${{ matrix.client }}--${{ matrix.bin }}${{ matrix.worker }}.log
+    - if: ${{ failure() || cancelled() }}
+      uses: actions/upload-artifact@v4
       with:
         name: debug log ${{ matrix.client }} ${{ matrix.bin }}
-        path: ~/.BBTTEST.log
+        path: ~/BBTTEST*.log
         retention-days: 5
 
     - run: find stats .stats -type f
