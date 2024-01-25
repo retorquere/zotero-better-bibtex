@@ -29,6 +29,9 @@ for job in sorted(args.durations):
 for key, dur in durations.items():
   print(key, timedelta(seconds=sum([test['seconds'] for test in dur.values()])))
 
+directory = os.path.dirname(args.output)
+if not os.path.exists(directory): os.makedirs(directory)
+
 if args.worker:
   key = f'{args.client}-worker'
 else:

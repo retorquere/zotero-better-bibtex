@@ -33,10 +33,7 @@ class NoTestError(Exception):
 class FailedError(Exception):
   pass
 class Tests:
-  def __init__(self):
-    self.tests = []
-
-  def load(self, timings):
+  def __init__(self, durations):
     with open(timings) as f:
       try:
         tests = json.load(f, object_hook=Munch.fromDict)
@@ -85,12 +82,10 @@ class Tests:
       print('Saving test bins to', args.bins)
       json.dump(self.bins, f, indent='  ')
 
-Tests = Tests()
-Tests.load(args.durations)
+Tests = Tests(args.durations)
 Tests.balance()
 publish('bin_ids', json.dumps(list(range(max(len(Tests.bins), 1)))))
 publish('bins', args.bins)
-publish('durations', args.durations)
 
 # clients = ['zotero', 'jurism']
 clients = ['zotero']
