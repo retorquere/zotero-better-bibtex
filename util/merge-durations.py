@@ -13,6 +13,9 @@ parser.add_argument('-w', '--worker', action='store_true')
 parser.add_argument('durations', nargs='+')
 args = parser.parse_args()
 
+if '*' in args.durations: # ?!?!?!
+  args.durations = glob.glob(args.durations)
+
 durations = {}
 for job in sorted(args.durations):
   print(os.path.basename(job))
