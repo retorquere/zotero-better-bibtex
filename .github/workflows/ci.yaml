@@ -69,7 +69,8 @@ jobs:
       run: ./util/balance.py --durations test/balance/durations.json --bins test/balance/bins.json
         --minutes 10 ${{ env.slow }} ${{ env.beta }}
 
-    - run: npm run build ${{ env.beta }}
+    - name: build ${{ env.beta }}
+      run: npm run build ${{ env.beta }}
 
     - name: store build artifacts
       uses: actions/upload-artifact@v4
@@ -82,15 +83,18 @@ jobs:
         retention-days: 1
 
     # site
-    - uses: peaceiris/actions-hugo@v2
+    - name: build site
+      uses: peaceiris/actions-hugo@v2
       if: ${{ github.event_name == 'push' && (github.ref == 'refs/heads/master' ||
         startsWith(github.ref, 'refs/tags/')) }}
       with:
         hugo-version: latest
         extended: true
-    - run: npm run docs:deploy
+    - name: prepare docs for deploy
+      run: npm run docs:deploy
       if: ${{ github.event_name == 'push' && (github.ref == 'refs/heads/master' ||
         startsWith(github.ref, 'refs/tags/')) }}
+    - name: deploy site
     - uses: peaceiris/actions-gh-pages@v3
       if: ${{ github.event_name == 'push' && (github.ref == 'refs/heads/master' ||
         startsWith(github.ref, 'refs/tags/')) }}
@@ -165,10 +169,12 @@ jobs:
       env:
         PYTHONUNBUFFERED: true
 
-    - if: ${{ failure() || cancelled() }}
+    - name: save log on failure
+      if: ${{ failure() || cancelled() }}
       run: |
         touch ~/.BBTTEST.log
         cp ~/.BBTTEST.log ~/BBTTEST--${{ matrix.client }}--${{ matrix.bin }}${{ matrix.worker }}.log
+    - name: upload log on failure
     - if: ${{ failure() || cancelled() }}
       uses: actions/upload-artifact@v4
       with:
