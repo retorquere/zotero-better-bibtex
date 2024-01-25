@@ -165,6 +165,7 @@ jobs:
 
     - run: find test/stats -type f
     - name: store test artifacts
+      if: ${{ matrix.client == 'zotero' && matrix.worker == '--worker' }}
       uses: actions/upload-artifact@v4
       with:
         name: test-artifacts--${{ matrix.client }}--${{ matrix.bin }}${{ matrix.worker }}
@@ -225,8 +226,8 @@ jobs:
         pattern: test-artifacts--*
     - run: find test/stats -type f
       continue-on-error: true
-    - name: rebalance tests
-      run: ./util/merge-durations.py --client zotero --output test/balance/durations.json test/stats/durations--*.json
+    - name: collect test data
+      run: jq -s add test/stats/durations--*.json > test/balance/durations.json
     - name: Store build stats
       run: |
         gh release upload builds test/balance/durations.json --clobber --repo ${{ github.repository }}
