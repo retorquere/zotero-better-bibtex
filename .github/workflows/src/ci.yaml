@@ -224,6 +224,7 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         pattern: test-artifacts--*
+        merge-multiple: true
     - run: find . -type f
       continue-on-error: true
     - name: collect test data
