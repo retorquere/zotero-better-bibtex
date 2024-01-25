@@ -182,7 +182,8 @@ jobs:
     - name: store test artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: test-artifacts
+        name: test-artifacts--${{ matrix.client }}--${{ matrix.bin }}${{ matrix.worker
+          }}
         path: |
           stats/
           .stats/
@@ -262,9 +263,10 @@ jobs:
       with:
         python-version: '3.10'
     - name: fetch test artifacts
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact/merge@v4
       with:
-        name: test-artifacts
+        pattern: test-artifacts--*
+        delete-merged: true
     - name: rebalance tests
       run: ./util/merge-durations.py --client zotero --output ${{ needs.build.outputs.durations
         }} stats/durations--*.json
