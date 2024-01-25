@@ -139,10 +139,6 @@ class Document {
   constructor(docId, options) {
     this.id = docId
 
-    options.style = options.style || 'apa'
-    const style = Zotero.Styles.get(`http://www.zotero.org/styles/${options.style}`) || Zotero.Styles.get(`http://juris-m.github.io/styles/${options.style}`) || Zotero.Styles.get(options.style)
-    options.style = style ? style.url : 'http://www.zotero.org/styles/apa'
-
     const data = new Zotero.Integration.DocumentData()
     data.prefs = {
       noteType: 0,
@@ -370,7 +366,7 @@ async function selected(options): Promise<string> {
     title: item.getField('title'),
   }))
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  return picked.length ? await Formatter[options.format || 'playground'](picked, options) : ''
+  return picked.length ? await Formatter[options.format || 'latex'](picked, options) : ''
 }
 
 function toClipboard(text) {
@@ -404,7 +400,22 @@ Zotero.Server.Endpoints['/better-bibtex/cayw'] = class {
     if (options.probe) return [this.OK, 'text/plain', Zotero.BetterBibTeX.ready.pending ? 'starting' : 'ready' ]
 
     try {
+      if (!options.style || !options.contentType || !options.locale) {
+        const format = Zotero.QuickCopy.unserializeSetting(Zotero.Prefs.get('export.quickCopy.setting'))
+        if (!options.style && format.mode === 'bibliography') options.style = format.id
+        options.contentType = options.contentType || format.contentType || 'text'
+        options.locale = options.locale || format.locale || Zotero.Prefs.get('export.quickCopy.locale') || 'en-US'
+      }
+      const style =
+        Zotero.Styles.get(`http://www.zotero.org/styles/${options.style}`)
+        ||
+        Zotero.Styles.get(`http://juris-m.github.io/styles/${options.style}`)
+        ||
+        Zotero.Styles.get(options.style)
+      options.style = style ? style.url : 'http://www.zotero.org/styles/apa'
+
       log.debug('CAYW:', options)
+
       const citation = options.selected ? (await selected(options)) : (await pick(options))
 
       if (options.minimize) Zotero.getMainWindow().minimize()

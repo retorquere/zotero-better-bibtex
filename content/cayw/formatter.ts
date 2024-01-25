@@ -106,26 +106,6 @@ function citation2latex(citation, options) {
   return formatted
 }
 
-function prepCSL(options) {
-  const format = Zotero.QuickCopy.unserializeSetting(Zotero.Prefs.get('export.quickCopy.setting'))
-  log.debug('CAYW.prepCSL', { options, format })
-
-  if (!options.style) {
-    if (format.mode !== 'bibliography') {
-      throw new Error(`if you don't supply a style, formatted-citations requires the Zotero default quick-copy format to be set to a citation style; it is currently ${format}`)
-    }
-    options.style = format.id
-  }
-  if (!options.style.startsWith('http://')) options.style += `http://www.zotero.org/styles/${options.style}`
-
-  return {
-    mode: 'bibliography',
-    contentType: options.contentType || format.contentType || 'text',
-    id: options.style,
-    locale: options.locale || format.locale || Zotero.Prefs.get('export.quickCopy.locale'),
-  }
-}
-
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export const Formatter = new class { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   public async citationLinks(citations, _options): Promise<string> {
@@ -260,9 +240,12 @@ export const Formatter = new class { // eslint-disable-line @typescript-eslint/n
   }
 
   public async 'formatted-citation'(citations, options) {
-    log.debug('CAYW.formatted-citation', { options })
-    const format = prepCSL(options)
-    log.debug('CAYW.formatted-citation', { format })
+    const format = {
+      mode: 'bibliography',
+      contentType: options.contentType,
+      id: options.style,
+      locale: options.locale,
+    }
 
     // items must be pre-loaded for the citation processor
     await getItemsAsync(citations.map(item => item.id))
@@ -276,12 +259,16 @@ export const Formatter = new class { // eslint-disable-line @typescript-eslint/n
     }
 
     const output = csl.previewCitationCluster(citation, [], [], format.contentType)
-    log.debug('CAYW.formatted-citation', { format, output })
     return output
   }
 
   public async 'formatted-bibliography'(citations, options) {
-    const format = prepCSL(options)
+    const format = {
+      mode: 'bibliography',
+      contentType: options.contentType,
+      id: options.style,
+      locale: options.locale,
+    }
 
     const items = await getItemsAsync(citations.map(item => item.id))
 
