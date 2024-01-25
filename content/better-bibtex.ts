@@ -644,9 +644,9 @@ export class BetterBibTeX {
         pack: 'start',
         flex: '1',
       })
-      const itemToolbar = doc.getElementById('zotero-item-toolbar')
+      const container = doc.getElementById('zotero-item-toolbar') || doc.getElementById('zotero-pane-progressmeter-container')
       // after hbox-before-zotero-pq-buttons
-      itemToolbar.insertBefore(progressToolbar, itemToolbar.firstChild.nextSibling)
+      container.insertBefore(progressToolbar, container.firstChild.nextSibling)
       progressToolbar.appendChild(elements.create('hbox', {
         id: 'better-bibtex-progress-meter',
         width: '16px',
