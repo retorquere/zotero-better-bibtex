@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/require-await, @typescript-eslint/no-unsafe-return, @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-shadow */
 
-import { log } from '../logger'
 import { Translators } from '../translators'
 import { getItemsAsync } from '../get-items-async'
 import { Preference } from '../prefs'
