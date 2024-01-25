@@ -15,6 +15,7 @@ args = parser.parse_args()
 
 durations = {}
 for job in sorted(args.durations):
+  print(os.path.basename(job))
   dur, client, bin, worker = os.path.basename(job).replace('.json', '').split('--')
   if worker == 'worker':
     key = f'{client}-worker'
