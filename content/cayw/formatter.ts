@@ -260,6 +260,7 @@ export const Formatter = new class { // eslint-disable-line @typescript-eslint/n
   }
 
   public async 'formatted-citation'(citations, options) {
+    log.debug('CAYW.formatted-citation', { options })
     const format = prepCSL(options)
     log.debug('CAYW.formatted-citation', { format })
 
