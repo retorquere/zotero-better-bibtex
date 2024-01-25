@@ -104,7 +104,7 @@ jobs:
       run: npm run docs:deploy
       if: ${{ github.event_name == 'push' && (github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/tags/')) }}
     - name: deploy site
-    - uses: peaceiris/actions-gh-pages@v3
+      uses: peaceiris/actions-gh-pages@v3
       if: ${{ github.event_name == 'push' && (github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/tags/')) }}
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -162,7 +162,7 @@ jobs:
         touch ~/.BBTTEST.log
         cp ~/.BBTTEST.log ~/BBTTEST--${{ matrix.client }}--${{ matrix.bin }}${{ matrix.worker }}.log
     - name: upload log on failure
-    - if: ${{ failure() || cancelled() }}
+      if: ${{ failure() || cancelled() }}
       uses: actions/upload-artifact@v4
       with:
         name: debug log ${{ matrix.client }} ${{ matrix.bin }}

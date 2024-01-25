@@ -2,6 +2,7 @@
 
 import sys, os, stat
 from pathlib import Path
+import json
 
 import ruamel.yaml
 ruamel.yaml.representer.RoundTripRepresenter.ignore_aliases = lambda x, y: True
@@ -33,8 +34,10 @@ if not tgt.exists() or src.stat().st_mtime > tgt.stat().st_mtime:
 
   for jobname, job in action['jobs'].items():
     for step in job['steps']:
-      if 'name' not in step and step.get('uses', '') != 'actions/checkout@v4':
-        print(jobname, step, 'does not have a name')
+      if 'run' not in step and 'uses' not in step:
+        raise ValueError(json.dumps(step))
+      #if 'name' not in step and step.get('uses', '') != 'actions/checkout@v4':
+      #  print(jobname, step, 'does not have a name')
 
   with open(str(tgt), 'w') as f:
     yaml.dump(action, f)
