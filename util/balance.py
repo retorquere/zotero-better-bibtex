@@ -28,13 +28,9 @@ def publish(var, value):
     print(f"{var}={value}")
     print(f"{var}={value}", file=f)
 
-class NoTestError(Exception):
-  pass
-class FailedError(Exception):
-  pass
 class Tests:
-  def __init__(self, durations):
-    with open(timings) as f:
+  def __init__(self):
+    with open(args.durations) as f:
       try:
         tests = json.load(f, object_hook=Munch.fromDict)
       except json.decoder.JSONDecodeError:
@@ -82,7 +78,7 @@ class Tests:
       print('Saving test bins to', args.bins)
       json.dump(self.bins, f, indent='  ')
 
-Tests = Tests(args.durations)
+Tests = Tests()
 Tests.balance()
 publish('bin_ids', json.dumps(list(range(max(len(Tests.bins), 1)))))
 publish('bins', args.bins)
