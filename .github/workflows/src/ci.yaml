@@ -169,7 +169,6 @@ jobs:
         path: ~/BBTTEST*.log
         retention-days: 5
 
-    - run: find test/stats -type f
     - name: store test artifacts
       if: ${{ matrix.client == 'zotero' && matrix.worker == '--worker' }}
       uses: actions/upload-artifact@v4
