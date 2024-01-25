@@ -230,8 +230,6 @@ jobs:
       with:
         pattern: test-artifacts--*
         merge-multiple: true
-    - run: find . -type f
-      continue-on-error: true
     - name: collect test data
       run: jq -s add test/stats/durations--*.json > test/stats/durations.json
     - name: Store build stats
