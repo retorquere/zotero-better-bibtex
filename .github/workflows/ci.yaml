@@ -183,7 +183,8 @@ jobs:
         retention-days: 5
 
     - name: store test artifacts
-      if: ${{ matrix.client == 'zotero' && matrix.worker == '--worker' }}
+      if: matrix.client == 'zotero' && matrix.worker == '--worker' && github.event_name
+        == 'push' && github.ref == 'refs/heads/master'
       uses: actions/upload-artifact@v4
       with:
         name: test-artifacts--${{ matrix.client }}--${{ matrix.bin }}${{ matrix.worker
@@ -253,7 +254,7 @@ jobs:
           }
 
   durations:
-    if: github.ref == 'refs/heads/master'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
     needs:
     - build
     - test
