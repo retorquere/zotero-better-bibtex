@@ -184,9 +184,7 @@ jobs:
       with:
         name: test-artifacts--${{ matrix.client }}--${{ matrix.bin }}${{ matrix.worker
           }}
-        path: |
-          stats/
-          .stats/
+        path: ./*/stats/durations*
         retention-days: 2
 
 #    - name: Setup tmate session
