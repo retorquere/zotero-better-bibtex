@@ -266,9 +266,9 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         pattern: test-artifacts--*
-    - name: rebalance tests
     - run: find stats .stats -type f
-    - run: ./util/merge-durations.py --client zotero --output ${{ needs.build.outputs.durations
+    - name: rebalance tests
+      run: ./util/merge-durations.py --client zotero --output ${{ needs.build.outputs.durations
         }} stats/durations--*.json
     - name: Store build stats
       run: |
