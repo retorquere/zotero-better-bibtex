@@ -88,10 +88,12 @@ class Tests:
 Tests = Tests()
 Tests.load(args.durations)
 Tests.balance()
-publish('test_bins', json.dumps(list(range(max(len(Tests.bins), 1)))))
+publish('bin_ids', json.dumps(list(range(max(len(Tests.bins), 1)))))
+publish('bins', args.bins)
+publish('durations', args.durations)
 
 # clients = ['zotero', 'jurism']
 clients = ['zotero']
 if args.beta:
   clients += [client + '-beta' for client in clients]
-publish('test_clients', json.dumps(clients))
+publish('clients', json.dumps(clients))
