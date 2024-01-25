@@ -342,7 +342,6 @@ export async function pick(options: any): Promise<string> {
 
     if (options.select && picked.length) {
       const zoteroPane = Zotero.getActiveZoteroPane()
-      zoteroPane.show()
       await zoteroPane.selectItems(picked.map(item => item.id), true)
     }
 
