@@ -211,7 +211,7 @@ jobs:
         path: ~/.BBTTEST.log
         retention-days: 5
 
-    # dummy directory .stats because otherwise dir structure is not maintained?!
+    # dummy directory .stats because https://github.com/actions/upload-artifact/issues/174
     - name: store test artifacts
       uses: actions/upload-artifact@v4
       with:

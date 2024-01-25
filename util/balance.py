@@ -82,6 +82,7 @@ class Tests:
 
     Path(os.path.dirname(args.bins)).mkdir(parents=True, exist_ok=True)
     with open(args.bins, 'w') as f:
+      print('Saving test bins to', args.bins)
       json.dump(self.bins, f, indent='  ')
 
 Tests = Tests()
