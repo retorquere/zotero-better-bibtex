@@ -227,9 +227,9 @@ jobs:
     - run: find test/stats -type f
       continue-on-error: true
     - name: collect test data
-      run: jq -s add test/stats/durations--*.json > test/balance/durations.json
+      run: jq -s add test/stats/durations--*.json > test/stats/durations.json
     - name: Store build stats
       run: |
-        gh release upload builds test/balance/durations.json --clobber --repo ${{ github.repository }}
+        gh release upload builds test/stats/durations.json --clobber --repo ${{ github.repository }}
       env:
         GH_TOKEN: ${{ github.token }}
