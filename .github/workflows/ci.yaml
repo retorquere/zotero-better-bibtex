@@ -267,6 +267,9 @@ jobs:
       with:
         pattern: test-artifacts--*
     - run: find stats .stats -type f
+      continue-on-error: true
+    - run: ls durations--*
+      continue-on-error: true
     - name: rebalance tests
       run: ./util/merge-durations.py --client zotero --output ${{ needs.build.outputs.durations
         }} stats/durations--*.json
