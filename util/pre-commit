@@ -32,9 +32,9 @@ if not tgt.exists() or src.stat().st_mtime > tgt.stat().st_mtime:
   action.pop('_anchors', None)
 
   for jobname, job in action['jobs'].items():
-    for i, step in enumerate(job['steps']):
-      if 'name' not in step:
-        print(jobname, i, 'does not have a name')
+    for step in job['steps']:
+      if 'name' not in step and step.get('uses', '') != 'actions/checkout@v4':
+        print(jobname, step, 'does not have a name')
 
   with open(str(tgt), 'w') as f:
     yaml.dump(action, f)
