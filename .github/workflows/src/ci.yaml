@@ -48,35 +48,6 @@ _anchors:
     run: ./util/action-flags
 
 jobs:
-  site:
-    if: ${{ github.event_name == 'push' && (github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/tags/')) }}
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v4
-      with:
-        persist-credentials: false
-        submodules: true  # Fetch Hugo themes (true OR recursive)
-        fetch-depth: 0    # Fetch all history for .GitInfo and .Lastmod
-    - *get_version
-    - name: cancel spurious build on tagged version
-      uses: andymckay/cancel-action@master
-      if: github.event.head_commit.message == env.version && !startsWith(github.ref, 'refs/tags/')
-
-    - *install_python
-    - *install_node
-    - *cache
-    - *install_python_packages
-    - *install_node_packages
-    - uses: peaceiris/actions-hugo@v2
-      with:
-        hugo-version: latest
-        extended: true
-    - run: npm run docs:deploy
-    - uses: peaceiris/actions-gh-pages@v3
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./site/public
-
   build:
     outputs:
       bin_ids: ${{ env.bin_ids }}
@@ -91,7 +62,8 @@ jobs:
         persist-credentials: false
         submodules: true  # Fetch Hugo themes (true OR recursive)
         fetch-depth: 0    # Fetch all history for .GitInfo and .Lastmod
-    - *get_version
+    - name: get package version
+      run: echo "version="`jq -r .version package.json` >> $GITHUB_ENV
     - name: cancel spurious build on tagged version
       uses: andymckay/cancel-action@master
       if: github.event.head_commit.message == env.version && !startsWith(github.ref, 'refs/tags/')
@@ -120,6 +92,20 @@ jobs:
           gen/
           test/stats/
         retention-days: 1
+
+    # site
+    - uses: peaceiris/actions-hugo@v2
+      if: ${{ github.event_name == 'push' && (github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/tags/')) }}
+      with:
+        hugo-version: latest
+        extended: true
+    - run: npm run docs:deploy
+      if: ${{ github.event_name == 'push' && (github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/tags/')) }}
+    - uses: peaceiris/actions-gh-pages@v3
+      if: ${{ github.event_name == 'push' && (github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/tags/')) }}
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./site/public
 
   test:
     needs:
@@ -174,6 +160,7 @@ jobs:
         path: ~/.BBTTEST.log
         retention-days: 5
 
+    - run: find stats .stats -type f
     # dummy directory .stats because https://github.com/actions/upload-artifact/issues/174
     - name: store test artifacts
       uses: actions/upload-artifact@v4
