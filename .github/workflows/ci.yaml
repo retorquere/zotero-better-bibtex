@@ -28,7 +28,7 @@ jobs:
         'refs/tags/')
 
     - name: install python
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
         python-version: '3.10'
     - name: install node
@@ -119,7 +119,7 @@ jobs:
       with:
         name: build-artifacts
     - name: install python
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
         python-version: '3.10'
     - name: Cache python/node dependencies
@@ -176,8 +176,7 @@ jobs:
         path: ~/BBTTEST*.log
         retention-days: 5
 
-    - run: find stats .stats -type f
-    # dummy directory .stats because https://github.com/actions/upload-artifact/issues/174
+    - run: find test/stats -type f
     - name: store test artifacts
       uses: actions/upload-artifact@v4
       with:
@@ -204,7 +203,7 @@ jobs:
       with:
         name: build-artifacts
     - name: install python
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
         python-version: '3.10'
     - name: install node
@@ -256,16 +255,14 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: install python
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
         python-version: '3.10'
     - name: fetch test artifacts
       uses: actions/download-artifact@v4
       with:
         pattern: test-artifacts--*
-    - run: find stats .stats -type f
-      continue-on-error: true
-    - run: ls durations--*
+    - run: find test/stats -type f
       continue-on-error: true
     - name: rebalance tests
       run: ./util/merge-durations.py --client zotero --output test/balance/durations.json

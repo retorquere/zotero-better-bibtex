@@ -12,7 +12,7 @@ _anchors:
     run: echo "version="`jq -r .version package.json` >> $GITHUB_ENV
   install_python: &install_python
     name: install python
-    uses: actions/setup-python@v4
+    uses: actions/setup-python@v5
     with:
       python-version: '3.10'
   install_node: &install_node
@@ -163,8 +163,7 @@ jobs:
         path: ~/BBTTEST*.log
         retention-days: 5
 
-    - run: find stats .stats -type f
-    # dummy directory .stats because https://github.com/actions/upload-artifact/issues/174
+    - run: find test/stats -type f
     - name: store test artifacts
       uses: actions/upload-artifact@v4
       with:
@@ -224,9 +223,7 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         pattern: test-artifacts--*
-    - run: find stats .stats -type f
-      continue-on-error: true
-    - run: ls durations--*
+    - run: find test/stats -type f
       continue-on-error: true
     - name: rebalance tests
       run: ./util/merge-durations.py --client zotero --output test/balance/durations.json test/stats/durations--*.json
