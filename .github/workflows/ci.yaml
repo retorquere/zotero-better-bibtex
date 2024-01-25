@@ -263,10 +263,9 @@ jobs:
       with:
         python-version: '3.10'
     - name: fetch test artifacts
-      uses: actions/download-artifact/merge@v4
+      uses: actions/download-artifact@v4
       with:
         pattern: test-artifacts--*
-        delete-merged: true
     - name: rebalance tests
       run: ./util/merge-durations.py --client zotero --output ${{ needs.build.outputs.durations
         }} stats/durations--*.json
