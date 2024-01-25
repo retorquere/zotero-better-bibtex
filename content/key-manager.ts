@@ -495,6 +495,7 @@ export const KeyManager = new class _KeyManager {
       let key: CitekeyRecord
       log.debug('keymanager.load: load existing')
       for (key of await Zotero.DB.queryAsync('SELECT * from betterbibtex.citationkey')) {
+        log.debug('2676:', { itemID: key.itemID, itemKey: key.itemKey, libraryID: key.libraryID, citationKey: key.citationKey, pinned: key.pinned })
         keys.set(key.itemID, lc({ itemID: key.itemID, itemKey: key.itemKey, libraryID: key.libraryID, citationKey: key.citationKey, pinned: key.pinned }))
       }
 
