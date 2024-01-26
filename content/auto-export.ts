@@ -41,7 +41,6 @@ export const SQL = new class {
 
     if (typeof path !== 'string') throw new Error(`ae:sql:get: ${path} is not a string but a ${typeof path}`)
 
-    log.debug('ae:sql:get: getting job for', {path})
     for (const meta of await Zotero.DB.queryAsync('SELECT * FROM betterbibtex.autoexport WHERE path = ?', [ path ])) {
       Object.assign(job, pick(meta, this.columns.job))
     }
@@ -61,14 +60,12 @@ export const SQL = new class {
 
   public async edit(path: string, setting: JobSetting, value: boolean | number | string): Promise<void> {
     if (typeof value === 'boolean') value = value ? 1 : 0
-    log.debug('ae.edit: pre', await this.get(path), 'apply:', { setting, value })
     if (this.columns.editable.includes(setting)) {
       await Zotero.DB.queryTx(`UPDATE betterbibtex.autoexport SET ${setting} = ? WHERE path = ?`, [ value, path ])
     }
     else {
       await Zotero.DB.queryTx(this.sql.setting, { setting, path, value }, NoParse)
     }
-    log.debug('ae.edit: post', await this.get(path))
     queue.add(path)
   }
 
@@ -285,7 +282,6 @@ const queue = new class TaskQueue {
   }
 
   public add(path: string) {
-    log.debug('auth-export: scheduled', path)
     this.scheduler.schedule(path, this.run.bind(this, path))
   }
 
@@ -300,7 +296,6 @@ const queue = new class TaskQueue {
     await Zotero.BetterBibTeX.ready
 
     const ae = await AutoExport.get(path)
-    log.debug('ae.schedule: running', ae)
     if (!ae) throw new Error(`AutoExport for ${JSON.stringify(path)} does not exist`)
 
     const translator = Translators.byId[ae.translatorID]
@@ -339,7 +334,6 @@ const queue = new class TaskQueue {
           return acc
         }, {} as any) as Partial<Preferences>,
       }]
-      log.debug('scheduling auto-export:', jobs)
 
       if (ae.recursive) {
         const collections = scope.type === 'library' ? Zotero.Collections.getByLibrary(scope.id, true) : Zotero.Collections.getByParent(scope.collection, true)
@@ -449,17 +443,14 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
         if (Preference.autoExport === 'immediate') queue.resume('startup')
         Events.addIdleListener('auto-export', Preference.autoExportIdleWait)
         Events.on('idle', state => {
-          log.debug('idle: auto-export:', { state, pref: { autoExport: Preference.autoExport, autoExportIdleWait: Preference.autoExportIdleWait }})
           if (state.topic !== 'auto-export' || Preference.autoExport !== 'idle') return
 
           switch (state.state) {
             case 'active':
-              log.debug('idle: stopping queue')
               queue.pause('end-of-idle')
               break
 
             case 'idle':
-              log.debug('idle: starting queue')
               queue.resume('start-of-idle')
               break
 
@@ -474,7 +465,6 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
 
   public async add(ae, schedule = false) {
     await SQL.create(ae)
-    log.debug('aedb: inserted, now', await Zotero.DB.valueQueryAsync('SELECT COUNT(*) FROM betterbibtex.autoexport'))
 
     try {
       const repo = await git.repo(ae.path)
@@ -493,7 +483,6 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
     if (!ids.length) return
 
     for (const path of await SQL.find(type, ids)) {
-      log.debug('ae.schedule: enqueueing', path)
       queue.add(path)
     }
   }

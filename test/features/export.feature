@@ -695,7 +695,7 @@ Feature: Export
   # Then an auto-export to "/tmp/autoexport.bib" using "Better BibTeX" should match "export/*.bibtex"
   # And I remove "/tmp/autoexport.bib"
   # When I remove all items from "Cited/2010 - CHI (Magic)"
-  # And I wait 5 seconds
+  # And I wait 15 seconds
   # And I wait at most 100 seconds until all auto-exports are done
   # Then "/tmp/autoexport.bib" should match "export/*.bibtex"
   @1495

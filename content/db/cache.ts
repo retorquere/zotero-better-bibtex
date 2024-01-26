@@ -271,7 +271,7 @@ Events.on('preference-changed', async pref => {
   await Zotero.BetterBibTeX.ready
   DB.reset(`pref ${pref} changed`, preference.affects[pref])
 })
-Events.on('items-changed-prep', async ({ ids }) => {
+Events.on('items-update-cache', async ({ ids }) => {
   await Zotero.BetterBibTeX.ready
   DB.remove(ids, 'items-changed')
 })

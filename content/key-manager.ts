@@ -257,7 +257,6 @@ export const KeyManager = new class _KeyManager {
           type: {},
         }
 
-        log.debug('keymanager: init: pre-fetching types/fields')
         for (const type of await ZoteroDB.queryAsync('select itemTypeID, typeName from itemTypes')) { // 1 = attachment, 14 = note
           this.query.type[type.typeName] = type.itemTypeID
         }
@@ -266,9 +265,7 @@ export const KeyManager = new class _KeyManager {
           this.query.field[field.fieldName] = field.fieldID
         }
 
-        log.debug('keymanager: init: compiling', Preference.citekeyFormat)
         Formatter.update([Preference.citekeyFormat])
-        log.debug('keymanager: init: done')
 
         await this.start()
       },
@@ -404,13 +401,11 @@ export const KeyManager = new class _KeyManager {
   async remove(keys: CitekeyRecord | CitekeyRecord[]) {
     if (Array.isArray(keys)) {
       await Zotero.DB.executeTransaction(async () => {
-        log.debug('removing', keys.length, 'keys')
         let pos = 0
         const chunk = 50
         while (pos < keys.length) {
           const slice = keys.slice(pos, chunk + pos)
           if (!slice.length) break
-          log.debug('removing', slice.length, 'at position', pos)
           pos += chunk
           await Zotero.DB.queryAsync(`DELETE FROM betterbibtex.citationkey WHERE itemID IN (${Array(slice.length).fill('?').join(',')})`, slice.map(key => key.itemID))
         }
@@ -440,8 +435,7 @@ export const KeyManager = new class _KeyManager {
           break
       }
     })
-    Events.on('items-changed-prep', ({ ids, action }) => {
-      log.debug('keymanager: items-changed-prep:', action, ids)
+    Events.on('items-update-cache', ({ ids, action }) => {
       let warn_titlecase = 0
       switch (action) {
         case 'delete':
@@ -478,7 +472,6 @@ export const KeyManager = new class _KeyManager {
 
     await Zotero.DB.executeTransaction(async () => {
       const items = `BBTITEMS${Zotero.Utilities.generateObjectKey()}`
-      log.debug('keymanager.load: select valid items into', items)
       await ZoteroDB.queryAsync(`
         CREATE TEMPORARY TABLE ${items}
         AS
@@ -488,18 +481,14 @@ export const KeyManager = new class _KeyManager {
         AND itemTypeID NOT IN (${this.query.type.attachment}, ${this.query.type.note}, ${this.query.type.annotation || this.query.type.note})
         AND itemID NOT IN (SELECT itemID from feedItems)
       `)
-      log.debug('keymanager.load: delete orphaned')
       await Zotero.DB.queryAsync(`DELETE FROM betterbibtex.citationkey WHERE itemID NOT IN (SELECT itemID FROM ${items})`)
 
       const keys: Map<number, CitekeyRecord> = new Map
       let key: CitekeyRecord
-      log.debug('keymanager.load: load existing')
       for (key of await Zotero.DB.queryAsync('SELECT * from betterbibtex.citationkey')) {
-        log.debug('2676:', { itemID: key.itemID, itemKey: key.itemKey, libraryID: key.libraryID, citationKey: key.citationKey, pinned: key.pinned })
         keys.set(key.itemID, lc({ itemID: key.itemID, itemKey: key.itemKey, libraryID: key.libraryID, citationKey: key.citationKey, pinned: key.pinned }))
       }
 
-      log.debug('keymanager.load: restore pin status')
       // fetch pinned keys to be sure
       const keyLine = /(^|\n)Citation Key\s*:\s*(.+?)(\n|$)/i
       const getKey = (extra: string) => {
@@ -524,16 +513,12 @@ export const KeyManager = new class _KeyManager {
         }
       }
 
-      log.debug('keymanager.load: insert into blinkdb')
       blink.insertMany(this.keys, [...keys.values()])
 
-      log.debug('keymanager.load: detect missing')
       missing =  await Zotero.DB.columnQueryAsync(`SELECT itemID FROM ${items} WHERE itemID NOT IN (SELECT itemID from betterbibtex.citationkey)`)
-      log.debug('keymanager.load: drop temp table')
       await Zotero.DB.queryAsync(`DROP TABLE temp.${items}`)
     })
 
-    log.debug('keymanager.load: set up listener')
     this.unwatch = [
       this.keys[BlinkKey].events.onInsert.register(changes => {
         for (const change of changes) {
@@ -557,7 +542,6 @@ export const KeyManager = new class _KeyManager {
     ]
 
     // generate keys for entries that don't have them yet
-    log.debug('keymanager.load: regenerate', missing.length)
     const progress = new Progress(missing.length, 'Assigning citation keys')
     for (const itemID of missing) {
       try {
@@ -571,7 +555,6 @@ export const KeyManager = new class _KeyManager {
     }
 
     progress.done()
-    log.debug('keymanager.load: done')
   }
 
   public update(item: ZoteroItem, current?: CitekeyRecord): string {
