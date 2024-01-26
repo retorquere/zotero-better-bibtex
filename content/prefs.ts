@@ -65,6 +65,8 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
         },
       })
     }
+
+    Events.itemObserverDelay = this.itemObserverDelay
   }
 
   setDefaultPrefs() {
@@ -121,6 +123,7 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
   changed(pref: string) {
     // prevent foot-guns
     if (this.repair(pref)) return
+    if (pref === 'itemObserverDelay') Events.itemObserverDelay = this.itemObserverDelay
     void Events.emit('preference-changed', pref)
   }
 

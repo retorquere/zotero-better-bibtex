@@ -347,11 +347,6 @@ export const KeyManager = new class _KeyManager {
       key.pinned ? 1 : 0,
     ])
 
-    // async is just a heap of fun. Who doesn't enjoy a good race condition?
-    // https://github.com/retorquere/zotero-better-bibtex/issues/774
-    // https://groups.google.com/forum/#!topic/zotero-dev/yGP4uJQCrMc
-    await Zotero.Promise.delay(Preference.itemObserverDelay)
-
     let item
     try {
       item = await Zotero.Items.getAsync(key.itemID)

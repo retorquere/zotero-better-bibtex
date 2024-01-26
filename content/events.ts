@@ -36,6 +36,7 @@ class Emitter extends Emittery<{
 
   private listeners: any[] = []
   public idle: Partial<Record<IdleTopic, IdleState>> = {}
+  public itemObserverDelay = 5
 
   public startup(): void {
     this.listeners.push(new WindowListener)
@@ -135,6 +136,11 @@ class ItemListener extends ZoteroListener {
   public async notify(zotero_action: 'modify' | 'add' | 'trash' | 'delete', type: string, ids: number[], extraData?: Record<number, { libraryID?: number, bbtCitekeyUpdate: boolean }>) {
     await Zotero.BetterBibTeX.ready
 
+    // async is just a heap of fun. Who doesn't enjoy a good race condition?
+    // https://github.com/retorquere/zotero-better-bibtex/issues/774
+    // https://groups.google.com/forum/#!topic/zotero-dev/yGP4uJQCrMc
+    await Zotero.Promise.delay(Events.itemObserverDelay)
+
     const action = zotero_action === 'trash' ? 'delete' : zotero_action
 
     log.debug('itemlistener.emit:', { action: action !== zotero_action ? `${zotero_action} => ${action}` : action, type, ids, extraData })
@@ -178,8 +184,8 @@ class ItemListener extends ZoteroListener {
       return true
     }) as ZoteroItem[]
 
-    if (ids.length && action !== 'add') await Events.emit('items-update-cache', { ids, action })
-    if (items.length && action !== 'delete') void Events.emit('items-changed', { items, action })
+    if (ids.length) await Events.emit('items-update-cache', { ids, action })
+    if (items.length) await Events.emit('items-changed', { items, action })
 
     let parents: ZoteroItem[] = []
     if (parentIDs.length) {
@@ -191,10 +197,12 @@ class ItemListener extends ZoteroListener {
       touch(item)
     }
 
-    log.debug('emit: items touched collections', [...touched.collections])
-    if (touched.collections.size) void Events.emit('collections-changed', [...touched.collections])
-    log.debug('emit: items touched libraries', [...touched.libraries])
-    if (touched.libraries.size) void Events.emit('libraries-changed', [...touched.libraries])
+    Zotero.Promise.delay(Events.itemObserverDelay).then(() => {
+      log.debug('emit: items touched collections', [...touched.collections])
+      if (touched.collections.size) void Events.emit('collections-changed', [...touched.collections])
+      log.debug('emit: items touched libraries', [...touched.libraries])
+      if (touched.libraries.size) void Events.emit('libraries-changed', [...touched.libraries])
+    })
   }
 }
 

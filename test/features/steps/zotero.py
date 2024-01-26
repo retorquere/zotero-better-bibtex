@@ -426,12 +426,21 @@ class Zotero:
 
   def export_library(self, translator, displayOptions = {}, collection = None, output = None, expected = None, resetCache = False):
     assert not displayOptions.get('keepUpdated', False) or output # Auto-export needs a destination
-    displayOptions['Normalize'] = True
 
     if translator.startswith('id:'):
       translator = translator[len('id:'):]
     else:
       translator = self.translators.byLabel[translator].translatorID
+
+    if self.worker and 'worker' not in displayOptions:
+      worker = self.translators.byId[translator].get('displayOptions', {}).get('worker', None)
+      if type(worker) == bool:
+        utils.print(f'{"" if worker else "not "}upgrading to worker')
+        displayOptions['worker'] = worker
+      else:
+        utils.print(f'{translator} has no worker support')
+
+    displayOptions['Normalize'] = True
 
     found = self.execute('return await Zotero.BetterBibTeX.TestSupport.exportLibrary(translatorID, displayOptions, path, collection)',
       translatorID=translator,
