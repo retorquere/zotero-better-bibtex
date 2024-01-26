@@ -119,7 +119,7 @@ if args.this or args.test_this:
   if args.this: args.this = BRANCH.replace('gh-', '@')
   if args.test_this: args.test = BRANCH.replace('gh-', '')
 
-if args.test or args.this or args.nightly or args.tagged or args.beta: args.slow = True
+if args.test or args.this or args.nightly or args.tagged: args.slow = True
 
 if args.client == 'jurism':
   print(f"********* JURISM NO LONGER SUPPORTED ***********")
