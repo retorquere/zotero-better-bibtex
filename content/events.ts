@@ -132,10 +132,12 @@ class ItemListener extends ZoteroListener {
     super('item')
   }
 
-  public async notify(action: 'modify' | 'add' | 'trash' | 'delete', type: string, ids: number[], extraData?: Record<number, { libraryID?: number, bbtCitekeyUpdate: boolean }>) {
+  public async notify(zotero_action: 'modify' | 'add' | 'trash' | 'delete', type: string, ids: number[], extraData?: Record<number, { libraryID?: number, bbtCitekeyUpdate: boolean }>) {
     await Zotero.BetterBibTeX.ready
 
-    log.debug('itemlistener.emit:', { action, type, ids, extraData })
+    const action = zotero_action === 'trash' ? 'delete' : zotero_action
+
+    log.debug('itemlistener.emit:', { action: action !== zotero_action ? `${zotero_action} => ${action}` : action, type, ids, extraData })
     // prevents update loop -- see KeyManager.init()
     if (action === 'modify') ids = ids.filter(id => !extraData?.[id]?.bbtCitekeyUpdate)
     if (!ids.length) return
@@ -144,7 +146,7 @@ class ItemListener extends ZoteroListener {
     // safe to use Zotero.Items.get(...) rather than Zotero.Items.getAsync here
     // https://groups.google.com/forum/#!topic/zotero-dev/99wkhAk-jm0
     const items = action === 'delete' ? [] : Zotero.Items.get(ids).filter((item: ZoteroItem) => {
-      // check .deleted for #2401 -- we're getting *updated* (?!) notifications for trashed items which reinstates them into the BBT DB
+      // check .deleted for #2401/#2676 -- we're getting *modify* (?!) notifications for trashed items which reinstates them into the BBT DB
       if (action === 'modify' && item.deleted) return false
       if (item.isFeedItem) return false
 
@@ -156,14 +158,13 @@ class ItemListener extends ZoteroListener {
       return true
     }) as ZoteroItem[]
 
-    const event_action = action === 'trash' ? 'delete' : action
-    await Events.emit('items-changed-prep', { ids, action: event_action })
-    if (items.length && action !== 'delete') void Events.emit('items-changed', { items, action: event_action })
+    await Events.emit('items-changed-prep', { ids, action })
+    if (items.length && action !== 'delete') void Events.emit('items-changed', { items, action })
 
     let parents: ZoteroItem[] = []
     if (parentIDs.length) {
       parents = Zotero.Items.get(parents)
-      void Events.emit('items-changed', { items: Zotero.Items.get(parents), action: 'modify', reason: `parent-${action}` })
+      void Events.emit('items-changed', { items: Zotero.Items.get(parents), action: 'modify', reason: `parent-${zotero_action}` })
     }
 
     const libraries: Set<number> = new Set(
