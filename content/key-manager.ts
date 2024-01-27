@@ -439,7 +439,8 @@ export const KeyManager = new class _KeyManager {
 
         case 'add':
         case 'modify':
-          for (const item of Zotero.Items.get(ids).filter(i => i.isRegularItem() && !i.isFeedItem)) {
+          // why do deleted items keep showing up here?
+          for (const item of Zotero.Items.get(ids).filter(i => !i.deleted && i.isRegularItem() && !i.isFeedItem)) {
             this.update(item)
             if (Preference.warnTitleCased) {
               const title = item.getField('title')
@@ -476,6 +477,7 @@ export const KeyManager = new class _KeyManager {
         AND itemTypeID NOT IN (${this.query.type.attachment}, ${this.query.type.note}, ${this.query.type.annotation || this.query.type.note})
         AND itemID NOT IN (SELECT itemID from feedItems)
       `)
+      log.debug('orphan citekeys', await Zotero.DB.columnQueryAsync('SELECT itemID FROM betterbibtex.citationkey WHERE itemID NOT IN (SELECT itemID FROM ${items})`)
       await Zotero.DB.queryAsync(`DELETE FROM betterbibtex.citationkey WHERE itemID NOT IN (SELECT itemID FROM ${items})`)
 
       const keys: Map<number, CitekeyRecord> = new Map
