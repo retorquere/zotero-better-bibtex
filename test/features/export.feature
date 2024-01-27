@@ -13,6 +13,7 @@ Feature: Export
 
     Examples:
       | file                                                                                                                     | references |
+      | shorttitle in citekeys always pinyinized #2770                                                                           | 1          |
       | Export unicode character o as latex command broken #2761                                                                 | 1          |
       | Citation key from abbreviationacronym from within field #2717                                                            | 3          |
       | raw bibtex fields with colon in extra #2750                                                                              | 1          |

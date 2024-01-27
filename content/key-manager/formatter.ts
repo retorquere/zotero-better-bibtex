@@ -787,7 +787,7 @@ class PatternFormatter {
    * @param m number of words to capitalize. `0` means no words will be capitalized. Mind that existing capitals are not removed.
    */
   public $shorttitle(n: number = 3, m: number = 0) { // eslint-disable-line @typescript-eslint/no-inferrable-types
-    const words = this.titleWords(this.item.title, { skipWords: true, nopunct: true, transliterate: true})
+    const words = this.titleWords(this.item.title, { skipWords: true, nopunct: true })
     if (!words) return this.$text('')
 
     return this.$text(words.slice(0, n).map((word, i) => i < m ? word.charAt(0).toUpperCase() + word.slice(1) : word).join(' '))
