@@ -175,6 +175,7 @@ export class ErrorReport {
       /NS_ERROR_FAILURE:.*getHistogramById/,
       /Upload request .* failed/,
       /You have reached your Zotero File Storage quota/,
+      /See your zotero.org account settings for additional storage options/,
       /Could not get children of.*CrashManager.jsm/,
     ]
 
