@@ -163,7 +163,7 @@ jobs:
       if: ${{ failure() || cancelled() }}
       uses: actions/upload-artifact@v4
       with:
-        name: debug log ${{ matrix.client }} ${{ matrix.bin }}
+        name: debug-log--${{ matrix.client }}--${{ matrix.bin }}${{ matrix.worker }}
         path: ~/BBTTEST*.log
         retention-days: 5
 
