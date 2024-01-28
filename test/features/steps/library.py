@@ -104,7 +104,7 @@ def unkey(data):
     return [unkey(d) for d in data]
 
   elif isinstance(data, dict):
-    return { k: unkey(v) for k, v in data.items() if k not in ('itemID', 'itemKey', 'key') }
+    return { k: unkey(v) for k, v in data.items() if k not in ('attachments', 'notes', 'itemID', 'itemKey', 'key') }
 
   else:
     return data

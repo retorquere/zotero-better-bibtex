@@ -845,7 +845,14 @@ export class ZoteroItem {
     if (!att.mimeType) delete att.mimeType
 
     this.item.attachments = this.item.attachments.filter(a => a.path !== att.path)
-    this.item.attachments.push(att)
+
+    const paths: string[] = this.translation.platform === 'lin'
+      ? [...(new Set(['NFC', 'NFD', 'NFKC', 'NFKD'].map((normalization: string) => att.path.normalize(normalization) as string)))]
+      : [ att.path ]
+
+    for (const path of paths) {
+      this.item.attachments.push({...att, path})
+    }
   }
 
   // "files(Mendeley)/filename(Qiqqa)" will import the same as "file" but won't be treated as verbatim by the bibtex parser. Needed because the people at Mendeley/Qiqqa can't be bothered to read the manual apparently.
