@@ -46,14 +46,15 @@ Some of us though are bound to outlets that still demand BibTeX, and there's gee
 |  ə | \textschwa |  |  ɤ | \textrevscripta |  |  ɸ | \textphi |  |  ʞ | \textturnk |  |
 |  ˥ | \tone{55} |  |  ˦ | \tone{44} |  |  ˧ | \tone{33} |  |  ˨ | \tone{22} |  |
 |  ˩ | \tone{11} |  |  ̀̄ | \textgravemacron |  |  ̀̇ | \textgravedot |  |  ́̄ | \textacutemacron |  |
-|  ́̌ | \textacutewedge |  |  ̂̇ | \textcircumdot |  |  ̃̇ | \texttildedot |  |  ̄̆ | \textbrevemacron |  |
-|  ́̇ | \textdotacute |  |  ̆̇ | \textdotbreve |  |  ̄̊ | \textringmacron |  |  ̍ | \textvbaraccent |  |
-|  ̎ | \textdoublevbaraccent |  |  ̐ | \textdotbreve |  |  ̘ | \textadvancing |  |  ̙ | \textretracting |  |
-|  ̚ | \textcorner |  |  ̜ | \textsublhalfring |  |  ̝ | \textraising |  |  ̞ | \textlowering |  |
-|  ̟ | \textsubplus |  |  ̤ | \textsubumlaut |  |  ̥ | \textsubring |  |  ̩ | \textsyllabic |  |
-|  ̪ | \textsubbridge |  |  ̬ | \textsubwedge |  |  ̯ | \textsubarch |  |  ̰ | \textsubtilde |  |
-|  ̱ | \textsubbar |  |  ̴ | \textsuperimposetilde |  |  ̹ | \textsubrhalfring |  |  ̺ | \textinvsubbridge |  |
-|  ̻ | \textsubsquare |  |  ̼ | \textseagull |  |  ̽ | \textovercross |  |  ₔ | \textsubscript{\textschwa} |  |
+|  ́̌ | \textacutewedge |  |  ̂̇ | \textcircumdot |  |  ̃̇ | \texttildedot |  |  ̄̀ | \textgravemacron |  |
+|  ̆̄ | \textbrevemacron |  |  ̇́ | \textdotacute |  |  ̇̆ | \textdotbreve |  |  ̊̄ | \textringmacron |  |
+|  ̍ | \textvbaraccent |  |  ̎ | \textdoublevbaraccent |  |  ̐ | \textdotbreve |  |  ̘ | \textadvancing |  |
+|  ̙ | \textretracting |  |  ̚ | \textcorner |  |  ̜ | \textsublhalfring |  |  ̝ | \textraising |  |
+|  ̞ | \textlowering |  |  ̟ | \textsubplus |  |  ̤ | \textsubumlaut |  |  ̥ | \textsubring |  |
+|  ̩ | \textsyllabic |  |  ̪ | \textsubbridge |  |  ̬ | \textsubwedge |  |  ̯ | \textsubarch |  |
+|  ̰ | \textsubtilde |  |  ̱ | \textsubbar |  |  ̴ | \textsuperimposetilde |  |  ̹ | \textsubrhalfring |  |
+|  ̺ | \textinvsubbridge |  |  ̻ | \textsubsquare |  |  ̼ | \textseagull |  |  ̽ | \textovercross |  |
+|  ₔ | \textsubscript{\textschwa} |  |  | |  |  | |  |  | |  |
 
 
 ### ipa
