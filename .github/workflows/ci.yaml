@@ -62,8 +62,8 @@ jobs:
 
     - name: get previous test durations
       run: curl -L 
-        https://github.com/retorquere/zotero-better-bibtex/releases/download/builds/durations.json
-        --create-dirs -o test/balance/durations.json
+        https://github.com/retorquere/zotero-better-bibtex/releases/download/builds/durations${{
+        env.slow }}.json --create-dirs -o test/balance/durations.json
     - name: balance tests
       id: balance
       run: ./util/balance.py --durations test/balance/durations.json --bins test/balance/bins.json
@@ -273,9 +273,10 @@ jobs:
         pattern: test-artifacts--*
         merge-multiple: true
     - name: collect test data
-      run: jq -s add test/stats/durations--*.json > test/stats/durations.json
+      run: jq -s add test/stats/durations--*.json > test/stats/durations${{ needs.build.outputs.slow
+        }}.json
     - name: Store build stats
       run: |
-        gh release upload builds test/stats/durations.json --clobber --repo ${{ github.repository }}
+        gh release upload builds test/stats/durations${{ needs.build.outputs.slow }}.json --clobber --repo ${{ github.repository }}
       env:
         GH_TOKEN: ${{ github.token }}
