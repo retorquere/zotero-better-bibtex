@@ -143,7 +143,6 @@ class ItemListener extends ZoteroListener {
 
     const action = zotero_action === 'trash' ? 'delete' : zotero_action
 
-    log.debug('itemlistener.emit:', { action: action !== zotero_action ? `${zotero_action} => ${action}` : action, type, ids, extraData })
     // prevents update loop -- see KeyManager.init()
     if (action === 'modify') ids = ids.filter(id => !extraData?.[id]?.bbtCitekeyUpdate)
     if (!ids.length) return
@@ -198,9 +197,7 @@ class ItemListener extends ZoteroListener {
     }
 
     Zotero.Promise.delay(Events.itemObserverDelay).then(() => {
-      log.debug('emit: items touched collections', [...touched.collections])
       if (touched.collections.size) void Events.emit('collections-changed', [...touched.collections])
-      log.debug('emit: items touched libraries', [...touched.libraries])
       if (touched.libraries.size) void Events.emit('libraries-changed', [...touched.libraries])
     })
   }
@@ -239,8 +236,6 @@ class MemberListener extends ZoteroListener {
   public async notify(action: string, type: string, pairs: string[]) {
     await Zotero.BetterBibTeX.ready
 
-    log.debug('emit: collection-item', { action, type, pairs })
-
     const changed: Set<number> = new Set()
 
     for (const pair of pairs) {
@@ -252,7 +247,6 @@ class MemberListener extends ZoteroListener {
       }
     }
 
-    log.debug('emit: collections membership', [...changed])
     if (changed.size) void Events.emit('collections-changed', Array.from(changed))
   }
 }
