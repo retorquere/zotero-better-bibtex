@@ -109,6 +109,9 @@ def unkey(data):
   else:
     return data
 
+def ascii(s):
+  return re.sub(r'[^\x20-\x7f]',r'', s)
+
 def load(lib):
   lib.pop('config', None)
   lib.pop('version', None)
@@ -121,7 +124,7 @@ def load(lib):
         utils.print('relations:' + str(item['relations']))
 
   lib['items'] = [clean_item(item) for item in lib['items']]
-  lib['items'] = sorted(lib['items'], key=lambda i: json.dumps(unkey(i), sort_keys=True))
+  lib['items'] = sorted(lib['items'], key=lambda i: ascii(json.dumps(unkey(i), sort_keys=True)))
 
   # renumber items
   itemIDs = {}
