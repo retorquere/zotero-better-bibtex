@@ -1037,8 +1037,15 @@ export class ZoteroItem {
   }
 
   protected $language(value: string): boolean {
-    return !this.bibtex.fields.langid && this.set('language', value)
+    if (this.bibtex.fields.langid) {
+      this.extra.push(`tex.language: ${value}`) // using this.set would match the label `language`
+      return true
+    }
+    else {
+      return this.set('language', value)
+    }
   }
+
   protected $langid(value: string): boolean {
     return this.set('language', value)
   }

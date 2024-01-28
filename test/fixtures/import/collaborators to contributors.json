@@ -2,7 +2,11 @@
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "options": {},
+    "options": {
+      "Items": true,
+      "Preferences": true,
+      "exportNotes": true
+    },
     "preferences": {
       "citekeyFormat": "auth + year"
     }
@@ -106,7 +110,8 @@
       "date": "2020-09",
       "extra": [
         "Citation Key: berger_vom_2020",
-        "Type: Virtuelle Ausstellung"
+        "Type: Virtuelle Ausstellung",
+        "tex.language: de"
       ],
       "itemID": 1,
       "itemType": "document",
