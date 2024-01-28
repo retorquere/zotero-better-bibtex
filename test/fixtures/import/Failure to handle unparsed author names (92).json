@@ -3,6 +3,8 @@
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "options": {
+      "Items": true,
+      "Preferences": true,
       "exportNotes": true
     },
     "preferences": {
@@ -49,7 +51,7 @@
       "itemType": "bookSection",
       "publicationTitle": "Landolt-B\u00f6rnstein",
       "publisher": "Springer-Verlag",
-      "series": "SpringerMaterials - the landolt-b\u00f6rnstein database",
+      "series": "SpringerMaterials - the Landolt-B\u00f6rnstein database",
       "title": "Cuprous oxide (Cu\u2082O) crystal structure, lattice parameters",
       "volume": "III/41c"
     }
