@@ -175,3 +175,78 @@ But wrt bibtex export, I don't think the Mendeley engineers actively use bib(la)
 * Mendeley is still double-bracing titles -- a behavior so wrong (yet unfortunately ubiquitous), biblatex started [ignoring double-braced titles]() (see [here](https://tex.stackexchange.com/a/327387/27603) and [here](https://tex.stackexchange.com/a/233976/27603)).
 * Mendeley uses CSL, so items should be entered in sentence case (as is the case in Zotero). But bib(la)tex expects title-case, so titles should be converted to title case during export. This is difficult, so Mendeley just doesn't bother doing it.
 * Verbatim fields that should per spec be exported as regular fields by Mendeley. This will get you compilation errors.
+
+## Exporting `language` fields in addition to `langid`
+
+Zotero's `language` field exports to the biblatex field `langid` only, not bib(la)tex `language`. Zotero's `language` field and the biblatex `langid` field are supposed to contain only language tags that control formatting, e.g. capitalization of titles and hyphenation.
+
+Biblatex's `language" field, by contrast, which has no equivalent in Zotero, is used to generate textual output in a formatted bibliography.
+
+Exporting Zotero's `language` field to the biblatex field `language` would result in what are now merely language-dependent formatting instructions all of a sudden turned into textual output as well, breaking virtually every style on the biblatex side.
+
+If you want the `language` field filled nonetheless, you can either use a BBT postscript, or the biblatex `langid` tags can still be used to selectively generate `language` fields that produce the output when rendered, assuming the aim is to eg have only items tagged as Japanese, i.e., containing biblatex `langid` fields whose contents begin with `ja` receive the string `[in Japanese]` in the formatted output.
+
+In the following, biblatex's `\DeclareSourcemap` mechanism is used to generate such language fields at runtime. Details can be found in the biblatex manual.
+
+```
+\documentclass{article}
+\begin{filecontents}[overwrite]{tmp.bib}
+@article{UseLanguage,
+  title = {Title of UseLanguage},
+  author = {A. U. Thor Language},
+  date = {1986},
+  journaltitle = {Journal of Engineering},
+  volume = {123},
+  number = {28},
+  pages = {1--12},
+  language = {japanese}
+}
+@article{UseLangid,
+  title = {Title of UseLangid},
+  author = {A. U. Thor Langid},
+  date = {1986},
+  journaltitle = {Journal of Engineering},
+  volume = {123},
+  number = {28},
+  pages = {1--12},
+  langid = {Japanese}
+}
+@article{UseLangidAbbrev,
+  title = {Title of UseLangidAbbrev},
+  author = {A. U. Thor LangidAbbrev},
+  date = {1986},
+  journaltitle = {Journal of Engineering},
+  volume = {123},
+  number = {28},
+  pages = {1--12},
+  langid = {ja-JP}
+}
+@article{en,
+  title = {Title of Something Completetly Different in English},
+  author = {Doe, John},
+  date = {2024},
+  journaltitle = {Journal of Whatever},
+  volume = {321},
+  number = {1},
+  pages = {33--77},
+  langid = {en}
+}
+\end{filecontents}
+\usepackage[sorting=none]{biblatex-chicago}
+%\usepackage[sorting=none]{biblatex}
+\addbibresource{tmp.bib}
+
+\DeclareSourcemap{
+  \maps[datatype=bibtex]{\map{
+     \step[fieldsource=langid, matchi=\regexp{^ja},
+   final]
+  \step[fieldset=language, fieldvalue=Japanese]
+    }
+  }
+}
+
+\begin{document}
+\nocite{*}
+\printbibliography
+\end{document}
+```
