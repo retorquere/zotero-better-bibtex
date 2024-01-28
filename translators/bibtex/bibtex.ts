@@ -1036,10 +1036,12 @@ export class ZoteroItem {
     return true
   }
 
-  protected $language(): boolean {
-    return this.set('language', this.bibtex.fields.language?.[0] || this.bibtex.fields.langid?.[0])
+  protected $language(value: string): boolean {
+    return !this.bibtex.fields.langid && this.set('language', value)
   }
-  protected $langid(): boolean { return this.$language() }
+  protected $langid(value: string): boolean {
+    return this.set('language', value)
+  }
 
   protected $shorttitle(value: string): boolean { return this.set('shortTitle', value) }
 
