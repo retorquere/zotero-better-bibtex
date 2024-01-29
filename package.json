@@ -81,7 +81,7 @@
     "detect-file-encoding-and-language": "^2.4.0",
     "edtf": "^4.6.0",
     "edtfy": "^0.0.8",
-    "emittery": "^1.0.1",
+    "emittery": "^1.0.2",
     "fast-safe-stringify": "^2.1.1",
     "fold-to-ascii": "^5.0.1",
     "fracturedjsonjs": "^3.1.0",
@@ -110,7 +110,7 @@
     "zotero-plugin": "2.0.14"
   },
   "devDependencies": {
-    "@retorquere/bibtex-parser": "^7.0.9",
+    "@retorquere/bibtex-parser": "^7.0.11",
     "@retorquere/zotero-sync": "^1.0.27",
     "@types/bluebird": "^3.5.42",
     "@types/lokijs": "^1.5.14",
