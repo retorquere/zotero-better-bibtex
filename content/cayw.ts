@@ -345,7 +345,7 @@ export async function pick(options: any): Promise<string> {
   }
   catch (err) {
     log.error('CAYW error:', err, `${err}`, err.stack, options)
-    flash('CAYW Failed', stringify(err))
+    flash('CAYW pick failed', stringify(err))
   }
 }
 
@@ -389,6 +389,15 @@ function toClipboard(text) {
   clipboard.setData(transferable, null, Components.interfaces.nsIClipboard.kGlobalClipboard)
 }
 
+function getStyle(id) {
+  try {
+    Zotero.Styles.get(id)
+  }
+  catch (err) {
+    return null
+  }
+}
+
 Zotero.Server.Endpoints['/better-bibtex/cayw'] = class {
   public supportedMethods = ['GET']
   public OK = 200
@@ -407,11 +416,11 @@ Zotero.Server.Endpoints['/better-bibtex/cayw'] = class {
         options.locale = options.locale || format.locale || Zotero.Prefs.get('export.quickCopy.locale') || 'en-US'
       }
       const style =
-        Zotero.Styles.get(`http://www.zotero.org/styles/${options.style}`)
+        getStyle(`http://www.zotero.org/styles/${options.style}`)
         ||
-        Zotero.Styles.get(`http://juris-m.github.io/styles/${options.style}`)
+        getStyle(`http://juris-m.github.io/styles/${options.style}`)
         ||
-        Zotero.Styles.get(options.style)
+        getStyle(options.style)
       options.style = style ? style.url : 'http://www.zotero.org/styles/apa'
 
       log.debug('CAYW:', options)
