@@ -437,7 +437,7 @@ export function generateBibLaTeX(translation: Translation): void {
       case 'mvproceedings':
       case 'proceedings':
       case 'inproceedings':
-        entry.add({ name: 'publisher', value: item.publisher || item.publicationTitle, bibtexStrings: true })
+        if (item.itemType !== 'preprint') entry.add({ name: 'publisher', value: item.publisher || item.publicationTitle, bibtexStrings: true })
         entry.add({ name: 'organization', value: item.authority, bibtexStrings: true })
         break
 
