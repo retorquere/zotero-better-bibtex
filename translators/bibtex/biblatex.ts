@@ -315,13 +315,6 @@ export function generateBibLaTeX(translation: Translation): void {
       entry.add({ name: 'location', value: item.place || item.extraFields.kv['publisher-place'] , enc: 'literal' })
     }
 
-    /*
-    if (entry.entytype === 'inbook') {
-      entry.add({ name: 'chapter', value: item.title })
-    } else {
-      entry.add({ name: 'title', value: item.title })
-    }
-    */
     entry.add({ name: 'title', value: item.title })
 
     // remove ordinal from edition
@@ -377,10 +370,6 @@ export function generateBibLaTeX(translation: Translation): void {
             entry.add({ name: 'booktitle', value: item.publicationTitle, bibtexStrings: true })
           }
         }
-        break
-
-      case 'online':
-        entry.add({ name: 'organization', value: item.publicationTitle, bibtexStrings: true })
         break
 
       case 'article':
@@ -440,9 +429,16 @@ export function generateBibLaTeX(translation: Translation): void {
         entry.add({ name: 'institution', value: item.authority || item.court, bibtexStrings: true })
         break
 
-      case 'software':
+      case 'dataset':
+      case 'manual':
       case 'misc':
-        entry.add({ name: 'organization', value: item.publisher, bibtexStrings: true })
+      case 'software':
+      case 'online':
+      case 'mvproceedings':
+      case 'proceedings':
+      case 'inproceedings':
+        entry.add({ name: 'publisher', value: item.publisher || item.publicationTitle, bibtexStrings: true })
+        entry.add({ name: 'organization', value: item.authority, bibtexStrings: true })
         break
 
       default:

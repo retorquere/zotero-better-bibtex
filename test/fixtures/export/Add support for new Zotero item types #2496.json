@@ -23,7 +23,7 @@
   "items": [
     {
       "DOI": "10.25592/dgs.corpus-1.0",
-      "citationKey": "MyDGS_annotated",
+      "citationKey": "dataset",
       "creators": [
         {
           "creatorType": "author",
@@ -98,7 +98,7 @@
       ],
       "date": "2018",
       "extra": [
-        "Citation Key: MyDGS_annotated"
+        "Citation Key: cite-dataset"
       ],
       "itemID": 1,
       "itemType": "dataset",
@@ -109,30 +109,31 @@
       "versionNumber": "1.0"
     },
     {
-      "version": 0,
+      "DOI": "the DOI",
+      "abstractNote": "This is the abstract",
+      "accessDate": "2022-03-03",
+      "archive": "the archive",
+      "archiveLocation": "the location in the archive",
+      "authority": "The Org",
+      "callNumber": "the call number",
+      "citationKey": "standard",
+      "committee": "This is the committee",
+      "date": "2021",
       "itemType": "standard",
-      "url": "the url",
-      "rights": "Restricted to linguistic research",
+      "language": "the language",
+      "libraryCatalog": "the library catalogue",
+      "number": "xxxxx",
+      "organization": "This is the organisation",
       "place": "the repo location",
       "publisher": "the repository",
-      "date": "2021",
-      "callNumber": "the call number",
-      "archiveLocation": "the location in the archive",
-      "DOI": "the DOI",
-      "accessDate": "2022-03-03",
-      "committee": "This is the committee",
-      "number": "xxxxx",
-      "libraryCatalog": "the library catalogue",
-      "versionNumber": "3333",
-      "language": "the language",
-      "abstractNote": "This is the abstract",
-      "type": "This is the dataset type",
-      "title": "Faulty Standard Export",
+      "rights": "Restricted to linguistic research",
       "shortTitle": "the short title",
-      "archive": "the archive",
-      "citationKey": "foo2021",
       "status": "The status",
-      "organization": "This is the organisation",
+      "title": "Faulty Standard Export",
+      "type": "This is the standard type",
+      "url": "the url",
+      "version": 0,
+      "versionNumber": "3333",
       "creators": [
         {
           "firstName": "John",
@@ -141,6 +142,9 @@
         }
       ],
       "tags": [],
+      "extra": [
+        "Citation Key: cite-standard"
+      ],
       "relations": [],
       "dateAdded": "2023-04-27T11:41:32Z",
       "dateModified": "2023-04-27T11:43:50Z",

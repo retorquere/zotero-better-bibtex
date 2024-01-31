@@ -1,5 +1,15 @@
-@standard{Foo2021,
-  type = {This is the dataset type},
+@dataset{cite-dataset,
+  title = {MY DGS – annotated. Public Corpus of German Sign Language},
+  shorttitle = {Public DGS Corpus},
+  author = {Konrad, Reiner and Hanke, Thomas and Langer, Gabriele and Blanck, Dolly and Bleicken, Julian and Hofmann, Ilona and Jeziorski, Olga and König, Lutz and König, Susanne and Nishio, Rie and Regen, Anja and Salden, Uta and Wagner, Sven and Worseck, Satu},
+  date = {2018},
+  publisher = {DGS-Korpus project, IDGS, Hamburg University},
+  doi = {10.25592/dgs.corpus-1.0},
+  version = {1.0}
+}
+
+@standard{cite-standard,
+  type = {This is the standard type},
   title = {Faulty Standard Export},
   shorttitle = {the short title},
   author = {Foo, John},
@@ -15,7 +25,7 @@
   pubstate = {The status},
   version = {3333}
 }
-% == BibLateX quality report for Foo2021:
+% == BibLateX quality report for cite-standard:
 % Unexpected field 'type'
 % Unexpected field 'title'
 % Unexpected field 'author'
@@ -30,13 +40,3 @@
 % ? unused Call number ("the call number")
 % ? unused Committee ("This is the committee")
 % ? unused Library catalog ("the library catalogue")
-
-@dataset{MyDGS_annotated,
-  title = {MY DGS – annotated. Public Corpus of German Sign Language},
-  shorttitle = {Public DGS Corpus},
-  author = {Konrad, Reiner and Hanke, Thomas and Langer, Gabriele and Blanck, Dolly and Bleicken, Julian and Hofmann, Ilona and Jeziorski, Olga and König, Lutz and König, Susanne and Nishio, Rie and Regen, Anja and Salden, Uta and Wagner, Sven and Worseck, Satu},
-  date = {2018},
-  publisher = {DGS-Korpus project, IDGS, Hamburg University},
-  doi = {10.25592/dgs.corpus-1.0},
-  version = {1.0}
-}
