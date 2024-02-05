@@ -389,9 +389,9 @@ function toClipboard(text) {
   clipboard.setData(transferable, null, Components.interfaces.nsIClipboard.kGlobalClipboard)
 }
 
-function getStyle(id) {
+function getStyle(id): { url: string } {
   try {
-    Zotero.Styles.get(id)
+    return Zotero.Styles.get(id) as { url: string }
   }
   catch (err) {
     return null
@@ -414,16 +414,17 @@ Zotero.Server.Endpoints['/better-bibtex/cayw'] = class {
         if (!options.style && format.mode === 'bibliography') options.style = format.id
         options.contentType = options.contentType || format.contentType || 'text'
         options.locale = options.locale || format.locale || Zotero.Prefs.get('export.quickCopy.locale') || 'en-US'
+        log.debug('CAYW: detected', options)
       }
       const style =
+        getStyle(options.style)
+        ||
         getStyle(`http://www.zotero.org/styles/${options.style}`)
         ||
         getStyle(`http://juris-m.github.io/styles/${options.style}`)
-        ||
-        getStyle(options.style)
       options.style = style ? style.url : 'http://www.zotero.org/styles/apa'
 
-      log.debug('CAYW:', options)
+      log.debug('CAYW:', { options, style })
 
       const citation = options.selected ? (await selected(options)) : (await pick(options))
 
