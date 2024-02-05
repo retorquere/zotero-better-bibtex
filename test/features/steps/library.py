@@ -53,6 +53,11 @@ def clean_item(item):
 
   un_multi(item)
 
+  if 'relations' in item and 'dc:replaces' in item['relations']:
+    del item['relations']['dc:replaces']
+    if len(item['relations']) == 0:
+      del item['relations']
+
   item.pop('__citekey__', None)
   item.pop('autoJournalAbbreviation', None)
   item.pop('citationKey', None)
@@ -117,11 +122,6 @@ def load(lib):
   lib.pop('version', None)
 
   for item in lib['items']:
-    if 'relations' in item:
-      if len(item['relations']) == 0:
-        del item['relations']
-      else:
-        utils.print('relations:' + str(item['relations']))
 
   lib['items'] = [clean_item(item) for item in lib['items']]
   lib['items'] = sorted(lib['items'], key=lambda i: ascii(json.dumps(unkey(i), sort_keys=True)))
