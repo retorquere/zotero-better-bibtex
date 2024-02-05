@@ -121,8 +121,6 @@ def load(lib):
   lib.pop('config', None)
   lib.pop('version', None)
 
-  for item in lib['items']:
-
   lib['items'] = [clean_item(item) for item in lib['items']]
   lib['items'] = sorted(lib['items'], key=lambda i: ascii(json.dumps(unkey(i), sort_keys=True)))
 
