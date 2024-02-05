@@ -170,7 +170,6 @@ export function doExport(): void {
           break
 
         default:
-          (item as any).relations = item.relations?.['dc:relation'] || []
           delete item.collections
 
           if (translation.options.Normalize) simplifyForExport(item, { dropAttachments: translation.options.dropAttachments})
@@ -186,7 +185,6 @@ export function doExport(): void {
 
             if (!att.path) continue // amazon/googlebooks etc links show up as atachments without a path
 
-            (att as any).relations = att.relations ? (att.relations['dc:relation'] || []) : []
             for (const field of Object.keys(att)) {
               if (!validAttachmentFields.has(field)) {
                 delete att[field]
