@@ -524,6 +524,8 @@
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "options": {
+      "Items": true,
+      "Preferences": true,
       "exportNotes": true
     },
     "preferences": {
@@ -652,7 +654,7 @@
           "tag": "Electronic books"
         },
         {
-          "tag": "Habit \u2013 Social aspects"
+          "tag": "Habit -- Social aspects"
         },
         {
           "tag": "Race discrimination"
@@ -661,13 +663,13 @@
           "tag": "Racism"
         },
         {
-          "tag": "United States \u2013 Ethnic relations"
+          "tag": "United States -- Ethnic relations"
         },
         {
-          "tag": "United States \u2013 Race relations"
+          "tag": "United States -- Race relations"
         },
         {
-          "tag": "Whites \u2013 Race identity"
+          "tag": "Whites -- Race identity"
         }
       ],
       "title": "Revealing whiteness: The unconscious habits of racial privilege"
@@ -741,16 +743,16 @@
       "publisher": "Portsmouth, NH : Heinemann",
       "tags": [
         {
-          "tag": "English language \u2013 Study and teaching (Secondary)"
+          "tag": "English language -- Study and teaching (Secondary)"
         },
         {
-          "tag": "English literature \u2013 History and criticism \u2013 The"
+          "tag": "English literature -- History and criticism -- The"
         },
         {
-          "tag": "Language arts \u2013 United States"
+          "tag": "Language arts -- United States"
         },
         {
-          "tag": "Literature \u2013 Study and teaching \u2013 United States"
+          "tag": "Literature -- Study and teaching -- United States"
         }
       ],
       "title": "Notice & note : strategies for close reading"
@@ -881,13 +883,13 @@
           "tag": "Fiction"
         },
         {
-          "tag": "Fiction \u2013 Authorship"
+          "tag": "Fiction -- Authorship"
         },
         {
-          "tag": "Fiction \u2013 History and criticism"
+          "tag": "Fiction -- History and criticism"
         },
         {
-          "tag": "Fiction \u2013 Technique"
+          "tag": "Fiction -- Technique"
         },
         {
           "tag": "interpretation"
@@ -926,7 +928,7 @@
           "tag": "Motion picture audiences"
         },
         {
-          "tag": "Motion picture audiences \u2013 Psychology"
+          "tag": "Motion picture audiences -- Psychology"
         },
         {
           "tag": "Reading"
@@ -935,7 +937,7 @@
           "tag": "Television viewers"
         },
         {
-          "tag": "Television viewers \u2013 Psychology"
+          "tag": "Television viewers -- Psychology"
         }
       ],
       "title": "The audience studies reader"
@@ -1012,10 +1014,10 @@
           "tag": "United States"
         },
         {
-          "tag": "United States \u2013 Politics and government"
+          "tag": "United States -- Politics and government"
         },
         {
-          "tag": "United States \u2013 Race relations"
+          "tag": "United States -- Race relations"
         }
       ],
       "title": "Keepin' it real : essays on race in contemporary America"
@@ -1089,19 +1091,19 @@
       "publisher": "Palgrave Macmillan",
       "tags": [
         {
-          "tag": "Colonization \u2013 History"
+          "tag": "Colonization -- History"
         },
         {
-          "tag": "Ethnology \u2013 Methodology"
+          "tag": "Ethnology -- Methodology"
         },
         {
-          "tag": "Ethnology \u2013 Research"
+          "tag": "Ethnology -- Research"
         },
         {
-          "tag": "Imperialism \u2013 History"
+          "tag": "Imperialism -- History"
         },
         {
-          "tag": "Indigenous peoples \u2013 Research"
+          "tag": "Indigenous peoples -- Research"
         }
       ],
       "title": "Decolonizing methodologies: research and indigenous peoples"
@@ -1826,7 +1828,7 @@
           "tag": "Content analysis (Communication)"
         },
         {
-          "tag": "Sociology \u2013 Research \u2013 Methodology"
+          "tag": "Sociology -- Research -- Methodology"
         }
       ],
       "title": "The content analysis guidebook"
@@ -2150,10 +2152,10 @@
           "tag": "1843-1916"
         },
         {
-          "tag": "1843-1916 \u2013 Pensee politique et sociale"
+          "tag": "1843-1916 -- Pensee politique et sociale"
         },
         {
-          "tag": "1843-1916 \u2013 Political and social views"
+          "tag": "1843-1916 -- Political and social views"
         },
         {
           "tag": "African Americans in literature"
@@ -2162,10 +2164,10 @@
           "tag": "American fiction"
         },
         {
-          "tag": "American fiction \u2013 19th century \u2013 History and cr"
+          "tag": "American fiction -- 19th century -- History and cr"
         },
         {
-          "tag": "American fiction \u2013 20th century \u2013 History and cr"
+          "tag": "American fiction -- 20th century -- History and cr"
         },
         {
           "tag": "Blancs dans la litterature"
@@ -2207,10 +2209,10 @@
           "tag": "Literature and society"
         },
         {
-          "tag": "Literature and society \u2013 United States \u2013 History"
+          "tag": "Literature and society -- United States -- History"
         },
         {
-          "tag": "Litterature et societe \u2013 Etats-Unis \u2013 Histoire"
+          "tag": "Litterature et societe -- Etats-Unis -- Histoire"
         },
         {
           "tag": "Noirs americains dans la litterature"
@@ -2243,10 +2245,10 @@
           "tag": "Roman"
         },
         {
-          "tag": "Roman americain \u2013 19e siecle \u2013 Histoire et criti"
+          "tag": "Roman americain -- 19e siecle -- Histoire et criti"
         },
         {
-          "tag": "Roman americain \u2013 20e siecle \u2013 Histoire et criti"
+          "tag": "Roman americain -- 20e siecle -- Histoire et criti"
         },
         {
           "tag": "Schwarze"
@@ -2383,7 +2385,7 @@
           "tag": "Electronic books"
         },
         {
-          "tag": "Horror films \u2013 History and criticism"
+          "tag": "Horror films -- History and criticism"
         }
       ],
       "title": "Horror, the film reader"
@@ -2611,19 +2613,19 @@
       "publisher": "New York, NY : New York University Press",
       "tags": [
         {
-          "tag": "African American arts \u2013 Influence"
+          "tag": "African American arts -- Influence"
         },
         {
           "tag": "African Americans in literature"
         },
         {
-          "tag": "American fiction \u2013 20th century \u2013 History and cr"
+          "tag": "American fiction -- 20th century -- History and cr"
         },
         {
-          "tag": "American fiction \u2013 21st century \u2013 History and cr"
+          "tag": "American fiction -- 21st century -- History and cr"
         },
         {
-          "tag": "American fiction \u2013 African American authors \u2013 Hi"
+          "tag": "American fiction -- African American authors -- Hi"
         },
         {
           "tag": "Electronic books"
@@ -2937,13 +2939,13 @@
           "tag": "fiction"
         },
         {
-          "tag": "Fiction \u2013 History and criticism"
+          "tag": "Fiction -- History and criticism"
         },
         {
-          "tag": "fiction \u2013 linguistique"
+          "tag": "fiction -- linguistique"
         },
         {
-          "tag": "Fiction \u2013 Technique"
+          "tag": "Fiction -- Technique"
         },
         {
           "tag": "Literatuursociologie"
@@ -3327,7 +3329,7 @@
           "tag": "Racism in education"
         },
         {
-          "tag": "Teachers \u2013 Training of"
+          "tag": "Teachers -- Training of"
         }
       ],
       "title": "Feeling white : a whiteness, emotionality, and education"
@@ -3589,16 +3591,16 @@
           "tag": "Patriarchy"
         },
         {
-          "tag": "Popular literature \u2013 History and criticism"
+          "tag": "Popular literature -- History and criticism"
         },
         {
-          "tag": "Romance fiction \u2013 Appreciation"
+          "tag": "Romance fiction -- Appreciation"
         },
         {
           "tag": "Sex role in literature"
         },
         {
-          "tag": "Women \u2013 Books and reading"
+          "tag": "Women -- Books and reading"
         },
         {
           "tag": "Women in literature"
@@ -3668,19 +3670,19 @@
       "publisher": "Scarecrow Press",
       "tags": [
         {
-          "tag": "African American children \u2013 Books and reading"
+          "tag": "African American children -- Books and reading"
         },
         {
-          "tag": "African American young adults \u2013 Books and reading"
+          "tag": "African American young adults -- Books and reading"
         },
         {
           "tag": "African Americans in literature"
         },
         {
-          "tag": "American \u2013 History and criticism"
+          "tag": "American -- History and criticism"
         },
         {
-          "tag": "American literature \u2013 African American authors \u2013"
+          "tag": "American literature -- African American authors --"
         },
         {
           "tag": "Children's literature"
@@ -3745,7 +3747,7 @@
           "tag": "Cultural studies"
         },
         {
-          "tag": "Education\u2013Teaching Methods And Curriculum"
+          "tag": "Education--Teaching Methods And Curriculum"
         },
         {
           "tag": "Ethnicity"
@@ -3802,7 +3804,7 @@
       "publisher": "Berkeley : University of California Press",
       "tags": [
         {
-          "tag": "American \u2013 19th century"
+          "tag": "American -- 19th century"
         },
         {
           "tag": "Art and race"
@@ -3817,7 +3819,7 @@
           "tag": "Race awareness in art"
         },
         {
-          "tag": "Whites \u2013 Race identity \u2013 United States"
+          "tag": "Whites -- Race identity -- United States"
         }
       ],
       "title": "Sight unseen: whiteness and American visual culture"
@@ -4083,10 +4085,10 @@
       "publisher": "Convergent Books",
       "tags": [
         {
-          "tag": "African American Christians \u2013 Biography"
+          "tag": "African American Christians -- Biography"
         },
         {
-          "tag": "African American women political activists \u2013 Biog"
+          "tag": "African American women political activists -- Biog"
         },
         {
           "tag": "Austin Channing"
@@ -4095,7 +4097,7 @@
           "tag": "Brown"
         },
         {
-          "tag": "United States \u2013 Race relations"
+          "tag": "United States -- Race relations"
         }
       ],
       "title": "I'm still here : black dignity in a world made for whiteness"
@@ -4218,7 +4220,7 @@
           "tag": "Electronic books"
         },
         {
-          "tag": "Fiction \u2013 Technique"
+          "tag": "Fiction -- Technique"
         },
         {
           "tag": "Narration (Rhetoric)"
@@ -4344,10 +4346,10 @@
       "publisher": "New York : New Press",
       "tags": [
         {
-          "tag": "Children \u2013 Books and reading"
+          "tag": "Children -- Books and reading"
         },
         {
-          "tag": "Children's literature \u2013 History and criticism"
+          "tag": "Children's literature -- History and criticism"
         },
         {
           "tag": "Racism in literature"
@@ -5288,13 +5290,13 @@
           "tag": "etc"
         },
         {
-          "tag": "Literature \u2013 Explication"
+          "tag": "Literature -- Explication"
         },
         {
-          "tag": "Literature \u2013 History and criticism \u2013 Theory"
+          "tag": "Literature -- History and criticism -- Theory"
         },
         {
-          "tag": "Literature \u2013 Philosophy"
+          "tag": "Literature -- Philosophy"
         },
         {
           "tag": "Reader-response criticism"
@@ -5480,7 +5482,7 @@
           "tag": "Young adult literature"
         },
         {
-          "tag": "Young adult literature\u2013History and criticism"
+          "tag": "Young adult literature--History and criticism"
         },
         {
           "tag": "Young adults"
@@ -5534,16 +5536,16 @@
           "tag": "Electronic books"
         },
         {
-          "tag": "Political correctness \u2013 Great Britain"
+          "tag": "Political correctness -- Great Britain"
         },
         {
-          "tag": "Political correctness \u2013 United States"
+          "tag": "Political correctness -- United States"
         },
         {
-          "tag": "Prejudices \u2013 Great Britain"
+          "tag": "Prejudices -- Great Britain"
         },
         {
-          "tag": "Prejudices \u2013 United States"
+          "tag": "Prejudices -- United States"
         }
       ],
       "title": "In defence of political correctness"
@@ -5613,13 +5615,13 @@
       "publisher": "New York University Press",
       "tags": [
         {
-          "tag": "American literature \u2013 History and criticism"
+          "tag": "American literature -- History and criticism"
         },
         {
           "tag": "Human skin color in literature"
         },
         {
-          "tag": "United States \u2013 Civilization"
+          "tag": "United States -- Civilization"
         },
         {
           "tag": "White"
@@ -5628,7 +5630,7 @@
           "tag": "White in literature"
         },
         {
-          "tag": "Whites \u2013 United States"
+          "tag": "Whites -- United States"
         },
         {
           "tag": "Whites in literature"
@@ -5710,10 +5712,10 @@
           "tag": "Education"
         },
         {
-          "tag": "Higher \u2013 Political aspects \u2013 United S"
+          "tag": "Higher -- Political aspects -- United S"
         },
         {
-          "tag": "Political correctness \u2013 United States"
+          "tag": "Political correctness -- United States"
         }
       ],
       "title": "Are you politically correct? : debating America's cultural standards"
@@ -5806,10 +5808,10 @@
           "tag": "African Americans"
         },
         {
-          "tag": "African Americans \u2013 History"
+          "tag": "African Americans -- History"
         },
         {
-          "tag": "African Americans \u2013 Intellectual life"
+          "tag": "African Americans -- Intellectual life"
         },
         {
           "tag": "Electronic books"
@@ -5866,13 +5868,13 @@
       "publisher": "New York : Routledge",
       "tags": [
         {
-          "tag": "Children's literature \u2013 History and criticism"
+          "tag": "Children's literature -- History and criticism"
         },
         {
           "tag": "Multiculturalism in literature"
         },
         {
-          "tag": "Young adult literature \u2013 History and criticism"
+          "tag": "Young adult literature -- History and criticism"
         }
       ],
       "title": "Critical multicultural analysis of children's literature mirrors, windows, and doors"
@@ -5973,13 +5975,13 @@
       "publisher": "Roseville, Calif. : Forum",
       "tags": [
         {
-          "tag": "Freedom of speech \u2013 United States"
+          "tag": "Freedom of speech -- United States"
         },
         {
-          "tag": "Liberalism \u2013 United States"
+          "tag": "Liberalism -- United States"
         },
         {
-          "tag": "Political correctness \u2013 United States"
+          "tag": "Political correctness -- United States"
         }
       ],
       "title": "The new thought police : inside the Left's assault on free speech and free minds"
@@ -6034,10 +6036,10 @@
       "publisher": "Westport, Conn. : Greenwood Press",
       "tags": [
         {
-          "tag": "Children \u2013 Books and reading"
+          "tag": "Children -- Books and reading"
         },
         {
-          "tag": "Children's literature \u2013 History and criticism"
+          "tag": "Children's literature -- History and criticism"
         },
         {
           "tag": "Cultural pluralism in literature"
@@ -6046,10 +6048,10 @@
           "tag": "Multiculturalism"
         },
         {
-          "tag": "Young adult literature \u2013 History and criticism"
+          "tag": "Young adult literature -- History and criticism"
         },
         {
-          "tag": "Young adults \u2013 Books and reading"
+          "tag": "Young adults -- Books and reading"
         }
       ],
       "title": "Multicultural literature for children and young adults : reflections on critical issues"
@@ -6430,19 +6432,19 @@
       "publisher": "New York : Teachers College Press",
       "tags": [
         {
-          "tag": "Child development \u2013 United States \u2013 Case studies"
+          "tag": "Child development -- United States -- Case studies"
         },
         {
           "tag": "Electronic books"
         },
         {
-          "tag": "English language \u2013 Composition and exercises \u2013 S"
+          "tag": "English language -- Composition and exercises -- S"
         },
         {
-          "tag": "Multicultural education \u2013 United States \u2013 Case s"
+          "tag": "Multicultural education -- United States -- Case s"
         },
         {
-          "tag": "Popular culture \u2013 United States \u2013 Case studies"
+          "tag": "Popular culture -- United States -- Case studies"
         }
       ],
       "title": "Writing superheroes: Contemporary childhood, popular culture, and classroom literacy"
@@ -6800,7 +6802,7 @@
       "publisher": "Mahwah, NJ : Lawrence Erlbaum Associates",
       "tags": [
         {
-          "tag": "Children \u2013 Language"
+          "tag": "Children -- Language"
         },
         {
           "tag": "Language arts (Preschool)"
@@ -7027,22 +7029,22 @@
       "publisher": "Boston : Pearson Allyn and Bacon",
       "tags": [
         {
-          "tag": "Children \u2013 Books and reading \u2013 United States"
+          "tag": "Children -- Books and reading -- United States"
         },
         {
-          "tag": "Children's literature \u2013 Study and teaching \u2013 Uni"
+          "tag": "Children's literature -- Study and teaching -- Uni"
         },
         {
-          "tag": "Cultural pluralism \u2013 Study and teaching \u2013 United"
+          "tag": "Cultural pluralism -- Study and teaching -- United"
         },
         {
-          "tag": "Multiculturalism \u2013 Study and teaching \u2013 United S"
+          "tag": "Multiculturalism -- Study and teaching -- United S"
         },
         {
-          "tag": "Teenagers \u2013 Books and reading \u2013 United States"
+          "tag": "Teenagers -- Books and reading -- United States"
         },
         {
-          "tag": "Young adult literature \u2013 Study and teaching \u2013 Un"
+          "tag": "Young adult literature -- Study and teaching -- Un"
         }
       ],
       "title": "Exploring culturally diverse literature for children and adolescents : learning to listen in new ways"
@@ -7583,16 +7585,16 @@
       "publisher": "Rowman & Littlefield",
       "tags": [
         {
-          "tag": "Gender \u2013 Study and teaching"
+          "tag": "Gender -- Study and teaching"
         },
         {
-          "tag": "Race \u2013 Study and teaching"
+          "tag": "Race -- Study and teaching"
         },
         {
-          "tag": "Social justice \u2013 Study and teaching"
+          "tag": "Social justice -- Study and teaching"
         },
         {
-          "tag": "Whites \u2013 Race identity \u2013 Study and teaching"
+          "tag": "Whites -- Race identity -- Study and teaching"
         }
       ],
       "title": "Surviving Becky(s) : pedagogies for deconstructing whiteness and gender"
@@ -7894,13 +7896,13 @@
       "publisher": "Chicago, Illinois : American Bar Association",
       "tags": [
         {
-          "tag": "Diversity in the workplace \u2013 United States"
+          "tag": "Diversity in the workplace -- United States"
         },
         {
-          "tag": "Law firms \u2013 United States \u2013 Personnel management"
+          "tag": "Law firms -- United States -- Personnel management"
         },
         {
-          "tag": "Political correctness \u2013 United States"
+          "tag": "Political correctness -- United States"
         }
       ],
       "title": "What if I say the wrong thing? : 25 habits for culturally effective people"
@@ -8004,13 +8006,13 @@
       "publisher": "New York, N.Y. : Teachers College Press",
       "tags": [
         {
-          "tag": "Cultural pluralism in literature \u2013 United States"
+          "tag": "Cultural pluralism in literature -- United States"
         },
         {
           "tag": "Electronic books"
         },
         {
-          "tag": "Literature \u2013 Study and teaching \u2013 United States"
+          "tag": "Literature -- Study and teaching -- United States"
         }
       ],
       "title": "Reading across cultures teaching literature in a diverse society"
@@ -8173,19 +8175,19 @@
           "tag": "Bibliography - General"
         },
         {
-          "tag": "Books and reading \u2013 History \u2013 19th century \u2013 Un"
+          "tag": "Books and reading -- History -- 19th century -- Un"
         },
         {
-          "tag": "Books and reading \u2013 History \u2013 20th century \u2013 Un"
+          "tag": "Books and reading -- History -- 20th century -- Un"
         },
         {
           "tag": "General"
         },
         {
-          "tag": "Popular culture \u2013 History \u2013 19th century \u2013 Unit"
+          "tag": "Popular culture -- History -- 19th century -- Unit"
         },
         {
-          "tag": "Popular culture \u2013 History \u2013 20th Century \u2013 Unit"
+          "tag": "Popular culture -- History -- 20th Century -- Unit"
         }
       ],
       "title": "A feeling for books : the Book-of-the-Month Club, literary taste, and middle-class desire"
@@ -8616,34 +8618,34 @@
       "publisher": "School of American Research",
       "tags": [
         {
-          "tag": "Cultural property \u2013 Protection \u2013 United States"
+          "tag": "Cultural property -- Protection -- United States"
         },
         {
-          "tag": "Decolonization \u2013 United States"
+          "tag": "Decolonization -- United States"
         },
         {
-          "tag": "Indians of North America \u2013 Ethnic identity"
+          "tag": "Indians of North America -- Ethnic identity"
         },
         {
-          "tag": "Indians of North America \u2013 Politics and governmen"
+          "tag": "Indians of North America -- Politics and governmen"
         },
         {
-          "tag": "Indians of North America \u2013 Social conditions"
+          "tag": "Indians of North America -- Social conditions"
         },
         {
-          "tag": "National \u2013 United States"
+          "tag": "National -- United States"
         },
         {
-          "tag": "Postcolonialism \u2013 United States"
+          "tag": "Postcolonialism -- United States"
         },
         {
           "tag": "Self-determination"
         },
         {
-          "tag": "United States \u2013 Politics and government"
+          "tag": "United States -- Politics and government"
         },
         {
-          "tag": "United States \u2013 Race relations"
+          "tag": "United States -- Race relations"
         }
       ],
       "title": "For indigenous eyes only : a decolonization handbook"
@@ -8749,21 +8751,21 @@
       "title": "Sticks and stones : the troublesome success of children's literature from Slovenly Peter to Harry Potter"
     },
     {
-      "citationKey": "zotero-2314",
+      "citationKey": "zotero-716",
       "itemID": 276,
       "itemType": "film",
       "title": "Canceling | ContraPoints - YouTube",
       "url": "https://www.youtube.com/watch?v=OjMPJVmXxV8"
     },
     {
-      "citationKey": "zotero-2487",
+      "citationKey": "zotero-889",
       "itemID": 277,
       "itemType": "webpage",
       "title": "Where is the diversity in publishing? The 2019 diversity baseline survey results | lee & low blog",
       "url": "https://blog.leeandlow.com/2020/01/28/2019diversitybaselinesurvey/"
     },
     {
-      "citationKey": "zotero-2516",
+      "citationKey": "zotero-918",
       "itemID": 278,
       "itemType": "webpage",
       "title": "Dr. Jennifer on Twitter: \"6 months after leaving the TT job hunt, I still find myself thinking about the research studies/articles I wrote that never got in a journal. Can you still publish as a non-academic? Is anyone out there an \"independent scholar?\"\" / Twitter",
