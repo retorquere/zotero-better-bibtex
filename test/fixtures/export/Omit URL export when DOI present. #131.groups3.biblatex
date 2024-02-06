@@ -8,7 +8,7 @@
   doi = {10.1109/HiPC.2011.6152428},
   url = {http://ieeexplore.ieee.org/xpls/abs_all.jsp?arnumber=6152428},
   urldate = {2014-10-23},
-  keywords = {bdec15,zotero\_testcase},
+  keywords = {bdec15,zotero_testcase},
   timestamp = {2015-02-24 12:14:36 +0100}
 }
 
@@ -26,7 +26,7 @@
   urldate = {2015-01-12},
   abstract = {We study the energy used by a production-level regional climate and weather simulation code on a distributed memory system with hybrid CPU-GPU nodes. The code is optimised for both processor architectures, for which we investigate both time and energy to solution. Operational constraints for time to solution can be met with both processor types, although on different numbers of nodes. Energy to solution is a factor 3 lower with GPUs, but strong scaling can be pushed to larger node counts with CPUs to minimize time to solution. Our data shows that an affine relationship exists between energy and nodehours consumed by the simulation. We use this property to devise a simple and practical methodology for optimising for energy efficiency that can be applied to other applications, which we demonstrate with the HPCG benchmark. We conclude with a discussion about the relationship to the commonly-used GF/Watt metric.},
   isbn = {978-1-4799-5500-8},
-  keywords = {bdec15,zotero\_testcase},
+  keywords = {bdec15,zotero_testcase},
   timestamp = {2015-02-24 12:14:36 +0100}
 }
 
@@ -41,7 +41,7 @@
   doi = {10.1175/BAMS-D-11-00094.1},
   url = {http://journals.ametsoc.org/doi/abs/10.1175/BAMS-D-11-00094.1},
   urldate = {2012-04-17},
-  keywords = {bdec15,jasmin13a,p-12-iam,p-gmdm41,zotero\_testcase},
+  keywords = {bdec15,jasmin13a,p-12-iam,p-gmdm41,zotero_testcase},
   timestamp = {2015-02-24 12:14:36 +0100}
 }
 
