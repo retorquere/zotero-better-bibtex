@@ -1082,7 +1082,7 @@ export class Entry {
     tags.sort((a, b) => stringCompare(a.tag, b.tag))
 
     // eslint-disable-next-line no-new-wrappers
-    return tags.map(tag => tag.tag.includes(',') ? new String(tag.tag) : tag.tag).map(tag => this.enc_latex({ value: tag })).join(',')
+    return tags.map(tag => tag.tag.includes(',') ? new String(tag.tag) : tag.tag).map(tag => this.enc_verbatim({ value: tag })).join(',')
   }
 
   relPath(path) {
