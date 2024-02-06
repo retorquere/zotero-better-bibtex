@@ -8,6 +8,7 @@ import { RegularItem as Item } from '../../gen/typings/serialized-item'
 import { Cache } from '../../typings/cache'
 import type { Translators } from '../../typings/translators'
 import * as DateParser from '../../content/dateparser'
+import fold2ascii from 'fold-to-ascii'
 
 import { Translation } from '../lib/translator'
 
@@ -1075,25 +1076,25 @@ export class Entry {
 
   protected enc_tags(f): string {
     const verbatim = this.translation.isVerbatimField(f.name)
+    const unicode = this.translation.unicode
     const tags = f.value
       .map(tag => (typeof tag === 'string' ? { tag } : tag))
       .filter(tag => (this.translation.preferences.automaticTags || (tag.type !== 1)) && tag.tag !== this.translation.preferences.rawLaTag)
     if (tags.length === 0) return null
 
-    tags.sort((a, b) => stringCompare(a.tag, b.tag))
-
     // eslint-disable-next-line no-new-wrappers
-    const encoded: string[] = []
+    const encoded: Set<string> = new Set
     for (const tag of tags) {
       if (verbatim) {
-        encoded.push(tag.tag.split(/(,)/).map(part => part === ',' ? '{,}' : this.enc_verbatim({ value: part })))
+        encoded.add(this.enc_verbatim({ value: (unicode ? tag.tag : fold2ascii.foldReplacing(tag.tag)).replace(/[{,}]/g, '').trim() }))
       }
       else {
         // eslint-disable-next-line no-new-wrappers
-        encoded.push(this.enc_latex({ value: tag.tag.includes(',') ? new String(tag.tag) : tag.tag }))
+        encoded.add(this.enc_latex({ value: tag.tag.includes(',') ? new String(tag.tag) : tag.tag }))
       }
     }
-    return encoded.join(',')
+
+    return [...encoded].sort((a, b) => stringCompare(a, b)).join(',')
   }
 
   relPath(path) {
