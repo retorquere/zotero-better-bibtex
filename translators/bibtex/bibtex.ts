@@ -773,23 +773,21 @@ export class ZoteroItem {
   protected $abstract(value: string): boolean { return this.set('abstractNote', value) }
 
   protected $keywords(): boolean {
-    let tags = this.bibtex.fields.keywords || []
+    let tags: string[] = []
 
-    const split = (data: string[]): string[] => {
-      if (!Array.isArray(data)) return []
-      let arr: string[] = []
+    const add = (data: string[]) => {
+      if (!Array.isArray(data)) return
       for (const line of data) {
-        arr = [...arr, ...line.trim().split(/\s*[,;]\s*/).filter(t => t)]
+        tags = [...tags, ...line.trim().split(/\s*[,;]\s*/).map(t => t.replace(/[\s\r\n]+/g, ' ')).filter(t => t)]
       }
-      return arr
     }
 
-    tags = [...tags, ...split(this.bibtex.fields.keyword)]
-    tags = [...tags, ...split(this.bibtex.fields.mesh)]
-    tags = [...tags, ...split(this.bibtex.fields.tags)]
-    tags = [...(new Set(tags))].sort()
+    add(this.bibtex.fields.keywords)
+    add(this.bibtex.fields.keyword)
+    add(this.bibtex.fields.mesh)
+    add(this.bibtex.fields.tags)
 
-    this.item.tags = tags
+    this.item.tags = [...(new Set(tags))].sort()
     return true
   }
   protected $keyword(): boolean { return this.$keywords() }
