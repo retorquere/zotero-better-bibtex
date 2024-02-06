@@ -1074,6 +1074,7 @@ export class Entry {
   }
 
   protected enc_tags(f): string {
+    const verbatim = this.translation.isVerbatimField(f.name)
     const tags = f.value
       .map(tag => (typeof tag === 'string' ? { tag } : tag))
       .filter(tag => (this.translation.preferences.automaticTags || (tag.type !== 1)) && tag.tag !== this.translation.preferences.rawLaTag)
@@ -1082,7 +1083,17 @@ export class Entry {
     tags.sort((a, b) => stringCompare(a.tag, b.tag))
 
     // eslint-disable-next-line no-new-wrappers
-    return tags.map(tag => tag.tag.includes(',') ? new String(tag.tag) : tag.tag).map(tag => this.enc_verbatim({ value: tag })).join(',')
+    const encoded: string[] = []
+    for (const tag of tags) {
+      if (verbatim) {
+        encoded.push(tag.tag.split(/(,)/).map(part => part === ',' ? '{,}' : this.enc_verbatim({ value: part })))
+      }
+      else {
+        // eslint-disable-next-line no-new-wrappers
+        encoded.push(this.enc_latex({ value: tag.tag.includes(',') ? new String(tag.tag) : tag.tag }))
+      }
+    }
+    return encoded.join(',')
   }
 
   relPath(path) {
