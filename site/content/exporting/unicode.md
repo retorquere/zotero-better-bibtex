@@ -16,10 +16,10 @@ Some of us though are bound to outlets that still demand BibTeX, and there's gee
 | **character** | **text** | **math** | **character** | **text** | **math** | **character** | **text** | **math** | **character** | **text** | **math** |
 |---------------|----------|----------|---------------|----------|----------|---------------|----------|----------|---------------|----------|----------|
 |  ¢ | \textcent |  |  ¤ | \textcurrency |  |  ¥ | \textyen |  |  ¦ | \textbrokenbar |  |
-|  © | \textcopyright |  |  ª | \textordfeminine |  |  ® | \textregistered |  |  ° | \textdegree |  |
-|  ¶ | \textparagraph |  |  º | \textordmasculine |  |  ð | \textdh |  |  ˙ | \textperiodcentered |  |
-|  • | \textbullet |  |  ‰ | \textperthousand |  |  ‱ | \textpertenthousand |  |  ℞ | \textrecipe |  |
-|  ™ | \texttrademark |  |  → | \textrightarrow |  |  | |  |  | |  |
+|  © | \textcopyright |  |  ª | \textordfeminine |  |  ° | \textdegree |  |  ¶ | \textparagraph |  |
+|  º | \textordmasculine |  |  ð | \textdh |  |  ˙ | \textperiodcentered |  |  • | \textbullet |  |
+|  ‰ | \textperthousand |  |  ‱ | \textpertenthousand |  |  ℞ | \textrecipe |  |  ™ | \texttrademark |  |
+|  → | \textrightarrow |  |  | |  |  | |  |  | |  |
 
 
 ### amssymb
