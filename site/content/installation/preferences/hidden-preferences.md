@@ -120,7 +120,7 @@ Any characters entered here will prefer a text-mode LaTeX-command counterpart ov
 
 ## packages
 
-default: `textcomp,amsmath`
+default: `<not set>`
 
 Some LaTeX commands only work when certain packages are loaded. By default, BBT will export Bib(La)TeX that requires no extra packages, but
 you can provide a comma-separated list here of packages to load to get higher fidelity export (for some admittedly niche characters).
