@@ -598,7 +598,7 @@ class PatternFormatter {
     let name = '%(f)s'
     if (initials) name += '%(I)s'
     let author = this.creators(creator, name)
-    if (n) author = author.slice(0, n)
+    if (n && n < author.length) author = author.slice(0, n).concat('EtAl')
     return this.$text(author.join(sep))
   }
 
