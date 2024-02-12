@@ -595,20 +595,8 @@ class PatternFormatter {
   public $auth(n=0, m=1, creator: AuthorType = '*', initials=false) {
     const family = n ? `%(f).${n}s` : '%(f)s'
     const name = initials ? `${family}%(I)s` : family
-    let ct: CreatorType[] = []
-    switch (creator) {
-      case 'author':
-      case 'editor':
-        ct = [ creator ]
-        break
-      case '*':
-        ct = ['primary', 'editor']
-        break
-      case 'collaborator':
-        ct = ['-author', '-editor']
-        break
-    }
-    return this.$creators([m, m], ct, name)
+    const author: string = this.creators(creator, name)[m - 1] || ''
+    return this.$text(author)
   }
 
   /**
