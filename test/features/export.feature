@@ -13,6 +13,7 @@ Feature: Export
 
     Examples:
       | file                                                                                                                     | references |
+      | Direct access to Zotero Creators fields #2787                                                                            | 1          |
       | shorttitle in citekeys always pinyinized #2770                                                                           | 1          |
       | Export unicode character o as latex command broken #2761                                                                 | 1          |
       | Citation key from abbreviationacronym from within field #2717                                                            | 3          |

@@ -146,7 +146,11 @@ type PartialDate = {
   S?: string
 }
 
-type Creator = 'author' | 'editor' | 'translator' | 'collaborator' | '*'
+type AuthorType = 'author' | 'editor' | 'translator' | 'collaborator' | '*'
+type CreatorType = 'artist' | '-artist' | 'attorneyAgent' | '-attorneyAgent' | 'author' | '-author' | 'bookAuthor' | '-bookAuthor' | 'cartographer' | '-cartographer' | 'castMember' | '-castMember' | 'commenter' | '-commenter' | 'composer' | '-composer' | 'contributor' | '-contributor' | 'cosponsor' | '-cosponsor' | 'counsel' | '-counsel' | 'director' | '-director' | 'editor' | '-editor' | 'guest' | '-guest' | 'interviewee' | '-interviewee' | 'interviewer' | '-interviewer' | 'inventor' | '-inventor' | 'performer' | '-performer' | 'podcaster' | '-podcaster' | 'presenter' | '-presenter' | 'producer' | '-producer' | 'programmer' | '-programmer' | 'recipient' | '-recipient' | 'reviewedAuthor' | '-reviewedAuthor' | 'scriptwriter' | '-scriptwriter' | 'seriesEditor' | '-seriesEditor' | 'sponsor' | '-sponsor' | 'testimonyBy' | '-testimonyBy' | 'translator' | '-translator' | 'wordsBy' | '-wordsBy'
+// const creatorTypes: CreatorType[] = Object.keys(itemCreators[client]) as CreatorType[]
+
+type Creator = { lastName?: string, firstName?: string, name?: string, creatorType: string, fieldMode?: number, source?: string }
 
 class Item {
   public item: ZoteroItem | SerializedItem
@@ -154,7 +158,7 @@ class Item {
 
   public itemType: string
   public date: PartialDate
-  public creators: { lastName?: string, firstName?: string, name?: string, creatorType: string, fieldMode?: number, source?: string }[]
+  public creators: Creator[]
   public title: string
   public itemID: number
   public itemKey: string
@@ -516,25 +520,35 @@ class PatternFormatter {
 
   /**
    * Author/editor information.
-   * @param n       select the first `n` authors (when passing a number) or the authors in this range (inclusive, when passing two values); negative numbers mean "from the end", default = 0 = all
-   * @param creator select type of creator (`author` or `editor`)
+   * @param n       select the first `n` creators (when passing a number) or the authors in this range (inclusive, when passing two values); negative numbers mean "from the end", default = 0 = all
+   * @param creator select only creators of given type(s). Default: all
    * @param name    sprintf-js template. Available named parameters are: `f` (family name), `g` (given name), `i` (initials)
    * @param etal    use this term to replace authors after `n` authors have been named
    * @param sep     use this character between authors
    * @param min     skip to the next pattern if there are less than `min` creators, 0 = ignore
    * @param max     skip to the next pattern if there are more than `max` creators, 0 = ignore
    */
-  public $authors(
+  public $creators(
     n: number | [number, number] = 0,
-    creator: Creator = '*',
+    creator: CreatorType | CreatorType[] | '*' = ['author', 'editor'],
     name: Template<'creator'> = '%(f)s',
     etal='',
     sep=' ',
     min=0,
     max=0
   ) {
-    let authors = this.creators(creator, name as string)
-    if ((min && authors.length < min) || (max && authors.length > max)) {
+    if (typeof creator === 'string' && creator !== '*') {
+      creator = [creator]
+    }
+    const include = creator === '*' ? [] : creator.filter(cr => cr[0] !== '-')
+    const exclude = creator === '*' ? [] : creator.filter(cr => cr[0] === '-').map(cr => cr.substr(1))
+    let creators = this.item.creators
+      .filter(cr => !include.length || include.includes(cr.creatorType as CreatorType))
+      .filter(cr => !exclude.length || !exclude.includes(cr.creatorType as CreatorType))
+      .map(cr => this.name(cr, name as string))
+    log.debug('$creators', { creators: this.item.creators, include, exclude, cited: creators })
+
+    if ((min && creators.length < min) || (max && creators.length > max)) {
       this.next = true
       return this.$text('')
     }
@@ -547,14 +561,13 @@ class PatternFormatter {
         etal = ''
       }
       else {
-        if (n >= authors.length) etal = ''
+        if (n >= creators.length) etal = ''
         n = [ 1, n ]
       }
-      authors = authors.slice(n[0] - 1, n[1])
+      creators = creators.slice(n[0] - 1, n[1])
       if (etal && !etal.replace(/[a-z]/ig, '').length) etal = `${sep}${etal}`
     }
-    const author = authors.join(sep) + etal
-    return this.$text(author)
+    return this.$text(creators.join(sep) + etal)
   }
 
   /**
@@ -564,17 +577,30 @@ class PatternFormatter {
    * @param creator   kind of creator to select, `*` selects `author` first, and if not present, `editor`, `translator` or `collaborator`, in that order.
    * @param initials  add author initials
    */
-  public $auth(n=0, m=1, creator: Creator = '*', initials=false) {
+  public $auth(n=0, m=1, creator: AuthorType = '*', initials=false) {
     const family = n ? `%(f).${n}s` : '%(f)s'
     const name = initials ? `${family}%(I)s` : family
-    return this.$authors([m, m], creator, name)
+    let ct: CreatorType[] = []
+    switch (creator) {
+      case 'author':
+      case 'editor':
+        ct = [ creator ]
+        break
+      case '*':
+        ct = ['author', 'editor']
+        break
+      case 'collaborator':
+        ct = ['-author', '-editor']
+        break
+    }
+    return this.$creators([m, m], ct, name)
   }
 
   /**
    * The given-name initial of the first author.
    * @param creator   kind of creator to select, `*` selects `author` first, and if not present, `editor`, `translator` or `collaborator`, in that order.
    */
-  public $authForeIni(creator: Creator = '*') {
+  public $authForeIni(creator: AuthorType = '*') {
     const author: string = this.creators(creator, '%(I)s')[0] || ''
     return this.$text(author)
   }
@@ -583,7 +609,7 @@ class PatternFormatter {
    * The given-name initial of the last author.
    * @param creator   kind of creator to select, `*` selects `author` first, and if not present, `editor`, `translator` or `collaborator`, in that order.
    */
-  public $authorLastForeIni(creator: Creator = '*') {
+  public $authorLastForeIni(creator: AuthorType = '*') {
     const authors = this.creators(creator, '%(I)s')
     const author = authors[authors.length - 1] || ''
     return this.$text(author)
@@ -594,7 +620,7 @@ class PatternFormatter {
    * @param creator   kind of creator to select, `*` selects `author` first, and if not present, `editor`, `translator` or `collaborator`, in that order.
    * @param initials  add author initials
    */
-  public $authorLast(creator: Creator = '*', initials=false) {
+  public $authorLast(creator: AuthorType = '*', initials=false) {
     const authors = this.creators(creator, initials ? '%(f)s%(I)s' : '%(f)s')
     const author = authors[authors.length - 1] || ''
     return this.$text(author)
@@ -607,7 +633,7 @@ class PatternFormatter {
    * @param initials  add author initials
    * @param sep     use this character between authors
    */
-  public $authorsAlpha(creator: Creator = '*', initials=false, sep=' ') {
+  public $authorsAlpha(creator: AuthorType = '*', initials=false, sep=' ') {
     const authors = this.creators(creator, initials ? '%(f)s%(I)s' : '%(f)s')
     if (!authors.length) return this.$text('')
 
@@ -637,7 +663,7 @@ class PatternFormatter {
    * @param initials  add author initials
    * @param sep     use this character between authors
    */
-  public $authIni(n=0, creator: Creator = '*', initials=false, sep='.') {
+  public $authIni(n=0, creator: AuthorType = '*', initials=false, sep='.') {
     const authors = this.creators(creator, initials ? '%(f)s%(I)s' : '%(f)s')
     if (!authors.length) return this.$text('')
     const author = authors.map(auth => auth.substring(0, n)).join(sep)
@@ -650,7 +676,7 @@ class PatternFormatter {
    * @param initials  add author initials
    * @param sep     use this character between authors
    */
-  public $authorIni(creator: Creator = '*', initials=false, sep='.'): PatternFormatter {
+  public $authorIni(creator: AuthorType = '*', initials=false, sep='.'): PatternFormatter {
     const authors = this.creators(creator, initials ? '%(f)s%(I)s' : '%(f)s')
     if (!authors.length) return this.$text('')
     const firstAuthor = authors.shift()
@@ -665,7 +691,7 @@ class PatternFormatter {
    * @param initials  add author initials
    * @param sep     use this character between authors
    */
-  public $authAuthEa(creator: Creator = '*', initials=false, sep='.') {
+  public $authAuthEa(creator: AuthorType = '*', initials=false, sep='.') {
     const authors = this.creators(creator, initials ? '%(f)s%(I)s' : '%(f)s')
     if (!authors.length) return this.$text('')
 
@@ -683,7 +709,7 @@ class PatternFormatter {
    * @param initials  add author initials
    * @param sep     use this character between authors
    */
-  public $authEtAl(creator: Creator = '*', initials=false, sep=' ') {
+  public $authEtAl(creator: AuthorType = '*', initials=false, sep=' ') {
     const authors = this.creators(creator, initials ? '%(f)s%(I)s' : '%(f)s')
     if (!authors.length) return this.$text('')
 
@@ -703,7 +729,7 @@ class PatternFormatter {
    * @param initials  add author initials
    * @param sep     use this character between authors
    */
-  public $authEtal2(creator: Creator = '*', initials=false, sep='.') {
+  public $authEtal2(creator: AuthorType = '*', initials=false, sep='.') {
     const authors = this.creators(creator, initials ? '%(f)s%(I)s' : '%(f)s')
     if (!authors.length) return this.$text('')
 
@@ -726,7 +752,7 @@ class PatternFormatter {
    * @param initials  add author initials
    * @param sep     use this character between authors
    */
-  public $authshort(creator: Creator = '*', initials=false, sep='.') {
+  public $authshort(creator: AuthorType = '*', initials=false, sep='.') {
     const authors = this.creators(creator, initials ? '%(f)s%(I)s' : '%(f)s')
 
     let author
@@ -894,6 +920,26 @@ class PatternFormatter {
     this.postfix.template = format as string
     this.postfix.offset = start
     return this.$text('')
+  }
+
+  /**
+   * This will return a comma-separated list of creator type information for all creators on the item
+   * in the form `<1 or 2><creator-type>`, where `1` or `2` denotes a 1-part or 2-part creator, and `creator-type` is one of {{% citekey-formatters/creatortypes %}}, or `primary` for
+   * the primary creator-type of the Zotero item under consideration. The list is prefixed by the item type, so might look like `audioRecording:2performer,2performer,1composer`.
+   * @param match  Regex to test the creator-type list. When passed, and the creator-type list does not match the regex, jump to the next formule. When it matches, return nothing but stay in the current formule. When no regex is passed, output the creator-type list for the item (mainly useful for debugging).
+   */
+  public $creatortypes(match?: RegExp) {
+    const creators = [...(new Set(['', (itemCreators[client][this.item.itemType] || [])[0] || '']))].sort() // this will shake out duplicates and put the empty string first
+      .map(primary => (this.item.creators || []).map(cr => `${typeof cr.name === 'string' ? 1 : 2}${cr.creatorType === primary ? 'primary' : cr.creatorType}`).join(';'))
+      .map(cr => `${this.item.itemType}:${cr}`)
+
+    if (match) {
+      this.next = !creators.find(cr => cr.match(match))
+      return this
+    }
+    else {
+      return this.$text(creators[0])
+    }
   }
 
   private padYear(year: string, length: number): string {
@@ -1405,7 +1451,16 @@ class PatternFormatter {
     return initials
   }
 
-  private creators(select: Creator, template: string): string[] {
+  private name(creator: Creator, template: string): string {
+    return sprintf(template, {
+      f: this.stripQuotes(this.innerText(creator.lastName || creator.name)),
+      g: this.stripQuotes(this.innerText(creator.firstName || '')),
+      I: this.initials(creator),
+      i: this.initials(creator, false),
+    }) as string
+  }
+
+  private creators(select: AuthorType, template: string): string[] {
     const types = itemCreators[client][this.item.itemType] || []
     const primary = types[0]
 
@@ -1417,18 +1472,22 @@ class PatternFormatter {
     }
 
     for (const creator of this.item.creators) {
-      const name = sprintf(template, {
-        f: this.stripQuotes(this.innerText(creator.lastName || creator.name)),
-        g: this.stripQuotes(this.innerText(creator.firstName || '')),
-        I: this.initials(creator),
-        i: this.initials(creator, false),
-      })
+      const name = this.name(creator, template)
       if (!name) continue
 
+      let hasEditor = false
+      let hasSeriesEditor = false
       switch (creator.creatorType) {
         case 'editor':
-        case 'seriesEditor':
+          hasEditor = true
           creators.editor.push(name)
+          break
+
+        case 'serieseditor':
+          if (!hasEditor || hasSeriesEditor) {
+            hasSeriesEditor = true
+            creators.editor.push(name)
+          }
           break
 
         case 'translator':
@@ -1444,7 +1503,7 @@ class PatternFormatter {
       }
     }
 
-    const candidates: Creator[] = select === '*' ? ['author', 'editor', 'translator', 'collaborator'] : [ select ]
+    const candidates: AuthorType[] = select === '*' ? ['author', 'editor', 'translator', 'collaborator'] : [ select ]
 
     for (const kind of candidates) {
       if (creators[kind].length) return creators[kind] as string[]
@@ -1455,26 +1514,6 @@ class PatternFormatter {
   public toString() {
     this.citekey += this.chunk
     return this.chunk
-  }
-
-  /*
-   * This will return a comma-separated list of creator type information for all creators on the item
-   * in the form `<1 or 2><creator-type>`, where `1` or `2` denotes a 1-part or 2-part creator, and `creator-type` is one of {{% citekey-formatters/creatortypes %}}, or `primary` for
-   * the primary creator-type of the Zotero item under consideration. The list is prefixed by the item type, so might look like `audioRecording:2performer,2performer,1composer`.
-   * @param match  Regex to test the creator-type list. When passed, and the creator-type list does not match the regex, jump to the next formule. When it matches, return nothing but stay in the current formule. When no regex is passed, output the creator-type list for the item (mainly useful for debugging).
-   */
-  public $creators(match?: RegExp) {
-    const creators = [...(new Set(['', (itemCreators[client][this.item.itemType] || [])[0] || '']))].sort() // this will shake out duplicates and put the empty string first
-      .map(primary => (this.item.creators || []).map(cr => `${typeof cr.name === 'string' ? 1 : 2}${cr.creatorType === primary ? 'primary' : cr.creatorType}`).join(','))
-      .map(cr => `${this.item.itemType}:${cr}`)
-
-    if (match) {
-      this.next = !creators.find(cr => cr.match(match))
-      return this
-    }
-    else {
-      return this.$text(creators[0])
-    }
   }
 }
 

@@ -6,7 +6,20 @@ import jurismSchema from '../schema/jurism.json'
 
 // type Json = string | number | boolean | null | Json[] | { [key: string]: Json };
 
-export type SimpleLiteral = boolean | number | string | { [key: string]: SimpleLiteral }
+export type SimpleLiteral = boolean | number | string | { [key: string]: SimpleLiteral } | SimpleLiteral[]
+
+const creatorTypes: Set<string> = new Set
+for (const schema of [zoteroSchema, jurismSchema]) {
+  for (const itemType of schema.itemTypes) {
+    for (const creatorType of itemType.creatorTypes) {
+      creatorTypes.add(creatorType.creatorType)
+    }
+  }
+}
+const CreatorType = {
+  type: 'string',
+  enum: [...creatorTypes].sort(),
+}
 
 function assert(cond, msg) {
   if (cond) return
@@ -144,6 +157,9 @@ export class API {
       case ts.SyntaxKind.FalseKeyword:
         return false
 
+      case ts.SyntaxKind.ArrayLiteralExpression:
+        return init.elements.map(elt => this.Literal(elt)) as SimpleLiteral[]
+
       default:
         throw new Error(`Unexpected kind ${init.kind} ${ts.SyntaxKind[init.kind]} of initializer ${JSON.stringify(init)}`)
     }
@@ -256,11 +272,14 @@ export class API {
       case 'RegExp':
         return { instanceof: typeName }
 
-      case 'Creator':
+      case 'AuthorType':
         return {
           type: 'string',
           enum: [ 'author', 'editor', 'translator', 'collaborator', '*' ],
         }
+
+      case 'CreatorType':
+        return CreatorType
 
       case 'Record':
         assert(typeref.typeArguments.length === 2, `expected 2 types, found ${typeref.typeArguments.length}`)
