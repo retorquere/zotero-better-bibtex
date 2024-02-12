@@ -147,7 +147,7 @@ type PartialDate = {
 }
 
 type AuthorType = 'author' | 'editor' | 'translator' | 'collaborator' | '*'
-type CreatorType = 'artist' | '-artist' | 'attorneyAgent' | '-attorneyAgent' | 'author' | '-author' | 'bookAuthor' | '-bookAuthor' | 'cartographer' | '-cartographer' | 'castMember' | '-castMember' | 'commenter' | '-commenter' | 'composer' | '-composer' | 'contributor' | '-contributor' | 'cosponsor' | '-cosponsor' | 'counsel' | '-counsel' | 'director' | '-director' | 'editor' | '-editor' | 'guest' | '-guest' | 'interviewee' | '-interviewee' | 'interviewer' | '-interviewer' | 'inventor' | '-inventor' | 'performer' | '-performer' | 'podcaster' | '-podcaster' | 'presenter' | '-presenter' | 'producer' | '-producer' | 'programmer' | '-programmer' | 'recipient' | '-recipient' | 'reviewedAuthor' | '-reviewedAuthor' | 'scriptwriter' | '-scriptwriter' | 'seriesEditor' | '-seriesEditor' | 'sponsor' | '-sponsor' | 'testimonyBy' | '-testimonyBy' | 'translator' | '-translator' | 'wordsBy' | '-wordsBy'
+type CreatorType = 'primary' | 'artist' | '-artist' | 'attorneyAgent' | '-attorneyAgent' | 'author' | '-author' | 'bookAuthor' | '-bookAuthor' | 'cartographer' | '-cartographer' | 'castMember' | '-castMember' | 'commenter' | '-commenter' | 'composer' | '-composer' | 'contributor' | '-contributor' | 'cosponsor' | '-cosponsor' | 'counsel' | '-counsel' | 'director' | '-director' | 'editor' | '-editor' | 'guest' | '-guest' | 'interviewee' | '-interviewee' | 'interviewer' | '-interviewer' | 'inventor' | '-inventor' | 'performer' | '-performer' | 'podcaster' | '-podcaster' | 'presenter' | '-presenter' | 'producer' | '-producer' | 'programmer' | '-programmer' | 'recipient' | '-recipient' | 'reviewedAuthor' | '-reviewedAuthor' | 'scriptwriter' | '-scriptwriter' | 'seriesEditor' | '-seriesEditor' | 'sponsor' | '-sponsor' | 'testimonyBy' | '-testimonyBy' | 'translator' | '-translator' | 'wordsBy' | '-wordsBy'
 // const creatorTypes: CreatorType[] = Object.keys(itemCreators[client]) as CreatorType[]
 
 type Creator = { lastName?: string, firstName?: string, name?: string, creatorType: string, fieldMode?: number, source?: string }
@@ -530,18 +530,33 @@ class PatternFormatter {
    */
   public $creators(
     n: number | [number, number] = 0,
-    creator: CreatorType | CreatorType[] | '*' = ['author', 'editor'],
+    creator: CreatorType | CreatorType[] | '*' = ['primary', 'editor'],
     name: Template<'creator'> = '%(f)s',
     etal='',
     sep=' ',
     min=0,
     max=0
   ) {
-    if (typeof creator === 'string' && creator !== '*') {
-      creator = [creator]
+    let include: string[]
+    let exclude: string[]
+
+    if (creator === '*') {
+      include = []
+      exclude = []
     }
-    const include = creator === '*' ? [] : creator.filter(cr => cr[0] !== '-')
-    const exclude = creator === '*' ? [] : creator.filter(cr => cr[0] === '-').map(cr => cr.substr(1))
+    else if (creator === 'primary') {
+      include = [ itemCreators[client][this.item.itemType][0] || '' ]
+      exclude = []
+    }
+    else if (typeof creator === 'string') {
+      include = [ creator ]
+      exclude = []
+    }
+    else {
+      include = creator.filter(cr => cr[0] !== '-').map(cr => (cr === 'primary' ? itemCreators[client][this.item.itemType][0] || '' : cr) as string)
+      exclude = creator.filter(cr => cr[0] === '-').map(cr => cr.substr(1))
+    }
+
     let creators = this.item.creators
       .filter(cr => !include.length || include.includes(cr.creatorType as CreatorType))
       .filter(cr => !exclude.length || !exclude.includes(cr.creatorType as CreatorType))
@@ -587,7 +602,7 @@ class PatternFormatter {
         ct = [ creator ]
         break
       case '*':
-        ct = ['author', 'editor']
+        ct = ['primary', 'editor']
         break
       case 'collaborator':
         ct = ['-author', '-editor']
