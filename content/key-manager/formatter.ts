@@ -345,18 +345,20 @@ class PatternFormatter {
     this.skipWords = new Set(Preference.skipWords.split(',').map((word: string) => word.trim()).filter((word: string) => word))
 
     let error = ''
+    const ts = Date.now()
     // the zero-width-space is a marker to re-save the current default so it doesn't get replaced when the default changes later, which would change new keys suddenly
     for (let formula of [...formulas, Preference.default.citekeyFormat.replace(/^\u200B/, '')]) {
-      log.debug(`formula.update: trying\n${formula}`)
+      log.debug(`formula-update: ${ts} trying: ${formula}`)
       if (!formula) continue
 
       if (formula[0] === '[') {
         try {
+          log.debug(`formula-update: ${ts} legacy-formula: ${formula}`)
           formula = legacyparser.parse(formula, { items, methods })
-          log.debug(`formula.update: upgraded to\n${formula}`)
+          log.debug(`formula-update: ${ts} legacy-formula upgraded to: ${formula}`)
         }
         catch (err) {
-          error = `failed to upgrade legacy formula ${formula}: ${err.message}`
+          log.debug(`formula-update: ${ts} legacy-formula failed to upgrade ${formula}: ${err.message}`)
           continue
         }
       }
@@ -583,6 +585,21 @@ class PatternFormatter {
       if (etal && !etal.replace(/[a-z]/ig, '').length) etal = `${sep}${etal}`
     }
     return this.$text(creators.join(sep) + etal)
+  }
+
+  /**
+   * The last names of the first `n` (default: all) authors.
+   * @param n         the number of characters to take from the name, 0 = all
+   * @param creator   kind of creator to select, `*` selects `author` first, and if not present, `editor`, `translator` or `collaborator`, in that order.
+   * @param initials  add author initials
+   * @param sep       use this character between authors
+   */
+  public $authorsn(n=0, creator: AuthorType = '*', initials=false, sep=' ') {
+    let name = '%(f)s'
+    if (initials) name += '%(I)s'
+    let author = this.creators(creator, name)
+    if (n) author = author.slice(0, n)
+    return this.$text(author.join(sep))
   }
 
   /**
