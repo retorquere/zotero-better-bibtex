@@ -523,7 +523,7 @@ class PatternFormatter {
   /**
    * Author/editor information.
    * @param n       select the first `n` creators (when passing a number) or the authors in this range (inclusive, when passing two values); negative numbers mean "from the end", default = 0 = all
-   * @param creator select only creators of given type(s). Default: all
+   * @param type select only creators of given type(s). Default: all
    * @param name    sprintf-js template. Available named parameters are: `f` (family name), `g` (given name), `i` (initials)
    * @param etal    use this term to replace authors after `n` authors have been named
    * @param sep     use this character between authors
@@ -531,7 +531,7 @@ class PatternFormatter {
    * @param max     skip to the next pattern if there are more than `max` creators, 0 = ignore
    */
   public $creators(
-    creator: CreatorType | CreatorType[] | '*' = ['primary', 'editor'],
+    type: CreatorType | CreatorType[] | '*' = ['primary', 'editor'],
     n: number | [number, number] = 0,
     name: Template<'creator'> = '%(f)s',
     etal='',
@@ -542,21 +542,21 @@ class PatternFormatter {
     let include: string[]
     let exclude: string[]
 
-    if (creator === '*') {
+    if (type === '*') {
       include = []
       exclude = []
     }
-    else if (creator === 'primary') {
+    else if (type === 'primary') {
       include = [ itemCreators[client][this.item.itemType][0] || '' ]
       exclude = []
     }
-    else if (typeof creator === 'string') {
-      include = [ creator ]
+    else if (typeof type === 'string') {
+      include = [ type ]
       exclude = []
     }
     else {
-      include = creator.filter(cr => cr[0] !== '-').map(cr => (cr === 'primary' ? itemCreators[client][this.item.itemType][0] || '' : cr) as string)
-      exclude = creator.filter(cr => cr[0] === '-').map(cr => cr.substr(1))
+      include = type.filter(cr => cr[0] !== '-').map(cr => (cr === 'primary' ? itemCreators[client][this.item.itemType][0] || '' : cr) as string)
+      exclude = type.filter(cr => cr[0] === '-').map(cr => cr.substr(1))
     }
 
     let creators = this.item.creators

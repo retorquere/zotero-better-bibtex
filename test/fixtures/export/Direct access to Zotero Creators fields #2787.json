@@ -12,7 +12,7 @@
       "autoExportDelay": 2,
       "automaticTags": false,
       "baseAttachmentPath": "/Users/vincentkalthoff/Dokumente/ZoteroAttachments",
-      "citekeyFormat": "creators(type=['seriesEditor', 'bookAuthor'])+year+(ShortTitle.nopunctordash.select(n=3).capitalize || shorttitle(3,3))",
+      "citekeyFormat": "creators(type=[seriesEditor, bookAuthor])+year+(ShortTitle.nopunctordash.select(n=3).capitalize || shorttitle(3,3))",
       "keyConflictPolicy": "change",
       "keyScope": "global",
       "quickCopyMode": "citekeys",
