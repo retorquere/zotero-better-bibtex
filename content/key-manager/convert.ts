@@ -282,8 +282,10 @@ ${compiled}
       required: new Set(method.schema.required),
     }
     args.forEach((arg: Argument, n: number) => {
-      // ignore deprecated parameter
+      // legacy: ignore deprecated parameter
       if (method.name.startsWith('$auth') && arg.name === 'clean') return
+      // legacy: renamed parameter
+      if (method.name === '$creators' && arg.name === 'creator') arg.name = 'type'
 
       if (arg.name) n = method.parameters.indexOf(arg.name)
       if (n === -1) this.error(arg.value, `${this.methodName(method)} passed unsupported parameter "${arg.name}"`)
