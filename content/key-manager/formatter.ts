@@ -531,8 +531,8 @@ class PatternFormatter {
    * @param max     skip to the next pattern if there are more than `max` creators, 0 = ignore
    */
   public $creators(
-    n: number | [number, number] = 0,
     creator: CreatorType | CreatorType[] | '*' = ['primary', 'editor'],
+    n: number | [number, number] = 0,
     name: Template<'creator'> = '%(f)s',
     etal='',
     sep=' ',
