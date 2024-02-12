@@ -523,7 +523,7 @@ class PatternFormatter {
   /**
    * Author/editor information.
    * @param n       select the first `n` creators (when passing a number) or the authors in this range (inclusive, when passing two values); negative numbers mean "from the end", default = 0 = all
-   * @param type select only creators of given type(s). Default: all
+   * @param type    select only creators of given type(s). Default: all
    * @param name    sprintf-js template. Available named parameters are: `f` (family name), `g` (given name), `i` (initials)
    * @param etal    use this term to replace authors after `n` authors have been named
    * @param sep     use this character between authors
@@ -531,8 +531,8 @@ class PatternFormatter {
    * @param max     skip to the next pattern if there are more than `max` creators, 0 = ignore
    */
   public $creators(
-    type: CreatorType | CreatorType[] | '*' = ['primary', 'editor'],
     n: number | [number, number] = 0,
+    type: CreatorType | CreatorType[] | '*' = ['primary', 'editor'],
     name: Template<'creator'> = '%(f)s',
     etal='',
     sep=' ',
