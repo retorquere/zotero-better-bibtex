@@ -81,6 +81,7 @@ Feature: Import
 
     Examples:
       | file                                                                                                                  | references |
+      | Double newlines means parbreak #2789                                                                                  | 1          |
       | Report number field is incorrectly translated into the issue field when importing a techreport from a .bib file #2752 | 8          |
       | Imported name suffix in family part #2744                                                                             | 1          |
       | DOIs excluded from export in 6.7.86 #2555                                                                             | 1          |

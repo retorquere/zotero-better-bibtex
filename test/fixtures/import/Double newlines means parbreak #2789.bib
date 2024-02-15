@@ -1,0 +1,31 @@
+@Article{Straube14infreqPerfEstImbal,
+  author    = {Straube, Sirko and Krell, Mario M},
+  title     = {How to evaluate an agent's behavior to infrequent events??Reliable performance estimation insensitive to class distribution},
+  journal   = {Frontiers in computational neuroscience},
+  year      = {2014},
+  volume    = {8},
+  abstract  = {In everyday life, humans and animals often have to base decisions on infrequent relevant stimuli with respect to frequent irrelevant ones. When research in neuroscience mimics this situation, the effect of this imbalance in stimulus classes on performance evaluation has to be considered. This is most obvious for the often used overall accuracy, because the proportion of correct responses is governed by the more frequent class. This imbalance problem has been widely debated across disciplines and out of the discussed treatments this review focusses on performance estimation. For this, a more universal view is taken: an agent performing a classification task. Commonly used performance measures are characterized when used with imbalanced classes. Metrics like Accuracy, F-Measure, Matthews Correlation Coefficient, and Mutual Information are affected by imbalance, while other metrics do not have this drawback, like AUC, d-prime, Balanced Accuracy, Weighted Accuracy and G-Mean. It is pointed out that one is not restricted to this group of metrics, but the sensitivity to the class ratio has to be kept in mind for a proper choice. Selecting an appropriate metric is critical to avoid drawing misled conclusions.
+
+Keywords: metrics, decision making, confusion matrix, oddball, imbalance, performance evaluation, classification},
+  comment   = {Straube14infreqPerfEstImbal
+
+Commonly used performance measures are characterized when used with imbalanced classes. A nice review paper.
+
+Metrics like Accuracy, F-Measure, Matthews Correlation Coefficient (really?), and Mutual Information are affected by imbalance, while other metrics do not have this drawback, like AUC, d-prime, Balanced Accuracy, Weighted Accuracy and G-Mean.
+
+
+Mutual Information and Imbalance
+- I(X;Y) = H(X) - H(X|Y)
+- if X is a binary class prediction, then H(X) is solely determined by the prior class distribution
+- so you'll get a different # for different class imbalance
+- but if you're just doing featsel using MI, then all features will have the same H(X) and (I think) it still makes sense to pick features w/ max MI, right?
+
+
+Matthews Correlation Coefficient is said to be one of the best metrics for multi-class imbalanced accuracy: Liang21sleepStagePred},
+  doi       = {10.3389/fncom.2014.00043},
+  file      = {Straube14infreqPerfEstImbal.pdf:Straube14infreqPerfEstImbal.pdf:PDF},
+  owner     = {sotterson},
+  publisher = {Frontiers Media SA},
+  timestamp = {2017.01.17},
+  url       = {https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3989732/},
+}
