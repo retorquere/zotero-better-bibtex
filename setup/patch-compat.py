@@ -19,6 +19,7 @@ def max_version(v1, v2):
 
 with open('schema/supported.json') as f:
   min_version = json.load(f)
+  min_version["jurism"] = "7.0"
 
 for client, version in min_version.items():
   client = {'zotero': 'zotero@chnm.gmu.edu', 'jurism': 'juris-m@juris-m.github.io' }[client]
