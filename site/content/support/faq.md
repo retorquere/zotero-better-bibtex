@@ -1,7 +1,7 @@
 ---
 title: Frequently Asked Questions
 weight: 5
-menuTitle: FAQ
+linktitle: FAQ
 aliases:
   - /Unnecessarily-complicated-BibTeX-output
   - /Unicode-and-Markup

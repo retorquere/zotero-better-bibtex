@@ -1,6 +1,6 @@
 ---
 title: Exporting items
-menuTitle: Exporting
+linktitle: Exporting
 weight: 2
 tags:
   - export
