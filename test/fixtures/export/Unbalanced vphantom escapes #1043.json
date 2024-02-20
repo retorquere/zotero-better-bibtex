@@ -41,7 +41,34 @@
       "pages": "957-967",
       "publicationTitle": "Physical Review A",
       "shortTitle": "Molecular Theory of Atomic Collisions",
-      "title": "Molecular Theory of Atomic Collisions: Calculated Cross Sections for ${\\mathrm{H}}^{+\\}}+\\mathrm{F}(^{2}P)$",
+      "title": "Molecular Theory of Atomic Collisions: Calculated Cross Sections for ${\\\\mathrm{H}}^{+}+\\\\mathrm{F}(^{2}P)$}",
+      "url": "http://link.aps.org/doi/10.1103/PhysRevA.7.957",
+      "volume": "7"
+    },
+    {
+      "DOI": "10.1103/PhysRevA.7.957",
+      "abstractNote": "The results of a close-coupling calculation of the fine-structure transitions (j,mj\u2192j\u2032,m\u2032j) are presented for collisions between photons and F(Pj,mj2). The theory is formulated in the perturbed-stationary-state approximation using accurate molecular wave functions for the ground II2 and \u03a32 states of HF+. Comparison is made to the predictions of the Born approximation. The magnetic selection rule (j,mj\u2192j,\u2212mj) is strongly violated in the j=32 state and less strongly violated in the j=12 state. It is concluded that the important region of interaction for the j=12\u2192j=32 transition is at short-to-intermediate distances where accurate molecular potentials are required and close-coupling effects are dominant.",
+      "accessDate": "2016-08-03T10:10:47Z",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "F. H.",
+          "lastName": "Mies"
+        }
+      ],
+      "date": "March 1, 1973",
+      "extra": [
+        "Citation Key: mies1973"
+      ],
+      "issue": "3",
+      "itemID": 1,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "Phys. Rev. A",
+      "libraryCatalog": "APS",
+      "pages": "957-967",
+      "publicationTitle": "Physical Review A",
+      "shortTitle": "Molecular Theory of Atomic Collisions",
+      "title": "Molecular Theory of Atomic Collisions: Calculated Cross Sections for H⁺+F(²P)",
       "url": "http://link.aps.org/doi/10.1103/PhysRevA.7.957",
       "volume": "7"
     }

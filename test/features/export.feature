@@ -532,7 +532,7 @@ Feature: Export
 
   @postscript @1043
   Scenario: Unbalanced vphantom escapes #1043
-    Given I import 1 references from "export/*.json"
+    Given I import 2 references from "export/*.json"
     Then an export using "Better BibTeX" should match "export/*.bibtex"
     When I set preference .postscript to "export/Detect and protect LaTeX math formulas.js"
     Then an export using "Better BibTeX" should match "export/*-mathmode.bibtex"
