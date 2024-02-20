@@ -58,7 +58,7 @@ function clean(item) {
   delete item.itemKey
   delete item.contentType
   delete item.filename
-  delete item.localPath
+  delete item.defaultPath
 }
 
 for (const lib of argv._) {
@@ -91,6 +91,8 @@ for (const lib of argv._) {
       }
 
       // post.items.sort((a, b) => sortkey(a).localeCompare(sortkey(b)))
+      if (argv.attachments) post.items = (post.items || []).filter(i => i.itemType != 'attachment')
+
       for (const item of (post.items || [])) {
         clean(item)
 
@@ -111,6 +113,7 @@ for (const lib of argv._) {
           }
         }
       }
+      console.log((post.items || []).length, 'items')
       break
     case '.csl.json':
       // post.sort((a, b) => stringify(a).localeCompare(stringify(b)))
