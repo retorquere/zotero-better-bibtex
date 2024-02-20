@@ -15,329 +15,282 @@ Some of us though are bound to outlets that still demand BibTeX, and there's gee
 
 | **character** | **text** | **math** | **character** | **text** | **math** | **character** | **text** | **math** | **character** | **text** | **math** |
 |---------------|----------|----------|---------------|----------|----------|---------------|----------|----------|---------------|----------|----------|
-|  ¢ | \textcent |  |  ¤ | \textcurrency |  |  ¥ | \textyen |  |  ¦ | \textbrokenbar |  |
+|  ¢ | \textcent |  |  ¤ | \textcurrency |  |  ¥ | \textyen |  |  ฿ | \textbaht |  |
+|  ₡ | \textcolonmonetary |  |  ₤ | \textlira |  |  ₦ | \textnaira |  |  ₧ | \textpeseta |  |
+|  ₩ | \textwon |  |  ₫ | \textdong |  |  ₱ | \textpeso |  |  ¦ | \textbrokenbar |  |
 |  © | \textcopyright |  |  ª | \textordfeminine |  |  ° | \textdegree |  |  ¶ | \textparagraph |  |
 |  º | \textordmasculine |  |  ð | \textdh |  |  ˙ | \textperiodcentered |  |  • | \textbullet |  |
 |  ‰ | \textperthousand |  |  ‱ | \textpertenthousand |  |  ℞ | \textrecipe |  |  ™ | \texttrademark |  |
-|  → | \textrightarrow |  |  | |  |  | |  |  | |  |
-
-
-### amssymb
-
-| **character** | **text** | **math** | **character** | **text** | **math** | **character** | **text** | **math** | **character** | **text** | **math** |
-|---------------|----------|----------|---------------|----------|----------|---------------|----------|----------|---------------|----------|----------|
-|  ð |  | \eth |  ⩽ |  | \leqslant |  ⩽̸ |  | \nleqslant |  ⩾ |  | \geqslant |
-|  ⩾̸ |  | \ngeqslant |  | |  |  | |  |  | |  |
-
-
-### arevmath
-
-| **character** | **text** | **math** | **character** | **text** | **math** | **character** | **text** | **math** | **character** | **text** | **math** |
-|---------------|----------|----------|---------------|----------|----------|---------------|----------|----------|---------------|----------|----------|
-|  ð |  | \eth |  | |  |  | |  |  | |  |
-
-
-### tipa
-
-| **character** | **text** | **math** | **character** | **text** | **math** | **character** | **text** | **math** | **character** | **text** | **math** |
-|---------------|----------|----------|---------------|----------|----------|---------------|----------|----------|---------------|----------|----------|
-|  ħ | \textcrh |  |  ĸ | ?? |  |  ƕ | \texthvlig |  |  ƞ | \textipa{\textnrleg} |  |
-|  ɐ | \textipa{\textturna} |  |  ɒ | textipa{\textopeno} |  |  ɔ | \textipa{O} |  |  ɖ | \textrtaild |  |
-|  ə | \textschwa |  |  ɤ | \textrevscripta |  |  ɸ | \textphi |  |  ʞ | \textturnk |  |
-|  ˥ | \tone{55} |  |  ˦ | \tone{44} |  |  ˧ | \tone{33} |  |  ˨ | \tone{22} |  |
-|  ˩ | \tone{11} |  |  ̀̄ | \textgravemacron |  |  ̀̇ | \textgravedot |  |  ́̄ | \textacutemacron |  |
-|  ́̌ | \textacutewedge |  |  ̂̇ | \textcircumdot |  |  ̃̇ | \texttildedot |  |  ̄̀ | \textgravemacron |  |
-|  ̆̄ | \textbrevemacron |  |  ̇́ | \textdotacute |  |  ̇̆ | \textdotbreve |  |  ̊̄ | \textringmacron |  |
-|  ̍ | \textvbaraccent |  |  ̎ | \textdoublevbaraccent |  |  ̐ | \textdotbreve |  |  ̘ | \textadvancing |  |
-|  ̙ | \textretracting |  |  ̚ | \textcorner |  |  ̜ | \textsublhalfring |  |  ̝ | \textraising |  |
-|  ̞ | \textlowering |  |  ̟ | \textsubplus |  |  ̤ | \textsubumlaut |  |  ̥ | \textsubring |  |
-|  ̩ | \textsyllabic |  |  ̪ | \textsubbridge |  |  ̬ | \textsubwedge |  |  ̯ | \textsubarch |  |
-|  ̰ | \textsubtilde |  |  ̱ | \textsubbar |  |  ̴ | \textsuperimposetilde |  |  ̹ | \textsubrhalfring |  |
-|  ̺ | \textinvsubbridge |  |  ̻ | \textsubsquare |  |  ̼ | \textseagull |  |  ̽ | \textovercross |  |
-|  ₔ | \textsubscript{\textschwa} |  |  | |  |  | |  |  | |  |
-
-
-### ipa
-
-| **character** | **text** | **math** | **character** | **text** | **math** | **character** | **text** | **math** | **character** | **text** | **math** |
-|---------------|----------|----------|---------------|----------|----------|---------------|----------|----------|---------------|----------|----------|
-|  ɯ | \textturnm |  |  | |  |  | |  |  | |  |
-
-
-### mathscinet
-
-| **character** | **text** | **math** | **character** | **text** | **math** | **character** | **text** | **math** | **character** | **text** | **math** |
-|---------------|----------|----------|---------------|----------|----------|---------------|----------|----------|---------------|----------|----------|
-|  ʿ | \lasp |  |  | |  |  | |  |  | |  |
+|  ↑ | \textuparrow |  |  → | \textrightarrow |  |  | |  |  | |  |
 
 
 ### unicode-math
 
 | **character** | **text** | **math** | **character** | **text** | **math** | **character** | **text** | **math** | **character** | **text** | **math** |
 |---------------|----------|----------|---------------|----------|----------|---------------|----------|----------|---------------|----------|----------|
-|  ̀ |  | \grave |  ́ |  | \acute |  ̂ |  | \hat |  ̃ |  | \tilde |
-|  ̄ |  | \bar |  ̆ |  | \breve |  ̇ |  | \dot |  ̈ |  | \ddot |
-|  ̉ |  | \ovhook |  ̌ |  | \check |  ̐ |  | \candra |  ̒ |  | \oturnedcomma |
-|  ̕ |  | \ocommatopright |  ̚ |  | \droang |  ͍ |  | \underleftrightarrow |  Α |  | \mupAlpha |
-|  Β |  | \mupBeta |  Γ |  | \mupGamma |  Δ |  | \mupDelta |  Ε |  | \mupEpsilon |
-|  Ζ |  | \mupZeta |  Η |  | \mupEta |  Θ |  | \mupTheta |  Ι |  | \mupIota |
-|  Κ |  | \mupKappa |  Λ |  | \mupLambda |  Μ |  | \mupMu |  Ν |  | \mupNu |
-|  Ο |  | \mupOmicron |  Ρ |  | \mupRho |  Τ |  | \mupTau |  Χ |  | \mupChi |
-|  ο |  | \mupomicron |  ϐ |  | \varbeta |  ϰ |  | \varkappa |  ϶ |  | \upbackepsilon |
-|  ᵀ0 |  | \mbfA |  ᵀ1 |  | \mbfB |  ᵀ2 |  | \mbfC |  ᵀ3 |  | \mbfD |
-|  ᵀ4 |  | \mbfE |  ᵀ5 |  | \mbfF |  ᵀ6 |  | \mbfG |  ᵀ7 |  | \mbfH |
-|  ᵀ8 |  | \mbfI |  ᵀ9 |  | \mbfJ |  ᵀA |  | \mbfK |  ᵀB |  | \mbfL |
-|  ᵀC |  | \mbfM |  ᵀD |  | \mbfN |  ᵀE |  | \mbfO |  ᵀF |  | \mbfP |
-|  ᵁ0 |  | \mbfQ |  ᵁ1 |  | \mbfR |  ᵁ2 |  | \mbfS |  ᵁ3 |  | \mbfT |
-|  ᵁ4 |  | \mbfU |  ᵁ5 |  | \mbfV |  ᵁ6 |  | \mbfW |  ᵁ7 |  | \mbfX |
-|  ᵁ8 |  | \mbfY |  ᵁ9 |  | \mbfZ |  ᵁA |  | \mbfa |  ᵁB |  | \mbfb |
-|  ᵁC |  | \mbfc |  ᵁD |  | \mbfd |  ᵁE |  | \mbfe |  ᵁF |  | \mbff |
-|  ᵂ0 |  | \mbfg |  ᵂ1 |  | \mbfh |  ᵂ2 |  | \mbfi |  ᵂ3 |  | \mbfj |
-|  ᵂ4 |  | \mbfk |  ᵂ5 |  | \mbfl |  ᵂ6 |  | \mbfm |  ᵂ7 |  | \mbfn |
-|  ᵂ8 |  | \mbfo |  ᵂ9 |  | \mbfp |  ᵂA |  | \mbfq |  ᵂB |  | \mbfr |
-|  ᵂC |  | \mbfs |  ᵂD |  | \mbft |  ᵂE |  | \mbfu |  ᵂF |  | \mbfv |
-|  ᵃ0 |  | \mbfw |  ᵃ1 |  | \mbfx |  ᵃ2 |  | \mbfy |  ᵃ3 |  | \mbfz |
-|  ᵃ4 |  | \mitA |  ᵃ5 |  | \mitB |  ᵃ6 |  | \mitC |  ᵃ7 |  | \mitD |
-|  ᵃ8 |  | \mitE |  ᵃ9 |  | \mitF |  ᵃA |  | \mitG |  ᵃB |  | \mitH |
-|  ᵃC |  | \mitI |  ᵃD |  | \mitJ |  ᵃE |  | \mitK |  ᵃF |  | \mitL |
-|  ᵄ0 |  | \mitM |  ᵄ1 |  | \mitN |  ᵄ2 |  | \mitO |  ᵄ3 |  | \mitP |
-|  ᵄ4 |  | \mitQ |  ᵄ5 |  | \mitR |  ᵄ6 |  | \mitS |  ᵄ7 |  | \mitT |
-|  ᵄ8 |  | \mitU |  ᵄ9 |  | \mitV |  ᵄA |  | \mitW |  ᵄB |  | \mitX |
-|  ᵄC |  | \mitY |  ᵄD |  | \mitZ |  ᵄE |  | \mita |  ᵄF |  | \mitb |
-|  ᵅ0 |  | \mitc |  ᵅ1 |  | \mitd |  ᵅ2 |  | \mite |  ᵅ3 |  | \mitf |
-|  ᵅ4 |  | \mitg |  ᵅ6 |  | \miti |  ᵅ7 |  | \mitj |  ᵅ8 |  | \mitk |
-|  ᵅ9 |  | \mitl |  ᵅA |  | \mitm |  ᵅB |  | \mitn |  ᵅC |  | \mito |
-|  ᵅD |  | \mitp |  ᵅE |  | \mitq |  ᵅF |  | \mitr |  ᵆ0 |  | \mits |
-|  ᵆ1 |  | \mitt |  ᵆ2 |  | \mitu |  ᵆ3 |  | \mitv |  ᵆ4 |  | \mitw |
-|  ᵆ5 |  | \mitx |  ᵆ6 |  | \mity |  ᵆ7 |  | \mitz |  ᵆ8 |  | \mbfitA |
-|  ᵆ9 |  | \mbfitB |  ᵆA |  | \mbfitC |  ᵆB |  | \mbfitD |  ᵆC |  | \mbfitE |
-|  ᵆD |  | \mbfitF |  ᵆE |  | \mbfitG |  ᵆF |  | \mbfitH |  ᵇ0 |  | \mbfitI |
-|  ᵇ1 |  | \mbfitJ |  ᵇ2 |  | \mbfitK |  ᵇ3 |  | \mbfitL |  ᵇ4 |  | \mbfitM |
-|  ᵇ5 |  | \mbfitN |  ᵇ6 |  | \mbfitO |  ᵇ7 |  | \mbfitP |  ᵇ8 |  | \mbfitQ |
-|  ᵇ9 |  | \mbfitR |  ᵇA |  | \mbfitS |  ᵇB |  | \mbfitT |  ᵇC |  | \mbfitU |
-|  ᵇD |  | \mbfitV |  ᵇE |  | \mbfitW |  ᵇF |  | \mbfitX |  ᵈ0 |  | \mbfitY |
-|  ᵈ1 |  | \mbfitZ |  ᵈ2 |  | \mbfita |  ᵈ3 |  | \mbfitb |  ᵈ4 |  | \mbfitc |
-|  ᵈ5 |  | \mbfitd |  ᵈ6 |  | \mbfite |  ᵈ7 |  | \mbfitf |  ᵈ8 |  | \mbfitg |
-|  ᵈ9 |  | \mbfith |  ᵈA |  | \mbfiti |  ᵈB |  | \mbfitj |  ᵈC |  | \mbfitk |
-|  ᵈD |  | \mbfitl |  ᵈE |  | \mbfitm |  ᵈF |  | \mbfitn |  ᵉ0 |  | \mbfito |
-|  ᵉ1 |  | \mbfitp |  ᵉ2 |  | \mbfitq |  ᵉ3 |  | \mbfitr |  ᵉ4 |  | \mbfits |
-|  ᵉ5 |  | \mbfitt |  ᵉ6 |  | \mbfitu |  ᵉ7 |  | \mbfitv |  ᵉ8 |  | \mbfitw |
-|  ᵉ9 |  | \mbfitx |  ᵉA |  | \mbfity |  ᵉB |  | \mbfitz |  ᵉC |  | \mscrA |
-|  ᵉE |  | \mscrC |  ᵉF |  | \mscrD |  ᵊ2 |  | \mscrG |  ᵊ5 |  | \mscrJ |
-|  ᵊ6 |  | \mscrK |  ᵊ9 |  | \mscrN |  ᵊA |  | \mscrO |  ᵊB |  | \mscrP |
-|  ᵊC |  | \mscrQ |  ᵊE |  | \mscrS |  ᵊF |  | \mscrT |  ᵋ0 |  | \mscrU |
-|  ᵋ1 |  | \mscrV |  ᵋ2 |  | \mscrW |  ᵋ3 |  | \mscrX |  ᵋ4 |  | \mscrY |
-|  ᵋ5 |  | \mscrZ |  ᵋ6 |  | \mscra |  ᵋ7 |  | \mscrb |  ᵋ8 |  | \mscrc |
-|  ᵋ9 |  | \mscrd |  ᵋB |  | \mscrf |  ᵋD |  | \mscrh |  ᵋE |  | \mscri |
-|  ᵋF |  | \mscrj |  ᵌ0 |  | \mscrk |  ᵌ1 |  | \mscrl |  ᵌ2 |  | \mscrm |
-|  ᵌ3 |  | \mscrn |  ᵌ5 |  | \mscrp |  ᵌ6 |  | \mscrq |  ᵌ7 |  | \mscrr |
-|  ᵌ8 |  | \mscrs |  ᵌ9 |  | \mscrt |  ᵌA |  | \mscru |  ᵌB |  | \mscrv |
-|  ᵌC |  | \mscrw |  ᵌD |  | \mscrx |  ᵌE |  | \mscry |  ᵌF |  | \mscrz |
-|  ᵍ0 |  | \mbfscrA |  ᵍ1 |  | \mbfscrB |  ᵍ2 |  | \mbfscrC |  ᵍ3 |  | \mbfscrD |
-|  ᵍ4 |  | \mbfscrE |  ᵍ5 |  | \mbfscrF |  ᵍ6 |  | \mbfscrG |  ᵍ7 |  | \mbfscrH |
-|  ᵍ8 |  | \mbfscrI |  ᵍ9 |  | \mbfscrJ |  ᵍA |  | \mbfscrK |  ᵍB |  | \mbfscrL |
-|  ᵍC |  | \mbfscrM |  ᵍD |  | \mbfscrN |  ᵍE |  | \mbfscrO |  ᵍF |  | \mbfscrP |
-|  ᵎ0 |  | \mbfscrQ |  ᵎ1 |  | \mbfscrR |  ᵎ2 |  | \mbfscrS |  ᵎ3 |  | \mbfscrT |
-|  ᵎ4 |  | \mbfscrU |  ᵎ5 |  | \mbfscrV |  ᵎ6 |  | \mbfscrW |  ᵎ7 |  | \mbfscrX |
-|  ᵎ8 |  | \mbfscrY |  ᵎ9 |  | \mbfscrZ |  ᵎA |  | \mbfscra |  ᵎB |  | \mbfscrb |
-|  ᵎC |  | \mbfscrc |  ᵎD |  | \mbfscrd |  ᵎE |  | \mbfscre |  ᵎF |  | \mbfscrf |
-|  ᵏ0 |  | \mbfscrg |  ᵏ1 |  | \mbfscrh |  ᵏ2 |  | \mbfscri |  ᵏ3 |  | \mbfscrj |
-|  ᵏ4 |  | \mbfscrk |  ᵏ5 |  | \mbfscrl |  ᵏ6 |  | \mbfscrm |  ᵏ7 |  | \mbfscrn |
-|  ᵏ8 |  | \mbfscro |  ᵏ9 |  | \mbfscrp |  ᵏA |  | \mbfscrq |  ᵏB |  | \mbfscrr |
-|  ᵏC |  | \mbfscrs |  ᵏD |  | \mbfscrt |  ᵏE |  | \mbfscru |  ᵏF |  | \mbfscrv |
-|  ᵐ0 |  | \mbfscrw |  ᵐ1 |  | \mbfscrx |  ᵐ2 |  | \mbfscry |  ᵐ3 |  | \mbfscrz |
-|  ᵐ4 |  | \mfrakA |  ᵐ5 |  | \mfrakB |  ᵐ7 |  | \mfrakD |  ᵐ8 |  | \mfrakE |
-|  ᵐ9 |  | \mfrakF |  ᵐA |  | \mfrakG |  ᵐD |  | \mfrakJ |  ᵐE |  | \mfrakK |
-|  ᵐF |  | \mfrakL |  ᵑ0 |  | \mfrakM |  ᵑ1 |  | \mfrakN |  ᵑ2 |  | \mfrakO |
-|  ᵑ3 |  | \mfrakP |  ᵑ4 |  | \mfrakQ |  ᵑ6 |  | \mfrakS |  ᵑ7 |  | \mfrakT |
-|  ᵑ8 |  | \mfrakU |  ᵑ9 |  | \mfrakV |  ᵑA |  | \mfrakW |  ᵑB |  | \mfrakX |
-|  ᵑC |  | \mfrakY |  ᵑE |  | \mfraka |  ᵑF |  | \mfrakb |  ᵒ0 |  | \mfrakc |
-|  ᵒ1 |  | \mfrakd |  ᵒ2 |  | \mfrake |  ᵒ3 |  | \mfrakf |  ᵒ4 |  | \mfrakg |
-|  ᵒ5 |  | \mfrakh |  ᵒ6 |  | \mfraki |  ᵒ7 |  | \mfrakj |  ᵒ8 |  | \mfrakk |
-|  ᵒ9 |  | \mfrakl |  ᵒA |  | \mfrakm |  ᵒB |  | \mfrakn |  ᵒC |  | \mfrako |
-|  ᵒD |  | \mfrakp |  ᵒE |  | \mfrakq |  ᵒF |  | \mfrakr |  ᵓ0 |  | \mfraks |
-|  ᵓ1 |  | \mfrakt |  ᵓ2 |  | \mfraku |  ᵓ3 |  | \mfrakv |  ᵓ4 |  | \mfrakw |
-|  ᵓ5 |  | \mfrakx |  ᵓ6 |  | \mfraky |  ᵓ7 |  | \mfrakz |  ᵓ8 |  | \BbbA |
-|  ᵓ9 |  | \BbbB |  ᵓB |  | \BbbD |  ᵓC |  | \BbbE |  ᵓD |  | \BbbF |
-|  ᵓE |  | \BbbG |  ᵔ0 |  | \BbbI |  ᵔ1 |  | \BbbJ |  ᵔ2 |  | \BbbK |
-|  ᵔ3 |  | \BbbL |  ᵔ4 |  | \BbbM |  ᵔ6 |  | \BbbO |  ᵔA |  | \BbbS |
-|  ᵔB |  | \BbbT |  ᵔC |  | \BbbU |  ᵔD |  | \BbbV |  ᵔE |  | \BbbW |
-|  ᵔF |  | \BbbX |  ᵕ0 |  | \BbbY |  ᵕ2 |  | \Bbba |  ᵕ3 |  | \Bbbb |
-|  ᵕ4 |  | \Bbbc |  ᵕ5 |  | \Bbbd |  ᵕ6 |  | \Bbbe |  ᵕ7 |  | \Bbbf |
-|  ᵕ8 |  | \Bbbg |  ᵕ9 |  | \Bbbh |  ᵕA |  | \Bbbi |  ᵕB |  | \Bbbj |
-|  ᵕC |  | \Bbbk |  ᵕD |  | \Bbbl |  ᵕE |  | \Bbbm |  ᵕF |  | \Bbbn |
-|  ᵖ0 |  | \Bbbo |  ᵖ1 |  | \Bbbp |  ᵖ2 |  | \Bbbq |  ᵖ3 |  | \Bbbr |
-|  ᵖ4 |  | \Bbbs |  ᵖ5 |  | \Bbbt |  ᵖ6 |  | \Bbbu |  ᵖ7 |  | \Bbbv |
-|  ᵖ8 |  | \Bbbw |  ᵖ9 |  | \Bbbx |  ᵖA |  | \Bbby |  ᵖB |  | \Bbbz |
-|  ᵖC |  | \mbffrakA |  ᵖD |  | \mbffrakB |  ᵖE |  | \mbffrakC |  ᵖF |  | \mbffrakD |
-|  ᵗ0 |  | \mbffrakE |  ᵗ1 |  | \mbffrakF |  ᵗ2 |  | \mbffrakG |  ᵗ3 |  | \mbffrakH |
-|  ᵗ4 |  | \mbffrakI |  ᵗ5 |  | \mbffrakJ |  ᵗ6 |  | \mbffrakK |  ᵗ7 |  | \mbffrakL |
-|  ᵗ8 |  | \mbffrakM |  ᵗ9 |  | \mbffrakN |  ᵗA |  | \mbffrakO |  ᵗB |  | \mbffrakP |
-|  ᵗC |  | \mbffrakQ |  ᵗD |  | \mbffrakR |  ᵗE |  | \mbffrakS |  ᵗF |  | \mbffrakT |
-|  ᵘ0 |  | \mbffrakU |  ᵘ1 |  | \mbffrakV |  ᵘ2 |  | \mbffrakW |  ᵘ3 |  | \mbffrakX |
-|  ᵘ4 |  | \mbffrakY |  ᵘ5 |  | \mbffrakZ |  ᵘ6 |  | \mbffraka |  ᵘ7 |  | \mbffrakb |
-|  ᵘ8 |  | \mbffrakc |  ᵘ9 |  | \mbffrakd |  ᵘA |  | \mbffrake |  ᵘB |  | \mbffrakf |
-|  ᵘC |  | \mbffrakg |  ᵘD |  | \mbffrakh |  ᵘE |  | \mbffraki |  ᵘF |  | \mbffrakj |
-|  ᵙ0 |  | \mbffrakk |  ᵙ1 |  | \mbffrakl |  ᵙ2 |  | \mbffrakm |  ᵙ3 |  | \mbffrakn |
-|  ᵙ4 |  | \mbffrako |  ᵙ5 |  | \mbffrakp |  ᵙ6 |  | \mbffrakq |  ᵙ7 |  | \mbffrakr |
-|  ᵙ8 |  | \mbffraks |  ᵙ9 |  | \mbffrakt |  ᵙA |  | \mbffraku |  ᵙB |  | \mbffrakv |
-|  ᵙC |  | \mbffrakw |  ᵙD |  | \mbffrakx |  ᵙE |  | \mbffraky |  ᵙF |  | \mbffrakz |
-|  ᵚ0 |  | \msansA |  ᵚ1 |  | \msansB |  ᵚ2 |  | \msansC |  ᵚ3 |  | \msansD |
-|  ᵚ4 |  | \msansE |  ᵚ5 |  | \msansF |  ᵚ6 |  | \msansG |  ᵚ7 |  | \msansH |
-|  ᵚ8 |  | \msansI |  ᵚ9 |  | \msansJ |  ᵚA |  | \msansK |  ᵚB |  | \msansL |
-|  ᵚC |  | \msansM |  ᵚD |  | \msansN |  ᵚE |  | \msansO |  ᵚF |  | \msansP |
-|  ᵛ0 |  | \msansQ |  ᵛ1 |  | \msansR |  ᵛ2 |  | \msansS |  ᵛ3 |  | \msansT |
-|  ᵛ4 |  | \msansU |  ᵛ5 |  | \msansV |  ᵛ6 |  | \msansW |  ᵛ7 |  | \msansX |
-|  ᵛ8 |  | \msansY |  ᵛ9 |  | \msansZ |  ᵛA |  | \msansa |  ᵛB |  | \msansb |
-|  ᵛC |  | \msansc |  ᵛD |  | \msansd |  ᵛE |  | \msanse |  ᵛF |  | \msansf |
-|  ᵜ0 |  | \msansg |  ᵜ1 |  | \msansh |  ᵜ2 |  | \msansi |  ᵜ3 |  | \msansj |
-|  ᵜ4 |  | \msansk |  ᵜ5 |  | \msansl |  ᵜ6 |  | \msansm |  ᵜ7 |  | \msansn |
-|  ᵜ8 |  | \msanso |  ᵜ9 |  | \msansp |  ᵜA |  | \msansq |  ᵜB |  | \msansr |
-|  ᵜC |  | \msanss |  ᵜD |  | \msanst |  ᵜE |  | \msansu |  ᵜF |  | \msansv |
-|  ᵝ0 |  | \msansw |  ᵝ1 |  | \msansx |  ᵝ2 |  | \msansy |  ᵝ3 |  | \msansz |
-|  ᵝ4 |  | \mbfsansA |  ᵝ5 |  | \mbfsansB |  ᵝ6 |  | \mbfsansC |  ᵝ7 |  | \mbfsansD |
-|  ᵝ8 |  | \mbfsansE |  ᵝ9 |  | \mbfsansF |  ᵝA |  | \mbfsansG |  ᵝB |  | \mbfsansH |
-|  ᵝC |  | \mbfsansI |  ᵝD |  | \mbfsansJ |  ᵝE |  | \mbfsansK |  ᵝF |  | \mbfsansL |
-|  ᵞ0 |  | \mbfsansM |  ᵞ1 |  | \mbfsansN |  ᵞ2 |  | \mbfsansO |  ᵞ3 |  | \mbfsansP |
-|  ᵞ4 |  | \mbfsansQ |  ᵞ5 |  | \mbfsansR |  ᵞ6 |  | \mbfsansS |  ᵞ7 |  | \mbfsansT |
-|  ᵞ8 |  | \mbfsansU |  ᵞ9 |  | \mbfsansV |  ᵞA |  | \mbfsansW |  ᵞB |  | \mbfsansX |
-|  ᵞC |  | \mbfsansY |  ᵞD |  | \mbfsansZ |  ᵞE |  | \mbfsansa |  ᵞF |  | \mbfsansb |
-|  ᵟ0 |  | \mbfsansc |  ᵟ1 |  | \mbfsansd |  ᵟ2 |  | \mbfsanse |  ᵟ3 |  | \mbfsansf |
-|  ᵟ4 |  | \mbfsansg |  ᵟ5 |  | \mbfsansh |  ᵟ6 |  | \mbfsansi |  ᵟ7 |  | \mbfsansj |
-|  ᵟ8 |  | \mbfsansk |  ᵟ9 |  | \mbfsansl |  ᵟA |  | \mbfsansm |  ᵟB |  | \mbfsansn |
-|  ᵟC |  | \mbfsanso |  ᵟD |  | \mbfsansp |  ᵟE |  | \mbfsansq |  ᵟF |  | \mbfsansr |
-|  ᵠ0 |  | \mbfsanss |  ᵠ1 |  | \mbfsanst |  ᵠ2 |  | \mbfsansu |  ᵠ3 |  | \mbfsansv |
-|  ᵠ4 |  | \mbfsansw |  ᵠ5 |  | \mbfsansx |  ᵠ6 |  | \mbfsansy |  ᵠ7 |  | \mbfsansz |
-|  ᵠ8 |  | \mitsansA |  ᵠ9 |  | \mitsansB |  ᵠA |  | \mitsansC |  ᵠB |  | \mitsansD |
-|  ᵠC |  | \mitsansE |  ᵠD |  | \mitsansF |  ᵠE |  | \mitsansG |  ᵠF |  | \mitsansH |
-|  ᵡ0 |  | \mitsansI |  ᵡ1 |  | \mitsansJ |  ᵡ2 |  | \mitsansK |  ᵡ3 |  | \mitsansL |
-|  ᵡ4 |  | \mitsansM |  ᵡ5 |  | \mitsansN |  ᵡ6 |  | \mitsansO |  ᵡ7 |  | \mitsansP |
-|  ᵡ8 |  | \mitsansQ |  ᵡ9 |  | \mitsansR |  ᵡA |  | \mitsansS |  ᵡB |  | \mitsansT |
-|  ᵡC |  | \mitsansU |  ᵡD |  | \mitsansV |  ᵡE |  | \mitsansW |  ᵡF |  | \mitsansX |
-|  ᵢ0 |  | \mitsansY |  ᵢ1 |  | \mitsansZ |  ᵢ2 |  | \mitsansa |  ᵢ3 |  | \mitsansb |
-|  ᵢ4 |  | \mitsansc |  ᵢ5 |  | \mitsansd |  ᵢ6 |  | \mitsanse |  ᵢ7 |  | \mitsansf |
-|  ᵢ8 |  | \mitsansg |  ᵢ9 |  | \mitsansh |  ᵢA |  | \mitsansi |  ᵢB |  | \mitsansj |
-|  ᵢC |  | \mitsansk |  ᵢD |  | \mitsansl |  ᵢE |  | \mitsansm |  ᵢF |  | \mitsansn |
-|  ᵣ0 |  | \mitsanso |  ᵣ1 |  | \mitsansp |  ᵣ2 |  | \mitsansq |  ᵣ3 |  | \mitsansr |
-|  ᵣ4 |  | \mitsanss |  ᵣ5 |  | \mitsanst |  ᵣ6 |  | \mitsansu |  ᵣ7 |  | \mitsansv |
-|  ᵣ8 |  | \mitsansw |  ᵣ9 |  | \mitsansx |  ᵣA |  | \mitsansy |  ᵣB |  | \mitsansz |
-|  ᵣC |  | \mbfitsansA |  ᵣD |  | \mbfitsansB |  ᵣE |  | \mbfitsansC |  ᵣF |  | \mbfitsansD |
-|  ᵤ0 |  | \mbfitsansE |  ᵤ1 |  | \mbfitsansF |  ᵤ2 |  | \mbfitsansG |  ᵤ3 |  | \mbfitsansH |
-|  ᵤ4 |  | \mbfitsansI |  ᵤ5 |  | \mbfitsansJ |  ᵤ6 |  | \mbfitsansK |  ᵤ7 |  | \mbfitsansL |
-|  ᵤ8 |  | \mbfitsansM |  ᵤ9 |  | \mbfitsansN |  ᵤA |  | \mbfitsansO |  ᵤB |  | \mbfitsansP |
-|  ᵤC |  | \mbfitsansQ |  ᵤD |  | \mbfitsansR |  ᵤE |  | \mbfitsansS |  ᵤF |  | \mbfitsansT |
-|  ᵥ0 |  | \mbfitsansU |  ᵥ1 |  | \mbfitsansV |  ᵥ2 |  | \mbfitsansW |  ᵥ3 |  | \mbfitsansX |
-|  ᵥ4 |  | \mbfitsansY |  ᵥ5 |  | \mbfitsansZ |  ᵥ6 |  | \mbfitsansa |  ᵥ7 |  | \mbfitsansb |
-|  ᵥ8 |  | \mbfitsansc |  ᵥ9 |  | \mbfitsansd |  ᵥA |  | \mbfitsanse |  ᵥB |  | \mbfitsansf |
-|  ᵥC |  | \mbfitsansg |  ᵥD |  | \mbfitsansh |  ᵥE |  | \mbfitsansi |  ᵥF |  | \mbfitsansj |
-|  ᵦ0 |  | \mbfitsansk |  ᵦ1 |  | \mbfitsansl |  ᵦ2 |  | \mbfitsansm |  ᵦ3 |  | \mbfitsansn |
-|  ᵦ4 |  | \mbfitsanso |  ᵦ5 |  | \mbfitsansp |  ᵦ6 |  | \mbfitsansq |  ᵦ7 |  | \mbfitsansr |
-|  ᵦ8 |  | \mbfitsanss |  ᵦ9 |  | \mbfitsanst |  ᵦA |  | \mbfitsansu |  ᵦB |  | \mbfitsansv |
-|  ᵦC |  | \mbfitsansw |  ᵦD |  | \mbfitsansx |  ᵦE |  | \mbfitsansy |  ᵦF |  | \mbfitsansz |
-|  ᵧ0 |  | \mttA |  ᵧ1 |  | \mttB |  ᵧ2 |  | \mttC |  ᵧ3 |  | \mttD |
-|  ᵧ4 |  | \mttE |  ᵧ5 |  | \mttF |  ᵧ6 |  | \mttG |  ᵧ7 |  | \mttH |
-|  ᵧ8 |  | \mttI |  ᵧ9 |  | \mttJ |  ᵧA |  | \mttK |  ᵧB |  | \mttL |
-|  ᵧC |  | \mttM |  ᵧD |  | \mttN |  ᵧE |  | \mttO |  ᵧF |  | \mttP |
-|  ᵨ0 |  | \mttQ |  ᵨ1 |  | \mttR |  ᵨ2 |  | \mttS |  ᵨ3 |  | \mttT |
-|  ᵨ4 |  | \mttU |  ᵨ5 |  | \mttV |  ᵨ6 |  | \mttW |  ᵨ7 |  | \mttX |
-|  ᵨ8 |  | \mttY |  ᵨ9 |  | \mttZ |  ᵨA |  | \mtta |  ᵨB |  | \mttb |
-|  ᵨC |  | \mttc |  ᵨD |  | \mttd |  ᵨE |  | \mtte |  ᵨF |  | \mttf |
-|  ᵩ0 |  | \mttg |  ᵩ1 |  | \mtth |  ᵩ2 |  | \mtti |  ᵩ3 |  | \mttj |
-|  ᵩ4 |  | \mttk |  ᵩ5 |  | \mttl |  ᵩ6 |  | \mttm |  ᵩ7 |  | \mttn |
-|  ᵩ8 |  | \mtto |  ᵩ9 |  | \mttp |  ᵩA |  | \mttq |  ᵩB |  | \mttr |
-|  ᵩC |  | \mtts |  ᵩD |  | \mttt |  ᵩE |  | \mttu |  ᵩF |  | \mttv |
-|  ᵪ0 |  | \mttw |  ᵪ1 |  | \mttx |  ᵪ2 |  | \mtty |  ᵪ3 |  | \mttz |
-|  ᵪ4 |  | \imath |  ᵪ5 |  | \jmath |  ᵪ8 |  | \mbfAlpha |  ᵪ9 |  | \mbfBeta |
-|  ᵪA |  | \mbfGamma |  ᵪB |  | \mbfDelta |  ᵪC |  | \mbfEpsilon |  ᵪD |  | \mbfZeta |
-|  ᵪE |  | \mbfEta |  ᵪF |  | \mbfTheta |  ᵫ0 |  | \mbfIota |  ᵫ1 |  | \mbfKappa |
-|  ᵫ2 |  | \mbfLambda |  ᵫ3 |  | \mbfMu |  ᵫ4 |  | \mbfNu |  ᵫ5 |  | \mbfXi |
-|  ᵫ6 |  | \mbfOmicron |  ᵫ7 |  | \mbfPi |  ᵫ8 |  | \mbfRho |  ᵫ9 |  | \mbfvarTheta |
-|  ᵫA |  | \mbfSigma |  ᵫB |  | \mbfTau |  ᵫC |  | \mbfUpsilon |  ᵫD |  | \mbfPhi |
-|  ᵫE |  | \mbfChi |  ᵫF |  | \mbfPsi |  ᵬ0 |  | \mbfOmega |  ᵬ1 |  | \mbfnabla |
-|  ᵬ2 |  | \mbfalpha |  ᵬ3 |  | \mbfbeta |  ᵬ4 |  | \mbfgamma |  ᵬ5 |  | \mbfdelta |
-|  ᵬ6 |  | \mbfvarepsilon |  ᵬ7 |  | \mbfzeta |  ᵬ8 |  | \mbfeta |  ᵬ9 |  | \mbftheta |
-|  ᵬA |  | \mbfiota |  ᵬB |  | \mbfkappa |  ᵬC |  | \mbflambda |  ᵬD |  | \mbfmu |
-|  ᵬE |  | \mbfnu |  ᵬF |  | \mbfxi |  ᵭ0 |  | \mbfomicron |  ᵭ1 |  | \mbfpi |
-|  ᵭ2 |  | \mbfrho |  ᵭ3 |  | \mbfvarsigma |  ᵭ4 |  | \mbfsigma |  ᵭ5 |  | \mbftau |
-|  ᵭ6 |  | \mbfupsilon |  ᵭ7 |  | \mbfvarphi |  ᵭ8 |  | \mbfchi |  ᵭ9 |  | \mbfpsi |
-|  ᵭA |  | \mbfomega |  ᵭB |  | \mbfpartial |  ᵭC |  | \mbfepsilon |  ᵭD |  | \mbfvartheta |
-|  ᵭE |  | \mbfvarkappa |  ᵭF |  | \mbfphi |  ᵮ0 |  | \mbfvarrho |  ᵮ1 |  | \mbfvarpi |
-|  ᵮ2 |  | \mitAlpha |  ᵮ3 |  | \mitBeta |  ᵮ4 |  | \mitGamma |  ᵮ5 |  | \mitDelta |
-|  ᵮ6 |  | \mitEpsilon |  ᵮ7 |  | \mitZeta |  ᵮ8 |  | \mitEta |  ᵮ9 |  | \mitTheta |
-|  ᵮA |  | \mitIota |  ᵮB |  | \mitKappa |  ᵮC |  | \mitLambda |  ᵮD |  | \mitMu |
-|  ᵮE |  | \mitNu |  ᵮF |  | \mitXi |  ᵯ0 |  | \mitOmicron |  ᵯ1 |  | \mitPi |
-|  ᵯ2 |  | \mitRho |  ᵯ3 |  | \mitvarTheta |  ᵯ4 |  | \mitSigma |  ᵯ5 |  | \mitTau |
-|  ᵯ6 |  | \mitUpsilon |  ᵯ7 |  | \mitPhi |  ᵯ8 |  | \mitChi |  ᵯ9 |  | \mitPsi |
-|  ᵯA |  | \mitOmega |  ᵯB |  | \mitnabla |  ᵯC |  | \mitalpha |  ᵯD |  | \mitbeta |
-|  ᵯE |  | \mitgamma |  ᵯF |  | \mitdelta |  ᵰ0 |  | \mitvarepsilon |  ᵰ1 |  | \mitzeta |
-|  ᵰ2 |  | \miteta |  ᵰ3 |  | \mittheta |  ᵰ4 |  | \mitiota |  ᵰ5 |  | \mitkappa |
-|  ᵰ6 |  | \mitlambda |  ᵰ7 |  | \mitmu |  ᵰ8 |  | \mitnu |  ᵰ9 |  | \mitxi |
-|  ᵰA |  | \mitomicron |  ᵰB |  | \mitpi |  ᵰC |  | \mitrho |  ᵰD |  | \mitvarsigma |
-|  ᵰE |  | \mitsigma |  ᵰF |  | \mittau |  ᵱ0 |  | \mitupsilon |  ᵱ1 |  | \mitvarphi |
-|  ᵱ2 |  | \mitchi |  ᵱ3 |  | \mitpsi |  ᵱ4 |  | \mitomega |  ᵱ5 |  | \mitpartial |
-|  ᵱ6 |  | \mitepsilon |  ᵱ7 |  | \mitvartheta |  ᵱ8 |  | \mitvarkappa |  ᵱ9 |  | \mitphi |
-|  ᵱA |  | \mitvarrho |  ᵱB |  | \mitvarpi |  ᵱC |  | \mbfitAlpha |  ᵱD |  | \mbfitBeta |
-|  ᵱE |  | \mbfitGamma |  ᵱF |  | \mbfitDelta |  ᵲ0 |  | \mbfitEpsilon |  ᵲ1 |  | \mbfitZeta |
-|  ᵲ2 |  | \mbfitEta |  ᵲ3 |  | \mbfitTheta |  ᵲ4 |  | \mbfitIota |  ᵲ5 |  | \mbfitKappa |
-|  ᵲ6 |  | \mbfitLambda |  ᵲ7 |  | \mbfitMu |  ᵲ8 |  | \mbfitNu |  ᵲ9 |  | \mbfitXi |
-|  ᵲA |  | \mbfitOmicron |  ᵲB |  | \mbfitPi |  ᵲC |  | \mbfitRho |  ᵲD |  | \mbfitvarTheta |
-|  ᵲE |  | \mbfitSigma |  ᵲF |  | \mbfitTau |  ᵳ0 |  | \mbfitUpsilon |  ᵳ1 |  | \mbfitPhi |
-|  ᵳ2 |  | \mbfitChi |  ᵳ3 |  | \mbfitPsi |  ᵳ4 |  | \mbfitOmega |  ᵳ5 |  | \mbfitnabla |
-|  ᵳ6 |  | \mbfitalpha |  ᵳ7 |  | \mbfitbeta |  ᵳ8 |  | \mbfitgamma |  ᵳ9 |  | \mbfitdelta |
-|  ᵳA |  | \mbfitvarepsilon |  ᵳB |  | \mbfitzeta |  ᵳC |  | \mbfiteta |  ᵳD |  | \mbfittheta |
-|  ᵳE |  | \mbfitiota |  ᵳF |  | \mbfitkappa |  ᵴ0 |  | \mbfitlambda |  ᵴ1 |  | \mbfitmu |
-|  ᵴ2 |  | \mbfitnu |  ᵴ3 |  | \mbfitxi |  ᵴ4 |  | \mbfitomicron |  ᵴ5 |  | \mbfitpi |
-|  ᵴ6 |  | \mbfitrho |  ᵴ7 |  | \mbfitvarsigma |  ᵴ8 |  | \mbfitsigma |  ᵴ9 |  | \mbfittau |
-|  ᵴA |  | \mbfitupsilon |  ᵴB |  | \mbfitvarphi |  ᵴC |  | \mbfitchi |  ᵴD |  | \mbfitpsi |
-|  ᵴE |  | \mbfitomega |  ᵴF |  | \mbfitpartial |  ᵵ0 |  | \mbfitepsilon |  ᵵ1 |  | \mbfitvartheta |
-|  ᵵ2 |  | \mbfitvarkappa |  ᵵ3 |  | \mbfitphi |  ᵵ4 |  | \mbfitvarrho |  ᵵ5 |  | \mbfitvarpi |
-|  ᵵ6 |  | \mbfsansAlpha |  ᵵ7 |  | \mbfsansBeta |  ᵵ8 |  | \mbfsansGamma |  ᵵ9 |  | \mbfsansDelta |
-|  ᵵA |  | \mbfsansEpsilon |  ᵵB |  | \mbfsansZeta |  ᵵC |  | \mbfsansEta |  ᵵD |  | \mbfsansTheta |
-|  ᵵE |  | \mbfsansIota |  ᵵF |  | \mbfsansKappa |  ᵶ0 |  | \mbfsansLambda |  ᵶ1 |  | \mbfsansMu |
-|  ᵶ2 |  | \mbfsansNu |  ᵶ3 |  | \mbfsansXi |  ᵶ4 |  | \mbfsansOmicron |  ᵶ5 |  | \mbfsansPi |
-|  ᵶ6 |  | \mbfsansRho |  ᵶ7 |  | \mbfsansvarTheta |  ᵶ8 |  | \mbfsansSigma |  ᵶ9 |  | \mbfsansTau |
-|  ᵶA |  | \mbfsansUpsilon |  ᵶB |  | \mbfsansPhi |  ᵶC |  | \mbfsansChi |  ᵶD |  | \mbfsansPsi |
-|  ᵶE |  | \mbfsansOmega |  ᵶF |  | \mbfsansnabla |  ᵷ0 |  | \mbfsansalpha |  ᵷ1 |  | \mbfsansbeta |
-|  ᵷ2 |  | \mbfsansgamma |  ᵷ3 |  | \mbfsansdelta |  ᵷ4 |  | \mbfsansvarepsilon |  ᵷ5 |  | \mbfsanszeta |
-|  ᵷ6 |  | \mbfsanseta |  ᵷ7 |  | \mbfsanstheta |  ᵷ8 |  | \mbfsansiota |  ᵷ9 |  | \mbfsanskappa |
-|  ᵷA |  | \mbfsanslambda |  ᵷB |  | \mbfsansmu |  ᵷC |  | \mbfsansnu |  ᵷD |  | \mbfsansxi |
-|  ᵷE |  | \mbfsansomicron |  ᵷF |  | \mbfsanspi |  ᵸ0 |  | \mbfsansrho |  ᵸ1 |  | \mbfsansvarsigma |
-|  ᵸ2 |  | \mbfsanssigma |  ᵸ3 |  | \mbfsanstau |  ᵸ4 |  | \mbfsansupsilon |  ᵸ5 |  | \mbfsansvarphi |
-|  ᵸ6 |  | \mbfsanschi |  ᵸ7 |  | \mbfsanspsi |  ᵸ8 |  | \mbfsansomega |  ᵸ9 |  | \mbfsanspartial |
-|  ᵸA |  | \mbfsansepsilon |  ᵸB |  | \mbfsansvartheta |  ᵸC |  | \mbfsansvarkappa |  ᵸD |  | \mbfsansphi |
-|  ᵸE |  | \mbfsansvarrho |  ᵸF |  | \mbfsansvarpi |  ᵹ0 |  | \mbfitsansAlpha |  ᵹ1 |  | \mbfitsansBeta |
-|  ᵹ2 |  | \mbfitsansGamma |  ᵹ3 |  | \mbfitsansDelta |  ᵹ4 |  | \mbfitsansEpsilon |  ᵹ5 |  | \mbfitsansZeta |
-|  ᵹ6 |  | \mbfitsansEta |  ᵹ7 |  | \mbfitsansTheta |  ᵹ8 |  | \mbfitsansIota |  ᵹ9 |  | \mbfitsansKappa |
-|  ᵹA |  | \mbfitsansLambda |  ᵹB |  | \mbfitsansMu |  ᵹC |  | \mbfitsansNu |  ᵹD |  | \mbfitsansXi |
-|  ᵹE |  | \mbfitsansOmicron |  ᵹF |  | \mbfitsansPi |  ᵺ0 |  | \mbfitsansRho |  ᵺ1 |  | \mbfitsansvarTheta |
-|  ᵺ2 |  | \mbfitsansSigma |  ᵺ3 |  | \mbfitsansTau |  ᵺ4 |  | \mbfitsansUpsilon |  ᵺ5 |  | \mbfitsansPhi |
-|  ᵺ6 |  | \mbfitsansChi |  ᵺ7 |  | \mbfitsansPsi |  ᵺ8 |  | \mbfitsansOmega |  ᵺ9 |  | \mbfitsansnabla |
-|  ᵺA |  | \mbfitsansalpha |  ᵺB |  | \mbfitsansbeta |  ᵺC |  | \mbfitsansgamma |  ᵺD |  | \mbfitsansdelta |
-|  ᵺE |  | \mbfitsansvarepsilon |  ᵺF |  | \mbfitsanszeta |  ᵻ0 |  | \mbfitsanseta |  ᵻ1 |  | \mbfitsanstheta |
-|  ᵻ2 |  | \mbfitsansiota |  ᵻ3 |  | \mbfitsanskappa |  ᵻ4 |  | \mbfitsanslambda |  ᵻ5 |  | \mbfitsansmu |
-|  ᵻ6 |  | \mbfitsansnu |  ᵻ7 |  | \mbfitsansxi |  ᵻ8 |  | \mbfitsansomicron |  ᵻ9 |  | \mbfitsanspi |
-|  ᵻA |  | \mbfitsansrho |  ᵻB |  | \mbfitsansvarsigma |  ᵻC |  | \mbfitsanssigma |  ᵻD |  | \mbfitsanstau |
-|  ᵻE |  | \mbfitsansupsilon |  ᵻF |  | \mbfitsansvarphi |  ᵼ0 |  | \mbfitsanschi |  ᵼ1 |  | \mbfitsanspsi |
-|  ᵼ2 |  | \mbfitsansomega |  ᵼ3 |  | \mbfitsanspartial |  ᵼ4 |  | \mbfitsansepsilon |  ᵼ5 |  | \mbfitsansvartheta |
-|  ᵼ6 |  | \mbfitsansvarkappa |  ᵼ7 |  | \mbfitsansphi |  ᵼ8 |  | \mbfitsansvarrho |  ᵼ9 |  | \mbfitsansvarpi |
-|  ᵼA |  | \mbfDigamma |  ᵼB |  | \mbfdigamma |  ᵼE |  | \mbfzero |  ᵼF |  | \mbfone |
-|  ᵽ0 |  | \mbftwo |  ᵽ1 |  | \mbfthree |  ᵽ2 |  | \mbffour |  ᵽ3 |  | \mbffive |
-|  ᵽ4 |  | \mbfsix |  ᵽ5 |  | \mbfseven |  ᵽ6 |  | \mbfeight |  ᵽ7 |  | \mbfnine |
-|  ᵽ8 |  | \Bbbzero |  ᵽ9 |  | \Bbbone |  ᵽA |  | \Bbbtwo |  ᵽB |  | \Bbbthree |
-|  ᵽC |  | \Bbbfour |  ᵽD |  | \Bbbfive |  ᵽE |  | \Bbbsix |  ᵽF |  | \Bbbseven |
-|  ᵾ0 |  | \Bbbeight |  ᵾ1 |  | \Bbbnine |  ᵾ2 |  | \msanszero |  ᵾ3 |  | \msansone |
-|  ᵾ4 |  | \msanstwo |  ᵾ5 |  | \msansthree |  ᵾ6 |  | \msansfour |  ᵾ7 |  | \msansfive |
-|  ᵾ8 |  | \msanssix |  ᵾ9 |  | \msansseven |  ᵾA |  | \msanseight |  ᵾB |  | \msansnine |
-|  ᵾC |  | \mbfsanszero |  ᵾD |  | \mbfsansone |  ᵾE |  | \mbfsanstwo |  ᵾF |  | \mbfsansthree |
-|  ᵿ0 |  | \mbfsansfour |  ᵿ1 |  | \mbfsansfive |  ᵿ2 |  | \mbfsanssix |  ᵿ3 |  | \mbfsansseven |
-|  ᵿ4 |  | \mbfsanseight |  ᵿ5 |  | \mbfsansnine |  ᵿ6 |  | \mttzero |  ᵿ7 |  | \mttone |
-|  ᵿ8 |  | \mtttwo |  ᵿ9 |  | \mttthree |  ᵿA |  | \mttfour |  ᵿB |  | \mttfive |
-|  ᵿC |  | \mttsix |  ᵿD |  | \mttseven |  ᵿE |  | \mtteight |  ᵿF |  | \mttnine |
-|  ữ0 |  | \arabicmaj |  ữ1 |  | \arabichad |  ‐ |  | \mathhyphen |  ― |  | \horizbar |
-|  ‗ |  | \twolowline |  ‥ |  | \enleadertwodots |  ″ |  | \dprime |  ‴ |  | \trprime |
-|  ‵ |  | \backprime |  ‶ |  | \backdprime |  ‷ |  | \backtrprime |  ‸ |  | \caretinsert |
-|  ‼ |  | \Exclam |  ⁀ |  | \tieconcat |  ⁃ |  | \hyphenbullet |  ⁄ |  | \fracslash |
-|  ⁇ |  | \Question |  ⁐ |  | \closure |  ⁗ |  | \qprime |  € |  | \euro |
+|  € |  | \euro |  ̀ |  | \grave |  ́ |  | \acute |  ̂ |  | \hat |
+|  ̃ |  | \tilde |  ̄ |  | \bar |  ̆ |  | \breve |  ̇ |  | \dot |
+|  ̈ |  | \ddot |  ̉ |  | \ovhook |  ̌ |  | \check |  ̐ |  | \candra |
+|  ̒ |  | \oturnedcomma |  ̕ |  | \ocommatopright |  ̚ |  | \droang |  ͍ |  | \underleftrightarrow |
+|  Α |  | \mupAlpha |  Β |  | \mupBeta |  Γ |  | \mupGamma |  Δ |  | \mupDelta |
+|  Ε |  | \mupEpsilon |  Ζ |  | \mupZeta |  Η |  | \mupEta |  Θ |  | \mupTheta |
+|  Ι |  | \mupIota |  Κ |  | \mupKappa |  Λ |  | \mupLambda |  Μ |  | \mupMu |
+|  Ν |  | \mupNu |  Ο |  | \mupOmicron |  Ρ |  | \mupRho |  Τ |  | \mupTau |
+|  Χ |  | \mupChi |  ο |  | \mupomicron |  ϐ |  | \varbeta |  ϰ |  | \varkappa |
+|  ϶ |  | \upbackepsilon |  𝐀 |  | \mbfA |  𝐁 |  | \mbfB |  𝐂 |  | \mbfC |
+|  𝐃 |  | \mbfD |  𝐄 |  | \mbfE |  𝐅 |  | \mbfF |  𝐆 |  | \mbfG |
+|  𝐇 |  | \mbfH |  𝐈 |  | \mbfI |  𝐉 |  | \mbfJ |  𝐊 |  | \mbfK |
+|  𝐋 |  | \mbfL |  𝐌 |  | \mbfM |  𝐍 |  | \mbfN |  𝐎 |  | \mbfO |
+|  𝐏 |  | \mbfP |  𝐐 |  | \mbfQ |  𝐑 |  | \mbfR |  𝐒 |  | \mbfS |
+|  𝐓 |  | \mbfT |  𝐔 |  | \mbfU |  𝐕 |  | \mbfV |  𝐖 |  | \mbfW |
+|  𝐗 |  | \mbfX |  𝐘 |  | \mbfY |  𝐙 |  | \mbfZ |  𝐚 |  | \mbfa |
+|  𝐛 |  | \mbfb |  𝐜 |  | \mbfc |  𝐝 |  | \mbfd |  𝐞 |  | \mbfe |
+|  𝐟 |  | \mbff |  𝐠 |  | \mbfg |  𝐡 |  | \mbfh |  𝐢 |  | \mbfi |
+|  𝐣 |  | \mbfj |  𝐤 |  | \mbfk |  𝐥 |  | \mbfl |  𝐦 |  | \mbfm |
+|  𝐧 |  | \mbfn |  𝐨 |  | \mbfo |  𝐩 |  | \mbfp |  𝐪 |  | \mbfq |
+|  𝐫 |  | \mbfr |  𝐬 |  | \mbfs |  𝐭 |  | \mbft |  𝐮 |  | \mbfu |
+|  𝐯 |  | \mbfv |  𝐰 |  | \mbfw |  𝐱 |  | \mbfx |  𝐲 |  | \mbfy |
+|  𝐳 |  | \mbfz |  𝐴 |  | \mitA |  𝐵 |  | \mitB |  𝐶 |  | \mitC |
+|  𝐷 |  | \mitD |  𝐸 |  | \mitE |  𝐹 |  | \mitF |  𝐺 |  | \mitG |
+|  𝐻 |  | \mitH |  𝐼 |  | \mitI |  𝐽 |  | \mitJ |  𝐾 |  | \mitK |
+|  𝐿 |  | \mitL |  𝑀 |  | \mitM |  𝑁 |  | \mitN |  𝑂 |  | \mitO |
+|  𝑃 |  | \mitP |  𝑄 |  | \mitQ |  𝑅 |  | \mitR |  𝑆 |  | \mitS |
+|  𝑇 |  | \mitT |  𝑈 |  | \mitU |  𝑉 |  | \mitV |  𝑊 |  | \mitW |
+|  𝑋 |  | \mitX |  𝑌 |  | \mitY |  𝑍 |  | \mitZ |  𝑎 |  | \mita |
+|  𝑏 |  | \mitb |  𝑐 |  | \mitc |  𝑑 |  | \mitd |  𝑒 |  | \mite |
+|  𝑓 |  | \mitf |  𝑔 |  | \mitg |  𝑖 |  | \miti |  𝑗 |  | \mitj |
+|  𝑘 |  | \mitk |  𝑙 |  | \mitl |  𝑚 |  | \mitm |  𝑛 |  | \mitn |
+|  𝑜 |  | \mito |  𝑝 |  | \mitp |  𝑞 |  | \mitq |  𝑟 |  | \mitr |
+|  𝑠 |  | \mits |  𝑡 |  | \mitt |  𝑢 |  | \mitu |  𝑣 |  | \mitv |
+|  𝑤 |  | \mitw |  𝑥 |  | \mitx |  𝑦 |  | \mity |  𝑧 |  | \mitz |
+|  𝑨 |  | \mbfitA |  𝑩 |  | \mbfitB |  𝑪 |  | \mbfitC |  𝑫 |  | \mbfitD |
+|  𝑬 |  | \mbfitE |  𝑭 |  | \mbfitF |  𝑮 |  | \mbfitG |  𝑯 |  | \mbfitH |
+|  𝑰 |  | \mbfitI |  𝑱 |  | \mbfitJ |  𝑲 |  | \mbfitK |  𝑳 |  | \mbfitL |
+|  𝑴 |  | \mbfitM |  𝑵 |  | \mbfitN |  𝑶 |  | \mbfitO |  𝑷 |  | \mbfitP |
+|  𝑸 |  | \mbfitQ |  𝑹 |  | \mbfitR |  𝑺 |  | \mbfitS |  𝑻 |  | \mbfitT |
+|  𝑼 |  | \mbfitU |  𝑽 |  | \mbfitV |  𝑾 |  | \mbfitW |  𝑿 |  | \mbfitX |
+|  𝒀 |  | \mbfitY |  𝒁 |  | \mbfitZ |  𝒂 |  | \mbfita |  𝒃 |  | \mbfitb |
+|  𝒄 |  | \mbfitc |  𝒅 |  | \mbfitd |  𝒆 |  | \mbfite |  𝒇 |  | \mbfitf |
+|  𝒈 |  | \mbfitg |  𝒉 |  | \mbfith |  𝒊 |  | \mbfiti |  𝒋 |  | \mbfitj |
+|  𝒌 |  | \mbfitk |  𝒍 |  | \mbfitl |  𝒎 |  | \mbfitm |  𝒏 |  | \mbfitn |
+|  𝒐 |  | \mbfito |  𝒑 |  | \mbfitp |  𝒒 |  | \mbfitq |  𝒓 |  | \mbfitr |
+|  𝒔 |  | \mbfits |  𝒕 |  | \mbfitt |  𝒖 |  | \mbfitu |  𝒗 |  | \mbfitv |
+|  𝒘 |  | \mbfitw |  𝒙 |  | \mbfitx |  𝒚 |  | \mbfity |  𝒛 |  | \mbfitz |
+|  𝒜 |  | \mscrA |  𝒞 |  | \mscrC |  𝒟 |  | \mscrD |  𝒢 |  | \mscrG |
+|  𝒥 |  | \mscrJ |  𝒦 |  | \mscrK |  𝒩 |  | \mscrN |  𝒪 |  | \mscrO |
+|  𝒫 |  | \mscrP |  𝒬 |  | \mscrQ |  𝒮 |  | \mscrS |  𝒯 |  | \mscrT |
+|  𝒰 |  | \mscrU |  𝒱 |  | \mscrV |  𝒲 |  | \mscrW |  𝒳 |  | \mscrX |
+|  𝒴 |  | \mscrY |  𝒵 |  | \mscrZ |  𝒶 |  | \mscra |  𝒷 |  | \mscrb |
+|  𝒸 |  | \mscrc |  𝒹 |  | \mscrd |  𝒻 |  | \mscrf |  𝒽 |  | \mscrh |
+|  𝒾 |  | \mscri |  𝒿 |  | \mscrj |  𝓀 |  | \mscrk |  𝓁 |  | \mscrl |
+|  𝓂 |  | \mscrm |  𝓃 |  | \mscrn |  𝓅 |  | \mscrp |  𝓆 |  | \mscrq |
+|  𝓇 |  | \mscrr |  𝓈 |  | \mscrs |  𝓉 |  | \mscrt |  𝓊 |  | \mscru |
+|  𝓋 |  | \mscrv |  𝓌 |  | \mscrw |  𝓍 |  | \mscrx |  𝓎 |  | \mscry |
+|  𝓏 |  | \mscrz |  𝓐 |  | \mbfscrA |  𝓑 |  | \mbfscrB |  𝓒 |  | \mbfscrC |
+|  𝓓 |  | \mbfscrD |  𝓔 |  | \mbfscrE |  𝓕 |  | \mbfscrF |  𝓖 |  | \mbfscrG |
+|  𝓗 |  | \mbfscrH |  𝓘 |  | \mbfscrI |  𝓙 |  | \mbfscrJ |  𝓚 |  | \mbfscrK |
+|  𝓛 |  | \mbfscrL |  𝓜 |  | \mbfscrM |  𝓝 |  | \mbfscrN |  𝓞 |  | \mbfscrO |
+|  𝓟 |  | \mbfscrP |  𝓠 |  | \mbfscrQ |  𝓡 |  | \mbfscrR |  𝓢 |  | \mbfscrS |
+|  𝓣 |  | \mbfscrT |  𝓤 |  | \mbfscrU |  𝓥 |  | \mbfscrV |  𝓦 |  | \mbfscrW |
+|  𝓧 |  | \mbfscrX |  𝓨 |  | \mbfscrY |  𝓩 |  | \mbfscrZ |  𝓪 |  | \mbfscra |
+|  𝓫 |  | \mbfscrb |  𝓬 |  | \mbfscrc |  𝓭 |  | \mbfscrd |  𝓮 |  | \mbfscre |
+|  𝓯 |  | \mbfscrf |  𝓰 |  | \mbfscrg |  𝓱 |  | \mbfscrh |  𝓲 |  | \mbfscri |
+|  𝓳 |  | \mbfscrj |  𝓴 |  | \mbfscrk |  𝓵 |  | \mbfscrl |  𝓶 |  | \mbfscrm |
+|  𝓷 |  | \mbfscrn |  𝓸 |  | \mbfscro |  𝓹 |  | \mbfscrp |  𝓺 |  | \mbfscrq |
+|  𝓻 |  | \mbfscrr |  𝓼 |  | \mbfscrs |  𝓽 |  | \mbfscrt |  𝓾 |  | \mbfscru |
+|  𝓿 |  | \mbfscrv |  𝔀 |  | \mbfscrw |  𝔁 |  | \mbfscrx |  𝔂 |  | \mbfscry |
+|  𝔃 |  | \mbfscrz |  𝔄 |  | \mfrakA |  𝔅 |  | \mfrakB |  𝔇 |  | \mfrakD |
+|  𝔈 |  | \mfrakE |  𝔉 |  | \mfrakF |  𝔊 |  | \mfrakG |  𝔍 |  | \mfrakJ |
+|  𝔎 |  | \mfrakK |  𝔏 |  | \mfrakL |  𝔐 |  | \mfrakM |  𝔑 |  | \mfrakN |
+|  𝔒 |  | \mfrakO |  𝔓 |  | \mfrakP |  𝔔 |  | \mfrakQ |  𝔖 |  | \mfrakS |
+|  𝔗 |  | \mfrakT |  𝔘 |  | \mfrakU |  𝔙 |  | \mfrakV |  𝔚 |  | \mfrakW |
+|  𝔛 |  | \mfrakX |  𝔜 |  | \mfrakY |  𝔞 |  | \mfraka |  𝔟 |  | \mfrakb |
+|  𝔠 |  | \mfrakc |  𝔡 |  | \mfrakd |  𝔢 |  | \mfrake |  𝔣 |  | \mfrakf |
+|  𝔤 |  | \mfrakg |  𝔥 |  | \mfrakh |  𝔦 |  | \mfraki |  𝔧 |  | \mfrakj |
+|  𝔨 |  | \mfrakk |  𝔩 |  | \mfrakl |  𝔪 |  | \mfrakm |  𝔫 |  | \mfrakn |
+|  𝔬 |  | \mfrako |  𝔭 |  | \mfrakp |  𝔮 |  | \mfrakq |  𝔯 |  | \mfrakr |
+|  𝔰 |  | \mfraks |  𝔱 |  | \mfrakt |  𝔲 |  | \mfraku |  𝔳 |  | \mfrakv |
+|  𝔴 |  | \mfrakw |  𝔵 |  | \mfrakx |  𝔶 |  | \mfraky |  𝔷 |  | \mfrakz |
+|  𝔸 |  | \BbbA |  𝔹 |  | \BbbB |  𝔻 |  | \BbbD |  𝔼 |  | \BbbE |
+|  𝔽 |  | \BbbF |  𝔾 |  | \BbbG |  𝕀 |  | \BbbI |  𝕁 |  | \BbbJ |
+|  𝕂 |  | \BbbK |  𝕃 |  | \BbbL |  𝕄 |  | \BbbM |  𝕆 |  | \BbbO |
+|  𝕊 |  | \BbbS |  𝕋 |  | \BbbT |  𝕌 |  | \BbbU |  𝕍 |  | \BbbV |
+|  𝕎 |  | \BbbW |  𝕏 |  | \BbbX |  𝕐 |  | \BbbY |  𝕒 |  | \Bbba |
+|  𝕓 |  | \Bbbb |  𝕔 |  | \Bbbc |  𝕕 |  | \Bbbd |  𝕖 |  | \Bbbe |
+|  𝕗 |  | \Bbbf |  𝕘 |  | \Bbbg |  𝕙 |  | \Bbbh |  𝕚 |  | \Bbbi |
+|  𝕛 |  | \Bbbj |  𝕜 |  | \Bbbk |  𝕝 |  | \Bbbl |  𝕞 |  | \Bbbm |
+|  𝕟 |  | \Bbbn |  𝕠 |  | \Bbbo |  𝕡 |  | \Bbbp |  𝕢 |  | \Bbbq |
+|  𝕣 |  | \Bbbr |  𝕤 |  | \Bbbs |  𝕥 |  | \Bbbt |  𝕦 |  | \Bbbu |
+|  𝕧 |  | \Bbbv |  𝕨 |  | \Bbbw |  𝕩 |  | \Bbbx |  𝕪 |  | \Bbby |
+|  𝕫 |  | \Bbbz |  𝕬 |  | \mbffrakA |  𝕭 |  | \mbffrakB |  𝕮 |  | \mbffrakC |
+|  𝕯 |  | \mbffrakD |  𝕰 |  | \mbffrakE |  𝕱 |  | \mbffrakF |  𝕲 |  | \mbffrakG |
+|  𝕳 |  | \mbffrakH |  𝕴 |  | \mbffrakI |  𝕵 |  | \mbffrakJ |  𝕶 |  | \mbffrakK |
+|  𝕷 |  | \mbffrakL |  𝕸 |  | \mbffrakM |  𝕹 |  | \mbffrakN |  𝕺 |  | \mbffrakO |
+|  𝕻 |  | \mbffrakP |  𝕼 |  | \mbffrakQ |  𝕽 |  | \mbffrakR |  𝕾 |  | \mbffrakS |
+|  𝕿 |  | \mbffrakT |  𝖀 |  | \mbffrakU |  𝖁 |  | \mbffrakV |  𝖂 |  | \mbffrakW |
+|  𝖃 |  | \mbffrakX |  𝖄 |  | \mbffrakY |  𝖅 |  | \mbffrakZ |  𝖆 |  | \mbffraka |
+|  𝖇 |  | \mbffrakb |  𝖈 |  | \mbffrakc |  𝖉 |  | \mbffrakd |  𝖊 |  | \mbffrake |
+|  𝖋 |  | \mbffrakf |  𝖌 |  | \mbffrakg |  𝖍 |  | \mbffrakh |  𝖎 |  | \mbffraki |
+|  𝖏 |  | \mbffrakj |  𝖐 |  | \mbffrakk |  𝖑 |  | \mbffrakl |  𝖒 |  | \mbffrakm |
+|  𝖓 |  | \mbffrakn |  𝖔 |  | \mbffrako |  𝖕 |  | \mbffrakp |  𝖖 |  | \mbffrakq |
+|  𝖗 |  | \mbffrakr |  𝖘 |  | \mbffraks |  𝖙 |  | \mbffrakt |  𝖚 |  | \mbffraku |
+|  𝖛 |  | \mbffrakv |  𝖜 |  | \mbffrakw |  𝖝 |  | \mbffrakx |  𝖞 |  | \mbffraky |
+|  𝖟 |  | \mbffrakz |  𝖠 |  | \msansA |  𝖡 |  | \msansB |  𝖢 |  | \msansC |
+|  𝖣 |  | \msansD |  𝖤 |  | \msansE |  𝖥 |  | \msansF |  𝖦 |  | \msansG |
+|  𝖧 |  | \msansH |  𝖨 |  | \msansI |  𝖩 |  | \msansJ |  𝖪 |  | \msansK |
+|  𝖫 |  | \msansL |  𝖬 |  | \msansM |  𝖭 |  | \msansN |  𝖮 |  | \msansO |
+|  𝖯 |  | \msansP |  𝖰 |  | \msansQ |  𝖱 |  | \msansR |  𝖲 |  | \msansS |
+|  𝖳 |  | \msansT |  𝖴 |  | \msansU |  𝖵 |  | \msansV |  𝖶 |  | \msansW |
+|  𝖷 |  | \msansX |  𝖸 |  | \msansY |  𝖹 |  | \msansZ |  𝖺 |  | \msansa |
+|  𝖻 |  | \msansb |  𝖼 |  | \msansc |  𝖽 |  | \msansd |  𝖾 |  | \msanse |
+|  𝖿 |  | \msansf |  𝗀 |  | \msansg |  𝗁 |  | \msansh |  𝗂 |  | \msansi |
+|  𝗃 |  | \msansj |  𝗄 |  | \msansk |  𝗅 |  | \msansl |  𝗆 |  | \msansm |
+|  𝗇 |  | \msansn |  𝗈 |  | \msanso |  𝗉 |  | \msansp |  𝗊 |  | \msansq |
+|  𝗋 |  | \msansr |  𝗌 |  | \msanss |  𝗍 |  | \msanst |  𝗎 |  | \msansu |
+|  𝗏 |  | \msansv |  𝗐 |  | \msansw |  𝗑 |  | \msansx |  𝗒 |  | \msansy |
+|  𝗓 |  | \msansz |  𝗔 |  | \mbfsansA |  𝗕 |  | \mbfsansB |  𝗖 |  | \mbfsansC |
+|  𝗗 |  | \mbfsansD |  𝗘 |  | \mbfsansE |  𝗙 |  | \mbfsansF |  𝗚 |  | \mbfsansG |
+|  𝗛 |  | \mbfsansH |  𝗜 |  | \mbfsansI |  𝗝 |  | \mbfsansJ |  𝗞 |  | \mbfsansK |
+|  𝗟 |  | \mbfsansL |  𝗠 |  | \mbfsansM |  𝗡 |  | \mbfsansN |  𝗢 |  | \mbfsansO |
+|  𝗣 |  | \mbfsansP |  𝗤 |  | \mbfsansQ |  𝗥 |  | \mbfsansR |  𝗦 |  | \mbfsansS |
+|  𝗧 |  | \mbfsansT |  𝗨 |  | \mbfsansU |  𝗩 |  | \mbfsansV |  𝗪 |  | \mbfsansW |
+|  𝗫 |  | \mbfsansX |  𝗬 |  | \mbfsansY |  𝗭 |  | \mbfsansZ |  𝗮 |  | \mbfsansa |
+|  𝗯 |  | \mbfsansb |  𝗰 |  | \mbfsansc |  𝗱 |  | \mbfsansd |  𝗲 |  | \mbfsanse |
+|  𝗳 |  | \mbfsansf |  𝗴 |  | \mbfsansg |  𝗵 |  | \mbfsansh |  𝗶 |  | \mbfsansi |
+|  𝗷 |  | \mbfsansj |  𝗸 |  | \mbfsansk |  𝗹 |  | \mbfsansl |  𝗺 |  | \mbfsansm |
+|  𝗻 |  | \mbfsansn |  𝗼 |  | \mbfsanso |  𝗽 |  | \mbfsansp |  𝗾 |  | \mbfsansq |
+|  𝗿 |  | \mbfsansr |  𝘀 |  | \mbfsanss |  𝘁 |  | \mbfsanst |  𝘂 |  | \mbfsansu |
+|  𝘃 |  | \mbfsansv |  𝘄 |  | \mbfsansw |  𝘅 |  | \mbfsansx |  𝘆 |  | \mbfsansy |
+|  𝘇 |  | \mbfsansz |  𝘈 |  | \mitsansA |  𝘉 |  | \mitsansB |  𝘊 |  | \mitsansC |
+|  𝘋 |  | \mitsansD |  𝘌 |  | \mitsansE |  𝘍 |  | \mitsansF |  𝘎 |  | \mitsansG |
+|  𝘏 |  | \mitsansH |  𝘐 |  | \mitsansI |  𝘑 |  | \mitsansJ |  𝘒 |  | \mitsansK |
+|  𝘓 |  | \mitsansL |  𝘔 |  | \mitsansM |  𝘕 |  | \mitsansN |  𝘖 |  | \mitsansO |
+|  𝘗 |  | \mitsansP |  𝘘 |  | \mitsansQ |  𝘙 |  | \mitsansR |  𝘚 |  | \mitsansS |
+|  𝘛 |  | \mitsansT |  𝘜 |  | \mitsansU |  𝘝 |  | \mitsansV |  𝘞 |  | \mitsansW |
+|  𝘟 |  | \mitsansX |  𝘠 |  | \mitsansY |  𝘡 |  | \mitsansZ |  𝘢 |  | \mitsansa |
+|  𝘣 |  | \mitsansb |  𝘤 |  | \mitsansc |  𝘥 |  | \mitsansd |  𝘦 |  | \mitsanse |
+|  𝘧 |  | \mitsansf |  𝘨 |  | \mitsansg |  𝘩 |  | \mitsansh |  𝘪 |  | \mitsansi |
+|  𝘫 |  | \mitsansj |  𝘬 |  | \mitsansk |  𝘭 |  | \mitsansl |  𝘮 |  | \mitsansm |
+|  𝘯 |  | \mitsansn |  𝘰 |  | \mitsanso |  𝘱 |  | \mitsansp |  𝘲 |  | \mitsansq |
+|  𝘳 |  | \mitsansr |  𝘴 |  | \mitsanss |  𝘵 |  | \mitsanst |  𝘶 |  | \mitsansu |
+|  𝘷 |  | \mitsansv |  𝘸 |  | \mitsansw |  𝘹 |  | \mitsansx |  𝘺 |  | \mitsansy |
+|  𝘻 |  | \mitsansz |  𝘼 |  | \mbfitsansA |  𝘽 |  | \mbfitsansB |  𝘾 |  | \mbfitsansC |
+|  𝘿 |  | \mbfitsansD |  𝙀 |  | \mbfitsansE |  𝙁 |  | \mbfitsansF |  𝙂 |  | \mbfitsansG |
+|  𝙃 |  | \mbfitsansH |  𝙄 |  | \mbfitsansI |  𝙅 |  | \mbfitsansJ |  𝙆 |  | \mbfitsansK |
+|  𝙇 |  | \mbfitsansL |  𝙈 |  | \mbfitsansM |  𝙉 |  | \mbfitsansN |  𝙊 |  | \mbfitsansO |
+|  𝙋 |  | \mbfitsansP |  𝙌 |  | \mbfitsansQ |  𝙍 |  | \mbfitsansR |  𝙎 |  | \mbfitsansS |
+|  𝙏 |  | \mbfitsansT |  𝙐 |  | \mbfitsansU |  𝙑 |  | \mbfitsansV |  𝙒 |  | \mbfitsansW |
+|  𝙓 |  | \mbfitsansX |  𝙔 |  | \mbfitsansY |  𝙕 |  | \mbfitsansZ |  𝙖 |  | \mbfitsansa |
+|  𝙗 |  | \mbfitsansb |  𝙘 |  | \mbfitsansc |  𝙙 |  | \mbfitsansd |  𝙚 |  | \mbfitsanse |
+|  𝙛 |  | \mbfitsansf |  𝙜 |  | \mbfitsansg |  𝙝 |  | \mbfitsansh |  𝙞 |  | \mbfitsansi |
+|  𝙟 |  | \mbfitsansj |  𝙠 |  | \mbfitsansk |  𝙡 |  | \mbfitsansl |  𝙢 |  | \mbfitsansm |
+|  𝙣 |  | \mbfitsansn |  𝙤 |  | \mbfitsanso |  𝙥 |  | \mbfitsansp |  𝙦 |  | \mbfitsansq |
+|  𝙧 |  | \mbfitsansr |  𝙨 |  | \mbfitsanss |  𝙩 |  | \mbfitsanst |  𝙪 |  | \mbfitsansu |
+|  𝙫 |  | \mbfitsansv |  𝙬 |  | \mbfitsansw |  𝙭 |  | \mbfitsansx |  𝙮 |  | \mbfitsansy |
+|  𝙯 |  | \mbfitsansz |  𝙰 |  | \mttA |  𝙱 |  | \mttB |  𝙲 |  | \mttC |
+|  𝙳 |  | \mttD |  𝙴 |  | \mttE |  𝙵 |  | \mttF |  𝙶 |  | \mttG |
+|  𝙷 |  | \mttH |  𝙸 |  | \mttI |  𝙹 |  | \mttJ |  𝙺 |  | \mttK |
+|  𝙻 |  | \mttL |  𝙼 |  | \mttM |  𝙽 |  | \mttN |  𝙾 |  | \mttO |
+|  𝙿 |  | \mttP |  𝚀 |  | \mttQ |  𝚁 |  | \mttR |  𝚂 |  | \mttS |
+|  𝚃 |  | \mttT |  𝚄 |  | \mttU |  𝚅 |  | \mttV |  𝚆 |  | \mttW |
+|  𝚇 |  | \mttX |  𝚈 |  | \mttY |  𝚉 |  | \mttZ |  𝚊 |  | \mtta |
+|  𝚋 |  | \mttb |  𝚌 |  | \mttc |  𝚍 |  | \mttd |  𝚎 |  | \mtte |
+|  𝚏 |  | \mttf |  𝚐 |  | \mttg |  𝚑 |  | \mtth |  𝚒 |  | \mtti |
+|  𝚓 |  | \mttj |  𝚔 |  | \mttk |  𝚕 |  | \mttl |  𝚖 |  | \mttm |
+|  𝚗 |  | \mttn |  𝚘 |  | \mtto |  𝚙 |  | \mttp |  𝚚 |  | \mttq |
+|  𝚛 |  | \mttr |  𝚜 |  | \mtts |  𝚝 |  | \mttt |  𝚞 |  | \mttu |
+|  𝚟 |  | \mttv |  𝚠 |  | \mttw |  𝚡 |  | \mttx |  𝚢 |  | \mtty |
+|  𝚣 |  | \mttz |  𝚤 |  | \imath |  𝚥 |  | \jmath |  𝚨 |  | \mbfAlpha |
+|  𝚩 |  | \mbfBeta |  𝚪 |  | \mbfGamma |  𝚫 |  | \mbfDelta |  𝚬 |  | \mbfEpsilon |
+|  𝚭 |  | \mbfZeta |  𝚮 |  | \mbfEta |  𝚯 |  | \mbfTheta |  𝚰 |  | \mbfIota |
+|  𝚱 |  | \mbfKappa |  𝚲 |  | \mbfLambda |  𝚳 |  | \mbfMu |  𝚴 |  | \mbfNu |
+|  𝚵 |  | \mbfXi |  𝚶 |  | \mbfOmicron |  𝚷 |  | \mbfPi |  𝚸 |  | \mbfRho |
+|  𝚹 |  | \mbfvarTheta |  𝚺 |  | \mbfSigma |  𝚻 |  | \mbfTau |  𝚼 |  | \mbfUpsilon |
+|  𝚽 |  | \mbfPhi |  𝚾 |  | \mbfChi |  𝚿 |  | \mbfPsi |  𝛀 |  | \mbfOmega |
+|  𝛁 |  | \mbfnabla |  𝛂 |  | \mbfalpha |  𝛃 |  | \mbfbeta |  𝛄 |  | \mbfgamma |
+|  𝛅 |  | \mbfdelta |  𝛆 |  | \mbfvarepsilon |  𝛇 |  | \mbfzeta |  𝛈 |  | \mbfeta |
+|  𝛉 |  | \mbftheta |  𝛊 |  | \mbfiota |  𝛋 |  | \mbfkappa |  𝛌 |  | \mbflambda |
+|  𝛍 |  | \mbfmu |  𝛎 |  | \mbfnu |  𝛏 |  | \mbfxi |  𝛐 |  | \mbfomicron |
+|  𝛑 |  | \mbfpi |  𝛒 |  | \mbfrho |  𝛓 |  | \mbfvarsigma |  𝛔 |  | \mbfsigma |
+|  𝛕 |  | \mbftau |  𝛖 |  | \mbfupsilon |  𝛗 |  | \mbfvarphi |  𝛘 |  | \mbfchi |
+|  𝛙 |  | \mbfpsi |  𝛚 |  | \mbfomega |  𝛛 |  | \mbfpartial |  𝛜 |  | \mbfepsilon |
+|  𝛝 |  | \mbfvartheta |  𝛞 |  | \mbfvarkappa |  𝛟 |  | \mbfphi |  𝛠 |  | \mbfvarrho |
+|  𝛡 |  | \mbfvarpi |  𝛢 |  | \mitAlpha |  𝛣 |  | \mitBeta |  𝛤 |  | \mitGamma |
+|  𝛥 |  | \mitDelta |  𝛦 |  | \mitEpsilon |  𝛧 |  | \mitZeta |  𝛨 |  | \mitEta |
+|  𝛩 |  | \mitTheta |  𝛪 |  | \mitIota |  𝛫 |  | \mitKappa |  𝛬 |  | \mitLambda |
+|  𝛭 |  | \mitMu |  𝛮 |  | \mitNu |  𝛯 |  | \mitXi |  𝛰 |  | \mitOmicron |
+|  𝛱 |  | \mitPi |  𝛲 |  | \mitRho |  𝛳 |  | \mitvarTheta |  𝛴 |  | \mitSigma |
+|  𝛵 |  | \mitTau |  𝛶 |  | \mitUpsilon |  𝛷 |  | \mitPhi |  𝛸 |  | \mitChi |
+|  𝛹 |  | \mitPsi |  𝛺 |  | \mitOmega |  𝛻 |  | \mitnabla |  𝛼 |  | \mitalpha |
+|  𝛽 |  | \mitbeta |  𝛾 |  | \mitgamma |  𝛿 |  | \mitdelta |  𝜀 |  | \mitvarepsilon |
+|  𝜁 |  | \mitzeta |  𝜂 |  | \miteta |  𝜃 |  | \mittheta |  𝜄 |  | \mitiota |
+|  𝜅 |  | \mitkappa |  𝜆 |  | \mitlambda |  𝜇 |  | \mitmu |  𝜈 |  | \mitnu |
+|  𝜉 |  | \mitxi |  𝜊 |  | \mitomicron |  𝜋 |  | \mitpi |  𝜌 |  | \mitrho |
+|  𝜍 |  | \mitvarsigma |  𝜎 |  | \mitsigma |  𝜏 |  | \mittau |  𝜐 |  | \mitupsilon |
+|  𝜑 |  | \mitvarphi |  𝜒 |  | \mitchi |  𝜓 |  | \mitpsi |  𝜔 |  | \mitomega |
+|  𝜕 |  | \mitpartial |  𝜖 |  | \mitepsilon |  𝜗 |  | \mitvartheta |  𝜘 |  | \mitvarkappa |
+|  𝜙 |  | \mitphi |  𝜚 |  | \mitvarrho |  𝜛 |  | \mitvarpi |  𝜜 |  | \mbfitAlpha |
+|  𝜝 |  | \mbfitBeta |  𝜞 |  | \mbfitGamma |  𝜟 |  | \mbfitDelta |  𝜠 |  | \mbfitEpsilon |
+|  𝜡 |  | \mbfitZeta |  𝜢 |  | \mbfitEta |  𝜣 |  | \mbfitTheta |  𝜤 |  | \mbfitIota |
+|  𝜥 |  | \mbfitKappa |  𝜦 |  | \mbfitLambda |  𝜧 |  | \mbfitMu |  𝜨 |  | \mbfitNu |
+|  𝜩 |  | \mbfitXi |  𝜪 |  | \mbfitOmicron |  𝜫 |  | \mbfitPi |  𝜬 |  | \mbfitRho |
+|  𝜭 |  | \mbfitvarTheta |  𝜮 |  | \mbfitSigma |  𝜯 |  | \mbfitTau |  𝜰 |  | \mbfitUpsilon |
+|  𝜱 |  | \mbfitPhi |  𝜲 |  | \mbfitChi |  𝜳 |  | \mbfitPsi |  𝜴 |  | \mbfitOmega |
+|  𝜵 |  | \mbfitnabla |  𝜶 |  | \mbfitalpha |  𝜷 |  | \mbfitbeta |  𝜸 |  | \mbfitgamma |
+|  𝜹 |  | \mbfitdelta |  𝜺 |  | \mbfitvarepsilon |  𝜻 |  | \mbfitzeta |  𝜼 |  | \mbfiteta |
+|  𝜽 |  | \mbfittheta |  𝜾 |  | \mbfitiota |  𝜿 |  | \mbfitkappa |  𝝀 |  | \mbfitlambda |
+|  𝝁 |  | \mbfitmu |  𝝂 |  | \mbfitnu |  𝝃 |  | \mbfitxi |  𝝄 |  | \mbfitomicron |
+|  𝝅 |  | \mbfitpi |  𝝆 |  | \mbfitrho |  𝝇 |  | \mbfitvarsigma |  𝝈 |  | \mbfitsigma |
+|  𝝉 |  | \mbfittau |  𝝊 |  | \mbfitupsilon |  𝝋 |  | \mbfitvarphi |  𝝌 |  | \mbfitchi |
+|  𝝍 |  | \mbfitpsi |  𝝎 |  | \mbfitomega |  𝝏 |  | \mbfitpartial |  𝝐 |  | \mbfitepsilon |
+|  𝝑 |  | \mbfitvartheta |  𝝒 |  | \mbfitvarkappa |  𝝓 |  | \mbfitphi |  𝝔 |  | \mbfitvarrho |
+|  𝝕 |  | \mbfitvarpi |  𝝖 |  | \mbfsansAlpha |  𝝗 |  | \mbfsansBeta |  𝝘 |  | \mbfsansGamma |
+|  𝝙 |  | \mbfsansDelta |  𝝚 |  | \mbfsansEpsilon |  𝝛 |  | \mbfsansZeta |  𝝜 |  | \mbfsansEta |
+|  𝝝 |  | \mbfsansTheta |  𝝞 |  | \mbfsansIota |  𝝟 |  | \mbfsansKappa |  𝝠 |  | \mbfsansLambda |
+|  𝝡 |  | \mbfsansMu |  𝝢 |  | \mbfsansNu |  𝝣 |  | \mbfsansXi |  𝝤 |  | \mbfsansOmicron |
+|  𝝥 |  | \mbfsansPi |  𝝦 |  | \mbfsansRho |  𝝧 |  | \mbfsansvarTheta |  𝝨 |  | \mbfsansSigma |
+|  𝝩 |  | \mbfsansTau |  𝝪 |  | \mbfsansUpsilon |  𝝫 |  | \mbfsansPhi |  𝝬 |  | \mbfsansChi |
+|  𝝭 |  | \mbfsansPsi |  𝝮 |  | \mbfsansOmega |  𝝯 |  | \mbfsansnabla |  𝝰 |  | \mbfsansalpha |
+|  𝝱 |  | \mbfsansbeta |  𝝲 |  | \mbfsansgamma |  𝝳 |  | \mbfsansdelta |  𝝴 |  | \mbfsansvarepsilon |
+|  𝝵 |  | \mbfsanszeta |  𝝶 |  | \mbfsanseta |  𝝷 |  | \mbfsanstheta |  𝝸 |  | \mbfsansiota |
+|  𝝹 |  | \mbfsanskappa |  𝝺 |  | \mbfsanslambda |  𝝻 |  | \mbfsansmu |  𝝼 |  | \mbfsansnu |
+|  𝝽 |  | \mbfsansxi |  𝝾 |  | \mbfsansomicron |  𝝿 |  | \mbfsanspi |  𝞀 |  | \mbfsansrho |
+|  𝞁 |  | \mbfsansvarsigma |  𝞂 |  | \mbfsanssigma |  𝞃 |  | \mbfsanstau |  𝞄 |  | \mbfsansupsilon |
+|  𝞅 |  | \mbfsansvarphi |  𝞆 |  | \mbfsanschi |  𝞇 |  | \mbfsanspsi |  𝞈 |  | \mbfsansomega |
+|  𝞉 |  | \mbfsanspartial |  𝞊 |  | \mbfsansepsilon |  𝞋 |  | \mbfsansvartheta |  𝞌 |  | \mbfsansvarkappa |
+|  𝞍 |  | \mbfsansphi |  𝞎 |  | \mbfsansvarrho |  𝞏 |  | \mbfsansvarpi |  𝞐 |  | \mbfitsansAlpha |
+|  𝞑 |  | \mbfitsansBeta |  𝞒 |  | \mbfitsansGamma |  𝞓 |  | \mbfitsansDelta |  𝞔 |  | \mbfitsansEpsilon |
+|  𝞕 |  | \mbfitsansZeta |  𝞖 |  | \mbfitsansEta |  𝞗 |  | \mbfitsansTheta |  𝞘 |  | \mbfitsansIota |
+|  𝞙 |  | \mbfitsansKappa |  𝞚 |  | \mbfitsansLambda |  𝞛 |  | \mbfitsansMu |  𝞜 |  | \mbfitsansNu |
+|  𝞝 |  | \mbfitsansXi |  𝞞 |  | \mbfitsansOmicron |  𝞟 |  | \mbfitsansPi |  𝞠 |  | \mbfitsansRho |
+|  𝞡 |  | \mbfitsansvarTheta |  𝞢 |  | \mbfitsansSigma |  𝞣 |  | \mbfitsansTau |  𝞤 |  | \mbfitsansUpsilon |
+|  𝞥 |  | \mbfitsansPhi |  𝞦 |  | \mbfitsansChi |  𝞧 |  | \mbfitsansPsi |  𝞨 |  | \mbfitsansOmega |
+|  𝞩 |  | \mbfitsansnabla |  𝞪 |  | \mbfitsansalpha |  𝞫 |  | \mbfitsansbeta |  𝞬 |  | \mbfitsansgamma |
+|  𝞭 |  | \mbfitsansdelta |  𝞮 |  | \mbfitsansvarepsilon |  𝞯 |  | \mbfitsanszeta |  𝞰 |  | \mbfitsanseta |
+|  𝞱 |  | \mbfitsanstheta |  𝞲 |  | \mbfitsansiota |  𝞳 |  | \mbfitsanskappa |  𝞴 |  | \mbfitsanslambda |
+|  𝞵 |  | \mbfitsansmu |  𝞶 |  | \mbfitsansnu |  𝞷 |  | \mbfitsansxi |  𝞸 |  | \mbfitsansomicron |
+|  𝞹 |  | \mbfitsanspi |  𝞺 |  | \mbfitsansrho |  𝞻 |  | \mbfitsansvarsigma |  𝞼 |  | \mbfitsanssigma |
+|  𝞽 |  | \mbfitsanstau |  𝞾 |  | \mbfitsansupsilon |  𝞿 |  | \mbfitsansvarphi |  𝟀 |  | \mbfitsanschi |
+|  𝟁 |  | \mbfitsanspsi |  𝟂 |  | \mbfitsansomega |  𝟃 |  | \mbfitsanspartial |  𝟄 |  | \mbfitsansepsilon |
+|  𝟅 |  | \mbfitsansvartheta |  𝟆 |  | \mbfitsansvarkappa |  𝟇 |  | \mbfitsansphi |  𝟈 |  | \mbfitsansvarrho |
+|  𝟉 |  | \mbfitsansvarpi |  𝟊 |  | \mbfDigamma |  𝟋 |  | \mbfdigamma |  𝟎 |  | \mbfzero |
+|  𝟏 |  | \mbfone |  𝟐 |  | \mbftwo |  𝟑 |  | \mbfthree |  𝟒 |  | \mbffour |
+|  𝟓 |  | \mbffive |  𝟔 |  | \mbfsix |  𝟕 |  | \mbfseven |  𝟖 |  | \mbfeight |
+|  𝟗 |  | \mbfnine |  𝟘 |  | \Bbbzero |  𝟙 |  | \Bbbone |  𝟚 |  | \Bbbtwo |
+|  𝟛 |  | \Bbbthree |  𝟜 |  | \Bbbfour |  𝟝 |  | \Bbbfive |  𝟞 |  | \Bbbsix |
+|  𝟟 |  | \Bbbseven |  𝟠 |  | \Bbbeight |  𝟡 |  | \Bbbnine |  𝟢 |  | \msanszero |
+|  𝟣 |  | \msansone |  𝟤 |  | \msanstwo |  𝟥 |  | \msansthree |  𝟦 |  | \msansfour |
+|  𝟧 |  | \msansfive |  𝟨 |  | \msanssix |  𝟩 |  | \msansseven |  𝟪 |  | \msanseight |
+|  𝟫 |  | \msansnine |  𝟬 |  | \mbfsanszero |  𝟭 |  | \mbfsansone |  𝟮 |  | \mbfsanstwo |
+|  𝟯 |  | \mbfsansthree |  𝟰 |  | \mbfsansfour |  𝟱 |  | \mbfsansfive |  𝟲 |  | \mbfsanssix |
+|  𝟳 |  | \mbfsansseven |  𝟴 |  | \mbfsanseight |  𝟵 |  | \mbfsansnine |  𝟶 |  | \mttzero |
+|  𝟷 |  | \mttone |  𝟸 |  | \mtttwo |  𝟹 |  | \mttthree |  𝟺 |  | \mttfour |
+|  𝟻 |  | \mttfive |  𝟼 |  | \mttsix |  𝟽 |  | \mttseven |  𝟾 |  | \mtteight |
+|  𝟿 |  | \mttnine |  ữ0 |  | \arabicmaj |  ữ1 |  | \arabichad |  ‐ |  | \mathhyphen |
+|  ― |  | \horizbar |  ‗ |  | \twolowline |  ‥ |  | \enleadertwodots |  ″ |  | \dprime |
+|  ‴ |  | \trprime |  ‵ |  | \backprime |  ‶ |  | \backdprime |  ‷ |  | \backtrprime |
+|  ‸ |  | \caretinsert |  ‼ |  | \Exclam |  ⁀ |  | \tieconcat |  ⁃ |  | \hyphenbullet |
+|  ⁄ |  | \fracslash |  ⁇ |  | \Question |  ⁐ |  | \closure |  ⁗ |  | \qprime |
 |  ⃒ |  | \vertoverlay |  ⃗ |  | \vec |  ⃛ |  | \dddot |  ⃜ |  | \ddddot |
 |  ⃝ |  | \enclosecircle |  ⃞ |  | \enclosesquare |  ⃟ |  | \enclosediamond |  ⃡ |  | \overleftrightarrow |
 |  ⃤ |  | \enclosetriangle |  ⃧ |  | \annuity |  ⃨ |  | \threeunderdot |  ⃩ |  | \widebridgeabove |
@@ -584,6 +537,82 @@ Some of us though are bound to outlets that still demand BibTeX, and there's gee
 |  〒 |  | \postalmark |  〰 |  | \hzigzag |  | |  |  | |  |
 
 
+### xecjk
+
+| **character** | **text** | **math** | **character** | **text** | **math** | **character** | **text** | **math** | **character** | **text** | **math** |
+|---------------|----------|----------|---------------|----------|----------|---------------|----------|----------|---------------|----------|----------|
+|  א | \hebalef |  |  ע | \hebayin |  |  ב | \hebbet |  |  ד | \hebdalet |  |
+|  ך | \hebfinalkaf |  |  ם | \hebfinalmem |  |  ן | \hebfinalnun |  |  ף | \hebfinalpe |  |
+|  ץ | \hebfinaltsadi |  |  ג | \hebgimel |  |  ה | \hebhe |  |  ח | \hebhet |  |
+|  כ | \hebkaf |  |  ל | \heblamed |  |  מ | \hebmem |  |  נ | \hebnun |  |
+|  פ | \hebpe |  |  ק | \hebqof |  |  ר | \hebresh |  |  ס | \hebsamekh |  |
+|  ש | \hebshin |  |  ת | \hebtav |  |  ט | \hebtet |  |  צ | \hebtsadi |  |
+|  ו | \hebvav |  |  י | \hebyod |  |  ז | \hebzayin |  |  ĸ | \textkra |  |
+|  ≂ |  | \texteqsim |  | |  |  | |  |  | |  |
+
+
+### amssymb
+
+| **character** | **text** | **math** | **character** | **text** | **math** | **character** | **text** | **math** | **character** | **text** | **math** |
+|---------------|----------|----------|---------------|----------|----------|---------------|----------|----------|---------------|----------|----------|
+|  ð |  | \eth |  ⩽ |  | \leqslant |  ⩽̸ |  | \nleqslant |  ⩾ |  | \geqslant |
+|  ⩾̸ |  | \ngeqslant |  | |  |  | |  |  | |  |
+
+
+### arevmath
+
+| **character** | **text** | **math** | **character** | **text** | **math** | **character** | **text** | **math** | **character** | **text** | **math** |
+|---------------|----------|----------|---------------|----------|----------|---------------|----------|----------|---------------|----------|----------|
+|  ð |  | \eth |  | |  |  | |  |  | |  |
+
+
+### inputenx
+
+| **character** | **text** | **math** | **character** | **text** | **math** | **character** | **text** | **math** | **character** | **text** | **math** |
+|---------------|----------|----------|---------------|----------|----------|---------------|----------|----------|---------------|----------|----------|
+|  Ħ | \textmalteseH |  |  ɸ | \textphi |  |  ≈ | \textapproxequal |  |  | |  |
+
+
+### tipa
+
+| **character** | **text** | **math** | **character** | **text** | **math** | **character** | **text** | **math** | **character** | **text** | **math** |
+|---------------|----------|----------|---------------|----------|----------|---------------|----------|----------|---------------|----------|----------|
+|  ħ | \textcrh |  |  ƕ | \texthvlig |  |  ƞ | \textipa{\textnrleg} |  |  ɐ | \textipa{\textturna} |  |
+|  ɒ | textipa{\textopeno} |  |  ɔ | \textipa{O} |  |  ɖ | \textrtaild |  |  ə | \textschwa |  |
+|  ɤ | \textrevscripta |  |  ɸ | \textphi |  |  ʞ | \textturnk |  |  ˥ | \tone{55} |  |
+|  ˦ | \tone{44} |  |  ˧ | \tone{33} |  |  ˨ | \tone{22} |  |  ˩ | \tone{11} |  |
+|  ̀̄ | \textgravemacron |  |  ̀̇ | \textgravedot |  |  ́̄ | \textacutemacron |  |  ́̌ | \textacutewedge |  |
+|  ̂̇ | \textcircumdot |  |  ̃̇ | \texttildedot |  |  ̄̀ | \textgravemacron |  |  ̆̄ | \textbrevemacron |  |
+|  ̇́ | \textdotacute |  |  ̇̆ | \textdotbreve |  |  ̊̄ | \textringmacron |  |  ̍ | \textvbaraccent |  |
+|  ̎ | \textdoublevbaraccent |  |  ̐ | \textdotbreve |  |  ̘ | \textadvancing |  |  ̙ | \textretracting |  |
+|  ̚ | \textcorner |  |  ̜ | \textsublhalfring |  |  ̝ | \textraising |  |  ̞ | \textlowering |  |
+|  ̟ | \textsubplus |  |  ̤ | \textsubumlaut |  |  ̥ | \textsubring |  |  ̩ | \textsyllabic |  |
+|  ̪ | \textsubbridge |  |  ̬ | \textsubwedge |  |  ̯ | \textsubarch |  |  ̰ | \textsubtilde |  |
+|  ̱ | \textsubbar |  |  ̴ | \textsuperimposetilde |  |  ̹ | \textsubrhalfring |  |  ̺ | \textinvsubbridge |  |
+|  ̻ | \textsubsquare |  |  ̼ | \textseagull |  |  ̽ | \textovercross |  |  ₔ | \textsubscript{\textschwa} |  |
+
+
+### ipa
+
+| **character** | **text** | **math** | **character** | **text** | **math** | **character** | **text** | **math** | **character** | **text** | **math** |
+|---------------|----------|----------|---------------|----------|----------|---------------|----------|----------|---------------|----------|----------|
+|  ɯ | \textturnm |  |  | |  |  | |  |  | |  |
+
+
+### mathscinet
+
+| **character** | **text** | **math** | **character** | **text** | **math** | **character** | **text** | **math** | **character** | **text** | **math** |
+|---------------|----------|----------|---------------|----------|----------|---------------|----------|----------|---------------|----------|----------|
+|  ʿ | \lasp |  |  | |  |  | |  |  | |  |
+
+
+### textalpha
+
+| **character** | **text** | **math** | **character** | **text** | **math** | **character** | **text** | **math** | **character** | **text** | **math** |
+|---------------|----------|----------|---------------|----------|----------|---------------|----------|----------|---------------|----------|----------|
+|  α | \textalpha |  |  | |  |  | |  |  | |  |
+
+
 ### MinionPro
 
 | **character** | **text** | **math** | **character** | **text** | **math** | **character** | **text** | **math** | **character** | **text** | **math** |
@@ -629,13 +658,6 @@ Some of us though are bound to outlets that still demand BibTeX, and there's gee
 | **character** | **text** | **math** | **character** | **text** | **math** | **character** | **text** | **math** | **character** | **text** | **math** |
 |---------------|----------|----------|---------------|----------|----------|---------------|----------|----------|---------------|----------|----------|
 |  ∸ |  | \dotdiv |  | |  |  | |  |  | |  |
-
-
-### xecjk
-
-| **character** | **text** | **math** | **character** | **text** | **math** | **character** | **text** | **math** | **character** | **text** | **math** |
-|---------------|----------|----------|---------------|----------|----------|---------------|----------|----------|---------------|----------|----------|
-|  ≂ |  | \texteqsim |  | |  |  | |  |  | |  |
 
 
 ### pmboxdraw

@@ -47,6 +47,7 @@
     "docs:serve": "npm run setup && cd site && hugo serve",
     "docs:serve:minimal": "cd site && hugo serve",
     "docs:deploy": "npm run setup && cd site && hugo --baseURL /zotero-better-bibtex",
+    "docs:build": "npm run setup && cd site && hugo",
     "reinstall": "rm -rf node_modules yarn* && npm install",
     "test:nightly": "./test/behave --tags @nightly",
     "xsubmodules": "git submodule update --init --recursive --remote && git submodule foreach git reset --hard && git submodule foreach git pull origin",
