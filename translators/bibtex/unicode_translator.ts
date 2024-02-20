@@ -221,6 +221,6 @@ export class HTMLConverter {
 
   private chars(text, nocased) {
     if (this.options.html) text = HE.decode(text, { isAttributeValue: true })
-    this.latex += this.tx.tolatex(text, { bracemath: !nocased, preservecommandspacers: true, packages: this.packages })
+    this.latex += this.tx.tolatex(text, { bracemath: !nocased, preservemacrospacers: true, packages: this.packages })
   }
 }
