@@ -830,7 +830,7 @@ class PatternFormatter {
   /**
    * The first `n` (default: 3) words of the title, apply capitalization to first `m` (default: 0) of those.
    * @param n number of words to select
-   * @param m number of words to capitalize. `0` means no words will be capitalized. Mind that existing capitals are not removed.
+   * @param m number of words to capitalize. `0` means no words will be capitalized. Mind that existing capitals are not removed. If you enable capitalization, you also get transliteration; for CJK, capitalization is not meaningful, so if you want capitalization, BBT romanizes first.
    */
   public $shorttitle(n: number = 3, m: number = 0) { // eslint-disable-line @typescript-eslint/no-inferrable-types
     const words = this.titleWords(this.item.title, { skipWords: true, nopunct: true, transliterate: m > 0})
