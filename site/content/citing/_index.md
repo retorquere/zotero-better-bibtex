@@ -155,7 +155,7 @@ Note: a number of functions below talk about the author's lastname; you can read
 
 **Note**: All `auth...` functions will fall back to editors if no authors are present on the item.
 
-**Note**: The functions above used to have the `clean` function automatically applied to them, **this is no longer the case**, so if you have CJK authors/titels and you want to manipulate them (using eg. `capitalize`), you could have to use `transliterate` on them first, eg. `authEtal2.transliterate.capitalize + year + shorttitle(3, 3)`.
+**Note**: The functions above used to have the `clean` function automatically applied to them, **this is no longer the case**, so if you have CJK authors/titles and you want to manipulate them (using eg. `capitalize`), you could have to use `transliterate` on them first, eg. `authEtal2.transliterate.capitalize + year + shorttitle(3, 3)`.
 
 ### Direct access to unprocessed fields
 
