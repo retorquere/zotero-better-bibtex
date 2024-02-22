@@ -539,21 +539,21 @@ class PatternFormatter {
     min=0,
     max=0
   ) {
-    let include: string[]
-    let exclude: string[]
+    const include: string[] = []
+    const exclude: string[] = []
     const primary = itemCreators[client][this.item.itemType][0]
 
-    if (type === '*') {
-      include = []
-      exclude = []
-    }
-    else if (type === 'primary') {
-      include = [ primary ]
-      exclude = []
-    }
-    else if (typeof type === 'string') {
-      include = [ type ]
-      exclude = []
+    if (typeof type === 'string') {
+      switch (type) {
+        case '*':
+          break
+        case 'primary':
+          include.push(primary)
+          break
+        default:
+          include.push(type)
+          break
+      }
     }
     else {
       const types = this.item.creators.map(cr => cr.creatorType)
