@@ -532,7 +532,7 @@ class PatternFormatter {
    */
   public $creators(
     n: number | [number, number] = 0,
-    type: CreatorType | CreatorType[] | '*' = ['primary', 'editor'],
+    type: CreatorType | (CreatorType | CreatorType[])[] | '*' = [['primary', 'editor']],
     name: Template<'creator'> = '%(f)s',
     etal='',
     sep=' ',
@@ -541,13 +541,14 @@ class PatternFormatter {
   ) {
     let include: string[]
     let exclude: string[]
+    const primary = itemCreators[client][this.item.itemType][0]
 
     if (type === '*') {
       include = []
       exclude = []
     }
     else if (type === 'primary') {
-      include = [ itemCreators[client][this.item.itemType][0] || '' ]
+      include = [ primary ]
       exclude = []
     }
     else if (typeof type === 'string') {
@@ -555,8 +556,13 @@ class PatternFormatter {
       exclude = []
     }
     else {
-      include = type.filter(cr => cr[0] !== '-').map(cr => (cr === 'primary' ? itemCreators[client][this.item.itemType][0] || '' : cr) as string)
-      exclude = type.filter(cr => cr[0] === '-').map(cr => cr.substr(1))
+      const types = this.item.creators.map(cr => cr.creatorType)
+      for (let t of type) {
+        if (Array.isArray(t)) t = t.find(candidate => types.includes(candidate === 'primary' ? primary : candidate))
+        if (!t) continue
+        if (t === 'primary') t = primary;
+        (t[0] === '-' ? exclude : include).push((t as string).replace(/^-/, ''))
+      }
     }
 
     let creators = this.item.creators
