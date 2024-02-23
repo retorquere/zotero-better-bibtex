@@ -1,0 +1,97 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "options": {
+      "Items": true,
+      "Preferences": true,
+      "exportNotes": true,
+      "worker": true
+    },
+    "preferences": {
+      "asciiBibLaTeX": true,
+      "baseAttachmentPath": "/Users/Ibai/Library/Mobile Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/Physics \ud83e\ude90/Physics Library \ud83c\udfdb",
+      "bibtexURL": "url",
+      "citekeyFold": false,
+      "citekeyFormat": "authors(min=4,n=2,sep=\"~\",etal=\"_et_al.\").capitalize.replace(\"-\",\"_\").condense(_).replace(\"~\",\"-\") + year.prefix(\"_\")\n|\nauthors(sep=\"~\").capitalize.replace(\"-\",\"_\").condense(_).replace(\"~\",\"-\") + year.prefix(\"_\")",
+      "keyConflictPolicy": "change",
+      "postscript": "\n// Detect and protect LaTeX math formulas\n\nif (Translator.BetterTeX && tex.has.title) {\n  tex.add({ name: 'title', value: zotero.title.replace(/(\\$.*?\\$)/g, '<script>{$1}</script>') });\n}\n\n\n// Custom field order\n\nif (Translator.BetterTeX) {\n  // The bib(La)TeX fields are ordered according to this array.\n  // If a field is not in this list, it will show up after the ordered fields.\n  // https://github.com/retorquere/zotero-better-bibtex/issues/512\n  const front = ['author', 'date', 'title', 'publisher']\n  const order = front.filter(field => tex.has[field]).concat(Object.keys(tex.has).filter(field => !front.includes(field)))\n  for (const [field, value] of order.map(f => [f, tex.has[f]])) {\n    delete tex.has[field]\n    tex.has[field] = value\n  }\n}\n",
+      "quickCopyEta": "it.items. &lt;%= JSON.stringify(it.items) %&gt;",
+      "quickCopyMode": "orgmode",
+      "quickCopyOrgMode": "citationkey",
+      "warnBulkModify": 0
+    }
+  },
+  "items": [
+    {
+      "ISBN": "978-0-521-22285-3",
+      "accessDate": "2023-11-03T18:40:27Z",
+      "citationKey": "DeWitt-Hawking-Israel_1979",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Bryce S.",
+          "lastName": "DeWitt"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "Stephen William",
+          "lastName": "Hawking"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "Werner",
+          "lastName": "Israel"
+        }
+      ],
+      "date": "1979",
+      "itemID": 1,
+      "itemType": "bookSection",
+      "language": "en",
+      "pages": "680-745",
+      "publicationTitle": "General Relativity: An Einstein Centenary Survey",
+      "publisher": "Cambridge University Press",
+      "title": "Quantum Gravity: The New Synthesis",
+      "url": "https://www.cambridge.org/us/universitypress/subjects/physics/cosmology-relativity-and-gravitation/general-relativity-einstein-centenary-survey-1?format=WX&isbn=9780521137980"
+    },
+    {
+      "ISBN": "978-0-85274-755-1",
+      "accessDate": "2023-05-20T14:27:59Z",
+      "citationKey": "Davies-Christensen_1984",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Paul Charles William",
+          "lastName": "Davies"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "Steven M.",
+          "lastName": "Christensen"
+        }
+      ],
+      "date": "1984",
+      "extra": [
+        "OCLC: 10674132"
+      ],
+      "itemID": 2,
+      "itemType": "bookSection",
+      "language": "en",
+      "libraryCatalog": "INSPIRE, Open WorldCat",
+      "pages": "66-77",
+      "place": "Bristol",
+      "publicationTitle": "Quantum theory of gravity: Essays in honor of the 60th birthday of Bryce S. DeWitt",
+      "publisher": "Hilger",
+      "tags": [
+        {
+          "tag": "* Keep the spark alive \ud83d\udca5"
+        },
+        {
+          "tag": "Particle concept"
+        }
+      ],
+      "title": "Particles do not exist",
+      "url": "http://catdir.loc.gov/catdir/enhancements/fy0745/83216515-d.html"
+    }
+  ]
+}
