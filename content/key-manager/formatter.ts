@@ -532,7 +532,7 @@ class PatternFormatter {
    */
   public $creators(
     n: number | [number, number] = 0,
-    type: CreatorType | (CreatorType | CreatorType[])[] | '*' = [['primary', 'editor']],
+    type: CreatorType | (CreatorType | (CreatorType | '*')[])[] | '*' = [['primary', 'editor', 'translator', '*']],
     name: Template<'creator'> = '%(f)s',
     etal='',
     sep=' ',
@@ -560,7 +560,7 @@ class PatternFormatter {
       for (let t of type) {
         if (Array.isArray(t)) t = t.find(candidate => types.includes(candidate === 'primary' ? primary : candidate))
         if (!t) continue
-        if (t === 'primary') t = primary;
+        t = { '*': types[0], primary }[t] || t;
         (t[0] === '-' ? exclude : include).push((t as string).replace(/^-/, ''))
       }
     }
