@@ -539,8 +539,7 @@ Some of us though are bound to outlets that still demand BibTeX, and there's gee
 |  Β |  | \mupBeta |  Α |  | \mupAlpha |  ͍ |  | \underleftrightarrow |  ̚ |  | \droang |
 |  ̕ |  | \ocommatopright |  ̒ |  | \oturnedcomma |  ̐ |  | \candra |  ̌ |  | \check |
 |  ̉ |  | \ovhook |  ̈ |  | \ddot |  ̇ |  | \dot |  ̆ |  | \breve |
-|  ̄ |  | \bar |  ̃ |  | \tilde |  ́ |  | \acute |  ̀ |  | \grave |
-|  € |  | \euro |  | |  |  | |  |  | |  |
+|  ̃ |  | \tilde |  ́ |  | \acute |  ̀ |  | \grave |  € |  | \euro |
 
 
 ### amssymb
