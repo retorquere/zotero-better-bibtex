@@ -11133,7 +11133,7 @@
       "itemID": 443,
       "itemType": "conferencePaper",
       "notes": [
-        "The authors review Chapman's Modal Truth Criterion (MTC) from his paper \u201cPlanning for Conjunctive Goals.\u201d They show a bug in Chapman's arguments \u2014 in particular that the equivalence \u25c7p \u2261\u00ac\u25a1\u00acp doesn't hold for truth in partially-ordered plans. The reason for this is that the excluded middle does not hold in the logic of partial plans \u2014 the truth value of some p in some completion of a partial plan may not be defined, because the completion may be ill-formed."
+        "The authors review Chapman's Modal Truth Criterion (MTC) from his paper \u201cPlanning for Conjunctive Goals.\u201d They show a bug in Chapman's arguments \u2014 in particular that the equivalence \u25c7p\u2261\u00ac\u25a1\u00acp doesn't hold for truth in partially-ordered plans. The reason for this is that the excluded middle does not hold in the logic of partial plans \u2014 the truth value of some p in some completion of a partial plan may not be defined, because the completion may be ill-formed."
       ],
       "pages": "1055\u20131060",
       "title": "On the nature of modal truth criteria in planning"
