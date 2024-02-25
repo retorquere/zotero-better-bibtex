@@ -543,24 +543,14 @@ class PatternFormatter {
     const exclude: string[] = []
     const primary = itemCreators[client][this.item.itemType][0]
 
+    const types = this.item.creators.map(cr => cr.creatorType)
     if (typeof type === 'string') {
-      switch (type) {
-        case '*':
-          break
-        case 'primary':
-          include.push(primary)
-          break
-        default:
-          include.push(type)
-          break
-      }
+      include.push({'*': types[0], primary}[type] || type)
     }
     else {
-      const types = this.item.creators.map(cr => cr.creatorType)
       for (let t of type) {
-        if (Array.isArray(t)) t = t.find(candidate => types.includes(candidate === 'primary' ? primary : candidate))
-        if (!t) continue
-        t = { '*': types[0], primary }[t] || t;
+        if (Array.isArray(t)) t = t.map(candidate => ({'*': types[0], primary}[candidate] || candidate) as CreatorType).find(candidate => types.includes(candidate))
+        if (!t) continue;
         (t[0] === '-' ? exclude : include).push((t as string).replace(/^-/, ''))
       }
     }
@@ -569,7 +559,6 @@ class PatternFormatter {
       .filter(cr => !include.length || include.includes(cr.creatorType as CreatorType))
       .filter(cr => !exclude.length || !exclude.includes(cr.creatorType as CreatorType))
       .map(cr => this.name(cr, name as string))
-    log.debug('$creators', { creators: this.item.creators, include, exclude, cited: creators })
 
     if ((min && creators.length < min) || (max && creators.length > max)) {
       this.next = true
