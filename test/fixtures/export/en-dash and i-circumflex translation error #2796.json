@@ -1,0 +1,108 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "options": {
+      "Items": true,
+      "Preferences": true,
+      "exportNotes": true,
+      "worker": true
+    },
+    "preferences": {
+      "DOIandURL": "doi",
+      "asciiBibLaTeX": true,
+      "bibtexURL": "url",
+      "citekeyFormat": "auth.lower + year",
+      "exportTitleCase": false,
+      "skipFields": "language,note,isbn,issn,urldate,accessed,abstract,Library catalogue,Call Number,file,primaryclass"
+    }
+  },
+  "items": [
+    {
+      "DOI": "10.1093/mnras/91.5.483",
+      "ISSN": "0035-8711",
+      "citationKey": "Lemaitre1931",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "A. G.",
+          "lastName": "Lema\u00eetre"
+        }
+      ],
+      "date": "1931-03-13",
+      "extra": [
+        "Citation Key: Lemaitre1931"
+      ],
+      "issue": "5",
+      "itemID": 1,
+      "itemType": "journalArticle",
+      "pages": "483-490",
+      "publicationTitle": "Monthly Notices of the Royal Astronomical Society",
+      "title": "A Homogeneous Universe of Constant Mass and Increasing Radius accounting for the Radial Velocity of Extra-galactic Nebulae",
+      "url": "https://academic.oup.com/mnras/article-lookup/doi/10.1093/mnras/91.5.483",
+      "volume": "91"
+    },
+    {
+      "DOI": "10.1093/mnras/stx1330",
+      "ISSN": "0035-8711, 1365-2966",
+      "citationKey": "Acebron2017",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Ana",
+          "lastName": "Acebron"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Eric",
+          "lastName": "Jullo"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Marceau",
+          "lastName": "Limousin"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Andr\u00e9",
+          "lastName": "Tilquin"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Carlo",
+          "lastName": "Giocoli"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Mathilde",
+          "lastName": "Jauzac"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Guillaume",
+          "lastName": "Mahler"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Johan",
+          "lastName": "Richard"
+        }
+      ],
+      "date": "2017-09-11",
+      "extra": [
+        "Citation Key: Acebron2017"
+      ],
+      "issue": "2",
+      "itemID": 2,
+      "itemType": "journalArticle",
+      "language": "en",
+      "libraryCatalog": "DOI.org (Crossref)",
+      "pages": "1809-1825",
+      "publicationTitle": "Monthly Notices of the Royal Astronomical Society",
+      "shortTitle": "Hubble Frontier Fields",
+      "title": "Hubble Frontier Fields: systematic errors in strong lensing models of galaxy clusters \u2013 implications for cosmography",
+      "url": "https://academic.oup.com/mnras/article/470/2/1809/3858038",
+      "volume": "470"
+    }
+  ]
+}
