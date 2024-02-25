@@ -1,0 +1,56 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "options": {
+      "Items": true,
+      "Preferences": true,
+      "exportNotes": true,
+      "worker": true
+    },
+    "preferences": {}
+  },
+  "items": [
+    {
+      "DOI": "10.1109/TMI.1986.4307732",
+      "ISSN": "1558254X",
+      "abstractNote": "An improved echo planar high-speed imaging technique using spiral scan is presented and experimental advantages are discussed. This proposed spiral-scan echo planar imaging (SEPI) technique employs two linearly increasing sinusoidal gradient fields, which results in a spiral trajectory in the spatial frequency domain (k-domain) that covers the entire frequency domain uniformly. The advantages of the method are: 1) circularly symmetric T2 weighting, resulting in a circularly symmetric point spread function in the image domain; 2) elimination of discontinuities in gradient waveforms which in turn will reduce initial transient as well as steady-state distortions; and 3) effective rapid spiral-scan from dc to high frequency in a continuous fashion, which ensures multiple pulsing with interlacing for further resolution improvement without T2 decay image degradation. Some preliminary experimental results will be presented and further possible improvements suggested.",
+      "citationKey": "Ahn1986",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "C. B.",
+          "lastName": "Ahn"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "J. H.",
+          "lastName": "Kim"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Z. H.",
+          "lastName": "Cho"
+        }
+      ],
+      "date": "1986",
+      "extra": [
+        "PMID: 18243976",
+        "Citation Key: Ahn1986",
+        "ISBN: 0278-0062"
+      ],
+      "issue": "1",
+      "itemID": 1,
+      "itemType": "journalArticle",
+      "pages": "2-7",
+      "publicationTitle": "IEEE Transactions on Medical Imaging",
+      "tags": [
+        {
+          "tag": " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~"
+        }
+      ],
+      "title": "High-Speed Spiral-Scan Echo Planar NMR Imaging-I",
+      "volume": "5"
+    }
+  ]
+}

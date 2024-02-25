@@ -1080,6 +1080,8 @@ export class Entry {
     const tags = f.value
       .map(tag => (typeof tag === 'string' ? { tag } : tag))
       .filter(tag => (this.translation.preferences.automaticTags || (tag.type !== 1)) && tag.tag !== this.translation.preferences.rawLaTag)
+      .map(tag => ({...tag, tag: tag.tag.replace(/[#%]/g, '') }))
+      .filter(tag => tag.tag)
     if (tags.length === 0) return null
 
     // eslint-disable-next-line no-new-wrappers
