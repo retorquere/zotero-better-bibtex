@@ -114,7 +114,7 @@ const enc_creators_marker = {
 const isBibString = /^[a-z][-a-z0-9_]*$/i
 
 export type Config = {
-  fieldEncoding: Record<string, 'raw' | 'url' | 'verbatim' | 'creators' | 'literal' | 'literal' | 'tags' | 'attachments' | 'date'>
+  fieldEncoding: Record<string, 'raw' | 'url' | 'verbatim' | 'creators' | 'literal' | 'tags' | 'attachments' | 'date'>
   caseConversion: Record<string, boolean>
   typeMap: {
     csl: Record<string, string | { type: string, subtype?: string }>
@@ -533,10 +533,6 @@ export class Entry {
             value = this.enc_creators(field, this.item.raw)
             break
 
-          case 'literal':
-            value = this.enc_literal(field, this.item.raw)
-            break
-
           case 'tags':
             value = this.enc_tags(field)
             break
@@ -916,7 +912,7 @@ export class Entry {
    */
   protected enc_url(f): string {
     if (this.translation.BetterBibTeX && this.translation.preferences.bibtexURL.endsWith('-ish')) {
-      return (f.value || '').replace(/([#\\%&{}])/g, '\\$1') // or maybe enc_literal?
+      return (f.value || '').replace(/([#\\%&{}])/g, '\\$1')
     }
     else if (this.translation.BetterBibTeX && this.translation.preferences.bibtexURL === 'note') {
       // https://github.com/retorquere/zotero-better-bibtex/issues/2617
@@ -1019,19 +1015,6 @@ export class Entry {
     }
 
     return replace_command_spacers(encoded.join(this.translation.preferences.separatorNames))
-  }
-
-  /*
-   * Encode text to LaTeX literal list (double-braced)
-   *
-   * This encoding supports simple HTML markup.
-   *
-   * @param {field} field to encode.
-   * @return {String} field.value encoded as author-style value
-   */
-  protected enc_literal(f, raw = false) {
-    if (!f.value) return null
-    return this.enc_literal({...f, value: this.translation.preferences.exportBraceProtection ? new String(f.value) : f.value}, { raw }) // eslint-disable-line no-new-wrappers
   }
 
   /*
