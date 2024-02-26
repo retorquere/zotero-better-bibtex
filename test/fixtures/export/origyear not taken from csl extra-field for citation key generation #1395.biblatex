@@ -5,7 +5,7 @@
   date = {1982},
   origdate = {1976},
   publisher = {Edaf},
-  location = {{Madrid}},
+  location = {Madrid},
   isbn = {84-7166-852-1},
   langid = {spanish}
 }
@@ -19,7 +19,7 @@
   edition = {1. ed.},
   pages = {p.22},
   publisher = {Instituto Internacional de Projeciologia},
-  location = {{Rio de Janeiro}},
+  location = {Rio de Janeiro},
   isbn = {978-85-86019-05-0},
   langid = {portuguese}
 }

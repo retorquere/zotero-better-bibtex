@@ -16,7 +16,7 @@
   editor = {d' Almeida, Luís and Edwards, James and Dolcetti, Andrea},
   date = {2013},
   publisher = {Hart Publishing},
-  location = {{Oxford}},
+  location = {Oxford},
   isbn = {978-1-84946-324-9},
   langid = {english},
   pagetotal = {vi+309}
@@ -27,7 +27,7 @@
   author = {Bennett, Jr., Frank G.},
   date = {2013},
   publisher = {CreateSpace Independent Publishing Platform},
-  location = {{Lexington Kentucky}},
+  location = {Lexington Kentucky},
   isbn = {978-1-4793-4771-1},
   pagetotal = {137}
 }
@@ -128,7 +128,7 @@
   date = {1963},
   series = {International Library of Philosophy and Scientific Method},
   publisher = {Routledge \& Kegan Paul},
-  location = {{Londres}},
+  location = {Londres},
   isbn = {0-7100-3616-7},
   langid = {anglais},
   pagetotal = {xviii+214}
@@ -152,7 +152,7 @@
   author = {King, Jr., Martin Luther},
   date = {1968},
   publisher = {Grosset \& Dunlap},
-  location = {{New York}},
+  location = {New York},
   pagetotal = {154}
 }
 

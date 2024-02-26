@@ -5,7 +5,7 @@
   editor = {Van Balen, Koen and Verstrynge, Els},
   date = {2016-08-16},
   publisher = {CRC Press},
-  location = {{BEL}},
+  location = {BEL},
   url = {https://strathprints.strath.ac.uk/56804/},
   urldate = {2020-12-09},
   abstract = {Before architectural conservation takes place, a survey is conducted to assess the condition of the building and estimate the cost of the work. For fa\c cades, scaffolding is erected so that experts can access the building's whole extent and gather data for analysis. This paper presents the results of a collaborative and cross-disciplinary research project aiming to automate data capture and analysis techniques for conservation of stone fa\c cades. Our research demonstrates the feasibility of a new methodology for the survey and assessment of historic buildings and will facilitate frequent surveys with minimal disruption to the general public in cities. The project has embedded architects' expert knowledge into intelligent algorithms for automatically analysing images of facades. The combination of technologies allows for an efficient data capture while minimising the requirement for manual data analysis as well as more accurate estimates of its cost.},

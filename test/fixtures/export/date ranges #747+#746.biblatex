@@ -40,7 +40,7 @@
   date = {1989-01-30/1989-02-03},
   pages = {287--304},
   publisher = {USENIX},
-  location = {{San Diego, California, USA}}
+  location = {San Diego, California, USA}
 }
 
 @inproceedings{Winograd1986,
@@ -50,7 +50,7 @@
   date = {1986-12-03/1986-12-05},
   pages = {203--220},
   publisher = {ACM},
-  location = {{Austin, TX}},
+  location = {Austin, TX},
   doi = {10.1145/637069.637096},
   url = {http://doi.acm.org/10.1145/637069.637096},
   urldate = {2017-10-20},

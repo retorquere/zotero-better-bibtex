@@ -7,8 +7,8 @@
 @book{publisher,
   title = {Publisher},
   publisher = {Miller, Smith and Jones},
-  location = {{Trinidad and Tobago}},
-  origlocation = {{Saint Kitts and Nevis}},
+  location = {Trinidad and Tobago},
+  origlocation = {Saint Kitts and Nevis},
   origpublisher = {Doe and Company}
 }
 

@@ -5,7 +5,7 @@
   date = {2014-02-11},
   number = {2003/32864},
   institution = {{Technische Universität Dortmund}},
-  location = {{Eldorado}},
+  location = {Eldorado},
   url = {http://dx.doi.org/10.17877/DE290R-13190}
 }
 
@@ -25,7 +25,7 @@
   author = {Skubala, Adam},
   date = {2012-09-27},
   publisher = {TU Dortmund},
-  location = {{Masterthesis, Fakultät Statistik}}
+  location = {Masterthesis, Fakultät Statistik}
 }
 
 @book{west_introduction_2000,

@@ -3,7 +3,7 @@
   title = {A Book},
   author = {Kant, Emmanuel},
   publisher = {Him},
-  location = {{Here}},
+  location = {Here},
   note = {\section{This is a heading}
 
 \par

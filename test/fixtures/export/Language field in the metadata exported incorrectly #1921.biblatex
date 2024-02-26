@@ -8,7 +8,7 @@
   edition = {3},
   pages = {1183--1198},
   publisher = {Springer},
-  location = {{Wien}},
+  location = {Wien},
   langid = {austrian}
 }
 
@@ -22,7 +22,7 @@
   edition = {2},
   pages = {277--303},
   publisher = {Springer},
-  location = {{Wien}},
+  location = {Wien},
   langid = {austrian}
 }
 
@@ -36,7 +36,7 @@
   edition = {2},
   pages = {303--364},
   publisher = {Springer},
-  location = {{Wien}},
+  location = {Wien},
   langid = {austrian}
 }
 
@@ -48,7 +48,7 @@
   date = {2019},
   edition = {8},
   publisher = {C. H. Beck},
-  location = {{München}},
+  location = {München},
   langid = {ngerman}
 }
 
@@ -60,7 +60,7 @@
   date = {2019},
   edition = {8},
   publisher = {C. H. Beck},
-  location = {{München}},
+  location = {München},
   langid = {ngerman}
 }
 
@@ -72,7 +72,7 @@
   date = {2019},
   edition = {8},
   publisher = {C. H. Beck},
-  location = {{München}},
+  location = {München},
   langid = {ngerman}
 }
 
@@ -83,7 +83,7 @@
   date = {2009},
   edition = {18},
   publisher = {C. H. Beck},
-  location = {{München}},
+  location = {München},
   langid = {ngerman}
 }
 
@@ -95,7 +95,7 @@
   date = {2004},
   pages = {417--477},
   publisher = {Sellier - de Gruyter},
-  location = {{Berlin}},
+  location = {Berlin},
   langid = {ngerman}
 }
 
@@ -105,7 +105,7 @@
   author = {Beck, Emil},
   date = {1942},
   publisher = {Schulthess},
-  location = {{Zürich}},
+  location = {Zürich},
   langid = {nswissgerman}
 }
 
@@ -118,7 +118,7 @@
   edition = {2},
   pages = {482--488},
   publisher = {Luchterhand},
-  location = {{Neuwied}},
+  location = {Neuwied},
   langid = {ngerman}
 }
 
@@ -131,7 +131,7 @@
   edition = {2},
   pages = {489--492},
   publisher = {Luchterhand},
-  location = {{Neuwied}},
+  location = {Neuwied},
   langid = {ngerman}
 }
 
@@ -142,7 +142,7 @@
   date = {2012},
   edition = {2},
   publisher = {Stämpfli Verlag},
-  location = {{Bern}},
+  location = {Bern},
   langid = {nswissgerman}
 }
 
@@ -155,7 +155,7 @@
   edition = {2},
   pages = {3080--3083},
   publisher = {Luchterhand},
-  location = {{Neuwied}},
+  location = {Neuwied},
   langid = {ngerman}
 }
 
@@ -166,7 +166,7 @@
   date = {1998},
   edition = {3},
   publisher = {Schulthess Polygraphischer Verlag AG},
-  location = {{Zürich}},
+  location = {Zürich},
   langid = {nswissgerman}
 }
 
@@ -177,7 +177,7 @@
   date = {1998},
   edition = {3},
   publisher = {Schulthess Polygraphischer Verlag AG},
-  location = {{Zürich}},
+  location = {Zürich},
   langid = {nswissgerman}
 }
 
@@ -189,7 +189,7 @@
   date = {2013},
   edition = {6},
   publisher = {Verlag Österreich},
-  location = {{Wien}},
+  location = {Wien},
   langid = {austrian}
 }
 
@@ -228,7 +228,7 @@
   date = {2008},
   pages = {159--184},
   publisher = {Sellier - de Gruyter},
-  location = {{Berlin}},
+  location = {Berlin},
   langid = {ngerman}
 }
 
@@ -250,7 +250,7 @@
   author = {Dağdelen, Ahmet Hakan},
   date = {2020},
   publisher = {Yetkin},
-  location = {{Ankara}},
+  location = {Ankara},
   langid = {austrian}
 }
 
@@ -263,7 +263,7 @@
   edition = {3},
   pages = {925--929},
   publisher = {Schulthess Juristische Medien AG},
-  location = {{Schweiz}},
+  location = {Schweiz},
   langid = {nswissgerman}
 }
 
@@ -277,7 +277,7 @@
   edition = {2},
   pages = {1--69},
   publisher = {Springer},
-  location = {{Wien}},
+  location = {Wien},
   langid = {austrian}
 }
 
@@ -299,7 +299,7 @@
   date = {2011},
   edition = {5},
   publisher = {Schulthess},
-  location = {{Zürich}},
+  location = {Zürich},
   langid = {nswissgerman}
 }
 
@@ -310,7 +310,7 @@
   editor = {Becker, Hermann},
   date = {1942},
   publisher = {Verlag von Stämpfli \& Cie.},
-  location = {{Bern}},
+  location = {Bern},
   langid = {nswissgerman}
 }
 
@@ -322,7 +322,7 @@
   edition = {2},
   pages = {1106--1112},
   publisher = {Schulthess Juristische Medien AG},
-  location = {{Schweiz}},
+  location = {Schweiz},
   langid = {nswissgerman}
 }
 
@@ -335,7 +335,7 @@
   edition = {3},
   pages = {408--412},
   publisher = {Schulthess Juristische Medien AG},
-  location = {{Schweiz}},
+  location = {Schweiz},
   langid = {nswissgerman}
 }
 
@@ -348,7 +348,7 @@
   edition = {3},
   pages = {412--413},
   publisher = {Schulthess Juristische Medien AG},
-  location = {{Schweiz}},
+  location = {Schweiz},
   langid = {nswissgerman}
 }
 
@@ -371,7 +371,7 @@
   author = {Guhl, Theo},
   date = {1942},
   publisher = {Polygraphischer Verlag},
-  location = {{Zürich}},
+  location = {Zürich},
   langid = {nswissgerman}
 }
 
@@ -382,7 +382,7 @@
   date = {1977},
   pages = {709--752},
   publisher = {Schulthess Polygraphischer Verlag AG},
-  location = {{Schweiz}},
+  location = {Schweiz},
   langid = {nswissgerman}
 }
 
@@ -408,7 +408,7 @@
   edition = {64},
   pages = {407--415},
   publisher = {C. H. Beck},
-  location = {{München}},
+  location = {München},
   langid = {ngerman}
 }
 
@@ -421,7 +421,7 @@
   edition = {64},
   pages = {416--419},
   publisher = {C. H. Beck},
-  location = {{München}},
+  location = {München},
   langid = {ngerman}
 }
 
@@ -434,7 +434,7 @@
   edition = {64},
   pages = {2646--2649},
   publisher = {C. H. Beck},
-  location = {{München}},
+  location = {München},
   langid = {ngerman}
 }
 
@@ -447,7 +447,7 @@
   edition = {3},
   pages = {350--354},
   publisher = {Schulthess Juristische Medien AG},
-  location = {{Schweiz}},
+  location = {Schweiz},
   langid = {nswissgerman}
 }
 
@@ -460,7 +460,7 @@
   edition = {3},
   pages = {354--359},
   publisher = {Schulthess Juristische Medien AG},
-  location = {{Schweiz}},
+  location = {Schweiz},
   langid = {nswissgerman}
 }
 
@@ -471,7 +471,7 @@
   date = {2005},
   edition = {4},
   publisher = {Schulthess},
-  location = {{Zürich}},
+  location = {Zürich},
   langid = {nswissgerman}
 }
 
@@ -482,7 +482,7 @@
   date = {2010},
   edition = {9},
   publisher = {Stämpfli Verlag},
-  location = {{Bern}},
+  location = {Bern},
   langid = {nswissgerman}
 }
 
@@ -492,7 +492,7 @@
   date = {2017},
   edition = {5},
   publisher = {Stämpfli Verlag},
-  location = {{Bern}},
+  location = {Bern},
   langid = {nswissgerman}
 }
 
@@ -504,7 +504,7 @@
   date = {2013},
   edition = {5},
   publisher = {Verlag Österreich},
-  location = {{Wien}},
+  location = {Wien},
   langid = {austrian}
 }
 
@@ -516,7 +516,7 @@
   date = {2016},
   edition = {6},
   publisher = {Verlag Österreich},
-  location = {{Wien}},
+  location = {Wien},
   langid = {austrian}
 }
 
@@ -529,7 +529,7 @@
   edition = {2},
   pages = {69--244},
   publisher = {Springer},
-  location = {{Wien}},
+  location = {Wien},
   langid = {austrian}
 }
 
@@ -540,7 +540,7 @@
   date = {1973},
   edition = {3},
   publisher = {Schulthess Polygraphischer Verlag AG},
-  location = {{Zürich}},
+  location = {Zürich},
   langid = {nswissgerman}
 }
 
@@ -553,7 +553,7 @@
   edition = {3},
   pages = {1453--1455},
   publisher = {Orell Füssli Verlag AG},
-  location = {{Schweiz}},
+  location = {Schweiz},
   langid = {nswissgerman}
 }
 
@@ -566,7 +566,7 @@
   edition = {3},
   pages = {1455--1458},
   publisher = {Orell Füssli Verlag AG},
-  location = {{Schweiz}},
+  location = {Schweiz},
   langid = {nswissgerman}
 }
 
@@ -580,7 +580,7 @@
   edition = {2},
   pages = {435--485},
   publisher = {Springer},
-  location = {{Wien}},
+  location = {Wien},
   langid = {austrian}
 }
 
@@ -591,7 +591,7 @@
   date = {2020},
   edition = {44},
   publisher = {C. H. Beck},
-  location = {{München}},
+  location = {München},
   langid = {ngerman}
 }
 
@@ -604,7 +604,7 @@
   date = {2019},
   pages = {79--106},
   publisher = {Institut für Schweizerisches und Internationales Baurecht},
-  location = {{Freiburg}},
+  location = {Freiburg},
   langid = {nswissgerman}
 }
 
@@ -614,7 +614,7 @@
   author = {Koller, Alfred},
   date = {2012},
   publisher = {Stämpfli Verlag},
-  location = {{Bern}},
+  location = {Bern},
   langid = {nswissgerman}
 }
 
@@ -624,7 +624,7 @@
   author = {Koller, Alfred},
   date = {2012},
   publisher = {Stämpfli Verlag},
-  location = {{Bern}},
+  location = {Bern},
   langid = {nswissgerman}
 }
 
@@ -634,7 +634,7 @@
   author = {Koller, Alfred},
   date = {2015},
   publisher = {Dike Verlag AG},
-  location = {{Zürich/St. Gallen}},
+  location = {Zürich/St. Gallen},
   langid = {nswissgerman}
 }
 
@@ -647,7 +647,7 @@
   edition = {2},
   pages = {586--594},
   publisher = {Lexisnexis},
-  location = {{Wien}},
+  location = {Wien},
   langid = {austrian}
 }
 
@@ -658,7 +658,7 @@
   date = {2015},
   pages = {168--169},
   publisher = {Orell Füssli Verlag AG},
-  location = {{Schweiz}},
+  location = {Schweiz},
   langid = {nswissgerman}
 }
 
@@ -670,7 +670,7 @@
   date = {2014},
   edition = {14},
   publisher = {Manz},
-  location = {{Wien}},
+  location = {Wien},
   isbn = {3-214-14708-0},
   langid = {austrian}
 }
@@ -682,7 +682,7 @@
   date = {2018},
   edition = {4},
   publisher = {C. H. Beck},
-  location = {{München}},
+  location = {München},
   langid = {ngerman}
 }
 
@@ -693,7 +693,7 @@
   date = {2018},
   edition = {18},
   publisher = {Beck},
-  location = {{München}},
+  location = {München},
   langid = {ngerman}
 }
 
@@ -704,7 +704,7 @@
   editor = {Aebi-Müller, Regina E. and Müller, Christoph},
   date = {2018},
   publisher = {Stämpfli Verlag},
-  location = {{Bern}},
+  location = {Bern},
   langid = {nswissgerman}
 }
 
@@ -717,7 +717,7 @@
   edition = {3},
   pages = {2100--2103},
   publisher = {Springer},
-  location = {{Wien}},
+  location = {Wien},
   langid = {austrian}
 }
 
@@ -729,7 +729,7 @@
   date = {2015},
   edition = {6},
   publisher = {Helbing Lichtenhahn Verlag},
-  location = {{Basel}},
+  location = {Basel},
   langid = {nswissgerman}
 }
 
@@ -741,7 +741,7 @@
   date = {2015},
   edition = {6},
   publisher = {Helbing Lichtenhahn Verlag},
-  location = {{Basel}},
+  location = {Basel},
   langid = {nswissgerman}
 }
 
@@ -754,7 +754,7 @@
   edition = {3},
   pages = {1898--1901},
   publisher = {Orell Füssli Verlag AG},
-  location = {{Schweiz}},
+  location = {Schweiz},
   langid = {nswissgerman}
 }
 
@@ -766,7 +766,7 @@
   date = {2010},
   edition = {5},
   publisher = {Springer},
-  location = {{Wien}},
+  location = {Wien},
   langid = {austrian}
 }
 
@@ -779,7 +779,7 @@
   edition = {64},
   pages = {658--661},
   publisher = {C. H. Beck},
-  location = {{München}},
+  location = {München},
   langid = {ngerman}
 }
 
@@ -789,7 +789,7 @@
   date = {2008},
   edition = {3},
   publisher = {Carl Heymanns Verlag},
-  location = {{Köln - München}},
+  location = {Köln - München},
   langid = {ngerman}
 }
 
@@ -802,7 +802,7 @@
   edition = {2},
   pages = {244--277},
   publisher = {Springer},
-  location = {{Wien}},
+  location = {Wien},
   langid = {austrian}
 }
 
@@ -816,7 +816,7 @@
   edition = {2},
   pages = {364--435},
   publisher = {Springer},
-  location = {{Wien}},
+  location = {Wien},
   langid = {austrian}
 }
 
@@ -826,7 +826,7 @@
   author = {Rüedi, Yves},
   date = {2011},
   publisher = {Stämpfli Verlag},
-  location = {{Bern}},
+  location = {Bern},
   langid = {nswissgerman}
 }
 
@@ -837,7 +837,7 @@
   date = {2020},
   edition = {20},
   publisher = {C. H. Beck},
-  location = {{München}},
+  location = {München},
   langid = {ngerman}
 }
 
@@ -850,7 +850,7 @@
   date = {2017},
   edition = {3},
   publisher = {C. H. Beck},
-  location = {{München}},
+  location = {München},
   langid = {ngerman}
 }
 
@@ -862,7 +862,7 @@
   date = {2008},
   pages = {43--122},
   publisher = {Sellier - de Gruyter},
-  location = {{Berlin}},
+  location = {Berlin},
   langid = {ngerman}
 }
 
@@ -875,7 +875,7 @@
   edition = {2},
   pages = {755--760},
   publisher = {Luchterhand},
-  location = {{Neuwied}},
+  location = {Neuwied},
   langid = {ngerman}
 }
 
@@ -888,7 +888,7 @@
   edition = {2},
   pages = {850--856},
   publisher = {Lexisnexis},
-  location = {{Wien}},
+  location = {Wien},
   langid = {austrian}
 }
 
@@ -901,7 +901,7 @@
   edition = {5},
   pages = {1407--1412},
   publisher = {Helbing Lichtenhahn Verlag},
-  location = {{Basel}},
+  location = {Basel},
   langid = {nswissgerman}
 }
 
@@ -911,7 +911,7 @@
   date = {2009},
   edition = {5},
   publisher = {Stämpfli Verlag},
-  location = {{Bern}},
+  location = {Bern},
   langid = {nswissgerman}
 }
 
@@ -924,7 +924,7 @@
   date = {2008},
   pages = {955--977},
   publisher = {Sellier - de Gruyter},
-  location = {{Berlin}},
+  location = {Berlin},
   langid = {ngerman}
 }
 
@@ -935,7 +935,7 @@
   editor = {Hausheer, Heinz},
   date = {2002},
   publisher = {Stämpfli Verlag},
-  location = {{Bern}},
+  location = {Bern},
   langid = {nswissgerman}
 }
 
@@ -946,7 +946,7 @@
   date = {2015},
   edition = {14},
   publisher = {Manz},
-  location = {{Wien}},
+  location = {Wien},
   langid = {austrian}
 }
 
@@ -959,7 +959,7 @@
   date = {2017},
   edition = {5},
   publisher = {C. H. Beck},
-  location = {{München}},
+  location = {München},
   langid = {ngerman}
 }
 
@@ -971,7 +971,7 @@
   date = {2018},
   edition = {7},
   publisher = {C. H. Beck},
-  location = {{München}},
+  location = {München},
   langid = {ngerman}
 }
 
@@ -982,7 +982,7 @@
   date = {2016},
   edition = {6},
   publisher = {Manz},
-  location = {{Wien}},
+  location = {Wien},
   langid = {austrian}
 }
 
@@ -994,7 +994,7 @@
   date = {2016},
   edition = {7},
   publisher = {C. H. Beck},
-  location = {{München}},
+  location = {München},
   langid = {ngerman}
 }
 
@@ -1005,7 +1005,7 @@
   date = {2020},
   edition = {35},
   publisher = {C. H. Beck},
-  location = {{München}},
+  location = {München},
   langid = {ngerman}
 }
 
@@ -1016,7 +1016,7 @@
   date = {2012},
   edition = {6},
   publisher = {Facultas},
-  location = {{Wien}},
+  location = {Wien},
   langid = {austrian}
 }
 

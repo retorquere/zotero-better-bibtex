@@ -6,7 +6,7 @@
   date = {2015},
   number = {77},
   institution = {{Institution}},
-  location = {{Place}},
+  location = {Place},
   annotation = {\{:X-genre: xxx\}}
 }
 
@@ -17,7 +17,7 @@
   editor = {Matthew, H.C.G. and Harrison, Brian Howard},
   date = {2004},
   publisher = {Oxford University Press},
-  location = {{Oxford}},
+  location = {Oxford},
   doi = {10.1093/ref:odnb/10183},
   url = {http://www.oxforddnb.com/view/article/10183},
   urldate = {2014-06-13}
@@ -30,7 +30,7 @@
   editortype = {director},
   date = {2015},
   publisher = {The Distributor},
-  location = {{US/GB}}
+  location = {US/GB}
 }
 
 @inreference{emptybook,
@@ -51,7 +51,7 @@
   volume = {3},
   number = {1},
   publisher = {Warner Home Video},
-  location = {{US}},
+  location = {US},
   langid = {american},
   origpublisher = {NBC}
 }
@@ -68,7 +68,7 @@
   volume = {3},
   number = {1},
   publisher = {NBC},
-  location = {{US}},
+  location = {US},
   langid = {american}
 }
 
