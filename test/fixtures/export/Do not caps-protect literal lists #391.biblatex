@@ -1,7 +1,7 @@
 
 @report{institution,
   title = {Institution},
-  institution = {{Office of Information Management and Communications}}
+  institution = {Office of Information Management and Communications}
 }
 
 @book{publisher,
@@ -14,7 +14,7 @@
 
 @thesis{university,
   title = {University},
-  institution = {{University of Saint Kitts and Nevis}}
+  institution = {University of Saint Kitts and Nevis}
 }
 
 
