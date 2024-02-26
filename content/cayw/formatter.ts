@@ -3,7 +3,6 @@
 import { Translators } from '../translators'
 import { getItemsAsync } from '../get-items-async'
 import { Preference } from '../prefs'
-import { fromPairs } from '../object'
 import { escapeHTML } from '../text'
 import { scannableCite } from '../../gen/ScannableCite'
 import { citeCreators, yearFromDate } from '../../translators/Better BibTeX Citation Key Quick Copy'
@@ -11,13 +10,7 @@ import { Eta } from 'eta'
 const eta = new Eta({ autoEscape: true })
 import { simplifyForExport } from '../../gen/items/simplify'
 
-import * as unicode_table from 'unicode2latex/tables/minimal.json'
-
-const unicode2latex = (fromPairs(
-  Object
-    .entries(unicode_table.base)
-    .map(([unicode, latex]: [string, { text: string, math: string }]) => [ unicode, { text: latex.text || latex.math, math: !(latex.text) }])
-) as Record<string, { text: string, math: boolean }>)
+import { Transform } from 'unicode2latex'
 
 function serialized(item) {
   if (item) {
@@ -27,25 +20,6 @@ function serialized(item) {
     return ser
   }
   return undefined
-}
-
-function tolatex(s: string): string {
-  if (!s) return ''
-
-  return s.split('')
-    .map(c => ({...(unicode2latex[c] || { text: c, math: false }) }) )
-    .reduce((acc, c) => {
-      const last = acc[acc.length - 1]
-      if (last && last.math === c.math) {
-        last.text += c.text
-      }
-      else {
-        acc.push(c)
-      }
-      return acc
-    }, [])
-    .map(c => c.math ? `$${c.text}$` : c.text)
-    .join('')
 }
 
 function shortLabel(label: string, options): string {
@@ -77,23 +51,24 @@ function shortLabel(label: string, options): string {
   }[label] || label
 }
 
+const latextx = new Transform('minimal')
 function citation2latex(citation, options) {
   let formatted = ''
   // despite Mozilla's claim that trimStart === trimLeft, and that trimStart should be preferred, trimStart does not seem to exist in FF chrome code.
   const label = (`${shortLabel(citation.label, { page: '', ...options })} `).trimLeft()
 
-  if (citation.prefix) formatted += `[${tolatex(citation.prefix)}]`
+  if (citation.prefix) formatted += `[${latextx.tolatex(citation.prefix)}]`
 
   if (citation.locator && citation.suffix) {
-    formatted += `[${tolatex(label)}${tolatex(citation.locator)}, ${tolatex(citation.suffix)}]`
+    formatted += `[${latextx.tolatex(label)}${latextx.tolatex(citation.locator)}, ${latextx.tolatex(citation.suffix)}]`
 
   }
   else if (citation.locator) {
-    formatted += `[${tolatex(label)}${tolatex(citation.locator)}]`
+    formatted += `[${latextx.tolatex(label)}${latextx.tolatex(citation.locator)}]`
 
   }
   else if (citation.suffix) {
-    formatted += `[${tolatex(citation.suffix)}]`
+    formatted += `[${latextx.tolatex(citation.suffix)}]`
 
   }
   else if (citation.prefix) {
