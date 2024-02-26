@@ -40,9 +40,9 @@ const config: Config = {
     url: 'verbatim',
     doi: 'verbatim',
     // school: 'literal'
-    institution: 'literal',
-    publisher: 'literal',
-    organization: 'literal',
+    institution: 'literal_list',
+    publisher: 'literal_list',
+    organization: 'literal_list',
     address: 'literal',
   },
 

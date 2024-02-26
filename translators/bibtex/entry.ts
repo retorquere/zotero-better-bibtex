@@ -114,7 +114,7 @@ const enc_creators_marker = {
 const isBibString = /^[a-z][-a-z0-9_]*$/i
 
 export type Config = {
-  fieldEncoding: Record<string, 'raw' | 'url' | 'verbatim' | 'creators' | 'literal' | 'tags' | 'attachments' | 'date'>
+  fieldEncoding: Record<string, 'raw' | 'url' | 'verbatim' | 'creators' | 'literal' | 'literal_list' | 'tags' | 'attachments' | 'date'>
   caseConversion: Record<string, boolean>
   typeMap: {
     csl: Record<string, string | { type: string, subtype?: string }>
@@ -513,6 +513,10 @@ export class Entry {
       else {
         let value
         switch (field.enc) {
+          case 'literal_list':
+            value = this.enc_literal_list(field, { raw: this.item.raw })
+            break
+
           case 'literal':
             value = this.enc_literal(field, { raw: this.item.raw })
             break
@@ -688,12 +692,12 @@ export class Entry {
 
           case 'original-publisher':
             name = 'origpublisher'
-            enc = 'literal'
+            enc = 'literal_list'
             break
 
           case 'original-publisher-place':
             name = 'origlocation'
-            enc = 'literal'
+            enc = 'literal_list'
             break
 
           case 'original-title':
@@ -1015,6 +1019,25 @@ export class Entry {
     }
 
     return replace_command_spacers(encoded.join(this.translation.preferences.separatorNames))
+  }
+
+  /*
+   * Encode text to LaTeX
+   *
+   * This encoding supports simple HTML markup.
+   *
+   * @param {field} field to encode.
+   * @return {String} field.value encoded as author-style value
+   */
+  protected enc_literal_list(f, options: { raw?: boolean } = {}) {
+    const list = Array.isArray(f.value) ? f.value : [ f.value ]
+    if (!list.length) return null
+    // eslint-disable-next-line no-new-wrappers
+    return list
+      .map(elt => typeof elt === 'string' ? elt : `${elt}`)
+      // eslint-disable-next-line no-new-wrappers
+      .map(elt => this.enc_literal({ value: elt.match(/(^| )and( |$)/) ? new String(elt) : elt }), options)
+      .join(' and ')
   }
 
   /*
