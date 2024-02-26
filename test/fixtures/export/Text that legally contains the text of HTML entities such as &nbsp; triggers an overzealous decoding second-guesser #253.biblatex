@@ -1,9 +1,8 @@
-
 @book{oecd_making_2014,
   title = {Making Development Co-Operation More Effective},
   author = {{OECD} and {UNDP}},
   date = {2014-04-03},
-  publisher = {Organisation for Economic Co-operation and Development},
+  publisher = {{Organisation for Economic Co-operation and Development}},
   location = {Paris},
   url = {http://www.oecd-ilibrary.org/content/book/9789264209305-en},
   urldate = {2014-05-26},
@@ -13,5 +12,3 @@
   keywords = {aid,cooperation,development,evaluation,monitoring},
   annotation = {00000}
 }
-
-
