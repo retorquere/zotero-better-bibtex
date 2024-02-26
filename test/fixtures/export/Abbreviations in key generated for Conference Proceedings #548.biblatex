@@ -5,7 +5,7 @@
   author = {Corless, Robert M. and Jeffrey, David J. and Knuth, Donald E.},
   date = {1997},
   pages = {197--204},
-  publisher = {{ACM Press}},
+  publisher = {ACM Press},
   doi = {10.1145/258726.258783},
   isbn = {0-89791-875-4},
   langid = {english}

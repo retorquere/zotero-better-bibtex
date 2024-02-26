@@ -7,7 +7,7 @@
   date = {2010},
   edition = {3},
   pages = {1183--1198},
-  publisher = {{Springer}},
+  publisher = {Springer},
   location = {{Wien}},
   langid = {austrian}
 }
@@ -21,7 +21,7 @@
   date = {2012},
   edition = {2},
   pages = {277--303},
-  publisher = {{Springer}},
+  publisher = {Springer},
   location = {{Wien}},
   langid = {austrian}
 }
@@ -35,7 +35,7 @@
   date = {2012},
   edition = {2},
   pages = {303--364},
-  publisher = {{Springer}},
+  publisher = {Springer},
   location = {{Wien}},
   langid = {austrian}
 }
@@ -47,7 +47,7 @@
   editor = {Krüger, Wolfgang},
   date = {2019},
   edition = {8},
-  publisher = {{C. H. Beck}},
+  publisher = {C. H. Beck},
   location = {{München}},
   langid = {ngerman}
 }
@@ -59,7 +59,7 @@
   editor = {Krüger, Wolfgang},
   date = {2019},
   edition = {8},
-  publisher = {{C. H. Beck}},
+  publisher = {C. H. Beck},
   location = {{München}},
   langid = {ngerman}
 }
@@ -71,7 +71,7 @@
   editor = {Krüger, Wolfgang},
   date = {2019},
   edition = {8},
-  publisher = {{C. H. Beck}},
+  publisher = {C. H. Beck},
   location = {{München}},
   langid = {ngerman}
 }
@@ -82,7 +82,7 @@
   author = {Baur, Fritz and Baur, Jürgen F. and Stürner, Rolf},
   date = {2009},
   edition = {18},
-  publisher = {{C. H. Beck}},
+  publisher = {C. H. Beck},
   location = {{München}},
   langid = {ngerman}
 }
@@ -94,7 +94,7 @@
   editor = {von Staudinger, J.},
   date = {2004},
   pages = {417--477},
-  publisher = {{Sellier - de Gruyter}},
+  publisher = {Sellier - de Gruyter},
   location = {{Berlin}},
   langid = {ngerman}
 }
@@ -104,7 +104,7 @@
   shorttitle = {Bürgschaftsrecht},
   author = {Beck, Emil},
   date = {1942},
-  publisher = {{Schulthess}},
+  publisher = {Schulthess},
   location = {{Zürich}},
   langid = {nswissgerman}
 }
@@ -117,7 +117,7 @@
   date = {2007},
   edition = {2},
   pages = {482--488},
-  publisher = {{Luchterhand}},
+  publisher = {Luchterhand},
   location = {{Neuwied}},
   langid = {ngerman}
 }
@@ -130,7 +130,7 @@
   date = {2007},
   edition = {2},
   pages = {489--492},
-  publisher = {{Luchterhand}},
+  publisher = {Luchterhand},
   location = {{Neuwied}},
   langid = {ngerman}
 }
@@ -141,7 +141,7 @@
   author = {Berger, Bernhard},
   date = {2012},
   edition = {2},
-  publisher = {{Stämpfli Verlag}},
+  publisher = {Stämpfli Verlag},
   location = {{Bern}},
   langid = {nswissgerman}
 }
@@ -154,7 +154,7 @@
   date = {2007},
   edition = {2},
   pages = {3080--3083},
-  publisher = {{Luchterhand}},
+  publisher = {Luchterhand},
   location = {{Neuwied}},
   langid = {ngerman}
 }
@@ -165,7 +165,7 @@
   author = {Bühler, Theodor},
   date = {1998},
   edition = {3},
-  publisher = {{Schulthess Polygraphischer Verlag AG}},
+  publisher = {Schulthess Polygraphischer Verlag AG},
   location = {{Zürich}},
   langid = {nswissgerman}
 }
@@ -176,7 +176,7 @@
   author = {Bühler, Theodor},
   date = {1998},
   edition = {3},
-  publisher = {{Schulthess Polygraphischer Verlag AG}},
+  publisher = {Schulthess Polygraphischer Verlag AG},
   location = {{Zürich}},
   langid = {nswissgerman}
 }
@@ -188,7 +188,7 @@
   editor = {Apathy, Peter},
   date = {2013},
   edition = {6},
-  publisher = {{Verlag Österreich}},
+  publisher = {Verlag Österreich},
   location = {{Wien}},
   langid = {austrian}
 }
@@ -227,7 +227,7 @@
   editor = {von Staudinger, J.},
   date = {2008},
   pages = {159--184},
-  publisher = {{Sellier - de Gruyter}},
+  publisher = {Sellier - de Gruyter},
   location = {{Berlin}},
   langid = {ngerman}
 }
@@ -249,7 +249,7 @@
   shorttitle = {Rechtsvergleich},
   author = {Dağdelen, Ahmet Hakan},
   date = {2020},
-  publisher = {{Yetkin}},
+  publisher = {Yetkin},
   location = {{Ankara}},
   langid = {austrian}
 }
@@ -262,7 +262,7 @@
   date = {2016},
   edition = {3},
   pages = {925--929},
-  publisher = {{Schulthess Juristische Medien AG}},
+  publisher = {Schulthess Juristische Medien AG},
   location = {{Schweiz}},
   langid = {nswissgerman}
 }
@@ -276,7 +276,7 @@
   date = {2012},
   edition = {2},
   pages = {1--69},
-  publisher = {{Springer}},
+  publisher = {Springer},
   location = {{Wien}},
   langid = {austrian}
 }
@@ -298,7 +298,7 @@
   author = {Gauch, Peter},
   date = {2011},
   edition = {5},
-  publisher = {{Schulthess}},
+  publisher = {Schulthess},
   location = {{Zürich}},
   langid = {nswissgerman}
 }
@@ -309,7 +309,7 @@
   author = {Giovanoli, Silvio},
   editor = {Becker, Hermann},
   date = {1942},
-  publisher = {{Verlag von Stämpfli \& Cie.}},
+  publisher = {Verlag von Stämpfli \& Cie.},
   location = {{Bern}},
   langid = {nswissgerman}
 }
@@ -321,7 +321,7 @@
   date = {2004},
   edition = {2},
   pages = {1106--1112},
-  publisher = {{Schulthess Juristische Medien AG}},
+  publisher = {Schulthess Juristische Medien AG},
   location = {{Schweiz}},
   langid = {nswissgerman}
 }
@@ -334,7 +334,7 @@
   date = {2016},
   edition = {3},
   pages = {408--412},
-  publisher = {{Schulthess Juristische Medien AG}},
+  publisher = {Schulthess Juristische Medien AG},
   location = {{Schweiz}},
   langid = {nswissgerman}
 }
@@ -347,7 +347,7 @@
   date = {2016},
   edition = {3},
   pages = {412--413},
-  publisher = {{Schulthess Juristische Medien AG}},
+  publisher = {Schulthess Juristische Medien AG},
   location = {{Schweiz}},
   langid = {nswissgerman}
 }
@@ -370,7 +370,7 @@
   shorttitle = {Bürgschaftsrecht},
   author = {Guhl, Theo},
   date = {1942},
-  publisher = {{Polygraphischer Verlag}},
+  publisher = {Polygraphischer Verlag},
   location = {{Zürich}},
   langid = {nswissgerman}
 }
@@ -381,7 +381,7 @@
   author = {Haab, Robert and Simonius, August and Scherrer, Werner and Zobl, Dieter},
   date = {1977},
   pages = {709--752},
-  publisher = {{Schulthess Polygraphischer Verlag AG}},
+  publisher = {Schulthess Polygraphischer Verlag AG},
   location = {{Schweiz}},
   langid = {nswissgerman}
 }
@@ -407,7 +407,7 @@
   date = {2005},
   edition = {64},
   pages = {407--415},
-  publisher = {{C. H. Beck}},
+  publisher = {C. H. Beck},
   location = {{München}},
   langid = {ngerman}
 }
@@ -420,7 +420,7 @@
   date = {2005},
   edition = {64},
   pages = {416--419},
-  publisher = {{C. H. Beck}},
+  publisher = {C. H. Beck},
   location = {{München}},
   langid = {ngerman}
 }
@@ -433,7 +433,7 @@
   date = {2005},
   edition = {64},
   pages = {2646--2649},
-  publisher = {{C. H. Beck}},
+  publisher = {C. H. Beck},
   location = {{München}},
   langid = {ngerman}
 }
@@ -446,7 +446,7 @@
   date = {2016},
   edition = {3},
   pages = {350--354},
-  publisher = {{Schulthess Juristische Medien AG}},
+  publisher = {Schulthess Juristische Medien AG},
   location = {{Schweiz}},
   langid = {nswissgerman}
 }
@@ -459,7 +459,7 @@
   date = {2016},
   edition = {3},
   pages = {354--359},
-  publisher = {{Schulthess Juristische Medien AG}},
+  publisher = {Schulthess Juristische Medien AG},
   location = {{Schweiz}},
   langid = {nswissgerman}
 }
@@ -470,7 +470,7 @@
   author = {Honsell, Heinrich},
   date = {2005},
   edition = {4},
-  publisher = {{Schulthess}},
+  publisher = {Schulthess},
   location = {{Zürich}},
   langid = {nswissgerman}
 }
@@ -481,7 +481,7 @@
   author = {Honsell, Heinrich},
   date = {2010},
   edition = {9},
-  publisher = {{Stämpfli Verlag}},
+  publisher = {Stämpfli Verlag},
   location = {{Bern}},
   langid = {nswissgerman}
 }
@@ -491,7 +491,7 @@
   author = {Hrubesch-Millauer, Stephanie and Graham-Siegenthaler, Barbara and Roberto, Vito},
   date = {2017},
   edition = {5},
-  publisher = {{Stämpfli Verlag}},
+  publisher = {Stämpfli Verlag},
   location = {{Bern}},
   langid = {nswissgerman}
 }
@@ -503,7 +503,7 @@
   editor = {Apathy, Peter},
   date = {2013},
   edition = {5},
-  publisher = {{Verlag Österreich}},
+  publisher = {Verlag Österreich},
   location = {{Wien}},
   langid = {austrian}
 }
@@ -515,7 +515,7 @@
   editor = {Apathy, Peter},
   date = {2016},
   edition = {6},
-  publisher = {{Verlag Österreich}},
+  publisher = {Verlag Österreich},
   location = {{Wien}},
   langid = {austrian}
 }
@@ -528,7 +528,7 @@
   date = {2012},
   edition = {2},
   pages = {69--244},
-  publisher = {{Springer}},
+  publisher = {Springer},
   location = {{Wien}},
   langid = {austrian}
 }
@@ -539,7 +539,7 @@
   author = {Jäggi, Peter and Schönenberger, Wilhelm},
   date = {1973},
   edition = {3},
-  publisher = {{Schulthess Polygraphischer Verlag AG}},
+  publisher = {Schulthess Polygraphischer Verlag AG},
   location = {{Zürich}},
   langid = {nswissgerman}
 }
@@ -552,7 +552,7 @@
   date = {2016},
   edition = {3},
   pages = {1453--1455},
-  publisher = {{Orell Füssli Verlag AG}},
+  publisher = {Orell Füssli Verlag AG},
   location = {{Schweiz}},
   langid = {nswissgerman}
 }
@@ -565,7 +565,7 @@
   date = {2016},
   edition = {3},
   pages = {1455--1458},
-  publisher = {{Orell Füssli Verlag AG}},
+  publisher = {Orell Füssli Verlag AG},
   location = {{Schweiz}},
   langid = {nswissgerman}
 }
@@ -579,7 +579,7 @@
   date = {2012},
   edition = {2},
   pages = {435--485},
-  publisher = {{Springer}},
+  publisher = {Springer},
   location = {{Wien}},
   langid = {austrian}
 }
@@ -590,7 +590,7 @@
   author = {Köhler, Helmut},
   date = {2020},
   edition = {44},
-  publisher = {{C. H. Beck}},
+  publisher = {C. H. Beck},
   location = {{München}},
   langid = {ngerman}
 }
@@ -603,7 +603,7 @@
   editor = {Stöckli, Hubert},
   date = {2019},
   pages = {79--106},
-  publisher = {{Institut für Schweizerisches und Internationales Baurecht}},
+  publisher = {Institut für Schweizerisches und Internationales Baurecht},
   location = {{Freiburg}},
   langid = {nswissgerman}
 }
@@ -613,7 +613,7 @@
   shorttitle = {OR BT I},
   author = {Koller, Alfred},
   date = {2012},
-  publisher = {{Stämpfli Verlag}},
+  publisher = {Stämpfli Verlag},
   location = {{Bern}},
   langid = {nswissgerman}
 }
@@ -623,7 +623,7 @@
   shorttitle = {OR BT I},
   author = {Koller, Alfred},
   date = {2012},
-  publisher = {{Stämpfli Verlag}},
+  publisher = {Stämpfli Verlag},
   location = {{Bern}},
   langid = {nswissgerman}
 }
@@ -633,7 +633,7 @@
   shorttitle = {Werkvertragsrecht},
   author = {Koller, Alfred},
   date = {2015},
-  publisher = {{Dike Verlag AG}},
+  publisher = {Dike Verlag AG},
   location = {{Zürich/St. Gallen}},
   langid = {nswissgerman}
 }
@@ -646,7 +646,7 @@
   date = {2013},
   edition = {2},
   pages = {586--594},
-  publisher = {{Lexisnexis}},
+  publisher = {Lexisnexis},
   location = {{Wien}},
   langid = {austrian}
 }
@@ -657,7 +657,7 @@
   author = {Kostkiewicz, Jolanta Kren},
   date = {2015},
   pages = {168--169},
-  publisher = {{Orell Füssli Verlag AG}},
+  publisher = {Orell Füssli Verlag AG},
   location = {{Schweiz}},
   langid = {nswissgerman}
 }
@@ -669,7 +669,7 @@
   author = {Koziol, Helmut and Welser, Rudolf and Kletečka, Andreas},
   date = {2014},
   edition = {14},
-  publisher = {{Manz}},
+  publisher = {Manz},
   location = {{Wien}},
   isbn = {3-214-14708-0},
   langid = {austrian}
@@ -681,7 +681,7 @@
   author = {Lüke, Wolfgang},
   date = {2018},
   edition = {4},
-  publisher = {{C. H. Beck}},
+  publisher = {C. H. Beck},
   location = {{München}},
   langid = {ngerman}
 }
@@ -692,7 +692,7 @@
   author = {Medicus, Dieter and Lorenz, Stephan},
   date = {2018},
   edition = {18},
-  publisher = {{Beck}},
+  publisher = {Beck},
   location = {{München}},
   langid = {ngerman}
 }
@@ -703,7 +703,7 @@
   author = {Müller, Christoph},
   editor = {Aebi-Müller, Regina E. and Müller, Christoph},
   date = {2018},
-  publisher = {{Stämpfli Verlag}},
+  publisher = {Stämpfli Verlag},
   location = {{Bern}},
   langid = {nswissgerman}
 }
@@ -716,7 +716,7 @@
   date = {2010},
   edition = {3},
   pages = {2100--2103},
-  publisher = {{Springer}},
+  publisher = {Springer},
   location = {{Wien}},
   langid = {austrian}
 }
@@ -728,7 +728,7 @@
   editor = {Honsell, Heinrich and Vogt, Nedim Peter and Wiegand, Wolfgang},
   date = {2015},
   edition = {6},
-  publisher = {{Helbing Lichtenhahn Verlag}},
+  publisher = {Helbing Lichtenhahn Verlag},
   location = {{Basel}},
   langid = {nswissgerman}
 }
@@ -740,7 +740,7 @@
   editor = {Honsell, Heinrich and Vogt, Nedim Peter and Wiegand, Wolfgang},
   date = {2015},
   edition = {6},
-  publisher = {{Helbing Lichtenhahn Verlag}},
+  publisher = {Helbing Lichtenhahn Verlag},
   location = {{Basel}},
   langid = {nswissgerman}
 }
@@ -753,7 +753,7 @@
   date = {2016},
   edition = {3},
   pages = {1898--1901},
-  publisher = {{Orell Füssli Verlag AG}},
+  publisher = {Orell Füssli Verlag AG},
   location = {{Schweiz}},
   langid = {nswissgerman}
 }
@@ -765,7 +765,7 @@
   editor = {Apathy, Peter},
   date = {2010},
   edition = {5},
-  publisher = {{Springer}},
+  publisher = {Springer},
   location = {{Wien}},
   langid = {austrian}
 }
@@ -778,7 +778,7 @@
   date = {2005},
   edition = {64},
   pages = {658--661},
-  publisher = {{C. H. Beck}},
+  publisher = {C. H. Beck},
   location = {{München}},
   langid = {ngerman}
 }
@@ -788,7 +788,7 @@
   author = {Reinicke, Dietrich and Tiedtke, Klaus},
   date = {2008},
   edition = {3},
-  publisher = {{Carl Heymanns Verlag}},
+  publisher = {Carl Heymanns Verlag},
   location = {{Köln - München}},
   langid = {ngerman}
 }
@@ -801,7 +801,7 @@
   date = {2012},
   edition = {2},
   pages = {244--277},
-  publisher = {{Springer}},
+  publisher = {Springer},
   location = {{Wien}},
   langid = {austrian}
 }
@@ -815,7 +815,7 @@
   date = {2012},
   edition = {2},
   pages = {364--435},
-  publisher = {{Springer}},
+  publisher = {Springer},
   location = {{Wien}},
   langid = {austrian}
 }
@@ -825,7 +825,7 @@
   booktitle = {Berner Kommentar Die Entstehung der Obligation: Die Entstehung aus ungerechtfetigter Bereicherung: Ausschluss der Rückforderungen, Art. 66 OR},
   author = {Rüedi, Yves},
   date = {2011},
-  publisher = {{Stämpfli Verlag}},
+  publisher = {Stämpfli Verlag},
   location = {{Bern}},
   langid = {nswissgerman}
 }
@@ -836,7 +836,7 @@
   author = {Rüthers, Bernd and Stadler, Astrid},
   date = {2020},
   edition = {20},
-  publisher = {{C. H. Beck}},
+  publisher = {C. H. Beck},
   location = {{München}},
   langid = {ngerman}
 }
@@ -849,7 +849,7 @@
   editor = {Hausmann, Rainer and Odersky, Felix},
   date = {2017},
   edition = {3},
-  publisher = {{C. H. Beck}},
+  publisher = {C. H. Beck},
   location = {{München}},
   langid = {ngerman}
 }
@@ -861,7 +861,7 @@
   editor = {von Staudinger, J.},
   date = {2008},
   pages = {43--122},
-  publisher = {{Sellier - de Gruyter}},
+  publisher = {Sellier - de Gruyter},
   location = {{Berlin}},
   langid = {ngerman}
 }
@@ -874,7 +874,7 @@
   date = {2007},
   edition = {2},
   pages = {755--760},
-  publisher = {{Luchterhand}},
+  publisher = {Luchterhand},
   location = {{Neuwied}},
   langid = {ngerman}
 }
@@ -887,7 +887,7 @@
   date = {2013},
   edition = {2},
   pages = {850--856},
-  publisher = {{Lexisnexis}},
+  publisher = {Lexisnexis},
   location = {{Wien}},
   langid = {austrian}
 }
@@ -900,7 +900,7 @@
   date = {2015},
   edition = {5},
   pages = {1407--1412},
-  publisher = {{Helbing Lichtenhahn Verlag}},
+  publisher = {Helbing Lichtenhahn Verlag},
   location = {{Basel}},
   langid = {nswissgerman}
 }
@@ -910,7 +910,7 @@
   author = {Schwenzer, Ingeborg},
   date = {2009},
   edition = {5},
-  publisher = {{Stämpfli Verlag}},
+  publisher = {Stämpfli Verlag},
   location = {{Bern}},
   langid = {nswissgerman}
 }
@@ -923,7 +923,7 @@
   editor = {von Staudinger, J.},
   date = {2008},
   pages = {955--977},
-  publisher = {{Sellier - de Gruyter}},
+  publisher = {Sellier - de Gruyter},
   location = {{Berlin}},
   langid = {ngerman}
 }
@@ -934,7 +934,7 @@
   author = {Weber, Rolf H.},
   editor = {Hausheer, Heinz},
   date = {2002},
-  publisher = {{Stämpfli Verlag}},
+  publisher = {Stämpfli Verlag},
   location = {{Bern}},
   langid = {nswissgerman}
 }
@@ -945,7 +945,7 @@
   author = {Welser, Rudolf and Zöchling-Jud, Brigitta},
   date = {2015},
   edition = {14},
-  publisher = {{Manz}},
+  publisher = {Manz},
   location = {{Wien}},
   langid = {austrian}
 }
@@ -958,7 +958,7 @@
   editor = {Schimansky, Herbert and Bunte, Hermann-Josef and Lwowski, Hans-Jürgen},
   date = {2017},
   edition = {5},
-  publisher = {{C. H. Beck}},
+  publisher = {C. H. Beck},
   location = {{München}},
   langid = {ngerman}
 }
@@ -970,7 +970,7 @@
   editor = {Hein, Jan},
   date = {2018},
   edition = {7},
-  publisher = {{C. H. Beck}},
+  publisher = {C. H. Beck},
   location = {{München}},
   langid = {ngerman}
 }
@@ -981,7 +981,7 @@
   author = {Wendehorst, Christiane and Zöchling-Jud, Brigitta},
   date = {2016},
   edition = {6},
-  publisher = {{Manz}},
+  publisher = {Manz},
   location = {{Wien}},
   langid = {austrian}
 }
@@ -993,7 +993,7 @@
   editor = {Säcker, Franz Jürgen and Rixecker, Roland and Oetker, Hartmut and Limperg, Bettina},
   date = {2016},
   edition = {7},
-  publisher = {{C. H. Beck}},
+  publisher = {C. H. Beck},
   location = {{München}},
   langid = {ngerman}
 }
@@ -1004,7 +1004,7 @@
   author = {Wolf, Manfred and Wellenhofer, Marina},
   date = {2020},
   edition = {35},
-  publisher = {{C. H. Beck}},
+  publisher = {C. H. Beck},
   location = {{München}},
   langid = {ngerman}
 }
@@ -1015,7 +1015,7 @@
   author = {Zankl, Wolfgang},
   date = {2012},
   edition = {6},
-  publisher = {{Facultas}},
+  publisher = {Facultas},
   location = {{Wien}},
   langid = {austrian}
 }

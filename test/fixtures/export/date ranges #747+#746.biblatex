@@ -39,7 +39,7 @@
   author = {Seeley, Donn},
   date = {1989-01-30/1989-02-03},
   pages = {287--304},
-  publisher = {{USENIX}},
+  publisher = {USENIX},
   location = {{San Diego, California, USA}}
 }
 
@@ -49,7 +49,7 @@
   author = {Winograd, Terry},
   date = {1986-12-03/1986-12-05},
   pages = {203--220},
-  publisher = {{ACM}},
+  publisher = {ACM},
   location = {{Austin, TX}},
   doi = {10.1145/637069.637096},
   url = {http://doi.acm.org/10.1145/637069.637096},

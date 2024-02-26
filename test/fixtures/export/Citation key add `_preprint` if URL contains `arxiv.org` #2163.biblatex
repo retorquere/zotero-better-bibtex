@@ -116,7 +116,7 @@
   author = {Shang, Wenling and Sohn, Kihyuk and Almeida, Diogo and Lee, Honglak},
   date = {2016-06-11},
   pages = {2217--2225},
-  publisher = {{PMLR}},
+  publisher = {PMLR},
   issn = {1938-7228},
   url = {http://proceedings.mlr.press/v48/shang16.html},
   urldate = {2021-05-04},

@@ -7,7 +7,7 @@
   date = {2020},
   series = {Lecture {{Notes}} in {{Computer Science}}},
   pages = {157--186},
-  publisher = {{Springer International Publishing}},
+  publisher = {Springer International Publishing},
   location = {{Cham}},
   doi = {10.1007/978-3-030-45388-6_6},
   abstract = {Recently, Beullens, Kleinjung, and Vercauteren (Asiacrypt’19) provided the first practical isogeny-based digital signature, obtained from the Fiat-Shamir (FS) paradigm. They worked with the CSIDH-512 parameters and passed through a new record class group computation. However, as with all standard FS signatures, the security proof is highly non-tight and the concrete parameters are set under the heuristic that the only way to attack the scheme is by finding collisions for a hash function.In this paper, we propose an FS-style signature scheme, called Lossy CSI-FiSh, constructed using the CSIDH-512 parameters and with a security proof based on the “Lossy Keys” technique introduced by Kiltz, Lyubashevsky and Schaffner (Eurocrypt’18). Lossy CSI-FiSh is provably secure under the same assumption which underlies the security of the key exchange protocol CSIDH (Castryck et al. (Asiacrypt’18)) and is almost as efficient as CSI-FiSh. For instance, aiming for small signature size, our scheme is expected to take around \textbackslash approx 800≈800\textbackslash approx 800 ms to sign/verify while producing signatures of size \textbackslash approx 280≈280\textbackslash approx 280 bytes. This is only twice slower than CSI-FiSh while having similar signature size for the same parameter set. As an additional benefit, our scheme is by construction secure both in the classical and quantum random oracle model.},

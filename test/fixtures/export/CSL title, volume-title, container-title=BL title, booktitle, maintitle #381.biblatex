@@ -8,7 +8,7 @@
   series = {Oxford Classical Texts},
   volume = {4},
   pages = {327--621},
-  publisher = {{Clarendon Press}},
+  publisher = {Clarendon Press},
   location = {{Oxford}},
   langid = {british},
   maintitle = {Opera}
@@ -21,7 +21,7 @@
   date = {1902},
   series = {Oxford Classical Texts {{CSL-VAR}}},
   volume = {4},
-  publisher = {{Clarendon Press}},
+  publisher = {Clarendon Press},
   location = {{Oxford}},
   langid = {british},
   maintitle = {Opera}

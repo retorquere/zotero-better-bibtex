@@ -2,7 +2,7 @@
 @book{Kant-Book,
   title = {A Book},
   author = {Kant, Emmanuel},
-  publisher = {{Him}},
+  publisher = {Him},
   location = {{Here}},
   note = {\section{This is a heading}
 
