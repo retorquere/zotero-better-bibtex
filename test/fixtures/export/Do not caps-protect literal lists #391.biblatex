@@ -1,20 +1,17 @@
-
 @report{institution,
   title = {Institution},
-  institution = {Office of Information Management and Communications}
+  institution = {{Office of Information Management and Communications}}
 }
 
 @book{publisher,
   title = {Publisher},
-  publisher = {Miller, Smith and Jones},
+  publisher = {{Miller, Smith and Jones}},
   location = {Trinidad and Tobago},
-  origlocation = {Saint Kitts and Nevis},
-  origpublisher = {Doe and Company}
+  origlocation = {{Saint Kitts and Nevis}},
+  origpublisher = {{Doe and Company}}
 }
 
 @thesis{university,
   title = {University},
-  institution = {University of Saint Kitts and Nevis}
+  institution = {{University of Saint Kitts and Nevis}}
 }
-
-
