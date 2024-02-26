@@ -327,7 +327,7 @@ export function generateBibTeX(translation: Translation): void {
           urlfield = ref.add({
             name: 'url',
             value: item.url || item.extraFields.kv.url,
-            enc: translation.preferences.bibtexURL === 'url' && translation.isVerbatimField('url') ? 'url' : 'latex',
+            enc: translation.preferences.bibtexURL === 'url' && translation.isVerbatimField('url') ? 'url' : 'literal',
           })
           break
 
@@ -336,7 +336,7 @@ export function generateBibTeX(translation: Translation): void {
           urlfield = ref.add({
             name: (['misc', 'booklet'].includes(ref.entrytype) && !ref.has.howpublished ? 'howpublished' : 'note'),
             value: item.url || item.extraFields.kv.url,
-            enc: translation.preferences.bibtexURL === 'note' ? 'url': 'latex',
+            enc: translation.preferences.bibtexURL === 'note' ? 'url': 'literal',
           })
           break
 
@@ -348,7 +348,7 @@ export function generateBibTeX(translation: Translation): void {
       }
     }
     if (translation.preferences.DOIandURL !== 'url' || !urlfield) {
-      ref.add({ name: 'doi', value: (doi || '').replace(/^https?:\/\/doi.org\//i, ''), enc: translation.isVerbatimField('doi') ? 'verbatim' : 'latex' })
+      ref.add({ name: 'doi', value: (doi || '').replace(/^https?:\/\/doi.org\//i, ''), enc: translation.isVerbatimField('doi') ? 'verbatim' : 'literal' })
     }
 
     if (ref.entrytype_source.split('.')[1] === 'thesis') {

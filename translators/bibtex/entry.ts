@@ -114,7 +114,7 @@ const enc_creators_marker = {
 const isBibString = /^[a-z][-a-z0-9_]*$/i
 
 export type Config = {
-  fieldEncoding: Record<string, 'raw' | 'url' | 'verbatim' | 'creators' | 'literal' | 'latex' | 'tags' | 'attachments' | 'date'>
+  fieldEncoding: Record<string, 'raw' | 'url' | 'verbatim' | 'creators' | 'literal' | 'literal' | 'tags' | 'attachments' | 'date'>
   caseConversion: Record<string, boolean>
   typeMap: {
     csl: Record<string, string | { type: string, subtype?: string }>
@@ -414,7 +414,7 @@ export class Entry {
    *
    * @param {field} field to add. 'name' must be set, and either 'value' or 'bibtex'. If you set 'bibtex', BBT will trust
    *   you and just use that as-is. If you set 'value', BBT will escape the value according the encoder passed in 'enc'; no
-   *   'enc' means 'enc_latex'. If you pass both 'bibtex' and 'latex', 'bibtex' takes precedence (and 'value' will be
+   *   'enc' means 'enc_literal'. If you pass both 'bibtex' and 'value', 'bibtex' takes precedence (and 'value' will be
    *   ignored)
    */
   public add(field: Translators.BibTeX.Field): string {
@@ -427,7 +427,7 @@ export class Entry {
 
     if (this.translation.skipField?.exec(`${this.translation.BetterBibTeX ? 'bibtex' : 'biblatex'}.${this.entrytype}.${field.name}`)) return null
 
-    field.enc = field.enc || this.config.fieldEncoding[field.name] || 'latex'
+    field.enc = field.enc || this.config.fieldEncoding[field.name] || 'literal'
 
     if (field.enc === 'date') {
       if (!field.value) return null
@@ -441,7 +441,7 @@ export class Entry {
       }
 
       // bare year
-      // if (this.translation.BetterBibLaTeX && (typeof field.value === 'number' || (typeof field.value === 'string' && field.value.match(/^[0-9]+$/)))) return this.add({...field, bibtex: `${field.value}`, enc: 'latex'})
+      // if (this.translation.BetterBibLaTeX && (typeof field.value === 'number' || (typeof field.value === 'string' && field.value.match(/^[0-9]+$/)))) return this.add({...field, bibtex: `${field.value}`, enc: 'literal'})
 
       if (this.translation.BetterBibLaTeX && this.translation.preferences.biblatexExtendedDateFormat && DateParser.isEDTF(field.value as string, true)) {
         return this.add({
@@ -513,8 +513,8 @@ export class Entry {
       else {
         let value
         switch (field.enc) {
-          case 'latex':
-            value = this.enc_latex(field, { raw: this.item.raw })
+          case 'literal':
+            value = this.enc_literal(field, { raw: this.item.raw })
             break
 
           case 'raw':
@@ -649,7 +649,7 @@ export class Entry {
       if (key === '_eprint') continue
 
       const type = ExtraFields[key]?.type || 'string'
-      let enc = {name: 'creator', text: 'latex'}[type] || type
+      let enc = {name: 'creator', text: 'literal'}[type] || type
       const replace = type === 'date'
       // these are handled just like 'arxiv' and 'lccn', respectively
       if (['PMID', 'PMCID'].includes(key) && typeof value === 'string') {
@@ -916,7 +916,7 @@ export class Entry {
    */
   protected enc_url(f): string {
     if (this.translation.BetterBibTeX && this.translation.preferences.bibtexURL.endsWith('-ish')) {
-      return (f.value || '').replace(/([#\\%&{}])/g, '\\$1') // or maybe enc_latex?
+      return (f.value || '').replace(/([#\\%&{}])/g, '\\$1') // or maybe enc_literal?
     }
     else if (this.translation.BetterBibTeX && this.translation.preferences.bibtexURL === 'note') {
       // https://github.com/retorquere/zotero-better-bibtex/issues/2617
@@ -980,7 +980,7 @@ export class Entry {
       let name
       if (creator.name || (creator.lastName && (creator.fieldMode === 1))) {
         name = creator.name || creator.lastName
-        if (name !== 'others') name = raw ? `{${name}}` : this.enc_latex({value: new String(this._enc_creators_scrub_name(name))}) // eslint-disable-line no-new-wrappers
+        if (name !== 'others') name = raw ? `{${name}}` : this.enc_literal({value: new String(this._enc_creators_scrub_name(name))}) // eslint-disable-line no-new-wrappers
 
       }
       else if (raw) {
@@ -1031,7 +1031,7 @@ export class Entry {
    */
   protected enc_literal(f, raw = false) {
     if (!f.value) return null
-    return this.enc_latex({...f, value: this.translation.preferences.exportBraceProtection ? new String(f.value) : f.value}, { raw }) // eslint-disable-line no-new-wrappers
+    return this.enc_literal({...f, value: this.translation.preferences.exportBraceProtection ? new String(f.value) : f.value}, { raw }) // eslint-disable-line no-new-wrappers
   }
 
   /*
@@ -1042,13 +1042,13 @@ export class Entry {
    * @param {field} field to encode.
    * @return {String} field.value encoded as author-style value
    */
-  protected enc_latex(f, options: { raw?: boolean, creator?: boolean} = {}) {
+  protected enc_literal(f, options: { raw?: boolean, creator?: boolean} = {}) {
     if (typeof f.value === 'number') return f.value
     if (!f.value) return null
 
     if (Array.isArray(f.value)) {
       if (f.value.length === 0) return null
-      return f.value.map(elt => this.enc_latex({...f, bibtex: undefined, value: elt}, options)).join(f.sep || '')
+      return f.value.map(elt => this.enc_literal({...f, bibtex: undefined, value: elt}, options)).join(f.sep || '')
     }
 
     if (f.raw || options.raw) return f.value
@@ -1092,7 +1092,7 @@ export class Entry {
       }
       else {
         // eslint-disable-next-line no-new-wrappers
-        encoded.add(this.enc_latex({ value: tag.tag.includes(',') ? new String(tag.tag) : tag.tag }))
+        encoded.add(this.enc_literal({ value: tag.tag.includes(',') ? new String(tag.tag) : tag.tag }))
       }
     }
 
@@ -1359,7 +1359,7 @@ export class Entry {
     if (name['non-dropping-particle']) family = new String(this._enc_creators_pad_particle(name['non-dropping-particle']) + family) // eslint-disable-line no-new-wrappers
     if (Zotero.Utilities.XRegExp.test(family, this.re.startsWithLowercase) || Zotero.Utilities.XRegExp.test(family, this.re.hasLowercaseWord)) family = new String(family) // eslint-disable-line no-new-wrappers
 
-    // https://github.com/retorquere/zotero-better-bibtex/issues/978 -- enc_latex can return null
+    // https://github.com/retorquere/zotero-better-bibtex/issues/978 -- enc_literal can return null
     family = family ? this._enc_creator_part(family) : ''
 
     // https://github.com/retorquere/zotero-better-bibtex/issues/976#issuecomment-393442419
