@@ -1,0 +1,24 @@
+#!/usr/bin/env node
+
+const esbuild = require('esbuild')
+const fs = require('fs')
+
+const globals = `
+  const Zotero = {
+    platformMajorVersion: 0,
+    clientName: 'zotero',
+  };
+`
+
+let result = esbuild.buildSync({
+  entryPoints: [process.argv[2]],
+  bundle: true,
+  sourcemap: false,
+  write: false,
+  outdir: 'out',
+  banner: { js: globals },
+})
+
+for (let out of result.outputFiles) {
+  eval(out.text)
+}

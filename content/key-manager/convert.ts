@@ -345,8 +345,9 @@ ${compiled}
 
       case 'array':
         if (value.type !== 'ArrayExpression') return fail(`expected array, got ${this.$typeof(value)} ${context}`)
-        if (!rule.items) return fail('cannot validate array items')
-        return `[${value.elements.map(v => this.validate(rule.items, v, context, softfail)).join(',')}]`
+        if (rule.items) return `[${value.elements.map(v => this.validate(rule.items, v, context, softfail)).join(',')}]`
+        if (rule.prefixItems) return `[${value.elements.map((v, i) => this.validate(rule.prefixItems[i], v, context, softfail)).join(',')}]`
+        return fail('cannot validate array items')
 
       case 'template':
         if (typeof value.value !== 'string') return fail(`expected string, got ${this.$typeof(value)} ${context}`)
