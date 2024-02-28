@@ -2,8 +2,8 @@
 @book{Kant-Book,
   title = {A Book},
   author = {Kant, Emmanuel},
-  publisher = {{Him}},
-  location = {{Here}},
+  publisher = {Him},
+  location = {Here},
   note = {\section{This is a heading}
 
 \par

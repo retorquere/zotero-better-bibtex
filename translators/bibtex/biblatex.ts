@@ -22,12 +22,12 @@ const config: Config = {
     verba: 'verbatim',
     verbb: 'verbatim',
     verbc: 'verbatim',
-    institution: 'literal',
-    publisher: 'literal',
-    origpublisher: 'literal',
+    institution: 'literal_list',
+    publisher: 'literal_list',
+    origpublisher: 'literal_list',
     organization: 'literal',
-    location: 'literal',
-    origlocation: 'literal',
+    location: 'literal_list',
+    origlocation: 'literal_list',
   },
 
   caseConversion: {

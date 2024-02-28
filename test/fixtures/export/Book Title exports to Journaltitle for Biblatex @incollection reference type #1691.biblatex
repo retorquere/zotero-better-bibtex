@@ -9,7 +9,7 @@
   date = {2008-10-24},
   url = {http://emma.hypotheses.org/147},
   urldate = {2017-12-12},
-  organization = {{Les émotions au Moyen Âge, carnet d'EMMA}}
+  organization = {Les émotions au Moyen Âge, carnet d'EMMA}
 }
 % == BibLateX quality report for NagyHistorians2008:
 % Unexpected field 'type'
@@ -26,9 +26,9 @@
   origdate = {1930},
   volume = {冊6},
   pages = {155--422},
-  publisher = {{北京大學}},
-  location = {{北京}},
-  origpublisher = {{萬有文庫}},
+  publisher = {北京大學},
+  location = {北京},
+  origpublisher = {萬有文庫},
   origtitle = {中國哲學史大綱卷上[1919]，商務}
 }
 

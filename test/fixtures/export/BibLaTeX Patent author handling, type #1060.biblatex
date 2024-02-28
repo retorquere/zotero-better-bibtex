@@ -9,7 +9,7 @@
   year = {Issue Date},
   number = {Patent Number},
   pages = {247--261},
-  location = {{Country}},
+  location = {Country},
   pubstate = {Legal Status}
 }
 % == BibLateX quality report for inventorCombinatorialProblemStabilityIssueDate:

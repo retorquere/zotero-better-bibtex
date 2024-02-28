@@ -4,8 +4,8 @@
   author = {Brato, Sebastian and Surmann, Dirk and Krey, Sebastian and Götze, Jürgen and Ligges, Uwe and Weihs, Claus},
   date = {2014-02-11},
   number = {2003/32864},
-  institution = {{Technische Universität Dortmund}},
-  location = {{Eldorado}},
+  institution = {Technische Universität Dortmund},
+  location = {Eldorado},
   url = {http://dx.doi.org/10.17877/DE290R-13190}
 }
 
@@ -24,8 +24,8 @@
   title = {Modellierung Niederfrequenter {{Schwingungen}} in Einem Elektrischen {{Energienetz}}},
   author = {Skubala, Adam},
   date = {2012-09-27},
-  publisher = {{TU Dortmund}},
-  location = {{Masterthesis, Fakultät Statistik}}
+  publisher = {TU Dortmund},
+  location = {Masterthesis, Fakultät Statistik}
 }
 
 @book{west_introduction_2000,
@@ -33,7 +33,7 @@
   author = {West, Douglas Brent},
   date = {2000-08-22},
   edition = {2},
-  publisher = {{Prentice Hall}},
+  publisher = {Prentice Hall},
   isbn = {978-0-13-014400-3},
   pagetotal = {470}
 }

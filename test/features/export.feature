@@ -14,6 +14,7 @@ Feature: Export
     Examples:
       | file                                                                                                                     | references |
       | en-dash and i-circumflex translation error #2796                                                                         | 2          |
+      | Exporting # in hashtags. #2795                                                                                           | 1          |
       | My citation key formula suddenly includes editors for book sections even when there is a declared author #2794           | 2          |
       | Direct access to Zotero Creators fields #2787                                                                            | 1          |
       | shorttitle in citekeys always pinyinized #2770                                                                           | 1          |

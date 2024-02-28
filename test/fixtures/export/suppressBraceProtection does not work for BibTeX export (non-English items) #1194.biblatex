@@ -4,12 +4,12 @@
   title = {Теория упругости},
   edition = {5},
   series = {Теоретическая физика},
-  publisher = {{Физматлит}},
+  publisher = {Физматлит},
   volume = {7},
   pagetotal = {259},
   isbn = {5-9221-0122-6},
   date = {2007},
-  location = {{М.}},
+  location = {М.},
   langid = {russian},
   volumes = {10}
 }
