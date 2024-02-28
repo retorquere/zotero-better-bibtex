@@ -103,6 +103,73 @@
       "title": "Hubble Frontier Fields: systematic errors in strong lensing models of galaxy clusters \u2013 implications for cosmography",
       "url": "https://academic.oup.com/mnras/article/470/2/1809/3858038",
       "volume": "470"
+    },
+    {
+      "DOI": "10.1145/2976749.2978427",
+      "abstractNote": "Differential power analysis (DPA) is a side-channel attack in which an adversary retrieves cryptographic material by measuring and analyzing the power consumption of the device on which the cryptographic algorithm under attack executes. An effective countermeasure against DPA is to mask secrets by probabilistically encoding them over a set of shares, and to run masked algorithms that compute on these encodings. Masked algorithms are often expected to provide, at least, a certain level of probing security. Leveraging the deep connections between probabilistic information flow and probing security, we develop a precise, scalable, and fully automated methodology to verify the probing security of masked algorithms, and generate them from unprotected descriptions of the algorithm. Our methodology relies on several contributions of independent interest, including a stronger notion of probing security that supports compositional reasoning, and a type system for enforcing an expressive class of probing policies. Finally, we validate our methodology on examples that go significantly beyond the state-of-the-art.",
+      "accessDate": "2021-02-25",
+      "citationKey": "BartheStrongNonInterferenceTypeDirected2016",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Gilles",
+          "lastName": "Barthe"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Sonia",
+          "lastName": "Bela\u00efd"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Fran\u00e7ois",
+          "lastName": "Dupressoir"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Pierre-Alain",
+          "lastName": "Fouque"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Benjamin",
+          "lastName": "Gr\u00e9goire"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Pierre-Yves",
+          "lastName": "Strub"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "R\u00e9becca",
+          "lastName": "Zucchini"
+        }
+      ],
+      "date": "2016",
+      "itemID": 1,
+      "itemType": "conferencePaper",
+      "publicationTitle": "CCS",
+      "tags": [
+        {
+          "tag": "formal verification",
+          "type": 1
+        },
+        {
+          "tag": "higher-order masking",
+          "type": 1
+        },
+        {
+          "tag": "non-interference",
+          "type": 1
+        },
+        {
+          "tag": "probing security",
+          "type": 1
+        }
+      ],
+      "title": "Strong Non-Interference and Type-Directed Higher-Order Masking",
+      "url": "https://doi.org/10.1145/2976749.2978427"
     }
   ]
 }

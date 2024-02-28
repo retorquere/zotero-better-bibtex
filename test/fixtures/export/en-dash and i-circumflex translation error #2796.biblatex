@@ -11,6 +11,15 @@
   langid = {english}
 }
 
+@inproceedings{barthe2016,
+  title = {Strong {{Non-Interference}} and {{Type-Directed Higher-Order Masking}}},
+  booktitle = {{{CCS}}},
+  author = {Barthe, Gilles and Bela\"id, Sonia and Dupressoir, Fran\c cois and Fouque, Pierre-Alain and Gr\'egoire, Benjamin and Strub, Pierre-Yves and Zucchini, R\'ebecca},
+  date = {2016},
+  doi = {10.1145/2976749.2978427},
+  keywords = {formal verification,higher-order masking,non-interference,probing security}
+}
+
 @article{Lemaitre1931,
   title = {A {{Homogeneous Universe}} of {{Constant Mass}} and {{Increasing Radius}} accounting for the {{Radial Velocity}} of {{Extra-galactic Nebulae}}},
   author = {Lema\^itre, A. G.},
