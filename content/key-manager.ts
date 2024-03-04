@@ -539,6 +539,7 @@ export const KeyManager = new class _KeyManager {
 
     // generate keys for entries that don't have them yet
     const progress = new Progress(missing.length, 'Assigning citation keys')
+    log.debug('2797:', missing.length, 'missing a key')
     for (const itemID of missing) {
       try {
         this.update(await getItemsAsync(itemID))
