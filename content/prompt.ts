@@ -13,3 +13,7 @@ export function prompt({ title, text, value }: { title?: string, text: string, v
     return ''
   }
 }
+
+export function confirm(title: string, question: string): boolean {
+  return ps.confirm(null, title, question) as boolean
+}
