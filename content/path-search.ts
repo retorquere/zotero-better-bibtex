@@ -33,28 +33,28 @@ function expandWinVars(value: string): string {
 async function pathSearch(bin: string, installationDirectory: { mac?: string[], win?: string[] } = {}): Promise<string> {
   const env = Components.classes['@mozilla.org/process/environment;1'].getService(Components.interfaces.nsIEnvironment)
 
-  let path: string[] = env.get('PATH').split(Zotero.isWin ? ';' : ':')
-  if (Zotero.isWin) path = path.map(expandWinVars)
-  if (Zotero.isWin && installationDirectory.win) path.unshift(...(installationDirectory.win))
-  if (Zotero.isMac && installationDirectory.mac) path.unshift(...(installationDirectory.mac))
-  path = path.filter(p => p)
-  if (!path.length) {
+  let paths: string[] = env.get('PATH').split(Zotero.isWin ? ';' : ':')
+  if (Zotero.isWin) paths = paths.map(expandWinVars)
+  if (Zotero.isWin && installationDirectory.win) paths.unshift(...(installationDirectory.win))
+  if (Zotero.isMac && installationDirectory.mac) paths.unshift(...(installationDirectory.mac))
+  paths = paths.filter(p => p)
+  if (!paths.length) {
     log.error('pathSearch: PATH not set')
     return ''
   }
 
-  const ext: string[] = Zotero.isWin ? env.get('PATHEXT').split(';').filter((e: string) => e.match(/^[.].+/)) : []
-  if (Zotero.isWin && !ext.length) {
+  const extensions: string[] = Zotero.isWin ? env.get('PATHEXT').split(';').filter((e: string) => e.match(/^[.].+/)) : ['']
+  if (Zotero.isWin && !extensions.length) {
     log.error('pathSearch: PATHEXT not set')
     return ''
   }
 
-  log.debug('pathSearch: looking for', bin, 'in', path, ext)
+  log.debug('pathSearch: looking for', bin, 'in', paths, extensions)
 
-  for await (const dir of asyncGenerator(path)) {
-    for (const pathext of env.pathext) {
+  for await (const path of asyncGenerator(paths)) {
+    for (const ext of extensions) {
       try {
-        const exe: string = OS.Path.join(dir, bin + pathext)
+        const exe: string = OS.Path.join(path, bin + ext)
         if (!(await OS.File.exists(exe))) continue
 
         // eslint-disable-next-line @typescript-eslint/await-thenable
