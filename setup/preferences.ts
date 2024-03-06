@@ -563,8 +563,8 @@ The Better BibTeX hidden preferences are preceded by “extensions.zotero.transl
     let conditions: string = Object.entries(autoexport).map(([ setting, schema ]) => check(setting, schema)).join('\n')
     triggers.push('DROP TRIGGER IF EXISTS betterbibtex.autoexport_insert')
     triggers.push([
-      'CREATE TRIGGER betterbibtex.autoexport_insert',
-      'BEFORE INSERT ON autoexport',
+      'CREATE TEMPORARY TRIGGER betterbibtex_autoexport_insert',
+      'BEFORE INSERT ON betterbibtex.autoexport',
       'BEGIN',
       conditions,
       'END;',
@@ -573,8 +573,8 @@ The Better BibTeX hidden preferences are preceded by “extensions.zotero.transl
     conditions = Object.entries(autoexport).filter(([ setting, _schema ]) => !fixated.includes(setting)).map(([ setting, schema ]) => check(setting, schema)).join('\n')
     triggers.push('DROP TRIGGER IF EXISTS betterbibtex.autoexport_update')
     triggers.push([
-      'CREATE TRIGGER betterbibtex.autoexport_update',
-      'BEFORE UPDATE ON autoexport',
+      'CREATE TEMPORARY TRIGGER betterbibtex_autoexport_update',
+      'BEFORE UPDATE ON betterbibtex.autoexport',
       'BEGIN',
       ...fixated.map(setting => fixate(setting)),
       '',
@@ -607,8 +607,8 @@ The Better BibTeX hidden preferences are preceded by “extensions.zotero.transl
     conditions = Object.entries(settings).map(([ setting, schema ]) => check(setting, schema, true)).join('\n')
     triggers.push('DROP TRIGGER IF EXISTS betterbibtex.autoexport_setting_insert')
     triggers.push([
-      'CREATE TRIGGER betterbibtex.autoexport_setting_insert',
-      'BEFORE INSERT ON autoexport_setting',
+      'CREATE TEMPORARY TRIGGER betterbibtex_autoexport_setting_insert',
+      'BEFORE INSERT ON betterbibtex.autoexport_setting',
       'BEGIN',
       unsupported,
       conditions,
@@ -617,8 +617,8 @@ The Better BibTeX hidden preferences are preceded by “extensions.zotero.transl
 
     triggers.push('DROP TRIGGER IF EXISTS betterbibtex.autoexport_setting_update')
     triggers.push([
-      'CREATE TRIGGER betterbibtex.autoexport_setting_update',
-      'BEFORE UPDATE ON autoexport_setting',
+      'CREATE TEMPORARY TRIGGER betterbibtex_autoexport_setting_update',
+      'BEFORE UPDATE ON betterbibtex.autoexport_setting',
       'BEGIN',
       fixate('path'),
       fixate('setting'),
