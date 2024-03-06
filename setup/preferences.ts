@@ -562,6 +562,7 @@ The Better BibTeX hidden preferences are preceded by “extensions.zotero.transl
     }
     let conditions: string = Object.entries(autoexport).map(([ setting, schema ]) => check(setting, schema)).join('\n')
     triggers.push('DROP TRIGGER IF EXISTS betterbibtex.autoexport_insert')
+    triggers.push('DROP TRIGGER IF EXISTS betterbibtex_autoexport_insert')
     triggers.push([
       'CREATE TEMPORARY TRIGGER betterbibtex_autoexport_insert',
       'BEFORE INSERT ON betterbibtex.autoexport',
@@ -572,6 +573,7 @@ The Better BibTeX hidden preferences are preceded by “extensions.zotero.transl
 
     conditions = Object.entries(autoexport).filter(([ setting, _schema ]) => !fixated.includes(setting)).map(([ setting, schema ]) => check(setting, schema)).join('\n')
     triggers.push('DROP TRIGGER IF EXISTS betterbibtex.autoexport_update')
+    triggers.push('DROP TRIGGER IF EXISTS betterbibtex_autoexport_update')
     triggers.push([
       'CREATE TEMPORARY TRIGGER betterbibtex_autoexport_update',
       'BEFORE UPDATE ON betterbibtex.autoexport',
@@ -606,6 +608,7 @@ The Better BibTeX hidden preferences are preceded by “extensions.zotero.transl
     const unsupported = `  SELECT RAISE(FAIL, "unsupported auto-export setting")\n  WHERE NEW.setting NOT IN (${set(Object.keys(settings))});\n`
     conditions = Object.entries(settings).map(([ setting, schema ]) => check(setting, schema, true)).join('\n')
     triggers.push('DROP TRIGGER IF EXISTS betterbibtex.autoexport_setting_insert')
+    triggers.push('DROP TRIGGER IF EXISTS betterbibtex_autoexport_setting_insert')
     triggers.push([
       'CREATE TEMPORARY TRIGGER betterbibtex_autoexport_setting_insert',
       'BEFORE INSERT ON betterbibtex.autoexport_setting',
@@ -616,6 +619,7 @@ The Better BibTeX hidden preferences are preceded by “extensions.zotero.transl
     ].join('\n'))
 
     triggers.push('DROP TRIGGER IF EXISTS betterbibtex.autoexport_setting_update')
+    triggers.push('DROP TRIGGER IF EXISTS betterbibtex_autoexport_setting_update')
     triggers.push([
       'CREATE TEMPORARY TRIGGER betterbibtex_autoexport_setting_update',
       'BEFORE UPDATE ON betterbibtex.autoexport_setting',
