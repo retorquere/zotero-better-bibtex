@@ -13,6 +13,7 @@ Feature: Export
 
     Examples:
       | file                                                                                                                     | references |
+      | Exporting item type film merges scriptwriter with other contributors #2802                                               | 1          |
       | en-dash and i-circumflex translation error #2796                                                                         | 3          |
       | Exporting # in hashtags. #2795                                                                                           | 1          |
       | My citation key formula suddenly includes editors for book sections even when there is a declared author #2794           | 2          |

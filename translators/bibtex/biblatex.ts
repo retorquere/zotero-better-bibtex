@@ -201,6 +201,16 @@ class Entry extends BaseEntry {
           }
           break
 
+        case 'contributor':
+          if (['video', 'movie'].includes(this.entrytype)) {
+            creators.editorb.push(creator)
+            creators.editorb.type = 'none'
+          }
+          else {
+            creators.editora.push(creator)
+          }
+          break
+
         default:
           creators.editora.push(creator)
       }

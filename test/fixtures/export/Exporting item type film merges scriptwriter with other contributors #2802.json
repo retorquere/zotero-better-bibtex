@@ -1,0 +1,75 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "options": {
+      "Items": true,
+      "Preferences": true,
+      "exportNotes": true,
+      "worker": true
+    },
+    "preferences": {
+      "autoExport": "idle",
+      "citeCommand": "autocite",
+      "citekeyFormat": "auth + ':' + shorttitle(3,3) + year"
+    }
+  },
+  "items": [
+    {
+      "abstractNote": "After surviving a heart-attack, a 59-year-old carpenter must fight bureaucratic forces to receive Employment and Support Allowance.",
+      "citationKey": "Loach:DanielBlake2017",
+      "creators": [
+        {
+          "creatorType": "director",
+          "firstName": "Ken",
+          "lastName": "Loach"
+        },
+        {
+          "creatorType": "scriptwriter",
+          "firstName": "Paul",
+          "lastName": "Laverty"
+        },
+        {
+          "creatorType": "contributor",
+          "firstName": "Dave",
+          "lastName": "Johns"
+        },
+        {
+          "creatorType": "contributor",
+          "firstName": "Hayley",
+          "lastName": "Squires"
+        },
+        {
+          "creatorType": "contributor",
+          "firstName": "Sharon",
+          "lastName": "Percy"
+        }
+      ],
+      "date": "2017-06-09",
+      "extra": [
+        "IMDb ID: tt5168192",
+        "event-location: United Kingdom, France, Belgium"
+      ],
+      "itemID": 1,
+      "itemType": "film",
+      "libraryCatalog": "IMDb",
+      "publisher": "Sixteen Films, Why Not Productions, Wild Bunch",
+      "runningTime": "1h40m",
+      "tags": [
+        {
+          "tag": "bureaucracy",
+          "type": 1
+        },
+        {
+          "tag": "psychological violence",
+          "type": 1
+        },
+        {
+          "tag": "United Kingdom"
+        }
+      ],
+      "title": "I, Daniel Blake",
+      "type": "Drama"
+    }
+  ]
+}

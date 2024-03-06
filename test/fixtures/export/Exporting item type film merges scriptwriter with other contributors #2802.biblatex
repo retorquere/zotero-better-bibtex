@@ -1,0 +1,16 @@
+@video{Loach:DanielBlake2017,
+  type = {Drama},
+  entrysubtype = {film},
+  title = {I, {{Daniel Blake}}},
+  editor = {Loach, Ken},
+  editortype = {director},
+  editora = {Laverty, Paul},
+  editoratype = {scriptwriter},
+  editorb = {Johns, Dave and Squires, Hayley and Percy, Sharon},
+  editorbtype = {none},
+  date = {2017-06-09},
+  publisher = {Sixteen Films, Why Not Productions, Wild Bunch},
+  abstract = {After surviving a heart-attack, a 59-year-old carpenter must fight bureaucratic forces to receive Employment and Support Allowance.},
+  keywords = {bureaucracy,psychological violence,United Kingdom},
+  annotation = {IMDb ID: tt5168192 event-location: United Kingdom, France, Belgium}
+}
