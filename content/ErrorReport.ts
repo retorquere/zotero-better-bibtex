@@ -95,7 +95,7 @@ export class ErrorReport {
 
     if (wizard.onLastPage) wizard.canRewind = false
     else if (wizard.pageIndex === 0) wizard.canRewind = false
-    else if (wizard.pageIndex === 1 && Zotero.Debug.enabled) wizard.canRewind = false
+    else if (wizard.pageIndex === 1 && Zotero.Debug.storing) wizard.canRewind = false
     else wizard.canRewind = true
   }
 
@@ -194,7 +194,7 @@ export class ErrorReport {
     wizard.getPageById('page-send').addEventListener('pageshow', () => { this.send().catch(err => log.debug('could not send debug log:', err)) })
     wizard.getPageById('page-done').addEventListener('pageshow', this.show.bind(this))
 
-    if (Zotero.Debug.enabled) wizard.pageIndex = 1
+    wizard.pageIndex = Zotero.Debug.storing ? 1 : 0
 
     const continueButton = wizard.getButton('next')
     continueButton.disabled = true
@@ -306,8 +306,8 @@ export class ErrorReport {
       }
     }
 
-    info += `Zotero.Debug.enabled: ${Zotero.Debug.enabled}\n`
-    info += `Zotero.Debug.enabled at start: ${Zotero.BetterBibTeX.debugEnabledAtStart}\n`
+    info += `Zotero.Debug.storing: ${Zotero.Debug.storing}\n`
+    info += `Zotero.Debug.storing at start: ${Zotero.BetterBibTeX.debugEnabledAtStart}\n`
 
     return info
   }

@@ -1,5 +1,5 @@
 ;
-// if (typeof Zotero !== 'undefined' && Zotero.Debug) Zotero.Debug.enabled = true
+// if (typeof Zotero !== 'undefined' && Zotero.Debug) Zotero.Debug.setStore(true)
 
 const __estrace = {
   hold: '',
