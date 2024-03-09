@@ -584,7 +584,7 @@ export class BetterBibTeX {
   public generateCSLJSON = generateCSLJSON
 
   constructor() {
-    this.debugEnabledAtStart = Zotero.Prefs.get('debug.store') || Zotero.Debug.enabled
+    this.debugEnabledAtStart = Zotero.Prefs.get('debug.store') || Zotero.Debug.storing
     if (Zotero.isWin && !is7) Zotero.Debug.addListener(this.logListener.bind(this))
   }
 
