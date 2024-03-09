@@ -29,6 +29,12 @@ type Query
   = Record<string, Record<'in', QueryPrimitive[]>>
   | Record<string, QueryPrimitive>
 
+function getStyle(id: string): any {
+  const style = Zotero.Styles.get(id)
+  if (!style) throw new Error(`CSL style ${JSON.stringify(id)} not found`)
+  return style
+}
+
 class NSCollection {
   /**
    * Scan an AUX file for citekeys and populate a Zotero collection from them. The target collection will be cleared if it exists.
@@ -380,6 +386,7 @@ class NSItem {
 
     if (!format.id) throw new Error('no style specified')
     if (!format.id.includes('/')) format.id = `http://www.zotero.org/styles/${format.id}`
+    getStyle(format.id)
 
     if (((format as any).mode || 'bibliography') !== 'bibliography') throw new Error(`mode must be bibliograpy, not ${(format as any).mode}`)
 
@@ -530,14 +537,7 @@ class NSItem {
       style = style || 'apa'
       if (!style.includes('/')) style = `http://www.zotero.org/styles/${style}`
       locale = locale || Zotero.Prefs.get('export.quickCopy.locale')
-
-      let citeproc
-      try {
-        citeproc = Zotero.Styles.get(style).getCiteProc(locale)
-      }
-      catch (err) {
-        throw new Error(`Could not load citation style ${style}`)
-      }
+      const citeproc = getStyle(style).getCiteProc(locale)
 
       for (const item of csl) {
         result.items[item['citation-key']] = item
