@@ -514,7 +514,6 @@ export const KeyManager = new class _KeyManager {
 
     // generate keys for entries that don't have them yet
     const progress = new Progress(missing.length, 'Assigning citation keys')
-    log.debug('2797:', missing.length, 'missing a key')
     for (const itemID of missing) {
       try {
         this.update(await getItemsAsync(itemID))
@@ -531,7 +530,6 @@ export const KeyManager = new class _KeyManager {
 
   public update(item: ZoteroItem, current?: CitekeyRecord): string {
     if (item.isFeedItem || !item.isRegularItem()) return null
-    log.debug('2797: update', item.id)
 
     current = current || blink.first(this.keys, { where: { itemID: item.id } })
 
@@ -539,7 +537,6 @@ export const KeyManager = new class _KeyManager {
 
     if (current && (current.pinned || !this.autopin.enabled) && (current.pinned === proposed.pinned) && (current.citationKey === proposed.citationKey)) return current.citationKey
 
-    log.debug('2797: update', item.id, 'to', proposed)
     if (current) {
       current.pinned = proposed.pinned
       current.citationKey = proposed.citationKey
