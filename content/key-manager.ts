@@ -89,7 +89,7 @@ export const KeyManager = new class _KeyManager {
     primary: 'itemID',
     indexes: ['itemKey', 'libraryID', 'citationKey', 'lcCitationKey'],
   })
-  private unwatch: UnwatchCallback[]
+  private unwatch: UnwatchCallback[] = []
 
   public query: {
     field: { extra?: number, title?: number }

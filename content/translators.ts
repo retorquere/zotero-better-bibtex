@@ -283,7 +283,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
       translator: translator.label,
       output: job.path || '',
-      debugEnabled: !!Zotero.Debug.enabled,
+      debugEnabled: !!Zotero.Debug.storing,
     }
 
     let items: any[] = []
