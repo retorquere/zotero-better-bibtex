@@ -89,16 +89,8 @@ export const KeyManager = new class _KeyManager {
     primary: 'itemID',
     indexes: ['itemKey', 'libraryID', 'citationKey', 'lcCitationKey'],
   })
-  private unwatch: UnwatchCallback[]
+  private unwatch: UnwatchCallback[] = []
 
-  public query: {
-    field: { extra?: number, title?: number }
-    type: {
-      note?: number
-      attachment?: number
-      annotation?: number
-    }
-  }
   public autopin: Scheduler<number> = new Scheduler<number>('autoPinDelay', 1000)
 
   private started = false
@@ -251,19 +243,6 @@ export const KeyManager = new class _KeyManager {
         log.debug('keymanager: init: kuroshiro/jieba')
         await kuroshiro.init()
         chinese.init()
-
-        this.query = {
-          field: {},
-          type: {},
-        }
-
-        for (const type of await ZoteroDB.queryAsync('select itemTypeID, typeName from itemTypes')) { // 1 = attachment, 14 = note
-          this.query.type[type.typeName] = type.itemTypeID
-        }
-
-        for (const field of await ZoteroDB.queryAsync('select fieldID, fieldName from fields')) {
-          this.query.field[field.fieldName] = field.fieldID
-        }
 
         Formatter.update([Preference.citekeyFormat])
 
@@ -467,17 +446,19 @@ export const KeyManager = new class _KeyManager {
     let missing: number[]
 
     await Zotero.DB.executeTransaction(async () => {
-      const items = `BBTITEMS${Zotero.Utilities.generateObjectKey()}`
-      await ZoteroDB.queryAsync(`
-        CREATE TEMPORARY TABLE ${items}
-        AS
-        SELECT itemID, key as itemKey, libraryID
-        FROM items
-        WHERE itemID NOT IN (SELECT itemID FROM deletedItems)
-        AND itemTypeID NOT IN (${this.query.type.attachment}, ${this.query.type.note}, ${this.query.type.annotation || this.query.type.note})
-        AND itemID NOT IN (SELECT itemID from feedItems)
-      `)
-      await Zotero.DB.queryAsync(`DELETE FROM betterbibtex.citationkey WHERE itemID NOT IN (SELECT itemID FROM ${items})`)
+      const $items = `
+        WITH _items AS (
+          SELECT items.itemID, items.key as itemKey, items.libraryID, extra.value AS extra
+          FROM items
+          LEFT JOIN itemData extraField ON extraField.itemID = items.itemID AND extraField.fieldID IN (SELECT fieldID FROM fields WHERE fieldName = 'extra')
+          LEFT JOIN itemDataValues extra ON extra.valueID = extraField.valueID
+          WHERE items.itemID NOT IN (SELECT itemID FROM deletedItems)
+          AND items.itemTypeID NOT IN (SELECT itemTypeID FROM itemTypes WHERE typeName IN ('attachment', 'note', 'annotation'))
+          AND items.itemID NOT IN (SELECT itemID from feedItems)
+        )
+      `
+
+      await ZoteroDB.queryAsync(`${$items} DELETE FROM betterbibtex.citationkey WHERE itemID NOT IN (SELECT itemID FROM _items)`)
 
       const keys: Map<number, CitekeyRecord> = new Map
       let key: CitekeyRecord
@@ -494,12 +475,7 @@ export const KeyManager = new class _KeyManager {
       }
 
       let pinned: string
-      for (const item of (await ZoteroDB.queryAsync(`
-        SELECT item.itemID, item.itemKey, item.libraryID, extra.value as extra
-        FROM ${items} item
-        LEFT JOIN itemData extraField ON extraField.itemID = item.itemID AND extraField.fieldID = ${this.query.field.extra}
-        LEFT JOIN itemDataValues extra ON extra.valueID = extraField.valueID
-      `))) {
+      for (const item of (await ZoteroDB.queryAsync(`${$items} SELECT itemID, itemKey, libraryID, extra FROM _items`))) {
         pinned = getKey(item.extra)
         if (pinned) {
           keys.set(item.itemID, lc({ itemID: item.itemID, itemKey: item.itemKey, libraryID: item.libraryID, citationKey: pinned, pinned: true }))
@@ -511,8 +487,7 @@ export const KeyManager = new class _KeyManager {
 
       blink.insertMany(this.keys, [...keys.values()])
 
-      missing =  await Zotero.DB.columnQueryAsync(`SELECT itemID FROM ${items} WHERE itemID NOT IN (SELECT itemID from betterbibtex.citationkey)`)
-      await Zotero.DB.queryAsync(`DROP TABLE temp.${items}`)
+      missing =  await ZoteroDB.columnQueryAsync(`${$items} SELECT itemID FROM _items WHERE itemID NOT IN (SELECT itemID from betterbibtex.citationkey)`)
     })
 
     this.unwatch = [
