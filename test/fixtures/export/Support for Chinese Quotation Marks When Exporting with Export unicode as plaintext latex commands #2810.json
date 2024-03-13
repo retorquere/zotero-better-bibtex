@@ -1,0 +1,53 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "options": {
+      "Items": true,
+      "Preferences": true,
+      "exportNotes": true,
+      "worker": true
+    },
+    "preferences": {
+      "DOIandURL": "doi",
+      "autoExport": "idle",
+      "autoPinDelay": 1,
+      "biblatexExtractEprint": false,
+      "citekeyFormat": "auth.transliterate.lower+year",
+      "citekeySearch": false,
+      "extraMergeCSL": true,
+      "keyConflictPolicy": "change",
+      "keyScope": "global",
+      "postscript": "if (\n  Translator.BetterBibLaTeX &&\n  [\n    \"book\",\n    \"bookSection\",\n    \"journalArticle\",\n    \"newspaperArticle\",\n    \"thesis\",\n  ].includes(item.itemType)\n) {\n  delete this.has.url;\n  delete this.has.urldate;\n}",
+      "quickCopyMode": "selectlink",
+      "retainCache": true,
+      "skipFields": "language, langid, annotation, shorttitle, shortjournal, eprint, eprinttype, editortype, issn, isbn, file, series, keywords, abstract, pagetotal, origtitle"
+    }
+  },
+  "items": [
+    {
+      "ISBN": "978-7-5097-1750-9",
+      "accessDate": "2024-01-12T07:58:27Z",
+      "citationKey": "tangqihua2010",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "\u5510\u542f\u534e"
+        }
+      ],
+      "date": "2010-9-1",
+      "extra": [
+        "Citation Key: tangqihua2010"
+      ],
+      "itemID": 1,
+      "itemType": "book",
+      "libraryCatalog": "Douban",
+      "numPages": "569",
+      "place": "\u5317\u4eac",
+      "publisher": "\u793e\u4f1a\u79d1\u5b66\u6587\u732e\u51fa\u7248\u793e",
+      "series": "\u8fd1\u4e16\u4e2d\u56fd",
+      "title": "\u88ab\u201c\u5e9f\u9664\u4e0d\u5e73\u7b49\u6761\u7ea6\u201d\u906e\u853d\u7684\u5317\u6d0b\u4fee\u7ea6\u53f2\uff081912\u20131928\uff09",
+      "url": "https://book.douban.com/subject/5288681/"
+    }
+  ]
+}
