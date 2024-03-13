@@ -14,7 +14,6 @@ Feature: Export
     Examples:
       | file                                                                                                                     | references |
       | Support for Chinese Quotation Marks When Exporting with Export unicode as plaintext latex commands #2810                 | 1          |
-      | Support for Chinese Quotation Marks When Exporting with Export unicode as plain-text latex commands #2810                | 1          |
       | en-dash and i-circumflex translation error #2796                                                                         | 3          |
       | Exporting # in hashtags. #2795                                                                                           | 1          |
       | My citation key formula suddenly includes editors for book sections even when there is a declared author #2794           | 2          |
