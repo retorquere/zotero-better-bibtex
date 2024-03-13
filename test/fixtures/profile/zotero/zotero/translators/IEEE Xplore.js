@@ -870,7 +870,7 @@ var testCases = [
 				"date": "January 1991",
 				"DOI": "10.1109/78.80767",
 				"ISSN": "1053-587X, 1941-0476",
-				"abstractNote": "Eigenanalysis methods are applied to interference cancellation problems. While with common array processing methods the cancellation is effected by global optimization procedures that include the interferences and the background noise, the proposed technique focuses on the interferences only, resulting in superior cancellation performance. Furthermore, the method achieves full effectiveness even for short observation times, when the number of samples used for processing is of the the order of the number of interferences. Adaptive implementation is obtained with a simple, fast converging algorithm.<>",
+				"abstractNote": "Eigenanalysis methods are applied to interference cancellation problems. While with common array processing methods the cancellation is effected by global optimization procedures that include the interferences and the background noise, the proposed technique focuses on the interferences only, resulting in superior cancellation performance. Furthermore, the method achieves full effectiveness even for short observation times, when the number of samples used for processing is of the order of the number of interferences. Adaptive implementation is obtained with a simple, fast converging algorithm.<>",
 				"issue": "1",
 				"itemID": "80767",
 				"libraryCatalog": "IEEE Xplore",
