@@ -554,6 +554,7 @@ export class Entry {
             if (typeof field.value === 'number' || field.value) {
               tx[field.enc] = tx[field.enc] || new Transform(field.enc)
               value = tx[field.enc].tolatex(`${field.value}`)
+              log.debug('tolatex', field.enc, field.value, '=>', value)
             }
             break
 

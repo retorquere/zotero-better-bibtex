@@ -9,6 +9,7 @@
       "worker": true
     },
     "preferences": {
+      "postscript": "\nif (Translator.BetterBibLaTeX) {\n  if ([ \"book\", \"bookSection\", \"journalArticle\", \"newspaperArticle\", \"thesis\" ].includes(item.itemType)) {\n    delete this.has.url;\n    delete this.has.urldate;\n  }\n\n  // if more than 50% of the title is CJK\n  if (zotero.title && (zotero.title.replace(/[^\u4e00-\u9fff]/g, '').length / zotero.title.length) > 0.5) {\n    // re-add the title field doing only minimal ascaping\n    tex.add({ name: 'title', value: zotero.title, enc: 'minimal' })\n  }\n}",
       "DOIandURL": "doi",
       "autoExport": "idle",
       "autoPinDelay": 1,
@@ -18,7 +19,7 @@
       "extraMergeCSL": true,
       "keyConflictPolicy": "change",
       "keyScope": "global",
-      "postscript": "if (\n  Translator.BetterBibLaTeX &&\n  [\n    \"book\",\n    \"bookSection\",\n    \"journalArticle\",\n    \"newspaperArticle\",\n    \"thesis\",\n  ].includes(item.itemType)\n) {\n  delete this.has.url;\n  delete this.has.urldate;\n}",
+      "asciiBibLaTeX": true,
       "quickCopyMode": "selectlink",
       "retainCache": true,
       "skipFields": "language, langid, annotation, shorttitle, shortjournal, eprint, eprinttype, editortype, issn, isbn, file, series, keywords, abstract, pagetotal, origtitle"
