@@ -23,6 +23,7 @@ import { zoteroCreator as ExtraZoteroCreator } from '../../content/extra'
 import { log } from '../../content/logger'
 import { babelLanguage, titleCase } from '../../content/text'
 import BabelTag from '../../gen/babel/tag.json'
+import { Transform } from 'unicode2latex'
 
 import { arXiv } from '../../content/arXiv'
 
@@ -40,6 +41,8 @@ import { toWordsOrdinal, toOrdinal } from 'number-to-words'
  * @param {String} @entrytype entrytype
  * @param {Object} @item the current Zotero item being converted
  */
+
+const tx: Partial<Record<'minimal' | 'bibtex' | 'biblatex', Transform>> = {}
 
 const fieldOrder = [
   'type',
@@ -543,6 +546,16 @@ export class Entry {
 
           case 'attachments':
             value = this.enc_attachments(field)
+            break
+
+          case 'minimal':
+          case 'bibtex':
+          case 'biblatex':
+            if (typeof field.value === 'number' || field.value) {
+              tx[field.enc] = tx[field.enc] || new Transform(field.enc)
+              value = tx[field.enc].tolatex(`${field.value}`)
+              log.debug('tolatex', field.enc, field.value, '=>', value)
+            }
             break
 
           default:
