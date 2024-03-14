@@ -1,7 +1,9 @@
-@book{tangqihua2010,
-  author = {唐启华},
-  date = {2010-09-01},
-  publisher = {社会科学文献出版社},
-  location = {北京},
-  title = {被“废除不平等条约”遮蔽的北洋修约史（1912–1928）}
+@article{lihuaiyin2022b,
+  author = {{李怀印}},
+  date = {2022},
+  journaltitle = {人民论坛{$\cdot$}学术前沿},
+  number = {2},
+  pages = {21--31},
+  doi = {10.16619/j.cnki.rmltxsqy.2022.02.003},
+  title = {“民族国家”的迷思与现代中国的形成}
 }
