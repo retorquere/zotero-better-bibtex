@@ -14,10 +14,12 @@ export const TeXstudio = new class { // eslint-disable-line @typescript-eslint/n
       description: 'TeXstudio support',
       needs: ['start'],
       startup: async () => {
+        log.debug('texstudio.startup: looking for texstudio')
         this.texstudio = await findBinary('texstudio', {
           mac: ['/Applications/texstudio.app/Contents/MacOS'],
           win: ['C:\\Program Files (x86)\\texstudio', 'C:\\Program Files\\texstudio'],
         })
+        log.debug('texstudio.startup: looking for texstudio is done')
         this.enabled = !!this.texstudio
         if (!this.enabled) log.debug('TeXstudio: not found')
         this.ready.resolve(this.enabled)
