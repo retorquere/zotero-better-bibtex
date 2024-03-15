@@ -10,7 +10,7 @@ Better BibTeX is mostly compatible with the Zotero 7 beta; I am awaiting a chang
 
 ## Juris-M support
 
-Juris-M is unfortunately no compatible with BBT at the moment. To my understanding, work is underway to get a Zotero-7-based Juris-M.
+Juris-M is unfortunately not compatible with BBT at the moment. To my understanding, work is underway to get a Zotero-7-based Juris-M, and then BBT will work in Juris-M.
 
 ## Features
 
