@@ -5,7 +5,9 @@ import { log } from './logger'
 export async function findBinary(bin: string, installationDirectory: { mac?: string[], win?: string[] } = {}): Promise<string> {
   const pref = `translators.better-bibtex.path.${bin}`
   let location: string = Zotero.Prefs.get(pref)
+  log.debug('path-search', { stored: location, exists: OS.File.exists(location) })
   if (location && (await OS.File.exists(location))) return location
+  log.debug('path-search', { bin })
   location = await pathSearch(bin, installationDirectory)
   if (typeof location === 'string') Zotero.Prefs.set(pref, location)
   return location
@@ -26,6 +28,7 @@ function expandWinVars(value: string): string {
       more = true
       return env.get(variable) as string
     })
+    log.debug('path-search', { vars: value })
   }
   return value
 }
@@ -33,23 +36,24 @@ function expandWinVars(value: string): string {
 async function pathSearch(bin: string, installationDirectory: { mac?: string[], win?: string[] } = {}): Promise<string> {
   const env = Components.classes['@mozilla.org/process/environment;1'].getService(Components.interfaces.nsIEnvironment)
 
+  log.debug('path-search: looking for', bin)
   let paths: string[] = env.get('PATH').split(Zotero.isWin ? ';' : ':')
   if (Zotero.isWin) paths = paths.map(expandWinVars)
   if (Zotero.isWin && installationDirectory.win) paths.unshift(...(installationDirectory.win))
   if (Zotero.isMac && installationDirectory.mac) paths.unshift(...(installationDirectory.mac))
   paths = paths.filter(p => p)
   if (!paths.length) {
-    log.error('pathSearch: PATH not set')
+    log.error('path-search: PATH not set')
     return ''
   }
 
   const extensions: string[] = Zotero.isWin ? env.get('PATHEXT').split(';').filter((e: string) => e.match(/^[.].+/)) : ['']
   if (Zotero.isWin && !extensions.length) {
-    log.error('pathSearch: PATHEXT not set')
+    log.error('path-search: PATHEXT not set')
     return ''
   }
 
-  log.debug('pathSearch: looking for', bin, 'in', paths, extensions)
+  log.debug('path-search: looking for', bin, 'in', paths, extensions)
 
   for await (const path of asyncGenerator(paths)) {
     for (const ext of extensions) {
@@ -63,18 +67,18 @@ async function pathSearch(bin: string, installationDirectory: { mac?: string[], 
 
         // eslint-disable-next-line no-bitwise
         if (!Zotero.isWin && (stat.unixMode & 111) === 0) { // bit iffy -- we don't know if *we* can execute this.
-          log.error(`pathSearch: ${exe} exists but has mode ${(stat.unixMode).toString(8)}`)
+          log.error(`path-search: ${exe} exists but has mode ${(stat.unixMode).toString(8)}`)
           continue
         }
 
-        log.debug(`pathSearch: ${bin} found at ${exe}`)
+        log.debug(`path-search: ${bin} found at ${exe}`)
         return exe
       }
       catch (err) {
-        log.error('pathSearch:', err)
+        log.error('path-search:', err)
       }
     }
   }
-  log.debug('pathSearch:', bin, 'not found in', env.path)
+  log.debug('path-search:', bin, 'not found in', env.path)
   return ''
 }
