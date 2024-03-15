@@ -8,6 +8,10 @@ Better BibTeX (BBT) is an extension for [Zotero](https://www.zotero.org) and [Ju
 
 Better BibTeX is mostly compatible with the Zotero 7 beta; I am awaiting a change by the Zotero team to get to complete support. You can find the status of Zotero 7 support in the first post of [#2522](https://github.com/retorquere/zotero-better-bibtex/issues/2522); if you find new problems (which are not still marked as unresolved in that top post), please report them as *new* issues, not by commenting on #2522.
 
+## Juris-M support
+
+Juris-M is unfortunately no compatible with BBT at the moment. To my understanding, work is underway to get a Zotero-7-based Juris-M.
+
 ## Features
 
 ### Facilities for generating citation keys
