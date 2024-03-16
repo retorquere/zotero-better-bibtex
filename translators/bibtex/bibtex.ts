@@ -7,7 +7,7 @@ import { validItem } from '../../content/ajv'
 import { valid, label } from '../../gen/items/items'
 import { wordsToNumbers } from 'words-to-numbers'
 
-import { parse as parseDate, strToISO as strToISODate } from '../../content/dateparser'
+import { parse as parseDate, strToISO as strToISODate, dateToISO } from '../../content/dateparser'
 
 import { parseBuffer as parsePList } from 'bplist-parser'
 
@@ -387,7 +387,7 @@ export function generateBibTeX(translation: Translation): void {
         break
 
       case 'interval':
-        ref.add({ name: 'year', value: item.date })
+        ref.add({ name: 'year', value: dateToISO(ref.date) })
         break
 
       case 'date':
