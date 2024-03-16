@@ -5,9 +5,7 @@ import { log } from './logger'
 export async function findBinary(bin: string, installationDirectory: { mac?: string[], win?: string[] } = {}): Promise<string> {
   const pref = `translators.better-bibtex.path.${bin}`
   let location: string = Zotero.Prefs.get(pref)
-  log.debug('path-search', { stored: location, exists: OS.File.exists(location) })
   if (location && (await OS.File.exists(location))) return location
-  log.debug('path-search', { bin })
   location = await pathSearch(bin, installationDirectory)
   if (typeof location === 'string') Zotero.Prefs.set(pref, location)
   return location
@@ -39,7 +37,6 @@ function expandVars(name: string, expanded: Record<string, string>): string {
 async function pathSearch(bin: string, installationDirectory: { mac?: string[], win?: string[] } = {}): Promise<string> {
   const env = Components.classes['@mozilla.org/process/environment;1'].getService(Components.interfaces.nsIEnvironment)
 
-  log.debug('path-search: looking for', bin)
   let paths: string[] = ENV.get('PATH').split(Zotero.isWin ? ';' : ':')
 
   const expanded = {}
@@ -57,8 +54,6 @@ async function pathSearch(bin: string, installationDirectory: { mac?: string[], 
     log.error('path-search: PATHEXT not set')
     return ''
   }
-
-  log.debug('path-search: looking for', bin, 'in', paths, extensions)
 
   for await (const path of asyncGenerator(paths)) {
     for (const ext of extensions) {
