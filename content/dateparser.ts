@@ -401,7 +401,7 @@ export function strToISO(str: string): string {
 }
 
 export function dateToISO(date: ParsedDate): string {
-  if (date.type === 'interval') return `${dateToISO(date.from)}/${dateToISO(date.to)}`
+  if (date.type === 'interval') return `${dateToISO(date.from)}/${dateToISO(date.to)}`.replace(/^[/]$/, '')
 
   if (typeof date.year !== 'number') return ''
 
