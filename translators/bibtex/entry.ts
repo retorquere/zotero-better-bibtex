@@ -220,6 +220,7 @@ export class Entry {
     }
 
     this.extraFields = JSON.parse(JSON.stringify(item.extraFields))
+    log.debug('extra-fields:', this.extraFields)
 
     // should be const entrytype: string | { type: string, subtype?: string }
     // https://github.com/Microsoft/TypeScript/issues/10422

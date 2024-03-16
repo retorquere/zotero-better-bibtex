@@ -387,8 +387,7 @@ export function generateBibTeX(translation: Translation): void {
         break
 
       case 'interval':
-        if (ref.date.from.month) ref.add({ name: 'month', value: months[ref.date.from.month - 1], bare: true })
-        ref.add({ name: 'year', value: `${ref.date.from.year}` })
+        ref.add({ name: 'year', value: item.date })
         break
 
       case 'date':
