@@ -206,6 +206,7 @@ Feature: Export
 
     Examples:
       | file                                                                                                               | references |
+      | Better BibTeX export from Zotero missing Extra fields eg issued #2816                                              | 1          |
       | formula grouping                                                                                                   | 1          |
       | formula grouping-upgrade                                                                                           | 1          |
       | BBT does not escape # in first argument of href in note #2617                                                      | 2          |
