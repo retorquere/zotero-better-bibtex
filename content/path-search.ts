@@ -19,26 +19,31 @@ async function* asyncGenerator<T>(array: T[]): AsyncGenerator<T, void, unknown> 
   }
 }
 
-function expandWinVars(value: string): string {
-  const env = Components.classes['@mozilla.org/process/environment;1'].getService(Components.interfaces.nsIEnvironment)
-  let more = true
-  while (more) {
-    more = false
-    value = value.replace(/%([A-Z][A-Z0-9]*)%/ig, (match, variable) => {
-      more = true
-      return env.get(variable) as string
-    })
-    log.debug('path-search', { vars: value })
+const ENV = Components.classes['@mozilla.org/process/environment;1'].getService(Components.interfaces.nsIEnvironment)
+const Var = Zotero.isWin ? /%([A-Z][A-Z0-9]*)%/ig : /[$]([A-Z][A-Z0-9]*)/ig
+function expandVars(name: string, expanded: Record<string, string>): string {
+  if (typeof expanded[name] !== 'string') {
+    let more = true
+    expanded[name] = ENV.get(name) || ''
+    while (more) {
+      more = false
+      expanded[name] = expanded[name].replace(Var, (match, inner) => {
+        more = true
+        return expandVars(inner, expanded)
+      })
+    }
   }
-  return value
+  return expanded[name]
 }
 
 async function pathSearch(bin: string, installationDirectory: { mac?: string[], win?: string[] } = {}): Promise<string> {
   const env = Components.classes['@mozilla.org/process/environment;1'].getService(Components.interfaces.nsIEnvironment)
 
   log.debug('path-search: looking for', bin)
-  let paths: string[] = env.get('PATH').split(Zotero.isWin ? ';' : ':')
-  if (Zotero.isWin) paths = paths.map(expandWinVars)
+  let paths: string[] = ENV.get('PATH').split(Zotero.isWin ? ';' : ':')
+
+  const expanded = {}
+  paths = paths.map(p => expandVars(p, expanded))
   if (Zotero.isWin && installationDirectory.win) paths.unshift(...(installationDirectory.win))
   if (Zotero.isMac && installationDirectory.mac) paths.unshift(...(installationDirectory.mac))
   paths = paths.filter(p => p)
@@ -47,7 +52,7 @@ async function pathSearch(bin: string, installationDirectory: { mac?: string[], 
     return ''
   }
 
-  const extensions: string[] = Zotero.isWin ? env.get('PATHEXT').split(';').filter((e: string) => e.match(/^[.].+/)) : ['']
+  const extensions: string[] = Zotero.isWin ? ENV.get('PATHEXT').split(';').filter((e: string) => e.match(/^[.].+/)) : ['']
   if (Zotero.isWin && !extensions.length) {
     log.error('path-search: PATHEXT not set')
     return ''
