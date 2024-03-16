@@ -473,8 +473,8 @@ export class PrefPane {
 
       await this.autoexport.load()
 
-      this.quickCopy()
-      $window.document.getElementById('bbt-preferences-quickcopy').addEventListener('command', () => this.quickCopy())
+      $window.document.getElementById('bbt-preferences-quickcopy').addEventListener('command', () => this.showQuickCopyDetails())
+      this.showQuickCopyDetails()
 
       this.checkCitekeyFormat()
       this.checkPostscript()
@@ -486,9 +486,10 @@ export class PrefPane {
     }
   }
 
-  private quickCopy() {
+  private showQuickCopyDetails() {
     const quickcopy = 'bbt-preferences-quickcopy-details'
     const selected = `${quickcopy}-${Zotero.Prefs.get('translators.better-bibtex.quickCopyMode')}`
+    log.debug('showQuickCopyDetails:', selected)
     for (const details of ([...$window.document.querySelectorAll(`.${quickcopy}`)] as HTMLElement[])) {
       details.style.display = details.id === selected ? 'initial' : 'none'
     }
@@ -515,6 +516,8 @@ export class PrefPane {
     for (const node of (Array.from($window.document.getElementsByClassName('bbt-jurism')) as unknown[] as XUL.Element[])) {
       node.hidden = client !== 'jurism'
     }
+
+    this.showQuickCopyDetails()
 
     if (client === 'jurism') {
       Zotero.Styles.init().then(() => {
