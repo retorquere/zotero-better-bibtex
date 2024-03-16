@@ -18,16 +18,16 @@ async function* asyncGenerator<T>(array: T[]): AsyncGenerator<T, void, unknown> 
 }
 
 const ENV = Components.classes['@mozilla.org/process/environment;1'].getService(Components.interfaces.nsIEnvironment)
-const Var = Zotero.isWin ? /%([A-Z][A-Z0-9]*)%/ig : /[$]([A-Z][A-Z0-9]*)/ig
+const VarRef = Zotero.isWin ? /%([A-Z][A-Z0-9]*)%/ig : /[$]([A-Z][A-Z0-9]*)/ig
 function expandVars(name: string, expanded: Record<string, string>): string {
   if (typeof expanded[name] !== 'string') {
-    let more = true
     expanded[name] = ENV.get(name) || ''
+    let more = true
     while (more) {
       more = false
-      expanded[name] = expanded[name].replace(Var, (match, inner) => {
+      expanded[name] = expanded[name].replace(VarRef, (match, varref) => {
         more = true
-        return expandVars(inner, expanded)
+        return expandVars(varref, expanded)
       })
     }
   }
