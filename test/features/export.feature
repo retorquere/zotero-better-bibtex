@@ -13,6 +13,7 @@ Feature: Export
 
     Examples:
       | file                                                                                                                     | references |
+      | Better BibTeX export from Zotero missing Extra fields eg issued #2816                                                    | 1          |
       | Support for Chinese Quotation Marks When Exporting with Export unicode as plaintext latex commands #2810                 | 1          |
       | en-dash and i-circumflex translation error #2796                                                                         | 3          |
       | Exporting # in hashtags. #2795                                                                                           | 1          |
