@@ -82,6 +82,10 @@ function citation2latex(citation, options) {
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export const Formatter = new class { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
+  public async typst(citations, _options): Promise<string> {
+    return await citations.map(citation => `#cite(${citation.citationKey})`).join('\n')
+  }
+
   public async citationLinks(citations, _options): Promise<string> {
     return await citations.map(citation => `cites: ${citation.citationKey}`).join('\n')
   }
