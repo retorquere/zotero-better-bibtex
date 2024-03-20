@@ -82,8 +82,14 @@ function citation2latex(citation, options) {
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export const Formatter = new class { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
-  public async typst(citations, _options): Promise<string> {
-    return await citations.map(citation => `#cite(${citation.citationKey.match(/^[a-z0-9_\-:.]+$/i) ? `<${citation.citationKey}>` : JSON.stringify(citation.citationKey)})`).join('')
+  public async typst(citations, options): Promise<string> {
+    const cite = citation => {
+      let cited = citation.citationKey.match(/^[a-z0-9_\-:.]+$/i) ? `<${citation.citationKey}>` : `label(${JSON.stringify(citation.citationKey)})`
+      if (citation.locator) cited += `,${JSON.stringify(`${shortLabel(citation.label, options)} ${citation.locator}`)}`
+      if (citation.suppressAuthor) cited += citation.locator ? ',"year"' : ', form: "year"'
+      return `#cite(${cited})`
+    }
+    return await citations.map(cite).join('')
   }
 
   public async citationLinks(citations, _options): Promise<string> {
