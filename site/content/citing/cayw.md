@@ -93,9 +93,10 @@ the following URL parameters:
 
 The following formats are available:
 
-* `latex`. Generates [natbib](https://ctan.org/pkg/natbib) citation commands. Extra URL parameters allowed:
+* `natbib`. Generates [natbib](https://ctan.org/pkg/natbib) citation commands. Extra URL parameters allowed:
   * `command`: the citation command to use (if unspecified, defaults to `cite`)
-* `cite` is an alias for `latex` with the assumption you want the cite command to be `cite`
+* `latex` and `cite` are aliases for `natbib` with the assumption you want the cite command to be `cite`
+* `citep` and `citet` are aliases for `natbib` with the assumption you want the cite command to be `citep` or `citet`, respectively.
 * `biblatex`. Generates [biblatex](https://ctan.org/pkg/biblatex) citation commands. Extra URL parameters allowed:
   * `command`: the citation command to use (if unspecified, defaults to `autocite`)
 * `mmd`: MultiMarkdown
