@@ -102,6 +102,7 @@ The following formats are available:
 * `mmd`: MultiMarkdown
 * `pandoc`. Accepts additional URL parameter `brackets`; any non-empty value surrounds the citation with brackets
 * `asciidoctor-bibtex`
+* `typst` Generates [typst](https://typst.app/docs/reference/model/cite/) citation commands
 * `jupyter`
 * `scannable-cite` for the [ODF scanner](https://zotero-odf-scan.github.io/zotero-odf-scan/)
 * `formatted-citation`: output formatted citation as per the current Zotero quick-export setting, if it is set to a citation style, and not an export format
