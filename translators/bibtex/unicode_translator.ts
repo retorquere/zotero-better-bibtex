@@ -20,6 +20,8 @@ export function replace_command_spacers(latex: string): string {
 
 export type ParseResult = { latex: string, raw: boolean, packages: string[] }
 
+export type Mode = 'minimal' | 'bibtex' | 'biblatex'
+
 export class HTMLConverter {
   private latex = ''
   private tx: Transform
@@ -29,9 +31,9 @@ export class HTMLConverter {
   private packages: Set<string> = new Set
   private translation: Translation
 
-  constructor(translation: Translation, mode?: 'minimal' | 'bibtex' | 'biblatex') {
+  constructor(translation: Translation, mode: 'minimal' | 'bibtex' | 'biblatex') {
     this.translation = translation
-    this.tx = new Transform(mode || (this.translation.unicode ? 'minimal' : (this.translation.BetterBibTeX ? 'bibtex' : 'biblatex')), {
+    this.tx = new Transform(mode, {
       math: this.translation.preferences.mapMath,
       text: this.translation.preferences.mapText,
       charmap: translation.charmap,
