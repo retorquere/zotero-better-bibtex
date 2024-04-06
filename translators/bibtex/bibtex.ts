@@ -450,22 +450,18 @@ export async function parseBibTeX(input: string, translation: Translation): Prom
   return bibtexParser.parseAsync(input, {
     // we are actually sure it's a valid enum value; stupid workaround for TS2322: Type 'string' is not assignable to type 'boolean | "as-needed" | "strict"'.
     caseProtection: (translation.preferences.importCaseProtection as 'as-needed'),
-    unsupported: function(node) { // eslint-disable-line object-shorthand
+    unsupported: function(node, tex, _entry) { // eslint-disable-line object-shorthand
       switch (translation.preferences.importUnknownTexCommand) {
         case 'tex':
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-          return this.text(`<script>${node.source}</script>`)
+          return tex
         case 'text':
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-          return this.text(node.source)
+          return node.type === 'macro' ? node.content : tex
         case 'ignore':
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-          return this.text('')
+          return ''
         default:
-          throw new Error(`Unexpected unknownCommandHandler ${JSON.stringify(translation.preferences.importUnknownTexCommand)}`)
+          return tex
       }
     },
-    markup: (translation.csquotes ? { enquote: translation.csquotes } : {}),
     sentenceCase: {
       langids: translation.preferences.importSentenceCase !== 'off',
       guess: translation.preferences.importSentenceCase === 'on+guess',
