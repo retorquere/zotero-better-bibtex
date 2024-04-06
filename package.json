@@ -55,7 +55,7 @@
     "submodules": "./setup/submodules.py",
     "ncu": "ncu -u -x '*eslint*' && npm i",
     "get-schema": "./setup/item.py",
-    "upgrades": "git add package.json package-lock.json submodules/* site/themes/relearn schema && git commit -m upgrades",
+    "upgrades": "git add package.json package-lock.json submodules/* site/themes/relearn schema && echo git commit -m upgrades",
     "db": "npm run zipup-debug-bridge"
   },
   "main": "index.js",
@@ -112,7 +112,7 @@
     "zotero-plugin": "2.0.14"
   },
   "devDependencies": {
-    "@retorquere/bibtex-parser": "^8.0.1",
+    "@retorquere/bibtex-parser": "^8.0.3",
     "@retorquere/zotero-sync": "^1.0.27",
     "@types/bluebird": "^3.5.42",
     "@types/lokijs": "^1.5.14",
@@ -167,7 +167,7 @@
     "process": "^0.11.10",
     "properties-reader": "^2.3.0",
     "pug": "^3.0.2",
-    "putout": "^35.7.6",
+    "putout": "^35.8.0",
     "recast": "^0.23.6",
     "regenerate": "^1.4.2",
     "rimraf": "^5.0.5",
