@@ -421,20 +421,13 @@ export function generateBibTeX(translation: Translation): void {
 }
 
 const importJabRef = new class {
-  public unabbrevations: Record<string, string> = {}
   public strings = ''
 
   private loaded = {
-    unabbrevations: false,
     strings: false,
   }
 
   load(translation: Translation) {
-    if (!this.loaded.unabbrevations && translation.preferences.importJabRefAbbreviations) {
-      Object.assign(this.unabbrevations, JSON.parse(Zotero.File.getContentsFromURL('chrome://zotero-better-bibtex/content/resource/bibtex/unabbrev.json')))
-      this.loaded.unabbrevations = true
-    }
-
     if (!this.loaded.strings && translation.preferences.importJabRefStrings) {
       this.strings = Zotero.File.getContentsFromURL('chrome://zotero-better-bibtex/content/resource/bibtex/strings.bib')
       this.loaded.strings = true
@@ -469,7 +462,7 @@ export async function parseBibTeX(input: string, translation: Translation): Prom
     },
     verbatimFields: translation.verbatimFields,
     raw: translation.preferences.rawImports,
-    unabbreviate: importJabRef.unabbrevations,
+    unabbreviations: translation.preferences.importJabRefAbbreviations,
     strings: importJabRef.strings,
   })
 }
