@@ -447,11 +447,10 @@ export async function parseBibTeX(input: string, translation: Translation): Prom
 
   importJabRef.load(translation)
 
-  return bibtexParser.promises.parse(input, {
+  return bibtexParser.parseAsync(input, {
     // we are actually sure it's a valid enum value; stupid workaround for TS2322: Type 'string' is not assignable to type 'boolean | "as-needed" | "strict"'.
     caseProtection: (translation.preferences.importCaseProtection as 'as-needed'),
-    errorHandler: (translation.preferences.testing ? undefined : function(err) { log.error(err) }), // eslint-disable-line prefer-arrow/prefer-arrow-functions
-    unknownCommandHandler: function(node) { // eslint-disable-line object-shorthand
+    unsupported: function(node) { // eslint-disable-line object-shorthand
       switch (translation.preferences.importUnknownTexCommand) {
         case 'tex':
           // eslint-disable-next-line @typescript-eslint/no-unsafe-return
@@ -467,9 +466,11 @@ export async function parseBibTeX(input: string, translation: Translation): Prom
       }
     },
     markup: (translation.csquotes ? { enquote: translation.csquotes } : {}),
-    sentenceCase: translation.preferences.importSentenceCase !== 'off',
-    guessAlreadySentenceCased: translation.preferences.importSentenceCase === 'on+guess',
-    sentenceCasePreserveQuoted: !translation.preferences.importSentenceCaseQuoted,
+    sentenceCase: {
+      langids: translation.preferences.importSentenceCase !== 'off',
+      guess: translation.preferences.importSentenceCase === 'on+guess',
+      preserveQuoted: !translation.preferences.importSentenceCaseQuoted,
+    },
     verbatimFields: translation.verbatimFields,
     raw: translation.preferences.rawImports,
     unabbreviate: importJabRef.unabbrevations,
