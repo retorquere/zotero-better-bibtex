@@ -53,7 +53,7 @@
     "xsubmodules": "git submodule update --init --recursive --remote && git submodule foreach git reset --hard && git submodule foreach git pull origin",
     "preupgrades": "npm-run-all -p --aggregate-output submodules ncu get-schema",
     "submodules": "./setup/submodules.py",
-    "ncu": "ncu -u && npm i",
+    "ncu": "ncu -u -x '*eslint*' && npm i",
     "get-schema": "./setup/item.py",
     "upgrades": "git add package.json package-lock.json submodules/* site/themes/relearn schema && git commit -m upgrades",
     "db": "npm run zipup-debug-bridge"
