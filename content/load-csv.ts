@@ -1,9 +1,12 @@
+import { Shim } from './os'
+const $OS = typeof OS !== 'undefined' ? OS : Shim
+
 import csv from 'papaparse'
 import { log } from './logger'
 
 async function read(path: string): Promise<string> {
   try {
-    return (await OS.File.exists(path)) ? (await OS.File.read(path, { encoding: 'utf-8' }) as unknown as string) : ''
+    return (await $OS.File.exists(path)) ? (await $OS.File.read(path, { encoding: 'utf-8' }) as unknown as string) : ''
   }
   catch (err) {
     log.error('csv.read', path, 'error:', err)

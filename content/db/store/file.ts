@@ -1,8 +1,10 @@
 /* eslint-disable @typescript-eslint/member-ordering */
 
-Components.utils.import('resource://gre/modules/osfile.jsm')
-
 import { log } from '../../logger'
+import { is7 } from '../../client'
+import { Shim } from '../../os'
+if (!is7) Components.utils.import('resource://gre/modules/osfile.jsm')
+const $OS = typeof OS !== 'undefined' ? OS : Shim
 
 // Components.utils.import('resource://gre/modules/Sqlite.jsm')
 // declare const Sqlite: any
@@ -30,12 +32,12 @@ export class File {
   }
 
   private async save(name: string, data, dirty: boolean) {
-    const path = OS.Path.join(Zotero.BetterBibTeX.dir, `${name}.json`)
-    const save = dirty || !(await OS.File.exists(path))
+    const path = $OS.Path.join(Zotero.BetterBibTeX.dir, `${name}.json`)
+    const save = dirty || !(await $OS.File.exists(path))
 
     if (!save) return null
 
-    await OS.File.writeAtomic(path, JSON.stringify(data), { encoding: 'utf-8', tmpPath: `${path}.tmp`})
+    await $OS.File.writeAtomic(path, JSON.stringify(data), { encoding: 'utf-8', tmpPath: `${path}.tmp`})
   }
 
   public async loadDatabase(name: string, callback: ((v: null) => void)): Promise<void> {
@@ -68,16 +70,16 @@ export class File {
   }
 
   private async load(name) {
-    const path = OS.Path.join(Zotero.BetterBibTeX.dir, `${name}.json`)
-    const exists = await OS.File.exists(path)
+    const path = $OS.Path.join(Zotero.BetterBibTeX.dir, `${name}.json`)
+    const exists = await $OS.File.exists(path)
 
     if (!exists) return null
 
-    const data = JSON.parse(await OS.File.read(path, { encoding: 'utf-8' }) as unknown as string)
+    const data = JSON.parse(await $OS.File.read(path, { encoding: 'utf-8' }) as unknown as string)
 
     // this is intentional. If all is well, the database will be retained in memory until it's saved at
     // shutdown. If all is not well, this will make sure the caches are rebuilt from scratch on next start
-    await OS.File.move(path, `${path}.bak`)
+    await $OS.File.move(path, `${path}.bak`)
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return data

@@ -1,5 +1,8 @@
 Components.utils.import('resource://gre/modules/Services.jsm')
 
+import { Shim } from './os'
+const $OS = typeof OS !== 'undefined' ? OS : Shim
+
 import type { XUL } from '../typings/xul'
 
 import { log } from './logger'
@@ -124,7 +127,7 @@ class AutoExportPane {
     let label: string = { library: icons.computer, collection: icons.folder }[ae.type]
     label += ` ${this.name(ae, 'short')}`
     label += ` (${Translators.byId[ae.translatorID].label})`
-    const path = ae.path.startsWith(OS.Constants.Path.homeDir) ? ae.path.replace(OS.Constants.Path.homeDir, '~') : ae.path
+    const path = ae.path.startsWith($OS.Constants.Path.homeDir) ? ae.path.replace($OS.Constants.Path.homeDir, '~') : ae.path
     label += ` ${path}`
     return label
   }

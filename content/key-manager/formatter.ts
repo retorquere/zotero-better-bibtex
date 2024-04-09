@@ -1,5 +1,8 @@
 import type { Tag, RegularItem as SerializedRegularItem, Item as SerializedItem } from '../../gen/typings/serialized-item'
 
+import { Shim } from '../os'
+const $OS = typeof OS !== 'undefined' ? OS : Shim
+
 import { client } from '../client'
 
 import { Events } from '../events'
@@ -1149,7 +1152,7 @@ class PatternFormatter {
       const acronyms: Record<string, string> = {}
 
       try {
-        for (const row of csv2list(OS.Path.join(Zotero.BetterBibTeX.dir, `${list}.csv`))) {
+        for (const row of csv2list($OS.Path.join(Zotero.BetterBibTeX.dir, `${list}.csv`))) {
           if (row.length !== 2) {
             log.error('unexpected row in', `${list}.csv`, ':', row)
             continue
