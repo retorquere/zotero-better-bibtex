@@ -1,5 +1,7 @@
 Components.utils.import('resource://gre/modules/Services.jsm')
 
+import { PromptService } from './prompt'
+
 import { Preference } from './prefs'
 import { defaults } from '../gen/preferences/meta'
 import { byId } from '../gen/translators'
@@ -100,11 +102,10 @@ export class ErrorReport {
   }
 
   public restartWithDebugEnabled(): void {
-    const ps = Components.classes['@mozilla.org/embedcomp/prompt-service;1'].getService(Components.interfaces.nsIPromptService)
-    const buttonFlags = ps.BUTTON_POS_0 * ps.BUTTON_TITLE_IS_STRING
-        + ps.BUTTON_POS_1 * ps.BUTTON_TITLE_CANCEL
-        + ps.BUTTON_POS_2 * ps.BUTTON_TITLE_IS_STRING
-    const index = ps.confirmEx(
+    const buttonFlags = PromptService.BUTTON_POS_0 * PromptService.BUTTON_TITLE_IS_STRING
+        + PromptService.BUTTON_POS_1 * PromptService.BUTTON_TITLE_CANCEL
+        + PromptService.BUTTON_POS_2 * PromptService.BUTTON_TITLE_IS_STRING
+    const index = PromptService.confirmEx(
       null,
       Zotero.getString('zotero.debugOutputLogging'),
       Zotero.getString('zotero.debugOutputLogging.enabledAfterRestart', [Zotero.clientName]),

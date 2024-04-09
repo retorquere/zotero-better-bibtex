@@ -200,7 +200,7 @@ class Override {
   }
 
   public override(preference: string, extension: string): boolean {
-    const override = this.orig[`${preference}Override`]
+    const override: string = this.orig[`${preference}Override`]
     if (!this.exportPath || !override) {
       return false
     }

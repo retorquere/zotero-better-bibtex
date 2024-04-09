@@ -1,5 +1,4 @@
 import { log } from './logger'
-// import { OS } from '../typings/xpcom'
 
 // https://searchfox.org/mozilla-central/source/toolkit/modules/subprocess/subprocess_win.jsm#135 doesn't seem to work on Windows.
 export async function findBinary(bin: string, installationDirectory: { mac?: string[], win?: string[] } = {}): Promise<string> {
