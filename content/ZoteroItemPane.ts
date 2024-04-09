@@ -44,20 +44,15 @@ export class ZoteroItemPane {
     this.document = win.document
     const elements = this.elements = new Elements(this.document)
 
-    if (!this.document.getElementById('better-bibtex-editpane-item-box')) {
-      itemBox.parentNode.appendChild(elements.create('vbox', { flex: 1, style: 'margin: 0; padding: 0', $: [
+    if (!is7) {
+      if (!this.document.getElementById('better-bibtex-editpane-item-box')) {
+        itemBox.parentNode.appendChild(elements.create('vbox', { flex: 1, style: 'margin: 0; padding: 0', $: [
 
-        elements.create('grid', { id: 'better-bibtex-editpane-item-box', $: [
-          elements.create('columns', { $: [
-            elements.create('column'),
-            elements.create('column', { flex: '1' }),
-            // elements.create('column', { flex: 100 }),
-          ]}),
-          elements.create('rows', { id: 'better-bibtex-fields', flex: 1, $: [
-            elements.create('row', { class: 'zotero-item-first-row', $: [
-              elements.create('label', { id: 'better-bibtex-citekey-label', style: 'width: 9em; text-align: right; color: #7F7F7F', value: '' }),
-              elements.create('textbox', { id: 'better-bibtex-citekey-display', flex: '1', class: 'plain', readonly: 'true', value: '' }),
-              // elements.create('label', { id: 'better-bibtex-citekey-pin', value: icons.pin }),
+          elements.create('grid', { id: 'better-bibtex-editpane-item-box', $: [
+            elements.create('columns', { $: [
+              elements.create('column'),
+              elements.create('column', { flex: '1' }),
+              // elements.create('column', { flex: 100 }),
             ]}),
           ]}),
         ]}),
