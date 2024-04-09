@@ -33,7 +33,7 @@ export class Exporter {
     if (!this.translation.BetterTeX || !this.translation.preferences.strings) return
 
     if (this.translation.BetterTeX && this.translation.preferences.exportBibTeXStrings.startsWith('match')) {
-      this.strings = bibtexParser.parse(this.translation.preferences.strings, { markup: (this.translation.csquotes ? { enquote: this.translation.csquotes } : {}) }).strings
+      this.strings = bibtexParser.parse(this.translation.preferences.strings).strings
       for (const [k, v] of Object.entries(this.strings)) {
         this.strings_reverse[v.toUpperCase()] = k.toUpperCase()
       }
