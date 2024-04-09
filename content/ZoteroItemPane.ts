@@ -44,22 +44,8 @@ export class ZoteroItemPane {
     // const itemPane = (win as any).ZoteroItemPane
     // itemPane.BetterBibTeX = this
 
-    if (!this.document.getElementById('better-bibtex-editpane-item-box')) {
-      if (is7) {
-        /*
-        itemBox.parentNode.parentNode.parentNode.appendChild(elements.create('html:div', { style: 'display: flex; flex-direction: column;' , $: [
-
-          elements.create('html:div', { id: 'better-bibtex-editpane-item-box', style: 'display: flex; flex-direction: row', $: [
-            elements.create('label', { id: 'better-bibtex-citekey-label', style: 'flex: 0 0 auto; width: 9em; text-align: right; color: #7F7F7F', value: '' }),
-            elements.create('html:input', { id: 'better-bibtex-citekey-display', type: 'text', style: 'flex: 0 0 auto', readonly: 'true', value: '' }),
-          ]}),
-
-          itemBox.parentNode.parentNode,
-        ]}))
-        */
-        log.debug('waiting for API to insert citekey in itempane')
-      }
-      else {
+    if (!is7) {
+      if (!this.document.getElementById('better-bibtex-editpane-item-box')) {
         itemBox.parentNode.appendChild(elements.create('vbox', { flex: 1, style: 'margin: 0; padding: 0', $: [
 
           elements.create('grid', { id: 'better-bibtex-editpane-item-box', $: [
