@@ -1,7 +1,8 @@
 Components.utils.import('resource://gre/modules/Services.jsm')
 
 import { Shim } from './os'
-const $OS = typeof OS !== 'undefined' ? OS : Shim
+import { is7 } from './client'
+const $OS = is7 ? Shim : OS
 
 import type { XUL } from '../typings/xul'
 
@@ -18,7 +19,6 @@ import * as l10n from './l10n'
 import { Events } from './events'
 import { pick } from './file-picker'
 import { flash } from './flash'
-import { is7 } from './client'
 import { icons } from './icons'
 
 // safe to keep "global" since only one pref pane will be loaded at any one time

@@ -1,7 +1,8 @@
 Components.utils.import('resource://gre/modules/Services.jsm')
 
 import { Shim } from './os'
-const $OS = typeof OS !== 'undefined' ? OS : Shim
+import { is7 } from './client'
+const $OS = is7 ? Shim : OS
 
 import { PromptService } from './prompt'
 
@@ -14,7 +15,6 @@ import { KeyManager } from './key-manager'
 
 import { DB as Cache } from './db/cache'
 import { pick } from './file-picker'
-import { is7 } from './client'
 import * as l10n from './l10n'
 
 import Tar from 'tar-js'

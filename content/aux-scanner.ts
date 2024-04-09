@@ -1,7 +1,6 @@
-import { is7 } from './client'
-
 import { Shim } from './os'
-const $OS = typeof OS !== 'undefined' ? OS : Shim
+import { is7 } from './client'
+const $OS = is7 ? Shim : OS
 
 if (!is7) Components.utils.import('resource://gre/modules/osfile.jsm')
 

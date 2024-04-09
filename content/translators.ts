@@ -1,7 +1,8 @@
 /* eslint-disable no-case-declarations, @typescript-eslint/no-unsafe-return */
 
 import { Shim } from './os'
-const $OS = typeof OS !== 'undefined' ? OS : Shim
+import { is7 } from './client'
+const $OS = is7 ? Shim : OS
 
 Components.utils.import('resource://gre/modules/Services.jsm')
 
@@ -23,7 +24,6 @@ import { $and } from './db/loki'
 import { Events } from './events'
 import { Pinger } from './ping'
 import Puqeue from 'puqeue'
-import { is7 } from './client'
 import { orchestrator } from './orchestrator'
 import type { Reason } from './bootstrap'
 import { headers as Headers, byLabel, byId, bySlug } from '../gen/translators'

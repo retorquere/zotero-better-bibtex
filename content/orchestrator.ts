@@ -5,7 +5,8 @@ import { log } from './logger'
 import { Preference } from './prefs'
 
 import { Shim } from './os'
-const $OS = typeof OS !== 'undefined' ? OS : Shim
+import { is7 } from './client'
+const $OS = is7 ? Shim : OS
 
 type Handler = (reason: Reason, task?: Task) => void | string | Promise<void | string>
 

@@ -1,7 +1,8 @@
 import type { Tag, RegularItem as SerializedRegularItem, Item as SerializedItem } from '../../gen/typings/serialized-item'
 
 import { Shim } from '../os'
-const $OS = typeof OS !== 'undefined' ? OS : Shim
+import { is7 } from '../../content/client'
+const $OS = is7 ? Shim : OS
 
 import { client } from '../client'
 

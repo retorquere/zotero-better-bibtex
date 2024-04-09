@@ -2,7 +2,8 @@
 declare const Services: any
 
 import { Shim } from './os'
-const $OS = typeof OS !== 'undefined' ? OS : Shim
+import { is7 } from './client'
+const $OS = is7 ? Shim : OS
 
 import { Events } from './events'
 import type { CharMap } from 'unicode2latex'

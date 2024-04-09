@@ -3,7 +3,7 @@
 import { Shim } from '../os'
 import { is7 } from '../client'
 if (!is7) importScripts('resource://gre/modules/osfile.jsm')
-const $OS = typeof OS !== 'undefined' ? OS : Shim
+const $OS = is7 ? Shim : OS
 
 const ctx: DedicatedWorkerGlobalScope = self as any
 

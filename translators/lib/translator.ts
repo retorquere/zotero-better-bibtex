@@ -2,7 +2,8 @@ declare const Zotero: any
 declare const __estrace: any // eslint-disable-line no-underscore-dangle
 
 import { Shim } from '../../content/os'
-const $OS = typeof OS !== 'undefined' ? OS : Shim
+import { is7 } from '../../content/client'
+const $OS = is7 ? Shim : OS
 
 import * as Prefs from '../../gen/preferences/meta'
 const PrefNames: Set<string> = new Set(Object.keys(Prefs.defaults))
