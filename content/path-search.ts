@@ -1,10 +1,12 @@
 import { log } from './logger'
+import { Shim } from './os'
+const $OS = typeof OS !== 'undefined' ? OS : Shim
 
 // https://searchfox.org/mozilla-central/source/toolkit/modules/subprocess/subprocess_win.jsm#135 doesn't seem to work on Windows.
 export async function findBinary(bin: string, installationDirectory: { mac?: string[], win?: string[] } = {}): Promise<string> {
   const pref = `translators.better-bibtex.path.${bin}`
   let location: string = Zotero.Prefs.get(pref)
-  if (location && (await OS.File.exists(location))) return location
+  if (location && (await $OS.File.exists(location))) return location
   location = await pathSearch(bin, installationDirectory)
   if (typeof location === 'string') Zotero.Prefs.set(pref, location)
   return location
@@ -57,11 +59,11 @@ async function pathSearch(bin: string, installationDirectory: { mac?: string[], 
   for await (const path of asyncGenerator(paths)) {
     for (const ext of extensions) {
       try {
-        const exe: string = OS.Path.join(path, bin + ext)
-        if (!(await OS.File.exists(exe))) continue
+        const exe: string = $OS.Path.join(path, bin + ext)
+        if (!(await $OS.File.exists(exe))) continue
 
         // eslint-disable-next-line @typescript-eslint/await-thenable
-        const stat = await OS.File.stat(exe)
+        const stat = await $OS.File.stat(exe)
         if (stat.isDir) continue
 
         // eslint-disable-next-line no-bitwise

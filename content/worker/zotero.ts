@@ -1,5 +1,10 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions, @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-assignment */
 
+import { Shim } from '../os'
+import { is7 } from '../client'
+if (!is7) importScripts('resource://gre/modules/osfile.jsm')
+const $OS = typeof OS !== 'undefined' ? OS : Shim
+
 const ctx: DedicatedWorkerGlobalScope = self as any
 
 export const workerEnvironment = {
@@ -14,7 +19,6 @@ for(const [key, value] of (new URLSearchParams(ctx.location.search)).entries()) 
 
 declare const dump: (message: string) => void
 
-importScripts('resource://gre/modules/osfile.jsm')
 importScripts('resource://zotero/config.js') // import ZOTERO_CONFIG'
 
 import { client, clientName } from '../../content/client'
@@ -184,9 +188,9 @@ class WorkerZoteroBetterBibTeX {
   }
 
   public getContents(path: string): string {
-    if (path && OS.File.exists(path)) {
+    if (path && $OS.File.exists(path)) {
       // https://contest-server.cs.uchicago.edu/ref/JavaScript/developer.mozilla.org/en-US/docs/Mozilla/JavaScript_code_modules/OSFile.jsm/OS-2.html
-      const array = OS.File.read(path)
+      const array = $OS.File.read(path)
       const decoder = new TextDecoder()
       return decoder.decode(array as BufferSource)
     }
@@ -263,52 +267,52 @@ function isWinRoot(path) {
 }
 function makeDirs(path) {
   if (isWinRoot(path)) return
-  if (!OS.Path.split(path).absolute) throw new Error(`Will not create relative ${path}`)
+  if (!$OS.Path.split(path).absolute) throw new Error(`Will not create relative ${path}`)
 
-  path = OS.Path.normalize(path)
+  path = $OS.Path.normalize(path)
 
   const paths: string[] = []
   // path === paths[0] means we've hit the root, as the dirname of root is root
-  while (path !== paths[0] && !isWinRoot(path) && !OS.File.exists(path)) {
+  while (path !== paths[0] && !isWinRoot(path) && !$OS.File.exists(path)) {
     paths.unshift(path)
-    path = OS.Path.dirname(path)
+    path = $OS.Path.dirname(path)
   }
 
-  if (!isWinRoot(path) && !(OS.File.stat(path) as OS.File.FileInfo).isDir) throw new Error(`makeDirs: root ${path} is not a directory`)
+  if (!isWinRoot(path) && !($OS.File.stat(path) as OS.File.FileInfo).isDir) throw new Error(`makeDirs: root ${path} is not a directory`)
 
   for (path of paths) {
-    OS.File.makeDir(path) as void
+    $OS.File.makeDir(path) as void
   }
 }
 
 function saveFile(path, overwrite) {
   if (!Zotero.exportDirectory) return false
 
-  if (!OS.File.exists(this.localPath)) return false
+  if (!$OS.File.exists(this.localPath)) return false
 
-  this.path = OS.Path.normalize(OS.Path.join(Zotero.exportDirectory, path))
+  this.path = $OS.Path.normalize($OS.Path.join(Zotero.exportDirectory, path))
   if (!this.path.startsWith(Zotero.exportDirectory)) throw new Error(`${path} looks like a relative path`)
 
   if (this.linkMode === 'imported_file' || (this.linkMode === 'imported_url' && this.contentType !== 'text/html')) {
-    makeDirs(OS.Path.dirname(this.path))
+    makeDirs($OS.Path.dirname(this.path))
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
-    OS.File.copy(this.localPath, this.path, { noOverwrite: !overwrite })
+    $OS.File.copy(this.localPath, this.path, { noOverwrite: !overwrite })
   }
   else if (this.linkMode === 'imported_url') {
-    const target = OS.Path.dirname(this.path)
-    if (!overwrite && OS.File.exists(target)) throw new Error(`${path} would overwite ${target}`)
+    const target = $OS.Path.dirname(this.path)
+    if (!overwrite && $OS.File.exists(target)) throw new Error(`${path} would overwite ${target}`)
 
-    OS.File.removeDir(target, { ignoreAbsent: true })
+    $OS.File.removeDir(target, { ignoreAbsent: true })
     makeDirs(target)
 
-    const snapshot = OS.Path.dirname(this.localPath)
-    const iterator = new OS.File.DirectoryIterator(snapshot)
-    // PITA dual-type OS.Path is promises on main thread but sync in worker
+    const snapshot = $OS.Path.dirname(this.localPath)
+    const iterator = new $OS.File.DirectoryIterator(snapshot)
+    // PITA dual-type $OS.Path is promises on main thread but sync in worker
     iterator.forEach(entry => { // eslint-disable-line @typescript-eslint/no-floating-promises
       if (entry.isDir) throw new Error(`Unexpected directory ${entry.path} in snapshot`)
       if (entry.name !== '.zotero-ft-cache') {
         // eslint-disable-next-line @typescript-eslint/no-floating-promises
-        OS.File.copy(OS.Path.join(snapshot, entry.name), OS.Path.join(target, entry.name), { noOverwrite: !overwrite })
+        $OS.File.copy($OS.Path.join(snapshot, entry.name), $OS.Path.join(target, entry.name), { noOverwrite: !overwrite })
       }
     })
   }
@@ -403,14 +407,14 @@ class WorkerZotero {
 
     if (workerJob.output) {
       if (workerJob.options.exportFileData) { // output path is a directory
-        this.exportDirectory = OS.Path.normalize(workerJob.output)
-        this.exportFile = OS.Path.join(this.exportDirectory, `${OS.Path.basename(this.exportDirectory)}.${ZOTERO_TRANSLATOR_INFO.target}`)
+        this.exportDirectory = $OS.Path.normalize(workerJob.output)
+        this.exportFile = $OS.Path.join(this.exportDirectory, `${$OS.Path.basename(this.exportDirectory)}.${ZOTERO_TRANSLATOR_INFO.target}`)
       }
       else {
-        this.exportFile = OS.Path.normalize(workerJob.output)
+        this.exportFile = $OS.Path.normalize(workerJob.output)
         const ext = `.${ZOTERO_TRANSLATOR_INFO.target}`
         if (!this.exportFile.endsWith(ext)) this.exportFile += ext
-        this.exportDirectory = OS.Path.dirname(this.exportFile)
+        this.exportDirectory = $OS.Path.dirname(this.exportFile)
       }
       makeDirs(this.exportDirectory)
     }
@@ -424,7 +428,7 @@ class WorkerZotero {
     if (this.exportFile) {
       const encoder = new TextEncoder()
       const array = encoder.encode(this.output)
-      OS.File.writeAtomic(this.exportFile, array) as void
+      $OS.File.writeAtomic(this.exportFile, array) as void
     }
     this.send({ kind: 'done', output: this.exportFile ? true : this.output })
   }
@@ -473,7 +477,7 @@ class WorkerZotero {
       item.saveFile = saveFile.bind(item)
 
       if (!item.defaultPath && item.localPath) { // why is this not set by itemGetter?!
-        item.defaultPath = `files/${item.itemID}/${OS.Path.basename(item.localPath)}`
+        item.defaultPath = `files/${item.itemID}/${$OS.Path.basename(item.localPath)}`
       }
 
     }

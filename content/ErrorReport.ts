@@ -1,5 +1,8 @@
 Components.utils.import('resource://gre/modules/Services.jsm')
 
+import { Shim } from './os'
+const $OS = typeof OS !== 'undefined' ? OS : Shim
+
 import { PromptService } from './prompt'
 
 import { Preference } from './prefs'
@@ -66,7 +69,7 @@ export class ErrorReport {
     const version = require('../gen/version.js')
 
     try {
-      await Zotero.HTTP.request('PUT', `${this.bucket}/${OS.Path.basename(this.tarball)}`, {
+      await Zotero.HTTP.request('PUT', `${this.bucket}/${$OS.Path.basename(this.tarball)}`, {
         noCache: true,
         // followRedirects: true,
         // noCache: true,
@@ -155,7 +158,7 @@ export class ErrorReport {
 
   public async save(): Promise<void> {
     const filename = await pick('Logs', 'save', [['Tape Archive (*.tgz)', '*.tgz']], `${this.key}.tgz`)
-    if (filename) await OS.File.writeAtomic(filename, this.tar(), { tmpPath: filename + '.tmp' })
+    if (filename) await $OS.File.writeAtomic(filename, this.tar(), { tmpPath: filename + '.tmp' })
   }
 
   private async ping(region: string) {
@@ -208,8 +211,8 @@ export class ErrorReport {
       items: win.arguments[0].wrappedJSObject.items,
     }
 
-    const acronyms = OS.Path.join(Zotero.BetterBibTeX.dir, 'acronyms.csv')
-    if (await OS.File.exists(acronyms)) this.errorlog.acronyms = await OS.File.read(acronyms, { encoding: 'utf-8' }) as unknown as string
+    const acronyms = $OS.Path.join(Zotero.BetterBibTeX.dir, 'acronyms.csv')
+    if (await $OS.File.exists(acronyms)) this.errorlog.acronyms = await $OS.File.read(acronyms, { encoding: 'utf-8' }) as unknown as string
 
     this.setValue('better-bibtex-error-context', this.errorlog.info)
     this.setValue('better-bibtex-error-errors', this.errorlog.errors)
@@ -288,7 +291,7 @@ export class ErrorReport {
     if (autoExports.length) {
       info += 'Auto-exports:\n'
       for (const ae of autoExports) {
-        info += `  path: ...${JSON.stringify(OS.Path.split(ae.path).components.pop())}`
+        info += `  path: ...${JSON.stringify($OS.Path.split(ae.path).components.pop())}`
         switch (ae.type) {
           case 'collection':
             info += ` (${Zotero.Collections.get(ae.id)?.name || '<collection>'})`

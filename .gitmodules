@@ -30,3 +30,7 @@
 	path = site/themes/relearn
 	url = https://github.com/McShelby/hugo-theme-relearn.git
 	branch = main
+[submodule "submodules/zotero"]
+	path = submodules/zotero
+	url = https://github.com/zotero/zotero.git
+	branch = main
