@@ -1,6 +1,10 @@
 /* eslint-disable @typescript-eslint/member-ordering */
 
 import { log } from '../../logger'
+import { is7 } from '../../client'
+import { Shim } from '../../os'
+if (!is7) Components.utils.import('resource://gre/modules/osfile.jsm')
+const $OS = typeof OS !== 'undefined' ? OS : Shim
 
 import { Shim } from '../../os'
 import { is7 } from '../../client'
