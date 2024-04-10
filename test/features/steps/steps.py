@@ -339,7 +339,16 @@ def step_impl(context):
 @when(u'I merge the selected items')
 def step_impl(context):
   assert len(context.selected) > 1
-  context.zotero.execute('return await Zotero.BetterBibTeX.TestSupport.merge(selected)', selected=context.selected)
+  context.zotero.execute('''
+    try {
+      return await Zotero.BetterBibTeX.TestSupport.merge(selected)
+    } catch (err) {
+      Zotero.debug('oops on merge')
+      Zotero.debug(`${err}`)
+      Zotero.debug(err.stack)
+      throw err
+    }
+  ''', selected=context.selected)
 
 @when(u'I empty the trash')
 def step_impl(context):
