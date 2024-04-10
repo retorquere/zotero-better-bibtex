@@ -1,6 +1,6 @@
 import { is7 } from './client'
 
-import { $OS } from '../gen/osfile-shim'
+import { OS as $OS } from '../gen/osfile'
 export const Shim: any = is7 ? $OS : undefined
 
 if (is7 && !Shim.Path.split) {

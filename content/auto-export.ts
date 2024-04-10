@@ -2,8 +2,6 @@ Components.utils.import('resource://gre/modules/FileUtils.jsm')
 declare const FileUtils: any
 
 import { log } from './logger'
-import { Shim } from './os'
-const $OS = typeof OS !== 'undefined' ? OS : Shim
 
 import { Shim } from './os'
 import { is7 } from './client'

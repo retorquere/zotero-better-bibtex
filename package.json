@@ -112,7 +112,7 @@
     "zotero-plugin": "2.0.14"
   },
   "devDependencies": {
-    "@retorquere/bibtex-parser": "^8.0.12",
+    "@retorquere/bibtex-parser": "^7.0.16",
     "@retorquere/zotero-sync": "^1.0.27",
     "@types/bluebird": "^3.5.42",
     "@types/lokijs": "^1.5.14",
@@ -134,7 +134,7 @@
     "dotenv": "^16.4.5",
     "ejs": "^3.1.9",
     "esbuild": "^0.20.2",
-    "eslint": "^9.0.0",
+    "eslint": "^8.57.0",
     "estrace": "^5.0.1",
     "eta": "^3.4.0",
     "fast-json-patch": "^3.1.1",
