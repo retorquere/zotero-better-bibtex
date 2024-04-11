@@ -192,8 +192,8 @@ class WorkerZoteroBetterBibTeX {
   public getContents(path: string): string {
     if (!path) return null
 
+    dump('getContents in\n')
     try {
-      dump('getContents in\n')
       let bytes: Uint8Array | ArrayBuffer
       try {
         if (is7) {
@@ -208,20 +208,23 @@ class WorkerZoteroBetterBibTeX {
         }
       }
       catch (err) {
+        dump(`getContents load: ${err}\n`)
         // in Zotero 7 we can't check sync for file existence
         return null
       }
 
       try {
         const decoder = new TextDecoder()
+        dump('getContents return\n')
         return decoder.decode(bytes as BufferSource)
       }
       catch (err) {
+        dump(`getContents decode: ${err}\n`)
         // in Zotero 7 we can't check sync for file existence
         return null
       }
     }
-    catch (err) {
+    finally {
       dump('getContents out\n')
     }
   }
