@@ -203,7 +203,7 @@ class WorkerZoteroBetterBibTeX {
         let text = ''
         while (!file.eof) {
           bytesRead = file.readBytesInto(bytes, chunkSize)
-          const chunk = bytes.subarray(0, bytesRead)
+          const chunk = bytesRead < chunkSize ? bytes.subarray(0, bytesRead) : bytes
           text += decoder.decode(chunk)
         }
         file.close()
