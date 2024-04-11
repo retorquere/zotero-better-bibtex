@@ -198,14 +198,19 @@ class WorkerZoteroBetterBibTeX {
         const file = IOUtils.openFileForSyncReading(path)
         const chunkSize = 64
         const bytes = new Uint8Array(chunkSize)
-        let bytesRead
         const decoder = new TextDecoder('utf-8')
+        let offset = 0
+        const size = file.size
+
         let text = ''
-        while (!file.eof) {
-          bytesRead = file.readBytesInto(bytes, chunkSize)
-          const chunk = bytesRead < chunkSize ? bytes.subarray(0, bytesRead) : bytes
+        while (offset < size) {
+          const len = Math.min(chunkSize, size - offset)
+          const chunk = len > chunkSize ? bytes : bytes.subarray(0, len)
+          file.readBytesInto(chunk, offset)
           text += decoder.decode(chunk)
+          offset += len
         }
+
         file.close()
         dump(`getContents ${path} return\n`)
         return text
@@ -219,7 +224,9 @@ class WorkerZoteroBetterBibTeX {
       }
     }
     catch (err) {
-      dump(`getContents ${path} error ${err} ${Object.keys(err)} ${err.message}\n`)
+      if (!err.message?.includes('NS_ERROR_FILE_NOT_FOUND')) {
+        dump(`getContents ${path} error ${err} ${Object.keys(err)} ${err.message}\n`)
+      }
       return null
     }
     finally {
