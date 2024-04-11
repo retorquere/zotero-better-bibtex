@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions, @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-assignment */
 
+declare const IOUtils: any
+
 import { Shim } from '../os'
 import { is7 } from '../client'
 if (!is7) importScripts('resource://gre/modules/osfile.jsm')
@@ -187,12 +189,33 @@ class WorkerZoteroBetterBibTeX {
     Zotero.send({ kind: 'progress', percent, translator: workerJob.translator, autoExport: workerJob.autoExport })
   }
 
-  public async getContents(path: string): Promise<string> {
-    if (path && await $OS.File.exists(path)) {
-      // https://contest-server.cs.uchicago.edu/ref/JavaScript/developer.mozilla.org/en-US/docs/Mozilla/JavaScript_code_modules/OSFile.jsm/OS-2.html
-      return await $OS.File.read(path, { encoding: 'utf-8' })
+  public getContents(path: string): string {
+    if (!path) return null
+
+    let bytes: Uint8Array | ArrayBuffer
+    try {
+      if (is7) {
+        const file = IOUtils.openFileForSyncReading(path)
+        bytes = new Uint8Array(64)
+        file.readBytesInto(bytes, 0)
+        file.close()
+      }
+      else {
+        if (!OS.File.exists(path)) return null
+        bytes = <ArrayBuffer>OS.File.read(path)
+      }
     }
-    else {
+    catch (err) {
+      // in Zotero 7 we can't check sync for file existence
+      return null
+    }
+
+    try {
+      const decoder = new TextDecoder()
+      return decoder.decode(bytes as BufferSource)
+    }
+    catch (err) {
+      // in Zotero 7 we can't check sync for file existence
       return null
     }
   }

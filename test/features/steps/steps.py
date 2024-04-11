@@ -62,16 +62,20 @@ def step_impl(context, value):
 
 @when(u'I create preference override {value}')
 def step_impl(context, value):
-  value = json.loads(value)
-  assert value.startswith('~/'), value
-  value = os.path.join(context.tmpDir, value[2:])
-  with open(value, 'w') as f:
+  override = json.loads(value)
+  assert override.startswith('~/'), override
+  override = os.path.join(context.tmpDir, override[2:])
+  with open(override, 'w') as f:
     json.dump({'override': { 'preferences': {} }}, f)
-  context.preferenceOverride = value
+  context.preferenceOverride = override
 
 @when(u'I remove preference override {value}')
 def step_impl(context, value):
-  os.remove(context.preferenceOverride)
+  override = json.loads(value)
+  assert override.startswith('~/'), override
+  override = os.path.join(context.tmpDir, override[2:])
+  assert override == context.preferenceOverride, [ override, context.preferenceOverride ]
+  os.remove(override)
 
 @step('I set preference override {pref} to {value}')
 def step_impl(context, pref, value):
