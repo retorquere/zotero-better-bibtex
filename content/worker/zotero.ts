@@ -199,13 +199,13 @@ class WorkerZoteroBetterBibTeX {
         const chunkSize = 64
         const bytes = new Uint8Array(chunkSize)
         let bytesRead
-        let text = ''
         const decoder = new TextDecoder('utf-8')
-        do {
+        let text = ''
+        while (!file.eof) {
           bytesRead = file.readBytesInto(bytes, chunkSize)
           const chunk = bytes.subarray(0, bytesRead)
           text += decoder.decode(chunk)
-        } while (bytesRead === chunkSize)
+        }
         file.close()
         dump(`getContents ${path} return\n`)
         return text
@@ -219,7 +219,7 @@ class WorkerZoteroBetterBibTeX {
       }
     }
     catch (err) {
-      dump(`getContents ${path} error ${err}\n`)
+      dump(`getContents ${path} error ${err} ${Object.keys(err)}\n`)
       return null
     }
     finally {
