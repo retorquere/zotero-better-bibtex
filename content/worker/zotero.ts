@@ -219,7 +219,7 @@ class WorkerZoteroBetterBibTeX {
       }
     }
     catch (err) {
-      dump(`getContents ${path} error ${err} ${Object.keys(err)}\n`)
+      dump(`getContents ${path} error ${err} ${Object.keys(err)} ${err.message}\n`)
       return null
     }
     finally {
