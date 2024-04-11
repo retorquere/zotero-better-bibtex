@@ -192,31 +192,37 @@ class WorkerZoteroBetterBibTeX {
   public getContents(path: string): string {
     if (!path) return null
 
-    let bytes: Uint8Array | ArrayBuffer
     try {
-      if (is7) {
-        const file = IOUtils.openFileForSyncReading(path)
-        bytes = new Uint8Array(64)
-        file.readBytesInto(bytes, 0)
-        file.close()
+      dump('getContents in\n')
+      let bytes: Uint8Array | ArrayBuffer
+      try {
+        if (is7) {
+          const file = IOUtils.openFileForSyncReading(path)
+          bytes = new Uint8Array(64)
+          file.readBytesInto(bytes, 0)
+          file.close()
+        }
+        else {
+          if (!OS.File.exists(path)) return null
+          bytes = <ArrayBuffer>OS.File.read(path)
+        }
       }
-      else {
-        if (!OS.File.exists(path)) return null
-        bytes = <ArrayBuffer>OS.File.read(path)
+      catch (err) {
+        // in Zotero 7 we can't check sync for file existence
+        return null
       }
-    }
-    catch (err) {
-      // in Zotero 7 we can't check sync for file existence
-      return null
-    }
 
-    try {
-      const decoder = new TextDecoder()
-      return decoder.decode(bytes as BufferSource)
+      try {
+        const decoder = new TextDecoder()
+        return decoder.decode(bytes as BufferSource)
+      }
+      catch (err) {
+        // in Zotero 7 we can't check sync for file existence
+        return null
+      }
     }
     catch (err) {
-      // in Zotero 7 we can't check sync for file existence
-      return null
+      dump('getContents out\n')
     }
   }
 
