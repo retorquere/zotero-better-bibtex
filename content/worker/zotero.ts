@@ -192,40 +192,38 @@ class WorkerZoteroBetterBibTeX {
   public getContents(path: string): string {
     if (!path) return null
 
-    dump('getContents in\n')
+    dump(`getContents from ${path}\n`)
     try {
-      let bytes: Uint8Array | ArrayBuffer
-      try {
-        if (is7) {
-          const file = IOUtils.openFileForSyncReading(path)
-          bytes = new Uint8Array(64)
-          file.readBytesInto(bytes, 0)
-          file.close()
-        }
-        else {
-          if (!OS.File.exists(path)) return null
-          bytes = <ArrayBuffer>OS.File.read(path)
-        }
+      if (is7) {
+        const file = IOUtils.openFileForSyncReading(path)
+        const chunkSize = 64
+        const bytes = new Uint8Array(chunkSize)
+        let bytesRead
+        let text = ''
+        const decoder = new TextDecoder('utf-8')
+        do {
+          bytesRead = file.readBytesInto(bytes, chunkSize)
+          const chunk = bytes.subarray(0, bytesRead)
+          text += decoder.decode(chunk)
+        } while (bytesRead === chunkSize)
+        file.close()
+        dump(`getContents ${path} return\n`)
+        return text
       }
-      catch (err) {
-        dump(`getContents load: ${err}\n`)
-        // in Zotero 7 we can't check sync for file existence
-        return null
-      }
-
-      try {
+      else {
+        if (!OS.File.exists(path)) return null
+        const bytes = <ArrayBuffer>OS.File.read(path)
         const decoder = new TextDecoder()
-        dump('getContents return\n')
+        dump(`getContents ${path} return\n`)
         return decoder.decode(bytes as BufferSource)
       }
-      catch (err) {
-        dump(`getContents decode: ${err}\n`)
-        // in Zotero 7 we can't check sync for file existence
-        return null
-      }
+    }
+    catch (err) {
+      dump(`getContents ${path} error ${err}\n`)
+      return null
     }
     finally {
-      dump('getContents out\n')
+      dump(`getContents ${path} out\n`)
     }
   }
 
