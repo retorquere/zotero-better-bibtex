@@ -1,5 +1,7 @@
 /* eslint-disable prefer-rest-params */
 
+require('array.prototype.flatmap/auto')
+
 import { Shim } from './os'
 import { is7 } from './client'
 const $OS = is7 ? Shim : OS
