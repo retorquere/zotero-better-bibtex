@@ -4,6 +4,10 @@ import type { Reason } from './bootstrap'
 import { log } from './logger'
 import { Preference } from './prefs'
 
+import { Shim } from './os'
+import { is7 } from './client'
+const $OS = is7 ? Shim : OS
+
 type Handler = (reason: Reason, task?: Task) => void | string | Promise<void | string>
 
 import { print } from './logger'
@@ -298,7 +302,7 @@ export class Orchestrator {
       </project>
     `
 
-    Zotero.File.putContents(Zotero.File.pathToFile(OS.Path.join(Zotero.BetterBibTeX.dir, `${phase}.gan`)), gantt)
+    Zotero.File.putContents(Zotero.File.pathToFile($OS.Path.join(Zotero.BetterBibTeX.dir, `${phase}.gan`)), gantt)
   }
 
   public async startup(reason: Reason, progress?: Progress): Promise<void> {

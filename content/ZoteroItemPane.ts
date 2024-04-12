@@ -86,17 +86,17 @@ export class ZoteroItemPane {
       this.unload()
     })
 
-    $patch$(itemBox.__proto__, 'refresh', original => function() {
-      // eslint-disable-next-line prefer-rest-params
-      original.apply(this, arguments)
+    if (!is7) {
+      $patch$(itemBox.__proto__, 'refresh', original => function() {
+        // eslint-disable-next-line prefer-rest-params
+        original.apply(this, arguments)
 
-      if (!this.item) {
-        // why is it refreshing if there is no item?!
-        log.debug('itemBox.refresh without an item')
-        return
-      }
+        if (!this.item) {
+          // why is it refreshing if there is no item?!
+          log.debug('itemBox.refresh without an item')
+          return
+        }
 
-      if (!is7) {
         const menuid = 'zotero-field-transform-menu-better-sentencecase'
         let menuitem = this.ownerDocument.getElementById(menuid)
         const menu = this.ownerDocument.getElementById('zotero-field-transform-menu')
@@ -110,18 +110,18 @@ export class ZoteroItemPane {
             },
           }))
         }
-      }
 
-      const { citationKey, pinned } = Zotero.BetterBibTeX.KeyManager.get(this.item.id)
-      const label = this.parentNode.querySelector('#better-bibtex-citekey-label')
-      const value = this.parentNode.querySelector('#better-bibtex-citekey-display')
-      if (!value) return // merge pane uses itembox
+        const { citationKey, pinned } = Zotero.BetterBibTeX.KeyManager.get(this.item.id)
+        const label = this.parentNode.querySelector('#better-bibtex-citekey-label')
+        const value = this.parentNode.querySelector('#better-bibtex-citekey-display')
+        if (!value) return // merge pane uses itembox
 
-      label.hidden = value.hidden = !citationKey
+        label.hidden = value.hidden = !citationKey
 
-      label.value = `${pinned ? icons.pin : ''}${l10n.localize('better-bibtex_item-pane_citekey')}`
-      value.value = citationKey
-    })
+        label.value = `${pinned ? icons.pin : ''}${l10n.localize('better-bibtex_item-pane_citekey')}`
+        value.value = citationKey
+      })
+    }
   }
 
   public unload(): void {

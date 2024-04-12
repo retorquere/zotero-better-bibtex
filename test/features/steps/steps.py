@@ -62,16 +62,20 @@ def step_impl(context, value):
 
 @when(u'I create preference override {value}')
 def step_impl(context, value):
-  value = json.loads(value)
-  assert value.startswith('~/'), value
-  value = os.path.join(context.tmpDir, value[2:])
-  with open(value, 'w') as f:
+  override = json.loads(value)
+  assert override.startswith('~/'), override
+  override = os.path.join(context.tmpDir, override[2:])
+  with open(override, 'w') as f:
     json.dump({'override': { 'preferences': {} }}, f)
-  context.preferenceOverride = value
+  context.preferenceOverride = override
 
 @when(u'I remove preference override {value}')
 def step_impl(context, value):
-  os.remove(context.preferenceOverride)
+  override = json.loads(value)
+  assert override.startswith('~/'), override
+  override = os.path.join(context.tmpDir, override[2:])
+  assert override == context.preferenceOverride, [ override, context.preferenceOverride ]
+  os.remove(override)
 
 @step('I set preference override {pref} to {value}')
 def step_impl(context, pref, value):
@@ -339,7 +343,16 @@ def step_impl(context):
 @when(u'I merge the selected items')
 def step_impl(context):
   assert len(context.selected) > 1
-  context.zotero.execute('return await Zotero.BetterBibTeX.TestSupport.merge(selected)', selected=context.selected)
+  context.zotero.execute('''
+    try {
+      return await Zotero.BetterBibTeX.TestSupport.merge(selected)
+    } catch (err) {
+      Zotero.debug('oops on merge')
+      Zotero.debug(`${err}`)
+      Zotero.debug(err.stack)
+      throw err
+    }
+  ''', selected=context.selected)
 
 @when(u'I empty the trash')
 def step_impl(context):

@@ -1,5 +1,9 @@
 Components.utils.import('resource://gre/modules/Services.jsm')
 
+import { Shim } from './os'
+import { is7 } from './client'
+const $OS = is7 ? Shim : OS
+
 import type { XUL } from '../typings/xul'
 
 import { log } from './logger'
@@ -15,7 +19,6 @@ import * as l10n from './l10n'
 import { Events } from './events'
 import { pick } from './file-picker'
 import { flash } from './flash'
-import { is7 } from './client'
 import { icons } from './icons'
 
 // safe to keep "global" since only one pref pane will be loaded at any one time
@@ -124,7 +127,7 @@ class AutoExportPane {
     let label: string = { library: icons.computer, collection: icons.folder }[ae.type]
     label += ` ${this.name(ae, 'short')}`
     label += ` (${Translators.byId[ae.translatorID].label})`
-    const path = ae.path.startsWith(OS.Constants.Path.homeDir) ? ae.path.replace(OS.Constants.Path.homeDir, '~') : ae.path
+    const path = ae.path.startsWith($OS.Constants.Path.homeDir) ? ae.path.replace($OS.Constants.Path.homeDir, '~') : ae.path
     label += ` ${path}`
     return label
   }

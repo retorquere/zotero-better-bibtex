@@ -1,6 +1,10 @@
 declare const Zotero: any
 declare const __estrace: any // eslint-disable-line no-underscore-dangle
 
+import { Shim } from '../../content/os'
+import { is7 } from '../../content/client'
+const $OS = is7 ? Shim : OS
+
 import * as Prefs from '../../gen/preferences/meta'
 const PrefNames: Set<string> = new Set(Object.keys(Prefs.defaults))
 import { client } from '../../content/client'
@@ -200,15 +204,15 @@ class Override {
   }
 
   public override(preference: string, extension: string): boolean {
-    const override = this.orig[`${preference}Override`]
+    const override: string = this.orig[`${preference}Override`]
     if (!this.exportPath || !override) {
       return false
     }
 
     const candidates = [
-      OS.Path.basename(this.exportPath).replace(/\.[^.]+$/, '') + extension,
+      $OS.Path.basename(this.exportPath).replace(/\.[^.]+$/, '') + extension,
       override,
-    ].map(filename => OS.Path.join(this.exportDir, filename))
+    ].map(filename => <string>$OS.Path.join(this.exportDir, filename))
 
     for (const candidate of candidates) {
       Zotero.debug(`better-bibtex: looking for override ${preference} in ${candidate}`)

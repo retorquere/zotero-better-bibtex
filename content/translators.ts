@@ -1,5 +1,9 @@
 /* eslint-disable no-case-declarations, @typescript-eslint/no-unsafe-return */
 
+import { Shim } from './os'
+import { is7 } from './client'
+const $OS = is7 ? Shim : OS
+
 Components.utils.import('resource://gre/modules/Services.jsm')
 
 declare class ChromeWorker extends Worker { }
@@ -20,7 +24,6 @@ import { $and } from './db/loki'
 import { Events } from './events'
 import { Pinger } from './ping'
 import Puqeue from 'puqeue'
-import { is7 } from './client'
 import { orchestrator } from './orchestrator'
 import type { Reason } from './bootstrap'
 import { headers as Headers, byLabel, byId, bySlug } from '../gen/translators'
@@ -249,7 +252,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     const displayOptions = {
       ...this.displayOptions(job.translatorID, job.displayOptions),
       exportPath: job.path || undefined,
-      exportDir: job.path ? OS.Path.dirname(job.path) : undefined,
+      exportDir: job.path ? $OS.Path.dirname(job.path) : undefined,
     }
 
     const translator = this.byId[job.translatorID]
