@@ -390,12 +390,12 @@ export class Entry {
   }
 
   /** normalize dashes, mainly for use in `pages` */
-  public normalizeDashes(str): string {
-    str = (str || '').trim()
+  public normalizeDashes(ranges: string): string {
+    ranges = (ranges || '').trim()
 
-    if (this.item.raw) return str
+    if (this.item.raw) return ranges
 
-    return str
+    return ranges
       .replace(/\u2053/g, '~')
       .replace(/[\u2014\u2015]/g, '---') // em-dash
       .replace(/[\u2012\u2013]/g, '--') // en-dash
@@ -1514,9 +1514,9 @@ export class Entry {
     }
   }
 
-  private unique_chars(str) {
+  private unique_chars(bag: string): string {
     let uniq = ''
-    for (const c of str) {
+    for (const c of bag) {
       if (uniq.indexOf(c) < 0) uniq += c
     }
     return uniq

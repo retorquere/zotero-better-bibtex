@@ -127,10 +127,10 @@ export async function doImport(): Promise<void> {
         if (err.column) item.note += `, column ${err.column}`
         item.note += ': '
       }
-      item.note += escape.html(err.message)
-      if (err.source) {
-        item.note += `<pre>${escape.html(err.source)}</pre>`
-        Zotero.debug(`import error: ${err.message}\n>>>\n${err.source}\n<<<`)
+      item.note += escape.html(err.error)
+      if (err.input) {
+        Zotero.debug(`import error: ${err.error}\n>>>\n${err.input}\n<<<`)
+        item.note += `<pre>${escape.html(err.input)}</pre>`
       }
       item.note += '</li>'
     }

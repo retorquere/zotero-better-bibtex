@@ -103,6 +103,7 @@
     "puqeue": "^1.1.4",
     "remeda": "^1.58.1",
     "sprintf-js": "^1.1.3",
+    "string.prototype.matchall": "^4.0.11",
     "tar-js": "^0.3.0",
     "text-title-case": "^1.0.2",
     "title": "^3.5.3",

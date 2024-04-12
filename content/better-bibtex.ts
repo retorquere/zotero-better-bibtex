@@ -1,6 +1,7 @@
 /* eslint-disable prefer-rest-params */
 
 require('array.prototype.flatmap/auto')
+require('string.prototype.matchall/auto')
 
 import { Shim } from './os'
 import { is7 } from './client'

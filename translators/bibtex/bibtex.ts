@@ -876,7 +876,7 @@ export class ZoteroItem {
       }
 
       // eslint-disable-next-line no-control-regex, @typescript-eslint/no-unsafe-return
-      const parts = record.split(':').map(str => str.replace(/[\u0011\u0012\u0013]/g, escaped => replace[escaped]))
+      const parts = record.split(':').map(part => part.replace(/[\u0011\u0012\u0013]/g, escaped => replace[escaped]))
       switch (parts.length) {
         case 1:
           att.path = parts[0]
@@ -1295,6 +1295,7 @@ export class ZoteroItem {
           if (this.$note(value, 'note')) continue
         }
 
+        log.debug('parsing', { field, value })
         if (this[`$${field}`]?.(value, field)) continue
 
         switch (field) {
