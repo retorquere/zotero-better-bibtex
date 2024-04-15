@@ -2,9 +2,13 @@
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "options": {},
+    "options": {
+      "Items": true,
+      "Preferences": true,
+      "exportNotes": true
+    },
     "preferences": {
-      "citekeyFormat": "[auth][year]"
+      "citekeyFormat": "auth + year"
     }
   },
   "items": [
@@ -37,7 +41,7 @@
       "place": "New York, NY, USA",
       "publicationTitle": "Proceedings of the 7th international conference on principles and practice of programming in java",
       "publisher": "ACM",
-      "series": "PPPJ '09",
+      "series": "Pppj '09",
       "tags": [
         {
           "tag": "calling context tree"
