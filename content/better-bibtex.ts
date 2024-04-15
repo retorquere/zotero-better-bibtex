@@ -1,9 +1,9 @@
 /* eslint-disable prefer-rest-params */
 
-// import flatMapShim from 'array.prototype.flatmap'
-// if (!Array.prototype.flatMap) flatMapShim()
-// import matchAllShim from 'string.prototype.matchall'
-// if (!String.prototype.matchAll) matchAllShim()
+import flatMap from 'array.prototype.flatmap'
+flatMap.shim()
+import matchAll from 'string.prototype.matchall'
+matchAll.shim()
 
 import { Shim } from './os'
 import { is7 } from './client'

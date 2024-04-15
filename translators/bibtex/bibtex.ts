@@ -1078,7 +1078,7 @@ export class ZoteroItem {
 
   protected $series(value: string): boolean { return this.set('series', value) }
   protected $collection(value: string): boolean {
-    return this.bibtex.fields.series ? (this.bibtex.fields.series[0].toLowerCase() === value.toLowerCase()) : this.$series(value)
+    return this.bibtex.fields.series ? (this.bibtex.fields.series.toLowerCase() === value.toLowerCase()) : this.$series(value)
   }
 
   // horrid jabref 3.8+ groups format
@@ -1300,7 +1300,6 @@ export class ZoteroItem {
       conference: 'conferenceName',
     }
 
-
     if (this.item.itemType === 'patent' && this.bibtex.fields.type) {
       this.patentNumberPrefix = {
         patent: '',
@@ -1310,7 +1309,7 @@ export class ZoteroItem {
         patentdede: 'DE',
         patentde: 'DE',
         patentfr: 'FR',
-      }[this.bibtex.fields.type[0].toLowerCase()] || ''
+      }[this.bibtex.fields.type.toLowerCase()] || ''
     }
 
     const urls: Set<string> = new Set
