@@ -1,5 +1,10 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions, @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-assignment */
 
+import flatMap from 'array.prototype.flatmap'
+flatMap.shim()
+import matchAll from 'string.prototype.matchall'
+matchAll.shim()
+
 declare const IOUtils: any
 
 import { Shim } from '../os'
