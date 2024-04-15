@@ -93,7 +93,7 @@ export async function doImport(): Promise<void> {
   let imported = 0
   let id = 0
   for (const bibtex of bib.entries) {
-    await Zotero.Promise.delay(100)
+    await new Promise(resolve => setTimeout(resolve, 100))
     if (bibtex.key && whitelist && !whitelist.includes(bibtex.key.toLowerCase())) continue
 
     id++
