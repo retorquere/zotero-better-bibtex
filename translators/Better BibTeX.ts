@@ -1,5 +1,6 @@
 import { Translation, collect } from './lib/translator'
 import type { Translators } from '../typings/translators.d.ts'
+import type { ParseError } from '@retorquere/bibtex-parser'
 
 declare const Zotero: any
 declare var ZOTERO_TRANSLATOR_INFO: Translators.Header // eslint-disable-line no-var
@@ -82,7 +83,7 @@ export async function doImport(): Promise<void> {
   if (translation.preferences.strings && translation.preferences.importBibTeXStrings) input = `${translation.preferences.strings}\n${input}`
 
   const bib = await Zotero.BetterBibTeX.parseBibTeX(input, translation)
-  const errors = bib.errors
+  const errors: ParseError[] = bib.errors
 
   const whitelist = bib.comments
     .filter((comment: string) => comment.startsWith('zotero-better-bibtex:whitelist:'))
@@ -106,7 +107,7 @@ export async function doImport(): Promise<void> {
     }
     catch (err) {
       Zotero.debug('bbt import error:', err)
-      errors.push({ message: err.message })
+      errors.push({ error: err.message, input: '' })
     }
 
     imported += 1
@@ -120,13 +121,9 @@ export async function doImport(): Promise<void> {
   if (errors.length) {
     const item = new Zotero.Item('note')
     item.note = 'Import errors found: <ul>'
+    Zotero.debug(`import errors: ${JSON.stringify(errors)}`)
     for (const err of errors) {
       item.note += '<li>'
-      if (err.line) {
-        item.note += `line ${err.line}`
-        if (err.column) item.note += `, column ${err.column}`
-        item.note += ': '
-      }
       item.note += escape.html(err.error)
       if (err.input) {
         Zotero.debug(`import error: ${err.error}\n>>>\n${err.input}\n<<<`)

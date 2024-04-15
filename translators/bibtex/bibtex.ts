@@ -420,17 +420,37 @@ export function generateBibTeX(translation: Translation): void {
   translation.bibtex.complete()
 }
 
-const importJabRef = new class {
+const importJabRef = new class JabRefDefaults {
+  public unabbrev: Record<string, string> = {}
   public strings = ''
 
   private loaded = {
+    unabbrev: false,
     strings: false,
   }
 
   load(translation: Translation) {
-    if (!this.loaded.strings && translation.preferences.importJabRefStrings) {
-      this.strings = Zotero.File.getContentsFromURL('chrome://zotero-better-bibtex/content/resource/bibtex/strings.bib')
-      this.loaded.strings = true
+    const assets = {
+      'strings.bib': translation.preferences.importJabRefStrings,
+      'unabbrev.json': translation.preferences.importJabRefAbbreviations,
+    }
+
+    for (const [ asset, enabled ] of Object.entries(assets)) {
+      if (!enabled) continue
+      const cache = asset.split('.')[0]
+      if (this.loaded[cache]) continue
+
+      const data = Zotero.File.getContentsFromURL(`chrome://zotero-better-bibtex/content/resource//bibtex/${asset}`)
+      switch (cache) {
+        case 'unabbrev':
+          Object.assign(this[cache], JSON.parse(data))
+          break
+        case 'strings':
+          this[cache] = data
+          break
+      }
+
+      this.loaded[cache] = true
     }
   }
 }
@@ -442,11 +462,10 @@ export async function parseBibTeX(input: string, translation: Translation): Prom
 
   return await parse(input, {
     // we are actually sure it's a valid enum value; stupid workaround for TS2322: Type 'string' is not assignable to type 'boolean | "as-needed" | "strict"'.
-    caseProtection: (translation.preferences.importCaseProtection as 'as-needed'),
     unsupported: (node, tex, _entry) => {
       switch (translation.preferences.importUnknownTexCommand) {
         case 'tex':
-          return tex
+          return `<script>${tex}</script>`
         case 'text':
           return node.type === 'macro' ? node.content : tex
         case 'ignore':
@@ -455,15 +474,16 @@ export async function parseBibTeX(input: string, translation: Translation): Prom
           return tex
       }
     },
+    english: translation.preferences.importSentenceCase !== 'off',
     sentenceCase: {
-      langids: translation.preferences.importSentenceCase !== 'off',
       guess: translation.preferences.importSentenceCase === 'on+guess',
       preserveQuoted: !translation.preferences.importSentenceCaseQuoted,
     },
+    caseProtection: (translation.preferences.importCaseProtection as 'as-needed'),
     verbatimFields: translation.verbatimFields,
     raw: translation.preferences.rawImports,
-    unabbreviations: translation.preferences.importJabRefAbbreviations,
     strings: importJabRef.strings,
+    removeOuterBraces: [ 'doi', 'publisher', 'location', 'title', 'booktitle' ],
   })
 }
 
@@ -541,6 +561,10 @@ export class ZoteroItem {
       return true
     }
     return false
+  }
+
+  protected $crossref(): boolean {
+    return true
   }
 
   protected $title(): boolean {
@@ -679,9 +703,11 @@ export class ZoteroItem {
   protected $journaltitle(): boolean {
     let journal: { field: string, value: string}, abbr: { field: string, value: string} = null
 
+    const unpack = (v: string | string[]): string => Array.isArray(v) ? v[0] : (v || '')
+
     // journal-full is bibdesk
     const titles = [ 'journal-full', 'journal', 'journaltitle', 'shortjournal' ].map(field => {
-      const value = this.bibtex.fields[field]?.[0] || ''
+      const value = unpack(this.bibtex.fields[field])
       delete this.bibtex.fields[field] // this makes sure we're not ran again
       return { field, value }
     })
@@ -715,8 +741,32 @@ export class ZoteroItem {
         return true
       })
 
+    // the remainer goes to the `extra` field
     for (const candidate of titles) {
       this.extra.push(`tex.${candidate.field}: ${candidate.value}`)
+    }
+
+    const resolve = (a: string): string => {
+      if (!importJabRef.unabbrev) return ''
+
+      a = a.toUpperCase()
+      let j: string
+
+      if (j = importJabRef.unabbrev[a]) return j
+
+      const m = a.match(/(.*)(\s+\S*\d\S*)$/)
+      if (m && (j = importJabRef.unabbrev[m[1]])) return `${j}${m[2]}`
+
+      return ''
+    }
+
+    let resolved: string
+    if (abbr && !journal && (resolved = resolve(abbr.value))) {
+      journal = { field: '', value: resolved }
+    }
+    else if (journal && !abbr && (resolved = resolve(journal.value))) {
+      abbr = { ...journal }
+      journal = { field: '', value: resolved }
     }
 
     if (journal) {
@@ -738,7 +788,7 @@ export class ZoteroItem {
       else if (!this.extra.find(line => line.startsWith('Journal abbreviation:'))) {
         this.extra.push(`Journal abbreviation: ${abbr.value}`)
       }
-      else {
+      else if (abbr.field) {
         this.extra.push(`tex.${abbr.field}: ${abbr.value}`)
       }
     }
@@ -774,7 +824,7 @@ export class ZoteroItem {
       if (typeof data === 'string') {
         tags.push(...(data.split(/\s*[,;]\s*/)))
       }
-      else {
+      else if (data) {
         tags.push(...data)
       }
     }
@@ -1124,7 +1174,7 @@ export class ZoteroItem {
       this.item.itemType === 'book'
       && this.bibtex.fields.title?.length
       && this.bibtex.fields.booktitle?.length
-      && !this.bibtex.crossref.donated.includes('booktitle')) this.item.itemType = 'bookSection'
+      && !this.bibtex.crossref?.donated.includes('booktitle')) this.item.itemType = 'bookSection'
 
     if (
       this.item.itemType === 'journalArticle'
@@ -1265,7 +1315,7 @@ export class ZoteroItem {
 
     const urls: Set<string> = new Set
     for (let [field, values] of Object.entries(this.bibtex.fields)) {
-      if (!Array.isArray(values)) values = [ values ]
+      if (typeof values === 'string') values = [ values ]
 
       for (const value of values) {
         if (typeof value !== 'string') {
@@ -1273,7 +1323,7 @@ export class ZoteroItem {
           continue
         }
 
-        if (field.match(/^(local-zo-url-[0-9]+|file-[0-9]+)$/)) {
+        if (field.match(/^(local-zo-url-[0-9]+|file-[0-9]+)$/) || field.match(/^file[+]duplicate-\s+$/)) {
           if (this.$file(value)) continue
         }
         else if (field.match(/^(bdsk-url-[0-9]+|url|howpublished|remote-url)$/)) {
@@ -1295,7 +1345,6 @@ export class ZoteroItem {
           if (this.$note(value, 'note')) continue
         }
 
-        log.debug('parsing', { field, value })
         if (this[`$${field}`]?.(value, field)) continue
 
         switch (field) {

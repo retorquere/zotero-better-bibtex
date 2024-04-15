@@ -985,7 +985,10 @@ export class Entry {
     const encoded = []
     for (const creator of f.value) {
       let name
-      if (creator.name || (creator.lastName && (creator.fieldMode === 1))) {
+      if (creator.name && raw) {
+        name = creator.name
+      }
+      else if (creator.name || (creator.lastName && (creator.fieldMode === 1))) {
         name = creator.name || creator.lastName
         if (name !== 'others') name = raw ? `{${name}}` : this.enc_literal({value: new String(this._enc_creators_scrub_name(name))}) // eslint-disable-line no-new-wrappers
 

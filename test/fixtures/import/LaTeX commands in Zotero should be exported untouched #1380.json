@@ -2,10 +2,13 @@
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "localeDateOrder": "ymd",
-    "options": {},
+    "options": {
+      "Items": true,
+      "Preferences": true,
+      "exportNotes": true
+    },
     "preferences": {
-      "citekeyFormat": "[auth][year]",
+      "citekeyFormat": "auth + year",
       "rawImports": true
     }
   },
@@ -16,38 +19,31 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "Frank",
-          "lastName": "Mittelbach"
+          "name": "Mittelbach, Frank"
         },
         {
           "creatorType": "author",
-          "firstName": "Michel",
-          "lastName": "Goossens"
+          "name": "Goossens, Michel"
         },
         {
           "creatorType": "translator",
-          "firstName": "Jacques",
-          "lastName": "Andr\\'e"
+          "name": "Andr\\'e, Jacques"
         },
         {
           "creatorType": "translator",
-          "firstName": "Beno\u00eet",
-          "lastName": "Bellet"
+          "name": "Bellet, Beno\u00eet"
         },
         {
           "creatorType": "translator",
-          "firstName": "Jean-C\u00f4me",
-          "lastName": "Charpentier"
+          "name": "Charpentier, Jean-C\u00f4me"
         },
         {
           "creatorType": "translator",
-          "firstName": "Jean-Michel",
-          "lastName": "Hufflen"
+          "name": "Hufflen, Jean-Michel"
         },
         {
           "creatorType": "translator",
-          "firstName": "Yves",
-          "lastName": "Soulet"
+          "name": "Soulet, Yves"
         }
       ],
       "date": "2006-02",

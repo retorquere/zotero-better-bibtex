@@ -1,4 +1,6 @@
 export function html(str: string): string {
+  // eslint-disable-next-line no-caller
+  // if (typeof str === 'undefined') Zotero.debug(`${arguments.callee.caller.name} do not pass undefined! ${(new Error('stacktrace')).stack}`)
   const entity = {
     '&': '&amp;',
     '<': '&lt;',

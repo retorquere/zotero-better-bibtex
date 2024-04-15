@@ -3,6 +3,8 @@
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "options": {
+      "Items": true,
+      "Preferences": true,
       "exportNotes": true
     },
     "preferences": {
@@ -57,7 +59,7 @@
       "publicationTitle": "Logics in artificial intelligence",
       "publisher": "Springer Berlin Heidelberg",
       "series": "Lecture notes in computer science",
-      "title": "Z-log: Applying system-Z",
+      "title": "Z-log: Applying system-z",
       "url": "http://dx.doi.org/10.1007/3-540-45757-7_52",
       "volume": "2424"
     }
