@@ -1314,6 +1314,7 @@ export class ZoteroItem {
 
     const urls: Set<string> = new Set
     for (let [field, values] of Object.entries(this.bibtex.fields)) {
+      if (Array.isArray(values) && this.bibtex.mode[field] === 'literallist') values = values.join(' and ')
       if (typeof values === 'string') values = [ values ]
 
       for (const value of values) {

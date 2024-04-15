@@ -680,7 +680,6 @@ class XHTML extends BaseASTWalker {
 
     let style: string
     switch (node.name) {
-     switch (node.name) {
       case'image':
         style = node.attrs.filter(a => a.name === 'height' || a.name === 'width').map(a => `${a.name}:${a.val}`).join(';')
         if (style) node.attrs.push({ name: 'style', val: JSON.stringify(style), mustEscape: false })
