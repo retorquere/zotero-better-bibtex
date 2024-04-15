@@ -1323,7 +1323,7 @@ export class ZoteroItem {
           continue
         }
 
-        if (field.match(/^(local-zo-url-[0-9]+|file-[0-9]+)$/) || field.match(/^file[+]duplicate-\s+$/)) {
+        if (field.match(/^(local-zo-url-[0-9]+|file-[0-9]+)$/) || field.match(/^file[+]duplicate-\d+$/)) {
           if (this.$file(value)) continue
         }
         else if (field.match(/^(bdsk-url-[0-9]+|url|howpublished|remote-url)$/)) {
