@@ -1318,6 +1318,8 @@ export class ZoteroItem {
       if (typeof values === 'string') values = [ values ]
 
       for (const value of values) {
+        if (this.bibtex.mode[field] === 'creatorlist' && this[`$${field}`]?.(value, field)) continue
+
         if (typeof value !== 'string') {
           errors.push({ error: `unexpected value ${JSON.stringify(value)} for ${field}`, input: JSON.stringify(value) })
           continue
