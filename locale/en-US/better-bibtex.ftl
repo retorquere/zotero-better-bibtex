@@ -30,12 +30,19 @@ better-bibtex_error-report_enable-debug = Zotero debug logging is currently disa
 better-bibtex_error-report_errors = 
   .label = Errors
 
+better-bibtex_error-report_include-errors = 
+  .label = Include error messages
+better-bibtex_error-report_include-log = 
+  .label = Include debug log
 better-bibtex_error-report_include-cache = 
-  .label = Include cache
+  .label = Include items
+better-bibtex_error-report_include-notes = 
+  .label = notes
+better-bibtex_error-report_include-attachments = 
+  .label = attachment metadata
 
 better-bibtex_error-report_items = 
   .label = Items
-
 
 better-bibtex_error-report_not-reviewed = Debug logs cannot be reviewed unless referred to in the GitHub issue tracker by their ID.
 

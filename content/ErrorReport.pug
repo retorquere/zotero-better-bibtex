@@ -27,22 +27,28 @@ wizard#better-bibtex-error-report(
     textbox#better-bibtex-report-latest.plain.textbox-emph(flex='1' readonly='true')
     textbox#better-bibtex-report-oom.plain.textbox-emph(hidden='true' flex='1' multiline='true' readonly='true' value='&better-bibtex_error-report_better-bibtex_oom.value;')
     textbox#better-bibtex-report-cache.plain(flex='1' readonly='true')
-    checkbox#better-bibtex-error-report-include-db(label='&better-bibtex_error-report_include-cache.label;')/
-    tabbox.debug-on(flex='1')
+    checkbox#better-bibtex-error-report-include-errors(label='&better-bibtex_error-report_include-errors.label;')/
+    checkbox#better-bibtex-error-report-include-log(label='&better-bibtex_error-report_include-log.label;')/
+    hbox
+      checkbox#better-bibtex-error-report-include-items(label='&better-bibtex_error-report_include-cache.label;')/
+      checkbox#better-bibtex-error-report-include-notes(label='&better-bibtex_error-report_include-notes.label;')/
+      checkbox#better-bibtex-error-report-include-attachments(label='&better-bibtex_error-report_include-attachments.label;')/
+      hbox(flex='1')
+    tabbox.debug-on(flex='10')
       tabs
-        tab(label='&better-bibtex_error-report_context.label;')/
-        tab(label='&better-bibtex_error-report_errors.label;')/
-        tab(label='&better-bibtex_error-report_debug.label;')/
-        tab#better-bibtex-error-tab-items(label='&better-bibtex_error-report_items.label;')/
+        tab#better-bibtex-error-context-tab(label='&better-bibtex_error-report_context.label;')/
+        tab#better-bibtex-error-errors-tab(label='&better-bibtex_error-report_errors.label;')/
+        tab#better-bibtex-error-log-tab(label='&better-bibtex_error-report_debug.label;')/
+        tab#better-bibtex-error-items-tab(label='&better-bibtex_error-report_items.label;')/
       tabpanels
         tabpanel(orient='vertical')
-          textbox#better-bibtex-error-context.plain(readonly='true' multiline='true' flex='1' style='min-height: 8em;')
+          textbox#better-bibtex-error-context.plain(readonly='true' multiline='true' flex='10' style='min-height: 8em;')
         tabpanel(orient='vertical')
-          textbox#better-bibtex-error-errors.plain(readonly='true' multiline='true' flex='1' style='min-height: 8em;')
+          textbox#better-bibtex-error-errors.plain(readonly='true' multiline='true' flex='10' style='min-height: 8em;')
         tabpanel(orient='vertical')
-          textbox#better-bibtex-error-debug.plain(readonly='true' multiline='true' flex='1' style='min-height: 8em;')
+          textbox#better-bibtex-error-log.plain(readonly='true' multiline='true' flex='10' style='min-height: 8em;')
         tabpanel(orient='vertical')
-          textbox#better-bibtex-error-items.plain(readonly='true' multiline='true' flex='1' style='min-height: 8em;')
+          textbox#better-bibtex-error-items.plain(readonly='true' multiline='true' flex='10' style='min-height: 8em;')
     hbox
       button(label='&better-bibtex_error-report_save.label;' oncommand='window.ErrorReport.save()')/
       hbox(flex='1')/

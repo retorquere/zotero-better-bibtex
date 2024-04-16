@@ -54,12 +54,26 @@ export class ErrorReport {
   private bucket: string
   private cacheState: string
 
-  private errorlog: {
-    info: string
+  private input: {
+    context: string
     errors: string
-    debug: string
+    log: string
     items?: string
     acronyms?: string
+  }
+  private report: {
+    context: string
+    errors: string
+    log: string
+    items?: string
+    acronyms?: string
+  }
+  private config: {
+    errors: boolean
+    log: boolean
+    items: boolean
+    notes: boolean
+    attachments: boolean
   }
 
   public async send(): Promise<void> {
@@ -93,7 +107,7 @@ export class ErrorReport {
     }
     catch (err) {
       log.error('failed to submit', this.key, err)
-      alert({ text: `${err} (${this.key}, items: ${!!this.errorlog.items})`, title: Zotero.getString('general.error') })
+      alert({ text: `${err} (${this.key}, items: ${!!this.report.items})`, title: Zotero.getString('general.error') })
       if (wizard.rewind) wizard.rewind()
     }
   }
@@ -141,20 +155,14 @@ export class ErrorReport {
     const tape = new Tar
     let out: Uint8Array
 
-    out = tape.append(`${this.key}/debug.txt`, [
-      this.errorlog.info,
-      this.cacheState,
-      this.errorlog.errors,
-      this.errorlog.debug,
-    ].filter(chunk => chunk).join('\n\n'))
+    out = tape.append(`${this.key}/debug.txt`, this.report.log)
 
-    if (this.errorlog.items) out = tape.append(`${this.key}/items.json`, this.errorlog.items)
-    if (this.errorlog.acronyms) out = tape.append(`${this.key}/acronyms.csv`, this.errorlog.acronyms)
-
-    if ((<HTMLInputElement>this.document.getElementById('better-bibtex-error-report-include-db')).checked) {
+    if (this.report.items) {
+      out = tape.append(`${this.key}/items.json`, this.report.items)
       out = tape.append(`${this.key}/database.json`, JSON.stringify(KeyManager.all()))
       out = tape.append(`${this.key}/cache.json`, Cache.serialize({ serializationMethod: 'pretty' }))
     }
+    if (this.report.acronyms) out = tape.append(`${this.key}/acronyms.csv`, this.report.acronyms)
 
     return gzip(out)
   }
@@ -171,7 +179,12 @@ export class ErrorReport {
   }
 
   private setValue(id: string, value: string) {
-    (<HTMLInputElement>this.document.getElementById(id)).value = value
+    const text = <HTMLInputElement>this.document.getElementById(id)
+    text.value = value
+    text.hidden = !value
+
+    const tab = <HTMLInputElement>this.document.getElementById(`${id}-tab`)
+    if (tab) tab.hidden = !value
   }
 
   private errors(): string {
@@ -190,6 +203,9 @@ export class ErrorReport {
   }
 
   private cleanItem(item: any) {
+    if (!this.config.attachments && item.itemType === 'attachment') return false
+    if (!this.config.notes && item.itemType === 'note') return false
+
     delete item.libraryID
     delete item.uri
     delete item.relations
@@ -207,11 +223,67 @@ export class ErrorReport {
       delete creator.multi
     }
 
-    if (item.attachments) {
-      for (const att of item.attachments) {
-        this.cleanItem(att)
+    for (const details of ['attachments', 'notes']) {
+      if (item[details]) {
+        item[details] = item[details].filter(detail => this.cleanItem(detail))
       }
     }
+
+    return true
+  }
+
+  private reload() {
+    const init = typeof this.config === 'undefined'
+    this.config = {
+      errors: false,
+      log: false,
+      items: false,
+      notes: false,
+      attachments: false,
+    }
+    for (const facet of ['errors', 'log', 'items', 'attachments', 'notes']) { // atts & notes after items
+      const cb = <HTMLInputElement>this.document.getElementById(`better-bibtex-error-report-include-${facet}`)
+      if (init) cb.checked = true
+      this.config[facet] = cb.checked
+      if (facet === 'notes' || facet === 'attachments') cb.disabled = !this.config.items
+    }
+    log.debug('error report reload:', { init }, this.config)
+
+    this.report = {...this.input}
+
+    if (!this.config.items) delete this.report.items
+    if (this.report.items) {
+      const lib = JSON.parse(this.report.items)
+
+      if (lib.items) lib.items = lib.items.filter(item => this.cleanItem(item))
+
+      delete lib.config.options
+
+      if (lib.config.preferences) {
+        for (const [pref, value] of Object.entries(lib.config.preferences)) {
+          if (!supported.includes(pref) || value === defaults[pref]) delete lib.config.preferences[pref]
+        }
+      }
+
+      this.report.items = JSON.stringify(lib, null, 2)
+    }
+
+    if (!this.config.errors) delete this.report.errors
+    if (!this.config.log) delete this.report.log
+
+    this.setValue('better-bibtex-error-context', this.report.context)
+    this.setValue('better-bibtex-error-errors', this.report.errors || '')
+    this.setValue('better-bibtex-error-log', this.preview(this.report.log || ''))
+    this.setValue('better-bibtex-error-items', this.preview(this.report.items || ''))
+
+    this.setValue('better-bibtex-report-cache', this.cacheState = l10n.localize('better-bibtex_error-report_better-bibtex_cache', Cache.state()))
+
+    this.report.log = [
+      this.report.context,
+      this.cacheState,
+      this.report.errors,
+      this.report.log,
+    ].filter(chunk => chunk).join('\n\n')
   }
 
   public async load(win: Window & { ErrorReport: ErrorReport, arguments: any[] }): Promise<void> {
@@ -225,46 +297,26 @@ export class ErrorReport {
     wizard.getPageById('page-review').addEventListener('pageshow', this.show.bind(this))
     wizard.getPageById('page-send').addEventListener('pageshow', () => { this.send().catch(err => log.debug('could not send debug log:', err)) })
     wizard.getPageById('page-done').addEventListener('pageshow', this.show.bind(this))
+    for (const facet of ['errors', 'log', 'items', 'notes', 'attachments']) {
+      (<HTMLInputElement>this.document.getElementById(`better-bibtex-error-report-include-${facet}`)).addEventListener('command', this.reload.bind(this))
+    }
 
     wizard.pageIndex = Zotero.Debug.storing ? 1 : 0
 
     const continueButton = wizard.getButton('next')
     continueButton.disabled = true
 
-    this.errorlog = {
-      info: await this.info(),
+    this.input = {
+      context: await this.context(),
       errors: `${Zotero.BetterBibTeX.outOfMemory}\n${this.errors()}`.trim(),
       // # 1896
-      debug: Zotero.Debug.getConsoleViewerOutput().slice(-500000).join('\n'),
+      log: Zotero.Debug.getConsoleViewerOutput().slice(-500000).join('\n'),
       items: win.arguments[0].wrappedJSObject.items,
     }
-
-    if (this.errorlog.items) {
-      log.debug('ITEMS::', this.errorlog.items)
-      const lib = JSON.parse(this.errorlog.items)
-
-      for (const item of (lib.items || [])) {
-        this.cleanItem(item)
-      }
-
-      if (lib.config.preferences) {
-        for (const [pref, value] of Object.entries(lib.config.preferences)) {
-          if (!supported.includes(pref) || value === defaults[pref]) delete lib.config.preferences[pref]
-        }
-      }
-
-      this.errorlog.items = JSON.stringify(lib, null, 2)
-      log.debug('SCRUBBED::', this.errorlog.items)
-    }
-
     const acronyms = $OS.Path.join(Zotero.BetterBibTeX.dir, 'acronyms.csv')
-    if (await $OS.File.exists(acronyms)) this.errorlog.acronyms = await $OS.File.read(acronyms, { encoding: 'utf-8' }) as unknown as string
+    if (await $OS.File.exists(acronyms)) this.input.acronyms = await $OS.File.read(acronyms, { encoding: 'utf-8' }) as unknown as string
 
-    this.setValue('better-bibtex-error-context', this.errorlog.info)
-    this.setValue('better-bibtex-error-errors', this.errorlog.errors)
-    this.setValue('better-bibtex-error-debug', this.preview(this.errorlog.debug))
-    this.setValue('better-bibtex-error-items', this.preview(this.errorlog.items))
-    this.document.getElementById('better-bibtex-error-tab-items').hidden = !this.errorlog.items
+    this.reload()
 
     const current = require('../gen/version.js')
     this.setValue('better-bibtex-report-current', l10n.localize('better-bibtex_error-report_better-bibtex_current', { version: current }))
@@ -283,11 +335,9 @@ export class ErrorReport {
 
       (<HTMLInputElement>this.document.getElementById('better-bibtex-report-oom')).hidden = !Zotero.BetterBibTeX.outOfMemory
 
-      this.setValue('better-bibtex-report-cache', this.cacheState = l10n.localize('better-bibtex_error-report_better-bibtex_cache', Cache.state()))
-
       const region = await Zotero.Promise.any(Object.keys(s3.region).map(this.ping.bind(this)))
       this.bucket = `https://${s3.bucket}-${region.short}.s3-${region.region}.amazonaws.com${region.tld || ''}`
-      this.key = `${Zotero.Utilities.generateObjectKey()}${this.errorlog.items ? '-refs' : ''}-${region.short}` // eslint-disable-line no-magic-numbers
+      this.key = `${Zotero.Utilities.generateObjectKey()}${this.report.items ? '-refs' : ''}-${region.short}` // eslint-disable-line no-magic-numbers
 
       this.tarball = `${this.key}-${this.timestamp}.tgz`
 
@@ -306,59 +356,59 @@ export class ErrorReport {
   }
 
   // general state of Zotero
-  private async info() {
-    let info = ''
+  private async context() {
+    let context = ''
 
     const appInfo = Components.classes['@mozilla.org/xre/app-info;1'].getService(Components.interfaces.nsIXULAppInfo)
-    info += `Application: ${appInfo.name} (${Zotero.clientName}) ${appInfo.version} ${Zotero.locale}\n`
-    info += `Platform: ${Zotero.platform} ${Zotero.oscpu}\n`
+    context += `Application: ${appInfo.name} (${Zotero.clientName}) ${appInfo.version} ${Zotero.locale}\n`
+    context += `Platform: ${Zotero.platform} ${Zotero.oscpu}\n`
 
     const addons = await Zotero.getInstalledExtensions()
     if (addons.length) {
-      info += 'Addons:\n'
+      context += 'Addons:\n'
       for (const addon of addons) {
-        info += `  ${addon}\n`
+        context += `  ${addon}\n`
       }
     }
 
-    info += 'Settings:\n'
+    context += 'Settings:\n'
     const settings = { default: '', set: '' }
     for (const [key, value] of Object.entries(Preference.all)) {
       settings[value === defaults[key] ? 'default' : 'set'] += `  ${key} = ${JSON.stringify(value)}\n`
     }
     if (settings.default) settings.default = `Settings at default:\n${settings.default}`
-    info += settings.set + settings.default
+    context += settings.set + settings.default
 
     for (const key of ['export.quickCopy.setting']) {
-      info += `  Zotero: ${key} = ${JSON.stringify(Zotero.Prefs.get(key))}\n`
+      context += `  Zotero: ${key} = ${JSON.stringify(Zotero.Prefs.get(key))}\n`
     }
 
     const autoExports = await AutoExport.all()
     if (autoExports.length) {
-      info += 'Auto-exports:\n'
+      context += 'Auto-exports:\n'
       for (const ae of autoExports) {
-        info += `  path: ...${JSON.stringify($OS.Path.split(ae.path).components.pop())}`
+        context += `  path: ...${JSON.stringify($OS.Path.split(ae.path).components.pop())}`
         switch (ae.type) {
           case 'collection':
-            info += ` (${Zotero.Collections.get(ae.id)?.name || '<collection>'})`
+            context += ` (${Zotero.Collections.get(ae.id)?.name || '<collection>'})`
             break
           case 'library':
-            info += ` (${Zotero.Libraries.get(ae.id)?.name || '<library>'})`
+            context += ` (${Zotero.Libraries.get(ae.id)?.name || '<library>'})`
             break
         }
-        info += '\n'
+        context += '\n'
         for (const [k, v] of Object.entries(ae)) {
           if (k === 'path') continue
-          info += `    ${k}: ${JSON.stringify(v)}`
-          if (k === 'translatorID' && byId[v as string]) info += ` (${byId[v as string].label})`
-          info += '\n'
+          context += `    ${k}: ${JSON.stringify(v)}`
+          if (k === 'translatorID' && byId[v as string]) context += ` (${byId[v as string].label})`
+          context += '\n'
         }
       }
     }
 
-    info += `Zotero.Debug.storing: ${Zotero.Debug.storing}\n`
-    info += `Zotero.Debug.storing at start: ${Zotero.BetterBibTeX.debugEnabledAtStart}\n`
+    context += `Zotero.Debug.storing: ${Zotero.Debug.storing}\n`
+    context += `Zotero.Debug.storing at start: ${Zotero.BetterBibTeX.debugEnabledAtStart}\n`
 
-    return info
+    return context
   }
 }
