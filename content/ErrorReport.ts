@@ -7,7 +7,10 @@ const $OS = is7 ? Shim : OS
 import { PromptService } from './prompt'
 
 import { Preference } from './prefs'
+
 import { defaults } from '../gen/preferences/meta'
+const supported: string[] = Object.keys(defaults).filter(name => !['client', 'testing', 'platform', 'newTranslatorsAskRestart'].includes(name))
+
 import { byId } from '../gen/translators'
 import { log } from './logger'
 import { AutoExport } from './auto-export'
@@ -186,6 +189,31 @@ export class ErrorReport {
     return (Zotero.getErrors(true) as string[]).filter(line => !ignore.find(re => line.match(re))).join('\n')
   }
 
+  cleanItem(item: any): boolean {
+    delete item.libraryID
+    delete item.uri
+    delete item.relations
+    delete item.select
+    delete item.itemKey
+    delete item.contentType
+    delete item.filename
+    delete item.defaultPath
+
+    delete item.multi
+
+    if (att.path) att.path = att.path.replace(/.*\/zotero\/storage\/[^/]+/, 'ATTACHMENT_KEY')
+
+    for (const creator of (item.creators || [])) {
+      delete creator.multi
+    }
+
+    if (item.attachments) {
+      for (const att of item.attachments) {
+        this.cleanItem(att)
+      }
+    }
+  }
+
   public async load(win: Window & { ErrorReport: ErrorReport, arguments: any[] }): Promise<void> {
     this.document = win.document
     win.ErrorReport = this
@@ -209,6 +237,24 @@ export class ErrorReport {
       // # 1896
       debug: Zotero.Debug.getConsoleViewerOutput().slice(-500000).join('\n'),
       items: win.arguments[0].wrappedJSObject.items,
+    }
+
+    if (this.errorlog.items) {
+      log.debug('ITEMS::', this.errorlog.items)
+      const lib = JSON.parse(this.errorlog.items)
+      
+      for (const item of (lib.items || [])) {
+        this.cleanItem(item)
+      }
+
+      if (lib.config.preferences) {
+        for (const [pref, value] of Object.entries(items.config.preferences)) {
+          if (!supported.includes(pref) || value === defaults[pref]) delete items.config.preferences[pref]
+        }
+      }
+
+      this.errorlog.items = JSON.stringify(items, null, 2)
+      log.debug('SCRUBBED::', this.errorlog.items)
     }
 
     const acronyms = $OS.Path.join(Zotero.BetterBibTeX.dir, 'acronyms.csv')

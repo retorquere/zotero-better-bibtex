@@ -82,7 +82,9 @@ export async function doImport(): Promise<void> {
 
   if (translation.preferences.strings && translation.preferences.importBibTeXStrings) input = `${translation.preferences.strings}\n${input}`
 
+  const start = Date.now()
   const bib = await Zotero.BetterBibTeX.parseBibTeX(input, translation)
+  Zotero.debug(`parsed ${bib.entries.length} items in ${Date.now() - start}msec`)
   const errors: ParseError[] = bib.errors
 
   const whitelist = bib.comments
@@ -93,10 +95,10 @@ export async function doImport(): Promise<void> {
   let imported = 0
   let id = 0
   for (const bibtex of bib.entries) {
-    await new Promise(resolve => setTimeout(resolve, 100))
     if (bibtex.key && whitelist && !whitelist.includes(bibtex.key.toLowerCase())) continue
 
     id++
+    if ((id % 1000) === 0) await new Promise(resolve => setTimeout(resolve, 0))
 
     if (bibtex.key) itemIDS[bibtex.key] = id // Endnote has no citation keys
 

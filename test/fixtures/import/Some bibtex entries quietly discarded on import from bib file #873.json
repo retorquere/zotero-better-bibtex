@@ -13911,7 +13911,7 @@
         "Contains a description of the typed, object-oriented, language for HTN planners. The work is interesting and offers checking to make sure that transitions are well-founded, in terms of the objects that make up the domain. Somewhat limited, however, in terms of the richness of the object hierarchy, and the sorts of things that an HTN method is allowed to do. There's a discussion of how OCL\u2095 could be used to formalize O-Plan operators."
       ],
       "publisher": "Department of Computer Science, The University of Huddersfield",
-      "title": "OCL<span class=\"nocase\">\u2095</span>: a sound and supportive planning domain modelling language"
+      "title": "OCL\u2095: a sound and supportive planning domain modelling language"
     },
     {
       "citationKey": "McCorduck:79",
