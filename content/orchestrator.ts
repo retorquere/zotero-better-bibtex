@@ -1,4 +1,4 @@
-export type Actor = | 'start' | 'done' | 'auto-export' | 'translators' | 'TeXstudio' | 'abbreviator' | 'keymanager' | 'serializer' | 'cache' | 'sqlite' | 'git-push' | 'citekeysearch'
+esoft xport type Actor = | 'start' | 'done' | 'auto-export' | 'translators' | 'TeXstudio' | 'abbreviator' | 'keymanager' | 'serializer' | 'cache' | 'sqlite' | 'git-push' | 'citekeysearch'
 export type PhaseID = 'startup' | 'shutdown'
 import type { Reason } from './bootstrap'
 import { log } from './logger'
@@ -173,14 +173,14 @@ export class Orchestrator {
       }
 
       const perform = async (): Promise<void | string> => {
-        print(`better-bibtex orchestrator: task ${phase}.${name} starting`)
+        print(`orchestrator: task ${phase}.${name} starting`)
         try {
           const res = await action(reason, task) as Promise<void | string>
-          print(`better-bibtex orchestrator: task ${phase}.${name} finished`)
+          print(`orchestrator: task ${phase}.${name} finished`)
           return res
         }
         catch (err) {
-          print(`better-bibtex orchestrator: error: task ${phase}.${name} failed: ${err}\n${err.stack}`)
+          print(`orchestrator: error: task ${phase}.${name} failed: ${err}\n${err.stack}`)
           throw err
         }
       }
@@ -203,7 +203,7 @@ export class Orchestrator {
         })
 
         .catch(err => {
-          print(`better-bibtex better-bibtex orchestrator: ${name}.${phase} ${reason || ''} error: ${err}`)
+          print(`orchestrator: ${name}.${phase} ${reason || ''} error: ${err}`)
           throw err
         })
     }

@@ -4,6 +4,7 @@ import { strToISO } from '../../content/dateparser'
 import { qualityReport } from '../../gen/biber-tool'
 
 import { Entry as BaseEntry, Config } from './entry'
+import { print } from '../../content/logger'
 
 type CreatorArray = any[] & { type?: string }
 
@@ -133,6 +134,7 @@ class Entry extends BaseEntry {
 
     const creators: Record<string, CreatorArray> = {
       author: [],
+      with: [],
       bookauthor: [],
       commentator: [],
       editor: [],
@@ -147,6 +149,7 @@ class Entry extends BaseEntry {
     creators.editorb.type = 'redactor'
 
     for (const creator of this.item.creators) {
+      print(`::translation:${JSON.stringify({ creator, options: this.translation.options })}`)
       switch (creator.creatorType) {
         case 'director':
           // 365.something
@@ -156,6 +159,15 @@ class Entry extends BaseEntry {
           }
           else {
             creators.author.push(creator)
+          }
+          break
+
+        case 'contributor':
+          if (this.translation.options['biblatex-apa']) {
+            creators.with.push(creator)
+          }
+          else {
+            creators.editora.push(creator)
           }
           break
 

@@ -7,7 +7,7 @@ import { stringify } from './stringify'
 import { asciify } from './text'
 
 export function print(msg: string): void {
-  dump(msg + '\n')
+  dump(`better-bibtex::${msg}\n`)
 }
 
 function toString(obj): string {

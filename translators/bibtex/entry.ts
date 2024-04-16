@@ -60,6 +60,7 @@ const fieldOrder = [
   'translatortype',
   'holder',
   'holdertype',
+  'with',
   'options',
   'date',
   'origdate',
@@ -181,7 +182,7 @@ export class Entry {
   private metadata: Cache.ExportedItemMetadata = { DeclarePrefChars: '', noopsort: false, packages: [] }
   private packages: Record<string, boolean> = {}
   private juniorcomma: boolean
-  private translation: Translation
+  public translation: Translation
 
   public lint(_explanation: Record<string, string>): string[] {
     return []

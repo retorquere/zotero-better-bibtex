@@ -75,6 +75,9 @@
             "Year": {
               "type": "boolean"
             },
+            "biblatex-apa": {
+              "type": "boolean"
+            },
             "exportFileData": {
               "type": "boolean"
             },
