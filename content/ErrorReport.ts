@@ -189,7 +189,7 @@ export class ErrorReport {
     return (Zotero.getErrors(true) as string[]).filter(line => !ignore.find(re => line.match(re))).join('\n')
   }
 
-  cleanItem(item: any): boolean {
+  private cleanItem(item: any) {
     delete item.libraryID
     delete item.uri
     delete item.relations
@@ -201,7 +201,7 @@ export class ErrorReport {
 
     delete item.multi
 
-    if (att.path) att.path = att.path.replace(/.*\/zotero\/storage\/[^/]+/, 'ATTACHMENT_KEY')
+    if (item.path) item.path = item.path.replace(/.*\/zotero\/storage\/[^/]+/, 'ATTACHMENT_KEY')
 
     for (const creator of (item.creators || [])) {
       delete creator.multi
@@ -242,18 +242,18 @@ export class ErrorReport {
     if (this.errorlog.items) {
       log.debug('ITEMS::', this.errorlog.items)
       const lib = JSON.parse(this.errorlog.items)
-      
+
       for (const item of (lib.items || [])) {
         this.cleanItem(item)
       }
 
       if (lib.config.preferences) {
-        for (const [pref, value] of Object.entries(items.config.preferences)) {
-          if (!supported.includes(pref) || value === defaults[pref]) delete items.config.preferences[pref]
+        for (const [pref, value] of Object.entries(lib.config.preferences)) {
+          if (!supported.includes(pref) || value === defaults[pref]) delete lib.config.preferences[pref]
         }
       }
 
-      this.errorlog.items = JSON.stringify(items, null, 2)
+      this.errorlog.items = JSON.stringify(lib, null, 2)
       log.debug('SCRUBBED::', this.errorlog.items)
     }
 
