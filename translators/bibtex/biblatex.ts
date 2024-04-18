@@ -163,7 +163,7 @@ class Entry extends BaseEntry {
           break
 
         case 'contributor':
-          if (this.translation.options['biblatex-apa']) {
+          if (this.translation.options.biblatexAPA) {
             creators.with.push(creator)
           }
           else {

@@ -279,6 +279,7 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
     quickCopyMode?: string
     dropAttachments?: boolean
     exportNotes?: boolean
+    biblatexAPA?: boolean
     markdown?: boolean
     exportFileData?: boolean
     useJournalAbbreviation?: boolean

@@ -16,7 +16,7 @@
     "exportNotes": false,
     "exportFileData": false,
     "useJournalAbbreviation": false,
-    "biblatex-apa": false,
+    "biblatexAPA": false,
     "keepUpdated": false,
     "worker": true
   },

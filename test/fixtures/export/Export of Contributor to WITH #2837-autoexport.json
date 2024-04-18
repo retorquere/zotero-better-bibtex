@@ -1,0 +1,31 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "options": {
+    },
+    "preferences": {
+    }
+  },
+  "items": [
+    {
+      "citationKey": "meyersWitheringWorrying2014",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "K.",
+          "lastName": "Meyers"
+        },
+        {
+          "creatorType": "contributor",
+          "firstName": "W. T.",
+          "lastName": "Long"
+        }
+      ],
+      "date": "2014",
+      "itemID": 1,
+      "itemType": "book",
+      "title": "Withering worrying"
+    }
+  ]
+}

@@ -59,6 +59,7 @@ export const SQL = new class {
       job[setting] = value
     }
 
+    log.debug('autoexport job', job)
     return job as Job
   }
 
@@ -412,6 +413,7 @@ type Job = {
   biblatexExtendedNameFormat?: boolean
   DOIandURL?: boolean
   bibtexURL?: boolean
+  biblatexAPA?: boolean
 }
 type JobSetting = keyof Job
 

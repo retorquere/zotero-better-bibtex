@@ -274,7 +274,15 @@ export class ErrorReport {
     this.setValue('better-bibtex-error-context', this.report.context)
     this.setValue('better-bibtex-error-errors', this.report.errors || '')
     this.setValue('better-bibtex-error-log', this.preview(this.report.log || ''))
-    this.setValue('better-bibtex-error-items', this.preview(this.report.items || ''))
+
+    let items = ''
+    if (this.report.items) {
+      const lib = JSON.parse(this.report.items)
+      lib = { ...lib, items: lib.items.slice(0, 2) }
+      items = JSON.stringify(lib, null, 2)
+      items += '...'
+    }
+    this.setValue('better-bibtex-error-items', items)
 
     this.setValue('better-bibtex-report-cache', this.cacheState = l10n.localize('better-bibtex_error-report_better-bibtex_cache', Cache.state()))
 
