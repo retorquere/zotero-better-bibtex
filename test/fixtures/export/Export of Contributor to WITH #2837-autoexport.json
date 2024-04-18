@@ -5,6 +5,7 @@
     "options": {
     },
     "preferences": {
+      "autoExport": "immediate"
     }
   },
   "items": [

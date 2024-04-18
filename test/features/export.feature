@@ -625,9 +625,8 @@ Feature: Export
 
   Scenario: Export of Contributor to WITH #2837-autoexport
     Given I import 1 reference from "export/*.json"
-    And I set preference .autoExport to "immediate"
     Then an auto-export to "~/autoexport.bib" using "Better BibLaTeX" should match "export/*.before.biblatex"
-    When I change biblatex-apa to true on the auto-export
+    When I change biblatexAPA to true on the auto-export
     And I wait 5 seconds
     Then "~/autoexport.bib" should match "export/*.after.biblatex"
 
