@@ -44,7 +44,7 @@ type Wizard = HTMLElement & {
 }
 
 export class ErrorReport {
-  private previewSize = 3 * kB // eslint-disable-line yoda
+  private previewSize = 3
   private document: Document
 
   private key: string
@@ -274,16 +274,7 @@ export class ErrorReport {
     this.setValue('better-bibtex-error-context', this.report.context)
     this.setValue('better-bibtex-error-errors', this.report.errors || '')
     this.setValue('better-bibtex-error-log', this.preview(this.report.log || ''))
-
-    let items = ''
-    if (this.report.items) {
-      const lib = JSON.parse(this.report.items)
-      lib = { ...lib, items: lib.items.slice(0, 2) }
-      items = JSON.stringify(lib, null, 2)
-      items += '...'
-    }
-    this.setValue('better-bibtex-error-items', items)
-
+    this.setValue('better-bibtex-error-items', this.report.items ? this.preview(JSON.parse(this.report.items)) : '')
     this.setValue('better-bibtex-report-cache', this.cacheState = l10n.localize('better-bibtex_error-report_better-bibtex_cache', Cache.state()))
 
     this.report.log = [
@@ -359,8 +350,16 @@ export class ErrorReport {
     }
   }
 
-  private preview(text: string): string {
-    return text.length > this.previewSize ? `${text.substr(0, this.previewSize)} ...` : text
+  private preview(input: any): string {
+    const previewSize = this.previewSize * kB
+    if (typeof input === 'string') return input.length > previewSize ? `${input.substr(0, previewSize)} ...` : input
+
+    let trail = ''
+    if (input.items.length > this.previewSize) {
+      trail = `\n... + ${input.items.length - this.previewSize} more items`
+      input = { ...input, items: input.items.slice(0, this.previewSize) }
+    }
+    return JSON.stringify(input, null, 2) + trail
   }
 
   // general state of Zotero
