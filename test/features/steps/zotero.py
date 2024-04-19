@@ -526,6 +526,9 @@ class Zotero:
         shutil.copy(orig, references)
 
       if '.bib' in references:
+        utils.print(references)
+        utils.print(os.path.exists(references))
+        assert os.path.exists(references), f'{json.dumps(references)} does not exist'
         copy = False
         bib = ''
         with open(references) as f:

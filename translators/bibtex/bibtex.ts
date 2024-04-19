@@ -16,6 +16,7 @@ import { Translation } from '../lib/translator'
 import { Entry as BaseEntry, Config } from './entry'
 
 import { Library, Entry as BibTeXEntry, JabRefMetadata, ParseError, Creator, parseAsync as parse } from '@retorquere/bibtex-parser'
+import { parse as detect } from '@retorquere/bibtex-parser/verbatim'
 
 function unique(value, index, self) {
   return self.indexOf(value) === index
@@ -452,6 +453,15 @@ const importJabRef = new class JabRefDefaults {
 
       this.loaded[cache] = true
     }
+  }
+}
+
+export function detectBibTeX(input: string): boolean {
+  try {
+    return detect(input, { max_entries: 1 }).entries.length > 0
+  }
+  catch (err) {
+    return false
   }
 }
 

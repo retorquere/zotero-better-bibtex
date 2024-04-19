@@ -55,7 +55,7 @@ import * as l10n from './l10n'
 import * as CSL from 'citeproc'
 
 import { generateBibLaTeX } from '../translators/bibtex/biblatex'
-import { generateBibTeX, parseBibTeX } from '../translators/bibtex/bibtex'
+import { generateBibTeX, parseBibTeX, detectBibTeX } from '../translators/bibtex/bibtex'
 import { generateCSLYAML, parseCSLYAML } from '../translators/csl/yaml'
 import { generateCSLJSON } from '../translators/csl/json'
 import { Translation } from '../translators/lib/translator'
@@ -429,6 +429,7 @@ Zotero.Translate.Import.prototype.Sandbox.BetterBibTeX = {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   parseDate(_sandbox: any, date: string): ParsedDate { return DateParser.parse(date) },
 
+  detectBibTeX(_sandbox: any, input: string) { return detectBibTeX(input) },
   async parseBibTeX(_sandbox: any, input: string, translation: Translation) { return parseBibTeX(input, translation) },
   parseCSLYAML(_sandbox: any, input: string): any { return parseCSLYAML(input) },
 }

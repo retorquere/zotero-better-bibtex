@@ -139,10 +139,10 @@ def step_impl(context):
   context.zotero.restart(timeout=context.timeout)
 
 @step(r'I apply the preferences from "{source}"')
-def step_impl(context, references, source):
+def step_impl(context, source):
   source = expand_scenario_variables(context, source)
   context.imported = source
-  assert_that(context.zotero.import_file(context, source, items=False), equal_to(references))
+  assert_that(context.zotero.import_file(context, source, items=False), equal_to(0))
 
 @step('I compile "{source}" to "{target}" it should match "{baseline}" with {n} citations')
 def step_impl(context, source, target, baseline, n):
