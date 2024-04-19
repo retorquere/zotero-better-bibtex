@@ -11,6 +11,7 @@
     "preferences": {
       "auxImport": true,
       "baseAttachmentPath": "C:\\Users\\shwur\\WIZnet Germany GmbH\\Agents of P.U.F. - General\\Zotero Storage",
+      "citekeyFormat": "auth + year",
       "importSentenceCase": "off",
       "rawImports": true,
       "relativeFilePaths": true
@@ -36,7 +37,8 @@
           "tag": "#LaTeX",
           "type": 1
         }
-      ]
+      ],
+      "url": "https://web.archive.org/web/20130825054202/http://www.gartner.com/technology/reprints.do?id=1-1IMDMZ5&ct=130819&st=sb"
     }
   ]
 }
