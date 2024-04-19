@@ -447,15 +447,8 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
     catch (err) {
     }
 
-    for (const key in this.options) {
-      if (typeof this.options[key] === 'boolean') {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-        this.options[key] = Zotero.getOption(key)
-      }
-      else {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-        this.options[key] = !!Zotero.getOption(key)
-      }
+    for (const key in this.options) { // eslint-disable-line guard-for-in
+      this.options[key] = !!Zotero.getOption(key)
     }
     this.options.custom = Zotero.getOption('custom') // for pandoc-filter CSL
     print(`translation options: ${JSON.stringify(this.options)}`)

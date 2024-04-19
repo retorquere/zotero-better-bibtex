@@ -8,3 +8,18 @@ export const pick = <T extends object, TKeys extends keyof T>(obj: T, keys: TKey
     return acc
   }, {} as Pick<T, TKeys>)
 }
+
+export function stringify(obj: any): string { // eslint-disable-line @typescript-eslint/explicit-module-boundary-types
+  const seen = new WeakSet()
+  return JSON.stringify(obj, (key, value) => {
+    if (typeof value === 'object' && value !== null) {
+      if (seen.has(value)) {
+        // If we've seen this object before, return a placeholder
+        return '[Circular]'
+      }
+      seen.add(value)
+    }
+    // Otherwise, proceed with the stringification
+    return value // eslint-disable-line @typescript-eslint/no-unsafe-return
+  })
+}
