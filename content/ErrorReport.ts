@@ -187,7 +187,7 @@ export class ErrorReport {
     if (tab) tab.hidden = !value
   }
 
-  private errors(): string {
+  private scrub(logging: string[]): string {
     const ignore = [
       /NS_NOINTERFACE.*ComponentUtils[.]jsm/,
       /Addon must include an id, version, and type/,
@@ -198,8 +198,15 @@ export class ErrorReport {
       /See your zotero.org account settings for additional storage options/,
       /Could not get children of.*CrashManager.jsm/,
     ]
+    return logging.filter(line => !ignore.find(re => line.match(re))).join('\n')
+  }
 
-    return (Zotero.getErrors(true) as string[]).filter(line => !ignore.find(re => line.match(re))).join('\n')
+  private errors(): string {
+    return this.scrub(Zotero.getErrors(true) as string[])
+  }
+
+  private log(): string {
+    return this.scrub(Zotero.Debug.getConsoleViewerOutput().slice(-500000))
   }
 
   private cleanItem(item: any) {
@@ -309,7 +316,7 @@ export class ErrorReport {
       context: await this.context(),
       errors: `${Zotero.BetterBibTeX.outOfMemory}\n${this.errors()}`.trim(),
       // # 1896
-      log: Zotero.Debug.getConsoleViewerOutput().slice(-500000).join('\n'),
+      log: this.log(),
       items: win.arguments[0].wrappedJSObject.items,
     }
     const acronyms = $OS.Path.join(Zotero.BetterBibTeX.dir, 'acronyms.csv')
