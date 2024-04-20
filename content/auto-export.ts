@@ -59,7 +59,6 @@ export const SQL = new class {
       job[setting] = value
     }
 
-    log.debug('autoexport job', job)
     return job as Job
   }
 

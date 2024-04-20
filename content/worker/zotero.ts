@@ -4,8 +4,6 @@ import flatMap from 'array.prototype.flatmap'
 flatMap.shim()
 import matchAll from 'string.prototype.matchall'
 matchAll.shim()
-import { print } from '../logger'
-import { stringify } from '../object'
 
 declare const IOUtils: any
 
@@ -495,7 +493,6 @@ class WorkerZotero {
   }
 
   public getOption(option) {
-    print(`option::${stringify(workerJob.options)} [${option}] = ${workerJob.options[option]}`)
     return workerJob.options[option]
   }
 
@@ -555,7 +552,6 @@ ctx.onmessage = function(e: { isTrusted?: boolean, data?: Translators.Worker.Mes
 
       case 'start':
         Object.assign(workerJob, JSON.parse(dec.decode(new Uint8Array(e.data.config))))
-        print(`worker job: ${stringify(workerJob.options)}`)
 
         importScripts(`chrome://zotero-better-bibtex/content/resource/${workerJob.translator}.js`)
         Zotero.start()

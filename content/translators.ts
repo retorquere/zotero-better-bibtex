@@ -255,7 +255,6 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       exportPath: job.path || undefined,
       exportDir: job.path ? $OS.Path.dirname(job.path) : undefined,
     }
-    log.debug('export job:', displayOptions)
 
     const translator = this.byId[job.translatorID]
 
