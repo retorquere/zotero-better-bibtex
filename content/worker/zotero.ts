@@ -541,7 +541,7 @@ export var Zotero = new WorkerZotero // eslint-disable-line @typescript-eslint/n
 
 const dec = new TextDecoder('utf-8')
 
-ctx.onmessage = function(e: { isTrusted?: boolean, data?: Translators.Worker.Message } ): void { // eslint-disable-line prefer-arrow/prefer-arrow-functions
+ctx.onmessage = async function(e: { isTrusted?: boolean, data?: Translators.Worker.Message } ): void { // eslint-disable-line prefer-arrow/prefer-arrow-functions
   if (!e.data) return // some kind of startup message
 
   try {
@@ -553,9 +553,15 @@ ctx.onmessage = function(e: { isTrusted?: boolean, data?: Translators.Worker.Mes
       case 'start':
         Object.assign(workerJob, JSON.parse(dec.decode(new Uint8Array(e.data.config))))
         importScripts(`chrome://zotero-better-bibtex/content/resource/${workerJob.translator}.js`)
-        Zotero.start()
-          .catch(err => { Zotero.logError(err) })
-          .finally(() => { Zotero.send({ kind: 'done', output: Zotero.exportFile ? true : Zotero.output }) })
+        try {
+          await Zotero.start()
+        }
+        catch (err) {
+          Zotero.logError(err)
+        }
+        finally {
+          Zotero.send({ kind: 'done', output: Zotero.exportFile ? true : Zotero.output })
+        }
         break
 
       case 'stop':
