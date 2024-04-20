@@ -1,0 +1,42 @@
+- const today = new Date().toISOString().slice(0, 10)
+- const scale = n => Math.ceil(n/100)
+doctype xml
+project(name=`Better BibTeX ${phase}` company='' webLink='https://' view-date='2023-09-30' view-index='0' gantt-divider-location='614' resource-divider-location='300' version='3.3.3295' locale='en_GB')
+  description
+  calendars
+    #{'day-types'}
+      #{'day-type'}(id='0')
+      #{'day-type'}(id='1')
+      #{'default-week'}(id='1' name='default' sun='0' mon='0' tue='0' wed='0' thu='0' fri='0' sat='0')
+      days
+  tasks(empty-milestones='true')
+    taskproperties
+      taskproperty(id='tpd0' name='type' type='default' valuetype='icon')
+      taskproperty(id='tpd1' name='priority' type='default' valuetype='icon')
+      taskproperty(id='tpd2' name='info' type='default' valuetype='icon')
+      taskproperty(id='tpd3' name='name' type='default' valuetype='text')
+      taskproperty(id='tpd4' name='begindate' type='default' valuetype='date')
+      taskproperty(id='tpd5' name='enddate' type='default' valuetype='date')
+      taskproperty(id='tpd6' name='duration' type='default' valuetype='int')
+      taskproperty(id='tpd7' name='completion' type='default' valuetype='int')
+      taskproperty(id='tpd8' name='coordinator' type='default' valuetype='text')
+      taskproperty(id='tpd9' name='predecessorsr' type='default' valuetype='text')
+    each task in tasks
+      task(
+        id=task.taskid
+        uid=`${task.id}${Math.random()}`
+        name=task.id
+        meeting='false'
+        start=task.needs.length ? null : today
+        duration=scale(task.finished - task.started)
+        complete='0'
+        expand='true'
+      )
+      each dependent in tasks.filter(t => t.needs.includes(task.id))
+        depend(id=dependent.taskid type='2' difference='0' hardness='Strong')
+  resources
+  allocations
+  vacations
+  previous
+  roles(roleset-name='Default')
+  roles(roleset-name='SoftwareDevelopment')
