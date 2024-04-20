@@ -541,7 +541,7 @@ export var Zotero = new WorkerZotero // eslint-disable-line @typescript-eslint/n
 
 const dec = new TextDecoder('utf-8')
 
-ctx.onmessage = async function(e: { isTrusted?: boolean, data?: Translators.Worker.Message } ): void { // eslint-disable-line prefer-arrow/prefer-arrow-functions
+ctx.onmessage = async function(e: { isTrusted?: boolean, data?: Translators.Worker.Message } ): Promise<void> { // eslint-disable-line prefer-arrow/prefer-arrow-functions
   if (!e.data) return // some kind of startup message
 
   try {
