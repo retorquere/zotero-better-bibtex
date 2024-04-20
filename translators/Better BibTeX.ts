@@ -21,12 +21,38 @@ export function detectImport(): boolean {
   const maxChars = 1048576 // 1MB
   const chunk = 4096
 
-  let input = Zotero.read(chunk)
-  while ((input += Zotero.read(chunk)) && input.length < maxChars) {
-    Zotero.debug(`tasting ${input}`)
-    if (Zotero.BetterBibTeX.detectBibTeX(input)) return true
+  let inComment = false
+  let block = ''
+  let buffer = ''
+  let chr = ''
+  let charsRead = 0
+
+  const re = /^\s*@[a-zA-Z]+[({]/
+  while ((buffer = Zotero.read(chunk)) && charsRead < maxChars) {
+    Zotero.debug(`Scanning ${buffer.length} characters for BibTeX`)
+    charsRead += buffer.length
+    for (let i=0; i<buffer.length; i++) {
+      chr = buffer[i]
+
+      if (inComment && chr !== '\r' && chr !== '\n') continue
+      inComment = false
+
+      if (chr === '%') {
+        // read until next newline
+        block = ''
+        inComment = true
+      }
+      // allow one-line entries
+      else if ((chr === '\n' || chr === '\r' || i === (buffer.length - 1)) && block) {
+        // check if this is a BibTeX entry
+        if (re.test(block)) return true
+        block = ''
+      }
+      else if (!' \n\r\t'.includes(chr)) {
+        block += chr
+      }
+    }
   }
-  return false
 }
 
 function importGroup(group, itemIDs, root = null) {
