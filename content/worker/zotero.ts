@@ -5,6 +5,9 @@ flatMap.shim()
 import matchAll from 'string.prototype.matchall'
 matchAll.shim()
 
+import { print } from '../logger'
+import { stringify } from '../stringify'
+
 declare const IOUtils: any
 
 import { Shim } from '../os'
@@ -23,8 +26,6 @@ export const workerEnvironment = {
 for(const [key, value] of (new URLSearchParams(ctx.location.search)).entries()) {
   workerEnvironment[key] = value
 }
-
-declare const dump: (message: string) => void
 
 importScripts('resource://zotero/config.js') // import ZOTERO_CONFIG'
 
@@ -197,7 +198,6 @@ class WorkerZoteroBetterBibTeX {
   public getContents(path: string): string {
     if (!path) return null
 
-    dump(`getContents from ${path}\n`)
     try {
       if (is7) {
         const file = IOUtils.openFileForSyncReading(path)
@@ -217,25 +217,20 @@ class WorkerZoteroBetterBibTeX {
         }
 
         file.close()
-        dump(`getContents ${path} return\n`)
         return text
       }
       else {
         if (!OS.File.exists(path)) return null
         const bytes = <ArrayBuffer>OS.File.read(path)
         const decoder = new TextDecoder()
-        dump(`getContents ${path} return\n`)
         return decoder.decode(bytes as BufferSource)
       }
     }
     catch (err) {
       if (!err.message?.includes('NS_ERROR_FILE_NOT_FOUND')) {
-        dump(`getContents ${path} error ${err} ${Object.keys(err)} ${err.message}\n`)
+        print(`getContents ${path} error ${err} ${Object.keys(err)} ${err.message}`)
       }
       return null
-    }
-    finally {
-      dump(`getContents ${path} out\n`)
     }
   }
 
@@ -502,7 +497,7 @@ class WorkerZotero {
     }
   }
   public logError(err) {
-    dump(`worker: error: ${err}\n${err.stack}\n`)
+    print(`worker: error: ${err}\n${err.stack}`)
     this.send({ kind: 'error', message: `${err}\n${err.stack}` })
   }
 
@@ -541,7 +536,7 @@ export var Zotero = new WorkerZotero // eslint-disable-line @typescript-eslint/n
 
 const dec = new TextDecoder('utf-8')
 
-ctx.onmessage = async function(e: { isTrusted?: boolean, data?: Translators.Worker.Message } ): void { // eslint-disable-line prefer-arrow/prefer-arrow-functions
+ctx.onmessage = async function(e: { isTrusted?: boolean, data?: Translators.Worker.Message } ): Promise<void> { // eslint-disable-line prefer-arrow/prefer-arrow-functions
   if (!e.data) return // some kind of startup message
 
   try {
@@ -552,6 +547,7 @@ ctx.onmessage = async function(e: { isTrusted?: boolean, data?: Translators.Work
 
       case 'start':
         Object.assign(workerJob, JSON.parse(dec.decode(new Uint8Array(e.data.config))))
+        print(`worker start:: ${stringify(workerJob.options)}`)
 
         importScripts(`chrome://zotero-better-bibtex/content/resource/${workerJob.translator}.js`)
         try {
