@@ -204,6 +204,7 @@ class AutoExportPane {
           case 'asciiBibLaTeX':
           case 'biblatexExtendedNameFormat':
           case 'recursive':
+          case 'biblatexAPA':
             (node as unknown as XUL.Checkbox).checked = selected[field]
             break
 
@@ -288,6 +289,7 @@ class AutoExportPane {
       case 'asciiBibLaTeX':
       case 'biblatexExtendedNameFormat':
       case 'recursive':
+      case 'biblatexAPA':
         log.debug('edit autoexport:', field, node.checked)
         value = node.checked
         break

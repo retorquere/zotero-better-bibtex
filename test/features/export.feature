@@ -13,6 +13,7 @@ Feature: Export
 
     Examples:
       | file                                                                                                                     | references |
+      | Export of Contributor to WITH #2837                                                                                      | 1          |
       | Better BibTeX export from Zotero missing Extra fields eg issued #2816                                                    | 1          |
       | Support for Chinese Quotation Marks When Exporting with Export unicode as plaintext latex commands #2810                 | 1          |
       | en-dash and i-circumflex translation error #2796                                                                         | 3          |
@@ -621,6 +622,13 @@ Feature: Export
     When I change DOIandURL to "url" on the auto-export
     And I wait 15 seconds
     Then "~/autoexport.bib" should match "export/*.after.bibtex"
+
+  Scenario: Export of Contributor to WITH #2837-autoexport
+    Given I import 1 reference from "export/*.json"
+    Then an auto-export to "~/autoexport.bib" using "Better BibLaTeX" should match "export/*.before.biblatex"
+    When I change biblatexAPA to true on the auto-export
+    And I wait 15 seconds
+    Then "~/autoexport.bib" should match "export/*.after.biblatex"
 
   Scenario: Auto-Export citekey edits #citekey-edit
     Given I import 1 reference from "export/*.json"

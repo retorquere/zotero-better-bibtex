@@ -84,6 +84,7 @@ export namespace Translators {
       exportNotes?: boolean,
       exportFileData?: boolean
       useJournalAbbreviation?: boolean
+      biblatexAPA?: boolean
       keepUpdated?: boolean
       worker?: boolean
       markdown?: boolean

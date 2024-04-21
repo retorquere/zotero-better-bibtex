@@ -50,7 +50,7 @@ export const SQL = new class {
     }
 
     const settings = autoExport[job.translatorID]
-    const displayOptions = byId[job.translatorID]?.displayOptions || {}
+    const displayOptions = {...(byId[job.translatorID]?.displayOptions || {})}
     Object.assign(job, pick(Preference, settings.preferences))
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     Object.assign(job, fromPairs(settings.options.map((option: PreferenceName) => [ option, job[option] ?? displayOptions[option] ?? false ])))
@@ -325,6 +325,7 @@ const queue = new class TaskQueue {
       const displayOptions: any = {
         exportNotes: ae.exportNotes,
         useJournalAbbreviation: ae.useJournalAbbreviation,
+        biblatexAPA: ae.biblatexAPA || false,
       }
 
       const jobs: ExportJob[] = [{
@@ -412,6 +413,7 @@ type Job = {
   biblatexExtendedNameFormat?: boolean
   DOIandURL?: boolean
   bibtexURL?: boolean
+  biblatexAPA?: boolean
 }
 type JobSetting = keyof Job
 

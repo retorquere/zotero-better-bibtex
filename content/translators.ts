@@ -3,6 +3,7 @@
 import { Shim } from './os'
 import { is7 } from './client'
 const $OS = is7 ? Shim : OS
+import merge from 'lodash.merge'
 
 Components.utils.import('resource://gre/modules/Services.jsm')
 
@@ -11,7 +12,7 @@ declare class ChromeWorker extends Worker { }
 Components.utils.import('resource://zotero/config.js')
 declare const ZOTERO_CONFIG: any
 
-import { clone } from './object'
+// import { clone } from './object'
 import { Deferred } from './deferred'
 import type { Translators as Translator } from '../typings/translators'
 import { Preference } from './prefs'
@@ -437,14 +438,12 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
   }
 
   public displayOptions(translatorID: string, displayOptions: any): any {
-    displayOptions = clone(displayOptions || this.byId[translatorID]?.displayOptions || {})
-    const defaults = this.byId[translatorID]?.displayOptions || {}
-    for (const [k, v] of Object.entries(defaults)) {
-      if (typeof displayOptions[k] === 'undefined') displayOptions[k] = v
-    }
-    if (this.byId[translatorID].label === 'BetterBibTeX JSON') displayOptions.exportCharset = 'UTF-8xBOM'
-
-    return displayOptions
+    return merge(
+      {},
+      this.byId[translatorID]?.displayOptions || {},
+      displayOptions,
+      this.byId[translatorID].label === 'BetterBibTeX JSON' ? { exportCharset: 'UTF-8xBOM' } : {}
+    )
   }
 
   public async exportItems(job: ExportJob): Promise<string> {

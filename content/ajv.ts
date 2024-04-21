@@ -51,7 +51,7 @@ export function validItem(obj: any, strict?: boolean): string { // eslint-disabl
   const errors = broken.me(obj)
   if (!errors) return ''
   if (!strict && !broken.other(obj)) {
-    if (typeof Zotero !== 'undefined') print('Better BibTeX soft error: ' + errors)
+    if (typeof Zotero !== 'undefined') print('soft error: ' + errors)
     return ''
   }
   // https://ajv.js.org/api.html#validation-errors

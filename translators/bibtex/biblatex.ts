@@ -133,6 +133,7 @@ class Entry extends BaseEntry {
 
     const creators: Record<string, CreatorArray> = {
       author: [],
+      with: [],
       bookauthor: [],
       commentator: [],
       editor: [],
@@ -156,6 +157,15 @@ class Entry extends BaseEntry {
           }
           else {
             creators.author.push(creator)
+          }
+          break
+
+        case 'contributor':
+          if (this.translation.options.biblatexAPA) {
+            creators.with.push(creator)
+          }
+          else {
+            creators.editora.push(creator)
           }
           break
 
