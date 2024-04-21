@@ -6,7 +6,6 @@ import matchAll from 'string.prototype.matchall'
 matchAll.shim()
 
 import { print } from '../logger'
-import { stringify } from '../stringify'
 
 declare const IOUtils: any
 

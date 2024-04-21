@@ -5,9 +5,6 @@ import { qualityReport } from '../../gen/biber-tool'
 
 import { Entry as BaseEntry, Config } from './entry'
 
-import { print } from '../../content/logger'
-import { stringify } from '../../content/stringify'
-
 type CreatorArray = any[] & { type?: string }
 
 const config: Config = {

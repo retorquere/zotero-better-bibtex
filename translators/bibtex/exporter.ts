@@ -1,7 +1,6 @@
 declare const Zotero: any
 
 import { Translation } from '../lib/translator'
-import { print } from '../../content/logger'
 
 import { RegularItem } from '../../gen/typings/serialized-item'
 import { Cache } from '../../typings/cache'
