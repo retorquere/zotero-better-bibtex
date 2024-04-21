@@ -232,7 +232,6 @@ def export_library(context, translator='BetterBibTeX JSON', collection=None, exp
   if output:
     assert output.startswith('~/'), output
     output = os.path.join(context.tmpDir, output[2:])
-  utils.print(json.dumps(displayOptions))
 
   start = time.time()
   context.zotero.export_library(

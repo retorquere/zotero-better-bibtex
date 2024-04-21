@@ -399,17 +399,6 @@ Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
   generateCSLYAML(_sandbox: any, translation: Translation) { generateCSLYAML(translation) },
   generateCSLJSON(_sandbox: any, translation: Translation) { generateCSLJSON(translation) },
 
-  /*
-  cacheFetch(sandbox: { translator: { label: string }[] }, itemID: number, options: { exportNotes: boolean, useJournalAbbreviation: boolean }, prefs: any) {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return Cache.fetch(sandbox.translator[0].label, itemID, options, prefs)
-  },
-
-  cacheStore(sandbox: { translator: { label: string }[] }, itemID: number, options: { exportNotes: boolean, useJournalAbbreviation: boolean }, prefs: any, entry: any, metadata: any) {
-    return Cache.store(sandbox.translator[0].label, itemID, options, prefs, entry, metadata)
-  },
-  */
-
   parseDate(_sandbox: any, date: string): ParsedDate { return DateParser.parse(date) },
 }
 

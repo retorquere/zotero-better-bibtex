@@ -9,6 +9,7 @@ import * as Prefs from '../../gen/preferences/meta'
 const PrefNames: Set<string> = new Set(Object.keys(Prefs.defaults))
 import { client } from '../../content/client'
 import { print } from '../../content/logger'
+import { stringify } from '../../content/stringify'
 import { RegularItem, Item, Collection, Attachment } from '../../gen/typings/serialized-item'
 import type { Exporter as BibTeXExporter } from '../bibtex/exporter'
 import type { ZoteroItem } from '../bibtex/bibtex'
@@ -451,7 +452,6 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
       this.options[key] = !!Zotero.getOption(key)
     }
     this.options.custom = Zotero.getOption('custom') // for pandoc-filter CSL
-    print(`translation options: ${JSON.stringify(this.options)}`)
 
     this.preferences = Object.entries(Prefs.defaults).reduce((acc, [pref, dflt]) => {
       acc[pref] = Zotero.getHiddenPref(`better-bibtex.${pref}`) ?? dflt

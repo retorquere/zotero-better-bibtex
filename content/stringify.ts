@@ -59,7 +59,7 @@ function $stringify(key, value, cache): any {
 }
 
 // safely handles circular references
-export function stringify(obj, indent: number | string = 2, ucode?: boolean) { // eslint-disable-line @typescript-eslint/explicit-module-boundary-types
+export function stringify(obj, indent: number | string = 0, ucode?: boolean) { // eslint-disable-line @typescript-eslint/explicit-module-boundary-types
   let cache = []
   const stringified = JSON.stringify(
     obj,

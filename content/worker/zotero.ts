@@ -234,16 +234,6 @@ class WorkerZoteroBetterBibTeX {
     }
   }
 
-  /*
-  public cacheFetch(itemID: number) {
-    return cacheFetch('', itemID, null, null)
-  }
-
-  public cacheStore(itemID: number, _options: any, _prefs: any, entry: string, metadata: any) {
-    return cacheStore('', itemID, null, null, entry, metadata)
-  }
-  */
-
   public parseDate(date) {
     return DateParser.parse(date)
   }
@@ -547,7 +537,6 @@ ctx.onmessage = async function(e: { isTrusted?: boolean, data?: Translators.Work
 
       case 'start':
         Object.assign(workerJob, JSON.parse(dec.decode(new Uint8Array(e.data.config))))
-        print(`worker start:: ${stringify(workerJob.options)}`)
 
         importScripts(`chrome://zotero-better-bibtex/content/resource/${workerJob.translator}.js`)
         try {

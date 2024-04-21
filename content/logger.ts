@@ -35,7 +35,7 @@ class Logger {
     let prefix = ''
     if (typeof workerEnvironment !== 'undefined') {
       prefix += ' worker'
-      if (typeof workerJob !== 'undefined') prefix += `${workerJob.translator}`
+      if (typeof workerJob !== 'undefined') prefix += `:${workerJob.translator}`
     }
 
     if (error) prefix += ' error:'
