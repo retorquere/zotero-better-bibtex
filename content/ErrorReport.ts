@@ -247,8 +247,9 @@ export class ErrorReport {
       attachments: false,
       cache: false,
     }
-    for (const facet of ['errors', 'log', 'items', 'cache', 'attachments', 'notes']) { // atts & notes after items
-      const cb = <HTMLInputElement>this.document.getElementById(`better-bibtex-error-report-include-${facet}`)
+    for (const cb of Array.from(this.document.getElementsByClassName('better-bibtex-error-report-facet')) as HTMLInputElement[]) {
+      const facet = cb.id.replace(/.*-/, '')
+
       if (init) {
         if (facet.match(/items|notes|attachments/)) {
           cb.disabled = !this.input.items
@@ -261,6 +262,7 @@ export class ErrorReport {
         }
         cb.checked = this.config[facet]
       }
+
       this.config[facet] = cb.checked
       if (facet === 'notes' || facet === 'attachments') cb.disabled = !this.config.items
     }
@@ -313,8 +315,9 @@ export class ErrorReport {
     wizard.getPageById('page-review').addEventListener('pageshow', this.show.bind(this))
     wizard.getPageById('page-send').addEventListener('pageshow', () => { this.send().catch(err => log.debug('could not send debug log:', err)) })
     wizard.getPageById('page-done').addEventListener('pageshow', this.show.bind(this))
-    for (const facet of ['errors', 'log', 'items', 'notes', 'attachments']) {
-      (<HTMLInputElement>this.document.getElementById(`better-bibtex-error-report-include-${facet}`)).addEventListener('command', this.reload.bind(this))
+
+    for (const cb of Array.from(this.document.getElementsByClassName('better-bibtex-error-report-facet')) as HTMLInputElement[]) {
+      cb.addEventListener('command', this.reload.bind(this))
     }
 
     wizard.pageIndex = Zotero.Debug.storing ? 1 : 0
