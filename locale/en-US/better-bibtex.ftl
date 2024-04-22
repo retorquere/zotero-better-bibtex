@@ -34,10 +34,12 @@ better-bibtex_error-report_include-errors =
   .label = Include error messages
 better-bibtex_error-report_include-log = 
   .label = Include debug log
-better-bibtex_error-report_include-cache = 
+better-bibtex_error-report_include-items = 
   .label = Include items
 better-bibtex_error-report_include-notes = 
   .label = notes
+better-bibtex_error-report_include-cache = 
+  .label = cache
 better-bibtex_error-report_include-attachments = 
   .label = attachment metadata
 

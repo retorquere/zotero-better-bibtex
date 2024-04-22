@@ -43,6 +43,14 @@ type Wizard = HTMLElement & {
   rewind: () => void
 }
 
+type Report = {
+  context: string
+  errors: string
+  log: string
+  items?: string
+  acronyms?: string
+}
+
 export class ErrorReport {
   private previewSize = 3
   private document: Document
@@ -54,27 +62,9 @@ export class ErrorReport {
   private bucket: string
   private cacheState: string
 
-  private input: {
-    context: string
-    errors: string
-    log: string
-    items?: string
-    acronyms?: string
-  }
-  private report: {
-    context: string
-    errors: string
-    log: string
-    items?: string
-    acronyms?: string
-  }
-  private config: {
-    errors: boolean
-    log: boolean
-    items: boolean
-    notes: boolean
-    attachments: boolean
-  }
+  private input: Report
+  private report: Report
+  private config: Record<keyof Report | 'attachments' | 'cache' | 'notes', boolean>
 
   public async send(): Promise<void> {
     const wizard: Wizard = this.document.getElementById('better-bibtex-error-report') as Wizard
@@ -157,8 +147,8 @@ export class ErrorReport {
 
     out = tape.append(`${this.key}/debug.txt`, this.report.log)
 
-    if (this.report.items) {
-      out = tape.append(`${this.key}/items.json`, this.report.items)
+    if (this.report.items) out = tape.append(`${this.key}/items.json`, this.report.items)
+    if (this.config.cache) {
       out = tape.append(`${this.key}/database.json`, JSON.stringify(KeyManager.all()))
       out = tape.append(`${this.key}/cache.json`, Cache.serialize({ serializationMethod: 'pretty' }))
     }
@@ -188,7 +178,7 @@ export class ErrorReport {
   }
 
   private scrub(logging: string[]): string {
-    const ignore = [
+    const ignore = new RegExp([
       /NS_NOINTERFACE.*ComponentUtils[.]jsm/,
       /Addon must include an id, version, and type/,
       /NS_ERROR_NOT_AVAILABLE.*PartitioningExceptionListService[.]jsm/,
@@ -197,8 +187,10 @@ export class ErrorReport {
       /You have reached your Zotero File Storage quota/,
       /See your zotero.org account settings for additional storage options/,
       /Could not get children of.*CrashManager.jsm/,
-    ]
-    return logging.filter(line => !ignore.find(re => line.match(re))).join('\n')
+      /PAC file installed from/,
+    ].map(re => re.source).join('|'))
+    const homeDir = $OS.Constants.Path.homeDir
+    return logging.filter(line => !line.match(ignore)).map(line => line.replace(homeDir, '$HOME')).join('\n')
   }
 
   private errors(): string {
@@ -242,15 +234,29 @@ export class ErrorReport {
   private reload() {
     const init = typeof this.config === 'undefined'
     this.config = {
-      errors: false,
-      log: false,
-      items: false,
-      notes: false,
-      attachments: false,
+      context: true,
+      acronyms: true,
+      errors: true,
+      log: true,
+      items: true,
+      notes: true,
+      attachments: true,
+      cache: true,
     }
-    for (const facet of ['errors', 'log', 'items', 'attachments', 'notes']) { // atts & notes after items
+    for (const facet of ['errors', 'log', 'items', 'cache', 'attachments', 'notes']) { // atts & notes after items
       const cb = <HTMLInputElement>this.document.getElementById(`better-bibtex-error-report-include-${facet}`)
-      if (init) cb.checked = true
+      if (init) {
+        if (facet.match(/items|notes|attachments/)) {
+          cb.disabled = !this.input.items
+          this.config[facet] = !!this.input.items
+        }
+        if (facet === 'errors') {
+          log.debug('error report errors:', { errors: this.input.errors })
+          cb.disabled = !this.input.errors
+          this.config[facet] = !!this.input.errors
+        }
+        cb.checked = this.config[facet]
+      }
       this.config[facet] = cb.checked
       if (facet === 'notes' || facet === 'attachments') cb.disabled = !this.config.items
     }
