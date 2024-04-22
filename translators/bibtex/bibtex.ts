@@ -440,7 +440,7 @@ const importJabRef = new class JabRefDefaults {
       const cache = asset.split('.')[0]
       if (this.loaded[cache]) continue
 
-      const data = Zotero.File.getContentsFromURL(`chrome://zotero-better-bibtex/content/resource//bibtex/${asset}`)
+      const data = Zotero.File.getContentsFromURL(`chrome://zotero-better-bibtex/content/resource/bibtex/${asset}`)
       switch (cache) {
         case 'unabbrev':
           Object.assign(this[cache], JSON.parse(data))
