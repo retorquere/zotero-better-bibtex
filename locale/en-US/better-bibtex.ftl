@@ -54,11 +54,12 @@ better-bibtex_error-report_restart-with-logging-enabled =
   .label = Restart with Logging Enabled…
 
 
-better-bibtex_error-report_review = The data below is about to submitted to Better BibTeX for debugging. You can preview the data here, or save a copy of the log to get the precise data about to be sent, to see whether there's sensitive information that you do not wish to send.
+better-bibtex_error-report_review = The data below is about to submitted to Better BibTeX for debugging. You can preview the data here, or save a copy of the log to get the precise data about to be sent, to see whether there's sensitive information that you do not wish to send. Please think carefully about whether unchecking options below is necessary for your environment. We will generally needs more communication (= time) if you remove parts of the log this way.
     
-    If you are OK with sending this data, please proceed to the next screen and post the debug ID presented in the next screen in the issue tracker at
+    If you are OK with sending this data, please proceed to the next screen where you will be presented a red debug ID, and post this ID on the issue tracker at
     
     https://github.com/retorquere/zotero-better-bibtex/issue
+
 
 better-bibtex_error-report_save = 
   .label = Save copy of log for inspection

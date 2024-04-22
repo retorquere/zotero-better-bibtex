@@ -56,8 +56,12 @@ export class ErrorReport {
   private document: Document
 
   private key: string
+  private region: {
+    region: string
+    short: string
+    tld: string
+  }
   private timestamp: string
-  private tarball: string
 
   private bucket: string
   private cacheState: string
@@ -76,7 +80,7 @@ export class ErrorReport {
     const version = require('../gen/version.js')
 
     try {
-      await Zotero.HTTP.request('PUT', `${this.bucket}/${$OS.Path.basename(this.tarball)}`, {
+      await Zotero.HTTP.request('PUT', `${this.bucket}/${$OS.Path.basename(this.tarball())}`, {
         noCache: true,
         // followRedirects: true,
         // noCache: true,
@@ -92,12 +96,12 @@ export class ErrorReport {
       wizard.advance();
 
       // eslint-disable-next-line no-magic-numbers
-      (<HTMLInputElement>this.document.getElementById('better-bibtex-report-id')).value = `${this.key}/${version}-${is7 ? 7 : 6}${Zotero.BetterBibTeX.outOfMemory ? '/oom' : ''}`
+      (<HTMLInputElement>this.document.getElementById('better-bibtex-report-id')).value = `${this.name()}/${version}-${is7 ? 7 : 6}${Zotero.BetterBibTeX.outOfMemory ? '/oom' : ''}`
       this.document.getElementById('better-bibtex-report-result').hidden = false
     }
     catch (err) {
-      log.error('failed to submit', this.key, err)
-      alert({ text: `${err} (${this.key}, items: ${!!this.report.items})`, title: Zotero.getString('general.error') })
+      log.error('failed to submit', this.name(), err)
+      alert({ text: `${err} (${this.name()}, items: ${!!this.report.items})`, title: Zotero.getString('general.error') })
       if (wizard.rewind) wizard.rewind()
     }
   }
@@ -145,20 +149,20 @@ export class ErrorReport {
     const tape = new Tar
     let out: Uint8Array
 
-    out = tape.append(`${this.key}/debug.txt`, this.report.log)
+    out = tape.append(`${this.name()}/debug.txt`, this.report.log)
 
-    if (this.report.items) out = tape.append(`${this.key}/items.json`, this.report.items)
+    if (this.report.items) out = tape.append(`${this.name()}/items.json`, this.report.items)
     if (this.config.cache) {
-      out = tape.append(`${this.key}/database.json`, JSON.stringify(KeyManager.all()))
-      out = tape.append(`${this.key}/cache.json`, Cache.serialize({ serializationMethod: 'pretty' }))
+      out = tape.append(`${this.name()}/database.json`, JSON.stringify(KeyManager.all()))
+      out = tape.append(`${this.name()}/cache.json`, Cache.serialize({ serializationMethod: 'pretty' }))
     }
-    if (this.report.acronyms) out = tape.append(`${this.key}/acronyms.csv`, this.report.acronyms)
+    if (this.report.acronyms) out = tape.append(`${this.name()}/acronyms.csv`, this.report.acronyms)
 
     return gzip(out)
   }
 
   public async save(): Promise<void> {
-    const filename = await pick('Logs', 'save', [['Tape Archive (*.tgz)', '*.tgz']], `${this.key}.tgz`)
+    const filename = await pick('Logs', 'save', [['Tape Archive (*.tgz)', '*.tgz']], `${this.name()}.tgz`)
     if (filename) await $OS.File.writeAtomic(filename, this.tar(), { tmpPath: filename + '.tmp' })
   }
 
@@ -239,16 +243,16 @@ export class ErrorReport {
       errors: true,
       log: true,
       items: true,
-      notes: true,
-      attachments: true,
-      cache: true,
+      notes: false,
+      attachments: false,
+      cache: false,
     }
     for (const facet of ['errors', 'log', 'items', 'cache', 'attachments', 'notes']) { // atts & notes after items
       const cb = <HTMLInputElement>this.document.getElementById(`better-bibtex-error-report-include-${facet}`)
       if (init) {
         if (facet.match(/items|notes|attachments/)) {
           cb.disabled = !this.input.items
-          this.config[facet] = !!this.input.items
+          this.config[facet] = this.config[facet] && !!this.input.items
         }
         if (facet === 'errors') {
           log.debug('error report errors:', { errors: this.input.errors })
@@ -347,11 +351,9 @@ export class ErrorReport {
 
       (<HTMLInputElement>this.document.getElementById('better-bibtex-report-oom')).hidden = !Zotero.BetterBibTeX.outOfMemory
 
-      const region = await Zotero.Promise.any(Object.keys(s3.region).map(this.ping.bind(this)))
-      this.bucket = `https://${s3.bucket}-${region.short}.s3-${region.region}.amazonaws.com${region.tld || ''}`
-      this.key = `${Zotero.Utilities.generateObjectKey()}${this.report.items ? '-refs' : ''}-${region.short}` // eslint-disable-line no-magic-numbers
-
-      this.tarball = `${this.key}-${this.timestamp}.tgz`
+      this.region = await Zotero.Promise.any(Object.keys(s3.region).map(this.ping.bind(this)))
+      this.bucket = `https://${s3.bucket}-${this.region.short}.s3-${this.region.region}.amazonaws.com${this.region.tld || ''}`
+      this.key = Zotero.Utilities.generateObjectKey()
 
       continueButton.disabled = false
       continueButton.focus()
@@ -361,6 +363,13 @@ export class ErrorReport {
       alert({ text: `No AWS region can be reached: ${err.message}` })
       wizard.getButton('cancel').disabled = false
     }
+  }
+
+  private name() {
+    return `${this.key}${this.report.items ? '-refs' : ''}-${this.region.short}`
+  }
+  private tarball() {
+    return `${this.name()}-${this.timestamp}.tgz`
   }
 
   private preview(input: any): string {
