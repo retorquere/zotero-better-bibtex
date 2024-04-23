@@ -28,10 +28,12 @@ better-bibtex_error-report_include-errors =
     .label = 包括错误信息
 better-bibtex_error-report_include-log = 
     .label = 包括调试日志
-better-bibtex_error-report_include-cache = 
-    .label = 包括条目
+better-bibtex_error-report_include-items = 
+    .label = Include item
 better-bibtex_error-report_include-notes = 
     .label = 备注
+better-bibtex_error-report_include-cache = 
+    .label = cache
 better-bibtex_error-report_include-attachments = 
     .label = 附件元数据
 better-bibtex_error-report_items = 
@@ -42,18 +44,19 @@ better-bibtex_error-report_report-id = 调试日志 ID：
 better-bibtex_error-report_restart-with-logging-enabled = 
     .label = 启用日志记录并重启…
 better-bibtex_error-report_review =
-    下列数据将被提交至 Better BibTeX 以供调试。您可以检查其中是否有您不希望发送的敏感信息。
+    The data below is about to submitted to Better BibTeX for debugging. You can preview the data here, or save a copy of the log to get the precise data about to be sent, to see whether there's sensitive information that you do not wish to send. Please think carefully about whether unchecking options below is necessary for your environment. We will generally needs more communication (= time) if you remove parts of the log this way.
     
-    若您同意发送下列数据，请进行下一步，并将下一步中显示的调试日志 ID 提交至 GitHub Issues，网址为
+    If you are OK with sending this data, please proceed to the next screen where you will be presented a red debug ID, and post this ID on the issue tracker at
     
     https://github.com/retorquere/zotero-better-bibtex/issue
 better-bibtex_error-report_save = 
-    .label = 保存日志副本
+    .label = Save copy of log for inspection
 better-bibtex_error-report_submission-in-progress = 正在提交调试日志，请稍候。
 better-bibtex_error-report_submitted = 您的调试日志已被提交。
 better-bibtex_export-options_keep-updated = 保持更新
 better-bibtex_export-options_reminder = 您确定不使用“{ $translator }”吗？
 better-bibtex_export-options_worker = 后台导出
+better-bibtex_export-options_biblatexAPA = biblatex-apa
 unused_better-bibtex_first-run = 
     .title = 欢迎使用 Better BibTeX for Zotero
     .label = 欢迎使用 Better BibTeX for Zotero
@@ -163,6 +166,8 @@ better-bibtex_preferences_auto-export_fields_notes =
     .label = 导出笔记
 better-bibtex_preferences_auto-export_fields_recursive = 
     .label = 导出所有子分类
+better-bibtex_preferences_auto-export_fields_biblatexAPA = 
+    .label = biblatex-apa
 better-bibtex_preferences_auto-export_git_message = { $type } updated by Better BibTeX for Zotero
 better-bibtex_preferences_auto-export_idle = 空闲时
     .label = { better-bibtex_preferences_auto-export_idle }

@@ -28,10 +28,12 @@ better-bibtex_error-report_include-errors =
     .label = Include error messages
 better-bibtex_error-report_include-log = 
     .label = Include debug log
-better-bibtex_error-report_include-cache = 
-    .label = Include items
+better-bibtex_error-report_include-items = 
+    .label = Include item
 better-bibtex_error-report_include-notes = 
     .label = notes
+better-bibtex_error-report_include-cache = 
+    .label = cache
 better-bibtex_error-report_include-attachments = 
     .label = attachment metadata
 better-bibtex_error-report_items = 
@@ -42,18 +44,19 @@ better-bibtex_error-report_report-id = Debug log ID:
 better-bibtex_error-report_restart-with-logging-enabled = 
     .label = Reiniciar com registro ativado…
 better-bibtex_error-report_review =
-    The data below is about to submitted to Better BibTeX for debugging. You can review the data to see whether there's sensitive information that you do not wish to send.
+    The data below is about to submitted to Better BibTeX for debugging. You can preview the data here, or save a copy of the log to get the precise data about to be sent, to see whether there's sensitive information that you do not wish to send. Please think carefully about whether unchecking options below is necessary for your environment. We will generally needs more communication (= time) if you remove parts of the log this way.
     
-    If you are OK with sending this data, please proceed to the next screen and post the debug ID presented in the next screen in the issue tracker at
+    If you are OK with sending this data, please proceed to the next screen where you will be presented a red debug ID, and post this ID on the issue tracker at
     
     https://github.com/retorquere/zotero-better-bibtex/issue
 better-bibtex_error-report_save = 
-    .label = Save copy of log
+    .label = Save copy of log for inspection
 better-bibtex_error-report_submission-in-progress = Please wait while the debug log is submitted.
 better-bibtex_error-report_submitted = Your debug log has been submitted.
 better-bibtex_export-options_keep-updated = Manter atualizado
 better-bibtex_export-options_reminder = Tem certeza que você não quer o formato ''{ $translator }''?
 better-bibtex_export-options_worker = Background export
+better-bibtex_export-options_biblatexAPA = biblatex-apa
 unused_better-bibtex_first-run = 
     .title = Welcome to Better BibTeX for Zotero
     .label = Welcome to Better BibTeX for Zotero
@@ -162,6 +165,8 @@ better-bibtex_preferences_auto-export_fields_notes =
     .label = Exportar notas
 better-bibtex_preferences_auto-export_fields_recursive = 
     .label = Export all child collections
+better-bibtex_preferences_auto-export_fields_biblatexAPA = 
+    .label = biblatex-apa
 better-bibtex_preferences_auto-export_git_message = { $type } atualizado por Better BibTeX for Zotero
 better-bibtex_preferences_auto-export_idle = Quando ocioso
     .label = { better-bibtex_preferences_auto-export_idle }
