@@ -251,8 +251,8 @@ export class ErrorReport {
       const facet = cb.id.replace(/.*-/, '')
 
       if (init) {
-        if (facet.match(/items|notes|attachments/)) {
-          cb.disabled = !this.input.items
+        if (facet.match(/notes|attachments/)) {
+          cb.hidden = !this.input.items
           this.config[facet] = this.config[facet] && !!this.input.items
         }
         if (facet === 'errors') {
