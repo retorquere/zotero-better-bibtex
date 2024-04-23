@@ -29,11 +29,11 @@ better-bibtex_error-report_include-errors =
 better-bibtex_error-report_include-log = 
     .label = 包括调试日志
 better-bibtex_error-report_include-items = 
-    .label = Include item
+    .label = 包括条目
 better-bibtex_error-report_include-notes = 
     .label = 备注
 better-bibtex_error-report_include-cache = 
-    .label = cache
+    .label = 缓存
 better-bibtex_error-report_include-attachments = 
     .label = 附件元数据
 better-bibtex_error-report_items = 
@@ -50,7 +50,7 @@ better-bibtex_error-report_review =
     
     https://github.com/retorquere/zotero-better-bibtex/issue
 better-bibtex_error-report_save = 
-    .label = Save copy of log for inspection
+    .label = 保存日志副本以供检查
 better-bibtex_error-report_submission-in-progress = 正在提交调试日志，请稍候。
 better-bibtex_error-report_submitted = 您的调试日志已被提交。
 better-bibtex_export-options_keep-updated = 保持更新

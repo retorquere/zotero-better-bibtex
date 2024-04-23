@@ -29,7 +29,7 @@ better-bibtex_error-report_include-errors =
 better-bibtex_error-report_include-log = 
     .label = Inclure le journal de débogage
 better-bibtex_error-report_include-items = 
-    .label = Include item
+    .label = Inclure l'élément
 better-bibtex_error-report_include-notes = 
     .label = notes
 better-bibtex_error-report_include-cache = 
@@ -44,13 +44,13 @@ better-bibtex_error-report_report-id = ID du journal de débogage :
 better-bibtex_error-report_restart-with-logging-enabled = 
     .label = Redémarrer avec le journal activé…
 better-bibtex_error-report_review =
-    The data below is about to submitted to Better BibTeX for debugging. You can preview the data here, or save a copy of the log to get the precise data about to be sent, to see whether there's sensitive information that you do not wish to send. Please think carefully about whether unchecking options below is necessary for your environment. We will generally needs more communication (= time) if you remove parts of the log this way.
+    Les données ci-dessous sont sur le point d'être soumises à Better BibTeX pour le débogage. Vous pouvez prévisualiser les données ici, ou enregistrer une copie du journal pour obtenir les données précises sur le point d'être envoyées, pour voir s'il y a des informations sensibles que vous souhaitez ne pas envoyer. Réfléchissez bien à la nécessité de décocher les options ci-dessous dans votre environnement. Nous aurons généralement besoin de plus de communication (= de temps) si vous supprimez des parties du journal de cette manière.
     
-    If you are OK with sending this data, please proceed to the next screen where you will be presented a red debug ID, and post this ID on the issue tracker at
+    Si vous êtes d'accord avec l'envoi de ces données, passez à l'écran suivant, où vous obtiendrez un identifiant de débogage rouge, et publiez cet identifiant sur le système de suivi des problèmes à l'adresse suivante :
     
     https://github.com/retorquere/zotero-better-bibtex/issue
 better-bibtex_error-report_save = 
-    .label = Save copy of log for inspection
+    .label = Sauvegarder une copie du log pour inspection
 better-bibtex_error-report_submission-in-progress = Veuillez patienter pendant que le journal de débogage est soumis.
 better-bibtex_error-report_submitted = Votre journal de débogage a été envoyé.
 better-bibtex_export-options_keep-updated = Garder à jour
