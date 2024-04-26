@@ -16,7 +16,7 @@ import ucs2decode = require('punycode2/ucs2/decode')
 import { Preference } from '../prefs'
 import { JournalAbbrev } from '../journal-abbrev'
 import * as Extra from '../extra'
-import { buildCiteKey as zotero_buildCiteKey } from './formatter-zotero'
+import { buildCiteKey as zotero_buildCiteKey } from '../../gen/ZoteroBibTeX.mjs'
 import { babelLanguage, CJK } from '../text'
 import { fetchSync as fetchInspireHEP } from '../inspire-hep'
 

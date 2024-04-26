@@ -760,3 +760,19 @@ with open(os.path.join(ITEMS, 'csl.json'), 'w') as f, open('submodules/citation-
     if 'type' in m and type(m.type) == list:
       m.type = sorted(m.type)
   json.dump(schema, f, indent='  ')
+
+print('  writing zotero citation key formatter')
+with open('submodules/translators/BibTeX.js') as fin, open('gen/ZoteroBibTeX.mjs', 'w') as fout:
+  fout.write('''
+    const ZU = Zotero.Utilities;
+    const Z = {
+      getHiddenPref(p) {
+        return Zotero.Prefs.get('translators.' + p);
+      }
+    };
+  ''')
+  fout.write('const ZOTERO_TRANSLATOR_INFO = ')
+  fout.write(fin.read()
+    .replace('Zotero.Utilities.strToDate', 'Zotero.Date.strToDate')
+  )
+  fout.write('\nexport { buildCiteKey }\n')
