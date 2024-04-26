@@ -775,4 +775,4 @@ with open('submodules/translators/BibTeX.js') as fin, open('gen/ZoteroBibTeX.mjs
   fout.write(fin.read()
     .replace('Zotero.Utilities.strToDate', 'Zotero.Date.strToDate')
   )
-  fout.write('\nexport { buildCiteKey }\n')
+  fout.write('\nexport { buildCiteKey, detectImport }\n')

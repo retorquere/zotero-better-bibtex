@@ -1,6 +1,7 @@
 import { Translation, collect } from './lib/translator'
 import type { Translators } from '../typings/translators.d.ts'
 import type { ParseError } from '@retorquere/bibtex-parser'
+import { detectImport as zotero_detectImport } from '../gen/ZoteroBibTeX.mjs'
 
 declare const Zotero: any
 declare var ZOTERO_TRANSLATOR_INFO: Translators.Header // eslint-disable-line no-var
@@ -16,43 +17,7 @@ export function doExport(): void {
 import * as escape from '../content/escape'
 
 export function detectImport(): boolean {
-  if (!Zotero.BetterBibTeX || !Zotero.getHiddenPref('better-bibtex.import')) return false
-
-  const maxChars = 1048576 // 1MB
-  const chunk = 4096
-
-  let inComment = false
-  let block = ''
-  let buffer = ''
-  let chr = ''
-  let charsRead = 0
-
-  const re = /^\s*@[a-zA-Z]+[({]/
-  while ((buffer = Zotero.read(chunk)) && charsRead < maxChars) {
-    Zotero.debug(`Scanning ${buffer.length} characters for BibTeX`)
-    charsRead += buffer.length
-    for (let i=0; i<buffer.length; i++) {
-      chr = buffer[i]
-
-      if (inComment && chr !== '\r' && chr !== '\n') continue
-      inComment = false
-
-      if (chr === '%') {
-        // read until next newline
-        block = ''
-        inComment = true
-      }
-      // allow one-line entries
-      else if ((chr === '\n' || chr === '\r' || i === (buffer.length - 1)) && block) {
-        // check if this is a BibTeX entry
-        if (re.test(block)) return true
-        block = ''
-      }
-      else if (!' \n\r\t'.includes(chr)) {
-        block += chr
-      }
-    }
-  }
+  return Zotero.BetterBibTeX && Zotero.getHiddenPref('better-bibtex.import') && zotero_detectImport()
 }
 
 function importGroup(group, itemIDs, root = null) {
