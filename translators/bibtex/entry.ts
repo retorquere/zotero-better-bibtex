@@ -115,7 +115,7 @@ const enc_creators_marker = {
 const isBibString = /^[a-z][-a-z0-9_]*$/i
 
 export type Config = {
-  fieldEncoding: Record<string, 'raw' | 'url' | 'verbatim' | 'creators' | 'literal' | 'literal_list' | 'tags' | 'attachments' | 'date'>
+  fieldEncoding: Record<string, 'raw' | 'url' | 'verbatim' | 'creators' | 'literal' | 'literal_list' | 'tags' | 'attachments' | 'date' | 'extra'>
   caseConversion: Record<string, boolean>
   typeMap: {
     csl: Record<string, string | { type: string, subtype?: string }>
@@ -515,6 +515,10 @@ export class Entry {
       else {
         let value
         switch (field.enc) {
+          case 'extra':
+            value = this.enc_extra(field)
+            break
+
           case 'literal_list':
             value = this.enc_literal_list(field, { raw: this.item.raw })
             break
@@ -776,7 +780,7 @@ export class Entry {
       }
     }
 
-    this.add({ name: 'annotation', value: this.item.extra?.replace(/\n+/g, newlines => (newlines.length > 1 ? '\n\n' : ' ')).trim() })
+    this.add({ name: 'annotation', value: this.item.extra, enc: 'extra' })
 
     if (this.translation.options.exportNotes) {
       // if bibtexURL === 'note' is active, the note field will have been filled with an URL. In all other cases, if this is attempting to overwrite the 'note' field, I want the test suite to throw an error
@@ -1033,12 +1037,25 @@ export class Entry {
   }
 
   /*
-   * Encode text to LaTeX
+   * Encode extra field to LaTeX
+   *
+   * This encoding supports plaintext with newlines
+   *
+   * @param {field} field to encode.
+   * @return {String} field.value encoded as latex
+   */
+  protected enc_extra(f) {
+    return f.value.split(/(\n+)/).map((value: string, i: number) => ((i % 2) === 0) ? this.enc_literal({ value }) : value.length === 1 ? '\\\\\n' : '\n\n').join('')
+  }
+
+  /*
+  /*
+   * Encode list to LaTeX
    *
    * This encoding supports simple HTML markup.
    *
    * @param {field} field to encode.
-   * @return {String} field.value encoded as author-style value
+   * @return {String} field.value encoded as list of literals
    */
   protected enc_literal_list(f, options: { raw?: boolean } = {}) {
     const list = Array.isArray(f.value) ? f.value : [ f.value ]

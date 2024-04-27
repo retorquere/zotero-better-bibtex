@@ -45,7 +45,7 @@ export namespace Translators {
       name: string
       verbatim?: string
       value: string | string[] | number | null | Attachment[] | Tag[]
-      enc?: 'raw' | 'url' | 'verbatim' | 'creators' | 'literal' | 'literal_list' | 'latex' | 'tags' | 'attachments' | 'date' | 'minimal' | 'bibtex' | 'biblatex'
+      enc?: 'raw' | 'url' | 'verbatim' | 'creators' | 'literal' | 'literal_list' | 'latex' | 'tags' | 'attachments' | 'date' | 'minimal' | 'bibtex' | 'biblatex' | 'extra'
       orig?: { name?: string, verbatim?: string, inherit?: boolean }
       bibtexStrings?: boolean
       bare?: boolean
