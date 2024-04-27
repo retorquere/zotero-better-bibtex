@@ -1045,7 +1045,7 @@ export class Entry {
    * @return {String} field.value encoded as latex
    */
   protected enc_extra(f) {
-    return f.value.split(/(\n+)/).map((value: string, i: number) => ((i % 2) === 0) ? this.enc_literal({ value }) : value.length === 1 ? '\\\\\n' : '\n\n').join('')
+    return this.enc_literal({ value: f.value.replace(/\n/g, '\x0E') }).replace(/\x0E/g, newlines => newlines.length === 1 ? '\\\\\n' : '\n\n') // eslint-disable-line no-control-regex
   }
 
   /*
