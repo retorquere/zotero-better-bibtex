@@ -362,6 +362,7 @@ better-bibtex_zotero-pane_sentence-case = BBT Tutte le Iniziali Maiuscole
 better-bibtex_zotero-pane_show_collection-key = Scarica esportazione di Better BibTeX...
 better-bibtex_zotero-pane_tag_duplicates = Tagga chiavi di citazione duplicate
 better-bibtex_zotero-pane_tex-studio = Invia voci a TeXstudio
+betterbibtex-item-pane-header = Citation key
 unused_better-bibtex_auto-export_too-long_body-eabled = La tua esportazione automatica di { $translator } in { $path } ha impiegato { $seconds } secondi. Durante le esportazioni, l'interfaccia di Zotero non risponde.
 unused_better-bibtex_auto-export_too-long_prime-enabled = Per ridurre al minimo i disagi dovuti a esportazioni automatiche di lunga durata, è stato attivato il pre-caricamento della cache. Ciò renderà le esportazioni più lente, ma ridurrà al minimo il blocco di Zotero.
 unused_better-bibtex_auto-export_too-long_sorry = Il pre-caricamento della cache è già attivo, e le esportazioni automatiche impostate durante i periodi di inattività. Ulteriori miglioramenti non sono possibili senza un cambio di architettura in Zotero (https://u.nu/27e9).

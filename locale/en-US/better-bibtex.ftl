@@ -71,6 +71,7 @@ better-bibtex_export-options_reminder = Are you sure you don't want the '{ $tran
 better-bibtex_export-options_worker = Background export
 better-bibtex_export-options_biblatexAPA = biblatex-apa
 better-bibtex_export-options_biblatexChicago = biblatex-chicago
+
 unused_better-bibtex_first-run = 
   .title = Welcome to Better BibTeX for Zotero
   .label = Welcome to Better BibTeX for Zotero
@@ -457,6 +458,8 @@ better-bibtex_zotero-pane_sentence-case = BBT Sentence-case
 better-bibtex_zotero-pane_show_collection-key = Download Better BibTeX export...
 better-bibtex_zotero-pane_tag_duplicates = Tag duplicate citation keys
 better-bibtex_zotero-pane_tex-studio = Push entries to TeXstudio
+
+betterbibtex-item-pane-header = Citation key
 
 unused_better-bibtex_auto-export_too-long_body-eabled = Your { $translator } auto-export to { $path } took { $seconds } seconds. During exports of any kind, the Zotero user interface locks up.
 
