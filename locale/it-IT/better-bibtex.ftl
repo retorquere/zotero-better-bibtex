@@ -57,6 +57,7 @@ better-bibtex_export-options_keep-updated = Mantieni aggiornato
 better-bibtex_export-options_reminder = Si è sicuri di non volere il formato '{ $translator }' ?
 better-bibtex_export-options_worker = Esportazione in background
 better-bibtex_export-options_biblatexAPA = biblatex-apa
+better-bibtex_export-options_biblatexChicago = biblatex-chicago
 unused_better-bibtex_first-run = 
     .title = Ti presentiamo Better BibTeX per Zotero
     .label = Ti presentiamo Better BibTeX per Zotero
