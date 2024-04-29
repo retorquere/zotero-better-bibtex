@@ -57,6 +57,7 @@ better-bibtex_export-options_keep-updated = 保持更新
 better-bibtex_export-options_reminder = 您确定不使用“{ $translator }”吗？
 better-bibtex_export-options_worker = 后台导出
 better-bibtex_export-options_biblatexAPA = biblatex-apa
+better-bibtex_export-options_biblatexChicago = biblatex-chicago
 unused_better-bibtex_first-run = 
     .title = 欢迎使用 Better BibTeX for Zotero
     .label = 欢迎使用 Better BibTeX for Zotero
