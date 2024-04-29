@@ -3,6 +3,7 @@ import { is7 } from './client'
 import { OS as $OS } from '../gen/osfile'
 export const Shim: any = is7 ? $OS : undefined
 
+/*
 if (is7 && !Shim.Path.split) {
   Shim.Path.split = (path: string) => {
     path = Shim.Path.normalize(path)
@@ -20,3 +21,4 @@ if (is7 && !Shim.Path.split) {
     }
   }
 }
+*/
