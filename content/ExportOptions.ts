@@ -95,7 +95,8 @@ export class ExportOptions {
         break
     }
 
-    for (const node of [...doc.querySelectorAll('#export-option-exportFileData, #export-option-worker, #export-option-keepUpdated')] as HTMLInputElement[]) {
+    const ids = ['exportFileData', 'worker', 'keepUpdated', 'biblatexAPA', 'biblatexChicago'].map(id => `#export-option-${id}`).join(', ')
+    for (const node of [...doc.querySelectorAll(ids)] as HTMLInputElement[]) {
       if (node.classList.contains('better-bibex-export-options')) continue
       node.classList.add('better-bibex-export-options')
       node.addEventListener('command', this.mutex.bind(this))
@@ -107,6 +108,12 @@ export class ExportOptions {
           break
         case 'export-option-worker':
           node.setAttribute('label', l10n.localize('better-bibtex_export-options_worker'))
+          break
+        case 'export-option-biblatexAPA':
+          node.setAttribute('label', l10n.localize('better-bibtex_export-options_biblatexAPA'))
+          break
+        case 'export-option-biblatexChicago':
+          node.setAttribute('label', l10n.localize('better-bibtex_export-options_biblatexChicago'))
           break
       }
     }
@@ -126,6 +133,8 @@ export class ExportOptions {
     const exportFileData = doc.getElementById('export-option-exportFileData') as XUL.Checkbox
     const keepUpdated = doc.getElementById('export-option-keepUpdated') as XUL.Checkbox
     const worker = doc.getElementById('export-option-worker') as XUL.Checkbox
+    const biblatexAPA = doc.getElementById('export-option-biblatexAPA') as XUL.Checkbox
+    const biblatexChicago = doc.getElementById('export-option-biblatexChicago') as XUL.Checkbox
 
     if (!exportFileData || !keepUpdated) return null
 
@@ -147,6 +156,12 @@ export class ExportOptions {
           exportFileData.checked = false
           worker.checked = true
         }
+        break
+      case biblatexAPA.id:
+        if (biblatexAPA.checked) biblatexChicago.checked = false
+        break
+      case biblatexChicago.id:
+        if (biblatexChicago.checked) biblatexAPA.checked = false
         break
     }
     worker.disabled = keepUpdated.checked

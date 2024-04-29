@@ -4,8 +4,7 @@ import { strToISO } from '../../content/dateparser'
 import { qualityReport } from '../../gen/biber-tool'
 
 import { Entry as BaseEntry, Config } from './entry'
-
-type CreatorArray = any[] & { type?: string }
+import { print } from '../../content/logger'
 
 const config: Config = {
   fieldEncoding: {
@@ -127,11 +126,43 @@ const config: Config = {
   },
 }
 
+class CreatorTypeMap {
+  public type: Record<string, string> = {}
+  private registered: Record<string, string> = {}
+  private static extension = {
+    editor: ['', 'a', 'b', 'c'],
+    name: ['a', 'b', 'c'],
+  }
+
+  constructor(private hasEditor: boolean) {
+  }
+
+  register(base: 'editor' | 'name', type: string) {
+    type = type.toLowerCase()
+    if (!this.registered[type]) {
+      for (const postfix of CreatorTypeMap.extension[base]) {
+        const candidate = `${base}${postfix}`
+        if (this.hasEditor && candidate === 'editor' && type !== 'editor') continue
+        if (this.type[candidate]) {
+          if (postfix !== 'c') continue
+          print(`squashing ${type} into ${candidate}`)
+        }
+        this.type[candidate] = type
+        this.registered[type] = candidate
+        break
+      }
+    }
+
+    print(`::register(${JSON.stringify({ base, type })} = ${JSON.stringify(this.type)}`)
+    return this.registered[type]
+  }
+}
+
 class Entry extends BaseEntry {
   public addCreators() {
     if (!this.item.creators || !this.item.creators.length) return
 
-    const creators: Record<string, CreatorArray> = {
+    const creators: Record<string, any[]> = {
       author: [],
       with: [],
       bookauthor: [],
@@ -139,25 +170,25 @@ class Entry extends BaseEntry {
       editor: [],
       editora: [],
       editorb: [],
+      editorc: [],
+      namea: [],
+      nameb: [],
+      namec: [],
       holder: [],
       translator: [],
       // scriptwriter: [],
       // director: [],
     }
-    creators.editora.type = 'collaborator'
-    creators.editorb.type = 'redactor'
+
+    const creatorType = new CreatorTypeMap(!!this.item.creators.find(cr => cr.creatorType === 'editor'))
+    const video = ['video', 'movie'].includes(this.entrytype)
+    if (video) creatorType.register('editor', 'director')
 
     for (const creator of this.item.creators) {
       switch (creator.creatorType) {
         case 'director':
           // 365.something
-          if (['video', 'movie'].includes(this.entrytype)) {
-            creators.editor.push(creator)
-            creators.editor.type = 'director'
-          }
-          else {
-            creators.author.push(creator)
-          }
+          creators[video ? 'editor' : 'author'].push(creator)
           break
 
         case 'contributor':
@@ -165,7 +196,7 @@ class Entry extends BaseEntry {
             creators.with.push(creator)
           }
           else {
-            creators.editora.push(creator)
+            creators[creatorType.register('editor', video && this.translation.options.biblatexChicago ? 'none' : 'collaborator')].push(creator)
           }
           break
 
@@ -200,32 +231,20 @@ class Entry extends BaseEntry {
           break
 
         case 'seriesEditor':
-          creators.editorb.push(creator)
+          creators[creatorType.register('editor', 'redactor')].push(creator)
           break
 
         case 'scriptwriter':
           // 365.something
-          creators.editora.push(creator)
-          if (['video', 'movie'].includes(this.entrytype)) {
-            creators.editora.type = 'scriptwriter'
-          }
-          break
-
-        case 'contributor':
-          if (['video', 'movie'].includes(this.entrytype)) {
-            creators.editorb.push(creator)
-            creators.editorb.type = 'none'
-          }
-          else {
-            creators.editora.push(creator)
-          }
+          creators[creatorType.register('editor', video ? 'scriptwriter' : 'collaborator')].push(creator)
           break
 
         default:
-          creators.editora.push(creator)
+          creators[creatorType.register('name', creator.creatorType)].push(creator)
       }
     }
 
+    print(`::types=${JSON.stringify(creatorType.type)}`)
     for (const [field, value] of Object.entries(creators)) {
       this.remove(field)
       this.remove(`${field}type`)
@@ -233,7 +252,7 @@ class Entry extends BaseEntry {
       if (!value.length) continue
 
       this.add({ name: field, value, enc: 'creators' })
-      if (value.type) this.add({ name: `${field}type`, value: value.type })
+      this.add({ name: `${field}type`, value: creatorType.type[field] })
     }
   }
 }

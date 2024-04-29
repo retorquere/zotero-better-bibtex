@@ -85,6 +85,7 @@ export namespace Translators {
       exportFileData?: boolean
       useJournalAbbreviation?: boolean
       biblatexAPA?: boolean
+      biblatexChicago?: boolean
       keepUpdated?: boolean
       worker?: boolean
       markdown?: boolean

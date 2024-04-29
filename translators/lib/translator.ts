@@ -280,6 +280,7 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
     dropAttachments?: boolean
     exportNotes?: boolean
     biblatexAPA?: boolean
+    biblatexChicago?: boolean
     markdown?: boolean
     exportFileData?: boolean
     useJournalAbbreviation?: boolean
