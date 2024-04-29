@@ -363,6 +363,7 @@ better-bibtex_zotero-pane_sentence-case = BBT 句首大写
 better-bibtex_zotero-pane_show_collection-key = 下载 Better BibTeX 导出…
 better-bibtex_zotero-pane_tag_duplicates = 标记重复的引用
 better-bibtex_zotero-pane_tex-studio = 推送条目至 TeXstudio
+betterbibtex-item-pane-header = Citation key
 unused_better-bibtex_auto-export_too-long_body-eabled = 您的 { $translator } 自动导出至 { $path } 用时 { $seconds } 秒。在任何导出过程中，Zotero 用户界面均将无响应。
 unused_better-bibtex_auto-export_too-long_prime-enabled = 为了最大程度地减少高耗时自动导出的影响，缓存预处理已启用。 这将使自动导出减慢，但也将缩减 Zotero 无响应的时间至最短。
 unused_better-bibtex_auto-export_too-long_sorry = 您已经启用了缓存预处理，并将自动导出设置为空闲时运行。进一步的优化要求重构 Zotero 架构（https://u.nu/27e9）。
