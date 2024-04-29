@@ -13,6 +13,7 @@ Feature: Export
 
     Examples:
       | file                                                                                                                     | references |
+      | Three dashes in extra field for generating markdown files from bibtex #2849                                              | 1          |
       | Export of Contributor to WITH #2837                                                                                      | 1          |
       | Better BibTeX export from Zotero missing Extra fields eg issued #2816                                                    | 1          |
       | Support for Chinese Quotation Marks When Exporting with Export unicode as plaintext latex commands #2810                 | 1          |
