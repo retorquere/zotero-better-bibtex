@@ -3,6 +3,10 @@ declare const FileUtils: any
 
 import { log } from './logger'
 
+import { Shim } from './os'
+import { is7 } from './client'
+const $OS = is7 ? Shim : OS
+
 import { Events } from './events'
 import { DB as Cache } from './db/cache'
 import { $and } from './db/loki'
@@ -46,7 +50,7 @@ export const SQL = new class {
     }
 
     const settings = autoExport[job.translatorID]
-    const displayOptions = byId[job.translatorID]?.displayOptions || {}
+    const displayOptions = {...(byId[job.translatorID]?.displayOptions || {})}
     Object.assign(job, pick(Preference, settings.preferences))
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     Object.assign(job, fromPairs(settings.options.map((option: PreferenceName) => [ option, job[option] ?? displayOptions[option] ?? false ])))
@@ -146,7 +150,7 @@ class Git {
 
       case 'always':
         try {
-          repo.path = OS.Path.dirname(bib)
+          repo.path = $OS.Path.dirname(bib)
         }
         catch (err) {
           log.error('git.repo:', err)
@@ -157,16 +161,16 @@ class Git {
       case 'config':
         // eslint-disable-next-line no-case-declarations
         let config = null
-        for (let root = OS.Path.dirname(bib); (await OS.File.exists(root)) && (await OS.File.stat(root)).isDir && root !== OS.Path.dirname(root); root = OS.Path.dirname(root)) {
-          config = OS.Path.join(root, '.git')
-          if ((await OS.File.exists(config)) && (await OS.File.stat(config)).isDir) break
+        for (let root = $OS.Path.dirname(bib); (await $OS.File.exists(root)) && (await $OS.File.stat(root)).isDir && root !== $OS.Path.dirname(root); root = $OS.Path.dirname(root)) {
+          config = $OS.Path.join(root, '.git')
+          if ((await $OS.File.exists(config)) && (await $OS.File.stat(config)).isDir) break
           config = null
         }
         if (!config) return repo
-        repo.path = OS.Path.dirname(config)
+        repo.path = $OS.Path.dirname(config)
 
-        config = OS.Path.join(config, 'config')
-        if (!(await OS.File.exists(config)) || (await OS.File.stat(config)).isDir) {
+        config = $OS.Path.join(config, 'config')
+        if (!(await $OS.File.exists(config)) || (await $OS.File.stat(config)).isDir) {
           return repo
         }
 
@@ -321,6 +325,7 @@ const queue = new class TaskQueue {
       const displayOptions: any = {
         exportNotes: ae.exportNotes,
         useJournalAbbreviation: ae.useJournalAbbreviation,
+        biblatexAPA: ae.biblatexAPA || false,
       }
 
       const jobs: ExportJob[] = [{
@@ -341,8 +346,8 @@ const queue = new class TaskQueue {
 
         const root = scope.type === 'collection' ? scope.collection : false
 
-        const dir = OS.Path.dirname(ae.path)
-        const base = OS.Path.basename(ae.path).replace(new RegExp(`${ext.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&')}$`), '')
+        const dir = $OS.Path.dirname(ae.path)
+        const base = $OS.Path.basename(ae.path).replace(new RegExp(`${ext.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&')}$`), '')
 
         const autoExportPathReplace = {
           diacritics: Preference.autoExportPathReplaceDiacritics,
@@ -351,7 +356,7 @@ const queue = new class TaskQueue {
         }
 
         for (const collection of collections) {
-          const output = OS.Path.join(dir, [base]
+          const output = $OS.Path.join(dir, [base]
             .concat(this.getCollectionPath(collection, root))
             // eslint-disable-next-line no-control-regex
             .map((p: string) => p.replace(/[<>:'"/\\|?*\u0000-\u001F]/g, ''))
@@ -408,6 +413,7 @@ type Job = {
   biblatexExtendedNameFormat?: boolean
   DOIandURL?: boolean
   bibtexURL?: boolean
+  biblatexAPA?: boolean
 }
 type JobSetting = keyof Job
 

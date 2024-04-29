@@ -1,0 +1,47 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "options": {
+      "Items": true,
+      "Preferences": true,
+      "exportNotes": true,
+      "worker": true
+    },
+    "preferences": {
+      "DOIandURL": "doi",
+      "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
+      "autoExportDelay": 2,
+      "citekeyFormat": "auth.lower+year"
+    }
+  },
+  "items": [
+    {
+      "citationKey": "rafn1829",
+      "creators": [
+        {
+          "creatorType": "editor",
+          "firstName": "Carl Christian",
+          "lastName": "Rafn"
+        }
+      ],
+      "date": "1829\u20131830",
+      "extra": [
+        "bibtex: rafn1829",
+        "Issued: 1829/1830"
+      ],
+      "itemID": 1,
+      "itemType": "book",
+      "language": "da",
+      "notes": [
+        "<p>vol I:</p>\n<p>1. Hr\u00f3lfs saga kraka</p>\n<p>2. Bjarkam\u00e1l</p>\n<p>3. V\u00f6lsunga saga</p>\n<p>4. Ragnars saga</p>\n<p>5. Kr\u00e1kum\u00e1l</p>\n<p>6. Norna Gests \u00fe\u00e1ttr</p>\n<p>7. Ragnarsona \u00fe\u00e1ttr</p>\n<p>8. S\u00f6gubrot</p>\n<p>9. S\u00f6rla \u00fe\u00e1ttr</p>\n<p>10. Hervarar saga</p>",
+        "<p>vol II: <br />1. Fr\u00e1 Fornjoti ok hans \u00e6ttm\u00f6nnum,</p>\n<p>2. H\u00e1lfs saga ok H\u00e1lfsreka (23-60),</p>\n<p>3. Fri\u00f0\u00fejofs saga ens fr\u00e6kna (61-100),</p>\n<p>4. Af Upplendinga konungum (101-106),</p>\n<p>5. Ketils saga h\u00e6ngs (107-139),</p>\n<p>6. Gr\u00edms saga lo\u00f0inkinna (141-157),</p>\n<p>7, \u00d6rvar-Odds saga (159-322),</p>\n<p>8. Ans saga Bogsveigis (323-362),</p>\n<p>9. Hr\u00f3mundar saga (363-380),</p>\n<p>10. \u00deorsteins saga vikingssonar (381-459),</p>\n<p>11. Asmundar saga kappabana (461-487)</p>",
+        "<p>vol. III</p>\n<p>1. Gautreks saga [sem sumir kalla Gjafa-Refs s\u00f6gu]</p>\n<p>2. Hr\u00f3lfs saga Gautrekssonar</p>\n<p>3. B\u00f3sa saga</p>\n<p>4. S\u00f6gu-Hr\u00f3lfs saga</p>\n<p>5. Egils saga einhenda</p>\n<p>6. S\u00f6rla saga sterka</p>\n<p>7. Hj\u00e1lers saga og Olvers</p>\n<p>8. H\u00e1lfdanae saga Eysteinnsonar</p>\n<p>9. H\u00e1lfdanar saga Br\u00f6nuf\u00f3stra</p>\n<p>10. Sturlaugs saga startama</p>\n<p>11. Illuga saga</p>"
+      ],
+      "numberOfVolumes": "3",
+      "place": "Copenhagen",
+      "publisher": "Popp",
+      "title": "Fornaldar s\u00f6gur Nordrlanda eptir g\u00f6mlum handritum"
+    }
+  ]
+}

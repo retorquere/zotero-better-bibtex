@@ -1,5 +1,9 @@
 import type { Tag, RegularItem as SerializedRegularItem, Item as SerializedItem } from '../../gen/typings/serialized-item'
 
+import { Shim } from '../os'
+import { is7 } from '../../content/client'
+const $OS = is7 ? Shim : OS
+
 import { client } from '../client'
 
 import { Events } from '../events'
@@ -12,7 +16,7 @@ import ucs2decode = require('punycode2/ucs2/decode')
 import { Preference } from '../prefs'
 import { JournalAbbrev } from '../journal-abbrev'
 import * as Extra from '../extra'
-import { buildCiteKey as zotero_buildCiteKey } from './formatter-zotero'
+import { buildCiteKey as zotero_buildCiteKey } from '../../gen/ZoteroBibTeX.mjs'
 import { babelLanguage, CJK } from '../text'
 import { fetchSync as fetchInspireHEP } from '../inspire-hep'
 
@@ -1149,7 +1153,7 @@ class PatternFormatter {
       const acronyms: Record<string, string> = {}
 
       try {
-        for (const row of csv2list(OS.Path.join(Zotero.BetterBibTeX.dir, `${list}.csv`))) {
+        for (const row of csv2list($OS.Path.join(Zotero.BetterBibTeX.dir, `${list}.csv`))) {
           if (row.length !== 2) {
             log.error('unexpected row in', `${list}.csv`, ':', row)
             continue

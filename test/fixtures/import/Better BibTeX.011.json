@@ -2,14 +2,13 @@
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "localeDateOrder": "ymd",
     "options": {
+      "Items": true,
+      "Preferences": true,
       "exportNotes": true
     },
     "preferences": {
-      "citekeyFormat": "[auth][year]",
-      "importCaseProtection": "off",
-      "itemObserverDelay": 100
+      "citekeyFormat": "auth + year"
     }
   },
   "items": [
@@ -36,14 +35,13 @@
       "extra": [
         "Citation Key: Klassen2010",
         "tex.bibsource: DBLP, http://dblp.uni-trier.de",
-        "tex.crossref: DBLP:conf/cata/2010",
         "tex.owner: sstudent",
         "tex.timestamp: 2011.03.22"
       ],
       "itemID": 1,
       "itemType": "conferencePaper",
       "notes": [
-        "<p>svm liniowe najlepsze</p>"
+        "svm liniowe najlepsze"
       ],
       "pages": "25-30",
       "publicationTitle": "CATA",

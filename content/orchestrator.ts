@@ -4,6 +4,10 @@ import type { Reason } from './bootstrap'
 import { log } from './logger'
 import { Preference } from './prefs'
 
+import { Shim } from './os'
+import { is7 } from './client'
+const $OS = is7 ? Shim : OS
+
 type Handler = (reason: Reason, task?: Task) => void | string | Promise<void | string>
 
 import { print } from './logger'
@@ -169,14 +173,14 @@ export class Orchestrator {
       }
 
       const perform = async (): Promise<void | string> => {
-        print(`better-bibtex orchestrator: task ${phase}.${name} starting`)
+        print(`orchestrator: task ${phase}.${name} starting`)
         try {
           const res = await action(reason, task) as Promise<void | string>
-          print(`better-bibtex orchestrator: task ${phase}.${name} finished`)
+          print(`orchestrator: task ${phase}.${name} finished`)
           return res
         }
         catch (err) {
-          print(`better-bibtex orchestrator: error: task ${phase}.${name} failed: ${err}\n${err.stack}`)
+          print(`orchestrator: error: task ${phase}.${name} failed: ${err}\n${err.stack}`)
           throw err
         }
       }
@@ -199,7 +203,7 @@ export class Orchestrator {
         })
 
         .catch(err => {
-          print(`better-bibtex better-bibtex orchestrator: ${name}.${phase} ${reason || ''} error: ${err}`)
+          print(`orchestrator: ${name}.${phase} ${reason || ''} error: ${err}`)
           throw err
         })
     }
@@ -298,7 +302,7 @@ export class Orchestrator {
       </project>
     `
 
-    Zotero.File.putContents(Zotero.File.pathToFile(OS.Path.join(Zotero.BetterBibTeX.dir, `${phase}.gan`)), gantt)
+    Zotero.File.putContents(Zotero.File.pathToFile($OS.Path.join(Zotero.BetterBibTeX.dir, `${phase}.gan`)), gantt)
   }
 
   public async startup(reason: Reason, progress?: Progress): Promise<void> {

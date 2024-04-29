@@ -14,7 +14,7 @@ import { Translation } from '../lib/translator'
 
 import * as postscript from '../lib/postscript'
 
-import { replace_command_spacers } from './unicode_translator'
+import { replace_command_spacers, Mode as ConversionMode } from './unicode_translator'
 import { datefield } from './datefield'
 import * as ExtraFields from '../../gen/items/extra-fields.json'
 import { label as propertyLabel } from '../../gen/items/items'
@@ -60,6 +60,7 @@ const fieldOrder = [
   'translatortype',
   'holder',
   'holdertype',
+  'with',
   'options',
   'date',
   'origdate',
@@ -114,7 +115,7 @@ const enc_creators_marker = {
 const isBibString = /^[a-z][-a-z0-9_]*$/i
 
 export type Config = {
-  fieldEncoding: Record<string, 'raw' | 'url' | 'verbatim' | 'creators' | 'literal' | 'literal_list' | 'tags' | 'attachments' | 'date'>
+  fieldEncoding: Record<string, 'raw' | 'url' | 'verbatim' | 'creators' | 'literal' | 'literal_list' | 'tags' | 'attachments' | 'date' | 'extra'>
   caseConversion: Record<string, boolean>
   typeMap: {
     csl: Record<string, string | { type: string, subtype?: string }>
@@ -181,7 +182,7 @@ export class Entry {
   private metadata: Cache.ExportedItemMetadata = { DeclarePrefChars: '', noopsort: false, packages: [] }
   private packages: Record<string, boolean> = {}
   private juniorcomma: boolean
-  private translation: Translation
+  public translation: Translation
 
   public lint(_explanation: Record<string, string>): string[] {
     return []
@@ -217,6 +218,7 @@ export class Entry {
     }
 
     this.extraFields = JSON.parse(JSON.stringify(item.extraFields))
+    log.debug('extra-fields:', this.extraFields)
 
     // should be const entrytype: string | { type: string, subtype?: string }
     // https://github.com/Microsoft/TypeScript/issues/10422
@@ -389,12 +391,12 @@ export class Entry {
   }
 
   /** normalize dashes, mainly for use in `pages` */
-  public normalizeDashes(str): string {
-    str = (str || '').trim()
+  public normalizeDashes(ranges: string): string {
+    ranges = (ranges || '').trim()
 
-    if (this.item.raw) return str
+    if (this.item.raw) return ranges
 
-    return str
+    return ranges
       .replace(/\u2053/g, '~')
       .replace(/[\u2014\u2015]/g, '---') // em-dash
       .replace(/[\u2012\u2013]/g, '--') // en-dash
@@ -513,6 +515,10 @@ export class Entry {
       else {
         let value
         switch (field.enc) {
+          case 'extra':
+            value = this.enc_extra(field)
+            break
+
           case 'literal_list':
             value = this.enc_literal_list(field, { raw: this.item.raw })
             break
@@ -543,6 +549,12 @@ export class Entry {
 
           case 'attachments':
             value = this.enc_attachments(field)
+            break
+
+          case 'minimal':
+          case 'bibtex':
+          case 'biblatex':
+            value = this.enc_literal(field, { raw: this.item.raw, mode: field.enc })
             break
 
           default:
@@ -768,7 +780,7 @@ export class Entry {
       }
     }
 
-    this.add({ name: 'annotation', value: this.item.extra?.replace(/\n+/g, newlines => (newlines.length > 1 ? '\n\n' : ' ')).trim() })
+    this.add({ name: 'annotation', value: this.item.extra, enc: 'extra' })
 
     if (this.translation.options.exportNotes) {
       // if bibtexURL === 'note' is active, the note field will have been filled with an URL. In all other cases, if this is attempting to overwrite the 'note' field, I want the test suite to throw an error
@@ -978,7 +990,10 @@ export class Entry {
     const encoded = []
     for (const creator of f.value) {
       let name
-      if (creator.name || (creator.lastName && (creator.fieldMode === 1))) {
+      if (creator.name && raw) {
+        name = creator.name
+      }
+      else if (creator.name || (creator.lastName && (creator.fieldMode === 1))) {
         name = creator.name || creator.lastName
         if (name !== 'others') name = raw ? `{${name}}` : this.enc_literal({value: new String(this._enc_creators_scrub_name(name))}) // eslint-disable-line no-new-wrappers
 
@@ -1022,12 +1037,25 @@ export class Entry {
   }
 
   /*
-   * Encode text to LaTeX
+   * Encode extra field to LaTeX
+   *
+   * This encoding supports plaintext with newlines
+   *
+   * @param {field} field to encode.
+   * @return {String} field.value encoded as latex
+   */
+  protected enc_extra(f) {
+    return this.enc_literal({ value: f.value.replace(/\n/g, '\x0E') }).replace(/\x0E/g, newlines => newlines.length === 1 ? '\\\\\n' : '\n\n') // eslint-disable-line no-control-regex
+  }
+
+  /*
+  /*
+   * Encode list to LaTeX
    *
    * This encoding supports simple HTML markup.
    *
    * @param {field} field to encode.
-   * @return {String} field.value encoded as author-style value
+   * @return {String} field.value encoded as list of literals
    */
   protected enc_literal_list(f, options: { raw?: boolean } = {}) {
     const list = Array.isArray(f.value) ? f.value : [ f.value ]
@@ -1048,7 +1076,7 @@ export class Entry {
    * @param {field} field to encode.
    * @return {String} field.value encoded as author-style value
    */
-  protected enc_literal(f, options: { raw?: boolean, creator?: boolean} = {}) {
+  protected enc_literal(f, options: { raw?: boolean, creator?: boolean, mode?: ConversionMode } = {}) {
     if (typeof f.value === 'number') return f.value
     if (!f.value) return null
 
@@ -1060,7 +1088,7 @@ export class Entry {
     if (f.raw || options.raw) return f.value
 
     const caseConversion = this.config.caseConversion[f.name] || f.caseConversion
-    const { latex, packages, raw } = this.translation.bibtex.text2latex(f.value, {html: f.html, caseConversion: caseConversion && this.english, creator: options.creator })
+    const { latex, packages, raw } = this.translation.bibtex.text2latex(f.value, {html: f.html, caseConversion: caseConversion && this.english, creator: options.creator }, options.mode)
     for (const pkg of packages) {
       this.packages[pkg] = true
     }
@@ -1507,9 +1535,9 @@ export class Entry {
     }
   }
 
-  private unique_chars(str) {
+  private unique_chars(bag: string): string {
     let uniq = ''
-    for (const c of str) {
+    for (const c of bag) {
       if (uniq.indexOf(c) < 0) uniq += c
     }
     return uniq

@@ -79,6 +79,9 @@ export async function startup({ resourceURI, rootURI = resourceURI.spec }, reaso
       target: {
         Zotero,
 
+        // because the Zotero sample code assumes you're doing everything in bootstrap.js
+        rootURI,
+
         // to pacify libraries that do env-detection
         window: Zotero.getMainWindow(),
         document: Zotero.getMainWindow().document,

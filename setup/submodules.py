@@ -34,7 +34,8 @@ if Repository('.').head.shorthand == 'master' and os.environ.get('CI') != 'true'
   if online:
     root = str(Path(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')).absolute())
 
-    submodules = run(root, 'git submodule update --init --recursive --remote')
+    # submodules = run(root, 'git submodule update --init --recursive --remote')
+    submodules = run(root, 'git submodule update --init --remote')
     if submodules.strip() == '': submodules = '  up to date'
     print(submodules)
 

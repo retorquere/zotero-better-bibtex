@@ -12,3 +12,6 @@ import scannablecite
 import manifest
 import ftl2dtd
 import unicode
+
+import shutil
+shutil.copyfile('submodules/zotero/chrome/content/zotero/osfile.mjs', 'gen/osfile.js')

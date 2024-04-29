@@ -5,7 +5,7 @@ import type { MarkupNode } from '../../typings/markup'
 
 import { log } from '../../content/logger'
 import HE = require('he')
-import { CharMap, Transform } from 'unicode2latex'
+import { Transform } from 'unicode2latex'
 
 export type ConverterOptions = {
   caseConversion?: boolean
@@ -20,6 +20,8 @@ export function replace_command_spacers(latex: string): string {
 
 export type ParseResult = { latex: string, raw: boolean, packages: string[] }
 
+export type Mode = 'minimal' | 'bibtex' | 'biblatex'
+
 export class HTMLConverter {
   private latex = ''
   private tx: Transform
@@ -29,12 +31,12 @@ export class HTMLConverter {
   private packages: Set<string> = new Set
   private translation: Translation
 
-  constructor(charmap: CharMap, translation: Translation) {
+  constructor(translation: Translation, mode: 'minimal' | 'bibtex' | 'biblatex') {
     this.translation = translation
-    this.tx = new Transform(this.translation.unicode ? 'minimal' : (this.translation.BetterBibTeX ? 'bibtex' : 'biblatex'), {
+    this.tx = new Transform(mode, {
       math: this.translation.preferences.mapMath,
       text: this.translation.preferences.mapText,
-      charmap,
+      charmap: translation.charmap,
       ascii: this.translation.preferences.ascii,
       packages: this.translation.preferences.packages.trim().split(/\s*,\s*/),
     })

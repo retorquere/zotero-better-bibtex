@@ -46,18 +46,23 @@ export class ZoteroItemPane {
 
     if (!this.document.getElementById('better-bibtex-editpane-item-box')) {
       if (is7) {
-        /*
-        itemBox.parentNode.parentNode.parentNode.appendChild(elements.create('html:div', { style: 'display: flex; flex-direction: column;' , $: [
-
-          elements.create('html:div', { id: 'better-bibtex-editpane-item-box', style: 'display: flex; flex-direction: row', $: [
-            elements.create('label', { id: 'better-bibtex-citekey-label', style: 'flex: 0 0 auto; width: 9em; text-align: right; color: #7F7F7F', value: '' }),
-            elements.create('html:input', { id: 'better-bibtex-citekey-display', type: 'text', style: 'flex: 0 0 auto', readonly: 'true', value: '' }),
-          ]}),
-
-          itemBox.parentNode.parentNode,
-        ]}))
-        */
-        log.debug('waiting for API to insert citekey in itempane')
+        Zotero.ItemPaneManager.registerSection({
+          paneID: 'betterbibtex-section-citationkey',
+          pluginID: 'better-bibtex@iris-advies.com',
+          header: {
+            l10nID: 'example-item-pane-header',
+            icon: `${rootURI}content/skin/citation-key.png`,
+          },
+          sidenav: {
+            l10nID: 'example-item-pane-header',
+            icon: `${rootURI}content/skin/citation-key.png`,
+          },
+          bodyXHTML: 'Citation Key <html:input type="text" id="better-bibtex-citation-key" readonly="true" style="position:relative;width:80%" xmlns:html="http://www.w3.org/1999/xhtml"/>',
+          // onRender: ({ body, item, editable, tabType }) => {
+          onRender: ({ body, item }) => {
+            body.ownerDocument.getElementById('better-bibtex-citation-key').value = item.getField('citationKey') || '\u274C'
+          },
+        })
       }
       else {
         itemBox.parentNode.appendChild(elements.create('vbox', { flex: 1, style: 'margin: 0; padding: 0', $: [
@@ -86,17 +91,17 @@ export class ZoteroItemPane {
       this.unload()
     })
 
-    $patch$(itemBox.__proto__, 'refresh', original => function() {
-      // eslint-disable-next-line prefer-rest-params
-      original.apply(this, arguments)
+    if (!is7) {
+      $patch$(itemBox.__proto__, 'refresh', original => function() {
+        // eslint-disable-next-line prefer-rest-params
+        original.apply(this, arguments)
 
-      if (!this.item) {
-        // why is it refreshing if there is no item?!
-        log.debug('itemBox.refresh without an item')
-        return
-      }
+        if (!this.item) {
+          // why is it refreshing if there is no item?!
+          log.debug('itemBox.refresh without an item')
+          return
+        }
 
-      if (!is7) {
         const menuid = 'zotero-field-transform-menu-better-sentencecase'
         let menuitem = this.ownerDocument.getElementById(menuid)
         const menu = this.ownerDocument.getElementById('zotero-field-transform-menu')
@@ -110,18 +115,18 @@ export class ZoteroItemPane {
             },
           }))
         }
-      }
 
-      const { citationKey, pinned } = Zotero.BetterBibTeX.KeyManager.get(this.item.id)
-      const label = this.parentNode.querySelector('#better-bibtex-citekey-label')
-      const value = this.parentNode.querySelector('#better-bibtex-citekey-display')
-      if (!value) return // merge pane uses itembox
+        const { citationKey, pinned } = Zotero.BetterBibTeX.KeyManager.get(this.item.id)
+        const label = this.parentNode.querySelector('#better-bibtex-citekey-label')
+        const value = this.parentNode.querySelector('#better-bibtex-citekey-display')
+        if (!value) return // merge pane uses itembox
 
-      label.hidden = value.hidden = !citationKey
+        label.hidden = value.hidden = !citationKey
 
-      label.value = `${pinned ? icons.pin : ''}${l10n.localize('better-bibtex_item-pane_citekey')}`
-      value.value = citationKey
-    })
+        label.value = `${pinned ? icons.pin : ''}${l10n.localize('better-bibtex_item-pane_citekey')}`
+        value.value = citationKey
+      })
+    }
   }
 
   public unload(): void {

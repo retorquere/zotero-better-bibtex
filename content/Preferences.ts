@@ -1,5 +1,9 @@
 Components.utils.import('resource://gre/modules/Services.jsm')
 
+import { Shim } from './os'
+import { is7 } from './client'
+const $OS = is7 ? Shim : OS
+
 import type { XUL } from '../typings/xul'
 
 import { log } from './logger'
@@ -15,7 +19,6 @@ import * as l10n from './l10n'
 import { Events } from './events'
 import { pick } from './file-picker'
 import { flash } from './flash'
-import { is7 } from './client'
 import { icons } from './icons'
 
 // safe to keep "global" since only one pref pane will be loaded at any one time
@@ -124,7 +127,7 @@ class AutoExportPane {
     let label: string = { library: icons.computer, collection: icons.folder }[ae.type]
     label += ` ${this.name(ae, 'short')}`
     label += ` (${Translators.byId[ae.translatorID].label})`
-    const path = ae.path.startsWith(OS.Constants.Path.homeDir) ? ae.path.replace(OS.Constants.Path.homeDir, '~') : ae.path
+    const path = ae.path.startsWith($OS.Constants.Path.homeDir) ? ae.path.replace($OS.Constants.Path.homeDir, '~') : ae.path
     label += ` ${path}`
     return label
   }
@@ -201,6 +204,7 @@ class AutoExportPane {
           case 'asciiBibLaTeX':
           case 'biblatexExtendedNameFormat':
           case 'recursive':
+          case 'biblatexAPA':
             (node as unknown as XUL.Checkbox).checked = selected[field]
             break
 
@@ -285,6 +289,7 @@ class AutoExportPane {
       case 'asciiBibLaTeX':
       case 'biblatexExtendedNameFormat':
       case 'recursive':
+      case 'biblatexAPA':
         log.debug('edit autoexport:', field, node.checked)
         value = node.checked
         break
@@ -473,8 +478,8 @@ export class PrefPane {
 
       await this.autoexport.load()
 
-      this.quickCopy()
-      $window.document.getElementById('bbt-preferences-quickcopy').addEventListener('command', () => this.quickCopy())
+      $window.document.getElementById('bbt-preferences-quickcopy').addEventListener('command', () => this.showQuickCopyDetails())
+      this.showQuickCopyDetails()
 
       this.checkCitekeyFormat()
       this.checkPostscript()
@@ -486,9 +491,10 @@ export class PrefPane {
     }
   }
 
-  private quickCopy() {
+  private showQuickCopyDetails() {
     const quickcopy = 'bbt-preferences-quickcopy-details'
     const selected = `${quickcopy}-${Zotero.Prefs.get('translators.better-bibtex.quickCopyMode')}`
+    log.debug('showQuickCopyDetails:', selected)
     for (const details of ([...$window.document.querySelectorAll(`.${quickcopy}`)] as HTMLElement[])) {
       details.style.display = details.id === selected ? 'initial' : 'none'
     }
@@ -515,6 +521,8 @@ export class PrefPane {
     for (const node of (Array.from($window.document.getElementsByClassName('bbt-jurism')) as unknown[] as XUL.Element[])) {
       node.hidden = client !== 'jurism'
     }
+
+    this.showQuickCopyDetails()
 
     if (client === 'jurism') {
       Zotero.Styles.init().then(() => {

@@ -2,143 +2,66 @@
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "preferences": {
-      "ascii": "",
-      "asciiBibLaTeX": false,
-      "asciiBibTeX": true,
-      "autoAbbrev": false,
-      "autoAbbrevStyle": "",
-      "autoExport": "immediate",
-      "autoExportDelay": 5,
-      "autoExportIdleWait": 10,
-      "autoExportPathReplaceDiacritics": false,
-      "autoExportPathReplaceDirSep": "-",
-      "autoExportPathReplaceSpace": " ",
-      "automaticTags": true,
-      "autoPinDelay": 0,
-      "auxImport": false,
-      "baseAttachmentPath": "",
-      "biblatexExtendedDateFormat": true,
-      "biblatexExtendedNameFormat": true,
-      "biblatexExtractEprint": true,
-      "bibtexEditionOrdinal": false,
-      "bibtexParticleNoOp": false,
-      "bibtexURL": "off",
-      "cache": true,
-      "cacheFlushInterval": 5,
-      "charmap": "",
-      "citeCommand": "cite",
-      "citekeyFold": true,
-      "citekeyFormat": "auth + year",
-      "citekeySearch": true,
-      "citekeyUnsafeChars": "\\\"#%'(),={}~",
-      "csquotes": "",
-      "DOIandURL": "both",
-      "exportBibTeXStrings": "off",
-      "exportBraceProtection": true,
-      "exportTitleCase": true,
-      "extraMergeCitekeys": false,
-      "extraMergeCSL": false,
-      "extraMergeTeX": false,
-      "git": "config",
-      "import": true,
-      "importBibTeXStrings": true,
-      "importCaseProtection": "as-needed",
-      "importCitationKey": true,
-      "importDetectURLs": true,
-      "importExtra": true,
-      "importJabRefAbbreviations": true,
-      "importJabRefStrings": true,
-      "importNoteToExtra": "",
-      "importSentenceCase": "on+guess",
-      "importSentenceCaseQuoted": true,
-      "importUnknownTexCommand": "tex",
-      "itemObserverDelay": 5,
-      "jabrefFormat": 0,
-      "jieba": false,
-      "keyConflictPolicy": "keep",
-      "keyScope": "library",
-      "kuroshiro": false,
-      "language": "langid",
-      "mapMath": "",
-      "mapText": "",
-      "parseParticles": true,
-      "patchDates": "dateadded=dateAdded, date-added=dateAdded, datemodified=dateModified, date-modified=dateModified",
-      "postscript": "",
-      "postscriptOverride": "",
-      "preferencesOverride": "",
-      "qualityReport": false,
-      "quickCopyEta": "",
-      "quickCopyMode": "latex",
-      "quickCopyOrgMode": "zotero",
-      "quickCopyPandocBrackets": false,
-      "quickCopySelectLink": "zotero",
-      "rawImports": false,
-      "rawLaTag": "#LaTeX",
-      "relativeFilePaths": false,
-      "retainCache": false,
-      "separatorList": "and",
-      "separatorNames": "and",
-      "skipFields": "",
-      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
-      "startupProgress": "popup",
-      "strings": "",
-      "stringsOverride": "",
-      "verbatimFields": "url,doi,file,pdf,ids,eprint,/^verb[a-z]$/,groups,/^citeulike-linkout-[0-9]+$/, /^bdsk-url-[0-9]+$/",
-      "warnBulkModify": 10,
-      "warnTitleCased": false
-    },
     "options": {
-      "exportNotes": true,
-      "exportFileData": false,
-      "keepUpdated": false,
-      "worker": false,
-      "Normalize": true
+      "Items": true,
+      "Preferences": true,
+      "exportNotes": true
+    },
+    "preferences": {
+      "citekeyFormat": "auth + year",
+      "importUnknownTexCommand": "tex"
     }
   },
-  "version": {
-    "zotero": "6.0.27",
-    "bbt": "6.7.122.emile.limonia"
-  },
-  "collections": {},
   "items": [
     {
-      "version": 0,
-      "itemType": "journalArticle",
-      "volume": "424",
-      "pages": "927-934",
-      "publicationTitle": "<script>\\aap</script>",
-      "date": "2004-09",
-      "extra": "Citation Key: 2004A&A...424..927C\narXiv: astro-ph/0405395 [astro-ph]\ntex.adsnote: Provided by the SAO/NASA Astrophysics Data System",
       "DOI": "10.1051/0004-6361:20040307",
-      "title": "Bright metal-poor variables: Why “Anomalous” cepheids?",
-      "creators": [
+      "attachments": [
         {
-          "firstName": "F.",
-          "lastName": "Caputo",
-          "creatorType": "author"
-        },
-        {
-          "firstName": "V.",
-          "lastName": "Castellani",
-          "creatorType": "author"
-        },
-        {
-          "firstName": "S.",
-          "lastName": "Degl'Innocenti",
-          "creatorType": "author"
-        },
-        {
-          "firstName": "G.",
-          "lastName": "Fiorentino",
-          "creatorType": "author"
-        },
-        {
-          "firstName": "M.",
-          "lastName": "Marconi",
-          "creatorType": "author"
+          "accessDate": "2024-04-15T01:01:22Z",
+          "itemType": "attachment",
+          "linkMode": "linked_url",
+          "title": "adsurl",
+          "url": "https://ui.adsabs.harvard.edu/abs/2004A&A...424..927C"
         }
       ],
+      "citationKey": "2004A&A...424..927C",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "F.",
+          "lastName": "Caputo"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "V.",
+          "lastName": "Castellani"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "S.",
+          "lastName": "Degl'Innocenti"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "G.",
+          "lastName": "Fiorentino"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "M.",
+          "lastName": "Marconi"
+        }
+      ],
+      "date": "2004-09",
+      "extra": [
+        "Citation Key: 2004A&A...424..927C",
+        "arXiv: astro-ph/0405395 [astro-ph]",
+        "tex.adsnote: Provided by the SAO/NASA Astrophysics Data System"
+      ],
+      "itemID": 1,
+      "itemType": "journalArticle",
+      "pages": "927-934",
+      "publicationTitle": "<script>\\aap</script>",
       "tags": [
         {
           "tag": "Astrophysics"
@@ -150,36 +73,8 @@
           "tag": "stars: variables: Cepheids"
         }
       ],
-      "relations": [],
-      "dateAdded": "2023-10-07T18:59:30Z",
-      "dateModified": "2023-10-07T18:59:30Z",
-      "uri": "http://zotero.org/users/8230813/items/BN2NFCZR",
-      "attachments": [
-        {
-          "version": 0,
-          "itemType": "attachment",
-          "url": "https://ui.adsabs.harvard.edu/abs/2004A&A...424..927C",
-          "accessDate": "2023-10-07T18:59:30Z",
-          "title": "adsurl",
-          "parentItem": "BN2NFCZR",
-          "linkMode": "linked_url",
-          "contentType": "",
-          "charset": "",
-          "tags": [],
-          "relations": {},
-          "dateAdded": "2023-10-07T18:59:30Z",
-          "dateModified": "2023-10-07T18:59:30Z",
-          "uri": "http://zotero.org/users/8230813/items/PZ4EZPTF",
-          "itemID": 1505,
-          "itemKey": "PZ4EZPTF",
-          "libraryID": 1
-        }
-      ],
-      "notes": [],
-      "citationKey": "2004A&A...424..927C",
-      "itemID": 1504,
-      "itemKey": "BN2NFCZR",
-      "libraryID": 1
+      "title": "Bright metal-poor variables: Why \u201canomalous\u201d cepheids?",
+      "volume": "424"
     }
   ]
 }

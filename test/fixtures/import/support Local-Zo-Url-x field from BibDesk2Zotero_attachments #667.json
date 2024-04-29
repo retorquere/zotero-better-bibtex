@@ -2,13 +2,13 @@
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "localeDateOrder": "ymd",
     "options": {
+      "Items": true,
+      "Preferences": true,
       "exportNotes": true
     },
     "preferences": {
-      "citekeyFormat": "[auth][year]",
-      "itemObserverDelay": 100
+      "citekeyFormat": "auth + year"
     }
   },
   "items": [
@@ -16,9 +16,8 @@
       "attachments": [
         {
           "itemType": "attachment",
-          "path": "/Users/emile/.BBTTEST/zotero/storage/8VZFW8AS/1.pdf",
-          "title": "1",
-          "uri": "http://zotero.org/users/local/6z7M0kXV/items/8VZFW8AS"
+          "path": "ATTACHMENT_KEY/1.pdf",
+          "title": "1"
         }
       ],
       "citationKey": "Abbott-2007-aa",
@@ -50,7 +49,7 @@
           "tag": "Political Economy"
         }
       ],
-      "title": "Are developing countries deterred from using the WTO dispute settlement system? - participation of developing countries in the DSM in the years 1995-2005"
+      "title": "Are developing countries deterred from using the WTO dispute settlement system? - Participation of developing countries in the DSM in the years 1995-2005"
     }
   ]
 }

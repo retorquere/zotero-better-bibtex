@@ -1,5 +1,10 @@
 /* eslint-disable no-case-declarations, @typescript-eslint/no-unsafe-return */
 
+import { Shim } from './os'
+import { is7 } from './client'
+const $OS = is7 ? Shim : OS
+import merge from 'lodash.merge'
+
 Components.utils.import('resource://gre/modules/Services.jsm')
 
 declare class ChromeWorker extends Worker { }
@@ -7,7 +12,7 @@ declare class ChromeWorker extends Worker { }
 Components.utils.import('resource://zotero/config.js')
 declare const ZOTERO_CONFIG: any
 
-import { clone } from './object'
+// import { clone } from './object'
 import { Deferred } from './deferred'
 import type { Translators as Translator } from '../typings/translators'
 import { Preference } from './prefs'
@@ -20,7 +25,6 @@ import { $and } from './db/loki'
 import { Events } from './events'
 import { Pinger } from './ping'
 import Puqeue from 'puqeue'
-import { is7 } from './client'
 import { orchestrator } from './orchestrator'
 import type { Reason } from './bootstrap'
 import { headers as Headers, byLabel, byId, bySlug } from '../gen/translators'
@@ -249,7 +253,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     const displayOptions = {
       ...this.displayOptions(job.translatorID, job.displayOptions),
       exportPath: job.path || undefined,
-      exportDir: job.path ? OS.Path.dirname(job.path) : undefined,
+      exportDir: job.path ? $OS.Path.dirname(job.path) : undefined,
     }
 
     const translator = this.byId[job.translatorID]
@@ -283,7 +287,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
       translator: translator.label,
       output: job.path || '',
-      debugEnabled: !!Zotero.Debug.enabled,
+      debugEnabled: !!Zotero.Debug.storing,
     }
 
     let items: any[] = []
@@ -434,14 +438,12 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
   }
 
   public displayOptions(translatorID: string, displayOptions: any): any {
-    displayOptions = clone(displayOptions || this.byId[translatorID]?.displayOptions || {})
-    const defaults = this.byId[translatorID]?.displayOptions || {}
-    for (const [k, v] of Object.entries(defaults)) {
-      if (typeof displayOptions[k] === 'undefined') displayOptions[k] = v
-    }
-    if (this.byId[translatorID].label === 'BetterBibTeX JSON') displayOptions.exportCharset = 'UTF-8xBOM'
-
-    return displayOptions
+    return merge(
+      {},
+      this.byId[translatorID]?.displayOptions || {},
+      displayOptions,
+      this.byId[translatorID].label === 'BetterBibTeX JSON' ? { exportCharset: 'UTF-8xBOM' } : {}
+    )
   }
 
   public async exportItems(job: ExportJob): Promise<string> {

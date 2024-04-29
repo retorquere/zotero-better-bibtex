@@ -1,125 +1,86 @@
 import { log } from './logger'
-import permutater = require('permutater')
-// import { OS } from '../typings/xpcom'
-
-function permutations(word) {
-  const config = {
-    charactersAt: {},
-    length: word.length,
-  }
-
-  for (const [i, c] of word.split('').entries()) {
-    config.charactersAt[i] = [ c.toUpperCase(), c.toLowerCase() ]
-  }
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  return permutater(config)
-}
-
-const alias: { [key: string]: string } = {}
-function getEnv(variable): string {
-  const ENV = Components.classes['@mozilla.org/process/environment;1'].getService(Components.interfaces.nsIEnvironment)
-  const value: string = ENV.get(variable)
-  if (value || !Zotero.isWin) return value
-
-  if (typeof alias[variable] === 'undefined') {
-    alias[variable] = ''
-    for (const permutation of permutations(variable)) {
-      if (ENV.get(permutation)) {
-        alias[variable] = permutation
-        break
-      }
-    }
-  }
-
-  if (!alias[variable]) return ''
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  return ENV.get(alias[variable])
-}
-
-function expandWinVars(value: string): string {
-  let more = true
-  while (more) {
-    more = false
-    value = value.replace(/%([A-Zaz]+)%/g, (match, variable) => {
-      more = true
-      return getEnv(variable)
-    })
-  }
-  return value
-}
+import { Shim } from './os'
+import { is7 } from './client'
+const $OS = is7 ? Shim : OS
 
 // https://searchfox.org/mozilla-central/source/toolkit/modules/subprocess/subprocess_win.jsm#135 doesn't seem to work on Windows.
 export async function findBinary(bin: string, installationDirectory: { mac?: string[], win?: string[] } = {}): Promise<string> {
   const pref = `translators.better-bibtex.path.${bin}`
   let location: string = Zotero.Prefs.get(pref)
-  if (typeof location !== 'string') location = ''
-  if (location === 'false') return ''
-  if (location && (await OS.File.exists(location))) return location
+  if (location && (await $OS.File.exists(location))) return location
   location = await pathSearch(bin, installationDirectory)
-  Zotero.Prefs.set(pref, location)
+  if (typeof location === 'string') Zotero.Prefs.set(pref, location)
   return location
 }
 
-async function pathSearch(bin: string, installationDirectory: { mac?: string[], win?: string[] } = {}): Promise<string> {
-  const env: {path: string[], pathext: string[]} = {
-    path: [],
-    pathext: [],
+async function* asyncGenerator<T>(array: T[]): AsyncGenerator<T, void, unknown> {
+  for (const item of array) {
+    yield await Promise.resolve(item)
   }
+}
 
-  if (Zotero.isWin) {
-    env.path = []
-    if (installationDirectory.win) env.path.push(...installationDirectory.win)
-    env.path = env.path.concat(getEnv('PATH').split(';').filter(p => p).map(expandWinVars))
-
-    env.pathext = getEnv('PATHEXT').split(';').filter(pe => pe.length > 1 && pe.startsWith('.'))
-    if (!env.pathext.length) {
-      log.error('pathSearch: PATHEXT not set')
-      return ''
+const ENV = Components.classes['@mozilla.org/process/environment;1'].getService(Components.interfaces.nsIEnvironment)
+const VarRef = Zotero.isWin ? /%([A-Z][A-Z0-9]*)%/ig : /[$]([A-Z][A-Z0-9]*)/ig
+function expandVars(name: string, expanded: Record<string, string>): string {
+  if (typeof expanded[name] !== 'string') {
+    expanded[name] = ENV.get(name) || ''
+    let more = true
+    while (more) {
+      more = false
+      expanded[name] = expanded[name].replace(VarRef, (match, varref) => {
+        more = true
+        return expandVars(varref, expanded)
+      })
     }
-
   }
-  else {
-    const ENV = Components.classes['@mozilla.org/process/environment;1'].getService(Components.interfaces.nsIEnvironment)
-    env.path = []
-    if (Zotero.isMac && installationDirectory.mac) env.path.push(...installationDirectory.mac)
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    env.path = env.path.concat((ENV.get('PATH') || '').split(':').filter(p => p))
+  return expanded[name]
+}
 
-    env.pathext = ['']
+async function pathSearch(bin: string, installationDirectory: { mac?: string[], win?: string[] } = {}): Promise<string> {
+  const env = Components.classes['@mozilla.org/process/environment;1'].getService(Components.interfaces.nsIEnvironment)
 
-  }
+  let paths: string[] = ENV.get('PATH').split(Zotero.isWin ? ';' : ':')
 
-  if (!env.path.length) {
-    log.error('pathSearch: PATH not set')
+  const expanded = {}
+  paths = paths.map(p => expandVars(p, expanded))
+  if (Zotero.isWin && installationDirectory.win) paths.unshift(...(installationDirectory.win))
+  if (Zotero.isMac && installationDirectory.mac) paths.unshift(...(installationDirectory.mac))
+  paths = paths.filter(p => p)
+  if (!paths.length) {
+    log.error('path-search: PATH not set')
     return ''
   }
-  log.debug('pathSearch: looking for', bin, 'in', env)
 
-  for (const path of env.path) {
-    for (const pathext of env.pathext) {
+  const extensions: string[] = Zotero.isWin ? ENV.get('PATHEXT').split(';').filter((e: string) => e.match(/^[.].+/)) : ['']
+  if (Zotero.isWin && !extensions.length) {
+    log.error('path-search: PATHEXT not set')
+    return ''
+  }
+
+  for await (const path of asyncGenerator(paths)) {
+    for (const ext of extensions) {
       try {
-        const cmd: string = OS.Path.join(path, bin + pathext)
-        if (!(await OS.File.exists(cmd))) continue
+        const exe: string = $OS.Path.join(path, bin + ext)
+        if (!(await $OS.File.exists(exe))) continue
 
         // eslint-disable-next-line @typescript-eslint/await-thenable
-        const stat = await OS.File.stat(cmd)
+        const stat = await $OS.File.stat(exe)
         if (stat.isDir) continue
 
         // eslint-disable-next-line no-bitwise
         if (!Zotero.isWin && (stat.unixMode & 111) === 0) { // bit iffy -- we don't know if *we* can execute this.
-          log.error(`pathSearch: ${cmd} exists but has mode ${(stat.unixMode).toString(8)}`)
+          log.error(`path-search: ${exe} exists but has mode ${(stat.unixMode).toString(8)}`)
           continue
         }
 
-        log.debug(`pathSearch: ${bin} found at ${cmd}`)
-        return cmd
+        log.debug(`path-search: ${bin} found at ${exe}`)
+        return exe
       }
       catch (err) {
-        log.error('pathSearch:', err)
+        log.error('path-search:', err)
       }
     }
   }
-  log.debug('pathSearch:', bin, 'not found in', env.path)
-
+  log.debug('path-search:', bin, 'not found in', env.path)
   return ''
 }

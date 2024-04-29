@@ -14,6 +14,10 @@ Feature: Export
     Examples:
       | file                                                                                                                     | references |
       | Exporting item type film merges scriptwriter with other contributors #2802                                               | 1          |
+      | Three dashes in extra field for generating markdown files from bibtex #2849                                              | 1          |
+      | Export of Contributor to WITH #2837                                                                                      | 1          |
+      | Better BibTeX export from Zotero missing Extra fields eg issued #2816                                                    | 1          |
+      | Support for Chinese Quotation Marks When Exporting with Export unicode as plaintext latex commands #2810                 | 1          |
       | en-dash and i-circumflex translation error #2796                                                                         | 3          |
       | Exporting # in hashtags. #2795                                                                                           | 1          |
       | My citation key formula suddenly includes editors for book sections even when there is a declared author #2794           | 2          |
@@ -206,6 +210,7 @@ Feature: Export
 
     Examples:
       | file                                                                                                               | references |
+      | Better BibTeX export from Zotero missing Extra fields eg issued #2816                                              | 1          |
       | formula grouping                                                                                                   | 1          |
       | formula grouping-upgrade                                                                                           | 1          |
       | BBT does not escape # in first argument of href in note #2617                                                      | 2          |
@@ -619,6 +624,13 @@ Feature: Export
     When I change DOIandURL to "url" on the auto-export
     And I wait 15 seconds
     Then "~/autoexport.bib" should match "export/*.after.bibtex"
+
+  Scenario: Export of Contributor to WITH #2837-autoexport
+    Given I import 1 reference from "export/*.json"
+    Then an auto-export to "~/autoexport.bib" using "Better BibLaTeX" should match "export/*.before.biblatex"
+    When I change biblatexAPA to true on the auto-export
+    And I wait 15 seconds
+    Then "~/autoexport.bib" should match "export/*.after.biblatex"
 
   Scenario: Auto-Export citekey edits #citekey-edit
     Given I import 1 reference from "export/*.json"

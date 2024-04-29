@@ -1,6 +1,13 @@
 /* eslint-disable prefer-rest-params */
 
+import flatMap from 'array.prototype.flatmap'
+flatMap.shim()
+import matchAll from 'string.prototype.matchall'
+matchAll.shim()
+
+import { Shim } from './os'
 import { is7 } from './client'
+const $OS = is7 ? Shim : OS
 
 if (is7) Components.utils.importGlobalProperties(['FormData'])
 
@@ -392,17 +399,6 @@ Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
   generateCSLYAML(_sandbox: any, translation: Translation) { generateCSLYAML(translation) },
   generateCSLJSON(_sandbox: any, translation: Translation) { generateCSLJSON(translation) },
 
-  /*
-  cacheFetch(sandbox: { translator: { label: string }[] }, itemID: number, options: { exportNotes: boolean, useJournalAbbreviation: boolean }, prefs: any) {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return Cache.fetch(sandbox.translator[0].label, itemID, options, prefs)
-  },
-
-  cacheStore(sandbox: { translator: { label: string }[] }, itemID: number, options: { exportNotes: boolean, useJournalAbbreviation: boolean }, prefs: any, entry: any, metadata: any) {
-    return Cache.store(sandbox.translator[0].label, itemID, options, prefs, entry, metadata)
-  },
-  */
-
   parseDate(_sandbox: any, date: string): ParsedDate { return DateParser.parse(date) },
 }
 
@@ -454,7 +450,7 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
       if (this.location) {
         if (displayOptions.exportFileData) { // when exporting file data, the user was asked to pick a directory rather than a file
           displayOptions.exportDir = this.location.path
-          displayOptions.exportPath = OS.Path.join(this.location.path, `${this.location.leafName}.${translator.target}`)
+          displayOptions.exportPath = $OS.Path.join(this.location.path, `${this.location.leafName}.${translator.target}`)
           displayOptions.cache = false
         }
         else {
@@ -497,6 +493,7 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
           status: 'done',
           translatorID,
           exportNotes: displayOptions.exportNotes,
+          biblatexAPA: displayOptions.biblatexAPA,
           useJournalAbbreviation: displayOptions.useJournalAbbreviation,
         })
       }
@@ -584,7 +581,7 @@ export class BetterBibTeX {
   public generateCSLJSON = generateCSLJSON
 
   constructor() {
-    this.debugEnabledAtStart = Zotero.Prefs.get('debug.store') || Zotero.Debug.enabled
+    this.debugEnabledAtStart = Zotero.Prefs.get('debug.store') || Zotero.Debug.storing
     if (Zotero.isWin && !is7) Zotero.Debug.addListener(this.logListener.bind(this))
   }
 
@@ -609,7 +606,7 @@ export class BetterBibTeX {
 
       case 'tag':
         // eslint-disable-next-line no-case-declarations
-        let name = OS.Path.basename(aux)
+        let name = $OS.Path.basename(aux)
         name = name.lastIndexOf('.') > 0 ? name.substr(0, name.lastIndexOf('.')) : name
         // eslint-disable-next-line no-case-declarations
         const tag = prompt({
@@ -694,8 +691,8 @@ export class BetterBibTeX {
         // this is what really takes long
         await Zotero.initializationPromise
 
-        this.dir = OS.Path.join(Zotero.DataDirectory.dir, 'better-bibtex')
-        await OS.File.makeDir(this.dir, { ignoreExisting: true })
+        this.dir = $OS.Path.join(Zotero.DataDirectory.dir, 'better-bibtex')
+        await $OS.File.makeDir(this.dir, { ignoreExisting: true })
         await Preference.startup(this.dir)
         Events.startup()
       },
@@ -703,7 +700,7 @@ export class BetterBibTeX {
 
     orchestrator.add('sqlite', {
       startup: async () => {
-        await Zotero.DB.queryAsync('ATTACH DATABASE ? AS betterbibtex', [OS.Path.join(Zotero.DataDirectory.dir, 'better-bibtex.sqlite')])
+        await Zotero.DB.queryAsync('ATTACH DATABASE ? AS betterbibtex', [$OS.Path.join(Zotero.DataDirectory.dir, 'better-bibtex.sqlite')])
 
         const tables: Record<string, boolean> = {}
         for (const table of await Zotero.DB.columnQueryAsync("SELECT LOWER(REPLACE(name, '-', '')) FROM betterbibtex.sqlite_master where type='table'")) {
@@ -868,7 +865,7 @@ export class BetterBibTeX {
     }
 
     const file = new FileUtils.File(path)
-    // cannot use await OS.File.exists here because we may be invoked in noWait mod
+    // cannot use await $OS.File.exists here because we may be invoked in noWait mod
     if (!file.exists()) {
       log.error('BetterBibTeX.getContents:', path, 'does not exist')
       return null

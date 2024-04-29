@@ -2,17 +2,12 @@
   "collections": {
     "coll:00000": {
       "collections": [
-        "coll:00004",
-        "coll:00007"
+        "coll:00006"
       ],
-      "items": [
-        1,
-        3,
-        5,
-        7
-      ],
+      "items": [],
       "key": "coll:00000",
-      "name": "Jabref import - groups lost #1730-3"
+      "name": "Markings",
+      "parent": "coll:00004"
     },
     "coll:00001": {
       "collections": [
@@ -24,21 +19,38 @@
       ],
       "key": "coll:00001",
       "name": "Group1",
-      "parent": "coll:00003"
+      "parent": "coll:00004"
     },
     "coll:00002": {
       "collections": [
-        "coll:00006"
+        "coll:00008",
+        "coll:00009"
       ],
-      "items": [],
+      "items": [
+        1
+      ],
       "key": "coll:00002",
-      "name": "Markings",
+      "name": "Group1",
       "parent": "coll:00003"
     },
     "coll:00003": {
       "collections": [
-        "coll:00001",
         "coll:00002",
+        "coll:00007"
+      ],
+      "items": [
+        1,
+        3,
+        5,
+        7
+      ],
+      "key": "coll:00003",
+      "name": "Jabref import - groups lost #1730-3"
+    },
+    "coll:00004": {
+      "collections": [
+        "coll:00000",
+        "coll:00001",
         "coll:00010"
       ],
       "items": [
@@ -47,20 +59,8 @@
         6,
         8
       ],
-      "key": "coll:00003",
-      "name": "Jabref import - groups lost #1730-5"
-    },
-    "coll:00004": {
-      "collections": [
-        "coll:00008",
-        "coll:00009"
-      ],
-      "items": [
-        1
-      ],
       "key": "coll:00004",
-      "name": "Group1",
-      "parent": "coll:00000"
+      "name": "Jabref import - groups lost #1730-5"
     },
     "coll:00005": {
       "collections": [],
@@ -74,7 +74,7 @@
       "items": [],
       "key": "coll:00006",
       "name": "jfd1",
-      "parent": "coll:00002"
+      "parent": "coll:00000"
     },
     "coll:00007": {
       "collections": [],
@@ -84,7 +84,7 @@
       ],
       "key": "coll:00007",
       "name": "Group2",
-      "parent": "coll:00000"
+      "parent": "coll:00003"
     },
     "coll:00008": {
       "collections": [],
@@ -95,7 +95,7 @@
       ],
       "key": "coll:00008",
       "name": "Group1a",
-      "parent": "coll:00004"
+      "parent": "coll:00002"
     },
     "coll:00009": {
       "collections": [],
@@ -104,7 +104,7 @@
       ],
       "key": "coll:00009",
       "name": "Group1b",
-      "parent": "coll:00004"
+      "parent": "coll:00002"
     },
     "coll:00010": {
       "collections": [],
@@ -114,7 +114,7 @@
       ],
       "key": "coll:00010",
       "name": "Group2",
-      "parent": "coll:00003"
+      "parent": "coll:00004"
     },
     "coll:00011": {
       "collections": [],
@@ -278,7 +278,7 @@
         "Submitted 6 Feb 2020, Accepted 17 April 2020,"
       ],
       "publicationTitle": "2020 international symposium on electromagnetic compatibility - EMC EUROPE",
-      "title": "Coupling of Energy into PCB traces in a reverberant environment: Absorption cross-section and Risk of Susceptibility",
+      "title": "Coupling of energy into PCB traces in a reverberant environment: Absorption cross-section and risk of susceptibility",
       "url": "http://eprints.whiterose.ac.uk/160133/"
     },
     {
@@ -328,7 +328,7 @@
         "Submitted 6 Feb 2020, Accepted 17 April 2020,"
       ],
       "publicationTitle": "2020 international symposium on electromagnetic compatibility - EMC EUROPE",
-      "title": "Coupling of Energy into PCB traces in a reverberant environment: Absorption cross-section and Risk of Susceptibility",
+      "title": "Coupling of energy into PCB traces in a reverberant environment: Absorption cross-section and risk of susceptibility",
       "url": "http://eprints.whiterose.ac.uk/160133/"
     },
     {
@@ -445,12 +445,11 @@
       "issue": "8",
       "itemID": 7,
       "itemType": "journalArticle",
-      "journalAbbreviation": "Electronics",
       "notes": [
         "Submitted: 8 June 2020; Revised 13 July 2020, Accepted 27 July 2020"
       ],
       "pages": "1219",
-      "publicationTitle": "Electronicsweek",
+      "publicationTitle": "Electronics",
       "title": "Virtual sensing directional hub MAC (VSDH-MAC) protocol with power control",
       "url": "http://eprints.whiterose.ac.uk/163808/",
       "volume": "9"
@@ -489,12 +488,11 @@
       "issue": "8",
       "itemID": 8,
       "itemType": "journalArticle",
-      "journalAbbreviation": "Electronics",
       "notes": [
         "Submitted: 8 June 2020; Revised 13 July 2020, Accepted 27 July 2020"
       ],
       "pages": "1219",
-      "publicationTitle": "Electronicsweek",
+      "publicationTitle": "Electronics",
       "title": "Virtual sensing directional hub MAC (VSDH-MAC) protocol with power control",
       "url": "http://eprints.whiterose.ac.uk/163808/",
       "volume": "9"

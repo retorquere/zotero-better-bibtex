@@ -24,8 +24,18 @@ better-bibtex_error-report_debug =
 better-bibtex_error-report_enable-debug = Le journal de débogage de Zotero est actuellement désactivé. Il sera plus facile de diagnostiquer le problème si vous l'activez avant de soumettre un rapport d'erreur.
 better-bibtex_error-report_errors = 
     .label = Erreurs
+better-bibtex_error-report_include-errors = 
+    .label = Inclure les messages d'erreur
+better-bibtex_error-report_include-log = 
+    .label = Inclure le journal de débogage
+better-bibtex_error-report_include-items = 
+    .label = Inclure l'élément
+better-bibtex_error-report_include-notes = 
+    .label = notes
 better-bibtex_error-report_include-cache = 
-    .label = Inclure le cache
+    .label = cache
+better-bibtex_error-report_include-attachments = 
+    .label = métadonnées de la pièce jointe
 better-bibtex_error-report_items = 
     .label = Références
 better-bibtex_error-report_not-reviewed = Les journaux de débogage ne peuvent pas être vérifiés à moins d'être référencés dans le gestionnaire de tickets GitHub par leur ID.
@@ -34,18 +44,19 @@ better-bibtex_error-report_report-id = ID du journal de débogage :
 better-bibtex_error-report_restart-with-logging-enabled = 
     .label = Redémarrer avec le journal activé…
 better-bibtex_error-report_review =
-    Les données ci-dessous sont sur le point d'être soumises à Better BibTeX à fins de débogage. Vous pouvez les examiner pour contrôler s'il y a des informations sensibles que vous ne souhaitez pas envoyer.
+    Les données ci-dessous sont sur le point d'être soumises à Better BibTeX pour le débogage. Vous pouvez prévisualiser les données ici, ou enregistrer une copie du journal pour obtenir les données précises sur le point d'être envoyées, pour voir s'il y a des informations sensibles que vous souhaitez ne pas envoyer. Réfléchissez bien à la nécessité de décocher les options ci-dessous dans votre environnement. Nous aurons généralement besoin de plus de communication (= de temps) si vous supprimez des parties du journal de cette manière.
     
-    Si vous êtes d'accord pour envoyer ces données, veuillez passer à l'écran suivant et publier l'ID de débogage qui y figure dans le gestionnaire de problèmes à l'adresse suivante :
+    Si vous êtes d'accord avec l'envoi de ces données, passez à l'écran suivant, où vous obtiendrez un identifiant de débogage rouge, et publiez cet identifiant sur le système de suivi des problèmes à l'adresse suivante :
     
     https://github.com/retorquere/zotero-better-bibtex/issue
 better-bibtex_error-report_save = 
-    .label = Enregistrer la copie du journal
+    .label = Sauvegarder une copie du log pour inspection
 better-bibtex_error-report_submission-in-progress = Veuillez patienter pendant que le journal de débogage est soumis.
 better-bibtex_error-report_submitted = Votre journal de débogage a été envoyé.
 better-bibtex_export-options_keep-updated = Garder à jour
 better-bibtex_export-options_reminder = Êtes-vous sûr de ne pas vouloir du format ''{ $translator }''?
 better-bibtex_export-options_worker = Exportation en arrière-plan
+better-bibtex_export-options_biblatexAPA = biblatex-apa
 unused_better-bibtex_first-run = 
     .title = Bienvenue sur Better BibTeX pour Zotero
     .label = Bienvenue sur Better BibTeX pour Zotero
@@ -155,6 +166,8 @@ better-bibtex_preferences_auto-export_fields_notes =
     .label = Export des notes
 better-bibtex_preferences_auto-export_fields_recursive = 
     .label = Exporter toutes les collections enfants
+better-bibtex_preferences_auto-export_fields_biblatexAPA = 
+    .label = biblatex-apa
 better-bibtex_preferences_auto-export_git_message = { $type } mis à jour par Better BibTeX pour Zotero
 better-bibtex_preferences_auto-export_idle = à la mise en veille
     .label = { better-bibtex_preferences_auto-export_idle }

@@ -432,7 +432,7 @@ You can edit most Better BibTeX preferences through the Preferences window in Zo
 
 ## Zotero
 
-To view the the full list of Better BibTeX's preferences, including many hidden preferences, go to the Advanced pane of the Zotero preferences and click “Config Editor”. Enter “better-bibtex” into the Filter field at the top of the list that comes up. Preferences that can be safely changed by users are described below.
+To view the full list of Better BibTeX's preferences, including many hidden preferences, go to the Advanced pane of the Zotero preferences and click “Config Editor”. Enter “better-bibtex” into the Filter field at the top of the list that comes up. Preferences that can be safely changed by users are described below.
 
 The Better BibTeX hidden preferences are preceded by “extensions.zotero.translators.better-bibtex.”
 
@@ -678,7 +678,13 @@ class XHTML extends BaseASTWalker {
     }
     if (node.name === 'script') throw new Error("scripts don't work in preference panes")
 
+    let style: string
     switch (node.name) {
+      case'image':
+        style = node.attrs.filter(a => a.name === 'height' || a.name === 'width').map(a => `${a.name}:${eval(a.val)}`).join(';')
+        if (style) node.attrs.push({ name: 'style', val: JSON.stringify(style), mustEscape: false })
+        break
+
       case 'textbox':
         node.attrs = node.attrs.filter(a => a.name !== 'flex')
 

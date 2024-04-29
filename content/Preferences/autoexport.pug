@@ -43,7 +43,7 @@ html:div#bbt-prefs-auto-exports(class='bbt-prefs-2col')
         menuitem(value='note-url-ish' label='&better-bibtex_preferences_export_bibtex_urls_note-url-ish.label;')
         menuitem(value='url' label='&better-bibtex_preferences_export_bibtex_urls_url.label;')
         menuitem(value='url-ish' label='&better-bibtex_preferences_export_bibtex_urls_url-ish.label;')
-    image(tooltip='bbt-tooltip-bibtexURL' src='chrome://zotero-better-bibtex/content/skin/attention.svg' width='16' height='16')
+    image(tooltip='bbt-tooltip-bibtexURL' src='chrome://zotero-better-bibtex/content/skin/attention.svg' width='16px' height='16px')
 
   // biblatex
   checkbox.bbt-autoexport-options.bbt-autoexport-BetterBibLaTeX(
@@ -78,6 +78,12 @@ html:div#bbt-prefs-auto-exports(class='bbt-prefs-2col')
     class='bbt-prefs-2col-span'
     data-ae-field='useJournalAbbreviation'
     label='&better-bibtex_preferences_auto-export_fields_journal-abbrev.label;'
+    oncommand='Zotero.BetterBibTeX.PrefPane.autoexport.edit(this)'
+  )
+  checkbox.bbt-autoexport-options.bbt-autoexport-BetterBibLaTeX(
+    class='bbt-prefs-2col-span'
+    data-ae-field='biblatexAPA'
+    label='&better-bibtex_preferences_auto-export_fields_biblatexAPA.label;'
     oncommand='Zotero.BetterBibTeX.PrefPane.autoexport.edit(this)'
   )
 

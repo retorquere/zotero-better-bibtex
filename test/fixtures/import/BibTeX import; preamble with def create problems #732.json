@@ -2,13 +2,13 @@
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "localeDateOrder": "ymd",
     "options": {
+      "Items": true,
+      "Preferences": true,
       "exportNotes": true
     },
     "preferences": {
-      "citekeyFormat": "[auth][year]",
-      "itemObserverDelay": 100
+      "citekeyFormat": "auth + year"
     }
   },
   "items": [
@@ -23,7 +23,7 @@
         {
           "creatorType": "author",
           "firstName": "Pavel",
-          "lastName": "Krej\u010d\u00ed"
+          "lastName": "Krej\u010d\u0131\u0301"
         }
       ],
       "extra": [

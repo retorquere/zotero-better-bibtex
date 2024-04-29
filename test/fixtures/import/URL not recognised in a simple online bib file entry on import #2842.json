@@ -1,0 +1,44 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "options": {
+      "Items": true,
+      "Preferences": true,
+      "exportNotes": true,
+      "worker": true
+    },
+    "preferences": {
+      "auxImport": true,
+      "baseAttachmentPath": "C:\\Users\\shwur\\WIZnet Germany GmbH\\Agents of P.U.F. - General\\Zotero Storage",
+      "citekeyFormat": "auth + year",
+      "importSentenceCase": "off",
+      "rawImports": true,
+      "relativeFilePaths": true
+    }
+  },
+  "items": [
+    {
+      "citationKey": "Gartner_CloudComputing",
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "Gartner"
+        }
+      ],
+      "date": "2013-08",
+      "extra": [
+        "Citation Key: Gartner_CloudComputing"
+      ],
+      "itemID": 1,
+      "itemType": "webpage",
+      "tags": [
+        {
+          "tag": "#LaTeX",
+          "type": 1
+        }
+      ],
+      "url": "https://web.archive.org/web/20130825054202/http://www.gartner.com/technology/reprints.do?id=1-1IMDMZ5&ct=130819&st=sb"
+    }
+  ]
+}

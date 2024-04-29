@@ -397,8 +397,11 @@ export function isEDTF(value: string, minuteLevelPrecision = false): boolean {
 }
 
 export function strToISO(str: string): string {
-  let date = parse(str)
-  if (date.type === 'interval') date = date.from
+  return dateToISO(parse(str))
+}
+
+export function dateToISO(date: ParsedDate): string {
+  if (date.type === 'interval') return `${dateToISO(date.from)}/${dateToISO(date.to)}`.replace(/^[/]$/, '')
 
   if (typeof date.year !== 'number') return ''
 
