@@ -46,18 +46,23 @@ export class ZoteroItemPane {
 
     if (!this.document.getElementById('better-bibtex-editpane-item-box')) {
       if (is7) {
-        /*
-        itemBox.parentNode.parentNode.parentNode.appendChild(elements.create('html:div', { style: 'display: flex; flex-direction: column;' , $: [
-
-          elements.create('html:div', { id: 'better-bibtex-editpane-item-box', style: 'display: flex; flex-direction: row', $: [
-            elements.create('label', { id: 'better-bibtex-citekey-label', style: 'flex: 0 0 auto; width: 9em; text-align: right; color: #7F7F7F', value: '' }),
-            elements.create('html:input', { id: 'better-bibtex-citekey-display', type: 'text', style: 'flex: 0 0 auto', readonly: 'true', value: '' }),
-          ]}),
-
-          itemBox.parentNode.parentNode,
-        ]}))
-        */
-        log.debug('waiting for API to insert citekey in itempane')
+        Zotero.ItemPaneManager.registerSection({
+          paneID: 'betterbibtex-section-citationkey',
+          pluginID: 'better-bibtex@iris-advies.com',
+          header: {
+            l10nID: 'example-item-pane-header',
+            icon: `${rootURI}content/skin/citation-key.png`,
+          },
+          sidenav: {
+            l10nID: 'example-item-pane-header',
+            icon: `${rootURI}content/skin/citation-key.png`,
+          },
+          bodyXHTML: 'Citation Key <html:input type="text" id="better-bibtex-citation-key" readonly="true" style="position:relative;width:80%" xmlns:html="http://www.w3.org/1999/xhtml"/>',
+          // onRender: ({ body, item, editable, tabType }) => {
+          onRender: ({ body, item }) => {
+            body.ownerDocument.getElementById('better-bibtex-citation-key').value = item.getField('citationKey') || '\u274C'
+          },
+        })
       }
       else {
         itemBox.parentNode.appendChild(elements.create('vbox', { flex: 1, style: 'margin: 0; padding: 0', $: [
