@@ -1,4 +1,3 @@
-
 @booklet{clark_mesopotamia_1957,
   title = {Mesopotamia: Between Two Rivers},
   author = {Clark, Hazel V.},
@@ -11,8 +10,8 @@
 @review{kamp_deconstructing_2006,
   title = {Deconstructing Dinner},
   author = {Kamp, David},
-  editora = {Pollan, Michael},
-  editoratype = {collaborator},
+  namea = {Pollan, Michael},
+  nameatype = {collaborator},
   date = {2006-04-23},
   url = {http://www.nytimes.com/2006/04/23/books/review/23kamp.html.},
   abstract = {Example from CMoS, 16e, 14.125},
@@ -41,8 +40,8 @@
 @review{ratliff_mystery_1999,
   title = {The Mystery of Samba: {{Popular}} Music and National Identity in {{Brazil}}},
   author = {Ratliff, Ben},
-  editora = {{Hermano Vianna}},
-  editoratype = {collaborator},
+  namea = {{Hermano Vianna}},
+  nameatype = {collaborator},
   date = {1999-04},
   journaltitle = {Lingua Franca},
   volume = {9},
@@ -57,5 +56,3 @@ Original annotation:
 \par
 Example from CMoS, 16e, 14.125}
 }
-
-

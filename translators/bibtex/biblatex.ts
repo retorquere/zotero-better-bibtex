@@ -195,8 +195,11 @@ class Entry extends BaseEntry {
           if (this.translation.options.biblatexAPA) {
             creators.with.push(creator)
           }
+          else if (video && this.translation.options.biblatexChicago) {
+            creators[creatorType.register('editor', 'none')].push(creator)
+          }
           else {
-            creators[creatorType.register('editor', video && this.translation.options.biblatexChicago ? 'none' : 'collaborator')].push(creator)
+            creators[creatorType.register('name', 'collaborator')].push(creator)
           }
           break
 
@@ -236,7 +239,12 @@ class Entry extends BaseEntry {
 
         case 'scriptwriter':
           // 365.something
-          creators[creatorType.register('editor', video ? 'scriptwriter' : 'collaborator')].push(creator)
+          if (video) {
+            creators[creatorType.register('editor', 'scriptwriter')].push(creator)
+          }
+          else {
+            creators[creatorType.register('name', 'collaborator')].push(creator)
+          }
           break
 
         default:
