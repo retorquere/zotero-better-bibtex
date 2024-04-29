@@ -362,6 +362,7 @@ better-bibtex_zotero-pane_sentence-case = BBT Sentence-case
 better-bibtex_zotero-pane_show_collection-key = Download Better-BibTeX-Export...
 better-bibtex_zotero-pane_tag_duplicates = Markiere doppelte Zitierschlüssel
 better-bibtex_zotero-pane_tex-studio = Einträge an TeXstudio senden
+betterbibtex-item-pane-header = Citation key
 unused_better-bibtex_auto-export_too-long_body-eabled = Ihr { $translator }-Auto-Export nach { $path } dauerte { $seconds } Sekunden. Während Exporten jeglicher Art wird die Zotero-Benutzeroberfläche gesperrt.
 unused_better-bibtex_auto-export_too-long_prime-enabled = Um die Auswirkungen von lang laufenden Auto-Exporten zu minimieren, wurde das Cache-Priming aktiviert. Dies macht den Auto-Export langsamer, verkürzt aber die Zeit, die Zotero einfriert, auf ein Minimum.
 unused_better-bibtex_auto-export_too-long_sorry = Sie haben bereits Cache-Priming eingeschaltet und den Auto-Export auf "Wenn unbeschäftigt" gesetzt. Ohne Änderungen in der Architektur von Zotero (https://u.nu/27e9) kann nichts mehr getan werden.

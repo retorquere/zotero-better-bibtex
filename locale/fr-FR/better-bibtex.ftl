@@ -363,6 +363,7 @@ better-bibtex_zotero-pane_sentence-case = BBT Casse de la phrase
 better-bibtex_zotero-pane_show_collection-key = Télécharger l'export de Better BibTeX...
 better-bibtex_zotero-pane_tag_duplicates = Tagguer les clés de citation doublons
 better-bibtex_zotero-pane_tex-studio = Envoyer les citations vers TeXstudio
+betterbibtex-item-pane-header = Citation key
 unused_better-bibtex_auto-export_too-long_body-eabled = Votre exportation automatique { $translator } à { $path } a pris { $seconds } secondes. Pendant les exportations de quelque type que ce soit, l''interface utilisateur de Zotero est verrouillée.
 unused_better-bibtex_auto-export_too-long_prime-enabled = Pour minimiser les effets des exportations automatiques durant (trop) longtemps, la mise en place du cache a été activée. Cela rendra les exportations automatiques plus lentes, mais réduira au maximum le temps pendant lequel Zotero est inutilisable.
 unused_better-bibtex_auto-export_too-long_sorry = Vous avez déjà activé la mise en place du cache, et l'exportation automatique est activée. Rien de plus ne peut être fait sans un changement de l'architecture de Zotero (https://u.nu/27e9).
