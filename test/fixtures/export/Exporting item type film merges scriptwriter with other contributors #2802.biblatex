@@ -12,5 +12,6 @@
   publisher = {Sixteen Films, Why Not Productions, Wild Bunch},
   abstract = {After surviving a heart-attack, a 59-year-old carpenter must fight bureaucratic forces to receive Employment and Support Allowance.},
   keywords = {bureaucracy,psychological violence,United Kingdom},
-  annotation = {IMDb ID: tt5168192 event-location: United Kingdom, France, Belgium}
+  annotation = {IMDb ID: tt5168192\\
+event-location: United Kingdom, France, Belgium}
 }

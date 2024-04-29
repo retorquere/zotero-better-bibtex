@@ -240,7 +240,7 @@ class Entry extends BaseEntry {
           break
 
         default:
-          creators[creatorType.register('name', creator.creatorType)].push(creator)
+          creators[creatorType.register('name', 'collaborator')].push(creator)
       }
     }
 

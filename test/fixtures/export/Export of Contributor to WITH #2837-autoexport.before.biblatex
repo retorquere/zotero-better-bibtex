@@ -1,7 +1,7 @@
 @book{meyersWitheringWorrying2014,
   title = {Withering Worrying},
   author = {Meyers, K.},
-  editora = {Long, W. T.},
-  editoratype = {collaborator},
+  editor = {Long, W. T.},
+  editortype = {collaborator},
   date = {2014}
 }
