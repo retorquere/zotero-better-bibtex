@@ -78,6 +78,9 @@
             "biblatexAPA": {
               "type": "boolean"
             },
+            "biblatexChicago": {
+              "type": "boolean"
+            },
             "exportFileData": {
               "type": "boolean"
             },

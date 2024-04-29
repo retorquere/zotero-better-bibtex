@@ -205,6 +205,7 @@ class AutoExportPane {
           case 'biblatexExtendedNameFormat':
           case 'recursive':
           case 'biblatexAPA':
+          case 'biblatexChicago':
             (node as unknown as XUL.Checkbox).checked = selected[field]
             break
 
@@ -280,6 +281,7 @@ class AutoExportPane {
     Cache.getCollection(Translators.byId[ae.translatorID].label).removeDataOnly()
 
     let value: number | boolean | string
+    let disable: 'biblatexChicago' | 'biblatexAPA' = null
 
     switch (field) {
       case 'exportNotes':
@@ -290,8 +292,14 @@ class AutoExportPane {
       case 'biblatexExtendedNameFormat':
       case 'recursive':
       case 'biblatexAPA':
-        log.debug('edit autoexport:', field, node.checked)
+      case 'biblatexChicago':
         value = node.checked
+        if (node.checked && field === 'biblatexAPA') {
+          disable = 'biblatexChicago'
+        }
+        else if (node.checked && field === 'biblatexChicago') {
+          disable = 'biblatexAPA'
+        }
         break
 
       case 'DOIandURL':
@@ -304,6 +312,7 @@ class AutoExportPane {
         log.error('edit autoexport: unexpected field', field)
     }
     await AutoExport.edit(path, field, value)
+    if (disable) await AutoExport.edit(path, disable, false)
     log.debug('edit autoexport: after', await AutoExport.get(path))
     await this.refresh()
   }

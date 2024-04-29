@@ -494,6 +494,7 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
           translatorID,
           exportNotes: displayOptions.exportNotes,
           biblatexAPA: displayOptions.biblatexAPA,
+          biblatexChicago: displayOptions.biblatexChicago,
           useJournalAbbreviation: displayOptions.useJournalAbbreviation,
         })
       }

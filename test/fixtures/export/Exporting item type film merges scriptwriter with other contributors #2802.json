@@ -6,6 +6,7 @@
       "Items": true,
       "Preferences": true,
       "exportNotes": true,
+      "biblatexChicago": true,
       "worker": true
     },
     "preferences": {

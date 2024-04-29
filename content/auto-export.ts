@@ -326,6 +326,7 @@ const queue = new class TaskQueue {
         exportNotes: ae.exportNotes,
         useJournalAbbreviation: ae.useJournalAbbreviation,
         biblatexAPA: ae.biblatexAPA || false,
+        biblatexChicago: ae.biblatexChicago || false,
       }
 
       const jobs: ExportJob[] = [{
@@ -414,6 +415,7 @@ type Job = {
   DOIandURL?: boolean
   bibtexURL?: boolean
   biblatexAPA?: boolean
+  biblatexChicago?: boolean
 }
 type JobSetting = keyof Job
 
