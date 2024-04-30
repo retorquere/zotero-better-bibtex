@@ -861,8 +861,10 @@ export class BetterBibTeX {
         },
         bodyXHTML: 'Citation Key <html:input type="text" id="better-bibtex-citation-key" readonly="true" style="position:relative;width:80%" xmlns:html="http://www.w3.org/1999/xhtml"/>',
         // onRender: ({ body, item, editable, tabType }) => {
-        onRender: ({ body, item }) => {
-          body.ownerDocument.getElementById('better-bibtex-citation-key').value = item.getField('citationKey') || '\u274C'
+        onRender: ({ body, item,  setSectionSummary }) => {
+          const citekey = item.getField('citationKey')
+          body.ownerDocument.getElementById('better-bibtex-citation-key').value = citekey || '\u274C'
+          setSectionSummary(citekey || '')
         },
       })
     }
