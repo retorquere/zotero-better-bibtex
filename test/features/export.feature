@@ -13,6 +13,7 @@ Feature: Export
 
     Examples:
       | file                                                                                                                     | references |
+      | Exporting item type film merges scriptwriter with other contributors #2802                                               | 1          |
       | Three dashes in extra field for generating markdown files from bibtex #2849                                              | 1          |
       | Export of Contributor to WITH #2837                                                                                      | 1          |
       | Better BibTeX export from Zotero missing Extra fields eg issued #2816                                                    | 1          |
