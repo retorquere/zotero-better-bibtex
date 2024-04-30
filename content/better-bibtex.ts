@@ -852,11 +852,11 @@ export class BetterBibTeX {
         paneID: 'betterbibtex-section-citationkey',
         pluginID: 'better-bibtex@iris-advies.com',
         header: {
-          l10nID: 'betterbibtex-item-pane-header',
+          l10nID: 'better-bibtex_item-pane_section',
           icon: `${rootURI}content/skin/citation-key.png`,
         },
         sidenav: {
-          l10nID: 'betterbibtex-item-pane-header',
+          l10nID: 'better-bibtex_item-pane_section',
           icon: `${rootURI}content/skin/citation-key.png`,
         },
         bodyXHTML: 'Citation Key <html:input type="text" id="better-bibtex-citation-key" readonly="true" style="position:relative;width:80%" xmlns:html="http://www.w3.org/1999/xhtml"/>',
