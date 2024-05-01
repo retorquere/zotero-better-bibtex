@@ -80,7 +80,7 @@ export class ErrorReport {
     const version = require('../gen/version.js')
 
     try {
-      await Zotero.HTTP.request('PUT', `${this.bucket}/${$OS.Path.basename(this.tarball())}`, {
+      await Zotero.HTTP.request('PUT', `${this.bucket}/${this.tarball()}`, {
         noCache: true,
         // followRedirects: true,
         // noCache: true,
