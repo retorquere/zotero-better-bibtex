@@ -185,9 +185,6 @@ better-bibtex_preferences_auto-export_fields_notes =
 better-bibtex_preferences_auto-export_fields_recursive = 
   .label = Export all child collections
 
-better-bibtex_preferences_auto-export_fields_biblatexAPA = 
-  .label = biblatex-apa
-
 better-bibtex_preferences_auto-export_git_message = { $type } updated by Better BibTeX for Zotero
 better-bibtex_preferences_auto-export_idle = When Idle
   .label = { better-bibtex_preferences_auto-export_idle }
