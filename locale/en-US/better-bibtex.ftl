@@ -72,9 +72,10 @@ better-bibtex_export-options_worker = Background export
 better-bibtex_export-options_biblatexAPA = biblatex-apa
 better-bibtex_export-options_biblatexChicago = biblatex-chicago
 
-better-bibtex_item-pane_section =
-  .label = Citation key
+better-bibtex_item-pane_section_sidenav =
   .tooltip = Citation key
+better-bibtex_item-pane_section_header =
+  .label = Citation key
 
 better-bibtex_preferences_advanced_export_brace-protection = 
   .label = Apply case-protection to capitalized words by enclosing them in braces
