@@ -91,9 +91,37 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
         this.uninstall('\u672B BetterBibTeX JSON (for debugging)')
         this.uninstall('BetterBibTeX JSON (for debugging)')
 
-        this.lateInit().catch(err => {
-          log.debug('translators startup failure', err)
-        })
+        await Zotero.Translators.init()
+
+        const reinit: { header: Translator.Header, code: string }[] = []
+        // fetch from resource because that has the hash
+        const headers: Translator.Header[] = Headers
+          .map(header => JSON.parse(Zotero.File.getContentsFromURL(`chrome://zotero-better-bibtex/content/resource/${header.label}.json`)))
+        let code
+        for (const header of headers) {
+          // workaround for mem limitations on Windows
+          if (!is7 && typeof header.displayOptions?.worker === 'boolean') header.displayOptions.worker = !!Zotero.isWin
+          if (code = await this.install(header)) reinit.push({ header, code })
+        }
+
+        if (reinit.length) {
+          await Zotero.Translators.reinit()
+
+          /*
+          for (const { header, code } of reinit) {
+            if (Zotero.Translators.getCodeForTranslator) {
+              const translator = Zotero.Translators.get(header.translatorID)
+              translator.cacheCode = true
+              await Zotero.Translators.getCodeForTranslator(translator)
+            }
+            else {
+              new Zotero.Translator({...header, cacheCode: true, code })
+            }
+          }
+          */
+        }
+
+        this.ready.resolve(true)
       },
       shutdown: async (reason: Reason) => {
         switch (reason) {
@@ -117,38 +145,6 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
         await Zotero.Translators.reinit()
       },
     })
-  }
-
-  private async lateInit() {
-    await Zotero.Translators.init()
-
-    const reinit: { header: Translator.Header, code: string }[] = []
-    // fetch from resource because that has the hash
-    const headers: Translator.Header[] = Headers
-      .map(header => JSON.parse(Zotero.File.getContentsFromURL(`chrome://zotero-better-bibtex/content/resource/${header.label}.json`)))
-    for (const header of headers) {
-      // workaround for mem limitations on Windows
-      if (!is7 && typeof header.displayOptions?.worker === 'boolean') header.displayOptions.worker = !!Zotero.isWin
-      let code
-      if (code = await this.install(header)) reinit.push({ header, code })
-    }
-
-    if (reinit.length) {
-      await Zotero.Translators.reinit()
-
-      for (const { header, code } of reinit) {
-        if (Zotero.Translators.getCodeForTranslator) {
-          const translator = Zotero.Translators.get(header.translatorID)
-          translator.cacheCode = true
-          await Zotero.Translators.getCodeForTranslator(translator)
-        }
-        else {
-          new Zotero.Translator({...header, cacheCode: true, code })
-        }
-      }
-    }
-
-    this.ready.resolve(true)
   }
 
   public getTranslatorId(name: string): string {
