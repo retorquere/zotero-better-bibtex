@@ -13,12 +13,6 @@ export async function findBinary(bin: string, installationDirectory: { mac?: str
   return location
 }
 
-async function* asyncGenerator<T>(array: T[]): AsyncGenerator<T, void, unknown> {
-  for (const item of array) {
-    yield await Promise.resolve(item)
-  }
-}
-
 const ENV = Components.classes['@mozilla.org/process/environment;1'].getService(Components.interfaces.nsIEnvironment)
 const VarRef = Zotero.isWin ? /%([A-Z][A-Z0-9]*)%/ig : /[$]([A-Z][A-Z0-9]*)/ig
 function expandVars(name: string, expanded: Record<string, string>): string {
@@ -43,6 +37,7 @@ async function pathSearch(bin: string, installationDirectory: { mac?: string[], 
 
   const expanded = {}
   paths = paths.map(p => expandVars(p, expanded))
+  log.debug('path-search: looking for', bin, 'in', ENV.get('PATH'), paths)
   if (Zotero.isWin && installationDirectory.win) paths.unshift(...(installationDirectory.win))
   if (Zotero.isMac && installationDirectory.mac) paths.unshift(...(installationDirectory.mac))
   paths = paths.filter(p => p)
@@ -57,10 +52,11 @@ async function pathSearch(bin: string, installationDirectory: { mac?: string[], 
     return ''
   }
 
-  for await (const path of asyncGenerator(paths)) {
+  for (const path of paths) {
     for (const ext of extensions) {
       try {
         const exe: string = $OS.Path.join(path, bin + ext)
+        log.debug(`path-search: testing ${exe}`)
         if (!(await $OS.File.exists(exe))) continue
 
         // eslint-disable-next-line @typescript-eslint/await-thenable
