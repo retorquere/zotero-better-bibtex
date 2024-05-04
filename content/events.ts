@@ -6,7 +6,7 @@ import { log } from './logger'
 import { is7 } from './client'
 
 type IdleState = 'active' | 'idle'
-type Action = 'modify' | 'delete' | 'add'
+export type Action = 'modify' | 'delete' | 'add'
 
 type IdleObserver = {
   observe: (subject: string, topic: IdleState, data: any) => void
