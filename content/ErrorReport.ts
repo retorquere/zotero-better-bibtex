@@ -194,7 +194,8 @@ export class ErrorReport {
       /PAC file installed from/,
     ].map(re => re.source).join('|'))
     const homeDir = $OS.Constants.Path.homeDir
-    return logging.filter(line => !line.match(ignore)).map(line => line.replace(homeDir, '$HOME')).join('\n')
+    const homeURI = $OS.Path.toFileURI(homeDir)
+    return logging.filter(line => !line.match(ignore)).map(line => line.replace(homeDir, '$HOME').replace(homeURI, '$HOME')).join('\n')
   }
 
   private errors(): string {
