@@ -848,6 +848,9 @@ export class BetterBibTeX {
 
   async loadUI(win: Window): Promise<void> {
     if (is7) {
+      let $displayed: number
+      let $refresh: () => void
+      let $done: () => void
       Zotero.ItemPaneManager.registerSection({
         paneID: 'betterbibtex-section-citationkey',
         pluginID: 'better-bibtex@iris-advies.com',
@@ -861,24 +864,31 @@ export class BetterBibTeX {
         },
         bodyXHTML: 'Citation Key <html:input type="text" id="better-bibtex-citation-key" readonly="true" style="position:relative;width:80%" xmlns:html="http://www.w3.org/1999/xhtml"/>',
         // onRender: ({ body, item, editable, tabType }) => {
-        onRender: ({ body, item,  setSectionSummary }) => {
+        onRender: ({ body, item, setSectionSummary }) => {
+          $displayed = item.id
           const citekey = item.getField('citationKey')
           body.ownerDocument.getElementById('better-bibtex-citation-key').value = citekey || '\u274C'
           setSectionSummary(citekey || '')
         },
-        /*
-        onInit({ refresh }) {
+        onInit: ({ refresh }) => {
+          $refresh = refresh
+          $done = Events.on('items-changed', ({ items }) => {
+            if ($refresh && items.map(item => item.id).includes($displayed)) $refresh()
+          })
         },
-        onDestroy() {
+        onDestroy: () => {
+          $done?.()
+          $done = undefined
+          $displayed = undefined
+          $refresh = undefined
         },
-        */
       })
     }
 
     try {
       log.debug('loading main UI')
       await newZoteroPane(win)
-      await newZoteroItemPane(win)
+      if (!is7) await newZoteroItemPane(win)
     }
     catch (err) {
       log.debug('loadUI error:', err)
