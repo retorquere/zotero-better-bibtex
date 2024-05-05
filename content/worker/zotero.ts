@@ -10,7 +10,7 @@ import { print } from '../logger'
 declare const IOUtils: any
 
 import { Shim } from '../os'
-import { is7 } from '../client'
+import { is7, platform } from '../client'
 if (!is7) importScripts('resource://gre/modules/osfile.jsm')
 const $OS = is7 ? Shim : OS
 
@@ -287,7 +287,7 @@ const WorkerZoteroUtilities = {
 }
 
 function isWinRoot(path) {
-  return workerEnvironment.platform === 'win' && path.match(/^[a-z]:\\?$/i)
+  return platform.windows && path.match(/^[a-z]:\\?$/i)
 }
 async function makeDirs(path) {
   if (isWinRoot(path)) return
@@ -424,7 +424,7 @@ class WorkerZotero {
   public async init() {
     this.Date.init(dateFormats)
 
-    workerJob.preferences.platform = workerEnvironment.platform
+    workerJob.preferences.platform = platform.name
     workerJob.preferences.client = client
     this.output = ''
     this.items = workerJob.data.items.length
