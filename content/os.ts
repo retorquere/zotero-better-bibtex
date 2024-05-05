@@ -3,6 +3,14 @@ import { is7 } from './client'
 import { OS as $OS } from '../gen/osfile'
 export const Shim: any = is7 ? $OS : undefined
 
+Shim.Path = {
+  ...Shim.Path,
+  basename: (path: string) => {
+    if (!path) return path
+    return path.replace(/[\\/]$/, '').replace(/.*[\\/]/, '')
+  },
+}
+
 /*
 if (is7 && !Shim.Path.split) {
   Shim.Path.split = (path: string) => {
