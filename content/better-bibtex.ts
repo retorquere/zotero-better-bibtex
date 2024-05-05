@@ -862,9 +862,11 @@ export class BetterBibTeX {
           l10nID: 'better-bibtex_item-pane_section_sidenav',
           icon: `${rootURI}content/skin/citation-key.png`,
         },
-        bodyXHTML: 'Citation Key <html:input type="text" id="better-bibtex-citation-key" readonly="true" style="position:relative;width:80%" xmlns:html="http://www.w3.org/1999/xhtml"/>',
+        // bodyXHTML: 'Citation Key <html:input type="text" id="better-bibtex-citation-key" readonly="true" style="position:relative;width:80%" xmlns:html="http://www.w3.org/1999/xhtml"/>',
+        bodyXHTML: 'Citation Key <html:input type="text" id="better-bibtex-citation-key" readonly="true" style="flex: 1" xmlns:html="http://www.w3.org/1999/xhtml"/>',
         // onRender: ({ body, item, editable, tabType }) => {
         onRender: ({ body, item, setSectionSummary }) => {
+          body.style.display = 'flex'
           $displayed = item.id
           const citekey = item.getField('citationKey')
           body.ownerDocument.getElementById('better-bibtex-citation-key').value = citekey || '\u274C'

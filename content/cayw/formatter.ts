@@ -3,7 +3,7 @@
 import { Translators } from '../translators'
 import { getItemsAsync } from '../get-items-async'
 import { Preference } from '../prefs'
-import { escapeHTML } from '../text'
+import { html as escapeHTML } from '../escape'
 import { scannableCite } from '../../gen/ScannableCite'
 import { citeCreators, yearFromDate } from '../../translators/Better BibTeX Citation Key Quick Copy'
 import { Eta } from 'eta'

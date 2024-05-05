@@ -5,6 +5,7 @@ import { is7 } from './client'
 const $OS = is7 ? Shim : OS
 
 import { PromptService } from './prompt'
+import { regex as escapeRE } from './escape'
 
 import { Preference } from './prefs'
 
@@ -50,6 +51,9 @@ type Report = {
   items?: string
   acronyms?: string
 }
+
+const homeDir = $OS.Constants.Path.homeDir
+const $home = new RegExp(`${escapeRE(homeDir)}|${escapeRE($OS.Path.toFileURI(homeDir))}`, 'g')
 
 export class ErrorReport {
   private previewSize = 3
@@ -193,8 +197,7 @@ export class ErrorReport {
       /Could not get children of.*CrashManager.jsm/,
       /PAC file installed from/,
     ].map(re => re.source).join('|'))
-    const homeDir = $OS.Constants.Path.homeDir
-    return logging.filter(line => !line.match(ignore)).map(line => line.replace(homeDir, '$HOME')).join('\n')
+    return logging.filter(line => !line.match(ignore)).map(line => line.replace($home, '$HOME')).join('\n')
   }
 
   private errors(): string {
