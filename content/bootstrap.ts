@@ -60,6 +60,10 @@ export function install(_data: any, _reason: ReasonId) {
   log('install, nothing to do')
 }
 
+export function onMainWindowLoad({ window }) {
+  window.MozXULElement.insertFTLIfNeeded('better-bibtex.ftl')
+}
+
 let chromeHandle
 export async function startup({ resourceURI, rootURI = resourceURI.spec }, reason: ReasonId) {
   try {
