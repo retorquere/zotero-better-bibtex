@@ -8,7 +8,6 @@ import { DB as Cache } from './db/cache'
 import { $and } from './db/loki'
 import { Preference } from './prefs'
 import { orchestrator } from './orchestrator'
-import { log } from './logger'
 
 type CacheEntry = {
   itemID: number
