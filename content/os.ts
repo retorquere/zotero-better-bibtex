@@ -1,16 +1,11 @@
-import { is7 } from './client'
+import { is7, platform } from './client'
 
 import { OS as $OS } from '../gen/osfile'
 export const Shim: any = is7 ? $OS : undefined
 
-Shim.Path = {
-  ...Shim.Path,
-  basename: (path: string) => {
-    // no idea why it was decided the shim should not accept relative paths
-    if (!path) return path
-    return path.replace(/[\\/]$/, '').replace(/.*[\\/]/, '')
-  },
-}
+// no idea why it was decided the shim should not accept relative paths
+const Path = platform.windows ? { start: /\\/g, end: /\\$/ } : { start: /\//g, end: /\/$/ }
+Shim.Path.basename = (path: string) => path && (Shim.Path.normalize(path) as string).replace(Path.end, '').replace(Path.start, '')
 
 /*
 if (is7 && !Shim.Path.split) {
