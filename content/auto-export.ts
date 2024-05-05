@@ -139,11 +139,13 @@ class Git {
     return this
   }
 
-  public async repo(bib): Promise<Git> {
+  public async repo(bib: string): Promise<Git> {
     const repo = new Git(this)
 
     if (!this.git) return repo
 
+    let config: string = null
+    log.debug('2867:', bib, $OS.Path.dirname(bib))
     switch (Preference.git) {
       case 'off':
         return repo
@@ -159,8 +161,6 @@ class Git {
         break
 
       case 'config':
-        // eslint-disable-next-line no-case-declarations
-        let config = null
         for (let root = $OS.Path.dirname(bib); (await $OS.File.exists(root)) && (await $OS.File.stat(root)).isDir && root !== $OS.Path.dirname(root); root = $OS.Path.dirname(root)) {
           config = $OS.Path.join(root, '.git')
           if ((await $OS.File.exists(config)) && (await $OS.File.stat(config)).isDir) break
@@ -179,7 +179,7 @@ class Git {
           if (enabled !== 'true' && enabled !== true) return repo
         }
         catch (err) {
-          log.error('git.repo: error parsing config', config.path, err)
+          log.error('git.repo: error parsing config', config, err)
           return repo
         }
         break
