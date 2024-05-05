@@ -2,7 +2,7 @@
 declare const Services: any
 
 import { Shim } from './os'
-import { is7 } from './client'
+import { is7, platform } from './client'
 const $OS = is7 ? Shim : OS
 
 import { Events } from './events'
@@ -39,16 +39,7 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
     this.setDefaultPrefs()
 
     // put this in a preference so that translators can access this.
-    if (Zotero.isWin) {
-      this.platform = 'win'
-    }
-    else if (Zotero.isMac) {
-      this.platform = 'mac'
-    }
-    else {
-      if (!Zotero.isLinux) Zotero.debug('error: better-bibtex could not establish the platform, assuming linux')
-      this.platform = 'lin'
-    }
+    this.platform = platform.name
 
     if (this.testing) {
       return new Proxy(this, {
@@ -181,16 +172,7 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
     this.move('suppressTitleCase', 'exportTitleCase', old => !old)
 
     // put this in a preference so that translators can access this.
-    if (Zotero.isWin) {
-      this.platform = 'win'
-    }
-    else if (Zotero.isMac) {
-      this.platform = 'mac'
-    }
-    else {
-      if (!Zotero.isLinux) Zotero.debug('error: better-bibtex could not establish the platform, assuming linux')
-      this.platform = 'lin'
-    }
+    this.platform = platform.name
 
     if (this.testing) {
       return new Proxy(this, {
