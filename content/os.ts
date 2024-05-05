@@ -6,6 +6,7 @@ export const Shim: any = is7 ? $OS : undefined
 Shim.Path = {
   ...Shim.Path,
   basename: (path: string) => {
+    // no idea why it was decided the shim should not accept relative paths
     if (!path) return path
     return path.replace(/[\\/]$/, '').replace(/.*[\\/]/, '')
   },

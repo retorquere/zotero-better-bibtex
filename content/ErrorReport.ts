@@ -53,7 +53,7 @@ type Report = {
 }
 
 const homeDir = $OS.Constants.Path.homeDir
-const $home = new RegExp(`${escapeRE(homeDir)}|${escapeRE($OS.Path.toFileURI(homeDir))}`, 'g')
+const $home = new RegExp(`${escapeRE(homeDir)}|${escapeRE(homeDir.replace(Zotero.isWin ? /\\/g : /\//g, '$1$1'))}|${escapeRE($OS.Path.toFileURI(homeDir))}`, 'g')
 
 export class ErrorReport {
   private previewSize = 3
