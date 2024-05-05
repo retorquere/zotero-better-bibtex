@@ -2,7 +2,7 @@
 declare const Zotero: any
 
 import { simplifyForExport } from '../gen/items/simplify'
-import { escapeHTML } from '../content/text'
+import { html as escapeHTML } from '../content/escape'
 
 import { Eta } from 'eta'
 const eta = new Eta({ autoEscape: true })

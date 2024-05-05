@@ -8,6 +8,7 @@ const $OS = is7 ? Shim : OS
 import * as Prefs from '../../gen/preferences/meta'
 const PrefNames: Set<string> = new Set(Object.keys(Prefs.defaults))
 import { client } from '../../content/client'
+import { regex as escapeRE } from '../../content/escape'
 import { RegularItem, Item, Collection, Attachment } from '../../gen/typings/serialized-item'
 import type { Exporter as BibTeXExporter } from '../bibtex/exporter'
 import type { ZoteroItem } from '../bibtex/bibtex'
@@ -171,10 +172,6 @@ export class Collections {
     }
     return nested
   }
-}
-
-function escapeRegExp(text: string): string {
-  return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&')
 }
 
 export type Input = {
@@ -387,11 +384,11 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
       translation.preferences.separatorNames = translation.preferences.separatorNames.trim()
       translation.and = {
         list: {
-          re: new RegExp(escapeRegExp(translation.preferences.separatorList), 'g'),
+          re: new RegExp(escapeRE(translation.preferences.separatorList), 'g'),
           repl: ` {${translation.preferences.separatorList}} `,
         },
         names: {
-          re: new RegExp(` ${escapeRegExp(translation.preferences.separatorNames)} `, 'g'),
+          re: new RegExp(` ${escapeRE(translation.preferences.separatorNames)} `, 'g'),
           repl: ` {${translation.preferences.separatorNames}} `,
         },
       }
