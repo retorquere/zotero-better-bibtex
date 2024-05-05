@@ -6,7 +6,7 @@ export const Shim: any = is7 ? $OS : undefined
 
 if (Shim) {
   // no idea why it was decided the shim should not accept relative paths
-  const Path = platform.windows ? { start: /\\/g, end: /\\$/ } : { start: /\//g, end: /\/$/ }
+  const Path = platform.windows ? { start: /.*\\/, end: /\\$/ } : { start: /.*\//, end: /\/$/ }
   Shim.Path.basename = (path: string) => path && (Shim.Path.normalize(path) as string).replace(Path.end, '').replace(Path.start, '')
 
   const exists = Shim.File.exists
