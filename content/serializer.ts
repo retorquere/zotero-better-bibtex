@@ -8,6 +8,7 @@ import { DB as Cache } from './db/cache'
 import { $and } from './db/loki'
 import { Preference } from './prefs'
 import { orchestrator } from './orchestrator'
+import { log } from './logger'
 
 type CacheEntry = {
   itemID: number
@@ -98,6 +99,7 @@ export const Serializer = new class { // eslint-disable-line @typescript-eslint/
   private fastAttachment(serialized: Attachment, att): Attachment {
     if (att.attachmentLinkMode !== Zotero.Attachments.LINK_MODE_LINKED_URL) {
       serialized.localPath = att.getFilePath()
+      log.debug('2867: fastAttachment', { path: serialized.localPath })
       if (serialized.localPath) serialized.defaultPath = `files/${att.id}/${$OS.Path.basename(serialized.localPath)}`
     }
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
