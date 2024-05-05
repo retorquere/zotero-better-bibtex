@@ -107,6 +107,7 @@ export async function startup({ resourceURI, rootURI = resourceURI.spec }, reaso
       defaultXUL: true,
     })
     log('startup done')
+    onMainWindowLoad({ window: Zotero.getMainWindow() })
   }
   catch (err) {
     alert({ title: 'Better BibTeX startup failed', text: `${err}` })

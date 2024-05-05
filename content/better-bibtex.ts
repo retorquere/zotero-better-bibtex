@@ -878,6 +878,11 @@ export class BetterBibTeX {
             if ($refresh && items.map(item => item.id).includes($displayed)) $refresh()
           })
         },
+        onItemChange: ({ body, item }) => {
+          $displayed = item.id
+          const citekey = item.getField('citationKey')
+          body.ownerDocument.getElementById('better-bibtex-citation-key').value = citekey || '\u274C'
+        },
         onDestroy: () => {
           $done?.()
           $done = undefined
