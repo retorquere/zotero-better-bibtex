@@ -99,7 +99,6 @@ export const Serializer = new class { // eslint-disable-line @typescript-eslint/
   private fastAttachment(serialized: Attachment, att): Attachment {
     if (att.attachmentLinkMode !== Zotero.Attachments.LINK_MODE_LINKED_URL) {
       serialized.localPath = att.getFilePath()
-      log.debug('2867: fastAttachment', { path: serialized.localPath })
       if (serialized.localPath) serialized.defaultPath = `files/${att.id}/${$OS.Path.basename(serialized.localPath)}`
     }
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return

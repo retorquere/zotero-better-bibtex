@@ -145,7 +145,6 @@ class Git {
     if (!this.git) return repo
 
     let config: string = null
-    log.debug('2867:', bib, $OS.Path.dirname(bib))
     switch (Preference.git) {
       case 'off':
         return repo
