@@ -1,4 +1,4 @@
--citation-key = Citation key
+-citation-key = Clé de citation
 better-bibtex_auto-export_delete = Suppression de l'export automatique
 better-bibtex_auto-export_delete_confirm = Êtes-vous sûr de vouloir supprimer cette exportation automatique ? Cette opération est irréversible.
 better-bibtex_aux-scan_prompt = Nom de tag
