@@ -47,7 +47,7 @@ import { Events } from './events'
 
 import { Translators } from './translators'
 import { DB as Cache } from './db/cache'
-import { Serializer } from './serializer'
+import { Serializer } from './item-export-format'
 import { AutoExport, SQL as AE } from './auto-export'
 import { KeyManager } from './key-manager'
 import { TestSupport } from './test-support'
