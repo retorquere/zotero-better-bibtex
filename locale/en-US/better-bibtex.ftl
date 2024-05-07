@@ -1,3 +1,4 @@
+-citation-key = Citation key
 better-bibtex_auto-export_delete = Deleting auto-export
 better-bibtex_auto-export_delete_confirm = Are you sure you want to delete this auto-export? This cannot be undone.
 better-bibtex_aux-scan_prompt = Tag name
@@ -73,11 +74,11 @@ better-bibtex_export-options_biblatexAPA = biblatex-apa
 better-bibtex_export-options_biblatexChicago = biblatex-chicago
 
 better-bibtex_item-pane_section_sidenav =
-  .tooltip = Citation key
+  .tooltip = { -citation-key }
 better-bibtex_item-pane_section_header =
-  .label = Citation key
+  .label = { -citation-key }
 better-bibtex_item-pane_info_citation-key =
-  .label = Citation key
+  .label = { -citation-key }
 
 better-bibtex_preferences_advanced_export_brace-protection = 
   .label = Apply case-protection to capitalized words by enclosing them in braces
@@ -407,12 +408,12 @@ better-bibtex_zotero-pane_add-citation-links = Citation Graph: add citation link
 better-bibtex_zotero-pane_citekey_pin_inspire-hep = Pin BibTeX key from InspireHEP
 better-bibtex_zotero-pane_citekey_refresh = Refresh BibTeX key
 better-bibtex_zotero-pane_citekey_unpin = Unpin BibTeX key
-better-bibtex_zotero-pane_column_citekey = Citation Key
+better-bibtex_zotero-pane_column_citekey = { -citation-key }
 better-bibtex_zotero-pane_patch-dates = Copy date-added/date-modified from extra field
 better-bibtex_zotero-pane_sentence-case = BBT Sentence-case
 better-bibtex_zotero-pane_show_collection-key = Download Better BibTeX export...
 better-bibtex_zotero-pane_tag_duplicates = Tag duplicate citation keys
 better-bibtex_zotero-pane_tex-studio = Push entries to TeXstudio
 
-betterbibtex-item-pane-header = Citation key
+betterbibtex-item-pane-header = { -citation-key }
 
