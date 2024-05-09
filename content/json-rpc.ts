@@ -227,8 +227,10 @@ class NSItem {
    *
    * @param citekey  The citekey to search for
    */
-  public async attachments(citekey: string) {
-    const key = Zotero.BetterBibTeX.KeyManager.first({ where: { citationKey: citekey.replace(/^@/, '') } })
+  public async attachments(citekey: string, library?: string | number) {
+    const where : Query = { citationKey: citekey.replace(/^@/, '') }
+    if (typeof library !== 'undefined') where.libraryID = Library.get(library).libraryID
+    const key = Zotero.BetterBibTeX.KeyManager.first({ where })
     if (!key) throw { code: INVALID_PARAMETERS, message: `${citekey} not found` }
     const item = await getItemsAsync(key.itemID)
     const attachments = await getItemsAsync(item.getAttachments())
