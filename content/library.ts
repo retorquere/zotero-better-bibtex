@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return, @typescript-eslint/explicit-module-boundary-types */
 
-export function get(name?: string | number): number {
+export function get(name?: string | number): { name: string, libraryID: number } {
   if (typeof name === 'undefined') name = Zotero.Libraries.userLibraryID
   const num = typeof name === 'number' ? name : parseInt(name)
   if (!isNaN(num)) return Zotero.Libraries.get(num || Zotero.Libraries.userLibraryID)

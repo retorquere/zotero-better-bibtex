@@ -25,9 +25,7 @@ const INVALID_PARAMETERS = -32602 // Invalid method parameter(s).
 const INTERNAL_ERROR = -32603 // Internal JSON-RPC error.
 
 type QueryPrimitive = number | boolean | string
-type Query
-  = Record<string, Record<'in', QueryPrimitive[]>>
-  | Record<string, QueryPrimitive>
+type Query = Record<string, QueryPrimitive | Record<'in', QueryPrimitive[]>>
 
 function getStyle(id: string): any {
   const style = Zotero.Styles.get(id)
@@ -447,7 +445,7 @@ class NSItem {
    * @param libraryID     ID of library to select the items from. When omitted, assume 'My Library'
    */
   public async export(citekeys: string[], translator: string, libraryID?: string | number) {
-    const where : Query = {
+    const where: Query = {
       libraryID: Library.get(libraryID).libraryID,
     }
     citekeys = citekeys.map(citekey => citekey.replace('@', ''))
