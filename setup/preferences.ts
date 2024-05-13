@@ -678,7 +678,13 @@ class XHTML extends BaseASTWalker {
     }
     if (node.name === 'script') throw new Error("scripts don't work in preference panes")
 
+    let style: string
     switch (node.name) {
+      case'image':
+        style = node.attrs.filter(a => a.name === 'height' || a.name === 'width').map(a => `${a.name}:${eval(a.val)}`).join(';')
+        if (style) node.attrs.push({ name: 'style', val: JSON.stringify(style), mustEscape: false })
+        break
+
       case 'textbox':
         node.attrs = node.attrs.filter(a => a.name !== 'flex')
 

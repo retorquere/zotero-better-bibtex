@@ -1,7 +1,9 @@
 /* eslint-disable no-case-declarations, @typescript-eslint/no-unsafe-return */
 
 import { Shim } from './os'
-const $OS = typeof OS !== 'undefined' ? OS : Shim
+import { is7 } from './client'
+const $OS = is7 ? Shim : OS
+import merge from 'lodash.merge'
 
 Components.utils.import('resource://gre/modules/Services.jsm')
 
@@ -10,12 +12,12 @@ declare class ChromeWorker extends Worker { }
 Components.utils.import('resource://zotero/config.js')
 declare const ZOTERO_CONFIG: any
 
-import { clone } from './object'
+// import { clone } from './object'
 import { Deferred } from './deferred'
 import type { Translators as Translator } from '../typings/translators'
 import { Preference } from './prefs'
 import { Preferences } from '../gen/preferences/meta'
-import { Serializer } from './serializer'
+import { Serializer } from './item-export-format'
 import { log } from './logger'
 import { DB as Cache } from './db/cache'
 import { flash } from './flash'
@@ -23,7 +25,6 @@ import { $and } from './db/loki'
 import { Events } from './events'
 import { Pinger } from './ping'
 import Puqeue from 'puqeue'
-import { is7 } from './client'
 import { orchestrator } from './orchestrator'
 import type { Reason } from './bootstrap'
 import { headers as Headers, byLabel, byId, bySlug } from '../gen/translators'
@@ -90,9 +91,37 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
         this.uninstall('\u672B BetterBibTeX JSON (for debugging)')
         this.uninstall('BetterBibTeX JSON (for debugging)')
 
-        this.lateInit().catch(err => {
-          log.debug('translators startup failure', err)
-        })
+        await Zotero.Translators.init()
+
+        const reinit: { header: Translator.Header, code: string }[] = []
+        // fetch from resource because that has the hash
+        const headers: Translator.Header[] = Headers
+          .map(header => JSON.parse(Zotero.File.getContentsFromURL(`chrome://zotero-better-bibtex/content/resource/${header.label}.json`)))
+        let code
+        for (const header of headers) {
+          // workaround for mem limitations on Windows
+          if (!is7 && typeof header.displayOptions?.worker === 'boolean') header.displayOptions.worker = !!Zotero.isWin
+          if (code = await this.install(header)) reinit.push({ header, code })
+        }
+
+        if (reinit.length) {
+          await Zotero.Translators.reinit()
+
+          /*
+          for (const { header, code } of reinit) {
+            if (Zotero.Translators.getCodeForTranslator) {
+              const translator = Zotero.Translators.get(header.translatorID)
+              translator.cacheCode = true
+              await Zotero.Translators.getCodeForTranslator(translator)
+            }
+            else {
+              new Zotero.Translator({...header, cacheCode: true, code })
+            }
+          }
+          */
+        }
+
+        this.ready.resolve(true)
       },
       shutdown: async (reason: Reason) => {
         switch (reason) {
@@ -116,38 +145,6 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
         await Zotero.Translators.reinit()
       },
     })
-  }
-
-  private async lateInit() {
-    await Zotero.Translators.init()
-
-    const reinit: { header: Translator.Header, code: string }[] = []
-    // fetch from resource because that has the hash
-    const headers: Translator.Header[] = Headers
-      .map(header => JSON.parse(Zotero.File.getContentsFromURL(`chrome://zotero-better-bibtex/content/resource/${header.label}.json`)))
-    for (const header of headers) {
-      // workaround for mem limitations on Windows
-      if (!is7 && typeof header.displayOptions?.worker === 'boolean') header.displayOptions.worker = !!Zotero.isWin
-      let code
-      if (code = await this.install(header)) reinit.push({ header, code })
-    }
-
-    if (reinit.length) {
-      await Zotero.Translators.reinit()
-
-      for (const { header, code } of reinit) {
-        if (Zotero.Translators.getCodeForTranslator) {
-          const translator = Zotero.Translators.get(header.translatorID)
-          translator.cacheCode = true
-          await Zotero.Translators.getCodeForTranslator(translator)
-        }
-        else {
-          new Zotero.Translator({...header, cacheCode: true, code })
-        }
-      }
-    }
-
-    this.ready.resolve(true)
   }
 
   public getTranslatorId(name: string): string {
@@ -437,14 +434,12 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
   }
 
   public displayOptions(translatorID: string, displayOptions: any): any {
-    displayOptions = clone(displayOptions || this.byId[translatorID]?.displayOptions || {})
-    const defaults = this.byId[translatorID]?.displayOptions || {}
-    for (const [k, v] of Object.entries(defaults)) {
-      if (typeof displayOptions[k] === 'undefined') displayOptions[k] = v
-    }
-    if (this.byId[translatorID].label === 'BetterBibTeX JSON') displayOptions.exportCharset = 'UTF-8xBOM'
-
-    return displayOptions
+    return merge(
+      {},
+      this.byId[translatorID]?.displayOptions || {},
+      displayOptions,
+      this.byId[translatorID].label === 'BetterBibTeX JSON' ? { exportCharset: 'UTF-8xBOM' } : {}
+    )
   }
 
   public async exportItems(job: ExportJob): Promise<string> {

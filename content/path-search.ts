@@ -1,6 +1,7 @@
 import { log } from './logger'
 import { Shim } from './os'
-const $OS = typeof OS !== 'undefined' ? OS : Shim
+import { is7 } from './client'
+const $OS = is7 ? Shim : OS
 
 // https://searchfox.org/mozilla-central/source/toolkit/modules/subprocess/subprocess_win.jsm#135 doesn't seem to work on Windows.
 export async function findBinary(bin: string, installationDirectory: { mac?: string[], win?: string[] } = {}): Promise<string> {
@@ -10,12 +11,6 @@ export async function findBinary(bin: string, installationDirectory: { mac?: str
   location = await pathSearch(bin, installationDirectory)
   if (typeof location === 'string') Zotero.Prefs.set(pref, location)
   return location
-}
-
-async function* asyncGenerator<T>(array: T[]): AsyncGenerator<T, void, unknown> {
-  for (const item of array) {
-    yield await Promise.resolve(item)
-  }
 }
 
 const ENV = Components.classes['@mozilla.org/process/environment;1'].getService(Components.interfaces.nsIEnvironment)
@@ -42,6 +37,7 @@ async function pathSearch(bin: string, installationDirectory: { mac?: string[], 
 
   const expanded = {}
   paths = paths.map(p => expandVars(p, expanded))
+  log.debug('path-search: looking for', bin, 'in', ENV.get('PATH'), paths)
   if (Zotero.isWin && installationDirectory.win) paths.unshift(...(installationDirectory.win))
   if (Zotero.isMac && installationDirectory.mac) paths.unshift(...(installationDirectory.mac))
   paths = paths.filter(p => p)
@@ -56,10 +52,11 @@ async function pathSearch(bin: string, installationDirectory: { mac?: string[], 
     return ''
   }
 
-  for await (const path of asyncGenerator(paths)) {
+  for (const path of paths) {
     for (const ext of extensions) {
       try {
         const exe: string = $OS.Path.join(path, bin + ext)
+        log.debug(`path-search: testing ${exe}`)
         if (!(await $OS.File.exists(exe))) continue
 
         // eslint-disable-next-line @typescript-eslint/await-thenable

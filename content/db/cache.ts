@@ -92,7 +92,7 @@ class Cache extends Loki {
 
       coll = this.schemaCollection(header.label, {
         logging: false,
-        indices: [ 'itemID', 'exportNotes', 'useJournalAbbreviation', ...Object.keys(cachedPrefs) ],
+        indices: [ 'itemID', 'exportNotes', 'biblatexAPA', 'biblatexChicago', 'useJournalAbbreviation', ...Object.keys(cachedPrefs) ],
         schema: {
           type: 'object',
           additionalProperties: false,
@@ -103,6 +103,8 @@ class Cache extends Loki {
             // displayOptions
             exportNotes: { type: 'boolean' },
             useJournalAbbreviation: { type: 'boolean' },
+            biblatexAPA: { type: 'boolean' },
+            biblatexChicago: { type: 'boolean' },
 
             // preferences
             ...cachedPrefs,
@@ -114,7 +116,7 @@ class Cache extends Loki {
             meta: { type: 'object' },
             $loki: { type: 'integer' },
           },
-          required: [ 'itemID', 'entry', 'exportNotes', 'useJournalAbbreviation', ...Object.keys(cachedPrefs) ],
+          required: [ 'itemID', 'entry', 'biblatexAPA', 'biblatexChicago', 'exportNotes', 'useJournalAbbreviation', ...Object.keys(cachedPrefs) ],
         },
         ttl,
         ttlInterval,
@@ -187,6 +189,8 @@ class Cache extends Loki {
     const query = {
       exportNotes: !!options.exportNotes,
       useJournalAbbreviation: !!options.useJournalAbbreviation,
+      biblatexAPA: !!options.biblatexAPA,
+      biblatexChicago: !!options.biblatexChicago,
       // itemID: Array.isArray(itemID) ? {$in: itemID} : itemID,
     }
     const translatorID = byLabel[translatorLabel].translatorID
@@ -227,7 +231,7 @@ class Cache extends Loki {
     return clone(cached)
   }
 
-  store(translator: string, itemID: number, options: { exportNotes?: boolean, useJournalAbbreviation?: boolean }, prefs: any, entry: any, metadata: any) {
+  store(translator: string, itemID: number, options: { exportNotes?: boolean, useJournalAbbreviation?: boolean, biblatexAPA?: boolean, biblatexChicago?: boolean }, prefs: any, entry: any, metadata: any) {
     if (!Preference.cache) return false
 
     if (!metadata) metadata = {}
@@ -235,6 +239,8 @@ class Cache extends Loki {
     options = {
       exportNotes: false,
       useJournalAbbreviation: false,
+      biblatexAPA: false,
+      biblatexChicago: false,
       ...options,
     }
 

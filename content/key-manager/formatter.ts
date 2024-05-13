@@ -1,7 +1,8 @@
 import type { Tag, RegularItem as SerializedRegularItem, Item as SerializedItem } from '../../gen/typings/serialized-item'
 
 import { Shim } from '../os'
-const $OS = typeof OS !== 'undefined' ? OS : Shim
+import { is7 } from '../../content/client'
+const $OS = is7 ? Shim : OS
 
 import { client } from '../client'
 
@@ -15,7 +16,7 @@ import ucs2decode = require('punycode2/ucs2/decode')
 import { Preference } from '../prefs'
 import { JournalAbbrev } from '../journal-abbrev'
 import * as Extra from '../extra'
-import { buildCiteKey as zotero_buildCiteKey } from './formatter-zotero'
+import { buildCiteKey as zotero_buildCiteKey } from '../../gen/ZoteroBibTeX.mjs'
 import { babelLanguage, CJK } from '../text'
 import { fetchSync as fetchInspireHEP } from '../inspire-hep'
 

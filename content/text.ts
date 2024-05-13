@@ -498,14 +498,6 @@ export const CJK = new RegExp(`([${ scripts.map((s: { name: string, bmp: string 
   }
 }).join('') }])`, 'g')
 
-export function escapeHTML(unsafe: string): string {
-  return unsafe
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-}
-
 export function asciify(str: string): string {
   return str.replace(/[\u007F-\uFFFF]/g, chr => `\\u${(`0000${chr.charCodeAt(0).toString(16)}`).substr(-4)}`)
 }

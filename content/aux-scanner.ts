@@ -1,7 +1,6 @@
-import { is7 } from './client'
-
 import { Shim } from './os'
-const $OS = typeof OS !== 'undefined' ? OS : Shim
+import { is7 } from './client'
+const $OS = is7 ? Shim : OS
 
 if (!is7) Components.utils.import('resource://gre/modules/osfile.jsm')
 
@@ -175,7 +174,7 @@ export const AUXScanner = new class { // eslint-disable-line @typescript-eslint/
       }
     }
 
-    re = /(?:\\citation|@cite|\\abx@aux@cite)\{([^}]+)\}/g
+    re = /(?:\\citation|@cite|\\abx@aux@cite(?:[{]0[}])?)\{([^}]+)\}/g
     while (m = re.exec(contents)) {
       for (const key of m[1].split(',')) {
         if (!citekeys.includes(key)) citekeys.push(key)

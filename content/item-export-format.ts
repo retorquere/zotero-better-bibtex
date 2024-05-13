@@ -1,5 +1,6 @@
 import { Shim } from './os'
-const $OS = typeof OS !== 'undefined' ? OS : Shim
+import { is7 } from './client'
+const $OS = is7 ? Shim : OS
 
 import type { Attachment, Item } from '../gen/typings/serialized-item'
 import { JournalAbbrev } from './journal-abbrev'

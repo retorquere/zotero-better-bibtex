@@ -120,6 +120,7 @@ if args.this or args.test_this:
   if args.test_this: args.test = BRANCH.replace('gh-', '')
 
 if args.test or args.this or args.nightly or args.tagged: args.slow = True
+if args.test: args.stop = False
 
 if args.client == 'jurism':
   print(f"********* JURISM NO LONGER SUPPORTED ***********")

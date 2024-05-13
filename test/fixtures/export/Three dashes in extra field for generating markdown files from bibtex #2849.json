@@ -1,0 +1,54 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "preferences": {
+      "asciiBibTeX": false,
+      "bibtexParticleNoOp": true,
+      "bibtexURL": "url",
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold.lower + \"_\" + shorttitle(1).lower + \"_\" + year",
+      "exportBraceProtection": false,
+      "exportTitleCase": false,
+      "importSentenceCase": "off",
+      "keyScope": "global"
+    }
+  },
+  "items": [
+    {
+      "citationKey": "castillo_authoritarianism_2011a",
+      "conferenceName": "Annual Scientific Meeting of the International Society of Political Psychology  ISPP",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "J.",
+          "lastName": "Castillo"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "D.",
+          "lastName": "Miranda"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "P.",
+          "lastName": "Torres"
+        }
+      ],
+      "date": "July, 2011",
+      "extra": [
+        "url_slides: \"lisa-coes.github.io/\"",
+        "---",
+        "This is a presentation funded by ANID"
+      ],
+      "itemID": 1,
+      "itemType": "conferencePaper",
+      "place": "Bilgi University, Istambul",
+      "tags": [
+        {
+          "tag": "legitimacy ideology Chile"
+        }
+      ],
+      "title": "Authoritarianism, social dominance, and trust in public institutions."
+    }
+  ]
+}

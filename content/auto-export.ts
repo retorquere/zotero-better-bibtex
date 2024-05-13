@@ -2,8 +2,10 @@ Components.utils.import('resource://gre/modules/FileUtils.jsm')
 declare const FileUtils: any
 
 import { log } from './logger'
+
 import { Shim } from './os'
-const $OS = typeof OS !== 'undefined' ? OS : Shim
+import { is7 } from './client'
+const $OS = is7 ? Shim : OS
 
 import { Events } from './events'
 import { DB as Cache } from './db/cache'
@@ -48,7 +50,7 @@ export const SQL = new class {
     }
 
     const settings = autoExport[job.translatorID]
-    const displayOptions = byId[job.translatorID]?.displayOptions || {}
+    const displayOptions = {...(byId[job.translatorID]?.displayOptions || {})}
     Object.assign(job, pick(Preference, settings.preferences))
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     Object.assign(job, fromPairs(settings.options.map((option: PreferenceName) => [ option, job[option] ?? displayOptions[option] ?? false ])))
@@ -137,11 +139,12 @@ class Git {
     return this
   }
 
-  public async repo(bib): Promise<Git> {
+  public async repo(bib: string): Promise<Git> {
     const repo = new Git(this)
 
     if (!this.git) return repo
 
+    let config: string = null
     switch (Preference.git) {
       case 'off':
         return repo
@@ -157,8 +160,6 @@ class Git {
         break
 
       case 'config':
-        // eslint-disable-next-line no-case-declarations
-        let config = null
         for (let root = $OS.Path.dirname(bib); (await $OS.File.exists(root)) && (await $OS.File.stat(root)).isDir && root !== $OS.Path.dirname(root); root = $OS.Path.dirname(root)) {
           config = $OS.Path.join(root, '.git')
           if ((await $OS.File.exists(config)) && (await $OS.File.stat(config)).isDir) break
@@ -177,7 +178,7 @@ class Git {
           if (enabled !== 'true' && enabled !== true) return repo
         }
         catch (err) {
-          log.error('git.repo: error parsing config', config.path, err)
+          log.error('git.repo: error parsing config', config, err)
           return repo
         }
         break
@@ -323,6 +324,8 @@ const queue = new class TaskQueue {
       const displayOptions: any = {
         exportNotes: ae.exportNotes,
         useJournalAbbreviation: ae.useJournalAbbreviation,
+        biblatexAPA: ae.biblatexAPA || false,
+        biblatexChicago: ae.biblatexChicago || false,
       }
 
       const jobs: ExportJob[] = [{
@@ -410,6 +413,8 @@ type Job = {
   biblatexExtendedNameFormat?: boolean
   DOIandURL?: boolean
   bibtexURL?: boolean
+  biblatexAPA?: boolean
+  biblatexChicago?: boolean
 }
 type JobSetting = keyof Job
 

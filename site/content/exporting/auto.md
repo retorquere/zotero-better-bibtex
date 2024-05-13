@@ -21,7 +21,7 @@ separate exports for separate papers for example if you have set up a collection
 
 There are two important concepts in play for auto-export
 
-* register a collection/library for scheduled epxorts, and
+* register a collection/library for scheduled exports, and
 * executing these scheduled exports
 
 When you check "keep updated" in the export screen, that means "in the future, schedule this export for re-export when any of its items change, to the file I pick next". If you do not check this checkbox, that merely means you are not registering the export you are doing, rather than undoing an auto-export you scheduled before.

@@ -1,5 +1,6 @@
 import { Shim } from './os'
-const $OS = typeof OS !== 'undefined' ? OS : Shim
+import { is7 } from './client'
+const $OS = is7 ? Shim : OS
 
 import csv from 'papaparse'
 import { log } from './logger'

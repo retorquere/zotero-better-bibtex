@@ -2,11 +2,13 @@ declare const Zotero: any
 declare const __estrace: any // eslint-disable-line no-underscore-dangle
 
 import { Shim } from '../../content/os'
-const $OS = typeof OS !== 'undefined' ? OS : Shim
+import { is7 } from '../../content/client'
+const $OS = is7 ? Shim : OS
 
 import * as Prefs from '../../gen/preferences/meta'
 const PrefNames: Set<string> = new Set(Object.keys(Prefs.defaults))
 import { client } from '../../content/client'
+import { regex as escapeRE } from '../../content/escape'
 import { RegularItem, Item, Collection, Attachment } from '../../gen/typings/serialized-item'
 import type { Exporter as BibTeXExporter } from '../bibtex/exporter'
 import type { ZoteroItem } from '../bibtex/bibtex'
@@ -172,10 +174,6 @@ export class Collections {
   }
 }
 
-function escapeRegExp(text: string): string {
-  return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&')
-}
-
 export type Input = {
   items: Items
   collections: Collections
@@ -278,6 +276,8 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
     quickCopyMode?: string
     dropAttachments?: boolean
     exportNotes?: boolean
+    biblatexAPA?: boolean
+    biblatexChicago?: boolean
     markdown?: boolean
     exportFileData?: boolean
     useJournalAbbreviation?: boolean
@@ -384,11 +384,11 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
       translation.preferences.separatorNames = translation.preferences.separatorNames.trim()
       translation.and = {
         list: {
-          re: new RegExp(escapeRegExp(translation.preferences.separatorList), 'g'),
+          re: new RegExp(escapeRE(translation.preferences.separatorList), 'g'),
           repl: ` {${translation.preferences.separatorList}} `,
         },
         names: {
-          re: new RegExp(` ${escapeRegExp(translation.preferences.separatorNames)} `, 'g'),
+          re: new RegExp(` ${escapeRE(translation.preferences.separatorNames)} `, 'g'),
           repl: ` {${translation.preferences.separatorNames}} `,
         },
       }
@@ -427,7 +427,7 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
     this[translator.label.replace(/[^a-z]/ig, '')] = true
     this.BetterTeX = this.BetterBibTeX || this.BetterBibLaTeX
     this.BetterCSL = this.BetterCSLJSON || this.BetterCSLYAML
-    this.options = translator.displayOptions || {}
+    this.options = {...(translator.displayOptions || {})}
 
     this.platform = (Zotero.getHiddenPref('better-bibtex.platform') as string)
     this.isJurisM = client === 'jurism'
@@ -444,15 +444,8 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
     catch (err) {
     }
 
-    for (const key in this.options) {
-      if (typeof this.options[key] === 'boolean') {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-        this.options[key] = Zotero.getOption(key)
-      }
-      else {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-        this.options[key] = !!Zotero.getOption(key)
-      }
+    for (const key in this.options) { // eslint-disable-line guard-for-in
+      this.options[key] = !!Zotero.getOption(key)
     }
     this.options.custom = Zotero.getOption('custom') // for pandoc-filter CSL
 

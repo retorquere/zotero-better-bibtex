@@ -10,6 +10,11 @@ Feature: Import
     When I import 2 references from "import/*.bib"
     Then the library should match "import/*.json"
 
+  Scenario: URL not recognised in a simple online bib file entry on import #2842
+    When I apply the preferences from "import/*.json"
+    And I import 1 reference from "import/*.bib"
+    Then the library should match "import/*.json"
+
   # And the markdown citation for Torre2008 should be '\(Torre & Verducci, 2008\)'
   # And the markdown bibliography for Torre2008 should be '<a name="@Torre2008"></a>Torre, J., & Verducci, T. \(2008\). _The Yankee Years_.  Doubleday.'
   # And the markdown citation for orre2008 should be ''

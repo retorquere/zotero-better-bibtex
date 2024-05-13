@@ -8,6 +8,7 @@ import { get as getCollection } from './collection'
 import * as Library from './library'
 import { log } from './logger'
 import { Preference } from './prefs'
+import { Server } from './server'
 
 import methods from '../gen/api/json-rpc.json'
 import { validator, noncoercing } from './ajv'
@@ -25,9 +26,7 @@ const INVALID_PARAMETERS = -32602 // Invalid method parameter(s).
 const INTERNAL_ERROR = -32603 // Internal JSON-RPC error.
 
 type QueryPrimitive = number | boolean | string
-type Query
-  = Record<string, Record<'in', QueryPrimitive[]>>
-  | Record<string, QueryPrimitive>
+type Query = Record<string, QueryPrimitive | Record<'in', QueryPrimitive[]>>
 
 function getStyle(id: string): any {
   const style = Zotero.Styles.get(id)
@@ -227,8 +226,10 @@ class NSItem {
    *
    * @param citekey  The citekey to search for
    */
-  public async attachments(citekey: string) {
-    const key = Zotero.BetterBibTeX.KeyManager.first({ where: { citationKey: citekey.replace(/^@/, '') } })
+  public async attachments(citekey: string, library?: string | number) {
+    const where : Query = { citationKey: citekey.replace(/^@/, '') }
+    if (library !== '*') where.libraryID = Library.get(library).libraryID
+    const key = Zotero.BetterBibTeX.KeyManager.first({ where })
     if (!key) throw { code: INVALID_PARAMETERS, message: `${citekey} not found` }
     const item = await getItemsAsync(key.itemID)
     const attachments = await getItemsAsync(item.getAttachments())
@@ -445,7 +446,7 @@ class NSItem {
    * @param libraryID     ID of library to select the items from. When omitted, assume 'My Library'
    */
   public async export(citekeys: string[], translator: string, libraryID?: string | number) {
-    const where : Query = {
+    const where: Query = {
       libraryID: Library.get(libraryID).libraryID,
     }
     citekeys = citekeys.map(citekey => citekey.replace('@', ''))
@@ -702,7 +703,7 @@ const api = new class API {
   }
 }
 
-Zotero.Server.Endpoints['/better-bibtex/json-rpc'] = class {
+Server.Endpoints['/better-bibtex/json-rpc'] = class {
   public supportedMethods = ['GET', 'POST']
   public supportedDataTypes = ['application/json']
   public permitBookmarklet = false

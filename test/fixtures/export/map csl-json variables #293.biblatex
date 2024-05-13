@@ -1,8 +1,9 @@
-
 @book{kelsen_democratie_2004,
   title = {La démocratie. Sa nature, sa valeur},
   author = {Kelsen, Hans},
   translator = {Eisenmann, Charles},
+  namea = {Raynaud, Philippe},
+  nameatype = {collaborator},
   date = {2004},
   origdate = {1929},
   series = {Bibliothèque Dalloz},
@@ -31,5 +32,3 @@
   origpublisher = {origpublisher},
   origtitle = {origtitle}
 }
-
-

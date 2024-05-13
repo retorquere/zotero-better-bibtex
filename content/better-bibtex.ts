@@ -1,8 +1,13 @@
 /* eslint-disable prefer-rest-params */
 
-import { is7 } from './client'
+import flatMap from 'array.prototype.flatmap'
+flatMap.shim()
+import matchAll from 'string.prototype.matchall'
+matchAll.shim()
+
 import { Shim } from './os'
-const $OS = typeof OS !== 'undefined' ? OS : Shim
+import { is7 } from './client'
+const $OS = is7 ? Shim : OS
 
 if (is7) Components.utils.importGlobalProperties(['FormData'])
 
@@ -42,7 +47,7 @@ import { Events } from './events'
 
 import { Translators } from './translators'
 import { DB as Cache } from './db/cache'
-import { Serializer } from './serializer'
+import { Serializer } from './item-export-format'
 import { AutoExport, SQL as AE } from './auto-export'
 import { KeyManager } from './key-manager'
 import { TestSupport } from './test-support'
@@ -394,17 +399,6 @@ Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
   generateCSLYAML(_sandbox: any, translation: Translation) { generateCSLYAML(translation) },
   generateCSLJSON(_sandbox: any, translation: Translation) { generateCSLJSON(translation) },
 
-  /*
-  cacheFetch(sandbox: { translator: { label: string }[] }, itemID: number, options: { exportNotes: boolean, useJournalAbbreviation: boolean }, prefs: any) {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return Cache.fetch(sandbox.translator[0].label, itemID, options, prefs)
-  },
-
-  cacheStore(sandbox: { translator: { label: string }[] }, itemID: number, options: { exportNotes: boolean, useJournalAbbreviation: boolean }, prefs: any, entry: any, metadata: any) {
-    return Cache.store(sandbox.translator[0].label, itemID, options, prefs, entry, metadata)
-  },
-  */
-
   parseDate(_sandbox: any, date: string): ParsedDate { return DateParser.parse(date) },
 }
 
@@ -499,6 +493,8 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
           status: 'done',
           translatorID,
           exportNotes: displayOptions.exportNotes,
+          biblatexAPA: displayOptions.biblatexAPA,
+          biblatexChicago: displayOptions.biblatexChicago,
           useJournalAbbreviation: displayOptions.useJournalAbbreviation,
         })
       }
@@ -851,10 +847,55 @@ export class BetterBibTeX {
   }
 
   async loadUI(win: Window): Promise<void> {
+    if (is7) {
+      let $displayed: number
+      let $refresh: () => void
+      let $done: () => void
+      Zotero.ItemPaneManager.registerSection({
+        paneID: 'betterbibtex-section-citationkey',
+        pluginID: 'better-bibtex@iris-advies.com',
+        header: {
+          l10nID: 'better-bibtex_item-pane_section_header',
+          icon: `${rootURI}content/skin/citation-key.svg`,
+        },
+        sidenav: {
+          l10nID: 'better-bibtex_item-pane_section_sidenav',
+          icon: `${rootURI}content/skin/citation-key.svg`,
+        },
+        // bodyXHTML: 'Citation Key <html:input type="text" id="better-bibtex-citation-key" readonly="true" style="position:relative;width:80%" xmlns:html="http://www.w3.org/1999/xhtml"/>',
+        bodyXHTML: 'Citation Key <html:input type="text" id="better-bibtex-citation-key" readonly="true" style="flex: 1" xmlns:html="http://www.w3.org/1999/xhtml"/>',
+        // onRender: ({ body, item, editable, tabType }) => {
+        onRender: ({ body, item, setSectionSummary }) => {
+          body.style.display = 'flex'
+          $displayed = item.id
+          const citekey = item.getField('citationKey')
+          body.ownerDocument.getElementById('better-bibtex-citation-key').value = citekey || '\u274C'
+          setSectionSummary(citekey || '')
+        },
+        onInit: ({ refresh }) => {
+          $refresh = refresh
+          $done = Events.on('items-changed', ({ items }) => {
+            if ($refresh && items.map(item => item.id).includes($displayed)) $refresh()
+          })
+        },
+        onItemChange: ({ body, item }) => {
+          $displayed = item.id
+          const citekey = item.getField('citationKey')
+          body.ownerDocument.getElementById('better-bibtex-citation-key').value = citekey || '\u274C'
+        },
+        onDestroy: () => {
+          $done?.()
+          $done = undefined
+          $displayed = undefined
+          $refresh = undefined
+        },
+      })
+    }
+
     try {
       log.debug('loading main UI')
       await newZoteroPane(win)
-      await newZoteroItemPane(win)
+      if (!is7) await newZoteroItemPane(win)
     }
     catch (err) {
       log.debug('loadUI error:', err)

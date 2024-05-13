@@ -1,3 +1,4 @@
+-citation-key = Clé de citation
 better-bibtex_auto-export_delete = Suppression de l'export automatique
 better-bibtex_auto-export_delete_confirm = Êtes-vous sûr de vouloir supprimer cette exportation automatique ? Cette opération est irréversible.
 better-bibtex_aux-scan_prompt = Nom de tag
@@ -24,8 +25,18 @@ better-bibtex_error-report_debug =
 better-bibtex_error-report_enable-debug = Le journal de débogage de Zotero est actuellement désactivé. Il sera plus facile de diagnostiquer le problème si vous l'activez avant de soumettre un rapport d'erreur.
 better-bibtex_error-report_errors = 
     .label = Erreurs
+better-bibtex_error-report_include-errors = 
+    .label = Inclure les messages d'erreur
+better-bibtex_error-report_include-log = 
+    .label = Inclure le journal de débogage
+better-bibtex_error-report_include-items = 
+    .label = Inclure l'élément
+better-bibtex_error-report_include-notes = 
+    .label = notes
 better-bibtex_error-report_include-cache = 
-    .label = Inclure le cache
+    .label = cache
+better-bibtex_error-report_include-attachments = 
+    .label = métadonnées de la pièce jointe
 better-bibtex_error-report_items = 
     .label = Références
 better-bibtex_error-report_not-reviewed = Les journaux de débogage ne peuvent pas être vérifiés à moins d'être référencés dans le gestionnaire de tickets GitHub par leur ID.
@@ -34,47 +45,26 @@ better-bibtex_error-report_report-id = ID du journal de débogage :
 better-bibtex_error-report_restart-with-logging-enabled = 
     .label = Redémarrer avec le journal activé…
 better-bibtex_error-report_review =
-    Les données ci-dessous sont sur le point d'être soumises à Better BibTeX à fins de débogage. Vous pouvez les examiner pour contrôler s'il y a des informations sensibles que vous ne souhaitez pas envoyer.
+    Les données ci-dessous sont sur le point d'être soumises à Better BibTeX pour le débogage. Vous pouvez prévisualiser les données ici, ou enregistrer une copie du journal pour obtenir les données précises sur le point d'être envoyées, pour voir s'il y a des informations sensibles que vous souhaitez ne pas envoyer. Réfléchissez bien à la nécessité de décocher les options ci-dessous dans votre environnement. Nous aurons généralement besoin de plus de communication (= de temps) si vous supprimez des parties du journal de cette manière.
     
-    Si vous êtes d'accord pour envoyer ces données, veuillez passer à l'écran suivant et publier l'ID de débogage qui y figure dans le gestionnaire de problèmes à l'adresse suivante :
+    Si vous êtes d'accord avec l'envoi de ces données, passez à l'écran suivant, où vous obtiendrez un identifiant de débogage rouge, et publiez cet identifiant sur le système de suivi des problèmes à l'adresse suivante :
     
     https://github.com/retorquere/zotero-better-bibtex/issue
 better-bibtex_error-report_save = 
-    .label = Enregistrer la copie du journal
+    .label = Sauvegarder une copie du log pour inspection
 better-bibtex_error-report_submission-in-progress = Veuillez patienter pendant que le journal de débogage est soumis.
 better-bibtex_error-report_submitted = Votre journal de débogage a été envoyé.
 better-bibtex_export-options_keep-updated = Garder à jour
 better-bibtex_export-options_reminder = Êtes-vous sûr de ne pas vouloir du format ''{ $translator }''?
 better-bibtex_export-options_worker = Exportation en arrière-plan
-unused_better-bibtex_first-run = 
-    .title = Bienvenue sur Better BibTeX pour Zotero
-    .label = Bienvenue sur Better BibTeX pour Zotero
-unused_better-bibtex_first-run_citekey-format = Vos clés de citation
-unused_better-bibtex_first-run_citekey-format_bbt = 
-    .label = Utiliser le format de clé de citation par défaut de BBT
-unused_better-bibtex_first-run_citekey-format_explanation = BBT va générer des clés de citation pour vos entrées bibliographiques. La génération de clés de citation est hautement configurable, et vous pouvez choisir de remplacer la génération, mais vous devrez sélectionner la valeur par défaut dès maintenant. Vous pouvez toujours aller dans les préférences et changer cela à tout moment.
-unused_better-bibtex_first-run_citekey-format_explanation_bbt = Les nouvelles clés de citation seront par défaut générées en utilisant le format de BBT. Si vous voulez un format différent, modifiez-le dans les préférences, puis sélectionnez tous les éléments, cliquez avec le bouton droit et sélectionnez Actualiser
-unused_better-bibtex_first-run_citekey-format_explanation_example = vos clés de citation ressembleront à
-unused_better-bibtex_first-run_citekey-format_explanation_zotero = Choisissez cette option si vous avez des documents qui font référence à des clés générées par Zotero sans l'aide de BBT. Cela va reproduire fidèlement les clés générées par Zotero, y compris les limitations connues du générateur de clé de Zotero. N'utilisez ceci que s'il vous est nécessaire que les clés soient exactement les mêmes que celles générées par Zotero.
-unused_better-bibtex_first-run_citekey-format_zotero = 
-    .label = Utiliser le format par défaut de Zotero pour la clé de citation
-unused_better-bibtex_first-run_done = Et voilà !
-unused_better-bibtex_first-run_done_explanation = BBT est maintenant configuré. Vous pouvez toujours modifier l'un de ces paramètres dans les préférences de Zotero, onglet 'Better BibTeX'.
-unused_better-bibtex_first-run_drag-and-drop = Citations par glisser-déposer
-unused_better-bibtex_first-run_drag-and-drop_enable = 
-    .label = Activer les citations par glisser-déposer
-unused_better-bibtex_first-run_drag-and-drop_explanation = BBT vous permet de glisser-déposer vos références dans l'éditeur LaTeX de votre choix. Voulez-vous activer cette fonctionnalité dès maintenant ?
-unused_better-bibtex_first-run_exporting = Exporter en utilisant BBT
-unused_better-bibtex_first-run_exporting_explanation = L'exportation à l'aide de BBT fonctionne comme d'habitude dans Zotero, mais assurez-vous d'avoir sélectionné le bon format ; dans la liste des formats, au lieu de 'BibTeX', sélectionnez
-unused_better-bibtex_first-run_import-strings_enable = 
-    .label = Développer les noms de journaux @string à l'importation
-unused_better-bibtex_first-run_import-strings_explanation = Certains fichiers bibtex utilisent des variables @string pour les noms de journaux. Si vous activez ceci, BBT utilisera une liste d'ID communs de journaux pour remplacer ces variables par les noms complets de ces journaux
-unused_better-bibtex_first-run_import_unabbreviate = Développer les chaînes de caractères bibtex et les abréviations de journaux pendant l'importation
-unused_better-bibtex_first-run_import_unabbreviate_enable = 
-    .label = Désabréger les noms de journaux lors de l'importation
-unused_better-bibtex_first-run_import_unabbreviate_explanation = Certains fichiers bibtex ont des abréviations de journaux dans le champ « journal ». Si vous activez ceci, BBT tentera de remplacer ces abréviations par le nom complet du journal lors de l'importation de fichiers bibtex
-unused_better-bibtex_first-run_welcome = Better BibTex pour Zotero (ou BBT) ajoute à Zotero une compatibilité étendue avec LaTeX ou Markdown. BBT est totalement configurable -- rendez-vous dans les préférences si vous êtes curieux -- mais nous allons commencer avec quelques choix simples.
-better-bibtex_item-pane_citekey = Clé de citation
+better-bibtex_export-options_biblatexAPA = biblatex-apa
+better-bibtex_export-options_biblatexChicago = biblatex-chicago
+better-bibtex_item-pane_section_sidenav = 
+    .tooltip = { -citation-key }
+better-bibtex_item-pane_section_header = 
+    .label = { -citation-key }
+better-bibtex_item-pane_info_citation-key = 
+    .label = { -citation-key }
 better-bibtex_preferences_advanced_export_brace-protection = 
     .label = Appliquer la protection de la casse aux mots en capitales en les insérant entre paires d'accolades
 better-bibtex_preferences_advanced_export_brace-protection_warning = Si vous n'êtes pas prêt à ignorer à la fois les meilleures pratiques BibTeX/BibLaTeX (voir la FAQ BBT) et les recommandations de Zotero sur le tire/phrase, vous pouvez désactiver cette option pour supprimer la protection automatique des accolades pour les mots avec des lettres capitales.
@@ -267,14 +257,10 @@ better-bibtex_preferences_export_quick-copy = Copie rapide
     .label = { better-bibtex_preferences_export_quick-copy }
 better-bibtex_preferences_export_quick-copy_explanation = Copie rapide/glissé-déposé des citations
 better-bibtex_preferences_export_quick-copy_format = Format de copie rapide
-unused_better-bibtex_preferences_export_quick-copy_atom = Atom
-    .label = { unused_better-bibtex_preferences_export_quick-copy_atom }
 better-bibtex_preferences_export_quick-copy_citekeys = Clés de citation
     .label = { better-bibtex_preferences_export_quick-copy_citekeys }
 better-bibtex_preferences_export_quick-copy_eta-template = Canevas Eta
     .label = { better-bibtex_preferences_export_quick-copy_eta-template }
-unused_better-bibtex_preferences_export_quick-copy_gitbook = GitBook
-    .label = { unused_better-bibtex_preferences_export_quick-copy_gitbook }
 better-bibtex_preferences_export_quick-copy_latex = Citation LaTeX
     .label = { better-bibtex_preferences_export_quick-copy_latex }
 better-bibtex_preferences_export_quick-copy_latex_command = Commande LaTeX
@@ -344,59 +330,10 @@ better-bibtex_zotero-pane_add-citation-links = Graphique de citation : ajouter d
 better-bibtex_zotero-pane_citekey_pin_inspire-hep = Verrouiller les clés BibTeX de InspireHEP
 better-bibtex_zotero-pane_citekey_refresh = Rafraichir la clé de citation
 better-bibtex_zotero-pane_citekey_unpin = Déverrouiller la clé de citation
-better-bibtex_zotero-pane_column_citekey = Clé de citation
+better-bibtex_zotero-pane_column_citekey = { -citation-key }
 better-bibtex_zotero-pane_patch-dates = Copier date-added/date-modified à partir du champ extra
 better-bibtex_zotero-pane_sentence-case = BBT Casse de la phrase
 better-bibtex_zotero-pane_show_collection-key = Télécharger l'export de Better BibTeX...
 better-bibtex_zotero-pane_tag_duplicates = Tagguer les clés de citation doublons
 better-bibtex_zotero-pane_tex-studio = Envoyer les citations vers TeXstudio
-unused_better-bibtex_auto-export_too-long_body-eabled = Votre exportation automatique { $translator } à { $path } a pris { $seconds } secondes. Pendant les exportations de quelque type que ce soit, l''interface utilisateur de Zotero est verrouillée.
-unused_better-bibtex_auto-export_too-long_prime-enabled = Pour minimiser les effets des exportations automatiques durant (trop) longtemps, la mise en place du cache a été activée. Cela rendra les exportations automatiques plus lentes, mais réduira au maximum le temps pendant lequel Zotero est inutilisable.
-unused_better-bibtex_auto-export_too-long_sorry = Vous avez déjà activé la mise en place du cache, et l'exportation automatique est activée. Rien de plus ne peut être fait sans un changement de l'architecture de Zotero (https://u.nu/27e9).
-unused_better-bibtex_auto-export_too-long_suggest-idle = Pour minimiser les effets des exportations automatiques durant (trop) longtemps, vous pouvez configurer l'exportation automatique en « Inactif » au lieu de « Immédiat ».
-unused_better-bibtex_auto-export_too-long_title = (Longue) exportation automatique en cours
-unused_better-bibtex_db_corrupt = Une erreur s'est produite lors de l'ouverture de votre base de données
-unused_better-bibtex_db_corrupt_explanation =
-    Une erreur s''est produite lors de l''ouverture de votre base de données. Cela pourrait signifier que votre base de données est corrompue. L''erreur signalée par Zotero est la suivante: { $error }.
-    
-    Pour continuer, indiquez si vous souhaitez :
-    
-    1. demander à Zotero de restaurer une sauvegarde précédente en redémarrant maintenant ;
-    2. réinitialiser la base de données Better BibTeX et continuer
-    3. quitter Zotero et solliciter l''assistance pour tenter de restaurer la base de données.
-    
-    La réinitialisation vous permettra de continuer, mais vos clés de citation seront régénérées et les exportations automatiques devront être configurées à nouveau. Une sauvegarde de la base de données corrompue sera conservée au cas où.
-unused_better-bibtex_db_corrupt_quit = Quitter Zotero maintenant
-unused_better-bibtex_db_corrupt_reset = Réinitialiser et continuer
-unused_better-bibtex_db_corrupt_restore = Redémarrer Zotero et tenter de restaurer
-unused_better-bibtex_error-report_out-of-memory = Votre système est probablement à court de mémoire lors de l’assemblage du fichier journal. Veuillez définir ''{ $preference }'' sur une valeur inférieure à la { $limit } actuelle, redémarrez et réessayez.
-unused_better-bibtex_key-manager_regenerate = (ré)génération des clés de citation
-unused_better-bibtex_key-manager_regenerate_confirm = { $n } clés de citation à (ré)générer : continuer ?
-unused_better-bibtex_preferences_advanced = Avancé
-unused_better-bibtex_preferences_advanced_export_workers = Exportation parallèle en arrière-plan :
-unused_better-bibtex_preferences_advanced_import_unabbreviate = Développer les titres abrégés de journaux à importer à l'aide de la liste :
-unused_better-bibtex_preferences_advanced_import_unabbreviate_off = Aucun
-unused_better-bibtex_preferences_advanced_tab_citekeys = Clés de citation
-unused_better-bibtex_preferences_advanced_tab_export = Exportation
-unused_better-bibtex_preferences_advanced_warning = Les paramètres ci-dessous ont un impact sur les performances et peuvent faire échouer les exportations. Procéder avec attention.
-unused_better-bibtex_preferences_auto-export_collection = Collection
-unused_better-bibtex_preferences_auto-export_library = Bibliothèque
-unused_better-bibtex_preferences_auto-export_warn_long-running = M'avertir lorsque les exportations automatiques durent plus de (en secondes)
-unused_better-bibtex_preferences_citekey_aux-scanner = Scanner BibTeX AUX/Markdown
-unused_better-bibtex_preferences_citekey_citekeys = Clés de citation
-unused_better-bibtex_startup_db-upgrade = Nettoyage de la base de données { $n }/{ $total }...
-unused_better-bibtex_startup_db-upgrade_not-editable = { $n } éléments non mis à jour car en lecture seule
-unused_better-bibtex_startup_db-upgrade_saving = Nettoyage de la base de données, sauvegarde...
-unused_better-bibtex_startup_installing_translators_new = Better BibTeX : nouveaux convertisseurs installés
-unused_better-bibtex_startup_installing_translators_new_dont-ask-again = Ne plus le demander
-unused_better-bibtex_startup_installing_translators_new_drag-and-drop = De nouveaux convertisseurs Better BibTeX ont été installés. Si vous voulez les utiliser pour glisser-déposer (par exemple pour glisser et déposer des clés de citation ou des citations), vous devrez redémarrer une fois pour les activer.
-unused_better-bibtex_startup_loading-keys = Chargement des clés de citation
-unused_better-bibtex_startup_loading_databases = Chargement des bases de données
-unused_better-bibtex_startup_waiting_for_translators = En attente des convertisseurs Zotero
-unused_better-bibtex_texstudio_not_found = TeXstudio est introuvable dans { $path }
-unused_better-bibtex_zotero-pane_server_disabled = Exportation par HTTP désactivée
-unused_preferences_auto-export_status_running = En cours...
-unused_preferences_auto-export_status_scheduled = Planifié
-unused_zotero_better-bibtex_csquotes = Remplacer les guillemets par la commande '\\enquote{ "{" }...{ "}" }' (nécessite le package « csquotes »)
-xpi = 
-    .description = Ajoute à Zotero une compatibilité étendue avec LaTeX
+betterbibtex-item-pane-header = { -citation-key }
