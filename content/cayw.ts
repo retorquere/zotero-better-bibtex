@@ -10,6 +10,7 @@ import { TeXstudio } from './tex-studio'
 import * as escape from './escape'
 import { flash } from './flash'
 import { log } from './logger'
+import { Server } from './server'
 
 /* eslint-disable max-classes-per-file */
 
@@ -398,7 +399,7 @@ function getStyle(id): { url: string } {
   }
 }
 
-Zotero.Server.Endpoints['/better-bibtex/cayw'] = class {
+Server.Endpoints['/better-bibtex/cayw'] = class {
   public supportedMethods = ['GET']
   public OK = 200
   public SERVER_ERROR = 500

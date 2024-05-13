@@ -8,6 +8,7 @@ import { get as getCollection } from './collection'
 import * as Library from './library'
 import { log } from './logger'
 import { Preference } from './prefs'
+import { Server } from './server'
 
 import methods from '../gen/api/json-rpc.json'
 import { validator, noncoercing } from './ajv'
@@ -702,7 +703,7 @@ const api = new class API {
   }
 }
 
-Zotero.Server.Endpoints['/better-bibtex/json-rpc'] = class {
+Server.Endpoints['/better-bibtex/json-rpc'] = class {
   public supportedMethods = ['GET', 'POST']
   public supportedDataTypes = ['application/json']
   public permitBookmarklet = false

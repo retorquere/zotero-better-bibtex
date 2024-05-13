@@ -10,6 +10,7 @@ import { get as getCollection } from './collection'
 import { get as getLibrary } from './library'
 import { getItemsAsync } from './get-items-async'
 import { fromPairs } from './object'
+import { Server } from './server'
 
 function displayOptions(request) {
   const isTrue = new Set([ 'y', 'yes', 'true' ])
@@ -22,7 +23,7 @@ function displayOptions(request) {
   }
 }
 
-Zotero.Server.Endpoints['/better-bibtex/export/collection'] = Zotero.Server.Endpoints['/better-bibtex/collection'] = class {
+Server.Endpoints['/better-bibtex/export/collection'] = Server.Endpoints['/better-bibtex/collection'] = class {
   public supportedMethods = ['GET']
 
   public async init(request) {
@@ -49,7 +50,7 @@ Zotero.Server.Endpoints['/better-bibtex/export/collection'] = Zotero.Server.Endp
   }
 }
 
-Zotero.Server.Endpoints['/better-bibtex/export/library'] = Zotero.Server.Endpoints['/better-bibtex/library'] = class {
+Server.Endpoints['/better-bibtex/export/library'] = Server.Endpoints['/better-bibtex/library'] = class {
   public supportedMethods = ['GET']
 
   public async init(request) {
@@ -76,7 +77,7 @@ Zotero.Server.Endpoints['/better-bibtex/export/library'] = Zotero.Server.Endpoin
   }
 }
 
-Zotero.Server.Endpoints['/better-bibtex/export/selected'] = Zotero.Server.Endpoints['/better-bibtex/select'] = class {
+Server.Endpoints['/better-bibtex/export/selected'] = Server.Endpoints['/better-bibtex/select'] = class {
   public supportedMethods = ['GET']
 
   public async init(request) {
@@ -109,7 +110,7 @@ Zotero.Server.Endpoints['/better-bibtex/export/selected'] = Zotero.Server.Endpoi
 function isSet(v) {
   return v ? 1 : 0
 }
-Zotero.Server.Endpoints['/better-bibtex/export/item'] = class {
+Server.Endpoints['/better-bibtex/export/item'] = class {
   public supportedMethods = ['GET']
 
   public async init(request) {
