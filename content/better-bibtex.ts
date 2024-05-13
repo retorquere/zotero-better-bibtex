@@ -858,6 +858,7 @@ export class BetterBibTeX {
           pinned.textContent = citekey.pinned ? icons.pin : ''
 
           setSectionSummary(citekey || '')
+          flash('item display', `item ${item?.id} displayed`)
         },
         onInit: ({ body, refresh }) => {
           $done = Events.on('items-changed', ({ items }) => {
