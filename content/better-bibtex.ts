@@ -871,14 +871,17 @@ export class BetterBibTeX {
           const citekey = item.getField('citationKey')
           body.ownerDocument.getElementById('better-bibtex-citation-key').value = citekey || '\u274C'
           setSectionSummary(citekey || '')
+          flash('item display', `item ${item?.id} displayed`)
         },
         onInit: ({ refresh }) => {
           $refresh = refresh
           $done = Events.on('items-changed', ({ items }) => {
+            flash('citekey refresh', `items ${items.map(item => item.id)} changed ${$displayed} displayed, so ${items.map(item => item.id).includes($displayed) ? 'do a' : 'no'} refresh`)
             if ($refresh && items.map(item => item.id).includes($displayed)) $refresh()
           })
         },
         onItemChange: ({ body, item }) => {
+          flash('item display', `item ${item?.id} displayed`)
           $displayed = item.id
           const citekey = item.getField('citationKey')
           body.ownerDocument.getElementById('better-bibtex-citation-key').value = citekey || '\u274C'
