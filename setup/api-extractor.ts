@@ -30,9 +30,9 @@ const CreatorTypeCollection = {
     type: 'array',
     items: {
       type: 'string',
-      enum: [...creatorTypes, '*'].sort()
-    }
-  }
+      enum: [...creatorTypes, '*'].sort(),
+    },
+  },
 }
 
 function assert(cond, msg) {
