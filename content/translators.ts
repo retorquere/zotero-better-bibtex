@@ -94,18 +94,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
         this.uninstall('BetterBibTeX JSON (for debugging)')
         log.debug('translators startup: cleaned')
 
-        try {
-          await Promise.race([
-            this.installTranslators(),
-            (async () => {
-              await Zotero.Promise.delay(20000)
-              throw new Error('translator init timed out')
-            })(),
-          ])
-        }
-        catch (err) {
-          flash('Failed to load translators', 'BBT could not load its translators, installation timed out')
-        }
+        await this.installTranslators()
 
         log.debug('translators startup: finished')
         this.ready.resolve(true)
