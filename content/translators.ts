@@ -70,7 +70,6 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
   public worker: ChromeWorker
 
   public ready = new Deferred<boolean>()
-  private installing = ''
 
   constructor() {
     Object.assign(this, { byLabel, byId, bySlug })
@@ -105,7 +104,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
           ])
         }
         catch (err) {
-          flash('Failed to load translators', `BBT could not load its translators, load stalled at ${this.installing}`)
+          flash('Failed to load translators', 'BBT could not load its translators, installation timed out')
         }
 
         log.debug('translators startup: finished')
@@ -532,10 +531,10 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
   }
 
   private async installTranslators() {
-    this.installing = 'waiting for Zotero.Translators.init()'
+    flash('installing translators', 'waiting for Zotero.Translators.init()')
     await Zotero.Translators.init()
 
-    this.installing = 'loading BBT translators'
+    flash('installing translators', 'loading BBT translators')
     const reinit: { header: Translator.Header, code: string }[] = []
     // fetch from resource because that has the hash
     const headers: Translator.Header[] = Headers
@@ -545,16 +544,16 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       // workaround for mem limitations on Windows
       if (!is7 && typeof header.displayOptions?.worker === 'boolean') header.displayOptions.worker = !!Zotero.isWin
       if (code = await this.install(header)) {
-        this.installing = `scheduling ${header.label} for re-init`
+        flash('installing translators', `scheduling ${header.label} for re-init`)
         reinit.push({ header, code })
       }
     }
 
     if (reinit.length) {
-      this.installing = `scheduling ${reinit.length} for re-init`
+      flash('installing translators', `scheduling ${reinit.length} for re-init`)
       await Zotero.Translators.reinit()
     }
-    this.installing = 'done'
+    flash('installing translators', 'done')
   }
 
   public async install(header: Translator.Header): Promise<string> {
