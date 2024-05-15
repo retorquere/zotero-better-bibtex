@@ -78,7 +78,9 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       description: 'translators',
       needs: ['keymanager', 'cache'],
       startup: async () => {
+        log.debug('translators startup: begin')
         await this.start()
+        log.debug('translators startup: started')
 
         this.itemType = {
           note: Zotero.ItemTypes.getID('note'),
@@ -90,8 +92,10 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
         this.uninstall('Better BibTeX Quick Copy')
         this.uninstall('\u672B BetterBibTeX JSON (for debugging)')
         this.uninstall('BetterBibTeX JSON (for debugging)')
+        log.debug('translators startup: cleaned')
 
         await Zotero.Translators.init()
+        log.debug('translators startup: zotero translators initialized')
 
         const reinit: { header: Translator.Header, code: string }[] = []
         // fetch from resource because that has the hash
@@ -103,8 +107,10 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
           if (!is7 && typeof header.displayOptions?.worker === 'boolean') header.displayOptions.worker = !!Zotero.isWin
           if (code = await this.install(header)) reinit.push({ header, code })
         }
+        log.debug('translators startup: translators installed')
 
         if (reinit.length) {
+          log.debug('translators startup: reinit required')
           await Zotero.Translators.reinit()
 
           /*
@@ -121,7 +127,9 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
           */
         }
 
+        log.debug('translators startup: finished')
         this.ready.resolve(true)
+        log.debug('translators startup: released')
       },
       shutdown: async (reason: Reason) => {
         switch (reason) {
