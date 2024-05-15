@@ -34,8 +34,11 @@ class FormatterAPI {
       })
       if (!this.signature[key].rest) delete this.signature[key].rest
       const defaults = parseScript(jsesc(this.signature[key].defaults)).body[0]
+      // always the case, but typescript demands the check to allow access to defaults.expression.elements
       if (defaults.type === 'ExpressionStatement' && defaults.expression.type === 'ArrayExpression') {
-        this.signature[key].ast = defaults.expression.elements
+        this.signature[key].ast = {
+          defaults: defaults.expression.elements
+        }
       }
       else {
         throw new Error(jsesc(this.signature[key].defaults))

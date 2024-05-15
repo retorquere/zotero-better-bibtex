@@ -151,8 +151,11 @@ type PartialDate = {
 }
 
 type AuthorType = 'author' | 'editor' | 'translator' | 'collaborator' | '*'
-type CreatorType = 'primary' | 'artist' | '-artist' | 'attorneyAgent' | '-attorneyAgent' | 'author' | '-author' | 'bookAuthor' | '-bookAuthor' | 'cartographer' | '-cartographer' | 'castMember' | '-castMember' | 'commenter' | '-commenter' | 'composer' | '-composer' | 'contributor' | '-contributor' | 'cosponsor' | '-cosponsor' | 'counsel' | '-counsel' | 'director' | '-director' | 'editor' | '-editor' | 'guest' | '-guest' | 'interviewee' | '-interviewee' | 'interviewer' | '-interviewer' | 'inventor' | '-inventor' | 'performer' | '-performer' | 'podcaster' | '-podcaster' | 'presenter' | '-presenter' | 'producer' | '-producer' | 'programmer' | '-programmer' | 'recipient' | '-recipient' | 'reviewedAuthor' | '-reviewedAuthor' | 'scriptwriter' | '-scriptwriter' | 'seriesEditor' | '-seriesEditor' | 'sponsor' | '-sponsor' | 'testimonyBy' | '-testimonyBy' | 'translator' | '-translator' | 'wordsBy' | '-wordsBy'
+export type CreatorType = 'primary' | 'artist' | '-artist' | 'attorneyAgent' | '-attorneyAgent' | 'author' | '-author' | 'bookAuthor' | '-bookAuthor' | 'cartographer' | '-cartographer' | 'castMember' | '-castMember' | 'commenter' | '-commenter' | 'composer' | '-composer' | 'contributor' | '-contributor' | 'cosponsor' | '-cosponsor' | 'counsel' | '-counsel' | 'director' | '-director' | 'editor' | '-editor' | 'guest' | '-guest' | 'interviewee' | '-interviewee' | 'interviewer' | '-interviewer' | 'inventor' | '-inventor' | 'performer' | '-performer' | 'podcaster' | '-podcaster' | 'presenter' | '-presenter' | 'producer' | '-producer' | 'programmer' | '-programmer' | 'recipient' | '-recipient' | 'reviewedAuthor' | '-reviewedAuthor' | 'scriptwriter' | '-scriptwriter' | 'seriesEditor' | '-seriesEditor' | 'sponsor' | '-sponsor' | 'testimonyBy' | '-testimonyBy' | 'translator' | '-translator' | 'wordsBy' | '-wordsBy'
 // const creatorTypes: CreatorType[] = Object.keys(itemCreators[client]) as CreatorType[]
+export type CreatorTypeArray = CreatorType[]
+export type CreatorTypeOrAll = CreatorType | '*'
+export type CreatorTypeCollection = CreatorTypeOrAll[][]
 
 type Creator = { lastName?: string, firstName?: string, name?: string, creatorType: string, fieldMode?: number, source?: string }
 
@@ -293,7 +296,7 @@ class Item {
 
 const page_range_splitter = /[-\s,\u2013]/
 
-class PatternFormatter {
+export class PatternFormatter {
   public next = false
   public chunk = ''
   public citekey = ''
@@ -536,7 +539,7 @@ class PatternFormatter {
    */
   public $creators(
     n: number | [number, number] = 0,
-    type: CreatorType | (CreatorType | (CreatorType | '*')[])[] | '*' = [['primary', 'editor', 'translator', '*']],
+    type: CreatorType | CreatorTypeArray | CreatorTypeCollection | '*' = [['primary', 'editor', 'translator', '*']],
     name: Template<'creator'> = '%(f)s',
     etal='',
     sep=' ',

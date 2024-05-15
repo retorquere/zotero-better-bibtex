@@ -181,6 +181,7 @@
     "string-template": "^1.0.0",
     "ts-node": "^10.9.2",
     "tslib": "^2.6.2",
+    "typedoc": "^0.25.13",
     "typescript": "^5.4.5",
     "unicode-11.0.0": "^0.7.8",
     "unicode2latex": "^6.0.4",
