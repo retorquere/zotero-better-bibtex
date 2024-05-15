@@ -20,6 +20,20 @@ const CreatorType = {
   type: 'string',
   enum: [...creatorTypes].sort(),
 }
+const CreatorTypeArray = {
+  type: 'array',
+  items: CreatorType,
+}
+const CreatorTypeCollection = {
+  type: 'array',
+  items: {
+    type: 'array',
+    items: {
+      type: 'string',
+      enum: [...creatorTypes, '*'].sort()
+    }
+  }
+}
 
 function assert(cond, msg) {
   if (cond) return
@@ -280,6 +294,10 @@ export class API {
 
       case 'CreatorType':
         return CreatorType
+      case 'CreatorTypeArray':
+        return CreatorTypeArray
+      case 'CreatorTypeCollection':
+        return CreatorTypeCollection
 
       case 'Record':
         assert(typeref.typeArguments.length === 2, `expected 2 types, found ${typeref.typeArguments.length}`)
