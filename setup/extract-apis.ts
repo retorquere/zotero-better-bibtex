@@ -37,7 +37,7 @@ class FormatterAPI {
       // always the case, but typescript demands the check to allow access to defaults.expression.elements
       if (defaults.type === 'ExpressionStatement' && defaults.expression.type === 'ArrayExpression') {
         this.signature[key].ast = {
-          defaults: defaults.expression.elements
+          defaults: defaults.expression.elements,
         }
       }
       else {
