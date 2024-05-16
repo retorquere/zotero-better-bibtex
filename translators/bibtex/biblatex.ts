@@ -351,7 +351,7 @@ export function generateBibLaTeX(translation: Translation): void {
     if (entry.entrytype === 'report' && item.type?.toLowerCase().includes('manual')) entry.entrytype = 'manual'
     // if (item.itemType === 'preprint' && entry.entrytype === 'online' && item.ISSN && item.publicationTitle) entry.entrytype = 'article'
 
-    this.add({ name: 'pubstate', value: item.itemType === 'preprint' ? 'preprint' : this.item.status })
+    entry.add({ name: 'pubstate', value: item.itemType === 'preprint' ? 'preprint' : item.status })
 
     if (entry.entrytype === 'patent') {
       if (item.country && !patent.region(item)) entry.add({ name: 'location', value: item.country || item.extraFields.kv['publisher-place'] })
