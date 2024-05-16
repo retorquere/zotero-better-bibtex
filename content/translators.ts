@@ -5,6 +5,18 @@ import { is7 } from './client'
 const $OS = is7 ? Shim : OS
 import merge from 'lodash.merge'
 
+async function guard(run: Promise<void>): Promise<boolean> {
+  const timeout = async () => { await Zotero.Promise.delay(20000); throw { timeout: true } } // eslint-disable-line
+  try {
+    await Promise.race([run, timeout()])
+    return true
+  }
+  catch (err) {
+    if (err.timeout) return false
+    throw err
+  }
+}
+
 Components.utils.import('resource://gre/modules/Services.jsm')
 
 declare class ChromeWorker extends Worker { }
@@ -94,7 +106,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
         this.uninstall('BetterBibTeX JSON (for debugging)')
         log.debug('translators startup: cleaned')
 
-        await this.installTranslators()
+        if (!await guard(this.installTranslators())) flash('installing translators timed out', 'please submit a debug log to the BBT project')
 
         log.debug('translators startup: finished')
         this.ready.resolve(true)
@@ -520,10 +532,10 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
   }
 
   private async installTranslators() {
-    flash('installing translators', 'waiting for Zotero.Translators.init()')
+    log.debug('installing translators: waiting for Zotero.Translators.init()')
     await Zotero.Translators.init()
 
-    flash('installing translators', 'loading BBT translators')
+    log.debug('installing translators: loading BBT translators')
     const reinit: { header: Translator.Header, code: string }[] = []
     // fetch from resource because that has the hash
     const headers: Translator.Header[] = Headers
@@ -533,16 +545,16 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       // workaround for mem limitations on Windows
       if (!is7 && typeof header.displayOptions?.worker === 'boolean') header.displayOptions.worker = !!Zotero.isWin
       if (code = await this.install(header)) {
-        flash('installing translators', `scheduling ${header.label} for re-init`)
+        log.debug(`installing translators: scheduling ${header.label} for re-init`)
         reinit.push({ header, code })
       }
     }
 
     if (reinit.length) {
-      flash('installing translators', `scheduling ${reinit.length} for re-init`)
+      log.debug(`installing translators: scheduling ${reinit.length} for re-init`)
       await Zotero.Translators.reinit()
     }
-    flash('installing translators', 'done')
+    log.debug('installing translators: done')
   }
 
   public async install(header: Translator.Header): Promise<string> {
