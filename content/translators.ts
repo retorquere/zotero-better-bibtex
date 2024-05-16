@@ -6,12 +6,19 @@ const $OS = is7 ? Shim : OS
 import merge from 'lodash.merge'
 
 async function guard(run: Promise<void>): Promise<boolean> {
-  const timeout = async () => { await Zotero.Promise.delay(20000); throw { timeout: true } } // eslint-disable-line
+  const timeout = async () => {
+    await Zotero.Promise.delay(20000)
+    log.debug('installing translators: raced to timeout!')
+    throw { timeout: true, message: 'timeout' } // eslint-disable-line no-throw-literal
+  }
+
   try {
     await Promise.race([run, timeout()])
+    log.debug('installing translators: guard OK')
     return true
   }
   catch (err) {
+    log.debug('installing translators: guard failed because of', err.message )
     if (err.timeout) return false
     throw err
   }
