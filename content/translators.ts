@@ -113,7 +113,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
         this.uninstall('BetterBibTeX JSON (for debugging)')
         log.debug('translators startup: cleaned')
 
-        if (!await guard(this.installTranslators())) flash('installing translators timed out', 'please submit a debug log to the BBT project')
+        if (!await guard(this.installTranslators())) flash('installing translators timed out', 'BBT exports may not work', 20)
 
         log.debug('translators startup: finished')
         this.ready.resolve(true)
