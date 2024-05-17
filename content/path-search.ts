@@ -15,34 +15,37 @@ export async function findBinary(bin: string, installationDirectory: { mac?: str
 
 const ENV = Components.classes['@mozilla.org/process/environment;1'].getService(Components.interfaces.nsIEnvironment)
 const VarRef = Zotero.isWin ? /%([A-Z][A-Z0-9]*)%/ig : /[$]([A-Z][A-Z0-9]*)/ig
-function expandVars(name: string, expanded: Record<string, string>): string {
-  if (typeof expanded[name] !== 'string') {
-    expanded[name] = ENV.get(name) || ''
-    let more = true
-    while (more) {
-      more = false
-      expanded[name] = expanded[name].replace(VarRef, (match, varref) => {
-        more = true
-        return expandVars(varref, expanded)
-      })
-    }
+function resolveVars(path: string, resolved: Record<string, string>): string {
+  let more = true
+  while (more) {
+    more = false
+    path = path.replace(VarRef, (match, varref) => {
+      more = true
+      if (typeof resolved[varref] !== 'string') resolved[varref] = ENV.get(name) || ''
+      return resolved[varref]
+    })
   }
-  return expanded[name]
+  return path
 }
 
 async function pathSearch(bin: string, installationDirectory: { mac?: string[], win?: string[] } = {}): Promise<string> {
   const env = Components.classes['@mozilla.org/process/environment;1'].getService(Components.interfaces.nsIEnvironment)
 
-  let paths: string[] = ENV.get('PATH').split(Zotero.isWin ? ';' : ':')
-
-  const expanded = {}
-  paths = paths.map(p => expandVars(p, expanded))
-  log.debug('path-search: looking for', bin, 'in', ENV.get('PATH'), paths)
+  const PATH = ENV.get('PATH')
+  if (!PATH.length) {
+    log.error('path-search: PATH not set')
+    return ''
+  }
+  let paths: string[] = PATH.split(Zotero.isWin ? ';' : ':')
+  log.debug('path-search:', PATH, '=>', paths)
+  const resolved = {}
+  paths = paths.map(p => resolveVars(p, resolved))
+  log.debug('path-search: looking for', bin, 'in', PATH, paths)
   if (Zotero.isWin && installationDirectory.win) paths.unshift(...(installationDirectory.win))
   if (Zotero.isMac && installationDirectory.mac) paths.unshift(...(installationDirectory.mac))
   paths = paths.filter(p => p)
   if (!paths.length) {
-    log.error('path-search: PATH not set')
+    log.error('path-search:', PATH, 'yielded no directories')
     return ''
   }
 
