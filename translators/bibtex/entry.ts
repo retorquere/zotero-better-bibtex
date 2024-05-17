@@ -663,8 +663,6 @@ export class Entry {
       this.add({ name: 'ids', value: this.item.extraFields.aliases.filter(alias => alias !== this.item.citationKey).join(','), enc: 'verbatim' })
     }
 
-    if (this.translation.BetterBibLaTeX) this.add({ name: 'pubstate', value: this.item.status })
-
     for (const [key, value] of Object.entries(this.item.extraFields.kv)) {
       if (key === '_eprint') continue
 

@@ -21,8 +21,7 @@ import { DB as Cache } from './db/cache'
 import { pick } from './file-picker'
 import * as l10n from './l10n'
 
-import Tar from 'tar-js'
-import { gzip } from 'pako'
+import * as UZip from 'uzip'
 
 import { alert } from './prompt'
 
@@ -84,7 +83,7 @@ export class ErrorReport {
     const version = require('../gen/version.js')
 
     try {
-      await Zotero.HTTP.request('PUT', `${this.bucket}/${this.tarball()}`, {
+      await Zotero.HTTP.request('PUT', `${this.bucket}/${this.zipfile()}`, {
         noCache: true,
         // followRedirects: true,
         // noCache: true,
@@ -94,7 +93,7 @@ export class ErrorReport {
           'x-amz-acl': 'bucket-owner-full-control',
           'Content-Type': 'application/x-gzip',
         },
-        body: this.tar(),
+        body: this.zip(),
       })
 
       wizard.advance();
@@ -149,25 +148,25 @@ export class ErrorReport {
     }
   }
 
-  public tar(): Uint8Array {
-    const tape = new Tar
-    let out: Uint8Array
+  public zip(): Uint8Array {
+    const files: Record<string, Uint8Array> = {}
+    const enc = new TextEncoder()
 
-    out = tape.append(`${this.name()}/debug.txt`, this.report.log)
+    files[`${this.name()}/debug.txt`] = enc.encode(this.report.log)
 
-    if (this.report.items) out = tape.append(`${this.name()}/items.json`, this.report.items)
+    if (this.report.items) files[`${this.name()}/items.json`] = enc.encode(this.report.items)
     if (this.config.cache) {
-      out = tape.append(`${this.name()}/database.json`, JSON.stringify(KeyManager.all()))
-      out = tape.append(`${this.name()}/cache.json`, Cache.serialize({ serializationMethod: 'pretty' }))
+      files[`${this.name()}/database.json`] = enc.encode(JSON.stringify(KeyManager.all()))
+      files[`${this.name()}/cache.json`] = enc.encode(Cache.serialize({ serializationMethod: 'pretty' }))
     }
-    if (this.report.acronyms) out = tape.append(`${this.name()}/acronyms.csv`, this.report.acronyms)
+    if (this.report.acronyms) files[`${this.name()}/acronyms.csv`] = enc.encode(this.report.acronyms)
 
-    return gzip(out)
+    return new Uint8Array(UZip.encode(files) as ArrayBuffer)
   }
 
   public async save(): Promise<void> {
-    const filename = await pick('Logs', 'save', [['Tape Archive (*.tgz)', '*.tgz']], `${this.name()}.tgz`)
-    if (filename) await $OS.File.writeAtomic(filename, this.tar(), { tmpPath: filename + '.tmp' })
+    const filename = await pick('Logs', 'save', [['Zip Archive (*.zip)', '*.zip']], `${this.name()}.zip`)
+    if (filename) await $OS.File.writeAtomic(filename, this.zip(), { tmpPath: filename + '.tmp' })
   }
 
   private async ping(region: string) {
@@ -376,8 +375,8 @@ export class ErrorReport {
   private name() {
     return `${this.key}${this.report.items ? '-refs' : ''}-${this.region.short}`
   }
-  private tarball() {
-    return `${this.name()}-${this.timestamp}.tgz`
+  private zipfile() {
+    return `${this.name()}-${this.timestamp}.zip`
   }
 
   private preview(input: any): string {

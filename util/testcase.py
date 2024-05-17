@@ -10,6 +10,11 @@ from munch import Munch
 from types import SimpleNamespace
 from glob import glob
 
+from compact_json import Formatter, EolStyle
+formatter = Formatter()
+formatter.indent_spaces = 2
+formatter.max_inline_complexity = 10
+
 from subprocess import call
 
 import argparse
@@ -88,7 +93,7 @@ if args.attach:
           if 'path' in att:
             att['path'] = candidates[os.path.splitext(att['path'])[1]]
   with open(args.data, 'w') as f:
-    json.dump(data, f)
+    print(formatter.serialize(data), file=f)
 
 # clean lib before putting it in place
 cleanlib = ["./util/clean-lib.ts", args.data]
