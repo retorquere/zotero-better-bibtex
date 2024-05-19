@@ -540,7 +540,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
   private async installTranslators() {
     log.debug('installing translators: waiting for Zotero.Translators.init()')
-    if (!(await guard(Zotero.Translators.init()))) flash('installing translators timed out', 'BBT exports may not work', 10)
+    if (!(await guard(Zotero.Translators.init()))) flash('Zotero translator init timed out', 'BBT exports may not work', 10)
 
     log.debug('installing translators: loading BBT translators')
     const reinit: { header: Translator.Header, code: string }[] = []
