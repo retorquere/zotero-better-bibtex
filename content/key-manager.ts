@@ -434,7 +434,6 @@ export const KeyManager = new class _KeyManager {
       }
     })
 
-
     this.started = true
   }
 
@@ -488,6 +487,8 @@ export const KeyManager = new class _KeyManager {
 
     const notify = (itemIDs: number[], action: Action) => {
       void Events.emit('items-changed', { items: Zotero.Items.get(itemIDs), action })
+      // messes with focus-on-tab
+      // if (action === 'modify' || action === 'add') Zotero.Notifier.trigger('refresh', 'item', itemIDs)
     }
     this.unwatch = [
       this.keys[BlinkKey].events.onInsert.register(changes => {
