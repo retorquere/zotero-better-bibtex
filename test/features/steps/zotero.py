@@ -229,6 +229,14 @@ class Zotero:
     self.redir = '>>'
 
   def execute(self, script, **args):
+    headers = {
+      'Content-Type': 'application/json'
+    }
+    resp = requests.get(f'http://127.0.0.1:{self.port}/connector/ping')
+    resp.raise_for_status()
+    resp = requests.post(f'http://127.0.0.1:{self.port}/connector/ping', headers=headers, data='{}')
+    resp.raise_for_status()
+
     for var, value in args.items():
       script = f'const {var} = {json.dumps(value)};\n' + script
 
