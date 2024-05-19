@@ -113,7 +113,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
         this.uninstall('BetterBibTeX JSON (for debugging)')
         log.debug('translators startup: cleaned')
 
-        if (!await guard(this.installTranslators())) flash('installing translators timed out', 'BBT exports may not work', 20)
+        await this.installTranslators()
 
         log.debug('translators startup: finished')
         this.ready.resolve(true)
@@ -540,7 +540,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
   private async installTranslators() {
     log.debug('installing translators: waiting for Zotero.Translators.init()')
-    await Zotero.Translators.init()
+    if (!(await guard(Zotero.Translators.init()))) flash('installing translators timed out', 'BBT exports may not work', 10)
 
     log.debug('installing translators: loading BBT translators')
     const reinit: { header: Translator.Header, code: string }[] = []
