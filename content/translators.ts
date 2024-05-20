@@ -5,6 +5,7 @@ import { is7 } from './client'
 const $OS = is7 ? Shim : OS
 import merge from 'lodash.merge'
 
+/*
 async function guard(run: Promise<void>): Promise<boolean> {
   let timeout = true
 
@@ -28,6 +29,7 @@ async function guard(run: Promise<void>): Promise<boolean> {
     throw err
   }
 }
+*/
 
 Components.utils.import('resource://gre/modules/Services.jsm')
 
@@ -545,8 +547,20 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
   }
 
   private async installTranslators() {
-    log.debug('installing translators: waiting for Zotero.Translators.init()')
-    if (!(await guard(Zotero.Translators.init()))) flash('Zotero translator init timed out', 'BBT exports may not work', 30)
+    log.debug('installing translators: busy-waiting for Zotero.Translators.init()')
+    while (true) { // eslint-disable-line no-constant-condition
+      try {
+        Zotero.Translators.get(0)
+        break
+      }
+      catch (err) {
+        log.debug('installing translators: apparently not loaded:', err)
+        await Zotero.Promise.delay(5000)
+      }
+    }
+
+    log.debug('installing translators: now actually waiting for Zotero.Translators.init()')
+    await Zotero.Translators.init()
 
     log.debug('installing translators: loading BBT translators')
     const reinit: { header: Translator.Header, code: string }[] = []
