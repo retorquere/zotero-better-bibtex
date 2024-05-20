@@ -848,7 +848,6 @@ export class BetterBibTeX {
 
   async loadUI(win: Window): Promise<void> {
     if (is7) {
-      let $displayed: number
       let $refresh: () => void
       let $done: () => void
       Zotero.ItemPaneManager.registerSection({
@@ -862,31 +861,33 @@ export class BetterBibTeX {
           l10nID: 'better-bibtex_item-pane_section_sidenav',
           icon: `${rootURI}content/skin/citation-key.svg`,
         },
-        // bodyXHTML: 'Citation Key <html:input type="text" id="better-bibtex-citation-key" readonly="true" style="position:relative;width:80%" xmlns:html="http://www.w3.org/1999/xhtml"/>',
-        bodyXHTML: 'Citation Key <html:input type="text" id="better-bibtex-citation-key" readonly="true" style="flex: 1" xmlns:html="http://www.w3.org/1999/xhtml"/>',
+        bodyXHTML: 'Citation Key <html:input type="text" data-itemid="" id="better-bibtex-citation-key" readonly="true" style="flex: 1" xmlns:html="http://www.w3.org/1999/xhtml"/>',
         // onRender: ({ body, item, editable, tabType }) => {
         onRender: ({ body, item, setSectionSummary }) => {
           body.style.display = 'flex'
-          $displayed = item.id
           const citekey = item.getField('citationKey')
-          body.ownerDocument.getElementById('better-bibtex-citation-key').value = citekey || '\u274C'
+          const textbox = body.ownerDocument.getElementById('better-bibtex-citation-key')
+          textbox.value = citekey || '\u274C'
+          textbox.dataset.itemid = citekey ? `${item.id}` : ''
           setSectionSummary(citekey || '')
         },
-        onInit: ({ refresh }) => {
+        onInit: ({ body, refresh }) => {
           $refresh = refresh
           $done = Events.on('items-changed', ({ items }) => {
-            if ($refresh && items.map(item => item.id).includes($displayed)) $refresh()
+            const textbox = body.ownerDocument.getElementById('better-bibtex-citation-key')
+            const itemID = textbox.dataset.itemid ? parseInt(textbox.dataset.itemid) : undefined
+            if (typeof itemID === 'number' && $refresh && items.find(item => item.id === itemID)) $refresh()
           })
         },
         onItemChange: ({ body, item }) => {
-          $displayed = item.id
           const citekey = item.getField('citationKey')
-          body.ownerDocument.getElementById('better-bibtex-citation-key').value = citekey || '\u274C'
+          const textbox = body.ownerDocument.getElementById('better-bibtex-citation-key')
+          textbox.dataset.itemid = citekey ? `${item.id}` : ''
+          textbox.value = citekey || '\u274C'
         },
         onDestroy: () => {
           $done?.()
           $done = undefined
-          $displayed = undefined
           $refresh = undefined
         },
       })
