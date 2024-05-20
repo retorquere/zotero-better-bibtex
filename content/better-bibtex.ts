@@ -866,19 +866,12 @@ export class BetterBibTeX {
         onRender: ({ body, item, setSectionSummary }) => {
           const citekey = item.getField('citationKey')
           const textbox = body.ownerDocument.getElementById('better-bibtex-citation-key')
-          if (citekey) {
-            body.hidden = false
-            body.style.display = 'flex'
-            // const was = textbox.dataset.itemid || '<node>'
-            textbox.value = citekey
-            textbox.dataset.itemid = `${item.id}`
-            setSectionSummary(citekey || '')
-            // log.debug('2884:onRender:', was, '->', textbox.dataset.itemid, show(item))
-          }
-          else {
-            textbox.dataset.itemid = ''
-            body.hidden = true
-          }
+          body.style.display = 'flex'
+          // const was = textbox.dataset.itemid || '<node>'
+          textbox.value = citekey || ''
+          textbox.dataset.itemid = citekey ? `${item.id}` : ''
+          setSectionSummary(citekey || '')
+          // log.debug('2884:onRender:', was, '->', textbox.dataset.itemid, show(item))
         },
         onInit: ({ body, refresh }) => {
           $done = Events.on('items-changed', ({ items }) => {
@@ -889,13 +882,20 @@ export class BetterBibTeX {
             if (displayed) refresh()
           })
         },
-        onItemChange: ({ body, item }) => {
-          const citekey = item.getField('citationKey')
+        onItemChange: ({ setEnabled, body, item }) => {
           const textbox = body.ownerDocument.getElementById('better-bibtex-citation-key')
-          // const was = textbox.dataset.itemid
-          textbox.dataset.itemid = citekey ? `${item.id}` : ''
-          textbox.value = citekey || '\u274C'
-          // log.debug('2884:onItemChange:', was, '->', textbox.dataset.itemid, show(item))
+          if (item.isRegularItem() && !item.isFeedItem) {
+            const citekey = item.getField('citationKey')
+            // const was = textbox.dataset.itemid
+            textbox.dataset.itemid = citekey ? `${item.id}` : ''
+            textbox.value = citekey || '\u274C'
+            // log.debug('2884:onItemChange:', was, '->', textbox.dataset.itemid, show(item))
+            setEnabled(true)
+          }
+          else {
+            textbox.dataset.itemid = ''
+            setEnabled(false)
+          }
         },
         onDestroy: () => {
           // if ($done) log.debug('2884:onDestroy')

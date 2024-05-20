@@ -2,7 +2,7 @@ import { Shim } from './os'
 import { is7 } from './client'
 const $OS = is7 ? Shim : OS
 
-import type { Attachment, Item } from '../gen/typings/serialized-item'
+import type { RegularItem, Attachment, Item } from '../gen/typings/serialized-item'
 import { JournalAbbrev } from './journal-abbrev'
 import { DB as Cache } from './db/cache'
 import { $and } from './db/loki'
@@ -106,11 +106,12 @@ export const Serializer = new class { // eslint-disable-line @typescript-eslint/
 
   public enrich(serialized: Item, item: ZoteroItem): Item {
     if (item.isRegularItem() && !item.isFeedItem) {
-      serialized.citationKey = Zotero.BetterBibTeX.KeyManager.get(item.id).citationKey
-      if (!serialized.citationKey) throw new Error(`no citation key for ${Zotero.ItemTypes.getName(item.itemTypeID)} ${item.id}`)
-      if (!serialized.journalAbbreviation && Preference.autoAbbrev) {
-        const autoJournalAbbreviation = JournalAbbrev.get(serialized)
-        if (autoJournalAbbreviation) serialized.autoJournalAbbreviation = autoJournalAbbreviation
+      const regular = <RegularItem>serialized
+      regular.citationKey = Zotero.BetterBibTeX.KeyManager.get(item.id).citationKey
+      if (!regular.citationKey) throw new Error(`no citation key for ${Zotero.ItemTypes.getName(item.itemTypeID)} ${item.id}`)
+      if (!regular.journalAbbreviation && Preference.autoAbbrev) {
+        const autoJournalAbbreviation = JournalAbbrev.get(regular)
+        if (autoJournalAbbreviation) regular.autoJournalAbbreviation = autoJournalAbbreviation
       }
     }
 
@@ -121,6 +122,6 @@ export const Serializer = new class { // eslint-disable-line @typescript-eslint/
     serialized.libraryID = item.libraryID
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return serialized
+    return serialized as unknown as Item
   }
 }
