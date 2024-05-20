@@ -23,7 +23,7 @@ async function guard(run: Promise<void>): Promise<boolean> {
     return true
   }
   catch (err) {
-    log.debug('installing translators: guard failed because of', err.message )
+    log.error('installing translators: guard failed because of', err.message )
     if (err.timeout) return false
     throw err
   }
