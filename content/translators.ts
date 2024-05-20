@@ -554,8 +554,13 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
         break
       }
       catch (err) {
-        log.debug('installing translators: apparently not loaded:', err)
-        await Zotero.Promise.delay(5000)
+        if (err.message === 'Translators not yet loaded') {
+          log.debug('installing translators:', err.message)
+          await Zotero.Promise.delay(1000)
+        }
+        else {
+          throw err
+        }
       }
     }
 
