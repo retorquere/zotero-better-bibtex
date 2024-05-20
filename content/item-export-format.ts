@@ -105,20 +105,14 @@ export const Serializer = new class { // eslint-disable-line @typescript-eslint/
   }
 
   public enrich(serialized: Item, item: ZoteroItem): Item {
-    switch (serialized.itemType) {
-      case 'note':
-      case 'annotation':
-      case 'attachment':
-        break
-
-      default:
-        serialized.citationKey = Zotero.BetterBibTeX.KeyManager.get(item.id).citationKey
-        if (!serialized.citationKey) throw new Error(`no citation key for ${Zotero.ItemTypes.getName(item.itemTypeID)} ${item.id}`)
-        if (!serialized.journalAbbreviation && Preference.autoAbbrev) {
-          const autoJournalAbbreviation = JournalAbbrev.get(serialized)
-          if (autoJournalAbbreviation) serialized.autoJournalAbbreviation = autoJournalAbbreviation
-        }
-        break
+    if (item.isRegularItem() && !item.isFeedItem) {
+      serialized.citationKey = Zotero.BetterBibTeX.KeyManager.get(item.id).citationKey
+      if (!serialized.citationKey) throw new Error(`no citation key for ${Zotero.ItemTypes.getName(item.itemTypeID)} ${item.id}`)
+      if (!serialized.journalAbbreviation && Preference.autoAbbrev) {
+        const autoJournalAbbreviation = JournalAbbrev.get(serialized)
+        if (autoJournalAbbreviation) serialized.autoJournalAbbreviation = autoJournalAbbreviation
+      }
+      break
     }
 
     // come on -- these are used in the collections export but not provided on the items?!

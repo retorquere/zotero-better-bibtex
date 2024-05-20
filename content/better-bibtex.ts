@@ -848,7 +848,7 @@ export class BetterBibTeX {
 
   async loadUI(win: Window): Promise<void> {
     if (is7) {
-      const show = (item: ZoteroItem): { id: number, type: string, citekey: string } | boolean => item ? { id: item.id, type: Zotero.ItemTypes.getName(item.itemTypeID), citekey: item.getField('citationKey') as string } : false
+      // const show = (item: ZoteroItem): { id: number, type: string, citekey: string } | boolean => item ? { id: item.id, type: Zotero.ItemTypes.getName(item.itemTypeID), citekey: item.getField('citationKey') as string } : false
       let $done: () => void
       Zotero.ItemPaneManager.registerSection({
         paneID: 'betterbibtex-section-citationkey',
@@ -863,15 +863,22 @@ export class BetterBibTeX {
         },
         bodyXHTML: 'Citation Key <html:input type="text" data-itemid="" id="better-bibtex-citation-key" readonly="true" style="flex: 1" xmlns:html="http://www.w3.org/1999/xhtml"/>',
         // onRender: ({ body, item, editable, tabType }) => {
-        onRender: ({ this, body, item, setSectionSummary }) => {
-          body.style.display = 'flex'
+        onRender: ({ body, item, setSectionSummary }) => {
           const citekey = item.getField('citationKey')
           const textbox = body.ownerDocument.getElementById('better-bibtex-citation-key')
-          const was = textbox.dataset.itemid || '<node>'
-          textbox.value = citekey || '\u274C'
-          textbox.dataset.itemid = citekey ? `${item.id}` : ''
-          setSectionSummary(citekey || '')
-          // log.debug('2884:onRender:', was, '->', textbox.dataset.itemid, show(item))
+          if (citekey) {
+            body.hidden = false
+            body.style.display = 'flex'
+            // const was = textbox.dataset.itemid || '<node>'
+            textbox.value = citekey
+            textbox.dataset.itemid = `${item.id}`
+            setSectionSummary(citekey || '')
+            // log.debug('2884:onRender:', was, '->', textbox.dataset.itemid, show(item))
+          }
+          else {
+            textbox.dataset.itemid = ''
+            body.hidden = true
+          }
         },
         onInit: ({ body, refresh }) => {
           $done = Events.on('items-changed', ({ items }) => {
@@ -885,7 +892,7 @@ export class BetterBibTeX {
         onItemChange: ({ body, item }) => {
           const citekey = item.getField('citationKey')
           const textbox = body.ownerDocument.getElementById('better-bibtex-citation-key')
-          const was = textbox.dataset.itemid
+          // const was = textbox.dataset.itemid
           textbox.dataset.itemid = citekey ? `${item.id}` : ''
           textbox.value = citekey || '\u274C'
           // log.debug('2884:onItemChange:', was, '->', textbox.dataset.itemid, show(item))
