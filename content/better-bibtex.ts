@@ -871,14 +871,14 @@ export class BetterBibTeX {
           textbox.value = citekey || '\u274C'
           textbox.dataset.itemid = citekey ? `${item.id}` : ''
           setSectionSummary(citekey || '')
-          log.debug('2884:onRender:', was, '->', textbox.dataset.itemid, show(item))
+          // log.debug('2884:onRender:', was, '->', textbox.dataset.itemid, show(item))
         },
         onInit: ({ body, refresh }) => {
           $done = Events.on('items-changed', ({ items }) => {
             const textbox = body.ownerDocument.getElementById('better-bibtex-citation-key')
             const itemID = textbox.dataset.itemid ? parseInt(textbox.dataset.itemid) : undefined
             const displayed: ZoteroItem = textbox.dataset.itemid ? items.find(item => item.id === itemID) : undefined
-            log.debug('2884:onInit.items-changed:', items.map(item => item.id), 'current:', textbox.dataset.itemid, 'refresh:', !!displayed)
+            // log.debug('2884:onInit.items-changed:', items.map(item => item.id), 'current:', textbox.dataset.itemid, 'refresh:', !!displayed)
             if (displayed) refresh()
           })
         },
@@ -888,10 +888,10 @@ export class BetterBibTeX {
           const was = textbox.dataset.itemid
           textbox.dataset.itemid = citekey ? `${item.id}` : ''
           textbox.value = citekey || '\u274C'
-          log.debug('2884:onItemChange:', was, '->', textbox.dataset.itemid, show(item))
+          // log.debug('2884:onItemChange:', was, '->', textbox.dataset.itemid, show(item))
         },
         onDestroy: () => {
-          if ($done) log.debug('2884:onDestroy')
+          // if ($done) log.debug('2884:onDestroy')
           $done?.()
           $done = undefined
         },
