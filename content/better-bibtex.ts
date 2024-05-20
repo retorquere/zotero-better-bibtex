@@ -848,7 +848,6 @@ export class BetterBibTeX {
 
   async loadUI(win: Window): Promise<void> {
     if (is7) {
-      let $refresh: () => void
       let $done: () => void
       Zotero.ItemPaneManager.registerSection({
         paneID: 'betterbibtex-section-citationkey',
@@ -870,13 +869,15 @@ export class BetterBibTeX {
           textbox.value = citekey || '\u274C'
           textbox.dataset.itemid = citekey ? `${item.id}` : ''
           setSectionSummary(citekey || '')
+          log.debug('2884:onRender:', item.id, Zotero.ItemTypes.getName((item as ZoteroItem).itemTypeID))
         },
         onInit: ({ body, refresh }) => {
-          $refresh = refresh
           $done = Events.on('items-changed', ({ items }) => {
             const textbox = body.ownerDocument.getElementById('better-bibtex-citation-key')
             const itemID = textbox.dataset.itemid ? parseInt(textbox.dataset.itemid) : undefined
-            if (typeof itemID === 'number' && $refresh && items.find(item => item.id === itemID)) $refresh()
+            const displayed: ZoteroItem = textbox.dataset.itemid ? items.find(item => item.id === itemID) : undefined
+            log.debug('2884:onInit.items-changed: retrieved', textbox.dataset.itemid, { type: displayed && Zotero.ItemTypes.getName(displayed.itemTypeID) })
+            if (displayed) refresh()
           })
         },
         onItemChange: ({ body, item }) => {
@@ -884,11 +885,12 @@ export class BetterBibTeX {
           const textbox = body.ownerDocument.getElementById('better-bibtex-citation-key')
           textbox.dataset.itemid = citekey ? `${item.id}` : ''
           textbox.value = citekey || '\u274C'
+          log.debug('2884:onItemChange: retrieved', item.id, Zotero.ItemTypes.getName((item as ZoteroItem).itemTypeID))
         },
         onDestroy: () => {
+          if ($done) log.debug('2884:onDestroy')
           $done?.()
           $done = undefined
-          $refresh = undefined
         },
       })
     }
