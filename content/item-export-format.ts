@@ -112,7 +112,6 @@ export const Serializer = new class { // eslint-disable-line @typescript-eslint/
         const autoJournalAbbreviation = JournalAbbrev.get(serialized)
         if (autoJournalAbbreviation) serialized.autoJournalAbbreviation = autoJournalAbbreviation
       }
-      break
     }
 
     // come on -- these are used in the collections export but not provided on the items?!
