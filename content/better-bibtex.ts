@@ -848,8 +848,7 @@ export class BetterBibTeX {
 
   async loadUI(win: Window): Promise<void> {
     if (is7) {
-      let $displayed: number
-      let $refresh: () => void
+      const show = (item: ZoteroItem): { id: number, type: string, citekey: string } | boolean => item ? { id: item.id, type: Zotero.ItemTypes.getName(item.itemTypeID), citekey: item.getField('citationKey') as string } : false
       let $done: () => void
       Zotero.ItemPaneManager.registerSection({
         paneID: 'betterbibtex-section-citationkey',
@@ -862,32 +861,39 @@ export class BetterBibTeX {
           l10nID: 'better-bibtex_item-pane_section_sidenav',
           icon: `${rootURI}content/skin/citation-key.svg`,
         },
-        // bodyXHTML: 'Citation Key <html:input type="text" id="better-bibtex-citation-key" readonly="true" style="position:relative;width:80%" xmlns:html="http://www.w3.org/1999/xhtml"/>',
-        bodyXHTML: 'Citation Key <html:input type="text" id="better-bibtex-citation-key" readonly="true" style="flex: 1" xmlns:html="http://www.w3.org/1999/xhtml"/>',
+        bodyXHTML: 'Citation Key <html:input type="text" data-itemid="" id="better-bibtex-citation-key" readonly="true" style="flex: 1" xmlns:html="http://www.w3.org/1999/xhtml"/>',
         // onRender: ({ body, item, editable, tabType }) => {
         onRender: ({ this, body, item, setSectionSummary }) => {
           body.style.display = 'flex'
-          $displayed = item.id
           const citekey = item.getField('citationKey')
-          body.ownerDocument.getElementById('better-bibtex-citation-key').value = citekey || '\u274C'
+          const textbox = body.ownerDocument.getElementById('better-bibtex-citation-key')
+          const was = textbox.dataset.itemid || '<node>'
+          textbox.value = citekey || '\u274C'
+          textbox.dataset.itemid = citekey ? `${item.id}` : ''
           setSectionSummary(citekey || '')
+          // log.debug('2884:onRender:', was, '->', textbox.dataset.itemid, show(item))
         },
-        onInit: ({ refresh }) => {
-          $refresh = refresh
+        onInit: ({ body, refresh }) => {
           $done = Events.on('items-changed', ({ items }) => {
-            if ($refresh && items.map(item => item.id).includes($displayed)) $refresh()
+            const textbox = body.ownerDocument.getElementById('better-bibtex-citation-key')
+            const itemID = textbox.dataset.itemid ? parseInt(textbox.dataset.itemid) : undefined
+            const displayed: ZoteroItem = textbox.dataset.itemid ? items.find(item => item.id === itemID) : undefined
+            // log.debug('2884:onInit.items-changed:', items.map(item => item.id), 'current:', textbox.dataset.itemid, 'refresh:', !!displayed)
+            if (displayed) refresh()
           })
         },
         onItemChange: ({ body, item }) => {
-          $displayed = item.id
           const citekey = item.getField('citationKey')
-          body.ownerDocument.getElementById('better-bibtex-citation-key').value = citekey || '\u274C'
+          const textbox = body.ownerDocument.getElementById('better-bibtex-citation-key')
+          const was = textbox.dataset.itemid
+          textbox.dataset.itemid = citekey ? `${item.id}` : ''
+          textbox.value = citekey || '\u274C'
+          // log.debug('2884:onItemChange:', was, '->', textbox.dataset.itemid, show(item))
         },
         onDestroy: () => {
+          // if ($done) log.debug('2884:onDestroy')
           $done?.()
           $done = undefined
-          $displayed = undefined
-          $refresh = undefined
         },
       })
     }
