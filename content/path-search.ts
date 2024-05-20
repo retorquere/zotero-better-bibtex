@@ -66,8 +66,8 @@ async function pathSearch(bin: string, installationDirectory: { mac?: string[], 
         const stat = await $OS.File.stat(exe)
         if (stat.isDir) continue
 
-        // eslint-disable-next-line no-bitwise
-        if (!Zotero.isWin && (stat.unixMode & 111) === 0) { // bit iffy -- we don't know if *we* can execute this.
+        // bit iffy -- we don't know if *we* can execute this. And on Zotero 7, unixMode does not exist
+        if (!Zotero.isWin && typeof stat.unixMode === 'number' && (stat.unixMode & 111) === 0) { // eslint-disable-line no-bitwise
           log.error(`path-search: ${exe} exists but has mode ${(stat.unixMode).toString(8)}`)
           continue
         }
