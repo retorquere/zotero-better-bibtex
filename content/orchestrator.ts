@@ -1,4 +1,4 @@
-export type Actor = | 'start' | 'done' | 'auto-export' | 'translators' | 'TeXstudio' | 'abbreviator' | 'keymanager' | 'serializer' | 'cache' | 'sqlite' | 'git-push' | 'citekeysearch'
+export type Actor = | 'start' | 'done' | 'auto-export' | 'translators' | 'TeXstudio' | 'abbreviator' | 'keymanager' | 'serializer' | 'cache' | 'sqlite' | 'git-push' | 'citekeysearch' | 'cayw' | 'json-rpc' | 'pull-export'
 export type PhaseID = 'startup' | 'shutdown'
 import type { Reason } from './bootstrap'
 import { log } from './logger'

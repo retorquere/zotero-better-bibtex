@@ -8,6 +8,7 @@ import { get as getCollection } from './collection'
 import * as Library from './library'
 import { log } from './logger'
 import { Preference } from './prefs'
+import { orchestrator } from './orchestrator'
 import { Server } from './server'
 
 import methods from '../gen/api/json-rpc.json'
@@ -703,7 +704,7 @@ const api = new class API {
   }
 }
 
-Server.Endpoints['/better-bibtex/json-rpc'] = class {
+class Handler {
   public supportedMethods = ['GET', 'POST']
   public supportedDataTypes = ['application/json']
   public permitBookmarklet = false
@@ -722,3 +723,17 @@ Server.Endpoints['/better-bibtex/json-rpc'] = class {
     }
   }
 }
+
+orchestrator.add('json-rpc', {
+  description: 'JSON-RPC endpoint',
+  needs: ['translators'],
+
+  startup: async () => { // eslint-disable-line @typescript-eslint/require-await
+    Server.register('/better-bibtex/json-rpc', Handler)
+    Server.startup()
+  },
+
+  shutdown: async () => { // eslint-disable-line @typescript-eslint/require-await
+    Server.shutdown()
+  },
+})
