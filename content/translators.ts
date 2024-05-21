@@ -564,7 +564,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       }
     }
 
-    /* screw it. the busy-wait guarantees it has once been inited, and this just hangs for no reason for some people.
+    /* the busy-wait guarantees it has once been inited, and this just hangs for no reason for some people.
     log.debug('installing translators: now actually waiting for Zotero.Translators.init()')
     await Zotero.Translators.init()
     */
