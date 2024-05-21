@@ -107,11 +107,18 @@ export const Serializer = new class { // eslint-disable-line @typescript-eslint/
   public enrich(serialized: Item, item: ZoteroItem): Item {
     if (item.isRegularItem() && !item.isFeedItem) {
       const regular = <RegularItem>serialized
-      regular.citationKey = Zotero.BetterBibTeX.KeyManager.get(item.id).citationKey
-      if (!regular.citationKey) throw new Error(`no citation key for ${Zotero.ItemTypes.getName(item.itemTypeID)} ${item.id}`)
-      if (!regular.journalAbbreviation && Preference.autoAbbrev) {
-        const autoJournalAbbreviation = JournalAbbrev.get(regular)
-        if (autoJournalAbbreviation) regular.autoJournalAbbreviation = autoJournalAbbreviation
+
+      if (Zotero.BetterBibTeX.ready.pending) {
+        // with the new "title as citation", CSL can request these items before the key manager is online
+        regular.citationKey = ''
+      }
+      else {
+        regular.citationKey = Zotero.BetterBibTeX.KeyManager.get(item.id).citationKey
+        if (!regular.citationKey) throw new Error(`no citation key for ${Zotero.ItemTypes.getName(item.itemTypeID)} ${item.id}`)
+        if (!regular.journalAbbreviation && Preference.autoAbbrev) {
+          const autoJournalAbbreviation = JournalAbbrev.get(regular)
+          if (autoJournalAbbreviation) regular.autoJournalAbbreviation = autoJournalAbbreviation
+        }
       }
     }
 
