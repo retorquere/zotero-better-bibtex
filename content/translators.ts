@@ -547,6 +547,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
   }
 
   private async installTranslators() {
+    /*
     log.debug('installing translators: busy-waiting for Zotero.Translators.init()')
     while (true) { // eslint-disable-line no-constant-condition
       try {
@@ -563,11 +564,11 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
         }
       }
     }
+    */
 
-    /* the busy-wait guarantees it has once been inited, and this just hangs for no reason for some people.
+    // the busy-wait guarantees it has once been inited, and this just hangs for no reason for some people.
     log.debug('installing translators: now actually waiting for Zotero.Translators.init()')
     await Zotero.Translators.init()
-    */
 
     log.debug('installing translators: loading BBT translators')
     const reinit: { header: Translator.Header, code: string }[] = []
