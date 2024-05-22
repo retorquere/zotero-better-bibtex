@@ -1,7 +1,7 @@
 Components.utils.import('resource://gre/modules/Services.jsm')
 
 import { Shim } from './os'
-import { is7 } from './client'
+import { is7, platform } from './client'
 const $OS = is7 ? Shim : OS
 
 import { PromptService } from './prompt'
@@ -397,7 +397,7 @@ export class ErrorReport {
 
     const appInfo = Components.classes['@mozilla.org/xre/app-info;1'].getService(Components.interfaces.nsIXULAppInfo)
     context += `Application: ${appInfo.name} (${Zotero.clientName}) ${appInfo.version} ${Zotero.locale}\n`
-    context += `Platform: ${Zotero.platform} ${Zotero.oscpu}\n`
+    context += `Platform: ${platform.name}\n`
 
     const addons = await Zotero.getInstalledExtensions()
     if (addons.length) {
