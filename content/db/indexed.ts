@@ -23,8 +23,13 @@ export class Cache extends AsyncIndexedDB {
           this.db = openRequest.result
           const clear = lastUpdated && (lastUpdated > (Zotero.Prefs.get('translators.better-bibtex.cache.lastUpdated') || ''))
           if (clear) {
+            /*
             await this.tx(['ExportFormat', 'Exported', 'ExportContext'], 'readwriteflush', async ({ ExportFormat, Exported, ExportContext }) => {
               await Promise.all([ExportFormat.clear(), Exported.clear(), ExportContext.clear()])
+            })
+            */
+            await this.tx(['ExportFormat'], 'readwriteflush', async ({ ExportFormat, Exported, ExportContext }) => {
+              await Promise.all([ExportFormat.clear()])
             })
           }
           resolve(this)
