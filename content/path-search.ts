@@ -21,7 +21,7 @@ function resolveVars(path: string, resolved: Record<string, string>): string {
     more = false
     path = path.replace(VarRef, (match, varref) => {
       more = true
-      if (typeof resolved[varref] !== 'string') resolved[varref] = ENV.get(name) || ''
+      if (typeof resolved[varref] !== 'string') resolved[varref] = ENV.get(varref) || ''
       return resolved[varref]
     })
   }
