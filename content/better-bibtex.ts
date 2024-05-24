@@ -368,6 +368,7 @@ if (!is7) {
 
     const text = doc.createElementNS('http://www.w3.org/1999/xhtml', 'span')
     text.className = 'cell-text'
+    text.id = `better-bibtex-citekey-cell-${item.id}`
     text.innerText = data
 
     const cell = doc.createElementNS('http://www.w3.org/1999/xhtml', 'span')
@@ -375,6 +376,16 @@ if (!is7) {
     cell.append(text, icon)
 
     return cell
+  })
+  Events.on('items-changed', ({ items }) => {
+    const doc = Zotero.getMainWindow().document
+    for (const item of items) {
+      const text = doc.getElementById(`better-bibtex-citekey-cell-${item.id}`)
+      const icon = doc.createElementNS('http://www.w3.org/1999/xhtml', 'span')
+      const citekey = Zotero.BetterBibTeX.KeyManager.get(item.id)
+      if (text) text.innerText = citekey.citationKey
+      if (icon) icon.innerText = citekey.pinned ? icons.pin : ''
+    }
   })
 }
 

@@ -28,7 +28,7 @@ export class Cache extends AsyncIndexedDB {
               await Promise.all([ExportFormat.clear(), Exported.clear(), ExportContext.clear()])
             })
             */
-            await this.tx(['ExportFormat'], 'readwriteflush', async ({ ExportFormat, Exported, ExportContext }) => {
+            await this.tx(['ExportFormat'], 'readwriteflush', async ({ ExportFormat }) => {
               await Promise.all([ExportFormat.clear()])
             })
           }
