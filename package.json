@@ -124,7 +124,6 @@
     "assert": "^2.1.0",
     "barcoder": "^2.0.1",
     "benchmark": "^2.1.4",
-    "bluebird": "^3.7.2",
     "buffer": "^6.0.3",
     "clp": "^4.0.12",
     "current-git-branch": "^1.1.0",
