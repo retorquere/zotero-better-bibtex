@@ -108,7 +108,7 @@ export const Serializer = new class { // eslint-disable-line @typescript-eslint/
     if (item.isRegularItem() && !item.isFeedItem) {
       const regular = <RegularItem>serialized
 
-      if (Zotero.BetterBibTeX.ready.pending) {
+      if (Zotero.BetterBibTeX.ready.isPending()) {
         // with the new "title as citation", CSL can request these items before the key manager is online
         regular.citationKey = ''
       }

@@ -5,6 +5,9 @@ flatMap.shim()
 import matchAll from 'string.prototype.matchall'
 matchAll.shim()
 
+import type Bluebird from 'bluebird'
+const Ready = Zotero.Promise.defer()
+
 import { Shim } from './os'
 import { is7 } from './client'
 const $OS = is7 ? Shim : OS
@@ -31,7 +34,6 @@ import { ErrorReport } from './ErrorReport'
 import { patch as $patch$, unpatch as $unpatch$ } from './monkey-patch'
 import { clean_pane_persist } from './clean_pane_persist'
 import { flash } from './flash'
-import { Deferred } from './deferred'
 import { orchestrator } from './orchestrator'
 import type { Reason } from './bootstrap'
 
@@ -271,7 +273,7 @@ $patch$(Zotero.ItemFields, 'isFieldOfBase', original => function Zotero_ItemFiel
 // because the zotero item editor does not check whether a textbox is read-only. *sigh*
 $patch$(Zotero.Item.prototype, 'setField', original => function Zotero_Item_prototype_setField(field: string, value: string | undefined, _loadIn: any) {
   if (field === 'citationKey') {
-    if (Zotero.BetterBibTeX.ready.pending) return false
+    if (Zotero.BetterBibTeX.ready.isPending()) return false
 
     const citekey = Zotero.BetterBibTeX.KeyManager.get(this.id)
     if (citekey.retry) return false
@@ -304,7 +306,7 @@ $patch$(Zotero.Item.prototype, 'setField', original => function Zotero_Item_prot
 $patch$(Zotero.Item.prototype, 'getField', original => function Zotero_Item_prototype_getField(field: any, unformatted: any, includeBaseMapped: any) {
   try {
     if (field === 'citationKey' || field === 'citekey') {
-      if (Zotero.BetterBibTeX.ready.pending) return '' // eslint-disable-line @typescript-eslint/no-use-before-define
+      if (Zotero.BetterBibTeX.ready.isPending()) return '' // eslint-disable-line @typescript-eslint/no-use-before-define
       return Zotero.BetterBibTeX.KeyManager.get(this.id).citationKey
     }
   }
@@ -584,7 +586,7 @@ export class BetterBibTeX {
   public PrefPane = new PrefPane
   public Translators = Translators
 
-  public ready = new Deferred<boolean>()
+  public ready: Bluebird<boolean> = Ready.promise
   public dir: string
 
   public debugEnabledAtStart: boolean
@@ -789,7 +791,7 @@ export class BetterBibTeX {
     orchestrator.add('done', {
       description: 'user interface',
       startup: async () => {
-        this.ready.resolve(true)
+        Ready.resolve(true)
         await this.load(Zotero.getMainWindow())
 
         Zotero.Promise.delay(15000).then(() => {
