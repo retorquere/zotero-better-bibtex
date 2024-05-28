@@ -1,13 +1,11 @@
 import { findBinary } from './path-search'
 import { log } from './logger'
 import { orchestrator } from './orchestrator'
-// import { Deferred } from './deferred'
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export const TeXstudio = new class { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   public enabled: boolean
   public texstudio: string
-  // public ready = new Deferred<boolean>
 
   constructor() {
     orchestrator.add('TeXstudio', {
