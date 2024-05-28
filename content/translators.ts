@@ -38,8 +38,6 @@ declare class ChromeWorker extends Worker { }
 Components.utils.import('resource://zotero/config.js')
 declare const ZOTERO_CONFIG: any
 
-// import { clone } from './object'
-import { Deferred } from './deferred'
 import type { Translators as Translator } from '../typings/translators'
 import { Preference } from './prefs'
 import { Preferences } from '../gen/preferences/meta'
@@ -53,6 +51,7 @@ import { Pinger } from './ping'
 import Puqeue from 'puqeue'
 import { orchestrator } from './orchestrator'
 import type { Reason } from './bootstrap'
+import type Bluebird from 'bluebird'
 import { headers as Headers, byLabel, byId, bySlug } from '../gen/translators'
 
 class Queue extends Puqeue {
@@ -95,9 +94,12 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
   public queue = new Queue
   public worker: ChromeWorker
 
-  public ready = new Deferred<boolean>()
+  public ready!: Bluebird<boolean>
 
   constructor() {
+    const ready = Zotero.Promise.defer()
+    this.ready = ready.promise
+
     Object.assign(this, { byLabel, byId, bySlug })
 
     orchestrator.add('translators', {
@@ -123,7 +125,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
         await this.installTranslators()
 
         log.debug('translators startup: finished')
-        this.ready.resolve(true)
+        ready.resolve(true)
         log.debug('translators startup: released')
       },
       shutdown: async (reason: Reason) => {
