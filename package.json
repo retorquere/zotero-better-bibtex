@@ -113,7 +113,7 @@
     "zotero-plugin": "2.0.16"
   },
   "devDependencies": {
-    "@retorquere/bibtex-parser": "^9.0.10",
+    "@retorquere/bibtex-parser": "^9.0.11",
     "@retorquere/zotero-sync": "^1.0.27",
     "@types/bluebird": "^3.5.42",
     "@types/lokijs": "^1.5.14",
@@ -168,7 +168,7 @@
     "process": "^0.11.10",
     "properties-reader": "^2.3.0",
     "pug": "^3.0.3",
-    "putout": "^35.30.0",
+    "putout": "^35.32.0",
     "recast": "^0.23.7",
     "regenerate": "^1.4.2",
     "rimraf": "^5.0.7",
