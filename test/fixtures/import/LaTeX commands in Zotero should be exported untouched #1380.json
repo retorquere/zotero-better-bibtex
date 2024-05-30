@@ -19,31 +19,38 @@
       "creators": [
         {
           "creatorType": "author",
-          "name": "Mittelbach, Frank"
+          "firstName": "Frank",
+          "lastName": "Mittelbach"
         },
         {
           "creatorType": "author",
-          "name": "Goossens, Michel"
+          "firstName": "Michel",
+          "lastName": "Goossens"
         },
         {
           "creatorType": "translator",
-          "name": "Andr\\'e, Jacques"
+          "firstName": "Jacques",
+          "lastName": "Andr\\'e"
         },
         {
           "creatorType": "translator",
-          "name": "Bellet, Beno\u00eet"
+          "firstName": "Beno\u00eet",
+          "lastName": "Bellet"
         },
         {
           "creatorType": "translator",
-          "name": "Charpentier, Jean-C\u00f4me"
+          "firstName": "Jean-C\u00f4me",
+          "lastName": "Charpentier"
         },
         {
           "creatorType": "translator",
-          "name": "Hufflen, Jean-Michel"
+          "firstName": "Jean-Michel",
+          "lastName": "Hufflen"
         },
         {
           "creatorType": "translator",
-          "name": "Soulet, Yves"
+          "firstName": "Yves",
+          "lastName": "Soulet"
         }
       ],
       "date": "2006-02",
