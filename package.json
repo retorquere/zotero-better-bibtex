@@ -113,11 +113,11 @@
     "zotero-plugin": "2.0.16"
   },
   "devDependencies": {
-    "@retorquere/bibtex-parser": "^9.0.11",
+    "@retorquere/bibtex-parser": "^9.0.12",
     "@retorquere/zotero-sync": "^1.0.27",
     "@types/bluebird": "^3.5.42",
     "@types/lokijs": "^1.5.14",
-    "@types/node": "^20.12.12",
+    "@types/node": "^20.12.13",
     "@xmldom/xmldom": "^0.8.10",
     "ajv-keywords": "^5.1.0",
     "archiver": "^7.0.1",
