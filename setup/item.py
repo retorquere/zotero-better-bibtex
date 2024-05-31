@@ -34,6 +34,11 @@ import fnmatch
 import sqlite3
 from pygit2 import Repository
 
+try:
+  ONLINE = urllib.request.urlopen('https://github.com').getcode() == 200
+except:
+  ONLINE = False
+
 root = os.path.join(os.path.dirname(__file__), '..')
 
 print('parsing Zotero/Juris-M schemas')
@@ -54,6 +59,9 @@ def readurl(url):
 class fetch(object):
   def __init__(self, client):
     self.schema = os.path.join(SCHEMA.root, f'{client}.json')
+
+    if not ONLINE:
+      return
 
     if client == 'zotero':
       # releases = [

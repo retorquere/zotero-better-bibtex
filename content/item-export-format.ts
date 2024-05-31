@@ -14,6 +14,74 @@ type CacheEntry = {
   item: Item
 }
 
+function attachmentToPOJO(serialized: Attachment, att): Attachment {
+  if (att.attachmentLinkMode !== Zotero.Attachments.LINK_MODE_LINKED_URL) {
+    serialized.localPath = att.getFilePath()
+    if (serialized.localPath) serialized.defaultPath = `files/${att.id}/${$OS.Path.basename(serialized.localPath)}`
+  }
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+  return serialized
+}
+
+export function itemToPOJO(item: ZoteroItem): Item {
+  let serialized: Item = item.toJSON()
+  serialized.uri = Zotero.URI.getItemURI(item)
+  serialized.itemID = item.id
+
+  switch (serialized.itemType) {
+    case 'note':
+    case 'annotation':
+      break
+
+    case 'attachment':
+      serialized = attachmentToPOJO(serialized as unknown as Attachment, item)
+      break
+
+    default:
+      serialized.attachments = item.getAttachments().map(id => {
+        const att = Zotero.Items.get(id)
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+        return attachmentToPOJO({ ...att.toJSON(), uri: Zotero.URI.getItemURI(att) }, att)
+      })
+
+      serialized.notes = item.getNotes().map(id => {
+        const note = Zotero.Items.get(id)
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+        return { ...note.toJSON(), uri: Zotero.URI.getItemURI(note) }
+      })
+  }
+
+  return serialized
+}
+
+export function fix(serialized: Item, item: ZoteroItem): Item {
+  if (item.isRegularItem() && !item.isFeedItem) {
+    const regular = <RegularItem>serialized
+
+    if (Zotero.BetterBibTeX.ready.isPending()) {
+      // with the new "title as citation", CSL can request these items before the key manager is online
+      regular.citationKey = ''
+    }
+    else {
+      regular.citationKey = Zotero.BetterBibTeX.KeyManager.get(item.id).citationKey
+      if (!regular.citationKey) throw new Error(`no citation key for ${Zotero.ItemTypes.getName(item.itemTypeID)} ${item.id}`)
+      if (!regular.journalAbbreviation && Preference.autoAbbrev) {
+        const autoJournalAbbreviation = JournalAbbrev.get(regular)
+        if (autoJournalAbbreviation) regular.autoJournalAbbreviation = autoJournalAbbreviation
+      }
+    }
+  }
+
+  // come on -- these are used in the collections export but not provided on the items?!
+  serialized.itemID = item.id
+  // serialized.key = serialized.itemKey = item.key
+  serialized.itemKey = item.key
+  serialized.libraryID = item.libraryID
+
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+  return serialized as unknown as Item
+}
+
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export const Serializer = new class { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   private cache
@@ -39,7 +107,7 @@ export const Serializer = new class { // eslint-disable-line @typescript-eslint/
     const cached: CacheEntry = this.cache.findOne($and({ itemID: item.id }))
     if (!cached) return null
 
-    return this.enrich(cached.item, item)
+    return fix(cached.item, item)
   }
 
   private store(item: ZoteroItem, serialized: Item): Item {
@@ -50,7 +118,7 @@ export const Serializer = new class { // eslint-disable-line @typescript-eslint/
       Zotero.debug('Serializer.store ignored, DB not yet loaded')
     }
 
-    return this.enrich(serialized, item)
+    return serialized
   }
 
   public serialize(item: ZoteroItem): Item {
@@ -58,77 +126,9 @@ export const Serializer = new class { // eslint-disable-line @typescript-eslint/
   }
 
   public fast(item: ZoteroItem): Item {
-    let serialized = this.fetch(item)
-
-    if (!serialized) {
-      serialized = item.toJSON()
-      serialized.uri = Zotero.URI.getItemURI(item)
-      serialized.itemID = item.id
-
-      switch (serialized.itemType) {
-        case 'note':
-        case 'annotation':
-          break
-
-        case 'attachment':
-          serialized = this.fastAttachment(serialized as unknown as Attachment, item)
-          break
-
-        default:
-          serialized.attachments = item.getAttachments().map(id => {
-            const att = Zotero.Items.get(id)
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-            return this.fastAttachment({ ...att.toJSON(), uri: Zotero.URI.getItemURI(att) }, att)
-          })
-
-          serialized.notes = item.getNotes().map(id => {
-            const note = Zotero.Items.get(id)
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-            return { ...note.toJSON(), uri: Zotero.URI.getItemURI(note) }
-          })
-      }
-      this.store(item, serialized)
-    }
-
     // since the cache doesn't clone, these will be written into the cache, but since we override them always anyways, that's OK
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return this.enrich(serialized, item)
+    return fix(this.fetch(item) || this.store(item, itemToPOJO(item)), item)
   }
 
-  private fastAttachment(serialized: Attachment, att): Attachment {
-    if (att.attachmentLinkMode !== Zotero.Attachments.LINK_MODE_LINKED_URL) {
-      serialized.localPath = att.getFilePath()
-      if (serialized.localPath) serialized.defaultPath = `files/${att.id}/${$OS.Path.basename(serialized.localPath)}`
-    }
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return serialized
-  }
-
-  public enrich(serialized: Item, item: ZoteroItem): Item {
-    if (item.isRegularItem() && !item.isFeedItem) {
-      const regular = <RegularItem>serialized
-
-      if (Zotero.BetterBibTeX.ready.isPending()) {
-        // with the new "title as citation", CSL can request these items before the key manager is online
-        regular.citationKey = ''
-      }
-      else {
-        regular.citationKey = Zotero.BetterBibTeX.KeyManager.get(item.id).citationKey
-        if (!regular.citationKey) throw new Error(`no citation key for ${Zotero.ItemTypes.getName(item.itemTypeID)} ${item.id}`)
-        if (!regular.journalAbbreviation && Preference.autoAbbrev) {
-          const autoJournalAbbreviation = JournalAbbrev.get(regular)
-          if (autoJournalAbbreviation) regular.autoJournalAbbreviation = autoJournalAbbreviation
-        }
-      }
-    }
-
-    // come on -- these are used in the collections export but not provided on the items?!
-    serialized.itemID = item.id
-    // serialized.key = serialized.itemKey = item.key
-    serialized.itemKey = item.key
-    serialized.libraryID = item.libraryID
-
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return serialized as unknown as Item
-  }
 }

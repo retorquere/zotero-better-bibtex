@@ -1,82 +1,78 @@
-import { default as AsyncIndexedDB, AsyncIDBObjectStore } from 'async-indexed-db'
+import Dexie, { type EntityTable } from 'dexie'
+import { Events } from '../events'
+import { orchestrator } from '../orchestrator'
+import { fix, itemToPOJO } from '../item-export-format'
 
-export class Cache extends AsyncIndexedDB {
+type ExportFormat = { itemID: number } & Omit<Record<string, any>, 'itemID'>
+
+export class Cache extends Dexie {
+  private lastUpdated = 'translators.better-bibtex.cache.lastUpdated'
+
+  public ExportFormat!: EntityTable<ExportFormat, 'itemID'>
+
   constructor() {
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    super('better-bibtex:cache', async (_db: IDBDatabase) => {}, 1)
-  }
-
-  async open(lastUpdated?: string): Promise<Cache> {
-    if (this.db) return this
-
-    return new Promise((resolve, reject) => {
-      const openRequest = indexedDB.open(this.name, 1)
-
-      openRequest.onerror = openRequest.onblocked = (): void => {
-        const error = `could not open cache ${this.name}: ${openRequest.error?.message || 'Unknown error'}`
-        Zotero.debug(error)
-        reject(new Error(error))
-      }
-
-      openRequest.onsuccess = async () => {
-        try {
-          this.db = openRequest.result
-          const clear = lastUpdated && (lastUpdated > (Zotero.Prefs.get('translators.better-bibtex.cache.lastUpdated') || ''))
-          if (clear) {
-            /*
-            await this.tx(['ExportFormat', 'Exported', 'ExportContext'], 'readwriteflush', async ({ ExportFormat, Exported, ExportContext }) => {
-              await Promise.all([ExportFormat.clear(), Exported.clear(), ExportContext.clear()])
-            })
-            */
-            await this.tx(['ExportFormat'], 'readwriteflush', async ({ ExportFormat }) => {
-              await Promise.all([ExportFormat.clear()])
-            })
-          }
-          resolve(this)
-        }
-        catch (err) {
-          reject(err)
-        }
-      }
-
-      openRequest.onupgradeneeded = () => {
-        const cache = openRequest.result
-        const stores = {
-          ExportFormat: { keyPath: 'itemID', indices: undefined },
-          /*
-          Exported: { keyPath: ['context', 'itemID'], indices: { // keyPath order matters for key retrieval!
-            itemID: { unique: false },
-            context: { unique: false }
-          } },
-          ExportContext:{ keyPath: 'id', autoIncrement: true, indices: {
-            properties: { unique: false, multiEntry: true },
-          } }
-          */
-        }
-
-        for (const [name, config] of Object.entries(stores)) {
-          if (cache.objectStoreNames.contains(name)) cache.deleteObjectStore(name)
-          const indices = config.indices
-          delete config.indices
-          const store = cache.createObjectStore(name, config)
-          if (indices) {
-            for (const [index, setup] of Object.entries(indices)) {
-              store.createIndex(index, index, setup)
-            }
-          }
-        }
-      }
+    super('BetterBibTeXCache')
+    this.version(1).stores({
+      ExportFormat: 'itemID',
     })
   }
 
-  public async tx(stores: string | string[], mode: 'readonly' | 'readwrite' | 'readwriteflush' = 'readonly', handler: (stores: Record<string, AsyncIDBObjectStore>) => Promise<void>): Promise<void> {
-    if (typeof stores === 'string') stores = [ stores ]
-    const tx = this.db.transaction(stores, mode as IDBTransactionMode)
-    const env: Record<string, AsyncIDBObjectStore> = {}
-    for (const store of stores) {
-      env[store] = AsyncIndexedDB.proxy(tx.objectStore(store)) as AsyncIDBObjectStore
+  public touch(): void {
+    Zotero.Prefs.set(this.lastUpdated, Zotero.Date.dateToSQL(new Date(), true))
+  }
+
+  public async fill(items: any[]): Promise<void> {
+    const cached = new Set(await this.ExportFormat.toCollection().primaryKeys())
+    await this.store(items.filter(item => !cached.has(item.id)))
+  }
+
+  public async store(items: any[]): Promise<void> {
+    items = items.filter(item => !item.isFeedItem && item.isRegularItem())
+    await Promise.all(items.map(item => cache.ExportFormat.put(fix(itemToPOJO(item), item))))
+  }
+
+  public async init(): Promise<void> {
+    await this.open()
+
+    await Zotero.initializationPromise
+    const clear = ((await Zotero.DB.valueQueryAsync('SELECT MAX(dateModified) FROM items')) || '') > (Zotero.Prefs.get(this.lastUpdated) || '')
+
+    if (clear) await this.ExportFormat.clear()
+    /*
+      Exported: { keyPath: ['context', 'itemID'], indices: { // keyPath order matters for key retrieval!
+        itemID: { unique: false },
+        context: { unique: false }
+      } },
+      ExportContext:{ keyPath: 'id', autoIncrement: true, indices: {
+        properties: { unique: false, multiEntry: true },
+      } }
+    */
+  }
+
+  public async export(): Promise<Record<string, any>> {
+    const tables: Record<string, any> = {}
+    for (const table of this.tables) {
+      tables[table.name] = await table.toArray()
     }
-    await handler(env)
-    tx.commit()
+    return tables
   }
 }
+
+export const cache = new Cache
+
+orchestrator.add('worker-cache', {
+  description: 'worker-cache',
+  startup: async () => {
+    await cache.init()
+
+    Events.on('items-update-cache', async ({ ids, action }) => {
+      if (action === 'delete') {
+        await Promise.all(ids.map(id => cache.ExportFormat.delete(id)))
+      }
+      else {
+        await cache.store(await Zotero.Items.getAsync(ids))
+        cache.touch()
+      }
+    })
+  },
+})

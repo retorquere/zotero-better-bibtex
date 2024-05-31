@@ -49,7 +49,8 @@ import { Events } from './events'
 
 import { Translators } from './translators'
 import { DB as Cache } from './db/cache'
-import { Serializer } from './item-export-format'
+// +import { cache as IndexedCache } from './db/indexed'
+import { fix as fixExportFormat } from './item-export-format'
 import { AutoExport, SQL as AE } from './auto-export'
 import { KeyManager } from './key-manager'
 import { TestSupport } from './test-support'
@@ -438,7 +439,7 @@ Zotero.Translate.Import.prototype.Sandbox.BetterBibTeX = {
 $patch$(Zotero.Utilities.Internal, 'itemToExportFormat', original => function Zotero_Utilities_Internal_itemToExportFormat(zoteroItem: any, _legacy: any, _skipChildItems: any) {
   const serialized = original.apply(this, arguments)
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  return Serializer.enrich(serialized, zoteroItem)
+  return fixExportFormat(serialized, zoteroItem)
 })
 
 // so BBT-JSON can be imported without extra-field meddling

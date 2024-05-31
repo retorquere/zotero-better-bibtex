@@ -4,6 +4,7 @@ import { Shim } from './os'
 import { is7 } from './client'
 const $OS = is7 ? Shim : OS
 import merge from 'lodash.merge'
+import { cache as IndexedCache } from './db/indexed'
 
 /*
 async function guard(run: Promise<void>): Promise<boolean> {
@@ -368,6 +369,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     if (job.path && job.canceled) return ''
 
     items = items.filter(item => !item.isAnnotation?.())
+    await IndexedCache.fill(items)
 
     let worked = Date.now()
     const prepare = new Pinger({
