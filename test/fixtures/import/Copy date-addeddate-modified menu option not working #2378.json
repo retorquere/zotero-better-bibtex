@@ -3,6 +3,8 @@
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "options": {
+      "Items": true,
+      "Preferences": true,
       "exportNotes": true
     },
     "preferences": {
@@ -25,7 +27,7 @@
           "lastName": "Snidal"
         }
       ],
-      "date": "1998-2",
+      "date": "1998-02",
       "extra": [
         "Citation Key: AbbottSnidal:1998"
       ],
@@ -53,7 +55,7 @@
           "lastName": "Snidal"
         }
       ],
-      "date": "1998-2",
+      "date": "1998-02",
       "extra": [
         "Citation Key: AbbottSnidal"
       ],

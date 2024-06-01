@@ -3,7 +3,7 @@ title: 'The rhetoric of tests'
 bibliography: library.json
 csl: apa7.csl
 zotero:
-	csl-style: apa7 # pre-fill the style
+	csl-style: apa
 papersize: a4
 ---
 

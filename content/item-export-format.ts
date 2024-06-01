@@ -1,4 +1,8 @@
-import type { Attachment, Item } from '../gen/typings/serialized-item'
+import { Shim } from './os'
+import { is7 } from './client'
+const $OS = is7 ? Shim : OS
+
+import type { RegularItem, Attachment, Item } from '../gen/typings/serialized-item'
 import { JournalAbbrev } from './journal-abbrev'
 import { DB as Cache } from './db/cache'
 import { $and } from './db/loki'
@@ -15,7 +19,8 @@ export const Serializer = new class { // eslint-disable-line @typescript-eslint/
   private cache
 
   constructor() {
-    orchestrator.add('serializer', {
+    orchestrator.add({
+      id: 'serializer',
       description: 'object serializer',
       needs: ['cache', 'keymanager', 'abbreviator'],
       startup: async () => { // eslint-disable-line @typescript-eslint/require-await
@@ -94,27 +99,28 @@ export const Serializer = new class { // eslint-disable-line @typescript-eslint/
   private fastAttachment(serialized: Attachment, att): Attachment {
     if (att.attachmentLinkMode !== Zotero.Attachments.LINK_MODE_LINKED_URL) {
       serialized.localPath = att.getFilePath()
-      if (serialized.localPath) serialized.defaultPath = `files/${att.id}/${OS.Path.basename(serialized.localPath)}`
+      if (serialized.localPath) serialized.defaultPath = `files/${att.id}/${$OS.Path.basename(serialized.localPath)}`
     }
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return serialized
   }
 
   public enrich(serialized: Item, item: ZoteroItem): Item {
-    switch (serialized.itemType) {
-      case 'note':
-      case 'annotation':
-      case 'attachment':
-        break
+    if (item.isRegularItem() && !item.isFeedItem) {
+      const regular = <RegularItem>serialized
 
-      default:
-        serialized.citationKey = Zotero.BetterBibTeX.KeyManager.get(item.id).citationKey
-        if (!serialized.citationKey) throw new Error(`no citation key for ${item.id}`)
-        if (!serialized.journalAbbreviation && Preference.autoAbbrev) {
-          const autoJournalAbbreviation = JournalAbbrev.get(serialized)
-          if (autoJournalAbbreviation) serialized.autoJournalAbbreviation = autoJournalAbbreviation
+      if (Zotero.BetterBibTeX.ready.isPending()) {
+        // with the new "title as citation", CSL can request these items before the key manager is online
+        regular.citationKey = ''
+      }
+      else {
+        regular.citationKey = Zotero.BetterBibTeX.KeyManager.get(item.id).citationKey
+        if (!regular.citationKey) throw new Error(`no citation key for ${Zotero.ItemTypes.getName(item.itemTypeID)} ${item.id}`)
+        if (!regular.journalAbbreviation && Preference.autoAbbrev) {
+          const autoJournalAbbreviation = JournalAbbrev.get(regular)
+          if (autoJournalAbbreviation) regular.autoJournalAbbreviation = autoJournalAbbreviation
         }
-        break
+      }
     }
 
     // come on -- these are used in the collections export but not provided on the items?!
@@ -124,6 +130,6 @@ export const Serializer = new class { // eslint-disable-line @typescript-eslint/
     serialized.libraryID = item.libraryID
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return serialized
+    return serialized as unknown as Item
   }
 }

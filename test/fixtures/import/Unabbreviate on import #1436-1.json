@@ -518,6 +518,8 @@
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "options": {
+      "Items": true,
+      "Preferences": true,
       "exportNotes": true
     },
     "preferences": {
@@ -1270,7 +1272,7 @@
       "itemType": "journalArticle",
       "journalAbbreviation": "J. Phys. Conf. Ser.",
       "pages": "12003",
-      "publicationTitle": "Yamada Conference Lx On Research in High Magnetic Fields",
+      "publicationTitle": "Journal of physics. Conference series",
       "title": "Monte Carlo simulation of secondary electron emission from dielectric targets",
       "volume": "402"
     },
@@ -3511,7 +3513,7 @@
       "date": "1997",
       "extra": [
         "Citation Key: Salviati_msmc_1997",
-        "Issue: 157",
+        "Number: 157",
         "tex.__markedentry: [jonas:]",
         "tex.af: Salviati, GEOLEOLZanotti-Fregonara, CEOLEOLAlbrecht, MEOLEOLChristiansen, SEOLEOLStrunk, HPEOLEOLMayer, MEOLEOLPelzmann, AEOLEOLKamp, MEOLEOLEbeling, KJEOLEOLBremser, MDEOLEOLDavis, RFEOLEOLShreter, YG",
         "tex.be: Cullis, AGEOLEOLHutchison, JL",
@@ -4186,9 +4188,8 @@
       "issue": "4",
       "itemID": 91,
       "itemType": "journalArticle",
-      "journalAbbreviation": "Small",
       "pages": "467\u2013470",
-      "publicationTitle": "Small (Weinheim an der Bergstrasse, Germany)",
+      "publicationTitle": "Small",
       "title": "Probing exciton diffusion in semiconductors using semiconductor-nanorod quantum structures",
       "volume": "4"
     },
@@ -4666,7 +4667,7 @@
       "journalAbbreviation": "Adv. Mater.",
       "pages": "3755\u20133760",
       "publicationTitle": "Advanced Materials",
-      "title": "Monolithic III-V Nanowire Solar Cells on Graphene via Direct van der Waals Epitaxy",
+      "title": "Monolithic III-V Nanowire Solar Cells on Graphene via Direct van Der Waals Epitaxy",
       "volume": "26"
     },
     {
@@ -5463,9 +5464,8 @@
       "issue": "7",
       "itemID": 115,
       "itemType": "journalArticle",
-      "journalAbbreviation": "Small",
       "pages": "899\u2013903",
-      "publicationTitle": "Small (Weinheim an der Bergstrasse, Germany)",
+      "publicationTitle": "Small",
       "title": "Prismatic Quantum Heterostructures Synthesized on Molecular-Beam Epitaxy GaAs Nanowires",
       "volume": "4"
     },
@@ -12307,7 +12307,7 @@
       "journalAbbreviation": "Appl. Phys. Lett.",
       "pages": "043109",
       "publicationTitle": "Applied Physics Letters",
-      "title": "Large redshift in photoluminescence of P-doped InP nanowires induced by Fermi-Level pinning",
+      "title": "Large redshift in photoluminescence of p-doped InP nanowires induced by Fermi-Level pinning",
       "volume": "88"
     },
     {
@@ -14898,7 +14898,7 @@
       "journalAbbreviation": "Appl. Phys. Lett.",
       "pages": "213113",
       "publicationTitle": "Applied Physics Letters",
-      "title": "Environmental sensitivity of N-i-n and undoped single GaN nanowire photodetectors",
+      "title": "Environmental sensitivity of n-i-n and undoped single GaN nanowire photodetectors",
       "volume": "102"
     },
     {
@@ -18092,7 +18092,7 @@
       "itemType": "journalArticle",
       "journalAbbreviation": "J. Phys. Conf. Ser.",
       "pages": "012017",
-      "publicationTitle": "Yamada Conference Lx On Research in High Magnetic Fields",
+      "publicationTitle": "Journal of physics. Conference series",
       "title": "Quantification of carbon contamination under electron beam irradiation in a scanning transmission electron microscope and its suppression by plasma cleaning",
       "volume": "241"
     },
@@ -22925,9 +22925,8 @@
       "issue": "5158",
       "itemID": 454,
       "itemType": "journalArticle",
-      "journalAbbreviation": "Science",
       "pages": "553\u2013556",
-      "publicationTitle": "Science (New York, N.Y.)",
+      "publicationTitle": "Science",
       "title": "Quantum Cascade Laser",
       "volume": "264"
     },
@@ -23630,7 +23629,7 @@
       "journalAbbreviation": "J. Opt. Soc. Am.",
       "pages": "742\u2013744",
       "publicationTitle": "Journal of The Optical Society of America",
-      "title": "Optical constants from the far infrared to the X-ray region: <span class=\"nocase\">Mg, Al, Cu, Ag, Au, Bi, C, and Al2O3</span>",
+      "title": "Optical constants from the far infrared to the x-ray region: <span class=\"nocase\">Mg, Al, Cu, Ag, Au, Bi, C, and Al2O3</span>",
       "volume": "65"
     },
     {
@@ -24118,8 +24117,8 @@
         },
         {
           "creatorType": "author",
-          "firstName": "G. S.",
-          "lastName": "Cargill, III"
+          "firstName": "G. S., III",
+          "lastName": "Cargill"
         },
         {
           "creatorType": "author",

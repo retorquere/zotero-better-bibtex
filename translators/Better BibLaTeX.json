@@ -16,6 +16,8 @@
     "exportNotes": false,
     "exportFileData": false,
     "useJournalAbbreviation": false,
+    "biblatexAPA": false,
+    "biblatexChicago": false,
     "keepUpdated": false,
     "worker": true
   },

@@ -1,3 +1,41 @@
 [
-  {"id":"Zhao2022SystematicReviewWikidata","abstract":"Wikidata has been widely used in Digital Humanities (DH) projects. However, a focused discussion regarding the current status, potential, and challenges of its application in the ﬁeld is still lacking. A systematic review was conducted to identify and evaluate how DH projects perceive and utilize Wikidata, as well as its potential and challenges as demonstrated through use. This research concludes that: (1) Wikidata is understood in the DH projects as a content provider, a platform, and a technology stack; (2) it is commonly implemented for annotation and enrichment, metadata curation, knowledge modelling, and Named Entity Recognition (NER); (3) Most projects tend to consume data from Wikidata, whereas there is more potential to utilize it as a platform and a technology stack to publish data on Wikidata or to create an ecosystem of data exchange; and (4) Projects face two types of challenges: technical issues in the implementations and concerns with Wikidata’s data quality. In the discussion, this article contributes to addressing three issues related to coping with the challenges in the speciﬁc context of the DH ﬁeld based on the research ﬁndings: the relevance and authority of other available domain sources; domain communities and their practices; and workﬂow design that coordinates technical and labour resources from projects and Wikidata.","accessed":{"date-parts":[[2022,12,31]]},"author":[{"family":"Zhao","given":"Fudie"}],"citation-key":"Zhao2022SystematicReviewWikidata","container-title":"Digital Scholarship in the Humanities","container-title-short":"Digit. Scholarsh. Humanit.","DOI":"10.1093/llc/fqac083","ISSN":"2055-7671, 2055-768X","issued":{"date-parts":[[2022,12,28]]},"language":"en","page":"fqac083","source":"DOI.org (Crossref)","title":"A systematic review of Wikidata in Digital Humanities projects","type":"article-journal","URL":"https://academic.oup.com/dsh/advance-article/doi/10.1093/llc/fqac083/6964525"}
+  {
+    "DOI": "10.1093/llc/fqac083",
+    "ISSN": "2055-7671, 2055-768X",
+    "URL": "https://academic.oup.com/dsh/advance-article/doi/10.1093/llc/fqac083/6964525",
+    "abstract": "Wikidata has been widely used in Digital Humanities (DH) projects. However, a focused discussion regarding the current status, potential, and challenges of its application in the \ufb01eld is still lacking. A systematic review was conducted to identify and evaluate how DH projects perceive and utilize Wikidata, as well as its potential and challenges as demonstrated through use. This research concludes that: (1) Wikidata is understood in the DH projects as a content provider, a platform, and a technology stack; (2) it is commonly implemented for annotation and enrichment, metadata curation, knowledge modelling, and Named Entity Recognition (NER); (3) Most projects tend to consume data from Wikidata, whereas there is more potential to utilize it as a platform and a technology stack to publish data on Wikidata or to create an ecosystem of data exchange; and (4) Projects face two types of challenges: technical issues in the implementations and concerns with Wikidata\u2019s data quality. In the discussion, this article contributes to addressing three issues related to coping with the challenges in the speci\ufb01c context of the DH \ufb01eld based on the research \ufb01ndings: the relevance and authority of other available domain sources; domain communities and their practices; and work\ufb02ow design that coordinates technical and labour resources from projects and Wikidata.",
+    "accessed": {
+      "date-parts": [
+        [
+          "2022",
+          12,
+          31
+        ]
+      ]
+    },
+    "author": [
+      {
+        "family": "Zhao",
+        "given": "Fudie"
+      }
+    ],
+    "citation-key": "Zhao2022SystematicReviewWikidata",
+    "container-title": "Digital Scholarship in the Humanities",
+    "container-title-short": "Digit. Scholarsh. Humanit.",
+    "id": "Zhao2022SystematicReviewWikidata",
+    "issued": {
+      "date-parts": [
+        [
+          "2022",
+          12,
+          28
+        ]
+      ]
+    },
+    "language": "en",
+    "page": "fqac083",
+    "source": "DOI.org (Crossref)",
+    "title": "A systematic review of Wikidata in Digital Humanities projects",
+    "type": "article-journal"
+  }
 ]

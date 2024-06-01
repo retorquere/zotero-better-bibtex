@@ -11,7 +11,7 @@ function date2csl(date: ParsedDate): [LooseNumber, LooseNumber?, LooseNumber?] {
       return [0]
 
     case 'date':
-      csl = [date.year > 0 ? date.year : date.year - 1]
+      csl = [ `${date.year > 0 ? date.year : date.year - 1}` ]
       if (date.month) {
         csl.push(date.month)
         if (date.day) {
@@ -23,7 +23,7 @@ function date2csl(date: ParsedDate): [LooseNumber, LooseNumber?, LooseNumber?] {
     case 'season':
       // https://github.com/retorquere/zotero-better-bibtex/issues/860
       // eslint-disable-next-line @typescript-eslint/restrict-plus-operands, @typescript-eslint/no-unsafe-return
-      return [ date.year > 0 ? date.year : date.year - 1, date.season + 12 ]
+      return [ `${date.year > 0 ? date.year : date.year - 1}`, date.season + 12 ]
 
     default:
       throw new Error(`Expected date or open, got ${date.type}`)

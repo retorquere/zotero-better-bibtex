@@ -1,14 +1,19 @@
 declare const Zotero: any
 declare const __estrace: any // eslint-disable-line no-underscore-dangle
 
+import { Shim } from '../../content/os'
+import { is7 } from '../../content/client'
+const $OS = is7 ? Shim : OS
+
 import * as Prefs from '../../gen/preferences/meta'
 const PrefNames: Set<string> = new Set(Object.keys(Prefs.defaults))
-import { TeXMap } from '../../content/prefs'
 import { client } from '../../content/client'
+import { regex as escapeRE } from '../../content/escape'
 import { RegularItem, Item, Collection, Attachment } from '../../gen/typings/serialized-item'
 import type { Exporter as BibTeXExporter } from '../bibtex/exporter'
 import type { ZoteroItem } from '../bibtex/bibtex'
 import type { Translators } from '../../typings/translators.d.ts'
+import type { CharMap } from 'unicode2latex'
 
 type CacheableItem = Item & { $cacheable: boolean }
 type CacheableRegularItem = RegularItem & { $cacheable: boolean }
@@ -169,10 +174,6 @@ export class Collections {
   }
 }
 
-function escapeRegExp(text: string): string {
-  return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&')
-}
-
 export type Input = {
   items: Items
   collections: Collections
@@ -200,15 +201,15 @@ class Override {
   }
 
   public override(preference: string, extension: string): boolean {
-    const override = this.orig[`${preference}Override`]
+    const override: string = this.orig[`${preference}Override`]
     if (!this.exportPath || !override) {
       return false
     }
 
     const candidates = [
-      OS.Path.basename(this.exportPath).replace(/\.[^.]+$/, '') + extension,
+      $OS.Path.basename(this.exportPath).replace(/\.[^.]+$/, '') + extension,
       override,
-    ].map(filename => OS.Path.join(this.exportDir, filename))
+    ].map(filename => <string>$OS.Path.join(this.exportDir, filename))
 
     for (const candidate of candidates) {
       Zotero.debug(`better-bibtex: looking for override ${preference} in ${candidate}`)
@@ -269,12 +270,14 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
     dir: undefined,
     path: undefined,
   }
-  public texmap: TeXMap
+  public charmap: CharMap
 
   public options: {
     quickCopyMode?: string
     dropAttachments?: boolean
     exportNotes?: boolean
+    biblatexAPA?: boolean
+    biblatexChicago?: boolean
     markdown?: boolean
     exportFileData?: boolean
     useJournalAbbreviation?: boolean
@@ -283,7 +286,10 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
     Authors?: boolean
     Year?: boolean
     Normalize?: boolean
+    Preferences?: boolean
+    Items?: boolean
     worker?: boolean
+    custom?: boolean // for pandoc-filter CSL
   }
 
   public BetterBibLaTeX?: boolean                   // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
@@ -378,11 +384,11 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
       translation.preferences.separatorNames = translation.preferences.separatorNames.trim()
       translation.and = {
         list: {
-          re: new RegExp(escapeRegExp(translation.preferences.separatorList), 'g'),
+          re: new RegExp(escapeRE(translation.preferences.separatorList), 'g'),
           repl: ` {${translation.preferences.separatorList}} `,
         },
         names: {
-          re: new RegExp(` ${escapeRegExp(translation.preferences.separatorNames)} `, 'g'),
+          re: new RegExp(` ${escapeRE(translation.preferences.separatorNames)} `, 'g'),
           repl: ` {${translation.preferences.separatorNames}} `,
         },
       }
@@ -391,7 +397,7 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
     }
 
     if (translation.preferences.testing && typeof __estrace === 'undefined' && translator.configOptions?.cached) {
-      const allowedPreferences: Prefs.Preferences = Prefs.affectedBy[translator.label]
+      const allowedPreferences: Prefs.Preferences = (translator.label === 'BetterBibTeX JSON' ? Object.keys(Prefs.defaults) : Prefs.affectedBy[translator.label])
         .concat([ 'testing' ])
         .reduce((acc: any, pref: Prefs.PreferenceName) => {
           acc[pref] = translation.preferences[pref]
@@ -421,7 +427,7 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
     this[translator.label.replace(/[^a-z]/ig, '')] = true
     this.BetterTeX = this.BetterBibTeX || this.BetterBibLaTeX
     this.BetterCSL = this.BetterCSLJSON || this.BetterCSLYAML
-    this.options = translator.displayOptions || {}
+    this.options = {...(translator.displayOptions || {})}
 
     this.platform = (Zotero.getHiddenPref('better-bibtex.platform') as string)
     this.isJurisM = client === 'jurism'
@@ -438,16 +444,10 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
     catch (err) {
     }
 
-    for (const key in this.options) {
-      if (typeof this.options[key] === 'boolean') {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-        this.options[key] = Zotero.getOption(key)
-      }
-      else {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-        this.options[key] = !!Zotero.getOption(key)
-      }
+    for (const key in this.options) { // eslint-disable-line guard-for-in
+      this.options[key] = !!Zotero.getOption(key)
     }
+    this.options.custom = Zotero.getOption('custom') // for pandoc-filter CSL
 
     this.preferences = Object.entries(Prefs.defaults).reduce((acc, [pref, dflt]) => {
       acc[pref] = Zotero.getHiddenPref(`better-bibtex.${pref}`) ?? dflt
@@ -461,10 +461,10 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
 
     // special handling
     try {
-      this.texmap = JSON.parse(this.preferences.charmap)
+      this.charmap = JSON.parse(this.preferences.charmap)
     }
     catch (err) {
-      this.texmap = {}
+      this.charmap = {}
     }
 
     this.importToExtra = {}

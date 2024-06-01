@@ -2,10 +2,13 @@
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "localeDateOrder": "dmy",
-    "options": {},
+    "options": {
+      "Items": true,
+      "Preferences": true,
+      "exportNotes": true
+    },
     "preferences": {
-      "citekeyFormat": "[auth][year]"
+      "citekeyFormat": "auth + year"
     }
   },
   "items": [
@@ -22,7 +25,7 @@
       ],
       "itemID": 1,
       "itemType": "journalArticle",
-      "title": "Blah <span class=\"nocase\"><i>mkbibemph</i></span> and <span class=\"nocase\">\u201cmkbibquote\u201d</span>."
+      "title": "Blah <span class=\"nocase\"><i>mkbibemph</i></span> and \u201c<span class=\"nocase\">mkbibquote</span>\u201d."
     },
     {
       "citationKey": "1e",
@@ -37,7 +40,7 @@
       ],
       "itemID": 2,
       "itemType": "journalArticle",
-      "title": "Blah <span class=\"nocase\"><i>emph</i></span> and <span class=\"nocase\">\u201cenquote\u201d</span>."
+      "title": "Blah <span class=\"nocase\"><i>emph</i></span> and \u201c<span class=\"nocase\">enquote</span>\u201d."
     },
     {
       "citationKey": "2b",
@@ -52,7 +55,7 @@
       ],
       "itemID": 3,
       "itemType": "book",
-      "title": "Blah <span class=\"nocase\"><i>mkbibemph</i></span> and <span class=\"nocase\">\u201cmkbibquote\u201d</span>."
+      "title": "Blah <span class=\"nocase\"><i>mkbibemph</i></span> and \u201c<span class=\"nocase\">mkbibquote</span>\u201d."
     },
     {
       "citationKey": "2e",
@@ -67,7 +70,7 @@
       ],
       "itemID": 4,
       "itemType": "book",
-      "title": "Blah <span class=\"nocase\"><i>emph</i></span> and <span class=\"nocase\">\u201cenquote\u201d</span>."
+      "title": "Blah <span class=\"nocase\"><i>emph</i></span> and \u201c<span class=\"nocase\">enquote</span>\u201d."
     },
     {
       "citationKey": "Algar1985",
@@ -143,8 +146,7 @@
       ],
       "date": "2013",
       "extra": [
-        "Citation Key: Cooper2013",
-        "tex.crossref: Classen2013"
+        "Citation Key: Cooper2013"
       ],
       "itemID": 8,
       "itemType": "bookSection",
@@ -168,7 +170,7 @@
       "itemType": "journalArticle",
       "pages": "1-11",
       "publicationTitle": "Beitr\u00e4ge zur Geschichte der Philosophie des Mittelalters",
-      "title": "Die dem boethius f\u00e4lschlich zugeschriebene abhandlung des dominicus gundisalvi 'De unitate'",
+      "title": "Die dem Boethius f\u00e4lschlich zugeschriebene Abhandlung des Dominicus Gundisalvi 'De unitate'",
       "volume": "1"
     }
   ]

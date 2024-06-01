@@ -432,7 +432,7 @@ You can edit most Better BibTeX preferences through the Preferences window in Zo
 
 ## Zotero
 
-To view the the full list of Better BibTeX's preferences, including many hidden preferences, go to the Advanced pane of the Zotero preferences and click “Config Editor”. Enter “better-bibtex” into the Filter field at the top of the list that comes up. Preferences that can be safely changed by users are described below.
+To view the full list of Better BibTeX's preferences, including many hidden preferences, go to the Advanced pane of the Zotero preferences and click “Config Editor”. Enter “better-bibtex” into the Filter field at the top of the list that comes up. Preferences that can be safely changed by users are described below.
 
 The Better BibTeX hidden preferences are preceded by “extensions.zotero.translators.better-bibtex.”
 
@@ -562,9 +562,10 @@ The Better BibTeX hidden preferences are preceded by “extensions.zotero.transl
     }
     let conditions: string = Object.entries(autoexport).map(([ setting, schema ]) => check(setting, schema)).join('\n')
     triggers.push('DROP TRIGGER IF EXISTS betterbibtex.autoexport_insert')
+    triggers.push('DROP TRIGGER IF EXISTS betterbibtex_autoexport_insert')
     triggers.push([
-      'CREATE TRIGGER betterbibtex.autoexport_insert',
-      'BEFORE INSERT ON autoexport',
+      'CREATE TEMPORARY TRIGGER betterbibtex_autoexport_insert',
+      'BEFORE INSERT ON betterbibtex.autoexport',
       'BEGIN',
       conditions,
       'END;',
@@ -572,9 +573,10 @@ The Better BibTeX hidden preferences are preceded by “extensions.zotero.transl
 
     conditions = Object.entries(autoexport).filter(([ setting, _schema ]) => !fixated.includes(setting)).map(([ setting, schema ]) => check(setting, schema)).join('\n')
     triggers.push('DROP TRIGGER IF EXISTS betterbibtex.autoexport_update')
+    triggers.push('DROP TRIGGER IF EXISTS betterbibtex_autoexport_update')
     triggers.push([
-      'CREATE TRIGGER betterbibtex.autoexport_update',
-      'BEFORE UPDATE ON autoexport',
+      'CREATE TEMPORARY TRIGGER betterbibtex_autoexport_update',
+      'BEFORE UPDATE ON betterbibtex.autoexport',
       'BEGIN',
       ...fixated.map(setting => fixate(setting)),
       '',
@@ -606,9 +608,10 @@ The Better BibTeX hidden preferences are preceded by “extensions.zotero.transl
     const unsupported = `  SELECT RAISE(FAIL, "unsupported auto-export setting")\n  WHERE NEW.setting NOT IN (${set(Object.keys(settings))});\n`
     conditions = Object.entries(settings).map(([ setting, schema ]) => check(setting, schema, true)).join('\n')
     triggers.push('DROP TRIGGER IF EXISTS betterbibtex.autoexport_setting_insert')
+    triggers.push('DROP TRIGGER IF EXISTS betterbibtex_autoexport_setting_insert')
     triggers.push([
-      'CREATE TRIGGER betterbibtex.autoexport_setting_insert',
-      'BEFORE INSERT ON autoexport_setting',
+      'CREATE TEMPORARY TRIGGER betterbibtex_autoexport_setting_insert',
+      'BEFORE INSERT ON betterbibtex.autoexport_setting',
       'BEGIN',
       unsupported,
       conditions,
@@ -616,9 +619,10 @@ The Better BibTeX hidden preferences are preceded by “extensions.zotero.transl
     ].join('\n'))
 
     triggers.push('DROP TRIGGER IF EXISTS betterbibtex.autoexport_setting_update')
+    triggers.push('DROP TRIGGER IF EXISTS betterbibtex_autoexport_setting_update')
     triggers.push([
-      'CREATE TRIGGER betterbibtex.autoexport_setting_update',
-      'BEFORE UPDATE ON autoexport_setting',
+      'CREATE TEMPORARY TRIGGER betterbibtex_autoexport_setting_update',
+      'BEFORE UPDATE ON betterbibtex.autoexport_setting',
       'BEGIN',
       fixate('path'),
       fixate('setting'),
@@ -674,7 +678,13 @@ class XHTML extends BaseASTWalker {
     }
     if (node.name === 'script') throw new Error("scripts don't work in preference panes")
 
+    let style: string
     switch (node.name) {
+      case'image':
+        style = node.attrs.filter(a => a.name === 'height' || a.name === 'width').map(a => `${a.name}:${eval(a.val)}`).join(';')
+        if (style) node.attrs.push({ name: 'style', val: JSON.stringify(style), mustEscape: false })
+        break
+
       case 'textbox':
         node.attrs = node.attrs.filter(a => a.name !== 'flex')
 

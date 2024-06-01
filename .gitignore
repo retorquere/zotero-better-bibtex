@@ -51,3 +51,4 @@ logs
 pandoc/docx
 pandoc/*.docx
 pandoc/*.odt
+pandoc/.snakemake

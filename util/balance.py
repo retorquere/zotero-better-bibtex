@@ -28,16 +28,9 @@ def publish(var, value):
     print(f"{var}={value}")
     print(f"{var}={value}", file=f)
 
-class NoTestError(Exception):
-  pass
-class FailedError(Exception):
-  pass
 class Tests:
   def __init__(self):
-    self.tests = []
-
-  def load(self, timings):
-    with open(timings) as f:
+    with open(args.durations) as f:
       try:
         tests = json.load(f, object_hook=Munch.fromDict)
       except json.decoder.JSONDecodeError:
@@ -82,15 +75,16 @@ class Tests:
 
     Path(os.path.dirname(args.bins)).mkdir(parents=True, exist_ok=True)
     with open(args.bins, 'w') as f:
+      print('Saving test bins to', args.bins)
       json.dump(self.bins, f, indent='  ')
 
 Tests = Tests()
-Tests.load(args.durations)
 Tests.balance()
-publish('test_bins', json.dumps(list(range(max(len(Tests.bins), 1)))))
+publish('bin_ids', json.dumps(list(range(max(len(Tests.bins), 1)))))
+publish('bins', args.bins)
 
 # clients = ['zotero', 'jurism']
 clients = ['zotero']
 if args.beta:
   clients += [client + '-beta' for client in clients]
-publish('test_clients', json.dumps(clients))
+publish('clients', json.dumps(clients))

@@ -5,8 +5,8 @@
   editor = {Editrix, Emma and Editor, Ed},
   date = {2015},
   number = {77},
-  institution = {{Institution}},
-  location = {{Place}},
+  institution = {Institution},
+  location = {Place},
   annotation = {\{:X-genre: xxx\}}
 }
 
@@ -16,8 +16,8 @@
   author = {Blair, John},
   editor = {Matthew, H.C.G. and Harrison, Brian Howard},
   date = {2004},
-  publisher = {{Oxford University Press}},
-  location = {{Oxford}},
+  publisher = {Oxford University Press},
+  location = {Oxford},
   doi = {10.1093/ref:odnb/10183},
   url = {http://www.oxforddnb.com/view/article/10183},
   urldate = {2014-06-13}
@@ -29,8 +29,8 @@
   editor = {Doe, John and Roe, Rob},
   editortype = {director},
   date = {2015},
-  publisher = {{The Distributor}},
-  location = {{US/GB}}
+  publisher = {The Distributor},
+  location = {US/GB}
 }
 
 @inreference{emptybook,
@@ -50,10 +50,10 @@
   origdate = {1996-09-16},
   volume = {3},
   number = {1},
-  publisher = {{Warner Home Video}},
-  location = {{US}},
+  publisher = {Warner Home Video},
+  location = {US},
   langid = {american},
-  origpublisher = {{NBC}}
+  origpublisher = {NBC}
 }
 
 @video{friends:leia:tv,
@@ -67,8 +67,8 @@
   date = {1996-09-16},
   volume = {3},
   number = {1},
-  publisher = {{NBC}},
-  location = {{US}},
+  publisher = {NBC},
+  location = {US},
   langid = {american}
 }
 

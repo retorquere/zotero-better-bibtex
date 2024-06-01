@@ -14,6 +14,22 @@ Feature: Export
     Examples:
       | file                                                                                                                     | references |
       | Split CJK names #2624                                                                                                    | 28         |
+      | Preprint with status in extra fails to export #2881                                                                      | 1          |
+      | Exporting item type film merges scriptwriter with other contributors #2802                                               | 1          |
+      | Three dashes in extra field for generating markdown files from bibtex #2849                                              | 1          |
+      | Export of Contributor to WITH #2837                                                                                      | 1          |
+      | Better BibTeX export from Zotero missing Extra fields eg issued #2816                                                    | 1          |
+      | Support for Chinese Quotation Marks When Exporting with Export unicode as plaintext latex commands #2810                 | 1          |
+      | Exporting item type film merges scriptwriter with other contributors #2802                                               | 1          |
+      | en-dash and i-circumflex translation error #2796                                                                         | 3          |
+      | Exporting # in hashtags. #2795                                                                                           | 1          |
+      | My citation key formula suddenly includes editors for book sections even when there is a declared author #2794           | 2          |
+      | Direct access to Zotero Creators fields #2787                                                                            | 1          |
+      | shorttitle in citekeys always pinyinized #2770                                                                           | 1          |
+      | Export unicode character o as latex command broken #2761                                                                 | 1          |
+      | Citation key from abbreviationacronym from within field #2717                                                            | 3          |
+      | raw bibtex fields with colon in extra #2750                                                                              | 1          |
+      | Unicode replacement results in undefined mathsl command #2722                                                            | 1          |
       | urldate when only DOI is exported #2697                                                                                  | 1          |
       | skipwords removes dashes #2614                                                                                           | 1          |
       | Length filter double-counting characters #2525                                                                           | 1          |
@@ -197,6 +213,7 @@ Feature: Export
 
     Examples:
       | file                                                                                                               | references |
+      | Better BibTeX export from Zotero missing Extra fields eg issued #2816                                              | 1          |
       | formula grouping                                                                                                   | 1          |
       | formula grouping-upgrade                                                                                           | 1          |
       | BBT does not escape # in first argument of href in note #2617                                                      | 2          |
@@ -228,7 +245,7 @@ Feature: Export
       | BibTeX journal article QR reports missing field number #1589                                                       | 2          |
       | Format disambiguations #1554                                                                                       | 2          |
       | BibTeX Warning for Inbook Entries with Author and Editor Fields #1541                                              | 1          |
-      | Unicode ø in author name is exported with trailing space which does not work in bibtex #1538                       | 1          |
+      | Unicode oslash in author name is exported with trailing space which does not work in bibtex #1538                  | 1          |
       | lone ogonek should have brace                                                                                      | 1          |
       | Regression in export to better biblatex #1491                                                                      | 1          |
       | add date, origdate functions, and format-date filter #1488                                                         | 4          |
@@ -527,7 +544,7 @@ Feature: Export
 
   @postscript @1043
   Scenario: Unbalanced vphantom escapes #1043
-    Given I import 1 references from "export/*.json"
+    Given I import 2 references from "export/*.json"
     Then an export using "Better BibTeX" should match "export/*.bibtex"
     When I set preference .postscript to "export/Detect and protect LaTeX math formulas.js"
     Then an export using "Better BibTeX" should match "export/*-mathmode.bibtex"
@@ -611,6 +628,13 @@ Feature: Export
     And I wait 15 seconds
     Then "~/autoexport.bib" should match "export/*.after.bibtex"
 
+  Scenario: Export of Contributor to WITH #2837-autoexport
+    Given I import 1 reference from "export/*.json"
+    Then an auto-export to "~/autoexport.bib" using "Better BibLaTeX" should match "export/*.before.biblatex"
+    When I change biblatexAPA to true on the auto-export
+    And I wait 15 seconds
+    Then "~/autoexport.bib" should match "export/*.after.biblatex"
+
   Scenario: Auto-Export citekey edits #citekey-edit
     Given I import 1 reference from "export/*.json"
     Then an auto-export to "~/autoexport.bib" using "Better BibTeX" should match "export/*.before.bibtex"
@@ -692,7 +716,7 @@ Feature: Export
   # Then an auto-export to "/tmp/autoexport.bib" using "Better BibTeX" should match "export/*.bibtex"
   # And I remove "/tmp/autoexport.bib"
   # When I remove all items from "Cited/2010 - CHI (Magic)"
-  # And I wait 5 seconds
+  # And I wait 15 seconds
   # And I wait at most 100 seconds until all auto-exports are done
   # Then "/tmp/autoexport.bib" should match "export/*.bibtex"
   @1495
@@ -730,21 +754,8 @@ Feature: Export
   @use.with_client=zotero
   Scenario: Using zotero.lua .md to .docx to add canonic number after comma without 'p.' #2248
     Given I import 2 references from "export/*.json"
-    When I compile "export/*.md" to "~/*.odt" it should match "export/*.odt"
-
-  @use.with_client=zotero @use.with_slow=true @timeout=3000
-  Scenario: Compare export times
-    Given I import 86 references from "export/*.json"
-    And I set preference .cache to false
-    Then I export the library 50 times using "Better BibTeX"
-    # stock bibtex
-    And I export the library 50 times using "id:9cb70025-a888-4a29-a210-93ec52da40d4"
-    Then I export the library 50 times using "Better BibLaTeX"
-    # stock biblatex
-    And I export the library 50 times using "id:b6e39b57-8942-4d11-8259-342c46ce395f"
-    Then I set preference .cache to true
-    And I export the library 50 times using "Better BibTeX"
-    And I export the library 50 times using "Better BibLaTeX"
+    When I compile "export/*.md" to "~/*.odt" it should match "export/*.odt" with 22 citations
+    When I compile "export/*.md" to "~/*.docx" it should match "export/*.docx" with 22 citations
 
   # Scenario: error exporting Better BibLaTex this.preference.skipFields is undefined #2029
   # Given I restart Zotero

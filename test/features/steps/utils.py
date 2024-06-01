@@ -14,6 +14,7 @@ import psutil
 import shlex
 from collections import UserDict
 import copy
+import unicodedata
 
 import warnings
 warnings.filterwarnings("ignore", category=UserWarning, module='bs4', message='.*looks like a URL.*')
@@ -50,6 +51,8 @@ class benchmark(object):
     return time.time() - self.started
 
 def assert_equal_diff(expected, found):
+  expected = unicodedata.normalize('NFD', expected)
+  found = unicodedata.normalize('NFD', found)
   assert found in [
     re.sub(r'\s+$', '\n', expected.lstrip()),
     expected.strip(),

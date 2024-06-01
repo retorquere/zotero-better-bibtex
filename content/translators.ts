@@ -1,5 +1,36 @@
 /* eslint-disable no-case-declarations, @typescript-eslint/no-unsafe-return */
 
+import { Shim } from './os'
+import { is7 } from './client'
+const $OS = is7 ? Shim : OS
+import merge from 'lodash.merge'
+
+/*
+async function guard(run: Promise<void>): Promise<boolean> {
+  let timeout = true
+
+  const delay = async () => {
+    await Zotero.Promise.delay(20000)
+    if (timeout) {
+      log.debug('installing translators: raced to timeout!')
+      throw { timeout: true, message: 'timeout' } // eslint-disable-line no-throw-literal
+    }
+  }
+
+  try {
+    await Promise.race([run, delay()])
+    timeout = false
+    log.debug('installing translators: guard OK')
+    return true
+  }
+  catch (err) {
+    log.error('installing translators: guard failed because of', err.message )
+    if (err.timeout) return false
+    throw err
+  }
+}
+*/
+
 Components.utils.import('resource://gre/modules/Services.jsm')
 
 declare class ChromeWorker extends Worker { }
@@ -7,12 +38,10 @@ declare class ChromeWorker extends Worker { }
 Components.utils.import('resource://zotero/config.js')
 declare const ZOTERO_CONFIG: any
 
-import { clone } from './object'
-import { Deferred } from './deferred'
 import type { Translators as Translator } from '../typings/translators'
 import { Preference } from './prefs'
 import { Preferences } from '../gen/preferences/meta'
-import { Serializer } from './serializer'
+import { Serializer } from './item-export-format'
 import { log } from './logger'
 import { DB as Cache } from './db/cache'
 import { flash } from './flash'
@@ -20,9 +49,9 @@ import { $and } from './db/loki'
 import { Events } from './events'
 import { Pinger } from './ping'
 import Puqeue from 'puqeue'
-import { is7 } from './client'
 import { orchestrator } from './orchestrator'
 import type { Reason } from './bootstrap'
+import type Bluebird from 'bluebird'
 import { headers as Headers, byLabel, byId, bySlug } from '../gen/translators'
 
 class Queue extends Puqeue {
@@ -65,16 +94,22 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
   public queue = new Queue
   public worker: ChromeWorker
 
-  public ready = new Deferred<boolean>()
+  public ready!: Bluebird<boolean>
 
   constructor() {
+    const ready = Zotero.Promise.defer()
+    this.ready = ready.promise
+
     Object.assign(this, { byLabel, byId, bySlug })
 
-    orchestrator.add('translators', {
+    orchestrator.add({
+      id: 'translators',
       description: 'translators',
       needs: ['keymanager', 'cache'],
       startup: async () => {
+        log.debug('translators startup: begin')
         await this.start()
+        log.debug('translators startup: started')
 
         this.itemType = {
           note: Zotero.ItemTypes.getID('note'),
@@ -86,10 +121,13 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
         this.uninstall('Better BibTeX Quick Copy')
         this.uninstall('\u672B BetterBibTeX JSON (for debugging)')
         this.uninstall('BetterBibTeX JSON (for debugging)')
+        log.debug('translators startup: cleaned')
 
-        this.lateInit().catch(err => {
-          log.debug('translators startup failure', err)
-        })
+        await this.installTranslators()
+
+        log.debug('translators startup: finished')
+        ready.resolve(true)
+        log.debug('translators startup: released')
       },
       shutdown: async (reason: Reason) => {
         switch (reason) {
@@ -113,38 +151,6 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
         await Zotero.Translators.reinit()
       },
     })
-  }
-
-  private async lateInit() {
-    await Zotero.Translators.init()
-
-    const reinit: { header: Translator.Header, code: string }[] = []
-    // fetch from resource because that has the hash
-    const headers: Translator.Header[] = Headers
-      .map(header => JSON.parse(Zotero.File.getContentsFromURL(`chrome://zotero-better-bibtex/content/resource/${header.label}.json`)))
-    for (const header of headers) {
-      // workaround for mem limitations on Windows
-      if (!is7 && typeof header.displayOptions?.worker === 'boolean') header.displayOptions.worker = !!Zotero.isWin
-      let code
-      if (code = await this.install(header)) reinit.push({ header, code })
-    }
-
-    if (reinit.length) {
-      await Zotero.Translators.reinit()
-
-      for (const { header, code } of reinit) {
-        if (Zotero.Translators.getCodeForTranslator) {
-          const translator = Zotero.Translators.get(header.translatorID)
-          translator.cacheCode = true
-          await Zotero.Translators.getCodeForTranslator(translator)
-        }
-        else {
-          new Zotero.Translator({...header, cacheCode: true, code })
-        }
-      }
-    }
-
-    this.ready.resolve(true)
   }
 
   public getTranslatorId(name: string): string {
@@ -180,6 +186,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
   public async importString(str) {
     await this.ready
+    await Zotero.initializationPromise // this really shouldn't be necessary
     const translation = new Zotero.Translate.Import()
     translation.setString(str)
 
@@ -249,7 +256,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     const displayOptions = {
       ...this.displayOptions(job.translatorID, job.displayOptions),
       exportPath: job.path || undefined,
-      exportDir: job.path ? OS.Path.dirname(job.path) : undefined,
+      exportDir: job.path ? $OS.Path.dirname(job.path) : undefined,
     }
 
     const translator = this.byId[job.translatorID]
@@ -283,7 +290,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
       translator: translator.label,
       output: job.path || '',
-      debugEnabled: !!Zotero.Debug.enabled,
+      debugEnabled: !!Zotero.Debug.storing,
     }
 
     let items: any[] = []
@@ -434,12 +441,12 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
   }
 
   public displayOptions(translatorID: string, displayOptions: any): any {
-    displayOptions = clone(displayOptions || this.byId[translatorID]?.displayOptions || {})
-    const defaults = this.byId[translatorID]?.displayOptions || {}
-    for (const [k, v] of Object.entries(defaults)) {
-      if (typeof displayOptions[k] === 'undefined') displayOptions[k] = v
-    }
-    return displayOptions
+    return merge(
+      {},
+      this.byId[translatorID]?.displayOptions || {},
+      displayOptions,
+      this.byId[translatorID].label === 'BetterBibTeX JSON' ? { exportCharset: 'UTF-8xBOM' } : {}
+    )
   }
 
   public async exportItems(job: ExportJob): Promise<string> {
@@ -540,6 +547,50 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     }
 
     return false
+  }
+
+  private async installTranslators() {
+    log.debug('installing translators: busy-waiting for Zotero.Translators.init()')
+    while (true) { // eslint-disable-line no-constant-condition
+      try {
+        Zotero.Translators.get(0)
+        break
+      }
+      catch (err) {
+        if (err.message === 'Translators not yet loaded') {
+          log.debug('installing translators:', err.message)
+          await Zotero.Promise.delay(1000)
+        }
+        else {
+          throw err
+        }
+      }
+    }
+
+    // the busy-wait guarantees it has once been inited, and this just hangs for no reason for some people.
+    // log.debug('installing translators: now actually waiting for Zotero.Translators.init()')
+    // await Zotero.Translators.init()
+
+    log.debug('installing translators: loading BBT translators')
+    const reinit: { header: Translator.Header, code: string }[] = []
+    // fetch from resource because that has the hash
+    const headers: Translator.Header[] = Headers
+      .map(header => JSON.parse(Zotero.File.getContentsFromURL(`chrome://zotero-better-bibtex/content/resource/${header.label}.json`)))
+    let code
+    for (const header of headers) {
+      // workaround for mem limitations on Windows
+      if (!is7 && typeof header.displayOptions?.worker === 'boolean') header.displayOptions.worker = !!Zotero.isWin
+      if (code = await this.install(header)) {
+        log.debug(`installing translators: scheduling ${header.label} for re-init`)
+        reinit.push({ header, code })
+      }
+    }
+
+    if (reinit.length) {
+      log.debug(`installing translators: scheduling ${reinit.length} for re-init`)
+      await Zotero.Translators.reinit()
+    }
+    log.debug('installing translators: done')
   }
 
   public async install(header: Translator.Header): Promise<string> {

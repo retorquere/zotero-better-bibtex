@@ -19,31 +19,23 @@ jobs:
           label.reopened: reopened
           log-id: "([A-Z0-9]{8}(-refs)?-(apse|euc))|([A-Z0-9]{8}-[^-]+)"
           message.log-required: |
-            Hello there @{{username}},
+            Hello @{{username}},
 
-            Hope you're doing well! `@retorquere` is here to help you get the most out of your experience with Better BibTeX. To make sure he can assist you effectively, he kindly asks for your cooperation in providing a debug log – it's like giving him the key to understanding and solving the puzzle!
+            `@retorquere` is ready to assist you with Better BibTeX. In order to do so efficiently, a debug log is generally required. The information it containst is key to him understanding, replicating, and resolving your issue.
 
-            Getting your debug log is a breeze and will save us both time in getting your problem resolved or the new feature you'd like implemented. Trust me, it's way quicker than discussing why it's important. :smiley:
+            **Here’s how you can share your debug log:**
 
-            **How to Share Your Debug Log:**
+            1. If your issue involves specific references, citekey generation, or exports, right-click on the relevant item(s) and select "Better BibTeX -> Submit Better BibTeX debug log" from the menu.
+            2. For issues where items do not play a role, follow these steps:
+              * Restart Zotero with debugging enabled (Help -> Debug Output Logging -> Restart with logging enabled).
+              * Reproduce the problem.
+              * Choose "Send Better BibTeX debug report..." from the help menu.
 
-            1. If the issue involves specific references, citekey generation, or exports, just right-click on the relevant item(s) and choose "Better BibTeX -> Submit Better BibTeX debug log" from the menu.
+            After these steps, you will receive debug ID displayed in red. Please share this ID with `@retorquere` in this issue thread. If your query is about an export, include both the actually exported result and your expected/desired outcome.
 
-            2. For other issues, follow these simple steps:
-               * Restart Zotero with debugging enabled (Help -> Debug Output Logging -> Restart with logging enabled).
-               * Reproduce the problem.
-               * Select "Send Better BibTeX debug report..." from the help menu.
+            Sharing your debug log gives `@retorquere` a view of your Better BibTeX configuration and the elements contributing to the issue. This helps him address your concerns more efficiently.
 
-            Once you hit that submit button, you'll get a special red debug ID. Just share that with `@retorquere` in this issue thread. If the question is regarding an export, don't forget to include what you see exported and what you expected.
+            Thank you.
 
-            By sharing your debug log, you're giving `@retorquere` a clearer picture of your setup and the items causing the issue. It's like a superhero cape for him – he can swoop in and tackle the problem much faster.
-
-            We totally get that your time is valuable, and we appreciate your effort in helping `@retorquere` help you. You might be surprised at how much this simple step speeds up the whole process.
-
-            Thanks a bunch!
-
-            **PS: If the Debug Log menu does not appear, or it does not send the debug log**
-
-            A fallback option is available under "Help" > "Send debug log to file.io".
-
+            **PS: If the Debug Log menu is not available, or if it fails to send the debug log**, you can use the option under “Help” > “Send debug log to file.io”.
           message.no-close: Thanks for the feedback! Just so you know, GitHub doesn't let me control who can close issues, and @retorquere likes to leave bug reports and enhancements open as a nudge to merge them into the next release.

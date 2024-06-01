@@ -53,6 +53,11 @@ def clean_item(item):
 
   un_multi(item)
 
+  if 'relations' in item and 'dc:replaces' in item['relations']:
+    del item['relations']['dc:replaces']
+    if len(item['relations']) == 0:
+      del item['relations']
+
   item.pop('__citekey__', None)
   item.pop('autoJournalAbbreviation', None)
   item.pop('citationKey', None)
@@ -104,24 +109,20 @@ def unkey(data):
     return [unkey(d) for d in data]
 
   elif isinstance(data, dict):
-    return { k: unkey(v) for k, v in data.items() if k not in ('itemID', 'itemKey', 'key') }
+    return { k: unkey(v) for k, v in data.items() if k not in ('attachments', 'notes', 'itemID', 'itemKey', 'key') }
 
   else:
     return data
+
+def ascii(s):
+  return re.sub(r'[^\x20-\x7f]',r'', s)
 
 def load(lib):
   lib.pop('config', None)
   lib.pop('version', None)
 
-  for item in lib['items']:
-    if 'relations' in item:
-      if len(item['relations']) == 0:
-        del item['relations']
-      else:
-        utils.print('relations:' + str(item['relations']))
-
   lib['items'] = [clean_item(item) for item in lib['items']]
-  lib['items'] = sorted(lib['items'], key=lambda i: json.dumps(unkey(i), sort_keys=True))
+  lib['items'] = sorted(lib['items'], key=lambda i: ascii(json.dumps(unkey(i), sort_keys=True)))
 
   # renumber items
   itemIDs = {}

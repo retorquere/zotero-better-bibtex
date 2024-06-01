@@ -37,6 +37,19 @@ inoremap <C-z> <C-r>=ZoteroCite()<CR>
 
 This inserts the citation at the cursor using the shortcut ctrl-z (in insert mode) or `<leader>`z (in normal, visual etc. modes, `<leader>` being backslash by default).
 
+### emacs
+
+@newhallroad wrote a function in elisp, which brings up the CAYW input, adds the chosen items as pandoc citations to the buffer, and moves the point to after the citations. This is for markdown-mode. Emacs users who use org-mode may (or may not) need something different.
+
+```
+(defun alk/bbt-zotero-insert-key ()
+  "Run shell command to bring up better bibtex cayw input and insert pandoc citation at point"
+  (interactive)
+  (shell-command "curl -s http://127.0.0.1:23119/better-bibtex/cayw?format=pandoc^&brackets=true" t nil) ; caret escapes ampersand 
+  (search-forward "]") ; place cursor after inserted citation
+  )
+```
+
 ###  Zotero Citations for Atom
 
 A sample implementation of real integration (rather than the working-but-clunky workarounds using paste) can be found in the [Zotero Citations](https://atom.io/packages/zotero-citations) package for the [Atom](http://atom.io) editor.
@@ -76,18 +89,21 @@ the following URL parameters:
 | `minimize` | Any non-empty value will minimize Zotero windows after a pick |
 | `texstudio` | Any non-empty value will try to push the pick to TeXstudio |
 | `selected` | Any non-empty value will use the current selection in Zotero rather than popping up the pick window |
-
+| `select` | More of a gimmick than anything else, but if you add select=true, BBT will select the picked items in Zotero. |
 
 The following formats are available:
 
-* `latex`. Generates [natbib](https://ctan.org/pkg/natbib) citation commands. Extra URL parameters allowed:
+* `natbib`. Generates [natbib](https://ctan.org/pkg/natbib) citation commands. Extra URL parameters allowed:
   * `command`: the citation command to use (if unspecified, defaults to `cite`)
-* `cite` is an alias for `latex` with the assumption you want the cite command to be `cite`
+* `latex` and `cite` are aliases for `natbib` with the assumption you want the cite command to be `cite`
+* `citep` and `citet` are aliases for `natbib` with the assumption you want the cite command to be `citep` or `citet`, respectively.
 * `biblatex`. Generates [biblatex](https://ctan.org/pkg/biblatex) citation commands. Extra URL parameters allowed:
   * `command`: the citation command to use (if unspecified, defaults to `autocite`)
 * `mmd`: MultiMarkdown
 * `pandoc`. Accepts additional URL parameter `brackets`; any non-empty value surrounds the citation with brackets
 * `asciidoctor-bibtex`
+* `typst` Generates [typst](https://typst.app/docs/reference/model/cite/) citation commands
+* `jupyter`
 * `scannable-cite` for the [ODF scanner](https://zotero-odf-scan.github.io/zotero-odf-scan/)
 * `formatted-citation`: output formatted citation as per the current Zotero quick-export setting, if it is set to a citation style, and not an export format
 * `formatted-bibliography`: output formatted bibliography as per the current Zotero quick-export setting, if it is set to a citation style, and not an export format
@@ -96,6 +112,10 @@ The following formats are available:
   * `exportNotes`: set to `true` to export notes
   * `useJournalAbbreviation`: set to `true` to use journal abbreviations
 * `json`: the full pick information Zotero provides.
+* `eta`: formats the pick using [Eta](https://eta.js.org/), with the picks exposed as `it.items`. To see what the items look like, use the `json` formatter. URL parameter required:
+  * `template`: the Eta template to render
+
+The `eta` formatter is great for experimentation, but if you need a format for a common target application, feel free to request a change to have that added to this list.
 
 The picker passes the following data along with your picked items if you filled them out:
 
@@ -157,21 +177,5 @@ For example, if you call up http://127.0.0.1:23119/better-bibtex/cayw?format=mmd
 
 * the response body will be `[#adams2001][][#brigge2002][]`, and
 * `[#adams2001][][#brigge2002][]` will be left on the clipboard
-
-More of a gimmick than anything else, but if you add `select=true`, BBT will select the picked items in Zotero.
-
-## Playing around
-
-For testing for other markdown formatters, you can construct simple references yourself, using the `playground` formatter, with parameters:
-
-* `citeprefix`, default empty, for text to put before the full citation.
-* `citepostfix`, default empty, for text to put after the full citation.
-* `keyprefix`, default empty, for text to put before each individual citekey
-* `keypostfix`, default empty, for text to put after each individual citekey
-* `separator`, default `,`, for text to put between citekeys
-
-Alternately, the `json` formatter will just give you the picks as JSON which you can turn into pretty much anything if you can code.
-
-but if you need an extra format, just ask.
 
 [^1]: For Juris-M, the port number `23119` must be replaced with `24119`.

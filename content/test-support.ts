@@ -11,6 +11,7 @@ import  { defaults } from '../gen/preferences/meta'
 import { Preference } from './prefs'
 import * as memory from './memory'
 import { Events } from './events'
+import { is7 } from './client'
 
 const setatstart: string[] = ['testing', 'cache'].filter(p => Preference[p] !== defaults[p])
 
@@ -74,6 +75,11 @@ export class TestSupport {
     if (items.length !== 0) throw new Error('library not empty after reset')
 
     await Zotero.Promise.delay(1000)
+
+    await Zotero.DB.executeTransaction(async () => {
+      Zotero.Prefs.set('purge.tags', true)
+      await Zotero.Tags.purge()
+    })
 
     if (Zotero.BetterBibTeX.KeyManager.all().length !== 0) throw new Error(`keystore has ${Zotero.BetterBibTeX.KeyManager.all().length} entries after reset`)
   }
@@ -172,10 +178,10 @@ export class TestSupport {
     return Array.from(new Set(ids))
   }
 
-  public async pick(format: string, citations: {id: number[], uri: string, citekey: string}[]): Promise<string> {
+  public async pick(format: string, citations: {id: number[], uri: string, citationKey: string}[]): Promise<string> {
     for (const citation of citations) {
       if (citation.id.length !== 1) throw new Error(`Expected 1 item, got ${citation.id.length}`)
-      citation.citekey = Zotero.BetterBibTeX.KeyManager.get(citation.id[0]).citationKey
+      citation.citationKey = Zotero.BetterBibTeX.KeyManager.get(citation.id[0]).citationKey
       citation.uri = Zotero.URI.getItemURI(await getItemsAsync(citation.id[0]))
     }
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
@@ -236,41 +242,45 @@ export class TestSupport {
   }
 
   public async merge(ids: number[]): Promise<void> {
-    const zoteroPane = Zotero.getActiveZoteroPane()
-    await zoteroPane.selectItems(ids, true)
-    const selected = zoteroPane.getSelectedItems()
-    if (selected.length !== ids.length) throw new Error(`selected: ${selected.length}, expected: ${ids.length}`)
-
-    // zoteroPane.mergeSelectedItems()
-
-    selected.sort((a, b) => ids.indexOf(a.id) - ids.indexOf(b.id))
-
-    const win = Zotero.getMainWindow()
-
-    /*
-    const env = {
-      Zotero,
-      window: win,
-      document: win.document,
-      Zotero_Duplicates_Pane: win.Zotero_Duplicates_Pane,
-      setTimeout: setTimeout.bind(win),
-      clearTimeout: clearTimeout.bind(win),
-    }
-    */
-
-    if (!win.Zotero_Duplicates_Pane) {
-      Components.classes['@mozilla.org/moz/jssubscript-loader;1']
-        .getService(Components.interfaces.mozIJSSubScriptLoader)
-        .loadSubScript('chrome://zotero/content/duplicatesMerge.js', win)
-    }
-
-    win.Zotero_Duplicates_Pane.setItems(selected)
-    await Zotero.Promise.delay(1500)
-
     const before = await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, true, false, true)
-    await win.Zotero_Duplicates_Pane.merge()
+
+    if (is7) {
+      let other = await getItemsAsync(ids)
+      const master = other.find(item => item.id === ids[0])
+      other = other.filter(item => item.id !== ids[0])
+      const json = master.toJSON()
+      // Exclude certain properties that are empty in the cloned object, so we don't clobber them
+      const { relations: _r, collections: _c, tags: _t, ...keep } = master.clone().toJSON() // eslint-disable-line @typescript-eslint/no-unused-vars
+      Object.assign(json, keep)
+
+      master.fromJSON(json)
+      Zotero.Items.merge(master, other)
+    }
+    else {
+      const zoteroPane = Zotero.getActiveZoteroPane()
+      await zoteroPane.selectItems(ids, true)
+      const selected = zoteroPane.getSelectedItems()
+      if (selected.length !== ids.length) throw new Error(`selected: ${selected.length}, expected: ${ids.length}`)
+
+      // zoteroPane.mergeSelectedItems()
+
+      selected.sort((a, b) => ids.indexOf(a.id) - ids.indexOf(b.id))
+
+      const win = Zotero.getMainWindow()
+
+      if (!win.Zotero_Duplicates_Pane) {
+        Components.classes['@mozilla.org/moz/jssubscript-loader;1']
+          .getService(Components.interfaces.mozIJSSubScriptLoader)
+          .loadSubScript('chrome://zotero/content/duplicatesMerge.js', win)
+      }
+
+      win.Zotero_Duplicates_Pane.setItems(selected)
+      await Zotero.Promise.delay(1500)
+      await win.Zotero_Duplicates_Pane.merge()
+    }
 
     await Zotero.Promise.delay(1500)
+
     const after = await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, true, false, true)
     if (before.length - after.length !== (ids.length - 1)) throw new Error(`merging ${ids.length}: before = ${before.length}, after = ${after.length}`)
   }

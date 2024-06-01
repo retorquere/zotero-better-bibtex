@@ -1,10 +1,18 @@
 /* eslint-disable prefer-rest-params */
 
+import flatMap from 'array.prototype.flatmap'
+flatMap.shim()
+import matchAll from 'string.prototype.matchall'
+matchAll.shim()
+
+import type Bluebird from 'bluebird'
+const Ready = Zotero.Promise.defer()
+
+import { Shim } from './os'
 import { is7 } from './client'
+const $OS = is7 ? Shim : OS
 
 if (is7) Components.utils.importGlobalProperties(['FormData'])
-
-let $window: Window
 
 Components.utils.import('resource://gre/modules/FileUtils.jsm')
 declare const FileUtils: any
@@ -26,7 +34,6 @@ import { ErrorReport } from './ErrorReport'
 import { patch as $patch$, unpatch as $unpatch$ } from './monkey-patch'
 import { clean_pane_persist } from './clean_pane_persist'
 import { flash } from './flash'
-import { Deferred } from './deferred'
 import { orchestrator } from './orchestrator'
 import type { Reason } from './bootstrap'
 
@@ -42,7 +49,7 @@ import { Events } from './events'
 
 import { Translators } from './translators'
 import { DB as Cache } from './db/cache'
-import { Serializer } from './serializer'
+import { Serializer } from './item-export-format'
 import { AutoExport, SQL as AE } from './auto-export'
 import { KeyManager } from './key-manager'
 import { TestSupport } from './test-support'
@@ -266,7 +273,7 @@ $patch$(Zotero.ItemFields, 'isFieldOfBase', original => function Zotero_ItemFiel
 // because the zotero item editor does not check whether a textbox is read-only. *sigh*
 $patch$(Zotero.Item.prototype, 'setField', original => function Zotero_Item_prototype_setField(field: string, value: string | undefined, _loadIn: any) {
   if (field === 'citationKey') {
-    if (Zotero.BetterBibTeX.ready.pending) return false
+    if (Zotero.BetterBibTeX.ready.isPending()) return false
 
     const citekey = Zotero.BetterBibTeX.KeyManager.get(this.id)
     if (citekey.retry) return false
@@ -299,7 +306,7 @@ $patch$(Zotero.Item.prototype, 'setField', original => function Zotero_Item_prot
 $patch$(Zotero.Item.prototype, 'getField', original => function Zotero_Item_prototype_getField(field: any, unformatted: any, includeBaseMapped: any) {
   try {
     if (field === 'citationKey' || field === 'citekey') {
-      if (Zotero.BetterBibTeX.ready.pending) return '' // eslint-disable-line @typescript-eslint/no-use-before-define
+      if (Zotero.BetterBibTeX.ready.isPending()) return '' // eslint-disable-line @typescript-eslint/no-use-before-define
       return Zotero.BetterBibTeX.KeyManager.get(this.id).citationKey
     }
   }
@@ -363,6 +370,7 @@ if (!is7) {
 
     const text = doc.createElementNS('http://www.w3.org/1999/xhtml', 'span')
     text.className = 'cell-text'
+    text.id = `better-bibtex-citekey-cell-${item.id}`
     text.innerText = data
 
     const cell = doc.createElementNS('http://www.w3.org/1999/xhtml', 'span')
@@ -370,6 +378,16 @@ if (!is7) {
     cell.append(text, icon)
 
     return cell
+  })
+  Events.on('items-changed', ({ items }) => {
+    const doc = Zotero.getMainWindow().document
+    for (const item of items) {
+      const text = doc.getElementById(`better-bibtex-citekey-cell-${item.id}`)
+      const icon = doc.createElementNS('http://www.w3.org/1999/xhtml', 'span')
+      const citekey = Zotero.BetterBibTeX.KeyManager.get(item.id)
+      if (text) text.innerText = citekey.citationKey
+      if (icon) icon.innerText = citekey.pinned ? icons.pin : ''
+    }
   })
 }
 
@@ -393,17 +411,6 @@ Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
   generateBibTeX(_sandbox: any, translation: Translation) { generateBibTeX(translation) },
   generateCSLYAML(_sandbox: any, translation: Translation) { generateCSLYAML(translation) },
   generateCSLJSON(_sandbox: any, translation: Translation) { generateCSLJSON(translation) },
-
-  /*
-  cacheFetch(sandbox: { translator: { label: string }[] }, itemID: number, options: { exportNotes: boolean, useJournalAbbreviation: boolean }, prefs: any) {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return Cache.fetch(sandbox.translator[0].label, itemID, options, prefs)
-  },
-
-  cacheStore(sandbox: { translator: { label: string }[] }, itemID: number, options: { exportNotes: boolean, useJournalAbbreviation: boolean }, prefs: any, entry: any, metadata: any) {
-    return Cache.store(sandbox.translator[0].label, itemID, options, prefs, entry, metadata)
-  },
-  */
 
   parseDate(_sandbox: any, date: string): ParsedDate { return DateParser.parse(date) },
 }
@@ -456,7 +463,7 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
       if (this.location) {
         if (displayOptions.exportFileData) { // when exporting file data, the user was asked to pick a directory rather than a file
           displayOptions.exportDir = this.location.path
-          displayOptions.exportPath = OS.Path.join(this.location.path, `${this.location.leafName}.${translator.target}`)
+          displayOptions.exportPath = $OS.Path.join(this.location.path, `${this.location.leafName}.${translator.target}`)
           displayOptions.cache = false
         }
         else {
@@ -499,6 +506,8 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
           status: 'done',
           translatorID,
           exportNotes: displayOptions.exportNotes,
+          biblatexAPA: displayOptions.biblatexAPA,
+          biblatexChicago: displayOptions.biblatexChicago,
           useJournalAbbreviation: displayOptions.useJournalAbbreviation,
         })
       }
@@ -575,8 +584,9 @@ export class BetterBibTeX {
   public ExportOptions: ExportOptions = new ExportOptions
   public ErrorReport = ErrorReport
   public PrefPane = new PrefPane
+  public Translators = Translators
 
-  public ready = new Deferred<boolean>()
+  public ready: Bluebird<boolean> = Ready.promise
   public dir: string
 
   public debugEnabledAtStart: boolean
@@ -585,7 +595,7 @@ export class BetterBibTeX {
   public generateCSLJSON = generateCSLJSON
 
   constructor() {
-    this.debugEnabledAtStart = Zotero.Prefs.get('debug.store') || Zotero.Debug.enabled
+    this.debugEnabledAtStart = Zotero.Prefs.get('debug.store') || Zotero.Debug.storing
     if (Zotero.isWin && !is7) Zotero.Debug.addListener(this.logListener.bind(this))
   }
 
@@ -610,7 +620,7 @@ export class BetterBibTeX {
 
       case 'tag':
         // eslint-disable-next-line no-case-declarations
-        let name = OS.Path.basename(aux)
+        let name = $OS.Path.basename(aux)
         name = name.lastIndexOf('.') > 0 ? name.substr(0, name.lastIndexOf('.')) : name
         // eslint-disable-next-line no-case-declarations
         const tag = prompt({
@@ -645,9 +655,9 @@ export class BetterBibTeX {
         pack: 'start',
         flex: '1',
       })
-      const itemToolbar = doc.getElementById('zotero-item-toolbar')
+      const container = doc.getElementById('zotero-item-toolbar') || doc.getElementById('zotero-pane-progressmeter-container')
       // after hbox-before-zotero-pq-buttons
-      itemToolbar.insertBefore(progressToolbar, itemToolbar.firstChild.nextSibling)
+      container.insertBefore(progressToolbar, container.firstChild.nextSibling)
       progressToolbar.appendChild(elements.create('hbox', {
         id: 'better-bibtex-progress-meter',
         width: '16px',
@@ -688,25 +698,25 @@ export class BetterBibTeX {
   public async startup(reason: Reason): Promise<void> {
     log.debug('Loading Better BibTeX: starting...')
 
-    orchestrator.add('start', {
-      description: 'zotero',
+    orchestrator.add({
+      id: 'start',
+      description: 'waiting for zotero',
       startup: async () => {
         // https://groups.google.com/d/msg/zotero-dev/QYNGxqTSpaQ/uvGObVNlCgAJ
         // this is what really takes long
-        const before = Date.now()
         await Zotero.initializationPromise
-        log.debug('startup: Zotero.initializationPromise took', (Date.now() - before)/1000, 'seconds')
 
-        this.dir = OS.Path.join(Zotero.DataDirectory.dir, 'better-bibtex')
-        await OS.File.makeDir(this.dir, { ignoreExisting: true })
+        this.dir = $OS.Path.join(Zotero.DataDirectory.dir, 'better-bibtex')
+        await $OS.File.makeDir(this.dir, { ignoreExisting: true })
         await Preference.startup(this.dir)
         Events.startup()
       },
     })
 
-    orchestrator.add('sqlite', {
+    orchestrator.add({
+      id: 'sqlite',
       startup: async () => {
-        await Zotero.DB.queryAsync('ATTACH DATABASE ? AS betterbibtex', [OS.Path.join(Zotero.DataDirectory.dir, 'better-bibtex.sqlite')])
+        await Zotero.DB.queryAsync('ATTACH DATABASE ? AS betterbibtex', [$OS.Path.join(Zotero.DataDirectory.dir, 'better-bibtex.sqlite')])
 
         const tables: Record<string, boolean> = {}
         for (const table of await Zotero.DB.columnQueryAsync("SELECT LOWER(REPLACE(name, '-', '')) FROM betterbibtex.sqlite_master where type='table'")) {
@@ -780,10 +790,11 @@ export class BetterBibTeX {
       },
     })
 
-    orchestrator.add('done', {
+    orchestrator.add({
+      id: 'done',
       description: 'user interface',
       startup: async () => {
-        this.ready.resolve(true)
+        Ready.resolve(true)
         await this.load(Zotero.getMainWindow())
 
         Zotero.Promise.delay(15000).then(() => {
@@ -842,48 +853,78 @@ export class BetterBibTeX {
       )
     }
 
-    // progress.update(l10n.localize('better-bibtex_startup_serialization-cache'), 20)
-    // Serializer.init()
-
-    // progress.update(l10n.localize('better-bibtex_startup_auto-export_load'), 30)
-    // await AutoExport.init()
-
-    // progress.update(l10n.localize('better-bibtex_startup_journal-abbrev'), 60)
-    // await JournalAbbrev.init()
-
-    // progress.update(l10n.localize('better-bibtex_startup_installing-translators'), 70)
-    // await Translators.init()
-
-    // progress.update(l10n.localize('better-bibtex_startup_key-manager'), 80)
-    // await this.KeyManager.start() // inits the key cache by scanning the DB and generating missing keys
-
-    // progress.update(l10n.localize('better-bibtex_startup_auto-export'), 90)
-    // AutoExport.start()
-
     await this.loadUI(win)
-
-    // progress.done()
 
     void Events.emit('loaded')
 
     Events.on('export-progress', ({ pct, message }) => {
-      /*
-      let status = `${percent < 0 ? l10n.localize('better-bibtex_preferences_auto-export_status_preparing') : ''} ${translator}`.trim()
-      if (Translators.queue.queued) status += ` +${Translators.queue.queued}`
-      setProgress(percent && percent < 100 && Math.abs(percent), status)
-      */
       this.setProgress(pct, message)
     })
   }
 
   async loadUI(win: Window): Promise<void> {
-    log.debug('loading main UI')
-    // set globals for libraries that for some reason need these -- probably a flawed env detection
-    $window = win
+    if (is7) {
+      // const show = (item: ZoteroItem): { id: number, type: string, citekey: string } | boolean => item ? { id: item.id, type: Zotero.ItemTypes.getName(item.itemTypeID), citekey: item.getField('citationKey') as string } : false
+      let $done: () => void
+      Zotero.ItemPaneManager.registerSection({
+        paneID: 'betterbibtex-section-citationkey',
+        pluginID: 'better-bibtex@iris-advies.com',
+        header: {
+          l10nID: 'better-bibtex_item-pane_section_header',
+          icon: `${rootURI}content/skin/citation-key.svg`,
+        },
+        sidenav: {
+          l10nID: 'better-bibtex_item-pane_section_sidenav',
+          icon: `${rootURI}content/skin/citation-key.svg`,
+        },
+        bodyXHTML: 'Citation Key <html:input type="text" data-itemid="" id="better-bibtex-citation-key" readonly="true" style="flex: 1" xmlns:html="http://www.w3.org/1999/xhtml"/>',
+        // onRender: ({ body, item, editable, tabType }) => {
+        onRender: ({ body, item, setSectionSummary }) => {
+          const citekey = item.getField('citationKey')
+          const textbox = body.ownerDocument.getElementById('better-bibtex-citation-key')
+          body.style.display = 'flex'
+          // const was = textbox.dataset.itemid || '<node>'
+          textbox.value = citekey || ''
+          textbox.dataset.itemid = citekey ? `${item.id}` : ''
+          setSectionSummary(citekey || '')
+          // log.debug('2884:onRender:', was, '->', textbox.dataset.itemid, show(item))
+        },
+        onInit: ({ body, refresh }) => {
+          $done = Events.on('items-changed', ({ items }) => {
+            const textbox = body.ownerDocument.getElementById('better-bibtex-citation-key')
+            const itemID = textbox.dataset.itemid ? parseInt(textbox.dataset.itemid) : undefined
+            const displayed: ZoteroItem = textbox.dataset.itemid ? items.find(item => item.id === itemID) : undefined
+            // log.debug('2884:onInit.items-changed:', items.map(item => item.id), 'current:', textbox.dataset.itemid, 'refresh:', !!displayed)
+            if (displayed) refresh()
+          })
+        },
+        onItemChange: ({ setEnabled, body, item }) => {
+          const textbox = body.ownerDocument.getElementById('better-bibtex-citation-key')
+          if (item.isRegularItem() && !item.isFeedItem) {
+            const citekey = item.getField('citationKey')
+            // const was = textbox.dataset.itemid
+            textbox.dataset.itemid = citekey ? `${item.id}` : ''
+            textbox.value = citekey || '\u274C'
+            // log.debug('2884:onItemChange:', was, '->', textbox.dataset.itemid, show(item))
+            setEnabled(true)
+          }
+          else {
+            textbox.dataset.itemid = ''
+            setEnabled(false)
+          }
+        },
+        onDestroy: () => {
+          // if ($done) log.debug('2884:onDestroy')
+          $done?.()
+          $done = undefined
+        },
+      })
+    }
 
     try {
-      await newZoteroPane($window)
-      await newZoteroItemPane($window)
+      log.debug('loading main UI')
+      await newZoteroPane(win)
+      if (!is7) await newZoteroItemPane(win)
     }
     catch (err) {
       log.debug('loadUI error:', err)
@@ -899,7 +940,7 @@ export class BetterBibTeX {
     }
 
     const file = new FileUtils.File(path)
-    // cannot use await OS.File.exists here because we may be invoked in noWait mod
+    // cannot use await $OS.File.exists here because we may be invoked in noWait mod
     if (!file.exists()) {
       log.error('BetterBibTeX.getContents:', path, 'does not exist')
       return null

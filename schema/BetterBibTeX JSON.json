@@ -60,13 +60,25 @@
             "Authors": {
               "type": "boolean"
             },
+            "Items": {
+              "type": "boolean"
+            },
             "Normalize": {
+              "type": "boolean"
+            },
+            "Preferences": {
               "type": "boolean"
             },
             "Title": {
               "type": "boolean"
             },
             "Year": {
+              "type": "boolean"
+            },
+            "biblatexAPA": {
+              "type": "boolean"
+            },
+            "biblatexChicago": {
               "type": "boolean"
             },
             "exportFileData": {
@@ -191,6 +203,9 @@
             },
             "citeCommand": {
               "type": "string"
+            },
+            "citekeyCaseInsensitive": {
+              "type": "boolean"
             },
             "citekeyFold": {
               "type": "boolean"
@@ -321,6 +336,9 @@
               "type": "string"
             },
             "mapText": {
+              "type": "string"
+            },
+            "packages": {
               "type": "string"
             },
             "parseParticles": {

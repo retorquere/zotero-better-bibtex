@@ -6,6 +6,7 @@ import * as fs from 'fs'
 import stringify from 'fast-safe-stringify'
 import _ from 'lodash'
 import jsesc from 'jsesc'
+import { parseScript } from 'meriyah'
 
 import Showdown from 'showdown'
 const showdown = new Showdown.Converter()
@@ -24,7 +25,7 @@ class FormatterAPI {
       const key = name.toLowerCase()
 
       if (this.signature[key]) throw new Error(`duplicate ${kind} ${key}`)
-      this.signature[name.toLowerCase()] = _.cloneDeep({
+      this.signature[key] = _.cloneDeep({
         name,
         parameters: method.parameters.map(p => p.name),
         defaults: method.parameters.map(p => p.default),
@@ -32,6 +33,16 @@ class FormatterAPI {
         schema: method.schema,
       })
       if (!this.signature[key].rest) delete this.signature[key].rest
+      const defaults = parseScript(jsesc(this.signature[key].defaults)).body[0]
+      // always the case, but typescript demands the check to allow access to defaults.expression.elements
+      if (defaults.type === 'ExpressionStatement' && defaults.expression.type === 'ArrayExpression') {
+        this.signature[key].ast = {
+          defaults: defaults.expression.elements,
+        }
+      }
+      else {
+        throw new Error(jsesc(this.signature[key].defaults))
+      }
 
       const description = method.parameters.find(param => param.doc)
       let params = method.parameters.map(p => {

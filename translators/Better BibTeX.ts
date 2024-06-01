@@ -1,5 +1,7 @@
 import { Translation, collect } from './lib/translator'
 import type { Translators } from '../typings/translators.d.ts'
+import type { ParseError } from '@retorquere/bibtex-parser'
+import { detectImport as zotero_detectImport } from '../gen/ZoteroBibTeX.mjs'
 
 declare const Zotero: any
 declare var ZOTERO_TRANSLATOR_INFO: Translators.Header // eslint-disable-line no-var
@@ -15,43 +17,7 @@ export function doExport(): void {
 import * as escape from '../content/escape'
 
 export function detectImport(): boolean {
-  if (!Zotero.BetterBibTeX || !Zotero.getHiddenPref('better-bibtex.import')) return false
-
-  const maxChars = 1048576 // 1MB
-  const chunk = 4096
-
-  let inComment = false
-  let block = ''
-  let buffer = ''
-  let chr = ''
-  let charsRead = 0
-
-  const re = /^\s*@[a-zA-Z]+[({]/
-  while ((buffer = Zotero.read(chunk)) && charsRead < maxChars) {
-    Zotero.debug(`Scanning ${buffer.length} characters for BibTeX`)
-    charsRead += buffer.length
-    for (let i=0; i<buffer.length; i++) {
-      chr = buffer[i]
-
-      if (inComment && chr !== '\r' && chr !== '\n') continue
-      inComment = false
-
-      if (chr === '%') {
-        // read until next newline
-        block = ''
-        inComment = true
-      }
-      // allow one-line entries
-      else if ((chr === '\n' || chr === '\r' || i === (buffer.length - 1)) && block) {
-        // check if this is a BibTeX entry
-        if (re.test(block)) return true
-        block = ''
-      }
-      else if (!' \n\r\t'.includes(chr)) {
-        block += chr
-      }
-    }
-  }
+  return Zotero.BetterBibTeX && Zotero.getHiddenPref('better-bibtex.import') && zotero_detectImport()
 }
 
 function importGroup(group, itemIDs, root = null) {
@@ -81,8 +47,10 @@ export async function doImport(): Promise<void> {
 
   if (translation.preferences.strings && translation.preferences.importBibTeXStrings) input = `${translation.preferences.strings}\n${input}`
 
+  const start = Date.now()
   const bib = await Zotero.BetterBibTeX.parseBibTeX(input, translation)
-  const errors = bib.errors
+  Zotero.debug(`parsed ${bib.entries.length} items in ${Date.now() - start}msec`)
+  const errors: ParseError[] = bib.errors
 
   const whitelist = bib.comments
     .filter((comment: string) => comment.startsWith('zotero-better-bibtex:whitelist:'))
@@ -95,6 +63,7 @@ export async function doImport(): Promise<void> {
     if (bibtex.key && whitelist && !whitelist.includes(bibtex.key.toLowerCase())) continue
 
     id++
+    if ((id % 1000) === 0) await new Promise(resolve => setTimeout(resolve, 0))
 
     if (bibtex.key) itemIDS[bibtex.key] = id // Endnote has no citation keys
 
@@ -106,7 +75,7 @@ export async function doImport(): Promise<void> {
     }
     catch (err) {
       Zotero.debug('bbt import error:', err)
-      errors.push({ message: err.message })
+      errors.push({ error: err.message, input: '' })
     }
 
     imported += 1
@@ -120,17 +89,13 @@ export async function doImport(): Promise<void> {
   if (errors.length) {
     const item = new Zotero.Item('note')
     item.note = 'Import errors found: <ul>'
+    Zotero.debug(`import errors: ${JSON.stringify(errors)}`)
     for (const err of errors) {
       item.note += '<li>'
-      if (err.line) {
-        item.note += `line ${err.line}`
-        if (err.column) item.note += `, column ${err.column}`
-        item.note += ': '
-      }
-      item.note += escape.html(err.message)
-      if (err.source) {
-        item.note += `<pre>${escape.html(err.source)}</pre>`
-        Zotero.debug(`import error: ${err.message}\n>>>\n${err.source}\n<<<`)
+      item.note += escape.html(err.error)
+      if (err.input) {
+        Zotero.debug(`import error: ${err.error}\n>>>\n${err.input}\n<<<`)
+        item.note += `<pre>${escape.html(err.input)}</pre>`
       }
       item.note += '</li>'
     }

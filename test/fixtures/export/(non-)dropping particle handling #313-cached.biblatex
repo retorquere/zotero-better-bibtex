@@ -15,8 +15,8 @@
   title = {Reading {{HLA Hart}}'s: {{{\emph{The Concept}}}}{\emph{ of }}{{{\emph{Law}}}}},
   editor = {d' Almeida, Luís and Edwards, James and Dolcetti, Andrea},
   date = {2013},
-  publisher = {{Hart Publishing}},
-  location = {{Oxford}},
+  publisher = {Hart Publishing},
+  location = {Oxford},
   isbn = {978-1-84946-324-9},
   langid = {english},
   pagetotal = {vi+309}
@@ -26,8 +26,8 @@
   title = {Citations, {{Out}} of the {{Box}}},
   author = {Bennett, Jr., Frank G.},
   date = {2013},
-  publisher = {{CreateSpace Independent Publishing Platform}},
-  location = {{Lexington Kentucky}},
+  publisher = {CreateSpace Independent Publishing Platform},
+  location = {Lexington Kentucky},
   isbn = {978-1-4793-4771-1},
   pagetotal = {137}
 }
@@ -127,8 +127,8 @@
   options = {useprefix=true},
   date = {1963},
   series = {International Library of Philosophy and Scientific Method},
-  publisher = {{Routledge \& Kegan Paul}},
-  location = {{Londres}},
+  publisher = {Routledge \& Kegan Paul},
+  location = {Londres},
   isbn = {0-7100-3616-7},
   langid = {anglais},
   pagetotal = {xviii+214}
@@ -151,8 +151,8 @@
   title = {"{{I}} Have a Dream" : The Quotations of {{Martin Luther King JR}}},
   author = {King, Jr., Martin Luther},
   date = {1968},
-  publisher = {{Grosset \& Dunlap}},
-  location = {{New York}},
+  publisher = {Grosset \& Dunlap},
+  location = {New York},
   pagetotal = {154}
 }
 

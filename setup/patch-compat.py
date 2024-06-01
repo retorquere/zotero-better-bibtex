@@ -7,7 +7,9 @@ import xml.dom.minidom as minidom
 import json
 import packaging.version
 import subprocess
+import shutil
 
+print('patching support versions')
 install = minidom.parse('build/install.rdf')
 ta = install.getElementsByTagNameNS('*', 'targetApplication')[0]
 
@@ -19,6 +21,7 @@ def max_version(v1, v2):
 
 with open('schema/supported.json') as f:
   min_version = json.load(f)
+  min_version["jurism"] = "7.0"
 
 for client, version in min_version.items():
   client = {'zotero': 'zotero@chnm.gmu.edu', 'jurism': 'juris-m@juris-m.github.io' }[client]
@@ -27,10 +30,10 @@ for client, version in min_version.items():
     listed = node.firstChild.nodeValue
     supported = max_version(listed, version)
     if supported == listed:
-      print('minimum overlay', client, 'version', supported)
+      print('  minimum overlay', client, 'version', supported)
     else:
       node.firstChild.replaceWholeText(supported)
-      print('minimum overlay', client, 'bumped from', listed, 'to', supported)
+      print('  minimum overlay', client, 'bumped from', listed, 'to', supported)
 with open('build/install.rdf', 'w') as f:
   install.writexml(f)
 
@@ -47,9 +50,17 @@ for client, version in min_version.items():
        supported = '8.0'
 
   if supported == listed:
-    print('minimum bootstrapped', client, 'version', supported)
+    print('  minimum bootstrapped', client, 'version', supported)
   else:
     manifest['applications'][client]['strict_min_version'] = supported
-    print('minimum bootstrapped', client, 'bumped from', listed, 'to', supported)
+    print('  minimum bootstrapped', client, 'bumped from', listed, 'to', supported)
 with open('build/manifest.json', 'w') as f:
   json.dump(manifest, f, indent='  ')
+
+print('  updates.json')
+with open('gen/updates.json') as f:
+  updates = json.load(f)
+  updates['addons']['better-bibtex@iris-advies.com']['updates'][0]['applications']['gecko'] = { "strict_min_version": "60.9" }
+with open('gen/updates.json', 'w') as f:
+  json.dump(updates, f, indent='  ')
+shutil.copyfile('gen/updates.json', 'gen/update.rdf')

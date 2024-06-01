@@ -10,6 +10,8 @@ import { TeXstudio } from './tex-studio'
 import * as escape from './escape'
 import { flash } from './flash'
 import { log } from './logger'
+import { orchestrator } from './orchestrator'
+import { Server } from './server'
 
 /* eslint-disable max-classes-per-file */
 
@@ -122,7 +124,7 @@ type Citation = {
   prefix: string
   suffix: string
   label: string
-  citekey: string
+  citationKey: string
 
   uri: string
   itemType: string
@@ -138,10 +140,6 @@ class Document {
 
   constructor(docId, options) {
     this.id = docId
-
-    options.style = options.style || 'apa'
-    const style = Zotero.Styles.get(`http://www.zotero.org/styles/${options.style}`) || Zotero.Styles.get(`http://juris-m.github.io/styles/${options.style}`) || Zotero.Styles.get(options.style)
-    options.style = style ? style.url : 'http://www.zotero.org/styles/apa'
 
     const data = new Zotero.Integration.DocumentData()
     data.prefs = {
@@ -268,20 +266,22 @@ class Document {
   public citation(): Citation[] {
     if (!this.fields[0] || !this.fields[0].code || !this.fields[0].code.startsWith('ITEM CSL_CITATION ')) return []
 
-    const citationItems = JSON.parse(this.fields[0].code.replace(/ITEM CSL_CITATION /, '')).citationItems
-    const items = (citationItems.map(item => ({
+    const citationItems: (Citation & { itemData: any })[] = JSON.parse(this.fields[0].code.replace(/ITEM CSL_CITATION /, '')).citationItems
+    const items = citationItems.map(item => ({
       id: item.id,
       locator: item.locator || '',
       suppressAuthor: !!item['suppress-author'],
       prefix: item.prefix || '',
       suffix: item.suffix || '',
       label: item.locator ? (item.label || 'page') : '',
-      citekey: Zotero.BetterBibTeX.KeyManager.get(item.id).citationKey,
+      citationKey: Zotero.BetterBibTeX.KeyManager.get(item.id).citationKey,
 
       uri: Array.isArray(item.uri) ? item.uri[0] : undefined,
       itemType: item.itemData ? item.itemData.type : undefined,
       title: item.itemData ? item.itemData.title : undefined,
-    } as Citation)) as Citation[])
+    }) as Citation)
+
+    log.debug('picked:', citationItems, items)
     return items
   }
 }
@@ -329,7 +329,7 @@ export async function pick(options: any): Promise<string> {
   await Zotero.BetterBibTeX.ready
 
   try {
-    const formatter = options.format || 'playground'
+    const formatter = options.format || 'latex'
     if (!Formatter[formatter]) throw new Error(`No such formatter ${JSON.stringify(formatter)}`)
     const doc = Application.createDocument(options)
     await Zotero.Integration.execCommand('BetterBibTeX', 'addEditCitation', doc.id)
@@ -340,7 +340,6 @@ export async function pick(options: any): Promise<string> {
 
     if (options.select && picked.length) {
       const zoteroPane = Zotero.getActiveZoteroPane()
-      zoteroPane.show()
       await zoteroPane.selectItems(picked.map(item => item.id), true)
     }
 
@@ -348,7 +347,7 @@ export async function pick(options: any): Promise<string> {
   }
   catch (err) {
     log.error('CAYW error:', err, `${err}`, err.stack, options)
-    flash('CAYW Failed', stringify(err))
+    flash('CAYW pick failed', stringify(err))
   }
 }
 
@@ -362,14 +361,14 @@ async function selected(options): Promise<string> {
     prefix: '',
     suffix: '',
     label: '',
-    citekey: Zotero.BetterBibTeX.KeyManager.get(item.id).citationKey,
+    citationKey: Zotero.BetterBibTeX.KeyManager.get(item.id).citationKey,
 
     uri: undefined,
     itemType: undefined,
     title: item.getField('title'),
   }))
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  return picked.length ? await Formatter[options.format || 'playground'](picked, options) : ''
+  return picked.length ? await Formatter[options.format || 'latex'](picked, options) : ''
 }
 
 function toClipboard(text) {
@@ -392,7 +391,16 @@ function toClipboard(text) {
   clipboard.setData(transferable, null, Components.interfaces.nsIClipboard.kGlobalClipboard)
 }
 
-Zotero.Server.Endpoints['/better-bibtex/cayw'] = class {
+function getStyle(id): { url: string } {
+  try {
+    return Zotero.Styles.get(id) as { url: string }
+  }
+  catch (err) {
+    return null
+  }
+}
+
+class Handler {
   public supportedMethods = ['GET']
   public OK = 200
   public SERVER_ERROR = 500
@@ -400,9 +408,26 @@ Zotero.Server.Endpoints['/better-bibtex/cayw'] = class {
   public async init(request) {
     const options = request.query || {}
 
-    if (options.probe) return [this.OK, 'text/plain', Zotero.BetterBibTeX.ready.pending ? 'starting' : 'ready' ]
+    if (options.probe) return [this.OK, 'text/plain', Zotero.BetterBibTeX.ready.isPending() ? 'starting' : 'ready' ]
 
     try {
+      if (!options.style || !options.contentType || !options.locale) {
+        const format = Zotero.QuickCopy.unserializeSetting(Zotero.Prefs.get('export.quickCopy.setting'))
+        if (!options.style && format.mode === 'bibliography') options.style = format.id
+        options.contentType = options.contentType || format.contentType || 'text'
+        options.locale = options.locale || format.locale || Zotero.Prefs.get('export.quickCopy.locale') || 'en-US'
+        log.debug('CAYW: detected', options)
+      }
+      const style =
+        getStyle(options.style)
+        ||
+        getStyle(`http://www.zotero.org/styles/${options.style}`)
+        ||
+        getStyle(`http://juris-m.github.io/styles/${options.style}`)
+      options.style = style ? style.url : 'http://www.zotero.org/styles/apa'
+
+      log.debug('CAYW:', { options, style })
+
       const citation = options.selected ? (await selected(options)) : (await pick(options))
 
       if (options.minimize) Zotero.getMainWindow().minimize()
@@ -423,3 +448,18 @@ Zotero.Server.Endpoints['/better-bibtex/cayw'] = class {
     }
   }
 }
+
+orchestrator.add({
+  id: 'cayw',
+  description: 'CAYW endpoint',
+  needs: ['translators'],
+
+  startup: async () => { // eslint-disable-line @typescript-eslint/require-await
+    Server.register('/better-bibtex/cayw', Handler)
+    Server.startup()
+  },
+
+  shutdown: async () => { // eslint-disable-line @typescript-eslint/require-await
+    Server.shutdown()
+  },
+})

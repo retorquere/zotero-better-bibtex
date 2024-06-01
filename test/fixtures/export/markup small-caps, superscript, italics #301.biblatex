@@ -1,12 +1,13 @@
-
 @incollection{burgorgue-larsen_interventions_2011,
   title = {Les interventions \emph{éclairées} devant la Cour européenne des droits de l'homme ou le rôle stratégique des \emph{amici curiae}},
   booktitle = {La conscience des droits. Mélanges en l'honneur de Jean-Paul Costa},
   author = {Burgorgue-Larsen, Laurence},
+  namea = {Titiun, Patrick and Dumaine, Patricia},
+  nameatype = {collaborator},
   date = {2011},
   pages = {68--82},
-  publisher = {{Dalloz}},
-  location = {{Paris}},
+  publisher = {Dalloz},
+  location = {Paris},
   isbn = {978-2-247-10748-3},
   langid = {french},
   volumes = {xxxi+710 p.}
@@ -20,11 +21,9 @@
   date = {2010},
   series = {Méridiennes. Études médiévales ibériques},
   pages = {33--50},
-  publisher = {{CNRS et Université de Toulouse-Le Mirail [Framespa]}},
-  location = {{Toulouse}},
+  publisher = {CNRS et Université de Toulouse-Le Mirail [Framespa]},
+  location = {Toulouse},
   isbn = {978-2-912025-68-5},
   langid = {french},
   volumes = {355 p.}
 }
-
-

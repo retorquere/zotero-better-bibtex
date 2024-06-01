@@ -16,7 +16,7 @@ You can edit most Better BibTeX preferences through the Preferences window in Zo
 
 ## Zotero
 
-To view the the full list of Better BibTeX's preferences, including many hidden preferences, go to the Advanced pane of the Zotero preferences and click “Config Editor”. Enter “better-bibtex” into the Filter field at the top of the list that comes up. Preferences that can be safely changed by users are described below.
+To view the full list of Better BibTeX's preferences, including many hidden preferences, go to the Advanced pane of the Zotero preferences and click “Config Editor”. Enter “better-bibtex” into the Filter field at the top of the list that comes up. Preferences that can be safely changed by users are described below.
 
 The Better BibTeX hidden preferences are preceded by “extensions.zotero.translators.better-bibtex.”
 
@@ -51,7 +51,6 @@ default: `<not set>`
 a JSON mapping from single character to raw LaTeX, to augment the default mapping; these will be applied when you export as ASCII. **DO NOT** edit this preferencedirectly,
 but create a CSV (not semicolons) file named `charmap.csv` in the zotero data directory under the `better-bibtex` folder with columns `unicode` (the source character),
 `text` (representation in LaTeX text mode, if any) and `math` (representation in LaTeX math mode, if any, without dollar signs).
-
 ## csquotes
 
 default: `<not set>`
@@ -111,13 +110,21 @@ the number of microseconds BBT should wait after being notified before acting on
 
 default: `<not set>`
 
-Any characters entered here will prefer a math-mode LaTeX-command counterpart over a math-mode, if a math-mode command is available.
+Any characters entered here will prefer a math-mode LaTeX-command counterpart over a text-mode mapping, if a math-mode command is available.
 
 ## mapText
 
 default: `<not set>`
 
 Any characters entered here will prefer a text-mode LaTeX-command counterpart over a math-mode, if a text-mode command is available.
+
+## packages
+
+default: `<not set>`
+
+Some LaTeX commands only work when certain packages are loaded. By default, BBT will export Bib(La)TeX that requires no extra packages, but
+you can provide a comma-separated list here of packages to load to get higher fidelity export (for some admittedly niche characters).
+Details of these packages and what they add can be found [here]({{ ref . "exporting/unicode.md" }}).
 
 ## parseParticles
 
@@ -224,7 +231,7 @@ A strings override will disable caching for that export.
 
 ## verbatimFields
 
-default: `url,doi,file,pdf,ids,eprint,/^verb[a-z]$/,groups,/^citeulike-linkout-[0-9]+$/, /^bdsk-url-[0-9]+$/`
+default: `url,doi,file,pdf,ids,eprint,/^verb[a-z]$/,groups,/^citeulike-linkout-[0-9]+$/, /^bdsk-url-[0-9]+$/, keywords`
 
 list of fields to treat as verbatim during import. If you're importing e.g. Mendeley-generated BibTeX, which is out of spec in various ways, try removing `file` from this list before import.
 ## warnTitleCased

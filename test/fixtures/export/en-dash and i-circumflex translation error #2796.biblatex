@@ -1,0 +1,32 @@
+@article{Acebron2017,
+  title = {Hubble {{Frontier Fields}}: systematic errors in strong lensing models of galaxy clusters -- implications for cosmography},
+  shorttitle = {Hubble {{Frontier Fields}}},
+  author = {Acebron, Ana and Jullo, Eric and Limousin, Marceau and Tilquin, Andr\'e and Giocoli, Carlo and Jauzac, Mathilde and Mahler, Guillaume and Richard, Johan},
+  date = {2017-09-11},
+  journaltitle = {Monthly Notices of the Royal Astronomical Society},
+  volume = {470},
+  number = {2},
+  pages = {1809--1825},
+  doi = {10.1093/mnras/stx1330},
+  langid = {english}
+}
+
+@inproceedings{barthe2016,
+  title = {Strong {{Non-Interference}} and {{Type-Directed Higher-Order Masking}}},
+  booktitle = {{{CCS}}},
+  author = {Barthe, Gilles and Bela\"id, Sonia and Dupressoir, Fran\c cois and Fouque, Pierre-Alain and Gr\'egoire, Benjamin and Strub, Pierre-Yves and Zucchini, R\'ebecca},
+  date = {2016},
+  doi = {10.1145/2976749.2978427},
+  keywords = {formal verification,higher-order masking,non-interference,probing security}
+}
+
+@article{Lemaitre1931,
+  title = {A {{Homogeneous Universe}} of {{Constant Mass}} and {{Increasing Radius}} accounting for the {{Radial Velocity}} of {{Extra-galactic Nebulae}}},
+  author = {Lema\^itre, A. G.},
+  date = {1931-03-13},
+  journaltitle = {Monthly Notices of the Royal Astronomical Society},
+  volume = {91},
+  number = {5},
+  pages = {483--490},
+  doi = {10.1093/mnras/91.5.483}
+}

@@ -60,6 +60,11 @@ export function install(_data: any, _reason: ReasonId) {
   log('install, nothing to do')
 }
 
+export function onMainWindowLoad({ window }) {
+  log('onMainWindowLoad')
+  window.MozXULElement.insertFTLIfNeeded('better-bibtex.ftl')
+}
+
 let chromeHandle
 export async function startup({ resourceURI, rootURI = resourceURI.spec }, reason: ReasonId) {
   try {
@@ -78,6 +83,9 @@ export async function startup({ resourceURI, rootURI = resourceURI.spec }, reaso
       // ignoreCache: true,
       target: {
         Zotero,
+
+        // because the Zotero sample code assumes you're doing everything in bootstrap.js
+        rootURI,
 
         // to pacify libraries that do env-detection
         window: Zotero.getMainWindow(),
@@ -99,6 +107,7 @@ export async function startup({ resourceURI, rootURI = resourceURI.spec }, reaso
       defaultXUL: true,
     })
     log('startup done')
+    onMainWindowLoad({ window: Zotero.getMainWindow() })
   }
   catch (err) {
     alert({ title: 'Better BibTeX startup failed', text: `${err}` })

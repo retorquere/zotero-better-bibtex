@@ -524,6 +524,8 @@
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "options": {
+      "Items": true,
+      "Preferences": true,
       "exportNotes": true
     },
     "preferences": {
@@ -652,7 +654,7 @@
           "tag": "Electronic books"
         },
         {
-          "tag": "Habit \u2013 Social aspects"
+          "tag": "Habit -- Social aspects"
         },
         {
           "tag": "Race discrimination"
@@ -661,13 +663,13 @@
           "tag": "Racism"
         },
         {
-          "tag": "United States \u2013 Ethnic relations"
+          "tag": "United States -- Ethnic relations"
         },
         {
-          "tag": "United States \u2013 Race relations"
+          "tag": "United States -- Race relations"
         },
         {
-          "tag": "Whites \u2013 Race identity"
+          "tag": "Whites -- Race identity"
         }
       ],
       "title": "Revealing whiteness: The unconscious habits of racial privilege"
@@ -689,7 +691,7 @@
       "itemID": 4,
       "itemType": "book",
       "notes": [
-        "Includes bibliographical references and index.; ID: 01UA<sub>A</sub>LMA51544019760003843"
+        "Includes bibliographical references and index.; ID: 01UA_ALMA51544019760003843"
       ],
       "publisher": "Jackson, Mississippi : University Press of Mississippi",
       "title": "Little red readings historical materialist perspectives on children\u2019s literature"
@@ -713,7 +715,7 @@
       "itemID": 5,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN\u209aroquest1621367911"
+        "ID: TN_proquest1621367911"
       ],
       "pages": "B14",
       "publicationTitle": "New York Times (1923-Current file)",
@@ -741,16 +743,16 @@
       "publisher": "Portsmouth, NH : Heinemann",
       "tags": [
         {
-          "tag": "English language \u2013 Study and teaching (Secondary)"
+          "tag": "English language -- Study and teaching (Secondary)"
         },
         {
-          "tag": "English literature \u2013 History and criticism \u2013 The"
+          "tag": "English literature -- History and criticism -- The"
         },
         {
-          "tag": "Language arts \u2013 United States"
+          "tag": "Language arts -- United States"
         },
         {
-          "tag": "Literature \u2013 Study and teaching \u2013 United States"
+          "tag": "Literature -- Study and teaching -- United States"
         }
       ],
       "title": "Notice & note : strategies for close reading"
@@ -773,7 +775,7 @@
       "itemID": 7,
       "itemType": "book",
       "notes": [
-        "Description based upon print version of record.; Description based on print version record.; ID: 01UA<sub>A</sub>LMA51543392390003843"
+        "Description based upon print version of record.; Description based on print version record.; ID: 01UA_ALMA51543392390003843"
       ],
       "publisher": "New York : Fordham University Press",
       "title": "How to be an intellectual: Essays on criticism, culture, and the university"
@@ -801,7 +803,7 @@
       ],
       "itemID": 8,
       "itemType": "webpage",
-      "title": "\"Pitt Pioneers: or, How Our Faculty Helped Establish Children\u2019s Literature and Childhood Studies in the Academy\" (2014)",
+      "title": "\"Pitt pioneers: or, how our faculty helped establish children\u2019s literature and childhood studies in the academy\" (2014)",
       "url": "https://www.academia.edu/9397598/_Pitt_Pioneers_or_How_Our_Faculty_Helped_Establish_Children_s_Literature_and_Childhood_Studies_in_the_Academy_2014_"
     },
     {
@@ -822,7 +824,7 @@
       "itemID": 9,
       "itemType": "book",
       "notes": [
-        "Includes bibliographical references (p. 149-162) and index; ID: 01UA<sub>A</sub>LMA21393431080003843"
+        "Includes bibliographical references (p. 149-162) and index; ID: 01UA_ALMA21393431080003843"
       ],
       "publisher": "Columbia : University of Missouri Press",
       "title": "Faint praise : the plight of book reviewing in America"
@@ -844,7 +846,7 @@
       "itemID": 10,
       "itemType": "book",
       "notes": [
-        "Includes bibliographical references (pages 203-213) and index.; ID: 01UA<sub>A</sub>LMA71628903890003843"
+        "Includes bibliographical references (pages 203-213) and index.; ID: 01UA_ALMA71628903890003843"
       ],
       "publisher": "Jefferson, North Carolina : McFarland & Company, Inc., Publishers",
       "title": "Which side are you on? : seven social responsibility debates in American librarianship, 1990-2015"
@@ -881,13 +883,13 @@
           "tag": "Fiction"
         },
         {
-          "tag": "Fiction \u2013 Authorship"
+          "tag": "Fiction -- Authorship"
         },
         {
-          "tag": "Fiction \u2013 History and criticism"
+          "tag": "Fiction -- History and criticism"
         },
         {
-          "tag": "Fiction \u2013 Technique"
+          "tag": "Fiction -- Technique"
         },
         {
           "tag": "interpretation"
@@ -926,7 +928,7 @@
           "tag": "Motion picture audiences"
         },
         {
-          "tag": "Motion picture audiences \u2013 Psychology"
+          "tag": "Motion picture audiences -- Psychology"
         },
         {
           "tag": "Reading"
@@ -935,7 +937,7 @@
           "tag": "Television viewers"
         },
         {
-          "tag": "Television viewers \u2013 Psychology"
+          "tag": "Television viewers -- Psychology"
         }
       ],
       "title": "The audience studies reader"
@@ -963,7 +965,7 @@
       "itemID": 13,
       "itemType": "book",
       "notes": [
-        "Includes bibliographical references and index.; ID: 01UA<sub>A</sub>LMA51539696940003843"
+        "Includes bibliographical references and index.; ID: 01UA_ALMA51539696940003843"
       ],
       "publisher": "San Francisco : Jossey-Bass",
       "title": "Twitter for good: Change the world one tweet at a time"
@@ -1012,10 +1014,10 @@
           "tag": "United States"
         },
         {
-          "tag": "United States \u2013 Politics and government"
+          "tag": "United States -- Politics and government"
         },
         {
-          "tag": "United States \u2013 Race relations"
+          "tag": "United States -- Race relations"
         }
       ],
       "title": "Keepin' it real : essays on race in contemporary America"
@@ -1037,7 +1039,7 @@
       "itemID": 15,
       "itemType": "book",
       "notes": [
-        "Includes bibliographical references (pages 165]-189) and index; ID: 01UA<sub>A</sub>LMA21422213960003843"
+        "Includes bibliographical references (pages 165]-189) and index; ID: 01UA_ALMA21422213960003843"
       ],
       "publisher": "New York : Peter Lang",
       "title": "Reading the world, the globe, and the cosmos : approaches to teaching literature for the Twenty-First century"
@@ -1060,7 +1062,7 @@
       "itemID": 16,
       "itemType": "book",
       "notes": [
-        "Includes bibliographical references and index; ID: 01UA<sub>A</sub>LMA21459275130003843"
+        "Includes bibliographical references and index; ID: 01UA_ALMA21459275130003843"
       ],
       "publisher": "Cambridge, Mass. : Harvard University Press",
       "title": "Our aesthetic categories : zany, cute, interesting"
@@ -1089,19 +1091,19 @@
       "publisher": "Palgrave Macmillan",
       "tags": [
         {
-          "tag": "Colonization \u2013 History"
+          "tag": "Colonization -- History"
         },
         {
-          "tag": "Ethnology \u2013 Methodology"
+          "tag": "Ethnology -- Methodology"
         },
         {
-          "tag": "Ethnology \u2013 Research"
+          "tag": "Ethnology -- Research"
         },
         {
-          "tag": "Imperialism \u2013 History"
+          "tag": "Imperialism -- History"
         },
         {
-          "tag": "Indigenous peoples \u2013 Research"
+          "tag": "Indigenous peoples -- Research"
         }
       ],
       "title": "Decolonizing methodologies: research and indigenous peoples"
@@ -1145,7 +1147,7 @@
       "itemID": 19,
       "itemType": "journalArticle",
       "publicationTitle": "Booktoss",
-      "title": "2020 \u2013 the \u201cHold my beer\u201d decade",
+      "title": "2020 \u2013 the \u201chold my beer\u201d decade",
       "url": "https://booktoss.blog/2020/05/09/2020-the-hold-my-beer-decade/"
     },
     {
@@ -1166,7 +1168,7 @@
       "itemID": 20,
       "itemType": "book",
       "notes": [
-        "ID: TN\u209aq\u2091book<sub>c</sub>entralEBC5640118"
+        "ID: TN_pq_ebook_centralEBC5640118"
       ],
       "title": "Marxist literary criticism today"
     },
@@ -1209,7 +1211,7 @@
       "itemID": 22,
       "itemType": "book",
       "notes": [
-        "Includes bibliographical references (pages 181-212) and index; ID: 01UA<sub>A</sub>LMA21452464220003843"
+        "Includes bibliographical references (pages 181-212) and index; ID: 01UA_ALMA21452464220003843"
       ],
       "publisher": "New York : Collins",
       "title": "From cover to cover : evaluating and reviewing children's books"
@@ -1354,7 +1356,7 @@
           "tag": "SOCIAL SCIENCE"
         }
       ],
-      "title": "Spoiler alert: A critical guide"
+      "title": "Spoiler alert: a critical guide"
     },
     {
       "abstractNote": "Allusions are often translated literally while their connotative and pragmatic meaning is largely ignored. This frequently leads to culture bumps, in other words, to puzzling or impenetrable wordings. Culture Bumps discusses this problem and how to deal with a culture-specific, source-text allusion in such a way that readers of the target text can understand the function and meaning of the allusive passage. The main focus is on translators and readers as active participants in the communicative process, and the book contains interviews with professional translators as well as empirical data on the responses of real readers. Examples provide teachers who want to take up the problem in translation classes with materials from contemporary English texts, both fiction and non-fiction, as well as a flowchart of translation strategies. The conclusion recommends that translators should take the needs of readers into account when choosing translation strategies for allusions, and that university-level language teaching and translator training should pay more attention to the biculturalisation of students",
@@ -1428,7 +1430,7 @@
       "itemID": 29,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN\u2091rudit1046984ar"
+        "ID: TN_erudit1046984ar"
       ],
       "publicationTitle": "M\u00e9moires du livre",
       "title": "Writing about writers",
@@ -1489,7 +1491,7 @@
       "itemID": 31,
       "itemType": "book",
       "notes": [
-        "Includes bibliographical references and index.; ID: 01UA<sub>A</sub>LMA71628989420003843"
+        "Includes bibliographical references and index.; ID: 01UA_ALMA71628989420003843"
       ],
       "publisher": "Jackson : University Press of Mississippi",
       "title": "Growing up Asian American in young adult fiction"
@@ -1512,7 +1514,7 @@
       "itemID": 32,
       "itemType": "book",
       "notes": [
-        "ID: TN\u209aq\u2091book<sub>c</sub>entralEBC3239850"
+        "ID: TN_pq_ebook_centralEBC3239850"
       ],
       "publisher": "New York: Fordham University Press",
       "title": "Realizing capital: Financial and psychic economies in victorian form",
@@ -1541,7 +1543,7 @@
       "itemID": 33,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN\u209aroquest305040598"
+        "ID: TN_proquest305040598"
       ],
       "title": "Librarian-book reviewers and librarianship"
     },
@@ -1563,7 +1565,7 @@
       "itemID": 34,
       "itemType": "book",
       "notes": [
-        "Includes bibliographical references (pages 278-316) and index.; ID: 01UA<sub>A</sub>LMA21630648630003843"
+        "Includes bibliographical references (pages 278-316) and index.; ID: 01UA_ALMA21630648630003843"
       ],
       "publisher": "New York Riverhead Books",
       "title": "Because internet : understanding the new rules of language"
@@ -1625,13 +1627,13 @@
           "lastName": "Steward"
         }
       ],
-      "date": "1994-4",
+      "date": "1994-04",
       "extra": [
         "Citation Key: Steward1994"
       ],
       "itemID": 37,
       "itemType": "journalArticle",
-      "title": "The multiculturally responsive vs. the multiculturally reactive: A study of perceptions of white counselor trainees.",
+      "title": "The multiculturally responsive vs. the multiculturally reactive: a study of perceptions of white counselor trainees.",
       "url": "https://eric.ed.gov/?q=Multicultural+Literature+and+the+Politics+of+Reaction&ft=on&id=ED376381"
     },
     {
@@ -1711,7 +1713,7 @@
       ],
       "itemID": 41,
       "itemType": "report",
-      "title": "BooKExpo america and bookcon to feature star-studded lineup of World?s best-selling Children?s and young adult authors - BookExpo 2020",
+      "title": "BooKExpo america and bookcon to feature star-studded lineup of world?s best-selling children?s and young adult authors - BookExpo 2020",
       "url": "https://www.bookexpoamerica.com/Media/Press-Releases/BooKExpo-America-And-Bookcon-To-Feature-Star-Studded-Lineup-Of-Worlds-Best-Selling-Childrens-And-Young-Adult-Authors/"
     },
     {
@@ -1773,7 +1775,7 @@
       "itemID": 44,
       "itemType": "book",
       "notes": [
-        "Includes bibliographical references and indexes.; ID: 01UA<sub>A</sub>LMA51545015840003843"
+        "Includes bibliographical references and indexes.; ID: 01UA_ALMA51545015840003843"
       ],
       "publisher": "Amsterdam; Philadelphia : John Benjamins Pub. Co",
       "title": "Cohesive profiling meaning and interaction in personal weblogs"
@@ -1826,7 +1828,7 @@
           "tag": "Content analysis (Communication)"
         },
         {
-          "tag": "Sociology \u2013 Research \u2013 Methodology"
+          "tag": "Sociology -- Research -- Methodology"
         }
       ],
       "title": "The content analysis guidebook"
@@ -1854,7 +1856,7 @@
       "itemID": 47,
       "itemType": "journalArticle",
       "publicationTitle": "Understanding and Dismantling Privilege",
-      "title": "Critical content analysis: A flexible method for thinking with theory",
+      "title": "Critical content analysis: a flexible method for thinking with theory",
       "url": "https://www.wpcjournal.com/article/view/18826",
       "volume": "8"
     },
@@ -1873,7 +1875,7 @@
           "lastName": "Benfer"
         }
       ],
-      "date": "2014-9",
+      "date": "2014-09",
       "extra": [
         "Citation Key: Gangi2014"
       ],
@@ -1901,7 +1903,7 @@
       "itemID": 49,
       "itemType": "book",
       "notes": [
-        "ID: TN\u2092xford\u209bcholarshiposo/9780198702504.003.0007"
+        "ID: TN_oxford_scholarshiposo/9780198702504.003.0007"
       ],
       "publisher": "Oxford University Press",
       "title": "Playing nice, being mean, and the space in between: Book critics and the difficulties of writing bad reviews"
@@ -1994,7 +1996,7 @@
       "itemID": 52,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN<sub>u</sub>cl10074348"
+        "ID: TN_ucl10074348"
       ],
       "publicationTitle": "Participations",
       "title": "Is \"Everyone welcome\"?: Intersectionality, inclusion, and the extension of cultural hierarchies on Emma Watson's Feminist book club, \"Our shared shelf\""
@@ -2084,7 +2086,7 @@
           "tag": "Spectatorship"
         }
       ],
-      "title": "\u2018What were We\u2014Idiots?\u2019: Re-evaluating female spectatorship and the new horror heroine with catherine hardwicke\u2019s twilight"
+      "title": "\u2018What were we\u2014idiots?\u2019: Re-evaluating female spectatorship and the new horror heroine with catherine hardwicke\u2019s twilight"
     },
     {
       "abstractNote": "First published in 2004. Routledge is an imprint of Taylor & Francis, an informa company. George Yancy holds the McCracken Fellowship in Africaana Studies at New York University. He has edited three previous books, including African-American Philosophers: 17 Conversations (Routledge, 1998), Cornel West: A Critical Reader (2001), and The Philosophical i: Personal Reflections on Life in Philosophy (2002). \"Not only are these essays provocative, but they are illuminating and useful both to scholars and to neophytes. The anthology as a whole deserves an unqualified recommendation for all interested in this matter.\" -L. Sebastian Purcell, Boston College",
@@ -2150,10 +2152,10 @@
           "tag": "1843-1916"
         },
         {
-          "tag": "1843-1916 \u2013 Pensee politique et sociale"
+          "tag": "1843-1916 -- Pensee politique et sociale"
         },
         {
-          "tag": "1843-1916 \u2013 Political and social views"
+          "tag": "1843-1916 -- Political and social views"
         },
         {
           "tag": "African Americans in literature"
@@ -2162,10 +2164,10 @@
           "tag": "American fiction"
         },
         {
-          "tag": "American fiction \u2013 19th century \u2013 History and cr"
+          "tag": "American fiction -- 19th century -- History and cr"
         },
         {
-          "tag": "American fiction \u2013 20th century \u2013 History and cr"
+          "tag": "American fiction -- 20th century -- History and cr"
         },
         {
           "tag": "Blancs dans la litterature"
@@ -2207,10 +2209,10 @@
           "tag": "Literature and society"
         },
         {
-          "tag": "Literature and society \u2013 United States \u2013 History"
+          "tag": "Literature and society -- United States -- History"
         },
         {
-          "tag": "Litterature et societe \u2013 Etats-Unis \u2013 Histoire"
+          "tag": "Litterature et societe -- Etats-Unis -- Histoire"
         },
         {
           "tag": "Noirs americains dans la litterature"
@@ -2243,10 +2245,10 @@
           "tag": "Roman"
         },
         {
-          "tag": "Roman americain \u2013 19e siecle \u2013 Histoire et criti"
+          "tag": "Roman americain -- 19e siecle -- Histoire et criti"
         },
         {
-          "tag": "Roman americain \u2013 20e siecle \u2013 Histoire et criti"
+          "tag": "Roman americain -- 20e siecle -- Histoire et criti"
         },
         {
           "tag": "Schwarze"
@@ -2286,7 +2288,7 @@
       "itemID": 57,
       "itemType": "book",
       "notes": [
-        "ID: TN\u209aq\u2091book<sub>c</sub>entralEBC5548389"
+        "ID: TN_pq_ebook_centralEBC5548389"
       ],
       "publisher": "Seattle: University of Washington Press",
       "title": "Racial ecologies"
@@ -2352,7 +2354,7 @@
       "itemID": 60,
       "itemType": "book",
       "notes": [
-        "Includes bibliographical references (p. 189-225) and index.; ID: 01UA<sub>A</sub>LMA51544855280003843"
+        "Includes bibliographical references (p. 189-225) and index.; ID: 01UA_ALMA51544855280003843"
       ],
       "publisher": "New Brunswick, N.J. : Rutgers University Press",
       "title": "Raising your kids right children's literature and american political conservatism"
@@ -2383,7 +2385,7 @@
           "tag": "Electronic books"
         },
         {
-          "tag": "Horror films \u2013 History and criticism"
+          "tag": "Horror films -- History and criticism"
         }
       ],
       "title": "Horror, the film reader"
@@ -2405,7 +2407,7 @@
       "itemID": 62,
       "itemType": "journalArticle",
       "publicationTitle": "Participations",
-      "title": "Reading harry potter: A personal and collective experience",
+      "title": "Reading Harry Potter: A personal and collective experience",
       "volume": "5"
     },
     {
@@ -2611,19 +2613,19 @@
       "publisher": "New York, NY : New York University Press",
       "tags": [
         {
-          "tag": "African American arts \u2013 Influence"
+          "tag": "African American arts -- Influence"
         },
         {
           "tag": "African Americans in literature"
         },
         {
-          "tag": "American fiction \u2013 20th century \u2013 History and cr"
+          "tag": "American fiction -- 20th century -- History and cr"
         },
         {
-          "tag": "American fiction \u2013 21st century \u2013 History and cr"
+          "tag": "American fiction -- 21st century -- History and cr"
         },
         {
-          "tag": "American fiction \u2013 African American authors \u2013 Hi"
+          "tag": "American fiction -- African American authors -- Hi"
         },
         {
           "tag": "Electronic books"
@@ -2712,7 +2714,7 @@
       "itemID": 69,
       "itemType": "book",
       "notes": [
-        "Includes bibliographical references and index; ID: 01UA<sub>A</sub>LMA21443524890003843"
+        "Includes bibliographical references and index; ID: 01UA_ALMA21443524890003843"
       ],
       "publisher": "Durham; London : Duke University Press",
       "title": "What is a world? : on postcolonial literature as world literature"
@@ -2794,7 +2796,7 @@
       "itemID": 72,
       "itemType": "book",
       "notes": [
-        "Description based upon print version of record.; ID: 01UA<sub>A</sub>LMA51660911640003843"
+        "Description based upon print version of record.; ID: 01UA_ALMA51660911640003843"
       ],
       "publisher": "Hoboken : Taylor and Francis",
       "title": "The children's book business: Lessons from the long eighteenth century"
@@ -2937,13 +2939,13 @@
           "tag": "fiction"
         },
         {
-          "tag": "Fiction \u2013 History and criticism"
+          "tag": "Fiction -- History and criticism"
         },
         {
-          "tag": "fiction \u2013 linguistique"
+          "tag": "fiction -- linguistique"
         },
         {
-          "tag": "Fiction \u2013 Technique"
+          "tag": "Fiction -- Technique"
         },
         {
           "tag": "Literatuursociologie"
@@ -2982,7 +2984,7 @@
       "itemID": 75,
       "itemType": "book",
       "notes": [
-        "Includes bibliographical references and index.; ID: 01UA<sub>A</sub>LMA51531436740003843"
+        "Includes bibliographical references and index.; ID: 01UA_ALMA51531436740003843"
       ],
       "publisher": "New Haven : Yale University Press",
       "title": "Materialism"
@@ -3045,7 +3047,7 @@
       "itemID": 77,
       "itemType": "book",
       "notes": [
-        "Includes bibliographic references and index.; ID: 01UA<sub>A</sub>LMA51544147360003843"
+        "Includes bibliographic references and index.; ID: 01UA_ALMA51544147360003843"
       ],
       "publisher": "Amsterdam : Rodopi",
       "title": "Authority matters : Rethinking the theory and practice of authorship"
@@ -3067,7 +3069,7 @@
       "itemID": 78,
       "itemType": "journalArticle",
       "publicationTitle": "The New York Review of Books",
-      "title": "The problem with \u2018Problematic\u2019",
+      "title": "The problem with \u2018problematic\u2019",
       "url": "https://www.nybooks.com/daily/2017/11/01/the-problem-with-problematic/"
     },
     {
@@ -3097,7 +3099,7 @@
       "itemID": 79,
       "itemType": "book",
       "notes": [
-        "Includes bibliographical references.; ID: 01UA<sub>A</sub>LMA51544570200003843"
+        "Includes bibliographical references.; ID: 01UA_ALMA51544570200003843"
       ],
       "publisher": "Philadelphia : Temple University Press",
       "title": "Crossroads, directions and a new critical race theory"
@@ -3185,7 +3187,7 @@
       "itemID": 82,
       "itemType": "thesis",
       "notes": [
-        "ID: TN<sub>c</sub>di\u209aroquest<sub>j</sub>ournals\u2081767220832"
+        "ID: TN_cdi_proquest_journals_1767220832"
       ],
       "publisher": "ProQuest Dissertations Publishing",
       "title": "Literacy and social justice: Understanding student perceptions and conceptions about literature"
@@ -3215,7 +3217,7 @@
       "itemID": 83,
       "itemType": "thesis",
       "notes": [
-        "Source type: Dissertations &amp;amp; Theses; Object type: Dissertation; Object type: Thesis; Copyright: Database copyright ProQuest LLC; ProQuest does not claim copyright in the individual underlying works.; DOCID: 4326335711; DocISBN: 978-0-438-02282-9; PCID: 112175342; PMID: 66569; DissertationNum: 10857168; PublisherXID: 10857168"
+        "Source type: Dissertations &amp; Theses; Object type: Dissertation; Object type: Thesis; Copyright: Database copyright ProQuest LLC; ProQuest does not claim copyright in the individual underlying works.; DOCID: 4326335711; DocISBN: 978-0-438-02282-9; PCID: 112175342; PMID: 66569; DissertationNum: 10857168; PublisherXID: 10857168"
       ],
       "publisher": "University of Cincinnati",
       "title": "Whose books get published?: Individual agency and the business of children's publishing",
@@ -3244,7 +3246,7 @@
       "itemID": 84,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN\u209aroquest304544124"
+        "ID: TN_proquest304544124"
       ],
       "title": "\"For all our children's fate\": Children's literature and contemporary culture"
     },
@@ -3267,7 +3269,7 @@
       "itemID": 85,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN\u209aroquest199358950"
+        "ID: TN_proquest199358950"
       ],
       "pages": "315-318",
       "publicationTitle": "The Horn Book Magazine",
@@ -3291,7 +3293,7 @@
       "itemID": 86,
       "itemType": "book",
       "notes": [
-        "ID: TN<sub>j</sub>stor<sub>b</sub>ooksj.ctt1pwt9w5"
+        "ID: TN_jstor_booksj.ctt1pwt9w5"
       ],
       "publisher": "New York: NYU Press",
       "title": "Algorithms of oppression - how search engines reinforce racism"
@@ -3327,7 +3329,7 @@
           "tag": "Racism in education"
         },
         {
-          "tag": "Teachers \u2013 Training of"
+          "tag": "Teachers -- Training of"
         }
       ],
       "title": "Feeling white : a whiteness, emotionality, and education"
@@ -3472,7 +3474,7 @@
       "itemID": 90,
       "itemType": "book",
       "notes": [
-        "Includes bibliographical references and index.; ID: 01UA<sub>A</sub>LMA51544082500003843"
+        "Includes bibliographical references and index.; ID: 01UA_ALMA51544082500003843"
       ],
       "publisher": "Minneapolis, Minnesota : University of Minnesota Press",
       "title": "Red skin, white masks rejecting the colonial politics of recognition"
@@ -3549,7 +3551,7 @@
       "itemID": 92,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN<sub>g</sub>ale\u2097itrc20258576"
+        "ID: TN_gale_litrc20258576"
       ],
       "pages": "34",
       "publicationTitle": "The Horn Book Magazine",
@@ -3589,16 +3591,16 @@
           "tag": "Patriarchy"
         },
         {
-          "tag": "Popular literature \u2013 History and criticism"
+          "tag": "Popular literature -- History and criticism"
         },
         {
-          "tag": "Romance fiction \u2013 Appreciation"
+          "tag": "Romance fiction -- Appreciation"
         },
         {
           "tag": "Sex role in literature"
         },
         {
-          "tag": "Women \u2013 Books and reading"
+          "tag": "Women -- Books and reading"
         },
         {
           "tag": "Women in literature"
@@ -3668,19 +3670,19 @@
       "publisher": "Scarecrow Press",
       "tags": [
         {
-          "tag": "African American children \u2013 Books and reading"
+          "tag": "African American children -- Books and reading"
         },
         {
-          "tag": "African American young adults \u2013 Books and reading"
+          "tag": "African American young adults -- Books and reading"
         },
         {
           "tag": "African Americans in literature"
         },
         {
-          "tag": "American \u2013 History and criticism"
+          "tag": "American -- History and criticism"
         },
         {
-          "tag": "American literature \u2013 African American authors \u2013"
+          "tag": "American literature -- African American authors --"
         },
         {
           "tag": "Children's literature"
@@ -3745,7 +3747,7 @@
           "tag": "Cultural studies"
         },
         {
-          "tag": "Education\u2013Teaching Methods And Curriculum"
+          "tag": "Education--Teaching Methods And Curriculum"
         },
         {
           "tag": "Ethnicity"
@@ -3775,7 +3777,7 @@
           "tag": "Writing"
         }
       ],
-      "title": "The trouble with reader-response theory when reading multicultural literature: A critique of dana fox's and kathy's short's stories matter",
+      "title": "The trouble with reader-response theory when reading multicultural literature: a critique of dana fox's and kathy's short's stories matter",
       "url": "http://ezproxy.library.arizona.edu/login?url=https://www.proquest.com/scholarly-journals/trouble-with-reader-response-theory-when-reading/docview/1881110575/se-2?accountid=8360 https://arizona-primo.hosted.exlibrisgroup.com/openurl/01UA/01UA?&aufirst=Jacquelyn&aulast=Chappel&atitle=The+Trouble+with+Reader-response+Theory+when+Reading+Multicultural+Literature%3A+A+Critique+of+Dana+Fox%27s+and+Kathy%27s+Short%27s+Stories+Matter&title=The+Trouble+with+Reader-response+Theory+when+Reading+Multicultural+Literature%3A+A+Critique+of+Dana+Fox%27s+and+Kathy%27s+Short%27s+Stories+Matter&volume=31&date=2017&spage=81&issn=",
       "volume": "31"
     },
@@ -3802,7 +3804,7 @@
       "publisher": "Berkeley : University of California Press",
       "tags": [
         {
-          "tag": "American \u2013 19th century"
+          "tag": "American -- 19th century"
         },
         {
           "tag": "Art and race"
@@ -3817,7 +3819,7 @@
           "tag": "Race awareness in art"
         },
         {
-          "tag": "Whites \u2013 Race identity \u2013 United States"
+          "tag": "Whites -- Race identity -- United States"
         }
       ],
       "title": "Sight unseen: whiteness and American visual culture"
@@ -3845,7 +3847,7 @@
       "itemID": 98,
       "itemType": "book",
       "notes": [
-        "Includes bibliographical references and index.; ID: 01UA<sub>A</sub>LMA51687551240003843"
+        "Includes bibliographical references and index.; ID: 01UA_ALMA51687551240003843"
       ],
       "publisher": "Nova Science Publishers, Inc",
       "title": "Activism, campaigning and political discourse on Twitter"
@@ -4083,10 +4085,10 @@
       "publisher": "Convergent Books",
       "tags": [
         {
-          "tag": "African American Christians \u2013 Biography"
+          "tag": "African American Christians -- Biography"
         },
         {
-          "tag": "African American women political activists \u2013 Biog"
+          "tag": "African American women political activists -- Biog"
         },
         {
           "tag": "Austin Channing"
@@ -4095,7 +4097,7 @@
           "tag": "Brown"
         },
         {
-          "tag": "United States \u2013 Race relations"
+          "tag": "United States -- Race relations"
         }
       ],
       "title": "I'm still here : black dignity in a world made for whiteness"
@@ -4135,7 +4137,7 @@
       "itemID": 106,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN\u2091rudit1043124ar"
+        "ID: TN_erudit1043124ar"
       ],
       "publicationTitle": "M\u00e9moires du livre",
       "title": "Reviewers as readers with power",
@@ -4218,7 +4220,7 @@
           "tag": "Electronic books"
         },
         {
-          "tag": "Fiction \u2013 Technique"
+          "tag": "Fiction -- Technique"
         },
         {
           "tag": "Narration (Rhetoric)"
@@ -4344,10 +4346,10 @@
       "publisher": "New York : New Press",
       "tags": [
         {
-          "tag": "Children \u2013 Books and reading"
+          "tag": "Children -- Books and reading"
         },
         {
-          "tag": "Children's literature \u2013 History and criticism"
+          "tag": "Children's literature -- History and criticism"
         },
         {
           "tag": "Racism in literature"
@@ -4375,7 +4377,7 @@
       "itemID": 114,
       "itemType": "book",
       "notes": [
-        "Description based upon print version of record.; Description based on online resource; title from PDF title page (ebrary, viewed September 17, 2014).; ID: 01UA<sub>A</sub>LMA51544193970003843"
+        "Description based upon print version of record.; Description based on online resource; title from PDF title page (ebrary, viewed September 17, 2014).; ID: 01UA_ALMA51544193970003843"
       ],
       "publisher": "Newcastle upon Tyne, England : Cambridge Scholars Publishing",
       "title": "The review as art and communication"
@@ -4405,7 +4407,7 @@
       "itemID": 115,
       "itemType": "book",
       "notes": [
-        "ID: TN\u2091lsevier\u209bdoi\u20810\u2081016<sub>B</sub>978\u2080\u20808\u208097086\u2088\u20810424\u2086"
+        "ID: TN_elsevier_sdoi_10_1016_B978_0_08_097086_8_10424_6"
       ],
       "publisher": "Elsevier Ltd",
       "title": "Cultural mediators and gatekeepers"
@@ -4505,11 +4507,11 @@
       "itemID": 117,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN<sub>g</sub>ale\u2092fa560927070"
+        "ID: TN_gale_ofa560927070"
       ],
       "pages": "893-908",
       "publicationTitle": "International journal of communication",
-      "title": "Distributed creativity on the internet: A theoretical foundation for online creative participation",
+      "title": "Distributed creativity on the internet: a theoretical foundation for online creative participation",
       "volume": "12"
     },
     {
@@ -4530,7 +4532,7 @@
       "itemID": 118,
       "itemType": "journalArticle",
       "publicationTitle": "Understanding and Dismantling Privilege",
-      "title": "\"But I Just Don't See It!\": Making white superiority visible",
+      "title": "\"But I just don't see it!\": Making white superiority visible",
       "url": "https://www.wpcjournal.com/article/view/10829",
       "volume": "3"
     },
@@ -4552,7 +4554,7 @@
       "itemID": 119,
       "itemType": "book",
       "notes": [
-        "ID: TN\u209aq\u2091book<sub>c</sub>entralEBC4001362"
+        "ID: TN_pq_ebook_centralEBC4001362"
       ],
       "publisher": "London: Palgrave Macmillan Limited",
       "title": "Media, margins and civic agency"
@@ -4607,7 +4609,7 @@
       "itemID": 121,
       "itemType": "journalArticle",
       "publicationTitle": "Understanding and Dismantling Privilege",
-      "title": "Considerations for using critical race theory and critical content analysis: A research note",
+      "title": "Considerations for using critical race theory and critical content analysis: a research note",
       "url": "https://www.wpcjournal.com/article/view/18198",
       "volume": "8"
     },
@@ -4644,7 +4646,7 @@
           "tag": "Latinx critical race theory"
         }
       ],
-      "title": "Beyond mirrors and windows: A critical content analysis of latinx children's books"
+      "title": "Beyond mirrors and windows: a critical content analysis of latinx children's books"
     },
     {
       "abstractNote": "This essay describes a fan-based pedagogy and the learning outcomes it produced among college students. We focus on a fandom assignment given in an \u2018Introduction to American Popular Culture\u2019 course in an American Studies department at a large state university. The assignment required students to conduct a study of a fan community of their choice. Students developed and administered questionnaires, conducted interviews, and wrote essays describing and interpreting their findings. They were required to include a reflective paragraph discussing what they learned about fandom as a result of their research. Using content analysis, we coded 135 essays from four sections of the class to identify how students spoke about what they learned. Students reported acquiring a deeper understanding of the role of fandom in constructing identity and community. In addition, many questioned and changed their preconceptions about fans and fan behavior. A number also noted that they acquired an appreciation for the theories and methods of academic fan studies. A majority of students indicated that studying fandom resulted in greater self- awareness and awareness of others. We make the case that learning and applying the methods of fan studies prepares students to engage the world outside the classroom with a more critical and reflective lens.",
@@ -4716,7 +4718,7 @@
       "itemID": 125,
       "itemType": "thesis",
       "notes": [
-        "ID: TN\u209aroquest61563298"
+        "ID: TN_proquest61563298"
       ],
       "publisher": "State University of New York at Binghamton",
       "title": "Bookmarking racism: Challenging white privilege through children's literature and participatory action research in a suburban school"
@@ -4743,7 +4745,7 @@
       "itemID": 126,
       "itemType": "thesis",
       "notes": [
-        "ID: TN\u209aroquest305112645"
+        "ID: TN_proquest305112645"
       ],
       "publisher": "ProQuest Dissertations Publishing",
       "title": "\u201cGentle doses of racism\u201d: Whiteness and children's literature"
@@ -4773,7 +4775,7 @@
       "itemID": 127,
       "itemType": "thesis",
       "notes": [
-        "Source type: Dissertations &amp;amp; Theses; Object type: Dissertation; Object type: Thesis; Copyright: Database copyright ProQuest LLC; ProQuest does not claim copyright in the individual underlying works.; DOCID: 4327328151; DocISBN: 978-0-438-88867-8; PCID: 112458482; PMID: 66569; DissertationNum: 10976903; PublisherXID: 10976903"
+        "Source type: Dissertations &amp; Theses; Object type: Dissertation; Object type: Thesis; Copyright: Database copyright ProQuest LLC; ProQuest does not claim copyright in the individual underlying works.; DOCID: 4327328151; DocISBN: 978-0-438-88867-8; PCID: 112458482; PMID: 66569; DissertationNum: 10976903; PublisherXID: 10976903"
       ],
       "publisher": "The University of Alabama",
       "title": "Determining how preservice teachers select multicultural children's literature",
@@ -4825,7 +4827,7 @@
       "itemID": 129,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN\u209aroquest1399381926"
+        "ID: TN_proquest1399381926"
       ],
       "title": "Work in progress : children's literature and childist criticism : towards an institutional re-consideration"
     },
@@ -5027,7 +5029,7 @@
       "itemID": 134,
       "itemType": "book",
       "notes": [
-        "Includes bibliographical references and index.; ID: 01UA<sub>A</sub>LMA51626148750003843"
+        "Includes bibliographical references and index.; ID: 01UA_ALMA51626148750003843"
       ],
       "publisher": "Fordham University Press",
       "title": "Under representation : the racial regime of aesthetics"
@@ -5049,7 +5051,7 @@
       "itemID": 135,
       "itemType": "conferencePaper",
       "series": "ALISE 2019",
-      "title": "We need them but what are they?: A conceptual analysis of diverse books"
+      "title": "We need them but what are they?: a conceptual analysis of diverse books"
     },
     {
       "abstractNote": "Using unobtrusive observations in comics stores and comics conventions as well as in-depth interviews with comics aficionados and store owners from five different countries this work examines the interpersonal communication patterns of comics aficionados, focusing on situations in which they meet and discuss their mutual interest. A repeating sequence of events had been identified and was subsequently dubbed as a \u2018recommendation ceremony\u2019. The analysis suggests that the \u2018recommendations ceremony\u2019 helps the people to fulfill their material and psychological needs as well as social functions that are crucial to the creation of the comics readers\u2019 sense of community.",
@@ -5288,13 +5290,13 @@
           "tag": "etc"
         },
         {
-          "tag": "Literature \u2013 Explication"
+          "tag": "Literature -- Explication"
         },
         {
-          "tag": "Literature \u2013 History and criticism \u2013 Theory"
+          "tag": "Literature -- History and criticism -- Theory"
         },
         {
-          "tag": "Literature \u2013 Philosophy"
+          "tag": "Literature -- Philosophy"
         },
         {
           "tag": "Reader-response criticism"
@@ -5387,7 +5389,7 @@
       ],
       "itemID": 146,
       "itemType": "webpage",
-      "title": "How barnes & noble\u2019s \u2018Diverse editions\u2019 of classic novels widely miss the mark",
+      "title": "How barnes & noble\u2019s \u2018diverse editions\u2019 of classic novels widely miss the mark",
       "url": "https://medium.com/@RodFaulkner/how-barnes-nobles-diverse-editions-of-classic-novels-widely-miss-the-mark-3f3d1bf8cbb3"
     },
     {
@@ -5480,7 +5482,7 @@
           "tag": "Young adult literature"
         },
         {
-          "tag": "Young adult literature\u2013History and criticism"
+          "tag": "Young adult literature--History and criticism"
         },
         {
           "tag": "Young adults"
@@ -5534,16 +5536,16 @@
           "tag": "Electronic books"
         },
         {
-          "tag": "Political correctness \u2013 Great Britain"
+          "tag": "Political correctness -- Great Britain"
         },
         {
-          "tag": "Political correctness \u2013 United States"
+          "tag": "Political correctness -- United States"
         },
         {
-          "tag": "Prejudices \u2013 Great Britain"
+          "tag": "Prejudices -- Great Britain"
         },
         {
-          "tag": "Prejudices \u2013 United States"
+          "tag": "Prejudices -- United States"
         }
       ],
       "title": "In defence of political correctness"
@@ -5581,7 +5583,7 @@
           "lastName": "Amsden"
         }
       ],
-      "date": "2015-2",
+      "date": "2015-02",
       "extra": [
         "Citation Key: Amsden2015"
       ],
@@ -5613,13 +5615,13 @@
       "publisher": "New York University Press",
       "tags": [
         {
-          "tag": "American literature \u2013 History and criticism"
+          "tag": "American literature -- History and criticism"
         },
         {
           "tag": "Human skin color in literature"
         },
         {
-          "tag": "United States \u2013 Civilization"
+          "tag": "United States -- Civilization"
         },
         {
           "tag": "White"
@@ -5628,7 +5630,7 @@
           "tag": "White in literature"
         },
         {
-          "tag": "Whites \u2013 United States"
+          "tag": "Whites -- United States"
         },
         {
           "tag": "Whites in literature"
@@ -5652,7 +5654,7 @@
       "itemID": 155,
       "itemType": "book",
       "notes": [
-        "Includes bibliography and index.; ID: 01UA<sub>A</sub>LMA21468543070003843"
+        "Includes bibliography and index.; ID: 01UA_ALMA21468543070003843"
       ],
       "publisher": "Basingstoke : Macmillan",
       "title": "Structuralism and the logic of dissent : Barthes, derrida, foucault, lacan"
@@ -5675,7 +5677,7 @@
       "itemID": 156,
       "itemType": "book",
       "notes": [
-        "Translation of Le plaisir du texte.; ID: 01UA<sub>A</sub>LMA21399200520003843"
+        "Translation of Le plaisir du texte.; ID: 01UA_ALMA21399200520003843"
       ],
       "publisher": "New York : Hill and Wang",
       "title": "The pleasure of the text"
@@ -5710,10 +5712,10 @@
           "tag": "Education"
         },
         {
-          "tag": "Higher \u2013 Political aspects \u2013 United S"
+          "tag": "Higher -- Political aspects -- United S"
         },
         {
-          "tag": "Political correctness \u2013 United States"
+          "tag": "Political correctness -- United States"
         }
       ],
       "title": "Are you politically correct? : debating America's cultural standards"
@@ -5727,7 +5729,7 @@
           "lastName": "Bertin"
         }
       ],
-      "date": "2016-2",
+      "date": "2016-02",
       "extra": [
         "Citation Key: Bertin2016"
       ],
@@ -5806,10 +5808,10 @@
           "tag": "African Americans"
         },
         {
-          "tag": "African Americans \u2013 History"
+          "tag": "African Americans -- History"
         },
         {
-          "tag": "African Americans \u2013 Intellectual life"
+          "tag": "African Americans -- Intellectual life"
         },
         {
           "tag": "Electronic books"
@@ -5834,7 +5836,7 @@
       "itemID": 162,
       "itemType": "book",
       "notes": [
-        "&amp;quot;Bibliography of ethical criticism&amp;quot;: p. 505-534.; Includes bibliographies and indexes.; ID: 01UA<sub>A</sub>LMA21405686220003843"
+        "&quot;Bibliography of ethical criticism&quot;: p. 505-534.; Includes bibliographies and indexes.; ID: 01UA_ALMA21405686220003843"
       ],
       "publisher": "Berkeley : University of California Press",
       "title": "The company we keep : an ethics of fiction"
@@ -5866,13 +5868,13 @@
       "publisher": "New York : Routledge",
       "tags": [
         {
-          "tag": "Children's literature \u2013 History and criticism"
+          "tag": "Children's literature -- History and criticism"
         },
         {
           "tag": "Multiculturalism in literature"
         },
         {
-          "tag": "Young adult literature \u2013 History and criticism"
+          "tag": "Young adult literature -- History and criticism"
         }
       ],
       "title": "Critical multicultural analysis of children's literature mirrors, windows, and doors"
@@ -5947,7 +5949,7 @@
       "itemID": 165,
       "itemType": "webpage",
       "publicationTitle": "The Open Book Blog",
-      "title": "How labeling books as \u201cDiverse\u201d reinforces white supremacy",
+      "title": "How labeling books as \u201cdiverse\u201d reinforces white supremacy",
       "url": "https://blog.leeandlow.com/2020/08/26/how-labeling-books-as-diverse-reinforces-white-supremacy/"
     },
     {
@@ -5973,13 +5975,13 @@
       "publisher": "Roseville, Calif. : Forum",
       "tags": [
         {
-          "tag": "Freedom of speech \u2013 United States"
+          "tag": "Freedom of speech -- United States"
         },
         {
-          "tag": "Liberalism \u2013 United States"
+          "tag": "Liberalism -- United States"
         },
         {
-          "tag": "Political correctness \u2013 United States"
+          "tag": "Political correctness -- United States"
         }
       ],
       "title": "The new thought police : inside the Left's assault on free speech and free minds"
@@ -6034,10 +6036,10 @@
       "publisher": "Westport, Conn. : Greenwood Press",
       "tags": [
         {
-          "tag": "Children \u2013 Books and reading"
+          "tag": "Children -- Books and reading"
         },
         {
-          "tag": "Children's literature \u2013 History and criticism"
+          "tag": "Children's literature -- History and criticism"
         },
         {
           "tag": "Cultural pluralism in literature"
@@ -6046,10 +6048,10 @@
           "tag": "Multiculturalism"
         },
         {
-          "tag": "Young adult literature \u2013 History and criticism"
+          "tag": "Young adult literature -- History and criticism"
         },
         {
-          "tag": "Young adults \u2013 Books and reading"
+          "tag": "Young adults -- Books and reading"
         }
       ],
       "title": "Multicultural literature for children and young adults : reflections on critical issues"
@@ -6119,7 +6121,7 @@
       "itemID": 171,
       "itemType": "book",
       "notes": [
-        "Includes bibliographical references and index.; ID: 01UA<sub>A</sub>LMA51599529990003843"
+        "Includes bibliographical references and index.; ID: 01UA_ALMA51599529990003843"
       ],
       "publisher": "Princeton University Press",
       "title": "Under the cover : the creation, production, and reception of a novel"
@@ -6140,7 +6142,7 @@
       "itemID": 172,
       "itemType": "book",
       "notes": [
-        "Includes bibliographical references (pages 253-260) and index.; ID: 01UA<sub>A</sub>LMA51613900150003843"
+        "Includes bibliographical references (pages 253-260) and index.; ID: 01UA_ALMA51613900150003843"
       ],
       "publisher": "Routledge",
       "title": "Entranced by story : brain, tale and teller, from infancy to old age"
@@ -6202,7 +6204,7 @@
       "itemID": 174,
       "itemType": "book",
       "notes": [
-        "Includes bibliographical references and index.; ID: 01UA<sub>A</sub>LMA51612588030003843"
+        "Includes bibliographical references and index.; ID: 01UA_ALMA51612588030003843"
       ],
       "publisher": "Oakland, California : University of California Press",
       "title": "Seeing race again : countering colorblindness across the disciplines"
@@ -6253,7 +6255,7 @@
       "itemID": 176,
       "itemType": "book",
       "notes": [
-        "Includes bibliographical references and index.; ID: 01UA<sub>A</sub>LMA51534026010003843"
+        "Includes bibliographical references and index.; ID: 01UA_ALMA51534026010003843"
       ],
       "publisher": "New York : New York University Press",
       "title": "Critical race theory : an introduction"
@@ -6275,7 +6277,7 @@
       "itemID": 177,
       "itemType": "book",
       "notes": [
-        "ID: TN\u209aroquest839302410"
+        "ID: TN_proquest839302410"
       ],
       "title": "Cultural boundaries and structural change - the extension of the high culture model to theater, opera, and the dance, 1900-1940"
     },
@@ -6298,7 +6300,7 @@
       "itemType": "journalArticle",
       "pages": "219",
       "publicationTitle": "Childhood Education",
-      "title": "Evaluating children's books portraying native american and asian cultures",
+      "title": "Evaluating children's books portraying Native American and Asian cultures",
       "volume": "68"
     },
     {
@@ -6355,7 +6357,7 @@
       "itemID": 181,
       "itemType": "webpage",
       "publicationTitle": "Global Comment",
-      "title": "We still need a female hero: Revisiting \"In Praise of Joanne Rowling's Hermione Granger series\"",
+      "title": "We still need a female hero: Revisiting \"in praise of joanne rowling's hermione granger series\"",
       "url": "https://globalcomment.com/we-still-need-a-female-hero-revisiting-in-praise-of-joanne-rowlings-hermione-granger-series/"
     },
     {
@@ -6399,7 +6401,7 @@
       "itemID": 183,
       "itemType": "journalArticle",
       "publicationTitle": "Research on Diversity in Youth Literature",
-      "title": "Unsettling representations of identities: A critical review of diverse youth literature",
+      "title": "Unsettling representations of identities: a critical review of diverse youth literature",
       "url": "https://sophia.stkate.edu/rdyl/vol1/iss1/7",
       "volume": "1"
     },
@@ -6430,19 +6432,19 @@
       "publisher": "New York : Teachers College Press",
       "tags": [
         {
-          "tag": "Child development \u2013 United States \u2013 Case studies"
+          "tag": "Child development -- United States -- Case studies"
         },
         {
           "tag": "Electronic books"
         },
         {
-          "tag": "English language \u2013 Composition and exercises \u2013 S"
+          "tag": "English language -- Composition and exercises -- S"
         },
         {
-          "tag": "Multicultural education \u2013 United States \u2013 Case s"
+          "tag": "Multicultural education -- United States -- Case s"
         },
         {
-          "tag": "Popular culture \u2013 United States \u2013 Case studies"
+          "tag": "Popular culture -- United States -- Case studies"
         }
       ],
       "title": "Writing superheroes: Contemporary childhood, popular culture, and classroom literacy"
@@ -6527,7 +6529,7 @@
       "itemID": 187,
       "itemType": "book",
       "notes": [
-        "Includes bibliographical references and index.; ID: 01UA<sub>A</sub>LMA21418982950003843"
+        "Includes bibliographical references and index.; ID: 01UA_ALMA21418982950003843"
       ],
       "publisher": "Cambridge, Mass. : Harvard University Press",
       "title": "Is there a text in this class? : The authority of interpretive communities"
@@ -6549,7 +6551,7 @@
       "itemID": 188,
       "itemType": "book",
       "notes": [
-        "Includes index.; ID: 01UA<sub>A</sub>LMA21487439460003843"
+        "Includes index.; ID: 01UA_ALMA21487439460003843"
       ],
       "publisher": "Oxford : Clarendon Press; Oxford; New York : Oxford University Press",
       "title": "Professional correctness : literary studies and political change"
@@ -6570,7 +6572,7 @@
       ],
       "itemID": 189,
       "itemType": "webpage",
-      "title": "Survey of public participation in the arts 1982-2012 combined file [United states]"
+      "title": "Survey of public participation in the arts 1982-2012 combined file [united states]"
     },
     {
       "citationKey": "Fox2003a",
@@ -6609,7 +6611,7 @@
       "itemID": 191,
       "itemType": "book",
       "notes": [
-        "ID: 01UA<sub>A</sub>LMA21443739850003843"
+        "ID: 01UA_ALMA21443739850003843"
       ],
       "publisher": "Bloomington, Indiana University Press",
       "title": "The educated imagination"
@@ -6630,7 +6632,7 @@
       "itemID": 192,
       "itemType": "thesis",
       "notes": [
-        "Thesis\u2013Teachers College, Columbia University.; Bibliography: leaves 124-127.; ID: 01UA<sub>A</sub>LMA21464657350003843"
+        "Thesis\u2013Teachers College, Columbia University.; Bibliography: leaves 124-127.; ID: 01UA_ALMA21464657350003843"
       ],
       "publisher": "Thesis\u2013Teachers College, Columbia University",
       "title": "An analytical study of the extent and nature of the reviewing of juvenile books in eight journals and newspapers : with special regard to their usefulness as selection aids for school libraries"
@@ -6652,7 +6654,7 @@
       "itemID": 193,
       "itemType": "book",
       "notes": [
-        "Includes index.; Description based on online resource; title from PDF title page (ebrary, viewed June 30, 2014).; ID: 01UA<sub>A</sub>LMA51689438440003843"
+        "Includes index.; Description based on online resource; title from PDF title page (ebrary, viewed June 30, 2014).; ID: 01UA_ALMA51689438440003843"
       ],
       "publisher": "New York, New York : Oxford University Press",
       "title": "The signifying monkey : a theory of African-American literary criticism"
@@ -6685,7 +6687,7 @@
       "itemID": 194,
       "itemType": "book",
       "notes": [
-        "ID: TN\u209bpringer\u209b978-1-137-52346-4\u208378673"
+        "ID: TN_springer_s978-1-137-52346-4_378673"
       ],
       "publisher": "London: Palgrave Macmillan UK",
       "title": "New directions in popular fiction: Genre, distribution, reproduction"
@@ -6707,7 +6709,7 @@
       "itemID": 195,
       "itemType": "book",
       "notes": [
-        "Includes bibliographical references and index.; ID: 01UA<sub>A</sub>LMA51527060200003843"
+        "Includes bibliographical references and index.; ID: 01UA_ALMA51527060200003843"
       ],
       "publisher": "Palgrave Macmillan",
       "title": "Popular media cultures : fans, audiences and paratexts"
@@ -6752,7 +6754,7 @@
       "itemID": 197,
       "itemType": "book",
       "notes": [
-        "Bibliography: p. 221-236.; ID: 01UA<sub>A</sub>LMA21473665260003843"
+        "Bibliography: p. 221-236.; ID: 01UA_ALMA21473665260003843"
       ],
       "publisher": "Tallahassee : Florida State University Press",
       "title": "The politics of literary theory : an introduction to Marxist criticism"
@@ -6766,7 +6768,7 @@
           "lastName": "G\u00f3mez"
         }
       ],
-      "date": "2016-2",
+      "date": "2016-02",
       "itemID": 198,
       "itemType": "webpage",
       "publicationTitle": "School Library Journal",
@@ -6800,7 +6802,7 @@
       "publisher": "Mahwah, NJ : Lawrence Erlbaum Associates",
       "tags": [
         {
-          "tag": "Children \u2013 Language"
+          "tag": "Children -- Language"
         },
         {
           "tag": "Language arts (Preschool)"
@@ -6830,7 +6832,7 @@
       "itemID": 200,
       "itemType": "webpage",
       "publicationTitle": "Slate Magazine",
-      "title": "Kosoko jackson\u2019s a place for wolves book scandal suggests YA twitter is getting uglier.",
+      "title": "Kosoko Jackson\u2019s A Place for Wolves book scandal suggests YA Twitter is getting uglier.",
       "url": "https://slate.com/culture/2019/03/ya-book-scandal-kosoko-jackson-a-place-for-wolves-explained.html"
     },
     {
@@ -6860,7 +6862,7 @@
       "itemID": 201,
       "itemType": "book",
       "notes": [
-        "Includes bibliographical references (p. 223]-256) and index; ID: 01UA<sub>A</sub>LMA21436653860003843"
+        "Includes bibliographical references (p. 223]-256) and index; ID: 01UA_ALMA21436653860003843"
       ],
       "publisher": "Stanford, Calif. : Stanford Business Books",
       "title": "The culture and commerce of publishing in the 21st century"
@@ -6912,7 +6914,7 @@
       "itemID": 203,
       "itemType": "book",
       "notes": [
-        "ID: TN\u209bpringer\u209b978-1-137-53924-3\u208376154"
+        "ID: TN_springer_s978-1-137-53924-3_376154"
       ],
       "publisher": "London: Palgrave Macmillan UK",
       "title": "Constructing the adolescent reader in contemporary young adult fiction"
@@ -6932,8 +6934,8 @@
         },
         {
           "creatorType": "author",
-          "firstName": "Mass. ). Center for the Study of Children's Literature Simmons College",
-          "lastName": "(Boston"
+          "firstName": "Mass. ). Center",
+          "lastName": "for the Study of Children's Literature Simmons College (Boston"
         }
       ],
       "date": "1987",
@@ -6967,7 +6969,7 @@
       "itemID": 205,
       "itemType": "book",
       "notes": [
-        "Includes bibliographical references (p. ) and index; ID: 01UA<sub>A</sub>LMA21446774300003843"
+        "Includes bibliographical references (p. ) and index; ID: 01UA_ALMA21446774300003843"
       ],
       "publisher": "Columbia : University of South Carolina Press",
       "title": "Vernacular voices : the rhetoric of publics and public spheres"
@@ -7027,22 +7029,22 @@
       "publisher": "Boston : Pearson Allyn and Bacon",
       "tags": [
         {
-          "tag": "Children \u2013 Books and reading \u2013 United States"
+          "tag": "Children -- Books and reading -- United States"
         },
         {
-          "tag": "Children's literature \u2013 Study and teaching \u2013 Uni"
+          "tag": "Children's literature -- Study and teaching -- Uni"
         },
         {
-          "tag": "Cultural pluralism \u2013 Study and teaching \u2013 United"
+          "tag": "Cultural pluralism -- Study and teaching -- United"
         },
         {
-          "tag": "Multiculturalism \u2013 Study and teaching \u2013 United S"
+          "tag": "Multiculturalism -- Study and teaching -- United S"
         },
         {
-          "tag": "Teenagers \u2013 Books and reading \u2013 United States"
+          "tag": "Teenagers -- Books and reading -- United States"
         },
         {
-          "tag": "Young adult literature \u2013 Study and teaching \u2013 Un"
+          "tag": "Young adult literature -- Study and teaching -- Un"
         }
       ],
       "title": "Exploring culturally diverse literature for children and adolescents : learning to listen in new ways"
@@ -7064,7 +7066,7 @@
       "itemID": 208,
       "itemType": "book",
       "notes": [
-        "Includes bibliographical references (p. 203]-223) and index.; ID: 01UA<sub>A</sub>LMA21414708010003843"
+        "Includes bibliographical references (p. 203]-223) and index.; ID: 01UA_ALMA21414708010003843"
       ],
       "publisher": "London; New York : Routledge",
       "title": "Raymond Williams : literature, Marxism and cultural materialism"
@@ -7085,7 +7087,7 @@
       "itemID": 209,
       "itemType": "book",
       "notes": [
-        "Includes bibliographical references (pages 166-198) and index.; ID: 01UA<sub>A</sub>LMA71628890610003843"
+        "Includes bibliographical references (pages 166-198) and index.; ID: 01UA_ALMA71628890610003843"
       ],
       "publisher": "Cambridge; Malden, MA : Polity Press",
       "title": "Social media and everyday politics"
@@ -7129,7 +7131,7 @@
       "itemID": 211,
       "itemType": "book",
       "notes": [
-        "Includes bibliographical references (p. 205-237) and index.; ID: 01UA<sub>A</sub>LMA21397847860003843"
+        "Includes bibliographical references (p. 205-237) and index.; ID: 01UA_ALMA21397847860003843"
       ],
       "publisher": "Madison, Wis. : University of Wisconsin Press",
       "title": "Crossing borders : reception theory, poststructuralism, deconstruction"
@@ -7169,7 +7171,7 @@
       "itemID": 213,
       "itemType": "book",
       "notes": [
-        "Bibliographic Level Mode of Issuance: Monograph; ID: 01UA<sub>A</sub>LMA51562243040003843"
+        "Bibliographic Level Mode of Issuance: Monograph; ID: 01UA_ALMA51562243040003843"
       ],
       "publisher": "Place of publication not identified Routledge",
       "title": "Literature for children : contemporary criticism"
@@ -7209,7 +7211,7 @@
       "itemID": 215,
       "itemType": "book",
       "publisher": "Wilfrid Laurier University Press",
-      "title": "Why indigenous literatures matter",
+      "title": "Why Indigenous literatures matter",
       "url": "https://www.worldcat.org/title/why-indigenous-literatures-matter/oclc/1030372038&referer=brief_results"
     },
     {
@@ -7233,7 +7235,7 @@
       "itemID": 216,
       "itemType": "book",
       "notes": [
-        "Includes bibliographical references and index.; ID: 01UA<sub>A</sub>LMA51531160860003843"
+        "Includes bibliographical references and index.; ID: 01UA_ALMA51531160860003843"
       ],
       "publisher": "Routledge",
       "title": "Prizing children's literature : the cultural politics of children's book awards"
@@ -7255,7 +7257,7 @@
       "itemID": 217,
       "itemType": "book",
       "notes": [
-        "Includes bibliographical references (p. 201-207) and index; ID: 01UA<sub>A</sub>LMA21432556890003843"
+        "Includes bibliographical references (p. 201-207) and index; ID: 01UA_ALMA21432556890003843"
       ],
       "publisher": "Athens, Ga; London : University of Georgia Press",
       "title": "What is a book?"
@@ -7276,10 +7278,10 @@
       "itemID": 218,
       "itemType": "book",
       "notes": [
-        "Includes bibliographical references (pages 161-165) and index.; ID: 01UA<sub>A</sub>LMA51531597190003843"
+        "Includes bibliographical references (pages 161-165) and index.; ID: 01UA_ALMA51531597190003843"
       ],
       "publisher": "Rowman & Littlefield Publishers",
-      "title": "Book banning in 21st-century America"
+      "title": "Book banning in 21st-century america"
     },
     {
       "citationKey": "Krippendorff2013",
@@ -7326,7 +7328,7 @@
       "itemID": 220,
       "itemType": "book",
       "notes": [
-        "ID: 01UA<sub>A</sub>LMA21657422020003843"
+        "ID: 01UA_ALMA21657422020003843"
       ],
       "publisher": "Tucson, Arizona : University of Arizona Press",
       "title": "How Indians think: colonial indigenous intellectuals and the question of critical race... theory"
@@ -7340,7 +7342,7 @@
           "lastName": "Larrick"
         }
       ],
-      "date": "1965-9",
+      "date": "1965-09",
       "extra": [
         "Citation Key: Larrick1965"
       ],
@@ -7377,7 +7379,7 @@
       "itemID": 222,
       "itemType": "book",
       "notes": [
-        "Includes bibliographical references and index.; ID: 01UA<sub>A</sub>LMA51535167080003843"
+        "Includes bibliographical references and index.; ID: 01UA_ALMA51535167080003843"
       ],
       "publisher": "Routledge",
       "title": "Teaching children's literature: it's critical!"
@@ -7430,7 +7432,7 @@
       "itemID": 224,
       "itemType": "book",
       "notes": [
-        "Includes bibliographical references and indexes; ID: 01UA<sub>A</sub>LMA21448218810003843"
+        "Includes bibliographical references and indexes; ID: 01UA_ALMA21448218810003843"
       ],
       "publisher": "Mahwah, N.J. : Lawrence Erlbaum Associates",
       "title": "Reframing sociocultural research on literacy : identity, agency, and power"
@@ -7498,7 +7500,7 @@
       "itemID": 227,
       "itemType": "book",
       "notes": [
-        "Includes bibliographical references and indexes.; Includes bibliographical references and indexes.; ID: 01UA<sub>A</sub>LMA21425312300003843"
+        "Includes bibliographical references and indexes.; Includes bibliographical references and indexes.; ID: 01UA_ALMA21425312300003843"
       ],
       "publisher": "Norwood, N.J. : Ablex Pub. Corp",
       "title": "Reader stance and literary understanding : exploring the theories, research, and practice"
@@ -7531,7 +7533,7 @@
       "itemID": 228,
       "itemType": "book",
       "notes": [
-        "ID: TN\u209bpringer\u209b978-1-137-51446-2\u208375745"
+        "ID: TN_springer_s978-1-137-51446-2_375745"
       ],
       "publisher": "London: Palgrave Macmillan UK",
       "title": "Publishers, readers, and digital engagement"
@@ -7583,16 +7585,16 @@
       "publisher": "Rowman & Littlefield",
       "tags": [
         {
-          "tag": "Gender \u2013 Study and teaching"
+          "tag": "Gender -- Study and teaching"
         },
         {
-          "tag": "Race \u2013 Study and teaching"
+          "tag": "Race -- Study and teaching"
         },
         {
-          "tag": "Social justice \u2013 Study and teaching"
+          "tag": "Social justice -- Study and teaching"
         },
         {
-          "tag": "Whites \u2013 Race identity \u2013 Study and teaching"
+          "tag": "Whites -- Race identity -- Study and teaching"
         }
       ],
       "title": "Surviving Becky(s) : pedagogies for deconstructing whiteness and gender"
@@ -7639,7 +7641,7 @@
       "itemType": "journalArticle",
       "pages": "201-212",
       "publicationTitle": "Children's Literature in Education",
-      "title": "\u201cI may be crackin\u2019, but um fackin\u2019\u201d: Racial humor in the watsons go to Birmingham\u20141963",
+      "title": "\u201cI may be crackin\u2019, but um fackin\u2019\u201d: Racial humor in the watsons go to birmingham\u20141963",
       "volume": "39"
     },
     {
@@ -7735,7 +7737,7 @@
       "itemID": 236,
       "itemType": "book",
       "notes": [
-        "Unlimited simultaneous users.; Description based on online resource; title from digital title page (viewed on September 14, 2015).; ID: 01UA<sub>A</sub>LMA51528892310003843"
+        "Unlimited simultaneous users.; Description based on online resource; title from digital title page (viewed on September 14, 2015).; ID: 01UA_ALMA51528892310003843"
       ],
       "publisher": "Routledge",
       "title": "Freaks, geeks, and cool kids : teenagers in an era of consumerism, standardized tests, and social media"
@@ -7772,8 +7774,8 @@
         },
         {
           "creatorType": "editor",
-          "firstName": "American Council of Learned",
-          "lastName": "Societies"
+          "firstName": "American Council",
+          "lastName": "of Learned Societies"
         }
       ],
       "date": "2005",
@@ -7806,7 +7808,7 @@
       "itemID": 239,
       "itemType": "book",
       "notes": [
-        "Includes bibliographical references.; ID: 01UA<sub>A</sub>LMA21473519800003843"
+        "Includes bibliographical references.; ID: 01UA_ALMA21473519800003843"
       ],
       "publisher": "Cambridge, Mass. : Harvard University Press",
       "title": "Playing in the dark : whiteness and the literary imagination"
@@ -7894,13 +7896,13 @@
       "publisher": "Chicago, Illinois : American Bar Association",
       "tags": [
         {
-          "tag": "Diversity in the workplace \u2013 United States"
+          "tag": "Diversity in the workplace -- United States"
         },
         {
-          "tag": "Law firms \u2013 United States \u2013 Personnel management"
+          "tag": "Law firms -- United States -- Personnel management"
         },
         {
-          "tag": "Political correctness \u2013 United States"
+          "tag": "Political correctness -- United States"
         }
       ],
       "title": "What if I say the wrong thing? : 25 habits for culturally effective people"
@@ -7914,7 +7916,7 @@
           "lastName": "Myers"
         }
       ],
-      "date": "2014-3",
+      "date": "2014-03",
       "extra": [
         "Citation Key: Myers2014"
       ],
@@ -7934,7 +7936,7 @@
           "lastName": "Myers"
         }
       ],
-      "date": "2014-3",
+      "date": "2014-03",
       "extra": [
         "Citation Key: Myers2014"
       ],
@@ -7962,7 +7964,7 @@
       "itemID": 245,
       "itemType": "book",
       "notes": [
-        "Includes bibliographical references (p. 153-159).; ID: 01UA<sub>A</sub>LMA21435708190003843"
+        "Includes bibliographical references (p. 153-159).; ID: 01UA_ALMA21435708190003843"
       ],
       "publisher": "Stoke on Trent, Staffordshire, England : Trentham Books",
       "title": "Through whose eyes? : exploring racism : reader, text and context"
@@ -8004,13 +8006,13 @@
       "publisher": "New York, N.Y. : Teachers College Press",
       "tags": [
         {
-          "tag": "Cultural pluralism in literature \u2013 United States"
+          "tag": "Cultural pluralism in literature -- United States"
         },
         {
           "tag": "Electronic books"
         },
         {
-          "tag": "Literature \u2013 Study and teaching \u2013 United States"
+          "tag": "Literature -- Study and teaching -- United States"
         }
       ],
       "title": "Reading across cultures teaching literature in a diverse society"
@@ -8052,7 +8054,7 @@
       "itemID": 248,
       "itemType": "book",
       "notes": [
-        "ID: TN\u209bpringer\u209beries978-3-319-42893-2"
+        "ID: TN_springer_series978-3-319-42893-2"
       ],
       "publisher": "Springer International Publishing, Cham",
       "title": "Racism in contemporary african american children\u2019s and young adult literature"
@@ -8081,7 +8083,7 @@
       "itemID": 249,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN<sub>c</sub>di<sub>j</sub>stor\u209arimary\u20841962273"
+        "ID: TN_cdi_jstor_primary_41962273"
       ],
       "pages": "242-245",
       "title": "Professional book reviews: Challenges and solutions: Children's literature in today's K\u201312 classrooms",
@@ -8098,7 +8100,7 @@
       "itemID": 250,
       "itemType": "webpage",
       "publicationTitle": "Goodreads",
-      "title": "Petra-X (somewhere in the caribbean, the united kingdom)\u2019s review of the secret life of groceries: The dark miracle of the american supermarket | goodreads",
+      "title": "Petra-x (somewhere in the caribbean, the united kingdom)\u2019s review of the secret life of groceries: The dark miracle of the american supermarket | goodreads",
       "url": "https://www.goodreads.com/review/show/3562346570?book_show_action=true&from_review_page=1"
     },
     {
@@ -8122,7 +8124,7 @@
       "itemID": 251,
       "itemType": "book",
       "notes": [
-        "Includes bibliographical references and index.; ID: 01UA<sub>A</sub>LMA71628896100003843"
+        "Includes bibliographical references and index.; ID: 01UA_ALMA71628896100003843"
       ],
       "publisher": "London; New York : Routledge, Taylor & Francis Group",
       "title": "Media activism in the digital age"
@@ -8144,7 +8146,7 @@
       "itemID": 252,
       "itemType": "book",
       "notes": [
-        "Includes bibliographical references (p. 180-182) and indexes.; ID: 01UA<sub>A</sub>LMA21481249440003843"
+        "Includes bibliographical references (p. 180-182) and indexes.; ID: 01UA_ALMA21481249440003843"
       ],
       "publisher": "New York; London : Teachers College Press",
       "title": "Children's literature and the politics of equality"
@@ -8173,19 +8175,19 @@
           "tag": "Bibliography - General"
         },
         {
-          "tag": "Books and reading \u2013 History \u2013 19th century \u2013 Un"
+          "tag": "Books and reading -- History -- 19th century -- Un"
         },
         {
-          "tag": "Books and reading \u2013 History \u2013 20th century \u2013 Un"
+          "tag": "Books and reading -- History -- 20th century -- Un"
         },
         {
           "tag": "General"
         },
         {
-          "tag": "Popular culture \u2013 History \u2013 19th century \u2013 Unit"
+          "tag": "Popular culture -- History -- 19th century -- Unit"
         },
         {
-          "tag": "Popular culture \u2013 History \u2013 20th Century \u2013 Unit"
+          "tag": "Popular culture -- History -- 20th Century -- Unit"
         }
       ],
       "title": "A feeling for books : the Book-of-the-Month Club, literary taste, and middle-class desire"
@@ -8229,7 +8231,7 @@
       "itemID": 255,
       "itemType": "book",
       "notes": [
-        "Includes bibliographical references and index.; ID: 01UA<sub>A</sub>LMA51535611040003843"
+        "Includes bibliographical references and index.; ID: 01UA_ALMA51535611040003843"
       ],
       "publisher": "Bristol University Press",
       "title": "New media and public activism : neoliberalism, the state and radical protest in the public sphere"
@@ -8282,7 +8284,7 @@
       "itemID": 257,
       "itemType": "book",
       "notes": [
-        "Includes bibliographical references and index.; ID: 01UA<sub>A</sub>LMA21480090040003843"
+        "Includes bibliographical references and index.; ID: 01UA_ALMA21480090040003843"
       ],
       "publisher": "Bingley, UK : Emerald Publishing",
       "title": "Social movements and media"
@@ -8304,7 +8306,7 @@
       "itemID": 258,
       "itemType": "book",
       "notes": [
-        "Bibliography: p. 155-171.; ID: 01UA<sub>A</sub>LMA21414384950003843"
+        "Bibliography: p. 155-171.; ID: 01UA_ALMA21414384950003843"
       ],
       "publisher": "London : Macmillan",
       "title": "The case of Peter Pan, or, The impossibility of children's fiction"
@@ -8360,7 +8362,7 @@
       "itemID": 260,
       "itemType": "book",
       "notes": [
-        "Includes bibliographical references and index.; ID: 01UA<sub>A</sub>LMA51527034730003843"
+        "Includes bibliographical references and index.; ID: 01UA_ALMA51527034730003843"
       ],
       "publisher": "Lanham : Rowman and Littlefield",
       "title": "Scales on censorship : real life lessons from School Library Journal"
@@ -8381,7 +8383,7 @@
       "itemID": 261,
       "itemType": "book",
       "notes": [
-        "Includes bibliographical references and index.; ID: 01UA<sub>A</sub>LMA21424224870003843"
+        "Includes bibliographical references and index.; ID: 01UA_ALMA21424224870003843"
       ],
       "publisher": "Chicago : ALA Editions, an imprint of the American Library Association",
       "title": "Books under fire : a hit list of banned and challenged children's books"
@@ -8420,7 +8422,7 @@
       "itemID": 263,
       "itemType": "magazineArticle",
       "publicationTitle": "Indiewire",
-      "title": "Catherine hardwicke wanted \u2018Twilight\u2019 to have diverse cast | IndieWire",
+      "title": "Catherine hardwicke wanted \u2018twilight\u2019 to have diverse cast | IndieWire",
       "url": "https://www.indiewire.com/2018/10/catherine-hardwicke-twilight-diverse-cast-stephenie-meyer-refused-1202009330/"
     },
     {
@@ -8441,7 +8443,7 @@
       "itemID": 264,
       "itemType": "book",
       "notes": [
-        "Includes bibliographical references and index.; ID: 01UA<sub>A</sub>LMA51545103730003843"
+        "Includes bibliographical references and index.; ID: 01UA_ALMA51545103730003843"
       ],
       "publisher": "New York : Columbia University Press",
       "title": "The late age of print: everyday book culture from consumerism to control"
@@ -8474,7 +8476,7 @@
       "itemID": 265,
       "itemType": "book",
       "notes": [
-        "Includes bibliographical references.; ID: 01UA<sub>A</sub>LMA51694714500003843"
+        "Includes bibliographical references.; ID: 01UA_ALMA51694714500003843"
       ],
       "publisher": "New York : Lothrop, Lee & Shepard Books",
       "title": "Celebrating children's books : essays on children's literature in honor of Zena Sutherland"
@@ -8522,7 +8524,7 @@
       "itemID": 267,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN<sub>c</sub>di<sub>j</sub>stor\u209arimary\u20841962274"
+        "ID: TN_cdi_jstor_primary_41962274"
       ],
       "pages": "246-254",
       "title": "Children's literature reviews: Challenges to children's literature: Deskilling, censoring, and obsolescence",
@@ -8550,7 +8552,7 @@
       "itemID": 268,
       "itemType": "book",
       "notes": [
-        "Includes bibliographical references and index.; ID: 01UA<sub>A</sub>LMA21421025800003843"
+        "Includes bibliographical references and index.; ID: 01UA_ALMA21421025800003843"
       ],
       "publisher": "Oxford : Clarendon Press; Oxford; New York : Oxford University Press",
       "title": "Grub Street and the ivory tower : literary journalism and literary scholarship from Fielding to the Internet"
@@ -8564,7 +8566,7 @@
           "lastName": "Turner-Neal"
         }
       ],
-      "date": "2015-8",
+      "date": "2015-08",
       "itemID": 269,
       "itemType": "magazineArticle",
       "publicationTitle": "Country Roads Magazine",
@@ -8616,34 +8618,34 @@
       "publisher": "School of American Research",
       "tags": [
         {
-          "tag": "Cultural property \u2013 Protection \u2013 United States"
+          "tag": "Cultural property -- Protection -- United States"
         },
         {
-          "tag": "Decolonization \u2013 United States"
+          "tag": "Decolonization -- United States"
         },
         {
-          "tag": "Indians of North America \u2013 Ethnic identity"
+          "tag": "Indians of North America -- Ethnic identity"
         },
         {
-          "tag": "Indians of North America \u2013 Politics and governmen"
+          "tag": "Indians of North America -- Politics and governmen"
         },
         {
-          "tag": "Indians of North America \u2013 Social conditions"
+          "tag": "Indians of North America -- Social conditions"
         },
         {
-          "tag": "National \u2013 United States"
+          "tag": "National -- United States"
         },
         {
-          "tag": "Postcolonialism \u2013 United States"
+          "tag": "Postcolonialism -- United States"
         },
         {
           "tag": "Self-determination"
         },
         {
-          "tag": "United States \u2013 Politics and government"
+          "tag": "United States -- Politics and government"
         },
         {
-          "tag": "United States \u2013 Race relations"
+          "tag": "United States -- Race relations"
         }
       ],
       "title": "For indigenous eyes only : a decolonization handbook"
@@ -8699,7 +8701,7 @@
       "itemID": 273,
       "itemType": "book",
       "notes": [
-        "&amp;quot;First published 1939.&amp;quot;; ID: dedupmrg294186296"
+        "&quot;First published 1939.&quot;; ID: dedupmrg294186296"
       ],
       "publisher": "London, The Hogarth Press",
       "title": "Reviewing"
@@ -8721,7 +8723,7 @@
       "itemID": 274,
       "itemType": "book",
       "notes": [
-        "&amp;quot;First published 1939.&amp;quot;; ID: dedupmrg294186296"
+        "&quot;First published 1939.&quot;; ID: dedupmrg294186296"
       ],
       "publisher": "London, The Hogarth Press",
       "title": "Reviewing"
@@ -8743,27 +8745,27 @@
       "itemID": 275,
       "itemType": "book",
       "notes": [
-        "Includes bibliographical references (p. 191-203) and index; ID: 01UA<sub>A</sub>LMA21444778790003843"
+        "Includes bibliographical references (p. 191-203) and index; ID: 01UA_ALMA21444778790003843"
       ],
       "publisher": "Routledge",
       "title": "Sticks and stones : the troublesome success of children's literature from Slovenly Peter to Harry Potter"
     },
     {
-      "citationKey": "zotero-2314",
+      "citationKey": "zotero-2097",
       "itemID": 276,
       "itemType": "film",
       "title": "Canceling | ContraPoints - YouTube",
       "url": "https://www.youtube.com/watch?v=OjMPJVmXxV8"
     },
     {
-      "citationKey": "zotero-2487",
+      "citationKey": "zotero-2270",
       "itemID": 277,
       "itemType": "webpage",
       "title": "Where is the diversity in publishing? The 2019 diversity baseline survey results | lee & low blog",
       "url": "https://blog.leeandlow.com/2020/01/28/2019diversitybaselinesurvey/"
     },
     {
-      "citationKey": "zotero-2516",
+      "citationKey": "zotero-2299",
       "itemID": 278,
       "itemType": "webpage",
       "title": "Dr. Jennifer on Twitter: \"6 months after leaving the TT job hunt, I still find myself thinking about the research studies/articles I wrote that never got in a journal. Can you still publish as a non-academic? Is anyone out there an \"independent scholar?\"\" / Twitter",
@@ -8790,7 +8792,7 @@
       "itemID": 279,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN<sub>w</sub>j10.1002/asi.20399"
+        "ID: TN_wj10.1002/asi.20399"
       ],
       "pages": "1194-1207",
       "publicationTitle": "Journal of the American Society for Information Science and Technology",
@@ -8831,7 +8833,7 @@
     {
       "DOI": "10.1002/asi.23805",
       "ISSN": "2330-1635",
-      "abstractNote": "Although peer-review and citation counts are commonly used to help assess the scholarly impact of published research, informal reader feedback might also be exploited to help assess the wider impacts of books, such as their educational or cultural value. The social website Goodreads seems to be a reasonable source for this purpose because it includes a large number of book reviews and ratings by many users inside and outside of academia. To check this, Goodreads book metrics were compared with different book-based impact indicators for 15,928 academic books across broad fields. Goodreads engagements were numerous enough in the arts (85% of books had at least one), humanities (80%), and social sciences (67%) for use as a source of impact evidence. Low and moderate correlations between Goodreads book metrics and scholarly or non-scholarly indicators suggest that reader feedback in Goodreads reflects the many purposes of books rather than a single type of impact. Although Goodreads book metrics...",
+      "abstractNote": "Although peer-review and citation counts are commonly used to help assess the scholarly impact of published research, informal reader feedback might also be exploited to help assess the wider impacts of books, such as their educational or cultural value. The social website Goodreads seems to be a reasonable source for this purpose because it includes a large number of book reviews and ratings by many users inside and outside of academia. To check this, Goodreads book metrics were compared with different book-based impact indicators for 15,928 academic books across broad fields. Goodreads engagements were numerous enough in the arts (85",
       "citationKey": "Kousha2017",
       "creators": [
         {
@@ -8859,7 +8861,7 @@
       "itemID": 281,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN\u209aroquest1919396787"
+        "ID: TN_proquest1919396787"
       ],
       "pages": "2004-2016",
       "publicationTitle": "Journal of the Association for Information Science and Technology",
@@ -8878,7 +8880,7 @@
           "lastName": "Mora"
         }
       ],
-      "date": "2014-9",
+      "date": "2014-09",
       "extra": [
         "Citation Key: Mora2014"
       ],
@@ -8912,11 +8914,11 @@
       "itemID": 283,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN\u209aroquest1933246555"
+        "ID: TN_proquest1933246555"
       ],
       "pages": "221-224",
       "publicationTitle": "Journal of Adolescent & Adult Literacy",
-      "title": "Worlds of inclusion: Challenging reading, writing, and publishing science fiction\u2013 and Fantasy\u2010Based young adult literature",
+      "title": "Worlds of inclusion: Challenging reading, writing, and publishing science fiction\u2013 and fantasy\u2010based young adult literature",
       "volume": "61"
     },
     {
@@ -8939,7 +8941,7 @@
       "itemID": 284,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN<sub>w</sub>j10.1002/jaal.755"
+        "ID: TN_wj10.1002/jaal.755"
       ],
       "pages": "7-12",
       "publicationTitle": "Journal of Adolescent & Adult Literacy",
@@ -9102,7 +9104,7 @@
       "itemType": "journalArticle",
       "pages": "197-216",
       "publicationTitle": "Children's Literature in Education: An International Quarterly",
-      "title": "'not censorship but selection': Censorship and/as prizing",
+      "title": "'Not censorship but selection': Censorship and/as prizing",
       "url": "http://gateway.proquest.com/openurl?ctx_ver=Z39.88-2003&xri:pqil:res_ver=0.2&res_id=xri:ilcs-us&rft_id=xri:ilcs:rec:abell:R04216711",
       "volume": "40"
     },
@@ -9123,7 +9125,7 @@
           "lastName": "Browne"
         }
       ],
-      "date": "2012-3",
+      "date": "2012-03",
       "extra": [
         "Citation Key: Brooks2012",
         "Publisher: Springer Netherlands",
@@ -9253,11 +9255,11 @@
       "itemID": 289,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN<sub>g</sub>ale\u2092fa276354552"
+        "ID: TN_gale_ofa276354552"
       ],
       "pages": "365",
       "publicationTitle": "Early Childhood Education Journal",
-      "title": "\"I Don't See Color\": Challenging assumptions about discussing race with young children",
+      "title": "\"I don't see color\": Challenging assumptions about discussing race with young children",
       "volume": "39"
     },
     {
@@ -9282,7 +9284,7 @@
       "itemID": 290,
       "itemType": "journalArticle",
       "notes": [
-        "10.1017/s0140525x06289118\u00a1br/\u00bf\u00a1br/\u00bf10.1080/13613320308200\u00a1br/\u00bf\u00a1br/\u00bf10.1080/08878739909555215\u00a1br/\u00bf\u00a1br/\u00bf10.2307/1289308\u00a1br/\u00bf\u00a1br/\u00bf10.1177/0042085900345003\u00a1br/\u00bf\u00a1br/\u00bf10.1023/a:1022813119743\u00a1br/\u00bf\u00a1br/\u00bf1573-1960\u00a1br/\u00bf\u00a1br/\u00bf10.1080/00405849209543550\u00a1br/\u00bf\u00a1br/\u00bf10.1080/00405849609543706\u00a1br/\u00bf\u00a1br/\u00bf10.17763/haer.59.3.058342114k266250\u00a1br/\u00bf\u00a1br/\u00bf10.17763/haer.72.1.c11617526l7k46v6\u00a1br/\u00bf\u00a1br/\u00bf10.1177/0013124507301577\u00a1br/\u00bf\u00a1br/\u00bf10.1177/002205748516700204\u00a1br/\u00bf\u00a1br/\u00bf10.17763/haer.63.3.h423221226v18648\u00a1br/\u00bf\u00a1br/\u00bf10.1207/s15327930pje7201\u2084\u00a1br/\u00bf\u00a1br/\u00bf10.3102/0013189x032003016\u00a1br/\u00bf\u00a1br/\u00bf10.1111/j.1469-5812.2006.00175.x\u00a1br/\u00bf\u00a1br/\u00bf10.1177/0022487100051003007\u00a1br/\u00bf\u00a1br/\u00bf10.1080/0022027041000229396\u00a1br/\u00bf\u00a1br/\u00bf10.4324/9780203420270\u00a1br/\u00bf\u00a1br/\u00bf10.2307/2295605"
+        "10.1017/s0140525x06289118\u00a1br/\u00bf\u00a1br/\u00bf10.1080/13613320308200\u00a1br/\u00bf\u00a1br/\u00bf10.1080/08878739909555215\u00a1br/\u00bf\u00a1br/\u00bf10.2307/1289308\u00a1br/\u00bf\u00a1br/\u00bf10.1177/0042085900345003\u00a1br/\u00bf\u00a1br/\u00bf10.1023/a:1022813119743\u00a1br/\u00bf\u00a1br/\u00bf1573-1960\u00a1br/\u00bf\u00a1br/\u00bf10.1080/00405849209543550\u00a1br/\u00bf\u00a1br/\u00bf10.1080/00405849609543706\u00a1br/\u00bf\u00a1br/\u00bf10.17763/haer.59.3.058342114k266250\u00a1br/\u00bf\u00a1br/\u00bf10.17763/haer.72.1.c11617526l7k46v6\u00a1br/\u00bf\u00a1br/\u00bf10.1177/0013124507301577\u00a1br/\u00bf\u00a1br/\u00bf10.1177/002205748516700204\u00a1br/\u00bf\u00a1br/\u00bf10.17763/haer.63.3.h423221226v18648\u00a1br/\u00bf\u00a1br/\u00bf10.1207/s15327930pje7201_4\u00a1br/\u00bf\u00a1br/\u00bf10.3102/0013189x032003016\u00a1br/\u00bf\u00a1br/\u00bf10.1111/j.1469-5812.2006.00175.x\u00a1br/\u00bf\u00a1br/\u00bf10.1177/0022487100051003007\u00a1br/\u00bf\u00a1br/\u00bf10.1080/0022027041000229396\u00a1br/\u00bf\u00a1br/\u00bf10.4324/9780203420270\u00a1br/\u00bf\u00a1br/\u00bf10.2307/2295605"
       ],
       "pages": "371-385",
       "publicationTitle": "The Urban review",
@@ -9351,7 +9353,7 @@
           "tag": "Teachers"
         }
       ],
-      "title": "The oppressor within: A counterstory of race, repression, and teacher reflection",
+      "title": "The oppressor within: a counterstory of race, repression, and teacher reflection",
       "volume": "40"
     },
     {
@@ -9374,7 +9376,7 @@
       "itemID": 291,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN\u209bpringer<sub>j</sub>our10.1007/s12109-006-0012-6"
+        "ID: TN_springer_jour10.1007/s12109-006-0012-6"
       ],
       "pages": "3-26",
       "publicationTitle": "Publishing Research Quarterly",
@@ -9393,7 +9395,7 @@
           "lastName": "Johnson"
         }
       ],
-      "date": "2017-6",
+      "date": "2017-06",
       "extra": [
         "Citation Key: Johnson2017",
         "Publisher: Springer Nature B.V",
@@ -9420,7 +9422,7 @@
           "lastName": "Laing"
         }
       ],
-      "date": "2017-9",
+      "date": "2017-09",
       "extra": [
         "Citation Key: Laing2017",
         "Publisher: Springer US",
@@ -9471,7 +9473,7 @@
       "itemID": 294,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN\u209bpringer<sub>j</sub>our10.1007/s12109-018-9573-4"
+        "ID: TN_springer_jour10.1007/s12109-018-9573-4"
       ],
       "pages": "207-217",
       "publicationTitle": "Publishing Research Quarterly",
@@ -9499,7 +9501,7 @@
       "itemID": 295,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN\u209aroquest2280931610"
+        "ID: TN_proquest2280931610"
       ],
       "pages": "704-709",
       "publicationTitle": "Publishing Research Quarterly",
@@ -9638,7 +9640,7 @@
       "itemID": 297,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN\u2091lsevier\u209bdoi\u20810\u2081016<sub>jc</sub>hb\u2082007\u20808\u208004"
+        "ID: TN_elsevier_sdoi_10_1016_j_chb_2007_08_004"
       ],
       "pages": "1977-1992",
       "publicationTitle": "Computers in Human Behavior",
@@ -9675,7 +9677,7 @@
       "itemID": 298,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN<sub>g</sub>ale\u2092fa484925407"
+        "ID: TN_gale_ofa484925407"
       ],
       "pages": "82",
       "publicationTitle": "International Journal of Child-Computer Interaction",
@@ -9717,7 +9719,7 @@
       "itemID": 299,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN\u2091lsevier\u209bdoi\u20810\u2081016<sub>jj</sub>busres\u2082013\u20803\u208033"
+        "ID: TN_elsevier_sdoi_10_1016_j_jbusres_2013_03_033"
       ],
       "pages": "464-470",
       "publicationTitle": "Journal of Business Research",
@@ -9727,7 +9729,7 @@
     {
       "DOI": "10.1016/j.jesp.2019.04.008",
       "ISSN": "0022-1031",
-      "abstractNote": "In this research we examine how normative expressions of prejudice shape university communities. Across four studies, we examine the prevalence of a former university mascot depicting harmful stereotypes about Native Americans and how exposure to that mascot influences people's attitudes and behaviors. In Study 1, images of the mascot persist on \u00bf10% of university apparel worn by students, in 50% of campus spaces, and in 5% of images searched online. Surveying students on this campus, we find that students with lower (higher) reported explicit prejudice also tended to have lower (higher) belonging at the university (Study 2). In two final experimental studies (N = 683), when compared to stereotype free university advertisements exposure to the stereotypic mascot reduced donations to the university by 5.5%, and in particular, among people low versus high in explicit prejudice (Studies 3 and 4). Overall, these findings suggest that institutional norms play an important role in expressions of prejudice and experiences of belonging. \u2022A mascot depicting Native American stereotypes is prevalent at one university campus.\u2022Exposure to the stereotypic mascot reduced university donations by 5.5%.\u2022People low in explicit prejudice report lower belonging when exposed to the mascot.",
+      "abstractNote": "In this research we examine how normative expressions of prejudice shape university communities. Across four studies, we examine the prevalence of a former university mascot depicting harmful stereotypes about Native Americans and how exposure to that mascot influences people's attitudes and behaviors. In Study 1, images of the mascot persist on \u00bf10\u2022A mascot depicting Native American stereotypes is prevalent at one university campus.\u2022Exposure to the stereotypic mascot reduced university donations by 5.5",
       "citationKey": "Kraus2019",
       "creators": [
         {
@@ -9823,7 +9825,7 @@
       "itemID": 301,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN\u2091lsevier\u209bdoi\u20810\u2081016<sub>j</sub>\u209aoetic\u2082008\u20802\u208004"
+        "ID: TN_elsevier_sdoi_10_1016_j_poetic_2008_02_004"
       ],
       "pages": "148-165",
       "publicationTitle": "Poetics",
@@ -9850,7 +9852,7 @@
       "itemID": 302,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN\u2091lsevier\u209bdoi\u20810\u2081016<sub>j</sub>\u209aoetic\u2082010\u20811\u208003"
+        "ID: TN_elsevier_sdoi_10_1016_j_poetic_2010_11_003"
       ],
       "pages": "64-84",
       "publicationTitle": "Poetics",
@@ -9886,7 +9888,7 @@
       "itemID": 303,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN\u2091lsevier\u209bdoi\u20810\u2081016<sub>j</sub>\u209aoetic\u2082015\u20809\u208001"
+        "ID: TN_elsevier_sdoi_10_1016_j_poetic_2015_09_001"
       ],
       "pages": "25-37",
       "publicationTitle": "Poetics",
@@ -9955,7 +9957,7 @@
           "lastName": "Fox"
         }
       ],
-      "date": "2003-2",
+      "date": "2003-02",
       "extra": [
         "Citation Key: Fox2003",
         "Publisher: Elsevier Ltd"
@@ -9988,7 +9990,7 @@
       "itemID": 306,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN\u2091lsevier\u209bdoi\u20810\u2081016<sub>S</sub>0304\u208422X\u20803\u20800037\u2088"
+        "ID: TN_elsevier_sdoi_10_1016_S0304_422X_03_00037_8"
       ],
       "pages": "259-281",
       "publicationTitle": "Poetics",
@@ -10040,7 +10042,7 @@
       "itemID": 308,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN\u2091lsevier\u209bdoi\u20810\u2081016<sub>S</sub>0304\u208422X\u20897\u20800018\u2081"
+        "ID: TN_elsevier_sdoi_10_1016_S0304_422X_97_00018_1"
       ],
       "pages": "265-280",
       "publicationTitle": "Poetics",
@@ -10147,7 +10149,7 @@
       "itemID": 310,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN\u209bpringer<sub>j</sub>our1010081830778"
+        "ID: TN_springer_jour1010081830778"
       ],
       "pages": "387-409",
       "publicationTitle": "Continental Philosophy Review",
@@ -10215,7 +10217,7 @@
       "itemID": 312,
       "itemType": "journalArticle",
       "notes": [
-        "10.1207/s15430421tip4203\u2085\u00a1br/\u00bf\u00a1br/\u00bf10.1111/j.1469-5812.2004.00058.x\u00a1br/\u00bf\u00a1br/\u00bf10.1007/s11256-005-0009-z\u00a1br/\u00bf\u00a1br/\u00bf10.1177/107780040200800106\u00a1br/\u00bf\u00a1br/\u00bf10.1086/443894\u00a1br/\u00bf\u00a1br/\u00bf10.1111/j.1741-5446.2001.00467.x\u00a1br/\u00bf\u00a1br/\u00bf10.4324/9780203880371\u00a1br/\u00bf\u00a1br/\u00bf10.1177/0022487101052002002\u00a1br/\u00bf\u00a1br/\u00bf10.2307/797566\u00a1br/\u00bf\u00a1br/\u00bf10.1177/002248718904000202\u00a1br/\u00bf\u00a1br/\u00bf10.1080/713845282\u00a1br/\u00bf\u00a1br/\u00bf1532-6993\u00a1br/\u00bf\u00a1br/\u00bf10.1080/1361332052000340971\u00a1br/\u00bf\u00a1br/\u00bf10.1080/01596300701801278\u00a1br/\u00bf\u00a1br/\u00bf10.17763/haer.79.2.nu3436017730384w\u00a1br/\u00bf\u00a1br/\u00bf10.1080/13613324.2012.674027\u00a1br/\u00bf\u00a1br/\u00bf10.1080/10665684.2011.539472\u00a1br/\u00bf\u00a1br/\u00bf10.1002/j.1556-6678.2008.tb00517.x\u00a1br/\u00bf\u00a1br/\u00bf10.1080/095183998236863\u00a1br/\u00bf\u00a1br/\u00bf10.2307/1228886\u00a1br/\u00bf\u00a1br/\u00bf10.1177/0042085999335004\u00a1br/\u00bf\u00a1br/\u00bf10.1177/1532708608321504\u00a1br/\u00bf\u00a1br/\u00bf10.1080/13613320902995491\u00a1br/\u00bf\u00a1br/\u00bf10.2307/800672\u00a1br/\u00bf\u00a1br/\u00bf10.1080/10665680490422089\u00a1br/\u00bf\u00a1br/\u00bf10.1207/s15327892mcp0504\u2082\u00a1br/\u00bf\u00a1br/\u00bf10.1080/0951839032000033509\u00a1br/\u00bf\u00a1br/\u00bf10.1080/00131857.2014.989952\u00a1br/\u00bf\u00a1br/\u00bf10.1177/1468796806068323\u00a1br/\u00bf\u00a1br/\u00bf10.3102/0013189x021002020\u00a1br/\u00bf\u00a1br/\u00bf10.3102/00028312043004701\u00a1br/\u00bf\u00a1br/\u00bf10.1080/13613320600807550\u00a1br/\u00bf\u00a1br/\u00bf10.1177/0022487195046004005"
+        "10.1207/s15430421tip4203_5\u00a1br/\u00bf\u00a1br/\u00bf10.1111/j.1469-5812.2004.00058.x\u00a1br/\u00bf\u00a1br/\u00bf10.1007/s11256-005-0009-z\u00a1br/\u00bf\u00a1br/\u00bf10.1177/107780040200800106\u00a1br/\u00bf\u00a1br/\u00bf10.1086/443894\u00a1br/\u00bf\u00a1br/\u00bf10.1111/j.1741-5446.2001.00467.x\u00a1br/\u00bf\u00a1br/\u00bf10.4324/9780203880371\u00a1br/\u00bf\u00a1br/\u00bf10.1177/0022487101052002002\u00a1br/\u00bf\u00a1br/\u00bf10.2307/797566\u00a1br/\u00bf\u00a1br/\u00bf10.1177/002248718904000202\u00a1br/\u00bf\u00a1br/\u00bf10.1080/713845282\u00a1br/\u00bf\u00a1br/\u00bf1532-6993\u00a1br/\u00bf\u00a1br/\u00bf10.1080/1361332052000340971\u00a1br/\u00bf\u00a1br/\u00bf10.1080/01596300701801278\u00a1br/\u00bf\u00a1br/\u00bf10.17763/haer.79.2.nu3436017730384w\u00a1br/\u00bf\u00a1br/\u00bf10.1080/13613324.2012.674027\u00a1br/\u00bf\u00a1br/\u00bf10.1080/10665684.2011.539472\u00a1br/\u00bf\u00a1br/\u00bf10.1002/j.1556-6678.2008.tb00517.x\u00a1br/\u00bf\u00a1br/\u00bf10.1080/095183998236863\u00a1br/\u00bf\u00a1br/\u00bf10.2307/1228886\u00a1br/\u00bf\u00a1br/\u00bf10.1177/0042085999335004\u00a1br/\u00bf\u00a1br/\u00bf10.1177/1532708608321504\u00a1br/\u00bf\u00a1br/\u00bf10.1080/13613320902995491\u00a1br/\u00bf\u00a1br/\u00bf10.2307/800672\u00a1br/\u00bf\u00a1br/\u00bf10.1080/10665680490422089\u00a1br/\u00bf\u00a1br/\u00bf10.1207/s15327892mcp0504_2\u00a1br/\u00bf\u00a1br/\u00bf10.1080/0951839032000033509\u00a1br/\u00bf\u00a1br/\u00bf10.1080/00131857.2014.989952\u00a1br/\u00bf\u00a1br/\u00bf10.1177/1468796806068323\u00a1br/\u00bf\u00a1br/\u00bf10.3102/0013189x021002020\u00a1br/\u00bf\u00a1br/\u00bf10.3102/00028312043004701\u00a1br/\u00bf\u00a1br/\u00bf10.1080/13613320600807550\u00a1br/\u00bf\u00a1br/\u00bf10.1177/0022487195046004005"
       ],
       "pages": "1-19",
       "publicationTitle": "Educational studies (Ames)",
@@ -10650,7 +10652,7 @@
           "lastName": "Wharton"
         }
       ],
-      "date": "2018-9",
+      "date": "2018-09",
       "extra": [
         "Citation Key: Phruksachart2018",
         "Edition: Rev. ed",
@@ -10661,7 +10663,7 @@
       "itemID": 316,
       "itemType": "journalArticle",
       "notes": [
-        "\u00a1b\u00bfFrom Duplicate 1 (\u00a1i\u00bfFrom cover to cover : evaluating and reviewing children's books\u00a1/i\u00bf - Horning, Kathleen T)\u00a1br/\u00bf\u00a1/b\u00bf\u00a1br/\u00bfIncludes bibliographical references (pages 181-212) and index; ID: 01UA<sub>A</sub>LMA21452464220003843\u00a1br/\u00bf\u00a1br/\u00bf\u00a1b\u00bfFrom Duplicate 2 (\u00a1i\u00bfThe review as art and communication\u00a1/i\u00bf - Skidmore, Joey)\u00a1br/\u00bf\u00a1/b\u00bf\u00a1br/\u00bfDescription based upon print version of record.; Description based on online resource; title from PDF title page (ebrary, viewed September 17, 2014).; ID: 01UA<sub>A</sub>LMA51544193970003843\u00a1br/\u00bf\u00a1br/\u00bf\u00a1b\u00bfFrom Duplicate 5 (\u00a1i\u00bfEditorial: Critical literacy revisited: Writing as critique\u00a1/i\u00bf - Janks, Hilary; Vasquez, Vivian)\u00a1br/\u00bf\u00a1/b\u00bf\u00a1br/\u00bfSource type: Scholarly Journals; Object type: Editorial; Object type: Commentary; Copyright: Copyright University of Waikato, Department of English May 2011; DOCID: 2602001211; PCID: 67792272; PMID: 155333; ProvJournalCode: NGTC; PublisherXID: ICANGTC<sub>N</sub>GTC<sub>v</sub>10n1\u20820110501541\u00a1br/\u00bf\u00a1br/\u00bf\u00a1b\u00bfFrom Duplicate 8 (\u00a1i\u00bfThe culture and commerce of publishing in the 21st century\u00a1/i\u00bf - Greco, Albert N)\u00a1br/\u00bf\u00a1/b\u00bf\u00a1br/\u00bfIncludes bibliographical references (p. 223]-256) and index; ID: 01UA<sub>A</sub>LMA21436653860003843\u00a1br/\u00bf\u00a1br/\u00bf\u00a1b\u00bfFrom Duplicate 9 (\u00a1i\u00bfQuality and influence in literary work: evaluating the \u2018educated imagination\u2019\u00a1/i\u00bf - Zuccala, Alesia)\u00a1br/\u00bf\u00a1/b\u00bf\u00a1br/\u00bfID: TN\u2092xford10.1093/reseval/rvs017\u00a1br/\u00bf\u00a1br/\u00bf\u00a1b\u00bfFrom Duplicate 10 (\u00a1i\u00bfProfiling review writers in the library periodical literature\u00a1/i\u00bf - Buttlar, Lois J)\u00a1br/\u00bf\u00a1/b\u00bf\u00a1br/\u00bfID: TN<sub>g</sub>ale\u2092fa9375756\u00a1br/\u00bf\u00a1br/\u00bf\u00a1b\u00bfFrom Duplicate 11 (\u00a1i\u00bfHerd behavior in purchasing books online\u00a1/i\u00bf - Chen, Yi-Fen)\u00a1br/\u00bf\u00a1/b\u00bf\u00a1br/\u00bfID: TN\u2091lsevier\u209bdoi\u20810\u2081016<sub>jc</sub>hb\u2082007\u20808\u208004\u00a1br/\u00bf\u00a1br/\u00bf\u00a1b\u00bfFrom Duplicate 12 (\u00a1i\u00bfReading and writing book reviews across the disciplines\u00a1/i\u00bf - Hartley, James)\u00a1br/\u00bf\u00a1/b\u00bf\u00a1br/\u00bfID: TN<sub>w</sub>j10.1002/asi.20399\u00a1br/\u00bf\u00a1br/\u00bf\u00a1b\u00bfFrom Duplicate 13 (\u00a1i\u00bfMotives for and consequences of reading internet book reviews\u00a1/i\u00bf - Kuei Huang, Yun; Yang, Wen I)\u00a1br/\u00bf\u00a1/b\u00bf\u00a1br/\u00bfID: TN\u2091merald\u209b10.1108/02640470810851770\u00a1br/\u00bf\u00a1br/\u00bf\u00a1b\u00bfFrom Duplicate 14 (\u00a1i\u00bfNegro Character As Seen by White Authors\u00a1/i\u00bf - Brown, Sterling A)\u00a1br/\u00bf\u00a1/b\u00bf\u00a1br/\u00bf25\u00a1br/\u00bf\u00a1br/\u00bf\u00a1b\u00bfFrom Duplicate 15 (\u00a1i\u00bfBlurred Of Mouth\u00a1/i\u00bf - Chia, Jessica)\u00a1br/\u00bf\u00a1/b\u00bf\u00a1br/\u00bfID: TN\u209aroquest2280498596\u00a1br/\u00bf\u00a1br/\u00bf\u00a1b\u00bfFrom Duplicate 17 (\u00a1i\u00bfGoodreads reviews to assess the wider impacts of books\u00a1/i\u00bf - Kousha, Kayvan; Thelwall, Mike; Abdoli, Mahshid)\u00a1br/\u00bf\u00a1/b\u00bf\u00a1br/\u00bfID: TN\u209aroquest1919396787\u00a1br/\u00bf\u00a1br/\u00bf\u00a1b\u00bfFrom Duplicate 18 (\u00a1i\u00bfFinding Good Reads on Goodreads: Readers Take RA into Their Own Hands\u00a1/i\u00bf - Naik, Yesha)\u00a1br/\u00bf\u00a1/b\u00bf\u00a1br/\u00bfID: TN\u209aroquest1021835587\u00a1br/\u00bf\u00a1br/\u00bf\u00a1b\u00bfFrom Duplicate 19 (\u00a1i\u00bfReading Online: Updating the State of the Discipline\u00a1/i\u00bf - Murray, Simone)\u00a1br/\u00bf\u00a1/b\u00bf\u00a1br/\u00bfID: TN\u209aroquest2159297257\u00a1br/\u00bf\u00a1br/\u00bf\u00a1b\u00bfFrom Duplicate 20 (\u00a1i\u00bfThe company we keep : an ethics of fiction\u00a1/i\u00bf - Booth, Wayne C)\u00a1br/\u00bf\u00a1/b\u00bf\u00a1br/\u00bf&amp;quot;Bibliography of ethical criticism&amp;quot;: p. 505-534.; Includes bibliographies and indexes.; ID: 01UA<sub>A</sub>LMA21405686220003843\u00a1br/\u00bf\u00a1br/\u00bf\u00a1b\u00bfFrom Duplicate 23 (\u00a1i\u00bfPublishers, Readers, and Digital Engagement\u00a1/i\u00bf - Martens, Marianne)\u00a1br/\u00bf\u00a1/b\u00bf\u00a1br/\u00bfID: TN\u209bpringer\u209b978-1-137-51446-2\u208375745\u00a1br/\u00bf\u00a1br/\u00bf\u00a1b\u00bfFrom Duplicate 24 (\u00a1i\u00bfSocial responsibility in librarianship : essays on equality\u00a1/i\u00bf - MacCann, Donnarae)\u00a1br/\u00bf\u00a1/b\u00bf\u00a1br/\u00bfIncludes bibliographical references.; ID: dedupmrg80437634\u00a1br/\u00bf\u00a1br/\u00bf\u00a1b\u00bfFrom Duplicate 26 (\u00a1i\u00bfEssaying the Review\u00a1/i\u00bf - Paul, Lissa)\u00a1br/\u00bf\u00a1/b\u00bf\u00a1br/\u00bfID: TN\u209aroquest1312023762\u00a1br/\u00bf\u00a1br/\u00bf\u00a1b\u00bfFrom Duplicate 27 (\u00a1i\u00bfGrowing Number of Bloggers See Their Work as Journalism\u00a1/i\u00bf - Ji, Hong; Sheehy, Michael)\u00a1br/\u00bf\u00a1/b\u00bf\u00a1br/\u00bfID: TN\u209aroquest820481867\u00a1br/\u00bf\u00a1br/\u00bf\u00a1b\u00bfFrom Duplicate 28 (\u00a1i\u00bfThe pleasure of the text\u00a1/i\u00bf - Barthes, Roland)\u00a1br/\u00bf\u00a1/b\u00bf\u00a1br/\u00bfTranslation of Le plaisir du texte.; ID: 01UA<sub>A</sub>LMA21399200520003843\u00a1br/\u00bf\u00a1br/\u00bf\u00a1b\u00bfFrom Duplicate 29 (\u00a1i\u00bfA Reviewer's Story\u00a1/i\u00bf - Hearne, Betsy)\u00a1br/\u00bf\u00a1/b\u00bf\u00a1br/\u00bfID: TN<sub>u</sub>cpj10.1086/601047\u00a1br/\u00bf\u00a1br/\u00bf\u00a1b\u00bfFrom Duplicate 30 (\u00a1i\u00bfUnderstanding Cultural Omnivorousness: Or, the Myth of the Cultural Omnivore\u00a1/i\u00bf - Warde, Alan; Wright, David; Gayo-Cal, Modesto)\u00a1br/\u00bf\u00a1/b\u00bf\u00a1br/\u00bfID: TN\u209bage\u209b10\u2081177\u2081749975507078185\u00a1br/\u00bf\u00a1br/\u00bf\u00a1b\u00bfFrom Duplicate 31 (\u00a1i\u00bfCultural capital and the literary field\u00a1/i\u00bf - Wright, David)\u00a1br/\u00bf\u00a1/b\u00bf\u00a1br/\u00bfID: TN<sub>i</sub>nformaworld\u209b10\u2081080\u20809548960600712934"
+        "\u00a1b\u00bfFrom Duplicate 1 (\u00a1i\u00bfFrom cover to cover : evaluating and reviewing children's books\u00a1/i\u00bf - Horning, Kathleen T)\u00a1br/\u00bf\u00a1/b\u00bf\u00a1br/\u00bfIncludes bibliographical references (pages 181-212) and index; ID: 01UA_ALMA21452464220003843\u00a1br/\u00bf\u00a1br/\u00bf\u00a1b\u00bfFrom Duplicate 2 (\u00a1i\u00bfThe review as art and communication\u00a1/i\u00bf - Skidmore, Joey)\u00a1br/\u00bf\u00a1/b\u00bf\u00a1br/\u00bfDescription based upon print version of record.; Description based on online resource; title from PDF title page (ebrary, viewed September 17, 2014).; ID: 01UA_ALMA51544193970003843\u00a1br/\u00bf\u00a1br/\u00bf\u00a1b\u00bfFrom Duplicate 5 (\u00a1i\u00bfEditorial: Critical literacy revisited: Writing as critique\u00a1/i\u00bf - Janks, Hilary; Vasquez, Vivian)\u00a1br/\u00bf\u00a1/b\u00bf\u00a1br/\u00bfSource type: Scholarly Journals; Object type: Editorial; Object type: Commentary; Copyright: Copyright University of Waikato, Department of English May 2011; DOCID: 2602001211; PCID: 67792272; PMID: 155333; ProvJournalCode: NGTC; PublisherXID: ICANGTC_NGTC_v10n1_20110501541\u00a1br/\u00bf\u00a1br/\u00bf\u00a1b\u00bfFrom Duplicate 8 (\u00a1i\u00bfThe culture and commerce of publishing in the 21st century\u00a1/i\u00bf - Greco, Albert N)\u00a1br/\u00bf\u00a1/b\u00bf\u00a1br/\u00bfIncludes bibliographical references (p. 223]-256) and index; ID: 01UA_ALMA21436653860003843\u00a1br/\u00bf\u00a1br/\u00bf\u00a1b\u00bfFrom Duplicate 9 (\u00a1i\u00bfQuality and influence in literary work: evaluating the \u2018educated imagination\u2019\u00a1/i\u00bf - Zuccala, Alesia)\u00a1br/\u00bf\u00a1/b\u00bf\u00a1br/\u00bfID: TN_oxford10.1093/reseval/rvs017\u00a1br/\u00bf\u00a1br/\u00bf\u00a1b\u00bfFrom Duplicate 10 (\u00a1i\u00bfProfiling review writers in the library periodical literature\u00a1/i\u00bf - Buttlar, Lois J)\u00a1br/\u00bf\u00a1/b\u00bf\u00a1br/\u00bfID: TN_gale_ofa9375756\u00a1br/\u00bf\u00a1br/\u00bf\u00a1b\u00bfFrom Duplicate 11 (\u00a1i\u00bfHerd behavior in purchasing books online\u00a1/i\u00bf - Chen, Yi-Fen)\u00a1br/\u00bf\u00a1/b\u00bf\u00a1br/\u00bfID: TN_elsevier_sdoi_10_1016_j_chb_2007_08_004\u00a1br/\u00bf\u00a1br/\u00bf\u00a1b\u00bfFrom Duplicate 12 (\u00a1i\u00bfReading and writing book reviews across the disciplines\u00a1/i\u00bf - Hartley, James)\u00a1br/\u00bf\u00a1/b\u00bf\u00a1br/\u00bfID: TN_wj10.1002/asi.20399\u00a1br/\u00bf\u00a1br/\u00bf\u00a1b\u00bfFrom Duplicate 13 (\u00a1i\u00bfMotives for and consequences of reading internet book reviews\u00a1/i\u00bf - Kuei Huang, Yun; Yang, Wen I)\u00a1br/\u00bf\u00a1/b\u00bf\u00a1br/\u00bfID: TN_emerald_s10.1108/02640470810851770\u00a1br/\u00bf\u00a1br/\u00bf\u00a1b\u00bfFrom Duplicate 14 (\u00a1i\u00bfNegro Character As Seen by White Authors\u00a1/i\u00bf - Brown, Sterling A)\u00a1br/\u00bf\u00a1/b\u00bf\u00a1br/\u00bf25\u00a1br/\u00bf\u00a1br/\u00bf\u00a1b\u00bfFrom Duplicate 15 (\u00a1i\u00bfBlurred Of Mouth\u00a1/i\u00bf - Chia, Jessica)\u00a1br/\u00bf\u00a1/b\u00bf\u00a1br/\u00bfID: TN_proquest2280498596\u00a1br/\u00bf\u00a1br/\u00bf\u00a1b\u00bfFrom Duplicate 17 (\u00a1i\u00bfGoodreads reviews to assess the wider impacts of books\u00a1/i\u00bf - Kousha, Kayvan; Thelwall, Mike; Abdoli, Mahshid)\u00a1br/\u00bf\u00a1/b\u00bf\u00a1br/\u00bfID: TN_proquest1919396787\u00a1br/\u00bf\u00a1br/\u00bf\u00a1b\u00bfFrom Duplicate 18 (\u00a1i\u00bfFinding Good Reads on Goodreads: Readers Take RA into Their Own Hands\u00a1/i\u00bf - Naik, Yesha)\u00a1br/\u00bf\u00a1/b\u00bf\u00a1br/\u00bfID: TN_proquest1021835587\u00a1br/\u00bf\u00a1br/\u00bf\u00a1b\u00bfFrom Duplicate 19 (\u00a1i\u00bfReading Online: Updating the State of the Discipline\u00a1/i\u00bf - Murray, Simone)\u00a1br/\u00bf\u00a1/b\u00bf\u00a1br/\u00bfID: TN_proquest2159297257\u00a1br/\u00bf\u00a1br/\u00bf\u00a1b\u00bfFrom Duplicate 20 (\u00a1i\u00bfThe company we keep : an ethics of fiction\u00a1/i\u00bf - Booth, Wayne C)\u00a1br/\u00bf\u00a1/b\u00bf\u00a1br/\u00bf&quot;Bibliography of ethical criticism&quot;: p. 505-534.; Includes bibliographies and indexes.; ID: 01UA_ALMA21405686220003843\u00a1br/\u00bf\u00a1br/\u00bf\u00a1b\u00bfFrom Duplicate 23 (\u00a1i\u00bfPublishers, Readers, and Digital Engagement\u00a1/i\u00bf - Martens, Marianne)\u00a1br/\u00bf\u00a1/b\u00bf\u00a1br/\u00bfID: TN_springer_s978-1-137-51446-2_375745\u00a1br/\u00bf\u00a1br/\u00bf\u00a1b\u00bfFrom Duplicate 24 (\u00a1i\u00bfSocial responsibility in librarianship : essays on equality\u00a1/i\u00bf - MacCann, Donnarae)\u00a1br/\u00bf\u00a1/b\u00bf\u00a1br/\u00bfIncludes bibliographical references.; ID: dedupmrg80437634\u00a1br/\u00bf\u00a1br/\u00bf\u00a1b\u00bfFrom Duplicate 26 (\u00a1i\u00bfEssaying the Review\u00a1/i\u00bf - Paul, Lissa)\u00a1br/\u00bf\u00a1/b\u00bf\u00a1br/\u00bfID: TN_proquest1312023762\u00a1br/\u00bf\u00a1br/\u00bf\u00a1b\u00bfFrom Duplicate 27 (\u00a1i\u00bfGrowing Number of Bloggers See Their Work as Journalism\u00a1/i\u00bf - Ji, Hong; Sheehy, Michael)\u00a1br/\u00bf\u00a1/b\u00bf\u00a1br/\u00bfID: TN_proquest820481867\u00a1br/\u00bf\u00a1br/\u00bf\u00a1b\u00bfFrom Duplicate 28 (\u00a1i\u00bfThe pleasure of the text\u00a1/i\u00bf - Barthes, Roland)\u00a1br/\u00bf\u00a1/b\u00bf\u00a1br/\u00bfTranslation of Le plaisir du texte.; ID: 01UA_ALMA21399200520003843\u00a1br/\u00bf\u00a1br/\u00bf\u00a1b\u00bfFrom Duplicate 29 (\u00a1i\u00bfA Reviewer's Story\u00a1/i\u00bf - Hearne, Betsy)\u00a1br/\u00bf\u00a1/b\u00bf\u00a1br/\u00bfID: TN_ucpj10.1086/601047\u00a1br/\u00bf\u00a1br/\u00bf\u00a1b\u00bfFrom Duplicate 30 (\u00a1i\u00bfUnderstanding Cultural Omnivorousness: Or, the Myth of the Cultural Omnivore\u00a1/i\u00bf - Warde, Alan; Wright, David; Gayo-Cal, Modesto)\u00a1br/\u00bf\u00a1/b\u00bf\u00a1br/\u00bfID: TN_sage_s10_1177_1749975507078185\u00a1br/\u00bf\u00a1br/\u00bf\u00a1b\u00bfFrom Duplicate 31 (\u00a1i\u00bfCultural capital and the literary field\u00a1/i\u00bf - Wright, David)\u00a1br/\u00bf\u00a1/b\u00bf\u00a1br/\u00bfID: TN_informaworld_s10_1080_09548960600712934"
       ],
       "pages": "221",
       "publicationTitle": "Callaloo",
@@ -10776,7 +10778,7 @@
       "itemID": 319,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN<sub>i</sub>nformaworld\u209b10\u2081080\u2080740770X\u2082019\u2081671106"
+        "ID: TN_informaworld_s10_1080_0740770X_2019_1671106"
       ],
       "pages": "276-295",
       "publicationTitle": "Women & Performance: a journal of feminist theory",
@@ -10808,11 +10810,11 @@
       "itemID": 320,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN<sub>i</sub>nformaworld\u209b10\u2081080\u20808900520701315269"
+        "ID: TN_informaworld_s10_1080_08900520701315269"
       ],
       "pages": "37-48",
       "publicationTitle": "Journal of Mass Media Ethics",
-      "title": "\"If I Break a Rule, What Do I Do, Fire Myself?\" ethics codes of independent blogs",
+      "title": "\"If I break a rule, what do I do, fire myself?\" ethics codes of independent blogs",
       "volume": "22"
     },
     {
@@ -10893,7 +10895,7 @@
       "itemID": 322,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN<sub>i</sub>nformaworld\u209b10\u2081080\u20809502386\u2082017\u2081374423"
+        "ID: TN_informaworld_s10_1080_09502386_2017_1374423"
       ],
       "pages": "975-996",
       "publicationTitle": "Cultural Studies",
@@ -10920,7 +10922,7 @@
       "itemID": 323,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN<sub>i</sub>nformaworld\u209b10\u2081080\u20809502386\u2082018\u2081549265"
+        "ID: TN_informaworld_s10_1080_09502386_2018_1549265"
       ],
       "pages": "143-166",
       "publicationTitle": "Cultural Studies",
@@ -10947,7 +10949,7 @@
       "itemID": 324,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN<sub>i</sub>nformaworld\u209b10\u2081080\u20809548960600712934"
+        "ID: TN_informaworld_s10_1080_09548960600712934"
       ],
       "pages": "123-139",
       "publicationTitle": "Cultural Trends",
@@ -11303,7 +11305,7 @@
           "tag": "United States"
         }
       ],
-      "title": "Teaching intolerance: Anti-indian imagery, racial politics, and (Anti)Racist pedagogy",
+      "title": "Teaching intolerance: Anti-indian imagery, racial politics, and (anti)racist pedagogy",
       "volume": "30"
     },
     {
@@ -11467,7 +11469,7 @@
     {
       "DOI": "10.1080/13614541.2015.1078618",
       "ISSN": "1361-4541",
-      "abstractNote": "Presents an investigation of contemporary American authors who write for youth. The methodology derives from Laurenson\u2019s study of the sociology of British authors. The study is based on the biographical and sociological data of the randomly selected 220 of 786 (27%) authors identified as first authors from American Library Association selected lists. Whites, women, and writers from the Northeast United States and West Coast dominate the field. Authors tend to be educated at high prestige colleges and universities and follow careers as writers, teachers, and fields in communications. Male and minority writers have increased in recent decades along with newer forms of artistic production.",
+      "abstractNote": "Presents an investigation of contemporary American authors who write for youth. The methodology derives from Laurenson\u2019s study of the sociology of British authors. The study is based on the biographical and sociological data of the randomly selected 220 of 786 (27",
       "citationKey": "Immroth2015",
       "creators": [
         {
@@ -11546,7 +11548,7 @@
       "itemID": 334,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN<sub>i</sub>nformaworld\u209b10\u2081080\u2081369118X\u2082017\u2081366540"
+        "ID: TN_informaworld_s10_1080_1369118X_2017_1366540"
       ],
       "pages": "232-249",
       "publicationTitle": "Information, Communication & Society",
@@ -11629,7 +11631,7 @@
       "itemID": 336,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN<sub>i</sub>nformaworld\u209b10\u2081080\u20815358593\u2082016\u2081183871"
+        "ID: TN_informaworld_s10_1080_15358593_2016_1183871"
       ],
       "pages": "4-24",
       "publicationTitle": "Review of Communication",
@@ -11871,7 +11873,7 @@
       "itemID": 342,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN<sub>u</sub>cpj10.1086/601047"
+        "ID: TN_ucpj10.1086/601047"
       ],
       "pages": "80-87",
       "publicationTitle": "The Library Quarterly",
@@ -11890,7 +11892,7 @@
           "lastName": "Carbado"
         }
       ],
-      "date": "2013-6",
+      "date": "2013-06",
       "extra": [
         "Citation Key: Carbado2013",
         "Publisher: University of Chicago Press"
@@ -11985,7 +11987,7 @@
       "itemID": 344,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN\u2092xford10.1093/elt/cct025"
+        "ID: TN_oxford10.1093/elt/cct025"
       ],
       "pages": "374-377",
       "publicationTitle": "Elt Journal",
@@ -12012,7 +12014,7 @@
       "itemID": 345,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN\u2092xford10.1093/esr/jcp039"
+        "ID: TN_oxford10.1093/esr/jcp039"
       ],
       "pages": "623-637",
       "publicationTitle": "European Sociological Review",
@@ -12099,7 +12101,7 @@
       "itemID": 347,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN\u2092xford10.1093/reseval/rvs017"
+        "ID: TN_oxford10.1093/reseval/rvs017"
       ],
       "pages": "229-241",
       "publicationTitle": "Research Evaluation",
@@ -12128,7 +12130,7 @@
       "itemID": 348,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN\u2091merald\u209b10.1108/02640470810851770"
+        "ID: TN_emerald_s10.1108/02640470810851770"
       ],
       "pages": "97-110",
       "publicationTitle": "The Electronic Library",
@@ -12155,7 +12157,7 @@
       "itemID": 349,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN\u2091merald\u209b10.1108/JD-07-2018-0104"
+        "ID: TN_emerald_s10.1108/JD-07-2018-0104"
       ],
       "pages": "612-626",
       "publicationTitle": "Journal of Documentation",
@@ -12205,7 +12207,7 @@
       "itemID": 351,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN<sub>i</sub>nformaworld\u209b10\u2081111<sub>c</sub>uri\u20812037"
+        "ID: TN_informaworld_s10_1111_curi_12037"
       ],
       "pages": "68-89",
       "publicationTitle": "Curriculum Inquiry",
@@ -12257,7 +12259,7 @@
       "itemID": 353,
       "itemType": "journalArticle",
       "notes": [
-        "10.2307/2167981\u00a1br/\u00bf\u00a1br/\u00bf10.1177/019685998601000201\u00a1br/\u00bf\u00a1br/\u00bf10.4324/9780203292990\u00a1br/\u00bf\u00a1br/\u00bf10.1017/cbo9780511812507\u00a1br/\u00bf\u00a1br/\u00bf10.1146/annurev.soc.28.110601.141107\u00a1br/\u00bf\u00a1br/\u00bf10.2307/3088900\u00a1br/\u00bf\u00a1br/\u00bf10.2307/2657316\u00a1br/\u00bf\u00a1br/\u00bf10.1086/230580\u00a1br/\u00bf\u00a1br/\u00bf10.1177/089124397011001004\u00a1br/\u00bf\u00a1br/\u00bf10.1023/a:1007068714468\u00a1br/\u00bf\u00a1br/\u00bf10.1016/s1537-4661(01)80009-x\u00a1br/\u00bf\u00a1br/\u00bf10.1525/sp.2002.49.4.521\u00a1br/\u00bf\u00a1br/\u00bf10.1215/9780822383659\u00a1br/\u00bf\u00a1br/\u00bf10.1177/026327696013002010\u00a1br/\u00bf\u00a1br/\u00bf1467-9558\u00a1br/\u00bf\u00a1br/\u00bf10.1177/0730888495022003002\u00a1br/\u00bf\u00a1br/\u00bf10.2307/1341787\u00a1br/\u00bf\u00a1br/\u00bf10.1093/sf/72.2.529\u00a1br/\u00bf\u00a1br/\u00bf10.1007/978-1-349-11902-8\u2082\u00a1br/\u00bf\u00a1br/\u00bf10.1086/229967\u00a1br/\u00bf\u00a1br/\u00bf10.1215/9780822381044\u00a1br/\u00bf\u00a1br/\u00bf10.1086/494918\u00a1br/\u00bf\u00a1br/\u00bf10.2307/1228940\u00a1br/\u00bf\u00a1br/\u00bf10.1007/978-1-4899-0818-6\u2085\u00a1br/\u00bf\u00a1br/\u00bf10.4324/9780203973431\u00a1br/\u00bf\u00a1br/\u00bf10.2307/2657409\u00a1br/\u00bf\u00a1br/\u00bf10.1215/9780822381044-006\u00a1br/\u00bf\u00a1br/\u00bf10.4324/9780203303979\u00a1br/\u00bf\u00a1br/\u00bf10.2747/0272-3638.14.2.194\u00a1br/\u00bf\u00a1br/\u00bf10.1017/cbo9780511625480\u00a1br/\u00bf\u00a1br/\u00bf10.1111/0735-2751.00074\u00a1br/\u00bf\u00a1br/\u00bf10.1177/0957926500011001003\u00a1br/\u00bf\u00a1br/\u00bf10.1177/089124101030001002\u00a1br/\u00bf\u00a1br/\u00bf10.1016/s0895-9935(03)12005-0\u00a1br/\u00bf\u00a1br/\u00bf10.1007/bf02193666\u00a1br/\u00bf\u00a1br/\u00bf10.1177/0891243287001002002\u00a1br/\u00bf\u00a1br/\u00bf10.2307/1388607\u00a1br/\u00bf\u00a1br/\u00bf10.1353/dem.2002.0037\u00a1br/\u00bf\u00a1br/\u00bf10.3102/00028312038004781"
+        "10.2307/2167981\u00a1br/\u00bf\u00a1br/\u00bf10.1177/019685998601000201\u00a1br/\u00bf\u00a1br/\u00bf10.4324/9780203292990\u00a1br/\u00bf\u00a1br/\u00bf10.1017/cbo9780511812507\u00a1br/\u00bf\u00a1br/\u00bf10.1146/annurev.soc.28.110601.141107\u00a1br/\u00bf\u00a1br/\u00bf10.2307/3088900\u00a1br/\u00bf\u00a1br/\u00bf10.2307/2657316\u00a1br/\u00bf\u00a1br/\u00bf10.1086/230580\u00a1br/\u00bf\u00a1br/\u00bf10.1177/089124397011001004\u00a1br/\u00bf\u00a1br/\u00bf10.1023/a:1007068714468\u00a1br/\u00bf\u00a1br/\u00bf10.1016/s1537-4661(01)80009-x\u00a1br/\u00bf\u00a1br/\u00bf10.1525/sp.2002.49.4.521\u00a1br/\u00bf\u00a1br/\u00bf10.1215/9780822383659\u00a1br/\u00bf\u00a1br/\u00bf10.1177/026327696013002010\u00a1br/\u00bf\u00a1br/\u00bf1467-9558\u00a1br/\u00bf\u00a1br/\u00bf10.1177/0730888495022003002\u00a1br/\u00bf\u00a1br/\u00bf10.2307/1341787\u00a1br/\u00bf\u00a1br/\u00bf10.1093/sf/72.2.529\u00a1br/\u00bf\u00a1br/\u00bf10.1007/978-1-349-11902-8_2\u00a1br/\u00bf\u00a1br/\u00bf10.1086/229967\u00a1br/\u00bf\u00a1br/\u00bf10.1215/9780822381044\u00a1br/\u00bf\u00a1br/\u00bf10.1086/494918\u00a1br/\u00bf\u00a1br/\u00bf10.2307/1228940\u00a1br/\u00bf\u00a1br/\u00bf10.1007/978-1-4899-0818-6_5\u00a1br/\u00bf\u00a1br/\u00bf10.4324/9780203973431\u00a1br/\u00bf\u00a1br/\u00bf10.2307/2657409\u00a1br/\u00bf\u00a1br/\u00bf10.1215/9780822381044-006\u00a1br/\u00bf\u00a1br/\u00bf10.4324/9780203303979\u00a1br/\u00bf\u00a1br/\u00bf10.2747/0272-3638.14.2.194\u00a1br/\u00bf\u00a1br/\u00bf10.1017/cbo9780511625480\u00a1br/\u00bf\u00a1br/\u00bf10.1111/0735-2751.00074\u00a1br/\u00bf\u00a1br/\u00bf10.1177/0957926500011001003\u00a1br/\u00bf\u00a1br/\u00bf10.1177/089124101030001002\u00a1br/\u00bf\u00a1br/\u00bf10.1016/s0895-9935(03)12005-0\u00a1br/\u00bf\u00a1br/\u00bf10.1007/bf02193666\u00a1br/\u00bf\u00a1br/\u00bf10.1177/0891243287001002002\u00a1br/\u00bf\u00a1br/\u00bf10.2307/1388607\u00a1br/\u00bf\u00a1br/\u00bf10.1353/dem.2002.0037\u00a1br/\u00bf\u00a1br/\u00bf10.3102/00028312038004781"
       ],
       "pages": "623-646",
       "publicationTitle": "Sociological theory",
@@ -12293,7 +12295,7 @@
           "tag": "Whiteness studies"
         }
       ],
-      "title": "\u201cWhat Group?\u201d Studying Whites and Whiteness in the Era of \u201cColor-Blindness\u201d",
+      "title": "\u201cWhat group?\u201d studying whites and whiteness in the era of \u201ccolor-blindness\u201d",
       "volume": "22"
     },
     {
@@ -12359,13 +12361,13 @@
           "tag": "Whiteness studies"
         }
       ],
-      "title": "Critical whiteness theories and the evangelical \u201cRace problem\u201d: Extending emerson and smith's divided by faith",
+      "title": "Critical whiteness theories and the evangelical \u201crace problem\u201d: Extending emerson and smith's divided by faith",
       "volume": "47"
     },
     {
       "DOI": "10.1111/j.1548-1492.2008.00020.x",
       "ISSN": "0161-7761",
-      "abstractNote": "In this article, I reflect on Signithia Fordham and John Ogbu's classic research on the \u201cburden of `acting White' \u201d to develop a long overdue dialogue between Africana studies and critical white studies. It highlights the dialectical nature of Fordham and Ogbu's philosophy of race and critical race theory by locating the origins of the \u201cburden of `acting White' \u201d in the work of W.E.B. Du Bois, who provides some of the intellectual foundations for this work. Following the work of F. W. Twine and C. Gallagher (2008), I then survey the field of critical whiteness studies and outline an emerging third wave in this interdisciplinary field. This new wave of research utilizes the following five elements that form its basic core: (1) the centrality of race and racism and their intersectionality with other forms of oppression",
+      "abstractNote": "In this article, I reflect on Signithia Fordham and John Ogbu's classic research on the \u201cburden of `acting White'\u2009\u201d to develop a long overdue dialogue between Africana studies and critical white studies. It highlights the dialectical nature of Fordham and Ogbu's philosophy of race and critical race theory by locating the origins of the \u201cburden of `acting White'\u2009\u201d in the work of W.E.B. Du Bois, who provides some of the intellectual foundations for this work. Following the work of F. W. Twine and C. Gallagher (2008), I then survey the field of critical whiteness studies and outline an emerging third wave in this interdisciplinary field. This new wave of research utilizes the following five elements that form its basic core: (1) the centrality of race and racism and their intersectionality with other forms of oppression",
       "citationKey": "Akom2008",
       "creators": [
         {
@@ -12478,7 +12480,7 @@
       "itemID": 356,
       "itemType": "journalArticle",
       "notes": [
-        "0264-3758; ID: TN<sub>c</sub>di<sub>g</sub>ale<sub>i</sub>nfotracacademiconefile<sub>A</sub>499880004"
+        "0264-3758; ID: TN_cdi_gale_infotracacademiconefile_A499880004"
       ],
       "pages": "557-572",
       "publicationTitle": "Journal of applied philosophy",
@@ -12507,7 +12509,7 @@
       "itemID": 357,
       "itemType": "journalArticle",
       "notes": [
-        "0264-3758; ID: TN<sub>c</sub>di<sub>g</sub>ale<sub>i</sub>nfotracacademiconefile<sub>A</sub>499880004"
+        "0264-3758; ID: TN_cdi_gale_infotracacademiconefile_A499880004"
       ],
       "pages": "557-572",
       "publicationTitle": "Journal of applied philosophy",
@@ -12536,7 +12538,7 @@
       "itemID": 358,
       "itemType": "journalArticle",
       "notes": [
-        "0264-3758; ID: TN<sub>c</sub>di<sub>g</sub>ale<sub>i</sub>nfotracacademiconefile<sub>A</sub>499880004"
+        "0264-3758; ID: TN_cdi_gale_infotracacademiconefile_A499880004"
       ],
       "pages": "557-572",
       "publicationTitle": "Journal of applied philosophy",
@@ -12565,11 +12567,11 @@
       "itemID": 359,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN<sub>c</sub>di<sub>g</sub>ale<sub>i</sub>nfotracacademiconefile<sub>A</sub>585000083"
+        "ID: TN_cdi_gale_infotracacademiconefile_A585000083"
       ],
       "pages": "257-267",
       "publicationTitle": "Journal of applied philosophy",
-      "title": "Resolving the tensions between white people's active investment in racial inequality and white ignorance: A response to marzia milazzo",
+      "title": "Resolving the tensions between white people's active investment in racial inequality and white ignorance: a response to marzia milazzo",
       "volume": "36"
     },
     {
@@ -12610,7 +12612,7 @@
       "itemID": 360,
       "itemType": "journalArticle",
       "notes": [
-        "Related Persons: Forte, Andrea; Prilla, Michael; Vivacqua, Adriana; M\u00fcller, Claudia; Robert, Jr, Lionel; ID: TN\u2090cm3154512"
+        "Related Persons: Forte, Andrea; Prilla, Michael; Vivacqua, Adriana; M\u00fcller, Claudia; Robert, Jr, Lionel; ID: TN_acm3154512"
       ],
       "pages": "117-121",
       "title": "Understanding book popularity on goodreads"
@@ -12641,7 +12643,7 @@
       "itemID": 361,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN\u209bage\u209b10\u2081177\u2080001699312456858"
+        "ID: TN_sage_s10_1177_0001699312456858"
       ],
       "pages": "351-365",
       "publicationTitle": "Acta Sociologica",
@@ -12843,7 +12845,7 @@
           "tag": "urban education"
         }
       ],
-      "title": "Reading, sharing, and experiencing Literary/Lived narratives about contemporary racism"
+      "title": "Reading, sharing, and experiencing literary/lived narratives about contemporary racism"
     },
     {
       "DOI": "10.1177/0263276407075956",
@@ -12866,7 +12868,7 @@
       "itemID": 364,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN\u209bage\u209b10\u2081177\u2080263276407075956"
+        "ID: TN_sage_s10_1177_0263276407075956"
       ],
       "pages": "55-78",
       "publicationTitle": "Theory, Culture & Society",
@@ -12899,7 +12901,7 @@
       "itemID": 365,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN\u209aroquest820481867"
+        "ID: TN_proquest820481867"
       ],
       "pages": "38-47",
       "publicationTitle": "Newspaper Research Journal",
@@ -12993,7 +12995,7 @@
     {
       "DOI": "10.1177/1077800418801375",
       "ISSN": "1077-8004",
-      "abstractNote": "Book reviews written by readers and published on digital sites such as Goodreads are a new force in contemporary book culture. This article uses feminist standpoint theory to investigate the language used in Goodreads reviews to better understand how these reviewers articulate intimate reading experiences. A total of 692 reviews of seven bestselling fiction and nonfiction books are analyzed by two methods. The first, thematic content analysis, involves close reading of the reviews. The second, sentiment analysis, is an automated \u201cdistant reading\u201d process. These methods prompt us, as researchers, to reflect on the way they foster or inhibit a sense of proximity to readers, even as they reveal predominant features of Goodreads reviews. Together, the methods reveal that 86.1% of Goodreads reviews describe a reading experience, and 68% specifically mention an emotional reaction to the book, with the emotion most intense in reviews of fiction. Reviews also create social connections...",
+      "abstractNote": "Book reviews written by readers and published on digital sites such as Goodreads are a new force in contemporary book culture. This article uses feminist standpoint theory to investigate the language used in Goodreads reviews to better understand how these reviewers articulate intimate reading experiences. A total of 692 reviews of seven bestselling fiction and nonfiction books are analyzed by two methods. The first, thematic content analysis, involves close reading of the reviews. The second, sentiment analysis, is an automated \u201cdistant reading\u201d process. These methods prompt us, as researchers, to reflect on the way they foster or inhibit a sense of proximity to readers, even as they reveal predominant features of Goodreads reviews. Together, the methods reveal that 86.1",
       "citationKey": "Driscoll2019",
       "creators": [
         {
@@ -13026,7 +13028,7 @@
       "itemID": 368,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN\u209bage\u209b10\u2081177\u2081077800418801375"
+        "ID: TN_sage_s10_1177_1077800418801375"
       ],
       "pages": "248-259",
       "publicationTitle": "Qualitative Inquiry",
@@ -13177,7 +13179,7 @@
       "itemID": 370,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN\u209bage\u209b10\u2081177\u2081354067X18796805"
+        "ID: TN_sage_s10_1177_1354067X18796805"
       ],
       "pages": "529-544",
       "publicationTitle": "Culture & Psychology",
@@ -13205,7 +13207,7 @@
       "itemID": 371,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN\u209bage\u209b10\u2081177\u2081354856517721805"
+        "ID: TN_sage_s10_1177_1354856517721805"
       ],
       "pages": "1063-1076",
       "publicationTitle": "Convergence: The International Journal of Research into New Media Technologies",
@@ -13233,7 +13235,7 @@
       "itemID": 372,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN\u209bage\u209b10\u2081177\u2081354856517751391"
+        "ID: TN_sage_s10_1177_1354856517751391"
       ],
       "pages": "1168-1184",
       "publicationTitle": "Convergence: The International Journal of Research into New Media Technologies",
@@ -13261,7 +13263,7 @@
       "itemID": 373,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN\u209bage\u209b10\u2081177\u2081461444815582141"
+        "ID: TN_sage_s10_1177_1461444815582141"
       ],
       "pages": "2305-2322",
       "publicationTitle": "New Media & Society",
@@ -13289,7 +13291,7 @@
       "itemID": 374,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN\u209bage\u209b10\u2081177\u2081464700107078139"
+        "ID: TN_sage_s10_1177_1464700107078139"
       ],
       "pages": "149-168",
       "publicationTitle": "Feminist Theory",
@@ -13316,7 +13318,7 @@
       "itemID": 375,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN\u209bage\u209b10\u2081177\u2081464884909102582"
+        "ID: TN_sage_s10_1177_1464884909102582"
       ],
       "pages": "283-285",
       "publicationTitle": "Journalism",
@@ -13368,7 +13370,7 @@
       "itemID": 376,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN\u209bage\u209b10\u2081177\u2081464884910388230"
+        "ID: TN_sage_s10_1177_1464884910388230"
       ],
       "pages": "586-606",
       "publicationTitle": "Journalism",
@@ -13401,7 +13403,7 @@
       "itemID": 377,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN\u209bage\u209b10\u2081177\u2081464884911415973"
+        "ID: TN_sage_s10_1177_1464884911415973"
       ],
       "pages": "963-982",
       "publicationTitle": "Journalism",
@@ -13434,7 +13436,7 @@
       "itemID": 378,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN\u209bage\u209b10\u2081177\u2081464884916663599"
+        "ID: TN_sage_s10_1177_1464884916663599"
       ],
       "pages": "375-391",
       "publicationTitle": "Journalism",
@@ -13462,7 +13464,7 @@
       "itemID": 379,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN\u209bage\u209b10\u2081177\u2081464884917722453"
+        "ID: TN_sage_s10_1177_1464884917722453"
       ],
       "pages": "427-443",
       "publicationTitle": "Journalism",
@@ -13500,7 +13502,7 @@
       "itemID": 380,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN\u209bage\u209b10\u2081177\u2081464884919845458"
+        "ID: TN_sage_s10_1177_1464884919845458"
       ],
       "pages": "1070-1086",
       "publicationTitle": "Journalism",
@@ -13544,7 +13546,7 @@
       "itemID": 381,
       "itemType": "journalArticle",
       "notes": [
-        "10.1037/0003-066x.52.6.613\u00a1br/\u00bf\u00a1br/\u00bf10.1037/0022-3514.55.6.893\u00a1br/\u00bf\u00a1br/\u00bf10.1177/1745691611406922\u00a1br/\u00bf\u00a1br/\u00bf10.1037/a0031017\u00a1br/\u00bf\u00a1br/\u00bf10.1525/sp.2009.56.3.403\u00a1br/\u00bf\u00a1br/\u00bf10.1037/a0013595\u00a1br/\u00bf\u00a1br/\u00bf10.1177/0146167292183006\u00a1br/\u00bf\u00a1br/\u00bf10.1016/j.obhdp.2007.05.001\u00a1br/\u00bf\u00a1br/\u00bf10.1002/ejsp.348\u00a1br/\u00bf\u00a1br/\u00bf10.1037/0022-3514.78.4.635\u00a1br/\u00bf\u00a1br/\u00bf10.1037/0022-3514.90.6.961\u00a1br/\u00bf\u00a1br/\u00bf10.1037/0022-3514.77.4.669\u00a1br/\u00bf\u00a1br/\u00bf10.1177/0146167202239047\u00a1br/\u00bf\u00a1br/\u00bf10.1037/0033-2909.102.1.72\u00a1br/\u00bf\u00a1br/\u00bf10.1177/0146167299025004008\u00a1br/\u00bf\u00a1br/\u00bf10.1037/0022-3514.78.4.690\u00a1br/\u00bf\u00a1br/\u00bf10.1017/s0007123401000102\u00a1br/\u00bf\u00a1br/\u00bf10.1037/0022-3514.72.6.1364\u00a1br/\u00bf\u00a1br/\u00bf10.1006/jesp.1996.0018\u00a1br/\u00bf\u00a1br/\u00bf10.1037/0022-3514.74.2.378\u00a1br/\u00bf\u00a1br/\u00bf10.1177/0146167201275007\u00a1br/\u00bf\u00a1br/\u00bf10.1177/106939719502900302\u00a1br/\u00bf\u00a1br/\u00bf10.1037/1089-2680.3.1.23\u00a1br/\u00bf\u00a1br/\u00bf10.4324/9780203973431\u00a1br/\u00bf\u00a1br/\u00bf10.1037/h0076486\u00a1br/\u00bf\u00a1br/\u00bf10.1023/a:1022148418210\u00a1br/\u00bf\u00a1br/\u00bf10.1111/j.2044-8309.1986.tb00712.x\u00a1br/\u00bf\u00a1br/\u00bf10.1080/15298868.2010.542015\u00a1br/\u00bf\u00a1br/\u00bf10.1016/j.jesp.2003.09.002\u00a1br/\u00bf\u00a1br/\u00bf10.1111/j.1468-2508.2007.00562.x\u00a1br/\u00bf\u00a1br/\u00bf10.1215/9780822381044-003\u00a1br/\u00bf\u00a1br/\u00bf10.1002/ejsp.259\u00a1br/\u00bf\u00a1br/\u00bf10.1111/j.1467-6494.1994.tb00311.x\u00a1br/\u00bf\u00a1br/\u00bf10.1215/9780822381044-004\u00a1br/\u00bf\u00a1br/\u00bf10.1177/1745691610393980\u00a1br/\u00bf\u00a1br/\u00bf10.1111/j.2044-8309.1998.tb01163.x\u00a1br/\u00bf\u00a1br/\u00bf10.1037/a0024598\u00a1br/\u00bf\u00a1br/\u00bf10.1002/ejsp.175\u00a1br/\u00bf\u00a1br/\u00bf10.1177/0956797610392926\u00a1br/\u00bf\u00a1br/\u00bf10.1177/0956797610384741\u00a1br/\u00bf\u00a1br/\u00bf10.1080/15298868.2011.556804\u00a1br/\u00bf\u00a1br/\u00bf10.1037/0022-3514.89.2.223\u00a1br/\u00bf\u00a1br/\u00bf10.1037/0022-3514.94.1.91\u00a1br/\u00bf\u00a1br/\u00bf10.1037/a0032250\u00a1br/\u00bf\u00a1br/\u00bf10.1111/0004-5608.00182\u00a1br/\u00bf\u00a1br/\u00bf10.1037/a0011990\u00a1br/\u00bf\u00a1br/\u00bf10.1080/10463280601095240\u00a1br/\u00bf\u00a1br/\u00bf10.1016/j.jesp.2009.08.017\u00a1br/\u00bf\u00a1br/\u00bf10.1177/0146167296226008\u00a1br/\u00bf\u00a1br/\u00bf10.1037/0022-3514.36.5.511\u00a1br/\u00bf\u00a1br/\u00bf10.1006/jesp.2001.1512\u00a1br/\u00bf\u00a1br/\u00bf10.1037/0033-295x.102.2.331\u00a1br/\u00bf\u00a1br/\u00bf10.1016/j.jesp.2007.11.002\u00a1br/\u00bf\u00a1br/\u00bf10.1177/0146167207311200\u00a1br/\u00bf\u00a1br/\u00bf10.1111/j.1467-9221.2005.00440.x\u00a1br/\u00bf\u00a1br/\u00bf10.1037/0022-3514.95.1.144\u00a1br/\u00bf\u00a1br/\u00bf10.1215/9780822383659\u00a1br/\u00bf\u00a1br/\u00bf10.1016/s0065-2601(04)36001-6\u00a1br/\u00bf\u00a1br/\u00bf10.1037/0033-295x.94.3.319\u00a1br/\u00bf\u00a1br/\u00bf10.1037/0003-066x.51.9.918\u00a1br/\u00bf\u00a1br/\u00bf10.1037/h0034225\u00a1br/\u00bf\u00a1br/\u00bf10.2307/1341787\u00a1br/\u00bf\u00a1br/\u00bf10.1037/0022-3514.72.6.1268\u00a1br/\u00bf\u00a1br/\u00bf10.1177/1368430209344869\u00a1br/\u00bf\u00a1br/\u00bf10.1146/annurev.soc.31.041304.122322\u00a1br/\u00bf\u00a1br/\u00bf10.1002/ejsp.2420250102\u00a1br/\u00bf\u00a1br/\u00bf1745-6924\u00a1br/\u00bf\u00a1br/\u00bf10.1177/0146167204271713\u00a1br/\u00bf\u00a1br/\u00bf10.1007/978-1-4899-0818-6\u2084\u00a1br/\u00bf\u00a1br/\u00bf10.1177/0146167207303016\u00a1br/\u00bf\u00a1br/\u00bf10.1037/0022-3514.77.1.167\u00a1br/\u00bf\u00a1br/\u00bf10.1257/0002828042002561\u00a1br/\u00bf\u00a1br/\u00bf10.1080/10463280600574815\u00a1br/\u00bf\u00a1br/\u00bf10.1037//0022-3514.74.6.1464\u00a1br/\u00bf\u00a1br/\u00bf10.1037/0033-295x.98.2.224\u00a1br/\u00bf\u00a1br/\u00bf10.1016/j.jesp.2014.04.005\u00a1br/\u00bf\u00a1br/\u00bf10.1037/0022-3514.73.4.805\u00a1br/\u00bf\u00a1br/\u00bf10.1177/0146167206287182\u00a1br/\u00bf\u00a1br/\u00bf10.1177/0146167212475224\u00a1br/\u00bf\u00a1br/\u00bf10.1080/10478401003676501\u00a1br/\u00bf\u00a1br/\u00bf10.1177/002200278102500401\u00a1br/\u00bf\u00a1br/\u00bf10.1111/j.1467-9280.2006.01810.x"
+        "10.1037/0003-066x.52.6.613\u00a1br/\u00bf\u00a1br/\u00bf10.1037/0022-3514.55.6.893\u00a1br/\u00bf\u00a1br/\u00bf10.1177/1745691611406922\u00a1br/\u00bf\u00a1br/\u00bf10.1037/a0031017\u00a1br/\u00bf\u00a1br/\u00bf10.1525/sp.2009.56.3.403\u00a1br/\u00bf\u00a1br/\u00bf10.1037/a0013595\u00a1br/\u00bf\u00a1br/\u00bf10.1177/0146167292183006\u00a1br/\u00bf\u00a1br/\u00bf10.1016/j.obhdp.2007.05.001\u00a1br/\u00bf\u00a1br/\u00bf10.1002/ejsp.348\u00a1br/\u00bf\u00a1br/\u00bf10.1037/0022-3514.78.4.635\u00a1br/\u00bf\u00a1br/\u00bf10.1037/0022-3514.90.6.961\u00a1br/\u00bf\u00a1br/\u00bf10.1037/0022-3514.77.4.669\u00a1br/\u00bf\u00a1br/\u00bf10.1177/0146167202239047\u00a1br/\u00bf\u00a1br/\u00bf10.1037/0033-2909.102.1.72\u00a1br/\u00bf\u00a1br/\u00bf10.1177/0146167299025004008\u00a1br/\u00bf\u00a1br/\u00bf10.1037/0022-3514.78.4.690\u00a1br/\u00bf\u00a1br/\u00bf10.1017/s0007123401000102\u00a1br/\u00bf\u00a1br/\u00bf10.1037/0022-3514.72.6.1364\u00a1br/\u00bf\u00a1br/\u00bf10.1006/jesp.1996.0018\u00a1br/\u00bf\u00a1br/\u00bf10.1037/0022-3514.74.2.378\u00a1br/\u00bf\u00a1br/\u00bf10.1177/0146167201275007\u00a1br/\u00bf\u00a1br/\u00bf10.1177/106939719502900302\u00a1br/\u00bf\u00a1br/\u00bf10.1037/1089-2680.3.1.23\u00a1br/\u00bf\u00a1br/\u00bf10.4324/9780203973431\u00a1br/\u00bf\u00a1br/\u00bf10.1037/h0076486\u00a1br/\u00bf\u00a1br/\u00bf10.1023/a:1022148418210\u00a1br/\u00bf\u00a1br/\u00bf10.1111/j.2044-8309.1986.tb00712.x\u00a1br/\u00bf\u00a1br/\u00bf10.1080/15298868.2010.542015\u00a1br/\u00bf\u00a1br/\u00bf10.1016/j.jesp.2003.09.002\u00a1br/\u00bf\u00a1br/\u00bf10.1111/j.1468-2508.2007.00562.x\u00a1br/\u00bf\u00a1br/\u00bf10.1215/9780822381044-003\u00a1br/\u00bf\u00a1br/\u00bf10.1002/ejsp.259\u00a1br/\u00bf\u00a1br/\u00bf10.1111/j.1467-6494.1994.tb00311.x\u00a1br/\u00bf\u00a1br/\u00bf10.1215/9780822381044-004\u00a1br/\u00bf\u00a1br/\u00bf10.1177/1745691610393980\u00a1br/\u00bf\u00a1br/\u00bf10.1111/j.2044-8309.1998.tb01163.x\u00a1br/\u00bf\u00a1br/\u00bf10.1037/a0024598\u00a1br/\u00bf\u00a1br/\u00bf10.1002/ejsp.175\u00a1br/\u00bf\u00a1br/\u00bf10.1177/0956797610392926\u00a1br/\u00bf\u00a1br/\u00bf10.1177/0956797610384741\u00a1br/\u00bf\u00a1br/\u00bf10.1080/15298868.2011.556804\u00a1br/\u00bf\u00a1br/\u00bf10.1037/0022-3514.89.2.223\u00a1br/\u00bf\u00a1br/\u00bf10.1037/0022-3514.94.1.91\u00a1br/\u00bf\u00a1br/\u00bf10.1037/a0032250\u00a1br/\u00bf\u00a1br/\u00bf10.1111/0004-5608.00182\u00a1br/\u00bf\u00a1br/\u00bf10.1037/a0011990\u00a1br/\u00bf\u00a1br/\u00bf10.1080/10463280601095240\u00a1br/\u00bf\u00a1br/\u00bf10.1016/j.jesp.2009.08.017\u00a1br/\u00bf\u00a1br/\u00bf10.1177/0146167296226008\u00a1br/\u00bf\u00a1br/\u00bf10.1037/0022-3514.36.5.511\u00a1br/\u00bf\u00a1br/\u00bf10.1006/jesp.2001.1512\u00a1br/\u00bf\u00a1br/\u00bf10.1037/0033-295x.102.2.331\u00a1br/\u00bf\u00a1br/\u00bf10.1016/j.jesp.2007.11.002\u00a1br/\u00bf\u00a1br/\u00bf10.1177/0146167207311200\u00a1br/\u00bf\u00a1br/\u00bf10.1111/j.1467-9221.2005.00440.x\u00a1br/\u00bf\u00a1br/\u00bf10.1037/0022-3514.95.1.144\u00a1br/\u00bf\u00a1br/\u00bf10.1215/9780822383659\u00a1br/\u00bf\u00a1br/\u00bf10.1016/s0065-2601(04)36001-6\u00a1br/\u00bf\u00a1br/\u00bf10.1037/0033-295x.94.3.319\u00a1br/\u00bf\u00a1br/\u00bf10.1037/0003-066x.51.9.918\u00a1br/\u00bf\u00a1br/\u00bf10.1037/h0034225\u00a1br/\u00bf\u00a1br/\u00bf10.2307/1341787\u00a1br/\u00bf\u00a1br/\u00bf10.1037/0022-3514.72.6.1268\u00a1br/\u00bf\u00a1br/\u00bf10.1177/1368430209344869\u00a1br/\u00bf\u00a1br/\u00bf10.1146/annurev.soc.31.041304.122322\u00a1br/\u00bf\u00a1br/\u00bf10.1002/ejsp.2420250102\u00a1br/\u00bf\u00a1br/\u00bf1745-6924\u00a1br/\u00bf\u00a1br/\u00bf10.1177/0146167204271713\u00a1br/\u00bf\u00a1br/\u00bf10.1007/978-1-4899-0818-6_4\u00a1br/\u00bf\u00a1br/\u00bf10.1177/0146167207303016\u00a1br/\u00bf\u00a1br/\u00bf10.1037/0022-3514.77.1.167\u00a1br/\u00bf\u00a1br/\u00bf10.1257/0002828042002561\u00a1br/\u00bf\u00a1br/\u00bf10.1080/10463280600574815\u00a1br/\u00bf\u00a1br/\u00bf10.1037//0022-3514.74.6.1464\u00a1br/\u00bf\u00a1br/\u00bf10.1037/0033-295x.98.2.224\u00a1br/\u00bf\u00a1br/\u00bf10.1016/j.jesp.2014.04.005\u00a1br/\u00bf\u00a1br/\u00bf10.1037/0022-3514.73.4.805\u00a1br/\u00bf\u00a1br/\u00bf10.1177/0146167206287182\u00a1br/\u00bf\u00a1br/\u00bf10.1177/0146167212475224\u00a1br/\u00bf\u00a1br/\u00bf10.1080/10478401003676501\u00a1br/\u00bf\u00a1br/\u00bf10.1177/002200278102500401\u00a1br/\u00bf\u00a1br/\u00bf10.1111/j.1467-9280.2006.01810.x"
       ],
       "pages": "594-609",
       "publicationTitle": "Perspectives on Psychological Science",
@@ -13644,7 +13646,7 @@
       "itemID": 382,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN\u209bage\u209b10\u2081177\u2081749975507078185"
+        "ID: TN_sage_s10_1177_1749975507078185"
       ],
       "pages": "143-164",
       "publicationTitle": "Cultural Sociology",
@@ -13734,7 +13736,7 @@
       "itemID": 384,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN\u209aroquest1983660865"
+        "ID: TN_proquest1983660865"
       ],
       "pages": "397",
       "publicationTitle": "Novel",
@@ -13760,7 +13762,7 @@
       "itemID": 385,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN<sub>d</sub>uke10.1215/01636545-1992-54-21"
+        "ID: TN_duke10.1215/01636545-1992-54-21"
       ],
       "pages": "21",
       "publicationTitle": "Radical History Review",
@@ -13797,7 +13799,7 @@
       "itemID": 386,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN\u2090ea10.1257/aer.104.8.2421"
+        "ID: TN_aea10.1257/aer.104.8.2421"
       ],
       "pages": "2421-2455",
       "publicationTitle": "American Economic Review",
@@ -13834,7 +13836,7 @@
       "itemID": 387,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN<sub>i</sub>nformsmksc.1090.0557"
+        "ID: TN_informsmksc.1090.0557"
       ],
       "pages": "815-827",
       "publicationTitle": "Marketing Science",
@@ -13862,7 +13864,7 @@
       "itemID": 388,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN\u209aroquest2159297257"
+        "ID: TN_proquest2159297257"
       ],
       "pages": "370-396",
       "publicationTitle": "Book History",
@@ -13888,7 +13890,7 @@
       "itemID": 389,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN\u209arojectmuse\u209b248391<sub>S</sub>1553120185300013"
+        "ID: TN_projectmuse_s248391_S1553120185300013"
       ],
       "pages": "100-104",
       "publicationTitle": "Children's Literature Association Quarterly",
@@ -13914,7 +13916,7 @@
       "itemID": 390,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN\u209arojectmuse\u209b248341<sub>S</sub>1553120184400148"
+        "ID: TN_projectmuse_s248341_S1553120184400148"
       ],
       "pages": "184-186",
       "publicationTitle": "Children's Literature Association Quarterly",
@@ -13965,7 +13967,7 @@
       "itemID": 392,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN\u209arojectmuse\u209b249312<sub>S</sub>1553120192300087"
+        "ID: TN_projectmuse_s249312_S1553120192300087"
       ],
       "pages": "37-39",
       "publicationTitle": "Children's Literature Association Quarterly",
@@ -13991,7 +13993,7 @@
       "itemID": 393,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN\u209arojectmuse\u209b249281<sub>S</sub>1553120192100071"
+        "ID: TN_projectmuse_s249281_S1553120192100071"
       ],
       "pages": "29-35",
       "publicationTitle": "Children's Literature Association Quarterly",
@@ -14027,11 +14029,11 @@
       "itemID": 394,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN\u209arojectmuse\u209b250011<sub>S</sub>1553120103300026"
+        "ID: TN_projectmuse_s250011_S1553120103300026"
       ],
       "pages": "137",
       "publicationTitle": "Children's Literature Association Quarterly",
-      "title": "Are children's book publishers changing the way children read?: A panel discussion",
+      "title": "Are children's book publishers changing the way children read?: a panel discussion",
       "volume": "28"
     },
     {
@@ -14078,11 +14080,11 @@
       "itemID": 396,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN\u209arojectmuse\u209b265018<sub>S</sub>1931023409400672"
+        "ID: TN_projectmuse_s265018_S1931023409400672"
       ],
       "pages": "10-19",
       "publicationTitle": "L'Esprit Cr\u00e9ateur",
-      "title": "Children's literature, issues of definition: The \"Why?\" and \"Why Not?\" of criticism",
+      "title": "Children's literature, issues of definition: The \"why?\" and \"why not?\" of criticism",
       "volume": "45"
     },
     {
@@ -14267,7 +14269,7 @@
       "itemID": 400,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN<sub>c</sub>rossref10.1386/btwo.1.1.7\u2081"
+        "ID: TN_crossref10.1386/btwo.1.1.7_1"
       ],
       "publicationTitle": "Book 2.0",
       "title": "history.child.book.shop.2.0",
@@ -14285,8 +14287,8 @@
         },
         {
           "creatorType": "editor",
-          "firstName": "Department of",
-          "lastName": "Media"
+          "firstName": "Department",
+          "lastName": "of Media"
         },
         {
           "creatorType": "editor",
@@ -14301,7 +14303,7 @@
       "itemID": 401,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN\u2099arciseur:oai:repub.eur.nl:31592"
+        "ID: TN_narciseur:oai:repub.eur.nl:31592"
       ],
       "pages": "441-462",
       "publicationTitle": "Communications: the European journal of communication research",
@@ -14327,7 +14329,7 @@
       "itemID": 402,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN<sub>c</sub>rossref10.15643/libartrus-2017.3.3"
+        "ID: TN_crossref10.15643/libartrus-2017.3.3"
       ],
       "pages": "230",
       "publicationTitle": "Rossiiskii Gumanitarnyi Zhurnal",
@@ -14354,7 +14356,7 @@
       "itemID": 403,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN<sub>d</sub>ash1/4795341"
+        "ID: TN_dash1/4795341"
       ],
       "publicationTitle": "PMLA.Publications of the Modern Language Association of America",
       "title": "Children\u2019s books, dolls, and the performance of race; or, the possibility of children\u2019s literature",
@@ -14381,11 +14383,11 @@
       "itemID": 404,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN\u209aroquest1325180426"
+        "ID: TN_proquest1325180426"
       ],
       "pages": "238",
       "publicationTitle": "PMLA.Publications of the Modern Language Association of America",
-      "title": "\"Words with Friends\": Socially networked reading on goodreads",
+      "title": "\"Words with friends\": Socially networked reading on goodreads",
       "volume": "128"
     },
     {
@@ -14433,7 +14435,7 @@
       "itemID": 406,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN\u2091ric\u209bEJ1164894"
+        "ID: TN_eric_sEJ1164894"
       ],
       "pages": "335",
       "publicationTitle": "Harvard Educational Review",
@@ -14460,9 +14462,9 @@
       "itemID": 407,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN<sub>d</sub>atacite10622566"
+        "ID: TN_datacite10622566"
       ],
-      "title": "A comparison of traditional book reviews and Amazon.com book reviews of fiction using a content analysis approach",
+      "title": "A comparison of traditional book reviews and amazon.com book reviews of fiction using a content analysis approach",
       "volume": "12"
     },
     {
@@ -14489,7 +14491,7 @@
       "itemID": 408,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN<sub>d</sub>oaj\u209boai<sub>d</sub>oaj\u2092rg\u2090rticle<sub>f</sub>38963c85c2340b2989dfce42a344694"
+        "ID: TN_doaj_soai_doaj_org_article_f38963c85c2340b2989dfce42a344694"
       ],
       "pages": "397-413",
       "publicationTitle": "RDBCI: Revista Digital de Biblioteconomia e Ci\u00eancia da Informa\u00e7\u00e3o",
@@ -14549,10 +14551,10 @@
       "itemID": 410,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN\u209aroquest2124051924"
+        "ID: TN_proquest2124051924"
       ],
       "publicationTitle": "Scholarly and Research Communication",
-      "title": "Readers read, readers write: A methodology for the study of reading practices in media convergence",
+      "title": "Readers read, readers write: a methodology for the study of reading practices in media convergence",
       "volume": "5"
     },
     {
@@ -14604,7 +14606,7 @@
       "itemType": "journalArticle",
       "pages": "339-363",
       "publicationTitle": "The Modern Language Review",
-      "title": "Foucault on the \"Question of the Author\": A critical exegesis",
+      "title": "Foucault on the \"question of the author\": a critical exegesis",
       "url": "http://www.jstor.org/stable/3738750",
       "volume": "99"
     },
@@ -14629,7 +14631,7 @@
       "itemID": 413,
       "itemType": "journalArticle",
       "notes": [
-        "0028-6087; ID: TN<sub>c</sub>di\u209aroquest<sub>j</sub>ournals\u2081297397992"
+        "0028-6087; ID: TN_cdi_proquest_journals_1297397992"
       ],
       "pages": "123-162",
       "publicationTitle": "New literary history",
@@ -14658,7 +14660,7 @@
       "itemID": 414,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN<sub>c</sub>di\u209aroquest<sub>j</sub>ournals\u208237300263"
+        "ID: TN_cdi_proquest_journals_237300263"
       ],
       "pages": "20-23",
       "publicationTitle": "English journal",
@@ -14695,11 +14697,11 @@
       "itemID": 415,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN<sub>g</sub>ale\u2092fa591131999"
+        "ID: TN_gale_ofa591131999"
       ],
       "pages": "158",
       "publicationTitle": "Journal of Advertising Research",
-      "title": "Adolescent perceptions of black-oriented media: \"The Day Beyonce Turned Black\": Can black-oriented films and TV programs be marketed more Broadly?(Report)",
+      "title": "Adolescent perceptions of black-oriented media: \"The day beyonce turned black\": Can black-oriented films and TV programs be marketed more broadly?(report)",
       "volume": "59"
     },
     {
@@ -14899,7 +14901,7 @@
           "tag": "Youth"
         }
       ],
-      "title": "Zoom: A review of the literature on marginalized adolescent readers, literacy theory, and policy implications",
+      "title": "Zoom: a review of the literature on marginalized adolescent readers, literacy theory, and policy implications",
       "volume": "76"
     },
     {
@@ -15061,7 +15063,7 @@
           "tag": "Young adult literature"
         }
       ],
-      "title": "\"But This Story of Mine Is Not Unique\": A review of research on african american children's literature",
+      "title": "\"But this story of mine is not unique\": a review of research on african american children's literature",
       "volume": "79"
     },
     {
@@ -15083,7 +15085,7 @@
       "itemID": 420,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN\u209bcopus2-s2.0-85056714664"
+        "ID: TN_scopus2-s2.0-85056714664"
       ],
       "pages": "12-15",
       "publicationTitle": "Journal of Scholarly Publishing",
@@ -15135,7 +15137,7 @@
       "itemID": 422,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN\u209aroquest1810344971"
+        "ID: TN_proquest1810344971"
       ],
       "pages": "R1-R7",
       "publicationTitle": "Film Criticism",
@@ -15187,7 +15189,7 @@
       "itemID": 424,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN\u209aroquest2249642905"
+        "ID: TN_proquest2249642905"
       ],
       "pages": "3-8",
       "publicationTitle": "Children & Libraries",
@@ -15215,7 +15217,7 @@
       "itemID": 425,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN\u209aroquest1021835587"
+        "ID: TN_proquest1021835587"
       ],
       "pages": "319-323",
       "publicationTitle": "Reference & User Services Quarterly",
@@ -15261,7 +15263,7 @@
       "itemID": 426,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN\u2091rudit1009347ar"
+        "ID: TN_erudit1009347ar"
       ],
       "publicationTitle": "M\u00e9moires du livre",
       "title": "#1b1t: Investigating reading practices at the turn of the twenty-first century",
@@ -15290,7 +15292,7 @@
       "itemID": 427,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN<sub>c</sub>rossref10.7202/1046988ar"
+        "ID: TN_crossref10.7202/1046988ar"
       ],
       "publicationTitle": "M\u00e9moires du livre",
       "title": "Serious fun: Gaming the book festival",
@@ -15330,7 +15332,7 @@
       "itemID": 428,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN\u2091rudit1060971ar"
+        "ID: TN_erudit1060971ar"
       ],
       "publicationTitle": "M\u00e9moires du livre",
       "title": "The discourse and value of being an independent publisher",
@@ -15649,7 +15651,7 @@
       "itemID": 440,
       "itemType": "book",
       "publisher": "n+1 foundation",
-      "title": "Canon/Archive: studies in quantitative formalism from the Stanford Literary Lab"
+      "title": "Canon/archive: studies in quantitative formalism from the stanford literary lab"
     },
     {
       "ISBN": "978-1-138-12008-2",
@@ -15906,7 +15908,7 @@
           "lastName": "Harris"
         }
       ],
-      "date": "1993-6",
+      "date": "1993-06",
       "extra": [
         "Citation Key: Harris1993",
         "Publisher: Harvard Law Review Association"
@@ -16095,8 +16097,8 @@
         },
         {
           "creatorType": "editor",
-          "firstName": "Department of",
-          "lastName": "Media"
+          "firstName": "Department",
+          "lastName": "of Media"
         },
         {
           "creatorType": "editor",
@@ -16111,7 +16113,7 @@
       "itemID": 453,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN\u2099arciseur:oai:repub.eur.nl:41392"
+        "ID: TN_narciseur:oai:repub.eur.nl:41392"
       ],
       "pages": "139-168",
       "publicationTitle": "K\u00f6lner Zeitschrift f\u00fcr Soziologie und Sozialpsychologie (print)",
@@ -16136,11 +16138,11 @@
       "itemID": 454,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN\u209arojectmuse\u209b633173<sub>S</sub>2157418916000586"
+        "ID: TN_projectmuse_s633173_S2157418916000586"
       ],
       "pages": "57-75",
       "publicationTitle": "Minnesota Review",
-      "title": "What was \u201cClose reading\u201d?: A century of method in literary studies",
+      "title": "What was \u201cclose reading\u201d?: a century of method in literary studies",
       "volume": "87"
     },
     {
@@ -16162,7 +16164,7 @@
       "itemID": 455,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN<sub>g</sub>ale\u2092fa20191277"
+        "ID: TN_gale_ofa20191277"
       ],
       "pages": "30",
       "publicationTitle": "National Review",
@@ -16188,7 +16190,7 @@
       "itemID": 456,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN<sub>g</sub>ale\u2092fg594089998"
+        "ID: TN_gale_ofg594089998"
       ],
       "pages": "40",
       "publicationTitle": "The New Republic",
@@ -16214,7 +16216,7 @@
       "itemID": 457,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN\u209aroquest1297371156"
+        "ID: TN_proquest1297371156"
       ],
       "pages": "197",
       "publicationTitle": "a Forum on Fiction",
@@ -16266,7 +16268,7 @@
       "itemID": 459,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN\u209aroquest2365267915"
+        "ID: TN_proquest2365267915"
       ],
       "pages": "36-38",
       "publicationTitle": "Psychology Today",
@@ -16291,7 +16293,7 @@
       "itemID": 460,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN<sub>g</sub>ale\u2092fa9375756"
+        "ID: TN_gale_ofa9375756"
       ],
       "pages": "221",
       "publicationTitle": "RQ",
@@ -16344,7 +16346,7 @@
       "itemType": "journalArticle",
       "pages": "145-197",
       "publicationTitle": "Research in the Teaching of English",
-      "title": "Children's literature at the turn of the century: \"Toward a Political Economy of the Publishing Industry\"",
+      "title": "Children's literature at the turn of the century: \"Toward a political economy of the publishing industry\"",
       "url": "https://www.jstor.org/stable/40171621",
       "volume": "37"
     },
@@ -16388,7 +16390,7 @@
       "itemID": 464,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN\u209aroquest1312023762"
+        "ID: TN_proquest1312023762"
       ],
       "pages": "93",
       "publicationTitle": "Signal",
@@ -16415,7 +16417,7 @@
       "itemID": 465,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN<sub>c</sub>di<sub>c</sub>hadwyckhealey\u2090bell<sub>R</sub>02199600"
+        "ID: TN_cdi_chadwyckhealey_abell_R02199600"
       ],
       "pages": "329-343",
       "publicationTitle": "Style (University Park, PA)",
@@ -16440,7 +16442,7 @@
       "itemID": 466,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN<sub>w</sub>os000331415500010"
+        "ID: TN_wos000331415500010"
       ],
       "pages": "89-100",
       "publicationTitle": "Filozofia",
@@ -16467,7 +16469,7 @@
       "itemID": 467,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN\u209aroquest2308830547"
+        "ID: TN_proquest2308830547"
       ],
       "pages": "52-57",
       "publicationTitle": "Reason",
@@ -16494,7 +16496,7 @@
       "itemID": 468,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN\u209aroquest2213786436"
+        "ID: TN_proquest2213786436"
       ],
       "pages": "58-63",
       "publicationTitle": "Reason",
@@ -16529,7 +16531,7 @@
       "itemID": 469,
       "itemType": "journalArticle",
       "publicationTitle": "Research note",
-      "title": "All reviews are not created equal: The disaggregate impact of reviews and reviewers at Amazon.Com"
+      "title": "All reviews are not created equal: The disaggregate impact of reviews and reviewers at amazon.com"
     },
     {
       "ISSN": "0094-5366",
@@ -16554,7 +16556,7 @@
       "itemID": 470,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN<sub>g</sub>ale\u2097itrc603632628"
+        "ID: TN_gale_litrc603632628"
       ],
       "pages": "1",
       "publicationTitle": "Bilingual Review",
@@ -16579,7 +16581,7 @@
       "itemID": 471,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN<sub>g</sub>ale\u2092fg455183834"
+        "ID: TN_gale_ofg455183834"
       ],
       "pages": "22",
       "publicationTitle": "Voice of Youth Advocates",
@@ -16604,7 +16606,7 @@
       "itemID": 472,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN<sub>g</sub>ale\u2092fg347403589"
+        "ID: TN_gale_ofg347403589"
       ],
       "pages": "51",
       "publicationTitle": "Voice of Youth Advocates",
@@ -16629,7 +16631,7 @@
       "itemID": 473,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN<sub>g</sub>ale\u2092fg409832259"
+        "ID: TN_gale_ofg409832259"
       ],
       "pages": "45",
       "publicationTitle": "Voice of Youth Advocates",
@@ -16654,7 +16656,7 @@
       "itemID": 474,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN<sub>g</sub>ale\u2092fg484156269"
+        "ID: TN_gale_ofg484156269"
       ],
       "pages": "43",
       "publicationTitle": "Voice of Youth Advocates",
@@ -16679,7 +16681,7 @@
       "itemID": 475,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN<sub>g</sub>ale\u2092fg529357095"
+        "ID: TN_gale_ofg529357095"
       ],
       "pages": "39",
       "publicationTitle": "Voice of Youth Advocates",
@@ -16741,7 +16743,7 @@
       "itemType": "journalArticle",
       "journalAbbreviation": "Esquire",
       "notes": [
-        "ID: TN<sub>g</sub>ale\u2092fa589559574"
+        "ID: TN_gale_ofa589559574"
       ],
       "pages": "22",
       "publicationTitle": "Esquire (New York, N.Y.)",
@@ -16857,7 +16859,7 @@
       "itemID": 480,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN\u209aroquest1290173911"
+        "ID: TN_proquest1290173911"
       ],
       "pages": "587",
       "publicationTitle": "Language Arts",
@@ -16906,7 +16908,7 @@
       "itemID": 482,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN\u209aroquest2339023315"
+        "ID: TN_proquest2339023315"
       ],
       "pages": "42-43",
       "publicationTitle": "Mother Jones",
@@ -16932,7 +16934,7 @@
       "itemID": 483,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN<sub>g</sub>ale\u2092fa358427046"
+        "ID: TN_gale_ofa358427046"
       ],
       "pages": "17",
       "publicationTitle": "School Library Journal",
@@ -16957,7 +16959,7 @@
       "itemID": 484,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN<sub>g</sub>ale\u2092fa399886794"
+        "ID: TN_gale_ofa399886794"
       ],
       "pages": "17",
       "title": "Value judgment: evaluating books, labels, and programs.(Scales on Censorship)(Column)",
@@ -16971,11 +16973,11 @@
       "itemID": 485,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN<sub>g</sub>ale\u2092fg621477024"
+        "ID: TN_gale_ofg621477024"
       ],
       "pages": "1",
       "publicationTitle": "New Criterion",
-      "title": "Cancel culture comstockery.(Notes & comments: April 2020)",
+      "title": "Cancel culture comstockery.(notes & comments: April 2020)",
       "volume": "38"
     },
     {
@@ -17057,11 +17059,11 @@
       "itemID": 488,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN<sub>w</sub>anfang<sub>j</sub>ourhwyy-z201107119"
+        "ID: TN_wanfang_jourhwyy-z201107119"
       ],
       "pages": "224-225",
       "publicationTitle": "\u6d77\u5916\u82f1\u8bed(\u4e2d\u65ec\u520a)",
-      "title": "What the author really is roland barthes vs. Michel foucault"
+      "title": "What the author really is roland barthes vs. michel foucault"
     },
     {
       "ISSN": "1054-7711",
@@ -17082,7 +17084,7 @@
       "itemID": 489,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN\u209aroquest2280498596"
+        "ID: TN_proquest2280498596"
       ],
       "publicationTitle": "Allure",
       "title": "Blurred of mouth",
@@ -17144,7 +17146,7 @@
       ],
       "pages": "7-9",
       "publicationTitle": "Voices From the Middle",
-      "title": "Are you as \"Literate\" as your students?",
+      "title": "Are you as \"literate\" as your students?",
       "url": "http://ezproxy.library.arizona.edu/login?url=https://www-proquest-com.ezproxy4.library.arizona.edu/docview/1011487043?accountid=8360",
       "volume": "19"
     },
@@ -17208,7 +17210,7 @@
       "itemID": 493,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN\u2091ric\u209bEJ605246"
+        "ID: TN_eric_sEJ605246"
       ],
       "pages": "28",
       "publicationTitle": "Knowledge Quest",
@@ -17312,7 +17314,7 @@
       "itemType": "journalArticle",
       "journalAbbreviation": "New Statesman",
       "notes": [
-        "ID: TN\u209aroquest2230263088"
+        "ID: TN_proquest2230263088"
       ],
       "pages": "48-50",
       "publicationTitle": "New statesman (London, England : 1957)",
@@ -17434,7 +17436,7 @@
       "itemType": "journalArticle",
       "pages": "6-17",
       "publicationTitle": "Journal of Children's Literature",
-      "title": "Much ado about a \"Fine Dessert\": The cultural politics of representing slavery in children's literature",
+      "title": "Much ado about a \"fine dessert\": The cultural politics of representing slavery in children's literature",
       "volume": "42"
     },
     {
@@ -17447,7 +17449,7 @@
           "lastName": "Campbell"
         }
       ],
-      "date": "2018-6",
+      "date": "2018-06",
       "extra": [
         "Citation Key: Campbell2018",
         "Publisher: American Library Association"
@@ -17508,11 +17510,11 @@
       "itemID": 502,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN<sub>g</sub>ale\u2092fa329269019"
+        "ID: TN_gale_ofa329269019"
       ],
       "pages": "201",
       "publicationTitle": "Communication, Culture and Critique",
-      "title": "Stuart hall's \"Deconstructing the Popular\": Reconsiderations 30 years later",
+      "title": "Stuart hall's \"deconstructing the popular\": Reconsiderations 30 years later",
       "volume": "6"
     },
     {
@@ -17665,7 +17667,7 @@
       "itemID": 509,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN\u209bcopus2-s2.0-85034449785"
+        "ID: TN_scopus2-s2.0-85034449785"
       ],
       "pages": "2071-2092",
       "publicationTitle": "International Journal of Communication",
@@ -17690,7 +17692,7 @@
       "itemID": 510,
       "itemType": "journalArticle",
       "notes": [
-        "ID: TN<sub>d</sub>oaj\u209boai<sub>d</sub>oaj\u2092rg\u2090rticle\u2084340117d36424b928b6072d6d9c67608"
+        "ID: TN_doaj_soai_doaj_org_article_4340117d36424b928b6072d6d9c67608"
       ],
       "publicationTitle": "Transformative Works and Cultures",
       "title": "Narrative extraction, #BlackPantherSoLit, and signifyin': \"Black Panther\" fandom and transformative social practices",
@@ -17722,7 +17724,7 @@
       "itemID": 511,
       "itemType": "journalArticle",
       "notes": [
-        "Source type: Scholarly Journals; Object type: Editorial; Object type: Commentary; Copyright: Copyright University of Waikato, Department of English May 2011; DOCID: 2602001211; PCID: 67792272; PMID: 155333; ProvJournalCode: NGTC; PublisherXID: ICANGTC<sub>N</sub>GTC<sub>v</sub>10n1\u20820110501541"
+        "Source type: Scholarly Journals; Object type: Editorial; Object type: Commentary; Copyright: Copyright University of Waikato, Department of English May 2011; DOCID: 2602001211; PCID: 67792272; PMID: 155333; ProvJournalCode: NGTC; PublisherXID: ICANGTC_NGTC_v10n1_20110501541"
       ],
       "pages": "1-n/a",
       "publicationTitle": "English Teaching",
@@ -17756,7 +17758,7 @@
       "itemID": 512,
       "itemType": "journalArticle",
       "notes": [
-        "Source type: Scholarly Journals; Object type: Feature; Object type: Article; Copyright: Copyright University of Waikato, Department of English May 2011; DOCID: 2602001181; PCID: 67792272; PMID: 155333; ProvJournalCode: NGTC; PublisherXID: ICANGTC<sub>N</sub>GTC<sub>v</sub>10n1\u208201105016901"
+        "Source type: Scholarly Journals; Object type: Feature; Object type: Article; Copyright: Copyright University of Waikato, Department of English May 2011; DOCID: 2602001181; PCID: 67792272; PMID: 155333; ProvJournalCode: NGTC; PublisherXID: ICANGTC_NGTC_v10n1_201105016901"
       ],
       "pages": "41-57",
       "publicationTitle": "English Teaching",

@@ -1,5 +1,9 @@
 Components.utils.import('resource://gre/modules/Services.jsm')
 
+import { Shim } from './os'
+import { is7 } from './client'
+const $OS = is7 ? Shim : OS
+
 import type { XUL } from '../typings/xul'
 
 import { log } from './logger'
@@ -15,7 +19,6 @@ import * as l10n from './l10n'
 import { Events } from './events'
 import { pick } from './file-picker'
 import { flash } from './flash'
-import { is7 } from './client'
 import { icons } from './icons'
 
 // safe to keep "global" since only one pref pane will be loaded at any one time
@@ -124,7 +127,7 @@ class AutoExportPane {
     let label: string = { library: icons.computer, collection: icons.folder }[ae.type]
     label += ` ${this.name(ae, 'short')}`
     label += ` (${Translators.byId[ae.translatorID].label})`
-    const path = ae.path.startsWith(OS.Constants.Path.homeDir) ? ae.path.replace(OS.Constants.Path.homeDir, '~') : ae.path
+    const path = ae.path.startsWith($OS.Constants.Path.homeDir) ? ae.path.replace($OS.Constants.Path.homeDir, '~') : ae.path
     label += ` ${path}`
     return label
   }
@@ -148,7 +151,7 @@ class AutoExportPane {
 
     // list changed
     if (Array.from(menupopup.children).map(ae => (ae as unknown as XUL.Menuitem).value).join('\t') !== auto_exports.map(ae => ae.path).join('\t')) {
-      menulist.removeAllItems()
+      menulist.querySelectorAll('menuitem').forEach(e => e.remove())
       for (const ae of auto_exports) {
         const menuitem = menulist.appendItem(this.label(ae), ae.path)
         if (selected && ae.path === selected.path) menulist.selectedItem = menuitem
@@ -201,6 +204,8 @@ class AutoExportPane {
           case 'asciiBibLaTeX':
           case 'biblatexExtendedNameFormat':
           case 'recursive':
+          case 'biblatexAPA':
+          case 'biblatexChicago':
             (node as unknown as XUL.Checkbox).checked = selected[field]
             break
 
@@ -276,6 +281,7 @@ class AutoExportPane {
     Cache.getCollection(Translators.byId[ae.translatorID].label).removeDataOnly()
 
     let value: number | boolean | string
+    let disable: 'biblatexChicago' | 'biblatexAPA' = null
 
     switch (field) {
       case 'exportNotes':
@@ -285,8 +291,15 @@ class AutoExportPane {
       case 'asciiBibLaTeX':
       case 'biblatexExtendedNameFormat':
       case 'recursive':
-        log.debug('edit autoexport:', field, node.checked)
+      case 'biblatexAPA':
+      case 'biblatexChicago':
         value = node.checked
+        if (node.checked && field === 'biblatexAPA') {
+          disable = 'biblatexChicago'
+        }
+        else if (node.checked && field === 'biblatexChicago') {
+          disable = 'biblatexAPA'
+        }
         break
 
       case 'DOIandURL':
@@ -299,6 +312,7 @@ class AutoExportPane {
         log.error('edit autoexport: unexpected field', field)
     }
     await AutoExport.edit(path, field, value)
+    if (disable) await AutoExport.edit(path, disable, false)
     log.debug('edit autoexport: after', await AutoExport.get(path))
     await this.refresh()
   }
@@ -365,13 +379,13 @@ export class PrefPane {
       return
     }
 
-    if (typeof preferences.parsed?.config?.preferences !== 'object') {
-      flash(`no preferences in ${preferences.path}`)
+    if (typeof preferences.parsed?.config?.preferences !== 'object' && !Array.isArray(preferences.parsed.items)) {
+      flash(`no preferences or items in ${preferences.path}`)
       return
     }
 
     try {
-      for (let [pref, value] of Object.entries(preferences.parsed.config.preferences)) {
+      for (let [pref, value] of Object.entries(preferences.parsed.config.preferences || {})) {
         if (pref === 'citekeyFormatEditing') continue
         if (pref === 'citekeyFormat') pref = 'citekeyFormatEditing'
 
@@ -387,10 +401,20 @@ export class PrefPane {
     catch (err) {
       flash(err.message)
     }
+
+    try {
+      Zotero.BetterBibTeX.KeyManager.import((preferences.parsed.items || []).reduce((updates, item) => {
+        if (item.citationKey && item.itemKey) updates[item.itemKey] = item.citationKey
+        return updates as Record<string, string>
+      }, {}))
+    }
+    catch (err) {
+      flash(err.message)
+    }
   }
 
   public checkCitekeyFormat(): void {
-    if (!$window || Zotero.BetterBibTeX.ready.pending) return // itemTypes not available yet
+    if (!$window || Zotero.BetterBibTeX.ready.isPending()) return // itemTypes not available yet
 
     const error = Formatter.update([Preference.citekeyFormatEditing, Preference.citekeyFormat])
 
@@ -463,8 +487,8 @@ export class PrefPane {
 
       await this.autoexport.load()
 
-      this.quickCopy()
-      $window.document.getElementById('bbt-preferences-quickcopy').addEventListener('command', () => this.quickCopy())
+      $window.document.getElementById('bbt-preferences-quickcopy').addEventListener('command', () => this.showQuickCopyDetails())
+      this.showQuickCopyDetails()
 
       this.checkCitekeyFormat()
       this.checkPostscript()
@@ -476,9 +500,10 @@ export class PrefPane {
     }
   }
 
-  private quickCopy() {
+  private showQuickCopyDetails() {
     const quickcopy = 'bbt-preferences-quickcopy-details'
     const selected = `${quickcopy}-${Zotero.Prefs.get('translators.better-bibtex.quickCopyMode')}`
+    log.debug('showQuickCopyDetails:', selected)
     for (const details of ([...$window.document.querySelectorAll(`.${quickcopy}`)] as HTMLElement[])) {
       details.style.display = details.id === selected ? 'initial' : 'none'
     }
@@ -505,6 +530,8 @@ export class PrefPane {
     for (const node of (Array.from($window.document.getElementsByClassName('bbt-jurism')) as unknown[] as XUL.Element[])) {
       node.hidden = client !== 'jurism'
     }
+
+    this.showQuickCopyDetails()
 
     if (client === 'jurism') {
       Zotero.Styles.init().then(() => {

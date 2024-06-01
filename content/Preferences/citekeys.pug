@@ -5,7 +5,7 @@ html:div(class='bbt-prefs-1col')
     rows=10
     cols=80
   )
-  textbox#bbt-citekeyFormat-error(
+  label#bbt-citekeyFormat-error(
     preference='extensions.zotero.translators.better-bibtex.citekeyFormat'
     rows=2
     size=80
@@ -33,6 +33,7 @@ html:div(class='bbt-prefs-1col')
 
   groupbox
     caption(label="&better-bibtex_preferences_citekey_uniqueness.label;")
+    checkbox(preference="extensions.zotero.translators.better-bibtex.citekeyCaseInsensitive" label="&better-bibtex_preferences_citekey_uniqueness_case.label;")
     html:div
       label(bbt:preference="extensions.zotero.translators.better-bibtex.keyScope") &better-bibtex_preferences_citekey_uniqueness_scope;
       menulist(preference="extensions.zotero.translators.better-bibtex.keyScope")

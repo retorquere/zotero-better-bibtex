@@ -1,0 +1,64 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "options": {
+      "Items": true,
+      "Preferences": true,
+      "exportNotes": true,
+      "worker": true
+    },
+    "preferences": {"asciiBibLaTeX": true}
+  },
+  "items": [
+    {
+      "DOI": "https://doi.org/10.1016/j.gca.2017.06.006",
+      "ISSN": "0016-7037",
+      "citationKey": "lugaroMeteoriticSiliconCarbide2018",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Maria",
+          "lastName": "Lugaro"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Amanda I.",
+          "lastName": "Karakas"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "M\u00e1ria",
+          "lastName": "Pet\u0151"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Emese",
+          "lastName": "Plachy"
+        }
+      ],
+      "date": "2018",
+      "itemID": 1,
+      "itemType": "journalArticle",
+      "notes": [
+        "Astrophysical Implications of Extraterrestrial Materials: A Special issue for Ernst K. Zinner"
+      ],
+      "pages": "6 - 20",
+      "publicationTitle": "Geochimica et Cosmochimica Acta",
+      "tags": [
+        {
+          "tag": "Stardust grains"
+        },
+        {
+          "tag": "Stars: AGB"
+        },
+        {
+          "tag": "Stellar nucleosynthesis"
+        }
+      ],
+      "title": "Do meteoritic silicon carbide grains originate from asymptotic giant branch stars of super-solar metallicity?",
+      "url": "http://www.sciencedirect.com/science/article/pii/S001670371730354X",
+      "volume": "221"
+    }
+  ]
+}

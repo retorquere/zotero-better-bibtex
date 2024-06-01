@@ -3,11 +3,11 @@
   shorttitle = {Catalogo dos livros, que se haõ de ler...},
   author = {de Macedo, Agostinho José da Costa},
   date = {1799},
-  publisher = {{Na Typographia da Mesma Academia}},
-  location = {{Lisboa}},
+  publisher = {Na Typographia da Mesma Academia},
+  location = {Lisboa},
   langid = {portuguese},
   pagetotal = {182},
-  keywords = {Literary Criticism / European / Spanish \& Portuguese,Portuguese literature}
+  keywords = {Literary Criticism / European / Spanish & Portuguese,Portuguese literature}
 }
 
 @thesis{oliveira_memoriam_2007,
@@ -15,8 +15,8 @@
   title = {In Memoriam, Na Cidade},
   author = {de Oliveira, Maria Manuel Lobo Pinto},
   date = {2007},
-  institution = {{Universidade do Minho}},
-  location = {{Guimarães, Portugal}},
+  institution = {Universidade do Minho},
+  location = {Guimarães, Portugal},
   url = {http://repositorium.sdum.uminho.pt/handle/1822/6877},
   urldate = {2015-03-24}
 }

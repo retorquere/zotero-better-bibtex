@@ -47,6 +47,7 @@ const re = {
   // fetch fields as per https://forums.zotero.org/discussion/3673/2/original-date-of-publication/. Spurious 'tex.' so I can do a single match
   old: /^{:((?:bib(?:la)?)?tex\.)?([^:]+)(:)\s*([^}]+)}$/i,
   new: /^((?:bib(?:la)?)?tex\.)?([^:=]+)\s*([:=])\s*([\S\s]*)/i,
+  quoted: /^((?:bib(?:la)?)?tex\.)"([^"]+)"\s*([:=])\s*([\S\s]*)/i,
 }
 
 type SetOptions = {
@@ -89,7 +90,9 @@ export function get(extra: string, mode: 'zotero' | 'csl', options?: GetOptions)
 
   let ef
   extra = extra.split('\n').filter((line, i) => {
-    const m = line.match(re.old) || line.match(re.new)
+    const m = line.match(re.old)
+      || line.match(re.quoted) // quoted before new, because new will trigger on the quoted colon
+      || line.match(re.new)
     if (!m) return true
 
     let [ , tex, key, assign, value ] = m

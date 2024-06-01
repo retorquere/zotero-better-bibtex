@@ -83,8 +83,8 @@ class Compiler {
 
   get(node: Node, allowed): Node {
     if (typeof allowed === 'string') allowed = [ allowed ]
-    if (!node) this.error(node, `expected ${allowed.join(' | ')} at end of input`)
-    if (!allowed.includes(node.type) && !allowed.includes(node.operator)) this.error(node, `expected ${allowed.join(' | ')}, got ${node.type}`)
+    if (!node) this.error(node, `expected ${this.expected(allowed)} at end of input`)
+    if (!allowed.includes(node.type) && !allowed.includes(node.operator)) this.error(node, `expected ${this.expected(allowed)}, got ${node.type}`)
     if (node.computed) this.error(node, 'unsupported computed attribute')
     if (node.optional) this.error(node, 'unsupported optional attribute')
     return node
@@ -167,6 +167,11 @@ ${compiled}
       default:
         this.error(node, `unexpected ${node.type}`)
     }
+  }
+
+  expected(types: string[]): string {
+    if (types.length > 1) return `${types.slice(0, types.length - 1).join(', ')} or ${types[types.length - 1]}`
+    return types[0]
   }
 
   $term(node) {
@@ -277,8 +282,10 @@ ${compiled}
       required: new Set(method.schema.required),
     }
     args.forEach((arg: Argument, n: number) => {
-      // ignore deprecated parameter
+      // legacy: ignore deprecated parameter
       if (method.name.startsWith('$auth') && arg.name === 'clean') return
+      // legacy: renamed parameter
+      if (method.name === '$creators' && arg.name === 'creator') arg.name = 'type'
 
       if (arg.name) n = method.parameters.indexOf(arg.name)
       if (n === -1) this.error(arg.value, `${this.methodName(method)} passed unsupported parameter "${arg.name}"`)
@@ -305,7 +312,7 @@ ${compiled}
     if (Array.isArray(arg)) { // only passed for rest
       if (!method.rest) this.error(arg[0]?.value, `variable number of arguments passed to non-rest ${this.methodName(method)}`)
       if (rule.type !== 'array') throw new Error(`${rule.type} expected, got array for ${this.methodName(method)}`)
-      return `${arg.map(a => this.validate(rule.items, a.value, context)).join(',')}`
+      return arg.map(a => this.validate(rule.items, a.value, context)).join(',')
     }
     else {
       if (method.rest) this.error(arg.value, `rest ${this.methodName(method)} expects a variable number of arguments`)
@@ -324,7 +331,7 @@ ${compiled}
         const validated = this.validate(subrule, value, context, true)
         if (validated !== null) return validated
       }
-      this.error(value, `expected ${rule.anyOf.map(r => (r.instanceof || r.type) as string).join(' | ')}, got ${this.$typeof(value)} ${context}`)
+      this.error(value, `expected ${this.expected(rule.anyOf.map(r => (r.instanceof || r.type) as string))}, got ${this.$typeof(value)} ${context}`)
     }
 
     switch (rule.instanceof || rule.type) {
@@ -332,15 +339,18 @@ ${compiled}
       case 'number':
       case 'string':
       case 'boolean':
-        if ((rule.instanceof || rule.type) !== this.$typeof(value)) return fail(`${rule.instanceof || rule.type} expected, got ${this.$typeof(value)} ${context}`)
-        if (rule.enum && !rule.enum.includes(value.value)) return fail(`${rule.enum.join(' | ')} expected, got ${value.value} ${context}`)
+        if ((rule.instanceof || rule.type) !== this.$typeof(value)) return fail(`expected ${rule.instanceof || rule.type}, got ${this.$typeof(value)} ${context}`)
+        if (rule.enum && !rule.enum.includes(value.value)) return fail(`expected ${this.expected(rule.enum)}, got ${value.value} ${context}`)
         break
 
       case 'array':
-        return fail(`array expected, got ${this.$typeof(value)} ${context}`)
+        if (value.type !== 'ArrayExpression') return fail(`expected array, got ${this.$typeof(value)} ${context}`)
+        if (rule.items) return `[${value.elements.map(v => this.validate(rule.items, v, context, softfail)).join(',')}]`
+        if (rule.prefixItems) return `[${value.elements.map((v, i) => this.validate(rule.prefixItems[i], v, context, softfail)).join(',')}]`
+        return fail('cannot validate array items')
 
       case 'template':
-        if (typeof value.value !== 'string') return fail(`string expected, got ${this.$typeof(value)} ${context}`)
+        if (typeof value.value !== 'string') return fail(`expected string, got ${this.$typeof(value)} ${context}`)
 
         let template = value.value
         if (rule.kind === 'datetime') {
@@ -356,7 +366,7 @@ ${compiled}
           return fail(`could not parse template ${JSON.stringify(value.value)}${template !== value.value ? `/${JSON.stringify(template)}` : ''} ${context}: ${err}`)
         }
         const unknown: string = used.length === 0 ? 'none' : used.find(v => !rule.variables[v])
-        if (unknown) return fail(`${Object.keys(rule.variables).join('/')} expected, got ${unknown} ${context}`)
+        if (unknown) return fail(`expected ${this.expected(Object.keys(rule.variables))}, got ${unknown} ${context}`)
         return JSON.stringify(template)
 
       default:
@@ -403,7 +413,7 @@ ${compiled}
 
       case 'UnaryExpression':
         if (node.operator !== '-' || !node.prefix) this.error(node, `unsupported unary ${node.prefix ? 'prefix' : 'postfix'} operator ${JSON.stringify(node.operator)}`)
-        if (typeof this.get(node.argument, 'Literal').value !== 'number') this.error(node.argument, `expected numeric value, found ${this.$typeof(node.argument)}`)
+        if (typeof this.get(node.argument, 'Literal').value !== 'number') this.error(node.argument, `expected number, found ${this.$typeof(node.argument)}`)
         return {
           ...node,
           type: 'Literal',

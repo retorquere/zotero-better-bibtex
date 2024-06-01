@@ -22,6 +22,10 @@ function module.urlencode(str)
 end
 
 function module.xmlescape(str)
+  return string.gsub(str, '[<>&]', { ['&'] = '&amp;', ['<'] = '&lt;', ['>'] = '&gt;' })
+end
+
+function module.xmlattr(str)
   return string.gsub(str, '["<>&]', { ['&'] = '&amp;', ['<'] = '&lt;', ['>'] = '&gt;', ['"'] = '&quot;' })
 end
 
@@ -43,6 +47,20 @@ function module.deepcopy(orig)
   end
   return copy
 end
+
+function module.dump(o)
+   if type(o) == 'table' then
+      local s = '{ '
+      for k,v in pairs(o) do
+         if type(k) ~= 'number' then k = '"'..k..'"' end
+         s = s .. '['..k..'] = ' .. module.dump(v) .. ','
+      end
+      return s .. '} '
+   else
+      return tostring(o)
+   end
+end
+
 
 function module.trim(s)
   if s == nil then

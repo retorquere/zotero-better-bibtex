@@ -70,11 +70,13 @@ interface ZoteroItem {
   toJSON: () => import('../gen/typings/serialized-item').Item
 }
 
-// https://stackoverflow.com/questions/39040108/import-class-in-definition-file-d-ts
-declare const Zotero: {
-  [attr: string]: any
+type GlobalBBT = {
+  // https://stackoverflow.com/questions/39040108/import-class-in-definition-file-d-ts
   BetterBibTeX: import('../content/better-bibtex').BetterBibTeX
 }
+type ZoteroObject = GlobalBBT & Omit<Record<string, any>, keyof GlobalBBT>
+declare const Zotero: ZoteroObject
 
 declare const Components: any
 declare const Services: any
+declare const rootURI: string

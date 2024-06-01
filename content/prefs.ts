@@ -1,7 +1,12 @@
 /* eslint-disable @typescript-eslint/quotes, max-len */
 declare const Services: any
 
+import { Shim } from './os'
+import { is7, platform } from './client'
+const $OS = is7 ? Shim : OS
+
 import { Events } from './events'
+import type { CharMap } from 'unicode2latex'
 
 declare const Zotero: any
 
@@ -11,12 +16,8 @@ import { dict as csv2dict } from './load-csv'
 import { log } from './logger'
 import { flash } from './flash'
 
-type TexChar = { unicode?: string, math?: string, text?: string }
-export type TeXMap = Record<string, TexChar>
-
 export const Preference = new class PreferenceManager extends PreferenceManagerBase {
   public prefix = 'translators.better-bibtex.'
-  public texmap: TeXMap = {}
   private observers: number[] = []
   private minimum = {
     autoExportIdleWait: 1,
@@ -38,21 +39,11 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
     this.setDefaultPrefs()
 
     // put this in a preference so that translators can access this.
-    if (Zotero.isWin) {
-      this.platform = 'win'
-    }
-    else if (Zotero.isMac) {
-      this.platform = 'mac'
-    }
-    else {
-      if (!Zotero.isLinux) Zotero.debug('error: better-bibtex could not establish the platform, assuming linux')
-      this.platform = 'lin'
-    }
+    this.platform = platform.name
 
     if (this.testing) {
       return new Proxy(this, {
         set: (object, property, value) => {
-          if (property === 'texmap') return true
           if (!(property in object)) {
             const stack = (new Error).stack
             throw new TypeError(`Unsupported preference ${new String(property)} ${stack}`) // eslint-disable-line no-new-wrappers
@@ -61,8 +52,6 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
           return true
         },
         get: (object, property) => {
-          if (property === 'texmap') return this.texmap
-
           if (!(property in object)) {
             const stack = (new Error).stack
             throw new TypeError(`Unsupported preference ${new String(property)} ${stack}`) // eslint-disable-line no-new-wrappers
@@ -71,6 +60,8 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
         },
       })
     }
+
+    Events.itemObserverDelay = this.itemObserverDelay
   }
 
   setDefaultPrefs() {
@@ -127,6 +118,7 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
   changed(pref: string) {
     // prevent foot-guns
     if (this.repair(pref)) return
+    if (pref === 'itemObserverDelay') Events.itemObserverDelay = this.itemObserverDelay
     void Events.emit('preference-changed', pref)
   }
 
@@ -143,77 +135,44 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
   */
 
   private migrate() {
-    let old, key
+    let key
 
     // clear out old keys
     const oops = 'extensions.translators.better-bibtex.'
     for (key of Services.prefs.getBranch(oops).getChildList('', {}) as string[]) {
       Zotero.Prefs.clear(oops + key, true) // eslint-disable-line @typescript-eslint/restrict-plus-operands
     }
-    if (typeof Zotero.Prefs.get(key = 'translators.better-bibtex.citeprocNoteCitekey') !== 'undefined') Zotero.Prefs.clear(key)
-    if (typeof Zotero.Prefs.get(key = 'translators.better-bibtex.newTranslatorsAskRestart') !== 'undefined') Zotero.Prefs.clear(key)
-    if (typeof Zotero.Prefs.get(key = 'translators.better-bibtex.caching') !== 'undefined') Zotero.Prefs.clear(key)
-    if (typeof Zotero.Prefs.get(key = 'translators.better-bibtex.citekeyFormatBackup') !== 'undefined') Zotero.Prefs.clear(key)
 
     // migrate ancient keys
-    if ((old = Zotero.Prefs.get(key = 'translators.better-bibtex.quickCopyMode')) === 'orgmode_citekey') {
+    if (Zotero.Prefs.get(key = 'translators.better-bibtex.quickCopyMode') === 'orgmode_citekey') {
       Zotero.Prefs.set(key, 'orgmode')
       Zotero.Prefs.set('translators.better-bibtex.quickCopyOrgMode', 'citationkey')
     }
-    if ((old = Zotero.Prefs.get(key = 'translators.better-bibtex.quickCopyMode')) === 'selectLink_citekey') {
+    if (Zotero.Prefs.get(key = 'translators.better-bibtex.quickCopyMode') === 'selectLink_citekey') {
       Zotero.Prefs.set(key, 'selectlink')
       Zotero.Prefs.set('translators.better-bibtex.quickCopySelectLink', 'citationkey')
-    }
-    if ((old = Zotero.Prefs.get(key = 'translators.better-bibtex.quickCopyMode')) === 'selectLink') {
-      Zotero.Prefs.set(key, 'selectlink')
-    }
-    if (typeof Zotero.Prefs.get(key = 'translators.better-bibtex.worker') !== 'undefined') {
-      Zotero.Prefs.clear(key)
-    }
-    if (typeof Zotero.Prefs.get(key = 'translators.better-bibtex.workers') !== 'undefined') {
-      Zotero.Prefs.clear(key)
-    }
-    if (typeof Zotero.Prefs.get(key = 'translators.better-bibtex.workersMax') !== 'undefined') {
-      Zotero.Prefs.clear(key)
-    }
-    if (typeof (old = Zotero.Prefs.get(key = 'translators.better-bibtex.workersCache')) !== 'undefined') {
-      Zotero.Prefs.clear(key)
-    }
-    if (typeof (old = Zotero.Prefs.get(key = 'translators.better-bibtex.suppressTitleCase')) !== 'undefined') {
-      Zotero.Prefs.clear(key)
-      Zotero.Prefs.set('translators.better-bibtex.exportTitleCase', !old)
-    }
-    if (typeof (old = Zotero.Prefs.get(key = 'translators.better-bibtex.suppressBraceProtection')) !== 'undefined') {
-      Zotero.Prefs.clear(key)
-      Zotero.Prefs.set('translators.better-bibtex.exportBraceProtection', !old)
-    }
-    if (typeof (old = Zotero.Prefs.get(key = 'translators.better-bibtex.suppressSentenceCase')) !== 'undefined') {
-      Zotero.Prefs.clear(key)
-      Zotero.Prefs.set('translators.better-bibtex.importSentenceCase', old ? 'off' : 'on+guess')
-    }
-    if (typeof (old = Zotero.Prefs.get(key = 'translators.better-bibtex.suppressNoCase')) !== 'undefined') {
-      Zotero.Prefs.clear(key)
-      Zotero.Prefs.set('translators.better-bibtex.importCaseProtection', old ? 'off' : 'as-needed')
-    }
-    if (typeof (old = Zotero.Prefs.get(key = 'translators.better-bibtex.autoPin')) !== 'undefined') {
-      Zotero.Prefs.clear(key)
-      Zotero.Prefs.set('translators.better-bibtex.autoPinDelay', old ? 1 : 0)
     }
     if (Zotero.Prefs.get(key = 'translators.better-bibtex.autoExportDelay') === 1) {
       Zotero.Prefs.set(key, defaults.autoExportDelay)
     }
 
+    Zotero.Prefs.clear('translators.better-bibtex.worker')
+    Zotero.Prefs.clear('translators.better-bibtex.workersCache')
+    Zotero.Prefs.clear('translators.better-bibtex.workersMax')
+    Zotero.Prefs.clear('translators.better-bibtex.workers')
+    Zotero.Prefs.clear('translators.better-bibtex.citeprocNoteCitekey')
+    Zotero.Prefs.clear('translators.better-bibtex.newTranslatorsAskRestart')
+    Zotero.Prefs.clear('translators.better-bibtex.caching')
+    Zotero.Prefs.clear('translators.better-bibtex.citekeyFormatBackup')
+
+    this.move('autoPin', 'autoPinDelay', old => old ? 1 : 0)
+    this.move('suppressNoCase', 'importCaseProtection', old => old ? 'off' : 'as-needed')
+    this.move('suppressSentenceCase', 'importSentenceCase', old => old ? 'off' : 'on+guess')
+    this.move('suppressBraceProtection', 'exportBraceProtection', old => !old)
+    this.move('suppressTitleCase', 'exportTitleCase', old => !old)
+
     // put this in a preference so that translators can access this.
-    if (Zotero.isWin) {
-      this.platform = 'win'
-    }
-    else if (Zotero.isMac) {
-      this.platform = 'mac'
-    }
-    else {
-      if (!Zotero.isLinux) Zotero.debug('error: better-bibtex could not establish the platform, assuming linux')
-      this.platform = 'lin'
-    }
+    this.platform = platform.name
 
     if (this.testing) {
       return new Proxy(this, {
@@ -230,11 +189,20 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
     }
   }
 
+  private move(ist: string, soll: string, convert: (v: any) => any) {
+    if (!ist.match(/[.]/)) ist = `translators.better-bibtex.${ist}`
+    if (!soll.match(/[.]/)) soll = `translators.better-bibtex.${soll}`
+    const old = Zotero.Prefs.get(ist)
+    if (typeof old === 'undefined') return
+    Zotero.Prefs.clear(ist)
+    Zotero.Prefs.set(soll, convert(old))
+  }
+
   private async loadFromCSV(pref: string, path: string, dflt: string, transform: (row: any) => any) {
     const key = `${this.prefix}${pref}`
     const modified = {
       pref: Zotero.Prefs.get(`${key}.modified`) || 0,
-      file: (await OS.File.exists(path)) ? (await OS.File.stat(path)).lastModificationDate.getTime() : 0,
+      file: (await $OS.File.exists(path)) ? (await $OS.File.stat(path)).lastModificationDate.getTime() : 0,
     }
     if (modified.pref >= modified.file) return
 
@@ -251,11 +219,10 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
 
   public async startup(dir: string) {
     // load from csv for easier editing
-    this.texmap = {}
-    await this.loadFromCSV('charmap', OS.Path.join(dir, 'charmap.csv'), '', (rows: Record<string, string>[]) => JSON.stringify(
-      rows.reduce((acc: TeXMap, row: TexChar) => {
+    await this.loadFromCSV('charmap', $OS.Path.join(dir, 'charmap.csv'), '{}', (rows: Record<string, string>[]) => JSON.stringify(
+      rows.reduce((acc: CharMap, row: { unicode: string, text: string, math: string }) => {
         if (row.unicode && (row.math || row.text)) acc[row.unicode] = { text: row.text, math: row.math }
-        return (this.texmap = acc)
+        return acc
       }, {})
     ))
 

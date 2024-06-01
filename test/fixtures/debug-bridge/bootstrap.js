@@ -168,14 +168,15 @@ async function startup({ resourceURI, rootURI = resourceURI.spec }, reason) {
     }
 
     async init(options) {
-      const password = {
-        expected: Zotero.Prefs.get('debug-bridge.password') || '',
-        found: (options.query || {}).password || '',
+      const token = {
+        expected: `Bearer ${Zotero.Prefs.get('debug-bridge.token') || ''}`,
+        found: (options.headers || {}).Authorization || '',
       }
 
-      if (!password.expected) return [500, 'text/plain', 'password not configured'];
-      if (!password.found) return [401, 'text/plain', 'password required'];
-      if (password.expected !== password.found)  return [401, 'text/plain', 'invalid password'];
+      if (token.expected.trim() === 'Bearer') return [500, 'text/plain', 'token not configured'];
+      if (!token.found) return [401, 'text/plain', 'bearer token required'];
+
+      if (token.expected !== token.found) return [401, 'text/plain', 'invalid bearer token']
 
       log(`executing\n${options.data}`)
       let start = new Date

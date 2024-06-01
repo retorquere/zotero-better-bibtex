@@ -1,0 +1,83 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "options": {
+      "Items": true,
+      "Preferences": true,
+      "exportNotes": true,
+      "worker": true
+    },
+    "preferences": {
+      "autoExportDelay": 2,
+      "automaticTags": false,
+      "baseAttachmentPath": "/Users/vincentkalthoff/Dokumente/ZoteroAttachments",
+      "citekeyFormat": "creators(type=[seriesEditor, bookAuthor])+year+(ShortTitle.nopunctordash.select(n=3).capitalize || shorttitle(3,3))",
+      "keyConflictPolicy": "change",
+      "keyScope": "global",
+      "quickCopyMode": "citekeys",
+      "quickCopyPandocBrackets": true,
+      "warnBulkModify": 0
+    }
+  },
+  "items": [
+    {
+      "ISBN": "978-3-05-003046-3",
+      "callNumber": "B3199.A34 T4745 2006",
+      "citationKey": "HonnethEtAl2006KlassikerAuslegenNegative",
+      "creators": [
+        {
+          "creatorType": "editor",
+          "firstName": "Axel",
+          "lastName": "Honneth"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "Christoph",
+          "lastName": "Menke"
+        },
+        {
+          "creatorType": "seriesEditor",
+          "firstName": "Otfried",
+          "lastName": "H\u00f6ffe"
+        }
+      ],
+      "date": "2006",
+      "itemID": 1,
+      "itemType": "book",
+      "language": "de",
+      "libraryCatalog": "Library of Congress ISBN",
+      "numPages": "218",
+      "place": "Berlin",
+      "publisher": "Akademie Verlag",
+      "series": "Klassiker Auslegen",
+      "seriesNumber": "28",
+      "shortTitle": "Klassiker Auslegen: Negative Dialektik",
+      "tags": [
+        {
+          "tag": "\ud83d\udce5"
+        },
+        {
+          "tag": "20. Jahrhundert"
+        },
+        {
+          "tag": "Adorno, Theodor W",
+          "type": 1
+        },
+        {
+          "tag": "Dialectic",
+          "type": 1
+        },
+        {
+          "tag": "History",
+          "type": 1
+        },
+        {
+          "tag": "Negative Dialektik",
+          "type": 1
+        }
+      ],
+      "title": "Theodor W. Adorno: Negative Dialektik"
+    }
+  ]
+}

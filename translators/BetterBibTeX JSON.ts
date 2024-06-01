@@ -10,6 +10,7 @@ const version = require('../gen/version.js')
 // import { stringify } from '../content/stringify'
 // import { log } from '../content/logger'
 import type { Library } from './lib/normalize'
+import  { asciify } from '../content/text'
 
 const chunkSize = 0x100000
 
@@ -141,7 +142,7 @@ export function doExport(): void {
     config: {
       id: ZOTERO_TRANSLATOR_INFO.translatorID,
       label: ZOTERO_TRANSLATOR_INFO.label,
-      preferences,
+      preferences : translation.options.Preferences ? preferences : {},
       options: translation.options,
     },
     version: {
@@ -152,53 +153,53 @@ export function doExport(): void {
     items: [],
   }
 
-  const validAttachmentFields = new Set([ 'relations', 'uri', 'itemType', 'title', 'path', 'tags', 'dateAdded', 'dateModified', 'seeAlso', 'mimeType' ])
+  if (translation.options.Items) {
+    const validAttachmentFields = new Set([ 'relations', 'uri', 'itemType', 'title', 'path', 'tags', 'dateAdded', 'dateModified', 'seeAlso', 'mimeType' ])
 
-  for (const item of translation.input.items) {
-    if (!translation.preferences.testing) addSelect(item)
-    delete (item as any).$cacheable
+    for (const item of translation.input.items) {
+      if (!translation.preferences.testing) addSelect(item)
+      delete (item as any).$cacheable
 
-    switch (item.itemType) {
-      case 'attachment':
-        if (translation.options.dropAttachments) continue
-        break
+      switch (item.itemType) {
+        case 'attachment':
+          if (translation.options.dropAttachments) continue
+          break
 
-      case 'note':
-      case 'annotation':
-        break
+        case 'note':
+        case 'annotation':
+          break
 
-      default:
-        (item as any).relations = item.relations?.['dc:relation'] || []
-        delete item.collections
+        default:
+          delete item.collections
 
-        if (translation.options.Normalize) simplifyForExport(item, { dropAttachments: translation.options.dropAttachments})
+          if (translation.options.Normalize) simplifyForExport(item, { dropAttachments: translation.options.dropAttachments})
 
-        for (const att of item.attachments || []) {
-          if (translation.options.exportFileData && att.saveFile && att.defaultPath) {
-            att.saveFile(att.defaultPath, true)
-            att.path = att.defaultPath
-          }
-          else if (att.localPath) {
-            att.path = att.localPath
-          }
-
-          if (!att.path) continue // amazon/googlebooks etc links show up as atachments without a path
-
-          (att as any).relations = att.relations ? (att.relations['dc:relation'] || []) : []
-          for (const field of Object.keys(att)) {
-            if (!validAttachmentFields.has(field)) {
-              delete att[field]
+          for (const att of item.attachments || []) {
+            if (translation.options.exportFileData && att.saveFile && att.defaultPath) {
+              att.saveFile(att.defaultPath, true)
+              att.path = att.defaultPath
             }
+            else if (att.localPath) {
+              att.path = att.localPath
+            }
+
+            if (!att.path) continue // amazon/googlebooks etc links show up as atachments without a path
+
+            for (const field of Object.keys(att)) {
+              if (!validAttachmentFields.has(field)) {
+                delete att[field]
+              }
+            }
+            if (!translation.preferences.testing) addSelect(att)
+
           }
-          if (!translation.preferences.testing) addSelect(att)
+          break
+      }
 
-        }
-        break
+      data.items.push(item)
     }
-
-    data.items.push(item)
   }
 
-  Zotero.write(JSON.stringify(data, null, 2))
+  Zotero.write(asciify(JSON.stringify(data, null, 2)))
   translation.erase()
 }

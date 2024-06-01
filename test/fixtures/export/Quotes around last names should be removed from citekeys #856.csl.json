@@ -1,1 +1,21 @@
-[{"id": "delaMareTitle2017", "author": [{"family": "de la Mare", "given": "Walter"}], "issued": {"date-parts": [[2017]]}, "title": "Title", "type": "article-journal", "citation-key": "delaMareTitle2017"}]
+[
+  {
+    "author": [
+      {
+        "family": "de la Mare",
+        "given": "Walter"
+      }
+    ],
+    "citation-key": "delaMareTitle2017",
+    "id": "delaMareTitle2017",
+    "issued": {
+      "date-parts": [
+        [
+          "2017"
+        ]
+      ]
+    },
+    "title": "Title",
+    "type": "article-journal"
+  }
+]

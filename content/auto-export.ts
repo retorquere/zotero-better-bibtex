@@ -3,6 +3,10 @@ declare const FileUtils: any
 
 import { log } from './logger'
 
+import { Shim } from './os'
+import { is7 } from './client'
+const $OS = is7 ? Shim : OS
+
 import { Events } from './events'
 import { DB as Cache } from './db/cache'
 import { $and } from './db/loki'
@@ -39,15 +43,14 @@ export const SQL = new class {
   public async get(path: string): Promise<Job> {
     const job: Partial<Job> = {}
 
-    if (typeof path !== 'string') throw new Error(`ae:sql:get: ${typeof path}`)
+    if (typeof path !== 'string') throw new Error(`ae:sql:get: ${path} is not a string but a ${typeof path}`)
 
-    log.debug('ae:sql:get', {path})
     for (const meta of await Zotero.DB.queryAsync('SELECT * FROM betterbibtex.autoexport WHERE path = ?', [ path ])) {
       Object.assign(job, pick(meta, this.columns.job))
     }
 
     const settings = autoExport[job.translatorID]
-    const displayOptions = byId[job.translatorID]?.displayOptions || {}
+    const displayOptions = {...(byId[job.translatorID]?.displayOptions || {})}
     Object.assign(job, pick(Preference, settings.preferences))
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     Object.assign(job, fromPairs(settings.options.map((option: PreferenceName) => [ option, job[option] ?? displayOptions[option] ?? false ])))
@@ -61,14 +64,12 @@ export const SQL = new class {
 
   public async edit(path: string, setting: JobSetting, value: boolean | number | string): Promise<void> {
     if (typeof value === 'boolean') value = value ? 1 : 0
-    log.debug('ae.edit: pre', await this.get(path), 'apply:', { setting, value })
     if (this.columns.editable.includes(setting)) {
       await Zotero.DB.queryTx(`UPDATE betterbibtex.autoexport SET ${setting} = ? WHERE path = ?`, [ value, path ])
     }
     else {
       await Zotero.DB.queryTx(this.sql.setting, { setting, path, value }, NoParse)
     }
-    log.debug('ae.edit: post', await this.get(path))
     queue.add(path)
   }
 
@@ -138,18 +139,19 @@ class Git {
     return this
   }
 
-  public async repo(bib): Promise<Git> {
+  public async repo(bib: string): Promise<Git> {
     const repo = new Git(this)
 
     if (!this.git) return repo
 
+    let config: string = null
     switch (Preference.git) {
       case 'off':
         return repo
 
       case 'always':
         try {
-          repo.path = OS.Path.dirname(bib)
+          repo.path = $OS.Path.dirname(bib)
         }
         catch (err) {
           log.error('git.repo:', err)
@@ -158,18 +160,16 @@ class Git {
         break
 
       case 'config':
-        // eslint-disable-next-line no-case-declarations
-        let config = null
-        for (let root = OS.Path.dirname(bib); (await OS.File.exists(root)) && (await OS.File.stat(root)).isDir && root !== OS.Path.dirname(root); root = OS.Path.dirname(root)) {
-          config = OS.Path.join(root, '.git')
-          if ((await OS.File.exists(config)) && (await OS.File.stat(config)).isDir) break
+        for (let root = $OS.Path.dirname(bib); (await $OS.File.exists(root)) && (await $OS.File.stat(root)).isDir && root !== $OS.Path.dirname(root); root = $OS.Path.dirname(root)) {
+          config = $OS.Path.join(root, '.git')
+          if ((await $OS.File.exists(config)) && (await $OS.File.stat(config)).isDir) break
           config = null
         }
         if (!config) return repo
-        repo.path = OS.Path.dirname(config)
+        repo.path = $OS.Path.dirname(config)
 
-        config = OS.Path.join(config, 'config')
-        if (!(await OS.File.exists(config)) || (await OS.File.stat(config)).isDir) {
+        config = $OS.Path.join(config, 'config')
+        if (!(await $OS.File.exists(config)) || (await $OS.File.stat(config)).isDir) {
           return repo
         }
 
@@ -178,7 +178,7 @@ class Git {
           if (enabled !== 'true' && enabled !== true) return repo
         }
         catch (err) {
-          log.error('git.repo: error parsing config', config.path, err)
+          log.error('git.repo: error parsing config', config, err)
           return repo
         }
         break
@@ -285,7 +285,6 @@ const queue = new class TaskQueue {
   }
 
   public add(path: string) {
-    log.debug('auth-export: scheduled', path)
     this.scheduler.schedule(path, this.run.bind(this, path))
   }
 
@@ -300,7 +299,6 @@ const queue = new class TaskQueue {
     await Zotero.BetterBibTeX.ready
 
     const ae = await AutoExport.get(path)
-    log.debug('ae.schedule: running', ae)
     if (!ae) throw new Error(`AutoExport for ${JSON.stringify(path)} does not exist`)
 
     const translator = Translators.byId[ae.translatorID]
@@ -326,6 +324,8 @@ const queue = new class TaskQueue {
       const displayOptions: any = {
         exportNotes: ae.exportNotes,
         useJournalAbbreviation: ae.useJournalAbbreviation,
+        biblatexAPA: ae.biblatexAPA || false,
+        biblatexChicago: ae.biblatexChicago || false,
       }
 
       const jobs: ExportJob[] = [{
@@ -339,7 +339,6 @@ const queue = new class TaskQueue {
           return acc
         }, {} as any) as Partial<Preferences>,
       }]
-      log.debug('scheduling auto-export:', jobs)
 
       if (ae.recursive) {
         const collections = scope.type === 'library' ? Zotero.Collections.getByLibrary(scope.id, true) : Zotero.Collections.getByParent(scope.collection, true)
@@ -347,8 +346,8 @@ const queue = new class TaskQueue {
 
         const root = scope.type === 'collection' ? scope.collection : false
 
-        const dir = OS.Path.dirname(ae.path)
-        const base = OS.Path.basename(ae.path).replace(new RegExp(`${ext.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&')}$`), '')
+        const dir = $OS.Path.dirname(ae.path)
+        const base = $OS.Path.basename(ae.path).replace(new RegExp(`${ext.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&')}$`), '')
 
         const autoExportPathReplace = {
           diacritics: Preference.autoExportPathReplaceDiacritics,
@@ -357,7 +356,7 @@ const queue = new class TaskQueue {
         }
 
         for (const collection of collections) {
-          const output = OS.Path.join(dir, [base]
+          const output = $OS.Path.join(dir, [base]
             .concat(this.getCollectionPath(collection, root))
             // eslint-disable-next-line no-control-regex
             .map((p: string) => p.replace(/[<>:'"/\\|?*\u0000-\u001F]/g, ''))
@@ -414,6 +413,8 @@ type Job = {
   biblatexExtendedNameFormat?: boolean
   DOIandURL?: boolean
   bibtexURL?: boolean
+  biblatexAPA?: boolean
+  biblatexChicago?: boolean
 }
 type JobSetting = keyof Job
 
@@ -430,7 +431,8 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
       if (typeof ae === 'string') this.progress.set(ae, pct)
     })
 
-    orchestrator.add('git-push', {
+    orchestrator.add({
+      id: 'git-push',
       description: 'git support',
       needs: ['start'],
       startup: async () => {
@@ -438,7 +440,8 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
       },
     })
 
-    orchestrator.add('auto-export', {
+    orchestrator.add({
+      id: 'auto-export',
       description: 'auto-export',
       needs: ['sqlite', 'cache', 'translators'],
       startup: async () => {
@@ -449,17 +452,14 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
         if (Preference.autoExport === 'immediate') queue.resume('startup')
         Events.addIdleListener('auto-export', Preference.autoExportIdleWait)
         Events.on('idle', state => {
-          log.debug('idle: auto-export:', { state, pref: { autoExport: Preference.autoExport, autoExportIdleWait: Preference.autoExportIdleWait }})
           if (state.topic !== 'auto-export' || Preference.autoExport !== 'idle') return
 
           switch (state.state) {
             case 'active':
-              log.debug('idle: stopping queue')
               queue.pause('end-of-idle')
               break
 
             case 'idle':
-              log.debug('idle: starting queue')
               queue.resume('start-of-idle')
               break
 
@@ -474,7 +474,6 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
 
   public async add(ae, schedule = false) {
     await SQL.create(ae)
-    log.debug('aedb: inserted, now', await Zotero.DB.valueQueryAsync('SELECT COUNT(*) FROM betterbibtex.autoexport'))
 
     try {
       const repo = await git.repo(ae.path)
@@ -493,7 +492,6 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
     if (!ids.length) return
 
     for (const path of await SQL.find(type, ids)) {
-      log.debug('ae.schedule: enqueueing', path)
       queue.add(path)
     }
   }

@@ -545,6 +545,13 @@ for creatorTypes in jsonpath.parse('*.itemTypes.*.creatorTypes').find(SCHEMA):
     creators[client][itemType].append(creatorType)
 with open(os.path.join(ITEMS, 'creators.json'), 'w') as f:
   json.dump(creators, f, indent='  ', default=lambda x: sorted(list(x)) if isinstance(x, set) else x)
+with open(os.path.join(root, 'site/layouts/shortcodes/citekey-formatters/creatortypes.html'), 'w') as f:
+  creators = sorted(list(set(sum([crs
+    for itemtypes in creators.values()
+    for crs in itemtypes.values()
+  ], []))))
+  creators = [f'`{cr}`' for cr in creators]
+  f.write(', '.join(creators))
 
 def template(tmpl):
   return Template(filename=os.path.join(root, 'setup/templates', tmpl))
@@ -580,6 +587,7 @@ with open(os.path.join(ITEMS, 'items.ts'), 'w') as items, open(os.path.join(ITEM
         valid.field[itemType][field] = client
       elif valid.field[itemType][field] != client:
         valid.field[itemType][field] = 'true'
+  valid.field['patent']['number'] = 'true'
 
   jsonschema = sqlite3.connect(':memory:')
   jsonschema.execute('CREATE TABLE valid (client, itemType, field)')
@@ -752,3 +760,19 @@ with open(os.path.join(ITEMS, 'csl.json'), 'w') as f, open('submodules/citation-
     if 'type' in m and type(m.type) == list:
       m.type = sorted(m.type)
   json.dump(schema, f, indent='  ')
+
+print('  writing zotero citation key formatter')
+with open('submodules/translators/BibTeX.js') as fin, open('gen/ZoteroBibTeX.mjs', 'w') as fout:
+  fout.write('''
+    const ZU = Zotero.Utilities;
+    const Z = {
+      getHiddenPref(p) {
+        return Zotero.Prefs.get('translators.' + p);
+      }
+    };
+  ''')
+  fout.write('const ZOTERO_TRANSLATOR_INFO = ')
+  fout.write(fin.read()
+    .replace('Zotero.Utilities.strToDate', 'Zotero.Date.strToDate')
+  )
+  fout.write('\nexport { buildCiteKey, detectImport }\n')

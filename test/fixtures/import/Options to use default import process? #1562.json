@@ -2,7 +2,11 @@
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "options": {},
+    "options": {
+      "Items": true,
+      "Preferences": true,
+      "exportNotes": true
+    },
     "preferences": {
       "citekeyFormat": "auth + year",
       "importCitationKey": false,
@@ -60,7 +64,19 @@
       "publicationTitle": "BUILDING AND ENVIRONMENT",
       "tags": [
         {
-          "tag": "Thermal comfort; Overheating; Energy policy; Insulation; Building simulation"
+          "tag": "{Thermal comfort"
+        },
+        {
+          "tag": "Building simulation}"
+        },
+        {
+          "tag": "Energy policy"
+        },
+        {
+          "tag": "Insulation"
+        },
+        {
+          "tag": "Overheating"
         }
       ],
       "title": "Mitigation versus adaptation: Does insulating dwellings increase overheating risk?",

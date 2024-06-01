@@ -1,0 +1,57 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "options": {
+      "exportNotes": true,
+      "worker": true
+    },
+    "preferences": {
+      "autoExportDelay": 30,
+      "citekeyFormat": "(auth.acronym(passthrough=false) || auth.match(/[(](.*?)[)]/) || auth).lower.nopunctordash+year+journal.lower.abbr",
+      "extraMergeCSL": true,
+      "extraMergeCitekeys": true,
+      "extraMergeTeX": true,
+      "itemObserverDelay": 100,
+      "keyConflictPolicy": "change",
+      "keyScope": "global",
+      "quickCopyMode": "pandoc",
+      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc"
+    }
+  },
+  "items": [
+    {
+      "citationKey": "earthlocation",
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "Earth Location"
+        }
+      ],
+      "itemID": 1,
+      "itemType": "document"
+    },
+    {
+      "citationKey": "epsl",
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "Earth and Planetary Science Letters"
+        }
+      ],
+      "itemID": 2,
+      "itemType": "document"
+    },
+    {
+      "citationKey": "pp",
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "Planet Place (PP)"
+        }
+      ],
+      "itemID": 3,
+      "itemType": "document"
+    }
+  ]
+}

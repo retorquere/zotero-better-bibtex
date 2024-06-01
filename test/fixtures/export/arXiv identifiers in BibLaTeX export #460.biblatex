@@ -31,7 +31,7 @@
   url = {http://arxiv.org/abs/1508.05387},
   urldate = {2016-04-17},
   abstract = {We construct the quantum BV master action for heterotic and type II string field theories.},
-  keywords = {\_tablet,Batalin-Vilkoviski formalism,covariant string field theory,futur: 3,note: 4,printed,superstring field theory},
+  keywords = {_tablet,Batalin-Vilkoviski formalism,covariant string field theory,futur: 3,note: 4,printed,superstring field theory},
   note = {27/03/16 - overview - studying the papers of Ashoke
 \par
 This paper is of great importance because it constructs a fully consistent quantum action for (covariant) superstring field theory, including the Ramond sector. The idea is to introduce extra dynamical fields which are free (they don't even couple to gravity) and so they can be consistently decoupled.}

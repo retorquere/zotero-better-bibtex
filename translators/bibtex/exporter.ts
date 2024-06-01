@@ -10,7 +10,7 @@ import { simplifyForExport } from '../../gen/items/simplify'
 import * as bibtexParser from '@retorquere/bibtex-parser'
 import { Postfix } from './postfix'
 import * as Extra from '../../content/extra'
-import { HTMLConverter, ConverterOptions, ParseResult } from './unicode_translator'
+import { HTMLConverter, Mode as ConversionMode, ConverterOptions, ParseResult } from './unicode_translator'
 
 export class Exporter {
   public postfix: Postfix
@@ -20,19 +20,20 @@ export class Exporter {
   public citekeys: Record<string, number> = {}
 
   private translation: Translation
-  private htmlconverter: HTMLConverter
+  private htmlconverter: Partial<Record<ConversionMode, HTMLConverter>> = {}
+  private htmlconverterMode: ConversionMode
 
   constructor(translation: Translation) {
     this.translation = translation
     this.jabref = new JabRef(translation)
-    this.htmlconverter = new HTMLConverter(translation.texmap, translation)
+    this.htmlconverterMode = translation.unicode ? 'minimal' : (translation.BetterBibTeX ? 'bibtex' : 'biblatex')
   }
 
   public prepare_strings(): void {
     if (!this.translation.BetterTeX || !this.translation.preferences.strings) return
 
     if (this.translation.BetterTeX && this.translation.preferences.exportBibTeXStrings.startsWith('match')) {
-      this.strings = bibtexParser.parse(this.translation.preferences.strings, { markup: (this.translation.csquotes ? { enquote: this.translation.csquotes } : {}) }).strings
+      this.strings = bibtexParser.parse(this.translation.preferences.strings).strings
       for (const [k, v] of Object.entries(this.strings)) {
         this.strings_reverse[v.toUpperCase()] = k.toUpperCase()
       }
@@ -97,9 +98,11 @@ export class Exporter {
     }
   }
 
-  text2latex(text:string, options: ConverterOptions = {}): ParseResult {
+  text2latex(text:string, options: ConverterOptions = {}, mode?: ConversionMode): ParseResult {
     if (typeof options.html === 'undefined') options.html = false
-    return this.htmlconverter.tolatex(text, options)
+    mode = mode || this.htmlconverterMode
+    if (!this.htmlconverter[mode]) this.htmlconverter[mode] = new HTMLConverter(this.translation, mode)
+    return this.htmlconverter[mode].tolatex(text, options)
   }
 
   public complete(): void {

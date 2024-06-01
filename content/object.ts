@@ -1,4 +1,7 @@
-export { clone, fromPairs } from 'remeda'
+import clone from 'lodash.clonedeep'
+import fromPairs from 'lodash.frompairs'
+
+export { clone, fromPairs }
 
 // pick from radash -- WTF would you bother with hasOwnProperty here?!?!
 export const pick = <T extends object, TKeys extends keyof T>(obj: T, keys: TKeys[]): Pick<T, TKeys> => {

@@ -3,10 +3,11 @@ declare const workerEnvironment: any
 declare const workerJob: Translator.Worker.Job
 declare const dump: (msg: string) => void
 
-import { asciify, stringify } from './stringify'
+import { stringify } from './stringify'
+import { asciify } from './text'
 
 export function print(msg: string): void {
-  dump(msg + '\n')
+  dump(`better-bibtex::${msg}\n`)
 }
 
 function toString(obj): string {
@@ -34,7 +35,7 @@ class Logger {
     let prefix = ''
     if (typeof workerEnvironment !== 'undefined') {
       prefix += ' worker'
-      if (typeof workerJob !== 'undefined') prefix += `${workerJob.translator}`
+      if (typeof workerJob !== 'undefined') prefix += `:${workerJob.translator}`
     }
 
     if (error) prefix += ' error:'

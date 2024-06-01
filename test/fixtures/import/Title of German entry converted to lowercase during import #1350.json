@@ -2,9 +2,13 @@
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "options": {},
+    "options": {
+      "Items": true,
+      "Preferences": true,
+      "exportNotes": true
+    },
     "preferences": {
-      "citekeyFormat": "[auth][year]"
+      "citekeyFormat": "auth + year"
     }
   },
   "items": [
@@ -65,7 +69,7 @@
       "itemType": "bookSection",
       "pages": "93 \u2013 108",
       "place": "Paderborn",
-      "publicationTitle": "Religion heute \u2013 \u00f6ffentlich und politisch: Provokationen, kontroversen, perspektiven",
+      "publicationTitle": "Religion heute \u2013 \u00f6ffentlich und politisch: Provokationen, Kontroversen, Perspektiven",
       "publisher": "Sch\u00f6ningh",
       "title": "Die R\u00fcckkehr der Religionen in der politischen und medialen \u00d6ffent\u00ad lichkeit"
     },
@@ -86,9 +90,9 @@
       "itemType": "bookSection",
       "language": "german",
       "place": "W\u00fcrzburg",
-      "publicationTitle": "Eine Auswahl von Techniken und Beispielen",
+      "publicationTitle": "Eine auswahl von techniken und beispielen",
       "publisher": "Ergon",
-      "title": "Die Darstellung des Islams in der Presse: Sprache, Bilder, Suggestionen"
+      "title": "Die darstellung des islams in der presse: Sprache, bilder, suggestionen"
     },
     {
       "citationKey": "schiffer2005a",
@@ -107,9 +111,9 @@
       "itemType": "bookSection",
       "language": "german",
       "place": "W\u00fcrzburg",
-      "publicationTitle": "Eine Auswahl von Techniken und Beispielen",
+      "publicationTitle": "Eine auswahl von techniken und beispielen",
       "publisher": "Ergon",
-      "title": "Die Darstellung des Islams in der Presse: Sprache, Bilder, Suggestionen"
+      "title": "Die darstellung des islams in der presse: Sprache, bilder, suggestionen"
     }
   ]
 }

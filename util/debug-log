@@ -19,13 +19,14 @@ logs = [log.split('/')[0] for log in logs]
 if len(logs) == 1 and '-fio-' in logs[0]:
   local, fio, remote = logs[0].split('-')
   url = 'https://file.io/' + remote
-  log = 'logs/' + local + '.tgz'
+  log = 'logs/' + local + '.zip'
   r = requests.get(url, allow_redirects=True)
   with open(log, 'wb') as f:
     f.write(r.content)
-  tar = tarfile.open(log)
-  tar.extractall('logs')
-  tar.close()
+  with ZipFile(log) as f:
+    for name in f.namelist():
+      print(name)
+    f.extractall(path='logs')
   os.remove(log)
   print(log)
   sys.exit(0)

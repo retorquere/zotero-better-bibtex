@@ -3,6 +3,8 @@
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "options": {
+      "Items": true,
+      "Preferences": true,
       "exportNotes": true
     },
     "preferences": {
@@ -30,7 +32,7 @@
       "itemID": 1,
       "itemType": "journalArticle",
       "notes": [
-        "In the paper at hand, I provide an editorial history of Isaac Newton\u2019s famous regulae philosophandi on the basis of extant manuscript material.&amp;amp;lt;/p&amp;amp;gt;"
+        "In the paper at hand, I provide an editorial history of Isaac Newton\u2019s famous regulae philosophandi on the basis of extant manuscript material.&amp;lt;/p&amp;gt;"
       ],
       "pages": "143\u2013164",
       "publicationTitle": "Estudios de Filosof\u00eda",
@@ -103,12 +105,13 @@
         "tex.category: Secondary",
         "tex.date-added: 2022-10-26 18:58:57 -0400",
         "tex.date-modified: 2022-10-26 18:58:57 -0400",
-        "tex.price: $80.00"
+        "tex.price: $80.00",
+        "tex.title+duplicate-1: The Cambridge History of Seventeenth-Century Philosophy"
       ],
       "itemID": 3,
       "itemType": "book",
       "publisher": "Cambridge University Press",
-      "title": "The cambridge history of seventeenth-century philosophy"
+      "title": "The Cambridge history of seventeenth-century philosophy"
     },
     {
       "ISBN": "0-521-65177-8",
@@ -143,13 +146,6 @@
     },
     {
       "ISBN": "0415170540 (hardcover)",
-      "attachments": [
-        {
-          "itemType": "attachment",
-          "path": "ATTACHMENT_KEY/Gaukroger - The Soft Underbelly of Reason  The Passions in the Seventeenth (1998).pdf",
-          "title": "Gaukroger - The Soft Underbelly of Reason  The Passions in the Seventeenth (1998)"
-        }
-      ],
       "citationKey": "ZGaukroger1998a",
       "creators": [
         {
@@ -199,9 +195,8 @@
       "issue": "4075",
       "itemID": 6,
       "itemType": "journalArticle",
-      "journalAbbreviation": "Science",
       "pages": "751\u2013758",
-      "publicationTitle": "Science (New York, N.Y.)",
+      "publicationTitle": "Science",
       "title": "Newton and the fudge factor",
       "volume": "179"
     },
@@ -245,7 +240,7 @@
           "tag": "Synthesis"
         }
       ],
-      "title": "Constituting the \u2018object\u2019 of science in Newton's Principia: the many faces of Janus",
+      "title": "Constituting the \u2018object\u2019 of science in newton's principia: the many faces of janus",
       "url": "https://doi.org/10.1016/j.shpsa.2022.07.002",
       "volume": "95"
     }

@@ -1,18 +1,17 @@
-
 @booklet{clark_mesopotamia_1957,
   title = {Mesopotamia: Between Two Rivers},
   author = {Clark, Hazel V.},
   date = {1957},
-  publisher = {{Trumbull County Historical Society}},
-  location = {{Mesopotamia, OH}},
+  publisher = {Trumbull County Historical Society},
+  location = {Mesopotamia, OH},
   abstract = {Example from CMoS, 16e, 14.249}
 }
 
 @review{kamp_deconstructing_2006,
   title = {Deconstructing Dinner},
   author = {Kamp, David},
-  editora = {Pollan, Michael},
-  editoratype = {collaborator},
+  namea = {Pollan, Michael},
+  nameatype = {collaborator},
   date = {2006-04-23},
   url = {http://www.nytimes.com/2006/04/23/books/review/23kamp.html.},
   abstract = {Example from CMoS, 16e, 14.125},
@@ -25,8 +24,8 @@
   editor = {Broder, Nathan},
   date = {1960},
   edition = {Rev. ed.},
-  publisher = {{Theodore Presser}},
-  location = {{Bryn Mawr, PA}},
+  publisher = {Theodore Presser},
+  location = {Bryn Mawr, PA},
   abstract = {Example from CMoS, 16e, 14.269 “Prepared from the autographs and earliest printed sources by Nathan Broder”}
 }
 
@@ -41,8 +40,8 @@
 @review{ratliff_mystery_1999,
   title = {The Mystery of Samba: {{Popular}} Music and National Identity in {{Brazil}}},
   author = {Ratliff, Ben},
-  editora = {{Hermano Vianna}},
-  editoratype = {collaborator},
+  namea = {{Hermano Vianna}},
+  nameatype = {collaborator},
   date = {1999-04},
   journaltitle = {Lingua Franca},
   volume = {9},
@@ -57,5 +56,3 @@ Original annotation:
 \par
 Example from CMoS, 16e, 14.125}
 }
-
-

@@ -40,4 +40,5 @@ print('flags =', flags)
 if len(flags) > 0:
   with open(os.environ['GITHUB_ENV'], 'a') as env:
     for flag in flags:
+      print(f'{flag}=--{flag}')
       print(f'{flag}=--{flag}', file=env)

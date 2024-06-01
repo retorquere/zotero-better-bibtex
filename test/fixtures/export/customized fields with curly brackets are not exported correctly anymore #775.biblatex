@@ -5,8 +5,8 @@
   author = {family=Knoblauch, given=Karl, prefix=von, useprefix=false},
   options = {pseudoauthor=true},
   date = {1789},
-  publisher = {{Krieger}},
-  location = {{[Marburg]}},
+  publisher = {Krieger},
+  location = {[Marburg]},
   langid = {german},
   pagetotal = {72},
   keywords = {anonym,Knoblauch,Monographie,Quelle}

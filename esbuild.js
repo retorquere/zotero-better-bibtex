@@ -264,8 +264,25 @@ async function rebuild() {
     exportGlobals: true,
     metafile: 'gen/worker.json',
     external: [ 'jsdom' ],
-    banner: { js: '\ndump("\\nloading BBT chromeworker\\n")\ntry {\n' },
-    footer: { js: '} catch ($$err$$) { dump("\\nerror: failed loading BBT chromeworker: " + $$err$$.message  + "\\n" + $$err$$.stack + "\\n") }\ndump("\\nloaded BBT chromeworker\\n")\n' },
+    banner: { js: `
+      dump("\\nloading BBT chromeworker\\n")
+      var Services
+      if (typeof location !== 'undefined' && location.search) {
+        Services = {
+          appinfo: {
+            OS: { win: 'WINNT', mac: 'Darwin', lin: 'Linux' }[(new URLSearchParams(location.search)).get('platform')],
+          }
+        }
+      }
+      try {
+    `},
+    footer: { js: `
+      }
+      catch ($$err$$) {
+        dump("\\nerror: failed loading BBT chromeworker: " + $$err$$.message  + "\\n" + $$err$$.stack + "\\n")
+      }
+      dump("\\nloaded BBT chromeworker\\n")
+    `},
   })
 
   // translators

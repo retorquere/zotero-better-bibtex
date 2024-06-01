@@ -158,6 +158,10 @@ method
       params = params || []
 
       let input = prefix + rest
+      if (input.match(/^(authors|editors)$/i)) { // match $authorsn rather than creators
+        input += 'n'
+        rest += 'n'
+      }
 
       const args = {
         creator: input.match(/^a/i) ? '*' : 'editor',
@@ -224,6 +228,8 @@ method
       if (ignored.length) error(`Unused arguments ${ignored}`)
 
       if (prefix.match(/^[a-z]/)) method += '.fold'
+
+      Zotero.debug(`legacy-author: ${JSON.stringify({ input, params, flags, method })}`)
 
       return method
     }

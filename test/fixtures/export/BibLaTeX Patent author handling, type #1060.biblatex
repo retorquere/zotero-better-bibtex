@@ -1,20 +1,17 @@
-
 @patent{inventorCombinatorialProblemStabilityIssueDate,
   type = {patent},
   title = {A Combinatorial Problem; Stability and Order for Models and Theories in Infinitary Languages},
   author = {Inventor, Some},
-  editora = {Attorney/Agent, Some and Contributer, Some},
-  editoratype = {collaborator},
   holder = {{Assignee}},
+  namea = {Attorney/Agent, Some and Contributer, Some},
+  nameatype = {collaborator},
   year = {Issue Date},
   number = {Patent Number},
   pages = {247--261},
-  location = {{Country}},
+  location = {Country},
   pubstate = {Legal Status}
 }
 % == BibLateX quality report for inventorCombinatorialProblemStabilityIssueDate:
-% Unexpected field 'editora'
-% Unexpected field 'editoratype'
 % Unexpected field 'pages'
 % ? unused Application number ("Application Number")
 % ? unused Assignee ("Assignee")
@@ -40,4 +37,3 @@
 % ? unused Assignee ("DaimlerChrysler AG (Stuttgart, 70567, DE) Bayerische Motoren Werke AG (München, 80809, DE) Robert Bosch GmbH (Stuttgart, 70469, DE)")
 % ? unused Filing date ("2003-12-24")
 % ? unused Number ("DE10361215")
-

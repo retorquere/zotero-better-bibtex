@@ -2,9 +2,10 @@
 declare const Zotero: any
 
 import { simplifyForExport } from '../gen/items/simplify'
+import { html as escapeHTML } from '../content/escape'
 
 import { Eta } from 'eta'
-const eta = new Eta({ autoEscape: false })
+const eta = new Eta({ autoEscape: true })
 
 function select_by_key(item) {
   const [ , kind, lib, key ] = item.uri.match(/^https?:\/\/zotero\.org\/(users|groups)\/((?:local\/)?[^/]+)\/items\/(.+)/)
@@ -14,29 +15,21 @@ function select_by_citekey(item) {
   return `zotero://select/items/@${encodeURIComponent(item.citationKey)}`
 }
 
-function escapeHtml(unsafe: string): string {
-  return unsafe
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-}
-
-function authorOf(item): string {
-  const creators = item.creators || []
+export function citeCreators(creators: { name?: string, lastName?: string }[]): string {
+  creators = creators || []
   const creator = creators[0] || {}
   let name: string = creator.name || creator.lastName || 'no author'
   if (creators.length > 1) name += ' et al.'
   return name
 }
 
-function yearOf(item): string {
-  if (!item.date) return 'no date'
+export function yearFromDate(d: string): string {
+  if (!d) return 'no date'
 
-  let date = Zotero.BetterBibTeX.parseDate(item.date)
+  let date = Zotero.BetterBibTeX.parseDate(d)
   if (date.type === 'interval') date = date.from
 
-  if (date.type === 'verbatim' || !date.year) return item.date as string
+  if (date.type === 'verbatim' || !date.year) return d
   return `${date.year}`
 }
 
@@ -121,13 +114,13 @@ const Mode = {
     const reference = items.map(item => {
       const ref = []
 
-      ref.push(authorOf(item))
+      ref.push(citeCreators(item.creators))
 
       // title
       if (item.title) ref.push(JSON.stringify(item.title))
 
       // year
-      ref.push(yearOf(item))
+      ref.push(yearFromDate(item.date))
 
       return ref.join(', ')
     })
@@ -135,7 +128,7 @@ const Mode = {
   },
 
   jupyter(items) {
-    Zotero.write(items.map(item => `<cite data-cite="${escapeHtml(item.citationKey)}">(${escapeHtml(authorOf(item))}, ${escapeHtml(yearOf(item))})</cite>`).join(''))
+    Zotero.write(items.map(item => `<cite data-cite="${escapeHTML(item.citationKey)}">(${escapeHTML(citeCreators(item.creators))}, ${escapeHTML(yearFromDate(item.date))})</cite>`).join(''))
   },
 
   eta(items) {

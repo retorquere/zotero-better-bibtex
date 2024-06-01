@@ -1,0 +1,30 @@
+@incollection{Davies_1984,
+  author = {Davies, Paul Charles William},
+  date = {1984},
+  title = {Particles Do Not Exist},
+  publisher = {Hilger},
+  booktitle = {Quantum Theory of Gravity: {{Essays}} in Honor of the 60th Birthday of {{Bryce S}}. {{DeWitt}}},
+  editor = {Christensen, Steven M.},
+  pages = {66--77},
+  location = {Bristol},
+  url = {http://catdir.loc.gov/catdir/enhancements/fy0745/83216515-d.html},
+  urldate = {2023-05-20},
+  isbn = {978-0-85274-755-1},
+  langid = {english},
+  keywords = {* Keep the spark alive,Particle concept},
+  annotation = {OCLC: 10674132}
+}
+
+@incollection{DeWitt_1979,
+  author = {DeWitt, Bryce S.},
+  date = {1979},
+  title = {Quantum {{Gravity}}: {{The New Synthesis}}},
+  publisher = {Cambridge University Press},
+  booktitle = {General {{Relativity}}: {{An Einstein Centenary Survey}}},
+  editor = {Hawking, Stephen William and Israel, Werner},
+  pages = {680--745},
+  url = {https://www.cambridge.org/us/universitypress/subjects/physics/cosmology-relativity-and-gravitation/general-relativity-einstein-centenary-survey-1?format=WX&isbn=9780521137980},
+  urldate = {2023-11-03},
+  isbn = {978-0-521-22285-3},
+  langid = {english}
+}

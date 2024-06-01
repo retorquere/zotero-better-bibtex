@@ -253,10 +253,11 @@ class ZoteroPane {
       if (Zotero.BetterBibTeX.uninstalled) clean_pane_persist()
     }, this.patched)
 
-    if (!is7) if (this.ZoteroPane.itemsView.collectionTreeRow) await this.ZoteroPane.itemsView.refreshAndMaintainSelection()
-
-    const selected = this.ZoteroPane.getSelectedItems(true)
-    if (selected.length === 1) Zotero.Notifier.trigger('refresh', 'item', selected)
+    if (!is7) {
+      if (this.ZoteroPane.itemsView.collectionTreeRow) await this.ZoteroPane.itemsView.refreshAndMaintainSelection()
+      const selected = this.ZoteroPane.getSelectedItems(true)
+      if (selected.length === 1) Zotero.Notifier.trigger('refresh', 'item', selected)
+    }
   }
 
   public pullExport(): void {

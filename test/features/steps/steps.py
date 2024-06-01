@@ -8,7 +8,7 @@ import time
 import os
 from hamcrest import assert_that, equal_to
 from steps.utils import assert_equal_diff, expand_scenario_variables
-from steps.citations import citations
+import steps.citations as citations
 import steps.utils as utils
 import steps.zotero as zotero
 import glob
@@ -62,16 +62,20 @@ def step_impl(context, value):
 
 @when(u'I create preference override {value}')
 def step_impl(context, value):
-  value = json.loads(value)
-  assert value.startswith('~/'), value
-  value = os.path.join(context.tmpDir, value[2:])
-  with open(value, 'w') as f:
+  override = json.loads(value)
+  assert override.startswith('~/'), override
+  override = os.path.join(context.tmpDir, override[2:])
+  with open(override, 'w') as f:
     json.dump({'override': { 'preferences': {} }}, f)
-  context.preferenceOverride = value
+  context.preferenceOverride = override
 
 @when(u'I remove preference override {value}')
 def step_impl(context, value):
-  os.remove(context.preferenceOverride)
+  override = json.loads(value)
+  assert override.startswith('~/'), override
+  override = os.path.join(context.tmpDir, override[2:])
+  assert override == context.preferenceOverride, [ override, context.preferenceOverride ]
+  os.remove(override)
 
 @step('I set preference override {pref} to {value}')
 def step_impl(context, pref, value):
@@ -135,15 +139,16 @@ def step_impl(context):
   context.zotero.restart(timeout=context.timeout)
 
 @step(r'I apply the preferences from "{source}"')
-def step_impl(context, references, source):
+def step_impl(context, source):
   source = expand_scenario_variables(context, source)
   context.imported = source
-  assert_that(context.zotero.import_file(context, source, items=False), equal_to(references))
+  assert_that(context.zotero.import_file(context, source, items=False), equal_to(0))
 
-@step(r'I compile "{source}" to "{target}" it should match "{baseline}"')
-def step_impl(context, source, target, baseline):
+@step('I compile "{source}" to "{target}" it should match "{baseline}" with {n} citations')
+def step_impl(context, source, target, baseline, n):
   source = os.path.join('test/fixtures', expand_scenario_variables(context, source))
   baseline = os.path.join('test/fixtures', expand_scenario_variables(context, baseline))
+  n = int(n)
 
   target = expand_scenario_variables(context, target)
   assert target.startswith('~/'), target
@@ -160,7 +165,13 @@ def step_impl(context, source, target, baseline):
   )
   utils.print(result.stdout)
 
-  assert_equal_diff(citations(baseline), citations(target))
+  match pathlib.Path(baseline).suffix:
+    case '.odt':
+      assert_equal_diff(citations.odt(baseline, n), citations.odt(target, n))
+    case '.docx':
+      assert_equal_diff(citations.docx(baseline, n), citations.docx(target, n))
+    case _:
+      raise AssertionError(f'Unexpected file extension on {baseline}')
 
 @step(r'I install "{source}" in the better bibtex directory as "{target}"')
 def step_impl(context, source, target):
@@ -332,7 +343,16 @@ def step_impl(context):
 @when(u'I merge the selected items')
 def step_impl(context):
   assert len(context.selected) > 1
-  context.zotero.execute('return await Zotero.BetterBibTeX.TestSupport.merge(selected)', selected=context.selected)
+  context.zotero.execute('''
+    try {
+      return await Zotero.BetterBibTeX.TestSupport.merge(selected)
+    } catch (err) {
+      Zotero.debug('oops on merge')
+      Zotero.debug(`${err}`)
+      Zotero.debug(err.stack)
+      throw err
+    }
+  ''', selected=context.selected)
 
 @when(u'I empty the trash')
 def step_impl(context):

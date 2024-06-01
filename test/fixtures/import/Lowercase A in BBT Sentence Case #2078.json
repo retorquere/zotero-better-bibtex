@@ -2,10 +2,13 @@
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "localeDateOrder": "dmy",
-    "options": {},
+    "options": {
+      "Items": true,
+      "Preferences": true,
+      "exportNotes": true
+    },
     "preferences": {
-      "citekeyFormat": "[auth][year]"
+      "citekeyFormat": "auth + year"
     }
   },
   "items": [
@@ -42,7 +45,7 @@
       "pages": "1412",
       "publicationTitle": "Journal of Open Source Software",
       "shortTitle": "Insight",
-      "title": "Insight: A unified interface to access information from model objects in R",
+      "title": "Insight: a unified interface to access information from model objects in R",
       "url": "http://joss.theoj.org/papers/10.21105/joss.01412",
       "volume": "4"
     }

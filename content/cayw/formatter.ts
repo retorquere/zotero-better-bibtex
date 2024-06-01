@@ -3,34 +3,23 @@
 import { Translators } from '../translators'
 import { getItemsAsync } from '../get-items-async'
 import { Preference } from '../prefs'
-import { fromPairs } from '../object'
+import { html as escapeHTML } from '../escape'
 import { scannableCite } from '../../gen/ScannableCite'
+import { citeCreators, yearFromDate } from '../../translators/Better BibTeX Citation Key Quick Copy'
+import { Eta } from 'eta'
+const eta = new Eta({ autoEscape: true })
+import { simplifyForExport } from '../../gen/items/simplify'
 
-import * as unicode_table from 'unicode2latex/tables/unicode.json'
+import { Transform } from 'unicode2latex'
 
-const unicode2latex = (fromPairs(
-  Object
-    .entries(unicode_table)
-    .map(([unicode, latex]: [string, { text: string, math: string }]) => [ unicode, { text: latex.text || latex.math, math: !(latex.text) }])
-) as Record<string, { text: string, math: boolean }>)
-
-function tolatex(s: string): string {
-  if (!s) return ''
-
-  return s.split('')
-    .map(c => ({...(unicode2latex[c] || { text: c, math: false }) }) )
-    .reduce((acc, c) => {
-      const last = acc[acc.length - 1]
-      if (last && last.math === c.math) {
-        last.text += c.text
-      }
-      else {
-        acc.push(c)
-      }
-      return acc
-    }, [])
-    .map(c => c.math ? `$${c.text}$` : c.text)
-    .join('')
+function serialized(item) {
+  if (item) {
+    const ser = simplifyForExport(Zotero.Utilities.Internal.itemToExportFormat(item, false, true))
+    ser.uri = Zotero.URI.getItemURI(item)
+    ser.itemID = item.id
+    return ser
+  }
+  return undefined
 }
 
 function shortLabel(label: string, options): string {
@@ -62,62 +51,49 @@ function shortLabel(label: string, options): string {
   }[label] || label
 }
 
+const latextx = new Transform('minimal')
 function citation2latex(citation, options) {
   let formatted = ''
   // despite Mozilla's claim that trimStart === trimLeft, and that trimStart should be preferred, trimStart does not seem to exist in FF chrome code.
   const label = (`${shortLabel(citation.label, { page: '', ...options })} `).trimLeft()
 
-  if (citation.prefix) formatted += `[${tolatex(citation.prefix)}]`
+  if (citation.prefix) formatted += `[${latextx.tolatex(citation.prefix)}]`
 
   if (citation.locator && citation.suffix) {
-    formatted += `[${tolatex(label)}${tolatex(citation.locator)}, ${tolatex(citation.suffix)}]`
+    formatted += `[${latextx.tolatex(label)}${latextx.tolatex(citation.locator)}, ${latextx.tolatex(citation.suffix)}]`
 
   }
   else if (citation.locator) {
-    formatted += `[${tolatex(label)}${tolatex(citation.locator)}]`
+    formatted += `[${latextx.tolatex(label)}${latextx.tolatex(citation.locator)}]`
 
   }
   else if (citation.suffix) {
-    formatted += `[${tolatex(citation.suffix)}]`
+    formatted += `[${latextx.tolatex(citation.suffix)}]`
 
   }
   else if (citation.prefix) {
     formatted += '[]'
   }
 
-  formatted += `{${citation.citekey}}`
+  formatted += `{${citation.citationKey}}`
 
   return formatted
 }
 
-function prepCSL(options) {
-  const format = Zotero.QuickCopy.unserializeSetting(Zotero.Prefs.get('export.quickCopy.setting'))
-
-  if (!options.style) {
-    if (format.mode !== 'bibliography') {
-      throw new Error(`if you don't supply a style, formatted-citations requires the Zotero default quick-copy format to be set to a citation style; it is currently ${format}`)
-    }
-    options.style = format.id
-  }
-  if (!options.style.startsWith('http://')) options.style += `http://www.zotero.org/styles/${options.style}`
-
-  return {
-    mode: 'bibliography',
-    contentType: options.contentType || format.contentType || 'text',
-    id: options.style,
-    locale: options.locale || format.locale || Zotero.Prefs.get('export.quickCopy.locale'),
-  }
-}
-
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export const Formatter = new class { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
-  public async playground(citations, options) {
-    const formatted = await citations.map(cit => `${options.keyprefix || ''}${cit.citekey}${options.keypostfix || ''}`)
-    return formatted.length ? `${options.citeprefix || ''}${formatted.join(options.separator || ',')}${options.citepostfix || ''}` : ''
+  public async typst(citations, options): Promise<string> {
+    const cite = citation => {
+      let cited = citation.citationKey.match(/^[a-z0-9_\-:.]+$/i) ? `<${citation.citationKey}>` : `label(${JSON.stringify(citation.citationKey)})`
+      if (citation.locator) cited += `,${JSON.stringify(`${shortLabel(citation.label, options)} ${citation.locator}`)}`
+      if (citation.suppressAuthor) cited += citation.locator ? ',"year"' : ', form: "year"'
+      return `#cite(${cited})`
+    }
+    return await citations.map(cite).join('')
   }
 
   public async citationLinks(citations, _options): Promise<string> {
-    return await citations.map(citation => `cites: ${citation.citekey}`).join('\n')
+    return await citations.map(citation => `cites: ${citation.citationKey}`).join('\n')
   }
 
   public async cite(citations, options) { return this.natbib(citations, options) }
@@ -141,7 +117,7 @@ export const Formatter = new class { // eslint-disable-line @typescript-eslint/n
       }, {})
 
       if (state.suffix === 0 && state.prefix === 0 && state.locator === 0 && (state.suppressAuthor === 0 || state.suppressAuthor === citations.length)) {
-        return `\\${citations[0].suppressAuthor ? 'citeyear' : options.command}{${citations.map(citation => citation.citekey).join(',')}}`
+        return `\\${citations[0].suppressAuthor ? 'citeyear' : options.command}{${citations.map(citation => citation.citationKey).join(',')}}`
       }
     }
 
@@ -187,17 +163,17 @@ export const Formatter = new class { // eslint-disable-line @typescript-eslint/n
 
     for (const citation of citations) {
       if (citation.prefix) {
-        formatted.push(`[${citation.prefix}][#${citation.citekey}]`)
+        formatted.push(`[${citation.prefix}][#${citation.citationKey}]`)
       }
       else {
-        formatted.push(`[#${citation.citekey}][]`)
+        formatted.push(`[#${citation.citationKey}][]`)
       }
     }
     return formatted.join('')
   }
 
   public async jekyll(citations, _options) {
-    return citations.map(cit => `{% cite ${cit.citekey} %}`).join('')
+    return citations.map(cit => `{% cite ${cit.citationKey} %}`).join('')
   }
 
   public async pandoc(citations, options) {
@@ -206,7 +182,7 @@ export const Formatter = new class { // eslint-disable-line @typescript-eslint/n
       let cite = ''
       if (citation.prefix) cite += `${citation.prefix} `
       if (citation.suppressAuthor) cite += '-'
-      cite += `@${citation.citekey}`
+      cite += `@${citation.citationKey}`
       if (citation.locator) cite += `, ${shortLabel(citation.label, options)} ${citation.locator}`.replace(/\s+/, ' ')
       if (citation.suffix) cite += ` ${citation.suffix}`
       formatted.push(cite)
@@ -218,7 +194,7 @@ export const Formatter = new class { // eslint-disable-line @typescript-eslint/n
   public async 'asciidoctor-bibtex'(citations, options) {
     const formatted = []
     for (const citation of citations) {
-      let cite = citation.citekey
+      let cite = citation.citationKey
       if (citation.locator) {
         const label = `${shortLabel(citation.label, { page: '', ...options })} ${citation.locator}`.trim()
         cite += `(${label})`
@@ -248,8 +224,14 @@ export const Formatter = new class { // eslint-disable-line @typescript-eslint/n
   }
 
   public async 'formatted-citation'(citations, options) {
-    const format = prepCSL(options)
+    const format = {
+      mode: 'bibliography',
+      contentType: options.contentType,
+      id: options.style,
+      locale: options.locale,
+    }
 
+    Zotero.debug(`formatted-citation ${JSON.stringify({ citations, options, format })}`)
     // items must be pre-loaded for the citation processor
     await getItemsAsync(citations.map(item => item.id))
 
@@ -261,15 +243,41 @@ export const Formatter = new class { // eslint-disable-line @typescript-eslint/n
       properties: {},
     }
 
-    return csl.previewCitationCluster(citation, [], [], format.contentType)
+    const output = csl.previewCitationCluster(citation, [], [], format.contentType)
+    return output
   }
 
   public async 'formatted-bibliography'(citations, options) {
-    const format = prepCSL(options)
+    const format = {
+      mode: 'bibliography',
+      contentType: options.contentType,
+      id: options.style,
+      locale: options.locale,
+    }
 
     const items = await getItemsAsync(citations.map(item => item.id))
 
     return Zotero.QuickCopy.getContentFromItems(items, format, null, false)[format.contentType]
+  }
+
+  public async jupyter(citations, _options) {
+    const items = await getItemsAsync(citations.map(cit => cit.id))
+    let picked = ''
+    for (const cit of citations) {
+      const i = items.find(item => item.id === cit.id)
+      const item = i ? { creators: i.getCreatorsJSON(), date: i.getField('date') } : {}
+      picked += `<cite data-cite="${escapeHTML(cit.citationKey)}">(${escapeHTML(citeCreators(item.creators))}, ${escapeHTML(yearFromDate(item.date))})</cite>`
+    }
+    return picked
+  }
+
+  public async eta(citations, options) {
+    if (!options.template) throw new Error('No template provided')
+    const items = await getItemsAsync(citations.map(cit => cit.id))
+    for (const cit of citations) {
+      cit.item = serialized(items.find(item => item.id === cit.id))
+    }
+    return eta.renderString(options.template, { items: citations })
   }
 
   public async translate(citations, options) {
@@ -287,8 +295,9 @@ export const Formatter = new class { // eslint-disable-line @typescript-eslint/n
   }
 
   public async json(citations, _options) {
-    for (const citation of citations) {
-      citation.item = Zotero.Utilities.Internal.itemToExportFormat(await getItemsAsync(citation.id), false, true)
+    const items = await getItemsAsync(citations.map(cit => cit.id))
+    for (const cit of citations) {
+      cit.item = serialized(items.find(item => item.id === cit.id))
     }
     return JSON.stringify(citations)
   }
