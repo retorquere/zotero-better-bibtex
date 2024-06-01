@@ -96,6 +96,7 @@ export class Orchestrator {
   }
 
   private async run(phase: PhaseID, reason: Reason, progress?: Progress): Promise<void> {
+    const duration = (dur: number) => (new Date(dur)).toISOString().split('T')[1].replace(/Z/, '')
     const order = this.order
     if (phase === 'shutdown') order.reverse()
     const tasks: Task[] = order.map(id => this.tasks[id]).filter(task => task[phase])
@@ -117,14 +118,14 @@ export class Orchestrator {
       log.debug('orchestrator: starting', task.id, task.description)
       await task[phase](reason, task)
       task.finished = Date.now()
-      log.debug('orchestrator:', task.id, 'took', (new Date(task.finished - task.started)).toISOString())
+      log.debug('orchestrator:', task.id, 'took', duration(task.finished - task.started))
 
       finished.push(task.id)
 
       progress?.(phase, task.id, finished.length, total, tasks.length ? tasks.map(t => t.id).join(',') : 'finished')
     }
 
-    log.debug('startup took', (new Date(Date.now() - started)).toISOString())
+    log.debug('startup took', duration(Date.now() - started))
     log.prefix = ''
   }
 
