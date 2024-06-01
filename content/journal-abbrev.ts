@@ -10,7 +10,8 @@ export const JournalAbbrev = new class { // eslint-disable-line @typescript-esli
   private abbrevs: any
 
   constructor() {
-    orchestrator.add('abbreviator', {
+    orchestrator.add({
+      id: 'abbreviator',
       description: 'journal abbreviator',
       needs: ['start'],
       startup: async () => {

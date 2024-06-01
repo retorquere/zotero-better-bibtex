@@ -699,8 +699,9 @@ export class BetterBibTeX {
   public async startup(reason: Reason): Promise<void> {
     log.debug('Loading Better BibTeX: starting...')
 
-    orchestrator.add('start', {
-      description: 'zotero',
+    orchestrator.add({
+      id: 'start',
+      description: 'waiting for zotero',
       startup: async () => {
         // https://groups.google.com/d/msg/zotero-dev/QYNGxqTSpaQ/uvGObVNlCgAJ
         // this is what really takes long
@@ -713,7 +714,8 @@ export class BetterBibTeX {
       },
     })
 
-    orchestrator.add('sqlite', {
+    orchestrator.add({
+      id: 'sqlite',
       startup: async () => {
         await Zotero.DB.queryAsync('ATTACH DATABASE ? AS betterbibtex', [$OS.Path.join(Zotero.DataDirectory.dir, 'better-bibtex.sqlite')])
 
@@ -789,7 +791,8 @@ export class BetterBibTeX {
       },
     })
 
-    orchestrator.add('done', {
+    orchestrator.add({
+      id: 'done',
       description: 'user interface',
       startup: async () => {
         Ready.resolve(true)

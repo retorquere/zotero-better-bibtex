@@ -449,7 +449,8 @@ class Handler {
   }
 }
 
-orchestrator.add('cayw', {
+orchestrator.add({
+  id: 'cayw',
   description: 'CAYW endpoint',
   needs: ['translators'],
 
