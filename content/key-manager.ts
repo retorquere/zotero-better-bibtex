@@ -235,7 +235,8 @@ export const KeyManager = new class _KeyManager {
   }
 
   constructor() {
-    orchestrator.add('keymanager', {
+    orchestrator.add({
+      id: 'keymanager',
       description: 'keymanager',
       needs: ['sqlite'],
       startup: async () => {
@@ -253,7 +254,8 @@ export const KeyManager = new class _KeyManager {
         }
       },
     })
-    orchestrator.add('citekeysearch', {
+    orchestrator.add({
+      id: 'citekeysearch',
       description: 'citation key search',
       needs: ['keymanager'],
       startup: async () => { // eslint-disable-line @typescript-eslint/require-await

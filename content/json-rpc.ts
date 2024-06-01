@@ -724,7 +724,8 @@ class Handler {
   }
 }
 
-orchestrator.add('json-rpc', {
+orchestrator.add({
+  id: 'json-rpc',
   description: 'JSON-RPC endpoint',
   needs: ['translators'],
 

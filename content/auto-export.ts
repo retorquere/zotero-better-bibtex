@@ -431,7 +431,8 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
       if (typeof ae === 'string') this.progress.set(ae, pct)
     })
 
-    orchestrator.add('git-push', {
+    orchestrator.add({
+      id: 'git-push',
       description: 'git support',
       needs: ['start'],
       startup: async () => {
@@ -439,7 +440,8 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
       },
     })
 
-    orchestrator.add('auto-export', {
+    orchestrator.add({
+      id: 'auto-export',
       description: 'auto-export',
       needs: ['sqlite', 'cache', 'translators'],
       startup: async () => {

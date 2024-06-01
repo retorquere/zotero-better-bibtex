@@ -208,7 +208,8 @@ class ItemHandler {
   }
 }
 
-orchestrator.add('pull-export', {
+orchestrator.add({
+  id: 'pull-export',
   description: 'JSON-RPC endpoint',
   needs: ['translators'],
 

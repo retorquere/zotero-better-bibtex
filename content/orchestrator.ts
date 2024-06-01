@@ -10,224 +10,126 @@ const $OS = is7 ? Shim : OS
 
 type Handler = (reason: Reason, task?: Task) => void | string | Promise<void | string>
 
-import { print } from './logger'
-
-interface TaskOptions {
+interface Task {
+  id: Actor
   description?: string
   startup?: Handler
   shutdown?: Handler
   needs?: Actor[]
-}
-
-export type Task = {
-  id: Actor
-  description: string
-  action: Handler
-  needs: Actor[]
-  needed: boolean
-
-  started: number
-  finished: number
-  milestones: Map<number, string>
+  started?: number
+  finished?: number
 }
 
 export type Progress = (phase: string, name: string, done: number, total: number, message?: string) => void
 
-type Phase = {
-  started: number
-  promises: Partial<Record<Actor, Promise<void>>>
-  tasks: Partial<Record<Actor, Task>>
-}
-
 export class Orchestrator {
   public id: string = Zotero.Utilities.generateObjectKey()
-  public started: number = Date.now()
+  public running: Actor
   public start: Actor = 'start'
   public done: Actor = 'done'
-  private resolved = false
+  private tasks: Partial<Record<Actor, Task>> = {}
+  private $order: Actor[]
 
-  private phase: Record<PhaseID, Phase> = {
-    startup: {
-      started: 0,
-      promises: {},
-      tasks: {},
-    },
-    shutdown: {
-      started: 0,
-      promises: {},
-      tasks: {},
-    },
-  }
+  public add({ description, id, startup, shutdown, needs }: Task): void {
+    needs = needs || []
+    if (!startup && !shutdown) throw new Error(`orchestrator: ${id}: no-op task`)
+    if (this.tasks[id]) throw new Error(`orchestrator: ${id} exists`)
+    switch (id) {
+      case this.start:
+      case this.done:
+        if (needs.length) throw new Error(`${id} task cannot have dependencies`)
+        break
+      default:
+        if (!needs.length) needs = [this.start]
+        break
+    }
 
-  public add(id: Actor, { startup, shutdown, needs, description }: TaskOptions): void {
-    if (!startup && !shutdown) throw new Error(`${id}: no-op task`)
-    if (this.phase.startup.tasks[id]) throw new Error(`${id} exists`)
-    if (id === this.start && needs) throw new Error('start task cannot have dependencies')
-    if (id === this.done && needs) throw new Error('done task has dependencies auto-assigned')
-
-    this.phase.startup.tasks[id] = {
+    this.tasks[id] = {
       id,
       description: description || id,
-      action: startup,
+      startup,
+      shutdown,
       needs: needs || [],
-      needed: false,
-      started: 0,
-      finished: 0,
-      milestones: new Map,
-    }
-
-    this.phase.shutdown.tasks[id] = {
-      ...this.phase.startup.tasks[id],
-      action: shutdown,
-      needs: [],
-      milestones: new Map,
     }
   }
 
-  private resolve() {
-    if (this.resolved) throw new Error('orchestrator: resolve ran twice')
-    this.resolved = true
+  public get order(): Actor[] {
+    if (!this.$order) {
 
-    const tasks: Task[] = Object.values(this.phase.startup.tasks)
+      if (this.tasks[this.done]) this.tasks[this.done].needs = (Object.keys(this.tasks) as Actor[]).filter(id => id !== this.done)
 
-    const has = {
-      start: this.phase.startup.tasks[this.start],
-      done: this.phase.startup.tasks[this.done],
-    }
+      this.$order = []
+      const tasks: Task[] = Object.values(this.tasks)
 
-    for (const task of tasks) {
-      if (has.start && task.id !== this.start && !task.needs.length) {
-        task.needs.push(this.start)
+      const dependents: Record<string, string[]> = {}
+      const needs: Record<string, Set<Actor>> = {}
+      let edges = 0
+      for (const task of tasks) {
+        needs[task.id] = new Set(task.needs)
+        edges += task.needs.length
+        if (!dependents[task.id]) dependents[task.id] = []
+
+        for (const parent of task.needs) {
+          if (!this.tasks[parent]) throw new Error(`orchestrator: ${task.id} needs non-existent task ${parent}`)
+          if (!dependents[parent]) dependents[parent] = []
+          dependents[parent].push(task.id)
+        }
       }
 
-      for (const needed of task.needs) {
-        if (!this.phase.startup.tasks[needed]) throw new Error(`orchestrator: ${task.id} needs non-existent ${needed}`)
-        this.phase.startup.tasks[needed].needed = true
+      const sources = tasks.filter(task => task.id !== this.done && !task.needs.length)
+      this.$order = []
+
+      while (sources.length) {
+        const task = sources.shift()
+        this.$order.push(task.id)
+
+        for (const dependent of dependents[task.id]) {
+          needs[dependent].delete(task.id)
+          edges--
+          if (!needs[dependent].size) sources.push(this.tasks[dependent])
+        }
       }
-
-      task.needs = [...(new Set(task.needs))].sort()
+      if (edges) throw new Error(`orchestrator: cyclic dependency involving ${[...(new Set([].concat(...(Object.values(needs).map(n => [...n])))))].join(',')}`)
     }
 
-    if (has.done) {
-      has.done.needs = tasks.filter(task => task.id !== this.done && !task.needed).map(task => task.id)
-      has.done.needs = [...(new Set(has.done.needs))].sort()
-    }
-
-    for (const task of tasks) {
-      for (const needed of task.needs) {
-        const shutdown = this.phase.shutdown.tasks[needed]
-        shutdown.needs.push(task.id)
-        shutdown.needs = [...(new Set(shutdown.needs))].sort()
-      }
-    }
-
-    for (const task of Object.values(this.phase.shutdown.tasks)) {
-      for (const needed of task.needs) {
-        this.phase.shutdown.tasks[needed].needed = true
-      }
-    }
+    return [...this.$order]
   }
 
   private async run(phase: PhaseID, reason: Reason, progress?: Progress): Promise<void> {
-    if (this.phase[phase].started) throw new Error(`orchestrator: re-run of ${phase}`)
-    this.phase[phase].started = Date.now()
-    const taskmap: Partial<Record<Actor, Task>> = this.phase[phase].tasks
-    const tasks: Task[] = Object.values(taskmap)
-    const promises = this.phase[phase].promises
+    const order = this.order
+    if (phase === 'shutdown') order.reverse()
+    const tasks: Task[] = order.map(id => this.tasks[id]).filter(task => task[phase])
+    const total = tasks.length
 
-    const circular = Promise.reject(new Error('circular dependency'))
-    circular.catch(() => { /* ignore */ }) // prevent unhandled rejection
+    const started = Date.now()
+    const finished: Actor[] = []
+    log.debug(phase, 'orchestrator started:', reason)
+    while (tasks.length) {
+      const task = tasks.shift()
 
-    const running = (): string[] => tasks.filter((t: Task) => t.started && !t.finished).map(t => t.id)
-    const time = ts => (new Date(ts)).toISOString()
-    const line = (name: string, event: string, timestamp: number) => { // eslint-disable-line arrow-body-style
-      return `better-bibtex orchestrator: [${name.padEnd(50, ' ')}] ${phase.padEnd(10, ' ')} ${event.padEnd(15, ' ')} at ${time(timestamp)} running [${running()}]`
+      log.prefix = ` ${phase}: [${task.id}`
+      if (tasks.length) log.prefix += `+${tasks.length}`
+      log.prefix += ']'
+
+      progress?.(phase, task.id, finished.length, total, task.description)
+
+      task.started = Date.now()
+      log.debug('orchestrator: starting', task.id, task.description)
+      await task[phase](reason, task)
+      task.finished = Date.now()
+      log.debug('orchestrator:', task.id, 'took', (new Date(task.finished - task.started)).toISOString())
+
+      finished.push(task.id)
+
+      progress?.(phase, task.id, finished.length, total, tasks.length ? tasks.map(t => t.id).join(',') : 'finished')
     }
 
-    const report = (name: string) => {
-      const task = taskmap[name]
-
-      for (const timestamp of [...task.milestones.keys()].sort()) {
-        print(line(`${this.id}.${name}.${task.milestones.get(timestamp)}`, 'finished', timestamp))
-      }
-      print(line(`${this.id}.${name}`, task.finished ? 'finished' : 'started', task.finished || task.started))
-
-      progress?.(phase, name, tasks.filter(t => t.finished).length, tasks.length, (task.finished ? running()[0] : task.description) || task.description)
-      log.prefix = running().length ? ` ${phase}: [${running()}]` : ''
-    }
-
-    const run = name => {
-      const promise: Promise<void> = promises[name]
-      if (promise != null) return promise
-
-      const task = taskmap[name]
-      const { action, needs } = task
-      if (!action) {
-        promises[name] = Promise.resolve()
-        return
-      }
-
-      const needed = async () => {
-        await Promise.all(needs.map(run))
-        // for (const dep of needs) await run(dep)
-      }
-
-      const perform = async (): Promise<void | string> => {
-        print(`orchestrator: task ${phase}.${name} starting`)
-        try {
-          const res = await action(reason, task) as Promise<void | string>
-          print(`orchestrator: task ${phase}.${name} finished`)
-          return res
-        }
-        catch (err) {
-          print(`orchestrator: error: task ${phase}.${name} failed: ${err}\n${err.stack}`)
-          throw err
-        }
-      }
-
-      promises[name] = circular
-
-      return promises[name] = needed()
-
-        .then(async () => {
-          task.started = Date.now()
-          report(name)
-
-          try {
-            return await perform()
-          }
-          finally {
-            task.finished = Date.now()
-            report(name)
-          }
-        })
-
-        .catch(err => {
-          print(`orchestrator: ${name}.${phase} ${reason || ''} error: ${err}`)
-          throw err
-        })
-    }
-
-    await Promise.all(Object.keys(taskmap).map(run))
+    log.debug('startup took', (new Date(Date.now() - started)).toISOString())
+    log.prefix = ''
   }
 
   private gantt(phase: PhaseID) {
-    const taskmap = this.phase[phase].tasks
-    let unsorted = Object.values(taskmap)
-    const sorted: string[] = []
-    const tasks: (Task & { taskid: number })[] = []
-    while (unsorted.length) {
-      unsorted = unsorted.filter(task => {
-        if (task.needs.filter(needed => !sorted.includes(needed)).length) {
-          return true
-        }
-        else {
-          sorted.push(task.id)
-          tasks.push({...task, taskid: tasks.length})
-          return false
-        }
-      })
-    }
+    const tasks: (Task & { taskid: number })[] = this.order.map((id: Actor, taskid: number) => ({...this.tasks[id], taskid }))
 
     const today = new Date().toISOString().slice(0, 10)
     let gantt = `<?xml version="1.0" encoding="UTF-8"?>
@@ -306,7 +208,6 @@ export class Orchestrator {
   }
 
   public async startup(reason: Reason, progress?: Progress): Promise<void> {
-    this.resolve()
     await this.run('startup', reason, progress)
     progress?.('startup', 'ready', 100, 100, 'ready')
 
@@ -314,7 +215,6 @@ export class Orchestrator {
   }
 
   public async shutdown(reason: Reason): Promise<void> {
-    if (!this.resolved) throw new Error('orchestrator: shutdown before startup')
     await this.run('shutdown', reason)
 
     if (Preference.testing) this.gantt('shutdown')
