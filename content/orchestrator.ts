@@ -28,9 +28,11 @@ export class Orchestrator {
   public start: Actor = 'start'
   public done: Actor = 'done'
   private tasks: Partial<Record<Actor, Task>> = {}
-  private $order: Actor[]
+  private $ordered: Task[]
 
   public add({ description, id, startup, shutdown, needs }: Task): void {
+    if (this.$ordered) throw new Error(`orchestrator: add ${id} after ordered`)
+
     needs = needs || []
     if (!startup && !shutdown) throw new Error(`orchestrator: ${id}: no-op task`)
     if (this.tasks[id]) throw new Error(`orchestrator: ${id} exists`)
@@ -53,12 +55,11 @@ export class Orchestrator {
     }
   }
 
-  public get order(): Actor[] {
-    if (!this.$order) {
+  public get ordered(): Task[] {
+    if (!this.$ordered) {
 
       if (this.tasks[this.done]) this.tasks[this.done].needs = (Object.keys(this.tasks) as Actor[]).filter(id => id !== this.done)
 
-      this.$order = []
       const tasks: Task[] = Object.values(this.tasks)
 
       const dependents: Record<string, string[]> = {}
@@ -77,11 +78,11 @@ export class Orchestrator {
       }
 
       const sources = tasks.filter(task => task.id !== this.done && !task.needs.length)
-      this.$order = []
+      this.$ordered = []
 
       while (sources.length) {
         const task = sources.shift()
-        this.$order.push(task.id)
+        this.$ordered.push(task)
 
         for (const dependent of dependents[task.id]) {
           needs[dependent].delete(task.id)
@@ -92,14 +93,17 @@ export class Orchestrator {
       if (edges) throw new Error(`orchestrator: cyclic dependency involving ${[...(new Set([].concat(...(Object.values(needs).map(n => [...n])))))].join(',')}`)
     }
 
-    return [...this.$order]
+    return [...this.$ordered]
   }
 
   private async run(phase: PhaseID, reason: Reason, progress?: Progress): Promise<void> {
     const duration = (dur: number) => (new Date(dur)).toISOString().split('T')[1].replace(/Z/, '')
-    const order = this.order
-    if (phase === 'shutdown') order.reverse()
-    const tasks: Task[] = order.map(id => this.tasks[id]).filter(task => task[phase])
+
+    const tasks: Task[] = this.ordered.filter(task => task[phase])
+    if (phase === 'shutdown') tasks.reverse()
+
+    log.debug('orchestrator:', phase, 'in order', tasks.map(task => task.id))
+
     const total = tasks.length
 
     const started = Date.now()
@@ -115,7 +119,7 @@ export class Orchestrator {
       progress?.(phase, task.id, finished.length, total, task.description)
 
       task.started = Date.now()
-      log.debug('orchestrator: starting', task.id, task.description)
+      log.debug('orchestrator: starting', task.id, JSON.stringify(task.description))
       await task[phase](reason, task)
       task.finished = Date.now()
       log.debug('orchestrator:', task.id, 'took', duration(task.finished - task.started))
@@ -130,7 +134,7 @@ export class Orchestrator {
   }
 
   private gantt(phase: PhaseID) {
-    const tasks: (Task & { taskid: number })[] = this.order.map((id: Actor, taskid: number) => ({...this.tasks[id], taskid }))
+    const tasks: (Task & { taskid: number })[] = this.ordered.map((task: Task, taskid: number) => ({...task, taskid }))
 
     const today = new Date().toISOString().slice(0, 10)
     let gantt = `<?xml version="1.0" encoding="UTF-8"?>
