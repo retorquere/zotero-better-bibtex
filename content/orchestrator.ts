@@ -106,8 +106,10 @@ export class Orchestrator {
 
     const total = tasks.length
 
-    let runtime = 0
-    let waiting = 0
+    const runtime = {
+      zotero: 0,
+      bbt: 0,
+    }
     const finished: number[] = []
     log.debug(phase, 'orchestrator started:', reason)
     while (tasks.length) {
@@ -120,20 +122,20 @@ export class Orchestrator {
       progress?.(phase, task.id, finished.length, total, task.description)
 
       log.debug('orchestrator: starting', task.id, JSON.stringify(task.description))
+
       task.started = Date.now()
-      if (finished.length) waiting += task.started - finished[0]
       await task[phase](reason, task)
       task.finished = Date.now()
-      log.debug('orchestrator:', task.id, 'took', duration(task.finished - task.started))
 
+      log.debug('orchestrator:', task.id, 'took', duration(task.finished - task.started))
       finished.unshift(task.finished)
-      runtime += task.finished - task.started
+      runtime[task.id === 'start' ? 'zotero' : 'bbt'] += task.finished - task.started
 
       progress?.(phase, task.id, finished.length, total, tasks.length ? tasks.map(t => t.id).join(',') : 'finished')
     }
 
     log.prefix = ''
-    log.debug('orchestrator: startup took', duration(runtime), 'with', duration(waiting), 'of wait time')
+    log.debug('orchestrator: startup took', duration(runtime.bbt), 'after waiting', duration(runtime.zotero), 'for zotero')
   }
 
   private gantt(phase: PhaseID) {
