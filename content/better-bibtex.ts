@@ -707,6 +707,9 @@ export class BetterBibTeX {
         // this is what really takes long
         await Zotero.initializationPromise
 
+        // and this
+        await Zotero.Translators.init()
+
         this.dir = $OS.Path.join(Zotero.DataDirectory.dir, 'better-bibtex')
         await $OS.File.makeDir(this.dir, { ignoreExisting: true })
         await Preference.startup(this.dir)
@@ -872,11 +875,11 @@ export class BetterBibTeX {
         pluginID: 'better-bibtex@iris-advies.com',
         header: {
           l10nID: 'better-bibtex_item-pane_section_header',
-          icon: `${rootURI}content/skin/citation-key.svg`,
+          icon: `${rootURI}content/skin/item-section/header.svg`,
         },
         sidenav: {
           l10nID: 'better-bibtex_item-pane_section_sidenav',
-          icon: `${rootURI}content/skin/citation-key.svg`,
+          icon: `${rootURI}content/skin/item-section/sidenav.svg`,
         },
         bodyXHTML: 'Citation Key <html:input type="text" data-itemid="" id="better-bibtex-citation-key" readonly="true" style="flex: 1" xmlns:html="http://www.w3.org/1999/xhtml"/>',
         // onRender: ({ body, item, editable, tabType }) => {

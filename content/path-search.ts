@@ -37,9 +37,8 @@ async function pathSearch(bin: string, installationDirectory: { mac?: string[], 
     return ''
   }
   let paths: string[] = PATH.split(Zotero.isWin ? ';' : ':')
-  log.debug('path-search:', PATH, '=>', paths)
   const resolved = {}
-  paths = paths.map(p => resolveVars(p, resolved))
+  paths = paths.map(p => resolveVars(p, resolved)).filter((p: string, i: number, self: string[]) => self.indexOf(p) === i)
   log.debug('path-search: looking for', bin, 'in', PATH, paths)
   if (Zotero.isWin && installationDirectory.win) paths.unshift(...(installationDirectory.win))
   if (Zotero.isMac && installationDirectory.mac) paths.unshift(...(installationDirectory.mac))
@@ -59,7 +58,6 @@ async function pathSearch(bin: string, installationDirectory: { mac?: string[], 
     for (const ext of extensions) {
       try {
         const exe: string = $OS.Path.join(path, bin + ext)
-        log.debug(`path-search: testing ${exe}`)
         if (!(await $OS.File.exists(exe))) continue
 
         // eslint-disable-next-line @typescript-eslint/await-thenable
