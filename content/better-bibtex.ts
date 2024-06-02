@@ -706,6 +706,9 @@ export class BetterBibTeX {
         // this is what really takes long
         await Zotero.initializationPromise
 
+        // and this
+        await Zotero.Translators.init()
+
         this.dir = $OS.Path.join(Zotero.DataDirectory.dir, 'better-bibtex')
         await $OS.File.makeDir(this.dir, { ignoreExisting: true })
         await Preference.startup(this.dir)

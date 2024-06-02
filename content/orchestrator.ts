@@ -106,8 +106,9 @@ export class Orchestrator {
 
     const total = tasks.length
 
-    const started = Date.now()
-    const finished: Actor[] = []
+    let runtime = 0
+    let waiting = 0
+    const finished: number[] = []
     log.debug(phase, 'orchestrator started:', reason)
     while (tasks.length) {
       const task = tasks.shift()
@@ -118,19 +119,21 @@ export class Orchestrator {
 
       progress?.(phase, task.id, finished.length, total, task.description)
 
-      task.started = Date.now()
       log.debug('orchestrator: starting', task.id, JSON.stringify(task.description))
+      task.started = Date.now()
+      if (finished.length) waiting += task.started - finished[0]
       await task[phase](reason, task)
       task.finished = Date.now()
       log.debug('orchestrator:', task.id, 'took', duration(task.finished - task.started))
 
-      finished.push(task.id)
+      finished.unshift(task.finished)
+      runtime += task.finished - task.started
 
       progress?.(phase, task.id, finished.length, total, tasks.length ? tasks.map(t => t.id).join(',') : 'finished')
     }
 
-    log.debug('startup took', duration(Date.now() - started))
     log.prefix = ''
+    log.debug('orchestrator: startup took', duration(runtime), 'with', duration(waiting), 'of wait time')
   }
 
   private gantt(phase: PhaseID) {
