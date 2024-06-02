@@ -102,7 +102,7 @@ export class Orchestrator {
     const tasks: Task[] = this.ordered.filter(task => task[phase])
     if (phase === 'shutdown') tasks.reverse()
 
-    log.debug('orchestrator:', phase, 'in order', tasks.map(task => task.id))
+    log.debug('orchestrator:', phase, 'in order', tasks.map(task => task.id).join(' - '))
 
     const total = tasks.length
 
