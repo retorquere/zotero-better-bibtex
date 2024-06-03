@@ -1,0 +1,14 @@
+@incollection{jonesEndangeredAfricanLanguages2020,
+  title = {Endangered {{African Languages Featured}} in a {{Digital Collection}}: {{The Case}} of the {{\textdoublepipe Khomani San}} \textbar{} {{Hugh Brody Collection}}},
+  booktitle = {Proceedings of the {{First}} Workshop on {{Resources}} for {{African Indigenous Languages}} ({{RAIL}}): {{Language Resources}} and {{Evaluation Conference}} ({{LREC}} 2020), {{Marseille}}, 11--16 {{May}} 2020},
+  author = {Jones, Kerry and Muftic, Sanjin},
+  editor = {Mabuya, Rooweither and Ramukhadi, Phathutshedzo and Setaka, Mmasibidi and Wagner, Valencia and family=Zaanen, given=Menno, prefix=van, useprefix=true},
+  date = {2020},
+  pages = {1--8},
+  publisher = {European Language Resources Association (ELRA)},
+  location = {Marseille, France},
+  url = {https://www.aclweb.org/anthology/2020.rail-1.1},
+  abstract = {The \textdoublepipe Khomani San \textbar{} Hugh Brody Collection features the voices and history of indigenous hunter gatherer descendants in three endangered languages namely, N\textbar uu, Kora and Khoekhoe as well as a regional dialect of Afrikaans. A large component of this collection is audio-visual (legacy media) recordings of interviews conducted with members of the community by Hugh Brody and his colleagues between 1997 and 2012, referring as far back as the 1800s. The Digital Library Services team at the University of Cape Town aim to showcase the collection digitally on the UCT-wide Digital Collections platform, Ibali which runs on Omeka-S. In this paper we highlight the importance of such a collection in the context of South Africa, and the ethical steps that were taken to ensure the respect of the \textdoublepipe Khomani San as their stories get uploaded onto a repository and become accessible to all. We will also feature some of the completed collection on Ibali and guide the reader through the organisation of the collection on the Omeka-S backend. Finally, we will outline our development process, from digitisation to repository publishing as well as present some of the challenges in data clean-up, the curation of legacy media, multi-lingual support, and site organisation.},
+  langid = {english},
+  keywords = {/unread,Omeka-S}
+}

@@ -623,20 +623,20 @@ Some of us though are bound to outlets that still demand BibTeX, and there's gee
 
 | **character** | **text** | **math** | **character** | **text** | **math** | **character** | **text** | **math** | **character** | **text** | **math** |
 |---------------|----------|----------|---------------|----------|----------|---------------|----------|----------|---------------|----------|----------|
-|  ħ | \textcrh |  |  ƕ | \texthvlig |  |  ƞ | \textipa{\textnrleg} |  |  ɐ | \textipa{\textturna} |  |
-|  ɒ | textipa{\textopeno} |  |  ɔ | \textipa{O} |  |  ɖ | \textrtaild |  |  ə | \textschwa |  |
-|  ɣ | \textipa{G} |  |  ɤ | \textrevscripta |  |  ɸ | \textphi |  |  ʞ | \textturnk |  |
-|  ˥ | \tone{55} |  |  ˦ | \tone{44} |  |  ˧ | \tone{33} |  |  ˨ | \tone{22} |  |
-|  ˩ | \tone{11} |  |  ̀̄ | \textgravemacron |  |  ̀̇ | \textgravedot |  |  ́̄ | \textacutemacron |  |
-|  ́̌ | \textacutewedge |  |  ̂̇ | \textcircumdot |  |  ̃̇ | \texttildedot |  |  ̄̀ | \textgravemacron |  |
-|  ̆̄ | \textbrevemacron |  |  ̇́ | \textdotacute |  |  ̇̆ | \textdotbreve |  |  ̊̄ | \textringmacron |  |
-|  ̍ | \textvbaraccent |  |  ̎ | \textdoublevbaraccent |  |  ̐ | \textdotbreve |  |  ̘ | \textadvancing |  |
-|  ̙ | \textretracting |  |  ̚ | \textcorner |  |  ̜ | \textsublhalfring |  |  ̝ | \textraising |  |
-|  ̞ | \textlowering |  |  ̟ | \textsubplus |  |  ̤ | \textsubumlaut |  |  ̥ | \textsubring |  |
-|  ̩ | \textsyllabic |  |  ̪ | \textsubbridge |  |  ̬ | \textsubwedge |  |  ̯ | \textsubarch |  |
-|  ̰ | \textsubtilde |  |  ̱ | \textsubbar |  |  ̴ | \textsuperimposetilde |  |  ̹ | \textsubrhalfring |  |
-|  ̺ | \textinvsubbridge |  |  ̻ | \textsubsquare |  |  ̼ | \textseagull |  |  ̽ | \textovercross |  |
-|  ₔ | \textsubscript{\textschwa} |  |  | |  |  | |  |  | |  |
+|  ħ | \textcrh |  |  ƕ | \texthvlig |  |  ƞ | \textipa{\textnrleg} |  |  ǂ | \textdoublebarpipe |  |
+|  ɐ | \textipa{\textturna} |  |  ɒ | textipa{\textopeno} |  |  ɔ | \textipa{O} |  |  ɖ | \textrtaild |  |
+|  ə | \textschwa |  |  ɣ | \textipa{G} |  |  ɤ | \textrevscripta |  |  ɸ | \textphi |  |
+|  ʞ | \textturnk |  |  ˥ | \tone{55} |  |  ˦ | \tone{44} |  |  ˧ | \tone{33} |  |
+|  ˨ | \tone{22} |  |  ˩ | \tone{11} |  |  ̀̄ | \textgravemacron |  |  ̀̇ | \textgravedot |  |
+|  ́̄ | \textacutemacron |  |  ́̌ | \textacutewedge |  |  ̂̇ | \textcircumdot |  |  ̃̇ | \texttildedot |  |
+|  ̄̀ | \textgravemacron |  |  ̆̄ | \textbrevemacron |  |  ̇́ | \textdotacute |  |  ̇̆ | \textdotbreve |  |
+|  ̊̄ | \textringmacron |  |  ̍ | \textvbaraccent |  |  ̎ | \textdoublevbaraccent |  |  ̐ | \textdotbreve |  |
+|  ̘ | \textadvancing |  |  ̙ | \textretracting |  |  ̚ | \textcorner |  |  ̜ | \textsublhalfring |  |
+|  ̝ | \textraising |  |  ̞ | \textlowering |  |  ̟ | \textsubplus |  |  ̤ | \textsubumlaut |  |
+|  ̥ | \textsubring |  |  ̩ | \textsyllabic |  |  ̪ | \textsubbridge |  |  ̬ | \textsubwedge |  |
+|  ̯ | \textsubarch |  |  ̰ | \textsubtilde |  |  ̱ | \textsubbar |  |  ̴ | \textsuperimposetilde |  |
+|  ̹ | \textsubrhalfring |  |  ̺ | \textinvsubbridge |  |  ̻ | \textsubsquare |  |  ̼ | \textseagull |  |
+|  ̽ | \textovercross |  |  ₔ | \textsubscript{\textschwa} |  |  | |  |  | |  |
 
 
 ### ipa
