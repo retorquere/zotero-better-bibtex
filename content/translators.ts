@@ -108,9 +108,37 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       description: 'translators',
       needs: ['keymanager', 'cache'],
       startup: async () => {
-        log.debug('translators startup: begin')
-        await this.start()
-        log.debug('translators startup: started')
+        if (!this.worker) {
+          try {
+            const environment = Object.entries({
+              version: Zotero.version,
+              platform: Preference.platform,
+              locale: Zotero.locale,
+              clientName: Zotero.clientName,
+              is7,
+            }).map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`).join('&')
+
+            this.worker = new ChromeWorker(`chrome://zotero-better-bibtex/content/worker/zotero.js?${environment}`)
+
+            // post dynamically to fix #2485
+            this.worker.postMessage({
+              kind: 'initialize',
+              CSL_MAPPINGS: Object.entries(Zotero.Schema).reduce((acc, [k, v]) => { if (k.startsWith('CSL')) acc[k] = v; return acc}, {}),
+            })
+          }
+          catch (err) {
+            log.error('translate: worker not acquired', err)
+            if (Preference.testing) throw err
+
+            flash(
+              'Failed to start background export',
+              `Could not start background export (${err.message}). Background exports have been disabled until restart -- report this as a bug at the Better BibTeX github project`,
+              15
+            )
+            this.worker = null
+          }
+        }
+        log.debug('translators startup: worker started')
 
         this.itemType = {
           note: Zotero.ItemTypes.getID('note'),
@@ -211,41 +239,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     return translation.newItems
   }
 
-  private async start() { // eslint-disable-line @typescript-eslint/require-await
-    if (this.worker) return
-
-    try {
-      const environment = Object.entries({
-        version: Zotero.version,
-        platform: Preference.platform,
-        locale: Zotero.locale,
-        clientName: Zotero.clientName,
-        is7,
-      }).map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`).join('&')
-
-      this.worker = new ChromeWorker(`chrome://zotero-better-bibtex/content/worker/zotero.js?${environment}`)
-
-      // post dynamically to fix #2485
-      this.worker.postMessage({
-        kind: 'initialize',
-        CSL_MAPPINGS: Object.entries(Zotero.Schema).reduce((acc, [k, v]) => { if (k.startsWith('CSL')) acc[k] = v; return acc}, {}),
-      })
-    }
-    catch (err) {
-      log.error('translate: worker not acquired', err)
-      if (Preference.testing) throw err
-
-      flash(
-        'Failed to start background export',
-        `Could not start background export (${err.message}). Background exports have been disabled until restart -- report this as a bug at the Better BibTeX github project`,
-        15
-      )
-      this.worker = null
-    }
-  }
-
   public async queueJob(job: ExportJob): Promise<string> {
-    await this.start()
     return this.queue.add(() => this.exportItemsByQueuedWorker(job))
   }
 
