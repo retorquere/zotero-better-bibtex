@@ -4,6 +4,7 @@ import { Shim } from './os'
 import { is7, platform } from './client'
 const $OS = is7 ? Shim : OS
 
+import { cache as IndexedCache } from './db/indexed'
 import { PromptService } from './prompt'
 // import { regex as escapeRE } from './escape'
 
@@ -49,6 +50,7 @@ type Report = {
   log: string
   items?: string
   acronyms?: string
+  cache?: string
 }
 
 // const homeDir = $OS.Constants.Path.homeDir
@@ -153,6 +155,7 @@ export class ErrorReport {
     const enc = new TextEncoder()
 
     files[`${this.name()}/debug.txt`] = enc.encode(this.report.log)
+    files[`${this.name()}/cache.json`] = enc.encode(this.report.cache)
 
     if (this.report.items) files[`${this.name()}/items.json`] = enc.encode(this.report.items)
     if (this.config.cache) {
@@ -335,6 +338,7 @@ export class ErrorReport {
       // # 1896
       log: this.log(),
       items: win.arguments[0].wrappedJSObject.items,
+      cache: JSON.stringify(await IndexedCache.export(), null, 2),
     }
     const acronyms = $OS.Path.join(Zotero.BetterBibTeX.dir, 'acronyms.csv')
     if (await $OS.File.exists(acronyms)) this.input.acronyms = await $OS.File.read(acronyms, { encoding: 'utf-8' }) as unknown as string
