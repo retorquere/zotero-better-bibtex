@@ -4,15 +4,10 @@ const $OS = is7 ? Shim : OS
 
 import type { RegularItem, Attachment, Item } from '../gen/typings/serialized-item'
 import { JournalAbbrev } from './journal-abbrev'
-import { DB as Cache } from './db/cache'
-import { $and } from './db/loki'
 import { Preference } from './prefs'
 import { orchestrator } from './orchestrator'
-
-type CacheEntry = {
-  itemID: number
-  item: Item
-}
+import { cache as IndexedCache } from './db/indexed'
+import { Events } from './events'
 
 function attachmentToPOJO(serialized: Attachment, att): Attachment {
   if (att.attachmentLinkMode !== Zotero.Attachments.LINK_MODE_LINKED_URL) {
@@ -82,54 +77,28 @@ export function fix(serialized: Item, item: ZoteroItem): Item {
   return serialized as unknown as Item
 }
 
-// export singleton: https://k94n.com/es6-modules-single-instance-pattern
-export const Serializer = new class { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
-  private cache
+type Serialized = RegularItem | Attachment | Item
+const serialize = (item: ZoteroItem): Serialized => <Serialized>JSON.parse(JSON.stringify(fix(itemToPOJO(item), item)))
 
-  constructor() {
-    orchestrator.add({
-      id: 'serializer',
-      description: 'object serializer',
-      needs: ['cache', 'keymanager', 'abbreviator'],
-      startup: async () => { // eslint-disable-line @typescript-eslint/require-await
-        try {
-          this.cache = Cache.getCollection('itemToExportFormat')
-        }
-        catch (err) {
-          Zotero.debug(`Serializer.init failed: ${err.message}`)
-        }
-      },
-    })
-  }
+orchestrator.add({
+  id: 'serializer',
+  description: 'object serializer',
+  needs: ['cache', 'keymanager', 'abbreviator'],
+  startup: async () => {
+    const lastUpdated = await Zotero.DB.valueQueryAsync('SELECT MAX(dateModified) FROM items')
+    await IndexedCache.open(serialize, lastUpdated)
 
-  private fetch(item: ZoteroItem): Item {
-    if (!Preference.cache || !this.cache) return null
-
-    const cached: CacheEntry = this.cache.findOne($and({ itemID: item.id }))
-    if (!cached) return null
-
-    return fix(cached.item, item)
-  }
-
-  private store(item: ZoteroItem, serialized: Item): Item {
-    if (this.cache) {
-      if (Preference.cache) this.cache.insert({ itemID: item.id, item: serialized })
+    Events.serializationCacheUpdate = async (action, ids) => {
+      if (action === 'delete') {
+        await IndexedCache.ExportFormat.delete(ids)
+      }
+      else {
+        await IndexedCache.ExportFormat.store(await Zotero.Items.getAsync(ids))
+        await IndexedCache.touch()
+      }
     }
-    else {
-      Zotero.debug('Serializer.store ignored, DB not yet loaded')
-    }
-
-    return serialized
-  }
-
-  public serialize(item: ZoteroItem): Item {
-    return Zotero.Utilities.Internal.itemToExportFormat(item, false, true) as Item
-  }
-
-  public fast(item: ZoteroItem): Item {
-    // since the cache doesn't clone, these will be written into the cache, but since we override them always anyways, that's OK
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return fix(this.fetch(item) || this.store(item, itemToPOJO(item)), item)
-  }
-
-}
+  },
+  shutdown: async () => { // eslint-disable-line @typescript-eslint/require-await
+    IndexedCache.close()
+  },
+})

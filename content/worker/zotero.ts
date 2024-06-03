@@ -1,5 +1,10 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions, @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-assignment */
 
+import type { Attachment, Item, Note } from '../../gen/typings/serialized-item'
+type Serialized = Attachment | Item | Note
+
+import { cache as IndexedCache } from '../db/indexed'
+
 import flatMap from 'array.prototype.flatmap'
 flatMap.shim()
 import matchAll from 'string.prototype.matchall'
@@ -411,7 +416,7 @@ class WorkerZotero {
   public output: string
   public exportDirectory: string
   public exportFile: string
-  private items = 0
+  private items: Serialized[]
 
   public Utilities = WorkerZoteroUtilities
   public BetterBibTeX = new WorkerZoteroBetterBibTeX // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
@@ -421,13 +426,15 @@ class WorkerZotero {
   public Date = ZD
   public Schema: any
 
-  public async init() {
+  public async start() {
     this.Date.init(dateFormats)
 
     workerJob.preferences.platform = platform.name
     workerJob.preferences.client = client
     this.output = ''
-    this.items = workerJob.data.items.length
+
+    if (!IndexedCache.opened) await IndexedCache.open()
+    this.items = await IndexedCache.ExportFormat.get(workerJob.data.items)
 
     if (workerJob.options.exportFileData) {
       for (const item of workerJob.data.items) {
@@ -452,11 +459,9 @@ class WorkerZotero {
       this.exportFile = ''
       this.exportDirectory = ''
     }
-  }
 
-  public async start() {
-    await this.init()
     doExport()
+
     if (this.exportFile) {
       const encoder = new TextEncoder()
       const array = encoder.encode(this.output)
@@ -495,8 +500,8 @@ class WorkerZotero {
   }
 
   public nextItem() {
-    this.send({ kind: 'item', item: this.items - workerJob.data.items.length })
-    return workerJob.data.items.shift()
+    this.send({ kind: 'item', item: this.items.length - workerJob.data.items.length })
+    return this.items.shift()
   }
 
   public nextCollection(): Collection {

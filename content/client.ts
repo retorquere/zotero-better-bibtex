@@ -1,7 +1,7 @@
 declare const Zotero: any
 declare const location: any
 
-const worker = typeof location !== 'undefined' && location.search
+export const worker = typeof location !== 'undefined' && location.search
 export const is7 = worker ? ((new URLSearchParams(location.search)).get('is7') === 'true') : Zotero.platformMajorVersion >= 102
 
 function clientname(): string {

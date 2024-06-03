@@ -42,7 +42,6 @@ declare const ZOTERO_CONFIG: any
 import type { Translators as Translator } from '../typings/translators'
 import { Preference } from './prefs'
 import { Preferences } from '../gen/preferences/meta'
-import { Serializer } from './item-export-format'
 import { log } from './logger'
 import { DB as Cache } from './db/cache'
 import { flash } from './flash'
@@ -364,9 +363,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     if (job.path && job.canceled) return ''
 
     items = items.filter(item => !item.isAnnotation?.())
-    await IndexedCache.fill(items)
 
-    let worked = Date.now()
     const prepare = new Pinger({
       total: items.length,
       callback: pct => {
@@ -375,18 +372,11 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
         void Events.emit('export-progress', { pct, message: preparing, ae: job.autoExport })
       },
     })
-    // use a loop instead of map so we can await for beachball protection
-    for (const item of items) {
-      config.data.items.push(Serializer.fast(item))
 
-      // sleep occasionally so the UI gets a breather
-      if ((Date.now() - worked) > 100) {
-        await Zotero.Promise.delay(0)
-        worked = Date.now()
-      }
-
-      prepare.update()
-    }
+    // maybe use a loop instead of map so we can await for beachball protection
+    await IndexedCache.ExportFormat.fill(items)
+    config.data.items = items.map(item => item.id)
+    prepare.update()
     if (job.path && job.canceled) return ''
 
     if (this.byId[job.translatorID].configOptions?.getCollections) {
@@ -401,7 +391,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     // pre-fetch cache
     if (cache) {
       const selector = translator.configOptions?.cached ? Cache.selector(translator.label, config.options, config.preferences) : null
-      const query = {...selector, itemID: { $in: config.data.items.map(item => item.itemID) }}
+      const query = {...selector, itemID: { $in: config.data.items }}
 
       // not safe in async!
       const cloneObjects = cache.cloneObjects

@@ -5,9 +5,10 @@ declare const dump: (msg: string) => void
 
 import { stringify } from './stringify'
 import { asciify } from './text'
+import { worker } from './client'
 
 export function print(msg: string): void {
-  dump(`better-bibtex::${msg}\n`)
+  dump(`${worker ? 'worker:' : ''}better-bibtex::${msg}\n`)
 }
 
 function toString(obj): string {

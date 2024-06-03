@@ -20,7 +20,7 @@ export namespace Translators {
       debugEnabled: boolean
 
       data?: {
-        items: Array<Item | Attachment | Note>
+        items: number[]
         collections: Collection[]
         cache: Record<number, {itemID: number, reference: string, metadata: any, meta: { updated: number }}>
       }
