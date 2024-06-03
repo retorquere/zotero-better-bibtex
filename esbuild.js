@@ -264,7 +264,7 @@ async function rebuild() {
     metafile: 'gen/worker.json',
     external: [ 'jsdom' ],
     banner: { js: `
-      dump("\\nloading BBT chromeworker\\n")
+      dump("\\nloading BBT chromeworker (indexedDB=" + typeof indexedDB + ")\\n")
       var Services
       if (typeof location !== 'undefined' && location.search) {
         Services = {
