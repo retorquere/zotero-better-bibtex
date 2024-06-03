@@ -1,6 +1,7 @@
 import { openDB, IDBPDatabase, IDBPTransaction, DBSchema } from 'idb'
 import { Events } from '../events'
 import { orchestrator } from '../orchestrator'
+import { print } from '../logger'
 import { fix, itemToPOJO } from '../item-export-format'
 
 type ExportFormat = { itemID: number } & Omit<Record<string, any>, 'itemID'>
@@ -25,11 +26,13 @@ export class Cache {
   public async fill(items: any[]): Promise<void> {
     const tx = this.db.transaction('ExportFormat', 'readwrite')
     const cached = new Set(await tx.store.getAllKeys())
+    print(`indexeddb: filling ${items.filter(item => !item.isFeedItem && item.isRegularItem() && !cached.has(item.id)).length}/${items.length}`)
     await this.store(items.filter(item => !cached.has(item.id)), tx)
   }
 
   public async store(items: any[], tx?: IDBPTransaction<Schema, ['ExportFormat'], 'readwrite'>): Promise<void> {
     items = items.filter(item => !item.isFeedItem && item.isRegularItem())
+    if (!items.length) return
     if (!tx) tx = this.db.transaction('ExportFormat', 'readwrite')
     const puts = items.map(item => tx.store.put(fix(itemToPOJO(item), item)))
     await Promise.all([...puts, tx.done])
@@ -89,7 +92,7 @@ orchestrator.add({
   startup: async () => {
     await cache.open()
 
-    Events.on('items-update-cache', async ({ ids, action }) => {
+    Events.serializationCacheUpdate = async (action, ids) => {
       if (action === 'delete') {
         await cache.delete(ids)
       }
@@ -97,7 +100,7 @@ orchestrator.add({
         await cache.store(await Zotero.Items.getAsync(ids))
         cache.touch()
       }
-    })
+    }
   },
   shutdown: async () => { // eslint-disable-line @typescript-eslint/require-await
     cache.close()

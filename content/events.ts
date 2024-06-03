@@ -5,6 +5,8 @@ import Emittery from 'emittery'
 import { log } from './logger'
 import { is7 } from './client'
 
+type ZoteroAction = 'modify' | 'add' | 'trash' | 'delete'
+
 type IdleState = 'active' | 'idle'
 export type Action = 'modify' | 'delete' | 'add'
 
@@ -24,7 +26,6 @@ class Emitter extends Emittery<{
   'collections-changed': number[]
   'collections-removed': number[]
   'export-progress': { pct: number, message: string, ae?: string }
-  'items-update-cache': { ids: number[], action: Action }
   'items-changed': { items: ZoteroItem[], action: Action, reason?: string }
   'libraries-changed': number[]
   'libraries-removed': number[]
@@ -37,6 +38,10 @@ class Emitter extends Emittery<{
   private listeners: any[] = []
   public idle: Partial<Record<IdleTopic, IdleState>> = {}
   public itemObserverDelay = 5
+
+  public keymanagerUpdate: (action: ZoteroAction, ids: number[]) => void
+  public serializationCacheUpdate: (action: ZoteroAction, ids: number[]) => Promise<void>
+  public legacyCacheUpdate: (action: ZoteroAction, ids: number[]) => Promise<void>
 
   public startup(): void {
     this.listeners.push(new WindowListener)
@@ -57,6 +62,12 @@ class Emitter extends Emittery<{
     }
 
     this.clearListeners()
+  }
+
+  public async itemsChanged(action, ids): Promise<void> {
+    this.keymanagerUpdate(action, ids)
+    await this.serializationCacheUpdate(action, ids)
+    await this.legacyCacheUpdate(action, ids)
   }
 }
 
@@ -133,7 +144,7 @@ class ItemListener extends ZoteroListener {
     super('item')
   }
 
-  public async notify(zotero_action: 'modify' | 'add' | 'trash' | 'delete', type: string, ids: number[], extraData?: Record<number, { libraryID?: number, bbtCitekeyUpdate: boolean }>) {
+  public async notify(zotero_action: ZoteroAction, type: string, ids: number[], extraData?: Record<number, { libraryID?: number, bbtCitekeyUpdate: boolean }>) {
     await Zotero.BetterBibTeX.ready
 
     // async is just a heap of fun. Who doesn't enjoy a good race condition?
@@ -183,7 +194,7 @@ class ItemListener extends ZoteroListener {
       return true
     }) as ZoteroItem[]
 
-    if (ids.length) await Events.emit('items-update-cache', { ids, action })
+    if (ids.length) await Events.itemsChanged(action, ids)
     if (items.length) await Events.emit('items-changed', { items, action })
 
     let parents: ZoteroItem[] = []
@@ -212,7 +223,7 @@ class TagListener extends ZoteroListener {
     await Zotero.BetterBibTeX.ready
 
     const ids = [...new Set(pairs.map(pair => parseInt(pair.split('-')[0])))]
-    await Events.emit('items-update-cache', { ids, action: 'modify' })
+    await Events.itemsChanged('modify', ids)
     void Events.emit('items-changed', { items: Zotero.Items.get(ids), action: 'modify', reason: 'tagged' })
   }
 }

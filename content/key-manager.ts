@@ -407,7 +407,8 @@ export const KeyManager = new class _KeyManager {
           break
       }
     })
-    Events.on('items-update-cache', ({ ids, action }) => {
+
+    Events.keymanagerUpdate = (action, ids) => {
       let warn_titlecase = 0
       switch (action) {
         case 'delete':
@@ -434,7 +435,7 @@ export const KeyManager = new class _KeyManager {
           }
           break
       }
-    })
+    }
 
     this.started = true
   }
