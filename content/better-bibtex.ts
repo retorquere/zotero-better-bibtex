@@ -895,14 +895,13 @@ export class BetterBibTeX {
         },
         onInit: ({ body, refresh }) => {
           $done = Events.on('items-changed', ({ items }) => {
+            items.forEach(item => pending.add(item.id))
+
             const textbox = body.ownerDocument.getElementById('better-bibtex-citation-key')
             const itemID = textbox.dataset.itemid ? parseInt(textbox.dataset.itemid) : undefined
             const displayed: ZoteroItem = textbox.dataset.itemid ? items.find(item => item.id === itemID) : undefined
             // log.debug('2884:onInit.items-changed:', items.map(item => item.id), 'current:', textbox.dataset.itemid, 'refresh:', !!displayed)
-            if (displayed) {
-              items.forEach(item => pending.add(item.id))
-              refresh()
-            }
+            if (displayed) refresh()
           })
         },
         onItemChange: ({ setEnabled, body, item }) => {
