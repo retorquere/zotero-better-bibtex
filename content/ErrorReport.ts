@@ -186,15 +186,20 @@ export class ErrorReport {
 
   private scrub(logging: string[]): string {
     const ignore = new RegExp([
-      /NS_NOINTERFACE.*ComponentUtils[.]jsm/,
       /Addon must include an id, version, and type/,
-      /NS_ERROR_NOT_AVAILABLE.*PartitioningExceptionListService[.]jsm/,
+      /Could not get children of.*CrashManager.jsm/,
+      /Error: Translate: No RDF found/,
       /NS_ERROR_FAILURE:.*getHistogramById/,
+      /NS_ERROR_NOT_AVAILABLE.*PartitioningExceptionListService[.]jsm/,
+      /NS_NOINTERFACE.*ComponentUtils[.]jsm/,
+      /PAC file installed from/,
+      /See your zotero.org account settings for additional storage options/,
+      /Syntax Error: Couldn't find trailer dictionary/
+      /Syntax Error: Couldn't read xref table/
       /Upload request .* failed/,
       /You have reached your Zotero File Storage quota/,
-      /See your zotero.org account settings for additional storage options/,
-      /Could not get children of.*CrashManager.jsm/,
-      /PAC file installed from/,
+      /pdftotext returned exit status/,
+      /protocol is not allowed for attachments/,
     ].map(re => re.source).join('|'))
     return logging.filter(line => !line.match(ignore))
       // .map(line => line.replace($home, '$HOME'))
