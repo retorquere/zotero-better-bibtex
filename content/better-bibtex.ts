@@ -870,6 +870,7 @@ export class BetterBibTeX {
     if (is7) {
       // const show = (item: ZoteroItem): { id: number, type: string, citekey: string } | boolean => item ? { id: item.id, type: Zotero.ItemTypes.getName(item.itemTypeID), citekey: item.getField('citationKey') as string } : false
       let $done: () => void
+      const pending: Set<number> = new Set
       Zotero.ItemPaneManager.registerSection({
         paneID: 'betterbibtex-section-citationkey',
         pluginID: 'better-bibtex@iris-advies.com',
@@ -895,6 +896,8 @@ export class BetterBibTeX {
         },
         onInit: ({ body, refresh }) => {
           $done = Events.on('items-changed', ({ items }) => {
+            items.forEach(item => pending.add(item.id))
+
             const textbox = body.ownerDocument.getElementById('better-bibtex-citation-key')
             const itemID = textbox.dataset.itemid ? parseInt(textbox.dataset.itemid) : undefined
             const displayed: ZoteroItem = textbox.dataset.itemid ? items.find(item => item.id === itemID) : undefined
@@ -903,6 +906,10 @@ export class BetterBibTeX {
           })
         },
         onItemChange: ({ setEnabled, body, item }) => {
+          if (pending.size) { // will force-refresh the middle pane without stealing focus
+            Zotero.Notifier.trigger('refresh', 'item', [...pending])
+            pending.clear()
+          }
           const textbox = body.ownerDocument.getElementById('better-bibtex-citation-key')
           if (item.isRegularItem() && !item.isFeedItem) {
             const citekey = item.getField('citationKey')

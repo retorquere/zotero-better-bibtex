@@ -740,6 +740,12 @@ Feature: Export
     Given I import 2 references from "export/*.json" into a new collection
     Then an export using "Better BibLaTeX" should match "export/*.biblatex"
 
+  Scenario: Export U01C2 as textdoublebarpipe #2896
+    Given I import 1 references from "export/*.json" into a new collection
+    Then an export using "Better BibLaTeX" should match "export/*.biblatex"
+    And I set preference .packages to "tipa"
+    Then an export using "Better BibLaTeX" should match "export/*.tipa.biblatex"
+
   Scenario: Exporting %-encoded URLs (e.g. containing %20) #1966
     Given I import 1 reference from "export/*.json"
     And I set preference .bibtexURL to "url"

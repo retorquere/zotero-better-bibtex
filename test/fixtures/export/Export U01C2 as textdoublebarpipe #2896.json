@@ -1,0 +1,72 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "preferences": {
+      "asciiBibLaTeX": true
+    }
+  },
+  "items": [
+    {
+      "abstractNote": "The \u01c2Khomani San | Hugh Brody Collection features the voices and history of indigenous hunter gatherer descendants in three endangered languages namely, N|uu, Kora and Khoekhoe as well as a regional dialect of Afrikaans. A large component of this collection is audio-visual (legacy media) recordings of interviews conducted with members of the community by Hugh Brody and his colleagues between 1997 and 2012, referring as far back as the 1800s. The Digital Library Services team at the University of Cape Town aim to showcase the collection digitally on the UCT-wide Digital Collections platform, Ibali which runs on Omeka-S. In this paper we highlight the importance of such a collection in the context of South Africa, and the ethical steps that were taken to ensure the respect of the \u01c2Khomani San as their stories get uploaded onto a repository and become accessible to all. We will also feature some of the completed collection on Ibali and guide the reader through the organisation of the collection on the Omeka-S backend. Finally, we will outline our development process, from digitisation to repository publishing as well as present some of the challenges in data clean-up, the curation of legacy media, multi-lingual support, and site organisation.",
+      "citationKey": "jonesEndangeredAfricanLanguages2020",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Kerry",
+          "lastName": "Jones"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Sanjin",
+          "lastName": "Muftic"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "Rooweither",
+          "lastName": "Mabuya"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "Phathutshedzo",
+          "lastName": "Ramukhadi"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "Mmasibidi",
+          "lastName": "Setaka"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "Valencia",
+          "lastName": "Wagner"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "Menno",
+          "lastName": "van Zaanen"
+        }
+      ],
+      "date": "2020",
+      "itemID": 1,
+      "itemType": "bookSection",
+      "language": "en",
+      "libraryCatalog": "Zotero",
+      "pages": "1\u20138",
+      "place": "Marseille, France",
+      "publicationTitle": "Proceedings of the First workshop on Resources for African Indigenous Languages (RAIL): Language Resources and Evaluation Conference (LREC 2020), Marseille, 11\u201316 May 2020",
+      "publisher": "European Language Resources Association (ELRA)",
+      "tags": [
+        {
+          "tag": "/unread",
+          "type": 1
+        },
+        {
+          "tag": "Omeka-S"
+        }
+      ],
+      "title": "Endangered African Languages Featured in a Digital Collection: The Case of the \u01c2Khomani San | Hugh Brody Collection",
+      "url": "https://www.aclweb.org/anthology/2020.rail-1.1"
+    }
+  ]
+}
