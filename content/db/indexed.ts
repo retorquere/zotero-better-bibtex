@@ -18,15 +18,26 @@ interface Schema extends DBSchema {
 
 class ExportFormat {
   public marked: Set<number> = new Set
+  public filled = 0 // exponential moving average
+  private smoothing = 2 / (10 + 1) // keep average over last 10 fills
 
   constructor(private db: IDBPDatabase<Schema>, private serialize: Serializer) {
   }
 
   public async fill(items: any[]): Promise<void> {
+    for (const item of items) this.marked.delete(item.id)
+
+    items = items.filter(item => !item.isFeedItem && item.isRegularItem())
+    if (!items.length) return
+
     const tx = this.db.transaction('ExportFormat', 'readwrite')
     const cached = new Set(await tx.store.getAllKeys())
-    print(`indexed: filling ${items.filter(item => !item.isFeedItem && item.isRegularItem() && !cached.has(item.id)).length}/${items.length}`)
-    await this.store(items.filter(item => !cached.has(item.id)), tx)
+    const requested = items.length
+    items = items.filter(item => !cached.has(item.id))
+    const fill = (requested - items.length) / requested
+    this.filled = (fill - this.filled) * this.smoothing + this.filled
+    print(`indexed: filling ${requested - items.length}/${requested}, avg cache fill=${this.filled}`)
+    await this.store(items, tx)
   }
 
   public async get(ids: number[]): Promise<Serialized[]> {
