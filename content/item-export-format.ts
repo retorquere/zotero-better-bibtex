@@ -8,6 +8,7 @@ import { Preference } from './prefs'
 import { orchestrator } from './orchestrator'
 import { cache as IndexedCache } from './db/indexed'
 import { Events } from './events'
+import { getItemsAsync } from './get-items-async'
 
 function attachmentToPOJO(serialized: Attachment, att): Attachment {
   if (att.attachmentLinkMode !== Zotero.Attachments.LINK_MODE_LINKED_URL) {
@@ -89,14 +90,14 @@ orchestrator.add({
     await IndexedCache.open(serialize, lastUpdated)
 
     Events.serializationCacheUpdate = async (action, ids) => {
-      if (action === 'delete') {
-        await IndexedCache.ExportFormat.delete(ids)
-      }
-      else {
-        await IndexedCache.ExportFormat.store(await Zotero.Items.getAsync(ids))
-        await IndexedCache.touch()
-      }
+      await IndexedCache.ExportFormat.delete(ids, action === 'add' || action === 'modify')
     }
+
+    Events.addIdleListener('cache-fill', 5)
+    Events.on('idle', async state => {
+      if (state.topic !== 'cache-fill' || state.state !== 'idle') return
+      if (IndexedCache.ExportFormat.marked.size) await IndexedCache.ExportFormat.fill(await getItemsAsync([...IndexedCache.ExportFormat.marked]))
+    })
   },
   shutdown: async () => { // eslint-disable-line @typescript-eslint/require-await
     IndexedCache.close()

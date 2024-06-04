@@ -18,7 +18,7 @@ type IdleService = {
   addIdleObserver: (observer: IdleObserver, time: number) => void
   removeIdleObserver: (observer: IdleObserver, time: number) => void
 }
-type IdleTopic = 'auto-export' | 'save-database'
+type IdleTopic = 'auto-export' | 'save-database' | 'cache-fill'
 
 const idleService: IdleService = Components.classes[`@mozilla.org/widget/${is7 ? 'user' : ''}idleservice;1`].getService(Components.interfaces[is7 ? 'nsIUserIdleService' : 'nsIIdleService'])
 
@@ -38,7 +38,6 @@ class Emitter extends Emittery<{
   private listeners: any[] = []
   public idle: Partial<Record<IdleTopic, IdleState>> = {}
   public itemObserverDelay = 5
-  public hold: Set<Set<number>> = new Set
 
   public keymanagerUpdate: (action: ZoteroAction, ids: number[]) => void
   public serializationCacheUpdate: (action: ZoteroAction, ids: number[]) => Promise<void>
@@ -66,9 +65,14 @@ class Emitter extends Emittery<{
   }
 
   public async itemsChanged(action, ids): Promise<void> {
-    this.keymanagerUpdate(action, ids)
-    await this.serializationCacheUpdate(action, ids)
-    await this.legacyCacheUpdate(action, ids)
+    try {
+      this.keymanagerUpdate(action, ids)
+      await this.serializationCacheUpdate(action, ids)
+      await this.legacyCacheUpdate(action, ids)
+    }
+    catch (err) {
+      log.error('cache update failed:', err)
+    }
   }
 }
 
@@ -146,9 +150,7 @@ class ItemListener extends ZoteroListener {
   }
 
   public async notify(zotero_action: ZoteroAction, type: string, ids: number[], extraData?: Record<number, { libraryID?: number }>) {
-    const hold = new Set(ids)
     try {
-      Events.hold.add(hold)
       await Zotero.BetterBibTeX.ready
 
       // async is just a heap of fun. Who doesn't enjoy a good race condition?
@@ -215,9 +217,6 @@ class ItemListener extends ZoteroListener {
     catch (err) {
       log.debug('error in', this.type, 'notify handler:', err)
     }
-    finally {
-      Events.hold.delete(hold)
-    }
   }
 }
 
@@ -227,22 +226,15 @@ class TagListener extends ZoteroListener {
   }
 
   public async notify(action: string, type: string, pairs: string[]) {
-    const hold: Set<number> = new Set
     try {
-      Events.hold.add(hold)
       await Zotero.BetterBibTeX.ready
 
       const ids = [...new Set(pairs.map(pair => parseInt(pair.split('-')[0])))]
-      ids.forEach(id => hold.add(id))
-
       await Events.itemsChanged('modify', ids)
       void Events.emit('items-changed', { items: Zotero.Items.get(ids), action: 'modify', reason: 'tagged' })
     }
     catch (err) {
       log.debug('error in', this.type, 'notify handler:', err)
-    }
-    finally {
-      Events.hold.delete(hold)
     }
   }
 }

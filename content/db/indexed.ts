@@ -17,6 +17,8 @@ interface Schema extends DBSchema {
 }
 
 class ExportFormat {
+  public marked: Set<number> = new Set
+
   constructor(private db: IDBPDatabase<Schema>, private serialize: Serializer) {
   }
 
@@ -42,7 +44,13 @@ class ExportFormat {
     await Promise.all([...puts, tx.done])
   }
 
-  public async delete(ids: number[]): Promise<void> {
+  public async delete(ids: number[], mark?: boolean): Promise<void> {
+    if (mark) {
+      ids.forEach(id => this.marked.add(id))
+    }
+    else {
+      ids.forEach(id => this.marked.delete(id))
+    }
     const tx = this.db.transaction('ExportFormat', 'readwrite')
     const deletes = ids.map(id => tx.store.delete(id))
     await Promise.all([...deletes, tx.done])
