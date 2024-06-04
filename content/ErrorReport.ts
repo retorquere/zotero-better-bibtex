@@ -196,9 +196,9 @@ export class ErrorReport {
       /NS_ERROR_NOT_AVAILABLE.*PartitioningExceptionListService[.]jsm/,
       /NS_NOINTERFACE.*ComponentUtils[.]jsm/,
       /PAC file installed from/,
-      /See your zotero.org account settings for additional storage options/,
-      /Syntax Error: Couldn't find trailer dictionary/
-      /Syntax Error: Couldn't read xref table/
+      /See your zotero[.]org account settings for additional storage options/,
+      /Syntax Error: Couldn't find trailer dictionary/,
+      /Syntax Error: Couldn't read xref table/,
       /Upload request .* failed/,
       /You have reached your Zotero File Storage quota/,
       /pdftotext returned exit status/,
