@@ -108,7 +108,7 @@ class IdleListener {
     if ((topic as any) === 'back') topic = 'active'
     log.debug(`idle: ${new Date}, ${this.topic} ${topic}`)
     Events.idle[this.topic] = topic
-    void Events.emit('idle', { state: topic, topic: this.topic })
+    if (Zotero.BetterBibTeX.ready.isResolved()) void Events.emit('idle', { state: topic, topic: this.topic })
   }
 
   unregister() {
