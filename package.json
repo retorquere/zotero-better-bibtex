@@ -118,7 +118,7 @@
     "@retorquere/zotero-sync": "^1.0.27",
     "@types/bluebird": "^3.5.42",
     "@types/lokijs": "^1.5.14",
-    "@types/node": "^20.14.0",
+    "@types/node": "^20.14.1",
     "@xmldom/xmldom": "^0.8.10",
     "ajv-keywords": "^5.1.0",
     "archiver": "^7.0.1",
