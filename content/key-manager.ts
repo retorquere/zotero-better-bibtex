@@ -27,6 +27,7 @@ import { DB as Cache } from './db/cache'
 
 import { createDB, createTable, Query, BlinkKey } from 'blinkdb'
 import * as blink from '../gen/blinkdb'
+import { cache as IndexedCache } from './db/indexed'
 
 import { patch as $patch$ } from './monkey-patch'
 
@@ -488,9 +489,18 @@ export const KeyManager = new class _KeyManager {
       missing =  await ZoteroDB.columnQueryAsync(`${$items} SELECT itemID FROM _items WHERE itemID NOT IN (SELECT itemID from betterbibtex.citationkey)`)
     })
 
-    const notify = (itemIDs: number[], action: Action) => {
-      itemIDs = itemIDs.filter(itemID => ![...Events.hold].some(hold => hold.has(itemID)))
-      if (itemIDs.length) void Events.emit('items-changed', { items: Zotero.Items.get(itemIDs), action })
+    const notify = async (ids: number[], action: Action) => {
+      if (!IndexedCache.ExportFormat) return
+
+      try {
+        await IndexedCache.ExportFormat.delete(ids, action === 'add' || action === 'modify')
+      }
+      catch (err) {
+        log.error('IndexedCache touch failed:', err)
+      }
+      finally {
+        void Events.emit('items-changed', { items: Zotero.Items.get(ids), action })
+      }
       // messes with focus-on-tab
       // if (action === 'modify' || action === 'add') Zotero.Notifier.trigger('refresh', 'item', itemIDs)
     }
@@ -499,19 +509,19 @@ export const KeyManager = new class _KeyManager {
         for (const change of changes) {
           void this.store(change.entity).catch(err => log.error('keymanager.insert', err))
         }
-        notify(changes.map(change => change.entity.itemID), 'add')
+        void notify(changes.map(change => change.entity.itemID), 'add')
       }),
       this.keys[BlinkKey].events.onUpdate.register(changes => {
         for (const change of changes) {
           void this.store(change.newEntity).catch(err => log.error('keymanager.update', err))
         }
-        notify(changes.map(change => change.newEntity.itemID), 'modify')
+        void notify(changes.map(change => change.newEntity.itemID), 'modify')
       }),
       this.keys[BlinkKey].events.onRemove.register(changes => {
         for (const change of changes) {
           void this.remove(change.entity).catch(err => log.error('keymanager.remove', err))
         }
-        notify(changes.map(change => change.entity.itemID), 'delete')
+        void notify(changes.map(change => change.entity.itemID), 'delete')
       }),
       this.keys[BlinkKey].events.onClear.register(_changes => {
         log.error('error: do not clear the keys database!')
