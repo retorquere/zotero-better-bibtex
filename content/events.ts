@@ -38,6 +38,7 @@ class Emitter extends Emittery<{
   private listeners: any[] = []
   public idle: Partial<Record<IdleTopic, IdleState>> = {}
   public itemObserverDelay = 5
+  public hold: Set<Set<number>> = new Set
 
   public keymanagerUpdate: (action: ZoteroAction, ids: number[]) => void
   public serializationCacheUpdate: (action: ZoteroAction, ids: number[]) => Promise<void>
@@ -128,10 +129,10 @@ class IdleListener {
   }
 }
 
-class ZoteroListener {
+abstract class ZoteroListener {
   private id: string
 
-  constructor(type: string) {
+  constructor(protected type: string) {
     this.id = Zotero.Notifier.registerObserver(this, [type], 'Better BibTeX', 1)
   }
   public unregister() {
@@ -144,73 +145,79 @@ class ItemListener extends ZoteroListener {
     super('item')
   }
 
-  public async notify(zotero_action: ZoteroAction, type: string, ids: number[], extraData?: Record<number, { libraryID?: number, bbtCitekeyUpdate: boolean }>) {
-    await Zotero.BetterBibTeX.ready
+  public async notify(zotero_action: ZoteroAction, type: string, ids: number[], extraData?: Record<number, { libraryID?: number }>) {
+    const hold = new Set(ids)
+    try {
+      Events.hold.add(hold)
+      await Zotero.BetterBibTeX.ready
 
-    // async is just a heap of fun. Who doesn't enjoy a good race condition?
-    // https://github.com/retorquere/zotero-better-bibtex/issues/774
-    // https://groups.google.com/forum/#!topic/zotero-dev/yGP4uJQCrMc
-    await Zotero.Promise.delay(Events.itemObserverDelay)
+      // async is just a heap of fun. Who doesn't enjoy a good race condition?
+      // https://github.com/retorquere/zotero-better-bibtex/issues/774
+      // https://groups.google.com/forum/#!topic/zotero-dev/yGP4uJQCrMc
+      await Zotero.Promise.delay(Events.itemObserverDelay)
 
-    const action = zotero_action === 'trash' ? 'delete' : zotero_action
+      const action = zotero_action === 'trash' ? 'delete' : zotero_action
 
-    // prevents update loop -- see KeyManager.init()
-    if (action === 'modify') ids = ids.filter(id => !extraData?.[id]?.bbtCitekeyUpdate)
-    if (!ids.length) return
-
-    const touched: Record<string, Set<number>> = { collections: new Set, libraries: new Set }
-    if (action === 'delete' && extraData) {
-      for (const ed of Object.values(extraData)) {
-        if (typeof ed.libraryID === 'number') touched.libraries.add(ed.libraryID)
-      }
-    }
-    const touch = item => {
-      touched.libraries.add(typeof item.libraryID === 'number' ? item.libraryID : Zotero.Libraries.userLibraryID)
-
-      for (let collectionID of item.getCollections()) {
-        if (touched.collections.has(collectionID)) continue
-
-        while (collectionID) {
-          touched.collections.add(collectionID)
-          collectionID = Zotero.Collections.get(collectionID).parentID
+      const touched: Record<string, Set<number>> = { collections: new Set, libraries: new Set }
+      if (action === 'delete' && extraData) {
+        for (const ed of Object.values(extraData)) {
+          if (typeof ed.libraryID === 'number') touched.libraries.add(ed.libraryID)
         }
       }
-    }
-    const parentIDs: number[] = []
-    // safe to use Zotero.Items.get(...) rather than Zotero.Items.getAsync here
-    // https://groups.google.com/forum/#!topic/zotero-dev/99wkhAk-jm0
-    const items = Zotero.Items.get(ids).filter((item: ZoteroItem) => {
-      if (item.deleted) touch(item) // because trashing an item *does not* trigger collection-item?!?!
-      if (action === 'delete') return false
-      // check .deleted for #2401/#2676 -- we're getting *modify* (?!) notifications for trashed items which reinstates them into the BBT DB
-      if (action === 'modify' && item.deleted) return false
-      if (item.isFeedItem) return false
+      const touch = item => {
+        touched.libraries.add(typeof item.libraryID === 'number' ? item.libraryID : Zotero.Libraries.userLibraryID)
 
-      if (item.isAttachment() || item.isNote() || item.isAnnotation?.()) { // should I keep top-level notes/attachments for BBT-JSON?
-        if (typeof item.parentID === 'number' && ids.includes(item.parentID)) parentIDs.push(item.parentID)
-        return false
+        for (let collectionID of item.getCollections()) {
+          if (touched.collections.has(collectionID)) continue
+
+          while (collectionID) {
+            touched.collections.add(collectionID)
+            collectionID = Zotero.Collections.get(collectionID).parentID
+          }
+        }
+      }
+      const parentIDs: number[] = []
+      // safe to use Zotero.Items.get(...) rather than Zotero.Items.getAsync here
+      // https://groups.google.com/forum/#!topic/zotero-dev/99wkhAk-jm0
+      const items = Zotero.Items.get(ids).filter((item: ZoteroItem) => {
+        if (item.deleted) touch(item) // because trashing an item *does not* trigger collection-item?!?!
+        if (action === 'delete') return false
+        // check .deleted for #2401/#2676 -- we're getting *modify* (?!) notifications for trashed items which reinstates them into the BBT DB
+        if (action === 'modify' && item.deleted) return false
+        if (item.isFeedItem) return false
+
+        if (item.isAttachment() || item.isNote() || item.isAnnotation?.()) { // should I keep top-level notes/attachments for BBT-JSON?
+          if (typeof item.parentID === 'number' && ids.includes(item.parentID)) parentIDs.push(item.parentID)
+          return false
+        }
+
+        return true
+      }) as ZoteroItem[]
+
+      if (ids.length) await Events.itemsChanged(action, ids)
+      if (items.length) await Events.emit('items-changed', { items, action })
+
+      let parents: ZoteroItem[] = []
+      if (parentIDs.length) {
+        parents = Zotero.Items.get(parentIDs)
+        void Events.emit('items-changed', { items: parents, action: 'modify', reason: `parent-${zotero_action}` })
       }
 
-      return true
-    }) as ZoteroItem[]
+      for (const item of items.concat(parents)) {
+        touch(item)
+      }
 
-    if (ids.length) await Events.itemsChanged(action, ids)
-    if (items.length) await Events.emit('items-changed', { items, action })
-
-    let parents: ZoteroItem[] = []
-    if (parentIDs.length) {
-      parents = Zotero.Items.get(parentIDs)
-      void Events.emit('items-changed', { items: parents, action: 'modify', reason: `parent-${zotero_action}` })
+      Zotero.Promise.delay(Events.itemObserverDelay).then(() => {
+        if (touched.collections.size) void Events.emit('collections-changed', [...touched.collections])
+        if (touched.libraries.size) void Events.emit('libraries-changed', [...touched.libraries])
+      })
     }
-
-    for (const item of items.concat(parents)) {
-      touch(item)
+    catch (err) {
+      log.debug('error in', this.type, 'notify handler:', err)
     }
-
-    Zotero.Promise.delay(Events.itemObserverDelay).then(() => {
-      if (touched.collections.size) void Events.emit('collections-changed', [...touched.collections])
-      if (touched.libraries.size) void Events.emit('libraries-changed', [...touched.libraries])
-    })
+    finally {
+      Events.hold.delete(hold)
+    }
   }
 }
 
@@ -220,11 +227,23 @@ class TagListener extends ZoteroListener {
   }
 
   public async notify(action: string, type: string, pairs: string[]) {
-    await Zotero.BetterBibTeX.ready
+    const hold: Set<number> = new Set
+    try {
+      Events.hold.add(hold)
+      await Zotero.BetterBibTeX.ready
 
-    const ids = [...new Set(pairs.map(pair => parseInt(pair.split('-')[0])))]
-    await Events.itemsChanged('modify', ids)
-    void Events.emit('items-changed', { items: Zotero.Items.get(ids), action: 'modify', reason: 'tagged' })
+      const ids = [...new Set(pairs.map(pair => parseInt(pair.split('-')[0])))]
+      ids.forEach(id => hold.add(id))
+
+      await Events.itemsChanged('modify', ids)
+      void Events.emit('items-changed', { items: Zotero.Items.get(ids), action: 'modify', reason: 'tagged' })
+    }
+    catch (err) {
+      log.debug('error in', this.type, 'notify handler:', err)
+    }
+    finally {
+      Events.hold.delete(hold)
+    }
   }
 }
 
@@ -234,8 +253,13 @@ class CollectionListener extends ZoteroListener {
   }
 
   public async notify(action: string, type: string, ids: number[]) {
-    await Zotero.BetterBibTeX.ready
-    if ((action === 'delete') && ids.length) void Events.emit('collections-removed', ids)
+    try {
+      await Zotero.BetterBibTeX.ready
+      if ((action === 'delete') && ids.length) void Events.emit('collections-removed', ids)
+    }
+    catch (err) {
+      log.debug('error in', this.type, 'notify handler:', err)
+    }
   }
 }
 
@@ -245,20 +269,25 @@ class MemberListener extends ZoteroListener {
   }
 
   public async notify(action: string, type: string, pairs: string[]) {
-    await Zotero.BetterBibTeX.ready
+    try {
+      await Zotero.BetterBibTeX.ready
 
-    const changed: Set<number> = new Set()
+      const changed: Set<number> = new Set()
 
-    for (const pair of pairs) {
-      let id = parseInt(pair.split('-')[0])
-      if (changed.has(id)) continue
-      while (id) {
-        changed.add(id)
-        id = Zotero.Collections.get(id).parentID
+      for (const pair of pairs) {
+        let id = parseInt(pair.split('-')[0])
+        if (changed.has(id)) continue
+        while (id) {
+          changed.add(id)
+          id = Zotero.Collections.get(id).parentID
+        }
       }
-    }
 
-    if (changed.size) void Events.emit('collections-changed', Array.from(changed))
+      if (changed.size) void Events.emit('collections-changed', Array.from(changed))
+    }
+    catch (err) {
+      log.debug('error in', this.type, 'notify handler:', err)
+    }
   }
 }
 
@@ -268,7 +297,12 @@ class GroupListener extends ZoteroListener {
   }
 
   public async notify(action: string, type: string, ids: number[]) {
-    await Zotero.BetterBibTeX.ready
-    if ((action === 'delete') && ids.length) void Events.emit('libraries-removed', ids)
+    try {
+      await Zotero.BetterBibTeX.ready
+      if ((action === 'delete') && ids.length) void Events.emit('libraries-removed', ids)
+    }
+    catch (err) {
+      log.debug('error in', this.type, 'notify handler:', err)
+    }
   }
 }
