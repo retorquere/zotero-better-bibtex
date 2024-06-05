@@ -12,3 +12,10 @@
   langid = {english},
   keywords = {/unread,Omeka-S}
 }
+% == BibLateX quality report for jonesEndangeredAfricanLanguages2020:
+% ? Title looks like it was stored in title-case in Zotero
+% ? unused Library catalog ("Zotero")
+
+
+% The following packages could be loaded to get more precise latex output:
+% * tipa
