@@ -42,7 +42,10 @@ function $stringify(key, value, cache): any {
 
   let replacement: string
 
-  if (value instanceof RegExp) {
+  if (value instanceof Set) {
+    value = [...value]
+  }
+  else if (value instanceof RegExp) {
     value = value.source
   }
   else if (replacement = stringifyXPCOM(value)) {

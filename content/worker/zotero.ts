@@ -435,9 +435,10 @@ class WorkerZotero {
 
     if (!IndexedCache.opened) await IndexedCache.open()
     this.items = await IndexedCache.ExportFormat.get(workerJob.data.items)
+    print(`cache: retrieved ${this.items.length}`)
 
     if (workerJob.options.exportFileData) {
-      for (const item of workerJob.data.items) {
+      for (const item of this.items) {
         this.patchAttachments(item)
       }
     }

@@ -17,7 +17,6 @@ interface Schema extends DBSchema {
 }
 
 class ExportFormat {
-  public marked: Set<number> = new Set
   public filled = 0 // exponential moving average
   private smoothing = 2 / (10 + 1) // keep average over last 10 fills
 
@@ -25,8 +24,6 @@ class ExportFormat {
   }
 
   public async fill(items: any[]): Promise<void> {
-    for (const item of items) this.marked.delete(item.id)
-
     items = items.filter(item => !item.isFeedItem && item.isRegularItem())
     if (!items.length) return
 
@@ -40,13 +37,6 @@ class ExportFormat {
     await this.store(items, tx)
   }
 
-  public async get(ids: number[]): Promise<Serialized[]> {
-    const tx = this.db.transaction('ExportFormat', 'readonly')
-    const items: Serialized[] = await Promise.all(ids.map(id => tx.store.get(id)))
-    await tx.done
-    return items
-  }
-
   public async store(items: any[], tx?: IDBPTransaction<Schema, ['ExportFormat'], 'readwrite'>): Promise<void> {
     items = items.filter(item => !item.isFeedItem && item.isRegularItem())
     if (!items.length) return
@@ -55,13 +45,14 @@ class ExportFormat {
     await Promise.all([...puts, tx.done])
   }
 
-  public async delete(ids: number[], mark?: boolean): Promise<void> {
-    if (mark) {
-      ids.forEach(id => this.marked.add(id))
-    }
-    else {
-      ids.forEach(id => this.marked.delete(id))
-    }
+  public async get(ids: number[]): Promise<Serialized[]> {
+    const tx = this.db.transaction('ExportFormat', 'readonly')
+    const items: Serialized[] = await Promise.all(ids.map(id => tx.store.get(id)))
+    await tx.done
+    return items
+  }
+
+  public async delete(ids: number[]): Promise<void> {
     const tx = this.db.transaction('ExportFormat', 'readwrite')
     const deletes = ids.map(id => tx.store.delete(id))
     await Promise.all([...deletes, tx.done])

@@ -493,7 +493,7 @@ export const KeyManager = new class _KeyManager {
       if (!IndexedCache.ExportFormat) return
 
       try {
-        await IndexedCache.ExportFormat.delete(ids, action === 'add' || action === 'modify')
+        await IndexedCache.ExportFormat.delete(ids)
       }
       catch (err) {
         log.error('IndexedCache touch failed:', err)
