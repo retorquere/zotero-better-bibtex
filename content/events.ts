@@ -40,7 +40,7 @@ class Emitter extends Emittery<{
   public itemObserverDelay = 5
 
   public keymanagerUpdate: (action: ZoteroAction, ids: number[]) => void
-  public serializationCacheUpdate: (action: ZoteroAction, ids: number[]) => Promise<void>
+  public serializationCacheTouch: (ids: number[]) => Promise<void>
   public legacyCacheUpdate: (action: ZoteroAction, ids: number[]) => Promise<void>
 
   public startup(): void {
@@ -67,7 +67,7 @@ class Emitter extends Emittery<{
   public async itemsChanged(action, ids): Promise<void> {
     try {
       this.keymanagerUpdate(action, ids)
-      await this.serializationCacheUpdate(action, ids)
+      await this.serializationCacheTouch(ids)
       await this.legacyCacheUpdate(action, ids)
     }
     catch (err) {
