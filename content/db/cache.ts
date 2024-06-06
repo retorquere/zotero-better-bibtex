@@ -45,30 +45,9 @@ class Cache extends Loki {
     await this.loadDatabase()
 
     // cleanup
-    if (this.getCollection('cache')) { this.removeCollection('cache') }
-    if (this.getCollection('serialized')) { this.removeCollection('serialized') }
-
-    let coll = this.schemaCollection('itemToExportFormat', {
-      indices: [ 'itemID' ],
-      logging: false,
-      cloneObjects: false,
-      schema: {
-        type: 'object',
-        properties: {
-          itemID: { type: 'integer' },
-          item: { type: 'object' },
-
-          // LokiJS
-          meta: { type: 'object' },
-          $loki: { type: 'integer' },
-        },
-        required: [ 'itemID', 'item' ],
-        additionalProperties: false,
-      },
-    })
-    if (!Preference.cache) coll.removeDataOnly()
-
-    this.clearOnUpgrade(coll, 'Zotero', Zotero.version)
+    for (const deprecated of ['cache', 'serialized', 'itemToExportFormat']) {
+      if (this.getCollection(deprecated)) this.removeCollection(deprecated)
+    }
 
     // this reaps unused cache entries -- make sure that cacheFetchs updates the object
     //                  secs    mins  hours days
@@ -91,7 +70,7 @@ class Cache extends Loki {
         ])
       )
 
-      coll = this.schemaCollection(header.label, {
+      const coll = this.schemaCollection(header.label, {
         logging: false,
         indices: [ 'itemID', 'exportNotes', 'biblatexAPA', 'biblatexChicago', 'useJournalAbbreviation', ...Object.keys(cachedPrefs) ],
         schema: {
