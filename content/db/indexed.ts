@@ -29,19 +29,28 @@ class ExportFormat {
 
   public async fill(items: any[]): Promise<void> {
     items = items.filter(item => this.cachable(item))
-    if (!items.length) return
+    if (!items.length) {
+      print(`indexed: fill, nothing to do, avg cache fill=${this.filled}`)
+      return
+    }
 
     const tx = this.db.transaction('ExportFormat', 'readwrite')
     const cached = new Set(await tx.store.getAllKeys())
     const requested = items.length
     items = items.filter(item => !cached.has(item.id))
-    const fill = (requested - items.length) / requested
-    this.filled = (fill - this.filled) * this.smoothing + this.filled
-    print(`indexed: filling ${requested - items.length}/${requested}, avg cache fill=${this.filled}`)
-    await this.store(items, tx)
+    const current = (requested - items.length) / requested
+    this.filled = (current - this.filled) * this.smoothing + this.filled
+    if (items.length) {
+      await this.store(items, tx)
+    }
+    else {
+      await tx.done
+    }
+    print(`indexed: fill, cached ${requested - items.length}, filling ${items.length}, avg cache fill=${this.filled}`)
   }
 
   public async store(items: any[], tx?: IDBPTransaction<Schema, ['ExportFormat'], 'readwrite'>): Promise<void> {
+    print(`indexed: storing ${items.map((item: { id: number }) => item.id)}`)
     items = items.filter(item => this.cachable(item))
     if (!items.length) return
     if (!tx) tx = this.db.transaction('ExportFormat', 'readwrite')
@@ -51,8 +60,11 @@ class ExportFormat {
 
   public async get(ids: number[]): Promise<Serialized[]> {
     const tx = this.db.transaction('ExportFormat', 'readonly')
-    const items: Serialized[] = await Promise.all(ids.map(id => tx.store.get(id)))
+    const items: Serialized[] = (await Promise.all(ids.map(id => tx.store.get(id)))).filter(item => item)
     await tx.done
+    const fetched = new Set(items.map(item => item.itemID))
+    const missing = ids.filter(id => !fetched.has(id))
+    if (missing.length) print(`indexed: failed to fetch ${missing}`)
     return items
   }
 

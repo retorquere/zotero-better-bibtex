@@ -373,7 +373,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       },
     })
 
-    log.debug('cache:', items.length, new Set(items.map(item => item.itemTypeID)))
+    log.debug('indexed:', items.map(item => [Zotero.ItemTypes.getName(item.itemTypeID), item.id]))
     // maybe use a loop instead of map so we can await for beachball protection
     await IndexedCache.ExportFormat.fill(items)
     config.data.items = items.map(item => item.id)
