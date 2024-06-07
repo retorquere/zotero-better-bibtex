@@ -491,7 +491,7 @@ class Zotero:
           case 'note':
             return [item['itemType'], item['note']]
           case _:
-            return [item['itemType'], item.get('title', ''), item.get('citationKey', '')]
+            return [item['itemType'], item.get('title', ''), item['citationKey']]
       def libsort(lib):
         lib['items'] = sorted(lib['items'], key=itemkey)
         return lib
