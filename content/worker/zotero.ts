@@ -435,7 +435,7 @@ class WorkerZotero {
 
     if (!IndexedCache.opened) await IndexedCache.open()
     this.items = await IndexedCache.ExportFormat.get(workerJob.data.items)
-    print(`cache: retrieved ${this.items.length}`)
+    print(`indexed: retrieved ${this.items.map(item => item.itemType)}`)
 
     if (workerJob.options.exportFileData) {
       for (const item of this.items) {
