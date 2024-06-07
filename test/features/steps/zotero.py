@@ -481,6 +481,9 @@ class Zotero:
 
       expected = Library(expected)
       found = Library(json.loads(found, object_pairs_hook=OrderedDict))
+      def summary(items):
+        return [(item.itemType, item.title) for item in items.items]
+      assert len(expected.items) == len(found.items), f"found {len(found.items)}, expected {len(expected.items)}, {summary(found)}, {summary(expected)}"
       assert_equal_diff(serialize(extra_lower(expected)), serialize(extra_lower(found)))
 
     elif expected_file.endswith('.html'):
