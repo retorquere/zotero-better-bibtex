@@ -183,7 +183,7 @@ jobs:
           }}
         path: |
           ~/BBTTEST*.txt
-          ~/BBTTEST/test/exported/
+          exported/
         retention-days: 5
 
     - name: store test artifacts
