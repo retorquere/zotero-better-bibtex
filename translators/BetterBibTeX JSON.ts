@@ -8,7 +8,7 @@ declare var ZOTERO_TRANSLATOR_INFO: Translators.Header // eslint-disable-line no
 import { simplifyForImport, simplifyForExport } from '../gen/items/simplify'
 const version = require('../gen/version.js')
 // import { stringify } from '../content/stringify'
-// import { log } from '../content/logger'
+import { log } from '../content/logger'
 import type { Library } from './lib/normalize'
 import  { asciify } from '../content/text'
 
@@ -197,8 +197,11 @@ export function doExport(): void {
       }
 
       data.items.push(item)
+      log.debug('added', item, 'now', data.items.length, 'in total')
     }
   }
+
+  log.debug('exported', data.items.length)
 
   Zotero.write(asciify(JSON.stringify(data, null, 2)))
   translation.erase()
