@@ -493,7 +493,7 @@ class Zotero:
           case _:
             return [item['itemType'], item.get('title', ''), item['citationKey']]
       def libsort(lib):
-        lib['items'] = sorted(lib['items'], key=itemkey)
+        # lib['items'] = sorted(lib['items'], key=itemkey)
         return lib
 
       assert_equal_diff(serialize(extra_lower(libsort(expected))), serialize(extra_lower(libsort(found))))
