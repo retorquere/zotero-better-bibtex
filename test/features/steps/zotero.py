@@ -481,10 +481,21 @@ class Zotero:
 
       expected = Library(expected)
       found = Library(json.loads(found, object_pairs_hook=OrderedDict))
+
       def summary(items):
-        return [(item.itemType, item.title) for item in items.items]
-      assert len(expected.items) == len(found.items), f"found {len(found.items)}, expected {len(expected.items)}, {summary(found)}, {summary(expected)}"
-      assert_equal_diff(serialize(extra_lower(expected)), serialize(extra_lower(found)))
+        return [(item['itemType'], item['title']) for item in items['items']]
+      assert len(expected['items']) == len(found['items']), f"found {len(found['items'])}, expected {len(expected['items'])}, {summary(found)}, {summary(expected)}"
+
+      def itemkey(item):
+        match item['itemType']:
+          case 'note':
+            return [item['itemType'], item['note']]
+          case _:
+            return [item['itemType'], item.get('title', ''), item['citationKey']]
+      def libsort(lib):
+        lib['items'] = sorted(lib['items'], key=itemkey)
+
+      assert_equal_diff(serialize(extra_lower(libsort(expected))), serialize(extra_lower(libsort(found))))
 
     elif expected_file.endswith('.html'):
       assert_equal_diff(clean_html(expected).strip(), clean_html(found).strip())

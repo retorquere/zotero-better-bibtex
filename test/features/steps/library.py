@@ -60,7 +60,7 @@ def clean_item(item):
 
   item.pop('__citekey__', None)
   item.pop('autoJournalAbbreviation', None)
-  item.pop('citationKey', None)
+  #item.pop('citationKey', None)
   item.pop('citekey', None)
   item.pop('collections', None)
   item.pop('dateAdded', None)
