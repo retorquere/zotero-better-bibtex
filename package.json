@@ -53,7 +53,7 @@
     "xsubmodules": "git submodule update --init --recursive --remote && git submodule foreach git reset --hard && git submodule foreach git pull origin",
     "preupgrades": "npm-run-all -p --aggregate-output submodules ncu get-schema",
     "submodules": "./setup/submodules.py",
-    "ncu": "ncu -u -x '*eslint*' && npm i",
+    "ncu": "ncu -u && npm i",
     "get-schema": "./setup/item.py",
     "upgrades": "git add package.json package-lock.json submodules/* site/themes/relearn schema && echo git commit -m upgrades",
     "db": "npm run zipup-debug-bridge"
@@ -111,14 +111,14 @@
     "uzip": "^0.20201231.0",
     "words-to-numbers": "^1.5.1",
     "xregexp": "^5.1.1",
-    "zotero-plugin": "2.0.16"
+    "zotero-plugin": "2.0.18"
   },
   "devDependencies": {
     "@retorquere/bibtex-parser": "^9.0.12",
     "@retorquere/zotero-sync": "^1.0.27",
     "@types/bluebird": "^3.5.42",
     "@types/lokijs": "^1.5.14",
-    "@types/node": "^20.14.1",
+    "@types/node": "^20.14.2",
     "@xmldom/xmldom": "^0.8.10",
     "ajv-keywords": "^5.1.0",
     "archiver": "^7.0.1",
@@ -158,7 +158,7 @@
     "kuroshiro-analyzer-kuromoji": "^1.1.0",
     "lodash.template": "^4.5.0",
     "lokijs": "^1.5.12",
-    "meriyah": "^4.4.3",
+    "meriyah": "^4.5.0",
     "moment": "^2.30.1",
     "node-eta": "^0.9.0",
     "npm-run-all": "^4.1.5",
@@ -169,7 +169,7 @@
     "process": "^0.11.10",
     "properties-reader": "^2.3.0",
     "pug": "^3.0.3",
-    "putout": "^35.32.0",
+    "putout": "^35.33.0",
     "recast": "^0.23.9",
     "regenerate": "^1.4.2",
     "rimraf": "^5.0.7",
