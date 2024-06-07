@@ -174,13 +174,16 @@ jobs:
       run: |
         touch ~/.BBTTEST.log
         cp ~/.BBTTEST.log ~/BBTTEST--${{ matrix.client }}--${{ matrix.bin }}${{ matrix.worker }}.txt
+        cp -r ~/.BBTTEST ~/BBTTEST
     - name: upload log on failure
       if: ${{ failure() || cancelled() }}
       uses: actions/upload-artifact@v4
       with:
         name: debug-log--${{ matrix.client }}--${{ matrix.bin }}${{ matrix.worker
           }}
-        path: ~/BBTTEST*.txt
+        path: |
+          ~/BBTTEST*.txt
+          ~/BBTTEST/test/exported/
         retention-days: 5
 
     - name: store test artifacts
