@@ -8,6 +8,7 @@ if len(files) == 0:
 files = tuple(files)
 print(sys.argv[1:])
 errors = [
+  'Could not parse attachment path',
   "Couldn't find trailer dictionary",
   "Translate: No RDF found",
   'error: resource://gre/modules/ComponentUtils.jsm',

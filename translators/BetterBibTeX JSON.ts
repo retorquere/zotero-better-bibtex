@@ -8,7 +8,7 @@ declare var ZOTERO_TRANSLATOR_INFO: Translators.Header // eslint-disable-line no
 import { simplifyForImport, simplifyForExport } from '../gen/items/simplify'
 const version = require('../gen/version.js')
 // import { stringify } from '../content/stringify'
-import { log } from '../content/logger'
+import { print } from '../content/logger'
 import type { Library } from './lib/normalize'
 import  { asciify } from '../content/text'
 
@@ -129,6 +129,7 @@ function addSelect(item: any) {
 }
 
 export function doExport(): void {
+  print('indexed: starting BBT JSON export')
   const translation = Translation.Export(ZOTERO_TRANSLATOR_INFO, collect())
 
   const preferences = {...translation.preferences}
@@ -156,7 +157,7 @@ export function doExport(): void {
   if (translation.options.Items) {
     const validAttachmentFields = new Set([ 'relations', 'uri', 'itemType', 'title', 'path', 'tags', 'dateAdded', 'dateModified', 'seeAlso', 'mimeType' ])
 
-    // log.debug('indexed: exporting', [...translation.input.items].map(item => item.itemType))
+    print(`indexed: exporting ${[...translation.input.items].map(item => item.itemType)}`)
     for (let item of translation.input.items) {
       item = {...item} // un-proxy item
       delete item.$cacheable
@@ -199,11 +200,11 @@ export function doExport(): void {
       }
 
       data.items.push(item)
-      log.debug('added', item, 'now', data.items.length, 'in total')
+      print(`indexed: added ${data.items.length} so far`)
     }
   }
 
-  log.debug('exported', data.items.length)
+  print(`indexed: exported ${data.items.length}`)
 
   Zotero.write(asciify(JSON.stringify(data, null, 2)))
   translation.erase()
