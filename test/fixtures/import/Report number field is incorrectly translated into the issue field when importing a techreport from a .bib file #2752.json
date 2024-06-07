@@ -138,7 +138,7 @@
       "extra": [
         "Citation Key: customCitationKey"
       ],
-      "itemID": 9,
+      "itemID": 7,
       "itemType": "patent",
       "language": "english",
       "number": "mypreciousreportnumber",
@@ -146,7 +146,7 @@
       "title": "What a great report"
     },
     {
-      "itemID": 10,
+      "itemID": 8,
       "itemType": "note",
       "note": "Import errors found: <ul><li>Don&#39;t know what Zotero type to make of &#39;standard&#39; for @customCitationKey, importing as document</li></ul>",
       "tags": [

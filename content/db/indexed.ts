@@ -23,8 +23,12 @@ class ExportFormat {
   constructor(private db: IDBPDatabase<Schema>, private serialize: Serializer) {
   }
 
+  private cachable(item: any): boolean {
+    return (!item.isFeedItem && (item.isRegularItem() || item.isNote() || item.isAttachment())) as boolean
+  }
+
   public async fill(items: any[]): Promise<void> {
-    items = items.filter(item => !item.isFeedItem && item.isRegularItem())
+    items = items.filter(item => this.cachable(item))
     if (!items.length) return
 
     const tx = this.db.transaction('ExportFormat', 'readwrite')
@@ -38,7 +42,7 @@ class ExportFormat {
   }
 
   public async store(items: any[], tx?: IDBPTransaction<Schema, ['ExportFormat'], 'readwrite'>): Promise<void> {
-    items = items.filter(item => !item.isFeedItem && item.isRegularItem())
+    items = items.filter(item => this.cachable(item))
     if (!items.length) return
     if (!tx) tx = this.db.transaction('ExportFormat', 'readwrite')
     const puts = items.map(item => tx.store.put(this.serialize(item)))
