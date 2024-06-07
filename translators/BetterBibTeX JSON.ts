@@ -156,10 +156,11 @@ export function doExport(): void {
   if (translation.options.Items) {
     const validAttachmentFields = new Set([ 'relations', 'uri', 'itemType', 'title', 'path', 'tags', 'dateAdded', 'dateModified', 'seeAlso', 'mimeType' ])
 
-    log.debug('indexed: exporting', [...translation.input.items].map(item => item.itemType))
-    for (const item of translation.input.items) {
+    // log.debug('indexed: exporting', [...translation.input.items].map(item => item.itemType))
+    for (let item of translation.input.items) {
+      item = {...item} // un-proxy item
+      delete item.$cacheable
       if (!translation.preferences.testing) addSelect(item)
-      delete (item as any).$cacheable
 
       switch (item.itemType) {
         case 'attachment':
