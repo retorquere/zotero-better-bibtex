@@ -490,10 +490,10 @@ export const KeyManager = new class _KeyManager {
     })
 
     const notify = async (ids: number[], action: Action) => {
-      if (!IndexedCache.ExportFormat) return
+      if (!IndexedCache.ZoteroExportFormat) return
 
       try {
-        await IndexedCache.ExportFormat.touch(ids)
+        await IndexedCache.ZoteroExportFormat.touch(ids)
       }
       catch (err) {
         log.error('IndexedCache touch failed:', err)

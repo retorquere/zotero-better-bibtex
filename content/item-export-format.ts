@@ -89,7 +89,7 @@ orchestrator.add({
     await IndexedCache.open(serialize, lastUpdated)
 
     Events.serializationCacheTouch = async (ids: number[]) => {
-      await IndexedCache.ExportFormat.touch(ids)
+      await IndexedCache.ZoteroExportFormat.touch(ids)
     }
   },
   shutdown: async () => { // eslint-disable-line @typescript-eslint/require-await

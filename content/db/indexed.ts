@@ -6,21 +6,22 @@ type Serialized = Item | Attachment | Note
 type Serializer = (item: any) => Serialized
 
 interface Schema extends DBSchema {
-  ExportFormat: {
+  ZoteroExportFormat: {
     value: Serialized
     key: number
   }
-  ExportFormatTouched: {
+  ZoteroExportFormatTouched: {
     value: boolean
     key: number
   }
+
   metadata: {
     value: { key: string, value: string | number }
     key: string
   }
 }
 
-class ExportFormat {
+class ZoteroExportFormat {
   public filled = 0 // exponential moving average
   private smoothing = 2 / (10 + 1) // keep average over last 10 fills
 
@@ -39,9 +40,9 @@ class ExportFormat {
       return
     }
 
-    const tx = this.db.transaction(['ExportFormat', 'ExportFormatTouched'], 'readwrite')
-    const store = tx.objectStore('ExportFormat')
-    const touched = tx.objectStore('ExportFormatTouched')
+    const tx = this.db.transaction(['ZoteroExportFormat', 'ZoteroExportFormatTouched'], 'readwrite')
+    const store = tx.objectStore('ZoteroExportFormat')
+    const touched = tx.objectStore('ZoteroExportFormatTouched')
     const cached = new Set(await store.getAllKeys())
 
     const purge = (await touched.getAllKeys())
@@ -75,7 +76,7 @@ class ExportFormat {
   }
 
   public async get(ids: number[]): Promise<Serialized[]> {
-    const tx = this.db.transaction('ExportFormat', 'readonly')
+    const tx = this.db.transaction('ZoteroExportFormat', 'readonly')
     const items: Serialized[] = (await Promise.all(ids.map(id => tx.store.get(id)))).filter(item => item)
     await tx.done
     const fetched = new Set(items.map(item => item.itemID))
@@ -85,15 +86,15 @@ class ExportFormat {
   }
 
   public async touch(ids: number[]): Promise<void> {
-    const tx = this.db.transaction('ExportFormatTouched', 'readwrite')
+    const tx = this.db.transaction('ZoteroExportFormatTouched', 'readwrite')
     const puts = ids.map(id => tx.store.put(true, id))
     await Promise.all([...puts, tx.done])
   }
 
   public async purge(): Promise<void> {
-    const tx = this.db.transaction(['ExportFormat', 'ExportFormatTouched'], 'readwrite')
-    const store = tx.objectStore('ExportFormat')
-    const touched = tx.objectStore('ExportFormatTouched')
+    const tx = this.db.transaction(['ZoteroExportFormat', 'ZoteroExportFormatTouched'], 'readwrite')
+    const store = tx.objectStore('ZoteroExportFormat')
+    const touched = tx.objectStore('ZoteroExportFormatTouched')
 
     const purge = (await touched.getAllKeys()).map(id => store.delete(id))
     await Promise.all([...purge, touched.clear(), tx.done])
@@ -101,11 +102,11 @@ class ExportFormat {
 }
 
 export const cache = new class Cache {
-  public schema = 5
+  public schema = 6
   private db: IDBPDatabase<Schema>
   public opened = false
 
-  public ExportFormat: ExportFormat
+  public ZoteroExportFormat: ZoteroExportFormat
 
   public async touch(): Promise<void> {
     await this.db.put('metadata', Zotero.Date.dateToSQL(new Date(), true), 'lastUpdated')
@@ -125,19 +126,19 @@ export const cache = new class Cache {
           }
         }
 
-        db.createObjectStore('ExportFormat', { keyPath: 'itemID' })
-        db.createObjectStore('ExportFormatTouched')
+        db.createObjectStore('ZoteroExportFormat', { keyPath: 'itemID' })
+        db.createObjectStore('ZoteroExportFormatTouched')
         db.createObjectStore('metadata')
       },
     })
 
-    print('indexed: attaching ExportFormat')
-    this.ExportFormat = new ExportFormat(this.db, serialize)
-    print('indexed: attached ExportFormat')
+    print('indexed: attaching ZoteroExportFormat')
+    this.ZoteroExportFormat = new ZoteroExportFormat(this.db, serialize)
+    print('indexed: attached ZoteroExportFormat')
 
     if (lastUpdated) {
       const lastTouched = await this.db.get('metadata', 'lastUpdated') || ''
-      if (lastUpdated > lastTouched) await this.db.clear('ExportFormat')
+      if (lastUpdated > lastTouched) await this.db.clear('ZoteroExportFormat')
     }
     /*
       Exported: { keyPath: ['context', 'itemID'], indices: { // keyPath order matters for key retrieval!
