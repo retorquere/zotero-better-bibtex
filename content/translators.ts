@@ -158,6 +158,8 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
         log.debug('translators startup: released')
       },
       shutdown: async (reason: Reason) => {
+        if (IndexedCache.opened) await IndexedCache.ExportFormat.purge()
+
         switch (reason) {
           case 'ADDON_DISABLE':
           case 'ADDON_UNINSTALL':

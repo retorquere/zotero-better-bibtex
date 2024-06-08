@@ -44,7 +44,7 @@ class ExportFormat {
     const touched = tx.objectStore('ExportFormatTouched')
     const cached = new Set(await store.getAllKeys())
 
-    const deletes = (await touched.getAllKeys())
+    const purge = (await touched.getAllKeys())
       .filter((id: number) => {
         if (cached.has(id)) {
           cached.delete(id)
@@ -55,7 +55,7 @@ class ExportFormat {
         }
       })
       .map((id: number) => store.delete(id))
-    if (deletes.length) await Promise.all(deletes)
+    if (purge.length) await Promise.all(purge)
     await touched.clear()
 
     const requested = items.length
@@ -88,6 +88,15 @@ class ExportFormat {
     const tx = this.db.transaction('ExportFormatTouched', 'readwrite')
     const puts = ids.map(id => tx.store.put(true, id))
     await Promise.all([...puts, tx.done])
+  }
+
+  public async purge(): Promise<void> {
+    const tx = this.db.transaction(['ExportFormat', 'ExportFormatTouched'], 'readwrite')
+    const store = tx.objectStore('ExportFormat')
+    const touched = tx.objectStore('ExportFormatTouched')
+
+    const purge = (await touched.getAllKeys()).map(id => store.delete(id))
+    await Promise.all([...purge, touched.clear(), tx.done])
   }
 }
 
@@ -145,6 +154,7 @@ export const cache = new class Cache {
 
   public close(): void {
     this.db.close()
+    this.opened = false
   }
 
   public async export(): Promise<Record<string, any>> {
