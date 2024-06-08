@@ -116,6 +116,7 @@ export class TestSupport {
     items = await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, true, false, true)
     const after = items.length
 
+    await Zotero.Promise.delay(Zotero.Prefs.get('translators.better-bibtex.itemObserverDelay') * 3)
     return (after - before)
   }
 
