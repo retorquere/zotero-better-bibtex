@@ -78,36 +78,39 @@ export async function startup({ resourceURI, rootURI = resourceURI.spec }, reaso
 
     setDefaultPrefs(rootURI)
 
-    Services.scriptloader.loadSubScriptWithOptions(`${rootURI}content/better-bibtex.js`, {
-      charset: 'utf=8',
-      // ignoreCache: true,
-      target: {
-        Zotero,
+    const $window = Zotero.getMainWindow()
+    if ($window) {
+      Services.scriptloader.loadSubScriptWithOptions(`${rootURI}content/better-bibtex.js`, {
+        charset: 'utf=8',
+        // ignoreCache: true,
+        target: {
+          Zotero,
 
-        // because the Zotero sample code assumes you're doing everything in bootstrap.js
-        rootURI,
+          // because the Zotero sample code assumes you're doing everything in bootstrap.js
+          rootURI,
 
-        // to pacify libraries that do env-detection
-        window: Zotero.getMainWindow(),
-        document: Zotero.getMainWindow().document,
+          // to pacify libraries that do env-detection
+          window: $window,
+          document: $window.document,
 
-        setTimeout,
-        clearTimeout,
-        setInterval,
-        clearInterval,
-      },
-    })
+          setTimeout,
+          clearTimeout,
+          setInterval,
+          clearInterval,
+        },
+      })
 
-    await Zotero.BetterBibTeX.startup(BOOTSTRAP_REASONS[reason])
-    Zotero.PreferencePanes.register({
-      pluginID: 'better-bibtex@iris-advies.com',
-      src: `${rootURI}content/preferences.xhtml`,
-      stylesheets: [`${rootURI}content/preferences.css`],
-      label: 'Better BibTeX',
-      defaultXUL: true,
-    })
-    log('startup done')
-    onMainWindowLoad({ window: Zotero.getMainWindow() })
+      await Zotero.BetterBibTeX.startup(BOOTSTRAP_REASONS[reason])
+      Zotero.PreferencePanes.register({
+        pluginID: 'better-bibtex@iris-advies.com',
+        src: `${rootURI}content/preferences.xhtml`,
+        stylesheets: [`${rootURI}content/preferences.css`],
+        label: 'Better BibTeX',
+        defaultXUL: true,
+      })
+      log('startup done')
+      onMainWindowLoad({ window: $window })
+    }
   }
   catch (err) {
     alert({ title: 'Better BibTeX startup failed', text: `${err}` })
