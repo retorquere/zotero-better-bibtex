@@ -1,4 +1,4 @@
-import { openDB, IDBPDatabase, IDBPTransaction, DBSchema } from 'idb'
+import { openDB, IDBPDatabase, DBSchema } from 'idb'
 import type { Attachment, Item, Note } from '../../gen/typings/serialized-item'
 import { print } from '../logger'
 
@@ -8,6 +8,10 @@ type Serializer = (item: any) => Serialized
 interface Schema extends DBSchema {
   ExportFormat: {
     value: Serialized
+    key: number
+  }
+  ExportFormatTouched: {
+    value: boolean
     key: number
   }
   metadata: {
@@ -29,33 +33,45 @@ class ExportFormat {
 
   public async fill(items: any[]): Promise<void> {
     items = items.filter(item => this.cachable(item))
+
     if (!items.length) {
       print(`indexed: fill, nothing to do, avg cache fill=${this.filled}`)
       return
     }
 
-    const tx = this.db.transaction('ExportFormat', 'readwrite')
-    const cached = new Set(await tx.store.getAllKeys())
+    const tx = this.db.transaction(['ExportFormat', 'ExportFormatTouched'], 'readwrite')
+    const store = tx.objectStore('ExportFormat')
+    const touched = tx.objectStore('ExportFormatTouched')
+    const cached = new Set(await store.getAllKeys())
+
+    const deletes = (await touched.getAllKeys())
+      .filter((id: number) => {
+        if (cached.has(id)) {
+          cached.delete(id)
+          return false
+        }
+        else {
+          return true
+        }
+      })
+      .map((id: number) => store.delete(id))
+    if (deletes.length) await Promise.all(deletes)
+    await touched.clear()
+
     const requested = items.length
     items = items.filter(item => !cached.has(item.id))
     const current = (requested - items.length) / requested
     this.filled = (current - this.filled) * this.smoothing + this.filled
+
     if (items.length) {
-      await this.store(items, tx)
+      print(`indexed: storing ${items.map((item: { id: number }) => item.id)}`)
+      const puts = items.map(item => store.put(this.serialize(item)))
+      await Promise.all([...puts, tx.done])
     }
     else {
       await tx.done
     }
     print(`indexed: fill, cached ${requested - items.length}, filling ${items.length}, avg cache fill=${this.filled}`)
-  }
-
-  public async store(items: any[], tx?: IDBPTransaction<Schema, ['ExportFormat'], 'readwrite'>): Promise<void> {
-    print(`indexed: storing ${items.map((item: { id: number }) => item.id)}`)
-    items = items.filter(item => this.cachable(item))
-    if (!items.length) return
-    if (!tx) tx = this.db.transaction('ExportFormat', 'readwrite')
-    const puts = items.map(item => tx.store.put(this.serialize(item)))
-    await Promise.all([...puts, tx.done])
   }
 
   public async get(ids: number[]): Promise<Serialized[]> {
@@ -68,15 +84,15 @@ class ExportFormat {
     return items
   }
 
-  public async delete(ids: number[]): Promise<void> {
-    const tx = this.db.transaction('ExportFormat', 'readwrite')
-    const deletes = ids.map(id => tx.store.delete(id))
-    await Promise.all([...deletes, tx.done])
+  public async touch(ids: number[]): Promise<void> {
+    const tx = this.db.transaction('ExportFormatTouched', 'readwrite')
+    const puts = ids.map(id => tx.store.put(true, id))
+    await Promise.all([...puts, tx.done])
   }
 }
 
 export const cache = new class Cache {
-  public schema = 4
+  public schema = 5
   private db: IDBPDatabase<Schema>
   public opened = false
 
@@ -101,6 +117,7 @@ export const cache = new class Cache {
         }
 
         db.createObjectStore('ExportFormat', { keyPath: 'itemID' })
+        db.createObjectStore('ExportFormatTouched')
         db.createObjectStore('metadata')
       },
     })
