@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS betterbibtex.autoexport_setting (
   setting NOT NULL,
   value NOT NULL,
   PRIMARY KEY(path, setting),
-  FOREIGN KEY(path) REFERENCES autoexport(path) ON DELETE CASCADE
+  FOREIGN KEY(path) REFERENCES autoexport(path) ON DELETE CASCADE ON UPDATE RESTRICT
 )
 --
 CREATE INDEX IF NOT EXISTS betterbibtex.autoexport_setting_path ON autoexport_setting(path)
