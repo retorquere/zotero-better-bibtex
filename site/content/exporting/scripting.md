@@ -8,7 +8,7 @@ aliases:
 ---
 ## You wanted customized...
 
-You got customized. If you go into the Advanced tab of the Better BibTeX preferences you will find a text box (empty by
+You got customized. If you go into the Export tab of the Better BibTeX preferences, subtab postscript, you will find a text box (empty by
 default) where you can edit a javascript snippet which will be executed for each entry generated in the Bib(La)TeX
 exporter. In this code, you have access to the entry just before it will be written out and cached. There is an API
 to do this, and it's fairly stable, but usually you can just open a new issue and ask me to write it, and I'll add it
