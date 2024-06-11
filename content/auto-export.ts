@@ -25,11 +25,11 @@ import { pick, fromPairs } from './object'
 
 const NoParse = { noParseParams: true }
 
-export function context(job: Job): { preferences: Partial<Preferences>, options: Record<string, boolean> } {
+export function context(job: Job): { preferences: Partial<Preferences>, displayOptions: Record<string, boolean> } {
   const translator = byId[job.translatorID]
   return {
-    preferences: pick(job, affectedBy[translator.label]),
-    displayOptions: pick(job, Object.keys(translator.displayOptions || {})),
+    preferences: pick(job as unknown as Preferences, affectedBy[translator.label]),
+    displayOptions: pick(job as unknown as Record<string, boolean>, Object.keys(translator.displayOptions || {})),
   }
 }
 

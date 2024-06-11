@@ -61,6 +61,27 @@ export namespace Translators {
     }
   }
 
+  export interface DisplayOptions {
+    exportNotes?: boolean,
+    exportFileData?: boolean
+    useJournalAbbreviation?: boolean
+    biblatexAPA?: boolean
+    biblatexChicago?: boolean
+    keepUpdated?: boolean
+    worker?: boolean
+    markdown?: boolean
+
+    Normalize?: boolean
+    Items?: boolean
+    Preferences?: boolean
+
+    Authors?: boolean
+    Title?: boolean
+    Year?: boolean
+
+    quickCopyMode?: string
+  }
+
   interface Header {
     translatorID: string
     label: string
@@ -80,25 +101,6 @@ export namespace Translators {
       hash?: string
       cached?: boolean
     }
-    displayOptions?: {
-      exportNotes?: boolean,
-      exportFileData?: boolean
-      useJournalAbbreviation?: boolean
-      biblatexAPA?: boolean
-      biblatexChicago?: boolean
-      keepUpdated?: boolean
-      worker?: boolean
-      markdown?: boolean
-
-      Normalize?: boolean
-      Items?: boolean
-      Preferences?: boolean
-
-      Authors?: boolean
-      Title?: boolean
-      Year?: boolean
-
-      quickCopyMode?: string
-    }
+    displayOptions?: DisplayOptions
   }
 }

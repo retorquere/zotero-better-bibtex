@@ -5,6 +5,7 @@ import { is7 } from './client'
 const $OS = is7 ? Shim : OS
 import merge from 'lodash.merge'
 import { cache as IndexedCache } from './db/indexed'
+import { unpick } from './object'
 
 /*
 async function guard(run: Promise<void>): Promise<boolean> {
@@ -638,5 +639,6 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 for (const header of Headers) {
   if (!header.configOptions?.cached) continue
   const preferences: Partial<Preferences> = Preference.pick(affectedBy[header.label])
-  log.debug('context:', header.label, preferences)
+  const displayOptions: Partial<Translator.DisplayOptions> = unpick(header.displayOptions || {}, ['keepUpdated', 'worker'])
+  log.debug('context:', header.label, preferences, displayOptions)
 }
