@@ -25,6 +25,14 @@ import { pick, fromPairs } from './object'
 
 const NoParse = { noParseParams: true }
 
+export function context(job: Job): { preferences: Partial<Preferences>, options: Record<string, boolean> } {
+  const translator = byId[job.translatorID]
+  return {
+    preferences: pick(job, affectedBy[translator.label]),
+    displayOptions: pick(job, Object.keys(translator.displayOptions || {})),
+  }
+}
+
 export const SQL = new class {
   public columns: { job: JobSetting[], editable: JobSetting[] } = {
     job: [ 'type', 'id', 'translatorID', 'path' ],

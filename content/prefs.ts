@@ -10,11 +10,12 @@ import type { CharMap } from 'unicode2latex'
 
 declare const Zotero: any
 
-import { defaults } from '../gen/preferences/meta'
+import { Preferences as $Preferences, PreferenceName, defaults } from '../gen/preferences/meta'
 import { PreferenceManager as PreferenceManagerBase } from '../gen/preferences'
 import { dict as csv2dict } from './load-csv'
 import { log } from './logger'
 import { flash } from './flash'
+import { pick } from './object'
 
 export const Preference = new class PreferenceManager extends PreferenceManagerBase {
   public prefix = 'translators.better-bibtex.'
@@ -232,6 +233,10 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
         this.observe(pref)
       }
     }
+  }
+
+  pick(keys: PreferenceName[]): Partial<$Preferences> {
+    return pick(this, keys) as Partial<$Preferences>
   }
 
   public shutdown() {
