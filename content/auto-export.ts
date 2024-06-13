@@ -11,9 +11,10 @@ import { Events } from './events'
 import { DB as Cache } from './db/cache'
 import { $and } from './db/loki'
 import { Translators, ExportJob } from './translators'
+import type { Translators as Translator } from '../typings/translators'
 import { Preference } from './prefs'
 import { Preferences, autoExport, affectedBy, PreferenceName } from '../gen/preferences/meta'
-import { byId } from '../gen/translators'
+import { headers as Headers, byId } from '../gen/translators'
 import * as ini from 'ini'
 import fold2ascii from 'fold-to-ascii'
 import { findBinary } from './path-search'
@@ -21,15 +22,48 @@ import { Scheduler } from './scheduler'
 import { flash } from './flash'
 import * as l10n from './l10n'
 import { orchestrator } from './orchestrator'
-import { pick, fromPairs } from './object'
+import { unpick, pick, fromPairs } from './object'
 
 const NoParse = { noParseParams: true }
 
-export function context(job: Job): { preferences: Partial<Preferences>, displayOptions: Record<string, boolean> } {
+export function jobContext(job: Job): { preferences: Partial<Preferences>, displayOptions: Partial<Translator.DisplayOptions> } {
   const translator = byId[job.translatorID]
   return {
     preferences: pick(job as unknown as Preferences, affectedBy[translator.label]),
-    displayOptions: pick(job as unknown as Record<string, boolean>, Object.keys(translator.displayOptions || {})),
+    displayOptions: pick(job as unknown as Partial<Translator.DisplayOptions>, Object.keys(translator.displayOptions || {})),
+  }
+}
+
+async function allContexts() {
+  const current: Record<string, { preferences: Partial<Preferences>, displayOptions: Partial<Translator.DisplayOptions> } = {}
+  for (const header of Headers) {
+    if (!header.configOptions?.cached) continue
+    const preferences: Partial<Preferences> = Preference.pick(affectedBy[header.label])
+    const displayOptions: Partial<Translator.DisplayOptions> = unpick(header.displayOptions || {}, ['keepUpdated', 'worker'])
+    current[header.label] = { preferences, displayOptions }
+
+    const options = Object.keys(displayOptions)
+    for (let p = 0; p < Math.pow(2, keys.length); p++) {
+      const permutation: Partial<Translator.DisplayOptions> = {}
+      const binaryString = p.toString(2).padStart(options.length, '0')
+      for (let o = 0; o < options.length; o++) {
+        permutation[options[o]] = binaryString[o] === '1'
+      }
+      log.debug('context:', {
+        translator: header.label,
+        preferences,
+        displayOptions: permutation,
+      })
+    }
+  }
+
+  for (const job of await AutoExport.all()) {
+    const context = jobContext(job)
+    log.debug('context:', {
+      translator: byId[job.translatorID].label,
+      preferences: {...current[byId[job.translatorID].label], ...context.preferences },
+      displayOptions: {...current[byId[job.translatorID].label], ...context.displayOptions },
+    })
   }
 }
 

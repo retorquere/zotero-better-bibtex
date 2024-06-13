@@ -5,7 +5,6 @@ import { is7 } from './client'
 const $OS = is7 ? Shim : OS
 import merge from 'lodash.merge'
 import { cache as IndexedCache } from './db/indexed'
-import { unpick } from './object'
 
 /*
 async function guard(run: Promise<void>): Promise<boolean> {
@@ -42,7 +41,7 @@ declare const ZOTERO_CONFIG: any
 
 import type { Translators as Translator } from '../typings/translators'
 import { Preference } from './prefs'
-import { Preferences, affectedBy } from '../gen/preferences/meta'
+import { Preferences } from '../gen/preferences/meta'
 import { log } from './logger'
 import { DB as Cache } from './db/cache'
 import { flash } from './flash'
@@ -634,11 +633,4 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
     return scope
   }
-}
-
-for (const header of Headers) {
-  if (!header.configOptions?.cached) continue
-  const preferences: Partial<Preferences> = Preference.pick(affectedBy[header.label])
-  const displayOptions: Partial<Translator.DisplayOptions> = unpick(header.displayOptions || {}, ['keepUpdated', 'worker'])
-  log.debug('context:', header.label, preferences, displayOptions)
 }
