@@ -581,7 +581,7 @@ export function generateBibLaTeX(translation: Translation): void {
     for (const eprinttype of ['pmid', 'arxiv', 'jstor', 'hdl', 'googlebooks']) {
       if (entry.has[eprinttype]) {
         if (!entry.has.eprinttype) {
-          entry.add({ name: 'eprinttype', value: eprinttype})
+          entry.add({ name: 'eprinttype', value: eprinttype === 'arxiv' ? 'arXiv' : eprinttype})
           entry.add({ name: 'eprint', value: entry.has[eprinttype].value })
         }
         entry.remove(eprinttype)
@@ -592,7 +592,7 @@ export function generateBibLaTeX(translation: Translation): void {
       let archive = true
       switch (item.archive.toLowerCase()) {
         case 'arxiv':
-          if (!entry.has.eprinttype) entry.add({ name: 'eprinttype', value: 'arxiv' })
+          if (!entry.has.eprinttype) entry.add({ name: 'eprinttype', value: 'arXiv' })
           entry.add({ name: 'eprintclass', value: item.callNumber })
           break
 
