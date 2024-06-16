@@ -381,7 +381,8 @@ if (!is7) {
     return cell
   })
   Events.on('items-changed', ({ items }) => {
-    const doc = Zotero.getMainWindow().document
+    const doc = Zotero.getMainWindow()?.document
+    if (!doc) return
     for (const item of items) {
       const text = doc.getElementById(`better-bibtex-citekey-cell-${item.id}`)
       const icon = doc.createElementNS('http://www.w3.org/1999/xhtml', 'span')
@@ -641,11 +642,13 @@ export class BetterBibTeX {
   }
 
   public openDialog(url: string, title: string, properties: string, params: Record<string, any>): void {
-    Zotero.getMainWindow().openDialog(url, title, properties, params)
+    Zotero.getMainWindow()?.openDialog(url, title, properties, params)
   }
 
   public setProgress(progress: number, msg: string): void {
-    const doc = Zotero.getMainWindow().document
+    const doc = Zotero.getMainWindow()?.document
+    if (!doc) return
+
     if (!doc.getElementById('better-bibtex-progress')) {
       const elements = new Elements(doc)
       // progress bar
@@ -844,6 +847,7 @@ export class BetterBibTeX {
   }
 
   public async load(win: Window): Promise<void> {
+    if (!win) return
     // the zero-width-space is a marker to re-save the current default so it doesn't get replaced
     // when the default changes later, which would change new keys suddenly
     if (!Preference.citekeyFormat) Preference.citekeyFormat = Preference.default.citekeyFormat
