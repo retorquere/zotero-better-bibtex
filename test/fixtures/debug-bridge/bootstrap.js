@@ -167,10 +167,10 @@ async function startup({ resourceURI, rootURI = resourceURI.spec }, reason) {
       this.permitBookmarklet = false
     }
 
-    async init(options) {
+    async init(request) {
       const token = {
         expected: `Bearer ${Zotero.Prefs.get('debug-bridge.token') || ''}`,
-        found: (options.headers || {}).Authorization || '',
+        found: (request.headers || {}).Authorization || '',
       }
 
       if (token.expected.trim() === 'Bearer') return [500, 'text/plain', 'token not configured'];
@@ -179,18 +179,19 @@ async function startup({ resourceURI, rootURI = resourceURI.spec }, reason) {
       if (token.expected !== token.found) return [401, 'text/plain', 'invalid bearer token']
 
       let query = {}
-      if (options.query) query = {...options.query}
-      if (options.searchParams) {
-        for (const [key, value] of options.searchParams) {
+      if (request.query) query = {...request.query}
+      if (request.searchParams) {
+        query[''] = request.searchParams.toString()
+        for (const [key, value] of request.searchParams) {
           query[key] = value
         }
       }
 
-      log(`executing\n${options.data} with ${JSON.stringify(query)}`)
+      log(`executing\n${request.data} with ${JSON.stringify(query)}`)
       let start = new Date
       let response
       try {
-        let action = new AsyncFunction('query', options.data)
+        let action = new AsyncFunction('query', request.data)
         response = await action(query)
         if (typeof response === 'undefined') response = null
         response = JSON.stringify(response)
