@@ -26,16 +26,9 @@ export const Server = new class Endpoints {
     let query: Record<string, string> = {}
     if (request.query) query = {...request.query}
     if (request.searchParams) {
+      query[''] = request.searchParams.toString()
       for (const [key, value] of request.searchParams) {
-        if (value) {
-          query[key] = value
-        }
-        else if (!query['']) {
-          query[''] = key
-        }
-        else {
-          throw new Error(`Ambiguous null-value argument between ${key} and ${query['']}`)
-        }
+        if (value) query[key] = value
       }
     }
     return query
