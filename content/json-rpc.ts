@@ -709,17 +709,18 @@ class Handler {
   public supportedDataTypes = ['application/json']
   public permitBookmarklet = false
 
-  public async init({ method, data, query }) {
+  public async init(request) {
+    const query = Server.queryParams(request)
     await Zotero.BetterBibTeX.ready
 
     try {
-      if (method === 'GET') data = JSON.parse(query[''])
+      if (request.method === 'GET') request.data = JSON.parse(query[''])
 
-      const response = await (Array.isArray(data) ? Promise.all(data.map(req => api.handle(req))) : api.handle(data))
+      const response = await (Array.isArray(request.data) ? Promise.all(request.data.map(req => api.handle(req))) : api.handle(request.data))
       return [OK, 'application/json', JSON.stringify(response)]
     }
     catch (err) {
-      return [OK, 'application/json', JSON.stringify({jsonrpc: '2.0', error: {code: PARSE_ERROR, message: `Parse error: ${err} in ${data}`}, id: null})]
+      return [OK, 'application/json', JSON.stringify({jsonrpc: '2.0', error: {code: PARSE_ERROR, message: `Parse error: ${err} in ${request.data}`}, id: null})]
     }
   }
 }

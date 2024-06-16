@@ -178,12 +178,20 @@ async function startup({ resourceURI, rootURI = resourceURI.spec }, reason) {
 
       if (token.expected !== token.found) return [401, 'text/plain', 'invalid bearer token']
 
-      log(`executing\n${options.data}`)
+      let query = {}
+      if (options.query) query = {...options.query}
+      if (options.searchParams) {
+        for (const [key, value] of options.searchParams) {
+          query[key] = value
+        }
+      }
+
+      log(`executing\n${options.data} with ${JSON.stringify(query)}`)
       let start = new Date
       let response
       try {
         let action = new AsyncFunction('query', options.data)
-        response = await action(options.query)
+        response = await action(query)
         if (typeof response === 'undefined') response = null
         response = JSON.stringify(response)
       } catch (err) {

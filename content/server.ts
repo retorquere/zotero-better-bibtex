@@ -21,4 +21,23 @@ export const Server = new class Endpoints {
     }
     this.handlers = {}
   }
+
+  public queryParams(request: { query?: Record<string, string>, searchParams?: URLSearchParams }): Record<string, string> {
+    let query: Record<string, string> = {}
+    if (request.query) query = {...request.query}
+    if (request.searchParams) {
+      for (const [key, value] of request.searchParams) {
+        if (value) {
+          query[key] = value
+        }
+        else if (!query['']) {
+          query[''] = key
+        }
+        else {
+          throw new Error(`Ambiguous null-value argument between ${key} and ${query['']}`)
+        }
+      }
+    }
+    return query
+  }
 }
