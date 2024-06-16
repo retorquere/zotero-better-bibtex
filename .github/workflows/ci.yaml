@@ -72,6 +72,11 @@ jobs:
     - name: build ${{ env.beta }}
       run: npm run build ${{ env.beta }}
 
+    - name: publish debug bridge
+      run: ./util/publish-debug-bridge.py
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
     - name: store build artifacts
       uses: actions/upload-artifact@v4
       with:
