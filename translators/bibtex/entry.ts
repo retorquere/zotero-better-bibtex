@@ -166,6 +166,14 @@ export class Entry {
     allCaps: any
   }
 
+  public eprintType = {
+    arxiv:        'arXiv',
+    jstor:        'JSTOR',
+    pubmed:       'PMID',
+    hdl:          'HDL',
+    googlebooks:  'GoogleBooksID',
+  }
+
   protected addCreators() {} // eslint-disable-line @typescript-eslint/no-empty-function
 
   public static installPostscript(translation: Translation): void {
@@ -818,7 +826,7 @@ export class Entry {
         case 'jstor':
         case 'hdl':
           if (this.translation.BetterBibLaTeX) {
-            this.override({ name: 'eprinttype', value: name === 'arxiv' ? 'arXiv' : name })
+            this.override({ name: 'eprinttype', value: this.eprintType[name] || name })
             this.override({ name: 'eprint', value: field.value, ...mode })
           }
           else {

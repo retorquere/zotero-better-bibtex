@@ -581,7 +581,7 @@ export function generateBibLaTeX(translation: Translation): void {
     for (const eprinttype of ['pmid', 'arxiv', 'jstor', 'hdl', 'googlebooks']) {
       if (entry.has[eprinttype]) {
         if (!entry.has.eprinttype) {
-          entry.add({ name: 'eprinttype', value: eprinttype === 'arxiv' ? 'arXiv' : eprinttype})
+          entry.add({ name: 'eprinttype', value: entry.eprintType[eprinttype] || eprinttype })
           entry.add({ name: 'eprint', value: entry.has[eprinttype].value })
         }
         entry.remove(eprinttype)
