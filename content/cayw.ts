@@ -281,7 +281,6 @@ class Document {
       title: item.itemData ? item.itemData.title : undefined,
     }) as Citation)
 
-    log.debug('picked:', citationItems, items)
     return items
   }
 }
@@ -406,7 +405,7 @@ class Handler {
   public SERVER_ERROR = 500
 
   public async init(request) {
-    const options = request.query || {}
+    const options = Server.queryParams(request)
 
     if (options.probe) return [this.OK, 'text/plain', Zotero.BetterBibTeX.ready.isPending() ? 'starting' : 'ready' ]
 
@@ -416,7 +415,6 @@ class Handler {
         if (!options.style && format.mode === 'bibliography') options.style = format.id
         options.contentType = options.contentType || format.contentType || 'text'
         options.locale = options.locale || format.locale || Zotero.Prefs.get('export.quickCopy.locale') || 'en-US'
-        log.debug('CAYW: detected', options)
       }
       const style =
         getStyle(options.style)
@@ -425,8 +423,6 @@ class Handler {
         ||
         getStyle(`http://juris-m.github.io/styles/${options.style}`)
       options.style = style ? style.url : 'http://www.zotero.org/styles/apa'
-
-      log.debug('CAYW:', { options, style })
 
       const citation = options.selected ? (await selected(options)) : (await pick(options))
 

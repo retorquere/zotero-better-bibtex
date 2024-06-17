@@ -81,6 +81,11 @@ jobs:
     - name: build ${{ env.beta }}
       run: npm run build ${{ env.beta }}
 
+    - name: publish debug bridge
+      run: ./util/publish-debug-bridge.py
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
     - name: store build artifacts
       uses: actions/upload-artifact@v4
       with:
@@ -102,7 +107,7 @@ jobs:
       run: npm run docs:deploy
       if: ${{ github.event_name == 'push' && (github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/tags/')) }}
     - name: deploy site
-      uses: peaceiris/actions-gh-pages@v3
+      uses: peaceiris/actions-gh-pages@v4
       if: ${{ github.event_name == 'push' && (github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/tags/')) }}
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}

@@ -166,6 +166,14 @@ export class Entry {
     allCaps: any
   }
 
+  public eprintType = {
+    arxiv:        'arXiv',
+    jstor:        'JSTOR',
+    pubmed:       'PMID',
+    hdl:          'HDL',
+    googlebooks:  'GoogleBooksID',
+  }
+
   protected addCreators() {} // eslint-disable-line @typescript-eslint/no-empty-function
 
   public static installPostscript(translation: Translation): void {
@@ -356,7 +364,7 @@ export class Entry {
       item.arXiv.category = item.arXiv.category || item.section
 
       this.add({ name: 'eprint', value: item.arXiv.id })
-      this.add({ name: eprinttype, value: 'arxiv'})
+      this.add({ name: eprinttype, value: 'arXiv'})
       this.add({ name: eprintclass, value: item.arXiv.category })
     }
 
@@ -669,7 +677,7 @@ export class Entry {
       const type = ExtraFields[key]?.type || 'string'
       let enc = {name: 'creator', text: 'literal'}[type] || type
       const replace = type === 'date'
-      // these are handled just like 'arxiv' and 'lccn', respectively
+      // these are handled just like 'arXiv' and 'lccn', respectively
       if (['PMID', 'PMCID'].includes(key) && typeof value === 'string') {
         this.item.extraFields.tex[key.toLowerCase()] = { value, line: -1 }
         delete this.item.extraFields.kv[key]
@@ -818,7 +826,7 @@ export class Entry {
         case 'jstor':
         case 'hdl':
           if (this.translation.BetterBibLaTeX) {
-            this.override({ name: 'eprinttype', value: name })
+            this.override({ name: 'eprinttype', value: this.eprintType[name] || name })
             this.override({ name: 'eprint', value: field.value, ...mode })
           }
           else {

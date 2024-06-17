@@ -15,10 +15,10 @@ import { Server } from './server'
 
 function displayOptions(request) {
   const isTrue = new Set([ 'y', 'yes', 'true' ])
-  const query = request.query || {}
+  const query = Server.queryParams(request)
 
   return {
-    exportCharset: query.exportCharset || 'utf8',
+    // exportCharset: query.exportCharset || 'utf8',
     exportNotes: isTrue.has(query.exportNotes),
     useJournalAbbreviation: isTrue.has(query.useJournalAbbreviation),
   }
@@ -28,12 +28,13 @@ class CollectionHandler {
   public supportedMethods = ['GET']
 
   public async init(request) {
-    if (!request.query || !request.query['']) return [NOT_FOUND, 'text/plain', 'Could not export bibliography: no path']
+    const urlpath: string = Server.queryParams(request)['']
+    if (!urlpath) return [NOT_FOUND, 'text/plain', 'Could not export bibliography: no path']
 
     try {
-      const [ , lib, path, translator ] = request.query[''].match(/^\/(?:([0-9]+)\/)?(.*)\.([-0-9a-z]+)$/i)
+      const [ , lib, path, translator ] = urlpath.match(/^\/(?:([0-9]+)\/)?(.*)\.([-0-9a-z]+)$/i)
 
-      const libID = parseInt(lib || 0) || Zotero.Libraries.userLibraryID
+      const libID = parseInt(lib || '0') || Zotero.Libraries.userLibraryID
 
       const collection = Zotero.Collections.getByLibraryAndKey(libID, path) || (await getCollection(`/${libID}/${path}`))
       if (!collection) return [NOT_FOUND, 'text/plain', `Could not export bibliography: path '${path}' not found`]
@@ -55,14 +56,15 @@ class LibraryHandler {
   public supportedMethods = ['GET']
 
   public async init(request) {
-    if (!request.query || !request.query['']) return [NOT_FOUND, 'text/plain', 'Could not export library: no path']
+    const urlpath: string = Server.queryParams(request)['']
+    if (!urlpath) return [NOT_FOUND, 'text/plain', 'Could not export library: no path']
 
     try {
-      const [ , lib, translator ] = request.query[''].match(/\/?(?:([0-9]+)\/)?library\.([-0-9a-z]+)$/i)
-      const libID = parseInt(lib || 0) || Zotero.Libraries.userLibraryID
+      const [ , lib, translator ] = urlpath.match(/\/?(?:([0-9]+)\/)?library\.([-0-9a-z]+)$/i)
+      const libID = parseInt(lib || '0') || Zotero.Libraries.userLibraryID
 
       if (!Zotero.Libraries.exists(libID)) {
-        return [NOT_FOUND, 'text/plain', `Could not export bibliography: library '${request.query['']}' does not exist`]
+        return [NOT_FOUND, 'text/plain', `Could not export bibliography: library '${urlpath}' does not exist`]
       }
 
       return [OK, 'text/plain', await Translators.exportItems({
@@ -82,7 +84,7 @@ class SelectedHandler {
   public supportedMethods = ['GET']
 
   public async init(request) {
-    const translator = request.query ? request.query[''] : null
+    const translator: string = Server.queryParams(request)['']
 
     if (!translator) return [NOT_FOUND, 'text/plain', 'Could not export bibliography: no format' ]
 
@@ -119,7 +121,8 @@ class ItemHandler {
     await Zotero.BetterBibTeX.ready
 
     try {
-      let { translator, citationKeys, groupID, libraryID, library, group, pandocFilterData } = request.query
+      let translator: string, citationKeys: string | string[], groupID: string | number, libraryID: string | number, library: string, group: string, pandocFilterData: string
+      ({ translator, citationKeys, groupID, libraryID, library, group, pandocFilterData } = Server.queryParams(request))
       if ((isSet(libraryID) + isSet(library) + isSet(groupID) + isSet(group)) > 1) {
         return [BAD_REQUEST, 'text/plain', 'specify at most one of library(/ID) or group(/ID)' ]
       }
@@ -154,7 +157,7 @@ class ItemHandler {
 
       const itemIDs: Record<string, number> = {}
       for (const citationKey of citationKeys) {
-        const key = Zotero.BetterBibTeX.KeyManager.find({ where: { libraryID, citationKey } })
+        const key = Zotero.BetterBibTeX.KeyManager.find({ where: { libraryID: <number>libraryID, citationKey } })
 
         switch (key.length) {
           case 0:
