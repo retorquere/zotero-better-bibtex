@@ -13,7 +13,7 @@ import { $and } from './db/loki'
 import { Translators, ExportJob } from './translators'
 import type { Translators as Translator } from '../typings/translators'
 import { Preference } from './prefs'
-import { Preferences, autoExport, affectedBy, PreferenceName } from '../gen/preferences/meta'
+import { Preferences, autoExport, affectedBy, PreferenceName, defaults, options } from '../gen/preferences/meta'
 import { headers as Headers, byId } from '../gen/translators'
 import * as ini from 'ini'
 import fold2ascii from 'fold-to-ascii'
@@ -36,6 +36,13 @@ export function jobContext(job: Job): { preferences: Partial<Preferences>, displ
 
 async function allContexts() {
   const current: Record<string, { preferences: Partial<Preferences>, displayOptions: Partial<Translator.DisplayOptions> } = {}
+  const schema: Record<string, 'number' | 'boolean' | 'string' | string[]> = {}
+  for (const [pref, dflt] of Object.entries(defaults)) {
+    schema[pref] = typeof dflt
+    if (dflt === 'string' && options[pref]) schema[pref] = Object.keys(options[pref]).sort()
+  }
+  log.debug('preference support:', schema)
+
   for (const header of Headers) {
     if (!header.configOptions?.cached) continue
     const preferences: Partial<Preferences> = Preference.pick(affectedBy[header.label])

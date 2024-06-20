@@ -1,9 +1,21 @@
 import { openDB, IDBPDatabase, DBSchema } from 'idb'
 import type { Attachment, Item, Note } from '../../gen/typings/serialized-item'
+import type { Preferences } from '../../gen/preferences/meta'
+import type { Translators as Translator } from '../typings/translators'
 import { print } from '../logger'
 
 type Serialized = Item | Attachment | Note
 type Serializer = (item: any) => Serialized
+
+export type ExportContext = {
+  preferences: Partial<Preferences>,
+  displayOptions: Partial<Translator.DisplayOptions>
+}
+
+type ExportCacheContext = ExportContext & {
+  keys: string
+  id: string
+}
 
 interface Schema extends DBSchema {
   ZoteroExportFormat: {
@@ -15,10 +27,18 @@ interface Schema extends DBSchema {
     key: number
   }
 
+  ExportCacheContext: {
+    value: ExportCacheContext
+    key: number
+  }
+
   metadata: {
     value: { key: string, value: string | number }
     key: string
   }
+}
+
+class Export {
 }
 
 class ZoteroExportFormat {
