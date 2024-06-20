@@ -657,13 +657,17 @@ export class Entry {
     this.add({ ...field, name, replace: (typeof field.replace !== 'boolean' && typeof field.fallback !== 'boolean') || field.replace })
   }
 
+  public langid(): string {
+    return babelLanguage(this.item.language)
+  }
+
   public complete(): void {
     if (this.translation.preferences.jabrefFormat >= 4 && this.item.collections?.length) {
       const groups = Array.from(new Set(this.item.collections.map(key => this.translation.collections[key]?.name).filter(name => name))).sort()
       this.add({ name: 'groups', value: groups.join(',') })
     }
 
-    if (['langid', 'both'].includes(this.translation.preferences.language)) this.add({name: 'langid', value: babelLanguage(this.item.language) })
+    if (['langid', 'both'].includes(this.translation.preferences.language)) this.add({name: 'langid', value: this.langid() })
     if (['language', 'both'].includes(this.translation.preferences.language)) this.add({name: 'language', value: this.item.language })
 
     // extra-fields has parsed & removed 'ids' to put it into aliases
