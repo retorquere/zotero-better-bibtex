@@ -59,7 +59,6 @@ export class TestSupport {
       const chunk = items.splice(0, 100)
       await Zotero.Items.erase(chunk)
     }
-
     await Zotero.Items.emptyTrash(Zotero.Libraries.userLibraryID)
 
     for (const collection of (Zotero.Collections.getByLibrary(Zotero.Libraries.userLibraryID, true) || [])) {
