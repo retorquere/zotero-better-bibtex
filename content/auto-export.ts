@@ -271,7 +271,7 @@ class Git {
     }
   }
 
-  private async exec(exe: string, args?: string[]): Promise<boolean> { // eslint-disable-line @typescript-eslint/require-await
+  private async exec(exe: string, args: string[] = []): Promise<boolean> { // eslint-disable-line @typescript-eslint/require-await
     // args = ['/K', exe].concat(args || [])
     // exe = await findBinary('CMD')
 
