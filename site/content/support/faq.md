@@ -250,3 +250,15 @@ In the following, biblatex's `\DeclareSourcemap` mechanism is used to generate s
 \printbibliography
 \end{document}
 ```
+
+If you just want the bib(la)tex `language` field to show whatever is in your Zotero `language` field, you can do it with this postscript:
+
+```
+if (Translator.BetterTeX) { tex.add({ name: 'language', value: zotero.language }) }
+```
+
+If you want the language field translated (to the best of BBTs abilities) to what would otherwise show up in `langid`, you can use:
+
+```
+if (Translator.BetterTeX) { tex.add({ name: 'language', value: tex.langid() }) }
+```
