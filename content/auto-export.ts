@@ -166,6 +166,7 @@ class Git {
   public enabled: boolean
   public path: string
   public bib: string
+  private root: Record<string, string>
 
   private git: string
 
@@ -179,6 +180,7 @@ class Git {
 
   public async init() {
     this.git = await findBinary('git')
+    this.root = {}
 
     return this
   }
@@ -189,6 +191,12 @@ class Git {
     if (!this.git) return repo
 
     let config: string = null
+
+    const disabled = () => {
+      this.root[bib] = ''
+      return repo
+    }
+
     switch (Preference.git) {
       case 'off':
         return repo
@@ -204,32 +212,34 @@ class Git {
         break
 
       case 'config':
-        for (let root = $OS.Path.dirname(bib); root && (await $OS.File.exists(root)) && (await $OS.File.stat(root)).isDir && root !== $OS.Path.dirname(root); root = $OS.Path.dirname(root)) {
-          config = $OS.Path.join(root, '.git')
-          if ((await $OS.File.exists(config)) && (await $OS.File.stat(config)).isDir) break
-          config = null
+        if (typeof this.root[bib] === 'undefined') {
+          for (let root = $OS.Path.dirname(bib); root && (await $OS.File.exists(root)) && (await $OS.File.stat(root)).isDir && root !== $OS.Path.dirname(root); root = $OS.Path.dirname(root)) {
+            const gitdir = $OS.Path.join(root, '.git')
+            if ((await $OS.File.exists(gitdir)) && (await $OS.File.stat(gitdir)).isDir) {
+              this.root[bib] = root
+              break
+            }
+          }
         }
-        if (!config) return repo
-        repo.path = $OS.Path.dirname(config)
+        if (!this.root[bib]) return disabled()
+        repo.path = this.root[bib]
 
-        config = $OS.Path.join(config, 'config')
-        if (!(await $OS.File.exists(config)) || (await $OS.File.stat(config)).isDir) {
-          return repo
-        }
+        config = $OS.Path.join(repo.path, '.git', 'config')
+        if (!(await $OS.File.exists(config)) || (await $OS.File.stat(config)).isDir) return disabled()
 
         try {
           const enabled = ini.parse(Zotero.File.getContents(config))['zotero "betterbibtex"']?.push
-          if (enabled !== 'true' && enabled !== true) return repo
+          if (enabled !== 'true' && enabled !== true) return disabled()
         }
         catch (err) {
           log.error('git.repo: error parsing config', config, err.message, err)
-          return repo
+          return disabled()
         }
         break
 
       default:
         log.error('git.repo: unexpected git config', Preference.git)
-        return repo
+        return disabled()
     }
 
     const sep = Zotero.isWin ? '\\' : '/'
