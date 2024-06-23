@@ -267,7 +267,7 @@ class Git {
     }
     catch (err) {
       flash('autoexport git push failed', err.message, 1)
-      log.error(`could not push ${this.bib} in ${this.path}`, err.message, err)
+      log.error(`could not push ${this.bib} in ${this.path}`, err.message)
     }
   }
 
@@ -277,22 +277,22 @@ class Git {
 
     args = args || []
     const command = [exe, ...args].map(quote).join(' ')
-    log.debug('running:', command)
+    log.debug('running: [', command, ']')
 
     const cmd = new FileUtils.File(exe)
     if (!cmd.isExecutable()) throw new Error(`${cmd.path} is not an executable`)
 
     const proc = Components.classes['@mozilla.org/process/util;1'].createInstance(Components.interfaces.nsIProcess)
     proc.init(cmd)
-    proc.startHidden = true
+    proc.startHidden = false
     const deferred = Zotero.Promise.defer()
     proc.runwAsync(args, args.length, {
       observe: (subject, topic) => {
         if (topic !== 'process-finished') {
-          deferred.reject(new Error(`failed: ${command}`))
+          deferred.reject(new Error(`[ ${command} ] failed: ${topic}`))
         }
         else if (proc.exitValue > 0) {
-          deferred.reject(new Error(`failed with exit status ${proc.exitValue}: ${command}`))
+          deferred.reject(new Error(`[ ${command} ] failed with exit status: ${proc.exitValue}`))
         }
         else {
           deferred.resolve(true)
@@ -332,7 +332,7 @@ const queue = new class TaskQueue {
   }
 
   public run(path: string) {
-    this.runAsync(path).catch(err => log.error('autoexport failed:', {path}, err.message, err))
+    this.runAsync(path).catch(err => log.error('autoexport failed:', {path}, err.message))
   }
   public async runAsync(path: string) {
     await Zotero.BetterBibTeX.ready
