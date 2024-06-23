@@ -294,7 +294,7 @@ class Git {
 
     const proc = Components.classes['@mozilla.org/process/util;1'].createInstance(Components.interfaces.nsIProcess)
     proc.init(cmd)
-    proc.startHidden = false
+    proc.startHidden = !Zotero.Prefs.get('extensions.zotero.translators.better-bibtex.path.git.show')
     const deferred = Zotero.Promise.defer()
     proc.runwAsync(args, args.length, {
       observe: (subject, topic) => {
