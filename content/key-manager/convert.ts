@@ -1,6 +1,6 @@
 /* eslint-disable no-case-declarations */
 
-import { parse } from 'acorn'
+import { parseScript as parse } from 'meriyah'
 import { methods } from '../../gen/api/key-formatter'
 const alias = require('./alias.json')
 import * as items from '../../gen/items/items'
@@ -127,7 +127,7 @@ class Compiler {
 
   compile(formula: string): string {
     // the typedefs from acorn are worse than useless
-    const program = this.get(parse(formula, { locations: true, ecmaVersion: 2020 }) as unknown as Node, 'Program')
+    const program = this.get(parse(formula, { loc: true, ranges: true, raw: true }) as unknown as Node, 'Program')
     if (!program.body.length) this.error(null, 'No input')
     const formulas: Node[] = program.body.length > 1
       ? program.body.map((stmt: Node) => this.get(stmt, 'ExpressionStatement').expression)

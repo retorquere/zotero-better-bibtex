@@ -271,21 +271,20 @@ class Git {
     }
   }
 
-  private async exec(exe: string, args: string[] = []): Promise<boolean> { // eslint-disable-line @typescript-eslint/require-await
+  private async exec(exe: string, args?: string[]): Promise<boolean> { // eslint-disable-line @typescript-eslint/require-await
     // args = ['/K', exe].concat(args || [])
     // exe = await findBinary('CMD')
 
-    const cmd = new FileUtils.File(exe)
+    args = args || []
+    const command = [exe, ...args].map(quote).join(' ')
+    log.debug('running:', command)
 
+    const cmd = new FileUtils.File(exe)
     if (!cmd.isExecutable()) throw new Error(`${cmd.path} is not an executable`)
 
     const proc = Components.classes['@mozilla.org/process/util;1'].createInstance(Components.interfaces.nsIProcess)
     proc.init(cmd)
     proc.startHidden = true
-
-    const command = [cmd.path, ...args].map(quote).join(' ')
-    log.debug('running:', command)
-
     const deferred = Zotero.Promise.defer()
     proc.runwAsync(args, args.length, {
       observe: (subject, topic) => {
