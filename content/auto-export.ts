@@ -4,7 +4,7 @@ declare const FileUtils: any
 import { log } from './logger'
 
 import { Shim } from './os'
-import { is7 } from './client'
+import { is7, platform } from './client'
 const $OS = is7 ? Shim : OS
 
 import { Events } from './events'
@@ -35,7 +35,7 @@ export function jobContext(job: Job): { preferences: Partial<Preferences>, displ
 }
 
 async function allContexts() {
-  const current: Record<string, { preferences: Partial<Preferences>, displayOptions: Partial<Translator.DisplayOptions> } = {}
+  const current: Record<string, { preferences: Partial<Preferences>, displayOptions: Partial<Translator.DisplayOptions> }> = {}
   const schema: Record<string, 'number' | 'boolean' | 'string' | string[]> = {}
   for (const [pref, dflt] of Object.entries(defaults)) {
     schema[pref] = typeof dflt
@@ -72,6 +72,50 @@ async function allContexts() {
       displayOptions: {...current[byId[job.translatorID].label], ...context.displayOptions },
     })
   }
+}
+
+const cmdMeta = /(["^&|<>()%!])/
+const cmdMetaOrSpace = /[\s"^&|<>()%!]/
+const cmdMetaInsideQuotes = /(["%!])/
+
+function win_quote(s: string, forCmd = true): string {
+  if (!s) return '""'
+  if (!cmdMetaOrSpace.test(s)) return s
+
+  if (forCmd && cmdMeta.test(s)) {
+    if (!cmdMetaInsideQuotes.test(s)) {
+      const m = s.match(/\\+$/)
+      return m ? `"${s}${m[0]}"` : `"${s}"`
+    }
+    if (/[\\"]/.test(s)) s = win_quote(s, false)
+    return s.replace(cmdMeta, '^$1')
+  }
+
+  const parts = []
+  parts.push('"')
+  for (const match of s.matchAll(/(\\*)(["+])|(\\+)|([^\\"]+)/g)) {
+    const [, slashes, quotes, onlySlashes, text] = match
+    if (quotes) {
+      parts.push(slashes)
+      parts.push(slashes)
+      parts.push('\\"'.repeat(quotes.length))
+    }
+    else if (onlySlashes) {
+      parts.push(onlySlashes)
+      if (match.index === s.length) parts.push(onlySlashes)
+    }
+    else {
+      parts.push(text)
+    }
+  }
+  parts.push('"')
+  return parts.join('')
+}
+
+const posix_quote = require('shell-quote/quote')
+
+function quote(s) {
+  return platform.name === 'win' ? win_quote(s) : <string>posix_quote(s)
 }
 
 export const SQL = new class {
@@ -171,6 +215,7 @@ class Git {
   public enabled: boolean
   public path: string
   public bib: string
+  private root: Record<string, string>
 
   private git: string
 
@@ -184,6 +229,7 @@ class Git {
 
   public async init() {
     this.git = await findBinary('git')
+    this.root = {}
 
     return this
   }
@@ -194,6 +240,12 @@ class Git {
     if (!this.git) return repo
 
     let config: string = null
+
+    const disabled = () => {
+      this.root[bib] = ''
+      return repo
+    }
+
     switch (Preference.git) {
       case 'off':
         return repo
@@ -209,32 +261,34 @@ class Git {
         break
 
       case 'config':
-        for (let root = $OS.Path.dirname(bib); (await $OS.File.exists(root)) && (await $OS.File.stat(root)).isDir && root !== $OS.Path.dirname(root); root = $OS.Path.dirname(root)) {
-          config = $OS.Path.join(root, '.git')
-          if ((await $OS.File.exists(config)) && (await $OS.File.stat(config)).isDir) break
-          config = null
+        if (typeof this.root[bib] === 'undefined') {
+          for (let root = $OS.Path.dirname(bib); root && (await $OS.File.exists(root)) && (await $OS.File.stat(root)).isDir && root !== $OS.Path.dirname(root); root = $OS.Path.dirname(root)) {
+            const gitdir = $OS.Path.join(root, '.git')
+            if ((await $OS.File.exists(gitdir)) && (await $OS.File.stat(gitdir)).isDir) {
+              this.root[bib] = root
+              break
+            }
+          }
         }
-        if (!config) return repo
-        repo.path = $OS.Path.dirname(config)
+        if (!this.root[bib]) return disabled()
+        repo.path = this.root[bib]
 
-        config = $OS.Path.join(config, 'config')
-        if (!(await $OS.File.exists(config)) || (await $OS.File.stat(config)).isDir) {
-          return repo
-        }
+        config = $OS.Path.join(repo.path, '.git', 'config')
+        if (!(await $OS.File.exists(config)) || (await $OS.File.stat(config)).isDir) return disabled()
 
         try {
           const enabled = ini.parse(Zotero.File.getContents(config))['zotero "betterbibtex"']?.push
-          if (enabled !== 'true' && enabled !== true) return repo
+          if (enabled !== 'true' && enabled !== true) return disabled()
         }
         catch (err) {
-          log.error('git.repo: error parsing config', config, err)
-          return repo
+          log.error('git.repo: error parsing config', config, err.message, err)
+          return disabled()
         }
         break
 
       default:
         log.error('git.repo: unexpected git config', Preference.git)
-        return repo
+        return disabled()
     }
 
     const sep = Zotero.isWin ? '\\' : '/'
@@ -258,7 +312,7 @@ class Git {
     }
     catch (err) {
       flash('autoexport git pull failed', err.message, 1)
-      log.error(`could not pull in ${this.path}:`, err)
+      log.error(`could not pull in ${this.path}:`, err.message, err)
     }
   }
 
@@ -272,37 +326,32 @@ class Git {
     }
     catch (err) {
       flash('autoexport git push failed', err.message, 1)
-      log.error(`could not push ${this.bib} in ${this.path}`, err)
+      log.error(`could not push ${this.bib} in ${this.path}`, err.message)
     }
-  }
-
-  private quote(cmd: string, args?: string[]) {
-    return [cmd].concat(args || []).map((arg: string) => arg.match(/['"]|\s/) ? JSON.stringify(arg) : arg).join(' ')
   }
 
   private async exec(exe: string, args?: string[]): Promise<boolean> { // eslint-disable-line @typescript-eslint/require-await
     // args = ['/K', exe].concat(args || [])
     // exe = await findBinary('CMD')
 
-    const cmd = new FileUtils.File(exe)
+    args = args || []
+    const command = [exe, ...args].map(quote).join(' ')
+    log.debug('running: [', command, ']')
 
+    const cmd = new FileUtils.File(exe)
     if (!cmd.isExecutable()) throw new Error(`${cmd.path} is not an executable`)
 
     const proc = Components.classes['@mozilla.org/process/util;1'].createInstance(Components.interfaces.nsIProcess)
     proc.init(cmd)
-    proc.startHidden = true
-
-    const command = this.quote(cmd.path, args)
-    log.debug('running:', command)
-
+    proc.startHidden = !Zotero.Prefs.get('extensions.zotero.translators.better-bibtex.path.git.show')
     const deferred = Zotero.Promise.defer()
     proc.runwAsync(args, args.length, {
       observe: (subject, topic) => {
         if (topic !== 'process-finished') {
-          deferred.reject(new Error(`failed: ${command}`))
+          deferred.reject(new Error(`[ ${command} ] failed: ${topic}`))
         }
         else if (proc.exitValue > 0) {
-          deferred.reject(new Error(`failed with exit status ${proc.exitValue}: ${command}`))
+          deferred.reject(new Error(`[ ${command} ] failed with exit status: ${proc.exitValue}`))
         }
         else {
           deferred.resolve(true)
@@ -342,7 +391,7 @@ const queue = new class TaskQueue {
   }
 
   public run(path: string) {
-    this.runAsync(path).catch(err => log.error('autoexport failed:', {path}, err))
+    this.runAsync(path).catch(err => log.error('autoexport failed:', {path}, err.message))
   }
   public async runAsync(path: string) {
     await Zotero.BetterBibTeX.ready
@@ -428,7 +477,7 @@ const queue = new class TaskQueue {
       ae.error = ''
     }
     catch (err) {
-      log.error('auto-export', ae.type, ae.id, 'failed:', ae, err)
+      log.error('auto-export', ae.type, ae.id, 'failed:', ae, err.message, err)
       ae.error = `${err}`
     }
 

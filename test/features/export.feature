@@ -212,6 +212,7 @@ Feature: Export
 
     Examples:
       | file                                                                                                               | references |
+      | export langid as language #2909                                                                                    | 1          |
       | Better BibTeX export from Zotero missing Extra fields eg issued #2816                                              | 1          |
       | formula grouping                                                                                                   | 1          |
       | formula grouping-upgrade                                                                                           | 1          |

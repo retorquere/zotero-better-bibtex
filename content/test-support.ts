@@ -44,7 +44,6 @@ export class TestSupport {
     log.debug('test environment reset for', scenario)
     Cache.reset('test environment reset')
 
-    let collections
     const prefix = 'translators.better-bibtex.'
     for (const [pref, value] of Object.entries(defaults)) {
       if (setatstart.includes(pref)) continue
@@ -53,12 +52,6 @@ export class TestSupport {
 
     Zotero.Prefs.set(`${prefix}testing`, true)
 
-    // remove collections before items to work around https://github.com/zotero/zotero/issues/1317 and https://github.com/zotero/zotero/issues/1314
-    // ^%&^%@#&^% you can't just loop and erase because subcollections are also deleted
-    while ((collections = Zotero.Collections.getByLibrary(Zotero.Libraries.userLibraryID, true) || []).length) {
-      await collections[0].eraseTx()
-    }
-
     // Zotero DB access is *really* slow and times out even with chunked transactions. 3.5k items take ~ 50 seconds
     // to delete.
     let items = await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, false, true, true)
@@ -66,8 +59,16 @@ export class TestSupport {
       const chunk = items.splice(0, 100)
       await Zotero.Items.erase(chunk)
     }
-
     await Zotero.Items.emptyTrash(Zotero.Libraries.userLibraryID)
+
+    // for (const collection of (Zotero.Collections.getByLibrary(Zotero.Libraries.userLibraryID, true) || [])) {
+    //   await collection.eraseTx()
+    // }
+    // collections might erase their contained collections
+    let collections
+    while ((collections = Zotero.Collections.getByLibrary(Zotero.Libraries.userLibraryID, true) || []).length) {
+      await collections[0].eraseTx()
+    }
 
     await AutoExport.removeAll()
 

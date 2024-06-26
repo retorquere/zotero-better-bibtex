@@ -430,12 +430,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
   }
 
   public displayOptions(translatorID: string, displayOptions: any): any {
-    return merge(
-      {},
-      this.byId[translatorID]?.displayOptions || {},
-      displayOptions,
-      this.byId[translatorID].label === 'BetterBibTeX JSON' ? { exportCharset: 'UTF-8xBOM' } : {}
-    )
+    return merge({}, this.byId[translatorID]?.displayOptions || {}, displayOptions)
   }
 
   public async exportItems(job: ExportJob): Promise<string> {

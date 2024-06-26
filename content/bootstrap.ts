@@ -97,13 +97,13 @@ export async function startup({ resourceURI, rootURI = resourceURI.spec }, reaso
           setInterval,
           clearInterval,
 
-          indexedDB: win.indexedDB,
-          IDBRequest: win.IDBRequest,
-          IDBTransaction: win.IDBTransaction,
-          IDBDatabase: win.IDBDatabase,
-          IDBObjectStore: win.IDBObjectStore,
-          IDBIndex: win.IDBIndex,
-          IDBCursor: win.IDBCursor,
+          indexedDB: $window.indexedDB,
+          IDBRequest: $window.IDBRequest,
+          IDBTransaction: $window.IDBTransaction,
+          IDBDatabase: $window.IDBDatabase,
+          IDBObjectStore: $window.IDBObjectStore,
+          IDBIndex: $window.IDBIndex,
+          IDBCursor: $window.IDBCursor,
         },
       })
 
