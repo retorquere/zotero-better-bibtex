@@ -8,6 +8,6 @@
   url = {http://arxiv.org/abs/2302.01890},
   urldate = {2023-02-09},
   abstract = {China is currently the country with the largest number of Android smartphone users. We use a combination of static and dynamic code analysis techniques to study the data transmitted by the preinstalled system apps on Android smartphones from three of the most popular vendors in China. We find that an alarming number of preinstalled system, vendor and third-party apps are granted dangerous privileges. Through traffic analysis, we find these packages transmit to many third-party domains privacy sensitive information related to the user's device (persistent identifiers), geolocation (GPS coordinates, network-related identifiers), user profile (phone number, app usage) and social relationships (e.g., call history), without consent or even notification. This poses serious deanonymization and tracking risks that extend outside China when the user leaves the country, and calls for a more rigorous enforcement of the recently adopted data privacy legislation.},
-  pubstate = {preprint},
+  pubstate = {prepublished},
   keywords = {Computer Science - Cryptography and Security}
 }
