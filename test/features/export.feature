@@ -13,6 +13,7 @@ Feature: Export
 
     Examples:
       | file                                                                                                                     | references |
+      | Use prepublished as default pubstate for arXiV articles #2911                                                            | 1          |
       | Preprint with status in extra fails to export #2881                                                                      | 1          |
       | Exporting item type film merges scriptwriter with other contributors #2802                                               | 1          |
       | Three dashes in extra field for generating markdown files from bibtex #2849                                              | 1          |

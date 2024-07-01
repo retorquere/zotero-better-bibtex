@@ -1086,6 +1086,10 @@ export class Entry {
       .join(' and ')
   }
 
+  // legacy support
+  protected enc_latex(f, options: { raw?: boolean, creator?: boolean, mode?: ConversionMode } = {}) {
+    return this.enc_literal(f, options)
+  }
   /*
    * Encode text to LaTeX
    *
