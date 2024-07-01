@@ -493,7 +493,7 @@ export const KeyManager = new class _KeyManager {
       if (!IndexedCache.ZoteroExportFormat) return
 
       try {
-        await IndexedCache.ZoteroExportFormat.touch(ids)
+        await IndexedCache.touch(ids)
       }
       catch (err) {
         log.error('IndexedCache touch failed:', err)

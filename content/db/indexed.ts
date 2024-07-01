@@ -7,14 +7,21 @@ import { print } from '../logger'
 type Serialized = Item | Attachment | Note
 type Serializer = (item: any) => Serialized
 
-export type ExportContext = {
-  preferences: Partial<Preferences>,
-  displayOptions: Partial<Translator.DisplayOptions>
+import type { Translators as Translator } from '../typings/translators'
+const skip = [ 'keepUpdated', 'worker', 'exportFileData' ]
+export function exportContext(options: Partial<Translator.DisplayOptions>): string {
+  JSON.stringify(Object.entries(displayOptions).filter(([k, v]) => !skip.includes(k)).sort((a, b) => a[0].localeCompare(b[0])))
 }
 
-type ExportCacheContext = ExportContext & {
-  keys: string
-  id: string
+export type ExportContext = {
+  context: string
+  id: number
+}
+
+export type ExportCacheContent = {
+  context: number
+  itemID: number
+  entry: string
 }
 
 interface Schema extends DBSchema {
@@ -28,8 +35,25 @@ interface Schema extends DBSchema {
   }
 
   ExportCacheContext: {
-    value: ExportCacheContext
+    value: ExportContext
     key: number
+  }
+
+  BetterBibLaTeX: {
+    value: ExportCacheContent
+    key: [number, number]
+  }
+  BetterBibTeX: {
+    value: ExportCacheContent
+    key: [number, number]
+  }
+  BetterCSLJSON: {
+    value: ExportCacheContent
+    key: [number, number]
+  }
+  BetterCSLYAML: {
+    value: ExportCacheContent
+    key: [number, number]
   }
 
   metadata: {
@@ -38,7 +62,17 @@ interface Schema extends DBSchema {
   }
 }
 
-class Export {
+class ExportCache {
+  constructor(private db: IDBPDatabase<Schema>, private translator: string) {
+  }
+
+  public touch(ids: number[]) {
+    const tx = this.db.transaction(this.translator, 'readwrite')
+    const index = tx.store.index('itemID')
+    const keys = await Promise.all(ids.map(id => index.getAllKeys(id)))
+    [].concat.apply([], keys).forEach(key => store.delete(key))
+    await tx.done
+  }
 }
 
 class ZoteroExportFormat {
@@ -128,6 +162,11 @@ export const cache = new class Cache {
 
   public ZoteroExportFormat: ZoteroExportFormat
 
+  public BetterBibTeX: ExportCache
+  public BetterBibLaTeX: ExportCache
+  public BetterCSLJSON: ExportCache
+  public BetterCSLYAML: ExportCache
+
   public async touch(): Promise<void> {
     await this.db.put('metadata', Zotero.Date.dateToSQL(new Date(), true), 'lastUpdated')
   }
@@ -149,6 +188,16 @@ export const cache = new class Cache {
         db.createObjectStore('ZoteroExportFormat', { keyPath: 'itemID' })
         db.createObjectStore('ZoteroExportFormatTouched')
         db.createObjectStore('metadata')
+
+        const context = db.createObjectStore('ExportCacheContext', { keyPath: 'id', autoIncrement: true })
+        context.createIndex('context', 'context', { unique: true })
+
+        for (const cache of ['Better BibTeX', 'Better BibLaTeX', 'Better CSL JSON', 'Better CSL YAML']) {
+          const store = db.createObjectStore(cache, { keyPath: [ 'context', 'itemID' ] })
+          store.createIndex('context', 'context')
+          store.createIndex('itemID', 'itemID')
+          store.createIndex('context-itemID', [ 'context', 'itemID' ])
+        }
       },
     })
 
@@ -156,21 +205,38 @@ export const cache = new class Cache {
     this.ZoteroExportFormat = new ZoteroExportFormat(this.db, serialize)
     print('indexed: attached ZoteroExportFormat')
 
+    this.BetterBibTeX = new ExportCache(this.db, 'Better BibTeX')
+    this.BetterBibLaTeX = new ExportCache(this.db, 'Better BibLaTeX')
+    this.BetterCSLJSON = new ExportCache(this.db, 'Better CSL JSON')
+    this.BetterCSLYAML = new ExportCache(this.db, 'Better CSL YAML')
+
     if (lastUpdated) {
       const lastTouched = await this.db.get('metadata', 'lastUpdated') || ''
-      if (lastUpdated > lastTouched) await this.db.clear('ZoteroExportFormat')
+      if (lastUpdated > lastTouched) {
+        print('indexed: store gap, clearing')
+        await this.db.clear('ZoteroExportFormat')
+        for (const cache of ['Better BibTeX', 'Better BibLaTeX', 'Better CSL JSON', 'Better CSL YAML']) {
+          await this.db.clear(cache)
+        }
+      }
     }
-    /*
-      Exported: { keyPath: ['context', 'itemID'], indices: { // keyPath order matters for key retrieval!
-        itemID: { unique: false },
-        context: { unique: false }
-      } },
-      ExportContext:{ keyPath: 'id', autoIncrement: true, indices: {
-        properties: { unique: false, multiEntry: true },
-      } }
-    */
+
     print('indexed: opened cache')
     this.opened = true
+  }
+
+  public async touch(ids: number[]): Promise<void> {
+    await Promise.all([
+      this.ZoteroExportFormat.touch(ids),
+      this.BetterBibTeX.touch(ids),
+      this.BetterBibLaTeX.touch(ids),
+      this.BetterCSLJSON.touch(ids),
+      this.BetterCSLYAML.touch(ids),
+    ])
+  }
+
+  clear(store: name) {
+    await this.db.clear(store)
   }
 
   public close(): void {
