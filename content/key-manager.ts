@@ -490,7 +490,7 @@ export const KeyManager = new class _KeyManager {
     })
 
     const notify = async (ids: number[], action: Action) => {
-      if (!IndexedCache.ZoteroExportFormat) return
+      if (!IndexedCache.ZoteroSerialized) return
 
       try {
         await IndexedCache.touch(ids)

@@ -1,4 +1,4 @@
-import { openDB, IDBPDatabase, DBSchema, IDBPTransaction } from 'idb'
+import { openDB, IDBPDatabase, DBSchema } from 'idb'
 import type { Attachment, Item, Note } from '../../gen/typings/serialized-item'
 import { print } from '../logger'
 
@@ -8,7 +8,7 @@ type Serializer = (item: any) => Serialized
 import type { Translators as Translator } from '../../typings/translators'
 const skip = [ 'keepUpdated', 'worker', 'exportFileData' ]
 export function exportContext(displayOptions: Partial<Translator.DisplayOptions>): string {
-  return JSON.stringify(Object.entries(displayOptions).filter(([k, v]) => !skip.includes(k)).sort((a, b) => a[0].localeCompare(b[0])))
+  return JSON.stringify(Object.entries(displayOptions).filter(([k, _v]) => !skip.includes(k)).sort((a, b) => a[0].localeCompare(b[0])))
 }
 
 export type ExportContext = {
@@ -71,8 +71,8 @@ class ExportCache {
   }
 
   public async touch(ids: number[]): Promise<void> {
-    const tx: IDBPTransaction = this.db.transaction(this.name, 'readwrite')
-    const store = tx.objectStore(this.name)
+    const tx = this.db.transaction(this.name, 'readwrite')
+    const store = tx.objectStore(this.name as 'BetterBibTeX')
     const index = store.index('itemID')
     for (const id of ids) {
       let cursor = await index.openCursor(IDBKeyRange.only(id))
@@ -198,8 +198,13 @@ export const cache = new class Cache {
         const context = db.createObjectStore('ExportCacheContext', { keyPath: 'id', autoIncrement: true })
         context.createIndex('context', 'context', { unique: true })
 
-        for (const cache of ['BetterBibTeX', 'BetterBibLaTeX', 'BetterCSL JSON', 'BetterCSLYAML']) {
-          const store = db.createObjectStore(cache, { keyPath: [ 'context', 'itemID' ] })
+        const stores = [
+          db.createObjectStore('BetterBibTeX', { keyPath: [ 'context', 'itemID' ] }),
+          db.createObjectStore('BetterBibLaTeX', { keyPath: [ 'context', 'itemID' ] }),
+          db.createObjectStore('BetterCSLJSON', { keyPath: [ 'context', 'itemID' ] }),
+          db.createObjectStore('BetterCSLYAML', { keyPath: [ 'context', 'itemID' ] }),
+        ]
+        for (const store of stores) {
           store.createIndex('context', 'context')
           store.createIndex('itemID', 'itemID')
           store.createIndex('context-itemID', [ 'context', 'itemID' ], { unique: true })
@@ -220,9 +225,14 @@ export const cache = new class Cache {
       const lastTouched = await this.db.get('metadata', 'lastUpdated') || ''
       if (lastUpdated > lastTouched) {
         print('indexed: store gap, clearing')
-        await this.db.clear('ZoteroSerialized')
-        for (const cache of ['BetterBibTeX', 'BetterBibLaTeX', 'BetterCSLJSON', 'BetterCSLYAML']) {
-          await this.db.clear(cache)
+        for (const store of this.db.objectStoreNames) {
+          switch (store) {
+            case 'metadata':
+              break
+            default:
+              await this.db.clear(store)
+              break
+          }
         }
       }
     }
@@ -240,8 +250,9 @@ export const cache = new class Cache {
     await this.db.put('metadata', Zotero.Date.dateToSQL(new Date(), true), 'lastUpdated')
   }
 
-  public async clear(store: string) {
+  public async clear(store: ExportCacheName) {
     const tx = this.db.transaction(store.replace(/ /g, '') as ExportCacheName, 'readonly')
+    // @ts-expect-error because for some reason, assert does not work here
     await tx.store.clear(store)
     await tx.done
   }

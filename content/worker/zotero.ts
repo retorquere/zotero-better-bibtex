@@ -434,7 +434,7 @@ class WorkerZotero {
     this.output = ''
 
     if (!IndexedCache.opened) await IndexedCache.open()
-    this.items = await IndexedCache.ZoteroExportFormat.get(workerJob.data.items)
+    this.items = await IndexedCache.ZoteroSerialized.get(workerJob.data.items)
     print(`indexed: requested ${workerJob.data.items}`)
     print(`indexed: retrieved ${this.items.map(item => [item.itemID, item.itemType])}`)
 

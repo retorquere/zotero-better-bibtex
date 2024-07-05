@@ -158,7 +158,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
         log.debug('translators startup: released')
       },
       shutdown: async (reason: Reason) => {
-        if (IndexedCache.opened) await IndexedCache.ZoteroExportFormat.purge()
+        if (IndexedCache.opened) await IndexedCache.ZoteroSerialized.purge()
 
         switch (reason) {
           case 'ADDON_DISABLE':
@@ -377,7 +377,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
     log.debug('indexed: pre-translation fill of', items.map(item => [Zotero.ItemTypes.getName(item.itemTypeID), item.id]))
     // maybe use a loop instead of map so we can await for beachball protection
-    await IndexedCache.ZoteroExportFormat.fill(items)
+    await IndexedCache.ZoteroSerialized.fill(items)
     config.data.items = items.map(item => item.id)
     prepare.update()
     if (job.path && job.canceled) return ''
