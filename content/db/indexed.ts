@@ -1,16 +1,14 @@
-import { openDB, IDBPDatabase, DBSchema } from 'idb'
+import { openDB, IDBPDatabase, DBSchema, IDBPTransaction } from 'idb'
 import type { Attachment, Item, Note } from '../../gen/typings/serialized-item'
-import type { Preferences } from '../../gen/preferences/meta'
-import type { Translators as Translator } from '../typings/translators'
 import { print } from '../logger'
 
 type Serialized = Item | Attachment | Note
 type Serializer = (item: any) => Serialized
 
-import type { Translators as Translator } from '../typings/translators'
+import type { Translators as Translator } from '../../typings/translators'
 const skip = [ 'keepUpdated', 'worker', 'exportFileData' ]
-export function exportContext(options: Partial<Translator.DisplayOptions>): string {
-  JSON.stringify(Object.entries(displayOptions).filter(([k, v]) => !skip.includes(k)).sort((a, b) => a[0].localeCompare(b[0])))
+export function exportContext(displayOptions: Partial<Translator.DisplayOptions>): string {
+  return JSON.stringify(Object.entries(displayOptions).filter(([k, v]) => !skip.includes(k)).sort((a, b) => a[0].localeCompare(b[0])))
 }
 
 export type ExportContext = {
@@ -25,11 +23,11 @@ export type ExportCacheContent = {
 }
 
 interface Schema extends DBSchema {
-  ZoteroExportFormat: {
+  ZoteroSerialized: {
     value: Serialized
     key: number
   }
-  ZoteroExportFormatTouched: {
+  ZoteroSerializedTouched: {
     value: boolean
     key: number
   }
@@ -37,23 +35,28 @@ interface Schema extends DBSchema {
   ExportCacheContext: {
     value: ExportContext
     key: number
+    indexes: { context: string }
   }
 
   BetterBibLaTeX: {
     value: ExportCacheContent
     key: [number, number]
+    indexes: { context: number, itemID: number, 'context-itemID': [ number, number ] }
   }
   BetterBibTeX: {
     value: ExportCacheContent
     key: [number, number]
+    indexes: { context: number, itemID: number, 'context-itemID': [ number, number ] }
   }
   BetterCSLJSON: {
     value: ExportCacheContent
     key: [number, number]
+    indexes: { context: number, itemID: number, 'context-itemID': [ number, number ] }
   }
   BetterCSLYAML: {
     value: ExportCacheContent
     key: [number, number]
+    indexes: { context: number, itemID: number, 'context-itemID': [ number, number ] }
   }
 
   metadata: {
@@ -61,21 +64,28 @@ interface Schema extends DBSchema {
     key: string
   }
 }
+export type ExportCacheName = 'ZoteroSerialized' | 'ZoteroSerializedTouched' | 'ExportCacheContext' | 'BetterBibLaTeX' | 'BetterBibTeX' | 'BetterCSLJSON' | 'BetterCSLYAML'
 
 class ExportCache {
-  constructor(private db: IDBPDatabase<Schema>, private translator: string) {
+  constructor(private db: IDBPDatabase<Schema>, private name: ExportCacheName) {
   }
 
-  public touch(ids: number[]) {
-    const tx = this.db.transaction(this.translator, 'readwrite')
-    const index = tx.store.index('itemID')
-    const keys = await Promise.all(ids.map(id => index.getAllKeys(id)))
-    [].concat.apply([], keys).forEach(key => store.delete(key))
+  public async touch(ids: number[]): Promise<void> {
+    const tx: IDBPTransaction = this.db.transaction(this.name, 'readwrite')
+    const store = tx.objectStore(this.name)
+    const index = store.index('itemID')
+    for (const id of ids) {
+      let cursor = await index.openCursor(IDBKeyRange.only(id))
+      while (cursor) {
+        await store.delete(cursor.primaryKey)
+        cursor = await cursor.continue()
+      }
+    }
     await tx.done
   }
 }
 
-class ZoteroExportFormat {
+class ZoteroSerialized {
   public filled = 0 // exponential moving average
   private smoothing = 2 / (10 + 1) // keep average over last 10 fills
 
@@ -94,9 +104,9 @@ class ZoteroExportFormat {
       return
     }
 
-    const tx = this.db.transaction(['ZoteroExportFormat', 'ZoteroExportFormatTouched'], 'readwrite')
-    const store = tx.objectStore('ZoteroExportFormat')
-    const touched = tx.objectStore('ZoteroExportFormatTouched')
+    const tx = this.db.transaction(['ZoteroSerialized', 'ZoteroSerializedTouched'], 'readwrite')
+    const store = tx.objectStore('ZoteroSerialized')
+    const touched = tx.objectStore('ZoteroSerializedTouched')
     const cached = new Set(await store.getAllKeys())
 
     const purge = (await touched.getAllKeys())
@@ -130,7 +140,7 @@ class ZoteroExportFormat {
   }
 
   public async get(ids: number[]): Promise<Serialized[]> {
-    const tx = this.db.transaction('ZoteroExportFormat', 'readonly')
+    const tx = this.db.transaction('ZoteroSerialized', 'readonly')
     const items: Serialized[] = (await Promise.all(ids.map(id => tx.store.get(id)))).filter(item => item)
     await tx.done
     const fetched = new Set(items.map(item => item.itemID))
@@ -140,15 +150,15 @@ class ZoteroExportFormat {
   }
 
   public async touch(ids: number[]): Promise<void> {
-    const tx = this.db.transaction('ZoteroExportFormatTouched', 'readwrite')
+    const tx = this.db.transaction('ZoteroSerializedTouched', 'readwrite')
     const puts = ids.map(id => tx.store.put(true, id))
     await Promise.all([...puts, tx.done])
   }
 
   public async purge(): Promise<void> {
-    const tx = this.db.transaction(['ZoteroExportFormat', 'ZoteroExportFormatTouched'], 'readwrite')
-    const store = tx.objectStore('ZoteroExportFormat')
-    const touched = tx.objectStore('ZoteroExportFormatTouched')
+    const tx = this.db.transaction(['ZoteroSerialized', 'ZoteroSerializedTouched'], 'readwrite')
+    const store = tx.objectStore('ZoteroSerialized')
+    const touched = tx.objectStore('ZoteroSerializedTouched')
 
     const purge = (await touched.getAllKeys()).map(id => store.delete(id))
     await Promise.all([...purge, touched.clear(), tx.done])
@@ -160,16 +170,12 @@ export const cache = new class Cache {
   private db: IDBPDatabase<Schema>
   public opened = false
 
-  public ZoteroExportFormat: ZoteroExportFormat
+  public ZoteroSerialized: ZoteroSerialized
 
   public BetterBibTeX: ExportCache
   public BetterBibLaTeX: ExportCache
   public BetterCSLJSON: ExportCache
   public BetterCSLYAML: ExportCache
-
-  public async touch(): Promise<void> {
-    await this.db.put('metadata', Zotero.Date.dateToSQL(new Date(), true), 'lastUpdated')
-  }
 
   public async open(): Promise<void>
   public async open(serialize: Serializer, lastUpdated: string)
@@ -185,37 +191,37 @@ export const cache = new class Cache {
           }
         }
 
-        db.createObjectStore('ZoteroExportFormat', { keyPath: 'itemID' })
-        db.createObjectStore('ZoteroExportFormatTouched')
+        db.createObjectStore('ZoteroSerialized', { keyPath: 'itemID' })
+        db.createObjectStore('ZoteroSerializedTouched')
         db.createObjectStore('metadata')
 
         const context = db.createObjectStore('ExportCacheContext', { keyPath: 'id', autoIncrement: true })
         context.createIndex('context', 'context', { unique: true })
 
-        for (const cache of ['Better BibTeX', 'Better BibLaTeX', 'Better CSL JSON', 'Better CSL YAML']) {
+        for (const cache of ['BetterBibTeX', 'BetterBibLaTeX', 'BetterCSL JSON', 'BetterCSLYAML']) {
           const store = db.createObjectStore(cache, { keyPath: [ 'context', 'itemID' ] })
           store.createIndex('context', 'context')
           store.createIndex('itemID', 'itemID')
-          store.createIndex('context-itemID', [ 'context', 'itemID' ])
+          store.createIndex('context-itemID', [ 'context', 'itemID' ], { unique: true })
         }
       },
     })
 
-    print('indexed: attaching ZoteroExportFormat')
-    this.ZoteroExportFormat = new ZoteroExportFormat(this.db, serialize)
-    print('indexed: attached ZoteroExportFormat')
+    print('indexed: attaching ZoteroSerialized')
+    this.ZoteroSerialized = new ZoteroSerialized(this.db, serialize)
+    print('indexed: attached ZoteroSerialized')
 
-    this.BetterBibTeX = new ExportCache(this.db, 'Better BibTeX')
-    this.BetterBibLaTeX = new ExportCache(this.db, 'Better BibLaTeX')
-    this.BetterCSLJSON = new ExportCache(this.db, 'Better CSL JSON')
-    this.BetterCSLYAML = new ExportCache(this.db, 'Better CSL YAML')
+    this.BetterBibTeX = new ExportCache(this.db, 'BetterBibTeX')
+    this.BetterBibLaTeX = new ExportCache(this.db, 'BetterBibLaTeX')
+    this.BetterCSLJSON = new ExportCache(this.db, 'BetterCSLJSON')
+    this.BetterCSLYAML = new ExportCache(this.db, 'BetterCSLYAML')
 
     if (lastUpdated) {
       const lastTouched = await this.db.get('metadata', 'lastUpdated') || ''
       if (lastUpdated > lastTouched) {
         print('indexed: store gap, clearing')
-        await this.db.clear('ZoteroExportFormat')
-        for (const cache of ['Better BibTeX', 'Better BibLaTeX', 'Better CSL JSON', 'Better CSL YAML']) {
+        await this.db.clear('ZoteroSerialized')
+        for (const cache of ['BetterBibTeX', 'BetterBibLaTeX', 'BetterCSLJSON', 'BetterCSLYAML']) {
           await this.db.clear(cache)
         }
       }
@@ -226,17 +232,18 @@ export const cache = new class Cache {
   }
 
   public async touch(ids: number[]): Promise<void> {
-    await Promise.all([
-      this.ZoteroExportFormat.touch(ids),
-      this.BetterBibTeX.touch(ids),
-      this.BetterBibLaTeX.touch(ids),
-      this.BetterCSLJSON.touch(ids),
-      this.BetterCSLYAML.touch(ids),
-    ])
+    if (ids.length) {
+      for (const store of [this.ZoteroSerialized, this.BetterBibTeX, this.BetterBibLaTeX, this.BetterCSLJSON, this.BetterCSLYAML ]) {
+        await store.touch(ids)
+      }
+    }
+    await this.db.put('metadata', Zotero.Date.dateToSQL(new Date(), true), 'lastUpdated')
   }
 
-  clear(store: name) {
-    await this.db.clear(store)
+  public async clear(store: string) {
+    const tx = this.db.transaction(store.replace(/ /g, '') as ExportCacheName, 'readonly')
+    await tx.store.clear(store)
+    await tx.done
   }
 
   public close(): void {

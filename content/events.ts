@@ -196,7 +196,7 @@ class ItemListener extends ZoteroListener {
         return true
       }) as ZoteroItem[]
 
-      if (ids.length) await Events.itemsChanged(action, ids)
+      await Events.itemsChanged(action, ids)
       if (items.length) await Events.emit('items-changed', { items, action })
 
       let parents: ZoteroItem[] = []
