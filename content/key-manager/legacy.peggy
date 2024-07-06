@@ -1,10 +1,8 @@
 {
-  const reservedIdentifiers = require('reserved-identifiers')
-  const identifiers = reservedIdentifiers({ includeGlobalProperties: true })
   const identifier = /^(?![0-9])[_$a-zA-Z][_$a-zA-Z0-9]*$/
 
-  function isIdentifier(v) {
-    return !identifiers.has(v) && v.match(identifier)
+  function allowedIdentifier(v) {
+    return !options.reserved.has(v) && v.match(identifier)
   }
 
   const alias = require('./alias.json')
@@ -27,7 +25,7 @@
       case 'boolean':
         return `${v}`
       case 'string':
-        return !noident && isIdentifier(v) ? v : JSON.stringify(v)
+        return !noident && allowedIdentifier(v) ? v : JSON.stringify(v)
     }
     throw new Error(`unexpected argument value ${typeof v} ${JSON.stringify(v)}`)
   }
