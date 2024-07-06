@@ -4,7 +4,7 @@ import { Shim } from './os'
 import { is7 } from './client'
 const $OS = is7 ? Shim : OS
 import merge from 'lodash.merge'
-import { cache as IndexedCache } from './db/indexed'
+import { Cache as IndexedCache } from './db/indexed'
 
 /*
 async function guard(run: Promise<void>): Promise<boolean> {

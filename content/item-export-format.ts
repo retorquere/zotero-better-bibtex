@@ -6,7 +6,7 @@ import type { RegularItem, Attachment, Item } from '../gen/typings/serialized-it
 import { JournalAbbrev } from './journal-abbrev'
 import { Preference } from './prefs'
 import { orchestrator } from './orchestrator'
-import { cache as IndexedCache } from './db/indexed'
+import { Cache as IndexedCache } from './db/indexed'
 import { Events } from './events'
 
 function attachmentToPOJO(serialized: Attachment, att): Attachment {

@@ -3,7 +3,7 @@
 import type { Attachment, Item, Note } from '../../gen/typings/serialized-item'
 type Serialized = Attachment | Item | Note
 
-import { cache as IndexedCache } from '../db/indexed'
+import { Cache as IndexedCache } from '../db/indexed'
 
 import flatMap from 'array.prototype.flatmap'
 flatMap.shim()

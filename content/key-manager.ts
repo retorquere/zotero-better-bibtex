@@ -27,7 +27,7 @@ import { DB as Cache } from './db/cache'
 
 import { createDB, createTable, Query, BlinkKey } from 'blinkdb'
 import * as blink from '../gen/blinkdb'
-import { cache as IndexedCache } from './db/indexed'
+import { Cache as IndexedCache } from './db/indexed'
 
 import { patch as $patch$ } from './monkey-patch'
 

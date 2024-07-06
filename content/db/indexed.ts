@@ -16,7 +16,7 @@ export type ExportContext = {
   id: number
 }
 
-export type ExportCacheContent = {
+export type ExportedItem = {
   context: number
   itemID: number
   entry: string
@@ -32,29 +32,29 @@ interface Schema extends DBSchema {
     key: number
   }
 
-  ExportCacheContext: {
+  ExportContext: {
     value: ExportContext
     key: number
     indexes: { context: string }
   }
 
   BetterBibLaTeX: {
-    value: ExportCacheContent
+    value: ExportedItem
     key: [number, number]
     indexes: { context: number, itemID: number, 'context-itemID': [ number, number ] }
   }
   BetterBibTeX: {
-    value: ExportCacheContent
+    value: ExportedItem
     key: [number, number]
     indexes: { context: number, itemID: number, 'context-itemID': [ number, number ] }
   }
   BetterCSLJSON: {
-    value: ExportCacheContent
+    value: ExportedItem
     key: [number, number]
     indexes: { context: number, itemID: number, 'context-itemID': [ number, number ] }
   }
   BetterCSLYAML: {
-    value: ExportCacheContent
+    value: ExportedItem
     key: [number, number]
     indexes: { context: number, itemID: number, 'context-itemID': [ number, number ] }
   }
@@ -64,7 +64,7 @@ interface Schema extends DBSchema {
     key: string
   }
 }
-export type ExportCacheName = 'ZoteroSerialized' | 'ZoteroSerializedTouched' | 'ExportCacheContext' | 'BetterBibLaTeX' | 'BetterBibTeX' | 'BetterCSLJSON' | 'BetterCSLYAML'
+export type ExportCacheName = 'BetterBibLaTeX' | 'BetterBibTeX' | 'BetterCSLJSON' | 'BetterCSLYAML'
 
 class ExportCache {
   constructor(private db: IDBPDatabase<Schema>, private name: ExportCacheName) {
@@ -85,16 +85,21 @@ class ExportCache {
     await Promise.all([...deletes, tx.done])
   }
 
-  public async reset(context: string): Promise<void> {
-    const tx = this.db.transaction(this.name, 'readwrite')
-    const store = tx.objectStore(this.name as 'BetterBibTeX')
-    const index = store.index('context')
-    let cursor = await index.openCursor(IDBKeyRange.only(context))
+  public async remove(path: string): Promise<void> {
+    const tx = this.db.transaction([this.name, 'ExportContext'], 'readwrite')
     const deletes: Promise<void>[] = []
+
+    const cache = tx.objectStore(this.name as 'BetterBibTeX')
+    let cursor = await cache.index('context').openCursor(IDBKeyRange.only(path))
     while (cursor) {
-      deletes.push(store.delete(cursor.primaryKey))
+      deletes.push(cache.delete(cursor.primaryKey))
       cursor = await cursor.continue()
     }
+
+    const context = tx.objectStore('ExportContext')
+    const key = await context.index('context').getKey(path)
+    if (key) deletes.push(context.delete(key))
+
     await Promise.all([...deletes, tx.done])
   }
 }
@@ -179,8 +184,8 @@ class ZoteroSerialized {
   }
 }
 
-export const cache = new class Cache {
-  public schema = 6
+export const Cache = new class $Cache {
+  public schema = 7
   private db: IDBPDatabase<Schema>
   public opened = false
 
@@ -209,7 +214,7 @@ export const cache = new class Cache {
         db.createObjectStore('ZoteroSerializedTouched')
         db.createObjectStore('metadata')
 
-        const context = db.createObjectStore('ExportCacheContext', { keyPath: 'id', autoIncrement: true })
+        const context = db.createObjectStore('ExportContext', { keyPath: 'id', autoIncrement: true })
         context.createIndex('context', 'context', { unique: true })
 
         const stores = [
@@ -269,6 +274,10 @@ export const cache = new class Cache {
     // @ts-expect-error because for some reason, assert does not work here
     await tx.store.clear(store)
     await tx.done
+  }
+
+  public async remove(context: string, store: ExportCacheName) {
+    await this[store.replace(/ /g, '') as 'Better BibTeX'].remove(context)
   }
 
   public close(): void {

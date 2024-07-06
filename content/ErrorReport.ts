@@ -4,7 +4,7 @@ import { Shim } from './os'
 import { is7, platform } from './client'
 const $OS = is7 ? Shim : OS
 
-import { cache as IndexedCache } from './db/indexed'
+import { Cache as IndexedCache } from './db/indexed'
 import { PromptService } from './prompt'
 // import { regex as escapeRE } from './escape'
 
