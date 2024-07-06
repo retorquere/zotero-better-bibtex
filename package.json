@@ -173,7 +173,7 @@
     "putout": "^35.36.2",
     "recast": "^0.23.9",
     "regenerate": "^1.4.2",
-    "rimraf": "^5.0.7",
+    "rimraf": "^5.0.8",
     "shelljs": "^0.8.5",
     "showdown": "^2.1.0",
     "string-template": "^1.0.0",
