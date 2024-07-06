@@ -74,14 +74,28 @@ class ExportCache {
     const tx = this.db.transaction(this.name, 'readwrite')
     const store = tx.objectStore(this.name as 'BetterBibTeX')
     const index = store.index('itemID')
+    const deletes: Promise<void>[] = []
     for (const id of ids) {
       let cursor = await index.openCursor(IDBKeyRange.only(id))
       while (cursor) {
-        await store.delete(cursor.primaryKey)
+        deletes.push(store.delete(cursor.primaryKey))
         cursor = await cursor.continue()
       }
     }
-    await tx.done
+    await Promise.all([...deletes, tx.done])
+  }
+
+  public async reset(context: string): Promise<void> {
+    const tx = this.db.transaction(this.name, 'readwrite')
+    const store = tx.objectStore(this.name as 'BetterBibTeX')
+    const index = store.index('context')
+    let cursor = await index.openCursor(IDBKeyRange.only(context))
+    const deletes: Promise<void>[] = []
+    while (cursor) {
+      deletes.push(store.delete(cursor.primaryKey))
+      cursor = await cursor.continue()
+    }
+    await Promise.all([...deletes, tx.done])
   }
 }
 
