@@ -21,6 +21,9 @@ import { babelLanguage, CJK } from '../text'
 import { fetchSync as fetchInspireHEP } from '../inspire-hep'
 
 const legacyparser = require('./legacy.peggy')
+import reservedIdentifiers from 'reserved-identifiers'
+const reserved = reservedIdentifiers({ includeGlobalProperties: true })
+
 import * as Formula from './convert'
 import * as DateParser from '../dateparser'
 
@@ -361,7 +364,7 @@ export class PatternFormatter {
       if (formula[0] === '[') {
         try {
           log.debug(`formula-update: ${ts} legacy-formula: ${formula}`)
-          formula = legacyparser.parse(formula, { items, methods })
+          formula = legacyparser.parse(formula, { reserved, items, methods })
           log.debug(`formula-update: ${ts} legacy-formula upgraded to: ${formula}`)
         }
         catch (err) {
