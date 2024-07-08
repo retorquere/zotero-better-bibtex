@@ -41,7 +41,7 @@ declare const ZOTERO_CONFIG: any
 
 import type { Translators as Translator } from '../typings/translators'
 import { Preference } from './prefs'
-import { Preferences } from '../gen/preferences/meta'
+import { affects, Preferences } from '../gen/preferences/meta'
 import { log } from './logger'
 import { flash } from './flash'
 import { Events } from './events'
@@ -51,6 +51,12 @@ import { orchestrator } from './orchestrator'
 import type { Reason } from './bootstrap'
 import type Bluebird from 'bluebird'
 import { headers as Headers, byLabel, byId, bySlug } from '../gen/translators'
+
+Events.on('preference-changed', async (pref: string) => {
+  for (const translator of (affects[pref] || [])) {
+    await IndexedCache.clear(translator)
+  }
+})
 
 class Queue extends Puqeue {
   get queued() {
