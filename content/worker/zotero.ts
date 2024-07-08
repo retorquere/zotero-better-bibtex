@@ -189,13 +189,20 @@ const WorkerCache = new class $WorkerCache {
       print('indexed cache: opening')
       await IndexedCache.open()
     }
+
+    this.pending = []
+
     const path = TranslationWorker.job.autoExport || exportContext(TranslationWorker.job.translator, TranslationWorker.job.options)
     this.cache = IndexedCache.cache(TranslationWorker.job.translator)
+    if (!this.cache) { // BBT JSON
+      TranslationWorker.job.preferences.cache = false
+      this.items = {}
+      return
+    }
     const { context, items } = await this.cache.load(path)
     print(`indexed cache: ${path} loaded ${Object.keys(items).length} items`)
     this.context = context
     this.items = items
-    this.pending = []
   }
 
   store(itemID: number, entry: string, metadata: ExportedItemMetadata): void {
