@@ -280,12 +280,23 @@ def step_impl(context, translator, collection, output, expected):
     resetCache = True
   )
 
+@step('an export using "{translator}" should match "{expected}", but take no more than {seconds:d} seconds')
+def step_impl(context, translator, expected, seconds):
+  export_library(context,
+    translator = translator,
+    expected = expected,
+    timeout = seconds
+  )
+
+def parse_json(text):
+  try:
+    json.loads(text)
+    return True
+  except:
+    return False
 @step('an export using "{translator}" with {displayOption} on should match {expected}')
 def step_impl(context, translator, displayOption, expected):
-  try:
-    json.loads(expected)
-  except:
-    utils.print(f"could not parse {expected}")
+  assert parse_json(expected), expected
 
   export_library(context,
     displayOption = displayOption,
@@ -298,14 +309,6 @@ def step_impl(context, translator, expected):
   export_library(context,
     translator = translator,
     expected = expected
-  )
-
-@step('an export using "{translator}" should match "{expected}", but take no more than {seconds:d} seconds')
-def step_impl(context, translator, expected, seconds):
-  export_library(context,
-    translator = translator,
-    expected = expected,
-    timeout = seconds
   )
 
 @step('the library should match "{expected}"')

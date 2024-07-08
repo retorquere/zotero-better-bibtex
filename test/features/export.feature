@@ -720,7 +720,7 @@ Feature: Export
     Then an export using "Better BibTeX" with worker on should match "export/*.bibtex"
     When I reset the cache
     Then an export using "Better CSL JSON" with worker on should match "export/*.csl.json"
-    And an export using "Better CSL JSON" with worker on should match "export/*.csl.json", but take no more than 150 seconds
+    And an export using "Better CSL JSON" with worker on should match "export/*.csl.json"
 
   # @use.with_client=zotero @use.with_slow=true @timeout=300
   # @1296
@@ -728,7 +728,7 @@ Feature: Export
   # When I restart Zotero with "1296"
   # And I empty the trash
   # #  Then an export using "Better BibTeX" should match "export/*.bibtex"
-  # #  And an export using "Better BibTeX" should match "export/*.bibtex", but take no more than 150 seconds
+  # #  And an export using "Better BibTeX" should match "export/*.bibtex"
   # Then an auto-export to "/tmp/autoexport.bib" using "Better BibTeX" should match "export/*.bibtex"
   # And I remove "/tmp/autoexport.bib"
   # When I remove all items from "Cited/2010 - CHI (Magic)"
