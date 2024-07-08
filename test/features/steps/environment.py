@@ -14,6 +14,7 @@ import json
 import time
 import math
 from pathlib import Path
+import csv, io
 
 active_tag_value_provider = {
   'client': 'zotero',
@@ -47,6 +48,15 @@ def patch_scenario_with_softfail(scenario):
   else:
     scenario_run = scenario.run
     scenario.run = functools.partial(scenario_run_with_softfail, scenario_run)
+
+def timestamp(phase, name):
+  with open('cpu_usage.csv', 'a') as f:
+    writer = csv.writer(f)
+    writer.writerow([phase, name, int(time.time())])
+def before_step(context, step):
+  timestamp('start', step.name)
+def after_step(context, step):
+  timestamp('end', step.name)
 
 def before_feature(context, feature):
   if lme:= context.config.userdata.get('log_memory_every'):

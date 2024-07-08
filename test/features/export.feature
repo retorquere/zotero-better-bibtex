@@ -689,24 +689,39 @@ Feature: Export
     When I import 1 reference from "export/*.json"
     Then an export using "Better BibLaTeX" should match "export/*.biblatex"
 
+  @cache
+  Scenario: Language field in the metadata exported incorrectly #1921
+    When I import 86 references from "export/*.json"
+    And I wait until Zotero is idle
+    Then an export using "Better BibLaTeX" with worker on should match "export/*.biblatex"
+    When I wait until Zotero is idle
+    Then an export using "Better BibLaTeX" with worker on should match "export/*.biblatex"
+
   # tests the cache
   @use.with_client=zotero @use.with_whopper=true @timeout=3000 @whopper
   Scenario: Really Big whopping library
     When I set preference .citekeySearch to false
     And I restart Zotero with "1287" + "export/*.json"
+    And I reset the cache
 
-  # And I reset the cache
-  # And I export the library 1 times using "id:9cb70025-a888-4a29-a210-93ec52da40d4"
-  # And an export using "Better BibTeX" should match "export/*.bibtex"
-  # And an export using "Better BibTeX" should match "export/*.bibtex"
-  # When I set preference .cache to false
-  # Then an export using "Better BibTeX" should match "export/*.bibtex"
-  # When I reset the cache
-  # And I set preference .cache to false
-  # Then an export using "Better BibTeX" should match "export/*.bibtex"
-  # When I reset the cache
-  # Then an export using "Better CSL JSON" should match "export/*.csl.json"
-  # And an export using "Better CSL JSON" should match "export/*.csl.json", but take no more than 150 seconds
+    And I wait until Zotero is idle
+    And I export the library 1 times using "id:9cb70025-a888-4a29-a210-93ec52da40d4"
+
+    And I wait until Zotero is idle
+    And an export using "Better BibTeX" with worker on should match "export/*.bibtex"
+
+    And I wait until Zotero is idle
+    And an export using "Better BibTeX" with worker on should match "export/*.bibtex"
+
+    When I set preference .cache to false
+    Then an export using "Better BibTeX" with worker on should match "export/*.bibtex"
+    When I reset the cache
+    And I set preference .cache to false
+    Then an export using "Better BibTeX" with worker on should match "export/*.bibtex"
+    When I reset the cache
+    Then an export using "Better CSL JSON" with worker on should match "export/*.csl.json"
+    And an export using "Better CSL JSON" with worker on should match "export/*.csl.json", but take no more than 150 seconds
+
   # @use.with_client=zotero @use.with_slow=true @timeout=300
   # @1296
   # Scenario: Cache does not seem to fill #1296

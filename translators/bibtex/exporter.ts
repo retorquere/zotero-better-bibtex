@@ -63,7 +63,7 @@ export class Exporter {
 
       let cached: ExportedItem = null
       if (item.$cacheable && this.translation.BetterTeX) {
-        if (cached = Zotero.BetterBibTeX.Cache.fetch(this.translation.translator.label, item.itemID, this.translation.options, this.translation.preferences)) {
+        if (cached = Zotero.BetterBibTeX.Cache.fetch(item.itemID)) {
           this.translation.output.body += cached.entry
           this.postfix?.add(cached.metadata)
           continue

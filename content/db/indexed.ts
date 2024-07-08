@@ -80,6 +80,7 @@ export type ExportCacheName = 'BetterBibLaTeX' | 'BetterBibTeX' | 'BetterCSLJSON
 
 export class ExportCache {
   constructor(private db: IDBPDatabase<Schema>, private name: ExportCacheName) {
+    print(`indexed: attaching ${name}`)
   }
 
   public async touch(ids: number[]): Promise<void> {
@@ -292,7 +293,6 @@ export const Cache = new class $Cache {
 
     print('indexed: attaching ZoteroSerialized')
     this.ZoteroSerialized = new ZoteroSerialized(this.db, serialize)
-    print('indexed: attached ZoteroSerialized')
 
     this.BetterBibTeX = new ExportCache(this.db, 'BetterBibTeX')
     this.BetterBibLaTeX = new ExportCache(this.db, 'BetterBibLaTeX')

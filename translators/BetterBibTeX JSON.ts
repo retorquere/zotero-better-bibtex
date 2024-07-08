@@ -157,7 +157,6 @@ export function doExport(): void {
   if (translation.options.Items) {
     const validAttachmentFields = new Set([ 'relations', 'uri', 'itemType', 'title', 'path', 'tags', 'dateAdded', 'dateModified', 'seeAlso', 'mimeType' ])
 
-    print(`indexed: exporting ${[...translation.input.items].map(item => item.itemType)}`)
     for (let item of translation.input.items) {
       item = {...item} // un-proxy item
       delete item.$cacheable
@@ -200,7 +199,6 @@ export function doExport(): void {
       }
 
       data.items.push(item)
-      print(`indexed: added ${data.items.length} so far`)
     }
   }
 

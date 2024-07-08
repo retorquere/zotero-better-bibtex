@@ -63,7 +63,7 @@ export abstract class CSLExporter {
       order.push({ citationKey: item.citationKey, i: items.length })
 
       let cached: ExportedItem
-      if (!this.translation.options.custom && (cached = Zotero.BetterBibTeX.Cache.fetch(this.translation.translator.label, item.itemID, this.translation.options, this.translation.preferences))) {
+      if (!this.translation.options.custom && (cached = Zotero.BetterBibTeX.Cache.fetch(item.itemID))) {
         items.push(cached.entry)
         continue
       }
@@ -192,7 +192,7 @@ export abstract class CSLExporter {
       csl = this.sortObject(csl)
       csl = this.serialize(csl)
 
-      if (allow.cache) Zotero.BetterBibTeX.Cache.store(this.translation.translator.label, item.itemID, this.translation.options, this.translation.preferences, csl, {})
+      if (allow.cache) Zotero.BetterBibTeX.Cache.store(item.itemID, csl, {})
 
       if (allow.write) items.push(csl)
     }

@@ -9,11 +9,12 @@ import * as Extra from './extra'
 import  { defaults } from '../gen/preferences/meta'
 import { Preference } from './prefs'
 import * as memory from './memory'
-import { Events } from './events'
 import { is7 } from './client'
 import { Cache as IndexedCache } from './db/indexed'
 
 const setatstart: string[] = ['testing', 'cache'].filter(p => Preference[p] !== defaults[p])
+
+const idleService: any = Components.classes[`@mozilla.org/widget/${is7 ? 'user' : ''}idleservice;1`].getService(Components.interfaces[is7 ? 'nsIUserIdleService' : 'nsIIdleService'])
 
 export class TestSupport {
   public timedMemoryLog: any
@@ -27,8 +28,8 @@ export class TestSupport {
   }
   */
 
-  public isIdle(topic: string): boolean {
-    return Events.idle[topic] === 'idle'
+  public isIdle(): boolean {
+    return idleService.idleTime > 1000
   }
 
   public memoryState(snapshot: string): memory.State {

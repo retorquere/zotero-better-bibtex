@@ -914,16 +914,7 @@ export class Entry {
     this.metadata.DeclarePrefChars = this.unique_chars(this.metadata.DeclarePrefChars)
 
     this.metadata.packages = Object.keys(this.packages)
-    if (this.item.$cacheable) {
-      Zotero.BetterBibTeX.Cache.store(
-        this.translation.translator.label,
-        this.item.itemID,
-        this.translation.options,
-        this.translation.preferences,
-        ref,
-        this.metadata
-      )
-    }
+    if (this.item.$cacheable) Zotero.BetterBibTeX.Cache.store(this.item.itemID, ref, this.metadata)
 
     this.translation.bibtex.postfix.add(this.metadata)
   }

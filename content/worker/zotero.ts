@@ -185,10 +185,14 @@ const WorkerCache = new class $WorkerCache {
   public pending: ExportedItem[] = []
 
   async init() {
-    if (!IndexedCache.opened) await IndexedCache.open()
+    if (!IndexedCache.opened) {
+      print('indexed cache: opening')
+      await IndexedCache.open()
+    }
     const path = TranslationWorker.job.autoExport || exportContext(TranslationWorker.job.translator, TranslationWorker.job.options)
     this.cache = IndexedCache.cache(TranslationWorker.job.translator)
     const { context, items } = await this.cache.load(path)
+    print(`indexed cache: ${path} loaded ${Object.keys(items).length} items`)
     this.context = context
     this.items = items
     this.pending = []
@@ -571,6 +575,7 @@ ctx.onmessage = async function(e: { isTrusted?: boolean, data?: Translators.Work
 
       case 'start':
         TranslationWorker.job = JSON.parse(dec.decode(new Uint8Array(e.data.config)))
+        print(`indexed cache: starting ${JSON.stringify(TranslationWorker.job.translator)}`)
 
         importScripts(`chrome://zotero-better-bibtex/content/resource/${TranslationWorker.job.translator}.js`)
         try {

@@ -88,7 +88,7 @@ orchestrator.add({
     const lastUpdated = await Zotero.DB.valueQueryAsync('SELECT MAX(dateModified) FROM items')
     await IndexedCache.open(serialize, lastUpdated)
 
-    Events.serializationCacheTouch = async (ids: number[]) => {
+    Events.cacheTouch = async (ids: number[]) => {
       await IndexedCache.touch(ids)
     }
   },

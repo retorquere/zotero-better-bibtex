@@ -282,6 +282,11 @@ def step_impl(context, translator, collection, output, expected):
 
 @step('an export using "{translator}" with {displayOption} on should match {expected}')
 def step_impl(context, translator, displayOption, expected):
+  try:
+    json.loads(expected)
+  except:
+    utils.print(f"could not parse {expected}")
+
   export_library(context,
     displayOption = displayOption,
     translator = translator,
@@ -414,7 +419,7 @@ def step_impl(context, seconds):
 
 @step(u'I wait until Zotero is idle')
 def step_impl(context):
-  while not context.zotero.execute('return await Zotero.BetterBibTeX.TestSupport.isIdle("auto-export")'):
+  while not context.zotero.execute('return await Zotero.BetterBibTeX.TestSupport.isIdle()'):
     time.sleep(5)
 
 @step(u'I wait at most {seconds:d} seconds until all auto-exports are done')
