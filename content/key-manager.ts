@@ -23,7 +23,6 @@ import { getItemsAsync } from './get-items-async'
 
 import { Preference } from './prefs'
 import { Formatter } from './key-manager/formatter'
-import { DB as Cache } from './db/cache'
 
 import { createDB, createTable, Query, BlinkKey } from 'blinkdb'
 import * as blink from '../gen/blinkdb'
@@ -114,7 +113,7 @@ export const KeyManager = new class _KeyManager {
     const citationKey = prompt({ text: l10n.localize('better-bibtex_citekey_set_change'), value: existingKey }) || existingKey
     if (citationKey === existingKey) return
 
-    Cache.remove(ids, `setting key for ${ids}`)
+    await IndexedCache.touch(ids)
 
     const item = await getItemsAsync(ids[0])
     item.setField('extra', Extra.set(item.getField('extra'), { citationKey }))
@@ -164,7 +163,7 @@ export const KeyManager = new class _KeyManager {
   public async refresh(ids: 'selected' | number | number[], manual = false): Promise<void> {
     ids = this.expandSelection(ids)
 
-    Cache.remove(ids, `refreshing keys for ${ids}`)
+    await IndexedCache.touch(ids)
 
     const warnAt = manual ? Preference.warnBulkModify : 0
     const affected = blink.many(this.keys, {

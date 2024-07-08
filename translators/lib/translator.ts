@@ -454,6 +454,13 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
       return acc
     }, {} as unknown as Prefs.Preferences)
 
+    // when exporting file data you get relative paths, when not, you get absolute paths, only one version can go into the cache
+    if (this.options.exportFileData) this.cacheable = false
+    // jabref 4 stores collection info inside the entry, and collection info depends on which part of your library you're exporting
+    if (this.BetterTeX && this.preferences.jabrefFormat >= 4) this.cacheable = false
+    // relative file paths are going to be different based on the file being exported to
+    if (this.preferences.relativeFilePaths) this.cacheable = false
+
     const override = new Override(this.preferences)
     if (override.override('preferences', '.json')) this.cacheable = false
     if (override.override('postscript', '.js')) this.cacheable = false

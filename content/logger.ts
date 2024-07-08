@@ -1,6 +1,6 @@
 import type { Translators as Translator } from '../typings/translators'
 declare const workerEnvironment: any
-declare const workerJob: Translator.Worker.Job
+declare const TranslationWorker: { job: Translator.Worker.Job }
 declare const dump: (msg: string) => void
 
 import { stringify } from './stringify'
@@ -36,7 +36,7 @@ class Logger {
     let prefix = ''
     if (typeof workerEnvironment !== 'undefined') {
       prefix += ' worker'
-      if (typeof workerJob !== 'undefined') prefix += `:${workerJob.translator}`
+      if (typeof TranslationWorker !== 'undefined') prefix += `:${TranslationWorker.job.translator}`
     }
 
     if (error) prefix += ' error:'
@@ -46,7 +46,7 @@ class Logger {
 
   public get enabled(): boolean {
     return (
-      (typeof workerJob !== 'undefined' && workerJob.debugEnabled)
+      (typeof TranslationWorker !== 'undefined' && TranslationWorker.job.debugEnabled)
       ||
       !Zotero
       ||

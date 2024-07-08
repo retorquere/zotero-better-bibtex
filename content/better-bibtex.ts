@@ -36,6 +36,7 @@ import { clean_pane_persist } from './clean_pane_persist'
 import { flash } from './flash'
 import { orchestrator } from './orchestrator'
 import type { Reason } from './bootstrap'
+import type { ExportedItem, ExportedItemMetadata } from './db/indexed'
 
 import { Preference } from './prefs' // needs to be here early, initializes the prefs observer
 require('./pull-export') // just require, initializes the pull-export end points
@@ -48,8 +49,6 @@ import { log } from './logger'
 import { Events } from './events'
 
 import { Translators } from './translators'
-import { DB as Cache } from './db/cache'
-// +import { cache as IndexedCache } from './db/indexed'
 import { fix as fixExportFormat } from './item-export-format'
 import { AutoExport, SQL as AE } from './auto-export'
 import { KeyManager } from './key-manager'
@@ -574,7 +573,13 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
 export class BetterBibTeX {
   public uninstalled = false
   public Orchestrator = orchestrator
-  public Cache = Cache
+  public Cache = {
+    fetch(_itemID: number): ExportedItem {
+      return null
+    },
+    store(_itemID: number, _entry: string, _metadata: ExportedItemMetadata): void { // eslint-disable-line @typescript-eslint/no-empty-function
+    },
+  }
 
   // eslint-disable-next-line prefer-arrow/prefer-arrow-functions, @typescript-eslint/no-unsafe-return, @typescript-eslint/explicit-module-boundary-types
   public CSL() { return CSL }

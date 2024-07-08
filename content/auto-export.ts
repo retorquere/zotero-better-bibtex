@@ -7,9 +7,8 @@ import { Shim } from './os'
 import { is7, platform } from './client'
 const $OS = is7 ? Shim : OS
 
+import { Cache as IndexedCache } from './db/indexed'
 import { Events } from './events'
-import { DB as Cache } from './db/cache'
-import { $and } from './db/loki'
 import { Translators, ExportJob } from './translators'
 import { Preference } from './prefs'
 import { Preferences, autoExport, affectedBy, PreferenceName } from '../gen/preferences/meta'
@@ -600,25 +599,8 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
     await this.itemIDs(ae, ae.id, itemTypeIDs, itemIDset)
     if (itemIDset.size === 0) return 100
 
-    const options = {
-      exportNotes: !!ae.exportNotes,
-      useJournalAbbreviation: !!ae.useJournalAbbreviation,
-    }
-    const prefs: Partial<Preferences> = affectedBy[translator.label].reduce((acc: any, k: string): any => {
-      if (k in ae) acc[k] = ae[k]
-      return acc
-    }, {} as any) as Partial<Preferences>
-
-    const label = translator.label
-    const selector = Cache.selector(label, options, prefs)
-    const itemIDs = [...itemIDset]
-    const query = $and({...selector, itemID: { $in: itemIDs } })
-    const cached = {
-      serialized: Cache.getCollection('itemToExportFormat').find({ itemID: { $in: itemIDs } }).length,
-      export: Cache.getCollection(label).find(query).length,
-    }
-
-    return Math.min(Math.round((100 * (cached.serialized + cached.export)) / (itemIDs.length * 2)), 100)
+    const cached = await IndexedCache.cache(translator.label).count(path)
+    return Math.min(100 * (cached / itemIDset.size), 100)
   }
 
   private async itemIDs(ae: Job, id: number, itemTypeIDs: number[], itemIDs: Set<number>) {

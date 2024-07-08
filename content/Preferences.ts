@@ -7,7 +7,6 @@ const $OS = is7 ? Shim : OS
 import type { XUL } from '../typings/xul'
 
 import { log } from './logger'
-import { DB as Cache } from './db/cache'
 
 import { Preference } from './prefs'
 import { options as preferenceOptions, defaults as preferenceDefaults } from '../gen/preferences/meta'
@@ -20,6 +19,7 @@ import { Events } from './events'
 import { pick } from './file-picker'
 import { flash } from './flash'
 import { icons } from './icons'
+import { Cache as IndexedCache } from './db/indexed'
 
 // safe to keep "global" since only one pref pane will be loaded at any one time
 let $window: Window & { sizeToContent(): void } // eslint-disable-line no-var
@@ -255,7 +255,7 @@ class AutoExportPane {
 
     const path = menulist.selectedItem.getAttribute('value')
     const ae = await AutoExport.get(path)
-    Cache.getCollection(Translators.byId[ae.translatorID].label)?.removeDataOnly()
+    await IndexedCache.remove(Translators.byId[ae.translatorID].label, path)
     await AutoExport.remove(path)
     await this.refresh()
   }
@@ -278,7 +278,8 @@ class AutoExportPane {
     log.debug('edit autoexport: before', ae)
 
     const field = node.getAttribute('data-ae-field')
-    Cache.getCollection(Translators.byId[ae.translatorID].label).removeDataOnly()
+
+    await IndexedCache.cache(Translators.byId[ae.translatorID].label)?.clear(path)
 
     let value: number | boolean | string
     let disable: 'biblatexChicago' | 'biblatexAPA' = null
@@ -455,8 +456,8 @@ export class PrefPane {
     $window.document.getElementById('bbt-cache-warn-postscript').setAttribute('hidden', `${!Preference.postscript.includes('Translator.options.exportPath')}`)
   }
 
-  public cacheReset(): void {
-    Cache.reset('user-initiated')
+  public async cacheReset(): Promise<void> {
+    await IndexedCache.clear('*')
   }
 
   public async load(win: Window): Promise<void> {

@@ -437,7 +437,7 @@ def step_impl(context, path):
 
 @step(u'I reset the cache')
 def step_impl(context):
-  context.zotero.execute('Zotero.BetterBibTeX.TestSupport.resetCache()')
+  context.zotero.execute('await Zotero.BetterBibTeX.TestSupport.resetCache()')
 
 @step(u'I copy date-added/date-modified for the selected items from the extra field')
 def step_impl(context):

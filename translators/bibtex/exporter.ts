@@ -3,13 +3,13 @@ declare const Zotero: any
 import { Translation } from '../lib/translator'
 
 import { RegularItem } from '../../gen/typings/serialized-item'
-import { Cache } from '../../typings/cache'
 
 import { JabRef } from '../bibtex/jabref'
 import { simplifyForExport } from '../../gen/items/simplify'
 import * as bibtexParser from '@retorquere/bibtex-parser'
 import { Postfix } from './postfix'
 import * as Extra from '../../content/extra'
+import type { ExportedItem } from '../../content/db/indexed'
 import { HTMLConverter, Mode as ConversionMode, ConverterOptions, ParseResult } from './unicode_translator'
 
 export class Exporter {
@@ -61,7 +61,7 @@ export class Exporter {
 
       this.jabref.citekeys.set(item.itemID, item.citationKey)
 
-      let cached: Cache.ExportedItem = null
+      let cached: ExportedItem = null
       if (item.$cacheable && this.translation.BetterTeX) {
         if (cached = Zotero.BetterBibTeX.Cache.fetch(this.translation.translator.label, item.itemID, this.translation.options, this.translation.preferences)) {
           this.translation.output.body += cached.entry

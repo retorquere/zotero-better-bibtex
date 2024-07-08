@@ -7,7 +7,7 @@ import { Translation } from '../lib/translator'
 
 import { simplifyForExport } from '../../gen/items/simplify'
 import { Fields as ParsedExtraFields, get as getExtra, cslCreator } from '../../content/extra'
-import { Cache } from '../../typings/cache'
+import type { ExportedItem } from '../../content/db/indexed'
 import * as ExtraFields from '../../gen/items/extra-fields.json'
 import { log } from '../../content/logger'
 import { RegularItem } from '../../gen/typings/serialized-item'
@@ -62,7 +62,7 @@ export abstract class CSLExporter {
     for (const item of (this.translation.input.items.regular as Generator<ExtendedItem, void, unknown>)) {
       order.push({ citationKey: item.citationKey, i: items.length })
 
-      let cached: Cache.ExportedItem
+      let cached: ExportedItem
       if (!this.translation.options.custom && (cached = Zotero.BetterBibTeX.Cache.fetch(this.translation.translator.label, item.itemID, this.translation.options, this.translation.preferences))) {
         items.push(cached.entry)
         continue

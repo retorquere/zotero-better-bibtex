@@ -5,13 +5,13 @@ import { Translators } from './translators'
 import { Formatter as CAYWFormatter } from './cayw/formatter'
 import { getItemsAsync } from './get-items-async'
 import { AUXScanner } from './aux-scanner'
-import { DB as Cache } from './db/cache'
 import * as Extra from './extra'
 import  { defaults } from '../gen/preferences/meta'
 import { Preference } from './prefs'
 import * as memory from './memory'
 import { Events } from './events'
 import { is7 } from './client'
+import { Cache as IndexedCache } from './db/indexed'
 
 const setatstart: string[] = ['testing', 'cache'].filter(p => Preference[p] !== defaults[p])
 
@@ -42,7 +42,7 @@ export class TestSupport {
 
   public async reset(scenario: string): Promise<void> {
     log.debug('test environment reset for', scenario)
-    Cache.reset('test environment reset')
+    await this.resetCache()
 
     const prefix = 'translators.better-bibtex.'
     for (const [pref, value] of Object.entries(defaults)) {
@@ -239,8 +239,8 @@ export class TestSupport {
     }
   }
 
-  public resetCache(): void {
-    Cache.reset('requested during test')
+  public async resetCache(): Promise<void> {
+    await IndexedCache.clear('*')
   }
 
   public async merge(ids: number[]): Promise<void> {

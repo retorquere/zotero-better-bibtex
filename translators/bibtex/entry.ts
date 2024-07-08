@@ -5,7 +5,7 @@
 declare const Zotero: any
 
 import { RegularItem as Item } from '../../gen/typings/serialized-item'
-import { Cache } from '../../typings/cache'
+import type { ExportedItemMetadata } from '../../content/db/indexed'
 import type { Translators } from '../../typings/translators'
 import * as DateParser from '../../content/dateparser'
 import fold2ascii from 'fold-to-ascii'
@@ -195,7 +195,7 @@ export class Entry {
     }
   }
 
-  private metadata: Cache.ExportedItemMetadata = { DeclarePrefChars: '', noopsort: false, packages: [] }
+  private metadata: ExportedItemMetadata = { DeclarePrefChars: '', noopsort: false, packages: [] }
   private packages: Record<string, boolean> = {}
   private juniorcomma: boolean
   public translation: Translation

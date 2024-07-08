@@ -369,7 +369,7 @@ class Zotero:
       os.remove(csv)
 
   def reset_cache(self):
-    self.execute('Zotero.BetterBibTeX.TestSupport.resetCache()')
+    self.execute('await Zotero.BetterBibTeX.TestSupport.resetCache()')
 
   def load(self, path, attempt_patch=False):
     path = os.path.join(FIXTURES, path)
@@ -456,7 +456,7 @@ class Zotero:
       path=output,
       collection=collection
     )
-    if resetCache: self.execute('Zotero.BetterBibTeX.TestSupport.resetCache()')
+    if resetCache: self.execute('await Zotero.BetterBibTeX.TestSupport.resetCache()')
 
     if expected is None: return
 

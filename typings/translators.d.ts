@@ -22,7 +22,6 @@ export namespace Translators {
       data?: {
         items: number[]
         collections: Collection[]
-        cache: Record<number, {itemID: number, reference: string, metadata: any, meta: { updated: number }}>
       }
     }
 
@@ -33,7 +32,6 @@ export namespace Translators {
       | { kind: 'done', output: boolean | string }
       | { kind: 'debug', message: string }
       | { kind: 'error', message: string }
-      | { kind: 'cache', itemID: number, entry: string, metadata: any }
       | { kind: 'item', item: number }
       | { kind: 'ping' }
       | { kind: 'stop' }

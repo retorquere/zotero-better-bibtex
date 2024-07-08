@@ -18,7 +18,6 @@ import { log } from './logger'
 import { AutoExport } from './auto-export'
 import { KeyManager } from './key-manager'
 
-import { DB as Cache } from './db/cache'
 import { pick } from './file-picker'
 import * as l10n from './l10n'
 
@@ -160,7 +159,7 @@ export class ErrorReport {
     if (this.report.items) files[`${this.name()}/items.json`] = enc.encode(this.report.items)
     if (this.config.cache) {
       files[`${this.name()}/database.json`] = enc.encode(JSON.stringify(KeyManager.all()))
-      files[`${this.name()}/cache.json`] = enc.encode(Cache.serialize({ serializationMethod: 'pretty' }))
+      files[`${this.name()}/cache.json`] = enc.encode(JSON.stringify(IndexedCache.export()))
     }
     if (this.report.acronyms) files[`${this.name()}/acronyms.csv`] = enc.encode(this.report.acronyms)
 
@@ -247,7 +246,7 @@ export class ErrorReport {
     return true
   }
 
-  private reload() {
+  private async reload() {
     const init = typeof this.config === 'undefined'
     this.config = {
       context: true,
@@ -306,7 +305,7 @@ export class ErrorReport {
     this.setValue('better-bibtex-error-errors', this.report.errors || '')
     this.setValue('better-bibtex-error-log', this.preview(this.report.log || ''))
     this.setValue('better-bibtex-error-items', this.report.items ? this.preview(JSON.parse(this.report.items)) : '')
-    this.setValue('better-bibtex-report-cache', this.cacheState = l10n.localize('better-bibtex_error-report_better-bibtex_cache', Cache.state()))
+    this.setValue('better-bibtex-report-cache', this.cacheState = l10n.localize('better-bibtex_error-report_better-bibtex_cache', { entries: await IndexedCache.count() }))
 
     this.report.log = [
       this.report.context,
@@ -348,7 +347,7 @@ export class ErrorReport {
     const acronyms = $OS.Path.join(Zotero.BetterBibTeX.dir, 'acronyms.csv')
     if (await $OS.File.exists(acronyms)) this.input.acronyms = await $OS.File.read(acronyms, { encoding: 'utf-8' }) as unknown as string
 
-    this.reload()
+    await this.reload()
 
     const current = require('../gen/version.js')
     this.setValue('better-bibtex-report-current', l10n.localize('better-bibtex_error-report_better-bibtex_current', { version: current }))

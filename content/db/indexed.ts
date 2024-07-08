@@ -1,3 +1,4 @@
+import { bySlug } from '../../gen/translators'
 import { openDB, IDBPDatabase, DBSchema } from 'idb'
 import type { Attachment, Item, Note } from '../../gen/typings/serialized-item'
 import { print } from '../logger'
@@ -6,9 +7,13 @@ type Serialized = Item | Attachment | Note
 type Serializer = (item: any) => Serialized
 
 import type { Translators as Translator } from '../../typings/translators'
-const skip = [ 'keepUpdated', 'worker', 'exportFileData' ]
-export function exportContext(displayOptions: Partial<Translator.DisplayOptions>): string {
-  return JSON.stringify(Object.entries(displayOptions).filter(([k, _v]) => !skip.includes(k)).sort((a, b) => a[0].localeCompare(b[0])))
+const skip = new Set([ 'keepUpdated', 'worker', 'exportFileData' ])
+
+export function exportContext(translator: string, displayOptions: Partial<Translator.DisplayOptions>): string {
+  const defaultOptions = bySlug[translator.replace(/ /g, '')]?.displayOptions
+  if (!defaultOptions) throw new Error(`Unexpected translator ${translator}`)
+  const valid = new Set(Object.keys(defaultOptions).filter(option => !skip.has(option)))
+  return JSON.stringify(Object.entries({ ...defaultOptions, ...displayOptions }).filter(([k, _v]) => valid.has(k)).sort((a, b) => a[0].localeCompare(b[0])))
 }
 
 export type ExportContext = {
@@ -16,10 +21,17 @@ export type ExportContext = {
   id: number
 }
 
+export interface ExportedItemMetadata {
+  DeclarePrefChars: string
+  noopsort: boolean
+  packages: string[]
+}
+
 export type ExportedItem = {
   context: number
   itemID: number
   entry: string
+  metadata: ExportedItemMetadata
 }
 
 interface Schema extends DBSchema {
@@ -66,7 +78,7 @@ interface Schema extends DBSchema {
 }
 export type ExportCacheName = 'BetterBibLaTeX' | 'BetterBibTeX' | 'BetterCSLJSON' | 'BetterCSLYAML'
 
-class ExportCache {
+export class ExportCache {
   constructor(private db: IDBPDatabase<Schema>, private name: ExportCacheName) {
   }
 
@@ -85,8 +97,13 @@ class ExportCache {
     await Promise.all([...deletes, tx.done])
   }
 
-  public async remove(path: string): Promise<void> {
-    const tx = this.db.transaction([this.name, 'ExportContext'], 'readwrite')
+  public async clear(path: string): Promise<void> {
+    await this.remove(path, false)
+  }
+
+  public async remove(path: string, deleteContext = true): Promise<void> {
+    const stores: Array<'ExportContext' | ExportCacheName> = deleteContext ? [this.name, 'ExportContext'] : [ this.name ]
+    const tx = this.db.transaction(stores, 'readwrite')
     const deletes: Promise<void>[] = []
 
     const cache = tx.objectStore(this.name as 'BetterBibTeX')
@@ -96,11 +113,53 @@ class ExportCache {
       cursor = await cursor.continue()
     }
 
-    const context = tx.objectStore('ExportContext')
-    const key = await context.index('context').getKey(path)
-    if (key) deletes.push(context.delete(key))
+    if (deleteContext) {
+      const context = tx.objectStore('ExportContext')
+      const key = await context.index('context').getKey(path)
+      if (key) deletes.push(context.delete(key))
+    }
 
     await Promise.all([...deletes, tx.done])
+  }
+
+  public async count(path: string): Promise<number> {
+    return await this.db.countFromIndex(this.name as 'BetterBibTeX', 'context', IDBKeyRange.only(path))
+  }
+
+  public async load(path: string): Promise<{ context: number, items: Record<number, ExportedItem>}> {
+    const stores: Array<'ExportContext' | ExportCacheName> = [this.name, 'ExportContext']
+    const tx = this.db.transaction(stores, 'readwrite')
+
+    let context: number
+    const items: Record<number, ExportedItem> = {}
+
+    try {
+      const store = tx.objectStore('ExportContext')
+      const index = store.index('context')
+      // force type to get auto-increment field
+      context = (await index.get(path))?.id || (await store.add({ context: path } as unknown as ExportContext))
+    }
+    catch (err) {
+      return { context, items }
+    }
+
+    try {
+      const store = tx.objectStore(this.name)
+      const index = store.index('context')
+      for (const entry of (await index.getAll(context))) {
+        items[entry.itemID] = entry
+      }
+    }
+    catch (err) {
+      return { context, items }
+    }
+
+    return { context, items }
+  }
+
+  public async store(items: ExportedItem[]): Promise<void> {
+    const tx = this.db.transaction(this.name, 'readwrite')
+    await Promise.all([...items.map(item => tx.store.put(item)), tx.done])
   }
 }
 
@@ -269,20 +328,38 @@ export const Cache = new class $Cache {
     await this.db.put('metadata', Zotero.Date.dateToSQL(new Date(), true), 'lastUpdated')
   }
 
-  public async clear(store: ExportCacheName) {
-    const tx = this.db.transaction(store.replace(/ /g, '') as ExportCacheName, 'readonly')
-    // @ts-expect-error because for some reason, assert does not work here
-    await tx.store.clear(store)
-    await tx.done
+  public cache(store: string): ExportCache {
+    return this[store.replace(/ /g, '') as 'Better BibTeX'] as ExportCache
   }
 
-  public async remove(context: string, store: ExportCacheName) {
-    await this[store.replace(/ /g, '') as 'Better BibTeX'].remove(context)
+  public async clear(store: string) {
+    store = store.replace(/ /g, '')
+    for (store of [...this.db.objectStoreNames].filter(name => name !== 'metadata' && (store === '*' || name === store))) {
+      await this.db.clear(store as 'BetterBibTeX')
+    }
+  }
+
+  public async remove(translator: string, path: string) {
+    await this.cache(translator)?.remove(path)
   }
 
   public close(): void {
     this.db.close()
     this.opened = false
+  }
+
+  public async count() {
+    let entries = 0
+    for (const store of this.db.objectStoreNames) {
+      switch (store) {
+        case 'metadata':
+        case 'ZoteroSerializedTouched':
+          break
+        default:
+          entries += await this.db.count(store)
+      }
+    }
+    return entries
   }
 
   public async export(): Promise<Record<string, any>> {

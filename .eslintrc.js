@@ -19,6 +19,7 @@ Object.assign(config.rules, {
   '@typescript-eslint/no-unsafe-member-access': 'off',
   '@typescript-eslint/prefer-regexp-exec': 'off',
   '@typescript-eslint/restrict-template-expressions': 'off',
+  '@typescript-eslint/array-type': 'off',
 
   '@typescript-eslint/ban-ts-comment': 'warn',
   '@typescript-eslint/member-delimiter-style': [ 'error', {
@@ -28,6 +29,7 @@ Object.assign(config.rules, {
   '@typescript-eslint/no-unused-vars': [ 'error', { "argsIgnorePattern": "^_" } ],
   'no-magic-numbers': 'off',
   'max-len': [ 'warn', { code: 320 } ],
+  'prefer-arrow/prefer-arrow-functions': 'off',
 })
 
 config.ignorePatterns = [

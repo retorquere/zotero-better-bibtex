@@ -43,9 +43,7 @@ import type { Translators as Translator } from '../typings/translators'
 import { Preference } from './prefs'
 import { Preferences } from '../gen/preferences/meta'
 import { log } from './logger'
-import { DB as Cache } from './db/cache'
 import { flash } from './flash'
-import { $and } from './db/loki'
 import { Events } from './events'
 import { Pinger } from './ping'
 import Puqeue from 'puqeue'
@@ -261,17 +259,6 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
     const preferences = job.preferences || {}
 
-    const cache = Preference.cache && !(
-      // when exporting file data you get relative paths, when not, you get absolute paths, only one version can go into the cache
-      displayOptions.exportFileData
-
-      // jabref 4 stores collection info inside the entry, and collection info depends on which part of your library you're exporting
-      || (translator.label.includes('TeX') && preferences.jabrefFormat >= 4)
-
-      // relative file paths are going to be different based on the file being exported to
-      || preferences.relativeFilePaths
-    ) && Cache.getCollection(translator.label)
-
     const deferred = Zotero.Promise.defer()
 
     const config: Translator.Worker.Job = {
@@ -280,7 +267,6 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       data: {
         items: [],
         collections: [],
-        cache: {},
       },
       autoExport: job.autoExport,
 
@@ -310,12 +296,6 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
         case 'done':
           void Events.emit('export-progress', { pct: 100, message: translator.label, ae: job.autoExport })
           deferred.resolve(typeof e.data.output === 'boolean' ? '' : e.data.output)
-          break
-
-        case 'cache':
-          let { itemID, entry, metadata } = e.data
-          if (!metadata) metadata = {}
-          Cache.store(translator.label, itemID, config.options, config.preferences, entry, metadata)
           break
 
         case 'progress':
@@ -389,25 +369,6 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
         collection.name = collection.fields.name
         return collection
       })
-    }
-
-    // pre-fetch cache
-    if (cache) {
-      const selector = translator.configOptions?.cached ? Cache.selector(translator.label, config.options, config.preferences) : null
-      const query = {...selector, itemID: { $in: config.data.items }}
-
-      // not safe in async!
-      const cloneObjects = cache.cloneObjects
-      // uncloned is safe because it gets serialized in the transfer
-      cache.cloneObjects = false
-      config.data.cache = cache.find($and(query)).reduce((acc, cached) => {
-        // direct-DB access for speed...
-        cached.meta.updated = (new Date).getTime() // touches the cache object so it isn't reaped too early
-        acc[cached.itemID] = cached
-        return acc
-      }, {})
-      cache.cloneObjects = cloneObjects
-      cache.dirty = true
     }
 
     prepare.done()
@@ -588,7 +549,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       Zotero.File.getContentsFromURL(`chrome://zotero-better-bibtex/content/resource/${header.label}.js`),
     ].join('\n')
 
-    if (header.configOptions?.cached) Cache.getCollection(header.label).removeDataOnly()
+    if (header.configOptions?.cached) await IndexedCache.clear(header.label)
 
     // will be started later by the scheduler
     await Zotero.DB.queryTx("UPDATE betterbibtex.autoExport SET status = 'scheduled' WHERE translatorID = ?", [ header.translatorID ])

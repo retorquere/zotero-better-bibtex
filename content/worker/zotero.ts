@@ -3,7 +3,7 @@
 import type { Attachment, Item, Note } from '../../gen/typings/serialized-item'
 type Serialized = Attachment | Item | Note
 
-import { Cache as IndexedCache } from '../db/indexed'
+import { ExportCache, ExportedItem, ExportedItemMetadata, exportContext, Cache as IndexedCache } from '../db/indexed'
 
 import flatMap from 'array.prototype.flatmap'
 flatMap.shim()
@@ -175,7 +175,39 @@ import jurism_schema from '../../schema/jurism.json'
 const schema = client === 'zotero' ? zotero_schema : jurism_schema
 import dateFormats from '../../schema/dateFormats.json'
 
-export const workerJob: Partial<Translators.Worker.Job> = {}
+export const TranslationWorker: { job?: Partial<Translators.Worker.Job> } = {}
+
+const WorkerCache = new class $WorkerCache {
+  public items: Record<number, ExportedItem>
+  public context: number
+
+  public cache: ExportCache
+  public pending: ExportedItem[] = []
+
+  async init() {
+    const path = TranslationWorker.job.autoExport || exportContext(TranslationWorker.job.translator, TranslationWorker.job.options)
+    this.cache = IndexedCache.cache(TranslationWorker.job.translator)
+    const { context, items } = await this.cache.load(path)
+    this.context = context
+    this.items = items
+    this.pending = []
+  }
+
+  store(itemID: number, entry: string, metadata: ExportedItemMetadata): void {
+    if (TranslationWorker.job.preferences.cache) this.pending.push({ context: this.context, itemID, entry, metadata })
+  }
+
+  fetch(itemID: number): ExportedItem {
+    return TranslationWorker.job.preferences.cache ? this.items[itemID] : null
+  }
+
+  public async flush(): Promise<void> {
+    if (TranslationWorker.job.preferences.cache) {
+      await this.cache.store(this.pending)
+      this.pending = []
+    }
+  }
+}
 
 class WorkerZoteroBetterBibTeX {
   public clientName = clientName
@@ -183,20 +215,16 @@ class WorkerZoteroBetterBibTeX {
   public worker = true
 
   public Cache = {
-    // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
-    store(_translator: string, itemID: number, _options: any, _prefs: any, entry: string, metadata: any) {
-      if (workerJob.preferences.cache) Zotero.send({ kind: 'cache', itemID, entry, metadata })
-      return true
+    store(itemID: number, entry: string, metadata: ExportedItemMetadata) {
+      WorkerCache.store(itemID, entry, metadata)
     },
-    // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
-    fetch(_translator: string, itemID: number, _options: any, _prefs: any) {
-      // ignore all the other cacheFetch params because we have a targeted cache here
-      return workerJob.data.cache[itemID]
+    fetch(itemID: number) {
+      return WorkerCache.fetch(itemID)
     },
   }
 
   public setProgress(percent: number) {
-    Zotero.send({ kind: 'progress', percent, translator: workerJob.translator, autoExport: workerJob.autoExport })
+    Zotero.send({ kind: 'progress', percent, translator: TranslationWorker.job.translator, autoExport: TranslationWorker.job.autoExport })
   }
 
   public getContents(path: string): string {
@@ -286,7 +314,7 @@ const WorkerZoteroUtilities = {
   }
 
   public itemToCSLJSON(item) {
-    return workerJob.cslItems[item.itemID]
+    return TranslationWorker.job.cslItems[item.itemID]
   }
   */
 }
@@ -429,28 +457,28 @@ class WorkerZotero {
   public async start() {
     this.Date.init(dateFormats)
 
-    workerJob.preferences.platform = platform.name
-    workerJob.preferences.client = client
+    TranslationWorker.job.preferences.platform = platform.name
+    TranslationWorker.job.preferences.client = client
     this.output = ''
 
     if (!IndexedCache.opened) await IndexedCache.open()
-    this.items = await IndexedCache.ZoteroSerialized.get(workerJob.data.items)
-    print(`indexed: requested ${workerJob.data.items}`)
+    this.items = await IndexedCache.ZoteroSerialized.get(TranslationWorker.job.data.items)
+    print(`indexed: requested ${TranslationWorker.job.data.items}`)
     print(`indexed: retrieved ${this.items.map(item => [item.itemID, item.itemType])}`)
 
-    if (workerJob.options.exportFileData) {
+    if (TranslationWorker.job.options.exportFileData) {
       for (const item of this.items) {
         this.patchAttachments(item)
       }
     }
 
-    if (workerJob.output) {
-      if (workerJob.options.exportFileData) { // output path is a directory
-        this.exportDirectory = $OS.Path.normalize(workerJob.output)
+    if (TranslationWorker.job.output) {
+      if (TranslationWorker.job.options.exportFileData) { // output path is a directory
+        this.exportDirectory = $OS.Path.normalize(TranslationWorker.job.output)
         this.exportFile = $OS.Path.join(this.exportDirectory, `${$OS.Path.basename(this.exportDirectory)}.${ZOTERO_TRANSLATOR_INFO.target}`)
       }
       else {
-        this.exportFile = $OS.Path.normalize(workerJob.output)
+        this.exportFile = $OS.Path.normalize(TranslationWorker.job.output)
         const ext = `.${ZOTERO_TRANSLATOR_INFO.target}`
         if (!this.exportFile.endsWith(ext)) this.exportFile += ext
         this.exportDirectory = $OS.Path.dirname(this.exportFile)
@@ -480,15 +508,15 @@ class WorkerZotero {
   }
 
   public getHiddenPref(pref) {
-    return workerJob.preferences[pref.replace(/^better-bibtex\./, '')]
+    return TranslationWorker.job.preferences[pref.replace(/^better-bibtex\./, '')]
   }
 
   public getOption(option) {
-    return workerJob.options[option]
+    return TranslationWorker.job.options[option]
   }
 
   public debug(message) {
-    if (workerJob.debugEnabled) {
+    if (TranslationWorker.job.debugEnabled) {
       this.send({ kind: 'debug', message })
     }
   }
@@ -502,12 +530,12 @@ class WorkerZotero {
   }
 
   public nextItem() {
-    this.send({ kind: 'item', item: this.items.length - workerJob.data.items.length })
+    this.send({ kind: 'item', item: this.items.length - TranslationWorker.job.data.items.length })
     return this.items.shift()
   }
 
   public nextCollection(): Collection {
-    return workerJob.data.collections.shift()
+    return TranslationWorker.job.data.collections.shift()
   }
 
   private patchAttachments(item): void {
@@ -542,16 +570,18 @@ ctx.onmessage = async function(e: { isTrusted?: boolean, data?: Translators.Work
         break
 
       case 'start':
-        Object.assign(workerJob, JSON.parse(dec.decode(new Uint8Array(e.data.config))))
+        TranslationWorker.job = JSON.parse(dec.decode(new Uint8Array(e.data.config)))
 
-        importScripts(`chrome://zotero-better-bibtex/content/resource/${workerJob.translator}.js`)
+        importScripts(`chrome://zotero-better-bibtex/content/resource/${TranslationWorker.job.translator}.js`)
         try {
+          await WorkerCache.init()
           await Zotero.start()
         }
         catch (err) {
           Zotero.logError(err)
         }
         finally {
+          await WorkerCache.flush()
           Zotero.send({ kind: 'done', output: Zotero.exportFile ? true : Zotero.output })
         }
         break
