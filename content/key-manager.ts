@@ -26,7 +26,7 @@ import { Formatter } from './key-manager/formatter'
 
 import { createDB, createTable, Query, BlinkKey } from 'blinkdb'
 import * as blink from '../gen/blinkdb'
-import { Cache as IndexedCache } from './db/indexed'
+import { Cache } from './db/cache'
 
 import { patch as $patch$ } from './monkey-patch'
 
@@ -113,7 +113,7 @@ export const KeyManager = new class _KeyManager {
     const citationKey = prompt({ text: l10n.localize('better-bibtex_citekey_set_change'), value: existingKey }) || existingKey
     if (citationKey === existingKey) return
 
-    await IndexedCache.touch(ids)
+    await Cache.touch(ids)
 
     const item = await getItemsAsync(ids[0])
     item.setField('extra', Extra.set(item.getField('extra'), { citationKey }))
@@ -163,7 +163,7 @@ export const KeyManager = new class _KeyManager {
   public async refresh(ids: 'selected' | number | number[], manual = false): Promise<void> {
     ids = this.expandSelection(ids)
 
-    await IndexedCache.touch(ids)
+    await Cache.touch(ids)
 
     const warnAt = manual ? Preference.warnBulkModify : 0
     const affected = blink.many(this.keys, {
@@ -489,13 +489,13 @@ export const KeyManager = new class _KeyManager {
     })
 
     const notify = async (ids: number[], action: Action) => {
-      if (!IndexedCache.ZoteroSerialized) return
+      if (!Cache.ZoteroSerialized) return
 
       try {
-        await IndexedCache.touch(ids)
+        await Cache.touch(ids)
       }
       catch (err) {
-        log.error('IndexedCache touch failed:', err)
+        log.error('Cache touch failed:', err)
       }
       finally {
         void Events.emit('items-changed', { items: Zotero.Items.get(ids), action })

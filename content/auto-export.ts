@@ -7,7 +7,7 @@ import { Shim } from './os'
 import { is7, platform } from './client'
 const $OS = is7 ? Shim : OS
 
-import { Cache as IndexedCache } from './db/indexed'
+import { Cache } from './db/cache'
 import { Events } from './events'
 import { Translators, ExportJob } from './translators'
 import { Preference } from './prefs'
@@ -599,7 +599,7 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
     await this.itemIDs(ae, ae.id, itemTypeIDs, itemIDset)
     if (itemIDset.size === 0) return 100
 
-    const cached = await IndexedCache.cache(translator.label).count(path)
+    const cached = await Cache.cache(translator.label).count(path)
     return Math.min(100 * (cached / itemIDset.size), 100)
   }
 

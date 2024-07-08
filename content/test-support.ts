@@ -10,7 +10,7 @@ import  { defaults } from '../gen/preferences/meta'
 import { Preference } from './prefs'
 import * as memory from './memory'
 import { is7 } from './client'
-import { Cache as IndexedCache } from './db/indexed'
+import { Cache } from './db/cache'
 
 const setatstart: string[] = ['testing', 'cache'].filter(p => Preference[p] !== defaults[p])
 
@@ -241,7 +241,7 @@ export class TestSupport {
   }
 
   public async resetCache(): Promise<void> {
-    await IndexedCache.clear('*')
+    await Cache.clear('*')
   }
 
   public async merge(ids: number[]): Promise<void> {

@@ -19,7 +19,7 @@ import { Events } from './events'
 import { pick } from './file-picker'
 import { flash } from './flash'
 import { icons } from './icons'
-import { Cache as IndexedCache } from './db/indexed'
+import { Cache } from './db/cache'
 
 // safe to keep "global" since only one pref pane will be loaded at any one time
 let $window: Window & { sizeToContent(): void } // eslint-disable-line no-var
@@ -255,7 +255,7 @@ class AutoExportPane {
 
     const path = menulist.selectedItem.getAttribute('value')
     const ae = await AutoExport.get(path)
-    await IndexedCache.remove(Translators.byId[ae.translatorID].label, path)
+    await Cache.remove(Translators.byId[ae.translatorID].label, path)
     await AutoExport.remove(path)
     await this.refresh()
   }
@@ -279,7 +279,7 @@ class AutoExportPane {
 
     const field = node.getAttribute('data-ae-field')
 
-    await IndexedCache.cache(Translators.byId[ae.translatorID].label)?.clear(path)
+    await Cache.cache(Translators.byId[ae.translatorID].label)?.clear(path)
 
     let value: number | boolean | string
     let disable: 'biblatexChicago' | 'biblatexAPA' = null
@@ -457,7 +457,7 @@ export class PrefPane {
   }
 
   public async cacheReset(): Promise<void> {
-    await IndexedCache.clear('*')
+    await Cache.clear('*')
   }
 
   public async load(win: Window): Promise<void> {

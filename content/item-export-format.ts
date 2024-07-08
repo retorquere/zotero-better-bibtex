@@ -6,7 +6,7 @@ import type { RegularItem, Attachment, Item } from '../gen/typings/serialized-it
 import { JournalAbbrev } from './journal-abbrev'
 import { Preference } from './prefs'
 import { orchestrator } from './orchestrator'
-import { Cache as IndexedCache } from './db/indexed'
+import { Cache } from './db/cache'
 import { Events } from './events'
 
 function attachmentToPOJO(serialized: Attachment, att): Attachment {
@@ -86,13 +86,13 @@ orchestrator.add({
   description: 'cache subsystem',
   async startup() {
     const lastUpdated = await Zotero.DB.valueQueryAsync('SELECT MAX(dateModified) FROM items')
-    await IndexedCache.open(serialize, lastUpdated)
+    await Cache.open(serialize, lastUpdated)
 
     Events.cacheTouch = async (ids: number[]) => {
-      await IndexedCache.touch(ids)
+      await Cache.touch(ids)
     }
   },
   shutdown() {
-    IndexedCache.close()
+    Cache.close()
   },
 })

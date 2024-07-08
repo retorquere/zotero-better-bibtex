@@ -3,7 +3,7 @@
 import type { Attachment, Item, Note } from '../../gen/typings/serialized-item'
 type Serialized = Attachment | Item | Note
 
-import { ExportCache, ExportedItem, ExportedItemMetadata, exportContext, Cache as IndexedCache } from '../db/indexed'
+import { ExportCache, ExportedItem, ExportedItemMetadata, exportContext, Cache } from '../db/cache'
 
 import flatMap from 'array.prototype.flatmap'
 flatMap.shim()
@@ -185,15 +185,15 @@ const WorkerCache = new class $WorkerCache {
   public pending: ExportedItem[] = []
 
   async init() {
-    if (!IndexedCache.opened) {
+    if (!Cache.opened) {
       print('indexed cache: opening')
-      await IndexedCache.open()
+      await Cache.open()
     }
 
     this.pending = []
 
     const path = TranslationWorker.job.autoExport || exportContext(TranslationWorker.job.translator, TranslationWorker.job.options)
-    this.cache = IndexedCache.cache(TranslationWorker.job.translator)
+    this.cache = Cache.cache(TranslationWorker.job.translator)
     if (!this.cache) { // BBT JSON
       TranslationWorker.job.preferences.cache = false
       this.items = {}
@@ -473,7 +473,7 @@ class WorkerZotero {
     TranslationWorker.job.preferences.client = client
     this.output = ''
 
-    this.items = await IndexedCache.ZoteroSerialized.get(TranslationWorker.job.data.items)
+    this.items = await Cache.ZoteroSerialized.get(TranslationWorker.job.data.items)
     print(`indexed: requested ${TranslationWorker.job.data.items}`)
     print(`indexed: retrieved ${this.items.map(item => [item.itemID, item.itemType])}`)
 

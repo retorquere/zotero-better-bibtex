@@ -7,7 +7,7 @@ import { Translation } from '../lib/translator'
 
 import { simplifyForExport } from '../../gen/items/simplify'
 import { Fields as ParsedExtraFields, get as getExtra, cslCreator } from '../../content/extra'
-import type { ExportedItem } from '../../content/db/indexed'
+import type { ExportedItem } from '../../content/db/cache'
 import * as ExtraFields from '../../gen/items/extra-fields.json'
 import { log } from '../../content/logger'
 import { RegularItem } from '../../gen/typings/serialized-item'

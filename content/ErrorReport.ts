@@ -4,7 +4,7 @@ import { Shim } from './os'
 import { is7, platform } from './client'
 const $OS = is7 ? Shim : OS
 
-import { Cache as IndexedCache } from './db/indexed'
+import { Cache } from './db/cache'
 import { PromptService } from './prompt'
 // import { regex as escapeRE } from './escape'
 
@@ -159,7 +159,7 @@ export class ErrorReport {
     if (this.report.items) files[`${this.name()}/items.json`] = enc.encode(this.report.items)
     if (this.config.cache) {
       files[`${this.name()}/database.json`] = enc.encode(JSON.stringify(KeyManager.all()))
-      files[`${this.name()}/cache.json`] = enc.encode(JSON.stringify(IndexedCache.export()))
+      files[`${this.name()}/cache.json`] = enc.encode(JSON.stringify(Cache.export()))
     }
     if (this.report.acronyms) files[`${this.name()}/acronyms.csv`] = enc.encode(this.report.acronyms)
 
@@ -305,7 +305,7 @@ export class ErrorReport {
     this.setValue('better-bibtex-error-errors', this.report.errors || '')
     this.setValue('better-bibtex-error-log', this.preview(this.report.log || ''))
     this.setValue('better-bibtex-error-items', this.report.items ? this.preview(JSON.parse(this.report.items)) : '')
-    this.setValue('better-bibtex-report-cache', this.cacheState = l10n.localize('better-bibtex_error-report_better-bibtex_cache', { entries: await IndexedCache.count() }))
+    this.setValue('better-bibtex-report-cache', this.cacheState = l10n.localize('better-bibtex_error-report_better-bibtex_cache', { entries: await Cache.count() }))
 
     this.report.log = [
       this.report.context,
@@ -342,7 +342,7 @@ export class ErrorReport {
       // # 1896
       log: this.log(),
       items: win.arguments[0].wrappedJSObject.items,
-      cache: JSON.stringify(await IndexedCache.export(), null, 2),
+      cache: JSON.stringify(await Cache.export(), null, 2),
     }
     const acronyms = $OS.Path.join(Zotero.BetterBibTeX.dir, 'acronyms.csv')
     if (await $OS.File.exists(acronyms)) this.input.acronyms = await $OS.File.read(acronyms, { encoding: 'utf-8' }) as unknown as string

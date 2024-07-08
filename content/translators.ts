@@ -4,7 +4,7 @@ import { Shim } from './os'
 import { is7 } from './client'
 const $OS = is7 ? Shim : OS
 import merge from 'lodash.merge'
-import { Cache as IndexedCache } from './db/indexed'
+import { Cache } from './db/cache'
 
 /*
 async function guard(run: Promise<void>): Promise<boolean> {
@@ -54,7 +54,7 @@ import { headers as Headers, byLabel, byId, bySlug } from '../gen/translators'
 
 Events.on('preference-changed', async (pref: string) => {
   for (const translator of (affects[pref] || [])) {
-    await IndexedCache.clear(translator)
+    await Cache.clear(translator)
   }
 })
 
@@ -162,7 +162,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
         log.debug('translators startup: released')
       },
       shutdown: async (reason: Reason) => {
-        if (IndexedCache.opened) await IndexedCache.ZoteroSerialized.purge()
+        if (Cache.opened) await Cache.ZoteroSerialized.purge()
 
         switch (reason) {
           case 'ADDON_DISABLE':
@@ -363,7 +363,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
     log.debug('indexed: pre-translation fill of', items.map(item => [Zotero.ItemTypes.getName(item.itemTypeID), item.id]))
     // maybe use a loop instead of map so we can await for beachball protection
-    await IndexedCache.ZoteroSerialized.fill(items)
+    await Cache.ZoteroSerialized.fill(items)
     config.data.items = items.map(item => item.id)
     prepare.update()
     if (job.path && job.canceled) return ''
@@ -555,7 +555,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       Zotero.File.getContentsFromURL(`chrome://zotero-better-bibtex/content/resource/${header.label}.js`),
     ].join('\n')
 
-    if (header.configOptions?.cached) await IndexedCache.clear(header.label)
+    if (header.configOptions?.cached) await Cache.clear(header.label)
 
     // will be started later by the scheduler
     await Zotero.DB.queryTx("UPDATE betterbibtex.autoExport SET status = 'scheduled' WHERE translatorID = ?", [ header.translatorID ])

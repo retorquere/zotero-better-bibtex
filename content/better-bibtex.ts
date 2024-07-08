@@ -36,7 +36,7 @@ import { clean_pane_persist } from './clean_pane_persist'
 import { flash } from './flash'
 import { orchestrator } from './orchestrator'
 import type { Reason } from './bootstrap'
-import type { ExportedItem, ExportedItemMetadata } from './db/indexed'
+import type { ExportedItem, ExportedItemMetadata } from './db/cache'
 
 import { Preference } from './prefs' // needs to be here early, initializes the prefs observer
 require('./pull-export') // just require, initializes the pull-export end points
