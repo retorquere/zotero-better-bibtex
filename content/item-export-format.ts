@@ -81,10 +81,10 @@ type Serialized = RegularItem | Attachment | Item
 const serialize = (item: ZoteroItem): Serialized => <Serialized>JSON.parse(JSON.stringify(fix(itemToPOJO(item), item)))
 
 orchestrator.add({
-  id: 'serializer',
-  description: 'object serializer',
-  needs: ['cache', 'keymanager', 'abbreviator'],
-  startup: async () => {
+  id: 'cache',
+  needs: ['keymanager', 'abbreviator'],
+  description: 'cache subsystem',
+  async startup() {
     const lastUpdated = await Zotero.DB.valueQueryAsync('SELECT MAX(dateModified) FROM items')
     await IndexedCache.open(serialize, lastUpdated)
 
@@ -92,7 +92,7 @@ orchestrator.add({
       await IndexedCache.touch(ids)
     }
   },
-  shutdown: async () => { // eslint-disable-line @typescript-eslint/require-await
+  shutdown() {
     IndexedCache.close()
   },
 })

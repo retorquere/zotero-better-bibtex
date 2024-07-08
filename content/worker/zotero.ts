@@ -185,6 +185,7 @@ const WorkerCache = new class $WorkerCache {
   public pending: ExportedItem[] = []
 
   async init() {
+    if (!IndexedCache.opened) await IndexedCache.open()
     const path = TranslationWorker.job.autoExport || exportContext(TranslationWorker.job.translator, TranslationWorker.job.options)
     this.cache = IndexedCache.cache(TranslationWorker.job.translator)
     const { context, items } = await this.cache.load(path)
@@ -461,7 +462,6 @@ class WorkerZotero {
     TranslationWorker.job.preferences.client = client
     this.output = ''
 
-    if (!IndexedCache.opened) await IndexedCache.open()
     this.items = await IndexedCache.ZoteroSerialized.get(TranslationWorker.job.data.items)
     print(`indexed: requested ${TranslationWorker.job.data.items}`)
     print(`indexed: retrieved ${this.items.map(item => [item.itemID, item.itemType])}`)
