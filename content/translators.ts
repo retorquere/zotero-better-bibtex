@@ -160,28 +160,27 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     // shortcuts
     switch (name_lc) {
       case 'json':
-        return Translators.bySlug.BetterCSLJSON.translatorID
+        return this.bySlug.BetterCSLJSON.translatorID
       case 'yaml':
-        return Translators.bySlug.BetterCSLYAML.translatorID
+        return this.bySlug.BetterCSLYAML.translatorID
       case 'jzon':
-        return Translators.bySlug.BetterBibTeXJSON.translatorID
+        return this.bySlug.BetterBibTeXJSON.translatorID
       case 'bib':
       case 'biblatex':
-        return Translators.bySlug.BetterBibLaTeX.translatorID
+        return this.bySlug.BetterBibLaTeX.translatorID
       case 'bibtex':
-        return Translators.bySlug.BetterBibTeX.translatorID
+        return this.bySlug.BetterBibTeX.translatorID
     }
 
     for (const [id, translator] of (Object.entries(this.byId))) {
       if (name_lc === translator.label.toLowerCase().replace(/ /g, '') && ['yaml', 'json', 'bib'].includes(translator.target)) return id
     }
 
-    if (typeof name !== 'string' || !name.match(/^[0-9a-fA-F]{8}-([0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}?$/)) {
-      Zotero.debug(`getTranslatorId: ${JSON.stringify(name)} is not a GUID`)
-      throw new Error(`getTranslatorId: ${JSON.stringify(name)} is not a GUID`)
-    }
+    if (typeof name === 'string' && name.match(/^[0-9a-fA-F]{8}-([0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}?$/)) return name
 
-    return name
+    const msg = `getTranslatorId: ${JSON.stringify(name)} could not be resolved to a translator`
+    Zotero.debug(msg)
+    throw new Error(msg)
   }
 
   public async importString(str) {
