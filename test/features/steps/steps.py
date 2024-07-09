@@ -397,6 +397,11 @@ def step_impl(context, citekey):
   assert len(context.selected) == 1
   context.zotero.execute('await Zotero.BetterBibTeX.TestSupport.pinCiteKey(id, "pin", citekey)', id=context.selected[0], citekey=citekey)
 
+@step(u'dump the cache to {cache}')
+def step_impl(context, cache):
+  cache = os.path.join(os.getcwd(), json.loads(cache))
+  context.zotero.execute('await Zotero.BetterBibTeX.TestSupport.dumpCache(filename)', filename=cache)
+
 @then(u'"{found}" should match "{expected}"')
 def step_impl(context, expected, found):
   expected = expand_scenario_variables(context, expected)

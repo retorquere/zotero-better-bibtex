@@ -208,7 +208,6 @@ class ZoteroSerialized {
     this.filled = (current - this.filled) * this.smoothing + this.filled
 
     if (items.length) {
-      print(`indexed: storing ${items.map((item: { id: number }) => item.id)}`)
       const puts = items.map(item => store.put(this.serialize(item)))
       await Promise.all([...puts, tx.done])
     }

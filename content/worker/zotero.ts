@@ -199,8 +199,9 @@ const WorkerCache = new class $WorkerCache {
       this.items = {}
       return
     }
+    const start = performance.now()
     const { context, items } = await this.cache.load(path)
-    print(`indexed cache: ${path} loaded ${Object.keys(items).length} items`)
+    print(`indexed cache: ${path} loaded ${Object.keys(items).length} items in ${performance.now() - start}ms`)
     this.context = context
     this.items = items
   }
@@ -215,6 +216,7 @@ const WorkerCache = new class $WorkerCache {
 
   public async flush(): Promise<void> {
     if (TranslationWorker.job.preferences.cache) {
+      print(`indexed cache: flushing ${TranslationWorker.job.translator} ${this.pending.length}`)
       await this.cache.store(this.pending)
       this.pending = []
     }
@@ -474,8 +476,7 @@ class WorkerZotero {
     this.output = ''
 
     this.items = await Cache.ZoteroSerialized.get(TranslationWorker.job.data.items)
-    print(`indexed: requested ${TranslationWorker.job.data.items}`)
-    print(`indexed: retrieved ${this.items.map(item => [item.itemID, item.itemType])}`)
+    print(`indexed: requested ${TranslationWorker.job.data.items.length}`)
 
     if (TranslationWorker.job.options.exportFileData) {
       for (const item of this.items) {

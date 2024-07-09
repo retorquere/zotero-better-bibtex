@@ -722,6 +722,8 @@ Feature: Export
     Then an export using "Better CSL JSON" with worker on should match "export/*.csl.json"
     And an export using "Better CSL JSON" with worker on should match "export/*.csl.json"
 
+    And dump the cache to "cache.json"
+
   # @use.with_client=zotero @use.with_slow=true @timeout=300
   # @1296
   # Scenario: Cache does not seem to fill #1296
