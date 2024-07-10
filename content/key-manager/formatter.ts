@@ -1099,7 +1099,9 @@ export class PatternFormatter {
   }
 
   /**
-   * replaces text, case insensitive when passing a string; `.replace('.etal','&etal')` will replace `.EtAl` with `&etal`
+   * replaces text, case insensitive when passing a string; `.replace('.etal','&etal')` will replace `.EtAl` with `&etal`.
+   * A regex should not be surrounded in quotes and must start and end with `/`.
+   * `[^]` can be used for negation, e.g. `replace(/[^;]/g, '')` will remove all characters except semicolons globally in the string.
    * @param find string or regex to match. String matches are case-insensitive
    * @param replace literal text to replace the match with
    */
