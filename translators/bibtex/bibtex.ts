@@ -702,26 +702,26 @@ export class ZoteroItem {
 
   protected $journaltitle(): boolean {
     let journal: { field: string, value: string}, abbr: { field: string, value: string} = null
-
-    const unpack = (v: string | string[]): string => Array.isArray(v) ? v[0] : (v || '')
+    const detect_abbr = this.translation.preferences.importJabRefAbbreviations
 
     // journal-full is bibdesk
-    const titles = [ 'journal-full', 'journal', 'journaltitle', 'shortjournal' ].map(field => {
-      const value = unpack(this.bibtex.fields[field])
-      delete this.bibtex.fields[field] // this makes sure we're not ran again
-      return { field, value }
-    })
+    const titles = [ 'journal-full', 'journal', 'journaltitle', 'shortjournal' ]
+      .map(field => {
+        const value = this.bibtex.fields[field]
+        delete this.bibtex.fields[field] // this makes sure we're not ran again
+        return { field, value }
+      })
       .filter(candidate => candidate.value) // skip empty
       .filter(candidate => {
-        if (!abbr && candidate.field === 'shortjournal') { // shortjournal is assumed to be an abbrev
+        if (detect_abbr && !abbr && candidate.field === 'shortjournal') { // shortjournal is assumed to be an abbrev
           abbr = candidate
           return false
         }
         return true
       })
       .filter(candidate => {
-        // to be considered an abbrev, it must have at least two periods, and there can be no periods that are not followed by a space, and no spaced that are not preceded by a period
-        const assumed_abbrev = candidate.value.match(/[.].+[.]/) && !candidate.value.match(/[.][^ ]/) && !candidate.value.match(/[^.] /)
+        // to be considered an abbrev, it must have at least two periods, and there can be no periods that are not followed by a space, and no space that are not preceded by a period
+        const assumed_abbrev = detect_abbr && candidate.value.match(/[.].+[.]/) && !candidate.value.match(/[.][^ ]/) && !candidate.value.match(/[^.] /)
         if (assumed_abbrev) {
           if (!abbr) {
             abbr = candidate
@@ -734,7 +734,7 @@ export class ZoteroItem {
         }
         return true
       }).filter(candidate => {
-        if (!abbr) {
+        if (detect_abbr && !abbr) {
           abbr = candidate
           return false
         }
