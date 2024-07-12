@@ -740,6 +740,7 @@ export class ZoteroItem {
         }
         return true
       })
+    log.debug('import journaltitle', { titles, detect_abbr, journal, abbr })
 
     // the remainer goes to the `extra` field
     for (const candidate of titles) {
