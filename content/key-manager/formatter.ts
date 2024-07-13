@@ -1099,7 +1099,8 @@ export class PatternFormatter {
   }
 
   /**
-   * replaces text, case insensitive when passing a string; `.replace('.etal','&etal')` will replace `.EtAl` with `&etal`
+   * replaces text, case insensitive when passing a string; `.replace('.etal','&etal')` will replace `.EtAl` with `&etal`.
+   * Regexes should not be surrounded by quotes and must follow <a href="https://www.simplilearn.com/tutorials/javascript-tutorial/javascript-regex">the Javascript syntax for regexes.</a>   
    * @param find string or regex to match. String matches are case-insensitive
    * @param replace literal text to replace the match with
    */
