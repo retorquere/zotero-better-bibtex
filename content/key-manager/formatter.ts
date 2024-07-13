@@ -1099,7 +1099,9 @@ export class PatternFormatter {
   }
 
   /**
-   * replaces text, case insensitive when passing a string; `.replace('.etal','&etal')` will replace `.EtAl` with `&etal`
+   * replaces text, for the text to match you can pass either:
+   * - a string: `.replace('.etal','&etal')` which will match case-insensitive, so will replace `.EtAl` with `&etal`.
+   * - [javascript regular expression](https://www.simplilearn.com/tutorials/javascript-tutorial/javascript-regex): `.replace(/[.]etal/ig, '&etal')`
    * @param find string or regex to match. String matches are case-insensitive
    * @param replace literal text to replace the match with
    */
