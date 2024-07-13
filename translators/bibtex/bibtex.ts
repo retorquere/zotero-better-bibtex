@@ -482,7 +482,7 @@ export async function parseBibTeX(input: string, translation: Translation): Prom
     caseProtection: (translation.preferences.importCaseProtection as 'as-needed'),
     verbatimFields: translation.verbatimFields,
     raw: translation.preferences.rawImports,
-    strings: importJabRef.strings,
+    strings: translation.preferences.importJabRefStrings ? importJabRef.strings : '',
     removeOuterBraces: [ 'doi', 'publisher', 'location', 'title', 'booktitle' ],
   })
 }
@@ -702,6 +702,7 @@ export class ZoteroItem {
 
   protected $journaltitle(): boolean {
     let journal: { field: string, value: string}, abbr: { field: string, value: string} = null
+    const unabbr = translation.preferences.importJabRefAbbreviations
 
     // journal-full is bibdesk
     const titles = [ 'journal-full', 'journal', 'journaltitle', 'shortjournal' ]
@@ -712,7 +713,7 @@ export class ZoteroItem {
       })
       .filter(candidate => candidate.value) // skip empty
       .filter(candidate => {
-        if (importJabRef.unabbrev && !abbr && candidate.field === 'shortjournal') { // shortjournal is assumed to be an abbrev
+        if (unabbr && !abbr && candidate.field === 'shortjournal') { // shortjournal is assumed to be an abbrev
           abbr = candidate
           return false
         }
@@ -720,7 +721,7 @@ export class ZoteroItem {
       })
       .filter(candidate => {
         // to be considered an abbrev, it must have at least two periods, and there can be no periods that are not followed by a space, and no space that are not preceded by a period
-        const assumed_abbrev = importJabRef.unabbrev && candidate.value.match(/[.].+[.]/) && !candidate.value.match(/[.][^ ]/) && !candidate.value.match(/[^.] /)
+        const assumed_abbrev = unabbr && candidate.value.match(/[.].+[.]/) && !candidate.value.match(/[.][^ ]/) && !candidate.value.match(/[^.] /)
         if (assumed_abbrev) {
           if (!abbr) {
             abbr = candidate
@@ -733,13 +734,13 @@ export class ZoteroItem {
         }
         return true
       }).filter(candidate => {
-        if (importJabRef.unabbrev && journal && !abbr) {
+        if (unabbr && journal && !abbr) {
           abbr = candidate
           return false
         }
         return true
       })
-    log.debug('import journaltitle', { titles, unabbrev: !!importJabRef.unabbrev, journal, abbr })
+    log.debug('import journaltitle', { titles, unabbr, journal, abbr })
 
     // the remainder goes to the `extra` field
     for (const candidate of titles) {
@@ -747,7 +748,7 @@ export class ZoteroItem {
     }
 
     const resolve = (a: string): string => {
-      if (!importJabRef.unabbrev) return ''
+      if (!unabbr || !importJabRef.unabbrev) return ''
 
       a = a.toUpperCase()
       let j: string
@@ -768,7 +769,7 @@ export class ZoteroItem {
       abbr = { ...journal }
       journal = { field: '', value: resolved }
     }
-    log.debug('import journaltitle', { titles, unabbrev: !!importJabRef.unabbrev, journal, abbr })
+    log.debug('import journaltitle', { titles, unabbr, journal, abbr })
 
     if (journal) {
       switch (this.item.itemType) {
