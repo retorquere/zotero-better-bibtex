@@ -420,37 +420,34 @@ export function generateBibTeX(translation: Translation): void {
   translation.bibtex.complete()
 }
 
-const importJabRef = new class JabRefDefaults {
-  public unabbrev: Record<string, string> = {}
+const preloadedStrings = new class PreloadedStrings {
   public strings = ''
+  public enabled = false
 
-  private loaded = {
-    unabbrev: false,
-    strings: false,
-  }
+  private loaded = false
 
   load(translation: Translation) {
-    const assets = {
-      'strings.bib': translation.preferences.importJabRefStrings,
-      'unabbrev.json': translation.preferences.importJabRefAbbreviations,
+    this.enabled  = translation.preferences.importJabRefStrings
+
+    if (this.enabled && !this.loaded) {
+      this.loaded = true
+      this.strings = Zotero.File.getContentsFromURL('chrome://zotero-better-bibtex/content/resource/bibtex/strings.bib')
     }
+  }
+}
 
-    for (const [ asset, enabled ] of Object.entries(assets)) {
-      if (!enabled) continue
-      const cache = asset.split('.')[0]
-      if (this.loaded[cache]) continue
+const unabbreviations = new class Unabbreviations {
+  public unabbr: Record<string, string> = {}
+  public enabled = false
 
-      const data = Zotero.File.getContentsFromURL(`chrome://zotero-better-bibtex/content/resource/bibtex/${asset}`)
-      switch (cache) {
-        case 'unabbrev':
-          Object.assign(this[cache], JSON.parse(data))
-          break
-        case 'strings':
-          this[cache] = data
-          break
-      }
+  private loaded = false
 
-      this.loaded[cache] = true
+  load(translation: Translation) {
+    this.enabled  = translation.preferences.importJabRefAbbreviations
+
+    if (this.enabled && !this.loaded) {
+      this.loaded = true
+      this.unabbr = JSON.parse(Zotero.File.getContentsFromURL('chrome://zotero-better-bibtex/content/resource/bibtex/unabbrev.json'))
     }
   }
 }
@@ -458,7 +455,8 @@ const importJabRef = new class JabRefDefaults {
 export async function parseBibTeX(input: string, translation: Translation): Promise<Library> {
   translation.ZoteroItem = ZoteroItem
 
-  importJabRef.load(translation)
+  preloadedStrings.load(translation)
+  unabbreviations.load(translation)
 
   return await parse(input, {
     // we are actually sure it's a valid enum value; stupid workaround for TS2322: Type 'string' is not assignable to type 'boolean | "as-needed" | "strict"'.
@@ -482,7 +480,7 @@ export async function parseBibTeX(input: string, translation: Translation): Prom
     caseProtection: (translation.preferences.importCaseProtection as 'as-needed'),
     verbatimFields: translation.verbatimFields,
     raw: translation.preferences.rawImports,
-    strings: translation.preferences.importJabRefStrings ? importJabRef.strings : '',
+    strings: preloadedStrings.enabled ? preloadedStrings.strings : '',
     removeOuterBraces: [ 'doi', 'publisher', 'location', 'title', 'booktitle' ],
   })
 }
@@ -702,7 +700,6 @@ export class ZoteroItem {
 
   protected $journaltitle(): boolean {
     let journal: { field: string, value: string}, abbr: { field: string, value: string} = null
-    const unabbr = translation.preferences.importJabRefAbbreviations
 
     // journal-full is bibdesk
     const titles = [ 'journal-full', 'journal', 'journaltitle', 'shortjournal' ]
@@ -713,7 +710,7 @@ export class ZoteroItem {
       })
       .filter(candidate => candidate.value) // skip empty
       .filter(candidate => {
-        if (unabbr && !abbr && candidate.field === 'shortjournal') { // shortjournal is assumed to be an abbrev
+        if (unabbreviations.enabled && !abbr && candidate.field === 'shortjournal') { // shortjournal is assumed to be an abbrev
           abbr = candidate
           return false
         }
@@ -721,7 +718,7 @@ export class ZoteroItem {
       })
       .filter(candidate => {
         // to be considered an abbrev, it must have at least two periods, and there can be no periods that are not followed by a space, and no space that are not preceded by a period
-        const assumed_abbrev = unabbr && candidate.value.match(/[.].+[.]/) && !candidate.value.match(/[.][^ ]/) && !candidate.value.match(/[^.] /)
+        const assumed_abbrev = unabbreviations.enabled && candidate.value.match(/[.].+[.]/) && !candidate.value.match(/[.][^ ]/) && !candidate.value.match(/[^.] /)
         if (assumed_abbrev) {
           if (!abbr) {
             abbr = candidate
@@ -734,13 +731,12 @@ export class ZoteroItem {
         }
         return true
       }).filter(candidate => {
-        if (unabbr && journal && !abbr) {
+        if (unabbreviations.enabled && journal && !abbr) {
           abbr = candidate
           return false
         }
         return true
       })
-    log.debug('import journaltitle', { titles, unabbr, journal, abbr })
 
     // the remainder goes to the `extra` field
     for (const candidate of titles) {
@@ -748,15 +744,15 @@ export class ZoteroItem {
     }
 
     const resolve = (a: string): string => {
-      if (!unabbr || !importJabRef.unabbrev) return ''
+      if (!unabbreviations.enabled) return ''
 
       a = a.toUpperCase()
       let j: string
 
-      if (j = importJabRef.unabbrev[a]) return j
+      if (j = unabbreviations.unabbr[a]) return j
 
       const m = a.match(/(.*)(\s+\S*\d\S*)$/)
-      if (m && (j = importJabRef.unabbrev[m[1]])) return `${j}${m[2]}`
+      if (m && (j = unabbreviations.unabbr[m[1]])) return `${j}${m[2]}`
 
       return ''
     }
@@ -769,7 +765,6 @@ export class ZoteroItem {
       abbr = { ...journal }
       journal = { field: '', value: resolved }
     }
-    log.debug('import journaltitle', { titles, unabbr, journal, abbr })
 
     if (journal) {
       switch (this.item.itemType) {
