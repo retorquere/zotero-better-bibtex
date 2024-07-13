@@ -739,6 +739,7 @@ export class ZoteroItem {
         }
         return true
       })
+    log.debug('import journaltitle', { titles, unabbrev: !!importJabRef.unabbrev, journal, abbr })
 
     // the remainder goes to the `extra` field
     for (const candidate of titles) {
