@@ -554,38 +554,41 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
         Zotero.File.getContentsFromURL(`chrome://zotero-better-bibtex/content/resource/${label}.js`),
       ].join('\n')
 
-      const translators = Zotero.DataDirectory.getSubdirectory('translators', true)
       const headers: Translator.Header[] = Headers
         .map(header => JSON.parse(Zotero.File.getContentsFromURL(`chrome://zotero-better-bibtex/content/resource/${header.label}.json`)))
+
+      const filenames = headers.map(header => `'${header.label}.js'`).join(',')
+      const installed: Record<string, Translator.Header> = {}
+      for (const { fileName, metadataJSON } of (await Zotero.DB.queryAsync(`SELECT fileName, metadataJSON FROM translatorCache WHERE fileName IN (${filenames})`))) {
+        try {
+          installed[fileName.replace(/[.]js$/, '')] = JSON.parse(metadataJSON)
+        }
+        catch (err) {
+          log.debug('translator install: failed to parse header for', fileName, ':', metadataJSON)
+        }
+      }
+
       for (const header of headers) {
         // workaround for mem limitations on Windows
         if (!is7 && typeof header.displayOptions?.worker === 'boolean') header.displayOptions.worker = !!Zotero.isWin
 
-        const translator = Zotero.File.pathToFile($OS.Path.join(translators, `${header.label}.js`))
-        if (!translator.exists()) {
+        const existing = installed[header.label]
+        if (!existing) {
           reinit[header.label] = { header, code: code(header.label) }
           log.debug('translator install: new translator', header.label)
-          continue
         }
-
-        try {
-          const stored = await Zotero.File.getContentsAsync(translator)
-          const installed = JSON.parse(stored.split(/\r?\n\}\r?\n/)[0])
-          if (installed.configOptions?.hash !== header.configOptions.hash) {
-            reinit[header.label] = { header, code: code(header.label) }
-            log.debug('translator install: updated translator', header.label, 'hash changed', { from: installed.configOptions?.hash, to: header.configOptions.hash })
-            continue
-          }
-        }
-        catch (err) {
+        else if (existing.configOptions?.hash !== header.configOptions.hash) {
           reinit[header.label] = { header, code: code(header.label) }
-          log.debug('translator install: updated translator', header.label, 'error during hash check', err)
-          continue
+          log.debug('translator install: updated translator', header.label, 'hash changed', { from: existing.configOptions?.hash, to: header.configOptions.hash })
+        }
+        else {
+          log.debug('translator install:', header.label, 'is up to date')
         }
       }
 
       this.reinit = Object.values(reinit)
     }
+
     return this.reinit
   }
 
