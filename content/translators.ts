@@ -94,6 +94,8 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
   public queue = new Queue
   public worker: ChromeWorker
 
+  private reinit: { header: Translator.Header, code: string }[]
+
   public ready!: Bluebird<boolean>
 
   constructor() {
@@ -543,76 +545,63 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     return false
   }
 
-  private async installTranslators() {
-    /*
-    log.debug('installing translators: busy-waiting for Zotero.Translators.init()')
-    while (true) { // eslint-disable-line no-constant-condition
-      try {
-        Zotero.Translators.get(0)
-        break
-      }
-      catch (err) {
-        if (err.message === 'Translators not yet loaded') {
-          log.debug('installing translators:', err.message)
-          await Zotero.Promise.delay(1000)
+  public async needsInstall(): Promise<{ header: Translator.Header, code: string }[]> {
+    if (!this.reinit) {
+      const reinit: Record<string, { header: Translator.Header, code: string }> = {}
+
+      const code = (label: string) => [
+        `ZOTERO_CONFIG = ${JSON.stringify(ZOTERO_CONFIG)}`,
+        Zotero.File.getContentsFromURL(`chrome://zotero-better-bibtex/content/resource/${label}.js`),
+      ].join('\n')
+
+      const translators = Zotero.DataDirectory.getSubdirectory('translators', true)
+      const headers: Translator.Header[] = Headers
+        .map(header => JSON.parse(Zotero.File.getContentsFromURL(`chrome://zotero-better-bibtex/content/resource/${header.label}.json`)))
+      for (const header of headers) {
+        // workaround for mem limitations on Windows
+        if (!is7 && typeof header.displayOptions?.worker === 'boolean') header.displayOptions.worker = !!Zotero.isWin
+
+        const translator = Zotero.File.pathToFile($OS.Path.join(translators, `${header.label}.js`))
+        if (!translator.exists()) {
+          reinit[header.label] = { header, code: code(header.label) }
+          log.debug('translator install: new translator', header.label)
+          continue
         }
-        else {
-          throw err
+
+        try {
+          const stored = await Zotero.File.getContentsAsync(translator)
+          const installed = JSON.parse(stored.split(/\r?\n\}\r?\n/)[0])
+          if (installed.configOptions?.hash !== header.configOptions.hash) {
+            reinit[header.label] = { header, code: code(header.label) }
+            log.debug('translator install: updated translator', header.label, 'hash changed', { from: installed.configOptions?.hash, to: header.configOptions.hash })
+            continue
+          }
+        }
+        catch (err) {
+          reinit[header.label] = { header, code: code(header.label) }
+          log.debug('translator install: updated translator', header.label, 'error during hash check', err)
+          continue
         }
       }
-    }
-    */
 
-    // the busy-wait guarantees it has once been inited, and this just hangs for no reason for some people.
-    // log.debug('installing translators: now actually waiting for Zotero.Translators.init()')
-    // await Zotero.Translators.init()
-
-    log.debug('installing translators: loading BBT translators')
-    const reinit: { header: Translator.Header, code: string }[] = []
-    // fetch from resource because that has the hash
-    const headers: Translator.Header[] = Headers
-      .map(header => JSON.parse(Zotero.File.getContentsFromURL(`chrome://zotero-better-bibtex/content/resource/${header.label}.json`)))
-    let code
-    for (const header of headers) {
-      // workaround for mem limitations on Windows
-      if (!is7 && typeof header.displayOptions?.worker === 'boolean') header.displayOptions.worker = !!Zotero.isWin
-      if (code = await this.install(header)) {
-        log.debug(`installing translators: scheduling ${header.label} for re-init`)
-        reinit.push({ header, code })
-      }
+      this.reinit = Object.values(reinit)
     }
-
-    if (reinit.length) {
-      log.debug(`installing translators: scheduling ${reinit.length} for re-init`)
-      await Zotero.Translators.reinit()
-    }
-    log.debug('installing translators: done')
+    return this.reinit
   }
 
-  public async install(header: Translator.Header): Promise<string> {
-    const installed = Zotero.Translators.get(header.translatorID) || null
-    if (installed?.configOptions?.hash === header.configOptions.hash) return ''
+  private async installTranslators() {
+    const install = await this.needsInstall()
+    if (!install.length) return
 
-    const code = [
-      `ZOTERO_CONFIG = ${JSON.stringify(ZOTERO_CONFIG)}`,
-      Zotero.File.getContentsFromURL(`chrome://zotero-better-bibtex/content/resource/${header.label}.js`),
-    ].join('\n')
-
-    if (header.configOptions?.cached) Cache.getCollection(header.label).removeDataOnly()
-
-    // will be started later by the scheduler
-    await Zotero.DB.queryTx("UPDATE betterbibtex.autoExport SET status = 'scheduled' WHERE translatorID = ?", [ header.translatorID ])
-
-    try {
+    log.debug('installing translators: loading BBT translators')
+    for (const { header, code } of install) {
+      log.debug('translator install: saving', header.label)
+      await Zotero.DB.queryTx("UPDATE betterbibtex.autoExport SET status = 'scheduled' WHERE translatorID = ?", [ header.translatorID ])
       await Zotero.Translators.save(header, code)
     }
-    catch (err) {
-      log.error('Translator.install', header, 'failed:', err)
-      this.uninstall(header.label)
-      return ''
-    }
 
-    return code
+    await Zotero.Translators.reinit()
+    log.debug('translator install: done')
   }
 
   private exportScope(scope: ExportScope): ExportScope {
