@@ -710,7 +710,7 @@ export class BetterBibTeX {
         await Zotero.initializationPromise
 
         // and this
-        await Zotero.Translators.init()
+        if ((await Translators.needsInstall()).length) await Zotero.Translators.init()
 
         this.dir = $OS.Path.join(Zotero.DataDirectory.dir, 'better-bibtex')
         await $OS.File.makeDir(this.dir, { ignoreExisting: true })
