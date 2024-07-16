@@ -1157,9 +1157,9 @@ export class ZoteroItem {
       const unknown = this.item.itemType === '$'
       this.item.itemType = this.item.itemType.substr(1) || 'document'
 
-      const msg = `Don't know what Zotero type to make of '${this.bibtex.type}' for ${this.bibtex.key ? `@${this.bibtex.key}` : 'unnamed item'}, importing as ${this.item.itemType}`
-      log.debug(msg)
       if (unknown) {
+        const msg = `Don't know what Zotero type to make of '${this.bibtex.type}' for ${this.bibtex.key ? `@${this.bibtex.key}` : 'unnamed item'}, importing as ${this.item.itemType}`
+        log.info(msg)
         if (this.translation.preferences.testing) throw new Error(msg)
         errors.push({ error: msg, input: this.bibtex.input })
       }

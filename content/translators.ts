@@ -12,7 +12,7 @@ async function guard(run: Promise<void>): Promise<boolean> {
   const delay = async () => {
     await Zotero.Promise.delay(20000)
     if (timeout) {
-      log.debug('installing translators: raced to timeout!')
+      log.error('installing translators: raced to timeout!')
       throw { timeout: true, message: 'timeout' } // eslint-disable-line no-throw-literal
     }
   }
@@ -20,7 +20,7 @@ async function guard(run: Promise<void>): Promise<boolean> {
   try {
     await Promise.race([run, delay()])
     timeout = false
-    log.debug('installing translators: guard OK')
+    log.info('installing translators: guard OK')
     return true
   }
   catch (err) {
@@ -109,9 +109,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       description: 'translators',
       needs: ['keymanager', 'cache'],
       startup: async () => {
-        log.debug('translators startup: begin')
         await this.start()
-        log.debug('translators startup: started')
 
         this.itemType = {
           note: Zotero.ItemTypes.getID('note'),
@@ -123,13 +121,10 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
         this.uninstall('Better BibTeX Quick Copy')
         this.uninstall('\u672B BetterBibTeX JSON (for debugging)')
         this.uninstall('BetterBibTeX JSON (for debugging)')
-        log.debug('translators startup: cleaned')
 
         await this.installTranslators()
 
-        log.debug('translators startup: finished')
         ready.resolve(true)
-        log.debug('translators startup: released')
       },
       shutdown: async (reason: Reason) => {
         switch (reason) {
@@ -564,7 +559,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
           installed[fileName.replace(/[.]js$/, '')] = JSON.parse(metadataJSON)
         }
         catch (err) {
-          log.debug('translator install: failed to parse header for', fileName, ':', metadataJSON)
+          log.error('translator install: failed to parse header for', fileName, ':', metadataJSON)
         }
       }
 
@@ -575,14 +570,14 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
         const existing = installed[header.label]
         if (!existing) {
           reinit[header.label] = { header, code: code(header.label) }
-          log.debug('translator install: new translator', header.label)
+          log.info(`translator install: new translator ${header.label}`)
         }
         else if (existing.configOptions?.hash !== header.configOptions.hash) {
           reinit[header.label] = { header, code: code(header.label) }
-          log.debug('translator install: updated translator', header.label, 'hash changed', { from: existing.configOptions?.hash, to: header.configOptions.hash })
+          log.info(`translator install: updated translator ${header.label}`)
         }
         else {
-          log.debug('translator install:', header.label, 'is up to date')
+          log.info(`translator install: ${header.label} is up to date`)
         }
       }
 
@@ -596,15 +591,12 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     const install = await this.needsInstall()
     if (!install.length) return
 
-    log.debug('installing translators: loading BBT translators')
     for (const { header, code } of install) {
-      log.debug('translator install: saving', header.label)
       await Zotero.DB.queryTx("UPDATE betterbibtex.autoExport SET status = 'scheduled' WHERE translatorID = ?", [ header.translatorID ])
       await Zotero.Translators.save(header, code)
     }
 
     await Zotero.Translators.reinit()
-    log.debug('translator install: done')
   }
 
   private exportScope(scope: ExportScope): ExportScope {

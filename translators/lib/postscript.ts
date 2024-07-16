@@ -42,7 +42,7 @@ export function postscript(kind: 'csl' | 'tex', main: string, guard?: string): P
 
   if (guard) body = `${guard} = true; try { ${body} } finally { ${guard} = false; }`
 
-  log.debug('postscript=', body)
+  log.info(`postscript=${body}`)
 
   return new Function('target', 'source', 'Translator', 'Zotero', 'extra', body) as Postscript
 }

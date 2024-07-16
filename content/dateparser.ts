@@ -131,25 +131,7 @@ function swap_day_month(day: number, month: number, fix_only = false): number[] 
 }
 
 export function parse(value: string): ParsedDate {
-  const date = parseToDate(value, false)
-
-  /* REVIEW:
-  if (date.type === 'verbatim') {
-    const csl = CSL.DateParser.parseDateToObject(value)
-    if (typeof csl.year === 'number') {
-      if (csl.day_end === csl.day) delete csl.day_end
-      if (csl.month_end === csl.month) delete csl.month_end
-      if (csl.year_end === csl.year) delete csl.year_end
-      const from = { type: 'date', year: csl.year, month: csl.month, day: csl.day }
-      const to = { type: 'date', year: csl.year_end, month: csl.month_end, day: csl.day_end }
-      if (is_valid_date(from) && (!to.year || is_valid_date(to))) {
-        return to.year ? { type: 'interval', from: Season.seasonize(from as ParsedDate), to: Season.seasonize(to as ParsedDate) } : Season.seasonize(from as ParsedDate)
-      }
-    }
-  }
-  */
-
-  return date
+  return parseToDate(value, false)
 }
 
 function parseEDTF(value: string): ParsedDate {

@@ -19,14 +19,6 @@ export class TestSupport {
   public timedMemoryLog: any
   public scenario: string
 
-  /* REVIEW:
-  public startTimedMemoryLog(msecs: number): void {
-    if (typeof this.timedMemoryLog === 'undefined') {
-      this.timedMemoryLog = setInterval(() => { log.debug('memory use:', memory.state('periodic snapshot')) }, msecs)
-    }
-  }
-  */
-
   public isIdle(topic: string): boolean {
     return Events.idle[topic] === 'idle'
   }
@@ -41,7 +33,7 @@ export class TestSupport {
   }
 
   public async reset(scenario: string): Promise<void> {
-    log.debug('test environment reset for', scenario)
+    log.info(`test environment reset for ${scenario}`)
     Cache.reset('test environment reset')
 
     const prefix = 'translators.better-bibtex.'

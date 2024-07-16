@@ -241,22 +241,6 @@ class WorkerZoteroBetterBibTeX {
     return DateParser.isEDTF(date, minuteLevelPrecision)
   }
 
-  /* REVIEW:
-  public titleCase(text) {
-    return titleCase(text)
-  }
-
-  public parseHTML(text, options) {
-    options = {
-      ...options,
-      exportBraceProtection: Zotero.getHiddenPref('exportBraceProtection'),
-      csquotes: Zotero.getHiddenPref('csquotes'),
-      exportTitleCase: Zotero.getHiddenPref('exportTitleCase'),
-    }
-    return HTMLParser.parse(text.toString(), options)
-  }
-  */
-
   public strToISO(str) {
     return DateParser.strToISO(str)
   }
@@ -274,16 +258,6 @@ const WorkerZoteroUtilities = {
   XRegExp,
 
   getVersion: () => workerEnvironment.version,
-
-  /* REVIEW:
-  public getCreatorsForType(itemType) {
-    return itemCreators[client][itemType]
-  }
-
-  public itemToCSLJSON(item) {
-    return workerJob.cslItems[item.itemID]
-  }
-  */
 }
 
 function isWinRoot(path) {

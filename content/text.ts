@@ -448,12 +448,6 @@ export function babelLanguage(language: string): string {
     || language
 }
 
-/* REVIEW:
-export function babelTag(langid: string): string {
-  return (Tag[langid] as string) || ''
-}
-*/
-
 const excelColumnCache: Map<number, string> = new Map
 // https://www.geeksforgeeks.org/find-excel-column-name-given-number/
 export function excelColumn(n: number): string {
