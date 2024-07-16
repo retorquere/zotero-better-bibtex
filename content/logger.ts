@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
+
 import type { Translators as Translator } from '../typings/translators'
 declare const workerEnvironment: any
 declare const workerJob: Translator.Worker.Job
@@ -5,6 +7,17 @@ declare const dump: (msg: string) => void
 
 import { stringify } from './stringify'
 import { asciify } from './text'
+
+export const discard = {
+  log(): void {},
+  error(): void {},
+  warn(): void {},
+  debug(): void {},
+  info(): void {},
+  clear(): void {},
+  dir(): void {},
+  table(): void {},
+}
 
 export function print(msg: string): void {
   dump(`better-bibtex::${msg}\n`)
@@ -66,14 +79,17 @@ class Logger {
     }
   }
 
+  /*
   public log(...msg) {
     this.print(this.format({}, msg))
   }
+  */
 
   public debug(...msg) {
     this.print(this.format({}, msg))
   }
 
+  /*
   public warn(...msg) {
     this.print(this.format({}, msg))
   }
@@ -81,14 +97,17 @@ class Logger {
   public info(...msg) {
     this.print(this.format({}, msg))
   }
+  */
 
   public error(...msg) {
     this.print(this.format({error: true}, msg))
   }
 
+  /*
   public dump(...msg) {
     if (this.enabled) print(this.format({}, msg))
   }
+  */
 
   public status({ error=false }, ...msg) {
     if (error || this.enabled) Zotero.debug(this.format({error}, msg))

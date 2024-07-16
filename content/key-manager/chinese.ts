@@ -1,8 +1,7 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
-
 import { Preference } from '../prefs'
 import { Events } from '../events'
 // import { CJK } from '../text'
+import { discard } from '../logger'
 
 declare const ChromeUtils: any
 
@@ -12,22 +11,11 @@ if (typeof Services == 'undefined') {
 
 import type { jieba as jiebaFunc, pinyin as pinyinFunc } from './chinese-optional'
 
-const noConsole = {
-  log: () => {},
-  error: () => {},
-  warn: () => {},
-  debug: () => {},
-  info: () => {},
-  clear: () => {},
-  dir: () => {},
-  table: () => {},
-}
-
 // Replace the console object with the empty shim
 export const chinese = new class {
   public window: Window
   public document: Document
-  public console = noConsole
+  public console = discard
 
   public jieba: typeof jiebaFunc
   public pinyin: typeof pinyinFunc

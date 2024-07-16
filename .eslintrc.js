@@ -7,6 +7,8 @@ Object.assign(config.rules, {
   'no-underscore-dangle': [ 'error', { "allowAfterThis": true } ],
   'prefer-template': 'off',
 
+  'prefer-arrow/prefer-arrow-functions': 'off',
+
   '@typescript-eslint/no-redundant-type-constituents': 'off',
   '@typescript-eslint/consistent-type-assertions': 'off',
   '@typescript-eslint/consistent-type-definitions': 'off',
@@ -34,7 +36,7 @@ const shell = require('shelljs')
 const branch = (process.env.GITHUB_REF && process.env.GITHUB_REF.startsWith('refs/heads/'))
   ? process.env.GITHUB_REF.replace('refs/heads/', '')
   : shell.exec('git rev-parse --abbrev-ref HEAD', { silent: true }).stdout.trim()
-config.rules['no-restricted-syntax'] = [branch === 'master' ? 'error' : 'warn', "MemberExpression[object.name='log'][property.name='debug']"]
+config.rules['no-restricted-syntax'] = [branch === 'master' ? 'error' : 'off', "MemberExpression[object.name='log'][property.name='debug']"]
 
 config.ignorePatterns = [
   'util/*.ts',
