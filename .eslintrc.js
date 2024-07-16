@@ -30,6 +30,14 @@ Object.assign(config.rules, {
   'max-len': [ 'warn', { code: 320 } ],
 })
 
+const shell = require('shelljs')
+const branch = (process.env.GITHUB_REF && process.env.GITHUB_REF.startsWith('refs/heads/'))
+  ? process.env.GITHUB_REF.replace('refs/heads/', '')
+  : shell.exec('git rev-parse --abbrev-ref HEAD', { silent: true }).stdout.trim()
+if (branch === 'master') {
+  config.rules['no-restricted-syntax'] = ['error', "MemberExpression[object.name='log',property.name='debug']"]
+}
+
 config.ignorePatterns = [
   'util/*.ts',
   'minitests/*.ts',
