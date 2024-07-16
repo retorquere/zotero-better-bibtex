@@ -37,11 +37,13 @@ class Logger {
   protected timestamp: number
   public prefix = ''
 
-  private format({ error=false }, msg) {
-    let diff = null
-    const now = Date.now()
-    if (this.timestamp) diff = now - this.timestamp
-    this.timestamp = now
+  private format({ ascii=true, trace=false, error=false }, msg) {
+    let diff = ''
+    if (trace) {
+      const now = Date.now()
+      if (this.timestamp) diff = `+${now - this.timestamp} `
+      this.timestamp = now
+    }
 
     if (Array.isArray(msg)) msg = msg.map(toString).join(' ')
 
@@ -52,8 +54,9 @@ class Logger {
     }
 
     if (error) prefix += ' error:'
+    if (ascii) msg = asciify(msg)
 
-    return `{better-bibtex${this.prefix}${prefix}} +${diff} ${asciify(msg)}`
+    return `{better-bibtex${this.prefix}${prefix}} ${diff}${msg}`
   }
 
   public get enabled(): boolean {
@@ -79,35 +82,21 @@ class Logger {
     }
   }
 
-  /*
-  public log(...msg) {
-    this.print(this.format({}, msg))
-  }
-  */
-
   public debug(...msg) {
     this.print(this.format({}, msg))
   }
 
-  /*
-  public warn(...msg) {
-    this.print(this.format({}, msg))
+  public info(msg: string) {
+    this.print(this.format({ ascii: false }, msg))
   }
 
-  public info(...msg) {
-    this.print(this.format({}, msg))
+  public trace(msg: string) {
+    this.print(this.format({ trace: true, ascii: false }, msg))
   }
-  */
 
   public error(...msg) {
     this.print(this.format({error: true}, msg))
   }
-
-  /*
-  public dump(...msg) {
-    if (this.enabled) print(this.format({}, msg))
-  }
-  */
 
   public status({ error=false }, ...msg) {
     if (error || this.enabled) Zotero.debug(this.format({error}, msg))
