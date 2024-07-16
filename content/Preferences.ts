@@ -275,7 +275,6 @@ class AutoExportPane {
       path = menulist.selectedItem.getAttribute('value')
     }
     const ae = await AutoExport.get(path)
-    log.debug('edit autoexport: before', ae)
 
     const field = node.getAttribute('data-ae-field')
     Cache.getCollection(Translators.byId[ae.translatorID].label).removeDataOnly()
@@ -304,7 +303,6 @@ class AutoExportPane {
 
       case 'DOIandURL':
       case 'bibtexURL':
-        log.debug('edit autoexport:', field, node.value)
         value = node.value
         break
 
@@ -313,7 +311,6 @@ class AutoExportPane {
     }
     await AutoExport.edit(path, field, value)
     if (disable) await AutoExport.edit(path, disable, false)
-    log.debug('edit autoexport: after', await AutoExport.get(path))
     await this.refresh()
   }
 
@@ -433,10 +430,7 @@ export class PrefPane {
   }
 
   public checkPostscript(): void {
-    if (!$window) {
-      log.debug('Preferences.checkPostscript: window not loaded yet?')
-      return
-    }
+    if (!$window) return
 
     let error = ''
     try {
@@ -478,7 +472,6 @@ export class PrefPane {
         // bloody *@*&^@# html controls only sorta work for prefs
         for (const node of Array.from($window.document.querySelectorAll<HTMLInputElement>("input[preference][type='range'], input[preference][type='text'], textarea[preference]"))) {
           node.value = Preference[node.getAttribute('preference').replace('extensions.zotero.translators.better-bibtex.', '')]
-          log.debug('prefence-input:', node.tagName)
           if (!is7 && node.tagName === 'textarea') node.style.marginBottom = '20px'
         }
 
@@ -496,14 +489,13 @@ export class PrefPane {
       if (typeof this.timer === 'undefined') this.timer = setInterval(this.refresh.bind(this), 500)
     }
     catch (err) {
-      log.debug('error loading preferences:', err)
+      log.error('error loading preferences:', err)
     }
   }
 
   private showQuickCopyDetails() {
     const quickcopy = 'bbt-preferences-quickcopy-details'
     const selected = `${quickcopy}-${Zotero.Prefs.get('translators.better-bibtex.quickCopyMode')}`
-    log.debug('showQuickCopyDetails:', selected)
     for (const details of ([...$window.document.querySelectorAll(`.${quickcopy}`)] as HTMLElement[])) {
       details.style.display = details.id === selected ? 'initial' : 'none'
     }

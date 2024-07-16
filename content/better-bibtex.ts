@@ -237,7 +237,7 @@ $patch$(Zotero.API, 'getResultsFromParams', original => function Zotero_API_getR
     }
   }
   catch (err) {
-    log.debug('getResultsFromParams', params, err)
+    log.error('getResultsFromParams', params, err)
   }
 
   return original.apply(this, arguments) as Record<string, any>
@@ -349,7 +349,7 @@ if (!is7) {
       })
     }
     catch (err) {
-      log.debug('could not install itemtree column')
+      log.error('could not install itemtree column')
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
@@ -538,10 +538,7 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
         if (noworker) noworker = `found async handlers: ${noworker}`
       }
 
-      if (noworker) {
-        log.debug('worker export skipped,', noworker)
-      }
-      else {
+      if (!noworker) {
         const path = this.location?.path
 
         // fake out the stuff that complete expects to be set by .translate
@@ -684,7 +681,6 @@ export class BetterBibTeX {
       }))
     }
 
-    log.debug('progress:', progress, msg)
     const progressbox = doc.getElementById('better-bibtex-progress')
     if (progressbox.hidden = (progress >= 100 || progress < 0)) return
 
@@ -699,8 +695,6 @@ export class BetterBibTeX {
   }
 
   public async startup(reason: Reason): Promise<void> {
-    log.debug('Loading Better BibTeX: starting...')
-
     orchestrator.add({
       id: 'start',
       description: 'waiting for zotero',
@@ -748,12 +742,10 @@ export class BetterBibTeX {
 
           await Zotero.DB.executeTransaction(async () => {
             for (let { name, data } of await Zotero.DB.queryAsync('SELECT name, data FROM betterbibtex."better-bibtex" WHERE migrated IS NULL')) {
-              log.debug('migrating', { name })
               data = JSON.parse(data)
               let migrated = name
               switch (name) {
                 case 'better-bibtex.citekey':
-                  log.debug('converting', { name, records: data.data.length })
                   try {
                     for (const key of data.data) {
                       await Zotero.DB.queryAsync('REPLACE INTO betterbibtex.citationkey (itemID, itemKey, libraryID, citationKey, pinned) VALUES (?, ?, ?, ?, ?)', [
@@ -771,7 +763,6 @@ export class BetterBibTeX {
                   break
 
                 case 'better-bibtex.autoexport':
-                  log.debug('converting', { name, records: data.data.length })
                   for (const ae of data.data) {
                     await AE.store({ ...ae, updated: ae.meta.updated })
                   }
@@ -788,7 +779,6 @@ export class BetterBibTeX {
           for (const { name, migrated } of await Zotero.DB.queryAsync('SELECT name, migrated FROM betterbibtex."better-bibtex"')) {
             status[name] = migrated
           }
-          log.debug('migrated:', status)
         }
       },
       shutdown: async () => {
@@ -804,7 +794,6 @@ export class BetterBibTeX {
         await this.load(Zotero.getMainWindow())
 
         Zotero.Promise.delay(15000).then(() => {
-          log.debug('removing fallback debug logger')
           DebugLog.unregister('Better BibTeX')
         })
         Zotero.Promise.delay(3000).then(() => {
@@ -894,14 +883,12 @@ export class BetterBibTeX {
           textbox.value = citekey || ''
           textbox.dataset.itemid = citekey ? `${item.id}` : ''
           setSectionSummary(citekey || '')
-          // log.debug('2884:onRender:', was, '->', textbox.dataset.itemid, show(item))
         },
         onInit: ({ body, refresh }) => {
           $done = Events.on('items-changed', ({ items }) => {
             const textbox = body.ownerDocument.getElementById('better-bibtex-citation-key')
             const itemID = textbox.dataset.itemid ? parseInt(textbox.dataset.itemid) : undefined
             const displayed: ZoteroItem = textbox.dataset.itemid ? items.find(item => item.id === itemID) : undefined
-            // log.debug('2884:onInit.items-changed:', items.map(item => item.id), 'current:', textbox.dataset.itemid, 'refresh:', !!displayed)
             if (displayed) refresh()
           })
         },
@@ -912,7 +899,6 @@ export class BetterBibTeX {
             // const was = textbox.dataset.itemid
             textbox.dataset.itemid = citekey ? `${item.id}` : ''
             textbox.value = citekey || '\u274C'
-            // log.debug('2884:onItemChange:', was, '->', textbox.dataset.itemid, show(item))
             setEnabled(true)
           }
           else {
@@ -921,7 +907,6 @@ export class BetterBibTeX {
           }
         },
         onDestroy: () => {
-          // if ($done) log.debug('2884:onDestroy')
           $done?.()
           $done = undefined
         },
@@ -929,12 +914,11 @@ export class BetterBibTeX {
     }
 
     try {
-      log.debug('loading main UI')
       await newZoteroPane(win)
       if (!is7) await newZoteroItemPane(win)
     }
     catch (err) {
-      log.debug('loadUI error:', err)
+      log.error('loadUI error:', err)
     }
   }
 
@@ -964,7 +948,6 @@ export class BetterBibTeX {
 }
 
 Events.on('window-loaded', async ({ win, href }: {win: Window, href: string}) => {
-  if (Preference.testing) log.debug('window-loaded:', href)
   switch (href) {
     case 'chrome://zotero/content/standalone/standalone.xul':
     case 'chrome://zotero/content/zoteroPane.xhtml':

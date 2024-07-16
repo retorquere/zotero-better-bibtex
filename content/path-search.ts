@@ -29,8 +29,6 @@ function resolveVars(path: string, resolved: Record<string, string>): string {
 }
 
 async function pathSearch(bin: string, installationDirectory: { mac?: string[], win?: string[] } = {}): Promise<string> {
-  const env = Components.classes['@mozilla.org/process/environment;1'].getService(Components.interfaces.nsIEnvironment)
-
   const PATH = ENV.get('PATH')
   if (!PATH.length) {
     log.error('path-search: PATH not set')
@@ -39,7 +37,7 @@ async function pathSearch(bin: string, installationDirectory: { mac?: string[], 
   let paths: string[] = PATH.split(Zotero.isWin ? ';' : ':')
   const resolved = {}
   paths = paths.map(p => resolveVars(p, resolved)).filter((p: string, i: number, self: string[]) => self.indexOf(p) === i)
-  log.debug('path-search: looking for', bin, 'in', PATH, paths)
+  log.info(`path-search: looking for ${bin} in ${PATH}`)
   if (Zotero.isWin && installationDirectory.win) paths.unshift(...(installationDirectory.win))
   if (Zotero.isMac && installationDirectory.mac) paths.unshift(...(installationDirectory.mac))
   paths = paths.filter(p => p)
@@ -70,7 +68,7 @@ async function pathSearch(bin: string, installationDirectory: { mac?: string[], 
           continue
         }
 
-        log.debug(`path-search: ${bin} found at ${exe}`)
+        log.info(`path-search: ${bin} found at ${exe}`)
         return exe
       }
       catch (err) {
@@ -78,6 +76,6 @@ async function pathSearch(bin: string, installationDirectory: { mac?: string[], 
       }
     }
   }
-  log.debug('path-search:', bin, 'not found in', env.path)
+  log.info(`path-search: ${bin} not found in ${PATH}`)
   return ''
 }

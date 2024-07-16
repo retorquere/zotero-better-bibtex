@@ -54,7 +54,6 @@ export async function fetchAsync(item: any): Promise<string> {
 export function fetchSync(item: any): string {
   for (const {type, id, url} of urls(item)) {
     try {
-      log.debug('inspire-HEP', url)
       const citekey = parse(type, id, JSON.parse(Zotero.File.getContentsFromURL(url)))
       if (citekey) return citekey
     }

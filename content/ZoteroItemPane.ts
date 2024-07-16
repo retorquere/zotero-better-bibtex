@@ -1,7 +1,6 @@
 import { patch as $patch$ } from './monkey-patch'
 import { sentenceCase } from './text'
 import * as l10n from './l10n'
-import { log } from './logger'
 import { Elements } from './create-element'
 import { busyWait } from './busy-wait'
 import { icons } from './icons'
@@ -76,9 +75,8 @@ export class ZoteroItemPane {
       original.apply(this, arguments)
 
       if (!this.item) {
-        self.displayed = undefined
         // why is it refreshing if there is no item?!
-        log.debug('itemBox.refresh without an item')
+        self.displayed = undefined
         return
       }
 
@@ -87,7 +85,6 @@ export class ZoteroItemPane {
       let menuitem = this.ownerDocument.getElementById(menuid)
       const menu = this.ownerDocument.getElementById('zotero-field-transform-menu')
       if (menu && !menuitem) {
-        log.debug('bbt sentencecase: adding', menuid)
         menuitem = menu.appendChild(elements.create('menuitem', {
           id: menuid,
           label: 'BBT sentence case',

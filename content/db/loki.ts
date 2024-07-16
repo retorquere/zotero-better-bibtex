@@ -24,8 +24,8 @@ $patch$(Loki.Collection.prototype, 'findOne', original => function() {
 })
 
 function oops(collection, action, doc, errors) {
-  log.debug(collection, action, doc)
   if (!errors) return
+  log.error(collection, action, doc)
 
   const error = new Error(`${collection} ${action} ${JSON.stringify(doc)}: ${errors}`)
   Preference.scrubDatabase = true

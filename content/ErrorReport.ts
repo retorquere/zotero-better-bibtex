@@ -265,7 +265,6 @@ export class ErrorReport {
           this.config[facet] = this.config[facet] && !!this.input.items
         }
         if (facet === 'errors') {
-          log.debug('error report errors:', { errors: this.input.errors })
           cb.disabled = !this.input.errors
           this.config[facet] = !!this.input.errors
         }
@@ -275,7 +274,6 @@ export class ErrorReport {
       this.config[facet] = cb.checked
       if (facet === 'notes' || facet === 'attachments') cb.disabled = !this.config.items
     }
-    log.debug('error report reload:', { init }, this.config)
 
     this.report = {...this.input}
 
@@ -322,7 +320,7 @@ export class ErrorReport {
     const wizard: Wizard = this.document.getElementById('better-bibtex-error-report') as Wizard
     wizard.getPageById('page-enable-debug').addEventListener('pageshow', this.show.bind(this))
     wizard.getPageById('page-review').addEventListener('pageshow', this.show.bind(this))
-    wizard.getPageById('page-send').addEventListener('pageshow', () => { this.send().catch(err => log.debug('could not send debug log:', err)) })
+    wizard.getPageById('page-send').addEventListener('pageshow', () => { this.send().catch(err => log.error('could not send debug log:', err)) })
     wizard.getPageById('page-done').addEventListener('pageshow', this.show.bind(this))
 
     for (const cb of Array.from(this.document.getElementsByClassName('better-bibtex-error-report-facet')) as HTMLInputElement[]) {

@@ -102,8 +102,6 @@ export class Orchestrator {
     const tasks: Task[] = this.ordered.filter(task => task[phase])
     if (phase === 'shutdown') tasks.reverse()
 
-    log.debug('orchestrator:', phase, 'in order', tasks.map(task => task.id).join(' - '))
-
     const total = tasks.length
 
     const runtime = {
@@ -111,7 +109,7 @@ export class Orchestrator {
       bbt: 0,
     }
     const finished: number[] = []
-    log.debug(phase, 'orchestrator started:', reason)
+    log.info(`${phase} orchestrator started: ${reason}`)
     while (tasks.length) {
       const task = tasks.shift()
 
@@ -121,13 +119,13 @@ export class Orchestrator {
 
       progress?.(phase, task.id, finished.length, total, task.description)
 
-      log.debug('orchestrator: starting', task.id, JSON.stringify(task.description))
+      log.info(`orchestrator: starting ${task.id} [${task.description}]`)
 
       task.started = Date.now()
       await task[phase](reason, task)
       task.finished = Date.now()
 
-      log.debug('orchestrator:', task.id, 'took', duration(task.finished - task.started))
+      log.info(`orchestrator: ${task.id} took ${duration(task.finished - task.started)}`)
       finished.unshift(task.finished)
       runtime[task.id === 'start' ? 'zotero' : 'bbt'] += task.finished - task.started
 
@@ -135,7 +133,7 @@ export class Orchestrator {
     }
 
     log.prefix = ''
-    log.debug('orchestrator: startup took', duration(runtime.bbt), 'after waiting', duration(runtime.zotero), 'for zotero')
+    log.info(`orchestrator: startup took ${duration(runtime.bbt)} after waiting ${duration(runtime.zotero)} for zotero`)
   }
 
   private gantt(phase: PhaseID) {
