@@ -8,7 +8,6 @@ declare var ZOTERO_TRANSLATOR_INFO: Translators.Header // eslint-disable-line no
 
 import html2md from 'html-to-md'
 
-import { log } from '../content/logger'
 import { Item } from '../gen/typings/serialized-item'
 
 import * as escape from '../content/escape'
@@ -93,10 +92,6 @@ class Exporter {
 
     this.html = `<html><head><style>${ style }</style></head><body>${ this.body }</body></html>`
     if (this.translation.options.markdown) this.markdown = html2md(this.html)
-  }
-
-  show(context, args) {
-    log.debug(`collectednotes.${context}: ${JSON.stringify(Array.from(args))}`)
   }
 
   write_collection(collection, level = 1) {

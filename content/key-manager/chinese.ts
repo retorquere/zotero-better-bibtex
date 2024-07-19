@@ -1,7 +1,7 @@
 import { Preference } from '../prefs'
 import { Events } from '../events'
-import { log } from '../logger'
 // import { CJK } from '../text'
+import { discard } from '../logger'
 
 declare const ChromeUtils: any
 
@@ -11,10 +11,11 @@ if (typeof Services == 'undefined') {
 
 import type { jieba as jiebaFunc, pinyin as pinyinFunc } from './chinese-optional'
 
+// Replace the console object with the empty shim
 export const chinese = new class {
   public window: Window
   public document: Document
-  public console = log
+  public console = discard
 
   public jieba: typeof jiebaFunc
   public pinyin: typeof pinyinFunc

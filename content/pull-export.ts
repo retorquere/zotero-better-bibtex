@@ -187,7 +187,7 @@ class ItemHandler {
             filtered_items = JSON.parse(contents).items
             break
           default:
-            throw new Error(`Unexpected translator ${translatorID}`)
+            throw new Error(`Unexpected translator ${translatorID} from ${translator}`)
         }
 
         for (const item of filtered_items) {

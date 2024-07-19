@@ -234,7 +234,6 @@ export class Entry {
     }
 
     this.extraFields = JSON.parse(JSON.stringify(item.extraFields))
-    log.debug('extra-fields:', this.extraFields)
 
     // should be const entrytype: string | { type: string, subtype?: string }
     // https://github.com/Microsoft/TypeScript/issues/10422
@@ -291,14 +290,7 @@ export class Entry {
     for (const [name, value] of Object.entries(item.extraFields.kv)) {
       const ef = ExtraFields[name]
       if (ef?.zotero) {
-        if (!item[name] || ef.type === 'date') {
-          item[name] = value
-        }
-        /*
-        else {
-          log.debug('extra fields: skipping', {name, value})
-        }
-        */
+        if (!item[name] || ef.type === 'date') item[name] = value
         delete item.extraFields.kv[name]
       }
     }
@@ -577,10 +569,7 @@ export class Entry {
             throw new Error(`Unexpected field encoding: ${JSON.stringify(field.enc)}`)
         }
 
-        if (!value) {
-          if (field.name !== 'file' && field.name !== 'keywords') log.debug('add: no value after encoding', field)
-          return null
-        }
+        if (!value) return null
 
         value = value.trim()
 

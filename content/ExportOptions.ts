@@ -2,27 +2,12 @@ import { patch as $patch$, unpatch as $unpatch$, Trampoline } from './monkey-pat
 import * as l10n from './l10n'
 import { Elements } from './create-element'
 import { Events } from './events'
-import { log } from './logger'
 import type { XUL } from '../typings/xul'
 
 type XULWindow = Window & { Zotero_File_Interface_Export?: any, arguments?: any[], sizeToContent?: () => void }
 // safe to keep these global as only one export window will ever be open at any one time
 let $window: XULWindow // eslint-disable-line no-var
 var Zotero_File_Interface_Export: any // eslint-disable-line no-var
-
-/*
-function show(label) {
-  const exportFileData = $window.document.getElementById('export-option-exportFileData') as XUL.Checkbox // eslint-disable-line no-case-declarations
-  const keepUpdated = $window.document.getElementById('export-option-keepUpdated') as XUL.Checkbox // eslint-disable-line no-case-declarations
-  const worker = $window.document.getElementById('export-option-worker') as XUL.Checkbox // eslint-disable-line no-case-declarations
-
-  log.debug(`export-options.${label}:`, {
-    exportFileData: exportFileData ? exportFileData.checked : null,
-    keepUpdated: keepUpdated ? keepUpdated.checked : null,
-    worker: worker ? worker.checked : null,
-  })
-}
-*/
 
 Events.on('window-loaded', ({ win, href }: {win: Window, href: string}) => {
   switch (href) {
@@ -138,12 +123,6 @@ export class ExportOptions {
 
     if (!exportFileData || !keepUpdated) return null
 
-    log.debug('export-options.mutex: start:', {
-      exportFileData: exportFileData ? exportFileData.checked : null,
-      keepUpdated: keepUpdated ? keepUpdated.checked : null,
-      worker: worker ? worker.checked : null,
-    })
-
     if (!e) keepUpdated.checked = false
 
     const target = e ? e.target as Element : exportFileData
@@ -165,11 +144,5 @@ export class ExportOptions {
         break
     }
     worker.disabled = keepUpdated.checked
-
-    log.debug('export-options.mutex: done:', {
-      exportFileData: exportFileData ? exportFileData.checked : null,
-      keepUpdated: keepUpdated ? keepUpdated.checked : null,
-      worker: worker ? worker.checked : null,
-    })
   }
 }

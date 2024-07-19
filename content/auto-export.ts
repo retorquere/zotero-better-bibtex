@@ -286,7 +286,6 @@ class Git {
 
     args = args || []
     const command = [exe, ...args].map(quote).join(' ')
-    log.debug('running: [', command, ']')
 
     const cmd = new FileUtils.File(exe)
     if (!cmd.isExecutable()) throw new Error(`${cmd.path} is not an executable`)

@@ -1,0 +1,40 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "options": {
+      "Items": true,
+      "Preferences": true,
+      "exportNotes": true
+    },
+    "preferences": {
+      "citekeyFormat": "auth + year",
+      "importJabRefAbbreviations": false,
+      "rawImports": true
+    }
+  },
+  "items": [
+    {
+      "citationKey": "citekey",
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "Author"
+        }
+      ],
+      "extra": [
+        "Citation Key: citekey"
+      ],
+      "itemID": 1,
+      "itemType": "journalArticle",
+      "publicationTitle": "J. Funct. Anal.",
+      "tags": [
+        {
+          "tag": "#LaTeX",
+          "type": 1
+        }
+      ],
+      "title": "title"
+    }
+  ]
+}

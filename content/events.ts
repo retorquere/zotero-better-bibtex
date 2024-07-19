@@ -2,7 +2,6 @@
 
 import Emittery from 'emittery'
 
-import { log } from './logger'
 import { is7 } from './client'
 
 type ZoteroAction = 'modify' | 'add' | 'trash' | 'delete'
@@ -75,6 +74,7 @@ class Emitter extends Emittery<{
 }
 
 export const Events = new Emitter({
+  /*
   debug: {
     name: 'better-bibtex event',
     enabled: Zotero.Prefs.get('translators.better-bibtex.logEvents'),
@@ -88,6 +88,7 @@ export const Events = new Emitter({
       }
     },
   },
+  */
 })
 
 class WindowListener {
@@ -114,13 +115,11 @@ class IdleListener {
     if (Events.idle[topic]) throw new Error(`idle topic ${topic} already registered`)
 
     Events.idle[topic] = (idleService.idleTime / 1000) > this.delay ? 'idle' : 'active'
-    log.debug('adding idle notifier', topic, 'on a', this.delay, 'second delay')
     idleService.addIdleObserver(this, this.delay)
   }
 
   observe(_subject: string, topic: IdleState, _data: any) {
     if ((topic as any) === 'back') topic = 'active'
-    log.debug(`idle: ${new Date}, ${this.topic} ${topic}`)
     Events.idle[this.topic] = topic
     void Events.emit('idle', { state: topic, topic: this.topic })
   }

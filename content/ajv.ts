@@ -1,12 +1,12 @@
 // 2020 for prefixItems
 import AJV from 'ajv/dist/2020'
-import { log, print } from './logger'
+import { discard, print } from './logger'
 
 const options  = {
   strict: false,
   discriminator: true,
   useDefaults: true,
-  logger: log,
+  logger: discard,
 }
 
 export const noncoercing = new AJV(options)

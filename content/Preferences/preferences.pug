@@ -144,11 +144,6 @@ preferences
   preference(name="extensions.zotero.translators.better-bibtex.autoExportIdleWait" bbt:affects="" type="int" default="10")
   bbt:doc Number of seconds to wait after your system goes idle before kicking off auto-exports.
 
-  preference(name="extensions.zotero.translators.better-bibtex.cacheFlushInterval" bbt:affects="" type="int" default="5")
-  bbt:doc.
-    How often the Better BibTeX database should be saved to disk. Defaults to once every 5 seconds. Note that
-    your database is always saved when your computer goes idle, or when you exit Zotero.
-
   preference(name="extensions.zotero.translators.better-bibtex.csquotes" bbt:affects="tex" type="string" default="")
   bbt:doc.
     if you set `csquotes` to a string of character pairs, each pair will be assumed to be the open and close parts of a pair and
@@ -344,8 +339,17 @@ preferences
 
   // hidden preferences
   preference(name="extensions.zotero.translators.better-bibtex.importSentenceCaseQuoted" bbt:affects="" type="bool" default="true")
+  bbt:doc.
+    During import, also sentence-case quoted parts of titles
+
   preference(name="extensions.zotero.translators.better-bibtex.importJabRefStrings" bbt:affects="" type="bool" default="true")
+  bbt:doc.
+    During import, replace titles matching a list of common @string definitions with the value of that @string
+
   preference(name="extensions.zotero.translators.better-bibtex.importJabRefAbbreviations" bbt:affects="" type="bool" default="true")
+  bbt:doc.
+    Expand journal abbreviations to the full journal name on import.
+
   preference(name="extensions.zotero.translators.better-bibtex.autoExportPathReplaceDirSep" bbt:affects="" type="string" default="-")
   preference(name="extensions.zotero.translators.better-bibtex.autoExportPathReplaceSpace" bbt:affects="" type="string" default=" ")
   preference(name="extensions.zotero.translators.better-bibtex.autoExportPathReplaceDiacritics" bbt:affects="" type="bool" default="false")

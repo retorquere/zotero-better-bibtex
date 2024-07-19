@@ -398,11 +398,11 @@ class ZoteroPane {
       }
       catch (err) {
         if (err.timeout) {
-          log.debug('errorreport: items timed out after', err.timeout, 'seconds')
+          log.error('errorreport: items timed out after', err.timeout, 'seconds')
           return 'Timeout retrieving items'
         }
         else {
-          log.debug('errorreport: could not get items', err)
+          log.error('errorreport: could not get items', err)
           return `Error retrieving items: ${err}`
         }
       }

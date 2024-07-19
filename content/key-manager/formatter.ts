@@ -389,17 +389,15 @@ export class PatternFormatter {
     const ts = Date.now()
     // the zero-width-space is a marker to re-save the current default so it doesn't get replaced when the default changes later, which would change new keys suddenly
     for (let formula of [...formulas, Preference.default.citekeyFormat.replace(/^\u200B/, '')]) {
-      log.debug(`formula-update: ${ts} trying: ${formula}`)
+      log.info(`formula-update: ${ts} trying: ${formula}`)
       if (!formula) continue
 
       if (formula[0] === '[') {
         try {
-          log.debug(`formula-update: ${ts} legacy-formula: ${formula}`)
           formula = legacyparser.parse(formula, { reserved, items, methods })
-          log.debug(`formula-update: ${ts} legacy-formula upgraded to: ${formula}`)
         }
         catch (err) {
-          log.debug(`formula-update: ${ts} legacy-formula failed to upgrade ${formula}: ${err.message}`)
+          log.error(`formula-update: ${ts} legacy-formula failed to upgrade ${formula}: ${err.message}`)
           continue
         }
       }
@@ -408,13 +406,8 @@ export class PatternFormatter {
         this.$postfix()
         const formatter = this.parseFormula(formula)
         this.generate = (new Function(formatter) as () => string)
-        log.debug('CitekeyFormatter.update: installing generator', this.generate.toString())
-        if (Preference.citekeyFormat !== formula) log.debug('CitekeyFormatter.update: change citekeyFormat from', Preference.citekeyFormat, 'to', formula)
         Preference.citekeyFormat = formula
-        if (!Preference.citekeyFormatEditing) {
-          log.debug('CitekeyFormatter.update: set citekeyFormatEditing to', formula)
-          Preference.citekeyFormatEditing = formula
-        }
+        if (!Preference.citekeyFormatEditing) Preference.citekeyFormatEditing = formula
         return error
       }
       catch (err) {
@@ -430,9 +423,7 @@ export class PatternFormatter {
   }
 
   public parseFormula(formula: string): string {
-    const code = Formula.convert(formula)
-    if (Preference.testing) log.debug(`parseFormula.compiled:\n${code}`)
-    return code
+    return Formula.convert(formula)
   }
 
   public reset(): string {
@@ -442,7 +433,6 @@ export class PatternFormatter {
   }
 
   public finalize(_citekey: string): string {
-    // log.debug('ternary:', { citekey: this.citekey, next: this.next })
     if (this.next) return ''
     if (this.citekey && Preference.citekeyFold) this.citekey = this.transliterate(this.citekey)
     this.citekey = this.citekey.replace(this.re.unsafechars, '')
@@ -1130,7 +1120,9 @@ export class PatternFormatter {
   }
 
   /**
-   * replaces text, case insensitive when passing a string; `.replace('.etal','&etal')` will replace `.EtAl` with `&etal`
+   * replaces text, for the text to match you can pass either:
+   * - a string: `.replace('.etal','&etal')` which will match case-insensitive, so will replace `.EtAl` with `&etal`.
+   * - [javascript regular expression](https://www.simplilearn.com/tutorials/javascript-tutorial/javascript-regex): `.replace(/[.]etal/ig, '&etal')`
    * @param find string or regex to match. String matches are case-insensitive
    * @param replace literal text to replace the match with
    */

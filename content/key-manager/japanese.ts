@@ -15,13 +15,12 @@ async function fetchArrayBuffer(url): Promise<ArrayBuffer> {
 if (client !== 'node') {
   NodeDictionaryLoader.prototype.loadArrayBuffer = function(url, callback) { // eslint-disable-line prefer-arrow/prefer-arrow-functions
     url = `chrome://zotero-better-bibtex/content/resource/kuromoji/${url.replace(/.*[\\/]/, '').replace(/\.gz$/, '')}`
-    log.debug('kuroshiro: loading', url)
     fetchArrayBuffer(url)
       .then(arrayBuffer => {
         callback(null, arrayBuffer)
       })
       .catch(err => {
-        log.debug(`kuroshiro: loading ${url} failed: ${err}`)
+        log.error(`kuroshiro: loading ${url} failed: ${err}`)
         callback(err, null)
       })
   }

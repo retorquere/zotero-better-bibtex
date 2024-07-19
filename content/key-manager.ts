@@ -240,7 +240,6 @@ export const KeyManager = new class _KeyManager {
       description: 'keymanager',
       needs: ['sqlite'],
       startup: async () => {
-        log.debug('keymanager: init: kuroshiro/jieba')
         await kuroshiro.init()
         chinese.init()
 
