@@ -3,6 +3,7 @@
 import Emittery from 'emittery'
 
 import { is7 } from './client'
+import { log } from './logger'
 
 type ZoteroAction = 'modify' | 'add' | 'trash' | 'delete'
 
@@ -84,7 +85,7 @@ export const Events = new Emitter({
         log.debug('emit:', debugName, type, eventName, eventData)
       }
       catch (err) {
-        log.debug(`emit: ${err}`)
+        log.error(`emit: ${err}`)
       }
     },
   },
@@ -212,7 +213,7 @@ class ItemListener extends ZoteroListener {
       })
     }
     catch (err) {
-      log.debug('error in', this.type, 'notify handler:', err)
+      log.error(`error in ${this.type} notify handler: ${err.message}`)
     }
   }
 }
@@ -231,7 +232,7 @@ class TagListener extends ZoteroListener {
       void Events.emit('items-changed', { items: Zotero.Items.get(ids), action: 'modify', reason: 'tagged' })
     }
     catch (err) {
-      log.debug('error in', this.type, 'notify handler:', err)
+      log.error(`error in ${this.type} notify handler: ${err.message}`)
     }
   }
 }
@@ -247,7 +248,7 @@ class CollectionListener extends ZoteroListener {
       if ((action === 'delete') && ids.length) void Events.emit('collections-removed', ids)
     }
     catch (err) {
-      log.debug('error in', this.type, 'notify handler:', err)
+      log.error(`error in ${this.type} notify handler: ${err.message}`)
     }
   }
 }
@@ -275,7 +276,7 @@ class MemberListener extends ZoteroListener {
       if (changed.size) void Events.emit('collections-changed', Array.from(changed))
     }
     catch (err) {
-      log.debug('error in', this.type, 'notify handler:', err)
+      log.error(`error in ${this.type} notify handler: ${err.message}`)
     }
   }
 }
@@ -291,7 +292,7 @@ class GroupListener extends ZoteroListener {
       if ((action === 'delete') && ids.length) void Events.emit('libraries-removed', ids)
     }
     catch (err) {
-      log.debug('error in', this.type, 'notify handler:', err)
+      log.error(`error in ${this.type} notify handler: ${err.message}`)
     }
   }
 }
