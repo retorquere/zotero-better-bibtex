@@ -143,7 +143,6 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
             this.worker = null
           }
         }
-        log.debug('translators startup: worker started')
 
         this.itemType = {
           note: Zotero.ItemTypes.getID('note'),

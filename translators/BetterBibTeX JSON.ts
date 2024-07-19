@@ -157,8 +157,7 @@ export function doExport(): void {
   if (translation.options.Items) {
     const validAttachmentFields = new Set([ 'relations', 'uri', 'itemType', 'title', 'path', 'tags', 'dateAdded', 'dateModified', 'seeAlso', 'mimeType' ])
 
-    for (let item of translation.input.items) {
-      item = {...item} // un-proxy item
+    for (const item of translation.input.items) {
       delete item.$cacheable
       if (!translation.preferences.testing) addSelect(item)
 

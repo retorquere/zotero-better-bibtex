@@ -18,31 +18,6 @@ import type { CharMap } from 'unicode2latex'
 type CacheableItem = Item & { $cacheable: boolean }
 type CacheableRegularItem = RegularItem & { $cacheable: boolean }
 
-const cacheDisabler = new class {
-  get(target, property) {
-    // if (typeof target.$unused === 'undefined') target.$unused = new Set(Object.keys(target).filter(field => !ignore_unused_fields.includes(field)))
-
-    // collections: jabref 4 stores collection info inside the entry, and collection info depends on which part of your library you're exporting
-    if (property === 'collections') {
-      target.$cacheable = false
-    }
-
-    // use for the QR to highlight unused data
-    // target.$unused.delete(property)
-
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return target[property]
-  }
-
-  /*
-  set(target, property, value): boolean {
-    if (property === '$cacheable' && target.$cacheable && !value) log.debug('cache-rate: not for', target, (new Error).stack)
-    target[property] = value
-    return true
-  }
-  */
-}
-
 type NestedCollection = {
   key: string
   name: string
@@ -58,12 +33,15 @@ export class Items {
 
   constructor(items?: CacheableItem[]) {
     if (items) {
-      this.items = items.map(item => this.map[item.itemID] = this.map[item.itemKey] = new Proxy(item, cacheDisabler) as CacheableItem)
+      this.items = items
+      for (const item of items) {
+        this.map[item.itemID] = this.map[item.itemKey] = item
+      }
     }
     else {
       let item: CacheableItem
       while (item = Zotero.nextItem()) {
-        this.items.push(this.map[item.itemID] = this.map[item.itemKey] = new Proxy(item, cacheDisabler))
+        this.items.push(this.map[item.itemID] = this.map[item.itemKey] = item)
       }
     }
 
