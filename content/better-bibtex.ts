@@ -513,32 +513,21 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
         })
       }
 
-      let noworker = ''
-      if (this.noWait) { // noWait must be synchronous
-        noworker = 'noWait is active'
-      }
-      else if (!Translators.worker) {
-        // there wasn't an error starting a worker earlier
-        noworker = 'failed to start a chromeworker, disabled until restart'
-      }
-      else if (typeof translator.displayOptions.worker === 'undefined') {
-        noworker = `${translator.label} does not support background export`
-      }
-      else if (!displayOptions.worker) {
-        noworker = `user has chosen foreground export for ${translator.label}`
-      }
-      /*
-      else if (this.location?.path.startsWith('\\\\')) {
-        // check for SMB path for #1396
-        noworker = 'chrome workers fail on smb paths'
-      }
-      */
-      else {
-        noworker = Object.keys(this._handlers).filter(handler => !['done', 'itemDone', 'error'].includes(handler)).join(', ')
-        if (noworker) noworker = `found async handlers: ${noworker}`
+      let worker = !this.noWait && typeof translator.displayOptions.worker === 'boolean' && displayOptions.worker
+
+      if (worker) {
+        if (!Translators.worker) {
+          // there wasn't an error starting a worker earlier
+          log.error('failed to start a chromeworker, disabled until restart')
+          worker = false
+        }
+        else {
+          // found async handlers
+          worker = Object.keys(this._handlers).filter(handler => !['done', 'itemDone', 'error'].includes(handler)).length === 0
+        }
       }
 
-      if (!noworker) {
+      if (worker) {
         const path = this.location?.path
 
         // fake out the stuff that complete expects to be set by .translate
