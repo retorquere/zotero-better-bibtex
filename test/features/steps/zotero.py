@@ -14,7 +14,7 @@ import requests
 import tempfile
 from munch import *
 from steps.utils import running, nested_dict_iter, benchmark, ROOT, assert_equal_diff, serialize, html2md, clean_html, extra_lower
-from steps.library import load as Library
+from steps.library import load as Library, sortbib
 import steps.utils as utils
 import shutil
 import shlex
@@ -502,7 +502,7 @@ class Zotero:
       assert_equal_diff(clean_html(expected).strip(), clean_html(found).strip())
 
     else:
-      assert_equal_diff(expected, found)
+      assert_equal_diff(sortbib(expected), sortbib(found))
 
     self.exported(exported)
 
