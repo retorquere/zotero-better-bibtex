@@ -1,7 +1,7 @@
 digraph CitationGraph {
   concentrate=true;
-  "node-0" [label="Kim2016b"];
-  "node-1" [label="Vandal2017"];
-  "node-1" -> "Kendall2017" [style="dashed"];
-  "node-1" -> "node-0";
+  "node-0" [label="Vandal2017"];
+  "node-0" -> "Kendall2017" [style="dashed"];
+  "node-0" -> "node-1";
+  "node-1" [label="Kim2016b"];
 }
