@@ -8,7 +8,7 @@ import sqlite3
 def sortbib(bib):
   chunks = []
 
-  for line in bib.strip().splitlines():
+  for line in bib.strip().splitlines(keepends=True):
     if len(chunks) == 0 or line.startswith('@'):
       chunks.append(line)
     else:
