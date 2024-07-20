@@ -90,7 +90,8 @@ class Logger {
     this.print(this.format({ ascii: false }, msg))
   }
 
-  public trace(msg: string) {
+  public trace(msg: string, reset=false) {
+    if (reset) this.timestamp = 0
     this.print(this.format({ trace: true, ascii: false }, msg))
   }
 
