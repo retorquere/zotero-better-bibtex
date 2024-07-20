@@ -455,7 +455,6 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   if (this.noWait) return original.apply(this, arguments)
 
-  let worker: Promise<void> = Promise.resolve()
   try {
     /* requested translator */
     let translatorID = this.translator[0]
@@ -534,7 +533,7 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
       if (useWorker) {
         const path = this.location?.path
 
-        worker = Translators.queueJob({ translatorID, displayOptions, translate: this, scope: { ...this._export, getter: this._itemGetter }, path })
+        return Translators.queueJob({ translatorID, displayOptions, translate: this, scope: { ...this._export, getter: this._itemGetter }, path })
           .then(result => {
             log.debug('worker prerun:', typeof result)
             this._displayOptions = {...displayOptions, workerResult: result}
@@ -542,6 +541,7 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
           .catch(err => {
             log.error('worker translation failed, error:', err)
           })
+          .then(() => original.apply(this, arguments)) // eslint-disable-line @typescript-eslint/no-unsafe-return
       }
     }
   }
@@ -550,7 +550,7 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  return worker.then(() => original.apply(this, arguments))
+  return original.apply(this, arguments)
 })
 
 export class BetterBibTeX {
