@@ -26,6 +26,19 @@ type NestedCollection = {
   parent?: NestedCollection
 }
 
+export function workerRan(): boolean {
+  const workerResult = Zotero.getOption('workerResult')
+  switch (typeof workerResult) {
+    case 'string':
+      Zotero.debug('worker prerun: success')
+      Zotero.write(workerResult)
+      return true
+    case 'boolean':
+      return true
+  }
+  return false
+}
+
 export class Items {
   private items: CacheableItem[] = []
   public map: Record<number | string, CacheableItem> = {}

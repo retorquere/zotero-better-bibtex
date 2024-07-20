@@ -452,6 +452,10 @@ $patch$(Zotero.Utilities.Internal, 'extractExtraFields', original => function Zo
 })
 
 $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zotero_Translate_Export_prototype_translate() {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+  if (this.noWait) return original.apply(this, arguments)
+
+  let worker: Promise<void> = Promise.resolve()
   try {
     /* requested translator */
     let translatorID = this.translator[0]
@@ -513,37 +517,30 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
         })
       }
 
-      let worker = !this.noWait && typeof translator.displayOptions.worker === 'boolean' && displayOptions.worker
+      let useWorker = typeof translator.displayOptions.worker === 'boolean' && displayOptions.worker
 
-      if (worker) {
+      if (useWorker) {
         if (!Translators.worker) {
           // there wasn't an error starting a worker earlier
           log.error('failed to start a chromeworker, disabled until restart')
-          worker = false
+          useWorker = false
         }
         else {
           // found async handlers
-          worker = Object.keys(this._handlers).filter(handler => !['done', 'itemDone', 'error'].includes(handler)).length === 0
+          useWorker = Object.keys(this._handlers).filter(handler => !['done', 'itemDone', 'error'].includes(handler)).length === 0
         }
       }
 
-      if (worker) {
+      if (useWorker) {
         const path = this.location?.path
 
-        // fake out the stuff that complete expects to be set by .translate
-        this._currentState = 'translate'
-        this.saveQueue = []
-        this._savingAttachments = []
-
-        return Translators.queueJob({ translatorID, displayOptions, translate: this, scope: { ...this._export, getter: this._itemGetter }, path })
+        worker = Translators.queueJob({ translatorID, displayOptions, translate: this, scope: { ...this._export, getter: this._itemGetter }, path })
           .then(result => {
-            // eslint-disable-next-line id-blacklist
-            this.string = result
-            this.complete(result || true)
+            log.debug('worker prerun:', typeof result)
+            this._displayOptions = {...displayOptions, workerResult: result}
           })
           .catch(err => {
             log.error('worker translation failed, error:', err)
-            this.complete(null, err)
           })
       }
     }
@@ -553,7 +550,7 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  return original.apply(this, arguments)
+  return worker.then(() => original.apply(this, arguments))
 })
 
 export class BetterBibTeX {

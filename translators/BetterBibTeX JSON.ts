@@ -1,6 +1,6 @@
 declare const Zotero: any
 
-import { Translation, collect } from './lib/translator'
+import { workerRan, Translation, collect } from './lib/translator'
 import type { Translators } from '../typings/translators.d.ts'
 declare var ZOTERO_TRANSLATOR_INFO: Translators.Header // eslint-disable-line no-var
 
@@ -129,7 +129,8 @@ function addSelect(item: any) {
 }
 
 export function doExport(): void {
-  print('indexed: starting BBT JSON export')
+  if (workerRan()) return
+
   const translation = Translation.Export(ZOTERO_TRANSLATOR_INFO, collect())
 
   const preferences = {...translation.preferences}
