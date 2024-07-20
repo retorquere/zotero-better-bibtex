@@ -14,6 +14,7 @@ import type { Exporter as BibTeXExporter } from '../bibtex/exporter'
 import type { ZoteroItem } from '../bibtex/bibtex'
 import type { Translators } from '../../typings/translators.d.ts'
 import type { CharMap } from 'unicode2latex'
+import { log } from '../../content/logger'
 
 type CacheableItem = Item & { $cacheable: boolean }
 type CacheableRegularItem = RegularItem & { $cacheable: boolean }
@@ -45,12 +46,7 @@ export class Items {
       }
     }
 
-    // fallback to itemType.itemID for notes and attachments. And some items may have duplicate keys
-    this.items.sort((a: any, b: any) => {
-      const ka = [ a.citationKey || a.itemType, a.dateModified || a.dateAdded, a.itemID ].join('\t')
-      const kb = [ b.citationKey || b.itemType, b.dateModified || b.dateAdded, b.itemID ].join('\t')
-      return ka.localeCompare(kb, undefined, { sensitivity: 'base' })
-    })
+    this.items.sort((a: any, b: any) => a.itemID - b.itemID)
   }
 
   public erase(): void {
