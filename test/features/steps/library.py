@@ -14,7 +14,8 @@ def sortbib(bib):
     else:
       chunks[-1] += line
 
-  return "".join(sorted(chunks))
+  chunks = sorted([chunk.strip() for chunk in chunks])
+  return '\n'.join(chunks)
 
 def unnest(obj, key):
   if type(obj) == str: return obj
