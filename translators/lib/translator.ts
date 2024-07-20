@@ -14,7 +14,6 @@ import type { Exporter as BibTeXExporter } from '../bibtex/exporter'
 import type { ZoteroItem } from '../bibtex/bibtex'
 import type { Translators } from '../../typings/translators.d.ts'
 import type { CharMap } from 'unicode2latex'
-import { log } from '../../content/logger'
 
 type CacheableItem = Item & { $cacheable: boolean }
 type CacheableRegularItem = RegularItem & { $cacheable: boolean }
