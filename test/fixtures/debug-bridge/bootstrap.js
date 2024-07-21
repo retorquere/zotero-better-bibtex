@@ -109,7 +109,6 @@ function setDefaultPrefs(rootURI) {
 }
 
 function install(data, reason) {
-  log('async:install:start')
 }
 
 class DebugBridge {
@@ -167,6 +166,10 @@ async function startup({ resourceURI, rootURI = resourceURI.spec }, reason) {
       this.permitBookmarklet = false
     }
 
+    duration(start) {
+      return new Date(Date.now() - start).toISOString().split('T')[1].replace('Z', '')
+    }
+
     async init(request) {
       const token = {
         expected: `Bearer ${Zotero.Prefs.get('debug-bridge.token') || ''}`,
@@ -188,7 +191,7 @@ async function startup({ resourceURI, rootURI = resourceURI.spec }, reason) {
       }
 
       log(`executing\n${request.data} with ${JSON.stringify(query)}`)
-      let start = new Date
+      const start = Date.now()
       let response
       try {
         let action = new AsyncFunction('query', request.data)
@@ -196,10 +199,10 @@ async function startup({ resourceURI, rootURI = resourceURI.spec }, reason) {
         if (typeof response === 'undefined') response = null
         response = JSON.stringify(response)
       } catch (err) {
-        log(`failed (${(new Date) - start} ms): ${err}`)
+        log(`failed (this.duration(start)}): ${err}`)
         return [500, 'application/text', `debug-bridge failed: ${err}\n${err.stack}`];
       }
-      log(`succeeded (${(new Date) - start}ms)`)
+      log(`succeeded (this.duration(start)})`)
       return [201, 'application/json', response]
     }
   }
