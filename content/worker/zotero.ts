@@ -569,7 +569,7 @@ ctx.onmessage = async function(e: { isTrusted?: boolean, data?: Translators.Work
         }
         finally {
           await WorkerCache.flush()
-          Zotero.send({ kind: 'done', output: Zotero.exportFile ? true : Zotero.output })
+          Zotero.send({ kind: 'done', output: Zotero.output })
         }
         break
 

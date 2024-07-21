@@ -535,7 +535,7 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
 
         return Translators.queueJob({ translatorID, displayOptions, translate: this, scope: { ...this._export, getter: this._itemGetter }, path })
           .then(result => {
-            log.debug('worker prerun:', typeof result)
+            log.debug('worker prerun:', result)
             this._displayOptions = {...displayOptions, workerResult: result}
           })
           .catch(err => {

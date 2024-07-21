@@ -30,7 +30,7 @@ export function workerRan(): boolean {
   const workerResult = Zotero.getOption('workerResult')
   switch (typeof workerResult) {
     case 'string':
-      Zotero.debug('worker prerun: success')
+      Zotero.debug(`worker prerun reuse: ${workerResult}`)
       Zotero.write(workerResult)
       return true
     case 'boolean':
