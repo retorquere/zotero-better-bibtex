@@ -199,10 +199,10 @@ async function startup({ resourceURI, rootURI = resourceURI.spec }, reason) {
         if (typeof response === 'undefined') response = null
         response = JSON.stringify(response)
       } catch (err) {
-        log(`failed (this.duration(start)}): ${err}`)
+        log(`failed (${this.duration(start)}): ${err}`)
         return [500, 'application/text', `debug-bridge failed: ${err}\n${err.stack}`];
       }
-      log(`succeeded (this.duration(start)})`)
+      log(`succeeded (${this.duration(start)})`)
       return [201, 'application/json', response]
     }
   }
