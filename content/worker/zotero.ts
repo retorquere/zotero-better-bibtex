@@ -178,7 +178,7 @@ import dateFormats from '../../schema/dateFormats.json'
 export const TranslationWorker: { job?: Partial<Translators.Worker.Job> } = {}
 
 const WorkerCache = new class $WorkerCache {
-  public items: Record<number, ExportedItem>
+  public items: Map<number, ExportedItem>
   public context: number
 
   public cache: ExportCache
@@ -196,7 +196,7 @@ const WorkerCache = new class $WorkerCache {
     this.cache = Cache.cache(TranslationWorker.job.translator)
     if (!this.cache) { // BBT JSON
       TranslationWorker.job.preferences.cache = false
-      this.items = {}
+      this.items = new Map
       return
     }
     const start = performance.now()
@@ -211,7 +211,7 @@ const WorkerCache = new class $WorkerCache {
   }
 
   fetch(itemID: number): ExportedItem {
-    return TranslationWorker.job.preferences.cache ? this.items[itemID] : null
+    return TranslationWorker.job.preferences.cache ? this.items.get(itemID) : null
   }
 
   public async flush(): Promise<void> {

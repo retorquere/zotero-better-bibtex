@@ -159,7 +159,7 @@ export class ErrorReport {
     if (this.report.items) files[`${this.name()}/items.json`] = enc.encode(this.report.items)
     if (this.config.cache) {
       files[`${this.name()}/database.json`] = enc.encode(JSON.stringify(KeyManager.all()))
-      files[`${this.name()}/cache.json`] = enc.encode(JSON.stringify(Cache.export()))
+      files[`${this.name()}/cache.json`] = enc.encode(JSON.stringify(Cache.dump()))
     }
     if (this.report.acronyms) files[`${this.name()}/acronyms.csv`] = enc.encode(this.report.acronyms)
 
@@ -340,7 +340,7 @@ export class ErrorReport {
       // # 1896
       log: this.log(),
       items: win.arguments[0].wrappedJSObject.items,
-      cache: JSON.stringify(await Cache.export(), null, 2),
+      cache: JSON.stringify(await Cache.dump(), null, 2),
     }
     const acronyms = $OS.Path.join(Zotero.BetterBibTeX.dir, 'acronyms.csv')
     if (await $OS.File.exists(acronyms)) this.input.acronyms = await $OS.File.read(acronyms, { encoding: 'utf-8' }) as unknown as string

@@ -78,6 +78,43 @@ interface Schema extends DBSchema {
 }
 export type ExportCacheName = 'BetterBibLaTeX' | 'BetterBibTeX' | 'BetterCSLJSON' | 'BetterCSLYAML'
 
+class Running {
+  public items: Map<number, ExportedItem>
+  public cache: ExportCache
+
+  private pending: ExportedItem[] = []
+  private context: number
+
+  public async load(cache: ExportCache, path: string) {
+    if (Cache.export) {
+      Cache.export = null
+      throw new Error('overlapping export cache')
+    }
+
+    Cache.export = this
+    if (cache) {
+      this.cache = cache
+      const { items, context } = await cache.load(path)
+      this.items = items
+      this.context = context
+    }
+  }
+
+  public fetch(itemID: number): ExportedItem {
+    return this.cache ? this.items.get(itemID) : null
+  }
+
+  public store(item: Omit<ExportedItem, 'context'>) {
+    if (this.cache) this.pending.push({ ...item, context: this.context })
+  }
+
+  public async flush(): Promise<void> {
+    if (this.cache) await this.cache.store(this.pending)
+    this.pending = []
+    Cache.export = null
+  }
+}
+
 export class ExportCache {
   constructor(private db: IDBPDatabase<Schema>, private name: ExportCacheName) {
     print(`indexed: attaching ${name}`)
@@ -127,12 +164,12 @@ export class ExportCache {
     return await this.db.countFromIndex(this.name as 'BetterBibTeX', 'context', IDBKeyRange.only(path))
   }
 
-  public async load(path: string): Promise<{ context: number, items: Record<number, ExportedItem>}> {
+  public async load(path: string): Promise<{ context: number, items: Map<number, ExportedItem>}> {
     const stores: Array<'ExportContext' | ExportCacheName> = [this.name, 'ExportContext']
     const tx = this.db.transaction(stores, 'readwrite')
 
     let context: number
-    const items: Record<number, ExportedItem> = {}
+    const items: Map<number, ExportedItem> = new Map
 
     try {
       const store = tx.objectStore('ExportContext')
@@ -148,7 +185,7 @@ export class ExportCache {
       const store = tx.objectStore(this.name)
       const index = store.index('context')
       for (const entry of (await index.getAll(context))) {
-        items[entry.itemID] = entry
+        items.set(entry.itemID, entry)
       }
     }
     catch (err) {
@@ -361,7 +398,12 @@ export const Cache = new class $Cache {
     return entries
   }
 
-  public async export(): Promise<Record<string, any>> {
+  public export: Running
+  public async initExport(store: string, path: string) {
+    await (new Running).load(this.cache(store), path)
+  }
+
+  public async dump(): Promise<Record<string, any>> {
     const tables: Record<string, any> = {}
     for (const store of this.db.objectStoreNames) {
       if (store === 'metadata') {

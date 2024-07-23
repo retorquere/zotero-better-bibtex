@@ -135,7 +135,7 @@ export class TestSupport {
 
   public async dumpCache(filename: string): Promise<void> {
     const encoder = new TextEncoder()
-    const array = encoder.encode(JSON.stringify(await Cache.export(), null, 2))
+    const array = encoder.encode(JSON.stringify(await Cache.dump(), null, 2))
     await $OS.File.writeAtomic(filename, array) as void
   }
 
