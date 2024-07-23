@@ -402,6 +402,8 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
     const displayOptions = this.displayOptions(job.translatorID, job.displayOptions)
 
+    if (displayOptions.worker) return this.exportItemsByQueuedWorker(job)
+
     const start = Date.now()
 
     const deferred = Zotero.Promise.defer()
