@@ -1,6 +1,6 @@
 declare const Zotero: any
 
-import { log } from '../../content/logger'
+import { simple as log } from '../../content/logger'
 import { Exporter as BibTeXExporter } from './exporter'
 import { parse as arXiv } from '../../content/arXiv'
 import { validItem } from '../../content/ajv'
@@ -405,7 +405,7 @@ export function generateBibTeX(translation: Translation): void {
         break
 
       default:
-        log.error('Unexpected date type', { date: item.date, parsed: ref.date })
+        log.error(`Unexpected date type ${JSON.stringify({ date: item.date, parsed: ref.date })}`)
     }
 
     ref.add({ name: 'keywords', value: item.tags, enc: 'tags' })

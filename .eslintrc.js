@@ -41,9 +41,10 @@ const branch = (process.env.GITHUB_REF && process.env.GITHUB_REF.startsWith('ref
 config.rules['no-restricted-syntax'] = [
   branch === 'master' ? 'error' : 'warn',
   "CallExpression[callee.name='dump']",
-  "CallExpression[callee.name='$dump']",
   "CallExpression[callee.object.name='Zotero'][callee.property.name='debug']",
   "CallExpression[callee.object.name='log'][callee.property.name='debug']",
+  "CallExpression[callee.object.name='log'][callee.property.name='dump']",
+  "CallExpression[callee.object.name='log'][callee.property.name='trace']",
 ]
 
 config.ignorePatterns = [

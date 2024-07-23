@@ -20,7 +20,7 @@ import * as ExtraFields from '../../gen/items/extra-fields.json'
 import { label as propertyLabel } from '../../gen/items/items'
 import type { Fields as ParsedExtraFields } from '../../content/extra'
 import { zoteroCreator as ExtraZoteroCreator } from '../../content/extra'
-import { log } from '../../content/logger'
+import { simple as log } from '../../content/logger'
 import { babelLanguage, titleCase } from '../../content/text'
 import BabelTag from '../../gen/babel/tag.json'
 
@@ -191,7 +191,7 @@ export class Entry {
     }
     catch (err) {
       Entry.prototype.postscript = postscript.noop
-      log.error('failed to install postscript', err, '\n', translation.preferences.postscript)
+      log.error(`failed to install postscript\n${translation.preferences.postscript}`, err)
     }
   }
 
@@ -478,13 +478,13 @@ export class Entry {
 
     if (field.fallback && field.replace) throw new Error('pick fallback or replace, buddy')
     if (field.fallback && this.has[field.name]) {
-      log.error('add: fallback already filled for', field.name)
+      log.error(`add: fallback already filled for ${field.name}`)
       return null
     }
 
     // legacy field addition
     if (!field.name) {
-      log.error('add: empty legacy object', field.name)
+      log.error(`add: empty legacy object ${field.name}`)
       return null
     }
 
@@ -783,7 +783,7 @@ export class Entry {
         this.override({ name, verbatim: name, orig: { inherit: true }, value, enc, replace, fallback: !replace })
       }
       else {
-        log.error('Unmapped extra field', key, '=', value)
+        log.error(`Unmapped extra field ${key}=${value}`)
       }
     }
 

@@ -20,8 +20,28 @@ export const discard = {
   table(): void {},
 }
 
-export function $dump(msg: string): void {
-  dump(`${worker ? 'worker:' : ''}better-bibtex::${msg}\n`)
+function format(msg: string, error?: Error) {
+  const err = error ? ` (${error.message})` : ''
+  return `${error ? 'error: ' : ''}${worker ? 'worker:' : ''}better-bibtex::${msg}${err}`
+}
+
+function $dump(msg: string, error? : Error): void {
+  dump(format(msg, error) + '\n')
+}
+
+export const simple = {
+  debug(msg: string): void {
+    Zotero.debug(format(msg))
+  },
+  info(msg: string): void {
+    Zotero.debug(format(msg))
+  },
+  error(msg: string, error?: Error): void {
+    Zotero.error(format(msg, error))
+  },
+  dump(msg: string): void {
+    $dump(msg)
+  },
 }
 
 function toString(obj): string {
@@ -34,7 +54,7 @@ function toString(obj): string {
   }
 }
 
-class Logger {
+export const log = new class Logger {
   protected timestamp: number
   public prefix = ''
 
@@ -103,6 +123,8 @@ class Logger {
   public status({ error=false }, ...msg) {
     if (error || this.enabled) Zotero.debug(this.format({error}, msg))
   }
-}
 
-export const log = new Logger
+  public dump(msg: string) {
+    $dump(msg)
+  }
+}
