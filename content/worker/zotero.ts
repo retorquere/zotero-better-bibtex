@@ -3,7 +3,7 @@
 import type { Attachment, Item, Note } from '../../gen/typings/serialized-item'
 type Serialized = Attachment | Item | Note
 
-import { ExportCache, ExportedItem, ExportedItemMetadata, exportContext, Cache } from '../db/cache'
+import { ExportedItemMetadata, Cache, exportContext } from '../db/cache'
 
 import flatMap from 'array.prototype.flatmap'
 flatMap.shim()
@@ -177,52 +177,6 @@ import dateFormats from '../../schema/dateFormats.json'
 
 export const TranslationWorker: { job?: Partial<Translators.Worker.Job> } = {}
 
-const WorkerCache = new class $WorkerCache {
-  public items: Map<number, ExportedItem>
-  public context: number
-
-  public cache: ExportCache
-  public pending: ExportedItem[] = []
-
-  async init() {
-    if (!Cache.opened) {
-      print('indexed cache: opening')
-      await Cache.open()
-    }
-
-    this.pending = []
-
-    const path = TranslationWorker.job.autoExport || exportContext(TranslationWorker.job.translator, TranslationWorker.job.options)
-    this.cache = Cache.cache(TranslationWorker.job.translator)
-    if (!this.cache) { // BBT JSON
-      TranslationWorker.job.preferences.cache = false
-      this.items = new Map
-      return
-    }
-    const start = performance.now()
-    const { context, items } = await this.cache.load(path)
-    print(`indexed cache: ${path} loaded ${Object.keys(items).length} items in ${performance.now() - start}ms`)
-    this.context = context
-    this.items = items
-  }
-
-  store(itemID: number, entry: string, metadata: ExportedItemMetadata): void {
-    if (TranslationWorker.job.preferences.cache) this.pending.push({ context: this.context, itemID, entry, metadata })
-  }
-
-  fetch(itemID: number): ExportedItem {
-    return TranslationWorker.job.preferences.cache ? this.items.get(itemID) : null
-  }
-
-  public async flush(): Promise<void> {
-    if (TranslationWorker.job.preferences.cache) {
-      print(`indexed cache: flushing ${TranslationWorker.job.translator} ${this.pending.length}`)
-      await this.cache.store(this.pending)
-      this.pending = []
-    }
-  }
-}
-
 class WorkerZoteroBetterBibTeX {
   public clientName = clientName
   public client = client
@@ -230,10 +184,10 @@ class WorkerZoteroBetterBibTeX {
 
   public Cache = {
     store(itemID: number, entry: string, metadata: ExportedItemMetadata) {
-      WorkerCache.store(itemID, entry, metadata)
+      Cache.export.store({ itemID, entry, metadata })
     },
     fetch(itemID: number) {
-      return WorkerCache.fetch(itemID)
+      return Cache.export.fetch(itemID)
     },
   }
 
@@ -561,14 +515,15 @@ ctx.onmessage = async function(e: { isTrusted?: boolean, data?: Translators.Work
 
         importScripts(`chrome://zotero-better-bibtex/content/resource/${TranslationWorker.job.translator}.js`)
         try {
-          await WorkerCache.init()
+          if (!Cache.opened) await Cache.open()
+          await Cache.initExport(TranslationWorker.job.translator, TranslationWorker.job.autoExport || exportContext(TranslationWorker.job.translator, TranslationWorker.job.options))
           await Zotero.start()
         }
         catch (err) {
           Zotero.logError(err)
         }
         finally {
-          await WorkerCache.flush()
+          await Cache.export.flush()
           Zotero.send({ kind: 'done', output: Zotero.output })
         }
         break
