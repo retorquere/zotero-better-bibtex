@@ -519,35 +519,29 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
 
       let useWorker = typeof translator.displayOptions.worker === 'boolean' && displayOptions.worker
 
-      if (useWorker) {
-        if (!Translators.worker) {
-          // there wasn't an error starting a worker earlier
-          log.error('failed to start a chromeworker, disabled until restart')
-          useWorker = false
-        }
-        else {
-          // found async handlers
-          useWorker = Object.keys(this._handlers).filter(handler => !['done', 'itemDone', 'error'].includes(handler)).length === 0
-        }
+      if (useWorker && !Translators.worker) {
+        // there wasn't an error starting a worker earlier
+        log.error('failed to start a chromeworker, disabled until restart')
+        useWorker = false
       }
 
       if (useWorker) {
         return (async () => {
           try {
-            const workerResult = await Translators.queueJob({
+            const result = await Translators.queueJob({
               translatorID,
               displayOptions,
               translate: this,
               scope: { ...this._export, getter: this._itemGetter },
               path: this.location?.path,
-            })
-            this._displayOptions = {...displayOptions, workerResult}
+            })  || ''
+            this.string = result // eslint-disable-line id-blacklist
+            this.complete(result)
           }
           catch (err) {
             log.error('worker translation failed, error:', err)
+            this.complete(null, err)
           }
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-          return original.apply(this, arguments)
         })()
       }
       else {
@@ -561,7 +555,7 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
             log.error('worker translation failed, error:', err)
           }
           finally {
-            Cache.export = null
+            await Cache.export.flush()
           }
         })()
       }
