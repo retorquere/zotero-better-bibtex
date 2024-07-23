@@ -104,7 +104,7 @@ class Running {
     return this.cache ? this.items.get(itemID) : null
   }
 
-  public store(item: Omit<ExportedItem, 'context'>) {
+  public store(item: Omit<ExportedItem, 'context'>): void {
     if (this.cache) this.pending.push({ ...item, context: this.context })
   }
 

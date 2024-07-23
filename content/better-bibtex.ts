@@ -37,6 +37,7 @@ import { flash } from './flash'
 import { orchestrator } from './orchestrator'
 import type { Reason } from './bootstrap'
 import type { ExportedItem, ExportedItemMetadata } from './db/cache'
+import { Cache, exportContext } from './db/cache'
 
 import { Preference } from './prefs' // needs to be here early, initializes the prefs observer
 require('./pull-export') // just require, initializes the pull-export end points
@@ -549,6 +550,21 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
           return original.apply(this, arguments)
         })()
       }
+      else {
+        return (async () => {
+          try {
+            await Cache.initExport(translator.label, exportContext(translator.label, displayOptions))
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+            return original.apply(this, arguments)
+          }
+          catch (err) {
+            log.error('worker translation failed, error:', err)
+          }
+          finally {
+            Cache.export = null
+          }
+        })()
+      }
     }
   }
   catch (err) {
@@ -563,10 +579,11 @@ export class BetterBibTeX {
   public uninstalled = false
   public Orchestrator = orchestrator
   public Cache = {
-    fetch(_itemID: number): ExportedItem {
-      return null
+    fetch(itemID: number): ExportedItem {
+      return Cache.export?.fetch(itemID)
     },
-    store(_itemID: number, _entry: string, _metadata: ExportedItemMetadata): void { // eslint-disable-line @typescript-eslint/no-empty-function
+    store(itemID: number, entry: string, metadata: ExportedItemMetadata): void { // eslint-disable-line @typescript-eslint/no-empty-function
+      Cache.export?.store({ itemID, entry, metadata })
     },
   }
 
