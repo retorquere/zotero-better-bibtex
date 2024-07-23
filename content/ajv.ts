@@ -1,6 +1,6 @@
 // 2020 for prefixItems
 import AJV from 'ajv/dist/2020'
-import { discard, print } from './logger'
+import { discard, $dump } from './logger'
 
 const options  = {
   strict: false,
@@ -31,7 +31,7 @@ export function validator(schema, ajv): (data: any) => string { // eslint-disabl
     }
   }
   catch (err) {
-    print(`${err}\n${err.stack}`)
+    $dump(`${err}\n${err.stack}`)
     throw err
   }
 }
@@ -51,7 +51,7 @@ export function validItem(obj: any, strict?: boolean): string { // eslint-disabl
   const errors = broken.me(obj)
   if (!errors) return ''
   if (!strict && !broken.other(obj)) {
-    if (typeof Zotero !== 'undefined') print('soft error: ' + errors)
+    if (typeof Zotero !== 'undefined') $dump('soft error: ' + errors)
     return ''
   }
   // https://ajv.js.org/api.html#validation-errors

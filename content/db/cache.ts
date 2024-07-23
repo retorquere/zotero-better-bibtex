@@ -1,7 +1,7 @@
 import { bySlug } from '../../gen/translators'
 import { openDB, IDBPDatabase, DBSchema } from 'idb'
 import type { Attachment, Item, Note } from '../../gen/typings/serialized-item'
-import { print } from '../logger'
+import { $dump } from '../logger'
 
 type Serialized = Item | Attachment | Note
 type Serializer = (item: any) => Serialized
@@ -117,7 +117,7 @@ class Running {
 
 export class ExportCache {
   constructor(private db: IDBPDatabase<Schema>, private name: ExportCacheName) {
-    print(`indexed: attaching ${name}`)
+    $dump(`indexed: attaching ${name}`)
   }
 
   public async touch(ids: number[]): Promise<void> {
@@ -216,7 +216,7 @@ class ZoteroSerialized {
     items = items.filter(item => this.cachable(item))
 
     if (!items.length) {
-      print(`indexed: fill, nothing to do, avg cache fill=${this.filled}`)
+      $dump(`indexed: fill, nothing to do, avg cache fill=${this.filled}`)
       return
     }
 
@@ -251,7 +251,7 @@ class ZoteroSerialized {
     else {
       await tx.done
     }
-    print(`indexed: fill, cached ${requested - items.length}, filling ${items.length}, avg cache fill=${this.filled}`)
+    $dump(`indexed: fill, cached ${requested - items.length}, filling ${items.length}, avg cache fill=${this.filled}`)
   }
 
   public async get(ids: number[]): Promise<Serialized[]> {
@@ -260,7 +260,7 @@ class ZoteroSerialized {
     await tx.done
     const fetched = new Set(items.map(item => item.itemID))
     const missing = ids.filter(id => !fetched.has(id))
-    if (missing.length) print(`indexed: failed to fetch ${missing}`)
+    if (missing.length) $dump(`indexed: failed to fetch ${missing}`)
     return items
   }
 
@@ -297,7 +297,7 @@ export const Cache = new class $Cache {
   public async open(serialize?: Serializer, lastUpdated?: string): Promise<void> {
     if (this.opened) throw new Error('database reopened')
 
-    print('indexed: opening cache')
+    $dump('indexed: opening cache')
     this.db = await openDB<Schema>('BetterBibTeXCache', this.schema, {
       upgrade: (db, oldVersion, newVersion) => {
         if (oldVersion !== newVersion) {
@@ -327,7 +327,7 @@ export const Cache = new class $Cache {
       },
     })
 
-    print('indexed: attaching ZoteroSerialized')
+    $dump('indexed: attaching ZoteroSerialized')
     this.ZoteroSerialized = new ZoteroSerialized(this.db, serialize)
 
     this.BetterBibTeX = new ExportCache(this.db, 'BetterBibTeX')
@@ -338,7 +338,7 @@ export const Cache = new class $Cache {
     if (lastUpdated) {
       const lastTouched = await this.db.get('metadata', 'lastUpdated') || ''
       if (lastUpdated > lastTouched) {
-        print('indexed: store gap, clearing')
+        $dump('indexed: store gap, clearing')
         for (const store of this.db.objectStoreNames) {
           switch (store) {
             case 'metadata':
@@ -351,7 +351,7 @@ export const Cache = new class $Cache {
       }
     }
 
-    print('indexed: opened cache')
+    $dump('indexed: opened cache')
     this.opened = true
   }
 

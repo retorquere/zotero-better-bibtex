@@ -10,7 +10,7 @@ flatMap.shim()
 import matchAll from 'string.prototype.matchall'
 matchAll.shim()
 
-import { print } from '../logger'
+import { $dump } from '../logger'
 
 declare const IOUtils: any
 
@@ -228,7 +228,7 @@ class WorkerZoteroBetterBibTeX {
     }
     catch (err) {
       if (!err.message?.includes('NS_ERROR_FILE_NOT_FOUND')) {
-        print(`getContents ${path} error ${err} ${Object.keys(err)} ${err.message}`)
+        $dump(`getContents ${path} error ${err} ${Object.keys(err)} ${err.message}`)
       }
       return null
     }
@@ -404,7 +404,7 @@ class WorkerZotero {
     this.output = ''
 
     this.items = await Cache.ZoteroSerialized.get(TranslationWorker.job.data.items)
-    print(`indexed: requested ${TranslationWorker.job.data.items.length}`)
+    $dump(`indexed: requested ${TranslationWorker.job.data.items.length}`)
 
     if (TranslationWorker.job.options.exportFileData) {
       for (const item of this.items) {
@@ -461,7 +461,7 @@ class WorkerZotero {
     }
   }
   public logError(err) {
-    print(`worker: error: ${err}\n${err.stack}`)
+    $dump(`worker: error: ${err}\n${err.stack}`)
     this.send({ kind: 'error', message: `${err}\n${err.stack}` })
   }
 
@@ -511,7 +511,7 @@ ctx.onmessage = async function(e: { isTrusted?: boolean, data?: Translators.Work
 
       case 'start':
         TranslationWorker.job = JSON.parse(dec.decode(new Uint8Array(e.data.config)))
-        print(`indexed cache: starting ${JSON.stringify(TranslationWorker.job.translator)}`)
+        $dump(`indexed cache: starting ${JSON.stringify(TranslationWorker.job.translator)}`)
 
         importScripts(`chrome://zotero-better-bibtex/content/resource/${TranslationWorker.job.translator}.js`)
         try {

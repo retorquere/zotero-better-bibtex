@@ -20,7 +20,7 @@ export const discard = {
   table(): void {},
 }
 
-export function print(msg: string): void {
+export function $dump(msg: string): void {
   dump(`${worker ? 'worker:' : ''}better-bibtex::${msg}\n`)
 }
 
@@ -79,7 +79,7 @@ class Logger {
       Zotero.debug(msg)
     }
     else {
-      print(msg)
+      $dump(msg)
     }
   }
 
