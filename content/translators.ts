@@ -245,7 +245,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     return this.queue.add(() => this.exportItemsByQueuedWorker(job))
   }
 
-  private async exportItemsByQueuedWorker(job: ExportJob) {
+  private async exportItemsByQueuedWorker(job: ExportJob): Promise<string> {
     if (job.path && job.canceled) return ''
     await Zotero.BetterBibTeX.ready
     if (job.path && job.canceled) return ''
