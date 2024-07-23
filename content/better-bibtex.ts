@@ -531,17 +531,23 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
       }
 
       if (useWorker) {
-        const path = this.location?.path
-
-        return Translators.queueJob({ translatorID, displayOptions, translate: this, scope: { ...this._export, getter: this._itemGetter }, path })
-          .then(result => {
-            log.debug('worker prerun:', result)
-            this._displayOptions = {...displayOptions, workerResult: result}
-          })
-          .catch(err => {
+        return (async () => {
+          try {
+            const workerResult = await Translators.queueJob({
+              translatorID,
+              displayOptions,
+              translate: this,
+              scope: { ...this._export, getter: this._itemGetter },
+              path: this.location?.path,
+            })
+            this._displayOptions = {...displayOptions, workerResult}
+          }
+          catch (err) {
             log.error('worker translation failed, error:', err)
-          })
-          .then(() => original.apply(this, arguments)) // eslint-disable-line @typescript-eslint/no-unsafe-return
+          }
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+          return original.apply(this, arguments)
+        })()
       }
     }
   }
