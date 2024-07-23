@@ -65,8 +65,8 @@ function win_quote(s: string, forCmd = true): string {
 
 const posix_quote = require('shell-quote/quote')
 
-function quote(s) {
-  return platform.name === 'win' ? win_quote(s) : <string>posix_quote(s)
+function quote(cmd: string[]): string {
+  return platform.name === 'win' ? cmd.map(s => win_quote(s)).join(' ') : <string>posix_quote(cmd)
 }
 
 export const SQL = new class {
@@ -286,7 +286,7 @@ class Git {
     // exe = await findBinary('CMD')
 
     args = args || []
-    const command = [exe, ...args].map(quote).join(' ')
+    const command = quote([exe, ...args])
 
     const cmd = new FileUtils.File(exe)
     if (!cmd.isExecutable()) throw new Error(`${cmd.path} is not an executable`)
