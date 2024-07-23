@@ -37,7 +37,7 @@ export const simple = {
     Zotero.debug(format(msg))
   },
   error(msg: string, error?: Error): void {
-    Zotero.error(format(msg, error))
+    Zotero.logError(format(msg, error))
   },
   dump(msg: string): void {
     $dump(msg)
