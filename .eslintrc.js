@@ -34,6 +34,7 @@ Object.assign(config.rules, {
   'prefer-arrow/prefer-arrow-functions': 'off',
 })
 
+/*
 const shell = require('shelljs')
 const branch = (process.env.GITHUB_REF && process.env.GITHUB_REF.startsWith('refs/heads/'))
   ? process.env.GITHUB_REF.replace('refs/heads/', '')
@@ -47,6 +48,7 @@ config.rules['no-restricted-syntax'] = [
   { selector: "CallExpression[callee.object.name='log'][callee.property.name='dump']", message: 'use of log.dump is not allowed' },
   { selector: "CallExpression[callee.object.name='log'][callee.property.name='trace']", message: 'use of log.trace is not allowed' },
 ]
+*/
 
 config.ignorePatterns = [
   'util/*.ts',

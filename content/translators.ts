@@ -256,6 +256,13 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       exportDir: job.path ? $OS.Path.dirname(job.path) : undefined,
     }
 
+    if (job.translate) {
+      // fake out the stuff that complete expects to be set by .translate
+      job.translate._currentState = 'translate' // eslint-disable-line no-underscore-dangle
+      job.translate.saveQueue = []
+      job.translate._savingAttachments = [] // eslint-disable-line no-underscore-dangle
+    }
+
     const translator = this.byId[job.translatorID]
 
     const start = Date.now()
@@ -283,8 +290,11 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       switch (e.data?.kind) {
         case 'error':
           log.status({error: true}, 'QBW failed:', Date.now() - start, e.data)
-          job.translate?._runHandler('error', e.data) // eslint-disable-line no-underscore-dangle
           deferred.reject(new Error(e.data.message))
+          if (job.translate) {
+            job.translate._runHandler('error', e.data) // eslint-disable-line no-underscore-dangle
+            job.translate.complete(null, new Error(e.data.message))
+          }
           break
 
         case 'debug':
@@ -298,7 +308,11 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
         case 'done':
           void Events.emit('export-progress', { pct: 100, message: translator.label, ae: job.autoExport })
-          deferred.resolve(typeof e.data.output === 'boolean' ? '' : e.data.output)
+          deferred.resolve(e.data.output)
+          if (job.translate) {
+            job.translate.string = e.data.output // eslint-disable-line id-blacklist
+            job.translate.complete(e.data.output)
+          }
           break
 
         case 'progress':
