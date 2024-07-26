@@ -454,13 +454,12 @@ class WorkerZotero {
   }
 
   public debug(message) {
-    if (TranslationWorker.job.debugEnabled) {
-      this.send({ kind: 'debug', message })
-    }
+    if (TranslationWorker.job.debugEnabled) this.send({ kind: 'debug', message })
   }
-  public logError(err) {
-    log.dump(`worker: error: ${err}\n${err.stack}`)
-    this.send({ kind: 'error', message: `${err}\n${err.stack}` })
+  public logError(err: Error | string) {
+    let message: string = typeof err === 'string' ? err : `${err.message}\n${err.stack}`.trim()
+    message = `error: ${message}`
+    this.send({ kind: 'debug', message })
   }
 
   public write(str) {
@@ -516,13 +515,13 @@ ctx.onmessage = async function(e: { isTrusted?: boolean, data?: Translators.Work
           if (!Cache.opened) await Cache.open()
           await Cache.initExport(TranslationWorker.job.translator, TranslationWorker.job.autoExport || exportContext(TranslationWorker.job.translator, TranslationWorker.job.options))
           await Zotero.start()
+          Zotero.send({ kind: 'done', output: Zotero.output })
         }
         catch (err) {
-          Zotero.logError(err)
+          Zotero.send({ kind: 'error', message: `${err}\n${err.stack}` })
         }
         finally {
           await Cache.export.flush()
-          Zotero.send({ kind: 'done', output: Zotero.output })
         }
         break
 

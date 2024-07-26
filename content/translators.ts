@@ -289,11 +289,11 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     this.worker.onmessage = (e: { data: Translator.Worker.Message }) => {
       switch (e.data?.kind) {
         case 'error':
-          log.status({error: true}, 'QBW failed:', Date.now() - start, e.data)
+          log.status({error: true}, `translation failed: ${e.data.message}\n${e.data.stack || ''}`.trim())
           deferred.reject(new Error(e.data.message))
           if (job.translate) {
-            job.translate._runHandler('error', e.data) // eslint-disable-line no-underscore-dangle
-            job.translate.complete(null, new Error(e.data.message))
+            // job.translate._runHandler('error', e.data) // eslint-disable-line no-underscore-dangle
+            job.translate.complete(null, { message: e.data.message, stack: e.data.stack })
           }
           break
 

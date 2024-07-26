@@ -31,7 +31,7 @@ export namespace Translators {
       | { kind: 'start', config: ArrayBuffer }
       | { kind: 'done', output: boolean | string }
       | { kind: 'debug', message: string }
-      | { kind: 'error', message: string }
+      | { kind: 'error', message: string, stack?: string }
       | { kind: 'item', item: number }
       | { kind: 'ping' }
       | { kind: 'stop' }
