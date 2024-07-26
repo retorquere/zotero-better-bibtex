@@ -226,6 +226,7 @@ class NSItem {
    * List attachments for an item with the given citekey
    *
    * @param citekey  The citekey to search for
+   * @param library  The libraryID to search in (optional)
    */
   public async attachments(citekey: string, library?: string | number) {
     const where : Query = { citationKey: citekey.replace(/^@/, '') }
