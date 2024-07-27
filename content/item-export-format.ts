@@ -2,51 +2,53 @@ import { Shim } from './os'
 import { is7 } from './client'
 const $OS = is7 ? Shim : OS
 
-import type { RegularItem, Attachment, Item } from '../gen/typings/serialized-item'
+import { getItemsAsync } from './get-items-async'
+import type { Attachment, RegularItem, Item, Note } from '../gen/typings/serialized-item'
+export type Serialized = RegularItem | Attachment | Item
+
 import { JournalAbbrev } from './journal-abbrev'
 import { Preference } from './prefs'
 import { orchestrator } from './orchestrator'
 import { Cache } from './db/cache'
 import { Events } from './events'
 
-function attachmentToPOJO(serialized: Attachment, att): Attachment {
-  if (att.attachmentLinkMode !== Zotero.Attachments.LINK_MODE_LINKED_URL) {
-    serialized.localPath = att.getFilePath()
-    if (serialized.localPath) serialized.defaultPath = `files/${att.id}/${$OS.Path.basename(serialized.localPath)}`
-  }
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  return serialized
-}
-
-export function itemToPOJO(item: ZoteroItem): Item {
-  let serialized: Item = item.toJSON()
-  serialized.uri = Zotero.URI.getItemURI(item)
-  serialized.itemID = item.id
-
-  switch (serialized.itemType) {
-    case 'note':
-    case 'annotation':
-      break
-
-    case 'attachment':
-      serialized = attachmentToPOJO(serialized as unknown as Attachment, item)
-      break
-
-    default:
-      serialized.attachments = item.getAttachments().map(id => {
-        const att = Zotero.Items.get(id)
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-        return attachmentToPOJO({ ...att.toJSON(), uri: Zotero.URI.getItemURI(att) }, att)
-      })
-
-      serialized.notes = item.getNotes().map(id => {
-        const note = Zotero.Items.get(id)
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-        return { ...note.toJSON(), uri: Zotero.URI.getItemURI(note) }
-      })
+export class Serializer {
+  private attachment(serialized: Attachment, att): Attachment {
+    if (att.attachmentLinkMode !== Zotero.Attachments.LINK_MODE_LINKED_URL) {
+      serialized.localPath = att.getFilePath()
+      if (serialized.localPath) serialized.defaultPath = `files/${att.id}/${$OS.Path.basename(serialized.localPath)}`
+    }
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    return serialized
   }
 
-  return serialized
+  private async item(item: ZoteroItem): Promise<Serialized> {
+    await item.loadAllData()
+    let serialized: Item = item.toJSON()
+    serialized.uri = Zotero.URI.getItemURI(item)
+    serialized.itemID = item.id
+
+    switch (serialized.itemType) {
+      case 'note':
+      case 'annotation':
+        break
+
+      case 'attachment':
+        serialized = this.attachment(serialized as unknown as Attachment, item)
+        break
+
+      default:
+        serialized.attachments = (await getItemsAsync(item.getAttachments())).map(att => this.attachment({ ...att.toJSON(), uri: Zotero.URI.getItemURI(att) } as Attachment, att))
+        serialized.notes = (await getItemsAsync(item.getNotes())).map(note => ({ ...note.toJSON(), uri: Zotero.URI.getItemURI(note) } as Note))
+        break
+    }
+
+    return <Serialized>JSON.parse(JSON.stringify(fix(serialized, item)))
+  }
+
+  public async serialize(items: ZoteroItem[]): Promise<Serialized[]> {
+    return Promise.all(items.map(item => this.item(item)))
+  }
 }
 
 export function fix(serialized: Item, item: ZoteroItem): Item {
@@ -77,16 +79,13 @@ export function fix(serialized: Item, item: ZoteroItem): Item {
   return serialized as unknown as Item
 }
 
-type Serialized = RegularItem | Attachment | Item
-const serialize = (item: ZoteroItem): Serialized => <Serialized>JSON.parse(JSON.stringify(fix(itemToPOJO(item), item)))
-
 orchestrator.add({
   id: 'cache',
   needs: ['keymanager', 'abbreviator'],
   description: 'cache subsystem',
   async startup() {
     const lastUpdated = await Zotero.DB.valueQueryAsync('SELECT MAX(dateModified) FROM items')
-    await Cache.open(serialize, lastUpdated)
+    await Cache.open(lastUpdated, new Serializer)
 
     Events.cacheTouch = async (ids: number[]) => {
       await Cache.touch(ids)

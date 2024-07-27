@@ -1,11 +1,8 @@
+import type { Serialized, Serializer } from '../item-export-format'
 import { bySlug } from '../../gen/translators'
 import { openDB, IDBPDatabase, DBSchema } from 'idb'
-import type { Attachment, Item, Note } from '../../gen/typings/serialized-item'
 import { log } from '../logger'
 import version from '../../gen/version'
-
-type Serialized = Item | Attachment | Note
-type Serializer = (item: any) => Serialized
 
 import type { Translators as Translator } from '../../typings/translators'
 const skip = new Set([ 'keepUpdated', 'worker', 'exportFileData' ])
@@ -205,20 +202,20 @@ class ZoteroSerialized {
   public filled = 0 // exponential moving average
   private smoothing = 2 / (10 + 1) // keep average over last 10 fills
 
-  constructor(private db: IDBPDatabase<Schema>, private serialize: Serializer) {
+  constructor(private db: IDBPDatabase<Schema>, private serializer: Serializer) {
   }
 
   private cachable(item: any): boolean {
     return (!item.isFeedItem && (item.isRegularItem() || item.isNote() || item.isAttachment())) as boolean
   }
 
-  public async fill(items: any[]): Promise<void> {
+  public async fill(items: ZoteroItem[]): Promise<void> {
     items = items.filter(item => this.cachable(item))
 
     if (!items.length) return
 
-    const tx = this.db.transaction(['ZoteroSerialized', 'touched'], 'readwrite')
-    const store = tx.objectStore('ZoteroSerialized')
+    let tx = this.db.transaction(['ZoteroSerialized', 'touched'], 'readwrite')
+    let store = tx.objectStore('ZoteroSerialized')
     const touched = tx.objectStore('touched')
     const cached = new Set(await store.getAllKeys())
 
@@ -226,15 +223,16 @@ class ZoteroSerialized {
       .filter((id: number) => {
         if (cached.has(id)) {
           cached.delete(id)
-          return false
+          return store.delete(id)
         }
         else {
-          return true
+          return null
         }
       })
-      .map((id: number) => store.delete(id))
+      .filter(del => del)
     if (purge.length) await Promise.all(purge)
     await touched.clear()
+    await tx.done
 
     const requested = items.length
     items = items.filter(item => !cached.has(item.id))
@@ -242,11 +240,11 @@ class ZoteroSerialized {
     this.filled = (current - this.filled) * this.smoothing + this.filled
 
     if (items.length) {
-      const puts = items.map(item => store.put(this.serialize(item)))
+      const serialized = await this.serializer.serialize(items)
+      tx = this.db.transaction(['ZoteroSerialized'], 'readwrite')
+      store = tx.objectStore('ZoteroSerialized')
+      const puts = serialized.map(item => store.put(item))
       await Promise.all([...puts, tx.done])
-    }
-    else {
-      await tx.done
     }
   }
 
@@ -289,8 +287,8 @@ export const Cache = new class $Cache {
   public BetterCSLYAML: ExportCache
 
   public async open(): Promise<void>
-  public async open(serialize: Serializer, lastUpdated: string)
-  public async open(serialize?: Serializer, lastUpdated?: string): Promise<void> {
+  public async open(lastUpdated: string, serializer: Serializer)
+  public async open(lastUpdated?: string, serializer?: Serializer): Promise<void> {
     if (this.opened) throw new Error('database reopened')
 
     this.db = await openDB<Schema>('BetterBibTeXCache', this.schema, {
@@ -322,7 +320,7 @@ export const Cache = new class $Cache {
       },
     })
 
-    this.ZoteroSerialized = new ZoteroSerialized(this.db, serialize)
+    this.ZoteroSerialized = new ZoteroSerialized(this.db, serializer)
 
     this.BetterBibTeX = new ExportCache(this.db, 'BetterBibTeX')
     this.BetterBibLaTeX = new ExportCache(this.db, 'BetterBibLaTeX')
