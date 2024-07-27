@@ -2,6 +2,7 @@ import { bySlug } from '../../gen/translators'
 import { openDB, IDBPDatabase, DBSchema } from 'idb'
 import type { Attachment, Item, Note } from '../../gen/typings/serialized-item'
 import { simple as log } from '../logger'
+import version from '../../gen/version'
 
 type Serialized = Item | Attachment | Note
 type Serializer = (item: any) => Serialized
@@ -329,9 +330,13 @@ export const Cache = new class $Cache {
     this.BetterCSLYAML = new ExportCache(this.db, 'BetterCSLYAML')
 
     if (lastUpdated) {
-      const lastTouched = await this.db.get('metadata', 'lastUpdated') || ''
-      if (lastUpdated > lastTouched) {
-        log.info('indexed: store gap, clearing')
+      const clear = [
+        lastUpdated > (await this.db.get('metadata', 'lastUpdated') || '') ? 'store gap' : '',
+        Zotero.version !== (await this.db.get('metadata', 'Zotero') || '') ? `Zotero version changed to ${Zotero.version}` : '',
+        version !== (await this.db.get('metadata', 'BetterBibteX') || '') ? `Better BibTeX version changed to ${version}` : '',
+      ].filter(reason => reason)
+      if (clear.length) {
+        log.info(`clearing cache: ${clear.join(', ')}`)
         for (const store of this.db.objectStoreNames) {
           switch (store) {
             case 'metadata':
@@ -341,6 +346,9 @@ export const Cache = new class $Cache {
               break
           }
         }
+
+        await this.db.put('metadata', Zotero.version, 'Zotero')
+        await this.db.put('metadata', version, 'BetterBibTeX')
       }
     }
 
