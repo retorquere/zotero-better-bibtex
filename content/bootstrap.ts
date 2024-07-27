@@ -22,10 +22,10 @@ export type Reason = typeof BOOTSTRAP_REASONS[ReasonId]
 function log(msg) {
   msg = `{better-bibtex} bootstrap: ${msg}`
   if (Zotero?.debug) {
-    Zotero.debug(`Better BibTeX bootstrap: ${msg}`)
+    Zotero.debug(`Better BibTeX bootstrap: ${msg}`) // eslint-disable-line no-restricted-syntax
   }
   else {
-    dump(`${msg}\n`)
+    dump(`${msg}\n`) // eslint-disable-line no-restricted-syntax
   }
 }
 
@@ -45,7 +45,7 @@ function setDefaultPrefs(rootURI) {
           branch.setIntPref(pref, value)
           break
         default:
-          Zotero.logError(`Invalid type '${typeof(value)}' for pref '${pref}'`)
+          log(`Invalid type '${typeof(value)}' for pref '${pref}'`)
       }
     },
   }

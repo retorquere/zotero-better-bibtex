@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
+/* eslint-disable @typescript-eslint/no-empty-function, no-restricted-syntax */
 
 import type { Translators as Translator } from '../typings/translators'
 declare const workerEnvironment: any
@@ -21,7 +21,7 @@ export const discard = {
 }
 
 function format(msg: string, error?: Error) {
-  const err = error ? ` (${error.message})` : ''
+  const err = error ? ` (${error.message})\n${error.stack}`.trim() : ''
   return `${error ? 'error: ' : ''}${worker ? 'worker:' : ''}better-bibtex::${msg}${err}`
 }
 

@@ -72,7 +72,6 @@ const childrenProxy = {
       }
     }
     const children = Array.from(target.childNodes).filter((child: any) => child.childNodes)
-    Zotero.debug(`proxy:children[${typeof prop === 'symbol' ? prop.toString() : prop}]`)
     return children[prop]
   },
 
@@ -226,7 +225,7 @@ class WorkerZoteroBetterBibTeX {
     }
     catch (err) {
       if (!err.message?.includes('NS_ERROR_FILE_NOT_FOUND')) {
-        log.dump(`getContents ${path} error ${err} ${Object.keys(err)} ${err.message}`)
+        log.error(`getContents ${path} error ${err} ${Object.keys(err)} ${err.message}`)
       }
       return null
     }
@@ -402,7 +401,6 @@ class WorkerZotero {
     this.output = ''
 
     this.items = await Cache.ZoteroSerialized.get(TranslationWorker.job.data.items)
-    log.dump(`indexed: requested ${TranslationWorker.job.data.items.length}`)
 
     if (TranslationWorker.job.options.exportFileData) {
       for (const item of this.items) {
@@ -508,7 +506,6 @@ ctx.onmessage = async function(e: { isTrusted?: boolean, data?: Translators.Work
 
       case 'start':
         TranslationWorker.job = JSON.parse(dec.decode(new Uint8Array(e.data.config)))
-        log.dump(`indexed cache: starting ${JSON.stringify(TranslationWorker.job.translator)}`)
 
         importScripts(`chrome://zotero-better-bibtex/content/resource/${TranslationWorker.job.translator}.js`)
         try {
@@ -538,6 +535,6 @@ ctx.onmessage = async function(e: { isTrusted?: boolean, data?: Translators.Work
     }
   }
   catch (err) {
-    Zotero.logError(err)
+    log.error(err)
   }
 }

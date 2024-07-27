@@ -104,7 +104,7 @@ export async function doImport(): Promise<void> {
     collection.zoteroCollection.name = collection.name
     collection.zoteroCollection.children = collection.items.filter(id => {
       if (items.has(id)) return true
-      Zotero.debug(`Collection ${collection.key} has non-existent item ${id}`)
+      log.error(`Collection ${collection.key} has non-existent item ${id}`)
       return false
     }).map(id => ({type: 'item', id}))
   }
@@ -113,7 +113,7 @@ export async function doImport(): Promise<void> {
       (data.collections[collection.parent] as unknown as any).zoteroCollection.children.push(collection.zoteroCollection)
     }
     else {
-      if (collection.parent) Zotero.debug(`Collection ${collection.key} has non-existent parent ${collection.parent}`)
+      if (collection.parent) log.error(`Collection ${collection.key} has non-existent parent ${collection.parent}`)
       collection.parent = false
     }
   }
@@ -199,8 +199,6 @@ export function doExport(): void {
       data.items.push(item)
     }
   }
-
-  log.dump(`indexed: exported ${data.items.length}`)
 
   Zotero.write(asciify(JSON.stringify(data, null, 2)))
   translation.erase()

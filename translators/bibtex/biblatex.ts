@@ -4,7 +4,6 @@ import { strToISO } from '../../content/dateparser'
 import { qualityReport } from '../../gen/biber-tool'
 
 import { Entry as BaseEntry, Config } from './entry'
-import { simple as log } from '../../content/logger'
 
 const config: Config = {
   fieldEncoding: {
@@ -143,17 +142,13 @@ class CreatorTypeMap {
       for (const postfix of CreatorTypeMap.extension[base]) {
         const candidate = `${base}${postfix}`
         if (this.hasEditor && candidate === 'editor' && type !== 'editor') continue
-        if (this.type[candidate]) {
-          if (postfix !== 'c') continue
-          log.dump(`squashing ${type} into ${candidate}`)
-        }
+        if (this.type[candidate] && postfix !== 'c') continue
         this.type[candidate] = type
         this.registered[type] = candidate
         break
       }
     }
 
-    log.dump(`::register(${JSON.stringify({ base, type })} = ${JSON.stringify(this.type)}`)
     return this.registered[type]
   }
 }
@@ -252,7 +247,6 @@ class Entry extends BaseEntry {
       }
     }
 
-    log.dump(`::types=${JSON.stringify(creatorType.type)}`)
     for (const [field, value] of Object.entries(creators)) {
       this.remove(field)
       this.remove(`${field}type`)

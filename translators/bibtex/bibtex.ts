@@ -936,7 +936,7 @@ export class ZoteroItem {
           break
 
         default:
-          Zotero.debug(`attachment import: Unexpected number of parts in file record '${record}': ${parts.length}`)
+          log.error(`attachment import: Unexpected number of parts in file record '${record}': ${parts.length}`)
           // might be absolute windows path, just make Zotero try
           att.path = parts.join(':')
           break
@@ -1141,7 +1141,7 @@ export class ZoteroItem {
   }
 
   private error(err) {
-    Zotero.debug(err)
+    log.error(err)
     throw new Error(err)
   }
 

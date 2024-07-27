@@ -31,7 +31,7 @@ export function validator(schema, ajv): (data: any) => string { // eslint-disabl
     }
   }
   catch (err) {
-    log.dump(`${err}\n${err.stack}`)
+    log.error(`${err}\n${err.stack}`)
     throw err
   }
 }
@@ -51,7 +51,7 @@ export function validItem(obj: any, strict?: boolean): string { // eslint-disabl
   const errors = broken.me(obj)
   if (!errors) return ''
   if (!strict && !broken.other(obj)) {
-    if (typeof Zotero !== 'undefined') log.dump('soft error: ' + errors)
+    if (typeof Zotero !== 'undefined') log.error('soft error: ' + errors)
     return ''
   }
   // https://ajv.js.org/api.html#validation-errors

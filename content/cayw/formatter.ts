@@ -231,7 +231,6 @@ export const Formatter = new class { // eslint-disable-line @typescript-eslint/n
       locale: options.locale,
     }
 
-    Zotero.debug(`formatted-citation ${JSON.stringify({ citations, options, format })}`)
     // items must be pre-loaded for the citation processor
     await getItemsAsync(citations.map(item => item.id))
 

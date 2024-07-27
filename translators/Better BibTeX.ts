@@ -47,9 +47,7 @@ export async function doImport(): Promise<void> {
 
   if (translation.preferences.strings && translation.preferences.importBibTeXStrings) input = `${translation.preferences.strings}\n${input}`
 
-  const start = Date.now()
   const bib = await Zotero.BetterBibTeX.parseBibTeX(input, translation)
-  Zotero.debug(`parsed ${bib.entries.length} items in ${Date.now() - start}msec`)
   const errors: ParseError[] = bib.errors
 
   const whitelist = bib.comments
@@ -74,7 +72,6 @@ export async function doImport(): Promise<void> {
       if (builder.import(errors)) await item.complete()
     }
     catch (err) {
-      Zotero.debug('bbt import error:', err)
       errors.push({ error: err.message, input: '' })
     }
 
@@ -89,12 +86,10 @@ export async function doImport(): Promise<void> {
   if (errors.length) {
     const item = new Zotero.Item('note')
     item.note = 'Import errors found: <ul>'
-    Zotero.debug(`import errors: ${JSON.stringify(errors)}`)
     for (const err of errors) {
       item.note += '<li>'
       item.note += escape.html(err.error)
       if (err.input) {
-        Zotero.debug(`import error: ${err.error}\n>>>\n${err.input}\n<<<`)
         item.note += `<pre>${escape.html(err.input)}</pre>`
       }
       item.note += '</li>'

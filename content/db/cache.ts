@@ -117,7 +117,6 @@ class Running {
 
 export class ExportCache {
   constructor(private db: IDBPDatabase<Schema>, private name: ExportCacheName) {
-    log.dump(`indexed: attaching ${name}`)
   }
 
   public async touch(ids: number[]): Promise<void> {
@@ -215,10 +214,7 @@ class ZoteroSerialized {
   public async fill(items: any[]): Promise<void> {
     items = items.filter(item => this.cachable(item))
 
-    if (!items.length) {
-      log.dump(`indexed: fill, nothing to do, avg cache fill=${this.filled}`)
-      return
-    }
+    if (!items.length) return
 
     const tx = this.db.transaction(['ZoteroSerialized', 'ZoteroSerializedTouched'], 'readwrite')
     const store = tx.objectStore('ZoteroSerialized')
@@ -251,7 +247,6 @@ class ZoteroSerialized {
     else {
       await tx.done
     }
-    log.dump(`indexed: fill, cached ${requested - items.length}, filling ${items.length}, avg cache fill=${this.filled}`)
   }
 
   public async get(ids: number[]): Promise<Serialized[]> {
@@ -260,7 +255,7 @@ class ZoteroSerialized {
     await tx.done
     const fetched = new Set(items.map(item => item.itemID))
     const missing = ids.filter(id => !fetched.has(id))
-    if (missing.length) log.dump(`indexed: failed to fetch ${missing}`)
+    if (missing.length) log.error(`indexed: failed to fetch ${missing}`)
     return items
   }
 
@@ -297,7 +292,6 @@ export const Cache = new class $Cache {
   public async open(serialize?: Serializer, lastUpdated?: string): Promise<void> {
     if (this.opened) throw new Error('database reopened')
 
-    log.dump('indexed: opening cache')
     this.db = await openDB<Schema>('BetterBibTeXCache', this.schema, {
       upgrade: (db, oldVersion, newVersion) => {
         if (oldVersion !== newVersion) {
@@ -327,7 +321,6 @@ export const Cache = new class $Cache {
       },
     })
 
-    log.dump('indexed: attaching ZoteroSerialized')
     this.ZoteroSerialized = new ZoteroSerialized(this.db, serialize)
 
     this.BetterBibTeX = new ExportCache(this.db, 'BetterBibTeX')
@@ -338,7 +331,7 @@ export const Cache = new class $Cache {
     if (lastUpdated) {
       const lastTouched = await this.db.get('metadata', 'lastUpdated') || ''
       if (lastUpdated > lastTouched) {
-        log.dump('indexed: store gap, clearing')
+        log.info('indexed: store gap, clearing')
         for (const store of this.db.objectStoreNames) {
           switch (store) {
             case 'metadata':
@@ -351,7 +344,6 @@ export const Cache = new class $Cache {
       }
     }
 
-    log.dump('indexed: opened cache')
     this.opened = true
   }
 

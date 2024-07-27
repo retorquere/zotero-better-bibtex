@@ -186,7 +186,6 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
   }
 
   public getTranslatorId(name: string): string {
-    Zotero.debug(`getTranslatorId: resolving ${JSON.stringify(name)}`)
     const name_lc = name.toLowerCase().replace(/ /g, '')
 
     // shortcuts
@@ -210,9 +209,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
     if (typeof name === 'string' && name.match(/^[0-9a-fA-F]{8}-([0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}?$/)) return name
 
-    const msg = `getTranslatorId: ${JSON.stringify(name)} could not be resolved to a translator`
-    Zotero.debug(msg)
-    throw new Error(msg)
+    throw new Error(`getTranslatorId: ${JSON.stringify(name)} could not be resolved to a translator`)
   }
 
   public async importString(str) {
@@ -299,7 +296,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
         case 'debug':
           // this is pre-formatted
-          Zotero.debug(e.data.message)
+          Zotero.debug(e.data.message) // eslint-disable-line no-restricted-syntax
           break
 
         case 'item':

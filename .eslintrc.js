@@ -38,8 +38,9 @@ const shell = require('shelljs')
 const branch = (process.env.GITHUB_REF && process.env.GITHUB_REF.startsWith('refs/heads/'))
   ? process.env.GITHUB_REF.replace('refs/heads/', '')
   : shell.exec('git rev-parse --abbrev-ref HEAD', { silent: true }).stdout.trim()
+const no_restricted_syntax = {master: 'error', minlog: 'warn'}[branch] || 'off'
 config.rules['no-restricted-syntax'] = [
-  branch === 'master' ? 'error' : 'off',
+  no_restricted_syntax,
   { selector: "CallExpression[callee.name='dump']", message: 'use of dump is not allowed' },
   { selector: "CallExpression[callee.object.name='Zotero'][callee.property.name='debug']", message: 'use of Zotero.debug is not allowed' },
   { selector: "CallExpression[callee.object.name='Zotero'][callee.property.name='logError']", message: 'use of Zotero.logError is not allowed' },
