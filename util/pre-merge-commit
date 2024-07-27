@@ -1,0 +1,19 @@
+#!/usr/bin/env python3
+
+import sys
+from pathlib import Path
+import subprocess
+
+script = Path(__file__)
+
+if script.parent.name == 'util':
+  hook = (script.parent.parent / '.git/hooks/pre-merge-commit').absolute()
+  if not hook.exists():
+    hook.symlink_to(script)
+
+if script.parent.name != 'hooks':
+  print('run script from .git/hooks')
+  sys.exit(1)
+
+subprocess.run(['npm', 'run', 'lint'])
+
