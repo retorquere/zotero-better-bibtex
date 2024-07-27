@@ -30,9 +30,6 @@ function $dump(msg: string, error? : Error): void {
 }
 
 export const simple = {
-  debug(msg: string): void {
-    Zotero.debug(format(msg))
-  },
   info(msg: string): void {
     Zotero.debug(format(msg))
   },

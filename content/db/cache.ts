@@ -1,7 +1,7 @@
 import { bySlug } from '../../gen/translators'
 import { openDB, IDBPDatabase, DBSchema } from 'idb'
 import type { Attachment, Item, Note } from '../../gen/typings/serialized-item'
-import { simple as log } from '../logger'
+import { log } from '../logger'
 import version from '../../gen/version'
 
 type Serialized = Item | Attachment | Note
@@ -40,7 +40,7 @@ interface Schema extends DBSchema {
     value: Serialized
     key: number
   }
-  ZoteroSerializedTouched: {
+  touched: {
     value: boolean
     key: number
   }
@@ -217,9 +217,9 @@ class ZoteroSerialized {
 
     if (!items.length) return
 
-    const tx = this.db.transaction(['ZoteroSerialized', 'ZoteroSerializedTouched'], 'readwrite')
+    const tx = this.db.transaction(['ZoteroSerialized', 'touched'], 'readwrite')
     const store = tx.objectStore('ZoteroSerialized')
-    const touched = tx.objectStore('ZoteroSerializedTouched')
+    const touched = tx.objectStore('touched')
     const cached = new Set(await store.getAllKeys())
 
     const purge = (await touched.getAllKeys())
@@ -261,15 +261,15 @@ class ZoteroSerialized {
   }
 
   public async touch(ids: number[]): Promise<void> {
-    const tx = this.db.transaction('ZoteroSerializedTouched', 'readwrite')
+    const tx = this.db.transaction('touched', 'readwrite')
     const puts = ids.map(id => tx.store.put(true, id))
     await Promise.all([...puts, tx.done])
   }
 
   public async purge(): Promise<void> {
-    const tx = this.db.transaction(['ZoteroSerialized', 'ZoteroSerializedTouched'], 'readwrite')
+    const tx = this.db.transaction(['ZoteroSerialized', 'touched'], 'readwrite')
     const store = tx.objectStore('ZoteroSerialized')
-    const touched = tx.objectStore('ZoteroSerializedTouched')
+    const touched = tx.objectStore('touched')
 
     const purge = (await touched.getAllKeys()).map(id => store.delete(id))
     await Promise.all([...purge, touched.clear(), tx.done])
@@ -277,7 +277,7 @@ class ZoteroSerialized {
 }
 
 export const Cache = new class $Cache {
-  public schema = 7
+  public schema = 8
   private db: IDBPDatabase<Schema>
   public opened = false
 
@@ -302,7 +302,7 @@ export const Cache = new class $Cache {
         }
 
         db.createObjectStore('ZoteroSerialized', { keyPath: 'itemID' })
-        db.createObjectStore('ZoteroSerializedTouched')
+        db.createObjectStore('touched')
         db.createObjectStore('metadata')
 
         const context = db.createObjectStore('ExportContext', { keyPath: 'id', autoIncrement: true })
@@ -389,7 +389,7 @@ export const Cache = new class $Cache {
     for (const store of this.db.objectStoreNames) {
       switch (store) {
         case 'metadata':
-        case 'ZoteroSerializedTouched':
+        case 'touched':
           break
         default:
           entries += await this.db.count(store)
@@ -405,17 +405,21 @@ export const Cache = new class $Cache {
 
   public async dump(): Promise<Record<string, any>> {
     const tables: Record<string, any> = {}
-    for (const store of this.db.objectStoreNames) {
-      if (store === 'metadata') {
-        tables[store] = {}
-        for (const key of await this.db.getAllKeys(store)) {
-          tables[store][key] = await this.db.get(store, key)
-        }
-      }
-      else {
-        const tx = this.db.transaction(store, 'readonly')
-        tables[store] = await tx.store.getAll()
-        await tx.done
+    for (const store of [...this.db.objectStoreNames]) {
+      switch (store) {
+        case 'touched':
+        case 'metadata':
+          tables[store] = {}
+          for (const key of await this.db.getAllKeys(store)) {
+            tables[store][key] = await this.db.get(store, key)
+          }
+          break
+
+        default:
+          const tx = this.db.transaction(store, 'readonly') // eslint-disable-line no-case-declarations
+          tables[store] = await tx.store.getAll()
+          await tx.done
+          break
       }
     }
 

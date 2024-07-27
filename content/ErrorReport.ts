@@ -154,12 +154,11 @@ export class ErrorReport {
     const enc = new TextEncoder()
 
     files[`${this.name()}/debug.txt`] = enc.encode(this.report.log)
-    files[`${this.name()}/cache.json`] = enc.encode(this.report.cache)
 
     if (this.report.items) files[`${this.name()}/items.json`] = enc.encode(this.report.items)
     if (this.config.cache) {
       files[`${this.name()}/database.json`] = enc.encode(JSON.stringify(KeyManager.all()))
-      files[`${this.name()}/cache.json`] = enc.encode(JSON.stringify(Cache.dump()))
+      files[`${this.name()}/cache.json`] = enc.encode(this.report.cache)
     }
     if (this.report.acronyms) files[`${this.name()}/acronyms.csv`] = enc.encode(this.report.acronyms)
 
