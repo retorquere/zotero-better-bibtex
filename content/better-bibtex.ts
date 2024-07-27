@@ -872,7 +872,7 @@ export class BetterBibTeX {
         // onRender: ({ body, item, editable, tabType }) => {
         onRender: ({ body, item, setSectionSummary }) => {
           const citekey = item.getField('citationKey')
-          const textbox = body.ownerDocument.getElementById('better-bibtex-citation-key')
+          const textbox = body.querySelector('#better-bibtex-citation-key')
           body.style.display = 'flex'
           // const was = textbox.dataset.itemid || '<node>'
           textbox.value = citekey || ''
@@ -881,14 +881,14 @@ export class BetterBibTeX {
         },
         onInit: ({ body, refresh }) => {
           $done = Events.on('items-changed', ({ items }) => {
-            const textbox = body.ownerDocument.getElementById('better-bibtex-citation-key')
+            const textbox = body.querySelector('#better-bibtex-citation-key')
             const itemID = textbox.dataset.itemid ? parseInt(textbox.dataset.itemid) : undefined
             const displayed: ZoteroItem = textbox.dataset.itemid ? items.find(item => item.id === itemID) : undefined
             if (displayed) refresh()
           })
         },
         onItemChange: ({ setEnabled, body, item }) => {
-          const textbox = body.ownerDocument.getElementById('better-bibtex-citation-key')
+          const textbox = body.querySelector('#better-bibtex-citation-key')
           if (item.isRegularItem() && !item.isFeedItem) {
             const citekey = item.getField('citationKey')
             // const was = textbox.dataset.itemid
