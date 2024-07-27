@@ -14,6 +14,7 @@ import type { Exporter as BibTeXExporter } from '../bibtex/exporter'
 import type { ZoteroItem } from '../bibtex/bibtex'
 import type { Translators } from '../../typings/translators.d.ts'
 import type { CharMap } from 'unicode2latex'
+import { simple as log } from '../../content/logger'
 
 type CacheableItem = Item & { $cacheable: boolean }
 type CacheableRegularItem = RegularItem & { $cacheable: boolean }
@@ -24,19 +25,6 @@ type NestedCollection = {
   items: CacheableItem[]
   collections: NestedCollection[]
   parent?: NestedCollection
-}
-
-export function workerRan(): boolean {
-  const workerResult = Zotero.getOption('workerResult')
-  switch (typeof workerResult) {
-    case 'string':
-      Zotero.debug(`worker prerun reuse: ${workerResult}`)
-      Zotero.write(workerResult)
-      return true
-    case 'boolean':
-      return true
-  }
-  return false
 }
 
 export class Items {
@@ -198,14 +186,9 @@ class Override {
     ].map(filename => <string>$OS.Path.join(this.exportDir, filename))
 
     for (const candidate of candidates) {
-      Zotero.debug(`better-bibtex: looking for override ${preference} in ${candidate}`)
-
       try {
         const content: string = Zotero.BetterBibTeX.getContents(candidate)
-        if (content === null) {
-          Zotero.debug(`better-bibtex: override ${candidate} not found`)
-          continue
-        }
+        if (content === null) continue
 
         let prefs: Partial<Prefs.Preferences>
         if (preference === 'preferences') {
@@ -218,26 +201,24 @@ class Override {
 
         for (const [pref, value] of Object.entries(prefs)) {
           if (!PrefNames.has(pref as unknown as Prefs.PreferenceName)) {
-            Zotero.debug(`better-bibtex: unexpected preference override for ${pref}`)
+            log.error(`better-bibtex: unexpected preference override for ${pref}`)
           }
           else if (typeof value !== typeof Prefs.defaults[pref]) {
-            Zotero.debug(`better-bibtex: preference override for ${pref}: expected ${typeof Prefs.defaults[pref]}, got ${typeof value}`)
+            log.error(`better-bibtex: preference override for ${pref}: expected ${typeof Prefs.defaults[pref]}, got ${typeof value}`)
           }
           else if (Prefs.options[pref] && !Prefs.options[pref][value]) {
             // eslint-disable-next-line @typescript-eslint/no-base-to-string
-            Zotero.debug(`better-bibtex: preference override for ${pref}: expected ${Object.keys(Prefs.options[pref]).join(' / ')}, got ${value}`)
+            log.error(`better-bibtex: preference override for ${pref}: expected ${Object.keys(Prefs.options[pref]).join(' / ')}, got ${value}`)
           }
           else {
             this.preferences[pref] = value
           }
         }
 
-        Zotero.debug(`better-bibtex: override ${candidate} loaded`)
-
         return true
       }
       catch (err) {
-        Zotero.debug(`better-bibtex: failed to load override ${candidate}: ${err}`)
+        log.error(`better-bibtex: failed to load override ${candidate}: ${err}`)
       }
     }
 

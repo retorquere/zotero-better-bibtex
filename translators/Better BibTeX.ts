@@ -1,4 +1,4 @@
-import { workerRan, Translation, collect } from './lib/translator'
+import { Translation, collect } from './lib/translator'
 import type { Translators } from '../typings/translators.d.ts'
 import type { ParseError } from '@retorquere/bibtex-parser'
 import { detectImport as zotero_detectImport } from '../gen/ZoteroBibTeX.mjs'
@@ -7,8 +7,6 @@ declare const Zotero: any
 declare var ZOTERO_TRANSLATOR_INFO: Translators.Header // eslint-disable-line no-var
 
 export function doExport(): void {
-  if (workerRan()) return
-
   const translation = Translation.Export(ZOTERO_TRANSLATOR_INFO, collect())
   Zotero.BetterBibTeX.generateBibTeX(translation)
   translation.saveAttachments()
