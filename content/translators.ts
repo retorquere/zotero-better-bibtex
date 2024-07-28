@@ -386,11 +386,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
     prepare.done()
 
-    const enc = new TextEncoder()
-    // stringify gets around 'object could not be cloned', and arraybuffers can be passed zero-copy. win-win
-    const abconfig = enc.encode(JSON.stringify(config)).buffer
-
-    this.worker.postMessage({ kind: 'start', config: abconfig }, [ abconfig ])
+    this.worker.postMessage({ kind: 'start', config })
 
     if (typeof job.timeout === 'number') {
       Zotero.Promise.delay(job.timeout * 1000).then(() => {

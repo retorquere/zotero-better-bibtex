@@ -493,8 +493,6 @@ class WorkerZotero {
 // haul to top
 export var Zotero = new WorkerZotero // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match,no-var
 
-const dec = new TextDecoder('utf-8')
-
 ctx.onmessage = async function(e: { isTrusted?: boolean, data?: Translators.Worker.Message } ): Promise<void> { // eslint-disable-line prefer-arrow/prefer-arrow-functions
   if (!e.data) return // some kind of startup message
 
@@ -505,7 +503,7 @@ ctx.onmessage = async function(e: { isTrusted?: boolean, data?: Translators.Work
         break
 
       case 'start':
-        TranslationWorker.job = JSON.parse(dec.decode(new Uint8Array(e.data.config)))
+        TranslationWorker.job = e.data.config
 
         importScripts(`chrome://zotero-better-bibtex/content/resource/${TranslationWorker.job.translator}.js`)
         try {
