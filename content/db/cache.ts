@@ -219,36 +219,42 @@ class ZoteroSerialized {
 
   public async fill(items: ZoteroItem[]): Promise<void> {
     items = items.filter(item => this.cachable(item))
-
     if (!items.length) return
 
     let tx = this.db.transaction(['ZoteroSerialized', 'touched'], 'readwrite')
     let store = tx.objectStore('ZoteroSerialized')
     const touched = tx.objectStore('touched')
-    const cached = new Set(await store.getAllKeys())
+    const purge = new Set(await touched.getAllKeys())
 
-    const purge = (await touched.getAllKeys())
-      .map((id: number) => {
-        if (cached.has(id)) {
-          cached.delete(id)
-          return store.delete(id)
+    const retrieve: Map<number, ZoteroItem> = items.reduce((acc, item) => acc.set(item.id, item), new Map)
+    const keys: number[] = [...retrieve.keys()].sort()
+    let key = 0
+
+    let cursor = await store.openKeyCursor()
+    if (cursor) cursor = await cursor.continue(keys[key])
+
+    while (cursor) {
+      if (cursor.key === keys[key]) { // key is found in the cache
+        if (purge.has(cursor.key)) {
+          purge.delete(cursor.key)
         }
         else {
-          return null
+          retrieve.delete(cursor.key)
         }
-      })
-      .filter(del => del)
-    if (purge.length) await Promise.all(purge)
+      }
+      key++
+      cursor = await cursor.continue(keys[key] ?? Number.MAX_SAFE_INTEGER)
+    }
+
+    if (purge.size) await Promise.all([...purge].map(id => store.delete(id)))
     await touched.clear()
     await tx.done
 
-    const requested = items.length
-    items = items.filter(item => !cached.has(item.id))
-    const current = (requested - items.length) / requested
+    const current = (items.length - retrieve.size) / items.length
     this.filled = (current - this.filled) * this.smoothing + this.filled
 
-    if (items.length) {
-      const serialized = await this.serializer.serialize(items)
+    if (retrieve.size) {
+      const serialized = await this.serializer.serialize([...retrieve.values()])
       tx = this.db.transaction(['ZoteroSerialized'], 'readwrite')
       store = tx.objectStore('ZoteroSerialized')
       const puts = serialized.map(item => store.put(item))
