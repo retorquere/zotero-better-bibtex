@@ -226,11 +226,11 @@ class ZoteroSerialized {
     const touched = tx.objectStore('touched')
     const purge = new Set(await touched.getAllKeys())
 
-    const retrieve: Map<number, ZoteroItem> = items.reduce((acc, item) => acc.set(item.id, item), new Map)
+    const fill: Map<number, ZoteroItem> = items.reduce((acc, item) => acc.set(item.id, item), new Map)
 
     let cursor = await store.openKeyCursor()
     if (cursor) {
-      for (const id of [...retrieve.keys()].sort()) {
+      for (const id of [...fill.keys()].sort()) {
         if (cursor.key < id) cursor = await cursor.continue(id)
         if (!cursor) break
 
@@ -239,7 +239,7 @@ class ZoteroSerialized {
             purge.delete(id)
           }
           else {
-            retrieve.delete(id) // and it was fresh, so don't re-fill it
+            fill.delete(id) // and it was fresh, so don't re-fill it
           }
         }
       }
@@ -247,11 +247,13 @@ class ZoteroSerialized {
 
     await Promise.all([ ...[...purge].map(id => store.delete(id)), touched.clear(), tx.done])
 
-    const current = (items.length - retrieve.size) / items.length
+    const current = (items.length - fill.size) / items.length
     this.filled = (current - this.filled) * this.smoothing + this.filled
 
-    if (retrieve.size) {
-      const serialized = await this.serializer.serialize([...retrieve.values()])
+    // log.debug('fill:', fill.size, 'of', items.length)
+
+    if (fill.size) {
+      const serialized = await this.serializer.serialize([...fill.values()])
       tx = this.db.transaction(['ZoteroSerialized'], 'readwrite')
       store = tx.objectStore('ZoteroSerialized')
       const puts = serialized.map(item => store.put(item))
