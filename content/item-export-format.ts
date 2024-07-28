@@ -22,8 +22,9 @@ export class Serializer {
     return serialized
   }
 
-  private async item(item: ZoteroItem): Promise<Serialized> {
-    await item.loadAllData()
+  private async item(item: ZoteroItem, selectedLibraryID: number): Promise<Serialized> {
+    if (item.libraryID !== selectedLibraryID) await item.loadAllData()
+
     let serialized: Item = item.toJSON()
     serialized.uri = Zotero.URI.getItemURI(item)
     serialized.itemID = item.id
@@ -38,8 +39,8 @@ export class Serializer {
         break
 
       default:
-        serialized.attachments = (await getItemsAsync(item.getAttachments())).map(att => this.attachment({ ...att.toJSON(), uri: Zotero.URI.getItemURI(att) } as Attachment, att))
-        serialized.notes = (await getItemsAsync(item.getNotes())).map(note => ({ ...note.toJSON(), uri: Zotero.URI.getItemURI(note) } as Note))
+        serialized.attachments = (await getItemsAsync(item.getAttachments(), selectedLibraryID)).map(att => this.attachment({ ...att.toJSON(), uri: Zotero.URI.getItemURI(att) } as Attachment, att))
+        serialized.notes = (await getItemsAsync(item.getNotes(), selectedLibraryID)).map(note => ({ ...note.toJSON(), uri: Zotero.URI.getItemURI(note) } as Note))
         break
     }
 
@@ -47,7 +48,8 @@ export class Serializer {
   }
 
   public async serialize(items: ZoteroItem[]): Promise<Serialized[]> {
-    return Promise.all(items.map(item => this.item(item)))
+    const selectedLibraryID = Zotero.getActiveZoteroPane().getSelectedLibraryID()
+    return Promise.all(items.map(item => this.item(item, selectedLibraryID)))
   }
 }
 
