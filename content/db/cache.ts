@@ -246,10 +246,10 @@ class ZoteroSerialized {
           retrieve.delete(cursor.key)
         }
       }
-      key++
 
+      // key++
       // while (cursor && cursor.key !== keys[key]) cursor = await cursor.continue()
-      cursor = await cursor.continue(keys[key] ?? Number.MAX_SAFE_INTEGER)
+      cursor = await cursor.continue(keys[++key] ?? Number.MAX_SAFE_INTEGER)
     }
 
     if (purge.size) await Promise.all([...purge].map(id => store.delete(id)))
