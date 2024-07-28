@@ -226,34 +226,30 @@ class ZoteroSerialized {
     const touched = tx.objectStore('touched')
     const purge = new Set(await touched.getAllKeys())
 
-    const fill: Map<number, ZoteroItem> = items.reduce((acc, item) => acc.set(item.id, item), new Map)
+    log.debug('fill:', await store.count(), 'in cache, of which', purge.size, 'touched')
+    log.debug('  fill:', await touched.getAllKeys())
 
-    let cursor = await store.openKeyCursor()
-    if (cursor) {
-      for (const id of [...fill.keys()].sort()) {
-        if (cursor.key < id) cursor = await cursor.continue(id)
-        if (!cursor) break
-
-        if (cursor.key === id) { // id is in cache
-          if (purge.has(id)) { // and was scheduled for purge, then re-fill will overwrite
-            purge.delete(id)
-          }
-          else {
-            fill.delete(id) // and it was fresh, so don't re-fill it
-          }
+    const cached = new Set(await store.getAllKeys())
+    const fill = items.filter(item => {
+      if (cached.has(item.id)) {
+        if (purge.has(item.id)) {
+          purge.delete(item.id)
+        }
+        else {
+          return false
         }
       }
-    }
+      return true
+    })
 
     await Promise.all([ ...[...purge].map(id => store.delete(id)), touched.clear(), tx.done])
+    log.debug('  fill:', fill.length, 'of', items.length, 'purged', purge.size)
 
-    const current = (items.length - fill.size) / items.length
+    const current = (items.length - fill.length) / items.length
     this.filled = (current - this.filled) * this.smoothing + this.filled
 
-    // log.debug('fill:', fill.size, 'of', items.length)
-
-    if (fill.size) {
-      const serialized = await this.serializer.serialize([...fill.values()])
+    if (fill.length) {
+      const serialized = await this.serializer.serialize(fill)
       tx = this.db.transaction(['ZoteroSerialized'], 'readwrite')
       store = tx.objectStore('ZoteroSerialized')
       const puts = serialized.map(item => store.put(item))
