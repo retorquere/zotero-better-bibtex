@@ -231,11 +231,7 @@ class ZoteroSerialized {
     let key = 0
 
     let cursor = await store.openKeyCursor()
-
-    if (cursor && cursor.key !== keys[key]) {
-      cursor = await cursor.continue()
-      if (cursor && cursor.key !== keys[key]) cursor = await cursor.continue(keys[key])
-    }
+    if (cursor && cursor.key !== keys[key]) cursor = await cursor.continue(keys[key])
 
     while (cursor) {
       if (cursor.key === keys[key]) { // key is found in the cache
@@ -247,8 +243,6 @@ class ZoteroSerialized {
         }
       }
 
-      // key++
-      // while (cursor && cursor.key !== keys[key]) cursor = await cursor.continue()
       cursor = await cursor.continue(keys[++key] ?? Number.MAX_SAFE_INTEGER)
     }
 
