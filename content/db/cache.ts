@@ -220,7 +220,7 @@ class ZoteroSerialized {
     const cached = new Set(await store.getAllKeys())
 
     const purge = (await touched.getAllKeys())
-      .filter((id: number) => {
+      .map((id: number) => {
         if (cached.has(id)) {
           cached.delete(id)
           return store.delete(id)
