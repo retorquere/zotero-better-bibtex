@@ -287,11 +287,11 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       switch (e.data?.kind) {
         case 'error':
           log.status({error: true}, `translation failed: ${e.data.message}\n${e.data.stack || ''}`.trim())
-          deferred.reject(new Error(e.data.message))
           if (job.translate) {
             // job.translate._runHandler('error', e.data) // eslint-disable-line no-underscore-dangle
             job.translate.complete(null, { message: e.data.message, stack: e.data.stack })
           }
+          deferred.reject(new Error(e.data.message))
           break
 
         case 'debug':
@@ -305,11 +305,11 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
         case 'done':
           void Events.emit('export-progress', { pct: 100, message: translator.label, ae: job.autoExport })
-          deferred.resolve(e.data.output)
           if (job.translate) {
             job.translate.string = e.data.output // eslint-disable-line id-blacklist
             job.translate.complete(e.data.output)
           }
+          deferred.resolve(e.data.output)
           break
 
         case 'progress':
