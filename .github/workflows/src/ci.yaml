@@ -209,7 +209,7 @@ jobs:
     - run: npm run release
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    - uses: actions/github-script@v6
+    - uses: actions/github-script@v7
       continue-on-error: true
       with:
         script: |
