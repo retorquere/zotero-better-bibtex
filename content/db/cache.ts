@@ -227,29 +227,25 @@ class ZoteroSerialized {
     const purge = new Set(await touched.getAllKeys())
 
     const retrieve: Map<number, ZoteroItem> = items.reduce((acc, item) => acc.set(item.id, item), new Map)
-    const keys: number[] = [...retrieve.keys()].sort()
-    let key = 0
 
     let cursor = await store.openKeyCursor()
-    if (cursor && cursor.key !== keys[key]) cursor = await cursor.continue(keys[key])
-    while (cursor) {
-      if (cursor.key === keys[key]) { // key is found in the cache
-        if (purge.has(cursor.key)) {
-          purge.delete(cursor.key)
-        }
-        else {
-          retrieve.delete(cursor.key)
+    if (cursor) {
+      for (const id of [...retrieve.keys()].sort()) {
+        if (cursor.key < id) cursor = await cursor.continue(id)
+        if (!cursor) break
+
+        if (cursor.key === id) { // id is in cache
+          if (purge.has(id)) { // and was scheduled for purge, then re-fill will overwrite
+            purge.delete(id)
+          }
+          else {
+            retrieve.delete(id) // and it was fresh, so don't re-fill it
+          }
         }
       }
-
-      key++
-      if (typeof keys[key] !== 'number') break
-      cursor = await cursor.continue(keys[key])
     }
 
-    if (purge.size) await Promise.all([...purge].map(id => store.delete(id)))
-    await touched.clear()
-    await tx.done
+    await Promise.all([ ...[...purge].map(id => store.delete(id)), touched.clear(), tx.done])
 
     const current = (items.length - retrieve.size) / items.length
     this.filled = (current - this.filled) * this.smoothing + this.filled
