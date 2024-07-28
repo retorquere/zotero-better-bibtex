@@ -232,7 +232,6 @@ class ZoteroSerialized {
 
     let cursor = await store.openKeyCursor()
     if (cursor && cursor.key !== keys[key]) cursor = await cursor.continue(keys[key])
-
     while (cursor) {
       if (cursor.key === keys[key]) { // key is found in the cache
         if (purge.has(cursor.key)) {
@@ -243,7 +242,9 @@ class ZoteroSerialized {
         }
       }
 
-      cursor = await cursor.continue(keys[++key] ?? Number.MAX_SAFE_INTEGER)
+      key++
+      if (typeof keys[key] !== 'number') break
+      cursor = await cursor.continue(keys[key])
     }
 
     if (purge.size) await Promise.all([...purge].map(id => store.delete(id)))
