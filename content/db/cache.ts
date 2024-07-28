@@ -226,9 +226,6 @@ class ZoteroSerialized {
     const touched = tx.objectStore('touched')
     const purge = new Set(await touched.getAllKeys())
 
-    log.debug('fill:', await store.count(), 'in cache, of which', purge.size, 'touched')
-    log.debug('  fill:', await touched.getAllKeys())
-
     const cached = new Set(await store.getAllKeys())
     const fill = items.filter(item => {
       if (cached.has(item.id)) {
@@ -243,7 +240,6 @@ class ZoteroSerialized {
     })
 
     await Promise.all([ ...[...purge].map(id => store.delete(id)), touched.clear(), tx.done])
-    log.debug('  fill:', fill.length, 'of', items.length, 'purged', purge.size)
 
     const current = (items.length - fill.length) / items.length
     this.filled = (current - this.filled) * this.smoothing + this.filled
