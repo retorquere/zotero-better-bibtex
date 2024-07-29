@@ -97,9 +97,13 @@ export const log = new class Logger {
     Zotero.debug(this.format({ ascii: false }, msg))
   }
 
-  public trace(msg: string, reset=false) {
-    if (reset) this.timestamp = 0
-    Zotero.debug(this.format({ trace: true, ascii: false }, msg))
+  public trace(msg?: string) {
+    if (msg) {
+      Zotero.debug(this.format({ trace: true, ascii: false }, msg))
+    }
+    else {
+      this.timestamp = 0
+    }
   }
 
   public error(...msg) {
