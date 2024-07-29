@@ -226,9 +226,9 @@ class ZoteroSerialized {
     const touched = tx.objectStore('touched')
     const purge = new Set(await touched.getAllKeys())
 
-    const cached = new Set(await store.getAllKeys())
+    const cached: Record<number, boolean> = (await store.getAllKeys()).reduce((acc, key) => { acc[key] = true; return acc }, {})
     const fill = items.filter(item => {
-      if (cached.has(item.id)) {
+      if (item.id in cached) {
         if (purge.has(item.id)) {
           purge.delete(item.id)
         }

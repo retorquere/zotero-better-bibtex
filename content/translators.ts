@@ -369,8 +369,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       },
     })
 
-    // maybe use a loop instead of map so we can await for beachball protection
-    await Cache.ZoteroSerialized.fill(items)
+    await log.timed('cache fill:', () => Cache.ZoteroSerialized.fill(items))
     config.data.items = items.map(item => item.id)
     prepare.update()
     if (job.path && job.canceled) return ''

@@ -58,7 +58,7 @@ export const log = new class Logger {
   private format({ ascii=true, trace=false, error=false }, msg) {
     let diff = ''
     if (trace) {
-      const now = Date.now()
+      const now = performance.now()
       if (this.timestamp) diff = `+${now - this.timestamp} `
       this.timestamp = now
     }
@@ -89,36 +89,31 @@ export const log = new class Logger {
     ) as boolean
   }
 
-  public print(msg: string) {
-    if (!this.enabled) return
-
-    if (typeof Zotero !== 'undefined') {
-      Zotero.debug(msg)
-    }
-    else {
-      $dump(msg)
-    }
-  }
-
   public debug(...msg) {
-    this.print(this.format({}, msg))
+    Zotero.debug(this.format({}, msg))
   }
 
   public info(msg: string) {
-    this.print(this.format({ ascii: false }, msg))
+    Zotero.debug(this.format({ ascii: false }, msg))
   }
 
   public trace(msg: string, reset=false) {
     if (reset) this.timestamp = 0
-    this.print(this.format({ trace: true, ascii: false }, msg))
+    Zotero.debug(this.format({ trace: true, ascii: false }, msg))
   }
 
   public error(...msg) {
-    this.print(this.format({error: true}, msg))
+    Zotero.debug(this.format({error: true}, msg))
   }
 
   public status({ error=false }, ...msg) {
     if (error || this.enabled) Zotero.debug(this.format({error}, msg))
+  }
+
+  public async timed(msg: string, code: () => void | Promise<void>) {
+    const start = performance.now()
+    await code()
+    this.debug(msg, 'took', performance.now() - start, 'ms')
   }
 
   public dump(msg: string) {

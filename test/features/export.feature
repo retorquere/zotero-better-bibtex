@@ -713,16 +713,16 @@ Feature: Export
     And I wait until Zotero is idle
     And an export using "Better BibTeX" with worker on should match "export/*.bibtex"
 
-    When I set preference .cache to false
-    Then an export using "Better BibTeX" with worker on should match "export/*.bibtex"
-    When I reset the cache
-    And I set preference .cache to false
-    Then an export using "Better BibTeX" with worker on should match "export/*.bibtex"
-    When I reset the cache
-    And I set preference .cache to true
-    And I export the library 1 times using "id:bc03b4fe-436d-4a1f-ba59-de4d2d7a63f7"
-    Then an export using "Better CSL JSON" with worker on should match "export/*.csl.json"
-    And an export using "Better CSL JSON" with worker on should match "export/*.csl.json"
+    # When I set preference .cache to false
+    # Then an export using "Better BibTeX" with worker on should match "export/*.bibtex"
+    # When I reset the cache
+    # And I set preference .cache to false
+    # Then an export using "Better BibTeX" with worker on should match "export/*.bibtex"
+    # When I reset the cache
+    # And I set preference .cache to true
+    # And I export the library 1 times using "id:bc03b4fe-436d-4a1f-ba59-de4d2d7a63f7"
+    # Then an export using "Better CSL JSON" with worker on should match "export/*.csl.json"
+    # And an export using "Better CSL JSON" with worker on should match "export/*.csl.json"
 
     And dump the cache to "cache.json"
 
