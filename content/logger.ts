@@ -58,7 +58,7 @@ export const log = new class Logger {
   private format({ ascii=true, trace=false, error=false }, msg) {
     let diff = ''
     if (trace) {
-      const now = performance.now()
+      const now = Date.now()
       if (this.timestamp) diff = `+${now - this.timestamp} `
       this.timestamp = now
     }
@@ -111,9 +111,9 @@ export const log = new class Logger {
   }
 
   public async timed(msg: string, code: () => void | Promise<void>) {
-    const start = performance.now()
+    const start = Date.now()
     await code()
-    this.debug(msg, 'took', performance.now() - start, 'ms')
+    this.debug(msg, 'took', Date.now() - start, 'ms')
   }
 
   public dump(msg: string) {
