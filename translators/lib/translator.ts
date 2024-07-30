@@ -34,16 +34,19 @@ export class Items {
 
   constructor(items?: CacheableItem[]) {
     if (items) {
+      trace('items: preloaded')
       this.items = items
       for (const item of items) {
         this.map[item.itemID] = this.map[item.itemKey] = item
       }
     }
     else {
+      trace('items: loading')
       let item: CacheableItem
       while (item = Zotero.nextItem()) {
         this.items.push(this.map[item.itemID] = this.map[item.itemKey] = item)
       }
+      trace('items: loaded')
     }
 
     this.items.sort((a: any, b: any) => a.itemID - b.itemID)

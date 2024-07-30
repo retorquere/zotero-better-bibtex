@@ -102,7 +102,7 @@ class Running {
       this.cache = cache
       trace('cache: load')
       const { items, context } = await cache.load(path)
-      trace('cache: load done')
+      trace(`cache: load done, ${items.size} items`)
       this.items = items
       this.context = context
     }
