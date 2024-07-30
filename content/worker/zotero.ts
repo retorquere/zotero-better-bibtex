@@ -400,7 +400,9 @@ class WorkerZotero {
     TranslationWorker.job.preferences.client = client
     this.output = ''
 
+    trace('cache: load serialized')
     this.items = await Cache.ZoteroSerialized.get(TranslationWorker.job.data.items)
+    trace('cache: serialized loaded')
 
     if (TranslationWorker.job.options.exportFileData) {
       for (const item of this.items) {

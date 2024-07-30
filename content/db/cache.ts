@@ -100,9 +100,9 @@ class Running {
     Cache.export = this
     if (cache) {
       this.cache = cache
-      trace('cache: load')
+      trace('export cache: load')
       const { items, context } = await cache.load(path)
-      trace(`cache: load done, ${items.size} items`)
+      trace(`export cache: load done, ${items.size} items`)
       this.items = items
       this.context = context
     }
@@ -179,6 +179,7 @@ export class ExportCache {
     let context: number
     const items: Map<number, ExportedItem> = new Map
 
+    trace(`${this.name} load: get export context`)
     try {
       const store = tx.objectStore('ExportContext')
       const index = store.index('context')
@@ -188,18 +189,24 @@ export class ExportCache {
     catch (err) {
       return { context, items }
     }
+    trace(`${this.name} load: export context = ${context}`)
 
     try {
+      trace(`${this.name} load`)
       const store = tx.objectStore(this.name)
       const index = store.index('context')
-      for (const entry of (await index.getAll(context))) {
+      const all = await index.getAll(context)
+      trace(`${this.name} loaded`)
+      for (const entry of all) {
         items.set(entry.itemID, entry)
       }
+      trace(`${this.name} mapped`)
     }
     catch (err) {
       return { context, items }
     }
 
+    trace(`${this.name} returned`)
     return { context, items }
   }
 
@@ -257,12 +264,14 @@ class ZoteroSerialized {
   }
 
   public async get(ids: number[]): Promise<Serialized[]> {
+    trace(`serialized: ${ids.length} items`)
     const tx = this.db.transaction('ZoteroSerialized', 'readonly')
-    const items: Serialized[] = (await Promise.all(ids.map(id => tx.store.get(id)))).filter(item => item)
+    const requested = new Set(ids)
+    const items: Serialized[] = (await tx.store.getAll()).filter(item => requested.has(item.itemID))
+    // const items: Serialized[] = (await Promise.all(ids.map(id => tx.store.get(id)))).filter(item => item)
     await tx.done
-    const fetched = new Set(items.map(item => item.itemID))
-    const missing = ids.filter(id => !fetched.has(id))
-    if (missing.length) log.error(`indexed: failed to fetch ${missing}`)
+
+    if (ids.length !== items.length) log.error(`indexed: failed to fetch ${ids.length - items.length} items`)
     return items
   }
 
