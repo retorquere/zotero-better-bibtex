@@ -48,7 +48,18 @@ export class Exporter {
     if (!this.postfix && this.translation.BetterTeX) this.postfix = new Postfix(this.translation.preferences.qualityReport)
 
     for (const item of this.translation.input.items.regular) {
+
       if (this.translation.output.body) this.translation.output.body += '\n'
+
+      if (typeof item.itemID !== 'number') item.$cacheable = false
+      if (item.$cacheable && this.translation.BetterTeX) {
+        let cached: ExportedItem = null
+        if (cached = Zotero.BetterBibTeX.Cache.fetch(item.itemID)) {
+          this.translation.output.body += cached.entry
+          this.postfix?.add(cached.metadata)
+          continue
+        }
+      }
 
       Object.assign(item, Extra.get(item.extra, 'zotero'))
       if (typeof item.itemID !== 'number') { // https://github.com/diegodlh/zotero-cita/issues/145
@@ -60,15 +71,6 @@ export class Exporter {
       this.citekeys[item.citationKey] = (this.citekeys[item.citationKey] || 0) + 1
 
       this.jabref.citekeys.set(item.itemID, item.citationKey)
-
-      let cached: ExportedItem = null
-      if (item.$cacheable && this.translation.BetterTeX) {
-        if (cached = Zotero.BetterBibTeX.Cache.fetch(item.itemID)) {
-          this.translation.output.body += cached.entry
-          this.postfix?.add(cached.metadata)
-          continue
-        }
-      }
 
       simplifyForExport(item)
 

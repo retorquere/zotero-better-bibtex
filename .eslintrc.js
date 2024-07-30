@@ -46,7 +46,7 @@ config.rules['no-restricted-syntax'] = [
   { selector: "CallExpression[callee.object.name='Zotero'][callee.property.name='logError']", message: 'use of Zotero.logError is not allowed' },
   { selector: "CallExpression[callee.object.name='log'][callee.property.name='debug']", message: 'use of log.debug is not allowed' },
   { selector: "CallExpression[callee.object.name='log'][callee.property.name='dump']", message: 'use of log.dump is not allowed' },
-  { selector: "CallExpression[callee.object.name='log'][callee.property.name='trace']", message: 'use of log.trace is not allowed' },
+  { selector: "CallExpression[callee.name='trace']", message: 'use of trace is not allowed' },
 ]
 
 config.ignorePatterns = [

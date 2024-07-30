@@ -1,7 +1,7 @@
 import type { Serialized, Serializer } from '../item-export-format'
 import { bySlug } from '../../gen/translators'
 import { openDB, IDBPDatabase, DBSchema } from 'idb'
-import { log } from '../logger'
+import { trace, log } from '../logger'
 import version from '../../gen/version'
 import Deferred from 'p-defer'
 
@@ -92,6 +92,7 @@ class Running {
 
   public async load(cache: ExportCache, path: string) {
     if (Cache.export) {
+      trace('cache: waiting for previous export')
       log.error('overlapping export cache')
       await Cache.export.ready
     }
@@ -99,7 +100,9 @@ class Running {
     Cache.export = this
     if (cache) {
       this.cache = cache
+      trace('cache: load')
       const { items, context } = await cache.load(path)
+      trace('cache: load done')
       this.items = items
       this.context = context
     }
@@ -223,12 +226,12 @@ class ZoteroSerialized {
 
     let tx = this.db.transaction(['ZoteroSerialized', 'touched'], 'readwrite')
     let store = tx.objectStore('ZoteroSerialized')
+    const cached = new Set(await store.getAllKeys())
     const touched = tx.objectStore('touched')
     const purge = new Set(await touched.getAllKeys())
 
-    const cached: Record<number, boolean> = (await store.getAllKeys()).reduce((acc, key) => { acc[key] = true; return acc }, {})
     const fill = items.filter(item => {
-      if (item.id in cached) {
+      if (cached.has(item.id)) {
         if (purge.has(item.id)) {
           purge.delete(item.id)
         }

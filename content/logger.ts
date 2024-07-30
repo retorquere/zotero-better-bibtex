@@ -29,6 +29,10 @@ function $dump(msg: string, error? : Error): void {
   dump(format(msg, error) + '\n')
 }
 
+export function trace(msg: string, mode = ''): void {
+  dump(`trace${mode}\t${Date.now()}\t${msg}\n`)
+}
+
 export const simple = {
   info(msg: string): void {
     Zotero.debug(format(msg))
@@ -55,14 +59,7 @@ export const log = new class Logger {
   protected timestamp: number
   public prefix = ''
 
-  private format({ ascii=true, trace=false, error=false }, msg) {
-    let diff = ''
-    if (trace) {
-      const now = Date.now()
-      if (this.timestamp) diff = `+${now - this.timestamp} `
-      this.timestamp = now
-    }
-
+  private format({ ascii=true, error=false }, msg) {
     if (Array.isArray(msg)) msg = msg.map(toString).join(' ')
 
     let prefix = ''
@@ -74,7 +71,7 @@ export const log = new class Logger {
     if (error) prefix += ' error:'
     if (ascii) msg = asciify(msg)
 
-    return `{better-bibtex${this.prefix}${prefix}} ${diff}${msg}`
+    return `{better-bibtex${this.prefix}${prefix}} ${msg}`
   }
 
   public get enabled(): boolean {
@@ -95,15 +92,6 @@ export const log = new class Logger {
 
   public info(msg: string) {
     Zotero.debug(this.format({ ascii: false }, msg))
-  }
-
-  public trace(msg?: string) {
-    if (msg) {
-      Zotero.debug(this.format({ trace: true, ascii: false }, msg))
-    }
-    else {
-      this.timestamp = 0
-    }
   }
 
   public error(...msg) {

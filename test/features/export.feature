@@ -713,6 +713,12 @@ Feature: Export
     And I wait until Zotero is idle
     And an export using "Better BibTeX" with worker on should match "export/*.bibtex"
 
+    And I wait until Zotero is idle
+    And an export using "Better BibTeX" with worker on should match "export/*.bibtex"
+
+    And I wait until Zotero is idle
+    And an export using "Better BibTeX" with worker on should match "export/*.bibtex"
+
     # When I set preference .cache to false
     # Then an export using "Better BibTeX" with worker on should match "export/*.bibtex"
     # When I reset the cache

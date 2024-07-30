@@ -14,7 +14,7 @@ import type { Exporter as BibTeXExporter } from '../bibtex/exporter'
 import type { ZoteroItem } from '../bibtex/bibtex'
 import type { Translators } from '../../typings/translators.d.ts'
 import type { CharMap } from 'unicode2latex'
-import { simple as log } from '../../content/logger'
+import { trace, simple as log } from '../../content/logger'
 
 type CacheableItem = Item & { $cacheable: boolean }
 type CacheableRegularItem = RegularItem & { $cacheable: boolean }
@@ -62,15 +62,18 @@ export class Items {
   }
 
   *[Symbol.iterator](): Generator<CacheableItem, void, unknown> {
+    trace('items: start item delivery')
     for (const item of this.items) {
       yield item
     }
+    trace('items: end item delivery')
   }
 
   public get regular(): Generator<CacheableRegularItem, void, unknown> {
     return this._regular()
   }
   private *_regular(): Generator<CacheableRegularItem, void, unknown> {
+    trace('items: start item delivery')
     for (const item of this.items) {
       switch (item.itemType) {
         case 'annotation':
@@ -82,6 +85,7 @@ export class Items {
           yield (this.current = item) as unknown as CacheableRegularItem
       }
     }
+    trace('items: end item delivery')
   }
 }
 

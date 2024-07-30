@@ -130,7 +130,13 @@ export class TestSupport {
     else {
       scope = null
     }
-    return await Translators.exportItems({translatorID, displayOptions: displayOptions as Record<string, boolean>, scope, path})
+    const start = Date.now()
+    try {
+      return await Translators.exportItems({translatorID, displayOptions: displayOptions as Record<string, boolean>, scope, path})
+    }
+    finally {
+      log.info(`export: took ${Date.now() - start}`)
+    }
   }
 
   public async dumpCache(filename: string): Promise<void> {
