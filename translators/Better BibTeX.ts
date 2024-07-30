@@ -8,12 +8,10 @@ declare var ZOTERO_TRANSLATOR_INFO: Translators.Header // eslint-disable-line no
 
 export function doExport(): void {
   const translation = Translation.Export(ZOTERO_TRANSLATOR_INFO, collect())
-  const start = Date.now()
   Zotero.BetterBibTeX.generateBibTeX(translation)
   translation.saveAttachments()
   Zotero.write(translation.output.body)
   translation.erase()
-  Zotero.debug(`export: done @ ${Date.now() - start}`)
 }
 
 import * as escape from '../content/escape'

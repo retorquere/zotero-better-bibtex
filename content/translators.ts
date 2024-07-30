@@ -42,7 +42,7 @@ declare const ZOTERO_CONFIG: any
 import type { Translators as Translator } from '../typings/translators'
 import { Preference } from './prefs'
 import { affects, Preferences } from '../gen/preferences/meta'
-import { trace, log } from './logger'
+import { log } from './logger'
 import { flash } from './flash'
 import { Events } from './events'
 import { Pinger } from './ping'
@@ -243,12 +243,12 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
   }
 
   private async exportItemsByQueuedWorker(job: ExportJob): Promise<string> {
-    trace('exportItemsByQueuedWorker: requested')
+    // trace('exportItemsByQueuedWorker: requested')
     if (job.path && job.canceled) return ''
     await Zotero.BetterBibTeX.ready
     if (job.path && job.canceled) return ''
 
-    trace('exportItemsByQueuedWorker: preparing')
+    // trace('exportItemsByQueuedWorker: preparing')
     const displayOptions = {
       ...this.displayOptions(job.translatorID, job.displayOptions),
       exportPath: job.path || undefined,
@@ -371,9 +371,9 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       },
     })
 
-    trace('exportItemsByQueuedWorker: starting cache completion')
+    // trace('exportItemsByQueuedWorker: starting cache completion')
     await Cache.ZoteroSerialized.fill(items)
-    trace('exportItemsByQueuedWorker: cache completion completed')
+    // trace('exportItemsByQueuedWorker: cache completion completed')
 
     config.data.items = items.map(item => item.id)
     prepare.update()
@@ -390,7 +390,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
     prepare.done()
 
-    trace('exportItemsByQueuedWorker: prepare finished')
+    // trace('exportItemsByQueuedWorker: prepare finished')
     this.worker.postMessage({ kind: 'start', config })
 
     if (typeof job.timeout === 'number') {

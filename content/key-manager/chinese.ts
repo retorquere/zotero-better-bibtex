@@ -1,7 +1,6 @@
 import { Preference } from '../prefs'
 import { Events } from '../events'
 // import { CJK } from '../text'
-import { discard } from '../logger'
 
 declare const ChromeUtils: any
 
@@ -15,7 +14,6 @@ import type { jieba as jiebaFunc, pinyin as pinyinFunc } from './chinese-optiona
 export const chinese = new class {
   public window: Window
   public document: Document
-  public console = discard
 
   public jieba: typeof jiebaFunc
   public pinyin: typeof pinyinFunc

@@ -14,7 +14,7 @@ import type { Exporter as BibTeXExporter } from '../bibtex/exporter'
 import type { ZoteroItem } from '../bibtex/bibtex'
 import type { Translators } from '../../typings/translators.d.ts'
 import type { CharMap } from 'unicode2latex'
-import { trace, simple as log } from '../../content/logger'
+import { simple as log } from '../../content/logger'
 
 type CacheableItem = Item & { $cacheable: boolean }
 type CacheableRegularItem = RegularItem & { $cacheable: boolean }
@@ -34,19 +34,19 @@ export class Items {
 
   constructor(items?: CacheableItem[]) {
     if (items) {
-      trace('items: preloaded')
+      // trace('items: preloaded')
       this.items = items
       for (const item of items) {
         this.map[item.itemID] = this.map[item.itemKey] = item
       }
     }
     else {
-      trace('items: loading')
+      // trace('items: loading')
       let item: CacheableItem
       while (item = Zotero.nextItem()) {
         this.items.push(this.map[item.itemID] = this.map[item.itemKey] = item)
       }
-      trace('items: loaded')
+      // trace('items: loaded')
     }
 
     this.items.sort((a: any, b: any) => a.itemID - b.itemID)
@@ -65,18 +65,18 @@ export class Items {
   }
 
   *[Symbol.iterator](): Generator<CacheableItem, void, unknown> {
-    trace('items: start item delivery')
+    // trace('items: start item delivery')
     for (const item of this.items) {
       yield item
     }
-    trace('items: end item delivery')
+    // trace('items: end item delivery')
   }
 
   public get regular(): Generator<CacheableRegularItem, void, unknown> {
     return this._regular()
   }
   private *_regular(): Generator<CacheableRegularItem, void, unknown> {
-    trace('items: start item delivery')
+    // trace('items: start item delivery')
     for (const item of this.items) {
       switch (item.itemType) {
         case 'annotation':
@@ -88,7 +88,7 @@ export class Items {
           yield (this.current = item) as unknown as CacheableRegularItem
       }
     }
-    trace('items: end item delivery')
+    // trace('items: end item delivery')
   }
 }
 

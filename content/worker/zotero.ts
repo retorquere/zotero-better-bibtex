@@ -163,7 +163,7 @@ declare const doExport: () => void
 import * as DateParser from '../../content/dateparser'
 // import * as Extra from '../../content/extra'
 import itemCreators from '../../gen/items/creators.json'
-import { trace, log } from '../../content/logger'
+import { log } from '../../content/logger'
 import { Collection } from '../../gen/typings/serialized-item'
 // import { CSL_MAPPINGS } from '../../gen/items/items'
 
@@ -400,9 +400,9 @@ class WorkerZotero {
     TranslationWorker.job.preferences.client = client
     this.output = ''
 
-    trace('cache: load serialized')
+    // trace('cache: load serialized')
     this.items = await Cache.ZoteroSerialized.get(TranslationWorker.job.data.items)
-    trace('cache: serialized loaded')
+    // trace('cache: serialized loaded')
 
     if (TranslationWorker.job.options.exportFileData) {
       for (const item of this.items) {
@@ -498,7 +498,7 @@ export var Zotero = new WorkerZotero // eslint-disable-line @typescript-eslint/n
 ctx.onmessage = async function(e: { isTrusted?: boolean, data?: Translators.Worker.Message } ): Promise<void> { // eslint-disable-line prefer-arrow/prefer-arrow-functions
   if (!e.data) return // some kind of startup message
 
-  trace(`worker: ${e.data.kind}`)
+  // trace(`worker: ${e.data.kind}`)
   try {
     switch (e.data.kind) {
       case 'initialize':
@@ -506,18 +506,18 @@ ctx.onmessage = async function(e: { isTrusted?: boolean, data?: Translators.Work
         break
 
       case 'start':
-        trace('worker: starting')
+        // trace('worker: starting')
         TranslationWorker.job = e.data.config
 
         importScripts(`chrome://zotero-better-bibtex/content/resource/${TranslationWorker.job.translator}.js`)
-        trace('worker: loaded')
+        // trace('worker: loaded')
         try {
           if (!Cache.opened) await Cache.open()
-          trace('worker: cache opened')
+          // trace('worker: cache opened')
           await Cache.initExport(TranslationWorker.job.translator, TranslationWorker.job.autoExport || exportContext(TranslationWorker.job.translator, TranslationWorker.job.options))
-          trace('worker: cache loaded')
+          // trace('worker: cache loaded')
           await Zotero.start()
-          trace('worker: export done')
+          // trace('worker: export done')
           Zotero.send({ kind: 'done', output: Zotero.output })
         }
         catch (err) {

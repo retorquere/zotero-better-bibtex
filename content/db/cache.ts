@@ -1,7 +1,7 @@
 import type { Serialized, Serializer } from '../item-export-format'
 import { bySlug } from '../../gen/translators'
 import { openDB, IDBPDatabase, DBSchema } from 'idb'
-import { trace, log } from '../logger'
+import { log } from '../logger'
 import version from '../../gen/version'
 import Deferred from 'p-defer'
 
@@ -92,7 +92,7 @@ class Running {
 
   public async load(cache: ExportCache, path: string) {
     if (Cache.export) {
-      trace('cache: waiting for previous export')
+      // trace('cache: waiting for previous export')
       log.error('overlapping export cache')
       await Cache.export.ready
     }
@@ -100,9 +100,9 @@ class Running {
     Cache.export = this
     if (cache) {
       this.cache = cache
-      trace('export cache: load')
+      // trace('export cache: load')
       const { items, context } = await cache.load(path)
-      trace(`export cache: load done, ${items.size} items`)
+      // trace(`export cache: load done, ${items.size} items`)
       this.items = items
       this.context = context
     }
@@ -179,7 +179,7 @@ export class ExportCache {
     let context: number
     const items: Map<number, ExportedItem> = new Map
 
-    trace(`${this.name} load: get export context`)
+    // trace(`${this.name} load: get export context`)
     try {
       const store = tx.objectStore('ExportContext')
       const index = store.index('context')
@@ -189,24 +189,24 @@ export class ExportCache {
     catch (err) {
       return { context, items }
     }
-    trace(`${this.name} load: export context = ${context}`)
+    // trace(`${this.name} load: export context = ${context}`)
 
     try {
-      trace(`${this.name} load`)
+      // trace(`${this.name} load`)
       const store = tx.objectStore(this.name)
       const index = store.index('context')
       const all = await index.getAll(context)
-      trace(`${this.name} loaded`)
+      // trace(`${this.name} loaded`)
       for (const entry of all) {
         items.set(entry.itemID, entry)
       }
-      trace(`${this.name} mapped`)
+      // trace(`${this.name} mapped`)
     }
     catch (err) {
       return { context, items }
     }
 
-    trace(`${this.name} returned`)
+    // trace(`${this.name} returned`)
     return { context, items }
   }
 
@@ -264,7 +264,7 @@ class ZoteroSerialized {
   }
 
   public async get(ids: number[]): Promise<Serialized[]> {
-    trace(`serialized: ${ids.length} items`)
+    // trace(`serialized: ${ids.length} items`)
     const tx = this.db.transaction('ZoteroSerialized', 'readonly')
     const requested = new Set(ids)
     const items: Serialized[] = (await tx.store.getAll()).filter(item => requested.has(item.itemID))
