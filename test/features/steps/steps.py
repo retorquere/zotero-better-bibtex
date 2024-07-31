@@ -106,29 +106,13 @@ def step_impl(context, pref, value):
     value = expand_scenario_variables(context, value)
   context.zotero.preferences[pref] = value
 
-@step(r'I restart Zotero with "{db}" + "{source}"')
-def step_impl(context, db, source):
-  source = expand_scenario_variables(context, source)
-  context.imported = source
-
-  with open(os.path.join(ROOT, 'test', 'fixtures', source)) as f:
-    data = json.load(f)
-    items = data['items']
-    #references = sum([ 1 + len(item.get('attachments', [])) + len(item.get('notes', [])) for item in items ])
-    references = len(items)
-
-  context.zotero.restart(timeout=context.timeout, db=db)
-  assert_that(context.zotero.execute('return await Zotero.BetterBibTeX.TestSupport.librarySize()'), equal_to(references))
-
-  # import preferences
-  context.zotero.import_file(context, source, items=False)
-
-  # check import
-  export_library(context, expected = source)
-
 @step(r'I restart Zotero with "{db}"')
 def step_impl(context, db):
   context.zotero.restart(timeout=context.timeout, db=db)
+
+@step(r'I select the library named {library}')
+def step_impl(context, library):
+  context.zotero.execute('await Zotero.BetterBibTeX.TestSupport.selectLibrary(library)', library = json.loads(library))
 
 @step(r'I restart Zotero with profile "{profile}"')
 def step_impl(context, profile):

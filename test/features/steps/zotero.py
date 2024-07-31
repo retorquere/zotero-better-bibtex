@@ -711,15 +711,15 @@ class Zotero:
       shutil.copy(db_bbt, os.path.join(profile.path, self.client, os.path.basename(db_bbt)))
 
       # remove any auto-exports that may exist
-      db = sqlite3.connect(os.path.join(profile.path, self.client, os.path.basename(db_bbt)))
-      ae = None
-      for (ae,) in db.execute('SELECT data FROM "better-bibtex" WHERE name = ?', [ 'better-bibtex.autoexport' ]):
-        ae = json.loads(ae)
-        ae['data'] = []
-      if ae:
-        db.execute('UPDATE "better-bibtex" SET data = ? WHERE name = ?', [ json.dumps(ae), 'better-bibtex.autoexport' ])
-        db.commit()
-      db.close()
+      # db = sqlite3.connect(os.path.join(profile.path, self.client, os.path.basename(db_bbt)))
+      # ae = None
+      # for (ae,) in db.execute('SELECT data FROM "better-bibtex" WHERE name = ?', [ 'better-bibtex.autoexport' ]):
+        # ae = json.loads(ae)
+        # ae['data'] = []
+      # if ae:
+        # db.execute('UPDATE "better-bibtex" SET data = ? WHERE name = ?', [ json.dumps(ae), 'better-bibtex.autoexport' ])
+        # db.commit()
+      # db.close()
 
     return profile
 
