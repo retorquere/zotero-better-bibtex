@@ -58,10 +58,7 @@ export abstract class CSLExporter {
 
   public doExport(): void {
     const items = []
-    const order: { citationKey: string, i: number}[] = []
     for (const item of (this.translation.input.items.regular as Generator<ExtendedItem, void, unknown>)) {
-      order.push({ citationKey: item.citationKey, i: items.length })
-
       let cached: ExportedItem
       if (!this.translation.options.custom && (cached = Zotero.BetterBibTeX.Cache.fetch(item.itemID))) {
         items.push(cached.entry)
@@ -197,8 +194,7 @@ export abstract class CSLExporter {
       if (allow.write) items.push(csl)
     }
 
-    order.sort((a, b) => a.citationKey.localeCompare(b.citationKey, undefined, { sensitivity: 'base' }))
-    this.translation.output.body += this.flush(order.map(o => items[o.i]))
+    this.translation.output.body += this.flush(items)
   }
 
   public keySort(a: string, b: string): number {
