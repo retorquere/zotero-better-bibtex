@@ -265,10 +265,15 @@ class ZoteroSerialized {
 
   public async get(ids: number[]): Promise<Serialized[]> {
     // trace(`serialized: ${ids.length} items`)
+    let items: Serialized[]
     const tx = this.db.transaction('ZoteroSerialized', 'readonly')
-    const requested = new Set(ids)
-    const items: Serialized[] = (await tx.store.getAll()).filter(item => requested.has(item.itemID))
-    // const items: Serialized[] = (await Promise.all(ids.map(id => tx.store.get(id)))).filter(item => item)
+    if (Zotero.isWin && !is7) {
+      items = (await Promise.all(ids.map(id => tx.store.get(id)))).filter(item => item)
+    }
+    else {
+      const requested = new Set(ids)
+      items = (await tx.store.getAll()).filter(item => requested.has(item.itemID))
+    }
     await tx.done
 
     if (ids.length !== items.length) log.error(`indexed: failed to fetch ${ids.length - items.length} items`)
