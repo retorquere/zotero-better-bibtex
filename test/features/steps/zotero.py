@@ -33,7 +33,7 @@ from collections.abc import MutableMapping
 import sys
 import threading
 import socket
-from pathlib import PurePath
+from pathlib import PurePath, Path
 from diff_match_patch import diff_match_patch
 from pygit2 import Repository
 from lxml import etree
@@ -179,6 +179,89 @@ class Config:
 
   def __str__(self):
     return str(self.data)
+
+class LibraryLoader:
+  def __init__(self, path=None, body=None, client=None, ext=None):
+    if path:
+      path = os.path.join(FIXTURES, path)
+
+    if path:
+      self.ext = self.suffix(path)
+    elif ext:
+      if type(ext) == LibraryLoader:
+        self.ext = self.suffix(ext.path)
+      else:
+        self.ext = self.suffix(ext)
+    else:
+      self.ext = None
+
+    if path is None and body is None:
+      raise ValueError('need something to work with')
+
+    utils.print(f'** loading {path}, {"no " if body is None else ""}body provided, {self.ext} ***')
+
+    self.base = path
+    self.body = body
+    self.client = client
+
+    self.data = None
+    self.patch = None
+    self.path = None
+    self.normalized = self.body
+
+    if self.base:
+      self.patch = self.base + '.' + self.client + '.patch'
+      self.path = self.base
+
+      if os.path.exists(self.patch):
+        self.path = self.base[:-len(self.ext)] + '.' + self.client + self.ext
+      else:
+        self.patch = None
+
+    if not self.body and self.base and os.path.exists(self.base):
+      with open(self.base) as f:
+        self.body = f.read()
+
+    if self.body and self.ext:
+      #if self.base and not os.path.exists(self.base):
+      #  with open(self.base, 'w') as f:
+      #    f.write(self.body)
+
+      if self.ext.endswith('.json') or self.ext == '.csl.yaml':
+        if self.ext.endswith('.json'):
+          self.data = json.loads(self.body, object_pairs_hook=OrderedDict)
+        else:
+          self.data = yaml.load(io.StringIO(self.body))
+        if self.patch:
+          self.data = jsonpatch.JsonPatch(json.load(f)).apply(self.data)
+        if self.ext in ['.csl.json', '.csl.yaml']:
+          self.data = sorted(self.data, key=lambda item: json.dumps(item, sort_keys=True))
+        self.normalized = json.dumps(self.data, indent=2, ensure_ascii=True, sort_keys=True)
+
+      elif self.ext in ['.biblatex', '.bibtex', '.bib']:
+        if self.patch:
+          dmp = diff_match_patch()
+          self.body = dmp.patch_apply(dmp.patch_fromText(open(self.patch).read()), self.data)[0]
+        self.normalized = sortbib(self.body)
+
+      elif self.ext == '.html':
+        self.normalized = clean_html(self.body).strip()
+
+  def suffix(self, path):
+    return ''.join(Path(path).suffixes)
+
+  def save(self):
+    if self.body and self.path:
+      self.exported = os.path.join(EXPORTED, os.path.basename(os.path.dirname(self.path)), os.path.basename(self.path))
+      with open(self.exported, 'w') as f:
+        f.write(self.body)
+
+  def clean(self):
+    if self.exported:
+      os.remove(self.exported)
+      exdir = os.path.dirname(self.exported)
+      if len(os.listdir(exdir)) == 0:
+        os.rmdir(exdir)
 
 class Zotero:
   def __init__(self, userdata):
@@ -371,66 +454,13 @@ class Zotero:
   def reset_cache(self):
     self.execute('await Zotero.BetterBibTeX.TestSupport.resetCache()')
 
-  def load(self, path, attempt_patch=False):
-    path = os.path.join(FIXTURES, path)
-
-    with open(path) as f:
-      if path.endswith('.json'):
-        data = json.load(f, object_pairs_hook=OrderedDict)
-      elif path.endswith('.yml'):
-        data = yaml.load(f)
-      else:
-        data = f.read()
-
-    patch = path + '.' + self.client + '.patch'
-
-    if not attempt_patch or not os.path.exists(patch):
-      loaded = path
-    else:
-      for ext in ['.schomd.json', '.csl.json', os.path.splitext(path)[1]]:
-        if path.endswith(ext):
-          loaded = path[:-len(ext)] + '.' + self.client + ext
-          break
-
-      if path.endswith('.json') or path.endswith('.yml'):
-        with open(patch) as f:
-          data = jsonpatch.JsonPatch(json.load(f)).apply(data)
-      else:
-        with open(patch) as f:
-          dmp = diff_match_patch()
-          data = dmp.patch_apply(dmp.patch_fromText(f.read()), data)[0]
-
-#    if path.endswith('.json') and not (path.endswith('.csl.json') or path.endswith('.schomd.json')):
-#      validate_bbt_json(data)
-
-    return (data, loaded)
-
-  def exported(self, path, data=None):
-    path = os.path.join(EXPORTED, os.path.basename(os.path.dirname(path)), os.path.basename(path))
-
-    if data is None:
-      os.remove(path)
-      exdir = os.path.dirname(path)
-      if len(os.listdir(exdir)) == 0:
-        os.rmdir(exdir)
-    else:
-      os.makedirs(os.path.dirname(path), exist_ok = True)
-
-      with open(path, 'w') as f:
-        f.write(data)
-
-    return path
-
   def quick_copy(self, itemIDs, translator, expected):
     found = self.execute('return await Zotero.BetterBibTeX.TestSupport.quickCopy(itemIDs, translator)',
       translator=translator,
       itemIDs=itemIDs
     )
-    expected_file = expected
-    expected, loaded_file = self.load(expected_file, True)
-    exported = self.exported(loaded_file, found)
-    assert_equal_diff(expected, found.strip())
-    self.exported(exported)
+    expected = LibraryLoader(path=expected, client=self.client)
+    assert_equal_diff(expected.body, found.strip())
 
   def export_library(self, translator, displayOptions = {}, collection = None, output = None, expected = None, resetCache = False):
     assert not displayOptions.get('keepUpdated', False) or output # Auto-export needs a destination
@@ -460,27 +490,18 @@ class Zotero:
 
     if expected is None: return
 
-    if output:
-      with open(output) as f:
-        found = f.read()
+    expected = LibraryLoader(path=expected, client=self.client)
+    found = LibraryLoader(path=output, body=found, client=self.client, ext=expected)
+    found.save()
 
-    expected_file = expected
-    expected, loaded_file = self.load(expected_file, True)
-    exported = self.exported(loaded_file, found)
+    if expected.path.endswith('.csl.json') or expected.path.endswith('.csl.yml') or Path(expected.path).suffix in ['.html', '.bib', '.bibtex', '.biblatex']:
+      assert_equal_diff(expected.normalized, found.normalized)
 
-    if expected_file.endswith('.csl.json'):
-      expected = sorted(expected, key=lambda item: json.dumps(item, sort_keys=True))
-      found = sorted(json.loads(found), key=lambda item: json.dumps(item, sort_keys=True))
-      assert_equal_diff(json.dumps(expected, sort_keys=True, indent='  '), json.dumps(found, sort_keys=True, indent='  '))
-
-    elif expected_file.endswith('.csl.yml'):
-      assert_equal_diff(serialize(expected), serialize(yaml.load(io.StringIO(found))))
-
-    elif expected_file.endswith('.json'):
+    elif expected.path.endswith('.json'):
       # TODO: clean lib and test against schema
 
-      expected = Library(expected)
-      found = Library(json.loads(found, object_pairs_hook=OrderedDict))
+      expected = Library(expected.data)
+      found = Library(found.data)
 
       def summary(items):
         return [(item['itemType'], item.get('title', '')) for item in items['items']]
@@ -498,22 +519,19 @@ class Zotero:
 
       assert_equal_diff(serialize(extra_lower(libsort(expected))), serialize(extra_lower(libsort(found))))
 
-    elif expected_file.endswith('.html'):
-      assert_equal_diff(clean_html(expected).strip(), clean_html(found).strip())
-
     else:
-      assert_equal_diff(sortbib(expected), sortbib(found))
+      raise ValueError('how did we get here?')
 
-    self.exported(exported)
+    found.cleanup()
 
   def import_file(self, context, references, collection = False, items=True):
     assert type(collection) in [bool, str]
 
-    data, references = self.load(references)
+    input = LibraryLoader(path=references, client=self.client)
 
-    if references.endswith('.json'):
+    if input.path.endswith('.json'):
       # TODO: clean lib and test against schema
-      config = data.get('config', {})
+      config = input.data.get('config', {})
       preferences = config.get('preferences', {})
       localeDateOrder = config.get('localeDateOrder', None)
 
@@ -533,16 +551,17 @@ class Zotero:
       for k, v in preferences.items():
         assert self.preferences.prefix + k in self.preferences.supported, f'Unsupported preference "{k}"'
         assert type(v) == self.preferences.supported[self.preferences.prefix + k], f'Value for preference {k} has unexpected type {type(v)}'
-      for item in data['items']:
+      for item in input.data['items']:
         for att in item.get('attachments') or []:
           if path := att.get('path'):
-            path = os.path.join(os.path.dirname(references), path)
+            path = os.path.join(os.path.dirname(input.path), path)
             assert os.path.exists(path), f'attachment {path} does not exist'
     else:
       preferences = None
       localeDateOrder = None
 
     with tempfile.TemporaryDirectory() as d:
+      references = input.path
       if type(collection) is str:
         orig = references
         references = os.path.join(d, collection)
