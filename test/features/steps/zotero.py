@@ -198,7 +198,6 @@ class LibraryLoader:
     if path is None and body is None:
       raise ValueError('need something to work with')
 
-    utils.print(f'** loading {path}, {"no " if body is None else ""}body provided, {self.ext} ***')
 
     self.base = path
     self.body = body
@@ -207,7 +206,7 @@ class LibraryLoader:
     self.data = None
     self.patch = None
     self.path = None
-    self.normalized = self.body
+    self.exported = None
 
     if self.base:
       self.patch = self.base + '.' + self.client + '.patch'
@@ -222,21 +221,31 @@ class LibraryLoader:
       with open(self.base) as f:
         self.body = f.read()
 
+    self.normalized = self.body
+
     if self.body and self.ext:
       #if self.base and not os.path.exists(self.base):
       #  with open(self.base, 'w') as f:
       #    f.write(self.body)
 
-      if self.ext.endswith('.json') or self.ext == '.csl.yaml':
+      if self.ext.endswith('.json') or self.ext == '.csl.yml':
         if self.ext.endswith('.json'):
           self.data = json.loads(self.body, object_pairs_hook=OrderedDict)
         else:
           self.data = yaml.load(io.StringIO(self.body))
+
         if self.patch:
           self.data = jsonpatch.JsonPatch(json.load(f)).apply(self.data)
-        if self.ext in ['.csl.json', '.csl.yaml']:
+
+        if self.ext in ['.csl.json', '.csl.yml']:
           self.data = sorted(self.data, key=lambda item: json.dumps(item, sort_keys=True))
-        self.normalized = json.dumps(self.data, indent=2, ensure_ascii=True, sort_keys=True)
+          self.normalized = json.dumps(self.data, indent=2, ensure_ascii=True, sort_keys=True)
+
+          if self.ext == '.csl.yml':
+            normalized = io.StringIO()
+            # re-use the key sorting from json dumps
+            yaml.dump(json.loads(self.normalized), normalized)
+            self.normalized = normalized.getvalue()
 
       elif self.ext in ['.biblatex', '.bibtex', '.bib']:
         if self.patch:
@@ -494,7 +503,7 @@ class Zotero:
     found = LibraryLoader(path=output, body=found, client=self.client, ext=expected)
     found.save()
 
-    if expected.path.endswith('.csl.json') or expected.path.endswith('.csl.yml') or Path(expected.path).suffix in ['.html', '.bib', '.bibtex', '.biblatex']:
+    if expected.ext in ['.csl.json', '.csl.yml', '.html', '.bib', '.bibtex', '.biblatex']:
       assert_equal_diff(expected.normalized, found.normalized)
 
     elif expected.path.endswith('.json'):
@@ -522,7 +531,7 @@ class Zotero:
     else:
       raise ValueError('how did we get here?')
 
-    found.cleanup()
+    found.clean()
 
   def import_file(self, context, references, collection = False, items=True):
     assert type(collection) in [bool, str]
