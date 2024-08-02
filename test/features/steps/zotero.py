@@ -195,10 +195,6 @@ class LibraryLoader:
     else:
       self.ext = None
 
-    if path is None and body is None:
-      raise ValueError('need something to work with')
-
-
     self.base = path
     self.body = body
     self.client = client
@@ -256,8 +252,18 @@ class LibraryLoader:
       elif self.ext == '.html':
         self.normalized = clean_html(self.body).strip()
 
+    if self.normalized is None or self.ext is None:
+      raise ValueError('need something to work with')
+
   def suffix(self, path):
-    return ''.join(Path(path).suffixes)
+    suffixes = Path(path).suffixes
+    if suffixes[-1] == 'yaml':
+      raise ValueError(f'Use yml, not yaml, in {path}')
+
+    if len(suffixes) >= 2 and suffixes[-2] == '.csl' and suffixes[-1] in ['json', 'yml']:
+      return ''.join(suffixes[-2:])
+
+    return suffixes[-1]
 
   def save(self):
     if self.body and self.path:
@@ -529,7 +535,7 @@ class Zotero:
       assert_equal_diff(serialize(extra_lower(libsort(expected))), serialize(extra_lower(libsort(found))))
 
     else:
-      raise ValueError('how did we get here?')
+      raise ValueError(f'how did we get here? {expected.ext}')
 
     found.clean()
 
