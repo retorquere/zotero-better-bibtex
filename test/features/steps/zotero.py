@@ -1,3 +1,4 @@
+import copy
 import bs4
 import sqlite3
 import uuid
@@ -246,9 +247,8 @@ class Library:
           self.normalized = normalized.getvalue()
 
       elif self.ext == '.json':
-        cleanlib(self.data)
         self.data['items'] = sorted(self.data['items'], key=lambda item: json.dumps(item, sort_keys=True))
-        self.normalized = json.dumps(self.data, indent=2, ensure_ascii=True, sort_keys=True)
+        self.normalized = json.dumps(cleanlib(copy.deepcopy(self.data)), indent=2, ensure_ascii=True, sort_keys=True)
 
     elif self.ext in ['.biblatex', '.bibtex', '.bib']:
       if self.patch:
@@ -590,6 +590,7 @@ class Zotero:
 
       filename = references
       if not items: filename = None
+      utils.print(f'importing with {json.dumps(preferences)}')
       return self.execute('return await Zotero.BetterBibTeX.TestSupport.importFile(filename, createNewCollection, preferences, localeDateOrder)',
         filename = filename,
         createNewCollection = (collection != False),
