@@ -1,17 +1,6 @@
-
-@online{00002100002400,
-  title = {0000-21/0000-24},
-  date = {0000-21/0000-24}
-}
-
 @online{001121001222-11,
   title = {-0011-21/-0012-22},
   date = {-0011-21/-0012-22}
-}
-
-@online{00112100122211,
-  title = {0011-21/0012-22},
-  date = {0011-21/0012-22}
 }
 
 @online{201121201222-2011,
@@ -19,16 +8,24 @@
   date = {-2011-21/-2012-22}
 }
 
-@online{MonthsOutRange2017,
+@online{00002100002400,
+  title = {0000-21/0000-24},
+  date = {0000-21/0000-24}
+}
+
+@online{00112100122211,
+  title = {0011-21/0012-22},
+  date = {0011-21/0012-22}
+}
+
+@online{monthsoutrange2017,
   title = {Months out of Range},
   date = {2017-22/2017-23},
   origdate = {2017-14/2017-99}
 }
 
-@online{SeasonRangesEDTF2017,
+@online{SeasonrangesEDTF2017,
   title = {Season Ranges: {{EDTF}} and Literal},
   date = {2017-23/2017-24},
   origdate = {2015-21/2016-22}
 }
-
-
