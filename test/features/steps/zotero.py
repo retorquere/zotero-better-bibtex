@@ -219,41 +219,40 @@ class LibraryLoader:
 
     self.normalized = self.body
 
-    if self.body and self.ext:
-      #if self.base and not os.path.exists(self.base):
-      #  with open(self.base, 'w') as f:
-      #    f.write(self.body)
-
-      if self.ext.endswith('.json') or self.ext == '.csl.yml':
-        if self.ext.endswith('.json'):
-          self.data = json.loads(self.body, object_pairs_hook=OrderedDict)
-        else:
-          self.data = yaml.load(io.StringIO(self.body))
-
-        if self.patch:
-          self.data = jsonpatch.JsonPatch(json.load(f)).apply(self.data)
-
-        if self.ext in ['.csl.json', '.csl.yml']:
-          self.data = sorted(self.data, key=lambda item: json.dumps(item, sort_keys=True))
-          self.normalized = json.dumps(self.data, indent=2, ensure_ascii=True, sort_keys=True)
-
-          if self.ext == '.csl.yml':
-            normalized = io.StringIO()
-            # re-use the key sorting from json dumps
-            yaml.dump(json.loads(self.normalized), normalized)
-            self.normalized = normalized.getvalue()
-
-      elif self.ext in ['.biblatex', '.bibtex', '.bib']:
-        if self.patch:
-          dmp = diff_match_patch()
-          self.body = dmp.patch_apply(dmp.patch_fromText(open(self.patch).read()), self.data)[0]
-        self.normalized = sortbib(self.body)
-
-      elif self.ext == '.html':
-        self.normalized = clean_html(self.body).strip()
-
     if self.normalized is None or self.ext is None:
       raise ValueError('need something to work with')
+
+    #if self.base and not os.path.exists(self.base):
+    #  with open(self.base, 'w') as f:
+    #    f.write(self.body)
+
+    if self.ext.endswith('.json') or self.ext == '.csl.yml':
+      if self.ext.endswith('.json'):
+        self.data = json.loads(self.body, object_pairs_hook=OrderedDict)
+      else:
+        self.data = yaml.load(io.StringIO(self.body))
+
+      if self.patch:
+        self.data = jsonpatch.JsonPatch(json.load(f)).apply(self.data)
+
+      if self.ext in ['.csl.json', '.csl.yml']:
+        self.data = sorted(self.data, key=lambda item: json.dumps(item, sort_keys=True))
+        self.normalized = json.dumps(self.data, indent=2, ensure_ascii=True, sort_keys=True)
+
+        if self.ext == '.csl.yml':
+          normalized = io.StringIO()
+          # re-use the key sorting from json dumps
+          yaml.dump(json.loads(self.normalized), normalized)
+          self.normalized = normalized.getvalue()
+
+    elif self.ext in ['.biblatex', '.bibtex', '.bib']:
+      if self.patch:
+        dmp = diff_match_patch()
+        self.body = dmp.patch_apply(dmp.patch_fromText(open(self.patch).read()), self.data)[0]
+      self.normalized = sortbib(self.body)
+
+    elif self.ext == '.html':
+      self.normalized = clean_html(self.body).strip()
 
   def suffix(self, path):
     suffixes = Path(path).suffixes
