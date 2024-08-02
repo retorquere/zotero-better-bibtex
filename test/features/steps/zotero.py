@@ -524,9 +524,6 @@ class Zotero:
       assert len(expected.data['items']) == len(found.data['items']), f"found {len(found.data['items'])}, expected {len(expected.data['items'])}, {summary(found.data)}, {summary(expected.data)}"
       assert_equal_diff(expected.normalized, found.normalized)
 
-    else:
-      raise ValueError(f'how did we get here? {expected.ext}')
-
     found.clean()
 
   def import_file(self, context, references, collection = False, items=True):
@@ -590,7 +587,6 @@ class Zotero:
 
       filename = references
       if not items: filename = None
-      utils.print(f'importing with {json.dumps(preferences)}')
       return self.execute('return await Zotero.BetterBibTeX.TestSupport.importFile(filename, createNewCollection, preferences, localeDateOrder)',
         filename = filename,
         createNewCollection = (collection != False),
