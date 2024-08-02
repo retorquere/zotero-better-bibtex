@@ -135,7 +135,7 @@ export class TestSupport {
       return await Translators.exportItems({translatorID, displayOptions: displayOptions as Record<string, boolean>, scope, path})
     }
     finally {
-      log.info(`export: took ${Date.now() - start}`)
+      log.info(`performance: ${translatorID} export took ${Date.now() - start}`)
     }
   }
 
