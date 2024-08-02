@@ -13,8 +13,8 @@ import urllib
 import requests
 import tempfile
 from munch import *
-from steps.utils import running, nested_dict_iter, benchmark, ROOT, assert_equal_diff, serialize, html2md, clean_html, extra_lower
-from steps.library import load as Library, sortbib
+from steps.utils import running, nested_dict_iter, benchmark, ROOT, assert_equal_diff, serialize, html2md, clean_html
+from steps.library import load as cleanlib, sortbib
 import steps.utils as utils
 import shutil
 import shlex
@@ -180,7 +180,7 @@ class Config:
   def __str__(self):
     return str(self.data)
 
-class LibraryLoader:
+class Library:
   def __init__(self, path=None, body=None, client=None, ext=None):
     if path:
       path = os.path.join(FIXTURES, path)
@@ -188,7 +188,7 @@ class LibraryLoader:
     if path:
       self.ext = self.suffix(path)
     elif ext:
-      if type(ext) == LibraryLoader:
+      if type(ext) == Library:
         self.ext = self.suffix(ext.path)
       else:
         self.ext = self.suffix(ext)
@@ -245,6 +245,11 @@ class LibraryLoader:
           yaml.dump(json.loads(self.normalized), normalized)
           self.normalized = normalized.getvalue()
 
+      elif self.ext == '.json':
+        cleanlib(self.data)
+        self.data['items'] = sorted(self.data['items'], key=lambda item: json.dumps(item, sort_keys=True))
+        self.normalized = json.dumps(self.data, indent=2, ensure_ascii=True, sort_keys=True)
+
     elif self.ext in ['.biblatex', '.bibtex', '.bib']:
       if self.patch:
         dmp = diff_match_patch()
@@ -256,19 +261,19 @@ class LibraryLoader:
 
   def suffix(self, path):
     suffixes = Path(path).suffixes
-    if suffixes[-1] == 'yaml':
-      raise ValueError(f'Use yml, not yaml, in {path}')
+    if suffixes[-1] == '.yaml':
+      raise ValueError(f'Use .yml, not .yaml, in {path}')
 
-    if len(suffixes) >= 2 and suffixes[-2] == '.csl' and suffixes[-1] in ['json', 'yml']:
+    if len(suffixes) >= 2 and suffixes[-2] == '.csl' and suffixes[-1] in ['.json', '.yml']:
       return ''.join(suffixes[-2:])
 
     return suffixes[-1]
 
-  def save(self):
-    if self.body and self.path:
-      self.exported = os.path.join(EXPORTED, os.path.basename(os.path.dirname(self.path)), os.path.basename(self.path))
-      with open(self.exported, 'w') as f:
-        f.write(self.body)
+  def save(self, path):
+    self.exported = os.path.join(EXPORTED, os.path.basename(os.path.dirname(path)), os.path.basename(path))
+    Path(self.exported).parent.mkdir(parents=True, exist_ok=True)
+    with open(self.exported, 'w') as f:
+      f.write(self.body)
 
   def clean(self):
     if self.exported:
@@ -473,7 +478,7 @@ class Zotero:
       translator=translator,
       itemIDs=itemIDs
     )
-    expected = LibraryLoader(path=expected, client=self.client)
+    expected = Library(path=expected, client=self.client)
     assert_equal_diff(expected.body, found.strip())
 
   def export_library(self, translator, displayOptions = {}, collection = None, output = None, expected = None, resetCache = False):
@@ -502,36 +507,22 @@ class Zotero:
     )
     if resetCache: self.execute('await Zotero.BetterBibTeX.TestSupport.resetCache()')
 
-    if expected is None: return
+    if expected is None:
+      utils.print('nothing expected')
+      return
 
-    expected = LibraryLoader(path=expected, client=self.client)
-    found = LibraryLoader(path=output, body=found, client=self.client, ext=expected)
-    found.save()
+    expected = Library(path=expected, client=self.client)
+    found = Library(path=output, body=found, client=self.client, ext=expected)
+    found.save(expected.path)
 
     if expected.ext in ['.csl.json', '.csl.yml', '.html', '.bib', '.bibtex', '.biblatex']:
       assert_equal_diff(expected.normalized, found.normalized)
 
     elif expected.path.endswith('.json'):
-      # TODO: clean lib and test against schema
-
-      expected = Library(expected.data)
-      found = Library(found.data)
-
       def summary(items):
         return [(item['itemType'], item.get('title', '')) for item in items['items']]
-      assert len(expected['items']) == len(found['items']), f"found {len(found['items'])}, expected {len(expected['items'])}, {summary(found)}, {summary(expected)}"
-
-      def itemkey(item):
-        match item['itemType']:
-          case 'note':
-            return [item['itemType'], item['note']]
-          case _:
-            return [item['itemType'], item.get('title', ''), item['citationKey']]
-      def libsort(lib):
-        # lib['items'] = sorted(lib['items'], key=itemkey)
-        return lib
-
-      assert_equal_diff(serialize(extra_lower(libsort(expected))), serialize(extra_lower(libsort(found))))
+      assert len(expected.data['items']) == len(found.data['items']), f"found {len(found.data['items'])}, expected {len(expected.data['items'])}, {summary(found.data)}, {summary(expected.data)}"
+      assert_equal_diff(expected.normalized, found.normalized)
 
     else:
       raise ValueError(f'how did we get here? {expected.ext}')
@@ -541,7 +532,7 @@ class Zotero:
   def import_file(self, context, references, collection = False, items=True):
     assert type(collection) in [bool, str]
 
-    input = LibraryLoader(path=references, client=self.client)
+    input = Library(path=references, client=self.client)
 
     if input.path.endswith('.json'):
       # TODO: clean lib and test against schema

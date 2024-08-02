@@ -19,13 +19,13 @@
   date = {-2011-21/-2012-22}
 }
 
-@online{monthsoutrange2017,
+@online{MonthsOutRange2017,
   title = {Months out of Range},
   date = {2017-22/2017-23},
   origdate = {2017-14/2017-99}
 }
 
-@online{SeasonrangesEDTF2017,
+@online{SeasonRangesEDTF2017,
   title = {Season Ranges: {{EDTF}} and Literal},
   date = {2017-23/2017-24},
   origdate = {2015-21/2016-22}
