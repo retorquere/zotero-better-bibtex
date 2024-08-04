@@ -11,7 +11,7 @@ import { Preference } from './prefs'
 import * as memory from './memory'
 import { is7 } from './client'
 import { Cache } from './db/cache'
-import { Bench } from 'tinybench'
+// import { Bench } from 'tinybench'
 
 import { Shim } from './os'
 const $OS = is7 ? Shim : OS
@@ -362,6 +362,7 @@ export class TestSupport {
     })
   }
 
+  /*
   async benchmark(tests: Array<{ translator: string, runs: number, cached?: boolean }>, _path?: string): Promise<Record<string, string | number>[]> {
     await Zotero.BetterBibTeX.ready
 
@@ -416,4 +417,5 @@ export class TestSupport {
       }
     })
   }
+  */
 }
