@@ -25,12 +25,12 @@ it.preferences.forEach(pref => {
   }
   if (pref.quoted_options) {
 -%>
-    if (!<%~ pref.quoted_options %>.includes(v)) throw new Error(`<%= pref.shortName %> must be one of <%~ pref.quoted_options %>, got '${v}'`)
+    if (!<%~ pref.quoted_options %>.includes(v)) throw new Error(`Preference <%= pref.shortName %> must be one of <%~ pref.quoted_options %>, got '${v}'`)
 <%
   }
   else {
 -%>
-    if (typeof v !== '<%= pref.type %>') throw new Error(`<%= pref.shortName %> must be of type <%= pref.type %>, got '${typeof v}'`)
+    if (typeof v !== '<%= pref.type %>') throw new Error(`Preference <%= pref.shortName %> must be of type <%= pref.type %>, got '${typeof v}'`)
 <%
   }
 -%>

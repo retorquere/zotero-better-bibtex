@@ -105,6 +105,7 @@ export async function startup({ resourceURI, rootURI = resourceURI.spec }, reaso
           IDBIndex: $window.IDBIndex,
           IDBCursor: $window.IDBCursor,
           IDBKeyRange: $window.IDBKeyRange,
+          Event: $window.Event,
         },
       })
 

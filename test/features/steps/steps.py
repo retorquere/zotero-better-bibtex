@@ -479,8 +479,8 @@ def step_impl(context, action, xpi):
 def step_impl(context):
   tests = []
   for row in context.table:
-    translator, cached, runs = row
-    tests.append({ 'translator': translator, 'cached': None if cached == '' else cached in [ 'true', 'yes' ], 'runs': int(runs) })
+    translator, cached = row
+    tests.append({ 'translator': translator, 'cached': None if cached == '' else cached in [ 'true', 'yes' ] })
   table = context.zotero.execute('return await Zotero.BetterBibTeX.TestSupport.benchmark(tests)', tests=tests)
   headers = table[0].keys()
   rows = [ [ row[h] for h in headers ] for row in table ]

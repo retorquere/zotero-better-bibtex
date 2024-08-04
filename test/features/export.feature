@@ -701,9 +701,11 @@ Feature: Export
     #When I import 86 references from "export/*.json"
     When I restart Zotero with "1287"
     When I benchmark the following exports:
-      | translator    | cached | runs |
-      | BibTeX        |        | 40   |
-      | Better BibTeX | yes    | 40   |
+      | translator      | cached |
+      | BibTeX          |        |
+      | Better BibTeX   | yes    |
+      # | CSL JSON        |        |
+      # | Better CSL JSON | yes    |
 
   # tests the cache
   @use.with_client=zotero @use.with_whopper=true @timeout=3000 @whopper

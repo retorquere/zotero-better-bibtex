@@ -11,6 +11,7 @@ import { Preference } from './prefs'
 import * as memory from './memory'
 import { is7 } from './client'
 import { Cache } from './db/cache'
+import { Bench } from 'tinybench'
 
 import { Shim } from './os'
 const $OS = is7 ? Shim : OS
@@ -364,6 +365,10 @@ export class TestSupport {
   async benchmark(tests: Array<{ translator: string, runs: number, cached?: boolean }>, _path?: string): Promise<Record<string, string | number>[]> {
     await Zotero.BetterBibTeX.ready
 
+    const bench = new Bench({
+      now: () => Date.now(),
+    })
+
     const stock = {
       'CSL JSON': 'bc03b4fe-436d-4a1f-ba59-de4d2d7a63f7',
       BibTeX: '9cb70025-a888-4a29-a210-93ec52da40d4',
@@ -371,34 +376,44 @@ export class TestSupport {
 
     const displayOptions = { worker: true }
 
-    const results: Record<string, string | number>[] = []
-    for (const { translator, runs, cached } of tests) {
-      let label = translator
-      if (typeof cached === 'boolean') label += `, ${cached ? '' : 'un'}cached`
+    const add = ({ translator, cached }: { translator: string, cached?: boolean }) => {
       const translatorID = Translators.byLabel[translator]?.translatorID || stock[translator]
+      const better = typeof cached === 'boolean'
 
-      if (typeof cached === 'boolean') {
+      const label = better ? `${translator}, ${cached ? '' : 'un'}cached` : translator
+
+      const beforeAll = !better ? undefined : async () => {
         Preference.cache = cached
         if (cached) {
           log.debug('bench: filling cache for', label)
+          await this.waitForIdle()
           await this.exportLibrary(translatorID, displayOptions)
           await this.exportLibrary(translatorID, displayOptions)
           await this.exportLibrary(translatorID, displayOptions)
         }
       }
 
-      let runtime = 0
-      for (const run of [...Array(runs).keys()]) {
-        log.debug('bench:', label, 'idle after', await this.waitForIdle(), 'ms')
-        const start = Date.now()
-        await this.exportLibrary(translatorID, displayOptions)
-        runtime += Date.now() - start
-        log.debug('bench:', label, runtime / (run + 1), 'ms')
+      const beforeEach = async () => {
+        await this.waitForIdle()
       }
 
-      results.push({ translator: label, 'runtime (ms)': runtime / runs })
+      bench.add(label, async () => { await this.exportLibrary(translatorID, displayOptions) }, { beforeAll, beforeEach })
     }
 
-    return results
+    for (const test of tests) {
+      add(test)
+    }
+
+    await bench.run()
+    return bench.tasks.map(task => {
+      if (!task.result) return null
+      return {
+        'Task Name': task.name,
+        'ops/sec': task.result.error ? 'NaN' : parseInt(task.result.hz.toString(), 10).toLocaleString(),
+        'Average Time (ms)': task.result.error ? 'NaN' : task.result.mean * 1000,
+        Margin: task.result.error ? 'NaN' : `\xb1${task.result.rme.toFixed(2)}%`,
+        Samples: task.result.error ? 'NaN' : task.result.samples.length,
+      }
+    })
   }
 }

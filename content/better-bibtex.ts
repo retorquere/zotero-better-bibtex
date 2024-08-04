@@ -574,7 +574,7 @@ export class BetterBibTeX {
 
   // eslint-disable-next-line prefer-arrow/prefer-arrow-functions, @typescript-eslint/no-unsafe-return, @typescript-eslint/explicit-module-boundary-types
   public CSL() { return CSL }
-  public TestSupport = new TestSupport
+  public TestSupport: TestSupport
   public KeyManager = KeyManager
   public Text = { sentenceCase }
 
@@ -595,6 +595,7 @@ export class BetterBibTeX {
   constructor() {
     this.debugEnabledAtStart = Zotero.Prefs.get('debug.store') || Zotero.Debug.storing
     if (Zotero.isWin && !is7) Zotero.Debug.addListener(this.logListener.bind(this))
+    if (Preference.testing) this.TestSupport = new TestSupport
   }
 
   private logListener(message: string): void {
