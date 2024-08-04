@@ -1,3 +1,7 @@
+Cython
+Mako
+PyGithub
+PyHamcrest
 addict
 babel
 beautifulsoup4
@@ -6,7 +10,6 @@ binpacking
 boto3
 bs4
 compact-json
-Cython
 diff-match-patch
 fluent
 fluent.runtime
@@ -18,7 +21,6 @@ jsonpatch
 jsonpath_ng
 jsonschema
 lxml
-Mako
 markdown
 markdownify
 munch
@@ -27,10 +29,9 @@ pathvalidate
 psutil
 pushbullet.py
 pygit2
-PyGithub
 pygtrie
-PyHamcrest
 pylint
+pytablewriter
 pytablewriter
 python-dotenv
 python-frontmatter

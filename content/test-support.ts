@@ -27,6 +27,12 @@ export class TestSupport {
     return idleService.idleTime > 1000
   }
 
+  public async waitForIdle(): Promise<number> {
+    const start = Date.now()
+    while (idleService.idleTime > 1000) await Zotero.Promise.delay(1000)
+    return Date.now() - start
+  }
+
   public memoryState(snapshot: string): memory.State {
     const state = memory.state(snapshot)
     return state
@@ -117,7 +123,7 @@ export class TestSupport {
     return (after - before)
   }
 
-  public async exportLibrary(translatorID: string, displayOptions: Record<string, number | string | boolean>, path: string, collectionName: string): Promise<string> {
+  public async exportLibrary(translatorID: string, displayOptions: Record<string, number | string | boolean>, path?: string, collectionName?: string): Promise<string> {
     let scope
     if (collectionName) {
       let name = collectionName
@@ -353,5 +359,46 @@ export class TestSupport {
       checked: value,
       value,
     })
+  }
+
+  async benchmark(tests: Array<{ translator: string, runs: number, cached?: boolean }>, _path?: string): Promise<Record<string, string | number>[]> {
+    await Zotero.BetterBibTeX.ready
+
+    const stock = {
+      'CSL JSON': 'bc03b4fe-436d-4a1f-ba59-de4d2d7a63f7',
+      BibTeX: '9cb70025-a888-4a29-a210-93ec52da40d4',
+    }
+
+    const displayOptions = { worker: true }
+
+    const results: Record<string, string | number>[] = []
+    for (const { translator, runs, cached } of tests) {
+      let label = translator
+      if (typeof cached === 'boolean') label += `, ${cached ? '' : 'un'}cached`
+      const translatorID = Translators.byLabel[translator]?.translatorID || stock[translator]
+
+      if (typeof cached === 'boolean') {
+        Preference.cache = cached
+        if (cached) {
+          log.debug('bench: filling cache for', label)
+          await this.exportLibrary(translatorID, displayOptions)
+          await this.exportLibrary(translatorID, displayOptions)
+          await this.exportLibrary(translatorID, displayOptions)
+        }
+      }
+
+      let runtime = 0
+      for (const run of [...Array(runs).keys()]) {
+        log.debug('bench:', label, 'idle after', await this.waitForIdle(), 'ms')
+        const start = Date.now()
+        await this.exportLibrary(translatorID, displayOptions)
+        runtime += Date.now() - start
+        log.debug('bench:', label, runtime / (run + 1), 'ms')
+      }
+
+      results.push({ translator: label, 'runtime (ms)': runtime / runs })
+    }
+
+    return results
   }
 }

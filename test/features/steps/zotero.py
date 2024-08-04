@@ -507,9 +507,7 @@ class Zotero:
     )
     if resetCache: self.execute('await Zotero.BetterBibTeX.TestSupport.resetCache()')
 
-    if expected is None:
-      utils.print('nothing expected')
-      return
+    if expected is None: return
 
     expected = Library(path=expected, client=self.client)
     found = Library(path=output, body=found, client=self.client, ext=expected)

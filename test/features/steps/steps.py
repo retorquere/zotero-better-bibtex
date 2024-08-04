@@ -18,6 +18,7 @@ import zipfile
 import html, re
 import timeit
 import platform
+import pytablewriter
 
 from contextlib import contextmanager
 
@@ -473,3 +474,16 @@ def step_impl(context, action, xpi):
 #  if platform.system() == 'Linux':
 #    import autopy
 #    autopy.bitmap.capture_screen().save(file)
+
+@step('I benchmark the following exports')
+def step_impl(context):
+  tests = []
+  for row in context.table:
+    translator, cached, runs = row
+    tests.append({ 'translator': translator, 'cached': None if cached == '' else cached in [ 'true', 'yes' ], 'runs': int(runs) })
+  table = context.zotero.execute('return await Zotero.BetterBibTeX.TestSupport.benchmark(tests)', tests=tests)
+  headers = table[0].keys()
+  rows = [ [ row[h] for h in headers ] for row in table ]
+  column_styles = [ pytablewriter.style.Style(align='left') for h in headers ]
+  writer = pytablewriter.MarkdownTableWriter(headers=headers, value_matrix=rows, column_styles=column_styles, margin=1)
+  utils.print('\n' + writer.dumps())

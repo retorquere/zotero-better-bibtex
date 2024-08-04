@@ -288,10 +288,10 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     this.worker.onmessage = (e: { data: Translator.Worker.Message }) => {
       switch (e.data?.kind) {
         case 'error':
-          log.status({error: true}, `translation failed: ${e.data.message}\n${e.data.stack || ''}`.trim())
+          log.error(`translation failed: ${e.data.message}\n${e.data.stack || ''}`.trim())
           if (job.translate) {
             // job.translate._runHandler('error', e.data) // eslint-disable-line no-underscore-dangle
-            job.translate.complete(null, { message: e.data.message, stack: e.data.stack })
+            job.translate.complete(false, { message: e.data.message, stack: e.data.stack })
           }
           deferred.reject(new Error(e.data.message))
           break
@@ -327,7 +327,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     }
 
     this.worker.onerror = e => {
-      log.status({error: true}, 'QBW: failed:', Date.now() - start, 'message:', e)
+      log.error('QBW: failed:', Date.now() - start, 'message:', e)
       job.translate?._runHandler('error', e) // eslint-disable-line no-underscore-dangle
       deferred.reject(new Error(e.message))
     }
@@ -414,9 +414,11 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
     const displayOptions = this.displayOptions(job.translatorID, job.displayOptions)
 
-    const start = Date.now()
+    const translator = this.byId[job.translatorID]
+    if (typeof translator?.displayOptions.worker === 'boolean' && displayOptions.worker) {
+      return await this.queueJob(job)
+    }
 
-    const deferred = Zotero.Promise.defer()
     const translation = new Zotero.Translate.Export()
 
     const scope = this.exportScope(job.scope)
@@ -454,41 +456,35 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
         log.error('Translators.exportItems:', err)
         file = null
       }
-      if (!file) {
-        deferred.reject(new Error(l10n.localize('better-bibtex_translate_error_target_not_a_file', { path: job.path })))
-        return deferred.promise
-      }
+
+      if (!file) throw new Error(l10n.localize('better-bibtex_translate_error_target_not_a_file', { path: job.path }))
 
       // the parent directory could have been removed
-      if (!file.parent || !file.parent.exists()) {
-        deferred.reject(new Error(l10n.localize('better-bibtex_translate_error_target_no_parent', { path: job.path })))
-        return deferred.promise
-      }
+      if (!file.parent || !file.parent.exists()) throw new Error(l10n.localize('better-bibtex_translate_error_target_no_parent', { path: job.path }))
 
       translation.setLocation(file)
     }
 
-    translation.setHandler('done', (obj, success) => {
-      if (success) {
-        deferred.resolve(obj ? obj.string : undefined)
-      }
-      else {
-        log.error('error: Translators.exportItems failed in', { time: Date.now() - start, ...job, translate: undefined })
-        deferred.reject(new Error('translation failed'))
-      }
-    })
-
-    translation.translate()
+    let finished = false
+    const work: Array<Promise<void>> = [
+      translation.translate(),
+    ]
 
     if (typeof job.timeout === 'number') {
-      Zotero.Promise.delay(job.timeout * 1000).then(() => {
-        const err = new TimeoutError(`translation timeout after ${job.timeout} seconds`, { timeout: job.timeout })
-        log.error('translation.exportItems:', err)
-        deferred.reject(err)
-      })
+      const timeout = async () => {
+        await Zotero.Promise.delay(job.timeout * 1000)
+        if (!finished) {
+          const err = new TimeoutError(`translation timeout after ${job.timeout} seconds`, { timeout: job.timeout })
+          log.error(err)
+          throw err
+        }
+      }
+      work.push(timeout())
     }
 
-    return deferred.promise
+    await Promise.race(work)
+    finished = true
+    return translation.string
   }
 
   public uninstall(label) {

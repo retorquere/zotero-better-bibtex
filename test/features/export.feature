@@ -697,6 +697,14 @@ Feature: Export
     When I wait until Zotero is idle
     Then an export using "Better BibLaTeX" with worker on should match "export/*.biblatex"
 
+  Scenario: Export benchmark
+    #When I import 86 references from "export/*.json"
+    When I restart Zotero with "1287"
+    When I benchmark the following exports:
+      | translator    | cached | runs |
+      | BibTeX        |        | 40   |
+      | Better BibTeX | yes    | 40   |
+
   # tests the cache
   @use.with_client=zotero @use.with_whopper=true @timeout=3000 @whopper
   Scenario: Really Big whopping library
