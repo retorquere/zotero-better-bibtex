@@ -130,7 +130,7 @@ export class TestSupport {
       let name = collectionName
       if (name[0] === '/') name = name.substring(1) // don't do full path parsing right now
       for (const collection of Zotero.Collections.getByLibrary(Zotero.Libraries.userLibraryID)) {
-        if (collection.name === name) scope = { type: 'collection', collection: collection.id }
+        if (collection.name === name) scope = { type: 'collection', collection }
       }
       if (!scope) throw new Error(`Collection '${ name }' not found`)
     }

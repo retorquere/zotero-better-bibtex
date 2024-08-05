@@ -455,7 +455,7 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
 
     // special handling
     try {
-      this.charmap = JSON.parse(this.preferences.charmap)
+      this.charmap = this.charmap ? JSON.parse(this.preferences.charmap) : {}
     }
     catch (err) {
       log.error('could not parse charmap', err)
