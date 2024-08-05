@@ -613,16 +613,16 @@ export const KeyManager = new class _KeyManager {
         return postfix
       })
 
+      let proposal: string
       if (ci) {
-        where.lcCitationKey = postfixed.toLowerCase()
+        where.lcCitationKey = proposal = postfixed.toLowerCase()
       }
       else {
-        where.citationKey = postfixed
+        where.citationKey = proposal = postfixed
       }
 
       if (blink.many(this.keys, { where }).filter(i => i.itemID !== item.id).length) continue
       if (mem) {
-        const proposal = ci ? postfixed.toLowerCase() : postfixed
         if (mem.has(proposal)) continue
         mem.add(proposal)
       }
