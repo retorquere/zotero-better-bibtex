@@ -354,7 +354,6 @@ export class TestSupport {
   public async editAutoExport(field: JobSetting, value: boolean | string): Promise<void> {
     // assumes only one auto-export is set up
     const path: string = await Zotero.DB.valueQueryAsync('SELECT path FROM betterbibtex.autoExport')
-    log.debug('ae:', path, await AutoExport.all())
     await AutoExport.edit(path, field, value)
   }
 
