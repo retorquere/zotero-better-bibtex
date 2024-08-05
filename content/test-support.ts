@@ -1,4 +1,4 @@
-import { AutoExport } from './auto-export'
+import { AutoExport, JobSetting } from './auto-export'
 import * as ZoteroDB from './db/zotero'
 import { log } from './logger'
 import { Translators } from './translators'
@@ -346,20 +346,10 @@ export class TestSupport {
     })
   }
 
-  public async editAutoExport(field: string, value: boolean | string): Promise<void> {
+  public async editAutoExport(field: JobSetting, value: boolean | string): Promise<void> {
     // assumes only one auto-export is set up
     const path: string = await Zotero.DB.valueQueryAsync('SELECT path FROM betterbibtex.autoExport')
-    await Zotero.BetterBibTeX.PrefPane.autoexport.edit({
-      getAttribute(name: string): string | number { // eslint-disable-line prefer-arrow/prefer-arrow-functions
-        switch (name) {
-          case 'data-ae-field': return field
-          case 'data-ae-path': return path
-          default: throw new Error(`unexpected attribute ${ name }`)
-        }
-      },
-      checked: value,
-      value,
-    })
+    await AutoExport.edit(path, field, value)
   }
 
   /*

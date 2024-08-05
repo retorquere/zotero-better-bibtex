@@ -464,7 +464,7 @@ type Job = {
   biblatexAPA?: boolean
   biblatexChicago?: boolean
 }
-type JobSetting = keyof Job
+export type JobSetting = keyof Job
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export const AutoExport = new class _AutoExport { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
