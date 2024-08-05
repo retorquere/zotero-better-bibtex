@@ -122,6 +122,9 @@ function clean_csl(item)
   return setmetatable(cleaned, getmetatable(item))
 end
 
+function stringify(node)
+end
+
 local function zotero_ref(cite)
   local content = pandoc.utils.stringify(cite.content)
   local csl = {
