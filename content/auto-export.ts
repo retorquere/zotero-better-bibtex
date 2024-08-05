@@ -589,7 +589,7 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
       try {
         return Zotero.ItemTypes.getID(type) as number
       }
-      catch (err) {
+      catch {
         return undefined
       }
     })

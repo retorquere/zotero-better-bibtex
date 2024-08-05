@@ -53,22 +53,38 @@ interface Schema extends DBSchema {
   BetterBibLaTeX: {
     value: ExportedItem
     key: [number, number]
-    indexes: { context: number; itemID: number; 'context-itemID': [ number, number ] }
+    indexes: {
+      context: number
+      itemID: number
+      'context-itemID': [ number, number ]
+    }
   }
   BetterBibTeX: {
     value: ExportedItem
     key: [number, number]
-    indexes: { context: number; itemID: number; 'context-itemID': [ number, number ] }
+    indexes: {
+      context: number
+      itemID: number
+      'context-itemID': [ number, number ]
+    }
   }
   BetterCSLJSON: {
     value: ExportedItem
     key: [number, number]
-    indexes: { context: number; itemID: number; 'context-itemID': [ number, number ] }
+    indexes: {
+      context: number
+      itemID: number
+      'context-itemID': [ number, number ]
+    }
   }
   BetterCSLYAML: {
     value: ExportedItem
     key: [number, number]
-    indexes: { context: number; itemID: number; 'context-itemID': [ number, number ] }
+    indexes: {
+      context: number
+      itemID: number
+      'context-itemID': [ number, number ]
+    }
   }
 
   metadata: {
@@ -187,7 +203,7 @@ export class ExportCache {
       // force type to get auto-increment field
       context = (await index.get(path))?.id || (await store.add({ context: path } as unknown as ExportContext))
     }
-    catch (err) {
+    catch {
       return { context, items }
     }
     // trace(`${this.name} load: export context = ${context}`)
@@ -203,7 +219,7 @@ export class ExportCache {
       }
       // trace(`${this.name} mapped`)
     }
-    catch (err) {
+    catch {
       return { context, items }
     }
 

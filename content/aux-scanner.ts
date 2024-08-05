@@ -15,6 +15,11 @@ const version = require('../gen/version.js')
 
 type Source = 'MarkDown' | 'BibTeX AUX'
 
+type Collection = {
+  libraryID: number
+  key: string
+  replace?: boolean
+}
 export const AUXScanner = new class { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   private pandoc: string
 
@@ -24,8 +29,10 @@ export const AUXScanner = new class { // eslint-disable-line @typescript-eslint/
     return await pick(Zotero.getString('fileInterface.import'), 'open', filters)
   }
 
-  public async scan(path: string, options: { tag?: string; libraryID?: number; collection?: { libraryID: number; key: string; replace?: boolean } } = {}) {
-    if ([ options.tag, options.libraryID, options.collection ].filter(tgt => tgt).length > 1) throw new Error('You can only specify one of tag, libraryID, or collection')
+  public async scan(path: string, options: { tag?: string; libraryID?: number; collection?: Collection } = {}) {
+    if ([ options.tag, options.libraryID, options.collection ].filter(tgt => tgt).length > 1) {
+      throw new Error('You can only specify one of tag, libraryID, or collection')
+    }
 
     const citekeys: string[] = []
     const bibfiles: Record<string, string> = Preference.auxImport ? {} : null

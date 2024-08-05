@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return, @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable @typescript-eslint/restrict-plus-operands */
+/* eslint-disable @typescript-eslint/no-wrapper-object-types, no-new-wrappers */
 
 declare const Zotero: any
 
@@ -993,7 +994,7 @@ export class Entry {
       }
       else if (creator.name || (creator.lastName && (creator.fieldMode === 1))) {
         name = creator.name || creator.lastName
-        if (name !== 'others') name = raw ? `{${ name }}` : this.enc_literal({ value: new String(this._enc_creators_scrub_name(name)) }) // eslint-disable-line no-new-wrappers
+        if (name !== 'others') name = raw ? `{${ name }}` : this.enc_literal({ value: new String(this._enc_creators_scrub_name(name)) })
       }
       else if (raw) {
         name = [ creator.lastName || '', creator.firstName || '' ].join(', ')
@@ -1056,10 +1057,8 @@ export class Entry {
   protected enc_literal_list(f, options: { raw?: boolean } = {}) {
     const list = Array.isArray(f.value) ? f.value : [f.value]
     if (!list.length) return null
-    // eslint-disable-next-line no-new-wrappers
     return list
       .map(elt => typeof elt === 'string' ? elt : `${ elt }`)
-      // eslint-disable-next-line no-new-wrappers
       .map(elt => this.enc_literal({ ...f, value: elt.match(/(^| )and( |$)/) ? new String(elt) : elt }), options)
       .join(' and ')
   }
@@ -1093,7 +1092,7 @@ export class Entry {
     for (const pkg of packages) {
       this.packages[pkg] = true
     }
-    let value: string = latex
+    let value: string | String = latex
 
     /*
       biblatex has a langid field it can use to exclude non-English
@@ -1105,7 +1104,7 @@ export class Entry {
     */
     if (caseConversion && this.translation.BetterBibTeX && !this.english && this.translation.preferences.exportBraceProtection) value = `{${ value }}`
 
-    if (f.value instanceof String && !raw) value = new String(`{${ value }}`) // eslint-disable-line no-new-wrappers
+    if (f.value instanceof String && !raw) value = new String(`{${ value }}`)
     return value
   }
 
@@ -1119,14 +1118,12 @@ export class Entry {
       .filter(tag => tag.tag)
     if (tags.length === 0) return null
 
-    // eslint-disable-next-line no-new-wrappers
     const encoded: Set<string> = new Set
     for (const tag of tags) {
       if (verbatim) {
         encoded.add(this.enc_verbatim({ value: (unicode ? tag.tag : fold2ascii.foldReplacing(tag.tag)).replace(/[{,}]/g, '').trim() }))
       }
       else {
-        // eslint-disable-next-line no-new-wrappers
         encoded.add(this.enc_literal({ value: tag.tag.includes(',') ? new String(tag.tag) : tag.tag }))
       }
     }
@@ -1293,18 +1290,18 @@ export class Entry {
     }
   }
 
-  private _enc_creator_part(part: string): string {
-    const { latex, packages } = this.translation.bibtex.text2latex((part), { creator: true, commandspacers: true })
+  private _enc_creator_part(part: string | String): string {
+    const { latex, packages } = this.translation.bibtex.text2latex((part as string), { creator: true, commandspacers: true })
     for (const pkg of packages) {
       this.packages[pkg] = true
     }
-    return (part instanceof String) ? new String(`{${ latex }}`) : latex // eslint-disable-line no-new-wrappers
+    return (part instanceof String) ? (new String(`{${ latex }}`) as string) : latex
   }
 
   private _enc_creators_biblatex(name: { family?: string; given?: string; suffix?: string; initials?: string }): string {
-    let family: string
+    let family: string | String
     if ((name.family.length > 1) && (name.family[0] === '"') && (name.family[name.family.length - 1] === '"')) {
-      family = new String(name.family.slice(1, -1)) // eslint-disable-line no-new-wrappers
+      family = new String(name.family.slice(1, -1))
     }
     else {
       ({ family } = name)
@@ -1346,7 +1343,7 @@ export class Entry {
       return namebuilder.join(', ')
     }
 
-    if (family && Zotero.Utilities.XRegExp.test(family, this.re.startsWithLowercase)) family = new String(family) // eslint-disable-line no-new-wrappers
+    if (family && Zotero.Utilities.XRegExp.test(family, this.re.startsWithLowercase)) family = new String(family)
 
     if (family) family = this._enc_creator_part(family)
 
@@ -1361,9 +1358,9 @@ export class Entry {
   }
 
   private _enc_creators_bibtex(name): string {
-    let family: string
+    let family: string | String
     if ((name.family.length > 1) && (name.family[0] === '"') && (name.family[name.family.length - 1] === '"')) { // quoted
-      family = new String(name.family.slice(1, -1)) // eslint-disable-line no-new-wrappers
+      family = new String(name.family.slice(1, -1))
     }
     else {
       family = name.family
@@ -1388,8 +1385,8 @@ export class Entry {
     */
 
     // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-    if (name['non-dropping-particle']) family = new String(this._enc_creators_pad_particle(name['non-dropping-particle']) + family) // eslint-disable-line no-new-wrappers
-    if (Zotero.Utilities.XRegExp.test(family, this.re.startsWithLowercase) || Zotero.Utilities.XRegExp.test(family, this.re.hasLowercaseWord)) family = new String(family) // eslint-disable-line no-new-wrappers
+    if (name['non-dropping-particle']) family = new String(this._enc_creators_pad_particle(name['non-dropping-particle']) + family)
+    if (Zotero.Utilities.XRegExp.test(family, this.re.startsWithLowercase) || Zotero.Utilities.XRegExp.test(family, this.re.hasLowercaseWord)) family = new String(family)
 
     // https://github.com/retorquere/zotero-better-bibtex/issues/978 -- enc_literal can return null
     family = family ? this._enc_creator_part(family) : ''
@@ -1407,11 +1404,11 @@ export class Entry {
     if (name.given) name.given = this._enc_creator_part(name.given)
     if (name.suffix) name.suffix = this._enc_creator_part(name.suffix)
 
-    let latex: string = family
+    let latex: string | String = family
     if (name.suffix) latex += `, ${ name.suffix }`
     if (name.given) latex += `, ${ name.given }`
 
-    return latex
+    return latex as string
   }
 
   private postscript(_entry, _item, _translator, _zotero, _extra): postscript.Allow {

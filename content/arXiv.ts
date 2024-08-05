@@ -20,7 +20,7 @@ export class arXiv {
 
     if (match = post2007.exec(id)) {
       this.id = this.id || match[1]
-      this.category = this.category || match[2] && match[2].trim()
+      this.category = this.category || (match[2] && match[2].trim())
       this.source = this.source ? `${ this.source }, ${ source }` : source
       return true
     }

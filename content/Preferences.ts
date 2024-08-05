@@ -102,7 +102,7 @@ class ZoteroPreferences {
 }
 
 class AutoExportPane {
-  private status: { [key: string]: string }
+  private status: Record<string, string>
   private cacherate: Record<number, number> = {}
 
   public async load() {
@@ -364,7 +364,7 @@ export class PrefPane {
     try {
       preferences.contents = Zotero.File.getContents(preferences.path)
     }
-    catch (err) {
+    catch {
       flash(`could not read contents of ${ preferences.path }`)
       return
     }
@@ -372,7 +372,7 @@ export class PrefPane {
     try {
       preferences.parsed = JSON.parse(preferences.contents)
     }
-    catch (err) {
+    catch {
       flash(`could not parse contents of ${ preferences.path }`)
       return
     }

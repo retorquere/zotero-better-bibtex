@@ -394,7 +394,7 @@ function getStyle(id): { url: string } {
   try {
     return Zotero.Styles.get(id) as { url: string }
   }
-  catch (err) {
+  catch {
     return null
   }
 }

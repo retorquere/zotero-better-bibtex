@@ -16,7 +16,7 @@ export class Elements {
         const elements = ref.deref()
         if (elements) elements.document.querySelectorAll(`.${ elements.className }`).forEach(e => e.remove())
       }
-      catch (err) {}
+      catch {}
     }
     this.all = []
   }

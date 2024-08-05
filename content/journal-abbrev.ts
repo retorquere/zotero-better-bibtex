@@ -62,7 +62,7 @@ export const JournalAbbrev = new class { // eslint-disable-line @typescript-esli
         try {
           abbrev = item.getField('journalAbbreviation', false, true)
         }
-        catch (error) {}
+        catch {}
       }
       else {
         abbrev = item.journalAbbreviation
@@ -83,7 +83,7 @@ export const JournalAbbrev = new class { // eslint-disable-line @typescript-esli
 
         break
       }
-      catch (err) {
+      catch {
       }
     }
 

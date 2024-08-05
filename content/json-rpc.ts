@@ -172,7 +172,7 @@ class NSItem {
         try {
           search.addCondition('libraryID', 'is', Library.get(library).libraryID, true)
         }
-        catch (err) {
+        catch {
           throw new Error(`library ${ JSON.stringify(library) } not found`)
         }
       }
@@ -195,7 +195,7 @@ class NSItem {
           try {
             term[2] = Library.get(term[2]).libraryID
           }
-          catch (err) {
+          catch {
             throw new Error(`library ${ JSON.stringify(term[2]) } not found`)
           }
         }

@@ -348,7 +348,7 @@ if (!is7) {
         zoteroPersist: new Set([ 'width', 'ordinal', 'hidden', 'sortActive', 'sortDirection' ]),
       })
     }
-    catch (err) {
+    catch {
       log.error('could not install itemtree column')
     }
 

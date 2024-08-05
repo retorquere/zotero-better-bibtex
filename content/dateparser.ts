@@ -149,8 +149,7 @@ function parseEDTF(value: string): ParsedDate {
     const edtf = normalize_edtf(EDTF.parse(upgrade_edtf(date.replace(/_|--/, '/'))))
     if (edtf) return edtf
   }
-  catch (err) {
-  }
+  catch {}
 
   try {
     const edtf = normalize_edtf(EDTF.parse(edtfy(date
@@ -161,8 +160,7 @@ function parseEDTF(value: string): ParsedDate {
     )))
     if (edtf) return edtf
   }
-  catch (err) {
-  }
+  catch {}
 
   return { verbatim: value }
 }
@@ -342,8 +340,7 @@ function parseToDate(value: string, as_single_date: boolean): ParsedDate {
         const edtf = normalize_edtf(EDTF.parse(edtfy(`${ day || '' } ${ month } ${ year }`.trim())))
         if (edtf) return edtf
       }
-      catch (err) {
-      }
+      catch {}
     }
   }
 
@@ -367,7 +364,7 @@ function testEDTF(value: string): boolean {
   try {
     return (EDTF.parse(value, { level: 1 }) as boolean)
   }
-  catch (err) {
+  catch {
     return false
   }
 }

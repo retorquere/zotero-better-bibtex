@@ -309,7 +309,7 @@ class ZoteroPane {
         mapping[k.toLowerCase()] = mapping[`tex.${ k.toLowerCase() }`] = { dateadded: 'dateAdded', datemodified: 'dateModified' }[v.toLowerCase()]
       }
     }
-    catch (err) {
+    catch {
       flash('could not parse field mapping', `could not parse field mapping ${ Preference.patchDates }`)
       return
     }
