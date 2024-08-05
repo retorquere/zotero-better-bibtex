@@ -116,7 +116,7 @@
     "uzip": "^0.20201231.0",
     "words-to-numbers": "^1.5.1",
     "xregexp": "^5.1.1",
-    "zotero-plugin": "2.0.22"
+    "zotero-plugin": "2.0.23"
   },
   "devDependencies": {
     "@retorquere/bibtex-parser": "^9.0.12",
