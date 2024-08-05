@@ -55,27 +55,24 @@ const latextx = new Transform('minimal')
 function citation2latex(citation, options) {
   let formatted = ''
   // despite Mozilla's claim that trimStart === trimLeft, and that trimStart should be preferred, trimStart does not seem to exist in FF chrome code.
-  const label = (`${shortLabel(citation.label, { page: '', ...options })} `).trimLeft()
+  const label = (`${ shortLabel(citation.label, { page: '', ...options }) } `).trimLeft()
 
-  if (citation.prefix) formatted += `[${latextx.tolatex(citation.prefix)}]`
+  if (citation.prefix) formatted += `[${ latextx.tolatex(citation.prefix) }]`
 
   if (citation.locator && citation.suffix) {
-    formatted += `[${latextx.tolatex(label)}${latextx.tolatex(citation.locator)}, ${latextx.tolatex(citation.suffix)}]`
-
+    formatted += `[${ latextx.tolatex(label) }${ latextx.tolatex(citation.locator) }, ${ latextx.tolatex(citation.suffix) }]`
   }
   else if (citation.locator) {
-    formatted += `[${latextx.tolatex(label)}${latextx.tolatex(citation.locator)}]`
-
+    formatted += `[${ latextx.tolatex(label) }${ latextx.tolatex(citation.locator) }]`
   }
   else if (citation.suffix) {
-    formatted += `[${latextx.tolatex(citation.suffix)}]`
-
+    formatted += `[${ latextx.tolatex(citation.suffix) }]`
   }
   else if (citation.prefix) {
     formatted += '[]'
   }
 
-  formatted += `{${citation.citationKey}}`
+  formatted += `{${ citation.citationKey }}`
 
   return formatted
 }
@@ -84,21 +81,21 @@ function citation2latex(citation, options) {
 export const Formatter = new class { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   public async typst(citations, options): Promise<string> {
     const cite = citation => {
-      let cited = citation.citationKey.match(/^[a-z0-9_\-:.]+$/i) ? `<${citation.citationKey}>` : `label(${JSON.stringify(citation.citationKey)})`
-      if (citation.locator) cited += `,${JSON.stringify(`${shortLabel(citation.label, options)} ${citation.locator}`)}`
+      let cited = citation.citationKey.match(/^[a-z0-9_\-:.]+$/i) ? `<${ citation.citationKey }>` : `label(${ JSON.stringify(citation.citationKey) })`
+      if (citation.locator) cited += `,${ JSON.stringify(`${ shortLabel(citation.label, options) } ${ citation.locator }`) }`
       if (citation.suppressAuthor) cited += citation.locator ? ',"year"' : ', form: "year"'
-      return `#cite(${cited})`
+      return `#cite(${ cited })`
     }
     return await citations.map(cite).join('')
   }
 
   public async citationLinks(citations, _options): Promise<string> {
-    return await citations.map(citation => `cites: ${citation.citationKey}`).join('\n')
+    return await citations.map(citation => `cites: ${ citation.citationKey }`).join('\n')
   }
 
   public async cite(citations, options) { return this.natbib(citations, options) }
-  public async citet(citations, options) { return this.natbib(citations, { command: 'citet', ...options } ) }
-  public async citep(citations, options) { return this.natbib(citations, { command: 'citep', ...options } ) }
+  public async citet(citations, options) { return this.natbib(citations, { command: 'citet', ...options }) }
+  public async citep(citations, options) { return this.natbib(citations, { command: 'citep', ...options }) }
   public async latex(citations, options) { return this.natbib(citations, options) }
 
   public async natbib(citations, options) {
@@ -109,7 +106,7 @@ export const Formatter = new class { // eslint-disable-line @typescript-eslint/n
     // test for simple case where multiple entries can be put in a single cite
     if (citations.length > 1) {
       const state = citations.reduce((acc, cit) => {
-        for (const field of ['prefix', 'suffix', 'suppressAuthor', 'locator', 'label']) {
+        for (const field of [ 'prefix', 'suffix', 'suppressAuthor', 'locator', 'label' ]) {
           // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
           acc[field] = (acc[field] || 0) + (cit[field] ? 1 : 0)
         }
@@ -117,13 +114,13 @@ export const Formatter = new class { // eslint-disable-line @typescript-eslint/n
       }, {})
 
       if (state.suffix === 0 && state.prefix === 0 && state.locator === 0 && (state.suppressAuthor === 0 || state.suppressAuthor === citations.length)) {
-        return `\\${citations[0].suppressAuthor ? 'citeyear' : options.command}{${citations.map(citation => citation.citationKey).join(',')}}`
+        return `\\${ citations[0].suppressAuthor ? 'citeyear' : options.command }{${ citations.map(citation => citation.citationKey).join(',') }}`
       }
     }
 
     let formatted = ''
     for (const citation of citations) {
-      formatted += `\\${citation.suppressAuthor ? 'citeyear' : options.command}${citation2latex(citation, options)}`
+      formatted += `\\${ citation.suppressAuthor ? 'citeyear' : options.command }${ citation2latex(citation, options) }`
     }
 
     return formatted
@@ -142,20 +139,20 @@ export const Formatter = new class { // eslint-disable-line @typescript-eslint/n
       // citations, biblatex doesn't support suppressing authors on a case by
       // case basis
       const suppressAuthor = citation.suppressAuthor && /^(auto|paren|)cite$/.exec(command) ? '*' : ''
-      return `\\${command}${suppressAuthor}${citation2latex(citation, options)}`
+      return `\\${ command }${ suppressAuthor }${ citation2latex(citation, options) }`
     }
 
     citations = citations.map(citation2latex).join('')
     if (citations.includes('[')) {
       // there are some pre/post notes → generate a full \XYcites command
-      command = command.endsWith('s') ? command : `${command}s`
+      command = command.endsWith('s') ? command : `${ command }s`
     }
     else {
       // there are no pre/post-notes, the citations can be a simple
       // comma-separated list of keys
       citations = citations.replace(/\}\{/g, ',')
     }
-    return `\\${command}${citations}`
+    return `\\${ command }${ citations }`
   }
 
   public async mmd(citations, _options) {
@@ -163,32 +160,32 @@ export const Formatter = new class { // eslint-disable-line @typescript-eslint/n
 
     for (const citation of citations) {
       if (citation.prefix) {
-        formatted.push(`[${citation.prefix}][#${citation.citationKey}]`)
+        formatted.push(`[${ citation.prefix }][#${ citation.citationKey }]`)
       }
       else {
-        formatted.push(`[#${citation.citationKey}][]`)
+        formatted.push(`[#${ citation.citationKey }][]`)
       }
     }
     return formatted.join('')
   }
 
   public async jekyll(citations, _options) {
-    return citations.map(cit => `{% cite ${cit.citationKey} %}`).join('')
+    return citations.map(cit => `{% cite ${ cit.citationKey } %}`).join('')
   }
 
   public async pandoc(citations, options) {
     const formatted = []
     for (const citation of citations) {
       let cite = ''
-      if (citation.prefix) cite += `${citation.prefix} `
+      if (citation.prefix) cite += `${ citation.prefix } `
       if (citation.suppressAuthor) cite += '-'
-      cite += `@${citation.citationKey}`
-      if (citation.locator) cite += `, ${shortLabel(citation.label, options)} ${citation.locator}`.replace(/\s+/, ' ')
-      if (citation.suffix) cite += ` ${citation.suffix}`
+      cite += `@${ citation.citationKey }`
+      if (citation.locator) cite += `, ${ shortLabel(citation.label, options) } ${ citation.locator }`.replace(/\s+/, ' ')
+      if (citation.suffix) cite += ` ${ citation.suffix }`
       formatted.push(cite)
     }
 
-    return `${options.brackets ? '[' : ''}${formatted.join('; ')}${options.brackets ? ']' : ''}`
+    return `${ options.brackets ? '[' : '' }${ formatted.join('; ') }${ options.brackets ? ']' : '' }`
   }
 
   public async 'asciidoctor-bibtex'(citations, options) {
@@ -196,13 +193,13 @@ export const Formatter = new class { // eslint-disable-line @typescript-eslint/n
     for (const citation of citations) {
       let cite = citation.citationKey
       if (citation.locator) {
-        const label = `${shortLabel(citation.label, { page: '', ...options })} ${citation.locator}`.trim()
-        cite += `(${label})`
+        const label = `${ shortLabel(citation.label, { page: '', ...options }) } ${ citation.locator }`.trim()
+        cite += `(${ label })`
       }
       formatted.push(cite)
     }
 
-    return `${options.cite || 'cite'}:[${formatted.join(', ')}]`
+    return `${ options.cite || 'cite' }:[${ formatted.join(', ') }]`
   }
 
   public async 'scannable-cite'(citations, options) {
@@ -212,13 +209,13 @@ export const Formatter = new class { // eslint-disable-line @typescript-eslint/n
 
       const enriched = [
         citation.prefix || '',
-        `${citation.suppressAuthor ? '-' : ''}${scannable.label}`,
-        citation.locator ? `${shortLabel(citation.label, options)} ${citation.locator}`.trim() : '',
+        `${ citation.suppressAuthor ? '-' : '' }${ scannable.label }`,
+        citation.locator ? `${ shortLabel(citation.label, options) } ${ citation.locator }`.trim() : '',
         citation.suffix || '',
         Preference.testing ? 'zu:0:ITEMKEY' : scannable.id,
       ].join(' | ').replace(/ +/g, ' ')
 
-      markers += `{ ${enriched.trim()} }`
+      markers += `{ ${ enriched.trim() } }`
     }
     return markers
   }
@@ -265,7 +262,7 @@ export const Formatter = new class { // eslint-disable-line @typescript-eslint/n
     for (const cit of citations) {
       const i = items.find(item => item.id === cit.id)
       const item = i ? { creators: i.getCreatorsJSON(), date: i.getField('date') } : {}
-      picked += `<cite data-cite="${escapeHTML(cit.citationKey)}">(${escapeHTML(citeCreators(item.creators))}, ${escapeHTML(yearFromDate(item.date))})</cite>`
+      picked += `<cite data-cite="${ escapeHTML(cit.citationKey) }">(${ escapeHTML(citeCreators(item.creators)) }, ${ escapeHTML(yearFromDate(item.date)) })</cite>`
     }
     return picked
   }
@@ -286,11 +283,11 @@ export const Formatter = new class { // eslint-disable-line @typescript-eslint/n
     const translatorID = Object.keys(Translators.byId).find(id => Translators.byId[id].label.replace(/\s/g, '').toLowerCase().replace('better', '') === label) || options.translator
 
     const displayOptions = {
-      exportNotes: ['yes', 'y', 'true'].includes((options.exportNotes || '').toLowerCase()),
-      useJournalAbbreviation: ['yes', 'y', 'true'].includes((options.useJournalAbbreviation || '').toLowerCase()),
+      exportNotes: [ 'yes', 'y', 'true' ].includes((options.exportNotes || '').toLowerCase()),
+      useJournalAbbreviation: [ 'yes', 'y', 'true' ].includes((options.useJournalAbbreviation || '').toLowerCase()),
     }
 
-    return await Translators.exportItems({translatorID, displayOptions, scope: { type: 'items', items }})
+    return await Translators.exportItems({ translatorID, displayOptions, scope: { type: 'items', items }})
   }
 
   public async json(citations, _options) {

@@ -9,7 +9,7 @@ import jurismSchema from '../schema/jurism.json'
 export type SimpleLiteral = boolean | number | string | { [key: string]: SimpleLiteral } | SimpleLiteral[]
 
 const creatorTypes: Set<string> = new Set
-for (const schema of [zoteroSchema, jurismSchema]) {
+for (const schema of [ zoteroSchema, jurismSchema ]) {
   for (const itemType of schema.itemTypes) {
     for (const creatorType of itemType.creatorTypes) {
       creatorTypes.add(creatorType.creatorType)
@@ -30,7 +30,7 @@ const CreatorTypeCollection = {
     type: 'array',
     items: {
       type: 'string',
-      enum: [...creatorTypes, '*'].sort(),
+      enum: [ ...creatorTypes, '*' ].sort(),
     },
   },
 }
@@ -38,7 +38,7 @@ const CreatorTypeCollection = {
 function assert(cond, msg) {
   if (cond) return
   if (typeof msg !== 'string') msg = JSON.stringify(msg, null, 2)
-  throw new Error(`assertion failed: ${msg}`)
+  throw new Error(`assertion failed: ${ msg }`)
 }
 
 export type Parameter = {
@@ -88,7 +88,7 @@ export class API {
           return ''
         }
         else {
-          return `${line.replace(/^\s*[*]\s*/, '')}\n`
+          return `${ line.replace(/^\s*[*]\s*/, '') }\n`
         }
       })
       .join('')
@@ -96,6 +96,7 @@ export class API {
 
     return params
   }
+
   private MethodDeclaration(className: string, method: ts.MethodDeclaration): void {
     const methodName: string = method.name.getText(this.ast)
     if (!methodName) return
@@ -125,7 +126,7 @@ export class API {
     })
     const orphans = Object.keys(params).join('/')
     if (orphans) {
-      throw new Error(`orphaned param docs for ${orphans}`)
+      throw new Error(`orphaned param docs for ${ orphans }`)
     }
   }
 
@@ -175,7 +176,7 @@ export class API {
         return init.elements.map(elt => this.Literal(elt)) as SimpleLiteral[]
 
       default:
-        throw new Error(`Unexpected kind ${init.kind} ${ts.SyntaxKind[init.kind]} of initializer ${JSON.stringify(init)}`)
+        throw new Error(`Unexpected kind ${ init.kind } ${ ts.SyntaxKind[init.kind] } of initializer ${ JSON.stringify(init) }`)
     }
   }
 
@@ -212,7 +213,7 @@ export class API {
         return this.TupleType(type as ts.TupleTypeNode)
 
       default:
-        throw {...type, kindName: ts.SyntaxKind[type.kind] } // eslint-disable-line no-throw-literal
+        throw { ...type, kindName: ts.SyntaxKind[type.kind] } // eslint-disable-line no-throw-literal
     }
   }
 
@@ -275,7 +276,7 @@ export class API {
       case 'ZoteroItemType':
         return {
           type: 'string',
-          enum: Array.from([zoteroSchema, jurismSchema].reduce((itemTypes, schema) => {
+          enum: Array.from([ zoteroSchema, jurismSchema ].reduce((itemTypes, schema) => {
             for (const itemType of schema.itemTypes) {
               if (itemType.creatorTypes?.length) itemTypes.add(itemType.itemType)
             }
@@ -300,7 +301,7 @@ export class API {
         return CreatorTypeCollection
 
       case 'Record':
-        assert(typeref.typeArguments.length === 2, `expected 2 types, found ${typeref.typeArguments.length}`)
+        assert(typeref.typeArguments.length === 2, `expected 2 types, found ${ typeref.typeArguments.length }`)
 
         key = this.schema(typeref.typeArguments[0])
         assert(key.type === 'string', key)
@@ -330,7 +331,7 @@ export class API {
         }
 
       case 'Template':
-        assert(typeref.typeArguments.length === 1, `expected 1 type argument, got ${typeref.typeArguments.length}`)
+        assert(typeref.typeArguments.length === 1, `expected 1 type argument, got ${ typeref.typeArguments.length }`)
         kind = (typeref.typeArguments[0] as any).literal.text
         switch (kind) {
           case 'datetime':
@@ -364,13 +365,13 @@ export class API {
             }
             break
           default:
-            assert(false, `expected template kind "datetime", "postfix" or "creator", got ${kind}`)
+            assert(false, `expected template kind "datetime", "postfix" or "creator", got ${ kind }`)
         }
 
         return { type: 'template', kind, variables }
 
       default:
-        assert(false, `unexpected TypeReference ${typeName}`)
+        assert(false, `unexpected TypeReference ${ typeName }`)
     }
   }
 
@@ -417,10 +418,9 @@ export class API {
       }
     })
 
-
     let combined
     if ((consts.size + enums.size) > 1 || consts.size > 1 || enums.size > 0) {
-      combined = { type: 'string', enum: [...(new Set([...consts, ...enums]))].sort() }
+      combined = { type: 'string', enum: [...(new Set([ ...consts, ...enums ]))].sort() }
     }
     else if (consts.size === 1) {
       combined = { const: [...consts][0] }
@@ -431,6 +431,6 @@ export class API {
 
     if (other.length === 0) return combined
 
-    return { anyOf : other.concat(combined) }
+    return { anyOf: other.concat(combined) }
   }
 }

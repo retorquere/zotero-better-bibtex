@@ -7,6 +7,9 @@ Object.assign(config.rules, {
   'no-underscore-dangle': [ 'error', { "allowAfterThis": true } ],
   'prefer-template': 'off',
 
+  '@stylistic/template-curly-spacing': [ 'error', 'always' ],
+  // '@stylistic/js/operator-linebreak': ['error', 'before' ],
+
   'prefer-arrow/prefer-arrow-functions': 'off',
 
   '@typescript-eslint/no-redundant-type-constituents': 'off',
@@ -24,10 +27,6 @@ Object.assign(config.rules, {
   '@typescript-eslint/array-type': 'off',
 
   '@typescript-eslint/ban-ts-comment': 'warn',
-  '@typescript-eslint/member-delimiter-style': [ 'error', {
-    multiline: { delimiter: 'none', requireLast: false },
-    singleline: { delimiter: 'comma', requireLast: false },
-  }],
   '@typescript-eslint/no-unused-vars': [ 'error', { "argsIgnorePattern": "^_" } ],
   'no-magic-numbers': 'off',
   'max-len': [ 'warn', { code: 320 } ],
@@ -50,6 +49,10 @@ config.rules['no-restricted-syntax'] = [
 ]
 
 config.ignorePatterns = [
+  'gen/**/*.ts',
+  'gen/**/*.js',
+  'setup/**/*.ts',
+  'setup/**/*.js',
   'util/*.ts',
   'minitests/*.ts',
   'content/minitests/*.ts',

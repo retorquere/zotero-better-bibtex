@@ -1,10 +1,10 @@
-/* eslint-disable @typescript-eslint/ban-types, prefer-rest-params, @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-function-type, prefer-rest-params, @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-unsafe-return */
 
 export type Trampoline = Function & { disabled?: boolean }
 const trampolines: Trampoline[] = []
 
 export function patch(object: any, method: string, patcher: (f: Function) => Function, mem?: Trampoline[]): void {
-  if (typeof object[method] !== 'function') throw new Error(`monkey-patch: ${method} is not a function`)
+  if (typeof object[method] !== 'function') throw new Error(`monkey-patch: ${ method } is not a function`)
 
   const orig = object[method]
   const patched = patcher(orig)

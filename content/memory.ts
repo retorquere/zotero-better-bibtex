@@ -5,7 +5,7 @@ const memoryReporterManager = Components.classes['@mozilla.org/memory-reporter-m
 memoryReporterManager.init()
 const inUseAtStart = memoryReporterManager.resident / MB
 
-export type State = { snapshot: string, resident: number, delta: number, deltaSinceStart: number }
+export type State = { snapshot: string; resident: number; delta: number; deltaSinceStart: number }
 const snapshots: Record<string, State> = {}
 
 export function state(snapshot: string): State {

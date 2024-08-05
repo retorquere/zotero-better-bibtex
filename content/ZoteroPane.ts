@@ -226,7 +226,7 @@ class ZoteroPane {
         let auto_exports = []
         const type = isCollection ? 'collection' : isLibrary ? 'library' : ''
         if (Preference.autoExport !== 'immediate' && type) {
-          auto_exports = await AutoExport.find(type, [ treeRow.ref.id ])
+          auto_exports = await AutoExport.find(type, [treeRow.ref.id])
         }
 
         const menulist: XUL.Menulist = doc.getElementById('zotero-collectionmenu-bbt-autoexport') as XUL.Menulist
@@ -265,7 +265,7 @@ class ZoteroPane {
 
     const row = this.ZoteroPane.collectionsView.selectedTreeRow
 
-    const root = `http://127.0.0.1:${Zotero.Prefs.get('httpServer.port')}/better-bibtex/export`
+    const root = `http://127.0.0.1:${ Zotero.Prefs.get('httpServer.port') }/better-bibtex/export`
     const params = {
       url: {
         long: '',
@@ -275,29 +275,29 @@ class ZoteroPane {
 
     if (row.isCollection()) {
       let collection = this.ZoteroPane.getSelectedCollection()
-      params.url.short = `${root}/collection?/${collection.libraryID || 0}/${collection.key}`
+      params.url.short = `${ root }/collection?/${ collection.libraryID || 0 }/${ collection.key }`
 
-      let path = `/${encodeURIComponent(collection.name)}`
+      let path = `/${ encodeURIComponent(collection.name) }`
       while (collection.parent) {
         collection = Zotero.Collections.get(collection.parent)
-        path = `/${encodeURIComponent(collection.name)}${path}`
+        path = `/${ encodeURIComponent(collection.name) }${ path }`
       }
-      params.url.long = `${root}/collection?/${collection.libraryID || 0}${path}`
+      params.url.long = `${ root }/collection?/${ collection.libraryID || 0 }${ path }`
     }
 
     if (row.isLibrary(true)) {
       const libId = this.ZoteroPane.getSelectedLibraryID()
-      const short = libId ? `/${libId}/library` : 'library'
-      params.url.short = `${root}/library?${short}`
+      const short = libId ? `/${ libId }/library` : 'library'
+      params.url.short = `${ root }/library?${ short }`
     }
 
     if (!params.url.short) return
 
-    this.window.openDialog(`chrome://zotero-better-bibtex/content/ServerURL.${is7 ? 'xhtml' : 'xul'}` , '', 'chrome,dialog,centerscreen,modal', params)
+    this.window.openDialog(`chrome://zotero-better-bibtex/content/ServerURL.${ is7 ? 'xhtml' : 'xul' }`, '', 'chrome,dialog,centerscreen,modal', params)
   }
 
   public padNum(n: number, width: number): string {
-    return `${n || 0}`.padStart(width, '0')
+    return `${ n || 0 }`.padStart(width, '0')
   }
 
   public async patchDates(): Promise<void> {
@@ -305,12 +305,12 @@ class ZoteroPane {
     const mapping: Record<string, string> = {}
     try {
       for (const assignment of Preference.patchDates.trim().split(/\s*,\s*/)) {
-        const [, k, v ] = assignment.trim().match(/^([-_a-z09]+)\s*=\s*(dateadded|datemodified)$/i)
-        mapping[k.toLowerCase()] = mapping[`tex.${k.toLowerCase()}`] = { dateadded: 'dateAdded', datemodified: 'dateModified' }[v.toLowerCase()]
+        const [ , k, v ] = assignment.trim().match(/^([-_a-z09]+)\s*=\s*(dateadded|datemodified)$/i)
+        mapping[k.toLowerCase()] = mapping[`tex.${ k.toLowerCase() }`] = { dateadded: 'dateAdded', datemodified: 'dateModified' }[v.toLowerCase()]
       }
     }
     catch (err) {
-      flash('could not parse field mapping', `could not parse field mapping ${Preference.patchDates}`)
+      flash('could not parse field mapping', `could not parse field mapping ${ Preference.patchDates }`)
       return
     }
 
@@ -318,7 +318,7 @@ class ZoteroPane {
       let save = false
       try {
         const extra = Extra.get(item.getField('extra'), 'zotero', { tex: true })
-        for (const [k, v] of Object.entries(extra.extraFields.tex)) {
+        for (const [ k, v ] of Object.entries(extra.extraFields.tex)) {
           if (mapping[k]) {
             const date = DateParser.parse(v.value)
             if (date.type === 'date' && date.day) {
@@ -326,7 +326,7 @@ class ZoteroPane {
               const time = typeof date.seconds === 'number'
               const timestamp = new Date(
                 date.year, date.month - 1, date.day,
-                time ? date.hour : 0, time ? date.minute - (date.offset || 0): 0, time ? date.seconds : 0, 0
+                time ? date.hour : 0, time ? date.minute - (date.offset || 0) : 0, time ? date.seconds : 0, 0
               )
               item.setField(mapping[k], timestamp.toISOString())
               save = true
@@ -356,7 +356,7 @@ class ZoteroPane {
     const picked = (await CAYW.pick({ format: 'citationLinks' })).split('\n').filter(citation => !citations.has(citation))
 
     if (picked.length) {
-      items[0].setField('extra', `${extra}\n${picked.join('\n')}`.trim())
+      items[0].setField('extra', `${ extra }\n${ picked.join('\n') }`.trim())
       await items[0].saveTx()
     }
   }
@@ -403,7 +403,7 @@ class ZoteroPane {
         }
         else {
           log.error('errorreport: could not get items', err)
-          return `Error retrieving items: ${err}`
+          return `Error retrieving items: ${ err }`
         }
       }
     }
@@ -411,10 +411,10 @@ class ZoteroPane {
     items = items ? await selection() : ''
 
     this.window.openDialog(
-      `chrome://zotero-better-bibtex/content/ErrorReport.${ is7 ? 'xhtml' : 'xul'}`,
+      `chrome://zotero-better-bibtex/content/ErrorReport.${ is7 ? 'xhtml' : 'xul' }`,
       'better-bibtex-error-report',
       'chrome,centerscreen,modal',
-      { wrappedJSObject: { items } })
+      { wrappedJSObject: { items }})
   }
 
   public async sentenceCase(): Promise<void> {

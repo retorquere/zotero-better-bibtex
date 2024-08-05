@@ -6,7 +6,7 @@ import { Formatter as CAYWFormatter } from './cayw/formatter'
 import { getItemsAsync } from './get-items-async'
 import { AUXScanner } from './aux-scanner'
 import * as Extra from './extra'
-import  { defaults } from '../gen/preferences/meta'
+import { defaults } from '../gen/preferences/meta'
 import { Preference } from './prefs'
 import * as memory from './memory'
 import { is7 } from './client'
@@ -16,9 +16,9 @@ import { Cache } from './db/cache'
 import { Shim } from './os'
 const $OS = is7 ? Shim : OS
 
-const setatstart: string[] = ['testing', 'cache'].filter(p => Preference[p] !== defaults[p])
+const setatstart: string[] = [ 'testing', 'cache' ].filter(p => Preference[p] !== defaults[p])
 
-const idleService: any = Components.classes[`@mozilla.org/widget/${is7 ? 'user' : ''}idleservice;1`].getService(Components.interfaces[is7 ? 'nsIUserIdleService' : 'nsIIdleService'])
+const idleService: any = Components.classes[`@mozilla.org/widget/${ is7 ? 'user' : '' }idleservice;1`].getService(Components.interfaces[is7 ? 'nsIUserIdleService' : 'nsIIdleService'])
 
 export class TestSupport {
   public timedMemoryLog: any
@@ -40,20 +40,20 @@ export class TestSupport {
   }
 
   public async autoExportRunning(): Promise<number> {
-    return await Zotero.DB.valueQueryAsync("SELECT COUNT(*) FROM betterbibtex.autoExport WHERE status = 'running'") as number
+    return await Zotero.DB.valueQueryAsync('SELECT COUNT(*) FROM betterbibtex.autoExport WHERE status = \'running\'') as number
   }
 
   public async reset(scenario: string): Promise<void> {
-    log.info(`test environment reset for ${scenario}`)
+    log.info(`test environment reset for ${ scenario }`)
     await this.resetCache()
 
     const prefix = 'translators.better-bibtex.'
-    for (const [pref, value] of Object.entries(defaults)) {
+    for (const [ pref, value ] of Object.entries(defaults)) {
       if (setatstart.includes(pref)) continue
       Zotero.Prefs.set(prefix + pref, value)
     }
 
-    Zotero.Prefs.set(`${prefix}testing`, true)
+    Zotero.Prefs.set(`${ prefix }testing`, true)
 
     // Zotero DB access is *really* slow and times out even with chunked transactions. 3.5k items take ~ 50 seconds
     // to delete.
@@ -85,7 +85,7 @@ export class TestSupport {
       await Zotero.Tags.purge()
     })
 
-    if (Zotero.BetterBibTeX.KeyManager.all().length !== 0) throw new Error(`keystore has ${Zotero.BetterBibTeX.KeyManager.all().length} entries after reset`)
+    if (Zotero.BetterBibTeX.KeyManager.all().length !== 0) throw new Error(`keystore has ${ Zotero.BetterBibTeX.KeyManager.all().length } entries after reset`)
   }
 
   public async librarySize(): Promise<number> {
@@ -96,11 +96,11 @@ export class TestSupport {
   public async importFile(path: string, createNewCollection: boolean, preferences: Record<string, number | boolean | string>): Promise<number> {
     preferences = preferences || {}
 
-    for (let [pref, value] of Object.entries(preferences)) {
+    for (let [ pref, value ] of Object.entries(preferences)) {
       if (pref === 'texmap') continue
-      if (typeof defaults[pref] === 'undefined') throw new Error(`Unsupported preference ${pref} in test case`)
+      if (typeof defaults[pref] === 'undefined') throw new Error(`Unsupported preference ${ pref } in test case`)
       if (Array.isArray(value)) value = value.join(',')
-      Zotero.Prefs.set(`translators.better-bibtex.${pref}`, value)
+      Zotero.Prefs.set(`translators.better-bibtex.${ pref }`, value)
     }
 
     if (!path) return 0
@@ -132,22 +132,22 @@ export class TestSupport {
       for (const collection of Zotero.Collections.getByLibrary(Zotero.Libraries.userLibraryID)) {
         if (collection.name === name) scope = { type: 'collection', collection: collection.id }
       }
-      if (!scope) throw new Error(`Collection '${name}' not found`)
+      if (!scope) throw new Error(`Collection '${ name }' not found`)
     }
     else {
       scope = null
     }
     const start = Date.now()
     try {
-      return await Translators.exportItems({translatorID, displayOptions: displayOptions as Record<string, boolean>, scope, path})
+      return await Translators.exportItems({ translatorID, displayOptions: displayOptions as Record<string, boolean>, scope, path })
     }
     finally {
-      log.info(`performance: ${translatorID} export took ${Date.now() - start}`)
+      log.info(`performance: ${ translatorID } export took ${ Date.now() - start }`)
     }
   }
 
   public async dumpCache(filename: string): Promise<void> {
-    const encoder = new TextEncoder()
+    const encoder = (new TextEncoder)
     const array = encoder.encode(JSON.stringify(await Cache.dump(), null, 2))
     await $OS.File.writeAtomic(filename, array) as void
   }
@@ -171,33 +171,33 @@ export class TestSupport {
 
       if (sortedIDs === JSON.stringify(selected.sort())) return true
     }
-    throw new Error(`failed to select ${ids}`)
+    throw new Error(`failed to select ${ ids }`)
   }
 
-  public async find(query: { contains: string, is: string }, expected = 1): Promise<number[]> {
-    if (!Object.keys(query).length) throw new Error(`empty query ${JSON.stringify(query)}`)
+  public async find(query: { contains: string; is: string }, expected = 1): Promise<number[]> {
+    if (!Object.keys(query).length) throw new Error(`empty query ${ JSON.stringify(query) }`)
 
     let ids: number[] = []
 
     if (query.contains) ids = ids.concat(Zotero.BetterBibTeX.KeyManager.all().filter(key => key.citationKey.toLowerCase().includes(query.contains.toLowerCase())).map(key => key.itemID))
-    if (query.is) ids = ids.concat(Zotero.BetterBibTeX.KeyManager.find({ where: { citationKey: query.is } }).map(key => key.itemID))
+    if (query.is) ids = ids.concat(Zotero.BetterBibTeX.KeyManager.find({ where: { citationKey: query.is }}).map(key => key.itemID))
 
-    const s = new Zotero.Search()
-    for (const [mode, text] of Object.entries(query)) {
-      if (!['is', 'contains'].includes(mode)) throw new Error(`unsupported search mode ${mode}`)
+    const s = (new Zotero.Search)
+    for (const [ mode, text ] of Object.entries(query)) {
+      if (![ 'is', 'contains' ].includes(mode)) throw new Error(`unsupported search mode ${ mode }`)
       s.addCondition('field', mode, text)
     }
     ids = ids.concat(await s.search())
     ids = Array.from(new Set(ids))
-    if (!ids || !ids.length) throw new Error(`No item found matching ${JSON.stringify(query)}`)
-    if (ids.length !== expected) throw new Error(`${JSON.stringify(query)} matched ${JSON.stringify(ids)}, but only ${expected} expected`)
+    if (!ids || !ids.length) throw new Error(`No item found matching ${ JSON.stringify(query) }`)
+    if (ids.length !== expected) throw new Error(`${ JSON.stringify(query) } matched ${ JSON.stringify(ids) }, but only ${ expected } expected`)
 
     return Array.from(new Set(ids))
   }
 
-  public async pick(format: string, citations: {id: number[], uri: string, citationKey: string}[]): Promise<string> {
+  public async pick(format: string, citations: { id: number[]; uri: string; citationKey: string }[]): Promise<string> {
     for (const citation of citations) {
-      if (citation.id.length !== 1) throw new Error(`Expected 1 item, got ${citation.id.length}`)
+      if (citation.id.length !== 1) throw new Error(`Expected 1 item, got ${ citation.id.length }`)
       citation.citationKey = Zotero.BetterBibTeX.KeyManager.get(citation.id[0]).citationKey
       citation.uri = Zotero.URI.getItemURI(await getItemsAsync(citation.id[0]))
     }
@@ -227,7 +227,7 @@ export class TestSupport {
     if (!ids.length) throw new Error('Nothing to do')
 
     if (citationKey) {
-      if (action !== 'pin') throw new Error(`Don't know how to ${action} ${citationKey}`)
+      if (action !== 'pin') throw new Error(`Don't know how to ${ action } ${ citationKey }`)
       log.error('conflict: pinning', ids, 'to', citationKey)
       for (const item of await getItemsAsync(ids)) {
         item.setField('extra', Extra.set(item.getField('extra'), { citationKey }))
@@ -249,7 +249,7 @@ export class TestSupport {
           await Zotero.BetterBibTeX.KeyManager.refresh(itemID)
           break
         default:
-          throw new Error(`TestSupport.pinCiteKey: unsupported action ${action}`)
+          throw new Error(`TestSupport.pinCiteKey: unsupported action ${ action }`)
       }
     }
   }
@@ -277,7 +277,7 @@ export class TestSupport {
       const zoteroPane = Zotero.getActiveZoteroPane()
       await zoteroPane.selectItems(ids, true)
       const selected = zoteroPane.getSelectedItems()
-      if (selected.length !== ids.length) throw new Error(`selected: ${selected.length}, expected: ${ids.length}`)
+      if (selected.length !== ids.length) throw new Error(`selected: ${ selected.length }, expected: ${ ids.length }`)
 
       // zoteroPane.mergeSelectedItems()
 
@@ -299,7 +299,7 @@ export class TestSupport {
     await Zotero.Promise.delay(1500)
 
     const after = await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, true, false, true)
-    if (before.length - after.length !== (ids.length - 1)) throw new Error(`merging ${ids.length}: before = ${before.length}, after = ${after.length}`)
+    if (before.length - after.length !== (ids.length - 1)) throw new Error(`merging ${ ids.length }: before = ${ before.length }, after = ${ after.length }`)
   }
 
   public async clearCollection(path: string): Promise<void> {
@@ -315,15 +315,15 @@ export class TestSupport {
         found = true
         break
       }
-      if (!found) throw new Error(`${path} not found`)
+      if (!found) throw new Error(`${ path } not found`)
     }
 
     const itemIDs = collection.getChildItems(true)
-    if (!itemIDs.length) throw new Error(`${path} is empty`)
+    if (!itemIDs.length) throw new Error(`${ path } is empty`)
     await Zotero.DB.executeTransaction(async () => {
       await collection.removeItems(itemIDs)
     })
-    if (collection.getChildItems(true).length) throw new Error(`${path} not empty`)
+    if (collection.getChildItems(true).length) throw new Error(`${ path } not empty`)
   }
 
   public async quickCopy(itemIDs: number[], translator: string): Promise<string> {
@@ -354,7 +354,7 @@ export class TestSupport {
         switch (name) {
           case 'data-ae-field': return field
           case 'data-ae-path': return path
-          default: throw new Error(`unexpected attribute ${name}`)
+          default: throw new Error(`unexpected attribute ${ name }`)
         }
       },
       checked: value,

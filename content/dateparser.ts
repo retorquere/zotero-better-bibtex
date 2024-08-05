@@ -77,7 +77,7 @@ function normalize_edtf(date: any): ParsedDate {
 
     case 'Season':
       [ year, month ] = date.values
-      if (typeof Season.fromMonth(month) !== 'number') throw new Error(`Unexpected season ${month}`)
+      if (typeof Season.fromMonth(month) !== 'number') throw new Error(`Unexpected season ${ month }`)
       return Season.seasonize({ type: 'date', year, month })
 
     case 'List':
@@ -112,12 +112,12 @@ function has_valid_month(date: ParsedDate) {
 function is_valid_date(date: ParsedDate) {
   if (date.type !== 'date') return true
   if (typeof date.year !== 'number') return false
-  date = {...date}
+  date = { ...date }
   if (typeof date.month === 'number' && Season.fromMonth(date.month)) {
     if (typeof date.day !== 'undefined') return false
     date.month = 1
   }
-  const d = new Date(`${date.year}-${date.month || 1}-${date.day || 1}`)
+  const d = new Date(`${ date.year }-${ date.month || 1 }-${ date.day || 1 }`)
   return (d instanceof Date) && !isNaN(d as unknown as number)
 }
 
@@ -125,9 +125,9 @@ function is_valid_date(date: ParsedDate) {
 function swap_day_month(day: number, month: number, fix_only = false): number[] {
   if (!day) return [ undefined, month ]
 
-  if (!is_valid_month(month, false) && is_valid_month(day, false)) return [month, day]
-  if (!fix_only && getLocaleDateOrder() === 'mdy' && is_valid_month(day, false)) return [month, day]
-  return [day, month]
+  if (!is_valid_month(month, false) && is_valid_month(day, false)) return [ month, day ]
+  if (!fix_only && getLocaleDateOrder() === 'mdy' && is_valid_month(day, false)) return [ month, day ]
+  return [ day, month ]
 }
 
 export function parse(value: string): ParsedDate {
@@ -140,8 +140,8 @@ function parseEDTF(value: string): ParsedDate {
 
   let m: RegExpMatchArray
   if (m = /^(\d+)[^\d]+(\d+)[^\d]+(\d+)[^\d]+(\d{2}:\d{2}:\d{2}(?:[.]\d+)?)(.*)/.exec(date)) {
-    const [, year, month, day, time, tz] = m
-    date = `${year.padStart(4, '0')}-${month.padStart(2, '0')}-${day.padStart(2, '0')}T${time}${(tz || '').replace(/\s/g, '')}`
+    const [ , year, month, day, time, tz ] = m
+    date = `${ year.padStart(4, '0') }-${ month.padStart(2, '0') }-${ day.padStart(2, '0') }T${ time }${ (tz || '').replace(/\s/g, '') }`
   }
 
   try {
@@ -186,13 +186,13 @@ function parseToDate(value: string, as_single_date: boolean): ParsedDate {
   if (m = (/^(-?[0-9]+)-00-00$/.exec(value) || /^(-?[0-9]+)\/00\/00$/.exec(value) || /^(-?[0-9]+-[0-9]+)-00$/.exec(value))) return parseToDate(m[1], true)
 
   // https://github.com/retorquere/zotero-better-bibtex/issues/1513
-  if ((m = (/^([0-9]+) (de )?([a-z]+) (de )?([0-9]+)$/i).exec(value)) && (m[2] || m[4]) && (months[m[3].toLowerCase()])) return parseToDate(`${m[1]} ${m[3]} ${m[5]}`, true)
+  if ((m = (/^([0-9]+) (de )?([a-z]+) (de )?([0-9]+)$/i).exec(value)) && (m[2] || m[4]) && (months[m[3].toLowerCase()])) return parseToDate(`${ m[1] } ${ m[3] } ${ m[5] }`, true)
 
   // '30-Mar-2020'
   if (m = (/^([0-9]+)-([a-z]+)-([0-9]+)$/i).exec(value)) {
     let [ , day, month, year ] = m
     if (parseInt(day) > 31 && parseInt(year) < 31) [ day, year ] = [ year, day ]
-    date = parseToDate(`${month} ${day} ${year}`, true)
+    date = parseToDate(`${ month } ${ day } ${ year }`, true)
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     if (date.type === 'date') return date
   }
@@ -203,7 +203,7 @@ function parseToDate(value: string, as_single_date: boolean): ParsedDate {
     date = parseToDate(_date, true)
     const orig = parseToDate(_orig, true)
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    if (date.type === 'date' && orig.type === 'date') return {...date, ...{ orig } }
+    if (date.type === 'date' && orig.type === 'date') return { ...date, ...{ orig }}
   }
 
   // 'date [origdate]'
@@ -212,22 +212,22 @@ function parseToDate(value: string, as_single_date: boolean): ParsedDate {
     date = parseToDate(_date, true)
     const orig = parseToDate(_orig, true)
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    if (date.type === 'date' && orig.type === 'date') return {...date, ...{ orig } }
+    if (date.type === 'date' && orig.type === 'date') return { ...date, ...{ orig }}
   }
 
   // '[origdate]'
   if (!as_single_date && (m = /^\[(.+)\]$/.exec(value))) {
     const [ , _orig ] = m
     const orig = parseToDate(_orig, true)
-    if (orig.type === 'date') return { ...{ orig } }
+    if (orig.type === 'date') return { ...{ orig }}
   }
 
   // 747 'jan 20-22 1977'
   if (!as_single_date && (m = /^([a-zA-Z]+)\s+([0-9]+)(?:--|-|\u2013)([0-9]+)[, ]\s*([0-9]+)$/.exec(value))) {
     const [ , month, day1, day2, year ] = m
 
-    const from = parseToDate(`${month} ${day1} ${year}`, true)
-    const to = parseToDate(`${month} ${day2} ${year}`, true)
+    const from = parseToDate(`${ month } ${ day1 } ${ year }`, true)
+    const to = parseToDate(`${ month } ${ day2 } ${ year }`, true)
 
     if (from.type === 'date' && to.type === 'date') return { type: 'interval', from, to }
   }
@@ -236,8 +236,8 @@ function parseToDate(value: string, as_single_date: boolean): ParsedDate {
   if (!as_single_date && (m = /^([a-zA-Z]+\s+[0-9]+)(?:--|-|\u2013)([a-zA-Z]+\s+[0-9]+)[, ]\s*([0-9]+)$/.exec(value))) {
     const [ , date1, date2, year ] = m
 
-    const from = parseToDate(`${date1} ${year}`, true)
-    const to = parseToDate(`${date2} ${year}`, true)
+    const from = parseToDate(`${ date1 } ${ year }`, true)
+    const to = parseToDate(`${ date2 } ${ year }`, true)
 
     if (from.type === 'date' && to.type === 'date') return { type: 'interval', from, to }
   }
@@ -246,8 +246,8 @@ function parseToDate(value: string, as_single_date: boolean): ParsedDate {
   if (!as_single_date && (m = /^([0-9]+)\s*([a-zA-Z]+)?\s*(?:--|-|\u2013)\s*([0-9]+)\s+([a-zA-Z]+)\s+([0-9]+)$/.exec(value))) {
     const [ , day1, month1, day2, month2, year ] = m
 
-    const from = parseToDate(`${month1 || month2} ${day1} ${year}`, true)
-    const to = parseToDate(`${month2} ${day2} ${year}`, true)
+    const from = parseToDate(`${ month1 || month2 } ${ day1 } ${ year }`, true)
+    const to = parseToDate(`${ month2 } ${ day2 } ${ year }`, true)
 
     if (from.type === 'date' && to.type === 'date') return { type: 'interval', from, to }
   }
@@ -256,8 +256,8 @@ function parseToDate(value: string, as_single_date: boolean): ParsedDate {
   if (!as_single_date && (m = (/^([a-z]+)(?:--|-|\u2013)([a-z]+)(?:--|-|\u2013|\s+)([0-9]+)$/i).exec(value))) {
     const [ , month1, month2, year ] = m
 
-    const from = parseToDate(`${month1} ${year}`, true)
-    const to = parseToDate(`${month2} ${year}`, true)
+    const from = parseToDate(`${ month1 } ${ year }`, true)
+    const to = parseToDate(`${ month2 } ${ year }`, true)
 
     if (from.type === 'date' && to.type === 'date') return { type: 'interval', from, to }
   }
@@ -281,18 +281,18 @@ function parseToDate(value: string, as_single_date: boolean): ParsedDate {
   if (m = /^(-?[0-9]{3,})([-\s/.])([0-9]{1,2})(\2([0-9]{1,2}))?$/.exec(date_only)) {
     const [ , _year, , _month, , _day ] = m
     const year = parseInt(_year)
-    const [day, month] = swap_day_month(parseInt(_day), parseInt(_month), true)
+    const [ day, month ] = swap_day_month(parseInt(_day), parseInt(_month), true)
 
     // if (!month && !day) return { type: 'date', year, ...time_doubt }
-    if (!day && has_valid_month(date = { type: 'date', year, month })) return Season.seasonize({...date, ...time_doubt})
-    if (is_valid_date(date = { type: 'date', year, month, day })) return {...date, ...time_doubt}
+    if (!day && has_valid_month(date = { type: 'date', year, month })) return Season.seasonize({ ...date, ...time_doubt })
+    if (is_valid_date(date = { type: 'date', year, month, day })) return { ...date, ...time_doubt }
   }
 
   // https://github.com/retorquere/zotero-better-bibtex/issues/1112
   if (m = /^([0-9]{1,2})\s+([0-9]{1,2})\s*,\s*([0-9]{4,})$/.exec(date_only)) {
     const [ , _day, _month, _year ] = m
     const year = parseInt(_year)
-    const [day, month] = swap_day_month(parseInt(_day), parseInt(_month))
+    const [ day, month ] = swap_day_month(parseInt(_day), parseInt(_month))
 
     if (!month && !day) return { type: 'date', year, ...time_doubt }
     if (!day && has_valid_month(date = { type: 'date', year, month })) return Season.seasonize({ ...date, ...time_doubt })
@@ -302,7 +302,7 @@ function parseToDate(value: string, as_single_date: boolean): ParsedDate {
   if (m = /^([0-9]{1,2})([-\s/.])([0-9]{1,2})(\2([0-9]{3,}))$/.exec(date_only)) {
     const [ , _day, , _month, , _year ] = m
     const year = parseInt(_year)
-    const [day, month] = swap_day_month(parseInt(_day), parseInt(_month))
+    const [ day, month ] = swap_day_month(parseInt(_day), parseInt(_month))
 
     if (!month && !day) return { type: 'date', year, ...time_doubt }
     if (!day && has_valid_month(date = { type: 'date', year, month })) return Season.seasonize({ ...date, ...time_doubt })
@@ -339,7 +339,7 @@ function parseToDate(value: string, as_single_date: boolean): ParsedDate {
     const [ , year, month, day ] = m
     if (months[month]) {
       try {
-        const edtf = normalize_edtf(EDTF.parse(edtfy(`${day || ''} ${month} ${year}`.trim())))
+        const edtf = normalize_edtf(EDTF.parse(edtfy(`${ day || '' } ${ month } ${ year }`.trim())))
         if (edtf) return edtf
       }
       catch (err) {
@@ -348,7 +348,7 @@ function parseToDate(value: string, as_single_date: boolean): ParsedDate {
   }
 
   if (!as_single_date) { // try ranges
-    for (const sep of ['--', '-', '/', '_', '\u2013']) {
+    for (const sep of [ '--', '-', '/', '_', '\u2013' ]) {
       const split = value.split(sep)
       if (split.length === 2) {
         const from = parseToDate(split[0], true)
@@ -375,7 +375,7 @@ function testEDTF(value: string): boolean {
 export function isEDTF(value: string, minuteLevelPrecision = false): boolean {
   value = upgrade_edtf(value)
 
-  return testEDTF(value) || (minuteLevelPrecision && testEDTF(`${value}:00`))
+  return testEDTF(value) || (minuteLevelPrecision && testEDTF(`${ value }:00`))
 }
 
 export function strToISO(str: string): string {
@@ -383,18 +383,18 @@ export function strToISO(str: string): string {
 }
 
 export function dateToISO(date: ParsedDate): string {
-  if (date.type === 'interval') return `${dateToISO(date.from)}/${dateToISO(date.to)}`.replace(/^[/]$/, '')
+  if (date.type === 'interval') return `${ dateToISO(date.from) }/${ dateToISO(date.to) }`.replace(/^[/]$/, '')
 
   if (typeof date.year !== 'number') return ''
 
-  let iso = `${date.year}`.padStart(4, '0')
+  let iso = `${ date.year }`.padStart(4, '0')
 
   if (typeof date.month === 'number') {
-    const month = `${date.month}`.padStart(2, '0')
-    iso += `-${month}`
+    const month = `${ date.month }`.padStart(2, '0')
+    iso += `-${ month }`
     if (date.day) {
-      const day = `${date.day}`.padStart(2, '0')
-      iso += `-${day}`
+      const day = `${ date.day }`.padStart(2, '0')
+      iso += `-${ day }`
     }
   }
 

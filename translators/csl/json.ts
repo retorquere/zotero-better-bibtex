@@ -11,7 +11,7 @@ function date2csl(date: ParsedDate): [LooseNumber, LooseNumber?, LooseNumber?] {
       return [0]
 
     case 'date':
-      csl = [ `${date.year > 0 ? date.year : date.year - 1}` ]
+      csl = [`${ date.year > 0 ? date.year : date.year - 1 }`]
       if (date.month) {
         csl.push(date.month)
         if (date.day) {
@@ -23,10 +23,10 @@ function date2csl(date: ParsedDate): [LooseNumber, LooseNumber?, LooseNumber?] {
     case 'season':
       // https://github.com/retorquere/zotero-better-bibtex/issues/860
       // eslint-disable-next-line @typescript-eslint/restrict-plus-operands, @typescript-eslint/no-unsafe-return
-      return [ `${date.year > 0 ? date.year : date.year - 1}`, date.season + 12 ]
+      return [ `${ date.year > 0 ? date.year : date.year - 1 }`, date.season + 12 ]
 
     default:
-      throw new Error(`Expected date or open, got ${date.type}`)
+      throw new Error(`Expected date or open, got ${ date.type }`)
   }
 }
 
@@ -36,7 +36,7 @@ class Exporter extends CSLExporter {
       case 'date':
       case 'open':
         return {
-          'date-parts': [ date2csl(date) ],
+          'date-parts': [date2csl(date)],
           circa: (date.approximate || date.uncertain) ? true : undefined,
         }
 
@@ -51,13 +51,13 @@ class Exporter extends CSLExporter {
 
       case 'season':
         return {
-          'date-parts': [ [ date.year ] ],
+          'date-parts': [[date.year]],
           season: date.season,
           circa: (date.approximate || date.uncertain) ? true : undefined,
         }
 
       default:
-        throw new Error(`Unexpected date type ${JSON.stringify(date)}`)
+        throw new Error(`Unexpected date type ${ JSON.stringify(date) }`)
     }
   }
 
@@ -66,7 +66,7 @@ class Exporter extends CSLExporter {
   }
 
   public flush(items: string[]): string {
-    return `[\n${(items.map(item => `  ${item}`)).join(',\n')}\n]\n`
+    return `[\n${ (items.map(item => `  ${ item }`)).join(',\n') }\n]\n`
   }
 }
 

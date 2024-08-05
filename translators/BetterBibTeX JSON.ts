@@ -10,7 +10,7 @@ const version = require('../gen/version.js')
 // import { stringify } from '../content/stringify'
 import { simple as log } from '../content/logger'
 import type { Library } from './lib/normalize'
-import  { asciify } from '../content/text'
+import { asciify } from '../content/text'
 
 const chunkSize = 0x100000
 
@@ -26,7 +26,7 @@ export function detectImport(): boolean {
   try {
     data = JSON.parse(json)
   }
-  catch (err) {
+  catch {
     return false
   }
 
@@ -72,18 +72,18 @@ export async function doImport(): Promise<void> {
     }
 
     // clear out junk data
-    for (const [field, value] of Object.entries(source)) {
+    for (const [ field, value ] of Object.entries(source)) {
       if ((value ?? '') === '') delete source[field]
     }
     // validate tests for strings
     if (Array.isArray(source.extra)) source.extra = source.extra.join('\n')
     // marker so BBT-JSON can be imported without extra-field meddling
-    if (source.extra) source.extra = `\x1BBBT\x1B${source.extra}`
+    if (source.extra) source.extra = `\x1BBBT\x1B${ source.extra }`
 
     // const error = validItem(source)
     // if (error) throw new Error(error)
 
-    const item = new Zotero.Item()
+    const item = (new Zotero.Item)
     Object.assign(item, source)
 
     for (const att of item.attachments || []) {
@@ -99,21 +99,21 @@ export async function doImport(): Promise<void> {
 
   const collections: any[] = Object.values(data.collections || {})
   for (const collection of collections) {
-    collection.zoteroCollection = new Zotero.Collection()
+    collection.zoteroCollection = (new Zotero.Collection)
     collection.zoteroCollection.type = 'collection'
     collection.zoteroCollection.name = collection.name
     collection.zoteroCollection.children = collection.items.filter(id => {
       if (items.has(id)) return true
-      log.error(`Collection ${collection.key} has non-existent item ${id}`)
+      log.error(`Collection ${ collection.key } has non-existent item ${ id }`)
       return false
-    }).map(id => ({type: 'item', id}))
+    }).map(id => ({ type: 'item', id }))
   }
   for (const collection of collections) {
     if (collection.parent && data.collections[collection.parent]) {
       (data.collections[collection.parent] as unknown as any).zoteroCollection.children.push(collection.zoteroCollection)
     }
     else {
-      if (collection.parent) log.error(`Collection ${collection.key} has non-existent parent ${collection.parent}`)
+      if (collection.parent) log.error(`Collection ${ collection.key } has non-existent parent ${ collection.parent }`)
       collection.parent = false
     }
   }
@@ -125,13 +125,13 @@ export async function doImport(): Promise<void> {
 
 function addSelect(item: any) {
   const [ , kind, lib, key ] = item.uri.match(/^https?:\/\/zotero\.org\/(users|groups)\/((?:local\/)?[^/]+)\/items\/(.+)/)
-  item.select = (kind === 'users') ? `zotero://select/library/items/${key}` : `zotero://select/groups/${lib}/items/${key}`
+  item.select = (kind === 'users') ? `zotero://select/library/items/${ key }` : `zotero://select/groups/${ lib }/items/${ key }`
 }
 
 export function doExport(): void {
   const translation = Translation.Export(ZOTERO_TRANSLATOR_INFO, collect())
 
-  const preferences = {...translation.preferences}
+  const preferences = { ...translation.preferences }
   delete preferences.citekeyFormatEditing
   delete preferences.testing
   delete preferences.platform
@@ -142,7 +142,7 @@ export function doExport(): void {
     config: {
       id: ZOTERO_TRANSLATOR_INFO.translatorID,
       label: ZOTERO_TRANSLATOR_INFO.label,
-      preferences : translation.options.Preferences ? preferences : {},
+      preferences: translation.options.Preferences ? preferences : {},
       options: translation.options,
     },
     version: {
@@ -172,7 +172,7 @@ export function doExport(): void {
         default:
           delete item.collections
 
-          if (translation.options.Normalize) simplifyForExport(item, { dropAttachments: translation.options.dropAttachments})
+          if (translation.options.Normalize) simplifyForExport(item, { dropAttachments: translation.options.dropAttachments })
 
           for (const att of item.attachments || []) {
             if (translation.options.exportFileData && att.saveFile && att.defaultPath) {
@@ -191,7 +191,6 @@ export function doExport(): void {
               }
             }
             if (!translation.preferences.testing) addSelect(att)
-
           }
           break
       }

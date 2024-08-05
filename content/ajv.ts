@@ -2,7 +2,7 @@
 import AJV from 'ajv/dist/2020'
 import { discard, simple as log } from './logger'
 
-const options  = {
+const options = {
   strict: false,
   discriminator: true,
   useDefaults: true,
@@ -10,16 +10,16 @@ const options  = {
 }
 
 export const noncoercing = new AJV(options)
-export const coercing = new AJV({...options, coerceTypes: true})
+export const coercing = new AJV({ ...options, coerceTypes: true })
 
 import keywords from 'ajv-keywords'
-for (const ajv of [coercing, noncoercing]) {
+for (const ajv of [ coercing, noncoercing ]) {
   keywords(ajv)
 }
 
 import betterAjvErrors from 'better-ajv-errors'
 
-type AjvError = { error: string, suggestion: string }
+type AjvError = { error: string; suggestion: string }
 
 export function validator(schema, ajv): (data: any) => string { // eslint-disable-line @typescript-eslint/explicit-module-boundary-types
   try {
@@ -27,11 +27,11 @@ export function validator(schema, ajv): (data: any) => string { // eslint-disabl
     return function(data: any): string { // eslint-disable-line prefer-arrow/prefer-arrow-functions
       if (ok(data)) return ''
       return (betterAjvErrors(schema, data, ok.errors, { format: 'js' }) as AjvError[])
-        .map((err: AjvError) => err.error + (err.suggestion ? `, ${err.suggestion}` : '')).join('\n')
+        .map((err: AjvError) => err.error + (err.suggestion ? `, ${ err.suggestion }` : '')).join('\n')
     }
   }
   catch (err) {
-    log.error(`${err}\n${err.stack}`)
+    log.error(`${ err }\n${ err.stack }`)
     throw err
   }
 }

@@ -15,7 +15,7 @@ export const TeXstudio = new class { // eslint-disable-line @typescript-eslint/n
       startup: async () => {
         this.texstudio = await findBinary('texstudio', {
           mac: ['/Applications/texstudio.app/Contents/MacOS'],
-          win: ['C:\\Program Files (x86)\\texstudio', 'C:\\Program Files\\texstudio'],
+          win: [ 'C:\\Program Files (x86)\\texstudio', 'C:\\Program Files\\texstudio' ],
         })
         this.enabled = !!this.texstudio
       },
@@ -41,7 +41,7 @@ export const TeXstudio = new class { // eslint-disable-line @typescript-eslint/n
     if (!citation) return
 
     try {
-      await Zotero.Utilities.Internal.exec(this.texstudio, ['--insert-cite', citation])
+      await Zotero.Utilities.Internal.exec(this.texstudio, [ '--insert-cite', citation ])
     }
     catch (err) {
       log.error('TeXstudio: Could not get execute texstudio:', err)

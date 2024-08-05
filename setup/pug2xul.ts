@@ -70,7 +70,7 @@ const pugs = [
   'content/zotero-preferences.pug',
 ]
 for (const src of pugs) {
-  let tgt = `build/${src.replace(/pug$/, 'xul')}`
+  let tgt = `build/${ src.replace(/pug$/, 'xul') }`
   switch (src) {
     case 'content/Preferences/xul.pug':
     case 'content/Preferences/xhtml.pug':

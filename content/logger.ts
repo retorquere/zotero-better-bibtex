@@ -21,16 +21,16 @@ export const discard = {
 }
 
 function format(msg: string, error?: Error) {
-  const err = error ? ` (${error.message})\n${error.stack}`.trim() : ''
-  return `${error ? 'error: ' : ''}${worker ? 'worker:' : ''}better-bibtex::${msg}${err}`
+  const err = error ? ` (${ error.message })\n${ error.stack }`.trim() : ''
+  return `${ error ? 'error: ' : '' }${ worker ? 'worker:' : '' }better-bibtex::${ msg }${ err }`
 }
 
-function $dump(msg: string, error? : Error): void {
+function $dump(msg: string, error?: Error): void {
   dump(format(msg, error) + '\n')
 }
 
 export function trace(msg: string, mode = ''): void {
-  dump(`trace${mode}\t${Date.now()}\t${msg}\n`)
+  dump(`trace${ mode }\t${ Date.now() }\t${ msg }\n`)
 }
 
 export const simple = {
@@ -59,30 +59,27 @@ export const log = new class Logger {
   protected timestamp: number
   public prefix = ''
 
-  private format({ ascii=true, error=false }, msg) {
+  private format({ ascii = true, error = false }, msg) {
     if (Array.isArray(msg)) msg = msg.map(toString).join(' ')
 
     let prefix = ''
     if (typeof workerEnvironment !== 'undefined') {
       prefix += ' worker'
-      if (typeof TranslationWorker !== 'undefined') prefix += `:${TranslationWorker.job.translator}`
+      if (typeof TranslationWorker !== 'undefined') prefix += `:${ TranslationWorker.job.translator }`
     }
 
     if (error) prefix += ' error:'
     if (ascii) msg = asciify(msg)
 
-    return `{better-bibtex${this.prefix}${prefix}} ${msg}`
+    return `{better-bibtex${ this.prefix }${ prefix }} ${ msg }`
   }
 
   public get enabled(): boolean {
     return (
       (typeof TranslationWorker !== 'undefined' && TranslationWorker.job.debugEnabled)
-      ||
-      !Zotero
-      ||
-      Zotero.Debug?.enabled
-      ||
-      Zotero.Prefs?.get('debug.store')
+      || !Zotero
+      || Zotero.Debug?.enabled
+      || Zotero.Prefs?.get('debug.store')
     ) as boolean
   }
 
@@ -95,11 +92,11 @@ export const log = new class Logger {
   }
 
   public error(...msg) {
-    Zotero.debug(this.format({error: true}, msg))
+    Zotero.debug(this.format({ error: true }, msg))
   }
 
-  public status({ error=false }, ...msg) {
-    if (error || this.enabled) Zotero.debug(this.format({error}, msg))
+  public status({ error = false }, ...msg) {
+    if (error || this.enabled) Zotero.debug(this.format({ error }, msg))
   }
 
   public async timed(msg: string, code: () => void | Promise<void>) {

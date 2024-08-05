@@ -11,7 +11,7 @@ import { PromptService } from './prompt'
 import { Preference } from './prefs'
 
 import { defaults } from '../gen/preferences/meta'
-const supported: string[] = Object.keys(defaults).filter(name => !['client', 'testing', 'platform', 'newTranslatorsAskRestart'].includes(name))
+const supported: string[] = Object.keys(defaults).filter(name => ![ 'client', 'testing', 'platform', 'newTranslatorsAskRestart' ].includes(name))
 
 import { byId } from '../gen/translators'
 import { log } from './logger'
@@ -65,6 +65,7 @@ export class ErrorReport {
     short: string
     tld: string
   }
+
   private timestamp: string
 
   private bucket: string
@@ -84,7 +85,7 @@ export class ErrorReport {
     const version = require('../gen/version.js')
 
     try {
-      await Zotero.HTTP.request('PUT', `${this.bucket}/${this.zipfile()}`, {
+      await Zotero.HTTP.request('PUT', `${ this.bucket }/${ this.zipfile() }`, {
         noCache: true,
         // followRedirects: true,
         // noCache: true,
@@ -100,12 +101,12 @@ export class ErrorReport {
       wizard.advance();
 
       // eslint-disable-next-line no-magic-numbers
-      (<HTMLInputElement>this.document.getElementById('better-bibtex-report-id')).value = `${this.name()}/${version}-${is7 ? 7 : 6}${Zotero.BetterBibTeX.outOfMemory ? '/oom' : ''}`
+      (<HTMLInputElement> this.document.getElementById('better-bibtex-report-id')).value = `${ this.name() }/${ version }-${ is7 ? 7 : 6 }${ Zotero.BetterBibTeX.outOfMemory ? '/oom' : '' }`
       this.document.getElementById('better-bibtex-report-result').hidden = false
     }
     catch (err) {
       log.error('failed to submit', this.name(), err)
-      alert({ text: `${err} (${this.name()}, items: ${!!this.report.items})`, title: Zotero.getString('general.error') })
+      alert({ text: `${ err } (${ this.name() }, items: ${ !!this.report.items })`, title: Zotero.getString('general.error') })
       if (wizard.rewind) wizard.rewind()
     }
   }
@@ -121,8 +122,8 @@ export class ErrorReport {
 
   public restartWithDebugEnabled(): void {
     const buttonFlags = PromptService.BUTTON_POS_0 * PromptService.BUTTON_TITLE_IS_STRING
-        + PromptService.BUTTON_POS_1 * PromptService.BUTTON_TITLE_CANCEL
-        + PromptService.BUTTON_POS_2 * PromptService.BUTTON_TITLE_IS_STRING
+      + PromptService.BUTTON_POS_1 * PromptService.BUTTON_TITLE_CANCEL
+      + PromptService.BUTTON_POS_2 * PromptService.BUTTON_TITLE_IS_STRING
     const index = PromptService.confirmEx(
       null,
       Zotero.getString('zotero.debugOutputLogging'),
@@ -151,37 +152,37 @@ export class ErrorReport {
 
   public zip(): Uint8Array {
     const files: Record<string, Uint8Array> = {}
-    const enc = new TextEncoder()
+    const enc = (new TextEncoder)
 
-    files[`${this.name()}/debug.txt`] = enc.encode(this.report.log)
+    files[`${ this.name() }/debug.txt`] = enc.encode(this.report.log)
 
-    if (this.report.items) files[`${this.name()}/items.json`] = enc.encode(this.report.items)
+    if (this.report.items) files[`${ this.name() }/items.json`] = enc.encode(this.report.items)
     if (this.config.cache) {
-      files[`${this.name()}/database.json`] = enc.encode(JSON.stringify(KeyManager.all()))
-      files[`${this.name()}/cache.json`] = enc.encode(this.report.cache)
+      files[`${ this.name() }/database.json`] = enc.encode(JSON.stringify(KeyManager.all()))
+      files[`${ this.name() }/cache.json`] = enc.encode(this.report.cache)
     }
-    if (this.report.acronyms) files[`${this.name()}/acronyms.csv`] = enc.encode(this.report.acronyms)
+    if (this.report.acronyms) files[`${ this.name() }/acronyms.csv`] = enc.encode(this.report.acronyms)
 
     return new Uint8Array(UZip.encode(files) as ArrayBuffer)
   }
 
   public async save(): Promise<void> {
-    const filename = await pick('Logs', 'save', [['Zip Archive (*.zip)', '*.zip']], `${this.name()}.zip`)
+    const filename = await pick('Logs', 'save', [[ 'Zip Archive (*.zip)', '*.zip' ]], `${ this.name() }.zip`)
     if (filename) await $OS.File.writeAtomic(filename, this.zip(), { tmpPath: filename + '.tmp' })
   }
 
   private async ping(region: string) {
-    await Zotero.HTTP.request('GET', `https://s3.${region}.amazonaws.com${s3.region[region].tld || ''}/ping`, { noCache: true })
+    await Zotero.HTTP.request('GET', `https://s3.${ region }.amazonaws.com${ s3.region[region].tld || '' }/ping`, { noCache: true })
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return { region, ...s3.region[region] }
   }
 
   private setValue(id: string, value: string) {
-    const text = <HTMLInputElement>this.document.getElementById(id)
+    const text = <HTMLInputElement> this.document.getElementById(id)
     text.value = value
     text.hidden = !value
 
-    const tab = <HTMLInputElement>this.document.getElementById(`${id}-tab`)
+    const tab = <HTMLInputElement> this.document.getElementById(`${ id }-tab`)
     if (tab) tab.hidden = !value
   }
 
@@ -236,7 +237,7 @@ export class ErrorReport {
       delete creator.multi
     }
 
-    for (const details of ['attachments', 'notes']) {
+    for (const details of [ 'attachments', 'notes' ]) {
       if (item[details]) {
         item[details] = item[details].filter(detail => this.cleanItem(detail))
       }
@@ -276,7 +277,7 @@ export class ErrorReport {
       if (facet === 'notes' || facet === 'attachments') cb.disabled = !this.config.items
     }
 
-    this.report = {...this.input}
+    this.report = { ...this.input }
 
     if (!this.config.items) delete this.report.items
     if (this.report.items) {
@@ -287,7 +288,7 @@ export class ErrorReport {
       delete lib.config.options
 
       if (lib.config.preferences) {
-        for (const [pref, value] of Object.entries(lib.config.preferences)) {
+        for (const [ pref, value ] of Object.entries(lib.config.preferences)) {
           if (!supported.includes(pref) || value === defaults[pref]) delete lib.config.preferences[pref]
         }
       }
@@ -312,11 +313,11 @@ export class ErrorReport {
     ].filter(chunk => chunk).join('\n\n')
   }
 
-  public async load(win: Window & { ErrorReport: ErrorReport, arguments: any[] }): Promise<void> {
+  public async load(win: Window & { ErrorReport: ErrorReport; arguments: any[] }): Promise<void> {
     this.document = win.document
     win.ErrorReport = this
 
-    this.timestamp = (new Date()).toISOString().replace(/\..*/, '').replace(/:/g, '.')
+    this.timestamp = ((new Date)).toISOString().replace(/\..*/, '').replace(/:/g, '.')
 
     const wizard: Wizard = this.document.getElementById('better-bibtex-error-report') as Wizard
     wizard.getPageById('page-enable-debug').addEventListener('pageshow', this.show.bind(this))
@@ -335,7 +336,7 @@ export class ErrorReport {
 
     this.input = {
       context: await this.context(),
-      errors: `${Zotero.BetterBibTeX.outOfMemory}\n${this.errors()}`.trim(),
+      errors: `${ Zotero.BetterBibTeX.outOfMemory }\n${ this.errors() }`.trim(),
       // # 1896
       log: this.log(),
       items: win.arguments[0].wrappedJSObject.items,
@@ -352,7 +353,7 @@ export class ErrorReport {
     try {
       const latest = await this.latest()
 
-      const show_latest = <HTMLInputElement>this.document.getElementById('better-bibtex-report-latest')
+      const show_latest = <HTMLInputElement> this.document.getElementById('better-bibtex-report-latest')
       if (current === latest) {
         show_latest.hidden = true
       }
@@ -361,10 +362,10 @@ export class ErrorReport {
         show_latest.hidden = false
       }
 
-      (<HTMLInputElement>this.document.getElementById('better-bibtex-report-oom')).hidden = !Zotero.BetterBibTeX.outOfMemory
+      (<HTMLInputElement> this.document.getElementById('better-bibtex-report-oom')).hidden = !Zotero.BetterBibTeX.outOfMemory
 
       this.region = await Zotero.Promise.any(Object.keys(s3.region).map(this.ping.bind(this)))
-      this.bucket = `https://${s3.bucket}-${this.region.short}.s3-${this.region.region}.amazonaws.com${this.region.tld || ''}`
+      this.bucket = `https://${ s3.bucket }-${ this.region.short }.s3-${ this.region.region }.amazonaws.com${ this.region.tld || '' }`
       this.key = Zotero.Utilities.generateObjectKey()
 
       continueButton.disabled = false
@@ -372,25 +373,26 @@ export class ErrorReport {
     }
     catch (err) {
       log.error('errorreport:', err)
-      alert({ text: `No AWS region can be reached: ${err.message}` })
+      alert({ text: `No AWS region can be reached: ${ err.message }` })
       wizard.getButton('cancel').disabled = false
     }
   }
 
   private name() {
-    return `${this.key}${this.report.items ? '-refs' : ''}-${this.region.short}`
+    return `${ this.key }${ this.report.items ? '-refs' : '' }-${ this.region.short }`
   }
+
   private zipfile() {
-    return `${this.name()}-${this.timestamp}.zip`
+    return `${ this.name() }-${ this.timestamp }.zip`
   }
 
   private preview(input: any): string {
     const previewSize = this.previewSize * kB
-    if (typeof input === 'string') return input.length > previewSize ? `${input.substr(0, previewSize)} ...` : input
+    if (typeof input === 'string') return input.length > previewSize ? `${ input.substr(0, previewSize) } ...` : input
 
     let trail = ''
     if (input.items.length > this.previewSize) {
-      trail = `\n... + ${input.items.length - this.previewSize} more items`
+      trail = `\n... + ${ input.items.length - this.previewSize } more items`
       input = { ...input, items: input.items.slice(0, this.previewSize) }
     }
     return JSON.stringify(input, null, 2) + trail
@@ -401,54 +403,54 @@ export class ErrorReport {
     let context = ''
 
     const appInfo = Components.classes['@mozilla.org/xre/app-info;1'].getService(Components.interfaces.nsIXULAppInfo)
-    context += `Application: ${appInfo.name} (${Zotero.clientName}) ${appInfo.version} ${Zotero.locale}\n`
-    context += `Platform: ${platform.name}\n`
+    context += `Application: ${ appInfo.name } (${ Zotero.clientName }) ${ appInfo.version } ${ Zotero.locale }\n`
+    context += `Platform: ${ platform.name }\n`
 
     const addons = await Zotero.getInstalledExtensions()
     if (addons.length) {
       context += 'Addons:\n'
       for (const addon of addons) {
-        context += `  ${addon}\n`
+        context += `  ${ addon }\n`
       }
     }
 
     context += 'Settings:\n'
     const settings = { default: '', set: '' }
-    for (const [key, value] of Object.entries(Preference.all)) {
-      settings[value === defaults[key] ? 'default' : 'set'] += `  ${key} = ${JSON.stringify(value)}\n`
+    for (const [ key, value ] of Object.entries(Preference.all)) {
+      settings[value === defaults[key] ? 'default' : 'set'] += `  ${ key } = ${ JSON.stringify(value) }\n`
     }
-    if (settings.default) settings.default = `Settings at default:\n${settings.default}`
+    if (settings.default) settings.default = `Settings at default:\n${ settings.default }`
     context += settings.set + settings.default
 
     for (const key of ['export.quickCopy.setting']) {
-      context += `  Zotero: ${key} = ${JSON.stringify(Zotero.Prefs.get(key))}\n`
+      context += `  Zotero: ${ key } = ${ JSON.stringify(Zotero.Prefs.get(key)) }\n`
     }
 
     const autoExports = await AutoExport.all()
     if (autoExports.length) {
       context += 'Auto-exports:\n'
       for (const ae of autoExports) {
-        context += `  path: ...${JSON.stringify($OS.Path.split(ae.path).components.pop())}`
+        context += `  path: ...${ JSON.stringify($OS.Path.split(ae.path).components.pop()) }`
         switch (ae.type) {
           case 'collection':
-            context += ` (${Zotero.Collections.get(ae.id)?.name || '<collection>'})`
+            context += ` (${ Zotero.Collections.get(ae.id)?.name || '<collection>' })`
             break
           case 'library':
-            context += ` (${Zotero.Libraries.get(ae.id)?.name || '<library>'})`
+            context += ` (${ Zotero.Libraries.get(ae.id)?.name || '<library>' })`
             break
         }
         context += '\n'
-        for (const [k, v] of Object.entries(ae)) {
+        for (const [ k, v ] of Object.entries(ae)) {
           if (k === 'path') continue
-          context += `    ${k}: ${JSON.stringify(v)}`
-          if (k === 'translatorID' && byId[v as string]) context += ` (${byId[v as string].label})`
+          context += `    ${ k }: ${ JSON.stringify(v) }`
+          if (k === 'translatorID' && byId[v as string]) context += ` (${ byId[v as string].label })`
           context += '\n'
         }
       }
     }
 
-    context += `Zotero.Debug.storing: ${Zotero.Debug.storing}\n`
-    context += `Zotero.Debug.storing at start: ${Zotero.BetterBibTeX.debugEnabledAtStart}\n`
+    context += `Zotero.Debug.storing: ${ Zotero.Debug.storing }\n`
+    context += `Zotero.Debug.storing at start: ${ Zotero.BetterBibTeX.debugEnabledAtStart }\n`
 
     return context
   }

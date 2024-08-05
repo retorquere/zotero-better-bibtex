@@ -12,7 +12,7 @@ export async function pick(title: string, mode: 'open' | 'save' | 'folder', filt
 
   fp.init(window, title, mode)
 
-  for (const [label, ext] of (filters || [])) {
+  for (const [ label, ext ] of (filters || [])) {
     fp.appendFilter(label, ext)
   }
 

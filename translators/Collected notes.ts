@@ -20,7 +20,7 @@ function clean(item: Item): Item {
     case 'attachment':
       return item
   }
-  const cleaned: Item = {...item, extra: Extra.get(item.extra, 'zotero').extra }
+  const cleaned: Item = { ...item, extra: Extra.get(item.extra, 'zotero').extra }
   cleaned.extra = cleaned.extra.split('\n').filter(line => !line.match(/^OCLC:/i)).join('\n')
   return cleaned
 }
@@ -54,7 +54,7 @@ class Exporter {
       if (this.keep(cleaned)) items[item.itemID] = cleaned
     }
 
-    for (const [key, collection] of Object.entries(this.translation.collections)) {
+    for (const [ key, collection ] of Object.entries(this.translation.collections)) {
       for (const itemID of collection.items) filed.add(itemID)
 
       collections[key] = {
@@ -67,7 +67,7 @@ class Exporter {
       }
     }
 
-    for (const [key, collection] of Object.entries(this.translation.collections)) {
+    for (const [ key, collection ] of Object.entries(this.translation.collections)) {
       collections[key].collections = (collection.collections || []).map(coll => collections[coll]).filter(coll => coll)
     }
 
@@ -80,12 +80,12 @@ class Exporter {
 
     let style = '\n  body {\n    counter-reset: h1;\n  }\n\n'
     for (let level = 1; level <= this.levels; level++) {
-      if (level !== this.levels) style += `  h${level} {\n    counter-reset: h${level + 1};\n  }\n`
+      if (level !== this.levels) style += `  h${ level } {\n    counter-reset: h${ level + 1 };\n  }\n`
 
-      style += `  h${level}:before {\n`
-      const label = Array.from({length: level}, (_x, i) => `counter(h${ i + 1 }, decimal)`).join(' "." ')
-      style += `    content: ${label} ".\\0000a0\\0000a0";\n`
-      style += `    counter-increment: h${level};\n`
+      style += `  h${ level }:before {\n`
+      const label = Array.from({ length: level }, (_x, i) => `counter(h${ i + 1 }, decimal)`).join(' "." ')
+      style += `    content: ${ label } ".\\0000a0\\0000a0";\n`
+      style += `    counter-increment: h${ level };\n`
       style += '  }\n\n'
     }
     style += '  blockquote { border-left: 1px solid gray; }\n'
@@ -147,7 +147,7 @@ class Exporter {
   }
 
   creator(cr) {
-    return [cr.lastName, cr.name, cr.firstName].find(v => v) || ''
+    return [ cr.lastName, cr.name, cr.firstName ].find(v => v) || ''
   }
 
   creators(cr: string[]): string {
@@ -158,7 +158,7 @@ class Exporter {
       case 2:
         return cr.join(' and ')
       default:
-        return `${cr.slice(0, cr.length - 1).join(', ')}, and ${cr[cr.length - 1]}`
+        return `${ cr.slice(0, cr.length - 1).join(', ') }, and ${ cr[cr.length - 1] }`
     }
   }
 
@@ -167,9 +167,8 @@ class Exporter {
     let title = ''
 
     if (item.itemType === 'attachment') {
-      if (item.note) notes = [ { note: item.note } ]
+      if (item.note) notes = [{ note: item.note }]
       if (item.title) title = `<samp>${ escape.html(item.title) }</samp>`
-
     }
     else {
       notes = (item.notes || []).filter(note => note.note)
@@ -183,7 +182,7 @@ class Exporter {
         date = typeof date.year === 'number' ? date.year : item.date
       }
 
-      const author = [creators, date].filter(v => v).join(', ')
+      const author = [ creators, date ].filter(v => v).join(', ')
 
       if (item.title) title += `<i>${ escape.html(item.title) }</i>`
       if (author) title += ` (${ escape.html(author) })`

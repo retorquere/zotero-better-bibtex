@@ -11,9 +11,9 @@ const skip = new Set([ 'keepUpdated', 'worker', 'exportFileData' ])
 
 export function exportContext(translator: string, displayOptions: Partial<Translator.DisplayOptions>): string {
   const defaultOptions = bySlug[translator.replace(/ /g, '')]?.displayOptions
-  if (!defaultOptions) throw new Error(`Unexpected translator ${translator}`)
+  if (!defaultOptions) throw new Error(`Unexpected translator ${ translator }`)
   const valid = new Set(Object.keys(defaultOptions).filter(option => !skip.has(option)))
-  return JSON.stringify(Object.entries({ ...defaultOptions, ...displayOptions }).filter(([k, _v]) => valid.has(k)).sort((a, b) => a[0].localeCompare(b[0])))
+  return JSON.stringify(Object.entries({ ...defaultOptions, ...displayOptions }).filter(([ k, _v ]) => valid.has(k)).sort((a, b) => a[0].localeCompare(b[0])))
 }
 
 export type ExportContext = {
@@ -53,26 +53,26 @@ interface Schema extends DBSchema {
   BetterBibLaTeX: {
     value: ExportedItem
     key: [number, number]
-    indexes: { context: number, itemID: number, 'context-itemID': [ number, number ] }
+    indexes: { context: number; itemID: number; 'context-itemID': [ number, number ] }
   }
   BetterBibTeX: {
     value: ExportedItem
     key: [number, number]
-    indexes: { context: number, itemID: number, 'context-itemID': [ number, number ] }
+    indexes: { context: number; itemID: number; 'context-itemID': [ number, number ] }
   }
   BetterCSLJSON: {
     value: ExportedItem
     key: [number, number]
-    indexes: { context: number, itemID: number, 'context-itemID': [ number, number ] }
+    indexes: { context: number; itemID: number; 'context-itemID': [ number, number ] }
   }
   BetterCSLYAML: {
     value: ExportedItem
     key: [number, number]
-    indexes: { context: number, itemID: number, 'context-itemID': [ number, number ] }
+    indexes: { context: number; itemID: number; 'context-itemID': [ number, number ] }
   }
 
   metadata: {
-    value: { key: string, value: string | number }
+    value: { key: string; value: string | number }
     key: string
   }
 }
@@ -141,7 +141,7 @@ export class ExportCache {
         cursor = await cursor.continue()
       }
     }
-    await Promise.all([...deletes, tx.done])
+    await Promise.all([ ...deletes, tx.done ])
   }
 
   public async clear(path: string): Promise<void> {
@@ -149,7 +149,7 @@ export class ExportCache {
   }
 
   public async remove(path: string, deleteContext = true): Promise<void> {
-    const stores: Array<'ExportContext' | ExportCacheName> = deleteContext ? [this.name, 'ExportContext'] : [ this.name ]
+    const stores: Array<'ExportContext' | ExportCacheName> = deleteContext ? [ this.name, 'ExportContext' ] : [this.name]
     const tx = this.db.transaction(stores, 'readwrite')
     const deletes: Promise<void>[] = []
 
@@ -166,15 +166,15 @@ export class ExportCache {
       if (key) deletes.push(context.delete(key))
     }
 
-    await Promise.all([...deletes, tx.done])
+    await Promise.all([ ...deletes, tx.done ])
   }
 
   public async count(path: string): Promise<number> {
     return await this.db.countFromIndex(this.name as 'BetterBibTeX', 'context', IDBKeyRange.only(path))
   }
 
-  public async load(path: string): Promise<{ context: number, items: Map<number, ExportedItem>}> {
-    const stores: Array<'ExportContext' | ExportCacheName> = [this.name, 'ExportContext']
+  public async load(path: string): Promise<{ context: number; items: Map<number, ExportedItem> }> {
+    const stores: Array<'ExportContext' | ExportCacheName> = [ this.name, 'ExportContext' ]
     const tx = this.db.transaction(stores, 'readwrite')
 
     let context: number
@@ -213,7 +213,7 @@ export class ExportCache {
 
   public async store(items: ExportedItem[]): Promise<void> {
     const tx = this.db.transaction(this.name, 'readwrite')
-    await Promise.all([...items.map(item => tx.store.put(item)), tx.done])
+    await Promise.all([ ...items.map(item => tx.store.put(item)), tx.done ])
   }
 }
 
@@ -232,7 +232,7 @@ class ZoteroSerialized {
     items = items.filter(item => this.cachable(item))
     if (!items.length) return
 
-    let tx = this.db.transaction(['ZoteroSerialized', 'touched'], 'readwrite')
+    let tx = this.db.transaction([ 'ZoteroSerialized', 'touched' ], 'readwrite')
     let store = tx.objectStore('ZoteroSerialized')
     const cached = new Set(await store.getAllKeys())
     const touched = tx.objectStore('touched')
@@ -250,7 +250,7 @@ class ZoteroSerialized {
       return true
     })
 
-    await Promise.all([ ...[...purge].map(id => store.delete(id)), touched.clear(), tx.done])
+    await Promise.all([ ...[...purge].map(id => store.delete(id)), touched.clear(), tx.done ])
 
     const current = (items.length - fill.length) / items.length
     this.filled = (current - this.filled) * this.smoothing + this.filled
@@ -260,7 +260,7 @@ class ZoteroSerialized {
       tx = this.db.transaction(['ZoteroSerialized'], 'readwrite')
       store = tx.objectStore('ZoteroSerialized')
       const puts = serialized.map(item => store.put(item))
-      await Promise.all([...puts, tx.done])
+      await Promise.all([ ...puts, tx.done ])
     }
   }
 
@@ -277,23 +277,23 @@ class ZoteroSerialized {
     }
     await tx.done
 
-    if (ids.length !== items.length) log.error(`indexed: failed to fetch ${ids.length - items.length} items`)
+    if (ids.length !== items.length) log.error(`indexed: failed to fetch ${ ids.length - items.length } items`)
     return items
   }
 
   public async touch(ids: number[]): Promise<void> {
     const tx = this.db.transaction('touched', 'readwrite')
     const puts = ids.map(id => tx.store.put(true, id))
-    await Promise.all([...puts, tx.done])
+    await Promise.all([ ...puts, tx.done ])
   }
 
   public async purge(): Promise<void> {
-    const tx = this.db.transaction(['ZoteroSerialized', 'touched'], 'readwrite')
+    const tx = this.db.transaction([ 'ZoteroSerialized', 'touched' ], 'readwrite')
     const store = tx.objectStore('ZoteroSerialized')
     const touched = tx.objectStore('touched')
 
     const purge = (await touched.getAllKeys()).map(id => store.delete(id))
-    await Promise.all([...purge, touched.clear(), tx.done])
+    await Promise.all([ ...purge, touched.clear(), tx.done ])
   }
 }
 
@@ -330,10 +330,10 @@ export const Cache = new class $Cache {
         context.createIndex('context', 'context', { unique: true })
 
         const stores = [
-          db.createObjectStore('BetterBibTeX', { keyPath: [ 'context', 'itemID' ] }),
-          db.createObjectStore('BetterBibLaTeX', { keyPath: [ 'context', 'itemID' ] }),
-          db.createObjectStore('BetterCSLJSON', { keyPath: [ 'context', 'itemID' ] }),
-          db.createObjectStore('BetterCSLYAML', { keyPath: [ 'context', 'itemID' ] }),
+          db.createObjectStore('BetterBibTeX', { keyPath: [ 'context', 'itemID' ]}),
+          db.createObjectStore('BetterBibLaTeX', { keyPath: [ 'context', 'itemID' ]}),
+          db.createObjectStore('BetterCSLJSON', { keyPath: [ 'context', 'itemID' ]}),
+          db.createObjectStore('BetterCSLYAML', { keyPath: [ 'context', 'itemID' ]}),
         ]
         for (const store of stores) {
           store.createIndex('context', 'context')
@@ -353,11 +353,11 @@ export const Cache = new class $Cache {
     if (lastUpdated) {
       const clear = [
         lastUpdated > (await this.db.get('metadata', 'lastUpdated') || '') ? 'store gap' : '',
-        Zotero.version !== (await this.db.get('metadata', 'Zotero') || '') ? `Zotero version changed to ${Zotero.version}` : '',
-        version !== (await this.db.get('metadata', 'BetterBibteX') || '') ? `Better BibTeX version changed to ${version}` : '',
+        Zotero.version !== (await this.db.get('metadata', 'Zotero') || '') ? `Zotero version changed to ${ Zotero.version }` : '',
+        version !== (await this.db.get('metadata', 'BetterBibteX') || '') ? `Better BibTeX version changed to ${ version }` : '',
       ].filter(reason => reason)
       if (clear.length) {
-        log.info(`clearing cache: ${clear.join(', ')}`)
+        log.info(`clearing cache: ${ clear.join(', ') }`)
         for (const store of this.db.objectStoreNames) {
           switch (store) {
             case 'metadata':
@@ -378,11 +378,11 @@ export const Cache = new class $Cache {
 
   public async touch(ids: number[]): Promise<void> {
     if (ids.length) {
-      for (const store of [this.ZoteroSerialized, this.BetterBibTeX, this.BetterBibLaTeX, this.BetterCSLJSON, this.BetterCSLYAML ]) {
+      for (const store of [ this.ZoteroSerialized, this.BetterBibTeX, this.BetterBibLaTeX, this.BetterCSLJSON, this.BetterCSLYAML ]) {
         await store.touch(ids)
       }
     }
-    await this.db.put('metadata', Zotero.Date.dateToSQL(new Date(), true), 'lastUpdated')
+    await this.db.put('metadata', Zotero.Date.dateToSQL((new Date), true), 'lastUpdated')
   }
 
   public cache(store: string): ExportCache {

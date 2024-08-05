@@ -6,16 +6,16 @@ declare var ZOTERO_TRANSLATOR_INFO: Translators.Header // eslint-disable-line no
 
 function node(id, attributes = {}) {
   let n = JSON.stringify(id)
-  const attrs = Object.entries(attributes).map(([key, value]) => `${key}=${JSON.stringify(value)}`).join(', ')
-  if (attrs) n += ` [${attrs}]`
-  return `  ${n};\n`
+  const attrs = Object.entries(attributes).map(([ key, value ]) => `${ key }=${ JSON.stringify(value) }`).join(', ')
+  if (attrs) n += ` [${ attrs }]`
+  return `  ${ n };\n`
 }
 
 function edge(source, target, attributes = {}) {
-  let e = `${JSON.stringify(source)} -> ${JSON.stringify(target)}`
-  const attrs = Object.entries(attributes).map(([key, value]) => `${key}=${JSON.stringify(value)}`).join(', ')
-  if (attrs) e += ` [${attrs}]`
-  return `  ${e};\n`
+  let e = `${ JSON.stringify(source) } -> ${ JSON.stringify(target) }`
+  const attrs = Object.entries(attributes).map(([ key, value ]) => `${ key }=${ JSON.stringify(value) }`).join(', ')
+  if (attrs) e += ` [${ attrs }]`
+  return `  ${ e };\n`
 }
 
 type Item = {
@@ -41,27 +41,27 @@ export function doExport(): void {
 
   const items: Item[] = []
   for (const ref of translation.input.items.regular) {
-    const label = [ ref.citationKey ]
+    const label = [ref.citationKey]
 
     if (add.title && ref.title) {
-      label.push(`\u201C${ref.title.replace(/"/g, "'")}\u201D`)
+      label.push(`\u201C${ ref.title.replace(/"/g, '\'') }\u201D`)
     }
 
     const author = []
     if (add.authors && ref.creators && ref.creators.length) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      const name = ref.creators?.map(creator => (creator.name || creator.lastName || '').replace(/"/g, "'")).filter(creator => creator).join(', ')
+      const name = ref.creators?.map(creator => (creator.name || creator.lastName || '').replace(/"/g, '\'')).filter(creator => creator).join(', ')
       if (name) author.push(name)
     }
     if (add.year && ref.date) {
       let date = Zotero.BetterBibTeX.parseDate(ref.date)
       if (date.from) date = date.from
-      if (date.year) author.push(`(${date.year})`)
+      if (date.year) author.push(`(${ date.year })`)
     }
     if (author.length) label.push(author.join(' '))
 
     items.push({
-      id: `node-${items.length}`,
+      id: `node-${ items.length }`,
       label: label.join('\n'),
       relations: (ref.relations?.['dc:relation'] || []),
       // eslint-disable-next-line prefer-spread

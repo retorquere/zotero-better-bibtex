@@ -35,15 +35,15 @@ export class JabRef {
 
     if (this.groups.length === 1) return ''
 
-    let groups = `@comment{jabref-meta: ${meta};}\n`
-    groups += `@comment{jabref-meta: ${this.translation.preferences.jabrefFormat === 5 ? 'grouping' : 'groupstree'}:\n`
+    let groups = `@comment{jabref-meta: ${ meta };}\n`
+    groups += `@comment{jabref-meta: ${ this.translation.preferences.jabrefFormat === 5 ? 'grouping' : 'groupstree' }:\n`
     groups += this.groups.map(group => this.quote(group, true)).concat('').join(';\n')
     groups += '}\n'
     return groups
   }
 
   private exportGroup(collection, level: number): void {
-    let group = [`${level} ${this.translation.preferences.jabrefFormat === 5 ? 'Static' : 'Explicit'}Group:${this.quote(collection.name)}`, '0']
+    let group = [ `${ level } ${ this.translation.preferences.jabrefFormat === 5 ? 'Static' : 'Explicit' }Group:${ this.quote(collection.name) }`, '0' ]
 
     if (this.translation.preferences.jabrefFormat === 3) {
       const items = ((collection.items || []).filter(id => this.citekeys.has(id)).map(id => this.quote(this.citekeys.get(id))))
@@ -52,7 +52,7 @@ export class JabRef {
     }
 
     if (this.translation.preferences.jabrefFormat === 5) {
-      group = group.concat(['1', '0x8a8a8aff', '', '']) // isexpanded?, color, icon, description
+      group = group.concat([ '1', '0x8a8a8aff', '', '' ]) // isexpanded?, color, icon, description
     }
     else {
       group.push('') // what is the meaning of the empty cell at the end, JabRef?
@@ -68,7 +68,7 @@ export class JabRef {
     }
   }
 
-  private quote(s:string, wrap = false): string {
+  private quote(s: string, wrap = false): string {
     s = s.replace(/([\\;])/g, '\\$1')
     if (wrap) s = s.match(/.{1,70}/g).join('\n')
     return s

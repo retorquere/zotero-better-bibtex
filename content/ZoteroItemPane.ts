@@ -101,7 +101,7 @@ export class ZoteroItemPane {
 
       label.hidden = value.hidden = !citationKey
 
-      label.value = `${pinned ? icons.pin : ''}${l10n.localize('better-bibtex_item-pane_info_citation-key.label')}`
+      label.value = `${ pinned ? icons.pin : '' }${ l10n.localize('better-bibtex_item-pane_info_citation-key.label') }`
       value.value = citationKey
     })
 

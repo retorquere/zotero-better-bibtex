@@ -11,19 +11,18 @@ export function stable_stringify(obj: any, replacer?: any, indent?: string | num
 
 function stringifyXPCOM(obj): string {
   if (!obj.QueryInterface) return ''
-  if (obj.message) return `[XPCOM error ${obj.message}]`
-  if (obj.name) return `[XPCOM object ${obj.name}]`
+  if (obj.message) return `[XPCOM error ${ obj.message }]`
+  if (obj.name) return `[XPCOM object ${ obj.name }]`
   return '[XPCOM object]'
 }
 
 function stringifyError(obj) {
-  if (obj instanceof Error) return `[error: ${obj.message || '<unspecified error>'}\n${obj.stack}]`
+  if (obj instanceof Error) return `[error: ${ obj.message || '<unspecified error>' }\n${ obj.stack }]`
   // guess it is an errorevent
-  if (obj.error instanceof Error && obj.message) return `[errorevent: ${obj.message} ${stringifyError(obj.error)}]`
-  if (typeof ErrorEvent !== 'undefined' && obj instanceof ErrorEvent) return `[errorevent: ${obj.message || '<unspecified errorevent>'}]`
+  if (obj.error instanceof Error && obj.message) return `[errorevent: ${ obj.message } ${ stringifyError(obj.error) }]`
+  if (typeof ErrorEvent !== 'undefined' && obj instanceof ErrorEvent) return `[errorevent: ${ obj.message || '<unspecified errorevent>' }]`
   return ''
 }
-
 
 function $stringify(key, value, cache): any {
   switch (typeof value) {
@@ -33,7 +32,7 @@ function $stringify(key, value, cache): any {
     case 'undefined':
       return value
     case 'function':
-      return `[function ${key}]`
+      return `[function ${ key }]`
   }
 
   if (value === null) return value
@@ -71,7 +70,7 @@ export function stringify(obj, indent: number | string = 0, ucode?: boolean) { /
         return $stringify(key, value, cache)
       }
       catch (err) {
-        return `[stringify error: ${err}\n${err.stack}]`
+        return `[stringify error: ${ err }\n${ err.stack }]`
       }
     },
     indent

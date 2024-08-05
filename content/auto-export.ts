@@ -35,7 +35,7 @@ function win_quote(s: string, forCmd = true): string {
   if (forCmd && cmdMeta.test(s)) {
     if (!cmdMetaInsideQuotes.test(s)) {
       const m = s.match(/\\+$/)
-      return m ? `"${s}${m[0]}"` : `"${s}"`
+      return m ? `"${ s }${ m[0] }"` : `"${ s }"`
     }
     if (/[\\"]/.test(s)) s = win_quote(s, false)
     return s.replace(cmdMeta, '^$1')
@@ -44,7 +44,7 @@ function win_quote(s: string, forCmd = true): string {
   const parts = []
   parts.push('"')
   for (const match of s.matchAll(/(\\*)(["+])|(\\+)|([^\\"]+)/g)) {
-    const [, slashes, quotes, onlySlashes, text] = match
+    const [ , slashes, quotes, onlySlashes, text ] = match
     if (quotes) {
       parts.push(slashes)
       parts.push(slashes)
@@ -69,10 +69,11 @@ function quote(cmd: string[]): string {
 }
 
 export const SQL = new class {
-  public columns: { job: JobSetting[], editable: JobSetting[] } = {
+  public columns: { job: JobSetting[]; editable: JobSetting[] } = {
     job: [ 'type', 'id', 'translatorID', 'path' ],
     editable: [ 'enabled', 'recursive', 'status', 'error', 'updated' ],
   }
+
   public sql = {
     create: 'REPLACE INTO betterbibtex.autoexport',
     setting: 'REPLACE INTO betterbibtex.autoexport_setting (path, setting, value) VALUES (:path, :setting, :value)',
@@ -80,25 +81,25 @@ export const SQL = new class {
 
   constructor() {
     this.columns.job = this.columns.job.concat(this.columns.editable)
-    this.sql.create += ` (${this.columns.job.join(',')}) VALUES (${this.columns.job.map(col => `:${col}`)})`
+    this.sql.create += ` (${ this.columns.job.join(',') }) VALUES (${ this.columns.job.map(col => `:${ col }`) })`
   }
 
   public async get(path: string): Promise<Job> {
     const job: Partial<Job> = {}
 
-    if (typeof path !== 'string') throw new Error(`ae:sql:get: ${path} is not a string but a ${typeof path}`)
+    if (typeof path !== 'string') throw new Error(`ae:sql:get: ${ path } is not a string but a ${ typeof path }`)
 
-    for (const meta of await Zotero.DB.queryAsync('SELECT * FROM betterbibtex.autoexport WHERE path = ?', [ path ])) {
+    for (const meta of await Zotero.DB.queryAsync('SELECT * FROM betterbibtex.autoexport WHERE path = ?', [path])) {
       Object.assign(job, pick(meta, this.columns.job))
     }
 
     const settings = autoExport[job.translatorID]
-    const displayOptions = {...(byId[job.translatorID]?.displayOptions || {})}
+    const displayOptions = { ...(byId[job.translatorID]?.displayOptions || {}) }
     Object.assign(job, pick(Preference, settings.preferences))
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     Object.assign(job, fromPairs(settings.options.map((option: PreferenceName) => [ option, job[option] ?? displayOptions[option] ?? false ])))
 
-    for (const { setting, value } of await Zotero.DB.queryAsync('SELECT setting, value FROM betterbibtex.autoexport_setting WHERE PATH = ?', [ path ])) {
+    for (const { setting, value } of await Zotero.DB.queryAsync('SELECT setting, value FROM betterbibtex.autoexport_setting WHERE PATH = ?', [path])) {
       job[setting] = value
     }
 
@@ -108,7 +109,7 @@ export const SQL = new class {
   public async edit(path: string, setting: JobSetting, value: boolean | number | string): Promise<void> {
     if (typeof value === 'boolean') value = value ? 1 : 0
     if (this.columns.editable.includes(setting)) {
-      await Zotero.DB.queryTx(`UPDATE betterbibtex.autoexport SET ${setting} = ? WHERE path = ?`, [ value, path ])
+      await Zotero.DB.queryTx(`UPDATE betterbibtex.autoexport SET ${ setting } = ? WHERE path = ?`, [ value, path ])
     }
     else {
       await Zotero.DB.queryTx(this.sql.setting, { setting, path, value }, NoParse)
@@ -128,7 +129,7 @@ export const SQL = new class {
     job.updated = job.updated || Date.now()
     job.enabled = true
 
-    for (const [k, v] of Object.entries(job)) {
+    for (const [ k, v ] of Object.entries(job)) {
       if (typeof v === 'boolean') job[k] = v ? 1 : 0
     }
 
@@ -152,8 +153,8 @@ export const SQL = new class {
 
   public async find(type: string, ids: number[]): Promise<string[]> {
     if (!ids.length) return []
-    const select = `SELECT path FROM betterbibtex.autoexport WHERE type = ? AND id IN (${this.paramSet(ids)}) ORDER BY path`
-    return (await Zotero.DB.columnQueryAsync(select, [type, ...ids])) as string[]
+    const select = `SELECT path FROM betterbibtex.autoexport WHERE type = ? AND id IN (${ this.paramSet(ids) }) ORDER BY path`
+    return (await Zotero.DB.columnQueryAsync(select, [ type, ...ids ])) as string[]
   }
 
   public paramSet(arr: any[]): string {
@@ -242,7 +243,7 @@ class Git {
     }
 
     const sep = Zotero.isWin ? '\\' : '/'
-    if (bib[repo.path.length] !== sep) throw new Error(`git.repo: ${bib} not in directory ${repo.path} (${bib[repo.path.length]} vs ${sep})?!`)
+    if (bib[repo.path.length] !== sep) throw new Error(`git.repo: ${ bib } not in directory ${ repo.path } (${ bib[repo.path.length] } vs ${ sep })?!`)
 
     repo.enabled = true
     repo.bib = bib.substring(repo.path.length + 1)
@@ -254,15 +255,15 @@ class Git {
     if (!this.enabled) return
 
     try {
-      await this.exec(this.git, ['-C', this.path, 'checkout', this.bib])
-      await this.exec(this.git, ['-C', this.path, 'pull'])
+      await this.exec(this.git, [ '-C', this.path, 'checkout', this.bib ])
+      await this.exec(this.git, [ '-C', this.path, 'pull' ])
       // fixes #2356
       await Zotero.Promise.delay(2000)
-      await this.exec(this.git, ['-C', this.path, 'pull'])
+      await this.exec(this.git, [ '-C', this.path, 'pull' ])
     }
     catch (err) {
       flash('autoexport git pull failed', err.message, 1)
-      log.error(`could not pull in ${this.path}:`, err.message, err)
+      log.error(`could not pull in ${ this.path }:`, err.message, err)
     }
   }
 
@@ -270,13 +271,13 @@ class Git {
     if (!this.enabled) return
 
     try {
-      await this.exec(this.git, ['-C', this.path, 'add', this.bib])
-      await this.exec(this.git, ['-C', this.path, 'commit', '-m', msg])
-      await this.exec(this.git, ['-C', this.path, 'push'])
+      await this.exec(this.git, [ '-C', this.path, 'add', this.bib ])
+      await this.exec(this.git, [ '-C', this.path, 'commit', '-m', msg ])
+      await this.exec(this.git, [ '-C', this.path, 'push' ])
     }
     catch (err) {
       flash('autoexport git push failed', err.message, 1)
-      log.error(`could not push ${this.bib} in ${this.path}`, err.message)
+      log.error(`could not push ${ this.bib } in ${ this.path }`, err.message)
     }
   }
 
@@ -285,10 +286,10 @@ class Git {
     // exe = await findBinary('CMD')
 
     args = args || []
-    const command = quote([exe, ...args])
+    const command = quote([ exe, ...args ])
 
     const cmd = new FileUtils.File(exe)
-    if (!cmd.isExecutable()) throw new Error(`${cmd.path} is not an executable`)
+    if (!cmd.isExecutable()) throw new Error(`${ cmd.path } is not an executable`)
 
     const proc = Components.classes['@mozilla.org/process/util;1'].createInstance(Components.interfaces.nsIProcess)
     proc.init(cmd)
@@ -297,10 +298,10 @@ class Git {
     proc.runwAsync(args, args.length, {
       observe: (subject, topic) => {
         if (topic !== 'process-finished') {
-          deferred.reject(new Error(`[ ${command} ] failed: ${topic}`))
+          deferred.reject(new Error(`[ ${ command } ] failed: ${ topic }`))
         }
         else if (proc.exitValue > 0) {
-          deferred.reject(new Error(`[ ${command} ] failed with exit status: ${proc.exitValue}`))
+          deferred.reject(new Error(`[ ${ command } ] failed with exit status: ${ proc.exitValue }`))
         }
         else {
           deferred.resolve(true)
@@ -311,8 +312,7 @@ class Git {
     return deferred.promise as Promise<boolean>
   }
 }
-const git = new Git()
-
+const git = (new Git)
 
 if (Preference.autoExportDelay < 1) Preference.autoExportDelay = 1
 if (Preference.autoExportIdleWait < 1) Preference.autoExportIdleWait = 1
@@ -340,18 +340,19 @@ const queue = new class TaskQueue {
   }
 
   public run(path: string) {
-    this.runAsync(path).catch(err => log.error('autoexport failed:', {path}, err.message))
+    this.runAsync(path).catch(err => log.error('autoexport failed:', { path }, err.message))
   }
+
   public async runAsync(path: string) {
     await Zotero.BetterBibTeX.ready
 
     const ae = await AutoExport.get(path)
-    if (!ae) throw new Error(`AutoExport for ${JSON.stringify(path)} does not exist`)
+    if (!ae) throw new Error(`AutoExport for ${ JSON.stringify(path) } does not exist`)
 
     const translator = Translators.byId[ae.translatorID]
-    void Events.emit('export-progress', { pct: 0, message: `Starting ${translator.label}`, ae: path })
+    void Events.emit('export-progress', { pct: 0, message: `Starting ${ translator.label }`, ae: path })
 
-    await Zotero.DB.queryTx("UPDATE betterbibtex.autoexport SET status = 'running' WHERE path = ?", [path])
+    await Zotero.DB.queryTx('UPDATE betterbibtex.autoexport SET status = \'running\' WHERE path = ?', [path])
 
     try {
       let scope
@@ -363,7 +364,7 @@ const queue = new class TaskQueue {
           scope = { type: 'library', id: ae.id }
           break
         default:
-          throw new Error(`Unexpected auto-export scope ${ae.type}`)
+          throw new Error(`Unexpected auto-export scope ${ ae.type }`)
       }
 
       const repo = await git.repo(path)
@@ -389,12 +390,12 @@ const queue = new class TaskQueue {
 
       if (ae.recursive) {
         const collections = scope.type === 'library' ? Zotero.Collections.getByLibrary(scope.id, true) : Zotero.Collections.getByParent(scope.collection, true)
-        const ext = `.${translator.target}`
+        const ext = `.${ translator.target }`
 
         const root = scope.type === 'collection' ? scope.collection : false
 
         const dir = $OS.Path.dirname(ae.path)
-        const base = $OS.Path.basename(ae.path).replace(new RegExp(`${ext.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&')}$`), '')
+        const base = $OS.Path.basename(ae.path).replace(new RegExp(`${ ext.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&') }$`), '')
 
         const autoExportPathReplace = {
           diacritics: Preference.autoExportPathReplaceDiacritics,
@@ -427,14 +428,14 @@ const queue = new class TaskQueue {
     }
     catch (err) {
       log.error('auto-export', ae.type, ae.id, 'failed:', ae, err.message, err)
-      ae.error = `${err}`
+      ae.error = `${ err }`
     }
 
-    await Zotero.DB.queryTx("UPDATE betterbibtex.autoexport SET status = 'done', updated = ? WHERE path = ?", [Date.now(), path])
+    await Zotero.DB.queryTx('UPDATE betterbibtex.autoexport SET status = \'done\', updated = ? WHERE path = ?', [ Date.now(), path ])
   }
 
-  private getCollectionPath(coll: {name: string, parentID: number}, root: number): string[] {
-    let path: string[] = [ coll.name ]
+  private getCollectionPath(coll: { name: string; parentID: number }, root: number): string[] {
+    let path: string[] = [coll.name]
     if (coll.parentID && coll.parentID !== root) path = this.getCollectionPath(Zotero.Collections.get(coll.parentID), root).concat(path)
     return path
   }
@@ -490,9 +491,9 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
     orchestrator.add({
       id: 'auto-export',
       description: 'auto-export',
-      needs: ['sqlite', 'cache', 'translators'],
+      needs: [ 'sqlite', 'cache', 'translators' ],
       startup: async () => {
-        for (const path of await Zotero.DB.columnQueryAsync("SELECT path FROM betterbibtex.autoexport WHERE status <> 'done'")) {
+        for (const path of await Zotero.DB.columnQueryAsync('SELECT path FROM betterbibtex.autoexport WHERE status <> \'done\'')) {
           queue.add(path)
         }
 
@@ -526,7 +527,7 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
       const repo = await git.repo(ae.path)
       if (repo.enabled || schedule) await this.schedule(ae.type, [ae.id]) // causes initial push to overleaf at the cost of a unnecesary extra export
     }
-    catch(err) {
+    catch (err) {
       log.error('AutoExport.add:', err)
     }
   }
@@ -559,9 +560,9 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
   public async remove(path: string): Promise<void>
   public async remove(type: 'collection' | 'library', ids: number[]): Promise<void>
   public async remove(arg: string, ids?: number[]): Promise<void> {
-    const paths: string[] = (typeof ids === 'undefined') ? [ arg ] : await SQL.find(arg as 'collection' | 'library', ids)
+    const paths: string[] = (typeof ids === 'undefined') ? [arg] : await SQL.find(arg as 'collection' | 'library', ids)
 
-    await Zotero.DB.queryTx(`DELETE FROM betterbibtex.autoexport WHERE path IN (${Array(paths.length).fill('?').join(',')})`, paths)
+    await Zotero.DB.queryTx(`DELETE FROM betterbibtex.autoexport WHERE path IN (${ Array(paths.length).fill('?').join(',') })`, paths)
 
     for (const path of paths) {
       queue.cancel(path)
@@ -584,7 +585,7 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
 
     const ae = await this.get(path)
 
-    const itemTypeIDs: number[] = ['attachment', 'note', 'annotation'].map(type => {
+    const itemTypeIDs: number[] = [ 'attachment', 'note', 'annotation' ].map(type => {
       try {
         return Zotero.ItemTypes.getID(type) as number
       }

@@ -4,8 +4,8 @@ import { is7 } from './client'
 const $OS = is7 ? Shim : OS
 
 // https://searchfox.org/mozilla-central/source/toolkit/modules/subprocess/subprocess_win.jsm#135 doesn't seem to work on Windows.
-export async function findBinary(bin: string, installationDirectory: { mac?: string[], win?: string[] } = {}): Promise<string> {
-  const pref = `translators.better-bibtex.path.${bin}`
+export async function findBinary(bin: string, installationDirectory: { mac?: string[]; win?: string[] } = {}): Promise<string> {
+  const pref = `translators.better-bibtex.path.${ bin }`
   let location: string = Zotero.Prefs.get(pref)
   if (location && (await $OS.File.exists(location))) return location
   location = await pathSearch(bin, installationDirectory)
@@ -28,7 +28,7 @@ function resolveVars(path: string, resolved: Record<string, string>): string {
   return path
 }
 
-async function pathSearch(bin: string, installationDirectory: { mac?: string[], win?: string[] } = {}): Promise<string> {
+async function pathSearch(bin: string, installationDirectory: { mac?: string[]; win?: string[] } = {}): Promise<string> {
   const PATH = ENV.get('PATH')
   if (!PATH.length) {
     log.error('path-search: PATH not set')
@@ -37,7 +37,7 @@ async function pathSearch(bin: string, installationDirectory: { mac?: string[], 
   let paths: string[] = PATH.split(Zotero.isWin ? ';' : ':')
   const resolved = {}
   paths = paths.map(p => resolveVars(p, resolved)).filter((p: string, i: number, self: string[]) => self.indexOf(p) === i)
-  log.info(`path-search: looking for ${bin} in ${PATH}`)
+  log.info(`path-search: looking for ${ bin } in ${ PATH }`)
   if (Zotero.isWin && installationDirectory.win) paths.unshift(...(installationDirectory.win))
   if (Zotero.isMac && installationDirectory.mac) paths.unshift(...(installationDirectory.mac))
   paths = paths.filter(p => p)
@@ -64,11 +64,11 @@ async function pathSearch(bin: string, installationDirectory: { mac?: string[], 
 
         // bit iffy -- we don't know if *we* can execute this. And on Zotero 7, unixMode does not exist
         if (!Zotero.isWin && typeof stat.unixMode === 'number' && (stat.unixMode & 111) === 0) { // eslint-disable-line no-bitwise
-          log.error(`path-search: ${exe} exists but has mode ${(stat.unixMode).toString(8)}`)
+          log.error(`path-search: ${ exe } exists but has mode ${ (stat.unixMode).toString(8) }`)
           continue
         }
 
-        log.info(`path-search: ${bin} found at ${exe}`)
+        log.info(`path-search: ${ bin } found at ${ exe }`)
         return exe
       }
       catch (err) {
@@ -76,6 +76,6 @@ async function pathSearch(bin: string, installationDirectory: { mac?: string[], 
       }
     }
   }
-  log.info(`path-search: ${bin} not found in ${PATH}`)
+  log.info(`path-search: ${ bin } not found in ${ PATH }`)
   return ''
 }

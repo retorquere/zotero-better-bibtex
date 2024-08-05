@@ -43,7 +43,7 @@ export class Scheduler<T> {
       const held = this.held
       this.held = null
 
-      for (const [id, handler] of held.entries()) {
+      for (const [ id, handler ] of held.entries()) {
         this.schedule(id, handler)
       }
     }

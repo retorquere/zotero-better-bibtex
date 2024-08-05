@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unsafe-argument, @typescript-eslint/ban-types, prefer-rest-params, @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-argument, prefer-rest-params, @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-unsafe-return */
 
 declare const Cc: any
 declare const Ci: any
@@ -20,12 +20,12 @@ type ReasonId = keyof typeof BOOTSTRAP_REASONS
 export type Reason = typeof BOOTSTRAP_REASONS[ReasonId]
 
 function log(msg) {
-  msg = `{better-bibtex} bootstrap: ${msg}`
+  msg = `{better-bibtex} bootstrap: ${ msg }`
   if (Zotero?.debug) {
-    Zotero.debug(`Better BibTeX bootstrap: ${msg}`) // eslint-disable-line no-restricted-syntax
+    Zotero.debug(`Better BibTeX bootstrap: ${ msg }`) // eslint-disable-line no-restricted-syntax
   }
   else {
-    dump(`${msg}\n`) // eslint-disable-line no-restricted-syntax
+    dump(`${ msg }\n`) // eslint-disable-line no-restricted-syntax
   }
 }
 
@@ -45,11 +45,11 @@ function setDefaultPrefs(rootURI) {
           branch.setIntPref(pref, value)
           break
         default:
-          log(`Invalid type '${typeof(value)}' for pref '${pref}'`)
+          log(`Invalid type '${ typeof (value) }' for pref '${ pref }'`)
       }
     },
   }
-  Services.scriptloader.loadSubScriptWithOptions(`${rootURI}prefs.js`, {
+  Services.scriptloader.loadSubScriptWithOptions(`${ rootURI }prefs.js`, {
     target: obj,
     charset: 'utf-8',
     // ignoreCache: true
@@ -71,7 +71,7 @@ export async function startup({ resourceURI, rootURI = resourceURI.spec }, reaso
     log('startup started')
 
     const aomStartup = Cc['@mozilla.org/addons/addon-manager-startup;1'].getService(Ci.amIAddonManagerStartup)
-    const manifestURI = Services.io.newURI(`${rootURI}manifest.json`)
+    const manifestURI = Services.io.newURI(`${ rootURI }manifest.json`)
     chromeHandle = aomStartup.registerChrome(manifestURI, require('../gen/chrome.json'))
 
     if (Zotero.BetterBibTeX) throw new Error('Better BibTeX is already started')
@@ -80,7 +80,7 @@ export async function startup({ resourceURI, rootURI = resourceURI.spec }, reaso
 
     const $window = Zotero.getMainWindow()
     if ($window) {
-      Services.scriptloader.loadSubScriptWithOptions(`${rootURI}content/better-bibtex.js`, {
+      Services.scriptloader.loadSubScriptWithOptions(`${ rootURI }content/better-bibtex.js`, {
         charset: 'utf=8',
         // ignoreCache: true,
         target: {
@@ -112,8 +112,8 @@ export async function startup({ resourceURI, rootURI = resourceURI.spec }, reaso
       await Zotero.BetterBibTeX.startup(BOOTSTRAP_REASONS[reason])
       Zotero.PreferencePanes.register({
         pluginID: 'better-bibtex@iris-advies.com',
-        src: `${rootURI}content/preferences.xhtml`,
-        stylesheets: [`${rootURI}content/preferences.css`],
+        src: `${ rootURI }content/preferences.xhtml`,
+        stylesheets: [`${ rootURI }content/preferences.css`],
         label: 'Better BibTeX',
         defaultXUL: true,
       })
@@ -122,8 +122,8 @@ export async function startup({ resourceURI, rootURI = resourceURI.spec }, reaso
     }
   }
   catch (err) {
-    alert({ title: 'Better BibTeX startup failed', text: `${err}` })
-    log(`${err}\n${err.stack}`)
+    alert({ title: 'Better BibTeX startup failed', text: `${ err }` })
+    log(`${ err }\n${ err.stack }`)
   }
 }
 
@@ -145,8 +145,8 @@ export async function shutdown(data: any, reason: ReasonId) {
     log('shutdown done')
   }
   catch (err) {
-    alert({ title: 'Better BibTeX shutdown failed', text: `${err}` })
-    log(`${err}\n${err.stack}`)
+    alert({ title: 'Better BibTeX shutdown failed', text: `${ err }` })
+    log(`${ err }\n${ err.stack }`)
   }
 }
 

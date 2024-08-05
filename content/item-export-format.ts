@@ -16,7 +16,7 @@ export class Serializer {
   private attachment(serialized: Attachment, att): Attachment {
     if (att.attachmentLinkMode !== Zotero.Attachments.LINK_MODE_LINKED_URL) {
       serialized.localPath = att.getFilePath()
-      if (serialized.localPath) serialized.defaultPath = `files/${att.id}/${$OS.Path.basename(serialized.localPath)}`
+      if (serialized.localPath) serialized.defaultPath = `files/${ att.id }/${ $OS.Path.basename(serialized.localPath) }`
     }
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return serialized
@@ -63,7 +63,7 @@ export function fix(serialized: Item, item: ZoteroItem): Item {
     }
     else {
       regular.citationKey = Zotero.BetterBibTeX.KeyManager.get(item.id).citationKey
-      if (!regular.citationKey) throw new Error(`no citation key for ${Zotero.ItemTypes.getName(item.itemTypeID)} ${item.id}`)
+      if (!regular.citationKey) throw new Error(`no citation key for ${ Zotero.ItemTypes.getName(item.itemTypeID) } ${ item.id }`)
       if (!regular.journalAbbreviation && Preference.autoAbbrev) {
         const autoJournalAbbreviation = JournalAbbrev.get(regular)
         if (autoJournalAbbreviation) regular.autoJournalAbbreviation = autoJournalAbbreviation
@@ -83,7 +83,7 @@ export function fix(serialized: Item, item: ZoteroItem): Item {
 
 orchestrator.add({
   id: 'cache',
-  needs: ['keymanager', 'abbreviator'],
+  needs: [ 'keymanager', 'abbreviator' ],
   description: 'cache subsystem',
   async startup() {
     const lastUpdated = await Zotero.DB.valueQueryAsync('SELECT MAX(dateModified) FROM items')

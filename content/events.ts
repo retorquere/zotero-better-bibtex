@@ -20,21 +20,20 @@ type IdleService = {
 }
 type IdleTopic = 'auto-export' | 'save-database' | 'cache-fill'
 
-const idleService: IdleService = Components.classes[`@mozilla.org/widget/${is7 ? 'user' : ''}idleservice;1`].getService(Components.interfaces[is7 ? 'nsIUserIdleService' : 'nsIIdleService'])
+const idleService: IdleService = Components.classes[`@mozilla.org/widget/${ is7 ? 'user' : '' }idleservice;1`].getService(Components.interfaces[is7 ? 'nsIUserIdleService' : 'nsIIdleService'])
 
 class Emitter extends Emittery<{
   'collections-changed': number[]
   'collections-removed': number[]
-  'export-progress': { pct: number, message: string, ae?: string }
-  'items-changed': { items: ZoteroItem[], action: Action, reason?: string }
+  'export-progress': { pct: number; message: string; ae?: string }
+  'items-changed': { items: ZoteroItem[]; action: Action; reason?: string }
   'libraries-changed': number[]
   'libraries-removed': number[]
-  'loaded': undefined
+  loaded: undefined
   'preference-changed': string
-  'window-loaded': { win: Window, href: string }
-  'idle': { state: IdleState, topic: IdleTopic }
+  'window-loaded': { win: Window; href: string }
+  idle: { state: IdleState; topic: IdleTopic }
 }> {
-
   private listeners: any[] = []
   public idle: Partial<Record<IdleTopic, IdleState>> = {}
   public itemObserverDelay = 5
@@ -113,7 +112,7 @@ class WindowListener {
 class IdleListener {
   constructor(private topic: IdleTopic, private delay: number) {
     if (this.delay <= 0) throw new Error('idle listener: only positive times are allowed')
-    if (Events.idle[topic]) throw new Error(`idle topic ${topic} already registered`)
+    if (Events.idle[topic]) throw new Error(`idle topic ${ topic } already registered`)
 
     Events.idle[topic] = (idleService.idleTime / 1000) > this.delay ? 'idle' : 'active'
     idleService.addIdleObserver(this, this.delay)
@@ -137,6 +136,7 @@ abstract class ZoteroListener {
   constructor(protected type: string) {
     this.id = Zotero.Notifier.registerObserver(this, [type], 'Better BibTeX', 1)
   }
+
   public unregister() {
     Zotero.Notifier.unregisterObserver(this.id)
   }
@@ -200,7 +200,7 @@ class ItemListener extends ZoteroListener {
       let parents: ZoteroItem[] = []
       if (parentIDs.length) {
         parents = Zotero.Items.get(parentIDs)
-        void Events.emit('items-changed', { items: parents, action: 'modify', reason: `parent-${zotero_action}` })
+        void Events.emit('items-changed', { items: parents, action: 'modify', reason: `parent-${ zotero_action }` })
       }
 
       for (const item of items.concat(parents)) {
@@ -213,7 +213,7 @@ class ItemListener extends ZoteroListener {
       })
     }
     catch (err) {
-      log.error(`error in ${this.type} notify handler: ${err.message}`)
+      log.error(`error in ${ this.type } notify handler: ${ err.message }`)
     }
   }
 }
@@ -232,7 +232,7 @@ class TagListener extends ZoteroListener {
       void Events.emit('items-changed', { items: Zotero.Items.get(ids), action: 'modify', reason: 'tagged' })
     }
     catch (err) {
-      log.error(`error in ${this.type} notify handler: ${err.message}`)
+      log.error(`error in ${ this.type } notify handler: ${ err.message }`)
     }
   }
 }
@@ -248,7 +248,7 @@ class CollectionListener extends ZoteroListener {
       if ((action === 'delete') && ids.length) void Events.emit('collections-removed', ids)
     }
     catch (err) {
-      log.error(`error in ${this.type} notify handler: ${err.message}`)
+      log.error(`error in ${ this.type } notify handler: ${ err.message }`)
     }
   }
 }
@@ -262,7 +262,7 @@ class MemberListener extends ZoteroListener {
     try {
       await Zotero.BetterBibTeX.ready
 
-      const changed: Set<number> = new Set()
+      const changed: Set<number> = (new Set)
 
       for (const pair of pairs) {
         let id = parseInt(pair.split('-')[0])
@@ -276,7 +276,7 @@ class MemberListener extends ZoteroListener {
       if (changed.size) void Events.emit('collections-changed', Array.from(changed))
     }
     catch (err) {
-      log.error(`error in ${this.type} notify handler: ${err.message}`)
+      log.error(`error in ${ this.type } notify handler: ${ err.message }`)
     }
   }
 }
@@ -292,7 +292,7 @@ class GroupListener extends ZoteroListener {
       if ((action === 'delete') && ids.length) void Events.emit('libraries-removed', ids)
     }
     catch (err) {
-      log.error(`error in ${this.type} notify handler: ${err.message}`)
+      log.error(`error in ${ this.type } notify handler: ${ err.message }`)
     }
   }
 }

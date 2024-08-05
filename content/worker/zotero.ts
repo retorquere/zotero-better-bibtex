@@ -25,7 +25,7 @@ export const workerEnvironment = {
   locale: '',
 }
 
-for(const [key, value] of (new URLSearchParams(ctx.location.search)).entries()) {
+for (const [ key, value ] of (new URLSearchParams(ctx.location.search)).entries()) {
   workerEnvironment[key] = value
 }
 
@@ -46,18 +46,18 @@ import { DOMParser as XMLDOMParser } from '@xmldom/xmldom'
 declare var ZOTERO_TRANSLATOR_INFO: Translators.Header // eslint-disable-line no-var
 
 const NodeType = {
-  ELEMENT_NODE                : 1,
-  ATTRIBUTE_NODE              : 2,
-  TEXT_NODE                   : 3,
-  CDATA_SECTION_NODE          : 4,
-  ENTITY_REFERENCE_NODE       : 5,
-  ENTITY_NODE                 : 6,
-  PROCESSING_INSTRUCTION_NODE : 7,
-  COMMENT_NODE                : 8,
-  DOCUMENT_NODE               : 9,
-  DOCUMENT_TYPE_NODE          : 10,
-  DOCUMENT_FRAGMENT_NODE      : 11,
-  NOTATION_NODE               : 12,
+  ELEMENT_NODE: 1,
+  ATTRIBUTE_NODE: 2,
+  TEXT_NODE: 3,
+  CDATA_SECTION_NODE: 4,
+  ENTITY_REFERENCE_NODE: 5,
+  ENTITY_NODE: 6,
+  PROCESSING_INSTRUCTION_NODE: 7,
+  COMMENT_NODE: 8,
+  DOCUMENT_NODE: 9,
+  DOCUMENT_TYPE_NODE: 10,
+  DOCUMENT_FRAGMENT_NODE: 11,
+  NOTATION_NODE: 12,
 }
 
 const childrenProxy = {
@@ -76,7 +76,7 @@ const childrenProxy = {
   },
 
   set(target, prop, _value) { // eslint-disable-line prefer-arrow/prefer-arrow-functions
-    throw new Error(`cannot set unsupported children.${prop}`)
+    throw new Error(`cannot set unsupported children.${ prop }`)
   },
 }
 
@@ -121,7 +121,7 @@ function upgrade(root) {
           throw new Error('Must provide one of "beforebegin", "afterbegin", "beforeend", or "afterend".')
       }
 
-      const fragment = domParser.parseFromString(`<span>${text}</span>`, 'text/html').documentElement
+      const fragment = domParser.parseFromString(`<span>${ text }</span>`, 'text/html').documentElement
 
       switch (position) {
         case 'beforebegin':
@@ -219,13 +219,13 @@ class WorkerZoteroBetterBibTeX {
       else {
         if (!OS.File.exists(path)) return null
         const bytes = <ArrayBuffer>OS.File.read(path)
-        const decoder = new TextDecoder()
+        const decoder = (new TextDecoder)
         return decoder.decode(bytes as BufferSource)
       }
     }
     catch (err) {
       if (!err.message?.includes('NS_ERROR_FILE_NOT_FOUND')) {
-        log.error(`getContents ${path} error ${err} ${Object.keys(err)} ${err.message}`)
+        log.error(`getContents ${ path } error ${ err } ${ Object.keys(err) } ${ err.message }`)
       }
       return null
     }
@@ -263,7 +263,7 @@ function isWinRoot(path) {
 }
 async function makeDirs(path) {
   if (isWinRoot(path)) return
-  if (!$OS.Path.split(path).absolute) throw new Error(`Will not create relative ${path}`)
+  if (!$OS.Path.split(path).absolute) throw new Error(`Will not create relative ${ path }`)
 
   path = $OS.Path.normalize(path)
 
@@ -274,7 +274,7 @@ async function makeDirs(path) {
     path = $OS.Path.dirname(path)
   }
 
-  if (!isWinRoot(path) && !(await $OS.File.stat(path)).isDir) throw new Error(`makeDirs: root ${path} is not a directory`)
+  if (!isWinRoot(path) && !(await $OS.File.stat(path)).isDir) throw new Error(`makeDirs: root ${ path } is not a directory`)
 
   for (path of paths) {
     await $OS.File.makeDir(path) as void
@@ -287,7 +287,7 @@ async function saveFile(path, overwrite) {
   if (!await $OS.File.exists(this.localPath)) return false
 
   this.path = $OS.Path.normalize($OS.Path.join(Zotero.exportDirectory, path))
-  if (!this.path.startsWith(Zotero.exportDirectory)) throw new Error(`${path} looks like a relative path`)
+  if (!this.path.startsWith(Zotero.exportDirectory)) throw new Error(`${ path } looks like a relative path`)
 
   if (this.linkMode === 'imported_file' || (this.linkMode === 'imported_url' && this.contentType !== 'text/html')) {
     await makeDirs($OS.Path.dirname(this.path))
@@ -296,16 +296,16 @@ async function saveFile(path, overwrite) {
   }
   else if (this.linkMode === 'imported_url') {
     const target = $OS.Path.dirname(this.path)
-    if (!overwrite && (await $OS.File.exists(target))) throw new Error(`${path} would overwite ${target}`)
+    if (!overwrite && (await $OS.File.exists(target))) throw new Error(`${ path } would overwite ${ target }`)
 
     await $OS.File.removeDir(target, { ignoreAbsent: true })
     await makeDirs(target)
 
     const snapshot = $OS.Path.dirname(this.localPath)
     const iterator = new $OS.File.DirectoryIterator(snapshot)
-    const files: { src: string, tgt: string }[] = []
+    const files: { src: string; tgt: string }[] = []
     await iterator.forEach(entry => { // eslint-disable-line @typescript-eslint/no-floating-promises
-      if (entry.isDir) throw new Error(`Unexpected directory ${entry.path} in snapshot`)
+      if (entry.isDir) throw new Error(`Unexpected directory ${ entry.path } in snapshot`)
       if (entry.name !== '.zotero-ft-cache') {
         files.push({
           src: $OS.Path.join(snapshot, entry.name),
@@ -332,7 +332,7 @@ class WorkerZoteroCreatorTypes {
   }
 
   public getLocalizedString(type: string): string {
-    return schema.locales[Zotero.locale]?.types[type] || type[0].toUpperCase() + type.substr(1).replace(/([A-Z])([a-z])/g, (m, u, l) => `${u.toLowerCase()} ${l}`)
+    return schema.locales[Zotero.locale]?.types[type] || type[0].toUpperCase() + type.substr(1).replace(/([A-Z])([a-z])/g, (m, u, l) => `${ u.toLowerCase() } ${ l }`)
   }
 
   public getPrimaryIDForType(typeID) {
@@ -342,6 +342,7 @@ class WorkerZoteroCreatorTypes {
   public getID(typeName) {
     return typeName
   }
+
   public getName(typeID) {
     return typeID
   }
@@ -388,8 +389,8 @@ class WorkerZotero {
   public Utilities = WorkerZoteroUtilities
   public BetterBibTeX = new WorkerZoteroBetterBibTeX // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   public CreatorTypes = new WorkerZoteroCreatorTypes
-  public ItemTypes  = new WorkerZoteroItemTypes
-  public ItemFields  = new WorkerZoteroItemFields
+  public ItemTypes = new WorkerZoteroItemTypes
+  public ItemFields = new WorkerZoteroItemFields
   public Date = ZD
   public Schema: any
 
@@ -413,11 +414,11 @@ class WorkerZotero {
     if (TranslationWorker.job.output) {
       if (TranslationWorker.job.options.exportFileData) { // output path is a directory
         this.exportDirectory = $OS.Path.normalize(TranslationWorker.job.output)
-        this.exportFile = $OS.Path.join(this.exportDirectory, `${$OS.Path.basename(this.exportDirectory)}.${ZOTERO_TRANSLATOR_INFO.target}`)
+        this.exportFile = $OS.Path.join(this.exportDirectory, `${ $OS.Path.basename(this.exportDirectory) }.${ ZOTERO_TRANSLATOR_INFO.target }`)
       }
       else {
         this.exportFile = $OS.Path.normalize(TranslationWorker.job.output)
-        const ext = `.${ZOTERO_TRANSLATOR_INFO.target}`
+        const ext = `.${ ZOTERO_TRANSLATOR_INFO.target }`
         if (!this.exportFile.endsWith(ext)) this.exportFile += ext
         this.exportDirectory = $OS.Path.dirname(this.exportFile)
       }
@@ -431,7 +432,7 @@ class WorkerZotero {
     doExport()
 
     if (this.exportFile) {
-      const encoder = new TextEncoder()
+      const encoder = (new TextEncoder)
       const array = encoder.encode(this.output)
       await $OS.File.writeAtomic(this.exportFile, array) as void
     }
@@ -456,9 +457,10 @@ class WorkerZotero {
   public debug(message) {
     if (TranslationWorker.job.debugEnabled) this.send({ kind: 'debug', message })
   }
+
   public logError(err: Error | string) {
-    let message: string = typeof err === 'string' ? err : `${err.message}\n${err.stack}`.trim()
-    message = `error: ${message}`
+    let message: string = typeof err === 'string' ? err : `${ err.message }\n${ err.stack }`.trim()
+    message = `error: ${ message }`
     this.send({ kind: 'debug', message })
   }
 
@@ -480,9 +482,8 @@ class WorkerZotero {
       item.saveFile = saveFile.bind(item)
 
       if (!item.defaultPath && item.localPath) { // why is this not set by itemGetter?!
-        item.defaultPath = `files/${item.itemID}/${$OS.Path.basename(item.localPath)}`
+        item.defaultPath = `files/${ item.itemID }/${ $OS.Path.basename(item.localPath) }`
       }
-
     }
     else if (item.attachments) {
       for (const att of item.attachments) {
@@ -495,7 +496,7 @@ class WorkerZotero {
 // haul to top
 export var Zotero = new WorkerZotero // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match,no-var
 
-ctx.onmessage = async function(e: { isTrusted?: boolean, data?: Translators.Worker.Message } ): Promise<void> { // eslint-disable-line prefer-arrow/prefer-arrow-functions
+ctx.onmessage = async function(e: { isTrusted?: boolean; data?: Translators.Worker.Message }): Promise<void> { // eslint-disable-line prefer-arrow/prefer-arrow-functions
   if (!e.data) return // some kind of startup message
 
   // trace(`worker: ${e.data.kind}`)
@@ -509,7 +510,7 @@ ctx.onmessage = async function(e: { isTrusted?: boolean, data?: Translators.Work
         // trace('worker: starting')
         TranslationWorker.job = e.data.config
 
-        importScripts(`chrome://zotero-better-bibtex/content/resource/${TranslationWorker.job.translator}.js`)
+        importScripts(`chrome://zotero-better-bibtex/content/resource/${ TranslationWorker.job.translator }.js`)
         // trace('worker: loaded')
         try {
           if (!Cache.opened) await Cache.open()
@@ -521,7 +522,7 @@ ctx.onmessage = async function(e: { isTrusted?: boolean, data?: Translators.Work
           Zotero.send({ kind: 'done', output: Zotero.output })
         }
         catch (err) {
-          Zotero.send({ kind: 'error', message: `${err}\n${err.stack}` })
+          Zotero.send({ kind: 'error', message: `${ err }\n${ err.stack }` })
         }
         finally {
           await Cache.export.flush()

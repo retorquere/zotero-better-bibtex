@@ -4,12 +4,12 @@ import { Elements } from './create-element'
 import { Events } from './events'
 import type { XUL } from '../typings/xul'
 
-type XULWindow = Window & { Zotero_File_Interface_Export?: any, arguments?: any[], sizeToContent?: () => void }
+type XULWindow = Window & { Zotero_File_Interface_Export?: any; arguments?: any[]; sizeToContent?: () => void }
 // safe to keep these global as only one export window will ever be open at any one time
 let $window: XULWindow // eslint-disable-line no-var
 var Zotero_File_Interface_Export: any // eslint-disable-line no-var
 
-Events.on('window-loaded', ({ win, href }: {win: Window, href: string}) => {
+Events.on('window-loaded', ({ win, href }: { win: Window; href: string }) => {
   switch (href) {
     case 'chrome://zotero/content/exportOptions.xul':
     case 'chrome://zotero/content/exportOptions.xhtml':
@@ -61,7 +61,7 @@ export class ExportOptions {
 
     if (!reminder) {
       const translateOptions = doc.getElementById('translator-options')
-      translateOptions.parentNode.insertBefore(reminder = this.elements.create('description', {style: 'color: red', hidden: 'true', id: 'better-bibtex-reminder'}), translateOptions)
+      translateOptions.parentNode.insertBefore(reminder = this.elements.create('description', { style: 'color: red', hidden: 'true', id: 'better-bibtex-reminder' }), translateOptions)
     }
 
     switch (selected.translatorID) {
@@ -80,7 +80,7 @@ export class ExportOptions {
         break
     }
 
-    const ids = ['exportFileData', 'worker', 'keepUpdated', 'biblatexAPA', 'biblatexChicago'].map(id => `#export-option-${id}`).join(', ')
+    const ids = [ 'exportFileData', 'worker', 'keepUpdated', 'biblatexAPA', 'biblatexChicago' ].map(id => `#export-option-${ id }`).join(', ')
     for (const node of [...doc.querySelectorAll(ids)] as HTMLInputElement[]) {
       if (node.classList.contains('better-bibex-export-options')) continue
       node.classList.add('better-bibex-export-options')

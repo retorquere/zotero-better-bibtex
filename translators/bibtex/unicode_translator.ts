@@ -18,7 +18,7 @@ export function replace_command_spacers(latex: string): string {
   return latex.replace(/\0(\s)/g, '{}$1').replace(/\0([^;.,!?${}_^\\/])/g, ' $1').replace(/\0/g, '')
 }
 
-export type ParseResult = { latex: string, raw: boolean, packages: string[] }
+export type ParseResult = { latex: string; raw: boolean; packages: string[] }
 
 export type Mode = 'minimal' | 'bibtex' | 'biblatex'
 
@@ -68,7 +68,7 @@ export class HTMLConverter {
       .replace(/\n*\\par\n*$/, '')
       .replace(/^\n*\\par\n*/, '')
 
-    return { latex: this.latex, raw: ast.nodeName === 'pre', packages: [...this.packages] }
+    return { latex: this.latex, raw: ast.nodeName === 'pre', packages: [...this.packages]}
   }
 
   private walk(tag: MarkupNode, nocased = false) {
@@ -107,7 +107,7 @@ export class HTMLConverter {
 
       case 'a':
         /* zotero://open-pdf/0_5P2KA4XM/7 is actually a reference. */
-        if (tag.attr.href && tag.attr.href.length) latex = `\\href{${tag.attr.href.replace(/[{}]/g, '').replace(/([\\%#])/g, '\\$1')}}{...}`
+        if (tag.attr.href && tag.attr.href.length) latex = `\\href{${ tag.attr.href.replace(/[{}]/g, '').replace(/([\\%#])/g, '\\$1') }}{...}`
         break
 
       case 'sup':
@@ -136,7 +136,7 @@ export class HTMLConverter {
       case 'h2':
       case 'h3':
       case 'h4':
-        latex = `\n\n\\${'sub'.repeat(parseInt(tag.nodeName[1]) - 1)}section{...}\n\n`
+        latex = `\n\n\\${ 'sub'.repeat(parseInt(tag.nodeName[1]) - 1) }section{...}\n\n`
         break
 
       case 'ol':
@@ -181,26 +181,25 @@ export class HTMLConverter {
         // if (tag.attr.src) latex = `\\includegraphics{${tag.attr.src}}`
         break
 
-
       default:
-        log.error(`unexpected tag '${tag.nodeName}' (${Object.keys(tag)})`)
+        log.error(`unexpected tag '${ tag.nodeName }' (${ Object.keys(tag) })`)
         break
     }
 
     if (latex !== '...') latex = this.embrace(latex, /^\\[a-z]+{\.\.\.}$/.test(latex))
-    if (tag.smallcaps) latex = this.embrace(`\\textsc{${latex}}`, true)
-    if (tag.nocase) latex = `{{${latex}}}`
-    if (tag.relax) latex = `{\\relax ${latex}}`
+    if (tag.smallcaps) latex = this.embrace(`\\textsc{${ latex }}`, true)
+    if (tag.nocase) latex = `{{${ latex }}}`
+    if (tag.relax) latex = `{\\relax ${ latex }}`
     if (tag.enquote) {
       if (this.translation.BetterBibTeX) {
-        latex = `\\enquote{${latex}}`
+        latex = `\\enquote{${ latex }}`
       }
       else {
-        latex = `\\mkbibquote{${latex}}`
+        latex = `\\mkbibquote{${ latex }}`
       }
     }
 
-    const [prefix, postfix] = latex.split('...')
+    const [ prefix, postfix ] = latex.split('...')
 
     this.latex += prefix
     for (const child of tag.childNodes) {
@@ -209,7 +208,6 @@ export class HTMLConverter {
     this.latex += postfix
 
     this.stack.shift()
-
   }
 
   private embrace(latex: string, condition: boolean): string {
@@ -218,7 +216,7 @@ export class HTMLConverter {
     /* https://github.com/plk/biblatex/issues/459 ... oy! */
     if (!this.embraced) this.embraced = this.options.caseConversion && (((this.latex || latex)[0] !== '\\') || this.translation.BetterBibTeX)
     if (!this.embraced || !condition) return latex
-    return `{${latex}}`
+    return `{${ latex }}`
   }
 
   private chars(text, nocased) {

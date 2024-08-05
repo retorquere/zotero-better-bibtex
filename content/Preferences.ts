@@ -23,7 +23,7 @@ import { Cache } from './db/cache'
 
 // safe to keep "global" since only one pref pane will be loaded at any one time
 let $window: Window & { sizeToContent(): void } // eslint-disable-line no-var
-Events.on('window-loaded', ({ win, href }: {win: Window, href: string}) => {
+Events.on('window-loaded', ({ win, href }: { win: Window; href: string }) => {
   switch (href) {
     case 'chrome://zotero/content/preferences/preferences.xul': // Zotero's own preferences on Z6
       new ZoteroPreferences(win)
@@ -53,8 +53,8 @@ function setQuickCopy(node: XUL.Menuitem): void {
   let cmd = ''
   switch (Preference.quickCopyMode) {
     case 'latex':
-      cmd = `${Preference.citeCommand}`.trim()
-      mode = (cmd === '') ? 'citation keys' : `\\${cmd}{citation keys}`
+      cmd = `${ Preference.citeCommand }`.trim()
+      mode = (cmd === '') ? 'citation keys' : `\\${ cmd }{citation keys}`
       break
 
     case 'pandoc':
@@ -65,7 +65,7 @@ function setQuickCopy(node: XUL.Menuitem): void {
       mode = preferenceOptions.quickCopyMode[Preference.quickCopyMode] || Preference.quickCopyMode
   }
 
-  node.label = `Better BibTeX Quick Copy: ${mode}`
+  node.label = `Better BibTeX Quick Copy: ${ mode }`
 }
 
 class ZoteroPreferences {
@@ -108,14 +108,14 @@ class AutoExportPane {
   public async load() {
     if (!this.status) {
       this.status = {}
-      for (const status of ['scheduled', 'running', 'done', 'error', 'preparing']) {
-        this.status[status] = l10n.localize(`better-bibtex_preferences_auto-export_status_${status}`)
+      for (const status of [ 'scheduled', 'running', 'done', 'error', 'preparing' ]) {
+        this.status[status] = l10n.localize(`better-bibtex_preferences_auto-export_status_${ status }`)
       }
     }
 
     await this.refresh()
 
-    Events.on('export-progress', async ( { pct, ae }) => {
+    Events.on('export-progress', async ({ pct, ae }) => {
       this.cacherate[ae] = await AutoExport.cached(ae)
       if (pct >= 100 && typeof ae === 'number') {
         await this.refresh(ae)
@@ -125,10 +125,10 @@ class AutoExportPane {
 
   private label(ae) {
     let label: string = { library: icons.computer, collection: icons.folder }[ae.type]
-    label += ` ${this.name(ae, 'short')}`
-    label += ` (${Translators.byId[ae.translatorID].label})`
+    label += ` ${ this.name(ae, 'short') }`
+    label += ` (${ Translators.byId[ae.translatorID].label })`
     const path = ae.path.startsWith($OS.Constants.Path.homeDir) ? ae.path.replace($OS.Constants.Path.homeDir, '~') : ae.path
-    label += ` ${path}`
+    label += ` ${ path }`
     return label
   }
 
@@ -164,11 +164,11 @@ class AutoExportPane {
 
     if (typeof path === 'string' && path !== selected.path) return
 
-    if (details.getAttribute('data-ae-path') !== selected.path || details.getAttribute('data-ae-updated') !== `${selected.updated}`) {
+    if (details.getAttribute('data-ae-path') !== selected.path || details.getAttribute('data-ae-updated') !== `${ selected.updated }`) {
       details.setAttribute('data-ae-path', selected.path)
-      details.setAttribute('data-ae-updated', `${selected.updated}`)
+      details.setAttribute('data-ae-updated', `${ selected.updated }`)
 
-      const displayed = `bbt-autoexport-${Translators.byId[selected.translatorID].label.replace(/ /g, '')}`
+      const displayed = `bbt-autoexport-${ Translators.byId[selected.translatorID].label.replace(/ /g, '') }`
       for (const node of (Array.from(details.getElementsByClassName('bbt-autoexport-options')) as unknown[] as XUL.Element[])) {
         node.style.display = node.classList.contains(displayed) ? 'initial' : 'none'
       }
@@ -178,7 +178,7 @@ class AutoExportPane {
 
         switch (field) {
           case 'type':
-            (node as unknown as XUL.Textbox).value = `${l10n.localize(`better-bibtex_preferences_auto-export_type_${selected.type}`)}:`
+            (node as unknown as XUL.Textbox).value = `${ l10n.localize(`better-bibtex_preferences_auto-export_type_${ selected.type }`) }:`
             break
 
           case 'name':
@@ -186,7 +186,7 @@ class AutoExportPane {
             break
 
           case 'updated':
-            (node as unknown as XUL.Textbox).value = `${new Date(selected.updated)}`
+            (node as unknown as XUL.Textbox).value = `${ new Date(selected.updated) }`
             break
 
           case 'translator':
@@ -220,15 +220,15 @@ class AutoExportPane {
             break
 
           default:
-            throw new Error(`Unexpected field in auto-export refresh: ${field}`)
+            throw new Error(`Unexpected field in auto-export refresh: ${ field }`)
         }
       }
     }
 
-    const status = details.querySelector("*[data-ae-field='status']") as unknown as XUL.Textbox
+    const status = details.querySelector('*[data-ae-field=\'status\']') as unknown as XUL.Textbox
     const progress = AutoExport.progress.get(selected.$loki)
     if (selected.status === 'running' && typeof progress === 'number') {
-      status.value = progress < 0 ? `${icons.running} ${this.status?.preparing || 'preparing'} ${-progress}%` : `${icons.running} ${progress}%`
+      status.value = progress < 0 ? `${ icons.running } ${ this.status?.preparing || 'preparing' } ${ -progress }%` : `${ icons.running } ${ progress }%`
     }
     else {
       const icon: string = {
@@ -236,15 +236,15 @@ class AutoExportPane {
         done: icons.check,
         scheduled: icons.waiting,
         error: icons.error,
-        preparing: `${icons.running}${icons.waiting}`,
+        preparing: `${ icons.running }${ icons.waiting }`,
       }[selected.status] || selected.status
 
-      status.value = `${icon} ${selected.error || ''}`.trim()
+      status.value = `${ icon } ${ selected.error || '' }`.trim()
     }
 
     if (typeof this.cacherate[selected.$loki] === 'undefined') this.cacherate[selected.$loki] = 0
-    const cacherate = details.querySelector("*[data-ae-field='cacherate']") as unknown as XUL.Textbox
-    cacherate.value = `${this.cacherate[selected.$loki]}%`
+    const cacherate = details.querySelector('*[data-ae-field=\'cacherate\']') as unknown as XUL.Textbox
+    cacherate.value = `${ this.cacherate[selected.$loki] }%`
   }
 
   public async remove() {
@@ -322,14 +322,14 @@ class AutoExportPane {
     if (!coll) return ''
 
     if (form === 'long' && !isNaN(parseInt(coll.parentID))) {
-      return `${this.collection(coll.parentID, form)} / ${coll.name}`
+      return `${ this.collection(coll.parentID, form) } / ${ coll.name }`
     }
     else {
-      return `${Zotero.Libraries.get(coll.libraryID).name} : ${coll.name}`
+      return `${ Zotero.Libraries.get(coll.libraryID).name } : ${ coll.name }`
     }
   }
 
-  private name(ae: { type: string, id: number, path: string }, form: 'long' | 'short'): string {
+  private name(ae: { type: string; id: number; path: string }, form: 'long' | 'short'): string {
     switch (ae.type) {
       case 'library':
         return (Zotero.Libraries.get(ae.id).name as string)
@@ -349,15 +349,15 @@ export class PrefPane {
   // private prefwindow: HTMLElement
 
   public async exportPrefs(): Promise<void> {
-    let file = await pick(Zotero.getString('fileInterface.export'), 'save', [['BBT JSON file', '*.json']])
+    let file = await pick(Zotero.getString('fileInterface.export'), 'save', [[ 'BBT JSON file', '*.json' ]])
     if (!file) return
-    if (!file.match(/.json$/)) file = `${file}.json`
-    Zotero.File.putContents(Zotero.File.pathToFile(file), JSON.stringify({ config: { preferences: Preference.all } }, null, 2))
+    if (!file.match(/.json$/)) file = `${ file }.json`
+    Zotero.File.putContents(Zotero.File.pathToFile(file), JSON.stringify({ config: { preferences: Preference.all }}, null, 2))
   }
 
   public async importPrefs(): Promise<void> {
-    const preferences: { path: string, contents?: string, parsed?: any } = {
-      path: await pick(Zotero.getString('fileInterface.import'), 'open', [['BBT JSON file', '*.json']]),
+    const preferences: { path: string; contents?: string; parsed?: any } = {
+      path: await pick(Zotero.getString('fileInterface.import'), 'open', [[ 'BBT JSON file', '*.json' ]]),
     }
     if (!preferences.path) return
 
@@ -365,7 +365,7 @@ export class PrefPane {
       preferences.contents = Zotero.File.getContents(preferences.path)
     }
     catch (err) {
-      flash(`could not read contents of ${preferences.path}`)
+      flash(`could not read contents of ${ preferences.path }`)
       return
     }
 
@@ -373,26 +373,26 @@ export class PrefPane {
       preferences.parsed = JSON.parse(preferences.contents)
     }
     catch (err) {
-      flash(`could not parse contents of ${preferences.path}`)
+      flash(`could not parse contents of ${ preferences.path }`)
       return
     }
 
     if (typeof preferences.parsed?.config?.preferences !== 'object' && !Array.isArray(preferences.parsed.items)) {
-      flash(`no preferences or items in ${preferences.path}`)
+      flash(`no preferences or items in ${ preferences.path }`)
       return
     }
 
     try {
-      for (let [pref, value] of Object.entries(preferences.parsed.config.preferences || {})) {
+      for (let [ pref, value ] of Object.entries(preferences.parsed.config.preferences || {})) {
         if (pref === 'citekeyFormatEditing') continue
         if (pref === 'citekeyFormat') pref = 'citekeyFormatEditing'
 
         if (typeof value === 'undefined' || typeof value !== typeof preferenceDefaults[pref]) {
-          flash(`Invalid ${typeof value} value for ${pref}, expected ${preferenceDefaults[pref]}`)
+          flash(`Invalid ${ typeof value } value for ${ pref }, expected ${ preferenceDefaults[pref] }`)
         }
         else if (Preference[pref] !== value) {
           Preference[pref] = value
-          flash(`${pref} set`, `${pref} set to ${JSON.stringify(value)}`)
+          flash(`${ pref } set`, `${ pref } set to ${ JSON.stringify(value) }`)
         }
       }
     }
@@ -414,7 +414,7 @@ export class PrefPane {
   public checkCitekeyFormat(): void {
     if (!$window || Zotero.BetterBibTeX.ready.isPending()) return // itemTypes not available yet
 
-    const error = Formatter.update([Preference.citekeyFormatEditing, Preference.citekeyFormat])
+    const error = Formatter.update([ Preference.citekeyFormatEditing, Preference.citekeyFormat ])
 
     const editing = $window.document.getElementById('bbt-preferences-citekeyFormatEditing')
     editing.classList[error ? 'add' : 'remove']('bbt-prefs-error')
@@ -440,14 +440,14 @@ export class PrefPane {
     }
     catch (err) {
       log.error('PrefPane.checkPostscript: error compiling postscript:', err)
-      error = `${err}`
+      error = `${ err }`
     }
 
     const postscript = $window.document.getElementById('bbt-postscript')
     postscript.setAttribute('style', (error ? '-moz-appearance: none !important; background-color: DarkOrange' : ''))
     postscript.setAttribute(is7 ? 'title' : 'tooltiptext', error)
     if (is7) postscript.setAttribute('tooltip', 'html-tooltip')
-    $window.document.getElementById('bbt-cache-warn-postscript').setAttribute('hidden', `${!Preference.postscript.includes('Translator.options.exportPath')}`)
+    $window.document.getElementById('bbt-cache-warn-postscript').setAttribute('hidden', `${ !Preference.postscript.includes('Translator.options.exportPath') }`)
   }
 
   public async cacheReset(): Promise<void> {
@@ -471,7 +471,7 @@ export class PrefPane {
         await Zotero.BetterBibTeX.ready
 
         // bloody *@*&^@# html controls only sorta work for prefs
-        for (const node of Array.from($window.document.querySelectorAll<HTMLInputElement>("input[preference][type='range'], input[preference][type='text'], textarea[preference]"))) {
+        for (const node of Array.from($window.document.querySelectorAll<HTMLInputElement>('input[preference][type=\'range\'], input[preference][type=\'text\'], textarea[preference]'))) {
           node.value = Preference[node.getAttribute('preference').replace('extensions.zotero.translators.better-bibtex.', '')]
           if (!is7 && node.tagName === 'textarea') node.style.marginBottom = '20px'
         }
@@ -496,8 +496,8 @@ export class PrefPane {
 
   private showQuickCopyDetails() {
     const quickcopy = 'bbt-preferences-quickcopy-details'
-    const selected = `${quickcopy}-${Zotero.Prefs.get('translators.better-bibtex.quickCopyMode')}`
-    for (const details of ([...$window.document.querySelectorAll(`.${quickcopy}`)] as HTMLElement[])) {
+    const selected = `${ quickcopy }-${ Zotero.Prefs.get('translators.better-bibtex.quickCopyMode') }`
+    for (const details of ([...$window.document.querySelectorAll(`.${ quickcopy }`)] as HTMLElement[])) {
       details.style.display = details.id === selected ? 'initial' : 'none'
     }
   }
@@ -534,7 +534,7 @@ export class PrefPane {
         const refill = stylebox.children.length === 0
         const selectedStyle = Preference.autoAbbrevStyle
         let selectedIndex = -1
-        for (const [i, style] of styles.entries()) {
+        for (const [ i, style ] of styles.entries()) {
           if (refill) {
             const itemNode = $window.document.createElement('menuitem')
             itemNode.setAttribute('value', style.styleID)

@@ -14,7 +14,7 @@ export class Elements {
     for (const ref of this.all) {
       try {
         const elements = ref.deref()
-        if (elements) elements.document.querySelectorAll(`.${elements.className}`).forEach(e => e.remove())
+        if (elements) elements.document.querySelectorAll(`.${ elements.className }`).forEach(e => e.remove())
       }
       catch (err) {}
     }
@@ -23,7 +23,7 @@ export class Elements {
 
   private className: string
   constructor(private document: Document) {
-    this.className = `better-bibtex-${Zotero.Utilities.generateObjectKey()}`
+    this.className = `better-bibtex-${ Zotero.Utilities.generateObjectKey() }`
     if (is7) Elements.all.push(new WeakRef(this))
   }
 
@@ -40,21 +40,21 @@ export class Elements {
     name = name.replace('html:', '')
 
     const elt: HTMLElement = is7
-      ? this.document[ namespace === NAMESPACE.XUL ? 'createXULElement' : 'createElement'](name) as HTMLElement
+      ? this.document[namespace === NAMESPACE.XUL ? 'createXULElement' : 'createElement'](name) as HTMLElement
       : this.document.createElementNS(namespace, name) as HTMLElement
-    attrs.class = `${this.className} ${attrs.class || ''}`.trim()
-    for (const [a, v] of Object.entries(attrs)) {
+    attrs.class = `${ this.className } ${ attrs.class || '' }`.trim()
+    for (const [ a, v ] of Object.entries(attrs)) {
       if (typeof v === 'string') {
         elt.setAttribute(a, v)
       }
       else if (typeof v === 'number') {
-        elt.setAttribute(a, `${v}`)
+        elt.setAttribute(a, `${ v }`)
       }
       else if (a.startsWith('on') && typeof v === 'function') {
-        elt.addEventListener(a.replace('on', ''), event => { (v(event) as Promise<void>)?.catch?.(err => { throw(err) }) })
+        elt.addEventListener(a.replace('on', ''), event => { (v(event) as Promise<void>)?.catch?.(err => { throw (err) }) })
       }
       else {
-        throw new Error(`unexpected attribute ${a} of type ${typeof v}`)
+        throw new Error(`unexpected attribute ${ a } of type ${ typeof v }`)
       }
     }
     for (const child of children) {

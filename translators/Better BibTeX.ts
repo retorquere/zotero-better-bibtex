@@ -17,15 +17,15 @@ export function doExport(): void {
 import * as escape from '../content/escape'
 
 export function detectImport(): boolean {
-  return Zotero.BetterBibTeX && Zotero.getHiddenPref('better-bibtex.import') && zotero_detectImport()
+  return Zotero.BetterBibTeX && Zotero.getHiddenPref('better-bibtex.import') && zotero_detectImport() as boolean
 }
 
 function importGroup(group, itemIDs, root = null) {
-  const collection = new Zotero.Collection()
+  const collection = (new Zotero.Collection)
   collection.type = 'collection'
   collection.name = group.name
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  collection.children = group.entries.filter(citekey => itemIDs[citekey]).map(citekey => ({type: 'item', id: itemIDs[citekey]}))
+  collection.children = group.entries.filter(citekey => itemIDs[citekey]).map(citekey => ({ type: 'item', id: itemIDs[citekey] }))
 
   for (const subgroup of group.groups || []) {
     collection.children.push(importGroup(subgroup, itemIDs))
@@ -45,7 +45,7 @@ export async function doImport(): Promise<void> {
     input += read
   }
 
-  if (translation.preferences.strings && translation.preferences.importBibTeXStrings) input = `${translation.preferences.strings}\n${input}`
+  if (translation.preferences.strings && translation.preferences.importBibTeXStrings) input = `${ translation.preferences.strings }\n${ input }`
 
   const bib = await Zotero.BetterBibTeX.parseBibTeX(input, translation)
   const errors: ParseError[] = bib.errors
@@ -90,7 +90,7 @@ export async function doImport(): Promise<void> {
       item.note += '<li>'
       item.note += escape.html(err.error)
       if (err.input) {
-        item.note += `<pre>${escape.html(err.input)}</pre>`
+        item.note += `<pre>${ escape.html(err.input) }</pre>`
       }
       item.note += '</li>'
     }

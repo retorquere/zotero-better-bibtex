@@ -13,7 +13,7 @@ export class arXiv {
   public category = ''
   public source = ''
 
-  public parse(id: string, source=''): boolean {
+  public parse(id: string, source = ''): boolean {
     if (!id) return false
 
     let match
@@ -21,13 +21,13 @@ export class arXiv {
     if (match = post2007.exec(id)) {
       this.id = this.id || match[1]
       this.category = this.category || match[2] && match[2].trim()
-      this.source = this.source ? `${this.source}, ${source}` : source
+      this.source = this.source ? `${ this.source }, ${ source }` : source
       return true
     }
 
     if (match = pre2007.exec(id)) {
       this.id = this.id || match[1]
-      this.source = this.source ? `${this.source}, ${source}` : source
+      this.source = this.source ? `${ this.source }, ${ source }` : source
       return true
     }
 

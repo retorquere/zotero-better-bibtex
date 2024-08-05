@@ -11,7 +11,7 @@ import { simple as log } from '../../content/logger'
 
 export type Postscript = (target: any, source: any, translator: Translation, extra: ExtraFields) => Allow
 
-export function postscript(kind: 'csl' | 'tex', main: string, guard?: string): Postscript  {
+export function postscript(kind: 'csl' | 'tex', main: string, guard?: string): Postscript {
   let body = `
     // aliases for backwards compat
     const item = source;
@@ -19,12 +19,12 @@ export function postscript(kind: 'csl' | 'tex', main: string, guard?: string): P
 
     const reference = target;
     const entry = target;
-    const ${kind} = target;
+    const ${ kind } = target;
 
     // referencetype is the legacy name of entrytype
     const entrytype = reference.referencetype = entry.entrytype
 
-    const result = (() => { ${main}; })();
+    const result = (() => { ${ main }; })();
 
     // entry type change through legacy field
     if (entry.entrytype === entrytype && reference.referencetype !== entrytype) entry.entrytype = reference.referencetype
@@ -40,9 +40,9 @@ export function postscript(kind: 'csl' | 'tex', main: string, guard?: string): P
     }
   `
 
-  if (guard) body = `${guard} = true; try { ${body} } finally { ${guard} = false; }`
+  if (guard) body = `${ guard } = true; try { ${ body } } finally { ${ guard } = false; }`
 
-  log.info(`postscript=${body}`)
+  log.info(`postscript=${ body }`)
 
   return new Function('target', 'source', 'Translator', 'Zotero', 'extra', body) as Postscript
 }

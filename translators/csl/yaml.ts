@@ -24,7 +24,7 @@ const htmlConverter = new class HTML {
   private walk(tag: MarkupNode) {
     if (!tag) return
 
-    if (['#text', 'pre', 'script'].includes(tag.nodeName)) {
+    if ([ '#text', 'pre', 'script' ].includes(tag.nodeName)) {
       this.markdown += tag.value.replace(/([[*~^])/g, '\\$1')
       return
     }
@@ -58,10 +58,10 @@ const htmlConverter = new class HTML {
         break
 
       case 'span':
-        for (const [k, v] of Object.entries(tag.attr)) {
-          span_attrs += ` ${k}="${v}"`
+        for (const [ k, v ] of Object.entries(tag.attr)) {
+          span_attrs += ` ${ k }="${ v }"`
         }
-        if (span_attrs) this.markdown += `<span${span_attrs}>`
+        if (span_attrs) this.markdown += `<span${ span_attrs }>`
         break
 
       case 'tbody':
@@ -72,7 +72,7 @@ const htmlConverter = new class HTML {
         break // ignore
 
       default:
-        log.error(`unexpected tag '${tag.nodeName}'`)
+        log.error(`unexpected tag '${ tag.nodeName }'`)
     }
 
     for (const child of tag.childNodes) {
@@ -97,7 +97,7 @@ const htmlConverter = new class HTML {
         break
 
       case 'a':
-        if (tag.attr.href && tag.attr.href.length) this.markdown += `](${tag.attr.href})`
+        if (tag.attr.href && tag.attr.href.length) this.markdown += `](${ tag.attr.href })`
         break
 
       case 'sc':
@@ -132,7 +132,7 @@ function date2csl(date): [LooseNumber, LooseNumber?, LooseNumber?] { // fudge fo
       } as unknown as [LooseNumber, LooseNumber?, LooseNumber?]
 
     default:
-      throw new Error(`Expected date or open, got ${date.type}`)
+      throw new Error(`Expected date or open, got ${ date.type }`)
   }
 }
 
@@ -142,28 +142,28 @@ class Exporter extends CSLExporter {
       case 'date':
       case 'open':
       case 'season':
-        return [ date2csl(date) ] as unknown as CSLDate
+        return [date2csl(date)] as unknown as CSLDate
 
       case 'interval':
         return [ date2csl(date.from), date2csl(date.to) ] as unknown as CSLDate
 
       case 'verbatim':
-        return [ { literal: date.verbatim } ] as unknown as CSLDate
+        return [{ literal: date.verbatim }] as unknown as CSLDate
 
       default:
-        throw new Error(`Unexpected date type ${JSON.stringify(date)}`)
+        throw new Error(`Unexpected date type ${ JSON.stringify(date) }`)
     }
   }
 
   public serialize(csl: CSLItem): string {
-    for (const [k, v] of Object.entries(csl)) {
+    for (const [ k, v ] of Object.entries(csl)) {
       if (typeof v === 'string' && v.indexOf('<') >= 0) csl[k] = htmlConverter.convert(v)
     }
-    return YAML.dump([csl], {skipInvalid: true}) as string
+    return YAML.dump([csl], { skipInvalid: true }) as string
   }
 
   public flush(items: string[]): string {
-    return `---\nreferences:\n${items.join('\n')}...\n`
+    return `---\nreferences:\n${ items.join('\n') }...\n`
   }
 }
 
@@ -187,22 +187,22 @@ export function detectImport(): boolean {
   try {
     return parseInput().references // eslint-disable-line @typescript-eslint/no-unsafe-return
   }
-  catch (err) {
+  catch {
     return false
   }
 }
 
 function fill(n: number, template: string): string {
-  const str = `${Math.abs(n)}`
-  const padded = `${template}${str}`
-  return `${n < 0 ? '-' : ''}${padded.slice(-Math.max(str.length, template.length))}`
+  const str = `${ Math.abs(n) }`
+  const padded = `${ template }${ str }`
+  return `${ n < 0 ? '-' : '' }${ padded.slice(-Math.max(str.length, template.length)) }`
 }
 
 function circa(date) {
   return date.circa ? '?' : ''
 }
 
-const seasons = [undefined, 'Spring', 'Summer', 'Autumn', 'Winter']
+const seasons = [ undefined, 'Spring', 'Summer', 'Autumn', 'Winter' ]
 
 function join(dates: string[]): string {
   switch (dates.length) {
@@ -241,7 +241,7 @@ function cslDate(date): string {
     season = date.season
   }
   else {
-    for (const offset of [20, 12]) {
+    for (const offset of [ 20, 12 ]) {
       if (month && month > offset) {
         season = month - offset
         month = undefined
@@ -250,12 +250,12 @@ function cslDate(date): string {
   }
 
   if (typeof season === 'number') season = seasons[season] || season
-  if (typeof season === 'number') return `${fill(year, '0000')}-${fill(season, '00')}${circa(date)}`
-  if (season) return `${season} ${fill(year, '0000')}`
+  if (typeof season === 'number') return `${ fill(year, '0000') }-${ fill(season, '00') }${ circa(date) }`
+  if (season) return `${ season } ${ fill(year, '0000') }`
 
-  if (day && month) return `${fill(year, '0000')}-${fill(month, '00')}-${fill(day, '0000')}${circa(date)}`
-  if (month) return `${fill(year, '0000')}-${fill(month, '00')}${circa(date)}`
-  return `${fill(year, '0000')}${circa(date)}`
+  if (day && month) return `${ fill(year, '0000') }-${ fill(month, '00') }-${ fill(day, '0000') }${ circa(date) }`
+  if (month) return `${ fill(year, '0000') }-${ fill(month, '00') }${ circa(date) }`
+  return `${ fill(year, '0000') }${ circa(date) }`
 }
 
 function yamlDate(date): string {
@@ -265,7 +265,7 @@ function yamlDate(date): string {
   if (date.year < 0) date.year += 1
 
   if (!date.season) {
-    for (const offset of [20, 12]) {
+    for (const offset of [ 20, 12 ]) {
       if (date.month && date.month > offset) {
         date.season = date.month - offset
         delete date.month
@@ -274,17 +274,17 @@ function yamlDate(date): string {
   }
 
   if (typeof date.season === 'number') date.season = seasons[date.season] || date.season
-  if (typeof date.season === 'number') return `${fill(date.year, '0000')}-${fill(date.season, '00')}${circa(date)}`
-  if (date.season) return `${date.season} ${fill(date.year, '0000')}`
+  if (typeof date.season === 'number') return `${ fill(date.year, '0000') }-${ fill(date.season, '00') }${ circa(date) }`
+  if (date.season) return `${ date.season } ${ fill(date.year, '0000') }`
 
-  if (date.day && date.month) return `${fill(date.year, '0000')}-${fill(date.month, '00')}-${fill(date.day, '0000')}${circa(date)}`
-  if (date.month) return `${fill(date.year, '0000')}-${fill(date.month, '00')}${circa(date)}`
-  return `${fill(date.year, '0000')}${circa(date)}`
+  if (date.day && date.month) return `${ fill(date.year, '0000') }-${ fill(date.month, '00') }-${ fill(date.day, '0000') }${ circa(date) }`
+  if (date.month) return `${ fill(date.year, '0000') }-${ fill(date.month, '00') }${ circa(date) }`
+  return `${ fill(date.year, '0000') }${ circa(date) }`
 }
 
 export async function doImport(): Promise<void> {
   for (const source of parseInput().references) {
-    const item = new Zotero.Item()
+    const item = new Zotero.Item
 
     // Default to 'article' (Document) if no type given. 'type' is required in CSL-JSON,
     // but some DOI registration agencies provide bad data, and this is better than failing.
@@ -300,7 +300,7 @@ export async function doImport(): Promise<void> {
     if (!source.type) source.type = 'article'
     Zotero.Utilities.itemFromCSLJSON(item, source)
 
-    for (const [csl, zotero] of Object.entries({ accessed: 'accessDate', issued: 'date', submitted: 'filingDate', 'original-date': 'Original date' })) {
+    for (const [ csl, zotero ] of Object.entries({ accessed: 'accessDate', issued: 'date', submitted: 'filingDate', 'original-date': 'Original date' })) {
       // empty
       if (typeof source[csl] === 'undefined') continue
 
@@ -309,7 +309,7 @@ export async function doImport(): Promise<void> {
         value = source[csl].raw || source[csl].literal
       }
       else if (source[csl]['date-parts']) {
-        value = join(source[csl]['date-parts'].map(dp => cslDate({...source[csl], 'date-part': dp})))
+        value = join(source[csl]['date-parts'].map(dp => cslDate({ ...source[csl], 'date-part': dp })))
       }
       else if (typeof source[csl] === 'number' || typeof source[csl] === 'string') {
         value = source[csl]
@@ -319,7 +319,7 @@ export async function doImport(): Promise<void> {
       }
 
       if (zotero.includes(' ')) {
-        item.extra = `${item.extra || ''}\n${zotero}: ${value}`.trim()
+        item.extra = `${ item.extra || '' }\n${ zotero }: ${ value }`.trim()
       }
       else {
         item[zotero] = value
@@ -327,7 +327,7 @@ export async function doImport(): Promise<void> {
     }
 
     if (typeof source.id === 'string' && !source.id.match(/^[0-9]+$/) && !(item.extra || '').toLowerCase().match(/(^|\n)citation key:/)) {
-      item.extra = `${item.extra || ''}\nCitation Key: ${source.id}`.trim()
+      item.extra = `${ item.extra || '' }\nCitation Key: ${ source.id }`.trim()
     }
     await item.complete()
   }

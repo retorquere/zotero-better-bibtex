@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/quotes, max-len */
+/* eslint-disable max-len */
 declare const Services: any
 
 import { Shim } from './os'
@@ -47,7 +47,7 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
         set: (object, property, value) => {
           if (!(property in object)) {
             const stack = (new Error).stack
-            throw new TypeError(`Unsupported preference ${new String(property)} ${stack}`) // eslint-disable-line no-new-wrappers
+            throw new TypeError(`Unsupported preference ${ new String(property) } ${ stack }`) // eslint-disable-line no-new-wrappers
           }
           object[property] = value
           return true
@@ -55,7 +55,7 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
         get: (object, property) => {
           if (!(property in object)) {
             const stack = (new Error).stack
-            throw new TypeError(`Unsupported preference ${new String(property)} ${stack}`) // eslint-disable-line no-new-wrappers
+            throw new TypeError(`Unsupported preference ${ new String(property) } ${ stack }`) // eslint-disable-line no-new-wrappers
           }
           return object[property] // eslint-disable-line @typescript-eslint/no-unsafe-return
         },
@@ -67,8 +67,8 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
 
   setDefaultPrefs() {
     const branch = Services.prefs.getDefaultBranch('')
-    for (const [pref, value] of Object.entries(defaults)) {
-      const name = `extensions.zotero.translators.better-bibtex.${pref}`
+    for (const [ pref, value ] of Object.entries(defaults)) {
+      const name = `extensions.zotero.translators.better-bibtex.${ pref }`
       let error = ''
       try {
         switch (typeof value) {
@@ -82,25 +82,25 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
             branch.setIntPref(name, value)
             break
           default:
-            error = `invalid default type '${typeof(value)}' for '${pref}'`
+            error = `invalid default type '${ typeof (value) }' for '${ pref }'`
             break
         }
       }
-      catch (err) {
-        error = `could not set default for ${pref} to ${typeof value} ${JSON.stringify(value)}`
+      catch {
+        error = `could not set default for ${ pref } to ${ typeof value } ${ JSON.stringify(value) }`
       }
       if (error) {
-        const v = Zotero.Prefs.get(`translators.better-bibtex.${pref}`)
-        if (typeof v !== 'undefined') error += `, value currently set to ${typeof v} ${JSON.stringify(v)}`
+        const v = Zotero.Prefs.get(`translators.better-bibtex.${ pref }`)
+        if (typeof v !== 'undefined') error += `, value currently set to ${ typeof v } ${ JSON.stringify(v) }`
         log.error(error)
-        flash(`could not set default ${pref}`, error, 20)
+        flash(`could not set default ${ pref }`, error, 20)
         Zotero.Prefs.clear(name)
       }
     }
   }
 
   observe(pref: string) {
-    this.observers.push(Zotero.Prefs.registerObserver(`${this.prefix}${pref}`, this.changed.bind(this, pref)))
+    this.observers.push(Zotero.Prefs.registerObserver(`${ this.prefix }${ pref }`, this.changed.bind(this, pref)))
   }
 
   repair(pref) {
@@ -166,12 +166,12 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
     if (this.testing) {
       return new Proxy(this, {
         set: (object, property, value) => {
-          if (!(property in object)) throw new TypeError(`Unsupported preference ${new String(property)}`) // eslint-disable-line no-new-wrappers
+          if (!(property in object)) throw new TypeError(`Unsupported preference ${ new String(property) }`) // eslint-disable-line no-new-wrappers
           object[property] = value
           return true
         },
         get: (object, property) => {
-          if (!(property in object)) throw new TypeError(`Unsupported preference ${new String(property)}`) // eslint-disable-line no-new-wrappers
+          if (!(property in object)) throw new TypeError(`Unsupported preference ${ new String(property) }`) // eslint-disable-line no-new-wrappers
           return object[property] // eslint-disable-line @typescript-eslint/no-unsafe-return
         },
       })
@@ -179,8 +179,8 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
   }
 
   private move(ist: string, soll: string, convert: (v: any) => any) {
-    if (!ist.match(/[.]/)) ist = `translators.better-bibtex.${ist}`
-    if (!soll.match(/[.]/)) soll = `translators.better-bibtex.${soll}`
+    if (!ist.match(/[.]/)) ist = `translators.better-bibtex.${ ist }`
+    if (!soll.match(/[.]/)) soll = `translators.better-bibtex.${ soll }`
     const old = Zotero.Prefs.get(ist)
     if (typeof old === 'undefined') return
     Zotero.Prefs.clear(ist)
@@ -188,14 +188,14 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
   }
 
   private async loadFromCSV(pref: string, path: string, dflt: string, transform: (row: any) => any) {
-    const key = `${this.prefix}${pref}`
+    const key = `${ this.prefix }${ pref }`
     const modified = {
-      pref: Zotero.Prefs.get(`${key}.modified`) || 0,
+      pref: Zotero.Prefs.get(`${ key }.modified`) || 0,
       file: (await $OS.File.exists(path)) ? (await $OS.File.stat(path)).lastModificationDate.getTime() : 0,
     }
     if (modified.pref >= modified.file) return
 
-    Zotero.Prefs.set(`${key}.modified`, modified.file)
+    Zotero.Prefs.set(`${ key }.modified`, modified.file)
     const rows = await csv2dict(path)
     try {
       this[pref] = rows.length ? transform(rows) : dflt
@@ -209,7 +209,7 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
   public async startup(dir: string) {
     // load from csv for easier editing
     await this.loadFromCSV('charmap', $OS.Path.join(dir, 'charmap.csv'), '{}', (rows: Record<string, string>[]) => JSON.stringify(
-      rows.reduce((acc: CharMap, row: { unicode: string, text: string, math: string }) => {
+      rows.reduce((acc: CharMap, row: { unicode: string; text: string; math: string }) => {
         if (row.unicode && (row.math || row.text)) acc[row.unicode] = { text: row.text, math: row.math }
         return acc
       }, {})

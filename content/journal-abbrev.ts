@@ -72,9 +72,9 @@ export const JournalAbbrev = new class { // eslint-disable-line @typescript-esli
     if (abbrev || !mode.endsWith('auto')) return abbrev || null
 
     const itemType: string = zotero_item ? Zotero.ItemTypes.getName(item.itemTypeID) : item.itemType
-    if (!['conferencePaper', 'journalArticle', 'bill', 'case', 'statute'].includes(itemType)) return null
+    if (![ 'conferencePaper', 'journalArticle', 'bill', 'case', 'statute' ].includes(itemType)) return null
 
-    for (const field of ['publicationTitle', 'reporter', 'code']) {
+    for (const field of [ 'publicationTitle', 'reporter', 'code' ]) {
       try {
         journal = zotero_item ? item.getField(field, false, true) : item[field]
         if (!journal) continue
