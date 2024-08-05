@@ -523,9 +523,7 @@ export const AutoExport = new class $AutoExport { // eslint-disable-line @typesc
   }
 
   public async add(ae: Job, schedule = false) {
-    log.debug('ae: adding', ae)
     await SQL.create(ae)
-    log.debug('ae: now', await this.all())
 
     try {
       const repo = await git.repo(ae.path)
