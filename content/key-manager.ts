@@ -586,7 +586,8 @@ export const KeyManager = new class _KeyManager {
     return blink.many(this.keys)
   }
 
-  public propose(item: ZoteroItem): Partial<CitekeyRecord> {
+  // mem is for https://github.com/retorquere/zotero-better-bibtex/issues/2926
+  public propose(item: ZoteroItem, mem?: Set<string>): Partial<CitekeyRecord> {
     let citationKey: string = Extra.get(item.getField('extra') as string, 'zotero', { citationKey: true }).extraFields.citationKey
 
     if (citationKey) return { citationKey, pinned: true }
@@ -620,7 +621,11 @@ export const KeyManager = new class _KeyManager {
       }
 
       if (blink.many(this.keys, { where }).filter(i => i.itemID !== item.id).length) continue
-
+      if (mem) {
+        const proposal = ci ? postfixed.toLowerCase() : postfixed
+        if (mem.has(proposal)) continue
+        mem.add(proposal)
+      }
       return { citationKey: postfixed, pinned: false }
     }
   }
