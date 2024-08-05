@@ -54,30 +54,28 @@ export class Serializer {
 }
 
 export function fix(serialized: Item, item: ZoteroItem): Item {
-  if (typeof item.id !== 'undefined') {
-    if (item.isRegularItem() && !item.isFeedItem) {
-      const regular = <RegularItem>serialized
+  if (item.isRegularItem() && !item.isFeedItem) {
+    const regular = <RegularItem>serialized
 
-      if (Zotero.BetterBibTeX.ready.isPending()) {
-        // with the new "title as citation", CSL can request these items before the key manager is online
-        regular.citationKey = ''
-      }
-      else {
-        regular.citationKey = Zotero.BetterBibTeX.KeyManager.get(item.id).citationKey
-        if (!regular.citationKey) throw new Error(`no citation key for ${ Zotero.ItemTypes.getName(item.itemTypeID) } ${ item.id }`)
-        if (!regular.journalAbbreviation && Preference.autoAbbrev) {
-          const autoJournalAbbreviation = JournalAbbrev.get(regular)
-          if (autoJournalAbbreviation) regular.autoJournalAbbreviation = autoJournalAbbreviation
-        }
+    if (Zotero.BetterBibTeX.ready.isPending()) {
+      // with the new "title as citation", CSL can request these items before the key manager is online
+      regular.citationKey = ''
+    }
+    else {
+      regular.citationKey = Zotero.BetterBibTeX.KeyManager.get(item.id).citationKey
+      if (!regular.citationKey) throw new Error(`no citation key for ${ Zotero.ItemTypes.getName(item.itemTypeID) } ${ item.id }`)
+      if (!regular.journalAbbreviation && Preference.autoAbbrev) {
+        const autoJournalAbbreviation = JournalAbbrev.get(regular)
+        if (autoJournalAbbreviation) regular.autoJournalAbbreviation = autoJournalAbbreviation
       }
     }
-
-    // come on -- these are used in the collections export but not provided on the items?!
-    serialized.itemID = item.id
-    // serialized.key = serialized.itemKey = item.key
-    serialized.itemKey = item.key
-    serialized.libraryID = item.libraryID
   }
+
+  // come on -- these are used in the collections export but not provided on the items?!
+  serialized.itemID = item.id
+  // serialized.key = serialized.itemKey = item.key
+  serialized.itemKey = item.key
+  serialized.libraryID = item.libraryID
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   return serialized as unknown as Item

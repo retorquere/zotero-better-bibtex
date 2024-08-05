@@ -439,7 +439,7 @@ Zotero.Translate.Import.prototype.Sandbox.BetterBibTeX = {
 $patch$(Zotero.Utilities.Internal, 'itemToExportFormat', original => function Zotero_Utilities_Internal_itemToExportFormat(zoteroItem: any, _legacy: any, _skipChildItems: any) {
   const serialized = original.apply(this, arguments)
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  return fixExportFormat(serialized, zoteroItem)
+  return typeof zoteroItem.id === 'undefined' ? serialized : fixExportFormat(serialized, zoteroItem)
 })
 
 // so BBT-JSON can be imported without extra-field meddling
