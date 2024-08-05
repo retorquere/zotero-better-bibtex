@@ -123,27 +123,14 @@ function clean_csl(item)
 end
 
 function stringify(node)
-  return pandoc.utils.stringify(pandoc.walk_inline(node, {
-    DoubleQuote = function(n) 
-      return { pandoc.Str "\"", unpack(n.content), pandoc.Str "\"" }
-    end,
-
-    Underline = function(n)
-      return { pandoc.Str "<u>", unpack(n.content), pandoc.Str "</u>" }
-    end,
-
-    Superscript = function(n)
-      return { pandoc.Str "<sup>", unpack(n.content), pandoc.Str "</sup>" }
-    end,
-
-    Subscript = function(n)
-      return { pandoc.Str "<sub>", unpack(n.content), pandoc.Str "</sub>" }
-    end,
-
-    Emph = function(n)
-      return { pandoc.Str "<i>", unpack(n.content), pandoc.Str "</i>" }
-    end
-  }))
+  local doc = pandoc.Pandoc({ node })
+  return pandoc.write(doc, 'html')
+    :gsub('<em>', '<i>')
+    :gsub('</em>', '</i>')
+    :gsub('<strong>', '<b>')
+    :gsub('</strong>', '</b>')
+    :gsub('<p>', '')
+    :gsub('</p>', '')
 end
 
 local function zotero_ref(cite)

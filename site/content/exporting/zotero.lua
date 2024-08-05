@@ -1,8 +1,8 @@
 
-  print('zotero-live-citations cd1ef3f')
+  print('zotero-live-citations 4b9705e')
   local mt, latest = pandoc.mediabag.fetch('https://retorque.re/zotero-better-bibtex/exporting/zotero.lua.revision')
   latest = string.sub(latest, 1, 10)
-  if 'cd1ef3f' ~= latest then
+  if '4b9705e' ~= latest then
     print('new version "' .. latest .. '" available at https://retorque.re/zotero-better-bibtex/exporting')
   end
 
@@ -1820,8 +1820,19 @@ function clean_csl(item)
   return setmetatable(cleaned, getmetatable(item))
 end
 
+function stringify(node)
+  local doc = pandoc.Pandoc({ node })
+  return pandoc.write(doc, 'html')
+    :gsub('<em>', '<i>')
+    :gsub('</em>', '</i>')
+    :gsub('<strong>', '<b>')
+    :gsub('</strong>', '</b>')
+    :gsub('<p>', '')
+    :gsub('</p>', '')
+end
+
 local function zotero_ref(cite)
-  local content = pandoc.utils.stringify(cite.content)
+  local content = stringify(cite.content)
   local csl = {
     citationID = utils.next_id(8),
     properties = {
@@ -1868,8 +1879,8 @@ local function zotero_ref(cite)
       if item.mode == 'SuppressAuthor' then
         citation['suppress-author'] = true
       end
-      citation.prefix = pandoc.utils.stringify(item.prefix):gsub('\194\160', ' ')
-      local label, locator, suffix = csl_locator.parse(pandoc.utils.stringify(item.suffix):gsub('\194\160', ' '))
+      citation.prefix = stringify(item.prefix):gsub('\194\160', ' ')
+      local label, locator, suffix = csl_locator.parse(stringify(item.suffix):gsub('\194\160', ' '))
       if suffix and suffix ~= '' then citation.suffix = suffix end
       if label and label ~= '' then citation.label = label end
       if locator and locator ~= '' then citation.locator = locator end
@@ -1960,7 +1971,7 @@ local function scannable_cite(cite)
       verse = 'v.',
       volume = 'vol.',
     }
-    local label, locator, suffix = csl_locator.parse(pandoc.utils.stringify(item.suffix))
+    local label, locator, suffix = csl_locator.parse(stringify(item.suffix))
     if label then
       locator = shortlabel[label] .. ' ' .. locator
     else
@@ -1968,8 +1979,8 @@ local function scannable_cite(cite)
     end
 
     citations = citations ..
-      '{ ' .. (pandoc.utils.stringify(item.prefix) or '') ..
-      ' | ' .. suppress .. utils.trim(string.gsub(pandoc.utils.stringify(cite.content) or '', '[|{}]', '')) ..
+      '{ ' .. (stringify(item.prefix) or '') ..
+      ' | ' .. suppress .. utils.trim(string.gsub(stringify(cite.content) or '', '[|{}]', '')) ..
       ' | ' .. locator ..
       ' | ' .. (suffix or '') ..
       ' | ' .. (ug == 'groups' and 'zg:' or 'zu:') .. id .. ':' .. key .. ' }'
