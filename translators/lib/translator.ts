@@ -50,8 +50,8 @@ export class Items {
     }
 
     this.items.sort((a: any, b: any) => {
-      if (typeof a.itemID !== 'number') return -1
-      if (typeof b.itemID !== 'number') return 1
+      if (typeof a.itemID !== 'number') return 1
+      if (typeof b.itemID !== 'number') return -1
       return a.itemID - b.itemID
     })
   }
