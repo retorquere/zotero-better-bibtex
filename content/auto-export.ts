@@ -75,6 +75,7 @@ export const SQL = new class {
   }
 
   public sql = {
+    delete: 'DELETE FROM betterbibtex.autoexport WHERE path = :path',
     create: 'REPLACE INTO betterbibtex.autoexport',
     setting: 'REPLACE INTO betterbibtex.autoexport_setting (path, setting, value) VALUES (:path, :setting, :value)',
   }
@@ -133,6 +134,7 @@ export const SQL = new class {
       if (typeof v === 'boolean') job[k] = v ? 1 : 0
     }
 
+    await Zotero.DB.queryAsync(this.sql.delete, { path: job.path }, NoParse)
     await Zotero.DB.queryAsync(this.sql.create, pick(job, this.columns.job), NoParse)
 
     const settings = autoExport[job.translatorID]
@@ -467,7 +469,7 @@ type Job = {
 export type JobSetting = keyof Job
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
-export const AutoExport = new class _AutoExport { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
+export const AutoExport = new class $AutoExport { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   public progress: Map<string, number> = new Map
 
   constructor() {
@@ -520,8 +522,10 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
     })
   }
 
-  public async add(ae, schedule = false) {
+  public async add(ae: Job, schedule = false) {
+    log.debug('ae: adding', ae)
     await SQL.create(ae)
+    log.debug('ae: now', await this.all())
 
     try {
       const repo = await git.repo(ae.path)
@@ -530,6 +534,43 @@ export const AutoExport = new class _AutoExport { // eslint-disable-line @typesc
     catch (err) {
       log.error('AutoExport.add:', err)
     }
+  }
+
+  public async register(job: ExportJob) {
+    if (!job.displayOptions.keepUpdated) return
+
+    if (!job.path) {
+      // this should never occur -- keepUpdated should only be settable if you do a file export
+      flash('Auto-export not registered', 'Auto-export only supported for exports to file -- please report this, you should not have seen this message')
+      return
+    }
+
+    if (job.displayOptions.exportFileData) {
+      // likewise, the export UI should prevent this
+      flash('Auto-export not registered', 'Auto-export does not support attachment export -- please report this, you should not have seen this message')
+      return
+    }
+
+    if (job.scope.type !== 'library' && job.scope.type !== 'collection') {
+      flash('Auto-export not registered', 'Auto-export only supported for groups, collections and libraries')
+      return
+    }
+
+    await this.add({
+      enabled: true,
+      path: job.path,
+      type: job.scope.type,
+      id: job.scope.type === 'library' ? job.scope.id : job.scope.collection.id,
+      recursive: false,
+      error: '',
+      updated: Date.now(),
+      status: 'done',
+      translatorID: job.translatorID,
+      exportNotes: job.displayOptions.exportNotes,
+      biblatexAPA: job.displayOptions.biblatexAPA,
+      biblatexChicago: job.displayOptions.biblatexChicago,
+      useJournalAbbreviation: job.displayOptions.useJournalAbbreviation,
+    })
   }
 
   public async find(type: 'collection' | 'library', ids: number[]): Promise<Job[]> {

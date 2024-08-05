@@ -135,11 +135,16 @@ export class TestSupport {
       if (!scope) throw new Error(`Collection '${ name }' not found`)
     }
     else {
-      scope = null
+      scope = { type: 'library', id: Zotero.Libraries.userLibraryID }
     }
+
+    const job = { translatorID, displayOptions: displayOptions as Record<string, boolean>, scope, path }
+
+    await AutoExport.register(job)
+
     const start = Date.now()
     try {
-      return await Translators.exportItems({ translatorID, displayOptions: displayOptions as Record<string, boolean>, scope, path })
+      return await Translators.exportItems(job)
     }
     finally {
       log.info(`performance: ${ translatorID } export took ${ Date.now() - start }`)
@@ -349,6 +354,7 @@ export class TestSupport {
   public async editAutoExport(field: JobSetting, value: boolean | string): Promise<void> {
     // assumes only one auto-export is set up
     const path: string = await Zotero.DB.valueQueryAsync('SELECT path FROM betterbibtex.autoExport')
+    log.debug('ae:', path, await AutoExport.all())
     await AutoExport.edit(path, field, value)
   }
 

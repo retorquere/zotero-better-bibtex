@@ -478,42 +478,14 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
         }
       }
 
-      let capture = displayOptions.keepUpdated
-
-      if (capture) {
-        // this should never occur -- keepUpdated should only be settable if you do a file export
-        if (!this.location?.path) {
-          flash('Auto-export not registered', 'Auto-export only supported for exports to file -- please report this, you should not have seen this message')
-          capture = false
-        }
-
-        // this should never occur -- the JS in exportOptions.ts should prevent it
-        if (displayOptions.exportFileData) {
-          flash('Auto-export not registered', 'Auto-export does not support file data export -- please report this, you should not have seen this message')
-          capture = false
-        }
-
-        if (![ 'library', 'collection' ].includes(this._export?.type)) {
-          flash('Auto-export not registered', 'Auto-export only supported for groups, collections and libraries')
-          capture = false
-        }
-      }
-
-      if (capture) {
-        void AutoExport.add({
-          enabled: true,
-          path: this.location.path,
-          type: this._export.type as 'collection' | 'library',
-          id: this._export.type === 'library' ? this._export.id : this._export.collection.id,
-          recursive: false,
-          error: '',
-          updated: Date.now(),
-          status: 'done',
+      if (this._export && displayOptions.keepUpdated) {
+        void AutoExport.register({
           translatorID,
-          exportNotes: displayOptions.exportNotes,
-          biblatexAPA: displayOptions.biblatexAPA,
-          biblatexChicago: displayOptions.biblatexChicago,
-          useJournalAbbreviation: displayOptions.useJournalAbbreviation,
+          displayOptions,
+          scope: this._export.type === 'collection'
+            ? { type: 'collection', collection: this._export.collection }
+            : { type: this._export.type as 'library', id: this._export.id },
+          path: this.location.path,
         })
       }
 
