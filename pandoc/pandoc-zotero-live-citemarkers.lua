@@ -123,14 +123,17 @@ function clean_csl(item)
 end
 
 function stringify(node)
-  local doc = pandoc.Pandoc({ node })
-  return pandoc.write(doc, 'html')
+  local html = pandoc.write(pandoc.Pandoc({ node }), 'html')
     :gsub('<em>', '<i>')
     :gsub('</em>', '</i>')
     :gsub('<strong>', '<b>')
     :gsub('</strong>', '</b>')
     :gsub('<p>', '')
     :gsub('</p>', '')
+  if pandoc.utils.stringify(node):match('^%s') then
+    html = ' ' .. html
+  end
+  return html
 end
 
 local function zotero_ref(cite)
