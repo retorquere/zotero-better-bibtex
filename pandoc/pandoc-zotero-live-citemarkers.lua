@@ -124,10 +124,13 @@ end
 
 function stringify(node)
   local html = pandoc.write(pandoc.Pandoc({ node }), 'html')
+    :gsub('<u>', '<i>')
+    :gsub('</u>', '</i>')
     :gsub('<em>', '<i>')
     :gsub('</em>', '</i>')
     :gsub('<strong>', '<b>')
     :gsub('</strong>', '</b>')
+    :gsub('<span class="smallcaps">', '<span style="font-variant:small-caps;">')
     :gsub('<p>', '')
     :gsub('</p>', '')
   if pandoc.utils.stringify(node):match('^%s') then
