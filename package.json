@@ -195,5 +195,9 @@
   },
   "bugs": {
     "url": "https://github.com/retorquere/zotero-better-bibtex/issues"
+  },
+  "typedocOptions": {
+    "out": "./docs",
+    "plugin": ["./uscore.js"]
   }
 }
