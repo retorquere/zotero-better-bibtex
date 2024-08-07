@@ -268,6 +268,14 @@ better-bibtex_preferences_export_bibtex_urls_url = in the 'url' field
 better-bibtex_preferences_export_bibtex_urls_url-ish = in the 'url' field, but assuming the 'url' package is not loaded
   .label = { better-bibtex_preferences_export_bibtex_urls_url-ish }
 
+better-bibtex_preferences_export_sort = Sort TeX/CSL output (useful if you use version control on the output):
+better-bibtex_preferences_export_sort_off = off
+  .label = { better-bibtex_preferences_export_sort_off }
+better-bibtex_preferences_export_sort_id = item creation order
+  .label = { better-bibtex_preferences_export_sort_id }
+better-bibtex_preferences_export_sort_citekey = citation key
+  .label = { better-bibtex_preferences_export_sort_citekey }
+
 better-bibtex_preferences_export_fields = Fields
   .label = { better-bibtex_preferences_export_fields }
 

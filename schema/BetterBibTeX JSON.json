@@ -231,6 +231,14 @@
             "exportBraceProtection": {
               "type": "boolean"
             },
+            "exportSort": {
+              "enum": [
+                "off",
+                "id",
+                "citekey"
+              ],
+              "type": "string"
+            },
             "exportTitleCase": {
               "type": "boolean"
             },
