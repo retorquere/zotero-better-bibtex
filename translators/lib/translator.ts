@@ -48,12 +48,25 @@ export class Items {
       }
       // trace('items: loaded')
     }
+  }
 
-    this.items.sort((a: any, b: any) => {
-      if (typeof a.itemID !== 'number') return 1
-      if (typeof b.itemID !== 'number') return -1
-      return a.itemID - b.itemID
-    })
+  private sortkey(item) {
+    return `${ item.itemID === 'number' ? 'a' : 'b' }\t${ item.citationKey || '' }\t${ item.itemID === 'number' ? item.itemID : '' }`
+  }
+
+  public sort(sort: 'off' | 'id' | 'citekey'): void {
+    switch (sort) {
+      case 'id':
+        this.items.sort((a: any, b: any) => {
+          if (typeof a.itemID !== 'number') return 1
+          if (typeof b.itemID !== 'number') return -1
+          return a.itemID - b.itemID
+        })
+        break
+      case 'citekey':
+        this.items.sort((a: any, b: any) => this.sortkey(a).localeCompare(this.sortkey(b)))
+        break
+    }
   }
 
   public erase(): void {
@@ -349,6 +362,7 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
     const translation = new this(translator, 'export')
 
     translation.input = input
+    translation.input.items.sort(translation.preferences.exportSort)
 
     translation.export = {
       dir: (Zotero.getOption('exportDir') as string),

@@ -102,6 +102,10 @@ preferences
   // preference name="extensions.zotero.translators.better-bibtex.langID" id="pref-better-bibtex-langID" type="string"
   // Switches between `babel` and `polyglossia`, except I haven't gotten around to polyglossia yet.
 
+  preference(name="extensions.zotero.translators.better-bibtex.exportSort" bbt:affects="" type="string" default="id")
+  bbt:doc.
+    BBT sorts the output for TeX and CSL exports to have the output be versioning-friendly.
+
   preference(name="extensions.zotero.translators.better-bibtex.exportBibTeXStrings" bbt:affects="tex" type="string" default="off")
   bbt:doc.
     When enabled, BBT will try to retain @string vars its exports unsurrounded by braces; when set to 'detect', single-word strings will be assumed to be externally-defined @string vars,

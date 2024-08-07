@@ -3,6 +3,14 @@ checkbox(label="&better-bibtex_preferences_auto-abbrev.label;" preference="exten
 separator.bbt-jurism
 
 html:div
+  label(bbt:preference="extensions.zotero.translators.better-bibtex.exportSort") &better-bibtex_preferences_export_sort;
+  menulist(preference="extensions.zotero.translators.better-bibtex.exportSort")
+    menupopup
+      menuitem(value='off' label='&better-bibtex_preferences_export_sort_off.label;')
+      menuitem(value='id' label='&better-bibtex_preferences_export_sort_id.label;')
+      menuitem(value='citekey' label='&better-bibtex_preferences_export_sort_citekey.label;')
+
+html:div
   label.bbt-jurism(bbt:preference="extensions.zotero.translators.better-bibtex.autoAbbrevStyle") &better-bibtex_preferences_auto-abbrev_style;
   menulist#bbt-abbrev-style.bbt-jurism(oncommand="Zotero.BetterBibTeX.PrefPane.styleChanged()")
     menupopup
