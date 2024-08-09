@@ -71,7 +71,6 @@ jobs:
       run: ./util/action-flags
       env:
         GITHUB_CONTEXT: ${{ toJson(github) }}
-    - run: cat $GITHUB_ENV
 
     - name: get previous test durations
       run: curl -L https://github.com/retorquere/zotero-better-bibtex/releases/download/builds/durations${{ env.slow }}.json --create-dirs -o test/balance/durations.json

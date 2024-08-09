@@ -59,7 +59,6 @@ jobs:
       run: ./util/action-flags
       env:
         GITHUB_CONTEXT: ${{ toJson(github) }}
-    - run: cat $GITHUB_ENV
 
     - name: get previous test durations
       run: curl -L 
