@@ -71,8 +71,8 @@ jobs:
       run: ./util/balance.py --durations test/balance/durations.json --bins test/balance/bins.json
         --minutes 10 ${{ env.slow }} ${{ env.beta }} ${{ env.legacy }}
 
-    - name: build ${{ env.beta }} ${{ env.legacy }
-      #run: npm run build ${{ env.beta }} ${{ env.legacy }
+    - name: build ${{ env.beta }} ${{ env.legacy }}
+      #run: npm run build ${{ env.beta }} ${{ env.legacy }}
       run: npm run build
 
     - name: publish debug bridge
