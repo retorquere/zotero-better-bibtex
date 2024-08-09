@@ -14,8 +14,8 @@ if github.event_name == 'push':
   if github.event.head_commit.message == package.version and github.ref == f'refs/tags/v{package.version}':
     print('release build')
     flags.add('slow')
-  elif github.ref_name == 'master': # builds on master.
-    print('master')
+  elif github.ref_name in ['master', 'z7'] : # builds on master.
+    print(github.ref_name)
     flags.add('slow')
     flags.add('beta')
     flags.add('legacy')
