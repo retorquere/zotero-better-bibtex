@@ -21,6 +21,7 @@ active_tag_value_provider = {
   'slow': 'false',
   'whopper': 'false',
   'beta': 'false',
+  'legacy': 'false',
 }
 active_tag_matcher = ActiveTagMatcher(active_tag_value_provider)
 

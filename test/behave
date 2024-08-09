@@ -42,6 +42,7 @@ class BooleanAction(argparse.Action):
 
   def __call__(self, parser, namespace, values, option_string=None):
     setattr(namespace, self.dest, not option_string.startswith('--no'))
+
 class ClientAction(argparse.Action):
   def __init__(self, option_strings, dest, nargs=None, **kwargs):
     super().__init__(option_strings, dest, nargs=0, **kwargs)
@@ -64,6 +65,7 @@ parser.add_argument('--jurism', dest='client', action='store_const', const='juri
 parser.add_argument('--client', dest='client', default=os.environ.get('CLIENT', 'zotero'))
 parser.add_argument('--log-memory-every', dest='log_memory_every', type=int)
 parser.add_argument('--beta', action='store_true', default=('#beta' in CI.message))
+parser.add_argument('--legacy', action='store_true', default=('#legacy' in CI.message))
 parser.add_argument('--keep', '--no-keep', dest='keep', action=BooleanAction, default=False)
 parser.add_argument('--inspire-hep', '--no-inspire-hep', dest='inspireHEP', action=BooleanAction, default=True)
 parser.add_argument('--worker', '--no-worker', dest='worker', action=BooleanAction, default=False)
@@ -104,7 +106,7 @@ if args.client.endswith('-beta'):
   args.beta = True
 
 if args.build:
-  process = subprocess.Popen(['npm', 'run', 'build'] + (['--beta'] if args.beta else []), stdout=subprocess.PIPE)
+  process = subprocess.Popen(['npm', 'run', 'build'], stdout=subprocess.PIPE)
   while True:
     line = process.stdout.readline()
     print(line.decode('utf-8'), end='')
@@ -138,7 +140,10 @@ if args.stop: sys.argv.append('--stop')
 if args.slow: sys.argv.extend(['--define', 'slow=true'])
 if args.whopper: sys.argv.extend(['--define', 'whopper=true'])
 
+if args.beta and args.legacy:
+  raise ValueError('cannot build beta+legacy')
 if args.beta: sys.argv.extend(['--define', 'beta=true'])
+if args.legacy: sys.argv.extend(['--define', 'legacy=true'])
 
 if args.test: sys.argv.extend(['--define', f'test={args.test}'])
 if args.headless: sys.argv.extend(['--define', f'headless=true'])

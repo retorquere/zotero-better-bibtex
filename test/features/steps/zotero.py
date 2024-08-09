@@ -288,6 +288,7 @@ class Zotero:
 
     self.client = userdata.get('client', 'zotero')
     self.beta = userdata.get('beta') == 'true'
+    self.legacy = userdata.get('legacy') == 'true'
     self.dev = userdata.get('dev') == 'true'
     self.token = str(uuid.uuid4())
     self.import_at_start = userdata.get('import', None)
@@ -623,8 +624,12 @@ class Zotero:
     os.makedirs(profile.profiles, exist_ok = True)
 
     variant = ''
-    if self.beta: variant = '-beta'
-    elif self.dev: variant = '-dev'
+    if self.beta:
+      variant = '-beta'
+    elif self.legacy:
+      variant = '6'
+    elif self.dev:
+      variant = '-dev'
     profile.binary = {
       'Linux': f'/usr/lib/{self.client}{variant}/{self.client}',
       'Darwin': f'/Applications/{self.client.title()}{variant}.app/Contents/MacOS/{self.client}',

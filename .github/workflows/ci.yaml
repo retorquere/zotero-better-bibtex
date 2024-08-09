@@ -117,10 +117,6 @@ jobs:
         bin: ${{ fromJSON(needs.build.outputs.bin_ids) }}
         client: ${{ fromJSON(needs.build.outputs.clients) }}
         worker: [--worker, --no-worker]
-        exclude:
-        - client: jurism-beta
-        - client: jurism
-          #  worker: '--worker'
     steps:
     - uses: actions/checkout@v4
     - name: fetch build artifacts

@@ -1,7 +1,7 @@
 @install
 Feature: Install
 
-  @use.with_beta=true
+  @use.with_legacy=false
   Scenario: reinstall the bootstrapped XPI
     When I import 1 reference from "export/*.json"
     And I disable extension better-bibtex@iris-advies.com

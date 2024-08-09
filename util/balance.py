@@ -20,6 +20,7 @@ parser.add_argument('-b', '--bins', required=True)
 parser.add_argument('-d', '--durations', required=True)
 parser.add_argument('-m', '--minutes', type=int, required=True) # one hour of test time becomes 6 builds
 parser.add_argument(      '--beta', default=False, action='store_true')
+parser.add_argument(      '--legacy', default=False, action='store_true')
 parser.add_argument('-s', '--slow', default=False, action='store_true')
 args = parser.parse_args()
 
@@ -87,4 +88,6 @@ publish('bins', args.bins)
 clients = ['zotero']
 if args.beta:
   clients += [client + '-beta' for client in clients]
+if args.legacy:
+  clients += [client + '6' for client in clients]
 publish('clients', json.dumps(clients))
