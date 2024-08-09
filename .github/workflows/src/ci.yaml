@@ -76,10 +76,11 @@ jobs:
       run: curl -L https://github.com/retorquere/zotero-better-bibtex/releases/download/builds/durations${{ env.slow }}.json --create-dirs -o test/balance/durations.json
     - name: balance tests
       id: balance
-      run: ./util/balance.py --durations test/balance/durations.json --bins test/balance/bins.json --minutes 10 ${{ env.slow }} ${{ env.beta }}
+      run: ./util/balance.py --durations test/balance/durations.json --bins test/balance/bins.json --minutes 10 ${{ env.slow }} ${{ env.beta }} ${{ env.legacy }}
 
-    - name: build ${{ env.beta }}
-      run: npm run build ${{ env.beta }}
+    - name: build ${{ env.beta }} ${{ env.legacy }
+      #run: npm run build ${{ env.beta }} ${{ env.legacy }
+      run: npm run build
 
     - name: publish debug bridge
       run: ./util/publish-debug-bridge.py
