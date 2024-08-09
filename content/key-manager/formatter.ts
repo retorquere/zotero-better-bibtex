@@ -454,9 +454,6 @@ export class PatternFormatter {
     return citekey
   }
 
-  /**
-   * Set the current chunk
-   */
   public $text(text: string): this {
     this.chunk = text || ''
     return this
@@ -502,6 +499,7 @@ export class PatternFormatter {
 
   /**
    * returns the internal item ID/key
+   * @param id 'id': return itemID; 'key': return the item key
    */
   public $item(id: 'id' | 'key' = 'key'): this {
     return this.$text(id === 'id' ? `${ this.item.itemID }` : this.item.itemKey)
@@ -845,9 +843,11 @@ export class PatternFormatter {
     return this.$text(pages.split(page_range_splitter)[0] || '')
   }
 
-  /** Tag number `n`. Mostly for legacy compatibility -- order of tags is undefined */
+  /** Tag number `n`. Mostly for legacy compatibility
+   * @param n position of tag to get
+   */
   public $keyword(n: number): this {
-    const tag: string | { tag: string } = this.item.getTags()?.[n] || ''
+    const tag: string | { tag: string } = this.item.getTags()?.slice().sort()[n] || ''
     return this.$text(typeof tag === 'string' ? tag : tag.tag)
   }
 
@@ -1158,6 +1158,7 @@ export class PatternFormatter {
 
   /**
    * Abbreviates the text. Only the first character and subsequent characters following white space will be included.
+   * @param chars number of characters to return per word
    */
   public _abbr(chars = 1): this {
     return this.$text(this.chunk.split(/\s+/).map(word => word.substring(0, chars)).join(''))
@@ -1292,7 +1293,9 @@ export class PatternFormatter {
     return text
   }
 
-  /** Removes punctuation */
+  /** Removes punctuation
+    * @param dash replace dashes with given character
+    */
   public _nopunct(dash = '-'): this {
     return this.$text(this.nopunct(this.chunk, dash))
   }
@@ -1307,7 +1310,10 @@ export class PatternFormatter {
     return this.$text(this.chunk.replace(CJK, ' $1 ').trim())
   }
 
-  /** word segmentation for Chinese items. Uses substantial memory, and adds about 7 seconds to BBTs startup time; must be enabled under Preferences -> Better BibTeX -> Advanced -> Citekeys */
+  /**
+    * word segmentation for Chinese items. Uses substantial memory, and adds about 7 seconds to BBTs startup time; must be enabled under Preferences -> Better BibTeX -> Advanced -> Citekeys
+    * @param mode segmentation mode
+    */
   public _jieba(mode?: 'cn' | 'tw' | 'hant'): this {
     if (!chinese.load(Preference.jieba)) return this
     if (mode === 'hant') mode = 'tw'

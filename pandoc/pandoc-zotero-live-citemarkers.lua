@@ -124,6 +124,7 @@ end
 
 function stringify(node)
   local html = pandoc.write(pandoc.Pandoc({ node }), 'html')
+    :gsub('\n', ' ')
     :gsub('<u>', '<i>')
     :gsub('</u>', '</i>')
     :gsub('<em>', '<i>')

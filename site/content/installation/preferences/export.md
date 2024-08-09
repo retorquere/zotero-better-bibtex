@@ -235,7 +235,7 @@ Options:
 
 * off (fastest)
 * item creation order (plenty fast)
-* citation key (slow on very large libraries)
+* citation key (slower on very large libraries)
 
 
 ### Abbreviation style:

@@ -1,8 +1,8 @@
 
-  print('zotero-live-citations bc894b4')
+  print('zotero-live-citations 7569117')
   local mt, latest = pandoc.mediabag.fetch('https://retorque.re/zotero-better-bibtex/exporting/zotero.lua.revision')
   latest = string.sub(latest, 1, 10)
-  if 'bc894b4' ~= latest then
+  if '7569117' ~= latest then
     print('new version "' .. latest .. '" available at https://retorque.re/zotero-better-bibtex/exporting')
   end
 
@@ -1822,6 +1822,7 @@ end
 
 function stringify(node)
   local html = pandoc.write(pandoc.Pandoc({ node }), 'html')
+    :gsub('\n', ' ')
     :gsub('<u>', '<i>')
     :gsub('</u>', '</i>')
     :gsub('<em>', '<i>')
