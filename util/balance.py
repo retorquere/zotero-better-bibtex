@@ -84,10 +84,5 @@ Tests.balance()
 publish('bin_ids', json.dumps(list(range(max(len(Tests.bins), 1)))))
 publish('bins', args.bins)
 
-# clients = ['zotero', 'jurism']
-clients = ['zotero']
-if args.beta:
-  clients += [client + '-beta' for client in clients]
-if args.legacy:
-  clients += [client + '6' for client in clients]
+clients = [ 'zotero', 'zotero6', 'zotero-beta' ]
 publish('clients', json.dumps(clients))
