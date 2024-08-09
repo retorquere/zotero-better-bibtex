@@ -55,15 +55,17 @@ jobs:
     - name: install node packages
       run: npm install
 
-    - name: set slow and beta flags
+    - name: set slow/legacy/beta flags
+      run: ./util/action-flags
       env:
         GITHUB_CONTEXT: ${{ toJson(github) }}
-      run: ./util/action-flags
+    - run: set | grep '\-\-'
 
     - name: get previous test durations
       run: curl -L 
         https://github.com/retorquere/zotero-better-bibtex/releases/download/builds/durations${{
         env.slow }}.json --create-dirs -o test/balance/durations.json
+
     - name: balance tests
       id: balance
       run: ./util/balance.py --durations test/balance/durations.json --bins test/balance/bins.json
