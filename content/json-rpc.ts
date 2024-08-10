@@ -242,8 +242,8 @@ class NSItem {
         path: att.getFilePath(),
       }
 
-      if (att.isPDFAttachment()) {
-        const rawAnnotations = att.getAnnotations()
+      const rawAnnotations = att.getAnnotations()
+      if (rawAnnotations.length) {
         const annotations: Record<string, any>[] = []
 
         for (const raw of rawAnnotations) {
