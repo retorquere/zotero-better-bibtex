@@ -162,7 +162,6 @@ export const KeyManager = new class _KeyManager {
 
   public async refresh(ids: 'selected' | number | number[], manual = false): Promise<void> {
     ids = this.expandSelection(ids)
-
     await Cache.touch(ids)
 
     const warnAt = manual ? Preference.warnBulkModify : 0
@@ -191,6 +190,9 @@ export const KeyManager = new class _KeyManager {
           return
       }
     }
+
+    // clear before refresh so they can update without hitting "claimed keys" in the deleted set
+    this.clear(ids)
 
     const updates: ZoteroItem[] = []
     const progress: Progress = ids.length > 10 ? new Progress(ids.length, 'Refreshing citation keys') : null
@@ -387,6 +389,10 @@ export const KeyManager = new class _KeyManager {
     }
   }
 
+  private clear(ids: number[]) {
+    blink.removeMany(this.keys, ids.map(itemID => ({ itemID })))
+  }
+
   private async start(): Promise<void> {
     if (Zotero.Libraries.userLibraryID > 1) {
       await Zotero.DB.queryAsync('UPDATE betterbibtex.citationkey SET libraryID = ? WHERE libraryID IN (0, 1)', [Zotero.Libraries.userLibraryID])
@@ -408,10 +414,12 @@ export const KeyManager = new class _KeyManager {
     })
 
     Events.keymanagerUpdate = (action, ids) => {
+      // clear even for add/modify so they can update without hitting "claimed keys" in the deleted set
+      this.clear(ids)
+
       let warn_titlecase = 0
       switch (action) {
         case 'delete':
-          blink.removeMany(this.keys, ids.map(itemID => ({ itemID })))
           break
 
         case 'add':
