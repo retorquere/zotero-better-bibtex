@@ -120,6 +120,10 @@ class ZoteroPane {
         label: l10n.localize('better-bibtex_zotero-pane_citekey_refresh'),
         oncommand: () => Zotero.BetterBibTeX.KeyManager.refresh('selected', true),
       }))
+      menupopup.appendChild(elements.create('menuitem', {
+        label: l10n.localize('better-bibtex_zotero-pane_citekey_toclipboard'),
+        oncommand: () => Zotero.BetterBibTeX.KeyManager.toclipboard('selected'),
+      }))
 
       menupopup.appendChild(elements.create('menuseparator'))
       menupopup.appendChild(elements.create('menuitem', {
