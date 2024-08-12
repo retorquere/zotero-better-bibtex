@@ -495,6 +495,8 @@ export const KeyManager = new class _KeyManager {
       missing = await ZoteroDB.columnQueryAsync(`${ $items } SELECT itemID FROM _items WHERE itemID NOT IN (SELECT itemID from betterbibtex.citationkey)`)
     })
 
+    log.debug('missing keys:', missing)
+
     const notify = async (ids: number[], action: Action) => {
       if (!Cache.ZoteroSerialized) return
 
