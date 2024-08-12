@@ -40,6 +40,7 @@ class Emitter extends Emittery<{
   private listeners: any[] = []
   public idle: Partial<Record<IdleTopic, IdleState>> = {}
   public itemObserverDelay = 5
+  public syncInProgress: boolean = Zotero?.Sync?.Runner?.syncInProgress ?? false
 
   public keymanagerUpdate: (action: ZoteroAction, ids: number[]) => void
   public cacheTouch: (ids: number[]) => Promise<void>
@@ -97,12 +98,16 @@ export const Events = new Emitter({
 
 class SyncListener {
   private interval: IntervalHandle
-  private syncInProgress: boolean = Zotero.Sync.Runner.syncInProgress
 
   constructor() {
     this.interval = setInterval(() => {
-      if (this.syncInProgress !== Zotero.Sync.Runner.syncInProgress) void Events.emit('sync', Zotero.Sync.Runner.syncInProgress)
-      this.syncInProgress = Zotero.Sync.Runner.syncInProgress
+      if (typeof Zotero.Sync?.Runner?.syncInProgress === 'boolean') {
+        if (Events.syncInProgress !== Zotero.Sync.Runner.syncInProgress) {
+          void Events.emit('sync', Zotero.Sync.Runner.syncInProgress)
+          Events.syncInProgress = Zotero.Sync.Runner.syncInProgress
+          log.info(`sync ${ Events.syncInProgress ? 'started' : 'stopped' }`)
+        }
+      }
     }, 1000)
   }
 
