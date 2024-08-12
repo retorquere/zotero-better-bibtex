@@ -350,7 +350,7 @@ const queue = new class TaskQueue {
 
   public holdDuringSync() {
     trace('ae:hold:')
-    if (Zotero.Sync.Runner.syncInProgress && !this.held) this.held = new Set
+    if (Events.syncInProgress && !this.held) this.held = new Set
   }
 
   public releaseAfterSync() {
