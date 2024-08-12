@@ -63,7 +63,11 @@ export function fix(serialized: Item, item: ZoteroItem): Item {
     }
     else {
       regular.citationKey = Zotero.BetterBibTeX.KeyManager.get(item.id).citationKey
-      if (!regular.citationKey) throw new Error(`no citation key for ${ Zotero.ItemTypes.getName(item.itemTypeID) } ${ item.id }`)
+      if (!regular.citationKey) {
+        // throw new Error(`no citation key for ${ Zotero.ItemTypes.getName(item.itemTypeID) } ${ item.id }`)
+        log.debug('no citation key for', Zotero.ItemTypes.getName(item.itemTypeID), item.id, regular)
+        regular.citationKey = `temporary-citekey-${ item.id }`
+      }
       if (!regular.journalAbbreviation && Preference.autoAbbrev) {
         const autoJournalAbbreviation = JournalAbbrev.get(regular)
         if (autoJournalAbbreviation) regular.autoJournalAbbreviation = autoJournalAbbreviation
