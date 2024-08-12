@@ -1,7 +1,7 @@
 Components.utils.import('resource://gre/modules/FileUtils.jsm')
 declare const FileUtils: any
 
-import { log } from './logger'
+import { log, trace } from './logger'
 
 import { Shim } from './os'
 import { is7, platform } from './client'
@@ -327,15 +327,18 @@ const queue = new class TaskQueue {
     this.holdDuringSync()
   }
 
-  public pause(_reason: 'startup' | 'end-of-idle' | 'preference-change') {
+  public pause(reason: 'startup' | 'end-of-idle' | 'preference-change') {
+    trace(`ae:pause: ${ reason }`)
     this.scheduler.paused = true
   }
 
-  public resume(_reason: 'startup' | 'start-of-idle' | 'preference-change') {
+  public resume(reason: 'startup' | 'start-of-idle' | 'preference-change') {
+    trace(`ae:resume: ${ reason }`)
     this.scheduler.paused = false
   }
 
   public add(path: string) {
+    trace(`ae:add: ${ path }`)
     this.cancel(path)
     if (this.held) {
       this.held.add(path)
@@ -346,10 +349,12 @@ const queue = new class TaskQueue {
   }
 
   public holdDuringSync() {
+    trace('ae:hold:')
     if (Zotero.Sync.Runner.syncInProgress && !this.held) this.held = new Set
   }
 
   public releaseAfterSync() {
+    trace('ae:release:')
     if (this.held) {
       const held = this.held
       this.held = null
@@ -360,14 +365,16 @@ const queue = new class TaskQueue {
   }
 
   public cancel(path: string) {
+    trace(`ae:cancel: ${ path }`)
     this.scheduler.cancel(path)
   }
 
   public run(path: string) {
+    trace(`ae:run: ${ path }`)
     this.runAsync(path).catch(err => log.error('autoexport failed:', { path }, err.message))
   }
 
-  public async runAsync(path: string) {
+  private async runAsync(path: string) {
     await Zotero.BetterBibTeX.ready
 
     const ae = await AutoExport.get(path)
