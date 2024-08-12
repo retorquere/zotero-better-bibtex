@@ -34,6 +34,9 @@ export function trace(msg: string, mode = ''): void {
 }
 
 export const simple = {
+  debug(msg: string): void {
+    Zotero.debug(format(msg))
+  },
   info(msg: string): void {
     Zotero.debug(format(msg))
   },
