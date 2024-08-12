@@ -10,6 +10,8 @@ type ZoteroAction = 'modify' | 'add' | 'trash' | 'delete'
 type IdleState = 'active' | 'idle'
 export type Action = 'modify' | 'delete' | 'add'
 
+type IntervalHandle = ReturnType<typeof setInterval>
+
 type IdleObserver = {
   observe: (subject: string, topic: IdleState, data: any) => void
 }
@@ -33,6 +35,7 @@ class Emitter extends Emittery<{
   'preference-changed': string
   'window-loaded': { win: Window; href: string }
   idle: { state: IdleState; topic: IdleTopic }
+  sync: boolean
 }> {
   private listeners: any[] = []
   public idle: Partial<Record<IdleTopic, IdleState>> = {}
@@ -48,6 +51,7 @@ class Emitter extends Emittery<{
     this.listeners.push(new CollectionListener)
     this.listeners.push(new MemberListener)
     this.listeners.push(new GroupListener)
+    this.listeners.push(new SyncListener)
   }
 
   public addIdleListener(topic: IdleTopic, delay: number): void {
@@ -90,6 +94,22 @@ export const Events = new Emitter({
   },
   */
 })
+
+class SyncListener {
+  private interval: IntervalHandle
+  private syncInProgress: boolean = Zotero.Sync.Runner.syncInProgress
+
+  constructor() {
+    this.interval = setInterval(() => {
+      if (this.syncInProgress !== Zotero.Sync.Runner.syncInProgress) void Events.emit('sync', Zotero.Sync.Runner.syncInProgress)
+      this.syncInProgress = Zotero.Sync.Runner.syncInProgress
+    }, 1000)
+  }
+
+  unregister() {
+    clearInterval(this.interval)
+  }
+}
 
 class WindowListener {
   constructor() {
