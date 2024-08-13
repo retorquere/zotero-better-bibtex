@@ -37,7 +37,7 @@ import { flash } from './flash'
 import { orchestrator } from './orchestrator'
 import type { Reason } from './bootstrap'
 import type { ExportedItem, ExportedItemMetadata } from './db/cache'
-import { Cache, exportContext } from './db/cache'
+import { Cache } from './db/cache'
 
 import { Preference } from './prefs' // needs to be here early, initializes the prefs observer
 require('./pull-export') // just require, initializes the pull-export end points
@@ -46,13 +46,16 @@ import { AUXScanner } from './aux-scanner'
 import * as Extra from './extra'
 import { sentenceCase, HTMLParser, HTMLParserOptions } from './text'
 
-import { log } from './logger'
 import { trace } from './logger'
+import { AutoExport } from './auto-export'
+import { exportContext } from './db/cache'
+
+import { log } from './logger'
 import { Events } from './events'
 
 import { Translators } from './translators'
 import { fix as fixExportFormat } from './item-export-format'
-import { AutoExport, SQL as AE } from './auto-export'
+import { SQL as AE } from './auto-export'
 import { KeyManager } from './key-manager'
 import { TestSupport } from './test-support'
 import * as l10n from './l10n'
@@ -453,12 +456,13 @@ $patch$(Zotero.Utilities.Internal, 'extractExtraFields', original => function Zo
 })
 
 $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zotero_Translate_Export_prototype_translate() {
+  trace('translation start', '=')
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   if (this.noWait) return original.apply(this, arguments)
 
-  trace('translation start', '=')
+  trace('translation async')
   try {
-    /* requested translator */
+    // requested translator
     let translatorID = this.translator[0]
     if (translatorID.translatorID) translatorID = translatorID.translatorID
     const translator = Translators.byId[translatorID]
