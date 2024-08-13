@@ -277,7 +277,7 @@ $patch$(Zotero.ItemFields, 'isFieldOfBase', original => function Zotero_ItemFiel
 // because the zotero item editor does not check whether a textbox is read-only. *sigh*
 $patch$(Zotero.Item.prototype, 'setField', original => function Zotero_Item_prototype_setField(field: string, value: string | undefined, _loadIn: any) {
   if (field === 'citationKey') {
-    if (Zotero.BetterBibTeX.ready.isPending()) return false
+    if (Zotero.BetterBibTeX.starting) return false
 
     const citekey = Zotero.BetterBibTeX.KeyManager.get(this.id)
     if (citekey.retry) return false
@@ -310,7 +310,7 @@ $patch$(Zotero.Item.prototype, 'setField', original => function Zotero_Item_prot
 $patch$(Zotero.Item.prototype, 'getField', original => function Zotero_Item_prototype_getField(field: any, unformatted: any, includeBaseMapped: any) {
   try {
     if (field === 'citationKey' || field === 'citekey') {
-      if (Zotero.BetterBibTeX.ready.isPending()) return '' // eslint-disable-line @typescript-eslint/no-use-before-define
+      if (Zotero.BetterBibTeX.starting) return '' // eslint-disable-line @typescript-eslint/no-use-before-define
       return Zotero.BetterBibTeX.KeyManager.get(this.id).citationKey
     }
   }
@@ -576,6 +576,10 @@ export class BetterBibTeX {
       flash('Zotero is out of memory', 'Zotero is out of memory. I will turn off the cache to help release memory pressure, but this is only a temporary fix until Zotero 7 comes out')
       Preference.cache = false
     }
+  }
+
+  public get starting(): boolean {
+    return this.ready.isPending()
   }
 
   public async scanAUX(target: string): Promise<void> {
