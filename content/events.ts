@@ -172,16 +172,27 @@ class ItemListener extends ZoteroListener {
     super('item')
   }
 
-  public async notify(zotero_action: ZoteroAction, type: string, ids: number[], extraData?: Record<number, { libraryID?: number }>) {
+  public async notify(action: ZoteroAction, type: string, ids: number[], extraData?: Record<number, { libraryID?: number }>) {
     try {
+      switch (action) {
+        case 'trash':
+          action = 'delete'
+          break
+        case 'modify':
+        case 'add':
+        case 'delete':
+          break
+        default:
+          // log.debug('ignoring notify item .', action)
+          return
+      }
+
       await Zotero.BetterBibTeX.ready
 
       // async is just a heap of fun. Who doesn't enjoy a good race condition?
       // https://github.com/retorquere/zotero-better-bibtex/issues/774
       // https://groups.google.com/forum/#!topic/zotero-dev/yGP4uJQCrMc
       await Zotero.Promise.delay(Events.itemObserverDelay)
-
-      const action = zotero_action === 'trash' ? 'delete' : zotero_action
 
       const touched: Record<string, Set<number>> = { collections: new Set, libraries: new Set }
       if (action === 'delete' && extraData) {
@@ -225,7 +236,7 @@ class ItemListener extends ZoteroListener {
       let parents: ZoteroItem[] = []
       if (parentIDs.length) {
         parents = Zotero.Items.get(parentIDs)
-        void Events.emit('items-changed', { items: parents, action: 'modify', reason: `parent-${ zotero_action }` })
+        void Events.emit('items-changed', { items: parents, action: 'modify', reason: `parent-${ action }` })
       }
 
       for (const item of items.concat(parents)) {

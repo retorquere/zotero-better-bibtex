@@ -338,7 +338,6 @@ const queue = new class TaskQueue {
   }
 
   public add(path: string) {
-    trace(`ae:add: ${ path }`)
     this.cancel(path)
     if (this.held) {
       this.held.add(path)
@@ -349,12 +348,10 @@ const queue = new class TaskQueue {
   }
 
   public holdDuringSync() {
-    trace('ae:hold:')
     if (Events.syncInProgress && !this.held) this.held = new Set
   }
 
   public releaseAfterSync() {
-    trace('ae:release:')
     if (this.held) {
       const held = this.held
       this.held = null
