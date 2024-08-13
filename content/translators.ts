@@ -49,7 +49,6 @@ import { Pinger } from './ping'
 import Puqeue from 'puqeue'
 import { orchestrator } from './orchestrator'
 import type { Reason } from './bootstrap'
-import type Bluebird from 'bluebird'
 import { headers as Headers, byLabel, byId, bySlug } from '../gen/translators'
 
 Events.on('preference-changed', async (pref: string) => {
@@ -100,11 +99,8 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
   private reinit: { header: Translator.Header; code: string }[]
 
-  public ready!: Bluebird<boolean>
-
   constructor() {
     const ready = Zotero.Promise.defer()
-    this.ready = ready.promise
 
     Object.assign(this, { byLabel, byId, bySlug })
 
@@ -213,8 +209,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
   }
 
   public async importString(str) {
-    await this.ready
-    await Zotero.initializationPromise // this really shouldn't be necessary
+    await Zotero.BetterBibTeX.ready
     const translation = (new Zotero.Translate.Import)
     translation.setString(str)
 
@@ -410,7 +405,6 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
   public async exportItems(job: ExportJob): Promise<string> {
     await Zotero.BetterBibTeX.ready
-    await this.ready
 
     const displayOptions = this.displayOptions(job.translatorID, job.displayOptions)
 
