@@ -1,7 +1,7 @@
 Components.utils.import('resource://gre/modules/FileUtils.jsm')
 declare const FileUtils: any
 
-import { log, trace } from './logger'
+import { log } from './logger'
 
 import { Shim } from './os'
 import { is7, platform } from './client'
@@ -327,18 +327,15 @@ const queue = new class TaskQueue {
     this.holdDuringSync()
   }
 
-  public pause(reason: 'startup' | 'end-of-idle' | 'preference-change') {
-    trace(`ae:pause: ${ reason }`)
+  public pause(_reason: 'startup' | 'end-of-idle' | 'preference-change') {
     this.scheduler.paused = true
   }
 
-  public resume(reason: 'startup' | 'start-of-idle' | 'preference-change') {
-    trace(`ae:resume: ${ reason }`)
+  public resume(_reason: 'startup' | 'start-of-idle' | 'preference-change') {
     this.scheduler.paused = false
   }
 
   public add(path: string) {
-    trace(`ae:add: ${ path }`)
     this.cancel(path)
     if (this.held) {
       this.held.add(path)
@@ -349,12 +346,10 @@ const queue = new class TaskQueue {
   }
 
   public holdDuringSync() {
-    trace('ae:hold:')
     if (Events.syncInProgress && !this.held) this.held = new Set
   }
 
   public releaseAfterSync() {
-    trace('ae:release:')
     if (this.held) {
       const held = this.held
       this.held = null
@@ -365,12 +360,10 @@ const queue = new class TaskQueue {
   }
 
   public cancel(path: string) {
-    trace(`ae:cancel: ${ path }`)
     this.scheduler.cancel(path)
   }
 
   public run(path: string) {
-    trace(`ae:run: ${ path }`)
     this.runAsync(path).catch(err => log.error('autoexport failed:', { path }, err.message))
   }
 

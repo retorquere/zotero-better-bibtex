@@ -495,8 +495,6 @@ export const KeyManager = new class _KeyManager {
       missing = await ZoteroDB.columnQueryAsync(`${ $items } SELECT itemID FROM _items WHERE itemID NOT IN (SELECT itemID from betterbibtex.citationkey)`)
     })
 
-    log.debug('keymanager:missing keys:', missing)
-
     const notify = async (ids: number[], action: Action) => {
       if (!Cache.ZoteroSerialized) return
 
@@ -541,9 +539,7 @@ export const KeyManager = new class _KeyManager {
     const progress = new Progress(missing.length, 'Assigning citation keys')
     for (const itemID of missing) {
       try {
-        log.debug('keymanager:missing key:', itemID)
         this.update(await getItemsAsync(itemID))
-        log.debug('keymanager:missing key:', itemID, 'updated')
       }
       catch (err) {
         log.error('KeyManager.rescan: update failed:', err.message || `${ err }`, err.stack)

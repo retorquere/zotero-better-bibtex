@@ -46,7 +46,7 @@ import { AUXScanner } from './aux-scanner'
 import * as Extra from './extra'
 import { sentenceCase, HTMLParser, HTMLParserOptions } from './text'
 
-import { trace } from './logger'
+// import { trace } from './logger'
 import { AutoExport } from './auto-export'
 import { exportContext } from './db/cache'
 
@@ -456,11 +456,9 @@ $patch$(Zotero.Utilities.Internal, 'extractExtraFields', original => function Zo
 })
 
 $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zotero_Translate_Export_prototype_translate() {
-  trace('translation start', '=')
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   if (this.noWait) return original.apply(this, arguments)
 
-  trace('translation async')
   try {
     // requested translator
     let translatorID = this.translator[0]
@@ -501,7 +499,6 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
         log.error('failed to start a chromeworker, disabled until restart')
         useWorker = false
       }
-      trace('prep done')
 
       if (useWorker) {
         return Translators.queueJob({
@@ -510,16 +507,15 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
           translate: this,
           scope: { ...this._export, getter: this._itemGetter },
           path: this.location?.path,
-        }).then(() => {
+        })/* .then(() => {
           trace('translation done', '+')
-        })
+        }) */
       }
       else {
         return (async () => {
           try {
             await Cache.initExport(translator.label, exportContext(translator.label, displayOptions))
             await original.apply(this, arguments)
-            trace('translation done', '+')
           }
           finally {
             await Cache.export.flush()
