@@ -210,7 +210,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
   public async importString(str) {
     await Zotero.BetterBibTeX.ready
-    const translation = (new Zotero.Translate.Import)
+    const translation = new Zotero.Translate.Import
     translation.setString(str)
 
     const zp = Zotero.getActiveZoteroPane()
@@ -234,16 +234,16 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
   }
 
   public async queueJob(job: ExportJob): Promise<string> {
-    return this.queue.add(() => this.exportItemsByQueuedWorker(job))
+    return this.queue.add(() => this.exportItemsByWorker(job))
   }
 
-  private async exportItemsByQueuedWorker(job: ExportJob): Promise<string> {
-    // trace('exportItemsByQueuedWorker: requested')
+  private async exportItemsByWorker(job: ExportJob): Promise<string> {
+    // trace('exportItemsByWorker: requested')
     if (job.path && job.canceled) return ''
     await Zotero.BetterBibTeX.ready
     if (job.path && job.canceled) return ''
 
-    // trace('exportItemsByQueuedWorker: preparing')
+    // trace('exportItemsByWorker: preparing')
     const displayOptions = {
       ...this.displayOptions(job.translatorID, job.displayOptions),
       exportPath: job.path || undefined,
@@ -366,9 +366,9 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       },
     })
 
-    // trace('exportItemsByQueuedWorker: starting cache completion')
+    // trace('exportItemsByWorker: starting cache completion')
     await Cache.ZoteroSerialized.fill(items)
-    // trace('exportItemsByQueuedWorker: cache completion completed')
+    // trace('exportItemsByWorker: cache completion completed')
 
     config.data.items = items.map(item => item.id)
     prepare.update()
@@ -385,7 +385,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
     prepare.done()
 
-    // trace('exportItemsByQueuedWorker: prepare finished')
+    // trace('exportItemsByWorker: prepare finished')
     this.worker.postMessage({ kind: 'start', config })
 
     if (typeof job.timeout === 'number') {
@@ -413,7 +413,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       return await this.queueJob(job)
     }
 
-    const translation = (new Zotero.Translate.Export)
+    const translation = new Zotero.Translate.Export
 
     const scope = this.exportScope(job.scope)
 

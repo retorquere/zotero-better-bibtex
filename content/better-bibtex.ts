@@ -456,8 +456,12 @@ $patch$(Zotero.Utilities.Internal, 'extractExtraFields', original => function Zo
 })
 
 $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zotero_Translate_Export_prototype_translate() {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  if (this.noWait) return original.apply(this, arguments)
+  if (this.noWait) {
+    this._displayOptions = this._displayOptions || {}
+    this._displayOptions.cached = false
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    return original.apply(this, arguments)
+  }
 
   try {
     // requested translator
@@ -512,7 +516,7 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
         }) */
       }
       else {
-        return (async () => {
+        return Translators.queue.add(async () => {
           try {
             await Cache.initExport(translator.label, exportContext(translator.label, displayOptions))
             await original.apply(this, arguments)
@@ -520,7 +524,7 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
           finally {
             await Cache.export.flush()
           }
-        })()
+        })
       }
     }
   }
