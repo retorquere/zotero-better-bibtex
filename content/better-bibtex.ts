@@ -46,12 +46,11 @@ import { AUXScanner } from './aux-scanner'
 import * as Extra from './extra'
 import { sentenceCase, HTMLParser, HTMLParserOptions } from './text'
 
-// import { trace } from './logger'
 import { AutoExport } from './auto-export'
 import { exportContext } from './db/cache'
 
 import { log } from './logger'
-import { trace } from './logger'
+// import { trace } from './logger'
 import { Events } from './events'
 
 import { Translators } from './translators'
