@@ -79,7 +79,16 @@ you can enable it here
 
 ## Fields
 
-### Export language as
+### Fields to omit from export (comma-separated)
+
+default: `<not set>`
+
+If there are some fields you don't want in your bibtex files (such as `note` for example), add a list of them here, separated by comma's.
+
+
+### BibTeX/BibLaTeX
+
+#### Export language as
 
 default: `langid`
 
@@ -93,7 +102,7 @@ Options:
 * both
 
 
-### When an item has both a DOI and a URL, export
+#### When an item has both a DOI and a URL, export
 
 default: `both`
 
@@ -109,14 +118,7 @@ Options:
 * URL
 
 
-### Fields to omit from export (comma-separated)
-
-default: `<not set>`
-
-If there are some fields you don't want in your bibtex files (such as `note` for example), add a list of them here, separated by comma's.
-
-
-### Include JabRef-specific metadata:
+#### Include JabRef-specific metadata:
 
 default: `0`
 
