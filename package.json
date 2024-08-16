@@ -29,7 +29,7 @@
     "prebuild": "npm install && npm run setup",
     "build": "npm run rebuild",
     "rebuild": "npm-run-all -p --aggregate-output lint esbuild tsc",
-    "postbuild": "./setup/patch-compat.py && npm run zipup-better-bibtex && npm run zipup-debug-bridge",
+    "postbuild": "npm run zipup-better-bibtex && npm run zipup-debug-bridge",
     "tsc": "tsc --noEmit",
     "esbuild": "node esbuild.js",
     "zipup-better-bibtex": "zotero-plugin-zipup build zotero-better-bibtex",
