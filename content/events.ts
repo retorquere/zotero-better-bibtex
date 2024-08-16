@@ -173,6 +173,7 @@ class ItemListener extends ZoteroListener {
   }
 
   public async notify(action: ZoteroAction, type: string, ids: number[], extraData?: Record<number, { libraryID?: number }>) {
+    log.debug('incoming notify item .', action)
     try {
       switch (action) {
         case 'trash':
@@ -183,7 +184,7 @@ class ItemListener extends ZoteroListener {
         case 'delete':
           break
         default:
-          // log.debug('ignoring notify item .', action)
+          log.debug('ignoring notify item .', action)
           return
       }
 
