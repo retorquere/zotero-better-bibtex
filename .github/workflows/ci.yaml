@@ -71,8 +71,9 @@ jobs:
         --minutes 10 ${{ env.slow }} ${{ env.beta }} ${{ env.legacy }}
 
     - name: build ${{ env.beta }} ${{ env.legacy }}
-      #run: npm run build ${{ env.beta }} ${{ env.legacy }}
       run: npm run build
+      env:
+        VERSION_WITH_ISSUE: false
 
     - name: publish debug bridge
       run: ./util/publish-debug-bridge.py
