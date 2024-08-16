@@ -371,7 +371,7 @@ export const KeyManager = new class _KeyManager {
     }
   }
 
-  async remove(keys: CitekeyRecord | CitekeyRecord[]) {
+  private async remove(keys: CitekeyRecord | CitekeyRecord[]) {
     if (Array.isArray(keys)) {
       await Zotero.DB.executeTransaction(async () => {
         let pos = 0
