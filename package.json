@@ -117,13 +117,13 @@
     "uzip": "^0.20201231.0",
     "words-to-numbers": "^1.5.1",
     "xregexp": "^5.1.1",
-    "zotero-plugin": "2.0.26"
+    "zotero-plugin": "2.0.27"
   },
   "devDependencies": {
     "@retorquere/bibtex-parser": "^9.0.12",
     "@retorquere/zotero-sync": "^1.0.27",
     "@types/bluebird": "^3.5.42",
-    "@types/node": "^22.3.0",
+    "@types/node": "^22.4.0",
     "@xmldom/xmldom": "^0.8.10",
     "ajv-keywords": "^5.1.0",
     "archiver": "^7.0.1",
@@ -139,7 +139,7 @@
     "dom-parser": "^1.1.5",
     "dotenv": "^16.4.5",
     "ejs": "^3.1.10",
-    "esbuild": "^0.23.0",
+    "esbuild": "^0.23.1",
     "eslint": "^8.57.0",
     "estrace": "^5.1.0",
     "eta": "^3.5.0",
