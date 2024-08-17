@@ -121,7 +121,13 @@ export class Orchestrator {
       log.info(`orchestrator: starting ${ task.id } [${ task.description }]`)
 
       task.started = Date.now()
-      await task[phase](reason, task)
+      try {
+        await task[phase](reason, task)
+      }
+      catch (err) {
+        log.error(phase, task.id, 'failed:', err)
+        if (phase === 'startup') throw err
+      }
       task.finished = Date.now()
 
       log.info(`orchestrator: ${ task.id } took ${ duration(task.finished - task.started) }`)
