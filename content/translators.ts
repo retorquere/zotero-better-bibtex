@@ -46,7 +46,7 @@ import { log } from './logger'
 import { flash } from './flash'
 import { Events } from './events'
 import { Pinger } from './ping'
-import Puqeue from 'puqeue'
+import { newQueue } from '@henrygd/queue'
 import { orchestrator } from './orchestrator'
 import type { Reason } from './bootstrap'
 import type Bluebird from 'bluebird'
@@ -57,12 +57,6 @@ Events.on('preference-changed', async (pref: string) => {
     await Cache.clear(translator)
   }
 })
-
-class Queue extends Puqeue {
-  get queued() {
-    return this._queue.length
-  }
-}
 
 import * as l10n from './l10n'
 
@@ -95,7 +89,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
   public byLabel: Record<string, Translator.Header> = {}
   public bySlug: Record<string, Translator.Header> = {}
   public itemType: { note: number; attachment: number; annotation: number }
-  public queue = new Queue
+  public queue = newQueue(1)
   public worker: ChromeWorker
 
   private reinit: { header: Translator.Header; code: string }[]
@@ -366,7 +360,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       total: items.length,
       callback: pct => {
         let preparing = `${ l10n.localize('better-bibtex_preferences_auto-export_status_preparing') } ${ translator.label }`.trim()
-        if (this.queue.queued) preparing += ` +${ Translators.queue.queued }`
+        if (this.queue.size()) preparing += ` +${ Translators.queue.size() }`
         void Events.emit('export-progress', { pct, message: preparing, ae: job.autoExport })
       },
     })

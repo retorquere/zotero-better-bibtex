@@ -66,6 +66,7 @@
   "dependencies": {
     "@artsy/to-title-case": "^1.1.0",
     "@caeser1996/titlecase": "^3.0.2",
+    "@henrygd/queue": "^1.0.6",
     "@lifeparticle/ap-style-title-case": "^1.5.0",
     "@stdlib/utils-escape-regexp-string": "^0.2.2",
     "@ungap/structured-clone": "^1.2.0",
@@ -104,7 +105,6 @@
     "parse5": "^7.1.2",
     "pinyin": "^3.1.0",
     "punycode2": "^1.0.1",
-    "puqeue": "^1.1.5",
     "reserved-identifiers": "^1.0.0",
     "shell-quote": "^1.8.1",
     "sprintf-js": "^1.1.3",

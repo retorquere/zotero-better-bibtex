@@ -31,7 +31,7 @@ import { Cache } from './db/cache'
 import { patch as $patch$ } from './monkey-patch'
 
 import { sprintf } from 'sprintf-js'
-import Queue from 'puqeue'
+import { newQueue } from '@henrygd/queue'
 
 import * as l10n from './l10n'
 
@@ -84,7 +84,7 @@ class Progress {
 
 export const KeyManager = new class _KeyManager {
   public searchEnabled = false
-  private queue = new Queue
+  private queue = newQueue(1)
 
   // Table<CitekeyRecord, "itemID">
   private keys = createTable<CitekeyRecord>(createDB({ clone: true }), 'citationKeys')({
