@@ -508,7 +508,6 @@ export const KeyManager = new class _KeyManager {
     })
 
     const notify = async (ids: number[], action: Action) => {
-      log.debug('keymanager:', action, ids)
       if (!Cache.ZoteroSerialized) return
 
       try {
