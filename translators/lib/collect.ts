@@ -1,4 +1,5 @@
 import { RegularItem, Item, Collection } from '../../gen/typings/serialized-item'
+import { displayOptions } from '../../gen/translators'
 
 type CacheableItem = Item & { $cacheable: boolean }
 type CacheableRegularItem = RegularItem & { $cacheable: boolean }
@@ -153,10 +154,14 @@ export class Collections {
 export class Input {
   public items: Items
   public collections: Collections
+  public displayOptions: Record<string, boolean> = {}
 
   constructor() {
     this.items = new Items
     this.collections = new Collections(this.items)
+    for (const displayOption of displayOptions) {
+      this.displayOptions[displayOption] = Zotero.getOption(displayOption)
+    }
   }
 
   public erase(): void {
