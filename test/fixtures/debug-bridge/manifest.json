@@ -8,7 +8,7 @@
 			"id": "debug-bridge@iris-advies.com",
 			"update_url": "https://github.com/retorquere/zotero-debug-bridge/releases/download/release/updates.json",
 			"strict_min_version": "6.999",
-			"strict_max_version": "7.0.*"
+			"strict_max_version": "7.*"
 		}
 	}
 }
