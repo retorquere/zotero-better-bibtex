@@ -31,6 +31,7 @@ import { Cache } from './db/cache'
 import { patch as $patch$ } from './monkey-patch'
 
 import { sprintf } from 'sprintf-js'
+import Queue from 'puqeue'
 
 import * as l10n from './l10n'
 
@@ -83,6 +84,7 @@ class Progress {
 
 export const KeyManager = new class _KeyManager {
   public searchEnabled = false
+  private queue = new Queue
 
   // Table<CitekeyRecord, "itemID">
   private keys = createTable<CitekeyRecord>(createDB({ clone: true }), 'citationKeys')({
@@ -319,7 +321,12 @@ export const KeyManager = new class _KeyManager {
     })
   }
 
-  async store(key: CitekeyRecord) {
+  // serialize so background stores from onRemove at all happen in order
+  private async store(key: CitekeyRecord) {
+    await this.queue.add(() => this.$store(key))
+  }
+
+  private async $store(key: CitekeyRecord) {
     await Zotero.DB.queryAsync('REPLACE INTO betterbibtex.citationkey (itemID, itemKey, libraryID, citationKey, pinned) VALUES (?, ?, ?, ?, ?)', [
       key.itemID,
       key.itemKey,
@@ -371,7 +378,12 @@ export const KeyManager = new class _KeyManager {
     }
   }
 
+  // serialize so background stores from onRemove at all happen in order
   private async remove(keys: CitekeyRecord | CitekeyRecord[]) {
+    await this.queue.add(() => this.$remove(keys))
+  }
+
+  private async $remove(keys: CitekeyRecord | CitekeyRecord[]) {
     if (Array.isArray(keys)) {
       await Zotero.DB.executeTransaction(async () => {
         let pos = 0
