@@ -487,7 +487,3 @@ export const CJK = new RegExp(`([${ scripts.map((s: { name: string; bmp: string 
       return ''
   }
 }).join('') }])`, 'g')
-
-export function asciify(str: string): string {
-  return str.replace(/[\u007F-\uFFFF]/g, chr => `\\u${ (`0000${ chr.charCodeAt(0).toString(16) }`).substr(-4) }`)
-}

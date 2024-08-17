@@ -1,12 +1,10 @@
 import fast_safe_stringify from 'fast-safe-stringify'
 
-import { asciify } from './text'
-
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export function stable_stringify(obj: any, replacer?: any, indent?: string | number, ucode?: boolean): string {
+export function stable_stringify(obj: any, replacer?: any, indent?: string | number): string {
   const stringified: string = fast_safe_stringify.stable(obj, replacer, indent)
 
-  return ucode ? asciify(stringified) : stringified
+  return stringified
 }
 
 function stringifyXPCOM(obj): string {
@@ -61,7 +59,7 @@ function $stringify(key, value, cache): any {
 }
 
 // safely handles circular references
-export function stringify(obj, indent: number | string = 0, ucode?: boolean) { // eslint-disable-line @typescript-eslint/explicit-module-boundary-types
+export function stringify(obj, indent: number | string = 0) { // eslint-disable-line @typescript-eslint/explicit-module-boundary-types
   let cache = []
   const stringified = JSON.stringify(
     obj,
@@ -76,5 +74,5 @@ export function stringify(obj, indent: number | string = 0, ucode?: boolean) { /
     indent
   )
   cache = null
-  return ucode ? asciify(stringified) : stringified
+  return stringified
 }

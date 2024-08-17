@@ -6,7 +6,6 @@ declare const TranslationWorker: { job: Translator.Worker.Job }
 declare const dump: (msg: string) => void
 
 import { stringify } from './stringify'
-import { asciify } from './text'
 import { worker } from './client'
 
 export const discard = {
@@ -62,7 +61,7 @@ export const log = new class Logger {
   protected timestamp: number
   public prefix = ''
 
-  private format({ ascii = true, error = false }, msg) {
+  private format({ error = false }, msg) {
     if (Array.isArray(msg)) msg = msg.map(toString).join(' ')
 
     let prefix = ''
@@ -72,7 +71,6 @@ export const log = new class Logger {
     }
 
     if (error) prefix += ' error:'
-    if (ascii) msg = asciify(msg)
 
     return `{better-bibtex${ this.prefix }${ prefix }} ${ msg }`
   }
@@ -91,7 +89,7 @@ export const log = new class Logger {
   }
 
   public info(msg: string) {
-    Zotero.debug(this.format({ ascii: false }, msg))
+    Zotero.debug(this.format({}, msg))
   }
 
   public error(...msg) {
