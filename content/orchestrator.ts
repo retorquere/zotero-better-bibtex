@@ -109,6 +109,7 @@ export class Orchestrator {
     }
     const finished: number[] = []
     log.info(`${ phase } orchestrator started: ${ reason }`)
+    const action = phase === 'startup' ? 'starting' : 'shutting down'
     while (tasks.length) {
       const task = tasks.shift()
 
@@ -118,7 +119,7 @@ export class Orchestrator {
 
       progress?.(phase, task.id, finished.length, total, task.description)
 
-      log.info(`orchestrator: starting ${ task.id } [${ task.description }]`)
+      log.info(`orchestrator: ${ action } ${ task.id } [${ task.description }]`)
 
       task.started = Date.now()
       try {
