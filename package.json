@@ -172,7 +172,7 @@
     "process": "^0.11.10",
     "properties-reader": "^2.3.0",
     "pug": "^3.0.3",
-    "putout": "^36.0.4",
+    "putout": "^36.0.5",
     "recast": "^0.23.9",
     "regenerate": "^1.4.2",
     "rimraf": "^6.0.1",
