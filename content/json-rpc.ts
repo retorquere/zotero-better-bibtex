@@ -242,28 +242,33 @@ class NSItem {
         path: att.getFilePath(),
       }
 
-      const rawAnnotations = att.getAnnotations()
-      if (rawAnnotations.length) {
-        const annotations: Record<string, any>[] = []
+      if (att.isFileAttachment()) {
 
-        for (const raw of rawAnnotations) {
-          const annot = raw.toJSON()
+        const rawAnnotations = att.getAnnotations()
 
-          if (annot.annotationType === 'image') {
-            if (!await Zotero.Annotations.hasCacheImage(raw)) {
-              await Zotero.PDFRenderer.renderAttachmentAnnotations(raw.parentID)
+        if (rawAnnotations.length) {
+          const annotations: Record<string, any>[] = []
+
+          for (const raw of rawAnnotations) {
+            const annot = raw.toJSON()
+
+            if (annot.annotationType === 'image') {
+              if (!await Zotero.Annotations.hasCacheImage(raw)) {
+                await Zotero.PDFRenderer.renderAttachmentAnnotations(raw.parentID)
+              }
+              annot.annotationImagePath = Zotero.Annotations.getCacheImagePath(raw)
             }
-            annot.annotationImagePath = Zotero.Annotations.getCacheImagePath(raw)
+
+            if (annot.annotationPosition && typeof annot.annotationPosition === 'string') {
+              annot.annotationPosition = JSON.parse(annot.annotationPosition)
+            }
+
+            annotations.push(annot)
           }
 
-          if (annot.annotationPosition && typeof annot.annotationPosition === 'string') {
-            annot.annotationPosition = JSON.parse(annot.annotationPosition)
-          }
-
-          annotations.push(annot)
+          data.annotations = annotations
         }
-
-        data.annotations = annotations
+        
       }
 
       output.push(data)
