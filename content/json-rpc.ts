@@ -243,7 +243,6 @@ class NSItem {
       }
 
       if (att.isFileAttachment()) {
-
         const rawAnnotations = att.getAnnotations()
 
         if (rawAnnotations.length) {
@@ -268,7 +267,6 @@ class NSItem {
 
           data.annotations = annotations
         }
-        
       }
 
       output.push(data)
