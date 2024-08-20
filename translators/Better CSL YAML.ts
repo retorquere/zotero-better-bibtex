@@ -1,29 +1,18 @@
 declare const Zotero: any
 
-import { Translation, collect } from './lib/translator'
+import { Collected, slurp } from './lib/collect'
 import type { Translators } from '../typings/translators.d.ts'
 declare var ZOTERO_TRANSLATOR_INFO: Translators.Header // eslint-disable-line no-var
 
 export function doExport(): void {
-  const translation = Translation.Export(ZOTERO_TRANSLATOR_INFO, collect())
-  Zotero.BetterBibTeX.generateCSLYAML(translation)
+  const translation = Zotero.BetterBibTeX.generateCSLYAML(new Collected(ZOTERO_TRANSLATOR_INFO, 'export'))
   Zotero.write(translation.output.body)
   translation.erase()
 }
 
-function parseInput(): any {
-  let src = ''
-  let chunk: string
-  while (chunk = Zotero.read(102400)) {
-    src += chunk
-  }
-
-  return Zotero.BetterBibTeX.parseCSLYAML(src)
-}
-
 export function detectImport(): boolean {
   try {
-    return !!(parseInput().references)
+    return !!Zotero.BetterBibTeX.parseCSLYAML(slurp()).references
   }
   catch {
     return false
@@ -121,7 +110,8 @@ function yamlDate(date): string {
 }
 
 export async function doImport(): Promise<void> {
-  for (const source of parseInput().references) {
+  const { references } = Zotero.BetterBibTeX.parseCSLYAML(slurp())
+  for (const source of references) {
     const item = (new Zotero.Item)
 
     // Default to 'article' (Document) if no type given. 'type' is required in CSL-JSON,
