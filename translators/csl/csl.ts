@@ -8,7 +8,7 @@ import { simplifyForExport } from '../../gen/items/simplify'
 import { Fields as ParsedExtraFields, get as getExtra, cslCreator } from '../../content/extra'
 import type { ExportedItem } from '../../content/db/cache'
 import * as ExtraFields from '../../gen/items/extra-fields.json'
-import { simple as log } from '../../content/logger'
+import { log } from '../../content/logger/simple'
 import { RegularItem } from '../../gen/typings/serialized-item'
 import * as postscript from '../lib/postscript'
 import * as dateparser from '../../content/dateparser'
@@ -37,8 +37,8 @@ export abstract class CSLExporter {
     this.translation = translation
 
     try {
-      if (this.translation.preferences.postscript.trim()) {
-        this.postscript = postscript.postscript('csl', this.translation.preferences.postscript)
+      if (this.translation.collected.preferences.postscript.trim()) {
+        this.postscript = postscript.postscript('csl', this.translation.collected.preferences.postscript)
       }
       else {
         this.postscript = postscript.noop
@@ -46,7 +46,7 @@ export abstract class CSLExporter {
     }
     catch (err) {
       this.postscript = postscript.noop
-      log.error(`failed to install postscript\n${ this.translation.preferences.postscript }`, err)
+      log.error(`failed to install postscript\n${ this.translation.collected.preferences.postscript }`, err)
     }
   }
 
@@ -57,9 +57,9 @@ export abstract class CSLExporter {
 
   public doExport(): void {
     const items = []
-    for (const item of (this.translation.input.items.regular as Generator<ExtendedItem, void, unknown>)) {
+    for (const item of (this.translation.collected.items.regular as Generator<ExtendedItem, void, unknown>)) {
       let cached: ExportedItem
-      if (!this.translation.options.custom && (cached = Zotero.BetterBibTeX.Cache.fetch(item.itemID))) {
+      if (!this.translation.collected.displayOptions.custom && (cached = Zotero.BetterBibTeX.Cache.fetch(item.itemID))) {
         items.push(cached.entry)
         continue
       }
@@ -76,7 +76,7 @@ export abstract class CSLExporter {
       let csl = Zotero.Utilities.Item.itemToCSLJSON(item)
 
       csl['citation-key'] = item.citationKey
-      if (this.translation.options.custom) csl.custom = { uri: item.uri, itemID: item.itemID }
+      if (this.translation.collected.displayOptions.custom) csl.custom = { uri: item.uri, itemID: item.itemID }
 
       if (Zotero.worker) csl.note = item.extra || undefined
 

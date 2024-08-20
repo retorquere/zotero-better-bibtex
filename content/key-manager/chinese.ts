@@ -1,7 +1,7 @@
 import { Preference } from '../prefs'
 import { Events } from '../events'
 // import { CJK } from '../text'
-import { discard } from '../logger'
+import { discard } from '../logger/simple'
 
 declare const ChromeUtils: any
 

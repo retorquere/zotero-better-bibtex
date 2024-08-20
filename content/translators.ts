@@ -228,7 +228,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
   }
 
   public async queueJob(job: ExportJob): Promise<string> {
-    return this.queue.add(() => this.exportItemsByWorker(job))
+    return await this.queue.add(() => this.exportItemsByQueuedWorker(job))
   }
 
   private async exportItemsByWorker(job: ExportJob): Promise<string> {

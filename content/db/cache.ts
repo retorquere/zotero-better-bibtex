@@ -407,6 +407,7 @@ export const Cache = new class $Cache {
 
   public close(): void {
     this.db.close()
+    this.db = null
     this.opened = false
   }
 

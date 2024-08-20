@@ -183,7 +183,6 @@ class ItemListener extends ZoteroListener {
         case 'delete':
           break
         default:
-          // log.debug('ignoring notify item .', action)
           return
       }
 

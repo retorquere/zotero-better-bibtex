@@ -2,7 +2,7 @@ import { Shim } from './os'
 import { is7 } from './client'
 const $OS = is7 ? Shim : OS
 
-import { simple as log } from './logger'
+import { log } from './logger/simple'
 import { getItemsAsync } from './get-items-async'
 import type { Attachment, RegularItem, Item, Note } from '../gen/typings/serialized-item'
 export type Serialized = RegularItem | Attachment | Item
