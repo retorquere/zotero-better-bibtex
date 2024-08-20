@@ -9,7 +9,7 @@ declare var ZOTERO_TRANSLATOR_INFO: Translators.Header // eslint-disable-line no
 import { simplifyForImport, simplifyForExport } from '../gen/items/simplify'
 const version = require('../gen/version.js')
 // import { stringify } from '../content/stringify'
-import { simple as log } from '../content/logger'
+import { log } from '../content/logger/simple'
 import type { Library } from './lib/normalize'
 import { asciify } from '../content/text'
 

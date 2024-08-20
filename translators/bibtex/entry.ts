@@ -20,7 +20,7 @@ import * as ExtraFields from '../../gen/items/extra-fields.json'
 import { label as propertyLabel } from '../../gen/items/items'
 import type { Fields as ParsedExtraFields } from '../../content/extra'
 import { zoteroCreator as ExtraZoteroCreator } from '../../content/extra'
-import { simple as log } from '../../content/logger'
+import { log } from '../../content/logger/simple'
 import { babelLanguage, titleCase } from '../../content/text'
 import BabelTag from '../../gen/babel/tag.json'
 

@@ -1,5 +1,4 @@
 import { Collected } from './lib/collect'
-import { simple as log } from '../content/logger'
 import type { Translators } from '../typings/translators.d.ts'
 import { detectImport as zotero_detectImport } from '../gen/ZoteroBibTeX.mjs'
 
@@ -8,7 +7,6 @@ declare var ZOTERO_TRANSLATOR_INFO: Translators.Header // eslint-disable-line no
 
 export function doExport(): void {
   const translation = Zotero.BetterBibTeX.generateBibTeX(new Collected(ZOTERO_TRANSLATOR_INFO, 'export'))
-  log.debug(`BBT: main ${ typeof translation }`)
   translation.saveAttachments()
   Zotero.write(translation.output.body)
   translation.erase()

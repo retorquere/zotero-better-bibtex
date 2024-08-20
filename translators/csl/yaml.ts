@@ -7,7 +7,7 @@ import { Translation } from '../lib/translator'
 import type { MarkupNode } from '../../typings/markup'
 
 import { CSLExporter } from './csl'
-import { simple as log } from '../../content/logger'
+import { log } from '../../content/logger/simple'
 import { ParsedDate } from '../../content/dateparser'
 import { HTMLParser } from '../../content/text'
 
