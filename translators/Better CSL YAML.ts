@@ -7,7 +7,6 @@ declare var ZOTERO_TRANSLATOR_INFO: Translators.Header // eslint-disable-line no
 export function doExport(): void {
   const translation = Zotero.BetterBibTeX.generateCSLYAML(new Collected(ZOTERO_TRANSLATOR_INFO, 'export'))
   Zotero.write(translation.output.body)
-  translation.erase()
 }
 
 export function detectImport(): boolean {
