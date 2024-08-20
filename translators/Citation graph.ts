@@ -1,7 +1,7 @@
 declare const Zotero: any
 
-import { Translation } from './lib/translator'
 import { Collected } from './lib/collect'
+import { Translation } from './lib/translator'
 import type { Translators } from '../typings/translators.d.ts'
 declare var ZOTERO_TRANSLATOR_INFO: Translators.Header // eslint-disable-line no-var
 
@@ -107,5 +107,4 @@ export function doExport(): void {
   translation.output.body += '}'
 
   Zotero.write(translation.output.body)
-  translation.erase()
 }

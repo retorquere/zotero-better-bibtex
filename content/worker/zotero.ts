@@ -38,6 +38,7 @@ import { generateBibLaTeX } from '../../translators/bibtex/biblatex'
 import { generateBibTeX } from '../../translators/bibtex/bibtex'
 import { generateCSLJSON } from '../../translators/csl/json'
 import { generateCSLYAML } from '../../translators/csl/yaml'
+import { generateBBTJSON } from '../../translators/lib/bbtjson'
 import type { Collected } from '../../translators/lib/collect'
 import XRegExp from 'xregexp'
 
@@ -247,6 +248,7 @@ class WorkerZoteroBetterBibTeX {
   public generateBibTeX(collected: Collected) { return generateBibTeX(collected) }
   public generateCSLYAML(collected: Collected) { return generateCSLYAML(collected) }
   public generateCSLJSON(collected: Collected) { return generateCSLJSON(collected) }
+  public generateBBTJSON(collected: Collected) { return generateBBTJSON(collected) }
 }
 
 const WorkerZoteroUtilities = {
