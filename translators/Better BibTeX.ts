@@ -9,7 +9,6 @@ export function doExport(): void {
   const translation = Zotero.BetterBibTeX.generateBibTeX(new Collected(ZOTERO_TRANSLATOR_INFO, 'export'))
   translation.saveAttachments()
   Zotero.write(translation.output.body)
-  translation.erase()
 }
 
 export function detectImport(): boolean {

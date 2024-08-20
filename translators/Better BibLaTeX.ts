@@ -8,5 +8,4 @@ export function doExport(): void {
   const translation = Zotero.BetterBibTeX.generateBibLaTeX(new Collected(ZOTERO_TRANSLATOR_INFO, 'export'))
   translation.saveAttachments()
   Zotero.write(translation.output.body)
-  translation.erase()
 }
