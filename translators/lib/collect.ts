@@ -22,7 +22,6 @@ export class Items {
   public current: CacheableItem
 
   constructor() {
-    if (!Zotero.nextItem) return // import translator
     let item: CacheableItem
     while (item = Zotero.nextItem()) {
       this.items.push(this.map[item.itemID] = this.map[item.itemKey] = item)
@@ -93,7 +92,6 @@ export class Collections {
   public byKey: Record<string, Collection> = {}
 
   constructor(private items: Items) {
-    if (!Zotero.nextCollection) return // import translator
     let collection: any
     while (collection = Zotero.nextCollection()) {
       this.registerCollection(collection, '')
@@ -163,7 +161,7 @@ export function slurp(): string {
 
 export class Collected {
   public input = ''
-  public items = new Items
+  public items: Items
   public collections: Collections
   public preferences: Preferences
   public displayOptions: DisplayOptions = {}
@@ -180,8 +178,6 @@ export class Collected {
         for (const displayOption of displayOptions) {
           this.displayOptions[displayOption] = Zotero.getOption(displayOption)
         }
-        this.displayOptions.cache = Zotero.getOption('cache')
-        this.displayOptions.custom = Zotero.getOption('custom') // for pandoc-filter CSL
         break
       case 'import':
         this.input = slurp()
