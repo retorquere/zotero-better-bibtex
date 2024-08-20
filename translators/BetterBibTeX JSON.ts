@@ -1,6 +1,7 @@
 declare const Zotero: any
 
-import { Translation, collect } from './lib/translator'
+import { Collected } from './lib/collect'
+import { Translation } from './lib/translator'
 import type { Translators } from '../typings/translators.d.ts'
 declare var ZOTERO_TRANSLATOR_INFO: Translators.Header // eslint-disable-line no-var
 
@@ -129,9 +130,9 @@ function addSelect(item: any) {
 }
 
 export function doExport(): void {
-  const translation = Translation.Export(ZOTERO_TRANSLATOR_INFO, collect())
+  const translation = Translation.Export(new Collected(ZOTERO_TRANSLATOR_INFO, 'export'))
 
-  const preferences = { ...translation.preferences }
+  const preferences = { ...translation.collected.preferences }
   delete preferences.citekeyFormatEditing
   delete preferences.testing
   delete preferences.platform
@@ -142,8 +143,8 @@ export function doExport(): void {
     config: {
       id: ZOTERO_TRANSLATOR_INFO.translatorID,
       label: ZOTERO_TRANSLATOR_INFO.label,
-      preferences: translation.options.Preferences ? preferences : {},
-      options: translation.options,
+      preferences: translation.collected.displayOptions.Preferences ? preferences : {},
+      options: translation.collected.displayOptions,
     },
     version: {
       zotero: Zotero.Utilities.getVersion(),
@@ -153,16 +154,16 @@ export function doExport(): void {
     items: [],
   }
 
-  if (translation.options.Items) {
+  if (translation.collected.displayOptions.Items) {
     const validAttachmentFields = new Set([ 'relations', 'uri', 'itemType', 'title', 'path', 'tags', 'dateAdded', 'dateModified', 'seeAlso', 'mimeType' ])
 
-    for (const item of translation.input.items) {
+    for (const item of translation.collected.items) {
       delete item.$cacheable
-      if (!translation.preferences.testing) addSelect(item)
+      if (!translation.collected.preferences.testing) addSelect(item)
 
       switch (item.itemType) {
         case 'attachment':
-          if (translation.options.dropAttachments) continue
+          if (translation.collected.displayOptions.dropAttachments) continue
           break
 
         case 'note':
@@ -172,10 +173,10 @@ export function doExport(): void {
         default:
           delete item.collections
 
-          if (translation.options.Normalize) simplifyForExport(item, { dropAttachments: translation.options.dropAttachments })
+          if (translation.collected.displayOptions.Normalize) simplifyForExport(item, { dropAttachments: translation.collected.displayOptions.dropAttachments })
 
           for (const att of item.attachments || []) {
-            if (translation.options.exportFileData && att.saveFile && att.defaultPath) {
+            if (translation.collected.displayOptions.exportFileData && att.saveFile && att.defaultPath) {
               att.saveFile(att.defaultPath, true)
               att.path = att.defaultPath
             }
@@ -190,7 +191,7 @@ export function doExport(): void {
                 delete att[field]
               }
             }
-            if (!translation.preferences.testing) addSelect(att)
+            if (!translation.collected.preferences.testing) addSelect(att)
           }
           break
       }

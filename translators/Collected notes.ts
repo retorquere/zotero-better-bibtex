@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 
-import { Translation, collect } from './lib/translator'
+import { Translation } from './lib/translator'
+import { Collected } from './lib/collect'
 import type { Translators } from '../typings/translators.d.ts'
 
 declare const Zotero: any
@@ -49,7 +50,7 @@ class Exporter {
     const filed: Set<number> = new Set
     const collections: Record<string, ExpandedCollection> = {}
 
-    for (const item of this.translation.input.items) {
+    for (const item of this.translation.collected.items) {
       const cleaned = clean(item)
       if (this.keep(cleaned)) items[item.itemID] = cleaned
     }
@@ -91,7 +92,7 @@ class Exporter {
     style += '  blockquote { border-left: 1px solid gray; }\n'
 
     this.html = `<html><head><style>${ style }</style></head><body>${ this.body }</body></html>`
-    if (this.translation.options.markdown) this.markdown = html2md(this.html)
+    if (this.translation.collected.displayOptions.markdown) this.markdown = html2md(this.html)
   }
 
   write_collection(collection, level = 1) {
@@ -219,9 +220,9 @@ class Exporter {
 }
 
 export function doExport(): void {
-  const translation = Translation.Export(ZOTERO_TRANSLATOR_INFO, collect())
+  const translation = Translation.Export(new Collected(ZOTERO_TRANSLATOR_INFO, 'export'))
   const exporter = new Exporter(translation)
-  translation.output.body += exporter[translation.options.markdown ? 'markdown' : 'html']
+  translation.output.body += exporter[translation.collected.displayOptions.markdown ? 'markdown' : 'html']
   Zotero.write(translation.output.body)
   translation.erase()
 }

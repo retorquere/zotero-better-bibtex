@@ -178,10 +178,10 @@ export class Entry {
 
   public static installPostscript(translation: Translation): void {
     try {
-      if (translation.preferences.postscript.trim()) {
+      if (translation.collected.preferences.postscript.trim()) {
         Entry.prototype.postscript = postscript.postscript(
           'tex',
-          translation.preferences.postscript,
+          translation.collected.preferences.postscript,
           'this.inPostscript' // workaround for https://github.com/Juris-M/zotero/issues/65
         )
       }
@@ -191,7 +191,7 @@ export class Entry {
     }
     catch (err) {
       Entry.prototype.postscript = postscript.noop
-      log.error(`failed to install postscript\n${ translation.preferences.postscript }`, err)
+      log.error(`failed to install postscript\n${ translation.collected.preferences.postscript }`, err)
     }
   }
 
@@ -304,8 +304,8 @@ export class Entry {
       }
     }
 
-    if (this.translation.preferences.jabrefFormat) {
-      if (this.translation.preferences.testing) {
+    if (this.translation.collected.preferences.jabrefFormat) {
+      if (this.translation.collected.preferences.testing) {
         this.add({ name: 'timestamp', value: '2015-02-24 12:14:36 +0100' })
       }
       else {
@@ -366,7 +366,7 @@ export class Entry {
   }
 
   private extractEprint(): boolean {
-    if (!this.translation.preferences.biblatexExtractEprint || !this.item.url) return false
+    if (!this.translation.collected.preferences.biblatexExtractEprint || !this.item.url) return false
 
     let m
     if (m = this.item.url.match(/^https?:\/\/www.jstor.org\/stable\/([\S]+)$/i)) {
@@ -428,7 +428,9 @@ export class Entry {
    *   ignored)
    */
   public add(field: Translators.BibTeX.Field): string {
-    if (this.translation.preferences.testing && !this.inPostscript && field.name !== field.name.toLowerCase()) throw new Error(`Do not add mixed-case field ${ field.name }`)
+    if (this.translation.collected.preferences.testing && !this.inPostscript && field.name !== field.name.toLowerCase()) {
+      throw new Error(`Do not add mixed-case field ${ field.name }`)
+    }
 
     if (!field.value && !field.bibtex && this.inPostscript) {
       delete this.has[field.name]
@@ -453,7 +455,7 @@ export class Entry {
       // bare year
       // if (this.translation.BetterBibLaTeX && (typeof field.value === 'number' || (typeof field.value === 'string' && field.value.match(/^[0-9]+$/)))) return this.add({...field, bibtex: `${field.value}`, enc: 'literal'})
 
-      if (this.translation.BetterBibLaTeX && this.translation.preferences.biblatexExtendedDateFormat && DateParser.isEDTF(field.value as string, true)) {
+      if (this.translation.BetterBibLaTeX && this.translation.collected.preferences.biblatexExtendedDateFormat && DateParser.isEDTF(field.value as string, true)) {
         return this.add({
           ...field,
           value: (field.value as string).replace(/[.][0-9]+[a-z]+$/i, ''),
@@ -604,7 +606,7 @@ export class Entry {
   public getBibString(value): string {
     if (!value || typeof value !== 'string') return null
 
-    switch (this.translation.preferences.exportBibTeXStrings) {
+    switch (this.translation.collected.preferences.exportBibTeXStrings) {
       case 'off':
         return null
 
@@ -651,13 +653,13 @@ export class Entry {
   }
 
   public complete(): void {
-    if (this.translation.preferences.jabrefFormat >= 4 && this.item.collections?.length) {
+    if (this.translation.collected.preferences.jabrefFormat >= 4 && this.item.collections?.length) {
       const groups = Array.from(new Set(this.item.collections.map(key => this.translation.collections[key]?.name).filter(name => name))).sort()
       this.add({ name: 'groups', value: groups.join(',') })
     }
 
-    if ([ 'langid', 'both' ].includes(this.translation.preferences.language)) this.add({ name: 'langid', value: this.langid() })
-    if ([ 'language', 'both' ].includes(this.translation.preferences.language)) this.add({ name: 'language', value: this.item.language })
+    if ([ 'langid', 'both' ].includes(this.translation.collected.preferences.language)) this.add({ name: 'langid', value: this.langid() })
+    if ([ 'language', 'both' ].includes(this.translation.collected.preferences.language)) this.add({ name: 'language', value: this.item.language })
 
     // extra-fields has parsed & removed 'ids' to put it into aliases
     if (this.item.extraFields.aliases.length) {
@@ -789,12 +791,15 @@ export class Entry {
 
     this.add({ name: 'annotation', value: this.item.extra, enc: 'extra' })
 
-    if (this.translation.options.exportNotes) {
-      // if bibtexURL === 'note' is active, the note field will have been filled with an URL. In all other cases, if this is attempting to overwrite the 'note' field, I want the test suite to throw an error
-      if (!(this.translation.BetterBibTeX && this.translation.preferences.bibtexURL === 'note')) this.add({ name: 'note', value: this.item.notes?.map((note: { note: string }) => note.note).join('</p><p>'), html: true })
+    if (this.translation.collected.displayOptions.exportNotes) {
+      // if bibtexURL === 'note' is active, the note field will have been filled with an URL.
+      // In all other cases, if this is attempting to overwrite the 'note' field, I want the test suite to throw an error
+      if (!(this.translation.BetterBibTeX && this.translation.collected.preferences.bibtexURL === 'note')) {
+        this.add({ name: 'note', value: this.item.notes?.map((note: { note: string }) => note.note).join('</p><p>'), html: true })
+      }
     }
 
-    const bibtexStrings = this.translation.preferences.exportBibTeXStrings.startsWith('match')
+    const bibtexStrings = this.translation.collected.preferences.exportBibTeXStrings.startsWith('match')
     for (const [ name, field ] of Object.entries(this.item.extraFields.tex)) {
       // psuedo-var, sets the entry type. Repeat application here because this needs to override all else.
       if (name === 'entrytype' || name === 'referencetype') { // phase out reference
@@ -866,7 +871,7 @@ export class Entry {
       allow = this.postscript(this, this.item, this.translation, Zotero, this.extraFields)
     }
     catch (err) {
-      if (this.translation.preferences.testing) throw err
+      if (this.translation.collected.preferences.testing) throw err
       log.error('postscript error:', err)
       allow.cache = false
     }
@@ -880,7 +885,7 @@ export class Entry {
     }
 
     if (this.has.url && this.has.doi) {
-      switch (this.translation.preferences.DOIandURL) {
+      switch (this.translation.collected.preferences.DOIandURL) {
         case 'url':
           delete this.has.doi
           break
@@ -925,10 +930,10 @@ export class Entry {
    * @return {String} field.value encoded as verbatim LaTeX string (minimal escaping). If in Better BibTeX, wraps return value in `\url{string}`
    */
   protected enc_url(f): string {
-    if (this.translation.BetterBibTeX && this.translation.preferences.bibtexURL.endsWith('-ish')) {
+    if (this.translation.BetterBibTeX && this.translation.collected.preferences.bibtexURL.endsWith('-ish')) {
       return (f.value || '').replace(/([#\\%&{}])/g, '\\$1')
     }
-    else if (this.translation.BetterBibTeX && this.translation.preferences.bibtexURL === 'note') {
+    else if (this.translation.BetterBibTeX && this.translation.collected.preferences.bibtexURL === 'note') {
       // https://github.com/retorquere/zotero-better-bibtex/issues/2617
       return `\\url{${ this.enc_verbatim(f).replace(/([\\%#])/g, '\\$1') }}`
     }
@@ -1005,9 +1010,9 @@ export class Entry {
           given: this._enc_creators_scrub_name(creator.firstName || ''),
         }
 
-        if (this.translation.preferences.parseParticles) CSL.parseParticles(name)
+        if (this.translation.collected.preferences.parseParticles) CSL.parseParticles(name)
 
-        if (!this.translation.BetterBibLaTeX || !this.translation.preferences.biblatexExtendedNameFormat) {
+        if (!this.translation.BetterBibLaTeX || !this.translation.collected.preferences.biblatexExtendedNameFormat) {
           // side effects to set use-prefix/uniorcomma -- make sure addCreators is called *before* adding 'options'
           if (!this.useprefix) this.useprefix = !!name['non-dropping-particle']
           if (!this.juniorcomma) this.juniorcomma = (f.juniorcomma && name['comma-suffix'])
@@ -1030,7 +1035,7 @@ export class Entry {
       encoded.push(name.trim())
     }
 
-    return replace_command_spacers(encoded.join(this.translation.preferences.separatorNames))
+    return replace_command_spacers(encoded.join(this.translation.collected.preferences.separatorNames))
   }
 
   /*
@@ -1102,7 +1107,7 @@ export class Entry {
       bibtex to back off from non-English titles is to wrap the whole
       thing in braces.
     */
-    if (caseConversion && this.translation.BetterBibTeX && !this.english && this.translation.preferences.exportBraceProtection) value = `{${ value }}`
+    if (caseConversion && this.translation.BetterBibTeX && !this.english && this.translation.collected.preferences.exportBraceProtection) value = `{${ value }}`
 
     if (f.value instanceof String && !raw) value = new String(`{${ value }}`)
     return value
@@ -1113,7 +1118,7 @@ export class Entry {
     const unicode = this.translation.unicode
     const tags = f.value
       .map(tag => (typeof tag === 'string' ? { tag } : tag))
-      .filter(tag => (this.translation.preferences.automaticTags || (tag.type !== 1)) && tag.tag !== this.translation.preferences.rawLaTag)
+      .filter(tag => (this.translation.collected.preferences.automaticTags || (tag.type !== 1)) && tag.tag !== this.translation.collected.preferences.rawLaTag)
       .map(tag => ({ ...tag, tag: tag.tag.replace(/[#%]/g, '') }))
       .filter(tag => tag.tag)
     if (tags.length === 0) return null
@@ -1133,7 +1138,7 @@ export class Entry {
 
   relPath(path) {
     const normalize = p => this.translation.paths.caseSensitive ? p : p.toLowerCase()
-    const drive = p => this.translation.preferences.platform === 'win' && p.match(/^[a-z]:\//) ? p.substring(0, 2) : ''
+    const drive = p => this.translation.collected.preferences.platform === 'win' && p.match(/^[a-z]:\//) ? p.substring(0, 2) : ''
 
     if (drive(this.translation.export.dir) !== drive(path)) return path
 
@@ -1162,7 +1167,7 @@ export class Entry {
         path: '',
       }
 
-      if (this.translation.options.exportFileData) {
+      if (this.translation.collected.displayOptions.exportFileData) {
         att.path = attachment.saveFile ? attachment.defaultPath : ''
       }
       else if (attachment.localPath) {
@@ -1173,7 +1178,7 @@ export class Entry {
       // att.path = att.path.replace(/^storage:/, '')
       att.path = att.path.replace(/(?:\s*[{}]+)+\s*/g, ' ')
 
-      if (this.translation.options.exportFileData && attachment.saveFile) {
+      if (this.translation.collected.displayOptions.exportFileData && attachment.saveFile) {
         this.translation.output.attachments.push(attachment)
         // attachment.saveFile(attachment.defaultPath, true)
       }
@@ -1182,14 +1187,14 @@ export class Entry {
 
       if (!att.mimetype && (att.path.slice(-4).toLowerCase() === '.pdf')) att.mimetype = 'application/pdf'
 
-      if (this.translation.preferences.relativeFilePaths && this.translation.export.dir) {
+      if (this.translation.collected.preferences.relativeFilePaths && this.translation.export.dir) {
         const relative = this.relPath(att.path)
         if (relative !== att.path) {
           this.item.$cacheable = false
           att.path = relative
         }
       }
-      if (this.translation.preferences.testing) att.path = att.path.replace(/.*[.]BBTTEST\/(zotero|jurism)\//, '~/BBTTEST/').replace(/\/storage\/[^/]+\//, '/storage/')
+      if (this.translation.collected.preferences.testing) att.path = att.path.replace(/.*[.]BBTTEST\/(zotero|jurism)\//, '~/BBTTEST/').replace(/\/storage\/[^/]+\//, '/storage/')
 
       if (modify) att.path = modify(att.path)
       attachments.push(att)
@@ -1204,7 +1209,9 @@ export class Entry {
       return stringCompare(a.path, b.path)
     })
 
-    if (this.translation.preferences.jabrefFormat) return attachments.map(att => [ att.title, att.path, att.mimetype ].map(part => part.replace(/([\\{}:;])/g, '\\$1')).join(':')).join(';')
+    if (this.translation.collected.preferences.jabrefFormat) {
+      return attachments.map(att => [ att.title, att.path, att.mimetype ].map(part => part.replace(/([\\{}:;])/g, '\\$1')).join(':')).join(';')
+    }
     if (attachments.length > 1) return attachments.map(att => att.path.replace(/([\\{}:;])/g, '\\$1')).join(';')
     return this.enc_verbatim({ value: attachments[0].path })
   }
@@ -1312,7 +1319,7 @@ export class Entry {
     this.detectInitials(name)
 
     const extendedNameformat = (
-      this.translation.preferences.biblatexExtendedNameFormat
+      this.translation.collected.preferences.biblatexExtendedNameFormat
       && (
         name.initials
         || name['dropping-particle']
@@ -1396,7 +1403,7 @@ export class Entry {
 
     if (name['dropping-particle']) family = `${ this._enc_creator_part(this._enc_creators_pad_particle(name['dropping-particle'], true)) }${ family }`
 
-    if (this.translation.BetterBibTeX && this.translation.preferences.bibtexParticleNoOp && (name['non-dropping-particle'] || name['dropping-particle'])) {
+    if (this.translation.BetterBibTeX && this.translation.collected.preferences.bibtexParticleNoOp && (name['non-dropping-particle'] || name['dropping-particle'])) {
       family = `{\\noopsort{${ this._enc_creator_part(name.family.toLowerCase()) }}}${ family }`
       this.metadata.noopsort = true
     }
@@ -1440,10 +1447,10 @@ export class Entry {
   }
 
   private qualityReport(): string {
-    if (!this.translation.preferences.qualityReport) return ''
+    if (!this.translation.collected.preferences.qualityReport) return ''
 
     let report: string[] = this.lint({
-      timestamp: `added because JabRef format is set to ${ this.translation.preferences.jabrefFormat || '?' }`,
+      timestamp: `added because JabRef format is set to ${ this.translation.collected.preferences.jabrefFormat || '?' }`,
     })
 
     if (report) {
@@ -1461,7 +1468,7 @@ export class Entry {
         }
       }
 
-      if (this.has.title && this.translation.preferences.exportTitleCase) {
+      if (this.has.title && this.translation.collected.preferences.exportTitleCase) {
         const titleCased = titleCase(this.has.title.value) === this.has.title.value
         if (this.has.title.value.match(/\s/)) {
           if (titleCased) report.push('? Title looks like it was stored in title-case in Zotero')

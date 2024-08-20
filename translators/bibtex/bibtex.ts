@@ -1,5 +1,6 @@
 declare const Zotero: any
 
+import * as escape from '../../content/escape'
 import { simple as log } from '../../content/logger'
 import { Exporter as BibTeXExporter } from './exporter'
 import { parse as arXiv } from '../../content/arXiv'
@@ -11,6 +12,7 @@ import { parse as parseDate, strToISO as strToISODate, dateToISO } from '../../c
 
 import { parseBuffer as parsePList } from 'bplist-parser'
 
+import type { Collected } from '../lib/collect'
 import { Translation } from '../lib/translator'
 
 import { Entry as BaseEntry, Config } from './entry'
@@ -251,7 +253,99 @@ class Entry extends BaseEntry {
   }
 }
 
-export function generateBibTeX(translation: Translation): void {
+class Importer {
+  private translation: Translation
+  private itemIDs: Record<string, number> = {}
+
+  constructor(collected: Collected) {
+    this.translation = Translation.Import(collected)
+  }
+
+  importGroup(group, root = false) {
+    const collection = this.translation.collected.collection()
+    collection.type = 'collection'
+    collection.name = group.name
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    collection.children = group.entries.filter(citekey => this.itemIDs[citekey]).map(citekey => ({ type: 'item', id: this.itemIDs[citekey] }))
+
+    for (const subgroup of group.groups || []) {
+      collection.children.push(this.importGroup(subgroup))
+    }
+
+    if (root) collection.complete()
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    return collection
+  }
+
+  public async import(): Promise<void> {
+    const collected = this.translation.collected
+
+    if (collected.preferences.strings && collected.preferences.importBibTeXStrings) {
+      collected.input = `${ collected.preferences.strings }\n${ collected.input }`
+    }
+
+    const bib = await parseBibTeX(this.translation)
+    const errors: ParseError[] = bib.errors
+
+    const whitelist = bib.comments
+      .filter((comment: string) => comment.startsWith('zotero-better-bibtex:whitelist:'))
+      .map((comment: string) => comment.toLowerCase().replace(/\s/g, '').split(':').pop().split(',').filter((key: string) => key))[0]
+
+    let imported = 0
+    let id = 0
+    for (const bibtex of bib.entries) {
+      if (bibtex.key && whitelist && !whitelist.includes(bibtex.key.toLowerCase())) continue
+
+      id++
+      if ((id % 1000) === 0) await new Promise(resolve => setTimeout(resolve, 0))
+
+      if (bibtex.key) this.itemIDs[bibtex.key] = id // Endnote has no citation keys
+
+      try {
+        const item = collected.item('journalArticle')
+        item.itemID = id
+        const builder = new ZoteroItem(this.translation, item, bibtex, bib.jabref)
+        if (builder.import(errors)) await item.complete()
+      }
+      catch (err) {
+        errors.push({ error: err.message, input: '' })
+      }
+
+      imported += 1
+      collected.progress(imported / bib.entries.length * 100)
+    }
+
+    for (const group of bib.jabref.root || []) {
+      this.importGroup(group, true)
+    }
+
+    if (errors.length) {
+      const item = collected.item('note')
+      item.note = 'Import errors found: <ul>'
+      for (const err of errors) {
+        item.note += '<li>'
+        item.note += escape.html(err.error)
+        if (err.input) {
+          item.note += `<pre>${ escape.html(err.input) }</pre>`
+        }
+        item.note += '</li>'
+      }
+      item.note += '</ul>'
+      item.tags = [{ tag: '#Better BibTeX import error', type: 1 }]
+      await item.complete()
+    }
+
+    collected.progress(100)
+  }
+}
+
+export async function importBibTeX(collected: Collected): Promise<void> {
+  const importer = new Importer(collected)
+  await importer.import()
+}
+
+export function generateBibTeX(collected: Collected): Translation {
+  const translation = Translation.Export(collected)
   translation.bibtex = new BibTeXExporter(translation)
 
   Entry.installPostscript(translation)
@@ -266,7 +360,7 @@ export function generateBibTeX(translation: Translation): void {
 
     ref.add({ name: 'address', value: item.place })
     ref.add({ name: 'chapter', value: item.section })
-    ref.add({ name: 'edition', value: ref.english && translation.preferences.bibtexEditionOrdinal ? ref.toEnglishOrdinal(item.edition) : item.edition })
+    ref.add({ name: 'edition', value: ref.english && collected.preferences.bibtexEditionOrdinal ? ref.toEnglishOrdinal(item.edition) : item.edition })
     ref.add({ name: 'type', value: item.type })
     ref.add({ name: 'series', value: item.series, bibtexStrings: true })
     ref.add({ name: 'title', value: item.title })
@@ -284,7 +378,7 @@ export function generateBibTeX(translation: Translation): void {
     if (![ 'book', 'inbook', 'incollection', 'proceedings', 'inproceedings' ].includes(ref.entrytype) || !ref.has.volume) ref.add({ name: 'number', value: item.number || item.issue || item.seriesNumber })
     ref.add({ name: 'urldate', value: item.accessDate && item.accessDate.replace(/\s*T?\d+:\d+:\d+.*/, '') })
 
-    const journalAbbreviation = translation.options.useJournalAbbreviation && (item.journalAbbreviation || item.autoJournalAbbreviation)
+    const journalAbbreviation = translation.collected.displayOptions.useJournalAbbreviation && (item.journalAbbreviation || item.autoJournalAbbreviation)
     if (ref.entrytype_source === 'zotero.conferencePaper') {
       ref.add({ name: 'booktitle', value: journalAbbreviation || item.publicationTitle || item.conferenceName, bibtexStrings: true })
     }
@@ -320,14 +414,14 @@ export function generateBibTeX(translation: Translation): void {
 
     const doi = item.DOI || item.extraFields.kv.DOI
     let urlfield = null
-    if (translation.preferences.DOIandURL !== 'doi' || !doi) {
-      switch (translation.preferences.bibtexURL) {
+    if (collected.preferences.DOIandURL !== 'doi' || !doi) {
+      switch (collected.preferences.bibtexURL) {
         case 'url':
         case 'url-ish':
           urlfield = ref.add({
             name: 'url',
             value: item.url || item.extraFields.kv.url,
-            enc: translation.preferences.bibtexURL === 'url' && translation.isVerbatimField('url') ? 'url' : 'literal',
+            enc: translation.collected.preferences.bibtexURL === 'url' && translation.isVerbatimField('url') ? 'url' : 'literal',
           })
           break
 
@@ -336,7 +430,7 @@ export function generateBibTeX(translation: Translation): void {
           urlfield = ref.add({
             name: ([ 'misc', 'booklet' ].includes(ref.entrytype) && !ref.has.howpublished ? 'howpublished' : 'note'),
             value: item.url || item.extraFields.kv.url,
-            enc: translation.preferences.bibtexURL === 'note' ? 'url' : 'literal',
+            enc: translation.collected.preferences.bibtexURL === 'note' ? 'url' : 'literal',
           })
           break
 
@@ -347,7 +441,7 @@ export function generateBibTeX(translation: Translation): void {
           break
       }
     }
-    if (translation.preferences.DOIandURL !== 'url' || !urlfield) {
+    if (translation.collected.preferences.DOIandURL !== 'url' || !urlfield) {
       ref.add({ name: 'doi', value: (doi || '').replace(/^https?:\/\/doi.org\//i, ''), enc: translation.isVerbatimField('doi') ? 'verbatim' : 'literal' })
     }
 
@@ -372,7 +466,7 @@ export function generateBibTeX(translation: Translation): void {
         sponsors.push(sponsor)
         return false
       })
-      ref.add({ name: 'organization', value: sponsors.join(translation.preferences.separatorList) })
+      ref.add({ name: 'organization', value: sponsors.join(translation.collected.preferences.separatorList) })
     }
     ref.addCreators()
     // #1541
@@ -418,6 +512,8 @@ export function generateBibTeX(translation: Translation): void {
   }
 
   translation.bibtex.complete()
+  log.debug(`BBT: plugin ${ typeof translation }`)
+  return translation
 }
 
 const preloadedStrings = new class PreloadedStrings {
@@ -427,7 +523,7 @@ const preloadedStrings = new class PreloadedStrings {
   private loaded = false
 
   load(translation: Translation) {
-    this.enabled = translation.preferences.importJabRefStrings
+    this.enabled = translation.collected.preferences.importJabRefStrings
 
     if (this.enabled && !this.loaded) {
       this.loaded = true
@@ -443,7 +539,7 @@ const unabbreviations = new class Unabbreviations {
   private loaded = false
 
   load(translation: Translation) {
-    this.enabled = translation.preferences.importJabRefAbbreviations
+    this.enabled = translation.collected.preferences.importJabRefAbbreviations
 
     if (this.enabled && !this.loaded) {
       this.loaded = true
@@ -452,16 +548,14 @@ const unabbreviations = new class Unabbreviations {
   }
 }
 
-export async function parseBibTeX(input: string, translation: Translation): Promise<Library> {
-  translation.ZoteroItem = ZoteroItem
-
+async function parseBibTeX(translation: Translation): Promise<Library> {
   preloadedStrings.load(translation)
   unabbreviations.load(translation)
 
-  return await parse(input, {
+  return await parse(translation.collected.input, {
     // we are actually sure it's a valid enum value; stupid workaround for TS2322: Type 'string' is not assignable to type 'boolean | "as-needed" | "strict"'.
     unsupported: (node, tex, _entry) => {
-      switch (translation.preferences.importUnknownTexCommand) {
+      switch (translation.collected.preferences.importUnknownTexCommand) {
         case 'tex':
           return `<script>${ tex }</script>`
         case 'text':
@@ -472,21 +566,21 @@ export async function parseBibTeX(input: string, translation: Translation): Prom
           return tex
       }
     },
-    english: translation.preferences.importSentenceCase !== 'off',
+    english: translation.collected.preferences.importSentenceCase !== 'off',
     sentenceCase: {
-      guess: translation.preferences.importSentenceCase === 'on+guess',
-      preserveQuoted: !translation.preferences.importSentenceCaseQuoted,
+      guess: translation.collected.preferences.importSentenceCase === 'on+guess',
+      preserveQuoted: !translation.collected.preferences.importSentenceCaseQuoted,
     },
-    caseProtection: (translation.preferences.importCaseProtection as 'as-needed'),
+    caseProtection: (translation.collected.preferences.importCaseProtection as 'as-needed'),
     verbatimFields: translation.verbatimFields,
-    raw: translation.preferences.rawImports,
+    raw: translation.collected.preferences.rawImports,
     strings: preloadedStrings.enabled ? preloadedStrings.strings : '',
     removeOuterBraces: [ 'doi', 'publisher', 'location', 'title', 'booktitle' ],
   })
 }
 
 const months = [ 'jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec' ]
-export class ZoteroItem {
+class ZoteroItem {
   public typeMap = {
     article: 'journalArticle',
     audio: 'audioRecording',
@@ -897,7 +991,7 @@ export class ZoteroItem {
 
     this.item.attachments = this.item.attachments.filter(a => a.path !== att.path)
 
-    const paths: string[] = this.translation.platform === 'lin'
+    const paths: string[] = this.translation.collected.platform === 'lin'
       ? [...(new Set([ 'NFC', 'NFD', 'NFKC', 'NFKD' ].map((normalization: string) => att.path.normalize(normalization) as string)))]
       : [att.path]
 
@@ -1041,7 +1135,7 @@ export class ZoteroItem {
       return true
     }
 
-    if (this.translation.preferences.importDetectURLs) {
+    if (this.translation.collected.preferences.importDetectURLs) {
       this.item.attachments.push({ itemType: 'attachment', url, title, linkMode: 'linked_url' })
       return true
     }
@@ -1173,7 +1267,7 @@ export class ZoteroItem {
       if (unknown) {
         const msg = `Don't know what Zotero type to make of '${ this.bibtex.type }' for ${ this.bibtex.key ? `@${ this.bibtex.key }` : 'unnamed item' }, importing as ${ this.item.itemType }`
         log.info(msg)
-        if (this.translation.preferences.testing) throw new Error(msg)
+        if (this.translation.collected.preferences.testing) throw new Error(msg)
         errors.push({ error: msg, input: this.bibtex.input })
       }
 
@@ -1389,7 +1483,7 @@ export class ZoteroItem {
             break
 
           default:
-            if (this.translation.preferences.importDetectURLs && this.isURL(value)) {
+            if (this.translation.collected.preferences.importDetectURLs && this.isURL(value)) {
               this.item.attachments.push({ itemType: 'attachment', url: value, title: field, linkMode: 'linked_url' })
             }
             else if (value.indexOf('\n') >= 0) {
@@ -1413,13 +1507,13 @@ export class ZoteroItem {
       }
     }
 
-    if (this.translation.preferences.rawImports && this.translation.preferences.rawLaTag !== '*') {
+    if (this.translation.collected.preferences.rawImports && this.translation.collected.preferences.rawLaTag !== '*') {
       if (!this.item.tags) this.item.tags = []
-      this.item.tags.push({ tag: this.translation.preferences.rawLaTag, type: 1 })
+      this.item.tags.push({ tag: this.translation.collected.preferences.rawLaTag, type: 1 })
     }
 
     // Endnote has no citation keys in their bibtex
-    if (this.bibtex.key && this.translation.preferences.importCitationKey) this.extra.push(`Citation Key: ${ this.bibtex.key }`)
+    if (this.bibtex.key && this.translation.collected.preferences.importCitationKey) this.extra.push(`Citation Key: ${ this.bibtex.key }`)
 
     if (this.eprint.slaccitation && !this.eprint.eprint) {
       const m = this.eprint.slaccitation.match(/^%%CITATION = (.+);%%$/)
@@ -1446,7 +1540,7 @@ export class ZoteroItem {
     }
 
     this.extra = this.extra.filter(line => {
-      if (line.startsWith('tex.')) return this.translation.preferences.importExtra
+      if (line.startsWith('tex.')) return this.translation.collected.preferences.importExtra
       return true
     })
     if (this.extra.length > 0) {
@@ -1472,7 +1566,7 @@ export class ZoteroItem {
       delete this.item.backupPublisher
     }
 
-    if (this.translation.preferences.testing) {
+    if (this.translation.collected.preferences.testing) {
       const err = validItem(JSON.parse(JSON.stringify(this.item)), true) // stringify/parse is a fast way to get rid of methods
       if (err) this.error(`import error: ${ this.item.itemType } ${ this.bibtex.key }: ${ err }\n${ JSON.stringify(this.item, null, 2) }`)
     }
@@ -1501,7 +1595,7 @@ export class ZoteroItem {
   private set(field, value, fallback = null) {
     if (!this.validFields[field]) return fallback && this.fallback(fallback, value)
 
-    if (this.translation.preferences.testing && (this.item[field] || typeof this.item[field] === 'number') && (value || typeof value === 'number') && this.item[field] !== value) {
+    if (this.translation.collected.preferences.testing && (this.item[field] || typeof this.item[field] === 'number') && (value || typeof value === 'number') && this.item[field] !== value) {
       this.error(`import error: duplicate ${ field } on ${ this.item.itemType } ${ this.bibtex.key } (old: ${ this.item[field] }, new: ${ value })`)
     }
 

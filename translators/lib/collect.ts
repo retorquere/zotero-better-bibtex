@@ -1,5 +1,9 @@
+declare const Zotero: any
+import type { Translators } from '../../typings/translators.d.ts'
 import { RegularItem, Item, Collection } from '../../gen/typings/serialized-item'
-import { displayOptions } from '../../gen/translators'
+import { displayOptions, DisplayOptions } from '../../gen/translators'
+import type { Preferences } from '../../gen/preferences/meta'
+import { defaults } from '../../gen/preferences/meta'
 
 type CacheableItem = Item & { $cacheable: boolean }
 type CacheableRegularItem = RegularItem & { $cacheable: boolean }
@@ -18,6 +22,7 @@ export class Items {
   public current: CacheableItem
 
   constructor() {
+    if (!Zotero.nextItem) return // import translator
     let item: CacheableItem
     while (item = Zotero.nextItem()) {
       this.items.push(this.map[item.itemID] = this.map[item.itemKey] = item)
@@ -87,15 +92,11 @@ export class Items {
 export class Collections {
   public byKey: Record<string, Collection> = {}
 
-  constructor(private items: Items, collections?: Record<string, Collection>) {
-    if (collections) {
-      this.byKey = collections
-    }
-    else if (Zotero.nextCollection) {
-      let collection: any
-      while (collection = Zotero.nextCollection()) {
-        this.registerCollection(collection, '')
-      }
+  constructor(private items: Items) {
+    if (!Zotero.nextCollection) return // import translator
+    let collection: any
+    while (collection = Zotero.nextCollection()) {
+      this.registerCollection(collection, '')
     }
   }
 
@@ -151,21 +152,59 @@ export class Collections {
   }
 }
 
-export class Input {
-  public items: Items
-  public collections: Collections
-  public displayOptions: Record<string, boolean> = {}
+export function slurp(): string {
+  let input = ''
+  let read
+  while ((read = Zotero.read(0x100000)) !== false) {
+    input += read
+  }
+  return input
+}
 
-  constructor() {
-    this.items = new Items
-    this.collections = new Collections(this.items)
-    for (const displayOption of displayOptions) {
-      this.displayOptions[displayOption] = Zotero.getOption(displayOption)
+export class Collected {
+  public input = ''
+  public items = new Items
+  public collections: Collections
+  public preferences: Preferences
+  public displayOptions: DisplayOptions = {}
+  public platform: string
+  public Item: any
+  public Collection: any
+
+  constructor(public translator: Translators.Header, mode: 'import' | 'export') {
+    switch (mode) {
+      case 'export':
+        this.items = new Items
+        this.collections = new Collections(this.items)
+
+        for (const displayOption of displayOptions) {
+          this.displayOptions[displayOption] = Zotero.getOption(displayOption)
+        }
+        this.displayOptions.cache = Zotero.getOption('cache')
+        this.displayOptions.custom = Zotero.getOption('custom') // for pandoc-filter CSL
+        break
+      case 'import':
+        this.input = slurp()
+        break
     }
+
+    this.preferences = Object.entries(defaults).reduce((acc, [ pref, dflt ]) => {
+      acc[pref] = Zotero.getHiddenPref(`better-bibtex.${ pref }`) ?? dflt
+      return acc
+    }, {} as unknown as Preferences)
+    this.preferences.testing = Zotero.getHiddenPref('better-bibtex.testing') as boolean
+    this.platform = Zotero.getHiddenPref('better-bibtex.platform') as string
   }
 
-  public erase(): void {
-    this.items = null
-    this.collections = null
+  public item(type: string): any {
+    return new Zotero.item(type)
+  }
+
+  public collection(): any {
+    return new Zotero.Collection
+  }
+
+  public progress(pct: number): void {
+    Zotero.setProgress(pct)
   }
 }
