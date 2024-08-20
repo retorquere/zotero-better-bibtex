@@ -166,10 +166,11 @@ class Exporter extends CSLExporter {
   }
 }
 
-export function generateCSLYAML(collected: Collected): void {
+export function generateCSLYAML(collected: Collected): Translation {
   const translation = Translation.Export(collected)
   const exporter = new Exporter(translation)
   exporter.doExport()
+  return translation
 }
 
 export function parseCSLYAML(input: string): any {
