@@ -154,7 +154,12 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
         ready.resolve(true)
       },
       shutdown: async (reason: Reason) => {
-        if (Cache.opened) await Cache.ZoteroSerialized.purge()
+        if (Cache.opened) {
+          await Cache.ZoteroSerialized.purge()
+        }
+        else {
+          log.info('orchestrator: translator shutdown skipped cache purge')
+        }
 
         switch (reason) {
           case 'ADDON_DISABLE':

@@ -4,7 +4,6 @@ import { bySlug } from '../../gen/translators'
 import { openDB, IDBPDatabase, DBSchema } from 'idb'
 import { log } from '../logger'
 import version from '../../gen/version'
-import Deferred from 'p-defer'
 
 import type { Translators as Translator } from '../../typings/translators'
 const skip = new Set([ 'keepUpdated', 'worker', 'exportFileData' ])
@@ -100,18 +99,11 @@ class Running {
 
   private pending: ExportedItem[] = []
   private context: number
-  private deferred = Deferred()
-  public ready: Promise<void>
-
-  constructor() {
-    this.ready = this.deferred.promise as Promise<void>
-  }
 
   public async load(cache: ExportCache, path: string) {
     if (Cache.export) {
       // trace('cache: waiting for previous export')
       log.error('overlapping export cache')
-      await Cache.export.ready
     }
 
     Cache.export = this
@@ -135,7 +127,6 @@ class Running {
 
   public async flush(): Promise<void> {
     if (this.cache) await this.cache.store(this.pending)
-    this.deferred.resolve()
     this.pending = []
     Cache.export = null
   }
@@ -316,7 +307,6 @@ class ZoteroSerialized {
 export const Cache = new class $Cache {
   public schema = 8
   private db: IDBPDatabase<Schema>
-  public opened = false
 
   public ZoteroSerialized: ZoteroSerialized
 
@@ -328,7 +318,8 @@ export const Cache = new class $Cache {
   public async open(): Promise<void>
   public async open(lastUpdated: string, serializer: Serializer)
   public async open(lastUpdated?: string, serializer?: Serializer): Promise<void> {
-    if (this.opened) throw new Error('database reopened')
+    log.debug('orchestrator: opening cache')
+    if (this.db) throw new Error('database reopened')
 
     this.db = await openDB<Schema>('BetterBibTeXCache', this.schema, {
       upgrade: (db, oldVersion, newVersion) => {
@@ -388,8 +379,10 @@ export const Cache = new class $Cache {
         await this.db.put('metadata', version, 'BetterBibTeX')
       }
     }
+  }
 
-    this.opened = true
+  public get opened() {
+    return !!this.db
   }
 
   public async touch(ids: number[]): Promise<void> {
@@ -417,9 +410,9 @@ export const Cache = new class $Cache {
   }
 
   public close(): void {
+    log.debug('orchestrator: closing cache')
     this.db.close()
     this.db = null
-    this.opened = false
   }
 
   public async count() {

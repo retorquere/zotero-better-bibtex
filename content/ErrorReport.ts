@@ -303,6 +303,7 @@ export class ErrorReport {
     this.setValue('better-bibtex-error-errors', this.report.errors || '')
     this.setValue('better-bibtex-error-log', this.preview(this.report.log || ''))
     this.setValue('better-bibtex-error-items', this.report.items ? this.preview(JSON.parse(this.report.items)) : '')
+    log.debug('orchestrator: getting cache count')
     this.setValue('better-bibtex-report-cache', this.cacheState = l10n.localize('better-bibtex_error-report_better-bibtex_cache', { entries: await Cache.count() }))
 
     this.report.log = [
@@ -334,6 +335,7 @@ export class ErrorReport {
     const continueButton = wizard.getButton('next')
     continueButton.disabled = true
 
+    log.debug('orchestrator: getting cache dump')
     this.input = {
       context: await this.context(),
       errors: `${ Zotero.BetterBibTeX.outOfMemory }\n${ this.errors() }`.trim(),
