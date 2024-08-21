@@ -31,6 +31,7 @@ Object.assign(config.rules, {
   'no-magic-numbers': 'off',
   'max-len': [ 'warn', { code: 320 } ],
   'prefer-arrow/prefer-arrow-functions': 'off',
+  '@stylistic/template-curly-spacing': 'off',
 })
 
 const shell = require('shelljs')
