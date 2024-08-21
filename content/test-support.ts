@@ -114,7 +114,9 @@ export class TestSupport {
       await Zotero.Promise.delay(1500)
     }
     else {
+      log.debug('stall: importFile', path)
       await Zotero.getMainWindow().Zotero_File_Interface.importFile({ file: Zotero.File.pathToFile(path), createNewCollection: !!createNewCollection })
+      log.debug('stall: importFile done', path)
     }
 
     items = await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, true, false, true)
