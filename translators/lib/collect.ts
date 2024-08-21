@@ -4,7 +4,6 @@ import { RegularItem, Item, Collection } from '../../gen/typings/serialized-item
 import { displayOptions, DisplayOptions } from '../../gen/translators'
 import type { Preferences } from '../../gen/preferences/meta'
 import { defaults } from '../../gen/preferences/meta'
-import { log } from '../../content/logger/simple'
 
 type CacheableItem = Item & { $cacheable: boolean }
 type CacheableRegularItem = RegularItem & { $cacheable: boolean }
