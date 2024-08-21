@@ -515,7 +515,7 @@ export const AutoExport = new class $AutoExport { // eslint-disable-line @typesc
     orchestrator.add({
       id: 'auto-export',
       description: 'auto-export',
-      needs: [ 'sqlite', 'cache', 'translators' ],
+      needs: [ 'sqlite', 'translators' ],
       startup: async () => {
         for (const path of await Zotero.DB.columnQueryAsync('SELECT path FROM betterbibtex.autoexport WHERE status <> \'done\'')) {
           queue.add(path)

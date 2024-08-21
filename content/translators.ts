@@ -105,7 +105,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     orchestrator.add({
       id: 'translators',
       description: 'translators',
-      needs: [ 'keymanager', 'cache' ],
+      needs: [ 'keymanager' ],
       startup: async () => {
         if (!this.worker) {
           try {
