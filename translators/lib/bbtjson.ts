@@ -92,14 +92,12 @@ export function generateBBTJSON(collected: Collected): Translation {
 }
 
 export async function importBBTJSON(collected: Collected): Promise<void> {
-  log.dump('stall: importing BBT JSON')
   const data: Library = JSON.parse(collected.input)
   if (!data.items || !data.items.length) return
 
   const items = new Set<number>
   for (const source of (data.items as any[])) {
     simplifyForImport(source)
-    log.dump(`stall: importing ${ JSON.stringify(source) }`)
 
     // I do export these but the cannot be imported back
     delete source.relations
@@ -148,7 +146,6 @@ export async function importBBTJSON(collected: Collected): Promise<void> {
     items.add(source.itemID)
     collected.progress(items.size / data.items.length * 100)
   }
-  log.dump('stall: importing items done')
   collected.progress(100)
 
   const collections: any[] = Object.values(data.collections || {})
@@ -175,5 +172,4 @@ export async function importBBTJSON(collected: Collected): Promise<void> {
     if (collection.parent) continue
     collection.zoteroCollection.complete()
   }
-  log.dump('stall: import finished')
 }
