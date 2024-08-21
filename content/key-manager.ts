@@ -51,6 +51,10 @@ function lc(record: Partial<CitekeyRecord>): CitekeyRecord {
   return record as unknown as CitekeyRecord
 }
 
+function byItemID(itemID) {
+  return { where: { itemID }}
+}
+
 class Progress {
   private win: any
   private progress: any
@@ -251,10 +255,11 @@ export const KeyManager = new class _KeyManager {
 
         await this.start()
       },
-      shutdown: () => {
+      shutdown: async () => {
         for (const cb of this.unwatch) {
           cb()
         }
+        await this.queue.add(() => null) // make sure store queue has been processed
       },
     })
     orchestrator.add({
@@ -335,18 +340,17 @@ export const KeyManager = new class _KeyManager {
       key.pinned ? 1 : 0,
     ])
 
+    if (!blink.first(this.keys, byItemID(key.itemID))) return
+
     let item
     try {
       item = await Zotero.Items.getAsync(key.itemID)
+      if (!item) log.error('could not load', key.itemID)
     }
-    catch {
-      item = undefined
+    catch (err) {
+      log.error('could not load', key.itemID, err)
     }
-    if (!item) {
-      // assume item has been deleted before we could get to it -- did I mention I hate async? I hate async
-      log.error('could not load', key.itemID)
-      return
-    }
+    if (!item) return
 
     if (item.isFeedItem || !item.isRegularItem()) {
       log.error('citekey registered for item of type', item.isFeedItem ? 'feedItem' : Zotero.ItemTypes.getName(item.itemTypeID))
@@ -522,6 +526,7 @@ export const KeyManager = new class _KeyManager {
       // messes with focus-on-tab
       // if (action === 'modify' || action === 'add') Zotero.Notifier.trigger('refresh', 'item', itemIDs)
     }
+
     this.unwatch = [
       this.keys[BlinkKey].events.onInsert.register(changes => {
         for (const change of changes) {
@@ -566,7 +571,7 @@ export const KeyManager = new class _KeyManager {
   public update(item: ZoteroItem, current?: CitekeyRecord): string {
     if (item.isFeedItem || !item.isRegularItem()) return null
 
-    current = current || blink.first(this.keys, { where: { itemID: item.id }})
+    current = current || blink.first(this.keys, byItemID(item.id))
 
     const proposed = this.propose(item)
 
@@ -589,7 +594,7 @@ export const KeyManager = new class _KeyManager {
     // go-ahead to *start* my init.
     if (!this.keys || !this.started) return { citationKey: '', pinned: false, retry: true }
 
-    const key = blink.first(this.keys, { where: { itemID }})
+    const key = blink.first(this.keys, byItemID(itemID))
     if (key) return key
     return { citationKey: '', pinned: false, retry: true }
   }
