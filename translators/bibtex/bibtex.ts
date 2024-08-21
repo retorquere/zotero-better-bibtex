@@ -512,7 +512,6 @@ export function generateBibTeX(collected: Collected): Translation {
   }
 
   translation.bibtex.complete()
-  log.debug(`BBT: plugin ${ typeof translation }`)
   return translation
 }
 

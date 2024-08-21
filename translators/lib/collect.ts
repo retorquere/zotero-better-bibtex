@@ -157,7 +157,6 @@ export function slurp(): string {
   while (read = Zotero.read(0x100000)) {
     input += read
   }
-  log.debug(`slurp: ${ input }`)
   return input
 }
 
@@ -172,7 +171,6 @@ export class Collected {
   public Collection: any
 
   constructor(public translator: Translators.Header, mode: 'import' | 'export') {
-    log.debug(`collecting ${ translator.label } for ${ mode }`)
     switch (mode) {
       case 'export':
         this.items = new Items
