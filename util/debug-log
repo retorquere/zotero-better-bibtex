@@ -25,6 +25,8 @@ if len(logs) == 1 and '-fio-' in logs[0]:
     f.write(r.content)
   with ZipFile(log) as f:
     for name in f.namelist():
+      if not '/' in name:
+        raise ValueError(name)
       print(name)
     f.extractall(path='logs')
   os.remove(log)
@@ -84,6 +86,8 @@ for target, partials in merge.items():
   elif log.endswith('.zip'):
     with ZipFile(log) as f:
       for name in f.namelist():
+        if not '/' in name:
+          raise ValueError(name)
         print(name)
       f.extractall(path='logs')
     os.remove(log)
