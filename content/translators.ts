@@ -534,9 +534,6 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
           reinit[header.label] = { header, code: code(header.label) }
           log.info(`translator install: updated translator ${ header.label }`)
         }
-        else {
-          log.info(`translator install: ${ header.label } is up to date`)
-        }
       }
 
       this.reinit = Object.values(reinit)
