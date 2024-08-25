@@ -327,11 +327,11 @@ const queue = new class TaskQueue {
     this.holdDuringSync()
   }
 
-  public pause(reason: 'startup' | 'end-of-idle' | 'preference-change') {
+  public pause(_reason: 'startup' | 'end-of-idle' | 'preference-change') {
     this.scheduler.paused = true
   }
 
-  public resume(reason: 'startup' | 'start-of-idle' | 'preference-change') {
+  public resume(_reason: 'startup' | 'start-of-idle' | 'preference-change') {
     this.scheduler.paused = false
   }
 
