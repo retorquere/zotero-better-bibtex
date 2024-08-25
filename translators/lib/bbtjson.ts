@@ -3,7 +3,6 @@ import type { Library } from './normalize'
 
 import { log } from '../../content/logger/simple'
 import { Translation } from './translator'
-import { asciify } from '../../content/text'
 import { simplifyForExport, simplifyForImport } from '../../gen/items/simplify'
 const version = require('../../gen/version.js')
 
@@ -86,7 +85,7 @@ export function generateBBTJSON(collected: Collected): Translation {
     }
   }
 
-  translation.output.body = asciify(JSON.stringify(data, null, 2))
+  translation.output.body = JSON.stringify(data, null, 2)
 
   return translation
 }
