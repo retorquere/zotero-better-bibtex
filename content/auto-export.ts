@@ -1,7 +1,8 @@
 Components.utils.import('resource://gre/modules/FileUtils.jsm')
 declare const FileUtils: any
 
-import { log, trace } from './logger'
+import { log } from './logger'
+import { trace } from './logger/simple'
 
 import { Shim } from './os'
 import { is7, platform } from './client'
