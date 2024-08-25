@@ -46,11 +46,11 @@ import { AUXScanner } from './aux-scanner'
 import * as Extra from './extra'
 import { sentenceCase, HTMLParser, HTMLParserOptions } from './text'
 
-// import { trace } from './logger'
 import { AutoExport } from './auto-export'
 import { exportContext } from './db/cache'
 
 import { log } from './logger'
+// import { trace } from './logger'
 import { Events } from './events'
 
 import { Translators } from './translators'
@@ -279,7 +279,7 @@ $Patcher$.schedule(Zotero.ItemFields, 'isFieldOfBase', original => function Zote
 // because the zotero item editor does not check whether a textbox is read-only. *sigh*
 $Patcher$.schedule(Zotero.Item.prototype, 'setField', original => function Zotero_Item_prototype_setField(field: string, value: string | undefined, _loadIn: any) {
   if (field === 'citationKey') {
-    if (Zotero.BetterBibTeX.ready.isPending()) return false
+    if (Zotero.BetterBibTeX.starting) return false
 
     const citekey = Zotero.BetterBibTeX.KeyManager.get(this.id)
     if (citekey.retry) return false
@@ -312,7 +312,7 @@ $Patcher$.schedule(Zotero.Item.prototype, 'setField', original => function Zoter
 $Patcher$.schedule(Zotero.Item.prototype, 'getField', original => function Zotero_Item_prototype_getField(field: any, unformatted: any, includeBaseMapped: any) {
   try {
     if (field === 'citationKey' || field === 'citekey') {
-      if (Zotero.BetterBibTeX.ready.isPending()) return '' // eslint-disable-line @typescript-eslint/no-use-before-define
+      if (Zotero.BetterBibTeX.starting) return '' // eslint-disable-line @typescript-eslint/no-use-before-define
       return Zotero.BetterBibTeX.KeyManager.get(this.id).citationKey
     }
   }
@@ -460,7 +460,12 @@ $Patcher$.schedule(Zotero.Utilities.Internal, 'extractExtraFields', original => 
 
 $Patcher$.schedule(Zotero.Translate.Export.prototype, 'translate', original => function Zotero_Translate_Export_prototype_translate() {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  if (this.noWait) return original.apply(this, arguments)
+  if (this.noWait) {
+    this._displayOptions = this._displayOptions || {}
+    this._displayOptions.cached = false
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    return original.apply(this, arguments)
+  }
 
   try {
     // requested translator
@@ -515,7 +520,7 @@ $Patcher$.schedule(Zotero.Translate.Export.prototype, 'translate', original => f
         }) */
       }
       else {
-        return (async () => {
+        return Translators.queue.add(async () => {
           try {
             await Cache.initExport(translator.label, exportContext(translator.label, displayOptions))
             await original.apply(this, arguments)
@@ -523,7 +528,7 @@ $Patcher$.schedule(Zotero.Translate.Export.prototype, 'translate', original => f
           finally {
             await Cache.export.flush()
           }
-        })()
+        })
       }
     }
   }
@@ -579,6 +584,10 @@ export class BetterBibTeX {
       flash('Zotero is out of memory', 'Zotero is out of memory. I will turn off the cache to help release memory pressure, but this is only a temporary fix until Zotero 7 comes out')
       Preference.cache = false
     }
+  }
+
+  public get starting(): boolean {
+    return this.ready.isPending()
   }
 
   public async scanAUX(target: string): Promise<void> {

@@ -407,7 +407,7 @@ class Handler {
   public async init(request) {
     const options = Server.queryParams(request)
 
-    if (options.probe) return [ this.OK, 'text/plain', Zotero.BetterBibTeX.ready.isPending() ? 'starting' : 'ready' ]
+    if (options.probe) return [ this.OK, 'text/plain', Zotero.BetterBibTeX.starting ? 'starting' : 'ready' ]
 
     try {
       if (!options.style || !options.contentType || !options.locale) {

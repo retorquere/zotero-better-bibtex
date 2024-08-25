@@ -58,7 +58,7 @@ export function fix(serialized: Item, item: ZoteroItem): Item {
   if (item.isRegularItem() && !item.isFeedItem) {
     const regular = <RegularItem>serialized
 
-    if (Zotero.BetterBibTeX.ready.isPending()) {
+    if (Zotero.BetterBibTeX.starting) {
       // with the new "title as citation", CSL can request these items before the key manager is online
       regular.citationKey = ''
     }

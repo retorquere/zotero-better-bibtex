@@ -4,7 +4,7 @@ import { bySlug } from '../../gen/translators'
 import { openDB, IDBPDatabase, DBSchema } from 'idb'
 import { log } from '../logger'
 import version from '../../gen/version'
-import Deferred from 'p-defer'
+// import Deferred from 'p-defer'
 
 import type { Translators as Translator } from '../../typings/translators'
 const skip = new Set([ 'keepUpdated', 'worker', 'exportFileData' ])
@@ -100,19 +100,9 @@ class Running {
 
   private pending: ExportedItem[] = []
   private context: number
-  private deferred = Deferred()
-  public ready: Promise<void>
-
-  constructor() {
-    this.ready = this.deferred.promise as Promise<void>
-  }
 
   public async load(cache: ExportCache, path: string) {
-    if (Cache.export) {
-      // trace('cache: waiting for previous export')
-      log.error('overlapping export cache')
-      await Cache.export.ready
-    }
+    if (Cache.export) throw new Error('cache: waiting for previous export')
 
     Cache.export = this
     if (cache) {
@@ -135,7 +125,6 @@ class Running {
 
   public async flush(): Promise<void> {
     if (this.cache) await this.cache.store(this.pending)
-    this.deferred.resolve()
     this.pending = []
     Cache.export = null
   }
