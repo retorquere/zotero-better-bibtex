@@ -2,7 +2,6 @@ Components.utils.import('resource://gre/modules/FileUtils.jsm')
 declare const FileUtils: any
 
 import { log } from './logger'
-import { trace } from './logger/simple'
 
 import { Shim } from './os'
 import { is7, platform } from './client'
@@ -329,12 +328,10 @@ const queue = new class TaskQueue {
   }
 
   public pause(reason: 'startup' | 'end-of-idle' | 'preference-change') {
-    trace(`ae:pause: ${ reason }`)
     this.scheduler.paused = true
   }
 
   public resume(reason: 'startup' | 'start-of-idle' | 'preference-change') {
-    trace(`ae:resume: ${ reason }`)
     this.scheduler.paused = false
   }
 
@@ -363,12 +360,10 @@ const queue = new class TaskQueue {
   }
 
   public cancel(path: string) {
-    trace(`ae:cancel: ${ path }`)
     this.scheduler.cancel(path)
   }
 
   public run(path: string) {
-    trace(`ae:run: ${ path }`)
     this.runAsync(path).catch(err => log.error('autoexport failed:', { path }, err.message))
   }
 
