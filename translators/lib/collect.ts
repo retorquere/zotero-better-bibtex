@@ -4,6 +4,7 @@ import { RegularItem, Item, Collection } from '../../gen/typings/serialized-item
 import { displayOptions, DisplayOptions } from '../../gen/translators'
 import type { Preferences } from '../../gen/preferences/meta'
 import { defaults } from '../../gen/preferences/meta'
+import { log } from '../../content/logger/simple'
 
 type CacheableItem = Item & { $cacheable: boolean }
 type CacheableRegularItem = RegularItem & { $cacheable: boolean }
@@ -153,9 +154,10 @@ export class Collections {
 export function slurp(): string {
   let input = ''
   let read
-  while ((read = Zotero.read(0x100000)) !== false) {
+  while (read = Zotero.read(0x100000)) {
     input += read
   }
+  log.debug(`slurp: ${ input }`)
   return input
 }
 
@@ -170,6 +172,7 @@ export class Collected {
   public Collection: any
 
   constructor(public translator: Translators.Header, mode: 'import' | 'export') {
+    log.debug(`collecting ${ translator.label } for ${ mode }`)
     switch (mode) {
       case 'export':
         this.items = new Items
@@ -192,8 +195,8 @@ export class Collected {
     this.platform = Zotero.getHiddenPref('better-bibtex.platform') as string
   }
 
-  public item(type: string): any {
-    return new Zotero.item(type)
+  public item(type?: string): any {
+    return new Zotero.Item(type)
   }
 
   public collection(): any {

@@ -309,13 +309,6 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
     this.csquotes = this.collected.preferences.csquotes ? { open: this.collected.preferences.csquotes[0], close: this.collected.preferences.csquotes[1] } : null
   }
 
-  public erase(): void {
-    this.collected.items.erase()
-    this.collected.collections.erase()
-    this.output.body = ''
-    this.output.attachments = []
-  }
-
   saveAttachments(): void {
     if (!this.output?.attachments.length) return
     for (const attachment of this.output.attachments) {

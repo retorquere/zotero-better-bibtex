@@ -63,6 +63,7 @@ import * as CSL from 'citeproc'
 
 import { generateBibLaTeX } from '../translators/bibtex/biblatex'
 import { generateBibTeX, importBibTeX } from '../translators/bibtex/bibtex'
+import { generateBBTJSON, importBBTJSON } from '../translators/lib/bbtjson'
 import { generateCSLYAML, parseCSLYAML } from '../translators/csl/yaml'
 import { generateCSLJSON } from '../translators/csl/json'
 import type { Collected } from '../translators/lib/collect'
@@ -412,14 +413,11 @@ Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
   strToISO(_sandbox: any, str: string) { return DateParser.strToISO(str) },
   getContents(_sandbox: any, path: string): string { return Zotero.BetterBibTeX.getContents(path) },
 
-  generateBibLaTeX(_sandbox: any, collected: Collected) {
-    const translation = generateBibLaTeX(collected)
-    log.debug(`BBT: bridge ${ typeof translation }`)
-    return translation
-  },
+  generateBibLaTeX(_sandbox: any, collected: Collected) { return generateBibLaTeX(collected) },
   generateBibTeX(_sandbox: any, collected: Collected) { return generateBibTeX(collected) },
   generateCSLYAML(_sandbox: any, collected: Collected) { return generateCSLYAML(collected) },
   generateCSLJSON(_sandbox: any, collected: Collected) { return generateCSLJSON(collected) },
+  generateBBTJSON(_sandbox: any, collected: Collected) { return generateBBTJSON(collected) },
 
   parseDate(_sandbox: any, date: string): ParsedDate { return DateParser.parse(date) },
 }
@@ -441,6 +439,7 @@ Zotero.Translate.Import.prototype.Sandbox.BetterBibTeX = {
   parseDate(_sandbox: any, date: string): ParsedDate { return DateParser.parse(date) },
 
   async importBibTeX(_sandbox: any, collected: Collected) { return await importBibTeX(collected) },
+  async importBBTJSON(_sandbox: any, collected: Collected) { return await importBBTJSON(collected) },
   parseCSLYAML(_sandbox: any, input: string): any { return parseCSLYAML(input) },
 }
 
