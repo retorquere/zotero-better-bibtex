@@ -139,7 +139,8 @@ export class Orchestrator {
     }
 
     log.prefix = ''
-    log.info(`orchestrator: startup took ${ duration(runtime.bbt) } after waiting ${ duration(runtime.zotero) } for zotero`)
+    const waiting = phase === 'startup' ? ` after waiting ${ duration(runtime.zotero) } for zotero` : ''
+    log.info(`orchestrator: ${ action } took ${ duration(runtime.bbt) }${ waiting }`)
   }
 
   private gantt(phase: PhaseID) {

@@ -4,7 +4,6 @@ import { RegularItem, Item, Collection } from '../../gen/typings/serialized-item
 import { displayOptions, DisplayOptions } from '../../gen/translators'
 import type { Preferences } from '../../gen/preferences/meta'
 import { defaults } from '../../gen/preferences/meta'
-import { log } from '../../content/logger/simple'
 
 type CacheableItem = Item & { $cacheable: boolean }
 type CacheableRegularItem = RegularItem & { $cacheable: boolean }
@@ -30,17 +29,13 @@ export class Items {
   }
 
   private sortkey(item) {
-    return `${ item.itemID === 'number' ? 'a' : 'b' }\t${ item.citationKey || '' }\t${ item.itemID === 'number' ? item.itemID : '' }`
+    return `${ item.citationKey || '' }\t${ item.dateAdded || ''}`
   }
 
   public sort(sort: 'off' | 'id' | 'citekey'): void {
     switch (sort) {
       case 'id':
-        this.items.sort((a: any, b: any) => {
-          if (typeof a.itemID !== 'number') return 1
-          if (typeof b.itemID !== 'number') return -1
-          return a.itemID - b.itemID
-        })
+        this.items.sort((a: { dateAdded?: string }, b: { dateAdded?: string }) => (a.dateAdded || '').localeCompare(b.dateAdded || ''))
         break
       case 'citekey':
         this.items.sort((a: any, b: any) => this.sortkey(a).localeCompare(this.sortkey(b)))
@@ -157,7 +152,6 @@ export function slurp(): string {
   while (read = Zotero.read(0x100000)) {
     input += read
   }
-  log.debug(`slurp: ${ input }`)
   return input
 }
 
@@ -172,7 +166,6 @@ export class Collected {
   public Collection: any
 
   constructor(public translator: Translators.Header, mode: 'import' | 'export') {
-    log.debug(`collecting ${ translator.label } for ${ mode }`)
     switch (mode) {
       case 'export':
         this.items = new Items
