@@ -342,7 +342,7 @@ $Patcher$.schedule(Zotero.Item.prototype, 'clone', original => function Zotero_I
 
 if (!is7) {
   const itemTree = require('zotero/itemTree')
-  $Patcher$.schedule(itemTree.prototype, 'getColumns', original => function Zotero_ItemTree_prototype_getColumns() {
+  $Patcher$.patch(itemTree.prototype, 'getColumns', original => function Zotero_ItemTree_prototype_getColumns() {
     const columns = original.apply(this, arguments)
     try {
       const insertAfter: number = columns.findIndex(column => column.dataKey === 'title')
@@ -361,7 +361,7 @@ if (!is7) {
     return columns
   })
 
-  $Patcher$.schedule(itemTree.prototype, '_renderCell', original => function Zotero_ItemTree_prototype_renderCell(index, data, col) {
+  $Patcher$.patch(itemTree.prototype, '_renderCell', original => function Zotero_ItemTree_prototype_renderCell(index, data, col) {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     if (col.dataKey !== 'citationKey') return original.apply(this, arguments)
 
