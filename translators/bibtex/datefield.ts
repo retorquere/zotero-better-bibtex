@@ -34,7 +34,7 @@ function format(date, translation: Translation): string {
     formatted = ''
   }
 
-  if (formatted && translation.BetterBibLaTeX && translation.preferences.biblatexExtendedDateFormat) {
+  if (formatted && translation.BetterBibLaTeX && translation.collected.preferences.biblatexExtendedDateFormat) {
     if (date.uncertain) formatted += '?'
     if (date.approximate) formatted += '~'
   }

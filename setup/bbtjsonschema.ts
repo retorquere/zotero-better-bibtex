@@ -3,7 +3,7 @@
 import * as fs from 'fs'
 import * as path from 'path'
 import * as glob from 'glob-promise'
-import fast_safe_stringify from 'fast-safe-stringify'
+import stringify from 'safe-stable-stringify'
 
 import { options, defaults } from '../gen/preferences/meta'
 
@@ -91,4 +91,4 @@ for (const client of [ 'schema/zotero.json', 'schema/jurism.json' ]) {
 
 schema.properties.items.items.properties.itemType = { enum: [...itemTypes].sort() }
 
-fs.writeFileSync(baseline, fast_safe_stringify.stable(schema, null, 2))
+fs.writeFileSync(baseline, stringify(schema, null, 2))

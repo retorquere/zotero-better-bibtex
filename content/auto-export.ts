@@ -320,9 +320,11 @@ if (Preference.autoExportDelay < 1) Preference.autoExportDelay = 1
 if (Preference.autoExportIdleWait < 1) Preference.autoExportIdleWait = 1
 const queue = new class TaskQueue {
   private scheduler = new Scheduler<string>('autoExportDelay', 1000)
+  private held: Set<string>
 
   constructor() {
     this.pause('startup')
+    this.holdDuringSync()
   }
 
   public pause(_reason: 'startup' | 'end-of-idle' | 'preference-change') {
@@ -334,7 +336,27 @@ const queue = new class TaskQueue {
   }
 
   public add(path: string) {
-    this.scheduler.schedule(path, this.run.bind(this, path))
+    this.cancel(path)
+    if (this.held) {
+      this.held.add(path)
+    }
+    else {
+      this.scheduler.schedule(path, this.run.bind(this, path))
+    }
+  }
+
+  public holdDuringSync() {
+    if (Events.syncInProgress && !this.held) this.held = new Set
+  }
+
+  public releaseAfterSync() {
+    if (this.held) {
+      const held = this.held
+      this.held = null
+      for (const path of [...held]) {
+        this.add(path)
+      }
+    }
   }
 
   public cancel(path: string) {
@@ -345,7 +367,7 @@ const queue = new class TaskQueue {
     this.runAsync(path).catch(err => log.error('autoexport failed:', { path }, err.message))
   }
 
-  public async runAsync(path: string) {
+  private async runAsync(path: string) {
     await Zotero.BetterBibTeX.ready
 
     const ae = await AutoExport.get(path)
@@ -516,6 +538,15 @@ export const AutoExport = new class $AutoExport { // eslint-disable-line @typesc
             default:
               log.error('idle: unexpected idle state', state)
               break
+          }
+        })
+
+        Events.on('sync', running => {
+          if (running) {
+            queue.holdDuringSync()
+          }
+          else {
+            queue.releaseAfterSync()
           }
         })
       },

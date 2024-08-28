@@ -1,14 +1,14 @@
 {
 	"manifest_version": 2,
 	"name": "Zotero Debug Bridge",
-	"version": "2.0.0",
+	"version": "2.1.0",
 	"description": "Zotero Debug Bridge",
 	"applications": {
 		"zotero": {
 			"id": "debug-bridge@iris-advies.com",
 			"update_url": "https://github.com/retorquere/zotero-debug-bridge/releases/download/release/updates.json",
 			"strict_min_version": "6.999",
-			"strict_max_version": "7.0.*"
+			"strict_max_version": "7.*"
 		}
 	}
 }

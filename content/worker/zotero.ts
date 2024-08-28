@@ -37,8 +37,9 @@ import { valid } from '../../gen/items/items'
 import { generateBibLaTeX } from '../../translators/bibtex/biblatex'
 import { generateBibTeX } from '../../translators/bibtex/bibtex'
 import { generateCSLJSON } from '../../translators/csl/json'
-import { generateCSLYAML, parseCSLYAML } from '../../translators/csl/yaml'
-import { Translation } from '../../translators/lib/translator'
+import { generateCSLYAML } from '../../translators/csl/yaml'
+import { generateBBTJSON } from '../../translators/lib/bbtjson'
+import type { Collected } from '../../translators/lib/collect'
 import XRegExp from 'xregexp'
 
 import { DOMParser as XMLDOMParser } from '@xmldom/xmldom'
@@ -243,11 +244,11 @@ class WorkerZoteroBetterBibTeX {
     return DateParser.strToISO(str)
   }
 
-  public generateBibLaTeX(translation: Translation) { generateBibLaTeX(translation) }
-  public generateBibTeX(translation: Translation) { generateBibTeX(translation) }
-  generateCSLYAML(translation: Translation) { generateCSLYAML(translation) }
-  generateCSLJSON(translation: Translation) { generateCSLJSON(translation) }
-  parseCSLYAML(input: string): any { return parseCSLYAML(input) }
+  public generateBibLaTeX(collected: Collected) { return generateBibLaTeX(collected) }
+  public generateBibTeX(collected: Collected) { return generateBibTeX(collected) }
+  public generateCSLYAML(collected: Collected) { return generateCSLYAML(collected) }
+  public generateCSLJSON(collected: Collected) { return generateCSLJSON(collected) }
+  public generateBBTJSON(collected: Collected) { return generateBBTJSON(collected) }
 }
 
 const WorkerZoteroUtilities = {

@@ -3,7 +3,7 @@ import type { XUL } from '../typings/xul'
 import { log } from './logger'
 import { TeXstudio } from './tex-studio'
 import { Translators } from './translators'
-import { patch as $patch$, unpatch as $unpatch$, Trampoline } from './monkey-patch'
+import { Patcher } from './monkey-patch'
 import { clean_pane_persist } from './clean_pane_persist'
 import { Preference } from './prefs'
 import { AutoExport } from './auto-export'
@@ -30,13 +30,13 @@ export async function newZoteroPane(win: XULWindow): Promise<void> {
 }
 
 class ZoteroPane {
-  private patched: Trampoline[] = []
+  private $patcher$: Patcher = new Patcher
   private elements: Elements
   private ZoteroPane: any
   private window: XULWindow
 
   public unload(): void {
-    $unpatch$(this.patched)
+    this.$patcher$.unpatch()
     this.elements.remove()
   }
 
@@ -83,7 +83,7 @@ class ZoteroPane {
 
     const bbt_zotero_pane_helper = this // eslint-disable-line @typescript-eslint/no-this-alias
 
-    $patch$(this.ZoteroPane, 'buildItemContextMenu', original => async function ZoteroPane_buildItemContextMenu() {
+    this.$patcher$.patch(this.ZoteroPane, 'buildItemContextMenu', original => async function ZoteroPane_buildItemContextMenu() {
       await original.apply(this, arguments) // eslint-disable-line prefer-rest-params
 
       const id = 'better-bibtex-item-menu'
@@ -155,7 +155,7 @@ class ZoteroPane {
       }))
     })
 
-    $patch$(this.ZoteroPane, 'buildCollectionContextMenu', original => async function() {
+    this.$patcher$.patch(this.ZoteroPane, 'buildCollectionContextMenu', original => async function() {
       // eslint-disable-next-line prefer-rest-params
       await original.apply(this, arguments)
 
@@ -248,14 +248,14 @@ class ZoteroPane {
       catch (err) {
         log.error('ZoteroPane.buildCollectionContextMenu:', err)
       }
-    }, this.patched)
+    })
 
     // Monkey patch because of https://groups.google.com/forum/#!topic/zotero-dev/zy2fSO1b0aQ
-    $patch$(this.ZoteroPane, 'serializePersist', original => function() {
+    this.$patcher$.patch(this.ZoteroPane, 'serializePersist', original => function() {
       // eslint-disable-next-line prefer-rest-params
       original.apply(this, arguments)
       if (Zotero.BetterBibTeX.uninstalled) clean_pane_persist()
-    }, this.patched)
+    })
 
     if (!is7) {
       if (this.ZoteroPane.itemsView.collectionTreeRow) await this.ZoteroPane.itemsView.refreshAndMaintainSelection()

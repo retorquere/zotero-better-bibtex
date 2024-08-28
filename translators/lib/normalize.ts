@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-return */
 
-import { stable_stringify as stringify } from '../../content/stringify'
+import stringify from 'safe-stable-stringify'
 import { RegularItem, Collection } from '../../gen/typings/serialized-item'
 
 function rjust(str: string | number, width: number, padding: string): string {

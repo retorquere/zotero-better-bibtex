@@ -30,10 +30,10 @@ export class Exporter {
   }
 
   public prepare_strings(): void {
-    if (!this.translation.BetterTeX || !this.translation.preferences.strings) return
+    if (!this.translation.BetterTeX || !this.translation.collected.preferences.strings) return
 
-    if (this.translation.BetterTeX && this.translation.preferences.exportBibTeXStrings.startsWith('match')) {
-      this.strings = bibtexParser.parse(this.translation.preferences.strings).strings
+    if (this.translation.BetterTeX && this.translation.collected.preferences.exportBibTeXStrings.startsWith('match')) {
+      this.strings = bibtexParser.parse(this.translation.collected.preferences.strings).strings
       for (const [ k, v ] of Object.entries(this.strings)) {
         this.strings_reverse[v.toUpperCase()] = k.toUpperCase()
       }
@@ -45,9 +45,9 @@ export class Exporter {
   }
 
   private *itemsGenerator(): Generator<RegularItem, void, unknown> {
-    if (!this.postfix && this.translation.BetterTeX) this.postfix = new Postfix(this.translation.preferences.qualityReport)
+    if (!this.postfix && this.translation.BetterTeX) this.postfix = new Postfix(this.translation.collected.preferences.qualityReport)
 
-    for (const item of this.translation.input.items.regular) {
+    for (const item of this.translation.collected.items.regular) {
       if (this.translation.output.body) this.translation.output.body += '\n'
 
       if (typeof item.itemID !== 'number') item.$cacheable = false
@@ -86,9 +86,9 @@ export class Exporter {
         delete item.extraFields.tex[name]
       }
 
-      item.raw = this.translation.BetterTeX && this.translation.preferences.rawLaTag === '*'
+      item.raw = this.translation.BetterTeX && this.translation.collected.preferences.rawLaTag === '*'
       item.tags = item.tags.filter(tag => {
-        if (this.translation.BetterTeX && tag.tag === this.translation.preferences.rawLaTag) {
+        if (this.translation.BetterTeX && tag.tag === this.translation.collected.preferences.rawLaTag) {
           item.raw = true
           return false
         }
@@ -112,7 +112,7 @@ export class Exporter {
       this.postfix?.toString() || '',
     ].filter(m => m)
 
-    if (this.translation.preferences.qualityReport) {
+    if (this.translation.collected.preferences.qualityReport) {
       const duplicates = [
         '% == Citekey duplicates in this file:\n',
       ]

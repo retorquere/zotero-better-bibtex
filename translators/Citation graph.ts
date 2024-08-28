@@ -1,6 +1,7 @@
 declare const Zotero: any
 
-import { Translation, collect } from './lib/translator'
+import { Collected } from './lib/collect'
+import { Translation } from './lib/translator'
 import type { Translators } from '../typings/translators.d.ts'
 declare var ZOTERO_TRANSLATOR_INFO: Translators.Header // eslint-disable-line no-var
 
@@ -28,7 +29,7 @@ type Item = {
 }
 
 export function doExport(): void {
-  const translation = Translation.Export(ZOTERO_TRANSLATOR_INFO, collect())
+  const translation = Translation.Export(new Collected(ZOTERO_TRANSLATOR_INFO, 'export'))
 
   translation.output.body += 'digraph CitationGraph {\n'
   translation.output.body += '  concentrate=true;\n'
@@ -40,7 +41,7 @@ export function doExport(): void {
   }
 
   const items: Item[] = []
-  for (const ref of translation.input.items.regular) {
+  for (const ref of translation.collected.items.regular) {
     const label = [ref.citationKey]
 
     if (add.title && ref.title) {
@@ -106,5 +107,4 @@ export function doExport(): void {
   translation.output.body += '}'
 
   Zotero.write(translation.output.body)
-  translation.erase()
 }

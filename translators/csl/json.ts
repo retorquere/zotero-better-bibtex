@@ -1,4 +1,5 @@
 import { Translation } from '../lib/translator'
+import type { Collected } from '../lib/collect'
 
 import { ParsedDate } from '../../content/dateparser'
 import { CSLExporter } from './csl'
@@ -70,7 +71,9 @@ class Exporter extends CSLExporter {
   }
 }
 
-export function generateCSLJSON(translation: Translation): void {
+export function generateCSLJSON(collected: Collected): Translation {
+  const translation = Translation.Export(collected)
   const exporter = new Exporter(translation)
   exporter.doExport()
+  return translation
 }

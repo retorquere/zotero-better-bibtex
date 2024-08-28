@@ -29,9 +29,10 @@ import { createDB, createTable, Query, BlinkKey } from 'blinkdb'
 import * as blink from '../gen/blinkdb'
 import { Cache } from './db/cache'
 
-import { patch as $patch$ } from './monkey-patch'
+import * as $Patcher$ from './monkey-patch'
 
 import { sprintf } from 'sprintf-js'
+import { newQueue } from '@henrygd/queue'
 
 import * as l10n from './l10n'
 
@@ -84,6 +85,7 @@ class Progress {
 
 export const KeyManager = new class _KeyManager {
   public searchEnabled = false
+  private queue = newQueue(1)
 
   // Table<CitekeyRecord, "itemID">
   private keys = createTable<CitekeyRecord>(createDB({ clone: true }), 'citationKeys')({
@@ -169,7 +171,6 @@ export const KeyManager = new class _KeyManager {
 
   public async refresh(ids: 'selected' | number | number[], manual = false): Promise<void> {
     ids = this.expandSelection(ids)
-
     await Cache.touch(ids)
 
     const warnAt = manual ? Preference.warnBulkModify : 0
@@ -198,6 +199,9 @@ export const KeyManager = new class _KeyManager {
           return
       }
     }
+
+    // clear before refresh so they can update without hitting "claimed keys" in the deleted set
+    this.clear(ids)
 
     const updates: ZoteroItem[] = []
     const progress: Progress = ids.length > 10 ? new Progress(ids.length, 'Refreshing citation keys') : null
@@ -287,7 +291,7 @@ export const KeyManager = new class _KeyManager {
       localized: 'Citation Key',
     }
 
-    $patch$(Zotero.Search.prototype, 'addCondition', original => function addCondition(condition: string, operator: any, value: any, _required: any) {
+    $Patcher$.schedule(Zotero.Search.prototype, 'addCondition', original => function addCondition(condition: string, operator: any, value: any, _required: any) {
       // detect a quick search being set up
       if (condition.match(/^quicksearch/)) this.__add_bbt_citekey = true
       // creator is always added in a quick search so use it as a trigger
@@ -298,18 +302,18 @@ export const KeyManager = new class _KeyManager {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return, prefer-rest-params
       return original.apply(this, arguments)
     })
-    $patch$(Zotero.SearchConditions, 'hasOperator', original => function hasOperator(condition: string, operator: string | number) {
+    $Patcher$.schedule(Zotero.SearchConditions, 'hasOperator', original => function hasOperator(condition: string, operator: string | number) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       if (condition === citekeySearchCondition.name) return citekeySearchCondition.operators[operator]
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return, prefer-rest-params
       return original.apply(this, arguments)
     })
-    $patch$(Zotero.SearchConditions, 'get', original => function get(condition: string) {
+    $Patcher$.schedule(Zotero.SearchConditions, 'get', original => function get(condition: string) {
       if (condition === citekeySearchCondition.name) return citekeySearchCondition
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return, prefer-rest-params
       return original.apply(this, arguments)
     })
-    $patch$(Zotero.SearchConditions, 'getStandardConditions', original => function getStandardConditions() {
+    $Patcher$.schedule(Zotero.SearchConditions, 'getStandardConditions', original => function getStandardConditions() {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return, prefer-rest-params
       return original.apply(this, arguments).concat({
         name: citekeySearchCondition.name,
@@ -317,14 +321,19 @@ export const KeyManager = new class _KeyManager {
         operators: citekeySearchCondition.operators,
       }).sort((a: { localized: string }, b: { localized: any }) => a.localized.localeCompare(b.localized))
     })
-    $patch$(Zotero.SearchConditions, 'getLocalizedName', original => function getLocalizedName(str: string) {
+    $Patcher$.schedule(Zotero.SearchConditions, 'getLocalizedName', original => function getLocalizedName(str: string) {
       if (str === citekeySearchCondition.name) return citekeySearchCondition.localized
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return, prefer-rest-params
       return original.apply(this, arguments)
     })
   }
 
-  async store(key: CitekeyRecord) {
+  // serialize so background stores from onRemove at all happen in order
+  private async store(key: CitekeyRecord) {
+    await this.queue.add(() => this.$store(key))
+  }
+
+  private async $store(key: CitekeyRecord) {
     await Zotero.DB.queryAsync('REPLACE INTO betterbibtex.citationkey (itemID, itemKey, libraryID, citationKey, pinned) VALUES (?, ?, ?, ?, ?)', [
       key.itemID,
       key.itemKey,
@@ -376,7 +385,12 @@ export const KeyManager = new class _KeyManager {
     }
   }
 
-  async remove(keys: CitekeyRecord | CitekeyRecord[]) {
+  // serialize so background stores from onRemove at all happen in order
+  private async remove(keys: CitekeyRecord | CitekeyRecord[]) {
+    await this.queue.add(() => this.$remove(keys))
+  }
+
+  private async $remove(keys: CitekeyRecord | CitekeyRecord[]) {
     if (Array.isArray(keys)) {
       await Zotero.DB.executeTransaction(async () => {
         let pos = 0
@@ -392,6 +406,10 @@ export const KeyManager = new class _KeyManager {
     else {
       await Zotero.DB.queryTx('DELETE FROM betterbibtex.citationkey WHERE itemID = ?', [keys.itemID])
     }
+  }
+
+  private clear(ids: number[]) {
+    blink.removeMany(this.keys, ids.map(itemID => ({ itemID })))
   }
 
   private async start(): Promise<void> {
@@ -415,10 +433,12 @@ export const KeyManager = new class _KeyManager {
     })
 
     Events.keymanagerUpdate = (action, ids) => {
+      // clear even for add/modify so they can update without hitting "claimed keys" in the deleted set
+      this.clear(ids)
+
       let warn_titlecase = 0
       switch (action) {
         case 'delete':
-          blink.removeMany(this.keys, ids.map(itemID => ({ itemID })))
           break
 
         case 'add':

@@ -1,49 +1,11 @@
 /* eslint-disable @typescript-eslint/no-empty-function, no-restricted-syntax */
 
 import type { Translators as Translator } from '../typings/translators'
-declare const workerEnvironment: any
 declare const TranslationWorker: { job: Translator.Worker.Job }
-declare const dump: (msg: string) => void
+import { $dump } from './logger/simple'
 
 import { stringify } from './stringify'
-import { asciify } from './text'
 import { worker } from './client'
-
-export const discard = {
-  log(): void {},
-  error(): void {},
-  warn(): void {},
-  debug(): void {},
-  info(): void {},
-  clear(): void {},
-  dir(): void {},
-  table(): void {},
-}
-
-function format(msg: string, error?: Error) {
-  const err = error ? ` (${ error.message })\n${ error.stack }`.trim() : ''
-  return `${ error ? 'error: ' : '' }${ worker ? 'worker:' : '' }better-bibtex::${ msg }${ err }`
-}
-
-function $dump(msg: string, error?: Error): void {
-  dump(format(msg, error) + '\n')
-}
-
-export function trace(msg: string, mode = ''): void {
-  dump(`trace${ mode }\t${ Date.now() }\t${ msg }\n`)
-}
-
-export const simple = {
-  info(msg: string): void {
-    Zotero.debug(format(msg))
-  },
-  error(msg: string, error?: Error): void {
-    Zotero.debug(format(msg, error))
-  },
-  dump(msg: string): void {
-    $dump(msg)
-  },
-}
 
 function toString(obj): string {
   try {
@@ -59,17 +21,16 @@ export const log = new class Logger {
   protected timestamp: number
   public prefix = ''
 
-  private format({ ascii = true, error = false }, msg) {
+  private format({ error = false }, msg) {
     if (Array.isArray(msg)) msg = msg.map(toString).join(' ')
 
     let prefix = ''
-    if (typeof workerEnvironment !== 'undefined') {
+    if (worker) {
       prefix += ' worker'
       if (typeof TranslationWorker !== 'undefined') prefix += `:${ TranslationWorker.job.translator }`
     }
 
     if (error) prefix += ' error:'
-    if (ascii) msg = asciify(msg)
 
     return `{better-bibtex${ this.prefix }${ prefix }} ${ msg }`
   }
@@ -88,7 +49,7 @@ export const log = new class Logger {
   }
 
   public info(msg: string) {
-    Zotero.debug(this.format({ ascii: false }, msg))
+    Zotero.debug(this.format({}, msg))
   }
 
   public error(...msg) {

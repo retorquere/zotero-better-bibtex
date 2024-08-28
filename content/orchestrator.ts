@@ -109,6 +109,7 @@ export class Orchestrator {
     }
     const finished: number[] = []
     log.info(`${ phase } orchestrator started: ${ reason }`)
+    const action = phase === 'startup' ? 'starting' : 'shutting down'
     while (tasks.length) {
       const task = tasks.shift()
 
@@ -118,10 +119,16 @@ export class Orchestrator {
 
       progress?.(phase, task.id, finished.length, total, task.description)
 
-      log.info(`orchestrator: starting ${ task.id } [${ task.description }]`)
+      log.info(`orchestrator: ${ action } ${ task.id } [${ task.description }]`)
 
       task.started = Date.now()
-      await task[phase](reason, task)
+      try {
+        await task[phase](reason, task)
+      }
+      catch (err) {
+        log.error(phase, task.id, 'failed:', err)
+        if (phase === 'startup') throw err
+      }
       task.finished = Date.now()
 
       log.info(`orchestrator: ${ task.id } took ${ duration(task.finished - task.started) }`)
@@ -132,7 +139,8 @@ export class Orchestrator {
     }
 
     log.prefix = ''
-    log.info(`orchestrator: startup took ${ duration(runtime.bbt) } after waiting ${ duration(runtime.zotero) } for zotero`)
+    const waiting = phase === 'startup' ? ` after waiting ${ duration(runtime.zotero) } for zotero` : ''
+    log.info(`orchestrator: ${ action } took ${ duration(runtime.bbt) }${ waiting }`)
   }
 
   private gantt(phase: PhaseID) {
