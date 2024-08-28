@@ -1,7 +1,7 @@
 Components.utils.import('resource://gre/modules/FileUtils.jsm')
 declare const FileUtils: any
 
-import { log } from './logger'
+import { log } from './logger/simple'
 
 import { Shim } from './os'
 import { is7, platform } from './client'
@@ -234,13 +234,13 @@ class Git {
           if (enabled !== 'true' && enabled !== true) return disabled()
         }
         catch (err) {
-          log.error('git.repo: error parsing config', config, err.message, err)
+          log.error(`git.repo: error parsing config "${config}" (${err.message})`, err)
           return disabled()
         }
         break
 
       default:
-        log.error('git.repo: unexpected git config', Preference.git)
+        log.error(`git.repo: unexpected git config ${Preference.git}`)
         return disabled()
     }
 
@@ -265,7 +265,7 @@ class Git {
     }
     catch (err) {
       flash('autoexport git pull failed', err.message, 1)
-      log.error(`could not pull in ${ this.path }:`, err.message, err)
+      log.error(`could not pull in ${ this.path }: ${err.message}`, err)
     }
   }
 
@@ -364,7 +364,7 @@ const queue = new class TaskQueue {
   }
 
   public run(path: string) {
-    this.runAsync(path).catch(err => log.error('autoexport failed:', { path }, err.message))
+    this.runAsync(path).catch(err => log.error(`autoexport failed: ${ path }`, err))
   }
 
   private async runAsync(path: string) {
@@ -451,7 +451,7 @@ const queue = new class TaskQueue {
       ae.error = ''
     }
     catch (err) {
-      log.error('auto-export', ae.type, ae.id, 'failed:', ae, err.message, err)
+      log.error(`auto-export ${ae.type} (${ae.id}) failed: ${JSON.stringify(ae)}, err.message`, err)
       ae.error = `${ err }`
     }
 
@@ -536,7 +536,7 @@ export const AutoExport = new class $AutoExport { // eslint-disable-line @typesc
               break
 
             default:
-              log.error('idle: unexpected idle state', state)
+              log.error(`idle: unexpected idle state ${JSON.stringify(state)}`)
               break
           }
         })
