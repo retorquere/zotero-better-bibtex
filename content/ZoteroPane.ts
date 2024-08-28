@@ -16,6 +16,7 @@ import * as l10n from './l10n'
 import { Elements } from './create-element'
 import { is7 } from './client'
 import { busyWait } from './busy-wait'
+import { toClipboard } from './text'
 
 type XULWindow = Window & {
   openDialog?: (url: string, id: string, options?: string, io?: any) => void
@@ -83,6 +84,7 @@ class ZoteroPane {
 
     const bbt_zotero_pane_helper = this // eslint-disable-line @typescript-eslint/no-this-alias
 
+    const zp = this.ZoteroPane
     this.$patcher$.patch(this.ZoteroPane, 'buildItemContextMenu', original => async function ZoteroPane_buildItemContextMenu() {
       await original.apply(this, arguments) // eslint-disable-line prefer-rest-params
 
@@ -119,6 +121,27 @@ class ZoteroPane {
       menupopup.appendChild(elements.create('menuitem', {
         label: l10n.localize('better-bibtex_zotero-pane_citekey_refresh'),
         oncommand: () => Zotero.BetterBibTeX.KeyManager.refresh('selected', true),
+      }))
+
+      const clipSelected = async (translatorID: string) => {
+        const items = zp.getSelectedItems()
+        toClipboard(await Translators.exportItems({
+          translatorID,
+          displayOptions: {},
+          scope: { type: 'items', items },
+        }))
+      }
+      menupopup.appendChild(elements.create('menuitem', {
+        label: l10n.localize('better-bibtex_zotero-pane_copy_biblatex_to_clipboard'),
+        oncommand: async () => {
+          await clipSelected(Translators.bySlug.BetterBibLaTeX.translatorID)
+        },
+      }))
+      menupopup.appendChild(elements.create('menuitem', {
+        label: l10n.localize('better-bibtex_zotero-pane_copy_bibtex_to_clipboard'),
+        oncommand: async () => {
+          await clipSelected(Translators.bySlug.BetterBibTeX.translatorID)
+        },
       }))
 
       menupopup.appendChild(elements.create('menuseparator'))

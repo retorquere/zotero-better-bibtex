@@ -7,11 +7,11 @@ import { stringify } from './stringify'
 
 import { Formatter } from './cayw/formatter'
 import { TeXstudio } from './tex-studio'
-import * as escape from './escape'
 import { flash } from './flash'
 import { log } from './logger'
 import { orchestrator } from './orchestrator'
 import { Server } from './server'
+import { toClipboard } from './text'
 
 /* eslint-disable max-classes-per-file */
 
@@ -368,26 +368,6 @@ async function selected(options): Promise<string> {
   }))
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   return picked.length ? await Formatter[options.format || 'latex'](picked, options) : ''
-}
-
-function toClipboard(text) {
-  const data = {
-    'text/unicode': text,
-    'text/html': escape.html(text),
-    'text/richtext': escape.rtf(text), // I know this is not the correct mimetype but it's the only one that Mozilla accepts for RTF
-  }
-
-  const clipboard = Components.classes['@mozilla.org/widget/clipboard;1'].getService(Components.interfaces.nsIClipboard)
-  const transferable = Components.classes['@mozilla.org/widget/transferable;1'].createInstance(Components.interfaces.nsITransferable)
-
-  for (const [ mimetype, content ] of Object.entries(data)) {
-    const str = Components.classes['@mozilla.org/supports-string;1'].createInstance(Components.interfaces.nsISupportsString)
-    str.data = content
-    transferable.addDataFlavor(mimetype)
-    transferable.setTransferData(mimetype, str, content.length * 2)
-  }
-
-  clipboard.setData(transferable, null, Components.interfaces.nsIClipboard.kGlobalClipboard)
 }
 
 function getStyle(id): { url: string } {

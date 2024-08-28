@@ -1,5 +1,7 @@
 import { toSentenceCase } from '@retorquere/bibtex-parser'
+import { is7 } from './client'
 
+import * as escape from './escape'
 import type { MarkupNode } from '../typings/markup'
 import { titleCased } from './csl-titlecase'
 
@@ -487,3 +489,28 @@ export const CJK = new RegExp(`([${ scripts.map((s: { name: string; bmp: string 
       return ''
   }
 }).join('') }])`, 'g')
+
+export function toClipboard(text: string): void {
+  if (is7) {
+    Components.classes['@mozilla.org/widget/clipboardhelper;1'].getService(Components.interfaces.nsIClipboardHelper).copyString(text)
+    return
+  }
+
+  const data = {
+    'text/unicode': text,
+    'text/html': escape.html(text),
+    'text/richtext': escape.rtf(text), // I know this is not the correct mimetype but it's the only one that Mozilla accepts for RTF
+  }
+
+  const clipboard = Components.classes['@mozilla.org/widget/clipboard;1'].getService(Components.interfaces.nsIClipboard)
+  const transferable = Components.classes['@mozilla.org/widget/transferable;1'].createInstance(Components.interfaces.nsITransferable)
+
+  for (const [ mimetype, content ] of Object.entries(data)) {
+    const str = Components.classes['@mozilla.org/supports-string;1'].createInstance(Components.interfaces.nsISupportsString)
+    str.data = content
+    transferable.addDataFlavor(mimetype)
+    transferable.setTransferData(mimetype, str, content.length * 2)
+  }
+
+  clipboard.setData(transferable, null, Components.interfaces.nsIClipboard.kGlobalClipboard)
+}
