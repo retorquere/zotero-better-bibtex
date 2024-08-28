@@ -16,6 +16,7 @@ import * as l10n from './l10n'
 import { Elements } from './create-element'
 import { is7 } from './client'
 import { busyWait } from './busy-wait'
+import { toClipboard } from './text'
 
 type XULWindow = Window & {
   openDialog?: (url: string, id: string, options?: string, io?: any) => void
@@ -121,8 +122,15 @@ class ZoteroPane {
         oncommand: () => Zotero.BetterBibTeX.KeyManager.refresh('selected', true),
       }))
       menupopup.appendChild(elements.create('menuitem', {
-        label: l10n.localize('better-bibtex_zotero-pane_citekey_toclipboard'),
-        oncommand: () => Zotero.BetterBibTeX.KeyManager.toclipboard('selected'),
+        label: l10n.localize('better-bibtex_zotero-pane_quickcopy_toclipboard'),
+        oncommand: async () => {
+          const items = this.ZoteroPane.getSelectedItems()
+          toClipboard(await Translators.exportItems({
+            translatorID: Translators.bySlug.BetterBibTeXCitationKeyQuickCopy.translatorID,
+            displayOptions: {},
+            scope: { type: 'items', items },
+          }))
+        },
       }))
 
       menupopup.appendChild(elements.create('menuseparator'))
