@@ -84,6 +84,7 @@ class ZoteroPane {
 
     const bbt_zotero_pane_helper = this // eslint-disable-line @typescript-eslint/no-this-alias
 
+    const zp = this.ZoteroPane
     this.$patcher$.patch(this.ZoteroPane, 'buildItemContextMenu', original => async function ZoteroPane_buildItemContextMenu() {
       await original.apply(this, arguments) // eslint-disable-line prefer-rest-params
 
@@ -124,7 +125,7 @@ class ZoteroPane {
       menupopup.appendChild(elements.create('menuitem', {
         label: l10n.localize('better-bibtex_zotero-pane_quickcopy_toclipboard'),
         oncommand: async () => {
-          const items = this.ZoteroPane.getSelectedItems()
+          const items = zp.getSelectedItems()
           toClipboard(await Translators.exportItems({
             translatorID: Translators.bySlug.BetterBibTeXCitationKeyQuickCopy.translatorID,
             displayOptions: {},
