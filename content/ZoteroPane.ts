@@ -122,15 +122,25 @@ class ZoteroPane {
         label: l10n.localize('better-bibtex_zotero-pane_citekey_refresh'),
         oncommand: () => Zotero.BetterBibTeX.KeyManager.refresh('selected', true),
       }))
+
+      const clipSelected = async (translatorID: string) => {
+        const items = zp.getSelectedItems()
+        toClipboard(await Translators.exportItems({
+          translatorID,
+          displayOptions: {},
+          scope: { type: 'items', items },
+        }))
+      }
       menupopup.appendChild(elements.create('menuitem', {
-        label: l10n.localize('better-bibtex_zotero-pane_quickcopy_toclipboard'),
+        label: l10n.localize('better-bibtex_zotero-pane_copy_biblatex_to_clipboard'),
         oncommand: async () => {
-          const items = zp.getSelectedItems()
-          toClipboard(await Translators.exportItems({
-            translatorID: Translators.bySlug.BetterBibTeXCitationKeyQuickCopy.translatorID,
-            displayOptions: {},
-            scope: { type: 'items', items },
-          }))
+          await clipSelected(Translators.bySlug.BetterBibLaTeX.translatorID)
+        },
+      }))
+      menupopup.appendChild(elements.create('menuitem', {
+        label: l10n.localize('better-bibtex_zotero-pane_copy_bibtex_to_clipboard'),
+        oncommand: async () => {
+          await clipSelected(Translators.bySlug.BetterBibTeX.translatorID)
         },
       }))
 
