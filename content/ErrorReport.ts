@@ -153,21 +153,22 @@ export class ErrorReport {
   public zip(): Uint8Array {
     const files: Record<string, Uint8Array> = {}
     const enc = (new TextEncoder)
+    const name = this.name()
 
-    files[`${ this.name() }/debug.txt`] = enc.encode(this.report.log)
+    files[`${ name }/debug.txt`] = enc.encode(this.report.log)
 
-    if (this.report.items) files[`${ this.name() }/items.json`] = enc.encode(this.report.items)
+    if (this.report.items) files[`${ name }/items.json`] = enc.encode(this.report.items)
     if (this.config.cache) {
-      files[`${ this.name() }/database.json`] = enc.encode(JSON.stringify(KeyManager.all()))
-      files[`${ this.name() }/cache.json`] = enc.encode(this.report.cache)
+      files[`${ name }/database.json`] = enc.encode(JSON.stringify(KeyManager.all()))
+      files[`${ name }/cache.json`] = enc.encode(this.report.cache)
     }
-    if (this.report.acronyms) files[`${ this.name() }/acronyms.csv`] = enc.encode(this.report.acronyms)
+    if (this.report.acronyms) files[`${ name }/acronyms.csv`] = enc.encode(this.report.acronyms)
 
     return new Uint8Array(UZip.encode(files) as ArrayBuffer)
   }
 
   public async save(): Promise<void> {
-    const filename = await pick('Logs', 'save', [[ 'Zip Archive (*.zip)', '*.zip' ]], `${ this.name() }.zip`)
+    const filename = await pick('Logs', 'save', [[ 'Zip Archive (*.zip)', '*.zip' ]], `${ name }.zip`)
     if (filename) await $OS.File.writeAtomic(filename, this.zip(), { tmpPath: filename + '.tmp' })
   }
 
