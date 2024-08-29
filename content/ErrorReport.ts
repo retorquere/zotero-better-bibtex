@@ -1,8 +1,9 @@
 Components.utils.import('resource://gre/modules/Services.jsm')
 
+import * as client from './client'
+
 import { Shim } from './os'
-import { is7, platform } from './client'
-const $OS = is7 ? Shim : OS
+const $OS = client.is7 ? Shim : OS
 
 import { Cache } from './db/cache'
 import { PromptService } from './prompt'
@@ -101,7 +102,7 @@ export class ErrorReport {
       wizard.advance();
 
       // eslint-disable-next-line no-magic-numbers
-      (<HTMLInputElement> this.document.getElementById('better-bibtex-report-id')).value = `${ this.name() }/${ version }-${ is7 ? 7 : 6 }${ Zotero.BetterBibTeX.outOfMemory ? '/oom' : '' }`
+      (<HTMLInputElement> this.document.getElementById('better-bibtex-report-id')).value = `${ this.name() }/${ version }-${ client.is7 ? 7 : 6 }${ Zotero.BetterBibTeX.outOfMemory ? '/oom' : '' }`
       this.document.getElementById('better-bibtex-report-result').hidden = false
     }
     catch (err) {
@@ -404,7 +405,7 @@ export class ErrorReport {
 
     const appInfo = Components.classes['@mozilla.org/xre/app-info;1'].getService(Components.interfaces.nsIXULAppInfo)
     context += `Application: ${ appInfo.name } (${ Zotero.clientName }) ${ appInfo.version } ${ Zotero.locale }\n`
-    context += `Platform: ${ platform.name }\n`
+    context += `Platform: ${ client.platform }\n`
 
     const addons = await Zotero.getInstalledExtensions()
     if (addons.length) {

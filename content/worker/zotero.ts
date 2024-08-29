@@ -13,25 +13,14 @@ matchAll.shim()
 declare const IOUtils: any
 
 import { Shim } from '../os'
-import { is7, platform } from '../client'
-if (!is7) importScripts('resource://gre/modules/osfile.jsm')
-const $OS = is7 ? Shim : OS
+import * as client from '../client'
+if (!client.is7) importScripts('resource://gre/modules/osfile.jsm')
+const $OS = client.is7 ? Shim : OS
 
 const ctx: DedicatedWorkerGlobalScope = self as any
 
-export const workerEnvironment = {
-  version: '',
-  platform: '',
-  locale: '',
-}
-
-for (const [ key, value ] of (new URLSearchParams(ctx.location.search)).entries()) {
-  workerEnvironment[key] = value
-}
-
 importScripts('resource://zotero/config.js') // import ZOTERO_CONFIG'
 
-import { client, clientName } from '../../content/client'
 import type { Translators } from '../../typings/translators'
 import { valid } from '../../gen/items/items'
 import { generateBibLaTeX } from '../../translators/bibtex/biblatex'
@@ -170,14 +159,14 @@ import { Collection } from '../../gen/typings/serialized-item'
 
 import zotero_schema from '../../schema/zotero.json'
 import jurism_schema from '../../schema/jurism.json'
-const schema = client === 'zotero' ? zotero_schema : jurism_schema
+const schema = client.slug === 'zotero' ? zotero_schema : jurism_schema
 import dateFormats from '../../schema/dateFormats.json'
 
 export const TranslationWorker: { job?: Partial<Translators.Worker.Job> } = {}
 
 class WorkerZoteroBetterBibTeX {
-  public clientName = clientName
-  public client = client
+  public clientName = client.clientName
+  public client = client.slug
   public worker = true
 
   public Cache = {
@@ -197,7 +186,7 @@ class WorkerZoteroBetterBibTeX {
     if (!path) return null
 
     try {
-      if (is7) {
+      if (client.is7) {
         const file = IOUtils.openFileForSyncReading(path)
         const chunkSize = 64
         const bytes = new Uint8Array(chunkSize)
@@ -256,11 +245,11 @@ const WorkerZoteroUtilities = {
   Item: ZUI,
   XRegExp,
 
-  getVersion: () => workerEnvironment.version,
+  getVersion: () => client.ZoteroVersion,
 }
 
 function isWinRoot(path) {
-  return platform.windows && path.match(/^[a-z]:\\?$/i)
+  return client.isWin && path.match(/^[a-z]:\\?$/i)
 }
 async function makeDirs(path) {
   if (isWinRoot(path)) return
@@ -325,11 +314,11 @@ async function saveFile(path, overwrite) {
 
 class WorkerZoteroCreatorTypes {
   public getTypesForItemType(itemTypeID: string): { name: string } {
-    return itemCreators[client][itemTypeID]?.map(name => ({ name })) || []
+    return itemCreators[client.slug][itemTypeID]?.map(name => ({ name })) || []
   }
 
   public isValidForItemType(creatorTypeID, itemTypeID) {
-    return itemCreators[client][itemTypeID]?.includes(creatorTypeID)
+    return itemCreators[client.slug][itemTypeID]?.includes(creatorTypeID)
   }
 
   public getLocalizedString(type: string): string {
@@ -337,7 +326,7 @@ class WorkerZoteroCreatorTypes {
   }
 
   public getPrimaryIDForType(typeID) {
-    return itemCreators[client][typeID]?.[0]
+    return itemCreators[client.slug][typeID]?.[0]
   }
 
   public getID(typeName) {
@@ -398,8 +387,8 @@ class WorkerZotero {
   public async start() {
     this.Date.init(dateFormats)
 
-    TranslationWorker.job.preferences.platform = platform.name
-    TranslationWorker.job.preferences.client = client
+    TranslationWorker.job.preferences.platform = client.platform
+    TranslationWorker.job.preferences.client = client.slug
     this.output = ''
 
     // trace('cache: load serialized')
@@ -444,7 +433,7 @@ class WorkerZotero {
   }
 
   public get locale() {
-    return workerEnvironment.locale
+    return client.locale
   }
 
   public getHiddenPref(pref) {
