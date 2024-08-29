@@ -1,8 +1,8 @@
 /* eslint-disable prefer-template, id-blacklist, @typescript-eslint/no-unsafe-return, @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/quotes */
 
 import { Item } from '../typings/serialized-item'
-import { client } from '../../content/client'
-const zotero = client === 'zotero'
+import * as client from '../../content/client'
+const zotero = client.slug === 'zotero'
 const jurism = !zotero
 
 function unalias(item: any, { scrub = true }: { scrub?: boolean } = {}): void {

@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-function-type, prefer-rest-params, @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-unsafe-return, @typescript-eslint/no-shadow */
 
 export type Trampoline = Function & { disabled?: boolean }
+// import { log } from './logger/simple'
 
 type Patch = {
   object: any
@@ -19,11 +20,13 @@ export class Patcher {
   }
 
   public schedule(object: Patch['object'], method: Patch['method'], patch: Patch['patch']): void {
+    // log.debug(`patch:schedule ${method}`)
     this.patches.push({ object, method, patch })
   }
 
   public execute() {
     for (const patch of this.patches) {
+      // log.debug(`patch:execute ${patch.method}`)
       this.patch(patch.object, patch.method, patch.patch)
     }
     this.patches.length = 0
@@ -31,6 +34,7 @@ export class Patcher {
 
   public patch(object: Patch['object'], method: Patch['method'], patch: Patch['patch']): void {
     if (typeof object[method] !== 'function') throw new Error(`monkey-patch: ${ method } is not a function`)
+    // log.debug(`patch:patch ${method}`)
 
     const orig = object[method]
     const patched = patch(orig)
@@ -41,6 +45,7 @@ export class Patcher {
   }
 
   public unpatch() {
+    // log.debug('patch:unpatch')
     for (const trampoline of this.trampolines) {
       trampoline.disabled = true
     }

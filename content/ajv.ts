@@ -36,9 +36,9 @@ export function validator(schema, ajv): (data: any) => string { // eslint-disabl
   }
 }
 
-import { client } from './client'
+import * as client from './client'
 
-const jurism = client === 'jurism'
+const jurism = client.slug === 'jurism'
 const zotero = !jurism
 
 const zoterovalidator = validator(require('../gen/items/zotero.json'), noncoercing)

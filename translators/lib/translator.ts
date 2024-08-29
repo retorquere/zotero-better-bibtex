@@ -2,13 +2,12 @@ declare const Zotero: any
 declare const __estrace: any // eslint-disable-line no-underscore-dangle
 
 import { Shim } from '../../content/os'
-import { is7 } from '../../content/client'
-const $OS = is7 ? Shim : OS
+import * as client from '../../content/client'
+const $OS = client.is7 ? Shim : OS
 
 import * as Prefs from '../../gen/preferences/meta'
 const PrefNames: Set<string> = new Set(Object.keys(Prefs.defaults))
 import { DisplayOptions } from '../../gen/translators'
-import { client } from '../../content/client'
 import { regex as escapeRE } from '../../content/escape'
 import { Collection, Attachment } from '../../gen/typings/serialized-item'
 import type { Exporter as BibTeXExporter } from '../bibtex/exporter'
@@ -242,7 +241,7 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
     this.options = { ...collected.displayOptions } // for backwards compat
     this.preferences = { ...collected.preferences } // for backwards compat
 
-    this.isJurisM = client === 'jurism'
+    this.isJurisM = client.slug === 'jurism'
     this.isZotero = !this.isJurisM
 
     this.paths = {

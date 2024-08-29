@@ -1,8 +1,8 @@
 Components.utils.import('resource://gre/modules/Services.jsm')
 
 import { Shim } from './os'
-import { is7 } from './client'
-const $OS = is7 ? Shim : OS
+import * as client from './client'
+const $OS = client.is7 ? Shim : OS
 
 import type { XUL } from '../typings/xul'
 
@@ -13,7 +13,6 @@ import { options as preferenceOptions, defaults as preferenceDefaults } from '..
 import { Formatter } from './key-manager/formatter'
 import { AutoExport } from './auto-export'
 import { Translators } from './translators'
-import { client } from './client'
 import * as l10n from './l10n'
 import { Events } from './events'
 import { pick } from './file-picker'
@@ -418,8 +417,8 @@ export class PrefPane {
 
     const editing = $window.document.getElementById('bbt-preferences-citekeyFormatEditing')
     editing.classList[error ? 'add' : 'remove']('bbt-prefs-error')
-    editing.setAttribute(is7 ? 'title' : 'tooltiptext', error)
-    if (is7) editing.setAttribute('tooltip', 'html-tooltip')
+    editing.setAttribute(client.is7 ? 'title' : 'tooltiptext', error)
+    if (client.is7) editing.setAttribute('tooltip', 'html-tooltip')
 
     const msg = $window.document.getElementById('bbt-citekeyFormat-error') as HTMLInputElement
     msg.value = error
@@ -445,8 +444,8 @@ export class PrefPane {
 
     const postscript = $window.document.getElementById('bbt-postscript')
     postscript.setAttribute('style', (error ? '-moz-appearance: none !important; background-color: DarkOrange' : ''))
-    postscript.setAttribute(is7 ? 'title' : 'tooltiptext', error)
-    if (is7) postscript.setAttribute('tooltip', 'html-tooltip')
+    postscript.setAttribute(client.is7 ? 'title' : 'tooltiptext', error)
+    if (client.is7) postscript.setAttribute('tooltip', 'html-tooltip')
     $window.document.getElementById('bbt-cache-warn-postscript').setAttribute('hidden', `${ !Preference.postscript.includes('Translator.options.exportPath') }`)
   }
 
@@ -464,7 +463,7 @@ export class PrefPane {
         $window = null
       })
 
-      if (!is7) {
+      if (!client.is7) {
         const deck = $window.document.getElementById('bbt-prefs-deck') as unknown as XUL.Deck
         deck.selectedIndex = 0
 
@@ -473,7 +472,7 @@ export class PrefPane {
         // bloody *@*&^@# html controls only sorta work for prefs
         for (const node of Array.from($window.document.querySelectorAll<HTMLInputElement>('input[preference][type=\'range\'], input[preference][type=\'text\'], textarea[preference]'))) {
           node.value = Preference[node.getAttribute('preference').replace('extensions.zotero.translators.better-bibtex.', '')]
-          if (!is7 && node.tagName === 'textarea') node.style.marginBottom = '20px'
+          if (!client.is7 && node.tagName === 'textarea') node.style.marginBottom = '20px'
         }
 
         deck.selectedIndex = 1
@@ -521,12 +520,12 @@ export class PrefPane {
 
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
     for (const node of (Array.from($window.document.getElementsByClassName('bbt-jurism')) as unknown[] as XUL.Element[])) {
-      node.hidden = client !== 'jurism'
+      node.hidden = client.slug !== 'jurism'
     }
 
     this.showQuickCopyDetails()
 
-    if (client === 'jurism') {
+    if (client.slug === 'jurism') {
       Zotero.Styles.init().then(() => {
         const styles = Zotero.Styles.getVisible().filter((style: { usesAbbreviation: boolean }) => style.usesAbbreviation)
 
@@ -557,7 +556,7 @@ export class PrefPane {
   }
 
   private styleChanged(index) {
-    if (client !== 'jurism') return null
+    if (client.slug !== 'jurism') return null
 
     const stylebox = $window.document.getElementById('bbt-abbrev-style') as unknown as XUL.Menulist
     const selectedItem: XUL.Element = typeof index !== 'undefined' ? stylebox.getItemAtIndex(index) : stylebox.selectedItem
