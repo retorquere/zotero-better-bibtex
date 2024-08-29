@@ -1,7 +1,7 @@
 import { log } from './logger'
 import { Shim } from './os'
-import { is7 } from './client'
-const $OS = is7 ? Shim : OS
+import * as client from './client'
+const $OS = client.is7 ? Shim : OS
 
 // https://searchfox.org/mozilla-central/source/toolkit/modules/subprocess/subprocess_win.jsm#135 doesn't seem to work on Windows.
 export async function findBinary(bin: string, installationDirectory: { mac?: string[]; win?: string[] } = {}): Promise<string> {
@@ -28,19 +28,24 @@ function resolveVars(path: string, resolved: Record<string, string>): string {
   return path
 }
 
+const dirService = Components.classes['@mozilla.org/file/directory_service;1'].getService(Components.interfaces.nsIProperties)
+const cwd = dirService.get('CurWorkD', Components.interfaces.nsIFile)?.path ?? ''
+
 async function pathSearch(bin: string, installationDirectory: { mac?: string[]; win?: string[] } = {}): Promise<string> {
   const PATH = ENV.get('PATH')
   if (!PATH.length) {
     log.error('path-search: PATH not set')
     return ''
   }
-  let paths: string[] = PATH.split(Zotero.isWin ? ';' : ':')
-  const resolved = {}
-  paths = paths.map(p => resolveVars(p, resolved)).filter((p: string, i: number, self: string[]) => self.indexOf(p) === i)
+
   log.info(`path-search: looking for ${ bin } in ${ PATH }`)
-  if (Zotero.isWin && installationDirectory.win) paths.unshift(...(installationDirectory.win))
-  if (Zotero.isMac && installationDirectory.mac) paths.unshift(...(installationDirectory.mac))
-  paths = paths.filter(p => p)
+  const sep = Zotero.isWin ? '\\' : '/'
+  const resolved = {}
+  const paths: string[] = [ ...PATH.split(Zotero.isWin ? ';' : ':'), installationDirectory[client.platform] || '' ]
+    .map(p => resolveVars(p, resolved))
+    .filter(_ => _)
+    .filter((p: string, i: number, self: string[]) => self.indexOf(p) === i) // unique
+    .map(p => cwd && p[0] === '.' && (p[1] || sep) === sep ? `${cwd}${p.substring(1)}` : p)
   if (!paths.length) {
     log.error('path-search:', PATH, 'yielded no directories')
     return ''
