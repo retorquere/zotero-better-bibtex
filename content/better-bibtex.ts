@@ -787,7 +787,7 @@ export class BetterBibTeX {
         await this.load(Zotero.getMainWindow())
 
         Zotero.Promise.delay(15000).then(() => {
-          DebugLog.unregister('Better BibTeX')
+          log.debug("DebugLog.unregister('Better BibTeX')")
         })
         Zotero.Promise.delay(3000).then(() => {
           DebugLog.convertLegacy()
