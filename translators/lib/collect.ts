@@ -29,17 +29,13 @@ export class Items {
   }
 
   private sortkey(item) {
-    return `${ item.itemID === 'number' ? 'a' : 'b' }\t${ item.citationKey || '' }\t${ item.itemID === 'number' ? item.itemID : '' }`
+    return `${ item.citationKey || '' }\t${ item.dateAdded || ''}`
   }
 
   public sort(sort: 'off' | 'id' | 'citekey'): void {
     switch (sort) {
       case 'id':
-        this.items.sort((a: any, b: any) => {
-          if (typeof a.itemID !== 'number') return 1
-          if (typeof b.itemID !== 'number') return -1
-          return a.itemID - b.itemID
-        })
+        this.items.sort((a: { dateAdded?: string }, b: { dateAdded?: string }) => (a.dateAdded || '').localeCompare(b.dateAdded || ''))
         break
       case 'citekey':
         this.items.sort((a: any, b: any) => this.sortkey(a).localeCompare(this.sortkey(b)))

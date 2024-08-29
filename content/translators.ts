@@ -49,7 +49,6 @@ import { Pinger } from './ping'
 import { newQueue } from '@henrygd/queue'
 import { orchestrator } from './orchestrator'
 import type { Reason } from './bootstrap'
-import type Bluebird from 'bluebird'
 import { headers as Headers, byLabel, byId, bySlug } from '../gen/translators'
 
 Events.on('preference-changed', async (pref: string) => {
@@ -94,11 +93,8 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
   private reinit: { header: Translator.Header; code: string }[]
 
-  public ready!: Bluebird<boolean>
-
   constructor() {
     const ready = Zotero.Promise.defer()
-    this.ready = ready.promise
 
     Object.assign(this, { byLabel, byId, bySlug })
 
@@ -212,9 +208,8 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
   }
 
   public async importString(str) {
-    await this.ready
-    await Zotero.initializationPromise // this really shouldn't be necessary
-    const translation = (new Zotero.Translate.Import)
+    await Zotero.BetterBibTeX.ready
+    const translation = new Zotero.Translate.Import
     translation.setString(str)
 
     const zp = Zotero.getActiveZoteroPane()
@@ -238,16 +233,16 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
   }
 
   public async queueJob(job: ExportJob): Promise<string> {
-    return await this.queue.add(() => this.exportItemsByQueuedWorker(job))
+    return await this.queue.add(() => this.exportItemsByWorker(job))
   }
 
-  private async exportItemsByQueuedWorker(job: ExportJob): Promise<string> {
-    // trace('exportItemsByQueuedWorker: requested')
+  private async exportItemsByWorker(job: ExportJob): Promise<string> {
+    // trace('exportItemsByWorker: requested')
     if (job.path && job.canceled) return ''
     await Zotero.BetterBibTeX.ready
     if (job.path && job.canceled) return ''
 
-    // trace('exportItemsByQueuedWorker: preparing')
+    // trace('exportItemsByWorker: preparing')
     const displayOptions = {
       ...this.displayOptions(job.translatorID, job.displayOptions),
       exportPath: job.path || undefined,
@@ -365,14 +360,14 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       total: items.length,
       callback: pct => {
         let preparing = `${ l10n.localize('better-bibtex_preferences_auto-export_status_preparing') } ${ translator.label }`.trim()
-        if (this.queue.size()) preparing += ` +${ Translators.queue.size() }`
+        if (this.queue.size()) preparing += ` +${ this.queue.size() }`
         void Events.emit('export-progress', { pct, message: preparing, ae: job.autoExport })
       },
     })
 
-    // trace('exportItemsByQueuedWorker: starting cache completion')
+    // trace('exportItemsByWorker: starting cache completion')
     await Cache.ZoteroSerialized.fill(items)
-    // trace('exportItemsByQueuedWorker: cache completion completed')
+    // trace('exportItemsByWorker: cache completion completed')
 
     config.data.items = items.map(item => item.id)
     prepare.update()
@@ -389,7 +384,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
     prepare.done()
 
-    // trace('exportItemsByQueuedWorker: prepare finished')
+    // trace('exportItemsByWorker: prepare finished')
     this.worker.postMessage({ kind: 'start', config })
 
     if (typeof job.timeout === 'number') {
@@ -409,7 +404,6 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
   public async exportItems(job: ExportJob): Promise<string> {
     await Zotero.BetterBibTeX.ready
-    await this.ready
 
     const displayOptions = this.displayOptions(job.translatorID, job.displayOptions)
 
@@ -418,7 +412,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       return await this.queueJob(job)
     }
 
-    const translation = (new Zotero.Translate.Export)
+    const translation = new Zotero.Translate.Export
 
     const scope = this.exportScope(job.scope)
 
@@ -538,9 +532,6 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
         else if (existing.configOptions?.hash !== header.configOptions.hash) {
           reinit[header.label] = { header, code: code(header.label) }
           log.info(`translator install: updated translator ${ header.label }`)
-        }
-        else {
-          log.info(`translator install: ${ header.label } is up to date`)
         }
       }
 

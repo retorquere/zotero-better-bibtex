@@ -101,10 +101,7 @@ class Running {
   private context: number
 
   public async load(cache: ExportCache, path: string) {
-    if (Cache.export) {
-      // trace('cache: waiting for previous export')
-      log.error('overlapping export cache')
-    }
+    if (Cache.export) throw new Error('cache: waiting for previous export')
 
     Cache.export = this
     if (cache) {

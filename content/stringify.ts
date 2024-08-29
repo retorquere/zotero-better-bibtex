@@ -1,13 +1,4 @@
-import fast_safe_stringify from 'fast-safe-stringify'
-
-import { asciify } from './text'
-
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export function stable_stringify(obj: any, replacer?: any, indent?: string | number, ucode?: boolean): string {
-  const stringified: string = fast_safe_stringify.stable(obj, replacer, indent)
-
-  return ucode ? asciify(stringified) : stringified
-}
+import safe_stable_stringify from 'safe-stable-stringify'
 
 function stringifyXPCOM(obj): string {
   if (!obj.QueryInterface) return ''
@@ -24,7 +15,8 @@ function stringifyError(obj) {
   return ''
 }
 
-function $stringify(key, value, cache): any {
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export function replacer(key: string, value: any): any {
   switch (typeof value) {
     case 'number':
     case 'string':
@@ -37,44 +29,12 @@ function $stringify(key, value, cache): any {
 
   if (value === null) return value
   if (value.openDialog || value.querySelector) return value.toString() // window/document
-  if (cache.includes(value)) return '[circular]'
-
-  let replacement: string
-
-  if (value instanceof Set) {
-    value = [...value]
-  }
-  else if (value instanceof RegExp) {
-    value = value.source
-  }
-  else if (replacement = stringifyXPCOM(value)) {
-    value = replacement
-  }
-  else if (replacement = stringifyError(value)) {
-    value = replacement
-  }
-  else {
-    replacement = ''
-  }
-  if (!replacement) cache.push(value)
-  return replacement || value
+  if (value instanceof Set) return [...value]
+  if (value instanceof RegExp) return value.source
+  return stringifyXPCOM(value) || stringifyError(value) || value
 }
 
-// safely handles circular references
-export function stringify(obj, indent: number | string = 0, ucode?: boolean) { // eslint-disable-line @typescript-eslint/explicit-module-boundary-types
-  let cache = []
-  const stringified = JSON.stringify(
-    obj,
-    (key, value): any => {
-      try {
-        return $stringify(key, value, cache)
-      }
-      catch (err) {
-        return `[stringify error: ${ err }\n${ err.stack }]`
-      }
-    },
-    indent
-  )
-  cache = null
-  return ucode ? asciify(stringified) : stringified
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export function stringify(obj: any, indent?: number | string): string {
+  return safe_stable_stringify(obj, replacer, indent)
 }

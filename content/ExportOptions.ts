@@ -1,4 +1,4 @@
-import { patch as $patch$, unpatch as $unpatch$, Trampoline } from './monkey-patch'
+import { Patcher } from './monkey-patch'
 import * as l10n from './l10n'
 import { Elements } from './create-element'
 import { Events } from './events'
@@ -23,7 +23,7 @@ Events.on('window-loaded', ({ win, href }: { win: Window; href: string }) => {
 })
 
 export class ExportOptions {
-  private patched: Trampoline[] = []
+  private $patcher$: Patcher = new Patcher
   private elements: Elements
 
   public load(): void {
@@ -36,11 +36,11 @@ export class ExportOptions {
     this.show()
 
     const self = this // eslint-disable-line @typescript-eslint/no-this-alias
-    $patch$(Zotero_File_Interface_Export, 'updateOptions', original => function(_options) {
+    this.$patcher$.patch(Zotero_File_Interface_Export, 'updateOptions', original => function(_options) {
       // eslint-disable-next-line prefer-rest-params
       original.apply(this, arguments)
       self.show()
-    }, this.patched)
+    })
   }
 
   private selected(): any {
@@ -110,7 +110,7 @@ export class ExportOptions {
 
   public unload(): void {
     this.elements.remove()
-    $unpatch$(this.patched)
+    this.$patcher$.unpatch()
   }
 
   mutex(e?: Event): void {

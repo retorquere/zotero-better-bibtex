@@ -33,6 +33,7 @@ Object.assign(config.rules, {
   'prefer-arrow/prefer-arrow-functions': 'off',
 
   '@stylistic/array-bracket-spacing': 'off',
+  '@stylistic/template-curly-spacing': 'off',
 })
 
 const shell = require('shelljs')
