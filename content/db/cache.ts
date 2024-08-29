@@ -407,7 +407,7 @@ export const Cache = new class $Cache {
   }
 
   public close(): void {
-    log.debug('orchestrator: closing cache')
+    log.debug('closing cache', (new Error('stack')).stack)
     this.db.close()
     this.db = null
   }
