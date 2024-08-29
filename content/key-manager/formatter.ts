@@ -1422,10 +1422,12 @@ export class PatternFormatter {
   private titleWords(title, options: { transliterate?: boolean; skipWords?: boolean; nopunct?: boolean } = {}): string[] {
     if (!title) return null
 
+    log.debug('titleWords: base', Zotero.Utilities.XRegExp.matchChain(title, [this.re.word]), options)
     // 551
     let words: string[] = Zotero.Utilities.XRegExp.matchChain(title, [this.re.word])
       .map((word: string) => options.nopunct ? this.nopunct(word, '') : word)
       .filter((word: string) => word && !(options.skipWords && ucs2decode(word).length === 1 && !word.match(CJK)))
+    log.debug('titleWords: filtered', words)
 
     // apply jieba.cut and flatten.
     if (chinese.load(Preference.jieba) && options.skipWords && this.item.transliterateMode.startsWith('chinese')) {
@@ -1434,12 +1436,14 @@ export class PatternFormatter {
       // remove CJK skipwords
       words = words.filter((word: string) => !this.skipWords.has(word.toLowerCase()))
     }
+    log.debug('titleWords: post-CJK', words)
 
     if (Preference.kuroshiro && kuroshiro.enabled && options.skipWords && this.item.transliterateMode === 'japanese') {
       words = [].concat(...words.map((word: string) => kuroshiro.tokenize(word)))
       // remove CJK skipwords
       words = words.filter((word: string) => !this.skipWords.has(word.toLowerCase()))
     }
+    log.debug('titleWords: post-CJK skipwords', words)
 
     if (options.transliterate) {
       words = words.map((word: string) => {
@@ -1457,9 +1461,11 @@ export class PatternFormatter {
         }
       })
     }
+    log.debug('titleWords: post-translit', words)
 
     // remove transliterated and non-CJK skipwords
     if (options.skipWords) words = words.filter((word: string) => !this.skipWords.has(word.toLowerCase()))
+    log.debug('titleWords: post-skipwords', words)
 
     if (words.length === 0) return null
 
