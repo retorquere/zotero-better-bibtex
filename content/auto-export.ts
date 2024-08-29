@@ -4,8 +4,8 @@ declare const FileUtils: any
 import { log } from './logger/simple'
 
 import { Shim } from './os'
-import { is7, platform } from './client'
-const $OS = is7 ? Shim : OS
+import * as client from './client'
+const $OS = client.is7 ? Shim : OS
 
 import { Cache } from './db/cache'
 import { Events } from './events'
@@ -65,7 +65,7 @@ function win_quote(s: string, forCmd = true): string {
 const posix_quote = require('shell-quote/quote')
 
 function quote(cmd: string[]): string {
-  return platform.name === 'win' ? cmd.map(s => win_quote(s)).join(' ') : <string>posix_quote(cmd)
+  return client.isWin ? cmd.map(s => win_quote(s)).join(' ') : <string>posix_quote(cmd)
 }
 
 export const SQL = new class {

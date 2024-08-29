@@ -1,8 +1,8 @@
 /* eslint-disable no-case-declarations, @typescript-eslint/no-unsafe-return */
 
 import { Shim } from './os'
-import { is7 } from './client'
-const $OS = is7 ? Shim : OS
+import * as client from './client'
+const $OS = client.is7 ? Shim : OS
 import merge from 'lodash.merge'
 import { Cache } from './db/cache'
 
@@ -105,15 +105,10 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       startup: async () => {
         if (!this.worker) {
           try {
-            const environment = Object.entries({
-              version: Zotero.version,
-              platform: Preference.platform,
-              locale: Zotero.locale,
-              clientName: Zotero.clientName,
-              is7,
-            }).map(([ k, v ]) => `${ encodeURIComponent(k) }=${ encodeURIComponent(v) }`).join('&')
+            const searchParams = Object.entries(client)
+              .map(([ k, v ]) => `${ encodeURIComponent(k) }=${ encodeURIComponent(`${v}`) }`).join('&')
 
-            this.worker = new ChromeWorker(`chrome://zotero-better-bibtex/content/worker/zotero.js?${ environment }`)
+            this.worker = new ChromeWorker(`chrome://zotero-better-bibtex/content/worker/zotero.js?${ searchParams }`)
 
             // post dynamically to fix #2485
             this.worker.postMessage({
@@ -517,7 +512,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
       for (const header of headers) {
         // workaround for mem limitations on Windows
-        if (!is7 && typeof header.displayOptions?.worker === 'boolean') header.displayOptions.worker = !!Zotero.isWin
+        if (!client.is7 && typeof header.displayOptions?.worker === 'boolean') header.displayOptions.worker = !!Zotero.isWin
 
         const existing = installed[header.label]
         if (!existing) {

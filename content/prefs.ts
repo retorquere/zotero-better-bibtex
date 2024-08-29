@@ -2,8 +2,8 @@
 declare const Services: any
 
 import { Shim } from './os'
-import { is7, platform } from './client'
-const $OS = is7 ? Shim : OS
+import * as client from './client'
+const $OS = client.is7 ? Shim : OS
 
 import { Events } from './events'
 import type { CharMap } from 'unicode2latex'
@@ -40,7 +40,7 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
     this.setDefaultPrefs()
 
     // put this in a preference so that translators can access this.
-    this.platform = platform.name
+    this.platform = client.platform
 
     if (this.testing) {
       return new Proxy(this, {
@@ -161,7 +161,7 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
     this.move('suppressTitleCase', 'exportTitleCase', old => !old)
 
     // put this in a preference so that translators can access this.
-    this.platform = platform.name
+    this.platform = client.platform
 
     if (this.testing) {
       return new Proxy(this, {

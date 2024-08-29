@@ -1,7 +1,7 @@
 /* eslint-disable prefer-template, id-blacklist, @typescript-eslint/no-unsafe-return, @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/quotes */
 
-import { client } from '../../content/client'
-const jurism = client === 'jurism'
+import * as client from '../../content/client'
+const jurism = client.slug === 'jurism'
 const zotero = !jurism
 
 type Valid = {

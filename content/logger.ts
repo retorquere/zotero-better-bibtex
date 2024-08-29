@@ -2,7 +2,7 @@
 
 import type { Translators as Translator } from '../typings/translators'
 declare const TranslationWorker: { job: Translator.Worker.Job }
-import { $dump } from './logger/simple'
+import { $dump, run } from './logger/simple'
 
 import { stringify } from './stringify'
 import { worker } from './client'
@@ -32,7 +32,7 @@ export const log = new class Logger {
 
     if (error) prefix += ' error:'
 
-    return `{better-bibtex${ this.prefix }${ prefix }} ${ msg }`
+    return `{better-bibtex ${run} ${ this.prefix }${ prefix }} ${ msg }`
   }
 
   public get enabled(): boolean {

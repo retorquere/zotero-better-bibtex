@@ -1,10 +1,8 @@
 import type { Tag, RegularItem as SerializedRegularItem, Item as SerializedItem } from '../../gen/typings/serialized-item'
 
 import { Shim } from '../os'
-import { is7 } from '../../content/client'
-const $OS = is7 ? Shim : OS
-
-import { client } from '../client'
+import * as client from '../../content/client'
+const $OS = client.is7 ? Shim : OS
 
 import { Events } from '../events'
 
@@ -184,7 +182,7 @@ export type CreatorType =
   | 'testimonyBy' | '-testimonyBy'
   | 'translator' | '-translator'
   | 'wordsBy' | '-wordsBy'
-// const creatorTypes: CreatorType[] = Object.keys(itemCreators[client]) as CreatorType[]
+// const creatorTypes: CreatorType[] = Object.keys(itemCreators[client.slug]) as CreatorType[]
 export type CreatorTypeArray = CreatorType[]
 export type CreatorTypeOrAll = CreatorType | '*'
 export type CreatorTypeCollection = CreatorTypeOrAll[][]
@@ -568,7 +566,7 @@ export class PatternFormatter {
   ): this {
     const include: string[] = []
     const exclude: string[] = []
-    const primary = itemCreators[client][this.item.itemType][0]
+    const primary = itemCreators[client.slug][this.item.itemType][0]
 
     const types = this.item.creators.map(cr => cr.creatorType)
     if (typeof type === 'string') {
@@ -972,7 +970,7 @@ export class PatternFormatter {
    * @param match  Regex to test the creator-type list. When passed, and the creator-type list does not match the regex, jump to the next formule. When it matches, return nothing but stay in the current formule. When no regex is passed, output the creator-type list for the item (mainly useful for debugging).
    */
   public $creatortypes(match?: RegExp): this {
-    const creators = [...(new Set([ '', (itemCreators[client][this.item.itemType] || [])[0] || '' ]))].sort() // this will shake out duplicates and put the empty string first
+    const creators = [...(new Set([ '', (itemCreators[client.slug][this.item.itemType] || [])[0] || '' ]))].sort() // this will shake out duplicates and put the empty string first
       .map(primary => (this.item.creators || []).map(cr => `${ typeof cr.name === 'string' ? 1 : 2 }${ cr.creatorType === primary ? 'primary' : cr.creatorType }`).join(';'))
       .map(cr => `${ this.item.itemType }:${ cr }`)
 
@@ -1510,7 +1508,7 @@ export class PatternFormatter {
   }
 
   private creators(select: AuthorType, template: string): string[] {
-    const types = itemCreators[client][this.item.itemType] || []
+    const types = itemCreators[client.slug][this.item.itemType] || []
     const primary = types[0]
 
     const creators = {
