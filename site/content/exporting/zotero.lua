@@ -1,9 +1,12 @@
 
-  print('zotero-live-citations 7569117')
-  local mt, latest = pandoc.mediabag.fetch('https://retorque.re/zotero-better-bibtex/exporting/zotero.lua.revision')
-  latest = string.sub(latest, 1, 10)
-  if '7569117' ~= latest then
-    print('new version "' .. latest .. '" available at https://retorque.re/zotero-better-bibtex/exporting')
+  print('zotero-live-citations 199d652')
+  local ok, response = pcall(json.decode, body)
+  local online, mt, latest = pcall(pandoc.mediabag.fetch, 'https://retorque.re/zotero-better-bibtex/exporting/zotero.lua.revision')
+  if online then
+    latest = string.sub(latest, 1, 10)
+    if '199d652' ~= latest then
+      print('new version "' .. latest .. '" available at https://retorque.re/zotero-better-bibtex/exporting')
+    end
   end
 
 do

@@ -41,7 +41,7 @@ async function pathSearch(bin: string, installationDirectory: { mac?: string[]; 
   log.info(`path-search: looking for ${ bin } in ${ PATH }`)
   const sep = Zotero.isWin ? '\\' : '/'
   const resolved = {}
-  const paths: string[] = [ ...PATH.split(Zotero.isWin ? ';' : ':'), installationDirectory[client.platform] || '' ]
+  const paths: string[] = [ ...PATH.split(Zotero.isWin ? ';' : ':'), ...(installationDirectory[client.platform] || []) ]
     .map(p => resolveVars(p, resolved))
     .filter(_ => _)
     .filter((p: string, i: number, self: string[]) => self.indexOf(p) === i) // unique
