@@ -13,6 +13,7 @@ Feature: Export
 
     Examples:
       | file                                                                                                                     | references |
+      | Inconsistent Citation Key #2953                                                                                          | 1          |
       | Use prepublished as default pubstate for arXiV articles #2911                                                            | 1          |
       | Preprint with status in extra fails to export #2881                                                                      | 1          |
       | Exporting item type film merges scriptwriter with other contributors #2802                                               | 1          |
@@ -697,16 +698,15 @@ Feature: Export
     When I wait until Zotero is idle
     Then an export using "Better BibLaTeX" with worker on should match "export/*.biblatex"
 
-#  Scenario: Export benchmark
-#    #When I import 86 references from "export/*.json"
-#    When I restart Zotero with "1287"
-#    When I benchmark the following exports:
-#      | translator      | cached |
-#      | BibTeX          |        |
-#      | Better BibTeX   | yes    |
-#      # | CSL JSON        |        |
-#      # | Better CSL JSON | yes    |
-
+  # Scenario: Export benchmark
+  # #When I import 86 references from "export/*.json"
+  # When I restart Zotero with "1287"
+  # When I benchmark the following exports:
+  # | translator      | cached |
+  # | BibTeX          |        |
+  # | Better BibTeX   | yes    |
+  # # | CSL JSON        |        |
+  # # | Better CSL JSON | yes    |
   # tests the cache
   @use.with_client=zotero @use.with_whopper=true @timeout=3000 @whopper
   Scenario: Really Big whopping library
@@ -719,33 +719,23 @@ Feature: Export
     And I set preference .keyConflictPolicy to "change"
     And I set preference .kuroshiro to true
     And I set preference .skipFields to "abstract, copyright, googlebooks, "
-
     # And I select the library named "CCNLab"
-
     And I set export option exportNotes to true
     And I wait until Zotero is idle
     And I export the library 1 times using "id:9cb70025-a888-4a29-a210-93ec52da40d4"
-
     And I wait until Zotero is idle
     And an export using "Better BibTeX" with worker on should match "export/*.bibtex"
-
     And I wait until Zotero is idle
     And an export using "Better BibTeX" with worker on should match "export/*.bibtex"
-
     And I wait until Zotero is idle
     And an export using "Better BibTeX" with worker on should match "export/*.bibtex"
-
     And I wait until Zotero is idle
     And an export using "Better BibTeX" with worker on should match "export/*.bibtex"
-
     When I export the library 1 times using "id:bc03b4fe-436d-4a1f-ba59-de4d2d7a63f7"
     And I wait until Zotero is idle
-
     Then an export using "Better CSL JSON" with worker on should match "export/*.csl.json"
-
     When I wait until Zotero is idle
     Then an export using "Better CSL JSON" with worker on should match "export/*.csl.json"
-
     When I wait until Zotero is idle
     Then an export using "Better CSL JSON" with worker on should match "export/*.csl.json"
 

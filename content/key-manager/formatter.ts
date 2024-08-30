@@ -4,6 +4,10 @@ import { Shim } from '../os'
 import * as client from '../../content/client'
 const $OS = client.is7 ? Shim : OS
 
+import flatMap from 'array.prototype.flatmap'
+flatMap.shim()
+import nlp from 'compromise/one'
+
 import { Events } from '../events'
 
 import { log } from '../logger'
@@ -346,7 +350,7 @@ export class PatternFormatter {
     dash: Zotero.Utilities.XRegExp('\\p{Pd}|\u2500|\uFF0D|\u2015', 'g'), // additional pseudo-dashes from #1880
     caseNotUpperTitle: Zotero.Utilities.XRegExp('[^\\p{Lu}\\p{Lt}]', 'g'),
     caseNotUpper: Zotero.Utilities.XRegExp('[^\\p{Lu}]', 'g'),
-    word: Zotero.Utilities.XRegExp('[\\p{L}\\p{Nd}\\p{Pc}\\p{M}]+(-[\\p{L}\\p{Nd}\\p{Pc}\\p{M}]+)*', 'g'),
+    // word: Zotero.Utilities.XRegExp('[\\p{L}\\p{Nd}\\p{Pc}\\p{M}]+(-[\\p{L}\\p{Nd}\\p{Pc}\\p{M}]+)*', 'g'),
   }
 
   private acronyms: Record<string, Record<string, string>> = {}
@@ -1420,28 +1424,22 @@ export class PatternFormatter {
   private titleWords(title, options: { transliterate?: boolean; skipWords?: boolean; nopunct?: boolean } = {}): string[] {
     if (!title) return null
 
-    log.debug('titleWords: base', Zotero.Utilities.XRegExp.matchChain(title, [this.re.word]), options)
-    // 551
-    let words: string[] = Zotero.Utilities.XRegExp.matchChain(title, [this.re.word])
+    let words: string[] = nlp(title).json()[0].terms.map((term: { text: string }) => term.text.split('/')).flat()
       .map((word: string) => options.nopunct ? this.nopunct(word, '') : word)
       .filter((word: string) => word && !(options.skipWords && ucs2decode(word).length === 1 && !word.match(CJK)))
-    log.debug('titleWords: filtered', words)
 
     // apply jieba.cut and flatten.
     if (chinese.load(Preference.jieba) && options.skipWords && this.item.transliterateMode.startsWith('chinese')) {
       const mode = this.item.transliterateMode === 'chinese-traditional' ? 'tw' : 'cn'
-      words = [].concat(...words.map((word: string) => chinese.jieba(word, mode)))
-      // remove CJK skipwords
-      words = words.filter((word: string) => !this.skipWords.has(word.toLowerCase()))
+      words = words
+        .map((word: string) => chinese.jieba(word, mode)).flat()
+        .filter((word: string) => !this.skipWords.has(word.toLowerCase())) // remove CJK skipwords
     }
-    log.debug('titleWords: post-CJK', words)
 
     if (Preference.kuroshiro && kuroshiro.enabled && options.skipWords && this.item.transliterateMode === 'japanese') {
-      words = [].concat(...words.map((word: string) => kuroshiro.tokenize(word)))
-      // remove CJK skipwords
-      words = words.filter((word: string) => !this.skipWords.has(word.toLowerCase()))
+      words = words.map((word: string) => kuroshiro.tokenize(word)).flat()
+        .filter((word: string) => !this.skipWords.has(word.toLowerCase()))
     }
-    log.debug('titleWords: post-CJK skipwords', words)
 
     if (options.transliterate) {
       words = words.map((word: string) => {
@@ -1459,11 +1457,9 @@ export class PatternFormatter {
         }
       })
     }
-    log.debug('titleWords: post-translit', words)
 
     // remove transliterated and non-CJK skipwords
     if (options.skipWords) words = words.filter((word: string) => !this.skipWords.has(word.toLowerCase()))
-    log.debug('titleWords: post-skipwords', words)
 
     if (words.length === 0) return null
 
