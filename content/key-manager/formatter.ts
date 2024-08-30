@@ -7,6 +7,9 @@ const $OS = client.is7 ? Shim : OS
 import flatMap from 'array.prototype.flatmap'
 flatMap.shim()
 import nlp from 'compromise/one'
+const world = nlp.world()
+world.model.one.prePunctuation['-'] = true
+world.model.one.postPunctuation['-'] = true
 
 import { Events } from '../events'
 
@@ -1421,10 +1424,20 @@ export class PatternFormatter {
     return this.transliterate(str).replace(allow_spaces ? this.re.unsafechars_allow_spaces : this.re.unsafechars, '').trim()
   }
 
+  private contract(terms: string[]): string[] {
+    const words: string[] = []
+    for (const term of terms) {
+    }
+  }
   private titleWords(title, options: { transliterate?: boolean; skipWords?: boolean; nopunct?: boolean } = {}): string[] {
     if (!title) return null
 
-    let words: string[] = nlp(title).json()[0].terms.map((term: { text: string }) => term.text.split('/')).flat()
+    let words: string[] = nlp(title).json()[0].terms
+      .map((term: { text: string }) => term.text)
+      .reduce((acc: string[], word: string) => {
+        
+      }, [])
+      .map((word: string) => word.split('/')).flat()
       .map((word: string) => options.nopunct ? this.nopunct(word, '') : word)
       .filter((word: string) => word && !(options.skipWords && ucs2decode(word).length === 1 && !word.match(CJK)))
 
