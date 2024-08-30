@@ -2,6 +2,7 @@
 
 /* eslint-disable prefer-arrow/prefer-arrow-functions, @typescript-eslint/no-unsafe-return, no-console, @typescript-eslint/no-shadow, no-eval, @typescript-eslint/no-empty-function, id-blacklist */
 
+console.log('converting pug to XUL/XHTML')
 import * as pug from 'pug'
 import * as fs from 'fs'
 import { walk, Lint, SelfClosing, ASTWalker } from './pug-ast-walker'
