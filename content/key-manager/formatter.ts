@@ -1442,13 +1442,13 @@ export class PatternFormatter {
         first = false
       }
     }
-    return $terms.reverse().flatMap(t => t.text.split(/[/:]/)).filter(w => !this.skipWords.has(w.toLowerCase()))
+    return $terms.reverse().map(t => t.text)
   }
 
   private titleWords(title, options: { transliterate?: boolean; skipWords?: boolean; nopunct?: boolean } = {}): string[] {
     if (!title) return null
 
-    title = title.replace(/<\/?(?:i|b|sc|nc|code|span[^>]*)>|["]/ig, '')
+    title = title.replace(/<\/?(?:i|b|sc|nc|code|span[^>]*)>|["]/ig, '').replace(/[/:]/g, ' ')
     log.debug('titlewords:', title)
     let words = this.contract(nlp(title).json())
       .map(word => options.nopunct ? this.nopunct(word, '') : word)
