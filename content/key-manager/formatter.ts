@@ -6,7 +6,14 @@ const $OS = client.is7 ? Shim : OS
 
 import flatMap from 'array.prototype.flatmap'
 flatMap.shim()
-import { tokenize } from '@retorquere/bibtex-parser'
+
+import nlp from 'compromise/one'
+type Term = {
+  text: string
+  normal: string
+  pre: string
+  post: string
+}
 
 import { Events } from '../events'
 
@@ -383,7 +390,7 @@ export class PatternFormatter {
     const unsafechars = rescape(Preference.citekeyUnsafeChars + '\uFFFD')
     this.re.unsafechars_allow_spaces = new RegExp(`[${ unsafechars }]`, 'g')
     this.re.unsafechars = new RegExp(`[${ unsafechars }\\s]`, 'g')
-    this.skipWords = new Set(Preference.skipWords.split(',').map((word: string) => word.trim()).filter((word: string) => word))
+    this.skipWords = new Set(Preference.skipWords.split(',').map((word: string) => word.trim().toLowerCase()).filter((word: string) => word))
 
     let error = ''
     const ts = Date.now()
@@ -1421,14 +1428,35 @@ export class PatternFormatter {
     return this.transliterate(str).replace(allow_spaces ? this.re.unsafechars_allow_spaces : this.re.unsafechars, '').trim()
   }
 
+  private contract(sentences: { terms: Term[] }[]): string[] {
+    const $terms: Term[] = []
+    for (const sentence of sentences) {
+      let first = true
+      for (const term of sentence.terms) {
+        if (this.skipWords.has(term.text.toLowerCase())) continue
+
+        if (first || !$terms[0].post || $terms[0].post !== '-') {
+          $terms.unshift(term)
+        }
+        else {
+          $terms[0].text += $terms[0].post + term.text
+          $terms[0].post = term.post
+        }
+        first = false
+      }
+    }
+    return $terms.reverse().map(t => t.text.split(/[/:]/)).flat().filter(w => !this.skipWords.has(w.toLowerCase()))
+  }
+
   private titleWords(title, options: { transliterate?: boolean; skipWords?: boolean; nopunct?: boolean } = {}): string[] {
     if (!title) return null
 
-    let words = tokenize(title, /<\/?(?:i|b|sc|nc|code|span[^>]*)>/ig)
-      .filter(t => t.type === 'word')
-      .map(t => t.text)
+    title = title.replace(/<\/?(?:i|b|sc|nc|code|span[^>]*)>|["]/ig, '')
+    log.debug('titlewords:', title)
+    let words = this.contract(nlp(title).json())
       .map(word => options.nopunct ? this.nopunct(word, '') : word)
       .filter(word => word && !(options.skipWords && ucs2decode(word).length === 1 && !word.match(CJK)))
+    log.debug('titlewords:', words)
 
     // apply jieba.cut and flatten.
     if (chinese.load(Preference.jieba) && options.skipWords && this.item.transliterateMode.startsWith('chinese')) {
