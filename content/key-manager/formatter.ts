@@ -1432,7 +1432,7 @@ export class PatternFormatter {
       for (const term of sentence.terms) {
         if (this.skipWords.has(term.text.toLowerCase())) continue
 
-        if (first || !$terms[0].post || $terms[0].post !== '-') {
+        if (first || ($terms[0].post && $terms[0].post !== '-')) {
           $terms.unshift(term)
         }
         else {
