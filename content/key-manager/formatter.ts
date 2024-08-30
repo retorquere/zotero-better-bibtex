@@ -7,9 +7,14 @@ const $OS = client.is7 ? Shim : OS
 import flatMap from 'array.prototype.flatmap'
 flatMap.shim()
 import nlp from 'compromise/one'
-const world = nlp.world()
+const world = nlp.world() as any
 world.model.one.prePunctuation['-'] = true
 world.model.one.postPunctuation['-'] = true
+type Term = {
+  text: string
+  pre: string
+  post: string
+}
 
 import { Events } from '../events'
 
@@ -1424,19 +1429,24 @@ export class PatternFormatter {
     return this.transliterate(str).replace(allow_spaces ? this.re.unsafechars_allow_spaces : this.re.unsafechars, '').trim()
   }
 
-  private contract(terms: string[]): string[] {
-    const words: string[] = []
+  private contract(terms: Term[]): string[] {
+    const $terms: Term[] = []
     for (const term of terms) {
+      if (!$terms.length || $terms[0].post) {
+        $terms.unshift(term)
+      }
+      else {
+        $terms[0].text += term.text
+        $terms[0].post = term.post
+      }
     }
+    return $terms.map(term => term.text)
   }
+
   private titleWords(title, options: { transliterate?: boolean; skipWords?: boolean; nopunct?: boolean } = {}): string[] {
     if (!title) return null
 
-    let words: string[] = nlp(title).json()[0].terms
-      .map((term: { text: string }) => term.text)
-      .reduce((acc: string[], word: string) => {
-        
-      }, [])
+    let words: string[] = this.contract(nlp(title).json()[0].terms)
       .map((word: string) => word.split('/')).flat()
       .map((word: string) => options.nopunct ? this.nopunct(word, '') : word)
       .filter((word: string) => word && !(options.skipWords && ucs2decode(word).length === 1 && !word.match(CJK)))
