@@ -228,7 +228,7 @@ If set, generates journal abbreviations on export using the Zotero journal abbre
 
 ### Sort TeX/CSL output (useful if you use version control on the output):
 
-default: `item creation order (plenty fast)`
+default: `citation key (slower on very large libraries)`
 
 BBT sorts the output for TeX and CSL exports to have the output be versioning-friendly.
 
