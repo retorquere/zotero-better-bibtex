@@ -233,7 +233,7 @@ Feature: Export
       | Customise name-separator and list-separator #1927                                                                  | 1          |
       | citation key format nopunctordash filter list #1880                                                                | 1          |
       | Export report+type as preprint                                                                                     | 1          |
-      | Use creator in extra field when there is no creator in the usual places? #1873                                     | 1          |
+      | Use creator in extra field when there is no creator in the usual places #1873                                      | 1          |
       | Exporting "month = {season}" for BibTeX #1810                                                                      | 1          |
       | bibtex does not export season dates                                                                                | 1          |
       | DOI not escaped using postscript #1803                                                                             | 1          |
