@@ -4,9 +4,6 @@ import { Shim } from '../os'
 import * as client from '../../content/client'
 const $OS = client.is7 ? Shim : OS
 
-import flatMap from 'array.prototype.flatmap'
-flatMap.shim()
-
 import nlp from 'compromise/one'
 type Term = {
   text: string
@@ -1445,7 +1442,7 @@ export class PatternFormatter {
         first = false
       }
     }
-    return $terms.reverse().map(t => t.text.split(/[/:]/)).flat().filter(w => !this.skipWords.has(w.toLowerCase()))
+    return $terms.reverse().flatMap(t => t.text.split(/[/:]/)).filter(w => !this.skipWords.has(w.toLowerCase()))
   }
 
   private titleWords(title, options: { transliterate?: boolean; skipWords?: boolean; nopunct?: boolean } = {}): string[] {
@@ -1462,12 +1459,13 @@ export class PatternFormatter {
     if (chinese.load(Preference.jieba) && options.skipWords && this.item.transliterateMode.startsWith('chinese')) {
       const mode = this.item.transliterateMode === 'chinese-traditional' ? 'tw' : 'cn'
       words = words
-        .map((word: string) => chinese.jieba(word, mode)).flat()
+        .flatMap((word: string) => chinese.jieba(word, mode))
         .filter((word: string) => !this.skipWords.has(word.toLowerCase())) // remove CJK skipwords
     }
 
     if (Preference.kuroshiro && kuroshiro.enabled && options.skipWords && this.item.transliterateMode === 'japanese') {
-      words = words.map((word: string) => kuroshiro.tokenize(word)).flat()
+      words = words
+        .flatMap((word: string) => kuroshiro.tokenize(word))
         .filter((word: string) => !this.skipWords.has(word.toLowerCase()))
     }
 
