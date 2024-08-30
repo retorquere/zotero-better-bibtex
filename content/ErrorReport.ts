@@ -306,7 +306,13 @@ export class ErrorReport {
     this.setValue('better-bibtex-error-log', this.preview(this.report.log || ''))
     this.setValue('better-bibtex-error-items', this.report.items ? this.preview(JSON.parse(this.report.items)) : '')
     log.debug('orchestrator: getting cache count')
-    this.setValue('better-bibtex-report-cache', this.cacheState = l10n.localize('better-bibtex_error-report_better-bibtex_cache', { entries: await Cache.count() }))
+    try {
+      this.setValue('better-bibtex-report-cache', this.cacheState = l10n.localize('better-bibtex_error-report_better-bibtex_cache', { entries: await Cache.count() }))
+    }
+    catch (err) {
+      log.error('failed getting cache count', err)
+      this.setValue('better-bibtex-report-cache', this.cacheState = l10n.localize('better-bibtex_error-report_better-bibtex_cache', { entries: -1 }))
+    }
 
     this.report.log = [
       this.report.context,
@@ -337,6 +343,14 @@ export class ErrorReport {
     const continueButton = wizard.getButton('next')
     continueButton.disabled = true
 
+    let cache = ''
+    try {
+      cache = JSON.stringify(await Cache.dump(), null, 2)
+    }
+    catch (err) {
+      log.error('could not get cache dump', err)
+      cache = ''
+    }
     log.debug('orchestrator: getting cache dump')
     this.input = {
       context: await this.context(),
@@ -344,7 +358,7 @@ export class ErrorReport {
       // # 1896
       log: this.log(),
       items: win.arguments[0].wrappedJSObject.items,
-      cache: JSON.stringify(await Cache.dump(), null, 2),
+      cache,
     }
     const acronyms = $OS.Path.join(Zotero.BetterBibTeX.dir, 'acronyms.csv')
     if (await $OS.File.exists(acronyms)) this.input.acronyms = await $OS.File.read(acronyms, { encoding: 'utf-8' }) as unknown as string
