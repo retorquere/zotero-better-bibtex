@@ -79,7 +79,6 @@
     "bplist-parser": "^0.3.2",
     "case": "^1.6.3",
     "citeproc": "^2.4.63",
-    "compromise": "^14.14.0",
     "csl-json": "^0.1.0",
     "cyrillic-to-translit-js": "^3.2.1",
     "detect-file-encoding-and-language": "^2.4.0",
