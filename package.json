@@ -120,7 +120,7 @@
     "zotero-plugin": "2.0.29"
   },
   "devDependencies": {
-    "@retorquere/bibtex-parser": "^9.0.15",
+    "@retorquere/bibtex-parser": "^9.0.16",
     "@retorquere/zotero-sync": "^1.0.27",
     "@types/bluebird": "^3.5.42",
     "@types/node": "^22.5.1",
