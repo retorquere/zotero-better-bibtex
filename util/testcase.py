@@ -81,7 +81,7 @@ issue = repo.get_issue(int(args.issue))
 args.title = re.sub(r'^\[[^\]]+\]\s*:', '', issue.title).strip()
 args.title = re.sub(r'^(Bug|Feature|Feature Request)\s*:', '', args.title, re.IGNORECASE).strip()
 args.title = re.sub(r'[^-A-Za-z0-9\s]', '', args.title).strip()
-args.title = sanitize_filename(f'{args.title} #{issue.number}'.strip()).replace('`', '')
+args.title = sanitize_filename(f'{args.title} #{issue.number}'.strip()).replace('`', '').replace('?', '')
 
 if args.attach:
   candidates = { os.path.splitext(att)[1]: att for att in glob('attachments/*.*', root_dir = 'test/fixtures/export') }

@@ -1,0 +1,16 @@
+--- node_modules/@xmldom/xmldom/lib/grammar.js	2024-08-30 19:59:00
++++ node_modules/@xmldom/xmldom/lib/grammar.js	2024-08-30 20:15:27
+@@ -389,9 +389,11 @@
+ var ExternalID_match = reg(
+ 	'^',
+ 	regg(
+-		regg(SYSTEM, S, '(?<SystemLiteralOnly>', SystemLiteral, ')'),
++		// regg(SYSTEM, S, '(?<SystemLiteralOnly>', SystemLiteral, ')'),
++		regg(SYSTEM, S, '(', SystemLiteral, ')'),
+ 		'|',
+-		regg(PUBLIC, S, '(?<PubidLiteral>', PubidLiteral, ')', S, '(?<SystemLiteral>', SystemLiteral, ')')
++		// regg(PUBLIC, S, '(?<PubidLiteral>', PubidLiteral, ')', S, '(?<SystemLiteral>', SystemLiteral, ')')
++		regg(PUBLIC, S, '(', PubidLiteral, ')', S, '(', SystemLiteral, ')')
+ 	)
+ );
+ 

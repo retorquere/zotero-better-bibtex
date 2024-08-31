@@ -132,13 +132,13 @@ class ZoteroPane {
         }))
       }
       menupopup.appendChild(elements.create('menuitem', {
-        label: l10n.localize('better-bibtex_zotero-pane_copy_biblatex_to_clipboard'),
+        label: l10n.localize('better-bibtex_zotero-pane_biblatex_to_clipboard'),
         oncommand: async () => {
           await clipSelected(Translators.bySlug.BetterBibLaTeX.translatorID)
         },
       }))
       menupopup.appendChild(elements.create('menuitem', {
-        label: l10n.localize('better-bibtex_zotero-pane_copy_bibtex_to_clipboard'),
+        label: l10n.localize('better-bibtex_zotero-pane_bibtex_to_clipboard'),
         oncommand: async () => {
           await clipSelected(Translators.bySlug.BetterBibTeX.translatorID)
         },

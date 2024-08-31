@@ -2,6 +2,8 @@
 
 /* eslint-disable @typescript-eslint/no-unsafe-return, no-console, @typescript-eslint/no-shadow, no-eval, @typescript-eslint/no-empty-function, id-blacklist */
 
+console.log('pre-processing preferences')
+
 import * as pug from 'pug'
 import * as fs from 'fs'
 import * as path from 'path'

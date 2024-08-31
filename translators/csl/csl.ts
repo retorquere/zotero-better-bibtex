@@ -64,12 +64,11 @@ export abstract class CSLExporter {
         continue
       }
 
+      Object.assign(item, getExtra(item.extra, 'csl'))
       simplifyForExport(item)
       if (item.accessDate) { // WTH is Juris-M doing with those dates?
         item.accessDate = item.accessDate.replace(/T?[0-9]{2}:[0-9]{2}:[0-9]{2}.*/, '').trim()
       }
-
-      Object.assign(item, getExtra(item.extra, 'csl'))
 
       item.journalAbbreviation = item.journalAbbreviation || item.autoJournalAbbreviation
 

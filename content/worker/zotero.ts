@@ -111,7 +111,7 @@ function upgrade(root) {
           throw new Error('Must provide one of "beforebegin", "afterbegin", "beforeend", or "afterend".')
       }
 
-      const fragment = domParser.parseFromString(`<span>${ text }</span>`, 'text/html').documentElement
+      const fragment = domParser.parseFromString(`<span>${ text }</span>`, 'text/html' as unknown as any).documentElement
 
       switch (position) {
         case 'beforebegin':
@@ -139,7 +139,7 @@ import { Node as XMLDOMNode } from '@xmldom/xmldom/lib/dom'
 upgrade(XMLDOMNode.prototype)
 
 export class DOMParser extends XMLDOMParser {
-  parseFromString(text: string, contentType: string) { // eslint-disable-line @typescript-eslint/explicit-module-boundary-types
+  parseFromString(text: string, contentType: any) { // eslint-disable-line @typescript-eslint/explicit-module-boundary-types
     return upgrade(super.parseFromString(text, contentType))
   }
 }

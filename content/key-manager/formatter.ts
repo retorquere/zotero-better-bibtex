@@ -4,6 +4,14 @@ import { Shim } from '../os'
 import * as client from '../../content/client'
 const $OS = client.is7 ? Shim : OS
 
+import nlp from 'compromise/one'
+type Term = {
+  text: string
+  normal: string
+  pre: string
+  post: string
+}
+
 import { Events } from '../events'
 
 import { log } from '../logger'
@@ -346,7 +354,7 @@ export class PatternFormatter {
     dash: Zotero.Utilities.XRegExp('\\p{Pd}|\u2500|\uFF0D|\u2015', 'g'), // additional pseudo-dashes from #1880
     caseNotUpperTitle: Zotero.Utilities.XRegExp('[^\\p{Lu}\\p{Lt}]', 'g'),
     caseNotUpper: Zotero.Utilities.XRegExp('[^\\p{Lu}]', 'g'),
-    word: Zotero.Utilities.XRegExp('[\\p{L}\\p{Nd}\\p{Pc}\\p{M}]+(-[\\p{L}\\p{Nd}\\p{Pc}\\p{M}]+)*', 'g'),
+    // word: Zotero.Utilities.XRegExp('[\\p{L}\\p{Nd}\\p{Pc}\\p{M}]+(-[\\p{L}\\p{Nd}\\p{Pc}\\p{M}]+)*', 'g'),
   }
 
   private acronyms: Record<string, Record<string, string>> = {}
@@ -379,7 +387,7 @@ export class PatternFormatter {
     const unsafechars = rescape(Preference.citekeyUnsafeChars + '\uFFFD')
     this.re.unsafechars_allow_spaces = new RegExp(`[${ unsafechars }]`, 'g')
     this.re.unsafechars = new RegExp(`[${ unsafechars }\\s]`, 'g')
-    this.skipWords = new Set(Preference.skipWords.split(',').map((word: string) => word.trim()).filter((word: string) => word))
+    this.skipWords = new Set(Preference.skipWords.split(',').map((word: string) => word.trim().toLowerCase()).filter((word: string) => word))
 
     let error = ''
     const ts = Date.now()
@@ -1417,26 +1425,46 @@ export class PatternFormatter {
     return this.transliterate(str).replace(allow_spaces ? this.re.unsafechars_allow_spaces : this.re.unsafechars, '').trim()
   }
 
+  private contract(sentences: { terms: Term[] }[]): string[] {
+    const $terms: Term[] = []
+    for (const sentence of sentences) {
+      let first = true
+      for (const term of sentence.terms) {
+        if (this.skipWords.has(term.text.toLowerCase())) continue
+
+        if (first || ($terms[0].post && $terms[0].post !== '-')) {
+          $terms.unshift(term)
+        }
+        else {
+          $terms[0].text += $terms[0].post + term.text
+          $terms[0].post = term.post
+        }
+        first = false
+      }
+    }
+    return $terms.reverse().map(t => t.text)
+  }
+
   private titleWords(title, options: { transliterate?: boolean; skipWords?: boolean; nopunct?: boolean } = {}): string[] {
     if (!title) return null
 
-    // 551
-    let words: string[] = Zotero.Utilities.XRegExp.matchChain(title, [this.re.word])
-      .map((word: string) => options.nopunct ? this.nopunct(word, '') : word)
-      .filter((word: string) => word && !(options.skipWords && ucs2decode(word).length === 1 && !word.match(CJK)))
+    title = title.replace(/<\/?(?:i|b|sc|nc|code|span[^>]*)>|["]/ig, '').replace(/[/:]/g, ' ')
+    let words = this.contract(nlp(title).json())
+      .map(word => options.nopunct ? this.nopunct(word, '') : word)
+      .filter(word => word && !(options.skipWords && ucs2decode(word).length === 1 && !word.match(CJK)))
 
     // apply jieba.cut and flatten.
     if (chinese.load(Preference.jieba) && options.skipWords && this.item.transliterateMode.startsWith('chinese')) {
       const mode = this.item.transliterateMode === 'chinese-traditional' ? 'tw' : 'cn'
-      words = [].concat(...words.map((word: string) => chinese.jieba(word, mode)))
-      // remove CJK skipwords
-      words = words.filter((word: string) => !this.skipWords.has(word.toLowerCase()))
+      words = words
+        .flatMap((word: string) => chinese.jieba(word, mode))
+        .filter((word: string) => !this.skipWords.has(word.toLowerCase())) // remove CJK skipwords
     }
 
     if (Preference.kuroshiro && kuroshiro.enabled && options.skipWords && this.item.transliterateMode === 'japanese') {
-      words = [].concat(...words.map((word: string) => kuroshiro.tokenize(word)))
-      // remove CJK skipwords
-      words = words.filter((word: string) => !this.skipWords.has(word.toLowerCase()))
+      words = words
+        .flatMap((word: string) => kuroshiro.tokenize(word))
+        .filter((word: string) => !this.skipWords.has(word.toLowerCase()))
     }
 
     if (options.transliterate) {
