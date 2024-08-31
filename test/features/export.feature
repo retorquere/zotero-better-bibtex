@@ -13,7 +13,6 @@ Feature: Export
 
     Examples:
       | file                                                                                                                     | references |
-      | Better CSL does not extract extra variables #2963                                                                        | 1          |
       | Inconsistent Citation Key #2953                                                                                          | 1          |
       | Use prepublished as default pubstate for arXiV articles #2911                                                            | 1          |
       | Preprint with status in extra fails to export #2881                                                                      | 1          |
