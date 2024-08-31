@@ -310,6 +310,7 @@ Feature: Export
 
     Examples:
       | file                                                                            | references |
+      | Better CSL does not extract extra variables #2963                               | 1          |
       | Does setting a type via cheater syntax work currently #2473                     | 1          |
       | _eprint in extra causes CSL-JSON export error #2430                             | 1          |
       | unwanted inclusion of Zotero's internal journal abbreviations in CSL JSON #2375 | 1          |

@@ -9,6 +9,7 @@ type Creator = {
 }
 
 export type Fields = {
+  raw: Record<string, string>
   kv: Record<string, string>
   creator: Record<string, string[]>
   creators: Creator[]
@@ -80,6 +81,7 @@ export function get(extra: string, mode: 'zotero' | 'csl', options?: GetOptions)
   extra = extra || ''
 
   const extraFields: Fields = {
+    raw: {},
     kv: options.kv || defaults ? {} : undefined,
     creator: {},
     creators: [],
@@ -101,14 +103,16 @@ export function get(extra: string, mode: 'zotero' | 'csl', options?: GetOptions)
 
     if (!tex && texmode) return true
 
+    key = key.trim()
+    value = value.trim()
+    extraFields.raw[key.toLowerCase()] = value
     if (tex) {
-      key = key.trim().toLowerCase()
+      key = key.toLowerCase()
     }
     else {
       // retain leading dash or underscore
-      key = key.trim().replace(/(?!^)[-_]/g, ' ').replace(/([a-z])([A-Z])/g, '$1 $2').toLowerCase()
+      key = key.replace(/(?!^)[-_]/g, ' ').replace(/([a-z])([A-Z])/g, '$1 $2').toLowerCase()
     }
-    value = value.trim()
 
     if (options.citationKey && !tex && [ 'citation key', 'bibtex' ].includes(key)) {
       extraFields.citationKey = value
