@@ -126,7 +126,7 @@ export class Orchestrator {
         await task[phase](reason, task)
       }
       catch (err) {
-        log.error(phase, task.id, 'failed:', err)
+        log.error(phase, task.id, 'failed:', err, `${err}`)
         if (phase === 'startup') throw err
       }
       task.finished = Date.now()
