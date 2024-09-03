@@ -321,8 +321,21 @@ export const Cache = new class $Cache {
   public async open(lastUpdated?: string, serializer?: Serializer): Promise<void> {
     if (this.opened) throw new Error('database reopened')
 
-    await openDB<Schema>(this.name, this.schema, {
+    const assign = db => {
+      log.debug('cache: assign collection proxies')
+      this.db = db
+
+      this.ZoteroSerialized = new ZoteroSerialized(db, serializer)
+
+      this.BetterBibTeX = new ExportCache(db, 'BetterBibTeX')
+      this.BetterBibLaTeX = new ExportCache(db, 'BetterBibLaTeX')
+      this.BetterCSLJSON = new ExportCache(db, 'BetterCSLJSON')
+      this.BetterCSLYAML = new ExportCache(db, 'BetterCSLYAML')
+    }
+
+    assign(await openDB<Schema>(this.name, this.schema, {
       upgrade: (db, oldVersion, newVersion) => {
+        log.debug(`cache: upgrade ${oldVersion} => ${newVersion}`)
         if (oldVersion !== newVersion) {
           for (const store of db.objectStoreNames) {
             db.deleteObjectStore(store)
@@ -348,16 +361,10 @@ export const Cache = new class $Cache {
           store.createIndex('context-itemID', [ 'context', 'itemID' ], { unique: true })
         }
 
-        this.db = db
-
-        this.ZoteroSerialized = new ZoteroSerialized(db, serializer)
-
-        this.BetterBibTeX = new ExportCache(db, 'BetterBibTeX')
-        this.BetterBibLaTeX = new ExportCache(db, 'BetterBibLaTeX')
-        this.BetterCSLJSON = new ExportCache(db, 'BetterCSLJSON')
-        this.BetterCSLYAML = new ExportCache(db, 'BetterCSLYAML')
+        assign(db)
       },
-    })
+    }))
+    log.debug('opening DB')
 
     if (lastUpdated) {
       const clear = [
