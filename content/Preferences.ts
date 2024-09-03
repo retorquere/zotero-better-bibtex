@@ -450,7 +450,7 @@ export class PrefPane {
   }
 
   public async cacheReset(): Promise<void> {
-    await Cache.clear('*')
+    await Cache.delete()
   }
 
   public async load(win: Window): Promise<void> {
