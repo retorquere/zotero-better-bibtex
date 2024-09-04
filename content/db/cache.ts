@@ -1,7 +1,7 @@
 import { is7 } from '../client'
 import type { Serialized, Serializer } from '../item-export-format'
 import { bySlug } from '../../gen/translators'
-import { openDB, IDBPDatabase, DBSchema } from 'idb'
+import { openDB, deleteDB, IDBPDatabase, DBSchema } from 'idb'
 import { log } from '../logger'
 import { main } from './testidb'
 import version from '../../gen/version'
@@ -320,7 +320,7 @@ export const Cache = new class $Cache {
   public async open(lastUpdated?: string): Promise<void> {
     if (this.db) throw new Error('database reopened')
 
-    this.db = await openDB<Schema>(this.name, this.schema, {
+    const $db = this.db = await openDB<Schema>(this.name, this.schema, {
       upgrade: (db, oldVersion, newVersion) => {
         if (oldVersion !== newVersion) {
           for (const store of db.objectStoreNames) {
@@ -346,6 +346,9 @@ export const Cache = new class $Cache {
           store.createIndex('itemID', 'itemID')
           store.createIndex('context-itemID', [ 'context', 'itemID' ], { unique: true })
         }
+      },
+      blocking: (currentVersion, blockedVersion, _event) => {
+        $db.close()
       },
     })
 
@@ -456,20 +459,13 @@ export const Cache = new class $Cache {
   }
 
   async delete() {
-    /*
-    if (this.db) {
-      unwrap(this.db).close()
-      await Zotero.Promise.delay(2000)
-    }
-
+    this.db = null
     await deleteDB(this.name, {
       blocked(blockedVersion, _blockedEvent) {
-        log.error(`Database blocked from being deleted ${blockedVersion}`)
+        log.error(`cache: database blocked from being deleted ${blockedVersion}`)
       },
     })
 
     await this.open()
-    */
-    return await this.clear('*')
   }
 }
