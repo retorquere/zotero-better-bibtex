@@ -322,7 +322,6 @@ export const Cache = new class $Cache {
 
     this.db = await openDB<Schema>(this.name, this.schema, {
       upgrade: (db, oldVersion, newVersion) => {
-        log.debug(`cache: upgrade ${oldVersion} => ${newVersion}`)
         if (oldVersion !== newVersion) {
           for (const store of db.objectStoreNames) {
             db.deleteObjectStore(store)
