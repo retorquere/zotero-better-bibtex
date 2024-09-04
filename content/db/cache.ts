@@ -1,7 +1,7 @@
 import { is7 } from '../client'
 import type { Serialized, Serializer } from '../item-export-format'
 import { bySlug } from '../../gen/translators'
-import { openDB, IDBPDatabase, DBSchema } from 'idb'
+import { deleteDB, openDB, IDBPDatabase, DBSchema } from 'idb'
 import { log } from '../logger'
 import version from '../../gen/version'
 
@@ -302,7 +302,9 @@ class ZoteroSerialized {
 }
 
 export const Cache = new class $Cache {
-  public schema = 8
+  public schema = 9
+  public name = 'BetterBibTeXCache'
+
   private db: IDBPDatabase<Schema>
 
   public ZoteroSerialized: ZoteroSerialized
@@ -318,7 +320,18 @@ export const Cache = new class $Cache {
     log.debug('orchestrator: opening cache')
     if (this.db) throw new Error('database reopened')
 
-    this.db = await openDB<Schema>('BetterBibTeXCache', this.schema, {
+    const assign = db => {
+      this.db = db
+
+      this.ZoteroSerialized = new ZoteroSerialized(db, serializer)
+
+      this.BetterBibTeX = new ExportCache(db, 'BetterBibTeX')
+      this.BetterBibLaTeX = new ExportCache(db, 'BetterBibLaTeX')
+      this.BetterCSLJSON = new ExportCache(db, 'BetterCSLJSON')
+      this.BetterCSLYAML = new ExportCache(db, 'BetterCSLYAML')
+    }
+
+    assign(await openDB<Schema>(this.name, this.schema, {
       upgrade: (db, oldVersion, newVersion) => {
         if (oldVersion !== newVersion) {
           for (const store of db.objectStoreNames) {
@@ -344,15 +357,10 @@ export const Cache = new class $Cache {
           store.createIndex('itemID', 'itemID')
           store.createIndex('context-itemID', [ 'context', 'itemID' ], { unique: true })
         }
+
+        assign(db)
       },
-    })
-
-    this.ZoteroSerialized = new ZoteroSerialized(this.db, serializer)
-
-    this.BetterBibTeX = new ExportCache(this.db, 'BetterBibTeX')
-    this.BetterBibLaTeX = new ExportCache(this.db, 'BetterBibLaTeX')
-    this.BetterCSLJSON = new ExportCache(this.db, 'BetterCSLJSON')
-    this.BetterCSLYAML = new ExportCache(this.db, 'BetterCSLYAML')
+    }))
 
     if (lastUpdated) {
       const clear = [
@@ -452,5 +460,9 @@ export const Cache = new class $Cache {
     }
 
     return tables
+  }
+
+  async delete() {
+    await deleteDB(this.name)
   }
 }
