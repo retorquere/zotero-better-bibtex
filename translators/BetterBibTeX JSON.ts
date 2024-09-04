@@ -1,7 +1,6 @@
 declare const Zotero: any
 
 import { Collected } from './lib/collect'
-import { log } from '../content/logger/simple'
 import type { Translators } from '../typings/translators.d.ts'
 declare var ZOTERO_TRANSLATOR_INFO: Translators.Header // eslint-disable-line no-var
 
