@@ -28,7 +28,6 @@ export function detectImport(): boolean {
 }
 
 export async function doImport(): Promise<void> {
-  log.debug('stall: doImport')
   await Zotero.BetterBibTeX.importBBTJSON(new Collected(ZOTERO_TRANSLATOR_INFO, 'import'))
 }
 

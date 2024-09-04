@@ -317,7 +317,6 @@ export const Cache = new class $Cache {
   public async open(): Promise<void>
   public async open(lastUpdated: string, serializer: Serializer)
   public async open(lastUpdated?: string, serializer?: Serializer): Promise<void> {
-    log.debug('orchestrator: opening cache')
     if (this.db) throw new Error('database reopened')
 
     const assign = db => {
@@ -415,7 +414,6 @@ export const Cache = new class $Cache {
   }
 
   public close(): void {
-    log.debug('closing cache', (new Error('stack')).stack)
     this.db.close()
     this.db = null
   }
