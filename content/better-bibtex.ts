@@ -54,7 +54,7 @@ import { log } from './logger'
 import { Events } from './events'
 
 import { Translators } from './translators'
-import { fix as fixExportFormat, Serializer } from './item-export-format'
+import { fix as fixExportFormat } from './item-export-format'
 import { SQL as AE } from './auto-export'
 import { KeyManager } from './key-manager'
 import { TestSupport } from './test-support'
@@ -695,8 +695,7 @@ export class BetterBibTeX {
         await Preference.startup(this.dir)
         Events.startup()
 
-        const lastUpdated = await Zotero.DB.valueQueryAsync('SELECT MAX(dateModified) FROM items')
-        await Cache.open(lastUpdated, new Serializer)
+        await Cache.open(await Zotero.DB.valueQueryAsync('SELECT MAX(dateModified) FROM items'))
         Events.cacheTouch = async (ids: number[]) => {
           await Cache.touch(ids)
         }

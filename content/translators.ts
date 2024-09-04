@@ -5,6 +5,7 @@ import * as client from './client'
 const $OS = client.is7 ? Shim : OS
 import merge from 'lodash.merge'
 import { Cache } from './db/cache'
+import { Serializer } from './item-export-format'
 
 /*
 async function guard(run: Promise<void>): Promise<boolean> {
@@ -92,6 +93,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
   public worker: ChromeWorker
 
   private reinit: { header: Translator.Header; code: string }[]
+  private serializer = new Serializer
 
   constructor() {
     const ready = Zotero.Promise.defer()
@@ -361,7 +363,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     })
 
     // trace('exportItemsByWorker: starting cache completion')
-    await Cache.ZoteroSerialized.fill(items)
+    await Cache.ZoteroSerialized.fill(items, this.serializer)
     // trace('exportItemsByWorker: cache completion completed')
 
     config.data.items = items.map(item => item.id)

@@ -50,6 +50,7 @@ export class Serializer {
     return Promise.all(items.map(item => this.item(item, selectedLibraryID)))
   }
 }
+export const serializer = new Serializer
 
 export function fix(serialized: Item, item: ZoteroItem): Item {
   if (item.isRegularItem() && !item.isFeedItem) {

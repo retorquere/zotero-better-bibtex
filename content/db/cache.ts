@@ -1,9 +1,12 @@
 import { is7 } from '../client'
 import type { Serialized, Serializer } from '../item-export-format'
 import { bySlug } from '../../gen/translators'
-import { deleteDB, openDB, IDBPDatabase, DBSchema } from 'idb'
+import { openDB, IDBPDatabase, DBSchema } from 'idb'
 import { log } from '../logger'
+import { main } from './testidb'
 import version from '../../gen/version'
+
+export const maintype = typeof main
 
 import type { Translators as Translator } from '../../typings/translators'
 const skip = new Set([ 'keepUpdated', 'worker', 'exportFileData' ])
@@ -225,14 +228,14 @@ class ZoteroSerialized {
   public filled = 0 // exponential moving average
   private smoothing = 2 / (10 + 1) // keep average over last 10 fills
 
-  constructor(private db: IDBPDatabase<Schema>, private serializer: Serializer) {
+  constructor(private db: IDBPDatabase<Schema>) {
   }
 
   private cachable(item: any): boolean {
     return (!item.isFeedItem && (item.isRegularItem() || item.isNote() || item.isAttachment())) as boolean
   }
 
-  public async fill(items: ZoteroItem[]): Promise<void> {
+  public async fill(items: ZoteroItem[], serializer: Serializer): Promise<void> {
     items = items.filter(item => this.cachable(item))
     if (!items.length) return
 
@@ -260,7 +263,7 @@ class ZoteroSerialized {
     this.filled = (current - this.filled) * this.smoothing + this.filled
 
     if (fill.length) {
-      const serialized = await this.serializer.serialize(fill)
+      const serialized = await serializer.serialize(fill)
       tx = this.db.transaction(['ZoteroSerialized'], 'readwrite')
       store = tx.objectStore('ZoteroSerialized')
       const puts = serialized.map(item => store.put(item))
@@ -314,24 +317,12 @@ export const Cache = new class $Cache {
   public BetterCSLJSON: ExportCache
   public BetterCSLYAML: ExportCache
 
-  public async open(): Promise<void>
-  public async open(lastUpdated: string, serializer: Serializer)
-  public async open(lastUpdated?: string, serializer?: Serializer): Promise<void> {
+  public async open(lastUpdated?: string): Promise<void> {
     if (this.db) throw new Error('database reopened')
 
-    const assign = db => {
-      this.db = db
-
-      this.ZoteroSerialized = new ZoteroSerialized(db, serializer)
-
-      this.BetterBibTeX = new ExportCache(db, 'BetterBibTeX')
-      this.BetterBibLaTeX = new ExportCache(db, 'BetterBibLaTeX')
-      this.BetterCSLJSON = new ExportCache(db, 'BetterCSLJSON')
-      this.BetterCSLYAML = new ExportCache(db, 'BetterCSLYAML')
-    }
-
-    assign(await openDB<Schema>(this.name, this.schema, {
+    this.db = await openDB<Schema>(this.name, this.schema, {
       upgrade: (db, oldVersion, newVersion) => {
+        log.debug(`cache: upgrade ${oldVersion} => ${newVersion}`)
         if (oldVersion !== newVersion) {
           for (const store of db.objectStoreNames) {
             db.deleteObjectStore(store)
@@ -356,10 +347,15 @@ export const Cache = new class $Cache {
           store.createIndex('itemID', 'itemID')
           store.createIndex('context-itemID', [ 'context', 'itemID' ], { unique: true })
         }
-
-        assign(db)
       },
-    }))
+    })
+
+    this.ZoteroSerialized = new ZoteroSerialized(this.db)
+
+    this.BetterBibTeX = new ExportCache(this.db, 'BetterBibTeX')
+    this.BetterBibLaTeX = new ExportCache(this.db, 'BetterBibLaTeX')
+    this.BetterCSLJSON = new ExportCache(this.db, 'BetterCSLJSON')
+    this.BetterCSLYAML = new ExportCache(this.db, 'BetterCSLYAML')
 
     if (lastUpdated) {
       const clear = [
@@ -461,6 +457,20 @@ export const Cache = new class $Cache {
   }
 
   async delete() {
-    await deleteDB(this.name)
+    /*
+    if (this.db) {
+      unwrap(this.db).close()
+      await Zotero.Promise.delay(2000)
+    }
+
+    await deleteDB(this.name, {
+      blocked(blockedVersion, _blockedEvent) {
+        log.error(`Database blocked from being deleted ${blockedVersion}`)
+      },
+    })
+
+    await this.open()
+    */
+    return await this.clear('*')
   }
 }
