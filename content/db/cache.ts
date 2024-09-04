@@ -348,6 +348,7 @@ export const Cache = new class $Cache {
         }
       },
       blocking: (currentVersion, blockedVersion, _event) => {
+        log.info(`cache: releasing ${currentVersion} for ${blockedVersion}`)
         $db.close()
       },
     })
