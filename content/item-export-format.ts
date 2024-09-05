@@ -67,7 +67,7 @@ export function fix(serialized: Item, item: ZoteroItem): Item {
         log.error(`no citation key for ${ Zotero.ItemTypes.getName(item.itemTypeID) } ${ item.id } ${ JSON.stringify(regular) }`)
         regular.citationKey = `temporary-citekey-${ item.id }`
       }
-      if (!regular.journalAbbreviation && Preference.autoAbbrev) {
+      if (!regular.journalAbbreviation && !regular.autoJournalAbbreviation && Preference.autoAbbrev) {
         const autoJournalAbbreviation = JournalAbbrev.get(regular)
         if (autoJournalAbbreviation) regular.autoJournalAbbreviation = autoJournalAbbreviation
       }
