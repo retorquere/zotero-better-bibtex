@@ -26,7 +26,7 @@ export namespace Translators {
     }
 
     type Message = 
-        { kind: 'initialize', CSL_MAPPINGS: any }
+        { kind: 'initialize', CSL_MAPPINGS: any, dateFormatsJSON: any }
       | { kind: 'configure', environment: Environment }
       | { kind: 'start', config: Job }
       | { kind: 'done', output: boolean | string }
