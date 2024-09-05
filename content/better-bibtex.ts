@@ -503,7 +503,11 @@ $Patcher$.schedule(Zotero.Translate.Export.prototype, 'translate', original => f
 
       if (useWorker && !Translators.worker) {
         // there wasn't an error starting a worker earlier
-        log.error('failed to start a chromeworker, disabled until restart')
+        flash('failed to start a chromeworker')
+        useWorker = false
+      }
+      if (!Cache.enabled) {
+        flash('cache not loaded, background exports are disabled')
         useWorker = false
       }
 

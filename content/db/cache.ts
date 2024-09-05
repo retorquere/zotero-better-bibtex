@@ -317,7 +317,12 @@ export const Cache = new class $Cache {
   public BetterCSLJSON: ExportCache
   public BetterCSLYAML: ExportCache
 
+  public enabled = false
+
   public async open(lastUpdated?: string): Promise<void> {
+    this.enabled = this.enabled || await working()
+    if (!this.enabled) return
+
     if (this.db) throw new Error('database reopened')
 
     const $db = this.db = await openDB<Schema>(this.name, this.schema, {
@@ -385,10 +390,12 @@ export const Cache = new class $Cache {
   }
 
   public get opened() {
-    return !!this.db
+    return this.enabled && !!this.db
   }
 
   public async touch(ids: number[]): Promise<void> {
+    if (!this.enabled) return
+
     if (ids.length) {
       for (const store of [ this.ZoteroSerialized, this.BetterBibTeX, this.BetterBibLaTeX, this.BetterCSLJSON, this.BetterCSLYAML ]) {
         await store.touch(ids)
@@ -398,26 +405,36 @@ export const Cache = new class $Cache {
   }
 
   public cache(store: string): ExportCache {
+    if (!this.enabled) return
+
     return this[store.replace(/ /g, '') as 'Better BibTeX'] as ExportCache
   }
 
   public async clear(store: string) {
+    if (!this.enabled) return
+
     store = store.replace(/ /g, '')
-    for (store of [...this.db.objectStoreNames].filter(name => name !== 'metadata' && (store === '*' || name === store))) {
-      await this.db.clear(store as 'BetterBibTeX')
+    for (const name of [...this.db.objectStoreNames].filter(n => n !== 'metadata' && (store === '*' || n === store))) {
+      await this.db.clear(name)
     }
   }
 
   public async remove(translator: string, path: string) {
+    if (!this.enabled) return
+
     await this.cache(translator)?.remove(path)
   }
 
   public close(): void {
+    if (!this.enabled) return
+
     this.db.close()
     this.db = null
   }
 
   public async count() {
+    if (!this.enabled) return 0
+
     let entries = 0
     for (const store of this.db.objectStoreNames) {
       switch (store) {
@@ -437,6 +454,8 @@ export const Cache = new class $Cache {
   }
 
   public async dump(): Promise<Record<string, any>> {
+    if (!this.enabled) return {}
+
     const tables: Record<string, any> = {}
     for (const store of [...this.db.objectStoreNames]) {
       switch (store) {
@@ -460,6 +479,8 @@ export const Cache = new class $Cache {
   }
 
   async delete() {
+    if (!this.enabled) return
+
     this.db = null
     await deleteDB(this.name, {
       blocked(blockedVersion, _blockedEvent) {
@@ -468,5 +489,56 @@ export const Cache = new class $Cache {
     })
 
     await this.open()
+  }
+}
+
+async function working() {
+  const dbname = 'BBT-IDB-verify'
+
+  function openIDB() {
+    return new Promise((resolve, reject) => {
+      try {
+        const req = indexedDB.open(dbname, 1)
+        req.onsuccess = function() {
+          const db = req.result
+          db.close()
+          resolve(true)
+        }
+        // actually do something so we're not a complete no-op
+        req.onupgradeneeded = function() {
+          req.result.createObjectStore('foo')
+        }
+        req.onerror = function(event) {
+          resolve(false)
+          event.preventDefault()
+          event.stopPropagation()
+        }
+      }
+      catch (err) {
+        reject(err) // eslint-disable-line @typescript-eslint/prefer-promise-reject-errors
+      }
+    })
+  }
+
+  function deleteIDB() {
+    return new Promise((resolve, reject) => {
+      const req = indexedDB.deleteDatabase(dbname)
+      req.onsuccess = function() {
+        resolve(true)
+      }
+      req.onerror = function() {
+        reject(req.error)
+      }
+    })
+  }
+
+  try {
+    await openIDB()
+    await deleteIDB()
+    return true
+  }
+  catch (err) {
+    log.error('cache test failed:', err)
+    return false
   }
 }

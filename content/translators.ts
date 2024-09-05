@@ -230,6 +230,8 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
   }
 
   public async queueJob(job: ExportJob): Promise<string> {
+    if (!Cache.enabled) throw new Error(`cache disabled, background exports do not work`)
+
     return await this.queue.add(() => this.exportItemsByWorker(job))
   }
 
