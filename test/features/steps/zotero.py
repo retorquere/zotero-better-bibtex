@@ -689,6 +689,11 @@ class Zotero:
     profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.scrubDatabase', True)
     # don't nag about the Z7 beta for a day
     profile.firefox.set_preference('extensions.zotero.hiddenNotices', json.dumps({ 'crossref-outage-2024-08-21': time.time() + 86400 }))
+    profile.firefox.set_preference('extensions.zotero.firstRunGuidanceShown.z7Banner', False)
+
+    profile.firefox.set_preference('extensions.zoteroMacWordIntegration.lastAttemptedVersion', '7.0.5.SOURCE')
+    profile.firefox.set_preference('extensions.zoteroMacWordIntegration.version', '7.0.5.SOURCE')
+
     profile.firefox.set_preference('intl.accept_languages', 'en-GB')
     profile.firefox.set_preference('intl.locale.requested', 'en-GB')
 

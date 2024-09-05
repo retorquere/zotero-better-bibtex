@@ -697,6 +697,14 @@ export class BetterBibTeX {
         await $OS.File.makeDir(this.dir, { ignoreExisting: true })
         await Preference.startup(this.dir)
         Events.startup()
+
+        await Cache.open(await Zotero.DB.valueQueryAsync('SELECT MAX(dateModified) FROM items'))
+        Events.cacheTouch = async (ids: number[]) => {
+          await Cache.touch(ids)
+        }
+      },
+      shutdown() {
+        Cache.close()
       },
     })
 

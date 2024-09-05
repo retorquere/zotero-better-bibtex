@@ -154,21 +154,22 @@ export class ErrorReport {
   public zip(): Uint8Array {
     const files: Record<string, Uint8Array> = {}
     const enc = (new TextEncoder)
+    const name = this.name()
 
-    files[`${ this.name() }/debug.txt`] = enc.encode(this.report.log)
+    files[`${ name }/debug.txt`] = enc.encode(this.report.log)
 
-    if (this.report.items) files[`${ this.name() }/items.json`] = enc.encode(this.report.items)
+    if (this.report.items) files[`${ name }/items.json`] = enc.encode(this.report.items)
     if (this.config.cache) {
-      files[`${ this.name() }/database.json`] = enc.encode(JSON.stringify(KeyManager.all()))
-      files[`${ this.name() }/cache.json`] = enc.encode(this.report.cache)
+      files[`${ name }/database.json`] = enc.encode(JSON.stringify(KeyManager.all()))
+      files[`${ name }/cache.json`] = enc.encode(this.report.cache)
     }
-    if (this.report.acronyms) files[`${ this.name() }/acronyms.csv`] = enc.encode(this.report.acronyms)
+    if (this.report.acronyms) files[`${ name }/acronyms.csv`] = enc.encode(this.report.acronyms)
 
     return new Uint8Array(UZip.encode(files) as ArrayBuffer)
   }
 
   public async save(): Promise<void> {
-    const filename = await pick('Logs', 'save', [[ 'Zip Archive (*.zip)', '*.zip' ]], `${ this.name() }.zip`)
+    const filename = await pick('Logs', 'save', [[ 'Zip Archive (*.zip)', '*.zip' ]], `${ name }.zip`)
     if (filename) await $OS.File.writeAtomic(filename, this.zip(), { tmpPath: filename + '.tmp' })
   }
 
@@ -304,7 +305,13 @@ export class ErrorReport {
     this.setValue('better-bibtex-error-errors', this.report.errors || '')
     this.setValue('better-bibtex-error-log', this.preview(this.report.log || ''))
     this.setValue('better-bibtex-error-items', this.report.items ? this.preview(JSON.parse(this.report.items)) : '')
-    this.setValue('better-bibtex-report-cache', this.cacheState = l10n.localize('better-bibtex_error-report_better-bibtex_cache', { entries: await Cache.count() }))
+    try {
+      this.setValue('better-bibtex-report-cache', this.cacheState = l10n.localize('better-bibtex_error-report_better-bibtex_cache', { entries: await Cache.count() }))
+    }
+    catch (err) {
+      log.error('failed getting cache count', err)
+      this.setValue('better-bibtex-report-cache', this.cacheState = l10n.localize('better-bibtex_error-report_better-bibtex_cache', { entries: -1 }))
+    }
 
     this.report.log = [
       this.report.context,
@@ -335,13 +342,21 @@ export class ErrorReport {
     const continueButton = wizard.getButton('next')
     continueButton.disabled = true
 
+    let cache = ''
+    try {
+      cache = JSON.stringify(await Cache.dump(), null, 2)
+    }
+    catch (err) {
+      log.error('could not get cache dump', err)
+      cache = ''
+    }
     this.input = {
       context: await this.context(),
       errors: `${ Zotero.BetterBibTeX.outOfMemory }\n${ this.errors() }`.trim(),
       // # 1896
       log: this.log(),
       items: win.arguments[0].wrappedJSObject.items,
-      cache: JSON.stringify(await Cache.dump(), null, 2),
+      cache,
     }
     const acronyms = $OS.Path.join(Zotero.BetterBibTeX.dir, 'acronyms.csv')
     if (await $OS.File.exists(acronyms)) this.input.acronyms = await $OS.File.read(acronyms, { encoding: 'utf-8' }) as unknown as string
