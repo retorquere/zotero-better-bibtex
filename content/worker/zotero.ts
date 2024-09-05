@@ -494,6 +494,7 @@ ctx.onmessage = async function(e: { isTrusted?: boolean; data?: Translators.Work
     switch (e.data.kind) {
       case 'initialize':
         Zotero.Schema = { ...e.data.CSL_MAPPINGS }
+        ZD.init(e.data.dateFormatsJSON)
         break
 
       case 'start':

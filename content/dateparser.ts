@@ -165,7 +165,7 @@ function parseEDTF(value: string): ParsedDate {
   return { verbatim: value }
 }
 
-function parseToDate(value: string, as_single_date: boolean): ParsedDate {
+function parseToDate(value: string, try_range = true): ParsedDate {
   value = (value || '').trim()
   let date: ParsedDate
 
@@ -190,72 +190,72 @@ function parseToDate(value: string, as_single_date: boolean): ParsedDate {
   if (m = (/^([0-9]+)-([a-z]+)-([0-9]+)$/i).exec(value)) {
     let [ , day, month, year ] = m
     if (parseInt(day) > 31 && parseInt(year) < 31) [ day, year ] = [ year, day ]
-    date = parseToDate(`${ month } ${ day } ${ year }`, true)
+    date = parseToDate(`${ month } ${ day } ${ year }`, false)
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     if (date.type === 'date') return date
   }
 
   // '[origdate] date'
-  if (!as_single_date && (m = /^\[(.+)\]\s*(.+)$/.exec(value))) {
+  if (try_range && (m = /^\[(.+)\]\s*(.+)$/.exec(value))) {
     const [ , _orig, _date ] = m
-    date = parseToDate(_date, true)
-    const orig = parseToDate(_orig, true)
+    date = parseToDate(_date, false)
+    const orig = parseToDate(_orig, false)
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     if (date.type === 'date' && orig.type === 'date') return { ...date, ...{ orig }}
   }
 
   // 'date [origdate]'
-  if (!as_single_date && (m = /^(.+)\s*\[(.+)\]$/.exec(value))) {
+  if (try_range && (m = /^(.+)\s*\[(.+)\]$/.exec(value))) {
     const [ , _date, _orig ] = m
-    date = parseToDate(_date, true)
-    const orig = parseToDate(_orig, true)
+    date = parseToDate(_date, false)
+    const orig = parseToDate(_orig, false)
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     if (date.type === 'date' && orig.type === 'date') return { ...date, ...{ orig }}
   }
 
   // '[origdate]'
-  if (!as_single_date && (m = /^\[(.+)\]$/.exec(value))) {
+  if (try_range && (m = /^\[(.+)\]$/.exec(value))) {
     const [ , _orig ] = m
-    const orig = parseToDate(_orig, true)
+    const orig = parseToDate(_orig, false)
     if (orig.type === 'date') return { ...{ orig }}
   }
 
   // 747 'jan 20-22 1977'
-  if (!as_single_date && (m = /^([a-zA-Z]+)\s+([0-9]+)(?:--|-|\u2013)([0-9]+)[, ]\s*([0-9]+)$/.exec(value))) {
+  if (try_range && (m = /^([a-zA-Z]+)\s+([0-9]+)(?:--|-|\u2013)([0-9]+)[, ]\s*([0-9]+)$/.exec(value))) {
     const [ , month, day1, day2, year ] = m
 
-    const from = parseToDate(`${ month } ${ day1 } ${ year }`, true)
-    const to = parseToDate(`${ month } ${ day2 } ${ year }`, true)
+    const from = parseToDate(`${ month } ${ day1 } ${ year }`, false)
+    const to = parseToDate(`${ month } ${ day2 } ${ year }`, false)
 
     if (from.type === 'date' && to.type === 'date') return { type: 'interval', from, to }
   }
 
   // 747, January 30–February 3, 1989
-  if (!as_single_date && (m = /^([a-zA-Z]+\s+[0-9]+)(?:--|-|\u2013)([a-zA-Z]+\s+[0-9]+)[, ]\s*([0-9]+)$/.exec(value))) {
+  if (try_range && (m = /^([a-zA-Z]+\s+[0-9]+)(?:--|-|\u2013)([a-zA-Z]+\s+[0-9]+)[, ]\s*([0-9]+)$/.exec(value))) {
     const [ , date1, date2, year ] = m
 
-    const from = parseToDate(`${ date1 } ${ year }`, true)
-    const to = parseToDate(`${ date2 } ${ year }`, true)
+    const from = parseToDate(`${ date1 } ${ year }`, false)
+    const to = parseToDate(`${ date2 } ${ year }`, false)
 
     if (from.type === 'date' && to.type === 'date') return { type: 'interval', from, to }
   }
 
   // 746, 22-26 June 2015, 29 June-1 July 2011
-  if (!as_single_date && (m = /^([0-9]+)\s*([a-zA-Z]+)?\s*(?:--|-|\u2013)\s*([0-9]+)\s+([a-zA-Z]+)\s+([0-9]+)$/.exec(value))) {
+  if (try_range && (m = /^([0-9]+)\s*([a-zA-Z]+)?\s*(?:--|-|\u2013)\s*([0-9]+)\s+([a-zA-Z]+)\s+([0-9]+)$/.exec(value))) {
     const [ , day1, month1, day2, month2, year ] = m
 
-    const from = parseToDate(`${ month1 || month2 } ${ day1 } ${ year }`, true)
-    const to = parseToDate(`${ month2 } ${ day2 } ${ year }`, true)
+    const from = parseToDate(`${ month1 || month2 } ${ day1 } ${ year }`, false)
+    const to = parseToDate(`${ month2 } ${ day2 } ${ year }`, false)
 
     if (from.type === 'date' && to.type === 'date') return { type: 'interval', from, to }
   }
 
   // July-October 1985
-  if (!as_single_date && (m = (/^([a-z]+)(?:--|-|\u2013)([a-z]+)(?:--|-|\u2013|\s+)([0-9]+)$/i).exec(value))) {
+  if (try_range && (m = (/^([a-z]+)(?:--|-|\u2013)([a-z]+)(?:--|-|\u2013|\s+)([0-9]+)$/i).exec(value))) {
     const [ , month1, month2, year ] = m
 
-    const from = parseToDate(`${ month1 } ${ year }`, true)
-    const to = parseToDate(`${ month2 } ${ year }`, true)
+    const from = parseToDate(`${ month1 } ${ year }`, false)
+    const to = parseToDate(`${ month2 } ${ year }`, false)
 
     if (from.type === 'date' && to.type === 'date') return { type: 'interval', from, to }
   }
@@ -344,13 +344,13 @@ function parseToDate(value: string, as_single_date: boolean): ParsedDate {
     }
   }
 
-  if (!as_single_date) { // try ranges
+  if (try_range) { // try ranges
     for (const sep of [ '--', '-', '/', '_', '\u2013' ]) {
       const split = value.split(sep)
       if (split.length === 2) {
-        const from = parseToDate(split[0], true)
+        const from = parseToDate(split[0], false)
         if (from.type !== 'date' && from.type !== 'season') continue
-        const to = parseToDate(split[1], true)
+        const to = parseToDate(split[1], false)
         if (to.type !== 'date' && to.type !== 'season') continue
         return { type: 'interval', from, to }
       }

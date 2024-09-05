@@ -116,6 +116,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
             this.worker.postMessage({
               kind: 'initialize',
               CSL_MAPPINGS: Object.entries(Zotero.Schema).reduce((acc, [ k, v ]) => { if (k.startsWith('CSL')) acc[k] = v; return acc }, {}),
+              dateFormatsJSON: Zotero.File.getResource('resource://zotero/schema/dateFormats.json'),
             })
           }
           catch (err) {
