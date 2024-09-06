@@ -1,4 +1,4 @@
-@book{Xanthopoulou2020,
+@book{Ksanthopoulou2020,
   title = {Το αρχαιολογικο εργο στην πελοποννησο 2 (ΑΕΠΕΛ2). Πρακτικά της Β ́ επιστημονικής συνάντησης Καλαμάτα, 1-4 Νοεμβρίου 2017},
   editor = {Ξανθοπούλου, Μαρία and Μπάνου, Αιμιλία and Ζυμή, Ελένη and Γιαννούλη, Ευγενία and Καραπαναγιώτου, Άννα Βασιλική and Κουμούση, Αναστασία},
   date = {2020},
@@ -6,5 +6,5 @@
   isbn = {978-960-89611-8-0},
   langid = {gr-GR}
 }
-% == BibLateX quality report for Xanthopoyloy2020:
+% == BibLateX quality report for Ksanthopoulou2020:
 % Missing required field 'author'
