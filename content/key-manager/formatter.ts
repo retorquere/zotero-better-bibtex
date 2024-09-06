@@ -15,7 +15,7 @@ type Term = {
 import { Events } from '../events'
 
 import { log } from '../logger'
-import fold2ascii from 'fold-to-ascii'
+// import fold2ascii from 'fold-to-ascii'
 import rescape from '@stdlib/utils-escape-regexp-string'
 import ucs2decode = require('punycode2/ucs2/decode')
 
@@ -1411,7 +1411,7 @@ export class PatternFormatter {
     log.debug('transliterate: languages', str)
     str = transliterate(str, '\uFFFD')
     log.debug('transliterate: generic', str)
-    str = fold2ascii.foldMaintaining(str)
+    // str = fold2ascii.foldMaintaining(str)
     log.debug('transliterate: fold', str)
 
     return str
