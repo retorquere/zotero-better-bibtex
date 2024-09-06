@@ -114,7 +114,7 @@
     "tinybench": "^2.9.0",
     "title": "^3.5.3",
     "title-case": "^4.3.1",
-    "transliteration": "^2.3.5",
+    "unidecode": "^1.1.0",
     "uzip": "^0.20201231.0",
     "words-to-numbers": "^1.5.1",
     "xregexp": "^5.1.1",

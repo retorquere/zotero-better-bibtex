@@ -613,11 +613,14 @@ export const KeyManager = new class _KeyManager {
 
   // mem is for https://github.com/retorquere/zotero-better-bibtex/issues/2926
   public propose(item: ZoteroItem, mem?: Set<string>): Partial<CitekeyRecord> {
+    log.debug('transliterate: propose')
     let citationKey: string = Extra.get(item.getField('extra') as string, 'zotero', { citationKey: true }).extraFields.citationKey
+    log.debug('transliterate: pinned', citationKey)
 
     if (citationKey) return { citationKey, pinned: true }
 
     citationKey = Formatter.format(item)
+    log.debug('transliterate: got', citationKey)
 
     const where: { citationKey?: string; lcCitationKey?: string; libraryID?: number } = {}
     if (Preference.keyScope !== 'global') where.libraryID = item.libraryID

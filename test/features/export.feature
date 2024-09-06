@@ -13,6 +13,7 @@ Feature: Export
 
     Examples:
       | file                                                                                                                     | references |
+      | Greek upsilon wrongly transliterated as y #2975                                                                          | 1          |
       | Inconsistent Citation Key #2953                                                                                          | 1          |
       | Use prepublished as default pubstate for arXiV articles #2911                                                            | 1          |
       | Preprint with status in extra fails to export #2881                                                                      | 1          |

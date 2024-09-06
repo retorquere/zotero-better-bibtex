@@ -45,7 +45,7 @@ import { sprintf } from 'sprintf-js'
 import { chinese } from './chinese'
 import { kuroshiro } from './japanese'
 import { transliterate as arabic } from './arabic'
-import { transliterate } from 'transliteration/dist/node/src/node/index'
+import transliterate from 'unidecode'
 import { ukranian, mongolian, russian } from './cyrillic'
 
 import { listsync as csv2list } from '../load-csv'
@@ -438,8 +438,11 @@ export class PatternFormatter {
 
   public finalize(_citekey: string): string {
     if (this.next) return ''
+    log.debug('transliterate: finalize', this.citekey)
     if (this.citekey && Preference.citekeyFold) this.citekey = this.transliterate(this.citekey)
+    log.debug('transliterate: finalized', this.citekey)
     this.citekey = this.citekey.replace(this.re.unsafechars, '')
+    log.debug('transliterate: safe', this.citekey)
     return this.citekey
   }
 
@@ -1356,21 +1359,17 @@ export class PatternFormatter {
   private transliterate(str: string, mode?: 'minimal' | 'de' | 'german' | 'ja' | 'japanese' | 'zh' | 'chinese' | 'tw' | 'zh-hant' | 'chinese-traditional' | 'ar' | 'arabic' | 'uk' | 'ukranian' | 'mn' | 'mongolian' | 'ru' | 'russian'): string {
     mode = mode || this.item.transliterateMode || 'minimal'
 
-    let replace: Record<string, string> = {}
+    str = str || ''
+
+    log.debug('transliterate: input', str)
+
     switch (mode) {
       case 'minimal':
         break
 
       case 'de':
       case 'german':
-        replace = {
-          ä: 'ae', // eslint-disable-line quote-props
-          ö: 'oe', // eslint-disable-line quote-props
-          ü: 'ue', // eslint-disable-line quote-props
-          Ä: 'Ae', // eslint-disable-line quote-props
-          Ö: 'Oe', // eslint-disable-line quote-props
-          Ü: 'Ue', // eslint-disable-line quote-props
-        }
+        str = str.replace(/[äöüÄÖÜ]/g, c => ({ ä: 'ae', ö: 'oe', ü: 'ue', Ä: 'Ae', Ö: 'Oe', Ü: 'Ue' }[c]))
         break
 
       case 'tw':
@@ -1409,13 +1408,11 @@ export class PatternFormatter {
       default:
         throw new Error(`Unsupported fold mode "${ mode }"`)
     }
-
-    str = transliterate(str || '', {
-      unknown: '\uFFFD', // unicode replacement char
-      replace,
-    })
-
+    log.debug('transliterate: languages', str)
+    str = transliterate(str, '\uFFFD')
+    log.debug('transliterate: generic', str)
     str = fold2ascii.foldMaintaining(str)
+    log.debug('transliterate: fold', str)
 
     return str
   }

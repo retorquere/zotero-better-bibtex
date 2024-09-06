@@ -1,0 +1,68 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "preferences": {
+      "DOIandURL": "doi",
+      "autoAbbrevStyle": "http://www.zotero.org/styles/elsevier-harvard",
+      "autoExport": "idle",
+      "autoExportIdleWait": 60,
+      "autoPinDelay": 1,
+      "citekeyFormat": "auth.default(unknown)+year+postfix(\"-%(n)s\")",
+      "citekeySearch": false,
+      "extraMergeCSL": true,
+      "extraMergeCitekeys": true,
+      "extraMergeTeX": true,
+      "importCitationKey": false,
+      "keyConflictPolicy": "change",
+      "qualityReport": true,
+      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc"
+    }
+  },
+  "items": [
+    {
+      "ISBN": "978-960-89611-8-0",
+      "citationKey": "Xanthopoyloy2020",
+      "creators": [
+        {
+          "creatorType": "editor",
+          "firstName": "Μαρία",
+          "lastName": "Ξανθοπούλου"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "Αιμιλία",
+          "lastName": "Μπάνου"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "Ελένη",
+          "lastName": "Ζυμή"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "Ευγενία",
+          "lastName": "Γιαννούλη"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "Άννα Βασιλική",
+          "lastName": "Καραπαναγιώτου"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "Αναστασία",
+          "lastName": "Κουμούση"
+        }
+      ],
+      "date": "2020",
+      "extra": [
+      ],
+      "itemID": 1,
+      "itemType": "book",
+      "language": "gr-GR",
+      "place": "Kalamata",
+      "title": "Το αρχαιολογικο εργο στην πελοποννησο 2 (ΑΕΠΕΛ2). Πρακτικά της Β ́ επιστημονικής συνάντησης Καλαμάτα, 1-4 Νοεμβρίου 2017"
+    }
+  ]
+}
