@@ -294,6 +294,7 @@ class Zotero:
     self.import_at_start = userdata.get('import', None)
     if self.import_at_start:
       self.import_at_start = os.path.abspath(self.import_at_start)
+    self.profiletemplate = userdata.get('profile', None)
 
     self.config = Config(userdata)
 
@@ -671,7 +672,7 @@ class Zotero:
       profile.firefox = FirefoxProfile(os.path.join(ROOT, 'test/db', self.config.profile))
       profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.removeStock', False)
     else:
-      profile.firefox = FirefoxProfile(os.path.join(FIXTURES, 'profile', self.client))
+      profile.firefox = FirefoxProfile(os.path.join(FIXTURES, 'profile', self.profiletemplate or self.client))
 
     profile.firefox.set_preference('extensions.zotero.dataDir', os.path.join(profile.path, self.client))
     profile.firefox.set_preference('extensions.zotero.useDataDir', True)
@@ -717,6 +718,8 @@ class Zotero:
 
     shutil.rmtree(profile.path, ignore_errors=True)
     shutil.move(profile.firefox.path, profile.path)
+    os.makedirs(f'{profile.path}/zotero', exist_ok=True)
+                    
     profile.firefox = None
 
     if self.config.db:
