@@ -231,7 +231,10 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
   }
 
   public async queueJob(job: ExportJob): Promise<string> {
+    const job = Date.now()
+    log.debug('translate: starting', job)
     return await this.queue.add(() => this.exportItemsByWorker(job))
+    log.debug('translate: finished', job)
   }
 
   private async exportItemsByWorker(job: ExportJob): Promise<string> {
