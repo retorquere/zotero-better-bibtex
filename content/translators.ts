@@ -116,6 +116,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
             this.worker.postMessage({
               kind: 'initialize',
               CSL_MAPPINGS: Object.entries(Zotero.Schema).reduce((acc, [ k, v ]) => { if (k.startsWith('CSL')) acc[k] = v; return acc }, {}),
+              dateFormatsJSON: Zotero.File.getResource('resource://zotero/schema/dateFormats.json'),
             })
           }
           catch (err) {
@@ -232,7 +233,14 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
   public async queueJob(job: ExportJob): Promise<string> {
     if (!Cache.enabled) throw new Error(`cache disabled, background exports do not work`)
 
-    return await this.queue.add(() => this.exportItemsByWorker(job))
+    const started = Date.now()
+    try {
+      log.debug('translate: starting', started)
+      return await this.queue.add(() => this.exportItemsByWorker(job))
+    }
+    finally {
+      log.debug('translate: finished', started)
+    }
   }
 
   private async exportItemsByWorker(job: ExportJob): Promise<string> {
