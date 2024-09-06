@@ -3,10 +3,8 @@ import type { Serialized, Serializer } from '../item-export-format'
 import { bySlug } from '../../gen/translators'
 import { openDB, deleteDB, IDBPDatabase, DBSchema } from 'idb'
 import { log } from '../logger'
-import { main } from './testidb'
 import version from '../../gen/version'
-
-export const maintype = typeof main
+import { flash } from '../flash'
 
 import type { Translators as Translator } from '../../typings/translators'
 const skip = new Set([ 'keepUpdated', 'worker', 'exportFileData' ])
@@ -320,43 +318,56 @@ export const Cache = new class $Cache {
   public enabled = false
 
   public async open(lastUpdated?: string): Promise<void> {
+    log.debug('cache: open')
     this.enabled = this.enabled || await working()
-    if (!this.enabled) return
+    log.debug('cache: enabled', this.enabled)
+    if (!this.enabled) {
+      flash('cache: pre-test failed')
+      return
+    }
 
     if (this.db) throw new Error('database reopened')
 
-    const $db = this.db = await openDB<Schema>(this.name, this.schema, {
-      upgrade: (db, oldVersion, newVersion) => {
-        if (oldVersion !== newVersion) {
-          for (const store of db.objectStoreNames) {
-            db.deleteObjectStore(store)
+    try {
+      const $db = this.db = await openDB<Schema>(this.name, this.schema, {
+        upgrade: (db, oldVersion, newVersion) => {
+          if (oldVersion !== newVersion) {
+            for (const store of db.objectStoreNames) {
+              db.deleteObjectStore(store)
+            }
           }
-        }
 
-        db.createObjectStore('ZoteroSerialized', { keyPath: 'itemID' })
-        db.createObjectStore('touched')
-        db.createObjectStore('metadata')
+          db.createObjectStore('ZoteroSerialized', { keyPath: 'itemID' })
+          db.createObjectStore('touched')
+          db.createObjectStore('metadata')
 
-        const context = db.createObjectStore('ExportContext', { keyPath: 'id', autoIncrement: true })
-        context.createIndex('context', 'context', { unique: true })
+          const context = db.createObjectStore('ExportContext', { keyPath: 'id', autoIncrement: true })
+          context.createIndex('context', 'context', { unique: true })
 
-        const stores = [
-          db.createObjectStore('BetterBibTeX', { keyPath: [ 'context', 'itemID' ]}),
-          db.createObjectStore('BetterBibLaTeX', { keyPath: [ 'context', 'itemID' ]}),
-          db.createObjectStore('BetterCSLJSON', { keyPath: [ 'context', 'itemID' ]}),
-          db.createObjectStore('BetterCSLYAML', { keyPath: [ 'context', 'itemID' ]}),
-        ]
-        for (const store of stores) {
-          store.createIndex('context', 'context')
-          store.createIndex('itemID', 'itemID')
-          store.createIndex('context-itemID', [ 'context', 'itemID' ], { unique: true })
-        }
-      },
-      blocking: (currentVersion, blockedVersion, _event) => {
-        log.info(`cache: releasing ${currentVersion} for ${blockedVersion}`)
-        $db.close()
-      },
-    })
+          const stores = [
+            db.createObjectStore('BetterBibTeX', { keyPath: [ 'context', 'itemID' ]}),
+            db.createObjectStore('BetterBibLaTeX', { keyPath: [ 'context', 'itemID' ]}),
+            db.createObjectStore('BetterCSLJSON', { keyPath: [ 'context', 'itemID' ]}),
+            db.createObjectStore('BetterCSLYAML', { keyPath: [ 'context', 'itemID' ]}),
+          ]
+          for (const store of stores) {
+            store.createIndex('context', 'context')
+            store.createIndex('itemID', 'itemID')
+            store.createIndex('context-itemID', [ 'context', 'itemID' ], { unique: true })
+          }
+        },
+        blocking: (currentVersion, blockedVersion, _event) => {
+          log.info(`cache: releasing ${currentVersion} for ${blockedVersion}`)
+          $db.close()
+        },
+      })
+    }
+    catch (err) {
+      this.enabled = false
+      log.debug('cache: disabled', err)
+      flash('cache: failed to open')
+      return
+    }
 
     this.ZoteroSerialized = new ZoteroSerialized(this.db)
 
