@@ -471,8 +471,6 @@ $Patcher$.schedule(Zotero.Translate.Export.prototype, 'translate', original => f
     let translatorID = this.translator[0]
     if (translatorID.translatorID) translatorID = translatorID.translatorID
     const translator = Translators.byId[translatorID]
-    log.debug('translate: starting', translator)
-
     const displayOptions = this._displayOptions || {}
 
     if (translator) {
@@ -509,7 +507,6 @@ $Patcher$.schedule(Zotero.Translate.Export.prototype, 'translate', original => f
       }
 
       if (useWorker) {
-        log.debug('translate: starting worker')
         return Translators.queueJob({
           translatorID,
           displayOptions,
@@ -521,7 +518,6 @@ $Patcher$.schedule(Zotero.Translate.Export.prototype, 'translate', original => f
         }) */
       }
       else {
-        log.debug('translate: starting foreground')
         return Translators.queue.add(async () => {
           try {
             await Cache.initExport(translator.label, exportContext(translator.label, displayOptions))
