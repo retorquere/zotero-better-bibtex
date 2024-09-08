@@ -301,6 +301,7 @@ export class ErrorReport {
     if (!this.config.errors) delete this.report.errors
     if (!this.config.log) delete this.report.log
 
+    log.info(`cache: errorreport ${Cache.enabled}`)
     this.setValue('better-bibtex-error-context', this.report.context)
     this.setValue('better-bibtex-error-errors', this.report.errors || '')
     this.setValue('better-bibtex-error-log', this.preview(this.report.log || ''))
@@ -309,7 +310,7 @@ export class ErrorReport {
       this.setValue('better-bibtex-report-cache', this.cacheState = l10n.localize('better-bibtex_error-report_better-bibtex_cache', { entries: await Cache.count() }))
     }
     catch (err) {
-      log.error('failed getting cache count', err)
+      log.error('cache: failed getting cache count', err)
       this.setValue('better-bibtex-report-cache', this.cacheState = l10n.localize('better-bibtex_error-report_better-bibtex_cache', { entries: -1 }))
     }
 
@@ -347,7 +348,7 @@ export class ErrorReport {
       cache = JSON.stringify(await Cache.dump(), null, 2)
     }
     catch (err) {
-      log.error('could not get cache dump', err)
+      log.error('cache: could not get cache dump', err)
       cache = ''
     }
     this.input = {

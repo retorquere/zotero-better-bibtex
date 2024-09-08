@@ -368,6 +368,7 @@ export const Cache = new class $Cache {
       flash('cache: failed to open')
       return
     }
+    log.debug('cache: ready', this.enabled)
 
     this.ZoteroSerialized = new ZoteroSerialized(this.db)
 
@@ -444,7 +445,7 @@ export const Cache = new class $Cache {
   }
 
   public async count() {
-    if (!this.enabled) return 0
+    if (!this.enabled) return -1
 
     let entries = 0
     for (const store of this.db.objectStoreNames) {
@@ -465,7 +466,7 @@ export const Cache = new class $Cache {
   }
 
   public async dump(): Promise<Record<string, any>> {
-    if (!this.enabled) return {}
+    if (!this.enabled) return { enabled: false }
 
     const tables: Record<string, any> = {}
     for (const store of [...this.db.objectStoreNames]) {
