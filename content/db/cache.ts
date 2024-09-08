@@ -406,7 +406,10 @@ export const Cache = new class $Cache {
   }
 
   public async touch(ids: number[]): Promise<void> {
-    if (!this.enabled) return
+    if (!this.enabled) {
+      log.debug('cache: touch on disabled cache')
+      return
+    }
 
     if (ids.length) {
       for (const store of [ this.ZoteroSerialized, this.BetterBibTeX, this.BetterBibLaTeX, this.BetterCSLJSON, this.BetterCSLYAML ]) {
@@ -417,13 +420,19 @@ export const Cache = new class $Cache {
   }
 
   public cache(store: string): ExportCache {
-    if (!this.enabled) return
+    if (!this.enabled) {
+      log.debug('cache: cache lookup on disabled cache')
+      return
+    }
 
     return this[store.replace(/ /g, '') as 'Better BibTeX'] as ExportCache
   }
 
   public async clear(store: string) {
-    if (!this.enabled) return
+    if (!this.enabled) {
+      log.debug('cache: clear on disabled cache')
+      return
+    }
 
     store = store.replace(/ /g, '')
     for (const name of [...this.db.objectStoreNames].filter(n => n !== 'metadata' && (store === '*' || n === store))) {
@@ -432,7 +441,10 @@ export const Cache = new class $Cache {
   }
 
   public async remove(translator: string, path: string) {
-    if (!this.enabled) return
+    if (!this.enabled) {
+      log.debug('cache: remove on disabled cache')
+      return
+    }
 
     await this.cache(translator)?.remove(path)
   }
@@ -446,7 +458,10 @@ export const Cache = new class $Cache {
   }
 
   public async count() {
-    if (!this.enabled) return -1
+    if (!this.enabled) {
+      log.debug('cache: count on disabled cache')
+      return -1
+    }
 
     let entries = 0
     for (const store of this.db.objectStoreNames) {
@@ -467,7 +482,10 @@ export const Cache = new class $Cache {
   }
 
   public async dump(): Promise<Record<string, any>> {
-    if (!this.enabled) return { enabled: false }
+    if (!this.enabled) {
+      log.debug('cache: dump on disabled cache')
+      return { enabled: false }
+    }
 
     const tables: Record<string, any> = {}
     for (const store of [...this.db.objectStoreNames]) {
@@ -492,7 +510,10 @@ export const Cache = new class $Cache {
   }
 
   async delete() {
-    if (!this.enabled) return
+    if (!this.enabled) {
+      log.debug('cache: delete on disabled cache')
+      return
+    }
 
     this.db = null
     await deleteDB(this.name, {
