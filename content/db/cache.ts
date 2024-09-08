@@ -438,6 +438,7 @@ export const Cache = new class $Cache {
   }
 
   public close(): void {
+    log.debug(`cache: close, enabled=${this.enabled}`)
     if (!this.enabled) return
 
     this.db.close()
