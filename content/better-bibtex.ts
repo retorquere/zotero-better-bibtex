@@ -55,7 +55,6 @@ import { Events } from './events'
 
 import { Translators } from './translators'
 import { fix as fixExportFormat } from './item-export-format'
-import { SQL as AE } from './auto-export'
 import { KeyManager } from './key-manager'
 import { TestSupport } from './test-support'
 import * as l10n from './l10n'
@@ -755,7 +754,7 @@ export class BetterBibTeX {
 
                 case 'better-bibtex.autoexport':
                   for (const ae of data.data) {
-                    await AE.store({ ...ae, updated: ae.meta.updated })
+                    AutoExport.store({ ...ae, updated: ae.meta.updated })
                   }
                   break
                 default:

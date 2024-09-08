@@ -487,6 +487,52 @@ The Better BibTeX hidden preferences are preceded by “extensions.zotero.transl
       translators,
     }))
     fs.writeFileSync('gen/auto-export-triggers.sql', this.triggers({ displayOptions, preferences, translators }))
+    fs.writeFileSync('gen/auto-export-schema.json', this.schema({ displayOptions, preferences, translators }))
+  }
+
+  schema({ displayOptions, preferences, translators }) {
+    const schema = {}
+    for (const tr of translators) {
+      if (!tr.displayOptions || typeof tr.displayOptions.keepUpdated !== 'boolean') continue
+
+      schema[tr.label] = {
+        path: { type: 'string', minLength: 1 },
+        translatorID: { const: tr.translatorID },
+        type: { type: 'string', enum: [ 'library', 'collection' ]},
+        id: { type: 'number' },
+        recursive: { type: 'boolean' },
+        enabled: { type: 'boolean' },
+        status: { enum: [ 'scheduled', 'running', 'done', 'error' ]},
+        error: { type: 'string' },
+        updated: { type: 'number' },
+      }
+
+      for (const option of displayOptions) {
+        if (tr.displayOptions && typeof tr.displayOptions[option] === 'boolean') schema[tr.label][option] = { type: 'boolean' }
+      }
+    }
+
+    for (const pref of preferences) {
+      if (!pref.label || !pref.override || !pref.affects.length) continue
+
+      for (const label of pref.affects) {
+        switch (pref.type) {
+          case 'boolean':
+            schema[label][pref.shortName] = { type: 'boolean' }
+            break
+          case 'string':
+            schema[label][pref.shortName] = { type: 'string' }
+            if (pref.options) schema[label][pref.shortName].enum = [...pref.options.keys()]
+            break
+          case 'number':
+            schema[label][pref.shortName] = { type: 'number' }
+            break
+          default:
+            throw new Error(`Don't know what to do with ${ pref.type }`)
+        }
+      }
+    }
+    return JSON.stringify(schema, null, 2)
   }
 
   triggers({ displayOptions, preferences, translators }) {
