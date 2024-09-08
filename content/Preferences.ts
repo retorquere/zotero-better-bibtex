@@ -131,11 +131,11 @@ class AutoExportPane {
     return label
   }
 
-  public async refresh(path?: string) {
+  public refresh(path?: string) {
     if (!$window) return
     const doc = $window.document
 
-    const auto_exports = await AutoExport.all()
+    const auto_exports = AutoExport.all()
     const details = doc.querySelector<HTMLElement>('#bbt-prefs-auto-exports')
     details.style.display = auto_exports.length ? 'grid' : 'none'
     if (!auto_exports.length) return null
