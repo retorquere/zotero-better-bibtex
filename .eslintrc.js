@@ -35,6 +35,7 @@ Object.assign(config.rules, {
   '@stylistic/array-bracket-spacing': 'off',
   '@stylistic/template-curly-spacing': 'off',
   '@stylistic/quotes': ['error', 'single', { "avoidEscape": true }],
+  '@stylistic/lines-between-class-members': 'off',
 })
 
 const shell = require('shelljs')

@@ -28,6 +28,10 @@ function mksync(src) {
         replaceWith(path, ReturnStatement(__a));
         return path
       },
+      'return Promise.resolve()'({}, path) {
+        replaceWith(path, ReturnStatement());
+        return path
+      },
     }),
   }
 
@@ -43,7 +47,7 @@ function mksync(src) {
 
 console.log('blinkdb.sync:')
 let xface = ''
-for (const f of 'one first many insert insertMany update updateMany remove removeMany'.split(' ')) {
+for (const f of 'clear one first many insert insertMany update updateMany remove removeMany'.split(' ')) {
   console.log(' ', f)
   fs.writeFileSync(`gen/blinkdb/${f}.js`, mksync(`blinkdb/dist/core/${f}.js`))
   const d_ts = fs.readFileSync(`node_modules/blinkdb/dist/core/${f}.d.ts`, 'utf-8')

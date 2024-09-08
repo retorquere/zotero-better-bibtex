@@ -277,7 +277,7 @@ const queue = new class TaskQueue {
   private async runAsync(path: string) {
     await Zotero.BetterBibTeX.ready
 
-    const ae = await AutoExport.get(path)
+    const ae = AutoExport.get(path)
     if (!ae) throw new Error(`AutoExport for ${ JSON.stringify(path) } does not exist`)
 
     const translator = Translators.byId[ae.translatorID]
@@ -437,9 +437,10 @@ export const AutoExport = new class $AutoExport { // eslint-disable-line @typesc
           Zotero.Prefs.clear(`translators.better-bibtex.autoExport.${this.key(change.entity.path)}`)
         }
       }),
-      this.db[BlinkKey].events.onClear.register(_changes => {
-        log.error('error: do not clear the autoexport database!')
-        throw new Error('do not clear the autoexport database!')
+      this.db[BlinkKey].events.onClear.register(() => {
+        for (const key of Services.prefs.getBranch('extensions.zotero.translators.better-bibtex.autoExport.').getChildList('', {})) {
+          Zotero.Prefs.clear(`translators.better-bibtex.autoExport.${key}`)
+        }
       }),
     ]
 
@@ -578,7 +579,7 @@ export const AutoExport = new class $AutoExport { // eslint-disable-line @typesc
 
     try {
       const repo = await git.repo(ae.path)
-      if (repo.enabled || schedule) await this.schedule(ae.type, [ae.id]) // causes initial push to overleaf at the cost of a unnecesary extra export
+      if (repo.enabled || schedule) this.schedule(ae.type, [ae.id]) // causes initial push to overleaf at the cost of a unnecesary extra export
     }
     catch (err) {
       log.error('AutoExport.add:', err)
@@ -622,10 +623,10 @@ export const AutoExport = new class $AutoExport { // eslint-disable-line @typesc
     })
   }
 
-  public async schedule(type: 'collection' | 'library', ids: number[]) {
+  public schedule(type: 'collection' | 'library', ids: number[]) {
     if (!ids.length) return
 
-    for (const ae of await this.find(type, ids)) {
+    for (const ae of this.find(type, ids)) {
       queue.add(ae.path)
     }
   }
@@ -634,20 +635,19 @@ export const AutoExport = new class $AutoExport { // eslint-disable-line @typesc
     return blink.first(this.db, path)
   }
 
-  public async all(): Promise<Job[]> {
-    const paths = await Zotero.DB.columnQueryAsync('SELECT path FROM betterbibtex.autoexport ORDER BY path')
-    return await Promise.all(paths.map(path => this.get(path))) as Job[]
+  public all(): Job[] {
+    return blink.many(this.db)
   }
 
   public edit(path: string, setting: JobSetting, value: number | boolean | string): void {
-    const ae = blink.first(this.db, path)
-    ae[setting] = value
+    const ae: Job = blink.first(this.db, path);
+    (ae[setting] as any) = value as any
     blink.insert(this.db, ae)
   }
 
-  public async remove(path: string): Promise<void>
-  public async remove(type: 'collection' | 'library', ids: number[]): Promise<void>
-  public async remove(arg: string, ids?: number[]): Promise<void> {
+  public remove(path: string): void
+  public remove(type: 'collection' | 'library', ids: number[]): void
+  public remove(arg: string, ids?: number[]): void {
     const paths: string[] = (typeof ids === 'undefined') ? [arg] : this.find(arg as 'collection' | 'library', ids).map(ae => ae.path)
 
     blink.removeMany(this.db, paths.map(path => ({ path })))
@@ -658,10 +658,10 @@ export const AutoExport = new class $AutoExport { // eslint-disable-line @typesc
     }
   }
 
-  public async removeAll() {
+  public removeAll() {
     queue.clear()
     this.progress = new Map
-    await Zotero.DB.queryTx('DELETE FROM betterbibtex.autoexport')
+    blink.clear(this.db)
   }
 
   public run(path: string) {
@@ -671,7 +671,7 @@ export const AutoExport = new class $AutoExport { // eslint-disable-line @typesc
   public async cached(path: string) {
     if (!Preference.cache) return 0
 
-    const ae = await this.get(path)
+    const ae = this.get(path)
 
     const itemTypeIDs: number[] = [ 'attachment', 'note', 'annotation' ].map(type => {
       try {

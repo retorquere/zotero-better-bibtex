@@ -67,9 +67,9 @@ class NSAutoExport {
 
     const coll = await getCollection(collection, true)
 
-    const ae = await AutoExport.get(path)
+    const ae = AutoExport.get(path)
     if (ae && ae.translatorID === translatorID && ae.type === 'collection' && ae.id === coll.id) {
-      await AutoExport.schedule(ae.type, [ae.id])
+      AutoExport.schedule(ae.type, [ae.id])
     }
     else if (ae && !replace) {
       throw { code: INVALID_PARAMETERS, message: 'Auto-export exists with incompatible parameters, but no \'replace\' was requested' }

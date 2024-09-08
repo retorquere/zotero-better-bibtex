@@ -73,7 +73,7 @@ export class TestSupport {
       await collections[0].eraseTx()
     }
 
-    await AutoExport.removeAll()
+    AutoExport.removeAll()
 
     items = await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, false, true, true)
     if (items.length !== 0) throw new Error('library not empty after reset')
@@ -354,7 +354,7 @@ export class TestSupport {
   public async editAutoExport(field: JobSetting, value: boolean | string): Promise<void> {
     // assumes only one auto-export is set up
     const path: string = await Zotero.DB.valueQueryAsync('SELECT path FROM betterbibtex.autoExport')
-    await AutoExport.edit(path, field, value)
+    AutoExport.edit(path, field, value)
   }
 
   /*
