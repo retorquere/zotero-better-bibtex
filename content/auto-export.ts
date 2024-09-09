@@ -278,6 +278,7 @@ const queue = new class TaskQueue {
     await Zotero.BetterBibTeX.ready
 
     const ae = AutoExport.get(path)
+    log.debug(`autoexport.run: ${JSON.stringify(ae)}`)
     if (!ae) throw new Error(`AutoExport for ${ JSON.stringify(path) } does not exist`)
 
     const translator = Translators.byId[ae.translatorID]
@@ -424,11 +425,13 @@ export const AutoExport = new class $AutoExport { // eslint-disable-line @typesc
       this.db[BlinkKey].events.onInsert.register(changes => {
         for (const change of changes) {
           Zotero.Prefs.set(`translators.better-bibtex.autoExport.${this.key(change.entity.path)}`, JSON.stringify(change.entity))
+          AutoExport.schedule(change.entity.type, [ change.entity.id ])
         }
       }),
       this.db[BlinkKey].events.onUpdate.register(changes => {
         for (const change of changes) {
           Zotero.Prefs.set(`translators.better-bibtex.autoExport.${this.key(change.newEntity.path)}`, JSON.stringify(change.newEntity))
+          AutoExport.schedule(change.newEntity.type, [ change.newEntity.id ])
         }
       }),
       this.db[BlinkKey].events.onRemove.register(changes => {
