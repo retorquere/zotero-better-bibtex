@@ -630,7 +630,7 @@ export const AutoExport = new class $AutoExport { // eslint-disable-line @typesc
   }
 
   public get(path: string): Job {
-    return blink.first(this.db, path)
+    return blink.first(this.db, { where: { path }})
   }
 
   public all(): Job[] {
@@ -638,10 +638,10 @@ export const AutoExport = new class $AutoExport { // eslint-disable-line @typesc
   }
 
   public edit(path: string, setting: JobSetting, value: number | boolean | string): void {
-    const ae: Job = blink.first(this.db, path)
+    const ae: Job = blink.first(this.db, { where: { path }})
     log.debug(`auto-export.edit: ${path}, ${JSON.stringify(ae)}, ${setting}, ${value}`);
     (ae[setting] as any) = value as any
-    blink.insert(this.db, ae)
+    blink.upsert(this.db, ae)
   }
 
   public remove(path: string): void
