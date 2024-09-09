@@ -3,7 +3,7 @@
 import sys, shutil, subprocess
 
 orig = sys.argv[1]
-assert orig.startswith('node_modules/'), orig
+assert orig.startswith('node_modules/') or orig.startswith('gen/'), orig
 new = orig + '.new'
 patch = sys.argv[2]
 assert patch.startswith('setup/patches') and patch.endswith('.patch'), patch

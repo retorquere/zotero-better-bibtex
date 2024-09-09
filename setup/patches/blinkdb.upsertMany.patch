@@ -1,0 +1,29 @@
+--- gen/blinkdb/upsertMany.js	2024-09-09 23:13:31
++++ gen/blinkdb/upsertMany.js	2024-09-09 23:14:30
+@@ -65,7 +65,6 @@
+ 
+ exports.upsertMany = upsertMany;
+ function internalUpsertMany(table, entities) {
+-    return _$awaiter(this, void 0, void 0, function*() {
+         // Split entities into items to create & items to update
+         // reduces the number of outgoing events to 2
+         const items = [];
+@@ -84,8 +83,8 @@
+         // Insert all items that need to be inserted, update all that need to be updated
+         const itemsToInsert = items.filter((i) => i.method === 'insert');
+         const itemsToUpdate = items.filter((i) => i.method === 'update');
+-        const insertIds = yield (0, insertMany_1.internalInsertMany)(table, itemsToInsert.map((i) => i.entity));
+-        const updateIds = yield (0, updateMany_1.internalUpdateMany)(table, itemsToUpdate.map((i) => i.entity));
++        const insertIds = (0, insertMany_1.internalInsertMany)(table, itemsToInsert.map((i) => i.entity));
++        const updateIds = (0, updateMany_1.internalUpdateMany)(table, itemsToUpdate.map((i) => i.entity));
+         
+         // Return the indexes in the correct order
+         const ids = [];
+@@ -106,7 +105,6 @@
+         }
+         
+         return ids;
+-    });
+ }
+ 
+ exports.internalUpsertMany = internalUpsertMany;

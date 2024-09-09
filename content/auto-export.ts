@@ -428,7 +428,6 @@ export const AutoExport = new class $AutoExport { // eslint-disable-line @typesc
       }),
       this.db[BlinkKey].events.onUpdate.register(changes => {
         for (const change of changes) {
-          Zotero.Prefs.clear(`translators.better-bibtex.autoExport.${this.key(change.oldEntity.path)}`)
           Zotero.Prefs.set(`translators.better-bibtex.autoExport.${this.key(change.newEntity.path)}`, JSON.stringify(change.newEntity))
         }
       }),
@@ -561,8 +560,7 @@ export const AutoExport = new class $AutoExport { // eslint-disable-line @typesc
       ae[option] = ae[option] ?? displayOptions[option] ?? false
     }
 
-    blink.remove(this.db, { path: ae.path })
-    blink.insert(this.db, ae)
+    blink.upsert(this.db, ae)
   }
 
   public find(type: 'collection' | 'library', ids: number[]): Job[] {
@@ -640,7 +638,8 @@ export const AutoExport = new class $AutoExport { // eslint-disable-line @typesc
   }
 
   public edit(path: string, setting: JobSetting, value: number | boolean | string): void {
-    const ae: Job = blink.first(this.db, path);
+    const ae: Job = blink.first(this.db, path)
+    log.debug(`auto-export.edit: ${path}, ${JSON.stringify(ae)}, ${setting}, ${value}`);
     (ae[setting] as any) = value as any
     blink.insert(this.db, ae)
   }

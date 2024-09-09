@@ -65,6 +65,7 @@
   },
   "dependencies": {
     "@artsy/to-title-case": "^1.1.0",
+    "@ast-grep/napi": "^0.27.1",
     "@caeser1996/titlecase": "^3.0.2",
     "@henrygd/queue": "^1.0.6",
     "@lifeparticle/ap-style-title-case": "^1.5.0",
