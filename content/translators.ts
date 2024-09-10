@@ -545,7 +545,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     if (!install.length) return
 
     for (const { header, code } of install) {
-      await Zotero.DB.queryTx('UPDATE betterbibtex.autoExport SET status = \'scheduled\' WHERE translatorID = ?', [header.translatorID])
+      // await Zotero.DB.queryTx('UPDATE betterbibtex.autoExport SET status = \'scheduled\' WHERE translatorID = ?', [header.translatorID])
       await Cache.clear(header.label)
       await Zotero.Translators.save(header, code)
     }

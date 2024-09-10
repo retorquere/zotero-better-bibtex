@@ -207,6 +207,7 @@ $Patcher$.schedule(Zotero.Items, 'merge', original => async function Zotero_Item
 
 // https://github.com/retorquere/zotero-better-bibtex/issues/769
 function parseLibraryKeyFromCitekey(libraryKey) {
+  log.debug('parseLibraryKeyFromCitekey:', libraryKey)
   try {
     const decoded = decodeURIComponent(libraryKey)
     if (decoded[0] === '@') {
@@ -716,12 +717,6 @@ export class BetterBibTeX {
         const NoParse = { noParseParams: true }
 
         for (const ddl of require('./db/citation-key.sql')) {
-          await Zotero.DB.queryAsync(ddl, [], NoParse)
-        }
-        for (const ddl of require('./db/auto-export.sql')) {
-          await Zotero.DB.queryAsync(ddl, [], NoParse)
-        }
-        for (const ddl of require('../gen/auto-export-triggers.sql')) {
           await Zotero.DB.queryAsync(ddl, [], NoParse)
         }
 

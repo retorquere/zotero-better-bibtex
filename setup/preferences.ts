@@ -486,7 +486,7 @@ The Better BibTeX hidden preferences are preceded by “extensions.zotero.transl
       preferences,
       translators,
     }))
-    fs.writeFileSync('gen/auto-export-triggers.sql', this.triggers({ displayOptions, preferences, translators }))
+    // fs.writeFileSync('gen/auto-export-triggers.sql', this.triggers({ displayOptions, preferences, translators }))
     fs.writeFileSync('gen/auto-export-schema.json', this.schema({ displayOptions, preferences, translators }))
   }
 

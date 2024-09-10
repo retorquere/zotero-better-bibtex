@@ -39,8 +39,9 @@ export class TestSupport {
     return state
   }
 
-  public async autoExportRunning(): Promise<number> {
-    return await Zotero.DB.valueQueryAsync('SELECT COUNT(*) FROM betterbibtex.autoExport WHERE status = \'running\'') as number
+  public autoExportRunning(): number {
+    // return await Zotero.DB.valueQueryAsync('SELECT COUNT(*) FROM betterbibtex.autoExport WHERE status = \'running\'') as number
+    return 0
   }
 
   public async reset(scenario: string): Promise<void> {
