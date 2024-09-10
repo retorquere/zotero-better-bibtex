@@ -2,14 +2,35 @@
 
 const putout = require('putout')
 const { replaceWith } = putout.operator
-const { BinaryExpression, MemberExpression, NumericLiteral, StringLiteral, ReturnStatement, ThrowStatement } = putout.types
+const { isFunction, BinaryExpression, MemberExpression, NumericLiteral, StringLiteral, ReturnStatement, ThrowStatement } = putout.types
 
 const fs = require('fs')
 const Path = require('path')
 
 function mksync(src) {
   const source = fs.readFileSync(Path.join('node_modules', src), 'utf-8')
-    .replace(/__awaiter/g, '_$awaiter')
+
+  const unyield = {
+    report: () => `strip 'yield'`,
+    fix: (path) => {
+      if (isFunction(path)) return path.node.generator = false
+      path.replaceWith(path.node.argument)
+    },
+    traverse: ({push}) => ({
+      YieldExpression(path) {
+        push(path);
+      },
+      Program: {
+        exit(path) {
+          path.traverse({
+            Function(path) {
+              push(path)
+            }
+          })
+        }
+      }
+    }),
+  }
 
   const unpromise = {
     report: () => 'async should be stripped',
@@ -41,13 +62,17 @@ function mksync(src) {
         replaceWith(path, BinaryExpression('===', __a, NumericLiteral(1)))
         return path
       },
+      '{return __awaiter(__args)}': ({__args}) => {
+        return __args.at(-1).body
+      },
     }),
   }
 
   const { code } = putout(source, {
     fixCount: 1,
     plugins: [
-      [ 'unpromise', unpromise ]
+      [ 'unyield', unyield ],
+      [ 'unpromise', unpromise ],
     ],
   })
 
