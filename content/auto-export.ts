@@ -461,7 +461,8 @@ export const AutoExport = new class $AutoExport { // eslint-disable-line @typesc
       startup: async () => {
         // detect
         log.debug(`migrate: ${await Zotero.DB.tableExists('autoexport', 'betterbibtex')}`)
-        if (await Zotero.DB.tableExists('autoexport', 'betterbibtex')) {
+        const exists = async (table: string) => (await Zotero.DB.tableExists(table, 'betterbibtex')) as Promise<boolean>
+        if (await exists('autoexport') && await exists('autoexport_settings')) {
           try {
             const migrate: Record<string, any> = {}
             for (const ae of await Zotero.DB.queryAsync('SELECT * FROM betterbibtex.autoexport')) {
@@ -483,17 +484,26 @@ export const AutoExport = new class $AutoExport { // eslint-disable-line @typesc
             for (const [ path, ae ] of Object.entries(migrate)) {
               Zotero.Prefs.set(`translators.better-bibtex.autoExport.${this.key(path)}`, JSON.stringify(ae))
             }
+
+            Zotero.DB.queryAsync('DELETE FROM betterbibtex.autoexport_settings')
+            Zotero.DB.queryAsync('DELETE FROM betterbibtex.autoexport')
+            Zotero.DB.queryAsync('DROP TABLE betterbibtex.autoexport_settings')
+            Zotero.DB.queryAsync('DROP TABLE betterbibtex.autoexport')
           }
           catch (err) {
             log.error('auto-export migration failed', err)
           }
-          try {
-            if (await Zotero.DB.tableExists('autoexport_settings', 'betterbibtex')) Zotero.DB.queryAsync('DROP TABLE betterbibtex.autoexport_settings')
-            if (await Zotero.DB.tableExists('autoexport', 'betterbibtex')) Zotero.DB.queryAsync('DROP TABLE betterbibtex.autoexport')
+        }
+        try {
+          if (!(await exists('autoexport')) && await exists('autoexport_settings')) {
+            Zotero.DB.queryAsync('DROP TABLE betterbibtex.autoexport_settings')
           }
-          catch (err) {
-            log.error('auto-export migration failed', err)
+          if (await exists('autoexport') && !(await exists('autoexport_settings'))) {
+            Zotero.DB.queryAsync('DROP TABLE betterbibtex.autoexport')
           }
+        }
+        catch (err) {
+          log.error('auto-export migration failed', err)
         }
 
         for (const key of Services.prefs.getBranch('extensions.zotero.translators.better-bibtex.autoExport.').getChildList('', {})) {
