@@ -1,7 +1,7 @@
 Components.utils.import('resource://gre/modules/FileUtils.jsm')
 declare const FileUtils: any
 
-import { log } from './logger/simple'
+import { log } from './logger'
 
 import { Shim } from './os'
 import * as client from './client'
@@ -11,7 +11,7 @@ import { Cache } from './db/cache'
 import { Events } from './events'
 import { Translators, ExportJob } from './translators'
 import { Preference } from './prefs'
-import { Preferences, autoExport, affectedBy } from '../gen/preferences/meta'
+import { Preferences, autoExport, affectedBy, affects } from '../gen/preferences/meta'
 import { byId } from '../gen/translators'
 import schema from '../gen/auto-export-schema.json'
 import * as ini from 'ini'
@@ -284,7 +284,7 @@ const queue = new class TaskQueue {
     const translator = Translators.byId[ae.translatorID]
     void Events.emit('export-progress', { pct: 0, message: `Starting ${ translator.label }`, ae: path })
 
-    await Zotero.DB.queryTx('UPDATE betterbibtex.autoexport SET status = \'running\' WHERE path = ?', [path])
+    AutoExport.status(path, 'running')
 
     try {
       let scope
@@ -319,6 +319,7 @@ const queue = new class TaskQueue {
           return acc
         }, {} as any) as Partial<Preferences>,
       }]
+      log.debug('queue: set up autoexport', jobs)
 
       if (ae.recursive) {
         const collections = scope.type === 'library' ? Zotero.Collections.getByLibrary(scope.id, true) : Zotero.Collections.getByParent(scope.collection, true)
@@ -363,7 +364,7 @@ const queue = new class TaskQueue {
       ae.error = `${ err }`
     }
 
-    await Zotero.DB.queryTx('UPDATE betterbibtex.autoexport SET status = \'done\', updated = ? WHERE path = ?', [ Date.now(), path ])
+    AutoExport.status(path, 'done')
   }
 
   private getCollectionPath(coll: { name: string; parentID: number }, root: number): string[] {
@@ -425,13 +426,11 @@ export const AutoExport = new class $AutoExport { // eslint-disable-line @typesc
       this.db[BlinkKey].events.onInsert.register(changes => {
         for (const change of changes) {
           Zotero.Prefs.set(`translators.better-bibtex.autoExport.${this.key(change.entity.path)}`, JSON.stringify(change.entity))
-          AutoExport.schedule(change.entity.type, [ change.entity.id ])
         }
       }),
       this.db[BlinkKey].events.onUpdate.register(changes => {
         for (const change of changes) {
           Zotero.Prefs.set(`translators.better-bibtex.autoExport.${this.key(change.newEntity.path)}`, JSON.stringify(change.newEntity))
-          AutoExport.schedule(change.newEntity.type, [ change.newEntity.id ])
         }
       }),
       this.db[BlinkKey].events.onRemove.register(changes => {
@@ -535,6 +534,30 @@ export const AutoExport = new class $AutoExport { // eslint-disable-line @typesc
             queue.releaseAfterSync()
           }
         })
+
+        Events.on('preference-changed', pref => {
+          if (pref === 'autoExport') {
+            switch (Preference.autoExport) {
+              case 'immediate':
+                queue.resume('preference-change')
+                break
+
+              case 'idle':
+                if (Events.idle['auto-export'] === 'idle') queue.resume('start-of-idle')
+                break
+
+              default: // off / idle
+                queue.pause('preference-change')
+            }
+          }
+
+          for (const translator of (affects[pref] || []).map(label => Translators.byLabel[label])) {
+            for (const ae of blink.many(this.db, { where: { translatorID: translator.translatorID }})) {
+              log.debug('queue:', pref, 'changed, touch', ae.path, '?', pref in ae)
+              if (!(pref in ae)) queue.add(ae.path)
+            }
+          }
+        })
       },
       shutdown: () => {
         for (const cb of this.unwatch) {
@@ -564,6 +587,7 @@ export const AutoExport = new class $AutoExport { // eslint-disable-line @typesc
     }
 
     blink.upsert(this.db, ae)
+    queue.add(ae.path)
   }
 
   public find(type: 'collection' | 'library', ids: number[]): Job[] {
@@ -645,6 +669,7 @@ export const AutoExport = new class $AutoExport { // eslint-disable-line @typesc
     log.debug(`auto-export.edit: ${path}, ${JSON.stringify(ae)}, ${setting}, ${value}`);
     (ae[setting] as any) = value as any
     blink.upsert(this.db, ae)
+    queue.add(ae.path)
   }
 
   public remove(path: string): void
@@ -658,6 +683,11 @@ export const AutoExport = new class $AutoExport { // eslint-disable-line @typesc
       queue.cancel(path)
       this.progress.delete(path)
     }
+  }
+
+  public status(path: string, status: 'running' | 'done') {
+    const ae = blink.first(this.db, { where: { path }})
+    if (ae) blink.update(this.db, { ...ae, status })
   }
 
   public removeAll() {
@@ -711,20 +741,3 @@ export const AutoExport = new class $AutoExport { // eslint-disable-line @typesc
     items.filter(item => !itemTypeIDs.includes(item.itemTypeID)).forEach(item => itemIDs.add(item.id))
   }
 }
-
-Events.on('preference-changed', pref => {
-  if (pref !== 'autoExport') return
-
-  switch (Preference.autoExport) {
-    case 'immediate':
-      queue.resume('preference-change')
-      break
-
-    case 'idle':
-      if (Events.idle['auto-export'] === 'idle') queue.resume('start-of-idle')
-      break
-
-    default: // off / idle
-      queue.pause('preference-change')
-  }
-})
