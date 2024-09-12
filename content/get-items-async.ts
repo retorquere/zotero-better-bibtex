@@ -1,27 +1,11 @@
-export async function getItemsAsync(ids: number | number[], selectedLibraryID?: number): Promise<any> {
-  selectedLibraryID = selectedLibraryID ?? Zotero.getActiveZoteroPane().getSelectedLibraryID()
-
-  let returnSingle: boolean
+export async function getItemsAsync(ids: number | number[]): Promise<any> {
   if (Array.isArray(ids)) {
-    returnSingle = false
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    return await Promise.all(await Zotero.Items.getAsync(ids).map(item => item.loadAllData()))
   }
   else {
-    returnSingle = true
-    ids = [ids]
+    const item = await Zotero.Items.getAsync(ids)
+    await item.loadAllData()
+    return item
   }
-
-  let items = []
-  for (const item of Zotero.Items.get(ids)) {
-    if (item.libraryID === selectedLibraryID) {
-      items.push(item)
-    }
-    else {
-      items.push(await Zotero.Items.getAsync(item.id))
-      await items[items.length - 1].loadAllData()
-    }
-  }
-
-  if (returnSingle) items = items[0]
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  return items
 }
