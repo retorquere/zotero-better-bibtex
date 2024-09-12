@@ -697,6 +697,10 @@ export class BetterBibTeX {
         Events.cacheTouch = async (ids: number[]) => {
           await Cache.touch(ids)
         }
+        Events.addIdleListener('cache-purge', Preference.autoExportIdleWait)
+        Events.on('idle', async state => {
+          if (state.topic === 'cache-purge' && Cache.opened) await Cache.ZoteroSerialized.purge()
+        })
       },
       shutdown() {
         Cache.close()

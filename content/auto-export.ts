@@ -672,7 +672,7 @@ export const AutoExport = new class $AutoExport { // eslint-disable-line @typesc
   }
 
   public edit(path: string, setting: JobSetting, value: number | boolean | string): void {
-    const ae: Job = blink.first(this.db, { where: { path }})
+    const ae: Job = blink.first(this.db, { where: { path }});
     (ae[setting] as any) = value as any
     blink.upsert(this.db, ae)
     queue.add(ae.path)
