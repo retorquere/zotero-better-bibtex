@@ -20,7 +20,7 @@ type IdleService = {
   addIdleObserver: (observer: IdleObserver, time: number) => void
   removeIdleObserver: (observer: IdleObserver, time: number) => void
 }
-type IdleTopic = 'auto-export' | 'save-database' | 'cache-fill'
+type IdleTopic = 'auto-export' | 'cache-purge'
 
 const idleService: IdleService = Components.classes[`@mozilla.org/widget/${ is7 ? 'user' : '' }idleservice;1`].getService(Components.interfaces[is7 ? 'nsIUserIdleService' : 'nsIIdleService'])
 

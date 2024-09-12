@@ -486,155 +486,52 @@ The Better BibTeX hidden preferences are preceded by “extensions.zotero.transl
       preferences,
       translators,
     }))
-    fs.writeFileSync('gen/auto-export-triggers.sql', this.triggers({ displayOptions, preferences, translators }))
+    fs.writeFileSync('gen/auto-export-schema.json', this.schema({ displayOptions, preferences, translators }))
   }
 
-  triggers({ displayOptions, preferences, translators }) {
-    const set = options => options.map(option => typeof option === 'number' ? `${ option }` : `'${ option }'`).join(',')
+  schema({ displayOptions, preferences, translators }) {
+    const schema = {}
+    for (const tr of translators) {
+      if (!tr.displayOptions || typeof tr.displayOptions.keepUpdated !== 'boolean') continue
 
-    const check = (name, schema, isSetting = false) => {
-      if (schema.type === 'boolean') schema = { enum: [ 0, 1 ]}
-      let test = ''
-      if (schema.enum) {
-        test += `  SELECT RAISE(FAIL, "${ name } must be one of ${ schema.enum.join(' / ') }")\n`
-        if (isSetting) {
-          test += `  WHERE NEW.setting = '${ name }' AND NEW.value NOT IN (${ set(schema.enum) });\n`
-        }
-        else {
-          test += `  WHERE NEW.${ name } NOT IN (${ set(schema.enum) });\n`
-        }
-      }
-      else if (schema.type === 'string' && schema.minLength) {
-        test += `  SELECT RAISE(FAIL, "${ name } must be a string of minimum length ${ schema.minLength }")\n`
-        if (isSetting) {
-          test += `  WHERE NEW.setting = '${ name }' AND (TYPEOF(NEW.value) <> 'text' OR LENGTH(NEW.value) < ${ schema.minLength });\n`
-        }
-        else {
-          test += `  WHERE TYPEOF(NEW.${ name }) <> 'text' OR LENGTH(NEW.${ name }) < ${ schema.minLength };\n`
-        }
-      }
-      else if (schema.type === 'string') {
-        test += `  SELECT RAISE(FAIL, "${ name } must be a string")\n`
-        if (isSetting) {
-          test += `  WHERE NEW.setting = '${ name }' AND TYPEOF(NEW.value) <> 'text';\n`
-        }
-        else {
-          test += `  WHERE TYPEOF(NEW.${ name }) <> 'text';\n`
-        }
-      }
-      else if (schema.type === 'number') {
-        test += `  SELECT RAISE(FAIL, "${ name } must be a number")\n`
-        if (isSetting) {
-          test += `  WHERE NEW.setting = '${ name }' AND TYPEOF(NEW.value) NOT IN ('integer', 'real');\n`
-        }
-        else {
-          test += `  WHERE TYPEOF(NEW.${ name }) NOT IN ('integer', 'real');\n`
-        }
+      schema[tr.label] = {
+        path: { type: 'string', minLength: 1 },
+        translatorID: { const: tr.translatorID },
+        type: { type: 'string', enum: [ 'library', 'collection' ]},
+        id: { type: 'number' },
+        recursive: { type: 'boolean' },
+        enabled: { type: 'boolean' },
+        status: { enum: [ 'scheduled', 'running', 'done', 'error' ]},
+        error: { type: 'string' },
+        updated: { type: 'number' },
       }
 
-      if (schema.affects) {
-        test += `  SELECT RAISE(FAIL, "${ name } is only applicable to ${ schema.affects.map(tr => tr.label).join(' / ') }")\n`
-        test += `  WHERE NEW.setting = '${ name }' AND NOT EXISTS (SELECT * FROM betterbibtex.autoexport WHERE path = NEW.path and translatorID `
-        const affects = schema.affects.map(tr => tr.translatorID)
-        if (schema.affects.length === 1) {
-          test += `= ${ set(affects) }`
-        }
-        else {
-          test += `IN (${ set(affects) })`
-        }
-        test += ');\n'
+      for (const option of displayOptions) {
+        if (tr.displayOptions && typeof tr.displayOptions[option] === 'boolean') schema[tr.label][option] = { type: 'boolean' }
       }
-      return test
     }
 
-    const triggers: string[] = []
+    for (const pref of preferences) {
+      if (!pref.label || !pref.override || !pref.affects.length) continue
 
-    const fixate = name => `  SELECT RAISE(FAIL, "${ name } may not be updated") WHERE NEW.${ name } <> OLD.${ name };`
-    const fixated = [ 'path', 'translatorID', 'type', 'id' ]
-
-    const autoexport = {
-      path: { type: 'string', minLength: 1 },
-      translatorID: { type: 'string', enum: translators.map(tr => tr.translatorID) },
-      type: { type: 'string', enum: [ 'library', 'collection' ]},
-      id: { type: 'number' },
-      recursive: { type: 'boolean' },
-      enabled: { type: 'boolean' },
-      status: { enum: [ 'scheduled', 'running', 'done', 'error' ]},
-      error: { type: 'string' },
-      updated: { type: 'number' },
+      for (const label of pref.affects) {
+        switch (pref.type) {
+          case 'boolean':
+            schema[label][pref.shortName] = { type: 'boolean' }
+            break
+          case 'string':
+            schema[label][pref.shortName] = { type: 'string' }
+            if (pref.options) schema[label][pref.shortName].enum = [...pref.options.keys()]
+            break
+          case 'number':
+            schema[label][pref.shortName] = { type: 'number' }
+            break
+          default:
+            throw new Error(`Don't know what to do with ${ pref.type }`)
+        }
+      }
     }
-    let conditions: string = Object.entries(autoexport).map(([ setting, schema ]) => check(setting, schema)).join('\n')
-    triggers.push('DROP TRIGGER IF EXISTS betterbibtex.autoexport_insert')
-    triggers.push('DROP TRIGGER IF EXISTS betterbibtex_autoexport_insert')
-    triggers.push([
-      'CREATE TEMPORARY TRIGGER betterbibtex_autoexport_insert',
-      'BEFORE INSERT ON betterbibtex.autoexport',
-      'BEGIN',
-      conditions,
-      'END;',
-    ].join('\n'))
-
-    conditions = Object.entries(autoexport).filter(([ setting, _schema ]) => !fixated.includes(setting)).map(([ setting, schema ]) => check(setting, schema)).join('\n')
-    triggers.push('DROP TRIGGER IF EXISTS betterbibtex.autoexport_update')
-    triggers.push('DROP TRIGGER IF EXISTS betterbibtex_autoexport_update')
-    triggers.push([
-      'CREATE TEMPORARY TRIGGER betterbibtex_autoexport_update',
-      'BEFORE UPDATE ON betterbibtex.autoexport',
-      'BEGIN',
-      ...fixated.map(setting => fixate(setting)),
-      '',
-      conditions,
-      'END;',
-    ].join('\n'))
-
-    const settings = Object.fromEntries(
-      preferences
-        .filter(pref => pref.label && pref.override && pref.affects.length)
-        .map(pref => {
-          const affects = pref.affects ? pref.affects.map(label => translators.find(tr => tr.label === label)) : []
-          switch (pref.type) {
-            case 'boolean':
-              return [ pref.shortName, { type: 'number', enum: [ 0, 1 ], affects } ]
-            case 'string':
-              return [ pref.shortName, { type: 'string', enum: pref.options ? [...pref.options.keys()] : undefined, affects } ]
-            case 'number':
-              return [ pref.shortName, { type: 'number', affects } ]
-            default:
-              throw new Error(`Don't know what to do with ${ pref.type }`)
-          }
-        })
-        .concat(
-          displayOptions.map(option => [ option, { type: 'boolean', affects: translators.filter(tr => typeof tr.displayOptions?.[option] === 'boolean') } ])
-        )
-    )
-
-    const unsupported = `  SELECT RAISE(FAIL, "unsupported auto-export setting")\n  WHERE NEW.setting NOT IN (${ set(Object.keys(settings)) });\n`
-    conditions = Object.entries(settings).map(([ setting, schema ]) => check(setting, schema, true)).join('\n')
-    triggers.push('DROP TRIGGER IF EXISTS betterbibtex.autoexport_setting_insert')
-    triggers.push('DROP TRIGGER IF EXISTS betterbibtex_autoexport_setting_insert')
-    triggers.push([
-      'CREATE TEMPORARY TRIGGER betterbibtex_autoexport_setting_insert',
-      'BEFORE INSERT ON betterbibtex.autoexport_setting',
-      'BEGIN',
-      unsupported,
-      conditions,
-      'END;',
-    ].join('\n'))
-
-    triggers.push('DROP TRIGGER IF EXISTS betterbibtex.autoexport_setting_update')
-    triggers.push('DROP TRIGGER IF EXISTS betterbibtex_autoexport_setting_update')
-    triggers.push([
-      'CREATE TEMPORARY TRIGGER betterbibtex_autoexport_setting_update',
-      'BEFORE UPDATE ON betterbibtex.autoexport_setting',
-      'BEGIN',
-      fixate('path'),
-      fixate('setting'),
-      unsupported,
-      conditions,
-      'END;',
-    ].join('\n'))
-
-    return triggers.join('\n--\n')
+    return JSON.stringify(schema, null, 2)
   }
 }
 

@@ -148,13 +148,6 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
         ready.resolve(true)
       },
       shutdown: async (reason: Reason) => {
-        if (Cache.opened) {
-          await Cache.ZoteroSerialized.purge()
-        }
-        else {
-          log.info('orchestrator: translator shutdown skipped cache purge')
-        }
-
         switch (reason) {
           case 'ADDON_DISABLE':
           case 'ADDON_UNINSTALL':
@@ -553,7 +546,6 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     if (!install.length) return
 
     for (const { header, code } of install) {
-      await Zotero.DB.queryTx('UPDATE betterbibtex.autoExport SET status = \'scheduled\' WHERE translatorID = ?', [header.translatorID])
       await Cache.clear(header.label)
       await Zotero.Translators.save(header, code)
     }

@@ -3,8 +3,10 @@ import type { Serialized, Serializer } from '../item-export-format'
 import { bySlug } from '../../gen/translators'
 import { openDB, deleteDB, IDBPDatabase, DBSchema } from 'idb'
 import { log } from '../logger'
+import { main } from './testidb'
 import version from '../../gen/version'
-import { flash } from '../flash'
+
+export const maintype = typeof main
 
 import type { Translators as Translator } from '../../typings/translators'
 const skip = new Set([ 'keepUpdated', 'worker', 'exportFileData' ])
@@ -315,60 +317,41 @@ export const Cache = new class $Cache {
   public BetterCSLJSON: ExportCache
   public BetterCSLYAML: ExportCache
 
-  public enabled = false
-
   public async open(lastUpdated?: string): Promise<void> {
-    log.debug('cache: open')
-    this.enabled = this.enabled || await working()
-    log.debug('cache: enabled', this.enabled)
-    if (!this.enabled) {
-      flash('cache: pre-test failed')
-      return
-    }
-
     if (this.db) throw new Error('database reopened')
 
-    try {
-      const $db = this.db = await openDB<Schema>(this.name, this.schema, {
-        upgrade: (db, oldVersion, newVersion) => {
-          if (oldVersion !== newVersion) {
-            for (const store of db.objectStoreNames) {
-              db.deleteObjectStore(store)
-            }
+    const $db = this.db = await openDB<Schema>(this.name, this.schema, {
+      upgrade: (db, oldVersion, newVersion) => {
+        if (oldVersion !== newVersion) {
+          for (const store of db.objectStoreNames) {
+            db.deleteObjectStore(store)
           }
+        }
 
-          db.createObjectStore('ZoteroSerialized', { keyPath: 'itemID' })
-          db.createObjectStore('touched')
-          db.createObjectStore('metadata')
+        db.createObjectStore('ZoteroSerialized', { keyPath: 'itemID' })
+        db.createObjectStore('touched')
+        db.createObjectStore('metadata')
 
-          const context = db.createObjectStore('ExportContext', { keyPath: 'id', autoIncrement: true })
-          context.createIndex('context', 'context', { unique: true })
+        const context = db.createObjectStore('ExportContext', { keyPath: 'id', autoIncrement: true })
+        context.createIndex('context', 'context', { unique: true })
 
-          const stores = [
-            db.createObjectStore('BetterBibTeX', { keyPath: [ 'context', 'itemID' ]}),
-            db.createObjectStore('BetterBibLaTeX', { keyPath: [ 'context', 'itemID' ]}),
-            db.createObjectStore('BetterCSLJSON', { keyPath: [ 'context', 'itemID' ]}),
-            db.createObjectStore('BetterCSLYAML', { keyPath: [ 'context', 'itemID' ]}),
-          ]
-          for (const store of stores) {
-            store.createIndex('context', 'context')
-            store.createIndex('itemID', 'itemID')
-            store.createIndex('context-itemID', [ 'context', 'itemID' ], { unique: true })
-          }
-        },
-        blocking: (currentVersion, blockedVersion, _event) => {
-          log.info(`cache: releasing ${currentVersion} for ${blockedVersion}`)
-          $db.close()
-        },
-      })
-    }
-    catch (err) {
-      this.enabled = false
-      log.debug('cache: disabled', err)
-      flash('cache: failed to open')
-      return
-    }
-    log.debug('cache: ready', this.enabled)
+        const stores = [
+          db.createObjectStore('BetterBibTeX', { keyPath: [ 'context', 'itemID' ]}),
+          db.createObjectStore('BetterBibLaTeX', { keyPath: [ 'context', 'itemID' ]}),
+          db.createObjectStore('BetterCSLJSON', { keyPath: [ 'context', 'itemID' ]}),
+          db.createObjectStore('BetterCSLYAML', { keyPath: [ 'context', 'itemID' ]}),
+        ]
+        for (const store of stores) {
+          store.createIndex('context', 'context')
+          store.createIndex('itemID', 'itemID')
+          store.createIndex('context-itemID', [ 'context', 'itemID' ], { unique: true })
+        }
+      },
+      blocking: (currentVersion, blockedVersion, _event) => {
+        log.info(`cache: releasing ${currentVersion} for ${blockedVersion}`)
+        $db.close()
+      },
+    })
 
     this.ZoteroSerialized = new ZoteroSerialized(this.db)
 
@@ -402,15 +385,10 @@ export const Cache = new class $Cache {
   }
 
   public get opened() {
-    return this.enabled && !!this.db
+    return !!this.db
   }
 
   public async touch(ids: number[]): Promise<void> {
-    if (!this.enabled) {
-      log.debug('cache: touch on disabled cache')
-      return
-    }
-
     if (ids.length) {
       for (const store of [ this.ZoteroSerialized, this.BetterBibTeX, this.BetterBibLaTeX, this.BetterCSLJSON, this.BetterCSLYAML ]) {
         await store.touch(ids)
@@ -420,49 +398,26 @@ export const Cache = new class $Cache {
   }
 
   public cache(store: string): ExportCache {
-    if (!this.enabled) {
-      log.debug('cache: cache lookup on disabled cache')
-      return
-    }
-
     return this[store.replace(/ /g, '') as 'Better BibTeX'] as ExportCache
   }
 
   public async clear(store: string) {
-    if (!this.enabled) {
-      log.debug('cache: clear on disabled cache')
-      return
-    }
-
     store = store.replace(/ /g, '')
-    for (const name of [...this.db.objectStoreNames].filter(n => n !== 'metadata' && (store === '*' || n === store))) {
-      await this.db.clear(name)
+    for (store of [...this.db.objectStoreNames].filter(name => name !== 'metadata' && (store === '*' || name === store))) {
+      await this.db.clear(store as 'BetterBibTeX')
     }
   }
 
   public async remove(translator: string, path: string) {
-    if (!this.enabled) {
-      log.debug('cache: remove on disabled cache')
-      return
-    }
-
     await this.cache(translator)?.remove(path)
   }
 
   public close(): void {
-    log.debug(`cache: close, enabled=${this.enabled}`)
-    if (!this.enabled) return
-
     this.db.close()
     this.db = null
   }
 
   public async count() {
-    if (!this.enabled) {
-      log.debug('cache: count on disabled cache')
-      return -1
-    }
-
     let entries = 0
     for (const store of this.db.objectStoreNames) {
       switch (store) {
@@ -482,11 +437,6 @@ export const Cache = new class $Cache {
   }
 
   public async dump(): Promise<Record<string, any>> {
-    if (!this.enabled) {
-      log.debug('cache: dump on disabled cache')
-      return { enabled: false }
-    }
-
     const tables: Record<string, any> = {}
     for (const store of [...this.db.objectStoreNames]) {
       switch (store) {
@@ -510,11 +460,6 @@ export const Cache = new class $Cache {
   }
 
   async delete() {
-    if (!this.enabled) {
-      log.debug('cache: delete on disabled cache')
-      return
-    }
-
     this.db = null
     await deleteDB(this.name, {
       blocked(blockedVersion, _blockedEvent) {
@@ -523,56 +468,5 @@ export const Cache = new class $Cache {
     })
 
     await this.open()
-  }
-}
-
-async function working() {
-  const dbname = 'BBT-IDB-verify'
-
-  function openIDB() {
-    return new Promise((resolve, reject) => {
-      try {
-        const req = indexedDB.open(dbname, 1)
-        req.onsuccess = function() {
-          const db = req.result
-          db.close()
-          resolve(true)
-        }
-        // actually do something so we're not a complete no-op
-        req.onupgradeneeded = function() {
-          req.result.createObjectStore('foo')
-        }
-        req.onerror = function(event) {
-          resolve(false)
-          event.preventDefault()
-          event.stopPropagation()
-        }
-      }
-      catch (err) {
-        reject(err) // eslint-disable-line @typescript-eslint/prefer-promise-reject-errors
-      }
-    })
-  }
-
-  function deleteIDB() {
-    return new Promise((resolve, reject) => {
-      const req = indexedDB.deleteDatabase(dbname)
-      req.onsuccess = function() {
-        resolve(true)
-      }
-      req.onerror = function() {
-        reject(req.error)
-      }
-    })
-  }
-
-  try {
-    await openIDB()
-    await deleteIDB()
-    return true
-  }
-  catch (err) {
-    log.error('cache test failed:', err)
-    return false
   }
 }

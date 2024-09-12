@@ -131,11 +131,11 @@ class AutoExportPane {
     return label
   }
 
-  public async refresh(path?: string) {
+  public refresh(path?: string) {
     if (!$window) return
     const doc = $window.document
 
-    const auto_exports = await AutoExport.all()
+    const auto_exports = AutoExport.all()
     const details = doc.querySelector<HTMLElement>('#bbt-prefs-auto-exports')
     details.style.display = auto_exports.length ? 'grid' : 'none'
     if (!auto_exports.length) return null
@@ -253,9 +253,9 @@ class AutoExportPane {
     if (!Services.prompt.confirm(null, l10n.localize('better-bibtex_auto-export_delete'), l10n.localize('better-bibtex_auto-export_delete_confirm'))) return
 
     const path = menulist.selectedItem.getAttribute('value')
-    const ae = await AutoExport.get(path)
+    const ae = AutoExport.get(path)
     await Cache.remove(Translators.byId[ae.translatorID].label, path)
-    await AutoExport.remove(path)
+    AutoExport.remove(path)
     await this.refresh()
   }
 
@@ -273,7 +273,7 @@ class AutoExportPane {
       const menulist: XUL.Menulist = $window.document.querySelector('#bbt-prefs-auto-export-select') as unknown as XUL.Menulist
       path = menulist.selectedItem.getAttribute('value')
     }
-    const ae = await AutoExport.get(path)
+    const ae = AutoExport.get(path)
 
     const field = node.getAttribute('data-ae-field')
 
@@ -309,8 +309,8 @@ class AutoExportPane {
       default:
         log.error('edit autoexport: unexpected field', field)
     }
-    await AutoExport.edit(path, field, value)
-    if (disable) await AutoExport.edit(path, disable, false)
+    AutoExport.edit(path, field, value)
+    if (disable) AutoExport.edit(path, disable, false)
     await this.refresh()
   }
 
