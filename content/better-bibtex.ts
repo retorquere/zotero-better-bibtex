@@ -207,7 +207,6 @@ $Patcher$.schedule(Zotero.Items, 'merge', original => async function Zotero_Item
 
 // https://github.com/retorquere/zotero-better-bibtex/issues/769
 function parseLibraryKeyFromCitekey(libraryKey) {
-  log.debug('parseLibraryKeyFromCitekey:', libraryKey)
   try {
     const decoded = decodeURIComponent(libraryKey)
     if (decoded[0] === '@') {

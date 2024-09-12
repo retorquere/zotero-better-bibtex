@@ -278,7 +278,6 @@ const queue = new class TaskQueue {
     await Zotero.BetterBibTeX.ready
 
     const ae = AutoExport.get(path)
-    log.debug(`autoexport.run: ${JSON.stringify(ae)}`)
     if (!ae) throw new Error(`AutoExport for ${ JSON.stringify(path) } does not exist`)
 
     const translator = Translators.byId[ae.translatorID]
@@ -319,7 +318,6 @@ const queue = new class TaskQueue {
           return acc
         }, {} as any) as Partial<Preferences>,
       }]
-      log.debug('queue: set up autoexport', jobs)
 
       if (ae.recursive) {
         const collections = scope.type === 'library' ? Zotero.Collections.getByLibrary(scope.id, true) : Zotero.Collections.getByParent(scope.collection, true)
@@ -463,7 +461,6 @@ export const AutoExport = new class $AutoExport { // eslint-disable-line @typesc
         const $ae = 'autoexport'
         const $ae$setting = 'autoexport_setting'
         const exists = async (table: string) => (await Zotero.DB.tableExists(table, 'betterbibtex')) as Promise<boolean>
-        log.debug(`migrate: ae: ${await exists($ae)}, setting: ${await exists($ae$setting)}`)
         if (await exists($ae) && await exists($ae$setting)) {
           try {
             const migrate: Record<string, any> = {}
@@ -482,7 +479,6 @@ export const AutoExport = new class $AutoExport { // eslint-disable-line @typesc
               }
             }
 
-            log.debug(`migrate: ${JSON.stringify(migrate)}`)
             for (const [ path, ae ] of Object.entries(migrate)) {
               Zotero.Prefs.set(`translators.better-bibtex.autoExport.${this.key(path)}`, JSON.stringify(ae))
             }
@@ -565,7 +561,6 @@ export const AutoExport = new class $AutoExport { // eslint-disable-line @typesc
 
           for (const translator of (affects[pref] || []).map(label => Translators.byLabel[label])) {
             for (const ae of blink.many(this.db, { where: { translatorID: translator.translatorID }})) {
-              log.debug('queue:', pref, 'changed, touch', ae.path, '?', pref in ae)
               if (!(pref in ae)) queue.add(ae.path)
             }
           }
@@ -678,7 +673,6 @@ export const AutoExport = new class $AutoExport { // eslint-disable-line @typesc
 
   public edit(path: string, setting: JobSetting, value: number | boolean | string): void {
     const ae: Job = blink.first(this.db, { where: { path }})
-    log.debug(`auto-export.edit: ${path}, ${JSON.stringify(ae)}, ${setting}, ${value}`);
     (ae[setting] as any) = value as any
     blink.upsert(this.db, ae)
     queue.add(ae.path)

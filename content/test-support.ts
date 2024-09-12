@@ -353,7 +353,6 @@ export class TestSupport {
   }
 
   public editAutoExport(field: JobSetting, value: boolean | string): void {
-    log.debug('auto-export:', AutoExport.all())
     // assumes only one auto-export is set up
     const path: string = AutoExport.all()[0].path
     AutoExport.edit(path, field, value)
