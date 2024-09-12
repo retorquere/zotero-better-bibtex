@@ -3,10 +3,7 @@ import type { Serialized, Serializer } from '../item-export-format'
 import { bySlug } from '../../gen/translators'
 import { openDB, deleteDB, IDBPDatabase, DBSchema } from 'idb'
 import { log } from '../logger'
-import { main } from './testidb'
 import version from '../../gen/version'
-
-export const maintype = typeof main
 
 import type { Translators as Translator } from '../../typings/translators'
 const skip = new Set([ 'keepUpdated', 'worker', 'exportFileData' ])
@@ -317,9 +314,7 @@ export const Cache = new class $Cache {
   public BetterCSLJSON: ExportCache
   public BetterCSLYAML: ExportCache
 
-  public async open(lastUpdated?: string): Promise<void> {
-    if (this.db) throw new Error('database reopened')
-
+  private async init() {
     const $db = this.db = await openDB<Schema>(this.name, this.schema, {
       upgrade: (db, oldVersion, newVersion) => {
         if (oldVersion !== newVersion) {
@@ -352,6 +347,17 @@ export const Cache = new class $Cache {
         $db.close()
       },
     })
+  }
+  public async open(lastUpdated?: string): Promise<void> {
+    if (this.db) throw new Error('database reopened')
+
+    try {
+      await this.init()
+    }
+    catch (err) {
+      log.error('could not open cache:', err)
+      this.db = null
+    }
 
     this.ZoteroSerialized = new ZoteroSerialized(this.db)
 
@@ -388,7 +394,17 @@ export const Cache = new class $Cache {
     return !!this.db
   }
 
+  private available(name: string) {
+    if (!this.db) {
+      log.error(`Cache.${name} on closed cache`)
+      return false
+    }
+    return true
+  }
+
   public async touch(ids: number[]): Promise<void> {
+    if (!this.available('touch')) return
+
     if (ids.length) {
       for (const store of [ this.ZoteroSerialized, this.BetterBibTeX, this.BetterBibLaTeX, this.BetterCSLJSON, this.BetterCSLYAML ]) {
         await store.touch(ids)
@@ -402,6 +418,8 @@ export const Cache = new class $Cache {
   }
 
   public async clear(store: string) {
+    if (!this.available('clear')) return
+
     store = store.replace(/ /g, '')
     for (store of [...this.db.objectStoreNames].filter(name => name !== 'metadata' && (store === '*' || name === store))) {
       await this.db.clear(store as 'BetterBibTeX')
@@ -409,15 +427,21 @@ export const Cache = new class $Cache {
   }
 
   public async remove(translator: string, path: string) {
+    if (!this.available('remove')) return
+
     await this.cache(translator)?.remove(path)
   }
 
   public close(): void {
+    if (!this.available('close')) return
+
     this.db.close()
     this.db = null
   }
 
   public async count() {
+    if (!this.available('count')) return 0
+
     let entries = 0
     for (const store of this.db.objectStoreNames) {
       switch (store) {
@@ -437,6 +461,8 @@ export const Cache = new class $Cache {
   }
 
   public async dump(): Promise<Record<string, any>> {
+    if (!this.available('dump')) return {}
+
     const tables: Record<string, any> = {}
     for (const store of [...this.db.objectStoreNames]) {
       switch (store) {
