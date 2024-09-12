@@ -39,8 +39,9 @@ export class TestSupport {
     return state
   }
 
-  public async autoExportRunning(): Promise<number> {
-    return await Zotero.DB.valueQueryAsync('SELECT COUNT(*) FROM betterbibtex.autoExport WHERE status = \'running\'') as number
+  public autoExportRunning(): number {
+    // return await Zotero.DB.valueQueryAsync('SELECT COUNT(*) FROM betterbibtex.autoExport WHERE status = \'running\'') as number
+    return 0
   }
 
   public async reset(scenario: string): Promise<void> {
@@ -73,7 +74,7 @@ export class TestSupport {
       await collections[0].eraseTx()
     }
 
-    await AutoExport.removeAll()
+    AutoExport.removeAll()
 
     items = await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, false, true, true)
     if (items.length !== 0) throw new Error('library not empty after reset')
@@ -351,10 +352,10 @@ export class TestSupport {
     })
   }
 
-  public async editAutoExport(field: JobSetting, value: boolean | string): Promise<void> {
+  public editAutoExport(field: JobSetting, value: boolean | string): void {
     // assumes only one auto-export is set up
-    const path: string = await Zotero.DB.valueQueryAsync('SELECT path FROM betterbibtex.autoExport')
-    await AutoExport.edit(path, field, value)
+    const path: string = AutoExport.all()[0].path
+    AutoExport.edit(path, field, value)
   }
 
   /*

@@ -55,7 +55,6 @@ import { Events } from './events'
 
 import { Translators } from './translators'
 import { fix as fixExportFormat } from './item-export-format'
-import { SQL as AE } from './auto-export'
 import { KeyManager } from './key-manager'
 import { TestSupport } from './test-support'
 import * as l10n from './l10n'
@@ -471,8 +470,6 @@ $Patcher$.schedule(Zotero.Translate.Export.prototype, 'translate', original => f
     let translatorID = this.translator[0]
     if (translatorID.translatorID) translatorID = translatorID.translatorID
     const translator = Translators.byId[translatorID]
-    log.debug('translate: starting', translator)
-
     const displayOptions = this._displayOptions || {}
 
     if (translator) {
@@ -702,6 +699,10 @@ export class BetterBibTeX {
         Events.cacheTouch = async (ids: number[]) => {
           await Cache.touch(ids)
         }
+        Events.addIdleListener('cache-purge', Preference.autoExportIdleWait)
+        Events.on('idle', async state => {
+          if (state.topic === 'cache-purge' && Cache.opened) await Cache.ZoteroSerialized.purge()
+        })
       },
       shutdown() {
         Cache.close()
@@ -721,12 +722,6 @@ export class BetterBibTeX {
         const NoParse = { noParseParams: true }
 
         for (const ddl of require('./db/citation-key.sql')) {
-          await Zotero.DB.queryAsync(ddl, [], NoParse)
-        }
-        for (const ddl of require('./db/auto-export.sql')) {
-          await Zotero.DB.queryAsync(ddl, [], NoParse)
-        }
-        for (const ddl of require('../gen/auto-export-triggers.sql')) {
           await Zotero.DB.queryAsync(ddl, [], NoParse)
         }
 
@@ -759,7 +754,7 @@ export class BetterBibTeX {
 
                 case 'better-bibtex.autoexport':
                   for (const ae of data.data) {
-                    await AE.store({ ...ae, updated: ae.meta.updated })
+                    AutoExport.store({ ...ae, updated: ae.meta.updated })
                   }
                   break
                 default:

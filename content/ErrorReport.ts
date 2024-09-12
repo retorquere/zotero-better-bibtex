@@ -442,7 +442,7 @@ export class ErrorReport {
       context += `  Zotero: ${ key } = ${ JSON.stringify(Zotero.Prefs.get(key)) }\n`
     }
 
-    const autoExports = await AutoExport.all()
+    const autoExports = AutoExport.all()
     if (autoExports.length) {
       context += 'Auto-exports:\n'
       for (const ae of autoExports) {

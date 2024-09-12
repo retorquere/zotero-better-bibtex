@@ -249,7 +249,7 @@ class ZoteroPane {
         let auto_exports = []
         const type = isCollection ? 'collection' : isLibrary ? 'library' : ''
         if (Preference.autoExport !== 'immediate' && type) {
-          auto_exports = await AutoExport.find(type, [treeRow.ref.id])
+          auto_exports = AutoExport.find(type, [treeRow.ref.id])
         }
 
         const menulist: XUL.Menulist = doc.getElementById('zotero-collectionmenu-bbt-autoexport') as XUL.Menulist
