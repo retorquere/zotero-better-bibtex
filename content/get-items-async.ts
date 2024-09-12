@@ -1,7 +1,9 @@
 export async function getItemsAsync(ids: number | number[]): Promise<any> {
   if (Array.isArray(ids)) {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return await Promise.all(await Zotero.Items.getAsync(ids).map(item => item.loadAllData()))
+    const items = await Zotero.Items.getAsync(ids)
+    // eslint-disable-next-line  @typescript-eslint/no-unsafe-return
+    await Promise.all(items.map(item => item.loadAllData()))
+    return items
   }
   else {
     const item = await Zotero.Items.getAsync(ids)
