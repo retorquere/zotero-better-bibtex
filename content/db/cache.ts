@@ -303,7 +303,7 @@ class ZoteroSerialized {
 
 export const Cache = new class $Cache {
   public schema = 9
-  public name = 'BetterBibTeXCache'
+  public name = '$BetterBibTeXCache'
 
   private db: IDBPDatabase<Schema>
 
@@ -317,12 +317,16 @@ export const Cache = new class $Cache {
   private async init() {
     const $db = this.db = await openDB<Schema>(this.name, this.schema, {
       upgrade: (db, oldVersion, newVersion) => {
+        log.debug('cache: opening')
         if (oldVersion !== newVersion) {
+          log.debug(`cache: upgrade ${oldVersion} => ${newVersion}`)
           for (const store of db.objectStoreNames) {
+            log.debug(`cache: upgrade ${oldVersion} => ${newVersion}, delete ${store}`)
             db.deleteObjectStore(store)
           }
         }
 
+        log.debug('cache: creating ZoteroSerialized, touched, metadata')
         db.createObjectStore('ZoteroSerialized', { keyPath: 'itemID' })
         db.createObjectStore('touched')
         db.createObjectStore('metadata')
@@ -330,17 +334,20 @@ export const Cache = new class $Cache {
         const context = db.createObjectStore('ExportContext', { keyPath: 'id', autoIncrement: true })
         context.createIndex('context', 'context', { unique: true })
 
+        log.debug('cache: creating export caches')
         const stores = [
           db.createObjectStore('BetterBibTeX', { keyPath: [ 'context', 'itemID' ]}),
           db.createObjectStore('BetterBibLaTeX', { keyPath: [ 'context', 'itemID' ]}),
           db.createObjectStore('BetterCSLJSON', { keyPath: [ 'context', 'itemID' ]}),
           db.createObjectStore('BetterCSLYAML', { keyPath: [ 'context', 'itemID' ]}),
         ]
+        log.debug('cache: adding export indices')
         for (const store of stores) {
           store.createIndex('context', 'context')
           store.createIndex('itemID', 'itemID')
           store.createIndex('context-itemID', [ 'context', 'itemID' ], { unique: true })
         }
+        log.debug('cache: upgrade done')
       },
       blocking: (currentVersion, blockedVersion, _event) => {
         log.info(`cache: releasing ${currentVersion} for ${blockedVersion}`)
@@ -355,7 +362,7 @@ export const Cache = new class $Cache {
       await this.init()
     }
     catch (err) {
-      log.error('could not open cache:', err)
+      log.error('could not open cache:', err.message)
       this.db = null
     }
 
