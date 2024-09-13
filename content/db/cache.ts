@@ -359,7 +359,9 @@ export const Cache = new class $Cache {
     if (this.db) throw new Error('database reopened')
 
     try {
+      log.debug('cache: about to open')
       await this.init()
+      log.debug('cache: opened')
     }
     catch (err) {
       log.error('could not open cache:', err.message)
