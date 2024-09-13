@@ -1,7 +1,7 @@
 import { is7 } from '../client'
 import type { Serialized, Serializer } from '../item-export-format'
 import { bySlug } from '../../gen/translators'
-import { openDB, deleteDB, IDBPDatabase, DBSchema } from 'idb'
+import { wrap, deleteDB, IDBPDatabase, DBSchema } from 'idb'
 import { log } from '../logger'
 import version from '../../gen/version'
 
@@ -314,9 +314,13 @@ export const Cache = new class $Cache {
   public BetterCSLJSON: ExportCache
   public BetterCSLYAML: ExportCache
 
-  private async init() {
-    const $db = this.db = await openDB<Schema>(this.name, this.schema, {
-      upgrade: (db, oldVersion, newVersion) => {
+  private async $open(): Promise<IDBPDatabase<Schema>> {
+    return new Promise((resolve, reject) => {
+      const request = indexedDB.open(this.name, this.schema)
+
+      request.onupgradeneeded = ({ target, oldVersion, newVersion }) => {
+        const db = (target as IDBOpenDBRequest).result
+
         log.debug('cache: opening')
         if (oldVersion !== newVersion) {
           log.debug(`cache: upgrade ${oldVersion} => ${newVersion}`)
@@ -348,19 +352,32 @@ export const Cache = new class $Cache {
           store.createIndex('context-itemID', [ 'context', 'itemID' ], { unique: true })
         }
         log.debug('cache: upgrade done')
-      },
-      blocking: (currentVersion, blockedVersion, _event) => {
-        log.info(`cache: releasing ${currentVersion} for ${blockedVersion}`)
-        $db.close()
-      },
+      }
+
+      request.onsuccess = event => {
+        resolve(<IDBPDatabase<Schema>>wrap((event.target as IDBOpenDBRequest).result))
+      }
+
+      request.onerror = event => {
+        const error = (event.target as IDBOpenDBRequest).error
+        log.error(`cache: failed to open (${error.message})`, error)
+        reject(error)
+      }
+
+      request.onblocked = event => {
+        const db = (event.target as IDBOpenDBRequest).result
+        log.info(`cache: releasing ${this.schema} for ${db?.version}`)
+        if (db) db.close()
+      }
     })
   }
+
   public async open(lastUpdated?: string): Promise<void> {
     if (this.db) throw new Error('database reopened')
 
     try {
       log.debug('cache: about to open')
-      await this.init()
+      this.db = await this.$open()
       log.debug('cache: opened')
     }
     catch (err) {
