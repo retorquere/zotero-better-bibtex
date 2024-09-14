@@ -2,8 +2,9 @@ import { is7 } from '../client'
 import type { Serialized, Serializer } from '../item-export-format'
 import { bySlug } from '../../gen/translators'
 import { wrap, deleteDB, IDBPDatabase, DBSchema } from 'idb'
-import { log } from '../logger'
+import { log } from '../logger/simple'
 import version from '../../gen/version'
+import { main as probe } from './cache-test'
 
 import type { Translators as Translator } from '../../typings/translators'
 const skip = new Set([ 'keepUpdated', 'worker', 'exportFileData' ])
