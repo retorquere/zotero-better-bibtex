@@ -1,4 +1,5 @@
 // https://firefox-storage-test.glitch.me/script.js
+const gVersion = 60 // what the (@#*&( is this?
 
 /**
  * The subsystem is broken, it impacts all content using the subsystem, and
@@ -355,7 +356,7 @@ async function testCacheAPI(preCtx) {
       }
 
       if (preCtx.paddedOpaqueCreatedIn) {
-        const response = await paddedOpaqueCache.match(KNOWN_OPAQUE_URL);
+        let response = await paddedOpaqueCache.match(KNOWN_OPAQUE_URL);
         // Check if the old opaque response is there; if so, that's okay.
         if (!response) {
           response = await unpaddedOpaqueCache.match(OLD_OPAQUE_URL);
@@ -535,5 +536,5 @@ function renderWrongBrowser() {
 
 export async function main() {
   const [state, context, logs] = await investigateStorage();
-  return { state, context, logs }
+  return { state, logs }
 }

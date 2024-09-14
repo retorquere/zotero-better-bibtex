@@ -1,7 +1,7 @@
 import { is7 } from '../client'
 import type { Serialized, Serializer } from '../item-export-format'
 import { bySlug } from '../../gen/translators'
-import { wrap, deleteDB, IDBPDatabase, DBSchema } from 'idb'
+import { openDB, deleteDB, IDBPDatabase, DBSchema } from 'idb'
 import { log } from '../logger/simple'
 import version from '../../gen/version'
 import { main as probe } from './cache-test'
@@ -304,7 +304,7 @@ class ZoteroSerialized {
 
 export const Cache = new class $Cache {
   public schema = 9
-  public name = '$BetterBibTeXCache'
+  public name = 'BetterBibTeXCache'
 
   private db: IDBPDatabase<Schema>
 
@@ -316,22 +316,16 @@ export const Cache = new class $Cache {
   public BetterCSLYAML: ExportCache
 
   private async $open(): Promise<IDBPDatabase<Schema>> {
-    return new Promise((resolve, reject) => {
-      const request = indexedDB.open(this.name, this.schema)
+    log.debug(`probing idb for ${this.name} ${this.schema}: ${JSON.stringify(await probe(), null, 2)}`)
 
-      request.onupgradeneeded = ({ target, oldVersion, newVersion }) => {
-        const db = (target as IDBOpenDBRequest).result
-
-        log.debug('cache: opening')
+    return openDB<Schema>(this.name, this.schema, {
+      upgrade: (db, oldVersion, newVersion) => {
         if (oldVersion !== newVersion) {
-          log.debug(`cache: upgrade ${oldVersion} => ${newVersion}`)
           for (const store of db.objectStoreNames) {
-            log.debug(`cache: upgrade ${oldVersion} => ${newVersion}, delete ${store}`)
             db.deleteObjectStore(store)
           }
         }
 
-        log.debug('cache: creating ZoteroSerialized, touched, metadata')
         db.createObjectStore('ZoteroSerialized', { keyPath: 'itemID' })
         db.createObjectStore('touched')
         db.createObjectStore('metadata')
@@ -339,37 +333,23 @@ export const Cache = new class $Cache {
         const context = db.createObjectStore('ExportContext', { keyPath: 'id', autoIncrement: true })
         context.createIndex('context', 'context', { unique: true })
 
-        log.debug('cache: creating export caches')
         const stores = [
           db.createObjectStore('BetterBibTeX', { keyPath: [ 'context', 'itemID' ]}),
           db.createObjectStore('BetterBibLaTeX', { keyPath: [ 'context', 'itemID' ]}),
           db.createObjectStore('BetterCSLJSON', { keyPath: [ 'context', 'itemID' ]}),
           db.createObjectStore('BetterCSLYAML', { keyPath: [ 'context', 'itemID' ]}),
         ]
-        log.debug('cache: adding export indices')
         for (const store of stores) {
           store.createIndex('context', 'context')
           store.createIndex('itemID', 'itemID')
           store.createIndex('context-itemID', [ 'context', 'itemID' ], { unique: true })
         }
-        log.debug('cache: upgrade done')
-      }
-
-      request.onsuccess = event => {
-        resolve(<IDBPDatabase<Schema>>wrap((event.target as IDBOpenDBRequest).result))
-      }
-
-      request.onerror = event => {
-        const error = (event.target as IDBOpenDBRequest).error
-        log.error(`cache: failed to open (${error.message})`, error)
-        reject(error)
-      }
-
-      request.onblocked = event => {
+      },
+      blocking: (currentVersion, blockedVersion, event) => {
         const db = (event.target as IDBOpenDBRequest).result
-        log.info(`cache: releasing ${this.schema} for ${db?.version}`)
+        log.info(`cache: releasing ${currentVersion} for ${blockedVersion}`)
         if (db) db.close()
-      }
+      },
     })
   }
 
