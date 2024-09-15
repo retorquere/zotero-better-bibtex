@@ -1,10 +1,12 @@
+import { log, $dump } from '../logger/simple'
+
+$dump(`IDBKeyRange: ${typeof IDBKeyRange}`)
 import { is7, worker } from '../client'
 var IDBKeyRange // eslint-disable-line no-var
-if (is7 && !worker && typeof IDBKeyRange === 'undefined') IDBKeyRange = Components.classes['@mozilla.org/appshell/appShellService;1'].getService(Components.interfaces.nsIAppShellService).hiddenDOMWindow.IDBKeyRange
+if (!worker && typeof IDBKeyRange === 'undefined') IDBKeyRange = Components.classes['@mozilla.org/appshell/appShellService;1'].getService(Components.interfaces.nsIAppShellService).hiddenDOMWindow.IDBKeyRange
 
 import type { Serialized, Serializer } from '../item-export-format'
 import { bySlug } from '../../gen/translators'
-import { log } from '../logger/simple'
 import version from '../../gen/version'
 import { main as probe } from './cache-test'
 
