@@ -8,8 +8,8 @@ import { log } from '../logger/simple'
 import version from '../../gen/version'
 import { main as probe } from './cache-test'
 
-// import { Database, Transaction, Factory } from '@retorquere/indexeddb-promise'
-import { Database, Transaction, Factory } from '../../../indexeddb-promise'
+import { Database, Transaction, Factory } from '@retorquere/indexeddb-promise'
+// import { Database, Transaction, Factory } from '../../../indexeddb-promise'
 
 import type { Translators as Translator } from '../../typings/translators'
 const skip = new Set([ 'keepUpdated', 'worker', 'exportFileData' ])
