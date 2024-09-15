@@ -78,48 +78,48 @@ export async function startup({ resourceURI, rootURI = resourceURI.spec }, reaso
 
     setDefaultPrefs(rootURI)
 
-    const $window = Zotero.getMainWindow()
-    if ($window) {
-      Services.scriptloader.loadSubScriptWithOptions(`${ rootURI }content/better-bibtex.js`, {
-        charset: 'utf=8',
-        // ignoreCache: true,
-        target: {
-          Zotero,
-          // because the Zotero sample code assumes you're doing everything in bootstrap.js
-          rootURI,
+    const $window = Cc['@mozilla.org/appshell/appShellService;1'].getService(Ci.nsIAppShellService).hiddenDOMWindow
+    Services.scriptloader.loadSubScriptWithOptions(`${ rootURI }content/better-bibtex.js`, {
+      charset: 'utf=8',
+      // ignoreCache: true,
+      target: {
+        Zotero,
+        // because the Zotero sample code assumes you're doing everything in bootstrap.js
+        rootURI,
 
-          // to pacify libraries that do env-detection
-          window: $window,
-          document: $window.document,
+        // to pacify libraries that do env-detection
+        window: $window,
+        document: $window.document,
 
-          setTimeout,
-          clearTimeout,
-          setInterval,
-          clearInterval,
+        setTimeout,
+        clearTimeout,
+        setInterval,
+        clearInterval,
 
-          indexedDB: $window.indexedDB,
-          IDBRequest: $window.IDBRequest,
-          IDBTransaction: $window.IDBTransaction,
-          IDBDatabase: $window.IDBDatabase,
-          IDBObjectStore: $window.IDBObjectStore,
-          IDBIndex: $window.IDBIndex,
-          IDBCursor: $window.IDBCursor,
-          IDBKeyRange: $window.IDBKeyRange,
-          Event: $window.Event,
-        },
-      })
+        /*
+        // indexedDB: $window.indexedDB,
+        IDBRequest: $window.IDBRequest,
+        IDBTransaction: $window.IDBTransaction,
+        IDBDatabase: $window.IDBDatabase,
+        IDBObjectStore: $window.IDBObjectStore,
+        IDBIndex: $window.IDBIndex,
+        IDBCursor: $window.IDBCursor,
+        IDBKeyRange: $window.IDBKeyRange,
+        Event: $window.Event,
+        */
+      },
+    })
 
-      await Zotero.BetterBibTeX.startup(BOOTSTRAP_REASONS[reason])
-      Zotero.PreferencePanes.register({
-        pluginID: 'better-bibtex@iris-advies.com',
-        src: `${ rootURI }content/preferences.xhtml`,
-        stylesheets: [`${ rootURI }content/preferences.css`],
-        label: 'Better BibTeX',
-        defaultXUL: true,
-      })
-      log('startup done')
-      onMainWindowLoad({ window: $window })
-    }
+    await Zotero.BetterBibTeX.startup(BOOTSTRAP_REASONS[reason])
+    Zotero.PreferencePanes.register({
+      pluginID: 'better-bibtex@iris-advies.com',
+      src: `${ rootURI }content/preferences.xhtml`,
+      stylesheets: [`${ rootURI }content/preferences.css`],
+      label: 'Better BibTeX',
+      defaultXUL: true,
+    })
+    log('startup done')
+    onMainWindowLoad({ window: Zotero.getMainWindow() })
   }
   catch (err) {
     alert({ title: 'Better BibTeX startup failed', text: `${ err }` })

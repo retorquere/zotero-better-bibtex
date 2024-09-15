@@ -12,7 +12,7 @@ import { Shim } from './os'
 import { is7 } from './client'
 const $OS = is7 ? Shim : OS
 
-if (is7) Components.utils.importGlobalProperties(['FormData'])
+if (is7) Components.utils.importGlobalProperties(['FormData', 'indexedDB'])
 
 Components.utils.import('resource://gre/modules/FileUtils.jsm')
 declare const FileUtils: any
