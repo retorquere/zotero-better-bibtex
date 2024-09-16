@@ -102,7 +102,7 @@ function makeEmptyContext() {
       unpaddedOpaqueCreatedIn: 0,
       // The first version we believe we stashed a padded opaque cors request in.
       paddedOpaqueCreatedIn: 0,
-      
+
     }
   };
 }
@@ -117,7 +117,7 @@ async function testLocalStorageAndExtractContext() {
     } else {
       ctx = makeEmptyContext();
     }
-    
+
     return [kFullyOperational, ctx, []];
   } catch (ex) {
     return [kUnexpectedBreakage, makeEmptyContext(), [ex.message]];
@@ -186,7 +186,7 @@ async function testIDB(preCtx) {
       }
     });
   }
-    
+
   try {
     const logs = [];
     const resultCtx = {
@@ -194,7 +194,7 @@ async function testIDB(preCtx) {
       persistentLastOpenedIn: preCtx.persistentLastOpenedIn,
       clearDetectedIn: preCtx.clearDetectedIn,
     };
-    
+
     const persistentCheck = await openDB("persistent");
     let status;
     if (persistentCheck === "created") {
@@ -218,7 +218,7 @@ async function testIDB(preCtx) {
         logs.push(`Failed to create "persistent" IDB.`);
       }
     }
-    
+
     const transientCheck = await openDB("transient");
     if (transientCheck === "created") {
       // If we were able to create this DB, downgrade to only existing stuff being broken.
@@ -231,7 +231,7 @@ async function testIDB(preCtx) {
       logs.push(`Failed to create "transient" IDB.`);
     }
     await deleteIDB("transient");
-    
+
     return [status, resultCtx, logs];
   } catch (ex) {
     return [kUnexpectedBreakage, preCtx, [ex.message]];
@@ -248,7 +248,7 @@ async function testStorageManager(preCtx) {
     if (!("storage" in navigator)) {
       return [kNotDirectlyObservable, preCtx, [`navigator.storage not available in this build, inferring status.`]];
     }
-    
+
     const usage = await navigator.storage.estimate();
     return [kFullyOperational, { lastWorkedIn: gVersion }];
   } catch (ex) {
@@ -258,7 +258,7 @@ async function testStorageManager(preCtx) {
     } else {
       logs.push(`storage.estimate() threw: ${ex.message}`);
     }
-    
+
     return [kFullyBroken, preCtx, logs];
   }
 }
@@ -296,7 +296,7 @@ const OLD_OPAQUE_URL = "https://firefox-storage-test-oth.glitch.me/known-opaque"
 async function testCacheAPI(preCtx) {
   try {
     const logs = [];
-    
+
     let cacheNames;
     // keys() will trigger full initialization of caches.sqlite if it doesn't
     // exist.
@@ -305,18 +305,18 @@ async function testCacheAPI(preCtx) {
     } catch(ex) {
       return [kFullyBroken, preCtx, [ex.message]];
     }
-    
+
     // If we got through caches.keys(), everything should be working.  Let's
     // set to operational, and overwrite to kExistingBroken if we see anything
     // weird happen as we run through our test.
     let status = kFullyOperational;
-    
+
     const resultCtx = {
       firstCacheCreatedIn: preCtx.firstCacheCreatedIn,
       unpaddedOpaqueCreatedIn: preCtx.unpaddedOpaqueCreatedIn,
       paddedOpaqueCreatedIn: preCtx.paddedOpaqueCreatedIn
     };
-    
+
     let stuffExisted = (cacheNames.length !== 0);
     if (!stuffExisted) {
       if (preCtx.firstCacheCreatedIn) {
@@ -328,11 +328,11 @@ async function testCacheAPI(preCtx) {
       }
       resultCtx.firstCacheCreatedIn = gVersion;
     }
-    
+
     const noOpaqueCache = await caches.open(CACHE_NO_OPAQUE);
     const unpaddedOpaqueCache = await caches.open(CACHE_WITH_UNPADDED_OPAQUE);
     const paddedOpaqueCache = await caches.open(CACHE_WITH_PADDED_OPAQUE);
-    
+
     // -- Check things that should exist.
     if (stuffExisted) {
       // NORMAL_URL should always have been added.
@@ -342,7 +342,7 @@ async function testCacheAPI(preCtx) {
         status = kExistingBroken;
         stuffExisted = false;
       }
-    
+
       if (preCtx.unpaddedOpaqueCreatedIn) {
         let response = await unpaddedOpaqueCache.match(KNOWN_OPAQUE_URL);
         // Check if the old opaque response is there; if so, that's okay.
@@ -367,12 +367,12 @@ async function testCacheAPI(preCtx) {
         }
       }
     }
-    
+
     // Put the NORMAL_URL in if it didn't/doesn't exist.
     if (!stuffExisted) { // (this got clobbered above if it didn't exist)
       await noOpaqueCache.add(NORMAL_URL);
     }
-    
+
     // -- Get our opaque response.
     const opaqueResponse = await fetch(KNOWN_OPAQUE_URL, { mode: "no-cors" });
     const shouldBePadded = (gVersion >= 57);
@@ -388,7 +388,7 @@ async function testCacheAPI(preCtx) {
         resultCtx.paddedOpaqueCreatedIn = gVersion;
       }
     }
-    
+
     return [status, resultCtx, logs];
   } catch (ex) {
     return [kUnexpectedBreakage, preCtx, [ex.message]];
@@ -403,17 +403,17 @@ async function testCacheAPI(preCtx) {
  */
 async function investigateStorage() {
   const [lsState, preCtx, lsLogs] = await testLocalStorageAndExtractContext();
-  
+
   console.log("investigating navigator.storage");
   // we may need to clobber the QM state if we have to fall back to inference
   let [qmState, qmCtx, qmLogs] = await testStorageManager(preCtx.qm);
-  
+
   console.log("investigating IndexedDB");
   const [idbState, idbCtx, idbLogs] = await testIDB(preCtx.idb);
-  
+
   console.log("investigating DOM Cache API");
   const [cacheState, cacheCtx, cacheLogs] = await testCacheAPI(preCtx.cache);
-  
+
   if (qmState === kNotDirectlyObservable) {
     if (isBadStatus(idbState)) {
       qmState = idbState;
@@ -423,14 +423,14 @@ async function investigateStorage() {
       qmState = kFullyOperational;
     }
   }
-  
+
   const allStates = {
     ls: lsState,
     qm: qmState,
     idb: idbState,
     cache: cacheState
   };
-  
+
   const resultCtx = makeEmptyContext();
   resultCtx.prevVersion = preCtx.curVersion;
   resultCtx.curVersion = gVersion;
@@ -439,9 +439,9 @@ async function investigateStorage() {
   resultCtx.idb = idbCtx;
   resultCtx.cache = cacheCtx;
   saveContextToLocalStorage(resultCtx);
-  
+
   const allLogs = [].concat(lsLogs, qmLogs, idbLogs, cacheLogs);
-  
+
   return [allStates, resultCtx, allLogs];
 }
 
@@ -460,10 +460,10 @@ async function resetState() {
 function renderDiagnosis(state, context) {
   const containerElem = document.getElementById("diagnosisContainer");
   containerElem.removeAttribute("style");
-  
+
   const bodyElem = document.getElementById("diagnosisBody");
   const lines = [];
-  
+
   // -- Give a brief overview of what seems to be going on with storage.
   let stuffBroken = false;
   let clearDetected = false;
@@ -483,7 +483,7 @@ function renderDiagnosis(state, context) {
   } else {
     lines.push(`Storage is working.`);
   }
-  
+
   // -- Explain what we think is happening version wise.
   if (!context.prevVersion) {
     lines.push(`This is your first visit or all storage was automatically cleared.`);
@@ -494,7 +494,7 @@ function renderDiagnosis(state, context) {
   } else {
     lines.push(`This is the same version (${context.curVersion}) as the last time you loaded this page.`);
   }
-  
+
   bodyElem.textContent = lines.join("\n");
 }
 
@@ -505,18 +505,18 @@ function renderDiagnosis(state, context) {
 function renderStorageState(state) {
   const containerElem = document.getElementById("storageStateContainer");
   containerElem.removeAttribute("style");
-  
+
   function renderSubsystem(subsystem, subsystemStatus) {
     const elem = document.getElementById(`status-${subsystem}`);
-    
+
     const goodOrBad = isBadStatus(subsystemStatus) ? "Bad" : "Good";
-    
+
     elem.textContent = `${goodOrBad}: ${STATUS_EXPLANATIONS[subsystemStatus]} (${subsystemStatus})`;
     elem.className = subsystemStatus;
   }
-  
+
   document.getElementById("brokenWarning").style.display = "none";
-  
+
   renderSubsystem("qm", state.qm);
   renderSubsystem("idb", state.idb);
   renderSubsystem("cacheApi", state.cache);
