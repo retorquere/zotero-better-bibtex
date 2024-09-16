@@ -428,6 +428,7 @@ export const AutoExport = new class $AutoExport { // eslint-disable-line @typesc
       }),
       this.db[BlinkKey].events.onUpdate.register(changes => {
         for (const change of changes) {
+          Zotero.Prefs.clear(`translators.better-bibtex.autoExport.${this.key(change.oldEntity.path)}`)
           Zotero.Prefs.set(`translators.better-bibtex.autoExport.${this.key(change.newEntity.path)}`, JSON.stringify(change.newEntity))
         }
       }),

@@ -37,8 +37,10 @@ export class Serializer {
         break
 
       default:
-        serialized.attachments = (await getItemsAsync(item.getAttachments(), selectedLibraryID)).map(att => this.attachment({ ...att.toJSON(), uri: Zotero.URI.getItemURI(att) } as Attachment, att))
-        serialized.notes = (await getItemsAsync(item.getNotes(), selectedLibraryID)).map(note => ({ ...note.toJSON(), uri: Zotero.URI.getItemURI(note) } as Note))
+        serialized.attachments = (await getItemsAsync(item.getAttachments()))
+          .map(att => this.attachment({ ...att.toJSON(), uri: Zotero.URI.getItemURI(att) } as Attachment, att))
+        serialized.notes = (await getItemsAsync(item.getNotes()))
+          .map(note => ({ ...note.toJSON(), uri: Zotero.URI.getItemURI(note) } as Note))
         break
     }
 
