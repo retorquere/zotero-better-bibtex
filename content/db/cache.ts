@@ -104,7 +104,13 @@ interface Schema extends DBSchema {
 export type ExportCacheName = 'BetterBibLaTeX' | 'BetterBibTeX' | 'BetterCSLJSON' | 'BetterCSLYAML'
 
 class CacheDB extends Database {
-  public _upgrade(transaction: Transaction, oldVersion: number, newVersion: number | null): void {
+  public _upgrade(_transaction: Transaction, oldVersion: number, newVersion: number | null): void {
+    if (typeof newVersion !== 'number') {
+      log.info(`cache: deleting ${oldVersion}`)
+    }
+    else {
+      log.info(`cache: upgrading ${oldVersion} => ${newVersion}`)
+    }
     for (const store of this.objectStoreNames) {
       this.deleteObjectStore(store)
     }
