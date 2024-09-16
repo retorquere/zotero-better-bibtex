@@ -169,7 +169,7 @@ export class ErrorReport {
   }
 
   public async save(): Promise<void> {
-    const filename = await pick('Logs', 'save', [[ 'Zip Archive (*.zip)', '*.zip' ]], `${ name }.zip`)
+    const filename = await pick('Logs', 'save', [[ 'Zip Archive (*.zip)', '*.zip' ]], `${ this.name() }.zip`)
     if (filename) await $OS.File.writeAtomic(filename, this.zip(), { tmpPath: filename + '.tmp' })
   }
 
