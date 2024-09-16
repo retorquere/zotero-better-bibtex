@@ -105,10 +105,8 @@ export type ExportCacheName = 'BetterBibLaTeX' | 'BetterBibTeX' | 'BetterCSLJSON
 
 class CacheDB extends Database {
   public _upgrade(transaction: Transaction, oldVersion: number, newVersion: number | null): void {
-    if (oldVersion !== newVersion) {
-      for (const store of this.objectStoreNames) {
-        this.deleteObjectStore(store)
-      }
+    for (const store of this.objectStoreNames) {
+      this.deleteObjectStore(store)
     }
 
     this.createObjectStore('ZoteroSerialized', { keyPath: 'itemID' })
