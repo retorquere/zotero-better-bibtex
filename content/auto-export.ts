@@ -711,6 +711,10 @@ export const AutoExport = new class $AutoExport { // eslint-disable-line @typesc
     if (!Preference.cache) return 0
 
     const ae = this.get(path)
+    if (!ae) {
+      log.error(`no auto-export found for ${path}`)
+      return 0
+    }
 
     const itemTypeIDs: number[] = [ 'attachment', 'note', 'annotation' ].map(type => {
       try {
