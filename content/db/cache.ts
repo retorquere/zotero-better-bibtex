@@ -476,11 +476,14 @@ export const Cache = new class $Cache {
   public async count() {
     if (!this.available('count')) return 0
 
+    let count = 0
     const stores = this.db.objectStoreNames.filter(name => name !== 'metadata' && name !== 'touched')
-    const tx = this.db.transaction(stores, 'readonly')
-    const entries = await Promise.all(stores.map(name => tx.objectStore(name).count()))
-    await tx.commit()
-    return entries.reduce((a, b) => a + b, 0)
+    for (const name of stores) {
+      const tx = this.db.transaction(name, 'readonly')
+      count += await tx.objectStore(name).count()
+      await tx.commit()
+    }
+    return count
   }
 
   public export: Running
@@ -492,24 +495,30 @@ export const Cache = new class $Cache {
     if (!this.available('dump')) return {}
 
     const tables: Record<string, any> = {}
-    const tx = this.db.transaction(this.db.objectStoreNames, 'readonly')
     for (const name of this.db.objectStoreNames) {
-      const store = tx.objectStore(name)
-      switch (name) {
-        case 'touched':
-        case 'metadata':
-          tables[name] = {}
-          for (const key of await store.getAllKeys() as string[]) {
-            tables[name][key] = await store.get(key)
-          }
-          break
+      try {
+        const tx = this.db.transaction(name, 'readonly')
+        const store = tx.objectStore(name)
+        switch (name) {
+          case 'touched':
+          case 'metadata':
+            tables[name] = {}
+            for (const key of await store.getAllKeys() as string[]) {
+              tables[name][key] = await store.get(key)
+            }
+            break
 
-        default:
-          tables[name] = await store.getAll()
-          break
+          default:
+            tables[name] = await store.getAll()
+            break
+        }
+        await tx.commit()
+      }
+      catch (err) {
+        log.error(`cache dump: ${name}`, err)
+        delete tables[name]
       }
     }
-    await tx.commit()
 
     return tables
   }
