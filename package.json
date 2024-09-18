@@ -69,7 +69,7 @@
     "@caeser1996/titlecase": "^3.0.2",
     "@henrygd/queue": "^1.0.6",
     "@lifeparticle/ap-style-title-case": "^1.5.0",
-    "@retorquere/indexeddb-promise": "^1.0.9",
+    "@retorquere/indexeddb-promise": "^1.0.10",
     "@stdlib/utils-escape-regexp-string": "^0.2.2",
     "@ungap/structured-clone": "^1.2.0",
     "ajv": "^8.17.1",
