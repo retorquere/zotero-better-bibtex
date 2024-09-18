@@ -2,51 +2,8 @@ import { log } from '../logger/simple'
 
 import { is7, worker } from '../client'
 
-class $IDBKeyRange {
-  public lower: IDBValidKey
-  public upper: IDBValidKey
-  public lowerOpen: boolean
-  public upperOpen: boolean
-
-  constructor(lower: IDBValidKey, upper: IDBValidKey, lowerOpen = false, upperOpen = false) {
-    this.lower = lower
-    this.upper = upper
-    this.lowerOpen = lowerOpen
-    this.upperOpen = upperOpen
-  }
-
-  static only(value: IDBValidKey): IDBKeyRange {
-    return new $IDBKeyRange(value, value, false, false)
-  }
-
-  static lowerBound(bound: IDBValidKey, open = false): IDBKeyRange {
-    return new $IDBKeyRange(bound, undefined, open, true)
-  }
-
-  static upperBound(bound: IDBValidKey, open = false): IDBKeyRange {
-    return new $IDBKeyRange(undefined, bound, true, open)
-  }
-
-  static bound(lower: IDBValidKey, upper: IDBValidKey, lowerOpen = false, upperOpen = false): IDBKeyRange {
-    return new $IDBKeyRange(lower, upper, lowerOpen, upperOpen)
-  }
-
-  includes(key: IDBValidKey): boolean {
-    if (this.lower !== undefined) {
-      if (this.lowerOpen ? key <= this.lower : key < this.lower) {
-        return false
-      }
-    }
-    if (this.upper !== undefined) {
-      if (this.upperOpen ? key >= this.upper : key > this.upper) {
-        return false
-      }
-    }
-    return true
-  }
-}
-
-const idbKeyRange = worker || typeof IDBKeyRange !== 'undefined' ? IDBKeyRange : $IDBKeyRange
+var IDBKeyRange // eslint-disable-line no-var
+if (!worker && typeof IDBKeyRange === 'undefined') IDBKeyRange = Components.classes['@mozilla.org/appshell/appShellService;1'].getService(Components.interfaces.nsIAppShellService).hiddenDOMWindow.IDBKeyRange
 
 import type { Serialized, Serializer } from '../item-export-format'
 import { bySlug } from '../../gen/translators'
@@ -230,7 +187,7 @@ export class ExportCache {
     const deletes: Promise<void>[] = []
 
     for (const id of ids) {
-      const cursor = await index.openCursor(idbKeyRange.only(id))
+      const cursor = await index.openCursor(IDBKeyRange.only(id))
       if (cursor) deletes.push(store.delete(cursor.primaryKey))
     }
     await Promise.all(deletes)
@@ -247,7 +204,7 @@ export class ExportCache {
     const deletes: Promise<void>[] = []
 
     const cache = tx.objectStore(this.name as 'BetterBibTeX')
-    const cursor = await cache.index('context').openCursor(idbKeyRange.only(path))
+    const cursor = await cache.index('context').openCursor(IDBKeyRange.only(path))
     if (cursor) deletes.push(cache.delete(cursor.primaryKey))
 
     if (deleteContext) {
@@ -264,7 +221,7 @@ export class ExportCache {
     const tx = this.db.transaction(this.name, 'readonly')
     const store = tx.objectStore(this.name)
     const index = store.index('context')
-    const count = await index.count(idbKeyRange.only(path))
+    const count = await index.count(IDBKeyRange.only(path))
     return count
   }
 
