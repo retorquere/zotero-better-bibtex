@@ -1,9 +1,52 @@
-import { log, $dump } from '../logger/simple'
+import { log } from '../logger/simple'
 
-$dump(`IDBKeyRange: ${typeof IDBKeyRange}`)
 import { is7, worker } from '../client'
-var IDBKeyRange // eslint-disable-line no-var
-if (!worker && typeof IDBKeyRange === 'undefined') IDBKeyRange = Components.classes['@mozilla.org/appshell/appShellService;1'].getService(Components.interfaces.nsIAppShellService).hiddenDOMWindow.IDBKeyRange
+
+class $IDBKeyRange {
+  public lower: IDBValidKey
+  public upper: IDBValidKey
+  public lowerOpen: boolean
+  public upperOpen: boolean
+
+  constructor(lower: IDBValidKey, upper: IDBValidKey, lowerOpen = false, upperOpen = false) {
+    this.lower = lower
+    this.upper = upper
+    this.lowerOpen = lowerOpen
+    this.upperOpen = upperOpen
+  }
+
+  static only(value: IDBValidKey): IDBKeyRange {
+    return new $IDBKeyRange(value, value, false, false)
+  }
+
+  static lowerBound(bound: IDBValidKey, open = false): IDBKeyRange {
+    return new $IDBKeyRange(bound, undefined, open, true)
+  }
+
+  static upperBound(bound: IDBValidKey, open = false): IDBKeyRange {
+    return new $IDBKeyRange(undefined, bound, true, open)
+  }
+
+  static bound(lower: IDBValidKey, upper: IDBValidKey, lowerOpen = false, upperOpen = false): IDBKeyRange {
+    return new $IDBKeyRange(lower, upper, lowerOpen, upperOpen)
+  }
+
+  includes(key: IDBValidKey): boolean {
+    if (this.lower !== undefined) {
+      if (this.lowerOpen ? key <= this.lower : key < this.lower) {
+        return false
+      }
+    }
+    if (this.upper !== undefined) {
+      if (this.upperOpen ? key >= this.upper : key > this.upper) {
+        return false
+      }
+    }
+    return true
+  }
+}
+
+const idbKeyRange = worker || typeof IDBKeyRange !== 'undefined' ? IDBKeyRange : $IDBKeyRange
 
 import type { Serialized, Serializer } from '../item-export-format'
 import { bySlug } from '../../gen/translators'
@@ -187,7 +230,7 @@ export class ExportCache {
     const deletes: Promise<void>[] = []
 
     for (const id of ids) {
-      const cursor = await index.openCursor(IDBKeyRange.only(id))
+      const cursor = await index.openCursor(idbKeyRange.only(id))
       if (cursor) deletes.push(store.delete(cursor.primaryKey))
     }
     await Promise.all(deletes)
@@ -204,7 +247,7 @@ export class ExportCache {
     const deletes: Promise<void>[] = []
 
     const cache = tx.objectStore(this.name as 'BetterBibTeX')
-    const cursor = await cache.index('context').openCursor(IDBKeyRange.only(path))
+    const cursor = await cache.index('context').openCursor(idbKeyRange.only(path))
     if (cursor) deletes.push(cache.delete(cursor.primaryKey))
 
     if (deleteContext) {
@@ -221,8 +264,7 @@ export class ExportCache {
     const tx = this.db.transaction(this.name, 'readonly')
     const store = tx.objectStore(this.name)
     const index = store.index('context')
-    const count = await index.count(IDBKeyRange.only(path))
-    await tx.commit()
+    const count = await index.count(idbKeyRange.only(path))
     return count
   }
 
@@ -333,7 +375,6 @@ class ZoteroSerialized {
       const requested = new Set(ids)
       items = (await store.getAll()).filter(item => requested.has(item.itemID))
     }
-    await tx.commit()
 
     if (ids.length !== items.length) log.error(`indexed: failed to fetch ${ ids.length - items.length } items`)
     return items
@@ -481,7 +522,6 @@ export const Cache = new class $Cache {
     for (const name of stores) {
       const tx = this.db.transaction(name, 'readonly')
       count += await tx.objectStore(name).count()
-      await tx.commit()
     }
     return count
   }
@@ -495,9 +535,9 @@ export const Cache = new class $Cache {
     if (!this.available('dump')) return {}
 
     const tables: Record<string, any> = {}
-    for (const name of this.db.objectStoreNames) {
-      try {
-        const tx = this.db.transaction(name, 'readonly')
+    try {
+      const tx = this.db.transaction([...this.db.objectStoreNames], 'readonly')
+      for (const name of this.db.objectStoreNames) {
         const store = tx.objectStore(name)
         switch (name) {
           case 'touched':
@@ -512,12 +552,10 @@ export const Cache = new class $Cache {
             tables[name] = await store.getAll()
             break
         }
-        await tx.commit()
       }
-      catch (err) {
-        log.error(`cache dump: ${name}`, err)
-        delete tables[name]
-      }
+    }
+    catch (err) {
+      log.error('cache dump:', err)
     }
 
     return tables
