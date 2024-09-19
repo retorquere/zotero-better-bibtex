@@ -511,7 +511,7 @@ export const Cache = new class $Cache {
         }
       }
       catch (err) {
-        log.error(`cache dump: (${name})`, err)
+        log.error(`cache dump of ${name} failed:`, err)
       }
     }
 

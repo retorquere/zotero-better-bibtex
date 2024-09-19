@@ -20,7 +20,7 @@ export const discard = {
 }
 
 export function format(msg: string, error?: Error): string {
-  const err = error ? ` (${ error.message })\n${ error.stack }`.trim() : ''
+  const err = error ? ` (${ error.message })\n${ error.stack }` : ''
   return `${ error ? 'error: ' : '' }${ client.worker ? 'worker:' : '' }better-bibtex: ${run}::${ msg }${ err }`
 }
 
