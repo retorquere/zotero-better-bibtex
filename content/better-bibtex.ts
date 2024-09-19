@@ -459,8 +459,6 @@ $Patcher$.schedule(Zotero.Utilities.Internal, 'extractExtraFields', original => 
 
 $Patcher$.schedule(Zotero.Translate.Export.prototype, 'translate', original => function Zotero_Translate_Export_prototype_translate() {
   if (this.noWait) {
-    this._displayOptions = this._displayOptions || {}
-    this._displayOptions.cached = false
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return original.apply(this, arguments)
   }
@@ -470,9 +468,10 @@ $Patcher$.schedule(Zotero.Translate.Export.prototype, 'translate', original => f
     let translatorID = this.translator[0]
     if (translatorID.translatorID) translatorID = translatorID.translatorID
     const translator = Translators.byId[translatorID]
-    const displayOptions = this._displayOptions || {}
+    const displayOptions = { ...(this._displayOptions || {}) }
 
     if (translator) {
+      log.debug('2981: BBT translator:', translator)
       if (this.location) {
         if (displayOptions.exportFileData) { // when exporting file data, the user was asked to pick a directory rather than a file
           displayOptions.exportDir = this.location.path
@@ -536,6 +535,8 @@ $Patcher$.schedule(Zotero.Translate.Export.prototype, 'translate', original => f
   catch (err) {
     log.error('Zotero.Translate.Export::translate error:', err)
   }
+
+  log.debug('2981: stock translator:', { translator: this.translator, displayOptions: this._displayOptions } )
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   return original.apply(this, arguments)
