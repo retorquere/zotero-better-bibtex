@@ -131,6 +131,7 @@ export type Config = {
   }
 }
 
+const nonAcademicSubtype = new Set(['newspaper', 'magazine'])
 /*
  * The fields are objects with the following keys:
  *   * name: name of the Bib(La)TeX field
@@ -282,7 +283,11 @@ export class Entry {
       this.entrytype = entrytype
     }
     else {
-      this.add({ name: 'entrysubtype', value: entrytype.subtype })
+      let subtype = entrytype.subtype
+      if (this.translation.BetterBibLaTeX && this.translation.collected.displayOptions.biblatexAPA && nonAcademicSubtype.has(subtype)) {
+        subtype = 'nonacademic'
+      }
+      this.add({ name: 'entrysubtype', value: subtype })
       this.entrytype = entrytype.type
     }
 
