@@ -45,7 +45,7 @@ better-bibtex_error-report_report-id = ID del log di debug:
 better-bibtex_error-report_restart-with-logging-enabled = 
     .label = Riavvio con log abilitato…
 better-bibtex_error-report_review =
-    The data below is about to submitted to Better BibTeX for debugging. You can preview the data here, or save a copy of the log to get the precise data about to be sent, to see whether there's sensitive information that you do not wish to send. Please think carefully about whether unchecking options below is necessary for your environment. We will generally needs more communication (= time) if you remove parts of the log this way.
+    The data below is about to submitted to Better BibTeX for debugging. You can preview the data here, or save a copy of the log to get the precise data about to be sent, to see whether there's sensitive information that you do not wish to send. Please think carefully about whether unchecking options below is necessary for your environment. We will generally need more communication (= time) if you remove parts of the log this way.
     
     If you are OK with sending this data, please proceed to the next screen where you will be presented a red debug ID, and post this ID on the issue tracker at
     
