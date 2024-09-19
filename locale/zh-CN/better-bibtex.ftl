@@ -45,9 +45,9 @@ better-bibtex_error-report_report-id = 调试日志 ID：
 better-bibtex_error-report_restart-with-logging-enabled = 
     .label = 启用日志记录并重启…
 better-bibtex_error-report_review =
-    The data below is about to submitted to Better BibTeX for debugging. You can preview the data here, or save a copy of the log to get the precise data about to be sent, to see whether there's sensitive information that you do not wish to send. Please think carefully about whether unchecking options below is necessary for your environment. We will generally need more communication (= time) if you remove parts of the log this way.
+    以下数据将被提交至 Better BibTeX 以供调试。您可以现在预览数据，或保存日志副本以获取将被发送的准确数据，以检查是否有您不希望发送的敏感信息。请仔细考虑在您的环境下是否有必要取消下面的选项。如果您以这种方式移除了部分日志，那么我们一般需要更多沟通（=更多时间）。
     
-    If you are OK with sending this data, please proceed to the next screen where you will be presented a red debug ID, and post this ID on the issue tracker at
+    如果您允许发送数据，请进行下一步，并将以红色字体显示的调试 ID 提交至问题追踪器（issue tracker）：
     
     https://github.com/retorquere/zotero-better-bibtex/issue
 better-bibtex_error-report_save = 
