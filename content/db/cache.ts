@@ -10,8 +10,7 @@ import { bySlug } from '../../gen/translators'
 import version from '../../gen/version'
 // import { main as probe } from './cache-test'
 
-import { Database, Transaction, Factory } from '@retorquere/indexeddb-promise'
-// import { Database, Transaction, Factory } from '../../../indexeddb-promise'
+import { CursorWithValue, Database, Transaction, Factory } from '@retorquere/indexeddb-promise'
 
 import type { Translators as Translator } from '../../typings/translators'
 const skip = new Set([ 'keepUpdated', 'worker', 'exportFileData' ])
@@ -488,20 +487,19 @@ export const Cache = new class $Cache {
     if (!this.available('dump')) return {}
 
     const tables: Record<string, any> = {}
-    let keys: string[]
+    let cursor: CursorWithValue | void
     for (const name of this.db.objectStoreNames) {
       try {
-        let tx = this.db.transaction(name, 'readonly')
+        const tx = this.db.transaction(name, 'readonly')
         const store = tx.objectStore(name)
         switch (name) {
           case 'touched':
           case 'metadata':
-            keys = [...(await store.getAllKeys())] as string[]
             tables[name] = {}
-            for (const key of keys) {
-              // #2948
-              tx = this.db.transaction(name, 'readonly')
-              tables[name][key] = await store.get(key)
+            cursor = await store.openCursor()
+            while (cursor) {
+              tables[name][cursor.key as string] = cursor.value
+              if (!await cursor.continue()) cursor = undefined
             }
             break
 
@@ -511,7 +509,13 @@ export const Cache = new class $Cache {
         }
       }
       catch (err) {
-        log.error(`cache dump of ${name} failed:`, err)
+        tables[name] = { error: err.message }
+        if (name === 'metadata') {
+          log.info(`cache dump of ${name} failed`)
+        }
+        else {
+          log.error(`cache dump of ${name} failed:`, err)
+        }
       }
     }
 
