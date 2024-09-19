@@ -489,8 +489,8 @@ export const Cache = new class $Cache {
 
     const tables: Record<string, any> = {}
     let keys: string[]
-    try {
-      for (const name of this.db.objectStoreNames) {
+    for (const name of this.db.objectStoreNames) {
+      try {
         let tx = this.db.transaction(name, 'readonly')
         const store = tx.objectStore(name)
         switch (name) {
@@ -498,8 +498,8 @@ export const Cache = new class $Cache {
           case 'metadata':
             keys = [...(await store.getAllKeys())] as string[]
             tables[name] = {}
-            // #2948
             for (const key of keys) {
+              // #2948
               tx = this.db.transaction(name, 'readonly')
               tables[name][key] = await store.get(key)
             }
@@ -510,9 +510,9 @@ export const Cache = new class $Cache {
             break
         }
       }
-    }
-    catch (err) {
-      log.error('cache dump:', err)
+      catch (err) {
+        log.error(`cache dump: (${name})`, err)
+      }
     }
 
     return tables
