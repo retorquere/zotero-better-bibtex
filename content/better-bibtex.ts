@@ -536,7 +536,7 @@ $Patcher$.schedule(Zotero.Translate.Export.prototype, 'translate', original => f
     log.error('Zotero.Translate.Export::translate error:', err)
   }
 
-  log.debug('2981: stock translator:', { translator: this.translator, displayOptions: this._displayOptions } )
+  log.debug('2981: stock translator:', { translator: this.translator, displayOptions: this._displayOptions })
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   return original.apply(this, arguments)
