@@ -207,26 +207,16 @@ $Patcher$.schedule(Zotero.Items, 'merge', original => async function Zotero_Item
 
 // https://github.com/retorquere/zotero-better-bibtex/issues/769
 function parseLibraryKeyFromCitekey(libraryKey) {
-  try {
-    const decoded = decodeURIComponent(libraryKey)
-    if (decoded[0] === '@') {
-      const item = Zotero.BetterBibTeX.KeyManager.first({ where: { citationKey: decoded.substring(1) }})
+  const decoded = decodeURIComponent(libraryKey)
+  const m = decoded.match(/^@(.+)|bbt:(?:[{](\d+)[}])?(.+)/)
+  if (!m) return
 
-      return item ? { libraryID: item.libraryID, key: item.itemKey } : false
-    }
-
-    const m = decoded.match(/^bbt:(?:{([0-9]+)})?(.*)/)
-    if (m) {
-      const [ _libraryID, citationKey ] = m.slice(1)
-      const libraryID: number = (!_libraryID || _libraryID === '1') ? Zotero.Libraries.userLibraryID : parseInt(_libraryID)
-      const item = Zotero.BetterBibTeX.KeyManager.first({ where: { libraryID, citationKey }})
-      return item ? { libraryID: item.libraryID, key: item.itemKey } : false
-    }
-  }
-  catch (err) {
-    log.error('parseLibraryKeyFromCitekey:', libraryKey, err)
-  }
-  return null
+  const [ , solo, library, combined ] = m
+  const item = Zotero.BetterBibTeX.KeyManager.first({ where: {
+    libraryID: library ? parseInt(library) : Zotero.Libraries.userLibraryID,
+    citationKey: solo || combined,
+  }})
+  return item ? { libraryID: item.libraryID, key: item.itemKey } : false
 }
 
 $Patcher$.schedule(Zotero.API, 'getResultsFromParams', original => function Zotero_API_getResultsFromParams(params: Record<string, any>) {
@@ -251,20 +241,15 @@ $Patcher$.schedule(Zotero.API, 'getResultsFromParams', original => function Zote
 if (typeof Zotero.DataObjects.prototype.parseLibraryKeyHash === 'function') {
   $Patcher$.schedule(Zotero.DataObjects.prototype, 'parseLibraryKeyHash', original => function Zotero_DataObjects_prototype_parseLibraryKeyHash(libraryKey: string) {
     const item = parseLibraryKeyFromCitekey(libraryKey)
-    if (item !== null) return item
-
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return original.apply(this, arguments)
+    return typeof item === 'undefined' ? original.apply(this, arguments) : item
   })
 }
 if (typeof Zotero.DataObjects.prototype.parseLibraryKey === 'function') {
   $Patcher$.schedule(Zotero.DataObjects.prototype, 'parseLibraryKey', original => function Zotero_DataObjects_prototype_parseLibraryKey(libraryKey: string) {
     const item = parseLibraryKeyFromCitekey(libraryKey)
-    if (item) return item
-    if (item === false) return { libraryID: Zotero.Libraries.userLibraryID, key: undefined }
-
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return original.apply(this, arguments)
+    return typeof item === 'undefined' ? original.apply(this, arguments) : item
   })
 }
 
