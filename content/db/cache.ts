@@ -8,7 +8,7 @@ if (!worker && typeof IDBKeyRange === 'undefined') IDBKeyRange = Components.clas
 import type { Serialized, Serializer } from '../item-export-format'
 import { bySlug } from '../../gen/translators'
 import version from '../../gen/version'
-import { main as probe } from './cache-test'
+// import { main as probe } from './cache-test'
 
 import { Database, Transaction, Factory } from '@retorquere/indexeddb-promise'
 // import { Database, Transaction, Factory } from '../../../indexeddb-promise'
@@ -370,8 +370,6 @@ export const Cache = new class $Cache {
   public BetterCSLYAML: ExportCache
 
   private async $open(): Promise<CacheDB> {
-    log.debug(`probing idb for ${this.name} ${this.version}: ${JSON.stringify(await probe(), null, 2)}`)
-
     const db = new CacheDB(this.name, this.version)
     await db.open()
     return db
@@ -381,9 +379,7 @@ export const Cache = new class $Cache {
     if (this.db) throw new Error('database reopened')
 
     try {
-      log.debug('cache: about to open')
       this.db = await this.$open()
-      log.debug('cache: opened')
     }
     catch (err) {
       log.error('could not open cache:', err.message)

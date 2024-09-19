@@ -254,6 +254,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     const preferences = job.preferences || {}
 
     const deferred = Zotero.Promise.defer()
+    let failed = true
 
     const config: Translator.Worker.Job = {
       preferences: { ...Preference.all, ...preferences },
@@ -297,6 +298,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
             job.translate.complete(e.data.output)
           }
           deferred.resolve(e.data.output)
+          failed = false
           break
 
         case 'progress':
@@ -380,9 +382,11 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
     if (typeof job.timeout === 'number') {
       Zotero.Promise.delay(job.timeout * 1000).then(() => {
-        const err = new TimeoutError(`translation timeout after ${ job.timeout } seconds`, { timeout: job.timeout })
-        log.error('translation.exportItems:', err)
-        deferred.reject(err)
+        if (failed) {
+          const err = new TimeoutError(`translation timeout after ${ job.timeout } seconds`, { timeout: job.timeout })
+          log.error('translation.exportItems:', err)
+          deferred.reject(err)
+        }
       })
     }
 
