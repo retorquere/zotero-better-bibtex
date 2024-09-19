@@ -492,15 +492,19 @@ export const Cache = new class $Cache {
     if (!this.available('dump')) return {}
 
     const tables: Record<string, any> = {}
+    let keys: string[]
     try {
-      const tx = this.db.transaction([...this.db.objectStoreNames], 'readonly')
       for (const name of this.db.objectStoreNames) {
+        let tx = this.db.transaction(name, 'readonly')
         const store = tx.objectStore(name)
         switch (name) {
           case 'touched':
           case 'metadata':
+            keys = [...(await store.getAllKeys())] as string[]
             tables[name] = {}
-            for (const key of await store.getAllKeys() as string[]) {
+            // #2948
+            for (const key of keys) {
+              tx = this.db.transaction(name, 'readonly')
               tables[name][key] = await store.get(key)
             }
             break
