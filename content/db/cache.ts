@@ -511,12 +511,7 @@ export const Cache = new class $Cache {
       }
       catch (err) {
         tables[name] = { error: err.message }
-        if (name === 'metadata') {
-          log.info(`cache dump of ${name} failed`)
-        }
-        else {
-          log.error(`cache dump of ${name} failed:`, err)
-        }
+        log.error(`cache dump of ${name} failed:`, err)
       }
     }
 
