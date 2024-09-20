@@ -116,7 +116,7 @@ class CacheDB extends Database {
 
     this.createObjectStore('ZoteroSerialized', { keyPath: 'itemID' })
     this.createObjectStore('touched')
-    this.createObjectStore('metadata')
+    this.createObjectStore('metadata', { keyPath: 'key' })
 
     const context = this.createObjectStore('ExportContext', { keyPath: 'id', autoIncrement: true })
     context.createIndex('context', 'context', { unique: true })
@@ -132,10 +132,6 @@ class CacheDB extends Database {
       store.createIndex('itemID', 'itemID')
       store.createIndex('context-itemID', [ 'context', 'itemID' ], { unique: true })
     }
-  }
-
-  public _blocked(idbDatabase: IDBDatabase, _oldVersion: number, _newVersion: number | null, _error: DOMException | null): void {
-    idbDatabase.close()
   }
 }
 
@@ -356,7 +352,7 @@ class ZoteroSerialized {
 }
 
 export const Cache = new class $Cache {
-  public version = 9
+  public version = 10
   public name = 'BetterBibTeXCache'
 
   private db: CacheDB
@@ -396,16 +392,18 @@ export const Cache = new class $Cache {
       const tx = this.db.transaction(this.db.objectStoreNames, 'readwrite')
       const metadata = tx.objectStore('metadata')
 
+      const get = async (key: string): Promise<string> => ((await metadata.get(key)) as ({ value: string } | void) || { value: '' }).value
+
       const clear = [
-        lastUpdated > (await metadata.get('lastUpdated') || '') ? 'store gap' : '',
-        Zotero.version !== (await metadata.get('Zotero') || '') ? `Zotero version changed to ${ Zotero.version }` : '',
-        version !== (await metadata.get('BetterBibteX') || '') ? `Better BibTeX version changed to ${ version }` : '',
+        lastUpdated > (await get('lastUpdated')) ? 'store gap' : '',
+        Zotero.version !== (await get('Zotero')) ? `Zotero version changed to ${ Zotero.version }` : '',
+        version !== (await get('BetterBibteX')) ? `Better BibTeX version changed to ${ version }` : '',
       ].filter(reason => reason)
       if (clear.length) {
         log.info(`clearing cache: ${ clear.join(', ') }`)
         await Promise.all(this.db.objectStoreNames.filter(name => name !== 'metadata').map(name => tx.objectStore(name).clear()))
-        await metadata.put(Zotero.version, 'Zotero')
-        await metadata.put(version, 'BetterBibTeX')
+        await metadata.put({ key: 'Zotero', value: Zotero.version })
+        await metadata.put({ key: 'BetterBibTeX', value: version })
       }
       await tx.commit()
     }
@@ -433,7 +431,7 @@ export const Cache = new class $Cache {
     }
     const tx = this.db.transaction('metadata', 'readwrite')
     const metadata = tx.objectStore('metadata')
-    await metadata.put(Zotero.Date.dateToSQL((new Date), true), 'lastUpdated')
+    await metadata.put({ key: 'lastUpdated', value: Zotero.Date.dateToSQL((new Date), true) })
     await tx.commit()
   }
 
@@ -494,13 +492,16 @@ export const Cache = new class $Cache {
         const store = tx.objectStore(name)
         switch (name) {
           case 'touched':
-          case 'metadata':
             tables[name] = {}
             cursor = await store.openCursor()
             while (cursor) {
               tables[name][cursor.key as string] = cursor.value
               if (!await cursor.continue()) cursor = undefined
             }
+            break
+
+          case 'metadata':
+            tables[name] = (await store.getAll()).reduce((acc: Record<string, string>, rec: { key: string; value: string }) => ({ ...acc, [rec.key]: rec.value }), {} as Record<string, string>)
             break
 
           default:
