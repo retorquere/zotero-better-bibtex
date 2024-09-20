@@ -223,18 +223,15 @@ $Patcher$.schedule(Zotero.API, 'getResultsFromParams', original => function Zote
   try {
     if (params.itemKey) {
       const libraryID = params.libraryID || Zotero.Libraries.userLibraryID
-      log.debug('2992: getResultsFromParams pre', { itemKey: params.itemKey })
       params.itemKey = params.itemKey.map((itemKey: string) => {
         const m = itemKey.match(/^(bbt:|@)(.+)/)
         if (!m) return itemKey
         const citekey = Zotero.BetterBibTeX.KeyManager.first({ where: { libraryID, citationKey: m[2] }})
         return citekey?.itemKey || itemKey
       })
-      log.debug('2992: getResultsFromParams post', { itemKey: params.itemKey })
     }
   }
   catch (err) {
-    log.debug('2992: getResultsFromParams', params, err)
     log.error('getResultsFromParams', params, err)
   }
 
@@ -244,7 +241,6 @@ $Patcher$.schedule(Zotero.API, 'getResultsFromParams', original => function Zote
 if (typeof Zotero.DataObjects.prototype.parseLibraryKeyHash === 'function') {
   $Patcher$.schedule(Zotero.DataObjects.prototype, 'parseLibraryKeyHash', original => function Zotero_DataObjects_prototype_parseLibraryKeyHash(libraryKey: string) {
     const item = parseLibraryKeyFromCitekey(libraryKey)
-    log.debug('2992: parseLibraryKeyHash', libraryKey, '=>', { item })
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return typeof item === 'undefined' ? original.apply(this, arguments) : item
   })
@@ -252,7 +248,6 @@ if (typeof Zotero.DataObjects.prototype.parseLibraryKeyHash === 'function') {
 if (typeof Zotero.DataObjects.prototype.parseLibraryKey === 'function') {
   $Patcher$.schedule(Zotero.DataObjects.prototype, 'parseLibraryKey', original => function Zotero_DataObjects_prototype_parseLibraryKey(libraryKey: string) {
     const item = parseLibraryKeyFromCitekey(libraryKey)
-    log.debug('2992: parseLibraryKey', libraryKey, '=>', { item })
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return typeof item === 'undefined' ? original.apply(this, arguments) : item
   })
@@ -453,14 +448,12 @@ $Patcher$.schedule(Zotero.Translate.Export.prototype, 'translate', original => f
   // requested translator
   const translator = Translators.byId[translatorID]
   if (this.noWait || !translator) {
-    log.debug('2981: stock translator:', { translator: this.translator, displayOptions: this._displayOptions })
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return original.apply(this, arguments)
   }
 
   const displayOptions = this._displayOptions || {}
 
-  log.debug('2981: BBT translator:', translator)
   if (this.location) {
     if (displayOptions.exportFileData) { // when exporting file data, the user was asked to pick a directory rather than a file
       displayOptions.exportDir = this.location.path
