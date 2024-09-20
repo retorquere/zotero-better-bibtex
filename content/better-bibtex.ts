@@ -448,87 +448,75 @@ $Patcher$.schedule(Zotero.Utilities.Internal, 'extractExtraFields', original => 
 })
 
 $Patcher$.schedule(Zotero.Translate.Export.prototype, 'translate', original => function Zotero_Translate_Export_prototype_translate() {
-  if (this.noWait) {
-    this._displayOptions = this._displayOptions || {}
-    this._displayOptions.cached = false
+  let translatorID = this.translator[0]
+  if (translatorID.translatorID) translatorID = translatorID.translatorID
+  // requested translator
+  const translator = Translators.byId[translatorID]
+  if (this.noWait || !translator) {
+    log.debug('2981: stock translator:', { translator: this.translator, displayOptions: this._displayOptions })
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return original.apply(this, arguments)
   }
 
-  try {
-    // requested translator
-    let translatorID = this.translator[0]
-    if (translatorID.translatorID) translatorID = translatorID.translatorID
-    const translator = Translators.byId[translatorID]
-    const displayOptions = this._displayOptions || {}
+  const displayOptions = this._displayOptions || {}
 
-    if (translator) {
-      if (this.location) {
-        if (displayOptions.exportFileData) { // when exporting file data, the user was asked to pick a directory rather than a file
-          displayOptions.exportDir = this.location.path
-          displayOptions.exportPath = $OS.Path.join(this.location.path, `${ this.location.leafName }.${ translator.target }`)
-          displayOptions.cache = false
-        }
-        else {
-          displayOptions.exportDir = this.location.parent.path
-          displayOptions.exportPath = this.location.path
-          displayOptions.cache = true
-        }
-      }
-
-      if (this._export && displayOptions.keepUpdated) {
-        void AutoExport.register({
-          translatorID,
-          displayOptions,
-          scope: this._export.type === 'collection'
-            ? { type: 'collection', collection: this._export.collection }
-            : { type: this._export.type as 'library', id: this._export.id },
-          path: this.location.path,
-        })
-      }
-
-      let useWorker = typeof translator.displayOptions.worker === 'boolean' && displayOptions.worker
-
-      if (useWorker && !Translators.worker) {
-        // there wasn't an error starting a worker earlier
-        flash('failed to start a chromeworker')
-        useWorker = false
-      }
-      if (!Cache.opened) {
-        flash('cache not loaded, background exports are disabled')
-        useWorker = false
-      }
-
-      if (useWorker) {
-        return Translators.queueJob({
-          translatorID,
-          displayOptions,
-          translate: this,
-          scope: { ...this._export, getter: this._itemGetter },
-          path: this.location?.path,
-        })/* .then(() => {
-          trace('translation done', '+')
-        }) */
-      }
-      else {
-        return Translators.queue.add(async () => {
-          try {
-            await Cache.initExport(translator.label, exportContext(translator.label, displayOptions))
-            await original.apply(this, arguments)
-          }
-          finally {
-            await Cache.export.flush()
-          }
-        })
-      }
+  log.debug('2981: BBT translator:', translator)
+  if (this.location) {
+    if (displayOptions.exportFileData) { // when exporting file data, the user was asked to pick a directory rather than a file
+      displayOptions.exportDir = this.location.path
+      displayOptions.exportPath = $OS.Path.join(this.location.path, `${ this.location.leafName }.${ translator.target }`)
+      displayOptions.cache = false
+    }
+    else {
+      displayOptions.exportDir = this.location.parent.path
+      displayOptions.exportPath = this.location.path
+      displayOptions.cache = true
     }
   }
-  catch (err) {
-    log.error('Zotero.Translate.Export::translate error:', err)
+
+  if (this._export && displayOptions.keepUpdated) {
+    void AutoExport.register({
+      translatorID,
+      displayOptions,
+      scope: this._export.type === 'collection'
+        ? { type: 'collection', collection: this._export.collection }
+        : { type: this._export.type as 'library', id: this._export.id },
+      path: this.location.path,
+    })
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  return original.apply(this, arguments)
+  let useWorker = typeof translator.displayOptions.worker === 'boolean' && displayOptions.worker
+
+  if (useWorker && !Translators.worker) {
+    // there wasn't an error starting a worker earlier
+    flash('failed to start a chromeworker')
+    useWorker = false
+  }
+  if (!Cache.opened) {
+    flash('cache not loaded, background exports are disabled')
+    useWorker = false
+  }
+
+  if (useWorker) {
+    return Translators.queueJob({
+      translatorID,
+      displayOptions,
+      translate: this,
+      scope: { ...this._export, getter: this._itemGetter },
+      path: this.location?.path,
+    })
+  }
+  else {
+    return Translators.queue.add(async () => {
+      try {
+        await Cache.initExport(translator.label, exportContext(translator.label, displayOptions))
+        await original.apply(this, arguments)
+      }
+      finally {
+        await Cache.export.flush()
+      }
+    })
+  }
 })
 
 export class BetterBibTeX {
