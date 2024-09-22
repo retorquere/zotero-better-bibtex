@@ -364,21 +364,59 @@ export const Cache = new class $Cache {
   public BetterCSLJSON: ExportCache
   public BetterCSLYAML: ExportCache
 
-  private async $open(): Promise<CacheDB> {
-    const db = new CacheDB(this.name, this.version)
-    await db.open()
-    return db
+  private async $open(action: string): Promise<CacheDB> {
+    try {
+      log.info(`cache: ${action} ${this.version}`)
+      const db = new CacheDB(this.name, this.version)
+      await db.open()
+      return db
+    }
+    catch (err) {
+      log.error(`cache: ${action} ${this.version} failed: ${err.message}`)
+      return null
+    }
+  }
+
+  private async metadata(): Promise<Record<string, string>> {
+    const metadata: Record<string, string> = {}
+
+    const tx = this.db.transaction('metadata', 'readonly')
+    const store = tx.objectStore('metadata')
+    for (const rec of (await store.getAll()) as { key: string; value: string }[]) {
+      metadata[rec.key] = rec.value
+    }
+
+    return metadata
   }
 
   public async open(lastUpdated?: string): Promise<void> {
     if (this.db) throw new Error('database reopened')
 
-    try {
-      this.db = await this.$open()
+    this.db = await this.$open('open')
+    if (!this.db) {
+      log.info('cache: could not open, delete and reopen') // #2995, downgrade 6 => 7
+      await Factory.deleteDatabase(this.name)
+      this.db = await this.$open('reopen')
     }
-    catch (err) {
-      log.error('could not open cache:', err.message)
-      this.db = null
+
+    if (this.db) {
+      const metadata = await this.metadata()
+      const reason = [
+        { reason: `Zotero version changed from ${metadata.Zotero || 'none'} to ${Zotero.version}`, test: metadata.Zotero && metadata.Zotero !== metadata.Zotero },
+        { reason: `Better BibTeX version changed from ${metadata.BetterBibTeX || 'none'} to ${version}`, test: metadata.BetterBibTeX && metadata.BetterBibTeX !== version },
+        { reason: `cache gap found ${metadata.lastUpdated} => ${lastUpdated}`, test: lastUpdated && metadata.lastUpdated && lastUpdated !== metadata.lastUpdated },
+      ].filter(r => r.test).map(r => r.reason).join(' and ')
+      if (reason) {
+        log.info(`cache: reopening because ${reason}`)
+        this.db.close()
+        await Factory.deleteDatabase(this.name)
+        this.db = await this.$open('upgrade')
+        const tx = this.db.transaction('metadata', 'readwrite')
+        const store = tx.objectStore('metadata')
+        await store.put({ key: 'Zotero', value: Zotero.version })
+        await store.put({ key: 'BetterBibTeX', value: version })
+        await tx.commit()
+      }
     }
 
     this.ZoteroSerialized = new ZoteroSerialized(this.db)
@@ -387,26 +425,6 @@ export const Cache = new class $Cache {
     this.BetterBibLaTeX = new ExportCache(this.db, 'BetterBibLaTeX')
     this.BetterCSLJSON = new ExportCache(this.db, 'BetterCSLJSON')
     this.BetterCSLYAML = new ExportCache(this.db, 'BetterCSLYAML')
-
-    if (lastUpdated) {
-      const tx = this.db.transaction(this.db.objectStoreNames, 'readwrite')
-      const metadata = tx.objectStore('metadata')
-
-      const get = async (key: string): Promise<string> => ((await metadata.get(key)) as ({ value: string } | void) || { value: '' }).value
-
-      const clear = [
-        lastUpdated > (await get('lastUpdated')) ? 'store gap' : '',
-        Zotero.version !== (await get('Zotero')) ? `Zotero version changed to ${ Zotero.version }` : '',
-        version !== (await get('BetterBibteX')) ? `Better BibTeX version changed to ${ version }` : '',
-      ].filter(reason => reason)
-      if (clear.length) {
-        log.info(`clearing cache: ${ clear.join(', ') }`)
-        await Promise.all(this.db.objectStoreNames.filter(name => name !== 'metadata').map(name => tx.objectStore(name).clear()))
-        await metadata.put({ key: 'Zotero', value: Zotero.version })
-        await metadata.put({ key: 'BetterBibTeX', value: version })
-      }
-      await tx.commit()
-    }
   }
 
   public get opened() {
@@ -501,7 +519,7 @@ export const Cache = new class $Cache {
             break
 
           case 'metadata':
-            tables[name] = (await store.getAll()).reduce((acc: Record<string, string>, rec: { key: string; value: string }) => ({ ...acc, [rec.key]: rec.value }), {} as Record<string, string>)
+            tables[name] = await this.metadata()
             break
 
           default:
@@ -519,6 +537,7 @@ export const Cache = new class $Cache {
   }
 
   async delete() {
+    this.db?.close()
     this.db = null
     await Factory.deleteDatabase(this.name)
     await this.open()
