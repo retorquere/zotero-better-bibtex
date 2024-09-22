@@ -105,7 +105,7 @@ export type ExportCacheName = 'BetterBibLaTeX' | 'BetterBibTeX' | 'BetterCSLJSON
 class CacheDB extends Database {
   public _upgrade(_transaction: Transaction, oldVersion: number, newVersion: number | null): void {
     if (typeof newVersion !== 'number') {
-      log.info(`cache: deleting ${oldVersion}`)
+      log.info(`cache: creating ${newVersion}`)
     }
     else {
       log.info(`cache: upgrading ${oldVersion} => ${newVersion}`)
