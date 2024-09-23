@@ -228,6 +228,18 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
   }
 
   private async exportItemsByWorker(job: ExportJob): Promise<string> {
+    try {
+      log.info(`worker: starting ${JSON.stringify(job)}`)
+      const result = await this.$exportItemsByWorker(job)
+      log.info(`worker: finished ${JSON.stringify(job)}`)
+      return result
+    }
+    catch (err) {
+      log.error(`worker: failed ${JSON.stringify(job)}`, err)
+      throw err
+    }
+  }
+  private async $exportItemsByWorker(job: ExportJob): Promise<string> {
     // trace('exportItemsByWorker: requested')
     if (job.path && job.canceled) return ''
     await Zotero.BetterBibTeX.ready
