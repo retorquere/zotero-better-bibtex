@@ -411,7 +411,7 @@ export const Cache = new class $Cache {
       const reason = reasons.filter(r => r.test).map(r => r.reason).join(' and ') || false
       Zotero.Prefs.clear(del)
 
-      log.debug(`cache: ${JSON.stringify(metadata)} + ${JSON.stringify({ Zotero: Zotero.version, BetterBibTeX: version, lastUpdated })} => ${JSON.stringify(reasons)} => ${reason}`)
+      log.info(`cache: ${JSON.stringify(metadata)} + ${JSON.stringify({ Zotero: Zotero.version, BetterBibTeX: version, lastUpdated })} => ${JSON.stringify(reasons)} => ${reason}`)
       if (reason) {
         log.info(`cache: reopening because ${reason}`)
         this.db.close()
