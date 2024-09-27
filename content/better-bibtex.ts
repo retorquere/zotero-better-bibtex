@@ -221,6 +221,7 @@ function parseLibraryKeyFromCitekey(libraryKey) {
 
 $Patcher$.schedule(Zotero.API, 'getResultsFromParams', original => function Zotero_API_getResultsFromParams(params: Record<string, any>) {
   try {
+    log.debug('select: getResultsFromParams', params)
     if (params.itemKey) {
       const libraryID = params.libraryID || Zotero.Libraries.userLibraryID
       params.itemKey = params.itemKey.map((itemKey: string) => {
@@ -240,6 +241,7 @@ $Patcher$.schedule(Zotero.API, 'getResultsFromParams', original => function Zote
 
 if (typeof Zotero.DataObjects.prototype.parseLibraryKeyHash === 'function') {
   $Patcher$.schedule(Zotero.DataObjects.prototype, 'parseLibraryKeyHash', original => function Zotero_DataObjects_prototype_parseLibraryKeyHash(libraryKey: string) {
+    log.debug('select: parseLibraryKeyHash', libraryKey)
     const item = parseLibraryKeyFromCitekey(libraryKey)
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return typeof item === 'undefined' ? original.apply(this, arguments) : item
@@ -247,6 +249,7 @@ if (typeof Zotero.DataObjects.prototype.parseLibraryKeyHash === 'function') {
 }
 if (typeof Zotero.DataObjects.prototype.parseLibraryKey === 'function') {
   $Patcher$.schedule(Zotero.DataObjects.prototype, 'parseLibraryKey', original => function Zotero_DataObjects_prototype_parseLibraryKey(libraryKey: string) {
+    log.debug('select: parseLibraryKey', libraryKey)
     const item = parseLibraryKeyFromCitekey(libraryKey)
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return typeof item === 'undefined' ? original.apply(this, arguments) : item
