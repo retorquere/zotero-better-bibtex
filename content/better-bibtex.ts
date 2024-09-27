@@ -222,14 +222,13 @@ function parseLibraryKeyFromCitekey(libraryKey) {
 $Patcher$.schedule(Zotero.API, 'getResultsFromParams', original => function Zotero_API_getResultsFromParams(params: Record<string, any>) {
   try {
     log.debug('select: getResultsFromParams', params)
-    if (params.itemKey) {
+    if (params.objectType === 'item' && params.objectKey) {
       const libraryID = params.libraryID || Zotero.Libraries.userLibraryID
-      params.itemKey = params.itemKey.map((itemKey: string) => {
-        const m = itemKey.match(/^(bbt:|@)(.+)/)
-        if (!m) return itemKey
+      const m = params.objectKey.match(/^(bbt:|@)(.+)/)
+      if (m) {
         const citekey = Zotero.BetterBibTeX.KeyManager.first({ where: { libraryID, citationKey: m[2] }})
-        return citekey?.itemKey || itemKey
-      })
+        if (citekey) params.objectKey = citekey.itemKey
+      }
     }
   }
   catch (err) {
