@@ -220,7 +220,7 @@ function parseLibraryKeyFromCitekey(libraryKey) {
 }
 
 $Patcher$.schedule(Zotero.API, 'getResultsFromParams', original => function Zotero_API_getResultsFromParams(params: Record<string, any>) {
-  log.debug('select: getResultsFromParams', params)
+  log.debug('select: getResultsFromParams before', params)
 
   const libraryID = params.libraryID || Zotero.Libraries.userLibraryID
   function ck(key: string): string {
@@ -235,7 +235,10 @@ $Patcher$.schedule(Zotero.API, 'getResultsFromParams', original => function Zote
   }
   else if (Array.isArray(params.itemKey)) {
     params.itemKey = params.itemKey.map(ck)
+    params.url = params.url.replace(/itemKey=.*/, `itemKey=${params.itemKey.join(',')}`)
   }
+
+  log.debug('select: getResultsFromParams after', params)
 
   return original.apply(this, arguments) as Record<string, any>
 })
