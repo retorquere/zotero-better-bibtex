@@ -7,7 +7,6 @@ Object.assign(config.rules, {
   'no-underscore-dangle': [ 'error', { "allowAfterThis": true } ],
   'prefer-template': 'off',
 
-  '@stylistic/template-curly-spacing': [ 'error', 'always' ],
   // '@stylistic/js/operator-linebreak': ['error', 'before' ],
 
   'prefer-arrow/prefer-arrow-functions': 'off',
