@@ -535,11 +535,4 @@ export const Cache = new class $Cache {
 
     return tables
   }
-
-  async delete() {
-    this.db?.close()
-    this.db = null
-    await Factory.deleteDatabase(this.name)
-    await this.open()
-  }
 }

@@ -220,19 +220,20 @@ function parseLibraryKeyFromCitekey(libraryKey) {
 }
 
 $Patcher$.schedule(Zotero.API, 'getResultsFromParams', original => function Zotero_API_getResultsFromParams(params: Record<string, any>) {
-  try {
-    if (params.itemKey) {
-      const libraryID = params.libraryID || Zotero.Libraries.userLibraryID
-      params.itemKey = params.itemKey.map((itemKey: string) => {
-        const m = itemKey.match(/^(bbt:|@)(.+)/)
-        if (!m) return itemKey
-        const citekey = Zotero.BetterBibTeX.KeyManager.first({ where: { libraryID, citationKey: m[2] }})
-        return citekey?.itemKey || itemKey
-      })
-    }
+  const libraryID = params.libraryID || Zotero.Libraries.userLibraryID
+  function ck(key: string): string {
+    const m = key.match(/^(bbt:|@)(.+)/)
+    if (!m) return key
+    const citekey = Zotero.BetterBibTeX.KeyManager.first({ where: { libraryID, citationKey: m[2] }})
+    return citekey ? citekey.itemKey : key
   }
-  catch (err) {
-    log.error('getResultsFromParams', params, err)
+
+  if (params.objectType === 'item' && params.objectKey) {
+    params.objectKey = ck(params.objectKey)
+  }
+  else if (Array.isArray(params.itemKey)) {
+    params.itemKey = params.itemKey.map(ck)
+    params.url = params.url.replace(/itemKey=.*/, `itemKey=${params.itemKey.join(',')}`)
   }
 
   return original.apply(this, arguments) as Record<string, any>
