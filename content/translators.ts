@@ -228,18 +228,6 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
   }
 
   private async exportItemsByWorker(job: ExportJob): Promise<string> {
-    try {
-      log.info(`worker: starting ${JSON.stringify(job)}`)
-      const result = await this.$exportItemsByWorker(job)
-      log.info(`worker: finished ${JSON.stringify(job)}`)
-      return result
-    }
-    catch (err) {
-      log.error(`worker: failed ${JSON.stringify(job)}`, err)
-      throw err
-    }
-  }
-  private async $exportItemsByWorker(job: ExportJob): Promise<string> {
     // trace('exportItemsByWorker: requested')
     if (job.path && job.canceled) return ''
     await Zotero.BetterBibTeX.ready
@@ -367,9 +355,8 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       const prepare = new Pinger({
         total: items.length,
         callback: pct => {
-          const pending = this.queue.size() - 1
-          let preparing = l10n.localize('better-bibtex_preferences_auto-export_status_preparing', { translator: translator.label, pending })
-          if (!pending) preparing = preparing.replace(/,.*/, '').trim()
+          let preparing = `${ l10n.localize('better-bibtex_preferences_auto-export_status_preparing') } ${ translator.label }`.trim()
+          if (this.queue.size()) preparing += ` +${ this.queue.size() }`
           void Events.emit('export-progress', { pct, message: preparing, ae: job.autoExport })
         },
       })

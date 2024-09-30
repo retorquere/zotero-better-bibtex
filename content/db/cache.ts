@@ -399,24 +399,30 @@ export const Cache = new class $Cache {
       this.db = await this.$open('reopen')
     }
 
-    if (this.db) {
-      const metadata = await this.metadata()
-      const reason = [
+    if (this.db && !worker) {
+      const del = 'extensions.zotero.translators.better-bibtex.cache.delete'
+      const metadata = { Zotero: '', BetterBibTeX: '', lastUpdated: '', ...(await this.metadata()) }
+      const reasons = [
         { reason: `Zotero version changed from ${metadata.Zotero || 'none'} to ${Zotero.version}`, test: metadata.Zotero && metadata.Zotero !== metadata.Zotero },
         { reason: `Better BibTeX version changed from ${metadata.BetterBibTeX || 'none'} to ${version}`, test: metadata.BetterBibTeX && metadata.BetterBibTeX !== version },
-        { reason: `cache gap found ${metadata.lastUpdated} => ${lastUpdated}`, test: lastUpdated && metadata.lastUpdated && lastUpdated !== metadata.lastUpdated },
-      ].filter(r => r.test).map(r => r.reason).join(' and ')
+        { reason: `cache gap found ${metadata.lastUpdated} => ${lastUpdated}`, test: (lastUpdated || false) && metadata.lastUpdated && lastUpdated !== metadata.lastUpdated },
+        { reason: 'marked for deletion', test: Zotero.Prefs.get(del) || false },
+      ]
+      const reason = reasons.filter(r => r.test).map(r => r.reason).join(' and ') || false
+      Zotero.Prefs.clear(del)
+
+      log.info(`cache: ${JSON.stringify(metadata)} + ${JSON.stringify({ Zotero: Zotero.version, BetterBibTeX: version, lastUpdated })} => ${JSON.stringify(reasons)} => ${reason}`)
       if (reason) {
         log.info(`cache: reopening because ${reason}`)
         this.db.close()
         await Factory.deleteDatabase(this.name)
         this.db = await this.$open('upgrade')
-        const tx = this.db.transaction('metadata', 'readwrite')
-        const store = tx.objectStore('metadata')
-        await store.put({ key: 'Zotero', value: Zotero.version })
-        await store.put({ key: 'BetterBibTeX', value: version })
-        await tx.commit()
       }
+      const tx = this.db.transaction('metadata', 'readwrite')
+      const store = tx.objectStore('metadata')
+      await store.put({ key: 'Zotero', value: Zotero.version })
+      await store.put({ key: 'BetterBibTeX', value: version })
+      await tx.commit()
     }
 
     this.ZoteroSerialized = new ZoteroSerialized(this.db)
