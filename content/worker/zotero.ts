@@ -374,7 +374,6 @@ class WorkerZotero {
   public output: string
   public exportDirectory: string
   public exportFile: string
-  public version: string = client.ZoteroVersion
   private items: Serialized[]
 
   public Utilities = WorkerZoteroUtilities

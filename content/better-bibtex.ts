@@ -220,20 +220,19 @@ function parseLibraryKeyFromCitekey(libraryKey) {
 }
 
 $Patcher$.schedule(Zotero.API, 'getResultsFromParams', original => function Zotero_API_getResultsFromParams(params: Record<string, any>) {
-  const libraryID = params.libraryID || Zotero.Libraries.userLibraryID
-  function ck(key: string): string {
-    const m = key.match(/^(bbt:|@)(.+)/)
-    if (!m) return key
-    const citekey = Zotero.BetterBibTeX.KeyManager.first({ where: { libraryID, citationKey: m[2] }})
-    return citekey ? citekey.itemKey : key
+  try {
+    if (params.itemKey) {
+      const libraryID = params.libraryID || Zotero.Libraries.userLibraryID
+      params.itemKey = params.itemKey.map((itemKey: string) => {
+        const m = itemKey.match(/^(bbt:|@)(.+)/)
+        if (!m) return itemKey
+        const citekey = Zotero.BetterBibTeX.KeyManager.first({ where: { libraryID, citationKey: m[2] }})
+        return citekey?.itemKey || itemKey
+      })
+    }
   }
-
-  if (params.objectType === 'item' && params.objectKey) {
-    params.objectKey = ck(params.objectKey)
-  }
-  else if (Array.isArray(params.itemKey)) {
-    params.itemKey = params.itemKey.map(ck)
-    params.url = params.url.replace(/itemKey=.*/, `itemKey=${params.itemKey.join(',')}`)
+  catch (err) {
+    log.error('getResultsFromParams', params, err)
   }
 
   return original.apply(this, arguments) as Record<string, any>
@@ -444,18 +443,15 @@ $Patcher$.schedule(Zotero.Utilities.Internal, 'extractExtraFields', original => 
 })
 
 $Patcher$.schedule(Zotero.Translate.Export.prototype, 'translate', original => function Zotero_Translate_Export_prototype_translate() {
-  log.debug('3000: translate started')
   let translatorID = this.translator[0]
   if (translatorID.translatorID) translatorID = translatorID.translatorID
   // requested translator
   const translator = Translators.byId[translatorID]
   if (this.noWait || !translator) {
-    log.debug('3000: native', { nowait: this.noWait, translator })
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return original.apply(this, arguments)
   }
 
-  log.debug('3000: bbt')
   const displayOptions = this._displayOptions || {}
 
   if (this.location) {
@@ -495,7 +491,6 @@ $Patcher$.schedule(Zotero.Translate.Export.prototype, 'translate', original => f
   }
 
   if (useWorker) {
-    log.debug('3000: bbt background')
     return Translators.queueJob({
       translatorID,
       displayOptions,
@@ -505,7 +500,6 @@ $Patcher$.schedule(Zotero.Translate.Export.prototype, 'translate', original => f
     })
   }
   else {
-    log.debug('3000: bbt foreground')
     return Translators.queue.add(async () => {
       try {
         await Cache.initExport(translator.label, exportContext(translator.label, displayOptions))
