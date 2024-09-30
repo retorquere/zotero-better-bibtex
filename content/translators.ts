@@ -355,8 +355,11 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       const prepare = new Pinger({
         total: items.length,
         callback: pct => {
+          /*
           let preparing = `${ l10n.localize('better-bibtex_preferences_auto-export_status_preparing') } ${ translator.label }`.trim()
           if (this.queue.size()) preparing += ` +${ this.queue.size() }`
+          */
+          const preparing = l10n.localize('better-bibtex_preferences_auto-export_status_preparing', { translator: translator.label, pending: this.queue.size() - 1 })
           void Events.emit('export-progress', { pct, message: preparing, ae: job.autoExport })
         },
       })
