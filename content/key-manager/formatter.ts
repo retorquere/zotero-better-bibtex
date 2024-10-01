@@ -392,7 +392,7 @@ export class PatternFormatter {
     let error = ''
     const ts = Date.now()
     // the zero-width-space is a marker to re-save the current default so it doesn't get replaced when the default changes later, which would change new keys suddenly
-    for (let formula of [ ...formulas, Preference.default.citekeyFormat.replace(/^\u200B/, '') ]) {
+    for (let formula of [ ...formulas, Preference.default.citekeyFormat ]) {
       log.info(`formula-update: ${ ts } trying: ${ formula }`)
       if (!formula) continue
 

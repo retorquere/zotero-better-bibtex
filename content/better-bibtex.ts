@@ -804,7 +804,6 @@ export class BetterBibTeX {
     // the zero-width-space is a marker to re-save the current default so it doesn't get replaced
     // when the default changes later, which would change new keys suddenly
     if (!Preference.citekeyFormat) Preference.citekeyFormat = Preference.default.citekeyFormat
-    Preference.citekeyFormat = Preference.citekeyFormat.replace(/\u200B/g, '')
 
     if (typeof __estrace !== 'undefined') {
       flash(

@@ -62,7 +62,7 @@ preferences
   bbt:doc Hyperlink to select items in your library
 
   // the zero-width-space is a marker to re-save the current default so it doesn't get replaced when the default changes later, which would change new keys suddenly
-  preference(name="extensions.zotero.translators.better-bibtex.citekeyFormat" bbt:affects="" type="string" default="\u200bauth.lower + shorttitle(3,3) + year")
+  preference(name="extensions.zotero.translators.better-bibtex.citekeyFormat" bbt:affects="" type="string" default="auth.lower + shorttitle(3,3) + year")
   bbt:doc Set the pattern used to generate citation keys. The format of the keys is documented [here]({{ ref . "citing" }}).
 
   preference(name="extensions.zotero.translators.better-bibtex.citekeyFormatEditing" bbt:affects="" type="string" default="")
