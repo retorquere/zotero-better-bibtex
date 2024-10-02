@@ -8,15 +8,35 @@ import sys
 import tarfile
 from zipfile import ZipFile
 import requests
+from pathlib import Path
 
 logs = sys.argv[1:]
 if len(logs) == 0:
   print('please provide one or more log IDs')
   sys.exit(1)
 
+print(logs)
+if len(logs) == 1 and logs[0].startswith('https://github.com/user-attachments/'):
+  print('debug-log mode')
+  url = logs[0]
+  log = url.split('/')[-1]
+  dir = Path(log).stem
+  log = f'logs/{dir}/{log}'
+  print(url, log)
+  r = requests.get(url, allow_redirects=True)
+  os.makedirs(f'logs/{dir}', exist_ok=True)
+  with open(log, 'wb') as f:
+    f.write(r.content)
+  if log.endswith('.zip'):
+    with ZipFile(log) as f:
+      f.extractall(path=f'logs/{dir}')
+    os.remove(log)
+  sys.exit(0)
+
 logs = [log.split('/')[0] for log in logs]
 
 if len(logs) == 1 and '-fio-' in logs[0]:
+  print('FIO mode')
   local, fio, remote = logs[0].split('-')
   url = 'https://file.io/' + remote
   log = 'logs/' + local + '.zip'
