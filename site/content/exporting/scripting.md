@@ -211,6 +211,14 @@ In Zotero when using an Export Format of Better Biblatex we'll get something lik
 
 Further details [Export to Biblatex/Bibtex. Custom field order. #512](https://github.com/retorquere/zotero-better-bibtex/issues/512).
 
+### Case-protect italicized text
+
+```javascript
+if (Translator.BetterTeX && tex.has.title) {
+  tex.add({ name: 'title', value: zotero.title.replace(/(<i>)/ig, '<span class="nocase">$1').replace(/(<[/]i>)/ig, '$1</span>'))
+}
+```
+
 ### Detect and protect LaTeX math formulas
 
 ```javascript
