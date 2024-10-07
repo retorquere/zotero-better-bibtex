@@ -822,6 +822,10 @@ export class BetterBibTeX {
     })
   }
 
+  public onMainWindowLoad({ window }: { window: Window }): void {
+    log.info(`onMainWindowLoad ${typeof window}`)
+  }
+
   async loadUI(win: Window): Promise<void> {
     if (is7) {
       // const show = (item: ZoteroItem): { id: number, type: string, citekey: string } | boolean => item ? { id: item.id, type: Zotero.ItemTypes.getName(item.itemTypeID), citekey: item.getField('citationKey') as string } : false
