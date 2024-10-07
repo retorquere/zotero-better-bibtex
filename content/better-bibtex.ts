@@ -825,6 +825,9 @@ export class BetterBibTeX {
   public onMainWindowLoad({ window }: { window: Window }): void {
     log.info(`onMainWindowLoad ${typeof window}`)
   }
+  public onMainWindowUnload({ window }: { window: Window }): void {
+    log.info(`onMainWindowUnload ${typeof window}`)
+  }
 
   async loadUI(win: Window): Promise<void> {
     if (is7) {

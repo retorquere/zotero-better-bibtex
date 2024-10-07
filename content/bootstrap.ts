@@ -63,6 +63,12 @@ export function install(_data: any, _reason: ReasonId) {
 export function onMainWindowLoad({ window }) {
   log('onMainWindowLoad')
   window.MozXULElement.insertFTLIfNeeded('better-bibtex.ftl')
+  Zotero.BetterBibTeX.onMainWindowLoad({ window })
+}
+
+export function onMainWindowUnload({ window }) {
+  log('onMainWindowUnload')
+  Zotero.BetterBibTeX.onMainWindowUnload({ window })
 }
 
 let chromeHandle
