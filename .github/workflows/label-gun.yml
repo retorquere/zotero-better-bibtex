@@ -21,7 +21,7 @@ jobs:
           message.log-required: |
             Hello @{{username}},
 
-            `@retorquere` is ready to assist you with Better BibTeX. In order to do so efficiently, a debug log is generally required. The information it containst is key to him understanding, replicating, and resolving your issue.
+            `@retorquere` is ready to assist you with Better BibTeX. In order to do so efficiently, a debug log is generally required. The information it containst is key to him understanding, replicating, and resolving your issue. If you have shared a `D<number>` log, those go to the Zotero team, `@retorquere` cannot access those.
 
             **Here’s how you can share your debug log:**
 
