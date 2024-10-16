@@ -33,7 +33,7 @@ export class HTMLConverter {
 
   constructor(translation: Translation, mode: 'minimal' | 'bibtex' | 'biblatex') {
     this.translation = translation
-    log.debug(`charmap: ${JSON.stringify(translation.charmap)}`)
+    log.debug(`3020: ${JSON.stringify(translation.charmap)}`)
     this.tx = new Transform(mode, {
       math: this.translation.collected.preferences.mapMath,
       text: this.translation.collected.preferences.mapText,

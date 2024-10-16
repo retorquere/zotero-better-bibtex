@@ -11,6 +11,7 @@ import { Postfix } from './postfix'
 import * as Extra from '../../content/extra'
 import type { ExportedItem } from '../../content/db/cache'
 import { HTMLConverter, Mode as ConversionMode, ConverterOptions, ParseResult } from './unicode_translator'
+import { log } from '../../content/logger/simple'
 
 export class Exporter {
   public postfix: Postfix
@@ -102,6 +103,7 @@ export class Exporter {
   text2latex(text: string, options: ConverterOptions = {}, mode?: ConversionMode): ParseResult {
     if (typeof options.html === 'undefined') options.html = false
     mode = mode || this.htmlconverterMode
+    log.debug(`3020: making htmlconverter: ${JSON.stringify(this.translation.charmap)}`)
     if (!this.htmlconverter[mode]) this.htmlconverter[mode] = new HTMLConverter(this.translation, mode)
     return this.htmlconverter[mode].tolatex(text, options)
   }
