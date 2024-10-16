@@ -13,6 +13,7 @@ Feature: Export
 
     Examples:
       | file                                                                                                                     | references |
+      | charmapcsv mapping not working anymore #3020                                                                             | 1          |
       | Use nonacademic entrysubtype in place of newspapermagazine for biblatex-apa #2987                                        | 1          |
       | Inconsistent Citation Key #2953                                                                                          | 1          |
       | Use prepublished as default pubstate for arXiV articles #2911                                                            | 1          |

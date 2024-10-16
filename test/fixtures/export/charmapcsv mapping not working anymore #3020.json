@@ -1,0 +1,88 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "preferences": {
+      "DOIandURL": "doi",
+      "ascii": "–",
+      "asciiBibLaTeX": true,
+      "asciiBibTeX": false,
+      "autoExport": "idle",
+      "autoPinDelay": 1,
+      "automaticTags": false,
+      "biblatexExtractEprint": false,
+      "charmap": "{\"·\":{\"text\":\"·\",\"math\":\"\"},\"ș\":{\"text\":\"ș\",\"math\":\"\"}}",
+      "citekeyFormat": "auth.transliterate.lower+year",
+      "exportSort": "off",
+      "exportTitleCase": false,
+      "extraMergeCSL": true,
+      "keyScope": "global",
+      "postscript": "if (Translator.BetterBibLaTeX) {\n  if (\n    [\n      \"book\",\n      \"bookSection\",\n      \"journalArticle\",\n      \"newspaperArticle\",\n      \"thesis\",\n      \"report\",\n    ].includes(item.itemType)\n  ) {\n    delete this.has.url;\n    delete this.has.urldate;\n\n    if ([\"book\", \"bookSection\"].includes(item.itemType)) {\n      delete this.has.number;\n    }\n\n    if (item.itemType == \"newspaperArticle\") {\n      delete this.has.location;\n    }\n  }\n\n  // Check if more than 10% of the title is CJK\n  // https://github.com/retorquere/zotero-better-bibtex/issues/2810\n  if (\n    zotero.title &&\n    zotero.title.replace(/[^\\u4E00-\\u9FFF]/g, \"\").length / zotero.title.length >\n      0.1\n  ) {\n    // re-add the title field doing only minimal ascaping\n    tex.add({ name: \"title\", value: zotero.title, enc: \"minimal\" });\n  }\n}\n\nif (Translator.BetterCSLJSON) {\n  delete csl.ISBN;\n  delete csl.ISSN;\n\n  if (\n    [\n      \"book\",\n      \"bookSection\",\n      \"journalArticle\",\n      \"newspaperArticle\",\n      \"thesis\",\n      \"report\",\n    ].includes(item.itemType)\n  ) {\n    delete csl.URL;\n    delete csl[\"accessed\"];\n    delete csl.PMID;\n    delete csl.PMCID;\n  }\n\n  if (csl.DOI && csl.URL) {\n    delete csl.URL;\n    delete csl[\"accessed\"];\n  }\n}",
+      "quickCopyMode": "selectlink",
+      "retainCache": true,
+      "skipFields": "language, langid, annotation, shortjournal, eprint, pmcid, eprinttype, editortype, issn, isbn, series, editora, editorb, editoratype, editorbtype, pagetotal, origtitle, original-title, collection-title, source, container-title-short, title-short, number-of-pages, event-place, license, citation-key, call-number, collection-number, collection-editor, file, keywords, abstract, note"
+    }
+  },
+  "items": [
+    {
+      "DOI": "10.1016/j.jrurstud.2021.07.008",
+      "ISSN": "07430167",
+      "accessDate": "2021-08-05T05:08:44Z",
+      "citationKey": "bora2021",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Iuliana",
+          "lastName": "Bora"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Mircea",
+          "lastName": "Voiculescu"
+        }
+      ],
+      "date": "2021-08",
+      "extra": [
+        "Citation Key: bora2021"
+      ],
+      "itemID": 1,
+      "itemType": "journalArticle",
+      "language": "en",
+      "libraryCatalog": "ScienceDirect",
+      "pages": "578-586",
+      "publicationTitle": "Journal of Rural Studies",
+      "tags": [
+        {
+          "tag": "Finished"
+        },
+        {
+          "tag": "Ntergenerational memory",
+          "type": 1
+        },
+        {
+          "tag": "Place attachment",
+          "type": 1
+        },
+        {
+          "tag": "Place identity",
+          "type": 1
+        },
+        {
+          "tag": "Resettlement",
+          "type": 1
+        },
+        {
+          "tag": "Roia jiu coal mine",
+          "type": 1
+        },
+        {
+          "tag": "Romania",
+          "type": 1
+        }
+      ],
+      "title": "Resettlement, intergenerational memory, place attachment, and place identity in Roșia Jiu coal mine - Gorj County, Romania",
+      "url": "https://www.sciencedirect.com/science/article/pii/S0743016721002059",
+      "volume": "86"
+    }
+  ]
+}

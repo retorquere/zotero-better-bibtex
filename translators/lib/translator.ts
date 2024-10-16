@@ -272,7 +272,7 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
       this.charmap = this.charmap ? JSON.parse(this.collected.preferences.charmap) : {}
     }
     catch (err) {
-      log.error('could not parse charmap', err)
+      log.error('could not parse charmap:', err)
       this.charmap = {}
     }
 
@@ -313,6 +313,7 @@ export class Translation { // eslint-disable-line @typescript-eslint/naming-conv
 
     if (!this.verbatimFields.length) this.verbatimFields = null
     this.csquotes = this.collected.preferences.csquotes ? { open: this.collected.preferences.csquotes[0], close: this.collected.preferences.csquotes[1] } : null
+    log.debug(`collected charmap: ${this.collected.preferences.charmap}`)
   }
 
   saveAttachments(): void {
