@@ -13,6 +13,7 @@ Feature: Export
 
     Examples:
       | file                                                                                                                     | references |
+      | citekey not skip one-letter word #3021                                                                                   | 1          |
       | Use nonacademic entrysubtype in place of newspapermagazine for biblatex-apa #2987                                        | 1          |
       | Inconsistent Citation Key #2953                                                                                          | 1          |
       | Use prepublished as default pubstate for arXiV articles #2911                                                            | 1          |

@@ -1451,7 +1451,7 @@ export class PatternFormatter {
     title = title.replace(/<\/?(?:i|b|sc|nc|code|span[^>]*)>|["]/ig, '').replace(/[/:]/g, ' ')
     let words = this.contract(nlp(title).json())
       .map(word => options.nopunct ? this.nopunct(word, '') : word)
-      .filter(word => word && !(options.skipWords && ucs2decode(word).length === 1 && !word.match(CJK)))
+      .filter(word => word && !(options.skipWords && ucs2decode(word).length === 1 && !word.match(/^\d+$/) && !word.match(CJK)))
 
     // apply jieba.cut and flatten.
     if (chinese.load(Preference.jieba) && options.skipWords && this.item.transliterateMode.startsWith('chinese')) {
