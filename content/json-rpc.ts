@@ -507,13 +507,13 @@ class NSItem {
    * @param asCSL         Return the items as CSL
    * @param libraryID     ID of library to select the items from. When omitted, assume 'My Library'
    */
-  public async pandoc_filter(citekeys: string[], asCSL: boolean, libraryID?: string | number, style?: string, locale?: string) {
+  public async pandoc_filter(citekeys: string[], asCSL: boolean, libraryID?: string | number | string[], style?: string, locale?: string) {
     citekeys = [...(new Set(citekeys))]
     const ci = Preference.citekeyCaseInsensitive
     const result: { errors: Record<string, number>; items: Record<string, any> } = { errors: {}, items: {}}
 
     const where: Query = {
-      libraryID: typeof libraryID === 'string' ? { in: libraryID.trim().split(/\s*,\s*/).map(id => Library.get(id).libraryID).filter(_ => _) } : Library.get(libraryID).libraryID,
+      libraryID: Array.isArray(libraryID) ? { in: libraryID.map(name => Library.get(name).libraryID).filter(_ => typeof _ === 'number') } : libraryID,
     }
     const itemIDs: number[] = []
     for (const citationKey of citekeys.map(citekey => citekey.replace('@', ''))) {
