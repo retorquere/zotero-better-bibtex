@@ -513,7 +513,7 @@ class NSItem {
     const result: { errors: Record<string, number>; items: Record<string, any> } = { errors: {}, items: {}}
 
     const where: Query = {
-      libraryID: Library.get(libraryID).libraryID,
+      libraryID: typeof libraryID === 'string' ? { in: libraryID.trim().split(/\s*,\s*/).map(id => Library.get(id).libraryID).filter(_ => _) } : Library.get(libraryID).libraryID,
     }
     const itemIDs: number[] = []
     for (const citationKey of citekeys.map(citekey => citekey.replace('@', ''))) {
