@@ -17,27 +17,30 @@ const ENV = Components.classes['@mozilla.org/process/environment;1'].getService(
 const VarRef = Zotero.isWin ? /%([A-Z][A-Z0-9]*)%/ig : /[$]([A-Z][A-Z0-9]*)|[$][{]([A-Z][A-Z0-9]*)[}]/ig
 
 const resolver = new class {
-  private cache: Record<string, string>
+  private cache: Map<string, string>
 
-  resolve(path: string, seen: Set<string> = new Set): string {
+  resolve(path: string, seen: Record<string, boolean> = {}): string {
     return path.replace(VarRef, (...args) => {
       const varName: string = args.slice(1).find(_ => _)
-      if (this.cache[varName]) return this.cache[varName]
+      if (this.cache.has(varName)) return this.cache.get(varName)
 
       log.debug('3026: resolving', varName)
-      if (seen.has(varName)) {
+      if (seen[varName]) {
         log.error(`path-resolve: circular reference detected for environment variable ${varName}`)
         return ''
       }
 
       const value = ENV.get(varName) || ''
-      if (!value) log.error(`path-search: environment variable ${varName} is not defined`)
+      if (value) {
+        log.debug('3026: resolved', varName, 'to', value)
+      }
+      else {
+        log.error(`path-search: environment variable ${varName} is not defined`)
+        return ''
+      }
 
-      log.debug('3026: resolved', varName, 'to', value)
-      seen.add(varName)
-      const resolved = this.resolve(value, seen)
-      seen.delete(varName)
-      if (value === resolved) this.cache[varName] = value
+      const resolved = this.resolve(value, { ...seen, [varName]: true })
+      if (value === resolved) this.cache.set(varName, value)
       return resolved
     })
   }
