@@ -512,9 +512,14 @@ class NSItem {
     const ci = Preference.citekeyCaseInsensitive
     const result: { errors: Record<string, number>; items: Record<string, any> } = { errors: {}, items: {}}
 
+    log.debug('3025:', libraryID)
+
     const where: Query = {
-      libraryID: Array.isArray(libraryID) ? { in: libraryID.map(name => Library.get(name).libraryID).filter(_ => typeof _ === 'number') } : libraryID,
+      libraryID: Array.isArray(libraryID)
+        ? { in: libraryID.map(name => Library.get(name).libraryID).filter(_ => typeof _ === 'number') }
+        : Library.get(libraryID).libraryID,
     }
+    log.debug('3025:', where)
     const itemIDs: number[] = []
     for (const citationKey of citekeys.map(citekey => citekey.replace('@', ''))) {
       where[ci ? 'lcCitationKey' : 'citationKey'] = ci ? citationKey.toLowerCase() : citationKey
