@@ -14,18 +14,33 @@ export async function findBinary(bin: string, installationDirectory: { mac?: str
 }
 
 const ENV = Components.classes['@mozilla.org/process/environment;1'].getService(Components.interfaces.nsIEnvironment)
-const VarRef = Zotero.isWin ? /%([A-Z][A-Z0-9]*)%/ig : /[$]([A-Z][A-Z0-9]*)/ig
-function resolveVars(path: string, resolved: Record<string, string>): string {
-  let more = true
-  while (more) {
-    more = false
-    path = path.replace(VarRef, (match, varref) => {
-      more = true
-      if (typeof resolved[varref] !== 'string') resolved[varref] = ENV.get(varref) || ''
-      return resolved[varref]
+const VarRef = Zotero.isWin ? /%([A-Z][A-Z0-9]*)%/ig : /[$]([A-Z][A-Z0-9]*)|[$][{]([A-Z][A-Z0-9]*)[}]/ig
+
+const resolver = new class {
+  private cache: Record<string, string>
+
+  resolve(path: string, seen: Set<string> = new Set): string {
+    return path.replace(VarRef, (...args) => {
+      const varName: string = args.slice(1).find(_ => _)
+      if (this.cache[varName]) return this.cache[varName]
+
+      log.debug('3026: resolving', varName)
+      if (seen.has(varName)) {
+        log.error(`path-resolve: circular reference detected for environment variable ${varName}`)
+        return ''
+      }
+
+      const value = ENV.get(varName) || ''
+      if (!value) log.error(`path-search: environment variable ${varName} is not defined`)
+
+      log.debug('3026: resolved', varName, 'to', value)
+      seen.add(varName)
+      const resolved = this.resolve(value, seen)
+      seen.delete(varName)
+      if (value === resolved) this.cache[varName] = value
+      return resolved
     })
   }
-  return path
 }
 
 const dirService = Components.classes['@mozilla.org/file/directory_service;1'].getService(Components.interfaces.nsIProperties)
@@ -40,9 +55,8 @@ async function pathSearch(bin: string, installationDirectory: { mac?: string[]; 
 
   log.info(`path-search: looking for ${ bin } in ${ PATH }`)
   const sep = Zotero.isWin ? '\\' : '/'
-  const resolved = {}
   const paths: string[] = [ ...PATH.split(Zotero.isWin ? ';' : ':'), ...(installationDirectory[client.platform] || []) ]
-    .map(p => resolveVars(p, resolved))
+    .map(p => resolver.resolve(p))
     .filter(_ => _)
     .filter((p: string, i: number, self: string[]) => self.indexOf(p) === i) // unique
     .map(p => cwd && p[0] === '.' && (p[1] || sep) === sep ? `${cwd}${p.substring(1)}` : p)
@@ -61,6 +75,7 @@ async function pathSearch(bin: string, installationDirectory: { mac?: string[]; 
     for (const ext of extensions) {
       try {
         const exe: string = $OS.Path.join(path, bin + ext)
+        log.debug('3026:', exe)
         if (!(await $OS.File.exists(exe))) continue
 
         // eslint-disable-next-line @typescript-eslint/await-thenable
