@@ -12,7 +12,6 @@ unsafe= true
 
 [params]
   editURL = "https://github.com/retorquere/zotero-better-bibtex/edit/master/site/content/"
-  description = "Make Zotero more useful for us LaTeX holdouts"
   showVisitedLinks = false
   disableBreadcrumb = false
   disableNextPrev = false
@@ -21,7 +20,7 @@ unsafe= true
   themeVariant = "green"
 
 [outputs]
-home = [ "HTML", "RSS", "SEARCH"]
+home = [ "html", "rss", "print"]
 
 [Languages]
 [Languages.en]
