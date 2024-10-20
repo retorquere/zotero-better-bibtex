@@ -70,6 +70,8 @@ better-bibtex_preferences_advanced_export_brace-protection =
 better-bibtex_preferences_advanced_export_brace-protection_warning = Se si vuole ignorare sia le buone pratiche di BibTeX/BibLaTeX (vedi le FAQ di BBT) e le raccomandazioni di Zotero sulle maiuscole, si può disattivare questa opzione per prevenire la protezione con graffe delle parole in maiuscolo.
 better-bibtex_preferences_advanced_export_retain-cache = 
     .label = Mantieni la cache delle esportazioni tra gli aggiornamenti
+better-bibtex_preferences_advanced_export_reset-cache = 
+    .label = Cache will be recreated on next start
 better-bibtex_preferences_advanced_export_retain-cache_warning =
     Di default BBT cancella tutte le cache ogni volta che BBT o Zotero sono aggiornati. Poiché non è possibile prevedere quando una modifica in Zotero o in BBT andrà a cambiare l'output generato a partire da un elemento, le cache sono eliminate ogni volta che viene rilevata una nuova versione di uno dei due, così da assicurare che vengano usate le ultime modifiche che riguardano le esportazioni. Tuttavia, se si è in possesso di una libreria molto grande di cui si esporta frequentemente porzioni significative, si può desiderare di mantenere gli elementi nella cache, anche se ciò espone al rischio di non usufruire dei miglioramenti introdotti con gli aggiornamenti più recenti.
     
@@ -304,7 +306,7 @@ better-bibtex_preferences_prefpane_loading = Caricamento di Better BibTeX in cor
 better-bibtex_preferences_rescan-citekeys = 
     .label = Ri-esamina le chiavi fissate
 better-bibtex_preferences_reset-cache = 
-    .label = Reset della cache
+    .label = Reset cache on next start
 better-bibtex_preferences_tab_auto-export = Esportazione automatica
     .label = { better-bibtex_preferences_tab_auto-export }
 better-bibtex_preferences_tab_citekey = Chiavi di citazione
