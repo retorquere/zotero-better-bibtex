@@ -71,7 +71,7 @@ better-bibtex_preferences_advanced_export_brace-protection_warning = 若您坚�
 better-bibtex_preferences_advanced_export_retain-cache = 
     .label = 升级后保留导出缓存
 better-bibtex_preferences_advanced_export_reset-cache = 
-    .label = Cache will be recreated on next start
+    .label = 缓存将在下次启动时被重建
 better-bibtex_preferences_advanced_export_retain-cache_warning =
     默认情况下，升级 BBT 或 Zotero 后 BBT 会清除所有缓存。我无法预测 BBT 或 Zotero 的更改是否会影响条目引用的生成结果，因此，为了确保您能受益于对引用生成有影响的更新和修复，当检测到组件更新时，缓存将被清除。然而，如果您有一个十分庞大的文库，且您经常需要导出其中的大量条目，那么您可能希望保留缓存的引用，即便这将带来在导出时获得（已在更新中修复的）旧有的错误输出的风险。
     
@@ -162,7 +162,7 @@ better-bibtex_preferences_auto-export_status = 状态
 better-bibtex_preferences_auto-export_status_done = 已完成
 better-bibtex_preferences_auto-export_status_error = 错误
 better-bibtex_preferences_auto-export_status_preparing = 正在准备 { $translator }
-better-bibtex_preferences_auto-export_status_preparing_delayed = preparing { $translator }, { $pending } exports pending
+better-bibtex_preferences_auto-export_status_preparing_delayed = 正在准备 { $translator }，待导出：{ $pending }
 better-bibtex_preferences_auto-export_status_running = 运行中
 better-bibtex_preferences_auto-export_status_scheduled = 已预定
 better-bibtex_preferences_auto-export_target = 输出文件
@@ -307,7 +307,7 @@ better-bibtex_preferences_prefpane_loading = 正在加载 Better BibTeX
 better-bibtex_preferences_rescan-citekeys = 
     .label = 重新扫描固定的引用
 better-bibtex_preferences_reset-cache = 
-    .label = Reset cache on next start
+    .label = 在下次启动时重置缓存
 better-bibtex_preferences_tab_auto-export = 自动导出
     .label = { better-bibtex_preferences_tab_auto-export }
 better-bibtex_preferences_tab_citekey = 引用
