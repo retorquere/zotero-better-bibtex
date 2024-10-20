@@ -17,7 +17,7 @@ const ENV = Components.classes['@mozilla.org/process/environment;1'].getService(
 const VarRef = Zotero.isWin ? /%([A-Z][A-Z0-9]*)%/ig : /[$]([A-Z][A-Z0-9]*)|[$][{]([A-Z][A-Z0-9]*)[}]/ig
 
 const resolver = new class {
-  private cache: Map<string, string>
+  private cache: Map<string, string> = new Map
 
   resolve(path: string, seen: Record<string, boolean> = {}): string {
     return path.replace(VarRef, (...args) => {
