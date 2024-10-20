@@ -195,6 +195,12 @@
             "cache": {
               "type": "boolean"
             },
+            "cacheDelete": {
+              "type": "boolean"
+            },
+            "cacheRetain": {
+              "type": "boolean"
+            },
             "charmap": {
               "type": "string"
             },
@@ -409,9 +415,6 @@
               "type": "string"
             },
             "relativeFilePaths": {
-              "type": "boolean"
-            },
-            "retainCache": {
               "type": "boolean"
             },
             "scrubDatabase": {

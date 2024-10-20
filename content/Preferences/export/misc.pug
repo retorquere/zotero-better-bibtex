@@ -29,7 +29,8 @@ html:div
 groupbox
   caption Cache
   html:div
-    checkbox(preference="extensions.zotero.translators.better-bibtex.retainCache" label="&better-bibtex_preferences_advanced_export_retain-cache.label;")
+    checkbox(preference="extensions.zotero.translators.better-bibtex.cacheRetain" label="&better-bibtex_preferences_advanced_export_retain-cache.label;")
     image(tooltip="bbt-tooltip-retainCache" src="chrome://zotero-better-bibtex/content/skin/attention.svg" width='16px' height='16px')
   checkbox(preference="extensions.zotero.translators.better-bibtex.cache" label="&better-bibtex_preferences_advanced_export_workers_cache.label;")
   button(label="&better-bibtex_preferences_reset-cache.label;" oncommand="Zotero.BetterBibTeX.PrefPane.cacheReset()")
+  checkbox(readonly='true' preference="extensions.zotero.translators.better-bibtex.cacheDelete" label="&better-bibtex_preferences_advanced_export_reset-cache.label;")
