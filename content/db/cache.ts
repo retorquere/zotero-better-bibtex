@@ -392,6 +392,15 @@ export const Cache = new class $Cache {
   public async open(lastUpdated?: string): Promise<void> {
     if (this.db) throw new Error('database reopened')
 
+    if (!worker) {
+      const del = 'extensions.zotero.translators.better-bibtex.cacheDelete'
+      if (Zotero.Prefs.get(del)) {
+        log.info('cache delete requested')
+        await Factory.deleteDatabase(this.name)
+      }
+      Zotero.Prefs.clear(del)
+    }
+
     this.db = await this.$open('open')
     if (!this.db) {
       log.info('cache: could not open, delete and reopen') // #2995, downgrade 6 => 7
@@ -400,16 +409,13 @@ export const Cache = new class $Cache {
     }
 
     if (this.db && !worker) {
-      const del = 'extensions.zotero.translators.better-bibtex.cache.delete'
       const metadata = { Zotero: '', BetterBibTeX: '', lastUpdated: '', ...(await this.metadata()) }
       const reasons = [
         { reason: `Zotero version changed from ${metadata.Zotero || 'none'} to ${Zotero.version}`, test: metadata.Zotero && metadata.Zotero !== metadata.Zotero },
         { reason: `Better BibTeX version changed from ${metadata.BetterBibTeX || 'none'} to ${version}`, test: metadata.BetterBibTeX && metadata.BetterBibTeX !== version },
         { reason: `cache gap found ${metadata.lastUpdated} => ${lastUpdated}`, test: (lastUpdated || false) && metadata.lastUpdated && lastUpdated !== metadata.lastUpdated },
-        { reason: 'marked for deletion', test: Zotero.Prefs.get(del) || false },
       ]
       const reason = reasons.filter(r => r.test).map(r => r.reason).join(' and ') || false
-      Zotero.Prefs.clear(del)
 
       log.info(`cache: ${JSON.stringify(metadata)} + ${JSON.stringify({ Zotero: Zotero.version, BetterBibTeX: version, lastUpdated })} => ${JSON.stringify(reasons)} => ${reason}`)
       if (reason) {

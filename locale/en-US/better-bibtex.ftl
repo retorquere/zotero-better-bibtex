@@ -86,7 +86,8 @@ better-bibtex_preferences_advanced_export_brace-protection =
 better-bibtex_preferences_advanced_export_brace-protection_warning = If you're dead-set on ignoring both BibTeX/BibLaTeX best practice (see the BBT FAQ) and the Zotero recommendations on title/sentence casing, you can turn this off to suppress automatic brace-protection for words with uppercase letters.
 better-bibtex_preferences_advanced_export_retain-cache = 
   .label = Retain export cache across upgrades
-
+better-bibtex_preferences_advanced_export_reset-cache = 
+  .label = Cache will be recreated on next start
 
 better-bibtex_preferences_advanced_export_retain-cache_warning = By default, BBT clears all caches whenever BBT or Zotero is upgraded. I can't realistically predict whether a change in Zotero or BBT is going to affect the output generated for any given item, so to be sure you always have the latest export-affecting fixes, the caches are discarded when a new version of either is detected. If you have a very large library however, of which you regularly export significant portions, you might want to retain the cached items even if that does come with the risk that you get wrong output on export that has been fixed in the interim.
     
@@ -377,7 +378,7 @@ better-bibtex_preferences_rescan-citekeys =
   .label = Re-scan pinned citekeys
 
 better-bibtex_preferences_reset-cache = 
-  .label = Reset cache
+  .label = Reset cache on next start
 
 better-bibtex_preferences_tab_auto-export = Automatic export
   .label = { better-bibtex_preferences_tab_auto-export }
