@@ -391,10 +391,10 @@ export const Cache = new class $Cache {
 
   public async open(lastUpdated?: string): Promise<void> {
     if (this.db) throw new Error('database reopened')
+    const del = 'translators.better-bibtex.cacheDelete'
 
     log.info(`opening cache ${worker ? 'worker' : 'main'}`)
     if (!worker) {
-      const del = 'translators.better-bibtex.cacheDelete'
       if (Zotero.Prefs.get(del)) {
         log.info('cache delete requested')
         await Factory.deleteDatabase(this.name)
@@ -408,6 +408,8 @@ export const Cache = new class $Cache {
       await Factory.deleteDatabase(this.name)
       this.db = await this.$open('reopen')
     }
+
+    if (!this.db) Zotero.Prefs.set(del, true)
 
     if (this.db && !worker) {
       const metadata = { Zotero: '', BetterBibTeX: '', lastUpdated: '', ...(await this.metadata()) }
