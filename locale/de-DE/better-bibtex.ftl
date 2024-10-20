@@ -70,6 +70,8 @@ better-bibtex_preferences_advanced_export_brace-protection =
 better-bibtex_preferences_advanced_export_brace-protection_warning = Wenn Sie sowohl BibTeX/BibLaTeX Best Practice (siehe BBT FAQ) als auch die Zotero-Empfehlungen zum Titel-/Satz-Casing ignorieren möchten, können Sie dies ausschalten, um das Titel-Casing für englische Referenzen zu unterdrücken
 better-bibtex_preferences_advanced_export_retain-cache = 
     .label = Export-Caches bei Upgrades behalten
+better-bibtex_preferences_advanced_export_reset-cache = 
+    .label = Cache will be recreated on next start
 better-bibtex_preferences_advanced_export_retain-cache_warning =
     Standardmäßig löscht BBT alle Caches bei einem Upgrade von BBT oder Zotero. Ich kann nicht realistisch vorhersagen, ob eine Änderung in Zotero oder BBT die erzeugte Ausgabe für einen bestimmten Eintrag beeinflussen wird. Um sicher zu gehen, dass Sie immer die aktuellsten Behebungen haben, die sich auf den Export auswirken, werden die Caches verworfen, wenn eine neue Version von beiden erkannt wird. Wenn Sie jedoch eine sehr große Bibliothek haben, von der Sie regelmäßig erhebliche Teile exportieren, können Sie die zwischengespeicherten Einträge behalten wollen, auch wenn dies mit dem Risiko verbunden ist, dass Sie eine falsche Ausgabe beim Export erhalten, die in der Zwischenzeit repariert wurde.
     
@@ -304,7 +306,7 @@ better-bibtex_preferences_prefpane_loading = Better BibTeX wird geladen
 better-bibtex_preferences_rescan-citekeys = 
     .label = Scanne angeheftete Zitierschlüssel erneut
 better-bibtex_preferences_reset-cache = 
-    .label = Cache zurücksetzen
+    .label = Reset cache on next start
 better-bibtex_preferences_tab_auto-export = Automatischer Export
     .label = { better-bibtex_preferences_tab_auto-export }
 better-bibtex_preferences_tab_citekey = Citation keys
