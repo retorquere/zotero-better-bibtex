@@ -392,8 +392,9 @@ export const Cache = new class $Cache {
   public async open(lastUpdated?: string): Promise<void> {
     if (this.db) throw new Error('database reopened')
 
+    log.info(`opening cache ${worker ? 'worker' : 'main'}`)
     if (!worker) {
-      const del = 'extensions.zotero.translators.better-bibtex.cacheDelete'
+      const del = 'translators.better-bibtex.cacheDelete'
       if (Zotero.Prefs.get(del)) {
         log.info('cache delete requested')
         await Factory.deleteDatabase(this.name)
