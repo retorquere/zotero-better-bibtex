@@ -20,29 +20,32 @@ const resolver = new class {
   private cache: Map<string, string> = new Map
 
   resolve(path: string, seen: Record<string, boolean> = {}): string {
-    return path.replace(VarRef, (...args) => {
-      const varName: string = args.slice(1).find(_ => _)
-      if (this.cache.has(varName)) return this.cache.get(varName)
+    let value: string
 
-      log.debug('3026: resolving', varName)
-      if (seen[varName]) {
-        log.error(`path-resolve: circular reference detected for environment variable ${varName}`)
-        return ''
-      }
+    if (!this.cache.has(path)) {
+      this.cache.set(path, path.replace(VarRef, ($varName, ...args) => {
+        if (!this.cache.has($varName)) {
+          const varName: string = args.find(_ => _)
 
-      const value = ENV.get(varName) || ''
-      if (value) {
-        log.debug('3026: resolved', varName, 'to', value)
-      }
-      else {
-        log.error(`path-search: environment variable ${varName} is not defined`)
-        return ''
-      }
+          if (seen[varName]) {
+            log.error(`path-resolve: circular reference detected for environment variable ${varName}`)
+            this.cache.set($varName, '')
+          }
+          else if (value = ENV.get(varName) || '') {
+            log.debug('3026: resolved', varName, 'to', value)
+            this.cache.set($varName, this.resolve(value, { ...seen, [varName]: true }))
+          }
+          else {
+            log.error(`path-search: environment variable ${varName} is not set`)
+            this.cache.set($varName, '')
+          }
+        }
 
-      const resolved = this.resolve(value, { ...seen, [varName]: true })
-      if (value === resolved) this.cache.set(varName, value)
-      return resolved
-    })
+        return this.cache.get($varName)
+      }))
+    }
+
+    return this.cache.get(path)
   }
 }
 
