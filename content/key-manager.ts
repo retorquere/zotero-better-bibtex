@@ -259,7 +259,7 @@ export const KeyManager = new class _KeyManager {
         for (const cb of this.unwatch) {
           cb()
         }
-        await this.queue.add(() => null) // make sure store queue has been processed
+        await this.queue.done()
       },
     })
     orchestrator.add({

@@ -154,6 +154,7 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
     Zotero.Prefs.clear('translators.better-bibtex.caching')
     Zotero.Prefs.clear('translators.better-bibtex.citekeyFormatBackup')
 
+    this.move('retainCache', 'cacheRetain', old => old ? 1 : 0)
     this.move('autoPin', 'autoPinDelay', old => old ? 1 : 0)
     this.move('suppressNoCase', 'importCaseProtection', old => old ? 'off' : 'as-needed')
     this.move('suppressSentenceCase', 'importSentenceCase', old => old ? 'off' : 'on+guess')
