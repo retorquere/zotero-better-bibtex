@@ -32,7 +32,6 @@ const resolver = new class {
             this.cache.set($varName, '')
           }
           else if (value = ENV.get(varName) || '') {
-            log.debug('3026: resolved', varName, 'to', value)
             this.cache.set($varName, this.resolve(value, { ...seen, [varName]: true }))
           }
           else {
@@ -81,7 +80,6 @@ async function pathSearch(bin: string, installationDirectory: { mac?: string[]; 
     for (const ext of extensions) {
       try {
         const exe: string = $OS.Path.join(path, bin + ext)
-        log.debug('3026:', exe)
         if (!(await $OS.File.exists(exe))) continue
 
         // eslint-disable-next-line @typescript-eslint/await-thenable
