@@ -65,7 +65,7 @@
   },
   "dependencies": {
     "@artsy/to-title-case": "^1.1.0",
-    "@ast-grep/napi": "^0.28.0",
+    "@ast-grep/napi": "^0.28.1",
     "@caeser1996/titlecase": "^3.0.2",
     "@henrygd/queue": "^1.0.7",
     "@lifeparticle/ap-style-title-case": "^1.5.0",
@@ -125,7 +125,7 @@
     "@retorquere/bibtex-parser": "^9.0.17",
     "@retorquere/zotero-sync": "^1.0.27",
     "@types/bluebird": "^3.5.42",
-    "@types/node": "^22.7.7",
+    "@types/node": "^22.7.8",
     "@xmldom/xmldom": "^0.9.4",
     "ajv-keywords": "^5.1.0",
     "archiver": "^7.0.1",
