@@ -120,6 +120,7 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
     // prevent foot-guns
     if (this.repair(pref)) return
     if (pref === 'itemObserverDelay') Events.itemObserverDelay = this.itemObserverDelay
+    log.debug('3031: pref changed:', pref, '=>', this[pref])
     void Events.emit('preference-changed', pref)
   }
 

@@ -424,6 +424,7 @@ export const KeyManager = new class _KeyManager {
         case 'citekeyCaseInsensitive':
         case 'citekeyUnsafeChars':
         case 'skipWords':
+          log.debug('3031: updating formula after change to', pref)
           Formatter.update([Preference.citekeyFormat])
           break
       }
