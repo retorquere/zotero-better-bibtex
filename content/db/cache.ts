@@ -1,6 +1,7 @@
 import { log } from '../logger/simple'
 
 import { is7, worker } from '../client'
+import { flash } from '../flash'
 
 var IDBKeyRange // eslint-disable-line no-var
 if (!worker && typeof IDBKeyRange === 'undefined') IDBKeyRange = Components.classes['@mozilla.org/appshell/appShellService;1'].getService(Components.interfaces.nsIAppShellService).hiddenDOMWindow.IDBKeyRange
@@ -409,7 +410,10 @@ export const Cache = new class $Cache {
       this.db = await this.$open('reopen')
     }
 
-    if (!this.db) Zotero.Prefs.set(del, true)
+    if (!this.db) {
+      Zotero.Prefs.set(del, true)
+      flash('Cache could not be opened', 'Cache could not be opened, please restart Zotero')
+    }
 
     if (this.db && !worker) {
       const metadata = { Zotero: '', BetterBibTeX: '', lastUpdated: '', ...(await this.metadata()) }
