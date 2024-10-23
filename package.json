@@ -125,7 +125,7 @@
     "@retorquere/bibtex-parser": "^9.0.17",
     "@retorquere/zotero-sync": "^1.0.27",
     "@types/bluebird": "^3.5.42",
-    "@types/node": "^22.7.8",
+    "@types/node": "^22.7.9",
     "@xmldom/xmldom": "^0.9.4",
     "ajv-keywords": "^5.1.0",
     "archiver": "^7.0.1",
