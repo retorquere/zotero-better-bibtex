@@ -1,4 +1,4 @@
-import { log } from './logger'
+import { log } from './logger/simple'
 
 const seconds = 1000
 
