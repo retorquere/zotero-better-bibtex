@@ -34,6 +34,8 @@ Events.on('window-loaded', ({ win, href }: { win: Window; href: string }) => {
       break
 
     case 'chrome://zotero/content/preferences/preferences.xhtml':
+      log.debug('3031: window-loaded', !!win)
+      Zotero.BetterBibTeX.PrefPane.load(win).catch(err => log.error(err))
       break
   }
 })
@@ -142,7 +144,7 @@ class AutoExportPane {
 
     const auto_exports = AutoExport.all()
     const details = doc.querySelector<HTMLElement>('#bbt-prefs-auto-exports')
-    details.style.display = auto_exports.length ? 'grid' : 'none'
+    if (details) details.style.display = auto_exports.length ? 'grid' : 'none'
     if (!auto_exports.length) return null
 
     const menulist: XUL.Menulist = doc.querySelector<HTMLElement>('#bbt-prefs-auto-export-select') as XUL.Menulist
@@ -463,6 +465,10 @@ export class PrefPane {
 
   public async load(win: Window): Promise<void> {
     try {
+      if (!win) {
+        log.debug('3031: no window?')
+        return
+      }
       $window = win as any
 
       ($window as any).Zotero = Zotero
