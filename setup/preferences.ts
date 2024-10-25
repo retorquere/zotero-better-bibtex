@@ -732,8 +732,19 @@ render('content/Preferences/xhtml.pug', 'build/content/preferences.xhtml', {
       walk(SelfClosing, ast)
       walk(Lint, ast)
 
-      // if (ast.type !== 'Block' || ast.nodes[0].type !== 'Tag' || ast.nodes[0].name !== 'vbox') throw new Error(`unexpected root`)
-      // ast = ast.nodes[0].block
+      if (ast.type !== 'Block' || ast.nodes.length !== 1 || ast.nodes[0].type !== 'Tag' || ast.nodes[0].name !== 'vbox') throw new Error(`unexpected root`)
+      let onload = ast.nodes[0].attrs.filter(attr => attr.name === 'onload')
+      const ns = ast.nodes[0].attrs.filter(attr => attr.name !== 'onload')
+
+      ast = ast.nodes[0].block
+      for (const node of ast.nodes) {
+        const nodes = node.type === 'Block' ? node.nodes : [ node ]
+
+        for (const n of nodes) {
+          n.attrs = [...n.attrs, ...onload, ...ns]
+          onload = []
+        }
+      }
 
       return ast
     },
