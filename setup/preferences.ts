@@ -732,8 +732,8 @@ render('content/Preferences/xhtml.pug', 'build/content/preferences.xhtml', {
       walk(SelfClosing, ast)
       walk(Lint, ast)
 
-      if (ast.type !== 'Block' || ast.nodes[0].type !== 'Tag' || ast.nodes[0].name !== 'vbox') throw new Error(`unexpected root`)
-      ast = ast.nodes[0].block
+      // if (ast.type !== 'Block' || ast.nodes[0].type !== 'Tag' || ast.nodes[0].name !== 'vbox') throw new Error(`unexpected root`)
+      // ast = ast.nodes[0].block
 
       return ast
     },

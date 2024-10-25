@@ -33,10 +33,12 @@ Events.on('window-loaded', ({ win, href }: { win: Window; href: string }) => {
       Zotero.BetterBibTeX.PrefPane.load(win).catch(err => log.error(err))
       break
 
+    /*
     case 'chrome://zotero/content/preferences/preferences.xhtml':
       log.debug('3031: window-loaded', !!win)
       Zotero.BetterBibTeX.PrefPane.load(win).catch(err => log.error(err))
       break
+    */
   }
 })
 
@@ -463,7 +465,8 @@ export class PrefPane {
     await Cache.clear('*')
   }
 
-  public async load(win: Window): Promise<void> {
+  public async load(win: Window, zv?: number): Promise<void> {
+    log.debug('3031: load', typeof win, typeof zv)
     try {
       if (!win) {
         log.debug('3031: no window?')
