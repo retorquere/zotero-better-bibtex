@@ -23,7 +23,6 @@ import { Cache } from './db/cache'
 // safe to keep "global" since only one pref pane will be loaded at any one time
 let $window: Window & { sizeToContent(): void } // eslint-disable-line no-var
 Events.on('window-loaded', ({ win, href }: { win: Window; href: string }) => {
-  log.debug('3031:', href)
   switch (href) {
     case 'chrome://zotero/content/preferences/preferences.xul': // Zotero's own preferences on Z6
       new ZoteroPreferences(win)
@@ -32,20 +31,12 @@ Events.on('window-loaded', ({ win, href }: { win: Window; href: string }) => {
     case 'chrome://zotero-better-bibtex/content/preferences.xul': // BBT's own Z6 preferences
       Zotero.BetterBibTeX.PrefPane.load(win).catch(err => log.error(err))
       break
-
-    /*
-    case 'chrome://zotero/content/preferences/preferences.xhtml':
-      log.debug('3031: window-loaded', !!win)
-      Zotero.BetterBibTeX.PrefPane.load(win).catch(err => log.error(err))
-      break
-    */
   }
 })
 
 Events.on('preference-changed', (pref: string) => {
   switch (pref) {
     case 'citekeyFormatEditing':
-      log.debug('3031: check', pref)
       Zotero.BetterBibTeX.PrefPane.checkCitekeyFormat()
       break
     case 'postscript':
@@ -420,12 +411,9 @@ export class PrefPane {
   }
 
   public checkCitekeyFormat(): void {
-    log.debug('3031:', typeof $window, Zotero.BetterBibTeX.starting)
     if (!$window || Zotero.BetterBibTeX.starting) return // itemTypes not available yet
 
     const error = Formatter.update([ Preference.citekeyFormatEditing, Preference.citekeyFormat ])
-    log.debug('3031:', error)
-
     const editing = $window.document.getElementById('bbt-preferences-citekeyFormatEditing')
     editing.classList[error ? 'add' : 'remove']('bbt-prefs-error')
     editing.setAttribute(client.is7 ? 'title' : 'tooltiptext', error)
@@ -465,11 +453,10 @@ export class PrefPane {
     await Cache.clear('*')
   }
 
-  public async load(win: Window, zv?: number): Promise<void> {
-    log.debug('3031: load', typeof win, typeof zv)
+  public async load(win: Window): Promise<void> {
     try {
       if (!win) {
-        log.debug('3031: no window?')
+        log.error('Preferences: no window?')
         return
       }
       $window = win as any
