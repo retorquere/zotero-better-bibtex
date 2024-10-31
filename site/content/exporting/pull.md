@@ -22,7 +22,7 @@ You can fetch your library as part of your build, using something like `curl` fr
 
 `format` can be:
 
-* `biblatex` for BibLaTeX
+* `bib` of `biblatex` for BibLaTeX
 * `bibtex` for BibTeX
 * `json` or `csljson` for CSL-JSON
 * `yaml`, `yml` or `cslyaml` for CSL-JSON in YAML format
