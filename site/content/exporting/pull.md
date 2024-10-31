@@ -29,7 +29,7 @@ You can fetch your library as part of your build, using something like `curl` fr
 * `jzon` for BetterBibTeX JSON debug format
 * the value of `translatorID` taken from the header of any existing Zotero translator to get an export in that translator format
 
-**Pull export will *only* work if you are compiling your document on the
+**`addbibresource` from pull export will *only* work if you are compiling your document on the
 same system your Zotero client with BBT runs on**. *Technically*
 it can be made to work for pulling from other systems, but it's
 even more arcane to set up than [git support]({{% ref "auto#git-support" %}}).
