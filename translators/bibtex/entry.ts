@@ -516,7 +516,10 @@ export class Entry {
           v_old = v_old.toLowerCase()
           v_new = v_new.toLowerCase()
         }
-        if (v_old !== v_new) this.quality_report.push(`duplicate "${ field.name }" ("${ this.has[field.name].value }") ignored`)
+        if (v_old !== v_new) {
+          if (typeof v_old === 'string') v_old = v_old.replace(/[\r\n]+/g, ' ')
+          this.quality_report.push(`duplicate "${ field.name }" ("${ v_old }") ignored`)
+        }
       }
 
       delete this.has[field.name]

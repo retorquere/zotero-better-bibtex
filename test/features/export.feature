@@ -13,6 +13,7 @@ Feature: Export
 
     Examples:
       | file                                                                                                                     | references |
+      | Duplicate note is not correctly commented out in biblatex output #3040                                                   | 1          |
       | citekey not skip one-letter word #3021                                                                                   | 1          |
       | charmapcsv mapping not working anymore #3020                                                                             | 1          |
       | Use nonacademic entrysubtype in place of newspapermagazine for biblatex-apa #2987                                        | 1          |
