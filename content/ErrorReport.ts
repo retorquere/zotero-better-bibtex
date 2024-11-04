@@ -266,7 +266,7 @@ export class ErrorReport {
       if (init) {
         if (facet.match(/notes|attachments/)) {
           cb.hidden = !this.input.items
-          this.config[facet] = this.config[facet] && !!this.input.items
+          this.config[facet] = this.config[facet] || !!this.input.items
         }
         if (facet === 'errors') {
           cb.disabled = !this.input.errors
