@@ -35,6 +35,8 @@ jobs:
 
             Sharing your debug log gives `@retorquere` a view of your Better BibTeX configuration and the elements contributing to the issue. This helps him address your concerns more efficiently.
 
+            If you have submitted a debug log and its ID looks like `D<number>`, that debug log goes to the Zotero team, not to `@retorquere`. Please see the points above how to send a BBT debug log.
+
             Thank you.
 
             **PS: If the Debug Log menu is not available, or if it fails to send the debug log**, you can use the option under “Help” > “Send debug log to file.io”.
