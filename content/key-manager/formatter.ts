@@ -846,7 +846,7 @@ export class PatternFormatter {
   public $lastpage(): this {
     const pages: string = this.item.getField('pages') as string
     if (!pages) return this.$text('')
-    return this.$text(pages.split(page_range_splitter)[0] || '')
+    return this.$text(pages.split(page_range_splitter).pop() || '')
   }
 
   /** Tag number `n`. Mostly for legacy compatibility
