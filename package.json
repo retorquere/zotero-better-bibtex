@@ -124,6 +124,7 @@
   "devDependencies": {
     "@retorquere/bibtex-parser": "^9.0.17",
     "@retorquere/zotero-sync": "^1.0.27",
+    "@stylistic/eslint-plugin": "^2.10.1",
     "@types/bluebird": "^3.5.42",
     "@types/node": "^22.9.0",
     "@xmldom/xmldom": "^0.9.5",
@@ -143,6 +144,8 @@
     "ejs": "^3.1.10",
     "esbuild": "^0.24.0",
     "eslint": "^8.57.0",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-prefer-arrow": "^1.2.3",
     "estrace": "^5.1.0",
     "eta": "^3.5.0",
     "fast-json-patch": "^3.1.1",
