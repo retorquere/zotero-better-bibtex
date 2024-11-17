@@ -37,13 +37,6 @@ Number of seconds to wait after your system goes idle before kicking off auto-ex
 default: `yes`
 
 Support for EDTF dates in biblatex
-## cacheFlushInterval
-
-default: `5`
-
-How often the Better BibTeX database should be saved to disk. Defaults to once every 5 seconds. Note that
-your database is always saved when your computer goes idle, or when you exit Zotero.
-
 ## charmap
 
 default: `<not set>`
@@ -83,11 +76,29 @@ On import, detect URLs in non-standard bib(la)tex fields and import them as atta
 default: `yes`
 
 On import, place all bib(la)tex field Zotero doesn't have an existing field for in the Zotero `extra` field of the item
+## importJabRefAbbreviations
+
+default: `yes`
+
+Expand journal abbreviations to the full journal name on import.
+
+## importJabRefStrings
+
+default: `yes`
+
+During import, replace titles matching a list of common @string definitions with the value of that @string
+
 ## importNoteToExtra
 
 default: `<not set>`
 
 On import, import note-like fields in this comma-separated list to the `extra` field, unless the note has rich text.
+## importSentenceCaseQuoted
+
+default: `yes`
+
+During import, also sentence-case quoted parts of titles
+
 ## importUnknownTexCommand
 
 default: `ignore`

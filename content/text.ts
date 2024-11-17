@@ -1,5 +1,7 @@
 import { toSentenceCase } from '@retorquere/bibtex-parser'
+import { is7 } from './client'
 
+import * as escape from './escape'
 import type { MarkupNode } from '../typings/markup'
 import { titleCased } from './csl-titlecase'
 
@@ -47,46 +49,46 @@ const re = {
 re.lcChar = re.Ll + re.Lt + re.Lm + re.Lo + re.Mn + re.Mc + re.Nd + re.Nl
 // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
 re.char = re.Lu + re.lcChar
-re.L = `${re.Lu}${re.Ll}${re.Lt}${re.Lm}${re.Lo}`
-re.protectedWord = `[${re.lcChar}]*[${re.Lu}][-${re.char}]*`
+re.L = `${ re.Lu }${ re.Ll }${ re.Lt }${ re.Lm }${ re.Lo }`
+re.protectedWord = `[${ re.lcChar }]*[${ re.Lu }][-${ re.char }]*`
 
 // actual regexps
 
 // TODO: add punctuation
-re.leadingUnprotectedWord = new RegExp(`^([${re.Lu}][${re.lcChar}]*)[${re.Whitespace}${re.P}]`)
-re.protectedWords = new RegExp(`^(${re.protectedWord})(([${re.Whitespace}])(${re.protectedWord}))*`)
-re.unprotectedWord = new RegExp(`^[${re.char}]+`)
+re.leadingUnprotectedWord = new RegExp(`^([${ re.Lu }][${ re.lcChar }]*)[${ re.Whitespace }${ re.P }]`)
+re.protectedWords = new RegExp(`^(${ re.protectedWord })(([${ re.Whitespace }])(${ re.protectedWord }))*`)
+re.unprotectedWord = new RegExp(`^[${ re.char }]+`)
 re.url = /^(https?|mailto):\/\/[^\s]+/
-re.whitespace = new RegExp(`^[${re.Whitespace}]+`)
+re.whitespace = new RegExp(`^[${ re.Whitespace }]+`)
 
 /* eslint-disable quote-props */
 const ligatures = {
   // '\u01F1': 'DZ',
   // '\u01F2': 'Dz',
-  '\u01F3': 'dz',
+  ǳ: 'dz',
   // '\u01C4': 'D\u017D',
   // '\u01C5': 'D\u017E',
   // '\u01C6': 'd\u017E',
-  '\uFB00': 'ff',
-  '\uFB01': 'fi',
-  '\uFB02': 'fl',
-  '\uFB03': 'ffi',
-  '\uFB04': 'ffl',
+  ﬀ: 'ff',
+  ﬁ: 'fi',
+  ﬂ: 'fl',
+  ﬃ: 'ffi',
+  ﬄ: 'ffl',
   // '\uFB05': '\u017Ft',
-  '\uFB06': 'st',
+  ﬆ: 'st',
   // '\u0132': 'IJ',
-  '\u0133': 'ij',
+  ĳ: 'ij',
   // '\u01C7': 'LJ',
   // '\u01C8': 'Lj',
-  '\u01C9': 'lj',
+  ǉ: 'lj',
   // '\u01CA': 'NJ',
   // '\u01CB': 'Nj',
-  '\u01CC': 'nj',
+  ǌ: 'nj',
 }
 /* eslint-enable */
 
-const titleCaseKeep = new RegExp(`(?:(?:[>:?]?[${re.Whitespace}]+)[${re.L}][${re.P}]?(?:[${re.Whitespace}]|$))|(?:(?:<span class="nocase">.*?</span>)|(?:<nc>.*?</nc>))`, 'gi')
-const singleLetter = new RegExp(`^([>:?])?[${re.Whitespace}]+(.)`)
+const titleCaseKeep = new RegExp(`(?:(?:[>:?]?[${ re.Whitespace }]+)[${ re.L }][${ re.P }]?(?:[${ re.Whitespace }]|$))|(?:(?:<span class="nocase">.*?</span>)|(?:<nc>.*?</nc>))`, 'gi')
+const singleLetter = new RegExp(`^([>:?])?[${ re.Whitespace }]+(.)`)
 
 export function titleCase(text: string): string {
   let titlecased: string = titleCased(text)
@@ -129,10 +131,10 @@ export type HTMLParserOptions = {
 export const HTMLParser = new class { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   private options: HTMLParserOptions
   private sentenceStart: boolean
-  private spuriousNode = new Set(['#document-fragment', '#document', 'div', 'span'])
+  private spuriousNode = new Set([ '#document-fragment', '#document', 'div', 'span' ])
   private titleCased: string
   private html: string
-  private ligatures = new RegExp(`[${Object.keys(ligatures).join('')}]`, 'g')
+  private ligatures = new RegExp(`[${ Object.keys(ligatures).join('') }]`, 'g')
 
   public parse(html, options: HTMLParserOptions): MarkupNode {
     this.html = html
@@ -146,9 +148,9 @@ export const HTMLParser = new class { // eslint-disable-line @typescript-eslint/
     const csquotes = this.options.csquotes
     if (csquotes) {
       const space = '\\s*'
-      for (const close of [0, 1]) {
-        const chars = csquotes.replace(/./g, (c: string, i: number) => [c, ''][(i + close) & 1]).replace(/[-[\]/{}()*+?.\\^$|]\s*/g, '\\$&') // eslint-disable-line no-bitwise
-        this.html = this.html.replace(new RegExp(`${close ? space : ''}[${chars}]${close ? '' : space}`, 'g'), close ? '</span>' : '<span class="enquote">')
+      for (const close of [ 0, 1 ]) {
+        const chars = csquotes.replace(/./g, (c: string, i: number) => [ c, '' ][(i + close) & 1]).replace(/[-[\]/{}()*+?.\\^$|]\s*/g, '\\$&') // eslint-disable-line no-bitwise
+        this.html = this.html.replace(new RegExp(`${ close ? space : '' }[${ chars }]${ close ? '' : space }`, 'g'), close ? '</span>' : '<span class="enquote">')
       }
     }
 
@@ -161,7 +163,7 @@ export const HTMLParser = new class { // eslint-disable-line @typescript-eslint/
 
         // I should have used script from the start
         // I think pre follows different rules where it still interprets what's inside; script just gives whatever is in there as-is
-        if (body.match(/^pre$/i)) return `<${close || ''}script>`
+        if (body.match(/^pre$/i)) return `<${ close || '' }script>`
 
         return match.replace(/</g, '&lt;').replace(/>/g, '&gt;')
       })
@@ -221,26 +223,26 @@ export const HTMLParser = new class { // eslint-disable-line @typescript-eslint/
 
   // BibLaTeX is beyond insane https://github.com/retorquere/zotero-better-bibtex/issues/541#issuecomment-240999396
   private unwrapNocase(node: MarkupNode): MarkupNode[] {
-    if (node.nodeName === '#text') return [ node ]
+    if (node.nodeName === '#text') return [node]
 
     // unwrap and flatten
     node.childNodes = [].concat(...node.childNodes.map(child => this.unwrapNocase(child)))
 
     // no nocase children? done
-    if (node.nocase || !node.childNodes.find(child => child.nocase)) return [ node ]
+    if (node.nocase || !node.childNodes.find(child => child.nocase)) return [node]
 
     // expand nested nocase node to sibling of node
     return node.childNodes.map((child: MarkupNode) => {
       if (child.nocase) {
         return {
           ...child,
-          childNodes: [ { ...node, childNodes: child.childNodes } ],
+          childNodes: [{ ...node, childNodes: child.childNodes }],
         }
       }
 
       return {
         ...node,
-        childNodes: [ child ],
+        childNodes: [child],
       }
     })
   }
@@ -282,7 +284,7 @@ export const HTMLParser = new class { // eslint-disable-line @typescript-eslint/
     text = text.replace(this.ligatures, (ligature: string) => (ligatures[ligature] as string))
     const l = childNodes.length
     if (l === 0 || (childNodes[l - 1].nodeName !== '#text')) {
-      childNodes.push({ nodeName: '#text', offset, value: text, attr: {}, class: {} })
+      childNodes.push({ nodeName: '#text', offset, value: text, attr: {}, class: {}})
     }
     else {
       childNodes[l - 1].value += text
@@ -307,8 +309,8 @@ export const HTMLParser = new class { // eslint-disable-line @typescript-eslint/
 
   private walk(node, isNocased = false) {
     // debug('walk:', node.nodeName)
-    const normalized_node: MarkupNode = { nodeName: node.nodeName, childNodes: [], attr: {}, class: {} }
-    for (const {name, value} of (node.attrs || [])) {
+    const normalized_node: MarkupNode = { nodeName: node.nodeName, childNodes: [], attr: {}, class: {}}
+    for (const { name, value } of (node.attrs || [])) {
       normalized_node.attr[name] = value
     }
     for (const cls of (normalized_node.attr.class || '').trim().split(/\s+/)) {
@@ -351,17 +353,16 @@ export const HTMLParser = new class { // eslint-disable-line @typescript-eslint/
 
     if (normalized_node.nodeName === 'script') {
       if (!node.childNodes || node.childNodes.length === 0) {
-        normalized_node.value =  ''
+        normalized_node.value = ''
         normalized_node.childNodes = []
       }
       else if (node.childNodes.length === 1 && node.childNodes[0].nodeName === '#text') {
-        normalized_node.value =  node.childNodes[0].value
+        normalized_node.value = node.childNodes[0].value
         normalized_node.childNodes = []
       }
       else {
-        throw new Error(`Unexpected script body ${JSON.stringify(node)}`)
+        throw new Error(`Unexpected script body ${ JSON.stringify(node) }`)
       }
-
     }
     else if (node.childNodes) {
       let m
@@ -394,7 +395,7 @@ export const HTMLParser = new class { // eslint-disable-line @typescript-eslint/
             continue
           }
 
-          if (this.sentenceStart && (m = re.leadingUnprotectedWord.exec(`${text} `))) {
+          if (this.sentenceStart && (m = re.leadingUnprotectedWord.exec(`${ text } `))) {
             this.sentenceStart = false
             // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
             this.plaintext(normalized_node.childNodes, m[1], child.sourceCodeLocation.startOffset + (length - text.length))
@@ -408,19 +409,16 @@ export const HTMLParser = new class { // eslint-disable-line @typescript-eslint/
             // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
             this.nocase(normalized_node.childNodes, m[0], child.sourceCodeLocation.startOffset + (length - text.length))
             text = text.substring(m[0].length)
-
           }
           else if (m = re.url.exec(text)) {
             // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
             this.nocase(normalized_node.childNodes, m[0], child.sourceCodeLocation.startOffset + (length - text.length))
             text = text.substring(m[0].length)
-
           }
           else if (m = re.unprotectedWord.exec(text)) {
             // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
             this.plaintext(normalized_node.childNodes, m[0], child.sourceCodeLocation.startOffset + (length - text.length))
             text = text.substring(m[0].length)
-
           }
           else {
             // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
@@ -435,7 +433,7 @@ export const HTMLParser = new class { // eslint-disable-line @typescript-eslint/
   }
 }
 
-const notAlphaNum = new RegExp(`[^${re.L}${re.Nd}${re.Nl}]`)
+const notAlphaNum = new RegExp(`[^${ re.L }${ re.Nd }${ re.Nl }]`)
 export function babelLanguage(language: string): string {
   if (!language) return ''
   const lc = language.toLowerCase()
@@ -447,12 +445,6 @@ export function babelLanguage(language: string): string {
     || Language[lc.replace(/-.*/, '').replace(/[^a-z0-9]/, '-')]
     || language
 }
-
-/* REVIEW:
-export function babelTag(langid: string): string {
-  return (Tag[langid] as string) || ''
-}
-*/
 
 const excelColumnCache: Map<number, string> = new Map
 // https://www.geeksforgeeks.org/find-excel-column-name-given-number/
@@ -487,7 +479,7 @@ export function excelColumn(n: number): string {
   return col
 }
 
-export const CJK = new RegExp(`([${ scripts.map((s: { name: string, bmp: string }): string => {
+export const CJK = new RegExp(`([${ scripts.map((s: { name: string; bmp: string }): string => {
   switch (s.name) {
     case 'Katakana':
     case 'Hiragana':
@@ -498,6 +490,27 @@ export const CJK = new RegExp(`([${ scripts.map((s: { name: string, bmp: string 
   }
 }).join('') }])`, 'g')
 
-export function asciify(str: string): string {
-  return str.replace(/[\u007F-\uFFFF]/g, chr => `\\u${(`0000${chr.charCodeAt(0).toString(16)}`).substr(-4)}`)
+export function toClipboard(text: string): void {
+  if (is7) {
+    Components.classes['@mozilla.org/widget/clipboardhelper;1'].getService(Components.interfaces.nsIClipboardHelper).copyString(text)
+    return
+  }
+
+  const data = {
+    'text/unicode': text,
+    'text/html': escape.html(text),
+    'text/richtext': escape.rtf(text), // I know this is not the correct mimetype but it's the only one that Mozilla accepts for RTF
+  }
+
+  const clipboard = Components.classes['@mozilla.org/widget/clipboard;1'].getService(Components.interfaces.nsIClipboard)
+  const transferable = Components.classes['@mozilla.org/widget/transferable;1'].createInstance(Components.interfaces.nsITransferable)
+
+  for (const [ mimetype, content ] of Object.entries(data)) {
+    const str = Components.classes['@mozilla.org/supports-string;1'].createInstance(Components.interfaces.nsISupportsString)
+    str.data = content
+    transferable.addDataFlavor(mimetype)
+    transferable.setTransferData(mimetype, str, content.length * 2)
+  }
+
+  clipboard.setData(transferable, null, Components.interfaces.nsIClipboard.kGlobalClipboard)
 }

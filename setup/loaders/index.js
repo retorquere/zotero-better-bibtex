@@ -29,7 +29,7 @@ const patcher = module.exports.patcher = new class {
         if (patch.newFileName != patch.oldFileName) {
           throw new Error(`${patchfile} renames ${JSON.stringify(patch.oldFileName)} to ${JSON.stringify(patch.newFileName)}`)
         }
-        if (!patch.oldFileName.match(/^(node_modules|submodules)/)) {
+        if (!patch.oldFileName.match(/^(node_modules|submodules|gen)/)) {
           throw new Error(`${patchfile} patches ${JSON.stringify(patch.oldFileName)} outside node_modules/submodules`)
         }
         filter.push(patch.oldFileName)

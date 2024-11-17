@@ -3,7 +3,7 @@ import type { XUL } from '../typings/xul'
 import { log } from './logger'
 import { TeXstudio } from './tex-studio'
 import { Translators } from './translators'
-import { patch as $patch$, unpatch as $unpatch$, Trampoline } from './monkey-patch'
+import { Patcher } from './monkey-patch'
 import { clean_pane_persist } from './clean_pane_persist'
 import { Preference } from './prefs'
 import { AutoExport } from './auto-export'
@@ -16,6 +16,7 @@ import * as l10n from './l10n'
 import { Elements } from './create-element'
 import { is7 } from './client'
 import { busyWait } from './busy-wait'
+import { toClipboard } from './text'
 
 type XULWindow = Window & {
   openDialog?: (url: string, id: string, options?: string, io?: any) => void
@@ -30,13 +31,13 @@ export async function newZoteroPane(win: XULWindow): Promise<void> {
 }
 
 class ZoteroPane {
-  private patched: Trampoline[] = []
+  private $patcher$: Patcher = new Patcher
   private elements: Elements
   private ZoteroPane: any
   private window: XULWindow
 
   public unload(): void {
-    $unpatch$(this.patched)
+    this.$patcher$.unpatch()
     this.elements.remove()
   }
 
@@ -83,7 +84,8 @@ class ZoteroPane {
 
     const bbt_zotero_pane_helper = this // eslint-disable-line @typescript-eslint/no-this-alias
 
-    $patch$(this.ZoteroPane, 'buildItemContextMenu', original => async function ZoteroPane_buildItemContextMenu() {
+    const zp = this.ZoteroPane
+    this.$patcher$.patch(this.ZoteroPane, 'buildItemContextMenu', original => async function ZoteroPane_buildItemContextMenu() {
       await original.apply(this, arguments) // eslint-disable-line prefer-rest-params
 
       const id = 'better-bibtex-item-menu'
@@ -121,6 +123,27 @@ class ZoteroPane {
         oncommand: () => Zotero.BetterBibTeX.KeyManager.refresh('selected', true),
       }))
 
+      const clipSelected = async (translatorID: string) => {
+        const items = zp.getSelectedItems()
+        toClipboard(await Translators.exportItems({
+          translatorID,
+          displayOptions: {},
+          scope: { type: 'items', items },
+        }))
+      }
+      menupopup.appendChild(elements.create('menuitem', {
+        label: l10n.localize('better-bibtex_zotero-pane_biblatex_to_clipboard'),
+        oncommand: async () => {
+          await clipSelected(Translators.bySlug.BetterBibLaTeX.translatorID)
+        },
+      }))
+      menupopup.appendChild(elements.create('menuitem', {
+        label: l10n.localize('better-bibtex_zotero-pane_bibtex_to_clipboard'),
+        oncommand: async () => {
+          await clipSelected(Translators.bySlug.BetterBibTeX.translatorID)
+        },
+      }))
+
       menupopup.appendChild(elements.create('menuseparator'))
       menupopup.appendChild(elements.create('menuitem', {
         label: l10n.localize('better-bibtex_zotero-pane_patch-dates'),
@@ -151,7 +174,7 @@ class ZoteroPane {
       }))
     })
 
-    $patch$(this.ZoteroPane, 'buildCollectionContextMenu', original => async function() {
+    this.$patcher$.patch(this.ZoteroPane, 'buildCollectionContextMenu', original => async function() {
       // eslint-disable-next-line prefer-rest-params
       await original.apply(this, arguments)
 
@@ -226,7 +249,7 @@ class ZoteroPane {
         let auto_exports = []
         const type = isCollection ? 'collection' : isLibrary ? 'library' : ''
         if (Preference.autoExport !== 'immediate' && type) {
-          auto_exports = await AutoExport.find(type, [ treeRow.ref.id ])
+          auto_exports = AutoExport.find(type, [treeRow.ref.id])
         }
 
         const menulist: XUL.Menulist = doc.getElementById('zotero-collectionmenu-bbt-autoexport') as XUL.Menulist
@@ -244,14 +267,14 @@ class ZoteroPane {
       catch (err) {
         log.error('ZoteroPane.buildCollectionContextMenu:', err)
       }
-    }, this.patched)
+    })
 
     // Monkey patch because of https://groups.google.com/forum/#!topic/zotero-dev/zy2fSO1b0aQ
-    $patch$(this.ZoteroPane, 'serializePersist', original => function() {
+    this.$patcher$.patch(this.ZoteroPane, 'serializePersist', original => function() {
       // eslint-disable-next-line prefer-rest-params
       original.apply(this, arguments)
       if (Zotero.BetterBibTeX.uninstalled) clean_pane_persist()
-    }, this.patched)
+    })
 
     if (!is7) {
       if (this.ZoteroPane.itemsView.collectionTreeRow) await this.ZoteroPane.itemsView.refreshAndMaintainSelection()
@@ -265,7 +288,7 @@ class ZoteroPane {
 
     const row = this.ZoteroPane.collectionsView.selectedTreeRow
 
-    const root = `http://127.0.0.1:${Zotero.Prefs.get('httpServer.port')}/better-bibtex/export`
+    const root = `http://127.0.0.1:${ Zotero.Prefs.get('httpServer.port') }/better-bibtex/export`
     const params = {
       url: {
         long: '',
@@ -275,29 +298,29 @@ class ZoteroPane {
 
     if (row.isCollection()) {
       let collection = this.ZoteroPane.getSelectedCollection()
-      params.url.short = `${root}/collection?/${collection.libraryID || 0}/${collection.key}`
+      params.url.short = `${ root }/collection?/${ collection.libraryID || 0 }/${ collection.key }`
 
-      let path = `/${encodeURIComponent(collection.name)}`
+      let path = `/${ encodeURIComponent(collection.name) }`
       while (collection.parent) {
         collection = Zotero.Collections.get(collection.parent)
-        path = `/${encodeURIComponent(collection.name)}${path}`
+        path = `/${ encodeURIComponent(collection.name) }${ path }`
       }
-      params.url.long = `${root}/collection?/${collection.libraryID || 0}${path}`
+      params.url.long = `${ root }/collection?/${ collection.libraryID || 0 }${ path }`
     }
 
     if (row.isLibrary(true)) {
       const libId = this.ZoteroPane.getSelectedLibraryID()
-      const short = libId ? `/${libId}/library` : 'library'
-      params.url.short = `${root}/library?${short}`
+      const short = libId ? `/${ libId }/library` : 'library'
+      params.url.short = `${ root }/library?${ short }`
     }
 
     if (!params.url.short) return
 
-    this.window.openDialog(`chrome://zotero-better-bibtex/content/ServerURL.${is7 ? 'xhtml' : 'xul'}` , '', 'chrome,dialog,centerscreen,modal', params)
+    this.window.openDialog(`chrome://zotero-better-bibtex/content/ServerURL.${ is7 ? 'xhtml' : 'xul' }`, '', 'chrome,dialog,centerscreen,modal', params)
   }
 
   public padNum(n: number, width: number): string {
-    return `${n || 0}`.padStart(width, '0')
+    return `${ n || 0 }`.padStart(width, '0')
   }
 
   public async patchDates(): Promise<void> {
@@ -305,12 +328,12 @@ class ZoteroPane {
     const mapping: Record<string, string> = {}
     try {
       for (const assignment of Preference.patchDates.trim().split(/\s*,\s*/)) {
-        const [, k, v ] = assignment.trim().match(/^([-_a-z09]+)\s*=\s*(dateadded|datemodified)$/i)
-        mapping[k.toLowerCase()] = mapping[`tex.${k.toLowerCase()}`] = { dateadded: 'dateAdded', datemodified: 'dateModified' }[v.toLowerCase()]
+        const [ , k, v ] = assignment.trim().match(/^([-_a-z09]+)\s*=\s*(dateadded|datemodified)$/i)
+        mapping[k.toLowerCase()] = mapping[`tex.${ k.toLowerCase() }`] = { dateadded: 'dateAdded', datemodified: 'dateModified' }[v.toLowerCase()]
       }
     }
-    catch (err) {
-      flash('could not parse field mapping', `could not parse field mapping ${Preference.patchDates}`)
+    catch {
+      flash('could not parse field mapping', `could not parse field mapping ${ Preference.patchDates }`)
       return
     }
 
@@ -318,7 +341,7 @@ class ZoteroPane {
       let save = false
       try {
         const extra = Extra.get(item.getField('extra'), 'zotero', { tex: true })
-        for (const [k, v] of Object.entries(extra.extraFields.tex)) {
+        for (const [ k, v ] of Object.entries(extra.extraFields.tex)) {
           if (mapping[k]) {
             const date = DateParser.parse(v.value)
             if (date.type === 'date' && date.day) {
@@ -326,7 +349,7 @@ class ZoteroPane {
               const time = typeof date.seconds === 'number'
               const timestamp = new Date(
                 date.year, date.month - 1, date.day,
-                time ? date.hour : 0, time ? date.minute - (date.offset || 0): 0, time ? date.seconds : 0, 0
+                time ? date.hour : 0, time ? date.minute - (date.offset || 0) : 0, time ? date.seconds : 0, 0
               )
               item.setField(mapping[k], timestamp.toISOString())
               save = true
@@ -356,7 +379,7 @@ class ZoteroPane {
     const picked = (await CAYW.pick({ format: 'citationLinks' })).split('\n').filter(citation => !citations.has(citation))
 
     if (picked.length) {
-      items[0].setField('extra', `${extra}\n${picked.join('\n')}`.trim())
+      items[0].setField('extra', `${ extra }\n${ picked.join('\n') }`.trim())
       await items[0].saveTx()
     }
   }
@@ -398,12 +421,12 @@ class ZoteroPane {
       }
       catch (err) {
         if (err.timeout) {
-          log.debug('errorreport: items timed out after', err.timeout, 'seconds')
+          log.error('errorreport: items timed out after', err.timeout, 'seconds')
           return 'Timeout retrieving items'
         }
         else {
-          log.debug('errorreport: could not get items', err)
-          return `Error retrieving items: ${err}`
+          log.error('errorreport: could not get items', err)
+          return `Error retrieving items: ${ err }`
         }
       }
     }
@@ -411,10 +434,10 @@ class ZoteroPane {
     items = items ? await selection() : ''
 
     this.window.openDialog(
-      `chrome://zotero-better-bibtex/content/ErrorReport.${ is7 ? 'xhtml' : 'xul'}`,
+      `chrome://zotero-better-bibtex/content/ErrorReport.${ is7 ? 'xhtml' : 'xul' }`,
       'better-bibtex-error-report',
       'chrome,centerscreen,modal',
-      { wrappedJSObject: { items } })
+      { wrappedJSObject: { items }})
   }
 
   public async sentenceCase(): Promise<void> {

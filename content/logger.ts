@@ -1,14 +1,11 @@
+/* eslint-disable @typescript-eslint/no-empty-function, no-restricted-syntax */
+
 import type { Translators as Translator } from '../typings/translators'
-declare const workerEnvironment: any
-declare const workerJob: Translator.Worker.Job
-declare const dump: (msg: string) => void
+declare const TranslationWorker: { job: Translator.Worker.Job }
+import { $dump, run } from './logger/simple'
 
 import { stringify } from './stringify'
-import { asciify } from './text'
-
-export function print(msg: string): void {
-  dump(`better-bibtex::${msg}\n`)
-}
+import { worker } from './client'
 
 function toString(obj): string {
   try {
@@ -20,79 +17,56 @@ function toString(obj): string {
   }
 }
 
-class Logger {
+export const log = new class Logger {
   protected timestamp: number
   public prefix = ''
 
-  private format({ error=false }, msg) {
-    let diff = null
-    const now = Date.now()
-    if (this.timestamp) diff = now - this.timestamp
-    this.timestamp = now
-
+  private format({ error = false }, msg) {
     if (Array.isArray(msg)) msg = msg.map(toString).join(' ')
 
     let prefix = ''
-    if (typeof workerEnvironment !== 'undefined') {
+    if (worker) {
       prefix += ' worker'
-      if (typeof workerJob !== 'undefined') prefix += `:${workerJob.translator}`
+      if (typeof TranslationWorker !== 'undefined') prefix += `:${ TranslationWorker.job.translator }`
     }
 
     if (error) prefix += ' error:'
 
-    return `{better-bibtex${this.prefix}${prefix}} +${diff} ${asciify(msg)}`
+    return `{better-bibtex ${run} ${ this.prefix }${ prefix }} ${ msg }`
   }
 
   public get enabled(): boolean {
     return (
-      (typeof workerJob !== 'undefined' && workerJob.debugEnabled)
-      ||
-      !Zotero
-      ||
-      Zotero.Debug?.enabled
-      ||
-      Zotero.Prefs?.get('debug.store')
+      (typeof TranslationWorker !== 'undefined' && TranslationWorker.job.debugEnabled)
+      || !Zotero
+      || Zotero.Debug?.enabled
+      || Zotero.Prefs?.get('debug.store')
     ) as boolean
   }
 
-  public print(msg: string) {
-    if (!this.enabled) return
-
-    if (typeof Zotero !== 'undefined') {
-      Zotero.debug(msg)
-    }
-    else {
-      print(msg)
-    }
-  }
-
-  public log(...msg) {
-    this.print(this.format({}, msg))
-  }
-
   public debug(...msg) {
-    this.print(this.format({}, msg))
+    Zotero.debug(this.format({}, msg))
   }
 
-  public warn(...msg) {
-    this.print(this.format({}, msg))
-  }
-
-  public info(...msg) {
-    this.print(this.format({}, msg))
+  public info(msg: string) {
+    Zotero.debug(this.format({}, msg))
   }
 
   public error(...msg) {
-    this.print(this.format({error: true}, msg))
+    Zotero.debug(this.format({ error: true }, msg))
   }
 
-  public dump(...msg) {
-    if (this.enabled) print(this.format({}, msg))
+  public status({ error = false }, ...msg) {
+    if (error || this.enabled) Zotero.debug(this.format({ error }, msg))
   }
 
-  public status({ error=false }, ...msg) {
-    if (error || this.enabled) Zotero.debug(this.format({error}, msg))
+  public async timed(msg: string, code: () => void | Promise<void>) {
+    const start = Date.now()
+    await code()
+    this.debug(msg, 'took', Date.now() - start, 'ms')
+  }
+
+  public dump(msg: string) {
+    $dump(msg)
   }
 }
-
-export const log = new Logger

@@ -9,7 +9,7 @@ Install by downloading the [latest release](https://github.com/retorquere/zotero
 2. Select 'Extensions'
 3. Click on the gear in the top-right corner and choose 'Install Add-on From File...'
 4. Choose .xpi that you've just downloaded, click 'Install'
-5. Restart Zotero if you're using Zotero 6
+5. If you're using Zotero 6, restart Zotero. Installation in Zotero 7 requires no restart.
 
 After the initial installation, the plugin will auto-update to newer releases, so you should need to perform the process described here only once. 
 

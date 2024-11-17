@@ -18,6 +18,7 @@ import zipfile
 import html, re
 import timeit
 import platform
+import pytablewriter
 
 from contextlib import contextmanager
 
@@ -106,29 +107,13 @@ def step_impl(context, pref, value):
     value = expand_scenario_variables(context, value)
   context.zotero.preferences[pref] = value
 
-@step(r'I restart Zotero with "{db}" + "{source}"')
-def step_impl(context, db, source):
-  source = expand_scenario_variables(context, source)
-  context.imported = source
-
-  with open(os.path.join(ROOT, 'test', 'fixtures', source)) as f:
-    data = json.load(f)
-    items = data['items']
-    #references = sum([ 1 + len(item.get('attachments', [])) + len(item.get('notes', [])) for item in items ])
-    references = len(items)
-
-  context.zotero.restart(timeout=context.timeout, db=db)
-  assert_that(context.zotero.execute('return await Zotero.BetterBibTeX.TestSupport.librarySize()'), equal_to(references))
-
-  # import preferences
-  context.zotero.import_file(context, source, items=False)
-
-  # check import
-  export_library(context, expected = source)
-
 @step(r'I restart Zotero with "{db}"')
 def step_impl(context, db):
   context.zotero.restart(timeout=context.timeout, db=db)
+
+@step(r'I select the library named {library}')
+def step_impl(context, library):
+  context.zotero.execute('await Zotero.BetterBibTeX.TestSupport.selectLibrary(library)', library = json.loads(library))
 
 @step(r'I restart Zotero with profile "{profile}"')
 def step_impl(context, profile):
@@ -280,8 +265,24 @@ def step_impl(context, translator, collection, output, expected):
     resetCache = True
   )
 
+@step('an export using "{translator}" should match "{expected}", but take no more than {seconds:d} seconds')
+def step_impl(context, translator, expected, seconds):
+  export_library(context,
+    translator = translator,
+    expected = expected,
+    timeout = seconds
+  )
+
+def parse_json(text):
+  try:
+    json.loads(text)
+    return True
+  except:
+    return False
 @step('an export using "{translator}" with {displayOption} on should match {expected}')
 def step_impl(context, translator, displayOption, expected):
+  assert parse_json(expected), expected
+
   export_library(context,
     displayOption = displayOption,
     translator = translator,
@@ -293,14 +294,6 @@ def step_impl(context, translator, expected):
   export_library(context,
     translator = translator,
     expected = expected
-  )
-
-@step('an export using "{translator}" should match "{expected}", but take no more than {seconds:d} seconds')
-def step_impl(context, translator, expected, seconds):
-  export_library(context,
-    translator = translator,
-    expected = expected,
-    timeout = seconds
   )
 
 @step('the library should match "{expected}"')
@@ -389,6 +382,11 @@ def step_impl(context, citekey):
   assert len(context.selected) == 1
   context.zotero.execute('await Zotero.BetterBibTeX.TestSupport.pinCiteKey(id, "pin", citekey)', id=context.selected[0], citekey=citekey)
 
+@step(u'dump the cache to {cache}')
+def step_impl(context, cache):
+  cache = os.path.join(os.getcwd(), json.loads(cache))
+  context.zotero.execute('await Zotero.BetterBibTeX.TestSupport.dumpCache(filename)', filename=cache)
+
 @then(u'"{found}" should match "{expected}"')
 def step_impl(context, expected, found):
   expected = expand_scenario_variables(context, expected)
@@ -414,7 +412,7 @@ def step_impl(context, seconds):
 
 @step(u'I wait until Zotero is idle')
 def step_impl(context):
-  while not context.zotero.execute('return await Zotero.BetterBibTeX.TestSupport.isIdle("auto-export")'):
+  while not context.zotero.execute('return await Zotero.BetterBibTeX.TestSupport.isIdle()'):
     time.sleep(5)
 
 @step(u'I wait at most {seconds:d} seconds until all auto-exports are done')
@@ -437,7 +435,7 @@ def step_impl(context, path):
 
 @step(u'I reset the cache')
 def step_impl(context):
-  context.zotero.execute('Zotero.BetterBibTeX.TestSupport.resetCache()')
+  context.zotero.execute('await Zotero.BetterBibTeX.TestSupport.resetCache()')
 
 @step(u'I copy date-added/date-modified for the selected items from the extra field')
 def step_impl(context):
@@ -476,3 +474,16 @@ def step_impl(context, action, xpi):
 #  if platform.system() == 'Linux':
 #    import autopy
 #    autopy.bitmap.capture_screen().save(file)
+
+@step('I benchmark the following exports')
+def step_impl(context):
+  tests = []
+  for row in context.table:
+    translator, cached = row
+    tests.append({ 'translator': translator, 'cached': None if cached == '' else cached in [ 'true', 'yes' ] })
+  table = context.zotero.execute('return await Zotero.BetterBibTeX.TestSupport.benchmark(tests)', tests=tests)
+  headers = table[0].keys()
+  rows = [ [ row[h] for h in headers ] for row in table ]
+  column_styles = [ pytablewriter.style.Style(align='left') for h in headers ]
+  writer = pytablewriter.MarkdownTableWriter(headers=headers, value_matrix=rows, column_styles=column_styles, margin=1)
+  utils.print('\n' + writer.dumps())

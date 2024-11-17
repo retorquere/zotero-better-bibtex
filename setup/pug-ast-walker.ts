@@ -10,7 +10,7 @@ export function pugs(directory: string): string[] {
   for (const file of files) {
     const p = path.join(directory, file)
     if (fs.statSync(p).isDirectory()) {
-      fileList = [...fileList, ...pugs(p)]
+      fileList = [ ...fileList, ...pugs(p) ]
     }
     else if (path.extname(p) === '.pug' && fs.statSync(p).isFile()) {
       fileList.push(p)
@@ -22,11 +22,11 @@ export function pugs(directory: string): string[] {
 
 export class ASTWalker {
   walk(node, history?) {
-    if (history) history = [node, ...history]
+    if (history) history = [ node, ...history ]
 
     if (this[node.type]) return this[node.type](node, history)
 
-    throw new Error(`No handler for ${node.type} ${Object.keys(node)}`)
+    throw new Error(`No handler for ${ node.type } ${ Object.keys(node) }`)
   }
 
   tag(name: string, attrs = {}, nodes = []) {
@@ -37,14 +37,14 @@ export class ASTWalker {
         type: 'Block',
         nodes,
       },
-      attrs: Object.entries(attrs).map(([k, v]) => ({ name: k, val: JSON.stringify(v), mustEscape: false })),
+      attrs: Object.entries(attrs).map(([ k, v ]) => ({ name: k, val: JSON.stringify(v), mustEscape: false })),
       attributeBlocks: [],
     }
   }
 
-  attr(node, name: string, required=false): string {
+  attr(node, name: string, required = false): string {
     const attr = node.attrs.find(a => a.name === name)
-    if (!attr && required) throw new Error(`could not find ${node.name}.${name} in ${node.attrs.map(a => a.name)}`)
+    if (!attr && required) throw new Error(`could not find ${ node.name }.${ name } in ${ node.attrs.map(a => a.name) }`)
     return attr ? eval(attr.val) : null
   }
 
@@ -99,7 +99,7 @@ export class SelfClosing extends ASTWalker {
 export class Lint extends ASTWalker {
   private ids: string[] = []
 
-  constructor(private needsNamespace=false) {
+  constructor(private needsNamespace = false) {
     super()
   }
 
@@ -113,10 +113,10 @@ export class Lint extends ASTWalker {
     if (this.needsNamespace) {
       const nns = name => {
         const attrs = tag.attrs.filter(a => a.name === name).map(a => ({ name: a.name, val: eval(a.val) }))
-        const nnsa = attrs.filter(a => !a.val.match(/^bbt-[^-]/) && (name !== 'class' || !['plain', 'text-link'].includes(a.val)))
+        const nnsa = attrs.filter(a => !a.val.match(/^bbt-[^-]/) && (name !== 'class' || ![ 'plain', 'text-link' ].includes(a.val)))
         if (nnsa.length) console.log('non-namespaced', name, nnsa.map(a => a.val), 'in', tag.filename)
         if (name === 'id' && attrs.length) {
-          if (attrs.length > 1 || this.ids.includes(attrs[0].val)) throw new Error(`duplicate IDs ${attrs.map(a => a.val)}`)
+          if (attrs.length > 1 || this.ids.includes(attrs[0].val)) throw new Error(`duplicate IDs ${ attrs.map(a => a.val) }`)
           this.ids.push(attrs[0].val)
         }
       }

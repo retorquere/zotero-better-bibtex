@@ -1,6 +1,6 @@
 import { Preference } from './prefs'
 import { Events } from './events'
-import { client } from './client'
+import * as client from './client'
 import { orchestrator } from './orchestrator'
 
 import { simplifyForExport as simplify } from '../gen/items/simplify'
@@ -10,11 +10,12 @@ export const JournalAbbrev = new class { // eslint-disable-line @typescript-esli
   private abbrevs: any
 
   constructor() {
-    orchestrator.add('abbreviator', {
+    orchestrator.add({
+      id: 'abbreviator',
       description: 'journal abbreviator',
       needs: ['start'],
       startup: async () => {
-        if (client === 'jurism') await Zotero.Styles.init() // otherwise Juris-M throws 'Styles not yet loaded'
+        if (client.slug === 'jurism') await Zotero.Styles.init() // otherwise Juris-M throws 'Styles not yet loaded'
         this.reset()
 
         Events.on('preference-changed', pref => {
@@ -26,7 +27,7 @@ export const JournalAbbrev = new class { // eslint-disable-line @typescript-esli
 
   public reset() {
     this.style = Preference.autoAbbrevStyle
-    if (client === 'jurism' && !this.style) {
+    if (client.slug === 'jurism' && !this.style) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       this.style = Zotero.Styles.getVisible().filter(style => style.usesAbbreviation)[0].styleID
     }
@@ -61,7 +62,7 @@ export const JournalAbbrev = new class { // eslint-disable-line @typescript-esli
         try {
           abbrev = item.getField('journalAbbreviation', false, true)
         }
-        catch (error) {}
+        catch {}
       }
       else {
         abbrev = item.journalAbbreviation
@@ -71,9 +72,9 @@ export const JournalAbbrev = new class { // eslint-disable-line @typescript-esli
     if (abbrev || !mode.endsWith('auto')) return abbrev || null
 
     const itemType: string = zotero_item ? Zotero.ItemTypes.getName(item.itemTypeID) : item.itemType
-    if (!['conferencePaper', 'journalArticle', 'bill', 'case', 'statute'].includes(itemType)) return null
+    if (![ 'conferencePaper', 'journalArticle', 'bill', 'case', 'statute' ].includes(itemType)) return null
 
-    for (const field of ['publicationTitle', 'reporter', 'code']) {
+    for (const field of [ 'publicationTitle', 'reporter', 'code' ]) {
       try {
         journal = zotero_item ? item.getField(field, false, true) : item[field]
         if (!journal) continue
@@ -82,7 +83,7 @@ export const JournalAbbrev = new class { // eslint-disable-line @typescript-esli
 
         break
       }
-      catch (err) {
+      catch {
       }
     }
 

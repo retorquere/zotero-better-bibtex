@@ -1,0 +1,20 @@
+#!/usr/bin/env python3
+
+import os
+import time
+
+now = time.time()
+cutoff = now - (21 * 60 * 60 * 24)
+
+for root, dirs, files in os.walk('logs'):
+  for file in files:
+    file_path = os.path.join(root, file)
+    if os.path.getmtime(file_path) < cutoff:
+      #print(f"Deleting {file_path}", time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(os.path.getmtime(file_path))))
+      os.remove(file_path)
+
+  for dir in dirs:
+    dir_path = os.path.join(root, dir)
+    if not os.listdir(dir_path):
+      print(f"Removing empty directory {dir_path}")
+      os.rmdir(dir_path)

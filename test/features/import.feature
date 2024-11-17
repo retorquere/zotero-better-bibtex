@@ -211,3 +211,10 @@ Feature: Import
   Scenario: web_page and other mendeley idiocy
     When I import 512 references from "import/*.bib" into a new collection
     Then the library should match "import/*.json"
+
+  Scenario: Journal detection active while importJabrefAbbreviations is off #2916
+    Given I set preference .rawImports to true
+    And I set preference .importJabRefAbbreviations to false
+    When I import 1 reference from "import/*.bib"
+    Then the library should match "import/*.json"
+

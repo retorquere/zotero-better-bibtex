@@ -1,5 +1,10 @@
 {
-  const identifier = require('../../gen/ecmascript-6')
+  const identifier = /^(?![0-9])[_$a-zA-Z][_$a-zA-Z0-9]*$/
+
+  function allowedIdentifier(v) {
+    return !options.reserved.has(v) && v.match(identifier)
+  }
+
   const alias = require('./alias.json')
 
   function get_method(method, prefix) {
@@ -20,7 +25,7 @@
       case 'boolean':
         return `${v}`
       case 'string':
-        return !noident && identifier.test(v) ? v : JSON.stringify(v)
+        return !noident && allowedIdentifier(v) ? v : JSON.stringify(v)
     }
     throw new Error(`unexpected argument value ${typeof v} ${JSON.stringify(v)}`)
   }

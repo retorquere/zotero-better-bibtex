@@ -25,7 +25,6 @@
       "bibtexParticleNoOp": false,
       "bibtexURL": "off",
       "cache": true,
-      "cacheFlushInterval": 5,
       "charmap": "",
       "citeCommand": "cite",
       "citekeyFold": true,

@@ -1,0 +1,54 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "preferences": {
+      "asciiBibLaTeX": true,
+      "autoAbbrev": true,
+      "autoExportDelay": 8,
+      "baseAttachmentPath": "/Users/furue/Dropbox/doc/papers",
+      "bibtexURL": "url",
+      "citekeyFormat": "authEtal2(initials=true).capitalize+\":\"+year",
+      "exportTitleCase": false,
+      "extraMergeCSL": true,
+      "language": "language",
+      "postscript": "if (Translator.BetterTeX) {\n  if (item.extra) reference.add({ name: 'note',  value: item.extra.replace(/(https?:\\/\\/[^ ]+)/, \"<script>\\\\url{$1}</script>\") })\n}",
+      "qualityReport": true,
+      "skipFields": "abstract,file,issn",
+      "strings": "@string{AO\t= \"Atmos.\\ Ocean\"}\n@string{ARFM\t= \"Annu.\\ Rev.\\ Fluid Mech.\"}\n@string{BAMS\t= \"Bull.\\ Amer.\\ Meteor.\\ Soc.\"}\n@string{BullMarSci = \"Bulletin of Marine Science\"}\n@string{CD\t= \"Climate Dynamics\"}\n@string{CSR\t= \"Cont.~Shelf Res.\"}\n@string{DAO\t= \"Dyn.\\ Atmos.\\ Oceans.\"}\n@string{DSR\t= \"Deep Sea Res.\"}\n@string{DSR1\t= \"Deep Sea Res.~I\"}\n@string{DSR2\t= \"Deep Sea Res.~II\"}\n@string{DSRA\t= \"Deep Sea Res.\\ Part~A\"}\n@string{FMARS\t= \"Front.\\ Mar.\\ Sci.\"}\n@string{GAFD\t= \"Geophys.\\ Astrophys.\\ Fluid Dyn.\"}\n@string{GBC\t= \"Global Biogeochem.\\ Cycles\"}\n@string{GRL\t= \"Geophys.\\ Res.\\ Lett.\"}\n@string{JAOT\t= \"J.\\ Atmos.\\ Oceanic Technol.\"}\n@string{JAS\t= \"J.\\ Atmos.\\ Sci.\"}\n@string{JC\t= \"J.\\ Climate\"}\n@string{JCP\t= \"J.\\ Comput.\\ Phys.\"}\n@string{JFM\t= \"J.\\ Fluid Mech.\"}\n@string{JGR\t= \"J.\\ Geophys.\\ Res.\"}\n@string{JGRC\t= \"J.\\ Geophys.\\ Res.\\ Oceans\"}\n@string{JMR\t= \"J.\\ Mar.\\ Res.\"}\n@string{JMSJ\t= \"J.\\ Meteorol.\\ Soc.\\ Japan\"}\n@string{JPlanktonRes = \"Journal of Plankton Research\"}\n@string{JPO\t= \"J.\\ Phys.\\ Oceanogr.\"}\n@string{JO\t= \"J.\\ Oceanogr.\"}\n@string{JOO     = \"J. Oper.\\ Oceanogr.\"}\n@string{JOSJ\t= \"J.\\ Oceanogr.\\ Soc.\\ Japan\"}\n@string{MWR\t= \"Mon.\\ Wea.\\ Rev.\"}\n@string{OD\t= \"Ocean Dyn.\"}\n@string{OM\t= \"Ocean Modelling\"}\n@string{PF\t= \"Phys.\\ Fluids\"}\n@string{PhysRevLett = \"Phys.\\ Rev.\\ Lett.\"}\n@string{PO\t= \"Prog.\\ Oceanog.\"}\n@string{PRS\t= \"Proc.\\ Roy.\\ Soc., Ser.~A\"}\n@string{QJRMS\t= \"Quarterly J.\\ Roy.\\ Meteorol.\\ Soc.\"}\n@string{RG\t= \"Rev.\\ Geophys.\"}\n@string{RevGeophysSpacePhys = \"Rev.\\ Geophys.\\ Space Phys.\"}\n@string{SREP = \"Scientific Reports\"}",
+      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc,groups",
+      "postscript": "if (Translator.BetterTeX) { tex.add({ name: 'language', value: tex.langid() }) }"
+    }
+  },
+  "items": [
+    {
+      "DOI": "10.1175/JPO-D-16-0131.1",
+      "ISSN": "0022-3670, 1520-0485",
+      "abstractNote": "Abstract The method of decomposing surface and internal tides determines the expression for internal tide energy, energy flux, and energy conversion. The de facto standard is to define surface tides as depth-averaged pressure and horizontal velocity and internal tides as the residuals. This decomposition, which is equivalent to projecting motion onto vertical modes that obey a rigid lid, is known to produce spurious energy conversion CS through movement of the free surface. Here, motion is instead projected onto modes that obey a linear, free-surface boundary condition. The free-surface modes are shown to obey a more complicated orthogonality condition than rigid-lid modes but are still straightforward to calculate numerically. The resulting decomposition (i) completely eliminates spurious energy conversion CS and (ii) leads to a more precise expression for topographic internal tide generation C, which now depends on horizontal gradients in the vertical structure of the surface tide. Numerical simulations and rough global estimates indicate that corrections to C are a maximum of a few percent. However, CS produces spurious energy flux divergences/convergences in the open ocean, which are the same order of magnitude [O(1\u201310) mW m\u22122] as open-ocean internal tide energy dissipation.",
+      "accessDate": "2023-03-26T03:17:19Z",
+      "citationKey": "KellySM:2016",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Samuel M.",
+          "lastName": "Kelly"
+        }
+      ],
+      "date": "2016/12/01",
+      "extra": [
+        "Publisher: American Meteorological Society",
+        "Section: Journal of Physical Oceanography"
+      ],
+      "issue": "12",
+      "itemID": 1,
+      "itemType": "journalArticle",
+      "language": "EN",
+      "libraryCatalog": "journals.ametsoc.org",
+      "pages": "3777-3788",
+      "publicationTitle": "Journal of Physical Oceanography",
+      "title": "The vertical mode decomposition of surface and internal tides in the presence of a free surface and arbitrary topography",
+      "url": "https://journals.ametsoc.org/view/journals/phoc/46/12/jpo-d-16-0131.1.xml",
+      "volume": "46"
+    }
+  ]
+}

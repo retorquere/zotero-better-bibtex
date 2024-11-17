@@ -1,3 +1,5 @@
+import { log } from './logger/simple'
+
 import { is7 } from './client'
 export function clean_pane_persist(): void {
   if (!is7) return
@@ -11,7 +13,7 @@ export function clean_pane_persist(): void {
       Zotero.Prefs.set('pane.persist', JSON.stringify(persisted))
     }
     catch (err) {
-      Zotero.logError(err)
+      log.error('', err)
     }
   }
 }

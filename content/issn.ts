@@ -12,7 +12,7 @@ export function validate(issn: string): boolean {
 
 export function format(issn: string): string {
   const matches = text(issn).match(isIssnLax)
-  return matches ? `${matches[1]}-${matches[2]}${matches[3]}`.toUpperCase() : undefined
+  return matches ? `${ matches[1] }-${ matches[2] }${ matches[3] }`.toUpperCase() : undefined
 }
 
 const isDigitsForChecksum = /^(\d{7})$/

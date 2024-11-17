@@ -29,9 +29,9 @@ export function qualityReport(value: string, test: string, params = null): strin
       return isEDTF(value) ? '' : 'not a valid ETDF date'
 
     case 'pattern':
-      return (new RegExp(`^${params}$`, 'i').test(value)) ? '' : `must match /^${params}$/`
+      return (new RegExp(`^${ params }$`, 'i').test(value)) ? '' : `must match /^${ params }$/`
 
     default:
-      throw new Error(`I don't know how to test for ${test}`)
+      throw new Error(`I don't know how to test for ${ test }`)
   }
 }

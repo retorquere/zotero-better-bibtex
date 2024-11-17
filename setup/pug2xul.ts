@@ -2,6 +2,7 @@
 
 /* eslint-disable prefer-arrow/prefer-arrow-functions, @typescript-eslint/no-unsafe-return, no-console, @typescript-eslint/no-shadow, no-eval, @typescript-eslint/no-empty-function, id-blacklist */
 
+console.log('converting pug to XUL/XHTML')
 import * as pug from 'pug'
 import * as fs from 'fs'
 import { walk, Lint, SelfClosing, ASTWalker } from './pug-ast-walker'
@@ -70,7 +71,7 @@ const pugs = [
   'content/zotero-preferences.pug',
 ]
 for (const src of pugs) {
-  let tgt = `build/${src.replace(/pug$/, 'xul')}`
+  let tgt = `build/${ src.replace(/pug$/, 'xul') }`
   switch (src) {
     case 'content/Preferences/xul.pug':
     case 'content/Preferences/xhtml.pug':

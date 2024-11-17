@@ -109,7 +109,6 @@ function setDefaultPrefs(rootURI) {
 }
 
 function install(data, reason) {
-  log('async:install:start')
 }
 
 class DebugBridge {
@@ -167,10 +166,14 @@ async function startup({ resourceURI, rootURI = resourceURI.spec }, reason) {
       this.permitBookmarklet = false
     }
 
-    async init(options) {
+    duration(start) {
+      return new Date(Date.now() - start).toISOString().split('T')[1].replace('Z', '')
+    }
+
+    async init(request) {
       const token = {
         expected: `Bearer ${Zotero.Prefs.get('debug-bridge.token') || ''}`,
-        found: (options.headers || {}).Authorization || '',
+        found: (request.headers || {}).Authorization || '',
       }
 
       if (token.expected.trim() === 'Bearer') return [500, 'text/plain', 'token not configured'];
@@ -178,19 +181,28 @@ async function startup({ resourceURI, rootURI = resourceURI.spec }, reason) {
 
       if (token.expected !== token.found) return [401, 'text/plain', 'invalid bearer token']
 
-      log(`executing\n${options.data}`)
-      let start = new Date
+      let query = {}
+      if (request.query) query = {...request.query}
+      if (request.searchParams) {
+        query[''] = request.searchParams.toString()
+        for (const [key, value] of request.searchParams) {
+          query[key] = value
+        }
+      }
+
+      log(`executing\n${request.data} with ${JSON.stringify(query)}`)
+      const start = Date.now()
       let response
       try {
-        let action = new AsyncFunction('query', options.data)
-        response = await action(options.query)
+        let action = new AsyncFunction('query', request.data)
+        response = await action(query)
         if (typeof response === 'undefined') response = null
         response = JSON.stringify(response)
       } catch (err) {
-        log(`failed (${(new Date) - start} ms): ${err}`)
+        log(`failed (${this.duration(start)}): ${err}`)
         return [500, 'application/text', `debug-bridge failed: ${err}\n${err.stack}`];
       }
-      log(`succeeded (${(new Date) - start}ms)`)
+      log(`succeeded (${this.duration(start)})`)
       return [201, 'application/json', response]
     }
   }

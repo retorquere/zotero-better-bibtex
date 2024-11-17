@@ -5,23 +5,22 @@ import { log } from '../logger'
 import { Preference } from '../prefs'
 import KuromojiAnalyzer from 'kuroshiro-analyzer-kuromoji'
 import { Events } from '../events'
-import { client } from '../client'
+import * as client from '../client'
 
 async function fetchArrayBuffer(url): Promise<ArrayBuffer> {
   const response = await fetch(url)
-  if (!response.ok) throw new Error(`kuroshiro: loading ${url} failed: status = ${response.status}`)
+  if (!response.ok) throw new Error(`kuroshiro: loading ${ url } failed: status = ${ response.status }`)
   return await response.arrayBuffer()
 }
-if (client !== 'node') {
+if (client.slug !== 'node') {
   NodeDictionaryLoader.prototype.loadArrayBuffer = function(url, callback) { // eslint-disable-line prefer-arrow/prefer-arrow-functions
-    url = `chrome://zotero-better-bibtex/content/resource/kuromoji/${url.replace(/.*[\\/]/, '').replace(/\.gz$/, '')}`
-    log.debug('kuroshiro: loading', url)
+    url = `chrome://zotero-better-bibtex/content/resource/kuromoji/${ url.replace(/.*[\\/]/, '').replace(/\.gz$/, '') }`
     fetchArrayBuffer(url)
       .then(arrayBuffer => {
         callback(null, arrayBuffer)
       })
       .catch(err => {
-        log.debug(`kuroshiro: loading ${url} failed: ${err}`)
+        log.error(`kuroshiro: loading ${ url } failed: ${ err }`)
         callback(err, null)
       })
   }
@@ -43,15 +42,15 @@ export const kuroshiro = new class {
     try {
       if (!Preference.kuroshiro || this.enabled) return
 
-      this.kuroshiro = new Kuroshiro()
-      const analyzer = new KuromojiAnalyzer(client === 'node' ? undefined : 'chrome://zotero-better-bibtex/content/resource/kuromoji')
+      this.kuroshiro = (new Kuroshiro)
+      const analyzer = new KuromojiAnalyzer(client.slug === 'node' ? undefined : 'chrome://zotero-better-bibtex/content/resource/kuromoji')
       await this.kuroshiro.init(analyzer)
       this.kuromoji = analyzer._analyzer // eslint-disable-line no-underscore-dangle
       this.enabled = true
     }
     catch (err) {
       this.enabled = false
-      log.error(`kuroshiro: initializing failed ${await err}`)
+      log.error(`kuroshiro: initializing failed ${ await err }`)
       throw await err
     }
   }

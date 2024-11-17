@@ -20,20 +20,18 @@ export namespace Translators {
       debugEnabled: boolean
 
       data?: {
-        items: Array<Item | Attachment | Note>
+        items: number[]
         collections: Collection[]
-        cache: Record<number, {itemID: number, reference: string, metadata: any, meta: { updated: number }}>
       }
     }
 
     type Message = 
-        { kind: 'initialize', CSL_MAPPINGS: any }
+        { kind: 'initialize', CSL_MAPPINGS: any, dateFormatsJSON: any }
       | { kind: 'configure', environment: Environment }
-      | { kind: 'start', config: ArrayBuffer }
+      | { kind: 'start', config: Job }
       | { kind: 'done', output: boolean | string }
       | { kind: 'debug', message: string }
-      | { kind: 'error', message: string }
-      | { kind: 'cache', itemID: number, entry: string, metadata: any }
+      | { kind: 'error', message: string, stack?: string }
       | { kind: 'item', item: number }
       | { kind: 'ping' }
       | { kind: 'stop' }
@@ -61,6 +59,27 @@ export namespace Translators {
     }
   }
 
+  export interface DisplayOptions {
+    exportNotes?: boolean,
+    exportFileData?: boolean
+    useJournalAbbreviation?: boolean
+    biblatexAPA?: boolean
+    biblatexChicago?: boolean
+    keepUpdated?: boolean
+    worker?: boolean
+    markdown?: boolean
+
+    Normalize?: boolean
+    Items?: boolean
+    Preferences?: boolean
+
+    Authors?: boolean
+    Title?: boolean
+    Year?: boolean
+
+    quickCopyMode?: string
+  }
+
   interface Header {
     translatorID: string
     label: string
@@ -80,25 +99,6 @@ export namespace Translators {
       hash?: string
       cached?: boolean
     }
-    displayOptions?: {
-      exportNotes?: boolean,
-      exportFileData?: boolean
-      useJournalAbbreviation?: boolean
-      biblatexAPA?: boolean
-      biblatexChicago?: boolean
-      keepUpdated?: boolean
-      worker?: boolean
-      markdown?: boolean
-
-      Normalize?: boolean
-      Items?: boolean
-      Preferences?: boolean
-
-      Authors?: boolean
-      Title?: boolean
-      Year?: boolean
-
-      quickCopyMode?: string
-    }
+    displayOptions?: DisplayOptions
   }
 }

@@ -1,7 +1,7 @@
 import * as mapping from '../gen/items/extra-fields.json'
 import * as CSL from 'citeproc'
 
-type TeXString = { value: string, mode?: 'raw' | 'cased', line: number }
+type TeXString = { value: string; mode?: 'raw' | 'cased'; line: number }
 
 type Creator = {
   name: string
@@ -9,6 +9,7 @@ type Creator = {
 }
 
 export type Fields = {
+  raw: Record<string, string>
   kv: Record<string, string>
   creator: Record<string, string[]>
   creators: Creator[]
@@ -17,13 +18,13 @@ export type Fields = {
   aliases: string[]
 }
 
-type CSLCreator = { literal?: string, isInstitution?: 1, family?: string, given?: string }
-type ZoteroCreator = { name?: string, lastName?: string, firstName?: string, creatorType: string }
+type CSLCreator = { literal?: string; isInstitution?: 1; family?: string; given?: string }
+type ZoteroCreator = { name?: string; lastName?: string; firstName?: string; creatorType: string }
 
 export function cslCreator(value: string): CSLCreator {
   const creator = value.split(/\s*\|\|\s*/)
   if (creator.length === 2) {
-    const csl_creator = { family: creator[0] || '', given: creator[1] || ''}
+    const csl_creator = { family: creator[0] || '', given: creator[1] || '' }
     CSL.parseParticles(csl_creator)
     return csl_creator
   }
@@ -63,23 +64,24 @@ type GetOptions = SetOptions | {
   tex?: boolean
 }
 
-const otherFields = ['lccn', 'mr', 'zbl', 'arxiv', 'jstor', 'hdl', 'googlebooksid']
+const otherFields = [ 'lccn', 'mr', 'zbl', 'arxiv', 'jstor', 'hdl', 'googlebooksid' ]
 const casing = {
   arxiv: 'arXiv',
 }
 
-export function get(extra: string, mode: 'zotero' | 'csl', options?: GetOptions): { extra: string, extraFields: Fields } {
+export function get(extra: string, mode: 'zotero' | 'csl', options?: GetOptions): { extra: string; extraFields: Fields } {
   let defaults = false
   if (!options) {
-    options = { citationKey: true , aliases: true, kv: true, tex: true }
+    options = { citationKey: true, aliases: true, kv: true, tex: true }
     defaults = true
   }
 
-  const other = {zotero: 'csl', csl: 'zotero'}[mode]
+  const other = { zotero: 'csl', csl: 'zotero' }[mode]
 
   extra = extra || ''
 
   const extraFields: Fields = {
+    raw: {},
     kv: options.kv || defaults ? {} : undefined,
     creator: {},
     creators: [],
@@ -101,26 +103,28 @@ export function get(extra: string, mode: 'zotero' | 'csl', options?: GetOptions)
 
     if (!tex && texmode) return true
 
+    key = key.trim()
+    value = value.trim()
+    extraFields.raw[key.toLowerCase()] = value
     if (tex) {
-      key = key.trim().toLowerCase()
+      key = key.toLowerCase()
     }
     else {
       // retain leading dash or underscore
-      key = key.trim().replace(/(?!^)[-_]/g, ' ').replace(/([a-z])([A-Z])/g, '$1 $2').toLowerCase()
+      key = key.replace(/(?!^)[-_]/g, ' ').replace(/([a-z])([A-Z])/g, '$1 $2').toLowerCase()
     }
-    value = value.trim()
 
-    if (options.citationKey && !tex && ['citation key', 'bibtex'].includes(key)) {
+    if (options.citationKey && !tex && [ 'citation key', 'bibtex' ].includes(key)) {
       extraFields.citationKey = value
       return false
     }
 
     if (options.aliases && !tex && key === 'citation key alias') {
-      extraFields.aliases = [...extraFields.aliases, ...(value.split(/s*,\s*/).filter(alias => alias))]
+      extraFields.aliases = [ ...extraFields.aliases, ...(value.split(/s*,\s*/).filter(alias => alias)) ]
       return false
     }
     if (options.aliases && tex && key === 'ids') {
-      extraFields.aliases = [...extraFields.aliases, ...(value.split(/s*,\s*/).filter(alias => alias))]
+      extraFields.aliases = [ ...extraFields.aliases, ...(value.split(/s*,\s*/).filter(alias => alias)) ]
       return false
     }
 
@@ -143,7 +147,7 @@ export function get(extra: string, mode: 'zotero' | 'csl', options?: GetOptions)
             extraFields.kv[field] = value
             break
           default:
-            throw new Error(`Unexpected extra field type ${ef.type}`)
+            throw new Error(`Unexpected extra field type ${ ef.type }`)
         }
       }
       return false
@@ -155,7 +159,7 @@ export function get(extra: string, mode: 'zotero' | 'csl', options?: GetOptions)
     }
 
     if (options.tex && !tex && otherFields.includes(key.replace(/[- ]/g, ''))) {
-      extraFields.tex[`tex.${key.replace(/[- ]/g, '')}`] = { value, line: i }
+      extraFields.tex[`tex.${ key.replace(/[- ]/g, '') }`] = { value, line: i }
       return false
     }
 
@@ -170,11 +174,11 @@ export function get(extra: string, mode: 'zotero' | 'csl', options?: GetOptions)
 export function set(extra: string, options: SetOptions = {}): string {
   const parsed = get(extra, 'zotero', options)
 
-  if (options.citationKey) parsed.extra += `\nCitation Key: ${options.citationKey}`
+  if (options.citationKey) parsed.extra += `\nCitation Key: ${ options.citationKey }`
 
   if (options.aliases?.length) {
     const aliases = Array.from(new Set(options.aliases)).sort().join(', ')
-    parsed.extra += `\ntex.ids= ${aliases}`
+    parsed.extra += `\ntex.ids= ${ aliases }`
   }
 
   if (options.tex) {
@@ -190,7 +194,7 @@ export function set(extra: string, options: SetOptions = {}): string {
       }
       if (otherFields.includes(field)) prefix = ''
       const value = options.tex[name]
-      parsed.extra += `\n${prefix}${casing[field] || field}${value.mode === 'raw' ? '=' : ':'} ${value.value}`
+      parsed.extra += `\n${ prefix }${ casing[field] || field }${ value.mode === 'raw' ? '=' : ':' } ${ value.value }`
     }
   }
 
@@ -198,10 +202,10 @@ export function set(extra: string, options: SetOptions = {}): string {
     for (const name of Object.keys(options.kv).sort()) {
       const value = options.kv[name]
       if (Array.isArray(value)) { // creators
-        parsed.extra += value.map(creator => `\n${name}: ${creator}`).join('') // do not sort!!
+        parsed.extra += value.map(creator => `\n${ name }: ${ creator }`).join('') // do not sort!!
       }
       else {
-        parsed.extra += `\n${name}: ${value}`
+        parsed.extra += `\n${ name }: ${ value }`
       }
     }
   }

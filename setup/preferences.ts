@@ -2,6 +2,8 @@
 
 /* eslint-disable @typescript-eslint/no-unsafe-return, no-console, @typescript-eslint/no-shadow, no-eval, @typescript-eslint/no-empty-function, id-blacklist */
 
+console.log('pre-processing preferences')
+
 import * as pug from 'pug'
 import * as fs from 'fs'
 import * as path from 'path'
@@ -19,7 +21,6 @@ function error(...args) {
   process.exit(1)
 }
 
-
 function ensureDir(file) {
   const parent = path.dirname(file)
   if (!fs.existsSync(parent)) fs.mkdirSync(parent, { recursive: true })
@@ -27,13 +28,12 @@ function ensureDir(file) {
 
 const translators = glob.sync('translators/*.json')
   .map(file => {
-    const tr = require(`../${file}`)
+    const tr = require(`../${ file }`)
     tr.keepUpdated = typeof tr.displayOptions?.keepUpdated === 'boolean'
     tr.cached = tr.label.startsWith('Better ') && !tr.label.includes('Quick')
     tr.affectedBy = []
     return tr
   })
-
 
 const l10n = new class {
   private strings = peggy
@@ -41,12 +41,13 @@ const l10n = new class {
     .parse(fs.readFileSync('build/locale/en-US/zotero-better-bibtex.dtd', 'utf-8')) as Record<string, string>
 
   private find(id: string): string {
-    if (id.startsWith('zotero.general.')) return `&${id};`
-    if (id.startsWith('zotero.errorReport.')) return `&${id};`
+    if (id.startsWith('zotero.general.')) return `&${ id };`
+    if (id.startsWith('zotero.errorReport.')) return `&${ id };`
     if (this.strings[id]) return this.strings[id]
     error(id, 'not in dtd')
     return ''
   }
+
   tr(txt: string): string {
     if (!txt) return txt
     return txt.replace(/&([^;]+);/g, (entity, id) => this.find(id))
@@ -63,7 +64,7 @@ class ASTWalker extends BaseASTWalker {
     }
   }
 
-  attr(node, name: string, required=false): string {
+  attr(node, name: string, required = false): string {
     const val = super.attr(node, name, required)
     switch (typeof val) {
       case 'object':
@@ -98,7 +99,7 @@ class Flex extends ASTWalker {
   flex(node): string {
     const flex = node.attrs.find(attr => attr.name === 'flex')
     if (!flex) return ''
-    if (typeof flex.val === 'number') return `${flex.val}`
+    if (typeof flex.val === 'number') return `${ flex.val }`
     return flex.mustEscape ? flex.val : eval(flex.val)
   }
 
@@ -114,7 +115,7 @@ class Flex extends ASTWalker {
         case 'tabpanels':
         case 'tabpanel':
         case 'deck':
-          if (!flex) node.attrs.push({ name: 'flex', val: "'1'", mustEscape: false })
+          if (!flex) node.attrs.push({ name: 'flex', val: '\'1\'', mustEscape: false })
           break
         case 'prefpane':
         case 'groupbox':
@@ -137,10 +138,10 @@ class Flex extends ASTWalker {
         case 'menupopup':
         case 'menuitem':
         case 'menulist':
-          if (flex) throw new Error(`${node.name} has flex ${flex}`)
+          if (flex) throw new Error(`${ node.name } has flex ${ flex }`)
           break
         default:
-          throw `no flex on ${node.name}` // eslint-disable-line no-throw-literal
+          throw `no flex on ${ node.name }` // eslint-disable-line no-throw-literal
       }
     }
     node.block = this.walk(node.block)
@@ -192,7 +193,7 @@ class Docs extends ASTWalker {
     const affects = this.attr(node, 'bbt:affects', true)
       .split(/\s+/)
       .reduce((acc, affects) => {
-        switch(affects) {
+        switch (affects) {
           case '':
             break
 
@@ -284,9 +285,11 @@ class Docs extends ASTWalker {
   label(doc, pref?) {
     this.doc(doc, pref, 'label')
   }
+
   description(doc, pref?) {
     this.doc(doc.replace(/</g, '&lt;').replace(/>/g, '&gt;'), pref, 'description')
   }
+
   doc(doc, pref, kind) {
     pref = pref || this.preference
     if (!pref) error('doc for no pref')
@@ -295,10 +298,10 @@ class Docs extends ASTWalker {
     this.preferences[pref][kind] = doc
   }
 
-  section(label, history: any[], offset=0) {
+  section(label, history: any[], offset = 0) {
     const level = history.filter(n => n.$section).length + 1 + offset
     if (label.includes('<%') && this.pages[this.page].content.includes(label)) error('duplicate', label)
-    this.pages[this.page].content += `${'#'.repeat(level)} ${label}\n\n`
+    this.pages[this.page].content += `${ '#'.repeat(level) } ${ label }\n\n`
   }
 
   Tag(node, history) {
@@ -313,7 +316,7 @@ class Docs extends ASTWalker {
           label = this.attr(node, 'label') || this.text(node)
           if (pref) {
             this.label(label, pref)
-            this.section(`<%~ it.${this.preferences[pref].shortName} %>\n`, history, 1)
+            this.section(`<%~ it.${ this.preferences[pref].shortName } %>\n`, history, 1)
           }
           else {
             history.find(n => n.name === 'groupbox').$section = label
@@ -353,7 +356,7 @@ class Docs extends ASTWalker {
         this.register(node)
         // clone name to id
         pref = node.attrs.find(attr => attr.name === 'name')
-        node.attrs.push({...pref, name: 'id'})
+        node.attrs.push({ ...pref, name: 'id' })
         break
 
       case 'tooltip':
@@ -390,7 +393,7 @@ class Docs extends ASTWalker {
 
           label = this.attr(node, 'label') || (node.name === 'label' && this.text(node))
           if (!hidden && label && (bbt || !pref.label)) {
-            if (!pref.label && pref.description) this.section(`<%~ it.${pref.shortName} %>\n`, history, 1)
+            if (!pref.label && pref.description) this.section(`<%~ it.${ pref.shortName } %>\n`, history, 1)
             this.label(label, pref.name)
           }
         }
@@ -423,8 +426,8 @@ class Docs extends ASTWalker {
           break
       }
       if (typeof dflt === 'undefined') error('unsupported pref default', pref.type)
-      prefs[pref.shortName] = `${pref.label || pref.shortName}\n\ndefault: \`${dflt}\`\n\n${pref.description}\n`
-      if (pref.options) prefs[pref.shortName] += `\nOptions:\n\n${[...pref.options.values()].map(o => `* ${o}`).join('\n')}\n`
+      prefs[pref.shortName] = `${ pref.label || pref.shortName }\n\ndefault: \`${ dflt }\`\n\n${ pref.description }\n`
+      if (pref.options) prefs[pref.shortName] += `\nOptions:\n\n${ [...pref.options.values()].map(o => `* ${ o }`).join('\n') }\n`
     }
 
     const hidden = `
@@ -438,7 +441,7 @@ The Better BibTeX hidden preferences are preceded by “extensions.zotero.transl
 
 `
     this.pages['hidden-preferences'] = {
-      content: hidden + Object.values(this.preferences).filter(p => !p.label && p.description).map(p => `## <%~ it.${p.shortName} %>`).sort().join('\n'),
+      content: hidden + Object.values(this.preferences).filter(p => !p.label && p.description).map(p => `## <%~ it.${ p.shortName } %>`).sort().join('\n'),
     }
 
     for (const page of glob.sync(path.join(dir, '*.md'))) {
@@ -449,9 +452,9 @@ The Better BibTeX hidden preferences are preceded by “extensions.zotero.transl
       if (this.pages[slug].title) this.pages[slug].matter.data.title = this.pages[slug].title
     }
 
-    for (const [slug, page] of Object.entries(this.pages)) {
+    for (const [ slug, page ] of Object.entries(this.pages)) {
       if (!page.path) error('no template for', slug)
-      page.matter.content = eta.renderString(`\n\n{{% preferences/header %}}\n\n${page.content}`, prefs)
+      page.matter.content = eta.renderString(`\n\n{{% preferences/header %}}\n\n${ page.content }`, prefs)
       ensureDir(page.path)
       fs.writeFileSync(page.path, page.matter.stringify())
     }
@@ -459,7 +462,7 @@ The Better BibTeX hidden preferences are preceded by “extensions.zotero.transl
 
   saveDefaults(defaults) {
     ensureDir(defaults)
-    fs.writeFileSync(defaults, Object.values(this.preferences).map(p => `pref(${JSON.stringify(p.name)}, ${JSON.stringify(p.default)})\n`).join(''))
+    fs.writeFileSync(defaults, Object.values(this.preferences).map(p => `pref(${ JSON.stringify(p.name) }, ${ JSON.stringify(p.default) })\n`).join(''))
   }
 
   saveTypescript() {
@@ -483,155 +486,52 @@ The Better BibTeX hidden preferences are preceded by “extensions.zotero.transl
       preferences,
       translators,
     }))
-    fs.writeFileSync('gen/auto-export-triggers.sql', this.triggers({ displayOptions, preferences, translators }))
+    fs.writeFileSync('gen/auto-export-schema.json', this.schema({ displayOptions, preferences, translators }))
   }
 
-  triggers({ displayOptions, preferences, translators}) {
-    const set = options => options.map(option => typeof option === 'number' ? `${option}` : `'${option}'`).join(',')
+  schema({ displayOptions, preferences, translators }) {
+    const schema = {}
+    for (const tr of translators) {
+      if (!tr.displayOptions || typeof tr.displayOptions.keepUpdated !== 'boolean') continue
 
-    const check = (name, schema, isSetting = false) => {
-      if (schema.type === 'boolean') schema = { enum: [0, 1] }
-      let test = ''
-      if (schema.enum) {
-        test += `  SELECT RAISE(FAIL, "${name} must be one of ${schema.enum.join(' / ')}")\n`
-        if (isSetting) {
-          test += `  WHERE NEW.setting = '${name}' AND NEW.value NOT IN (${set(schema.enum)});\n`
-        }
-        else {
-          test += `  WHERE NEW.${name} NOT IN (${set(schema.enum)});\n`
-        }
-      }
-      else if (schema.type === 'string' && schema.minLength) {
-        test += `  SELECT RAISE(FAIL, "${name} must be a string of minimum length ${schema.minLength}")\n`
-        if (isSetting) {
-          test += `  WHERE NEW.setting = '${name}' AND (TYPEOF(NEW.value) <> 'text' OR LENGTH(NEW.value) < ${schema.minLength});\n`
-        }
-        else {
-          test += `  WHERE TYPEOF(NEW.${name}) <> 'text' OR LENGTH(NEW.${name}) < ${schema.minLength};\n`
-        }
-      }
-      else if (schema.type === 'string') {
-        test += `  SELECT RAISE(FAIL, "${name} must be a string")\n`
-        if (isSetting) {
-          test += `  WHERE NEW.setting = '${name}' AND TYPEOF(NEW.value) <> 'text';\n`
-        }
-        else {
-          test += `  WHERE TYPEOF(NEW.${name}) <> 'text';\n`
-        }
-      }
-      else if (schema.type === 'number') {
-        test += `  SELECT RAISE(FAIL, "${name} must be a number")\n`
-        if (isSetting) {
-          test += `  WHERE NEW.setting = '${name}' AND TYPEOF(NEW.value) NOT IN ('integer', 'real');\n`
-        }
-        else {
-          test += `  WHERE TYPEOF(NEW.${name}) NOT IN ('integer', 'real');\n`
-        }
+      schema[tr.label] = {
+        path: { type: 'string', minLength: 1 },
+        translatorID: { const: tr.translatorID },
+        type: { type: 'string', enum: [ 'library', 'collection' ]},
+        id: { type: 'number' },
+        recursive: { type: 'boolean' },
+        enabled: { type: 'boolean' },
+        status: { enum: [ 'scheduled', 'running', 'done', 'error' ]},
+        error: { type: 'string' },
+        updated: { type: 'number' },
       }
 
-      if (schema.affects) {
-        test += `  SELECT RAISE(FAIL, "${name} is only applicable to ${schema.affects.map(tr => tr.label).join(' / ')}")\n`
-        test += `  WHERE NEW.setting = '${name}' AND NOT EXISTS (SELECT * FROM betterbibtex.autoexport WHERE path = NEW.path and translatorID `
-        const affects = schema.affects.map(tr => tr.translatorID)
-        if (schema.affects.length === 1) {
-          test += `= ${set(affects)}`
-        }
-        else {
-          test += `IN (${set(affects)})`
-        }
-        test += ');\n'
+      for (const option of displayOptions) {
+        if (tr.displayOptions && typeof tr.displayOptions[option] === 'boolean') schema[tr.label][option] = { type: 'boolean' }
       }
-      return test
     }
 
-    const triggers: string[] = []
+    for (const pref of preferences) {
+      if (!pref.label || !pref.override || !pref.affects.length) continue
 
-    const fixate = name => `  SELECT RAISE(FAIL, "${name} may not be updated") WHERE NEW.${name} <> OLD.${name};`
-    const fixated = [ 'path', 'translatorID', 'type', 'id']
-
-    const autoexport = {
-      path: { type: 'string', minLength: 1 },
-      translatorID: { type: 'string', enum: translators.map(tr => tr.translatorID) },
-      type: { type: 'string', enum: ['library', 'collection'] },
-      id: { type: 'number' },
-      recursive: { type: 'boolean' },
-      enabled: { type: 'boolean' },
-      status: { enum: [ 'scheduled', 'running', 'done', 'error' ] },
-      error: { type: 'string' },
-      updated: { type: 'number' },
+      for (const label of pref.affects) {
+        switch (pref.type) {
+          case 'boolean':
+            schema[label][pref.shortName] = { type: 'boolean' }
+            break
+          case 'string':
+            schema[label][pref.shortName] = { type: 'string' }
+            if (pref.options) schema[label][pref.shortName].enum = [...pref.options.keys()]
+            break
+          case 'number':
+            schema[label][pref.shortName] = { type: 'number' }
+            break
+          default:
+            throw new Error(`Don't know what to do with ${ pref.type }`)
+        }
+      }
     }
-    let conditions: string = Object.entries(autoexport).map(([ setting, schema ]) => check(setting, schema)).join('\n')
-    triggers.push('DROP TRIGGER IF EXISTS betterbibtex.autoexport_insert')
-    triggers.push('DROP TRIGGER IF EXISTS betterbibtex_autoexport_insert')
-    triggers.push([
-      'CREATE TEMPORARY TRIGGER betterbibtex_autoexport_insert',
-      'BEFORE INSERT ON betterbibtex.autoexport',
-      'BEGIN',
-      conditions,
-      'END;',
-    ].join('\n'))
-
-    conditions = Object.entries(autoexport).filter(([ setting, _schema ]) => !fixated.includes(setting)).map(([ setting, schema ]) => check(setting, schema)).join('\n')
-    triggers.push('DROP TRIGGER IF EXISTS betterbibtex.autoexport_update')
-    triggers.push('DROP TRIGGER IF EXISTS betterbibtex_autoexport_update')
-    triggers.push([
-      'CREATE TEMPORARY TRIGGER betterbibtex_autoexport_update',
-      'BEFORE UPDATE ON betterbibtex.autoexport',
-      'BEGIN',
-      ...fixated.map(setting => fixate(setting)),
-      '',
-      conditions,
-      'END;',
-    ].join('\n'))
-
-    const settings = Object.fromEntries(
-      preferences
-        .filter(pref => pref.label && pref.override && pref.affects.length)
-        .map(pref => {
-          const affects = pref.affects ? pref.affects.map(label => translators.find(tr => tr.label === label)) : []
-          switch (pref.type) {
-            case 'boolean':
-              return [ pref.shortName, { type: 'number', enum: [ 0, 1 ], affects } ]
-            case 'string':
-              return [ pref.shortName, { type: 'string', enum: pref.options ? [...pref.options.keys()] : undefined, affects } ]
-            case 'number':
-              return [ pref.shortName, { type: 'number', affects } ]
-            default:
-              throw new Error(`Don't know what to do with ${pref.type}`)
-          }
-        })
-        .concat(
-          displayOptions.map(option => [ option, { type: 'boolean', affects: translators.filter(tr => typeof tr.displayOptions?.[option] === 'boolean') } ])
-        )
-    )
-
-    const unsupported = `  SELECT RAISE(FAIL, "unsupported auto-export setting")\n  WHERE NEW.setting NOT IN (${set(Object.keys(settings))});\n`
-    conditions = Object.entries(settings).map(([ setting, schema ]) => check(setting, schema, true)).join('\n')
-    triggers.push('DROP TRIGGER IF EXISTS betterbibtex.autoexport_setting_insert')
-    triggers.push('DROP TRIGGER IF EXISTS betterbibtex_autoexport_setting_insert')
-    triggers.push([
-      'CREATE TEMPORARY TRIGGER betterbibtex_autoexport_setting_insert',
-      'BEFORE INSERT ON betterbibtex.autoexport_setting',
-      'BEGIN',
-      unsupported,
-      conditions,
-      'END;',
-    ].join('\n'))
-
-    triggers.push('DROP TRIGGER IF EXISTS betterbibtex.autoexport_setting_update')
-    triggers.push('DROP TRIGGER IF EXISTS betterbibtex_autoexport_setting_update')
-    triggers.push([
-      'CREATE TEMPORARY TRIGGER betterbibtex_autoexport_setting_update',
-      'BEFORE UPDATE ON betterbibtex.autoexport_setting',
-      'BEGIN',
-      fixate('path'),
-      fixate('setting'),
-      unsupported,
-      conditions,
-      'END;',
-    ].join('\n'))
-
-    return triggers.join('\n--\n')
+    return JSON.stringify(schema, null, 2)
   }
 }
 
@@ -645,8 +545,8 @@ class XHTML extends BaseASTWalker {
     if (typeof val !== 'string') return ''
     const m = val.match(/(.*)&([^;]+);(.*)/)
     if (!m) return ''
-    const [, pre, id, post ] = m
-    if (pre || post) throw new Error(`unexpected data around translation id in ${val}`)
+    const [ , pre, id, post ] = m
+    if (pre || post) throw new Error(`unexpected data around translation id in ${ val }`)
     return id
   }
 
@@ -659,10 +559,10 @@ class XHTML extends BaseASTWalker {
       const tabpanel = tabpanels[i]
 
       const label = this.attr(tab, 'label', true)
-      const l10n = label.includes('&') ? { 'data-l10n-id': label.replace(/&([^;.]+).label;/, '$1') }: {}
+      const l10n = label.includes('&') ? { 'data-l10n-id': label.replace(/&([^;.]+).label;/, '$1') } : {}
       nodes.push(this.tag('groupbox', { class: indent ? 'bbt-prefs-group-main' : 'bbt-prefs-group-sub' }, [
         this.tag('label', {}, [
-          this.tag('html:h2', l10n, label.includes('&') ? [] : [ { type: 'Text', val: label } ]),
+          this.tag('html:h2', l10n, label.includes('&') ? [] : [{ type: 'Text', val: label }]),
         ]),
         ...tabpanel.block.nodes,
       ]))
@@ -674,14 +574,14 @@ class XHTML extends BaseASTWalker {
     const cls = this.attr(node, 'class')
     if (cls && cls.split(' ').includes('bbt-prefs-2col-span')) {
       const pcls = this.attr(history.slice(1).find(n => n.type === 'Tag'), 'class')
-      if (! pcls?.includes('bbt-prefs-2col')) throw new Error('2-col span not in a 2-col parent')
+      if (!pcls?.includes('bbt-prefs-2col')) throw new Error('2-col span not in a 2-col parent')
     }
-    if (node.name === 'script') throw new Error("scripts don't work in preference panes")
+    if (node.name === 'script') throw new Error('scripts don\'t work in preference panes')
 
     let style: string
     switch (node.name) {
-      case'image':
-        style = node.attrs.filter(a => a.name === 'height' || a.name === 'width').map(a => `${a.name}:${eval(a.val)}`).join(';')
+      case 'image':
+        style = node.attrs.filter(a => a.name === 'height' || a.name === 'width').map(a => `${ a.name }:${ eval(a.val) }`).join(';')
         if (style) node.attrs.push({ name: 'style', val: JSON.stringify(style), mustEscape: false })
         break
 
@@ -695,7 +595,7 @@ class XHTML extends BaseASTWalker {
           })
           node.attrs = node.attrs.filter(a => a.name !== 'multiline')
           // arbitrary size
-          for (const [name, val] of Object.entries({ cols: '80', rows: '5' })) {
+          for (const [ name, val ] of Object.entries({ cols: '80', rows: '5' })) {
             if (!node.attrs.find(a => a.name === name)) node.attrs.push({ name, val: JSON.stringify(val), mustEscape: false })
           }
         }
@@ -720,7 +620,7 @@ class XHTML extends BaseASTWalker {
                 mustEscape: false,
               })
             }
-            return this.tag('label', {}, [ {...child, name: 'html:h2' }])
+            return this.tag('label', {}, [{ ...child, name: 'html:h2' }])
           }
           else {
             return child
@@ -733,11 +633,11 @@ class XHTML extends BaseASTWalker {
     for (const attr of node.attrs) {
       const id = this.l10n(this.attr(node, attr.name))
       if (id) {
-        if (!id.match(/^[^.]+[.][^.]+$/)) throw new Error(`no '.' in l10n attribute ${attr.name}`)
-        const [base, a] = id.split('.')
+        if (!id.match(/^[^.]+[.][^.]+$/)) throw new Error(`no '.' in l10n attribute ${ attr.name }`)
+        const [ base, a ] = id.split('.')
         l10n_id = l10n_id || base
-        if (base !== l10n_id) throw new Error(`unexpected l10n base in ${id}, expected ${l10n_id}`)
-        if (a !== attr.name) throw new Error(`unexpected l10n attribute in ${id}, expected ${attr.name}`)
+        if (base !== l10n_id) throw new Error(`unexpected l10n base in ${ id }, expected ${ l10n_id }`)
+        if (a !== attr.name) throw new Error(`unexpected l10n attribute in ${ id }, expected ${ attr.name }`)
         attr.val = '""'
       }
     }
@@ -748,7 +648,7 @@ class XHTML extends BaseASTWalker {
     const duplicate: Record<string, string> = {}
     for (const attr of node.attrs) {
       if (attr.name !== 'class' && duplicate[attr.name]) {
-        throw new Error(`${node.name}.${attr.name}=${attr.val}`)
+        throw new Error(`${ node.name }.${ attr.name }=${ attr.val }`)
       }
       else {
         duplicate[attr.name] = attr.val
@@ -767,7 +667,7 @@ class XHTML extends BaseASTWalker {
 
       if (node.type === 'Tag' && node.name === 'tabbox') {
         const indent = history.filter(n => n.name === 'groupbox' && n.attrs.find(a => a.name === 'class')).length
-        nodes = [...nodes, ...(this.tabbox(node, indent).map(n => this.walk(n, history))) ]
+        nodes = [ ...nodes, ...(this.tabbox(node, indent).map(n => this.walk(n, history))) ]
       }
       else {
         nodes.push(this.walk(node, history))
@@ -781,11 +681,11 @@ class XHTML extends BaseASTWalker {
     const id = this.l10n(node.val)
     if (!id) return node
 
-    if (!id.match(/^[^.]+$/)) throw new Error(`not a valid l10n id ${id}`)
+    if (!id.match(/^[^.]+$/)) throw new Error(`not a valid l10n id ${ id }`)
     const parent = history.find(n => n.type === 'Tag')
     const existing = parent.attrs?.find(a => a.name === 'data-l10n-id')
     if (existing) {
-      if (existing.val !== JSON.stringify(id)) throw new Error(`expected ${existing.val}, found ${JSON.stringify(id)}`)
+      if (existing.val !== JSON.stringify(id)) throw new Error(`expected ${ existing.val }, found ${ JSON.stringify(id) }`)
     }
     else {
       parent.attrs = parent.attrs || []
@@ -831,6 +731,20 @@ render('content/Preferences/xhtml.pug', 'build/content/preferences.xhtml', {
       walk(XHTML, ast)
       walk(SelfClosing, ast)
       walk(Lint, ast)
+
+      if (ast.type !== 'Block' || ast.nodes.length !== 1 || ast.nodes[0].type !== 'Tag' || ast.nodes[0].name !== 'vbox') throw new Error(`unexpected root`)
+      let onload = ast.nodes[0].attrs.filter(attr => attr.name === 'onload')
+      const ns = ast.nodes[0].attrs.filter(attr => attr.name !== 'onload')
+
+      ast = ast.nodes[0].block
+      for (const node of ast.nodes) {
+        const nodes = node.type === 'Block' ? node.nodes : [ node ]
+
+        for (const n of nodes) {
+          n.attrs = [...n.attrs, ...onload, ...ns]
+          onload = []
+        }
+      }
 
       return ast
     },

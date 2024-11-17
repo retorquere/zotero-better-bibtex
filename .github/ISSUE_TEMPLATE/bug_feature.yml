@@ -20,7 +20,7 @@ body:
 
         "N/A" is usually inaccurate (for bugs and feature requests alike); if you're unsure of its relevance, please generate one anyway. When you omit it, the issue bot will guide you on creating a debug log ID. Please carefully review that message. If you genuinely believe it doesn't apply, kindly explain why. Your cooperation is appreciated.
 
-        If the regular debug log submission does not work, use "send to file.io" from the help menu.
+        *If the regular debug log submission does not work, use "send to file.io" from the help menu.*
 
         If you are sure your question does not relate to items in your library at all, just select any one item in your library.
   - type: input

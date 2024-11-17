@@ -55,22 +55,30 @@ jobs:
     - name: install node packages
       run: npm install
 
-    - name: set slow and beta flags
+    - name: set slow/legacy/beta flags
+      run: ./util/action-flags
       env:
         GITHUB_CONTEXT: ${{ toJson(github) }}
-      run: ./util/action-flags
 
     - name: get previous test durations
       run: curl -L 
         https://github.com/retorquere/zotero-better-bibtex/releases/download/builds/durations${{
         env.slow }}.json --create-dirs -o test/balance/durations.json
+
     - name: balance tests
       id: balance
       run: ./util/balance.py --durations test/balance/durations.json --bins test/balance/bins.json
-        --minutes 10 ${{ env.slow }} ${{ env.beta }}
+        --minutes 10 ${{ env.slow }} ${{ env.beta }} ${{ env.legacy }}
 
-    - name: build ${{ env.beta }}
-      run: npm run build ${{ env.beta }}
+    - name: build ${{ env.beta }} ${{ env.legacy }}
+      run: npm run build
+      env:
+        VERSION_WITH_ISSUE: false
+
+    - name: publish debug bridge
+      run: ./util/publish-debug-bridge.py
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: store build artifacts
       uses: actions/upload-artifact@v4
@@ -95,7 +103,7 @@ jobs:
       if: ${{ github.event_name == 'push' && (github.ref == 'refs/heads/master' ||
         startsWith(github.ref, 'refs/tags/')) }}
     - name: deploy site
-      uses: peaceiris/actions-gh-pages@v3
+      uses: peaceiris/actions-gh-pages@v4
       if: ${{ github.event_name == 'push' && (github.ref == 'refs/heads/master' ||
         startsWith(github.ref, 'refs/tags/')) }}
       with:
@@ -112,10 +120,6 @@ jobs:
         bin: ${{ fromJSON(needs.build.outputs.bin_ids) }}
         client: ${{ fromJSON(needs.build.outputs.clients) }}
         worker: [--worker, --no-worker]
-        exclude:
-        - client: jurism-beta
-        - client: jurism
-          #  worker: '--worker'
     steps:
     - uses: actions/checkout@v4
     - name: fetch build artifacts
@@ -174,13 +178,16 @@ jobs:
       run: |
         touch ~/.BBTTEST.log
         cp ~/.BBTTEST.log ~/BBTTEST--${{ matrix.client }}--${{ matrix.bin }}${{ matrix.worker }}.txt
+        cp -r ~/.BBTTEST ~/BBTTEST
     - name: upload log on failure
       if: ${{ failure() || cancelled() }}
       uses: actions/upload-artifact@v4
       with:
         name: debug-log--${{ matrix.client }}--${{ matrix.bin }}${{ matrix.worker
           }}
-        path: ~/BBTTEST*.txt
+        path: |
+          ~/BBTTEST*.txt
+          exported/
         retention-days: 5
 
     - name: store test artifacts
@@ -242,7 +249,7 @@ jobs:
     - run: npm run release
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    - uses: actions/github-script@v6
+    - uses: actions/github-script@v7
       continue-on-error: true
       with:
         script: |

@@ -2,9 +2,9 @@ import { Exporter as BibTeXExporter } from './exporter'
 import { Translation } from '../lib/translator'
 import { strToISO } from '../../content/dateparser'
 import { qualityReport } from '../../gen/biber-tool'
+import type { Collected } from '../lib/collect'
 
 import { Entry as BaseEntry, Config } from './entry'
-import { print } from '../../content/logger'
 
 const config: Config = {
   fieldEncoding: {
@@ -46,82 +46,82 @@ const config: Config = {
 
   typeMap: {
     csl: {
-      article               : 'article',
-      'article-journal'     : 'article',
-      'article-magazine'    : {type: 'article', subtype: 'magazine'},
-      'article-newspaper'   : {type: 'article', subtype: 'newspaper'},
-      bill                  : 'legislation',
-      book                  : 'book',
-      broadcast             : {type: 'misc', subtype: 'broadcast'},
-      chapter               : 'incollection',
-      data                  : 'dataset',
-      dataset               : 'dataset',
-      entry                 : 'inreference',
-      'entry-dictionary'    : 'inreference',
-      'entry-encyclopedia'  : 'inreference',
-      figure                : 'image',
-      graphic               : 'image',
-      interview             : {type: 'misc', subtype: 'interview'},
-      legal_case            : 'jurisdiction',
-      legislation           : 'legislation',
-      manuscript            : 'unpublished',
-      map                   : {type: 'misc', subtype: 'map'},
-      motion_picture        : 'movie',
-      musical_score         : 'audio',
-      pamphlet              : 'booklet',
-      'paper-conference'    : 'inproceedings',
-      patent                : 'patent',
+      article: 'article',
+      'article-journal': 'article',
+      'article-magazine': { type: 'article', subtype: 'magazine' },
+      'article-newspaper': { type: 'article', subtype: 'newspaper' },
+      bill: 'legislation',
+      book: 'book',
+      broadcast: { type: 'misc', subtype: 'broadcast' },
+      chapter: 'incollection',
+      data: 'dataset',
+      dataset: 'dataset',
+      entry: 'inreference',
+      'entry-dictionary': 'inreference',
+      'entry-encyclopedia': 'inreference',
+      figure: 'image',
+      graphic: 'image',
+      interview: { type: 'misc', subtype: 'interview' },
+      legal_case: 'jurisdiction',
+      legislation: 'legislation',
+      manuscript: 'unpublished',
+      map: { type: 'misc', subtype: 'map' },
+      motion_picture: 'movie',
+      musical_score: 'audio',
+      pamphlet: 'booklet',
+      'paper-conference': 'inproceedings',
+      patent: 'patent',
       personal_communication: 'letter',
-      post                  : 'online',
-      'post-weblog'         : 'online',
-      report                : 'report',
-      review                : 'review',
-      'review-book'         : 'review',
-      song                  : 'music',
-      speech                : {type: 'misc', subtype: 'speech'},
-      thesis                : 'thesis',
-      treaty                : 'legal',
-      webpage               : 'online',
+      post: 'online',
+      'post-weblog': 'online',
+      report: 'report',
+      review: 'review',
+      'review-book': 'review',
+      song: 'music',
+      speech: { type: 'misc', subtype: 'speech' },
+      thesis: 'thesis',
+      treaty: 'legal',
+      webpage: 'online',
     },
     zotero: {
-      artwork            : 'artwork',
-      audioRecording     : 'audio',
-      bill               : 'legislation',
-      blogPost           : 'online',
-      book               : 'book',
-      bookSection        : 'incollection',
-      case               : 'jurisdiction',
-      computerProgram    : 'software',
-      conferencePaper    : 'inproceedings',
-      dictionaryEntry    : 'inreference',
-      dataset            : 'dataset',
-      document           : 'misc',
-      email              : 'letter',
+      artwork: 'artwork',
+      audioRecording: 'audio',
+      bill: 'legislation',
+      blogPost: 'online',
+      book: 'book',
+      bookSection: 'incollection',
+      case: 'jurisdiction',
+      computerProgram: 'software',
+      conferencePaper: 'inproceedings',
+      dictionaryEntry: 'inreference',
+      dataset: 'dataset',
+      document: 'misc',
+      email: 'letter',
       encyclopediaArticle: 'inreference',
-      film               : 'video',
-      forumPost          : 'online',
-      gazette            : 'jurisdiction',
-      hearing            : 'jurisdiction',
-      instantMessage     : 'misc',
-      interview          : 'misc',
-      journalArticle     : 'article',
-      letter             : 'letter',
-      magazineArticle    : {type: 'article', subtype: 'magazine'},
-      manuscript         : 'unpublished',
-      map                : 'misc',
-      newspaperArticle   : {type: 'article', subtype: 'newspaper'},
-      patent             : 'patent',
-      podcast            : 'audio',
-      preprint           : 'online',
-      presentation       : 'unpublished',
-      radioBroadcast     : 'audio',
-      report             : 'report',
-      standard           : 'standard',
-      statute            : 'legislation',
-      thesis             : 'thesis',
-      tvBroadcast        : 'video',
-      videoRecording     : 'video',
-      webpage            : 'online',
+      film: 'video',
+      forumPost: 'online',
+      gazette: 'jurisdiction',
+      hearing: 'jurisdiction',
+      instantMessage: 'misc',
+      interview: 'misc',
+      journalArticle: 'article',
+      letter: 'letter',
+      magazineArticle: { type: 'article', subtype: 'magazine' },
+      manuscript: 'unpublished',
+      map: 'misc',
+      newspaperArticle: { type: 'article', subtype: 'newspaper' },
+      patent: 'patent',
+      podcast: 'audio',
+      preprint: 'online',
+      presentation: 'unpublished',
+      radioBroadcast: 'audio',
+      report: 'report',
+      standard: 'standard',
+      statute: 'legislation',
+      thesis: 'thesis',
+      tvBroadcast: 'video',
+      videoRecording: 'video',
+      webpage: 'online',
     },
   },
 }
@@ -130,8 +130,8 @@ class CreatorTypeMap {
   public type: Record<string, string> = {}
   private registered: Record<string, string> = {}
   private static extension = {
-    editor: ['', 'a', 'b', 'c'],
-    name: ['a', 'b', 'c'],
+    editor: [ '', 'a', 'b', 'c' ],
+    name: [ 'a', 'b', 'c' ],
   }
 
   constructor(private hasEditor: boolean) {
@@ -141,19 +141,15 @@ class CreatorTypeMap {
     type = type.toLowerCase()
     if (!this.registered[type]) {
       for (const postfix of CreatorTypeMap.extension[base]) {
-        const candidate = `${base}${postfix}`
+        const candidate = `${ base }${ postfix }`
         if (this.hasEditor && candidate === 'editor' && type !== 'editor') continue
-        if (this.type[candidate]) {
-          if (postfix !== 'c') continue
-          print(`squashing ${type} into ${candidate}`)
-        }
+        if (this.type[candidate] && postfix !== 'c') continue
         this.type[candidate] = type
         this.registered[type] = candidate
         break
       }
     }
 
-    print(`::register(${JSON.stringify({ base, type })} = ${JSON.stringify(this.type)}`)
     return this.registered[type]
   }
 }
@@ -181,7 +177,7 @@ class Entry extends BaseEntry {
     }
 
     const creatorType = new CreatorTypeMap(!!this.item.creators.find(cr => cr.creatorType === 'editor'))
-    const video = ['video', 'movie'].includes(this.entrytype)
+    const video = [ 'video', 'movie' ].includes(this.entrytype)
     if (video) creatorType.register('editor', 'director')
 
     for (const creator of this.item.creators) {
@@ -192,10 +188,10 @@ class Entry extends BaseEntry {
           break
 
         case 'contributor':
-          if (this.translation.options.biblatexAPA) {
+          if (this.translation.collected.displayOptions.biblatexAPA) {
             creators.with.push(creator)
           }
-          else if (video && this.translation.options.biblatexChicago) {
+          else if (video && this.translation.collected.displayOptions.biblatexChicago) {
             creators[creatorType.register('editor', 'none')].push(creator)
           }
           else {
@@ -252,15 +248,14 @@ class Entry extends BaseEntry {
       }
     }
 
-    print(`::types=${JSON.stringify(creatorType.type)}`)
-    for (const [field, value] of Object.entries(creators)) {
+    for (const [ field, value ] of Object.entries(creators)) {
       this.remove(field)
-      this.remove(`${field}type`)
+      this.remove(`${ field }type`)
 
       if (!value.length) continue
 
       this.add({ name: field, value, enc: 'creators' })
-      this.add({ name: `${field}type`, value: creatorType.type[field] })
+      this.add({ name: `${ field }type`, value: creatorType.type[field] })
     }
   }
 }
@@ -289,8 +284,8 @@ function looks_like_number_field(n: string): boolean {
 }
 
 const patent = new class {
-  private countries = ['de', 'eu', 'fr', 'uk', 'us']
-  private prefix = {us: 'us', ep: 'eu', gb: 'uk', de: 'de', fr: 'fr' }
+  private countries = [ 'de', 'eu', 'fr', 'uk', 'us' ]
+  private prefix = { us: 'us', ep: 'eu', gb: 'uk', de: 'de', fr: 'fr' }
 
   public region(item): string {
     if (item.itemType !== 'patent') return ''
@@ -300,7 +295,7 @@ const patent = new class {
       if (this.countries.includes(country)) return country
     }
 
-    for (const patentNumber of [item.number, item.applicationNumber]) {
+    for (const patentNumber of [ item.number, item.applicationNumber ]) {
       if (patentNumber) {
         const prefix: string = this.prefix[patentNumber.substr(0, 2).toLowerCase()]
         if (prefix) return prefix
@@ -314,7 +309,7 @@ const patent = new class {
   public number(item): string {
     if (item.itemType !== 'patent' || (!item.number && !item.applicationNumber)) return ''
 
-    for (const patentNumber of ([item.number, item.applicationNumber] as string[])) {
+    for (const patentNumber of ([ item.number, item.applicationNumber ] as string[])) {
       if (patentNumber) {
         const country = patentNumber.substr(0, 2).toLowerCase()
         if (this.prefix[country]) return patentNumber.substr(country.length)
@@ -329,14 +324,15 @@ const patent = new class {
 
     const region = this.region(item)
 
-    if (region && item.number) return `patent${region}`
-    if (region && item.applicationNumber) return `patreq${region}`
+    if (region && item.number) return `patent${ region }`
+    if (region && item.applicationNumber) return `patreq${ region }`
 
     return 'patent'
   }
 }
 
-export function generateBibLaTeX(translation: Translation): void {
+export function generateBibLaTeX(collected: Collected): Translation {
+  const translation = Translation.Export(collected)
   translation.bibtex = new BibTeXExporter(translation)
 
   Entry.installPostscript(translation)
@@ -350,7 +346,8 @@ export function generateBibLaTeX(translation: Translation): void {
     if (entry.entrytype === 'book' && item.numberOfVolumes) entry.entrytype = 'mvbook'
     if (entry.entrytype === 'report' && item.type?.toLowerCase().includes('manual')) entry.entrytype = 'manual'
     // if (item.itemType === 'preprint' && entry.entrytype === 'online' && item.ISSN && item.publicationTitle) entry.entrytype = 'article'
-    if (item.itemType === 'preprint') entry.add({ name: 'pubstate', value: 'preprint' })
+
+    entry.add({ name: 'pubstate', value: item.status || (item.itemType === 'preprint' && 'prepublished') })
 
     if (entry.entrytype === 'patent') {
       if (item.country && !patent.region(item)) entry.add({ name: 'location', value: item.country || item.extraFields.kv['publisher-place'] })
@@ -359,7 +356,7 @@ export function generateBibLaTeX(translation: Translation): void {
       entry.add({ name: 'venue', value: item.place, enc: 'literal' })
     }
     else {
-      entry.add({ name: 'location', value: item.place || item.extraFields.kv['publisher-place'] , enc: 'literal' })
+      entry.add({ name: 'location', value: item.place || item.extraFields.kv['publisher-place'], enc: 'literal' })
     }
 
     /*
@@ -417,7 +414,7 @@ export function generateBibLaTeX(translation: Translation): void {
           if (entry.entrytype === 'inproceedings' && entry.getBibString(item.publicationTitle)) {
             entry.add({ name: 'booktitle', value: item.publicationTitle, bibtexStrings: true })
           }
-          else if (entry.entrytype === 'inproceedings' && translation.options.useJournalAbbreviation && item.publicationTitle && journalAbbreviation) {
+          else if (entry.entrytype === 'inproceedings' && translation.collected.displayOptions.useJournalAbbreviation && item.publicationTitle && journalAbbreviation) {
             entry.add({ name: 'booktitle', value: journalAbbreviation, bibtexStrings: true })
           }
           else {
@@ -434,7 +431,7 @@ export function generateBibLaTeX(translation: Translation): void {
         if (entry.getBibString(item.publicationTitle)) {
           entry.add({ name: 'journaltitle', value: item.publicationTitle, bibtexStrings: true })
         }
-        else if ((translation.options.useJournalAbbreviation || !item.publicationTitle) && journalAbbreviation) {
+        else if ((translation.collected.displayOptions.useJournalAbbreviation || !item.publicationTitle) && journalAbbreviation) {
           entry.add({ name: 'journaltitle', value: journalAbbreviation, bibtexStrings: true })
         }
         else {
@@ -468,7 +465,7 @@ export function generateBibLaTeX(translation: Translation): void {
       })
       for (let i = 0; i < languages.length; i++) {
         entry.add({
-          name: i === 0 ? 'titleaddon' : `user${String.fromCharCode('d'.charCodeAt(0) + i)}`,
+          name: i === 0 ? 'titleaddon' : `user${ String.fromCharCode('d'.charCodeAt(0) + i) }`,
           // eslint-disable-next-line no-underscore-dangle
           value: item.multi._keys.title[languages[i]],
         })
@@ -503,7 +500,7 @@ export function generateBibLaTeX(translation: Translation): void {
         break
 
       case 'thesis':
-        entry.add({ name: 'type', value: entry.thesistype(item.type, 'phdthesis', 'mathesis', 'bathesis', 'candthesis')  || item.type })
+        entry.add({ name: 'type', value: entry.thesistype(item.type, 'phdthesis', 'mathesis', 'bathesis', 'candthesis') || item.type })
         break
 
       case 'report':
@@ -565,22 +562,22 @@ export function generateBibLaTeX(translation: Translation): void {
 
     if (item.volumeTitle) { // #381
       if (entry.entrytype === 'book' && entry.has.title) {
-        entry.add({name: 'maintitle', value: item.volumeTitle }); // ; to prevent chaining
-        [entry.has.title.bibtex, entry.has.maintitle.bibtex] = [entry.has.maintitle.bibtex, entry.has.title.bibtex]; // ; to prevent chaining
-        [entry.has.title.value, entry.has.maintitle.value] = [entry.has.maintitle.value, entry.has.title.value]
+        entry.add({ name: 'maintitle', value: item.volumeTitle }); // ; to prevent chaining
+        [ entry.has.title.bibtex, entry.has.maintitle.bibtex ] = [ entry.has.maintitle.bibtex, entry.has.title.bibtex ]; // ; to prevent chaining
+        [ entry.has.title.value, entry.has.maintitle.value ] = [ entry.has.maintitle.value, entry.has.title.value ]
       }
 
-      if (['incollection', 'chapter'].includes(entry.entrytype) && entry.has.booktitle) {
-        entry.add({name: 'maintitle', value: item.volumeTitle }); // ; to prevent chaining
-        [entry.has.booktitle.bibtex, entry.has.maintitle.bibtex] = [entry.has.maintitle.bibtex, entry.has.booktitle.bibtex]; // ; to preven chaining
-        [entry.has.booktitle.value, entry.has.maintitle.value] = [entry.has.maintitle.value, entry.has.booktitle.value]
+      if ([ 'incollection', 'chapter' ].includes(entry.entrytype) && entry.has.booktitle) {
+        entry.add({ name: 'maintitle', value: item.volumeTitle }); // ; to prevent chaining
+        [ entry.has.booktitle.bibtex, entry.has.maintitle.bibtex ] = [ entry.has.maintitle.bibtex, entry.has.booktitle.bibtex ]; // ; to preven chaining
+        [ entry.has.booktitle.value, entry.has.maintitle.value ] = [ entry.has.maintitle.value, entry.has.booktitle.value ]
       }
     }
 
-    for (const eprinttype of ['pmid', 'arxiv', 'jstor', 'hdl', 'googlebooks']) {
+    for (const eprinttype of [ 'pmid', 'arxiv', 'jstor', 'hdl', 'googlebooks' ]) {
       if (entry.has[eprinttype]) {
         if (!entry.has.eprinttype) {
-          entry.add({ name: 'eprinttype', value: eprinttype})
+          entry.add({ name: 'eprinttype', value: entry.eprintType[eprinttype] || eprinttype })
           entry.add({ name: 'eprint', value: entry.has[eprinttype].value })
         }
         entry.remove(eprinttype)
@@ -591,7 +588,7 @@ export function generateBibLaTeX(translation: Translation): void {
       let archive = true
       switch (item.archive.toLowerCase()) {
         case 'arxiv':
-          if (!entry.has.eprinttype) entry.add({ name: 'eprinttype', value: 'arxiv' })
+          if (!entry.has.eprinttype) entry.add({ name: 'eprinttype', value: 'arXiv' })
           entry.add({ name: 'eprintclass', value: item.callNumber })
           break
 
@@ -637,4 +634,5 @@ export function generateBibLaTeX(translation: Translation): void {
   }
 
   translation.bibtex.complete()
+  return translation
 }

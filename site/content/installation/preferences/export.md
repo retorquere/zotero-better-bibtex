@@ -79,7 +79,16 @@ you can enable it here
 
 ## Fields
 
-### Export language as
+### Fields to omit from export (comma-separated)
+
+default: `<not set>`
+
+If there are some fields you don't want in your bibtex files (such as `note` for example), add a list of them here, separated by comma's.
+
+
+### BibTeX/BibLaTeX
+
+#### Export language as
 
 default: `langid`
 
@@ -93,7 +102,7 @@ Options:
 * both
 
 
-### When an item has both a DOI and a URL, export
+#### When an item has both a DOI and a URL, export
 
 default: `both`
 
@@ -109,14 +118,7 @@ Options:
 * URL
 
 
-### Fields to omit from export (comma-separated)
-
-default: `<not set>`
-
-If there are some fields you don't want in your bibtex files (such as `note` for example), add a list of them here, separated by comma's.
-
-
-### Include JabRef-specific metadata:
+#### Include JabRef-specific metadata:
 
 default: `0`
 
@@ -222,6 +224,20 @@ To find out what an item looks like inside the template, export some items as Be
 default: `no`
 
 If set, generates journal abbreviations on export using the Zotero journal abbreviator, according to the abbreviation style selected in the list below the checkbox.
+
+
+### Sort TeX/CSL output (useful if you use version control on the output):
+
+default: `citation key (slower on very large libraries)`
+
+BBT sorts the output for TeX and CSL exports to have the output be versioning-friendly.
+
+
+Options:
+
+* off (fastest)
+* item creation order (plenty fast)
+* citation key (slower on very large libraries)
 
 
 ### Abbreviation style:

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-types */
 /* eslint-disable @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-assignment */
 
 declare const Zotero: any
@@ -7,9 +6,9 @@ import { Translation } from '../lib/translator'
 
 import { simplifyForExport } from '../../gen/items/simplify'
 import { Fields as ParsedExtraFields, get as getExtra, cslCreator } from '../../content/extra'
-import { Cache } from '../../typings/cache'
+import type { ExportedItem } from '../../content/db/cache'
 import * as ExtraFields from '../../gen/items/extra-fields.json'
-import { log } from '../../content/logger'
+import { log } from '../../content/logger/simple'
 import { RegularItem } from '../../gen/typings/serialized-item'
 import * as postscript from '../lib/postscript'
 import * as dateparser from '../../content/dateparser'
@@ -30,7 +29,7 @@ const keyOrder = [
 
 export abstract class CSLExporter {
   private translation: Translation
-  protected abstract flush(items: string[]):string
+  protected abstract flush(items: string[]): string
   protected abstract serialize(items: CSLItem): string
   protected abstract date2CSL(date: dateparser.ParsedDate): CSLDate
 
@@ -38,8 +37,8 @@ export abstract class CSLExporter {
     this.translation = translation
 
     try {
-      if (this.translation.preferences.postscript.trim()) {
-        this.postscript = postscript.postscript('csl', this.translation.preferences.postscript)
+      if (this.translation.collected.preferences.postscript.trim()) {
+        this.postscript = postscript.postscript('csl', this.translation.collected.preferences.postscript)
       }
       else {
         this.postscript = postscript.noop
@@ -47,7 +46,7 @@ export abstract class CSLExporter {
     }
     catch (err) {
       this.postscript = postscript.noop
-      log.error('failed to install postscript', err, '\n', this.translation.preferences.postscript)
+      log.error(`failed to install postscript\n${ this.translation.collected.preferences.postscript }`, err)
     }
   }
 
@@ -58,29 +57,25 @@ export abstract class CSLExporter {
 
   public doExport(): void {
     const items = []
-    const order: { citationKey: string, i: number}[] = []
-    for (const item of (this.translation.input.items.regular as Generator<ExtendedItem, void, unknown>)) {
-      order.push({ citationKey: item.citationKey, i: items.length })
-
-      let cached: Cache.ExportedItem
-      if (!this.translation.options.custom && (cached = Zotero.BetterBibTeX.Cache.fetch(this.translation.translator.label, item.itemID, this.translation.options, this.translation.preferences))) {
+    for (const item of (this.translation.collected.items.regular as Generator<ExtendedItem, void, unknown>)) {
+      let cached: ExportedItem
+      if (!this.translation.collected.displayOptions.custom && (cached = Zotero.BetterBibTeX.Cache.fetch(item.itemID))) {
         items.push(cached.entry)
         continue
       }
 
+      Object.assign(item, getExtra(item.extra, 'csl'))
       simplifyForExport(item)
       if (item.accessDate) { // WTH is Juris-M doing with those dates?
         item.accessDate = item.accessDate.replace(/T?[0-9]{2}:[0-9]{2}:[0-9]{2}.*/, '').trim()
       }
-
-      Object.assign(item, getExtra(item.extra, 'csl'))
 
       item.journalAbbreviation = item.journalAbbreviation || item.autoJournalAbbreviation
 
       let csl = Zotero.Utilities.Item.itemToCSLJSON(item)
 
       csl['citation-key'] = item.citationKey
-      if (this.translation.options.custom) csl.custom = { uri: item.uri, itemID: item.itemID }
+      if (this.translation.collected.displayOptions.custom) csl.custom = { uri: item.uri, itemID: item.itemID }
 
       if (Zotero.worker) csl.note = item.extra || undefined
 
@@ -91,7 +86,7 @@ export abstract class CSLExporter {
 
       if (item.itemType === 'videoRecording' && csl.type === 'video') csl.type = 'motion_picture'
 
-      if (csl.journalAbbreviation) [csl.journalAbbreviation, csl['container-title-short']] = [csl['container-title-short'], csl.journalAbbreviation]
+      if (csl.journalAbbreviation) [ csl.journalAbbreviation, csl['container-title-short'] ] = [ csl['container-title-short'], csl.journalAbbreviation ]
 
       if (item.date) {
         const parsed = dateparser.parse(item.date)
@@ -102,7 +97,7 @@ export abstract class CSLExporter {
       if (item.accessDate) csl.accessed = this.date2CSL(dateparser.parse(item.accessDate))
 
       /* ham-fisted workaround for #365 */
-      if ((csl.type === 'motion_picture' || csl.type === 'broadcast') && csl.author && !csl.director) [csl.author, csl.director] = [csl.director, csl.author]
+      if ((csl.type === 'motion_picture' || csl.type === 'broadcast') && csl.author && !csl.director) [ csl.author, csl.director ] = [ csl.director, csl.author ]
 
       csl.id = item.citationKey
 
@@ -117,7 +112,7 @@ export abstract class CSLExporter {
         delete item.extraFields.kv.type
       }
 
-      for (const [name, value] of Object.entries(item.extraFields.kv)) {
+      for (const [ name, value ] of Object.entries(item.extraFields.kv)) {
         if (!value) continue
 
         const cslField = CSLField[name]
@@ -156,7 +151,7 @@ export abstract class CSLExporter {
         delete item.extraFields.kv[name]
       }
 
-      for (const [field, value] of Object.entries(item.extraFields.creator)) {
+      for (const [ field, value ] of Object.entries(item.extraFields.creator)) {
         if (!ExtraFields[field].csl) continue
         csl[field] = value.map(cslCreator)
 
@@ -164,7 +159,7 @@ export abstract class CSLExporter {
       }
 
       /* Juris-M workarounds to match Zotero as close as possible */
-      for (const kind of ['translator', 'author', 'editor', 'director', 'reviewed-author']) {
+      for (const kind of [ 'translator', 'author', 'editor', 'director', 'reviewed-author' ]) {
         for (const creator of csl[kind] || []) {
           delete creator.multi
         }
@@ -184,7 +179,7 @@ export abstract class CSLExporter {
 
       if (this.translation.skipField) {
         for (const field of Object.keys(csl)) {
-          const fullname = `csl.${csl.type}.${field}`
+          const fullname = `csl.${ csl.type }.${ field }`
           if (fullname.match(this.translation.skipField)) delete csl[field]
         }
       }
@@ -192,13 +187,12 @@ export abstract class CSLExporter {
       csl = this.sortObject(csl)
       csl = this.serialize(csl)
 
-      if (allow.cache) Zotero.BetterBibTeX.Cache.store(this.translation.translator.label, item.itemID, this.translation.options, this.translation.preferences, csl, {})
+      if (allow.cache) Zotero.BetterBibTeX.Cache.store(item.itemID, csl, {})
 
       if (allow.write) items.push(csl)
     }
 
-    order.sort((a, b) => a.citationKey.localeCompare(b.citationKey, undefined, { sensitivity: 'base' }))
-    this.translation.output.body += this.flush(order.map(o => items[o.i]))
+    this.translation.output.body += this.flush(items)
   }
 
   public keySort(a: string, b: string): number {

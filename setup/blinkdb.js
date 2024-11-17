@@ -2,13 +2,35 @@
 
 const putout = require('putout')
 const { replaceWith } = putout.operator
-const { StringLiteral, ReturnStatement, ThrowStatement } = putout.types
+const { isFunction, BinaryExpression, MemberExpression, NumericLiteral, StringLiteral, ReturnStatement, ThrowStatement } = putout.types
 
 const fs = require('fs')
 const Path = require('path')
 
 function mksync(src) {
   const source = fs.readFileSync(Path.join('node_modules', src), 'utf-8')
+
+  const unyield = {
+    report: () => `strip 'yield'`,
+    fix: (path) => {
+      if (isFunction(path)) return path.node.generator = false
+      path.replaceWith(path.node.argument)
+    },
+    traverse: ({push}) => ({
+      YieldExpression(path) {
+        push(path);
+      },
+      Program: {
+        exit(path) {
+          path.traverse({
+            Function(path) {
+              push(path)
+            }
+          })
+        }
+      }
+    }),
+  }
 
   const unpromise = {
     report: () => 'async should be stripped',
@@ -28,22 +50,38 @@ function mksync(src) {
         replaceWith(path, ReturnStatement(__a));
         return path
       },
+      'return Promise.resolve()'({}, path) {
+        replaceWith(path, ReturnStatement());
+        return path
+      },
+      '__a.then((ids) => ids[0])'({__a}, path) {
+        replaceWith(path, MemberExpression(__a, NumericLiteral(0), true))
+        return path
+      },
+      '__a.then((n) => n === 1)'({__a}, path) {
+        replaceWith(path, BinaryExpression('===', __a, NumericLiteral(1)))
+        return path
+      },
+      '{return __awaiter(__args)}': ({__args}) => {
+        return __args.at(-1).body
+      },
     }),
   }
 
   const { code } = putout(source, {
     fixCount: 1,
-    plugins: [ [ 'unpromise', unpromise ] ],
+    plugins: [
+      [ 'unyield', unyield ],
+      [ 'unpromise', unpromise ],
+    ],
   })
 
   return code
-    .replace('.then((ids) => ids[0]);', '[0];')
-    .replace('.then((n) => n === 1);', ' === 1;')
 }
 
 console.log('blinkdb.sync:')
 let xface = ''
-for (const f of 'one first many insert insertMany update updateMany remove removeMany'.split(' ')) {
+for (const f of 'clear one first many insert insertMany update updateMany upsert upsertMany remove removeMany'.split(' ')) {
   console.log(' ', f)
   fs.writeFileSync(`gen/blinkdb/${f}.js`, mksync(`blinkdb/dist/core/${f}.js`))
   const d_ts = fs.readFileSync(`node_modules/blinkdb/dist/core/${f}.d.ts`, 'utf-8')
