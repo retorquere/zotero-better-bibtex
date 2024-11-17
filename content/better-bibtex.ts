@@ -9,7 +9,7 @@ import type Bluebird from 'bluebird'
 const Ready = Zotero.Promise.defer()
 
 import { Shim } from './os'
-import { is7 } from './client'
+import { is7, isBeta } from './client'
 const $OS = is7 ? Shim : OS
 
 if (is7) Components.utils.importGlobalProperties(['FormData', 'indexedDB'])
@@ -765,6 +765,7 @@ export class BetterBibTeX {
         })
 
         if (is7) {
+          if (Zotero.ItemTreeManager.registerColumn && !isBeta) log.error('error: registerColumn has landed in release, please migrate')
           await Zotero.ItemTreeManager.registerColumns({
             dataKey: 'citationKey',
             label: 'Citation key',
