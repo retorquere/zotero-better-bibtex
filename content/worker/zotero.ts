@@ -165,7 +165,7 @@ import dateFormats from '../../schema/dateFormats.json'
 export const TranslationWorker: { job?: Partial<Translators.Worker.Job> } = {}
 
 class WorkerZoteroBetterBibTeX {
-  public clientName = client.clientName
+  public clientName = client.name
   public client = client.slug
   public worker = true
 
@@ -245,7 +245,7 @@ const WorkerZoteroUtilities = {
   Item: ZUI,
   XRegExp,
 
-  getVersion: () => client.ZoteroVersion,
+  getVersion: () => client.version,
 }
 
 function isWinRoot(path) {
@@ -374,7 +374,7 @@ class WorkerZotero {
   public output: string
   public exportDirectory: string
   public exportFile: string
-  public version: string = client.ZoteroVersion
+  public version: string = client.version
   private items: Serialized[]
 
   public Utilities = WorkerZoteroUtilities
