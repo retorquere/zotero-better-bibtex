@@ -776,23 +776,25 @@ export class BetterBibTeX {
             },
           })
 
-          Zotero.ItemPaneManager.registerInfoRow({
-            rowID: 'better-bibtex-citation-key',
-            pluginID: 'better-bibtex@iris-advies.com',
-            label: { l10nID: 'better-bibtex_item-pane_info_citation-key_label' },
-            position: 'start',
-            multiline: false,
-            nowrap: false,
-            editable: false,
-            onGetData({ item }) {
-              return item.getField('citationKey') as string
-            },
-            /*
-            onSetData({ rowID, item, tabType, editable, value }) {
-              Zotero.debug(`Set custom info row ${rowID} of item ${item.id} to ${value}`);
-            },
-            */
-          })
+          if (isBeta) {
+            Zotero.ItemPaneManager.registerInfoRow({
+              rowID: 'better-bibtex-citation-key',
+              pluginID: 'better-bibtex@iris-advies.com',
+              label: { l10nID: 'better-bibtex_item-pane_info_citation-key_label' },
+              position: 'start',
+              multiline: false,
+              nowrap: false,
+              editable: false,
+              onGetData({ item }) {
+                return item.getField('citationKey') as string
+              },
+              /*
+              onSetData({ rowID, item, tabType, editable, value }) {
+                Zotero.debug(`Set custom info row ${rowID} of item ${item.id} to ${value}`);
+              },
+              */
+            })
+          }
         }
         $Patcher$.execute()
       },
