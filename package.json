@@ -65,7 +65,7 @@
   },
   "dependencies": {
     "@artsy/to-title-case": "^1.1.0",
-    "@ast-grep/napi": "^0.29.0",
+    "@ast-grep/napi": "^0.30.0",
     "@caeser1996/titlecase": "^3.0.2",
     "@henrygd/queue": "^1.0.7",
     "@lifeparticle/ap-style-title-case": "^1.5.0",
@@ -112,14 +112,14 @@
     "sprintf-js": "^1.1.3",
     "string.prototype.matchall": "^4.0.11",
     "text-title-case": "^1.0.2",
-    "tinybench": "^3.0.3",
+    "tinybench": "^3.0.6",
     "title": "^3.5.3",
     "title-case": "^4.3.2",
     "transliteration": "^2.3.5",
     "uzip": "^0.20201231.0",
     "words-to-numbers": "^1.5.1",
     "xregexp": "^5.1.1",
-    "zotero-plugin": "2.0.32"
+    "zotero-plugin": "3.1.0"
   },
   "devDependencies": {
     "@retorquere/bibtex-parser": "^9.0.17",
@@ -174,7 +174,7 @@
     "process": "^0.11.10",
     "properties-reader": "^2.3.0",
     "pug": "^3.0.3",
-    "putout": "^36.11.0",
+    "putout": "^36.12.0",
     "recast": "^0.23.9",
     "regenerate": "^1.4.2",
     "rimraf": "^6.0.1",
