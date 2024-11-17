@@ -15,6 +15,7 @@ export const slug: string = clientName.toLowerCase().replace('-', '')
 
 export const ZoteroVersion: string = worker ? searchParams.get('ZoteroVersion') : Zotero.version
 export const is7: boolean = worker ? searchParams.get('is7') === 'true' : Zotero.platformMajorVersion >= 102
+export const isBeta: boolean = ZoteroVersion.includes('beta')
 export const run: string = worker ? searchParams.get('run') : Zotero.Utilities.generateObjectKey()
 
 export const locale: string = worker ? searchParams.get('locale') : Zotero.locale
