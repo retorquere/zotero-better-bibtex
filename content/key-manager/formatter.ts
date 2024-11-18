@@ -382,6 +382,25 @@ export class PatternFormatter {
     })
   }
 
+  public test(formula: string): string {
+    if (formula[0] === '[') {
+      try {
+        legacyparser.parse(formula, { reserved, items, methods })
+      }
+      catch (err) {
+        return err.message as string
+      }
+      return ''
+    }
+    try {
+      this.parseFormula(formula)
+    }
+    catch (err) {
+      return err.message as string
+    }
+    return ''
+  }
+
   // private fold: boolean
   public update(formulas: string[]): string {
     const unsafechars = rescape(Preference.citekeyUnsafeChars + '\uFFFD')
@@ -399,6 +418,7 @@ export class PatternFormatter {
       if (formula[0] === '[') {
         try {
           formula = legacyparser.parse(formula, { reserved, items, methods })
+          log.debug('legacy formula:', formula)
         }
         catch (err) {
           log.error(`formula-update: ${ ts } legacy-formula failed to upgrade ${ formula }: ${ err.message }`)
