@@ -183,7 +183,7 @@ class Config:
 
 class Library:
   def __init__(self, path=None, body=None, client=None, ext=None):
-    if path:
+    if path and not os.path.isabs(path):
       path = os.path.join(FIXTURES, path)
 
     if path:
@@ -487,6 +487,10 @@ class Zotero:
       translator=translator,
       itemIDs=itemIDs
     )
+    expected = Library(path=expected, client=self.qualifiedclient())
+    assert_equal_diff(expected.body, found.strip())
+
+  def comparelib(self, expected, found):
     expected = Library(path=expected, client=self.qualifiedclient())
     assert_equal_diff(expected.body, found.strip())
 
