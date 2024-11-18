@@ -65,6 +65,7 @@ better-bibtex_item-pane_section_header =
     .label = { -citation-key }
 better-bibtex_item-pane_info_citation-key = 
     .label = { -citation-key }
+better-bibtex_item-pane_info_citation-key_label = { -citation-key }
 better-bibtex_preferences_advanced_export_brace-protection = 
     .label = Appliquer la protection de la casse aux mots en capitales en les insérant entre paires d'accolades
 better-bibtex_preferences_advanced_export_brace-protection_warning = Si vous n'êtes pas prêt à ignorer à la fois les meilleures pratiques BibTeX/BibLaTeX (voir la FAQ BBT) et les recommandations de Zotero sur le tire/phrase, vous pouvez désactiver cette option pour supprimer la protection automatique des accolades pour les mots avec des lettres capitales.
