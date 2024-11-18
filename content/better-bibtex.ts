@@ -853,7 +853,7 @@ export class BetterBibTeX {
   }
 
   async loadUI(win: Window): Promise<void> {
-    if (is7) {
+    if (is7 && !isBeta) {
       // const show = (item: ZoteroItem): { id: number, type: string, citekey: string } | boolean => item ? { id: item.id, type: Zotero.ItemTypes.getName(item.itemTypeID), citekey: item.getField('citationKey') as string } : false
       let $done: () => void
       Zotero.ItemPaneManager.registerSection({
