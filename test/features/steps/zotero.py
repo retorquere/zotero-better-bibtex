@@ -214,6 +214,7 @@ class Library:
 
       if self.patch:
         self.path = self.base[:-len(self.ext)] + '.' + self.patch.split('.')[-2] + self.ext
+        utils.print(f'patch: {self.patch}, path: {self.path}')
 
     if not self.body and self.base and os.path.exists(self.base):
       with open(self.base) as f:
