@@ -5,6 +5,7 @@ import { Elements } from './create-element'
 import { busyWait } from './busy-wait'
 import { icons } from './icons'
 import { Events } from './events'
+import { is7 } from './client'
 
 async function title_sentenceCase(label) {
   const val = this._getFieldValue(label)
@@ -44,7 +45,7 @@ export class ZoteroItemPane {
     this.document = win.document
     const elements = this.elements = new Elements(this.document)
 
-    if (!this.document.getElementById('better-bibtex-editpane-item-box')) {
+    if (!is7 && !this.document.getElementById('better-bibtex-editpane-item-box')) {
       itemBox.parentNode.appendChild(elements.create('vbox', { flex: 1, style: 'margin: 0; padding: 0', $: [
 
         elements.create('grid', { id: 'better-bibtex-editpane-item-box', $: [
