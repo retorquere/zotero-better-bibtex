@@ -207,14 +207,13 @@ class Library:
     self.exported = None
 
     if self.base:
+      self.path = self.base
+
       patches = [ self.base + '.' + client + '.patch' ]
       if self.beta: patches.append(self.base + '.' + self.client + '.patch')
       self.patch = next((patch for patch in patches if os.path.exists(patch)), None)
-      self.path = self.base
-
       if self.patch:
         self.path = self.base[:-len(self.ext)] + '.' + self.patch.split('.')[-2] + self.ext
-        utils.print(f'patch: {self.patch}, path: {self.path}')
 
     if not self.body and self.base and os.path.exists(self.base):
       with open(self.base) as f:
@@ -255,7 +254,7 @@ class Library:
     elif self.ext in ['.biblatex', '.bibtex', '.bib']:
       if self.patch:
         dmp = diff_match_patch()
-        self.body = dmp.patch_apply(dmp.patch_fromText(open(self.patch).read()), self.data)[0]
+        self.body = dmp.patch_apply(dmp.patch_fromText(open(self.patch).read()), self.body)[0]
       self.normalized = sortbib(self.body)
 
     elif self.ext == '.html':
