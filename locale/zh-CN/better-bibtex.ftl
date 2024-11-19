@@ -65,6 +65,7 @@ better-bibtex_item-pane_section_header =
     .label = { -citation-key }
 better-bibtex_item-pane_info_citation-key = 
     .label = { -citation-key }
+better-bibtex_item-pane_info_citation-key_label = { -citation-key }
 better-bibtex_preferences_advanced_export_brace-protection = 
     .label = 使用大括号括起首字母大写的单词以保持大小写格式
 better-bibtex_preferences_advanced_export_brace-protection_warning = 若您坚持忽略 BibTeX/BibLaTeX 最佳做法（见 BBT FAQ）和 Zotero 关于标题/句子大小写格式的建议，您可以关闭该选项以禁止自动使用括号对含大写字母单词进行大小写保护。
