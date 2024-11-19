@@ -770,7 +770,7 @@ export class BetterBibTeX {
           if (Zotero.ItemTreeManager.registerColumn && !isBeta) log.error('error: registerColumn has landed in release, please migrate')
           await Zotero.ItemTreeManager.registerColumns({
             dataKey: 'citationKey',
-            label: l10n.localize('better-bibtex_item-pane_info_citation-key.label'),
+            label: l10n.localize('better-bibtex_zotero-pane_column_citekey'),
             pluginID: 'better-bibtex@iris-advies.com',
             dataProvider: (item, _dataKey) => {
               const citekey = Zotero.BetterBibTeX.KeyManager.get(item.id)

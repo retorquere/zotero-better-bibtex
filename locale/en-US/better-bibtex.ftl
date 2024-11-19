@@ -77,8 +77,6 @@ better-bibtex_item-pane_section_sidenav =
   .tooltip = { -citation-key }
 better-bibtex_item-pane_section_header =
   .label = { -citation-key }
-better-bibtex_item-pane_info_citation-key =
-  .label = { -citation-key }
 better-bibtex_item-pane_info_citation-key_label = { -citation-key }
 
 better-bibtex_preferences_advanced_export_brace-protection = 
