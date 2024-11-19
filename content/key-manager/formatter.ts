@@ -1426,23 +1426,20 @@ export class PatternFormatter {
   }
 
   private contract(sentences: { terms: Term[] }[]): string[] {
-    const $terms: Term[] = []
+    const terms: Term[] = []
+    let tail: Term
     for (const sentence of sentences) {
-      let first = true
-      for (const term of sentence.terms) {
-        if (this.skipWords.has(term.text.toLowerCase())) continue
-
-        if (first || ($terms[0].post && $terms[0].post !== '-')) {
-          $terms.unshift(term)
+      sentence.terms.forEach((term, i) => {
+        if (i !== 0 && tail.post === '-') {
+          tail.text += tail.post + term.text
+          tail.post = term.post
         }
         else {
-          $terms[0].text += $terms[0].post + term.text
-          $terms[0].post = term.post
+          terms.push(tail = term)
         }
-        first = false
-      }
+      })
     }
-    return $terms.reverse().map(t => t.text)
+    return terms.map(term => term.text).filter(term => !this.skipWords.has(term.toLowerCase()))
   }
 
   private titleWords(title, options: { transliterate?: boolean; skipWords?: boolean; nopunct?: boolean } = {}): string[] {

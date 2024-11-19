@@ -13,6 +13,7 @@ Feature: Export
 
     Examples:
       | file                                                                                                                     | references |
+      | Citation keys are missing certain words if hyphens are used #3059                                                        | 1          |
       | lastpage not work in better bitex #3050                                                                                  | 1          |
       | citekey not skip one-letter word #3021                                                                                   | 1          |
       | charmapcsv mapping not working anymore #3020                                                                             | 1          |
