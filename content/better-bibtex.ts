@@ -778,7 +778,8 @@ export class BetterBibTeX {
             },
           })
 
-          if (isBeta) {
+          if (Zotero.ItemPaneManager.registerInfoRow) {
+            if (!isBeta) log.error('Zotero.ItemPaneManager.registerInfoRow is GA')
             Zotero.ItemPaneManager.registerInfoRow({
               rowID: 'better-bibtex-citation-key',
               pluginID: 'better-bibtex@iris-advies.com',
@@ -855,60 +856,65 @@ export class BetterBibTeX {
   async loadUI(win: Window): Promise<void> {
     if (is7 && !isBeta) {
       // const show = (item: ZoteroItem): { id: number, type: string, citekey: string } | boolean => item ? { id: item.id, type: Zotero.ItemTypes.getName(item.itemTypeID), citekey: item.getField('citationKey') as string } : false
-      let $done: () => void
-      Zotero.ItemPaneManager.registerSection({
-        paneID: 'betterbibtex-section-citationkey',
-        pluginID: 'better-bibtex@iris-advies.com',
-        header: {
-          l10nID: 'better-bibtex_item-pane_section_header',
-          icon: `${ rootURI }content/skin/item-section/header.svg`,
-        },
-        sidenav: {
-          l10nID: 'better-bibtex_item-pane_section_sidenav',
-          icon: `${ rootURI }content/skin/item-section/sidenav.svg`,
-        },
-        bodyXHTML: 'Citation Key <html:input type="text" data-itemid="" id="better-bibtex-citation-key" readonly="true" style="flex: 1" xmlns:html="http://www.w3.org/1999/xhtml"/><html:span id="better-bibtex-citation-key-pinned"/>',
-        // onRender: ({ body, item, editable, tabType }) => {
-        onRender: ({ body, item, setSectionSummary }) => {
-          const citekey = Zotero.BetterBibTeX.KeyManager.get(item.id) || { citationKey: '', pinned: false }
-          const textbox = body.querySelector('#better-bibtex-citation-key')
-          body.style.display = 'flex'
-          // const was = textbox.dataset.itemid || '<node>'
-          textbox.value = citekey.citationKey
-          textbox.dataset.itemid = citekey.citationKey ? `${ item.id }` : ''
-
-          const pinned = body.querySelector('#better-bibtex-citation-key-pinned')
-          pinned.textContent = citekey.pinned ? icons.pin : ''
-
-          setSectionSummary(citekey || '')
-        },
-        onInit: ({ body, refresh }) => {
-          $done = Events.on('items-changed', ({ items }) => {
+      if (Zotero.ItemPaneManager.registerInfoRow) {
+        log.error('Zotero.ItemPaneManager.registerInfoRow is GA')
+      }
+      else {
+        let $done: () => void
+        Zotero.ItemPaneManager.registerSection({
+          paneID: 'betterbibtex-section-citationkey',
+          pluginID: 'better-bibtex@iris-advies.com',
+          header: {
+            l10nID: 'better-bibtex_item-pane_section_header',
+            icon: `${ rootURI }content/skin/item-section/header.svg`,
+          },
+          sidenav: {
+            l10nID: 'better-bibtex_item-pane_section_sidenav',
+            icon: `${ rootURI }content/skin/item-section/sidenav.svg`,
+          },
+          bodyXHTML: 'Citation Key <html:input type="text" data-itemid="" id="better-bibtex-citation-key" readonly="true" style="flex: 1" xmlns:html="http://www.w3.org/1999/xhtml"/><html:span id="better-bibtex-citation-key-pinned"/>',
+          // onRender: ({ body, item, editable, tabType }) => {
+          onRender: ({ body, item, setSectionSummary }) => {
+            const citekey = Zotero.BetterBibTeX.KeyManager.get(item.id) || { citationKey: '', pinned: false }
             const textbox = body.querySelector('#better-bibtex-citation-key')
-            const itemID = textbox.dataset.itemid ? parseInt(textbox.dataset.itemid) : undefined
-            const displayed: ZoteroItem = textbox.dataset.itemid ? items.find(item => item.id === itemID) : undefined
-            if (displayed) refresh()
-          })
-        },
-        onItemChange: ({ setEnabled, body, item }) => {
-          const textbox = body.querySelector('#better-bibtex-citation-key')
-          if (item.isRegularItem() && !item.isFeedItem) {
-            const citekey = item.getField('citationKey')
-            // const was = textbox.dataset.itemid
-            textbox.dataset.itemid = citekey ? `${ item.id }` : ''
-            textbox.value = citekey || '\u274C'
-            setEnabled(true)
-          }
-          else {
-            textbox.dataset.itemid = ''
-            setEnabled(false)
-          }
-        },
-        onDestroy: () => {
-          $done?.()
-          $done = undefined
-        },
-      })
+            body.style.display = 'flex'
+            // const was = textbox.dataset.itemid || '<node>'
+            textbox.value = citekey.citationKey
+            textbox.dataset.itemid = citekey.citationKey ? `${ item.id }` : ''
+
+            const pinned = body.querySelector('#better-bibtex-citation-key-pinned')
+            pinned.textContent = citekey.pinned ? icons.pin : ''
+
+            setSectionSummary(citekey || '')
+          },
+          onInit: ({ body, refresh }) => {
+            $done = Events.on('items-changed', ({ items }) => {
+              const textbox = body.querySelector('#better-bibtex-citation-key')
+              const itemID = textbox.dataset.itemid ? parseInt(textbox.dataset.itemid) : undefined
+              const displayed: ZoteroItem = textbox.dataset.itemid ? items.find(item => item.id === itemID) : undefined
+              if (displayed) refresh()
+            })
+          },
+          onItemChange: ({ setEnabled, body, item }) => {
+            const textbox = body.querySelector('#better-bibtex-citation-key')
+            if (item.isRegularItem() && !item.isFeedItem) {
+              const citekey = item.getField('citationKey')
+              // const was = textbox.dataset.itemid
+              textbox.dataset.itemid = citekey ? `${ item.id }` : ''
+              textbox.value = citekey || '\u274C'
+              setEnabled(true)
+            }
+            else {
+              textbox.dataset.itemid = ''
+              setEnabled(false)
+            }
+          },
+          onDestroy: () => {
+            $done?.()
+            $done = undefined
+          },
+        })
+      }
     }
 
     try {
