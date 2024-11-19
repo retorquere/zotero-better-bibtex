@@ -418,7 +418,6 @@ export class PatternFormatter {
       if (formula[0] === '[') {
         try {
           formula = legacyparser.parse(formula, { reserved, items, methods })
-          log.debug('legacy formula:', formula)
         }
         catch (err) {
           log.error(`formula-update: ${ ts } legacy-formula failed to upgrade ${ formula }: ${ err.message }`)
