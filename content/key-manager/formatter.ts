@@ -1425,9 +1425,10 @@ export class PatternFormatter {
     return this.transliterate(str).replace(allow_spaces ? this.re.unsafechars_allow_spaces : this.re.unsafechars, '').trim()
   }
 
-  private contract(sentences: { terms: Term[] }[]): string[] {
-    const terms: Term[] = []
+  private split(title: string): string[] {
+    const contracted: Term[] = []
     let tail: Term
+    const sentences: { terms: Term[] }[] = nlp(title).json()
     for (const sentence of sentences) {
       sentence.terms.forEach((term, i) => {
         if (i !== 0 && tail.post === '-') {
@@ -1435,18 +1436,18 @@ export class PatternFormatter {
           tail.post = term.post
         }
         else {
-          terms.push(tail = term)
+          contracted.push(tail = term)
         }
       })
     }
-    return terms.map(term => term.text).filter(term => !this.skipWords.has(term.toLowerCase()))
+    return contracted.map(term => term.text).filter(term => !this.skipWords.has(term.toLowerCase()))
   }
 
   private titleWords(title, options: { transliterate?: boolean; skipWords?: boolean; nopunct?: boolean } = {}): string[] {
     if (!title) return null
 
     title = title.replace(/<\/?(?:i|b|sc|nc|code|span[^>]*)>|["]/ig, '').replace(/[/:]/g, ' ')
-    let words = this.contract(nlp(title).json())
+    let words = this.split(title)
       .map(word => options.nopunct ? this.nopunct(word, '') : word)
       .filter(word => word && !(options.skipWords && ucs2decode(word).length === 1 && !word.match(/^\d+$/) && !word.match(CJK)))
 
