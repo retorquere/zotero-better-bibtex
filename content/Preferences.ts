@@ -115,9 +115,9 @@ class AutoExportPane {
     await this.refresh()
 
     Events.on('export-progress', async ({ pct, ae }) => {
-      this.cacherate[ae] = await AutoExport.cached(ae)
-      if (pct >= 100 && typeof ae === 'number') {
-        await this.refresh(ae)
+      if (ae) {
+        this.cacherate[ae] = await AutoExport.cached(ae)
+        if (pct >= 100) await this.refresh(ae)
       }
     })
   }

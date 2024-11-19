@@ -183,7 +183,7 @@ class Config:
 
 class Library:
   def __init__(self, path=None, body=None, client=None, ext=None):
-    if path:
+    if path and not os.path.isabs(path):
       path = os.path.join(FIXTURES, path)
 
     if path:
@@ -198,7 +198,8 @@ class Library:
 
     self.base = path
     self.body = body
-    self.client = client
+    self.client = client.split('-')[0]
+    self.beta = '-beta' in client
 
     self.data = None
     self.patch = None
@@ -206,13 +207,13 @@ class Library:
     self.exported = None
 
     if self.base:
-      self.patch = self.base + '.' + self.client + '.patch'
       self.path = self.base
 
-      if os.path.exists(self.patch):
-        self.path = self.base[:-len(self.ext)] + '.' + self.client + self.ext
-      else:
-        self.patch = None
+      patches = [ self.base + '.' + client + '.patch' ]
+      if self.beta: patches.append(self.base + '.' + self.client + '.patch')
+      self.patch = next((patch for patch in patches if os.path.exists(patch)), None)
+      if self.patch:
+        self.path = self.base[:-len(self.ext)] + '.' + self.patch.split('.')[-2] + self.ext
 
     if not self.body and self.base and os.path.exists(self.base):
       with open(self.base) as f:
@@ -253,7 +254,7 @@ class Library:
     elif self.ext in ['.biblatex', '.bibtex', '.bib']:
       if self.patch:
         dmp = diff_match_patch()
-        self.body = dmp.patch_apply(dmp.patch_fromText(open(self.patch).read()), self.data)[0]
+        self.body = dmp.patch_apply(dmp.patch_fromText(open(self.patch).read()), self.body)[0]
       self.normalized = sortbib(self.body)
 
     elif self.ext == '.html':
@@ -475,12 +476,22 @@ class Zotero:
   def reset_cache(self):
     self.execute('await Zotero.BetterBibTeX.TestSupport.resetCache()')
 
+  def qualifiedclient(self):
+    if self.beta:
+      return f'{self.client}-beta'
+    else:
+      return self.client
+
   def quick_copy(self, itemIDs, translator, expected):
     found = self.execute('return await Zotero.BetterBibTeX.TestSupport.quickCopy(itemIDs, translator)',
       translator=translator,
       itemIDs=itemIDs
     )
-    expected = Library(path=expected, client=self.client)
+    expected = Library(path=expected, client=self.qualifiedclient())
+    assert_equal_diff(expected.body, found.strip())
+
+  def comparelib(self, expected, found):
+    expected = Library(path=expected, client=self.qualifiedclient())
     assert_equal_diff(expected.body, found.strip())
 
   def export_library(self, translator, displayOptions = {}, collection = None, output = None, expected = None, resetCache = False):
@@ -511,8 +522,8 @@ class Zotero:
 
     if expected is None: return
 
-    expected = Library(path=expected, client=self.client)
-    found = Library(path=output, body=found, client=self.client, ext=expected)
+    expected = Library(path=expected, client=self.qualifiedclient())
+    found = Library(path=output, body=found, client=self.qualifiedclient(), ext=expected)
     found.save(expected.path)
 
     if expected.ext in ['.csl.json', '.csl.yml', '.html', '.bib', '.bibtex', '.biblatex']:
@@ -529,7 +540,7 @@ class Zotero:
   def import_file(self, context, references, collection = False, items=True):
     assert type(collection) in [bool, str]
 
-    input = Library(path=references, client=self.client)
+    input = Library(path=references, client=self.qualifiedclient())
 
     if input.path.endswith('.json'):
       # TODO: clean lib and test against schema

@@ -6,7 +6,7 @@ weight: 1
 Install by downloading the [latest release](https://github.com/retorquere/zotero-better-bibtex/releases/latest) -- if you use Firefox, make sure to right-click and save the XPI file, not just clicking it -- and then in Zotero:
 
 1. In the main menu go to Tools > Add-ons
-2. Select 'Extensions'
+2. Select 'Plugins'
 3. Click on the gear in the top-right corner and choose 'Install Add-on From File...'
 4. Choose .xpi that you've just downloaded, click 'Install'
 5. If you're using Zotero 6, restart Zotero. Installation in Zotero 7 requires no restart.

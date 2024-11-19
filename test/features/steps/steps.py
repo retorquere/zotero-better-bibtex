@@ -392,10 +392,6 @@ def step_impl(context, expected, found):
   expected = expand_scenario_variables(context, expected)
   if expected.startswith('~/'):
     expected = os.path.join(context.tmpDir, expected[2:])
-  else:
-    expected = os.path.join(ROOT, 'test/fixtures', expected)
-  with open(expected) as f:
-    expected = f.read()
 
   if found.startswith('~/'):
     found = os.path.join(context.tmpDir, found[2:])
@@ -404,7 +400,7 @@ def step_impl(context, expected, found):
   with open(found) as f:
     found = f.read()
 
-  assert_equal_diff(expected, found)
+  context.zotero.comparelib(expected=expected, found = found)
 
 @step(u'I wait {seconds:d} seconds')
 def step_impl(context, seconds):

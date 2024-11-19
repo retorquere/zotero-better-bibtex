@@ -124,7 +124,7 @@
   "devDependencies": {
     "@retorquere/bibtex-parser": "^9.0.17",
     "@retorquere/zotero-sync": "^1.0.27",
-    "@stylistic/eslint-plugin": "^2.10.1",
+    "@stylistic/eslint-plugin": "^2.11.0",
     "@types/bluebird": "^3.5.42",
     "@types/node": "^22.9.0",
     "@xmldom/xmldom": "^0.9.5",

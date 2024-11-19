@@ -20,7 +20,7 @@ def get_ext(filename):
   parts = filename.split('.')
 
   for i in [3, 2]:
-    if len(parts) > i and (parts[-i] == 'juris-m' or parts[-i] == 'jurism'): return '.'.join(parts[-i:])
+    if len(parts) > i and parts[-i] in ['juris-m', 'jurism', 'zotero-beta']: return '.'.join(parts[-i:])
   if len(parts) > 2 and parts[-2] in ['schomd', 'csl']: return '.'.join(parts[-2:])
   return parts[-1]
 
@@ -37,10 +37,10 @@ def patch2path(_patch):
 patches = []
 for target in glob.glob('test/fixtures/*/*.*'):
   ext = get_ext(target)
-  if ext.startswith('juris-m.'):
-    source = target[:-len(ext)] + ext.replace('juris-m.', '')
-  elif ext.startswith('jurism.'):
-    source = target[:-len(ext)] + ext.replace('jurism.', '')
+  alt = next((a for a in ['juris-m.', 'jurism.', 'zotero-beta.'] if ext.startswith(a)), None)
+  print(target, ext, alt)
+  if alt:
+    source = target[:-len(ext)] + ext.replace(alt, '')
   else:
     continue
 
@@ -77,7 +77,7 @@ for target in glob.glob('test/fixtures/*/*.*'):
     patch = dmp.patch_make(_source, _target)
     diff = dmp.patch_toText(patch)
 
-  patch = source + '.jurism.patch'
+  patch = source + '.' + alt.replace('.', '') + '.patch'
   patches.append(shlex.quote(patch))
 
   if os.path.exists(patch):
