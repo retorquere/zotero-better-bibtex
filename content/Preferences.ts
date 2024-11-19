@@ -413,19 +413,21 @@ export class PrefPane {
   public checkCitekeyFormat(): void {
     if (!$window || Zotero.BetterBibTeX.starting) return // itemTypes not available yet
 
-    const error = Formatter.update([ Preference.citekeyFormatEditing, Preference.citekeyFormat ])
+    const error = Formatter.test(Preference.citekeyFormatEditing || Preference.citekeyFormat)
     const editing = $window.document.getElementById('bbt-preferences-citekeyFormatEditing')
     editing.classList[error ? 'add' : 'remove']('bbt-prefs-error')
     editing.setAttribute(client.is7 ? 'title' : 'tooltiptext', error)
     if (client.is7) editing.setAttribute('tooltip', 'html-tooltip')
 
     const msg = $window.document.getElementById('bbt-citekeyFormat-error') as HTMLInputElement
-    msg.value = error
+    msg.value = error || (Preference.citekeyFormatEditing === '[' && 'legacy formula, will be upgraded when completed')
     msg.style.display = error ? 'initial' : 'none'
 
     const active = $window.document.getElementById('bbt-preferences-citekeyFormat')
     const label = $window.document.getElementById('bbt-label-citekeyFormat')
     active.style.display = label.style.display = Preference.citekeyFormat === Preference.citekeyFormatEditing ? 'none' : 'initial'
+
+    if (!error) Formatter.update([ Preference.citekeyFormatEditing, Preference.citekeyFormat ])
   }
 
   public checkPostscript(): void {

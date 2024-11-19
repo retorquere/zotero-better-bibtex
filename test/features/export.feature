@@ -13,6 +13,7 @@ Feature: Export
 
     Examples:
       | file                                                                                                                     | references |
+      | Cannot change citation key formula #3058                                                                                 | 1          |
       | Citation keys are missing certain words if hyphens are used #3059                                                        | 1          |
       | lastpage not work in better bitex #3050                                                                                  | 1          |
       | citekey not skip one-letter word #3021                                                                                   | 1          |
