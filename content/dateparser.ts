@@ -5,6 +5,14 @@ import edtfy = require('edtfy')
 // import escapeStringRegexp = require('escape-string-regexp')
 
 import * as months from '../gen/dateparser-months.json'
+const Month = new class {
+  private months = months
+  private re = new RegExp(Object.keys(months).sort((a, b) => b.length - a.length).map(month => `${month}[.]?`).join('|'), 'i')
+
+  english(date: string): string {
+    return date.replace(this.re, (month: string) => this.months[month.toLowerCase().replace('.', '')] as string || month)
+  }
+}
 
 import { getLocaleDateOrder } from '../submodules/zotero-utilities/date'
 
@@ -33,8 +41,6 @@ export type ParsedDate = {
   uncertain?: boolean
   approximate?: boolean
 }
-
-const months_re = new RegExp(Object.keys(months).sort((a, b) => b.length - a.length).join('|'), 'i')
 
 const Season = new class {
   private ranges = [
@@ -148,12 +154,11 @@ function parseEDTF(value: string): ParsedDate {
   catch {}
 
   try {
-    const edtf = normalize_edtf(EDTF.parse(edtfy(date
+    const edtf = normalize_edtf(EDTF.parse(edtfy(Month.english(date
       .normalize('NFC')
       .replace(/\. /, ' ') // 8. july 2011
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      .replace(months_re, _ => months[_.toLowerCase()] || _)
-    )))
+    ))))
     if (edtf) return edtf
   }
   catch {}
@@ -329,7 +334,7 @@ export function parse(value: string, try_range = true): ParsedDate {
 
   // https://github.com/retorquere/zotero-better-bibtex/issues/868
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  if (m = /^([0-9]{3,})\s([^0-9]+)(?:\s+([0-9]+))?$/.exec(value.normalize('NFC').replace(months_re, _ => months[_.toLowerCase()] || _))) {
+  if (m = /^([0-9]{3,})\s([^0-9]+)(?:\s+([0-9]+))?$/.exec(Month.english(value.normalize('NFC')))) {
     const [ , year, month, day ] = m
     if (months[month]) {
       try {
