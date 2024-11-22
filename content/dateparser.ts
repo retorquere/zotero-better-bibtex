@@ -136,7 +136,7 @@ function swap_day_month(day: number, month: number, fix_only = false): number[] 
   return [ day, month ]
 }
 
-function parseEDTF(value: string): ParsedDate {
+function parseEDTF(value: string, english: string): ParsedDate {
   // 2378 + 2275
   let date = value
 
@@ -154,16 +154,12 @@ function parseEDTF(value: string): ParsedDate {
   catch {}
 
   try {
-    const edtf = normalize_edtf(EDTF.parse(edtfy(Month.english(date
-      .normalize('NFC')
-      .replace(/\. /, ' ') // 8. july 2011
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    ))))
+    const edtf = normalize_edtf(EDTF.parse(edtfy(english)))
     if (edtf) return edtf
   }
   catch {}
 
-  return { verbatim: value }
+  return null
 }
 
 export function parse(value: string, try_range = true): ParsedDate {
@@ -194,6 +190,17 @@ export function parse(value: string, try_range = true): ParsedDate {
     date = parse(`${ month } ${ day } ${ year }`, false)
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     if (date.type === 'date') return date
+  }
+
+  const english = Month.english(value.normalize('NFC').replace(/[.] /, ' ')) // 8. july 2011
+
+  if (m = (/^([a-z]+)[-/]([0-9]+)$/i).exec(english)) {
+    const [ , month, year ] = m
+    if (months[month.toLowerCase()]) {
+      date = parse(`${ month } ${ year }`, false)
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+      if (date.type === 'date') return date
+    }
   }
 
   // '[origdate] date'
@@ -330,11 +337,11 @@ export function parse(value: string, try_range = true): ParsedDate {
     return { type: 'date', year: parseInt(date_only), ...time_doubt }
   }
 
-  if (!(date = parseEDTF(value)).verbatim) return date
+  if (date = parseEDTF(value, english)) return date
 
   // https://github.com/retorquere/zotero-better-bibtex/issues/868
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  if (m = /^([0-9]{3,})\s([^0-9]+)(?:\s+([0-9]+))?$/.exec(Month.english(value.normalize('NFC')))) {
+  if (m = /^([0-9]{3,})\s([^0-9]+)(?:\s+([0-9]+))?$/.exec(english)) {
     const [ , year, month, day ] = m
     if (months[month]) {
       try {
