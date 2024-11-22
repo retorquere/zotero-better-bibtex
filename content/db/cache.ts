@@ -381,10 +381,15 @@ export const Cache = new class $Cache {
   private async metadata(): Promise<Record<string, string>> {
     const metadata: Record<string, string> = {}
 
-    const tx = this.db.transaction('metadata', 'readonly')
-    const store = tx.objectStore('metadata')
-    for (const rec of (await store.getAll()) as { key: string; value: string }[]) {
-      metadata[rec.key] = rec.value
+    try {
+      const tx = this.db.transaction('metadata', 'readonly')
+      const store = tx.objectStore('metadata')
+      for (const rec of (await store.getAll()) as { key: string; value: string }[]) {
+        metadata[rec.key] = rec.value
+      }
+    }
+    catch (err) {
+      log.error(`failed to fetch metadata: ${err.message}`)
     }
 
     return metadata
