@@ -105,6 +105,7 @@
     "papaparse": "^5.4.1",
     "parse5": "^7.2.1",
     "pinyin": "^3.1.0",
+    "promise.allsettled": "^1.0.7",
     "punycode2": "^1.0.1",
     "reserved-identifiers": "^1.0.0",
     "safe-stable-stringify": "^2.5.0",
