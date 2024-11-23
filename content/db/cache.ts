@@ -11,7 +11,7 @@ import { bySlug } from '../../gen/translators'
 import version from '../../gen/version'
 // import { main as probe } from './cache-test'
 
-import { ObjectStore, CursorWithValue, Database, Transaction, Factory } from '@retorquere/indexeddb-promise'
+import { ObjectStore, Database, Transaction, Factory } from '@retorquere/indexeddb-promise'
 
 import type { Translators as Translator } from '../../typings/translators'
 const skip = new Set([ 'keepUpdated', 'worker', 'exportFileData' ])
@@ -26,6 +26,12 @@ export function exportContext(translator: string, displayOptions: Partial<Transl
 export type ExportContext = {
   context: string
   id: number
+}
+
+async function allSettled(promises): Promise<string> {
+  const settled = await Promise.allSettled(promises)
+  const rejected = settled.filter(result => result.status === 'rejected').length
+  return rejected ? `${rejected}/${promises.length}` : ''
 }
 
 export interface ExportedItemMetadata {
@@ -106,7 +112,6 @@ export type ExportCacheName = 'BetterBibLaTeX' | 'BetterBibTeX' | 'BetterCSLJSON
 class CacheDB extends Database {
   #stores = {
     ZoteroSerialized: { keyPath: 'itemID' },
-    touched: undefined,
     metadata: { keyPath: 'key' },
     ExportContext: { keyPath: 'id', autoIncrement: true },
     BetterBibTeX: { keyPath: [ 'context', 'itemID' ]},
@@ -195,8 +200,9 @@ export class ExportCache {
       const cursor = await index.openCursor(IDBKeyRange.only(id))
       if (cursor) deletes.push(store.delete(cursor.primaryKey))
     }
-    await Promise.all(deletes)
+    const rejected = await allSettled(deletes)
     await tx.commit()
+    if (rejected) log.error(`cache: failed to touch ${rejected} entries in ${this.name}`)
   }
 
   public async clear(path: string): Promise<void> {
@@ -218,8 +224,9 @@ export class ExportCache {
       if (key) deletes.push(context.delete(key))
     }
 
-    await Promise.all(deletes)
+    const rejected = await allSettled(deletes)
     await tx.commit()
+    if (rejected.length) log.error(`cache: failed to remove ${rejected} entries from ${this.name}::${path}`)
   }
 
   public async count(path: string): Promise<number> {
@@ -271,12 +278,15 @@ export class ExportCache {
   public async store(items: ExportedItem[]): Promise<void> {
     const tx = this.db.transaction(this.name, 'readwrite')
     const store = tx.objectStore(this.name)
-    await Promise.all(items.map(item => store.put(item)))
+    const rejected = await allSettled(items.map(item => store.put(item)))
     await tx.commit()
+    if (rejected.length) log.error(`cache: failed to store ${rejected} for ${this.name}`)
   }
 }
 
 class ZoteroSerialized {
+  #touched = 'translators.better-bibtex.cache.touched'
+
   public filled = 0 // exponential moving average
   private smoothing = 2 / (10 + 1) // keep average over last 10 fills
 
@@ -291,11 +301,10 @@ class ZoteroSerialized {
     items = items.filter(item => this.cachable(item))
     if (!items.length) return
 
-    let tx = this.db.transaction([ 'ZoteroSerialized', 'touched' ], 'readwrite')
+    let tx = this.db.transaction([ 'ZoteroSerialized' ], 'readwrite')
     let store = tx.objectStore('ZoteroSerialized')
     const cached = new Set(await store.getAllKeys())
-    const touched = tx.objectStore('touched')
-    const purge = new Set(await touched.getAllKeys())
+    const purge: Set<number> = new Set(this.touched)
 
     const fill = items.filter(item => {
       if (cached.has(item.id)) {
@@ -309,8 +318,10 @@ class ZoteroSerialized {
       return true
     })
 
-    await Promise.all([ ...[...purge].map(id => store.delete(id)), touched.clear() ])
+    let rejected = await allSettled([...purge].map(id => store.delete(id)))
     await tx.commit()
+    Zotero.Prefs.set(this.#touched, '')
+    if (rejected) log.error(`cache: failed to purge ${rejected}`)
 
     const current = (items.length - fill.length) / items.length
     this.filled = (current - this.filled) * this.smoothing + this.filled
@@ -320,8 +331,9 @@ class ZoteroSerialized {
       tx = this.db.transaction(['ZoteroSerialized'], 'readwrite')
       store = tx.objectStore('ZoteroSerialized')
       const puts = serialized.map(item => store.put(item))
-      await Promise.all(puts)
+      rejected = await allSettled(puts)
       await tx.commit()
+      if (rejected) log.error(`cache: failed to store ${rejected}`)
     }
   }
 
@@ -342,22 +354,31 @@ class ZoteroSerialized {
     return items
   }
 
-  public async touch(ids: number[]): Promise<void> {
-    const tx = this.db.transaction('touched', 'readwrite')
-    const store = tx.objectStore('touched')
-    const puts = ids.map(id => store.put(true, id))
-    await Promise.all(puts)
-    await tx.commit()
+  public get touched(): number[] {
+    const touched = Zotero.Prefs.get(this.#touched)
+    if (!touched) return []
+
+    try {
+      return JSON.parse(touched) as number[]
+    }
+    catch (err) {
+      log.error(`cache: could not read touched: ${err.message}`)
+    }
+    return []
+  }
+
+  public touch(ids: number[]): void {
+    Zotero.Prefs.set(this.#touched, JSON.stringify([...(new Set([ ...this.touched, ...ids]))]))
   }
 
   public async purge(): Promise<void> {
-    const tx = this.db.transaction([ 'ZoteroSerialized', 'touched' ], 'readwrite')
+    const tx = this.db.transaction([ 'ZoteroSerialized' ], 'readwrite')
     const serialized = tx.objectStore('ZoteroSerialized')
-    const touched = tx.objectStore('touched')
 
-    const purge = (await touched.getAllKeys()).map(id => serialized.delete(id))
-    await Promise.all([ ...purge, touched.clear() ])
+    const rejected = await allSettled(this.touched.map(id => serialized.delete(id)))
     await tx.commit()
+    if (rejected.length) log.error(`cache: failed to purge ${rejected}`)
+    Zotero.Prefs.set(this.#touched, '')
   }
 }
 
@@ -474,8 +495,6 @@ export const Cache = new class $Cache {
   }
 
   public async touch(ids: number[]): Promise<void> {
-    if (!this.available('touch')) return
-
     if (ids.length) {
       for (const store of [ this.ZoteroSerialized, this.BetterBibTeX, this.BetterBibLaTeX, this.BetterCSLJSON, this.BetterCSLYAML ]) {
         await store.touch(ids)
@@ -498,8 +517,10 @@ export const Cache = new class $Cache {
     const stores = [...this.db.objectStoreNames].filter(name => name !== 'metadata' && (store === '*' || name === store))
     if (stores.length) {
       const tx = this.db.transaction(stores, 'readwrite')
-      await Promise.all(stores.map(name => tx.objectStore(name).clear()))
+      const cleared = await Promise.allSettled(stores.map(name => tx.objectStore(name).clear()))
       await tx.commit()
+      const rejected = cleared.map((result, i) => result.status === 'rejected' ? stores[i] : '').filter(_ => _).join(', ')
+      if (rejected) log.error(`cache: failed to clear ${rejected}`)
     }
   }
 
@@ -537,19 +558,21 @@ export const Cache = new class $Cache {
     if (!this.available('dump')) return {}
 
     const tables: Record<string, any> = {}
-    let cursor: CursorWithValue | void
+    // let cursor: CursorWithValue | void
     for (const name of this.db.objectStoreNames) {
       try {
         const tx = this.db.transaction(name, 'readonly')
         const store = tx.objectStore(name)
         switch (name) {
           case 'touched':
+            /*
             tables[name] = {}
             cursor = await store.openCursor()
             while (cursor) {
               tables[name][cursor.key as string] = cursor.value
               if (!await cursor.continue()) cursor = undefined
             }
+            */
             break
 
           case 'metadata':
