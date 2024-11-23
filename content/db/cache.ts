@@ -16,6 +16,8 @@ import { ObjectStore, Database, Transaction, Factory } from '@retorquere/indexed
 import type { Translators as Translator } from '../../typings/translators'
 const skip = new Set([ 'keepUpdated', 'worker', 'exportFileData' ])
 
+import PromiseAllSettled from 'promise.allsettled'
+
 export function exportContext(translator: string, displayOptions: Partial<Translator.DisplayOptions>): string {
   const defaultOptions = bySlug[translator.replace(/ /g, '')]?.displayOptions
   if (!defaultOptions) throw new Error(`Unexpected translator ${ translator }`)
@@ -29,7 +31,7 @@ export type ExportContext = {
 }
 
 async function allSettled(promises): Promise<string> {
-  const settled = await Promise.allSettled(promises)
+  const settled = await PromiseAllSettled(promises)
   const rejected = settled.filter(result => result.status === 'rejected').length
   return rejected ? `${rejected}/${promises.length}` : ''
 }

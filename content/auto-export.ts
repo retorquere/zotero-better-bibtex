@@ -25,6 +25,8 @@ import { createDB, createTable, BlinkKey } from 'blinkdb'
 import * as blink from '../gen/blinkdb'
 import { pick } from './object'
 
+import PromiseAllSettled from 'promise.allsettled'
+
 const cmdMeta = /(["^&|<>()%!])/
 const cmdMetaOrSpace = /[\s"^&|<>()%!]/
 const cmdMetaInsideQuotes = /(["%!])/
@@ -351,7 +353,7 @@ const queue = new class TaskQueue {
         }
       }
 
-      await Promise.allSettled(jobs.map(job => Translators.queueJob(job)))
+      await PromiseAllSettled(jobs.map(job => Translators.queueJob(job)))
 
       await repo.push(l10n.localize('better-bibtex_preferences_auto-export_git_message', { type: translator.label.replace('Better ', '') }))
 
