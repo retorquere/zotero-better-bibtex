@@ -1,5 +1,8 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions, @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-assignment */
 
+import allSettled = require('promise.allsettled')
+allSettled.shim()
+
 import type { Attachment, Item, Note } from '../../gen/typings/serialized-item'
 type Serialized = Attachment | Item | Note
 

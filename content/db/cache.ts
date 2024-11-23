@@ -16,8 +16,6 @@ import { ObjectStore, Database, Transaction, Factory } from '@retorquere/indexed
 import type { Translators as Translator } from '../../typings/translators'
 const skip = new Set([ 'keepUpdated', 'worker', 'exportFileData' ])
 
-import PromiseAllSettled = require('promise.allsettled')
-
 export function exportContext(translator: string, displayOptions: Partial<Translator.DisplayOptions>): string {
   const defaultOptions = bySlug[translator.replace(/ /g, '')]?.displayOptions
   if (!defaultOptions) throw new Error(`Unexpected translator ${ translator }`)
@@ -31,13 +29,16 @@ export type ExportContext = {
 }
 
 async function allSettled(promises): Promise<string> {
+  log.debug(`cache: settling ${promises.length} promises`)
+  if (!promises.length) return ''
+
   try {
-    const settled = await PromiseAllSettled(promises)
+    const settled = await Promise.allSettled(promises)
     const rejected = settled.filter(result => result.status === 'rejected').length
-    return rejected ? `${rejected}/${promises.length}` : ''
+    return rejected ? `${rejected}/${settled.length}` : ''
   }
   catch (err) {
-    return err.message as string
+    return `[[${err.message}]]`
   }
 }
 
@@ -521,7 +522,7 @@ export const Cache = new class $Cache {
     if (!this.available('clear')) return
 
     store = store.replace(/ /g, '')
-    const stores = [...this.db.objectStoreNames].filter(name => name !== 'metadata' && (store === '*' || name === store))
+    const stores = this.db.objectStoreNames.filter(name => name !== 'metadata' && (store === '*' || name === store))
     if (stores.length) {
       const tx = this.db.transaction(stores, 'readwrite')
       const cleared = await Promise.allSettled(stores.map(name => tx.objectStore(name).clear()))
