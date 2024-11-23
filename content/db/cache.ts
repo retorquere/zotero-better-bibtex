@@ -11,7 +11,7 @@ import { bySlug } from '../../gen/translators'
 import version from '../../gen/version'
 // import { main as probe } from './cache-test'
 
-import { CursorWithValue, Database, Transaction, Factory } from '@retorquere/indexeddb-promise'
+import { ObjectStore, CursorWithValue, Database, Transaction, Factory } from '@retorquere/indexeddb-promise'
 
 import type { Translators as Translator } from '../../typings/translators'
 const skip = new Set([ 'keepUpdated', 'worker', 'exportFileData' ])
@@ -104,6 +104,17 @@ interface Schema extends DBSchema {
 export type ExportCacheName = 'BetterBibLaTeX' | 'BetterBibTeX' | 'BetterCSLJSON' | 'BetterCSLYAML'
 
 class CacheDB extends Database {
+  #stores = {
+    ZoteroSerialized: { keyPath: 'itemID' },
+    touched: undefined,
+    metadata: { keyPath: 'key' },
+    ExportContext: { keyPath: 'id', autoIncrement: true },
+    BetterBibTeX: { keyPath: [ 'context', 'itemID' ]},
+    BetterBibLaTeX: { keyPath: [ 'context', 'itemID' ]},
+    BetterCSLJSON: { keyPath: [ 'context', 'itemID' ]},
+    BetterCSLYAML: { keyPath: [ 'context', 'itemID' ]},
+  }
+
   public _upgrade(_transaction: Transaction, oldVersion: number, newVersion: number | null): void {
     if (typeof newVersion !== 'number') {
       log.info(`cache: creating ${newVersion}`)
@@ -115,24 +126,22 @@ class CacheDB extends Database {
       this.deleteObjectStore(store)
     }
 
-    this.createObjectStore('ZoteroSerialized', { keyPath: 'itemID' })
-    this.createObjectStore('touched')
-    this.createObjectStore('metadata', { keyPath: 'key' })
-
-    const context = this.createObjectStore('ExportContext', { keyPath: 'id', autoIncrement: true })
-    context.createIndex('context', 'context', { unique: true })
-
-    const stores = [
-      this.createObjectStore('BetterBibTeX', { keyPath: [ 'context', 'itemID' ]}),
-      this.createObjectStore('BetterBibLaTeX', { keyPath: [ 'context', 'itemID' ]}),
-      this.createObjectStore('BetterCSLJSON', { keyPath: [ 'context', 'itemID' ]}),
-      this.createObjectStore('BetterCSLYAML', { keyPath: [ 'context', 'itemID' ]}),
-    ]
-    for (const store of stores) {
-      store.createIndex('context', 'context')
-      store.createIndex('itemID', 'itemID')
-      store.createIndex('context-itemID', [ 'context', 'itemID' ], { unique: true })
+    const stores: Record<string, ObjectStore> = {}
+    for (const [store, options] of Object.entries(this.#stores)) {
+      stores[store] = this.createObjectStore(store, options)
     }
+
+    stores.ExportContext.createIndex('context', 'context', { unique: true })
+
+    for (const store of ['BetterBibTeX', 'BetterBibLaTeX', 'BetterCSLJSON', 'BetterCSLYAML']) {
+      stores[store].createIndex('context', 'context')
+      stores[store].createIndex('itemID', 'itemID')
+      stores[store].createIndex('context-itemID', [ 'context', 'itemID' ], { unique: true })
+    }
+  }
+
+  public get complete() {
+    return [...this.objectStoreNames].sort().join(',') === Object.keys(this.#stores).sort().join(',')
   }
 }
 
@@ -409,7 +418,8 @@ export const Cache = new class $Cache {
     }
 
     this.db = await this.$open('open')
-    if (!this.db) {
+    if (!this.db || !this.db.complete) {
+      this.db?.close()
       log.info('cache: could not open, delete and reopen') // #2995, downgrade 6 => 7
       await Factory.deleteDatabase(this.name)
       this.db = await this.$open('reopen')
