@@ -25,7 +25,7 @@ import { createDB, createTable, BlinkKey } from 'blinkdb'
 import * as blink from '../gen/blinkdb'
 import { pick } from './object'
 
-import PromiseAllSettled from 'promise.allsettled'
+import PromiseAllSettled = require('promise.allsettled')
 
 const cmdMeta = /(["^&|<>()%!])/
 const cmdMetaOrSpace = /[\s"^&|<>()%!]/

@@ -16,7 +16,7 @@ import { ObjectStore, Database, Transaction, Factory } from '@retorquere/indexed
 import type { Translators as Translator } from '../../typings/translators'
 const skip = new Set([ 'keepUpdated', 'worker', 'exportFileData' ])
 
-import PromiseAllSettled from 'promise.allsettled'
+import PromiseAllSettled = require('promise.allsettled')
 
 export function exportContext(translator: string, displayOptions: Partial<Translator.DisplayOptions>): string {
   const defaultOptions = bySlug[translator.replace(/ /g, '')]?.displayOptions
@@ -31,9 +31,14 @@ export type ExportContext = {
 }
 
 async function allSettled(promises): Promise<string> {
-  const settled = await PromiseAllSettled(promises)
-  const rejected = settled.filter(result => result.status === 'rejected').length
-  return rejected ? `${rejected}/${promises.length}` : ''
+  try {
+    const settled = await PromiseAllSettled(promises)
+    const rejected = settled.filter(result => result.status === 'rejected').length
+    return rejected ? `${rejected}/${promises.length}` : ''
+  }
+  catch (err) {
+    return err.message as string
+  }
 }
 
 export interface ExportedItemMetadata {
@@ -228,7 +233,7 @@ export class ExportCache {
 
     const rejected = await allSettled(deletes)
     await tx.commit()
-    if (rejected.length) log.error(`cache: failed to remove ${rejected} entries from ${this.name}::${path}`)
+    if (rejected) log.error(`cache: failed to remove ${rejected} entries from ${this.name}::${path}`)
   }
 
   public async count(path: string): Promise<number> {
@@ -282,7 +287,7 @@ export class ExportCache {
     const store = tx.objectStore(this.name)
     const rejected = await allSettled(items.map(item => store.put(item)))
     await tx.commit()
-    if (rejected.length) log.error(`cache: failed to store ${rejected} for ${this.name}`)
+    if (rejected) log.error(`cache: failed to store ${rejected} for ${this.name}`)
   }
 }
 
@@ -379,7 +384,7 @@ class ZoteroSerialized {
 
     const rejected = await allSettled(this.touched.map(id => serialized.delete(id)))
     await tx.commit()
-    if (rejected.length) log.error(`cache: failed to purge ${rejected}`)
+    if (rejected) log.error(`cache: failed to purge ${rejected}`)
     Zotero.Prefs.set(this.#touched, '')
   }
 }

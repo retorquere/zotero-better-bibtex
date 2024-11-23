@@ -518,7 +518,7 @@ export const KeyManager = new class _KeyManager {
         await Cache.touch(ids)
       }
       catch (err) {
-        log.error('Cache touch failed:', err)
+        log.error('Cache touch failed:', Object.keys(err))
       }
       finally {
         void Events.emit('items-changed', { items: Zotero.Items.get(ids), action })
