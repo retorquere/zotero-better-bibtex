@@ -1,4 +1,5 @@
 import { log } from '../logger/simple'
+import { stringify } from '../stringify'
 
 import { is7, worker } from '../client'
 import { flash } from '../flash'
@@ -11,7 +12,7 @@ import { bySlug } from '../../gen/translators'
 import version from '../../gen/version'
 // import { main as probe } from './cache-test'
 
-import { CursorWithValue, ObjectStore, Database, Transaction, Factory } from '@retorquere/indexeddb-promise'
+import { CursorWithValue, Database, Transaction, Factory } from '@retorquere/indexeddb-promise'
 
 import type { Translators as Translator } from '../../typings/translators'
 const skip = new Set([ 'keepUpdated', 'worker', 'exportFileData' ])
@@ -116,16 +117,29 @@ interface Schema extends DBSchema {
 */
 export type ExportCacheName = 'BetterBibLaTeX' | 'BetterBibTeX' | 'BetterCSLJSON' | 'BetterCSLYAML'
 
+const ExportCacheConfig = {
+  $: { keyPath: [ 'context', 'itemID' ]},
+  context: ['context'],
+  itemID: ['itemID'],
+  'context-itemID': [[ 'context', 'itemID' ], { unique: true }],
+}
 class CacheDB extends Database {
-  #stores = {
-    ZoteroSerialized: { keyPath: 'itemID' },
-    metadata: { keyPath: 'key' },
-    ExportContext: { keyPath: 'id', autoIncrement: true },
-    BetterBibTeX: { keyPath: [ 'context', 'itemID' ]},
-    BetterBibLaTeX: { keyPath: [ 'context', 'itemID' ]},
-    BetterCSLJSON: { keyPath: [ 'context', 'itemID' ]},
-    BetterCSLYAML: { keyPath: [ 'context', 'itemID' ]},
-    touched: undefined,
+  #schema = {
+    ZoteroSerialized: {
+      $: { keyPath: 'itemID' },
+    },
+    metadata: {
+      $: { keyPath: 'key' },
+    },
+    ExportContext: {
+      $: { keyPath: 'id', autoIncrement: true },
+      context: ['context', { unique: true }],
+    },
+    BetterBibTeX: ExportCacheConfig,
+    BetterBibLaTeX: ExportCacheConfig,
+    BetterCSLJSON: ExportCacheConfig,
+    BetterCSLYAML: ExportCacheConfig,
+    touched: {},
   }
 
   public _upgrade(_transaction: Transaction, oldVersion: number, newVersion: number | null): void {
@@ -139,22 +153,47 @@ class CacheDB extends Database {
       this.deleteObjectStore(store)
     }
 
-    const stores: Record<string, ObjectStore> = {}
-    for (const [store, options] of Object.entries(this.#stores)) {
-      stores[store] = this.createObjectStore(store, options)
-    }
+    for (const [storeName, storeConfig] of Object.entries(this.#schema)) {
+      const store = this.createObjectStore(storeName, (storeConfig as any).$)
 
-    stores.ExportContext.createIndex('context', 'context', { unique: true })
-
-    for (const store of ['BetterBibTeX', 'BetterBibLaTeX', 'BetterCSLJSON', 'BetterCSLYAML']) {
-      stores[store].createIndex('context', 'context')
-      stores[store].createIndex('itemID', 'itemID')
-      stores[store].createIndex('context-itemID', [ 'context', 'itemID' ], { unique: true })
+      for (const [indexName, indexConfig] of Object.entries(storeConfig)) {
+        if (indexName !== '$') store.createIndex(indexName, ...(indexConfig as [string]))
+      }
     }
   }
 
-  public get complete() {
-    return [...this.objectStoreNames].sort().join(',') === Object.keys(this.#stores).sort().join(',')
+  public async validate(): Promise<boolean> {
+    if (worker) return true
+
+    log.info('validating schema')
+    const tx = this.transaction(this.objectStoreNames, 'readonly')
+    const schema: Record<string, any> = {}
+    for (const storeName of this.objectStoreNames) {
+      schema[storeName] = {}
+      const store = tx.objectStore(storeName)
+
+      if (store.autoIncrement || store.keyPath) {
+        schema[storeName].$ = {
+          ...(store.keyPath ? { keyPath: store.keyPath } : {}),
+          ...(store.autoIncrement ? { autoIncrement: true } : {}),
+        }
+      }
+
+      for (const indexName of store.indexNames) {
+        const index = store.index(indexName)
+        schema[storeName][indexName] = [ index.keyPath, ...(index.unique ? [{ unique: true }] : []) ]
+      }
+    }
+    await tx.commit()
+
+    const expected = stringify(this.#schema, 2)
+    const found = stringify(schema, 2)
+    log.info(`schema: ${found}`)
+    if (expected !== found) {
+      log.error(`cache schema mismatch!\nexpected:${expected}\nfound:${found}`)
+      return false
+    }
+    return true
   }
 }
 
@@ -408,22 +447,6 @@ export const Cache = new class $Cache {
     }
   }
 
-  private async schema(): Promise<string> {
-    let schema = '\n'
-    for (const storeName of [...this.db.objectStoreNames].sort()) {
-      const tx = this.db.transaction(storeName, 'readonly')
-      const store = tx.objectStore(storeName)
-      schema += `Object Store: ${JSON.stringify(storeName)}, Key Path: ${JSON.stringify(store.keyPath)}\n`
-
-      for (const indexName of [...store.indexNames].sort()) {
-        const index = store.index(indexName)
-        schema += `  Index: ${JSON.stringify(indexName)}, Key Path: ${JSON.stringify(index.keyPath)}, Unique: ${!!index.unique}\n`
-      }
-      await tx.commit()
-    }
-    return schema
-  }
-
   private async metadata(): Promise<Record<string, string>> {
     const metadata: Record<string, string> = {}
 
@@ -455,17 +478,14 @@ export const Cache = new class $Cache {
     }
 
     this.db = await this.$open('open')
-    if (!this.db || !this.db.complete) {
+    if (!this.db || !(await this.db.validate())) {
       this.db?.close()
       log.info('cache: could not open, delete and reopen') // #2995, downgrade 6 => 7
       await Factory.deleteDatabase(this.name)
       this.db = await this.$open('reopen')
     }
 
-    if (this.db) {
-      log.info(await this.schema())
-    }
-    else {
+    if (!this.db) {
       Zotero.Prefs.set(del, true)
       flash('Cache could not be opened', 'Cache could not be opened, please restart Zotero')
     }
