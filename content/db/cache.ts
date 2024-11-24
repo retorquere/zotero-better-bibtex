@@ -11,7 +11,7 @@ import { bySlug } from '../../gen/translators'
 import version from '../../gen/version'
 // import { main as probe } from './cache-test'
 
-import { ObjectStore, Database, Transaction, Factory } from '@retorquere/indexeddb-promise'
+import { CursorWithValue, ObjectStore, Database, Transaction, Factory } from '@retorquere/indexeddb-promise'
 
 import type { Translators as Translator } from '../../typings/translators'
 const skip = new Set([ 'keepUpdated', 'worker', 'exportFileData' ])
@@ -126,6 +126,7 @@ class CacheDB extends Database {
     BetterBibLaTeX: { keyPath: [ 'context', 'itemID' ]},
     BetterCSLJSON: { keyPath: [ 'context', 'itemID' ]},
     BetterCSLYAML: { keyPath: [ 'context', 'itemID' ]},
+    touched: undefined,
   }
 
   public _upgrade(_transaction: Transaction, oldVersion: number, newVersion: number | null): void {
@@ -293,8 +294,6 @@ export class ExportCache {
 }
 
 class ZoteroSerialized {
-  #touched = 'translators.better-bibtex.cache.touched'
-
   public filled = 0 // exponential moving average
   private smoothing = 2 / (10 + 1) // keep average over last 10 fills
 
@@ -309,10 +308,11 @@ class ZoteroSerialized {
     items = items.filter(item => this.cachable(item))
     if (!items.length) return
 
-    let tx = this.db.transaction([ 'ZoteroSerialized' ], 'readwrite')
+    let tx = this.db.transaction(['ZoteroSerialized', 'touched'], 'readwrite')
     let store = tx.objectStore('ZoteroSerialized')
     const cached = new Set(await store.getAllKeys())
-    const purge: Set<number> = new Set(this.touched)
+    const touched = tx.objectStore('touched')
+    const purge = new Set(await touched.getAllKeys())
 
     const fill = items.filter(item => {
       if (cached.has(item.id)) {
@@ -327,8 +327,8 @@ class ZoteroSerialized {
     })
 
     let rejected = await allSettled([...purge].map(id => store.delete(id)))
+    await touched.clear()
     await tx.commit()
-    Zotero.Prefs.set(this.#touched, '')
     if (rejected) log.error(`cache: failed to purge ${rejected}`)
 
     const current = (items.length - fill.length) / items.length
@@ -362,31 +362,24 @@ class ZoteroSerialized {
     return items
   }
 
-  public get touched(): number[] {
-    const touched = Zotero.Prefs.get(this.#touched)
-    if (!touched) return []
-
-    try {
-      return JSON.parse(touched) as number[]
-    }
-    catch (err) {
-      log.error(`cache: could not read touched: ${err.message}`)
-    }
-    return []
-  }
-
-  public touch(ids: number[]): void {
-    Zotero.Prefs.set(this.#touched, JSON.stringify([...(new Set([ ...this.touched, ...ids]))]))
+  public async touch(ids: number[]): Promise<void> {
+    const tx = this.db.transaction('touched', 'readwrite')
+    const store = tx.objectStore('touched')
+    const puts = ids.map(id => store.put(true, id))
+    await Promise.all(puts)
+    await tx.commit()
   }
 
   public async purge(): Promise<void> {
-    const tx = this.db.transaction([ 'ZoteroSerialized' ], 'readwrite')
+    const tx = this.db.transaction(['ZoteroSerialized', 'touched'], 'readwrite')
     const serialized = tx.objectStore('ZoteroSerialized')
+    const touched = tx.objectStore('touched')
 
-    const rejected = await allSettled(this.touched.map(id => serialized.delete(id)))
+    const purge = (await touched.getAllKeys()).map(id => serialized.delete(id))
+    const rejected = await allSettled(purge)
+    await touched.clear()
     await tx.commit()
     if (rejected) log.error(`cache: failed to purge ${rejected}`)
-    Zotero.Prefs.set(this.#touched, '')
   }
 }
 
@@ -566,21 +559,19 @@ export const Cache = new class $Cache {
     if (!this.available('dump')) return {}
 
     const tables: Record<string, any> = {}
-    // let cursor: CursorWithValue | void
+    let cursor: CursorWithValue | void
     for (const name of this.db.objectStoreNames) {
       try {
         const tx = this.db.transaction(name, 'readonly')
         const store = tx.objectStore(name)
         switch (name) {
           case 'touched':
-            /*
             tables[name] = {}
             cursor = await store.openCursor()
             while (cursor) {
               tables[name][cursor.key as string] = cursor.value
               if (!await cursor.continue()) cursor = undefined
             }
-            */
             break
 
           case 'metadata':
