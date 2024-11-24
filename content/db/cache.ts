@@ -508,7 +508,6 @@ export const Cache = new class $Cache {
       }
       const tx = this.db.transaction('metadata', 'readwrite')
       const store = tx.objectStore('metadata')
-      log.debug(`3070: ${JSON.stringify({ zotero: Zotero.version, bbt: version })}`)
       await store.put({ key: 'Zotero', value: Zotero.version })
       await store.put({ key: 'BetterBibTeX', value: version })
       await tx.commit()
