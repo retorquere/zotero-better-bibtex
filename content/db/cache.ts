@@ -29,7 +29,6 @@ export type ExportContext = {
 }
 
 async function allSettled(promises): Promise<string> {
-  log.debug(`cache: settling ${promises.length} promises`)
   if (!promises.length) return ''
 
   try {
@@ -463,9 +462,10 @@ export const Cache = new class $Cache {
       this.db = await this.$open('reopen')
     }
 
-    log.debug(await this.schema())
-
-    if (!this.db) {
+    if (this.db) {
+      log.info(await this.schema())
+    }
+    else {
       Zotero.Prefs.set(del, true)
       flash('Cache could not be opened', 'Cache could not be opened, please restart Zotero')
     }
