@@ -13,6 +13,7 @@ Feature: Export
 
     Examples:
       | file                                                                                                                     | references |
+      | Better BibLatex copied year column as string if  character is found #3067                                                | 1          |
       | Cannot change citation key formula #3058                                                                                 | 1          |
       | Citation keys are missing certain words if hyphens are used #3059                                                        | 1          |
       | lastpage not work in better bitex #3050                                                                                  | 1          |
