@@ -206,7 +206,7 @@ export class ExportCache {
     const deletes: Promise<void>[] = []
 
     for (const id of ids) {
-      const cursor = await index.openCursor(IDBKeyRange.only(id))
+      const cursor = await index.openCursor(id)
       if (cursor) deletes.push(store.delete(cursor.primaryKey))
     }
     const rejected = await allSettled(deletes)
@@ -224,7 +224,7 @@ export class ExportCache {
     const deletes: Promise<void>[] = []
 
     const cache = tx.objectStore(this.name as 'BetterBibTeX')
-    const cursor = await cache.index('context').openCursor(IDBKeyRange.only(path))
+    const cursor = await cache.index('context').openCursor(path)
     if (cursor) deletes.push(cache.delete(cursor.primaryKey))
 
     if (deleteContext) {
@@ -242,7 +242,7 @@ export class ExportCache {
     const tx = this.db.transaction(this.name, 'readonly')
     const store = tx.objectStore(this.name)
     const index = store.index('context')
-    const count = await index.count(IDBKeyRange.only(path))
+    const count = await index.count(path)
     return count
   }
 
