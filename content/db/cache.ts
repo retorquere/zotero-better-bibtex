@@ -409,6 +409,22 @@ export const Cache = new class $Cache {
     }
   }
 
+  private async schema(): Promise<string> {
+    let schema = '\n'
+    for (const storeName of [...this.db.objectStoreNames].sort()) {
+      const tx = this.db.transaction(storeName, 'readonly')
+      const store = tx.objectStore(storeName)
+      schema += `Object Store: ${JSON.stringify(storeName)}, Key Path: ${JSON.stringify(store.keyPath)}\n`
+
+      for (const indexName of [...store.indexNames].sort()) {
+        const index = store.index(indexName)
+        schema += `  Index: ${JSON.stringify(indexName)}, Key Path: ${JSON.stringify(index.keyPath)}, Unique: ${!!index.unique}\n`
+      }
+      await tx.commit()
+    }
+    return schema
+  }
+
   private async metadata(): Promise<Record<string, string>> {
     const metadata: Record<string, string> = {}
 
@@ -446,6 +462,8 @@ export const Cache = new class $Cache {
       await Factory.deleteDatabase(this.name)
       this.db = await this.$open('reopen')
     }
+
+    log.debug(await this.schema())
 
     if (!this.db) {
       Zotero.Prefs.set(del, true)
