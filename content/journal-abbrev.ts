@@ -79,7 +79,6 @@ export const JournalAbbrev = new class { // eslint-disable-line @typescript-esli
       Zotero.Cite.getAbbreviation(this.style, this.abbrevs, 'default', 'container-title', journal)
     }
     abbrev = this.abbrevs.default['container-title'][journal]
-    Zotero.debug(`3046: ${journal} => ${abbrev}`)
     if (abbrev && abbrev.toLowerCase() !== journal.toLowerCase().replace(/[.]/g, '')) return abbrev
 
     return null
