@@ -781,27 +781,29 @@ export class BetterBibTeX {
             },
           })
 
-          if (Zotero.ItemPaneManager.registerInfoRow) {
-            if (!isBeta) log.error('Zotero.ItemPaneManager.registerInfoRow is GA')
-            Zotero.ItemPaneManager.registerInfoRow({
-              rowID: 'better-bibtex-citation-key',
-              pluginID: 'better-bibtex@iris-advies.com',
-              label: { l10nID: 'better-bibtex_item-pane_info_citation-key_label' },
-              position: 'start',
-              multiline: false,
-              nowrap: false,
-              editable: false,
-              onGetData({ item }) {
-                return item.getField('citationKey') as string
-              },
-              /*
-              onSetData({ rowID, item, tabType, editable, value }) {
-                Zotero.debug(`Set custom info row ${rowID} of item ${item.id} to ${value}`);
-              },
-              */
-            })
-          }
+          const rowID = Zotero.ItemPaneManager.registerInfoRow({
+            rowID: 'better-bibtex-citation-key',
+            pluginID: 'better-bibtex@iris-advies.com',
+            label: { l10nID: 'better-bibtex_item-pane_info_citation-key_label' },
+            position: 'start',
+            multiline: false,
+            nowrap: false,
+            editable: false,
+            onGetData({ item }) {
+              return item.getField('citationKey') as string
+            },
+            /*
+            onSetData({ rowID, item, tabType, editable, value }) {
+              Zotero.debug(`Set custom info row ${rowID} of item ${item.id} to ${value}`);
+            },
+            */
+          })
+
+          Events.on('items-changed', () => {
+            Zotero.ItemPaneManager.refreshInfoRow(rowID)
+          })
         }
+
         $Patcher$.execute()
       },
       shutdown: async () => { // eslint-disable-line @typescript-eslint/require-await
