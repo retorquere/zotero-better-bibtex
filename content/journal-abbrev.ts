@@ -71,7 +71,7 @@ export const JournalAbbrev = new class { // eslint-disable-line @typescript-esli
 
     if (!this.journal.has(zotero_item ? Zotero.ItemTypes.getName(item.itemTypeID) : item.itemType)) return null
 
-    const journal: string = this.fields.map(field => this.getField(item, field, zotero_item)?.replace(/<\/?(sup|sub|i|b)>/, '')).find(_ => _)
+    const journal: string = this.fields.map(field => this.getField(item, field, zotero_item)?.replace(/<\/?(sup|sub|i|b)>/g, '')).find(_ => _)
     if (!journal) return null
 
     // juris-m doesn't offer the abbreviator anymore. https://github.com/Juris-M/zotero/issues/47
