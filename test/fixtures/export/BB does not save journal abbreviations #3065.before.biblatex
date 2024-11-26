@@ -1,0 +1,29 @@
+@article{klymakmoum03,
+  title = {Internal Solitary Waves of Elevation Advancing on a Shoaling Shelf},
+  author = {Klymak, Jody M. and Moum, James N.},
+  date = {2003},
+  journaltitle = {Geophys. Res. Lett.},
+  volume = {30},
+  number = {20},
+  issn = {1944-8007},
+  doi = {10.1029/2003GL017706},
+  abstract = {A sequence of three internal solitary waves of elevation were observed propagating shoreward along a near-bottom density interface over Oregon's continental shelf. These waves are highly turbulent and coincide with enhanced optical backscatter, consistent with increased suspended sediments in the bottom boundary layer. Non-linear solitary wave solutions are employed to estimate wave speeds and energy. The waves are rank ordered in amplitude, phase speed, and energy, and inversely ordered in width. Wave kinetic energy is roughly twice the potential energy. The observed turbulence is not sufficiently large to dissipate the waves' energy before the waves reach the shore. Because of high wave velocities at the sea bed, bottom stress is inferred to be an important source of wave energy loss, unlike near-surface solitary waves. The wave solution suggests that the lead wave has a trapped core, implying enhanced cross-shelf transport of fluid and biology.},
+  langid = {english}
+}
+
+@article{klymakmoum07,
+  title = {Oceanic {{Isopycnal Slope Spectra}}. {{Part I}}: {{Internal Waves}}},
+  shorttitle = {Oceanic {{Isopycnal Slope Spectra}}. {{Part I}}},
+  author = {Klymak, Jody M. and Moum, James N.},
+  date = {2007-05-01},
+  journaltitle = {J. Phys. Oceanogr.},
+  volume = {37},
+  number = {5},
+  pages = {1215--1231},
+  publisher = {American Meteorological Society},
+  issn = {0022-3670, 1520-0485},
+  doi = {10.1175/JPO3073.1},
+  abstract = {Horizontal tow measurements of internal waves are rare and have been largely supplanted in recent decades by vertical profile measurements. Here, estimates of isotherm displacements and turbulence dissipation rate from a towed vehicle deployed near Hawaii are presented. The displacement data are interpreted in terms of horizontal wavenumber spectra of isopycnal slope. The spectra span scales from 5 km to 0.1 m, encompassing both internal waves and turbulence. The turbulence subrange is identified using a standard turbulence fit, and the rest of the motions are deemed to be internal waves. The remaining subrange has a slightly red slope (ϕ ∼ k−1/2x) and vertical coherences compatible with internal waves, in agreement with previous towed measurements. However, spectral amplitudes in the internal wave subrange exhibit surprisingly little variation despite a four-order-of-magnitude change in turbulence dissipation rate observed at the site. The shape and amplitude of the horizontal spectra are shown to be consistent with observations and models of vertical internal wave spectra that consist of two subranges: a “linear” subrange (ϕ ∼ k0z) and a red “saturated” subrange (ϕ ∼ k−1z). These two subranges are blurred in the transformation to horizontal spectra, yielding slopes close to those observed. The saturated subrange does not admit amplitude variations in the spectra yet is an important component of the measured horizontal spectra, explaining the poor correspondence with the dissipation rate.},
+  langid = {english},
+  keywords = {Internal waves,Turbulence,Wave spectra}
+}

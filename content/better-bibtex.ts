@@ -458,6 +458,7 @@ $Patcher$.schedule(Zotero.Translate.Export.prototype, 'translate', original => f
   }
 
   const displayOptions = this._displayOptions || {}
+  log.debug('3065:', this._displayOptions)
 
   if (this.location) {
     if (displayOptions.exportFileData) { // when exporting file data, the user was asked to pick a directory rather than a file
