@@ -8,6 +8,8 @@ import { simplifyForExport as simplify } from '../gen/items/simplify'
 export const JournalAbbrev = new class { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   private style: any
   private abbrevs: any
+  private journal = new Set(['conferencePaper', 'journalArticle', 'bill', 'case', 'statute'])
+  private fields = ['publicationTitle', 'reporter', 'code']
 
   constructor() {
     orchestrator.add({
@@ -51,52 +53,35 @@ export const JournalAbbrev = new class { // eslint-disable-line @typescript-esli
     }
   }
 
+  getField(item, field, native): string {
+    try {
+      return (native ? item.getField(field, false, true) as string : item[field] as string) || null
+    }
+    catch {
+      return null
+    }
+  }
+
   public get(item, mode: 'abbrev' | 'auto' | 'abbrev+auto' = 'abbrev+auto'): string {
-    let abbrev = ''
-    let journal: string
     const zotero_item = !!(item._objectType) // eslint-disable-line no-underscore-dangle
     if (!zotero_item) item = simplify(Object.create(item), { creators: false, scrub: false }) // don't mess with the serialized object, Zotero needs it intact
 
-    if (mode.startsWith('abbrev')) {
-      if (zotero_item) {
-        try {
-          abbrev = item.getField('journalAbbreviation', false, true)
-        }
-        catch {}
-      }
-      else {
-        abbrev = item.journalAbbreviation
-      }
-    }
+    let abbrev = mode.startsWith('abbrev') ? this.getField(item, 'journalAbbreviation', zotero_item) : null
+    if (abbrev || !mode.endsWith('auto')) return abbrev
 
-    if (abbrev || !mode.endsWith('auto')) return abbrev || null
+    if (!this.journal.has(zotero_item ? Zotero.ItemTypes.getName(item.itemTypeID) : item.itemType)) return null
 
-    const itemType: string = zotero_item ? Zotero.ItemTypes.getName(item.itemTypeID) : item.itemType
-    if (![ 'conferencePaper', 'journalArticle', 'bill', 'case', 'statute' ].includes(itemType)) return null
-
-    for (const field of [ 'publicationTitle', 'reporter', 'code' ]) {
-      try {
-        journal = zotero_item ? item.getField(field, false, true) : item[field]
-        if (!journal) continue
-        journal = journal.replace(/<\/?(sup|sub|i|b)>/g, '')
-        if (!journal) continue
-
-        break
-      }
-      catch {
-      }
-    }
-
+    const journal: string = this.fields.map(field => this.getField(item, field, zotero_item)?.replace(/<\/?(sup|sub|i|b)>/, '')).find(_ => _)
     if (!journal) return null
 
     // juris-m doesn't offer the abbreviator anymore. https://github.com/Juris-M/zotero/issues/47
     if (!this.abbrevs.default['container-title'][journal] && typeof Zotero.Cite.getAbbreviation === 'function') {
       Zotero.Cite.getAbbreviation(this.style, this.abbrevs, 'default', 'container-title', journal)
     }
-    const abbr: string = this.abbrevs.default['container-title'][journal]
+    abbrev = this.abbrevs.default['container-title'][journal]
+    Zotero.debug(`3046: ${journal} => ${abbrev}`)
+    if (abbrev && abbrev.toLowerCase() !== journal.toLowerCase().replace(/[.]/g, '')) return abbrev
 
-    if (!abbr || abbr.toLowerCase() === journal.toLowerCase().replace(/[.]/g, '')) return null
-
-    return abbr || journal
+    return null
   }
 }

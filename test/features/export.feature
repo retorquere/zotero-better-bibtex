@@ -221,6 +221,7 @@ Feature: Export
 
     Examples:
       | file                                                                                                               | references |
+      | Export field zoteroautoJournalAbbreviation only available when zoterojournalAbbreviation is empty #3046            | 2          |
       | export langid as language #2909                                                                                    | 1          |
       | Better BibTeX export from Zotero missing Extra fields eg issued #2816                                              | 1          |
       | formula grouping                                                                                                   | 1          |
