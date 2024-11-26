@@ -182,7 +182,7 @@ class Config:
     return str(self.data)
 
 class Library:
-  def __init__(self, path=None, body=None, client=None, ext=None):
+  def __init__(self, path=None, body=None, client=None, variant='', ext=None):
     if path and not os.path.isabs(path):
       path = os.path.join(FIXTURES, path)
 
@@ -198,8 +198,7 @@ class Library:
 
     self.base = path
     self.body = body
-    self.client = client.split('-')[0]
-    self.beta = '-beta' in client
+    self.client = client
 
     self.data = None
     self.patch = None
@@ -209,8 +208,8 @@ class Library:
     if self.base:
       self.path = self.base
 
-      patches = [ self.base + '.' + client + '.patch' ]
-      if self.beta: patches.append(self.base + '.' + self.client + '.patch')
+      patches = [ self.base + '.' + client + variant + '.patch' ]
+      if len(variant) > 0: patches.append(self.base + '.' + self.client + '.patch')
       self.patch = next((patch for patch in patches if os.path.exists(patch)), None)
       if self.patch:
         self.path = self.base[:-len(self.ext)] + '.' + self.patch.split('.')[-2] + self.ext
@@ -476,22 +475,16 @@ class Zotero:
   def reset_cache(self):
     self.execute('await Zotero.BetterBibTeX.TestSupport.resetCache()')
 
-  def qualifiedclient(self):
-    if self.beta:
-      return f'{self.client}-beta'
-    else:
-      return self.client
-
   def quick_copy(self, itemIDs, translator, expected):
     found = self.execute('return await Zotero.BetterBibTeX.TestSupport.quickCopy(itemIDs, translator)',
       translator=translator,
       itemIDs=itemIDs
     )
-    expected = Library(path=expected, client=self.qualifiedclient())
+    expected = Library(path=expected, client=self.client, variant=self.variant)
     assert_equal_diff(expected.body, found.strip())
 
   def comparelib(self, expected, found):
-    expected = Library(path=expected, client=self.qualifiedclient())
+    expected = Library(path=expected, client=self.client, variant=self.variant)
     assert_equal_diff(expected.body, found.strip())
 
   def export_library(self, translator, displayOptions = {}, collection = None, output = None, expected = None, resetCache = False):
@@ -522,8 +515,8 @@ class Zotero:
 
     if expected is None: return
 
-    expected = Library(path=expected, client=self.qualifiedclient())
-    found = Library(path=output, body=found, client=self.qualifiedclient(), ext=expected)
+    expected = Library(path=expected, client=self.client, variant=self.variant)
+    found = Library(path=output, body=found, client=self.client, variant=self.variant, ext=expected)
     found.save(expected.path)
 
     if expected.ext in ['.csl.json', '.csl.yml', '.html', '.bib', '.bibtex', '.biblatex']:
@@ -540,7 +533,7 @@ class Zotero:
   def import_file(self, context, references, collection = False, items=True):
     assert type(collection) in [bool, str]
 
-    input = Library(path=references, client=self.qualifiedclient())
+    input = Library(path=references, client=self.client, variant=self.variant)
 
     if input.path.endswith('.json'):
       # TODO: clean lib and test against schema
@@ -635,16 +628,16 @@ class Zotero:
     }[platform.system()]
     os.makedirs(profile.profiles, exist_ok = True)
 
-    variant = ''
+    self.variant = ''
     if self.beta:
-      variant = '-beta'
+      self.variant = '-beta'
     elif self.legacy:
-      variant = '6'
+      self.variant = '6'
     elif self.dev:
-      variant = '-dev'
+      self.variant = '-dev'
     profile.binary = {
-      'Linux': f'/usr/lib/{self.client}{variant}/{self.client}',
-      'Darwin': f'/Applications/{self.client.title()}{variant}.app/Contents/MacOS/{self.client}',
+      'Linux': f'/usr/lib/{self.client}{self.variant}/{self.client}',
+      'Darwin': f'/Applications/{self.client.title()}{self.variant}.app/Contents/MacOS/{self.client}',
     }[platform.system()]
 
     # create profile
