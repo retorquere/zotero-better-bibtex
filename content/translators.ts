@@ -43,7 +43,7 @@ declare const ZOTERO_CONFIG: any
 import type { Translators as Translator } from '../typings/translators'
 import { Preference } from './prefs'
 import { affects, Preferences } from '../gen/preferences/meta'
-import { log } from './logger'
+import { log } from './logger/simple'
 import { flash } from './flash'
 import { Events } from './events'
 import { Pinger } from './ping'
@@ -311,7 +311,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
           default:
             if (JSON.stringify(e) !== '{"isTrusted":true}') { // why are we getting this?
-              log.status({ error: true }, 'unexpected message from worker', e)
+              log.error('unexpected message from worker', e)
             }
             break
         }
@@ -497,7 +497,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       }
     }
     catch (err) {
-      log.error(`Translators.uninstall: failed to remove ${ label }:`, err)
+      log.error(`Translators.uninstall: failed to remove ${label}:`, err)
       return true
     }
 
