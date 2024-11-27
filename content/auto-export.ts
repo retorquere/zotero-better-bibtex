@@ -275,7 +275,6 @@ const queue = new class TaskQueue {
   }
 
   private async runAsync(path: string) {
-    log.debug('3065: scheduling', path)
     await Zotero.BetterBibTeX.ready
 
     const ae = AutoExport.get(path)
@@ -665,7 +664,6 @@ export const AutoExport = new class $AutoExport { // eslint-disable-line @typesc
   }
 
   public get(path: string): Job {
-    log.debug('3065: autoexport.get', path, blink.first(this.db, { where: { path }}))
     return blink.first(this.db, { where: { path }})
   }
 
