@@ -224,6 +224,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
   }
 
   public async queueJob(job: ExportJob): Promise<string> {
+    log.debug(`3065: queued ${JSON.stringify(job)}`)
     return await this.queue.add(() => this.exportItemsByWorker(job))
   }
 
@@ -239,6 +240,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       exportPath: job.path || undefined,
       exportDir: job.path ? $OS.Path.dirname(job.path) : undefined,
     }
+    log.debug(`3065: tr.displayOptions = ${JSON.stringify(displayOptions)}`)
 
     if (job.translate) {
       // fake out the stuff that complete expects to be set by .translate

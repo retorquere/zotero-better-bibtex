@@ -364,6 +364,9 @@ class ZoteroSerialized {
       return true
     })
 
+    log.debug(`3065: purge ${purge.size}`)
+    log.debug(`3065: fill ${fill.length}`)
+
     let rejected = await allSettled([...purge].map(id => store.delete(id)))
     await touched.clear()
     await tx.commit()

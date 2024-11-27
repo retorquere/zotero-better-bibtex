@@ -275,6 +275,7 @@ const queue = new class TaskQueue {
   }
 
   private async runAsync(path: string) {
+    log.debug(`3065: scheduling ${path}`)
     await Zotero.BetterBibTeX.ready
 
     const ae = AutoExport.get(path)
@@ -582,16 +583,15 @@ export const AutoExport = new class $AutoExport { // eslint-disable-line @typesc
       recursive: job.recursive ?? false,
       updated: job.updated || Date.now(),
       enabled: true,
-
     }
 
     const valid = autoExport[job.translatorID]
     const displayOptions = byId[job.translatorID]?.displayOptions || {}
     for (const pref of valid.preferences) {
-      ae[pref] = ae[pref] ?? Preference[pref]
+      ae[pref] = ae[pref] ?? job[pref] ?? Preference[pref]
     }
-    for (const option of valid.preferences) {
-      ae[option] = ae[option] ?? displayOptions[option] ?? false
+    for (const option of valid.options) {
+      ae[option] = ae[option] ?? job[option] ?? displayOptions[option] ?? false
     }
 
     blink.upsert(this.db, ae)
@@ -665,6 +665,7 @@ export const AutoExport = new class $AutoExport { // eslint-disable-line @typesc
   }
 
   public get(path: string): Job {
+    log.debug('3065: autoexport.get', path, blink.first(this.db, { where: { path }}))
     return blink.first(this.db, { where: { path }})
   }
 
