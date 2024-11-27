@@ -309,7 +309,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
           default:
             if (JSON.stringify(e) !== '{"isTrusted":true}') { // why are we getting this?
-              log.status({ error: true }, 'unexpected message from worker', e)
+              log.error('unexpected message from worker', e)
             }
             break
         }
@@ -495,7 +495,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       }
     }
     catch (err) {
-      log.error(`Translators.uninstall: failed to remove ${ label }:`, err)
+      log.error(`Translators.uninstall: failed to remove ${label}:`, err)
       return true
     }
 

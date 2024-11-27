@@ -3,7 +3,7 @@ import { HTMLParser } from '../../content/text'
 
 import type { MarkupNode } from '../../typings/markup'
 
-import { log } from '../../content/logger/simple'
+import { log } from '../../content/logger'
 import HE = require('he')
 import { Transform } from 'unicode2latex'
 

@@ -1,6 +1,6 @@
 // 2020 for prefixItems
 import AJV from 'ajv/dist/2020'
-import { discard, log } from './logger/simple'
+import { discard, log } from './logger'
 
 const options = {
   strict: false,

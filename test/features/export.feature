@@ -815,3 +815,13 @@ Feature: Export
   Scenario: `Error getCollections configure option not set` when exporting to citation graph #2319
     Given I import 2 references from "export/*.json"
     Then an export using "Citation graph" should match "export/*.dot"
+
+  Scenario: BB does not save journal abbreviations #3065
+    Given I import 2 references from "export/*.json"
+    And I set export option exportNotes to true
+    And I set export option useJournalAbbreviation to true
+    Then an auto-export to "~/autoexport.bib" using "Better BibLaTeX" should match "export/*.before.biblatex"
+    Then dump the cache to "cache.json"
+    When I change biblatexAPA to true on the auto-export
+    And I wait 15 seconds
+    Then "~/autoexport.bib" should match "export/*.after.biblatex"

@@ -1,7 +1,7 @@
 declare const Zotero: any
 
 import * as escape from '../../content/escape'
-import { log } from '../../content/logger/simple'
+import { log } from '../../content/logger'
 import { Exporter as BibTeXExporter } from './exporter'
 import { parse as arXiv } from '../../content/arXiv'
 import { validItem } from '../../content/ajv'
