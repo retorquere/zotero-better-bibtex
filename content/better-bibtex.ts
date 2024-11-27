@@ -769,8 +769,11 @@ export class BetterBibTeX {
         })
 
         if (is7) {
-          if (Zotero.ItemTreeManager.registerColumn && !isBeta) log.error('error: registerColumn has landed in release, please migrate')
-          await Zotero.ItemTreeManager.registerColumns({
+          if (Zotero.ItemTreeManager.registerColumn && !isBeta) {
+            log.error('error: registerColumn has landed in release, please migrate')
+            // const columnDataKey = await Zotero.ItemTreeManager.registerColumn({...})
+          }
+          await Zotero.ItemTreeManager.registerColumns([{
             dataKey: 'citationKey',
             label: l10n.localize('better-bibtex_zotero-pane_column_citekey'),
             pluginID: 'better-bibtex@iris-advies.com',
@@ -778,7 +781,7 @@ export class BetterBibTeX {
               const citekey = Zotero.BetterBibTeX.KeyManager.get(item.id)
               return citekey ? `${ citekey.citationKey }${ citekey.pinned ? icons.pin : '' }`.trim() : ''
             },
-          })
+          }])
 
           const rowID = Zotero.ItemPaneManager.registerInfoRow({
             rowID: 'better-bibtex-citation-key',
@@ -800,6 +803,7 @@ export class BetterBibTeX {
 
           Events.on('items-changed', () => {
             Zotero.ItemPaneManager.refreshInfoRow(rowID)
+            // if (!ZoteroPane.itemPane.itemsView._columnPrefs[columnDataKey].hidden) Zotero.ItemTreeManager.refreshColumns()
           })
         }
 
