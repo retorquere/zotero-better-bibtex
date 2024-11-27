@@ -19,6 +19,21 @@ export const discard = {
   table(): void {},
 }
 
+function stringifyXPCOM(obj): string {
+  if (!obj.QueryInterface) return ''
+  if (obj.message) return `[XPCOM error ${ obj.message }]`
+  if (obj.name) return `[XPCOM object ${ obj.name }]`
+  return '[XPCOM object]'
+}
+
+function stringifyError(obj) {
+  if (obj instanceof Error) return `[error: ${ obj.message || '<unspecified error>' }\n${ obj.stack }]`
+  // guess it is an errorevent
+  if (obj.error instanceof Error && obj.message) return `[errorevent: ${ obj.message } ${ stringifyError(obj.error) }]`
+  if (typeof ErrorEvent !== 'undefined' && obj instanceof ErrorEvent) return `[errorevent: ${ obj.message || '<unspecified errorevent>' }]`
+  return ''
+}
+
 function replacer() {
   const seen = new WeakSet
   return (key, value) => {
@@ -26,17 +41,23 @@ function replacer() {
       if (seen.has(value)) return '[Circular]'
       seen.add(value)
     }
+
     if (value === null) return value
     if (value instanceof Set) return [...value]
     if (value instanceof Map) return Object.fromEntries(value)
+
     switch (typeof value) {
       case 'string':
       case 'number':
       case 'boolean':
-      case 'object':
         return value
+
+      case 'object':
+        return stringifyXPCOM(value) || stringifyError(value) || value
     }
+
     if (Array.isArray(value)) return value
+
     return undefined
   }
 }
