@@ -11,7 +11,7 @@ import type Bluebird from 'bluebird'
 const Ready = Zotero.Promise.defer()
 
 import { Shim } from './os'
-import { is7, isBeta } from './client'
+import { is7 } from './client'
 const $OS = is7 ? Shim : OS
 
 if (is7) Components.utils.importGlobalProperties(['FormData', 'indexedDB'])
@@ -770,8 +770,7 @@ export class BetterBibTeX {
         })
 
         if (is7) {
-          if (Zotero.ItemTreeManager.registerColumn && !isBeta) log.error('error: registerColumn has landed in release, please migrate')
-          await Zotero.ItemTreeManager.registerColumns({
+          const columnDataKey = await Zotero.ItemTreeManager.registerColumn({
             dataKey: 'citationKey',
             label: l10n.localize('better-bibtex_zotero-pane_column_citekey'),
             pluginID: 'better-bibtex@iris-advies.com',
@@ -801,6 +800,8 @@ export class BetterBibTeX {
 
           Events.on('items-changed', () => {
             Zotero.ItemPaneManager.refreshInfoRow(rowID)
+            // eslint-disable-next-line no-underscore-dangle
+            if (!Zotero.getActiveZoteroPane().itemPane.itemsView._columnPrefs[columnDataKey].hidden) Zotero.ItemTreeManager.refreshColumns()
           })
         }
 
@@ -859,69 +860,6 @@ export class BetterBibTeX {
   }
 
   async loadUI(win: Window): Promise<void> {
-    if (is7 && !isBeta) {
-      // const show = (item: ZoteroItem): { id: number, type: string, citekey: string } | boolean => item ? { id: item.id, type: Zotero.ItemTypes.getName(item.itemTypeID), citekey: item.getField('citationKey') as string } : false
-      if (Zotero.ItemPaneManager.registerInfoRow) {
-        log.error('Zotero.ItemPaneManager.registerInfoRow is GA')
-      }
-      else {
-        let $done: () => void
-        Zotero.ItemPaneManager.registerSection({
-          paneID: 'betterbibtex-section-citationkey',
-          pluginID: 'better-bibtex@iris-advies.com',
-          header: {
-            l10nID: 'better-bibtex_item-pane_section_header',
-            icon: `${ rootURI }content/skin/item-section/header.svg`,
-          },
-          sidenav: {
-            l10nID: 'better-bibtex_item-pane_section_sidenav',
-            icon: `${ rootURI }content/skin/item-section/sidenav.svg`,
-          },
-          bodyXHTML: 'Citation Key <html:input type="text" data-itemid="" id="better-bibtex-citation-key" readonly="true" style="flex: 1" xmlns:html="http://www.w3.org/1999/xhtml"/><html:span id="better-bibtex-citation-key-pinned"/>',
-          // onRender: ({ body, item, editable, tabType }) => {
-          onRender: ({ body, item, setSectionSummary }) => {
-            const citekey = Zotero.BetterBibTeX.KeyManager.get(item.id) || { citationKey: '', pinned: false }
-            const textbox = body.querySelector('#better-bibtex-citation-key')
-            body.style.display = 'flex'
-            // const was = textbox.dataset.itemid || '<node>'
-            textbox.value = citekey.citationKey
-            textbox.dataset.itemid = citekey.citationKey ? `${ item.id }` : ''
-
-            const pinned = body.querySelector('#better-bibtex-citation-key-pinned')
-            pinned.textContent = citekey.pinned ? icons.pin : ''
-
-            setSectionSummary(citekey || '')
-          },
-          onInit: ({ body, refresh }) => {
-            $done = Events.on('items-changed', ({ items }) => {
-              const textbox = body.querySelector('#better-bibtex-citation-key')
-              const itemID = textbox.dataset.itemid ? parseInt(textbox.dataset.itemid) : undefined
-              const displayed: ZoteroItem = textbox.dataset.itemid ? items.find(item => item.id === itemID) : undefined
-              if (displayed) refresh()
-            })
-          },
-          onItemChange: ({ setEnabled, body, item }) => {
-            const textbox = body.querySelector('#better-bibtex-citation-key')
-            if (item.isRegularItem() && !item.isFeedItem) {
-              const citekey = item.getField('citationKey')
-              // const was = textbox.dataset.itemid
-              textbox.dataset.itemid = citekey ? `${ item.id }` : ''
-              textbox.value = citekey || '\u274C'
-              setEnabled(true)
-            }
-            else {
-              textbox.dataset.itemid = ''
-              setEnabled(false)
-            }
-          },
-          onDestroy: () => {
-            $done?.()
-            $done = undefined
-          },
-        })
-      }
-    }
-
     try {
       await newZoteroPane(win)
       if (!is7) await newZoteroItemPane(win)
