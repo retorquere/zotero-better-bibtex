@@ -1,4 +1,4 @@
-import { log } from '../logger/simple'
+import { log } from '../logger'
 import { stringify } from '../stringify'
 
 import { is7, worker } from '../client'

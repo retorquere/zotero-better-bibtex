@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-function-type, prefer-rest-params, @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-unsafe-return, @typescript-eslint/no-shadow */
 
 export type Trampoline = Function & { disabled?: boolean }
-// import { log } from './logger/simple'
+// import { log } from './logger'
 
 type Patch = {
   object: any

@@ -12,7 +12,7 @@ import { regex as escapeRE } from '../../content/escape'
 import { Collection, Attachment } from '../../gen/typings/serialized-item'
 import type { Exporter as BibTeXExporter } from '../bibtex/exporter'
 import type { CharMap } from 'unicode2latex'
-import { log } from '../../content/logger/simple'
+import { log } from '../../content/logger'
 import type { Collected } from './collect'
 
 export type Output = {

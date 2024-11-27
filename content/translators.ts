@@ -43,7 +43,7 @@ declare const ZOTERO_CONFIG: any
 import type { Translators as Translator } from '../typings/translators'
 import { Preference } from './prefs'
 import { affects, Preferences } from '../gen/preferences/meta'
-import { log } from './logger/simple'
+import { log } from './logger'
 import { flash } from './flash'
 import { Events } from './events'
 import { Pinger } from './ping'
