@@ -1,7 +1,7 @@
 Components.utils.import('resource://gre/modules/FileUtils.jsm')
 declare const FileUtils: any
 
-import { log } from './logger'
+import { log } from './logger/simple'
 
 import { Shim } from './os'
 import * as client from './client'
@@ -275,7 +275,7 @@ const queue = new class TaskQueue {
   }
 
   private async runAsync(path: string) {
-    log.debug(`3065: scheduling ${path}`)
+    log.debug('3065: scheduling', path)
     await Zotero.BetterBibTeX.ready
 
     const ae = AutoExport.get(path)
