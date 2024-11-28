@@ -4,7 +4,6 @@ import { Shim } from './os'
 import * as client from './client'
 const $OS = client.is7 ? Shim : OS
 import merge from 'lodash.merge'
-import { pick } from './object'
 import { Cache } from './db/cache'
 import { Serializer } from './item-export-format'
 
@@ -401,7 +400,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
   public displayOptions(translatorID: string, displayOptions: any): any {
     const defaults = this.byId[translatorID]?.displayOptions || {}
-    return pick(merge({}, defaults, displayOptions), Object.keys(defaults))
+    return merge({}, defaults, displayOptions)
   }
 
   public async exportItems(job: ExportJob): Promise<string> {
