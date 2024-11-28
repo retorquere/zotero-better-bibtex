@@ -414,7 +414,7 @@ class ZoteroPane {
       try {
         return await Translators.queueJob({
           translatorID: Translators.bySlug.BetterBibTeXJSON.translatorID,
-          displayOptions: { exportNotes: true, dropAttachments: true, Normalize: true },
+          displayOptions: { worker: true, exportNotes: true, dropAttachments: true, Normalize: true },
           scope,
           timeout: 40,
         })

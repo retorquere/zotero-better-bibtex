@@ -224,7 +224,14 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
   }
 
   public async queueJob(job: ExportJob): Promise<string> {
-    return await this.queue.add(() => this.exportItemsByWorker(job))
+    const displayOptions = this.displayOptions(job.translatorID, job.displayOptions)
+    const translator = this.byId[job.translatorID]
+    if (typeof translator?.displayOptions.worker === 'boolean' && displayOptions.worker) {
+      return await this.queue.add(() => this.exportItemsByWorker(job))
+    }
+    else {
+      return await this.queue.add(() => this.exportItems(job))
+    }
   }
 
   private async exportItemsByWorker(job: ExportJob): Promise<string> {
@@ -411,11 +418,6 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     await Zotero.BetterBibTeX.ready
 
     const displayOptions = this.displayOptions(job.translatorID, job.displayOptions)
-
-    const translator = this.byId[job.translatorID]
-    if (typeof translator?.displayOptions.worker === 'boolean' && displayOptions.worker) {
-      return await this.queueJob(job)
-    }
 
     const translation = new Zotero.Translate.Export
 

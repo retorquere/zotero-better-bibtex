@@ -498,7 +498,7 @@ $Patcher$.schedule(Zotero.Translate.Export.prototype, 'translate', original => f
   if (useWorker) {
     return Translators.queueJob({
       translatorID,
-      displayOptions,
+      displayOptions: {...displayOptions, worker: true},
       translate: this,
       scope: { ...this._export, getter: this._itemGetter },
       path: this.location?.path,

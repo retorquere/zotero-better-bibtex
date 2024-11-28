@@ -36,7 +36,7 @@ const config = {
           singleline: { delimiter: 'semi', requireLast: false }
         }],
         '@stylistic/array-bracket-spacing': ['error', 'always', { singleValue: false }],
-        '@stylistic/object-curly-spacing': ['error', 'always', { arraysInObjects: false, objectsInObjects: false }],
+        '@stylistic/object-curly-spacing': 'off',
         '@stylistic/new-parens': ['error', 'never'],
         '@stylistic/quote-props': [ 'error', 'as-needed' ],
         '@stylistic/arrow-parens': [ 'error', 'as-needed' ],

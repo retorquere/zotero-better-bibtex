@@ -305,6 +305,7 @@ const queue = new class TaskQueue {
         useJournalAbbreviation: ae.useJournalAbbreviation,
         biblatexAPA: ae.biblatexAPA || false,
         biblatexChicago: ae.biblatexChicago || false,
+        worker: true,
       }
 
       const jobs: ExportJob[] = [{
