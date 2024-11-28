@@ -15,6 +15,7 @@ _anchors:
     uses: actions/setup-python@v5
     with:
       python-version: '3.10'
+      cache: 'pip'
   install_node: &install_node
     name: install node
     uses: actions/setup-node@v4
@@ -29,9 +30,7 @@ _anchors:
     with:
       path: |
         ~/.npm
-        ~/.nocache/pip
-        ${{ env.pythonLocation }}
-      key: ${{ runner.os }}-build-${{ env.pythonLocation }}-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('requirements.txt') }}
+      key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('requirements.txt') }}
   install_python_packages: &install_python_packages
     name: install python packages
     run: |
@@ -63,9 +62,9 @@ jobs:
       if: github.event.head_commit.message == env.version && !startsWith(github.ref, 'refs/tags/')
 
     - *install_python
+    - *install_python_packages
     - *install_node
     - *cache
-    - *install_python_packages
     - *install_node_packages
     - name: set slow/legacy/beta flags
       run: ./util/action-flags
@@ -133,8 +132,8 @@ jobs:
       with:
         name: build-artifacts
     - *install_python
-    - *cache
     - *install_python_packages
+    - *cache
 
     - name: install ${{ matrix.client }}
       run: |
@@ -200,9 +199,9 @@ jobs:
       with:
         name: build-artifacts
     - *install_python
+    - *install_python_packages
     - *install_node
     - *cache
-    - *install_python_packages
     - *install_node_packages
 
     - run: npm run release
@@ -230,6 +229,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - *install_python
+    - *install_python_packages
     - name: fetch test artifacts
       uses: actions/download-artifact@v4
       with:
