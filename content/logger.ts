@@ -67,8 +67,8 @@ function to_s(obj: any): string {
   return JSON.stringify(obj, replacer(), 2)
 }
 
-export function format(...msg): void {
-  msg.map(to_s).join(' ')
+export function format(...msg): string {
+  return msg.map(to_s).join(' ')
 }
 
 export const log = new class {

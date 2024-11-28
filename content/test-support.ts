@@ -145,6 +145,7 @@ export class TestSupport {
 
     const start = Date.now()
     try {
+      log.info('queue: starting new job while', Translators.queue.size(), 'pending')
       return await Translators.exportItems(job)
     }
     finally {
