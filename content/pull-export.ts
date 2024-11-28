@@ -44,7 +44,6 @@ class CollectionHandler {
         translatorID: Translators.getTranslatorId(translator),
         displayOptions: displayOptions(request),
         scope: { type: 'collection', collection },
-        worker: true,
       }) ]
     }
     catch (err) {
@@ -72,7 +71,6 @@ class LibraryHandler {
         translatorID: Translators.getTranslatorId(translator),
         displayOptions: displayOptions(request),
         scope: { type: 'library', id: libID },
-        worker: true,
       }) ]
     }
     catch (err) {
@@ -103,7 +101,6 @@ class SelectedHandler {
         translatorID: Translators.getTranslatorId(translator),
         displayOptions: displayOptions(request),
         scope: { type: 'items', items },
-        worker: true,
       }) ]
     }
     catch (err) {

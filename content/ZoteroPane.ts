@@ -127,9 +127,8 @@ class ZoteroPane {
         const items = zp.getSelectedItems()
         toClipboard(await Translators.queueJob({
           translatorID,
-          displayOptions: {},
+          displayOptions: { worker: true },
           scope: { type: 'items', items },
-          worker: true,
         }))
       }
       menupopup.appendChild(elements.create('menuitem', {
