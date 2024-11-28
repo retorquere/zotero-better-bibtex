@@ -235,12 +235,10 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
   }
 
   private async exportItemsByWorker(job: ExportJob): Promise<string> {
-    // trace('exportItemsByWorker: requested')
     if (job.path && job.canceled) return ''
     await Zotero.BetterBibTeX.ready
     if (job.path && job.canceled) return ''
 
-    // trace('exportItemsByWorker: preparing')
     const displayOptions = {
       ...this.displayOptions(job.translatorID, job.displayOptions),
       exportPath: job.path || undefined,
@@ -370,9 +368,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
         },
       })
 
-      // trace('exportItemsByWorker: starting cache completion')
       await Cache.ZoteroSerialized.fill(items, this.serializer)
-      // trace('exportItemsByWorker: cache completion completed')
 
       config.data.items = items.map(item => item.id)
       prepare.update()
@@ -389,7 +385,6 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
       prepare.done()
 
-      // trace('exportItemsByWorker: prepare finished')
       this.worker.postMessage({ kind: 'start', config })
 
       if (typeof job.timeout === 'number') {
@@ -418,7 +413,6 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     await Zotero.BetterBibTeX.ready
 
     const displayOptions = this.displayOptions(job.translatorID, job.displayOptions)
-
     const translation = new Zotero.Translate.Export
 
     const scope = this.exportScope(job.scope)
