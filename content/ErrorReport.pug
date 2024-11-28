@@ -22,7 +22,7 @@ wizard#better-bibtex-error-report(
     description.header(style='white-space: pre-wrap;') &better-bibtex_error-report_enable-debug;
     button(label='&better-bibtex_error-report_restart-with-logging-enabled.label;' oncommand='window.ErrorReport.restartWithDebugEnabled()')/
   wizardpage(pageid='page-review' label=' ')
-    description.header(style='white-space: pre-wrap;') &better-bibtex_error-report_review;
+    tooltip#better-bibtex-error-report-info &better-bibtex_error-report_review;
     textbox#better-bibtex-report-current.plain(flex='1' readonly='true')
     textbox#better-bibtex-report-latest.plain.textbox-emph(flex='1' readonly='true')
     textbox#better-bibtex-report-oom.plain.textbox-emph(hidden='true' flex='1' multiline='true' readonly='true' value='&better-bibtex_error-report_better-bibtex_oom.value;')
@@ -43,13 +43,13 @@ wizard#better-bibtex-error-report(
         tab#better-bibtex-error-items-tab(label='&better-bibtex_error-report_items.label;')/
       tabpanels(flex='1')
         tabpanel(flex='1' orient='vertical')
-          textbox#better-bibtex-error-context.plain(readonly='true' multiline='true' flex='10' style='min-height: 8em;')
+          textbox#better-bibtex-error-context.plain(readonly='true' multiline='true' flex='10' style='min-height: 8em;' tooltip='better-bibtex-error-report-info')
         tabpanel(flex='1' orient='vertical')
-          textbox#better-bibtex-error-errors.plain(readonly='true' multiline='true' flex='10' style='min-height: 8em;')
+          textbox#better-bibtex-error-errors.plain(readonly='true' multiline='true' flex='10' style='min-height: 8em;' tooltip='better-bibtex-error-report-info')
         tabpanel(flex='1' orient='vertical')
-          textbox#better-bibtex-error-log.plain(readonly='true' multiline='true' flex='10' style='min-height: 8em;')
+          textbox#better-bibtex-error-log.plain(readonly='true' multiline='true' flex='10' style='min-height: 8em;' tooltip='better-bibtex-error-report-info')
         tabpanel(flex='1' orient='vertical')
-          textbox#better-bibtex-error-items.plain(readonly='true' multiline='true' flex='10' style='min-height: 8em;')
+          textbox#better-bibtex-error-items.plain(readonly='true' multiline='true' flex='10' style='min-height: 8em;' tooltip='better-bibtex-error-report-info')
     hbox
       button(label='&better-bibtex_error-report_save.label;' oncommand='window.ErrorReport.save()')/
       hbox(flex='1')/
