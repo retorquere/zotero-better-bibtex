@@ -125,10 +125,11 @@ class ZoteroPane {
 
       const clipSelected = async (translatorID: string) => {
         const items = zp.getSelectedItems()
-        toClipboard(await Translators.exportItems({
+        toClipboard(await Translators.queueJob({
           translatorID,
           displayOptions: {},
           scope: { type: 'items', items },
+          worker: true,
         }))
       }
       menupopup.appendChild(elements.create('menuitem', {

@@ -13,14 +13,15 @@ import { fromPairs } from './object'
 import { orchestrator } from './orchestrator'
 import { Server } from './server'
 
+const isTrue = new Set([ 'y', 'yes', 'true' ])
 function displayOptions(request) {
-  const isTrue = new Set([ 'y', 'yes', 'true' ])
   const query = Server.queryParams(request)
 
   return {
     // exportCharset: query.exportCharset || 'utf8',
     exportNotes: isTrue.has(query.exportNotes),
     useJournalAbbreviation: isTrue.has(query.useJournalAbbreviation),
+    worker: !query.worker || isTrue.has(query.worker),
   }
 }
 
@@ -39,10 +40,11 @@ class CollectionHandler {
       const collection = Zotero.Collections.getByLibraryAndKey(libID, path) || (await getCollection(`/${ libID }/${ path }`))
       if (!collection) return [ NOT_FOUND, 'text/plain', `Could not export bibliography: path '${ path }' not found` ]
 
-      return [ OK, 'text/plain', await Translators.exportItems({
+      return [ OK, 'text/plain', await Translators.queueJob({
         translatorID: Translators.getTranslatorId(translator),
         displayOptions: displayOptions(request),
         scope: { type: 'collection', collection },
+        worker: true,
       }) ]
     }
     catch (err) {
@@ -66,10 +68,11 @@ class LibraryHandler {
         return [ NOT_FOUND, 'text/plain', `Could not export bibliography: library '${ urlpath }' does not exist` ]
       }
 
-      return [ OK, 'text/plain', await Translators.exportItems({
+      return [ OK, 'text/plain', await Translators.queueJob({
         translatorID: Translators.getTranslatorId(translator),
         displayOptions: displayOptions(request),
         scope: { type: 'library', id: libID },
+        worker: true,
       }) ]
     }
     catch (err) {
@@ -96,10 +99,11 @@ class SelectedHandler {
         return [ OK, 'text/plain', Zotero.QuickCopy.getContentFromItems(items, format, null, true).text ]
       }
 
-      return [ OK, 'text/plain', await Translators.exportItems({
+      return [ OK, 'text/plain', await Translators.queueJob({
         translatorID: Translators.getTranslatorId(translator),
         displayOptions: displayOptions(request),
         scope: { type: 'items', items },
+        worker: true,
       }) ]
     }
     catch (err) {
@@ -173,7 +177,7 @@ class ItemHandler {
       if (!Object.keys(itemIDs).length) return [ SERVER_ERROR, 'text/plain', 'no items found' ]
       // itemID => zotero item
       const items = fromPairs((await getItemsAsync(Object.values(itemIDs))).map(item => [ item.itemID, item ]))
-      let contents = await Translators.exportItems({ translatorID, displayOptions: displayOptions(request), scope: { type: 'items', items: Object.values(items) }})
+      let contents = await Translators.queueJob({ translatorID, displayOptions: displayOptions(request), scope: { type: 'items', items: Object.values(items) }})
 
       if (pandocFilterData) {
         let filtered_items
