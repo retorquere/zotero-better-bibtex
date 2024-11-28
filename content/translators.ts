@@ -4,6 +4,7 @@ import { Shim } from './os'
 import * as client from './client'
 const $OS = client.is7 ? Shim : OS
 import merge from 'lodash.merge'
+import { pick } from './object'
 import { Cache } from './db/cache'
 import { Serializer } from './item-export-format'
 
@@ -224,14 +225,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
   }
 
   public async queueJob(job: ExportJob): Promise<string> {
-    const displayOptions = this.displayOptions(job.translatorID, job.displayOptions)
-    const translator = this.byId[job.translatorID]
-    if (typeof translator?.displayOptions.worker === 'boolean' && displayOptions.worker) {
-      return await this.queue.add(() => this.exportItemsByWorker(job))
-    }
-    else {
-      return await this.queue.add(() => this.exportItems(job))
-    }
+    return await this.queue.add(() => this.exportItems(job))
   }
 
   private async exportItemsByWorker(job: ExportJob): Promise<string> {
@@ -406,13 +400,16 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
   }
 
   public displayOptions(translatorID: string, displayOptions: any): any {
-    return merge({}, this.byId[translatorID]?.displayOptions || {}, displayOptions)
+    const defaults = this.byId[translatorID]?.displayOptions || {}
+    return pick(merge({}, defaults, displayOptions), Object.keys(defaults))
   }
 
   public async exportItems(job: ExportJob): Promise<string> {
     await Zotero.BetterBibTeX.ready
 
     const displayOptions = this.displayOptions(job.translatorID, job.displayOptions)
+    if (displayOptions.worker) return await this.exportItemsByWorker(job)
+
     const translation = new Zotero.Translate.Export
 
     const scope = this.exportScope(job.scope)
