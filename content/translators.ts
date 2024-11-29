@@ -406,8 +406,9 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
   public async exportItems(job: ExportJob): Promise<string> {
     await Zotero.BetterBibTeX.ready
 
+    const translator = this.byId[job.translatorID]
     const displayOptions = this.displayOptions(job.translatorID, job.displayOptions)
-    if (displayOptions.worker) return await this.exportItemsByWorker(job)
+    if (translator && displayOptions.worker) return await this.exportItemsByWorker(job)
 
     const translation = new Zotero.Translate.Export
 
