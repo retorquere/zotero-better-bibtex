@@ -791,11 +791,9 @@ export class BetterBibTeX {
             onGetData({ item }) {
               return item.getField('citationKey') as string
             },
-            /*
             onSetData({ rowID, item, tabType, editable, value }) {
               Zotero.debug(`Set custom info row ${rowID} of item ${item.id} to ${value}`);
             },
-            */
           })
           */
 
