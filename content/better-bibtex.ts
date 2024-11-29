@@ -779,7 +779,7 @@ export class BetterBibTeX {
             },
           })
 
-          const rowID = Zotero.ItemPaneManager.registerInfoRow({
+          const rowID = Zotero.ItemPaneManager.registerInfoRow?.({
             rowID: 'better-bibtex-citation-key',
             pluginID: 'better-bibtex@iris-advies.com',
             label: { l10nID: 'better-bibtex_item-pane_info_citation-key_label' },
@@ -798,7 +798,7 @@ export class BetterBibTeX {
           })
 
           Events.on('items-changed', () => {
-            Zotero.ItemPaneManager.refreshInfoRow(rowID)
+            if (rowID) Zotero.ItemPaneManager.refreshInfoRow(rowID)
             // eslint-disable-next-line no-underscore-dangle
             if (columnDataKey && !Zotero.getActiveZoteroPane().itemPane.itemsView._columnPrefs[columnDataKey].hidden) Zotero.ItemTreeManager.refreshColumns()
           })
