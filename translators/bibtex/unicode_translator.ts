@@ -92,7 +92,12 @@ export class HTMLConverter {
       case 'em':
       case 'italic':
       case 'emphasis':
-        latex = '\\emph{...}'
+        if (this.translation.BetterBibTeX) {
+          latex = '\\emph{...}'
+        }
+        else {
+          latex = '\\mkbibemph{...}'
+        }
         break
 
       case 'b':

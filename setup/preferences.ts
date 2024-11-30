@@ -73,6 +73,8 @@ class ASTWalker extends BaseASTWalker {
         return l10n.tr(val)
       case 'number':
         return val
+      case 'boolean':
+        return val
       default:
         error('unexpected type', typeof val)
     }
