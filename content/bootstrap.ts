@@ -128,8 +128,8 @@ export async function startup({ resourceURI, rootURI = resourceURI.spec }, reaso
     onMainWindowLoad({ window: Zotero.getMainWindow() })
   }
   catch (err) {
-    alert({ title: 'Better BibTeX startup failed', text: `${ err }` })
-    log(`${ err }\n${ err.stack }`)
+    alert({ title: 'Better BibTeX startup failed', text: `${err}\n${err.stack}` })
+    log(`${ err }\n${err.stack}`)
   }
 }
 
