@@ -531,6 +531,7 @@ export class PrefPane {
 
     this.showQuickCopyDetails()
 
+    /*
     if (client.slug === 'jurism') {
       Zotero.Styles.init().then(() => {
         const styles = Zotero.Styles.getVisible().filter((style: { usesAbbreviation: boolean }) => style.usesAbbreviation)
@@ -557,10 +558,12 @@ export class PrefPane {
         }, 0)
       })
     }
+    */
 
     if (this.autoexport) await this.autoexport.refresh()
   }
 
+  /*
   private styleChanged(index) {
     if (client.slug !== 'jurism') return null
 
@@ -569,4 +572,5 @@ export class PrefPane {
     const styleID = selectedItem.getAttribute('value')
     Preference.autoAbbrevStyle = styleID
   }
+  */
 }

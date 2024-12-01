@@ -1,5 +1,3 @@
-import { Preference } from './prefs'
-import { Events } from './events'
 import * as client from './client'
 import { orchestrator } from './orchestrator'
 
@@ -20,19 +18,23 @@ export const JournalAbbrev = new class { // eslint-disable-line @typescript-esli
         if (client.slug === 'jurism') await Zotero.Styles.init() // otherwise Juris-M throws 'Styles not yet loaded'
         this.reset()
 
+        /*
         Events.on('preference-changed', pref => {
           if (pref === 'autoAbbrevStyle') this.reset()
         })
+        */
       },
     })
   }
 
   public reset() {
+    /*
     this.style = Preference.autoAbbrevStyle
     if (client.slug === 'jurism' && !this.style) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       this.style = Zotero.Styles.getVisible().filter(style => style.usesAbbreviation)[0].styleID
     }
+    */
 
     this.abbrevs = {
       default: {
