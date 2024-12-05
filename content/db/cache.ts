@@ -365,17 +365,17 @@ export const Cache = new class $Cache {
   private async validate(): Promise<boolean> {
     if (worker) return true
 
-    log.info('validating schema')
+    log.info('cache: validating schema')
     const tx = this.db.transaction(this.db.objectStoreNames, 'readonly')
     const schema: Record<string, any> = {}
     for (const storeName of this.db.objectStoreNames) {
       schema[storeName] = {}
-      const store = tx.objectStore(storeName) as unknown as any
+      const store = tx.objectStore(storeName)
 
-      if (store.ctx.objectStore.autoIncrement || store.ctx.objectStore.keyPath) {
+      if (store.autoIncrement || store.keyPath) {
         schema[storeName].$ = {
-          ...(store.ctx.objectStore.keyPath ? { keyPath: store.ctx.objectStore.keyPath } : {}),
-          ...(store.ctx.objectStore.autoIncrement ? { autoIncrement: true } : {}),
+          ...(store.keyPath ? { keyPath: store.keyPath } : {}),
+          ...(store.autoIncrement ? { autoIncrement: true } : {}),
         }
       }
 
@@ -388,13 +388,14 @@ export const Cache = new class $Cache {
 
     const expected = stringify(this.#schema, 2)
     const found = stringify(schema, 2)
-    log.info(`schema: ${found}`)
+    log.info(`cache: schema: ${found}`)
     if (expected !== found) {
-      log.error(`cache schema mismatch!\nexpected:${expected}\nfound:${found}`)
+      log.error(`cache: schema mismatch!\nexpected:${expected}\nfound:${found}`)
       return false
     }
     return true
   }
+
   private async metadata(): Promise<Record<string, string>> {
     const metadata: Record<string, string> = {}
 
