@@ -1,0 +1,45 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "preferences": {
+      "DOIandURL": "doi",
+      "autoExportDelay": 300,
+      "extraMergeCSL": true,
+      "extraMergeTeX": true,
+      "itemObserverDelay": 100,
+      "keyConflictPolicy": "change",
+      "quickCopyMode": "pandoc",
+      "warnBulkModify": 0
+    }
+  },
+  "items": [
+    {
+      "DOI": "10.1484/j.jml.2.304214",
+      "accessDate": "2013-08-30T16:28:11Z",
+      "citationKey": "adamsVerseTranslationAbbo2004",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Anthony",
+          "lastName": "Adams"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "A. G.",
+          "lastName": "Rigg"
+        }
+      ],
+      "date": "2004",
+      "itemID": 1,
+      "itemType": "journalArticle",
+      "language": "eng",
+      "libraryCatalog": "MetaPress",
+      "pages": "1-68",
+      "publicationTitle": "The Journal of Medieval Latin",
+      "title": "A verse translation of Abbo of St. Germain's <span class=\"nocase\"><i>Bella Parisiacae urbis</i></span>",
+      "url": "http://dx.doi.org/10.1484/J.JML.2.304214",
+      "volume": "14"
+    }
+  ]
+}
