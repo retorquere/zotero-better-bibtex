@@ -1,30 +1,3 @@
 [
-  {
-    "ISBN": "978-0-253-21190-3",
-    "author": [
-      {
-        "family": "Peirce",
-        "given": "Charles S."
-      }
-    ],
-    "citation-key": "peirce1998",
-    "container-title": "The Essential Peirce: Selected Philosophical Writings, Volume 2",
-    "event-place": "Bloomington",
-    "id": "peirce1998",
-    "issued": {
-      "date-parts": [
-        [
-          "1998",
-          4,
-          1
-        ]
-      ]
-    },
-    "language": "English",
-    "publisher": "Indiana University Press",
-    "publisher-place": "Bloomington",
-    "source": "Amazon",
-    "title": "Pragmatism (1907)",
-    "type": "chapter"
-  }
+  {"id":"peirce1998","author":[{"family":"Peirce","given":"Charles S."}],"citation-key":"peirce1998","container-title":"The Essential Peirce: Selected Philosophical Writings, Volume 2","event-place":"Bloomington","ISBN":"978-0-253-21190-3","issued":{"date-parts":[["1998",4,1]]},"language":"en","publisher":"Indiana University Press","publisher-place":"Bloomington","source":"Amazon","title":"Pragmatism (1907)","type":"chapter"}
 ]
