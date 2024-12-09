@@ -40,7 +40,7 @@ class CollectionHandler {
       const collection = Zotero.Collections.getByLibraryAndKey(libID, path) || (await getCollection(`/${ libID }/${ path }`))
       if (!collection) return [ NOT_FOUND, 'text/plain', `Could not export bibliography: path '${ path }' not found` ]
 
-      return [ OK, 'text/plain', await Translators.queueJob({
+      return [ OK, 'text/plain', await Translators.exportItems({
         translatorID: Translators.getTranslatorId(translator),
         displayOptions: displayOptions(request),
         scope: { type: 'collection', collection },
@@ -67,7 +67,7 @@ class LibraryHandler {
         return [ NOT_FOUND, 'text/plain', `Could not export bibliography: library '${ urlpath }' does not exist` ]
       }
 
-      return [ OK, 'text/plain', await Translators.queueJob({
+      return [ OK, 'text/plain', await Translators.exportItems({
         translatorID: Translators.getTranslatorId(translator),
         displayOptions: displayOptions(request),
         scope: { type: 'library', id: libID },
@@ -97,7 +97,7 @@ class SelectedHandler {
         return [ OK, 'text/plain', Zotero.QuickCopy.getContentFromItems(items, format, null, true).text ]
       }
 
-      return [ OK, 'text/plain', await Translators.queueJob({
+      return [ OK, 'text/plain', await Translators.exportItems({
         translatorID: Translators.getTranslatorId(translator),
         displayOptions: displayOptions(request),
         scope: { type: 'items', items },
@@ -174,7 +174,7 @@ class ItemHandler {
       if (!Object.keys(itemIDs).length) return [ SERVER_ERROR, 'text/plain', 'no items found' ]
       // itemID => zotero item
       const items = fromPairs((await getItemsAsync(Object.values(itemIDs))).map(item => [ item.itemID, item ]))
-      let contents = await Translators.queueJob({ translatorID, displayOptions: displayOptions(request), scope: { type: 'items', items: Object.values(items) }})
+      let contents = await Translators.exportItems({ translatorID, displayOptions: displayOptions(request), scope: { type: 'items', items: Object.values(items) }})
 
       if (pandocFilterData) {
         let filtered_items
