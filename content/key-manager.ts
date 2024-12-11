@@ -28,7 +28,7 @@ import { createDB, createTable, Query, BlinkKey } from 'blinkdb'
 import * as blink from '../gen/blinkdb'
 import { Cache } from './db/cache'
 
-import * as $Patcher$ from './monkey-patch'
+import { monkey } from './monkey-patch'
 
 import { sprintf } from 'sprintf-js'
 import { newQueue } from '@henrygd/queue'
@@ -289,7 +289,7 @@ export const KeyManager = new class _KeyManager {
       localized: 'Citation Key',
     }
 
-    $Patcher$.schedule(Zotero.Search.prototype, 'addCondition', original => function addCondition(condition: string, operator: any, value: any, _required: any) {
+    monkey.patch(Zotero.Search.prototype, 'addCondition', original => function addCondition(condition: string, operator: any, value: any, _required: any) {
       // detect a quick search being set up
       if (condition.match(/^quicksearch/)) this.__add_bbt_citekey = true
       // creator is always added in a quick search so use it as a trigger
@@ -300,18 +300,18 @@ export const KeyManager = new class _KeyManager {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return, prefer-rest-params
       return original.apply(this, arguments)
     })
-    $Patcher$.schedule(Zotero.SearchConditions, 'hasOperator', original => function hasOperator(condition: string, operator: string | number) {
+    monkey.patch(Zotero.SearchConditions, 'hasOperator', original => function hasOperator(condition: string, operator: string | number) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       if (condition === citekeySearchCondition.name) return citekeySearchCondition.operators[operator]
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return, prefer-rest-params
       return original.apply(this, arguments)
     })
-    $Patcher$.schedule(Zotero.SearchConditions, 'get', original => function get(condition: string) {
+    monkey.patch(Zotero.SearchConditions, 'get', original => function get(condition: string) {
       if (condition === citekeySearchCondition.name) return citekeySearchCondition
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return, prefer-rest-params
       return original.apply(this, arguments)
     })
-    $Patcher$.schedule(Zotero.SearchConditions, 'getStandardConditions', original => function getStandardConditions() {
+    monkey.patch(Zotero.SearchConditions, 'getStandardConditions', original => function getStandardConditions() {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return, prefer-rest-params
       return original.apply(this, arguments).concat({
         name: citekeySearchCondition.name,
@@ -319,7 +319,7 @@ export const KeyManager = new class _KeyManager {
         operators: citekeySearchCondition.operators,
       }).sort((a: { localized: string }, b: { localized: any }) => a.localized.localeCompare(b.localized))
     })
-    $Patcher$.schedule(Zotero.SearchConditions, 'getLocalizedName', original => function getLocalizedName(str: string) {
+    monkey.patch(Zotero.SearchConditions, 'getLocalizedName', original => function getLocalizedName(str: string) {
       if (str === citekeySearchCondition.name) return citekeySearchCondition.localized
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return, prefer-rest-params
       return original.apply(this, arguments)

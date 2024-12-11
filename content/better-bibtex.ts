@@ -33,7 +33,7 @@ import { newZoteroItemPane } from './ZoteroItemPane'
 import { ExportOptions } from './ExportOptions'
 import { PrefPane } from './Preferences'
 import { ErrorReport } from './ErrorReport'
-import * as $Patcher$ from './monkey-patch'
+import { monkey } from './monkey-patch'
 import { clean_pane_persist } from './clean_pane_persist'
 import { flash } from './flash'
 import { orchestrator } from './orchestrator'
@@ -72,7 +72,7 @@ import type { Collected } from '../translators/lib/collect'
 // need coroutine here because Zotero calls '.done()' on the nonexistent! result, added automagically by bluebird
 if (!is7) {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  $Patcher$.patch(Zotero, 'shutdown', original => Zotero.Promise.coroutine(function* () {
+  monkey.patch(Zotero, 'shutdown', original => Zotero.Promise.coroutine(function* () {
     try {
       yield orchestrator.shutdown(Zotero.BetterBibTeX.uninstalled ? 'ADDON_UNINSTALL' : 'APP_SHUTDOWN')
     }
@@ -111,7 +111,7 @@ if (!is7) {
 // MONKEY PATCHES
 
 // zotero moved itemToCSLJSON to Zotero.Utilities.Item, jurism for the moment keeps it on ZU
-$Patcher$.schedule(Zotero.Utilities.Item?.itemToCSLJSON ? Zotero.Utilities.Item : Zotero.Utilities, 'itemToCSLJSON', original => function itemToCSLJSON(zoteroItem: { itemID: any }) {
+monkey.patch(Zotero.Utilities.Item?.itemToCSLJSON ? Zotero.Utilities.Item : Zotero.Utilities, 'itemToCSLJSON', original => function itemToCSLJSON(zoteroItem: { itemID: any }) {
   const cslItem = original.apply(this, arguments)
 
   try {
@@ -131,7 +131,7 @@ $Patcher$.schedule(Zotero.Utilities.Item?.itemToCSLJSON ? Zotero.Utilities.Item 
 })
 
 // https://github.com/retorquere/zotero-better-bibtex/issues/1221
-$Patcher$.schedule(Zotero.Items, 'merge', original => async function Zotero_Items_merge(item: ZoteroItem, otherItems: ZoteroItem[]) {
+monkey.patch(Zotero.Items, 'merge', original => async function Zotero_Items_merge(item: ZoteroItem, otherItems: ZoteroItem[]) {
   try {
     // log.verbose = true
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
@@ -221,7 +221,7 @@ function parseLibraryKeyFromCitekey(libraryKey) {
   return item ? { libraryID: item.libraryID, key: item.itemKey } : false
 }
 
-$Patcher$.schedule(Zotero.API, 'getResultsFromParams', original => function Zotero_API_getResultsFromParams(params: Record<string, any>) {
+monkey.patch(Zotero.API, 'getResultsFromParams', original => function Zotero_API_getResultsFromParams(params: Record<string, any>) {
   const libraryID = params.libraryID || Zotero.Libraries.userLibraryID
   function ck(key: string): string {
     const m = key.match(/^(bbt:|@)(.+)/)
@@ -242,14 +242,14 @@ $Patcher$.schedule(Zotero.API, 'getResultsFromParams', original => function Zote
 })
 
 if (typeof Zotero.DataObjects.prototype.parseLibraryKeyHash === 'function') {
-  $Patcher$.schedule(Zotero.DataObjects.prototype, 'parseLibraryKeyHash', original => function Zotero_DataObjects_prototype_parseLibraryKeyHash(libraryKey: string) {
+  monkey.patch(Zotero.DataObjects.prototype, 'parseLibraryKeyHash', original => function Zotero_DataObjects_prototype_parseLibraryKeyHash(libraryKey: string) {
     const item = parseLibraryKeyFromCitekey(libraryKey)
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return typeof item === 'undefined' ? original.apply(this, arguments) : item
   })
 }
 if (typeof Zotero.DataObjects.prototype.parseLibraryKey === 'function') {
-  $Patcher$.schedule(Zotero.DataObjects.prototype, 'parseLibraryKey', original => function Zotero_DataObjects_prototype_parseLibraryKey(libraryKey: string) {
+  monkey.patch(Zotero.DataObjects.prototype, 'parseLibraryKey', original => function Zotero_DataObjects_prototype_parseLibraryKey(libraryKey: string) {
     const item = parseLibraryKeyFromCitekey(libraryKey)
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return typeof item === 'undefined' ? original.apply(this, arguments) : item
@@ -257,14 +257,14 @@ if (typeof Zotero.DataObjects.prototype.parseLibraryKey === 'function') {
 }
 
 // otherwise the display of the citekey in the item pane flames out
-$Patcher$.schedule(Zotero.ItemFields, 'isFieldOfBase', original => function Zotero_ItemFields_isFieldOfBase(field: string, _baseField: any) {
+monkey.patch(Zotero.ItemFields, 'isFieldOfBase', original => function Zotero_ItemFields_isFieldOfBase(field: string, _baseField: any) {
   if (field === 'citationKey') return false
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   return original.apply(this, arguments)
 })
 
 // because the zotero item editor does not check whether a textbox is read-only. *sigh*
-$Patcher$.schedule(Zotero.Item.prototype, 'setField', original => function Zotero_Item_prototype_setField(field: string, value: string | undefined, _loadIn: any) {
+monkey.patch(Zotero.Item.prototype, 'setField', original => function Zotero_Item_prototype_setField(field: string, value: string | undefined, _loadIn: any) {
   if (field === 'citationKey') {
     if (Zotero.BetterBibTeX.starting) return false
 
@@ -296,7 +296,7 @@ $Patcher$.schedule(Zotero.Item.prototype, 'setField', original => function Zoter
 })
 
 // To show the citekey in the item list
-$Patcher$.schedule(Zotero.Item.prototype, 'getField', original => function Zotero_Item_prototype_getField(field: any, unformatted: any, includeBaseMapped: any) {
+monkey.patch(Zotero.Item.prototype, 'getField', original => function Zotero_Item_prototype_getField(field: any, unformatted: any, includeBaseMapped: any) {
   try {
     if (field === 'citationKey' || field === 'citekey') {
       if (Zotero.BetterBibTeX.starting) return '' // eslint-disable-line @typescript-eslint/no-use-before-define
@@ -313,7 +313,7 @@ $Patcher$.schedule(Zotero.Item.prototype, 'getField', original => function Zoter
 })
 
 // #1579
-$Patcher$.schedule(Zotero.Item.prototype, 'clone', original => function Zotero_Item_prototype_clone(libraryID: number, options = {}) {
+monkey.patch(Zotero.Item.prototype, 'clone', original => function Zotero_Item_prototype_clone(libraryID: number, options = {}) {
   const item = original.apply(this, arguments)
   try {
     if ((typeof libraryID === 'undefined' || this.libraryID === libraryID) && item.isRegularItem()) {
@@ -329,7 +329,7 @@ $Patcher$.schedule(Zotero.Item.prototype, 'clone', original => function Zotero_I
 
 if (!is7) {
   const itemTree = require('zotero/itemTree')
-  $Patcher$.patch(itemTree.prototype, 'getColumns', original => function Zotero_ItemTree_prototype_getColumns() {
+  monkey.patch(itemTree.prototype, 'getColumns', original => function Zotero_ItemTree_prototype_getColumns() {
     const columns = original.apply(this, arguments)
     try {
       const insertAfter: number = columns.findIndex(column => column.dataKey === 'title')
@@ -348,7 +348,7 @@ if (!is7) {
     return columns
   })
 
-  $Patcher$.patch(itemTree.prototype, '_renderCell', original => function Zotero_ItemTree_prototype_renderCell(index, data, col) {
+  monkey.patch(itemTree.prototype, '_renderCell', original => function Zotero_ItemTree_prototype_renderCell(index, data, col) {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     if (col.dataKey !== 'citationKey') return original.apply(this, arguments)
 
@@ -385,7 +385,7 @@ if (!is7) {
 }
 
 import * as CAYW from './cayw'
-$Patcher$.schedule(Zotero.Integration, 'getApplication', original => function Zotero_Integration_getApplication(agent: string, _command: any, _docId: any) {
+monkey.patch(Zotero.Integration, 'getApplication', original => function Zotero_Integration_getApplication(agent: string, _command: any, _docId: any) {
   if (agent === 'BetterBibTeX') return CAYW.Application
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   return original.apply(this, arguments)
@@ -432,14 +432,14 @@ Zotero.Translate.Import.prototype.Sandbox.BetterBibTeX = {
   parseCSLYAML(_sandbox: any, input: string): any { return parseCSLYAML(input) },
 }
 
-$Patcher$.schedule(Zotero.Utilities.Internal, 'itemToExportFormat', original => function Zotero_Utilities_Internal_itemToExportFormat(zoteroItem: any, _legacy: any, _skipChildItems: any) {
+monkey.patch(Zotero.Utilities.Internal, 'itemToExportFormat', original => function Zotero_Utilities_Internal_itemToExportFormat(zoteroItem: any, _legacy: any, _skipChildItems: any) {
   const serialized = original.apply(this, arguments)
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   return typeof zoteroItem.id === 'number' ? fixExportFormat(serialized, zoteroItem) : serialized
 })
 
 // so BBT-JSON can be imported without extra-field meddling
-$Patcher$.schedule(Zotero.Utilities.Internal, 'extractExtraFields', original => function Zotero_Utilities_Internal_extractExtraFields(extra: string, _item: any, _additionalFields: any) {
+monkey.patch(Zotero.Utilities.Internal, 'extractExtraFields', original => function Zotero_Utilities_Internal_extractExtraFields(extra: string, _item: any, _additionalFields: any) {
   if (extra && extra.startsWith('\x1BBBT\x1B')) {
     return { itemType: null, fields: (new Map), creators: [], extra: extra.replace('\x1BBBT\x1B', '') }
   }
@@ -447,7 +447,7 @@ $Patcher$.schedule(Zotero.Utilities.Internal, 'extractExtraFields', original => 
   return original.apply(this, arguments)
 })
 
-$Patcher$.schedule(Zotero.Translate.Export.prototype, 'translate', original => function Zotero_Translate_Export_prototype_translate() {
+monkey.patch(Zotero.Translate.Export.prototype, 'translate', original => function Zotero_Translate_Export_prototype_translate() {
   let translatorID = this.translator[0]
   if (translatorID.translatorID) translatorID = translatorID.translatorID
   // requested translator
@@ -859,12 +859,12 @@ export class BetterBibTeX {
           })
         }
 
-        $Patcher$.execute()
+        monkey.enable()
       },
       shutdown: async () => { // eslint-disable-line @typescript-eslint/require-await
         Events.shutdown()
         Elements.removeAll()
-        $Patcher$.unpatch()
+        monkey.disable()
         clean_pane_persist()
         Preference.shutdown()
         for (const endpoint of Object.keys(Zotero.Server.Endpoints)) {
