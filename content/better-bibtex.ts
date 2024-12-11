@@ -864,7 +864,7 @@ export class BetterBibTeX {
       shutdown: async () => { // eslint-disable-line @typescript-eslint/require-await
         Events.shutdown()
         Elements.removeAll()
-        monkey.disable()
+        monkey.disableAll()
         clean_pane_persist()
         Preference.shutdown()
         for (const endpoint of Object.keys(Zotero.Server.Endpoints)) {

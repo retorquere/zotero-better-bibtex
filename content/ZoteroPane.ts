@@ -32,18 +32,19 @@ export async function newZoteroPane(win: XULWindow): Promise<void> {
 
 class ZoteroPane {
   private monkey = new Monkey(true)
-  private elements: Elements
+  // private elements: Elements
   private ZoteroPane: any
   private window: XULWindow
 
   public unload(): void {
     this.monkey.disable()
-    this.elements.remove()
+    // this.elements.remove()
   }
 
   public async load(win: XULWindow) {
     const doc = win.document
-    const elements = this.elements = new Elements(doc)
+    // const elements = this.elements = new Elements(doc)
+    const elements = new Elements(doc)
     this.window = win
     this.ZoteroPane = (this.window as any).ZoteroPane
     this.ZoteroPane.BetterBibTeX = this
