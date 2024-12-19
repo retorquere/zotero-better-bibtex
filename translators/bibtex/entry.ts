@@ -1341,9 +1341,9 @@ export class Entry {
         const initials = Zotero.Utilities.XRegExp.exec(name.initials, this.re.allCaps)
           ? name.initials
           : name.initials
-            .split(/[\s.]+/)
-            .map(initial => initial.length > 1 ? `<span class="nocase">${ initial }</span>` : initial)
-            .join('')
+              .split(/[\s.]+/)
+              .map(initial => initial.length > 1 ? `<span class="nocase">${ initial }</span>` : initial)
+              .join('')
         namebuilder.push(`given-i=${ this._enc_creator_part(initials) }`)
       }
       if (name.suffix) namebuilder.push(`suffix=${ this._enc_creator_part(name.suffix) }`)
