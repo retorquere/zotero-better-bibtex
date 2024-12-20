@@ -1,4 +1,4 @@
-import { Patcher } from './monkey-patch'
+import { Monkey } from './monkey-patch'
 import { sentenceCase } from './text'
 import * as l10n from './l10n'
 import { Elements } from './create-element'
@@ -31,7 +31,7 @@ export async function newZoteroItemPane(win: Window): Promise<void> {
 }
 
 export class ZoteroItemPane {
-  private $patcher$ = new Patcher
+  private monkey = new Monkey(true)
   document: Document
   elements: Elements
   displayed: number
@@ -72,7 +72,7 @@ export class ZoteroItemPane {
     })
 
     const self = this // eslint-disable-line @typescript-eslint/no-this-alias
-    this.$patcher$.patch(itemBox.__proto__, 'refresh', original => function() {
+    this.monkey.patch(itemBox.__proto__, 'refresh', original => function() {
       // eslint-disable-next-line prefer-rest-params
       original.apply(this, arguments)
 
@@ -116,6 +116,6 @@ export class ZoteroItemPane {
     this.elements.remove()
     this.done?.()
     this.document = undefined
-    this.$patcher$.unpatch()
+    this.monkey.disable()
   }
 }
