@@ -55,8 +55,6 @@ export async function startup({ resourceURI, rootURI = resourceURI.spec }, reaso
 
     if (Zotero.BetterBibTeX) throw new Error('Better BibTeX is already started')
 
-    setDefaultPrefs(rootURI)
-
     const $window = Cc['@mozilla.org/appshell/appShellService;1'].getService(Ci.nsIAppShellService).hiddenDOMWindow
     Services.scriptloader.loadSubScriptWithOptions(`${ rootURI }content/better-bibtex.js`, {
       charset: 'utf=8',
