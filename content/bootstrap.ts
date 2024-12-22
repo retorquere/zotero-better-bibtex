@@ -29,33 +29,6 @@ function log(msg) {
   }
 }
 
-// Loads default preferences from prefs.js in Zotero 6
-function setDefaultPrefs(rootURI) {
-  const branch = Services.prefs.getDefaultBranch('')
-  const obj = {
-    pref: (pref, value) => {
-      switch (typeof value) {
-        case 'boolean':
-          branch.setBoolPref(pref, value)
-          break
-        case 'string':
-          branch.setStringPref(pref, value)
-          break
-        case 'number':
-          branch.setIntPref(pref, value)
-          break
-        default:
-          log(`Invalid type '${ typeof (value) }' for pref '${ pref }'`)
-      }
-    },
-  }
-  Services.scriptloader.loadSubScriptWithOptions(`${ rootURI }prefs.js`, {
-    target: obj,
-    charset: 'utf-8',
-    // ignoreCache: true
-  })
-}
-
 export function install(_data: any, _reason: ReasonId) {
   log('install, nothing to do')
 }
