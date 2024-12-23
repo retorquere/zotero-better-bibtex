@@ -12,6 +12,7 @@ import { getItemsAsync } from './get-items-async'
 import { fromPairs } from './object'
 import { orchestrator } from './orchestrator'
 import { Server } from './server'
+import { log } from './logger'
 
 const isTrue = new Set([ 'y', 'yes', 'true' ])
 function displayOptions(request) {
@@ -37,6 +38,9 @@ class CollectionHandler {
 
       const libID = parseInt(lib || '0') || Zotero.Libraries.userLibraryID
 
+      log.debug('pull-export: resolving', { libID, path })
+      log.debug('pull-export: by key', { collection: Zotero.Collections.getByLibraryAndKey(libID, path) })
+      log.debug('pull-export: by path', { collection: await getCollection(`/${ libID }/${ path }`) })
       const collection = Zotero.Collections.getByLibraryAndKey(libID, path) || (await getCollection(`/${ libID }/${ path }`))
       if (!collection) return [ NOT_FOUND, 'text/plain', `Could not export bibliography: path '${ path }' not found` ]
 
