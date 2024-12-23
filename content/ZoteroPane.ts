@@ -317,7 +317,7 @@ class ZoteroPane {
 
     if (!params.url.short) return
 
-    this.window.openDialog(`chrome://zotero-better-bibtex/content/ServerURL.${ is7 ? 'xhtml' : 'xul' }`, '', 'chrome,dialog,centerscreen,modal', params)
+    this.window.openDialog(`chrome://zotero-better-bibtex/content/ServerURL.${ is7 ? 'xhtml' : 'xul' }`, '', 'chrome,dialog,centerscreen', params)
   }
 
   public padNum(n: number, width: number): string {
