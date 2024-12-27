@@ -1,0 +1,14 @@
+--- node_modules/compromise/src/1-one/tokenize/methods/02-terms/02-slashes.js	2024-08-30 13:59:03
++++ node_modules/compromise/src/1-one/tokenize/methods/02-terms/02-slashes.js	2024-08-30 16:45:13
+@@ -1,4 +1,10 @@
+-const isSlash = /\p{L} ?\/ ?\p{L}+$/u
++const xretest = re => {
++  re = new Zotero.Utilities.XRegExp(re)
++  return {
++    test: s => Zotero.Utilities.XRegExp.test(s, re)
++  }
++}
++const isSlash = xretest('\\p{L} ?\\/ ?\\p{L}+$')
+ 
+ // 'he / she' should be one word
+ const combineSlashes = function (arr) {

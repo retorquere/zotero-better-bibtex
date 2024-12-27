@@ -42,6 +42,7 @@ class BooleanAction(argparse.Action):
 
   def __call__(self, parser, namespace, values, option_string=None):
     setattr(namespace, self.dest, not option_string.startswith('--no'))
+
 class ClientAction(argparse.Action):
   def __init__(self, option_strings, dest, nargs=None, **kwargs):
     super().__init__(option_strings, dest, nargs=0, **kwargs)
@@ -64,6 +65,7 @@ parser.add_argument('--jurism', dest='client', action='store_const', const='juri
 parser.add_argument('--client', dest='client', default=os.environ.get('CLIENT', 'zotero'))
 parser.add_argument('--log-memory-every', dest='log_memory_every', type=int)
 parser.add_argument('--beta', action='store_true', default=('#beta' in CI.message))
+parser.add_argument('--legacy', action='store_true', default=('#legacy' in CI.message))
 parser.add_argument('--keep', '--no-keep', dest='keep', action=BooleanAction, default=False)
 parser.add_argument('--inspire-hep', '--no-inspire-hep', dest='inspireHEP', action=BooleanAction, default=True)
 parser.add_argument('--worker', '--no-worker', dest='worker', action=BooleanAction, default=False)
@@ -81,6 +83,7 @@ parser.add_argument('--slow', action='store_true',
 parser.add_argument('--whopper', action='store_true', default = CI.event == 'schedule')
 parser.add_argument('--test')
 parser.add_argument('--import', dest='import_at_start')
+parser.add_argument('--profile')
 parser.add_argument('--durations')
 parser.add_argument('--bin')
 parser.add_argument('--bins')
@@ -102,9 +105,12 @@ if args.keep:
 if args.client.endswith('-beta'):
   args.client = args.client.split('-')[0]
   args.beta = True
+elif args.client.endswith('6'):
+  args.client = args.client.replace('6', '')
+  args.legacy = True
 
 if args.build:
-  process = subprocess.Popen(['npm', 'run', 'build'] + (['--beta'] if args.beta else []), stdout=subprocess.PIPE)
+  process = subprocess.Popen(['npm', 'run', 'build'], stdout=subprocess.PIPE)
   while True:
     line = process.stdout.readline()
     print(line.decode('utf-8'), end='')
@@ -138,12 +144,16 @@ if args.stop: sys.argv.append('--stop')
 if args.slow: sys.argv.extend(['--define', 'slow=true'])
 if args.whopper: sys.argv.extend(['--define', 'whopper=true'])
 
+if args.beta and args.legacy:
+  raise ValueError('cannot build beta+legacy')
 if args.beta: sys.argv.extend(['--define', 'beta=true'])
+if args.legacy: sys.argv.extend(['--define', 'legacy=true'])
 
 if args.test: sys.argv.extend(['--define', f'test={args.test}'])
 if args.headless: sys.argv.extend(['--define', f'headless=true'])
 if args.durations: sys.argv.extend(['--define', f'durations={args.durations}'])
 if args.import_at_start: sys.argv.extend(['--define', f'import={args.import_at_start}'])
+if args.profile: sys.argv.extend(['--define', f'profile={args.profile}'])
 if args.this: sys.argv.extend(['--tags', args.this ])
 if args.log_memory_every: sys.argv.extend(['--define', f'log_memory_every={args.log_memory_every}'])
 

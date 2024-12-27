@@ -1,0 +1,10 @@
+@dataset{UPSSCalculatorV09,
+  title = {{{UPSS Calculator}} v0.9},
+  translator = {zzz},
+  url = {https://www.cs.umd.edu/~yakatz/research/upss/calc-v0.9.xlsx},
+  presort = {zzz},
+  sortkey = {zzz}
+}
+% == BibLateX quality report for UPSSCalculatorV09:
+% Unexpected field 'translator'
+% ? Title looks like it was stored in title-case in Zotero

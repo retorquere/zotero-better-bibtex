@@ -14,7 +14,7 @@ weight: 10
 
 ## Active citation key formula
 
-default: `​auth.lower + shorttitle(3,3) + year`
+default: `auth.lower + shorttitle(3,3) + year`
 
 Set the pattern used to generate citation keys. The format of the keys is documented [here]({{ ref . "citing" }}).
 

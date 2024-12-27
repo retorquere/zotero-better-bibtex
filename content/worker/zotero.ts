@@ -1,5 +1,8 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions, @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-assignment */
 
+import allSettled = require('promise.allsettled')
+allSettled.shim()
+
 import type { Attachment, Item, Note } from '../../gen/typings/serialized-item'
 type Serialized = Attachment | Item | Note
 
@@ -13,32 +16,22 @@ matchAll.shim()
 declare const IOUtils: any
 
 import { Shim } from '../os'
-import { is7, platform } from '../client'
-if (!is7) importScripts('resource://gre/modules/osfile.jsm')
-const $OS = is7 ? Shim : OS
+import * as client from '../client'
+if (!client.is7) importScripts('resource://gre/modules/osfile.jsm')
+const $OS = client.is7 ? Shim : OS
 
 const ctx: DedicatedWorkerGlobalScope = self as any
 
-export const workerEnvironment = {
-  version: '',
-  platform: '',
-  locale: '',
-}
-
-for (const [ key, value ] of (new URLSearchParams(ctx.location.search)).entries()) {
-  workerEnvironment[key] = value
-}
-
 importScripts('resource://zotero/config.js') // import ZOTERO_CONFIG'
 
-import { client, clientName } from '../../content/client'
 import type { Translators } from '../../typings/translators'
 import { valid } from '../../gen/items/items'
 import { generateBibLaTeX } from '../../translators/bibtex/biblatex'
 import { generateBibTeX } from '../../translators/bibtex/bibtex'
 import { generateCSLJSON } from '../../translators/csl/json'
-import { generateCSLYAML, parseCSLYAML } from '../../translators/csl/yaml'
-import { Translation } from '../../translators/lib/translator'
+import { generateCSLYAML } from '../../translators/csl/yaml'
+import { generateBBTJSON } from '../../translators/lib/bbtjson'
+import type { Collected } from '../../translators/lib/collect'
 import XRegExp from 'xregexp'
 
 import { DOMParser as XMLDOMParser } from '@xmldom/xmldom'
@@ -121,7 +114,7 @@ function upgrade(root) {
           throw new Error('Must provide one of "beforebegin", "afterbegin", "beforeend", or "afterend".')
       }
 
-      const fragment = domParser.parseFromString(`<span>${ text }</span>`, 'text/html').documentElement
+      const fragment = domParser.parseFromString(`<span>${ text }</span>`, 'text/html' as unknown as any).documentElement
 
       switch (position) {
         case 'beforebegin':
@@ -149,7 +142,7 @@ import { Node as XMLDOMNode } from '@xmldom/xmldom/lib/dom'
 upgrade(XMLDOMNode.prototype)
 
 export class DOMParser extends XMLDOMParser {
-  parseFromString(text: string, contentType: string) { // eslint-disable-line @typescript-eslint/explicit-module-boundary-types
+  parseFromString(text: string, contentType: any) { // eslint-disable-line @typescript-eslint/explicit-module-boundary-types
     return upgrade(super.parseFromString(text, contentType))
   }
 }
@@ -169,14 +162,14 @@ import { Collection } from '../../gen/typings/serialized-item'
 
 import zotero_schema from '../../schema/zotero.json'
 import jurism_schema from '../../schema/jurism.json'
-const schema = client === 'zotero' ? zotero_schema : jurism_schema
+const schema = client.slug === 'zotero' ? zotero_schema : jurism_schema
 import dateFormats from '../../schema/dateFormats.json'
 
 export const TranslationWorker: { job?: Partial<Translators.Worker.Job> } = {}
 
 class WorkerZoteroBetterBibTeX {
-  public clientName = clientName
-  public client = client
+  public clientName = client.name
+  public client = client.slug
   public worker = true
 
   public Cache = {
@@ -196,7 +189,7 @@ class WorkerZoteroBetterBibTeX {
     if (!path) return null
 
     try {
-      if (is7) {
+      if (client.is7) {
         const file = IOUtils.openFileForSyncReading(path)
         const chunkSize = 64
         const bytes = new Uint8Array(chunkSize)
@@ -243,11 +236,11 @@ class WorkerZoteroBetterBibTeX {
     return DateParser.strToISO(str)
   }
 
-  public generateBibLaTeX(translation: Translation) { generateBibLaTeX(translation) }
-  public generateBibTeX(translation: Translation) { generateBibTeX(translation) }
-  generateCSLYAML(translation: Translation) { generateCSLYAML(translation) }
-  generateCSLJSON(translation: Translation) { generateCSLJSON(translation) }
-  parseCSLYAML(input: string): any { return parseCSLYAML(input) }
+  public generateBibLaTeX(collected: Collected) { return generateBibLaTeX(collected) }
+  public generateBibTeX(collected: Collected) { return generateBibTeX(collected) }
+  public generateCSLYAML(collected: Collected) { return generateCSLYAML(collected) }
+  public generateCSLJSON(collected: Collected) { return generateCSLJSON(collected) }
+  public generateBBTJSON(collected: Collected) { return generateBBTJSON(collected) }
 }
 
 const WorkerZoteroUtilities = {
@@ -255,11 +248,11 @@ const WorkerZoteroUtilities = {
   Item: ZUI,
   XRegExp,
 
-  getVersion: () => workerEnvironment.version,
+  getVersion: () => client.version,
 }
 
 function isWinRoot(path) {
-  return platform.windows && path.match(/^[a-z]:\\?$/i)
+  return client.isWin && path.match(/^[a-z]:\\?$/i)
 }
 async function makeDirs(path) {
   if (isWinRoot(path)) return
@@ -324,11 +317,11 @@ async function saveFile(path, overwrite) {
 
 class WorkerZoteroCreatorTypes {
   public getTypesForItemType(itemTypeID: string): { name: string } {
-    return itemCreators[client][itemTypeID]?.map(name => ({ name })) || []
+    return itemCreators[client.slug][itemTypeID]?.map(name => ({ name })) || []
   }
 
   public isValidForItemType(creatorTypeID, itemTypeID) {
-    return itemCreators[client][itemTypeID]?.includes(creatorTypeID)
+    return itemCreators[client.slug][itemTypeID]?.includes(creatorTypeID)
   }
 
   public getLocalizedString(type: string): string {
@@ -336,7 +329,7 @@ class WorkerZoteroCreatorTypes {
   }
 
   public getPrimaryIDForType(typeID) {
-    return itemCreators[client][typeID]?.[0]
+    return itemCreators[client.slug][typeID]?.[0]
   }
 
   public getID(typeName) {
@@ -384,6 +377,7 @@ class WorkerZotero {
   public output: string
   public exportDirectory: string
   public exportFile: string
+  public version: string = client.version
   private items: Serialized[]
 
   public Utilities = WorkerZoteroUtilities
@@ -397,8 +391,8 @@ class WorkerZotero {
   public async start() {
     this.Date.init(dateFormats)
 
-    TranslationWorker.job.preferences.platform = platform.name
-    TranslationWorker.job.preferences.client = client
+    TranslationWorker.job.preferences.platform = client.platform
+    TranslationWorker.job.preferences.client = client.slug
     this.output = ''
 
     // trace('cache: load serialized')
@@ -443,7 +437,7 @@ class WorkerZotero {
   }
 
   public get locale() {
-    return workerEnvironment.locale
+    return client.locale
   }
 
   public getHiddenPref(pref) {
@@ -504,6 +498,7 @@ ctx.onmessage = async function(e: { isTrusted?: boolean; data?: Translators.Work
     switch (e.data.kind) {
       case 'initialize':
         Zotero.Schema = { ...e.data.CSL_MAPPINGS }
+        ZD.init(e.data.dateFormatsJSON)
         break
 
       case 'start':

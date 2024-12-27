@@ -1,0 +1,48 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "preferences": {
+      "baseAttachmentPath": "/Users/rhelder/Documents/Zotero/Storage",
+      "biblatexExtractEprint": false,
+      "bibtexURL": "url",
+      "citekeyFormat": "extra('tex.shorthand').clean.replace('emph', '').nopunct | auth.lower + year + shorttitle(2,2)",
+      "csquotes": "“”‘’",
+      "postscript": "if (Translator.BetterCSLYAML) {\n  if (zotero.extraFields.raw.entrysubtype === 'classical') csl.type = 'classic';\n  if (zotero.extraFields.raw.entrysubtype === 'classical') delete csl.author;\n  if (zotero.language === 'english') csl.language = 'en';\n}\n\nif (Translator.BetterBibLaTeX) {\n  if (zotero.extraFields.raw.entrytype === 'bookinbook') {\n    tex.add({name: 'booktitle', value: tex.has.journaltitle.value});\n    tex.remove('journaltitle');\n  }\n}",
+      "quickCopyMode": "citekeys"
+    }
+  },
+  "items": [
+    {
+      "citationKey": "waterlow1982NatureChange",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Sarah",
+          "lastName": "Waterlow"
+        }
+      ],
+      "date": "1982",
+      "itemID": 1,
+      "itemType": "book",
+      "language": "english",
+      "place": "Oxford",
+      "publisher": "Oxford University Press",
+      "tags": [
+        {
+          "tag": "Aristotle"
+        },
+        {
+          "tag": "Aristotle's natural philosophy"
+        },
+        {
+          "tag": "Aristotle's Physics"
+        },
+        {
+          "tag": "phusis"
+        }
+      ],
+      "title": "Nature, change, and agency in Aristotle's <i>Physics</i>"
+    }
+  ]
+}

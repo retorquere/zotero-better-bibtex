@@ -8,7 +8,7 @@ const validate = ajv.compile(require('../schema/BetterBibTeX JSON.json'))
 import * as jsonpatch from 'fast-json-patch'
 
 import { normalize } from '../translators/lib/normalize'
-import { stable_stringify as stringify } from '../content/stringify'
+import stringify from 'safe-stable-stringify'
 import * as fs from 'fs'
 
 import { defaults } from '../gen/preferences/meta'
@@ -129,6 +129,6 @@ for (const lib of argv._) {
   if (diff.length > 0) {
     console.log(lib)
     console.log('  saving')
-    fs.writeFileSync(lib, stringify(post, null, 2, true))
+    fs.writeFileSync(lib, stringify(post, null, 2))
   }
 }

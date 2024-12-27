@@ -55,7 +55,7 @@ better-bibtex_error-report_restart-with-logging-enabled =
   .label = Restart with Logging Enabled…
 
 
-better-bibtex_error-report_review = The data below is about to submitted to Better BibTeX for debugging. You can preview the data here, or save a copy of the log to get the precise data about to be sent, to see whether there's sensitive information that you do not wish to send. Please think carefully about whether unchecking options below is necessary for your environment. We will generally needs more communication (= time) if you remove parts of the log this way.
+better-bibtex_error-report_review = The data below is about to submitted to Better BibTeX for debugging. You can preview the data here, or save a copy of the log to get the precise data about to be sent, to see whether there's sensitive information that you do not wish to send. Please think carefully about whether unchecking options below is necessary for your environment. We will generally need more communication (= time) if you remove parts of the log this way.
     
     If you are OK with sending this data, please proceed to the next screen where you will be presented a red debug ID, and post this ID on the issue tracker at
     
@@ -77,8 +77,7 @@ better-bibtex_item-pane_section_sidenav =
   .tooltip = { -citation-key }
 better-bibtex_item-pane_section_header =
   .label = { -citation-key }
-better-bibtex_item-pane_info_citation-key =
-  .label = { -citation-key }
+better-bibtex_item-pane_info_citation-key_label = { -citation-key }
 
 better-bibtex_preferences_advanced_export_brace-protection = 
   .label = Apply case-protection to capitalized words by enclosing them in braces
@@ -86,7 +85,8 @@ better-bibtex_preferences_advanced_export_brace-protection =
 better-bibtex_preferences_advanced_export_brace-protection_warning = If you're dead-set on ignoring both BibTeX/BibLaTeX best practice (see the BBT FAQ) and the Zotero recommendations on title/sentence casing, you can turn this off to suppress automatic brace-protection for words with uppercase letters.
 better-bibtex_preferences_advanced_export_retain-cache = 
   .label = Retain export cache across upgrades
-
+better-bibtex_preferences_advanced_export_reset-cache = 
+  .label = Cache will be recreated on next start
 
 better-bibtex_preferences_advanced_export_retain-cache_warning = By default, BBT clears all caches whenever BBT or Zotero is upgraded. I can't realistically predict whether a change in Zotero or BBT is going to affect the output generated for any given item, so to be sure you always have the latest export-affecting fixes, the caches are discarded when a new version of either is detected. If you have a very large library however, of which you regularly export significant portions, you might want to retain the cached items even if that does come with the risk that you get wrong output on export that has been fixed in the interim.
     
@@ -203,7 +203,8 @@ better-bibtex_preferences_auto-export_run =
 better-bibtex_preferences_auto-export_status = Status
 better-bibtex_preferences_auto-export_status_done = done
 better-bibtex_preferences_auto-export_status_error = error
-better-bibtex_preferences_auto-export_status_preparing = preparing
+better-bibtex_preferences_auto-export_status_preparing = preparing { $translator }
+better-bibtex_preferences_auto-export_status_preparing_delayed = preparing { $translator }, { $pending } exports pending
 better-bibtex_preferences_auto-export_status_running = running
 better-bibtex_preferences_auto-export_status_scheduled = scheduled
 better-bibtex_preferences_auto-export_target = Output file
@@ -267,6 +268,14 @@ better-bibtex_preferences_export_bibtex_urls_url = in the 'url' field
   .label = { better-bibtex_preferences_export_bibtex_urls_url }
 better-bibtex_preferences_export_bibtex_urls_url-ish = in the 'url' field, but assuming the 'url' package is not loaded
   .label = { better-bibtex_preferences_export_bibtex_urls_url-ish }
+
+better-bibtex_preferences_export_sort = Sort TeX/CSL output (useful if you use version control on the output):
+better-bibtex_preferences_export_sort_off = off (fastest)
+  .label = { better-bibtex_preferences_export_sort_off }
+better-bibtex_preferences_export_sort_id = item creation order (plenty fast)
+  .label = { better-bibtex_preferences_export_sort_id }
+better-bibtex_preferences_export_sort_citekey = citation key (slower on very large libraries)
+  .label = { better-bibtex_preferences_export_sort_citekey }
 
 better-bibtex_preferences_export_fields = Fields
   .label = { better-bibtex_preferences_export_fields }
@@ -368,7 +377,7 @@ better-bibtex_preferences_rescan-citekeys =
   .label = Re-scan pinned citekeys
 
 better-bibtex_preferences_reset-cache = 
-  .label = Reset cache
+  .label = Reset cache on next start
 
 better-bibtex_preferences_tab_auto-export = Automatic export
   .label = { better-bibtex_preferences_tab_auto-export }
@@ -408,6 +417,8 @@ better-bibtex_zotero-pane_add-citation-links = Citation Graph: add citation link
 better-bibtex_zotero-pane_citekey_pin_inspire-hep = Pin BibTeX key from InspireHEP
 better-bibtex_zotero-pane_citekey_refresh = Refresh BibTeX key
 better-bibtex_zotero-pane_citekey_unpin = Unpin BibTeX key
+better-bibtex_zotero-pane_bibtex_to_clipboard = 🅱 copy BibTeX to clipboard
+better-bibtex_zotero-pane_biblatex_to_clipboard = 🅱 copy BibLaTeX to clipboard
 better-bibtex_zotero-pane_column_citekey = { -citation-key }
 better-bibtex_zotero-pane_patch-dates = Copy date-added/date-modified from extra field
 better-bibtex_zotero-pane_sentence-case = BBT Sentence-case

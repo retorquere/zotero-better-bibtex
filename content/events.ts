@@ -10,6 +10,8 @@ type ZoteroAction = 'modify' | 'add' | 'trash' | 'delete'
 type IdleState = 'active' | 'idle'
 export type Action = 'modify' | 'delete' | 'add'
 
+type IntervalHandle = ReturnType<typeof setInterval>
+
 type IdleObserver = {
   observe: (subject: string, topic: IdleState, data: any) => void
 }
@@ -18,7 +20,7 @@ type IdleService = {
   addIdleObserver: (observer: IdleObserver, time: number) => void
   removeIdleObserver: (observer: IdleObserver, time: number) => void
 }
-type IdleTopic = 'auto-export' | 'save-database' | 'cache-fill'
+type IdleTopic = 'auto-export' | 'cache-purge'
 
 const idleService: IdleService = Components.classes[`@mozilla.org/widget/${ is7 ? 'user' : '' }idleservice;1`].getService(Components.interfaces[is7 ? 'nsIUserIdleService' : 'nsIIdleService'])
 
@@ -33,10 +35,12 @@ class Emitter extends Emittery<{
   'preference-changed': string
   'window-loaded': { win: Window; href: string }
   idle: { state: IdleState; topic: IdleTopic }
+  sync: boolean
 }> {
   private listeners: any[] = []
   public idle: Partial<Record<IdleTopic, IdleState>> = {}
   public itemObserverDelay = 5
+  public syncInProgress: boolean = Zotero?.Sync?.Runner?.syncInProgress ?? false
 
   public keymanagerUpdate: (action: ZoteroAction, ids: number[]) => void
   public cacheTouch: (ids: number[]) => Promise<void>
@@ -48,6 +52,7 @@ class Emitter extends Emittery<{
     this.listeners.push(new CollectionListener)
     this.listeners.push(new MemberListener)
     this.listeners.push(new GroupListener)
+    this.listeners.push(new SyncListener)
   }
 
   public addIdleListener(topic: IdleTopic, delay: number): void {
@@ -90,6 +95,26 @@ export const Events = new Emitter({
   },
   */
 })
+
+class SyncListener {
+  private interval: IntervalHandle
+
+  constructor() {
+    this.interval = setInterval(() => {
+      if (typeof Zotero.Sync?.Runner?.syncInProgress === 'boolean') {
+        if (Events.syncInProgress !== Zotero.Sync.Runner.syncInProgress) {
+          void Events.emit('sync', Zotero.Sync.Runner.syncInProgress)
+          Events.syncInProgress = Zotero.Sync.Runner.syncInProgress
+          log.info(`sync ${ Events.syncInProgress ? 'started' : 'stopped' }`)
+        }
+      }
+    }, 1000)
+  }
+
+  unregister() {
+    clearInterval(this.interval)
+  }
+}
 
 class WindowListener {
   constructor() {
@@ -147,16 +172,26 @@ class ItemListener extends ZoteroListener {
     super('item')
   }
 
-  public async notify(zotero_action: ZoteroAction, type: string, ids: number[], extraData?: Record<number, { libraryID?: number }>) {
+  public async notify(action: ZoteroAction, type: string, ids: number[], extraData?: Record<number, { libraryID?: number }>) {
     try {
+      switch (action) {
+        case 'trash':
+          action = 'delete'
+          break
+        case 'modify':
+        case 'add':
+        case 'delete':
+          break
+        default:
+          return
+      }
+
       await Zotero.BetterBibTeX.ready
 
       // async is just a heap of fun. Who doesn't enjoy a good race condition?
       // https://github.com/retorquere/zotero-better-bibtex/issues/774
       // https://groups.google.com/forum/#!topic/zotero-dev/yGP4uJQCrMc
       await Zotero.Promise.delay(Events.itemObserverDelay)
-
-      const action = zotero_action === 'trash' ? 'delete' : zotero_action
 
       const touched: Record<string, Set<number>> = { collections: new Set, libraries: new Set }
       if (action === 'delete' && extraData) {
@@ -200,7 +235,7 @@ class ItemListener extends ZoteroListener {
       let parents: ZoteroItem[] = []
       if (parentIDs.length) {
         parents = Zotero.Items.get(parentIDs)
-        void Events.emit('items-changed', { items: parents, action: 'modify', reason: `parent-${ zotero_action }` })
+        void Events.emit('items-changed', { items: parents, action: 'modify', reason: `parent-${ action }` })
       }
 
       for (const item of items.concat(parents)) {

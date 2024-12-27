@@ -1,4 +1,4 @@
-import { simple as log } from './logger'
+import { log } from './logger'
 
 import { is7 } from './client'
 export function clean_pane_persist(): void {

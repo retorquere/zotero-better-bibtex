@@ -182,8 +182,8 @@ class Config:
     return str(self.data)
 
 class Library:
-  def __init__(self, path=None, body=None, client=None, ext=None):
-    if path:
+  def __init__(self, path=None, body=None, client=None, variant='', ext=None):
+    if path and not os.path.isabs(path):
       path = os.path.join(FIXTURES, path)
 
     if path:
@@ -206,13 +206,13 @@ class Library:
     self.exported = None
 
     if self.base:
-      self.patch = self.base + '.' + self.client + '.patch'
       self.path = self.base
 
-      if os.path.exists(self.patch):
-        self.path = self.base[:-len(self.ext)] + '.' + self.client + self.ext
-      else:
-        self.patch = None
+      patches = [ self.base + '.' + client + variant + '.patch' ]
+      if len(variant) > 0: patches.append(self.base + '.' + self.client + '.patch')
+      self.patch = next((patch for patch in patches if os.path.exists(patch)), None)
+      if self.patch:
+        self.path = self.base[:-len(self.ext)] + '.' + self.patch.split('.')[-2] + self.ext
 
     if not self.body and self.base and os.path.exists(self.base):
       with open(self.base) as f:
@@ -247,13 +247,14 @@ class Library:
           self.normalized = normalized.getvalue()
 
       elif self.ext == '.json':
+        if 'config' in self.data and 'preferences' in self.data['config']: self.data['config']['preferences'].pop('autoAbbrevStyle', None)
         self.data['items'] = sorted(self.data['items'], key=lambda item: json.dumps(item, sort_keys=True))
         self.normalized = json.dumps(cleanlib(copy.deepcopy(self.data)), indent=2, ensure_ascii=True, sort_keys=True)
 
     elif self.ext in ['.biblatex', '.bibtex', '.bib']:
       if self.patch:
         dmp = diff_match_patch()
-        self.body = dmp.patch_apply(dmp.patch_fromText(open(self.patch).read()), self.data)[0]
+        self.body = dmp.patch_apply(dmp.patch_fromText(open(self.patch).read()), self.body)[0]
       self.normalized = sortbib(self.body)
 
     elif self.ext == '.html':
@@ -288,11 +289,13 @@ class Zotero:
 
     self.client = userdata.get('client', 'zotero')
     self.beta = userdata.get('beta') == 'true'
+    self.legacy = userdata.get('legacy') == 'true'
     self.dev = userdata.get('dev') == 'true'
     self.token = str(uuid.uuid4())
     self.import_at_start = userdata.get('import', None)
     if self.import_at_start:
       self.import_at_start = os.path.abspath(self.import_at_start)
+    self.profiletemplate = userdata.get('profile', None)
 
     self.config = Config(userdata)
 
@@ -478,7 +481,11 @@ class Zotero:
       translator=translator,
       itemIDs=itemIDs
     )
-    expected = Library(path=expected, client=self.client)
+    expected = Library(path=expected, client=self.client, variant=self.variant)
+    assert_equal_diff(expected.body, found.strip())
+
+  def comparelib(self, expected, found):
+    expected = Library(path=expected, client=self.client, variant=self.variant)
     assert_equal_diff(expected.body, found.strip())
 
   def export_library(self, translator, displayOptions = {}, collection = None, output = None, expected = None, resetCache = False):
@@ -509,8 +516,8 @@ class Zotero:
 
     if expected is None: return
 
-    expected = Library(path=expected, client=self.client)
-    found = Library(path=output, body=found, client=self.client, ext=expected)
+    expected = Library(path=expected, client=self.client, variant=self.variant)
+    found = Library(path=output, body=found, client=self.client, variant=self.variant, ext=expected)
     found.save(expected.path)
 
     if expected.ext in ['.csl.json', '.csl.yml', '.html', '.bib', '.bibtex', '.biblatex']:
@@ -527,7 +534,7 @@ class Zotero:
   def import_file(self, context, references, collection = False, items=True):
     assert type(collection) in [bool, str]
 
-    input = Library(path=references, client=self.client)
+    input = Library(path=references, client=self.client, variant=self.variant)
 
     if input.path.endswith('.json'):
       # TODO: clean lib and test against schema
@@ -622,12 +629,16 @@ class Zotero:
     }[platform.system()]
     os.makedirs(profile.profiles, exist_ok = True)
 
-    variant = ''
-    if self.beta: variant = '-beta'
-    elif self.dev: variant = '-dev'
+    self.variant = ''
+    if self.beta:
+      self.variant = '-beta'
+    elif self.legacy:
+      self.variant = '6'
+    elif self.dev:
+      self.variant = '-dev'
     profile.binary = {
-      'Linux': f'/usr/lib/{self.client}{variant}/{self.client}',
-      'Darwin': f'/Applications/{self.client.title()}{variant}.app/Contents/MacOS/{self.client}',
+      'Linux': f'/usr/lib/{self.client}{self.variant}/{self.client}',
+      'Darwin': f'/Applications/{self.client.title()}{self.variant}.app/Contents/MacOS/{self.client}',
     }[platform.system()]
 
     # create profile
@@ -666,7 +677,7 @@ class Zotero:
       profile.firefox = FirefoxProfile(os.path.join(ROOT, 'test/db', self.config.profile))
       profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.removeStock', False)
     else:
-      profile.firefox = FirefoxProfile(os.path.join(FIXTURES, 'profile', self.client))
+      profile.firefox = FirefoxProfile(os.path.join(FIXTURES, 'profile', self.profiletemplate or self.client))
 
     profile.firefox.set_preference('extensions.zotero.dataDir', os.path.join(profile.path, self.client))
     profile.firefox.set_preference('extensions.zotero.useDataDir', True)
@@ -683,7 +694,12 @@ class Zotero:
     profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.caching', self.caching)
     profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.scrubDatabase', True)
     # don't nag about the Z7 beta for a day
-    profile.firefox.set_preference('extensions.zotero.hiddenNotices', json.dumps({ 'z7-beta-warning': time.time() + 86400 }))
+    profile.firefox.set_preference('extensions.zotero.hiddenNotices', json.dumps({ 'crossref-outage-2024-08-21': time.time() + 86400 }))
+    profile.firefox.set_preference('extensions.zotero.firstRunGuidanceShown.z7Banner', False)
+
+    profile.firefox.set_preference('extensions.zoteroMacWordIntegration.lastAttemptedVersion', '7.0.5.SOURCE')
+    profile.firefox.set_preference('extensions.zoteroMacWordIntegration.version', '7.0.5.SOURCE')
+
     profile.firefox.set_preference('intl.accept_languages', 'en-GB')
     profile.firefox.set_preference('intl.locale.requested', 'en-GB')
 
@@ -707,6 +723,8 @@ class Zotero:
 
     shutil.rmtree(profile.path, ignore_errors=True)
     shutil.move(profile.firefox.path, profile.path)
+    os.makedirs(f'{profile.path}/zotero', exist_ok=True)
+                    
     profile.firefox = None
 
     if self.config.db:

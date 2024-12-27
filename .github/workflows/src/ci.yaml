@@ -15,6 +15,7 @@ _anchors:
     uses: actions/setup-python@v5
     with:
       python-version: '3.10'
+      cache: 'pip'
   install_node: &install_node
     name: install node
     uses: actions/setup-node@v4
@@ -29,9 +30,7 @@ _anchors:
     with:
       path: |
         ~/.npm
-        ~/.nocache/pip
-        ${{ env.pythonLocation }}
-      key: ${{ runner.os }}-build-${{ env.pythonLocation }}-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('requirements.txt') }}
+      key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('requirements.txt') }}
   install_python_packages: &install_python_packages
     name: install python packages
     run: |
@@ -63,23 +62,26 @@ jobs:
       if: github.event.head_commit.message == env.version && !startsWith(github.ref, 'refs/tags/')
 
     - *install_python
+    - *install_python_packages
     - *install_node
     - *cache
-    - *install_python_packages
     - *install_node_packages
-    - name: set slow and beta flags
+    - name: set slow/legacy/beta flags
+      run: ./util/action-flags
       env:
         GITHUB_CONTEXT: ${{ toJson(github) }}
-      run: ./util/action-flags
 
     - name: get previous test durations
       run: curl -L https://github.com/retorquere/zotero-better-bibtex/releases/download/builds/durations${{ env.slow }}.json --create-dirs -o test/balance/durations.json
+
     - name: balance tests
       id: balance
-      run: ./util/balance.py --durations test/balance/durations.json --bins test/balance/bins.json --minutes 10 ${{ env.slow }} ${{ env.beta }}
+      run: ./util/balance.py --durations test/balance/durations.json --bins test/balance/bins.json --minutes 10 ${{ env.slow }} ${{ env.beta }} ${{ env.legacy }}
 
-    - name: build ${{ env.beta }}
-      run: npm run build ${{ env.beta }}
+    - name: build ${{ env.beta }} ${{ env.legacy }}
+      run: npm run build
+      env:
+        VERSION_WITH_ISSUE: false
 
     - name: publish debug bridge
       run: ./util/publish-debug-bridge.py
@@ -123,10 +125,6 @@ jobs:
         bin: ${{ fromJSON(needs.build.outputs.bin_ids) }}
         client: ${{ fromJSON(needs.build.outputs.clients) }}
         worker: ['--worker', '--no-worker']
-        exclude:
-          - client: jurism-beta
-          - client: jurism
-          #  worker: '--worker'
     steps:
     - uses: actions/checkout@v4
     - name: fetch build artifacts
@@ -134,15 +132,15 @@ jobs:
       with:
         name: build-artifacts
     - *install_python
-    - *cache
     - *install_python_packages
+    - *cache
 
     - name: install ${{ matrix.client }}
       run: |
         curl -sL https://raw.githubusercontent.com/retorquere/zotero-deb/master/install.sh | sudo bash
         sudo apt-get update
         sudo apt-get install ${{ matrix.client }}
-        sudo apt-get install mesa-utils libegl1-mesa xvfb
+        sudo apt-get install mesa-utils xvfb
         curl -LO https://github.com/jgm/pandoc/releases/download/3.1.11.1/pandoc-3.1.11.1-linux-amd64.tar.gz
         tar xvzf pandoc-3.1.11.1-linux-amd64.tar.gz
         sudo mv pandoc-3.1.11.1/bin/pandoc /usr/bin
@@ -201,9 +199,9 @@ jobs:
       with:
         name: build-artifacts
     - *install_python
+    - *install_python_packages
     - *install_node
     - *cache
-    - *install_python_packages
     - *install_node_packages
 
     - run: npm run release
@@ -231,6 +229,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - *install_python
+    - *install_python_packages
     - name: fetch test artifacts
       uses: actions/download-artifact@v4
       with:

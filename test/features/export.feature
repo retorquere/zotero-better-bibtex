@@ -13,6 +13,15 @@ Feature: Export
 
     Examples:
       | file                                                                                                                     | references |
+      | Add option to translate ii to mkbibemph instead of emph #3096                                                            | 1          |
+      | Better BibLatex copied year column as string if  character is found #3067                                                | 1          |
+      | Cannot change citation key formula #3058                                                                                 | 1          |
+      | Citation keys are missing certain words if hyphens are used #3059                                                        | 1          |
+      | lastpage not work in better bitex #3050                                                                                  | 1          |
+      | citekey not skip one-letter word #3021                                                                                   | 1          |
+      | charmapcsv mapping not working anymore #3020                                                                             | 1          |
+      | Use nonacademic entrysubtype in place of newspapermagazine for biblatex-apa #2987                                        | 1          |
+      | Inconsistent Citation Key #2953                                                                                          | 1          |
       | Use prepublished as default pubstate for arXiV articles #2911                                                            | 1          |
       | Preprint with status in extra fails to export #2881                                                                      | 1          |
       | Exporting item type film merges scriptwriter with other contributors #2802                                               | 1          |
@@ -213,6 +222,7 @@ Feature: Export
 
     Examples:
       | file                                                                                                               | references |
+      | Export field zoteroautoJournalAbbreviation only available when zoterojournalAbbreviation is empty #3046            | 2          |
       | export langid as language #2909                                                                                    | 1          |
       | Better BibTeX export from Zotero missing Extra fields eg issued #2816                                              | 1          |
       | formula grouping                                                                                                   | 1          |
@@ -233,7 +243,7 @@ Feature: Export
       | Customise name-separator and list-separator #1927                                                                  | 1          |
       | citation key format nopunctordash filter list #1880                                                                | 1          |
       | Export report+type as preprint                                                                                     | 1          |
-      | Use creator in extra field when there is no creator in the usual places? #1873                                     | 1          |
+      | Use creator in extra field when there is no creator in the usual places #1873                                      | 1          |
       | Exporting "month = {season}" for BibTeX #1810                                                                      | 1          |
       | bibtex does not export season dates                                                                                | 1          |
       | DOI not escaped using postscript #1803                                                                             | 1          |
@@ -309,6 +319,7 @@ Feature: Export
 
     Examples:
       | file                                                                            | references |
+      | Better CSL does not extract extra variables #2963                               | 1          |
       | Does setting a type via cheater syntax work currently #2473                     | 1          |
       | _eprint in extra causes CSL-JSON export error #2430                             | 1          |
       | unwanted inclusion of Zotero's internal journal abbreviations in CSL JSON #2375 | 1          |
@@ -500,7 +511,7 @@ Feature: Export
   @journal-abbrev @bbt
   Scenario: Journal abbreviations
     Given I set preference .citekeyFormat to "[authors][year][journal]"
-    And I set preference .autoAbbrevStyle to "http://www.zotero.org/styles/cell"
+    # And I set preference .autoAbbrevStyle to "http://www.zotero.org/styles/cell"
     And I import 1 reference with 1 attachment from "export/*.json"
     Then an export using "Better BibTeX" with useJournalAbbreviation on should match "export/*.bibtex"
 
@@ -511,7 +522,7 @@ Feature: Export
   @81 @bbt
   Scenario: Journal abbreviations exported in bibtex (81)
     Given I set preference .citekeyFormat to "[authors2][year][journal:nopunct]"
-    And I set preference .autoAbbrevStyle to "http://www.zotero.org/styles/cell"
+    # And I set preference .autoAbbrevStyle to "http://www.zotero.org/styles/cell"
     And I import 1 reference from "export/*.json"
     Then an export using "Better BibTeX" with useJournalAbbreviation on should match "export/*.bibtex"
 
@@ -697,55 +708,44 @@ Feature: Export
     When I wait until Zotero is idle
     Then an export using "Better BibLaTeX" with worker on should match "export/*.biblatex"
 
-#  Scenario: Export benchmark
-#    #When I import 86 references from "export/*.json"
-#    When I restart Zotero with "1287"
-#    When I benchmark the following exports:
-#      | translator      | cached |
-#      | BibTeX          |        |
-#      | Better BibTeX   | yes    |
-#      # | CSL JSON        |        |
-#      # | Better CSL JSON | yes    |
-
+  # Scenario: Export benchmark
+  # #When I import 86 references from "export/*.json"
+  # When I restart Zotero with "1287"
+  # When I benchmark the following exports:
+  # | translator      | cached |
+  # | BibTeX          |        |
+  # | Better BibTeX   | yes    |
+  # # | CSL JSON        |        |
+  # # | Better CSL JSON | yes    |
   # tests the cache
   @use.with_client=zotero @use.with_whopper=true @timeout=3000 @whopper
   Scenario: Really Big whopping library
     When I restart Zotero with "1287"
     And I set preference .DOIandURL to "doi"
-    And I set preference .autoAbbrevStyle to "http://www.zotero.org/styles/cell"
+    # And I set preference .autoAbbrevStyle to "http://www.zotero.org/styles/cell"
     And I set preference .autoExport to "off"
     And I set preference .citekeyFormat to "authorsn(n=3,creator=\"*\",initials=false,sep=\" \").fold + shortyear"
     And I set preference .itemObserverDelay to 100
     And I set preference .keyConflictPolicy to "change"
     And I set preference .kuroshiro to true
     And I set preference .skipFields to "abstract, copyright, googlebooks, "
-
     # And I select the library named "CCNLab"
-
     And I set export option exportNotes to true
     And I wait until Zotero is idle
     And I export the library 1 times using "id:9cb70025-a888-4a29-a210-93ec52da40d4"
-
     And I wait until Zotero is idle
     And an export using "Better BibTeX" with worker on should match "export/*.bibtex"
-
     And I wait until Zotero is idle
     And an export using "Better BibTeX" with worker on should match "export/*.bibtex"
-
     And I wait until Zotero is idle
     And an export using "Better BibTeX" with worker on should match "export/*.bibtex"
-
     And I wait until Zotero is idle
     And an export using "Better BibTeX" with worker on should match "export/*.bibtex"
-
     When I export the library 1 times using "id:bc03b4fe-436d-4a1f-ba59-de4d2d7a63f7"
     And I wait until Zotero is idle
-
     Then an export using "Better CSL JSON" with worker on should match "export/*.csl.json"
-
     When I wait until Zotero is idle
     Then an export using "Better CSL JSON" with worker on should match "export/*.csl.json"
-
     When I wait until Zotero is idle
     Then an export using "Better CSL JSON" with worker on should match "export/*.csl.json"
 
@@ -816,3 +816,13 @@ Feature: Export
   Scenario: `Error getCollections configure option not set` when exporting to citation graph #2319
     Given I import 2 references from "export/*.json"
     Then an export using "Citation graph" should match "export/*.dot"
+
+  Scenario: BB does not save journal abbreviations #3065
+    Given I import 2 references from "export/*.json"
+    And I set export option exportNotes to true
+    And I set export option useJournalAbbreviation to true
+    Then an auto-export to "~/autoexport.bib" using "Better BibLaTeX" should match "export/*.before.biblatex"
+    Then dump the cache to "cache.json"
+    When I change biblatexAPA to true on the auto-export
+    And I wait 15 seconds
+    Then "~/autoexport.bib" should match "export/*.after.biblatex"

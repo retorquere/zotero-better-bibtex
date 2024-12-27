@@ -1,0 +1,15 @@
+--- node_modules/@xmldom/xmldom/lib/sax.js	2024-08-30 19:59:00
++++ node_modules/@xmldom/xmldom/lib/sax.js	2024-08-30 20:18:16
+@@ -808,6 +808,12 @@
+ 				if (!match) {
+ 					return errorHandler.fatalError('doctype external id is not well-formed at position ' + p.getIndex());
+ 				}
++        // see lib/grammar.js patch
++        match.groups = {
++          SystemLiteralOnly: match[1],
++          PubidLiteral: match[2],
++          SystemLiteral: match[3],
++        }
+ 				if (match.groups.SystemLiteralOnly !== undefined) {
+ 					doctype.systemId = match.groups.SystemLiteralOnly;
+ 				} else {

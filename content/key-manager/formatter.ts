@@ -1,10 +1,16 @@
 import type { Tag, RegularItem as SerializedRegularItem, Item as SerializedItem } from '../../gen/typings/serialized-item'
 
 import { Shim } from '../os'
-import { is7 } from '../../content/client'
-const $OS = is7 ? Shim : OS
+import * as client from '../../content/client'
+const $OS = client.is7 ? Shim : OS
 
-import { client } from '../client'
+import nlp from 'compromise/one'
+type Term = {
+  text: string
+  normal: string
+  pre: string
+  post: string
+}
 
 import { Events } from '../events'
 
@@ -184,7 +190,7 @@ export type CreatorType =
   | 'testimonyBy' | '-testimonyBy'
   | 'translator' | '-translator'
   | 'wordsBy' | '-wordsBy'
-// const creatorTypes: CreatorType[] = Object.keys(itemCreators[client]) as CreatorType[]
+// const creatorTypes: CreatorType[] = Object.keys(itemCreators[client.slug]) as CreatorType[]
 export type CreatorTypeArray = CreatorType[]
 export type CreatorTypeOrAll = CreatorType | '*'
 export type CreatorTypeCollection = CreatorTypeOrAll[][]
@@ -348,7 +354,7 @@ export class PatternFormatter {
     dash: Zotero.Utilities.XRegExp('\\p{Pd}|\u2500|\uFF0D|\u2015', 'g'), // additional pseudo-dashes from #1880
     caseNotUpperTitle: Zotero.Utilities.XRegExp('[^\\p{Lu}\\p{Lt}]', 'g'),
     caseNotUpper: Zotero.Utilities.XRegExp('[^\\p{Lu}]', 'g'),
-    word: Zotero.Utilities.XRegExp('[\\p{L}\\p{Nd}\\p{Pc}\\p{M}]+(-[\\p{L}\\p{Nd}\\p{Pc}\\p{M}]+)*', 'g'),
+    // word: Zotero.Utilities.XRegExp('[\\p{L}\\p{Nd}\\p{Pc}\\p{M}]+(-[\\p{L}\\p{Nd}\\p{Pc}\\p{M}]+)*', 'g'),
   }
 
   private acronyms: Record<string, Record<string, string>> = {}
@@ -376,17 +382,36 @@ export class PatternFormatter {
     })
   }
 
+  public test(formula: string): string {
+    if (formula[0] === '[') {
+      try {
+        legacyparser.parse(formula, { reserved, items, methods })
+      }
+      catch (err) {
+        return err.message as string
+      }
+      return ''
+    }
+    try {
+      this.parseFormula(formula)
+    }
+    catch (err) {
+      return err.message as string
+    }
+    return ''
+  }
+
   // private fold: boolean
   public update(formulas: string[]): string {
     const unsafechars = rescape(Preference.citekeyUnsafeChars + '\uFFFD')
     this.re.unsafechars_allow_spaces = new RegExp(`[${ unsafechars }]`, 'g')
     this.re.unsafechars = new RegExp(`[${ unsafechars }\\s]`, 'g')
-    this.skipWords = new Set(Preference.skipWords.split(',').map((word: string) => word.trim()).filter((word: string) => word))
+    this.skipWords = new Set(Preference.skipWords.split(',').map((word: string) => word.trim().toLowerCase()).filter((word: string) => word))
 
     let error = ''
     const ts = Date.now()
     // the zero-width-space is a marker to re-save the current default so it doesn't get replaced when the default changes later, which would change new keys suddenly
-    for (let formula of [ ...formulas, Preference.default.citekeyFormat.replace(/^\u200B/, '') ]) {
+    for (let formula of [ ...formulas, Preference.default.citekeyFormat ]) {
       log.info(`formula-update: ${ ts } trying: ${ formula }`)
       if (!formula) continue
 
@@ -454,9 +479,6 @@ export class PatternFormatter {
     return citekey
   }
 
-  /**
-   * Set the current chunk
-   */
   public $text(text: string): this {
     this.chunk = text || ''
     return this
@@ -502,6 +524,7 @@ export class PatternFormatter {
 
   /**
    * returns the internal item ID/key
+   * @param id 'id': return itemID; 'key': return the item key
    */
   public $item(id: 'id' | 'key' = 'key'): this {
     return this.$text(id === 'id' ? `${ this.item.itemID }` : this.item.itemKey)
@@ -570,7 +593,7 @@ export class PatternFormatter {
   ): this {
     const include: string[] = []
     const exclude: string[] = []
-    const primary = itemCreators[client][this.item.itemType][0]
+    const primary = itemCreators[client.slug][this.item.itemType][0]
 
     const types = this.item.creators.map(cr => cr.creatorType)
     if (typeof type === 'string') {
@@ -842,12 +865,14 @@ export class PatternFormatter {
   public $lastpage(): this {
     const pages: string = this.item.getField('pages') as string
     if (!pages) return this.$text('')
-    return this.$text(pages.split(page_range_splitter)[0] || '')
+    return this.$text(pages.split(page_range_splitter).pop() || '')
   }
 
-  /** Tag number `n`. Mostly for legacy compatibility -- order of tags is undefined */
+  /** Tag number `n`. Mostly for legacy compatibility
+   * @param n position of tag to get
+   */
   public $keyword(n: number): this {
-    const tag: string | { tag: string } = this.item.getTags()?.[n] || ''
+    const tag: string | { tag: string } = this.item.getTags()?.slice().sort()[n] || ''
     return this.$text(typeof tag === 'string' ? tag : tag.tag)
   }
 
@@ -972,7 +997,7 @@ export class PatternFormatter {
    * @param match  Regex to test the creator-type list. When passed, and the creator-type list does not match the regex, jump to the next formule. When it matches, return nothing but stay in the current formule. When no regex is passed, output the creator-type list for the item (mainly useful for debugging).
    */
   public $creatortypes(match?: RegExp): this {
-    const creators = [...(new Set([ '', (itemCreators[client][this.item.itemType] || [])[0] || '' ]))].sort() // this will shake out duplicates and put the empty string first
+    const creators = [...(new Set([ '', (itemCreators[client.slug][this.item.itemType] || [])[0] || '' ]))].sort() // this will shake out duplicates and put the empty string first
       .map(primary => (this.item.creators || []).map(cr => `${ typeof cr.name === 'string' ? 1 : 2 }${ cr.creatorType === primary ? 'primary' : cr.creatorType }`).join(';'))
       .map(cr => `${ this.item.itemType }:${ cr }`)
 
@@ -1158,6 +1183,7 @@ export class PatternFormatter {
 
   /**
    * Abbreviates the text. Only the first character and subsequent characters following white space will be included.
+   * @param chars number of characters to return per word
    */
   public _abbr(chars = 1): this {
     return this.$text(this.chunk.split(/\s+/).map(word => word.substring(0, chars)).join(''))
@@ -1292,7 +1318,9 @@ export class PatternFormatter {
     return text
   }
 
-  /** Removes punctuation */
+  /** Removes punctuation
+    * @param dash replace dashes with given character
+    */
   public _nopunct(dash = '-'): this {
     return this.$text(this.nopunct(this.chunk, dash))
   }
@@ -1307,7 +1335,10 @@ export class PatternFormatter {
     return this.$text(this.chunk.replace(CJK, ' $1 ').trim())
   }
 
-  /** word segmentation for Chinese items. Uses substantial memory, and adds about 7 seconds to BBTs startup time; must be enabled under Preferences -> Better BibTeX -> Advanced -> Citekeys */
+  /**
+    * word segmentation for Chinese items. Uses substantial memory, and adds about 7 seconds to BBTs startup time; must be enabled under Preferences -> Better BibTeX -> Advanced -> Citekeys
+    * @param mode segmentation mode
+    */
   public _jieba(mode?: 'cn' | 'tw' | 'hant'): this {
     if (!chinese.load(Preference.jieba)) return this
     if (mode === 'hant') mode = 'tw'
@@ -1413,26 +1444,44 @@ export class PatternFormatter {
     return this.transliterate(str).replace(allow_spaces ? this.re.unsafechars_allow_spaces : this.re.unsafechars, '').trim()
   }
 
+  private split(title: string): string[] {
+    const contracted: Term[] = []
+    let tail: Term
+    const sentences: { terms: Term[] }[] = nlp(title).json()
+    for (const sentence of sentences) {
+      sentence.terms.forEach((term, i) => {
+        if (i !== 0 && tail.post === '-') {
+          tail.text += tail.post + term.text
+          tail.post = term.post
+        }
+        else {
+          contracted.push(tail = term)
+        }
+      })
+    }
+    return contracted.map(term => term.text).filter(term => !this.skipWords.has(term.toLowerCase()))
+  }
+
   private titleWords(title, options: { transliterate?: boolean; skipWords?: boolean; nopunct?: boolean } = {}): string[] {
     if (!title) return null
 
-    // 551
-    let words: string[] = Zotero.Utilities.XRegExp.matchChain(title, [this.re.word])
-      .map((word: string) => options.nopunct ? this.nopunct(word, '') : word)
-      .filter((word: string) => word && !(options.skipWords && ucs2decode(word).length === 1 && !word.match(CJK)))
+    title = title.replace(/<\/?(?:i|b|sc|nc|code|span[^>]*)>|["]/ig, '').replace(/[/:]/g, ' ')
+    let words = this.split(title)
+      .map(word => options.nopunct ? this.nopunct(word, '') : word)
+      .filter(word => word && !(options.skipWords && ucs2decode(word).length === 1 && !word.match(/^\d+$/) && !word.match(CJK)))
 
     // apply jieba.cut and flatten.
     if (chinese.load(Preference.jieba) && options.skipWords && this.item.transliterateMode.startsWith('chinese')) {
       const mode = this.item.transliterateMode === 'chinese-traditional' ? 'tw' : 'cn'
-      words = [].concat(...words.map((word: string) => chinese.jieba(word, mode)))
-      // remove CJK skipwords
-      words = words.filter((word: string) => !this.skipWords.has(word.toLowerCase()))
+      words = words
+        .flatMap((word: string) => chinese.jieba(word, mode))
+        .filter((word: string) => !this.skipWords.has(word.toLowerCase())) // remove CJK skipwords
     }
 
     if (Preference.kuroshiro && kuroshiro.enabled && options.skipWords && this.item.transliterateMode === 'japanese') {
-      words = [].concat(...words.map((word: string) => kuroshiro.tokenize(word)))
-      // remove CJK skipwords
-      words = words.filter((word: string) => !this.skipWords.has(word.toLowerCase()))
+      words = words
+        .flatMap((word: string) => kuroshiro.tokenize(word))
+        .filter((word: string) => !this.skipWords.has(word.toLowerCase()))
     }
 
     if (options.transliterate) {
@@ -1504,7 +1553,7 @@ export class PatternFormatter {
   }
 
   private creators(select: AuthorType, template: string): string[] {
-    const types = itemCreators[client][this.item.itemType] || []
+    const types = itemCreators[client.slug][this.item.itemType] || []
     const primary = types[0]
 
     const creators = {

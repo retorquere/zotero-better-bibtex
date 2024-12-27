@@ -1,7 +1,7 @@
 import { log } from './logger'
 import { Shim } from './os'
-import { is7 } from './client'
-const $OS = is7 ? Shim : OS
+import * as client from './client'
+const $OS = client.is7 ? Shim : OS
 
 // https://searchfox.org/mozilla-central/source/toolkit/modules/subprocess/subprocess_win.jsm#135 doesn't seem to work on Windows.
 export async function findBinary(bin: string, installationDirectory: { mac?: string[]; win?: string[] } = {}): Promise<string> {
@@ -14,19 +14,42 @@ export async function findBinary(bin: string, installationDirectory: { mac?: str
 }
 
 const ENV = Components.classes['@mozilla.org/process/environment;1'].getService(Components.interfaces.nsIEnvironment)
-const VarRef = Zotero.isWin ? /%([A-Z][A-Z0-9]*)%/ig : /[$]([A-Z][A-Z0-9]*)/ig
-function resolveVars(path: string, resolved: Record<string, string>): string {
-  let more = true
-  while (more) {
-    more = false
-    path = path.replace(VarRef, (match, varref) => {
-      more = true
-      if (typeof resolved[varref] !== 'string') resolved[varref] = ENV.get(varref) || ''
-      return resolved[varref]
-    })
+const VarRef = Zotero.isWin ? /%([A-Z][A-Z0-9]*)%/ig : /[$]([A-Z][A-Z0-9]*)|[$][{]([A-Z][A-Z0-9]*)[}]/ig
+
+const resolver = new class {
+  private cache: Map<string, string> = new Map
+
+  resolve(path: string, seen: Record<string, boolean> = {}): string {
+    let value: string
+
+    if (!this.cache.has(path)) {
+      this.cache.set(path, path.replace(VarRef, ($varName, ...args) => {
+        if (!this.cache.has($varName)) {
+          const varName: string = args.find(_ => _)
+
+          if (seen[varName]) {
+            log.error(`path-resolve: circular reference detected for environment variable ${varName}`)
+            this.cache.set($varName, '')
+          }
+          else if (value = ENV.get(varName) || '') {
+            this.cache.set($varName, this.resolve(value, { ...seen, [varName]: true }))
+          }
+          else {
+            log.error(`path-search: environment variable ${varName} is not set`)
+            this.cache.set($varName, '')
+          }
+        }
+
+        return this.cache.get($varName)
+      }))
+    }
+
+    return this.cache.get(path)
   }
-  return path
 }
+
+const dirService = Components.classes['@mozilla.org/file/directory_service;1'].getService(Components.interfaces.nsIProperties)
+const cwd = dirService.get('CurWorkD', Components.interfaces.nsIFile)?.path ?? ''
 
 async function pathSearch(bin: string, installationDirectory: { mac?: string[]; win?: string[] } = {}): Promise<string> {
   const PATH = ENV.get('PATH')
@@ -34,13 +57,14 @@ async function pathSearch(bin: string, installationDirectory: { mac?: string[]; 
     log.error('path-search: PATH not set')
     return ''
   }
-  let paths: string[] = PATH.split(Zotero.isWin ? ';' : ':')
-  const resolved = {}
-  paths = paths.map(p => resolveVars(p, resolved)).filter((p: string, i: number, self: string[]) => self.indexOf(p) === i)
+
   log.info(`path-search: looking for ${ bin } in ${ PATH }`)
-  if (Zotero.isWin && installationDirectory.win) paths.unshift(...(installationDirectory.win))
-  if (Zotero.isMac && installationDirectory.mac) paths.unshift(...(installationDirectory.mac))
-  paths = paths.filter(p => p)
+  const sep = Zotero.isWin ? '\\' : '/'
+  const paths: string[] = [ ...PATH.split(Zotero.isWin ? ';' : ':'), ...(installationDirectory[client.platform] || []) ]
+    .map(p => resolver.resolve(p))
+    .filter(_ => _)
+    .filter((p: string, i: number, self: string[]) => self.indexOf(p) === i) // unique
+    .map(p => cwd && p[0] === '.' && (p[1] || sep) === sep ? `${cwd}${p.substring(1)}` : p)
   if (!paths.length) {
     log.error('path-search:', PATH, 'yielded no directories')
     return ''

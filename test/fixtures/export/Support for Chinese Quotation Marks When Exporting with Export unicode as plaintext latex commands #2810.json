@@ -23,7 +23,6 @@
       "keyScope": "global",
       "postscript": "if (Translator.BetterBibLaTeX) {\n  // Apply this logic for specific item types only\n  if ([\"book\", \"bookSection\", \"journalArticle\", \"newspaperArticle\", \"thesis\"].includes(item.itemType)) {\n    delete this.has.url;\n    delete this.has.urldate;\n  }\n\n  // Check if more than 50% of the title is CJK\n  // https://github.com/retorquere/zotero-better-bibtex/issues/2810\n  if (zotero.title && (zotero.title.replace(/[^\\u4E00-\\u9FFF]/g, '').length / zotero.title.length) > 0.0) {\n    // re-add the title field doing only minimal ascaping\n    tex.add({ name: 'title', value: zotero.title, enc: 'minimal' })\n  }\n}",
       "quickCopyMode": "selectlink",
-      "retainCache": true,
       "skipFields": "language, langid, annotation, shorttitle, shortjournal, eprint, eprinttype, editortype, issn, isbn, file, series, pagetotal, origtitle, keywords, abstract"
     }
   },

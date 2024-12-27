@@ -3,7 +3,7 @@ import { HTMLParser } from '../../content/text'
 
 import type { MarkupNode } from '../../typings/markup'
 
-import { simple as log } from '../../content/logger'
+import { log } from '../../content/logger'
 import HE = require('he')
 import { Transform } from 'unicode2latex'
 
@@ -34,11 +34,11 @@ export class HTMLConverter {
   constructor(translation: Translation, mode: 'minimal' | 'bibtex' | 'biblatex') {
     this.translation = translation
     this.tx = new Transform(mode, {
-      math: this.translation.preferences.mapMath,
-      text: this.translation.preferences.mapText,
+      math: this.translation.collected.preferences.mapMath,
+      text: this.translation.collected.preferences.mapText,
       charmap: translation.charmap,
-      ascii: this.translation.preferences.ascii,
-      packages: this.translation.preferences.packages.trim().split(/\s*,\s*/),
+      ascii: this.translation.collected.preferences.ascii,
+      packages: this.translation.collected.preferences.packages.trim().split(/\s*,\s*/),
     })
   }
 
@@ -52,9 +52,9 @@ export class HTMLConverter {
     const ast: MarkupNode = HTMLParser.parse(source, {
       html: options.html,
       caseConversion: options.caseConversion,
-      exportBraceProtection: this.translation.preferences.exportBraceProtection,
-      csquotes: this.translation.preferences.csquotes,
-      exportTitleCase: this.translation.preferences.exportTitleCase,
+      exportBraceProtection: this.translation.collected.preferences.exportBraceProtection,
+      csquotes: this.translation.collected.preferences.csquotes,
+      exportTitleCase: this.translation.collected.preferences.exportTitleCase,
     })
     this.walk(ast)
 
@@ -92,7 +92,12 @@ export class HTMLConverter {
       case 'em':
       case 'italic':
       case 'emphasis':
-        latex = '\\emph{...}'
+        if (this.translation.BetterBibTeX) {
+          latex = '\\emph{...}'
+        }
+        else {
+          latex = '\\mkbibemph{...}'
+        }
         break
 
       case 'b':

@@ -1,10 +1,11 @@
-import { patch as $patch$ } from './monkey-patch'
+import { Monkey } from './monkey-patch'
 import { sentenceCase } from './text'
 import * as l10n from './l10n'
 import { Elements } from './create-element'
 import { busyWait } from './busy-wait'
 import { icons } from './icons'
 import { Events } from './events'
+import { is7 } from './client'
 
 async function title_sentenceCase(label) {
   const val = this._getFieldValue(label)
@@ -30,6 +31,7 @@ export async function newZoteroItemPane(win: Window): Promise<void> {
 }
 
 export class ZoteroItemPane {
+  private monkey = new Monkey(true)
   document: Document
   elements: Elements
   displayed: number
@@ -43,7 +45,7 @@ export class ZoteroItemPane {
     this.document = win.document
     const elements = this.elements = new Elements(this.document)
 
-    if (!this.document.getElementById('better-bibtex-editpane-item-box')) {
+    if (!is7 && !this.document.getElementById('better-bibtex-editpane-item-box')) {
       itemBox.parentNode.appendChild(elements.create('vbox', { flex: 1, style: 'margin: 0; padding: 0', $: [
 
         elements.create('grid', { id: 'better-bibtex-editpane-item-box', $: [
@@ -70,7 +72,7 @@ export class ZoteroItemPane {
     })
 
     const self = this // eslint-disable-line @typescript-eslint/no-this-alias
-    $patch$(itemBox.__proto__, 'refresh', original => function() {
+    this.monkey.patch(itemBox.__proto__, 'refresh', original => function() {
       // eslint-disable-next-line prefer-rest-params
       original.apply(this, arguments)
 
@@ -101,7 +103,7 @@ export class ZoteroItemPane {
 
       label.hidden = value.hidden = !citationKey
 
-      label.value = `${ pinned ? icons.pin : '' }${ l10n.localize('better-bibtex_item-pane_info_citation-key.label') }`
+      label.value = `${ pinned ? icons.pin : '' }${ l10n.localize('better-bibtex_item-pane_info_citation-key_label') }`
       value.value = citationKey
     })
 
@@ -114,5 +116,6 @@ export class ZoteroItemPane {
     this.elements.remove()
     this.done?.()
     this.document = undefined
+    this.monkey.disable()
   }
 }

@@ -1,4 +1,4 @@
-{{ partial "header.html" . }}
+{{ partial "content-header.html" . }}
   
 {{ if eq .Kind "section" }}
   {{ .Content }}
@@ -21,7 +21,7 @@
   {{end}}
 </footer>
 
-{{ partial "footer.html" . }}
+{{ partial "content-footer.html" . }}
 
 {{ define "page-path" }}
     {{ if .currentPage.Parent }}

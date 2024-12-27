@@ -5,6 +5,9 @@ csl: apa7.csl
 zotero:
 	csl-style: apa
 papersize: a4
+library:
+- 
+- better-bibtex
 ---
 
 \newpage

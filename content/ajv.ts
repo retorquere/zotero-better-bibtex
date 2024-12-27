@@ -1,6 +1,6 @@
 // 2020 for prefixItems
 import AJV from 'ajv/dist/2020'
-import { discard, simple as log } from './logger'
+import { discard, log } from './logger'
 
 const options = {
   strict: false,
@@ -36,9 +36,9 @@ export function validator(schema, ajv): (data: any) => string { // eslint-disabl
   }
 }
 
-import { client } from './client'
+import * as client from './client'
 
-const jurism = client === 'jurism'
+const jurism = client.slug === 'jurism'
 const zotero = !jurism
 
 const zoterovalidator = validator(require('../gen/items/zotero.json'), noncoercing)

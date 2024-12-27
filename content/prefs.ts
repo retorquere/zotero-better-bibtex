@@ -2,8 +2,8 @@
 declare const Services: any
 
 import { Shim } from './os'
-import { is7, platform } from './client'
-const $OS = is7 ? Shim : OS
+import * as client from './client'
+const $OS = client.is7 ? Shim : OS
 
 import { Events } from './events'
 import type { CharMap } from 'unicode2latex'
@@ -40,7 +40,7 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
     this.setDefaultPrefs()
 
     // put this in a preference so that translators can access this.
-    this.platform = platform.name
+    this.platform = client.platform
 
     if (this.testing) {
       return new Proxy(this, {
@@ -154,6 +154,7 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
     Zotero.Prefs.clear('translators.better-bibtex.caching')
     Zotero.Prefs.clear('translators.better-bibtex.citekeyFormatBackup')
 
+    this.move('retainCache', 'cacheRetain', old => old ? 1 : 0)
     this.move('autoPin', 'autoPinDelay', old => old ? 1 : 0)
     this.move('suppressNoCase', 'importCaseProtection', old => old ? 'off' : 'as-needed')
     this.move('suppressSentenceCase', 'importSentenceCase', old => old ? 'off' : 'on+guess')
@@ -161,7 +162,7 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
     this.move('suppressTitleCase', 'exportTitleCase', old => !old)
 
     // put this in a preference so that translators can access this.
-    this.platform = platform.name
+    this.platform = client.platform
 
     if (this.testing) {
       return new Proxy(this, {

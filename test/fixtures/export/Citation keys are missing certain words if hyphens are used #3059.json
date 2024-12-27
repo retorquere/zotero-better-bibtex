@@ -1,0 +1,52 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "preferences": {
+      "baseAttachmentPath": "/home/trevor/Insync/trevor.ablett@gmail.com/Google Drive/UofT/Papers/zotero"
+    }
+  },
+  "items": [
+    {
+      "abstractNote": "Model-free deep reinforcement learning (RL) algorithms have been demonstrated on a range of challenging decision making and control tasks. However, these methods typically suffer from two major cha...",
+      "accessDate": "2021-03-01T14:42:36Z",
+      "citationKey": "haarnojaSoftActorCriticPolicy2018",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Tuomas",
+          "lastName": "Haarnoja"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Aurick",
+          "lastName": "Zhou"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Pieter",
+          "lastName": "Abbeel"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Sergey",
+          "lastName": "Levine"
+        }
+      ],
+      "date": "2018/07/03",
+      "itemID": 1,
+      "itemType": "conferencePaper",
+      "language": "en",
+      "libraryCatalog": "proceedings.mlr.press",
+      "notes": [
+        "Comment: ICML 2018 Videos: sites.google.com/view/soft-actor-critic Code: github.com/haarnoja/sac"
+      ],
+      "pages": "1861-1870",
+      "place": "Stockholm, Sweden",
+      "publicationTitle": "Proceedings of the 35th international conference on machine learning (ICML'18)",
+      "shortTitle": "Soft Actor-Critic",
+      "title": "Soft Actor-Critic: Off-Policy Maximum Entropy Deep Reinforcement Learning with a Stochastic Actor",
+      "url": "http://proceedings.mlr.press/v80/haarnoja18b.html"
+    }
+  ]
+}

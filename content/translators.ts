@@ -1,10 +1,11 @@
 /* eslint-disable no-case-declarations, @typescript-eslint/no-unsafe-return */
 
 import { Shim } from './os'
-import { is7 } from './client'
-const $OS = is7 ? Shim : OS
+import * as client from './client'
+const $OS = client.is7 ? Shim : OS
 import merge from 'lodash.merge'
 import { Cache } from './db/cache'
+import { Serializer } from './item-export-format'
 
 /*
 async function guard(run: Promise<void>): Promise<boolean> {
@@ -46,10 +47,9 @@ import { log } from './logger'
 import { flash } from './flash'
 import { Events } from './events'
 import { Pinger } from './ping'
-import Puqeue from 'puqeue'
+import { newQueue } from '@henrygd/queue'
 import { orchestrator } from './orchestrator'
 import type { Reason } from './bootstrap'
-import type Bluebird from 'bluebird'
 import { headers as Headers, byLabel, byId, bySlug } from '../gen/translators'
 
 Events.on('preference-changed', async (pref: string) => {
@@ -57,12 +57,6 @@ Events.on('preference-changed', async (pref: string) => {
     await Cache.clear(translator)
   }
 })
-
-class Queue extends Puqeue {
-  get queued() {
-    return this._queue.length
-  }
-}
 
 import * as l10n from './l10n'
 
@@ -95,40 +89,34 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
   public byLabel: Record<string, Translator.Header> = {}
   public bySlug: Record<string, Translator.Header> = {}
   public itemType: { note: number; attachment: number; annotation: number }
-  public queue = new Queue
+  public queue = newQueue(1)
   public worker: ChromeWorker
 
   private reinit: { header: Translator.Header; code: string }[]
-
-  public ready!: Bluebird<boolean>
+  private serializer = new Serializer
 
   constructor() {
     const ready = Zotero.Promise.defer()
-    this.ready = ready.promise
 
     Object.assign(this, { byLabel, byId, bySlug })
 
     orchestrator.add({
       id: 'translators',
       description: 'translators',
-      needs: [ 'keymanager', 'cache' ],
+      needs: [ 'keymanager' ],
       startup: async () => {
         if (!this.worker) {
           try {
-            const environment = Object.entries({
-              version: Zotero.version,
-              platform: Preference.platform,
-              locale: Zotero.locale,
-              clientName: Zotero.clientName,
-              is7,
-            }).map(([ k, v ]) => `${ encodeURIComponent(k) }=${ encodeURIComponent(v) }`).join('&')
+            const searchParams = Object.entries(client)
+              .map(([ k, v ]) => `${ encodeURIComponent(k) }=${ encodeURIComponent(`${v}`) }`).join('&')
 
-            this.worker = new ChromeWorker(`chrome://zotero-better-bibtex/content/worker/zotero.js?${ environment }`)
+            this.worker = new ChromeWorker(`chrome://zotero-better-bibtex/content/worker/zotero.js?${ searchParams }`)
 
             // post dynamically to fix #2485
             this.worker.postMessage({
               kind: 'initialize',
               CSL_MAPPINGS: Object.entries(Zotero.Schema).reduce((acc, [ k, v ]) => { if (k.startsWith('CSL')) acc[k] = v; return acc }, {}),
+              dateFormatsJSON: Zotero.File.getResource('resource://zotero/schema/dateFormats.json'),
             })
           }
           catch (err) {
@@ -160,8 +148,6 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
         ready.resolve(true)
       },
       shutdown: async (reason: Reason) => {
-        if (Cache.opened) await Cache.ZoteroSerialized.purge()
-
         switch (reason) {
           case 'ADDON_DISABLE':
           case 'ADDON_UNINSTALL':
@@ -213,9 +199,8 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
   }
 
   public async importString(str) {
-    await this.ready
-    await Zotero.initializationPromise // this really shouldn't be necessary
-    const translation = (new Zotero.Translate.Import)
+    await Zotero.BetterBibTeX.ready
+    const translation = new Zotero.Translate.Import
     translation.setString(str)
 
     const zp = Zotero.getActiveZoteroPane()
@@ -239,16 +224,14 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
   }
 
   public async queueJob(job: ExportJob): Promise<string> {
-    return this.queue.add(() => this.exportItemsByQueuedWorker(job))
+    return await this.queue.add(() => this.exportItems(job))
   }
 
-  private async exportItemsByQueuedWorker(job: ExportJob): Promise<string> {
-    // trace('exportItemsByQueuedWorker: requested')
+  private async exportItemsByWorker(job: ExportJob): Promise<string> {
     if (job.path && job.canceled) return ''
     await Zotero.BetterBibTeX.ready
     if (job.path && job.canceled) return ''
 
-    // trace('exportItemsByQueuedWorker: preparing')
     const displayOptions = {
       ...this.displayOptions(job.translatorID, job.displayOptions),
       exportPath: job.path || undefined,
@@ -270,156 +253,164 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
     const deferred = Zotero.Promise.defer()
 
-    const config: Translator.Worker.Job = {
-      preferences: { ...Preference.all, ...preferences },
-      options: displayOptions,
-      data: {
-        items: [],
-        collections: [],
-      },
-      autoExport: job.autoExport,
+    try {
+      let failed = true
 
-      translator: translator.label,
-      output: job.path || '',
-      debugEnabled: !!Zotero.Debug.storing,
-    }
+      const config: Translator.Worker.Job = {
+        preferences: { ...Preference.all, ...preferences },
+        options: displayOptions,
+        data: {
+          items: [],
+          collections: [],
+        },
+        autoExport: job.autoExport,
 
-    let items: any[] = []
-    this.worker.onmessage = (e: { data: Translator.Worker.Message }) => {
-      switch (e.data?.kind) {
-        case 'error':
-          log.error(`translation failed: ${ e.data.message }\n${ e.data.stack || '' }`.trim())
-          if (job.translate) {
-            // job.translate._runHandler('error', e.data) // eslint-disable-line no-underscore-dangle
-            job.translate.complete(false, { message: e.data.message, stack: e.data.stack })
+        translator: translator.label,
+        output: job.path || '',
+        debugEnabled: !!Zotero.Debug.storing,
+      }
+
+      let items: any[] = []
+      this.worker.onmessage = (e: { data: Translator.Worker.Message }) => {
+        switch (e.data?.kind) {
+          case 'error':
+            log.error(`translation failed: ${ e.data.message }\n${ e.data.stack || '' }`.trim())
+            if (job.translate) {
+              // job.translate._runHandler('error', e.data) // eslint-disable-line no-underscore-dangle
+              job.translate.complete(false, { message: e.data.message, stack: e.data.stack })
+            }
+            deferred.reject(new Error(e.data.message))
+            break
+
+          case 'debug':
+            // this is pre-formatted
+            Zotero.debug(e.data.message) // eslint-disable-line no-restricted-syntax
+            break
+
+          case 'item':
+            job.translate?._runHandler('itemDone', items[e.data.item]) // eslint-disable-line no-underscore-dangle
+            break
+
+          case 'done':
+            void Events.emit('export-progress', { pct: 100, message: translator.label, ae: job.autoExport })
+            if (job.translate) {
+              job.translate.string = e.data.output // eslint-disable-line id-blacklist
+              job.translate.complete(e.data.output)
+            }
+            deferred.resolve(e.data.output)
+            failed = false
+            break
+
+          case 'progress':
+            void Events.emit('export-progress', { pct: e.data.percent, message: e.data.translator, ae: e.data.autoExport })
+            break
+
+          default:
+            if (JSON.stringify(e) !== '{"isTrusted":true}') { // why are we getting this?
+              log.error('unexpected message from worker', e)
+            }
+            break
+        }
+      }
+
+      this.worker.onerror = e => {
+        log.error('QBW: failed:', Date.now() - start, 'message:', e)
+        // job.translate?._runHandler('error', e) // eslint-disable-line no-underscore-dangle
+        job.translate?.complete(false, { message: e.message, stack: e.error?.stack })
+        deferred.reject(new Error(e.message))
+      }
+
+      const scope = this.exportScope(job.scope)
+      let collections: any[] = []
+      switch (scope.type) {
+        case 'library':
+          items = await Zotero.Items.getAll(scope.id, true)
+          collections = Zotero.Collections.getByLibrary(scope.id) // , true)
+          break
+
+        case 'items':
+          items = scope.items
+          break
+
+        case 'collection':
+          collections = Zotero.Collections.getByParent(scope.collection.id, true)
+          const items_with_duplicates = new Set(scope.collection.getChildItems())
+          for (const collection of collections) {
+            for (const item of collection.getChildItems()) {
+              items_with_duplicates.add(item) // sure hope getChildItems doesn't return a new object?!
+            }
           }
-          deferred.reject(new Error(e.data.message))
-          break
-
-        case 'debug':
-          // this is pre-formatted
-          Zotero.debug(e.data.message) // eslint-disable-line no-restricted-syntax
-          break
-
-        case 'item':
-          job.translate?._runHandler('itemDone', items[e.data.item]) // eslint-disable-line no-underscore-dangle
-          break
-
-        case 'done':
-          void Events.emit('export-progress', { pct: 100, message: translator.label, ae: job.autoExport })
-          if (job.translate) {
-            job.translate.string = e.data.output // eslint-disable-line id-blacklist
-            job.translate.complete(e.data.output)
-          }
-          deferred.resolve(e.data.output)
-          break
-
-        case 'progress':
-          void Events.emit('export-progress', { pct: e.data.percent, message: e.data.translator, ae: e.data.autoExport })
+          items = Array.from(items_with_duplicates.values())
           break
 
         default:
-          if (JSON.stringify(e) !== '{"isTrusted":true}') { // why are we getting this?
-            log.status({ error: true }, 'unexpected message from worker', e)
+          throw new Error(`Unexpected scope: ${ Object.keys(scope) }`)
+      }
+      if (job.path && job.canceled) return ''
+
+      items = items.filter(item => !item.isAnnotation?.())
+
+      const prepare = new Pinger({
+        total: items.length,
+        callback: pct => {
+          const pending = this.queue.size() - 1
+          const preparing = pending
+            ? l10n.localize('better-bibtex_preferences_auto-export_status_preparing_delayed', { translator: translator.label, pending })
+            : l10n.localize('better-bibtex_preferences_auto-export_status_preparing', { translator: translator.label })
+          void Events.emit('export-progress', { pct, message: preparing, ae: job.autoExport })
+        },
+      })
+
+      await Cache.ZoteroSerialized.fill(items, this.serializer)
+
+      config.data.items = items.map(item => item.id)
+      prepare.update()
+      if (job.path && job.canceled) return ''
+
+      if (this.byId[job.translatorID].configOptions?.getCollections) {
+        config.data.collections = collections.map(collection => {
+          collection = collection.serialize(true)
+          collection.id = collection.primary.collectionID
+          collection.name = collection.fields.name
+          return collection
+        })
+      }
+
+      prepare.done()
+
+      this.worker.postMessage({ kind: 'start', config })
+
+      if (typeof job.timeout === 'number') {
+        Zotero.Promise.delay(job.timeout * 1000).then(() => {
+          if (failed) {
+            const err = new TimeoutError(`translation timeout after ${ job.timeout } seconds`, { timeout: job.timeout })
+            log.error('translation.exportItems:', err)
+            deferred.reject(err)
           }
-          break
+        })
       }
     }
-
-    this.worker.onerror = e => {
-      log.error('QBW: failed:', Date.now() - start, 'message:', e)
-      job.translate?._runHandler('error', e) // eslint-disable-line no-underscore-dangle
-      deferred.reject(new Error(e.message))
-    }
-
-    const scope = this.exportScope(job.scope)
-    let collections: any[] = []
-    switch (scope.type) {
-      case 'library':
-        items = await Zotero.Items.getAll(scope.id, true)
-        collections = Zotero.Collections.getByLibrary(scope.id) // , true)
-        break
-
-      case 'items':
-        items = scope.items
-        break
-
-      case 'collection':
-        collections = Zotero.Collections.getByParent(scope.collection.id, true)
-        const items_with_duplicates = new Set(scope.collection.getChildItems())
-        for (const collection of collections) {
-          for (const item of collection.getChildItems()) {
-            items_with_duplicates.add(item) // sure hope getChildItems doesn't return a new object?!
-          }
-        }
-        items = Array.from(items_with_duplicates.values())
-        break
-
-      default:
-        throw new Error(`Unexpected scope: ${ Object.keys(scope) }`)
-    }
-    if (job.path && job.canceled) return ''
-
-    items = items.filter(item => !item.isAnnotation?.())
-
-    const prepare = new Pinger({
-      total: items.length,
-      callback: pct => {
-        let preparing = `${ l10n.localize('better-bibtex_preferences_auto-export_status_preparing') } ${ translator.label }`.trim()
-        if (this.queue.queued) preparing += ` +${ Translators.queue.queued }`
-        void Events.emit('export-progress', { pct, message: preparing, ae: job.autoExport })
-      },
-    })
-
-    // trace('exportItemsByQueuedWorker: starting cache completion')
-    await Cache.ZoteroSerialized.fill(items)
-    // trace('exportItemsByQueuedWorker: cache completion completed')
-
-    config.data.items = items.map(item => item.id)
-    prepare.update()
-    if (job.path && job.canceled) return ''
-
-    if (this.byId[job.translatorID].configOptions?.getCollections) {
-      config.data.collections = collections.map(collection => {
-        collection = collection.serialize(true)
-        collection.id = collection.primary.collectionID
-        collection.name = collection.fields.name
-        return collection
-      })
-    }
-
-    prepare.done()
-
-    // trace('exportItemsByQueuedWorker: prepare finished')
-    this.worker.postMessage({ kind: 'start', config })
-
-    if (typeof job.timeout === 'number') {
-      Zotero.Promise.delay(job.timeout * 1000).then(() => {
-        const err = new TimeoutError(`translation timeout after ${ job.timeout } seconds`, { timeout: job.timeout })
-        log.error('translation.exportItems:', err)
-        deferred.reject(err)
-      })
+    catch (err) {
+      job.translate?.complete(false, err)
+      deferred.reject(err)
     }
 
     return deferred.promise
   }
 
   public displayOptions(translatorID: string, displayOptions: any): any {
-    return merge({}, this.byId[translatorID]?.displayOptions || {}, displayOptions)
+    const defaults = this.byId[translatorID]?.displayOptions || {}
+    return merge({}, defaults, displayOptions)
   }
 
   public async exportItems(job: ExportJob): Promise<string> {
     await Zotero.BetterBibTeX.ready
-    await this.ready
-
-    const displayOptions = this.displayOptions(job.translatorID, job.displayOptions)
 
     const translator = this.byId[job.translatorID]
-    if (typeof translator?.displayOptions.worker === 'boolean' && displayOptions.worker) {
-      return await this.queueJob(job)
-    }
+    const displayOptions = this.displayOptions(job.translatorID, job.displayOptions)
+    if (translator && displayOptions.worker) return await this.exportItemsByWorker(job)
 
-    const translation = (new Zotero.Translate.Export)
+    const translation = new Zotero.Translate.Export
 
     const scope = this.exportScope(job.scope)
 
@@ -497,7 +488,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       }
     }
     catch (err) {
-      log.error(`Translators.uninstall: failed to remove ${ label }:`, err)
+      log.error(`Translators.uninstall: failed to remove ${label}:`, err)
       return true
     }
 
@@ -529,7 +520,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
       for (const header of headers) {
         // workaround for mem limitations on Windows
-        if (!is7 && typeof header.displayOptions?.worker === 'boolean') header.displayOptions.worker = !!Zotero.isWin
+        if (!client.is7 && typeof header.displayOptions?.worker === 'boolean') header.displayOptions.worker = !!Zotero.isWin
 
         const existing = installed[header.label]
         if (!existing) {
@@ -539,9 +530,6 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
         else if (existing.configOptions?.hash !== header.configOptions.hash) {
           reinit[header.label] = { header, code: code(header.label) }
           log.info(`translator install: updated translator ${ header.label }`)
-        }
-        else {
-          log.info(`translator install: ${ header.label } is up to date`)
         }
       }
 
@@ -556,7 +544,6 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     if (!install.length) return
 
     for (const { header, code } of install) {
-      await Zotero.DB.queryTx('UPDATE betterbibtex.autoExport SET status = \'scheduled\' WHERE translatorID = ?', [header.translatorID])
       await Cache.clear(header.label)
       await Zotero.Translators.save(header, code)
     }

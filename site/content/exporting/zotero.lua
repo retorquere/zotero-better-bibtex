@@ -1,9 +1,11 @@
 
-  print('zotero-live-citations 02c1695')
-  local mt, latest = pandoc.mediabag.fetch('https://retorque.re/zotero-better-bibtex/exporting/zotero.lua.revision')
-  latest = string.sub(latest, 1, 10)
-  if '02c1695' ~= latest then
-    print('new version "' .. latest .. '" available at https://retorque.re/zotero-better-bibtex/exporting')
+  print('zotero-live-citations 199d652')
+  local online, mt, latest = pcall(pandoc.mediabag.fetch, 'https://retorque.re/zotero-better-bibtex/exporting/zotero.lua.revision')
+  if online then
+    latest = string.sub(latest, 1, 10)
+    if '199d652' ~= latest then
+      print('new version "' .. latest .. '" available at https://retorque.re/zotero-better-bibtex/exporting')
+    end
   end
 
 do
@@ -1822,10 +1824,14 @@ end
 
 function stringify(node)
   local html = pandoc.write(pandoc.Pandoc({ node }), 'html')
+    :gsub('\n', ' ')
+    :gsub('<u>', '<i>')
+    :gsub('</u>', '</i>')
     :gsub('<em>', '<i>')
     :gsub('</em>', '</i>')
     :gsub('<strong>', '<b>')
     :gsub('</strong>', '</b>')
+    :gsub('<span class="smallcaps">', '<span style="font-variant:small-caps;">')
     :gsub('<p>', '')
     :gsub('</p>', '')
   if pandoc.utils.stringify(node):match('^%s') then

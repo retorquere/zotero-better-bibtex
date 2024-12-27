@@ -1,0 +1,95 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "preferences": {
+      "DOIandURL": "doi",
+      "autoAbbrev": true,
+      "citekeyFormat": "authEtAl.lower + shortyear"
+    }
+  },
+  "items": [
+    {
+      "DOI": "10.1029/2003GL017706",
+      "ISSN": "1944-8007",
+      "abstractNote": "A sequence of three internal solitary waves of elevation were observed propagating shoreward along a near-bottom density interface over Oregon's continental shelf. These waves are highly turbulent and coincide with enhanced optical backscatter, consistent with increased suspended sediments in the bottom boundary layer. Non-linear solitary wave solutions are employed to estimate wave speeds and energy. The waves are rank ordered in amplitude, phase speed, and energy, and inversely ordered in width. Wave kinetic energy is roughly twice the potential energy. The observed turbulence is not sufficiently large to dissipate the waves' energy before the waves reach the shore. Because of high wave velocities at the sea bed, bottom stress is inferred to be an important source of wave energy loss, unlike near-surface solitary waves. The wave solution suggests that the lead wave has a trapped core, implying enhanced cross-shelf transport of fluid and biology.",
+      "accessDate": "2024-11-21T02:18:46Z",
+      "citationKey": "klymakmoum03",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Jody M.",
+          "lastName": "Klymak"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "James N.",
+          "lastName": "Moum"
+        }
+      ],
+      "date": "2003",
+      "extra": [
+        "_eprint: https://onlinelibrary.wiley.com/doi/pdf/10.1029/2003GL017706"
+      ],
+      "issue": "20",
+      "itemID": 1,
+      "itemType": "journalArticle",
+      "language": "en",
+      "libraryCatalog": "Wiley Online Library",
+      "publicationTitle": "Geophysical Research Letters",
+      "rights": "Copyright 2003 by the American Geophysical Union.",
+      "title": "Internal solitary waves of elevation advancing on a shoaling shelf",
+      "url": "https://onlinelibrary.wiley.com/doi/abs/10.1029/2003GL017706",
+      "volume": "30"
+    },
+    {
+      "DOI": "10.1175/JPO3073.1",
+      "ISSN": "0022-3670, 1520-0485",
+      "abstractNote": "Horizontal tow measurements of internal waves are rare and have been largely supplanted in recent decades by vertical profile measurements. Here, estimates of isotherm displacements and turbulence dissipation rate from a towed vehicle deployed near Hawaii are presented. The displacement data are interpreted in terms of horizontal wavenumber spectra of isopycnal slope. The spectra span scales from 5 km to 0.1 m, encompassing both internal waves and turbulence. The turbulence subrange is identified using a standard turbulence fit, and the rest of the motions are deemed to be internal waves. The remaining subrange has a slightly red slope (ϕ ∼ k−1/2x) and vertical coherences compatible with internal waves, in agreement with previous towed measurements. However, spectral amplitudes in the internal wave subrange exhibit surprisingly little variation despite a four-order-of-magnitude change in turbulence dissipation rate observed at the site. The shape and amplitude of the horizontal spectra are shown to be consistent with observations and models of vertical internal wave spectra that consist of two subranges: a “linear” subrange (ϕ ∼ k0z) and a red “saturated” subrange (ϕ ∼ k−1z). These two subranges are blurred in the transformation to horizontal spectra, yielding slopes close to those observed. The saturated subrange does not admit amplitude variations in the spectra yet is an important component of the measured horizontal spectra, explaining the poor correspondence with the dissipation rate.",
+      "accessDate": "2024-11-21T02:19:42Z",
+      "citationKey": "klymakmoum07",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Jody M.",
+          "lastName": "Klymak"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "James N.",
+          "lastName": "Moum"
+        }
+      ],
+      "date": "2007/05/01",
+      "extra": [
+        "Publisher: American Meteorological Society",
+        "Section: Journal of Physical Oceanography"
+      ],
+      "issue": "5",
+      "itemID": 2,
+      "itemType": "journalArticle",
+      "language": "EN",
+      "libraryCatalog": "journals.ametsoc.org",
+      "pages": "1215-1231",
+      "publicationTitle": "Journal of Physical Oceanography",
+      "shortTitle": "Oceanic Isopycnal Slope Spectra. Part I",
+      "tags": [
+        {
+          "tag": "Internal waves",
+          "type": 1
+        },
+        {
+          "tag": "Turbulence",
+          "type": 1
+        },
+        {
+          "tag": "Wave spectra",
+          "type": 1
+        }
+      ],
+      "title": "Oceanic Isopycnal Slope Spectra. Part I: Internal Waves",
+      "url": "https://journals.ametsoc.org/view/journals/phoc/37/5/jpo3073.1.xml",
+      "volume": "37"
+    }
+  ]
+}

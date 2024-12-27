@@ -2,15 +2,13 @@ import { Shim } from './os'
 import { is7 } from './client'
 const $OS = is7 ? Shim : OS
 
+import { log } from './logger'
 import { getItemsAsync } from './get-items-async'
 import type { Attachment, RegularItem, Item, Note } from '../gen/typings/serialized-item'
 export type Serialized = RegularItem | Attachment | Item
 
 import { JournalAbbrev } from './journal-abbrev'
 import { Preference } from './prefs'
-import { orchestrator } from './orchestrator'
-import { Cache } from './db/cache'
-import { Events } from './events'
 
 export class Serializer {
   private attachment(serialized: Attachment, att): Attachment {
@@ -39,8 +37,10 @@ export class Serializer {
         break
 
       default:
-        serialized.attachments = (await getItemsAsync(item.getAttachments(), selectedLibraryID)).map(att => this.attachment({ ...att.toJSON(), uri: Zotero.URI.getItemURI(att) } as Attachment, att))
-        serialized.notes = (await getItemsAsync(item.getNotes(), selectedLibraryID)).map(note => ({ ...note.toJSON(), uri: Zotero.URI.getItemURI(note) } as Note))
+        serialized.attachments = (await getItemsAsync(item.getAttachments()))
+          .map(att => this.attachment({ ...att.toJSON(), uri: Zotero.URI.getItemURI(att) } as Attachment, att))
+        serialized.notes = (await getItemsAsync(item.getNotes()))
+          .map(note => ({ ...note.toJSON(), uri: Zotero.URI.getItemURI(note) } as Note))
         break
     }
 
@@ -52,21 +52,25 @@ export class Serializer {
     return Promise.all(items.map(item => this.item(item, selectedLibraryID)))
   }
 }
+export const serializer = new Serializer
 
 export function fix(serialized: Item, item: ZoteroItem): Item {
   if (item.isRegularItem() && !item.isFeedItem) {
     const regular = <RegularItem>serialized
 
-    if (Zotero.BetterBibTeX.ready.isPending()) {
+    if (Zotero.BetterBibTeX.starting) {
       // with the new "title as citation", CSL can request these items before the key manager is online
       regular.citationKey = ''
     }
     else {
       regular.citationKey = Zotero.BetterBibTeX.KeyManager.get(item.id).citationKey
-      if (!regular.citationKey) throw new Error(`no citation key for ${ Zotero.ItemTypes.getName(item.itemTypeID) } ${ item.id }`)
-      if (!regular.journalAbbreviation && Preference.autoAbbrev) {
-        const autoJournalAbbreviation = JournalAbbrev.get(regular)
-        if (autoJournalAbbreviation) regular.autoJournalAbbreviation = autoJournalAbbreviation
+      if (!regular.citationKey) {
+        // throw new Error(`no citation key for ${ Zotero.ItemTypes.getName(item.itemTypeID) } ${ item.id }`)
+        log.error(`no citation key for ${ Zotero.ItemTypes.getName(item.itemTypeID) } ${ item.id } ${ JSON.stringify(regular) }`)
+        regular.citationKey = `temporary-citekey-${ item.id }`
+      }
+      if (Preference.autoAbbrev) {
+        regular.autoJournalAbbreviation = JournalAbbrev.get(regular, 'auto') || ''
       }
     }
   }
@@ -80,20 +84,3 @@ export function fix(serialized: Item, item: ZoteroItem): Item {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   return serialized as unknown as Item
 }
-
-orchestrator.add({
-  id: 'cache',
-  needs: [ 'keymanager', 'abbreviator' ],
-  description: 'cache subsystem',
-  async startup() {
-    const lastUpdated = await Zotero.DB.valueQueryAsync('SELECT MAX(dateModified) FROM items')
-    await Cache.open(lastUpdated, new Serializer)
-
-    Events.cacheTouch = async (ids: number[]) => {
-      await Cache.touch(ids)
-    }
-  },
-  shutdown() {
-    Cache.close()
-  },
-})

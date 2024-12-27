@@ -17,7 +17,7 @@ function select(selector, node) {
 }
 
 function bibertool(source) {
-  const doc = (new DOMParser).parseFromString(source)
+  const doc = (new DOMParser).parseFromString(source, 'text/xml')
 
   const BiberTool = { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
     // combinations fo allowed fields

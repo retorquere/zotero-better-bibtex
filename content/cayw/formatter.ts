@@ -285,9 +285,10 @@ export const Formatter = new class { // eslint-disable-line @typescript-eslint/n
     const displayOptions = {
       exportNotes: [ 'yes', 'y', 'true' ].includes((options.exportNotes || '').toLowerCase()),
       useJournalAbbreviation: [ 'yes', 'y', 'true' ].includes((options.useJournalAbbreviation || '').toLowerCase()),
+      worker: !options.worker || [ 'yes', 'y', 'true' ].includes((options.worker || '').toLowerCase()),
     }
 
-    return await Translators.exportItems({ translatorID, displayOptions, scope: { type: 'items', items }})
+    return await Translators.queueJob({ translatorID, displayOptions, scope: { type: 'items', items }})
   }
 
   public async json(citations, _options) {

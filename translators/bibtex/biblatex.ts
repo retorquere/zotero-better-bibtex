@@ -2,6 +2,7 @@ import { Exporter as BibTeXExporter } from './exporter'
 import { Translation } from '../lib/translator'
 import { strToISO } from '../../content/dateparser'
 import { qualityReport } from '../../gen/biber-tool'
+import type { Collected } from '../lib/collect'
 
 import { Entry as BaseEntry, Config } from './entry'
 
@@ -187,10 +188,10 @@ class Entry extends BaseEntry {
           break
 
         case 'contributor':
-          if (this.translation.options.biblatexAPA) {
+          if (this.translation.collected.displayOptions.biblatexAPA) {
             creators.with.push(creator)
           }
-          else if (video && this.translation.options.biblatexChicago) {
+          else if (video && this.translation.collected.displayOptions.biblatexChicago) {
             creators[creatorType.register('editor', 'none')].push(creator)
           }
           else {
@@ -330,7 +331,8 @@ const patent = new class {
   }
 }
 
-export function generateBibLaTeX(translation: Translation): void {
+export function generateBibLaTeX(collected: Collected): Translation {
+  const translation = Translation.Export(collected)
   translation.bibtex = new BibTeXExporter(translation)
 
   Entry.installPostscript(translation)
@@ -412,7 +414,7 @@ export function generateBibLaTeX(translation: Translation): void {
           if (entry.entrytype === 'inproceedings' && entry.getBibString(item.publicationTitle)) {
             entry.add({ name: 'booktitle', value: item.publicationTitle, bibtexStrings: true })
           }
-          else if (entry.entrytype === 'inproceedings' && translation.options.useJournalAbbreviation && item.publicationTitle && journalAbbreviation) {
+          else if (entry.entrytype === 'inproceedings' && translation.collected.displayOptions.useJournalAbbreviation && item.publicationTitle && journalAbbreviation) {
             entry.add({ name: 'booktitle', value: journalAbbreviation, bibtexStrings: true })
           }
           else {
@@ -429,7 +431,7 @@ export function generateBibLaTeX(translation: Translation): void {
         if (entry.getBibString(item.publicationTitle)) {
           entry.add({ name: 'journaltitle', value: item.publicationTitle, bibtexStrings: true })
         }
-        else if ((translation.options.useJournalAbbreviation || !item.publicationTitle) && journalAbbreviation) {
+        else if ((translation.collected.displayOptions.useJournalAbbreviation || !item.publicationTitle) && journalAbbreviation) {
           entry.add({ name: 'journaltitle', value: journalAbbreviation, bibtexStrings: true })
         }
         else {
@@ -632,4 +634,5 @@ export function generateBibLaTeX(translation: Translation): void {
   }
 
   translation.bibtex.complete()
+  return translation
 }

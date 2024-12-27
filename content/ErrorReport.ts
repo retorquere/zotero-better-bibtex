@@ -1,8 +1,9 @@
 Components.utils.import('resource://gre/modules/Services.jsm')
 
+import * as client from './client'
+
 import { Shim } from './os'
-import { is7, platform } from './client'
-const $OS = is7 ? Shim : OS
+const $OS = client.is7 ? Shim : OS
 
 import { Cache } from './db/cache'
 import { PromptService } from './prompt'
@@ -101,7 +102,7 @@ export class ErrorReport {
       wizard.advance();
 
       // eslint-disable-next-line no-magic-numbers
-      (<HTMLInputElement> this.document.getElementById('better-bibtex-report-id')).value = `${ this.name() }/${ version }-${ is7 ? 7 : 6 }${ Zotero.BetterBibTeX.outOfMemory ? '/oom' : '' }`
+      (<HTMLInputElement> this.document.getElementById('better-bibtex-report-id')).value = `${ this.name() }/${ version }-${ client.is7 ? 7 : 6 }${ Zotero.BetterBibTeX.outOfMemory ? '/oom' : '' }`
       this.document.getElementById('better-bibtex-report-result').hidden = false
     }
     catch (err) {
@@ -153,15 +154,16 @@ export class ErrorReport {
   public zip(): Uint8Array {
     const files: Record<string, Uint8Array> = {}
     const enc = (new TextEncoder)
+    const name = this.name()
 
-    files[`${ this.name() }/debug.txt`] = enc.encode(this.report.log)
+    files[`${ name }/debug.txt`] = enc.encode(this.report.log)
 
-    if (this.report.items) files[`${ this.name() }/items.json`] = enc.encode(this.report.items)
+    if (this.report.items) files[`${ name }/items.json`] = enc.encode(this.report.items)
     if (this.config.cache) {
-      files[`${ this.name() }/database.json`] = enc.encode(JSON.stringify(KeyManager.all()))
-      files[`${ this.name() }/cache.json`] = enc.encode(this.report.cache)
+      files[`${ name }/database.json`] = enc.encode(JSON.stringify(KeyManager.all()))
+      files[`${ name }/cache.json`] = enc.encode(this.report.cache)
     }
-    if (this.report.acronyms) files[`${ this.name() }/acronyms.csv`] = enc.encode(this.report.acronyms)
+    if (this.report.acronyms) files[`${ name }/acronyms.csv`] = enc.encode(this.report.acronyms)
 
     return new Uint8Array(UZip.encode(files) as ArrayBuffer)
   }
@@ -264,7 +266,7 @@ export class ErrorReport {
       if (init) {
         if (facet.match(/notes|attachments/)) {
           cb.hidden = !this.input.items
-          this.config[facet] = this.config[facet] && !!this.input.items
+          this.config[facet] = this.config[facet] || !!this.input.items
         }
         if (facet === 'errors') {
           cb.disabled = !this.input.errors
@@ -299,11 +301,18 @@ export class ErrorReport {
     if (!this.config.errors) delete this.report.errors
     if (!this.config.log) delete this.report.log
 
+    log.info(`cache: errorreport ${Cache.opened}`)
     this.setValue('better-bibtex-error-context', this.report.context)
     this.setValue('better-bibtex-error-errors', this.report.errors || '')
     this.setValue('better-bibtex-error-log', this.preview(this.report.log || ''))
     this.setValue('better-bibtex-error-items', this.report.items ? this.preview(JSON.parse(this.report.items)) : '')
-    this.setValue('better-bibtex-report-cache', this.cacheState = l10n.localize('better-bibtex_error-report_better-bibtex_cache', { entries: await Cache.count() }))
+    try {
+      this.setValue('better-bibtex-report-cache', this.cacheState = l10n.localize('better-bibtex_error-report_better-bibtex_cache', { entries: await Cache.count() }))
+    }
+    catch (err) {
+      log.error('cache: failed getting cache count', err)
+      this.setValue('better-bibtex-report-cache', this.cacheState = l10n.localize('better-bibtex_error-report_better-bibtex_cache', { entries: -1 }))
+    }
 
     this.report.log = [
       this.report.context,
@@ -334,13 +343,21 @@ export class ErrorReport {
     const continueButton = wizard.getButton('next')
     continueButton.disabled = true
 
+    let cache = ''
+    try {
+      cache = JSON.stringify(await Cache.dump(), null, 2)
+    }
+    catch (err) {
+      log.error('cache: could not get cache dump', err)
+      cache = ''
+    }
     this.input = {
       context: await this.context(),
       errors: `${ Zotero.BetterBibTeX.outOfMemory }\n${ this.errors() }`.trim(),
       // # 1896
       log: this.log(),
       items: win.arguments[0].wrappedJSObject.items,
-      cache: JSON.stringify(await Cache.dump(), null, 2),
+      cache,
     }
     const acronyms = $OS.Path.join(Zotero.BetterBibTeX.dir, 'acronyms.csv')
     if (await $OS.File.exists(acronyms)) this.input.acronyms = await $OS.File.read(acronyms, { encoding: 'utf-8' }) as unknown as string
@@ -404,7 +421,7 @@ export class ErrorReport {
 
     const appInfo = Components.classes['@mozilla.org/xre/app-info;1'].getService(Components.interfaces.nsIXULAppInfo)
     context += `Application: ${ appInfo.name } (${ Zotero.clientName }) ${ appInfo.version } ${ Zotero.locale }\n`
-    context += `Platform: ${ platform.name }\n`
+    context += `Platform: ${ client.platform }\n`
 
     const addons = await Zotero.getInstalledExtensions()
     if (addons.length) {
@@ -426,7 +443,7 @@ export class ErrorReport {
       context += `  Zotero: ${ key } = ${ JSON.stringify(Zotero.Prefs.get(key)) }\n`
     }
 
-    const autoExports = await AutoExport.all()
+    const autoExports = AutoExport.all()
     if (autoExports.length) {
       context += 'Auto-exports:\n'
       for (const ae of autoExports) {

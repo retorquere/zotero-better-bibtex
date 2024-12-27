@@ -21,7 +21,7 @@ jobs:
           message.log-required: |
             Hello @{{username}},
 
-            `@retorquere` is ready to assist you with Better BibTeX. In order to do so efficiently, a debug log is generally required. The information it containst is key to him understanding, replicating, and resolving your issue.
+            `@retorquere` is ready to assist you with Better BibTeX. In order to do so efficiently, a debug log is generally required. The information it containst is key to him understanding, replicating, and resolving your issue. If you have shared a `D<number>` log, those go to the Zotero team, `@retorquere` cannot access those.
 
             **Here’s how you can share your debug log:**
 
@@ -34,6 +34,8 @@ jobs:
             After these steps, you will receive debug ID displayed in red. Please share this ID with `@retorquere` in this issue thread. If your query is about an export, include both the actually exported result and your expected/desired outcome.
 
             Sharing your debug log gives `@retorquere` a view of your Better BibTeX configuration and the elements contributing to the issue. This helps him address your concerns more efficiently.
+
+            If you have submitted a debug log and its ID looks like `D<number>`, that debug log goes to the Zotero team, not to `@retorquere`. Please see the points above how to send a BBT debug log.
 
             Thank you.
 

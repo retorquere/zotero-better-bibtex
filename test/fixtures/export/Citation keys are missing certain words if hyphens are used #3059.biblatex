@@ -1,0 +1,13 @@
+@inproceedings{haarnojaSoftActorCriticOffPolicy2018,
+  title = {Soft {{Actor-Critic}}: {{Off-Policy Maximum Entropy Deep Reinforcement Learning}} with a {{Stochastic Actor}}},
+  shorttitle = {Soft {{Actor-Critic}}},
+  booktitle = {Proceedings of the 35th International Conference on Machine Learning ({{ICML}}'18)},
+  author = {Haarnoja, Tuomas and Zhou, Aurick and Abbeel, Pieter and Levine, Sergey},
+  date = {2018-07-03},
+  pages = {1861--1870},
+  location = {Stockholm, Sweden},
+  url = {http://proceedings.mlr.press/v80/haarnoja18b.html},
+  urldate = {2021-03-01},
+  abstract = {Model-free deep reinforcement learning (RL) algorithms have been demonstrated on a range of challenging decision making and control tasks. However, these methods typically suffer from two major cha...},
+  langid = {english}
+}
