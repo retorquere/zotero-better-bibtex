@@ -18,16 +18,17 @@ office:document(
         config:config-item-map-entry
           config:config-item(config:name="ViewId" config:type="string") view1
           config:config-item-map-named(config:name="Tables")
-            config:config-item-map-entry(config:name="Sheet1")
-              config:config-item(config:name="HorizontalSplitMode" config:type="short") 0
-              config:config-item(config:name="VerticalSplitMode" config:type="short") 2
-              config:config-item(config:name="HorizontalSplitPosition" config:type="int") 0
-              config:config-item(config:name="VerticalSplitPosition" config:type="int") 1
-              config:config-item(config:name="ActiveSplitRange" config:type="short") 0
-              config:config-item(config:name="PositionLeft" config:type="int") 0
-              config:config-item(config:name="PositionRight" config:type="int") 0
-              config:config-item(config:name="PositionTop" config:type="int") 0
-              config:config-item(config:name="PositionBottom" config:type="int") 1
+            each rows, name in sheets
+              config:config-item-map-entry(config:name=name)
+                config:config-item(config:name="HorizontalSplitMode" config:type="short") 0
+                config:config-item(config:name="VerticalSplitMode" config:type="short") 2
+                config:config-item(config:name="HorizontalSplitPosition" config:type="int") 0
+                config:config-item(config:name="VerticalSplitPosition" config:type="int") 1
+                config:config-item(config:name="ActiveSplitRange" config:type="short") 0
+                config:config-item(config:name="PositionLeft" config:type="int") 0
+                config:config-item(config:name="PositionRight" config:type="int") 0
+                config:config-item(config:name="PositionTop" config:type="int") 0
+                config:config-item(config:name="PositionBottom" config:type="int") 1
   office:styles
     loext:theme(loext:name="Office")
       loext:theme-colors(loext:name="LibreOffice")
@@ -36,18 +37,18 @@ office:document(
       style:text-properties(fo:font-weight="bold" style:font-weight-asian="bold" style:font-weight-complex="bold")
   office:body
     office:spreadsheet
-      table:table(table:name="Sheet1" table:style-name="ta1")
-        table:table-column(table:style-name="co1" table:number-columns-repeated="16384" table:default-cell-style-name="ce1")
-        table:table-row(table:style-name="ro1")
-          table:table-cell(office:value-type="string" calcext:value-type="string")
-            text:p h1
-          table:table-cell(office:value-type="string" calcext:value-type="string")
-            text:p h2
-          table:table-cell(table:number-columns-repeated="16382")
-        table:table-row(table:style-name="ro1")
-          table:table-cell(table:style-name="Default" office:value-type="string" calcext:value-type="string")
-            text:p v1
-          table:table-cell(table:style-name="Default" office:value-type="string" calcext:value-type="string")
-            text:p v2
-          table:table-cell(table:style-name="Default" table:number-columns-repeated="16382")
-      // table:named-expressions
+      each rows, name in sheets
+        table:table(table:name=name table:style-name="ta1")
+          - const columns = Object.keys(rows[0])
+          table:table-column(table:style-name="co1" table:number-columns-repeated="16384" table:default-cell-style-name="ce1")
+          table:table-row(table:style-name="ro1")
+            each column in columns
+              table:table-cell(office:value-type="string" calcext:value-type="string")
+                text:p= column
+            table:table-cell(table:number-columns-repeated="16382")
+          each row in rows
+            table:table-row(table:style-name="ro1")
+              each column in columns
+                table:table-cell(table:style-name="Default" office:value-type="string" calcext:value-type="string")
+                  text:p= row[column]
+              table:table-cell(table:style-name="Default" table:number-columns-repeated="16382")
