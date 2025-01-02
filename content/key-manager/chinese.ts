@@ -1,7 +1,7 @@
 import { Preference } from '../prefs'
 import { Events } from '../events'
-import { log } from '../logger'
 // import { CJK } from '../text'
+import { discard } from '../logger'
 
 declare const ChromeUtils: any
 
@@ -11,10 +11,11 @@ if (typeof Services == 'undefined') {
 
 import type { jieba as jiebaFunc, pinyin as pinyinFunc } from './chinese-optional'
 
+// Replace the console object with the empty shim
 export const chinese = new class {
   public window: Window
   public document: Document
-  public console = log
+  public console = discard
 
   public jieba: typeof jiebaFunc
   public pinyin: typeof pinyinFunc
@@ -28,12 +29,14 @@ export const chinese = new class {
     if (on && !this.jieba) {
       // needed because jieba-js does environment detection
       this.window = this.window || Zotero.getMainWindow()
-      this.document = this.document || this.window.document
-      Services.scriptloader.loadSubScriptWithOptions('chrome://zotero-better-bibtex/content/key-manager/chinese-optional.js', {
-        target: this,
-        charset: 'utf-8',
-        // ignoreCache: true,
-      })
+      this.document = this.document || this.window?.document
+      if (this.window) {
+        Services.scriptloader.loadSubScriptWithOptions('chrome://zotero-better-bibtex/content/key-manager/chinese-optional.js', {
+          target: this,
+          charset: 'utf-8',
+          // ignoreCache: true,
+        })
+      }
     }
     return on
   }

@@ -1,30 +1,15 @@
-import { patch as $patch$, unpatch as $unpatch$, Trampoline } from './monkey-patch'
+import { Monkey } from './monkey-patch'
 import * as l10n from './l10n'
 import { Elements } from './create-element'
 import { Events } from './events'
-import { log } from './logger'
 import type { XUL } from '../typings/xul'
 
-type XULWindow = Window & { Zotero_File_Interface_Export?: any, arguments?: any[], sizeToContent?: () => void }
+type XULWindow = Window & { Zotero_File_Interface_Export?: any; arguments?: any[]; sizeToContent?: () => void }
 // safe to keep these global as only one export window will ever be open at any one time
 let $window: XULWindow // eslint-disable-line no-var
 var Zotero_File_Interface_Export: any // eslint-disable-line no-var
 
-/*
-function show(label) {
-  const exportFileData = $window.document.getElementById('export-option-exportFileData') as XUL.Checkbox // eslint-disable-line no-case-declarations
-  const keepUpdated = $window.document.getElementById('export-option-keepUpdated') as XUL.Checkbox // eslint-disable-line no-case-declarations
-  const worker = $window.document.getElementById('export-option-worker') as XUL.Checkbox // eslint-disable-line no-case-declarations
-
-  log.debug(`export-options.${label}:`, {
-    exportFileData: exportFileData ? exportFileData.checked : null,
-    keepUpdated: keepUpdated ? keepUpdated.checked : null,
-    worker: worker ? worker.checked : null,
-  })
-}
-*/
-
-Events.on('window-loaded', ({ win, href }: {win: Window, href: string}) => {
+Events.on('window-loaded', ({ win, href }: { win: Window; href: string }) => {
   switch (href) {
     case 'chrome://zotero/content/exportOptions.xul':
     case 'chrome://zotero/content/exportOptions.xhtml':
@@ -38,7 +23,7 @@ Events.on('window-loaded', ({ win, href }: {win: Window, href: string}) => {
 })
 
 export class ExportOptions {
-  private patched: Trampoline[] = []
+  private monkey = new Monkey(true)
   private elements: Elements
 
   public load(): void {
@@ -51,11 +36,11 @@ export class ExportOptions {
     this.show()
 
     const self = this // eslint-disable-line @typescript-eslint/no-this-alias
-    $patch$(Zotero_File_Interface_Export, 'updateOptions', original => function(_options) {
+    this.monkey.patch(Zotero_File_Interface_Export, 'updateOptions', original => function(_options) {
       // eslint-disable-next-line prefer-rest-params
       original.apply(this, arguments)
       self.show()
-    }, this.patched)
+    })
   }
 
   private selected(): any {
@@ -76,7 +61,7 @@ export class ExportOptions {
 
     if (!reminder) {
       const translateOptions = doc.getElementById('translator-options')
-      translateOptions.parentNode.insertBefore(reminder = this.elements.create('description', {style: 'color: red', hidden: 'true', id: 'better-bibtex-reminder'}), translateOptions)
+      translateOptions.parentNode.insertBefore(reminder = this.elements.create('description', { style: 'color: red', hidden: 'true', id: 'better-bibtex-reminder' }), translateOptions)
     }
 
     switch (selected.translatorID) {
@@ -95,7 +80,7 @@ export class ExportOptions {
         break
     }
 
-    const ids = ['exportFileData', 'worker', 'keepUpdated', 'biblatexAPA', 'biblatexChicago'].map(id => `#export-option-${id}`).join(', ')
+    const ids = [ 'exportFileData', 'worker', 'keepUpdated', 'biblatexAPA', 'biblatexChicago' ].map(id => `#export-option-${ id }`).join(', ')
     for (const node of [...doc.querySelectorAll(ids)] as HTMLInputElement[]) {
       if (node.classList.contains('better-bibex-export-options')) continue
       node.classList.add('better-bibex-export-options')
@@ -125,7 +110,7 @@ export class ExportOptions {
 
   public unload(): void {
     this.elements.remove()
-    $unpatch$(this.patched)
+    this.monkey.disable()
   }
 
   mutex(e?: Event): void {
@@ -137,12 +122,6 @@ export class ExportOptions {
     const biblatexChicago = doc.getElementById('export-option-biblatexChicago') as XUL.Checkbox
 
     if (!exportFileData || !keepUpdated) return null
-
-    log.debug('export-options.mutex: start:', {
-      exportFileData: exportFileData ? exportFileData.checked : null,
-      keepUpdated: keepUpdated ? keepUpdated.checked : null,
-      worker: worker ? worker.checked : null,
-    })
 
     if (!e) keepUpdated.checked = false
 
@@ -165,11 +144,5 @@ export class ExportOptions {
         break
     }
     worker.disabled = keepUpdated.checked
-
-    log.debug('export-options.mutex: done:', {
-      exportFileData: exportFileData ? exportFileData.checked : null,
-      keepUpdated: keepUpdated ? keepUpdated.checked : null,
-      worker: worker ? worker.checked : null,
-    })
   }
 }

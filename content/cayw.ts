@@ -7,17 +7,17 @@ import { stringify } from './stringify'
 
 import { Formatter } from './cayw/formatter'
 import { TeXstudio } from './tex-studio'
-import * as escape from './escape'
 import { flash } from './flash'
 import { log } from './logger'
 import { orchestrator } from './orchestrator'
 import { Server } from './server'
+import { toClipboard } from './text'
 
 /* eslint-disable max-classes-per-file */
 
 class FieldEnumerator {
   // eslint-disable-next-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
-  public QueryInterface = (is7 ? ChromeUtils : XPCOMUtils).generateQI([Components.interfaces.nsISupports, Components.interfaces.nsISimpleEnumerator])
+  public QueryInterface = (is7 ? ChromeUtils : XPCOMUtils).generateQI([ Components.interfaces.nsISupports, Components.interfaces.nsISimpleEnumerator ])
   public doc: Document
   public idx: number
 
@@ -141,13 +141,13 @@ class Document {
   constructor(docId, options) {
     this.id = docId
 
-    const data = new Zotero.Integration.DocumentData()
+    const data = (new Zotero.Integration.DocumentData)
     data.prefs = {
       noteType: 0,
       fieldType: 'Field',
       automaticJournalAbbreviations: true,
     }
-    data.style = {styleID: options.style, locale: 'en-US', hasBibliography: true, bibliographyStyleHasBeenSet: true}
+    data.style = { styleID: options.style, locale: 'en-US', hasBibliography: true, bibliographyStyleHasBeenSet: true }
     data.sessionID = Zotero.Utilities.randomString(10)
     this.data = (data.serialize() as DocumentData)
   }
@@ -281,7 +281,6 @@ class Document {
       title: item.itemData ? item.itemData.title : undefined,
     }) as Citation)
 
-    log.debug('picked:', citationItems, items)
     return items
   }
 }
@@ -314,7 +313,7 @@ export const Application = new class { // eslint-disable-line @typescript-eslint
   public QueryInterface() { return this }
 
   public createDocument(options) {
-    this.active = `better-bibtex-cayw-${Zotero.Utilities.generateObjectKey()}`
+    this.active = `better-bibtex-cayw-${ Zotero.Utilities.generateObjectKey() }`
     this.docs[this.active] = new Document(this.active, options)
     return this.docs[this.active]
   }
@@ -330,7 +329,7 @@ export async function pick(options: any): Promise<string> {
 
   try {
     const formatter = options.format || 'latex'
-    if (!Formatter[formatter]) throw new Error(`No such formatter ${JSON.stringify(formatter)}`)
+    if (!Formatter[formatter]) throw new Error(`No such formatter ${ JSON.stringify(formatter) }`)
     const doc = Application.createDocument(options)
     await Zotero.Integration.execCommand('BetterBibTeX', 'addEditCitation', doc.id)
 
@@ -346,7 +345,7 @@ export async function pick(options: any): Promise<string> {
     return citation
   }
   catch (err) {
-    log.error('CAYW error:', err, `${err}`, err.stack, options)
+    log.error('CAYW error:', err, `${ err }`, err.stack, options)
     flash('CAYW pick failed', stringify(err))
   }
 }
@@ -371,31 +370,11 @@ async function selected(options): Promise<string> {
   return picked.length ? await Formatter[options.format || 'latex'](picked, options) : ''
 }
 
-function toClipboard(text) {
-  const data = {
-    'text/unicode': text,
-    'text/html': escape.html(text),
-    'text/richtext': escape.rtf(text), // I know this is not the correct mimetype but it's the only one that Mozilla accepts for RTF
-  }
-
-  const clipboard = Components.classes['@mozilla.org/widget/clipboard;1'].getService(Components.interfaces.nsIClipboard)
-  const transferable = Components.classes['@mozilla.org/widget/transferable;1'].createInstance(Components.interfaces.nsITransferable)
-
-  for (const [mimetype, content] of Object.entries(data)) {
-    const str = Components.classes['@mozilla.org/supports-string;1'].createInstance(Components.interfaces.nsISupportsString)
-    str.data = content
-    transferable.addDataFlavor(mimetype)
-    transferable.setTransferData(mimetype, str, content.length * 2)
-  }
-
-  clipboard.setData(transferable, null, Components.interfaces.nsIClipboard.kGlobalClipboard)
-}
-
 function getStyle(id): { url: string } {
   try {
     return Zotero.Styles.get(id) as { url: string }
   }
-  catch (err) {
+  catch {
     return null
   }
 }
@@ -406,9 +385,9 @@ class Handler {
   public SERVER_ERROR = 500
 
   public async init(request) {
-    const options = request.query || {}
+    const options = Server.queryParams(request)
 
-    if (options.probe) return [this.OK, 'text/plain', Zotero.BetterBibTeX.ready.isPending() ? 'starting' : 'ready' ]
+    if (options.probe) return [ this.OK, 'text/plain', Zotero.BetterBibTeX.starting ? 'starting' : 'ready' ]
 
     try {
       if (!options.style || !options.contentType || !options.locale) {
@@ -416,35 +395,30 @@ class Handler {
         if (!options.style && format.mode === 'bibliography') options.style = format.id
         options.contentType = options.contentType || format.contentType || 'text'
         options.locale = options.locale || format.locale || Zotero.Prefs.get('export.quickCopy.locale') || 'en-US'
-        log.debug('CAYW: detected', options)
       }
-      const style =
-        getStyle(options.style)
-        ||
-        getStyle(`http://www.zotero.org/styles/${options.style}`)
-        ||
-        getStyle(`http://juris-m.github.io/styles/${options.style}`)
+      const style
+        = getStyle(options.style)
+        || getStyle(`http://www.zotero.org/styles/${ options.style }`)
+        || getStyle(`http://juris-m.github.io/styles/${ options.style }`)
       options.style = style ? style.url : 'http://www.zotero.org/styles/apa'
-
-      log.debug('CAYW:', { options, style })
 
       const citation = options.selected ? (await selected(options)) : (await pick(options))
 
-      if (options.minimize) Zotero.getMainWindow().minimize()
+      if (options.minimize) Zotero.getMainWindow()?.minimize()
 
       if (options.texstudio) {
-        if (!TeXstudio.enabled) return [this.SERVER_ERROR, 'application/text', 'TeXstudio not found']
+        if (!TeXstudio.enabled) return [ this.SERVER_ERROR, 'application/text', 'TeXstudio not found' ]
         await TeXstudio.push(citation)
       }
 
       if (options.clipboard) toClipboard(citation)
 
-      return [this.OK, 'text/html; charset=utf-8', citation]
+      return [ this.OK, 'text/html; charset=utf-8', citation ]
     }
     catch (err) {
       log.error('CAYW request failed:', options, err)
       flash('CAYW Failed', err.message)
-      return [this.SERVER_ERROR, 'application/text', `CAYW failed: ${err.message}\n${err.stack}`]
+      return [ this.SERVER_ERROR, 'application/text', `CAYW failed: ${ err.message }\n${ err.stack }` ]
     }
   }
 }

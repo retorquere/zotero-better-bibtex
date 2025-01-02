@@ -14,14 +14,13 @@ if github.event_name == 'push':
   if github.event.head_commit.message == package.version and github.ref == f'refs/tags/v{package.version}':
     print('release build')
     flags.add('slow')
-    flags.add('beta')
-  elif github.ref_name == 'master': # builds on master.
-    print('master')
+  elif github.ref_name in ['master', 'z7'] : # builds on master.
+    print(github.ref_name)
     flags.add('slow')
     flags.add('beta')
+    flags.add('legacy')
   else:
     print('debug build')
-    flags.add('beta')
 #  elif os.path.isfile('beta.txt'):
 #    with open('beta.txt') as f:
 #      for branch in f.readlines():
@@ -33,6 +32,7 @@ if github.event_name == 'schedule': # nightlies
   print('nightly')
   flags.add('slow')
   flags.add('beta')
+  flags.add('legacy')
   flags.add('whopper')
 
 print('flags =', flags)

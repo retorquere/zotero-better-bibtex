@@ -43,7 +43,7 @@ export class Scheduler<T> {
       const held = this.held
       this.held = null
 
-      for (const [id, handler] of held.entries()) {
+      for (const [ id, handler ] of held.entries()) {
         this.schedule(id, handler)
       }
     }
@@ -55,47 +55,36 @@ export class Scheduler<T> {
       return
     }
 
-    let job = this.job.get(id)
-    if (job) {
-      clearTimeout(job.timer)
-    }
-    else {
-      job = {
-        id,
-        start: Date.now(),
-        handler,
-        timer: 0 as unknown as TimerHandle,
-      }
-    }
+    this.cancel(id)
+    this.job.set(id, {
+      id,
+      start: Date.now(),
+      handler,
+      timer: setTimeout(this.run.bind(this), this.delay, id),
+    })
+  }
 
-    job.timer = setTimeout(j => {
-      this.job.delete(id)
-      j.handler()
-    }, this.delay, job)
-
-    this.job.set(id, job)
+  private run(id: T) {
+    this.job.get(id)?.handler()
+    this.job.delete(id)
   }
 
   public cancel(id: T): void {
-    let job: Job & { id: T }
-    if (this.held) {
-      this.held.delete(id)
-    }
-    else if (job = this.job.get(id)) {
+    if (this.held) this.held.delete(id)
+
+    const job = this.job.get(id)
+    if (job) {
       clearTimeout(job.timer)
       this.job.delete(id)
     }
   }
 
   public clear(): void {
-    if (this.held) {
-      this.held = new Map
+    if (this.held) this.held = new Map
+
+    for (const job of this.job.values()) {
+      clearTimeout(job.timer)
     }
-    else {
-      for (const job of this.job.values()) {
-        clearTimeout(job.timer)
-      }
-      this.job = new Map
-    }
+    this.job = new Map
   }
 }

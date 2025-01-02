@@ -3,20 +3,20 @@ declare const Zotero: any
 import { Translation } from '../lib/translator'
 
 import { RegularItem } from '../../gen/typings/serialized-item'
-import { Cache } from '../../typings/cache'
 
 import { JabRef } from '../bibtex/jabref'
 import { simplifyForExport } from '../../gen/items/simplify'
 import * as bibtexParser from '@retorquere/bibtex-parser'
 import { Postfix } from './postfix'
 import * as Extra from '../../content/extra'
+import type { ExportedItem } from '../../content/db/cache'
 import { HTMLConverter, Mode as ConversionMode, ConverterOptions, ParseResult } from './unicode_translator'
 
 export class Exporter {
   public postfix: Postfix
   public jabref: JabRef
-  public strings: {[key: string]: string} = {}
-  public strings_reverse: {[key: string]: string} = {}
+  public strings: Record<string, string> = {}
+  public strings_reverse: Record<string, string> = {}
   public citekeys: Record<string, number> = {}
 
   private translation: Translation
@@ -30,11 +30,11 @@ export class Exporter {
   }
 
   public prepare_strings(): void {
-    if (!this.translation.BetterTeX || !this.translation.preferences.strings) return
+    if (!this.translation.BetterTeX || !this.translation.collected.preferences.strings) return
 
-    if (this.translation.BetterTeX && this.translation.preferences.exportBibTeXStrings.startsWith('match')) {
-      this.strings = bibtexParser.parse(this.translation.preferences.strings).strings
-      for (const [k, v] of Object.entries(this.strings)) {
+    if (this.translation.BetterTeX && this.translation.collected.preferences.exportBibTeXStrings.startsWith('match')) {
+      this.strings = bibtexParser.parse(this.translation.collected.preferences.strings).strings
+      for (const [ k, v ] of Object.entries(this.strings)) {
         this.strings_reverse[v.toUpperCase()] = k.toUpperCase()
       }
     }
@@ -45,36 +45,37 @@ export class Exporter {
   }
 
   private *itemsGenerator(): Generator<RegularItem, void, unknown> {
-    if (!this.postfix && this.translation.BetterTeX) this.postfix = new Postfix(this.translation.preferences.qualityReport)
+    if (!this.postfix && this.translation.BetterTeX) this.postfix = new Postfix(this.translation.collected.preferences.qualityReport)
 
-    for (const item of this.translation.input.items.regular) {
+    for (const item of this.translation.collected.items.regular) {
       if (this.translation.output.body) this.translation.output.body += '\n'
 
-      Object.assign(item, Extra.get(item.extra, 'zotero'))
-      if (typeof item.itemID !== 'number') { // https://github.com/diegodlh/zotero-cita/issues/145
-        item.citationKey = item.extraFields.citationKey
-        item.$cacheable = false
-      }
-      if (!item.citationKey) throw new Error(`No citation key in ${JSON.stringify(item)}`)
-
-      this.citekeys[item.citationKey] = (this.citekeys[item.citationKey] || 0) + 1
-
-      this.jabref.citekeys.set(item.itemID, item.citationKey)
-
-      let cached: Cache.ExportedItem = null
+      if (typeof item.itemID !== 'number') item.$cacheable = false
       if (item.$cacheable && this.translation.BetterTeX) {
-        if (cached = Zotero.BetterBibTeX.Cache.fetch(this.translation.translator.label, item.itemID, this.translation.options, this.translation.preferences)) {
+        let cached: ExportedItem = null
+        if (cached = Zotero.BetterBibTeX.Cache.fetch(item.itemID)) {
           this.translation.output.body += cached.entry
           this.postfix?.add(cached.metadata)
           continue
         }
       }
 
+      Object.assign(item, Extra.get(item.extra, 'zotero'))
+      if (typeof item.itemID !== 'number') { // https://github.com/diegodlh/zotero-cita/issues/145
+        item.citationKey = item.extraFields.citationKey
+        item.$cacheable = false
+      }
+      if (!item.citationKey) throw new Error(`No citation key in ${ JSON.stringify(item) }`)
+
+      this.citekeys[item.citationKey] = (this.citekeys[item.citationKey] || 0) + 1
+
+      this.jabref.citekeys.set(item.itemID, item.citationKey)
+
       simplifyForExport(item)
 
       // strip extra.tex fields that are not for me
       const prefix = this.translation.BetterBibLaTeX ? 'biblatex.' : 'bibtex.'
-      for (const [name, field] of Object.entries(item.extraFields.tex).sort((a, b) => b[0].localeCompare(a[0]))) { // sorts the fields from tex. to biblatex. to bibtex.
+      for (const [ name, field ] of Object.entries(item.extraFields.tex).sort((a, b) => b[0].localeCompare(a[0]))) { // sorts the fields from tex. to biblatex. to bibtex.
         for (const type of [ prefix, 'tex.' ]) {
           if (name.startsWith(type)) {
             item.extraFields.tex[name.substr(type.length)] = field
@@ -85,9 +86,9 @@ export class Exporter {
         delete item.extraFields.tex[name]
       }
 
-      item.raw = this.translation.BetterTeX && this.translation.preferences.rawLaTag === '*'
+      item.raw = this.translation.BetterTeX && this.translation.collected.preferences.rawLaTag === '*'
       item.tags = item.tags.filter(tag => {
-        if (this.translation.BetterTeX && tag.tag === this.translation.preferences.rawLaTag) {
+        if (this.translation.BetterTeX && tag.tag === this.translation.collected.preferences.rawLaTag) {
           item.raw = true
           return false
         }
@@ -98,7 +99,7 @@ export class Exporter {
     }
   }
 
-  text2latex(text:string, options: ConverterOptions = {}, mode?: ConversionMode): ParseResult {
+  text2latex(text: string, options: ConverterOptions = {}, mode?: ConversionMode): ParseResult {
     if (typeof options.html === 'undefined') options.html = false
     mode = mode || this.htmlconverterMode
     if (!this.htmlconverter[mode]) this.htmlconverter[mode] = new HTMLConverter(this.translation, mode)
@@ -111,12 +112,12 @@ export class Exporter {
       this.postfix?.toString() || '',
     ].filter(m => m)
 
-    if (this.translation.preferences.qualityReport) {
+    if (this.translation.collected.preferences.qualityReport) {
       const duplicates = [
         '% == Citekey duplicates in this file:\n',
       ]
-      for (const [citekey, n] of Object.entries(this.citekeys).sort((a, b) => a[0].localeCompare(b[0]))) {
-        if (n > 1) duplicates.push(`% ${citekey} duplicates: ${n}\n`)
+      for (const [ citekey, n ] of Object.entries(this.citekeys).sort((a, b) => a[0].localeCompare(b[0]))) {
+        if (n > 1) duplicates.push(`% ${ citekey } duplicates: ${ n }\n`)
       }
       if (duplicates.length > 1) postfix.push(duplicates.join(''))
     }

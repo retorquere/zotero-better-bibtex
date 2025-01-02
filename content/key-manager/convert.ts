@@ -1,6 +1,6 @@
 /* eslint-disable no-case-declarations */
 
-import { parse } from 'acorn'
+import { parseScript as parse } from 'meriyah'
 import { methods } from '../../gen/api/key-formatter'
 const alias = require('./alias.json')
 import * as items from '../../gen/items/items'
@@ -73,18 +73,18 @@ class Compiler {
   error(node: Node, message) {
     if (node) {
       if (node.loc) {
-        if (node.loc.start.line > 1) throw new Error(`${message} at line ${node.loc.start.line}, position ${node.loc.start.column + 1}`)
-        throw new Error(`${message} at position ${node.loc.start.column + 1}`)
+        if (node.loc.start.line > 1) throw new Error(`${ message } at line ${ node.loc.start.line }, position ${ node.loc.start.column + 1 }`)
+        throw new Error(`${ message } at position ${ node.loc.start.column + 1 }`)
       }
-      if (typeof (node as unknown as any).start === 'number') throw new Error(`${message} at position ${node.start + 1}`)
+      if (typeof (node as unknown as any).start === 'number') throw new Error(`${ message } at position ${ node.start + 1 }`)
     }
     throw new Error(message)
   }
 
   get(node: Node, allowed): Node {
-    if (typeof allowed === 'string') allowed = [ allowed ]
-    if (!node) this.error(node, `expected ${this.expected(allowed)} at end of input`)
-    if (!allowed.includes(node.type) && !allowed.includes(node.operator)) this.error(node, `expected ${this.expected(allowed)}, got ${node.type}`)
+    if (typeof allowed === 'string') allowed = [allowed]
+    if (!node) this.error(node, `expected ${ this.expected(allowed) } at end of input`)
+    if (!allowed.includes(node.type) && !allowed.includes(node.operator)) this.error(node, `expected ${ this.expected(allowed) }, got ${ node.type }`)
     if (node.computed) this.error(node, 'unsupported computed attribute')
     if (node.optional) this.error(node, 'unsupported optional attribute')
     return node
@@ -101,19 +101,21 @@ class Compiler {
   }
 
   wrap(formula: string): string {
-    return `sub(function() { return ${formula} })`
+    return `sub(function() { return ${ formula } })`
   }
+
   finalize(formula: string): string {
-    return `this.finalize(this.reset() + ${formula})`
+    return `this.finalize(this.reset() + ${ formula })`
   }
-  $formula(ast: Node, wrap=false): string {
+
+  $formula(ast: Node, wrap = false): string {
     let formula = ''
     for (const term of this.split(ast, '+').map((t: Node) => this.$term(t))) {
       if (term.startsWith('this._len')) { // convert function len to filter
-        formula = `this.$text(${this.wrap(this.finalize(formula))}).${term.replace(/^this[.]/, '')}`
+        formula = `this.$text(${ this.wrap(this.finalize(formula)) }).${ term.replace(/^this[.]/, '') }`
       }
       else if (formula) {
-        formula += ` + ${term}`
+        formula += ` + ${ term }`
       }
       else {
         formula = term
@@ -127,16 +129,16 @@ class Compiler {
 
   compile(formula: string): string {
     // the typedefs from acorn are worse than useless
-    const program = this.get(parse(formula, { locations: true, ecmaVersion: 2020 }) as unknown as Node, 'Program')
+    const program = this.get(parse(formula, { loc: true, ranges: true, raw: true }) as unknown as Node, 'Program')
     if (!program.body.length) this.error(null, 'No input')
     const formulas: Node[] = program.body.length > 1
       ? program.body.map((stmt: Node) => this.get(stmt, 'ExpressionStatement').expression)
       : this.split(this.get(program.body[0], 'ExpressionStatement').expression, '|')
 
-    const compiled = formulas.map((candidate: Node) => `    () => ${this.$formula(candidate)},`).join('\n')
+    const compiled = formulas.map((candidate: Node) => `    () => ${ this.$formula(candidate) },`).join('\n')
     return `  const sub = f => f.call(Object.create(this))
   return [
-${compiled}
+${ compiled }
   ].reduce((citekey, formula) => citekey || formula(), '') || ('zotero-' + this.item.id)`
   }
 
@@ -144,7 +146,7 @@ ${compiled}
     switch (node.type) {
       case 'MemberExpression':
         if (node.object.type === 'BinaryExpression') {
-          if (node.object.operator !== '+') this.error(node, `unexpected ${node.type} operator ${node.operator}`)
+          if (node.object.operator !== '+') this.error(node, `unexpected ${ node.type } operator ${ node.operator }`)
           return [node.object].concat(this.flatten(node.property))
         }
         else {
@@ -156,83 +158,83 @@ ${compiled}
       case 'ConditionalExpression':
         return [node]
       case 'LogicalExpression':
-        if (node.operator !== '||') this.error(node, `unexpected ${node.type} operator ${node.operator}`)
+        if (node.operator !== '||') this.error(node, `unexpected ${ node.type } operator ${ node.operator }`)
         return [node]
       case 'BinaryExpression':
-        if (node.operator !== '+') this.error(node, `unexpected ${node.type} operator ${node.operator}`)
+        if (node.operator !== '+') this.error(node, `unexpected ${ node.type } operator ${ node.operator }`)
         return [node]
       case 'Literal':
-        if (typeof node.value !== 'string') this.error(node, `expected string, got ${this.$typeof(node)}`)
+        if (typeof node.value !== 'string') this.error(node, `expected string, got ${ this.$typeof(node) }`)
         return [node]
       default:
-        this.error(node, `unexpected ${node.type}`)
+        this.error(node, `unexpected ${ node.type }`)
     }
   }
 
   expected(types: string[]): string {
-    if (types.length > 1) return `${types.slice(0, types.length - 1).join(', ')} or ${types[types.length - 1]}`
+    if (types.length > 1) return `${ types.slice(0, types.length - 1).join(', ') } or ${ types[types.length - 1] }`
     return types[0]
   }
 
   $term(node) {
     if (node.type === 'Literal') {
-      if (typeof node.value !== 'string') this.error(node, `expected string, got ${this.$typeof(node)}`)
-      return `this.$text(${node.raw})`
+      if (typeof node.value !== 'string') this.error(node, `expected string, got ${ this.$typeof(node) }`)
+      return `this.$text(${ node.raw })`
     }
 
     const flat = this.flatten(node)
     let compiled = 'this'
     let prefix = '$'
     while (flat.length) {
-      const head = this.get(flat.shift(), ['Identifier'].concat(prefix === '$' ? ['BinaryExpression', 'LogicalExpression', 'ConditionalExpression'] : []))
+      const head = this.get(flat.shift(), ['Identifier'].concat(prefix === '$' ? [ 'BinaryExpression', 'LogicalExpression', 'ConditionalExpression' ] : []))
 
       if (head.type === 'ConditionalExpression') {
         const test = this.$formula(head.test, true)
         const consequent = this.$formula(head.consequent, true)
         const alternate = this.$formula(head.alternate, true)
-        compiled += `.$text(${test} ? ${consequent} : ${alternate})`
+        compiled += `.$text(${ test } ? ${ consequent } : ${ alternate })`
       }
       else if (head.type === 'LogicalExpression') {
         const left = this.$formula(head.left, true)
         const right = this.$formula(head.right, true)
-        compiled += `.$text(${left} || ${right})`
+        compiled += `.$text(${ left } || ${ right })`
       }
       else if (head.type === 'BinaryExpression') {
         const formula = this.$formula(head, true)
-        compiled += `.$text(${formula})`
+        compiled += `.$text(${ formula })`
       }
       else {
         const looks_like_field = prefix === '$' && head.name[0] === head.name[0].toUpperCase()
         const field = items.name.field[head.name.toLowerCase()]
 
         const looks_like_method = !looks_like_field
-        let method_name = `${prefix}${head.name.toLowerCase()}`
+        let method_name = `${ prefix }${ head.name.toLowerCase() }`
         method_name = alias[method_name] || method_name
         const method = methods[method_name === '$len' ? '_len' : method_name] // fake out $len resolution by resolving it as _len
         const methodCall = flat[0]?.type === 'CallExpression'
 
         if (looks_like_field && field && !methodCall) {
-          compiled += `.${prefix}field("${field}")`
+          compiled += `.${ prefix }field("${ field }")`
         }
         else if (looks_like_method && method) {
-          compiled += `.${method.name}(`
+          compiled += `.${ method.name }(`
           if (methodCall) compiled += this.$arguments(method, flat.shift())
           compiled += ')'
         }
         else if (looks_like_field && method) {
-          this.error(head, `did you mean to use "${head.name.replace(/^./, match => match.toLowerCase())}" instead of "${head.name}"?`)
+          this.error(head, `did you mean to use "${ head.name.replace(/^./, match => match.toLowerCase()) }" instead of "${ head.name }"?`)
         }
         else if (looks_like_method && prefix === '$' && field) {
-          this.error(head, `did you mean to use "${head.name.replace(/^./, match => match.toUpperCase())}" instead of "${head.name}"?`)
+          this.error(head, `did you mean to use "${ head.name.replace(/^./, match => match.toUpperCase()) }" instead of "${ head.name }"?`)
         }
         else if (looks_like_field && field && methodCall) {
-          this.error(head, `item field access "${head.name}" does not take arguments`)
+          this.error(head, `item field access "${ head.name }" does not take arguments`)
         }
         else if (looks_like_field) {
-          this.error(head, `Zotero items do not have a field named "${head.name}"`)
+          this.error(head, `Zotero items do not have a field named "${ head.name }"`)
         }
         else {
-          this.error(head, `Unknown ${prefix === '$' ? 'function' : 'filter'} ${head.name}`)
+          this.error(head, `Unknown ${ prefix === '$' ? 'function' : 'filter' } ${ head.name }`)
         }
       }
 
@@ -242,12 +244,12 @@ ${compiled}
   }
 
   methodName(method) {
-    return `${method.name[0] === '$' ? 'function' : 'filter'} ${JSON.stringify(method.name.substring(1))}`
+    return `${ method.name[0] === '$' ? 'function' : 'filter' } ${ JSON.stringify(method.name.substring(1)) }`
   }
 
   $arguments(method, node) {
     let named: Argument
-    const allowed =  ['ArrayExpression', 'Identifier', 'UnaryExpression', 'Literal']
+    const allowed = [ 'ArrayExpression', 'Identifier', 'UnaryExpression', 'Literal' ]
     const args: Argument[] = node.arguments
       .map(arg => {
         switch (arg.type) {
@@ -255,28 +257,28 @@ ${compiled}
             named = { name: this.get(arg.left, 'Identifier').name, value: this.get(arg.right, allowed) }
             return named
           default:
-            if (named) this.error(arg, `positional argument after named argument "${named.name}"`)
+            if (named) this.error(arg, `positional argument after named argument "${ named.name }"`)
             return { name: '', value: this.get(arg, allowed) }
         }
       })
       .map((arg: Argument): Argument => {
         arg.value = this.$value(arg.value)
-        if (!arg.value.raw) this.error(arg.value, `${arg.value.type} conversion error`)
+        if (!arg.value.raw) this.error(arg.value, `${ arg.value.type } conversion error`)
         return arg
       })
 
     if (method.rest) {
       if (args.length) {
         const error: Argument = args.find(arg => arg.name)
-        if (error) this.error(error.value, `${this.methodName(method)} does not support named arguments`)
+        if (error) this.error(error.value, `${ this.methodName(method) } does not support named arguments`)
         this.validateArg(method, args)
       }
       return args.map((arg: Argument) => arg.value.raw).join(',')
     }
 
-    if (args.length > method.parameters.length) this.error(node, `${this.methodName(method)} expected ${method.parameters.length} arguments, got ${args.length}`)
+    if (args.length > method.parameters.length) this.error(node, `${ this.methodName(method) } expected ${ method.parameters.length } arguments, got ${ args.length }`)
 
-    const resolved: { values: string[], params: Set<string>, required: Set<string> } = {
+    const resolved: { values: string[]; params: Set<string>; required: Set<string> } = {
       values: method.defaults.map(d => typeof d === 'undefined' ? 'undefined' : JSON.stringify(d)),
       params: new Set,
       required: new Set(method.schema.required),
@@ -288,16 +290,16 @@ ${compiled}
       if (method.name === '$creators' && arg.name === 'creator') arg.name = 'type'
 
       if (arg.name) n = method.parameters.indexOf(arg.name)
-      if (n === -1) this.error(arg.value, `${this.methodName(method)} passed unsupported parameter "${arg.name}"`)
+      if (n === -1) this.error(arg.value, `${ this.methodName(method) } passed unsupported parameter "${ arg.name }"`)
       arg.name = arg.name || method.parameters[n]
-      if (resolved.params.has(arg.name)) this.error(arg.value, `duplicate parameter ${n} ("${arg.name}") to ${this.methodName(method)}`)
+      if (resolved.params.has(arg.name)) this.error(arg.value, `duplicate parameter ${ n } ("${ arg.name }") to ${ this.methodName(method) }`)
 
       resolved.params.add(arg.name)
       if (arg.value.raw !== 'undefined') resolved.required.delete(arg.name)
       resolved.values[n] = this.validateArg(method, arg)
     })
 
-    if (resolved.required.size) this.error(node, `missing required argument "${[...resolved.required][0]}" for ${this.methodName(method)}`)
+    if (resolved.required.size) this.error(node, `missing required argument "${ [...resolved.required][0] }" for ${ this.methodName(method) }`)
 
     return resolved.values.join(',')
   }
@@ -305,22 +307,22 @@ ${compiled}
   validateArg(method, arg: Argument | Argument[]): string {
     const name = Array.isArray(arg) ? method.rest : arg.name
     const rule = method.schema.properties[name]
-    if (!rule) this.error(Array.isArray(arg) ? arg[0].value : arg.value, `${this.methodName(method)} passed unsupported parameter "${name}"`)
+    if (!rule) this.error(Array.isArray(arg) ? arg[0].value : arg.value, `${ this.methodName(method) } passed unsupported parameter "${ name }"`)
 
-    const context = `for "${name}" parameter of ${this.methodName(method)}`
+    const context = `for "${ name }" parameter of ${ this.methodName(method) }`
 
     if (Array.isArray(arg)) { // only passed for rest
-      if (!method.rest) this.error(arg[0]?.value, `variable number of arguments passed to non-rest ${this.methodName(method)}`)
-      if (rule.type !== 'array') throw new Error(`${rule.type} expected, got array for ${this.methodName(method)}`)
+      if (!method.rest) this.error(arg[0]?.value, `variable number of arguments passed to non-rest ${ this.methodName(method) }`)
+      if (rule.type !== 'array') throw new Error(`${ rule.type } expected, got array for ${ this.methodName(method) }`)
       return arg.map(a => this.validate(rule.items, a.value, context)).join(',')
     }
     else {
-      if (method.rest) this.error(arg.value, `rest ${this.methodName(method)} expects a variable number of arguments`)
+      if (method.rest) this.error(arg.value, `rest ${ this.methodName(method) } expects a variable number of arguments`)
       return this.validate(rule, arg.value, context)
     }
   }
 
-  validate(rule, value: Node, context: string, softfail=false): string {
+  validate(rule, value: Node, context: string, softfail = false): string {
     const fail = (msg: string): string => {
       if (!softfail) this.error(value, msg)
       return null
@@ -331,7 +333,7 @@ ${compiled}
         const validated = this.validate(subrule, value, context, true)
         if (validated !== null) return validated
       }
-      this.error(value, `expected ${this.expected(rule.anyOf.map(r => (r.instanceof || r.type) as string))}, got ${this.$typeof(value)} ${context}`)
+      this.error(value, `expected ${ this.expected(rule.anyOf.map(r => (r.instanceof || r.type) as string)) }, got ${ this.$typeof(value) } ${ context }`)
     }
 
     switch (rule.instanceof || rule.type) {
@@ -339,23 +341,23 @@ ${compiled}
       case 'number':
       case 'string':
       case 'boolean':
-        if ((rule.instanceof || rule.type) !== this.$typeof(value)) return fail(`expected ${rule.instanceof || rule.type}, got ${this.$typeof(value)} ${context}`)
-        if (rule.enum && !rule.enum.includes(value.value)) return fail(`expected ${this.expected(rule.enum)}, got ${value.value} ${context}`)
+        if ((rule.instanceof || rule.type) !== this.$typeof(value)) return fail(`expected ${ rule.instanceof || rule.type }, got ${ this.$typeof(value) } ${ context }`)
+        if (rule.enum && !rule.enum.includes(value.value)) return fail(`expected ${ this.expected(rule.enum) }, got ${ value.value } ${ context }`)
         break
 
       case 'array':
-        if (value.type !== 'ArrayExpression') return fail(`expected array, got ${this.$typeof(value)} ${context}`)
-        if (rule.items) return `[${value.elements.map(v => this.validate(rule.items, v, context, softfail)).join(',')}]`
-        if (rule.prefixItems) return `[${value.elements.map((v, i) => this.validate(rule.prefixItems[i], v, context, softfail)).join(',')}]`
+        if (value.type !== 'ArrayExpression') return fail(`expected array, got ${ this.$typeof(value) } ${ context }`)
+        if (rule.items) return `[${ value.elements.map(v => this.validate(rule.items, v, context, softfail)).join(',') }]`
+        if (rule.prefixItems) return `[${ value.elements.map((v, i) => this.validate(rule.prefixItems[i], v, context, softfail)).join(',') }]`
         return fail('cannot validate array items')
 
       case 'template':
-        if (typeof value.value !== 'string') return fail(`expected string, got ${this.$typeof(value)} ${context}`)
+        if (typeof value.value !== 'string') return fail(`expected string, got ${ this.$typeof(value) } ${ context }`)
 
         let template = value.value
         if (rule.kind === 'datetime') {
           // old-style date templates
-          template = template.replace(/%(-?)(o?[a-z])|%%/ig, (match, pad, par) => rule.variables[par] ? `%(${par})0${par.endsWith('Y') ? 4 : 2}s` : match)
+          template = template.replace(/%(-?)(o?[a-z])|%%/ig, (match, pad, par) => rule.variables[par] ? `%(${ par })0${ par.endsWith('Y') ? 4 : 2 }s` : match)
         }
 
         let used: string[]
@@ -363,14 +365,14 @@ ${compiled}
           used = sprintf.parse(template).filter(v => typeof v !== 'string').map((v: { keys: string[] }) => v.keys[0])
         }
         catch (err) {
-          return fail(`could not parse template ${JSON.stringify(value.value)}${template !== value.value ? `/${JSON.stringify(template)}` : ''} ${context}: ${err}`)
+          return fail(`could not parse template ${ JSON.stringify(value.value) }${ template !== value.value ? `/${ JSON.stringify(template) }` : '' } ${ context }: ${ err }`)
         }
         const unknown: string = used.length === 0 ? 'none' : used.find(v => !rule.variables[v])
-        if (unknown) return fail(`expected ${this.expected(Object.keys(rule.variables))}, got ${unknown} ${context}`)
+        if (unknown) return fail(`expected ${ this.expected(Object.keys(rule.variables)) }, got ${ unknown } ${ context }`)
         return JSON.stringify(template)
 
       default:
-        throw new Error(`cannot validate ${rule.type}`)
+        throw new Error(`cannot validate ${ rule.type }`)
     }
 
     return value.raw
@@ -408,26 +410,26 @@ ${compiled}
         return {
           ...node,
           elements,
-          raw: `[${elements.map(e => e.raw).join(',')}]`,
+          raw: `[${ elements.map(e => e.raw).join(',') }]`,
         }
 
       case 'UnaryExpression':
-        if (node.operator !== '-' || !node.prefix) this.error(node, `unsupported unary ${node.prefix ? 'prefix' : 'postfix'} operator ${JSON.stringify(node.operator)}`)
-        if (typeof this.get(node.argument, 'Literal').value !== 'number') this.error(node.argument, `expected number, found ${this.$typeof(node.argument)}`)
+        if (node.operator !== '-' || !node.prefix) this.error(node, `unsupported unary ${ node.prefix ? 'prefix' : 'postfix' } operator ${ JSON.stringify(node.operator) }`)
+        if (typeof this.get(node.argument, 'Literal').value !== 'number') this.error(node.argument, `expected number, found ${ this.$typeof(node.argument) }`)
         return {
           ...node,
           type: 'Literal',
           value: -1 * (node.argument.value as number),
-          raw: `${node.operator}${node.argument.raw}`,
+          raw: `${ node.operator }${ node.argument.raw }`,
         }
 
       default:
-        this.error(node, `unexpected argument of type ${node.type}`)
+        this.error(node, `unexpected argument of type ${ node.type }`)
     }
   }
 }
 
-const compiler =  new Compiler
+const compiler = new Compiler
 export function convert(formulas: string): string {
   return compiler.compile(formulas)
 }

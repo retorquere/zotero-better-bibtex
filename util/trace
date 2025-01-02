@@ -1,0 +1,23 @@
+#!/usr/bin/env python3
+
+import os
+
+last = None
+start = None
+with open(os.path.expanduser('~/.BBTTEST.log')) as f, open('trace.md', 'w') as trace:
+  print('| | duration | so far |', file=trace)
+  print('|-|----------|--------|', file=trace)
+  for line in f.readlines():
+    if line.replace('=', '').startswith('trace\t'):
+      reset, timestamp, message = line.strip().split('\t')
+      timestamp = int(timestamp)
+      reset = reset.endswith('=')
+      if reset:
+        start = last = timestamp
+      if last is not None:
+        print('*' if reset else ' ', message, f'({timestamp - last}, {timestamp - start})')
+        msg = message
+        if reset:
+          msg = '**' + message + '**'
+        print('|', msg, '|', timestamp - last, '|', timestamp - start, '|', file=trace)
+      last = timestamp

@@ -37,6 +37,27 @@ inoremap <C-z> <C-r>=ZoteroCite()<CR>
 
 This inserts the citation at the cursor using the shortcut ctrl-z (in insert mode) or `<leader>`z (in normal, visual etc. modes, `<leader>` being backslash by default).
 
+Alternatively, if you use a recent version of Vim (not Neovim) and have written your config file in `vim9script`, you may be interested in a `vim9script` version of the above solution to take advantage of JIT compilation:
+```vim
+def g:ZoteroCite(): string
+    # Pick a citation format based on the filetype (feel free to customize)
+    var format: string
+    if &filetype =~ '.*tex'
+      format = 'cite'
+    else
+      format = 'pandoc'
+    endif
+
+    # Make the BetterBibTeX API call and return the result.
+    var api_call = 'http://127.0.0.1:23119/better-bibtex/cayw?format=' .. format .. '&brackets=1'
+    var citation = system('curl -s ' .. shellescape(api_call))
+    return citation
+enddef
+
+inoremap <C-x><C-z> <C-r>=g:ZoteroCite()<cr>
+```
+In this case, the keybinding Ctrl-X Ctrl-Z in insert mode inserts a Zotero citation. You can add a normal-mode keybinding in the same way as for the legacy VimScript version provided above.
+
 ### emacs
 
 @newhallroad wrote a function in elisp, which brings up the CAYW input, adds the chosen items as pandoc citations to the buffer, and moves the point to after the citations. This is for markdown-mode. Emacs users who use org-mode may (or may not) need something different.

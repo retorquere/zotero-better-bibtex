@@ -1,0 +1,60 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "preferences": {
+      "autoPinDelay": 10,
+      "citekeyFormat": "(authEtal2 || title).capitalize.postfix('\\_') + year",
+      "postscript": "if (Translator.BetterCSL && extra.raw.gscc) csl.GSCC = extra.raw.gscc"
+    }
+  },
+  "items": [
+    {
+      "ISBN": "978-1-107-04452-4 978-1-107-68637-3",
+      "abstractNote": "\"Advances in qualitative methods and recent developments in the philosophy of science have led to an emphasis on explanation via reference to causal mechanisms. This book argues that the method known as process tracing is particularly well suited to developing and assessing theories about such mechanisms.The editors begin by establishing a philosophical basis for process tracing - one that captures mainstream uses while simultaneously being open to applications by interpretive scholars\"--",
+      "callNumber": "JA71 .P756 2015",
+      "citationKey": "Bennett.Checkel_2015",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Andrew",
+          "lastName": "Bennett"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Jeffrey T.",
+          "lastName": "Checkel"
+        }
+      ],
+      "date": "2015",
+      "extra": [
+        "my-note: 0001903",
+        "Citation Key: Bennett.Checkel_2015",
+        "GSCC: 0021819"
+      ],
+      "itemID": 1,
+      "itemType": "bookSection",
+      "language": "en",
+      "libraryCatalog": "Library of Congress ISBN",
+      "place": "Cambridge ; New York",
+      "publicationTitle": "Process tracing: from metaphor to analytic tool",
+      "publisher": "Cambridge University Press",
+      "series": "Strategies for social inquiry",
+      "tags": [
+        {
+          "tag": "case method"
+        },
+        {
+          "tag": "causation"
+        },
+        {
+          "tag": "methods"
+        },
+        {
+          "tag": "process tracing"
+        }
+      ],
+      "title": "Process tracing: from philosophical roots to best practices"
+    }
+  ]
+}

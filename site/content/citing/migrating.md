@@ -23,3 +23,10 @@ variable in the CSL processing so it can be rendered using a CSL
 style. If you previously used the `citeprocNoteCitekey` preference,
 that is now gone, so you'll have to update the style you used.
 
+Update: pandoc now supports docx+citations as input format and will export your word documents into pandoc-compatible markdown with citations! That should be a much smoother experience:
+
+```
+pandoc -f docx+citations -t markdown -i Aristotle.docx -o Aristotle.md
+```
+
+should do the trick!

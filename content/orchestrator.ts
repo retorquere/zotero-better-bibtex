@@ -1,4 +1,4 @@
-export type Actor = | 'start' | 'done' | 'auto-export' | 'translators' | 'TeXstudio' | 'abbreviator' | 'keymanager' | 'serializer' | 'cache' | 'sqlite' | 'git-push' | 'citekeysearch' | 'cayw' | 'json-rpc' | 'pull-export'
+export type Actor = | 'start' | 'done' | 'auto-export' | 'translators' | 'TeXstudio' | 'abbreviator' | 'keymanager' | 'cache' | 'sqlite' | 'git-push' | 'citekeysearch' | 'cayw' | 'json-rpc' | 'pull-export'
 export type PhaseID = 'startup' | 'shutdown'
 import type { Reason } from './bootstrap'
 import { log } from './logger'
@@ -28,16 +28,18 @@ export class Orchestrator {
   public start: Actor = 'start'
   public done: Actor = 'done'
   private tasks: Partial<Record<Actor, Task>> = {}
-  private $order: Actor[]
+  private $ordered: Task[]
 
   public add({ description, id, startup, shutdown, needs }: Task): void {
+    if (this.$ordered) throw new Error(`orchestrator: add ${ id } after ordered`)
+
     needs = needs || []
-    if (!startup && !shutdown) throw new Error(`orchestrator: ${id}: no-op task`)
-    if (this.tasks[id]) throw new Error(`orchestrator: ${id} exists`)
+    if (!startup && !shutdown) throw new Error(`orchestrator: ${ id }: no-op task`)
+    if (this.tasks[id]) throw new Error(`orchestrator: ${ id } exists`)
     switch (id) {
       case this.start:
       case this.done:
-        if (needs.length) throw new Error(`${id} task cannot have dependencies`)
+        if (needs.length) throw new Error(`${ id } task cannot have dependencies`)
         break
       default:
         if (!needs.length) needs = [this.start]
@@ -53,12 +55,10 @@ export class Orchestrator {
     }
   }
 
-  public get order(): Actor[] {
-    if (!this.$order) {
-
+  public get ordered(): Task[] {
+    if (!this.$ordered) {
       if (this.tasks[this.done]) this.tasks[this.done].needs = (Object.keys(this.tasks) as Actor[]).filter(id => id !== this.done)
 
-      this.$order = []
       const tasks: Task[] = Object.values(this.tasks)
 
       const dependents: Record<string, string[]> = {}
@@ -70,18 +70,18 @@ export class Orchestrator {
         if (!dependents[task.id]) dependents[task.id] = []
 
         for (const parent of task.needs) {
-          if (!this.tasks[parent]) throw new Error(`orchestrator: ${task.id} needs non-existent task ${parent}`)
+          if (!this.tasks[parent]) throw new Error(`orchestrator: ${ task.id } needs non-existent task ${ parent }`)
           if (!dependents[parent]) dependents[parent] = []
           dependents[parent].push(task.id)
         }
       }
 
       const sources = tasks.filter(task => task.id !== this.done && !task.needs.length)
-      this.$order = []
+      this.$ordered = []
 
       while (sources.length) {
         const task = sources.shift()
-        this.$order.push(task.id)
+        this.$ordered.push(task)
 
         for (const dependent of dependents[task.id]) {
           needs[dependent].delete(task.id)
@@ -89,56 +89,70 @@ export class Orchestrator {
           if (!needs[dependent].size) sources.push(this.tasks[dependent])
         }
       }
-      if (edges) throw new Error(`orchestrator: cyclic dependency involving ${[...(new Set([].concat(...(Object.values(needs).map(n => [...n])))))].join(',')}`)
+      if (edges) throw new Error(`orchestrator: cyclic dependency involving ${ [...(new Set([].concat(...(Object.values(needs).map(n => [...n])))))].join(',') }`)
     }
 
-    return [...this.$order]
+    return [...this.$ordered]
   }
 
   private async run(phase: PhaseID, reason: Reason, progress?: Progress): Promise<void> {
     const duration = (dur: number) => (new Date(dur)).toISOString().split('T')[1].replace(/Z/, '')
-    const order = this.order
-    if (phase === 'shutdown') order.reverse()
-    const tasks: Task[] = order.map(id => this.tasks[id]).filter(task => task[phase])
+
+    const tasks: Task[] = this.ordered.filter(task => task[phase])
+    if (phase === 'shutdown') tasks.reverse()
+
     const total = tasks.length
 
-    const started = Date.now()
-    const finished: Actor[] = []
-    log.debug(phase, 'orchestrator started:', reason)
+    const runtime = {
+      zotero: 0,
+      bbt: 0,
+    }
+    const finished: number[] = []
+    log.info(`${ phase } orchestrator started: ${ reason }`)
+    const action = phase === 'startup' ? 'starting' : 'shutting down'
     while (tasks.length) {
       const task = tasks.shift()
 
-      log.prefix = ` ${phase}: [${task.id}`
-      if (tasks.length) log.prefix += `+${tasks.length}`
+      log.prefix = ` ${ phase }: [${ task.id }`
+      if (tasks.length) log.prefix += `+${ tasks.length }`
       log.prefix += ']'
 
       progress?.(phase, task.id, finished.length, total, task.description)
 
-      task.started = Date.now()
-      log.debug('orchestrator: starting', task.id, task.description)
-      await task[phase](reason, task)
-      task.finished = Date.now()
-      log.debug('orchestrator:', task.id, 'took', duration(task.finished - task.started))
+      log.info(`orchestrator: ${ action } ${ task.id } [${ task.description }]`)
 
-      finished.push(task.id)
+      task.started = Date.now()
+      try {
+        await task[phase](reason, task)
+      }
+      catch (err) {
+        log.error(phase, task.id, 'failed:', err, `${err}`)
+        if (phase === 'startup') throw err
+      }
+      task.finished = Date.now()
+
+      log.info(`orchestrator: ${ task.id } took ${ duration(task.finished - task.started) }`)
+      finished.unshift(task.finished)
+      runtime[task.id === 'start' ? 'zotero' : 'bbt'] += task.finished - task.started
 
       progress?.(phase, task.id, finished.length, total, tasks.length ? tasks.map(t => t.id).join(',') : 'finished')
     }
 
-    log.debug('startup took', duration(Date.now() - started))
     log.prefix = ''
+    const waiting = phase === 'startup' ? ` after waiting ${ duration(runtime.zotero) } for zotero` : ''
+    log.info(`orchestrator: ${ action } took ${ duration(runtime.bbt) }${ waiting }`)
   }
 
   private gantt(phase: PhaseID) {
-    const tasks: (Task & { taskid: number })[] = this.order.map((id: Actor, taskid: number) => ({...this.tasks[id], taskid }))
+    const tasks: (Task & { taskid: number })[] = this.ordered.map((task: Task, taskid: number) => ({ ...task, taskid }))
 
-    const today = new Date().toISOString().slice(0, 10)
+    const today = (new Date).toISOString().slice(0, 10)
     let gantt = `<?xml version="1.0" encoding="UTF-8"?>
       <project
-        name="Better BibTeX ${phase}"
+        name="Better BibTeX ${ phase }"
         company=""
         webLink="https://"
-        view-date="${today}"
+        view-date="${ today }"
         view-index="0"
         gantt-divider-location="614"
         resource-divider-location="300"
@@ -176,21 +190,21 @@ export class Orchestrator {
     for (const task of tasks) {
       gantt += `
           <task
-            id="${task.taskid}"
-            uid="${task.id}${Math.random()}"
-            name="${task.id}" meeting="false"
-            ${task.needs.length ? '' : `start="${today}"`}
-            duration="${Math.ceil((task.finished - task.started)/100)}"
+            id="${ task.taskid }"
+            uid="${ task.id }${ Math.random() }"
+            name="${ task.id }" meeting="false"
+            ${ task.needs.length ? '' : `start="${ today }"` }
+            duration="${ Math.ceil((task.finished - task.started) / 100) }"
             complete="0"
             expand="true"
           >`
       for (const dependent of tasks.filter(t => t.needs.includes(task.id))) {
         gantt += `
-            <depend id="${dependent.taskid}" type="2" difference="0" hardness="Strong"/>
+            <depend id="${ dependent.taskid }" type="2" difference="0" hardness="Strong"/>
         `
       }
       gantt += `
-            <customproperty taskproperty-id="tpc0" value="${((task.finished - task.started)/1000).toFixed(2)}"/>
+            <customproperty taskproperty-id="tpc0" value="${ ((task.finished - task.started) / 1000).toFixed(2) }"/>
           </task>
       `
     }
@@ -205,7 +219,7 @@ export class Orchestrator {
       </project>
     `
 
-    Zotero.File.putContents(Zotero.File.pathToFile($OS.Path.join(Zotero.BetterBibTeX.dir, `${phase}.gan`)), gantt)
+    Zotero.File.putContents(Zotero.File.pathToFile($OS.Path.join(Zotero.BetterBibTeX.dir, `${ phase }.gan`)), gantt)
   }
 
   public async startup(reason: Reason, progress?: Progress): Promise<void> {

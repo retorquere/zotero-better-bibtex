@@ -63,11 +63,13 @@ interface ZoteroItem {
   setField: (name: string, value: string | number) => void
   getCreators: () => {firstName?: string, lastName: string, fieldMode: number, creatorTypeID: number}[]
   getCreatorsJSON: () => { firstName?: string, lastName?:string, name?: string, creatorType: string }[]
-  getNotes: () => ZoteroItem[]
+  getNotes: () => number[]
   getCollections: () => number[]
-  getAttachments: () => ZoteroItem[]
+  getAttachments: () => number[]
   getTags: () => { tag: string, type: number }[]
   toJSON: () => import('../gen/typings/serialized-item').Item
+
+  loadAllData: () => Promise<void>
 }
 
 type GlobalBBT = {

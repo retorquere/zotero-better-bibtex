@@ -13,14 +13,15 @@ import { fromPairs } from './object'
 import { orchestrator } from './orchestrator'
 import { Server } from './server'
 
+const isTrue = new Set([ 'y', 'yes', 'true' ])
 function displayOptions(request) {
-  const isTrue = new Set([ 'y', 'yes', 'true' ])
-  const query = request.query || {}
+  const query = Server.queryParams(request)
 
   return {
-    exportCharset: query.exportCharset || 'utf8',
+    // exportCharset: query.exportCharset || 'utf8',
     exportNotes: isTrue.has(query.exportNotes),
     useJournalAbbreviation: isTrue.has(query.useJournalAbbreviation),
+    worker: !query.worker || isTrue.has(query.worker),
   }
 }
 
@@ -28,25 +29,25 @@ class CollectionHandler {
   public supportedMethods = ['GET']
 
   public async init(request) {
-    if (!request.query || !request.query['']) return [NOT_FOUND, 'text/plain', 'Could not export bibliography: no path']
+    const urlpath: string = Server.queryParams(request)['']
+    if (!urlpath) return [ NOT_FOUND, 'text/plain', 'Could not export bibliography: no path' ]
 
     try {
-      const [ , lib, path, translator ] = request.query[''].match(/^\/(?:([0-9]+)\/)?(.*)\.([-0-9a-z]+)$/i)
+      const [ , lib, path, translator ] = urlpath.match(/^\/(?:([0-9]+)\/)?(.*)\.([-0-9a-z]+)$/i)
 
-      const libID = parseInt(lib || 0) || Zotero.Libraries.userLibraryID
+      const libID = parseInt(lib || '0') || Zotero.Libraries.userLibraryID
 
-      const collection = Zotero.Collections.getByLibraryAndKey(libID, path) || (await getCollection(`/${libID}/${path}`))
-      if (!collection) return [NOT_FOUND, 'text/plain', `Could not export bibliography: path '${path}' not found`]
+      const collection = Zotero.Collections.getByLibraryAndKey(libID, path) || (await getCollection(`/${ libID }/${ path }`))
+      if (!collection) return [ NOT_FOUND, 'text/plain', `Could not export bibliography: path '${ path }' not found` ]
 
-      return [ OK, 'text/plain', await Translators.exportItems({
+      return [ OK, 'text/plain', await Translators.queueJob({
         translatorID: Translators.getTranslatorId(translator),
         displayOptions: displayOptions(request),
         scope: { type: 'collection', collection },
-      })]
-
+      }) ]
     }
     catch (err) {
-      return [{ notfound: NOT_FOUND, duplicate: CONFLICT, error: SERVER_ERROR}[err.kind || 'error'], 'text/plain', `${err}`]
+      return [ { notfound: NOT_FOUND, duplicate: CONFLICT, error: SERVER_ERROR }[err.kind || 'error'], 'text/plain', `${ err }` ]
     }
   }
 }
@@ -55,25 +56,25 @@ class LibraryHandler {
   public supportedMethods = ['GET']
 
   public async init(request) {
-    if (!request.query || !request.query['']) return [NOT_FOUND, 'text/plain', 'Could not export library: no path']
+    const urlpath: string = Server.queryParams(request)['']
+    if (!urlpath) return [ NOT_FOUND, 'text/plain', 'Could not export library: no path' ]
 
     try {
-      const [ , lib, translator ] = request.query[''].match(/\/?(?:([0-9]+)\/)?library\.([-0-9a-z]+)$/i)
-      const libID = parseInt(lib || 0) || Zotero.Libraries.userLibraryID
+      const [ , lib, translator ] = urlpath.match(/\/?(?:([0-9]+)\/)?library\.([-0-9a-z]+)$/i)
+      const libID = parseInt(lib || '0') || Zotero.Libraries.userLibraryID
 
       if (!Zotero.Libraries.exists(libID)) {
-        return [NOT_FOUND, 'text/plain', `Could not export bibliography: library '${request.query['']}' does not exist`]
+        return [ NOT_FOUND, 'text/plain', `Could not export bibliography: library '${ urlpath }' does not exist` ]
       }
 
-      return [OK, 'text/plain', await Translators.exportItems({
+      return [ OK, 'text/plain', await Translators.queueJob({
         translatorID: Translators.getTranslatorId(translator),
         displayOptions: displayOptions(request),
         scope: { type: 'library', id: libID },
-      })]
-
+      }) ]
     }
     catch (err) {
-      return [SERVER_ERROR, 'text/plain', `${err}`]
+      return [ SERVER_ERROR, 'text/plain', `${ err }` ]
     }
   }
 }
@@ -82,28 +83,28 @@ class SelectedHandler {
   public supportedMethods = ['GET']
 
   public async init(request) {
-    const translator = request.query ? request.query[''] : null
+    const translator: string = Server.queryParams(request)['']
 
-    if (!translator) return [NOT_FOUND, 'text/plain', 'Could not export bibliography: no format' ]
+    if (!translator) return [ NOT_FOUND, 'text/plain', 'Could not export bibliography: no format' ]
 
     try {
       const items = Zotero.getActiveZoteroPane().getSelectedItems()
-      if (!items.length) return [NOT_FOUND, 'text/plain', 'Could not export bibliography: no selection' ]
+      if (!items.length) return [ NOT_FOUND, 'text/plain', 'Could not export bibliography: no selection' ]
 
       if (translator === 'quick-copy') {
         const format = Zotero.Prefs.get('export.quickCopy.setting')
         if (Zotero.QuickCopy.unserializeSetting(format).mode !== 'bibliography') throw new Error('formatted-citations requires the Zotero default quick-copy format to be set to a citation style')
-        return [OK, 'text/plain', Zotero.QuickCopy.getContentFromItems(items, format, null, true).text ]
+        return [ OK, 'text/plain', Zotero.QuickCopy.getContentFromItems(items, format, null, true).text ]
       }
 
-      return [OK, 'text/plain', await Translators.exportItems({
+      return [ OK, 'text/plain', await Translators.queueJob({
         translatorID: Translators.getTranslatorId(translator),
         displayOptions: displayOptions(request),
         scope: { type: 'items', items },
-      })]
+      }) ]
     }
     catch (err) {
-      return [SERVER_ERROR, 'text/plain', `${err}`]
+      return [ SERVER_ERROR, 'text/plain', `${ err }` ]
     }
   }
 }
@@ -119,21 +120,22 @@ class ItemHandler {
     await Zotero.BetterBibTeX.ready
 
     try {
-      let { translator, citationKeys, groupID, libraryID, library, group, pandocFilterData } = request.query
+      let translator: string, citationKeys: string | string[], groupID: string | number, libraryID: string | number, library: string, group: string, pandocFilterData: string
+      ({ translator, citationKeys, groupID, libraryID, library, group, pandocFilterData } = Server.queryParams(request))
       if ((isSet(libraryID) + isSet(library) + isSet(groupID) + isSet(group)) > 1) {
-        return [BAD_REQUEST, 'text/plain', 'specify at most one of library(/ID) or group(/ID)' ]
+        return [ BAD_REQUEST, 'text/plain', 'specify at most one of library(/ID) or group(/ID)' ]
       }
       else if (libraryID) {
-        if (!libraryID.match(/^[0-9]+$/)) return [BAD_REQUEST, 'text/plain', `${libraryID} is not a number` ]
+        if (!libraryID.match(/^[0-9]+$/)) return [ BAD_REQUEST, 'text/plain', `${ libraryID } is not a number` ]
         libraryID = parseInt(libraryID)
       }
       else if (groupID) {
-        if (!groupID.match(/^[0-9]+$/)) return [BAD_REQUEST, 'text/plain', `${libraryID} is not a number` ]
+        if (!groupID.match(/^[0-9]+$/)) return [ BAD_REQUEST, 'text/plain', `${ libraryID } is not a number` ]
         try {
           groupID = parseInt(groupID)
           libraryID = Zotero.Groups.getAll().find(g => g.groupID === groupID).libraryID
         }
-        catch (err) {
+        catch {
           libraryID = null
         }
       }
@@ -150,11 +152,11 @@ class ItemHandler {
       const translatorID = Translators.getTranslatorId(translator)
       if (!translator || !translatorID) return [ SERVER_ERROR, 'text/plain', 'no translator selected' ]
 
-      const response: { items: Record<string, any>, zotero: Record<string, { itemID: number, uri: string }>, errors: Record<string, string> } = { items: {}, zotero: {}, errors: {} }
+      const response: { items: Record<string, any>; zotero: Record<string, { itemID: number; uri: string }>; errors: Record<string, string> } = { items: {}, zotero: {}, errors: {}}
 
       const itemIDs: Record<string, number> = {}
       for (const citationKey of citationKeys) {
-        const key = Zotero.BetterBibTeX.KeyManager.find({ where: { libraryID, citationKey } })
+        const key = Zotero.BetterBibTeX.KeyManager.find({ where: { libraryID: <number>libraryID, citationKey }})
 
         switch (key.length) {
           case 0:
@@ -164,15 +166,15 @@ class ItemHandler {
             itemIDs[citationKey] = key[0].itemID
             break
           default:
-            response.errors[citationKey] = `${key.length} items found with key "${citationKey}"`
+            response.errors[citationKey] = `${ key.length } items found with key "${ citationKey }"`
             break
         }
       }
 
       if (!Object.keys(itemIDs).length) return [ SERVER_ERROR, 'text/plain', 'no items found' ]
       // itemID => zotero item
-      const items = fromPairs((await getItemsAsync(Object.values(itemIDs))).map(item => [ item.itemID , item ]))
-      let contents = await Translators.exportItems({translatorID, displayOptions: displayOptions(request), scope: { type: 'items', items: Object.values(items) }})
+      const items = fromPairs((await getItemsAsync(Object.values(itemIDs))).map(item => [ item.itemID, item ]))
+      let contents = await Translators.queueJob({ translatorID, displayOptions: displayOptions(request), scope: { type: 'items', items: Object.values(items) }})
 
       if (pandocFilterData) {
         let filtered_items
@@ -184,7 +186,7 @@ class ItemHandler {
             filtered_items = JSON.parse(contents).items
             break
           default:
-            throw new Error(`Unexpected translator ${translatorID}`)
+            throw new Error(`Unexpected translator ${ translatorID } from ${ translator }`)
         }
 
         for (const item of filtered_items) {
@@ -200,10 +202,10 @@ class ItemHandler {
         contents = JSON.stringify(response)
       }
 
-      return [OK, 'text/plain', contents ]
+      return [ OK, 'text/plain', contents ]
     }
     catch (err) {
-      return [SERVER_ERROR, 'text/plain', `${err}`]
+      return [ SERVER_ERROR, 'text/plain', `${ err }` ]
     }
   }
 }
@@ -214,9 +216,9 @@ orchestrator.add({
   needs: ['translators'],
 
   startup: async () => { // eslint-disable-line @typescript-eslint/require-await
-    Server.register(['/better-bibtex/export/collection', '/better-bibtex/collection'], CollectionHandler)
-    Server.register(['/better-bibtex/export/library', '/better-bibtex/library'], LibraryHandler)
-    Server.register(['/better-bibtex/export/selected', '/better-bibtex/select'], SelectedHandler)
+    Server.register([ '/better-bibtex/export/collection', '/better-bibtex/collection' ], CollectionHandler)
+    Server.register([ '/better-bibtex/export/library', '/better-bibtex/library' ], LibraryHandler)
+    Server.register([ '/better-bibtex/export/selected', '/better-bibtex/select' ], SelectedHandler)
     Server.register('/better-bibtex/export/item', ItemHandler)
     Server.startup()
   },

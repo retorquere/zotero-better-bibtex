@@ -79,17 +79,6 @@ def html2md(html):
 def serialize(obj):
   return json.dumps(obj, indent=2, ensure_ascii=True, sort_keys=True)
 
-def extra_lower(obj):
-  if isinstance(obj, dict) and 'items' in obj:
-    obj = copy.deepcopy(obj)
-    for item in obj['items']:
-      if 'extra' in item:
-        if type(item['extra']) == list:
-          item['extra'] = [line.lower() for line in item['extra']]
-        else:
-          item['extra'] = item['extra'].lower()
-  return obj
-
 def running(id):
   if type(id) == int:
     try:

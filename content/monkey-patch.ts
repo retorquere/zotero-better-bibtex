@@ -1,22 +1,49 @@
-/* eslint-disable @typescript-eslint/ban-types, prefer-rest-params, @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-unsafe-function-type, @typescript-eslint/no-unsafe-return */
 
-export type Trampoline = Function & { disabled?: boolean }
-const trampolines: Trampoline[] = []
+const monkeys: Monkey[] = []
 
-export function patch(object: any, method: string, patcher: (f: Function) => Function, mem?: Trampoline[]): void {
-  if (typeof object[method] !== 'function') throw new Error(`monkey-patch: ${method} is not a function`)
+import { log } from './logger'
 
-  const orig = object[method]
-  const patched = patcher(orig)
-  object[method] = function trampoline() {
-    return (trampoline as Trampoline).disabled ? orig.apply(this, arguments) : patched.apply(this, arguments)
+export class Monkey {
+  constructor(public enabled = false) {
+    monkeys.push(this)
   }
-  trampolines.push(object[method])
-  if (mem) mem.push(object[method])
+
+  public patch(obj: any, methodName: string, patcher: Function): void {
+    const originalMethod = obj[methodName]
+    const newMethod = patcher(obj[methodName])
+
+    obj[methodName] = new Proxy(originalMethod, {
+      apply: (target, thisArg, argumentsList) => {
+        try {
+          if (this.enabled) {
+            return newMethod.apply(thisArg, argumentsList)
+          }
+          else {
+            return originalMethod.apply(thisArg, argumentsList)
+          }
+        }
+        catch (err) {
+          log.error('monkey-patch:', err)
+          throw err
+        }
+      },
+    })
+  }
+
+  disable() {
+    this.enabled = false
+  }
+
+  enable() {
+    this.enabled = true
+  }
+
+  disableAll() {
+    for (const m of monkeys) {
+      m.enabled = false
+    }
+  }
 }
 
-export function unpatch(functions?: Trampoline[]) {
-  for (const trampoline of (functions || trampolines)) {
-    trampoline.disabled = true
-  }
-}
+export const monkey = new Monkey

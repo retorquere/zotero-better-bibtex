@@ -1,98 +1,109 @@
-import type { Translators as Translator } from '../typings/translators'
-declare const workerEnvironment: any
-declare const workerJob: Translator.Worker.Job
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-unsafe-return, @typescript-eslint/no-empty-function, no-restricted-syntax */
+
+declare const Zotero: any
+
+import * as client from './client'
+const version = require('./../gen/version.js')
+export const run = `<${version} ${client.run}>`
+
 declare const dump: (msg: string) => void
 
-import { stringify } from './stringify'
-import { asciify } from './text'
-
-export function print(msg: string): void {
-  dump(`better-bibtex::${msg}\n`)
+export const discard = {
+  log(): void {},
+  error(): void {},
+  warn(): void {},
+  debug(): void {},
+  info(): void {},
+  clear(): void {},
+  dir(): void {},
+  table(): void {},
 }
 
-function toString(obj): string {
-  try {
-    if (typeof obj === 'string') return obj
-    return stringify(obj, 0)
-  }
-  catch (err) {
-    return stringify(err, 0)
+function stringifyXPCOM(obj): string {
+  if (!obj.QueryInterface) return ''
+  if (obj.message) return `[XPCOM error ${ obj.message }]`
+  if (obj.name) return `[XPCOM object ${ obj.name }]`
+  return '[XPCOM object]'
+}
+
+function stringifyError(obj) {
+  if (obj instanceof Error) return `[error: ${ obj.message || '<unspecified error>' }\n${ obj.stack }]`
+  // guess it is an errorevent
+  if (obj.error instanceof Error && obj.message) return `[errorevent: ${ obj.message } ${ stringifyError(obj.error) }]`
+  if (typeof ErrorEvent !== 'undefined' && obj instanceof ErrorEvent) return `[errorevent: ${ obj.message || '<unspecified errorevent>' }]`
+  return ''
+}
+
+function replacer() {
+  const seen = new WeakSet
+  return (key, value) => {
+    if (typeof value === 'object' && value !== null) {
+      if (seen.has(value)) return '[Circular]'
+      seen.add(value)
+    }
+
+    if (value === null) return value
+    if (value instanceof Set) return [...value]
+    if (value instanceof Map) return Object.fromEntries(value)
+
+    switch (typeof value) {
+      case 'string':
+      case 'number':
+      case 'boolean':
+        return value
+
+      case 'object':
+        return stringifyXPCOM(value) || stringifyError(value) || value
+    }
+
+    if (Array.isArray(value)) return value
+
+    return undefined
   }
 }
 
-class Logger {
-  protected timestamp: number
+function to_s(obj: any): string {
+  if (typeof obj === 'string') return obj
+  return JSON.stringify(obj, replacer(), 2)
+}
+
+export function format(...msg): string {
+  return msg.map(to_s).join(' ')
+}
+
+export const log = new class {
   public prefix = ''
 
-  private format({ error=false }, msg) {
-    let diff = null
-    const now = Date.now()
-    if (this.timestamp) diff = now - this.timestamp
-    this.timestamp = now
-
-    if (Array.isArray(msg)) msg = msg.map(toString).join(' ')
-
-    let prefix = ''
-    if (typeof workerEnvironment !== 'undefined') {
-      prefix += ' worker'
-      if (typeof workerJob !== 'undefined') prefix += `:${workerJob.translator}`
-    }
-
-    if (error) prefix += ' error:'
-
-    return `{better-bibtex${this.prefix}${prefix}} +${diff} ${asciify(msg)}`
+  #prefix(error?: any) {
+    return `{${ error ? 'error: ' : '' }${ client.worker ? 'worker: ' : '' }${this.prefix}better-bibtex: ${run}} `
   }
 
-  public get enabled(): boolean {
-    return (
-      (typeof workerJob !== 'undefined' && workerJob.debugEnabled)
-      ||
-      !Zotero
-      ||
-      Zotero.Debug?.enabled
-      ||
-      Zotero.Prefs?.get('debug.store')
-    ) as boolean
+  public debug(...msg): void {
+    Zotero.debug(`${this.#prefix()}${format(...msg)}\n`)
   }
 
-  public print(msg: string) {
-    if (!this.enabled) return
+  public info(...msg): void {
+    Zotero.debug(`${this.#prefix()}${format(...msg)}\n`)
+  }
 
-    if (typeof Zotero !== 'undefined') {
-      Zotero.debug(msg)
+  public error(...msg): void {
+    Zotero.debug(`${this.#prefix(true)}${format(...msg)}\n`)
+  }
+
+  public dump(msg: string, error?: Error): void {
+    if (error) {
+      dump(`${this.#prefix(error)}${format(msg, error)}\n`)
     }
     else {
-      print(msg)
+      dump(`${this.#prefix()}${format(msg)}\n`)
     }
-  }
-
-  public log(...msg) {
-    this.print(this.format({}, msg))
-  }
-
-  public debug(...msg) {
-    this.print(this.format({}, msg))
-  }
-
-  public warn(...msg) {
-    this.print(this.format({}, msg))
-  }
-
-  public info(...msg) {
-    this.print(this.format({}, msg))
-  }
-
-  public error(...msg) {
-    this.print(this.format({error: true}, msg))
-  }
-
-  public dump(...msg) {
-    if (this.enabled) print(this.format({}, msg))
-  }
-
-  public status({ error=false }, ...msg) {
-    if (error || this.enabled) Zotero.debug(this.format({error}, msg))
   }
 }
 
-export const log = new Logger
+export function $dump(msg: string, error?: Error): void {
+  log.dump(msg, error)
+}
+
+export function trace(msg: string, mode = ''): void {
+  dump(`trace${ mode }\t${ Date.now() }\t${ msg }\n`)
+}

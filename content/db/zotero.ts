@@ -20,4 +20,3 @@ export async function columnQueryAsync(query: string, args?: any): Promise<any[]
 export async function valueQueryAsync(query: string, args?: any): Promise<any> {
   return Zotero.DB.valueQueryAsync(normalize(query), args, options) as Promise<any>
 }
-

@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/require-await, no-throw-literal, max-len */
+/* eslint-disable @typescript-eslint/only-throw-error, @typescript-eslint/require-await, max-len */
 
 import { getItemsAsync } from './get-items-async'
 import { AUXScanner } from './aux-scanner'
@@ -31,7 +31,7 @@ type Query = Record<string, QueryPrimitive | Record<'in', QueryPrimitive[]>>
 
 function getStyle(id: string): any {
   const style = Zotero.Styles.get(id)
-  if (!style) throw new Error(`CSL style ${JSON.stringify(id)} not found`)
+  if (!style) throw new Error(`CSL style ${ JSON.stringify(id) } not found`)
   return style
 }
 
@@ -45,7 +45,7 @@ class NSCollection {
    */
   public async scanAUX(collection: string, aux: string) {
     const { libraryID, key } = await getCollection(collection, true)
-    await AUXScanner.scan(aux, { collection: { libraryID, key, replace: true } })
+    await AUXScanner.scan(aux, { collection: { libraryID, key, replace: true }})
     return { libraryID, key }
   }
 }
@@ -61,18 +61,18 @@ class NSAutoExport {
    * @param replace                                Replace the auto-export if it exists, default `false`
    * @returns                                      Collection ID of the target collection
    */
-  public async add(collection: string, translator: string, path: string, displayOptions:Record<string, boolean> = {}, replace = false): Promise<{ libraryID: number, key: string, id: number}> {
+  public async add(collection: string, translator: string, path: string, displayOptions: Record<string, boolean> = {}, replace = false): Promise<{ libraryID: number; key: string; id: number }> {
     const translatorID = Translators.getTranslatorId(translator)
-    if (!Translators.byId[translatorID]) throw { code: INVALID_PARAMETERS, message: `Unknown translator '${translator}'` }
+    if (!Translators.byId[translatorID]) throw { code: INVALID_PARAMETERS, message: `Unknown translator '${ translator }'` }
 
     const coll = await getCollection(collection, true)
 
-    const ae = await AutoExport.get(path)
+    const ae = AutoExport.get(path)
     if (ae && ae.translatorID === translatorID && ae.type === 'collection' && ae.id === coll.id) {
-      await AutoExport.schedule(ae.type, [ae.id])
+      AutoExport.schedule(ae.type, [ae.id])
     }
     else if (ae && !replace) {
-      throw { code: INVALID_PARAMETERS, message: "Auto-export exists with incompatible parameters, but no 'replace' was requested" }
+      throw { code: INVALID_PARAMETERS, message: 'Auto-export exists with incompatible parameters, but no \'replace\' was requested' }
     }
     else {
       await AutoExport.add({
@@ -133,11 +133,10 @@ class NSItem {
    *               (https://github.com/zotero/zotero/blob/9971f15e617f19f1bc72f8b24bb00b72d2a4736f/chrome/content/zotero/xpcom/data/searchConditions.js#L72-L610)
    */
   public async search(terms: string
-  | ([string] | [string, string] | [string, string, string | number] | [string, string, string | number, boolean])[], library?: string | number) {
+    | ([string] | [string, string] | [string, string, string | number] | [string, string, string | number, boolean])[], library?: string | number) {
+    const search = (new Zotero.Search)
 
-    const search = new Zotero.Search()
-
-    if (!terms.length) {/* */}
+    if (!terms.length) { /* */ }
     else if (typeof terms === 'string') {
       // Custom action for only string.
       // Similar behavior as quicksearch-titleCreateorYear, but search also in citationKey and ignore feeds and attachments
@@ -173,8 +172,8 @@ class NSItem {
         try {
           search.addCondition('libraryID', 'is', Library.get(library).libraryID, true)
         }
-        catch (err) {
-          throw new Error(`library ${JSON.stringify(library)} not found`)
+        catch {
+          throw new Error(`library ${ JSON.stringify(library) } not found`)
         }
       }
     }
@@ -196,8 +195,8 @@ class NSItem {
           try {
             term[2] = Library.get(term[2]).libraryID
           }
-          catch (err) {
-            throw new Error(`library ${JSON.stringify(term[2])} not found`)
+          catch {
+            throw new Error(`library ${ JSON.stringify(term[2]) } not found`)
           }
         }
         search.addCondition(...term)
@@ -226,44 +225,48 @@ class NSItem {
    * List attachments for an item with the given citekey
    *
    * @param citekey  The citekey to search for
+   * @param library  The libraryID to search in (optional)
    */
   public async attachments(citekey: string, library?: string | number) {
-    const where : Query = { citationKey: citekey.replace(/^@/, '') }
+    const where: Query = { citationKey: citekey.replace(/^@/, '') }
     if (library !== '*') where.libraryID = Library.get(library).libraryID
     const key = Zotero.BetterBibTeX.KeyManager.first({ where })
-    if (!key) throw { code: INVALID_PARAMETERS, message: `${citekey} not found` }
+    if (!key) throw { code: INVALID_PARAMETERS, message: `${ citekey } not found` }
     const item = await getItemsAsync(key.itemID)
     const attachments = await getItemsAsync(item.getAttachments())
     const output: Record<string, any>[] = []
 
     for (const att of attachments) {
       const data: Record<string, any> = {
-        open: `zotero://open-pdf/${Zotero.API.getLibraryPrefix(item.libraryID || Zotero.Libraries.userLibraryID)}/items/${att.key}`,
+        open: `zotero://open-pdf/${ Zotero.API.getLibraryPrefix(item.libraryID || Zotero.Libraries.userLibraryID) }/items/${ att.key }`,
         path: att.getFilePath(),
       }
 
-      if (att.isPDFAttachment()) {
+      if (att.isFileAttachment()) {
         const rawAnnotations = att.getAnnotations()
-        const annotations: Record<string, any>[] = []
 
-        for (const raw of rawAnnotations) {
-          const annot = raw.toJSON()
+        if (rawAnnotations.length) {
+          const annotations: Record<string, any>[] = []
 
-          if (annot.annotationType === 'image') {
-            if (!await Zotero.Annotations.hasCacheImage(raw)) {
-              await Zotero.PDFRenderer.renderAttachmentAnnotations(raw.parentID)
+          for (const raw of rawAnnotations) {
+            const annot = raw.toJSON()
+
+            if (annot.annotationType === 'image') {
+              if (!await Zotero.Annotations.hasCacheImage(raw)) {
+                await Zotero.PDFRenderer.renderAttachmentAnnotations(raw.parentID)
+              }
+              annot.annotationImagePath = Zotero.Annotations.getCacheImagePath(raw)
             }
-            annot.annotationImagePath = Zotero.Annotations.getCacheImagePath(raw)
+
+            if (annot.annotationPosition && typeof annot.annotationPosition === 'string') {
+              annot.annotationPosition = JSON.parse(annot.annotationPosition)
+            }
+
+            annotations.push(annot)
           }
 
-          if (annot.annotationPosition && typeof annot.annotationPosition === 'string') {
-            annot.annotationPosition = JSON.parse(annot.annotationPosition)
-          }
-
-          annotations.push(annot)
+          data.annotations = annotations
         }
-
-        data.annotations = annotations
       }
 
       output.push(data)
@@ -288,7 +291,7 @@ class NSItem {
       q.citationKey = { in: citekeys }
     }
     const keys = Zotero.BetterBibTeX.KeyManager.find({ where: q })
-    if (!keys.length) throw { code: INVALID_PARAMETERS, message: `zero matches for ${citekeys.join(',')}` }
+    if (!keys.length) throw { code: INVALID_PARAMETERS, message: `zero matches for ${ citekeys.join(',') }` }
 
     const seen = {}
     const recurseParents = (libraryID: string, key: string) => {
@@ -343,15 +346,15 @@ class NSItem {
    */
   public async notes(citekeys: string[]) {
     citekeys = citekeys.map(citekey => citekey.replace('@', ''))
-    const q = { where : {} }
+    const q = { where: {}}
     if (Preference.citekeyCaseInsensitive) {
-      q.where = { lcCitationKey: { in: citekeys.map(citekey => citekey.toLowerCase()) } }
+      q.where = { lcCitationKey: { in: citekeys.map(citekey => citekey.toLowerCase()) }}
     }
     else {
-      q.where = { citationKey: { in: citekeys } }
+      q.where = { citationKey: { in: citekeys }}
     }
     const keys = Zotero.BetterBibTeX.KeyManager.find(q)
-    if (!keys.length) throw { code: INVALID_PARAMETERS, message: `zero matches for ${citekeys.join(',')}` }
+    if (!keys.length) throw { code: INVALID_PARAMETERS, message: `zero matches for ${ citekeys.join(',') }` }
 
     const notes = {}
     for (const key of keys) {
@@ -374,7 +377,7 @@ class NSItem {
    *
    * @returns  A formatted bibliography
    */
-  public async bibliography(citekeys: string[], format: { quickCopy?: boolean, contentType?: 'html' | 'text', locale?: string, id?: string} = {}, library?: string | number) {
+  public async bibliography(citekeys: string[], format: { quickCopy?: boolean; contentType?: 'html' | 'text'; locale?: string; id?: string } = {}, library?: string | number) {
     const qc = format.quickCopy ? Zotero.QuickCopy.unserializeSetting(Zotero.Prefs.get('export.quickCopy.setting')) : {}
     delete format.quickCopy
 
@@ -387,12 +390,12 @@ class NSItem {
     }
 
     if (!format.id) throw new Error('no style specified')
-    if (!format.id.includes('/')) format.id = `http://www.zotero.org/styles/${format.id}`
+    if (!format.id.includes('/')) format.id = `http://www.zotero.org/styles/${ format.id }`
     getStyle(format.id)
 
-    if (((format as any).mode || 'bibliography') !== 'bibliography') throw new Error(`mode must be bibliograpy, not ${(format as any).mode}`)
+    if (((format as any).mode || 'bibliography') !== 'bibliography') throw new Error(`mode must be bibliograpy, not ${ (format as any).mode }`)
 
-    const where : Query = {}
+    const where: Query = {}
     if (library !== '*') where.libraryID = Library.get(library).libraryID
     citekeys = citekeys.map(citekey => citekey.replace('@', ''))
     if (Preference.citekeyCaseInsensitive) {
@@ -426,14 +429,14 @@ class NSItem {
       if (key.includes(':')) {
         [ libraryIDstr, itemKey ] = key.split(':')
         libraryID = parseInt(libraryIDstr)
-        if (isNaN(libraryID)) throw new Error(`Could not parse library ID from ${key}`)
+        if (isNaN(libraryID)) throw new Error(`Could not parse library ID from ${ key }`)
       }
       else {
         libraryID = Zotero.Libraries.userLibraryID
         itemKey = key
       }
 
-      keys[key] = Zotero.BetterBibTeX.KeyManager.first({ where: { libraryID, itemKey } })?.citationKey || null
+      keys[key] = Zotero.BetterBibTeX.KeyManager.first({ where: { libraryID, itemKey }})?.citationKey || null
     }
 
     return keys
@@ -467,8 +470,8 @@ class NSItem {
     for (const item of found) {
       status[item.citationKey] += 1
     }
-    const error = { missing: [], duplicates: [] }
-    for (const [citekey, n] of Object.entries(status)) {
+    const error = { missing: [], duplicates: []}
+    for (const [ citekey, n ] of Object.entries(status)) {
       switch (n) {
         case 0:
           error.missing.push(citekey)
@@ -483,8 +486,8 @@ class NSItem {
 
     if (error.missing.length || error.duplicates.length) {
       const message = [
-        error.missing.length ? `not found: ${error.missing.join(', ')}` : '',
-        error.duplicates.length ? `duplicates found: ${error.duplicates.join(', ')}` : '',
+        error.missing.length ? `not found: ${ error.missing.join(', ') }` : '',
+        error.duplicates.length ? `duplicates found: ${ error.duplicates.join(', ') }` : '',
       ].filter(msg => msg).join('\n')
       throw { code: INVALID_PARAMETERS, message }
     }
@@ -492,7 +495,7 @@ class NSItem {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return await Translators.queueJob({
       translatorID: Translators.getTranslatorId(translator),
-      displayOptions: {},
+      displayOptions: { worker: true },
       scope: { type: 'items', items: await getItemsAsync(found.map(key => key.itemID)) }, // eslint-disable-line @typescript-eslint/no-unsafe-return
     })
   }
@@ -504,13 +507,15 @@ class NSItem {
    * @param asCSL         Return the items as CSL
    * @param libraryID     ID of library to select the items from. When omitted, assume 'My Library'
    */
-  public async pandoc_filter(citekeys: string[], asCSL: boolean, libraryID?: string | number, style?: string, locale?: string) {
+  public async pandoc_filter(citekeys: string[], asCSL: boolean, libraryID?: string | number | string[], style?: string, locale?: string) {
     citekeys = [...(new Set(citekeys))]
     const ci = Preference.citekeyCaseInsensitive
-    const result: { errors: Record<string, number>, items: Record<string, any> } = { errors: {}, items: {} }
+    const result: { errors: Record<string, number>; items: Record<string, any> } = { errors: {}, items: {}}
 
-    const where : Query = {
-      libraryID: Library.get(libraryID).libraryID,
+    const where: Query = {
+      libraryID: Array.isArray(libraryID)
+        ? { in: libraryID.map(name => Library.get(name).libraryID).filter(_ => typeof _ === 'number') }
+        : Library.get(libraryID).libraryID,
     }
     const itemIDs: number[] = []
     for (const citationKey of citekeys.map(citekey => citekey.replace('@', ''))) {
@@ -532,22 +537,22 @@ class NSItem {
       // I need the cleanup BCJ does
       const csl = JSON.parse(await Translators.queueJob({
         translatorID: Translators.getTranslatorId('Better CSL JSON'),
-        displayOptions: { custom: true },
+        displayOptions: { worker: true, custom: true },
         scope: { type: 'items', items },
       }))
 
       style = style || 'apa'
-      if (!style.includes('/')) style = `http://www.zotero.org/styles/${style}`
+      if (!style.includes('/')) style = `http://www.zotero.org/styles/${ style }`
       locale = locale || Zotero.Prefs.get('export.quickCopy.locale')
       const citeproc = getStyle(style).getCiteProc(locale)
 
       for (const item of csl) {
         result.items[item['citation-key']] = item
 
-        let [ authorDate, date ] = [false, true].map(suppress => {
-          citeproc.updateItems([ item.custom.itemID ])
+        let [ authorDate, date ] = [ false, true ].map(suppress => {
+          citeproc.updateItems([item.custom.itemID])
           const citation = {
-            citationItems: [ { id: item.custom.itemID, 'suppress-author': suppress } ],
+            citationItems: [{ id: item.custom.itemID, 'suppress-author': suppress }],
             properties: {},
           }
           return citeproc.previewCitationCluster(citation, [], [], 'text') as string
@@ -563,8 +568,8 @@ class NSItem {
         }
         else {
           item.custom.author = items.find(i => i.id === item.custom.itemID)?.getField('firstCreator')
-          item.custom.author = item.custom.author || ['author', 'creators', 'reporter']
-            .map(cr => item[cr] as { literal: string, family: string} [])
+          item.custom.author = item.custom.author || [ 'author', 'creators', 'reporter' ]
+            .map(cr => item[cr] as { literal: string; family: string } [])
             .find(cr => cr)
             ?.map(cr => cr.literal || cr.family)
             .filter(cr => cr)
@@ -575,7 +580,6 @@ class NSItem {
       }
 
       citeproc.free()
-
     }
     else {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
@@ -598,20 +602,19 @@ class NSViewer {
    */
   public async viewPDF(id: string, page: number) {
     const item = await Zotero.URI.getURIItem(id)
-    if (!item) throw { code: INVALID_PARAMETERS, message: `invalid URI ${id}` }
+    if (!item) throw { code: INVALID_PARAMETERS, message: `invalid URI ${ id }` }
     let attachments = await item.getBestAttachments()
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     attachments = attachments.filter(x => x.isPDFAttachment())
 
-    if (!attachments.length) throw {code: INVALID_PARAMETERS, message: `no PDF found for URI ${id}` }
+    if (!attachments.length) throw { code: INVALID_PARAMETERS, message: `no PDF found for URI ${ id }` }
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return await Zotero.OpenPDF.openToPage(
       attachments[0],
       page + 1
     )
   }
-
 }
 
 class NSAPI {
@@ -634,15 +637,15 @@ const api = new class API {
   }
 
   public async handle(request) {
-    if (!this.validRequest(request)) return {jsonrpc: '2.0', error: {code: INVALID_REQUEST, message: 'Invalid Request'}, id: null}
+    if (!this.validRequest(request)) return { jsonrpc: '2.0', error: { code: INVALID_REQUEST, message: 'Invalid Request' }, id: null }
 
     const [ namespace, methodName ] = request.method.split('.')
-    const method = this[`$${namespace}`]?.[methodName]
-    if (!method) return {jsonrpc: '2.0', error: {code: METHOD_NOT_FOUND, message: `Method not found: ${request.method}`}, id: null}
+    const method = this[`$${ namespace }`]?.[methodName]
+    if (!method) return { jsonrpc: '2.0', error: { code: METHOD_NOT_FOUND, message: `Method not found: ${ request.method }` }, id: null }
     const schema = methods[request.method]
-    if (!schema) return {jsonrpc: '2.0', error: {code: METHOD_NOT_FOUND, message: `Method schema not found: ${request.method}`}, id: null}
+    if (!schema) return { jsonrpc: '2.0', error: { code: METHOD_NOT_FOUND, message: `Method schema not found: ${ request.method }` }, id: null }
 
-    const args: { array: any[], object: any } = {
+    const args: { array: any[]; object: any } = {
       array: [],
       object: {},
     }
@@ -653,7 +656,7 @@ const api = new class API {
             jsonrpc: '2.0',
             error: {
               code: INVALID_PARAMETERS,
-              message: `${request.method}: expected (max) ${schema.parameters.length} arguments, got ${request.params.length}`,
+              message: `${ request.method }: expected (max) ${ schema.parameters.length } arguments, got ${ request.params.length }`,
             },
             id: null,
           }
@@ -668,30 +671,30 @@ const api = new class API {
       else if (typeof request.params === 'object') {
         const unknown = Object.keys(request.params).find(p => !schema.parameters.includes(p))
         if (unknown) {
-          return {jsonrpc: '2.0', error: {code: INVALID_PARAMETERS, message: `${request.method}: unexpected argument ${unknown}`}, id: null}
+          return { jsonrpc: '2.0', error: { code: INVALID_PARAMETERS, message: `${ request.method }: unexpected argument ${ unknown }` }, id: null }
         }
 
         args.array = schema.parameters.map(p => request.params[p]) // eslint-disable-line @typescript-eslint/no-unsafe-return
         args.object = request.params
       }
       else {
-        return {jsonrpc: '2.0', error: {code: INVALID_PARAMETERS, message: 'Invalid Parameters'}, id: null}
+        return { jsonrpc: '2.0', error: { code: INVALID_PARAMETERS, message: 'Invalid Parameters' }, id: null }
       }
     }
 
     const argerror = schema.validate(args.object)
-    if (argerror) return {jsonrpc: '2.0', error: {code: INVALID_PARAMETERS, message: argerror}, id: null}
+    if (argerror) return { jsonrpc: '2.0', error: { code: INVALID_PARAMETERS, message: argerror }, id: null }
 
     try {
-      return {jsonrpc: '2.0', result: await method(...args.array), id: request.id || null}
+      return { jsonrpc: '2.0', result: await method(...args.array), id: request.id || null }
     }
     catch (err) {
       log.error('JSON-RPC:', err)
       if (err.code) {
-        return {jsonrpc: '2.0', error: { code: err.code, message: err.message }, id: null}
+        return { jsonrpc: '2.0', error: { code: err.code, message: err.message }, id: null }
       }
       else {
-        return {jsonrpc: '2.0', error: { code: INTERNAL_ERROR, message: `${err}` }, id: null}
+        return { jsonrpc: '2.0', error: { code: INTERNAL_ERROR, message: `${ err }` }, id: null }
       }
     }
   }
@@ -705,21 +708,22 @@ const api = new class API {
 }
 
 class Handler {
-  public supportedMethods = ['GET', 'POST']
+  public supportedMethods = [ 'GET', 'POST' ]
   public supportedDataTypes = ['application/json']
   public permitBookmarklet = false
 
-  public async init({ method, data, query }) {
+  public async init(request) {
+    const query = Server.queryParams(request)
     await Zotero.BetterBibTeX.ready
 
     try {
-      if (method === 'GET') data = JSON.parse(query[''])
+      if (request.method === 'GET') request.data = JSON.parse(query[''])
 
-      const response = await (Array.isArray(data) ? Promise.all(data.map(req => api.handle(req))) : api.handle(data))
-      return [OK, 'application/json', JSON.stringify(response)]
+      const response = await (Array.isArray(request.data) ? Promise.all(request.data.map(req => api.handle(req))) : api.handle(request.data))
+      return [ OK, 'application/json', JSON.stringify(response) ]
     }
     catch (err) {
-      return [OK, 'application/json', JSON.stringify({jsonrpc: '2.0', error: {code: PARSE_ERROR, message: `Parse error: ${err} in ${data}`}, id: null})]
+      return [ OK, 'application/json', JSON.stringify({ jsonrpc: '2.0', error: { code: PARSE_ERROR, message: `Parse error: ${ err } in ${ request.data }` }, id: null }) ]
     }
   }
 }

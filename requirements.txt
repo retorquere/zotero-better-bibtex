@@ -32,6 +32,7 @@ pygit2
 pygtrie
 pylint
 pytablewriter
+pytablewriter
 python-dotenv
 python-frontmatter
 python-slugify
@@ -43,3 +44,4 @@ ruamel.yaml
 selenium
 snakemake>=7.16
 toml
+xvfbwrapper

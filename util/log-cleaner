@@ -1,8 +1,16 @@
 #!/usr/bin/env python3
 
-import fileinput, os
+import fileinput, os, sys
 
+files = sys.argv[1:]
+if len(files) == 0:
+  files.append(os.path.expanduser('~/.BBTTEST.log'))
+files = tuple(files)
+print(sys.argv[1:])
 errors = [
+  'Could not parse attachment path',
+  "Couldn't find trailer dictionary",
+  "Translate: No RDF found",
   'error: resource://gre/modules/ComponentUtils.jsm',
   "Syntax Error: Couldn't read xref table",
   'pdfinfo returned exit status 1"',
@@ -13,7 +21,9 @@ errors = [
   'error: resource://gre/modules/addons/XPIProvider.jsm, line 1710: Error: Addon must include an id, version, and type',
   'error: resource://gre/modules/amInstallTrigger.jsm, line 52: TypeError: this.mm is null',
   'JavaScript error: , line 0: uncaught exception: undefined',
+  'pdfinfo returned exit status',
+  'DOMParser error: loading data into data store failed',
 ]
-for line in fileinput.input(files=(os.path.expanduser('~/.BBTTEST.log'),), encoding='utf-8', inplace=True):
+for line in fileinput.input(files=files, encoding='utf-8', inplace=True):
   if any([error in line for error in errors]): continue
   print(line, end='')

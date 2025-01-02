@@ -15,17 +15,24 @@ const version = require('../gen/version.js')
 
 type Source = 'MarkDown' | 'BibTeX AUX'
 
+type Collection = {
+  libraryID: number
+  key: string
+  replace?: boolean
+}
 export const AUXScanner = new class { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   private pandoc: string
 
   public async pick(): Promise<string> { // eslint-disable-line @typescript-eslint/no-unsafe-return
     if (typeof this.pandoc !== 'string') this.pandoc = await findBinary('pandoc')
-    const filters: [string, string][] = this.pandoc ? [['AUX/Markdown', '*.aux; *.md; *.txt; *.markdown']] : [['AUX file', '*.aux']]
+    const filters: [string, string][] = this.pandoc ? [[ 'AUX/Markdown', '*.aux; *.md; *.txt; *.markdown' ]] : [[ 'AUX file', '*.aux' ]]
     return await pick(Zotero.getString('fileInterface.import'), 'open', filters)
   }
 
-  public async scan(path: string, options: { tag?: string, libraryID?: number, collection?: { libraryID: number, key: string, replace?: boolean } } = {}) {
-    if ([options.tag, options.libraryID, options.collection].filter(tgt => tgt).length > 1) throw new Error('You can only specify one of tag, libraryID, or collection')
+  public async scan(path: string, options: { tag?: string; libraryID?: number; collection?: Collection } = {}) {
+    if ([ options.tag, options.libraryID, options.collection ].filter(tgt => tgt).length > 1) {
+      throw new Error('You can only specify one of tag, libraryID, or collection')
+    }
 
     const citekeys: string[] = []
     const bibfiles: Record<string, string> = Preference.auxImport ? {} : null
@@ -48,7 +55,7 @@ export const AUXScanner = new class { // eslint-disable-line @typescript-eslint/
       libraryID = collection ? collection.libraryID : azp.getSelectedLibraryID()
     }
 
-    const found = Zotero.BetterBibTeX.KeyManager.find({ where: { libraryID, citationKey: { in: citekeys } } })
+    const found = Zotero.BetterBibTeX.KeyManager.find({ where: { libraryID, citationKey: { in: citekeys }}})
 
     const itemIDs = found.map(key => key.itemID)
 
@@ -59,8 +66,8 @@ export const AUXScanner = new class { // eslint-disable-line @typescript-eslint/
     if (bibfiles) {
       if (missing.length) {
         const bibtex = Object.values(bibfiles).join('\n').trim()
-        newImports = bibtex ? await Translators.importString(`@comment{zotero-better-bibtex:whitelist:${missing.join(',')}}\n${bibtex}`) : []
-        itemIDs.push(...(newImports.map((item: { id: number}) => item.id)))
+        newImports = bibtex ? await Translators.importString(`@comment{zotero-better-bibtex:whitelist:${ missing.join(',') }}\n${ bibtex }`) : []
+        itemIDs.push(...(newImports.map((item: { id: number }) => item.id)))
         missing = []
       }
     }
@@ -101,16 +108,16 @@ export const AUXScanner = new class { // eslint-disable-line @typescript-eslint/
           }
           break
       }
-      throw new Error(`Unsupported file type for ${path}`)
+      throw new Error(`Unsupported file type for ${ path }`)
     }
     catch (err) {
-      alert({ text: `AUX/Markdown scan failed: ${err.message}` })
+      alert({ text: `AUX/Markdown scan failed: ${ err.message }` })
     }
     return null
   }
 
   private async luaFilter(): Promise<string> {
-    const lua = `list-citekeys-${version}.lua`
+    const lua = `list-citekeys-${ version }.lua`
 
     const filters: string[] = []
     const iterator = new $OS.File.DirectoryIterator(Zotero.BetterBibTeX.dir)
@@ -138,7 +145,7 @@ export const AUXScanner = new class { // eslint-disable-line @typescript-eslint/
 
   private async parseMD(path: string, citekeys: string[]) {
     const filter = await this.luaFilter()
-    const output: string = $OS.Path.join(Zotero.getTempDirectory().path, `citekeys_${Zotero.Utilities.randomString()}.txt`)
+    const output: string = $OS.Path.join(Zotero.getTempDirectory().path, `citekeys_${ Zotero.Utilities.randomString() }.txt`)
     try {
       await Zotero.Utilities.Internal.exec(this.pandoc, [ '--lua-filter', filter, '-t', 'markdown', '-o', output, path ])
       for (const citekey of (await Zotero.File.getContentsAsync(output)).split(/\s+/)) {
@@ -146,7 +153,7 @@ export const AUXScanner = new class { // eslint-disable-line @typescript-eslint/
       }
     }
     catch (e) {
-      alert({ text: `pandoc parsing error ${e}` })
+      alert({ text: `pandoc parsing error ${ e }` })
       log.error('pandoc parsing error:', e)
       return
     }
@@ -155,7 +162,7 @@ export const AUXScanner = new class { // eslint-disable-line @typescript-eslint/
     }
   }
 
-  private async parseAUX(path: string, citekeys: string[], bibfiles: Record<string, string> ) {
+  private async parseAUX(path: string, citekeys: string[], bibfiles: Record<string, string>) {
     let m, re
 
     const contents = await this.read(path)
@@ -165,7 +172,7 @@ export const AUXScanner = new class { // eslint-disable-line @typescript-eslint/
       // bib files used
       re = /\\bibdata\{([^}]+)\}/g
       while (m = re.exec(contents)) {
-        for (const bib of [m[1], `${m[1]}.bib`]) {
+        for (const bib of [ m[1], `${ m[1] }.bib` ]) {
           if (!bibfiles[bib] && await $OS.File.exists(bib)) {
             bibfiles[bib] = await this.read(bib)
             break
@@ -188,7 +195,7 @@ export const AUXScanner = new class { // eslint-disable-line @typescript-eslint/
     }
   }
 
-  private async saveToCollection(source: Source, itemIDs: number[], missing_keys: string[], target: { collection?: any, libraryID?: number, basename?: string }) {
+  private async saveToCollection(source: Source, itemIDs: number[], missing_keys: string[], target: { collection?: any; libraryID?: number; basename?: string }) {
     if (typeof target.libraryID === 'number') {
       if (target.collection) throw new Error('cannot have both collection and library target')
       if (!target.basename) throw new Error('Saving to library needs a name')
@@ -220,21 +227,19 @@ export const AUXScanner = new class { // eslint-disable-line @typescript-eslint/
         parentID: target.collection ? target.collection.id : undefined,
       })
       await target.collection.saveTx()
-
     }
     else {
       // saving into existing collection, remove items that are not cited
       const obsolete = target.collection.getChildItems(true).filter(itemID => !itemIDs.includes(itemID))
       if (obsolete.length) await Zotero.DB.executeTransaction(async () => { await target.collection.removeItems(obsolete) })
-
     }
 
     if (missing_keys.length) {
       const collator = new Intl.Collator('en')
       missing_keys.sort(collator.compare.bind(collator))
-      let report = `<html><div><p><b>${source} scan</b></p><p>Missing entries:</p><ul>`
+      let report = `<html><div><p><b>${ source } scan</b></p><p>Missing entries:</p><ul>`
       for (const citekey of missing_keys) {
-        report += `<li>${citekey.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/'/g, '&quot;').replace(/'/g, '&#039;')}</li>`
+        report += `<li>${ citekey.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/'/g, '&quot;').replace(/'/g, '&#039;') }</li>`
       }
       report += '</ul></div></html>'
 

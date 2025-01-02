@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 
-import { Translation, collect } from './lib/translator'
+import { Translation } from './lib/translator'
+import { Collected } from './lib/collect'
 import type { Translators } from '../typings/translators.d.ts'
 
 declare const Zotero: any
@@ -8,7 +9,6 @@ declare var ZOTERO_TRANSLATOR_INFO: Translators.Header // eslint-disable-line no
 
 import html2md from 'html-to-md'
 
-import { log } from '../content/logger'
 import { Item } from '../gen/typings/serialized-item'
 
 import * as escape from '../content/escape'
@@ -21,7 +21,7 @@ function clean(item: Item): Item {
     case 'attachment':
       return item
   }
-  const cleaned: Item = {...item, extra: Extra.get(item.extra, 'zotero').extra }
+  const cleaned: Item = { ...item, extra: Extra.get(item.extra, 'zotero').extra }
   cleaned.extra = cleaned.extra.split('\n').filter(line => !line.match(/^OCLC:/i)).join('\n')
   return cleaned
 }
@@ -50,12 +50,12 @@ class Exporter {
     const filed: Set<number> = new Set
     const collections: Record<string, ExpandedCollection> = {}
 
-    for (const item of this.translation.input.items) {
+    for (const item of this.translation.collected.items) {
       const cleaned = clean(item)
       if (this.keep(cleaned)) items[item.itemID] = cleaned
     }
 
-    for (const [key, collection] of Object.entries(this.translation.collections)) {
+    for (const [ key, collection ] of Object.entries(this.translation.collections)) {
       for (const itemID of collection.items) filed.add(itemID)
 
       collections[key] = {
@@ -68,7 +68,7 @@ class Exporter {
       }
     }
 
-    for (const [key, collection] of Object.entries(this.translation.collections)) {
+    for (const [ key, collection ] of Object.entries(this.translation.collections)) {
       collections[key].collections = (collection.collections || []).map(coll => collections[coll]).filter(coll => coll)
     }
 
@@ -81,22 +81,18 @@ class Exporter {
 
     let style = '\n  body {\n    counter-reset: h1;\n  }\n\n'
     for (let level = 1; level <= this.levels; level++) {
-      if (level !== this.levels) style += `  h${level} {\n    counter-reset: h${level + 1};\n  }\n`
+      if (level !== this.levels) style += `  h${ level } {\n    counter-reset: h${ level + 1 };\n  }\n`
 
-      style += `  h${level}:before {\n`
-      const label = Array.from({length: level}, (_x, i) => `counter(h${ i + 1 }, decimal)`).join(' "." ')
-      style += `    content: ${label} ".\\0000a0\\0000a0";\n`
-      style += `    counter-increment: h${level};\n`
+      style += `  h${ level }:before {\n`
+      const label = Array.from({ length: level }, (_x, i) => `counter(h${ i + 1 }, decimal)`).join(' "." ')
+      style += `    content: ${ label } ".\\0000a0\\0000a0";\n`
+      style += `    counter-increment: h${ level };\n`
       style += '  }\n\n'
     }
     style += '  blockquote { border-left: 1px solid gray; }\n'
 
     this.html = `<html><head><style>${ style }</style></head><body>${ this.body }</body></html>`
-    if (this.translation.options.markdown) this.markdown = html2md(this.html)
-  }
-
-  show(context, args) {
-    log.debug(`collectednotes.${context}: ${JSON.stringify(Array.from(args))}`)
+    if (this.translation.collected.displayOptions.markdown) this.markdown = html2md(this.html)
   }
 
   write_collection(collection, level = 1) {
@@ -152,7 +148,7 @@ class Exporter {
   }
 
   creator(cr) {
-    return [cr.lastName, cr.name, cr.firstName].find(v => v) || ''
+    return [ cr.lastName, cr.name, cr.firstName ].find(v => v) || ''
   }
 
   creators(cr: string[]): string {
@@ -163,7 +159,7 @@ class Exporter {
       case 2:
         return cr.join(' and ')
       default:
-        return `${cr.slice(0, cr.length - 1).join(', ')}, and ${cr[cr.length - 1]}`
+        return `${ cr.slice(0, cr.length - 1).join(', ') }, and ${ cr[cr.length - 1] }`
     }
   }
 
@@ -172,9 +168,8 @@ class Exporter {
     let title = ''
 
     if (item.itemType === 'attachment') {
-      if (item.note) notes = [ { note: item.note } ]
+      if (item.note) notes = [{ note: item.note }]
       if (item.title) title = `<samp>${ escape.html(item.title) }</samp>`
-
     }
     else {
       notes = (item.notes || []).filter(note => note.note)
@@ -188,7 +183,7 @@ class Exporter {
         date = typeof date.year === 'number' ? date.year : item.date
       }
 
-      const author = [creators, date].filter(v => v).join(', ')
+      const author = [ creators, date ].filter(v => v).join(', ')
 
       if (item.title) title += `<i>${ escape.html(item.title) }</i>`
       if (author) title += ` (${ escape.html(author) })`
@@ -225,9 +220,8 @@ class Exporter {
 }
 
 export function doExport(): void {
-  const translation = Translation.Export(ZOTERO_TRANSLATOR_INFO, collect())
+  const translation = Translation.Export(new Collected(ZOTERO_TRANSLATOR_INFO, 'export'))
   const exporter = new Exporter(translation)
-  translation.output.body += exporter[translation.options.markdown ? 'markdown' : 'html']
+  translation.output.body += exporter[translation.collected.displayOptions.markdown ? 'markdown' : 'html']
   Zotero.write(translation.output.body)
-  translation.erase()
 }

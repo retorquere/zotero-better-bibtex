@@ -25,7 +25,7 @@ async function getCollection(parent, name, path, create) {
     case 1:
       return found[0]
     default:
-      throw new CollectionError(`Collection '${path}' is not unique`, 'duplicate')
+      throw new CollectionError(`Collection '${ path }' is not unique`, 'duplicate')
   }
 
   found = children.filter(coll => coll.name.toLowerCase() === name.toLowerCase())
@@ -35,10 +35,10 @@ async function getCollection(parent, name, path, create) {
     case 1:
       return found[0]
     default:
-      throw new CollectionError(`Collection '${path}' is not unique`, 'duplicate')
+      throw new CollectionError(`Collection '${ path }' is not unique`, 'duplicate')
   }
 
-  if (!create) throw new CollectionError(`Collection '${path}' does not exist`, 'notfound')
+  if (!create) throw new CollectionError(`Collection '${ path }' does not exist`, 'notfound')
   const collection = new Zotero.Collection({
     name,
     libraryID: parent instanceof Zotero.Library ? parent.id : parent.libraryID,
@@ -55,11 +55,11 @@ export async function get(path: string, create = false): Promise<any> {
   if (names.length === 0) throw new CollectionError('path is too short', 'notfound')
 
   let collection = root.match(/^[0-9]+$/) ? Zotero.Libraries.get(root) : getLibrary(root)
-  if (!collection) throw new CollectionError(`Library ${root} not found`, 'notfound')
-  let tmp_path = `/${root}`
+  if (!collection) throw new CollectionError(`Library ${ root } not found`, 'notfound')
+  let tmp_path = `/${ root }`
 
   for (const name of names) {
-    tmp_path += `/${name}`
+    tmp_path += `/${ name }`
     collection = await getCollection(collection, name, tmp_path, create)
   }
 

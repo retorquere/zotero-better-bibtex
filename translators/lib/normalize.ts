@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-return */
 
-import { stable_stringify as stringify } from '../../content/stringify'
+import stringify from 'safe-stable-stringify'
 import { RegularItem, Collection } from '../../gen/typings/serialized-item'
 
 function rjust(str: string | number, width: number, padding: string): string {
-  if (typeof str === 'number') str = `${str}`
+  if (typeof str === 'number') str = `${ str }`
   padding = (padding || ' ')[0]
   return str.length < width ? padding.repeat(width - str.length) + str : str
 }
@@ -37,7 +37,7 @@ export type Library = {
 }
 
 function key(item) {
-  return [item.itemType, item.citationKey || '', item.title || '', item.creators?.[0]?.lastName || item.creators?.[0]?.name || ''].join('\t').toLowerCase()
+  return [ item.itemType, item.citationKey || '', item.title || '', item.creators?.[0]?.lastName || item.creators?.[0]?.name || '' ].join('\t').toLowerCase()
 }
 
 function strip(obj) {
@@ -50,7 +50,7 @@ function strip(obj) {
 
   if (typeof obj === 'object') {
     let keep = false
-    for (let [k, v] of Object.entries(obj)) {
+    for (let [ k, v ] of Object.entries(obj)) {
       v = strip(v)
       if (typeof v === 'undefined') {
         delete obj[k]
@@ -68,7 +68,7 @@ function strip(obj) {
   return obj
 }
 
-export function normalize(library: Library, sort=true): void {
+export function normalize(library: Library, sort = true): void {
   if (sort) library.items.sort((a, b) => key(a).localeCompare(key(b)))
 
   for (const item of (library.items as any[])) {
@@ -99,7 +99,7 @@ export function normalize(library: Library, sort=true): void {
       for (const att of item.attachments) {
         att.contentType = att.contentType || att.mimeType
         delete att.mimeType
-        for (const prop of ['select', 'localPath', 'itemID', 'charset', 'dateAdded', 'parentItem', 'dateModified', 'version', 'relations', 'id']) {
+        for (const prop of [ 'select', 'localPath', 'itemID', 'charset', 'dateAdded', 'parentItem', 'dateModified', 'version', 'relations', 'id' ]) {
           delete att[prop]
         }
       }
@@ -138,7 +138,7 @@ export function normalize(library: Library, sort=true): void {
   }
 
   // sort items and normalize their IDs
-  library.items.sort((a, b) => stringify({...a, itemID: 0}).localeCompare(stringify({...b, itemID: 0})))
+  library.items.sort((a, b) => stringify({ ...a, itemID: 0 }).localeCompare(stringify({ ...b, itemID: 0 })))
   const itemIDs: Record<number, number> = library.items.reduce((acc, item, i) => {
     item.itemID = acc[item.itemID] = i + 1 // Zotero does not recognize items with itemID 0 in collections...
     return acc
@@ -146,9 +146,9 @@ export function normalize(library: Library, sort=true): void {
 
   if (library.collections && Object.keys(library.collections).length) {
     const collectionOrder: Collection[] = Object.values(library.collections)
-      .sort((a: Collection, b: Collection): number => stringify({...a, key: '', parent: ''}).localeCompare(stringify({...b, key: '', parent: ''})))
+      .sort((a: Collection, b: Collection): number => stringify({ ...a, key: '', parent: '' }).localeCompare(stringify({ ...b, key: '', parent: '' })))
     const collectionKeys: Record<string, string> = collectionOrder.reduce((acc: Record<string, string>, coll: Collection, i: number): Record<string, string> => {
-      coll.key = acc[coll.key] = `coll:${rjust(i, 5, '0')}`
+      coll.key = acc[coll.key] = `coll:${ rjust(i, 5, '0') }`
       return acc
     }, {})
     library.collections = collectionOrder.reduce((acc, coll) => {

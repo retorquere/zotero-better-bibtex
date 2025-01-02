@@ -5,6 +5,18 @@ from steps.utils import html2md, HashableDict, print
 import steps.utils as utils
 import sqlite3
 
+def sortbib(bib):
+  chunks = []
+
+  for line in bib.strip().splitlines(keepends=True):
+    if len(chunks) == 0 or line.startswith('@'):
+      chunks.append(line)
+    else:
+      chunks[-1] += line
+
+  chunks = sorted([chunk.strip() for chunk in chunks])
+  return '\n'.join(chunks)
+
 def unnest(obj, key):
   if type(obj) == str: return obj
   return obj[key]

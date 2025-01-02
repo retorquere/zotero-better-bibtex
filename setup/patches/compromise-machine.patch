@@ -1,0 +1,14 @@
+--- node_modules/compromise/src/1-one/tokenize/compute/machine.js	2024-08-30 16:55:45
++++ node_modules/compromise/src/1-one/tokenize/compute/machine.js	2024-08-30 16:56:20
+@@ -1,4 +1,10 @@
+-const hasDash = /^\p{Letter}+-\p{Letter}+$/u
++const xretest = re => {
++  re = new Zotero.Utilities.XRegExp(re)
++  return {
++    test: s => Zotero.Utilities.XRegExp.test(s, re)
++  }
++}
++const hasDash = xretest('^\\p{Letter}+-\\p{Letter}+$')
+ // 'machine' is a normalized form that looses human-readability
+ const doMachine = function (term) {
+   let str = term.implicit || term.normal || term.text

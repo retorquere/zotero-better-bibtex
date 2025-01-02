@@ -129,9 +129,6 @@
             "autoAbbrev": {
               "type": "boolean"
             },
-            "autoAbbrevStyle": {
-              "type": "string"
-            },
             "autoExport": {
               "enum": [
                 "immediate",
@@ -195,8 +192,11 @@
             "cache": {
               "type": "boolean"
             },
-            "cacheFlushInterval": {
-              "type": "number"
+            "cacheDelete": {
+              "type": "boolean"
+            },
+            "cacheRetain": {
+              "type": "boolean"
             },
             "charmap": {
               "type": "string"
@@ -233,6 +233,14 @@
             },
             "exportBraceProtection": {
               "type": "boolean"
+            },
+            "exportSort": {
+              "enum": [
+                "off",
+                "id",
+                "citekey"
+              ],
+              "type": "string"
             },
             "exportTitleCase": {
               "type": "boolean"
@@ -404,9 +412,6 @@
               "type": "string"
             },
             "relativeFilePaths": {
-              "type": "boolean"
-            },
-            "retainCache": {
               "type": "boolean"
             },
             "scrubDatabase": {

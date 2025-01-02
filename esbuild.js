@@ -6,7 +6,7 @@ const exec = require('child_process').exec
 const glob = require('glob-promise')
 const crypto = require('crypto')
 const branch = require('git-branch')
-const fast_safe_stringify = require('fast-safe-stringify')
+const stringify = require('safe-stable-stringify')
 
 const loader = require('./setup/loaders')
 const shims = require('./setup/shims')
@@ -146,6 +146,7 @@ async function bundle(config) {
     treeShaking: true,
     plugins: [],
     minify: false,
+    drop: ['console'],
     ...config,
   }
   if (!config.plugins.includes(loader.json)) config.plugins.push(loader.json)
@@ -265,7 +266,7 @@ async function rebuild() {
     metafile: 'gen/worker.json',
     external: [ 'jsdom' ],
     banner: { js: `
-      dump("\\nloading BBT chromeworker\\n")
+      dump("\\nloading BBT chromeworker (indexedDB=" + typeof indexedDB + ")\\n")
       var Services
       if (typeof location !== 'undefined' && location.search) {
         Services = {
@@ -313,7 +314,7 @@ async function rebuild() {
 
     const source = await fs.promises.readFile(outfile, 'utf-8')
     const checksum = crypto.createHash('sha256')
-    checksum.update(fast_safe_stringify.stable(header) + source)
+    checksum.update(stringify(header) + source)
 
     if (!header.configOptions) header.configOptions = {}
     header.configOptions.hash = checksum.digest('hex')

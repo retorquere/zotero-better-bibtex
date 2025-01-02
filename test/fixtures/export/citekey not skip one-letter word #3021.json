@@ -1,0 +1,36 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "preferences": {
+      "DOIandURL": "doi",
+      "asciiBibLaTeX": true,
+      "autoAbbrev": true,
+      "autoExportDelay": 2,
+      "automaticTags": false,
+      "baseAttachmentPath": "/Users/ccui/Library/Mobile Documents/com~apple~CloudDocs/Zotero/ss",
+      "bibtexEditionOrdinal": true,
+      "citekeyFormat": "auth.lower+shorttitle(10,10).abbr(2)+year",
+      "import": false,
+      "keyConflictPolicy": "change",
+      "skipFields": "abstract,keywords,langid,file,annotation,issn,isbn,month"
+    }
+  },
+  "items": [
+    {
+      "citationKey": "aecomReOvNeHoPhRe2019",
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "AECOM"
+        }
+      ],
+      "date": "September 2019",
+      "itemID": 1,
+      "itemType": "report",
+      "place": "London, UK",
+      "publisher": "Ministry of Housing, Communities and Local Government",
+      "title": "Research into overheating in new homes - Phase 1 report"
+    }
+  ]
+}

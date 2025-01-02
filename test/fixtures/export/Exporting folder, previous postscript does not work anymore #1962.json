@@ -19,6 +19,7 @@
   },
   "items": [
     {
+      "itemID": 0,
       "itemType": "journalArticle",
       "title": "dummy"
     },
