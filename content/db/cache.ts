@@ -1,3 +1,6 @@
+// import { DatabaseFactory, Database, ObjectStoreInterface } from '@idxdb/promised'
+import { DatabaseFactory, Database } from '@idxdb/promised'
+
 import { log } from '../logger'
 import { stringify } from '../stringify'
 
@@ -11,8 +14,6 @@ import type { Serialized, Serializer } from '../item-export-format'
 import { bySlug } from '../../gen/translators'
 import version from '../../gen/version'
 // import { main as probe } from './cache-test'
-
-import { CursorWithValue, Database, Transaction, Factory } from '@retorquere/indexeddb-promise'
 
 import type { Translators as Translator } from '../../typings/translators'
 const skip = new Set([ 'keepUpdated', 'worker', 'exportFileData' ])
@@ -55,147 +56,12 @@ export type ExportedItem = {
   metadata: ExportedItemMetadata
 }
 
-/*
-interface Schema extends DBSchema {
-  ZoteroSerialized: {
-    value: Serialized
-    key: number
-  }
-  touched: {
-    value: boolean
-    key: number
-  }
-
-  ExportContext: {
-    value: ExportContext
-    key: number
-    indexes: { context: string }
-  }
-
-  BetterBibLaTeX: {
-    value: ExportedItem
-    key: [number, number]
-    indexes: {
-      context: number
-      itemID: number
-      'context-itemID': [ number, number ]
-    }
-  }
-  BetterBibTeX: {
-    value: ExportedItem
-    key: [number, number]
-    indexes: {
-      context: number
-      itemID: number
-      'context-itemID': [ number, number ]
-    }
-  }
-  BetterCSLJSON: {
-    value: ExportedItem
-    key: [number, number]
-    indexes: {
-      context: number
-      itemID: number
-      'context-itemID': [ number, number ]
-    }
-  }
-  BetterCSLYAML: {
-    value: ExportedItem
-    key: [number, number]
-    indexes: {
-      context: number
-      itemID: number
-      'context-itemID': [ number, number ]
-    }
-  }
-
-  metadata: {
-    value: { key: string; value: string | number }
-    key: string
-  }
+export type Metadata = {
+  key: string
+  value: string
 }
-*/
+
 export type ExportCacheName = 'BetterBibLaTeX' | 'BetterBibTeX' | 'BetterCSLJSON' | 'BetterCSLYAML'
-
-const ExportCacheConfig = {
-  $: { keyPath: [ 'context', 'itemID' ]},
-  context: ['context'],
-  itemID: ['itemID'],
-  'context-itemID': [[ 'context', 'itemID' ], { unique: true }],
-}
-class CacheDB extends Database {
-  #schema = {
-    ZoteroSerialized: {
-      $: { keyPath: 'itemID' },
-    },
-    metadata: {
-      $: { keyPath: 'key' },
-    },
-    ExportContext: {
-      $: { keyPath: 'id', autoIncrement: true },
-      context: ['context', { unique: true }],
-    },
-    BetterBibTeX: ExportCacheConfig,
-    BetterBibLaTeX: ExportCacheConfig,
-    BetterCSLJSON: ExportCacheConfig,
-    BetterCSLYAML: ExportCacheConfig,
-    touched: {},
-  }
-
-  public _upgrade(_transaction: Transaction, oldVersion: number, newVersion: number | null): void {
-    if (typeof newVersion !== 'number') {
-      log.info(`cache: creating ${newVersion}`)
-    }
-    else {
-      log.info(`cache: upgrading ${oldVersion} => ${newVersion}`)
-    }
-    for (const store of this.objectStoreNames) {
-      this.deleteObjectStore(store)
-    }
-
-    for (const [storeName, storeConfig] of Object.entries(this.#schema)) {
-      const store = this.createObjectStore(storeName, (storeConfig as any).$)
-
-      for (const [indexName, indexConfig] of Object.entries(storeConfig)) {
-        if (indexName !== '$') store.createIndex(indexName, ...(indexConfig as [string]))
-      }
-    }
-  }
-
-  public async validate(): Promise<boolean> {
-    if (worker) return true
-
-    log.info('validating schema')
-    const tx = this.transaction(this.objectStoreNames, 'readonly')
-    const schema: Record<string, any> = {}
-    for (const storeName of this.objectStoreNames) {
-      schema[storeName] = {}
-      const store = tx.objectStore(storeName)
-
-      if (store.autoIncrement || store.keyPath) {
-        schema[storeName].$ = {
-          ...(store.keyPath ? { keyPath: store.keyPath } : {}),
-          ...(store.autoIncrement ? { autoIncrement: true } : {}),
-        }
-      }
-
-      for (const indexName of store.indexNames) {
-        const index = store.index(indexName)
-        schema[storeName][indexName] = [ index.keyPath, ...(index.unique ? [{ unique: true }] : []) ]
-      }
-    }
-    await tx.commit()
-
-    const expected = stringify(this.#schema, 2)
-    const found = stringify(schema, 2)
-    log.info(`schema: ${found}`)
-    if (expected !== found) {
-      log.error(`cache schema mismatch!\nexpected:${expected}\nfound:${found}`)
-      return false
-    }
-    return true
-  }
-}
 
 class Running {
   public items: Map<number, ExportedItem>
@@ -234,7 +100,7 @@ class Running {
 }
 
 export class ExportCache {
-  constructor(private db: CacheDB, private name: ExportCacheName) {
+  constructor(private db: Database, private name: ExportCacheName) {
   }
 
   public async touch(ids: number[]): Promise<void> {
@@ -244,8 +110,11 @@ export class ExportCache {
     const deletes: Promise<void>[] = []
 
     for (const id of ids) {
-      const cursor = await index.openCursor(id)
-      if (cursor) deletes.push(store.delete(cursor.primaryKey))
+      const cursor = index.openCursor(id)
+      while (!(await cursor.end())) {
+        deletes.push(store.delete(cursor.primaryKey))
+        cursor.continue()
+      }
     }
     const rejected = await allSettled(deletes)
     await tx.commit()
@@ -262,8 +131,11 @@ export class ExportCache {
     const deletes: Promise<void>[] = []
 
     const cache = tx.objectStore(this.name as 'BetterBibTeX')
-    const cursor = await cache.index('context').openCursor(path)
-    if (cursor) deletes.push(cache.delete(cursor.primaryKey))
+    const cursor = cache.index('context').openCursor(path)
+    while (!(await cursor.end())) {
+      deletes.push(cache.delete(cursor.primaryKey))
+      cursor.continue()
+    }
 
     if (deleteContext) {
       const context = tx.objectStore('ExportContext')
@@ -296,7 +168,7 @@ export class ExportCache {
       const store = tx.objectStore('ExportContext')
       const index = store.index('context')
       // force type to get auto-increment field
-      context = (await index.get(path))?.id || (await store.add({ context: path } as unknown as ExportContext))
+      context = (await index.get<ExportContext, string>(path))?.id || (await store.add<ExportContext, number>(<ExportContext>{ context: path }))
     }
     catch {
       return { context, items }
@@ -307,7 +179,7 @@ export class ExportCache {
       // trace(`${this.name} load`)
       const store = tx.objectStore(this.name)
       const index = store.index('context')
-      const all = await index.getAll(context)
+      const all: ExportedItem[] = await index.getAll(context)
       // trace(`${this.name} loaded`)
       for (const entry of all) {
         items.set(entry.itemID, entry)
@@ -335,7 +207,7 @@ class ZoteroSerialized {
   public filled = 0 // exponential moving average
   private smoothing = 2 / (10 + 1) // keep average over last 10 fills
 
-  constructor(private db: CacheDB) {
+  constructor(private db: Database) {
   }
 
   private cachable(item: any): boolean {
@@ -350,7 +222,7 @@ class ZoteroSerialized {
     let store = tx.objectStore('ZoteroSerialized')
     const cached = new Set(await store.getAllKeys())
     const touched = tx.objectStore('touched')
-    const purge = new Set(await touched.getAllKeys())
+    const purge: Set<number> = new Set(await touched.getAllKeys())
 
     const fill = items.filter(item => {
       if (cached.has(item.id)) {
@@ -389,11 +261,11 @@ class ZoteroSerialized {
     const tx = this.db.transaction('ZoteroSerialized', 'readonly')
     const store = tx.objectStore('ZoteroSerialized')
     if (Zotero.isWin && !is7) {
-      items = (await Promise.all(ids.map(id => store.get(id)))).filter(item => item)
+      items = (await Promise.all(ids.map(id => store.get<Serialized, number>(id)))).filter(item => item)
     }
     else {
       const requested = new Set(ids)
-      items = (await store.getAll()).filter(item => requested.has(item.itemID))
+      items = (await store.getAll<Serialized, number>()).filter(item => requested.has(item.itemID))
     }
 
     if (ids.length !== items.length) log.error(`indexed: failed to fetch ${ ids.length - items.length } items`)
@@ -421,11 +293,34 @@ class ZoteroSerialized {
   }
 }
 
+const ExportCacheConfig = {
+  $: { keyPath: [ 'context', 'itemID' ]},
+  context: ['context'],
+  itemID: ['itemID'],
+  'context-itemID': [[ 'context', 'itemID' ], { unique: true }],
+}
 export const Cache = new class $Cache {
+  #schema = {
+    ZoteroSerialized: {
+      $: { keyPath: 'itemID' },
+    },
+    metadata: {
+      $: { keyPath: 'key' },
+    },
+    ExportContext: {
+      $: { keyPath: 'id', autoIncrement: true },
+      context: ['context', { unique: true }],
+    },
+    BetterBibTeX: ExportCacheConfig,
+    BetterBibLaTeX: ExportCacheConfig,
+    BetterCSLJSON: ExportCacheConfig,
+    BetterCSLYAML: ExportCacheConfig,
+    touched: {},
+  }
   public version = 10
   public name = 'BetterBibTeXCache'
 
-  private db: CacheDB
+  private db: Database
 
   public ZoteroSerialized: ZoteroSerialized
 
@@ -434,17 +329,75 @@ export const Cache = new class $Cache {
   public BetterCSLJSON: ExportCache
   public BetterCSLYAML: ExportCache
 
-  private async $open(action: string): Promise<CacheDB> {
+  private async $open(action: string): Promise<Database> {
     try {
       log.info(`cache: ${action} ${this.version}`)
-      const db = new CacheDB(this.name, this.version)
-      await db.open()
-      return db
+      return await DatabaseFactory.open(this.name, this.version, [{
+        version: this.version,
+        // eslint-disable-next-line @typescript-eslint/require-await
+        migration: async ({db, dbOldVersion, dbNewVersion }) => {
+          if (typeof dbNewVersion !== 'number') {
+            log.info(`cache: creating ${dbNewVersion}`)
+          }
+          else {
+            log.info(`cache: upgrading ${dbOldVersion} => ${dbNewVersion}`)
+          }
+          for (const store of db.objectStoreNames) {
+            db.deleteObjectStore(store)
+          }
+
+          for (const [storeName, storeConfig] of Object.entries(this.#schema)) {
+            const store = db.createObjectStore(storeName, (storeConfig as any).$)
+
+            for (const [indexName, indexConfig] of Object.entries(storeConfig)) {
+              if (indexName !== '$') store.createIndex(indexName, ...(indexConfig as [string]))
+            }
+          }
+        },
+      }])
     }
     catch (err) {
       log.error(`cache: ${action} ${this.version} failed: ${err.message}`)
       return null
     }
+  }
+
+  private async validate(): Promise<boolean> {
+    if (worker) return true
+
+    log.info('cache: validating schema')
+
+    // #3111 -- what the *actual*?!?!
+    if (!this.db.objectStoreNames.length) return false
+
+    const tx = this.db.transaction(this.db.objectStoreNames, 'readonly')
+    const schema: Record<string, any> = {}
+    for (const storeName of this.db.objectStoreNames) {
+      schema[storeName] = {}
+      const store = tx.objectStore(storeName)
+
+      if (store.autoIncrement || store.keyPath) {
+        schema[storeName].$ = {
+          ...(store.keyPath ? { keyPath: store.keyPath } : {}),
+          ...(store.autoIncrement ? { autoIncrement: true } : {}),
+        }
+      }
+
+      for (const indexName of store.indexNames) {
+        const index = store.index(indexName)
+        schema[storeName][indexName] = [ index.keyPath, ...(index.unique ? [{ unique: true }] : []) ]
+      }
+    }
+    await tx.commit()
+
+    const expected = stringify(this.#schema, 2)
+    const found = stringify(schema, 2)
+    log.info(`cache: schema: ${found}`)
+    if (expected !== found) {
+      log.error(`cache: schema mismatch!\nexpected:${expected}\nfound:${found}`)
+      return false
+    }
+    return true
   }
 
   private async metadata(): Promise<Record<string, string>> {
@@ -453,7 +406,7 @@ export const Cache = new class $Cache {
     try {
       const tx = this.db.transaction('metadata', 'readonly')
       const store = tx.objectStore('metadata')
-      for (const rec of (await store.getAll()) as { key: string; value: string }[]) {
+      for (const rec of (await store.getAll<Metadata, string>())) {
         metadata[rec.key] = rec.value
       }
     }
@@ -472,16 +425,16 @@ export const Cache = new class $Cache {
     if (!worker) {
       if (Zotero.Prefs.get(del)) {
         log.info('cache delete requested')
-        await Factory.deleteDatabase(this.name)
+        await DatabaseFactory.deleteDatabase(this.name)
       }
       Zotero.Prefs.clear(del)
     }
 
     this.db = await this.$open('open')
-    if (!this.db || !(await this.db.validate())) {
+    if (!this.db || !(await this.validate())) {
       this.db?.close()
       log.info('cache: could not open, delete and reopen') // #2995, downgrade 6 => 7
-      await Factory.deleteDatabase(this.name)
+      await DatabaseFactory.deleteDatabase(this.name)
       this.db = await this.$open('reopen')
     }
 
@@ -503,13 +456,13 @@ export const Cache = new class $Cache {
       if (reason) {
         log.info(`cache: reopening because ${reason}`)
         this.db.close()
-        await Factory.deleteDatabase(this.name)
+        await DatabaseFactory.deleteDatabase(this.name)
         this.db = await this.$open('upgrade')
       }
       const tx = this.db.transaction('metadata', 'readwrite')
       const store = tx.objectStore('metadata')
-      await store.put({ key: 'Zotero', value: Zotero.version })
-      await store.put({ key: 'BetterBibTeX', value: version })
+      await store.put<Metadata, string>({ key: 'Zotero', value: Zotero.version })
+      await store.put<Metadata, string>({ key: 'BetterBibTeX', value: version })
       await tx.commit()
     }
 
@@ -597,20 +550,20 @@ export const Cache = new class $Cache {
     if (!this.available('dump')) return {}
 
     const tables: Record<string, any> = {}
-    let cursor: CursorWithValue | void
     for (const name of this.db.objectStoreNames) {
       try {
         const tx = this.db.transaction(name, 'readonly')
         const store = tx.objectStore(name)
         switch (name) {
-          case 'touched':
+          case 'touched': {
             tables[name] = {}
-            cursor = await store.openCursor()
-            while (cursor) {
-              tables[name][cursor.key as string] = cursor.value
-              if (!await cursor.continue()) cursor = undefined
+            const cursor = store.openCursor<number, number, boolean>()
+            while (!(await cursor.end())) {
+              tables[name][cursor.primaryKey] = cursor.value
+              cursor.continue()
             }
             break
+          }
 
           case 'metadata':
             tables[name] = await this.metadata()

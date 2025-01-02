@@ -13,6 +13,7 @@ Feature: Export
 
     Examples:
       | file                                                                                                                     | references |
+      | Add option to translate ii to mkbibemph instead of emph #3096                                                            | 1          |
       | Better BibLatex copied year column as string if  character is found #3067                                                | 1          |
       | Cannot change citation key formula #3058                                                                                 | 1          |
       | Citation keys are missing certain words if hyphens are used #3059                                                        | 1          |
@@ -510,7 +511,7 @@ Feature: Export
   @journal-abbrev @bbt
   Scenario: Journal abbreviations
     Given I set preference .citekeyFormat to "[authors][year][journal]"
-    And I set preference .autoAbbrevStyle to "http://www.zotero.org/styles/cell"
+    # And I set preference .autoAbbrevStyle to "http://www.zotero.org/styles/cell"
     And I import 1 reference with 1 attachment from "export/*.json"
     Then an export using "Better BibTeX" with useJournalAbbreviation on should match "export/*.bibtex"
 
@@ -521,7 +522,7 @@ Feature: Export
   @81 @bbt
   Scenario: Journal abbreviations exported in bibtex (81)
     Given I set preference .citekeyFormat to "[authors2][year][journal:nopunct]"
-    And I set preference .autoAbbrevStyle to "http://www.zotero.org/styles/cell"
+    # And I set preference .autoAbbrevStyle to "http://www.zotero.org/styles/cell"
     And I import 1 reference from "export/*.json"
     Then an export using "Better BibTeX" with useJournalAbbreviation on should match "export/*.bibtex"
 
@@ -721,7 +722,7 @@ Feature: Export
   Scenario: Really Big whopping library
     When I restart Zotero with "1287"
     And I set preference .DOIandURL to "doi"
-    And I set preference .autoAbbrevStyle to "http://www.zotero.org/styles/cell"
+    # And I set preference .autoAbbrevStyle to "http://www.zotero.org/styles/cell"
     And I set preference .autoExport to "off"
     And I set preference .citekeyFormat to "authorsn(n=3,creator=\"*\",initials=false,sep=\" \").fold + shortyear"
     And I set preference .itemObserverDelay to 100

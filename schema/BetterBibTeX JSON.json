@@ -129,9 +129,6 @@
             "autoAbbrev": {
               "type": "boolean"
             },
-            "autoAbbrevStyle": {
-              "type": "string"
-            },
             "autoExport": {
               "enum": [
                 "immediate",

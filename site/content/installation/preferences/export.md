@@ -240,15 +240,6 @@ Options:
 * citation key (slower on very large libraries)
 
 
-### Abbreviation style:
-
-default: `<not set>`
-
-Select the style for auto-abbreviation. Only applicable to Juris-M; in Zotero, the style for automatic
-abbreviation is not configurable.
-
-
-
 ### Include comments about potential problems with the exported entries
 
 default: `no`

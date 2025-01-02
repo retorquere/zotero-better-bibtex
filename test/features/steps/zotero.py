@@ -247,6 +247,7 @@ class Library:
           self.normalized = normalized.getvalue()
 
       elif self.ext == '.json':
+        if 'config' in self.data and 'preferences' in self.data['config']: self.data['config']['preferences'].pop('autoAbbrevStyle', None)
         self.data['items'] = sorted(self.data['items'], key=lambda item: json.dumps(item, sort_keys=True))
         self.normalized = json.dumps(cleanlib(copy.deepcopy(self.data)), indent=2, ensure_ascii=True, sort_keys=True)
 

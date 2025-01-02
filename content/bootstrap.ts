@@ -29,33 +29,6 @@ function log(msg) {
   }
 }
 
-// Loads default preferences from prefs.js in Zotero 6
-function setDefaultPrefs(rootURI) {
-  const branch = Services.prefs.getDefaultBranch('')
-  const obj = {
-    pref: (pref, value) => {
-      switch (typeof value) {
-        case 'boolean':
-          branch.setBoolPref(pref, value)
-          break
-        case 'string':
-          branch.setStringPref(pref, value)
-          break
-        case 'number':
-          branch.setIntPref(pref, value)
-          break
-        default:
-          log(`Invalid type '${ typeof (value) }' for pref '${ pref }'`)
-      }
-    },
-  }
-  Services.scriptloader.loadSubScriptWithOptions(`${ rootURI }prefs.js`, {
-    target: obj,
-    charset: 'utf-8',
-    // ignoreCache: true
-  })
-}
-
 export function install(_data: any, _reason: ReasonId) {
   log('install, nothing to do')
 }
@@ -81,8 +54,6 @@ export async function startup({ resourceURI, rootURI = resourceURI.spec }, reaso
     chromeHandle = aomStartup.registerChrome(manifestURI, require('../gen/chrome.json'))
 
     if (Zotero.BetterBibTeX) throw new Error('Better BibTeX is already started')
-
-    setDefaultPrefs(rootURI)
 
     const $window = Cc['@mozilla.org/appshell/appShellService;1'].getService(Ci.nsIAppShellService).hiddenDOMWindow
     Services.scriptloader.loadSubScriptWithOptions(`${ rootURI }content/better-bibtex.js`, {

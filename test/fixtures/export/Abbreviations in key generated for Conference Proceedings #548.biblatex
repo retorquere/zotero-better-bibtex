@@ -1,6 +1,5 @@
-
 @inproceedings{CorlessJeffreyKnuth1997Proc1997IntSympSymbAlgebrComput,
-  title = {A Sequence of Series for the {{Lambert}} {{{\emph{W}}}} Function},
+  title = {A Sequence of Series for the {{Lambert}} {{{\mkbibemph{W}}}} Function},
   booktitle = {Proceedings of the 1997 {{International Symposium}} on {{Symbolic}} and {{Algebraic Computation}}},
   author = {Corless, Robert M. and Jeffrey, David J. and Knuth, Donald E.},
   date = {1997},
@@ -10,5 +9,3 @@
   isbn = {0-89791-875-4},
   langid = {english}
 }
-
-
