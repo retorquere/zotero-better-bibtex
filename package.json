@@ -40,7 +40,7 @@
     "start": "./test/behave --no-headless --keep --tags=@none",
     "beta": "./test/behave --beta --no-headless --keep --tags=@none",
     "legacy": "./test/behave --legacy --no-headless --keep --tags=@none",
-    "release": "zotero-plugin-release \"$(<setup/release-message.md)\"",
+    "release": "zotero-plugin-release --release-message @setup/release-message.md",
     "branches": "zotero-plugin-branches",
     "fix-fixtures": "ts-node ./util/fix-test-fixtures.ts",
     "postversion": "git push --follow-tags",
