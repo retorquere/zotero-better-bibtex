@@ -366,6 +366,10 @@ export const Cache = new class $Cache {
     if (worker) return true
 
     log.info('cache: validating schema')
+
+    // #3111 -- what the *actual*?!?!
+    if (!this.db.objectStoreNames.length) return false
+
     const tx = this.db.transaction(this.db.objectStoreNames, 'readonly')
     const schema: Record<string, any> = {}
     for (const storeName of this.db.objectStoreNames) {
