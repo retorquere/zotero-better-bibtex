@@ -14,7 +14,11 @@
     "optionsURL": "chrome://zotero/content/preferences/preferences.xul#better-bibtex",
     "updateLink": "https://github.com/retorquere/zotero-better-bibtex/releases/download/v{version}/zotero-better-bibtex-{version}.xpi",
     "updateInfoURL": "https://github.com/retorquere/zotero-better-bibtex/releases/latest",
-    "releaseURL": "https://github.com/retorquere/zotero-better-bibtex/releases/download/release/"
+    "releaseURL": "https://github.com/retorquere/zotero-better-bibtex/releases/download/release/",
+    "releaseBranches": ["zotero6"],
+    "update": {
+      "update.rdf": true
+    }
   },
   "scripts": {
     "changelog": "auto-changelog",
@@ -40,7 +44,7 @@
     "start": "./test/behave --no-headless --keep --tags=@none",
     "beta": "./test/behave --beta --no-headless --keep --tags=@none",
     "legacy": "./test/behave --legacy --no-headless --keep --tags=@none",
-    "release": "zotero-plugin-release \"$(<setup/release-message.md)\"",
+    "release": "zotero-plugin-release --xpi zotero6-better-bibtex-{version}.xpi --release-message @setup/release-message.md",
     "branches": "zotero-plugin-branches",
     "fix-fixtures": "ts-node ./util/fix-test-fixtures.ts",
     "postversion": "git push --follow-tags",
