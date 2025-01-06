@@ -17,7 +17,7 @@ export function prompt({ title, text, value }: { title?: string; text: string; v
   }
 }
 
-function modalDialogOpen() {
+export function modalDialogOpen(): boolean {
   if (!is7) return false
 
   const enumerator = Services.wm.getEnumerator('navigator:browser')
@@ -30,4 +30,10 @@ function modalDialogOpen() {
   }
 
   return false
+}
+
+export async function modalsClosed(): Promise<void> {
+  while (modalDialogOpen()) {
+    await Zotero.Promise.delay(300)
+  }
 }

@@ -5,6 +5,7 @@ const NOT_FOUND = 404
 const CONFLICT = 409
 const BAD_REQUEST = 400
 
+import { modalsClosed } from './prompt'
 import { Translators } from './translators'
 import { get as getCollection } from './collection'
 import { get as getLibrary } from './library'
@@ -31,6 +32,8 @@ class CollectionHandler {
   public async init(request) {
     const urlpath: string = Server.queryParams(request)['']
     if (!urlpath) return [ NOT_FOUND, 'text/plain', 'Could not export bibliography: no path' ]
+
+    await modalsClosed()
 
     try {
       const [ , lib, path, translator ] = urlpath.match(/^\/(?:([0-9]+)\/)?(.*)\.([-0-9a-z]+)$/i)
@@ -59,6 +62,8 @@ class LibraryHandler {
     const urlpath: string = Server.queryParams(request)['']
     if (!urlpath) return [ NOT_FOUND, 'text/plain', 'Could not export library: no path' ]
 
+    await modalsClosed()
+
     try {
       const [ , lib, translator ] = urlpath.match(/\/?(?:([0-9]+)\/)?library\.([-0-9a-z]+)$/i)
       const libID = parseInt(lib || '0') || Zotero.Libraries.userLibraryID
@@ -84,6 +89,8 @@ class SelectedHandler {
 
   public async init(request) {
     const translator: string = Server.queryParams(request)['']
+
+    await modalsClosed()
 
     if (!translator) return [ NOT_FOUND, 'text/plain', 'Could not export bibliography: no format' ]
 
@@ -118,6 +125,8 @@ class ItemHandler {
 
   public async init(request) {
     await Zotero.BetterBibTeX.ready
+
+    await modalsClosed()
 
     try {
       let translator: string, citationKeys: string | string[], groupID: string | number, libraryID: string | number, library: string, group: string, pandocFilterData: string
