@@ -22,13 +22,15 @@ export function modalDialogOpen(): boolean {
 
   const enumerator = Services.wm.getEnumerator('navigator:browser')
   while (enumerator.hasMoreElements()) {
-    const win = enumerator.getNext().QueryInterface(Components.interfaces.nsIDOMWindow)
-    if (win) {
+    const win = enumerator.getNext()
+    if (typeof win.QueryInterface === 'function') {
       const baseWin = win.QueryInterface(Components.interfaces.nsIBaseWindow)
       if (baseWin?.modal) return true
     }
+    else {
+      Zotero.debug(`modalDialogOpen: ${typeof win.QueryInterface}`)
+    }
   }
-
   return false
 }
 
