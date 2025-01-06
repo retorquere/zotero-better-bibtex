@@ -121,6 +121,7 @@
     "title": "^4.0.1",
     "title-case": "^4.3.2",
     "transliteration": "^2.3.5",
+    "ts-morph": "^25.0.0",
     "uzip": "^0.20201231.0",
     "words-to-numbers": "^1.5.1",
     "xregexp": "^5.1.1",
