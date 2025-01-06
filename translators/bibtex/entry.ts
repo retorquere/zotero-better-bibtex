@@ -404,7 +404,9 @@ export class Entry {
   }
 
   /** normalize dashes, mainly for use in `pages` */
-  public normalizeDashes(ranges: string): string {
+  public normalizeDashes(ranges: string | number): string {
+    if (typeof ranges === 'number') return `${ranges}`
+
     ranges = (ranges || '').trim()
 
     if (this.item.raw) return ranges

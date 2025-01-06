@@ -565,11 +565,24 @@ export class PatternFormatter {
     }
   }
 
-  /** returns the name of the shared group library, or nothing if the item is in your personal library */
+  /** Tests whether the item is in the user library */
   public $library(): this {
-    if (this.item.libraryID === Zotero.Libraries.userLibraryID) return this.$text('')
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return this.$text(Zotero.Libraries.get(this.item.libraryID).name)
+    if (this.item.libraryID !== Zotero.Libraries.userLibraryID) this.next = true
+    return this.$text('')
+  }
+
+  /**
+   * Tests whether the item is in the given group library
+   * @param name group name
+   */
+  public $group(name: string): this {
+    if (this.item.libraryID === Zotero.Libraries.userLibraryID) {
+      this.next = true
+    }
+    else if (Zotero.Libraries.get(this.item.libraryID)?.name !== name) {
+      this.next = true
+    }
+    return this.$text('')
   }
 
   /**
