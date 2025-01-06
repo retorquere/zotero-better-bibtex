@@ -16,3 +16,18 @@ export function prompt({ title, text, value }: { title?: string; text: string; v
     return ''
   }
 }
+
+function modalDialogOpen() {
+  if (!is7) return false
+
+  const enumerator = Services.wm.getEnumerator('navigator:browser')
+  while (enumerator.hasMoreElements()) {
+    const win = enumerator.getNext().QueryInterface(Components.interfaces.nsIDOMWindow)
+    if (win) {
+      const baseWin = win.QueryInterface(Components.interfaces.nsIBaseWindow)
+      if (baseWin?.modal) return true
+    }
+  }
+
+  return false
+}
