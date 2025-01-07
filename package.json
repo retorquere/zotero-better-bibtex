@@ -15,9 +15,7 @@
     "updateLink": "https://github.com/retorquere/zotero-better-bibtex/releases/download/v{version}/zotero-better-bibtex-{version}.xpi",
     "updateInfoURL": "https://github.com/retorquere/zotero-better-bibtex/releases/latest",
     "releaseURL": "https://github.com/retorquere/zotero-better-bibtex/releases/download/release/",
-    "update": {
-      "updates.json": true
-    }
+    "minVersion": "7.*"
   },
   "scripts": {
     "changelog": "auto-changelog",
@@ -125,7 +123,7 @@
     "uzip": "^0.20201231.0",
     "words-to-numbers": "^1.5.1",
     "xregexp": "^5.1.1",
-    "zotero-plugin": "4.0.3"
+    "zotero-plugin": "5.0.1"
   },
   "devDependencies": {
     "@retorquere/bibtex-parser": "^9.0.17",
