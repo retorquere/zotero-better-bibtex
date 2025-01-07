@@ -136,7 +136,7 @@ jobs:
     - *cache
 
     - name: Set system-wide proxy using PAC URL
-      run: echo "auto_proxy=http://proxy-doc.ird.fr/proxy.pac" >> /etc/environment
+      run: echo "auto_proxy=http://proxy-doc.ird.fr/proxy.pac" | sudo tee -a /etc/environment
       env:
         auto_proxy: http://proxy-doc.ird.fr/proxy.pac
 
