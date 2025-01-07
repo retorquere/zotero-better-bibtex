@@ -80,5 +80,6 @@ type ZoteroObject = GlobalBBT & Omit<Record<string, any>, keyof GlobalBBT>
 declare const Zotero: ZoteroObject
 
 declare const Components: any
-declare const Services: any
 declare const rootURI: string
+declare const ChromeUtils: any
+declare const Services: any
