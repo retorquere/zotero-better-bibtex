@@ -7,7 +7,7 @@ import os
 import re
 import shutil, shlex
 import subprocess
-import sys
+import sys, time, threading
 import tarfile
 from pygit2 import Repository
 import glob
@@ -71,7 +71,7 @@ parser.add_argument('--inspire-hep', '--no-inspire-hep', dest='inspireHEP', acti
 parser.add_argument('--worker', '--no-worker', dest='worker', action=BooleanAction, default=False)
 parser.add_argument('--logging', '--no-logging', dest='logging', action=BooleanAction, default=False)
 parser.add_argument('--caching', '--no-caching', dest='caching', action=BooleanAction, default=True)
-parser.add_argument('--headless', '--no-headless', dest='headless', action=BooleanAction, default=platform.system() == 'Linux')
+parser.add_argument('--headless', '--no-headless', dest='headless', action=BooleanAction, default=platform.system() == 'Linux' and not os.getenv('XDG_SESSION_TYPE'))
 parser.add_argument('--this', action='store_true')
 parser.add_argument('--test-this', action='store_true')
 parser.add_argument('--slow', action='store_true',
@@ -176,9 +176,33 @@ class InstallLastRunner(Runner):
     if install: locations.append(install)
     return locations
 
+def cancel_proxy():
+  for i in range(20):
+    print('cancel-proxy: looking for proxy auth window')
+    result = subprocess.run(['wmctrl', '-l'], capture_output=True, text=True)
+    window_id = None
+    for line in result.stdout.splitlines():
+      if 'Authentication Required - Zotero' in line:
+        window_id = line.split()[0]
+        break
+
+    time.sleep(5)
+    if window_id:
+      print('cancel proxy:', window_id)
+      time.sleep(3)
+      subprocess.run(['xdotool', 'windowactivate', '--sync', window_id, 'key', 'Escape'])
+      return
+
+  print('cancel proxy: no window found')
+
 def main():
   config = Configuration()
+  thread = None
+  thread = threading.Thread(target=cancel_proxy)
+  thread.start()
   sys.exit(run_behave(config, runner_class=InstallLastRunner))
+  if thread:
+    thread.join()
 
 if args.headless:
   from xvfbwrapper import Xvfb
