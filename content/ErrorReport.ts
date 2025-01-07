@@ -1,4 +1,9 @@
-Components.utils.import('resource://gre/modules/Services.jsm')
+/*
+declare var Services: any
+if (typeof Services == 'undefined') {
+  var { Services } = ChromeUtils.import('resource://gre/modules/Services.jsm') // eslint-disable-line no-var
+}
+*/
 
 import * as client from './client'
 
@@ -27,8 +32,6 @@ import * as UZip from 'uzip'
 import { alert } from './prompt'
 
 import * as s3 from './s3.json'
-
-import * as PACKAGE from '../package.json'
 
 const kB = 1024
 
@@ -139,11 +142,11 @@ export class ErrorReport {
     if (index === 0) Zotero.Utilities.Internal.quit(true)
   }
 
-  private async latest() {
+  private async latest(): Promise<string> {
     try {
-      const latest = PACKAGE.xpi.releaseURL.replace('https://github.com/', 'https://api.github.com/repos/').replace(/\/releases\/.*/, '/releases/latest')
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      return JSON.parse((await Zotero.HTTP.request('GET', latest, { noCache: true })).response).tag_name.replace('v', '')
+      const latest = JSON.parse((await Zotero.HTTP.request('GET', 'https://github.com/retorquere/zotero-better-bibtex/releases/download/release/updates.json', { noCache: true })).response)
+      return latest.addons['better-bibtex@iris-advies.com'].updates[0].version as string
     }
     catch (err) {
       log.error('errorreport.latest:', err)
@@ -434,7 +437,12 @@ export class ErrorReport {
     context += 'Settings:\n'
     const settings = { default: '', set: '' }
     for (const [ key, value ] of Object.entries(Preference.all)) {
-      settings[value === defaults[key] ? 'default' : 'set'] += `  ${ key } = ${ JSON.stringify(value) }\n`
+      if (value === defaults[key]) {
+        settings.default += `  ${key} = ${ JSON.stringify(value) }\n`
+      }
+      else {
+        settings.set += `  ${key} = ${JSON.stringify(value)} (default: ${JSON.stringify(defaults[key])})\n`
+      }
     }
     if (settings.default) settings.default = `Settings at default:\n${ settings.default }`
     context += settings.set + settings.default
