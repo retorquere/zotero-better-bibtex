@@ -28,8 +28,6 @@ import { alert } from './prompt'
 
 import * as s3 from './s3.json'
 
-import * as PACKAGE from '../package.json'
-
 const kB = 1024
 
 type WizardButton = HTMLElement & { disabled: boolean }
@@ -139,11 +137,16 @@ export class ErrorReport {
     if (index === 0) Zotero.Utilities.Internal.quit(true)
   }
 
-  private async latest() {
+  private async latest(): Promise<string> {
     try {
-      const latest = PACKAGE.xpi.releaseURL.replace('https://github.com/', 'https://api.github.com/repos/').replace(/\/releases\/.*/, '/releases/latest')
+      let version: string = null
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      return JSON.parse((await Zotero.HTTP.request('GET', latest, { noCache: true })).response).tag_name.replace('v', '')
+      const latest = (await Zotero.HTTP.request('GET', 'https://github.com/retorquere/zotero-better-bibtex/releases/download/release/updates.json', { noCache: true })).response
+      latest.replace(/<em:version>(.*?)<\/em:version>/, (m, v) => {
+        version = v
+        return ''
+      })
+      return version
     }
     catch (err) {
       log.error('errorreport.latest:', err)
