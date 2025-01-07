@@ -147,9 +147,9 @@ jobs:
           }}-${{ hashFiles('requirements.txt') }}
 
     - name: Set system-wide proxy using PAC URL
-      run: echo "auto_proxy=http://proxy-doc.ird.fr/proxy.pac" | sudo tee -a /etc/environment
-      env:
-        auto_proxy: http://proxy-doc.ird.fr/proxy.pac
+      run: |
+        echo "auto_proxy=http://proxy-doc.ird.fr/proxy.pac" | sudo tee -a /etc/environment
+        echo "auto_proxy=http://proxy-doc.ird.fr/proxy.pac" >> $GITHUB_ENV
 
     - name: Verify proxy settings
       run: env | grep -i proxy
