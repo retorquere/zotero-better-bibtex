@@ -18,9 +18,7 @@
     "releaseBranches": [
       "zotero6"
     ],
-    "update": {
-      "update.rdf": true
-    }
+    "maxVersion": "6.0.999"
   },
   "scripts": {
     "changelog": "auto-changelog",
@@ -71,7 +69,7 @@
   },
   "dependencies": {
     "@artsy/to-title-case": "^1.1.0",
-    "@ast-grep/napi": "^0.32.3",
+    "@ast-grep/napi": "^0.33.0",
     "@caeser1996/titlecase": "^3.0.2",
     "@henrygd/queue": "^1.0.7",
     "@idxdb/promised": "^4.0.5",
@@ -127,14 +125,14 @@
     "uzip": "^0.20201231.0",
     "words-to-numbers": "^1.5.1",
     "xregexp": "^5.1.1",
-    "zotero-plugin": "4.0.1"
+    "zotero-plugin": "5.0.1"
   },
   "devDependencies": {
     "@retorquere/bibtex-parser": "^9.0.17",
     "@retorquere/zotero-sync": "^1.0.27",
     "@stylistic/eslint-plugin": "^2.12.1",
     "@types/bluebird": "^3.5.42",
-    "@types/node": "^22.10.4",
+    "@types/node": "^22.10.5",
     "@xmldom/xmldom": "^0.9.6",
     "ajv-keywords": "^5.1.0",
     "archiver": "^7.0.1",
@@ -174,7 +172,7 @@
     "jsesc": "^3.1.0",
     "kuroshiro": "^1.2.0",
     "kuroshiro-analyzer-kuromoji": "^1.1.0",
-    "meriyah": "^6.0.3",
+    "meriyah": "^6.0.4",
     "moment": "^2.30.1",
     "node-eta": "^0.9.0",
     "npm-run-all": "^4.1.5",
@@ -185,7 +183,7 @@
     "process": "^0.11.10",
     "properties-reader": "^2.3.0",
     "pug": "^3.0.3",
-    "putout": "^37.8.2",
+    "putout": "^37.12.0",
     "recast": "^0.23.9",
     "regenerate": "^1.4.2",
     "rimraf": "^6.0.1",
