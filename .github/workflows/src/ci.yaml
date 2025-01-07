@@ -140,7 +140,8 @@ jobs:
         curl -sL https://raw.githubusercontent.com/retorquere/zotero-deb/master/install.sh | sudo bash
         sudo apt-get update
         sudo apt-get install ${{ matrix.client }}
-        sudo apt-get install mesa-utils xvfb
+        sudo apt-get install mesa-utils xvfb wmc
+        sudo apt-get install wmctrl xdotool
         curl -LO https://github.com/jgm/pandoc/releases/download/3.1.11.1/pandoc-3.1.11.1-linux-amd64.tar.gz
         tar xvzf pandoc-3.1.11.1-linux-amd64.tar.gz
         sudo mv pandoc-3.1.11.1/bin/pandoc /usr/bin
