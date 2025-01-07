@@ -101,9 +101,6 @@ export class API {
     const methodName: string = method.name.getText(this.ast)
     if (!methodName) return
 
-    // const jsDoc = method.getChildren().filter(ts.isJSDoc).map(doc => doc.comment).join("\n");
-    // console.log(jsDoc)
-
     const comment_ranges = ts.getLeadingCommentRanges(this.ast.getFullText(), method.getFullStart())
     if (!comment_ranges) return
     const comment = this.ast.getFullText().slice(comment_ranges[0].pos, comment_ranges[0].end)

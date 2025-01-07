@@ -1,5 +1,12 @@
 /* eslint-disable no-case-declarations, @typescript-eslint/no-unsafe-return */
 
+/*
+declare var Services: any
+if (typeof Services == 'undefined') {
+  var { Services } = ChromeUtils.import('resource://gre/modules/Services.jsm') // eslint-disable-line no-var
+}
+*/
+
 import { Shim } from './os'
 import * as client from './client'
 const $OS = client.is7 ? Shim : OS
@@ -32,8 +39,6 @@ async function guard(run: Promise<void>): Promise<boolean> {
   }
 }
 */
-
-Components.utils.import('resource://gre/modules/Services.jsm')
 
 declare class ChromeWorker extends Worker { }
 
