@@ -439,7 +439,12 @@ export class ErrorReport {
     context += 'Settings:\n'
     const settings = { default: '', set: '' }
     for (const [ key, value ] of Object.entries(Preference.all)) {
-      settings[value === defaults[key] ? 'default' : 'set'] += `  ${ key } = ${ JSON.stringify(value) }\n`
+      if (value === defaults[key]) {
+        settings.default += `  ${key} = ${ JSON.stringify(value) }\n`
+      }
+      else {
+        settings.set += `  ${key} = ${JSON.stringify(value)} (default: ${JSON.stringify(defaults[key])})\n`
+      }
     }
     if (settings.default) settings.default = `Settings at default:\n${ settings.default }`
     context += settings.set + settings.default
