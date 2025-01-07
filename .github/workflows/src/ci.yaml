@@ -204,7 +204,7 @@ jobs:
     - *cache
     - *install_node_packages
 
-    - run: npm run release
+    - run: npm run release -- --pre-release
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - uses: actions/github-script@v7
