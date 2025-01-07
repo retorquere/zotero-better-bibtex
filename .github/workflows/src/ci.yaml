@@ -135,6 +135,14 @@ jobs:
     - *install_python_packages
     - *cache
 
+    - name: Set system-wide proxy using PAC URL
+      run: echo "auto_proxy=http://proxy-doc.ird.fr/proxy.pac" >> /etc/environment
+      env:
+        auto_proxy: http://proxy-doc.ird.fr/proxy.pac
+
+    - name: Verify proxy settings
+      run: env | grep -i proxy
+
     - name: install ${{ matrix.client }}
       run: |
         curl -sL https://raw.githubusercontent.com/retorquere/zotero-deb/master/install.sh | sudo bash
