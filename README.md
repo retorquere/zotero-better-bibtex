@@ -28,7 +28,7 @@ in your items that Bib(La)TeX won't understand.
 
 * BBT will convert from/to HTML/LaTeX:
 
-  - `<i>...</i>`&#8660;`\emph{...}`/`\textit{...}`
+  - `<i>...</i>`&#8660;`\emph{...}`/`\mkbibemph{...}`/`\textit{...}`
   - `<b>...</b>`&#8660;`\textbf{...}`
   - `<sup>...</sup>`&#8660;`\textsuperscript{...}` and `<sub>...</sub>`&#8660;`\textsubscript{...}`. 
   
