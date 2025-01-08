@@ -45,9 +45,10 @@ export const File = new class {
 }
 
 export const Path = new class {
-  #home = ''
+  #home: string
   public get home(): string {
-    return (this.#home = this.#home || FileUtils.getDir('Home', []).path as string)
+    // dynamic fetch because this does not work in workers, but it also isn't requested there
+    return typeof this.#home === 'string' ? this.#home : (this.#home = FileUtils.getDir('Home', []).path as string)
   }
 
   #basenameRE = isWin ? /(^|\\)([^\\]+)\\?$/ : /(^|[/])([^/]+)[/]?$/
