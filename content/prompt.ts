@@ -1,4 +1,6 @@
 import { is7 } from './client'
+import { log } from './logger'
+
 export const PromptService = is7
   ? Services.prompt
   : Components.classes['@mozilla.org/embedcomp/prompt-service;1'].getService(Components.interfaces.nsIPromptService)
@@ -28,14 +30,17 @@ export function modalDialogOpen(): boolean {
       if (baseWin?.modal) return true
     }
     else {
-      Zotero.debug(`modalDialogOpen: ${typeof win.QueryInterface}`)
+      log.debug('modalDialogOpen:', typeof win.QueryInterface)
     }
   }
   return false
 }
 
 export async function modalsClosed(): Promise<void> {
+  log.debug('waiting for modal to close')
   while (modalDialogOpen()) {
+    log.debug('modal open')
     await Zotero.Promise.delay(300)
   }
+  log.debug('no modal open')
 }
