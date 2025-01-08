@@ -1,44 +1,10 @@
 /* eslint-disable no-case-declarations, @typescript-eslint/no-unsafe-return */
 
-/*
-declare var Services: any
-if (typeof Services == 'undefined') {
-  var { Services } = ChromeUtils.import('resource://gre/modules/Services.jsm') // eslint-disable-line no-var
-}
-*/
-
-import { Shim } from './os'
 import * as client from './client'
-const $OS = client.is7 ? Shim : OS
 import merge from 'lodash.merge'
 import { Cache } from './db/cache'
 import { Serializer } from './item-export-format'
-
-/*
-async function guard(run: Promise<void>): Promise<boolean> {
-  let timeout = true
-
-  const delay = async () => {
-    await Zotero.Promise.delay(20000)
-    if (timeout) {
-      log.error('installing translators: raced to timeout!')
-      throw { timeout: true, message: 'timeout' } // eslint-disable-line no-throw-literal
-    }
-  }
-
-  try {
-    await Promise.race([run, delay()])
-    timeout = false
-    log.info('installing translators: guard OK')
-    return true
-  }
-  catch (err) {
-    log.error('installing translators: guard failed because of', err.message )
-    if (err.timeout) return false
-    throw err
-  }
-}
-*/
+import { Path } from './file'
 
 declare class ChromeWorker extends Worker { }
 
@@ -240,7 +206,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     const displayOptions = {
       ...this.displayOptions(job.translatorID, job.displayOptions),
       exportPath: job.path || undefined,
-      exportDir: job.path ? $OS.Path.dirname(job.path) : undefined,
+      exportDir: job.path ? Path.dirname(job.path) : undefined,
     }
 
     if (job.translate) {

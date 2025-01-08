@@ -2,10 +2,9 @@ Components.utils.import('resource://gre/modules/FileUtils.jsm')
 declare const FileUtils: any
 
 import { log } from './logger'
+import { Path, File } from './file'
 
-import { Shim } from './os'
 import * as client from './client'
-const $OS = client.is7 ? Shim : OS
 
 import { Cache } from './db/cache'
 import { Events } from './events'
@@ -112,7 +111,7 @@ class Git {
 
       case 'always':
         try {
-          repo.path = $OS.Path.dirname(bib)
+          repo.path = PathUtils.parent(bib)
         }
         catch (err) {
           log.error('git.repo:', err)
@@ -122,9 +121,9 @@ class Git {
 
       case 'config':
         if (typeof this.root[bib] === 'undefined') {
-          for (let root = $OS.Path.dirname(bib); root && (await $OS.File.exists(root)) && (await $OS.File.stat(root)).isDir && root !== $OS.Path.dirname(root); root = $OS.Path.dirname(root)) {
-            const gitdir = $OS.Path.join(root, '.git')
-            if ((await $OS.File.exists(gitdir)) && (await $OS.File.stat(gitdir)).isDir) {
+          for (let root = PathUtils.parent(bib); root && (await File.exists(root)) && (await File.isDir(root)) && root !== PathUtils.parent(root); root = PathUtils.parent(root)) {
+            const gitdir = PathUtils.join(root, '.git')
+            if ((await File.exists(gitdir)) && (await File.isDir(gitdir))) {
               this.root[bib] = root
               break
             }
@@ -133,8 +132,8 @@ class Git {
         if (!this.root[bib]) return disabled()
         repo.path = this.root[bib]
 
-        config = $OS.Path.join(repo.path, '.git', 'config')
-        if (!(await $OS.File.exists(config)) || (await $OS.File.stat(config)).isDir) return disabled()
+        config = PathUtils.join(repo.path, '.git', 'config')
+        if (!(await File.exists(config)) || (await File.isDir(config))) return disabled()
 
         try {
           const enabled = ini.parse(Zotero.File.getContents(config))['zotero "betterbibtex"']?.push
@@ -326,8 +325,8 @@ const queue = new class TaskQueue {
 
         const root = scope.type === 'collection' ? scope.collection : false
 
-        const dir = $OS.Path.dirname(ae.path)
-        const base = $OS.Path.basename(ae.path).replace(new RegExp(`${ ext.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&') }$`), '')
+        const dir = PathUtils.parent(ae.path)
+        const base = Path.basename(ae.path).replace(new RegExp(`${ ext.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&') }$`), '')
 
         const autoExportPathReplace = {
           diacritics: Preference.autoExportPathReplaceDiacritics,
@@ -336,7 +335,7 @@ const queue = new class TaskQueue {
         }
 
         for (const collection of collections) {
-          const output = $OS.Path.join(dir, [base]
+          const output = PathUtils.join(dir, [base]
             .concat(this.getCollectionPath(collection, root))
             // eslint-disable-next-line no-control-regex
             .map((p: string) => p.replace(/[<>:'"/\\|?*\u0000-\u001F]/g, ''))

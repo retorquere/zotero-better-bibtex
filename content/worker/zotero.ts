@@ -15,10 +15,7 @@ matchAll.shim()
 
 declare const IOUtils: any
 
-import { Shim } from '../os'
 import * as client from '../client'
-if (!client.is7) importScripts('resource://gre/modules/osfile.jsm')
-const $OS = client.is7 ? Shim : OS
 
 const ctx: DedicatedWorkerGlobalScope = self as any
 
@@ -256,34 +253,32 @@ function isWinRoot(path) {
 }
 async function makeDirs(path) {
   if (isWinRoot(path)) return
-  if (!$OS.Path.split(path).absolute) throw new Error(`Will not create relative ${ path }`)
-
-  path = $OS.Path.normalize(path)
+  if (!Path.isAbsolute(path)) throw new Error(`Will not create relative ${ path }`)
 
   const paths: string[] = []
   // path === paths[0] means we've hit the root, as the dirname of root is root
-  while (path !== paths[0] && !isWinRoot(path) && !(await $OS.File.exists(path))) {
+  while (path !== paths[0] && !isWinRoot(path) && !(await File.exists(path))) {
     paths.unshift(path)
-    path = $OS.Path.dirname(path)
+    path = Path.dirname(path)
   }
 
-  if (!isWinRoot(path) && !(await $OS.File.stat(path)).isDir) throw new Error(`makeDirs: root ${ path } is not a directory`)
+  if (!isWinRoot(path) && !(await File.isDir(path))) throw new Error(`makeDirs: root ${ path } is not a directory`)
 
   for (path of paths) {
-    await $OS.File.makeDir(path) as void
+    await File.makeDir(path) as void
   }
 }
 
 async function saveFile(path, overwrite) {
   if (!Zotero.exportDirectory) return false
 
-  if (!await $OS.File.exists(this.localPath)) return false
+  if (!await File.exists(this.localPath)) return false
 
-  this.path = $OS.Path.normalize($OS.Path.join(Zotero.exportDirectory, path))
+  this.path = PathUtils.join(Zotero.exportDirectory, path)
   if (!this.path.startsWith(Zotero.exportDirectory)) throw new Error(`${ path } looks like a relative path`)
 
   if (this.linkMode === 'imported_file' || (this.linkMode === 'imported_url' && this.contentType !== 'text/html')) {
-    await makeDirs($OS.Path.dirname(this.path))
+    await makeDirs(Path.dirname(this.path))
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
     await $OS.File.copy(this.localPath, this.path, { noOverwrite: !overwrite })
   }

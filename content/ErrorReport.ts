@@ -1,14 +1,5 @@
-/*
-declare var Services: any
-if (typeof Services == 'undefined') {
-  var { Services } = ChromeUtils.import('resource://gre/modules/Services.jsm') // eslint-disable-line no-var
-}
-*/
-
 import * as client from './client'
-
-import { Shim } from './os'
-const $OS = client.is7 ? Shim : OS
+import { Path, File } from './file'
 
 import { Cache } from './db/cache'
 import { PromptService } from './prompt'
@@ -56,8 +47,7 @@ type Report = {
   cache?: string
 }
 
-// const homeDir = $OS.Constants.Path.homeDir
-// const $home = new RegExp(`${escapeRE(homeDir)}|${escapeRE(homeDir.replace(Zotero.isWin ? /\\/g : /\//g, '$1$1'))}|${escapeRE($OS.Path.toFileURI(homeDir))}`, 'g')
+const $home = new RegExp(`${escapeRE(Path.home)}|${escapeRE(Path.home.replace(Zotero.isWin ? /\\/g : /\//g, '$1$1'))}|${escapeRE(PathUtils.toFileURI(Path.home))}`, 'g')
 
 export class ErrorReport {
   private previewSize = 3
@@ -173,7 +163,7 @@ export class ErrorReport {
 
   public async save(): Promise<void> {
     const filename = await pick('Logs', 'save', [[ 'Zip Archive (*.zip)', '*.zip' ]], `${ this.name() }.zip`)
-    if (filename) await $OS.File.writeAtomic(filename, this.zip(), { tmpPath: filename + '.tmp' })
+    if (filename) await IOUtils.write(filename, this.zip(), { tmpPath: filename + '.tmp' })
   }
 
   private async ping(region: string) {
@@ -209,7 +199,7 @@ export class ErrorReport {
       /protocol is not allowed for attachments/,
     ].map(re => re.source).join('|'))
     return logging.filter(line => !line.match(ignore))
-      // .map(line => line.replace($home, '$HOME'))
+      .map(line => line.replace($home, '$HOME'))
       .join('\n')
   }
 
@@ -362,8 +352,8 @@ export class ErrorReport {
       items: win.arguments[0].wrappedJSObject.items,
       cache,
     }
-    const acronyms = $OS.Path.join(Zotero.BetterBibTeX.dir, 'acronyms.csv')
-    if (await $OS.File.exists(acronyms)) this.input.acronyms = await $OS.File.read(acronyms, { encoding: 'utf-8' }) as unknown as string
+    const acronyms = PathUtils.join(Zotero.BetterBibTeX.dir, 'acronyms.csv')
+    if (await File.exists(acronyms)) this.input.acronyms = await IOUtils.readUTF8(acronyms) as string
 
     await this.reload()
 
@@ -455,7 +445,7 @@ export class ErrorReport {
     if (autoExports.length) {
       context += 'Auto-exports:\n'
       for (const ae of autoExports) {
-        context += `  path: ...${ JSON.stringify($OS.Path.split(ae.path).components.pop()) }`
+        context += `  path: ...${JSON.stringify(Path.basename(ae.path))}`
         switch (ae.type) {
           case 'collection':
             context += ` (${ Zotero.Collections.get(ae.id)?.name || '<collection>' })`

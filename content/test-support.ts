@@ -13,9 +13,6 @@ import { is7 } from './client'
 import { Cache } from './db/cache'
 // import { Bench } from 'tinybench'
 
-import { Shim } from './os'
-const $OS = is7 ? Shim : OS
-
 const setatstart: string[] = [ 'testing', 'cache' ].filter(p => Preference[p] !== defaults[p])
 
 const idleService: any = Components.classes[`@mozilla.org/widget/${ is7 ? 'user' : '' }idleservice;1`].getService(Components.interfaces[is7 ? 'nsIUserIdleService' : 'nsIIdleService'])
@@ -153,9 +150,7 @@ export class TestSupport {
   }
 
   public async dumpCache(filename: string): Promise<void> {
-    const encoder = (new TextEncoder)
-    const array = encoder.encode(JSON.stringify(await Cache.dump(), null, 2))
-    await $OS.File.writeAtomic(filename, array) as void
+    await IOUtils.writeUTF8(filename, JSON.stringify(await Cache.dump(), null, 2))
   }
 
   public async select(ids: number[]): Promise<boolean> {

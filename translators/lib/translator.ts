@@ -1,9 +1,7 @@
 declare const Zotero: any
 declare const __estrace: any // eslint-disable-line no-underscore-dangle
 
-import { Shim } from '../../content/os'
 import * as client from '../../content/client'
-const $OS = client.is7 ? Shim : OS
 
 import * as Prefs from '../../gen/preferences/meta'
 const PrefNames: Set<string> = new Set(Object.keys(Prefs.defaults))
@@ -38,9 +36,9 @@ class Override {
     }
 
     const candidates = [
-      $OS.Path.basename(this.exportPath).replace(/\.[^.]+$/, '') + extension,
+      Path.basename(this.exportPath).replace(/\.[^.]+$/, '') + extension,
       override,
-    ].map(filename => <string>$OS.Path.join(this.exportDir, filename))
+    ].map(filename => PathUtils.join(this.exportDir, filename))
 
     for (const candidate of candidates) {
       try {

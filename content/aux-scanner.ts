@@ -1,6 +1,4 @@
-import { Shim } from './os'
-import { is7 } from './client'
-const $OS = is7 ? Shim : OS
+import { Path } from './file'
 
 if (!is7) Components.utils.import('resource://gre/modules/osfile.jsm')
 
@@ -72,7 +70,7 @@ export const AUXScanner = new class { // eslint-disable-line @typescript-eslint/
       }
     }
 
-    const basename = $OS.Path.basename(path).replace(/\.[^.]*$/, '')
+    const basename = Path.basename(path).replace(/\.[^.]*$/, '')
     if (options.tag) {
       await this.saveToTag(itemIDs, options.tag, libraryID)
     }
@@ -91,7 +89,7 @@ export const AUXScanner = new class { // eslint-disable-line @typescript-eslint/
 
   private async read(path) {
     const decoder: TextDecoder = new TextDecoder
-    return decoder.decode(await $OS.File.read(path) as BufferSource)
+    return decoder.decode(await IOUtils.read(path) as BufferSource)
   }
 
   private async parse(path: string, citekeys: string[], bibfiles: Record<string, string>): Promise<Source> {
@@ -119,22 +117,18 @@ export const AUXScanner = new class { // eslint-disable-line @typescript-eslint/
   private async luaFilter(): Promise<string> {
     const lua = `list-citekeys-${ version }.lua`
 
-    const filters: string[] = []
-    const iterator = new $OS.File.DirectoryIterator(Zotero.BetterBibTeX.dir)
-    try {
-      await iterator.forEach(entry => {
-        if (entry.isFile && entry.name !== lua && entry.name.match(/^list-citekeys.*\.lua$/)) filters.push(entry.name)
+    const filters: string[] = (await IOUtils.getChildren(Zotero.BetterBibTeX.dir))
+      .map(filter => PathUtils.join(Zotero.BetterBibTeX.dir, old))
+      .filter(filter => {
+        const filename = PathUtils.filename(filter)
+        return filename !== lua && filename.match(/^list-citekeys.*\.lua$/)
       })
-    }
-    finally {
-      iterator.close()
-    }
     for (const old of filters) {
-      await $OS.File.remove($OS.Path.join(Zotero.BetterBibTeX.dir, old))
+      if (await File.isFile(old)) await IOUtils.remove(old)
     }
 
-    const filter = $OS.Path.join(Zotero.BetterBibTeX.dir, lua)
-    if (!(await $OS.File.exists(filter))) {
+    const filter = PathUtils.join(Zotero.BetterBibTeX.dir, lua)
+    if (!(await File.exists(filter))) {
       const url = 'chrome://zotero-better-bibtex/content/resource/list-citekeys.lua'
       const file = Zotero.File.pathToFile(filter)
       const contents = Zotero.File.getContentsFromURL(url)
@@ -145,7 +139,7 @@ export const AUXScanner = new class { // eslint-disable-line @typescript-eslint/
 
   private async parseMD(path: string, citekeys: string[]) {
     const filter = await this.luaFilter()
-    const output: string = $OS.Path.join(Zotero.getTempDirectory().path, `citekeys_${ Zotero.Utilities.randomString() }.txt`)
+    const output: string = PathUtils.join(Zotero.getTempDirectory().path, `citekeys_${ Zotero.Utilities.randomString() }.txt`)
     try {
       await Zotero.Utilities.Internal.exec(this.pandoc, [ '--lua-filter', filter, '-t', 'markdown', '-o', output, path ])
       for (const citekey of (await Zotero.File.getContentsAsync(output)).split(/\s+/)) {
@@ -166,14 +160,14 @@ export const AUXScanner = new class { // eslint-disable-line @typescript-eslint/
     let m, re
 
     const contents = await this.read(path)
-    const parent = $OS.Path.dirname(path)
+    const parent = Path.dirname(path)
 
     if (bibfiles) {
       // bib files used
       re = /\\bibdata\{([^}]+)\}/g
       while (m = re.exec(contents)) {
         for (const bib of [ m[1], `${ m[1] }.bib` ]) {
-          if (!bibfiles[bib] && await $OS.File.exists(bib)) {
+          if (!bibfiles[bib] && await File.exists(bib)) {
             bibfiles[bib] = await this.read(bib)
             break
           }
@@ -191,7 +185,7 @@ export const AUXScanner = new class { // eslint-disable-line @typescript-eslint/
     // include files
     re = /\\@input\{([^}]+)\}/g
     while (m = re.exec(contents)) {
-      await this.parseAUX($OS.Path.join(parent, m[1]), citekeys, bibfiles)
+      await this.parseAUX(PathUtils.join(parent, m[1]), citekeys, bibfiles)
     }
   }
 

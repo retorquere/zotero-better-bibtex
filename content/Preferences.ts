@@ -1,13 +1,5 @@
-/*
-declare var Services: any
-if (typeof Services == 'undefined') {
-  var { Services } = ChromeUtils.import('resource://gre/modules/Services.jsm') // eslint-disable-line no-var
-}
-*/
-
-import { Shim } from './os'
 import * as client from './client'
-const $OS = client.is7 ? Shim : OS
+import { Path } from './file'
 
 import type { XUL } from '../typings/xul'
 
@@ -131,8 +123,7 @@ class AutoExportPane {
     let label: string = { library: icons.computer, collection: icons.folder }[ae.type]
     label += ` ${ this.name(ae, 'short') }`
     label += ` (${ Translators.byId[ae.translatorID].label })`
-    const path = ae.path.startsWith($OS.Constants.Path.homeDir) ? ae.path.replace($OS.Constants.Path.homeDir, '~') : ae.path
-    label += ` ${ path }`
+    label += ` ${ae.path.replace(Path.home, '~')}`
     return label
   }
 

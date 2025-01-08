@@ -10,9 +10,7 @@ allSettled.shim()
 import type Bluebird from 'bluebird'
 const Ready = Zotero.Promise.defer()
 
-import { Shim } from './os'
 import { is7 } from './client'
-const $OS = is7 ? Shim : OS
 
 if (is7) Components.utils.importGlobalProperties(['FormData', 'indexedDB'])
 
@@ -462,7 +460,7 @@ monkey.patch(Zotero.Translate.Export.prototype, 'translate', original => functio
   if (this.location) {
     if (displayOptions.exportFileData) { // when exporting file data, the user was asked to pick a directory rather than a file
       displayOptions.exportDir = this.location.path
-      displayOptions.exportPath = $OS.Path.join(this.location.path, `${ this.location.leafName }.${ translator.target }`)
+      displayOptions.exportPath = PathUtils.join(this.location.path, `${ this.location.leafName }.${ translator.target }`)
       displayOptions.cache = false
     }
     else {
@@ -580,7 +578,7 @@ export class BetterBibTeX {
 
       case 'tag':
         // eslint-disable-next-line no-case-declarations
-        let name = $OS.Path.basename(aux)
+        let name = Path.basename(aux)
         name = name.lastIndexOf('.') > 0 ? name.substr(0, name.lastIndexOf('.')) : name
         // eslint-disable-next-line no-case-declarations
         const tag = prompt({
@@ -668,8 +666,8 @@ export class BetterBibTeX {
         // and this
         if ((await Translators.needsInstall()).length) await Zotero.Translators.init()
 
-        this.dir = $OS.Path.join(Zotero.DataDirectory.dir, 'better-bibtex')
-        await $OS.File.makeDir(this.dir, { ignoreExisting: true })
+        this.dir = PathUtils.join(Zotero.DataDirectory.dir, 'better-bibtex')
+        await File.makeDir(this.dir)
         await Preference.startup(this.dir)
         Events.startup()
 
@@ -690,7 +688,7 @@ export class BetterBibTeX {
     orchestrator.add({
       id: 'sqlite',
       startup: async () => {
-        await Zotero.DB.queryAsync('ATTACH DATABASE ? AS betterbibtex', [$OS.Path.join(Zotero.DataDirectory.dir, 'better-bibtex.sqlite')])
+        await Zotero.DB.queryAsync('ATTACH DATABASE ? AS betterbibtex', [PathUtils.join(Zotero.DataDirectory.dir, 'better-bibtex.sqlite')])
 
         const tables: Record<string, boolean> = {}
         for (const table of await Zotero.DB.columnQueryAsync('SELECT LOWER(REPLACE(name, \'-\', \'\')) FROM betterbibtex.sqlite_master where type=\'table\'')) {
@@ -932,7 +930,7 @@ export class BetterBibTeX {
     }
 
     const file = new FileUtils.File(path)
-    // cannot use await $OS.File.exists here because we may be invoked in noWait mod
+    // cannot use await File.exists here because we may be invoked in noWait mod
     if (!file.exists()) {
       log.error('BetterBibTeX.getContents:', path, 'does not exist')
       return null
