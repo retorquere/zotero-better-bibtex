@@ -25,22 +25,23 @@ export function modalDialogOpen(): boolean {
   const enumerator = Services.wm.getEnumerator('navigator:browser')
   while (enumerator.hasMoreElements()) {
     const win = enumerator.getNext()
+    log.debug('3101:', win.document.title)
     if (typeof win.QueryInterface === 'function') {
       const baseWin = win.QueryInterface(Components.interfaces.nsIBaseWindow)
       if (baseWin?.modal) return true
     }
     else {
-      log.debug('modalDialogOpen:', typeof win.QueryInterface)
+      log.debug('3101: modalDialogOpen:', typeof win.QueryInterface)
     }
   }
   return false
 }
 
 export async function modalsClosed(): Promise<void> {
-  log.debug('waiting for modal to close')
+  log.debug('3101: waiting for modal to close')
   while (modalDialogOpen()) {
-    log.debug('modal open')
+    log.debug('3101: modal open')
     await Zotero.Promise.delay(300)
   }
-  log.debug('no modal open')
+  log.debug('3101: no modal open')
 }
