@@ -30,7 +30,6 @@ class Emitter extends Emittery<{
   'items-changed': { items: ZoteroItem[]; action: Action; reason?: string }
   'libraries-changed': number[]
   'libraries-removed': number[]
-  loaded: undefined
   'preference-changed': string
   'window-loaded': { win: Window; href: string }
   idle: { state: IdleState; topic: IdleTopic }

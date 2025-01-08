@@ -15,8 +15,6 @@ Components.utils.importGlobalProperties(['FormData', 'indexedDB'])
 Components.utils.import('resource://gre/modules/FileUtils.jsm')
 declare const FileUtils: any
 
-declare const __estrace: any // eslint-disable-line no-underscore-dangle
-
 import type { XUL } from '../typings/xul'
 import { DebugLog } from 'zotero-plugin/debug-log'
 DebugLog.register('Better BibTeX', ['extensions.zotero.translators.better-bibtex.'])
@@ -560,7 +558,11 @@ export class BetterBibTeX {
         this.dir = PathUtils.join(Zotero.DataDirectory.dir, 'better-bibtex')
         await IOUtils.makeDirectory(this.dir, { ignoreExisting: true, createAncestors: true })
         await Preference.startup(this.dir)
+
         Events.startup()
+        Events.on('export-progress', ({ pct, message }) => {
+          this.setProgress(pct, message)
+        })
 
         await Cache.open(await Zotero.DB.valueQueryAsync('SELECT MAX(dateModified) FROM items'))
         Events.cacheTouch = async (ids: number[]) => {
@@ -648,7 +650,8 @@ export class BetterBibTeX {
       description: 'user interface',
       startup: async () => {
         Ready.resolve(true)
-        await this.load(Zotero.getMainWindow())
+
+        this.onMainWindowLoad(Zotero.getMainWindow())
 
         Zotero.Promise.delay(15000).then(() => {
           DebugLog.unregister('Better BibTeX')
@@ -770,43 +773,11 @@ export class BetterBibTeX {
     await orchestrator.shutdown(reason)
   }
 
-  public async load(win: Window): Promise<void> {
-    if (!win) return
-    // the zero-width-space is a marker to re-save the current default so it doesn't get replaced
-    // when the default changes later, which would change new keys suddenly
-    if (!Preference.citekeyFormat) Preference.citekeyFormat = Preference.default.citekeyFormat
-
-    if (typeof __estrace !== 'undefined') {
-      flash(
-        'BBT TRACE LOGGING IS ENABLED',
-        'BBT trace logging is enabled in this build.\nZotero will run very slowly.\nThis is intended for debugging ONLY.',
-        20
-      )
-    }
-
-    await this.loadUI(win)
-
-    void Events.emit('loaded')
-
-    Events.on('export-progress', ({ pct, message }) => {
-      this.setProgress(pct, message)
-    })
-  }
-
   public onMainWindowLoad({ window }: { window: Window }): void {
-    log.info(`onMainWindowLoad ${typeof window}`)
+    void newZoteroPane(window)
   }
   public onMainWindowUnload({ window }: { window: Window }): void {
     log.info(`onMainWindowUnload ${typeof window}`)
-  }
-
-  async loadUI(win: Window): Promise<void> {
-    try {
-      await newZoteroPane(win)
-    }
-    catch (err) {
-      log.error('loadUI error:', err)
-    }
   }
 
   public parseDate(date: string): ParsedDate { return DateParser.parse(date) }
@@ -833,14 +804,5 @@ export class BetterBibTeX {
     }
   }
 }
-
-Events.on('window-loaded', async ({ win, href }: { win: Window; href: string }) => {
-  switch (href) {
-    case 'chrome://zotero/content/standalone/standalone.xul':
-    case 'chrome://zotero/content/zoteroPane.xhtml':
-      await Zotero.BetterBibTeX.loadUI(win)
-      break
-  }
-})
 
 Zotero.BetterBibTeX = Zotero.BetterBibTeX || new BetterBibTeX
