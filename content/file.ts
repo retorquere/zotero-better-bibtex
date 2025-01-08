@@ -45,7 +45,10 @@ export const File = new class {
 }
 
 export const Path = new class {
-  public home: string = FileUtils.getDir('Home', []).path
+  #home = ''
+  public get home(): string {
+    return (this.#home = this.#home || FileUtils.getDir('Home', []).path as string)
+  }
 
   #basenameRE = isWin ? /(^|\\)([^\\]+)\\?$/ : /(^|[/])([^/]+)[/]?$/
   public basename(path: string): string {
