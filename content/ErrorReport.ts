@@ -2,7 +2,6 @@ import * as client from './client'
 import { Path, File } from './file'
 
 import { Cache } from './db/cache'
-import { PromptService } from './prompt'
 import { regex as escapeRE } from './escape'
 
 import { Preference } from './prefs'
@@ -95,7 +94,7 @@ export class ErrorReport {
       wizard.advance();
 
       // eslint-disable-next-line no-magic-numbers
-      (<HTMLInputElement> this.document.getElementById('better-bibtex-report-id')).value = `${ this.name() }/${ version }-${ client.is7 ? 7 : 6 }${ Zotero.BetterBibTeX.outOfMemory ? '/oom' : '' }`
+      (<HTMLInputElement> this.document.getElementById('better-bibtex-report-id')).value = `${ this.name() }/${version}`
       this.document.getElementById('better-bibtex-report-result').hidden = false
     }
     catch (err) {
@@ -115,10 +114,10 @@ export class ErrorReport {
   }
 
   public restartWithDebugEnabled(): void {
-    const buttonFlags = PromptService.BUTTON_POS_0 * PromptService.BUTTON_TITLE_IS_STRING
-      + PromptService.BUTTON_POS_1 * PromptService.BUTTON_TITLE_CANCEL
-      + PromptService.BUTTON_POS_2 * PromptService.BUTTON_TITLE_IS_STRING
-    const index = PromptService.confirmEx(
+    const buttonFlags = Services.prompt.BUTTON_POS_0 * Services.prompt.BUTTON_TITLE_IS_STRING
+      + Services.prompt.BUTTON_POS_1 * Services.prompt.BUTTON_TITLE_CANCEL
+      + Services.prompt.BUTTON_POS_2 * Services.prompt.BUTTON_TITLE_IS_STRING
+    const index = Services.prompt.confirmEx(
       null,
       Zotero.getString('zotero.debugOutputLogging'),
       Zotero.getString('zotero.debugOutputLogging.enabledAfterRestart', [Zotero.clientName]),
@@ -346,7 +345,7 @@ export class ErrorReport {
     }
     this.input = {
       context: await this.context(),
-      errors: `${ Zotero.BetterBibTeX.outOfMemory }\n${ this.errors() }`.trim(),
+      errors: this.errors(),
       // # 1896
       log: this.log(),
       items: win.arguments[0].wrappedJSObject.items,
@@ -371,8 +370,6 @@ export class ErrorReport {
         show_latest.value = l10n.localize('better-bibtex_error-report_better-bibtex_latest', { version: latest || '<could not be established>' })
         show_latest.hidden = false
       }
-
-      (<HTMLInputElement> this.document.getElementById('better-bibtex-report-oom')).hidden = !Zotero.BetterBibTeX.outOfMemory
 
       this.region = await Zotero.Promise.any(Object.keys(s3.region).map(this.ping.bind(this)))
       this.bucket = `https://${ s3.bucket }-${ this.region.short }.s3-${ this.region.region }.amazonaws.com${ this.region.tld || '' }`

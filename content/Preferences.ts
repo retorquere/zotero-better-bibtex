@@ -412,8 +412,8 @@ export class PrefPane {
     const error = Formatter.test(Preference.citekeyFormatEditing || Preference.citekeyFormat)
     const editing = $window.document.getElementById('bbt-preferences-citekeyFormatEditing')
     editing.classList[error ? 'add' : 'remove']('bbt-prefs-error')
-    editing.setAttribute(client.is7 ? 'title' : 'tooltiptext', error)
-    if (client.is7) editing.setAttribute('tooltip', 'html-tooltip')
+    editing.setAttribute('title', error)
+    editing.setAttribute('tooltip', 'html-tooltip')
 
     const msg = $window.document.getElementById('bbt-citekeyFormat-error') as HTMLInputElement
     msg.value = error || (Preference.citekeyFormatEditing === '[' && 'legacy formula, will be upgraded when completed')
@@ -441,8 +441,8 @@ export class PrefPane {
 
     const postscript = $window.document.getElementById('bbt-postscript')
     postscript.setAttribute('style', (error ? '-moz-appearance: none !important; background-color: DarkOrange' : ''))
-    postscript.setAttribute(client.is7 ? 'title' : 'tooltiptext', error)
-    if (client.is7) postscript.setAttribute('tooltip', 'html-tooltip')
+    postscript.setAttribute('title', error)
+    postscript.setAttribute('tooltip', 'html-tooltip')
     $window.document.getElementById('bbt-cache-warn-postscript').setAttribute('hidden', `${ !Preference.postscript.includes('Translator.options.exportPath') }`)
   }
 
@@ -464,21 +464,6 @@ export class PrefPane {
         Zotero.BetterBibTeX.PrefPane.unload()
         $window = null
       })
-
-      if (!client.is7) {
-        const deck = $window.document.getElementById('bbt-prefs-deck') as unknown as XUL.Deck
-        deck.selectedIndex = 0
-
-        await Zotero.BetterBibTeX.ready
-
-        // bloody *@*&^@# html controls only sorta work for prefs
-        for (const node of Array.from($window.document.querySelectorAll<HTMLInputElement>('input[preference][type=\'range\'], input[preference][type=\'text\'], textarea[preference]'))) {
-          node.value = Preference[node.getAttribute('preference').replace('extensions.zotero.translators.better-bibtex.', '')]
-          if (!client.is7 && node.tagName === 'textarea') node.style.marginBottom = '20px'
-        }
-
-        deck.selectedIndex = 1
-      }
 
       await this.autoexport.load()
 

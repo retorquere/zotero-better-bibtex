@@ -9,13 +9,12 @@ import * as Extra from './extra'
 import { defaults } from '../gen/preferences/meta'
 import { Preference } from './prefs'
 import * as memory from './memory'
-import { is7 } from './client'
 import { Cache } from './db/cache'
 // import { Bench } from 'tinybench'
 
 const setatstart: string[] = [ 'testing', 'cache' ].filter(p => Preference[p] !== defaults[p])
 
-const idleService: any = Components.classes[`@mozilla.org/widget/${ is7 ? 'user' : '' }idleservice;1`].getService(Components.interfaces[is7 ? 'nsIUserIdleService' : 'nsIIdleService'])
+const idleService: any = Components.classes['@mozilla.org/widget/useridleservice;1'].getService(Components.interfaces.nsIUserIdleService)
 
 export class TestSupport {
   public timedMemoryLog: any
@@ -262,40 +261,16 @@ export class TestSupport {
   public async merge(ids: number[]): Promise<void> {
     const before = await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, true, false, true)
 
-    if (is7) {
-      let other = await getItemsAsync(ids)
-      const master = other.find(item => item.id === ids[0])
-      other = other.filter(item => item.id !== ids[0])
-      const json = master.toJSON()
-      // Exclude certain properties that are empty in the cloned object, so we don't clobber them
-      const { relations: _r, collections: _c, tags: _t, ...keep } = master.clone().toJSON() // eslint-disable-line @typescript-eslint/no-unused-vars
-      Object.assign(json, keep)
+    let other = await getItemsAsync(ids)
+    const master = other.find(item => item.id === ids[0])
+    other = other.filter(item => item.id !== ids[0])
+    const json = master.toJSON()
+    // Exclude certain properties that are empty in the cloned object, so we don't clobber them
+    const { relations: _r, collections: _c, tags: _t, ...keep } = master.clone().toJSON() // eslint-disable-line @typescript-eslint/no-unused-vars
+    Object.assign(json, keep)
 
-      master.fromJSON(json)
-      Zotero.Items.merge(master, other)
-    }
-    else {
-      const zoteroPane = Zotero.getActiveZoteroPane()
-      await zoteroPane.selectItems(ids, true)
-      const selected = zoteroPane.getSelectedItems()
-      if (selected.length !== ids.length) throw new Error(`selected: ${ selected.length }, expected: ${ ids.length }`)
-
-      // zoteroPane.mergeSelectedItems()
-
-      selected.sort((a, b) => ids.indexOf(a.id) - ids.indexOf(b.id))
-
-      const win = Zotero.getMainWindow()
-
-      if (!win.Zotero_Duplicates_Pane) {
-        Components.classes['@mozilla.org/moz/jssubscript-loader;1']
-          .getService(Components.interfaces.mozIJSSubScriptLoader)
-          .loadSubScript('chrome://zotero/content/duplicatesMerge.js', win)
-      }
-
-      win.Zotero_Duplicates_Pane.setItems(selected)
-      await Zotero.Promise.delay(1500)
-      await win.Zotero_Duplicates_Pane.merge()
-    }
+    master.fromJSON(json)
+    Zotero.Items.merge(master, other)
 
     await Zotero.Promise.delay(1500)
 

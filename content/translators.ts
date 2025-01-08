@@ -489,9 +489,6 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       }
 
       for (const header of headers) {
-        // workaround for mem limitations on Windows
-        if (!client.is7 && typeof header.displayOptions?.worker === 'boolean') header.displayOptions.worker = !!Zotero.isWin
-
         const existing = installed[header.label]
         if (!existing) {
           reinit[header.label] = { header, code: code(header.label) }

@@ -187,32 +187,24 @@ class WorkerZoteroBetterBibTeX {
     if (!path) return null
 
     try {
-      if (client.is7) {
-        const file = IOUtils.openFileForSyncReading(path)
-        const chunkSize = 64
-        const bytes = new Uint8Array(chunkSize)
-        const decoder = new TextDecoder('utf-8')
-        let offset = 0
-        const size = file.size
+      const file = IOUtils.openFileForSyncReading(path)
+      const chunkSize = 64
+      const bytes = new Uint8Array(chunkSize)
+      const decoder = new TextDecoder('utf-8')
+      let offset = 0
+      const size = file.size
 
-        let text = ''
-        while (offset < size) {
-          const len = Math.min(chunkSize, size - offset)
-          const chunk = len > chunkSize ? bytes : bytes.subarray(0, len)
-          file.readBytesInto(chunk, offset)
-          text += decoder.decode(chunk)
-          offset += len
-        }
+      let text = ''
+      while (offset < size) {
+        const len = Math.min(chunkSize, size - offset)
+        const chunk = len > chunkSize ? bytes : bytes.subarray(0, len)
+        file.readBytesInto(chunk, offset)
+        text += decoder.decode(chunk)
+        offset += len
+      }
 
-        file.close()
-        return text
-      }
-      else {
-        if (!OS.File.exists(path)) return null
-        const bytes = <ArrayBuffer>OS.File.read(path)
-        const decoder = (new TextDecoder)
-        return decoder.decode(bytes as BufferSource)
-      }
+      file.close()
+      return text
     }
     catch (err) {
       if (!err.message?.includes('NS_ERROR_FILE_NOT_FOUND')) {
