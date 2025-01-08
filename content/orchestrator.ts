@@ -4,8 +4,6 @@ import type { Reason } from './bootstrap'
 import { log } from './logger'
 import { Preference } from './prefs'
 
-import { is7 } from './client'
-
 type Handler = (reason: Reason, task?: Task) => void | string | Promise<void | string>
 
 interface Task {

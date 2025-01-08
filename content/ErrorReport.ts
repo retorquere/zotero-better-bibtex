@@ -3,7 +3,7 @@ import { Path, File } from './file'
 
 import { Cache } from './db/cache'
 import { PromptService } from './prompt'
-// import { regex as escapeRE } from './escape'
+import { regex as escapeRE } from './escape'
 
 import { Preference } from './prefs'
 

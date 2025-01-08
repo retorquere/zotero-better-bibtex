@@ -4,7 +4,6 @@ import * as client from './client'
 import merge from 'lodash.merge'
 import { Cache } from './db/cache'
 import { Serializer } from './item-export-format'
-import { Path } from './file'
 
 declare class ChromeWorker extends Worker { }
 
@@ -206,7 +205,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     const displayOptions = {
       ...this.displayOptions(job.translatorID, job.displayOptions),
       exportPath: job.path || undefined,
-      exportDir: job.path ? Path.dirname(job.path) : undefined,
+      exportDir: job.path ? PathUtils.parent(job.path) : undefined,
     }
 
     if (job.translate) {

@@ -1,4 +1,3 @@
-import { is7 } from './client'
 import { Path } from './file'
 
 import { log } from './logger'

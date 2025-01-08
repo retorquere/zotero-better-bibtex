@@ -1,6 +1,4 @@
-import { Path } from './file'
-
-if (!is7) Components.utils.import('resource://gre/modules/osfile.jsm')
+import { Path, File } from './file'
 
 import { Translators } from './translators'
 import { Preference } from './prefs'
@@ -115,26 +113,19 @@ export const AUXScanner = new class { // eslint-disable-line @typescript-eslint/
   }
 
   private async luaFilter(): Promise<string> {
-    const lua = `list-citekeys-${ version }.lua`
+    const filter: string = PathUtils.join(Zotero.BetterBibTeX.dir, `list-citekeys-${version}.lua`)
 
-    const filters: string[] = (await IOUtils.getChildren(Zotero.BetterBibTeX.dir))
-      .map(filter => PathUtils.join(Zotero.BetterBibTeX.dir, old))
-      .filter(filter => {
-        const filename = PathUtils.filename(filter)
-        return filename !== lua && filename.match(/^list-citekeys.*\.lua$/)
-      })
-    for (const old of filters) {
-      if (await File.isFile(old)) await IOUtils.remove(old)
+    for (const old of await IOUtils.getChildren(Zotero.BetterBibTeX.dir)) {
+      if (old !== filter && PathUtils.filename(old).match(/^list-citekeys-.*[.]lua$/) && await File.isFile(old)) await IOUtils.remove(old)
     }
 
-    const filter = PathUtils.join(Zotero.BetterBibTeX.dir, lua)
     if (!(await File.exists(filter))) {
       const url = 'chrome://zotero-better-bibtex/content/resource/list-citekeys.lua'
       const file = Zotero.File.pathToFile(filter)
       const contents = Zotero.File.getContentsFromURL(url)
       Zotero.File.putContents(file, contents)
     }
-    return <string>filter
+    return filter
   }
 
   private async parseMD(path: string, citekeys: string[]) {
@@ -160,7 +151,7 @@ export const AUXScanner = new class { // eslint-disable-line @typescript-eslint/
     let m, re
 
     const contents = await this.read(path)
-    const parent = Path.dirname(path)
+    const parent = PathUtils.parent(path)
 
     if (bibfiles) {
       // bib files used

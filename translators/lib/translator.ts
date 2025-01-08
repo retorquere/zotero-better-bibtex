@@ -2,6 +2,7 @@ declare const Zotero: any
 declare const __estrace: any // eslint-disable-line no-underscore-dangle
 
 import * as client from '../../content/client'
+import { Path } from '../../content/file'
 
 import * as Prefs from '../../gen/preferences/meta'
 const PrefNames: Set<string> = new Set(Object.keys(Prefs.defaults))
@@ -35,10 +36,10 @@ class Override {
       return false
     }
 
-    const candidates = [
+    const candidates: string[] = [
       Path.basename(this.exportPath).replace(/\.[^.]+$/, '') + extension,
       override,
-    ].map(filename => PathUtils.join(this.exportDir, filename))
+    ].map(filename => PathUtils.join(this.exportDir, filename) as string)
 
     for (const candidate of candidates) {
       try {

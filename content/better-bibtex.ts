@@ -578,7 +578,7 @@ export class BetterBibTeX {
 
       case 'tag':
         // eslint-disable-next-line no-case-declarations
-        let name = Path.basename(aux)
+        let name = PathUtils.filename(aux)
         name = name.lastIndexOf('.') > 0 ? name.substr(0, name.lastIndexOf('.')) : name
         // eslint-disable-next-line no-case-declarations
         const tag = prompt({
@@ -667,7 +667,7 @@ export class BetterBibTeX {
         if ((await Translators.needsInstall()).length) await Zotero.Translators.init()
 
         this.dir = PathUtils.join(Zotero.DataDirectory.dir, 'better-bibtex')
-        await File.makeDir(this.dir)
+        await IOUtils.makeDirectory(this.dir, { ignoreExisting: true, createAncestors: true })
         await Preference.startup(this.dir)
         Events.startup()
 

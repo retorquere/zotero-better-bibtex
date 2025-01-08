@@ -1,5 +1,4 @@
 import { File } from './file'
-import { is7 } from './client'
 
 import csv from 'papaparse'
 import { log } from './logger'

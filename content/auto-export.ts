@@ -93,6 +93,18 @@ class Git {
     return this
   }
 
+  private async findRoot(path: string): Promise<string> {
+    if (!path) return ''
+    if (!await File.exists(path)) return ''
+    if (!await File.isDir(path)) return ''
+    const gitdir = PathUtils.join(path, '.git')
+    if ((await File.exists(gitdir)) && (await File.isDir(gitdir))) return path
+
+    const parent = PathUtils.parent(path)
+    if (parent === path) return '' // at root, and is not git repo. Who does this?
+    return await this.findRoot(parent)
+  }
+
   public async repo(bib: string): Promise<Git> {
     const repo = new Git(this)
 
@@ -120,15 +132,7 @@ class Git {
         break
 
       case 'config':
-        if (typeof this.root[bib] === 'undefined') {
-          for (let root = PathUtils.parent(bib); root && (await File.exists(root)) && (await File.isDir(root)) && root !== PathUtils.parent(root); root = PathUtils.parent(root)) {
-            const gitdir = PathUtils.join(root, '.git')
-            if ((await File.exists(gitdir)) && (await File.isDir(gitdir))) {
-              this.root[bib] = root
-              break
-            }
-          }
-        }
+        if (typeof this.root[bib] === 'undefined') this.root[bib] = await this.findRoot(PathUtils.parent(bib))
         if (!this.root[bib]) return disabled()
         repo.path = this.root[bib]
 
