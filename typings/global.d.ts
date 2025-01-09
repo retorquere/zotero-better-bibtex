@@ -1,23 +1,39 @@
 declare namespace Zotero {
   let BetterBibTeX: import('../content/better-bibtex').BetterBibTeX
 
+  let version: string
   let clientName: string
   let write: (body: string) => void // needed in translators
   let hiDPI: boolean
+  let getActiveZoteroPane: function(): any
+  let getTranslatorsDirectory: function(): any
+  let debug: (msg: string) => void
+  let getString: (name: string, params?: Record<string, string>, num?: number) => string
+  let getMainWindow: () => Window
+  let isWin: boolean
 
   let API: any
   let Cite: any
+  let DataObjects: any
   let Debug: any
+  let File: any
+  let Groups: any
   let Integration: any
   let ItemFields: any
+  let Items: any
   let PDFRenderer: any
+  let Prefs: any
+  let Promise: any
   let QuickCopy: any
   let Schema: any
+  let Search: any
   let SearchConditions: any
+  let Server: any
   let Styles: any
   let Sync: any
   let Translate: any
   let Translators: any
+  let URI: any
 
   interface Search {
     addCondition(
@@ -43,6 +59,7 @@ declare namespace Zotero {
   }
 
   interface Item {
+    id: number
     isFeedItem: boolean
   }
 
@@ -58,6 +75,10 @@ declare namespace Zotero {
   }
 
   interface Collection {
+    name: string
+    parentID: number
+    libraryID: number
+
     toJSON(options?: object): {
       key: string
       name: string
@@ -87,15 +108,18 @@ declare namespace Zotero {
         noCache?: boolean
       },
     ): Promise<any[] | undefined> // any instead of object, or const { fileName, metadataJSON } of (await Zotero.DB.queryAsync... does not work
+
     function queryTx(sql: string, params?: Zotero.DB.QueryParams, options?: { // 2ns parameter optional
         inBackup?: boolean
         noParseParams?: boolean
         onRow?: (row: unknown, cancel: unknown) => void
         noCache?: boolean
       },
-    ): Promise<any[] | undefined> // any instead of object, or const { fileName, metadataJSON } of (await Zotero.DB.queryAsync... does not work
+    ): Promise<any[] | undefined>
 
     function executeTransaction(func: any, options?: any): Promise<any>
+
+    function tableExists(table: string, schema?: string): Promise<boolean>
   }
 
   interface LibraryTree {
@@ -107,6 +131,7 @@ declare namespace Zotero {
     let Internal: any
     let Item: any
     function generateObjectKey(): string
+    function randomString(): string
   }
 }
 
@@ -117,3 +142,8 @@ declare namespace Zotero_File_Interface {
 declare function importScripts(url: string): void
 type DedicatedWorkerGlobalScope = any
 declare const FileUtils: any
+declare const PathUtils: any
+declare const Components: any
+declare const IOUtils: any
+declare const Services: any
+declare const rootURI: string

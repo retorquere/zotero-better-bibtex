@@ -111,7 +111,7 @@ export class TestSupport {
       await Zotero.Promise.delay(1500)
     }
     else {
-      await Zotero.getMainWindow().Zotero_File_Interface.importFile({ file: Zotero.File.pathToFile(path), createNewCollection: !!createNewCollection })
+      await (Zotero.getMainWindow() as unknown as any).Zotero_File_Interface.importFile({ file: Zotero.File.pathToFile(path), createNewCollection: !!createNewCollection })
     }
 
     items = await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, true, false, true)
@@ -185,7 +185,7 @@ export class TestSupport {
     const s = (new Zotero.Search)
     for (const [ mode, text ] of Object.entries(query)) {
       if (![ 'is', 'contains' ].includes(mode)) throw new Error(`unsupported search mode ${ mode }`)
-      s.addCondition('field', mode as _ZoteroTypes.Search.Operator, text)
+      s.addCondition('field', mode, text)
     }
     ids = ids.concat(await s.search())
     ids = Array.from(new Set(ids))
