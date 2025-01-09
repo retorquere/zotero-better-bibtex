@@ -199,6 +199,7 @@ class NSItem {
             throw new Error(`library ${ JSON.stringify(term[2]) } not found`)
           }
         }
+        // @ts-ignore
         search.addCondition(...term)
       }
     }
@@ -238,7 +239,7 @@ class NSItem {
 
     for (const att of attachments) {
       const data: Record<string, any> = {
-        open: `zotero://open-pdf/${ Zotero.API.getLibraryPrefix(item.libraryID || Zotero.Libraries.userLibraryID) }/items/${ att.key }`,
+        open: `zotero://open-pdf/${Zotero.API.getLibraryPrefix(item.libraryID || Zotero.Libraries.userLibraryID)}/items/${att.key}`,
         path: att.getFilePath(),
       }
 
@@ -293,16 +294,20 @@ class NSItem {
     const keys = Zotero.BetterBibTeX.KeyManager.find({ where: q })
     if (!keys.length) throw { code: INVALID_PARAMETERS, message: `zero matches for ${ citekeys.join(',') }` }
 
-    const seen = {}
+    const seen: Record<string, any> = {}
     const recurseParents = (libraryID: number, key: string): string => {
       if (!seen[key]) {
-        let col = Zotero.Collections.getByLibraryAndKey(libraryID, key)
+        let col = (Zotero.Collections.getByLibraryAndKey(libraryID, key) || null)?.toJSON()
 
-        if (!col) return ''
-
-        col = col.toJSON()
+        if (col) {
+          col = structuredClone(col)
+        }
+        else {
+          return ''
+        }
 
         if (col.parentCollection) {
+          // @ts-ignore TODO: remove after fix in zotero-types
           col.parentCollection = recurseParents(libraryID, col.parentCollection)
         }
 
@@ -320,7 +325,7 @@ class NSItem {
     for (const key of keys) {
       const item = await getItemsAsync(key.itemID)
       collections[key.citationKey] = item.getCollections().map(id => {
-        const col = Zotero.Collections.get(id).toJSON()
+        const col = structuredClone(Zotero.Collections.get(id).toJSON())
 
         delete col.relations
         delete col.version
@@ -328,7 +333,8 @@ class NSItem {
         seen[id] = col
 
         if (includeParents && col.parentCollection) {
-          col.parentCollection = recurseParents(item.libraryID, col.parentCollection)
+          /// @ts-ignore TODO: remove when zotero-types is fixed
+          col.parentCollection = recurseParents(item.libraryID, col.parentCollection) 
         }
 
         // eslint-disable-next-line @typescript-eslint/no-unsafe-return

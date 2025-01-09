@@ -27,7 +27,7 @@ class Emitter extends Emittery<{
   'collections-changed': number[]
   'collections-removed': number[]
   'export-progress': { pct: number; message: string; ae?: string }
-  'items-changed': { items: ZoteroItem[]; action: Action; reason?: string }
+  'items-changed': { items: Zotero.Item[]; action: Action; reason?: string }
   'libraries-changed': number[]
   'libraries-removed': number[]
   'preference-changed': string
@@ -212,7 +212,7 @@ class ItemListener extends ZoteroListener {
       const parentIDs: number[] = []
       // safe to use Zotero.Items.get(...) rather than Zotero.Items.getAsync here
       // https://groups.google.com/forum/#!topic/zotero-dev/99wkhAk-jm0
-      const items = Zotero.Items.get(ids).filter((item: ZoteroItem) => {
+      const items = Zotero.Items.get(ids).filter((item: Zotero.Item) => {
         if (item.deleted) touch(item) // because trashing an item *does not* trigger collection-item?!?!
         if (action === 'delete') return false
         // check .deleted for #2401/#2676 -- we're getting *modify* (?!) notifications for trashed items which reinstates them into the BBT DB
@@ -225,12 +225,12 @@ class ItemListener extends ZoteroListener {
         }
 
         return true
-      }) as ZoteroItem[]
+      }) as Zotero.Item[]
 
       await Events.itemsChanged(action, ids)
       if (items.length) await Events.emit('items-changed', { items, action })
 
-      let parents: ZoteroItem[] = []
+      let parents: Zotero.Item[] = []
       if (parentIDs.length) {
         parents = Zotero.Items.get(parentIDs)
         void Events.emit('items-changed', { items: parents, action: 'modify', reason: `parent-${ action }` })

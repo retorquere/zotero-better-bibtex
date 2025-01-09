@@ -214,7 +214,7 @@ class ZoteroSerialized {
     return (!item.isFeedItem && (item.isRegularItem() || item.isNote() || item.isAttachment())) as boolean
   }
 
-  public async fill(items: ZoteroItem[], serializer: Serializer): Promise<void> {
+  public async fill(items: Zotero.Item[], serializer: Serializer): Promise<void> {
     items = items.filter(item => this.cachable(item))
     if (!items.length) return
 

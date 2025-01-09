@@ -1,15 +1,38 @@
 declare namespace Zotero {
   let BetterBibTeX: import('../content/better-bibtex').BetterBibTeX
+
+  let clientName: string
   let write: (body: string) => void // needed in translators
   let hiDPI: boolean
 
-  let ItemFields: any
-  let Translators: any
-  let Translate: any
+  let API: any
+  let Cite: any
   let Debug: any
-  let Schema: any
+  let Integration: any
+  let ItemFields: any
+  let PDFRenderer: any
   let QuickCopy: any
+  let Schema: any
   let SearchConditions: any
+  let Styles: any
+  let Sync: any
+  let Translate: any
+  let Translators: any
+
+  interface Search {
+    addCondition(
+      condition: _ZoteroTypes.Search.Conditions,
+      operator: _ZoteroTypes.Search.Operator,
+      value: number,
+      required?: boolean,
+    ): number
+
+    addCondition(condition: 'blockStart' | 'blockEnd'): number
+  }
+
+  namespace DataDirectory {
+    let dir: string
+  }
 
   namespace OpenPDF {
     async function openToPage(attachment: Zotero.Item, page?: number)
@@ -32,6 +55,16 @@ declare namespace Zotero {
     function get(libraryID: number): Library
     function exists(libraryID: number): boolean
     function getAll(): Zotero.Library[]
+  }
+
+  interface Collection {
+    toJSON(options?: object): {
+      key: string
+      name: string
+      version: 68
+      parentCollection: string | false
+      relations: _ZoteroTypes.ObjectRelations
+    }
   }
 
   namespace Collections {
@@ -72,6 +105,7 @@ declare namespace Zotero {
   namespace Utilities {
     let XRegExp: any
     let Internal: any
+    let Item: any
     function generateObjectKey(): string
   }
 }
@@ -82,3 +116,4 @@ declare namespace Zotero_File_Interface {
 
 declare function importScripts(url: string): void
 type DedicatedWorkerGlobalScope = any
+declare const FileUtils: any

@@ -14,7 +14,7 @@ export const File = new class {
 
   public async isFile(path: string): Promise<boolean> {
     try {
-      return (await IOUtils.stat(path)).type === 'file'
+      return (await IOUtils.stat(path)).type === 'regular'
     }
     catch (err) {
       if (err.name !== 'NotFoundError') log.error(path, 'isFile', err)
@@ -25,8 +25,8 @@ export const File = new class {
   public async lastModified(path: string): Promise<number> {
     try {
       const stat = await IOUtils.stat(path)
-      if (stat.type !== 'file') return 0
-      return stat.lastModificationDate.getTime() as number
+      if (stat.type !== 'regular') return 0
+      return stat.lastModified
     }
     catch {
       return 0

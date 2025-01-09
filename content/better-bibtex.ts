@@ -85,7 +85,7 @@ monkey.patch(Zotero.Utilities.Item?.itemToCSLJSON ? Zotero.Utilities.Item : Zote
 })
 
 // https://github.com/retorquere/zotero-better-bibtex/issues/1221
-monkey.patch(Zotero.Items, 'merge', original => async function Zotero_Items_merge(item: ZoteroItem, otherItems: ZoteroItem[]) {
+monkey.patch(Zotero.Items, 'merge', original => async function Zotero_Items_merge(item: Zotero.Item, otherItems: Zotero.Item[]) {
   try {
     // log.verbose = true
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
@@ -704,7 +704,7 @@ export class BetterBibTeX {
           // onRender: ({ body, item, editable, tabType }) => {
           onRender: ({ body, item, setSectionSummary }) => {
             const citekey = Zotero.BetterBibTeX.KeyManager.get(item.id) || { citationKey: '', pinned: false }
-            const textbox = body.querySelector('#better-bibtex-citation-key')
+            const textbox: HTMLElement = body.querySelector('#better-bibtex-citation-key')
             body.style.display = 'flex'
             // const was = textbox.dataset.itemid || '<node>'
             textbox.value = citekey.citationKey
@@ -717,14 +717,14 @@ export class BetterBibTeX {
           },
           onInit: ({ body, refresh }) => {
             $done = Events.on('items-changed', ({ items }) => {
-              const textbox = body.querySelector('#better-bibtex-citation-key')
+              const textbox: HTMLElement = body.querySelector('#better-bibtex-citation-key')
               const itemID = textbox.dataset.itemid ? parseInt(textbox.dataset.itemid) : undefined
-              const displayed: ZoteroItem = textbox.dataset.itemid ? items.find(item => item.id === itemID) : undefined
+              const displayed: Zotero.Item = textbox.dataset.itemid ? items.find(item => item.id === itemID) : undefined
               if (displayed) refresh()
             })
           },
           onItemChange: ({ setEnabled, body, item }) => {
-            const textbox = body.querySelector('#better-bibtex-citation-key')
+            const textbox: HTMLElement = body.querySelector('#better-bibtex-citation-key')
             if (item.isRegularItem() && !item.isFeedItem) {
               const citekey = item.getField('citationKey')
               // const was = textbox.dataset.itemid
