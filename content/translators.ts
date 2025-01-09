@@ -58,7 +58,6 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
   public byId: Record<string, Translator.Header> = {}
   public byLabel: Record<string, Translator.Header> = {}
   public bySlug: Record<string, Translator.Header> = {}
-  public itemType: { note: number; attachment: number; annotation: number }
   public queue = newQueue(1)
   public worker: ChromeWorker
 
@@ -102,12 +101,6 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
           }
         }
 
-        this.itemType = {
-          note: Zotero.ItemTypes.getID('note'),
-          attachment: Zotero.ItemTypes.getID('attachment'),
-          annotation: Zotero.ItemTypes.getID('annotation') || 'NULL',
-        }
-
         // cleanup old translators
         this.uninstall('Better BibTeX Quick Copy')
         this.uninstall('\u672B BetterBibTeX JSON (for debugging)')
@@ -115,7 +108,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
         await this.installTranslators()
 
-        ready.resolve(true)
+        ready.resolve(true as unknown as void)
       },
       shutdown: async (reason: Reason) => {
         switch (reason) {
@@ -174,6 +167,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     translation.setString(str)
 
     const zp = Zotero.getActiveZoteroPane()
+    if (!zp.collectionsView) return
 
     if (!zp.collectionsView.editable) {
       await zp.collectionsView.selectLibrary()
@@ -249,7 +243,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
               // job.translate._runHandler('error', e.data) // eslint-disable-line no-underscore-dangle
               job.translate.complete(false, { message: e.data.message, stack: e.data.stack })
             }
-            deferred.reject(new Error(e.data.message))
+            deferred.reject(new Error(e.data.message) as unknown as void)
             break
 
           case 'debug':
@@ -267,7 +261,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
               job.translate.string = e.data.output // eslint-disable-line id-blacklist
               job.translate.complete(e.data.output)
             }
-            deferred.resolve(e.data.output)
+            deferred.resolve(e.data.output as unknown as void)
             failed = false
             break
 
@@ -287,7 +281,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
         log.error('QBW: failed:', Date.now() - start, 'message:', e)
         // job.translate?._runHandler('error', e) // eslint-disable-line no-underscore-dangle
         job.translate?.complete(false, { message: e.message, stack: e.error?.stack })
-        deferred.reject(new Error(e.message))
+        deferred.reject(new Error(e.message) as unknown as void)
       }
 
       const scope = this.exportScope(job.scope)
@@ -355,7 +349,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
           if (failed) {
             const err = new TimeoutError(`translation timeout after ${ job.timeout } seconds`, { timeout: job.timeout })
             log.error('translation.exportItems:', err)
-            deferred.reject(err)
+            deferred.reject(err as unknown as void)
           }
         })
       }
@@ -365,7 +359,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       deferred.reject(err)
     }
 
-    return deferred.promise
+    return deferred.promise as unknown as Promise<string>
   }
 
   public displayOptions(translatorID: string, displayOptions: any): any {

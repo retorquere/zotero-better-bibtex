@@ -140,7 +140,7 @@ class Git {
         if (!(await File.exists(config)) || (await File.isDir(config))) return disabled()
 
         try {
-          const enabled = ini.parse(Zotero.File.getContents(config))['zotero "betterbibtex"']?.push
+          const enabled = ini.parse(await Zotero.File.getContentsAsync(config))['zotero "betterbibtex"']?.push
           if (enabled !== 'true' && enabled !== true) return disabled()
         }
         catch (err) {

@@ -196,7 +196,7 @@ export type CreatorTypeCollection = CreatorTypeOrAll[][]
 type Creator = { lastName?: string; firstName?: string; name?: string; creatorType: string; fieldMode?: number; source?: string }
 
 class Item {
-  public item: ZoteroItem | SerializedItem
+  public item: Zotero.Item | SerializedItem
   private language = ''
 
   public itemType: string
@@ -213,13 +213,13 @@ class Item {
   public extra: string
   public extraFields: Extra.Fields
 
-  constructor(item: ZoteroItem | SerializedItem) { // Item must have simplifyForExport pre-applied, without scrubbing
+  constructor(item: Zotero.Item | SerializedItem) { // Item must have simplifyForExport pre-applied, without scrubbing
     this.item = item
 
-    if ((item as ZoteroItem).getField) {
-      this.itemID = this.id = (item as ZoteroItem).id
-      this.itemKey = this.key = (item as ZoteroItem).key
-      this.itemType = Zotero.ItemTypes.getName((item as ZoteroItem).itemTypeID)
+    if ((item as Zotero.Item).getField) {
+      this.itemID = this.id = (item as Zotero.Item).id
+      this.itemKey = this.key = (item as Zotero.Item).key
+      this.itemType = Zotero.ItemTypes.getName((item as Zotero.Item).itemTypeID)
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       this.getField = function(name: string): string | number {
         switch (name) {
@@ -232,12 +232,12 @@ class Item {
             return this.title
           default:
             // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-            return (this.item as ZoteroItem).getField(name, false, true) as string || this.extraFields?.kv[name] || ''
+            return (this.item as Zotero.Item).getField(name as _ZoteroTypes.Item.ItemField, false, true) as string || this.extraFields?.kv[name] || ''
         }
       }
-      this.creators = (item as ZoteroItem).getCreatorsJSON()
+      this.creators = (item as Zotero.Item).getCreatorsJSON()
       this.libraryID = item.libraryID
-      this.title = (item as ZoteroItem).getField('title', false, true) as string
+      this.title = (item as Zotero.Item).getField('title', false, true) as string
     }
     else {
       this.itemType = (item as SerializedRegularItem).itemType
@@ -326,7 +326,7 @@ class Item {
   }
 
   public getTags(): Tag[] | string[] {
-    return (this.item as ZoteroItem).getTags ? (this.item as ZoteroItem).getTags() : (this.item as SerializedRegularItem).tags
+    return (this.item as Zotero.Item).getTags ? (this.item as Zotero.Item).getTags() : (this.item as SerializedRegularItem).tags
   }
 }
 
@@ -460,7 +460,7 @@ export class PatternFormatter {
     return this.citekey
   }
 
-  public format(item: ZoteroItem | SerializedItem): string {
+  public format(item: Zotero.Item | SerializedItem): string {
     this.item = new Item(item)
     this.chunk = ''
 

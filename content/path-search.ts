@@ -5,7 +5,7 @@ import { File } from './file'
 // https://searchfox.org/mozilla-central/source/toolkit/modules/subprocess/subprocess_win.jsm#135 doesn't seem to work on Windows.
 export async function findBinary(bin: string, installationDirectory: { mac?: string[]; win?: string[] } = {}): Promise<string> {
   const pref = `translators.better-bibtex.path.${ bin }`
-  let location: string = Zotero.Prefs.get(pref)
+  let location: string = Zotero.Prefs.get(pref) as string
   if (location && (await File.exists(location))) return location
   location = await pathSearch(bin, installationDirectory)
   if (typeof location === 'string') Zotero.Prefs.set(pref, location)

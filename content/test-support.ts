@@ -117,7 +117,7 @@ export class TestSupport {
     items = await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, true, false, true)
     const after = items.length
 
-    await Zotero.Promise.delay(Zotero.Prefs.get('translators.better-bibtex.itemObserverDelay') * 3)
+    await Zotero.Promise.delay(Zotero.Prefs.get('translators.better-bibtex.itemObserverDelay') as number * 3)
     return (after - before)
   }
 
@@ -185,7 +185,7 @@ export class TestSupport {
     const s = (new Zotero.Search)
     for (const [ mode, text ] of Object.entries(query)) {
       if (![ 'is', 'contains' ].includes(mode)) throw new Error(`unsupported search mode ${ mode }`)
-      s.addCondition('field', mode, text)
+      s.addCondition('field', mode as _ZoteroTypes.Search.Operator, text)
     }
     ids = ids.concat(await s.search())
     ids = Array.from(new Set(ids))

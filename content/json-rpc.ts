@@ -294,11 +294,11 @@ class NSItem {
     if (!keys.length) throw { code: INVALID_PARAMETERS, message: `zero matches for ${ citekeys.join(',') }` }
 
     const seen = {}
-    const recurseParents = (libraryID: string, key: string) => {
+    const recurseParents = (libraryID: number, key: string): string => {
       if (!seen[key]) {
         let col = Zotero.Collections.getByLibraryAndKey(libraryID, key)
 
-        if (!col) return false
+        if (!col) return ''
 
         col = col.toJSON()
 
@@ -543,7 +543,7 @@ class NSItem {
 
       style = style || 'apa'
       if (!style.includes('/')) style = `http://www.zotero.org/styles/${ style }`
-      locale = locale || Zotero.Prefs.get('export.quickCopy.locale')
+      locale = locale || Zotero.Prefs.get('export.quickCopy.locale') as string
       const citeproc = getStyle(style).getCiteProc(locale)
 
       for (const item of csl) {
@@ -610,10 +610,7 @@ class NSViewer {
 
     if (!attachments.length) throw { code: INVALID_PARAMETERS, message: `no PDF found for URI ${ id }` }
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return await Zotero.OpenPDF.openToPage(
-      attachments[0],
-      page + 1
-    )
+    return await Zotero.OpenPDF.openToPage(attachments[0], page + 1)
   }
 }
 

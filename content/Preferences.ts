@@ -168,7 +168,7 @@ class AutoExportPane {
         node.style.display = node.classList.contains(displayed) ? 'initial' : 'none'
       }
 
-      for (const node of Array.from(details.querySelectorAll('*[data-ae-field]'))) {
+      for (const node of Array.from(details.querySelectorAll('*[data-ae-field]')) as HTMLElement[]) {
         const field = node.getAttribute('data-ae-field')
 
         switch (field) {
@@ -316,18 +316,20 @@ class AutoExportPane {
     const coll = Zotero.Collections.get(id)
     if (!coll) return ''
 
-    if (form === 'long' && !isNaN(parseInt(coll.parentID))) {
-      return `${ this.collection(coll.parentID, form) } / ${ coll.name }`
+    if (form === 'long') {
+      return `${this.collection(coll.parentID, form)} / ${coll.name}`
     }
     else {
-      return `${ Zotero.Libraries.get(coll.libraryID).name } : ${ coll.name }`
+      return `${Zotero.Libraries.get(coll.libraryID).name} : ${coll.name}`
     }
   }
 
   private name(ae: { type: string; id: number; path: string }, form: 'long' | 'short'): string {
     switch (ae.type) {
-      case 'library':
-        return (Zotero.Libraries.get(ae.id).name as string)
+      case 'library': {
+        const lib = Zotero.Libraries.get(ae.id)
+        return lib ? lib.name : ''
+      }
 
       case 'collection':
         return this.collection(ae.id, form)
@@ -357,7 +359,7 @@ export class PrefPane {
     if (!preferences.path) return
 
     try {
-      preferences.contents = Zotero.File.getContents(preferences.path)
+      preferences.contents = (await Zotero.File.getContentsAsync(preferences.path, 'utf-8')) as string
     }
     catch {
       flash(`could not read contents of ${ preferences.path }`)
