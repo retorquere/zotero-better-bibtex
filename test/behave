@@ -198,8 +198,9 @@ def cancel_proxy():
 def main():
   config = Configuration()
   thread = None
-  thread = threading.Thread(target=cancel_proxy)
-  thread.start()
+  if platform.system() == 'Linux':
+    thread = threading.Thread(target=cancel_proxy)
+    thread.start()
   sys.exit(run_behave(config, runner_class=InstallLastRunner))
   if thread:
     thread.join()
