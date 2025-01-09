@@ -424,6 +424,8 @@ export const Cache = new class $Cache {
       Zotero.Prefs.clear(del)
     }
 
+    await Zotero.proxyAuthComplete()
+
     this.db = await this.$open('open')
     if (!this.db || !(await this.validate())) {
       this.db?.close()

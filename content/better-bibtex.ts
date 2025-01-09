@@ -20,7 +20,7 @@ import { DebugLog } from 'zotero-plugin/debug-log'
 DebugLog.register('Better BibTeX', ['extensions.zotero.translators.better-bibtex.'])
 
 import { icons } from './icons'
-import { prompt, modalsClosed } from './prompt'
+import { prompt } from './prompt'
 import { Elements } from './create-element'
 import { newZoteroPane } from './ZoteroPane'
 import { ExportOptions } from './ExportOptions'
@@ -564,7 +564,6 @@ export class BetterBibTeX {
           this.setProgress(pct, message)
         })
 
-        await modalsClosed()
         await Cache.open(await Zotero.DB.valueQueryAsync('SELECT MAX(dateModified) FROM items'))
         Events.cacheTouch = async (ids: number[]) => {
           await Cache.touch(ids)
