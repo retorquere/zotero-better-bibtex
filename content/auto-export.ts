@@ -465,7 +465,7 @@ export const AutoExport = new class $AutoExport { // eslint-disable-line @typesc
         // detect
         const $ae = 'autoexport'
         const $ae$setting = 'autoexport_setting'
-        const exists = async (table: string) => (await Zotero.DB.tableExists(table, 'betterbibtex')) as Promise<boolean>
+        const exists = async (table: string) => Zotero.DB.tableExists(table, 'betterbibtex')
         if (await exists($ae) && await exists($ae$setting)) {
           try {
             const migrate: Record<string, any> = {}
@@ -742,7 +742,7 @@ export const AutoExport = new class $AutoExport { // eslint-disable-line @typesc
     if (ae.type === 'collection') {
       const coll = await Zotero.Collections.getAsync(id)
       if (ae.recursive) {
-        for (const collID of coll.getChildren(true)) {
+        for (const collID of coll.getChildCollections(true)) {
           await this.itemIDs(ae, collID, itemTypeIDs, itemIDs)
         }
       }

@@ -56,6 +56,7 @@ declare namespace Zotero {
 
   namespace Date {
     function strToDate(string: string): any // object does not allow accessing .day on return value
+    function dateToSQL(date: Date, toUTC?: boolean): string
   }
 
   interface Item {
@@ -94,6 +95,7 @@ declare namespace Zotero {
     function getByLibrary(libraryID: number, recursive?: boolean): Zotero.Collection[]
     function getByLibraryAndKey(libraryID: number, key: string): Zotero.Collection
     function getByLibraryAndKeyAsync(libraryID: number, key: string): Zotero.Collection
+    function getAsync(id: number | number[], options?: any): Promise<Collection>
   }
 
   namespace Tags {
@@ -101,7 +103,7 @@ declare namespace Zotero {
   }
 
   namespace DB {
-    function queryAsync(sql: string, params?: Zotero.DB.QueryParams, options?: { // 2ns parameter optional
+    function queryAsync(sql: string, params?: Zotero.DB.QueryParams, options?: { // 2nd parameter optional
         inBackup?: boolean
         noParseParams?: boolean
         onRow?: (row: unknown, cancel: unknown) => void
@@ -109,13 +111,29 @@ declare namespace Zotero {
       },
     ): Promise<any[] | undefined> // any instead of object, or const { fileName, metadataJSON } of (await Zotero.DB.queryAsync... does not work
 
-    function queryTx(sql: string, params?: Zotero.DB.QueryParams, options?: { // 2ns parameter optional
+    function queryTx(sql: string, params?: Zotero.DB.QueryParams, options?: {
         inBackup?: boolean
         noParseParams?: boolean
         onRow?: (row: unknown, cancel: unknown) => void
         noCache?: boolean
       },
     ): Promise<any[] | undefined>
+
+    function columnQueryAsync(sql: string, params?: Zotero.DB.QueryParams, options?: {
+        inBackup?: boolean
+        noParseParams?: boolean
+        onRow?: (row: unknown, cancel: unknown) => void
+        noCache?: boolean
+      },
+    ): Promise<any[] | undefined>
+
+    function valueQueryAsync(sql: string, params?: Zotero.DB.QueryParams, options?: {
+        inBackup?: boolean
+        noParseParams?: boolean
+        onRow?: (row: unknown, cancel: unknown) => void
+        noCache?: boolean
+      },
+    ): Promise<any>
 
     function executeTransaction(func: any, options?: any): Promise<any>
 
@@ -131,7 +149,7 @@ declare namespace Zotero {
     let Internal: any
     let Item: any
     function generateObjectKey(): string
-    function randomString(): string
+    function randomString(len?: number, chars?: string): string
   }
 }
 
