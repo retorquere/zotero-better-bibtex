@@ -156,9 +156,11 @@ class IdleListener {
 abstract class ZoteroListener {
   private id: string
 
-  constructor(protected type: string) {
+  constructor(protected type: _ZoteroTypes.Notifier.Type) {
     this.id = Zotero.Notifier.registerObserver(this, [type], 'Better BibTeX', 1)
   }
+
+  abstract async notify(action: ZoteroAction, type: string, ids: number[], extraData?: Record<number, { libraryID?: number }>): void
 
   public unregister() {
     Zotero.Notifier.unregisterObserver(this.id)

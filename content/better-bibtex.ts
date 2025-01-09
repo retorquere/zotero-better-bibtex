@@ -705,9 +705,9 @@ export class BetterBibTeX {
           onRender: ({ body, item, setSectionSummary }) => {
             const citekey = Zotero.BetterBibTeX.KeyManager.get(item.id) || { citationKey: '', pinned: false }
             const textbox: HTMLElement = body.querySelector('#better-bibtex-citation-key')
-            body.style.display = 'flex'
+            body.style.display = 'flex';
             // const was = textbox.dataset.itemid || '<node>'
-            textbox.value = citekey.citationKey
+            (textbox as any).value = citekey.citationKey
             textbox.dataset.itemid = citekey.citationKey ? `${ item.id }` : ''
 
             const pinned = body.querySelector('#better-bibtex-citation-key-pinned')
