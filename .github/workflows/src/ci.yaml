@@ -135,12 +135,21 @@ jobs:
     - *install_python_packages
     - *cache
 
+    - name: Set system-wide proxy using PAC URL
+      run: |
+        echo "auto_proxy=http://proxy-doc.ird.fr/proxy.pac" | sudo tee -a /etc/environment
+        echo "auto_proxy=http://proxy-doc.ird.fr/proxy.pac" >> $GITHUB_ENV
+
+    - name: Verify proxy settings
+      run: env | grep -i proxy
+
     - name: install ${{ matrix.client }}
       run: |
         curl -sL https://raw.githubusercontent.com/retorquere/zotero-deb/master/install.sh | sudo bash
         sudo apt-get update
         sudo apt-get install ${{ matrix.client }}
         sudo apt-get install mesa-utils xvfb
+        sudo apt-get install wmctrl xdotool
         curl -LO https://github.com/jgm/pandoc/releases/download/3.1.11.1/pandoc-3.1.11.1-linux-amd64.tar.gz
         tar xvzf pandoc-3.1.11.1-linux-amd64.tar.gz
         sudo mv pandoc-3.1.11.1/bin/pandoc /usr/bin
