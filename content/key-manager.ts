@@ -87,7 +87,7 @@ class Progress {
   done() {
     this.progress.setProgress(100)
     this.progress.setText('Ready')
-    this.win.startCloseTimer(500)
+    this.win.close()
   }
 }
 
