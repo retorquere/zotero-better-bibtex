@@ -16,8 +16,6 @@ better-bibtex_error-report =
   .title = Better BibTeX debug log
 
 better-bibtex_error-report_better-bibtex_cache = Cache size: { $entries } entries.
-better-bibtex_error-report_better-bibtex_oom = Zotero is out of memory! Zotero on Windows has memory use restrictions that will be ameliorated by Zotero 7. In the mean time, please turn off Better BibTeX caching and restart Zotero.
-  .value = { better-bibtex_error-report_better-bibtex_oom }
 better-bibtex_error-report_better-bibtex_current = You are running Better BibTeX version { $version }
 better-bibtex_error-report_better-bibtex_latest = The latest Better BibTeX version is { $version }
 better-bibtex_error-report_context = 

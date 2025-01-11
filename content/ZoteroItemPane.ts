@@ -2,10 +2,8 @@ import { Monkey } from './monkey-patch'
 import { sentenceCase } from './text'
 import * as l10n from './l10n'
 import { Elements } from './create-element'
-import { busyWait } from './busy-wait'
 import { icons } from './icons'
 import { Events } from './events'
-import { is7 } from './client'
 
 async function title_sentenceCase(label) {
   const val = this._getFieldValue(label)
@@ -24,12 +22,6 @@ async function title_sentenceCase(label) {
   }
 }
 
-export async function newZoteroItemPane(win: Window): Promise<void> {
-  let itemBox: HTMLElement
-  await busyWait(() => { itemBox = win.document.querySelector('#zotero-editpane-item-box'); return !!itemBox })
-  new ZoteroItemPane(win, itemBox)
-}
-
 export class ZoteroItemPane {
   private monkey = new Monkey(true)
   document: Document
@@ -44,32 +36,6 @@ export class ZoteroItemPane {
   constructor(win: Window, private itemBox: any) { // eslint-disable-line @typescript-eslint/explicit-module-boundary-types
     this.document = win.document
     const elements = this.elements = new Elements(this.document)
-
-    if (!is7 && !this.document.getElementById('better-bibtex-editpane-item-box')) {
-      itemBox.parentNode.appendChild(elements.create('vbox', { flex: 1, style: 'margin: 0; padding: 0', $: [
-
-        elements.create('grid', { id: 'better-bibtex-editpane-item-box', $: [
-          elements.create('columns', { $: [
-            elements.create('column'),
-            elements.create('column', { flex: '1' }),
-            // elements.create('column', { flex: 100 }),
-          ]}),
-          elements.create('rows', { id: 'better-bibtex-fields', flex: 1, $: [
-            elements.create('row', { class: 'zotero-item-first-row', $: [
-              elements.create('label', { id: 'better-bibtex-citekey-label', style: 'width: 9em; text-align: right; color: #7F7F7F', value: '' }),
-              elements.create('textbox', { id: 'better-bibtex-citekey-display', flex: '1', class: 'plain', readonly: 'true', value: '' }),
-              // elements.create('label', { id: 'better-bibtex-citekey-pin', value: icons.pin }),
-            ]}),
-          ]}),
-        ]}),
-
-        itemBox,
-      ]}))
-    }
-
-    win.addEventListener('unload', () => {
-      this.unload()
-    })
 
     const self = this // eslint-disable-line @typescript-eslint/no-this-alias
     this.monkey.patch(itemBox.__proto__, 'refresh', original => function() {

@@ -1,8 +1,6 @@
 import type { Tag, RegularItem as SerializedRegularItem, Item as SerializedItem } from '../../gen/typings/serialized-item'
 
-import { Shim } from '../os'
 import * as client from '../../content/client'
-const $OS = client.is7 ? Shim : OS
 
 import nlp from 'compromise/one'
 type Term = {
@@ -1216,7 +1214,7 @@ export class PatternFormatter {
       const acronyms: Record<string, string> = {}
 
       try {
-        for (const row of csv2list($OS.Path.join(Zotero.BetterBibTeX.dir, `${ list }.csv`))) {
+        for (const row of csv2list(PathUtils.join(Zotero.BetterBibTeX.dir, `${ list }.csv`))) {
           if (row.length !== 2) {
             log.error('unexpected row in', `${ list }.csv`, ':', row)
             continue

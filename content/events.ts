@@ -2,7 +2,6 @@
 
 import Emittery from 'emittery'
 
-import { is7 } from './client'
 import { log } from './logger'
 
 type ZoteroAction = 'modify' | 'add' | 'trash' | 'delete'
@@ -22,7 +21,7 @@ type IdleService = {
 }
 type IdleTopic = 'auto-export' | 'cache-purge'
 
-const idleService: IdleService = Components.classes[`@mozilla.org/widget/${ is7 ? 'user' : '' }idleservice;1`].getService(Components.interfaces[is7 ? 'nsIUserIdleService' : 'nsIIdleService'])
+const idleService: IdleService = Components.classes['@mozilla.org/widget/useridleservice;1'].getService(Components.interfaces.nsIUserIdleService)
 
 class Emitter extends Emittery<{
   'collections-changed': number[]
@@ -31,7 +30,6 @@ class Emitter extends Emittery<{
   'items-changed': { items: ZoteroItem[]; action: Action; reason?: string }
   'libraries-changed': number[]
   'libraries-removed': number[]
-  loaded: undefined
   'preference-changed': string
   'window-loaded': { win: Window; href: string }
   idle: { state: IdleState; topic: IdleTopic }

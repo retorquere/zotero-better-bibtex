@@ -1,9 +1,8 @@
 /* eslint-disable max-len */
 declare const Services: any
 
-import { Shim } from './os'
 import * as client from './client'
-const $OS = client.is7 ? Shim : OS
+import { File } from './file'
 
 import { Events } from './events'
 import type { CharMap } from 'unicode2latex'
@@ -192,7 +191,7 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
     const key = `${ this.prefix }${ pref }`
     const modified = {
       pref: Zotero.Prefs.get(`${ key }.modified`) || 0,
-      file: (await $OS.File.exists(path)) ? (await $OS.File.stat(path)).lastModificationDate.getTime() : 0,
+      file: (await File.exists(path)) ? await File.lastModified(path) : 0,
     }
     if (modified.pref >= modified.file) return
 
@@ -209,7 +208,7 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
 
   public async startup(dir: string) {
     // load from csv for easier editing
-    await this.loadFromCSV('charmap', $OS.Path.join(dir, 'charmap.csv'), '{}', (rows: Record<string, string>[]) => JSON.stringify(
+    await this.loadFromCSV('charmap', PathUtils.join(dir, 'charmap.csv'), '{}', (rows: Record<string, string>[]) => JSON.stringify(
       rows.reduce((acc: CharMap, row: { unicode: string; text: string; math: string }) => {
         if (row.unicode && (row.math || row.text)) acc[row.unicode] = { text: row.text, math: row.math }
         return acc

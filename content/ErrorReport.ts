@@ -1,18 +1,8 @@
-/*
-declare var Services: any
-if (typeof Services == 'undefined') {
-  var { Services } = ChromeUtils.import('resource://gre/modules/Services.jsm') // eslint-disable-line no-var
-}
-*/
-
 import * as client from './client'
-
-import { Shim } from './os'
-const $OS = client.is7 ? Shim : OS
+import { Path, File } from './file'
 
 import { Cache } from './db/cache'
-import { PromptService } from './prompt'
-// import { regex as escapeRE } from './escape'
+import { regex as escapeRE } from './escape'
 
 import { Preference } from './prefs'
 
@@ -56,8 +46,7 @@ type Report = {
   cache?: string
 }
 
-// const homeDir = $OS.Constants.Path.homeDir
-// const $home = new RegExp(`${escapeRE(homeDir)}|${escapeRE(homeDir.replace(Zotero.isWin ? /\\/g : /\//g, '$1$1'))}|${escapeRE($OS.Path.toFileURI(homeDir))}`, 'g')
+const $home = new RegExp(`${escapeRE(Path.home)}|${escapeRE(Path.home.replace(Zotero.isWin ? /\\/g : /\//g, '$1$1'))}|${escapeRE(PathUtils.toFileURI(Path.home))}`, 'g')
 
 export class ErrorReport {
   private previewSize = 3
@@ -105,7 +94,7 @@ export class ErrorReport {
       wizard.advance();
 
       // eslint-disable-next-line no-magic-numbers
-      (<HTMLInputElement> this.document.getElementById('better-bibtex-report-id')).value = `${ this.name() }/${ version }-${ client.is7 ? 7 : 6 }${ Zotero.BetterBibTeX.outOfMemory ? '/oom' : '' }`
+      (<HTMLInputElement> this.document.getElementById('better-bibtex-report-id')).value = `${ this.name() }/${version}`
       this.document.getElementById('better-bibtex-report-result').hidden = false
     }
     catch (err) {
@@ -125,10 +114,10 @@ export class ErrorReport {
   }
 
   public restartWithDebugEnabled(): void {
-    const buttonFlags = PromptService.BUTTON_POS_0 * PromptService.BUTTON_TITLE_IS_STRING
-      + PromptService.BUTTON_POS_1 * PromptService.BUTTON_TITLE_CANCEL
-      + PromptService.BUTTON_POS_2 * PromptService.BUTTON_TITLE_IS_STRING
-    const index = PromptService.confirmEx(
+    const buttonFlags = Services.prompt.BUTTON_POS_0 * Services.prompt.BUTTON_TITLE_IS_STRING
+      + Services.prompt.BUTTON_POS_1 * Services.prompt.BUTTON_TITLE_CANCEL
+      + Services.prompt.BUTTON_POS_2 * Services.prompt.BUTTON_TITLE_IS_STRING
+    const index = Services.prompt.confirmEx(
       null,
       Zotero.getString('zotero.debugOutputLogging'),
       Zotero.getString('zotero.debugOutputLogging.enabledAfterRestart', [Zotero.clientName]),
@@ -173,7 +162,7 @@ export class ErrorReport {
 
   public async save(): Promise<void> {
     const filename = await pick('Logs', 'save', [[ 'Zip Archive (*.zip)', '*.zip' ]], `${ this.name() }.zip`)
-    if (filename) await $OS.File.writeAtomic(filename, this.zip(), { tmpPath: filename + '.tmp' })
+    if (filename) await IOUtils.write(filename, this.zip(), { tmpPath: filename + '.tmp' })
   }
 
   private async ping(region: string) {
@@ -209,7 +198,7 @@ export class ErrorReport {
       /protocol is not allowed for attachments/,
     ].map(re => re.source).join('|'))
     return logging.filter(line => !line.match(ignore))
-      // .map(line => line.replace($home, '$HOME'))
+      .map(line => line.replace($home, '$HOME'))
       .join('\n')
   }
 
@@ -356,14 +345,14 @@ export class ErrorReport {
     }
     this.input = {
       context: await this.context(),
-      errors: `${ Zotero.BetterBibTeX.outOfMemory }\n${ this.errors() }`.trim(),
+      errors: this.errors(),
       // # 1896
       log: this.log(),
       items: win.arguments[0].wrappedJSObject.items,
       cache,
     }
-    const acronyms = $OS.Path.join(Zotero.BetterBibTeX.dir, 'acronyms.csv')
-    if (await $OS.File.exists(acronyms)) this.input.acronyms = await $OS.File.read(acronyms, { encoding: 'utf-8' }) as unknown as string
+    const acronyms = PathUtils.join(Zotero.BetterBibTeX.dir, 'acronyms.csv')
+    if (await File.exists(acronyms)) this.input.acronyms = await IOUtils.readUTF8(acronyms) as string
 
     await this.reload()
 
@@ -381,8 +370,6 @@ export class ErrorReport {
         show_latest.value = l10n.localize('better-bibtex_error-report_better-bibtex_latest', { version: latest || '<could not be established>' })
         show_latest.hidden = false
       }
-
-      (<HTMLInputElement> this.document.getElementById('better-bibtex-report-oom')).hidden = !Zotero.BetterBibTeX.outOfMemory
 
       this.region = await Zotero.Promise.any(Object.keys(s3.region).map(this.ping.bind(this)))
       this.bucket = `https://${ s3.bucket }-${ this.region.short }.s3-${ this.region.region }.amazonaws.com${ this.region.tld || '' }`
@@ -455,7 +442,7 @@ export class ErrorReport {
     if (autoExports.length) {
       context += 'Auto-exports:\n'
       for (const ae of autoExports) {
-        context += `  path: ...${ JSON.stringify($OS.Path.split(ae.path).components.pop()) }`
+        context += `  path: ...${JSON.stringify(Path.basename(ae.path))}`
         switch (ae.type) {
           case 'collection':
             context += ` (${ Zotero.Collections.get(ae.id)?.name || '<collection>' })`

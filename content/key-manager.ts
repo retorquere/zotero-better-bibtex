@@ -9,7 +9,7 @@ import { orchestrator } from './orchestrator'
 
 import ETA from 'node-eta'
 
-import { alert, prompt, PromptService } from './prompt'
+import { alert, prompt } from './prompt'
 
 import { kuroshiro } from './key-manager/japanese'
 import { chinese } from './key-manager/chinese'
@@ -87,7 +87,7 @@ class Progress {
   done() {
     this.progress.setProgress(100)
     this.progress.setText('Ready')
-    this.win.startCloseTimer(500)
+    this.win.close()
   }
 }
 
@@ -183,11 +183,11 @@ export const KeyManager = new class _KeyManager {
       },
     }).length
     if (warnAt > 0 && affected > warnAt) {
-      const index = PromptService.confirmEx(
+      const index = Services.prompt.confirmEx(
         null, // no parent
         'Better BibTeX for Zotero', // dialog title
         l10n.localize('better-bibtex_bulk-keys-confirm_warning', { treshold: warnAt }),
-        PromptService.STD_OK_CANCEL_BUTTONS + PromptService.BUTTON_POS_2 * PromptService.BUTTON_TITLE_IS_STRING, // buttons
+        Services.prompt.STD_OK_CANCEL_BUTTONS + Services.prompt.BUTTON_POS_2 * Services.prompt.BUTTON_TITLE_IS_STRING, // buttons
         null, null, l10n.localize('better-bibtex_bulk-keys-confirm_stop_asking'), // button labels
         null, {} // no checkbox
       )
@@ -557,20 +557,22 @@ export const KeyManager = new class _KeyManager {
       }),
     ]
 
-    // generate keys for entries that don't have them yet
-    const progress = new Progress(missing.length, 'Assigning citation keys')
-    for (const itemID of missing) {
-      try {
-        this.update(await getItemsAsync(itemID))
-      }
-      catch (err) {
-        log.error('KeyManager.rescan: update failed:', err.message || `${ err }`, err.stack)
+    if (missing.length) {
+      // generate keys for entries that don't have them yet
+      const progress = new Progress(missing.length, 'Assigning citation keys')
+      for (const itemID of missing) {
+        try {
+          this.update(await getItemsAsync(itemID))
+        }
+        catch (err) {
+          log.error('KeyManager.rescan: update failed:', err.message || `${ err }`, err.stack)
+        }
+
+        progress.next()
       }
 
-      progress.next()
+      progress.done()
     }
-
-    progress.done()
   }
 
   public update(item: ZoteroItem, current?: CitekeyRecord): string {

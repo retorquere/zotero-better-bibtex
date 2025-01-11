@@ -1,7 +1,4 @@
-import { is7 } from './client'
-
 declare const ChromeUtils: any
-declare const XPCOMUtils: any
 
 import { stringify } from './stringify'
 
@@ -17,7 +14,7 @@ import { toClipboard } from './text'
 
 class FieldEnumerator {
   // eslint-disable-next-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
-  public QueryInterface = (is7 ? ChromeUtils : XPCOMUtils).generateQI([ Components.interfaces.nsISupports, Components.interfaces.nsISimpleEnumerator ])
+  public QueryInterface = ChromeUtils.generateQI([ Components.interfaces.nsISupports, Components.interfaces.nsISimpleEnumerator ])
   public doc: Document
   public idx: number
 

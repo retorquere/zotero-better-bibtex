@@ -83,3 +83,6 @@ declare const Components: any
 declare const rootURI: string
 declare const ChromeUtils: any
 declare const Services: any
+declare const PathUtils: any
+declare const FileUtils: any
+declare const IOUtils: any

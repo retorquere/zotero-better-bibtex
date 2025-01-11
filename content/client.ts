@@ -19,7 +19,6 @@ export const version: string = (() => {
 })()
 
 export const slug: string = name.toLowerCase().replace('-', '')
-export const is7: boolean = version[0] === '7'
 export const isBeta: boolean = version.includes('beta')
 export const run: string = worker ? searchParams.get('run') : Zotero.Utilities.generateObjectKey()
 

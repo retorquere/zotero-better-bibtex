@@ -1,9 +1,6 @@
 import { log } from './logger'
 
-import { is7 } from './client'
 export function clean_pane_persist(): void {
-  if (!is7) return
-
   let persisted = Zotero.Prefs.get('pane.persist')
   if (persisted) {
     try {
