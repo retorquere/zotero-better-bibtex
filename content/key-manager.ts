@@ -87,7 +87,7 @@ class Progress {
   done() {
     this.progress.setProgress(100)
     this.progress.setText('Ready')
-    this.win.startCloseTimer(500)
+    this.win.close()
   }
 }
 
@@ -558,20 +558,22 @@ export const KeyManager = new class _KeyManager {
       }),
     ]
 
-    // generate keys for entries that don't have them yet
-    const progress = new Progress(missing.length, 'Assigning citation keys')
-    for (const itemID of missing) {
-      try {
-        this.update(await getItemsAsync(itemID))
-      }
-      catch (err) {
-        log.error('KeyManager.rescan: update failed:', err.message || `${ err }`, err.stack)
+    if (missing.length) {
+      // generate keys for entries that don't have them yet
+      const progress = new Progress(missing.length, 'Assigning citation keys')
+      for (const itemID of missing) {
+        try {
+          this.update(await getItemsAsync(itemID))
+        }
+        catch (err) {
+          log.error('KeyManager.rescan: update failed:', err.message || `${ err }`, err.stack)
+        }
+
+        progress.next()
       }
 
-      progress.next()
+      progress.done()
     }
-
-    progress.done()
   }
 
   public update(item: Zotero.Item, current?: CitekeyRecord): string {
