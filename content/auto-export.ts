@@ -488,10 +488,10 @@ export const AutoExport = new class $AutoExport { // eslint-disable-line @typesc
               Zotero.Prefs.set(`translators.better-bibtex.autoExport.${this.key(path)}`, JSON.stringify(ae))
             }
 
-            Zotero.DB.queryAsync(`DELETE FROM betterbibtex.${$ae$setting}`)
-            Zotero.DB.queryAsync(`DELETE FROM betterbibtex.${$ae}`)
-            Zotero.DB.queryAsync(`DROP TABLE betterbibtex.${$ae$setting}`)
-            Zotero.DB.queryAsync(`DROP TABLE betterbibtex.${$ae}`)
+            await Zotero.DB.queryAsync(`DELETE FROM betterbibtex.${$ae$setting}`)
+            await Zotero.DB.queryAsync(`DELETE FROM betterbibtex.${$ae}`)
+            await Zotero.DB.queryAsync(`DROP TABLE betterbibtex.${$ae$setting}`)
+            await Zotero.DB.queryAsync(`DROP TABLE betterbibtex.${$ae}`)
           }
           catch (err) {
             log.error('auto-export migration failed', err)
@@ -499,10 +499,10 @@ export const AutoExport = new class $AutoExport { // eslint-disable-line @typesc
         }
         try {
           if (!(await exists($ae)) && await exists($ae$setting)) {
-            Zotero.DB.queryAsync(`DROP TABLE betterbibtex.${$ae$setting}`)
+            await Zotero.DB.queryAsync(`DROP TABLE betterbibtex.${$ae$setting}`)
           }
           if (await exists($ae) && !(await exists($ae$setting))) {
-            Zotero.DB.queryAsync(`DROP TABLE betterbibtex.${$ae}`)
+            await Zotero.DB.queryAsync(`DROP TABLE betterbibtex.${$ae}`)
           }
         }
         catch (err) {
@@ -742,7 +742,7 @@ export const AutoExport = new class $AutoExport { // eslint-disable-line @typesc
     if (ae.type === 'collection') {
       const coll = await Zotero.Collections.getAsync(id)
       if (ae.recursive) {
-        for (const collID of coll.getChildCollections(true) as number[]) {
+        for (const collID of coll.getChildCollections(true)) {
           await this.itemIDs(ae, collID, itemTypeIDs, itemIDs)
         }
       }

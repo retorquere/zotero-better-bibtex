@@ -621,7 +621,7 @@ export const KeyManager = new class _KeyManager {
 
   // mem is for https://github.com/retorquere/zotero-better-bibtex/issues/2926
   public propose(item: Zotero.Item, mem?: Set<string>): Partial<CitekeyRecord> {
-    let citationKey: string = Extra.get(item.getField('extra') as string, 'zotero', { citationKey: true }).extraFields.citationKey
+    let citationKey: string = Extra.get(item.getField('extra'), 'zotero', { citationKey: true }).extraFields.citationKey
 
     if (citationKey) return { citationKey, pinned: true }
 

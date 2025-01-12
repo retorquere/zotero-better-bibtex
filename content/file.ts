@@ -26,7 +26,7 @@ export const File = new class {
     try {
       const stat = await IOUtils.stat(path)
       if (stat.type !== 'regular') return 0
-      return stat.lastModified
+      return stat.lastModified as number
     }
     catch {
       return 0

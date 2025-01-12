@@ -101,8 +101,7 @@ class NSUser {
    * @param includeCollections Wether or not the result should inlcude a list of collection for each library (default is false)
    */
   public async groups(includeCollections?: boolean) {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return await Zotero.Libraries
+    return Zotero.Libraries
       .getAll().map(lib => ({
         id: lib.libraryID,
         name: lib.name,
@@ -199,7 +198,6 @@ class NSItem {
             throw new Error(`library ${ JSON.stringify(term[2]) } not found`)
           }
         }
-        // @ts-ignore
         search.addCondition(...term)
       }
     }
@@ -307,7 +305,7 @@ class NSItem {
         }
 
         if (col.parentCollection) {
-          // @ts-ignore TODO: remove after fix in zotero-types
+          // @ts-expect-error TODO: remove after fix in zotero-types
           col.parentCollection = recurseParents(libraryID, col.parentCollection)
         }
 
@@ -333,8 +331,8 @@ class NSItem {
         seen[id] = col
 
         if (includeParents && col.parentCollection) {
-          /// @ts-ignore TODO: remove when zotero-types is fixed
-          col.parentCollection = recurseParents(item.libraryID, col.parentCollection) 
+          /// @ts-expect-error TODO: remove when zotero-types is fixed
+          col.parentCollection = recurseParents(item.libraryID, col.parentCollection)
         }
 
         // eslint-disable-next-line @typescript-eslint/no-unsafe-return

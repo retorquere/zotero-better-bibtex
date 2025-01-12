@@ -232,12 +232,12 @@ class Item {
             return this.title
           default:
             // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-            return (this.item as Zotero.Item).getField(name, false, true) as string || this.extraFields?.kv[name] || ''
+            return (this.item as Zotero.Item).getField(name, false, true) || this.extraFields?.kv[name] || ''
         }
       }
       this.creators = (item as Zotero.Item).getCreatorsJSON()
       this.libraryID = item.libraryID
-      this.title = (item as Zotero.Item).getField('title', false, true) as string
+      this.title = (item as Zotero.Item).getField('title', false, true)
     }
     else {
       this.itemType = (item as SerializedRegularItem).itemType

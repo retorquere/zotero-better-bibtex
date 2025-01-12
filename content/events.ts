@@ -160,7 +160,7 @@ abstract class ZoteroListener {
     this.id = Zotero.Notifier.registerObserver(this, [type], 'Better BibTeX', 1)
   }
 
-  abstract notify(action: ZoteroAction, type: string, ids: number[], extraData?: Record<number, { libraryID?: number }>): Promise<void>
+  abstract notify(action: ZoteroAction, type: string, ids: string[] | number[], extraData?: Record<number, { libraryID?: number }>): Promise<void>
 
   public unregister() {
     Zotero.Notifier.unregisterObserver(this.id)
