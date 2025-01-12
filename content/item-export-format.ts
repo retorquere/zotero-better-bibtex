@@ -1,6 +1,4 @@
-import { Shim } from './os'
-import { is7 } from './client'
-const $OS = is7 ? Shim : OS
+import { Path } from './file'
 
 import { log } from './logger'
 import { getItemsAsync } from './get-items-async'
@@ -14,7 +12,7 @@ export class Serializer {
   private attachment(serialized: Attachment, att): Attachment {
     if (att.attachmentLinkMode !== Zotero.Attachments.LINK_MODE_LINKED_URL) {
       serialized.localPath = att.getFilePath()
-      if (serialized.localPath) serialized.defaultPath = `files/${ att.id }/${ $OS.Path.basename(serialized.localPath) }`
+      if (serialized.localPath) serialized.defaultPath = `files/${att.id}/${Path.basename(serialized.localPath)}`
     }
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return serialized

@@ -14,7 +14,6 @@ import * as Extra from './extra'
 import * as DateParser from './dateparser'
 import * as l10n from './l10n'
 import { Elements } from './create-element'
-import { is7 } from './client'
 import { busyWait } from './busy-wait'
 import { toClipboard } from './text'
 
@@ -27,7 +26,7 @@ export async function newZoteroPane(win: XULWindow): Promise<void> {
   const zp = win.ZoteroPane
   await busyWait(() => typeof zp.itemsView.waitForLoad === 'function')
   await zp.itemsView.waitForLoad()
-  await (new ZoteroPane).load(win)
+  new ZoteroPane(win)
 }
 
 class ZoteroPane {
@@ -41,7 +40,7 @@ class ZoteroPane {
     // this.elements.remove()
   }
 
-  public async load(win: XULWindow) {
+  public constructor(win: XULWindow) {
     const doc = win.document
     // const elements = this.elements = new Elements(doc)
     const elements = new Elements(doc)
@@ -64,14 +63,6 @@ class ZoteroPane {
         label: l10n.localize('better-bibtex_aux-scanner'),
         oncommand: () => Zotero.BetterBibTeX.scanAUX('tag'),
       }))
-      if (!is7) {
-        menupopup.appendChild(elements.create('menuitem', {
-          label: l10n.localize('better-bibtex_preferences_open.label'),
-          oncommand: () => {
-            this.window.openDialog('chrome://zotero-better-bibtex/content/preferences.xul', 'better-bibtex-prefs-window')
-          },
-        }))
-      }
       menupopup.appendChild(elements.create('menuitem', {
         label: l10n.localize('better-bibtex_report-errors'),
         oncommand: () => this.errorReport(),
@@ -276,12 +267,6 @@ class ZoteroPane {
       original.apply(this, arguments)
       if (Zotero.BetterBibTeX.uninstalled) clean_pane_persist()
     })
-
-    if (!is7) {
-      if (this.ZoteroPane.itemsView.collectionTreeRow) await this.ZoteroPane.itemsView.refreshAndMaintainSelection()
-      const selected = this.ZoteroPane.getSelectedItems(true)
-      if (selected.length === 1) Zotero.Notifier.trigger('refresh', 'item', selected)
-    }
   }
 
   public pullExport(): void {
@@ -317,7 +302,7 @@ class ZoteroPane {
 
     if (!params.url.short) return
 
-    this.window.openDialog(`chrome://zotero-better-bibtex/content/ServerURL.${ is7 ? 'xhtml' : 'xul' }`, '', 'chrome,dialog,centerscreen', params)
+    this.window.openDialog('chrome://zotero-better-bibtex/content/ServerURL.xhtml', '', 'chrome,dialog,centerscreen,modal', params)
   }
 
   public padNum(n: number, width: number): string {
@@ -435,7 +420,7 @@ class ZoteroPane {
     items = items ? await selection() : ''
 
     this.window.openDialog(
-      `chrome://zotero-better-bibtex/content/ErrorReport.${ is7 ? 'xhtml' : 'xul' }`,
+      'chrome://zotero-better-bibtex/content/ErrorReport.xhtml',
       'better-bibtex-error-report',
       'chrome,centerscreen,modal',
       { wrappedJSObject: { items }})

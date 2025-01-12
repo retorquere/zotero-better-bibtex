@@ -5,7 +5,7 @@ import { SynchronousPromise } from 'synchronous-promise'
 import { log } from '../logger'
 import { stringify } from '../stringify'
 
-import { is7, worker } from '../client'
+import { worker } from '../client'
 import { flash } from '../flash'
 
 var IDBKeyRange // eslint-disable-line no-var
@@ -258,16 +258,10 @@ class ZoteroSerialized {
 
   public async get(ids: number[]): Promise<Serialized[]> {
     // trace(`serialized: ${ids.length} items`)
-    let items: Serialized[]
     const tx = this.db.transaction('ZoteroSerialized', 'readonly')
     const store = tx.objectStore('ZoteroSerialized')
-    if (Zotero.isWin && !is7) {
-      items = (await Promise.all(ids.map(id => store.get<Serialized, number>(id)))).filter(item => item)
-    }
-    else {
-      const requested = new Set(ids)
-      items = (await store.getAll<Serialized, number>()).filter(item => requested.has(item.itemID))
-    }
+    const requested = new Set(ids)
+    const items: Serialized[] = (await store.getAll<Serialized, number>()).filter(item => requested.has(item.itemID))
 
     if (ids.length !== items.length) log.error(`indexed: failed to fetch ${ ids.length - items.length } items`)
     return items
@@ -430,6 +424,8 @@ export const Cache = new class $Cache {
       }
       Zotero.Prefs.clear(del)
     }
+
+    await Zotero.proxyAuthComplete
 
     this.db = await this.$open('open')
     if (!this.db || !(await this.validate())) {
