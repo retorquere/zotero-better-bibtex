@@ -8,7 +8,7 @@ declare namespace Zotero {
   let getActiveZoteroPane: function(): any
   let getTranslatorsDirectory: function(): any
   let debug: (msg: string) => void
-  let getString: (name: string, params?: Record<string, string>, num?: number) => string
+  let getString: (name: string, params?: string | string[], num?: number) => string
   let getMainWindow: () => Window
   let getInstalledExtensions: () => Promise<any[]>
   let getTempDirectory: () => { path: string }
@@ -18,26 +18,27 @@ declare namespace Zotero {
   let getErrors: (asStrings?: boolean) => string[]
   let locale: string
 
-  let PreferencePanes: any
-  let ItemPaneManager: any
-  let ItemTreeManager: any
-  let HTTP: any
-  let Feeds: any
-  let Annotations: any
-  let ProgressWindow: any
   let API: any
+  let Annotations: any
+  let Attachments: any
   let Cite: any
   let DataObjects: any
-  let Notifier: any
   let Debug: any
+  let Feeds: any
   let File: any
   let Groups: any
+  let HTTP: any
   let Integration: any
   let ItemFields: any
+  let ItemPaneManager: any
+  let ItemTreeManager: any
   let ItemTypes: any
   let Items: any
+  let Notifier: any
   let PDFRenderer: any
+  let PreferencePanes: any
   let Prefs: any
+  let ProgressWindow: any
   let Promise: any
   let QuickCopy: any
   let Schema: any
@@ -78,6 +79,7 @@ declare namespace Zotero {
     id: number
     parentID: number
     key: string
+    deleted: boolean
     itemTypeID: number
     libraryID: number
     isFeedItem: boolean
