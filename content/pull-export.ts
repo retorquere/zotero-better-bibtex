@@ -38,10 +38,24 @@ class CollectionHandler {
 
       const libID = parseInt(lib || '0') || Zotero.Libraries.userLibraryID
 
-      log.debug('pull-export: resolving', { libID, path })
-      log.debug('pull-export: by key', { collection: Zotero.Collections.getByLibraryAndKey(libID, path) })
-      log.debug('pull-export: by path', { collection: await getCollection(`/${ libID }/${ path }`) })
-      const collection = Zotero.Collections.getByLibraryAndKey(libID, path) || (await getCollection(`/${ libID }/${ path }`))
+      let collection
+      try {
+        log.debug('pull-export: resolving', { libID, path }, 'by key')
+        collection = Zotero.Collections.getByLibraryAndKey(libID, path)
+        log.debug('pull-export: resolved by key to', collection)
+      }
+      catch (err) {
+        log.debug('pull-export: resolve by key error:', err)
+      }
+      try {
+        log.debug('pull-export: resolving', { libID, path }, 'by path')
+        collection = await getCollection(`/${ libID }/${ path }`)
+        log.debug('pull-export: resolved by path to', collection)
+      }
+      catch (err) {
+        log.debug('pull-export: resolve by path error:', err)
+      }
+
       if (!collection) return [ NOT_FOUND, 'text/plain', `Could not export bibliography: path '${ path }' not found` ]
 
       return [ OK, 'text/plain', await Translators.exportItems({
