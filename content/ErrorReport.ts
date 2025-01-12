@@ -203,7 +203,7 @@ export class ErrorReport {
   }
 
   private errors(): string {
-    return this.scrub(Zotero.getErrors(true) as string[])
+    return this.scrub(Zotero.getErrors(true))
   }
 
   private log(): string {
