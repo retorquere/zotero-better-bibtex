@@ -10,16 +10,31 @@ declare namespace Zotero {
   let debug: (msg: string) => void
   let getString: (name: string, params?: Record<string, string>, num?: number) => string
   let getMainWindow: () => Window
+  let getInstalledExtensions: () => Promise<any[]>
+  let getTempDirectory: () => { path: string }
   let isWin: boolean
+  let initializationPromise: Promise<void>
+  let proxyAuthComplete: Promise<void>
+  let getErrors: (asStrings?: boolean) => string[]
+  let locale: string
 
+  let PreferencePanes: any
+  let ItemPaneManager: any
+  let ItemTreeManager: any
+  let HTTP: any
+  let Feeds: any
+  let Annotations: any
+  let ProgressWindow: any
   let API: any
   let Cite: any
   let DataObjects: any
+  let Notifier: any
   let Debug: any
   let File: any
   let Groups: any
   let Integration: any
   let ItemFields: any
+  let ItemTypes: any
   let Items: any
   let PDFRenderer: any
   let Prefs: any
@@ -61,7 +76,23 @@ declare namespace Zotero {
 
   interface Item {
     id: number
+    parentID: number
+    key: string
+    itemTypeID: number
+    libraryID: number
     isFeedItem: boolean
+    isRegularItem(): boolean
+    isNote(): boolean
+    isAnnotation(): boolean
+    isAttachment(): boolean
+    getTags(): { tag: string, type?: number }[]
+    getNotes(): number[]
+    getAttachments(includeTrashed?: boolean): number[]
+    getField(field: string, unformatted?: boolean, includeBaseMapped?: boolean): string
+    setField(field: string | number, value: string, loadIn?: boolean): void
+    getCreatorsJSON(): { firstName?: string, lastName?: string, name?: string, creatorType: string }[]
+    toJSON(): any
+    loadAllData(reload?: boolean): Promise<void>
   }
 
   interface Group {
@@ -76,9 +107,13 @@ declare namespace Zotero {
   }
 
   interface Collection {
+    id: number
     name: string
     parentID: number
     libraryID: number
+
+    getChildCollections(asIDs?: boolean, includeTrashed?: boolean): Collection[] | number[]
+    getChildItems(asIDs?: boolean, includeTrashed?: boolean): Item[] | number[]
 
     toJSON(options?: object): {
       key: string

@@ -401,7 +401,7 @@ class Handler {
 
       const citation = options.selected ? (await selected(options)) : (await pick(options))
 
-      if (options.minimize) Zotero.getMainWindow()?.minimize()
+      if (options.minimize) (Zotero.getMainWindow() as any)?.minimize()
 
       if (options.texstudio) {
         if (!TeXstudio.enabled) return [ this.SERVER_ERROR, 'application/text', 'TeXstudio not found' ]

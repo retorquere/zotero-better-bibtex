@@ -232,7 +232,7 @@ class Item {
             return this.title
           default:
             // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-            return (this.item as Zotero.Item).getField(name as _ZoteroTypes.Item.ItemField, false, true) as string || this.extraFields?.kv[name] || ''
+            return (this.item as Zotero.Item).getField(name, false, true) as string || this.extraFields?.kv[name] || ''
         }
       }
       this.creators = (item as Zotero.Item).getCreatorsJSON()
@@ -325,7 +325,7 @@ class Item {
     return BabelTag[this.language as BabelLanguage] || ''
   }
 
-  public getTags(): Tag[] | string[] {
+  public getTags(): Tag[] {
     return (this.item as Zotero.Item).getTags ? (this.item as Zotero.Item).getTags() : (this.item as SerializedRegularItem).tags
   }
 }

@@ -487,7 +487,7 @@ export class BetterBibTeX {
   }
 
   public openDialog(url: string, title: string, properties: string, params: Record<string, any>): void {
-    Zotero.getMainWindow()?.openDialog(url, title, properties, params)
+    (Zotero.getMainWindow() as any)?.openDialog(url, title, properties, params)
   }
 
   public setProgress(progress: number, msg: string): void {
@@ -728,8 +728,8 @@ export class BetterBibTeX {
             if (item.isRegularItem() && !item.isFeedItem) {
               const citekey = item.getField('citationKey')
               // const was = textbox.dataset.itemid
-              textbox.dataset.itemid = citekey ? `${ item.id }` : ''
-              textbox.value = citekey || '\u274C'
+              textbox.dataset.itemid = citekey ? `${ item.id }` : '';
+              (textbox as any).value = citekey || '\u274C'
               setEnabled(true)
             }
             else {

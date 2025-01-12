@@ -156,7 +156,7 @@ class IdleListener {
 abstract class ZoteroListener {
   private id: string
 
-  constructor(protected type: _ZoteroTypes.Notifier.Type) {
+  constructor(protected type) {
     this.id = Zotero.Notifier.registerObserver(this, [type], 'Better BibTeX', 1)
   }
 

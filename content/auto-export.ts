@@ -742,7 +742,7 @@ export const AutoExport = new class $AutoExport { // eslint-disable-line @typesc
     if (ae.type === 'collection') {
       const coll = await Zotero.Collections.getAsync(id)
       if (ae.recursive) {
-        for (const collID of coll.getChildCollections(true)) {
+        for (const collID of coll.getChildCollections(true) as number[]) {
           await this.itemIDs(ae, collID, itemTypeIDs, itemIDs)
         }
       }
