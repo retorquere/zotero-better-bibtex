@@ -198,12 +198,12 @@ class NSItem {
             throw new Error(`library ${ JSON.stringify(term[2]) } not found`)
           }
         }
-        // @ts-expect-error
+        // @ts-expect-error I don't know why this spread fails type checking
         search.addCondition(...term)
       }
     }
 
-    const ids = new Set(await search.search() as number[])
+    const ids = new Set(await search.search())
 
     const items = await getItemsAsync(Array.from(ids))
     const libraries = {}

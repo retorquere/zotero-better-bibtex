@@ -146,7 +146,7 @@ export const AUXScanner = new class { // eslint-disable-line @typescript-eslint/
       return
     }
     finally {
-      Zotero.File.removeIfExists(output)
+      await Zotero.File.removeIfExists(output)
     }
   }
 

@@ -336,7 +336,9 @@ export async function pick(options: any): Promise<string> {
 
     if (options.select && picked.length) {
       const zoteroPane = Zotero.getActiveZoteroPane()
-      await zoteroPane.selectItems(picked.map(item => item.id), true)
+
+      // don't know why zotero-types is not picked up here
+      await zoteroPane.selectItems(picked.map(item => item.id), true) // eslint-disable-line @typescript-eslint/await-thenable
     }
 
     return citation
@@ -395,8 +397,8 @@ class Handler {
       }
       const style
         = getStyle(options.style)
-        || getStyle(`http://www.zotero.org/styles/${ options.style }`)
-        || getStyle(`http://juris-m.github.io/styles/${ options.style }`)
+          || getStyle(`http://www.zotero.org/styles/${ options.style }`)
+          || getStyle(`http://juris-m.github.io/styles/${ options.style }`)
       options.style = style ? style.url : 'http://www.zotero.org/styles/apa'
 
       const citation = options.selected ? (await selected(options)) : (await pick(options))

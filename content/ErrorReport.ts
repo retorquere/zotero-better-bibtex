@@ -352,7 +352,7 @@ export class ErrorReport {
       cache,
     }
     const acronyms = PathUtils.join(Zotero.BetterBibTeX.dir, 'acronyms.csv')
-    if (await File.exists(acronyms)) this.input.acronyms = await IOUtils.readUTF8(acronyms) as string
+    if (await File.exists(acronyms)) this.input.acronyms = await IOUtils.readUTF8(acronyms)
 
     await this.reload()
 
@@ -371,7 +371,7 @@ export class ErrorReport {
         show_latest.hidden = false
       }
 
-      // @ts-ignore
+      // @ts-expect-error zotero-types does not export .any
       this.region = await Zotero.Promise.any(Object.keys(s3.region).map(this.ping.bind(this)))
       this.bucket = `https://${ s3.bucket }-${ this.region.short }.s3-${ this.region.region }.amazonaws.com${ this.region.tld || '' }`
       this.key = Zotero.Utilities.generateObjectKey()

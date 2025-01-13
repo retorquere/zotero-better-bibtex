@@ -210,15 +210,14 @@ class Git {
     proc.runwAsync(args, args.length, {
       observe: (subject, topic) => {
         if (topic !== 'process-finished') {
-          // @ts-ignore
+          // @ts-expect-error zotero-types does not handle typed deferreds
           deferred.reject(new Error(`[ ${ command } ] failed: ${ topic }`))
         }
         else if (proc.exitValue > 0) {
-          // @ts-ignore
+          // @ts-expect-error zotero-types does not handle typed deferreds
           deferred.reject(new Error(`[ ${ command } ] failed with exit status: ${ proc.exitValue }`))
         }
         else {
-          // @ts-ignore
           deferred.resolve()
         }
       },
@@ -445,7 +444,7 @@ export const AutoExport = new class $AutoExport { // eslint-disable-line @typesc
         }
       }),
       this.db[BlinkKey].events.onClear.register(() => {
-        // @ts-ignore
+        // @ts-expect-error unsure about getChildList
         for (const key of Services.prefs.getBranch('extensions.zotero.translators.better-bibtex.autoExport.').getChildList('', {})) {
           Zotero.Prefs.clear(`translators.better-bibtex.autoExport.${key}`)
         }
@@ -513,7 +512,7 @@ export const AutoExport = new class $AutoExport { // eslint-disable-line @typesc
           log.error('auto-export migration failed', err)
         }
 
-        // @ts-ignore
+        // @ts-expect-error unsure about getChildList
         for (const key of Services.prefs.getBranch('extensions.zotero.translators.better-bibtex.autoExport.').getChildList('', {})) {
           try {
             const ae = JSON.parse(Zotero.Prefs.get(`translators.better-bibtex.autoExport.${key}`) as string)

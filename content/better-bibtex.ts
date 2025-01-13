@@ -195,18 +195,18 @@ monkey.patch(Zotero.API, 'getResultsFromParams', original => function Zotero_API
   return original.apply(this, arguments) as Record<string, any>
 })
 
-// @ts-ignore
+// @ts-expect-error prototype not exported by zotero-types
 if (typeof Zotero.DataObjects.prototype.parseLibraryKeyHash === 'function') {
-  // @ts-ignore
+  // @ts-expect-error prototype not exported by zotero-types
   monkey.patch(Zotero.DataObjects.prototype, 'parseLibraryKeyHash', original => function Zotero_DataObjects_prototype_parseLibraryKeyHash(libraryKey: string) {
     const item = parseLibraryKeyFromCitekey(libraryKey)
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return typeof item === 'undefined' ? original.apply(this, arguments) : item
   })
 }
-// @ts-ignore
+// @ts-expect-error prototype not exported by zotero-types
 if (typeof Zotero.DataObjects.prototype.parseLibraryKey === 'function') {
-  // @ts-ignore
+  // @ts-expect-error prototype not exported by zotero-types
   monkey.patch(Zotero.DataObjects.prototype, 'parseLibraryKey', original => function Zotero_DataObjects_prototype_parseLibraryKey(libraryKey: string) {
     const item = parseLibraryKeyFromCitekey(libraryKey)
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
@@ -233,7 +233,6 @@ monkey.patch(Zotero.Item.prototype, 'setField', original => function Zotero_Item
     if (!value) {
       this.setField('extra', Extra.get(this.getField('extra') as string, 'zotero', { citationKey: true }).extra)
       Zotero.BetterBibTeX.KeyManager.update(this)
-      Zotero.Notifier.trigger('modify', 'item', [this.id])
       return true
     }
     else if (value !== citekey.citationKey) {
@@ -588,7 +587,7 @@ export class BetterBibTeX {
         await Zotero.DB.queryAsync('ATTACH DATABASE ? AS betterbibtex', [PathUtils.join(Zotero.DataDirectory.dir, 'better-bibtex.sqlite')])
 
         const tables: Record<string, boolean> = {}
-        for (const table of await Zotero.DB.columnQueryAsync('SELECT LOWER(REPLACE(name, \'-\', \'\')) FROM betterbibtex.sqlite_master where type=\'table\'') as string[]) {
+        for (const table of await Zotero.DB.columnQueryAsync<string>('SELECT LOWER(REPLACE(name, \'-\', \'\')) FROM betterbibtex.sqlite_master where type=\'table\'')) {
           tables[table] = true
         }
 
@@ -664,7 +663,8 @@ export class BetterBibTeX {
           DebugLog.convertLegacy()
         })
 
-        const columnDataKey = await Zotero.ItemTreeManager.registerColumn?.({
+        // don't know why this is not picked up from zotero-types
+        const columnDataKey = await Zotero.ItemTreeManager.registerColumn?.({ // eslint-disable-line @typescript-eslint/await-thenable
           dataKey: 'citationKey',
           label: l10n.localize('better-bibtex_zotero-pane_column_citekey'),
           pluginID: 'better-bibtex@iris-advies.com',
@@ -719,12 +719,12 @@ export class BetterBibTeX {
 
             setSectionSummary(citekey.citationKey || '')
           },
-          onInit: ({ body, refresh }) => {
+          onInit: ({ body, refresh }) => { // eslint-disable-line @typescript-eslint/unbound-method
             $done = Events.on('items-changed', ({ items }) => {
               const textbox: HTMLElement = body.querySelector('#better-bibtex-citation-key')
               const itemID = textbox.dataset.itemid ? parseInt(textbox.dataset.itemid) : undefined
               const displayed: Zotero.Item = textbox.dataset.itemid ? items.find(item => item.id === itemID) : undefined
-              if (displayed) refresh()
+              if (displayed) void refresh()
             })
           },
           onItemChange: ({ setEnabled, body, item }) => {
@@ -753,6 +753,7 @@ export class BetterBibTeX {
           if (!columnDataKey) return
           const azp = Zotero.getActiveZoteroPane()
           if (!azp || !azp.itemPane) return
+          // eslint-disable-next-line no-underscore-dangle
           if (!azp.itemPane.itemsView._columnPrefs[columnDataKey].hidden) Zotero.ItemTreeManager.refreshColumns()
         })
 
@@ -803,7 +804,7 @@ export class BetterBibTeX {
     }
 
     try {
-      // @ts-ignore
+      // @ts-expect-error deprecated method
       return Zotero.File.getContents(file) as string
     }
     catch (err) {

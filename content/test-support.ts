@@ -159,7 +159,7 @@ export class TestSupport {
 
     const sortedIDs = JSON.stringify(ids.slice().sort())
     for (let attempt = 1; attempt <= 10; attempt++) {
-      await zoteroPane.selectItems(ids, true)
+      await zoteroPane.selectItems(ids, true) // eslint-disable-line @typescript-eslint/await-thenable
 
       let selected
       try {

@@ -4,7 +4,7 @@ export async function pick(title: string, mode: 'open' | 'save' | 'folder', filt
 
   if (suggestion) fp.defaultString = suggestion
 
-  // @ts-ignore
+  // @ts-expect-error going to be reoplaced with zotero-toolkit
   mode = {
     open: Components.interfaces.nsIFilePicker.modeOpen,
     save: Components.interfaces.nsIFilePicker.modeSave,
@@ -17,7 +17,7 @@ export async function pick(title: string, mode: 'open' | 'save' | 'folder', filt
     fp.appendFilter(label, ext)
   }
 
-  // @ts-ignore
+  // @ts-expect-error going to be reoplaced with zotero-toolkit
   return new Zotero.Promise(resolve => { // eslint-disable-line @typescript-eslint/no-unsafe-return
     fp.open(userChoice => {
       switch (userChoice) {

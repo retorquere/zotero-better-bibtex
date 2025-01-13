@@ -131,7 +131,7 @@ class WindowListener {
     }, false)
   }
 
-  onCloseWindow(window: nsIAppWindow): void {
+  onCloseWindow(_window: nsIAppWindow): void {
     // pass
   }
 }
@@ -218,7 +218,8 @@ class ItemListener extends ZoteroListener {
       const parentIDs: number[] = []
       // safe to use Zotero.Items.get(...) rather than Zotero.Items.getAsync here
       // https://groups.google.com/forum/#!topic/zotero-dev/99wkhAk-jm0
-      const items = Zotero.Items.get(ids).filter((item: Zotero.Item) => {
+
+      const items = Zotero.Items.get(ids).filter(item => {
         if (item.deleted) touch(item) // because trashing an item *does not* trigger collection-item?!?!
         if (action === 'delete') return false
         // check .deleted for #2401/#2676 -- we're getting *modify* (?!) notifications for trashed items which reinstates them into the BBT DB
@@ -231,7 +232,7 @@ class ItemListener extends ZoteroListener {
         }
 
         return true
-      }) as Zotero.Item[]
+      })
 
       await Events.itemsChanged(action, ids)
       if (items.length) await Events.emit('items-changed', { items, action })
