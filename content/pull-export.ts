@@ -40,20 +40,22 @@ class CollectionHandler {
 
       let collection
       try {
-        log.debug('pull-export: resolving', { libID, path }, 'by key')
+        log.debug('3102: resolving', { libID, path }, 'by key')
         collection = Zotero.Collections.getByLibraryAndKey(libID, path)
-        log.debug('pull-export: resolved by key to', collection)
+        log.debug('3102: resolved by key to', collection)
       }
       catch (err) {
-        log.debug('pull-export: resolve by key error:', err)
+        log.debug('3102: resolve by key error:', err)
       }
-      try {
-        log.debug('pull-export: resolving', { libID, path }, 'by path')
-        collection = await getCollection(`/${ libID }/${ path }`)
-        log.debug('pull-export: resolved by path to', collection)
-      }
-      catch (err) {
-        log.debug('pull-export: resolve by path error:', err)
+      if (!collection) {
+        try {
+          log.debug('3102: resolving', { libID, path }, 'by path')
+          collection = await getCollection(`/${ libID }/${ path }`)
+          log.debug('3102: resolved by path to', collection)
+        }
+        catch (err) {
+          log.debug('3102: resolve by path error:', err)
+        }
       }
 
       if (!collection) return [ NOT_FOUND, 'text/plain', `Could not export bibliography: path '${ path }' not found` ]
