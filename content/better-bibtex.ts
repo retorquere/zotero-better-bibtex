@@ -674,8 +674,7 @@ export class BetterBibTeX {
           },
         })
 
-        /*
-        const rowID = Zotero.ItemPaneManager.registerInfoRow?.({
+        const rowID = Zotero.ItemPaneManager.registerInfoRow({
           rowID: 'better-bibtex-citation-key',
           pluginID: 'better-bibtex@iris-advies.com',
           label: { l10nID: 'better-bibtex_item-pane_info_citation-key_label' },
@@ -684,13 +683,14 @@ export class BetterBibTeX {
           nowrap: false,
           editable: false,
           onGetData({ item }) {
-            return item.getField('citationKey') as string
+            return item.getField('citationKey')
           },
+          /*
           onSetData({ rowID, item, tabType, editable, value }) {
             Zotero.debug(`Set custom info row ${rowID} of item ${item.id} to ${value}`);
           },
+          */
         })
-        */
 
         let $done: () => void
         Zotero.ItemPaneManager.registerSection({
@@ -748,7 +748,7 @@ export class BetterBibTeX {
         })
 
         Events.on('items-changed', () => {
-          // if (rowID) Zotero.ItemPaneManager.refreshInfoRow(rowID)
+          if (rowID) Zotero.ItemPaneManager.refreshInfoRow(rowID)
           // eslint-disable-next-line no-underscore-dangle
           if (!columnDataKey) return
           const azp = Zotero.getActiveZoteroPane()
