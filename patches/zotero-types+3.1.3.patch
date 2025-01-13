@@ -1,0 +1,153 @@
+diff --git a/node_modules/zotero-types/types/libraryTree.d.ts b/node_modules/zotero-types/types/libraryTree.d.ts
+index 74893eb..7cb7508 100644
+--- a/node_modules/zotero-types/types/libraryTree.d.ts
++++ b/node_modules/zotero-types/types/libraryTree.d.ts
+@@ -79,6 +79,6 @@ declare namespace _ZoteroTypes {
+      */
+     setDropEffect(event: unknown, effect: unknown): void;
+ 
+-    selectLibrary(libraryID: number): void;
++    selectLibrary(libraryID?: number): Promise<void>;
+   }
+ }
+diff --git a/node_modules/zotero-types/types/xpcom/data/search.d.ts b/node_modules/zotero-types/types/xpcom/data/search.d.ts
+index cc7d662..5fea306 100644
+--- a/node_modules/zotero-types/types/xpcom/data/search.d.ts
++++ b/node_modules/zotero-types/types/xpcom/data/search.d.ts
+@@ -33,13 +33,13 @@ declare namespace Zotero {
+     addCondition(
+       condition: _ZoteroTypes.Search.Conditions,
+       operator: _ZoteroTypes.Search.Operator,
+-      value: string,
++      value: string | number,
+       required?: boolean,
+     ): number;
+     addCondition(
+       condition: string,
+       operator: _ZoteroTypes.Search.Operator,
+-      value?: string,
++      value?: string | number,
+       required?: boolean,
+     ): number;
+     addCondition(condition: "blockStart" | "blockEnd"): number;
+diff --git a/node_modules/zotero-types/types/xpcom/db.d.ts b/node_modules/zotero-types/types/xpcom/db.d.ts
+index a4b269f..c9d7cbd 100644
+--- a/node_modules/zotero-types/types/xpcom/db.d.ts
++++ b/node_modules/zotero-types/types/xpcom/db.d.ts
+@@ -105,7 +105,7 @@ declare namespace _ZoteroTypes {
+ 
+     queryTx(
+       sql: string,
+-      params: DB.QueryParams,
++      params?: DB.QueryParams,
+       options?: {
+         inBackup?: boolean;
+         noParseParams?: boolean;
+@@ -119,11 +119,11 @@ declare namespace _ZoteroTypes {
+      * @param {Array|String|Integer} [params]  SQL parameters to bind
+      * @return {Promise<Array|Boolean>}  A promise for either the value or FALSE if no result
+      */
+-    valueQueryAsync(
++    valueQueryAsync<T>(
+       sql: string,
+-      params: DB.QueryParams,
++      params?: DB.QueryParams,
+       options?: { inBackup?: boolean; noCache?: boolean },
+-    ): Promise<anyObj[] | boolean>;
++    ): Promise<T | boolean>;
+ 
+     /**
+      * @param {String} sql SQL statement to run
+@@ -132,7 +132,7 @@ declare namespace _ZoteroTypes {
+      */
+     rowQueryAsync(
+       sql: string,
+-      params: DB.QueryParams,
++      params?: DB.QueryParams,
+     ): Promise<object | boolean>;
+ 
+     /**
+@@ -140,16 +140,16 @@ declare namespace _ZoteroTypes {
+      * @param {Array|String|Integer} [params] SQL parameters to bind
+      * @return {Promise<Array>}  A promise for an array of values in the column
+      */
+-    columnQueryAsync(
++    columnQueryAsync<T>(
+       sql: string,
+-      params: DB.QueryParams,
++      params?: DB.QueryParams,
+       options?: {
+         inBackup?: boolean;
+         noCache?: boolean;
+         debug?: boolean;
+         debugParams?: boolean;
+       },
+-    ): Promise<anyObj[][]>;
++    ): Promise<T[]>;
+ 
+     logQuery(
+       sql: string,
+diff --git a/node_modules/zotero-types/types/xpcom/fileHandlers.d.ts b/node_modules/zotero-types/types/xpcom/fileHandlers.d.ts
+index ada4bef..4c9188d 100644
+--- a/node_modules/zotero-types/types/xpcom/fileHandlers.d.ts
++++ b/node_modules/zotero-types/types/xpcom/fileHandlers.d.ts
+@@ -7,7 +7,7 @@ declare namespace Zotero {
+     function openToPage(
+       item: Zotero.Item,
+       page: number,
+-      annotationKey: string,
++      annotationKey?: string,
+     ): Promise<void>;
+   }
+ }
+diff --git a/node_modules/zotero-types/types/xpcom/http.d.ts b/node_modules/zotero-types/types/xpcom/http.d.ts
+index 31031db..eb5465b 100644
+--- a/node_modules/zotero-types/types/xpcom/http.d.ts
++++ b/node_modules/zotero-types/types/xpcom/http.d.ts
+@@ -48,7 +48,7 @@ declare namespace _ZoteroTypes {
+       method: string,
+       url: string,
+       options?: {
+-        body?: string;
++        body?: string | Uint8Array;
+         headers?: any;
+         followRedirects?: boolean;
+         cookieSandbox?: Zotero.CookieSandbox;
+diff --git a/node_modules/zotero-types/types/xpcom/preferencePanes.d.ts b/node_modules/zotero-types/types/xpcom/preferencePanes.d.ts
+index d9265db..2daf964 100644
+--- a/node_modules/zotero-types/types/xpcom/preferencePanes.d.ts
++++ b/node_modules/zotero-types/types/xpcom/preferencePanes.d.ts
+@@ -52,6 +52,7 @@ declare namespace _ZoteroTypes {
+     scripts?: string[];
+     stylesheets?: string[];
+     helpURL?: string;
++    defaultXUL?: boolean;
+   };
+ }
+ 
+diff --git a/node_modules/zotero-types/types/xpcom/utilities/utilities.d.ts b/node_modules/zotero-types/types/xpcom/utilities/utilities.d.ts
+index 23f54ca..ee8af61 100644
+--- a/node_modules/zotero-types/types/xpcom/utilities/utilities.d.ts
++++ b/node_modules/zotero-types/types/xpcom/utilities/utilities.d.ts
+@@ -5,7 +5,7 @@ declare namespace _ZoteroTypes {
+   interface Utilities {
+     Internal: Utilities.Internal;
+ 
+-    XRegExp: anyObj;
++    XRegExp: any;
+     Item: anyObj;
+ 
+     /**
+diff --git a/node_modules/zotero-types/types/zoteroPane.d.ts b/node_modules/zotero-types/types/zoteroPane.d.ts
+index def7a79..4327717 100644
+--- a/node_modules/zotero-types/types/zoteroPane.d.ts
++++ b/node_modules/zotero-types/types/zoteroPane.d.ts
+@@ -29,7 +29,7 @@ declare namespace _ZoteroTypes {
+     selectItems: (
+       itemIDs: Array<number>,
+       inLibraryRoot?: boolean,
+-    ) => undefined | boolean;
++    ) => Promise<undefined | boolean>;
+     copySelectedItemsToClipboard(asCitations: boolean): void;
+     refreshFeed(): undefined | Promise<any>;
+     emptyTrash(): Promise<void>;
