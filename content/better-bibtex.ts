@@ -683,7 +683,8 @@ export class BetterBibTeX {
           nowrap: false,
           editable: false,
           onGetData({ item }) {
-            return item.getField('citationKey')
+            const citekey = Zotero.BetterBibTeX.KeyManager.get(item.id) || { citationKey: '', pinned: false }
+            return citekey.citationKey
           },
           /*
           onSetData({ rowID, item, tabType, editable, value }) {
