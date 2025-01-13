@@ -1,3 +1,7 @@
+# PSA
+
+I am in the process of switching BBT to Zotero 7 exclusively. It is no longer feasible for me to maintain compatibility across 6 and 7.
+
 # Better BibTeX for Zotero
 
 [![Join the chat at https://gitter.im/retorquere/zotero-better-bibtex](https://badges.gitter.im/retorquere/zotero-better-bibtex.svg)](https://gitter.im/retorquere/zotero-better-bibtex?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) [![Greenkeeper badge](https://badges.greenkeeper.io/retorquere/zotero-better-bibtex.svg)](https://greenkeeper.io/)
