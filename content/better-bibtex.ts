@@ -664,7 +664,7 @@ export class BetterBibTeX {
         })
 
         // don't know why this is not picked up from zotero-types
-        const columnDataKey = await Zotero.ItemTreeManager.registerColumn?.({ // eslint-disable-line @typescript-eslint/await-thenable
+        const columnDataKey = await Zotero.ItemTreeManager.registerColumn({ // eslint-disable-line @typescript-eslint/await-thenable
           dataKey: 'citationKey',
           label: l10n.localize('better-bibtex_zotero-pane_column_citekey'),
           pluginID: 'better-bibtex@iris-advies.com',
@@ -784,6 +784,8 @@ export class BetterBibTeX {
 
   public onMainWindowLoad({ window }: { window: Window }): void {
     void newZoteroPane(window)
+
+
   }
   public onMainWindowUnload({ window }: { window: Window }): void {
     log.info(`onMainWindowUnload ${typeof window}`)
