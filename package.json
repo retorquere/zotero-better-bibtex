@@ -181,7 +181,7 @@
     "process": "^0.11.10",
     "properties-reader": "^2.3.0",
     "pug": "^3.0.3",
-    "putout": "^37.13.0",
+    "putout": "^37.14.0",
     "recast": "^0.23.9",
     "regenerate": "^1.4.2",
     "rimraf": "^6.0.1",
