@@ -249,6 +249,8 @@ async function makeDirs(path) {
 async function saveFile(path, overwrite) {
   if (!Zotero.exportDirectory) return false
 
+  log.
+
   const protect = overwrite
     ? async function(_tgt: string, _src?: string) {} // eslint-disable-line @typescript-eslint/no-empty-function
     : async function(tgt: string, src?: string) {
@@ -264,6 +266,7 @@ async function saveFile(path, overwrite) {
 
   if (!await File.exists(this.localPath)) return false
 
+  log.debug('3125: saving file to', { exportDirectory: Zotero.exportDirectory, path })
   this.path = PathUtils.join(Zotero.exportDirectory, path)
   if (!this.path.startsWith(Zotero.exportDirectory)) throw new Error(`${path} looks like a relative path`)
 
