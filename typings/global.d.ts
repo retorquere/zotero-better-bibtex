@@ -3,10 +3,6 @@ declare namespace Zotero {
 
   let write: (body: string) => void // needed in translators
 
-  interface LibraryTree extends React.Component {
-    selectLibrary(libraryID?: number): void
-  }
-
   /*
   let version: string
   let clientName: string
@@ -181,10 +177,6 @@ declare namespace Zotero {
     function executeTransaction(func: any, options?: any): Promise<any>
 
     function tableExists(table: string, schema?: string): Promise<boolean>
-  }
-
-  interface LibraryTree {
-    selectLibrary(id: number): void
   }
 
   namespace Utilities {

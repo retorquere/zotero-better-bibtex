@@ -170,7 +170,6 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     if (!zp.collectionsView) return
 
     if (!zp.collectionsView.editable) {
-      // @ts-ignore TODO zotero-types bug
       await zp.collectionsView.selectLibrary()
     }
 
@@ -179,7 +178,8 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     if (!translators.length) throw new Error('No translators found')
 
     const libraryID = zp.getSelectedLibraryID()
-    await zp.collectionsView.selectLibrary(libraryID)
+    // eslint-disable-next-line @typescript-eslint/await-thenable
+    await zp.collectionsView.selectLibrary(libraryID) // TODO: zotero-types does somehow not declare this to return a promise
 
     translation.setTranslator(translators[0])
 

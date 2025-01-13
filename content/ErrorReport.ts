@@ -88,7 +88,6 @@ export class ErrorReport {
           'x-amz-acl': 'bucket-owner-full-control',
           'Content-Type': 'application/x-gzip',
         },
-        // @ts-ignore
         body: this.zip(),
       })
 

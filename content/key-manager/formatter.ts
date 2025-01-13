@@ -347,15 +347,10 @@ export class PatternFormatter {
   private re = {
     unsafechars_allow_spaces: /\s/g,
     unsafechars: /\s/g,
-    // @ts-ignore
     alphanum: Zotero.Utilities.XRegExp('[^\\p{L}\\p{N}]'),
-    // @ts-ignore
     punct: Zotero.Utilities.XRegExp('\\p{Pe}|\\p{Pf}|\\p{Pi}|\\p{Po}|\\p{Ps}', 'g'),
-    // @ts-ignore
     dash: Zotero.Utilities.XRegExp('\\p{Pd}|\u2500|\uFF0D|\u2015', 'g'), // additional pseudo-dashes from #1880
-    // @ts-ignore
     caseNotUpperTitle: Zotero.Utilities.XRegExp('[^\\p{Lu}\\p{Lt}]', 'g'),
-    // @ts-ignore
     caseNotUpper: Zotero.Utilities.XRegExp('[^\\p{Lu}]', 'g'),
     // word: Zotero.Utilities.XRegExp('[\\p{L}\\p{Nd}\\p{Pc}\\p{M}]+(-[\\p{L}\\p{Nd}\\p{Pc}\\p{M}]+)*', 'g'),
   }

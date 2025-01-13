@@ -169,7 +169,6 @@ class NSItem {
 
       if (typeof library !== 'undefined' && library !== '*') {
         try {
-          // @ts-ignore TODO awaits zotero-types fix
           search.addCondition('libraryID', 'is', Library.get(library).libraryID, true)
         }
         catch {
@@ -616,7 +615,6 @@ class NSViewer {
     attachments = attachments.filter(x => x.isPDFAttachment())
 
     if (!attachments.length) throw { code: INVALID_PARAMETERS, message: `no PDF found for URI ${ id }` }
-    // @ts-ignore
     return await Zotero.OpenPDF.openToPage(attachments[0], page + 1) // eslint-disable-line @typescript-eslint/no-unsafe-return
   }
 }

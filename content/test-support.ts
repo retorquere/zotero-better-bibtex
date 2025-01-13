@@ -10,6 +10,7 @@ import { defaults } from '../gen/preferences/meta'
 import { Preference } from './prefs'
 import * as memory from './memory'
 import { Cache } from './db/cache'
+
 // import { Bench } from 'tinybench'
 
 const setatstart: string[] = [ 'testing', 'cache' ].filter(p => Preference[p] !== defaults[p])
@@ -185,8 +186,7 @@ export class TestSupport {
     const s = (new Zotero.Search)
     for (const [ mode, text ] of Object.entries(query)) {
       if (![ 'is', 'contains' ].includes(mode)) throw new Error(`unsupported search mode ${ mode }`)
-      // @ts-ignore TODO import type for mode from zotero-types
-      s.addCondition('field', mode, text)
+      s.addCondition('field', mode as _ZoteroTypes.Search.Operator, text)
     }
     ids = ids.concat(await s.search())
     ids = Array.from(new Set(ids))
@@ -271,7 +271,7 @@ export class TestSupport {
     Object.assign(json, keep)
 
     master.fromJSON(json)
-    Zotero.Items.merge(master, other)
+    await Zotero.Items.merge(master, other)
 
     await Zotero.Promise.delay(1500)
 

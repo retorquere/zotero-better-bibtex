@@ -242,7 +242,6 @@ export const AUXScanner = new class { // eslint-disable-line @typescript-eslint/
   }
 
   private async saveToTag(cited: number[], tag: string, _libraryID: number) {
-    // @ts-ignore
     const tagged: number[] = await Zotero.DB.columnQueryAsync('SELECT itemID FROM itemTags JOIN tags ON tags.tagID = itemTags.tagID WHERE LOWER(tags.name) = LOWER(?)', [tag])
 
     // cited but not tagged
