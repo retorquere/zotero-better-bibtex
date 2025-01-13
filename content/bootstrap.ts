@@ -93,6 +93,7 @@ export async function startup({ resourceURI, rootURI = resourceURI.spec }, reaso
       src: `${ rootURI }content/preferences.xhtml`,
       stylesheets: [`${ rootURI }content/preferences.css`],
       label: 'Better BibTeX',
+      // @ts-ignore
       defaultXUL: true,
     })
     log('startup done')

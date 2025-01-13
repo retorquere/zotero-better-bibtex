@@ -170,6 +170,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     if (!zp.collectionsView) return
 
     if (!zp.collectionsView.editable) {
+      // @ts-ignore TODO zotero-types bug
       await zp.collectionsView.selectLibrary()
     }
 

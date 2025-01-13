@@ -320,7 +320,9 @@ class AutoExportPane {
       return `${this.collection(coll.parentID, form)} / ${coll.name}`
     }
     else {
-      return `${Zotero.Libraries.get(coll.libraryID).name} : ${coll.name}`
+      const lib = Zotero.Libraries.get(coll.libraryID)
+
+      return `${lib ? lib.name : `:${coll.libraryID}`} : ${coll.name}`
     }
   }
 

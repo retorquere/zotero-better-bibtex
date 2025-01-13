@@ -193,7 +193,7 @@ class Git {
     }
   }
 
-  private async exec(exe: string, args?: string[]): Promise<boolean> { // eslint-disable-line @typescript-eslint/require-await
+  private async exec(exe: string, args?: string[]): Promise<void> { // eslint-disable-line @typescript-eslint/require-await
     // args = ['/K', exe].concat(args || [])
     // exe = await findBinary('CMD')
 
@@ -210,18 +210,21 @@ class Git {
     proc.runwAsync(args, args.length, {
       observe: (subject, topic) => {
         if (topic !== 'process-finished') {
+          // @ts-ignore
           deferred.reject(new Error(`[ ${ command } ] failed: ${ topic }`))
         }
         else if (proc.exitValue > 0) {
+          // @ts-ignore
           deferred.reject(new Error(`[ ${ command } ] failed with exit status: ${ proc.exitValue }`))
         }
         else {
-          deferred.resolve(true)
+          // @ts-ignore
+          deferred.resolve()
         }
       },
     })
 
-    return deferred.promise as Promise<boolean>
+    return deferred.promise
   }
 }
 const git = (new Git)
@@ -442,6 +445,7 @@ export const AutoExport = new class $AutoExport { // eslint-disable-line @typesc
         }
       }),
       this.db[BlinkKey].events.onClear.register(() => {
+        // @ts-ignore
         for (const key of Services.prefs.getBranch('extensions.zotero.translators.better-bibtex.autoExport.').getChildList('', {})) {
           Zotero.Prefs.clear(`translators.better-bibtex.autoExport.${key}`)
         }
@@ -509,9 +513,10 @@ export const AutoExport = new class $AutoExport { // eslint-disable-line @typesc
           log.error('auto-export migration failed', err)
         }
 
+        // @ts-ignore
         for (const key of Services.prefs.getBranch('extensions.zotero.translators.better-bibtex.autoExport.').getChildList('', {})) {
           try {
-            const ae = JSON.parse(Zotero.Prefs.get(`translators.better-bibtex.autoExport.${key}`))
+            const ae = JSON.parse(Zotero.Prefs.get(`translators.better-bibtex.autoExport.${key}`) as string)
             blink.insert(this.db, ae)
             if (ae.status !== 'done') queue.add(ae.path)
           }

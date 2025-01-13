@@ -133,8 +133,11 @@ export const AUXScanner = new class { // eslint-disable-line @typescript-eslint/
     const output: string = PathUtils.join(Zotero.getTempDirectory().path, `citekeys_${ Zotero.Utilities.randomString() }.txt`)
     try {
       await Zotero.Utilities.Internal.exec(this.pandoc, [ '--lua-filter', filter, '-t', 'markdown', '-o', output, path ])
-      for (const citekey of (await Zotero.File.getContentsAsync(output)).split(/\s+/)) {
-        if (citekey) citekeys.push(citekey)
+      const md = await Zotero.File.getContentsAsync(output)
+      if (typeof md === 'string') {
+        for (const citekey of md.split(/\s+/)) {
+          if (citekey) citekeys.push(citekey)
+        }
       }
     }
     catch (e) {
@@ -239,6 +242,7 @@ export const AUXScanner = new class { // eslint-disable-line @typescript-eslint/
   }
 
   private async saveToTag(cited: number[], tag: string, _libraryID: number) {
+    // @ts-ignore
     const tagged: number[] = await Zotero.DB.columnQueryAsync('SELECT itemID FROM itemTags JOIN tags ON tags.tagID = itemTags.tagID WHERE LOWER(tags.name) = LOWER(?)', [tag])
 
     // cited but not tagged

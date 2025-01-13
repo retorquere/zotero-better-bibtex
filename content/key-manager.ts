@@ -489,7 +489,7 @@ export const KeyManager = new class _KeyManager {
 
       const keys: Map<number, CitekeyRecord> = new Map
       let key: CitekeyRecord
-      for (key of await Zotero.DB.queryAsync('SELECT * from betterbibtex.citationkey')) {
+      for (key of await Zotero.DB.queryAsync('SELECT * from betterbibtex.citationkey') as CitekeyRecord[]) {
         keys.set(key.itemID, lc({ itemID: key.itemID, itemKey: key.itemKey, libraryID: key.libraryID, citationKey: key.citationKey, pinned: key.pinned }))
       }
 

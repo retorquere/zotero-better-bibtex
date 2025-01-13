@@ -130,6 +130,10 @@ class WindowListener {
       void Events.emit('window-loaded', { win, href: win.location.href })
     }, false)
   }
+
+  onCloseWindow(window: nsIAppWindow): void {
+    // pass
+  }
 }
 
 class IdleListener {

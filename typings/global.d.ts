@@ -1,9 +1,15 @@
 declare namespace Zotero {
   let BetterBibTeX: import('../content/better-bibtex').BetterBibTeX
 
+  let write: (body: string) => void // needed in translators
+
+  interface LibraryTree extends React.Component {
+    selectLibrary(libraryID?: number): void
+  }
+
+  /*
   let version: string
   let clientName: string
-  let write: (body: string) => void // needed in translators
   let hiDPI: boolean
   let getActiveZoteroPane: function(): any
   let getTranslatorsDirectory: function(): any
@@ -188,17 +194,21 @@ declare namespace Zotero {
     function generateObjectKey(): string
     function randomString(len?: number, chars?: string): string
   }
+
+  */
 }
 
+/*
 declare namespace Zotero_File_Interface {
   function importFile(options: { file: any, createNewCollection?: boolean }): Promise<void>
 }
 
-declare function importScripts(url: string): void
-type DedicatedWorkerGlobalScope = any
-declare const FileUtils: any
 declare const PathUtils: any
 declare const Components: any
 declare const IOUtils: any
 declare const Services: any
+*/
 declare const rootURI: string
+declare const FileUtils: any
+type DedicatedWorkerGlobalScope = any
+declare function importScripts(url: string): void

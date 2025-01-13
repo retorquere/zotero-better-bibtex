@@ -195,14 +195,18 @@ monkey.patch(Zotero.API, 'getResultsFromParams', original => function Zotero_API
   return original.apply(this, arguments) as Record<string, any>
 })
 
+// @ts-ignore
 if (typeof Zotero.DataObjects.prototype.parseLibraryKeyHash === 'function') {
+  // @ts-ignore
   monkey.patch(Zotero.DataObjects.prototype, 'parseLibraryKeyHash', original => function Zotero_DataObjects_prototype_parseLibraryKeyHash(libraryKey: string) {
     const item = parseLibraryKeyFromCitekey(libraryKey)
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return typeof item === 'undefined' ? original.apply(this, arguments) : item
   })
 }
+// @ts-ignore
 if (typeof Zotero.DataObjects.prototype.parseLibraryKey === 'function') {
+  // @ts-ignore
   monkey.patch(Zotero.DataObjects.prototype, 'parseLibraryKey', original => function Zotero_DataObjects_prototype_parseLibraryKey(libraryKey: string) {
     const item = parseLibraryKeyFromCitekey(libraryKey)
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
@@ -438,7 +442,7 @@ export class BetterBibTeX {
   public PrefPane = new PrefPane
   public Translators = Translators
 
-  public ready: Bluebird<boolean> = Ready.promise
+  public ready: Bluebird<void> = Ready.promise
   public dir: string
 
   public debugEnabledAtStart: boolean
@@ -564,6 +568,7 @@ export class BetterBibTeX {
           this.setProgress(pct, message)
         })
 
+        // @ts-ignore
         await Cache.open(await Zotero.DB.valueQueryAsync('SELECT MAX(dateModified) FROM items'))
         Events.cacheTouch = async (ids: number[]) => {
           await Cache.touch(ids)
@@ -584,7 +589,9 @@ export class BetterBibTeX {
         await Zotero.DB.queryAsync('ATTACH DATABASE ? AS betterbibtex', [PathUtils.join(Zotero.DataDirectory.dir, 'better-bibtex.sqlite')])
 
         const tables: Record<string, boolean> = {}
+        // @ts-ignore
         for (const table of await Zotero.DB.columnQueryAsync('SELECT LOWER(REPLACE(name, \'-\', \'\')) FROM betterbibtex.sqlite_master where type=\'table\'')) {
+          // @ts-ignore
           tables[table] = true
         }
 
@@ -649,7 +656,7 @@ export class BetterBibTeX {
       id: 'done',
       description: 'user interface',
       startup: async () => {
-        Ready.resolve(true)
+        Ready.resolve()
 
         this.onMainWindowLoad(Zotero.getMainWindow())
 
@@ -713,7 +720,7 @@ export class BetterBibTeX {
             const pinned = body.querySelector('#better-bibtex-citation-key-pinned')
             pinned.textContent = citekey.pinned ? icons.pin : ''
 
-            setSectionSummary(citekey || '')
+            setSectionSummary(citekey.citationKey || '')
           },
           onInit: ({ body, refresh }) => {
             $done = Events.on('items-changed', ({ items }) => {
@@ -746,7 +753,10 @@ export class BetterBibTeX {
         Events.on('items-changed', () => {
           // if (rowID) Zotero.ItemPaneManager.refreshInfoRow(rowID)
           // eslint-disable-next-line no-underscore-dangle
-          if (columnDataKey && !Zotero.getActiveZoteroPane().itemPane.itemsView._columnPrefs[columnDataKey].hidden) Zotero.ItemTreeManager.refreshColumns()
+          if (!columnDataKey) return
+          const azp = Zotero.getActiveZoteroPane()
+          if (!azp || !azp.itemPane) return
+          if (!azp.itemPane.itemsView._columnPrefs[columnDataKey].hidden) Zotero.ItemTreeManager.refreshColumns()
         })
 
         monkey.enable()
@@ -796,6 +806,7 @@ export class BetterBibTeX {
     }
 
     try {
+      // @ts-ignore
       return Zotero.File.getContents(file) as string
     }
     catch (err) {

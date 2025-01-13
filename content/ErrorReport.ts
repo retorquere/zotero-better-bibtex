@@ -88,6 +88,7 @@ export class ErrorReport {
           'x-amz-acl': 'bucket-owner-full-control',
           'Content-Type': 'application/x-gzip',
         },
+        // @ts-ignore
         body: this.zip(),
       })
 
@@ -123,7 +124,7 @@ export class ErrorReport {
       Zotero.getString('zotero.debugOutputLogging.enabledAfterRestart', [Zotero.clientName]),
       buttonFlags,
       Zotero.getString('general.restartNow'),
-      null, Zotero.getString('general.restartLater'), null, {}
+      null, Zotero.getString('general.restartLater'), null, { value: false }
     )
 
     if (index !== 1) Zotero.Prefs.set('debug.store', true)
@@ -371,6 +372,7 @@ export class ErrorReport {
         show_latest.hidden = false
       }
 
+      // @ts-ignore
       this.region = await Zotero.Promise.any(Object.keys(s3.region).map(this.ping.bind(this)))
       this.bucket = `https://${ s3.bucket }-${ this.region.short }.s3-${ this.region.region }.amazonaws.com${ this.region.tld || '' }`
       this.key = Zotero.Utilities.generateObjectKey()
@@ -447,9 +449,11 @@ export class ErrorReport {
           case 'collection':
             context += ` (${ Zotero.Collections.get(ae.id)?.name || '<collection>' })`
             break
-          case 'library':
-            context += ` (${ Zotero.Libraries.get(ae.id)?.name || '<library>' })`
+          case 'library': {
+            const lib = Zotero.Libraries.get(ae.id)
+            context += ` (${(lib ? lib.name : '') || '<library>'})`
             break
+          }
         }
         context += '\n'
         for (const [ k, v ] of Object.entries(ae)) {

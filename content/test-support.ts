@@ -185,6 +185,7 @@ export class TestSupport {
     const s = (new Zotero.Search)
     for (const [ mode, text ] of Object.entries(query)) {
       if (![ 'is', 'contains' ].includes(mode)) throw new Error(`unsupported search mode ${ mode }`)
+      // @ts-ignore TODO import type for mode from zotero-types
       s.addCondition('field', mode, text)
     }
     ids = ids.concat(await s.search())

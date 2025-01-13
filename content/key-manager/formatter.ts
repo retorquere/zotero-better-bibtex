@@ -67,7 +67,7 @@ function innerText(node): string {
 function parseDate(v): PartialDate {
   v = v || ''
   const parsed: {
-    y?: number
+    y?: number | string
     m?: number
     d?: number
     oy?: number
@@ -89,8 +89,8 @@ function parseDate(v): PartialDate {
       const reparsed = Zotero.Date.strToDate(date.verbatim)
       if (typeof reparsed.year === 'number' || reparsed.year) {
         parsed.y = reparsed.year
-        parsed.m = parseInt(reparsed.month) || undefined
-        parsed.d = parseInt(reparsed.day) || undefined
+        parsed.m = reparsed.month || undefined
+        parsed.d = reparsed.day || undefined
       }
       else {
         parsed.y = parsed.oy = (date.verbatim as unknown as number) // a bit cheaty
@@ -122,7 +122,7 @@ function parseDate(v): PartialDate {
 
   res.m = (typeof parsed.m !== 'undefined') ? (`${ parsed.m }`) : ''
   res.d = (typeof parsed.d !== 'undefined') ? (`${ parsed.d }`) : ''
-  res.y = (typeof parsed.y !== 'undefined') ? (`${ parsed.y % 100 }`) : ''
+  res.y = (typeof parsed.y === 'number') ? (`${ parsed.y % 100 }`) : (parsed.y || '')
   res.Y = (typeof parsed.y !== 'undefined') ? (`${ parsed.y }`) : ''
   res.om = (typeof parsed.om !== 'undefined') ? (`${ parsed.om }`) : ''
   res.od = (typeof parsed.od !== 'undefined') ? (`${ parsed.od }`) : ''
@@ -347,10 +347,15 @@ export class PatternFormatter {
   private re = {
     unsafechars_allow_spaces: /\s/g,
     unsafechars: /\s/g,
+    // @ts-ignore
     alphanum: Zotero.Utilities.XRegExp('[^\\p{L}\\p{N}]'),
+    // @ts-ignore
     punct: Zotero.Utilities.XRegExp('\\p{Pe}|\\p{Pf}|\\p{Pi}|\\p{Po}|\\p{Ps}', 'g'),
+    // @ts-ignore
     dash: Zotero.Utilities.XRegExp('\\p{Pd}|\u2500|\uFF0D|\u2015', 'g'), // additional pseudo-dashes from #1880
+    // @ts-ignore
     caseNotUpperTitle: Zotero.Utilities.XRegExp('[^\\p{Lu}\\p{Lt}]', 'g'),
+    // @ts-ignore
     caseNotUpper: Zotero.Utilities.XRegExp('[^\\p{Lu}]', 'g'),
     // word: Zotero.Utilities.XRegExp('[\\p{L}\\p{Nd}\\p{Pc}\\p{M}]+(-[\\p{L}\\p{Nd}\\p{Pc}\\p{M}]+)*', 'g'),
   }
@@ -574,10 +579,11 @@ export class PatternFormatter {
    * @param name group name
    */
   public $group(name: string): this {
+    let group
     if (this.item.libraryID === Zotero.Libraries.userLibraryID) {
       this.next = true
     }
-    else if (Zotero.Libraries.get(this.item.libraryID)?.name !== name) {
+    else if ((group = Zotero.Libraries.get(this.item.libraryID)) && (group.name !== name)) {
       this.next = true
     }
     return this.$text('')

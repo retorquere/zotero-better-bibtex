@@ -169,6 +169,7 @@ class NSItem {
 
       if (typeof library !== 'undefined' && library !== '*') {
         try {
+          // @ts-ignore TODO awaits zotero-types fix
           search.addCondition('libraryID', 'is', Library.get(library).libraryID, true)
         }
         catch {
@@ -198,6 +199,7 @@ class NSItem {
             throw new Error(`library ${ JSON.stringify(term[2]) } not found`)
           }
         }
+        // @ts-expect-error
         search.addCondition(...term)
       }
     }
@@ -209,7 +211,10 @@ class NSItem {
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return items.map(item => {
-      libraries[item.libraryID] = libraries[item.libraryID] || Zotero.Libraries.get(item.libraryID).name
+      if (!libraries[item.libraryID]) {
+        const lib = Zotero.Libraries.get(item.libraryID)
+        libraries[item.libraryID] = lib ? lib.name : `library#${item.libraryID}`
+      }
 
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       return {
@@ -305,7 +310,6 @@ class NSItem {
         }
 
         if (col.parentCollection) {
-          // @ts-expect-error TODO: remove after fix in zotero-types
           col.parentCollection = recurseParents(libraryID, col.parentCollection)
         }
 
@@ -331,7 +335,6 @@ class NSItem {
         seen[id] = col
 
         if (includeParents && col.parentCollection) {
-          /// @ts-expect-error TODO: remove when zotero-types is fixed
           col.parentCollection = recurseParents(item.libraryID, col.parentCollection)
         }
 
@@ -613,8 +616,8 @@ class NSViewer {
     attachments = attachments.filter(x => x.isPDFAttachment())
 
     if (!attachments.length) throw { code: INVALID_PARAMETERS, message: `no PDF found for URI ${ id }` }
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return await Zotero.OpenPDF.openToPage(attachments[0], page + 1)
+    // @ts-ignore
+    return await Zotero.OpenPDF.openToPage(attachments[0], page + 1) // eslint-disable-line @typescript-eslint/no-unsafe-return
   }
 }
 
