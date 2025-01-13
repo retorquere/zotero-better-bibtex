@@ -14,7 +14,7 @@ import { log } from './logger'
 import { AutoExport } from './auto-export'
 import { KeyManager } from './key-manager'
 
-import { pick } from './file-picker'
+import { FilePickerHelper } from 'zotero-plugin-toolkit'
 import * as l10n from './l10n'
 
 import * as UZip from 'uzip'
@@ -161,7 +161,7 @@ export class ErrorReport {
   }
 
   public async save(): Promise<void> {
-    const filename = await pick('Logs', 'save', [[ 'Zip Archive (*.zip)', '*.zip' ]], `${ this.name() }.zip`)
+    const filename = await new FilePickerHelper('Logs', 'save', [[ 'Zip Archive (*.zip)', '*.zip' ]], `${this.name()}.zip`).open()
     if (filename) await IOUtils.write(filename, this.zip(), { tmpPath: filename + '.tmp' })
   }
 

@@ -127,6 +127,7 @@
     "words-to-numbers": "^1.5.1",
     "xregexp": "^5.1.1",
     "zotero-plugin": "5.0.1",
+    "zotero-plugin-toolkit": "^4.1.1",
     "zotero-types": "^3.1.4"
   },
   "devDependencies": {

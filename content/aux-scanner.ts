@@ -2,7 +2,7 @@ import { Path, File } from './file'
 
 import { Translators } from './translators'
 import { Preference } from './prefs'
-import { pick } from './file-picker'
+import { FilePickerHelper } from 'zotero-plugin-toolkit'
 import { findBinary } from './path-search'
 import { log } from './logger'
 import { alert } from './prompt'
@@ -22,7 +22,7 @@ export const AUXScanner = new class { // eslint-disable-line @typescript-eslint/
   public async pick(): Promise<string> { // eslint-disable-line @typescript-eslint/no-unsafe-return
     if (typeof this.pandoc !== 'string') this.pandoc = await findBinary('pandoc')
     const filters: [string, string][] = this.pandoc ? [[ 'AUX/Markdown', '*.aux; *.md; *.txt; *.markdown' ]] : [[ 'AUX file', '*.aux' ]]
-    return await pick(Zotero.getString('fileInterface.import'), 'open', filters)
+    return (await new FilePickerHelper(Zotero.getString('fileInterface.import'), 'open', filters).open()) || ''
   }
 
   public async scan(path: string, options: { tag?: string; libraryID?: number; collection?: Collection } = {}) {

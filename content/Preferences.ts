@@ -12,7 +12,7 @@ import { AutoExport } from './auto-export'
 import { Translators } from './translators'
 import * as l10n from './l10n'
 import { Events } from './events'
-import { pick } from './file-picker'
+import { FilePickerHelper } from 'zotero-plugin-toolkit'
 import { flash } from './flash'
 import { icons } from './icons'
 import { Cache } from './db/cache'
@@ -348,15 +348,15 @@ export class PrefPane {
   // private prefwindow: HTMLElement
 
   public async exportPrefs(): Promise<void> {
-    let file = await pick(Zotero.getString('fileInterface.export'), 'save', [[ 'BBT JSON file', '*.json' ]])
+    let file = await new FilePickerHelper(Zotero.getString('fileInterface.export'), 'save', [[ 'BBT JSON file', '*.json' ]]).open()
     if (!file) return
-    if (!file.match(/.json$/)) file = `${ file }.json`
+    if (!file.match(/.json$/)) file = `${file}.json`
     Zotero.File.putContents(Zotero.File.pathToFile(file), JSON.stringify({ config: { preferences: Preference.all }}, null, 2))
   }
 
   public async importPrefs(): Promise<void> {
     const preferences: { path: string; contents?: string; parsed?: any } = {
-      path: await pick(Zotero.getString('fileInterface.import'), 'open', [[ 'BBT JSON file', '*.json' ]]),
+      path: (await new FilePickerHelper(Zotero.getString('fileInterface.import'), 'open', [[ 'BBT JSON file', '*.json' ]]).open()) || '',
     }
     if (!preferences.path) return
 
