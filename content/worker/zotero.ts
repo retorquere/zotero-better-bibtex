@@ -249,8 +249,6 @@ async function makeDirs(path) {
 async function saveFile(path, overwrite) {
   if (!Zotero.exportDirectory) return false
 
-  log.
-
   const protect = overwrite
     ? async function(_tgt: string, _src?: string) {} // eslint-disable-line @typescript-eslint/no-empty-function
     : async function(tgt: string, src?: string) {
