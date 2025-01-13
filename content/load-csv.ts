@@ -5,7 +5,7 @@ import { log } from './logger'
 
 async function read(path: string): Promise<string> {
   try {
-    return (await File.exists(path)) ? (await IOUtils.readUTF8(path) as string) : ''
+    return (await File.exists(path)) ? await IOUtils.readUTF8(path) : ''
   }
   catch (err) {
     log.error('csv.read', path, 'error:', err)

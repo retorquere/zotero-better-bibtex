@@ -14,7 +14,7 @@ import { log } from './logger'
 import { AutoExport } from './auto-export'
 import { KeyManager } from './key-manager'
 
-import { pick } from './file-picker'
+import { FilePickerHelper } from 'zotero-plugin-toolkit'
 import * as l10n from './l10n'
 
 import * as UZip from 'uzip'
@@ -123,7 +123,7 @@ export class ErrorReport {
       Zotero.getString('zotero.debugOutputLogging.enabledAfterRestart', [Zotero.clientName]),
       buttonFlags,
       Zotero.getString('general.restartNow'),
-      null, Zotero.getString('general.restartLater'), null, {}
+      null, Zotero.getString('general.restartLater'), null, { value: false }
     )
 
     if (index !== 1) Zotero.Prefs.set('debug.store', true)
@@ -161,7 +161,7 @@ export class ErrorReport {
   }
 
   public async save(): Promise<void> {
-    const filename = await pick('Logs', 'save', [[ 'Zip Archive (*.zip)', '*.zip' ]], `${ this.name() }.zip`)
+    const filename = await new FilePickerHelper('Logs', 'save', [[ 'Zip Archive (*.zip)', '*.zip' ]], `${this.name()}.zip`).open()
     if (filename) await IOUtils.write(filename, this.zip(), { tmpPath: filename + '.tmp' })
   }
 
@@ -203,7 +203,7 @@ export class ErrorReport {
   }
 
   private errors(): string {
-    return this.scrub(Zotero.getErrors(true) as string[])
+    return this.scrub(Zotero.getErrors(true))
   }
 
   private log(): string {
@@ -352,7 +352,7 @@ export class ErrorReport {
       cache,
     }
     const acronyms = PathUtils.join(Zotero.BetterBibTeX.dir, 'acronyms.csv')
-    if (await File.exists(acronyms)) this.input.acronyms = await IOUtils.readUTF8(acronyms) as string
+    if (await File.exists(acronyms)) this.input.acronyms = await IOUtils.readUTF8(acronyms)
 
     await this.reload()
 
@@ -371,6 +371,7 @@ export class ErrorReport {
         show_latest.hidden = false
       }
 
+      // @ts-expect-error zotero-types does not export .any
       this.region = await Zotero.Promise.any(Object.keys(s3.region).map(this.ping.bind(this)))
       this.bucket = `https://${ s3.bucket }-${ this.region.short }.s3-${ this.region.region }.amazonaws.com${ this.region.tld || '' }`
       this.key = Zotero.Utilities.generateObjectKey()
@@ -447,9 +448,11 @@ export class ErrorReport {
           case 'collection':
             context += ` (${ Zotero.Collections.get(ae.id)?.name || '<collection>' })`
             break
-          case 'library':
-            context += ` (${ Zotero.Libraries.get(ae.id)?.name || '<library>' })`
+          case 'library': {
+            const lib = Zotero.Libraries.get(ae.id)
+            context += ` (${(lib ? lib.name : '') || '<library>'})`
             break
+          }
         }
         context += '\n'
         for (const [ k, v ] of Object.entries(ae)) {

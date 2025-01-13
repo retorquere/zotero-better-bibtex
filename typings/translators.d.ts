@@ -29,7 +29,7 @@ export namespace Translators {
         { kind: 'initialize', CSL_MAPPINGS: any, dateFormatsJSON: any }
       | { kind: 'configure', environment: Environment }
       | { kind: 'start', config: Job }
-      | { kind: 'done', output: boolean | string }
+      | { kind: 'done', output: string }
       | { kind: 'debug', message: string }
       | { kind: 'error', message: string, stack?: string }
       | { kind: 'item', item: number }

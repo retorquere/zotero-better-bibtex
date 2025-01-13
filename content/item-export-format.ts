@@ -18,10 +18,10 @@ export class Serializer {
     return serialized
   }
 
-  private async item(item: ZoteroItem, selectedLibraryID: number): Promise<Serialized> {
+  private async item(item: Zotero.Item, selectedLibraryID: number): Promise<Serialized> {
     if (item.libraryID !== selectedLibraryID) await item.loadAllData()
 
-    let serialized: Item = item.toJSON()
+    let serialized: Item = item.toJSON() as unknown as Item
     serialized.uri = Zotero.URI.getItemURI(item)
     serialized.itemID = item.id
 
@@ -45,14 +45,14 @@ export class Serializer {
     return <Serialized>JSON.parse(JSON.stringify(fix(serialized, item)))
   }
 
-  public async serialize(items: ZoteroItem[]): Promise<Serialized[]> {
+  public async serialize(items: Zotero.Item[]): Promise<Serialized[]> {
     const selectedLibraryID = Zotero.getActiveZoteroPane().getSelectedLibraryID()
     return Promise.all(items.map(item => this.item(item, selectedLibraryID)))
   }
 }
 export const serializer = new Serializer
 
-export function fix(serialized: Item, item: ZoteroItem): Item {
+export function fix(serialized: Item, item: Zotero.Item): Item {
   if (item.isRegularItem() && !item.isFeedItem) {
     const regular = <RegularItem>serialized
 

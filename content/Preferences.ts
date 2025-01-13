@@ -12,7 +12,7 @@ import { AutoExport } from './auto-export'
 import { Translators } from './translators'
 import * as l10n from './l10n'
 import { Events } from './events'
-import { pick } from './file-picker'
+import { FilePickerHelper } from 'zotero-plugin-toolkit'
 import { flash } from './flash'
 import { icons } from './icons'
 import { Cache } from './db/cache'
@@ -168,7 +168,7 @@ class AutoExportPane {
         node.style.display = node.classList.contains(displayed) ? 'initial' : 'none'
       }
 
-      for (const node of Array.from(details.querySelectorAll('*[data-ae-field]'))) {
+      for (const node of Array.from(details.querySelectorAll('*[data-ae-field]')) as HTMLElement[]) {
         const field = node.getAttribute('data-ae-field')
 
         switch (field) {
@@ -316,18 +316,22 @@ class AutoExportPane {
     const coll = Zotero.Collections.get(id)
     if (!coll) return ''
 
-    if (form === 'long' && !isNaN(parseInt(coll.parentID))) {
-      return `${ this.collection(coll.parentID, form) } / ${ coll.name }`
+    if (form === 'long') {
+      return `${this.collection(coll.parentID, form)} / ${coll.name}`
     }
     else {
-      return `${ Zotero.Libraries.get(coll.libraryID).name } : ${ coll.name }`
+      const lib = Zotero.Libraries.get(coll.libraryID)
+
+      return `${lib ? lib.name : `:${coll.libraryID}`} : ${coll.name}`
     }
   }
 
   private name(ae: { type: string; id: number; path: string }, form: 'long' | 'short'): string {
     switch (ae.type) {
-      case 'library':
-        return (Zotero.Libraries.get(ae.id).name as string)
+      case 'library': {
+        const lib = Zotero.Libraries.get(ae.id)
+        return lib ? lib.name : ''
+      }
 
       case 'collection':
         return this.collection(ae.id, form)
@@ -344,20 +348,20 @@ export class PrefPane {
   // private prefwindow: HTMLElement
 
   public async exportPrefs(): Promise<void> {
-    let file = await pick(Zotero.getString('fileInterface.export'), 'save', [[ 'BBT JSON file', '*.json' ]])
+    let file = await new FilePickerHelper(Zotero.getString('fileInterface.export'), 'save', [[ 'BBT JSON file', '*.json' ]]).open()
     if (!file) return
-    if (!file.match(/.json$/)) file = `${ file }.json`
+    if (!file.match(/.json$/)) file = `${file}.json`
     Zotero.File.putContents(Zotero.File.pathToFile(file), JSON.stringify({ config: { preferences: Preference.all }}, null, 2))
   }
 
   public async importPrefs(): Promise<void> {
     const preferences: { path: string; contents?: string; parsed?: any } = {
-      path: await pick(Zotero.getString('fileInterface.import'), 'open', [[ 'BBT JSON file', '*.json' ]]),
+      path: (await new FilePickerHelper(Zotero.getString('fileInterface.import'), 'open', [[ 'BBT JSON file', '*.json' ]]).open()) || '',
     }
     if (!preferences.path) return
 
     try {
-      preferences.contents = Zotero.File.getContents(preferences.path)
+      preferences.contents = (await Zotero.File.getContentsAsync(preferences.path, 'utf-8')) as string
     }
     catch {
       flash(`could not read contents of ${ preferences.path }`)

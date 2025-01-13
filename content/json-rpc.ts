@@ -101,8 +101,7 @@ class NSUser {
    * @param includeCollections Wether or not the result should inlcude a list of collection for each library (default is false)
    */
   public async groups(includeCollections?: boolean) {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return await Zotero.Libraries
+    return Zotero.Libraries
       .getAll().map(lib => ({
         id: lib.libraryID,
         name: lib.name,
@@ -199,18 +198,22 @@ class NSItem {
             throw new Error(`library ${ JSON.stringify(term[2]) } not found`)
           }
         }
+        // @ts-expect-error I don't know why this spread fails type checking
         search.addCondition(...term)
       }
     }
 
-    const ids = new Set(await search.search() as number[])
+    const ids = new Set(await search.search())
 
     const items = await getItemsAsync(Array.from(ids))
     const libraries = {}
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return items.map(item => {
-      libraries[item.libraryID] = libraries[item.libraryID] || Zotero.Libraries.get(item.libraryID).name
+      if (!libraries[item.libraryID]) {
+        const lib = Zotero.Libraries.get(item.libraryID)
+        libraries[item.libraryID] = lib ? lib.name : `library#${item.libraryID}`
+      }
 
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       return {
@@ -238,7 +241,7 @@ class NSItem {
 
     for (const att of attachments) {
       const data: Record<string, any> = {
-        open: `zotero://open-pdf/${ Zotero.API.getLibraryPrefix(item.libraryID || Zotero.Libraries.userLibraryID) }/items/${ att.key }`,
+        open: `zotero://open-pdf/${Zotero.API.getLibraryPrefix(item.libraryID || Zotero.Libraries.userLibraryID)}/items/${att.key}`,
         path: att.getFilePath(),
       }
 
@@ -293,14 +296,17 @@ class NSItem {
     const keys = Zotero.BetterBibTeX.KeyManager.find({ where: q })
     if (!keys.length) throw { code: INVALID_PARAMETERS, message: `zero matches for ${ citekeys.join(',') }` }
 
-    const seen = {}
-    const recurseParents = (libraryID: string, key: string) => {
+    const seen: Record<string, any> = {}
+    const recurseParents = (libraryID: number, key: string): string => {
       if (!seen[key]) {
-        let col = Zotero.Collections.getByLibraryAndKey(libraryID, key)
+        let col = (Zotero.Collections.getByLibraryAndKey(libraryID, key) || null)?.toJSON()
 
-        if (!col) return false
-
-        col = col.toJSON()
+        if (col) {
+          col = structuredClone(col)
+        }
+        else {
+          return ''
+        }
 
         if (col.parentCollection) {
           col.parentCollection = recurseParents(libraryID, col.parentCollection)
@@ -320,7 +326,7 @@ class NSItem {
     for (const key of keys) {
       const item = await getItemsAsync(key.itemID)
       collections[key.citationKey] = item.getCollections().map(id => {
-        const col = Zotero.Collections.get(id).toJSON()
+        const col = structuredClone(Zotero.Collections.get(id).toJSON())
 
         delete col.relations
         delete col.version
@@ -543,7 +549,7 @@ class NSItem {
 
       style = style || 'apa'
       if (!style.includes('/')) style = `http://www.zotero.org/styles/${ style }`
-      locale = locale || Zotero.Prefs.get('export.quickCopy.locale')
+      locale = locale || Zotero.Prefs.get('export.quickCopy.locale') as string
       const citeproc = getStyle(style).getCiteProc(locale)
 
       for (const item of csl) {
@@ -609,11 +615,7 @@ class NSViewer {
     attachments = attachments.filter(x => x.isPDFAttachment())
 
     if (!attachments.length) throw { code: INVALID_PARAMETERS, message: `no PDF found for URI ${ id }` }
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return await Zotero.OpenPDF.openToPage(
-      attachments[0],
-      page + 1
-    )
+    return await Zotero.OpenPDF.openToPage(attachments[0], page + 1) // eslint-disable-line @typescript-eslint/no-unsafe-return
   }
 }
 
