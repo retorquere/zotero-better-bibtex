@@ -15,6 +15,8 @@ Components.utils.importGlobalProperties(['FormData', 'indexedDB'])
 Components.utils.import('resource://gre/modules/FileUtils.jsm')
 declare const FileUtils: any
 
+import { Menu } from 'zotero-plugin-toolkit'
+
 import type { XUL } from '../typings/xul'
 import { DebugLog } from 'zotero-plugin/debug-log'
 DebugLog.register('Better BibTeX', ['extensions.zotero.translators.better-bibtex.'])
@@ -785,7 +787,16 @@ export class BetterBibTeX {
   public onMainWindowLoad({ window }: { window: Window }): void {
     void newZoteroPane(window)
 
-
+    Menu.register('menuFile', {
+      tag: 'menu',
+      label: 'Better BibTeX',
+      children: [
+        { label: 'better-bibtex_aux-scanner', oncommand: "Zotero.BetterBibTeX.scanAUX('tag')" },
+        { label: 'better-bibtex_report-errors', oncommand: "Zotero.BetterBibTeX.scanAUX('tag')" },
+      ]
+    })
+      oncommand: 'Zotero.FolderImport.addAttachmentsFromFolder()',
+    
   }
   public onMainWindowUnload({ window }: { window: Window }): void {
     log.info(`onMainWindowUnload ${typeof window}`)
