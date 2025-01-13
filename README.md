@@ -1,6 +1,6 @@
-# PSA
+# PSA: Zotero 6 support is ending
 
-I am in the process of switching BBT to Zotero 7 exclusively. It is no longer feasible for me to maintain compatibility across 6 and 7.
+I am in the process of switching BBT to Zotero 7 exclusively. It is no longer feasible for me to maintain compatibility across 6 and 7. A 6-compatible build remains available, and I might do emergency fixes on it depending on the case at hand, but new work will be 7-only.
 
 # Better BibTeX for Zotero
 
