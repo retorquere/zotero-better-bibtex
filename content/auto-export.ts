@@ -407,7 +407,7 @@ export type JobSetting = keyof Job
 export const AutoExport = new class $AutoExport { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
   public progress: Map<string, number> = new Map
 
-  private db = createTable<Job>(createDB({ clone: true }), 'autoExports')({
+  public db = createTable<Job>(createDB({ clone: true }), 'autoExports')({
     primary: 'path',
     indexes: [ 'translatorID', 'type', 'id' ],
   })
@@ -757,5 +757,12 @@ export const AutoExport = new class $AutoExport { // eslint-disable-line @typesc
     }
 
     items.filter(item => !itemTypeIDs.includes(item.itemTypeID)).forEach(item => itemIDs.add(item.id))
+  }
+
+  forCollection(collectionID: number) {
+    return blink.many(this.db, {
+      where: { type: 'collection', id: collectionID },
+      sort: { key: 'path', order: 'asc' },
+    })
   }
 }

@@ -469,4 +469,55 @@ export class ErrorReport {
 
     return context
   }
+
+  public async open(items?: string): Promise<void> {
+    const selection = async () => {
+      let scope = null
+      const zp = Zotero.getActiveZoteroPane()
+      switch (items) {
+        case 'collection':
+        case 'library':
+          scope = { type: 'collection', collection: zp.getSelectedCollection() }
+          if (!scope.collection) scope = { type: 'library', id: zp.getSelectedLibraryID() }
+          break
+
+        case 'items':
+          try {
+            scope = { type: 'items', items: zp.getSelectedItems() }
+          }
+          catch (err) { // ZoteroPane.getSelectedItems() doesn't test whether there's a selection and errors out if not
+            log.error('Could not get selected items:', err)
+          }
+      }
+
+      if (!scope) return ''
+
+      try {
+        return await Zotero.BetterBibTeX.Translators.queueJob({
+          translatorID: Zotero.BetterBibTeX.Translators.bySlug.BetterBibTeXJSON.translatorID,
+          displayOptions: { worker: true, exportNotes: true, dropAttachments: true, Normalize: true },
+          scope,
+          timeout: 40,
+        })
+      }
+      catch (err) {
+        if (err.timeout) {
+          log.error('errorreport: items timed out after', err.timeout, 'seconds')
+          return 'Timeout retrieving items'
+        }
+        else {
+          log.error('errorreport: could not get items', err)
+          return `Error retrieving items: ${ err }`
+        }
+      }
+    }
+
+    items = items ? await selection() : ''
+
+    Zotero.getMainWindow().openDialog(
+      'chrome://zotero-better-bibtex/content/ErrorReport.xhtml',
+      'better-bibtex-error-report',
+      'chrome,centerscreen,modal',
+      { wrappedJSObject: { items }})
+  }
 }
