@@ -135,17 +135,23 @@ export function AEisHidden(elem: any, _ev: Event): boolean { // eslint-disable-l
 
   if (!lib && !coll) return true
 
-  const n = elem.getAttribute('id')?.match(/^better-bibtex-collection-menu-ae-(\d+)$/)
-  if (!n) return true
+  let n: number
+  const m = elem.getAttribute('id')?.match(/^better-bibtex-collection-menu-ae-(\d+)$/)
+  if (m) {
+    n = parseInt(m[1])
+  }
+  else {
+    n = 0
+  }
 
   const aes = blink.many(AutoExport.db, {
     where: { type: lib ? 'library' : 'collection', id: lib ? lib.id : coll.id },
     sort: { key: 'path', order: 'asc' },
   })
-  const ae = aes[parseInt(n)]
+  const ae = aes[n]
   if (!ae) return true
 
-  elem.setAttribute('label', ae.path)
+  if (m) elem.setAttribute('label', ae.path)
   return false
 }
 
