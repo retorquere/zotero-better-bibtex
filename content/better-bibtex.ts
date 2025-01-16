@@ -26,7 +26,6 @@ import { TeXstudio } from './tex-studio'
 import { icons } from './icons'
 import { prompt } from './prompt'
 import { Elements } from './create-element'
-import { newZoteroPane } from './ZoteroPane'
 import { ExportOptions } from './ExportOptions'
 import * as MenuHelper from './menu-helper'
 import { PrefPane } from './Preferences'
@@ -660,7 +659,7 @@ export class BetterBibTeX {
       startup: async () => {
         Ready.resolve()
 
-        this.onMainWindowLoad(Zotero.getMainWindow())
+        this.onMainWindowLoad()
 
         Zotero.Promise.delay(15000).then(() => {
           DebugLog.unregister('Better BibTeX')
@@ -788,16 +787,15 @@ export class BetterBibTeX {
     await orchestrator.shutdown(reason)
   }
 
-  public onMainWindowLoad({ window }: { window: Window }): void {
-    void newZoteroPane(window)
-
+  // public onMainWindowLoad({ window }: { window: Window }): void {
+  public onMainWindowLoad(): void {
     Menu.register('menuFile', {
       tag: 'menu',
       label: 'Better BibTeX',
       children: [
         { tag: 'menuitem', label: 'better-bibtex_aux-scanner', oncommand: "Zotero.BetterBibTeX.scanAUX('tag')" },
         { tag: 'menuitem', label: 'better-bibtex_report-errors', oncommand: 'Zotero.BetterBibTeX.ErrorReport.open()' },
-      ]
+      ],
     })
 
     Menu.register('menuHelp', {

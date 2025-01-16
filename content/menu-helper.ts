@@ -7,10 +7,12 @@ import { log } from './logger'
 import * as CAYW from './cayw'
 import { TeXstudio } from './tex-studio'
 import * as blink from '../gen/blinkdb'
+import { AutoExport } from './auto-export'
+import { Translators } from './translators'
 
-export async function clipSelected(translatorID: string) {
+export async function clipSelected(translatorID: string): Promise<void> {
   const items = Zotero.getActiveZoteroPane().getSelectedItems()
-  toClipboard(await Zotero.BetterBibTeX.Translators.queueJob({
+  toClipboard(await Translators.queueJob({
     translatorID,
     displayOptions: { worker: true },
     scope: { type: 'items', items },
@@ -127,7 +129,7 @@ export async function toTeXstudio(): Promise<void> {
   }
 }
 
-export function AEisHidden(elem, ev): boolean {
+export function AEisHidden(elem: any, _ev: Event): boolean { // eslint-disable-line @typescript-eslint/explicit-module-boundary-types
   const lib = selectedLibrary()
   const coll = selectedCollection()
 
@@ -136,7 +138,7 @@ export function AEisHidden(elem, ev): boolean {
   const n = elem.getAttribute('id')?.match(/^better-bibtex-collection-menu-ae-(\d+)$/)
   if (!n) return true
 
-  const aes = blink.many(Zotero.BetterBibTeX.KeyManager.keys, {
+  const aes = blink.many(AutoExport.db, {
     where: { type: lib ? 'library' : 'collection', id: lib ? lib.id : coll.id },
     sort: { key: 'path', order: 'asc' },
   })
@@ -147,16 +149,18 @@ export function AEisHidden(elem, ev): boolean {
   return false
 }
 
-export function selectedCollection() {
+export function selectedCollection(): Zotero.Collection {
   const zp = Zotero.getActiveZoteroPane()
   const cv = zp?.collectionsView
-  return cv?.selection?.count && cv.selectedTreeRow?.isCollection() ? zp.getSelectedCollection() : null
+  if (!cv) return null
+  return cv.selection?.count && cv.selectedTreeRow?.isCollection() ? zp.getSelectedCollection() : null
 }
 
-export function selectedLibrary() {
+export function selectedLibrary(): Zotero.Library {
   const zp = Zotero.getActiveZoteroPane()
   const cv = zp?.collectionsView
-  return cv.selectedTreeRow?.isLibrary(true) ? Zotero.Libraries.get(zp.getSelectedLibraryID()) : null
+  if (!cv) return null
+  return cv.selectedTreeRow?.isLibrary(true) ? Zotero.Libraries.get(zp.getSelectedLibraryID()) || null : null
 }
 
 export function pullExport(): void {
@@ -172,14 +176,14 @@ export function pullExport(): void {
   }
 
   if (coll) {
-    params.url.short = `${root}/collection?/${coll.libraryID || 0}/${collection.key}`
+    params.url.short = `${root}/collection?/${coll.libraryID || 0}/${coll.key}`
 
     let path = `/${encodeURIComponent(coll.name)}`
-    while (coll.parent) {
-      coll = Zotero.Collections.get(coll.parent)
+    while (typeof coll.parentID === 'number') {
+      coll = Zotero.Collections.get(coll.parentID)
       path = `/${encodeURIComponent(coll.name)}${path}`
     }
-    params.url.long = `${root}/collection?/${collection.libraryID || 0}${path}`
+    params.url.long = `${root}/collection?/${coll.libraryID || 0}${path}`
   }
   else if (lib) {
     params.url.short = `${root}/library?${lib.id ? `/${lib.id}/library` : 'library'}`
