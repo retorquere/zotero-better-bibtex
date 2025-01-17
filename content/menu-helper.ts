@@ -198,5 +198,5 @@ export function pullExport(): void {
     return
   }
 
-  this.window.openDialog('chrome://zotero-better-bibtex/content/ServerURL.xhtml', '', 'chrome,dialog,centerscreen,modal', params)
+  Zotero.getMainWindow().openDialog('chrome://zotero-better-bibtex/content/ServerURL.xhtml', '', 'chrome,dialog,centerscreen,modal', params)
 }
