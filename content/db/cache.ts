@@ -495,6 +495,7 @@ export const Cache = new class $Cache {
   }
 
   public cache(store: string): ExportCache {
+    log.debug('3135: retrieving cache', store, ':', !!this[store.replace(/ /g, '') as 'Better BibTeX'])
     return this[store.replace(/ /g, '') as 'Better BibTeX'] as ExportCache
   }
 
