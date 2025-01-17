@@ -1,4 +1,3 @@
-import { log } from './logger'
 import { Monkey } from './monkey-patch'
 import * as l10n from './l10n'
 import { Events } from './events'
@@ -16,9 +15,7 @@ export function disable(): void {
 type XULWindow = Window & { bbtmonkey?: Monkey; Zotero_File_Interface_Export?: any; arguments?: any[]; sizeToContent?: () => void }
 
 Events.on('window-loaded', ({ win, href }: { win: Window; href: string }) => {
-  log.debug('export options:', href)
   if (!enabled || href !== 'chrome://zotero/content/exportOptions.xhtml') return
-  log.debug('loading export options:', href)
 
   const window: XULWindow = win
   const document = window.document
@@ -30,7 +27,6 @@ Events.on('window-loaded', ({ win, href }: { win: Window; href: string }) => {
   })
 
   function mutex(e?: Event): void {
-    log.debug('export options: mutex')
     const exportFileData = document.getElementById('export-option-exportFileData') as XUL.Checkbox
     const keepUpdated = document.getElementById('export-option-keepUpdated') as XUL.Checkbox
     const worker = document.getElementById('export-option-worker') as XUL.Checkbox
@@ -63,7 +59,6 @@ Events.on('window-loaded', ({ win, href }: { win: Window; href: string }) => {
   }
 
   function show() {
-    log.debug('export options: show')
     const index = (document.getElementById('format-menu') as HTMLSelectElement).selectedIndex
     const selected = (index >= 0) ? window.arguments[0].translators[index] : null
 
@@ -128,14 +123,11 @@ Events.on('window-loaded', ({ win, href }: { win: Window; href: string }) => {
   }
 
   if (window.bbtmonkey) {
-    log.debug('export options: enable patch')
     window.bbtmonkey.enable()
   }
   else {
-    log.debug('export options: install patch')
     window.bbtmonkey = new Monkey(true)
     window.bbtmonkey.patch(window.Zotero_File_Interface_Export, 'updateOptions', original => function(_options) {
-      log.debug('export options: patched updateOptions')
       // eslint-disable-next-line prefer-rest-params
       original.apply(this, arguments)
       show()
