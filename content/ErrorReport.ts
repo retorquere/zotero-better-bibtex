@@ -2,7 +2,7 @@ import * as client from './client'
 import { Path, File } from './file'
 
 import { Cache } from './db/cache'
-import { regex as escapeRE } from './escape'
+// import { regex as escapeRE } from './escape'
 
 import { Preference } from './prefs'
 
@@ -46,7 +46,7 @@ type Report = {
   cache?: string
 }
 
-const $home = new RegExp(`${escapeRE(Path.home)}|${escapeRE(Path.home.replace(Zotero.isWin ? /\\/g : /\//g, '$1$1'))}|${escapeRE(PathUtils.toFileURI(Path.home))}`, 'g')
+// const $home = new RegExp(`${escapeRE(Path.home)}|${escapeRE(Path.home.replace(Zotero.isWin ? /\\/g : /\//g, '$1$1'))}|${escapeRE(PathUtils.toFileURI(Path.home))}`, 'g')
 
 export class ErrorReport {
   private previewSize = 3
@@ -197,8 +197,10 @@ export class ErrorReport {
       /pdftotext returned exit status/,
       /protocol is not allowed for attachments/,
     ].map(re => re.source).join('|'))
+
+    log.debug('DISABLED $HOME SCRUBBING')
     return logging.filter(line => !line.match(ignore))
-      .map(line => line.replace($home, '$HOME'))
+      // .map(line => line.replace($home, '$HOME'))
       .join('\n')
   }
 
