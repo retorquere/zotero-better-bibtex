@@ -96,7 +96,7 @@ export const KeyManager = new class _KeyManager {
   private queue = newQueue(1)
 
   // Table<CitekeyRecord, "itemID">
-  private keys = createTable<CitekeyRecord>(createDB({ clone: true }), 'citationKeys')({
+  public keys = createTable<CitekeyRecord>(createDB({ clone: true }), 'citationKeys')({
     primary: 'itemID',
     indexes: [ 'itemKey', 'libraryID', 'citationKey', 'lcCitationKey' ],
   })
