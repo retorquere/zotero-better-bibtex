@@ -737,7 +737,7 @@ export const AutoExport = new class $AutoExport { // eslint-disable-line @typesc
     await this.itemIDs(ae, ae.id, itemTypeIDs, itemIDset)
     if (itemIDset.size === 0) return 100
 
-    const cached = await Cache.cache(translator.label).count(path)
+    const cached = await Cache.cache(translator.label)?.count(path) || 0
     return Math.min(100 * (cached / itemIDset.size), 100)
   }
 
