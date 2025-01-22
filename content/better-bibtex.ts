@@ -440,7 +440,7 @@ export class BetterBibTeX {
   public Text = { sentenceCase }
 
   // panes
-  public ErrorReport = ErrorReport
+  public ErrorReport = new ErrorReport
   public PrefPane = new PrefPane
   public Translators = Translators
   public MenuHelper = MenuHelper
