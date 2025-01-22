@@ -64,7 +64,7 @@ function replacer() {
 
 function to_s(obj: any): string {
   if (typeof obj === 'string') return obj
-  return JSON.stringify(obj, replacer(), 2)
+  return JSON.stringify(obj, replacer())
 }
 
 export function format(...msg): string {
