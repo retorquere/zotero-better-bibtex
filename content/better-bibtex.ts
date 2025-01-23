@@ -588,10 +588,12 @@ export class BetterBibTeX {
     orchestrator.add({
       id: 'sqlite',
       startup: async () => {
-        await Zotero.DB.queryAsync('ATTACH DATABASE ? AS betterbibtex', [PathUtils.join(Zotero.DataDirectory.dir, 'better-bibtex.sqlite')])
+        const dbpath = PathUtils.join(Zotero.DataDirectory.dir, 'better-bibtex.sqlite')
+        log.debug('3135: dbpath', dbpath)
+        await Zotero.DB.queryAsync('ATTACH DATABASE ? AS betterbibtex', [dbpath])
 
         const tables: Record<string, boolean> = {}
-        for (const table of await Zotero.DB.columnQueryAsync<string>('SELECT LOWER(REPLACE(name, \'-\', \'\')) FROM betterbibtex.sqlite_master where type=\'table\'')) {
+        for (const table of await Zotero.DB.columnQueryAsync<string>("SELECT LOWER(REPLACE(name, '-', '')) FROM betterbibtex.sqlite_master where type='table'")) {
           tables[table] = true
         }
 
