@@ -285,6 +285,8 @@ const queue = new class TaskQueue {
     const ae = AutoExport.get(path)
     if (!ae) throw new Error(`AutoExport for ${ JSON.stringify(path) } does not exist`)
 
+    log.debug('3135: starting', ae)
+
     const translator = Translators.byId[ae.translatorID]
     void Events.emit('export-progress', { pct: 0, message: `Starting ${ translator.label }`, ae: path })
 
