@@ -248,6 +248,7 @@ const queue = new class TaskQueue {
   }
 
   public add(path: string) {
+    log.debug('3135: schedule auto-export', path)
     this.cancel(path)
     if (this.held) {
       this.held.add(path)
@@ -276,6 +277,7 @@ const queue = new class TaskQueue {
   }
 
   public run(path: string) {
+    log.debug('3135: starting auto-export', path)
     this.runAsync(path).catch(err => log.error(`autoexport failed: ${ path }`, err))
   }
 

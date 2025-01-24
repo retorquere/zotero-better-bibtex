@@ -178,7 +178,7 @@ class ItemListener extends ZoteroListener {
 
   public async notify(action: ZoteroAction, type: string, ids: number[], extraData?: Record<number, { libraryID?: number }>) {
     try {
-      log.debug('3135: itemlistener', { action, type, ids, extraData })
+      log.debug('3135: itemlistener', { action, type, ids, types: (await Zotero.Items.getAsync(ids)).map(item => Zotero.ItemTypes.getName(item.itemTypeID)) })
       switch (action) {
         case 'trash':
           action = 'delete'
