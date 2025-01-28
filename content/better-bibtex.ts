@@ -440,7 +440,7 @@ export class BetterBibTeX {
   public Text = { sentenceCase }
 
   // panes
-  public ErrorReport = ErrorReport
+  public ErrorReport = new ErrorReport
   public PrefPane = new PrefPane
   public Translators = Translators
   public MenuHelper = MenuHelper
@@ -659,7 +659,7 @@ export class BetterBibTeX {
         Ready.resolve()
 
         ExportOptions.enable()
-        this.onMainWindowLoad({ window: Zotero.getMainWindow() })
+        if (Zotero.getMainWindow()) this.onMainWindowLoad({ window: Zotero.getMainWindow() })
 
         Zotero.Promise.delay(15000).then(() => {
           DebugLog.unregister('Better BibTeX')
