@@ -41,16 +41,6 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: 20.x
-    - name: Cache python/node dependencies
-      id: cache
-      uses: actions/cache@v4
-      env:
-        cache-name: v3
-      with:
-        path: |
-          ~/.npm
-        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('package-lock.json')
-          }}-${{ hashFiles('requirements.txt') }}
     - name: install node packages
       run: npm install
 
@@ -135,16 +125,6 @@ jobs:
         python -m pip install --upgrade pip
         pip install packaging xvfbwrapper
         pip install -r requirements.txt
-    - name: Cache python/node dependencies
-      id: cache
-      uses: actions/cache@v4
-      env:
-        cache-name: v3
-      with:
-        path: |
-          ~/.npm
-        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('package-lock.json')
-          }}-${{ hashFiles('requirements.txt') }}
 
     - name: Set system-wide proxy using PAC URL
       run: |
@@ -238,16 +218,6 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: 20.x
-    - name: Cache python/node dependencies
-      id: cache
-      uses: actions/cache@v4
-      env:
-        cache-name: v3
-      with:
-        path: |
-          ~/.npm
-        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('package-lock.json')
-          }}-${{ hashFiles('requirements.txt') }}
     - name: install node packages
       run: npm install
 
