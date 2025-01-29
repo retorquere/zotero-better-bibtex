@@ -29,7 +29,7 @@ _anchors:
       pip install -r requirements.txt
   install_node_packages: &install_node_packages
     name: install node packages
-    run: npm install
+    run: npm install && npm ls
 
 jobs:
   build:
