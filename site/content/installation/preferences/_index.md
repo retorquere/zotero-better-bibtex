@@ -58,7 +58,7 @@ default: `within each library`
 
 Auto-generated (non-pinned) keys automatically get a postfix when they would generate a duplicate. By default, the check for duplicates is restricted
 to the library/group the item lives in. When set to global, the check will include all libraries/groups, so auto-generated keys would be globally
-unique. Changing this setting *does not* affect existign keys - for this you would need to select the items and refresh the keys.
+unique. Changing this setting *does not* affect existing keys - for this you would need to select the items and refresh the keys.
 
 
 Options:
