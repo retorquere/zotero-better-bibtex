@@ -1,0 +1,13 @@
+diff --git a/node_modules/zotero-types/types/zotero.d.ts b/node_modules/zotero-types/types/zotero.d.ts
+index 6cd6416..e90c20a 100644
+--- a/node_modules/zotero-types/types/zotero.d.ts
++++ b/node_modules/zotero-types/types/zotero.d.ts
+@@ -342,7 +342,7 @@ declare namespace Zotero {
+   let Debug: any;
+   let Integration: any;
+   let ItemFields: any;
+-  let PDFRenderer: any;
++  let PDFWorker: any;
+   let QuickCopy: any;
+   let Schema: any;
+   let SearchConditions: any;
