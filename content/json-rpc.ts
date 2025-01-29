@@ -256,7 +256,7 @@ class NSItem {
 
             if (annot.annotationType === 'image') {
               if (!await Zotero.Annotations.hasCacheImage(raw)) {
-                await Zotero.PDFRenderer.renderAttachmentAnnotations(raw.parentID)
+                await Zotero.PDFWorker.renderAttachmentAnnotations(raw.parentID)
               }
               annot.annotationImagePath = Zotero.Annotations.getCacheImagePath(raw)
             }

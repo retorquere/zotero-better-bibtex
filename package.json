@@ -133,7 +133,7 @@
   "devDependencies": {
     "@retorquere/bibtex-parser": "^9.0.17",
     "@retorquere/zotero-sync": "^1.0.27",
-    "@stylistic/eslint-plugin": "^3.0.0",
+    "@stylistic/eslint-plugin": "^3.0.1",
     "@types/bluebird": "^3.5.42",
     "@types/node": "^22.12.0",
     "@xmldom/xmldom": "^0.9.7",
@@ -186,7 +186,7 @@
     "process": "^0.11.10",
     "properties-reader": "^2.3.0",
     "pug": "^3.0.3",
-    "putout": "^37.21.1",
+    "putout": "^38.0.0",
     "recast": "^0.23.9",
     "regenerate": "^1.4.2",
     "rimraf": "^6.0.1",
