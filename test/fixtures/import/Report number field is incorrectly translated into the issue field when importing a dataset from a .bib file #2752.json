@@ -108,10 +108,9 @@
   "items": [
     {
       "version": 0,
-      "itemType": "report",
-      "pages": "6",
+      "itemType": "dataset",
       "date": "1995-01",
-      "extra": "Citation Key: techreport",
+      "extra": "Citation Key: dataset\nPages: 6",
       "language": "english",
       "title": "What a great report",
       "creators": [
@@ -122,16 +121,16 @@
       ],
       "tags": [],
       "relations": {},
-      "dateAdded": "2025-01-29T17:47:23Z",
-      "dateModified": "2025-01-29T17:47:23Z",
-      "uri": "http://zotero.org/users/8230813/items/7CJKL3L8",
+      "dateAdded": "2025-01-29T17:47:14Z",
+      "dateModified": "2025-01-29T17:47:14Z",
+      "uri": "http://zotero.org/users/8230813/items/VFTB6REM",
       "attachments": [],
       "notes": [],
-      "citationKey": "techreport",
-      "itemID": 112,
-      "itemKey": "7CJKL3L8",
+      "citationKey": "dataset",
+      "itemID": 103,
+      "itemKey": "VFTB6REM",
       "libraryID": 1,
-      "number": "my_precious_report_number"
+      "number": "mypreciousreportnumber"
     }
   ]
 }

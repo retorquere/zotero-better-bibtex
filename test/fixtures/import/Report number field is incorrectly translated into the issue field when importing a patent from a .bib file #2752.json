@@ -108,30 +108,30 @@
   "items": [
     {
       "version": 0,
-      "itemType": "report",
+      "itemType": "patent",
       "pages": "6",
-      "date": "1995-01",
-      "extra": "Citation Key: techreport",
+      "extra": "Citation Key: patent",
       "language": "english",
       "title": "What a great report",
       "creators": [
         {
           "name": "A very well-known and serious institution",
-          "creatorType": "author"
+          "creatorType": "inventor"
         }
       ],
       "tags": [],
       "relations": {},
-      "dateAdded": "2025-01-29T17:47:23Z",
-      "dateModified": "2025-01-29T17:47:23Z",
-      "uri": "http://zotero.org/users/8230813/items/7CJKL3L8",
+      "dateAdded": "2025-01-29T17:47:19Z",
+      "dateModified": "2025-01-29T17:47:19Z",
+      "uri": "http://zotero.org/users/8230813/items/9GCIH2XU",
       "attachments": [],
       "notes": [],
-      "citationKey": "techreport",
-      "itemID": 112,
-      "itemKey": "7CJKL3L8",
+      "citationKey": "patent",
+      "itemID": 109,
+      "itemKey": "9GCIH2XU",
       "libraryID": 1,
-      "number": "my_precious_report_number"
+      "date": "1995-01",
+      "number": "mypreciousreportnumber"
     }
   ]
 }

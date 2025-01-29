@@ -111,7 +111,7 @@
       "itemType": "report",
       "pages": "6",
       "date": "1995-01",
-      "extra": "Citation Key: techreport",
+      "extra": "Citation Key: report",
       "language": "english",
       "title": "What a great report",
       "creators": [
@@ -122,16 +122,16 @@
       ],
       "tags": [],
       "relations": {},
-      "dateAdded": "2025-01-29T17:47:23Z",
-      "dateModified": "2025-01-29T17:47:23Z",
-      "uri": "http://zotero.org/users/8230813/items/7CJKL3L8",
+      "dateAdded": "2025-01-29T17:47:20Z",
+      "dateModified": "2025-01-29T17:47:20Z",
+      "uri": "http://zotero.org/users/8230813/items/R6IJ3EQW",
       "attachments": [],
       "notes": [],
-      "citationKey": "techreport",
-      "itemID": 112,
-      "itemKey": "7CJKL3L8",
+      "citationKey": "report",
+      "itemID": 110,
+      "itemKey": "R6IJ3EQW",
       "libraryID": 1,
-      "number": "my_precious_report_number"
+      "number": "mypreciousreportnumber"
     }
   ]
 }

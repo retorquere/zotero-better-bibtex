@@ -108,30 +108,23 @@
   "items": [
     {
       "version": 0,
-      "itemType": "report",
-      "pages": "6",
-      "date": "1995-01",
-      "extra": "Citation Key: techreport",
-      "language": "english",
-      "title": "What a great report",
-      "creators": [
+      "itemType": "note",
+      "note": "Import errors found: <ul><li>Don&#39;t know what Zotero type to make of &#39;standard&#39; for @standard, importing as document</li></ul>",
+      "tags": [
         {
-          "name": "A very well-known and serious institution",
-          "creatorType": "author"
+          "tag": "#Better BibTeX import error",
+          "type": 1
         }
       ],
-      "tags": [],
+      "collections": [],
       "relations": {},
-      "dateAdded": "2025-01-29T17:47:23Z",
-      "dateModified": "2025-01-29T17:47:23Z",
-      "uri": "http://zotero.org/users/8230813/items/7CJKL3L8",
-      "attachments": [],
-      "notes": [],
-      "citationKey": "techreport",
-      "itemID": 112,
-      "itemKey": "7CJKL3L8",
+      "dateAdded": "2025-01-28T20:42:39Z",
+      "dateModified": "2025-01-28T20:42:39Z",
+      "uri": "http://zotero.org/users/8230813/items/K7F4UWWS",
+      "itemID": 109,
+      "itemKey": "K7F4UWWS",
       "libraryID": 1,
-      "number": "my_precious_report_number"
+      "attachments": []
     }
   ]
 }

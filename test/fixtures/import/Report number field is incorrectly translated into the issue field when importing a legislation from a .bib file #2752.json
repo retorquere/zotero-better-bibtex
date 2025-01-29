@@ -108,12 +108,10 @@
   "items": [
     {
       "version": 0,
-      "itemType": "report",
+      "itemType": "statute",
       "pages": "6",
-      "date": "1995-01",
-      "extra": "Citation Key: techreport",
+      "extra": "Citation Key: legislation1",
       "language": "english",
-      "title": "What a great report",
       "creators": [
         {
           "name": "A very well-known and serious institution",
@@ -122,16 +120,18 @@
       ],
       "tags": [],
       "relations": {},
-      "dateAdded": "2025-01-29T17:47:23Z",
-      "dateModified": "2025-01-29T17:47:23Z",
-      "uri": "http://zotero.org/users/8230813/items/7CJKL3L8",
+      "dateAdded": "2025-01-29T17:47:17Z",
+      "dateModified": "2025-01-29T17:47:17Z",
+      "uri": "http://zotero.org/users/8230813/items/JT6ZZGXP",
       "attachments": [],
       "notes": [],
-      "citationKey": "techreport",
-      "itemID": 112,
-      "itemKey": "7CJKL3L8",
+      "citationKey": "legislation1",
+      "itemID": 108,
+      "itemKey": "JT6ZZGXP",
       "libraryID": 1,
-      "number": "my_precious_report_number"
+      "date": "1995-01",
+      "number": "mypreciousreportnumber",
+      "title": "What a great report"
     }
   ]
 }
