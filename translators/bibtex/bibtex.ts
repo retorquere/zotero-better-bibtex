@@ -22,6 +22,11 @@ import { Library, Entry as BibTeXEntry, JabRefMetadata, ParseError, Creator, par
 function unique(value, index, self) {
   return self.indexOf(value) === index
 }
+function asarray(v?: string | number | string[]): string[] {
+  if (!v) return []
+  if (Array.isArray(v)) return v
+  return [ `${v}` ]
+}
 
 const config: Config = {
   caseConversion: {
@@ -658,27 +663,19 @@ class ZoteroItem {
     return true
   }
 
+  protected $titleaddon(): boolean { return this.$title() }
+  protected $subtitle(): boolean { return this.$title() }
   protected $title(): boolean {
-    let title: string[] = []
-
-    for (const field of [ 'title', 'titleaddon', 'subtitle' ]) {
-      if (typeof this.bibtex.fields[field] === 'string' || typeof this.bibtex.fields[field] === 'number') {
-        title.push(`${ this.bibtex.fields[field] }`)
-      }
-    }
-    title = title.filter(unique)
+    const title = [ ...asarray(this.bibtex.fields.title), ...asarray(this.bibtex.fields.titleaddon), ...asarray(this.bibtex.fields.subtitle) ].filter(unique).join('. ')
 
     if (this.item.itemType === 'encyclopediaArticle') {
-      this.item.publicationTitle = title.join('. ')
+      this.item.publicationTitle = title
     }
     else {
-      this.item.title = title.join('. ')
+      this.item.title = title
     }
     return true
   }
-
-  protected $titleaddon(): boolean { return this.$title() }
-  protected $subtitle(): boolean { return this.$title() }
 
   protected $holder(): boolean {
     if (this.item.itemType === 'patent') {
@@ -709,18 +706,26 @@ class ZoteroItem {
   protected $school(value: string, field: string): boolean { return this.$publisher(value, field) }
   protected $organization(value: string, field: string): boolean { return this.$publisher(value, field) }
 
-  protected $address(value: string): boolean {
-    return this.set('place', value, ['place'])
+  protected $address(value: string, field: string): boolean {
+    return this.$location(value, field)
   }
 
-  protected $location(value: string): boolean {
-    if (this.item.itemType === 'conferencePaper') {
-      if (typeof value === 'string') value = value.replace(/\n+/g, '')
-      this.extra.push(`Place: ${ value }`)
-      return true
+  protected $location(value: string, field: string): boolean {
+    const location = this.bibtex.fields.location
+    const address = this.bibtex.fields.address
+    if (field === 'address' && location?.length && address?.length) return true // handled through location
+
+    const places = [ ...asarray(location), ...asarray(address) ].map((v: string) => v.replace(/[\n ]+/g, ' ').trim()).filter(_ => _)
+
+    if (places.length) {
+      if (this.validFields.place) this.set('place', places.shift())
+
+      for (const place of places) {
+        this.extra.push(`Place: ${place}`)
+      }
     }
 
-    return this.$address(value)
+    return true
   }
 
   protected '$call-number'(value: string): boolean {
@@ -745,16 +750,14 @@ class ZoteroItem {
 
   protected $booktitle(value: string): boolean {
     switch (this.item.itemType) {
-      case 'conferencePaper':
-      case 'bookSection':
-        return this.set('publicationTitle', value)
-
       case 'book':
         if (this.bibtex.fields.title && this.bibtex.crossref?.donated.includes('booktitle')) return true
         if (this.bibtex.fields.title === value) return true
         if (!this.item.title) return this.set('title', value)
         break
     }
+
+    if (this.validFields.publicationTitle) return this.set('publicationTitle', value)
 
     return this.fallback(['booktitle'], value)
   }
