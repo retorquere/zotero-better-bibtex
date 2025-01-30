@@ -198,9 +198,8 @@ export class ErrorReport {
       /protocol is not allowed for attachments/,
     ].map(re => re.source).join('|'))
 
-    log.debug('DISABLED $HOME SCRUBBING')
     return logging.filter(line => !line.match(ignore))
-      // .map(line => line.replace($home, '$HOME'))
+      .map(line => line.replace($home, '$HOME'))
       .join('\n')
   }
 

@@ -264,7 +264,6 @@ async function saveFile(path, overwrite) {
 
   if (!await File.exists(this.localPath)) return false
 
-  log.debug('3125: saving file to', { exportDirectory: Zotero.exportDirectory, path })
   try {
     this.path = PathUtils.join(Zotero.exportDirectory, path)
   }
