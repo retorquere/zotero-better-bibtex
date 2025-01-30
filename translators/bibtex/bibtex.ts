@@ -1513,7 +1513,7 @@ class ZoteroItem {
 
     // Endnote has no citation keys in their bibtex
     if (this.bibtex.key && this.translation.collected.preferences.importCitationKey) {
-      this.item.citationKey = this.bibtex.key
+      if (this.validFields.citationKey) this.item.citationKey = this.bibtex.key
       this.extra.push(`Citation Key: ${this.bibtex.key}`)
     }
 
