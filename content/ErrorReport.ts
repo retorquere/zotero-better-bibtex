@@ -2,7 +2,7 @@ import * as client from './client'
 import { Path, File } from './file'
 
 import { Cache } from './db/cache'
-// import { regex as escapeRE } from './escape'
+import { regex as escapeRE } from './escape'
 
 import { Preference } from './prefs'
 
@@ -46,7 +46,7 @@ type Report = {
   cache?: string
 }
 
-// const $home = new RegExp(`${escapeRE(Path.home)}|${escapeRE(Path.home.replace(Zotero.isWin ? /\\/g : /\//g, '$1$1'))}|${escapeRE(PathUtils.toFileURI(Path.home))}`, 'g')
+const $home = new RegExp(`${escapeRE(Path.home)}|${escapeRE(Path.home.replace(Zotero.isWin ? /\\/g : /\//g, '$1$1'))}|${escapeRE(PathUtils.toFileURI(Path.home))}`, 'g')
 
 export class ErrorReport {
   private previewSize = 3
