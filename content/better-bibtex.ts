@@ -239,7 +239,7 @@ monkey.patch(Zotero.Item.prototype, 'setField', original => function Zotero_Item
       Zotero.BetterBibTeX.KeyManager.update(this)
       return true
     }
-    else if (value !== citekey.citationKey) {
+    else if (value !== citekey.citationKey || !citekey.pinned) {
       this.setField('extra', Extra.set(this.getField('extra'), { citationKey: value }))
       // citekey.pinned = true
       // citekey.citekey = value
