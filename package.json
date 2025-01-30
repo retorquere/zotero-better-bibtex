@@ -132,7 +132,7 @@
   },
   "devDependencies": {
     "@retorquere/bibtex-parser": "^9.0.17",
-    "@retorquere/zotero-sync": "^1.0.27",
+    "@retorquere/zotero-sync": "^1.1.1",
     "@stylistic/eslint-plugin": "^3.0.1",
     "@types/bluebird": "^3.5.42",
     "@types/node": "^22.12.0",
