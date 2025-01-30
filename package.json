@@ -128,7 +128,7 @@
     "xregexp": "^5.1.1",
     "zotero-plugin": "5.0.1",
     "zotero-plugin-toolkit": "^4.1.1",
-    "zotero-types": "^3.1.6"
+    "zotero-types": "^3.1.7"
   },
   "devDependencies": {
     "@retorquere/bibtex-parser": "^9.0.17",
