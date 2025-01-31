@@ -21,7 +21,6 @@ jobs:
         persist-credentials: false
         fetch-depth: 1
         submodules: true
-        submodules-depth: 1
 
     - name: get package version
       run: echo "version="`jq -r .version package.json` >> $GITHUB_ENV
@@ -93,7 +92,6 @@ jobs:
         persist-credentials: false
         fetch-depth: 1
         submodules: true
-        submodules-depth: 1
 
     - name: install python
       uses: actions/setup-python@v5
@@ -142,7 +140,6 @@ jobs:
         persist-credentials: false
         fetch-depth: 1
         submodules: true
-        submodules-depth: 1
 
     - name: fetch build artifacts
       uses: actions/download-artifact@v4
@@ -237,7 +234,6 @@ jobs:
         persist-credentials: false
         fetch-depth: 1
         submodules: true
-        submodules-depth: 1
 
 
     - name: fetch build artifacts
@@ -290,7 +286,6 @@ jobs:
         persist-credentials: false
         fetch-depth: 1
         submodules: true
-        submodules-depth: 1
 
     - name: install python
       uses: actions/setup-python@v5

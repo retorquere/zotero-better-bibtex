@@ -37,7 +37,6 @@ _anchors:
       persist-credentials: false
       fetch-depth: 1
       submodules: true
-      submodules-depth: 1
 
 jobs:
   build:
