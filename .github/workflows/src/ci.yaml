@@ -92,15 +92,15 @@ jobs:
     continue-on-error: true
     if: ${{ github.event_name == 'push' && (github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/tags/')) }}
     steps:
-    - *install_python
-    - *install_python_packages
-    - *install_node
-    - *install_node_packages
     - uses: actions/checkout@v4
       with:
         persist-credentials: false
         submodules: true  # Fetch Hugo themes (true OR recursive)
         fetch-depth: 0    # Fetch all history for .GitInfo and .Lastmod
+    - *install_python
+    - *install_python_packages
+    - *install_node
+    - *install_node_packages
     - name: build site and install hugo
       uses: peaceiris/actions-hugo@v3
       with:
