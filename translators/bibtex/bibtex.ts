@@ -667,7 +667,7 @@ class ZoteroItem {
   protected $subtitle(): boolean { return this.$title() }
   protected $title(): boolean {
     const title = [ ...asarray(this.bibtex.fields.title), ...asarray(this.bibtex.fields.titleaddon), ...asarray(this.bibtex.fields.subtitle) ].filter(unique).join('. ')
-    return this.set('title', title)
+    return this.set(this.bibtex.fields.lista && this.validFields.publicationTitle ? 'publicationTitle' : 'title', title)
   }
 
   protected $holder(): boolean {
@@ -1138,10 +1138,7 @@ class ZoteroItem {
   }
 
   protected $lista(value: string): boolean {
-    if (this.item.itemType !== 'encyclopediaArticle' || !!this.item.title) return false
-
-    this.set('title', value)
-    return true
+    return this.validFields.publicationTitle && this.set('title', value)
   }
 
   protected $annotation(value: string, field: string): boolean {
