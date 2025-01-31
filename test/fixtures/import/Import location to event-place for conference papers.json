@@ -32,13 +32,13 @@
       "extra": [
         "Citation Key: Mostafa:2009:TPA:1596655.1596682",
         "Number of pages: 10",
-        "Place: Calgary, Alberta, Canada",
+        "Place: New York, NY, USA",
         "tex.acmid: 1596682"
       ],
       "itemID": 1,
       "itemType": "conferencePaper",
-      "pages": "162\u2013171",
-      "place": "New York, NY, USA",
+      "pages": "162–171",
+      "place": "Calgary, Alberta, Canada",
       "publicationTitle": "Proceedings of the 7th international conference on principles and practice of programming in java",
       "publisher": "ACM",
       "series": "Pppj '09",
