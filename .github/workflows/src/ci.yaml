@@ -30,6 +30,14 @@ _anchors:
   install_node_packages: &install_node_packages
     name: install node packages
     run: npm install && npm ls
+  checkout: &checkout
+    name: Checkout repository
+    uses: actions/checkout@v4
+    with:
+      persist-credentials: false
+      fetch-depth: 1
+      submodules: true
+      submodules-depth: 1
 
 jobs:
   build:
@@ -40,11 +48,7 @@ jobs:
       slow: ${{ env.slow }}
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-      with:
-        persist-credentials: false
-        submodules: true  # Fetch Hugo themes (true OR recursive)
-        fetch-depth: 0    # Fetch all history for .GitInfo and .Lastmod
+    - *checkout
     - name: get package version
       run: echo "version="`jq -r .version package.json` >> $GITHUB_ENV
     - name: cancel spurious build on tagged version
@@ -92,11 +96,7 @@ jobs:
     continue-on-error: true
     if: ${{ github.event_name == 'push' && (github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/tags/')) }}
     steps:
-    - uses: actions/checkout@v4
-      with:
-        persist-credentials: false
-        submodules: true  # Fetch Hugo themes (true OR recursive)
-        fetch-depth: 0    # Fetch all history for .GitInfo and .Lastmod
+    - *checkout
     - *install_python
     - *install_python_packages
     - *install_node
@@ -126,7 +126,7 @@ jobs:
         client: ${{ fromJSON(needs.build.outputs.clients) }}
         worker: ['--worker', '--no-worker']
     steps:
-    - uses: actions/checkout@v4
+    - *checkout
     - name: fetch build artifacts
       uses: actions/download-artifact@v4
       with:
@@ -200,7 +200,7 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - *checkout
 
     - name: fetch build artifacts
       uses: actions/download-artifact@v4
@@ -234,7 +234,7 @@ jobs:
       - test
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - *checkout
     - *install_python
     - *install_python_packages
     - name: fetch test artifacts
