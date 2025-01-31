@@ -85,6 +85,23 @@ jobs:
     if: ${{ github.event_name == 'push' && (github.ref == 'refs/heads/master' || startsWith(github.ref,
       'refs/tags/')) }}
     steps:
+    - name: install python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+        cache: pip
+    - name: install python packages
+      run: |
+        python -m pip install --upgrade pip
+        pip install packaging xvfbwrapper
+        pip install -r requirements.txt
+    - name: install node
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20.x
+    - name: install node packages
+      run: npm install && npm ls
+
     - uses: actions/checkout@v4
       with:
         persist-credentials: false
