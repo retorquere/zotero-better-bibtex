@@ -667,14 +667,7 @@ class ZoteroItem {
   protected $subtitle(): boolean { return this.$title() }
   protected $title(): boolean {
     const title = [ ...asarray(this.bibtex.fields.title), ...asarray(this.bibtex.fields.titleaddon), ...asarray(this.bibtex.fields.subtitle) ].filter(unique).join('. ')
-
-    if (this.item.itemType === 'encyclopediaArticle') {
-      this.item.publicationTitle = title
-    }
-    else {
-      this.item.title = title
-    }
-    return true
+    return this.set('title', title)
   }
 
   protected $holder(): boolean {
@@ -715,17 +708,8 @@ class ZoteroItem {
     const address = this.bibtex.fields.address
     if (field === 'address' && location?.length && address?.length) return true // handled through location
 
-    const places = [ ...asarray(location), ...asarray(address) ].map((v: string) => v.replace(/[\n ]+/g, ' ').trim()).filter(_ => _)
-
-    if (places.length) {
-      if (this.validFields.place) this.set('place', places.shift())
-
-      for (const place of places) {
-        this.extra.push(`Place: ${place}`)
-      }
-    }
-
-    return true
+    const place = [ ...asarray(location), ...asarray(address) ].map((v: string) => v.replace(/[\n ]+/g, ' ').trim()).filter(_ => _).join(' and ')
+    return !!place && this.set('place', place, ['place'])
   }
 
   protected '$call-number'(value: string): boolean {
