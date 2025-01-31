@@ -79,23 +79,27 @@ jobs:
           test/balance/
         retention-days: 1
 
-    # site
-    - name: build site
+  site:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    if: ${{ github.event_name == 'push' && (github.ref == 'refs/heads/master' || startsWith(github.ref,
+      'refs/tags/')) }}
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        persist-credentials: false
+        submodules: true  # Fetch Hugo themes (true OR recursive)
+        fetch-depth: 0    # Fetch all history for .GitInfo and .Lastmod
+    - name: build site and install hugo
       uses: peaceiris/actions-hugo@v3
-      continue-on-error: true
-      if: ${{ github.event_name == 'push' && (github.ref == 'refs/heads/master' ||
-        startsWith(github.ref, 'refs/tags/')) }}
       with:
         hugo-version: latest
         extended: true
     - name: prepare docs for deploy
       run: npm run docs:deploy
-      if: ${{ github.event_name == 'push' && (github.ref == 'refs/heads/master' ||
-        startsWith(github.ref, 'refs/tags/')) }}
     - name: deploy site
       uses: peaceiris/actions-gh-pages@v4
-      if: ${{ github.event_name == 'push' && (github.ref == 'refs/heads/master' ||
-        startsWith(github.ref, 'refs/tags/')) }}
+      if: ${{ success() }}
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./site/public
