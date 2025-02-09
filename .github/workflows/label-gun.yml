@@ -15,10 +15,10 @@ jobs:
           token: ${{ github.token }}
           label.exempt: question
           label.awaiting: awaiting-user-feedback
-          label.log-required: needs-debug-log
           label.reopened: reopened
-          log-id: "([A-Z0-9]{8}(-refs)?-(apse|euc))|([A-Z0-9]{8}-[^-]+)"
-          message.log-required: |
+          log.regex: "([A-Z0-9]{8}(-refs)?-(apse|euc))|([A-Z0-9]{8}-[^-]+)"
+          log.label: needs-debug-log
+          log.message: |
             Hello @{{username}},
 
             `@retorquere` is ready to assist you with Better BibTeX. In order to do so efficiently, a debug log is generally required. The information it containst is key to him understanding, replicating, and resolving your issue. If you have shared a `D<number>` log, those go to the Zotero team, `@retorquere` cannot access those.
