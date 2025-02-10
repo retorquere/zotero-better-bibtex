@@ -170,7 +170,8 @@ export class Entry {
   public eprintType = {
     arxiv: 'arXiv',
     jstor: 'JSTOR',
-    pubmed: 'PMID',
+    pmid: 'pubmed',
+    pmcid: 'pubmed',
     hdl: 'HDL',
     googlebooks: 'GoogleBooksID',
   }
