@@ -1,8 +1,6 @@
 import type { Tag, RegularItem as SerializedRegularItem, Item as SerializedItem } from '../../gen/typings/serialized-item'
 
-import { Shim } from '../os'
 import * as client from '../../content/client'
-const $OS = client.is7 ? Shim : OS
 
 import nlp from 'compromise/one'
 type Term = {
@@ -69,7 +67,7 @@ function innerText(node): string {
 function parseDate(v): PartialDate {
   v = v || ''
   const parsed: {
-    y?: number
+    y?: number | string
     m?: number
     d?: number
     oy?: number
@@ -91,8 +89,8 @@ function parseDate(v): PartialDate {
       const reparsed = Zotero.Date.strToDate(date.verbatim)
       if (typeof reparsed.year === 'number' || reparsed.year) {
         parsed.y = reparsed.year
-        parsed.m = parseInt(reparsed.month) || undefined
-        parsed.d = parseInt(reparsed.day) || undefined
+        parsed.m = reparsed.month || undefined
+        parsed.d = reparsed.day || undefined
       }
       else {
         parsed.y = parsed.oy = (date.verbatim as unknown as number) // a bit cheaty
@@ -124,7 +122,7 @@ function parseDate(v): PartialDate {
 
   res.m = (typeof parsed.m !== 'undefined') ? (`${ parsed.m }`) : ''
   res.d = (typeof parsed.d !== 'undefined') ? (`${ parsed.d }`) : ''
-  res.y = (typeof parsed.y !== 'undefined') ? (`${ parsed.y % 100 }`) : ''
+  res.y = (typeof parsed.y === 'number') ? (`${ parsed.y % 100 }`) : (parsed.y || '')
   res.Y = (typeof parsed.y !== 'undefined') ? (`${ parsed.y }`) : ''
   res.om = (typeof parsed.om !== 'undefined') ? (`${ parsed.om }`) : ''
   res.od = (typeof parsed.od !== 'undefined') ? (`${ parsed.od }`) : ''
@@ -198,7 +196,7 @@ export type CreatorTypeCollection = CreatorTypeOrAll[][]
 type Creator = { lastName?: string; firstName?: string; name?: string; creatorType: string; fieldMode?: number; source?: string }
 
 class Item {
-  public item: ZoteroItem | SerializedItem
+  public item: Zotero.Item | SerializedItem
   private language = ''
 
   public itemType: string
@@ -215,13 +213,13 @@ class Item {
   public extra: string
   public extraFields: Extra.Fields
 
-  constructor(item: ZoteroItem | SerializedItem) { // Item must have simplifyForExport pre-applied, without scrubbing
+  constructor(item: Zotero.Item | SerializedItem) { // Item must have simplifyForExport pre-applied, without scrubbing
     this.item = item
 
-    if ((item as ZoteroItem).getField) {
-      this.itemID = this.id = (item as ZoteroItem).id
-      this.itemKey = this.key = (item as ZoteroItem).key
-      this.itemType = Zotero.ItemTypes.getName((item as ZoteroItem).itemTypeID)
+    if ((item as Zotero.Item).getField) {
+      this.itemID = this.id = (item as Zotero.Item).id
+      this.itemKey = this.key = (item as Zotero.Item).key
+      this.itemType = Zotero.ItemTypes.getName((item as Zotero.Item).itemTypeID)
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       this.getField = function(name: string): string | number {
         switch (name) {
@@ -234,12 +232,12 @@ class Item {
             return this.title
           default:
             // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-            return (this.item as ZoteroItem).getField(name, false, true) as string || this.extraFields?.kv[name] || ''
+            return (this.item as Zotero.Item).getField(name, false, true) || this.extraFields?.kv[name] || ''
         }
       }
-      this.creators = (item as ZoteroItem).getCreatorsJSON()
+      this.creators = (item as Zotero.Item).getCreatorsJSON()
       this.libraryID = item.libraryID
-      this.title = (item as ZoteroItem).getField('title', false, true) as string
+      this.title = (item as Zotero.Item).getField('title', false, true)
     }
     else {
       this.itemType = (item as SerializedRegularItem).itemType
@@ -327,8 +325,8 @@ class Item {
     return BabelTag[this.language as BabelLanguage] || ''
   }
 
-  public getTags(): Tag[] | string[] {
-    return (this.item as ZoteroItem).getTags ? (this.item as ZoteroItem).getTags() : (this.item as SerializedRegularItem).tags
+  public getTags(): Tag[] {
+    return (this.item as Zotero.Item).getTags ? (this.item as Zotero.Item).getTags() : (this.item as SerializedRegularItem).tags
   }
 }
 
@@ -462,7 +460,7 @@ export class PatternFormatter {
     return this.citekey
   }
 
-  public format(item: ZoteroItem | SerializedItem): string {
+  public format(item: Zotero.Item | SerializedItem): string {
     this.item = new Item(item)
     this.chunk = ''
 
@@ -565,11 +563,25 @@ export class PatternFormatter {
     }
   }
 
-  /** returns the name of the shared group library, or nothing if the item is in your personal library */
+  /** Tests whether the item is in the user library */
   public $library(): this {
-    if (this.item.libraryID === Zotero.Libraries.userLibraryID) return this.$text('')
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return this.$text(Zotero.Libraries.get(this.item.libraryID).name)
+    if (this.item.libraryID !== Zotero.Libraries.userLibraryID) this.next = true
+    return this.$text('')
+  }
+
+  /**
+   * Tests whether the item is in the given group library
+   * @param name group name
+   */
+  public $group(name: string): this {
+    let group
+    if (this.item.libraryID === Zotero.Libraries.userLibraryID) {
+      this.next = true
+    }
+    else if ((group = Zotero.Libraries.get(this.item.libraryID)) && (group.name !== name)) {
+      this.next = true
+    }
+    return this.$text('')
   }
 
   /**
@@ -1203,7 +1215,7 @@ export class PatternFormatter {
       const acronyms: Record<string, string> = {}
 
       try {
-        for (const row of csv2list($OS.Path.join(Zotero.BetterBibTeX.dir, `${ list }.csv`))) {
+        for (const row of csv2list(PathUtils.join(Zotero.BetterBibTeX.dir, `${ list }.csv`))) {
           if (row.length !== 2) {
             log.error('unexpected row in', `${ list }.csv`, ':', row)
             continue

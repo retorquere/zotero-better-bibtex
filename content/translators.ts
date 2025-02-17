@@ -1,39 +1,9 @@
 /* eslint-disable no-case-declarations, @typescript-eslint/no-unsafe-return */
 
-import { Shim } from './os'
 import * as client from './client'
-const $OS = client.is7 ? Shim : OS
 import merge from 'lodash.merge'
 import { Cache } from './db/cache'
 import { Serializer } from './item-export-format'
-
-/*
-async function guard(run: Promise<void>): Promise<boolean> {
-  let timeout = true
-
-  const delay = async () => {
-    await Zotero.Promise.delay(20000)
-    if (timeout) {
-      log.error('installing translators: raced to timeout!')
-      throw { timeout: true, message: 'timeout' } // eslint-disable-line no-throw-literal
-    }
-  }
-
-  try {
-    await Promise.race([run, delay()])
-    timeout = false
-    log.info('installing translators: guard OK')
-    return true
-  }
-  catch (err) {
-    log.error('installing translators: guard failed because of', err.message )
-    if (err.timeout) return false
-    throw err
-  }
-}
-*/
-
-Components.utils.import('resource://gre/modules/Services.jsm')
 
 declare class ChromeWorker extends Worker { }
 
@@ -88,7 +58,6 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
   public byId: Record<string, Translator.Header> = {}
   public byLabel: Record<string, Translator.Header> = {}
   public bySlug: Record<string, Translator.Header> = {}
-  public itemType: { note: number; attachment: number; annotation: number }
   public queue = newQueue(1)
   public worker: ChromeWorker
 
@@ -132,12 +101,6 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
           }
         }
 
-        this.itemType = {
-          note: Zotero.ItemTypes.getID('note'),
-          attachment: Zotero.ItemTypes.getID('attachment'),
-          annotation: Zotero.ItemTypes.getID('annotation') || 'NULL',
-        }
-
         // cleanup old translators
         this.uninstall('Better BibTeX Quick Copy')
         this.uninstall('\u672B BetterBibTeX JSON (for debugging)')
@@ -145,7 +108,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
         await this.installTranslators()
 
-        ready.resolve(true)
+        ready.resolve(true as unknown as void)
       },
       shutdown: async (reason: Reason) => {
         switch (reason) {
@@ -204,6 +167,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     translation.setString(str)
 
     const zp = Zotero.getActiveZoteroPane()
+    if (!zp.collectionsView) return
 
     if (!zp.collectionsView.editable) {
       await zp.collectionsView.selectLibrary()
@@ -214,7 +178,8 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     if (!translators.length) throw new Error('No translators found')
 
     const libraryID = zp.getSelectedLibraryID()
-    await zp.collectionsView.selectLibrary(libraryID)
+    // eslint-disable-next-line @typescript-eslint/await-thenable
+    await zp.collectionsView.selectLibrary(libraryID) // TODO: zotero-types does somehow not declare this to return a promise
 
     translation.setTranslator(translators[0])
 
@@ -235,7 +200,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     const displayOptions = {
       ...this.displayOptions(job.translatorID, job.displayOptions),
       exportPath: job.path || undefined,
-      exportDir: job.path ? $OS.Path.dirname(job.path) : undefined,
+      exportDir: job.path ? PathUtils.parent(job.path) : undefined,
     }
 
     if (job.translate) {
@@ -279,7 +244,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
               // job.translate._runHandler('error', e.data) // eslint-disable-line no-underscore-dangle
               job.translate.complete(false, { message: e.data.message, stack: e.data.stack })
             }
-            deferred.reject(new Error(e.data.message))
+            deferred.reject(new Error(e.data.message) as unknown as void)
             break
 
           case 'debug':
@@ -297,7 +262,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
               job.translate.string = e.data.output // eslint-disable-line id-blacklist
               job.translate.complete(e.data.output)
             }
-            deferred.resolve(e.data.output)
+            deferred.resolve(e.data.output as unknown as void)
             failed = false
             break
 
@@ -317,7 +282,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
         log.error('QBW: failed:', Date.now() - start, 'message:', e)
         // job.translate?._runHandler('error', e) // eslint-disable-line no-underscore-dangle
         job.translate?.complete(false, { message: e.message, stack: e.error?.stack })
-        deferred.reject(new Error(e.message))
+        deferred.reject(new Error(e.message) as unknown as void)
       }
 
       const scope = this.exportScope(job.scope)
@@ -385,7 +350,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
           if (failed) {
             const err = new TimeoutError(`translation timeout after ${ job.timeout } seconds`, { timeout: job.timeout })
             log.error('translation.exportItems:', err)
-            deferred.reject(err)
+            deferred.reject(err as unknown as void)
           }
         })
       }
@@ -395,7 +360,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       deferred.reject(err)
     }
 
-    return deferred.promise
+    return deferred.promise as unknown as Promise<string>
   }
 
   public displayOptions(translatorID: string, displayOptions: any): any {
@@ -519,9 +484,6 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
       }
 
       for (const header of headers) {
-        // workaround for mem limitations on Windows
-        if (!client.is7 && typeof header.displayOptions?.worker === 'boolean') header.displayOptions.worker = !!Zotero.isWin
-
         const existing = installed[header.label]
         if (!existing) {
           reinit[header.label] = { header, code: code(header.label) }

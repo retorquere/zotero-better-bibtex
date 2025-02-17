@@ -21,6 +21,9 @@ export const valid: Valid = {
       %for field, client in sorted(fields.items()):
       ${field}: ${client},
       %endfor
+      %if itemType == 'xdataset':
+      citationKey: zotero && client.isBeta,
+      %endif
     },
     %endfor
   },

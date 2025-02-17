@@ -1,8 +1,5 @@
-Components.utils.import('resource://gre/modules/Services.jsm')
-
-import { Shim } from './os'
 import * as client from './client'
-const $OS = client.is7 ? Shim : OS
+import { Path } from './file'
 
 import type { XUL } from '../typings/xul'
 
@@ -15,7 +12,7 @@ import { AutoExport } from './auto-export'
 import { Translators } from './translators'
 import * as l10n from './l10n'
 import { Events } from './events'
-import { pick } from './file-picker'
+import { FilePickerHelper } from 'zotero-plugin-toolkit'
 import { flash } from './flash'
 import { icons } from './icons'
 import { Cache } from './db/cache'
@@ -126,8 +123,7 @@ class AutoExportPane {
     let label: string = { library: icons.computer, collection: icons.folder }[ae.type]
     label += ` ${ this.name(ae, 'short') }`
     label += ` (${ Translators.byId[ae.translatorID].label })`
-    const path = ae.path.startsWith($OS.Constants.Path.homeDir) ? ae.path.replace($OS.Constants.Path.homeDir, '~') : ae.path
-    label += ` ${ path }`
+    label += ` ${ae.path.replace(Path.home, '~')}`
     return label
   }
 
@@ -172,7 +168,7 @@ class AutoExportPane {
         node.style.display = node.classList.contains(displayed) ? 'initial' : 'none'
       }
 
-      for (const node of Array.from(details.querySelectorAll('*[data-ae-field]'))) {
+      for (const node of Array.from(details.querySelectorAll('*[data-ae-field]')) as HTMLElement[]) {
         const field = node.getAttribute('data-ae-field')
 
         switch (field) {
@@ -320,18 +316,22 @@ class AutoExportPane {
     const coll = Zotero.Collections.get(id)
     if (!coll) return ''
 
-    if (form === 'long' && !isNaN(parseInt(coll.parentID))) {
-      return `${ this.collection(coll.parentID, form) } / ${ coll.name }`
+    if (form === 'long') {
+      return `${this.collection(coll.parentID, form)} / ${coll.name}`
     }
     else {
-      return `${ Zotero.Libraries.get(coll.libraryID).name } : ${ coll.name }`
+      const lib = Zotero.Libraries.get(coll.libraryID)
+
+      return `${lib ? lib.name : `:${coll.libraryID}`} : ${coll.name}`
     }
   }
 
   private name(ae: { type: string; id: number; path: string }, form: 'long' | 'short'): string {
     switch (ae.type) {
-      case 'library':
-        return (Zotero.Libraries.get(ae.id).name as string)
+      case 'library': {
+        const lib = Zotero.Libraries.get(ae.id)
+        return lib ? lib.name : ''
+      }
 
       case 'collection':
         return this.collection(ae.id, form)
@@ -348,20 +348,20 @@ export class PrefPane {
   // private prefwindow: HTMLElement
 
   public async exportPrefs(): Promise<void> {
-    let file = await pick(Zotero.getString('fileInterface.export'), 'save', [[ 'BBT JSON file', '*.json' ]])
+    let file = await new FilePickerHelper(Zotero.getString('fileInterface.export'), 'save', [[ 'BBT JSON file', '*.json' ]]).open()
     if (!file) return
-    if (!file.match(/.json$/)) file = `${ file }.json`
+    if (!file.match(/.json$/)) file = `${file}.json`
     Zotero.File.putContents(Zotero.File.pathToFile(file), JSON.stringify({ config: { preferences: Preference.all }}, null, 2))
   }
 
   public async importPrefs(): Promise<void> {
     const preferences: { path: string; contents?: string; parsed?: any } = {
-      path: await pick(Zotero.getString('fileInterface.import'), 'open', [[ 'BBT JSON file', '*.json' ]]),
+      path: (await new FilePickerHelper(Zotero.getString('fileInterface.import'), 'open', [[ 'BBT JSON file', '*.json' ]]).open()) || '',
     }
     if (!preferences.path) return
 
     try {
-      preferences.contents = Zotero.File.getContents(preferences.path)
+      preferences.contents = (await Zotero.File.getContentsAsync(preferences.path, 'utf-8')) as string
     }
     catch {
       flash(`could not read contents of ${ preferences.path }`)
@@ -416,8 +416,8 @@ export class PrefPane {
     const error = Formatter.test(Preference.citekeyFormatEditing || Preference.citekeyFormat)
     const editing = $window.document.getElementById('bbt-preferences-citekeyFormatEditing')
     editing.classList[error ? 'add' : 'remove']('bbt-prefs-error')
-    editing.setAttribute(client.is7 ? 'title' : 'tooltiptext', error)
-    if (client.is7) editing.setAttribute('tooltip', 'html-tooltip')
+    editing.setAttribute('title', error)
+    editing.setAttribute('tooltip', 'html-tooltip')
 
     const msg = $window.document.getElementById('bbt-citekeyFormat-error') as HTMLInputElement
     msg.value = error || (Preference.citekeyFormatEditing === '[' && 'legacy formula, will be upgraded when completed')
@@ -445,8 +445,8 @@ export class PrefPane {
 
     const postscript = $window.document.getElementById('bbt-postscript')
     postscript.setAttribute('style', (error ? '-moz-appearance: none !important; background-color: DarkOrange' : ''))
-    postscript.setAttribute(client.is7 ? 'title' : 'tooltiptext', error)
-    if (client.is7) postscript.setAttribute('tooltip', 'html-tooltip')
+    postscript.setAttribute('title', error)
+    postscript.setAttribute('tooltip', 'html-tooltip')
     $window.document.getElementById('bbt-cache-warn-postscript').setAttribute('hidden', `${ !Preference.postscript.includes('Translator.options.exportPath') }`)
   }
 
@@ -468,21 +468,6 @@ export class PrefPane {
         Zotero.BetterBibTeX.PrefPane.unload()
         $window = null
       })
-
-      if (!client.is7) {
-        const deck = $window.document.getElementById('bbt-prefs-deck') as unknown as XUL.Deck
-        deck.selectedIndex = 0
-
-        await Zotero.BetterBibTeX.ready
-
-        // bloody *@*&^@# html controls only sorta work for prefs
-        for (const node of Array.from($window.document.querySelectorAll<HTMLInputElement>('input[preference][type=\'range\'], input[preference][type=\'text\'], textarea[preference]'))) {
-          node.value = Preference[node.getAttribute('preference').replace('extensions.zotero.translators.better-bibtex.', '')]
-          if (!client.is7 && node.tagName === 'textarea') node.style.marginBottom = '20px'
-        }
-
-        deck.selectedIndex = 1
-      }
 
       await this.autoexport.load()
 

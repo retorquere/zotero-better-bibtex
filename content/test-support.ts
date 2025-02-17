@@ -9,16 +9,13 @@ import * as Extra from './extra'
 import { defaults } from '../gen/preferences/meta'
 import { Preference } from './prefs'
 import * as memory from './memory'
-import { is7 } from './client'
 import { Cache } from './db/cache'
-// import { Bench } from 'tinybench'
 
-import { Shim } from './os'
-const $OS = is7 ? Shim : OS
+// import { Bench } from 'tinybench'
 
 const setatstart: string[] = [ 'testing', 'cache' ].filter(p => Preference[p] !== defaults[p])
 
-const idleService: any = Components.classes[`@mozilla.org/widget/${ is7 ? 'user' : '' }idleservice;1`].getService(Components.interfaces[is7 ? 'nsIUserIdleService' : 'nsIIdleService'])
+const idleService: any = Components.classes['@mozilla.org/widget/useridleservice;1'].getService(Components.interfaces.nsIUserIdleService)
 
 export class TestSupport {
   public timedMemoryLog: any
@@ -115,13 +112,13 @@ export class TestSupport {
       await Zotero.Promise.delay(1500)
     }
     else {
-      await Zotero.getMainWindow().Zotero_File_Interface.importFile({ file: Zotero.File.pathToFile(path), createNewCollection: !!createNewCollection })
+      await (Zotero.getMainWindow() as unknown as any).Zotero_File_Interface.importFile({ file: Zotero.File.pathToFile(path), createNewCollection: !!createNewCollection })
     }
 
     items = await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, true, false, true)
     const after = items.length
 
-    await Zotero.Promise.delay(Zotero.Prefs.get('translators.better-bibtex.itemObserverDelay') * 3)
+    await Zotero.Promise.delay(Zotero.Prefs.get('translators.better-bibtex.itemObserverDelay') as number * 3)
     return (after - before)
   }
 
@@ -153,9 +150,7 @@ export class TestSupport {
   }
 
   public async dumpCache(filename: string): Promise<void> {
-    const encoder = (new TextEncoder)
-    const array = encoder.encode(JSON.stringify(await Cache.dump(), null, 2))
-    await $OS.File.writeAtomic(filename, array) as void
+    await IOUtils.writeUTF8(filename, JSON.stringify(await Cache.dump(), null, 2))
   }
 
   public async select(ids: number[]): Promise<boolean> {
@@ -164,7 +159,7 @@ export class TestSupport {
 
     const sortedIDs = JSON.stringify(ids.slice().sort())
     for (let attempt = 1; attempt <= 10; attempt++) {
-      await zoteroPane.selectItems(ids, true)
+      await zoteroPane.selectItems(ids, true) // eslint-disable-line @typescript-eslint/await-thenable
 
       let selected
       try {
@@ -191,7 +186,7 @@ export class TestSupport {
     const s = (new Zotero.Search)
     for (const [ mode, text ] of Object.entries(query)) {
       if (![ 'is', 'contains' ].includes(mode)) throw new Error(`unsupported search mode ${ mode }`)
-      s.addCondition('field', mode, text)
+      s.addCondition('field', mode as _ZoteroTypes.Search.Operator, text)
     }
     ids = ids.concat(await s.search())
     ids = Array.from(new Set(ids))
@@ -267,40 +262,16 @@ export class TestSupport {
   public async merge(ids: number[]): Promise<void> {
     const before = await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, true, false, true)
 
-    if (is7) {
-      let other = await getItemsAsync(ids)
-      const master = other.find(item => item.id === ids[0])
-      other = other.filter(item => item.id !== ids[0])
-      const json = master.toJSON()
-      // Exclude certain properties that are empty in the cloned object, so we don't clobber them
-      const { relations: _r, collections: _c, tags: _t, ...keep } = master.clone().toJSON() // eslint-disable-line @typescript-eslint/no-unused-vars
-      Object.assign(json, keep)
+    let other = await getItemsAsync(ids)
+    const master = other.find(item => item.id === ids[0])
+    other = other.filter(item => item.id !== ids[0])
+    const json = master.toJSON()
+    // Exclude certain properties that are empty in the cloned object, so we don't clobber them
+    const { relations: _r, collections: _c, tags: _t, ...keep } = master.clone().toJSON() // eslint-disable-line @typescript-eslint/no-unused-vars
+    Object.assign(json, keep)
 
-      master.fromJSON(json)
-      Zotero.Items.merge(master, other)
-    }
-    else {
-      const zoteroPane = Zotero.getActiveZoteroPane()
-      await zoteroPane.selectItems(ids, true)
-      const selected = zoteroPane.getSelectedItems()
-      if (selected.length !== ids.length) throw new Error(`selected: ${ selected.length }, expected: ${ ids.length }`)
-
-      // zoteroPane.mergeSelectedItems()
-
-      selected.sort((a, b) => ids.indexOf(a.id) - ids.indexOf(b.id))
-
-      const win = Zotero.getMainWindow()
-
-      if (!win.Zotero_Duplicates_Pane) {
-        Components.classes['@mozilla.org/moz/jssubscript-loader;1']
-          .getService(Components.interfaces.mozIJSSubScriptLoader)
-          .loadSubScript('chrome://zotero/content/duplicatesMerge.js', win)
-      }
-
-      win.Zotero_Duplicates_Pane.setItems(selected)
-      await Zotero.Promise.delay(1500)
-      await win.Zotero_Duplicates_Pane.merge()
-    }
+    master.fromJSON(json)
+    await Zotero.Items.merge(master, other)
 
     await Zotero.Promise.delay(1500)
 

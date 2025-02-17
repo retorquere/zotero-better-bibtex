@@ -1,7 +1,4 @@
-import { is7 } from './client'
-
 declare const ChromeUtils: any
-declare const XPCOMUtils: any
 
 import { stringify } from './stringify'
 
@@ -17,7 +14,7 @@ import { toClipboard } from './text'
 
 class FieldEnumerator {
   // eslint-disable-next-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
-  public QueryInterface = (is7 ? ChromeUtils : XPCOMUtils).generateQI([ Components.interfaces.nsISupports, Components.interfaces.nsISimpleEnumerator ])
+  public QueryInterface = ChromeUtils.generateQI([ Components.interfaces.nsISupports, Components.interfaces.nsISimpleEnumerator ])
   public doc: Document
   public idx: number
 
@@ -339,7 +336,9 @@ export async function pick(options: any): Promise<string> {
 
     if (options.select && picked.length) {
       const zoteroPane = Zotero.getActiveZoteroPane()
-      await zoteroPane.selectItems(picked.map(item => item.id), true)
+
+      // don't know why zotero-types is not picked up here
+      await zoteroPane.selectItems(picked.map(item => item.id), true) // eslint-disable-line @typescript-eslint/await-thenable
     }
 
     return citation
@@ -398,13 +397,13 @@ class Handler {
       }
       const style
         = getStyle(options.style)
-        || getStyle(`http://www.zotero.org/styles/${ options.style }`)
-        || getStyle(`http://juris-m.github.io/styles/${ options.style }`)
+          || getStyle(`http://www.zotero.org/styles/${ options.style }`)
+          || getStyle(`http://juris-m.github.io/styles/${ options.style }`)
       options.style = style ? style.url : 'http://www.zotero.org/styles/apa'
 
       const citation = options.selected ? (await selected(options)) : (await pick(options))
 
-      if (options.minimize) Zotero.getMainWindow()?.minimize()
+      if (options.minimize) (Zotero.getMainWindow() as any)?.minimize()
 
       if (options.texstudio) {
         if (!TeXstudio.enabled) return [ this.SERVER_ERROR, 'application/text', 'TeXstudio not found' ]

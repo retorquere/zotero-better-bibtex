@@ -15,10 +15,8 @@ matchAll.shim()
 
 declare const IOUtils: any
 
-import { Shim } from '../os'
 import * as client from '../client'
-if (!client.is7) importScripts('resource://gre/modules/osfile.jsm')
-const $OS = client.is7 ? Shim : OS
+import { Path, File } from '../file'
 
 const ctx: DedicatedWorkerGlobalScope = self as any
 
@@ -189,32 +187,24 @@ class WorkerZoteroBetterBibTeX {
     if (!path) return null
 
     try {
-      if (client.is7) {
-        const file = IOUtils.openFileForSyncReading(path)
-        const chunkSize = 64
-        const bytes = new Uint8Array(chunkSize)
-        const decoder = new TextDecoder('utf-8')
-        let offset = 0
-        const size = file.size
+      const file = IOUtils.openFileForSyncReading(path)
+      const chunkSize = 64
+      const bytes = new Uint8Array(chunkSize)
+      const decoder = new TextDecoder('utf-8')
+      let offset = 0
+      const size = file.size
 
-        let text = ''
-        while (offset < size) {
-          const len = Math.min(chunkSize, size - offset)
-          const chunk = len > chunkSize ? bytes : bytes.subarray(0, len)
-          file.readBytesInto(chunk, offset)
-          text += decoder.decode(chunk)
-          offset += len
-        }
+      let text = ''
+      while (offset < size) {
+        const len = Math.min(chunkSize, size - offset)
+        const chunk = len > chunkSize ? bytes : bytes.subarray(0, len)
+        file.readBytesInto(chunk, offset)
+        text += decoder.decode(chunk)
+        offset += len
+      }
 
-        file.close()
-        return text
-      }
-      else {
-        if (!OS.File.exists(path)) return null
-        const bytes = <ArrayBuffer>OS.File.read(path)
-        const decoder = (new TextDecoder)
-        return decoder.decode(bytes as BufferSource)
-      }
+      file.close()
+      return text
     }
     catch (err) {
       if (!err.message?.includes('NS_ERROR_FILE_NOT_FOUND')) {
@@ -251,64 +241,56 @@ const WorkerZoteroUtilities = {
   getVersion: () => client.version,
 }
 
-function isWinRoot(path) {
-  return client.isWin && path.match(/^[a-z]:\\?$/i)
-}
 async function makeDirs(path) {
-  if (isWinRoot(path)) return
-  if (!$OS.Path.split(path).absolute) throw new Error(`Will not create relative ${ path }`)
-
-  path = $OS.Path.normalize(path)
-
-  const paths: string[] = []
-  // path === paths[0] means we've hit the root, as the dirname of root is root
-  while (path !== paths[0] && !isWinRoot(path) && !(await $OS.File.exists(path))) {
-    paths.unshift(path)
-    path = $OS.Path.dirname(path)
-  }
-
-  if (!isWinRoot(path) && !(await $OS.File.stat(path)).isDir) throw new Error(`makeDirs: root ${ path } is not a directory`)
-
-  for (path of paths) {
-    await $OS.File.makeDir(path) as void
-  }
+  if (!Path.isAbsolute(path)) throw new Error(`Will not create relative ${ path }`)
+  await IOUtils.makeDirectory(path, { ignoreExisting: true, createAncestors: true })
 }
 
 async function saveFile(path, overwrite) {
   if (!Zotero.exportDirectory) return false
 
-  if (!await $OS.File.exists(this.localPath)) return false
+  const protect = overwrite
+    ? async function(_tgt: string, _src?: string) {} // eslint-disable-line @typescript-eslint/no-empty-function
+    : async function(tgt: string, src?: string) {
+      if (await File.exists(tgt)) {
+        if ((src || tgt) === tgt) {
+          throw new Error(`save to ${JSON.stringify(tgt)} would overwite existing file`)
+        }
+        else {
+          throw new Error(`copy of ${JSON.stringify(src)} to ${JSON.stringify(tgt)} would overwite existing file`)
+        }
+      }
+    }
 
-  this.path = $OS.Path.normalize($OS.Path.join(Zotero.exportDirectory, path))
-  if (!this.path.startsWith(Zotero.exportDirectory)) throw new Error(`${ path } looks like a relative path`)
+  if (!await File.exists(this.localPath)) return false
+
+  try {
+    this.path = PathUtils.join(Zotero.exportDirectory, path)
+  }
+  catch (err) {
+    log.error('3125: failed to join', { exportDirectory: Zotero.exportDirectory, path }, err)
+  }
+  if (!this.path.startsWith(Zotero.exportDirectory)) throw new Error(`${path} looks like a relative path`)
 
   if (this.linkMode === 'imported_file' || (this.linkMode === 'imported_url' && this.contentType !== 'text/html')) {
-    await makeDirs($OS.Path.dirname(this.path))
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
-    await $OS.File.copy(this.localPath, this.path, { noOverwrite: !overwrite })
+    await protect(this.path, this.localPath)
+    await makeDirs(PathUtils.parent(this.path))
+    await IOUtils.copy(this.localPath, this.path)
   }
   else if (this.linkMode === 'imported_url') {
-    const target = $OS.Path.dirname(this.path)
-    if (!overwrite && (await $OS.File.exists(target))) throw new Error(`${ path } would overwite ${ target }`)
+    const target = PathUtils.parent(this.path)
+    await protect(target, this.localPath)
 
-    await $OS.File.removeDir(target, { ignoreAbsent: true })
+    await IOUtils.remove(target, { recursive: true, ignoreAbsent: true })
     await makeDirs(target)
 
-    const snapshot = $OS.Path.dirname(this.localPath)
-    const iterator = new $OS.File.DirectoryIterator(snapshot)
-    const files: { src: string; tgt: string }[] = []
-    await iterator.forEach(entry => { // eslint-disable-line @typescript-eslint/no-floating-promises
-      if (entry.isDir) throw new Error(`Unexpected directory ${ entry.path } in snapshot`)
-      if (entry.name !== '.zotero-ft-cache') {
-        files.push({
-          src: $OS.Path.join(snapshot, entry.name),
-          tgt: $OS.Path.join(target, entry.name),
-        })
-      }
-    })
-    iterator.close()
-    for (const file of files) {
-      await $OS.File.copy(file.src, file.tgt, { noOverwrite: !overwrite })
+    const snapshot = PathUtils.parent(this.localPath)
+    for (const src of await IOUtils.getChildren(snapshot)) {
+      if (PathUtils.filename(src) === '.zotero-ft-cache') continue
+      if (await File.isDir(src)) throw new Error(`Unexpected directory ${JSON.stringify(src)} in snapshot`)
+      const tgt = PathUtils.join(target, PathUtils.filename(src))
+      await protect(tgt, src)
+      await IOUtils.copy(src, tgt)
     }
   }
 
@@ -407,14 +389,14 @@ class WorkerZotero {
 
     if (TranslationWorker.job.output) {
       if (TranslationWorker.job.options.exportFileData) { // output path is a directory
-        this.exportDirectory = $OS.Path.normalize(TranslationWorker.job.output)
-        this.exportFile = $OS.Path.join(this.exportDirectory, `${ $OS.Path.basename(this.exportDirectory) }.${ ZOTERO_TRANSLATOR_INFO.target }`)
+        this.exportDirectory = TranslationWorker.job.output
+        this.exportFile = PathUtils.join(this.exportDirectory, `${Path.basename(this.exportDirectory)}.${ZOTERO_TRANSLATOR_INFO.target}`)
       }
       else {
-        this.exportFile = $OS.Path.normalize(TranslationWorker.job.output)
+        this.exportFile = TranslationWorker.job.output
         const ext = `.${ ZOTERO_TRANSLATOR_INFO.target }`
         if (!this.exportFile.endsWith(ext)) this.exportFile += ext
-        this.exportDirectory = $OS.Path.dirname(this.exportFile)
+        this.exportDirectory = PathUtils.parent(this.exportFile)
       }
       await makeDirs(this.exportDirectory)
     }
@@ -425,11 +407,7 @@ class WorkerZotero {
 
     doExport()
 
-    if (this.exportFile) {
-      const encoder = (new TextEncoder)
-      const array = encoder.encode(this.output)
-      await $OS.File.writeAtomic(this.exportFile, array) as void
-    }
+    if (this.exportFile) await IOUtils.writeUTF8(this.exportFile, this.output)
   }
 
   public send(message: Translators.Worker.Message) {
@@ -476,7 +454,7 @@ class WorkerZotero {
       item.saveFile = saveFile.bind(item)
 
       if (!item.defaultPath && item.localPath) { // why is this not set by itemGetter?!
-        item.defaultPath = `files/${ item.itemID }/${ $OS.Path.basename(item.localPath) }`
+        item.defaultPath = `files/${item.itemID}/${Path.basename(item.localPath)}`
       }
     }
     else if (item.attachments) {

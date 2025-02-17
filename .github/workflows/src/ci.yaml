@@ -21,16 +21,6 @@ _anchors:
     uses: actions/setup-node@v4
     with:
       node-version: 20.x
-  cache: &cache
-    name: Cache python/node dependencies
-    id: cache
-    uses: actions/cache@v4
-    env:
-      cache-name: v3
-    with:
-      path: |
-        ~/.npm
-      key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('requirements.txt') }}
   install_python_packages: &install_python_packages
     name: install python packages
     run: |
@@ -39,7 +29,14 @@ _anchors:
       pip install -r requirements.txt
   install_node_packages: &install_node_packages
     name: install node packages
-    run: npm install
+    run: npm install && npm ls
+  checkout: &checkout
+    name: Checkout repository
+    uses: actions/checkout@v4
+    with:
+      persist-credentials: false
+      fetch-depth: 1
+      submodules: true
 
 jobs:
   build:
@@ -50,11 +47,7 @@ jobs:
       slow: ${{ env.slow }}
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-      with:
-        persist-credentials: false
-        submodules: true  # Fetch Hugo themes (true OR recursive)
-        fetch-depth: 0    # Fetch all history for .GitInfo and .Lastmod
+    - *checkout
     - name: get package version
       run: echo "version="`jq -r .version package.json` >> $GITHUB_ENV
     - name: cancel spurious build on tagged version
@@ -64,7 +57,6 @@ jobs:
     - *install_python
     - *install_python_packages
     - *install_node
-    - *cache
     - *install_node_packages
     - name: set slow/legacy/beta flags
       run: ./util/action-flags
@@ -98,19 +90,26 @@ jobs:
           test/balance/
         retention-days: 1
 
-    # site
-    - name: build site
+  site:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    if: ${{ github.event_name == 'push' && (github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/tags/')) }}
+    steps:
+    - *checkout
+    - *install_python
+    - *install_python_packages
+    - *install_node
+    - *install_node_packages
+    - name: build site and install hugo
       uses: peaceiris/actions-hugo@v3
-      if: ${{ github.event_name == 'push' && (github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/tags/')) }}
       with:
         hugo-version: latest
         extended: true
     - name: prepare docs for deploy
       run: npm run docs:deploy
-      if: ${{ github.event_name == 'push' && (github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/tags/')) }}
     - name: deploy site
       uses: peaceiris/actions-gh-pages@v4
-      if: ${{ github.event_name == 'push' && (github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/tags/')) }}
+      if: ${{ success() }}
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./site/public
@@ -126,14 +125,21 @@ jobs:
         client: ${{ fromJSON(needs.build.outputs.clients) }}
         worker: ['--worker', '--no-worker']
     steps:
-    - uses: actions/checkout@v4
+    - *checkout
     - name: fetch build artifacts
       uses: actions/download-artifact@v4
       with:
         name: build-artifacts
     - *install_python
     - *install_python_packages
-    - *cache
+
+    - name: Set system-wide proxy using PAC URL
+      run: |
+        echo "auto_proxy=http://proxy-doc.ird.fr/proxy.pac" | sudo tee -a /etc/environment
+        echo "auto_proxy=http://proxy-doc.ird.fr/proxy.pac" >> $GITHUB_ENV
+
+    - name: Verify proxy settings
+      run: env | grep -i proxy
 
     - name: install ${{ matrix.client }}
       run: |
@@ -141,6 +147,7 @@ jobs:
         sudo apt-get update
         sudo apt-get install ${{ matrix.client }}
         sudo apt-get install mesa-utils xvfb
+        sudo apt-get install wmctrl xdotool
         curl -LO https://github.com/jgm/pandoc/releases/download/3.1.11.1/pandoc-3.1.11.1-linux-amd64.tar.gz
         tar xvzf pandoc-3.1.11.1-linux-amd64.tar.gz
         sudo mv pandoc-3.1.11.1/bin/pandoc /usr/bin
@@ -192,7 +199,7 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - *checkout
 
     - name: fetch build artifacts
       uses: actions/download-artifact@v4
@@ -201,7 +208,6 @@ jobs:
     - *install_python
     - *install_python_packages
     - *install_node
-    - *cache
     - *install_node_packages
 
     - run: npm run release
@@ -227,7 +233,7 @@ jobs:
       - test
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - *checkout
     - *install_python
     - *install_python_packages
     - name: fetch test artifacts
