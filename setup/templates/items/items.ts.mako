@@ -29,6 +29,8 @@ export const valid: Valid = {
   },
 }
 
+export type ZoteroItemType = keyof typeof valid.type
+
 export const name: Record<'type' | 'field', Record<string, string>> = {
 %for section in ['type', 'field']:
   ${section}: {

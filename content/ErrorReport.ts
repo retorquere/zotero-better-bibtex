@@ -19,6 +19,8 @@ import * as l10n from './l10n'
 
 import * as UZip from 'uzip'
 
+const ENV = Components.classes['@mozilla.org/process/environment;1'].getService(Components.interfaces.nsIEnvironment)
+
 import { alert } from './prompt'
 
 import * as s3 from './s3.json'
@@ -413,7 +415,7 @@ export class ErrorReport {
 
     const appInfo = Components.classes['@mozilla.org/xre/app-info;1'].getService(Components.interfaces.nsIXULAppInfo)
     context += `Application: ${ appInfo.name } (${ Zotero.clientName }) ${ appInfo.version } ${ Zotero.locale }\n`
-    context += `Platform: ${ client.platform }\n`
+    context += `Platform: ${ client.platform }${(ENV.get('SNAP') && ' snap') || (ENV.get('FLATPAK_SANDBOX_DIR') && ' flatpak') || ''}\n`
 
     const addons = await Zotero.getInstalledExtensions()
     if (addons.length) {
