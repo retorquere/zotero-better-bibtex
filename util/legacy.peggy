@@ -237,18 +237,13 @@ method
     return match('$len', [operator, n], operator, error)
   }
   / prop:$([A-Z][a-zA-Z]+) { // before method matching, as method matching is case-insensitive now!
-      const field = options.items.name.field[prop.toLowerCase()]
-      if (!field) error(`Unknown field ${JSON.stringify(prop)}`)
       return prop
     }
   / name:$([a-z][-.a-zA-Z]+) &{ return get_method(name, '$').name } p:fparams? {
       return match('$' + name, p || [], name, error)
     }
   / prop:$([a-zA-Z]+) { // really just an error catcher now
-      // if (prop.match(/^[a-z]/)) error(`Direct field access ${prop} must start with a leading capital`)
-      const field = options.items.name.field[prop.toLowerCase()]
-      if (!field) error(`Unknown field ${JSON.stringify(prop)}`)
-      return field.replace(/^./, c => c.toUpperCase())
+      return prop
     }
 
 fparams
