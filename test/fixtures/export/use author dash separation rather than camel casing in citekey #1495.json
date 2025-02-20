@@ -6,7 +6,7 @@
       "exportNotes": true
     },
     "preferences": {
-      "citekeyFormat": "[authors2:lower][>0]_[year] -[shorttitle:skipwords:lower]| [shorttitle:skipwords:lower]-[year]",
+      "citekeyFormat": "authorsn(n=2,creator=\"*\",initials=false,sep=\" \").fold.lower + len + \"_\" + year + \"-\" + shorttitle.skipwords.lower;\nshorttitle.skipwords.lower + \"-\" + year;",
       "keyConflictPolicy": "change",
       "quickCopyMode": "pandoc",
       "quickCopyPandocBrackets": true
@@ -26,7 +26,7 @@
         {
           "creatorType": "author",
           "firstName": "Bruce",
-          "lastName": "D\u2019Arcus"
+          "lastName": "D’Arcus"
         }
       ],
       "date": "January 2, 2019",

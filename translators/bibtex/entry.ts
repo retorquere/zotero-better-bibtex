@@ -509,7 +509,7 @@ export class Entry {
 
       if (!this.inPostscript && !field.replace) {
         const value = field.bibtex ? 'bibtex' : 'value'
-        throw new Error(`duplicate field '${ field.name }' for ${ this.item.citationKey }: old: ${ this.has[field.name][value] }, new: ${ field[value] }`)
+        throw new Error(`duplicate field '${ field.name }' for ${ this.item.citationKey }: old: ${ this.has[field.name][value] }, new: ${ field[value] as string }`)
       }
 
       if (!field.replace) {
@@ -528,7 +528,7 @@ export class Entry {
     if (!field.bibtex) {
       let bibstring = ''
       if ((typeof field.value === 'number') || (field.bibtexStrings && (bibstring = this.getBibString(field.value)))) {
-        field.bibtex = `${ bibstring || field.value }`
+        field.bibtex = `${ bibstring || field.value as string }`
       }
       else {
         let value

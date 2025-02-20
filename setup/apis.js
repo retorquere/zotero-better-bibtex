@@ -181,7 +181,7 @@ function makeSchema(type) {
             case 'creator':
               return { sprintf: '%fs%gs%is' }
             case 'postfix':
-              return { sprintf: '%as%As%nd' }
+              return { sprintf: '%as%As%ns' }
           }
           throw type
         }

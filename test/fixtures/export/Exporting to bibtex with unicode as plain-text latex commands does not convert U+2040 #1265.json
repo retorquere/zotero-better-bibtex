@@ -7,7 +7,7 @@
       "exportNotes": true
     },
     "preferences": {
-      "citekeyFormat": "[zotero:clean]",
+      "citekeyFormat": "zotero.clean",
       "importCaseProtection": "off",
       "itemObserverDelay": 100
     }
@@ -22,12 +22,12 @@
         {
           "creatorType": "author",
           "firstName": "E. G.",
-          "lastName": "Gol\u02b9shte\u012dn"
+          "lastName": "Golʹshteĭn"
         },
         {
           "creatorType": "author",
           "firstName": "N. V.",
-          "lastName": "Tret\u02b9i\ufe20a\ufe21kov"
+          "lastName": "Tretʹi︠a︡kov"
         }
       ],
       "date": "1996",

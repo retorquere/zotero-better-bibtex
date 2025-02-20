@@ -14,7 +14,7 @@
       "auxImport": true,
       "biblatexExtendedNameFormat": true,
       "citeCommand": "@",
-      "citekeyFormat": "[auth:lower]-[veryshorttitle:lower]-[year]",
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold.lower + \"-\" + veryshorttitle.lower + \"-\" + year",
       "itemObserverDelay": 100,
       "keyConflictPolicy": "change",
       "keyScope": "global",
@@ -28,7 +28,7 @@
     {
       "DOI": "10.1038/sdata.2016.18",
       "ISSN": "2052-4463",
-      "abstractNote": "There is an urgent need to improve the infrastructure supporting the reuse of scholarly data. A diverse set of stakeholders\u2014representing academia, industry, funding agencies, and scholarly publishers\u2014have come together to design and jointly endorse a concise and measureable set of principles that we refer to as the FAIR Data Principles. The intent is that these may act as a guideline for those wishing to enhance the reusability of their data holdings. Distinct from peer initiatives that focus on the human scholar, the FAIR Principles put specific emphasis on enhancing the ability of machines to automatically find and use the data, in addition to supporting its reuse by individuals. This Comment is the first formal publication of the FAIR Principles, and includes the rationale behind them, and some exemplar implementations in the community.",
+      "abstractNote": "There is an urgent need to improve the infrastructure supporting the reuse of scholarly data. A diverse set of stakeholders—representing academia, industry, funding agencies, and scholarly publishers—have come together to design and jointly endorse a concise and measureable set of principles that we refer to as the FAIR Data Principles. The intent is that these may act as a guideline for those wishing to enhance the reusability of their data holdings. Distinct from peer initiatives that focus on the human scholar, the FAIR Principles put specific emphasis on enhancing the ability of machines to automatically find and use the data, in addition to supporting its reuse by individuals. This Comment is the first formal publication of the FAIR Principles, and includes the rationale behind them, and some exemplar implementations in the community.",
       "accessDate": "2020-02-28T20:46:08Z",
       "attachments": [],
       "citationKey": "wilkinson-fair-2016",
@@ -100,7 +100,7 @@
         },
         {
           "creatorType": "author",
-          "firstName": "Merc\u00e8",
+          "firstName": "Mercè",
           "lastName": "Crosas"
         },
         {
@@ -160,7 +160,7 @@
         },
         {
           "creatorType": "author",
-          "firstName": "Peter A. C. \u2019t",
+          "firstName": "Peter A. C. ’t",
           "lastName": "Hoen"
         },
         {

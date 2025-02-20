@@ -9,7 +9,7 @@
     "preferences": {
       "biblatexExtendedDateFormat": false,
       "bibtexURL": "url",
-      "citekeyFormat": "[auth][shorttitle2_2][year]",
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold + shorttitle(2,2) + year",
       "qualityReport": true,
       "skipFields": "keywords, file,  timestamp",
       "warnBulkModify": 1
@@ -17,7 +17,7 @@
   },
   "items": [
     {
-      "abstractNote": "Em aprendizagem de m\u00e1quina, a medi\u00e7\u00e3o de desempenho \u00e9 uma tarefa crucial. As m\u00e9tricas ROC (Receiver Operating Characteristics) e AUC (Area\u2026",
+      "abstractNote": "Em aprendizagem de máquina, a medição de desempenho é uma tarefa crucial. As métricas ROC (Receiver Operating Characteristics) e AUC (Area…",
       "accessDate": "2020-11-23",
       "citationKey": "AvelarQueAUC2019",
       "creators": [
@@ -34,7 +34,7 @@
       "itemID": 1,
       "itemType": "webpage",
       "language": "pt-BR",
-      "title": "O que \u00e9 AUC e ROC nos modelos de Machine Learning",
+      "title": "O que é AUC e ROC nos modelos de Machine Learning",
       "url": "https://medium.com/@eam.avelar/o-que-%C3%A9-auc-e-roc-nos-modelos-de-machine-learning-2e2c4112033d"
     }
   ]

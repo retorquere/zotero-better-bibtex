@@ -11,7 +11,7 @@
       "autoAbbrevStyle": "http://citationstylist.org/styles/mlz-cms-full",
       "autoExport": "idle",
       "citekeyFold": false,
-      "citekeyFormat": "[auth][year][0]"
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold + year + postfix(\"-%(n)s\")"
     }
   },
   "items": [
@@ -26,7 +26,7 @@
               }
             }
           },
-          "name": "\u984f\u91c7\u5bb9"
+          "name": "顏采容"
         }
       ],
       "date": "2003",
@@ -48,8 +48,8 @@
         }
       },
       "numPages": "214",
-      "publisher": "\u570b\u7acb\u66a8\u5357\u570b\u969b\u5927\u5b78",
-      "title": "\u660e\u6e05\u6642\u671f\u51fa\u7248\u8207\u6587\u5316\u2500\u4ee5\u300c\u624d\u5b50\u4f73\u4eba\u300d\u5c0f\u8aaa\u70ba\u4e2d\u5fc3",
+      "publisher": "國立暨南國際大學",
+      "title": "明清時期出版與文化─以「才子佳人」小說為中心",
       "type": "Ph.D. Dissertation",
       "url": "http://ndltd.ncl.edu.tw/cgi-bin/gs32/gsweb.cgi?o=dnclcdr&s=id=%22091NCNU0493006%22.&searchmode=basic"
     },
@@ -64,11 +64,11 @@
                 "lastName": "Erudition"
               },
               "zh-alalc97": {
-                "lastName": "\u00c0i r\u00fa sh\u0113ng"
+                "lastName": "Ài rú shēng"
               }
             }
           },
-          "name": "\u611b\u5982\u751f"
+          "name": "愛如生"
         }
       ],
       "date": "n.d.",
@@ -82,10 +82,10 @@
         "_keys": {
           "title": {
             "en": "Database of Chinese Encyclopeadias",
-            "zh-alalc97": "Zh\u014dnggu\u00f3 l\u00e8ish\u016b k\u00f9"
+            "zh-alalc97": "Zhōngguó lèishū kù"
           },
           "websiteTitle": {
-            "zh-alalc97": "Zh\u014dnggu\u00f3 l\u00e8ish\u016b k\u00f9"
+            "zh-alalc97": "Zhōngguó lèishū kù"
           }
         },
         "main": {
@@ -93,9 +93,9 @@
           "websiteTitle": "zh"
         }
       },
-      "publicationTitle": "\u4e2d\u570b\u985e\u66f8\u5eab",
+      "publicationTitle": "中國類書庫",
       "shortTitle": "leishuku",
-      "title": "\u4e2d\u570b\u985e\u66f8\u5eab",
+      "title": "中國類書庫",
       "type": "Full-text databse",
       "url": "http://server.wenzibase.com"
     }

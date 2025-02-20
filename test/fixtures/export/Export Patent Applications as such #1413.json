@@ -8,7 +8,7 @@
     },
     "preferences": {
       "asciiBibLaTeX": true,
-      "citekeyFormat": "[auth:lower][shorttitle3_3][year]",
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold.lower + shorttitle(3,3) + year",
       "exportBraceProtection": false,
       "itemObserverDelay": 100,
       "skipFields": "file,abstract"

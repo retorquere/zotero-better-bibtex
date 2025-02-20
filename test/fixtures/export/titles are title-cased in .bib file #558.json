@@ -8,7 +8,7 @@
     },
     "preferences": {
       "autoAbbrevStyle": "http://www.zotero.org/styles/ieee",
-      "citekeyFormat": "[zotero]",
+      "citekeyFormat": "zotero",
       "quickCopyMode": "citekeys"
     }
   },
@@ -45,7 +45,7 @@
       "journalAbbreviation": "The American Journal of Emergency Medicine",
       "language": "English",
       "libraryCatalog": "www.ajemjournal.com",
-      "pages": "1016\u20131023",
+      "pages": "1016–1023",
       "publicationTitle": "The American Journal of Emergency Medicine",
       "title": "Using Google Flu Trends data in forecasting influenza-like-illness related ED visits in Omaha, Nebraska",
       "url": "http://www.ajemjournal.com/article/S0735-6757(14)00421-5/abstract",
@@ -78,7 +78,7 @@
       "libraryCatalog": "CrossRef",
       "pages": "8154",
       "publicationTitle": "Scientific Reports",
-      "title": "Using networks to combine \u201cBig Data\u201d and traditional surveillance to improve influenza predictions",
+      "title": "Using networks to combine “Big Data” and traditional surveillance to improve influenza predictions",
       "url": "http://www.nature.com/articles/srep08154",
       "volume": "5"
     }

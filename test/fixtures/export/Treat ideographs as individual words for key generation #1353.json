@@ -7,7 +7,7 @@
       "exportNotes": true
     },
     "preferences": {
-      "citekeyFormat": "[Auth]_[year]_[Title:split-ideographs:select=1,3]",
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false) + \"_\" + year + \"_\" + Title.ideographs.select(1,3)",
       "kuroshiro": true,
       "importBibTeXStrings": false,
       "importCaseProtection": "off",
@@ -22,14 +22,14 @@
       "creators": [
         {
           "creatorType": "author",
-          "name": "\u674e\u6587\u8f89"
+          "name": "李文辉"
         }
       ],
       "date": "2014",
       "itemID": 1,
       "itemType": "thesis",
-      "publisher": "\u897f\u5b89: \u897f\u5b89\u7535\u5b50\u79d1\u6280\u5927\u5b66",
-      "title": "\u822a\u62cd\u89c6\u9891\u4e2d\u8fd0\u52a8\u76ee\u6807\u7684\u68c0\u6d4b\u4e0e\u8ddf\u8e2a\u7b97\u6cd5\u7814\u7a76",
+      "publisher": "西安: 西安电子科技大学",
+      "title": "航拍视频中运动目标的检测与跟踪算法研究",
       "type": "PhD Thesis"
     }
   ]

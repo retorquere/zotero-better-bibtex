@@ -11,7 +11,7 @@ for (const [_old, _new] of Object.entries(aliases)) {
 // this allows moving $len to _len after it has been validated
 API.methods.$len = API.methods._len
 
-const breaker = {
+const normalize = {
   enter(node, parent) {
     if (node.type === 'Program') {
       const body = node.body
@@ -27,6 +27,10 @@ const breaker = {
         }
       }
       node.body.push({ type: 'ExpressionStatement', expression: { type: 'Literal', value: '' } })
+    }
+
+    if (node.type === 'UnaryExpression' && node.operator === '-' && node.argument.type === 'Literal' && typeof node.argument.value === 'number') {
+      return { type: 'Literal', value: -1 * node.argument.value }
     }
   },
 }
@@ -475,7 +479,7 @@ function compile(code, braces) {
   let generatedCode
 
   const ast = meriyah.parse(code, { ecmaVersion: 2020 })
-  estraverse.replace(ast, breaker)
+  estraverse.replace(ast, normalize)
   estraverse.replace(ast, parens)
   estraverse.replace(ast, invert)
   estraverse.replace(ast, len)

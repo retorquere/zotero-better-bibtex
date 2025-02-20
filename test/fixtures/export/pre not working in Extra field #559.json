@@ -8,7 +8,7 @@
     },
     "preferences": {
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
-      "citekeyFormat": "[authors2][year]:[Title:nopunct:skipwords:select,1,3:lower:condense,-]",
+      "citekeyFormat": "authorsn(n=2,creator=\"*\",initials=false,sep=\" \").fold + year + \":\" + Title.nopunct.skipwords.select(1,3).lower.condense(\"-\")",
       "keyConflictPolicy": "change",
       "skipFields": "doi,abstract,url,lccn,file,shorttitle,timestamp,keywords,urldate,issn,month,copyright,language"
     }
@@ -19,7 +19,7 @@
         {
           "creatorType": "author",
           "firstName": "Morten",
-          "lastName": "Br\u00f8ns"
+          "lastName": "Brøns"
         }
       ],
       "extra": [

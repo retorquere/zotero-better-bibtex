@@ -5,7 +5,7 @@
     "localeDateOrder": "ymd",
     "preferences": {
       "bibtexURL": "note",
-      "citekeyFormat": "[auth][year]-[shorttitle]",
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold + year + \"-\" + shorttitle",
       "biblatexExtendedNameFormat": false
     }
   },
@@ -22,7 +22,7 @@
         },
         {
           "creatorType": "author",
-          "firstName": "Mart\u00edn",
+          "firstName": "Martín",
           "lastName": "Aznar"
         }
       ],
@@ -32,7 +32,7 @@
       "itemType": "journalArticle",
       "language": "en",
       "libraryCatalog": "CrossRef",
-      "pages": "1379\u20131385",
+      "pages": "1379–1385",
       "publicationTitle": "The Journal of Chemical Thermodynamics",
       "title": "(Liquid+liquid) equilibrium of <span class=\"nocase\">{water+phenol+(1-butanol, or 2-butanol, or tert-butanol)}</span> systems",
       "url": "http://linkinghub.elsevier.com/retrieve/pii/S0021961410002107",

@@ -7,7 +7,7 @@
     "preferences": {
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
       "bibtexURL": "note",
-      "citekeyFormat": "[zotero]",
+      "citekeyFormat": "zotero",
       "exportBibTeXStrings": "detect"
     }
   },
@@ -25,7 +25,7 @@
       "itemID": 1,
       "itemType": "webpage",
       "publicationTitle": "GitHub",
-      "title": "Replicate Zotero key algorithm \u00b7 Issue #439 \u00b7 retorquere/zotero-better-bibtex",
+      "title": "Replicate Zotero key algorithm · Issue #439 · retorquere/zotero-better-bibtex",
       "url": "https://github.com/retorquere/zotero-better-bibtex/issues/439"
     },
     {
@@ -47,7 +47,7 @@
       "itemID": 2,
       "itemType": "webpage",
       "publicationTitle": "GitHub",
-      "title": "Replicate Zotero key algorithm \u00b7 Issue #439 \u00b7 retorquere/zotero-better-bibtex",
+      "title": "Replicate Zotero key algorithm · Issue #439 · retorquere/zotero-better-bibtex",
       "url": "https://github.com/retorquere/zotero-better-bibtex/issues/439"
     },
     {
@@ -63,7 +63,7 @@
       "itemID": 3,
       "itemType": "webpage",
       "publicationTitle": "GitHub",
-      "title": "Replicate Zotero key algorithm \u00b7 Issue #439 \u00b7 retorquere/zotero-better-bibtex",
+      "title": "Replicate Zotero key algorithm · Issue #439 · retorquere/zotero-better-bibtex",
       "url": "https://github.com/retorquere/zotero-better-bibtex/issues/439"
     }
   ]

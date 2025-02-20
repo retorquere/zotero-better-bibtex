@@ -135,7 +135,7 @@ monkey.patch(Zotero.Items, 'merge', original => async function Zotero_Items_merg
               extra.extraFields.kv[name] = value
             }
             else if (Array.isArray(existing) && Array.isArray(value)) {
-              for (const creator in value) {
+              for (const creator of value) {
                 if (!existing.includes(creator)) existing.push(creator)
               }
             }

@@ -8,14 +8,14 @@
     },
     "preferences": {
       "bibtexURL": "note",
-      "citekeyFormat": "[authorsAlpha:lower][year]",
+      "citekeyFormat": "authorsAlpha(creator=\"*\",initials=false,sep=\" \").fold.lower + year",
       "skipFields": "abstract, keywords, shorttitle, issn, copyright, timestamp, language, urldate"
     }
   },
   "items": [
     {
       "ISBN": "978-3-642-11217-1 978-3-642-11218-8",
-      "abstractNote": "Summary The traveling salesman problem (TSP) is a challenging problem in combinatorial optimization. In this paper we consider the multiobjective TSP for which the aim is to obtain or to approximate the set of efficient solutions. In a first step, we classify and describe briefly the existing works, that are essentially based on the use of metaheuristics. In a second step, we propose a new method, called two-phase Pareto local search. In the first phase of this method, an initial population composed of an approximation to the extreme supported efficient solutions is generated. The second phase is a Pareto local search applied to all solutions of the initial population. The method does not use any numerical parameter. We show that using the combination of these two techniques\u2014good initial population generation and Pareto local search\u2014gives, on the majority of the instances tested, better results than state-of-the-art algorithms.",
+      "abstractNote": "Summary The traveling salesman problem (TSP) is a challenging problem in combinatorial optimization. In this paper we consider the multiobjective TSP for which the aim is to obtain or to approximate the set of efficient solutions. In a first step, we classify and describe briefly the existing works, that are essentially based on the use of metaheuristics. In a second step, we propose a new method, called two-phase Pareto local search. In the first phase of this method, an initial population composed of an approximation to the extreme supported efficient solutions is generated. The second phase is a Pareto local search applied to all solutions of the initial population. The method does not use any numerical parameter. We show that using the combination of these two techniques—good initial population generation and Pareto local search—gives, on the majority of the instances tested, better results than state-of-the-art algorithms.",
       "accessDate": "2015-12-07 20:34:28",
       "creators": [
         {
@@ -52,10 +52,10 @@
       "itemType": "bookSection",
       "language": "en",
       "libraryCatalog": "link.springer.com",
-      "pages": "119\u2013141",
+      "pages": "119–141",
       "publicationTitle": "Advances in Multi-Objective Nature Inspired Computing",
       "publisher": "Springer Berlin Heidelberg",
-      "rights": "\u00a92010 Springer-Verlag Berlin Heidelberg",
+      "rights": "©2010 Springer-Verlag Berlin Heidelberg",
       "series": "Studies in Computational Intelligence",
       "seriesNumber": "272",
       "shortTitle": "The Multiobjective Traveling Salesman Problem",

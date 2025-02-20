@@ -7,7 +7,7 @@
     "preferences": {
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
       "bibtexURL": "note",
-      "citekeyFormat": "[auth:lower:nopunct]:[year][Title:lower:nopunct:skipwords:select,1,1][0]"
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold.lower.nopunct + \":\" + year + Title.lower.nopunct.skipwords.select(1,1) + postfix(\"-%(n)s\")"
     }
   },
   "items": [

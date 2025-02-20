@@ -10,7 +10,7 @@
       "qualityReport": true,
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
       "bibtexURL": "note",
-      "citekeyFormat": "[authors][shortyear]",
+      "citekeyFormat": "authorsn(n=0,creator=\"*\",initials=false,sep=\" \").fold + shortyear",
       "skipFields": "file,abstract"
     }
   },
