@@ -26,14 +26,8 @@ import { buildCiteKey as zotero_buildCiteKey } from '../../gen/ZoteroBibTeX.mjs'
 import { babelLanguage, CJK } from '../text'
 import { fetchSync as fetchInspireHEP } from '../inspire-hep'
 
-const legacyparser = require('./legacy.peggy')
-import reservedIdentifiers from 'reserved-identifiers'
-const reserved = reservedIdentifiers({ includeGlobalProperties: true })
-
 import { compile } from './compile'
 import * as DateParser from '../dateparser'
-
-import { methods } from '../../gen/api/key-formatter'
 
 import itemCreators from '../../gen/items/creators.json'
 import * as items from '../../gen/items/items'
@@ -381,15 +375,6 @@ export class PatternFormatter {
   }
 
   public test(formula: string): string {
-    if (formula[0] === '[') {
-      try {
-        legacyparser.parse(formula, { reserved, items, methods })
-      }
-      catch (err) {
-        return err.message as string
-      }
-      return ''
-    }
     try {
       compile(formula)
     }
@@ -409,19 +394,9 @@ export class PatternFormatter {
     let error = ''
     const ts = Date.now()
     // the zero-width-space is a marker to re-save the current default so it doesn't get replaced when the default changes later, which would change new keys suddenly
-    for (let formula of [ ...formulas, Preference.default.citekeyFormat ]) {
+    for (const formula of [ ...formulas, Preference.default.citekeyFormat ]) {
       log.info(`formula-update: ${ ts } trying: ${ formula }`)
       if (!formula) continue
-
-      if (formula[0] === '[') {
-        try {
-          formula = legacyparser.parse(formula, { reserved, items, methods })
-        }
-        catch (err) {
-          log.error(`formula-update: ${ ts } legacy-formula failed to upgrade ${ formula }: ${ err.message }`)
-          continue
-        }
-      }
 
       try {
         this.$postfix()

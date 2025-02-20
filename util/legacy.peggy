@@ -1,16 +1,13 @@
 {
   const identifier = /^(?![0-9])[_$a-zA-Z][_$a-zA-Z0-9]*$/
 
-  function allowedIdentifier(v) {
-    return !options.reserved.has(v) && v.match(identifier)
-  }
-
-  const alias = require('./alias.json')
+  const Alias = require('../content/key-manager/alias.json')
+  const Methods = require('../gen/api/key-formatter').methods
 
   function get_method(method, prefix) {
     method = (prefix || '') + method.toLowerCase().replace(/[-.]/g, '')
-    method = alias[method] || method
-    return options.methods[method] || {}
+    method = Alias[method] || method
+    return Methods[method] || {}
   }
 
   function literal(v, noident) {
@@ -25,7 +22,7 @@
       case 'boolean':
         return `${v}`
       case 'string':
-        return !noident && allowedIdentifier(v) ? v : JSON.stringify(v)
+        return JSON.stringify(v)
     }
     throw new Error(`unexpected argument value ${typeof v} ${JSON.stringify(v)}`)
   }
@@ -83,7 +80,6 @@
       if (typeof arg === 'undefined') return
 
       const name = method.parameters[i]
-      if (typeof arg === 'string') arg = validate(method.schema.properties[name], arg)
       params[name] = arg
     }, {})
 
@@ -233,8 +229,6 @@ method
       if (ignored.length) error(`Unused arguments ${ignored}`)
 
       if (prefix.match(/^[a-z]/)) method += '.fold'
-
-      Zotero.debug(`legacy-author: ${JSON.stringify({ input, params, flags, method })}`)
 
       return method
     }

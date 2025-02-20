@@ -4,7 +4,6 @@ import * as escape from '../../content/escape'
 import { log } from '../../content/logger'
 import { Exporter as BibTeXExporter } from './exporter'
 import { parse as arXiv } from '../../content/arXiv'
-import { validItem } from '../../content/ajv'
 import { valid, label } from '../../gen/items/items'
 import { wordsToNumbers } from 'words-to-numbers'
 
@@ -1550,11 +1549,6 @@ class ZoteroItem {
     if (!this.item.publisher && this.item.backupPublisher) {
       this.item.publisher = this.item.backupPublisher
       delete this.item.backupPublisher
-    }
-
-    if (this.translation.collected.preferences.testing) {
-      const err = validItem(JSON.parse(JSON.stringify(this.item)), true) // stringify/parse is a fast way to get rid of methods
-      if (err) this.error(`import error: ${ this.item.itemType } ${ this.bibtex.key }: ${ err }\n${ JSON.stringify(this.item, null, 2) }`)
     }
 
     return true
