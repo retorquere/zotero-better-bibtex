@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/only-throw-error */
-
 import type { Tag, RegularItem as SerializedRegularItem, Item as SerializedItem } from '../../gen/typings/serialized-item'
 
 import * as client from '../../content/client'
@@ -51,6 +49,11 @@ type BabelLanguageTag = ValueOf<typeof BabelTag>
 type BabelLanguage = keyof typeof BabelTag
 
 class Template<K> extends String {} // eslint-disable-line @typescript-eslint/no-unused-vars
+
+function skip() {
+  // log.debug(`formula: exiting from ${(new Error).stack}`)
+  throw { next: true } // eslint-disable-line @typescript-eslint/only-throw-error
+}
 
 function innerText(node): string {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
@@ -211,6 +214,7 @@ class Item {
 
   constructor(item: Zotero.Item | SerializedItem) { // Item must have simplifyForExport pre-applied, without scrubbing
     this.item = item
+    log.debug('formula: item set as', (item as Zotero.Item).getField ? 'native' : 'serialized')
 
     if ((item as Zotero.Item).getField) {
       this.itemID = this.id = (item as Zotero.Item).id
@@ -401,6 +405,7 @@ export class PatternFormatter {
       try {
         this.$postfix()
         const formatter = compile(formula)
+        log.debug('formula:', formula, '=>', formatter)
         this.generate = (new Function(formatter) as () => string)
         Preference.citekeyFormat = formula
         if (!Preference.citekeyFormatEditing) Preference.citekeyFormatEditing = formula
@@ -429,7 +434,11 @@ export class PatternFormatter {
     }
 
     this.$postfix()
+    log.info(`running formula: ${this.generate}`)
     let citekey = this.generate()
+    log.info('formula: made', { citekey })
+    if (citekey && Preference.citekeyFold) citekey = this.transliterate(citekey)
+    citekey = citekey.replace(this.re.unsafechars, '')
     if (!citekey.includes(this.postfix.marker)) citekey += this.postfix.marker
     return citekey
   }
@@ -442,7 +451,7 @@ export class PatternFormatter {
   public $type(...allowed: ZoteroItemType[]): string {
     if (!allowed.length) return this.item.itemType
 
-    if (!allowed.map(type => type.toLowerCase()).includes(this.item.itemType.toLowerCase())) throw { next: true }
+    if (!allowed.map(type => type.toLowerCase()).includes(this.item.itemType.toLowerCase())) skip()
     return ''
   }
 
@@ -456,7 +465,7 @@ export class PatternFormatter {
    * @param name one or more language codes
    */
   public $language(...name: (BabelLanguage | BabelLanguageTag)[]): string {
-    if (!name.concat(name.map(n => BabelTag[n] as string).filter(n => n)).includes(this.item.babelTag())) throw { next: true }
+    if (!name.concat(name.map(n => BabelTag[n] as string).filter(n => n)).includes(this.item.babelTag())) skip()
     return ''
   }
   public $$language(...name: (BabelLanguage | BabelLanguageTag)[]): string {
@@ -498,7 +507,7 @@ export class PatternFormatter {
     }
     catch (err) {
       log.error('inspire-hep returned an error:', err)
-      throw { next: true }
+      skip()
     }
   }
 
@@ -525,7 +534,7 @@ export class PatternFormatter {
 
   /** Tests whether the item is in the user library */
   public $library(): string {
-    if (this.item.libraryID !== Zotero.Libraries.userLibraryID) throw { next: true }
+    if (this.item.libraryID !== Zotero.Libraries.userLibraryID) skip()
     return ''
   }
   public $$library(): string {
@@ -539,8 +548,8 @@ export class PatternFormatter {
    */
   public $group(name: string): string {
     let group
-    if (this.item.libraryID === Zotero.Libraries.userLibraryID) throw { next: true }
-    if ((group = Zotero.Libraries.get(this.item.libraryID)) && (group.name !== name)) throw { next: true }
+    if (this.item.libraryID === Zotero.Libraries.userLibraryID) skip()
+    if ((group = Zotero.Libraries.get(this.item.libraryID)) && (group.name !== name)) skip()
     return ''
   }
   public $$group(name: string): string {
@@ -588,7 +597,7 @@ export class PatternFormatter {
       .filter(cr => !exclude.length || !exclude.includes(cr.creatorType as CreatorType))
       .map(cr => this.name(cr, name as string))
 
-    if ((min && creators.length < min) || (max && creators.length > max)) throw { next: true }
+    if ((min && creators.length < min) || (max && creators.length > max)) skip()
 
     if (!n) {
       etal = ''
@@ -642,6 +651,7 @@ export class PatternFormatter {
    * @param initials  add author initials
    */
   public $auth(n = 0, m = 1, creator: AuthorType = '*', initials = false): string {
+    log.debug('formula: $auth', this.item.creators)
     const family = n ? `%(f).${ n }s` : '%(f)s'
     const name = initials ? `${ family }%(I)s` : family
     const author: string = this.creators(creator, name)[m - 1] || ''
@@ -885,6 +895,7 @@ export class PatternFormatter {
    * @param variable extra-field line identifier
    */
   public $extra(variable: string): string { // eslint-disable-line @typescript-eslint/no-inferrable-types
+    log.debug('formula: $extra', variable, this.item.extraFields)
     const variables = variable.toLowerCase().trim().split(/\s*\/\s*/).filter(varname => varname)
     if (!variables.length) return ''
 
@@ -962,7 +973,7 @@ export class PatternFormatter {
       .map(primary => (this.item.creators || []).map(cr => `${ typeof cr.name === 'string' ? 1 : 2 }${ cr.creatorType === primary ? 'primary' : cr.creatorType }`).join(';'))
       .map(cr => `${ this.item.itemType }:${ cr }`)
 
-    if (match && !creators.find(cr => cr.match(match))) throw { next: true }
+    if (match && !creators.find(cr => cr.match(match))) skip()
     return creators[0]
   }
   public $$creatortypes(match?: RegExp): string {
@@ -1007,7 +1018,7 @@ export class PatternFormatter {
 
     if (typeof match === 'string') match = new RegExp(rescape(cleaned(match)), 'i')
     const m = cleaned(input).match(match)
-    if (!m) throw { next: true }
+    if (!m) skip()
     if (m.length === 1) return input
     return m.slice(1).join('')
   }
@@ -1042,7 +1053,7 @@ export class PatternFormatter {
         throw new Error(`Unexpected length comparison ${ relation }`)
     }
 
-    if (next) throw { next: true }
+    if (next) skip()
     return input
   }
 
