@@ -154,6 +154,9 @@ const structure = {
   ConditionalExpression(node, parent) {
   },
 
+  SequenceExpression(node, parent) {
+  },
+
   ThisExpression(node, parent) {
   },
 
@@ -473,6 +476,22 @@ const protect = {
         }
         break
       }
+
+      case 'SequenceExpression': {
+        this.visitor.sequence = true
+        return {
+          type: 'CallExpression',
+          callee: { type: 'Identifier', name: 'sequence' },
+          arguments: node.expressions.map(e => ({
+            type: 'ArrowFunctionExpression',
+            expression: true,
+            generator: false,
+            async: false,
+            params: [],
+            body: e,
+          })),
+        }
+      }
     }
 
     return node
@@ -560,21 +579,44 @@ const tester = `
     }
   }
 `
+const sequence = `
+  function sequence(...e) {
+    const final = e.pop()
+    for (const attempt of e) {
+      try {
+        return attempt()
+      }
+      catch (err) {
+        if (!err.next) {
+          Zotero.debug('citekey-formula: error: ' + err.message)
+          throw err
+        }
+      }
+    }
+    return final()
+  }
+`
 function compile(code, options) {
   const ast = meriyah.parse(code, { ecmaVersion: 2020 })
 
   estraverse.replace(ast, normalize)
   estraverse.replace(ast, parens)
+
   delete invert.test
   estraverse.replace(ast, invert)
+
   estraverse.replace(ast, len)
   estraverse.traverse(ast, structure)
+
+  delete protect.sequence
   estraverse.replace(ast, protect)
+
   if (options?.logging) estraverse.replace(ast, logging)
 
   const generatedCode = [
     options?.logging ? logger : '',
     invert.test ? tester : '',
+    protect.sequence ? sequence : '',
     'let citekey',
     astring.generate(ast, { generator: options?.braces && generator }),
     'return citekey || `zotero-item-${this.item.id}`',
