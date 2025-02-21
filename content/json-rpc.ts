@@ -662,11 +662,12 @@ const api = new class API {
       const params = request.params
       request.params = schema.parameters.map(_ => undefined)
       for (const [k, v] of Object.entries(params)) {
-        const i = schema.params.indexOf(k)
+        const i = schema.parameters.indexOf(k)
         if (i < 0) return this.invalid(`unsupported argument ${k} for ${method}`)
         request.params[i] = v
       }
     }
+    log.debug('json-rpc:', request.params)
 
     const errors = schema.parameters.map((p, i) => {
       const v = request.params[i]

@@ -208,12 +208,13 @@ function astFor(expression) {
 }
 
 const invert = {
-  test: [],
-
   enter(node, parent) {
-    if (parent && parent.type === 'ConditionalExpression') this.visitor.test.unshift(node === parent.test)
+    if (parent && parent.type === 'ConditionalExpression') {
+      this.visitor.test = this.visitor.test || []
+      this.visitor.test.unshift(node === parent.test)
+    }
 
-    const test = this.visitor.test[0]
+    const test = this.visitor.test?.[0]
 
     if (node.type === 'CallExpression') {
       this.skip()
@@ -460,16 +461,15 @@ const protect = {
       case 'ConditionalExpression': {
         node.test = {
           type: 'CallExpression',
-          callee: {
+          callee: { type: 'Identifier', name: 'test' },
+          arguments: [{
             type: 'ArrowFunctionExpression',
-            id: null,
+            expression: true,
+            generator: false,
+            async: false,
             params: [],
-            body: {
-              type: 'BlockStatement',
-              body: [try_catch(_return(node.test), _return({ type: 'Literal', value: '' }))],
-            },
-          },
-          arguments: [],
+            body: node.test,
+          }],
         }
         break
       }
@@ -544,8 +544,20 @@ const logger = `
     else {
       msg = 'exec: ' + k + ' => ' + JSON.stringify(v)
     }
-    Zotero.debug('formula: ' + msg)
+    Zotero.debug('citekey-formula: ' + msg)
     return v
+  }
+`
+const tester = `
+  function test(f) {
+    try {
+      return f()
+    }
+    catch (err) {
+      if (err.next) return ''
+      Zotero.debug('citekey-formula: error: ' + err.message)
+      throw err
+    }
   }
 `
 function compile(code, options) {
@@ -553,6 +565,7 @@ function compile(code, options) {
 
   estraverse.replace(ast, normalize)
   estraverse.replace(ast, parens)
+  delete invert.test
   estraverse.replace(ast, invert)
   estraverse.replace(ast, len)
   estraverse.traverse(ast, structure)
@@ -561,10 +574,11 @@ function compile(code, options) {
 
   const generatedCode = [
     options?.logging ? logger : '',
+    invert.test ? tester : '',
     'let citekey',
     astring.generate(ast, { generator: options?.braces && generator }),
     'return citekey || `zotero-item-${this.item.id}`',
-  ]
+  ].filter(_ => _)
   return generatedCode.join('\n')
 }
 
