@@ -26,7 +26,6 @@ const normalize = {
           node.body.push(stmt)
         }
       }
-      node.body.push({ type: 'ExpressionStatement', expression: { type: 'Literal', value: '' } })
     }
 
     if (node.type === 'UnaryExpression' && node.operator === '-' && node.argument.type === 'Literal' && typeof node.argument.value === 'number') {
@@ -45,7 +44,7 @@ const parens = {
   },
 
   Identifier(node, parent) {
-    if (parent.type === 'ExpressionStatement' || (parent.type === 'BinaryExpression' && parent.operator === '+')) {
+    if (parent.type.match(/(?<!Call|Member)Expression$/)) {
       return {
         type: 'CallExpression',
         callee: node,
@@ -53,6 +52,14 @@ const parens = {
         optional: node.optional,
       }
     }
+  },
+
+  LogicalExpression(node, parent) {
+    if (!['||', '&&'].includes(node.operator)) throw new Error(`${astring.generate(node)} not supported`)
+  },
+
+  BinaryExpression(node, parent) {
+    if (node.operator !== '+') throw new Error(`${astring.generate(node)} not supported`)
   },
 
   MemberExpression(node, parent) {
@@ -242,7 +249,7 @@ const invert = {
               method: `_${current.callee.property.name}`,
               args: current.arguments,
             })
-            if (current.callee.object.type === 'BinaryExpression') {
+            if (current.callee.object.type.match(/(?<!Call|Member)Expression$/)) {
               methodChain.unshift(estraverse.replace(current.callee.object, invert))
               current = null
             }
@@ -349,17 +356,20 @@ const invert = {
         }
       }
 
-      const wrap = (method, wrapped) => ({
-        type: 'CallExpression',
-        callee: {
-          type: 'MemberExpression',
-          object: { type: 'ThisExpression' },
-          // replace calls with __/$$ calls for tests in conditionals so that a non-throwing result is always truthy
-          property: { type: 'Identifier', name: (test && API.methods[method._method].test) || method._method },
-          computed: false,
-        },
-        arguments: wrapped ? [wrapped, ...method.args] : method.args,
-      })
+      function wrap(method, wrapped) {
+        const api = API.methods[method._method]
+        return {
+          type: 'CallExpression',
+          callee: {
+            type: 'MemberExpression',
+            object: { type: 'ThisExpression' },
+            // replace calls with __/$$ calls for tests in conditionals so that a non-throwing result is always truthy
+            property: { type: 'Identifier', name: (test && api.test) || api.name },
+            computed: false,
+          },
+          arguments: wrapped ? [wrapped, ...method.args] : method.args,
+        }
+      }
       let transformed = methodChain[0].type ? methodChain[0] : wrap(methodChain[0])
       for (const method of methodChain.slice(1)) {
         transformed = wrap(method, transformed)
@@ -375,6 +385,7 @@ const invert = {
 
   keys: {
     CallExpression: [],
+    MemberExpression: [],
   },
 }
 
@@ -383,7 +394,7 @@ function try_catch(body, fallback) {
     type: 'TryStatement',
     block: {
       type: 'BlockStatement',
-      body: [{ type: 'ReturnStatement', argument: body }],
+      body: [body],
     },
     handler: {
       type: 'CatchClause',
@@ -417,11 +428,30 @@ function try_catch(body, fallback) {
     },
   }
 }
+function _return(v) {
+  return {
+    type: 'ReturnStatement',
+    argument: v,
+  }
+}
+function _assign(v) {
+  return {
+    type: 'AssignmentExpression',
+    operator: '=',
+    left: { type: 'Identifier', name: 'citekey' },
+    right: {
+      type: 'LogicalExpression',
+      operator: '||',
+      left: { type: 'Identifier', name: 'citekey' },
+      right:  v,
+    }
+  }
+}
 const protect = {
   leave(node, parent) {
     switch (node.type) {
       case 'Program': {
-        node.body = node.body.map(stmt => try_catch(stmt))
+        node.body = node.body.map(stmt => try_catch(_assign(stmt)))
         break
       }
 
@@ -434,7 +464,7 @@ const protect = {
             params: [],
             body: {
               type: 'BlockStatement',
-              body: [try_catch(node.test, { type: 'ReturnStatement', argument: { type: 'Literal', value: '' } })],
+              body: [try_catch(_return(node.test), _return({ type: 'Literal', value: '' }))],
             },
           },
           arguments: [],
@@ -476,9 +506,8 @@ const generator = Object.assign({}, astring.GENERATOR, {
 })
 
 function compile(code, braces) {
-  let generatedCode
-
   const ast = meriyah.parse(code, { ecmaVersion: 2020 })
+
   estraverse.replace(ast, normalize)
   estraverse.replace(ast, parens)
   estraverse.replace(ast, invert)
@@ -486,15 +515,18 @@ function compile(code, braces) {
   estraverse.traverse(ast, structure)
   estraverse.replace(ast, protect)
 
-  generatedCode = astring.generate(ast, { generator: braces && generator })
-  return generatedCode
+  const generatedCode = [
+    'let citekey',
+    astring.generate(ast, { generator: braces && generator }),
+    `return citekey || ''`,
+  ]
+  return generatedCode.join('\n')
 }
 
 module.exports.compile = compile
 
 /*
-const start = Date.now()
-const code = 'auth + title + len'
+const code = 'auth.lower + shorttitle(3,3) + year'
+console.log(code)
 console.log(compile(code))
-console.log(Date.now() - start)
 */
