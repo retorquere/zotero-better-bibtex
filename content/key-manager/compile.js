@@ -9,7 +9,7 @@ for (const [_old, _new] of Object.entries(aliases)) {
   API.methods[_old] = API.methods[_new]
 }
 // this allows moving $len to _len after it has been validated
-API.methods.$len = API.methods._len
+API.methods.$len = { ...API.methods._len, name: '$len', test: '$$len' }
 
 const normalize = {
   enter(node, parent) {
@@ -495,11 +495,7 @@ const logging = {
       node.body.body.unshift({
         type: 'CallExpression',
         callee: { type: 'Identifier', name: 'log' },
-        arguments: [ { type: 'Literal', value: 'skip' }, {
-          type: 'MemberExpression',
-          object: { type: 'Identifier', name: 'err' },
-          property: { type: 'Identifier', name: 'next' },
-        }],
+        arguments: [ { type: 'Literal' }, { type: 'Literal' }, { type: 'Identifier', name: 'err' } ],
       })
     }
     else {
@@ -536,6 +532,22 @@ const generator = Object.assign({}, astring.GENERATOR, {
   },
 })
 
+const logger = `
+  function log(k, v, e) {
+    let msg
+    if (e && e.next) {
+      msg = 'skip'
+    }
+    else if (e) {
+      msg = 'error: ' + e.message
+    }
+    else {
+      msg = 'exec: ' + k + ' => ' + JSON.stringify(v)
+    }
+    Zotero.debug('formula: ' + msg)
+    return v
+  }
+`
 function compile(code, options) {
   const ast = meriyah.parse(code, { ecmaVersion: 2020 })
 
@@ -548,7 +560,7 @@ function compile(code, options) {
   if (options?.logging) estraverse.replace(ast, logging)
 
   const generatedCode = [
-    options?.logging ? 'function log(k, v) { Zotero.debug(`formula: exec ${k}=>${JSON.stringify(v)}`); return v }' : '',
+    options?.logging ? logger : '',
     'let citekey',
     astring.generate(ast, { generator: options?.braces && generator }),
     'return citekey || `zotero-item-${this.item.id}`',
@@ -558,8 +570,6 @@ function compile(code, options) {
 
 module.exports.compile = compile
 
-/*
-const code = 'auth.lower + shorttitle(3,3) + year'
+const code = "auth(n=1,m=1,creator=\"*\",initials=false).fold + auth(n=1,m=2,creator=\"*\",initials=false).fold + auth(n=1,m=3,creator=\"*\",initials=false).fold + auth(n=1,m=4,creator=\"*\",initials=false).fold + len('>',1) + shortyear;\nauth(n=3,m=1,creator=\"*\",initials=false).fold + shortyear;"
 console.log(code)
 console.log(compile(code))
-*/
