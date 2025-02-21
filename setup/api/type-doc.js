@@ -6,7 +6,7 @@ const fs = require('fs')
 const tmp = require('tmp')
 const ts = require('typescript')
 
-const plugin = path.resolve(path.join(__dirname, 'type-doc-all-defaults.js'))
+const plugin = path.resolve(path.join(__dirname, 'type-doc-all-defaults.mjs'))
 
 function run(cmd, args) {
   console.log(cmd, ...args)
