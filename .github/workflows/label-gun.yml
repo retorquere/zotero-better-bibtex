@@ -10,7 +10,7 @@ jobs:
   nag:
     runs-on: ubuntu-latest
     steps:
-      - uses: retorquere/label-gun@main
+      - uses: retorquere/label-gun@project
         with:
           token: ${{ github.token }}
           label.exempt: question
@@ -40,4 +40,11 @@ jobs:
             Thank you.
 
             **PS: If the Debug Log menu is not available, or if it fails to send the debug log**, you can use the option under “Help” > “Send debug log to file.io”.
-            # message.no-close: Thanks for the feedback! Just so you know, GitHub doesn't let me control who can close issues, and @retorquere likes to leave bug reports and enhancements open as a nudge to merge them into the next release.
+
+          close.message: Thanks for the feedback! Just so you know, GitHub doesn't let me control who can close issues, and @retorquere likes to leave bug reports and enhancements open as a nudge to merge them into the next release.
+
+          user.assign: retorquere
+          user.bots: blip-bloop
+          verbose: true
+          project.url: https://github.com/users/retorquere/projects/5
+          project.token: ${{ secrets.PROJECT_TOKEN }}
