@@ -8,7 +8,7 @@
     },
     "preferences": {
       "autoExportDelay": 30,
-      "citekeyFormat": "(auth.acronym(passthrough=false) || auth.match(/[(](.*?)[)]/) || auth).lower.nopunctordash+year+journal.lower.abbr",
+      "citekeyFormat": "(auth.acronym(passthrough=false) || auth.find(/[(](.*?)[)]/) || auth).lower.nopunctordash+year+journal.lower.abbr",
       "extraMergeCSL": true,
       "extraMergeCitekeys": true,
       "extraMergeTeX": true,

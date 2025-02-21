@@ -51,7 +51,6 @@ type BabelLanguage = keyof typeof BabelTag
 class Template<K> extends String {} // eslint-disable-line @typescript-eslint/no-unused-vars
 
 function skip() {
-  // log.debug(`formula: exiting from ${(new Error).stack}`)
   throw { next: true } // eslint-disable-line @typescript-eslint/only-throw-error
 }
 
@@ -214,7 +213,6 @@ class Item {
 
   constructor(item: Zotero.Item | SerializedItem) { // Item must have simplifyForExport pre-applied, without scrubbing
     this.item = item
-    log.debug('formula: item set as', (item as Zotero.Item).getField ? 'native' : 'serialized')
 
     if ((item as Zotero.Item).getField) {
       this.itemID = this.id = (item as Zotero.Item).id
@@ -405,7 +403,7 @@ export class PatternFormatter {
       try {
         this.$postfix()
         const formatter = compile(formula)
-        log.debug('formula:', formula, '=>\n', formatter)
+        log.debug('formula:', formula, '=>\n', formatter.replace(/[\n\s]+/g, ' '))
         this.generate = (new Function(formatter) as () => string)
         Preference.citekeyFormat = formula
         if (!Preference.citekeyFormatEditing) Preference.citekeyFormatEditing = formula
@@ -651,7 +649,6 @@ export class PatternFormatter {
    * @param initials  add author initials
    */
   public $auth(n = 0, m = 1, creator: AuthorType = '*', initials = false): string {
-    log.debug('formula: $auth', this.item.creators)
     const family = n ? `%(f).${ n }s` : '%(f)s'
     const name = initials ? `${ family }%(I)s` : family
     const author: string = this.creators(creator, name)[m - 1] || ''
@@ -895,7 +892,6 @@ export class PatternFormatter {
    * @param variable extra-field line identifier
    */
   public $extra(variable: string): string { // eslint-disable-line @typescript-eslint/no-inferrable-types
-    log.debug('formula: $extra', variable, this.item.extraFields)
     const variables = variable.toLowerCase().trim().split(/\s*\/\s*/).filter(varname => varname)
     if (!variables.length) return ''
 
@@ -1025,6 +1021,26 @@ export class PatternFormatter {
   public __match(input: string, match: RegExp | string, clean = false): string {
     this._match(input, match, clean)
     return '__match'
+  }
+
+  /**
+   * Finds a text in the string and returns it.
+   * @param match regex or string to match. String matches are case-insensitive
+   * @param clean   transliterates the current output and removes unsafe characters during matching
+   * @param passthrough if no match is found, pass through input.
+   */
+  public _find(input: string, match: RegExp | string, passthrough = false): string {
+    try {
+      return this._match(input, match)
+    }
+    catch (err) {
+      if (err.next) {
+        return passthrough ? input : ''
+      }
+      else {
+        throw err
+      }
+    }
   }
 
   private len(input: string, relation: '<' | '<=' | '=' | '!=' | '>=' | '>', n: number): string {
@@ -1168,7 +1184,7 @@ export class PatternFormatter {
    * Does an acronym lookup for the text.
    * @param list lookup list. The list must be a CSV file and live in the `Zotero/better-bibtex` directory in your Zotero profile, and must use commas as the delimiter.
    * @param reload reload the list for every call. When off, the list will only be read at startup of Better BibTeX. You can set this to true temporarily to live-reload a list.
-   * @param passthrough if no match is found, pass through input. This is mostly for backwards compatibility, and I would encourage use of `(<input>.acronym || <input>)` over `<input>.acronym(passthrough=true)`. This option will be removed at some point in the future.
+   * @param passthrough if no match is found, pass through input.
    */
   public _acronym(input: string, list = 'acronyms', reload = false, passthrough = false): string {
     list = list.replace(/\.csv$/i, '')

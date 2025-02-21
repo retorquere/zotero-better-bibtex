@@ -8,6 +8,7 @@
   "<description><summary>condense(sep: string = &#39;&#39;)</summary>\n\n<p>replaces spaces in the value passed in. You can specify what to replace it with by adding it as a\nparameter, e.g <code>.condense('\\_')</code> will replace spaces with underscores. Equivalent to <code>.replace(/\\s+/g, sep)</code>.</p></description>\n",
   "<description><summary>default(text: string)</summary>\n\n<p>Returns the given text if no output was generated</p></description>\n",
   "<description><summary>discard()</summary>\n\n<p>discards the input</p></description>\n",
+  "<description><summary>find(match: (string | RegExp), passthrough: boolean = false)</summary>\n\n<p>Finds a text in the string and returns it.</p></description>\n",
   "<description><summary>formatDate(format: string = &#39;%Y-%m-%d&#39;)</summary>\n\n<p>formats date as by replacing y, m and d in the format</p></description>\n",
   "<description><summary>ideographs()</summary>\n\n<p>Treat ideaographs as individual words</p></description>\n",
   "<description><summary>jieba(mode?: (&quot;cn&quot; | &quot;tw&quot; | &quot;hant&quot;))</summary>\n\n<p>word segmentation for Chinese items. Uses substantial memory, and adds about 7 seconds to BBTs startup time; must be enabled under Preferences -&gt; Better BibTeX -&gt; Advanced -&gt; Citekeys</p></description>\n",

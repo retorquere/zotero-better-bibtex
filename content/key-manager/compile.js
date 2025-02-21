@@ -390,6 +390,8 @@ const invert = {
 }
 
 function try_catch(body, fallback) {
+  fallback = fallback ? [ fallback ] : []
+
   return {
     type: 'TryStatement',
     block: {
@@ -422,7 +424,7 @@ function try_catch(body, fallback) {
               argument: { type: 'Identifier', name: 'err' },
             },
           },
-          ...(fallback ? [fallback] : []),
+          ...fallback
         ],
       },
     },
@@ -477,6 +479,35 @@ const protect = {
   },
 }
 
+const logging = {
+  leave(node, parent) {
+    if (node.type === 'CallExpression') {
+      if (node.callee.type !== 'MemberExpression') return node
+      if (node.callee.object.type !== 'ThisExpression') return node
+      if (node.callee.property.type !== 'Identifier') return node
+      return {
+        type: 'CallExpression',
+        callee: { type: 'Identifier', name: 'log' },
+        arguments: [ { type: 'Literal', value: node.callee.property.name }, node ],
+      }
+    }
+    else if (node.type === 'CatchClause') {
+      node.body.body.unshift({
+        type: 'CallExpression',
+        callee: { type: 'Identifier', name: 'log' },
+        arguments: [ { type: 'Literal', value: 'skip' }, {
+          type: 'MemberExpression',
+          object: { type: 'Identifier', name: 'err' },
+          property: { type: 'Identifier', name: 'next' },
+        }],
+      })
+    }
+    else {
+      return node
+    }
+  }
+}
+
 const generator = Object.assign({}, astring.GENERATOR, {
   BinaryExpression: function(node, state) {
     state.write('( ( ')
@@ -505,7 +536,7 @@ const generator = Object.assign({}, astring.GENERATOR, {
   },
 })
 
-function compile(code, braces) {
+function compile(code, options) {
   const ast = meriyah.parse(code, { ecmaVersion: 2020 })
 
   estraverse.replace(ast, normalize)
@@ -514,11 +545,13 @@ function compile(code, braces) {
   estraverse.replace(ast, len)
   estraverse.traverse(ast, structure)
   estraverse.replace(ast, protect)
+  if (options?.logging) estraverse.replace(ast, logging)
 
   const generatedCode = [
+    options?.logging ? 'function log(k, v) { Zotero.debug(`formula: exec ${k}=>${JSON.stringify(v)}`); return v }' : '',
     'let citekey',
-    astring.generate(ast, { generator: braces && generator }),
-    `return citekey || ''`,
+    astring.generate(ast, { generator: options?.braces && generator }),
+    'return citekey || `zotero-item-${this.item.id}`',
   ]
   return generatedCode.join('\n')
 }
