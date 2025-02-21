@@ -432,7 +432,6 @@ export class PatternFormatter {
     }
 
     this.$postfix()
-    log.info(`running formula: ${this.generate}`)
     let citekey = this.generate()
     log.info('formula: made', { citekey })
     if (citekey && Preference.citekeyFold) citekey = this.transliterate(citekey)
@@ -1044,32 +1043,30 @@ export class PatternFormatter {
   }
 
   private len(input: string, relation: '<' | '<=' | '=' | '!=' | '>=' | '>', n: number): string {
-    input = input.replace(/\s/g, '')
-    let next
+    const $input = input.replace(/\s/g, '')
     switch (relation) {
       case '<':
-        next = !(input.length < n)
+        if (!($input.length < n)) skip()
         break
       case '<=':
-        next = !(input.length <= n)
+        if (!($input.length <= n)) skip()
         break
       case '=':
-        next = !(input.length === n)
+        if (!($input.length === n)) skip()
         break
       case '!=':
-        next = !(input.length !== n)
+        if (!($input.length !== n)) skip()
         break
       case '>':
-        next = !(input.length > n)
+        if (!($input.length > n)) skip()
         break
       case '>=':
-        next = !(input.length >= n)
+        if (!($input.length >= n)) skip()
         break
       default:
         throw new Error(`Unexpected length comparison ${ relation }`)
     }
 
-    if (next) skip()
     return input
   }
 
