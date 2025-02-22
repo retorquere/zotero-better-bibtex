@@ -1,3 +1,5 @@
+<dl>
   {{ range .Site.Data.citekeyformatters.filters }}
-    <description><summary>{{ .summary | safeHTML }}</summary>{{ .description | safeHTML }}</description>
+  <dt>{{ .summary | safeHTML }}</dt><dd>{{ .description | safeHTML }}</dd>
   {{ end }}
+</dl>
