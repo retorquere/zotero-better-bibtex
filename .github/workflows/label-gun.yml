@@ -5,6 +5,7 @@ on:
     types: [opened, edited, closed, reopened]
   issue_comment:
     types: [created, edited, closed]
+  workflow_dispatch:
 
 jobs:
   nag:
