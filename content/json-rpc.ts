@@ -667,7 +667,6 @@ const api = new class API {
         request.params[i] = v
       }
     }
-    log.debug('json-rpc:', request.params)
 
     const errors = schema.parameters.map((p, i) => {
       const v = request.params[i]

@@ -403,7 +403,7 @@ export class PatternFormatter {
       try {
         this.$postfix()
         const formatter = compile(formula, { logging: Preference.testing })
-        log.debug('formula:', formula, '=>\n', formatter)
+        log.info('formula:', formula, '=>\n', formatter)
         this.generate = (new Function(formatter) as () => string)
         Preference.citekeyFormat = formula
         if (!Preference.citekeyFormatEditing) Preference.citekeyFormatEditing = formula
