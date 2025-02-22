@@ -1043,7 +1043,7 @@ export class PatternFormatter {
   }
 
   private len(input: string, relation: '<' | '<=' | '=' | '!=' | '>=' | '>', n: number): string {
-    const $input = input.replace(/\s/g, '')
+    const $input = input.replace(/\s/g, '').replace(this.postfix.marker, '')
     switch (relation) {
       case '<':
         if (!($input.length < n)) skip()
