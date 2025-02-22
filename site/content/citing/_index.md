@@ -63,11 +63,13 @@ Better BibTeX knows four kinds of "things" to build the citekey from:
 3. "filters", these are actions that act on the text returned from either functions, field access, or from a subformula like `(auth + title || year)`. these are fully case insensitive, and you can chain these together, each acting on the output of the previous filter.
 4. bare strings (text quoted in single or double quotes)
 
-There are 3 ways you can build subformulae:
+There are 5 ways you can build subformulae:
 
 1. composition: `(auth + title)`
-2. alternates: `(auth || title)` (use the first thing that returns any text, so `auth` if that returns text, otherwise `title`). 
+2. alternates: `(auth || title)` (use the first thing that returns any text, so `auth` if that returns text, otherwise `title`). Note the test-filters like `.len` *will skip to the next formula if it fails; see also *sequence* below
 3. ternaries: `(auth ? year : title)` (if `auth` returns any text, use `year`, otherwise use `title`). Ternary operators have the format `condition ? output_if_true : output_if_false`, and you can use it like an if-or statement.
+4. sequences: `(auth, shorttitle.len, '', title, 'hi')`. The first element of the sequence that returns a non-empty output is used. Tests like `.len` that would usually skip to the next formula don't do so in a sequence, they just return empty output if they fail, *except* the last element in the sequence. If that is a test, and it fails, the current formula is skipped and the next started. You would usually want a non-test here, or a fixed value.
+5. `(auth + title) > 0` or `auth > 0` are shorthand for `(auth + title).len` / `auth.len`.
 
 these can be combined, eg `(auth || shorttitle || year) ? (auth + title) : (year || title)`, but subformulae cannot appear in parameters, so `title.select(auth ? 3 : 4)` is not valid. Filters (explained below) can be applied to subformulae, so `(title || auth).lower` checks whether the `title` function produces output (i.e. not empty). If it does, the `title` function is used; otherwise, the formula will use the `auth` function. It then converts the output of `(title || auth)` to lowercase.
 
@@ -78,6 +80,12 @@ title.lower.len + year; auth + year
 ```
 
 which would have the formula evaluate whether the `title` function returns a non-empty text; if this condition is not met, formula evaluaton jumps to the next formula `auth + year`. You can also test for a minimal length using eg
+
+```
+title > 1 + year | auth + year
+```
+
+which is shorthand for
 
 ```
 title.len('>',1) + year | auth + year
