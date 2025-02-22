@@ -1,6 +1,6 @@
 <dl>
-  {{ range $func, $description := .Site.Data.citekeyformatters.functions }}
-    <description><summary>{{ $func | safeHTML }}</summary>{{ $description | safeHTML }}</description>
+  {{ range .Site.Data.citekeyformatters.functions }}
+    <description><summary>{{ .summary | safeHTML }}</summary>{{ .description | safeHTML }}</description>
   {{ end }}
 </dl>
 
