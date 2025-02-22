@@ -311,7 +311,7 @@ function KeyManager() {
     },
   }
 
-  for (const method of methods) {
+  for (const method of methods.sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()))) {
     if (method.name.match(/^[_$][_$]/)) continue
 
     const signature = method.signatures[0]
@@ -335,7 +335,7 @@ function KeyManager() {
       validate: {},
     }
 
-    const parameters = (signature.parameters || []).map(p => {
+    let parameters = (signature.parameters || []).map(p => {
       let schema = typescriptType[method.name]?.[p.name] || p.type
       schema = makeSchema(schema)
       if (p.flags.isRest) {
@@ -351,6 +351,7 @@ function KeyManager() {
       const dflt = typeof p.defaultValue === 'undefined' ? '' : ` = ${p.defaultValue}`
       return `${name}: ${type}${dflt}`
     }).join(', ')
+    parameters = parameters ? `(${parameters})` : ''
 
     let description = signature.comment.summary.map(s => {
       if (!s.kind.match(/^(code|text)$/)) throw s
@@ -362,10 +363,9 @@ function KeyManager() {
     }
 
     const kind = method.name[0]
-    const func = `${method.name.substring(1)}(${parameters})`
+    const func = `${method.name.substring(1)}${parameters}`
 
-    section[kind].push(`<description><summary>${escapeHTML(func)}</summary>\n\n${showdown.makeHtml(description || '')}</description>\n`)
-    section[kind].sort()
+    section[kind].push({ summary: escapeHTML(func), description: showdown.makeHtml(description || '') })
 
     const testname = `${kind}${method.name}`
     const test = methods.find(m => m.name === testname)

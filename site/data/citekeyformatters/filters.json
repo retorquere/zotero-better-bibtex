@@ -1,32 +1,122 @@
 [
-  "<description><summary>abbr(chars: number = 1)</summary>\n\n<p>Abbreviates the text. Only the first character and subsequent characters following white space will be included.</p></description>\n",
-  "<description><summary>acronym(list: string = &#39;acronyms&#39;, reload: boolean = false, passthrough: boolean = false)</summary>\n\n<p>Does an acronym lookup for the text.</p></description>\n",
-  "<description><summary>alphanum()</summary>\n\n<p>clears out everything but unicode alphanumeric characters (unicode character classes <code>L</code> and <code>N</code>)</p></description>\n",
-  "<description><summary>ascii()</summary>\n\n<p>removes all non-ascii characters</p></description>\n",
-  "<description><summary>capitalize()</summary>\n\n<p>uppercases the first letter of each word</p></description>\n",
-  "<description><summary>clean()</summary>\n\n<p>transliterates the citation key and removes unsafe characters</p></description>\n",
-  "<description><summary>condense(sep: string = &#39;&#39;)</summary>\n\n<p>replaces spaces in the value passed in. You can specify what to replace it with by adding it as a\nparameter, e.g <code>.condense('\\_')</code> will replace spaces with underscores. Equivalent to <code>.replace(/\\s+/g, sep)</code>.</p></description>\n",
-  "<description><summary>default(text: string)</summary>\n\n<p>Returns the given text if no output was generated</p></description>\n",
-  "<description><summary>discard()</summary>\n\n<p>discards the input</p></description>\n",
-  "<description><summary>find(match: (string | RegExp), passthrough: boolean = false)</summary>\n\n<p>Finds a text in the string and returns it.</p></description>\n",
-  "<description><summary>formatDate(format: string = &#39;%Y-%m-%d&#39;)</summary>\n\n<p>formats date as by replacing y, m and d in the format</p></description>\n",
-  "<description><summary>ideographs()</summary>\n\n<p>Treat ideaographs as individual words</p></description>\n",
-  "<description><summary>jieba(mode?: (&quot;cn&quot; | &quot;tw&quot; | &quot;hant&quot;))</summary>\n\n<p>word segmentation for Chinese items. Uses substantial memory, and adds about 7 seconds to BBTs startup time; must be enabled under Preferences -&gt; Better BibTeX -&gt; Advanced -&gt; Citekeys</p></description>\n",
-  "<description><summary>kuromoji()</summary>\n\n<p>word segmentation for Japanese items. Uses substantial memory; must be enabled under Preferences -&gt; Better BibTeX -&gt; Advanced -&gt; Citekeys</p></description>\n",
-  "<description><summary>len(relation: (&quot;=&quot; | &quot;&lt;&quot; | &quot;&gt;&quot; | &quot;&lt;=&quot; | &quot;!=&quot; | &quot;&gt;=&quot;) = &#39;&gt;&#39;, length: number = 0)</summary>\n\n<p>If the length of the output does not match the given number, skip to the next pattern.</p></description>\n",
-  "<description><summary>localTime()</summary>\n\n<p>transforms date/time to local time. Mainly useful for dateAdded and dateModified as it requires an ISO-formatted input.</p></description>\n",
-  "<description><summary>lower()</summary>\n\n<p>Forces the text inserted by the field marker to be in lowercase. For example, <code>auth.lower</code> expands to the last name of the first author in lowercase.</p></description>\n",
-  "<description><summary>match(match: (string | RegExp), clean: boolean = false)</summary>\n\n<p>If the output does not match the given string/regex, skip to the next pattern.</p></description>\n",
-  "<description><summary>nopunct(dash: string = &#39;-&#39;)</summary>\n\n<p>Removes punctuation</p></description>\n",
-  "<description><summary>nopunctordash()</summary>\n\n<p>Removes punctuation and word-connecting dashes. alias for <code>nopunct(dash='')</code></p></description>\n",
-  "<description><summary>numeric()</summary>\n\n<p>returns the value if it's an integer</p></description>\n",
-  "<description><summary>pinyin()</summary>\n\n<p>transliterates the citation key to pinyin</p></description>\n",
-  "<description><summary>postfix(postfix: string)</summary>\n\n<p>postfixes with its parameter, so <code>postfix('\\_')</code> will add an underscore to the end if, and only if, the value\nit is supposed to postfix isn't empty</p></description>\n",
-  "<description><summary>prefix(prefix: string)</summary>\n\n<p>prefixes with its parameter, so <code>.prefix('\\_')</code> will add an underscore to the front if, and only if, the value\nit is supposed to prefix isn't empty.</p></description>\n",
-  "<description><summary>replace(find: (string | RegExp), replace: string)</summary>\n\n<p>replaces text, for the text to match you can pass either:</p>\n<ul>\n<li>a string: <code>.replace('.etal','&amp;etal')</code> which will match case-insensitive, so will replace <code>.EtAl</code> with <code>&amp;etal</code>.</li>\n<li><a href=\"https://www.simplilearn.com/tutorials/javascript-tutorial/javascript-regex\">javascript regular expression</a>: <code>.replace(/[.]etal/ig, '&amp;etal')</code></li>\n</ul></description>\n",
-  "<description><summary>select(start: number = 1, n?: number)</summary>\n\n<p>selects words from the value passed in. The format is <code>select(start,number)</code> (1-based), so <code>select(1,4)</code> or <code>select(n=4)</code>\nwould select the first four words. If <code>n</code> is not given, all words from <code>start</code> to the end are\nselected.</p></description>\n",
-  "<description><summary>skipwords(nopunct: boolean = false)</summary>\n\n<p>filters out common words like 'of', 'the', … the list of words can be seen and changed by going into\n<code>about:config</code> under the key <code>extensions.zotero.translators.better-bibtex.skipWords</code> as a comma-separated,\ncase-insensitive list of words.</p>\n<p>If you want to strip words like 'Jr.' from names, you could use something like <code>Auth.nopunct.skipwords.fold</code>\nafter adding <code>jr</code> to the skipWords list.\nNote that this filter is always applied with <code>nopunct</code> on if you use <code>title</code> (which is different from <code>Title</code>) or <code>shorttitle</code>.</p></description>\n",
-  "<description><summary>substring(start: number = 1, n?: number)</summary>\n\n<p><code>substring(start,n)</code> selects <code>n</code> (default: all) characters starting at <code>start</code></p></description>\n",
-  "<description><summary>transliterate(mode?: (&quot;minimal&quot; | &quot;tw&quot; | &quot;arabic&quot; | &quot;chinese&quot; | &quot;german&quot; | &quot;japanese&quot; | &quot;mongolian&quot; | &quot;russian&quot; | &quot;uk&quot; | &quot;ru&quot; | &quot;mn&quot; | &quot;ar&quot; | &quot;de&quot; | &quot;ja&quot; | &quot;zh&quot; | &quot;zh-hant&quot; | &quot;ukranian&quot;))</summary>\n\n<p>transliterates the citation key. If you don't specify a mode, the mode is derived from the item language field</p></description>\n",
-  "<description><summary>upper()</summary>\n\n<p>Forces the text inserted by the field marker to be in uppercase. For example, <code>auth.upper</code> expands the last name of the first author in uppercase.</p></description>\n"
+  {
+    "summary": "abbr(chars: number = 1)",
+    "description": "<p>Abbreviates the text. Only the first character and subsequent characters following white space will be included.</p>"
+  },
+  {
+    "summary": "acronym(list: string = &#39;acronyms&#39;, reload: boolean = false, passthrough: boolean = false)",
+    "description": "<p>Does an acronym lookup for the text.</p>"
+  },
+  {
+    "summary": "alphanum",
+    "description": "<p>clears out everything but unicode alphanumeric characters (unicode character classes <code>L</code> and <code>N</code>)</p>"
+  },
+  {
+    "summary": "ascii",
+    "description": "<p>removes all non-ascii characters</p>"
+  },
+  {
+    "summary": "capitalize",
+    "description": "<p>uppercases the first letter of each word</p>"
+  },
+  {
+    "summary": "clean",
+    "description": "<p>transliterates the citation key and removes unsafe characters</p>"
+  },
+  {
+    "summary": "condense(sep: string = &#39;&#39;)",
+    "description": "<p>replaces spaces in the value passed in. You can specify what to replace it with by adding it as a\nparameter, e.g <code>.condense('\\_')</code> will replace spaces with underscores. Equivalent to <code>.replace(/\\s+/g, sep)</code>.</p>"
+  },
+  {
+    "summary": "default(text: string)",
+    "description": "<p>Returns the given text if no output was generated</p>"
+  },
+  {
+    "summary": "discard",
+    "description": "<p>discards the input</p>"
+  },
+  {
+    "summary": "find(match: (string | RegExp), passthrough: boolean = false)",
+    "description": "<p>Finds a text in the string and returns it.</p>"
+  },
+  {
+    "summary": "formatDate(format: string = &#39;%Y-%m-%d&#39;)",
+    "description": "<p>formats date as by replacing y, m and d in the format</p>"
+  },
+  {
+    "summary": "ideographs",
+    "description": "<p>Treat ideaographs as individual words</p>"
+  },
+  {
+    "summary": "jieba(mode?: (&quot;cn&quot; | &quot;tw&quot; | &quot;hant&quot;))",
+    "description": "<p>word segmentation for Chinese items. Uses substantial memory, and adds about 7 seconds to BBTs startup time; must be enabled under Preferences -&gt; Better BibTeX -&gt; Advanced -&gt; Citekeys</p>"
+  },
+  {
+    "summary": "kuromoji",
+    "description": "<p>word segmentation for Japanese items. Uses substantial memory; must be enabled under Preferences -&gt; Better BibTeX -&gt; Advanced -&gt; Citekeys</p>"
+  },
+  {
+    "summary": "len(relation: (&quot;=&quot; | &quot;&lt;&quot; | &quot;&gt;&quot; | &quot;&lt;=&quot; | &quot;!=&quot; | &quot;&gt;=&quot;) = &#39;&gt;&#39;, length: number = 0)",
+    "description": "<p>If the length of the output does not match the given number, skip to the next pattern.</p>"
+  },
+  {
+    "summary": "localTime",
+    "description": "<p>transforms date/time to local time. Mainly useful for dateAdded and dateModified as it requires an ISO-formatted input.</p>"
+  },
+  {
+    "summary": "lower",
+    "description": "<p>Forces the text inserted by the field marker to be in lowercase. For example, <code>auth.lower</code> expands to the last name of the first author in lowercase.</p>"
+  },
+  {
+    "summary": "match(match: (string | RegExp), clean: boolean = false)",
+    "description": "<p>If the output does not match the given string/regex, skip to the next pattern.</p>"
+  },
+  {
+    "summary": "nopunct(dash: string = &#39;-&#39;)",
+    "description": "<p>Removes punctuation</p>"
+  },
+  {
+    "summary": "nopunctordash",
+    "description": "<p>Removes punctuation and word-connecting dashes. alias for <code>nopunct(dash='')</code></p>"
+  },
+  {
+    "summary": "numeric",
+    "description": "<p>returns the value if it's an integer</p>"
+  },
+  {
+    "summary": "pinyin",
+    "description": "<p>transliterates the citation key to pinyin</p>"
+  },
+  {
+    "summary": "postfix(postfix: string)",
+    "description": "<p>postfixes with its parameter, so <code>postfix('\\_')</code> will add an underscore to the end if, and only if, the value\nit is supposed to postfix isn't empty</p>"
+  },
+  {
+    "summary": "prefix(prefix: string)",
+    "description": "<p>prefixes with its parameter, so <code>.prefix('\\_')</code> will add an underscore to the front if, and only if, the value\nit is supposed to prefix isn't empty.</p>"
+  },
+  {
+    "summary": "replace(find: (string | RegExp), replace: string)",
+    "description": "<p>replaces text, for the text to match you can pass either:</p>\n<ul>\n<li>a string: <code>.replace('.etal','&amp;etal')</code> which will match case-insensitive, so will replace <code>.EtAl</code> with <code>&amp;etal</code>.</li>\n<li><a href=\"https://www.simplilearn.com/tutorials/javascript-tutorial/javascript-regex\">javascript regular expression</a>: <code>.replace(/[.]etal/ig, '&amp;etal')</code></li>\n</ul>"
+  },
+  {
+    "summary": "select(start: number = 1, n?: number)",
+    "description": "<p>selects words from the value passed in. The format is <code>select(start,number)</code> (1-based), so <code>select(1,4)</code> or <code>select(n=4)</code>\nwould select the first four words. If <code>n</code> is not given, all words from <code>start</code> to the end are\nselected.</p>"
+  },
+  {
+    "summary": "skipwords(nopunct: boolean = false)",
+    "description": "<p>filters out common words like 'of', 'the', … the list of words can be seen and changed by going into\n<code>about:config</code> under the key <code>extensions.zotero.translators.better-bibtex.skipWords</code> as a comma-separated,\ncase-insensitive list of words.</p>\n<p>If you want to strip words like 'Jr.' from names, you could use something like <code>Auth.nopunct.skipwords.fold</code>\nafter adding <code>jr</code> to the skipWords list.\nNote that this filter is always applied with <code>nopunct</code> on if you use <code>title</code> (which is different from <code>Title</code>) or <code>shorttitle</code>.</p>"
+  },
+  {
+    "summary": "substring(start: number = 1, n?: number)",
+    "description": "<p><code>substring(start,n)</code> selects <code>n</code> (default: all) characters starting at <code>start</code></p>"
+  },
+  {
+    "summary": "transliterate(mode?: (&quot;minimal&quot; | &quot;tw&quot; | &quot;arabic&quot; | &quot;chinese&quot; | &quot;german&quot; | &quot;japanese&quot; | &quot;mongolian&quot; | &quot;russian&quot; | &quot;uk&quot; | &quot;ru&quot; | &quot;mn&quot; | &quot;ar&quot; | &quot;de&quot; | &quot;ja&quot; | &quot;zh&quot; | &quot;zh-hant&quot; | &quot;ukranian&quot;))",
+    "description": "<p>transliterates the citation key. If you don't specify a mode, the mode is derived from the item language field</p>"
+  },
+  {
+    "summary": "upper",
+    "description": "<p>Forces the text inserted by the field marker to be in uppercase. For example, <code>auth.upper</code> expands the last name of the first author in uppercase.</p>"
+  }
 ]
