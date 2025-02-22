@@ -14,7 +14,6 @@ Feature: Export
     Examples:
       | file                                                                                                                     | references |
       | pmid versus pubmed #3146                                                                                                 | 1          |
-      | OR pattern condenses input #2957                                                                                         | 1          |
       | Ensure en-dash is used for volumeissue ranges in exported BibTeXBiBibTeX #3118                                           | 1          |
       | Add option to translate ii to mkbibemph instead of emph #3096                                                            | 1          |
       | Better BibLatex copied year column as string if  character is found #3067                                                | 1          |
@@ -829,3 +828,19 @@ Feature: Export
     When I change biblatexAPA to true on the auto-export
     And I wait 15 seconds
     Then "~/autoexport.bib" should match "export/*.after.biblatex"
+
+  Scenario: OR pattern condenses input #2957                                                                                         | 1          |
+    Given I import 1 reference from "export/*.json"
+    When I select the item with a field that contains "Valuations"
+
+    When I set preference .citekeyFormat to "(ShortTitle.condense(_) || Title.condense(_))"
+    And I refresh the citation key
+    Then the citation key should match "The_Theory_of_Classical_Valuations"
+
+    When I set preference .citekeyFormat to "(ShortTitle || Title).condense(_)"
+    And I refresh the citation key
+    Then the citation key should match "The_Theory_of_Classical_Valuations"
+
+    When I set preference .citekeyFormat to "(ShortTitle ? ShortTitle : Title).condense(_)"
+    And I refresh the citation key
+    Then the citation key should match "The_Theory_of_Classical_Valuations"
