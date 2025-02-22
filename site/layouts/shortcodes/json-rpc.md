@@ -48,7 +48,7 @@ Fetch the notes for a range of citekeys
 Generate an export for a list of citekeys, tailored for the pandoc zotero filter
 
 
-## item.search(terms: (string | ([ string ] | [ string,string ] | [ string,string,(string | number) ] | [ string,string,(string | number),boolean ])[]), library?: (string | number)): any
+## item.search(terms: (string | ([ string ] | [ string, string ] | [ string, string, (string | number) ] | [ string, string, (string | number), boolean ])[]), library?: (string | number)): any
 
 Search for items in Zotero.
 

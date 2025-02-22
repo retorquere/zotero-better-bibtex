@@ -130,9 +130,7 @@ chunk
         }
       }
   / '[=' types:$[a-zA-Z/]+ ']'            {
-      types = types.toLowerCase().split('/').map(type => type.trim()).map(type => options.items.name.type[type.toLowerCase()] || type);
-      var unknown = types.find(type => !options.items.valid.type[type])
-      if (typeof unknown !== 'undefined') error(`unknown item type "${unknown}; valid types are ${Object.keys(options.items.name.type)}"`);
+      types = types.toLowerCase().split('/').map(type => type.trim())
       return `type(${types.map(t => literal(t)).join(', ')})`
     }
   / '[language=' languages:$[a-zA-Z/]+ ']'            { // add language checking in parse phase

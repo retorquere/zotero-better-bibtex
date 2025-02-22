@@ -44,6 +44,41 @@ ajv.addKeyword({
   },
 })
 
+const Zotero = {
+  schema: require(path.join(root, 'schema/zotero.json')),
+}
+Zotero.itemTypes = Zotero.schema.itemTypes.map(it => it.itemType)
+Zotero.creatorTypes = new Set()
+for (const itemType of Zotero.schema.itemTypes) {
+  for (const creatorType of itemType.creatorTypes) {
+    Zotero.creatorTypes.add(creatorType.creatorType)
+  }
+}
+Zotero.creatorTypes = [...Zotero.creatorTypes].sort()
+ajv.addFormat('item-type', new RegExp(`^(${Zotero.itemTypes.join('|')})$`, 'i'))
+ajv.addFormat('creator-type', new RegExp(`^(${Zotero.creatorTypes.join('|')})$`, 'i'))
+
+const Babel = {
+  tags: require('../gen/babel/tag.json'),
+}
+Babel.languages = [...(new Set([...Object.keys(Babel.tags), ...Object.values(Babel.tags)]))].sort()
+ajv.addFormat('babel-language', new RegExp(`^(${Babel.languages.join('|')})$`, 'i'))
+
+Zotero.fields = new Set()
+Zotero.fieldLookup = {}
+for (const itemType of Zotero.schema.itemTypes) {
+  for (const field of itemType.fields) {
+    for (const name of ['field', 'baseField']) {
+      if (field[name]) {
+        Zotero.fields.add(field[name])
+        Zotero.fieldLookup[field[name].toLowerCase()] = field[name]
+      }
+    }
+  }
+}
+Zotero.fields = [...Zotero.fields].sort()
+ajv.addFormat('item-field', new RegExp(`^(${Zotero.fields.join('|')})$`, 'i'))
+
 function flattenUnion(type) {
   if (type.type !== 'union') return type
   if (type.types.find(t => t.type !== 'union' && t.type !== 'literal')) return type
@@ -53,157 +88,166 @@ function flattenUnion(type) {
   }
 }
 
-function CreatorTypeArray(creatorType) {
-  return {
-    type: 'array',
-    elementType: creatorType,
-  }
-}
+function printType(type) {
+  type = flattenUnion(patch(type))
 
-function CreatorTypeCollection(creatorType) {
-  return {
-    type: 'array',
-    elementType: {
-      type: 'array',
-      elementType: {
-        type: 'union',
-        types: [
-          creatorType,
-          { type: 'literal', value: '*' },
-        ],
-      },
-    },
-  }
-}
-
-function makeType(type) {
-  type = flattenUnion(type)
-
-  const creatorType = { type: 'reference', package: 'zotero-better-bibtex', name: 'CreatorType' }
-
-  switch (`${type.type}.${type.package || ''}`) {
-    case 'intrinsic.':
+  switch (typeName(type)) {
+    case 'number':
+    case 'string':
+    case 'boolean':
+    case 'any':
+    case 'void':
       return type.name
-    case 'union.':
-      return `(${type.types.map(makeType).join(' | ')})`
-    case 'literal.':
+
+    case 'union':
+      return `(${type.types.map(printType).join(' | ')})`
+
+    case 'literal':
       return JSON.stringify(type.value)
-    case 'reference.typescript':
-      switch (type.name) {
-        case 'RegExp':
-          return type.name
-        case 'Record':
-          return `Record<${type.typeArguments.map(makeType).join(', ')}>`
-        default:
-          throw type
-      }
-    case 'tuple.':
-      return `[ ${type.elements.map(makeType)} ]`
-    case 'array.':
-      return `${makeType(type.elementType)}[]`
 
-    case 'reference.zotero-better-bibtex':
-      switch (type.name) {
-        case 'Template':
-          return '`sprintf-style format template`'
-        case 'AuthorType':
-          return makeType({
-            type: 'union',
-            types: ['author', 'editor', 'translator', 'collaborator', '*'].map(a => ({ type: 'literal', value: a })),
-          })
-        case 'CreatorType':
-          return 'Creator'
-        case 'CreatorTypeArray':
-          return makeType(CreatorTypeArray(creatorType))
-        case 'CreatorTypeCollection':
-          return makeType(CreatorTypeCollection(creatorType))
-        default:
-          throw type
-      }
+    case 'reference.typescript.RegExp':
+      return type.name
 
-    case 'reflection.':
-      if (type.declaration.children) return `{ ${type.declaration.children.map(t => `${t.name}: ${makeType(t.type)}`).join('; ')} }`
-      if (type.typeArguments?.length === 1) return makeType(type.typeArguments[0])
+    case 'reference.typescript.Record':
+      return `Record<${type.typeArguments.map(printType).join(', ')}>`
 
-    case 'reference.zotero-types':
-      switch (type.name) {
-        case 'Collection':
-          return type.name
-        default:
-          throw type
-      }
+    case 'tuple':
+      return `[ ${type.elements.map(printType).join(', ')} ]`
+
+    case 'array':
+      return `${printType(type.elementType)}[]`
+
+    case 'reference.zotero-better-bibtex.Template':
+      return '`sprintf-style format template`'
+
+    case 'reference.zotero-better-bibtex.AuthorType':
+      return printType({
+        type: 'union',
+        types: ['author', 'editor', 'translator', 'collaborator', '*'].map(a => ({ type: 'literal', value: a })),
+      })
+
+    case 'reference.zotero-better-bibtex.CreatorType':
+      return 'Creator'
+
+    case 'reflection':
+      if (type.declaration.children) return `{ ${type.declaration.children.map(t => `${t.name}: ${printType(t.type)}`).join('; ')} }`
+      if (type.typeArguments?.length === 1) return printType(type.typeArguments[0])
+      throw type
+
+    case 'reference.zotero-types.Collection':
+      return type.name
+
+    default:
+      throw new Error(JSON.stringify(type))
   }
+}
+
+function typeName(type) {
+  if (type.type === 'intrinsic') return [type.name, type.format].filter(_ => _).join('.')
+  if (type.type.match(/^(union|literal|tuple|array|reflection)$/)) return type.type
+  if (type.type === 'reference') return [type.type, type.package, type.name].join('.')
   throw type
 }
 
+function patch(type) {
+  return JSON.parse(JSON.stringify(type, function(k, v) {
+    if (v.type === 'reference' && v.package === 'zotero-better-bibtex' && v.name === 'CreatorTypeArray') {
+      return {
+        type: 'array',
+        elementType: { ...v, name: 'CreatorType' }
+      }
+    }
+    else if (v.type === 'reference' && v.package === 'zotero-better-bibtex' && v.name === 'CreatorTypeCollection') {
+      return {
+        type: 'array',
+        elementType: {
+          type: 'array',
+          elementType: {
+            type: 'union',
+            types: [
+              { ...v, name: 'CreatorType' },
+              { type: 'literal', value: '*' },
+            ],
+          },
+        },
+      }
+    }
+    else {
+      return v
+    }
+  }))
+}
+
 function makeSchema(type) {
-  type = flattenUnion(type)
+  type = flattenUnion(patch(type))
 
-  const creatorType = { enum: creatorTypes }
+  if (type.enum) throw type
 
-  if (type.enum) return type
-
-  switch (`${type.type}.${type.package || ''}`) {
-    case 'intrinsic.':
+  switch (typeName(type)) {
+    case 'number':
+    case 'string':
+    case 'boolean':
       return { type: type.name }
-    case 'union.': {
+
+    case 'union': {
       const oneOf = type.types.map(makeSchema)
       if (oneOf.find(t => !t.const)) return { oneOf }
       return { enum: oneOf.map(t => t.const) }
     }
-    case 'literal.':
+
+    case 'literal':
       return { const: type.value }
 
-    case 'reference.typescript':
-      switch (type.name) {
-        case 'RegExp':
-          return { instanceof: type.name }
-        case 'Record':
-          return {
-            type: 'object',
-            additionalProperties: makeSchema(type.typeArguments[1]),
-          }
-          return `Record<${type.typeArguments.map(makeType).join(', ')}>`
+    case 'reference.typescript.RegExp':
+      return { instanceof: type.name }
+
+    case 'reference.typescript.Record':
+      return {
+        type: 'object',
+        additionalProperties: makeSchema(type.typeArguments[1]),
+      }
+
+    case 'tuple':
+      return { type: 'array', prefixItems: type.elements.map(makeSchema), minItems: type.elements.length, maxItems: type.elements.length }
+
+    case 'array':
+      return { type: 'array', items: makeSchema(type.elementType) }
+
+    case 'reference.zotero-better-bibtex.Template':
+      switch (type.typeArguments[0].value) {
+        case 'creator':
+          return { sprintf: '%fs%gs%is' }
+        case 'postfix':
+          return { sprintf: '%as%As%ns' }
         default:
           throw type
       }
 
-    case 'tuple.':
-      return { type: 'array', prefixItems: type.elements.map(makeSchema), minItems: type.elements.length, maxItems: type.elements.length }
+    case 'reference.zotero-better-bibtex.AuthorType':
+      return { enum: ['author', 'editor', 'translator', 'collaborator', '*'] }
 
-    case 'array.':
-      return { type: 'array', items: makeSchema(type.elementType) }
+    case 'reference.zotero-better-bibtex.CreatorType':
+      return { type: 'string', format: 'creator-type' }
 
-    case 'reference.zotero-better-bibtex':
-      switch (type.name) {
-        case 'Template': {
-          switch (type.typeArguments[0].value) {
-            case 'creator':
-              return { sprintf: '%fs%gs%is' }
-            case 'postfix':
-              return { sprintf: '%as%As%ns' }
-          }
-          throw type
-        }
+    case 'reference.zotero-better-bibtex.ItemType':
+      return { type: 'string', format: 'item-type' }
 
-        case 'AuthorType':
-          return { enum: ['author', 'editor', 'translator', 'collaborator', '*'] }
-        case 'CreatorType':
-          return creatorType
-        case 'CreatorTypeArray':
-          return makeSchema(CreatorTypeArray(creatorType))
-        case 'CreatorTypeCollection':
-          return makeSchema(CreatorTypeCollection(creatorType))
-      }
+    case 'reference.zotero-better-bibtex.ItemField':
+      return { type: 'string', format: 'item-field' }
 
-    case 'reflection.':
+    case 'reference.zotero-better-bibtex.BabelLanguage':
+      return { type: 'string', format: 'babel-language' }
+
+    case 'reflection':
+      if (type.typeArguments?.length === 1) return makeSchema(type.typeArguments[0])
       return {
         type: 'object',
         properties: type.declaration.children.reduce((acc, p) => ({ ...acc, [p.name]: makeSchema(p.type) }), {}),
       }
-      if (type.typeArguments?.length === 1) return makeSchema(type.typeArguments[0])
+
+    default:
+      throw new Error(JSON.stringify({ name: typeName(type), type }, null, 2))
   }
-  throw type
 }
 
 const Validators = {}
@@ -242,27 +286,6 @@ function escapeHTML(str) {
 const formatter = ast(path.join(root, 'content/key-manager/formatter.ts')).children.find(child => child.name === 'PatternFormatter')
 const methods = formatter.children.filter(child => child.variant === 'declaration' && child.name.match(/^[$_]/))
 
-const zotero = require(path.join(root, 'schema/zotero.json'))
-let creatorTypes = new Set()
-for (const itemType of zotero.itemTypes) {
-  for (const creatorType of itemType.creatorTypes) {
-    creatorTypes.add(creatorType.creatorType)
-  }
-}
-creatorTypes = [...creatorTypes].sort()
-const fields = new Set()
-const fieldLookup = {}
-for (const itemType of zotero.itemTypes) {
-  for (const field of itemType.fields) {
-    for (const name of ['field', 'baseField']) {
-      if (field[name]) {
-        fields.add(field[name])
-        fieldLookup[field[name].toLowerCase()] = field[name]
-      }
-    }
-  }
-}
-
 function KeyManager() {
   const section = {
     $: [],
@@ -270,32 +293,21 @@ function KeyManager() {
   }
   const apispec = {}
 
-  const babel = require('../gen/babel/tag.json')
-  const babelLanguages = [...(new Set([...Object.keys(babel), ...Object.values(babel)]))].sort()
-  const typeOverrides = {
+  const typescriptType = {
     $language: {
       name: {
         type: 'array',
-        elementType: {
-          type: 'union',
-          types: babelLanguages.map(l => ({ type: 'literal', value: l })),
-        },
+        elementType: { type: 'reference', package: 'zotero-better-bibtex', name: 'BabelLanguage' },
       },
     },
     $type: {
       allowed: {
         type: 'array',
-        elementType: {
-          type: 'union',
-          types: zotero.itemTypes.map(t => ({ type: 'literal', value: t.itemType })),
-        },
+        elementType: { type: 'reference', package: 'zotero-better-bibtex', name: 'ItemType' },
       },
     },
     $field: {
-      name: {
-        type: 'union',
-        types: [...fields].sort().map(f => ({ type: 'literal', value: f })),
-      },
+      name: { type: 'reference', package: 'zotero-better-bibtex', name: 'ItemField' },
     },
   }
 
@@ -324,7 +336,8 @@ function KeyManager() {
     }
 
     const parameters = (signature.parameters || []).map(p => {
-      let schema = makeSchema(typeOverrides[method.name]?.[p.name] || p.type)
+      let schema = typescriptType[method.name]?.[p.name] || p.type
+      schema = makeSchema(schema)
       if (p.flags.isRest) {
         schema = schema.items // so that we can give sensible, per-argument errors
         apispec[_name].rest = p.name
@@ -334,7 +347,7 @@ function KeyManager() {
       if (!p.flags.isOptional && !p.defaultValue) apispec[_name].required.push(p.name)
 
       const name = (p.flags.isRest ? `...${p.name}` : p.name) + (p.flags.isOptional ? '?' : '')
-      const type = makeType(p.type)
+      const type = printType(p.type)
       const dflt = typeof p.defaultValue === 'undefined' ? '' : ` = ${p.defaultValue}`
       return `${name}: ${type}${dflt}`
     }).join(', ')
@@ -345,7 +358,7 @@ function KeyManager() {
     }).join('')
 
     if (parameters.includes('Creator')) {
-      description += `\n\nCreator is one of: ${creatorTypes.join(', ')}`
+      description += `\n\nCreator is one of: ${Zotero.creatorTypes.join(', ')}`
     }
 
     const kind = method.name[0]
@@ -367,7 +380,7 @@ function KeyManager() {
     linkValidators(
       `/* eslint-disable quote-props, comma-dangle */
 module.exports.methods = ${jsesc(apispec, { compact: false, indent: '  ' })}
-module.exports.fields = ${jsesc(fieldLookup, { compact: false, indent: '  ' })}
+module.exports.fields = ${jsesc(Zotero.fieldLookup, { compact: false, indent: '  ' })}
 `,
     ),
   )
@@ -375,40 +388,35 @@ module.exports.fields = ${jsesc(fieldLookup, { compact: false, indent: '  ' })}
 
 function JSONRPC() {
   const jsonrpc = ast(path.join(root, 'content/json-rpc.ts')).children.filter(child => child.name.startsWith('NS'))
-  fs.writeFileSync(
-    'json-rpc.json',
-    JSON.stringify(jsonrpc.map(cls => cls.children.filter(method => method.flags.isPublic)), function(k, v) {
-      switch (k) {
-        case 'sources':
-        case 'target':
-          return undefined
-          break
-        default:
-          return v
-      }
-    }, 2),
-  )
 
   const apispec = {}
   const page = []
   for (const api of jsonrpc.flat()) {
     const namespace = api.name.substring(2).toLowerCase()
-    const validate = {}
-    const required = []
 
     for (const method of api.children) {
       if (method.name === 'constructor') continue
+
       const signature = method.signatures[0]
+
+      const methodname = `${namespace}.${method.name}`
+      apispec[methodname] = {
+        parameters: [],
+        validate: {},
+        required: [],
+      }
+
       const parameters = (signature.parameters || []).map(p => {
-        if (!p.flags.isOptional) required.push(p.name)
-        makeValidator(validate[p.name] = makeSchema(p.type))
+        apispec[methodname].parameters.push(p.name)
+        if (!p.flags.isOptional) apispec[methodname].required.push(p.name)
+        apispec[methodname].validate[p.name] = makeValidator(makeSchema(p.type))
 
         const name = (p.flags.isRest ? `...${p.name}` : p.name) + (p.flags.isOptional ? '?' : '')
-        const type = makeType(p.type)
+        const type = printType(p.type)
         const dflt = typeof p.defaultValue === 'undefined' ? '' : ` = ${p.defaultValue}`
         return `${name}: ${type}${dflt}`
       }).join(', ')
-      const returnType = `: ${makeType(signature.type.typeArguments[0])}`.replace(': void', '')
+      const returnType = `: ${printType(signature.type.typeArguments[0])}`.replace(': void', '')
 
       const description = signature.comment.summary.map(s => {
         if (!s.kind.match(/^(code|text)$/)) throw s
@@ -416,12 +424,6 @@ function JSONRPC() {
       }).join('')
 
       page.push(`## ${namespace}.${method.name}(${parameters})${returnType}\n\n${description}\n\n`)
-
-      apispec[`${namespace}.${method.name}`] = {
-        parameters: (signature.parameters || []).map(p => p.name),
-        validate,
-        required,
-      }
     }
   }
 
