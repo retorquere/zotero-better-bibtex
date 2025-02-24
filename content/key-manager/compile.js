@@ -108,7 +108,7 @@ const len = {
         }
       }
     }
-    else if (node.type === 'BinaryExpression' && node.operator.match(/^[<>]=?|==$/)) {
+    else if (node.type === 'BinaryExpression' && node.operator.match(/^[<>]=?|[!=]=$/)) {
       return {
         type: 'CallExpression',
         callee: {
