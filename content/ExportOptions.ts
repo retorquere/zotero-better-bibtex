@@ -1,6 +1,7 @@
 import { Monkey } from './monkey-patch'
 import * as l10n from './l10n'
 import { Events } from './events'
+import { log } from './logger'
 
 let enabled = true
 
@@ -14,6 +15,7 @@ export function disable(): void {
 type XULWindow = Window & { bbtmonkey?: Monkey; Zotero_File_Interface_Export?: any; arguments?: any[]; sizeToContent?: () => void }
 
 Events.on('window-loaded', ({ win, href }: { win: Window; href: string }) => {
+  log.debug('3153: export options window-loaded', href)
   if (!enabled || href !== 'chrome://zotero/content/exportOptions.xhtml') return
 
   const window: XULWindow = win
