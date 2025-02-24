@@ -303,6 +303,10 @@ export class TestSupport {
     if (collection.getChildItems(true).length) throw new Error(`${ path } not empty`)
   }
 
+  public citationKey(itemID: number): string {
+    return Zotero.BetterBibTeX.KeyManager.get(itemID).citationKey
+  }
+
   public async quickCopy(itemIDs: number[], translator: string): Promise<string> {
     const format = {
       mode: 'export',

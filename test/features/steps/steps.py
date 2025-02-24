@@ -483,3 +483,9 @@ def step_impl(context):
   column_styles = [ pytablewriter.style.Style(align='left') for h in headers ]
   writer = pytablewriter.MarkdownTableWriter(headers=headers, value_matrix=rows, column_styles=column_styles, margin=1)
   utils.print('\n' + writer.dumps())
+
+@then(u'the citation key should be "{expected}"')
+def step_impl(context, expected):
+  assert type(context.selected) == list and len(context.selected) == 1, context.selected
+  found = context.zotero.execute('return await Zotero.BetterBibTeX.TestSupport.citationKey(itemID)', itemID=context.selected[0])
+  assert found == expected, { 'expected': expected, 'found': found }

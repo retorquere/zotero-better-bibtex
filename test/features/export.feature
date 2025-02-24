@@ -829,18 +829,18 @@ Feature: Export
     And I wait 15 seconds
     Then "~/autoexport.bib" should match "export/*.after.biblatex"
 
-  Scenario: OR pattern condenses input #2957                                                                                         | 1          |
+  Scenario: OR pattern condenses input #2957
     Given I import 1 reference from "export/*.json"
     When I select the item with a field that contains "Valuations"
 
     When I set preference .citekeyFormat to "(ShortTitle.condense(_) || Title.condense(_))"
     And I refresh the citation key
-    Then the citation key should match "The_Theory_of_Classical_Valuations"
+    Then the citation key should be "The_Theory_of_Classical_Valuations"
 
     When I set preference .citekeyFormat to "(ShortTitle || Title).condense(_)"
     And I refresh the citation key
-    Then the citation key should match "The_Theory_of_Classical_Valuations"
+    Then the citation key should be "The_Theory_of_Classical_Valuations"
 
     When I set preference .citekeyFormat to "(ShortTitle ? ShortTitle : Title).condense(_)"
     And I refresh the citation key
-    Then the citation key should match "The_Theory_of_Classical_Valuations"
+    Then the citation key should be "The_Theory_of_Classical_Valuations"
