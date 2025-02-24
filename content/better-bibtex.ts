@@ -18,7 +18,6 @@ declare const FileUtils: any
 import { MenuManager } from 'zotero-plugin-toolkit'
 const Menu = new MenuManager
 
-import type { XUL } from '../typings/xul'
 import { DebugLog } from 'zotero-plugin/debug-log'
 DebugLog.register('Better BibTeX', ['extensions.zotero.translators.better-bibtex.'])
 

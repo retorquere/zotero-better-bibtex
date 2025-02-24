@@ -1,7 +1,6 @@
 import { Monkey } from './monkey-patch'
 import * as l10n from './l10n'
 import { Events } from './events'
-import type { XUL } from '../typings/xul'
 
 let enabled = true
 
@@ -27,11 +26,11 @@ Events.on('window-loaded', ({ win, href }: { win: Window; href: string }) => {
   })
 
   function mutex(e?: Event): void {
-    const exportFileData = document.getElementById('export-option-exportFileData') as XUL.Checkbox
-    const keepUpdated = document.getElementById('export-option-keepUpdated') as XUL.Checkbox
-    const worker = document.getElementById('export-option-worker') as XUL.Checkbox
-    const biblatexAPA = document.getElementById('export-option-biblatexAPA') as XUL.Checkbox
-    const biblatexChicago = document.getElementById('export-option-biblatexChicago') as XUL.Checkbox
+    const exportFileData = document.getElementById('export-option-exportFileData') as unknown as XUL.Checkbox
+    const keepUpdated = document.getElementById('export-option-keepUpdated') as unknown as XUL.Checkbox
+    const worker = document.getElementById('export-option-worker') as unknown as XUL.Checkbox
+    const biblatexAPA = document.getElementById('export-option-biblatexAPA') as unknown as XUL.Checkbox
+    const biblatexChicago = document.getElementById('export-option-biblatexChicago') as unknown as XUL.Checkbox
 
     if (!exportFileData || !keepUpdated) return null
 

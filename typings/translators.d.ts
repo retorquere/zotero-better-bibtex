@@ -88,7 +88,6 @@ export namespace Translators {
     minVersion: string
     maxVersion: string
     translatorType: number
-    browserSupport: string
     inRepository: false
     priority: number
     target: string
