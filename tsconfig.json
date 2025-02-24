@@ -16,13 +16,14 @@
     "downlevelIteration": true,
     "resolveJsonModule": true,
     "moduleResolution": "node",
-    "skipLibCheck": true,
     "typeRoots": [
+      "./node_modules",
       "./node_modules/@types",
       "./gen/typings",
       "./typings"
     ],
     "skipDefaultLibCheck": true,
+    "types": ["zotero-types"],
     "lib": [ "es2017", "dom", "dom.iterable", "webworker", "ES2021.WeakRef" ]
   },
   "include": [
@@ -31,7 +32,6 @@
     "setup/**/*",
     "gen/**/*",
     "typings/*",
-    "node_modules/zotero-types"
   ],
   "exclude": [
     "headless",
