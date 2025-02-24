@@ -13,6 +13,7 @@ Feature: Export
 
     Examples:
       | file                                                                                                                     | references |
+      | Auto-export does not support attachment export #3153                                                                     | 1          |
       | pmid versus pubmed #3146                                                                                                 | 1          |
       | Ensure en-dash is used for volumeissue ranges in exported BibTeXBiBibTeX #3118                                           | 1          |
       | Add option to translate ii to mkbibemph instead of emph #3096                                                            | 1          |
