@@ -753,13 +753,13 @@ export class BetterBibTeX {
         })
 
         Events.on('items-changed', () => {
-          if (rowID) Zotero.ItemPaneManager.refreshInfoRow(rowID)
+          if (rowID) log.debug('3154: Zotero.ItemPaneManager.refreshInfoRow(rowID)')
           // eslint-disable-next-line no-underscore-dangle
           if (!columnDataKey) return
           const azp = Zotero.getActiveZoteroPane()
           if (!azp || !azp.itemPane) return
           // eslint-disable-next-line no-underscore-dangle
-          if (!azp.itemPane.itemsView._columnPrefs[columnDataKey].hidden) Zotero.ItemTreeManager.refreshColumns()
+          if (!azp.itemPane.itemsView._columnPrefs[columnDataKey].hidden) log.debug('3154: Zotero.ItemTreeManager.refreshColumns()')
         })
 
         monkey.enable()
