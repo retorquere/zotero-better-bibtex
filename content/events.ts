@@ -211,6 +211,7 @@ class ItemListener extends ZoteroListener {
 
           while (collectionID) {
             touched.collections.add(collectionID)
+            log.debug('3159: collection', collectionID, 'has parent', Zotero.Collections.get(collectionID).parentID)
             collectionID = Zotero.Collections.get(collectionID).parentID
           }
         }
