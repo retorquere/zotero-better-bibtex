@@ -398,6 +398,7 @@ function KeyManager() {
     if (test) apispec[_name].test = test.name
   }
 
+  section.$ = section.$.filter(s => !s.summary.startsWith('<b>field</b>'))
   fs.writeFileSync(path.join(root, 'site/data/citekeyformatters/functions.json'), JSON.stringify(section.$, null, 2))
   fs.writeFileSync(path.join(root, 'site/data/citekeyformatters/filters.json'), JSON.stringify(section._, null, 2))
 
