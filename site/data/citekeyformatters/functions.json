@@ -1,154 +1,154 @@
 [
   {
-    "summary": "auth(n: number = 0, m: number = 1, creator: (&quot;author&quot; | &quot;editor&quot; | &quot;translator&quot; | &quot;collaborator&quot; | &quot;*&quot;) = &#39;*&#39;, initials: boolean = false)",
+    "summary": "<b>auth</b>(n: number = 0, m: number = 1, creator: (&quot;author&quot; | &quot;editor&quot; | &quot;translator&quot; | &quot;collaborator&quot; | &quot;*&quot;) = &#39;*&#39;, initials: boolean = false)",
     "description": "<p>The first <code>n</code> (default: all) characters of the <code>m</code>th (default: first) author's last name.</p>"
   },
   {
-    "summary": "authAuthEa(creator: (&quot;author&quot; | &quot;editor&quot; | &quot;translator&quot; | &quot;collaborator&quot; | &quot;*&quot;) = &#39;*&#39;, initials: boolean = false, sep: string = &#39;.&#39;)",
+    "summary": "<b>authAuthEa</b>(creator: (&quot;author&quot; | &quot;editor&quot; | &quot;translator&quot; | &quot;collaborator&quot; | &quot;*&quot;) = &#39;*&#39;, initials: boolean = false, sep: string = &#39;.&#39;)",
     "description": "<p>The last name of the first two authors, and \".ea\" if there are more than two.</p>"
   },
   {
-    "summary": "authEtAl(creator: (&quot;author&quot; | &quot;editor&quot; | &quot;translator&quot; | &quot;collaborator&quot; | &quot;*&quot;) = &#39;*&#39;, initials: boolean = false, sep: string = &#39; &#39;)",
+    "summary": "<b>authEtAl</b>(creator: (&quot;author&quot; | &quot;editor&quot; | &quot;translator&quot; | &quot;collaborator&quot; | &quot;*&quot;) = &#39;*&#39;, initials: boolean = false, sep: string = &#39; &#39;)",
     "description": "<p>The last name of the first author, and the last name of the\nsecond author if there are two authors or \"EtAl\" if there are\nmore than two. This is similar to <code>auth.etal</code>. The difference\nis that the authors are not separated by \".\" and in case of\nmore than 2 authors \"EtAl\" instead of \".etal\" is appended.</p>"
   },
   {
-    "summary": "authEtal2(creator: (&quot;author&quot; | &quot;editor&quot; | &quot;translator&quot; | &quot;collaborator&quot; | &quot;*&quot;) = &#39;*&#39;, initials: boolean = false, sep: string = &#39;.&#39;)",
+    "summary": "<b>authEtal2</b>(creator: (&quot;author&quot; | &quot;editor&quot; | &quot;translator&quot; | &quot;collaborator&quot; | &quot;*&quot;) = &#39;*&#39;, initials: boolean = false, sep: string = &#39;.&#39;)",
     "description": "<p>The last name of the first author, and the last name of the second author if there are two authors or \".etal\" if there are more than two.</p>"
   },
   {
-    "summary": "authForeIni(creator: (&quot;author&quot; | &quot;editor&quot; | &quot;translator&quot; | &quot;collaborator&quot; | &quot;*&quot;) = &#39;*&#39;)",
+    "summary": "<b>authForeIni</b>(creator: (&quot;author&quot; | &quot;editor&quot; | &quot;translator&quot; | &quot;collaborator&quot; | &quot;*&quot;) = &#39;*&#39;)",
     "description": "<p>The given-name initial of the first author.</p>"
   },
   {
-    "summary": "authIni(n: number = 0, creator: (&quot;author&quot; | &quot;editor&quot; | &quot;translator&quot; | &quot;collaborator&quot; | &quot;*&quot;) = &#39;*&#39;, initials: boolean = false, sep: string = &#39;.&#39;)",
+    "summary": "<b>authIni</b>(n: number = 0, creator: (&quot;author&quot; | &quot;editor&quot; | &quot;translator&quot; | &quot;collaborator&quot; | &quot;*&quot;) = &#39;*&#39;, initials: boolean = false, sep: string = &#39;.&#39;)",
     "description": "<p>The beginning of each author's last name, using no more than <code>n</code> characters (0 = all).</p>"
   },
   {
-    "summary": "authorIni(creator: (&quot;author&quot; | &quot;editor&quot; | &quot;translator&quot; | &quot;collaborator&quot; | &quot;*&quot;) = &#39;*&#39;, initials: boolean = false, sep: string = &#39;.&#39;)",
+    "summary": "<b>authorIni</b>(creator: (&quot;author&quot; | &quot;editor&quot; | &quot;translator&quot; | &quot;collaborator&quot; | &quot;*&quot;) = &#39;*&#39;, initials: boolean = false, sep: string = &#39;.&#39;)",
     "description": "<p>The first 5 characters of the first author's last name, and the last name initials of the remaining authors.</p>"
   },
   {
-    "summary": "authorLast(creator: (&quot;author&quot; | &quot;editor&quot; | &quot;translator&quot; | &quot;collaborator&quot; | &quot;*&quot;) = &#39;*&#39;, initials: boolean = false)",
+    "summary": "<b>authorLast</b>(creator: (&quot;author&quot; | &quot;editor&quot; | &quot;translator&quot; | &quot;collaborator&quot; | &quot;*&quot;) = &#39;*&#39;, initials: boolean = false)",
     "description": "<p>The last name of the last author</p>"
   },
   {
-    "summary": "authorLastForeIni(creator: (&quot;author&quot; | &quot;editor&quot; | &quot;translator&quot; | &quot;collaborator&quot; | &quot;*&quot;) = &#39;*&#39;)",
+    "summary": "<b>authorLastForeIni</b>(creator: (&quot;author&quot; | &quot;editor&quot; | &quot;translator&quot; | &quot;collaborator&quot; | &quot;*&quot;) = &#39;*&#39;)",
     "description": "<p>The given-name initial of the last author.</p>"
   },
   {
-    "summary": "authorsAlpha(creator: (&quot;author&quot; | &quot;editor&quot; | &quot;translator&quot; | &quot;collaborator&quot; | &quot;*&quot;) = &#39;*&#39;, initials: boolean = false, sep: string = &#39; &#39;)",
+    "summary": "<b>authorsAlpha</b>(creator: (&quot;author&quot; | &quot;editor&quot; | &quot;translator&quot; | &quot;collaborator&quot; | &quot;*&quot;) = &#39;*&#39;, initials: boolean = false, sep: string = &#39; &#39;)",
     "description": "<p>Corresponds to the BibTeX style \"alpha\". One author: First three letters of the last name. Two to four authors: First letters of last names concatenated.\nMore than four authors: First letters of last names of first three authors concatenated. \"+\" at the end.</p>"
   },
   {
-    "summary": "authorsn(n: number = 0, creator: (&quot;author&quot; | &quot;editor&quot; | &quot;translator&quot; | &quot;collaborator&quot; | &quot;*&quot;) = &#39;*&#39;, initials: boolean = false, sep: string = &#39; &#39;)",
+    "summary": "<b>authorsn</b>(n: number = 0, creator: (&quot;author&quot; | &quot;editor&quot; | &quot;translator&quot; | &quot;collaborator&quot; | &quot;*&quot;) = &#39;*&#39;, initials: boolean = false, sep: string = &#39; &#39;)",
     "description": "<p>The last names of the first <code>n</code> (default: all) authors.</p>"
   },
   {
-    "summary": "authshort(creator: (&quot;author&quot; | &quot;editor&quot; | &quot;translator&quot; | &quot;collaborator&quot; | &quot;*&quot;) = &#39;*&#39;, initials: boolean = false, sep: string = &#39;.&#39;)",
+    "summary": "<b>authshort</b>(creator: (&quot;author&quot; | &quot;editor&quot; | &quot;translator&quot; | &quot;collaborator&quot; | &quot;*&quot;) = &#39;*&#39;, initials: boolean = false, sep: string = &#39;.&#39;)",
     "description": "<p>The last name if one author/editor is given; the first character\nof up to three authors' last names if more than one author is\ngiven. A plus character is added, if there are more than three\nauthors.</p>"
   },
   {
-    "summary": "creators(n: (number | [ number, number ]) = 0, type: (&quot;*&quot; | Creator | Creator[] | (Creator | &quot;*&quot;)[][]) = [[&#39;primary&#39;, &#39;editor&#39;, &#39;translator&#39;, &#39;*&#39;]], name: &#96;sprintf-style format template&#96; = &#39;%(f)s&#39;, etal: string = &#39;&#39;, sep: string = &#39; &#39;, min: number = 0, max: number = 0)",
+    "summary": "<b>creators</b>(n: (number | [ number, number ]) = 0, type: (&quot;*&quot; | Creator | Creator[] | (Creator | &quot;*&quot;)[][]) = [[&#39;primary&#39;, &#39;editor&#39;, &#39;translator&#39;, &#39;*&#39;]], name: &#96;sprintf-style format template&#96; = &#39;%(f)s&#39;, etal: string = &#39;&#39;, sep: string = &#39; &#39;, min: number = 0, max: number = 0)",
     "description": "<p>Author/editor information.</p>\n<p>creator type can be one of <code>artist</code>, <code>attorneyAgent</code>, <code>author</code>, <code>bookAuthor</code>, <code>cartographer</code>, <code>castMember</code>, <code>commenter</code>, <code>composer</code>, <code>contributor</code>, <code>cosponsor</code>, <code>counsel</code>, <code>director</code>, <code>editor</code>, <code>guest</code>, <code>interviewee</code>, <code>interviewer</code>, <code>inventor</code>, <code>performer</code>, <code>podcaster</code>, <code>presenter</code>, <code>producer</code>, <code>programmer</code>, <code>recipient</code>, <code>reviewedAuthor</code>, <code>scriptwriter</code>, <code>seriesEditor</code>, <code>sponsor</code>, <code>translator</code>, <code>wordsBy</code></p>\n<p>in the creator template, you can use:</p>\n<ul>\n<li><code>%(f)s</code>: family (\"last\") name</li>\n<li><code>%(g)s</code>: given (\"first\") name</li>\n<li><code>%(i)s</code>: given-name initials</li>\n</ul>"
   },
   {
-    "summary": "creatortypes(match?: RegExp)",
+    "summary": "<b>creatortypes</b>(match?: RegExp)",
     "description": "<p>This will return a comma-separated list of creator type information for all creators on the item\nin the form <code>&lt;1 or 2&gt;&lt;creator-type&gt;</code>, where <code>1</code> or <code>2</code> denotes a 1-part or 2-part creator, and <code>creator-type</code> is one of {{% citekey-formatters/creatortypes %}}, or <code>primary</code> for\nthe primary creator-type of the Zotero item under consideration. The list is prefixed by the item type, so might look like <code>audioRecording:2performer,2performer,1composer</code>.</p>"
   },
   {
-    "summary": "date(format: string = &#39;%Y-%m-%d&#39;)",
+    "summary": "<b>date</b>(format: string = &#39;%Y-%m-%d&#39;)",
     "description": "<p>The date of the publication</p>"
   },
   {
-    "summary": "extra(variable: string)",
+    "summary": "<b>extra</b>(variable: string)",
     "description": "<p>A pseudo-field from the extra field. eg if you have <code>Original date: 1970</code> in your <code>extra</code> field, you can get it as\n<code>extra(originalDate)</code>, or <code>tex.shortauthor: APA</code> which you could\nget with <code>extra('tex.shortauthor')</code>. Any <code>tex.</code> field will be\npicked up, the other fields can be selected from <a href=\"https://retorque.re/zotero-better-bibtex/exporting/extra-fields/\">this list</a>\nof key names.</p>"
   },
   {
-    "summary": "field(name: string)",
+    "summary": "<b>field</b>(name: string)",
     "description": "<p>Gets the value of the item field</p>\n<p>field can be one of <code>DOI</code>, <code>ISBN</code>, <code>ISSN</code>, <code>abstractNote</code>, <code>accessDate</code>, <code>applicationNumber</code>, <code>archive</code>, <code>archiveID</code>, <code>archiveLocation</code>, <code>artworkMedium</code>, <code>artworkSize</code>, <code>assignee</code>, <code>audioFileType</code>, <code>audioRecordingFormat</code>, <code>authority</code>, <code>billNumber</code>, <code>blogTitle</code>, <code>bookTitle</code>, <code>callNumber</code>, <code>caseName</code>, <code>citationKey</code>, <code>code</code>, <code>codeNumber</code>, <code>codePages</code>, <code>codeVolume</code>, <code>committee</code>, <code>company</code>, <code>conferenceName</code>, <code>country</code>, <code>court</code>, <code>date</code>, <code>dateDecided</code>, <code>dateEnacted</code>, <code>dictionaryTitle</code>, <code>distributor</code>, <code>docketNumber</code>, <code>documentNumber</code>, <code>edition</code>, <code>encyclopediaTitle</code>, <code>episodeNumber</code>, <code>extra</code>, <code>filingDate</code>, <code>firstPage</code>, <code>format</code>, <code>forumTitle</code>, <code>genre</code>, <code>history</code>, <code>identifier</code>, <code>institution</code>, <code>interviewMedium</code>, <code>issue</code>, <code>issueDate</code>, <code>issuingAuthority</code>, <code>journalAbbreviation</code>, <code>label</code>, <code>language</code>, <code>legalStatus</code>, <code>legislativeBody</code>, <code>letterType</code>, <code>libraryCatalog</code>, <code>manuscriptType</code>, <code>mapType</code>, <code>medium</code>, <code>meetingName</code>, <code>nameOfAct</code>, <code>network</code>, <code>numPages</code>, <code>number</code>, <code>numberOfVolumes</code>, <code>organization</code>, <code>pages</code>, <code>patentNumber</code>, <code>place</code>, <code>postType</code>, <code>presentationType</code>, <code>priorityNumbers</code>, <code>proceedingsTitle</code>, <code>programTitle</code>, <code>programmingLanguage</code>, <code>publicLawNumber</code>, <code>publicationTitle</code>, <code>publisher</code>, <code>references</code>, <code>reportNumber</code>, <code>reportType</code>, <code>reporter</code>, <code>reporterVolume</code>, <code>repository</code>, <code>repositoryLocation</code>, <code>rights</code>, <code>runningTime</code>, <code>scale</code>, <code>section</code>, <code>series</code>, <code>seriesNumber</code>, <code>seriesText</code>, <code>seriesTitle</code>, <code>session</code>, <code>shortTitle</code>, <code>status</code>, <code>studio</code>, <code>subject</code>, <code>system</code>, <code>thesisType</code>, <code>title</code>, <code>type</code>, <code>university</code>, <code>url</code>, <code>versionNumber</code>, <code>videoRecordingFormat</code>, <code>volume</code>, <code>websiteTitle</code>, <code>websiteType</code></p>"
   },
   {
-    "summary": "firstpage",
+    "summary": "<b>firstpage</b>",
     "description": "<p>The number of the first page of the publication (Caution: this\nwill return the lowest number found in the pages field, since\nBibTeX allows <code>7,41,73--97</code> or <code>43+</code>.)</p>"
   },
   {
-    "summary": "group(name: string)",
+    "summary": "<b>group</b>(name: string)",
     "description": "<p>Tests whether the item is in the given group library</p>"
   },
   {
-    "summary": "infix(format: string = &#39;%(a)s&#39;, start: number = 0)",
+    "summary": "<b>infix</b>(format: string = &#39;%(a)s&#39;, start: number = 0)",
     "description": "<p>a pseudo-function that sets the citekey disambiguation infix using an <a href=\"https://www.npmjs.com/package/sprintf-js\">sprintf-js</a> format spec\nfor when a key is generated that already exists. The infix charachter appears at the place of this function of the formula instead of at the and (as postfix does).\nYou <em>must</em> include <em>exactly one</em> of the placeholders <code>%(n)s</code> (number), <code>%(a)s</code> (alpha, lowercase) or <code>%(A)s</code> (alpha, uppercase).\nFor the rest of the disambiguator you can use things like padding and extra text as sprintf-js allows. With start set to <code>1</code> the disambiguator is always included,\neven if there is no need for it when no duplicates exist. The default  format is <code>%(a)s</code>.</p>"
   },
   {
-    "summary": "inspireHep",
+    "summary": "<b>inspireHep</b>",
     "description": "<p>Fetches the key from inspire-hep based on DOI or arXiv ID</p>"
   },
   {
-    "summary": "item(id: (&quot;key&quot; | &quot;id&quot;) = &#39;key&#39;)",
+    "summary": "<b>item</b>(id: (&quot;key&quot; | &quot;id&quot;) = &#39;key&#39;)",
     "description": "<p>returns the internal item ID/key</p>"
   },
   {
-    "summary": "journal(abbrev: (&quot;off&quot; | &quot;abbrev&quot; | &quot;auto&quot; | &quot;abbrev+auto&quot; | &quot;full&quot;) = &#39;abbrev+auto&#39;)",
+    "summary": "<b>journal</b>(abbrev: (&quot;off&quot; | &quot;abbrev&quot; | &quot;auto&quot; | &quot;abbrev+auto&quot; | &quot;full&quot;) = &#39;abbrev+auto&#39;)",
     "description": "<p>returns the journal abbreviation, or, if not found, the journal title, If 'automatic journal abbreviation' is enabled in the BBT settings,\nit will use the same abbreviation filter Zotero uses in the wordprocessor integration. You might want to use the <code>abbr</code> filter on this.\nAbbreviation behavior can be specified as <code>abbrev+auto</code> (the default) which uses the explicit journal abbreviation if present, and tries the automatic\nabbreviator if not (if auto-abbrev is enabled in the preferences), <code>auto</code> (skip explicit journal abbreviation even if present), <code>abbrev</code>\n(no auto-abbrev even if it is enabled in the preferences) or <code>full</code>/<code>off</code> (no abbrevation).</p>"
   },
   {
-    "summary": "keyword(n: number)",
+    "summary": "<b>keyword</b>(n: number)",
     "description": "<p>Tag number <code>n</code>. Mostly for legacy compatibility</p>"
   },
   {
-    "summary": "language(...name: string[])",
+    "summary": "<b>language</b>(...name: string[])",
     "description": "<p>Tests whether the item has the given language set, and skips to the next pattern if not</p>\n<p>language can be one of <code>ame</code>, <code>american</code>, <code>american english</code>, <code>americanenglish</code>, <code>ar</code>, <code>ar-ar</code>, <code>ar-dz</code>, <code>ar-eg</code>, <code>ar-iq</code>, <code>ar-jo</code>, <code>ar-lb</code>, <code>ar-ma</code>, <code>ar-ps</code>, <code>ar-sa</code>, <code>ar-sy</code>, <code>ar-tn</code>, <code>ara</code>, <code>arabic</code>, <code>arabic-algeria</code>, <code>arabic-dz</code>, <code>arabic-eg</code>, <code>arabic-egypt</code>, <code>arabic-iq</code>, <code>arabic-iraq</code>, <code>arabic-jo</code>, <code>arabic-jordan</code>, <code>arabic-lb</code>, <code>arabic-lebanon</code>, <code>arabic-ma</code>, <code>arabic-morocco</code>, <code>arabic-palestinianterritories</code>, <code>arabic-ps</code>, <code>arabic-sa</code>, <code>arabic-saudiarabia</code>, <code>arabic-sy</code>, <code>arabic-syria</code>, <code>arabic-tn</code>, <code>arabic-tunisia</code>, <code>australian</code>, <code>australian english</code>, <code>australianenglish</code>, <code>austrian</code>, <code>austrian german</code>, <code>austrian-traditional</code>, <code>austriangerman</code>, <code>austriangerman-traditional</code>, <code>bri</code>, <code>british</code>, <code>british english</code>, <code>britishenglish</code>, <code>canadian</code>, <code>canadian english</code>, <code>canadianenglish</code>, <code>chinese</code>, <code>chinese-hans</code>, <code>chinese-hans-hk</code>, <code>chinese-hans-mo</code>, <code>chinese-hans-sg</code>, <code>chinese-hant</code>, <code>chinese-hant-hk</code>, <code>chinese-hant-mo</code>, <code>chinese-simplified</code>, <code>chinese-simplified-hongkongsarchina</code>, <code>chinese-simplified-macausarchina</code>, <code>chinese-simplified-singapore</code>, <code>chinese-traditional</code>, <code>chinese-traditional-hongkongsarchina</code>, <code>chinese-traditional-macausarchina</code>, <code>de</code>, <code>de-1901</code>, <code>de-1996</code>, <code>de-at</code>, <code>de-at-1901</code>, <code>de-at-1996</code>, <code>de-ch</code>, <code>de-ch-1901</code>, <code>de-ch-1996</code>, <code>de-de</code>, <code>deutsch</code>, <code>en</code>, <code>en-au</code>, <code>en-ca</code>, <code>en-en</code>, <code>en-gb</code>, <code>en-nz</code>, <code>en-us</code>, <code>eng</code>, <code>english</code>, <code>english-au</code>, <code>english-australia</code>, <code>english-ca</code>, <code>english-canada</code>, <code>english-gb</code>, <code>english-newzealand</code>, <code>english-nz</code>, <code>english-unitedkingdom</code>, <code>english-unitedstates</code>, <code>english-us</code>, <code>ger</code>, <code>german</code>, <code>german-at</code>, <code>german-at-traditional</code>, <code>german-austria</code>, <code>german-austria-traditional</code>, <code>german-ch</code>, <code>german-ch-traditional</code>, <code>german-switzerland</code>, <code>german-switzerland-traditional</code>, <code>german-traditional</code>, <code>ja</code>, <code>ja-ja</code>, <code>jap</code>, <code>japanese</code>, <code>nau</code>, <code>naustrian</code>, <code>newzealand</code>, <code>nge</code>, <code>ngerman</code>, <code>nsw</code>, <code>nswissgerman</code>, <code>schweizer hochdeutsch</code>, <code>simplified chinese</code>, <code>swiss high german</code>, <code>swisshighgerman</code>, <code>swisshighgerman-traditional</code>, <code>traditional chinese</code>, <code>tw</code>, <code>ukenglish</code>, <code>usenglish</code>, <code>zh</code>, <code>zh-hans</code>, <code>zh-hans-hk</code>, <code>zh-hans-mo</code>, <code>zh-hans-sg</code>, <code>zh-hant</code>, <code>zh-hant-hk</code>, <code>zh-hant-mo</code>, <code>zh-tw</code>, <code>zh-zh</code>, <code>österreichisches deutsch</code>, <code>العربية</code>, <code>中文</code>, <code>中文-中文</code>, <code>日本語</code>, <code>简体中文</code>, <code>繁體中文</code></p>"
   },
   {
-    "summary": "lastpage",
+    "summary": "<b>lastpage</b>",
     "description": "<p>The number of the last page of the publication (See the remark on <code>firstpage</code>)</p>"
   },
   {
-    "summary": "library",
+    "summary": "<b>library</b>",
     "description": "<p>Tests whether the item is in the user library</p>"
   },
   {
-    "summary": "month",
+    "summary": "<b>month</b>",
     "description": "<p>the month of the publication</p>"
   },
   {
-    "summary": "origdate",
+    "summary": "<b>origdate</b>",
     "description": "<p>the original date of the publication</p>"
   },
   {
-    "summary": "origyear",
+    "summary": "<b>origyear</b>",
     "description": "<p>the original year of the publication</p>"
   },
   {
-    "summary": "postfix(format: &#96;sprintf-style format template&#96; = &#39;%(a)s&#39;, start: number = 0)",
+    "summary": "<b>postfix</b>(format: &#96;sprintf-style format template&#96; = &#39;%(a)s&#39;, start: number = 0)",
     "description": "<p>a pseudo-function that sets the citekey disambiguation postfix using an <a href=\"https://www.npmjs.com/package/sprintf-js\">sprintf-js</a> format spec\nfor when a key is generated that already exists. Does not add any text to the citekey otherwise.\nYou <em>must</em> include <em>exactly one</em> of the placeholders <code>%(n)s</code> (number), <code>%(a)s</code> (alpha, lowercase) or <code>%(A)s</code> (alpha, uppercase).\nFor the rest of the disambiguator you can use things like padding and extra text as sprintf-js allows. With start set to <code>1</code> the disambiguator is always included,\neven if there is no need for it when no duplicates exist. The default  format is <code>%(a)s</code>.</p>\n<p>in the template, you can use:</p>\n<ul>\n<li><code>%(a)s</code>: lower-case alphabetic disambiguator</li>\n<li><code>%(A)s</code>: upper-case alphabetic disambiguator</li>\n<li><code>%(n)s</code>: numeric disambiguator</li>\n</ul>"
   },
   {
-    "summary": "shorttitle(n: number = 3, m: number = 0)",
+    "summary": "<b>shorttitle</b>(n: number = 3, m: number = 0)",
     "description": "<p>The first <code>n</code> (default: 3) words of the title, apply capitalization to first <code>m</code> (default: 0) of those.</p>"
   },
   {
-    "summary": "shortyear",
+    "summary": "<b>shortyear</b>",
     "description": "<p>The last 2 digits of the publication year</p>"
   },
   {
-    "summary": "title",
+    "summary": "<b>title</b>",
     "description": "<p>Capitalize all the significant words of the title, and concatenate them. For example, <code>An awesome paper on JabRef</code> will become <code>AnAwesomePaperJabref</code></p>"
   },
   {
-    "summary": "type(...allowed: string[])",
+    "summary": "<b>type</b>(...allowed: string[])",
     "description": "<p>Without arguments, returns the item type.\nWhen arguments as passed, tests whether the item is of any of the given types, and skips to the next pattern if not, eg <code>type(book) + veryshorttitle | auth + year</code>.</p>\n<p>creator type can be one of <code>annotation</code>, <code>artwork</code>, <code>attachment</code>, <code>audioRecording</code>, <code>bill</code>, <code>blogPost</code>, <code>book</code>, <code>bookSection</code>, <code>case</code>, <code>computerProgram</code>, <code>conferencePaper</code>, <code>dataset</code>, <code>dictionaryEntry</code>, <code>document</code>, <code>email</code>, <code>encyclopediaArticle</code>, <code>film</code>, <code>forumPost</code>, <code>hearing</code>, <code>instantMessage</code>, <code>interview</code>, <code>journalArticle</code>, <code>letter</code>, <code>magazineArticle</code>, <code>manuscript</code>, <code>map</code>, <code>newspaperArticle</code>, <code>note</code>, <code>patent</code>, <code>podcast</code>, <code>preprint</code>, <code>presentation</code>, <code>radioBroadcast</code>, <code>report</code>, <code>standard</code>, <code>statute</code>, <code>thesis</code>, <code>tvBroadcast</code>, <code>videoRecording</code>, <code>webpage</code></p>"
   },
   {
-    "summary": "veryshorttitle(n: number = 1, m: number = 0)",
+    "summary": "<b>veryshorttitle</b>(n: number = 1, m: number = 0)",
     "description": "<p>The first <code>n</code> words of the title, apply capitalization to first <code>m</code> of those</p>"
   },
   {
-    "summary": "year",
+    "summary": "<b>year</b>",
     "description": "<p>The year of the publication</p>"
   },
   {
-    "summary": "zotero",
+    "summary": "<b>zotero</b>",
     "description": "<p>Generates citation keys as the stock Zotero Bib(La)TeX export\ndoes. Note that this pattern inherits all the problems of the\noriginal Zotero citekey generation -- you should really only\nuse this if you have existing papers that rely on this behavior.</p>"
   }
 ]

@@ -389,9 +389,9 @@ function KeyManager() {
     }).join('') + '\n' + builder.description
 
     const kind = method.name[0]
-    const func = `${method.name.substring(1)}${parameters}`
+    const func = `<b>${escapeHTML(method.name.substring(1))}</b>${escapeHTML(parameters)}`
 
-    section[kind].push({ summary: escapeHTML(func), description: showdown.makeHtml(description || '') })
+    section[kind].push({ summary: func, description: showdown.makeHtml(description || '') })
 
     const testname = `${kind}${method.name}`
     const test = methods.find(m => m.name === testname)
