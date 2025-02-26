@@ -1144,7 +1144,7 @@ export class PatternFormatter {
 
   /**
    * replaces spaces in the value passed in. You can specify what to replace it with by adding it as a
-   * parameter, e.g `.condense('\_')` will replace spaces with underscores. Equivalent to `.replace(/\s+/g, sep)`.
+   * parameter, e.g `.condense('_')` will replace spaces with underscores. Equivalent to `.replace(/\s+/g, sep)`.
    * @param sep replacement character
    */
   public _condense(input: string, sep: string = ''): string { // eslint-disable-line @typescript-eslint/no-inferrable-types
@@ -1152,7 +1152,7 @@ export class PatternFormatter {
   }
 
   /**
-   * prefixes with its parameter, so `.prefix('\_')` will add an underscore to the front if, and only if, the value
+   * prefixes with its parameter, so `.prefix('_')` will add an underscore to the front if, and only if, the value
    * it is supposed to prefix isn't empty.
    * @param prefix prefix string
    */
@@ -1161,7 +1161,7 @@ export class PatternFormatter {
   }
 
   /**
-   * postfixes with its parameter, so `postfix('\_')` will add an underscore to the end if, and only if, the value
+   * postfixes with its parameter, so `postfix('_')` will add an underscore to the end if, and only if, the value
    * it is supposed to postfix isn't empty
    * @param postfix postfix string
    */

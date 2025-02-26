@@ -119,6 +119,7 @@ class Flex extends ASTWalker {
         case 'deck':
           if (!flex) node.attrs.push({ name: 'flex', val: '\'1\'', mustEscape: false })
           break
+
         case 'prefpane':
         case 'groupbox':
         case 'prefwindow':
@@ -130,7 +131,6 @@ class Flex extends ASTWalker {
         case 'popupset':
         case 'tooltip':
         case 'description':
-        case 'label':
         case 'checkbox':
         case 'radio':
         case 'button':
@@ -142,6 +142,10 @@ class Flex extends ASTWalker {
         case 'menulist':
           if (flex) throw new Error(`${ node.name } has flex ${ flex }`)
           break
+
+        case 'label':
+          break
+
         default:
           throw `no flex on ${ node.name }` // eslint-disable-line no-throw-literal
       }

@@ -12,10 +12,16 @@
   grid-column: span 2;
 }
 
+.bbt-prefs-preview {
+  -moz-appearance: none !important;
+  background-color: LightGreen;
+}
+
 .bbt-prefs-error {
   -moz-appearance: none !important;
   background-color: DarkOrange;
 }
+
 
 .bbt-prefs-emph {
   color: red;

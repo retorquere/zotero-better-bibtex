@@ -418,7 +418,7 @@ export class PrefPane {
     editing.setAttribute('tooltip', 'html-tooltip')
 
     const msg = $window.document.getElementById('bbt-citekeyFormat-error') as HTMLInputElement
-    msg.value = error || (Preference.citekeyFormatEditing === '[' && 'legacy formula, will be upgraded when completed')
+    msg.value = error
     msg.style.display = error ? 'initial' : 'none'
 
     const active = $window.document.getElementById('bbt-preferences-citekeyFormat')
@@ -426,6 +426,11 @@ export class PrefPane {
     active.style.display = label.style.display = Preference.citekeyFormat === Preference.citekeyFormatEditing ? 'none' : 'initial'
 
     if (!error) Formatter.update([ Preference.citekeyFormatEditing, Preference.citekeyFormat ])
+
+    const preview = $window.document.getElementById('bbt-citekey-preview') as HTMLInputElement
+    preview.style.display = 'initial'
+    const previews = Zotero.getActiveZoteroPane().getSelectedItems().slice(0, 10).map(item => Zotero.BetterBibTeX.KeyManager.propose(item)).filter(key => !key.pinned).map(key => key.citationKey)
+    preview.value = previews.join(', ')
   }
 
   public checkPostscript(): void {
