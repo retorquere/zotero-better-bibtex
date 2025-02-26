@@ -25,7 +25,7 @@
   },
   {
     "summary": "<b>condense</b>(sep: string = &#39;&#39;)",
-    "description": "<p>replaces spaces in the value passed in. You can specify what to replace it with by adding it as a\nparameter, e.g <code>.condense('\\_')</code> will replace spaces with underscores. Equivalent to <code>.replace(/\\s+/g, sep)</code>.</p>"
+    "description": "<p>replaces spaces in the value passed in. You can specify what to replace it with by adding it as a\nparameter, e.g <code>.condense('_')</code> will replace spaces with underscores. Equivalent to <code>.replace(/\\s+/g, sep)</code>.</p>"
   },
   {
     "summary": "<b>default</b>(text: string)",
@@ -89,11 +89,11 @@
   },
   {
     "summary": "<b>postfix</b>(postfix: string)",
-    "description": "<p>postfixes with its parameter, so <code>postfix('\\_')</code> will add an underscore to the end if, and only if, the value\nit is supposed to postfix isn't empty</p>"
+    "description": "<p>postfixes with its parameter, so <code>postfix('_')</code> will add an underscore to the end if, and only if, the value\nit is supposed to postfix isn't empty</p>"
   },
   {
     "summary": "<b>prefix</b>(prefix: string)",
-    "description": "<p>prefixes with its parameter, so <code>.prefix('\\_')</code> will add an underscore to the front if, and only if, the value\nit is supposed to prefix isn't empty.</p>"
+    "description": "<p>prefixes with its parameter, so <code>.prefix('_')</code> will add an underscore to the front if, and only if, the value\nit is supposed to prefix isn't empty.</p>"
   },
   {
     "summary": "<b>replace</b>(find: (string | RegExp), replace: string)",
