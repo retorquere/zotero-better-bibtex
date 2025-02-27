@@ -12,6 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: retorquere/label-gun@main
+        id: labelgun
         with:
           token: ${{ github.token }}
           label.exempt: question
@@ -46,3 +47,11 @@ jobs:
 
           verbose: true
           assign: true
+      - uses: leonsteinhaeuser/project-beta-automations@v2.2.1
+        if: labelgun.outputs.state
+        with:
+          gh_token: ${{ secrets.PROJECT_TOKEN }}
+          user: retorquere
+          project_id: 5
+          resource_node_id: ${{ github.event.issue.node_id }}
+          status_value: labelgun.outputs.state
