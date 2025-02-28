@@ -461,7 +461,7 @@ function JSONRPC() {
         return s.text
       }).join('') + '\n' + builder.description
 
-      page.push(`## ${namespace}.${method.name}(${parameters})${returnType}\n\n${description}\n\n`)
+      page.push(`**${namespace}.${method.name}**(${parameters})${returnType}\n\n${description}\n\n`)
     }
   }
 
