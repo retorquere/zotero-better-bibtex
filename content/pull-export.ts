@@ -30,6 +30,7 @@ class CollectionHandler {
   public supportedMethods = ['GET']
 
   public async init(request) {
+    log.debug('3102: request for', request)
     const urlpath: string = Server.queryParams(request)['']
     if (!urlpath) return [ NOT_FOUND, 'text/plain', 'Could not export bibliography: no path' ]
 
