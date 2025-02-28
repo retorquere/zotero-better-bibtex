@@ -178,75 +178,103 @@ function patch(type) {
   }))
 }
 
-function makeSchema(type) {
-  type = flattenUnion(patch(type))
+class SchemaBuilder {
+  #description = {}
 
-  if (type.enum) throw type
+  make(type) {
+    type = flattenUnion(patch(type))
 
-  switch (typeName(type)) {
-    case 'number':
-    case 'string':
-    case 'boolean':
-      return { type: type.name }
+    if (type.enum) throw type
 
-    case 'union': {
-      const oneOf = type.types.map(makeSchema)
-      if (oneOf.find(t => !t.const)) return { oneOf }
-      return { enum: oneOf.map(t => t.const) }
+    switch (typeName(type)) {
+      case 'number':
+      case 'string':
+      case 'boolean':
+        return { type: type.name }
+
+      case 'union': {
+        const oneOf = type.types.map(t => this.make(t))
+        if (oneOf.find(t => !t.const)) return { oneOf }
+        return { enum: oneOf.map(t => t.const) }
+      }
+
+      case 'literal':
+        return { const: type.value }
+
+      case 'reference.typescript.RegExp':
+        return { instanceof: type.name }
+
+      case 'reference.typescript.Record':
+        return {
+          type: 'object',
+          additionalProperties: this.make(type.typeArguments[1]),
+        }
+
+      case 'tuple':
+        return { type: 'array', prefixItems: type.elements.map(t => this.make(t)), minItems: type.elements.length, maxItems: type.elements.length }
+
+      case 'array':
+        return { type: 'array', items: this.make(type.elementType) }
+
+      case 'reference.zotero-better-bibtex.Template':
+        switch (type.typeArguments[0].value) {
+          case 'creator':
+            this.#description.creatorTemplate = [
+              '',
+              'in the creator template, you can use:',
+              '* `%(f)s`: family ("last") name',
+              '* `%(g)s`: given ("first") name',
+              '* `%(i)s`: given-name initials',
+              '',
+            ].join('\n')
+            return { sprintf: '%fs%gs%is' }
+          case 'postfix':
+            this.#description.postfixTemplate = [
+              '',
+              'in the template, you can use:',
+              '* `%(a)s`: lower-case alphabetic disambiguator',
+              '* `%(A)s`: upper-case alphabetic disambiguator',
+              '* `%(n)s`: numeric disambiguator',
+              '',
+            ].join('\n')
+            return { sprintf: '%as%As%ns' }
+          default:
+            throw type
+        }
+
+      case 'reference.zotero-better-bibtex.AuthorType':
+        return { enum: ['author', 'editor', 'translator', 'collaborator', '*'] }
+
+      case 'reference.zotero-better-bibtex.CreatorType':
+        this.#description.creatorType = `\ncreator type can be one of ${Zotero.creatorTypes.map(t => '`' + t + '`').join(', ')}\n`
+        return { type: 'string', format: 'creator-type' }
+
+      case 'reference.zotero-better-bibtex.ItemType':
+        this.#description.itemType = `\ncreator type can be one of ${Zotero.itemTypes.map(t => '`' + t + '`').join(', ')}\n`
+        return { type: 'string', format: 'item-type' }
+
+      case 'reference.zotero-better-bibtex.ItemField':
+        this.#description.itemField = `\nfield can be one of ${Zotero.fields.map(t => '`' + t + '`').join(', ')}\n`
+        return { type: 'string', format: 'item-field' }
+
+      case 'reference.zotero-better-bibtex.BabelLanguage':
+        this.#description.babelLanguage = `\nlanguage can be one of ${Babel.languages.map(t => '`' + t + '`').join(', ')}\n`
+        return { type: 'string', format: 'babel-language' }
+
+      case 'reflection':
+        if (type.typeArguments?.length === 1) return this.make(type.typeArguments[0])
+        return {
+          type: 'object',
+          properties: type.declaration.children.reduce((acc, p) => ({ ...acc, [p.name]: this.make(p.type) }), {}),
+        }
+
+      default:
+        throw new Error(JSON.stringify({ name: typeName(type), type }, null, 2))
     }
+  }
 
-    case 'literal':
-      return { const: type.value }
-
-    case 'reference.typescript.RegExp':
-      return { instanceof: type.name }
-
-    case 'reference.typescript.Record':
-      return {
-        type: 'object',
-        additionalProperties: makeSchema(type.typeArguments[1]),
-      }
-
-    case 'tuple':
-      return { type: 'array', prefixItems: type.elements.map(makeSchema), minItems: type.elements.length, maxItems: type.elements.length }
-
-    case 'array':
-      return { type: 'array', items: makeSchema(type.elementType) }
-
-    case 'reference.zotero-better-bibtex.Template':
-      switch (type.typeArguments[0].value) {
-        case 'creator':
-          return { sprintf: '%fs%gs%is' }
-        case 'postfix':
-          return { sprintf: '%as%As%ns' }
-        default:
-          throw type
-      }
-
-    case 'reference.zotero-better-bibtex.AuthorType':
-      return { enum: ['author', 'editor', 'translator', 'collaborator', '*'] }
-
-    case 'reference.zotero-better-bibtex.CreatorType':
-      return { type: 'string', format: 'creator-type' }
-
-    case 'reference.zotero-better-bibtex.ItemType':
-      return { type: 'string', format: 'item-type' }
-
-    case 'reference.zotero-better-bibtex.ItemField':
-      return { type: 'string', format: 'item-field' }
-
-    case 'reference.zotero-better-bibtex.BabelLanguage':
-      return { type: 'string', format: 'babel-language' }
-
-    case 'reflection':
-      if (type.typeArguments?.length === 1) return makeSchema(type.typeArguments[0])
-      return {
-        type: 'object',
-        properties: type.declaration.children.reduce((acc, p) => ({ ...acc, [p.name]: makeSchema(p.type) }), {}),
-      }
-
-    default:
-      throw new Error(JSON.stringify({ name: typeName(type), type }, null, 2))
+  get description() {
+    return Object.values(this.#description).join('\n')
   }
 }
 
@@ -312,6 +340,8 @@ function KeyManager() {
   }
 
   for (const method of methods.sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()))) {
+    const builder = new SchemaBuilder
+
     if (method.name.match(/^[_$][_$]/)) continue
 
     const signature = method.signatures[0]
@@ -337,7 +367,7 @@ function KeyManager() {
 
     let parameters = (signature.parameters || []).map(p => {
       let schema = typescriptType[method.name]?.[p.name] || p.type
-      schema = makeSchema(schema)
+      schema = builder.make(schema)
       if (p.flags.isRest) {
         schema = schema.items // so that we can give sensible, per-argument errors
         apispec[_name].rest = p.name
@@ -356,22 +386,19 @@ function KeyManager() {
     let description = signature.comment.summary.map(s => {
       if (!s.kind.match(/^(code|text)$/)) throw s
       return s.text
-    }).join('')
-
-    if (parameters.includes('Creator')) {
-      description += `\n\nCreator is one of: ${Zotero.creatorTypes.join(', ')}`
-    }
+    }).join('') + '\n' + builder.description
 
     const kind = method.name[0]
-    const func = `${method.name.substring(1)}${parameters}`
+    const func = `<b>${escapeHTML(method.name.substring(1))}</b>${escapeHTML(parameters)}`
 
-    section[kind].push({ summary: escapeHTML(func), description: showdown.makeHtml(description || '') })
+    section[kind].push({ summary: func, description: showdown.makeHtml(description || '') })
 
     const testname = `${kind}${method.name}`
     const test = methods.find(m => m.name === testname)
     if (test) apispec[_name].test = test.name
   }
 
+  section.$ = section.$.filter(s => !s.summary.startsWith('<b>field</b>'))
   fs.writeFileSync(path.join(root, 'site/data/citekeyformatters/functions.json'), JSON.stringify(section.$, null, 2))
   fs.writeFileSync(path.join(root, 'site/data/citekeyformatters/filters.json'), JSON.stringify(section._, null, 2))
 
@@ -392,6 +419,7 @@ function JSONRPC() {
   const apispec = {}
   const page = []
   for (const api of jsonrpc.flat()) {
+    const builder = new SchemaBuilder
     const namespace = api.name.substring(2).toLowerCase()
 
     for (const method of api.children) {
@@ -409,7 +437,7 @@ function JSONRPC() {
       const parameters = (signature.parameters || []).map(p => {
         apispec[methodname].parameters.push(p.name)
         if (!p.flags.isOptional) apispec[methodname].required.push(p.name)
-        apispec[methodname].validate[p.name] = makeValidator(makeSchema(p.type))
+        apispec[methodname].validate[p.name] = makeValidator(builder.make(p.type))
 
         const name = (p.flags.isRest ? `...${p.name}` : p.name) + (p.flags.isOptional ? '?' : '')
         const type = printType(p.type)
@@ -421,7 +449,7 @@ function JSONRPC() {
       const description = signature.comment.summary.map(s => {
         if (!s.kind.match(/^(code|text)$/)) throw s
         return s.text
-      }).join('')
+      }).join('') + '\n' + builder.description
 
       page.push(`## ${namespace}.${method.name}(${parameters})${returnType}\n\n${description}\n\n`)
     }
