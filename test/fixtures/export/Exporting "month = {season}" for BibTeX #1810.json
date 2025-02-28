@@ -11,7 +11,7 @@
       "autoExport": "idle",
       "autoExportDelay": 7,
       "bibtexURL": "url",
-      "citekeyFormat": "[authors1+.:replace=.etal,+:lower][shortyear][title:skipwords:lower:abbr]",
+      "citekeyFormat": "authorsn(n=1,creator=\"*\",initials=false,sep=\".\").fold.replace(find=\".etal\",replace=\"+\").lower + shortyear + title.skipwords.lower.abbr",
       "exportTitleCase": false,
       "keyConflictPolicy": "change",
       "keyScope": "global",

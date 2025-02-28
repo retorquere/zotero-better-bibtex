@@ -9,7 +9,7 @@
     "preferences": {
       "autoAbbrevStyle": "http://www.zotero.org/styles/american-medical-association",
       "bibtexURL": "note",
-      "citekeyFormat": "[auth][year]"
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold + year"
     }
   },
   "items": [

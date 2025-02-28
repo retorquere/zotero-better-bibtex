@@ -1,16 +1,13 @@
 {
   const identifier = /^(?![0-9])[_$a-zA-Z][_$a-zA-Z0-9]*$/
 
-  function allowedIdentifier(v) {
-    return !options.reserved.has(v) && v.match(identifier)
-  }
-
-  const alias = require('./alias.json')
+  const Alias = require('../content/key-manager/alias.json')
+  const Methods = require('../gen/api/key-formatter').methods
 
   function get_method(method, prefix) {
     method = (prefix || '') + method.toLowerCase().replace(/[-.]/g, '')
-    method = alias[method] || method
-    return options.methods[method] || {}
+    method = Alias[method] || method
+    return Methods[method] || {}
   }
 
   function literal(v, noident) {
@@ -25,7 +22,7 @@
       case 'boolean':
         return `${v}`
       case 'string':
-        return !noident && allowedIdentifier(v) ? v : JSON.stringify(v)
+        return JSON.stringify(v)
     }
     throw new Error(`unexpected argument value ${typeof v} ${JSON.stringify(v)}`)
   }
@@ -83,7 +80,6 @@
       if (typeof arg === 'undefined') return
 
       const name = method.parameters[i]
-      if (typeof arg === 'string') arg = validate(method.schema.properties[name], arg)
       params[name] = arg
     }, {})
 
@@ -134,9 +130,7 @@ chunk
         }
       }
   / '[=' types:$[a-zA-Z/]+ ']'            {
-      types = types.toLowerCase().split('/').map(type => type.trim()).map(type => options.items.name.type[type.toLowerCase()] || type);
-      var unknown = types.find(type => !options.items.valid.type[type])
-      if (typeof unknown !== 'undefined') error(`unknown item type "${unknown}; valid types are ${Object.keys(options.items.name.type)}"`);
+      types = types.toLowerCase().split('/').map(type => type.trim())
       return `type(${types.map(t => literal(t)).join(', ')})`
     }
   / '[language=' languages:$[a-zA-Z/]+ ']'            { // add language checking in parse phase
@@ -234,8 +228,6 @@ method
 
       if (prefix.match(/^[a-z]/)) method += '.fold'
 
-      Zotero.debug(`legacy-author: ${JSON.stringify({ input, params, flags, method })}`)
-
       return method
     }
   / operator:$([<>=] / [<>!] '=') n:$[0-9]+ {
@@ -243,18 +235,13 @@ method
     return match('$len', [operator, n], operator, error)
   }
   / prop:$([A-Z][a-zA-Z]+) { // before method matching, as method matching is case-insensitive now!
-      const field = options.items.name.field[prop.toLowerCase()]
-      if (!field) error(`Unknown field ${JSON.stringify(prop)}`)
       return prop
     }
   / name:$([a-z][-.a-zA-Z]+) &{ return get_method(name, '$').name } p:fparams? {
       return match('$' + name, p || [], name, error)
     }
   / prop:$([a-zA-Z]+) { // really just an error catcher now
-      // if (prop.match(/^[a-z]/)) error(`Direct field access ${prop} must start with a leading capital`)
-      const field = options.items.name.field[prop.toLowerCase()]
-      if (!field) error(`Unknown field ${JSON.stringify(prop)}`)
-      return field.replace(/^./, c => c.toUpperCase())
+      return prop
     }
 
 fparams

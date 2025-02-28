@@ -9,7 +9,7 @@
     "preferences": {
       "asciiBibTeX": false,
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
-      "citekeyFormat": "[zotero:clean][firstpage:prefix=_]",
+      "citekeyFormat": "zotero.clean + firstpage.prefix(_)",
       "itemObserverDelay": 100,
       "biblatexExtendedNameFormat": false
     }
@@ -18,7 +18,7 @@
     {
       "DOI": "10.1016/0039-6028(94)90559-2",
       "ISSN": "0039-6028",
-      "abstractNote": "The adsorption site of pyridine (C5H5N) on Ni{111} has been investigated by scanned-energy mode photoelectron diffraction using the N 1s core level. It was found that the nitrogen atom adsorbs close to the atop position with an angle of 18\u00b0( + 2\u00b0\u2212 4\u00b0) between the N\ue5f8Ni bond and the surface normal. The N\ue5f8Ni bond length is 1.97 \u00b1 0.03 \u00c5. Since recent X-ray absorption studies show that the \u03c0 system of the pyridine is also tilted by about 20\u00b0 away from the surface normal, we conclude that the N\ue5f8Ni bond and the ring plane are co-planar.",
+      "abstractNote": "The adsorption site of pyridine (C5H5N) on Ni{111} has been investigated by scanned-energy mode photoelectron diffraction using the N 1s core level. It was found that the nitrogen atom adsorbs close to the atop position with an angle of 18°( + 2°− 4°) between the NNi bond and the surface normal. The NNi bond length is 1.97 ± 0.03 Å. Since recent X-ray absorption studies show that the π system of the pyridine is also tilted by about 20° away from the surface normal, we conclude that the NNi bond and the ring plane are co-planar.",
       "accessDate": "2018-07-17T09:51:47Z",
       "creators": [
         {
@@ -39,7 +39,7 @@
         {
           "creatorType": "author",
           "firstName": "M.",
-          "lastName": "Pol\u010dik"
+          "lastName": "Polčik"
         },
         {
           "creatorType": "author",
@@ -85,7 +85,7 @@
     {
       "DOI": "10.1016/0039-6028(94)90559-2",
       "ISSN": "0039-6028",
-      "abstractNote": "The adsorption site of pyridine (C5H5N) on Ni{111} has been investigated by scanned-energy mode photoelectron diffraction using the N 1s core level. It was found that the nitrogen atom adsorbs close to the atop position with an angle of 18\u00b0( + 2\u00b0\u2212 4\u00b0) between the N\ue5f8Ni bond and the surface normal. The N\ue5f8Ni bond length is 1.97 \u00b1 0.03 \u00c5. Since recent X-ray absorption studies show that the \u03c0 system of the pyridine is also tilted by about 20\u00b0 away from the surface normal, we conclude that the N\ue5f8Ni bond and the ring plane are co-planar.",
+      "abstractNote": "The adsorption site of pyridine (C5H5N) on Ni{111} has been investigated by scanned-energy mode photoelectron diffraction using the N 1s core level. It was found that the nitrogen atom adsorbs close to the atop position with an angle of 18°( + 2°− 4°) between the NNi bond and the surface normal. The NNi bond length is 1.97 ± 0.03 Å. Since recent X-ray absorption studies show that the π system of the pyridine is also tilted by about 20° away from the surface normal, we conclude that the NNi bond and the ring plane are co-planar.",
       "accessDate": "2018-07-17T09:51:47Z",
       "creators": [
         {
@@ -106,7 +106,7 @@
         {
           "creatorType": "author",
           "firstName": "M.",
-          "lastName": "Pol\u010dik"
+          "lastName": "Polčik"
         },
         {
           "creatorType": "author",
@@ -135,7 +135,7 @@
       "itemType": "journalArticle",
       "journalAbbreviation": "Surf. Sci.",
       "libraryCatalog": "ScienceDirect",
-      "pages": "L1\u2013L6",
+      "pages": "L1–L6",
       "publicationTitle": "Surface Science",
       "tags": [
         {

@@ -9,7 +9,7 @@
     "preferences": {
       "kuroshiro": true,
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
-      "citekeyFormat": "[auth.etal][veryshorttitle][year]",
+      "citekeyFormat": "authEtal2(creator=\"*\",initials=false,sep=\".\").fold + veryshorttitle + year",
       "itemObserverDelay": 100,
       "quickCopyMode": "pandoc",
       "quickCopyPandocBrackets": true
@@ -22,8 +22,8 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "\u76f4\u4eba",
-          "lastName": "\u6a0b\u53e3",
+          "firstName": "直人",
+          "lastName": "樋口",
           "multi": {
             "_key": {
               "ja-alalc97": {
@@ -49,7 +49,7 @@
             "ja-alalc97": "Nagoya"
           },
           "publisher": {
-            "ja-alalc97": "\u540d\u53e4\u5c4b\u5927\u5b66\u51fa\u7248\u4f1a"
+            "ja-alalc97": "名古屋大学出版会"
           },
           "title": {
             "en": "Questions about Japanese Xenophobia",
@@ -63,8 +63,8 @@
         }
       },
       "pages": "9-28",
-      "place": "\u540d\u53e4\u5c4b",
-      "publicationTitle": "\u65e5\u672c\u578b\u6392\u5916\u4e3b\u7fa9: \u5728\u7279\u4f1a\u30fb\u5916\u56fd\u4eba\u53c2\u653f\u6a29\u30fb\u6771\u30a2\u30b8\u30a2\u5730\u653f\u5b66",
+      "place": "名古屋",
+      "publicationTitle": "日本型排外主義: 在特会・外国人参政権・東アジア地政学",
       "publisher": "Nagoya Daigaku Shuppankai",
       "tags": [
         {
@@ -84,7 +84,7 @@
           "type": 1
         }
       ],
-      "title": "\u65e5\u672c\u578b\u6392\u5916\u4e3b\u7fa9\u3092\u3081\u3050\u308b\u554f\u3044"
+      "title": "日本型排外主義をめぐる問い"
     }
   ]
 }

@@ -3,7 +3,7 @@ import { HTMLParser } from '../../content/text'
 
 import type { MarkupNode } from '../../typings/markup'
 
-import { log } from '../../content/logger/simple'
+import { log } from '../../content/logger'
 import HE = require('he')
 import { Transform } from 'unicode2latex'
 
@@ -92,7 +92,12 @@ export class HTMLConverter {
       case 'em':
       case 'italic':
       case 'emphasis':
-        latex = '\\emph{...}'
+        if (this.translation.BetterBibTeX) {
+          latex = '\\emph{...}'
+        }
+        else {
+          latex = '\\mkbibemph{...}'
+        }
         break
 
       case 'b':

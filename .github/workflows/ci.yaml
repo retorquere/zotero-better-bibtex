@@ -15,11 +15,13 @@ jobs:
       slow: ${{ env.slow }}
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout repository
+      uses: actions/checkout@v4
       with:
         persist-credentials: false
-        submodules: true  # Fetch Hugo themes (true OR recursive)
-        fetch-depth: 0    # Fetch all history for .GitInfo and .Lastmod
+        fetch-depth: 1
+        submodules: true
+
     - name: get package version
       run: echo "version="`jq -r .version package.json` >> $GITHUB_ENV
     - name: cancel spurious build on tagged version
@@ -31,30 +33,18 @@ jobs:
       uses: actions/setup-python@v5
       with:
         python-version: '3.10'
-    - name: install node
-      uses: actions/setup-node@v4
-      with:
-        node-version: 20.x
-    - name: Cache python/node dependencies
-      id: cache
-      uses: actions/cache@v4
-      env:
-        cache-name: v3
-      with:
-        path: |
-          ~/.npm
-          ~/.nocache/pip
-          ${{ env.pythonLocation }}
-        key: ${{ runner.os }}-build-${{ env.pythonLocation }}-${{ env.cache-name }}-${{
-          hashFiles('package-lock.json') }}-${{ hashFiles('requirements.txt') }}
+        cache: pip
     - name: install python packages
       run: |
         python -m pip install --upgrade pip
         pip install packaging xvfbwrapper
         pip install -r requirements.txt
+    - name: install node
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20.x
     - name: install node packages
-      run: npm install
-
+      run: npm install && npm ls
     - name: set slow/legacy/beta flags
       run: ./util/action-flags
       env:
@@ -90,22 +80,45 @@ jobs:
           test/balance/
         retention-days: 1
 
-    # site
-    - name: build site
+  site:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    if: ${{ github.event_name == 'push' && (github.ref == 'refs/heads/master' || startsWith(github.ref,
+      'refs/tags/')) }}
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        persist-credentials: false
+        fetch-depth: 1
+        submodules: true
+
+    - name: install python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+        cache: pip
+    - name: install python packages
+      run: |
+        python -m pip install --upgrade pip
+        pip install packaging xvfbwrapper
+        pip install -r requirements.txt
+    - name: install node
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20.x
+    - name: install node packages
+      run: npm install && npm ls
+    - name: build site and install hugo
       uses: peaceiris/actions-hugo@v3
-      if: ${{ github.event_name == 'push' && (github.ref == 'refs/heads/master' ||
-        startsWith(github.ref, 'refs/tags/')) }}
       with:
         hugo-version: latest
         extended: true
     - name: prepare docs for deploy
       run: npm run docs:deploy
-      if: ${{ github.event_name == 'push' && (github.ref == 'refs/heads/master' ||
-        startsWith(github.ref, 'refs/tags/')) }}
     - name: deploy site
       uses: peaceiris/actions-gh-pages@v4
-      if: ${{ github.event_name == 'push' && (github.ref == 'refs/heads/master' ||
-        startsWith(github.ref, 'refs/tags/')) }}
+      if: ${{ success() }}
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./site/public
@@ -121,7 +134,13 @@ jobs:
         client: ${{ fromJSON(needs.build.outputs.clients) }}
         worker: [--worker, --no-worker]
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        persist-credentials: false
+        fetch-depth: 1
+        submodules: true
+
     - name: fetch build artifacts
       uses: actions/download-artifact@v4
       with:
@@ -130,30 +149,28 @@ jobs:
       uses: actions/setup-python@v5
       with:
         python-version: '3.10'
-    - name: Cache python/node dependencies
-      id: cache
-      uses: actions/cache@v4
-      env:
-        cache-name: v3
-      with:
-        path: |
-          ~/.npm
-          ~/.nocache/pip
-          ${{ env.pythonLocation }}
-        key: ${{ runner.os }}-build-${{ env.pythonLocation }}-${{ env.cache-name }}-${{
-          hashFiles('package-lock.json') }}-${{ hashFiles('requirements.txt') }}
+        cache: pip
     - name: install python packages
       run: |
         python -m pip install --upgrade pip
         pip install packaging xvfbwrapper
         pip install -r requirements.txt
 
+    - name: Set system-wide proxy using PAC URL
+      run: |
+        echo "auto_proxy=http://proxy-doc.ird.fr/proxy.pac" | sudo tee -a /etc/environment
+        echo "auto_proxy=http://proxy-doc.ird.fr/proxy.pac" >> $GITHUB_ENV
+
+    - name: Verify proxy settings
+      run: env | grep -i proxy
+
     - name: install ${{ matrix.client }}
       run: |
         curl -sL https://raw.githubusercontent.com/retorquere/zotero-deb/master/install.sh | sudo bash
         sudo apt-get update
         sudo apt-get install ${{ matrix.client }}
-        sudo apt-get install mesa-utils libegl1-mesa xvfb
+        sudo apt-get install mesa-utils xvfb
+        sudo apt-get install wmctrl xdotool
         curl -LO https://github.com/jgm/pandoc/releases/download/3.1.11.1/pandoc-3.1.11.1-linux-amd64.tar.gz
         tar xvzf pandoc-3.1.11.1-linux-amd64.tar.gz
         sudo mv pandoc-3.1.11.1/bin/pandoc /usr/bin
@@ -211,7 +228,13 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        persist-credentials: false
+        fetch-depth: 1
+        submodules: true
+
 
     - name: fetch build artifacts
       uses: actions/download-artifact@v4
@@ -221,30 +244,18 @@ jobs:
       uses: actions/setup-python@v5
       with:
         python-version: '3.10'
-    - name: install node
-      uses: actions/setup-node@v4
-      with:
-        node-version: 20.x
-    - name: Cache python/node dependencies
-      id: cache
-      uses: actions/cache@v4
-      env:
-        cache-name: v3
-      with:
-        path: |
-          ~/.npm
-          ~/.nocache/pip
-          ${{ env.pythonLocation }}
-        key: ${{ runner.os }}-build-${{ env.pythonLocation }}-${{ env.cache-name }}-${{
-          hashFiles('package-lock.json') }}-${{ hashFiles('requirements.txt') }}
+        cache: pip
     - name: install python packages
       run: |
         python -m pip install --upgrade pip
         pip install packaging xvfbwrapper
         pip install -r requirements.txt
+    - name: install node
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20.x
     - name: install node packages
-      run: npm install
-
+      run: npm install && npm ls
 
     - run: npm run release
       env:
@@ -269,11 +280,23 @@ jobs:
     - test
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        persist-credentials: false
+        fetch-depth: 1
+        submodules: true
+
     - name: install python
       uses: actions/setup-python@v5
       with:
         python-version: '3.10'
+        cache: pip
+    - name: install python packages
+      run: |
+        python -m pip install --upgrade pip
+        pip install packaging xvfbwrapper
+        pip install -r requirements.txt
     - name: fetch test artifacts
       uses: actions/download-artifact@v4
       with:

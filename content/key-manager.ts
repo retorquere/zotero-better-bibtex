@@ -1,10 +1,15 @@
-Components.utils.import('resource://gre/modules/Services.jsm')
+/*
+declare var Services: any
+if (typeof Services == 'undefined') {
+  var { Services } = ChromeUtils.import('resource://gre/modules/Services.jsm') // eslint-disable-line no-var
+}
+*/
 
 import { orchestrator } from './orchestrator'
 
 import ETA from 'node-eta'
 
-import { alert, prompt, PromptService } from './prompt'
+import { alert, prompt } from './prompt'
 
 import { kuroshiro } from './key-manager/japanese'
 import { chinese } from './key-manager/chinese'
@@ -28,7 +33,7 @@ import { createDB, createTable, Query, BlinkKey } from 'blinkdb'
 import * as blink from '../gen/blinkdb'
 import { Cache } from './db/cache'
 
-import * as $Patcher$ from './monkey-patch'
+import { monkey } from './monkey-patch'
 
 import { sprintf } from 'sprintf-js'
 import { newQueue } from '@henrygd/queue'
@@ -82,7 +87,7 @@ class Progress {
   done() {
     this.progress.setProgress(100)
     this.progress.setText('Ready')
-    this.win.startCloseTimer(500)
+    this.win.close()
   }
 }
 
@@ -91,7 +96,7 @@ export const KeyManager = new class _KeyManager {
   private queue = newQueue(1)
 
   // Table<CitekeyRecord, "itemID">
-  private keys = createTable<CitekeyRecord>(createDB({ clone: true }), 'citationKeys')({
+  public keys = createTable<CitekeyRecord>(createDB({ clone: true }), 'citationKeys')({
     primary: 'itemID',
     indexes: [ 'itemKey', 'libraryID', 'citationKey', 'lcCitationKey' ],
   })
@@ -178,13 +183,14 @@ export const KeyManager = new class _KeyManager {
       },
     }).length
     if (warnAt > 0 && affected > warnAt) {
-      const index = PromptService.confirmEx(
+      const ignore = { value: false }
+      const index = Services.prompt.confirmEx(
         null, // no parent
         'Better BibTeX for Zotero', // dialog title
         l10n.localize('better-bibtex_bulk-keys-confirm_warning', { treshold: warnAt }),
-        PromptService.STD_OK_CANCEL_BUTTONS + PromptService.BUTTON_POS_2 * PromptService.BUTTON_TITLE_IS_STRING, // buttons
+        Services.prompt.STD_OK_CANCEL_BUTTONS + Services.prompt.BUTTON_POS_2 * Services.prompt.BUTTON_TITLE_IS_STRING, // buttons
         null, null, l10n.localize('better-bibtex_bulk-keys-confirm_stop_asking'), // button labels
-        null, {} // no checkbox
+        null, ignore // no checkbox
       )
       switch (index) {
         case 0: // OK
@@ -200,7 +206,7 @@ export const KeyManager = new class _KeyManager {
     // clear before refresh so they can update without hitting "claimed keys" in the deleted set
     this.clear(ids)
 
-    const updates: ZoteroItem[] = []
+    const updates: Zotero.Item[] = []
     const progress: Progress = ids.length > 10 ? new Progress(ids.length, 'Refreshing citation keys') : null
     for (const item of await getItemsAsync(ids)) {
       if (item.isFeedItem || !item.isRegularItem()) continue
@@ -289,7 +295,7 @@ export const KeyManager = new class _KeyManager {
       localized: 'Citation Key',
     }
 
-    $Patcher$.schedule(Zotero.Search.prototype, 'addCondition', original => function addCondition(condition: string, operator: any, value: any, _required: any) {
+    monkey.patch(Zotero.Search.prototype, 'addCondition', original => function addCondition(condition: string, operator: any, value: any, _required: any) {
       // detect a quick search being set up
       if (condition.match(/^quicksearch/)) this.__add_bbt_citekey = true
       // creator is always added in a quick search so use it as a trigger
@@ -300,18 +306,18 @@ export const KeyManager = new class _KeyManager {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return, prefer-rest-params
       return original.apply(this, arguments)
     })
-    $Patcher$.schedule(Zotero.SearchConditions, 'hasOperator', original => function hasOperator(condition: string, operator: string | number) {
+    monkey.patch(Zotero.SearchConditions, 'hasOperator', original => function hasOperator(condition: string, operator: string | number) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       if (condition === citekeySearchCondition.name) return citekeySearchCondition.operators[operator]
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return, prefer-rest-params
       return original.apply(this, arguments)
     })
-    $Patcher$.schedule(Zotero.SearchConditions, 'get', original => function get(condition: string) {
+    monkey.patch(Zotero.SearchConditions, 'get', original => function get(condition: string) {
       if (condition === citekeySearchCondition.name) return citekeySearchCondition
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return, prefer-rest-params
       return original.apply(this, arguments)
     })
-    $Patcher$.schedule(Zotero.SearchConditions, 'getStandardConditions', original => function getStandardConditions() {
+    monkey.patch(Zotero.SearchConditions, 'getStandardConditions', original => function getStandardConditions() {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return, prefer-rest-params
       return original.apply(this, arguments).concat({
         name: citekeySearchCondition.name,
@@ -319,7 +325,7 @@ export const KeyManager = new class _KeyManager {
         operators: citekeySearchCondition.operators,
       }).sort((a: { localized: string }, b: { localized: any }) => a.localized.localeCompare(b.localized))
     })
-    $Patcher$.schedule(Zotero.SearchConditions, 'getLocalizedName', original => function getLocalizedName(str: string) {
+    monkey.patch(Zotero.SearchConditions, 'getLocalizedName', original => function getLocalizedName(str: string) {
       if (str === citekeySearchCondition.name) return citekeySearchCondition.localized
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return, prefer-rest-params
       return original.apply(this, arguments)
@@ -483,7 +489,7 @@ export const KeyManager = new class _KeyManager {
 
       const keys: Map<number, CitekeyRecord> = new Map
       let key: CitekeyRecord
-      for (key of await Zotero.DB.queryAsync('SELECT * from betterbibtex.citationkey')) {
+      for (key of await Zotero.DB.queryAsync('SELECT * from betterbibtex.citationkey') as CitekeyRecord[]) {
         keys.set(key.itemID, lc({ itemID: key.itemID, itemKey: key.itemKey, libraryID: key.libraryID, citationKey: key.citationKey, pinned: key.pinned }))
       }
 
@@ -518,7 +524,7 @@ export const KeyManager = new class _KeyManager {
         await Cache.touch(ids)
       }
       catch (err) {
-        log.error('Cache touch failed:', err)
+        log.error('Cache touch failed:', Object.keys(err))
       }
       finally {
         void Events.emit('items-changed', { items: Zotero.Items.get(ids), action })
@@ -552,23 +558,25 @@ export const KeyManager = new class _KeyManager {
       }),
     ]
 
-    // generate keys for entries that don't have them yet
-    const progress = new Progress(missing.length, 'Assigning citation keys')
-    for (const itemID of missing) {
-      try {
-        this.update(await getItemsAsync(itemID))
-      }
-      catch (err) {
-        log.error('KeyManager.rescan: update failed:', err.message || `${ err }`, err.stack)
+    if (missing.length) {
+      // generate keys for entries that don't have them yet
+      const progress = new Progress(missing.length, 'Assigning citation keys')
+      for (const itemID of missing) {
+        try {
+          this.update(await getItemsAsync(itemID))
+        }
+        catch (err) {
+          log.error('KeyManager.rescan: update failed:', err.message || `${ err }`, err.stack)
+        }
+
+        progress.next()
       }
 
-      progress.next()
+      progress.done()
     }
-
-    progress.done()
   }
 
-  public update(item: ZoteroItem, current?: CitekeyRecord): string {
+  public update(item: Zotero.Item, current?: CitekeyRecord): string {
     if (item.isFeedItem || !item.isRegularItem()) return null
 
     current = current || blink.first(this.keys, byItemID(item.id))
@@ -612,8 +620,8 @@ export const KeyManager = new class _KeyManager {
   }
 
   // mem is for https://github.com/retorquere/zotero-better-bibtex/issues/2926
-  public propose(item: ZoteroItem, mem?: Set<string>): Partial<CitekeyRecord> {
-    let citationKey: string = Extra.get(item.getField('extra') as string, 'zotero', { citationKey: true }).extraFields.citationKey
+  public propose(item: Zotero.Item, mem?: Set<string>): Partial<CitekeyRecord> {
+    let citationKey: string = Extra.get(item.getField('extra'), 'zotero', { citationKey: true }).extraFields.citationKey
 
     if (citationKey) return { citationKey, pinned: true }
 

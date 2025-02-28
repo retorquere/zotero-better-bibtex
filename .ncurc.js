@@ -1,1 +1,3 @@
-module.exports = require('zotero-plugin/.ncurc')
+module.exports = {
+  reject: ['eslint', '@stylistic/eslint-plugin']
+}

@@ -11,7 +11,7 @@
 }
 
 @inreference{Blair2004,
-  title = {Frithuswith ({\emph{d.}} 727)},
+  title = {Frithuswith ({\mkbibemph{d.}} 727)},
   booktitle = {Oxford Dictionary of National Biography},
   author = {Blair, John},
   editor = {Matthew, H.C.G. and Harrison, Brian Howard},

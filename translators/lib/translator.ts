@@ -1,9 +1,8 @@
 declare const Zotero: any
 declare const __estrace: any // eslint-disable-line no-underscore-dangle
 
-import { Shim } from '../../content/os'
 import * as client from '../../content/client'
-const $OS = client.is7 ? Shim : OS
+import { Path } from '../../content/file'
 
 import * as Prefs from '../../gen/preferences/meta'
 const PrefNames: Set<string> = new Set(Object.keys(Prefs.defaults))
@@ -12,7 +11,7 @@ import { regex as escapeRE } from '../../content/escape'
 import { Collection, Attachment } from '../../gen/typings/serialized-item'
 import type { Exporter as BibTeXExporter } from '../bibtex/exporter'
 import type { CharMap } from 'unicode2latex'
-import { log } from '../../content/logger/simple'
+import { log } from '../../content/logger'
 import type { Collected } from './collect'
 
 export type Output = {
@@ -37,10 +36,10 @@ class Override {
       return false
     }
 
-    const candidates = [
-      $OS.Path.basename(this.exportPath).replace(/\.[^.]+$/, '') + extension,
+    const candidates: string[] = [
+      Path.basename(this.exportPath).replace(/\.[^.]+$/, '') + extension,
       override,
-    ].map(filename => <string>$OS.Path.join(this.exportDir, filename))
+    ].map(filename => PathUtils.join(this.exportDir, filename))
 
     for (const candidate of candidates) {
       try {

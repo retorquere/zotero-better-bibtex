@@ -7,7 +7,7 @@ export type Allow = {
 import type { Translation } from '../lib/translator'
 
 import type { Fields as ExtraFields } from '../../content/extra'
-import { log } from '../../content/logger/simple'
+import { log } from '../../content/logger'
 
 export type Postscript = (target: any, source: any, translator: Translation, extra: ExtraFields) => Allow
 

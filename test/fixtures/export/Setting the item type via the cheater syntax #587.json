@@ -9,12 +9,12 @@
     "preferences": {
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
       "autoExport": "idle",
-      "citekeyFormat": "[zotero]"
+      "citekeyFormat": "zotero"
     }
   },
   "items": [
     {
-      "abstractNote": "Example from CMoS, 16e, 14.269\n\u201cPrepared from the autographs and earliest printed sources by Nathan\nBroder\u201d",
+      "abstractNote": "Example from CMoS, 16e, 14.269\n“Prepared from the autographs and earliest printed sources by Nathan\nBroder”",
       "creators": [
         {
           "creatorType": "author",
@@ -58,7 +58,7 @@
       "title": "Mesopotamia: between two rivers"
     },
     {
-      "abstractNote": "Example from CMoS, 16e, 14.215\n\u201ced. and trans. John Charles Chasteen\u201d",
+      "abstractNote": "Example from CMoS, 16e, 14.215\n“ed. and trans. John Charles Chasteen”",
       "creators": [
         {
           "creatorType": "author",
@@ -80,7 +80,7 @@
       "notes": [
         "<p>biblatex-chicago example, adapted from <a href=\"http://mirrors.ctan.org/macros/latex/contrib/biblatex-contrib/biblatex-chicago/doc/examples/dates-test.bib\">http://mirrors.ctan.org/macros/latex/contrib/biblatex-contrib/biblatex-chicago/doc/examples/dates-test.bib</a></p>\n<p>Original annotation:</p>\n<p>*16th edition only.* A Review entry presenting a review from a scholarly journaltitle, hence no entrysubtype needed.&nbsp;&nbsp;Note the bibstrings in the title of the review, and the formatting of the title of the book reviewed there.&nbsp;&nbsp;Also note the use of \\parteditandtrans.&nbsp;&nbsp;The author-date system doesn't absolutely require the use of these mechanisms, which were invented to cope with the differences between notes and bibliography in the other Chicago style.&nbsp;&nbsp;Still, although simply writing \"edited and translated by\" yourself will suffice, using these mechanisms will make your .bib file work across multiple languages, and will also allow it to work, with fewer modifications, in the notes \\&amp; bibliography style, should that be needed.&nbsp;&nbsp;See next entry.</p>\n<p>&nbsp;</p>\n<p>Example from CMoS, 16e, 14.125</p>"
       ],
-      "pages": "B13\u2013B14",
+      "pages": "B13–B14",
       "publicationTitle": "Lingua Franca",
       "title": "The mystery of samba: Popular music and national identity in Brazil",
       "volume": "9"
@@ -114,7 +114,7 @@
       "date": "2006-04-23",
       "extra": [
         "type: review-book",
-        "reviewed-title: The omnivore\u2019s dilemma: a natural history of four meals"
+        "reviewed-title: The omnivore’s dilemma: a natural history of four meals"
       ],
       "itemID": 1,
       "itemType": "newspaperArticle",

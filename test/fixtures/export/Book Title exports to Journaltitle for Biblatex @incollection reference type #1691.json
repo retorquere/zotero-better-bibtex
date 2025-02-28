@@ -13,7 +13,7 @@
       "auxImport": true,
       "biblatexExtendedNameFormat": true,
       "citekeyFold": false,
-      "citekeyFormat": "[Auth][Title:skipwords:capitalize:select=1,1:split-ideographs:select=1,3:nopunct][year]",
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false) + Title.skipwords.capitalize.select(1,1).ideographs.select(1,3).nopunct + year",
       "importCaseProtection": "off",
       "qualityReport": true,
       "quickCopyMode": "orgRef",
@@ -24,10 +24,9 @@
   },
   "items": [
     {
-      "abstractNote": "Le colloque international \u00ab\u00a0Cultural History of Emotions in Premodernity\u00a0\u00bb s\u2019est tenu du 23 au 26 octobre \u00e0 l\u2019universit\u00e9 d\u2019Ume\u00e5 dans le nord de la Su\u00e8de. Piroska Nagy (UQAM) a prononc\u00e9 le 23 octobre la premi\u00e8re conf\u00e9rence pleini\u00e8re. EMMA vous en propose le texte en exclusivit\u00e9 : Historians and Emotions: New Theories, New Questions Piroska NAGY \u2026 Continuer la lecture de Historians and Emotions: New Theories, New Questions \u2192",
+      "abstractNote": "Le colloque international « Cultural History of Emotions in Premodernity » s’est tenu du 23 au 26 octobre à l’université d’Umeå dans le nord de la Suède. Piroska Nagy (UQAM) a prononcé le 23 octobre la première conférence pleinière. EMMA vous en propose le texte en exclusivité : Historians and Emotions: New Theories, New Questions Piroska NAGY … Continuer la lecture de Historians and Emotions: New Theories, New Questions →",
       "accessDate": "2017-12-12T08:19:14Z",
-      "attachments": [
-      ],
+      "attachments": [],
       "citationKey": "NagyHistorians2008",
       "creators": [
         {
@@ -44,41 +43,41 @@
       "date": "24 octobre 2008",
       "itemID": 2,
       "itemType": "blogPost",
-      "publicationTitle": "Les \u00e9motions au Moyen \u00c2ge, carnet d'EMMA",
+      "publicationTitle": "Les émotions au Moyen Âge, carnet d'EMMA",
       "shortTitle": "Historians and Emotions",
       "title": "Historians and Emotions: New Theories, New Questions",
       "type": "Billet",
       "url": "http://emma.hypotheses.org/147"
     },
     {
-      "abstractNote": "\u300a\u4e2d\u570b\u53e4\u4ee3\u54f2\u5b78\u53f2\u300b\u539f\u540d\u300a\u4e2d\u570b\u54f2\u5b78\u53f2\u5927\u7db1\u300b\u5377\u4e0a\uff0c\u672c\u66f8\u6700\u521d\u662f\u80e1\u90691917\u5e749\u6708\u4ee5\u5f8c\u5728\u5317\u4eac\u5357\u5b78\u8b1b\u6388\u300a\u4e2d\u570b\u54f2\u5b78\u53f2\u5927\u7db1\u300b\u4e00\u8ab2\u7684\u8b1b\u7a3f\uff0c\u5728\u6821\u5167\u66fe\u4f5c\u70ba\u8b1b\u7fa9\u6cb9\u5370\u30021919\u5e742\u6708\u5546\u52d9\u5370\u66f8\u9928\u51fa\u7248\uff0c\u81f31930\u5e74\u5df2\u51fa15\u7248\u30021930\u5e74\u6536\u5165\u300c\u842c\u6709\u6587\u5eab\u300d\uff0c\u66f8\u540d\u6539\u4f5c\u300a\u4e2d\u570b\u53e4\u4ee3\u54f2\u5b78\u53f2\u300b\uff08\u4e09\u518a\uff09\u30021958\u5e74\u53f0\u5317\u5546\u52d9\u5370\u66f8\u9928\u6539\u7248\u91cd\u5370\uff0c\u80e1\u9069\u65b0\u589e\u300a\u3008\u4e2d\u570b\u53e4\u4ee3\u54f2\u5b78\u53f2\u3009\u53f0\u5317\u7248\u81ea\u8a18\u300b\uff0c\u4e26\u5728\u66f8\u5f8c\u505a\u4e86\u4e00\u500b\u300c\u6b63\u8aa4\u8868\u300d\u3002\u73fe\u64da1958\u5e74\u53f0\u5317\u5546\u52d9\u7248\u6536\u5165\u3002",
-      "citationKey": "\u80e1\u9069\u54f2\u5b78\u53f21917",
+      "abstractNote": "《中國古代哲學史》原名《中國哲學史大綱》卷上，本書最初是胡適1917年9月以後在北京南學講授《中國哲學史大綱》一課的講稿，在校內曾作為講義油印。1919年2月商務印書館出版，至1930年已出15版。1930年收入「萬有文庫」，書名改作《中國古代哲學史》（三冊）。1958年台北商務印書館改版重印，胡適新增《〈中國古代哲學史〉台北版自記》，並在書後做了一個「正誤表」。現據1958年台北商務版收入。",
+      "citationKey": "胡適哲學史1917",
       "creators": [
         {
           "creatorType": "author",
-          "name": "\u80e1\u9069"
+          "name": "胡適"
         },
         {
           "creatorType": "editor",
-          "name": "\u6b50\u967d\u54f2\u751f"
+          "name": "歐陽哲生"
         }
       ],
       "date": "1998",
       "extra": [
         "tex.referencetype: incollection",
-        "citation-key:\u80e1\u9069\u54f2\u5b78\u53f21917",
+        "citation-key:胡適哲學史1917",
         "tex.origdate:1930",
-        "tex.origpublisher:\u842c\u6709\u6587\u5eab",
-        "tex.origtitle:\u4e2d\u570b\u54f2\u5b78\u53f2\u5927\u7db1\u5377\u4e0a[1919]\uff0c\u5546\u52d9"
+        "tex.origpublisher:萬有文庫",
+        "tex.origtitle:中國哲學史大綱卷上[1919]，商務"
       ],
       "itemID": 1,
       "itemType": "bookSection",
       "pages": "155-422",
-      "place": "\u5317\u4eac",
-      "publicationTitle": "\u80e1\u9069\u6587\u96c6",
-      "publisher": "\u5317\u4eac\u5927\u5b78",
-      "title": "\u4e2d\u570b\u53e4\u4ee3\u54f2\u5b78\u53f2",
-      "volume": "\u518a6"
+      "place": "北京",
+      "publicationTitle": "胡適文集",
+      "publisher": "北京大學",
+      "title": "中國古代哲學史",
+      "volume": "冊6"
     }
   ]
 }

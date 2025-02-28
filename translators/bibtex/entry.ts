@@ -20,7 +20,7 @@ import * as ExtraFields from '../../gen/items/extra-fields.json'
 import { label as propertyLabel } from '../../gen/items/items'
 import type { Fields as ParsedExtraFields } from '../../content/extra'
 import { zoteroCreator as ExtraZoteroCreator } from '../../content/extra'
-import { log } from '../../content/logger/simple'
+import { log } from '../../content/logger'
 import { babelLanguage, titleCase } from '../../content/text'
 import BabelTag from '../../gen/babel/tag.json'
 
@@ -170,7 +170,8 @@ export class Entry {
   public eprintType = {
     arxiv: 'arXiv',
     jstor: 'JSTOR',
-    pubmed: 'PMID',
+    pmid: 'pubmed',
+    pmcid: 'pubmed',
     hdl: 'HDL',
     googlebooks: 'GoogleBooksID',
   }
@@ -404,7 +405,9 @@ export class Entry {
   }
 
   /** normalize dashes, mainly for use in `pages` */
-  public normalizeDashes(ranges: string): string {
+  public normalizeDashes(ranges: string | number): string {
+    if (typeof ranges === 'number') return `${ranges}`
+
     ranges = (ranges || '').trim()
 
     if (this.item.raw) return ranges
@@ -506,7 +509,7 @@ export class Entry {
 
       if (!this.inPostscript && !field.replace) {
         const value = field.bibtex ? 'bibtex' : 'value'
-        throw new Error(`duplicate field '${ field.name }' for ${ this.item.citationKey }: old: ${ this.has[field.name][value] }, new: ${ field[value] }`)
+        throw new Error(`duplicate field '${ field.name }' for ${ this.item.citationKey }: old: ${ this.has[field.name][value] }, new: ${ field[value] as string }`)
       }
 
       if (!field.replace) {
@@ -528,7 +531,7 @@ export class Entry {
     if (!field.bibtex) {
       let bibstring = ''
       if ((typeof field.value === 'number') || (field.bibtexStrings && (bibstring = this.getBibString(field.value)))) {
-        field.bibtex = `${ bibstring || field.value }`
+        field.bibtex = `${ bibstring || field.value as string }`
       }
       else {
         let value
@@ -1344,9 +1347,9 @@ export class Entry {
         const initials = Zotero.Utilities.XRegExp.exec(name.initials, this.re.allCaps)
           ? name.initials
           : name.initials
-            .split(/[\s.]+/)
-            .map(initial => initial.length > 1 ? `<span class="nocase">${ initial }</span>` : initial)
-            .join('')
+              .split(/[\s.]+/)
+              .map(initial => initial.length > 1 ? `<span class="nocase">${ initial }</span>` : initial)
+              .join('')
         namebuilder.push(`given-i=${ this._enc_creator_part(initials) }`)
       }
       if (name.suffix) namebuilder.push(`suffix=${ this._enc_creator_part(name.suffix) }`)

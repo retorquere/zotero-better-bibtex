@@ -54,7 +54,7 @@ export async function get(path: string, create = false): Promise<any> {
   const root = names.shift()
   if (names.length === 0) throw new CollectionError('path is too short', 'notfound')
 
-  let collection = root.match(/^[0-9]+$/) ? Zotero.Libraries.get(root) : getLibrary(root)
+  let collection = root.match(/^\d+$/) ? Zotero.Libraries.get(parseInt(root)) : getLibrary(root)
   if (!collection) throw new CollectionError(`Library ${ root } not found`, 'notfound')
   let tmp_path = `/${ root }`
 

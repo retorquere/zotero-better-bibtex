@@ -1,7 +1,7 @@
 import type { Collected } from './collect'
 import type { Library } from './normalize'
 
-import { log } from '../../content/logger/simple'
+import { log } from '../../content/logger'
 import { Translation } from './translator'
 import { simplifyForExport, simplifyForImport } from '../../gen/items/simplify'
 const version = require('../../gen/version.js')

@@ -1,0 +1,92 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "preferences": {
+      "baseAttachmentPath": "E:\\NewSyn\\02-Papers\\RefPaper",
+      "citekeyFold": false,
+      "citekeyFormat": "year + \"_\" + auth + \"_p\" + firstpage + \"-\" + lastpage",
+      "keyScope": "global"
+    }
+  },
+  "items": [
+    {
+      "DOI": "10.13224/j.cnki.jasp.2016.10.015",
+      "abstractNote": "利用Concept NREC软件建立离心压气机叶轮设计样本库,借助BP(back propagation)人工神经网络建立样本库中各设计参数与压气机性能之间的关系,接下来以多目标遗传算法寻找Pareto解,从而获得离心压气机叶轮最佳设计参数.将该方法应用于Krain叶轮设计工况,所得叶轮的效率、压比较Krain叶轮原型分别提高1.4%和10.9%.通过对人工神经网络模型可靠性的讨论、多目标优化模型的主成分分析和所设计叶轮性能的CFD验证,证明了所构建的目标函数与所获得的Pareto解集的合理性,说明本方法可以有效应用于在离心压气机设计、选型.",
+      "accessDate": "2024-11-07T15:12:29Z",
+      "citationKey": "2016_罗明_p2424-2424",
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "罗明"
+        },
+        {
+          "creatorType": "author",
+          "name": "左志涛"
+        },
+        {
+          "creatorType": "author",
+          "name": "李弘扬"
+        },
+        {
+          "creatorType": "author",
+          "name": "李文"
+        },
+        {
+          "creatorType": "author",
+          "name": "陈海生"
+        }
+      ],
+      "date": "2016",
+      "extra": [
+        "foundation: 国家高技术研究发展计划(2013AA050801)； 科技部国际合作项目(2014DFA60600)；",
+        "download: 902",
+        "album: 工程科技Ⅱ辑",
+        "CLC: TH452",
+        "dbcode: CJFQ",
+        "dbname: CJFDLAST2016",
+        "filename: HKDI201610015"
+      ],
+      "issue": "10",
+      "itemID": 1,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "航空动力学报",
+      "language": "zh-CN",
+      "libraryCatalog": "CNKI",
+      "pages": "2424-2431",
+      "publicationTitle": "航空动力学报",
+      "tags": [
+        {
+          "tag": "/unread",
+          "type": 1
+        },
+        {
+          "tag": "machine learning"
+        },
+        {
+          "tag": "主成分分析",
+          "type": 1
+        },
+        {
+          "tag": "人工神经网络",
+          "type": 1
+        },
+        {
+          "tag": "多目标优化",
+          "type": 1
+        },
+        {
+          "tag": "离心压气机叶轮设计",
+          "type": 1
+        },
+        {
+          "tag": "遗传算法",
+          "type": 1
+        }
+      ],
+      "title": "基于bp人工神经网络的离心压气机叶轮多目标优化设计方法",
+      "url": "https://doi.org/10.13224/j.cnki.jasp.2016.10.015",
+      "volume": "31"
+    }
+  ]
+}

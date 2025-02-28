@@ -8,7 +8,7 @@
     },
     "preferences": {
       "asciiBibLaTeX": true,
-      "citekeyFormat": "[auth]_[title]_[year]",
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold + \"_\" + title + \"_\" + year",
       "itemObserverDelay": 100
     }
   },
@@ -29,7 +29,7 @@
       "language": "Dutch",
       "pages": "123  ----      432",
       "publicationTitle": "Proceedings of the test",
-      "title": "<span class=\"novase\">A-D test </span>title with lower case greek letter \u03bcPC4570, which is not the same as 1\u00b5F"
+      "title": "<span class=\"novase\">A-D test </span>title with lower case greek letter μPC4570, which is not the same as 1µF"
     },
     {
       "citationKey": "noauthor_nec_nodate",
@@ -38,7 +38,7 @@
       "notes": [
         "<p>In Yamaha tuner IC101 en IC102</p>"
       ],
-      "title": "NEC \u00b5PC577H Tri state hex buffers"
+      "title": "NEC µPC577H Tri state hex buffers"
     }
   ]
 }

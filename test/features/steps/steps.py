@@ -392,10 +392,6 @@ def step_impl(context, expected, found):
   expected = expand_scenario_variables(context, expected)
   if expected.startswith('~/'):
     expected = os.path.join(context.tmpDir, expected[2:])
-  else:
-    expected = os.path.join(ROOT, 'test/fixtures', expected)
-  with open(expected) as f:
-    expected = f.read()
 
   if found.startswith('~/'):
     found = os.path.join(context.tmpDir, found[2:])
@@ -404,7 +400,7 @@ def step_impl(context, expected, found):
   with open(found) as f:
     found = f.read()
 
-  assert_equal_diff(expected, found)
+  context.zotero.comparelib(expected=expected, found = found)
 
 @step(u'I wait {seconds:d} seconds')
 def step_impl(context, seconds):
@@ -439,7 +435,7 @@ def step_impl(context):
 
 @step(u'I copy date-added/date-modified for the selected items from the extra field')
 def step_impl(context):
-  context.zotero.execute('Zotero.getActiveZoteroPane().BetterBibTeX.patchDates()')
+  context.zotero.execute('Zotero.BetterBibTeX.MenuHelper.patchDates()')
 
 @step('I change {param} to {value} on the auto-export')
 def step_impl(context, param, value):
@@ -487,3 +483,9 @@ def step_impl(context):
   column_styles = [ pytablewriter.style.Style(align='left') for h in headers ]
   writer = pytablewriter.MarkdownTableWriter(headers=headers, value_matrix=rows, column_styles=column_styles, margin=1)
   utils.print('\n' + writer.dumps())
+
+@then(u'the citation key should be "{expected}"')
+def step_impl(context, expected):
+  assert type(context.selected) == list and len(context.selected) == 1, context.selected
+  found = context.zotero.execute('return await Zotero.BetterBibTeX.TestSupport.citationKey(itemID)', itemID=context.selected[0])
+  assert found == expected, { 'expected': expected, 'found': found }

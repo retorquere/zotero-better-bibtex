@@ -1,6 +1,6 @@
 checkbox(label="&better-bibtex_preferences_auto-abbrev.label;" preference="extensions.zotero.translators.better-bibtex.autoAbbrev")
 
-separator.bbt-jurism
+//- separator.bbt-jurism
 
 html:div
   label(bbt:preference="extensions.zotero.translators.better-bibtex.exportSort") &better-bibtex_preferences_export_sort;
@@ -10,7 +10,7 @@ html:div
       menuitem(value='id' label='&better-bibtex_preferences_export_sort_id.label;')
       menuitem(value='citekey' label='&better-bibtex_preferences_export_sort_citekey.label;')
 
-html:div
+//- html:div.bbt-jurism
   label.bbt-jurism(bbt:preference="extensions.zotero.translators.better-bibtex.autoAbbrevStyle") &better-bibtex_preferences_auto-abbrev_style;
   menulist#bbt-abbrev-style.bbt-jurism(oncommand="Zotero.BetterBibTeX.PrefPane.styleChanged()")
     menupopup

@@ -11,7 +11,7 @@
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
       "autoExport": "idle",
       "bibtexURL": "note",
-      "citekeyFormat": "[auth][origyear]",
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold + origyear",
       "keyConflictPolicy": "change",
       "skipFields": "file,isbn,issn,abstract,keywords,copyright,language,timestamp,urldate,note"
     }
@@ -40,11 +40,11 @@
       "itemType": "bookSection",
       "language": "de",
       "libraryCatalog": "link.springer.com",
-      "pages": "145\u2013160",
+      "pages": "145–160",
       "publicationTitle": "Sozialpolitik und Sozialstaat: Soziologische Analysen",
-      "publisher": "VS Verlag f\u00fcr Sozialwissenschaften",
-      "rights": "\u00a92002 VS Verlag f\u00fcr Sozialwissenschaften | Springer Fachmedien Wiesbaden GmbH, Wiesbaden",
-      "title": "Sozialpolitik und Bev\u00f6lkerungsproze\u00df",
+      "publisher": "VS Verlag für Sozialwissenschaften",
+      "rights": "©2002 VS Verlag für Sozialwissenschaften | Springer Fachmedien Wiesbaden GmbH, Wiesbaden",
+      "title": "Sozialpolitik und Bevölkerungsprozeß",
       "url": "http://link.springer.com/chapter/10.1007/978-3-322-99962-7_7"
     },
     {
@@ -70,10 +70,10 @@
       "itemType": "bookSection",
       "language": "de",
       "libraryCatalog": "link.springer.com",
-      "pages": "241\u2013260",
+      "pages": "241–260",
       "publicationTitle": "Sozialpolitik und Sozialstaat: Soziologische Analysen",
-      "publisher": "VS Verlag f\u00fcr Sozialwissenschaften",
-      "rights": "\u00a92002 VS Verlag f\u00fcr Sozialwissenschaften | Springer Fachmedien Wiesbaden GmbH, Wiesbaden",
+      "publisher": "VS Verlag für Sozialwissenschaften",
+      "rights": "©2002 VS Verlag für Sozialwissenschaften | Springer Fachmedien Wiesbaden GmbH, Wiesbaden",
       "title": "Schwindet die integrative Funktion des Sozialstaates?",
       "url": "http://link.springer.com/chapter/10.1007/978-3-322-99962-7_11"
     }

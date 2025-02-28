@@ -21,10 +21,15 @@ export const valid: Valid = {
       %for field, client in sorted(fields.items()):
       ${field}: ${client},
       %endfor
+      %if itemType == 'xdataset':
+      citationKey: zotero && client.isBeta,
+      %endif
     },
     %endfor
   },
 }
+
+export type ZoteroItemType = keyof typeof valid.type
 
 export const name: Record<'type' | 'field', Record<string, string>> = {
 %for section in ['type', 'field']:

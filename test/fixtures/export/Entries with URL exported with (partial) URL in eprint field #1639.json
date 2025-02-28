@@ -11,8 +11,8 @@
       "automaticTags": false,
       "biblatexExtractEprint": false,
       "citeCommand": "",
-      "citekeyFormat": "[authors2][year]",
-      "csquotes": "\u201c\u201d",
+      "citekeyFormat": "authorsn(n=2,creator=\"*\",initials=false,sep=\" \").fold + year",
+      "csquotes": "“”",
       "qualityReport": true,
       "quickCopyMode": "citekeys",
       "skipFields": "abstract,series,number,isbn,issn"

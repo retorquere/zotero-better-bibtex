@@ -6,7 +6,7 @@
     "preferences": {
       "asciiBibTeX": false,
       "bibtexURL": "note",
-      "citekeyFormat": "[auth][year]"
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold + year"
     }
   },
   "items": [
@@ -26,13 +26,13 @@
           "lastName": "Snyder"
         }
       ],
-      "date": "\u56db\u6708 1, 1976",
+      "date": "四月 1, 1976",
       "issue": "4",
       "itemID": 1,
       "itemType": "journalArticle",
       "journalAbbreviation": "Appl. Opt.",
       "libraryCatalog": "Optical Society of America",
-      "pages": "1040\u20131044",
+      "pages": "1040–1044",
       "publicationTitle": "Applied Optics",
       "shortTitle": "Leaky modes on a dielectric waveguide",
       "title": "Leaky modes on a dielectric waveguide: orthogonality and excitation",

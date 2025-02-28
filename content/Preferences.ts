@@ -1,10 +1,5 @@
-Components.utils.import('resource://gre/modules/Services.jsm')
-
-import { Shim } from './os'
 import * as client from './client'
-const $OS = client.is7 ? Shim : OS
-
-import type { XUL } from '../typings/xul'
+import { Path } from './file'
 
 import { log } from './logger'
 
@@ -15,7 +10,7 @@ import { AutoExport } from './auto-export'
 import { Translators } from './translators'
 import * as l10n from './l10n'
 import { Events } from './events'
-import { pick } from './file-picker'
+import { FilePickerHelper } from 'zotero-plugin-toolkit'
 import { flash } from './flash'
 import { icons } from './icons'
 import { Cache } from './db/cache'
@@ -45,7 +40,7 @@ Events.on('preference-changed', (pref: string) => {
   }
 })
 
-function setQuickCopy(node: XUL.Menuitem): void {
+function setQuickCopy(node: XUL.MenuItem): void {
   if (!node) return
 
   let mode = ''
@@ -92,7 +87,7 @@ class ZoteroPreferences {
         this.observed = [...node.getElementsByTagNameNS('http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul', 'menulist')].find(added => added.id === 'zotero-quickCopy-menu')
         this.observer.observe(this.observed, { childList: true, subtree: true })
       }
-      else if (this.observed?.tagName === 'menulist' && (node = [...mutation.addedNodes].find((added: XUL.Menuitem) => added.tagName === 'menuitem' && added.label?.match(/Better BibTeX.*Quick Copy/)))) {
+      else if (this.observed?.tagName === 'menulist' && (node = [...mutation.addedNodes].find((added: XUL.MenuItem) => added.tagName === 'menuitem' && added.label?.match(/Better BibTeX.*Quick Copy/)))) {
         node.id = 'translator-bbt-quick-copy'
         setQuickCopy(node)
       }
@@ -115,9 +110,9 @@ class AutoExportPane {
     await this.refresh()
 
     Events.on('export-progress', async ({ pct, ae }) => {
-      this.cacherate[ae] = await AutoExport.cached(ae)
-      if (pct >= 100 && typeof ae === 'number') {
-        await this.refresh(ae)
+      if (ae) {
+        this.cacherate[ae] = await AutoExport.cached(ae)
+        if (pct >= 100) await this.refresh(ae)
       }
     })
   }
@@ -126,8 +121,7 @@ class AutoExportPane {
     let label: string = { library: icons.computer, collection: icons.folder }[ae.type]
     label += ` ${ this.name(ae, 'short') }`
     label += ` (${ Translators.byId[ae.translatorID].label })`
-    const path = ae.path.startsWith($OS.Constants.Path.homeDir) ? ae.path.replace($OS.Constants.Path.homeDir, '~') : ae.path
-    label += ` ${ path }`
+    label += ` ${ae.path.replace(Path.home, '~')}`
     return label
   }
 
@@ -140,7 +134,7 @@ class AutoExportPane {
     if (details) details.style.display = auto_exports.length ? 'grid' : 'none'
     if (!auto_exports.length) return null
 
-    const menulist: XUL.Menulist = doc.querySelector<HTMLElement>('#bbt-prefs-auto-export-select') as XUL.Menulist
+    const menulist = doc.querySelector<XUL.MenuList>('#bbt-prefs-auto-export-select')
     const menupopup = doc.querySelector('#bbt-prefs-auto-export-select menupopup')
     let selected
     if (menulist.selectedItem) {
@@ -149,7 +143,7 @@ class AutoExportPane {
     }
 
     // list changed
-    if (Array.from(menupopup.children).map(ae => (ae as unknown as XUL.Menuitem).value).join('\t') !== auto_exports.map(ae => ae.path).join('\t')) {
+    if (Array.from(menupopup.children).map(ae => (ae as unknown as XUL.MenuItem).value).join('\t') !== auto_exports.map(ae => ae.path).join('\t')) {
       menulist.querySelectorAll('menuitem').forEach(e => e.remove())
       for (const ae of auto_exports) {
         const menuitem = menulist.appendItem(this.label(ae), ae.path)
@@ -172,7 +166,7 @@ class AutoExportPane {
         node.style.display = node.classList.contains(displayed) ? 'initial' : 'none'
       }
 
-      for (const node of Array.from(details.querySelectorAll('*[data-ae-field]'))) {
+      for (const node of Array.from(details.querySelectorAll('*[data-ae-field]')) as HTMLElement[]) {
         const field = node.getAttribute('data-ae-field')
 
         switch (field) {
@@ -210,7 +204,7 @@ class AutoExportPane {
 
           case 'DOIandURL':
           case 'bibtexURL':
-            (node as unknown as XUL.Menulist).value = selected[field]
+            (node as unknown as XUL.MenuList).value = selected[field]
             break
 
           case 'cacherate':
@@ -247,7 +241,7 @@ class AutoExportPane {
   }
 
   public async remove() {
-    const menulist: XUL.Menulist = $window.document.querySelector('#bbt-prefs-auto-export-select') as unknown as XUL.Menulist
+    const menulist: XUL.MenuList = $window.document.querySelector('#bbt-prefs-auto-export-select') as unknown as XUL.MenuList
     if (!menulist.selectedItem) return
 
     if (!Services.prompt.confirm(null, l10n.localize('better-bibtex_auto-export_delete'), l10n.localize('better-bibtex_auto-export_delete_confirm'))) return
@@ -260,7 +254,7 @@ class AutoExportPane {
   }
 
   public async run() {
-    const menulist: XUL.Menulist = $window.document.querySelector('#bbt-prefs-auto-export-select') as unknown as XUL.Menulist
+    const menulist: XUL.MenuList = $window.document.querySelector('#bbt-prefs-auto-export-select') as unknown as XUL.MenuList
     if (!menulist.selectedItem) return
 
     AutoExport.run(menulist.selectedItem.getAttribute('value'))
@@ -270,7 +264,7 @@ class AutoExportPane {
   public async edit(node) {
     let path: string
     if (!(path = node.getAttribute('data-ae-path'))) {
-      const menulist: XUL.Menulist = $window.document.querySelector('#bbt-prefs-auto-export-select') as unknown as XUL.Menulist
+      const menulist: XUL.MenuList = $window.document.querySelector('#bbt-prefs-auto-export-select') as unknown as XUL.MenuList
       path = menulist.selectedItem.getAttribute('value')
     }
     const ae = AutoExport.get(path)
@@ -320,18 +314,22 @@ class AutoExportPane {
     const coll = Zotero.Collections.get(id)
     if (!coll) return ''
 
-    if (form === 'long' && !isNaN(parseInt(coll.parentID))) {
-      return `${ this.collection(coll.parentID, form) } / ${ coll.name }`
+    if (form === 'long') {
+      return `${this.collection(coll.parentID, form)} / ${coll.name}`
     }
     else {
-      return `${ Zotero.Libraries.get(coll.libraryID).name } : ${ coll.name }`
+      const lib = Zotero.Libraries.get(coll.libraryID)
+
+      return `${lib ? lib.name : `:${coll.libraryID}`} : ${coll.name}`
     }
   }
 
   private name(ae: { type: string; id: number; path: string }, form: 'long' | 'short'): string {
     switch (ae.type) {
-      case 'library':
-        return (Zotero.Libraries.get(ae.id).name as string)
+      case 'library': {
+        const lib = Zotero.Libraries.get(ae.id)
+        return lib ? lib.name : ''
+      }
 
       case 'collection':
         return this.collection(ae.id, form)
@@ -348,20 +346,20 @@ export class PrefPane {
   // private prefwindow: HTMLElement
 
   public async exportPrefs(): Promise<void> {
-    let file = await pick(Zotero.getString('fileInterface.export'), 'save', [[ 'BBT JSON file', '*.json' ]])
+    let file = await new FilePickerHelper(Zotero.getString('fileInterface.export'), 'save', [[ 'BBT JSON file', '*.json' ]]).open()
     if (!file) return
-    if (!file.match(/.json$/)) file = `${ file }.json`
+    if (!file.match(/.json$/)) file = `${file}.json`
     Zotero.File.putContents(Zotero.File.pathToFile(file), JSON.stringify({ config: { preferences: Preference.all }}, null, 2))
   }
 
   public async importPrefs(): Promise<void> {
     const preferences: { path: string; contents?: string; parsed?: any } = {
-      path: await pick(Zotero.getString('fileInterface.import'), 'open', [[ 'BBT JSON file', '*.json' ]]),
+      path: (await new FilePickerHelper(Zotero.getString('fileInterface.import'), 'open', [[ 'BBT JSON file', '*.json' ]]).open()) || '',
     }
     if (!preferences.path) return
 
     try {
-      preferences.contents = Zotero.File.getContents(preferences.path)
+      preferences.contents = (await Zotero.File.getContentsAsync(preferences.path, 'utf-8')) as string
     }
     catch {
       flash(`could not read contents of ${ preferences.path }`)
@@ -413,11 +411,11 @@ export class PrefPane {
   public checkCitekeyFormat(): void {
     if (!$window || Zotero.BetterBibTeX.starting) return // itemTypes not available yet
 
-    const error = Formatter.update([ Preference.citekeyFormatEditing, Preference.citekeyFormat ])
+    const error = Formatter.test(Preference.citekeyFormatEditing || Preference.citekeyFormat)
     const editing = $window.document.getElementById('bbt-preferences-citekeyFormatEditing')
     editing.classList[error ? 'add' : 'remove']('bbt-prefs-error')
-    editing.setAttribute(client.is7 ? 'title' : 'tooltiptext', error)
-    if (client.is7) editing.setAttribute('tooltip', 'html-tooltip')
+    editing.setAttribute('title', error)
+    editing.setAttribute('tooltip', 'html-tooltip')
 
     const msg = $window.document.getElementById('bbt-citekeyFormat-error') as HTMLInputElement
     msg.value = error
@@ -426,6 +424,13 @@ export class PrefPane {
     const active = $window.document.getElementById('bbt-preferences-citekeyFormat')
     const label = $window.document.getElementById('bbt-label-citekeyFormat')
     active.style.display = label.style.display = Preference.citekeyFormat === Preference.citekeyFormatEditing ? 'none' : 'initial'
+
+    if (!error) Formatter.update([ Preference.citekeyFormatEditing, Preference.citekeyFormat ])
+
+    const preview = $window.document.getElementById('bbt-citekey-preview') as HTMLInputElement
+    preview.style.display = 'initial'
+    const previews = Zotero.getActiveZoteroPane().getSelectedItems().slice(0, 10).map(item => Zotero.BetterBibTeX.KeyManager.propose(item)).filter(key => !key.pinned).map(key => key.citationKey)
+    preview.value = previews.join(', ')
   }
 
   public checkPostscript(): void {
@@ -443,8 +448,8 @@ export class PrefPane {
 
     const postscript = $window.document.getElementById('bbt-postscript')
     postscript.setAttribute('style', (error ? '-moz-appearance: none !important; background-color: DarkOrange' : ''))
-    postscript.setAttribute(client.is7 ? 'title' : 'tooltiptext', error)
-    if (client.is7) postscript.setAttribute('tooltip', 'html-tooltip')
+    postscript.setAttribute('title', error)
+    postscript.setAttribute('tooltip', 'html-tooltip')
     $window.document.getElementById('bbt-cache-warn-postscript').setAttribute('hidden', `${ !Preference.postscript.includes('Translator.options.exportPath') }`)
   }
 
@@ -466,21 +471,6 @@ export class PrefPane {
         Zotero.BetterBibTeX.PrefPane.unload()
         $window = null
       })
-
-      if (!client.is7) {
-        const deck = $window.document.getElementById('bbt-prefs-deck') as unknown as XUL.Deck
-        deck.selectedIndex = 0
-
-        await Zotero.BetterBibTeX.ready
-
-        // bloody *@*&^@# html controls only sorta work for prefs
-        for (const node of Array.from($window.document.querySelectorAll<HTMLInputElement>('input[preference][type=\'range\'], input[preference][type=\'text\'], textarea[preference]'))) {
-          node.value = Preference[node.getAttribute('preference').replace('extensions.zotero.translators.better-bibtex.', '')]
-          if (!client.is7 && node.tagName === 'textarea') node.style.marginBottom = '20px'
-        }
-
-        deck.selectedIndex = 1
-      }
 
       await this.autoexport.load()
 
@@ -529,6 +519,7 @@ export class PrefPane {
 
     this.showQuickCopyDetails()
 
+    /*
     if (client.slug === 'jurism') {
       Zotero.Styles.init().then(() => {
         const styles = Zotero.Styles.getVisible().filter((style: { usesAbbreviation: boolean }) => style.usesAbbreviation)
@@ -555,10 +546,12 @@ export class PrefPane {
         }, 0)
       })
     }
+    */
 
     if (this.autoexport) await this.autoexport.refresh()
   }
 
+  /*
   private styleChanged(index) {
     if (client.slug !== 'jurism') return null
 
@@ -567,4 +560,5 @@ export class PrefPane {
     const styleID = selectedItem.getAttribute('value')
     Preference.autoAbbrevStyle = styleID
   }
+  */
 }

@@ -1,3 +1,7 @@
+# PSA: Zotero 6 support is ending
+
+I am in the process of switching BBT to Zotero 7 exclusively. It is no longer feasible for me to maintain compatibility across 6 and 7. A 6-compatible build remains available, and I might do emergency fixes on it depending on the case at hand, but new work will be 7-only.
+
 # Better BibTeX for Zotero
 
 [![Join the chat at https://gitter.im/retorquere/zotero-better-bibtex](https://badges.gitter.im/retorquere/zotero-better-bibtex.svg)](https://gitter.im/retorquere/zotero-better-bibtex?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) [![Greenkeeper badge](https://badges.greenkeeper.io/retorquere/zotero-better-bibtex.svg)](https://greenkeeper.io/)
@@ -6,7 +10,7 @@ Better BibTeX (BBT) is an extension for [Zotero](https://www.zotero.org) and [Ju
 
 ## Zotero 7 support
 
-Better BibTeX is mostly compatible with the Zotero 7 beta; I am awaiting a change by the Zotero team to get to complete support. You can find the status of Zotero 7 support in the first post of [#2522](https://github.com/retorquere/zotero-better-bibtex/issues/2522); if you find new problems (which are not still marked as unresolved in that top post), please report them as *new* issues, not by commenting on #2522.
+I have begun the process of deprecating Zotero 6 support. I'm still putting the infrastructure for than in place, but as of now, only Zotero7 and Zotero7 beta get new functionality, and Zotero 6 support (available at https://github.com/retorquere/zotero-better-bibtex/releases/tag/v6.7.267) is in maintenance mode.
 
 ## Juris-M support
 
@@ -28,7 +32,7 @@ in your items that Bib(La)TeX won't understand.
 
 * BBT will convert from/to HTML/LaTeX:
 
-  - `<i>...</i>`&#8660;`\emph{...}`/`\textit{...}`
+  - `<i>...</i>`&#8660;`\emph{...}`/`\mkbibemph{...}`/`\textit{...}`
   - `<b>...</b>`&#8660;`\textbf{...}`
   - `<sup>...</sup>`&#8660;`\textsuperscript{...}` and `<sub>...</sub>`&#8660;`\textsubscript{...}`. 
   

@@ -5,6 +5,14 @@ import edtfy = require('edtfy')
 // import escapeStringRegexp = require('escape-string-regexp')
 
 import * as months from '../gen/dateparser-months.json'
+const Month = new class {
+  private months = months
+  private re = new RegExp(Object.keys(months).sort((a, b) => b.length - a.length).map(month => `${month}[.]?`).join('|'), 'i')
+
+  english(date: string): string {
+    return date.replace(this.re, (month: string) => this.months[month.toLowerCase().replace('.', '')] as string || month)
+  }
+}
 
 import { getLocaleDateOrder } from '../submodules/zotero-utilities/date'
 
@@ -33,8 +41,6 @@ export type ParsedDate = {
   uncertain?: boolean
   approximate?: boolean
 }
-
-const months_re = new RegExp(Object.keys(months).sort((a, b) => b.length - a.length).join('|'), 'i')
 
 const Season = new class {
   private ranges = [
@@ -130,7 +136,7 @@ function swap_day_month(day: number, month: number, fix_only = false): number[] 
   return [ day, month ]
 }
 
-function parseEDTF(value: string): ParsedDate {
+function parseEDTF(value: string, english: string): ParsedDate {
   // 2378 + 2275
   let date = value
 
@@ -148,17 +154,12 @@ function parseEDTF(value: string): ParsedDate {
   catch {}
 
   try {
-    const edtf = normalize_edtf(EDTF.parse(edtfy(date
-      .normalize('NFC')
-      .replace(/\. /, ' ') // 8. july 2011
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      .replace(months_re, _ => months[_.toLowerCase()] || _)
-    )))
+    const edtf = normalize_edtf(EDTF.parse(edtfy(english)))
     if (edtf) return edtf
   }
   catch {}
 
-  return { verbatim: value }
+  return null
 }
 
 export function parse(value: string, try_range = true): ParsedDate {
@@ -189,6 +190,17 @@ export function parse(value: string, try_range = true): ParsedDate {
     date = parse(`${ month } ${ day } ${ year }`, false)
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     if (date.type === 'date') return date
+  }
+
+  const english = Month.english(value.normalize('NFC').replace(/[.] /, ' ')) // 8. july 2011
+
+  if (m = (/^([a-z]+)[-/]([0-9]+)$/i).exec(english)) {
+    const [ , month, year ] = m
+    if (months[month.toLowerCase()]) {
+      date = parse(`${ month } ${ year }`, false)
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+      if (date.type === 'date') return date
+    }
   }
 
   // '[origdate] date'
@@ -325,11 +337,11 @@ export function parse(value: string, try_range = true): ParsedDate {
     return { type: 'date', year: parseInt(date_only), ...time_doubt }
   }
 
-  if (!(date = parseEDTF(value)).verbatim) return date
+  if (date = parseEDTF(value, english)) return date
 
   // https://github.com/retorquere/zotero-better-bibtex/issues/868
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  if (m = /^([0-9]{3,})\s([^0-9]+)(?:\s+([0-9]+))?$/.exec(value.normalize('NFC').replace(months_re, _ => months[_.toLowerCase()] || _))) {
+  if (m = /^([0-9]{3,})\s([^0-9]+)(?:\s+([0-9]+))?$/.exec(english)) {
     const [ , year, month, day ] = m
     if (months[month]) {
       try {
