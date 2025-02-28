@@ -24,7 +24,7 @@ import { buildCiteKey as zotero_buildCiteKey } from '../../gen/ZoteroBibTeX.mjs'
 import { babelLanguage, CJK } from '../text'
 import { fetchSync as fetchInspireHEP } from '../inspire-hep'
 
-import { compile } from './compile'
+import { compile, broken } from './compile'
 import * as DateParser from '../dateparser'
 
 import itemCreators from '../../gen/items/creators.json'
@@ -405,8 +405,8 @@ export class PatternFormatter {
         const formatter = compile(formula, { logging: Preference.testing })
         log.info('formula:', formula, '=>\n', formatter)
         this.generate = (new Function(formatter) as () => string)
-        Preference.citekeyFormat = formula
-        if (!Preference.citekeyFormatEditing) Preference.citekeyFormatEditing = formula
+        Preference.citekeyFormat = broken(formula) // upgrade to semicolons
+        if (!Preference.citekeyFormatEditing) Preference.citekeyFormatEditing = Preference.citekeyFormat
         return error
       }
       catch (err) {

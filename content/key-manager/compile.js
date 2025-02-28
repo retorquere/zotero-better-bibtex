@@ -11,7 +11,7 @@ for (const [_old, _new] of Object.entries(aliases)) {
 // this allows moving $len to _len after it has been validated
 API.methods.$len = { ...API.methods._len, name: '$len', test: '$$len' }
 
-const normalize = {
+const breaker = {
   enter(node, parent) {
     if (node.type === 'Program') {
       const body = node.body
@@ -27,7 +27,11 @@ const normalize = {
         }
       }
     }
+  }
+}
 
+const simplify = {
+  enter(node, parent) {
     if (node.type === 'UnaryExpression' && node.operator === '-' && node.argument.type === 'Literal' && typeof node.argument.value === 'number') {
       return { type: 'Literal', value: -1 * node.argument.value }
     }
@@ -581,7 +585,8 @@ const tester = `
 function compile(code, options) {
   const ast = meriyah.parse(code, { ecmaVersion: 2020 })
 
-  estraverse.replace(ast, normalize)
+  estraverse.replace(ast, breaker)
+  estraverse.replace(ast, simplify)
   estraverse.replace(ast, parens)
 
   delete invert.test
@@ -604,7 +609,14 @@ function compile(code, options) {
 
 module.exports.compile = compile
 
+module.exports.broken = function(code) {
+  const ast = meriyah.parse(code, { ecmaVersion: 2020 })
+  estraverse.replace(ast, breaker)
+  return astring.generate(ast).trim().replace(/;$/, '')
+}
+
 /*
+console.log(module.exports.broken('auth + title'))
 const code = "auth(n=1,m=1,creator='*',initials=false).fold + auth(n=1,m=2,creator='*',initials=false).fold + auth(n=1,m=3,creator='*',initials=false).fold + auth(n=1,m=4,creator='*',initials=false).fold + len('>',1) + (shortyear ? shortyear : year);\nauth(n=3,m=1,creator='*',initials=false).fold + (shortyear, year);"
 console.log(code)
 console.log(compile(code, { logging: false }))
