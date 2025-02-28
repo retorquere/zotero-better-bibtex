@@ -82,13 +82,13 @@ title.lower.len + year; auth + year
 which would have the formula evaluate whether the `title` function returns a non-empty text; if this condition is not met, formula evaluaton jumps to the next formula `auth + year`. You can also test for a minimal length using eg
 
 ```
-title > 1 + year | auth + year
+title > 1 + year; auth + year
 ```
 
 which is shorthand for
 
 ```
-title.len('>',1) + year | auth + year
+title.len('>',1) + year; auth + year
 ```
 
 which checks whether the `title` output is longer than 1 character.
@@ -134,7 +134,7 @@ or
 instead of
 
 ```
-title.len + year | auth + year
+title.len + year; auth + year
 ```
 
 and you can test for length of subsections; what you would previously do with
