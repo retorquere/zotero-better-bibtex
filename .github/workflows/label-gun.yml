@@ -12,6 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: retorquere/label-gun@main
+        id: labelgun
         with:
           token: ${{ github.token }}
           label.exempt: question

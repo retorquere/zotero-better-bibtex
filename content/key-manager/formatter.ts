@@ -24,7 +24,7 @@ import { buildCiteKey as zotero_buildCiteKey } from '../../gen/ZoteroBibTeX.mjs'
 import { babelLanguage, CJK } from '../text'
 import { fetchSync as fetchInspireHEP } from '../inspire-hep'
 
-import { compile } from './compile'
+import { compile, upgrade } from './compile'
 import * as DateParser from '../dateparser'
 
 import itemCreators from '../../gen/items/creators.json'
@@ -405,8 +405,8 @@ export class PatternFormatter {
         const formatter = compile(formula, { logging: Preference.testing })
         log.info('formula:', formula, '=>\n', formatter)
         this.generate = (new Function(formatter) as () => string)
-        Preference.citekeyFormat = formula
-        if (!Preference.citekeyFormatEditing) Preference.citekeyFormatEditing = formula
+        Preference.citekeyFormat = upgrade(formula) // upgrade to semicolons
+        if (!Preference.citekeyFormatEditing) Preference.citekeyFormatEditing = Preference.citekeyFormat
         return error
       }
       catch (err) {
@@ -1587,6 +1587,46 @@ export class PatternFormatter {
       if (creators[kind].length) return creators[kind] as string[]
     }
     return []
+  }
+
+  public formula_log(k: string, v: string, e?: Error & { next?: boolean }): string {
+    if (e && e.next) {
+      log.info('formula: skip')
+    }
+    else if (e) {
+      log.error('formula:', e)
+    }
+    else {
+      log.info('formula:', k, '=>', v)
+    }
+    return v
+  }
+
+  public formula_sequence(...e: (() => string)[]): string {
+    const final = e.pop()
+    for (const attempt of e) {
+      try {
+        return attempt()
+      }
+      catch (err) {
+        if (!err.next) {
+          log.error('formula: sequence element', err)
+          throw err
+        }
+      }
+    }
+    return final()
+  }
+
+  public formula_test(f: () => string): string {
+    try {
+      return f()
+    }
+    catch (err: any) {
+      if (err.next) return ''
+      log.error('formula:', err)
+      throw err
+    }
   }
 }
 

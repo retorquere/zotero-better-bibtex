@@ -225,7 +225,7 @@ export class NSItem {
    * List attachments for an item with the given citekey
    *
    * @param citekey  The citekey to search for
-   * @param library  The libraryID to search in (optional)
+   * @param library  The libraryID to search in (optional). Pass `*` to search across your library and all groups.
    */
   public async attachments(citekey: string, library?: string | number): Promise<any> {
     const where: Query = { citationKey: citekey.replace(/^@/, '') }
@@ -372,11 +372,11 @@ export class NSItem {
    * Generate a bibliography for the given citekeys
    *
    * @param citekeys An array of citekeys
-   * @param format   A specification of how the bibliography should be formatted
-   * @param.quickCopy    Format as specified in the Zotero quick-copy settings
-   * @param.contentType  Output as HTML or text
-   * @param.locale       Locale to use to generate the bibliography
-   * @param.id           CSL style to use
+   * @param {object} format   A specification of how the bibliography should be formatted
+   * @param {string} format.quickCopy    Format as specified in the Zotero quick-copy settings
+   * @param {} format.contentType  Output as HTML or text
+   * @param {} format.locale       Locale to use to generate the bibliography
+   * @param {} format.id           CSL style to use
    *
    * @returns  A formatted bibliography
    */

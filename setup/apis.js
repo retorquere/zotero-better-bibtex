@@ -434,7 +434,17 @@ function JSONRPC() {
         required: [],
       }
 
+      let description = ''
       const parameters = (signature.parameters || []).map(p => {
+        if (p.comment?.summary?.length) {
+          description += `* ${p.name}: `
+          description += p.comment.summary.map(s => {
+            if (!s.kind.match(/^(code|text)$/)) throw s
+            return s.text
+          }).join('')
+          description += '\n'
+        }
+
         apispec[methodname].parameters.push(p.name)
         if (!p.flags.isOptional) apispec[methodname].required.push(p.name)
         apispec[methodname].validate[p.name] = makeValidator(builder.make(p.type))
@@ -446,12 +456,12 @@ function JSONRPC() {
       }).join(', ')
       const returnType = `: ${printType(signature.type.typeArguments[0])}`.replace(': void', '')
 
-      const description = signature.comment.summary.map(s => {
+      description += signature.comment.summary.map(s => {
         if (!s.kind.match(/^(code|text)$/)) throw s
         return s.text
       }).join('') + '\n' + builder.description
 
-      page.push(`## ${namespace}.${method.name}(${parameters})${returnType}\n\n${description}\n\n`)
+      page.push(`**${namespace}.${method.name}**(${parameters})${returnType}\n\n${description}\n\n`)
     }
   }
 
