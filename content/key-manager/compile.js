@@ -627,7 +627,7 @@ function compile(code, options) {
 module.exports.compile = compile
 
 /*
-const code = "auth(n=1,m=1,creator=\"*\",initials=false).fold + auth(n=1,m=2,creator=\"*\",initials=false).fold + auth(n=1,m=3,creator=\"*\",initials=false).fold + auth(n=1,m=4,creator=\"*\",initials=false).fold + len('>',1) + shortyear;\nauth(n=3,m=1,creator=\"*\",initials=false).fold + shortyear;"
+const code = "auth(n=1,m=1,creator='*',initials=false).fold + auth(n=1,m=2,creator='*',initials=false).fold + auth(n=1,m=3,creator='*',initials=false).fold + auth(n=1,m=4,creator='*',initials=false).fold + len('>',1) + shortyear;\nauth(n=3,m=1,creator='*',initials=false).fold + (shortyear, year);"
 console.log(code)
 console.log(compile(code))
 */
