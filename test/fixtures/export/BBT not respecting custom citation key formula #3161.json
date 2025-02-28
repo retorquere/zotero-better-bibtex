@@ -1,0 +1,38 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "preferences": {
+      "citekeyFormat": "auth. lower + shorttitle(3,3) + year",
+      "warnBulkModify": 0
+    }
+  },
+  "items": [
+    {
+      "ISBN": "978-1-5266-2353-9",
+      "abstractNote": "A definitive volume expanded and updated to do justice to the four decade career of one of the most important cultural and intellectual thinkers of the 21st centuryThe renowned literary and cultural critic and political thinker Edward Said was one of our era's most provocative and important thinkers. This comprehensive collection of his work, expanded from the earlier Edward Said Reader, now draws from across his entire four-decade career, including his posthumously published books, making it a definitive one-volume source.The Selected Works includes key sections from all of Said's books, including his groundbreaking Orientalism; his memoir, Out of Place; and his last book, On Late Style. Whether writing of Zionism or Palestinian self-determination, Jane Austen or Yeats, or of music or the media, Said's uncompromising intelligence casts urgent light on every subject he undertakes. The Selected Works is a joy for the general reader and an indispensable resource for scholars in the many fields that his work has influenced and transformed.",
+      "citationKey": "saidSelectedWorksEdward2021",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Edward",
+          "lastName": "Said"
+        }
+      ],
+      "date": "2021",
+      "itemID": 1,
+      "itemType": "book",
+      "language": "English",
+      "libraryCatalog": "Amazon",
+      "numPages": "656",
+      "publisher": "Bloomsbury Publishing",
+      "shortTitle": "The Selected Works of Edward Said",
+      "tags": [
+        {
+          "tag": "notion"
+        }
+      ],
+      "title": "The Selected Works of Edward Said: 1966–2006"
+    }
+  ]
+}
