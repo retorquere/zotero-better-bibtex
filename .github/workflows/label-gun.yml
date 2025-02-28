@@ -52,6 +52,7 @@ jobs:
         id: command
         uses: xt0rted/slash-command-action@v1
         with:
+          repo-token: ${{ github.token }}
           command: debuglog
           reaction: "false"
           allow-edits: "true"
