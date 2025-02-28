@@ -609,7 +609,7 @@ function compile(code, options) {
 
 module.exports.compile = compile
 
-module.exports.broken = function(code) {
+module.exports.upgrade = function(code) {
   const ast = meriyah.parse(code, { ecmaVersion: 2020 })
   estraverse.replace(ast, breaker)
   return astring.generate(ast).trim().replace(/;$/, '')
