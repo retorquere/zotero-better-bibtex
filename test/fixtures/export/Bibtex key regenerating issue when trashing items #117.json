@@ -8,7 +8,7 @@
     },
     "preferences": {
       "bibtexURL": "note",
-      "citekeyFormat": "[auth][year]"
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold + year"
     }
   },
   "items": [
@@ -35,7 +35,7 @@
       "journalAbbreviation": "Genetics",
       "language": "en",
       "libraryCatalog": "www.genetics.org",
-      "pages": "185\u2013199",
+      "pages": "185–199",
       "publicationTitle": "Genetics",
       "title": "Mapping Mendelian factors underlying quantitative traits using RFLP linkage maps.",
       "url": "http://www.genetics.org/content/121/1/185",

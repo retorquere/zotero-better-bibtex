@@ -29,7 +29,7 @@ export namespace Translators {
         { kind: 'initialize', CSL_MAPPINGS: any, dateFormatsJSON: any }
       | { kind: 'configure', environment: Environment }
       | { kind: 'start', config: Job }
-      | { kind: 'done', output: boolean | string }
+      | { kind: 'done', output: string }
       | { kind: 'debug', message: string }
       | { kind: 'error', message: string, stack?: string }
       | { kind: 'item', item: number }
@@ -88,7 +88,6 @@ export namespace Translators {
     minVersion: string
     maxVersion: string
     translatorType: number
-    browserSupport: string
     inRepository: false
     priority: number
     target: string

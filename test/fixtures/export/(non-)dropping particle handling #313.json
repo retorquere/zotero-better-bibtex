@@ -9,8 +9,8 @@
     "preferences": {
       "autoAbbrevStyle": "http://www.zotero.org/styles/nature",
       "bibtexURL": "note",
-      "citekeyFormat": "[auth:lower][Title:fold:nopunct:skipwords:select,1,1:lower:alphanum:prefix,_][year:prefix,_][0]",
-      "csquotes": "\u00ab\u00bb\u201c\u201d",
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold.lower + Title.transliterate.nopunct.skipwords.select(1,1).lower.alphanum.prefix(_) + year.prefix(_) + postfix(\"-%(n)s\")",
+      "csquotes": "«»“”",
       "skipFields": "abstract,file,editora,editoratype,editorb,editorbtype",
       "biblatexExtendedNameFormat": false
     }
@@ -98,7 +98,7 @@
       "creators": [
         {
           "creatorType": "editor",
-          "firstName": "Lu\u00eds d'",
+          "firstName": "Luís d'",
           "lastName": "Almeida"
         },
         {
@@ -145,8 +145,8 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "Fran\u00e7ois H\u00e9delin",
-          "lastName": "abb\u00e9 d' Aubignac"
+          "firstName": "François Hédelin",
+          "lastName": "abbé d' Aubignac"
         }
       ],
       "extra": [
@@ -154,7 +154,7 @@
       ],
       "itemID": 10,
       "itemType": "journalArticle",
-      "title": "<span class=\"nocase\">(abb\u00e9 d' Aubignac) (Fran\u00e7ois H\u00e9delin)</span>"
+      "title": "<span class=\"nocase\">(abbé d' Aubignac) (François Hédelin)</span>"
     },
     {
       "creators": [
@@ -180,8 +180,8 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "G\u00e9rard, III",
-          "lastName": "de la Martini\u00e8re"
+          "firstName": "Gérard, III",
+          "lastName": "de la Martinière"
         }
       ],
       "extra": [
@@ -850,8 +850,8 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "\u039a\u03ce\u03c3\u03c4\u03b1\u03c2",
-          "lastName": "\u039a\u03b1\u03c1\u03c5\u03c9\u03c4\u03ac\u03ba\u03b7\u03c2"
+          "firstName": "Κώστας",
+          "lastName": "Καρυωτάκης"
         }
       ],
       "extra": [
@@ -1129,7 +1129,7 @@
     {
       "creators": [
         {
-          "name": "S\u00e3o Paulo (Estado)"
+          "name": "São Paulo (Estado)"
         }
       ],
       "extra": [
@@ -1236,7 +1236,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "Fran\u00e7ois H\u00e9delin, abb\u00e9 d'",
+          "firstName": "François Hédelin, abbé d'",
           "lastName": "Aubignac"
         }
       ],
@@ -1246,13 +1246,13 @@
       ],
       "itemID": 8,
       "itemType": "journalArticle",
-      "title": "<span class=\"nocase\">(Aubignac) (Fran\u00e7ois H\u00e9delin, abb\u00e9 d')</span>"
+      "title": "<span class=\"nocase\">(Aubignac) (François Hédelin, abbé d')</span>"
     },
     {
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "Fran\u00e7ois H\u00e9delin, abb\u00e9 d'",
+          "firstName": "François Hédelin, abbé d'",
           "lastName": "d'Aubignac"
         }
       ],

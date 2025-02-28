@@ -1,3 +1,5 @@
+declare type IZoteroMarkupNode = any;
+
 export interface MarkupNode {
   nodeName: string
   childNodes?: IZoteroMarkupNode[]

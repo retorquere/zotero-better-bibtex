@@ -8,7 +8,7 @@
     },
     "preferences": {
       "DOIandURL": "doi",
-      "citekeyFormat": "[shorttitle3_3][shortyear][0]",
+      "citekeyFormat": "shorttitle(3,3) + shortyear + postfix(\"-%(n)s\")",
       "itemObserverDelay": 100,
       "keyConflictPolicy": "change",
       "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc"

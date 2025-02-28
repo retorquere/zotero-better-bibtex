@@ -8,7 +8,7 @@
     },
     "preferences": {
       "automaticTags": false,
-      "citekeyFormat": "[authEtAl]-[shorttitle3_3]",
+      "citekeyFormat": "authEtAl(creator=\"*\",initials=false,sep=\" \").fold + \"-\" + shorttitle(3,3)",
       "itemObserverDelay": 100,
       "jabrefFormat": 4,
       "qualityReport": true,
@@ -29,7 +29,7 @@
       "itemID": 1,
       "itemType": "book",
       "notes": [
-        "<h1>This is a heading</h1>\n<p>This is some text</p>\n<blockquote>\n<p>Then this is a quote from the book. It is inserted using the \" icon in Zotero. It appears indented and with a blue vertical line to\u00a0 its left.</p>\n<p>It can span several paragraphs.</p>\n</blockquote>\n<p>And this is some regular text again.</p>\n<p>\u00a0</p>"
+        "<h1>This is a heading</h1>\n<p>This is some text</p>\n<blockquote>\n<p>Then this is a quote from the book. It is inserted using the \" icon in Zotero. It appears indented and with a blue vertical line to  its left.</p>\n<p>It can span several paragraphs.</p>\n</blockquote>\n<p>And this is some regular text again.</p>\n<p> </p>"
       ],
       "place": "Here",
       "publisher": "Him",

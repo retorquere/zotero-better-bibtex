@@ -9,7 +9,7 @@
     "preferences": {
       "DOIandURL": "doi",
       "asciiBibLaTeX": true,
-      "citekeyFormat": "[zotero:clean]",
+      "citekeyFormat": "zotero.clean",
       "itemObserverDelay": 100,
       "postscript": "if (Translator.BetterBibTeX && this.has.title) {\n  delete this.has['language']\n}",
       "quickCopyMode": "citekeys",
@@ -19,35 +19,35 @@
   "items": [
     {
       "ISSN": "1000-0852",
-      "abstractNote": "\u672c\u6587\u63a2\u8ba8\u4e86\u652f\u6301\u5411\u91cf\u673a\u65b9\u6cd5\u5728\u964d\u96e8-\u5f84\u6d41\u9884\u6d4b\u4e2d\u7684\u5e94\u7528\u3002\u8be5\u65b9\u6cd5\u91c7\u7528\u7ed3\u6784\u98ce\u9669\u6700\u5c0f\u5316\u51c6\u5219,\u5f25\u8865\u4e86\u4eba\u5de5\u795e\u7ecf\u7f51\u7edc\u5728\u9884\u6d4b\u5e94\u7528\u4e2d\u7684\u4e0d\u8db3,\u8f83\u597d\u5730\u89e3\u51b3\u4e86\u5c0f\u6837\u672c,\u975e\u7ebf\u6027\u3001\u9ad8\u7ef4\u6570\u548c\u5c40\u90e8\u6700\u5c0f\u70b9\u7b49\u5b9e\u9645\u95ee\u9898\u3002\u5e76\u4e14\u672c\u7814\u7a76\u901a\u8fc7\u4e0e\u4eba\u5de5\u795e\u7ecf\u7f51\u7edc\u9884\u6d4b\u65b9\u6cd5\u3001\u4f20\u7edf\u7684\u56de\u5f52\u5206\u6790\u9884\u6d4b\u65b9\u6cd5\u6bd4\u8f83\u7814\u7a76,\u5f97\u51fa\u652f\u6301\u5411\u91cf\u673a\u80fd\u53d6\u5f97\u66f4\u9ad8\u7cbe\u5ea6\u7684\u964d\u96e8-\u5f84\u6d41\u9884\u6d4b\u503c\u3002",
+      "abstractNote": "本文探讨了支持向量机方法在降雨-径流预测中的应用。该方法采用结构风险最小化准则,弥补了人工神经网络在预测应用中的不足,较好地解决了小样本,非线性、高维数和局部最小点等实际问题。并且本研究通过与人工神经网络预测方法、传统的回归分析预测方法比较研究,得出支持向量机能取得更高精度的降雨-径流预测值。",
       "accessDate": "2018-06-07 08:55:34",
       "callNumber": "11-1814/P",
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "\u4e3d\u5a1c",
-          "lastName": "\u6c6a"
+          "firstName": "丽娜",
+          "lastName": "汪"
         },
         {
           "creatorType": "author",
-          "firstName": "\u7ca4\u5b89",
-          "lastName": "\u674e"
+          "firstName": "粤安",
+          "lastName": "李"
         },
         {
           "creatorType": "author",
-          "firstName": "\u6653\u5b8f",
-          "lastName": "\u9648"
+          "firstName": "晓宏",
+          "lastName": "陈"
         }
       ],
       "date": "2009",
       "issue": "01",
       "itemID": 1,
       "itemType": "journalArticle",
-      "language": "\u4e2d\u6587;",
+      "language": "中文;",
       "libraryCatalog": "CNKI",
       "pages": "13-16",
-      "publicationTitle": "\u6c34\u6587",
-      "title": "\u57fa\u4e8e\u652f\u6301\u5411\u91cf\u673a\u7684\u964d\u96e8\u2014\u5f84\u6d41\u9884\u6d4b\u7814\u7a76",
+      "publicationTitle": "水文",
+      "title": "基于支持向量机的降雨—径流预测研究",
       "url": "http://kns.cnki.net/KCMS/detail/detail.aspx?dbcode=CJFQ&dbname=CJFD2009&filename=SWZZ200901003&uid=WEEvREcwSlJHSldRa1FhcEE0RVZycFZqd1NScUtXTk9zd3RUUDFrNlYwST0=$9A4hF_YAuvQ5obgVAqNKPCYcEjKensW4ggI8Fm4gTkoUKaID8j8gFw!!&v=MTk5NTBoMVQzcVRyV00xRnJDVVJMS2ZZZVpvRnkvaFY3dkFOanJSZExHNEh0ak1ybzlGWjRSOGVYMUx1eFlTN0Q="
     }
   ]

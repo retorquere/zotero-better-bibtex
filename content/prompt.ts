@@ -4,7 +4,8 @@ export function alert({ title, text }: { title?: string; text: string }): void {
 
 export function prompt({ title, text, value }: { title?: string; text: string; value?: string }): string {
   const wrap = { value: value || '' }
-  if (Services.prompt.prompt(null, title || 'Enter text', text, wrap, null, {})) {
+  const ignore = { value: false }
+  if (Services.prompt.prompt(null, title || 'Enter text', text, wrap, null, ignore)) {
     return wrap.value
   }
   else {

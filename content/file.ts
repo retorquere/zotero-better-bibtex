@@ -4,7 +4,7 @@ import { isWin } from './client'
 export const File = new class {
   public async exists(path: string): Promise<boolean> {
     try {
-      return await IOUtils.exists(path) as boolean
+      return await IOUtils.exists(path)
     }
     catch (e) {
       if (e.message.includes('NS_ERROR_FILE_UNRECOGNIZED_PATH')) log.error(`${e.message}\n\n${e.stack}\n\n`)
@@ -14,7 +14,7 @@ export const File = new class {
 
   public async isFile(path: string): Promise<boolean> {
     try {
-      return (await IOUtils.stat(path)).type === 'file'
+      return (await IOUtils.stat(path)).type === 'regular'
     }
     catch (err) {
       if (err.name !== 'NotFoundError') log.error(path, 'isFile', err)
@@ -25,8 +25,8 @@ export const File = new class {
   public async lastModified(path: string): Promise<number> {
     try {
       const stat = await IOUtils.stat(path)
-      if (stat.type !== 'file') return 0
-      return stat.lastModificationDate.getTime() as number
+      if (stat.type !== 'regular') return 0
+      return stat.lastModified
     }
     catch {
       return 0

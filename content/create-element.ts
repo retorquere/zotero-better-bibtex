@@ -38,7 +38,7 @@ export class Elements {
     name = name.replace('html:', '')
 
     const elt: HTMLElement = this.document[namespace === NAMESPACE.XUL ? 'createXULElement' : 'createElement'](name) as HTMLElement
-    attrs.class = `${ this.className } ${ attrs.class || '' }`.trim()
+    attrs.class = `${ this.className } ${ attrs.class as string || '' }`.trim()
     for (const [ a, v ] of Object.entries(attrs)) {
       if (typeof v === 'string') {
         elt.setAttribute(a, v)

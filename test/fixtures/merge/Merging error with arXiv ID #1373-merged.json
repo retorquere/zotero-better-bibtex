@@ -7,7 +7,7 @@
       "exportNotes": true
     },
     "preferences": {
-      "citekeyFormat": "[auth:lower][shorttitle3_3][year]"
+      "citekeyFormat": "auth.lower + shorttitle(3,3) + year"
     }
   },
   "items": [

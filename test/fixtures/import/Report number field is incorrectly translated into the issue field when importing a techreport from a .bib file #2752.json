@@ -2,159 +2,136 @@
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
+    "preferences": {
+      "ascii": "",
+      "asciiBibLaTeX": false,
+      "asciiBibTeX": true,
+      "autoAbbrev": false,
+      "autoExport": "immediate",
+      "autoExportDelay": 5,
+      "autoExportIdleWait": 10,
+      "autoExportPathReplaceDiacritics": false,
+      "autoExportPathReplaceDirSep": "-",
+      "autoExportPathReplaceSpace": " ",
+      "automaticTags": true,
+      "autoPinDelay": 0,
+      "auxImport": false,
+      "baseAttachmentPath": "",
+      "biblatexExtendedDateFormat": true,
+      "biblatexExtendedNameFormat": true,
+      "biblatexExtractEprint": true,
+      "bibtexEditionOrdinal": false,
+      "bibtexParticleNoOp": false,
+      "bibtexURL": "off",
+      "cache": true,
+      "cacheDelete": false,
+      "cacheRetain": false,
+      "charmap": "",
+      "citeCommand": "cite",
+      "citekeyCaseInsensitive": true,
+      "citekeyFold": true,
+      "citekeyFormat": "auth + year",
+      "citekeySearch": true,
+      "citekeyUnsafeChars": "\\\"#%'(),={}~",
+      "csquotes": "",
+      "DOIandURL": "both",
+      "exportBibTeXStrings": "off",
+      "exportBraceProtection": true,
+      "exportSort": "citekey",
+      "exportTitleCase": true,
+      "extraMergeCitekeys": false,
+      "extraMergeCSL": false,
+      "extraMergeTeX": false,
+      "git": "config",
+      "import": true,
+      "importBibTeXStrings": true,
+      "importCaseProtection": "as-needed",
+      "importCitationKey": true,
+      "importDetectURLs": true,
+      "importExtra": true,
+      "importJabRefAbbreviations": true,
+      "importJabRefStrings": true,
+      "importNoteToExtra": "",
+      "importSentenceCase": "on+guess",
+      "importSentenceCaseQuoted": true,
+      "importUnknownTexCommand": "ignore",
+      "itemObserverDelay": 5,
+      "jabrefFormat": 0,
+      "jieba": false,
+      "keyConflictPolicy": "keep",
+      "keyScope": "library",
+      "kuroshiro": false,
+      "language": "langid",
+      "mapMath": "",
+      "mapText": "",
+      "packages": "",
+      "parseParticles": true,
+      "patchDates": "dateadded=dateAdded, date-added=dateAdded, datemodified=dateModified, date-modified=dateModified",
+      "postscript": "",
+      "postscriptOverride": "",
+      "preferencesOverride": "",
+      "qualityReport": false,
+      "quickCopyEta": "",
+      "quickCopyMode": "latex",
+      "quickCopyOrgMode": "zotero",
+      "quickCopyPandocBrackets": false,
+      "quickCopySelectLink": "zotero",
+      "rawImports": false,
+      "rawLaTag": "#LaTeX",
+      "relativeFilePaths": false,
+      "separatorList": "and",
+      "separatorNames": "and",
+      "skipFields": "",
+      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
+      "startupProgress": "popup",
+      "strings": "",
+      "stringsOverride": "",
+      "verbatimFields": "url,doi,file,pdf,ids,eprint,/^verb[a-z]$/,groups,/^citeulike-linkout-[0-9]+$/, /^bdsk-url-[0-9]+$/, keywords",
+      "warnBulkModify": 10,
+      "warnTitleCased": false
+    },
     "options": {
       "Items": true,
+      "Normalize": true,
       "Preferences": true,
-      "exportNotes": true
-    },
-    "preferences": {
-      "citekeyFormat": "auth + year"
+      "exportFileData": false,
+      "exportNotes": true,
+      "keepUpdated": false,
+      "worker": false
     }
   },
+  "version": {
+    "zotero": "7.0.11",
+    "bbt": "7.0.5.emile.kiku.local"
+  },
+  "collections": {},
   "items": [
     {
-      "citationKey": "customCitationKey",
-      "creators": [
-        {
-          "creatorType": "author",
-          "name": "A very well-known and serious institution"
-        }
-      ],
-      "date": "1995-01",
-      "extra": [
-        "Citation Key: customCitationKey",
-        "Pages: 6"
-      ],
-      "itemID": 1,
-      "itemType": "dataset",
-      "language": "english",
-      "number": "mypreciousreportnumber",
-      "title": "What a great report"
-    },
-    {
-      "citationKey": "customCitationKey",
-      "creators": [
-        {
-          "creatorType": "author",
-          "name": "A very well-known and serious institution"
-        }
-      ],
-      "date": "1995-01",
-      "extra": [
-        "Citation Key: customCitationKey"
-      ],
-      "itemID": 2,
-      "itemType": "case",
-      "language": "english",
-      "number": "mypreciousreportnumber",
-      "pages": "6",
-      "title": "What a great report"
-    },
-    {
-      "citationKey": "customCitationKey",
-      "creators": [
-        {
-          "creatorType": "author",
-          "name": "A very well-known and serious institution"
-        }
-      ],
-      "date": "1995-01",
-      "extra": [
-        "Citation Key: customCitationKey"
-      ],
-      "itemID": 3,
+      "version": 0,
       "itemType": "report",
-      "language": "english",
-      "number": "my_precious_report_number",
       "pages": "6",
-      "title": "What a great report"
-    },
-    {
-      "citationKey": "customCitationKey",
+      "date": "1995-01",
+      "extra": "Citation Key: techreport",
+      "language": "english",
+      "title": "What a great report",
       "creators": [
         {
-          "creatorType": "author",
-          "name": "A very well-known and serious institution"
+          "name": "A very well-known and serious institution",
+          "creatorType": "author"
         }
       ],
-      "date": "1995-01",
-      "extra": [
-        "Citation Key: customCitationKey"
-      ],
-      "itemID": 4,
-      "itemType": "report",
-      "language": "english",
-      "number": "mypreciousreportnumber",
-      "pages": "6",
-      "title": "What a great report"
-    },
-    {
-      "citationKey": "customCitationKey",
-      "creators": [
-        {
-          "creatorType": "author",
-          "name": "A very well-known and serious institution"
-        }
-      ],
-      "date": "1995-01",
-      "extra": [
-        "Citation Key: customCitationKey"
-      ],
-      "itemID": 5,
-      "itemType": "statute",
-      "language": "english",
-      "number": "mypreciousreportnumber",
-      "pages": "6",
-      "title": "What a great report"
-    },
-    {
-      "citationKey": "customCitationKey",
-      "creators": [
-        {
-          "creatorType": "author",
-          "name": "A very well-known and serious institution"
-        }
-      ],
-      "date": "1995-01",
-      "extra": [
-        "Citation Key: customCitationKey"
-      ],
-      "itemID": 6,
-      "itemType": "statute",
-      "language": "english",
-      "number": "mypreciousreportnumber",
-      "pages": "6",
-      "title": "What a great report"
-    },
-    {
-      "citationKey": "customCitationKey",
-      "creators": [
-        {
-          "creatorType": "inventor",
-          "name": "A very well-known and serious institution"
-        }
-      ],
-      "date": "1995-01",
-      "extra": [
-        "Citation Key: customCitationKey"
-      ],
-      "itemID": 7,
-      "itemType": "patent",
-      "language": "english",
-      "number": "mypreciousreportnumber",
-      "pages": "6",
-      "title": "What a great report"
-    },
-    {
-      "itemID": 8,
-      "itemType": "note",
-      "note": "Import errors found: <ul><li>Don&#39;t know what Zotero type to make of &#39;standard&#39; for @customCitationKey, importing as document</li></ul>",
-      "tags": [
-        {
-          "tag": "#Better BibTeX import error",
-          "type": 1
-        }
-      ]
+      "tags": [],
+      "relations": {},
+      "dateAdded": "2025-01-29T17:47:23Z",
+      "dateModified": "2025-01-29T17:47:23Z",
+      "uri": "http://zotero.org/users/8230813/items/7CJKL3L8",
+      "attachments": [],
+      "notes": [],
+      "citationKey": "techreport",
+      "itemID": 112,
+      "itemKey": "7CJKL3L8",
+      "libraryID": 1,
+      "number": "my_precious_report_number"
     }
   ]
 }

@@ -264,7 +264,12 @@ async function saveFile(path, overwrite) {
 
   if (!await File.exists(this.localPath)) return false
 
-  this.path = PathUtils.join(Zotero.exportDirectory, path)
+  try {
+    this.path = PathUtils.join(Zotero.exportDirectory, path)
+  }
+  catch (err) {
+    log.error('3125: failed to join', { exportDirectory: Zotero.exportDirectory, path }, err)
+  }
   if (!this.path.startsWith(Zotero.exportDirectory)) throw new Error(`${path} looks like a relative path`)
 
   if (this.linkMode === 'imported_file' || (this.linkMode === 'imported_url' && this.contentType !== 'text/html')) {

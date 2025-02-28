@@ -1,11 +1,11 @@
 /* eslint-disable prefer-rest-params */
 
-import flatMap from 'array.prototype.flatmap'
-flatMap.shim()
-import matchAll from 'string.prototype.matchall'
-matchAll.shim()
-import allSettled = require('promise.allsettled')
-allSettled.shim()
+// import flatMap from 'array.prototype.flatmap'
+// flatMap.shim()
+// import matchAll from 'string.prototype.matchall'
+// matchAll.shim()
+// import allSettled = require('promise.allsettled')
+// allSettled.shim()
 
 import type Bluebird from 'bluebird'
 const Ready = Zotero.Promise.defer()
@@ -15,15 +15,18 @@ Components.utils.importGlobalProperties(['FormData', 'indexedDB'])
 Components.utils.import('resource://gre/modules/FileUtils.jsm')
 declare const FileUtils: any
 
-import type { XUL } from '../typings/xul'
+import { MenuManager } from 'zotero-plugin-toolkit'
+const Menu = new MenuManager
+
 import { DebugLog } from 'zotero-plugin/debug-log'
 DebugLog.register('Better BibTeX', ['extensions.zotero.translators.better-bibtex.'])
 
+import { TeXstudio } from './tex-studio'
 import { icons } from './icons'
 import { prompt } from './prompt'
 import { Elements } from './create-element'
-import { newZoteroPane } from './ZoteroPane'
-import { ExportOptions } from './ExportOptions'
+import * as ExportOptions from './ExportOptions'
+import * as MenuHelper from './menu-helper'
 import { PrefPane } from './Preferences'
 import { ErrorReport } from './ErrorReport'
 import { monkey } from './monkey-patch'
@@ -85,7 +88,7 @@ monkey.patch(Zotero.Utilities.Item?.itemToCSLJSON ? Zotero.Utilities.Item : Zote
 })
 
 // https://github.com/retorquere/zotero-better-bibtex/issues/1221
-monkey.patch(Zotero.Items, 'merge', original => async function Zotero_Items_merge(item: ZoteroItem, otherItems: ZoteroItem[]) {
+monkey.patch(Zotero.Items, 'merge', original => async function Zotero_Items_merge(item: Zotero.Item, otherItems: Zotero.Item[]) {
   try {
     // log.verbose = true
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
@@ -96,7 +99,7 @@ monkey.patch(Zotero.Items, 'merge', original => async function Zotero_Items_merg
     }
 
     if (merge.citationKey || merge.tex || merge.kv) {
-      const extra = Extra.get(item.getField('extra') as string, 'zotero', { citationKey: merge.citationKey, aliases: merge.citationKey, tex: merge.tex, kv: merge.kv })
+      const extra = Extra.get(item.getField('extra'), 'zotero', { citationKey: merge.citationKey, aliases: merge.citationKey, tex: merge.tex, kv: merge.kv })
       if (!extra.extraFields.citationKey) { // why is the citationkey stripped from extra before we get to this point?!
         const pinned = Zotero.BetterBibTeX.KeyManager.get(item.id)
         if (pinned.pinned) extra.extraFields.citationKey = pinned.citationKey
@@ -111,7 +114,7 @@ monkey.patch(Zotero.Items, 'merge', original => async function Zotero_Items_merg
 
       // add any aliases they were already holding
       for (const i of otherItems) {
-        const otherExtra = Extra.get(i.getField('extra') as string, 'zotero', { citationKey: merge.citationKey, aliases: merge.citationKey, tex: merge.tex, kv: merge.kv })
+        const otherExtra = Extra.get(i.getField('extra'), 'zotero', { citationKey: merge.citationKey, aliases: merge.citationKey, tex: merge.tex, kv: merge.kv })
 
         if (merge.citationKey) {
           extra.extraFields.aliases = [ ...extra.extraFields.aliases, ...otherExtra.extraFields.aliases ]
@@ -131,7 +134,7 @@ monkey.patch(Zotero.Items, 'merge', original => async function Zotero_Items_merg
               extra.extraFields.kv[name] = value
             }
             else if (Array.isArray(existing) && Array.isArray(value)) {
-              for (const creator in value) {
+              for (const creator of value) {
                 if (!existing.includes(creator)) existing.push(creator)
               }
             }
@@ -195,14 +198,18 @@ monkey.patch(Zotero.API, 'getResultsFromParams', original => function Zotero_API
   return original.apply(this, arguments) as Record<string, any>
 })
 
+// @ts-expect-error prototype not exported by zotero-types
 if (typeof Zotero.DataObjects.prototype.parseLibraryKeyHash === 'function') {
+  // @ts-expect-error prototype not exported by zotero-types
   monkey.patch(Zotero.DataObjects.prototype, 'parseLibraryKeyHash', original => function Zotero_DataObjects_prototype_parseLibraryKeyHash(libraryKey: string) {
     const item = parseLibraryKeyFromCitekey(libraryKey)
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return typeof item === 'undefined' ? original.apply(this, arguments) : item
   })
 }
+// @ts-expect-error prototype not exported by zotero-types
 if (typeof Zotero.DataObjects.prototype.parseLibraryKey === 'function') {
+  // @ts-expect-error prototype not exported by zotero-types
   monkey.patch(Zotero.DataObjects.prototype, 'parseLibraryKey', original => function Zotero_DataObjects_prototype_parseLibraryKey(libraryKey: string) {
     const item = parseLibraryKeyFromCitekey(libraryKey)
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
@@ -229,10 +236,9 @@ monkey.patch(Zotero.Item.prototype, 'setField', original => function Zotero_Item
     if (!value) {
       this.setField('extra', Extra.get(this.getField('extra') as string, 'zotero', { citationKey: true }).extra)
       Zotero.BetterBibTeX.KeyManager.update(this)
-      Zotero.Notifier.trigger('modify', 'item', [this.id])
       return true
     }
-    else if (value !== citekey.citationKey) {
+    else if (value !== citekey.citationKey || !citekey.pinned) {
       this.setField('extra', Extra.set(this.getField('extra'), { citationKey: value }))
       // citekey.pinned = true
       // citekey.citekey = value
@@ -433,12 +439,12 @@ export class BetterBibTeX {
   public Text = { sentenceCase }
 
   // panes
-  public ExportOptions: ExportOptions = new ExportOptions
-  public ErrorReport = ErrorReport
+  public ErrorReport = new ErrorReport
   public PrefPane = new PrefPane
   public Translators = Translators
+  public MenuHelper = MenuHelper
 
-  public ready: Bluebird<boolean> = Ready.promise
+  public ready: Bluebird<void> = Ready.promise
   public dir: string
 
   public debugEnabledAtStart: boolean
@@ -487,7 +493,7 @@ export class BetterBibTeX {
   }
 
   public openDialog(url: string, title: string, properties: string, params: Record<string, any>): void {
-    Zotero.getMainWindow()?.openDialog(url, title, properties, params)
+    (Zotero.getMainWindow() as any)?.openDialog(url, title, properties, params)
   }
 
   public setProgress(progress: number, msg: string): void {
@@ -555,6 +561,8 @@ export class BetterBibTeX {
         // and this
         if ((await Translators.needsInstall()).length) await Zotero.Translators.init()
 
+        await l10n.initialize()
+
         this.dir = PathUtils.join(Zotero.DataDirectory.dir, 'better-bibtex')
         await IOUtils.makeDirectory(this.dir, { ignoreExisting: true, createAncestors: true })
         await Preference.startup(this.dir)
@@ -564,7 +572,7 @@ export class BetterBibTeX {
           this.setProgress(pct, message)
         })
 
-        await Cache.open(await Zotero.DB.valueQueryAsync('SELECT MAX(dateModified) FROM items'))
+        await Cache.open(await Zotero.DB.valueQueryAsync('SELECT MAX(dateModified) FROM items') as string)
         Events.cacheTouch = async (ids: number[]) => {
           await Cache.touch(ids)
         }
@@ -584,7 +592,7 @@ export class BetterBibTeX {
         await Zotero.DB.queryAsync('ATTACH DATABASE ? AS betterbibtex', [PathUtils.join(Zotero.DataDirectory.dir, 'better-bibtex.sqlite')])
 
         const tables: Record<string, boolean> = {}
-        for (const table of await Zotero.DB.columnQueryAsync('SELECT LOWER(REPLACE(name, \'-\', \'\')) FROM betterbibtex.sqlite_master where type=\'table\'')) {
+        for (const table of await Zotero.DB.columnQueryAsync<string>('SELECT LOWER(REPLACE(name, \'-\', \'\')) FROM betterbibtex.sqlite_master where type=\'table\'')) {
           tables[table] = true
         }
 
@@ -596,7 +604,7 @@ export class BetterBibTeX {
 
         if (tables.betterbibtex) {
           if (!(await Zotero.DB.queryAsync('PRAGMA betterbibtex.table_info("better-bibtex")')).find(info => info.name === 'migrated')) {
-            Zotero.DB.queryAsync('ALTER TABLE betterbibtex."better-bibtex" ADD migrated')
+            await Zotero.DB.queryAsync('ALTER TABLE betterbibtex."better-bibtex" ADD migrated')
           }
 
           await Zotero.DB.executeTransaction(async () => {
@@ -649,9 +657,10 @@ export class BetterBibTeX {
       id: 'done',
       description: 'user interface',
       startup: async () => {
-        Ready.resolve(true)
+        Ready.resolve()
 
-        this.onMainWindowLoad(Zotero.getMainWindow())
+        ExportOptions.enable()
+        if (Zotero.getMainWindow()) this.onMainWindowLoad({ window: Zotero.getMainWindow() })
 
         Zotero.Promise.delay(15000).then(() => {
           DebugLog.unregister('Better BibTeX')
@@ -660,7 +669,8 @@ export class BetterBibTeX {
           DebugLog.convertLegacy()
         })
 
-        const columnDataKey = await Zotero.ItemTreeManager.registerColumn?.({
+        // don't know why this is not picked up from zotero-types
+        const columnDataKey = await Zotero.ItemTreeManager.registerColumn({ // eslint-disable-line @typescript-eslint/await-thenable
           dataKey: 'citationKey',
           label: l10n.localize('better-bibtex_zotero-pane_column_citekey'),
           pluginID: 'better-bibtex@iris-advies.com',
@@ -670,8 +680,7 @@ export class BetterBibTeX {
           },
         })
 
-        /*
-        const rowID = Zotero.ItemPaneManager.registerInfoRow?.({
+        const rowID = Zotero.ItemPaneManager.registerInfoRow({
           rowID: 'better-bibtex-citation-key',
           pluginID: 'better-bibtex@iris-advies.com',
           label: { l10nID: 'better-bibtex_item-pane_info_citation-key_label' },
@@ -680,13 +689,15 @@ export class BetterBibTeX {
           nowrap: false,
           editable: false,
           onGetData({ item }) {
-            return item.getField('citationKey') as string
+            const citekey = Zotero.BetterBibTeX.KeyManager.get(item.id) || { citationKey: '', pinned: false }
+            return citekey.citationKey
           },
+          /*
           onSetData({ rowID, item, tabType, editable, value }) {
             Zotero.debug(`Set custom info row ${rowID} of item ${item.id} to ${value}`);
           },
+          */
         })
-        */
 
         let $done: () => void
         Zotero.ItemPaneManager.registerSection({
@@ -704,32 +715,32 @@ export class BetterBibTeX {
           // onRender: ({ body, item, editable, tabType }) => {
           onRender: ({ body, item, setSectionSummary }) => {
             const citekey = Zotero.BetterBibTeX.KeyManager.get(item.id) || { citationKey: '', pinned: false }
-            const textbox = body.querySelector('#better-bibtex-citation-key')
-            body.style.display = 'flex'
+            const textbox: HTMLElement = body.querySelector('#better-bibtex-citation-key')
+            body.style.display = 'flex';
             // const was = textbox.dataset.itemid || '<node>'
-            textbox.value = citekey.citationKey
+            (textbox as any).value = citekey.citationKey
             textbox.dataset.itemid = citekey.citationKey ? `${ item.id }` : ''
 
             const pinned = body.querySelector('#better-bibtex-citation-key-pinned')
             pinned.textContent = citekey.pinned ? icons.pin : ''
 
-            setSectionSummary(citekey || '')
+            setSectionSummary(citekey.citationKey || '')
           },
-          onInit: ({ body, refresh }) => {
+          onInit: ({ body, refresh }) => { // eslint-disable-line @typescript-eslint/unbound-method
             $done = Events.on('items-changed', ({ items }) => {
-              const textbox = body.querySelector('#better-bibtex-citation-key')
+              const textbox: HTMLElement = body.querySelector('#better-bibtex-citation-key')
               const itemID = textbox.dataset.itemid ? parseInt(textbox.dataset.itemid) : undefined
-              const displayed: ZoteroItem = textbox.dataset.itemid ? items.find(item => item.id === itemID) : undefined
-              if (displayed) refresh()
+              const displayed: Zotero.Item = textbox.dataset.itemid ? items.find(item => item.id === itemID) : undefined
+              if (displayed) void refresh()
             })
           },
           onItemChange: ({ setEnabled, body, item }) => {
-            const textbox = body.querySelector('#better-bibtex-citation-key')
+            const textbox: HTMLElement = body.querySelector('#better-bibtex-citation-key')
             if (item.isRegularItem() && !item.isFeedItem) {
               const citekey = item.getField('citationKey')
               // const was = textbox.dataset.itemid
-              textbox.dataset.itemid = citekey ? `${ item.id }` : ''
-              textbox.value = citekey || '\u274C'
+              textbox.dataset.itemid = citekey ? `${ item.id }` : '';
+              (textbox as any).value = citekey || '\u274C'
               setEnabled(true)
             }
             else {
@@ -744,16 +755,22 @@ export class BetterBibTeX {
         })
 
         Events.on('items-changed', () => {
-          // if (rowID) Zotero.ItemPaneManager.refreshInfoRow(rowID)
+          if (rowID) Zotero.ItemPaneManager.refreshInfoRow(rowID)
           // eslint-disable-next-line no-underscore-dangle
-          if (columnDataKey && !Zotero.getActiveZoteroPane().itemPane.itemsView._columnPrefs[columnDataKey].hidden) Zotero.ItemTreeManager.refreshColumns()
+          if (!columnDataKey) return
+          const azp = Zotero.getActiveZoteroPane()
+          if (!azp || !azp.itemPane) return
+          // eslint-disable-next-line no-underscore-dangle
+          if (!azp.itemPane.itemsView._columnPrefs[columnDataKey].hidden) Zotero.ItemTreeManager.refreshColumns()
         })
 
         monkey.enable()
       },
       shutdown: async () => { // eslint-disable-line @typescript-eslint/require-await
+        ExportOptions.disable()
         Events.shutdown()
         Elements.removeAll()
+        Menu.unregisterAll()
         monkey.disableAll()
         clean_pane_persist()
         Preference.shutdown()
@@ -774,10 +791,93 @@ export class BetterBibTeX {
   }
 
   public onMainWindowLoad({ window }: { window: Window }): void {
-    void newZoteroPane(window)
+    const doc = window.document
+
+    if (!doc.querySelector('#better-bibtex-menuFile')) {
+      Menu.register('menuFile', {
+        id: 'better-bibtex-menuFile',
+        tag: 'menu',
+        label: 'Better BibTeX',
+        children: [
+          { tag: 'menuitem', label: l10n.localize('better-bibtex_aux-scanner'), oncommand: "Zotero.BetterBibTeX.scanAUX('tag')" },
+          { tag: 'menuitem', label: l10n.localize('better-bibtex_report-errors'), oncommand: 'Zotero.BetterBibTeX.ErrorReport.open()' },
+        ],
+      })
+    }
+
+    if (!doc.querySelector('#better-bibtex-menuHelp')) {
+      Menu.register('menuHelp', {
+        id: 'better-bibtex-menuHelp',
+        tag: 'menuitem',
+        label: l10n.localize('better-bibtex_report-errors'),
+        oncommand: 'Zotero.BetterBibTeX.ErrorReport.open()',
+      })
+    }
+
+    if (!doc.querySelector('#better-bibtex-menuItem')) {
+      Menu.register('item', {
+        id: 'better-bibtex-menuItem',
+        tag: 'menu',
+        label: 'Better BibTeX',
+        icon: 'chrome://zotero-better-bibtex/content/skin/bibtex-menu.svg',
+        children: [
+          { tag: 'menuitem', label: l10n.localize('better-bibtex_citekey_set'), oncommand: 'Zotero.BetterBibTeX.KeyManager.set()' },
+          { tag: 'menuitem', label: l10n.localize('better-bibtex_citekey_pin'), oncommand: 'Zotero.BetterBibTeX.KeyManager.pin("selected")' },
+          { tag: 'menuitem', label: l10n.localize('better-bibtex_zotero-pane_citekey_pin_inspire-hep'), oncommand: 'Zotero.BetterBibTeX.KeyManager.pin("selected", true)' },
+          { tag: 'menuitem', label: l10n.localize('better-bibtex_zotero-pane_citekey_refresh'), oncommand: 'Zotero.BetterBibTeX.KeyManager.refresh("selected", true)' },
+          {
+            tag: 'menuitem',
+            label: l10n.localize('better-bibtex_zotero-pane_biblatex_to_clipboard-bibtex_zotero-pane_citekey_refresh'),
+            oncommand: `Zotero.BetterBibTeX.MenuHelper.clipSelected('${Translators.bySlug.BetterBibLaTeX.translatorID}')`,
+          },
+          {
+            tag: 'menuitem',
+            label: l10n.localize('better-bibtex_zotero-pane_bibtex_to_clipboard-bibtex_zotero-pane_citekey_refresh'),
+            oncommand: `Zotero.BetterBibTeX.MenuHelper.clipSelected('${Translators.bySlug.BetterBibTeX.translatorID}')`,
+          },
+          { tag: 'menuseparator' },
+          { tag: 'menuitem', label: l10n.localize('better-bibtex_zotero-pane_patch-dates'), oncommand: 'Zotero.BetterBibTeX.MenuHelper.patchDates()' },
+          { tag: 'menuitem', label: l10n.localize('better-bibtex_zotero-pane_sentence-case'), oncommand: 'Zotero.BetterBibTeX.MenuHelper.sentenceCase()' },
+          { tag: 'menuitem', label: l10n.localize('better-bibtex_zotero-pane_add-citation-links'), oncommand: 'Zotero.BetterBibTeX.MenuHelper.addCitationLinks()' },
+          { tag: 'menuseparator', isHidden: () => !TeXstudio.enabled },
+          { tag: 'menuitem', label: l10n.localize('better-bibtex_zotero-pane_tex-studio'), oncommand: 'Zotero.BetterBibTeX.MenuHelper.toTeXstudio()', isHidden: () => !TeXstudio.enabled },
+          { tag: 'menuseparator' },
+          { tag: 'menuitem', label: l10n.localize('better-bibtex_report-errors'), oncommand: 'Zotero.BetterBibTeX.ErrorReport.open("items")' },
+        ],
+      })
+    }
+
+    if (!doc.querySelector('#better-bibtex-menuCollection')) {
+      Menu.register('collection', {
+        id: 'better-bibtex-menuCollection',
+        tag: 'menu',
+        label: 'Better BibTeX',
+        icon: 'chrome://zotero-better-bibtex/content/skin/bibtex-menu.svg',
+        children: [
+          {
+            tag: 'menu',
+            isHidden: MenuHelper.AEisHidden,
+            label: l10n.localize('zotero-collectionmenu-bbt-autoexport'),
+            children: Array.from({length: 10}).map((_, i) => ({
+              tag: 'menuitem',
+              id: `better-bibtex-collection-menu-ae-${i}`,
+              label: '',
+              isHidden: MenuHelper.AEisHidden,
+              oncommand: 'Zotero.BetterBibTeX.AutoExport.run(this.getAttribute("label"))',
+            })),
+          },
+          { tag: 'menuitem', label: l10n.localize('better-bibtex_zotero-pane_show_collection-key'), oncommand: 'Zotero.BetterBibTeX.MenuHelper.pullExport()' },
+          { tag: 'menuitem', label: l10n.localize('better-bibtex_aux-scanner'), oncommand: 'Zotero.BetterBibTeX.scanAUX("collection")' },
+          // { tag: 'menuitem', label: l10n.localize('better-bibtex_zotero-pane_tag_duplicates'), oncommand: 'Zotero.BetterBibTeX.KeyManager.tagDuplicates("libraryID")' },
+          { tag: 'menuitem', label: l10n.localize('better-bibtex_report-errors'), oncommand: 'Zotero.BetterBibTeX.ErrorReport.open("collection")' },
+        ],
+      })
+    }
   }
+
   public onMainWindowUnload({ window }: { window: Window }): void {
     log.info(`onMainWindowUnload ${typeof window}`)
+    Menu.unregisterAll()
   }
 
   public parseDate(date: string): ParsedDate { return DateParser.parse(date) }
@@ -796,6 +896,7 @@ export class BetterBibTeX {
     }
 
     try {
+      // @ts-expect-error deprecated method
       return Zotero.File.getContents(file) as string
     }
     catch (err) {

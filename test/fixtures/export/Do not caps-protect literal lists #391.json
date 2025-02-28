@@ -8,7 +8,7 @@
     },
     "preferences": {
       "bibtexURL": "note",
-      "citekeyFormat": "[title:lower]",
+      "citekeyFormat": "title.lower",
       "skipFields": "timestamp"
     }
   },

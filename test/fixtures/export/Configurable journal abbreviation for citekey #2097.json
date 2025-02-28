@@ -8,7 +8,7 @@
     },
     "preferences": {
       "autoAbbrev": true,
-      "citekeyFormat": "[auth:lower][shorttitle3_3].[journal=auto][year]",
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold.lower + shorttitle(3,3) + \".\" + journal(auto) + year",
       "citekeySearch": false,
       "extraMergeCSL": true,
       "extraMergeCitekeys": true,
@@ -32,7 +32,7 @@
         },
         {
           "creatorType": "author",
-          "firstName": "Jo\u00e3o F.",
+          "firstName": "João F.",
           "lastName": "Mano"
         },
         {

@@ -12,7 +12,7 @@
       "autoExport": "idle",
       "autoExportDelay": 15,
       "autoExportIdleWait": 60,
-      "citekeyFormat": "[extra=editor:lower][0] | [auth:(unknown)][year][0]",
+      "citekeyFormat": "extra(editor).lower + postfix(\"-%(n)s\");\nauth(n=0,m=1,creator=\"*\",initials=false).fold.default(unknown) + year + postfix(\"-%(n)s\");",
       "citekeySearch": false,
       "extraMergeCSL": true,
       "extraMergeCitekeys": true,

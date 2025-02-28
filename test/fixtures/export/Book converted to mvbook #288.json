@@ -9,7 +9,7 @@
     "preferences": {
       "autoAbbrevStyle": "http://www.zotero.org/styles/nature",
       "bibtexURL": "note",
-      "citekeyFormat": "[auth:lower][Title:fold:nopunct:skipwords:select,1,1:lower:alphanum:prefix,_][year:prefix,_][0]",
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold.lower + Title.transliterate.nopunct.skipwords.select(1,1).lower.alphanum.prefix(_) + year.prefix(_) + postfix(\"-%(n)s\")",
       "skipFields": "file,editora,editoratype,editorb,editorbtype"
     }
   },
@@ -26,10 +26,10 @@
       "date": "1990",
       "itemID": 1,
       "itemType": "book",
-      "language": "fran\u00e7ais",
+      "language": "français",
       "libraryCatalog": "SUDOC",
       "notes": [
-        "<p>Comprend : t. 1, La puissance du d\u00e9sordre ; t. 2, La fin des dogmes</p>"
+        "<p>Comprend : t. 1, La puissance du désordre ; t. 2, La fin des dogmes</p>"
       ],
       "numPages": "79",
       "numberOfVolumes": "2",

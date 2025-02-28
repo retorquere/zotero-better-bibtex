@@ -10,7 +10,7 @@
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
       "autoExport": "off",
       "citekeyFold": false,
-      "citekeyFormat": "[auth5:lower][shortyear]",
+      "citekeyFormat": "auth(n=5,m=1,creator=\"*\",initials=false).fold.lower + shortyear",
       "keyConflictPolicy": "change",
       "skipFields": "keywords,file,URL"
     }
@@ -21,7 +21,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "Dani\u00e8le",
+          "firstName": "Danièle",
           "lastName": "van de Velde"
         }
       ],
@@ -32,7 +32,7 @@
       "libraryCatalog": "Amazon.com",
       "place": "Paris",
       "publisher": "Peeters",
-      "title": "Le spectre nominal. Des noms de mati\u00e8res aux noms d'abstractions"
+      "title": "Le spectre nominal. Des noms de matières aux noms d'abstractions"
     },
     {
       "DOI": "10.1007/s10988-006-9008-0",
@@ -50,7 +50,7 @@
       "itemID": 3,
       "itemType": "journalArticle",
       "libraryCatalog": "CrossRef",
-      "pages": "1\u201345",
+      "pages": "1–45",
       "publicationTitle": "Linguistics and Philosophy",
       "shortTitle": "Vagueness and grammar",
       "tags": [
@@ -78,7 +78,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "Henri\u00ebtte",
+          "firstName": "Henriëtte",
           "lastName": "de Swart"
         }
       ],
@@ -89,7 +89,7 @@
       "journalAbbreviation": "Natural Language & Linguistic Theory",
       "language": "en",
       "libraryCatalog": "link.springer.com.are.uab.cat",
-      "pages": "347\u2013385",
+      "pages": "347–385",
       "publicationTitle": "Natural Language & Linguistic Theory",
       "title": "Aspect Shift and Coercion",
       "url": "http://link.springer.com.are.uab.cat/article/10.1023/A%3A1005916004600",

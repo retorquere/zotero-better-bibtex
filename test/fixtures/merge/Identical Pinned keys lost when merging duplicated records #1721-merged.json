@@ -11,7 +11,7 @@
       "automaticTags": false,
       "bibtexURL": "url",
       "citekeyFold": false,
-      "citekeyFormat": "[auth:lower][year] | [=forumPost/WebPage][Auth:lower:capitalize][Date:format-date=%Y-%m-%d.%H\\:%M\\:%S:prefix=.][shorttitle3_3:lower:capitalize:prefix=.][Pages:prefix=.p.][Volume:prefix=.Vol.][NumberofVolumes:prefix=de] | [Auth:lower:capitalize][shorttitle3_3:lower:capitalize:prefix=.][Pages:prefix=.p.][Volume:prefix=.Vol.][NumberofVolumes:prefix=de]",
+      "citekeyFormat": "auth.fold.lower + year; type(forumpost, webpage) + auth.lower.capitalize + Date.formatDate('%Y-%m-%d.%H:%M:%S').prefix('.') + shorttitle(3,3).lower.capitalize.prefix('.') + Pages.prefix('.p.') + Volume.prefix('.Vol.') + NumberofVolumes.prefix('de'); auth.lower.capitalize + shorttitle(3,3).lower.capitalize.prefix('.') + Pages.prefix('.p.') + Volume.prefix('.Vol.') + NumberofVolumes.prefix('de')",
       "kuroshiro": true
     }
   },

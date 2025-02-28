@@ -7,16 +7,15 @@
       "exportNotes": true
     },
     "preferences": {
-      "citekeyFormat": "[Auth:lower:replace=\\[-\\ \\].*,,regex:alphanum][year][Title:skipwords=true:replace=\\[-\\ \\].*,,regex:alphanum:lower]"
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).lower.replace(find=/[- ].*/,replace=\"\").alphanum + year + Title.skipwords(true).replace(find=/[- ].*/,replace=\"\").alphanum.lower"
     }
   },
   "items": [
     {
       "DOI": "10.1007/978-3-030-45388-6_6",
       "ISBN": "978-3-030-45388-6",
-      "abstractNote": "Recently, Beullens, Kleinjung, and Vercauteren (Asiacrypt\u201919) provided the first practical isogeny-based digital signature, obtained from the Fiat-Shamir (FS) paradigm. They worked with the CSIDH-512 parameters and passed through a new record class group computation. However, as with all standard FS signatures, the security proof is highly non-tight and the concrete parameters are set under the heuristic that the only way to attack the scheme is by finding collisions for a hash function.In this paper, we propose an FS-style signature scheme, called Lossy CSI-FiSh, constructed using the CSIDH-512 parameters and with a security proof based on the \u201cLossy Keys\u201d technique introduced by Kiltz, Lyubashevsky and Schaffner (Eurocrypt\u201918). Lossy CSI-FiSh is provably secure under the same assumption which underlies the security of the key exchange protocol CSIDH (Castryck et al. (Asiacrypt\u201918)) and is almost as efficient as CSI-FiSh. For instance, aiming for small signature size, our scheme is expected to take around \\approx 800\u2248800\\approx 800 ms to sign/verify while producing signatures of size \\approx 280\u2248280\\approx 280 bytes. This is only twice slower than CSI-FiSh while having similar signature size for the same parameter set. As an additional benefit, our scheme is by construction secure both in the classical and quantum random oracle model.",
-      "attachments": [
-      ],
+      "abstractNote": "Recently, Beullens, Kleinjung, and Vercauteren (Asiacrypt’19) provided the first practical isogeny-based digital signature, obtained from the Fiat-Shamir (FS) paradigm. They worked with the CSIDH-512 parameters and passed through a new record class group computation. However, as with all standard FS signatures, the security proof is highly non-tight and the concrete parameters are set under the heuristic that the only way to attack the scheme is by finding collisions for a hash function.In this paper, we propose an FS-style signature scheme, called Lossy CSI-FiSh, constructed using the CSIDH-512 parameters and with a security proof based on the “Lossy Keys” technique introduced by Kiltz, Lyubashevsky and Schaffner (Eurocrypt’18). Lossy CSI-FiSh is provably secure under the same assumption which underlies the security of the key exchange protocol CSIDH (Castryck et al. (Asiacrypt’18)) and is almost as efficient as CSI-FiSh. For instance, aiming for small signature size, our scheme is expected to take around \\approx 800≈800\\approx 800 ms to sign/verify while producing signatures of size \\approx 280≈280\\approx 280 bytes. This is only twice slower than CSI-FiSh while having similar signature size for the same parameter set. As an additional benefit, our scheme is by construction secure both in the classical and quantum random oracle model.",
+      "attachments": [],
       "citationKey": "elkaafarani2020lossy",
       "creators": [
         {
@@ -62,17 +61,16 @@
       "libraryCatalog": "Springer Link",
       "pages": "157-186",
       "place": "Cham",
-      "publicationTitle": "Public-Key Cryptography \u2013 PKC 2020",
+      "publicationTitle": "Public-Key Cryptography – PKC 2020",
       "publisher": "Springer International Publishing",
       "series": "Lecture Notes in Computer Science",
       "shortTitle": "Lossy CSI-FiSh",
       "title": "Lossy CSI-FiSh: Efficient Signature Scheme with Tight Reduction to Decisional CSIDH-512"
     },
     {
-      "abstractNote": "We present the first general-purpose digital signature scheme based on supersingular elliptic curve isogenies secure against quantum adversaries in the quantum random oracle model with small key sizes. This scheme is an application of Unruh\u2019s construction of non-interactive zero-knowledge proofs to an interactive zero-knowledge proof proposed by De Feo, Jao, and Pl\u00fbt. We implement our proposed scheme on an x86-64 PC platform as well as an ARM-powered device. We exploit the state-of-the-art techniques to speed up the computations for general C and assembly. Finally, we provide timing results for real world applications.",
+      "abstractNote": "We present the first general-purpose digital signature scheme based on supersingular elliptic curve isogenies secure against quantum adversaries in the quantum random oracle model with small key sizes. This scheme is an application of Unruh’s construction of non-interactive zero-knowledge proofs to an interactive zero-knowledge proof proposed by De Feo, Jao, and Plût. We implement our proposed scheme on an x86-64 PC platform as well as an ARM-powered device. We exploit the state-of-the-art techniques to speed up the computations for general C and assembly. Finally, we provide timing results for real world applications.",
       "accessDate": "2020-11-03T10:26:21Z",
-      "attachments": [
-      ],
+      "attachments": [],
       "citationKey": "yoo2017postquantum",
       "creators": [
         {

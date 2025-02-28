@@ -5,7 +5,7 @@
     "localeDateOrder": "ymd",
     "preferences": {
       "bibtexURL": "note",
-      "citekeyFormat": "[authors][year]"
+      "citekeyFormat": "authorsn(n=0,creator=\"*\",initials=false,sep=\" \").fold + year"
     }
   },
   "items": [

@@ -1,3 +1,3 @@
 module.exports = {
-  reject: ['eslint']
+  reject: ['eslint', '@stylistic/eslint-plugin']
 }

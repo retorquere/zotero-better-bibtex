@@ -44,7 +44,7 @@ export interface Attachment extends ItemBase {
 
 export interface RegularItem extends ItemBase {
   itemType: ${' | '.join(["'" + itemType + "'" for itemType in itemTypes if itemType not in ['note', 'annotation', 'attachment']])}
-  citationKey: string
+  // citationKey: string
 
   // fields common to all items
   creators: Array<Creator>

@@ -96,7 +96,7 @@ export const KeyManager = new class _KeyManager {
   private queue = newQueue(1)
 
   // Table<CitekeyRecord, "itemID">
-  private keys = createTable<CitekeyRecord>(createDB({ clone: true }), 'citationKeys')({
+  public keys = createTable<CitekeyRecord>(createDB({ clone: true }), 'citationKeys')({
     primary: 'itemID',
     indexes: [ 'itemKey', 'libraryID', 'citationKey', 'lcCitationKey' ],
   })
@@ -183,13 +183,14 @@ export const KeyManager = new class _KeyManager {
       },
     }).length
     if (warnAt > 0 && affected > warnAt) {
+      const ignore = { value: false }
       const index = Services.prompt.confirmEx(
         null, // no parent
         'Better BibTeX for Zotero', // dialog title
         l10n.localize('better-bibtex_bulk-keys-confirm_warning', { treshold: warnAt }),
         Services.prompt.STD_OK_CANCEL_BUTTONS + Services.prompt.BUTTON_POS_2 * Services.prompt.BUTTON_TITLE_IS_STRING, // buttons
         null, null, l10n.localize('better-bibtex_bulk-keys-confirm_stop_asking'), // button labels
-        null, {} // no checkbox
+        null, ignore // no checkbox
       )
       switch (index) {
         case 0: // OK
@@ -205,7 +206,7 @@ export const KeyManager = new class _KeyManager {
     // clear before refresh so they can update without hitting "claimed keys" in the deleted set
     this.clear(ids)
 
-    const updates: ZoteroItem[] = []
+    const updates: Zotero.Item[] = []
     const progress: Progress = ids.length > 10 ? new Progress(ids.length, 'Refreshing citation keys') : null
     for (const item of await getItemsAsync(ids)) {
       if (item.isFeedItem || !item.isRegularItem()) continue
@@ -488,7 +489,7 @@ export const KeyManager = new class _KeyManager {
 
       const keys: Map<number, CitekeyRecord> = new Map
       let key: CitekeyRecord
-      for (key of await Zotero.DB.queryAsync('SELECT * from betterbibtex.citationkey')) {
+      for (key of await Zotero.DB.queryAsync('SELECT * from betterbibtex.citationkey') as CitekeyRecord[]) {
         keys.set(key.itemID, lc({ itemID: key.itemID, itemKey: key.itemKey, libraryID: key.libraryID, citationKey: key.citationKey, pinned: key.pinned }))
       }
 
@@ -575,7 +576,7 @@ export const KeyManager = new class _KeyManager {
     }
   }
 
-  public update(item: ZoteroItem, current?: CitekeyRecord): string {
+  public update(item: Zotero.Item, current?: CitekeyRecord): string {
     if (item.isFeedItem || !item.isRegularItem()) return null
 
     current = current || blink.first(this.keys, byItemID(item.id))
@@ -619,8 +620,8 @@ export const KeyManager = new class _KeyManager {
   }
 
   // mem is for https://github.com/retorquere/zotero-better-bibtex/issues/2926
-  public propose(item: ZoteroItem, mem?: Set<string>): Partial<CitekeyRecord> {
-    let citationKey: string = Extra.get(item.getField('extra') as string, 'zotero', { citationKey: true }).extraFields.citationKey
+  public propose(item: Zotero.Item, mem?: Set<string>): Partial<CitekeyRecord> {
+    let citationKey: string = Extra.get(item.getField('extra'), 'zotero', { citationKey: true }).extraFields.citationKey
 
     if (citationKey) return { citationKey, pinned: true }
 

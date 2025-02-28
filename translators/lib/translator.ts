@@ -39,7 +39,7 @@ class Override {
     const candidates: string[] = [
       Path.basename(this.exportPath).replace(/\.[^.]+$/, '') + extension,
       override,
-    ].map(filename => PathUtils.join(this.exportDir, filename) as string)
+    ].map(filename => PathUtils.join(this.exportDir, filename))
 
     for (const candidate of candidates) {
       try {

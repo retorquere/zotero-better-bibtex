@@ -9,7 +9,7 @@
     "preferences": {
       "DOIandURL": "doi",
       "bibtexURL": "url",
-      "citekeyFormat": "[authors3][year]",
+      "citekeyFormat": "authorsn(n=3,creator=\"*\",initials=false,sep=\" \").fold + year",
       "exportTitleCase": false,
       "itemObserverDelay": 100,
       "skipFields": "note,issn"

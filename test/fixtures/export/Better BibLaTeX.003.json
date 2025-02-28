@@ -5,7 +5,7 @@
     "localeDateOrder": "ymd",
     "preferences": {
       "bibtexURL": "note",
-      "citekeyFormat": "[auth][year]"
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold + year"
     }
   },
   "items": [
@@ -49,7 +49,7 @@
       ],
       "itemID": 1,
       "itemType": "conferencePaper",
-      "pages": "330\u2014331",
+      "pages": "330—331",
       "title": "Some publication title"
     }
   ]

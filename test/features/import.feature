@@ -87,7 +87,14 @@ Feature: Import
     Examples:
       | file                                                                                                                  | references |
       | Double newlines means parbreak #2789                                                                                  | 1          |
-      | Report number field is incorrectly translated into the issue field when importing a techreport from a .bib file #2752 | 8          |
+      | Report number field is incorrectly translated into the issue field when importing a techreport from a .bib file #2752 | 1          |
+      | Report number field is incorrectly translated into the issue field when importing a dataset from a .bib file #2752 | 1 |
+      | Report number field is incorrectly translated into the issue field when importing a jurisdiction from a .bib file #2752 | 1 |
+      | Report number field is incorrectly translated into the issue field when importing a legislation from a .bib file #2752 | 1 |
+      | Report number field is incorrectly translated into the issue field when importing a patent from a .bib file #2752 | 1 |
+      | Report number field is incorrectly translated into the issue field when importing a report from a .bib file #2752 | 1 |
+      | Report number field is incorrectly translated into the issue field when importing a standard from a .bib file #2752 | 1 |
+      | Report number field is incorrectly translated into the issue field when importing a techreport from a .bib file #2752 | 1 |
       | Imported name suffix in family part #2744                                                                             | 1          |
       | DOIs excluded from export in 6.7.86 #2555                                                                             | 1          |
       | issuenumberarticle-number #2551                                                                                       | 1          |

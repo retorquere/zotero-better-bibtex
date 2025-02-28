@@ -10,7 +10,7 @@
       "autoExport": "idle",
       "autoExportDelay": 15,
       "autoExportIdleWait": 60,
-      "citekeyFormat": "[auth:lower][year] | [=forumPost/WebPage][Auth:lower:capitalize][Date:format-date=%Y-%m-%d.%H\\:%M\\:%S:prefix=.][shorttitle3_3:lower:capitalize:prefix=.][Pages:prefix=.p.][Volume:prefix=.Vol.][NumberofVolumes:prefix=de] | [Auth:lower:capitalize][shorttitle3_3:lower:capitalize:prefix=.][Pages:prefix=.p.][Volume:prefix=.Vol.][NumberofVolumes:prefix=de]",
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold.lower + year;\ntype(forumPost, webpage) + auth(n=0,m=1,creator=\"*\",initials=false).lower.capitalize + Date.formatDate(\"%Y-%m-%d.%H:%M:%S\").prefix(\".\") + shorttitle(3,3).lower.capitalize.prefix(\".\") + Pages.prefix(\".p.\") + Volume.prefix(\".Vol.\") + NumberofVolumes.prefix(de);\nauth(n=0,m=1,creator=\"*\",initials=false).lower.capitalize + shorttitle(3,3).lower.capitalize.prefix(\".\") + Pages.prefix(\".p.\") + Volume.prefix(\".Vol.\") + NumberofVolumes.prefix(de);",
       "citekeySearch": false,
       "extraMergeCSL": true,
       "extraMergeCitekeys": true,

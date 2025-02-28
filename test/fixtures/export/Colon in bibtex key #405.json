@@ -9,7 +9,7 @@
     "preferences": {
       "autoAbbrevStyle": "http://www.zotero.org/styles/nature",
       "bibtexURL": "note",
-      "citekeyFormat": "[auth:alphanum][year:prefix,\\:][Title:nopunct:skipwords:capitalize:select,1,3:alphanum:prefix,\\:][0]",
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold.alphanum + year.prefix(\":\") + Title.nopunct.skipwords.capitalize.select(1,3).alphanum.prefix(\":\") + postfix(\"-%(n)s\")",
       "biblatexExtendedNameFormat": false
     }
   },

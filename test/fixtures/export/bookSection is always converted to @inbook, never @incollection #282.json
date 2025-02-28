@@ -9,7 +9,7 @@
     "preferences": {
       "autoAbbrevStyle": "http://www.zotero.org/styles/nature",
       "bibtexURL": "note",
-      "citekeyFormat": "[auth:lower][Title:fold:nopunct:skipwords:select,1,1:lower:alphanum:prefix,_][year:prefix,_][0]",
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold.lower + Title.transliterate.nopunct.skipwords.select(1,1).lower.alphanum.prefix(_) + year.prefix(_) + postfix(\"-%(n)s\")",
       "skipFields": "file,editora,editoratype,editorb,editorbtype"
     }
   },
@@ -28,11 +28,11 @@
       "itemType": "bookSection",
       "language": "fr-FR",
       "numberOfVolumes": "2 vol. (786, xxiv+908 p.)",
-      "pages": "155\u2013300",
+      "pages": "155–300",
       "place": "Paris",
       "publicationTitle": "Cours de droit administratif",
       "publisher": "LGDJ",
-      "title": "Probl\u00e8mes d\u2019organisation de l\u2019Administration [1966-1967]",
+      "title": "Problèmes d’organisation de l’Administration [1966-1967]",
       "volume": "t. 1"
     }
   ]

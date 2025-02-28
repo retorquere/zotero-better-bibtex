@@ -13,7 +13,7 @@
       "automaticTags": false,
       "biblatexExtractEprint": false,
       "citekeyFold": false,
-      "citekeyFormat": "[auth:lower]-[shorttitle3_3]-[year]",
+      "citekeyFormat": "auth(n=0,m=1,creator=\"*\",initials=false).fold.lower + \"-\" + shorttitle(3,3) + \"-\" + year",
       "citekeySearch": false,
       "importBibTeXStrings": false,
       "skipFields": "abstract,keywords,annotation,month"
@@ -76,7 +76,7 @@
       "itemID": 1,
       "itemType": "journalArticle",
       "notes": [
-        "<p>\u91cd\u70b9\u53c2\u80033\uff1a\u9897\u7c92\u56fe\u4e0e\u5ca9\u77f3\u65ad\u88c2\u56fe</p>"
+        "<p>重点参考3：颗粒图与岩石断裂图</p>"
       ],
       "pages": "100-114",
       "publicationTitle": "Engineering Geology",
