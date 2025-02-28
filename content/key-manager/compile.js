@@ -464,7 +464,11 @@ const protect = {
       case 'ConditionalExpression': {
         node.test = {
           type: 'CallExpression',
-          callee: { type: 'Identifier', name: 'test' },
+          callee: {
+            type: 'MemberExpression',
+            object: { type: 'ThisExpression' },
+            property: { type: 'Identifier', name: 'formula_test' },
+          },
           arguments: [{
             type: 'ArrowFunctionExpression',
             expression: true,
@@ -478,10 +482,13 @@ const protect = {
       }
 
       case 'SequenceExpression': {
-        this.visitor.sequence = true
         return {
           type: 'CallExpression',
-          callee: { type: 'Identifier', name: 'sequence' },
+          callee: {
+            type: 'MemberExpression',
+            object: { type: 'ThisExpression' },
+            property: { type: 'Identifier', name: 'formula_sequence' },
+          },
           arguments: node.expressions.map(e => ({
             type: 'ArrowFunctionExpression',
             expression: true,
@@ -506,14 +513,22 @@ const logging = {
       if (node.callee.property.type !== 'Identifier') return node
       return {
         type: 'CallExpression',
-        callee: { type: 'Identifier', name: 'log' },
+        callee: {
+          type: 'MemberExpression',
+          object: { type: 'ThisExpression' },
+          property: { type: 'Identifier', name: 'formula_log' },
+        },
         arguments: [ { type: 'Literal', value: node.callee.property.name }, node ],
       }
     }
     else if (node.type === 'CatchClause') {
       node.body.body.unshift({
         type: 'CallExpression',
-        callee: { type: 'Identifier', name: 'log' },
+        callee: {
+          type: 'MemberExpression',
+          object: { type: 'ThisExpression' },
+          property: { type: 'Identifier', name: 'formula_log' },
+        },
         arguments: [ { type: 'Literal' }, { type: 'Literal' }, { type: 'Identifier', name: 'err' } ],
       })
     }
@@ -551,22 +566,6 @@ const generator = Object.assign({}, astring.GENERATOR, {
   },
 })
 
-const logger = `
-  function log(k, v, e) {
-    let msg
-    if (e && e.next) {
-      msg = 'skip'
-    }
-    else if (e) {
-      msg = 'error: ' + e.message
-    }
-    else {
-      msg = 'exec: ' + k + ' => ' + JSON.stringify(v)
-    }
-    Zotero.debug('citekey-formula: ' + msg)
-    return v
-  }
-`
 const tester = `
   function test(f) {
     try {
@@ -577,23 +576,6 @@ const tester = `
       Zotero.debug('citekey-formula: error: ' + err.message)
       throw err
     }
-  }
-`
-const sequence = `
-  function sequence(...e) {
-    const final = e.pop()
-    for (const attempt of e) {
-      try {
-        return attempt()
-      }
-      catch (err) {
-        if (!err.next) {
-          Zotero.debug('citekey-formula: error: ' + err.message)
-          throw err
-        }
-      }
-    }
-    return final()
   }
 `
 function compile(code, options) {
@@ -608,15 +590,11 @@ function compile(code, options) {
   estraverse.replace(ast, len)
   estraverse.traverse(ast, structure)
 
-  delete protect.sequence
   estraverse.replace(ast, protect)
 
   if (options?.logging) estraverse.replace(ast, logging)
 
   const generatedCode = [
-    options?.logging ? logger : '',
-    invert.test ? tester : '',
-    protect.sequence ? sequence : '',
     'let citekey',
     astring.generate(ast, { generator: options?.braces && generator }),
     'return citekey || `zotero-item-${this.item.id}`',
@@ -626,8 +604,6 @@ function compile(code, options) {
 
 module.exports.compile = compile
 
-/*
-const code = "auth(n=1,m=1,creator='*',initials=false).fold + auth(n=1,m=2,creator='*',initials=false).fold + auth(n=1,m=3,creator='*',initials=false).fold + auth(n=1,m=4,creator='*',initials=false).fold + len('>',1) + shortyear;\nauth(n=3,m=1,creator='*',initials=false).fold + (shortyear, year);"
+const code = "auth(n=1,m=1,creator='*',initials=false).fold + auth(n=1,m=2,creator='*',initials=false).fold + auth(n=1,m=3,creator='*',initials=false).fold + auth(n=1,m=4,creator='*',initials=false).fold + len('>',1) + (shortyear ? shortyear : year);\nauth(n=3,m=1,creator='*',initials=false).fold + (shortyear, year);"
 console.log(code)
-console.log(compile(code))
-*/
+console.log(compile(code, { logging: true }))

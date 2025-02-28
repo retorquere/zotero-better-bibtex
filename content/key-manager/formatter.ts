@@ -1588,6 +1588,46 @@ export class PatternFormatter {
     }
     return []
   }
+
+  public formula_log(k: string, v: string, e?: Error & { next?: boolean }): string {
+    if (e && e.next) {
+      log.info('formula: skip')
+    }
+    else if (e) {
+      log.error('formula:', e)
+    }
+    else {
+      log.info('formula:', k, '=>', v)
+    }
+    return v
+  }
+
+  public formula_sequence(...e: (() => string)[]): string {
+    const final = e.pop()
+    for (const attempt of e) {
+      try {
+        return attempt()
+      }
+      catch (err) {
+        if (!err.next) {
+          log.error('formula: sequence element', err)
+          throw err
+        }
+      }
+    }
+    return final()
+  }
+
+  public formula_test(f: () => string): string {
+    try {
+      return f()
+    }
+    catch (err: any) {
+      if (err.next) return ''
+      log.error('formula:', err)
+      throw err
+    }
+  }
 }
 
 export const Formatter = new PatternFormatter // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
