@@ -755,7 +755,7 @@ export class BetterBibTeX {
         })
 
         Events.on('items-changed', () => {
-          if (rowID) Zotero.ItemPaneManager.refreshInfoRow(rowID)
+          if (rowID) Zotero.debug('Zotero.ItemPaneManager.refreshInfoRow(rowID)')
           // eslint-disable-next-line no-underscore-dangle
           if (!columnDataKey) return
           const azp = Zotero.getActiveZoteroPane()
