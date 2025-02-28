@@ -632,34 +632,46 @@ export const KeyManager = new class _KeyManager {
     const ci = Preference.citekeyCaseInsensitive
 
     const seen: Set<string> = new Set
+    const [ prefix, postfix ] = citationKey.split(Formatter.postfix.marker)
+
     // eslint-disable-next-line no-constant-condition
     for (let n = Formatter.postfix.offset; true; n += 1) {
-      const postfixed = citationKey.replace(Formatter.postfix.marker, () => {
-        let postfix = ''
-        if (n) {
-          const alpha = excelColumn(n)
-          postfix = sprintf(Formatter.postfix.template, { a: alpha.toLowerCase(), A: alpha, n })
-        }
-        // this should never happen, it'd mean the postfix pattern doesn't have placeholders, which should have been caught by parsePattern
-        if (seen.has(postfix)) throw new Error(`${ JSON.stringify(Formatter.postfix) } does not generate unique postfixes`)
-        seen.add(postfix)
-        return postfix
-      })
+      let disambiguated = prefix
+      let disambiguator = ''
+      if (n) {
+        const alpha = excelColumn(n)
+        disambiguator = sprintf(Formatter.postfix.template, { a: alpha.toLowerCase(), A: alpha, n })
+      }
+      // this should never happen, it'd mean the disambiguator pattern doesn't have placeholders, which should have been caught by parsePattern
+      if (seen.has(disambiguator)) throw new Error(`${ JSON.stringify(Formatter.postfix) } does not generate unique postfixes`)
+      seen.add(disambiguator)
+      disambiguated += disambiguator
 
       let proposal: string
       if (ci) {
-        where.lcCitationKey = proposal = postfixed.toLowerCase()
+        where.lcCitationKey = proposal = disambiguated.toLowerCase()
       }
       else {
-        where.citationKey = proposal = postfixed
+        where.citationKey = proposal = disambiguated
+      }
+      if (blink.many(this.keys, { where }).filter(i => i.itemID !== item.id).length) continue
+
+      if (postfix) {
+        disambiguated += postfix
+        if (ci) {
+          where.lcCitationKey = proposal = disambiguated.toLowerCase()
+        }
+        else {
+          where.citationKey = proposal = disambiguated
+        }
+        if (blink.many(this.keys, { where }).filter(i => i.itemID !== item.id).length) continue
       }
 
-      if (blink.many(this.keys, { where }).filter(i => i.itemID !== item.id).length) continue
       if (mem) {
         if (mem.has(proposal)) continue
         mem.add(proposal)
       }
-      return { citationKey: postfixed, pinned: false }
+      return { citationKey: disambiguated, pinned: false }
     }
   }
 
