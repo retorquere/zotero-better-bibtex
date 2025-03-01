@@ -87,10 +87,11 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
           dateFormatsJSON: Zotero.File.getResource('resource://zotero/schema/dateFormats.json'),
         })
 
-        this.#worker.addEventListener('message', (e: { data: Translator.Worker.Message | string[] }) => {
-          if (Array.isArray(e.data)) return
+        this.#worker.addEventListener('message', (e: MessageEvent) => {
+          const data = (e.data || []) as Translator.Worker.Message | string[]
+          if (Array.isArray(data)) return
 
-          switch (e.data?.kind) {
+          switch (data.kind) {
             case 'debug':
               // this is pre-formatted
               Zotero.debug(e.data.message) // eslint-disable-line no-restricted-syntax
