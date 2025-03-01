@@ -29,8 +29,8 @@ function parse(src, tgt) {
     ? { name: path.resolve(tgt), removeCallback: () => {} }
     : tmp.fileSync({ postfix: '.json' })
 
-  const tsconfig = path.resolve(__dirname, `../../tsconfig${Math.random()}.json`)
-  fs.writeFileSync(tsconfig, JSON.stringify({ ...require('../../tsconfig.json'), moduleResolution: 'node' }))
+  // const tsconfig = path.resolve(__dirname, `../../tsconfig${Math.random()}.json`)
+  // fs.writeFileSync(tsconfig, JSON.stringify({ ...require('../../tsconfig.json'), moduleResolution: 'node' }))
   const result = run('npx', [
     'typedoc',
     // '--tsconfig', tsconfig,
@@ -71,7 +71,7 @@ function parse(src, tgt) {
   }))
   fs.writeFileSync(tgt.name, JSON.stringify(doc, null, 2))
   tgt.removeCallback()
-  fs.unlinkSync(tsconfig)
+  // fs.unlinkSync(tsconfig)
   return doc
 }
 
