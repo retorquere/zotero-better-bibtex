@@ -36,7 +36,7 @@ function parse(src, tgt) {
     // '--tsconfig', tsconfig,
     '--json', tgt.name,
     '--plugin', plugin,
-    '--externalPattern', 'gen/items/items.ts',
+    '--externalPattern', '**/*/{items,zotero}.ts',
     '--excludeExternals',
     src,
   ])
