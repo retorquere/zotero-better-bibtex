@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions, @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-assignment */
 
+import registerPromiseWorker from '@kotorik/promise-worker/register'
 import allSettled = require('promise.allsettled')
 allSettled.shim()
 
@@ -468,53 +469,34 @@ class WorkerZotero {
 // haul to top
 export var Zotero = new WorkerZotero // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match,no-var
 
-ctx.onmessage = async function(e: { isTrusted?: boolean; data?: Translators.Worker.Message }): Promise<void> { // eslint-disable-line prefer-arrow/prefer-arrow-functions
-  if (!e.data) return // some kind of startup message
+registerPromiseWorker(async function(message: Translators.Worker.Message) {
+  switch (message.kind) {
+    case 'initialize':
+      Zotero.Schema = { ...message.CSL_MAPPINGS }
+      ZD.init(message.dateFormatsJSON)
+      break
 
-  // trace(`worker: ${e.data.kind}`)
-  try {
-    switch (e.data.kind) {
-      case 'initialize':
-        Zotero.Schema = { ...e.data.CSL_MAPPINGS }
-        ZD.init(e.data.dateFormatsJSON)
-        break
+    case 'start':
+      // trace('worker: starting')
+      TranslationWorker.job = message.config
 
-      case 'start':
-        // trace('worker: starting')
-        TranslationWorker.job = e.data.config
+      importScripts(`chrome://zotero-better-bibtex/content/resource/${ TranslationWorker.job.translator }.js`)
+      // trace('worker: loaded')
+      try {
+        if (!Cache.opened) await Cache.open()
+        // trace('worker: cache opened')
+        await Cache.initExport(TranslationWorker.job.translator, TranslationWorker.job.autoExport || exportContext(TranslationWorker.job.translator, TranslationWorker.job.options))
+        // trace('worker: cache loaded')
+        await Zotero.start()
+        // trace('worker: export done')
+        return { kind: 'done', output: Zotero.output }
+      }
+      finally {
+        await Cache.export.flush()
+      }
 
-        importScripts(`chrome://zotero-better-bibtex/content/resource/${ TranslationWorker.job.translator }.js`)
-        // trace('worker: loaded')
-        try {
-          if (!Cache.opened) await Cache.open()
-          // trace('worker: cache opened')
-          await Cache.initExport(TranslationWorker.job.translator, TranslationWorker.job.autoExport || exportContext(TranslationWorker.job.translator, TranslationWorker.job.options))
-          // trace('worker: cache loaded')
-          await Zotero.start()
-          // trace('worker: export done')
-          Zotero.send({ kind: 'done', output: Zotero.output })
-        }
-        catch (err) {
-          Zotero.send({ kind: 'error', message: `${ err }\n${ err.stack }` })
-        }
-        finally {
-          await Cache.export.flush()
-        }
-        break
-
-      case 'stop':
-        break
-
-      case 'ping':
-        ctx.postMessage({ kind: 'ping' })
-        break
-
-      default:
-        log.error('unexpected message:', e)
-        break
-    }
+    default:
+      log.error('unexpected message:', message)
+      break
   }
-  catch (err) {
-    log.error(err)
-  }
-}
+})

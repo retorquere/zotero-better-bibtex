@@ -33,8 +33,6 @@ export namespace Translators {
       | { kind: 'debug', message: string }
       | { kind: 'error', message: string, stack?: string }
       | { kind: 'item', item: number }
-      | { kind: 'ping' }
-      | { kind: 'stop' }
       | { kind: 'progress', percent: number, translator: string, autoExport: string }
   }
 
