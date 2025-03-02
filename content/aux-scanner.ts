@@ -7,7 +7,7 @@ import { findBinary } from './path-search'
 import { log } from './logger'
 import { alert } from './prompt'
 
-const version = require('../gen/version.js')
+import { version } from '../gen/version.json'
 
 type Source = 'MarkDown' | 'BibTeX AUX'
 
