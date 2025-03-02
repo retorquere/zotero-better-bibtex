@@ -127,7 +127,7 @@
     "uzip": "^0.20201231.0",
     "words-to-numbers": "^1.5.1",
     "xregexp": "^5.1.2",
-    "zotero-plugin": "5.0.2",
+    "zotero-plugin": "5.0.3",
     "zotero-plugin-toolkit": "^4.1.2",
     "zotero-types": "^3.1.7"
   },
@@ -188,7 +188,7 @@
     "process": "^0.11.10",
     "properties-reader": "^2.3.0",
     "pug": "^3.0.3",
-    "putout": "^38.4.4",
+    "putout": "^38.4.5",
     "recast": "^0.23.10",
     "regenerate": "^1.4.2",
     "rimraf": "^6.0.1",
