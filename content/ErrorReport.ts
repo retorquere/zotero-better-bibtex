@@ -39,6 +39,8 @@ type Wizard = HTMLElement & {
   rewind: () => void
 }
 
+import { version as running } from '../gen/version.json'
+
 type Report = {
   context: string
   errors: string
@@ -77,8 +79,6 @@ export class ErrorReport {
     wizard.getButton('cancel').disabled = true
     wizard.canRewind = false
 
-    const version = require('../gen/version.js')
-
     try {
       await Zotero.HTTP.request('PUT', `${ this.bucket }/${ this.zipfile() }`, {
         noCache: true,
@@ -96,7 +96,7 @@ export class ErrorReport {
       wizard.advance();
 
       // eslint-disable-next-line no-magic-numbers
-      (<HTMLInputElement> this.document.getElementById('better-bibtex-report-id')).value = `${ this.name() }/${version}`
+      (<HTMLInputElement> this.document.getElementById('better-bibtex-report-id')).value = `${ this.name() }/${running}`
       this.document.getElementById('better-bibtex-report-result').hidden = false
     }
     catch (err) {
@@ -359,14 +359,13 @@ export class ErrorReport {
 
     await this.reload()
 
-    const current = require('../gen/version.js')
-    this.setValue('better-bibtex-report-current', l10n.localize('better-bibtex_error-report_better-bibtex_current', { version: current }))
+    this.setValue('better-bibtex-report-current', l10n.localize('better-bibtex_error-report_better-bibtex_current', { version: running }))
 
     try {
       const latest = await this.latest()
 
       const show_latest = <HTMLInputElement> this.document.getElementById('better-bibtex-report-latest')
-      if (current === latest) {
+      if (running === latest) {
         show_latest.hidden = true
       }
       else {

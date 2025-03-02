@@ -12,7 +12,7 @@ if (!worker && typeof IDBKeyRange === 'undefined') IDBKeyRange = Components.clas
 
 import type { Serialized, Serializer } from '../item-export-format'
 import { bySlug } from '../../gen/translators'
-import version from '../../gen/version'
+import { version } from '../../gen/version.json'
 // import { main as probe } from './cache-test'
 
 import type { Translators as Translator } from '../../typings/translators'
