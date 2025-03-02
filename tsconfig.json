@@ -31,7 +31,7 @@
     "translators/**/*",
     "setup/**/*",
     "gen/**/*",
-    "typings/*",
+    "typings/*"
   ],
   "exclude": [
     "headless",
