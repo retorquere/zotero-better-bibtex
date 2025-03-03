@@ -113,6 +113,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
         ready.resolve(true as unknown as void)
       },
       shutdown: async (reason: Reason) => {
+        await this.worker.postMessage({ kind: 'terminate' })
         this.#worker.terminate()
 
         switch (reason) {
