@@ -496,6 +496,10 @@ registerPromiseWorker(async function(message: Translators.Worker.Message) {
         await Cache.export.flush()
       }
 
+    case 'terminate':
+      if (Cache.opened) await Cache.close()
+      break
+
     default:
       log.error('unexpected message:', message)
       break
