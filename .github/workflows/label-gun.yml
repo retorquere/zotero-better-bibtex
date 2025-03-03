@@ -61,3 +61,11 @@ jobs:
       - name: ask for log
         if: steps.command.outputs.command-name == 'debuglog'
         run: "gh issue comment ${{ github.event.issue.number }} --body-file $GITHUB_WORKSPACE/.github/workflows/debug-log.md --edit-last"
+      - uses: fojia/action-move-issues-to-column@master
+        if: ${{ steps.labelgun.outputs.state != '' }}
+        with:
+          project: 'Zotero plugins'
+          column: ${{ steps.labelgun.outputs.state }}
+          owner: retorquere
+          type: 'user'
+          github_token: ${{ secrets.PROJECT_TOKEN }}
