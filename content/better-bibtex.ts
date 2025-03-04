@@ -730,7 +730,7 @@ export class BetterBibTeX {
             $done = Events.on('items-changed', ({ items }) => {
               const textbox: HTMLElement = body.querySelector('#better-bibtex-citation-key')
               const itemID = textbox.dataset.itemid ? parseInt(textbox.dataset.itemid) : undefined
-              const displayed: Zotero.Item = textbox.dataset.itemid ? items.find(item => item.id === itemID) : undefined
+              const displayed = textbox.dataset.itemid ? items.find(item => item.id === itemID) : undefined
               if (displayed) void refresh()
             })
           },
@@ -761,7 +761,7 @@ export class BetterBibTeX {
           const azp = Zotero.getActiveZoteroPane()
           if (!azp || !azp.itemPane) return
           // eslint-disable-next-line no-underscore-dangle
-          if (!azp.itemPane.itemsView._columnPrefs[columnDataKey].hidden) Zotero.ItemTreeManager.refreshColumns()
+          if (!azp.itemPane.itemsView._columnPrefs[columnDataKey].hidden) Zotero.debug('Zotero.ItemTreeManager.refreshColumns()')
         })
 
         monkey.enable()
