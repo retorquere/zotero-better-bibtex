@@ -48,15 +48,6 @@ jobs:
           verbose: true
           assign: true
 
-      - uses: fojia/action-move-issues-to-column@master
-        if: ${{ steps.labelgun.outputs.state != '' }}
-        with:
-          project: 'Zotero plugins'
-          column: ${{ steps.labelgun.outputs.state }}
-          owner: retorquere
-          type: 'user'
-          github_token: ${{ secrets.PROJECT_SYNC }}
-
       - name: slash commands
         id: command
         continue-on-error: true
