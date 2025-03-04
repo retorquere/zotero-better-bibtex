@@ -528,7 +528,6 @@ export const KeyManager = new class _KeyManager {
       }
       finally {
         void Events.emit('items-changed', { items: Zotero.Items.get(ids), action: 'modify' })
-        void Events.emit('citationkeys-changed', { itemIDs: ids })
       }
       // messes with focus-on-tab
       // if (action === 'modify' || action === 'add') Zotero.Notifier.trigger('refresh', 'item', itemIDs)

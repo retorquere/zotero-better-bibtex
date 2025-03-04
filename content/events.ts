@@ -28,7 +28,6 @@ class Emitter extends Emittery<{
   'collections-removed': number[]
   'export-progress': { pct: number; message: string; ae?: string }
   'items-changed': { items: Zotero.Item[]; action: Action; reason?: string }
-  'citationkeys-changed': { itemIDs: number[] }
   'libraries-changed': number[]
   'libraries-removed': number[]
   'preference-changed': string

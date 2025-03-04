@@ -727,10 +727,10 @@ export class BetterBibTeX {
             setSectionSummary(citekey.citationKey || '')
           },
           onInit: ({ body, refresh }) => { // eslint-disable-line @typescript-eslint/unbound-method
-            $done = Events.on('citationkeys-changed', ({ itemIDs }) => {
+            $done = Events.on('items-changed', ({ items }) => {
               const textbox: HTMLElement = body.querySelector('#better-bibtex-citation-key')
               const itemID = textbox.dataset.itemid ? parseInt(textbox.dataset.itemid) : undefined
-              const displayed = textbox.dataset.itemid ? itemIDs.includes(itemID) : undefined
+              const displayed = textbox.dataset.itemid ? items.find(item => item.id === itemID) : undefined
               if (displayed) void refresh()
             })
           },
@@ -754,8 +754,8 @@ export class BetterBibTeX {
           },
         })
 
-        Events.on('citationkeys-changed', () => {
-          if (rowID) Zotero.ItemPaneManager.refreshInfoRow(rowID)
+        Events.on('items-changed', () => {
+          if (rowID) Zotero.debug('Zotero.ItemPaneManager.refreshInfoRow(rowID)')
           // eslint-disable-next-line no-underscore-dangle
           if (!columnDataKey) return
           const azp = Zotero.getActiveZoteroPane()
