@@ -55,7 +55,7 @@ jobs:
           column: ${{ steps.labelgun.outputs.state }}
           owner: retorquere
           type: 'user'
-          github_token: ${{ secrets.PROJECT_TOKEN }}
+          github_token: ${{ secrets.PROJECT_SYNC }}
 
       - name: slash commands
         id: command
