@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 
 import { get as getLibrary } from './library'
+import { log } from './logger'
 
 class CollectionError extends Error {
   kind: 'duplicate' | 'notfound'
@@ -18,6 +19,7 @@ class CollectionError extends Error {
 
 async function getCollection(parent, name, path, create) {
   const children = parent instanceof Zotero.Library ? Zotero.Collections.getByLibrary(parent.id) : Zotero.Collections.getByParent(parent.id)
+  log.debug('3102: getCollection', { parent, name, path, create, children: children.map(coll => coll.name) })
   let found = children.filter(coll => coll.name === name)
   switch (found.length) {
     case 0:
