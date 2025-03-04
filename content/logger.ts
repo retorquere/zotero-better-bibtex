@@ -3,7 +3,7 @@
 declare const Zotero: any
 
 import * as client from './client'
-const version = require('./../gen/version.js')
+import { version } from './../gen/version.json'
 export const run = `<${version} ${client.run}>`
 
 declare const dump: (msg: string) => void

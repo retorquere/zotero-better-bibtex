@@ -27,14 +27,13 @@ export namespace Translators {
 
     type Message = 
         { kind: 'initialize', CSL_MAPPINGS: any, dateFormatsJSON: any }
+      | { kind: 'terminate' }
       | { kind: 'configure', environment: Environment }
       | { kind: 'start', config: Job }
       | { kind: 'done', output: string }
       | { kind: 'debug', message: string }
       | { kind: 'error', message: string, stack?: string }
       | { kind: 'item', item: number }
-      | { kind: 'ping' }
-      | { kind: 'stop' }
       | { kind: 'progress', percent: number, translator: string, autoExport: string }
   }
 
