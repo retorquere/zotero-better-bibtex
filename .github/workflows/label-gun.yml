@@ -61,7 +61,7 @@ jobs:
       - name: ask for log
         if: steps.command.outputs.command-name == 'debuglog'
         run: "gh issue comment ${{ github.event.issue.number }} --body-file $GITHUB_WORKSPACE/.github/workflows/debug-log.md --edit-last"
-      - uses: actions/add-to-project@v1
+      - uses: actions/add-to-project@v1.0.2
         if: ${{ steps.labelgun.outputs.state != '' }}
         with:
           project-url: https://github.com/users/retorquere/projects/5
