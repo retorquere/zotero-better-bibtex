@@ -18,7 +18,7 @@ class CollectionError extends Error {
 }
 
 async function getCollection(parent, name, path, create) {
-  const children = parent instanceof Zotero.Library ? Zotero.Collections.getByLibrary(parent.id) : Zotero.Collections.getByParent(parent.id)
+  const children = parent instanceof Zotero.Library ? Zotero.Collections.getByLibrary(parent.libraryID) : Zotero.Collections.getByParent(parent.id)
   log.debug('3102: getCollection', { parent, name, path, create, children: children.map(coll => coll.name) })
   let found = children.filter(coll => coll.name === name)
   switch (found.length) {
