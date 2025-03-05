@@ -15,7 +15,7 @@ jobs:
         id: labelgun
         with:
           token: ${{ github.token }}
-          label.exempt: question
+          label.canclose: question
           label.awaiting: awaiting-user-feedback
           label.reopened: reopened
           log.regex: "([A-Z0-9]{8}(-refs)?-(apse|euc))|([A-Z0-9]{8}-[^-]+)"
@@ -61,6 +61,7 @@ jobs:
       - name: ask for log
         if: steps.command.outputs.command-name == 'debuglog'
         run: "gh issue comment ${{ github.event.issue.number }} --body-file $GITHUB_WORKSPACE/.github/workflows/debug-log.md --edit-last"
+      - run: echo Status = ${{ steps.labelgun.outputs.state != '' }}
       - uses: actions/add-to-project@v1.0.2
         if: ${{ steps.labelgun.outputs.state != '' }}
         with:
