@@ -61,3 +61,16 @@ jobs:
       - name: ask for log
         if: steps.command.outputs.command-name == 'debuglog'
         run: "gh issue comment ${{ github.event.issue.number }} --body-file $GITHUB_WORKSPACE/.github/workflows/debug-log.md --edit-last"
+      - uses: actions/add-to-project@v1
+        if: ${{ steps.labelgun.outputs.state != '' }}
+        with:
+          project-url: https://github.com/users/retorquere/projects/5
+          github-token: ${{ secrets.PROJECT_TOKEN }}
+      - name: Set status
+        if: ${{ steps.labelgun.outputs.state != '' }}
+        uses: nipe0324/update-project-v2-item-field@v2.0.2
+        with:
+          project-url: https://github.com/users/retorquere/projects/5
+          github-token: ${{ secrets.PROJECT_TOKEN }}
+          field-name: "Status"
+          field-value: "${{ steps.labelgun.outputs.state }}"
