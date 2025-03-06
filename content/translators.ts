@@ -53,7 +53,7 @@ export type ExportJob = {
 }
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
-export const Translators = new class { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
+export const Translators = new class {
   public byId: Record<string, Translator.Header> = {}
   public byLabel: Record<string, Translator.Header> = {}
   public bySlug: Record<string, Translator.Header> = {}
@@ -183,7 +183,6 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     if (!translators.length) throw new Error('No translators found')
 
     const libraryID = zp.getSelectedLibraryID()
-    // eslint-disable-next-line @typescript-eslint/await-thenable
     await zp.collectionsView.selectLibrary(libraryID) // TODO: zotero-types does somehow not declare this to return a promise
 
     translation.setTranslator(translators[0])

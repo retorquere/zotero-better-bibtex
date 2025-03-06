@@ -710,7 +710,6 @@ export const KeyManager = new class _KeyManager {
 
     if (ids === 'selected') {
       try {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
         return Zotero.getActiveZoteroPane().getSelectedItems(true)
       }
       catch (err) { // zoteroPane.getSelectedItems() doesn't test whether there's a selection and errors out if not

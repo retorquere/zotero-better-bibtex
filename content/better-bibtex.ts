@@ -91,7 +91,6 @@ monkey.patch(Zotero.Utilities.Item?.itemToCSLJSON ? Zotero.Utilities.Item : Zote
 monkey.patch(Zotero.Items, 'merge', original => async function Zotero_Items_merge(item: Zotero.Item, otherItems: Zotero.Item[]) {
   try {
     // log.verbose = true
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     const merge = {
       citationKey: Preference.extraMergeCitekeys,
       tex: Preference.extraMergeTeX,
@@ -108,7 +107,6 @@ monkey.patch(Zotero.Items, 'merge', original => async function Zotero_Items_merg
       // get citekeys of other items
       if (merge.citationKey) {
         const otherIDs = otherItems.map(i => i.id)
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
         extra.extraFields.aliases = [ ...extra.extraFields.aliases, ...Zotero.BetterBibTeX.KeyManager.find({ where: { itemID: { in: otherIDs }}}).map(key => key.citationKey) ]
       }
 
@@ -259,7 +257,7 @@ monkey.patch(Zotero.Item.prototype, 'setField', original => function Zotero_Item
 monkey.patch(Zotero.Item.prototype, 'getField', original => function Zotero_Item_prototype_getField(field: any, unformatted: any, includeBaseMapped: any) {
   try {
     if (field === 'citationKey' || field === 'citekey') {
-      if (Zotero.BetterBibTeX.starting) return '' // eslint-disable-line @typescript-eslint/no-use-before-define
+      if (Zotero.BetterBibTeX.starting) return ''
       return Zotero.BetterBibTeX.KeyManager.get(this.id).citationKey
     }
   }
@@ -268,7 +266,6 @@ monkey.patch(Zotero.Item.prototype, 'getField', original => function Zotero_Item
     return ''
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   return original.apply(this, arguments) as string
 })
 
@@ -327,7 +324,6 @@ Zotero.Translate.Import.prototype.Sandbox.BetterBibTeX = {
     return HTMLParser.parse(text.toString(), options)
   },
 
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   parseDate(_sandbox: any, date: string): ParsedDate { return DateParser.parse(date) },
 
   async importBibTeX(_sandbox: any, collected: Collected) { return await importBibTeX(collected) },
@@ -427,12 +423,12 @@ export class BetterBibTeX {
     fetch(itemID: number): ExportedItem {
       return Cache.export?.fetch(itemID)
     },
-    store(itemID: number, entry: string, metadata: ExportedItemMetadata): void { // eslint-disable-line @typescript-eslint/no-empty-function
+    store(itemID: number, entry: string, metadata: ExportedItemMetadata): void {
       Cache.export?.store({ itemID, entry, metadata })
     },
   }
 
-  // eslint-disable-next-line prefer-arrow/prefer-arrow-functions, @typescript-eslint/no-unsafe-return, @typescript-eslint/explicit-module-boundary-types
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/explicit-module-boundary-types
   public CSL() { return CSL }
   public TestSupport: TestSupport
   public KeyManager = KeyManager
@@ -756,12 +752,11 @@ export class BetterBibTeX {
 
         Events.on('items-changed', () => {
           if (rowID) Zotero.ItemPaneManager.refreshInfoRow(rowID)
-          // eslint-disable-next-line no-underscore-dangle
           if (!columnDataKey) return
           const azp = Zotero.getActiveZoteroPane()
           if (!azp || !azp.itemPane) return
           // eslint-disable-next-line no-underscore-dangle
-          if (!azp.itemPane.itemsView._columnPrefs[columnDataKey].hidden) Zotero.debug('Zotero.ItemTreeManager.refreshColumns()')
+          if (!azp.itemPane.itemsView._columnPrefs[columnDataKey].hidden) log.info('Zotero.ItemTreeManager.refreshColumns()')
         })
 
         monkey.enable()

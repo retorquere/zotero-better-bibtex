@@ -43,9 +43,7 @@ const re = {
   sentenceEnd: /^[:?]/,
 }
 
-// eslint-disable-next-line @typescript-eslint/restrict-plus-operands
 re.lcChar = re.Ll + re.Lt + re.Lm + re.Lo + re.Mn + re.Mc + re.Nd + re.Nl
-// eslint-disable-next-line @typescript-eslint/restrict-plus-operands
 re.char = re.Lu + re.lcChar
 re.L = `${ re.Lu }${ re.Ll }${ re.Lt }${ re.Lm }${ re.Lo }`
 re.protectedWord = `[${ re.lcChar }]*[${ re.Lu }][-${ re.char }]*`
@@ -59,7 +57,6 @@ re.unprotectedWord = new RegExp(`^[${ re.char }]+`)
 re.url = /^(https?|mailto):\/\/[^\s]+/
 re.whitespace = new RegExp(`^[${ re.Whitespace }]+`)
 
-/* eslint-disable quote-props */
 const ligatures = {
   // '\u01F1': 'DZ',
   // '\u01F2': 'Dz',
@@ -83,7 +80,6 @@ const ligatures = {
   // '\u01CB': 'Nj',
   ǌ: 'nj',
 }
-/* eslint-enable */
 
 const titleCaseKeep = new RegExp(`(?:(?:[>:?]?[${ re.Whitespace }]+)[${ re.L }][${ re.P }]?(?:[${ re.Whitespace }]|$))|(?:(?:<span class="nocase">.*?</span>)|(?:<nc>.*?</nc>))`, 'gi')
 const singleLetter = new RegExp(`^([>:?])?[${ re.Whitespace }]+(.)`)
@@ -126,7 +122,7 @@ export type HTMLParserOptions = {
   exportTitleCase?: boolean
 }
 
-export const HTMLParser = new class { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
+export const HTMLParser = new class {
   private options: HTMLParserOptions
   private sentenceStart: boolean
   private spuriousNode = new Set([ '#document-fragment', '#document', 'div', 'span' ])
@@ -379,14 +375,12 @@ export const HTMLParser = new class { // eslint-disable-line @typescript-eslint/
         const length = text.length
         while (text) {
           if (m = re.whitespace.exec(text)) {
-            // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
             this.plaintext(normalized_node.childNodes, m[0], child.sourceCodeLocation.startOffset + (length - text.length))
             text = text.substring(m[0].length)
             continue
           }
 
           if (m = re.sentenceEnd.exec(text)) {
-            // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
             this.plaintext(normalized_node.childNodes, m[0], child.sourceCodeLocation.startOffset + (length - text.length))
             text = text.substring(m[0].length)
             // this.sentenceStart = true
@@ -395,7 +389,6 @@ export const HTMLParser = new class { // eslint-disable-line @typescript-eslint/
 
           if (this.sentenceStart && (m = re.leadingUnprotectedWord.exec(`${ text } `))) {
             this.sentenceStart = false
-            // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
             this.plaintext(normalized_node.childNodes, m[1], child.sourceCodeLocation.startOffset + (length - text.length))
             text = text.substring(m[1].length)
             continue
@@ -404,22 +397,18 @@ export const HTMLParser = new class { // eslint-disable-line @typescript-eslint/
           this.sentenceStart = false
 
           if (!isNocased && this.options.exportBraceProtection && (m = re.protectedWords.exec(text))) {
-            // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
             this.nocase(normalized_node.childNodes, m[0], child.sourceCodeLocation.startOffset + (length - text.length))
             text = text.substring(m[0].length)
           }
           else if (m = re.url.exec(text)) {
-            // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
             this.nocase(normalized_node.childNodes, m[0], child.sourceCodeLocation.startOffset + (length - text.length))
             text = text.substring(m[0].length)
           }
           else if (m = re.unprotectedWord.exec(text)) {
-            // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
             this.plaintext(normalized_node.childNodes, m[0], child.sourceCodeLocation.startOffset + (length - text.length))
             text = text.substring(m[0].length)
           }
           else {
-            // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
             this.plaintext(normalized_node.childNodes, text[0], child.sourceCodeLocation.startOffset + (length - text.length))
             text = text.substring(1)
           }

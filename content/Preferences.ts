@@ -16,7 +16,7 @@ import { icons } from './icons'
 import { Cache } from './db/cache'
 
 // safe to keep "global" since only one pref pane will be loaded at any one time
-let $window: Window & { sizeToContent(): void } // eslint-disable-line no-var
+let $window: Window & { sizeToContent(): void }
 Events.on('window-loaded', ({ win, href }: { win: Window; href: string }) => {
   switch (href) {
     case 'chrome://zotero/content/preferences/preferences.xul': // Zotero's own preferences on Z6
@@ -83,7 +83,6 @@ class ZoteroPreferences {
       if (this.observed?.id === 'zotero-prefpane-export' && (node = [...mutation.addedNodes].find((added: XUL.Element) => added.id === 'zotero-prefpane-export-groupbox'))) {
         observer.disconnect()
         this.observer = new MutationObserver(this.mutated.bind(this))
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
         this.observed = [...node.getElementsByTagNameNS('http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul', 'menulist')].find(added => added.id === 'zotero-quickCopy-menu')
         this.observer.observe(this.observed, { childList: true, subtree: true })
       }
@@ -439,7 +438,7 @@ export class PrefPane {
     let error = ''
     try {
       // don't care about the return value, just if it throws an error
-      new Function(Preference.postscript) // eslint-disable-line @typescript-eslint/no-unused-expressions
+      new Function(Preference.postscript)
     }
     catch (err) {
       log.error('PrefPane.checkPostscript: error compiling postscript:', err)
@@ -512,7 +511,6 @@ export class PrefPane {
       return
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
     for (const node of (Array.from($window.document.getElementsByClassName('bbt-jurism')) as unknown[] as XUL.Element[])) {
       node.hidden = client.slug !== 'jurism'
     }

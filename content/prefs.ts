@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 declare const Services: any
 
 import * as client from './client'
@@ -128,7 +127,7 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
     // clear out old keys
     const oops = 'extensions.translators.better-bibtex.'
     for (key of Services.prefs.getBranch(oops).getChildList('', {}) as string[]) {
-      Zotero.Prefs.clear(oops + key, true) // eslint-disable-line @typescript-eslint/restrict-plus-operands
+      Zotero.Prefs.clear(oops + key, true)
     }
 
     // migrate ancient keys

@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/only-throw-error, @typescript-eslint/require-await, max-len */
+/* eslint-disable @typescript-eslint/no-unsafe-return, @typescript-eslint/only-throw-error, @typescript-eslint/require-await */
 
 import { getItemsAsync } from './get-items-async'
 import { AUXScanner } from './aux-scanner'
@@ -207,14 +207,12 @@ export class NSItem {
     const items = await getItemsAsync(Array.from(ids))
     const libraries = {}
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return items.map(item => {
       if (!libraries[item.libraryID]) {
         const lib = Zotero.Libraries.get(item.libraryID)
         libraries[item.libraryID] = lib ? lib.name : `library#${item.libraryID}`
       }
 
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       return {
         ...Zotero.Utilities.Item.itemToCSLJSON(item),
         library: libraries[item.libraryID],
@@ -317,7 +315,6 @@ export class NSItem {
         seen[key] = col
       }
 
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       return seen[key]
     }
 
@@ -336,7 +333,6 @@ export class NSItem {
           col.parentCollection = recurseParents(item.libraryID, col.parentCollection)
         }
 
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
         return col
       })
     }
@@ -364,7 +360,6 @@ export class NSItem {
     const notes = {}
     for (const key of keys) {
       const item = await getItemsAsync(key.itemID)
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       notes[key.citationKey] = (await getItemsAsync(item.getNotes())).map(note => note.getNote())
     }
     return notes
@@ -410,11 +405,9 @@ export class NSItem {
       where.citationKey = { in: citekeys }
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     const items = await getItemsAsync(Zotero.BetterBibTeX.KeyManager.find({ where }).map(key => key.itemID))
 
     const bibliography = Zotero.QuickCopy.getContentFromItems(items, { ...format, mode: 'bibliography' }, null, false)
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return bibliography[format.contentType || 'html']
   }
 
@@ -497,11 +490,10 @@ export class NSItem {
       throw { code: INVALID_PARAMETERS, message }
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return await Translators.queueJob({
       translatorID: Translators.getTranslatorId(translator),
       displayOptions: { worker: true },
-      scope: { type: 'items', items: await getItemsAsync(found.map(key => key.itemID)) }, // eslint-disable-line @typescript-eslint/no-unsafe-return
+      scope: { type: 'items', items: await getItemsAsync(found.map(key => key.itemID)) },
     })
   }
 
@@ -587,7 +579,6 @@ export class NSItem {
       citeproc.free()
     }
     else {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       for (const item of items.map(i => Zotero.Utilities.Internal.itemToExportFormat(i, false, true))) {
         result.items[item.citationKey] = item
       }
@@ -610,11 +601,10 @@ export class NSViewer {
     if (!item) throw { code: INVALID_PARAMETERS, message: `invalid URI ${ id }` }
     let attachments = await item.getBestAttachments()
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     attachments = attachments.filter(x => x.isPDFAttachment())
 
     if (!attachments.length) throw { code: INVALID_PARAMETERS, message: `no PDF found for URI ${ id }` }
-    return await Zotero.OpenPDF.openToPage(attachments[0], page + 1) // eslint-disable-line @typescript-eslint/no-unsafe-return
+    return await Zotero.OpenPDF.openToPage(attachments[0], page + 1)
   }
 }
 
@@ -726,12 +716,12 @@ orchestrator.add({
   description: 'JSON-RPC endpoint',
   needs: ['translators'],
 
-  startup: async () => { // eslint-disable-line @typescript-eslint/require-await
+  startup: async () => {
     Server.register('/better-bibtex/json-rpc', Handler)
     Server.startup()
   },
 
-  shutdown: async () => { // eslint-disable-line @typescript-eslint/require-await
+  shutdown: async () => {
     Server.shutdown()
   },
 })

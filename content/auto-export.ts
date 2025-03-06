@@ -193,7 +193,7 @@ class Git {
     }
   }
 
-  private async exec(exe: string, args?: string[]): Promise<void> { // eslint-disable-line @typescript-eslint/require-await
+  private async exec(exe: string, args?: string[]): Promise<void> {
     // args = ['/K', exe].concat(args || [])
     // exe = await findBinary('CMD')
 
@@ -404,7 +404,7 @@ type Job = {
 export type JobSetting = keyof Job
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
-export const AutoExport = new class $AutoExport { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
+export const AutoExport = new class $AutoExport {
   public progress: Map<string, number> = new Map
 
   public db = createTable<Job>(createDB({ clone: true }), 'autoExports')({

@@ -188,7 +188,6 @@ export function parse(value: string, try_range = true): ParsedDate {
     let [ , day, month, year ] = m
     if (parseInt(day) > 31 && parseInt(year) < 31) [ day, year ] = [ year, day ]
     date = parse(`${ month } ${ day } ${ year }`, false)
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     if (date.type === 'date') return date
   }
 
@@ -198,7 +197,6 @@ export function parse(value: string, try_range = true): ParsedDate {
     const [ , month, year ] = m
     if (months[month.toLowerCase()]) {
       date = parse(`${ month } ${ year }`, false)
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       if (date.type === 'date') return date
     }
   }
@@ -208,7 +206,6 @@ export function parse(value: string, try_range = true): ParsedDate {
     const [ , _orig, _date ] = m
     date = parse(_date, false)
     const orig = parse(_orig, false)
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     if (date.type === 'date' && orig.type === 'date') return { ...date, ...{ orig }}
   }
 
@@ -217,7 +214,6 @@ export function parse(value: string, try_range = true): ParsedDate {
     const [ , _date, _orig ] = m
     date = parse(_date, false)
     const orig = parse(_orig, false)
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     if (date.type === 'date' && orig.type === 'date') return { ...date, ...{ orig }}
   }
 
@@ -340,7 +336,6 @@ export function parse(value: string, try_range = true): ParsedDate {
   if (date = parseEDTF(value, english)) return date
 
   // https://github.com/retorquere/zotero-better-bibtex/issues/868
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   if (m = /^([0-9]{3,})\s([^0-9]+)(?:\s+([0-9]+))?$/.exec(english)) {
     const [ , year, month, day ] = m
     if (months[month]) {

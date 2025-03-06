@@ -1,4 +1,3 @@
-/* eslint-disable prefer-arrow/prefer-arrow-functions */
 declare const Zotero: any
 
 import { simplifyForExport } from '../gen/items/simplify'
@@ -34,7 +33,6 @@ export function yearFromDate(d: string): string {
 }
 
 const Mode = {
-  // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
   gitbook(items) {
     const citations = items.map(item => `{{ "${ item.citationKey }" | cite }}`)
     Zotero.write(citations.join(''))

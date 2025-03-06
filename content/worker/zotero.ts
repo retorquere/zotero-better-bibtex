@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/restrict-template-expressions, @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 
 // import registerPromiseWorker from '@kotorik/promise-worker/register'
 import registerPromiseWorker from '../../node_modules/@kotorik/promise-worker/dist/register.mjs'
@@ -54,7 +54,7 @@ const NodeType = {
 }
 
 const childrenProxy = {
-  get(target, prop) { // eslint-disable-line prefer-arrow/prefer-arrow-functions
+  get(target, prop) {
     if (prop === Symbol.iterator) {
       return function*() {
         let child = target.firstChild
@@ -68,7 +68,7 @@ const childrenProxy = {
     return children[prop]
   },
 
-  set(target, prop, _value) { // eslint-disable-line prefer-arrow/prefer-arrow-functions
+  set(target, prop, _value) {
     throw new Error(`cannot set unsupported children.${ prop }`)
   },
 }
@@ -365,7 +365,7 @@ class WorkerZotero {
   private items: Serialized[]
 
   public Utilities = WorkerZoteroUtilities
-  public BetterBibTeX = new WorkerZoteroBetterBibTeX // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
+  public BetterBibTeX = new WorkerZoteroBetterBibTeX
   public CreatorTypes = new WorkerZoteroCreatorTypes
   public ItemTypes = new WorkerZoteroItemTypes
   public ItemFields = new WorkerZoteroItemFields
@@ -468,7 +468,7 @@ class WorkerZotero {
 }
 
 // haul to top
-export var Zotero = new WorkerZotero // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match,no-var
+export var Zotero = new WorkerZotero // eslint-disable-line no-var
 
 registerPromiseWorker(async function(message: Translators.Worker.Message) {
   switch (message.kind) {
@@ -497,7 +497,7 @@ registerPromiseWorker(async function(message: Translators.Worker.Message) {
       }
 
     case 'terminate':
-      if (Cache.opened) await Cache.close()
+      if (Cache.opened) Cache.close()
       break
 
     default:

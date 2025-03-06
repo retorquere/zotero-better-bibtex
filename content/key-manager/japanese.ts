@@ -13,7 +13,7 @@ async function fetchArrayBuffer(url): Promise<ArrayBuffer> {
   return await response.arrayBuffer()
 }
 if (client.slug !== 'node') {
-  NodeDictionaryLoader.prototype.loadArrayBuffer = function(url, callback) { // eslint-disable-line prefer-arrow/prefer-arrow-functions
+  NodeDictionaryLoader.prototype.loadArrayBuffer = function(url, callback) {
     url = `chrome://zotero-better-bibtex/content/resource/kuromoji/${ url.replace(/.*[\\/]/, '').replace(/\.gz$/, '') }`
     fetchArrayBuffer(url)
       .then(arrayBuffer => {

@@ -14,7 +14,6 @@ export class Serializer {
       serialized.localPath = att.getFilePath()
       if (serialized.localPath) serialized.defaultPath = `files/${att.id}/${Path.basename(serialized.localPath)}`
     }
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return serialized
   }
 
@@ -79,6 +78,5 @@ export function fix(serialized: Item, item: Zotero.Item): Item {
   serialized.itemKey = item.key
   serialized.libraryID = item.libraryID
 
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   return serialized as unknown as Item
 }

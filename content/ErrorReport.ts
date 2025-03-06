@@ -95,7 +95,6 @@ export class ErrorReport {
 
       wizard.advance();
 
-      // eslint-disable-next-line no-magic-numbers
       (<HTMLInputElement> this.document.getElementById('better-bibtex-report-id')).value = `${ this.name() }/${running}`
       this.document.getElementById('better-bibtex-report-result').hidden = false
     }
@@ -135,7 +134,6 @@ export class ErrorReport {
 
   private async latest(): Promise<string> {
     try {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       const latest = JSON.parse((await Zotero.HTTP.request('GET', 'https://github.com/retorquere/zotero-better-bibtex/releases/download/release/updates.json', { noCache: true })).response)
       return latest.addons['better-bibtex@iris-advies.com'].updates[0].version as string
     }

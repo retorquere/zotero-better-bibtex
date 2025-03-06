@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/require-await, @typescript-eslint/no-unsafe-return, @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-shadow */
+/* eslint-disable @typescript-eslint/require-await, @typescript-eslint/no-unsafe-return, @typescript-eslint/no-shadow */
 
 import { Translators } from '../translators'
 import { getItemsAsync } from '../get-items-async'
@@ -78,7 +78,7 @@ function citation2latex(citation, options) {
 }
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
-export const Formatter = new class { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
+export const Formatter = new class {
   public async typst(citations, options): Promise<string> {
     const cite = citation => {
       let cited = citation.citationKey.match(/^[a-z0-9_\-:.]+$/i) ? `<${ citation.citationKey }>` : `label(${ JSON.stringify(citation.citationKey) })`
@@ -107,7 +107,6 @@ export const Formatter = new class { // eslint-disable-line @typescript-eslint/n
     if (citations.length > 1) {
       const state = citations.reduce((acc, cit) => {
         for (const field of [ 'prefix', 'suffix', 'suppressAuthor', 'locator', 'label' ]) {
-          // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
           acc[field] = (acc[field] || 0) + (cit[field] ? 1 : 0)
         }
         return acc
