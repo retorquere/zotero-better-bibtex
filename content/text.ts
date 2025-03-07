@@ -2,6 +2,7 @@ import { toSentenceCase } from '@retorquere/bibtex-parser'
 
 import type { MarkupNode } from '../typings/markup'
 import { titleCased } from './csl-titlecase'
+import { log } from './logger'
 
 import { parseFragment } from 'parse5'
 
@@ -122,18 +123,43 @@ export type HTMLParserOptions = {
   exportTitleCase?: boolean
 }
 
-function escapeRegExp(text: string) {
-  return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&')
-}
-function csQuotes(str: string, close: 0 | 1): RegExp {
-  let re = escapeRegExp(Array.from(str).filter((_, i) => i % 2 === close).join(''))
-  if (close) {
-    re = `\\\\s${re}`
+const CSQuotes = new class {
+  #cache: Record<string, { open: RegExp; close: RegExp }> = {}
+
+  public open(quotes: string): RegExp {
+    this.ensure(quotes)
+    return this.#cache[quotes].open
   }
-  else {
-    re = `${re}\\\\s`
+
+  public close(quotes: string): RegExp {
+    this.ensure(quotes)
+    return this.#cache[quotes].close
   }
-  return new RegExp(re, 'g')
+
+  private ensure(quotes) {
+    if (!this.#cache[quotes]) {
+      this.#cache[quotes] = {
+        open: this.regex(quotes, 0),
+        close: this.regex(quotes, 1),
+      }
+    }
+  }
+
+  private escape(text: string) {
+    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&')
+  }
+
+  private regex(str: string, close: 0 | 1): RegExp {
+    let re = this.escape(Array.from(str).filter((_, i) => i % 2 === close).join(''))
+    if (close) {
+      re = `\\s*${re}`
+    }
+    else {
+      re = `${re}\\s*`
+    }
+    log.debug('1573:', { re })
+    return new RegExp(re, 'g')
+  }
 }
 
 export const HTMLParser = new class {
@@ -155,8 +181,9 @@ export const HTMLParser = new class {
     // add enquote tags.
     if (this.options.csquotes) {
       this.html = this.html
-        .replace(csQuotes(this.options.csquotes, 0), '<span class="enquote">')
-        .replace(csQuotes(this.options.csquotes, 1), '</span>')
+        .replace(CSQuotes.open(this.options.csquotes), '<span class="enquote">')
+        .replace(CSQuotes.close(this.options.csquotes), '</span>')
+      log.debug('1573:', { html: this.html })
     }
 
     if (!this.options.html) {
