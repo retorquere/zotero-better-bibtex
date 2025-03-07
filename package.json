@@ -105,7 +105,6 @@
     "lodash.clonedeep": "^4.5.0",
     "lodash.frompairs": "^4.0.1",
     "lodash.merge": "^4.6.2",
-    "npm": "^11.1.0",
     "p-defer": "^4.0.1",
     "papaparse": "^5.5.2",
     "parse5": "^7.2.1",
@@ -133,13 +132,13 @@
     "zotero-types": "^3.1.7"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^8.26.0",
     "@eslint/compat": "^1.2.7",
     "@retorquere/bibtex-parser": "^9.0.17",
     "@retorquere/zotero-sync": "^1.1.1",
     "@stylistic/eslint-plugin": "^4.2.0",
     "@types/bluebird": "^3.5.42",
     "@types/node": "^22.13.9",
+    "@typescript-eslint/eslint-plugin": "^8.26.0",
     "@xmldom/xmldom": "^0.9.8",
     "ajv-keywords": "^5.1.0",
     "archiver": "^7.0.1",
