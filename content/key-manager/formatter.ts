@@ -923,6 +923,17 @@ export class PatternFormatter {
     return (this.titleWords(this.item.title, { skipWords: true, nopunct: true }) || []).join(' ')
   }
 
+  private postfixstart(start: number | string): number {
+    if (typeof start === 'number') return start
+
+    let n = 0
+    const a = 'A'.charCodeAt(0) + 1
+    for (const char of start.toUpperCase().replace(/[^A-Z]/g, '')) {
+      n = n * 26 + (char.charCodeAt(0) - a)
+    }
+    return n
+  }
+
   /**
    * a pseudo-function that sets the citekey disambiguation infix using an <a href="https://www.npmjs.com/package/sprintf-js">sprintf-js</a> format spec
    * for when a key is generated that already exists. The infix charachter appears at the place of this function of the formula instead of at the and (as postfix does).
@@ -932,9 +943,9 @@ export class PatternFormatter {
    * @param format sprintf-style format template
    * @param start start value for postfix
    */
-  public $infix(format = '%(a)s', start = 0): string {
-    this.postfix.template = format
-    this.postfix.offset = start
+  public $infix(format: Template<'postfix'> = '%(a)s', start: number | string = 0): string {
+    this.postfix.template = format as string
+    this.postfix.offset = this.postfixstart(start)
     return this.postfix.marker
   }
 
@@ -947,9 +958,9 @@ export class PatternFormatter {
    * @param format sprintf-style format template
    * @param start start value for postfix
    */
-  public $postfix(format: Template<'postfix'> = '%(a)s', start = 0): string {
+  public $postfix(format: Template<'postfix'> = '%(a)s', start: number | string = 0): string {
     this.postfix.template = format as string
-    this.postfix.offset = start
+    this.postfix.offset = this.postfixstart(start)
     return ''
   }
 
