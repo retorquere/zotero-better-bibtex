@@ -152,10 +152,10 @@ const CSQuotes = new class {
   private regex(str: string, close: 0 | 1): RegExp {
     let re = this.escape(Array.from(str).filter((_, i) => i % 2 === close).join(''))
     if (close) {
-      re = `\\s*${re}`
+      re = `\\s*[${re}]`
     }
     else {
-      re = `${re}\\s*`
+      re = `[${re}]\\s*`
     }
     log.debug('1573:', { re })
     return new RegExp(re, 'g')
