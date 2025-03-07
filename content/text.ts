@@ -122,11 +122,11 @@ export type HTMLParserOptions = {
   exportTitleCase?: boolean
 }
 
-function escapeRegExp(text) {
-  return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
+function escapeRegExp(text: string) {
+  return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&')
 }
 function csQuotes(str: string, close: 0 | 1): RegExp {
-  let re = escapeRegExp(Array.from(this.options.csquotes).filter((_, i) => i % 2 === close).join(''))
+  let re = escapeRegExp(Array.from(str).filter((_, i) => i % 2 === close).join(''))
   if (close) {
     re = `\\\\s${re}`
   }
