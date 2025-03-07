@@ -2,7 +2,6 @@ import { toSentenceCase } from '@retorquere/bibtex-parser'
 
 import type { MarkupNode } from '../typings/markup'
 import { titleCased } from './csl-titlecase'
-import { log } from './logger'
 
 import { parseFragment } from 'parse5'
 
@@ -157,7 +156,6 @@ const CSQuotes = new class {
     else {
       re = `[${re}]\\s*`
     }
-    log.debug('1573:', { re })
     return new RegExp(re, 'g')
   }
 }
@@ -183,7 +181,6 @@ export const HTMLParser = new class {
       this.html = this.html
         .replace(CSQuotes.open(this.options.csquotes), '<span class="enquote">')
         .replace(CSQuotes.close(this.options.csquotes), '</span>')
-      log.debug('1573:', { html: this.html })
     }
 
     if (!this.options.html) {
