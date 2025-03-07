@@ -12,7 +12,7 @@ const LanguagePrefixes = Object.keys(Language).sort().reverse().filter(prefix =>
 import charCategories = require('xregexp/tools/output/categories')
 import scripts = require('xregexp/tools/output/scripts')
 
-const re = {
+const RE = {
   Nl: charCategories.find(cat => cat.alias === 'Letter_Number').bmp,
   Nd: charCategories.find(cat => cat.alias === 'Decimal_Number').bmp,
   Mn: charCategories.find(cat => cat.alias === 'Nonspacing_Mark').bmp,
@@ -43,19 +43,19 @@ const re = {
   sentenceEnd: /^[:?]/,
 }
 
-re.lcChar = re.Ll + re.Lt + re.Lm + re.Lo + re.Mn + re.Mc + re.Nd + re.Nl
-re.char = re.Lu + re.lcChar
-re.L = `${ re.Lu }${ re.Ll }${ re.Lt }${ re.Lm }${ re.Lo }`
-re.protectedWord = `[${ re.lcChar }]*[${ re.Lu }][-${ re.char }]*`
+RE.lcChar = RE.Ll + RE.Lt + RE.Lm + RE.Lo + RE.Mn + RE.Mc + RE.Nd + RE.Nl
+RE.char = RE.Lu + RE.lcChar
+RE.L = `${ RE.Lu }${ RE.Ll }${ RE.Lt }${ RE.Lm }${ RE.Lo }`
+RE.protectedWord = `[${ RE.lcChar }]*[${ RE.Lu }][-${ RE.char }]*`
 
 // actual regexps
 
 // TODO: add punctuation
-re.leadingUnprotectedWord = new RegExp(`^([${ re.Lu }][${ re.lcChar }]*)[${ re.Whitespace }${ re.P }]`)
-re.protectedWords = new RegExp(`^(${ re.protectedWord })(([${ re.Whitespace }])(${ re.protectedWord }))*`)
-re.unprotectedWord = new RegExp(`^[${ re.char }]+`)
-re.url = /^(https?|mailto):\/\/[^\s]+/
-re.whitespace = new RegExp(`^[${ re.Whitespace }]+`)
+RE.leadingUnprotectedWord = new RegExp(`^([${ RE.Lu }][${ RE.lcChar }]*)[${ RE.Whitespace }${ RE.P }]`)
+RE.protectedWords = new RegExp(`^(${ RE.protectedWord })(([${ RE.Whitespace }])(${ RE.protectedWord }))*`)
+RE.unprotectedWord = new RegExp(`^[${ RE.char }]+`)
+RE.url = /^(https?|mailto):\/\/[^\s]+/
+RE.whitespace = new RegExp(`^[${ RE.Whitespace }]+`)
 
 const ligatures = {
   // '\u01F1': 'DZ',
@@ -81,8 +81,8 @@ const ligatures = {
   ǌ: 'nj',
 }
 
-const titleCaseKeep = new RegExp(`(?:(?:[>:?]?[${ re.Whitespace }]+)[${ re.L }][${ re.P }]?(?:[${ re.Whitespace }]|$))|(?:(?:<span class="nocase">.*?</span>)|(?:<nc>.*?</nc>))`, 'gi')
-const singleLetter = new RegExp(`^([>:?])?[${ re.Whitespace }]+(.)`)
+const titleCaseKeep = new RegExp(`(?:(?:[>:?]?[${ RE.Whitespace }]+)[${ RE.L }][${ RE.P }]?(?:[${ RE.Whitespace }]|$))|(?:(?:<span class="nocase">.*?</span>)|(?:<nc>.*?</nc>))`, 'gi')
+const singleLetter = new RegExp(`^([>:?])?[${ RE.Whitespace }]+(.)`)
 
 export function titleCase(text: string): string {
   let titlecased: string = titleCased(text)
@@ -122,6 +122,20 @@ export type HTMLParserOptions = {
   exportTitleCase?: boolean
 }
 
+function escapeRegExp(text) {
+  return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
+}
+function csQuotes(str: string, close: 0 | 1): RegExp {
+  let re = escapeRegExp(Array.from(this.options.csquotes).filter((_, i) => i % 2 === close).join(''))
+  if (close) {
+    re = `\\\\s${re}`
+  }
+  else {
+    re = `${re}\\\\s`
+  }
+  return new RegExp(re, 'g')
+}
+
 export const HTMLParser = new class {
   private options: HTMLParserOptions
   private sentenceStart: boolean
@@ -130,7 +144,7 @@ export const HTMLParser = new class {
   private html: string
   private ligatures = new RegExp(`[${ Object.keys(ligatures).join('') }]`, 'g')
 
-  public parse(html, options: HTMLParserOptions): MarkupNode {
+  public parse(html: string, options: HTMLParserOptions): MarkupNode {
     this.html = html
 
     let doc: MarkupNode
@@ -139,13 +153,10 @@ export const HTMLParser = new class {
     this.sentenceStart = true
 
     // add enquote tags.
-    const csquotes = this.options.csquotes
-    if (csquotes) {
-      const space = '\\s*'
-      for (const close of [ 0, 1 ]) {
-        const chars = csquotes.replace(/./g, (c: string, i: number) => [ c, '' ][(i + close) & 1]).replace(/[-[\]/{}()*+?.\\^$|]\s*/g, '\\$&') // eslint-disable-line no-bitwise
-        this.html = this.html.replace(new RegExp(`${ close ? space : '' }[${ chars }]${ close ? '' : space }`, 'g'), close ? '</span>' : '<span class="enquote">')
-      }
+    if (this.options.csquotes) {
+      this.html = this.html
+        .replace(csQuotes(this.options.csquotes, 0), '<span class="enquote">')
+        .replace(csQuotes(this.options.csquotes, 1), '</span>')
     }
 
     if (!this.options.html) {
@@ -374,20 +385,20 @@ export const HTMLParser = new class {
         let text = child.value
         const length = text.length
         while (text) {
-          if (m = re.whitespace.exec(text)) {
+          if (m = RE.whitespace.exec(text)) {
             this.plaintext(normalized_node.childNodes, m[0], child.sourceCodeLocation.startOffset + (length - text.length))
             text = text.substring(m[0].length)
             continue
           }
 
-          if (m = re.sentenceEnd.exec(text)) {
+          if (m = RE.sentenceEnd.exec(text)) {
             this.plaintext(normalized_node.childNodes, m[0], child.sourceCodeLocation.startOffset + (length - text.length))
             text = text.substring(m[0].length)
             // this.sentenceStart = true
             continue
           }
 
-          if (this.sentenceStart && (m = re.leadingUnprotectedWord.exec(`${ text } `))) {
+          if (this.sentenceStart && (m = RE.leadingUnprotectedWord.exec(`${ text } `))) {
             this.sentenceStart = false
             this.plaintext(normalized_node.childNodes, m[1], child.sourceCodeLocation.startOffset + (length - text.length))
             text = text.substring(m[1].length)
@@ -396,15 +407,15 @@ export const HTMLParser = new class {
 
           this.sentenceStart = false
 
-          if (!isNocased && this.options.exportBraceProtection && (m = re.protectedWords.exec(text))) {
+          if (!isNocased && this.options.exportBraceProtection && (m = RE.protectedWords.exec(text))) {
             this.nocase(normalized_node.childNodes, m[0], child.sourceCodeLocation.startOffset + (length - text.length))
             text = text.substring(m[0].length)
           }
-          else if (m = re.url.exec(text)) {
+          else if (m = RE.url.exec(text)) {
             this.nocase(normalized_node.childNodes, m[0], child.sourceCodeLocation.startOffset + (length - text.length))
             text = text.substring(m[0].length)
           }
-          else if (m = re.unprotectedWord.exec(text)) {
+          else if (m = RE.unprotectedWord.exec(text)) {
             this.plaintext(normalized_node.childNodes, m[0], child.sourceCodeLocation.startOffset + (length - text.length))
             text = text.substring(m[0].length)
           }
@@ -420,7 +431,7 @@ export const HTMLParser = new class {
   }
 }
 
-const notAlphaNum = new RegExp(`[^${ re.L }${ re.Nd }${ re.Nl }]`)
+const notAlphaNum = new RegExp(`[^${ RE.L }${ RE.Nd }${ RE.Nl }]`)
 export function babelLanguage(language: string): string {
   if (!language) return ''
   const lc = language.toLowerCase()
