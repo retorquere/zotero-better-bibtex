@@ -570,7 +570,11 @@ export class BetterBibTeX {
 
         await Cache.open(await Zotero.DB.valueQueryAsync('SELECT MAX(dateModified) FROM items') as string)
         Events.cacheTouch = async (ids: number[]) => {
-          await Cache.touch(ids)
+          const withParents: Set<number> = new Set(ids)
+          for (const item of await Zotero.Items.getAsync(ids)) {
+            if (typeof item.parentID === 'number') withParents.add(item.parentID)
+          }
+          await Cache.touch([...withParents])
         }
         Events.addIdleListener('cache-purge', Preference.autoExportIdleWait)
         Events.on('idle', async state => {
