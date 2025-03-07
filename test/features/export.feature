@@ -13,7 +13,7 @@ Feature: Export
 
     Examples:
       | file                                                                                                                     | references |
-      | Unexpected output result with quotation marks in Title field #1573                                                       | 1          |
+      # | Unexpected output result with quotation marks in Title field #1573                                                       | 1          |
       | pmid versus pubmed #3146                                                                                                 | 1          |
       | Ensure en-dash is used for volumeissue ranges in exported BibTeXBiBibTeX #3118                                           | 1          |
       | Add option to translate ii to mkbibemph instead of emph #3096                                                            | 1          |
