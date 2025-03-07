@@ -822,12 +822,12 @@ export class BetterBibTeX {
           { tag: 'menuitem', label: l10n.localize('better-bibtex_zotero-pane_citekey_refresh'), oncommand: 'Zotero.BetterBibTeX.KeyManager.refresh("selected", true)' },
           {
             tag: 'menuitem',
-            label: l10n.localize('better-bibtex_zotero-pane_biblatex_to_clipboard-bibtex_zotero-pane_citekey_refresh'),
+            label: l10n.localize('better-bibtex_zotero-pane_biblatex_to_clipboard'),
             oncommand: `Zotero.BetterBibTeX.MenuHelper.clipSelected('${Translators.bySlug.BetterBibLaTeX.translatorID}')`,
           },
           {
             tag: 'menuitem',
-            label: l10n.localize('better-bibtex_zotero-pane_bibtex_to_clipboard-bibtex_zotero-pane_citekey_refresh'),
+            label: l10n.localize('better-bibtex_zotero-pane_bibtex_to_clipboard'),
             oncommand: `Zotero.BetterBibTeX.MenuHelper.clipSelected('${Translators.bySlug.BetterBibTeX.translatorID}')`,
           },
           { tag: 'menuseparator' },

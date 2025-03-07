@@ -20,6 +20,11 @@ const compat = new FlatCompat({
   allConfig: js.configs.all,
 })
 
+import shell from 'shelljs'
+const branch = (process.env.GITHUB_REF && process.env.GITHUB_REF.startsWith('refs/heads/'))
+  ? process.env.GITHUB_REF.replace('refs/heads/', '')
+  : shell.exec('git rev-parse --abbrev-ref HEAD', { silent: true }).stdout.trim()
+
 const config = [
   {
     ignores: [
@@ -459,18 +464,8 @@ const config = [
       '@typescript-eslint/no-redundant-type-constituents': 'off',
       '@typescript-eslint/consistent-type-definitions': 'off',
       '@typescript-eslint/no-unsafe-argument': 'off',
-    },
-  },
-]
 
-import shell from 'shelljs'
-const branch = (process.env.GITHUB_REF && process.env.GITHUB_REF.startsWith('refs/heads/'))
-  ? process.env.GITHUB_REF.replace('refs/heads/', '')
-  : shell.exec('git rev-parse --abbrev-ref HEAD', { silent: true }).stdout.trim()
-if (branch === 'master' || branch === 'eslint') {
-  config.push({
-    rules: {
-      'no-restricted-syntax': ['error', {
+      'no-restricted-syntax': [branch === 'master' ? 'error' : 'warn', {
         selector: "CallExpression[callee.name='dump']",
         message: 'use of dump is not allowed',
       }, {
@@ -489,8 +484,9 @@ if (branch === 'master' || branch === 'eslint') {
         selector: "CallExpression[callee.name='trace']",
         message: 'use of trace is not allowed',
       }],
+
     },
-  })
-}
+  },
+]
 
 export default config
