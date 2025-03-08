@@ -31,7 +31,7 @@ export const Context = new class {
 
   make(translator: string, displayOptions: Partial<Translator.DisplayOptions>): string {
     const cp: Partial<Translator.DisplayOptions & { translator: string }> = this.defaults[translator]
-    if (!cp) throw new Error(`Unexpected translator ${ translator }`)
+    if (!cp) return ''
     // @ts-expect-error TS2345
     return stringify(pick({ ...cp, ...displayOptions, translator }, Object.keys(cp)))
   }
@@ -84,7 +84,13 @@ export class Running {
   private pending: ExportedItem[] = []
 
   public async load(itemIDs: number[], translator: string, context: string): Promise<Running> {
-    ({ context: this.context, items: this.exported } = await Cache.Exports.load(translator, context))
+    if (context) {
+      ({ context: this.context, items: this.exported } = await Cache.Exports.load(translator, context))
+    }
+    else {
+      this.context = -1
+      this.exported = new Map
+    }
     this.serialized = await Cache.Serialized.get(itemIDs)
     return this
   }
