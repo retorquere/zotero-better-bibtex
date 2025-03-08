@@ -6,7 +6,6 @@ import { Path, File } from './file'
 
 import * as client from './client'
 
-import { Cache } from './db/cache'
 import { Events } from './events'
 import { Translators, ExportJob } from './translators'
 import { Preference } from './prefs'
@@ -712,51 +711,6 @@ export const AutoExport = new class $AutoExport {
 
   public run(path: string) {
     queue.run(path)
-  }
-
-  public async cached(path: string) {
-    if (!Preference.cache) return 0
-
-    const ae = this.get(path)
-    if (!ae) {
-      log.error(`no auto-export found for ${path}`)
-      return 0
-    }
-
-    const itemTypeIDs: number[] = [ 'attachment', 'note', 'annotation' ].map(type => {
-      try {
-        return Zotero.ItemTypes.getID(type) as number
-      }
-      catch {
-        return undefined
-      }
-    })
-
-    const translator = Translators.byId[ae.translatorID]
-    const itemIDset: Set<number> = new Set
-    await this.itemIDs(ae, ae.id, itemTypeIDs, itemIDset)
-    if (itemIDset.size === 0) return 100
-
-    const cached = await Cache.cache(translator.label).count(path)
-    return Math.min(100 * (cached / itemIDset.size), 100)
-  }
-
-  private async itemIDs(ae: Job, id: number, itemTypeIDs: number[], itemIDs: Set<number>) {
-    let items
-    if (ae.type === 'collection') {
-      const coll = await Zotero.Collections.getAsync(id)
-      if (ae.recursive) {
-        for (const collID of coll.getChildCollections(true)) {
-          await this.itemIDs(ae, collID, itemTypeIDs, itemIDs)
-        }
-      }
-      items = coll.getChildItems()
-    }
-    else if (ae.type === 'library') {
-      items = await Zotero.Items.getAll(id)
-    }
-
-    items.filter(item => !itemTypeIDs.includes(item.itemTypeID)).forEach(item => itemIDs.add(item.id))
   }
 
   forCollection(collectionID: number) {

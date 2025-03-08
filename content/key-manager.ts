@@ -518,7 +518,7 @@ export const KeyManager = new class _KeyManager {
     })
 
     const notify = async (ids: number[]) => {
-      if (!Cache.ZoteroSerialized) return
+      if (!Cache.opened) return
 
       try {
         await Cache.touch(ids)

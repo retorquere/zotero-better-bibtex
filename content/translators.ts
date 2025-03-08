@@ -263,7 +263,7 @@ export const Translators = new class {
 
     items = items.filter(item => !item.isAnnotation?.())
 
-    await Cache.ZoteroSerialized.fill(items, this.serializer)
+    await Cache.Serialized.fill(items, this.serializer)
 
     config.data.items = items.map(item => item.id)
     if (job.path && job.canceled) return ''
@@ -279,7 +279,9 @@ export const Translators = new class {
 
     const result = await this.worker.postMessage({ kind: 'start', config })
     switch (result.kind) {
-      case 'done': return result.output
+      case 'done':
+        if (job.autoExport) Cache.cacheRate[job.autoExport] = result.cacheRate
+        return result.output
       default: throw new Error(`Unexpected message of type ${result.kind}`)
     }
   }

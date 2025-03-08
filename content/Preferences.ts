@@ -96,7 +96,6 @@ class ZoteroPreferences {
 
 class AutoExportPane {
   private status: Record<string, string>
-  private cacherate: Record<number, number> = {}
 
   public async load() {
     if (!this.status) {
@@ -109,10 +108,7 @@ class AutoExportPane {
     await this.refresh()
 
     Events.on('export-progress', async ({ pct, ae }) => {
-      if (ae) {
-        this.cacherate[ae] = await AutoExport.cached(ae)
-        if (pct >= 100) await this.refresh(ae)
-      }
+      if (ae) if (pct >= 100) await this.refresh(ae)
     })
   }
 
@@ -217,8 +213,8 @@ class AutoExportPane {
       }
     }
 
-    const status = details.querySelector('*[data-ae-field=\'status\']') as unknown as XUL.Textbox
-    const progress = AutoExport.progress.get(selected.$loki)
+    const status = details.querySelector("*[data-ae-field='status']") as unknown as XUL.Textbox
+    const progress = AutoExport.progress.get(selected.path)
     if (selected.status === 'running' && typeof progress === 'number') {
       status.value = progress < 0 ? `${ icons.running } ${ this.status?.preparing || 'preparing' } ${ -progress }%` : `${ icons.running } ${ progress }%`
     }
@@ -234,9 +230,8 @@ class AutoExportPane {
       status.value = `${ icon } ${ selected.error || '' }`.trim()
     }
 
-    if (typeof this.cacherate[selected.$loki] === 'undefined') this.cacherate[selected.$loki] = 0
-    const cacherate = details.querySelector('*[data-ae-field=\'cacherate\']') as unknown as XUL.Textbox
-    cacherate.value = `${ this.cacherate[selected.$loki] }%`
+    const cacherate = details.querySelector("*[data-ae-field='cacherate']") as unknown as XUL.Textbox
+    cacherate.value = `${ Cache.cacheRate[selected.path] || 0 }%`
   }
 
   public async remove() {
@@ -266,15 +261,13 @@ class AutoExportPane {
       const menulist: XUL.MenuList = $window.document.querySelector('#bbt-prefs-auto-export-select') as unknown as XUL.MenuList
       path = menulist.selectedItem.getAttribute('value')
     }
-    const ae = AutoExport.get(path)
 
-    const field = node.getAttribute('data-ae-field')
-
-    await Cache.cache(Translators.byId[ae.translatorID].label)?.clear(path)
+    await Cache.Exports.drop(path, false)
 
     let value: number | boolean | string
     let disable: 'biblatexChicago' | 'biblatexAPA' = null
 
+    const field = node.getAttribute('data-ae-field')
     switch (field) {
       case 'exportNotes':
       case 'useJournalAbbreviation':

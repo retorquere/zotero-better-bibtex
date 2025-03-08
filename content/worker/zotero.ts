@@ -5,10 +5,7 @@ import registerPromiseWorker from '../../node_modules/@kotorik/promise-worker/di
 import allSettled = require('promise.allsettled')
 allSettled.shim()
 
-import type { Attachment, Item, Note } from '../../gen/typings/serialized-item'
-type Serialized = Attachment | Item | Note
-
-import { ExportedItemMetadata, Cache, exportContext } from '../db/cache'
+import { ExportedItemMetadata, Cache, Context, Running } from '../db/cache'
 
 import flatMap from 'array.prototype.flatmap'
 flatMap.shim()
@@ -174,10 +171,10 @@ class WorkerZoteroBetterBibTeX {
 
   public Cache = {
     store(itemID: number, entry: string, metadata: ExportedItemMetadata) {
-      Cache.export.store({ itemID, entry, metadata })
+      Zotero.running?.store({ itemID, entry, metadata })
     },
     fetch(itemID: number) {
-      return Cache.export.fetch(itemID)
+      return Zotero.running?.fetch(itemID)
     },
   }
 
@@ -362,7 +359,8 @@ class WorkerZotero {
   public exportDirectory: string
   public exportFile: string
   public version: string = client.version
-  private items: Serialized[]
+
+  public running?: Running
 
   public Utilities = WorkerZoteroUtilities
   public BetterBibTeX = new WorkerZoteroBetterBibTeX
@@ -379,12 +377,14 @@ class WorkerZotero {
     TranslationWorker.job.preferences.client = client.slug
     this.output = ''
 
-    // trace('cache: load serialized')
-    this.items = await Cache.ZoteroSerialized.get(TranslationWorker.job.data.items)
-    // trace('cache: serialized loaded')
+    this.running = await Cache.initExport(
+      TranslationWorker.job.data.items,
+      TranslationWorker.job.translator,
+      TranslationWorker.job.autoExport || Context.make(TranslationWorker.job.translator, TranslationWorker.job.options)
+    )
 
     if (TranslationWorker.job.options.exportFileData) {
-      for (const item of this.items) {
+      for (const item of this.running.serialized) {
         this.patchAttachments(item)
       }
     }
@@ -443,8 +443,8 @@ class WorkerZotero {
   }
 
   public nextItem() {
-    this.send({ kind: 'item', item: this.items.length - TranslationWorker.job.data.items.length })
-    return this.items.shift()
+    this.send({ kind: 'item', item: this.running.serialized.length - TranslationWorker.job.data.items.length })
+    return this.running.serialized.shift()
   }
 
   public nextCollection(): Collection {
@@ -478,22 +478,18 @@ registerPromiseWorker(async function(message: Translators.Worker.Message) {
       break
 
     case 'start':
-      // trace('worker: starting')
       TranslationWorker.job = message.config
 
       importScripts(`chrome://zotero-better-bibtex/content/resource/${ TranslationWorker.job.translator }.js`)
-      // trace('worker: loaded')
       try {
         if (!Cache.opened) await Cache.open()
-        // trace('worker: cache opened')
-        await Cache.initExport(TranslationWorker.job.translator, TranslationWorker.job.autoExport || exportContext(TranslationWorker.job.translator, TranslationWorker.job.options))
-        // trace('worker: cache loaded')
         await Zotero.start()
-        // trace('worker: export done')
-        return { kind: 'done', output: Zotero.output }
+        const cacheRate = Zotero.running.hits + Zotero.running.misses ? Zotero.running.hits / (Zotero.running.hits + Zotero.running.misses) : 0
+        return { kind: 'done', output: Zotero.output, cacheRate }
       }
       finally {
-        await Cache.export.flush()
+        await Zotero.running?.flush()
+        Zotero.running = null
       }
 
     case 'terminate':

@@ -45,7 +45,6 @@ import * as Extra from './extra'
 import { sentenceCase, HTMLParser, HTMLParserOptions } from './text'
 
 import { AutoExport } from './auto-export'
-import { exportContext } from './db/cache'
 
 import { log } from './logger'
 // import { trace } from './logger'
@@ -404,15 +403,7 @@ monkey.patch(Zotero.Translate.Export.prototype, 'translate', original => functio
     })
   }
   else {
-    return Translators.queue.add(async () => {
-      try {
-        await Cache.initExport(translator.label, exportContext(translator.label, displayOptions))
-        await original.apply(this, arguments)
-      }
-      finally {
-        await Cache.export.flush()
-      }
-    })
+    return original.apply(this, arguments) // eslint-disable-line @typescript-eslint/no-unsafe-return
   }
 })
 
@@ -420,11 +411,11 @@ export class BetterBibTeX {
   public uninstalled = false
   public Orchestrator = orchestrator
   public Cache = {
-    fetch(itemID: number): ExportedItem {
-      return Cache.export?.fetch(itemID)
+    fetch(_itemID: number): ExportedItem | null {
+      return null
     },
-    store(itemID: number, entry: string, metadata: ExportedItemMetadata): void {
-      Cache.export?.store({ itemID, entry, metadata })
+    store(_itemID: number, _entry: string, _metadata: ExportedItemMetadata): void {
+      return
     },
   }
 
@@ -578,7 +569,7 @@ export class BetterBibTeX {
         }
         Events.addIdleListener('cache-purge', Preference.autoExportIdleWait)
         Events.on('idle', async state => {
-          if (state.topic === 'cache-purge' && Cache.opened) await Cache.ZoteroSerialized.purge()
+          if (state.topic === 'cache-purge' && Cache.opened) await Cache.Serialized.purge()
         })
       },
       shutdown() {
