@@ -1,6 +1,6 @@
 // import { DatabaseFactory, Database, ObjectStoreInterface } from '@idxdb/promised'
 import { DatabaseFactory, Database } from '@idxdb/promised'
-import { SynchronousPromise } from 'synchronous-promise'
+// import { SynchronousPromise } from 'synchronous-promise'
 
 import { log } from '../logger'
 import stringify from 'safe-stable-stringify'
@@ -47,7 +47,7 @@ async function allSettled(promises): Promise<string> {
   if (!promises.length) return ''
 
   try {
-    const settled = await SynchronousPromise.allSettled(promises)
+    const settled = await Promise.allSettled(promises)
     const rejected = settled.filter(result => result.status === 'rejected').length
     return rejected ? `${rejected}/${settled.length}` : ''
   }
