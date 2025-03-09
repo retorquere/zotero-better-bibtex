@@ -23,7 +23,7 @@ import { headers as Headers, byLabel, byId, bySlug } from '../gen/translators'
 
 Events.on('preference-changed', async (pref: string) => {
   for (const translator of (affects[pref] || [])) {
-    await Cache.clear(translator)
+    await Cache.Exports.dropTranslator(translator)
   }
 })
 
@@ -429,7 +429,7 @@ export const Translators = new class {
     if (!install.length) return
 
     for (const { header, code } of install) {
-      await Cache.clear(header.label)
+      await Cache.Exports.dropTranslator(header.label)
       await Zotero.Translators.save(header, code)
     }
 

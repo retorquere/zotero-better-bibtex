@@ -241,8 +241,7 @@ class AutoExportPane {
     if (!Services.prompt.confirm(null, l10n.localize('better-bibtex_auto-export_delete'), l10n.localize('better-bibtex_auto-export_delete_confirm'))) return
 
     const path = menulist.selectedItem.getAttribute('value')
-    const ae = AutoExport.get(path)
-    await Cache.remove(Translators.byId[ae.translatorID].label, path)
+    await Cache.Exports.dropAutoExport(path, true)
     AutoExport.remove(path)
     await this.refresh()
   }
@@ -262,7 +261,7 @@ class AutoExportPane {
       path = menulist.selectedItem.getAttribute('value')
     }
 
-    await Cache.Exports.drop(path, false)
+    await Cache.Exports.dropAutoExport(path, false)
 
     let value: number | boolean | string
     let disable: 'biblatexChicago' | 'biblatexAPA' = null
@@ -447,7 +446,7 @@ export class PrefPane {
 
   public async cacheReset(): Promise<void> {
     Preference.cacheDelete = true
-    await Cache.clear('*')
+    await Cache.Exports.drop()
   }
 
   public async load(win: Window): Promise<void> {

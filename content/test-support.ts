@@ -256,7 +256,8 @@ export class TestSupport {
   }
 
   public async resetCache(): Promise<void> {
-    await Cache.clear('*')
+    await Cache.Exports.drop()
+    await Cache.Serialized.drop()
   }
 
   public async merge(ids: number[]): Promise<void> {
