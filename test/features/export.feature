@@ -842,3 +842,9 @@ Feature: Export
     When I set preference .citekeyFormat to "(ShortTitle ? ShortTitle : Title).condense(_)"
     And I refresh the citation key
     Then the citation key should be "The_Theory_of_Classical_Valuations"
+
+  Scenario: Citation key not updating automatically #3173
+    Given I import 1 reference from "export/*.json"
+    When I select the item with a field that contains "Quantum"
+    And I refresh the citation key
+    Then the citation key should be "The_Theory_of_Classical_Valuations"
