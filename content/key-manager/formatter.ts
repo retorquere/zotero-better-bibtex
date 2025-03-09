@@ -429,9 +429,7 @@ export class PatternFormatter {
     }
 
     this.$postfix()
-    log.debug('3173: running', `${this.generate}`)
     let citekey = this.generate()
-    log.info('3173: formula: made', { citekey })
     if (citekey && Preference.citekeyFold) citekey = this.transliterate(citekey)
     citekey = citekey.replace(this.re.unsafechars, '')
     if (!citekey.includes(this.postfix.marker)) citekey += this.postfix.marker
