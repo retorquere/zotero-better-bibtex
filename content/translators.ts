@@ -193,7 +193,16 @@ export const Translators = new class {
   }
 
   public async queueJob(job: ExportJob): Promise<string> {
-    return await this.queue.add(() => this.exportItems(job))
+    try {
+      log.debug('3164: queued', job)
+      return await this.queue.add(() => this.exportItems(job))
+    }
+    catch (err) {
+      log.error('3164: failed', job, err)
+    }
+    finally {
+      log.debug('3164: finished', job)
+    }
   }
 
   private async exportItemsByWorker(job: ExportJob): Promise<string> {
