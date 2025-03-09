@@ -490,25 +490,12 @@ class $Cache {
   public async touch(ids: number[]): Promise<void> {
     if (ids.length) {
       await this.Exports.touch(ids)
+      await this.Serialized.touch(ids)
     }
     const tx = this.db.transaction('metadata', 'readwrite')
     const metadata = tx.objectStore('metadata')
     await metadata.put({ key: 'lastUpdated', value: Zotero.Date.dateToSQL((new Date), true) })
     await tx.commit()
-  }
-
-  public async xclear(store: string) {
-    if (!this.available('clear')) return
-
-    store = store.replace(/ /g, '')
-    const stores = this.db.objectStoreNames.filter(name => name !== 'metadata' && (store === '*' || name === store))
-    if (stores.length) {
-      const tx = this.db.transaction(stores, 'readwrite')
-      const cleared = await Promise.allSettled(stores.map(name => tx.objectStore(name).clear()))
-      await tx.commit()
-      const rejected = cleared.map((result, i) => result.status === 'rejected' ? stores[i] : '').filter(_ => _).join(', ')
-      if (rejected) log.error(`cache: failed to clear ${rejected}`)
-    }
   }
 
   public close(): void {
