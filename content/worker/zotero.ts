@@ -409,7 +409,10 @@ class WorkerZotero {
 
     doExport()
 
-    if (this.exportFile) await IOUtils.writeUTF8(this.exportFile, this.output)
+    if (this.exportFile) {
+      log.debug('3164: writing', this.exportFile, this.output.length)
+      await IOUtils.writeUTF8(this.exportFile, this.output)
+    }
   }
 
   public send(message: Translators.Worker.Message) {
