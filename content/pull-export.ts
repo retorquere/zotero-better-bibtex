@@ -30,7 +30,6 @@ class CollectionHandler {
   public supportedMethods = ['GET']
 
   public async init(request) {
-    log.debug('3102: request for', request)
     const urlpath: string = Server.queryParams(request)['']
     if (!urlpath) return [ NOT_FOUND, 'text/plain', 'Could not export bibliography: no path' ]
 
@@ -41,21 +40,17 @@ class CollectionHandler {
 
       let collection
       try {
-        log.debug('3102: resolving', { libID, path }, 'by key')
         collection = Zotero.Collections.getByLibraryAndKey(libID, path)
-        log.debug('3102: resolved by key to', collection)
       }
       catch (err) {
-        log.debug('3102: resolve by key error:', err)
+        log.error('pull-export: resolve by key error:', err)
       }
       if (!collection) {
         try {
-          log.debug('3102: resolving', { libID, path }, 'by path')
           collection = await getCollection(`/${ libID }/${ path }`)
-          log.debug('3102: resolved by path to', collection)
         }
         catch (err) {
-          log.debug('3102: resolve by path error:', err)
+          log.error('pull-export: resolve by path error:', err)
         }
       }
 
