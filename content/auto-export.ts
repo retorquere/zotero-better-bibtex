@@ -367,6 +367,7 @@ const queue = new class TaskQueue {
       ae.error = `${ err }`
     }
 
+    void Events.emit('export-progress', { pct: 100, message: `${ translator.label } done`, ae: path })
     AutoExport.status(path, 'done')
   }
 
@@ -422,7 +423,10 @@ export const AutoExport = new class $AutoExport {
     Events.on('collections-changed', ids => this.schedule('collection', ids))
     Events.on('collections-removed', ids => this.remove('collection', ids))
     Events.on('export-progress', ({ pct, ae }) => {
-      if (typeof ae === 'string') this.progress.set(ae, pct)
+      if (typeof ae === 'string') {
+        this.progress.set(ae, pct)
+        log.debug('3164:', ae, '@', pct, '%')
+      }
     })
 
     this.unwatch = [
