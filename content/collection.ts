@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-
 import { get as getLibrary } from './library'
 import { log } from './logger'
 

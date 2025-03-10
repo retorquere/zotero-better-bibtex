@@ -61,17 +61,37 @@ jobs:
       - name: ask for log
         if: steps.command.outputs.command-name == 'debuglog'
         run: "gh issue comment ${{ github.event.issue.number }} --body-file $GITHUB_WORKSPACE/.github/workflows/debug-log.md --edit-last"
-      - run: echo Status = ${{ steps.labelgun.outputs.state != '' }}
+      - run: echo Status = ${{ steps.labelgun.outputs.status != '' }}
+
       - uses: actions/add-to-project@v1.0.2
-        if: ${{ steps.labelgun.outputs.state != '' }}
+        if: ${{ steps.labelgun.outputs.status != '' }}
         with:
           project-url: https://github.com/users/retorquere/projects/5
           github-token: ${{ secrets.PROJECT_TOKEN }}
+
       - name: Set status
-        if: ${{ steps.labelgun.outputs.state != '' }}
+        if: ${{ steps.labelgun.outputs.status != '' }}
         uses: nipe0324/update-project-v2-item-field@v2.0.2
         with:
           project-url: https://github.com/users/retorquere/projects/5
           github-token: ${{ secrets.PROJECT_TOKEN }}
           field-name: "Status"
-          field-value: "${{ steps.labelgun.outputs.state }}"
+          field-value: "${{ steps.labelgun.outputs.status }}"
+
+      - name: Set end date
+        if: ${{ steps.labelgun.outputs.status != '' && steps.labelgun.outputs.lastactive != '' }}
+        uses: nipe0324/update-project-v2-item-field@v2.0.2
+        with:
+          project-url: https://github.com/users/retorquere/projects/5
+          github-token: ${{ secrets.PROJECT_TOKEN }}
+          field-name: "End date"
+          field-value: "${{ steps.labelgun.outputs.lastactive }}"
+
+      - name: Set users
+        if: ${{ steps.labelgun.outputs.status != '' && steps.actor.outputs.users != '' }}
+        uses: nipe0324/update-project-v2-item-field@v2.0.2
+        with:
+          project-url: https://github.com/users/retorquere/projects/5
+          github-token: ${{ secrets.PROJECT_TOKEN }}
+          field-name: "Users"
+          field-value: "${{ steps.actor.outputs.users }}"

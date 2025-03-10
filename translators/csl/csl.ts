@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-assignment */
-
 declare const Zotero: any
 
 import { Translation } from '../lib/translator'
@@ -169,7 +167,6 @@ export abstract class CSLExporter {
 
       let allow: postscript.Allow = { cache: true, write: true }
       try {
-        // eslint-disable-next-line @typescript-eslint/unbound-method
         allow = this.postscript(csl, item, this.translation, Zotero, extraFields)
       }
       catch (err) {
@@ -205,7 +202,7 @@ export abstract class CSLExporter {
     return a.localeCompare(b, undefined, { sensitivity: 'base' })
   }
 
-  private sortObject(obj) {
+  private sortObject(obj: any): any {
     if (obj && !Array.isArray(obj) && typeof obj === 'object') {
       // eslint-disable-next-line @typescript-eslint/unbound-method
       for (const field of Object.keys(obj).sort(this.keySort)) {

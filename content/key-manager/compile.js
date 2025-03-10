@@ -310,7 +310,7 @@ const invert = {
         method.args.forEach(arg => ident2string(arg, !api.rest))
 
         if (api.rest) {
-          if (!method.args.length) throw new Error(`${whoami} requires at least one argument`)
+          if (api.name !== '$type' && !method.args.length) throw new Error(`${whoami} requires at least one argument`)
           const validate = api.validate[api.rest]
           for (const arg of method.args) {
             if (!validate(valueOf(arg))) {

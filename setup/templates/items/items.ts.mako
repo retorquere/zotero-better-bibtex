@@ -1,4 +1,4 @@
-/* eslint-disable prefer-template, id-blacklist, @typescript-eslint/no-unsafe-return, @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/quotes */
+/* eslint-disable id-blacklist */
 
 import * as client from '../../content/client'
 const jurism = client.slug === 'jurism'

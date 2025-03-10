@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-return, @typescript-eslint/explicit-module-boundary-types */
-
 type Library = { name: string; libraryID: number }
 export function get(name?: string | number): Library {
   if (typeof name === 'undefined') name = Zotero.Libraries.userLibraryID

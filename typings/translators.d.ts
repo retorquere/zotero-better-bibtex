@@ -30,7 +30,7 @@ export namespace Translators {
       | { kind: 'terminate' }
       | { kind: 'configure', environment: Environment }
       | { kind: 'start', config: Job }
-      | { kind: 'done', output: string }
+      | { kind: 'done', output: string, cacheRate: number }
       | { kind: 'debug', message: string }
       | { kind: 'error', message: string, stack?: string }
       | { kind: 'item', item: number }

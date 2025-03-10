@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 
 import stringify from 'safe-stable-stringify'
 import { RegularItem, Collection } from '../../gen/typings/serialized-item'

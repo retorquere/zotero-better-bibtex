@@ -269,7 +269,6 @@ class Importer {
     const collection = this.translation.collected.collection()
     collection.type = 'collection'
     collection.name = group.name
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     collection.children = group.entries.filter(citekey => this.itemIDs[citekey]).map(citekey => ({ type: 'item', id: this.itemIDs[citekey] }))
 
     for (const subgroup of group.groups || []) {
@@ -642,7 +641,6 @@ class ZoteroItem {
   private validFields: Record<string, boolean>
   private patentNumberPrefix = ''
 
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   constructor(private translation: Translation, private item: any, private bibtex: BibTeXEntry, private jabref: JabRefMetadata) {
     // hard for users to debug, replace with regular spaces
     this.bibtex = JSON.parse(JSON.stringify(this.bibtex, (k, v) => (typeof v === 'string' ? v.replace(/\u00A0/g, ' ').trim() : v) as string))
@@ -1234,7 +1232,7 @@ class ZoteroItem {
     throw new Error(err)
   }
 
-  public import(errors: ParseError[]): boolean { // eslint-disable-line @typescript-eslint/explicit-module-boundary-types
+  public import(errors: ParseError[]): boolean {
     if (!Object.keys(this.bibtex.fields).length) {
       errors.push({ error: `No fields in ${ this.bibtex.key ? `@${ this.bibtex.key }` : 'unnamed item' }`, input: this.bibtex.input })
       return false

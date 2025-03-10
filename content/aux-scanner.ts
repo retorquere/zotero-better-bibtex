@@ -16,10 +16,10 @@ type Collection = {
   key: string
   replace?: boolean
 }
-export const AUXScanner = new class { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
+export const AUXScanner = new class {
   private pandoc: string
 
-  public async pick(): Promise<string> { // eslint-disable-line @typescript-eslint/no-unsafe-return
+  public async pick(): Promise<string> {
     if (typeof this.pandoc !== 'string') this.pandoc = await findBinary('pandoc')
     const filters: [string, string][] = this.pandoc ? [[ 'AUX/Markdown', '*.aux; *.md; *.txt; *.markdown' ]] : [[ 'AUX file', '*.aux' ]]
     return (await new FilePickerHelper(Zotero.getString('fileInterface.import'), 'open', filters).open()) || ''

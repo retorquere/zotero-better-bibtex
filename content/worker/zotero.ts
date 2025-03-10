@@ -1,14 +1,11 @@
-/* eslint-disable @typescript-eslint/restrict-template-expressions, @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 
 // import registerPromiseWorker from '@kotorik/promise-worker/register'
 import registerPromiseWorker from '../../node_modules/@kotorik/promise-worker/dist/register.mjs'
 import allSettled = require('promise.allsettled')
 allSettled.shim()
 
-import type { Attachment, Item, Note } from '../../gen/typings/serialized-item'
-type Serialized = Attachment | Item | Note
-
-import { ExportedItemMetadata, Cache, exportContext } from '../db/cache'
+import { ExportedItemMetadata, Cache, Context, Running } from '../db/cache'
 
 import flatMap from 'array.prototype.flatmap'
 flatMap.shim()
@@ -54,7 +51,7 @@ const NodeType = {
 }
 
 const childrenProxy = {
-  get(target, prop) { // eslint-disable-line prefer-arrow/prefer-arrow-functions
+  get(target, prop) {
     if (prop === Symbol.iterator) {
       return function*() {
         let child = target.firstChild
@@ -68,7 +65,7 @@ const childrenProxy = {
     return children[prop]
   },
 
-  set(target, prop, _value) { // eslint-disable-line prefer-arrow/prefer-arrow-functions
+  set(target, prop, _value) {
     throw new Error(`cannot set unsupported children.${ prop }`)
   },
 }
@@ -174,10 +171,10 @@ class WorkerZoteroBetterBibTeX {
 
   public Cache = {
     store(itemID: number, entry: string, metadata: ExportedItemMetadata) {
-      Cache.export.store({ itemID, entry, metadata })
+      Zotero.running?.store({ itemID, entry, metadata })
     },
     fetch(itemID: number) {
-      return Cache.export.fetch(itemID)
+      return Zotero.running?.fetch(itemID)
     },
   }
 
@@ -362,10 +359,11 @@ class WorkerZotero {
   public exportDirectory: string
   public exportFile: string
   public version: string = client.version
-  private items: Serialized[]
+
+  public running?: Running
 
   public Utilities = WorkerZoteroUtilities
-  public BetterBibTeX = new WorkerZoteroBetterBibTeX // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
+  public BetterBibTeX = new WorkerZoteroBetterBibTeX
   public CreatorTypes = new WorkerZoteroCreatorTypes
   public ItemTypes = new WorkerZoteroItemTypes
   public ItemFields = new WorkerZoteroItemFields
@@ -379,12 +377,14 @@ class WorkerZotero {
     TranslationWorker.job.preferences.client = client.slug
     this.output = ''
 
-    // trace('cache: load serialized')
-    this.items = await Cache.ZoteroSerialized.get(TranslationWorker.job.data.items)
-    // trace('cache: serialized loaded')
+    this.running = await Cache.initExport(
+      TranslationWorker.job.data.items,
+      TranslationWorker.job.translator,
+      TranslationWorker.job.autoExport || Context.make(TranslationWorker.job.translator, TranslationWorker.job.options)
+    )
 
     if (TranslationWorker.job.options.exportFileData) {
-      for (const item of this.items) {
+      for (const item of this.running.serialized) {
         this.patchAttachments(item)
       }
     }
@@ -443,8 +443,8 @@ class WorkerZotero {
   }
 
   public nextItem() {
-    this.send({ kind: 'item', item: this.items.length - TranslationWorker.job.data.items.length })
-    return this.items.shift()
+    this.send({ kind: 'item', item: this.running.serialized.length - TranslationWorker.job.data.items.length })
+    return this.running.serialized.shift()
   }
 
   public nextCollection(): Collection {
@@ -468,7 +468,7 @@ class WorkerZotero {
 }
 
 // haul to top
-export var Zotero = new WorkerZotero // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match,no-var
+export var Zotero = new WorkerZotero // eslint-disable-line no-var
 
 registerPromiseWorker(async function(message: Translators.Worker.Message) {
   switch (message.kind) {
@@ -478,26 +478,22 @@ registerPromiseWorker(async function(message: Translators.Worker.Message) {
       break
 
     case 'start':
-      // trace('worker: starting')
       TranslationWorker.job = message.config
 
       importScripts(`chrome://zotero-better-bibtex/content/resource/${ TranslationWorker.job.translator }.js`)
-      // trace('worker: loaded')
       try {
         if (!Cache.opened) await Cache.open()
-        // trace('worker: cache opened')
-        await Cache.initExport(TranslationWorker.job.translator, TranslationWorker.job.autoExport || exportContext(TranslationWorker.job.translator, TranslationWorker.job.options))
-        // trace('worker: cache loaded')
         await Zotero.start()
-        // trace('worker: export done')
-        return { kind: 'done', output: Zotero.output }
+        const cacheRate = Zotero.running.hits + Zotero.running.misses ? Zotero.running.hits / (Zotero.running.hits + Zotero.running.misses) : 0
+        return { kind: 'done', output: Zotero.output, cacheRate }
       }
       finally {
-        await Cache.export.flush()
+        await Zotero.running?.flush()
+        Zotero.running = null
       }
 
     case 'terminate':
-      if (Cache.opened) await Cache.close()
+      if (Cache.opened) Cache.close()
       break
 
     default:

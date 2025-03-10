@@ -182,6 +182,7 @@ export const KeyManager = new class _KeyManager {
         pinned: { in: [ 0, false ]},
       },
     }).length
+
     if (warnAt > 0 && affected > warnAt) {
       const ignore = { value: false }
       const index = Services.prompt.confirmEx(
@@ -203,30 +204,31 @@ export const KeyManager = new class _KeyManager {
       }
     }
 
+    const items = (await getItemsAsync(ids)).filter(item => {
+      // these get no key
+      if (item.isFeedItem || !item.isRegularItem()) return false
+
+      // leave pinned keys alone
+      if (Extra.get(item.getField('extra'), 'zotero', { citationKey: true }).extraFields.citationKey) return false
+
+      return true
+    })
+
+    if (!items.length) return
+    ids = items.map(item => item.id as number) as number[]
+
     // clear before refresh so they can update without hitting "claimed keys" in the deleted set
     this.clear(ids)
 
     const updates: Zotero.Item[] = []
     const progress: Progress = ids.length > 10 ? new Progress(ids.length, 'Refreshing citation keys') : null
-    for (const item of await getItemsAsync(ids)) {
-      if (item.isFeedItem || !item.isRegularItem()) continue
-
-      const extra = item.getField('extra')
-
-      const citationKey = {
-        old: Extra.get(extra, 'zotero', { citationKey: true }).extraFields.citationKey,
-        new: '',
-      }
-      if (citationKey.old) continue // pinned, leave it alone
-
-      citationKey.old = this.get(item.id).citationKey
-      citationKey.new = this.update(item)
-      if (citationKey.old === citationKey.new) continue
+    for (const item of items) {
+      const citationKey = this.update(item)
 
       // remove the new citekey from the aliases if present
-      const aliases = Extra.get(extra, 'zotero', { aliases: true })
-      if (aliases.extraFields.aliases.includes(citationKey.new)) {
-        aliases.extraFields.aliases = aliases.extraFields.aliases.filter(alias => alias !== citationKey.new)
+      const aliases = Extra.get(item.getField('extra'), 'zotero', { aliases: true })
+      if (aliases.extraFields.aliases.includes(citationKey)) {
+        aliases.extraFields.aliases = aliases.extraFields.aliases.filter(alias => alias !== citationKey)
 
         if (aliases.extraFields.aliases.length) {
           item.setField('extra', Extra.set(aliases.extra, { aliases: aliases.extraFields.aliases }))
@@ -518,7 +520,7 @@ export const KeyManager = new class _KeyManager {
     })
 
     const notify = async (ids: number[]) => {
-      if (!Cache.ZoteroSerialized) return
+      if (!Cache.opened) return
 
       try {
         await Cache.touch(ids)
@@ -710,7 +712,6 @@ export const KeyManager = new class _KeyManager {
 
     if (ids === 'selected') {
       try {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
         return Zotero.getActiveZoteroPane().getSelectedItems(true)
       }
       catch (err) { // zoteroPane.getSelectedItems() doesn't test whether there's a selection and errors out if not

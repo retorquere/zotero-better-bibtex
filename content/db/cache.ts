@@ -1,47 +1,12 @@
 // import { DatabaseFactory, Database, ObjectStoreInterface } from '@idxdb/promised'
 import { DatabaseFactory, Database } from '@idxdb/promised'
-import { SynchronousPromise } from 'synchronous-promise'
-
-import { log } from '../logger'
-import { stringify } from '../stringify'
-
-import { worker } from '../client'
-import { flash } from '../flash'
-
-var IDBKeyRange // eslint-disable-line no-var
-if (!worker && typeof IDBKeyRange === 'undefined') IDBKeyRange = Components.classes['@mozilla.org/appshell/appShellService;1'].getService(Components.interfaces.nsIAppShellService).hiddenDOMWindow.IDBKeyRange
+// import { SynchronousPromise } from 'synchronous-promise'
 
 import type { Serialized, Serializer } from '../item-export-format'
-import { bySlug } from '../../gen/translators'
-import { version } from '../../gen/version.json'
-// import { main as probe } from './cache-test'
-
-import type { Translators as Translator } from '../../typings/translators'
-const skip = new Set([ 'keepUpdated', 'worker', 'exportFileData' ])
-
-export function exportContext(translator: string, displayOptions: Partial<Translator.DisplayOptions>): string {
-  const defaultOptions = bySlug[translator.replace(/ /g, '')]?.displayOptions
-  if (!defaultOptions) throw new Error(`Unexpected translator ${ translator }`)
-  const valid = new Set(Object.keys(defaultOptions).filter(option => !skip.has(option)))
-  return JSON.stringify(Object.entries({ ...defaultOptions, ...displayOptions }).filter(([ k, _v ]) => valid.has(k)).sort((a, b) => a[0].localeCompare(b[0])))
-}
-
 export type ExportContext = {
   context: string
+  translator: string
   id: number
-}
-
-async function allSettled(promises): Promise<string> {
-  if (!promises.length) return ''
-
-  try {
-    const settled = await SynchronousPromise.allSettled(promises)
-    const rejected = settled.filter(result => result.status === 'rejected').length
-    return rejected ? `${rejected}/${settled.length}` : ''
-  }
-  catch (err) {
-    return `[[${err.message}]]`
-  }
 }
 
 export interface ExportedItemMetadata {
@@ -57,61 +22,110 @@ export type ExportedItem = {
   metadata: ExportedItemMetadata
 }
 
-export type Metadata = {
+export type CacheMetadata = {
   key: string
   value: string
 }
 
-export type ExportCacheName = 'BetterBibLaTeX' | 'BetterBibTeX' | 'BetterCSLJSON' | 'BetterCSLYAML'
+import { log } from '../logger'
+import stringify from 'safe-stable-stringify'
 
-class Running {
-  public items: Map<number, ExportedItem>
-  public cache: ExportCache
+import { worker } from '../client'
+import { flash } from '../flash'
+import { pick, unpick } from '../object'
 
-  private pending: ExportedItem[] = []
-  private context: number
+var IDBKeyRange // eslint-disable-line no-var
+if (!worker && typeof IDBKeyRange === 'undefined') IDBKeyRange = Components.classes['@mozilla.org/appshell/appShellService;1'].getService(Components.interfaces.nsIAppShellService).hiddenDOMWindow.IDBKeyRange
 
-  public async load(cache: ExportCache, path: string) {
-    if (Cache.export) throw new Error('cache: waiting for previous export')
+import { byLabel } from '../../gen/translators'
+import { version } from '../../gen/version.json'
+// import { main as probe } from './cache-test'
 
-    Cache.export = this
-    if (cache) {
-      this.cache = cache
-      // trace('export cache: load')
-      const { items, context } = await cache.load(path)
-      // trace(`export cache: load done, ${items.size} items`)
-      this.items = items
-      this.context = context
+import type { Translators as Translator } from '../../typings/translators'
+
+export const Context = new class {
+  private defaults: Record<string, Partial<Translator.DisplayOptions & { translator: string }>> = {}
+
+  constructor() {
+    for (const [ label, header ] of Object.entries(byLabel)) {
+      if (typeof header.displayOptions?.worker !== 'boolean') continue
+      this.defaults[label] = { ...unpick(header.displayOptions, ['keepUpdated', 'worker']), translator: '' }
     }
   }
 
+  make(translator: string, displayOptions: Partial<Translator.DisplayOptions>): string {
+    const cp: Partial<Translator.DisplayOptions & { translator: string }> = this.defaults[translator]
+    if (!cp) return ''
+    // @ts-expect-error TS2345
+    return stringify(pick({ ...cp, ...displayOptions, translator }, Object.keys(cp)))
+  }
+}
+
+async function allSettled(promises): Promise<string> {
+  if (!promises.length) return ''
+
+  try {
+    const settled = await Promise.allSettled(promises)
+    const rejected = settled.filter(result => result.status === 'rejected').length
+    return rejected ? `${rejected}/${settled.length}` : ''
+  }
+  catch (err) {
+    return `[[${err.message}]]`
+  }
+}
+
+export class Running {
+  public serialized: Serialized[]
+  public exported: Map<number, ExportedItem>
+  public context: number
+  public hits = 0
+  public misses = 0
+
+  private pending: ExportedItem[] = []
+
+  public async load(itemIDs: number[], translator: string, context: string): Promise<Running> {
+    if (context) {
+      ({ context: this.context, items: this.exported } = await Cache.Exports.load(translator, context))
+    }
+    else {
+      this.context = -1
+      this.exported = new Map
+    }
+    this.serialized = await Cache.Serialized.get(itemIDs)
+    return this
+  }
+
   public fetch(itemID: number): ExportedItem {
-    return this.cache ? this.items.get(itemID) : null
+    const item = this.exported.get(itemID)
+    if (item) {
+      this.hits++
+    }
+    else {
+      this.misses++
+    }
+    return item
   }
 
   public store(item: Omit<ExportedItem, 'context'>): void {
-    if (this.cache) this.pending.push({ ...item, context: this.context })
+    this.pending.push({ ...item, context: this.context })
   }
 
   public async flush(): Promise<void> {
-    if (this.cache) await this.cache.store(this.pending)
+    await Cache.Exports.store(this.pending)
+    Cache.updateStats(this)
     this.pending = []
-    Cache.export = null
   }
 }
 
 export class ExportCache {
-  constructor(private db: Database, private name: ExportCacheName) {
-  }
-
-  public async touch(ids: number[]): Promise<void> {
-    const tx = this.db.transaction(this.name, 'readwrite')
-    const store = tx.objectStore(this.name as 'BetterBibTeX')
+  public async touch(itemIDs: number[]): Promise<void> {
+    const tx = Cache.db.transaction('Export', 'readwrite')
+    const store = tx.objectStore('Export')
     const index = store.index('itemID')
     const deletes: Promise<void>[] = []
 
-    for (const id of ids) {
-      const cursor = index.openCursor(id)
+    for (const itemID of itemIDs) {
+      const cursor = index.openKeyCursor(itemID)
       while (!(await cursor.end())) {
         deletes.push(store.delete(cursor.primaryKey))
         cursor.continue()
@@ -119,98 +133,101 @@ export class ExportCache {
     }
     const rejected = await allSettled(deletes)
     await tx.commit()
-    if (rejected) log.error(`cache: failed to touch ${rejected} entries in ${this.name}`)
+    if (rejected) log.error(`cache: failed to touch ${rejected} of ${itemIDs.length} entries`)
   }
 
-  public async clear(path: string): Promise<void> {
-    await this.remove(path, false)
-  }
+  public async dropAutoExport(path: string, deleteContext: boolean): Promise<void> {
+    const tx = Cache.db.transaction(['ExportContext', 'Export'], 'readwrite')
+    const exportContextStore = tx.objectStore('ExportContext')
+    const exportContextIndex = exportContextStore.index('context')
+    const exportContext = await exportContextIndex.get<ExportContext, string>(path)
 
-  public async remove(path: string, deleteContext = true): Promise<void> {
-    const stores: Array<'ExportContext' | ExportCacheName> = deleteContext ? [ this.name, 'ExportContext' ] : [this.name]
-    const tx = this.db.transaction(stores, 'readwrite')
-    const deletes: Promise<void>[] = []
+    if (exportContext) {
+      const deletes: Promise<void>[] = []
 
-    const cache = tx.objectStore(this.name as 'BetterBibTeX')
-    const cursor = cache.index('context').openCursor(path)
-    while (!(await cursor.end())) {
-      deletes.push(cache.delete(cursor.primaryKey))
-      cursor.continue()
+      const exportsStore = tx.objectStore('Export')
+      const exportsIndex = exportsStore.index('context')
+      const cursor = exportsIndex.openKeyCursor<[number, number], number>(exportContext.id)
+
+      while (!(await cursor.end())) {
+        deletes.push(exportsStore.delete(cursor.primaryKey))
+        cursor.continue()
+      }
+
+      if (deleteContext) deletes.push(exportContextStore.delete<number>(exportContext.id))
     }
 
-    if (deleteContext) {
-      const context = tx.objectStore('ExportContext')
-      const key = await context.index('context').getKey(path)
-      if (key) deletes.push(context.delete(key))
-    }
-
-    const rejected = await allSettled(deletes)
     await tx.commit()
-    if (rejected) log.error(`cache: failed to remove ${rejected} entries from ${this.name}::${path}`)
   }
 
-  public async count(path: string): Promise<number> {
-    const tx = this.db.transaction(this.name, 'readonly')
-    const store = tx.objectStore(this.name)
-    const index = store.index('context')
-    const count = await index.count(path)
-    return count
+  public async dropTranslator(translator: string): Promise<void> {
+    const tx = Cache.db.transaction(['ExportContext', 'Export'], 'readwrite')
+    const exportContextStore = tx.objectStore('ExportContext')
+    const exportContextIndex = exportContextStore.index('translator')
+    const contextIDs: number[] = await exportContextIndex.getAllKeys<number>(IDBKeyRange.only(translator))
+
+    if (contextIDs.length > 0) {
+      const deletes: Promise<void>[] = []
+
+      const exportsStore = tx.objectStore('Export')
+      const exportsIndex = exportsStore.index('context')
+
+      for (const contextID of contextIDs) {
+        const cursor = exportsIndex.openKeyCursor<[number, number], number>(contextID)
+        while (!(await cursor.end())) {
+          deletes.push(exportsStore.delete(cursor.primaryKey))
+          cursor.continue()
+        }
+      }
+
+      const rejected = await allSettled(deletes)
+      if (rejected) log.error(`cache: failed to remove ${rejected} entries for ${translator}`)
+    }
+
+    await tx.commit()
   }
 
-  public async load(path: string): Promise<{ context: number; items: Map<number, ExportedItem> }> {
-    const stores: Array<'ExportContext' | ExportCacheName> = [ this.name, 'ExportContext' ]
-    const tx = this.db.transaction(stores, 'readwrite')
+  public async load(translator: string, context: string): Promise<{ context: number; items: Map<number, ExportedItem> }> {
+    const tx = Cache.db.transaction([ 'Export', 'ExportContext' ], 'readwrite')
 
-    let context: number
+    let contextID = -1
     const items: Map<number, ExportedItem> = new Map
 
-    // trace(`${this.name} load: get export context`)
     try {
-      const store = tx.objectStore('ExportContext')
-      const index = store.index('context')
+      let store = tx.objectStore('ExportContext')
+      let index = store.index('context')
       // force type to get auto-increment field
-      context = (await index.get<ExportContext, string>(path))?.id || (await store.add<ExportContext, number>(<ExportContext>{ context: path }))
-    }
-    catch {
-      return { context, items }
-    }
-    // trace(`${this.name} load: export context = ${context}`)
+      contextID = (await index.get<ExportContext, string>(context))?.id
+      if (typeof contextID !== 'number') contextID = await store.add<ExportContext, number>(<ExportContext>{ context, translator })
 
-    try {
-      // trace(`${this.name} load`)
-      const store = tx.objectStore(this.name)
-      const index = store.index('context')
-      const all: ExportedItem[] = await index.getAll(context)
-      // trace(`${this.name} loaded`)
+      store = tx.objectStore('Export')
+      index = store.index('context')
+      const all: ExportedItem[] = await index.getAll(contextID)
       for (const entry of all) {
         items.set(entry.itemID, entry)
       }
-      // trace(`${this.name} mapped`)
     }
-    catch {
-      return { context, items }
+    catch (err) {
+      log.error('failed to load export cache', context, err)
     }
 
-    // trace(`${this.name} returned`)
-    return { context, items }
+    return { context: contextID, items }
   }
 
   public async store(items: ExportedItem[]): Promise<void> {
-    const tx = this.db.transaction(this.name, 'readwrite')
-    const store = tx.objectStore(this.name)
+    const tx = Cache.db.transaction('Export', 'readwrite')
+    const store = tx.objectStore('Export')
     const rejected = await allSettled(items.map(item => store.put(item)))
     await tx.commit()
-    if (rejected) log.error(`cache: failed to store ${rejected} for ${this.name}`)
+    if (rejected) log.error(`cache: failed to store ${rejected}`)
+  }
+
+  public async drop(): Promise<void> {
+    await Cache.drop(['Export', 'ExportContext'])
   }
 }
 
-class ZoteroSerialized {
-  public filled = 0 // exponential moving average
-  private smoothing = 2 / (10 + 1) // keep average over last 10 fills
-
-  constructor(private db: Database) {
-  }
-
+class SerializedCache {
   private cachable(item: any): boolean {
     return (!item.isFeedItem && (item.isRegularItem() || item.isNote() || item.isAttachment())) as boolean
   }
@@ -219,8 +236,8 @@ class ZoteroSerialized {
     items = items.filter(item => this.cachable(item))
     if (!items.length) return
 
-    let tx = this.db.transaction(['ZoteroSerialized', 'touched'], 'readwrite')
-    let store = tx.objectStore('ZoteroSerialized')
+    let tx = Cache.db.transaction(['Serialized', 'touched'], 'readwrite')
+    let store = tx.objectStore('Serialized')
     const cached = new Set(await store.getAllKeys())
     const touched = tx.objectStore('touched')
     const purge: Set<number> = new Set(await touched.getAllKeys())
@@ -237,18 +254,15 @@ class ZoteroSerialized {
       return true
     })
 
-    await touched.clear()
     let rejected = await allSettled([...purge].map(id => store.delete(id)))
+    await touched.clear()
     await tx.commit()
     if (rejected) log.error(`cache: failed to purge ${rejected}`)
 
-    const current = (items.length - fill.length) / items.length
-    this.filled = (current - this.filled) * this.smoothing + this.filled
-
     if (fill.length) {
       const serialized = await serializer.serialize(fill)
-      tx = this.db.transaction(['ZoteroSerialized'], 'readwrite')
-      store = tx.objectStore('ZoteroSerialized')
+      tx = Cache.db.transaction(['Serialized'], 'readwrite')
+      store = tx.objectStore('Serialized')
       const puts = serialized.map(item => store.put(item))
       rejected = await allSettled(puts)
       await tx.commit()
@@ -257,9 +271,8 @@ class ZoteroSerialized {
   }
 
   public async get(ids: number[]): Promise<Serialized[]> {
-    // trace(`serialized: ${ids.length} items`)
-    const tx = this.db.transaction('ZoteroSerialized', 'readonly')
-    const store = tx.objectStore('ZoteroSerialized')
+    const tx = Cache.db.transaction('Serialized', 'readonly')
+    const store = tx.objectStore('Serialized')
     const requested = new Set(ids)
     const items: Serialized[] = (await store.getAll<Serialized, number>()).filter(item => requested.has(item.itemID))
 
@@ -268,7 +281,7 @@ class ZoteroSerialized {
   }
 
   public async touch(ids: number[]): Promise<void> {
-    const tx = this.db.transaction('touched', 'readwrite')
+    const tx = Cache.db.transaction('touched', 'readwrite')
     const store = tx.objectStore('touched')
     const puts = ids.map(id => store.put(true, id))
     await Promise.all(puts)
@@ -276,8 +289,8 @@ class ZoteroSerialized {
   }
 
   public async purge(): Promise<void> {
-    const tx = this.db.transaction(['ZoteroSerialized', 'touched'], 'readwrite')
-    const serialized = tx.objectStore('ZoteroSerialized')
+    const tx = Cache.db.transaction(['Serialized', 'touched'], 'readwrite')
+    const serialized = tx.objectStore('Serialized')
     const touched = tx.objectStore('touched')
 
     const purge = (await touched.getAllKeys()).map(id => serialized.delete(id))
@@ -286,17 +299,15 @@ class ZoteroSerialized {
     await tx.commit()
     if (rejected) log.error(`cache: failed to purge ${rejected}`)
   }
+
+  public async drop(): Promise<void> {
+    await Cache.drop(['Serialized', 'touched'])
+  }
 }
 
-const ExportCacheConfig = {
-  $: { keyPath: [ 'context', 'itemID' ]},
-  context: ['context'],
-  itemID: ['itemID'],
-  'context-itemID': [[ 'context', 'itemID' ], { unique: true }],
-}
-export const Cache = new class $Cache {
+class $Cache {
   #schema = {
-    ZoteroSerialized: {
+    Serialized: {
       $: { keyPath: 'itemID' },
     },
     metadata: {
@@ -305,24 +316,24 @@ export const Cache = new class $Cache {
     ExportContext: {
       $: { keyPath: 'id', autoIncrement: true },
       context: ['context', { unique: true }],
+      translator: ['translator'],
     },
-    BetterBibTeX: ExportCacheConfig,
-    BetterBibLaTeX: ExportCacheConfig,
-    BetterCSLJSON: ExportCacheConfig,
-    BetterCSLYAML: ExportCacheConfig,
+    Export: {
+      $: { keyPath: [ 'context', 'itemID' ]},
+      context: ['context'],
+      itemID: ['itemID'],
+    },
     touched: {},
   }
-  public version = 10
+
+  public cacheRate: Record<string, number> = {}
+
+  public version = 11
   public name = 'BetterBibTeXCache'
 
-  private db: Database
-
-  public ZoteroSerialized: ZoteroSerialized
-
-  public BetterBibTeX: ExportCache
-  public BetterBibLaTeX: ExportCache
-  public BetterCSLJSON: ExportCache
-  public BetterCSLYAML: ExportCache
+  public db: Database
+  public Serialized = new SerializedCache
+  public Exports = new ExportCache
 
   private async $open(action: string): Promise<Database> {
     try {
@@ -385,8 +396,8 @@ export const Cache = new class $Cache {
     }
     await tx.commit()
 
-    const expected = stringify(this.#schema, 2)
-    const found = stringify(schema, 2)
+    const expected = stringify(this.#schema, null, 2)
+    const found = stringify(schema, null, 2)
     log.info(`cache: schema: ${found}`)
     if (expected !== found) {
       log.error(`cache: schema mismatch!\nexpected:${expected}\nfound:${found}`)
@@ -401,7 +412,7 @@ export const Cache = new class $Cache {
     try {
       const tx = this.db.transaction('metadata', 'readonly')
       const store = tx.objectStore('metadata')
-      for (const rec of (await store.getAll<Metadata, string>())) {
+      for (const rec of (await store.getAll<CacheMetadata, string>())) {
         metadata[rec.key] = rec.value
       }
     }
@@ -458,17 +469,10 @@ export const Cache = new class $Cache {
       }
       const tx = this.db.transaction('metadata', 'readwrite')
       const store = tx.objectStore('metadata')
-      await store.put<Metadata, string>({ key: 'Zotero', value: Zotero.version })
-      await store.put<Metadata, string>({ key: 'BetterBibTeX', value: version })
+      await store.put<CacheMetadata, string>({ key: 'Zotero', value: Zotero.version })
+      await store.put<CacheMetadata, string>({ key: 'BetterBibTeX', value: version })
       await tx.commit()
     }
-
-    this.ZoteroSerialized = new ZoteroSerialized(this.db)
-
-    this.BetterBibTeX = new ExportCache(this.db, 'BetterBibTeX')
-    this.BetterBibLaTeX = new ExportCache(this.db, 'BetterBibLaTeX')
-    this.BetterCSLJSON = new ExportCache(this.db, 'BetterCSLJSON')
-    this.BetterCSLYAML = new ExportCache(this.db, 'BetterCSLYAML')
   }
 
   public get opened() {
@@ -485,38 +489,13 @@ export const Cache = new class $Cache {
 
   public async touch(ids: number[]): Promise<void> {
     if (ids.length) {
-      for (const store of [ this.ZoteroSerialized, this.BetterBibTeX, this.BetterBibLaTeX, this.BetterCSLJSON, this.BetterCSLYAML ]) {
-        await store.touch(ids)
-      }
+      await this.Exports.touch(ids)
+      await this.Serialized.touch(ids)
     }
     const tx = this.db.transaction('metadata', 'readwrite')
     const metadata = tx.objectStore('metadata')
     await metadata.put({ key: 'lastUpdated', value: Zotero.Date.dateToSQL((new Date), true) })
     await tx.commit()
-  }
-
-  public cache(store: string): ExportCache {
-    return this[store.replace(/ /g, '') as 'Better BibTeX'] as ExportCache
-  }
-
-  public async clear(store: string) {
-    if (!this.available('clear')) return
-
-    store = store.replace(/ /g, '')
-    const stores = this.db.objectStoreNames.filter(name => name !== 'metadata' && (store === '*' || name === store))
-    if (stores.length) {
-      const tx = this.db.transaction(stores, 'readwrite')
-      const cleared = await Promise.allSettled(stores.map(name => tx.objectStore(name).clear()))
-      await tx.commit()
-      const rejected = cleared.map((result, i) => result.status === 'rejected' ? stores[i] : '').filter(_ => _).join(', ')
-      if (rejected) log.error(`cache: failed to clear ${rejected}`)
-    }
-  }
-
-  public async remove(translator: string, path: string) {
-    if (!this.available('remove')) return
-
-    await this.cache(translator)?.remove(path)
   }
 
   public close(): void {
@@ -538,9 +517,13 @@ export const Cache = new class $Cache {
     return count
   }
 
-  public export: Running
-  public async initExport(store: string, path: string) {
-    await (new Running).load(this.cache(store), path)
+  public async initExport(itemIDs: number[], translator: string, path: string): Promise<Running> {
+    return await (new Running).load(itemIDs, translator, path)
+  }
+
+  public updateStats(run: Running): void {
+    // average over 10 runs
+    this.cacheRate[''] = this.cacheRate[''] + (run.hits - (this.cacheRate[''] * (run.hits + run.misses))) / 10
   }
 
   public async dump(): Promise<Record<string, any>> {
@@ -579,4 +562,15 @@ export const Cache = new class $Cache {
 
     return tables
   }
+
+  public async drop(names: string[]): Promise<void> {
+    const tx = Cache.db.transaction(names, 'readwrite')
+    for (const name of names) {
+      const store = tx.objectStore(name)
+      await store.clear()
+    }
+    await tx.commit()
+  }
 }
+
+export const Cache = new $Cache

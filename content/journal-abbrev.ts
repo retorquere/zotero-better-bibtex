@@ -3,7 +3,7 @@ import { orchestrator } from './orchestrator'
 
 import { simplifyForExport as simplify } from '../gen/items/simplify'
 
-export const JournalAbbrev = new class { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
+export const JournalAbbrev = new class {
   private style: any
   private abbrevs: any
   private journal = new Set(['conferencePaper', 'journalArticle', 'bill', 'case', 'statute'])

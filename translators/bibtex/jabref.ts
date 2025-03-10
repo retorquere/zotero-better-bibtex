@@ -8,7 +8,7 @@ export class JabRef {
   private translation: Translation
 
   constructor(translation: Translation) {
-    this.translation = translation // eslint-disable-line no-var
+    this.translation = translation
     this.citekeys = new Map
   }
 

@@ -175,5 +175,5 @@ export function generateCSLYAML(collected: Collected): Translation {
 
 export function parseCSLYAML(input: string): any {
   input = input.replace(/\n---[\r\n]*$/, '\n...\n')
-  return YAML.load(input) // eslint-disable-line @typescript-eslint/no-unsafe-return
+  return YAML.load(input)
 }

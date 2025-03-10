@@ -23,7 +23,7 @@ import { headers as Headers, byLabel, byId, bySlug } from '../gen/translators'
 
 Events.on('preference-changed', async (pref: string) => {
   for (const translator of (affects[pref] || [])) {
-    await Cache.clear(translator)
+    await Cache.Exports.dropTranslator(translator)
   }
 })
 
@@ -53,7 +53,7 @@ export type ExportJob = {
 }
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
-export const Translators = new class { // eslint-disable-line @typescript-eslint/naming-convention,no-underscore-dangle,id-blacklist,id-match
+export const Translators = new class {
   public byId: Record<string, Translator.Header> = {}
   public byLabel: Record<string, Translator.Header> = {}
   public bySlug: Record<string, Translator.Header> = {}
@@ -183,7 +183,6 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     if (!translators.length) throw new Error('No translators found')
 
     const libraryID = zp.getSelectedLibraryID()
-    // eslint-disable-next-line @typescript-eslint/await-thenable
     await zp.collectionsView.selectLibrary(libraryID) // TODO: zotero-types does somehow not declare this to return a promise
 
     translation.setTranslator(translators[0])
@@ -264,7 +263,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
     items = items.filter(item => !item.isAnnotation?.())
 
-    await Cache.ZoteroSerialized.fill(items, this.serializer)
+    await Cache.Serialized.fill(items, this.serializer)
 
     config.data.items = items.map(item => item.id)
     if (job.path && job.canceled) return ''
@@ -280,7 +279,9 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
 
     const result = await this.worker.postMessage({ kind: 'start', config })
     switch (result.kind) {
-      case 'done': return result.output
+      case 'done':
+        if (job.autoExport) Cache.cacheRate[job.autoExport] = result.cacheRate
+        return result.output
       default: throw new Error(`Unexpected message of type ${result.kind}`)
     }
   }
@@ -428,7 +429,7 @@ export const Translators = new class { // eslint-disable-line @typescript-eslint
     if (!install.length) return
 
     for (const { header, code } of install) {
-      await Cache.clear(header.label)
+      await Cache.Exports.dropTranslator(header.label)
       await Zotero.Translators.save(header, code)
     }
 
