@@ -1,12 +1,8 @@
-declare const Services: any
-
 import * as client from './client'
 import { File } from './file'
 
 import { Events } from './events'
 import type { CharMap } from 'unicode2latex'
-
-declare const Zotero: any
 
 import { Preferences as $Preferences, PreferenceName, defaults } from '../gen/preferences/meta'
 import { PreferenceManager as PreferenceManagerBase } from '../gen/preferences'
@@ -17,7 +13,7 @@ import { pick } from './object'
 
 export const Preference = new class PreferenceManager extends PreferenceManagerBase {
   public prefix = 'translators.better-bibtex.'
-  private observers: number[] = []
+  private observers: symbol[] = []
   private minimum = {
     autoExportIdleWait: 1,
     autoExportDelay: 1,
@@ -31,7 +27,7 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
       this.repair(pref)
     }
 
-    this.baseAttachmentPath = Zotero.Prefs.get('baseAttachmentPath')
+    this.baseAttachmentPath = <string>Zotero.Prefs.get('baseAttachmentPath')
     this.observers.push(Zotero.Prefs.registerObserver('baseAttachmentPath', val => { this.baseAttachmentPath = val }))
 
     this.migrate()
@@ -126,7 +122,7 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
 
     // clear out old keys
     const oops = 'extensions.translators.better-bibtex.'
-    for (key of Services.prefs.getBranch(oops).getChildList('', {}) as string[]) {
+    for (key of Services.prefs.getBranch(oops).getChildList('', {})) {
       Zotero.Prefs.clear(oops + key, true)
     }
 
@@ -189,7 +185,7 @@ export const Preference = new class PreferenceManager extends PreferenceManagerB
   private async loadFromCSV(pref: string, path: string, dflt: string, transform: (row: any) => any) {
     const key = `${ this.prefix }${ pref }`
     const modified = {
-      pref: Zotero.Prefs.get(`${ key }.modified`) || 0,
+      pref: <number>Zotero.Prefs.get(`${ key }.modified`) || 0,
       file: (await File.exists(path)) ? await File.lastModified(path) : 0,
     }
     if (modified.pref >= modified.file) return

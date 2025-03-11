@@ -443,7 +443,6 @@ export const AutoExport = new class $AutoExport {
         }
       }),
       this.db[BlinkKey].events.onClear.register(() => {
-        // @ts-expect-error unsure about getChildList
         for (const key of Services.prefs.getBranch('extensions.zotero.translators.better-bibtex.autoExport.').getChildList('', {})) {
           Zotero.Prefs.clear(`translators.better-bibtex.autoExport.${key}`)
         }
@@ -511,7 +510,6 @@ export const AutoExport = new class $AutoExport {
           log.error('auto-export migration failed', err)
         }
 
-        // @ts-expect-error unsure about getChildList
         for (const key of Services.prefs.getBranch('extensions.zotero.translators.better-bibtex.autoExport.').getChildList('', {})) {
           try {
             const ae = JSON.parse(Zotero.Prefs.get(`translators.better-bibtex.autoExport.${key}`) as string)

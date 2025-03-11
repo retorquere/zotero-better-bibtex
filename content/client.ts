@@ -1,4 +1,3 @@
-declare const Zotero: any
 declare const location: any
 
 export const worker: boolean = typeof location !== 'undefined' && location.search

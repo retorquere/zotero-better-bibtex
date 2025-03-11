@@ -408,6 +408,9 @@ monkey.patch(Zotero.Translate.Export.prototype, 'translate', original => functio
 })
 
 export class BetterBibTeX {
+  public clientName = Zotero.clientName
+  public clientVersion = Zotero.version
+
   public uninstalled = false
   public Orchestrator = orchestrator
   public Cache = {

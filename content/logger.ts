@@ -1,7 +1,5 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-unsafe-return, @typescript-eslint/no-empty-function, no-restricted-syntax */
 
-declare const Zotero: any
-
 import * as client from './client'
 import { version } from './../gen/version.json'
 export const run = `<${version} ${client.run}>`

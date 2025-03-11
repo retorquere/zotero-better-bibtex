@@ -112,7 +112,7 @@
     "description": "<p><code>substring(start,n)</code> selects <code>n</code> (default: all) characters starting at <code>start</code></p>"
   },
   {
-    "summary": "<b>transliterate</b>(mode?: (&quot;minimal&quot; | &quot;tw&quot; | &quot;mn&quot; | &quot;arabic&quot; | &quot;chinese&quot; | &quot;german&quot; | &quot;japanese&quot; | &quot;mongolian&quot; | &quot;russian&quot; | &quot;ru&quot; | &quot;uk&quot; | &quot;ar&quot; | &quot;de&quot; | &quot;ja&quot; | &quot;zh&quot; | &quot;zh-hant&quot; | &quot;ukranian&quot;))",
+    "summary": "<b>transliterate</b>(mode?: (&quot;ar&quot; | &quot;de&quot; | &quot;minimal&quot; | &quot;tw&quot; | &quot;mn&quot; | &quot;arabic&quot; | &quot;chinese&quot; | &quot;german&quot; | &quot;japanese&quot; | &quot;mongolian&quot; | &quot;russian&quot; | &quot;ru&quot; | &quot;uk&quot; | &quot;ja&quot; | &quot;zh&quot; | &quot;zh-hant&quot; | &quot;ukranian&quot;))",
     "description": "<p>transliterates the citation key. If you don't specify a mode, the mode is derived from the item language field</p>"
   },
   {
