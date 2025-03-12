@@ -1,4 +1,4 @@
-import type { Tag, RegularItem as SerializedRegularItem, Item as SerializedItem } from '../../gen/typings/serialized-item'
+import type { Tag } from '../../gen/typings/serialized-item'
 
 import * as client from '../../content/client'
 
@@ -194,7 +194,7 @@ export type CreatorTypeCollection = CreatorTypeOrAll[][]
 type Creator = { lastName?: string; firstName?: string; name?: string; creatorType: string; fieldMode?: number; source?: string }
 
 class Item {
-  public item: Zotero.Item | SerializedItem
+  public item: Zotero.Item
   private language = ''
 
   public itemType: string
@@ -211,41 +211,30 @@ class Item {
   public extra: string
   public extraFields: Extra.Fields
 
-  constructor(item: Zotero.Item | SerializedItem) { // Item must have simplifyForExport pre-applied, without scrubbing
+  constructor(item: Zotero.Item) { // Item must have simplifyForExport pre-applied, without scrubbing
     this.item = item
 
-    if ((item as Zotero.Item).getField) {
-      this.itemID = this.id = (item as Zotero.Item).id
-      this.itemKey = this.key = (item as Zotero.Item).key
-      this.itemType = Zotero.ItemTypes.getName((item as Zotero.Item).itemTypeID)
-      this.getField = function(name: string): string | number {
-        switch (name) {
-          case 'dateAdded':
-          case 'dateModified':
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-            return (this.item)[name]
-          case 'title':
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-            return this.title
-          default:
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-            return (this.item as Zotero.Item).getField(name, false, true) || this.extraFields?.kv[name] || ''
-        }
+    this.itemID = this.id = item.id
+    this.itemKey = this.key = item.key
+    this.itemType = Zotero.ItemTypes.getName(item.itemTypeID)
+    this.getField = function(name: string): string | number {
+      switch (name) {
+        case 'dateAdded':
+        case 'dateModified':
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+          return (this.item)[name]
+        case 'title':
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+          return this.title
+        default:
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+          return this.item.getField(name, false, true) || this.extraFields?.kv[name] || ''
       }
-      this.creators = (item as Zotero.Item).getCreatorsJSON()
-      this.libraryID = item.libraryID
-      this.title = (item as Zotero.Item).getField('title', false, true)
     }
-    else {
-      this.itemType = (item as SerializedRegularItem).itemType
-      this.itemID = this.id = (item as SerializedRegularItem).itemID
-      this.itemKey = this.key = (item as SerializedRegularItem).itemKey
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      this.getField = (name: string) => name === 'title' ? this.title : this.item[name] || this.extraFields?.kv[name] || ''
-      this.creators = (item as SerializedRegularItem).creators
-      this.libraryID = null
-      this.title = (item as SerializedRegularItem).title
-    }
+
+    this.creators = item.getCreatorsJSON()
+    this.libraryID = item.libraryID
+    this.title = item.getField('title', false, true)
 
     this.language = babelLanguage((this.getField('language') as string) || '')
     switch (this.babelTag()) {
@@ -323,7 +312,7 @@ class Item {
   }
 
   public getTags(): Tag[] {
-    return (this.item as Zotero.Item).getTags ? (this.item as Zotero.Item).getTags() : (this.item as SerializedRegularItem).tags
+    return this.item.getTags()
   }
 }
 
@@ -418,7 +407,7 @@ export class PatternFormatter {
     return `failed to install citekey formula: ${ error }`.trim()
   }
 
-  public format(item: Zotero.Item | SerializedItem): string {
+  public format(item: Zotero.Item): string {
     this.item = new Item(item)
 
     switch (this.item.itemType) {
