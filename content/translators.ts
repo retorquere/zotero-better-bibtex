@@ -6,7 +6,7 @@ import { Cache } from './db/cache'
 import { Serializer } from './item-export-format'
 
 declare class ChromeWorker extends Worker { }
-import { PromiseWorker } from './worker/promise'
+import { Client as WorkerClientBase } from './worker/json-rpc'
 
 Components.utils.import('resource://zotero/config.js')
 declare const ZOTERO_CONFIG: any
@@ -28,6 +28,16 @@ Events.on('preference-changed', async (pref: string) => {
 })
 
 import * as l10n from './l10n'
+
+class WorkerClient extends WorkerClientBase {
+  public initialize: (config: { CSL_MAPPINGS: any; dateFormatsJSON: any }) => Promise<void>
+  public terminate: () => Promise<void>
+  public start: (config: Translator.Worker.Job) => Promise<{ cacheRate: number; output: string }>
+
+  constructor(worker) {
+    super(worker)
+  }
+}
 
 class TimeoutError extends Error {
   timeout: number
@@ -59,7 +69,7 @@ export const Translators = new class {
   public bySlug: Record<string, Translator.Header> = {}
   public queue = newQueue(1)
   #worker: ChromeWorker
-  public worker: PromiseWorker<Translator.Worker.Message, Translator.Worker.Message>
+  public worker: WorkerClient
 
   private reinit: { header: Translator.Header; code: string }[]
   private serializer = new Serializer
@@ -78,11 +88,10 @@ export const Translators = new class {
         const params = new URLSearchParams(client as unknown as Record<string, string>)
         url.search = params.toString()
         this.#worker = new ChromeWorker(url.toString())
-        this.worker = new PromiseWorker(this.#worker)
+        this.worker = new WorkerClient(this.#worker)
 
         // post dynamically to fix #2485
-        await this.worker.postMessage({
-          kind: 'initialize',
+        await this.worker.initialize({
           CSL_MAPPINGS: Object.entries(Zotero.Schema).reduce((acc, [ k, v ]) => { if (k.startsWith('CSL')) acc[k] = v; return acc }, {}),
           dateFormatsJSON: Zotero.File.getResource('resource://zotero/schema/dateFormats.json'),
         })
@@ -113,7 +122,7 @@ export const Translators = new class {
         ready.resolve(true as unknown as void)
       },
       shutdown: async (reason: Reason) => {
-        await this.worker.postMessage({ kind: 'terminate' })
+        await this.worker.terminate()
         this.#worker.terminate()
 
         switch (reason) {
@@ -277,13 +286,9 @@ export const Translators = new class {
       })
     }
 
-    const result = await this.worker.postMessage({ kind: 'start', config })
-    switch (result.kind) {
-      case 'done':
-        if (job.autoExport) Cache.cacheRate[job.autoExport] = result.cacheRate
-        return result.output
-      default: throw new Error(`Unexpected message of type ${result.kind}`)
-    }
+    const result = await this.worker.start(config)
+    if (job.autoExport) Cache.cacheRate[job.autoExport] = result.cacheRate
+    return result.output
   }
 
   public displayOptions(translatorID: string, displayOptions: any): any {

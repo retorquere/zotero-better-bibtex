@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 
 // import registerPromiseWorker from '@kotorik/promise-worker/register'
-import { registerPromiseWorker } from './promise'
+import { Server as WorkerServerBase } from './json-rpc'
+
 import allSettled = require('promise.allsettled')
 allSettled.shim()
 
@@ -470,34 +471,30 @@ class WorkerZotero {
 // haul to top
 export var Zotero = new WorkerZotero // eslint-disable-line no-var
 
-registerPromiseWorker(async function(message: Translators.Worker.Message) {
-  switch (message.kind) {
-    case 'initialize':
-      Zotero.Schema = { ...message.CSL_MAPPINGS }
-      ZD.init(message.dateFormatsJSON)
-      break
-
-    case 'start':
-      TranslationWorker.job = message.config
-
-      importScripts(`chrome://zotero-better-bibtex/content/resource/${ TranslationWorker.job.translator }.js`)
-      try {
-        if (!Cache.opened) await Cache.open()
-        await Zotero.start()
-        const cacheRate = Zotero.running.hits + Zotero.running.misses ? Zotero.running.hits / (Zotero.running.hits + Zotero.running.misses) : 0
-        return { kind: 'done', output: Zotero.output, cacheRate }
-      }
-      finally {
-        await Zotero.running?.flush()
-        Zotero.running = null
-      }
-
-    case 'terminate':
-      if (Cache.opened) Cache.close()
-      break
-
-    default:
-      log.error('unexpected message:', message)
-      break
+class WorkerServer extends WorkerServerBase {
+  async initialize(config: { CSL_MAPPINGS: any; dateFormatsJSON: any }): Promise<void> { // eslint-disable-line @typescript-eslint/require-await
+    Zotero.Schema = { ...config.CSL_MAPPINGS }
+    ZD.init(config.dateFormatsJSON)
   }
-})
+
+  async start(config: Translators.Worker.Job): Promise<{ output: string; cacheRate: number }> {
+    TranslationWorker.job = config
+
+    importScripts(`chrome://zotero-better-bibtex/content/resource/${ TranslationWorker.job.translator }.js`)
+    try {
+      if (!Cache.opened) await Cache.open()
+      await Zotero.start()
+      const cacheRate = Zotero.running.hits + Zotero.running.misses ? Zotero.running.hits / (Zotero.running.hits + Zotero.running.misses) : 0
+      return { output: Zotero.output, cacheRate }
+    }
+    finally {
+      await Zotero.running?.flush()
+      Zotero.running = null
+    }
+  }
+
+  async terminate(): Promise<void> { // eslint-disable-line @typescript-eslint/require-await
+    if (Cache.opened) Cache.close()
+  }
+}
+new WorkerServer
