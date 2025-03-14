@@ -1,11 +1,9 @@
 declare const ChromeUtils: any
 
-import { stringify } from './stringify'
-
 import { Formatter } from './cayw/formatter'
 import { TeXstudio } from './tex-studio'
 import { flash } from './flash'
-import { log } from './logger'
+import { log, stringify } from './logger'
 import { orchestrator } from './orchestrator'
 import { Server } from './server'
 import { toClipboard } from './text'
