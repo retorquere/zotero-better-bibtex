@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 
 // import registerPromiseWorker from '@kotorik/promise-worker/register'
-import registerPromiseWorker from '../../node_modules/@kotorik/promise-worker/dist/register.mjs'
+import { registerPromiseWorker } from './promise'
 import allSettled = require('promise.allsettled')
 allSettled.shim()
 

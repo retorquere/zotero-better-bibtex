@@ -19,7 +19,6 @@ export const version: string = (() => {
 
 export const slug: string = name.toLowerCase().replace('-', '')
 export const isBeta: boolean = version.includes('beta')
-export const run: string = worker ? searchParams.get('run') : Zotero.Utilities.generateObjectKey()
 
 export const locale: string = worker ? searchParams.get('locale') : Zotero.locale
 export const platform: string = worker ? searchParams.get('platform') : Zotero.isWin ? 'win' : Zotero.isMac ? 'mac' : Zotero.isLinux ? 'lin' : 'unk'

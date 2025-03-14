@@ -1,8 +1,6 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-unsafe-return, @typescript-eslint/no-empty-function, no-restricted-syntax */
 
 import * as client from './client'
-import { version } from './../gen/version.json'
-export const run = `<${version} ${client.run}>`
 
 declare const dump: (msg: string) => void
 
@@ -43,26 +41,34 @@ function replacer() {
     if (value === null) return value
     if (value instanceof Set) return [...value]
     if (value instanceof Map) return Object.fromEntries(value)
+    if (value instanceof RegExp) return value.source
+    if (Array.isArray(value)) return value
 
     switch (typeof value) {
       case 'string':
       case 'number':
       case 'boolean':
+      case 'function':
+      case 'undefined':
         return value
 
       case 'object':
         return stringifyXPCOM(value) || stringifyError(value) || value
     }
 
-    if (Array.isArray(value)) return value
+    if (value.openDialog || value.querySelector) return value.toString() // window/document
 
-    return undefined
+    return '{object}'
   }
+}
+
+export function stringify(obj: any, indent?: number | string): string {
+  return JSON.stringify(obj, replacer(), indent)
 }
 
 function to_s(obj: any): string {
   if (typeof obj === 'string') return obj
-  return JSON.stringify(obj, replacer())
+  return stringify(obj)
 }
 
 export function format(...msg): string {
@@ -73,7 +79,7 @@ export const log = new class {
   public prefix = ''
 
   #prefix(error?: any) {
-    return `{${ error ? 'error: ' : '' }${ client.worker ? 'worker: ' : '' }${this.prefix}better-bibtex: ${run}} `
+    return `{${ error ? 'error: ' : '' }${ client.worker ? 'worker: ' : '' }${this.prefix}better-bibtex:} `
   }
 
   public debug(...msg): void {

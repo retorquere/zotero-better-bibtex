@@ -6,7 +6,7 @@ import { Cache } from './db/cache'
 import { Serializer } from './item-export-format'
 
 declare class ChromeWorker extends Worker { }
-import PromiseWorker from '@kotorik/promise-worker'
+import { PromiseWorker } from './worker/promise'
 
 Components.utils.import('resource://zotero/config.js')
 declare const ZOTERO_CONFIG: any
