@@ -1,5 +1,6 @@
 import * as client from '../client'
 import { Client as WorkerClient } from '../worker/json-rpc'
+import { Exporter as ExporterInterface } from '../worker/interface'
 import { orchestrator } from '../orchestrator'
 import type { Collection } from '../../gen/typings/serialized-item'
 import { $dump } from '../logger'
@@ -43,7 +44,7 @@ $dump(`json-rpc: main booting worker ${url.toString()}`)
 export const worker: ChromeWorker = new ChromeWorker(url.toString())
 $dump('json-rpc: main worker started')
 
-class ExporterClient extends WorkerClient {
+class ExporterClient extends WorkerClient implements ExporterInterface {
   public ready = false
   public initialize: (config: { CSL_MAPPINGS: any; dateFormatsJSON: any; lastUpdated: string }) => Promise<void>
   public terminate: () => Promise<void>

@@ -2,6 +2,7 @@
 
 // import registerPromiseWorker from '@kotorik/promise-worker/register'
 import { Server as WorkerServerBase } from './json-rpc'
+import { Exporter } from './interface'
 
 import allSettled = require('promise.allsettled')
 allSettled.shim()
@@ -472,7 +473,7 @@ class WorkerZotero {
 // haul to top
 export var Zotero = new WorkerZotero // eslint-disable-line no-var
 
-class WorkerServer extends WorkerServerBase {
+class WorkerServer extends WorkerServerBase implements Exporter {
   async initialize(config: { CSL_MAPPINGS: any; dateFormatsJSON: any }): Promise<void> { // eslint-disable-line @typescript-eslint/require-await
     Zotero.Schema = { ...config.CSL_MAPPINGS }
     ZD.init(config.dateFormatsJSON)
