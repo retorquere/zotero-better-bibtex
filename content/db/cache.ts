@@ -31,7 +31,6 @@ import { log } from '../logger'
 import stringify from 'safe-stable-stringify'
 
 import { worker } from '../client'
-import { flash } from '../flash'
 import { pick, unpick } from '../object'
 
 var IDBKeyRange // eslint-disable-line no-var
@@ -369,7 +368,7 @@ class $Cache {
   }
 
   private async validate(): Promise<boolean> {
-    if (worker) return true
+    if (!worker) return true
 
     log.info('cache: validating schema')
 
@@ -425,18 +424,14 @@ class $Cache {
 
   public async open(lastUpdated?: string): Promise<void> {
     if (this.db) throw new Error('database reopened')
-    const del = 'translators.better-bibtex.cacheDelete'
 
     log.info(`opening cache ${worker ? 'worker' : 'main'}`)
-    if (!worker) {
-      if (Zotero.Prefs.get(del)) {
+    if (worker) {
+      if (lastUpdated === 'delete') {
         log.info('cache delete requested')
         await DatabaseFactory.deleteDatabase(this.name)
       }
-      Zotero.Prefs.clear(del)
     }
-
-    await Zotero.proxyAuthComplete
 
     this.db = await this.$open('open')
     if (!this.db || !(await this.validate())) {
@@ -446,12 +441,7 @@ class $Cache {
       this.db = await this.$open('reopen')
     }
 
-    if (!this.db) {
-      Zotero.Prefs.set(del, true)
-      flash('Cache could not be opened', 'Cache could not be opened, please restart Zotero')
-    }
-
-    if (this.db && !worker) {
+    if (worker) {
       const metadata = { Zotero: '', BetterBibTeX: '', lastUpdated: '', ...(await this.metadata()) }
       const reasons = [
         { reason: `Zotero version changed from ${metadata.Zotero || 'none'} to ${Zotero.version}`, test: metadata.Zotero && metadata.Zotero !== metadata.Zotero },
