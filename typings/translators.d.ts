@@ -1,28 +1,13 @@
 import { Item, Attachment, Collection, Tag } from '../gen/typings/serialized-item'
 
 export namespace Translators {
+  /*
   namespace Worker {
     type Environment = {
       version: string
       platform: string
       locale: string
       localeDateOrder: string
-    }
-
-    type Job = {
-      translator: string
-      autoExport?: string
-
-      preferences: any
-      options: any
-
-      output: string
-      debugEnabled: boolean
-
-      data?: {
-        items: number[]
-        collections: Collection[]
-      }
     }
 
     type Message = 
@@ -36,6 +21,7 @@ export namespace Translators {
       | { kind: 'item', item: number }
       | { kind: 'progress', percent: number, translator: string, autoExport: string }
   }
+  */
 
   namespace BibTeX {
     interface Field {

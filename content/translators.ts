@@ -17,7 +17,7 @@ import { newQueue } from '@henrygd/queue'
 import { orchestrator } from './orchestrator'
 import type { Reason } from './bootstrap'
 import { headers as Headers, byLabel, byId, bySlug } from '../gen/translators'
-import { worker, Exporter } from './translators/worker'
+import { Job, worker, Exporter, Message } from './translators/worker'
 
 Events.on('preference-changed', async (pref: string) => {
   for (const translator of (affects[pref] || [])) {
@@ -71,7 +71,7 @@ export const Translators = new class {
       needs: [ 'worker', 'keymanager' ],
       startup: async () => {
         worker.addEventListener('message', (e: MessageEvent) => {
-          const data = (e.data || []) as Translator.Worker.Message | string[]
+          const data = (e.data || []) as Message | string[]
           if (Array.isArray(data)) return
 
           switch (data.kind) {
@@ -198,7 +198,7 @@ export const Translators = new class {
 
     const preferences = job.preferences || {}
 
-    const config: Translator.Worker.Job = {
+    const config: Job = {
       preferences: { ...Preference.all, ...preferences },
       options: displayOptions,
       data: {

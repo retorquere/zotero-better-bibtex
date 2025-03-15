@@ -22,6 +22,7 @@ const ctx: DedicatedWorkerGlobalScope = self as any
 
 importScripts('resource://zotero/config.js') // import ZOTERO_CONFIG'
 
+import type { Message, Job } from '../translators/worker'
 import type { Translators } from '../../typings/translators'
 import { valid } from '../../gen/items/items'
 import { generateBibLaTeX } from '../../translators/bibtex/biblatex'
@@ -163,7 +164,7 @@ import jurism_schema from '../../schema/jurism.json'
 const schema = client.slug === 'zotero' ? zotero_schema : jurism_schema
 import dateFormats from '../../schema/dateFormats.json'
 
-export const TranslationWorker: { job?: Partial<Translators.Worker.Job> } = {}
+export const TranslationWorker: { job?: Partial<Job> } = {}
 
 class WorkerZoteroBetterBibTeX {
   public clientName = client.name
@@ -413,7 +414,7 @@ class WorkerZotero {
     if (this.exportFile) await IOUtils.writeUTF8(this.exportFile, this.output)
   }
 
-  public send(message: Translators.Worker.Message) {
+  public send(message: Message) {
     ctx.postMessage(message)
   }
 
@@ -477,8 +478,8 @@ class WorkerServer extends WorkerServerBase {
     ZD.init(config.dateFormatsJSON)
   }
 
-  async start(config: Translators.Worker.Job): Promise<{ output: string; cacheRate: number }> {
-    TranslationWorker.job = config
+  async start(job: Job): Promise<{ output: string; cacheRate: number }> {
+    TranslationWorker.job = job
 
     importScripts(`chrome://zotero-better-bibtex/content/resource/${ TranslationWorker.job.translator }.js`)
     try {

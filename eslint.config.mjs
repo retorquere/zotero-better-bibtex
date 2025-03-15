@@ -141,7 +141,7 @@ const config = [
         VariableDeclarator: 1,
       }],
 
-      '@stylistic/indent-binary-ops': ['error', 2],
+      '@stylistic/indent-binary-ops': 'off',
 
       '@stylistic/key-spacing': ['error', {
         afterColon: true,

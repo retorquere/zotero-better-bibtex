@@ -1,11 +1,35 @@
 import * as client from '../client'
 import { Client as WorkerClient } from '../worker/json-rpc'
 import { orchestrator } from '../orchestrator'
-// import type { Item } from '../../gen/typings/serialized-item'
-import type { Translators } from '../../typings/translators'
-// import type { Job } from './types'
-type Job = Translators.Worker.Job
+import type { Collection } from '../../gen/typings/serialized-item'
 import { $dump } from '../logger'
+
+export type Message =
+//    { kind: 'initialize', CSL_MAPPINGS: any, dateFormatsJSON: any }
+//  | { kind: 'terminate' }
+//  | { kind: 'configure', environment: Environment }
+//  | { kind: 'start', config: Job }
+//  | { kind: 'done', output: string, cacheRate: number }
+    { kind: 'debug'; message: string }
+  | { kind: 'error'; message: string; stack?: string }
+  | { kind: 'item'; item: number }
+  | { kind: 'progress'; percent: number; translator: string; autoExport: string }
+
+export type Job = {
+  translator: string
+  autoExport?: string
+
+  preferences: any
+  options: any
+
+  output: string
+  debugEnabled: boolean
+
+  data?: {
+    items: number[]
+    collections: Collection[]
+  }
+}
 
 const url = new URL('chrome://zotero-better-bibtex/content/worker/zotero.js')
 const params = new URLSearchParams({
