@@ -34,8 +34,8 @@ import { clean_pane_persist } from './clean_pane_persist'
 import { flash } from './flash'
 import { orchestrator } from './orchestrator'
 import type { Reason } from './bootstrap'
-import type { ExportedItem, ExportedItemMetadata } from './db/cache'
-import { Cache } from './db/cache'
+import type { ExportedItem, ExportedItemMetadata } from './worker/cache'
+import { Cache } from './translators/worker'
 
 import { Preference } from './prefs' // needs to be here early, initializes the prefs observer
 require('./pull-export') // just require, initializes the pull-export end points
@@ -389,10 +389,6 @@ monkey.patch(Zotero.Translate.Export.prototype, 'translate', original => functio
     flash('failed to start a chromeworker')
     useWorker = false
   }
-  if (!Cache.opened) {
-    flash('cache not loaded, background exports are disabled')
-    useWorker = false
-  }
 
   if (useWorker) {
     return Translators.queueJob({
@@ -563,7 +559,6 @@ export class BetterBibTeX {
           this.setProgress(pct, message)
         })
 
-        await Cache.open(await Zotero.DB.valueQueryAsync('SELECT MAX(dateModified) FROM items') as string)
         Events.cacheTouch = async (ids: number[]) => {
           const withParents: Set<number> = new Set(ids)
           for (const item of await Zotero.Items.getAsync(ids)) {
@@ -573,11 +568,8 @@ export class BetterBibTeX {
         }
         Events.addIdleListener('cache-purge', Preference.autoExportIdleWait)
         Events.on('idle', async state => {
-          if (state.topic === 'cache-purge' && Cache.opened) await Cache.Serialized.purge()
+          if (state.topic === 'cache-purge' && Cache.ready) await Cache.Serialized.purge()
         })
-      },
-      shutdown() {
-        Cache.close()
       },
     })
 

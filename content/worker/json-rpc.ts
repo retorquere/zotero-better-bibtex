@@ -18,8 +18,8 @@ export class Client {
   #namespace: string
   #id: string
 
-  constructor(worker: Worker, namespace?: string) {
-    this.#namespace = namespace ? `${namespace}.` : ''
+  constructor(worker: Worker, namespace = '') {
+    this.#namespace = namespace
     this.#id = `[${this.#namespace}${Date.now()}:${Math.random()}]`
 
     worker.addEventListener('message', (e: MessageEvent<JsonRpcMessage>) => {
@@ -29,7 +29,7 @@ export class Client {
         return
       }
       if (!req.id.startsWith(this.#id)) {
-        $dump(`json-rpc: main received neighbour json-rpc response ${req.id}`)
+        // $dump(`json-rpc: main ${this.#id} received neighbour json-rpc response ${req.id}`)
         return
       }
       if (!this.#handlers[req.id]) {

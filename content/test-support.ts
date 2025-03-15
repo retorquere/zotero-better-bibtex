@@ -9,7 +9,7 @@ import * as Extra from './extra'
 import { defaults } from '../gen/preferences/meta'
 import { Preference } from './prefs'
 import * as memory from './memory'
-import { Cache } from './db/cache'
+import { Cache } from './translators/worker'
 
 // import { Bench } from 'tinybench'
 
@@ -256,8 +256,7 @@ export class TestSupport {
   }
 
   public async resetCache(): Promise<void> {
-    await Cache.Exports.drop()
-    await Cache.Serialized.drop()
+    await Cache.drop()
   }
 
   public async merge(ids: number[]): Promise<void> {

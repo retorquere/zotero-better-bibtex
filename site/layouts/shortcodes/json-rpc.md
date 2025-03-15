@@ -79,7 +79,7 @@ Generate an export for a list of citekeys, tailored for the pandoc zotero filter
 
 
 
-**item.search**(terms: (string | ([ string ] | [ string, string ] | [ string, string, (string | number) ] | [ string, string, (string | number), boolean ])[]), library?: (string | number)): any
+**item.search**(terms: (string | ([ string, string ] | [ string ] | [ string, string, (string | number) ] | [ string, string, (string | number), boolean ])[]), library?: (string | number)): any
 
 * terms: Single string as typed into the search box in Zotero (search for Title Creator Year)
               Array of tuples similar as typed into the advanced search box in Zotero

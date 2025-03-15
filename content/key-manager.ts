@@ -31,7 +31,7 @@ import { Formatter } from './key-manager/formatter'
 
 import { createDB, createTable, Query, BlinkKey } from 'blinkdb'
 import * as blink from '../gen/blinkdb'
-import { Cache } from './db/cache'
+import { Cache } from './translators/worker'
 
 import { monkey } from './monkey-patch'
 
@@ -254,7 +254,7 @@ export const KeyManager = new class _KeyManager {
     orchestrator.add({
       id: 'keymanager',
       description: 'keymanager',
-      needs: ['sqlite'],
+      needs: [ 'worker', 'sqlite'],
       startup: async () => {
         await kuroshiro.init()
         chinese.init()
@@ -520,13 +520,16 @@ export const KeyManager = new class _KeyManager {
     })
 
     const notify = async (ids: number[]) => {
-      if (!Cache.opened) return
+      if (!Cache.ready) {
+        log.error('Cache touch failed for', ids, 'cache not ready')
+        return
+      }
 
       try {
         await Cache.touch(ids)
       }
       catch (err) {
-        log.error('Cache touch failed:', Object.keys(err))
+        log.error('Cache touch failed for', ids, err)
       }
       finally {
         void Events.emit('items-changed', { items: Zotero.Items.get(ids), action: 'modify' })

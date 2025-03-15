@@ -13,7 +13,7 @@ import { Events } from './events'
 import { FilePickerHelper } from 'zotero-plugin-toolkit'
 import { flash } from './flash'
 import { icons } from './icons'
-import { Cache } from './db/cache'
+import { Cache } from './translators/worker'
 
 // safe to keep "global" since only one pref pane will be loaded at any one time
 let $window: Window & { sizeToContent(): void }
@@ -231,7 +231,7 @@ class AutoExportPane {
     }
 
     const cacherate = details.querySelector("*[data-ae-field='cacherate']") as unknown as XUL.Textbox
-    cacherate.value = `${ Cache.cacheRate[selected.path] || 0 }%`
+    cacherate.value = `${ Cache.rate[selected.path] || 0 }%`
   }
 
   public async remove() {
@@ -446,7 +446,7 @@ export class PrefPane {
 
   public async cacheReset(): Promise<void> {
     Preference.cacheDelete = true
-    await Cache.Exports.drop()
+    await Cache.drop()
   }
 
   public async load(win: Window): Promise<void> {

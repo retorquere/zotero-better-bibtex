@@ -2,7 +2,9 @@
 import { DatabaseFactory, Database } from '@idxdb/promised'
 // import { SynchronousPromise } from 'synchronous-promise'
 
-import type { Serialized, Serializer } from '../item-export-format'
+import type { Item } from '../../gen/typings/serialized-item'
+import { Cache as CacheInterface } from './interface'
+
 export type ExportContext = {
   context: string
   translator: string
@@ -30,11 +32,9 @@ export type CacheMetadata = {
 import { log } from '../logger'
 import stringify from 'safe-stable-stringify'
 
-import { worker } from '../client'
 import { pick, unpick } from '../object'
 
 var IDBKeyRange // eslint-disable-line no-var
-if (!worker && typeof IDBKeyRange === 'undefined') IDBKeyRange = Components.classes['@mozilla.org/appshell/appShellService;1'].getService(Components.interfaces.nsIAppShellService).hiddenDOMWindow.IDBKeyRange
 
 import { byLabel } from '../../gen/translators'
 import { version } from '../../gen/version.json'
@@ -74,7 +74,7 @@ async function allSettled(promises): Promise<string> {
 }
 
 export class Running {
-  public serialized: Serialized[]
+  public serialized: Item[]
   public exported: Map<number, ExportedItem>
   public context: number
   public hits = 0
@@ -227,24 +227,17 @@ export class ExportCache {
 }
 
 class SerializedCache {
-  private cachable(item: any): boolean {
-    return (!item.isFeedItem && (item.isRegularItem() || item.isNote() || item.isAttachment())) as boolean
-  }
-
-  public async fill(items: Zotero.Item[], serializer: Serializer): Promise<void> {
-    items = items.filter(item => this.cachable(item))
-    if (!items.length) return
-
-    let tx = Cache.db.transaction(['Serialized', 'touched'], 'readwrite')
-    let store = tx.objectStore('Serialized')
+  public async missing(itemIDs: number[]): Promise<number[]> {
+    const tx = Cache.db.transaction(['Serialized', 'touched'], 'readwrite')
+    const store = tx.objectStore('Serialized')
     const cached = new Set(await store.getAllKeys())
     const touched = tx.objectStore('touched')
     const purge: Set<number> = new Set(await touched.getAllKeys())
 
-    const fill = items.filter(item => {
-      if (cached.has(item.id)) {
-        if (purge.has(item.id)) {
-          purge.delete(item.id)
+    const missing = itemIDs.filter(itemID => {
+      if (cached.has(itemID)) {
+        if (purge.has(itemID)) {
+          purge.delete(itemID)
         }
         else {
           return false
@@ -253,27 +246,30 @@ class SerializedCache {
       return true
     })
 
-    let rejected = await allSettled([...purge].map(id => store.delete(id)))
+    const rejected = await allSettled([...purge].map(id => store.delete(id)))
     await touched.clear()
     await tx.commit()
     if (rejected) log.error(`cache: failed to purge ${rejected}`)
 
-    if (fill.length) {
-      const serialized = await serializer.serialize(fill)
-      tx = Cache.db.transaction(['Serialized'], 'readwrite')
-      store = tx.objectStore('Serialized')
-      const puts = serialized.map(item => store.put(item))
-      rejected = await allSettled(puts)
+    return missing
+  }
+
+  public async fill(items: Item[]): Promise<void> {
+    if (items.length) {
+      const tx = Cache.db.transaction(['Serialized'], 'readwrite')
+      const store = tx.objectStore('Serialized')
+      const puts = items.map(item => store.put(item))
+      const rejected = await allSettled(puts)
       await tx.commit()
       if (rejected) log.error(`cache: failed to store ${rejected}`)
     }
   }
 
-  public async get(ids: number[]): Promise<Serialized[]> {
+  public async get(ids: number[]): Promise<Item[]> {
     const tx = Cache.db.transaction('Serialized', 'readonly')
     const store = tx.objectStore('Serialized')
     const requested = new Set(ids)
-    const items: Serialized[] = (await store.getAll<Serialized, number>()).filter(item => requested.has(item.itemID))
+    const items: Item[] = (await store.getAll<Item, number>()).filter(item => requested.has(item.itemID))
 
     if (ids.length !== items.length) log.error(`indexed: failed to fetch ${ ids.length - items.length } items`)
     return items
@@ -304,7 +300,7 @@ class SerializedCache {
   }
 }
 
-class $Cache {
+class $Cache implements CacheInterface {
   #schema = {
     Serialized: {
       $: { keyPath: 'itemID' },
@@ -368,8 +364,6 @@ class $Cache {
   }
 
   private async validate(): Promise<boolean> {
-    if (!worker) return true
-
     log.info('cache: validating schema')
 
     // #3111 -- what the *actual*?!?!
@@ -422,15 +416,13 @@ class $Cache {
     return metadata
   }
 
-  public async open(lastUpdated?: string): Promise<void> {
+  public async open(lastZoteroUpdate: string): Promise<void> {
     if (this.db) throw new Error('database reopened')
 
-    log.info(`opening cache ${worker ? 'worker' : 'main'}`)
-    if (worker) {
-      if (lastUpdated === 'delete') {
-        log.info('cache delete requested')
-        await DatabaseFactory.deleteDatabase(this.name)
-      }
+    log.info('opening cache')
+    if (lastZoteroUpdate === 'delete') {
+      log.info('cache delete requested')
+      await DatabaseFactory.deleteDatabase(this.name)
     }
 
     this.db = await this.$open('open')
@@ -441,28 +433,35 @@ class $Cache {
       this.db = await this.$open('reopen')
     }
 
-    if (worker) {
-      const metadata = { Zotero: '', BetterBibTeX: '', lastUpdated: '', ...(await this.metadata()) }
-      const reasons = [
-        { reason: `Zotero version changed from ${metadata.Zotero || 'none'} to ${Zotero.version}`, test: metadata.Zotero && metadata.Zotero !== metadata.Zotero },
-        { reason: `Better BibTeX version changed from ${metadata.BetterBibTeX || 'none'} to ${version}`, test: metadata.BetterBibTeX && metadata.BetterBibTeX !== version },
-        { reason: `cache gap found ${metadata.lastUpdated} => ${lastUpdated}`, test: (lastUpdated || false) && metadata.lastUpdated && lastUpdated !== metadata.lastUpdated },
-      ]
-      const reason = reasons.filter(r => r.test).map(r => r.reason).join(' and ') || false
+    const metadata = { Zotero: '', BetterBibTeX: '', lastUpdated: '', ...(await this.metadata()) }
+    const reasons = [
+      {
+        reason: `Zotero version changed from ${metadata.Zotero || 'none'} to ${Zotero.version}`,
+        test: metadata.Zotero && metadata.Zotero !== metadata.Zotero,
+      },
+      {
+        reason: `Better BibTeX version changed from ${metadata.BetterBibTeX || 'none'} to ${version}`,
+        test: metadata.BetterBibTeX && metadata.BetterBibTeX !== version,
+      },
+      {
+        reason: `cache gap found: cache = ${metadata.lastUpdated}, zotero = ${lastZoteroUpdate}`,
+        test: !lastZoteroUpdate || !metadata.lastUpdated || lastZoteroUpdate > metadata.lastUpdated,
+      },
+    ]
+    const reason = reasons.filter(r => r.test).map(r => r.reason).join(' and ') || false
 
-      log.info(`cache: ${JSON.stringify(metadata)} + ${JSON.stringify({ Zotero: Zotero.version, BetterBibTeX: version, lastUpdated })} => ${JSON.stringify(reasons)} => ${reason}`)
-      if (reason) {
-        log.info(`cache: reopening because ${reason}`)
-        this.db.close()
-        await DatabaseFactory.deleteDatabase(this.name)
-        this.db = await this.$open('upgrade')
-      }
-      const tx = this.db.transaction('metadata', 'readwrite')
-      const store = tx.objectStore('metadata')
-      await store.put<CacheMetadata, string>({ key: 'Zotero', value: Zotero.version })
-      await store.put<CacheMetadata, string>({ key: 'BetterBibTeX', value: version })
-      await tx.commit()
+    log.info('cache:', metadata, { Zotero: Zotero.version, BetterBibTeX: version, lastUpdated: lastZoteroUpdate }, '=>', reasons, '=>', reason)
+    if (reason) {
+      log.info(`cache: reset-reopen because ${reason}`)
+      this.db.close()
+      await DatabaseFactory.deleteDatabase(this.name)
+      this.db = await this.$open('upgrade')
     }
+    const tx = this.db.transaction('metadata', 'readwrite')
+    const store = tx.objectStore('metadata')
+    await store.put<CacheMetadata, string>({ key: 'Zotero', value: Zotero.version })
+    await store.put<CacheMetadata, string>({ key: 'BetterBibTeX', value: version })
+    await tx.commit()
   }
 
   public get opened() {
@@ -553,7 +552,8 @@ class $Cache {
     return tables
   }
 
-  public async drop(names: string[]): Promise<void> {
+  public async drop(names: '*' | string[]): Promise<void> {
+    if (names === '*') names = this.db.objectStoreNames
     const tx = Cache.db.transaction(names, 'readwrite')
     for (const name of names) {
       const store = tx.objectStore(name)

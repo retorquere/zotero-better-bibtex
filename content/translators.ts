@@ -2,8 +2,8 @@
 
 // import * as client from './client'
 import merge from 'lodash.merge'
-import { Cache } from './db/cache'
-import { Serializer } from './item-export-format'
+import { Cache } from './translators/worker'
+import { serializer } from './item-export-format'
 
 Components.utils.import('resource://zotero/config.js')
 declare const ZOTERO_CONFIG: any
@@ -58,7 +58,6 @@ export const Translators = new class {
   public queue = newQueue(1)
 
   private reinit: { header: Translator.Header; code: string }[]
-  private serializer = new Serializer
 
   constructor() {
     const ready = Zotero.Promise.defer()
@@ -241,9 +240,9 @@ export const Translators = new class {
     }
     if (job.path && job.canceled) return ''
 
-    items = items.filter(item => !item.isAnnotation?.())
-
-    await Cache.Serialized.fill(items, this.serializer)
+    items = items.filter(item => !item.isAnnotation() && !item.isFeedItem && (item.isRegularItem() || item.isNote() || item.isAttachment()))
+    const missing = new Set(await Cache.Serialized.missing(items.map(item => item.id)))
+    await Cache.Serialized.fill(await serializer.serialize(items.filter(item => missing.has(item.id))))
 
     config.data.items = items.map(item => item.id)
     if (job.path && job.canceled) return ''
@@ -257,9 +256,9 @@ export const Translators = new class {
       })
     }
 
-    const result = await Exporter.start(config)
-    if (job.autoExport) Cache.cacheRate[job.autoExport] = result.cacheRate
-    return result.output
+    const { cacheRate, output } = await Exporter.start(config)
+    if (job.autoExport) Cache.rate[job.autoExport] = cacheRate
+    return output
   }
 
   public displayOptions(translatorID: string, displayOptions: any): any {

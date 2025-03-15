@@ -2,12 +2,12 @@
 
 // import registerPromiseWorker from '@kotorik/promise-worker/register'
 import { Server as WorkerServerBase } from './json-rpc'
-import { Exporter } from './interface'
+import { Exporter as ExporterInterface } from './interface'
 
 import allSettled = require('promise.allsettled')
 allSettled.shim()
 
-import { ExportedItemMetadata, Cache, Context, Running } from '../db/cache'
+import { ExportedItemMetadata, Cache, Context, Running } from './cache'
 
 import flatMap from 'array.prototype.flatmap'
 flatMap.shim()
@@ -473,10 +473,13 @@ class WorkerZotero {
 // haul to top
 export var Zotero = new WorkerZotero // eslint-disable-line no-var
 
-class WorkerServer extends WorkerServerBase implements Exporter {
-  async initialize(config: { CSL_MAPPINGS: any; dateFormatsJSON: any }): Promise<void> { // eslint-disable-line @typescript-eslint/require-await
+class WorkerServer extends WorkerServerBase implements ExporterInterface {
+  public Cache = Cache
+
+  async initialize(config: { CSL_MAPPINGS: any; dateFormatsJSON: any; lastUpdated: string }): Promise<void> {
     Zotero.Schema = { ...config.CSL_MAPPINGS }
     ZD.init(config.dateFormatsJSON)
+    await Cache.open(config.lastUpdated)
   }
 
   async start(job: Job): Promise<{ output: string; cacheRate: number }> {
@@ -484,7 +487,6 @@ class WorkerServer extends WorkerServerBase implements Exporter {
 
     importScripts(`chrome://zotero-better-bibtex/content/resource/${ TranslationWorker.job.translator }.js`)
     try {
-      if (!Cache.opened) await Cache.open()
       await Zotero.start()
       const cacheRate = Zotero.running.hits + Zotero.running.misses ? Zotero.running.hits / (Zotero.running.hits + Zotero.running.misses) : 0
       return { output: Zotero.output, cacheRate }

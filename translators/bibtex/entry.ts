@@ -5,7 +5,7 @@
 declare const Zotero: any
 
 import { RegularItem as Item } from '../../gen/typings/serialized-item'
-import type { ExportedItemMetadata } from '../../content/db/cache'
+import type { ExportedItemMetadata } from '../../content/worker/cache'
 import type { Translators } from '../../typings/translators'
 import * as DateParser from '../../content/dateparser'
 import fold2ascii from 'fold-to-ascii'

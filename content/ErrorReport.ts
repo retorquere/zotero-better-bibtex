@@ -1,7 +1,7 @@
 import * as client from './client'
 import { Path, File } from './file'
 
-import { Cache } from './db/cache'
+import { Cache } from './translators/worker'
 import { regex as escapeRE } from './escape'
 
 import { Preference } from './prefs'
@@ -294,7 +294,6 @@ export class ErrorReport {
     if (!this.config.errors) delete this.report.errors
     if (!this.config.log) delete this.report.log
 
-    log.info(`cache: errorreport ${Cache.opened}`)
     this.setValue('better-bibtex-error-context', this.report.context)
     this.setValue('better-bibtex-error-errors', this.report.errors || '')
     this.setValue('better-bibtex-error-log', this.preview(this.report.log || ''))

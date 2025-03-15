@@ -4,7 +4,7 @@ import type { Job } from '../translators/worker'
 export interface Cache {
   count(): Promise<number>
   touch(itemIDs: number[]): Promise<void>
-  drop(): Promise<void>
+  drop(stores: '*' | string[]): Promise<void>
   dump(): Promise<any>
 
   Serialized: {

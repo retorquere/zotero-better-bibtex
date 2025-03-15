@@ -1,6 +1,7 @@
 import * as client from '../client'
+import type { Item } from '../../gen/typings/serialized-item'
 import { Client as WorkerClient } from '../worker/json-rpc'
-import { Exporter as ExporterInterface } from '../worker/interface'
+import { Exporter as ExporterInterface, Cache as CacheInterface } from '../worker/interface'
 import { orchestrator } from '../orchestrator'
 import type { Collection } from '../../gen/typings/serialized-item'
 import { $dump } from '../logger'
@@ -57,7 +58,6 @@ class ExporterClient extends WorkerClient implements ExporterInterface {
 }
 export const Exporter = new ExporterClient
 
-/*
 class ExportsCacheClient extends WorkerClient {
   dropTranslator: (translator: string) => Promise<void>
   dropAutoExport: (path: string, deleted: boolean) => Promise<void>
@@ -70,7 +70,7 @@ class SerializedCacheClient extends WorkerClient {
   purge: () => Promise<any>
 }
 
-class CacheClient extends WorkerClient {
+class CacheClient extends WorkerClient implements CacheInterface {
   public ready = false
   public rate: Record<string, number> = {}
   public async stats(): Promise<{ rate: number; count: number }> {
@@ -87,14 +87,13 @@ class CacheClient extends WorkerClient {
   public Serialized: SerializedCacheClient
 
   constructor() {
-    super(worker, 'Cache:')
-    this.Exports = new ExportsCacheClient(worker, 'Cache:Exports.')
-    this.Serialized = new SerializedCacheClient(worker, 'Cache:Serialized.')
+    super(worker, 'Cache.')
+    this.Exports = new ExportsCacheClient(worker, 'Cache.Exports.')
+    this.Serialized = new SerializedCacheClient(worker, 'Cache.Serialized.')
   }
 }
 
 export const Cache = new CacheClient
-*/
 
 orchestrator.add({
   id: 'worker',
@@ -106,16 +105,16 @@ orchestrator.add({
     await Exporter.initialize({
       CSL_MAPPINGS: Object.entries(Zotero.Schema).reduce((acc, [ k, v ]) => { if (k.startsWith('CSL')) acc[k] = v; return acc }, {}),
       dateFormatsJSON: Zotero.File.getResource('resource://zotero/schema/dateFormats.json'),
-      lastUpdated: Zotero.Prefs.get(cacheDelete) ? 'delete' : await Zotero.DB.valueQueryAsync('SELECT MAX(dateModified) FROM items') as string,
+      lastUpdated: Zotero.Prefs.get(cacheDelete) ? 'delete' : (await Zotero.DB.valueQueryAsync('SELECT MAX(dateModified) FROM items') as string || ''),
     })
     Zotero.Prefs.clear(cacheDelete)
     Exporter.ready = true
-    // Cache.ready = true
+    Cache.ready = true
   },
   shutdown: async () => {
-    await Exporter.terminate()
     Exporter.ready = false
-    // Cache.ready = false
+    Cache.ready = false
+    await Exporter.terminate()
     worker.terminate()
   },
 })
