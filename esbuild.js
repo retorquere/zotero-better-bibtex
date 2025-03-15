@@ -265,7 +265,7 @@ async function rebuild() {
     metafile: 'gen/worker.json',
     external: [ 'jsdom' ],
     banner: { js: `
-      dump("\\nloading BBT chromeworker (indexedDB=" + typeof indexedDB + ")\\n")
+      dump("\\njson-rpc: loading better-bibtex chromeworker\\n")
       var Services
       if (typeof location !== 'undefined' && location.search) {
         Services = {
@@ -279,9 +279,9 @@ async function rebuild() {
     footer: { js: `
       }
       catch ($$err$$) {
-        dump("\\nerror: failed loading BBT chromeworker: " + $$err$$.message  + "\\n" + $$err$$.stack + "\\n")
+        dump("\\njson-rpc: error: failed loading better-bibtex chromeworker: " + $$err$$.message  + "\\n" + $$err$$.stack + "\\n")
       }
-      dump("\\nloaded BBT chromeworker\\n")
+      dump("\\njson-rpc: loaded better-bibtex chromeworker\\n")
     `},
   })
 
