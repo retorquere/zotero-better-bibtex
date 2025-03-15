@@ -51,6 +51,7 @@ import { log } from './logger'
 import { Events } from './events'
 
 import { Translators } from './translators'
+import { Exporter } from './translators/worker'
 import { fix as fixExportFormat } from './item-export-format'
 import { KeyManager } from './key-manager'
 import { TestSupport } from './test-support'
@@ -383,7 +384,7 @@ monkey.patch(Zotero.Translate.Export.prototype, 'translate', original => functio
 
   let useWorker = typeof translator.displayOptions.worker === 'boolean' && displayOptions.worker
 
-  if (useWorker && !Translators.worker) {
+  if (useWorker && !Exporter.ready) {
     // there wasn't an error starting a worker earlier
     flash('failed to start a chromeworker')
     useWorker = false

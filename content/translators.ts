@@ -1,12 +1,9 @@
 /* eslint-disable no-case-declarations, @typescript-eslint/no-unsafe-return */
 
-import * as client from './client'
+// import * as client from './client'
 import merge from 'lodash.merge'
 import { Cache } from './db/cache'
 import { Serializer } from './item-export-format'
-
-declare class ChromeWorker extends Worker { }
-import { Client as WorkerClientBase } from './worker/json-rpc'
 
 Components.utils.import('resource://zotero/config.js')
 declare const ZOTERO_CONFIG: any
@@ -20,6 +17,7 @@ import { newQueue } from '@henrygd/queue'
 import { orchestrator } from './orchestrator'
 import type { Reason } from './bootstrap'
 import { headers as Headers, byLabel, byId, bySlug } from '../gen/translators'
+import { worker, Exporter } from './translators/worker'
 
 Events.on('preference-changed', async (pref: string) => {
   for (const translator of (affects[pref] || [])) {
@@ -28,16 +26,6 @@ Events.on('preference-changed', async (pref: string) => {
 })
 
 import * as l10n from './l10n'
-
-class WorkerClient extends WorkerClientBase {
-  public initialize: (config: { CSL_MAPPINGS: any; dateFormatsJSON: any }) => Promise<void>
-  public terminate: () => Promise<void>
-  public start: (config: Translator.Worker.Job) => Promise<{ cacheRate: number; output: string }>
-
-  constructor(worker) {
-    super(worker)
-  }
-}
 
 class TimeoutError extends Error {
   timeout: number
@@ -68,8 +56,6 @@ export const Translators = new class {
   public byLabel: Record<string, Translator.Header> = {}
   public bySlug: Record<string, Translator.Header> = {}
   public queue = newQueue(1)
-  #worker: ChromeWorker
-  public worker: WorkerClient
 
   private reinit: { header: Translator.Header; code: string }[]
   private serializer = new Serializer
@@ -82,21 +68,9 @@ export const Translators = new class {
     orchestrator.add({
       id: 'translators',
       description: 'translators',
-      needs: [ 'keymanager' ],
+      needs: [ 'worker', 'keymanager' ],
       startup: async () => {
-        const url = new URL('chrome://zotero-better-bibtex/content/worker/zotero.js')
-        const params = new URLSearchParams(client as unknown as Record<string, string>)
-        url.search = params.toString()
-        this.#worker = new ChromeWorker(url.toString())
-        this.worker = new WorkerClient(this.#worker)
-
-        // post dynamically to fix #2485
-        await this.worker.initialize({
-          CSL_MAPPINGS: Object.entries(Zotero.Schema).reduce((acc, [ k, v ]) => { if (k.startsWith('CSL')) acc[k] = v; return acc }, {}),
-          dateFormatsJSON: Zotero.File.getResource('resource://zotero/schema/dateFormats.json'),
-        })
-
-        this.#worker.addEventListener('message', (e: MessageEvent) => {
+        worker.addEventListener('message', (e: MessageEvent) => {
           const data = (e.data || []) as Translator.Worker.Message | string[]
           if (Array.isArray(data)) return
 
@@ -122,9 +96,6 @@ export const Translators = new class {
         ready.resolve(true as unknown as void)
       },
       shutdown: async (reason: Reason) => {
-        await this.worker.terminate()
-        this.#worker.terminate()
-
         switch (reason) {
           case 'ADDON_DISABLE':
           case 'ADDON_UNINSTALL':
@@ -286,7 +257,7 @@ export const Translators = new class {
       })
     }
 
-    const result = await this.worker.start(config)
+    const result = await Exporter.start(config)
     if (job.autoExport) Cache.cacheRate[job.autoExport] = result.cacheRate
     return result.output
   }
