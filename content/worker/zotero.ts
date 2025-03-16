@@ -5,8 +5,8 @@ import { Server as WorkerServerBase } from './json-rpc'
 import { Exporter as ExporterInterface } from './interface'
 import type { Item } from '../../gen/typings/serialized-item'
 
-import allSettled = require('promise.allsettled')
-allSettled.shim()
+// import allSettled = require('promise.allsettled')
+// allSettled.shim()
 
 import { ExportedItem, ExportedItemMetadata, Cache, Context } from './cache'
 
