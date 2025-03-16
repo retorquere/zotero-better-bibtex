@@ -1,5 +1,7 @@
---- node_modules/kuroshiro-analyzer-kuromoji/src/index.js	2018-08-12 15:49:42.000000000 +0200
-+++ node_modules/kuroshiro-analyzer-kuromoji/src/index.js	2018-08-12 17:03:42.000000000 +0200
+diff --git a/node_modules/kuroshiro-analyzer-kuromoji/src/index.js b/node_modules/kuroshiro-analyzer-kuromoji/src/index.js
+index 3854289..c322b4c 100644
+--- a/node_modules/kuroshiro-analyzer-kuromoji/src/index.js
++++ b/node_modules/kuroshiro-analyzer-kuromoji/src/index.js
 @@ -1,11 +1,4 @@
 -import kuromoji from "kuromoji";
 -
@@ -13,7 +15,7 @@
  
  /**
   * Kuromoji based morphological analyzer for kuroshiro
-@@ -19,13 +12,7 @@
+@@ -19,13 +12,7 @@ class Analyzer {
      constructor({ dictPath } = {}) {
          this._analyzer = null;
  
@@ -27,7 +29,7 @@
      }
  
      /**
-@@ -74,8 +61,7 @@
+@@ -74,8 +61,7 @@ class Analyzer {
       * }]
       */
      parse(str = "") {
@@ -37,7 +39,7 @@
              const result = this._analyzer.tokenize(str);
              for (let i = 0; i < result.length; i++) {
                  result[i].verbose = {};
-@@ -86,8 +72,7 @@
+@@ -86,8 +72,7 @@ class Analyzer {
                  delete result[i].word_type;
                  delete result[i].word_position;
              }
