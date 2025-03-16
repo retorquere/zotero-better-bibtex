@@ -421,7 +421,13 @@ export class NSItem {
 
     if (item_keys === 'selected') {
       for (const item of Zotero.getActiveZoteroPane().getSelectedItems()) {
-        keys[item.key] = Zotero.BetterBibTeX.KeyManager.first({ where: { libraryID: item.libraryID, itemKey: item.key }})?.citationKey || null
+        if (item.isFeedItem) continue
+        if (item.isRegularItem()) {
+          keys[item.key] = Zotero.BetterBibTeX.KeyManager.first({ where: { libraryID: item.libraryID, itemKey: item.key }})?.citationKey || null
+        }
+        else if (item.isAttachment() && typeof item.parentID === 'number') {
+          keys[item.key] = Zotero.BetterBibTeX.KeyManager.first({ where: { libraryID: item.libraryID, itemID: item.parentID }})?.citationKey || null
+        }
       }
       return keys
     }
