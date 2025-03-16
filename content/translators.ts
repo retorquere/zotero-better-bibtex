@@ -70,10 +70,9 @@ export const Translators = new class {
       needs: [ 'worker', 'keymanager' ],
       startup: async () => {
         worker.addEventListener('message', (e: MessageEvent) => {
-          const data = (e.data || []) as Message | string[]
-          if (Array.isArray(data)) return
+          const data = e.data as Message
 
-          switch (data.kind) {
+          switch (data?.kind) {
             case 'debug':
               // this is pre-formatted
               Zotero.debug(e.data.message) // eslint-disable-line no-restricted-syntax

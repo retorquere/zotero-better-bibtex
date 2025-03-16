@@ -4,7 +4,7 @@ import { Client as WorkerClient } from '../worker/json-rpc'
 import { Exporter as ExporterInterface, Cache as CacheInterface } from '../worker/interface'
 import { orchestrator } from '../orchestrator'
 import type { Collection } from '../../gen/typings/serialized-item'
-import { $dump } from '../logger'
+import { log } from '../logger'
 
 export type Message =
 //    { kind: 'initialize', CSL_MAPPINGS: any, dateFormatsJSON: any }
@@ -14,7 +14,7 @@ export type Message =
 //  | { kind: 'done', output: string, cacheRate: number }
     { kind: 'debug'; message: string }
   | { kind: 'error'; message: string; stack?: string }
-  | { kind: 'item'; item: number }
+  // | { kind: 'item'; item: number }
   | { kind: 'cache-delete' }
   | { kind: 'progress'; percent: number; translator: string; autoExport: string }
 
@@ -42,9 +42,9 @@ const params = new URLSearchParams({
 url.search = params.toString()
 
 declare class ChromeWorker extends Worker { }
-$dump(`json-rpc: main booting worker ${url.toString()}`)
+log.info(`json-rpc: main booting worker ${url.toString()}`)
 export const worker: ChromeWorker = new ChromeWorker(url.toString())
-$dump('json-rpc: main worker started')
+log.info('json-rpc: main worker started')
 
 class ExporterClient extends WorkerClient implements ExporterInterface {
   public ready = false
