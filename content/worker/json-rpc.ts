@@ -1,4 +1,4 @@
-import { $dump, stringify } from '../logger'
+import { log } from '../logger'
 
 type JsonRpcMessage = {
   jsonrpc: '2.0'
@@ -24,19 +24,15 @@ export class Client {
 
     worker.addEventListener('message', (e: MessageEvent<JsonRpcMessage>) => {
       const req = e.data
-      if (!req || req.jsonrpc !== '2.0' || typeof req.id !== 'string') {
-        $dump(`json-rpc: main received non-json-rpc response ${stringify(req)}`)
-        return
-      }
-      if (!req.id.startsWith(this.#id)) {
-        // $dump(`json-rpc: main ${this.#id} received neighbour json-rpc response ${req.id}`)
-        return
-      }
+      if (!req || req.jsonrpc !== '2.0' || typeof req.id !== 'string') return
+      // received neighbour json-rpc response
+      if (!req.id.startsWith(this.#id)) return
+
       if (!this.#handlers[req.id]) {
-        $dump(`json-rpc: ERROR: main has no handler for json-rpc response ${req.id}`)
+        log.error(`json-rpc: ERROR: main has no handler for json-rpc response ${req.id}`)
         return
       }
-      $dump(`json-rpc: main received ${req.error ? 'error' : 'success'} for ${req.method || req.id}`)
+      // $dump(`json-rpc: main received ${req.error ? 'error' : 'success'} for ${req.method || req.id}`)
       this.#handlers[req.id](req)
       delete this.#handlers[req.id]
     })
@@ -58,7 +54,7 @@ export class Client {
               }
 
               worker.postMessage(message)
-              $dump(`json-rpc: main sent ${message.id} ${message.method}`)
+              // $dump(`json-rpc: main sent ${message.id} ${message.method}`)
             })
           }
         }
@@ -78,7 +74,7 @@ export class Server {
       if (!req || req.jsonrpc !== '2.0' || !req.id) return
 
       try {
-        $dump(`json-rpc: worker received ${req.method} request`)
+        // $dump(`json-rpc: worker received ${req.method} request`)
         const m = req.method.split('.')
 
         let host = this // eslint-disable-line @typescript-eslint/no-this-alias
@@ -94,11 +90,11 @@ export class Server {
         }
 
         self.postMessage({ jsonrpc: '2.0', method: req.method, result: await method.apply(host, req.params || []), id: req.id })
-        $dump(`json-rpc: worker sent ${req.method} success`)
+        // $dump(`json-rpc: worker sent ${req.method} success`)
       }
       catch (err) {
         self.postMessage({ jsonrpc: '2.0', method: req.method, error: { code: INTERNAL_ERROR, message: err.message }, id: req.id })
-        $dump(`json-rpc: worker sent ${req.method} error`)
+        // $dump(`json-rpc: worker sent ${req.method} error`)
         return
       }
     })
